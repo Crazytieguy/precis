@@ -1,871 +1,836 @@
 fixture = "linkwarden"
 revision_pin = "22723575"
 summary = """
-Linkwarden is a self-hosted bookmark manager: collect, annotate, and
-preserve webpages (screenshot/PDF/Monolith/readability). It's a yarn
-workspace monorepo with three apps (`web` — Next.js + Prisma + Meili
-backend and frontend; `worker` — background preservation/indexing/RSS
-poller; `mobile` — Expo React Native) and five shared packages
-(`prisma`, `lib`, `router` — tanstack-query hooks, `filesystem` —
-local/S3 abstraction, `types`).
+Linkwarden: a self-hosted, open-source collaborative bookmark manager
+("Bookmarks, Evolved"). Yarn workspaces monorepo: `apps/web` (Next.js
+15 pages-router app: UI + `/api/v1` and `/api/v2` REST endpoints, auth
+via next-auth with 58 optional SSO providers, Stripe billing),
+`apps/worker` (a hand-rolled long-running Node process, no queue
+system — six `while(true)` polling loops for link preservation,
+RSS polling, AI auto-tagging, trial-end email, and a home-grown
+`AppMigration` runner), `apps/mobile` (Expo/React Native + expo-router
+client). Shared `packages/`: `prisma` (Postgres schema + ~90
+migrations), `lib` (SSRF-safe fetch guard, Meilisearch client,
+nodemailer transporter, zod schemas, subscription-capacity checks),
+`filesystem` (local-disk vs S3 dual-backend file storage), `router`
+(React Query hooks shared by web+mobile), `types`.
 
-A coding agent landing here will face a wide query distribution:
-end-to-end bookmark flows (UI → REST → Prisma → worker preservation),
-auth/SSRF/subscription guardrails, schema/migration questions, mobile
-parity vs web, search (Meili w/ Postgres fallback), i18n, Docker
-deployment, integrations with NextAuth's many providers, etc. The
-ranking front-loads the monorepo shape and data model (Prisma schema
-+ enums drive nearly every query), then surfaces locations for the
-HTTP API surface and the React Query hook layer (because every
-client/mobile feature talks through `packages/router`), then dives
-into the preservation pipeline and finally into call-site detail for
-deeper questions.
+Core domain: Users create Collections, add Links (auto-preserved by
+the worker as Screenshot/PDF/Monolith/Readability/Wayback-Machine
+snapshot), organize with Tags, optionally share Collections publicly
+or with member permissions (canCreate/canUpdate/canDelete), and can
+run local/hosted AI models to auto-tag links. Query distribution this
+NS optimizes for: "how does link preservation/archiving work",
+"where's the code for feature X" (SSO provider, migration importer,
+archive format, dashboard section), SSRF/security review of the
+worker's arbitrary-URL fetching, schema/migration questions, adding
+an API endpoint or React Query hook, mobile-app parity questions,
+Docker/env-var self-hosting config, and CI/test entry points. README
+is marketing copy with no build/architecture detail, so this NS
+spends its budget on operational surface (env vars, compose, package
+scripts) and concrete code shapes instead of re-deriving what the
+README already covers.
 """
-
-# ============================================================
-# Tier 1 — Repository orientation: what this project is and how
-# its monorepo is laid out. Smallest, highest-leverage batches.
-# ============================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "README lede + tagline"
-justification = """
-Single highest-value line: the H1 + tagline tell the agent what
-Linkwarden *is* before any code. Cheap (3 lines).
-"""
+descriptor = "Root identity: .precis-pin + README lede"
+justification = "Cheapest possible orientation: fixture revision marker plus the one-paragraph self-description of what Linkwarden is, before any directory listing. Anchors every later batch."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "README.md", start = 3, end = 4, render = { kind = "full" } },
-  { path = "README.md", start = 30, end = 30, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "README.md"
+start = 3
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 30
+end = 30
+render = { kind = "full" }
 
 [[batches]]
 id = "1.2"
-descriptor = "Root filesystem layout"
-justification = """
-Names every top-level child of the repo. Establishes that this is a
-monorepo (apps/ + packages/), pulls in docker-compose/Dockerfile as
-deployment signals, and surfaces top-level config files. Catastrophic-
-omission hedge for 'what's at the top level?'
-"""
+descriptor = "Root directory listing"
+justification = "Full top-level roster (dotfiles, Dockerfile, docker-compose.yml, apps/, packages/, patches/, LICENSE.md) so nothing at the root is assumed missing before we descend anywhere."
 [batches.content]
 kind = "fs"
-groups = [{ parent = ".", entries = "all" }]
+[[batches.content.groups]]
+parent = "."
+entries = "all"
 
 [[batches]]
 id = "1.3"
-descriptor = "apps/ and packages/ listings"
-justification = """
-After 1.2 the agent knows apps/ and packages/ exist; this names every
-child of each so the agent doesn't assume e.g. there is no mobile app
-or that filesystem/router are absent from packages. Foundational for
-routing any later subdir question.
-"""
+descriptor = "apps/ and packages/ workspace listings"
+justification = "The two Yarn workspace globs from package.json — shows all three deployables (web/mobile/worker) and all five shared packages exist, before picking one to dig into."
 [batches.content]
 kind = "fs"
-groups = [
-  { parent = "apps", entries = "all" },
-  { parent = "packages", entries = "all" },
-]
+[[batches.content.groups]]
+parent = "apps"
+entries = "all"
+[[batches.content.groups]]
+parent = "packages"
+entries = "all"
 
 [[batches]]
 id = "1.4"
-descriptor = "package.json — workspaces declaration"
-justification = """
-The `workspaces: ['apps/*', 'packages/*']` declaration confirms the
-yarn-workspaces shape matches what 1.3 just listed. Single most
-load-bearing fact in package.json's upper half.
-"""
+descriptor = ".env.sample: NextAuth + database settings"
+justification = "The two settings that are mandatory for any deployment (NEXTAUTH_SECRET, DATABASE_URL/POSTGRES_PASSWORD) before the much longer optional-settings roster."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "package.json", start = 6, end = 9, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = ".env.sample"
+start = 1
+end = 11
+render = { kind = "full" }
 
 [[batches]]
 id = "1.5"
-descriptor = "package.json — web + worker dev scripts"
-predecessor = "1.4"
-justification = """
-The most-used entry points: web:dev/build/start, worker:dev/start.
-The `dotenv --` prefix flags that .env is required at runtime. Often
-zero-follow-up for 'how do I run the web app'.
-"""
+descriptor = "vitest.config.mts"
+justification = "The root unit-test runner config: `@` alias resolves to apps/web, e2e/ is excluded (that's Playwright's job instead) — small but resolves 'how do tests find apps/web imports' immediately."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "package.json", start = 11, end = 13, render = { kind = "full" } },
-  { path = "package.json", start = 15, end = 16, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "vitest.config.mts"
+start = 1
+end = 13
+render = { kind = "full" }
 
 [[batches]]
 id = "1.6"
-descriptor = "package.json — prisma + test scripts"
-predecessor = "1.5"
-justification = """
-Closes the run-scripts list: prisma:deploy/dev/generate/studio (DB
-schema lifecycle is the central op for any schema work) and
-test/coverage (vitest). Pairs with 1.5 to fully cover the human-facing
-scripts.
-"""
+descriptor = "next-i18next.config.js (supported locales)"
+justification = "The 14-locale roster (en default + it/fr/zh/zh-TW/uk/pt-BR/ja/es/de/nl/tr/pl/ru) that public/locales/ and crowdin.yml both key off — answers 'what languages are supported' in one place."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "package.json", start = 19, end = 25, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "apps/web/next-i18next.config.js"
+start = 1
+end = 23
+render = { kind = "full" }
 
 [[batches]]
 id = "1.7"
-descriptor = "docker-compose — postgres + linkwarden"
-justification = """
-The two app-facing services: postgres (16-alpine, env from .env, data
-volume) and the linkwarden app container (ghcr.io image, port
-3000:3000, depends on postgres + meilisearch, DATABASE_URL composed
-from POSTGRES_PASSWORD). Documents the env vars and the canonical
-deployment shape.
-"""
+descriptor = ".env.sample: Meilisearch/S3/SMTP/proxy/PDF settings"
+justification = "Search index, S3-compatible object storage, outbound email, outbound-fetch proxy, and PDF-margin knobs — the other infra integrations besides Postgres."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "docker-compose.yml", start = 1, end = 21, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = ".env.sample"
+start = 78
+end = 104
+render = { kind = "full" }
 
 [[batches]]
 id = "1.8"
-descriptor = "docker-compose — meilisearch"
-predecessor = "1.7"
-justification = """
-The third service: meilisearch v1.12.8 with persistent meili_data
-volume. Catastrophic-omission hedge — without this, 1.7 'depends on
-meilisearch' would be unresolved.
-"""
+descriptor = "docker-compose.yml"
+justification = "The self-hosting entry point: three services (postgres, linkwarden, meilisearch), ports, volumes — this is almost certainly the first thing an agent needs for a 'how do I run this' query."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "docker-compose.yml", start = 22, end = 28, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "docker-compose.yml"
+start = 1
+end = 28
+render = { kind = "full" }
 
-# ============================================================
-# Tier 2 — Data model: the Prisma schema is what most backend
-# questions reduce to. Listed model-by-model after a cheap TOC,
-# with the highest-leverage enums up front.
-# ============================================================
+[[batches]]
+id = "1.9"
+descriptor = ".env.sample: AI provider settings"
+justification = "Ollama (local) plus OpenAI-compatible/Azure/Anthropic/OpenRouter/Perplexity provider blocks for the AI auto-tagging feature — directly answers 'which AI backends does auto-tagging support'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".env.sample"
+start = 50
+end = 76
+render = { kind = "full" }
+
+[[batches]]
+id = "1.10"
+descriptor = "Dockerfile (stages + build + CMD)"
+justification = "Two-stage build (Rust monolith-builder produces the `monolith` archiving binary, copied into the Node main-app stage); the final RUN + CMD line is exactly what docker-compose's prebuilt image runs (`yarn prisma:deploy && yarn concurrently:start`). Middle COPY-context lines (workspace package.json copying) elided — one open away, low semantic value."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Dockerfile"
+start = 1
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Dockerfile"
+start = 40
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "Dockerfile"
+start = 58
+end = 70
+render = { kind = "full" }
+
+[[batches]]
+id = "1.11"
+descriptor = ".env.sample: additional optional settings roster"
+justification = "35 feature-flag/limit env var names (PAGINATION_TAKE_COUNT, MAX_LINKS_PER_USER, ARCHIVE_TAKE_COUNT, DISABLE_PRESERVATION, ALLOW_PRIVATE_NETWORK_ACCESS, etc.) with no values — this is the actual config-key roster, showing all of them avoids implying the unlisted ones don't exist."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".env.sample"
+start = 13
+end = 48
+render = { kind = "full" }
+
+[[batches]]
+id = "1.12"
+descriptor = "Root package.json (workspace scripts)"
+justification = "The monorepo's own entry points: web:dev/build/start, worker:dev/start, concurrently:*, prisma:* scripts, and the workspaces glob — this is how a human runs the whole stack, which README defers to external docs for. The `packageManager` line's yarn integrity hash is elided (pure noise); the three root deps (dotenv-cli, vitest, concurrently, patch-package) are a one-line grep away."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "package.json"
+start = 4
+end = 27
+render = { kind = "full" }
+
+[[batches]]
+id = "1.13"
+descriptor = "apps/mobile/package.json (identity + scripts)"
+justification = "Confirms the mobile entry point is `expo-router/entry`, scripts are `expo start`/`run:android`/`run:ios`, and testing uses jest-expo. Full ~70-line dependency array (expo-router, expo-share-intent, @sentry/react-native, nativewind, zustand, react-native-mmkv, ...) elided as a one-open-away mechanical list; the code-sharing boundary with web (@linkwarden/router, @linkwarden/lib, @linkwarden/types) is visible directly below."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "apps/mobile/package.json"
+start = 1
+end = 22
+render = { kind = "full" }
+
+[[batches]]
+id = "1.14"
+descriptor = "apps/web/package.json (identity + scripts)"
+justification = "Confirms the workspace name (@linkwarden/web), version (independently versioned from root's 0.0.0), AGPL-3.0 license, and its scripts: `next dev/build/start`, `playwright test e2e`, and the `postinstall: playwright install --with-deps chromium` that explains why the image needs a browser. The ~90-line dependencies array (next-auth, stripe, zod, sharp, rss-parser, nodemailer, dnd-kit, radix-ui, ...) is a single `cat` away and not reproduced here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "apps/web/package.json"
+start = 1
+end = 17
+render = { kind = "full" }
+
+[[batches]]
+id = "1.15"
+descriptor = "apps/worker/package.json (scripts + dependencies)"
+justification = "Worker's own script + dependency surface: tsx-run dev/start (no build step), the AI SDK provider packages (@ai-sdk/anthropic/azure/openai-compatible/perplexity, @openrouter/ai-sdk-provider, ollama-ai-provider-v2) backing the auto-tagging feature, @mozilla/readability + jsdom (readability archiving), meilisearch client, playwright. devDependencies (typecheck-only tooling) elided."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "apps/worker/package.json"
+start = 1
+end = 36
+render = { kind = "full" }
+
+[[batches]]
+id = "1.16"
+descriptor = ".env.sample: SSO provider roster (first 35 of 58, alphabetical)"
+justification = "Catastrophic-omission hedge, alphabetical prefix: 35 of the 58 supported next-auth SSO providers get their own header-comment line here (42 School through Netlify), each provider's own client-id/secret lines beneath it elided. The remaining 23 (Okta through Zoom) are cut for budget — the renderer's own elision marker signals more providers continue past Netlify, so 'does Linkwarden support SSO provider X' resolves to a one-line grep of this same file rather than a guess from a list that looks complete but silently isn't."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".env.sample"
+start = 110
+end = 110
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 116
+end = 116
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 122
+end = 122
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 129
+end = 129
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 136
+end = 136
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 142
+end = 142
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 149
+end = 149
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 156
+end = 156
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 162
+end = 162
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 169
+end = 169
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 175
+end = 175
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 182
+end = 182
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 189
+end = 189
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 195
+end = 195
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 201
+end = 201
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 207
+end = 207
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 214
+end = 214
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 220
+end = 220
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 226
+end = 226
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 232
+end = 232
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 239
+end = 239
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 245
+end = 245
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 253
+end = 253
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 259
+end = 259
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 266
+end = 266
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 272
+end = 272
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 278
+end = 278
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 285
+end = 285
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 291
+end = 291
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 298
+end = 298
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 304
+end = 304
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 310
+end = 310
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 316
+end = 316
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 322
+end = 322
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 328
+end = 328
+render = { kind = "full" }
 
 [[batches]]
 id = "2.1"
-descriptor = "schema.prisma — model + enum TOC"
-justification = """
-Names every declared `model` and `enum` in schema.prisma with its
-opening line. Cheap catastrophic-omission hedge so the agent doesn't
-assume e.g. there's no Highlight model, no AppMigration table, or
-that DashboardSectionType doesn't exist. Line numbers double as a
-direct-jump TOC.
-"""
+descriptor = "packages/prisma directory listing"
+justification = "schema.prisma, seed.js, index.ts (PrismaClient singleton), migrations/, generated client/ — the whole data-layer package in one glance before reading any of it."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 10, end = 10, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 28, end = 28, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 77, end = 77, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 83, end = 83, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 90, end = 90, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 99, end = 99, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 108, end = 108, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 118, end = 118, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 126, end = 126, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 151, end = 151, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 166, end = 166, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 200, end = 200, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 220, end = 220, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 234, end = 234, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 248, end = 248, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 260, end = 260, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 275, end = 275, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 289, end = 289, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 296, end = 296, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 304, end = 304, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "packages/prisma"
+entries = "all"
 
 [[batches]]
 id = "2.2"
-descriptor = "schema.prisma — enums (Theme/AiTaggingMethod/LinksRouteTo)"
-predecessor = "2.1"
-justification = """
-The three user-facing enums: Theme {dark, light, auto},
-AiTaggingMethod {DISABLED, GENERATE, EXISTING, PREDEFINED},
-LinksRouteTo {ORIGINAL, PDF, READABLE, MONOLITH, SCREENSHOT, DETAILS}.
-Often zero-follow-up for 'what values can field X take' and the
-literal strings are what the worker / preference UI compare against.
-"""
+descriptor = "schema.prisma: every model/enum name (roster)"
+justification = "Catastrophic-omission hedge for the data model: all 15 models and 5 enums get a one-line pointer (name + line number) here, in schema order, before only a handful get full field-list treatment below. Confirms e.g. WhitelistedUser, PasswordResetToken, and AppMigration exist even though their fields aren't expanded."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 78, end = 97, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 10
+end = 10
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 28
+end = 28
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 77
+end = 77
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 83
+end = 83
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 90
+end = 90
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 99
+end = 99
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 108
+end = 108
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 118
+end = 118
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 126
+end = 126
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 151
+end = 151
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 166
+end = 166
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 200
+end = 200
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 220
+end = 220
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 234
+end = 234
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 248
+end = 248
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 260
+end = 260
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 275
+end = 275
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 289
+end = 289
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 296
+end = 296
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 304
+end = 304
+render = { kind = "full" }
 
 [[batches]]
 id = "2.3"
-descriptor = "schema.prisma — Tag model"
-predecessor = "2.1"
-justification = """
-Per-user tag with optional archival override flags
-(archiveAsScreenshot/Monolith/PDF/Readable/WaybackMachine, aiTag,
-aiGenerated). The optional booleans are what `isArchivalTag` checks
-to decide if a tag is an 'archival tag' that overrides user defaults.
-"""
+descriptor = "schema.prisma: generator + datasource"
+justification = "Confirms Postgres-only (no SQLite/MySQL provider swap) and prisma-client-js generator — the two lines that gate every 'can I use database X' question."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 201, end = 218, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 1
+end = 8
+render = { kind = "full" }
 
 [[batches]]
 id = "2.4"
-descriptor = "schema.prisma — Link model"
-predecessor = "2.1"
-justification = """
-The bookmark itself. Fields name/type/description, the five archival
-columns (preview/image/pdf/readable/monolith — each holds a path or
-'unavailable'), lastPreserved/indexVersion, collection FK, tags m:n,
-pinnedBy / createdBy / highlights relations. Often answers backend
-queries about Link fields directly without follow-up.
-"""
+descriptor = "schema.prisma: User model (full fields)"
+justification = "The central entity, expanded in full: auth fields, subscription relation, per-user archival-format toggles (archiveAsScreenshot/Monolith/PDF/Readable/WaybackMachine) that archiveHandler.ts falls back to when a link has no tag-level override, AI tagging settings, reader-view preferences, dashboard/collection ordering. Everything Settings pages read/write lives here."
+predecessor = "2.2"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 167, end = 198, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 28
+end = 75
+render = { kind = "full" }
 
 [[batches]]
 id = "2.5"
-descriptor = "schema.prisma — User model (identity + relations)"
-predecessor = "2.1"
-justification = """
-First half of User: id/name/username/email + emailVerified +
-unverifiedNewEmail, parentSubscription (org-style billing chain),
-locale, and the relation fan-out (accounts, collections, tags,
-pinnedLinks, createdLinks, createdCollections, highlights,
-collectionsJoined, whitelistedUsers, accessTokens, subscriptions).
-Often the answer to 'what relations does User have?'
-"""
+descriptor = "schema.prisma: Theme / AiTaggingMethod / LinksRouteTo enums"
+justification = "The three enum value-sets governing User preference fields shown above (dark/light/auto; DISABLED/GENERATE/EXISTING/PREDEFINED; ORIGINAL/PDF/READABLE/MONOLITH/SCREENSHOT/DETAILS) — cheap and directly answers 'what are the valid values for X'."
+predecessor = "2.2"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 29, end = 51, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 77
+end = 97
+render = { kind = "full" }
 
 [[batches]]
 id = "2.6"
-descriptor = "schema.prisma — User model (preferences + archival defaults)"
-predecessor = "2.5"
-justification = """
-Second half of User: linksRouteTo, aiTaggingMethod/aiPredefinedTags/
-aiTagExistingLinks, theme + readableFont*/Line* defaults,
-preventDuplicateLinks, archiveAsScreenshot/Monolith/PDF/Readable/
-WaybackMachine defaults (worker's archiveHandler reads these),
-isPrivate, referredBy, dashboardSections, lastPickedAt,
-acceptPromotionalEmails, trialEndEmailSent, createdAt/updatedAt.
-"""
+descriptor = "schema.prisma: Collection + UsersAndCollections (sharing/permissions)"
+justification = "The collaboration model: sub-collection parenting via self-relation, isPublic flag, and the three-flag member permission row (canCreate/canUpdate/canDelete) that getPermission.ts/setCollection.ts check against — this IS the permission model, not just a join table."
+predecessor = "2.2"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 52, end = 75, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 126
+end = 164
+render = { kind = "full" }
 
 [[batches]]
 id = "2.7"
-descriptor = "schema.prisma — Collection + UsersAndCollections"
-predecessor = "2.1"
-justification = """
-Collection with its self-referential subCollections relation, isPublic
-flag, color/icon, owner/createdBy split. UsersAndCollections is the
-junction with the canCreate/canUpdate/canDelete permission triple that
-every permission check in `getPermission.ts` and friends reads.
-"""
+descriptor = "schema.prisma: Link model (full fields)"
+justification = "The other central entity: the five preservation-format columns (image/pdf/readable/monolith + preview) that archiveHandler.ts writes 'unavailable' into on failure/skip, plus clientSide/aiTagged/indexVersion flags that gate the worker's polling queries (getLinkBatchFairly.ts)."
+predecessor = "2.2"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 127, end = 164, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 166
+end = 198
+render = { kind = "full" }
 
 [[batches]]
 id = "2.8"
-descriptor = "schema.prisma — Highlight + DashboardSection + DashboardSectionType"
-predecessor = "2.1"
-justification = """
-Highlight (color/comment + startOffset/endOffset + text) — the reader
-annotation entity. DashboardSection (per-user, optional collectionId,
-ordered) + DashboardSectionType enum {STATS, RECENT_LINKS,
-PINNED_LINKS, COLLECTION}. Together these complete the user-facing
-feature models.
-"""
+descriptor = "schema.prisma: Tag model (full fields)"
+justification = "Tags carry their own optional per-tag archival-format overrides (archiveAsScreenshot/Monolith/PDF/Readable/WaybackMachine, aiTag) — this is the 'archival tag' mechanism archiveHandler.ts checks via isArchivalTag() before falling back to User-level settings."
+predecessor = "2.2"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 261, end = 273, render = { kind = "full" } },
-  { path = "packages/prisma/schema.prisma", start = 276, end = 294, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "packages/prisma/schema.prisma"
+start = 200
+end = 218
+render = { kind = "full" }
 
 [[batches]]
 id = "2.9"
-descriptor = "schema.prisma — Subscription + AccessToken + RssSubscription"
-predecessor = "2.1"
-justification = """
-Three operational models. Subscription (Stripe; stripeSubscriptionId,
-period start/end, quantity, childUsers self-relation). AccessToken
-(per-user API token, `isSession` lets it double as mobile login).
-RssSubscription (url + collection FK, lastBuildDate). All three are
-referenced by name in routes and the worker.
-"""
+descriptor = "packages/prisma/index.ts (client singleton) + latest migration.sql"
+justification = "The dev-mode-safe PrismaClient singleton pattern (global cache to survive hot reload), plus the newest migration file as a size/shape reference for what these SQL files actually look like (a single ALTER TABLE)."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 221, end = 258, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.10"
-descriptor = "schema.prisma datasource + prisma client singleton"
-predecessor = "2.1"
-justification = """
-The header: postgresql datasource bound to DATABASE_URL, prisma-
-client-js generator. Plus the package-level index that exposes a
-singleton `prisma` client (consumed everywhere as
-`import { prisma } from '@linkwarden/prisma'`). Anchors how every
-route gets its DB handle.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "packages/prisma/schema.prisma", start = 1, end = 8, render = { kind = "full" } },
-  { path = "packages/prisma/index.ts", start = 1, end = 14, render = { kind = "full" } },
-]
-
-# ============================================================
-# Tier 3 — Workspace layouts: each app's directory shape and
-# entry points. After tier 2 the agent knows the data model;
-# here it learns where the code lives.
-# ============================================================
+[[batches.content.spans]]
+path = "packages/prisma/index.ts"
+start = 1
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prisma/migrations/20260207203957_add_meta_description_field_to_link/migration.sql"
+start = 1
+end = 2
+render = { kind = "full" }
 
 [[batches]]
 id = "3.1"
-descriptor = "apps/web subtree — top-level files + key dirs"
-justification = """
-Names every top-level child of apps/web (next.config.js,
-playwright.config.ts, tsconfig, etc.) and the children of `pages/`
-(Next.js page-based routing — names tell you what routes exist at the
-top: dashboard, links, collections, tags, search, settings, admin,
-auth, api, public, _app/_document). Foundational for any frontend
-question.
-"""
+descriptor = "apps/web/pages/api/v1 + v2 directory listings"
+justification = "The full REST surface at a glance: v1 has archives/, auth/, avatar/, collections/, config/, dashboard/, getFavicon, highlights/, links/, logins/, migration/, payment/, preserved/, public/, rss/, search/, session/, tags/, tokens/, users/, webhook/, worker/ — every resource the web app exposes, one hop from any controller. v2 is a single dashboard/ endpoint so far — the newer, still-narrow API generation the summary's '/api/v1 and /api/v2' line refers to."
 [batches.content]
 kind = "fs"
-groups = [
-  { parent = "apps/web", entries = "all" },
-  { parent = "apps/web/pages", entries = "all" },
-]
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v1"
+entries = "all"
+[[batches.content.groups]]
+parent = "apps/web/pages/api/v2"
+entries = "all"
 
 [[batches]]
 id = "3.2"
-descriptor = "apps/web subtree — pages/api, lib, components, hooks"
-justification = """
-The deeper structure of apps/web: `pages/api/v1/*` and `pages/api/v2/*`
-(REST surface — every domain has its own dir), `lib/api/controllers`
-(the actual business logic behind every page route), `lib/client`
-(shared client helpers), `lib/shared`, `hooks/`, `store/`, `layouts/`,
-`components/`. Tells the agent the REST → controller indirection that
-every backend question follows.
-"""
+descriptor = "apps/web/lib/api/controllers directory listing"
+justification = "The controller-function roster backing the routes in 3.1, grouped by resource folder (collections/, dashboard/, highlights/, links/, migration/, public/, search/, session/, tags/, tokens/, users/, worker/) — pairs with 3.1 to give route-to-implementation mapping without opening any route file."
 [batches.content]
 kind = "fs"
-groups = [
-  { parent = "apps/web/pages/api", entries = "all" },
-  { parent = "apps/web/pages/api/v1", entries = "all" },
-  { parent = "apps/web/lib", entries = "all" },
-  { parent = "apps/web/lib/api", entries = "all" },
-  { parent = "apps/web/lib/api/controllers", entries = "all" },
-  { parent = "apps/web/lib/client", entries = "all" },
-  { parent = "apps/web/lib/shared", entries = "all" },
-  { parent = "apps/web/hooks", entries = "all" },
-  { parent = "apps/web/store", entries = "all" },
-  { parent = "apps/web/layouts", entries = "all" },
-  { parent = "apps/web/components", entries = "all" },
-]
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers"
+entries = "all"
 
 [[batches]]
 id = "3.3"
-descriptor = "apps/worker subtree — entry, workers, lib"
-justification = """
-The worker app: top-level (index.ts spawn-respawn wrapper,
-worker.ts initializer), workers/* (the six background loops:
-autoTagPreservedLinks, linkIndexing, linkProcessing, migrationWorker,
-rssPolling, trialEndEmailWorker), lib/* (archiveHandler, autoTagLink,
-browser, fetchHeaders, batch fetchers, prompts, protectPageRequests),
-lib/preservationScheme/* (the per-format archive handlers).
-"""
+descriptor = "apps/web/lib/api directory listing (non-controller helpers)"
+justification = "The auth/permission/session helpers that sit beside controllers/: verifyUser, verifyToken, getPermission, setCollection, isDemoMode, verifyByCredentials, isAuthenticatedRequest, getCollectionRootOwnerAndMembers, searchQueryBuilder, paymentCheckout, the four sendXRequest email-trigger helpers, plus archives/, preserved/, stripe/ subfolders — these are shared across nearly every controller."
 [batches.content]
 kind = "fs"
-groups = [
-  { parent = "apps/worker", entries = "all" },
-  { parent = "apps/worker/workers", entries = "all" },
-  { parent = "apps/worker/lib", entries = "all" },
-  { parent = "apps/worker/lib/preservationScheme", entries = "all" },
-]
+[[batches.content.groups]]
+parent = "apps/web/lib/api"
+entries = "all"
 
 [[batches]]
 id = "3.4"
-descriptor = "apps/worker — worker.ts initializer (full)"
-predecessor = "3.3"
-justification = """
-22 lines, very high signal: orchestrates the six worker loops with
-their relative timing and reads the canonical
-`ARCHIVE_SCRIPT_INTERVAL` env var. Often zero-follow-up for 'how does
-the worker start up and what does it run?'
-"""
+descriptor = "verifyUser.ts + verifyToken.ts (auth gate)"
+justification = "Every authenticated route calls verifyUser() first: it composes verifyToken() (JWT expiry + revocation check against AccessToken.revoked) with user lookup and email-verification gating — this is the single chokepoint to read for any 401/404 debugging. The trailing Stripe-subscription gate (STRIPE_SECRET_KEY-only) is elided; verifySubscription() is one open away."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "apps/worker/worker.ts", start = 1, end = 22, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "apps/web/lib/api/verifyToken.ts"
+start = 1
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "apps/web/lib/api/verifyUser.ts"
+start = 1
+end = 47
+render = { kind = "full" }
 
 [[batches]]
 id = "3.5"
-descriptor = "apps/mobile subtree — Expo router structure"
-justification = """
-The mobile app (Expo + expo-router): app/_layout.tsx (Sentry init + root
-Stack), app/(tabs) tab navigator, app/links/[id].tsx, app/login.tsx,
-app/incoming.tsx (share-intent receiver), app/index.tsx, plus
-components/, lib/, store/, plugins/, types/, assets/, styles/.
-Mobile reuses @linkwarden/router, @linkwarden/lib, @linkwarden/types
-and @linkwarden/prisma but ships its own UI.
-"""
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "apps/mobile", entries = "all" },
-  { parent = "apps/mobile/app", entries = "all" },
-  { parent = "apps/mobile/app/(tabs)", entries = "all" },
-  { parent = "apps/mobile/app/links", entries = "all" },
-  { parent = "apps/mobile/components", entries = "all" },
-  { parent = "apps/mobile/lib", entries = "all" },
-  { parent = "apps/mobile/store", entries = "all" },
-]
-
-[[batches]]
-id = "3.6"
-descriptor = "packages/* — package contents"
-justification = """
-The full file listing of every shared package: filesystem/* (the
-local-or-S3 file abstraction with 10 thin wrappers + s3Client), lib/*
-(domain helpers — ssrf, safeFetch, schemaValidation, meili client,
-rssHandler, generatePreview, …), prisma/* (schema + migrations +
-client), router/* (tanstack-query hooks per domain), types/* (global
-+ inputSelect). Catastrophic-omission hedge for 'is there a util for X
-in shared code?'
-"""
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "packages/filesystem", entries = "all" },
-  { parent = "packages/lib", entries = "all" },
-  { parent = "packages/prisma", entries = "all" },
-  { parent = "packages/router", entries = "all" },
-  { parent = "packages/types", entries = "all" },
-]
-
-[[batches]]
-id = "3.7"
-descriptor = "packages/filesystem index — re-export surface"
-justification = """
-The single index.ts is the package's full export list:
-moveFile/removeFile/s3Client/readFile/fileExists/createFile/createFolder/
-manageFiles/removeFolder. Each export is one file; together they form
-the abstract local-or-S3 filesystem layer the web app + worker both
-import via `@linkwarden/filesystem`.
-"""
+descriptor = "getPermission.ts + setCollection.ts (collection access, trimmed)"
+justification = "getPermission() (full) is the one place that checks collection ownership/membership by linkId-or-collectionId, used by nearly every collection/link mutation. setCollection()'s collectionId branch (full) shows it delegating straight back to getPermission() plus a canCreate member check; its collectionName-lookup and default-'Unorganized'-collection branches (lines 41-102) are elided here to stay within budget."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/filesystem/index.ts", start = 1, end = 9, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.8"
-descriptor = "apps/web/lib/api/controllers — bracketed leaves + stripe"
-justification = """
-The deeper REST controllers, listed for completeness: per-id subdirs
-(collections/collectionId, links/linkId{,/highlight}, tags/tagId,
-tokens/tokenId, users/userId), links/bulk, links/linkId/highlight,
-public/{collections,links/linkId,users}, and lib/api/stripe (six
-Stripe helpers). Hedge so the agent doesn't assume the bulk/{tokenId}
-paths are absent.
-"""
-[batches.content]
-kind = "fs"
-groups = [
-  { parent = "apps/web/lib/api/controllers/collections", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/collections/collectionId", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/dashboard", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/highlights", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/links", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/links/bulk", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/links/linkId", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/links/linkId/highlight", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/migration", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/public", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/public/collections", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/public/links", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/public/links/linkId", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/public/users", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/search", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/session", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/tags", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/tags/tagId", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/tokens", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/tokens/tokenId", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/users", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/users/userId", entries = "all" },
-  { parent = "apps/web/lib/api/controllers/worker", entries = "all" },
-  { parent = "apps/web/lib/api/stripe", entries = "all" },
-]
-
-# ============================================================
-# Tier 4 — REST API surface + router hook layer. The
-# request → controller → Prisma pattern, then the React Query
-# hooks every client/mobile feature actually calls.
-# ============================================================
+[[batches.content.spans]]
+path = "apps/web/lib/api/getPermission.ts"
+start = 1
+end = 38
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "apps/web/lib/api/setCollection.ts"
+start = 1
+end = 39
+render = { kind = "full" }
 
 [[batches]]
 id = "4.1"
-descriptor = "verifyUser middleware (full)"
-justification = """
-Every non-public REST route opens with `await verifyUser({ req, res })`.
-The full ~73 lines show the auth/subscription/email-verified guardrail
-(verifyToken → prisma.user.findUnique with subscriptions included →
-checks for username + emailVerified gating via NEXT_PUBLIC_EMAIL_
-PROVIDER + STRIPE_SECRET_KEY-gated subscription check). Often zero-
-follow-up for 'how is the user authenticated'.
-"""
+descriptor = "packages/lib directory listing"
+justification = "The shared-utility roster: ssrf.ts+safeFetch.ts (SSRF-safe outbound fetch), meilisearchClient.ts, transporter.ts (nodemailer), rssHandler.ts, schemaValidation.ts (zod), verifyCapacity.ts (plan limits), plus the archive-format helper cluster (generatePreview.ts, getFormatFromContentType/getLinkTypeFromFormat/getOriginalFormat/getPreservedFormatUrl/getFormatBasedOnPreference), constants.ts, isArchivalTag.ts, formatStats.ts, utils.ts, and its own ssrf.test.ts colocated."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "apps/web/lib/api/verifyUser.ts", start = 1, end = 73, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "packages/lib"
+entries = "all"
 
 [[batches]]
 id = "4.2"
-descriptor = "links REST handler — verifyUser + GET dispatch"
-justification = """
-The canonical handler pattern (verifyUser + GET branch shown): `verifyUser` →
-`if (req.method === ...)` switch, each branch dispatches to a
-controller in `lib/api/controllers/links/*`. Includes the
-NEXT_PUBLIC_DEMO read-only gate that every write branch repeats. Same
-shape recurs in every other domain (`collections`, `tags`, `tokens`,
-`users`).
-"""
+descriptor = "packages/filesystem + packages/types + packages/router directory listings"
+justification = "filesystem/ (local-vs-S3 file ops: createFile/readFile/removeFile/moveFile/createFolder/removeFolder/fileExists/s3Client/manageFiles); types/ (global.ts + inputSelect.ts); router/ (per-resource React Query hook files shared by web+mobile: links/collections/tags/users/tokens/worker/rss/highlights/dashboardData/config/publicLinks/publicTags/user)."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "apps/web/pages/api/v1/links/index.ts", start = 1, end = 31, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "packages/filesystem"
+entries = "all"
+[[batches.content.groups]]
+parent = "packages/types"
+entries = "all"
+[[batches.content.groups]]
+parent = "packages/router"
+entries = "all"
 
 [[batches]]
 id = "4.3"
-descriptor = "links/[id] REST handler — imports + signature"
-justification = """
-Per-id mux: GET/PUT/DELETE → getLinkById/updateLinkById/deleteLinkById
-from `controllers/links/linkId/`. The same `[id]/index.ts` shape
-recurs at `collections/[id].ts`, `tags/[id].ts`, `tokens/[id].ts`,
-`users/[id]/index.ts` — predicts where per-id handlers live across
-domains.
-"""
+descriptor = "ssrf.ts: blocked-hostname policy data"
+justification = "The actual SSRF hostname denylist as data, not just code: exact blocked literals/suffixes (localhost, *.internal, *.local, ...) that gate every server-side fetch of a user-submitted URL. The parallel IPv4/IPv6 CIDR block lists (lines 37-61) are elided for budget; same file, one scroll down."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "apps/web/pages/api/v1/links/[id]/index.ts", start = 1, end = 16, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "packages/lib/ssrf.ts"
+start = 22
+end = 28
+render = { kind = "full" }
 
 [[batches]]
 id = "4.4"
-descriptor = "packages/router — hook declaration locations (12 files)"
-justification = """
-Location batch: the `const useX = …` declaration line for every hook
-across the per-domain router files (collections, dashboardData,
-highlights, rss, tags, tokens, user, users, publicLinks, publicTags,
-worker, config). Catastrophic-omission hedge — without this the agent
-will assume e.g. there's no useMergeTags or useDeletePreservations.
-One read per file lands on the body.
-"""
+descriptor = "ssrf.ts: assertUrlIsSafeForServerSideFetch (main entry point)"
+justification = "The single function every preservation/RSS/archive fetch path calls before touching a user-submitted URL: protocol allowlist (http/https only), then either an ALLOW_PRIVATE_NETWORK_ACCESS bypass or a DNS-resolve-and-check-every-address call. archiveHandler.ts, safeFetch.ts, rssHandler.ts, and protectPageRequests.ts all funnel through this."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/router/collections.tsx", start = 76, end = 76, render = { kind = "full" } },
-  { path = "packages/router/collections.tsx", start = 108, end = 108, render = { kind = "full" } },
-  { path = "packages/router/collections.tsx", start = 141, end = 141, render = { kind = "full" } },
-  { path = "packages/router/collections.tsx", start = 180, end = 180, render = { kind = "full" } },
-  { path = "packages/router/dashboardData.tsx", start = 6, end = 6, render = { kind = "full" } },
-  { path = "packages/router/dashboardData.tsx", start = 37, end = 37, render = { kind = "full" } },
-  { path = "packages/router/highlights.tsx", start = 11, end = 11, render = { kind = "full" } },
-  { path = "packages/router/highlights.tsx", start = 29, end = 29, render = { kind = "full" } },
-  { path = "packages/router/highlights.tsx", start = 65, end = 65, render = { kind = "full" } },
-  { path = "packages/router/rss.tsx", start = 11, end = 11, render = { kind = "full" } },
-  { path = "packages/router/rss.tsx", start = 27, end = 27, render = { kind = "full" } },
-  { path = "packages/router/rss.tsx", start = 51, end = 51, render = { kind = "full" } },
-  { path = "packages/router/tags.tsx", start = 165, end = 165, render = { kind = "full" } },
-  { path = "packages/router/tags.tsx", start = 247, end = 247, render = { kind = "full" } },
-  { path = "packages/router/tags.tsx", start = 292, end = 292, render = { kind = "full" } },
-  { path = "packages/router/tags.tsx", start = 322, end = 322, render = { kind = "full" } },
-  { path = "packages/router/tags.tsx", start = 347, end = 347, render = { kind = "full" } },
-  { path = "packages/router/tags.tsx", start = 381, end = 381, render = { kind = "full" } },
-  { path = "packages/router/tags.tsx", start = 408, end = 408, render = { kind = "full" } },
-  { path = "packages/router/tokens.tsx", start = 5, end = 5, render = { kind = "full" } },
-  { path = "packages/router/tokens.tsx", start = 22, end = 22, render = { kind = "full" } },
-  { path = "packages/router/tokens.tsx", start = 49, end = 49, render = { kind = "full" } },
-  { path = "packages/router/user.tsx", start = 11, end = 11, render = { kind = "full" } },
-  { path = "packages/router/user.tsx", start = 57, end = 57, render = { kind = "full" } },
-  { path = "packages/router/user.tsx", start = 86, end = 86, render = { kind = "full" } },
-  { path = "packages/router/users.tsx", start = 6, end = 6, render = { kind = "full" } },
-  { path = "packages/router/users.tsx", start = 24, end = 24, render = { kind = "full" } },
-  { path = "packages/router/users.tsx", start = 57, end = 57, render = { kind = "full" } },
-  { path = "packages/router/publicLinks.tsx", start = 9, end = 9, render = { kind = "full" } },
-  { path = "packages/router/publicTags.tsx", start = 7, end = 7, render = { kind = "full" } },
-  { path = "packages/router/worker.tsx", start = 6, end = 6, render = { kind = "full" } },
-  { path = "packages/router/worker.tsx", start = 23, end = 23, render = { kind = "full" } },
-  { path = "packages/router/config.tsx", start = 51, end = 51, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.5"
-descriptor = "packages/router/links — 11 hook declaration locations"
-justification = """
-Names the 11 hooks in the largest router file: useLinks, useAddLink,
-useUpdateLink, useDeleteLink, useGetLink, useBulkDeleteLinks,
-useUploadFile, useUpdateFile, useBulkEditLinks, useArchiveAction,
-resetInfiniteQueryPagination. Shape of the client-side link CRUD +
-optimistic-update API in one batch.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "packages/router/links.tsx", start = 26, end = 26, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 383, end = 383, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 551, end = 551, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 708, end = 708, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 820, end = 820, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 901, end = 901, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 940, end = 940, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 1009, end = 1009, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 1057, end = 1057, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 1097, end = 1097, render = { kind = "full" } },
-  { path = "packages/router/links.tsx", start = 1124, end = 1124, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.6"
-descriptor = "packages/lib/schemaValidation — zod schema declaration locations"
-justification = """
-Names every exported Zod schema in schemaValidation.ts
-(Forgot/Reset/VerifyEmail; PostToken; Post/Update User;
-UpdateUserPreference; PostSession; Post/Update Link; UploadFile;
-Post/Update Collection; UpdateTag; PostRssSubscription; PostTag;
-TagBulkDeletion; MergeTags; PostHighlight; LinkArchiveAction;
-DeletePreservations; UpdateDashboardLayout). One read lands on a
-specific schema's shape.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "packages/lib/schemaValidation.ts", start = 16, end = 16, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 20, end = 20, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 25, end = 25, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 29, end = 29, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 36, end = 36, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 60, end = 60, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 97, end = 97, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 119, end = 119, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 125, end = 125, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 150, end = 150, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 193, end = 193, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 210, end = 210, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 221, end = 221, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 243, end = 243, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 249, end = 249, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 256, end = 256, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 272, end = 272, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 278, end = 278, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 285, end = 285, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 296, end = 296, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 304, end = 304, render = { kind = "full" } },
-  { path = "packages/lib/schemaValidation.ts", start = 312, end = 312, render = { kind = "full" } },
-]
-
-# ============================================================
-# Tier 5 — Worker pipeline + safety nets. The worker
-# preserves links (screenshot/PDF/Monolith/readable), runs
-# Meili indexing, polls RSS, handles AI tagging, and emails
-# trial-end. SSRF + safeFetch gate every outbound fetch.
-# ============================================================
+[[batches.content.spans]]
+path = "packages/lib/ssrf.ts"
+start = 306
+end = 329
+render = { kind = "full" }
 
 [[batches]]
 id = "5.1"
-descriptor = "apps/worker/index.ts — spawn-respawn supervisor"
-justification = """
-The worker's actual entry point: spawn `tsx worker.ts` as a child,
-restart 5s after exit. Hot loop pattern — agent doesn't need to read
-the file once this is shown. Pairs with 3.4 (worker.ts which lists
-the loops).
-"""
+descriptor = "apps/worker directory listing (workers/ + lib/)"
+justification = "The worker process's own module roster: workers/ holds the six long-running loops (linkProcessing, autoTagPreservedLinks, linkIndexing, rssPolling, migrationWorker, trialEndEmailWorker) started from worker.ts; lib/ holds archiveHandler + autoTagLink (AI tagging) + its preservationScheme/ handlers (handleArchivePreview/handleMonolith/handleReadability/handleScreenshotAndPdf/imageHandler/pdfHandler/sendToWayback) + browser/protectPageRequests/fetchHeaders/getLinkBatch(Fairly)/countUnprocessedBillableLinks/prompts."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "apps/worker/index.ts", start = 1, end = 16, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "apps/worker/workers"
+entries = "all"
+[[batches.content.groups]]
+parent = "apps/worker/lib"
+entries = "all"
+[[batches.content.groups]]
+parent = "apps/worker/lib/preservationScheme"
+entries = "all"
 
 [[batches]]
 id = "5.2"
-descriptor = "packages/lib/ssrf — public export locations"
-justification = """
-Names every exported function/class/type in ssrf.ts:
-UnsafeUrlError class, ResolvedAddress / HostnameLookup types,
-isHostnameBlockedForServerSideFetch, isIpAddressBlockedForServerSideFetch,
-defaultHostnameLookup, resolveHostnameForServerSideFetch,
-assertUrlIsSafeForServerSideFetch, isUrlSafeForServerSideFetch. The
-canonical SSRF guard — every URL-fetching path calls one of these.
-"""
+descriptor = "worker.ts (process entry point)"
+justification = "The one file that wires all six workers together: migrationWorker() runs to completion first (blocking), then the other five start as concurrent infinite loops — this is the answer to 'what does the worker process actually do on boot'."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/lib/ssrf.ts", start = 4, end = 4, render = { kind = "full" } },
-  { path = "packages/lib/ssrf.ts", start = 13, end = 13, render = { kind = "full" } },
-  { path = "packages/lib/ssrf.ts", start = 18, end = 18, render = { kind = "full" } },
-  { path = "packages/lib/ssrf.ts", start = 193, end = 193, render = { kind = "full" } },
-  { path = "packages/lib/ssrf.ts", start = 204, end = 204, render = { kind = "full" } },
-  { path = "packages/lib/ssrf.ts", start = 245, end = 245, render = { kind = "full" } },
-  { path = "packages/lib/ssrf.ts", start = 259, end = 259, render = { kind = "full" } },
-  { path = "packages/lib/ssrf.ts", start = 306, end = 306, render = { kind = "full" } },
-  { path = "packages/lib/ssrf.ts", start = 331, end = 331, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "apps/worker/worker.ts"
+start = 1
+end = 22
+render = { kind = "full" }
 
 [[batches]]
 id = "5.3"
-descriptor = "packages/lib/ssrf — blocked hostname lists"
-predecessor = "5.2"
-justification = """
-The literal hostname blocklists: BLOCKED_HOSTNAMES (localhost, ip6-localhost,
-broadcasthost) and BLOCKED_HOSTNAME_SUFFIXES (.localhost, .local, .localdomain,
-.internal). The IPv4/IPv6 CIDR tables live nearby (lines 37-61) — one read
-reveals them.
-"""
+descriptor = "archiveHandler.ts: format dispatch cascade"
+justification = "The literal answer to 'how does link preservation/archiving work' — the four preservation calls in the order they run and the resolved-settings/existing-value guards on each: handleArchivePreview (unconditional, if no preview yet), handleReadability, handleScreenshotAndPdf (screenshot OR pdf), handleMonolith. This is the payoff of the archivalSettings resolution (tag override vs User default, computed just above at lines 85-107) that 2.7/2.8's justifications reference; imports, the SSRF pre-check, browser/context setup, and determineLinkType (content-type sniffing for image/pdf/url) are elided — each is a short, separately-named function one scroll away in the same 263-line file."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/lib/ssrf.ts", start = 22, end = 35, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "5.4"
-descriptor = "searchQueryBuilder — supported search conditions"
-justification = """
-The `SEARCH_CONDITIONS` array: url, name, description, type,
-collection, pinned, public, before, after, tag. These are the
-field-prefixed tokens parseSearchTokens recognises. Often zero-
-follow-up for 'what search prefixes are supported in `searchQueryString`'.
-Also documents the leading `!` negation syntax.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "apps/web/lib/api/searchQueryBuilder.ts", start = 1, end = 18, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "5.5"
-descriptor = "archiveHandler — worker preservation pipeline signature"
-justification = """
-Imports show the worker's collaborators: prisma, ssrf
-assertUrlIsSafeForServerSideFetch, isArchivalTag, the per-format
-handlers (handleMonolith / handleReadability / handleArchivePreview /
-handleScreenshotAndPdf / sendToWayback / imageHandler / pdfHandler),
-filesystem helpers, getDefaultContextOptions, protectPageRequests.
-Signature + the DISABLE_PRESERVATION env gate. Often answers 'what
-files implement the archive pipeline?'
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "apps/worker/lib/archiveHandler.ts", start = 1, end = 16, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "5.6"
-descriptor = "_app.tsx — Next.js root provider stack"
-justification = """
-The web app's React root: QueryClientProvider (tanstack-query, 30s
-staleTime), SessionProvider (next-auth basePath `/api/v1/auth`),
-Toaster (react-hot-toast), AuthRedirect layout. Anchors what global
-context every page sees.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "apps/web/pages/_app.tsx", start = 1, end = 17, render = { kind = "full" } },
-]
-
-
-# ============================================================
-# Tier 6 — Shared types + cross-cutting integrations. Most
-# routes/hooks reference enums from packages/types/global.ts,
-# and i18n / NextAuth wiring matters for many tasks.
-# ============================================================
+[[batches.content.spans]]
+path = "apps/worker/lib/archiveHandler.ts"
+start = 166
+end = 194
+render = { kind = "full" }
 
 [[batches]]
 id = "6.1"
-descriptor = "packages/types/global — export locations"
-justification = """
-Names every export in @linkwarden/types/global (the shared type
-surface every package imports): interfaces (LinkIncluding…,
-Collection…, Tag…, MobileAuth, MobileData, ArchivalSettings, Backup,
-WorkerStats), the query types (LinkRequestQuery / TagRequestQuery /
-PublicLinkRequestQuery), and the runtime enums (ViewMode, Sort,
-TagSort, MigrationFormat, Plan, ArchivedFormat, LinkType, TokenExpiry).
-One read lands on a specific shape.
-"""
+descriptor = "apps/web UI directory listing (pages/, components/)"
+justification = "The web app's UI surface in one shot: top-level pages/ routes and components/ (with ModalContent/, LinkViews/, InputSelect/, ui/, Preservation/ subfolders) — for any 'where's the component/page for X' question. hooks/ and layouts/ (a dozen small files total) are one `ls` away."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "packages/types/global.ts", start = 81, end = 81, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 87, end = 87, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 94, end = 94, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 105, end = 105, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 139, end = 139, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 147, end = 147, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 160, end = 160, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 168, end = 168, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 175, end = 175, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 189, end = 189, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 198, end = 198, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 204, end = 204, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 214, end = 214, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "apps/web/pages"
+entries = "all"
+[[batches.content.groups]]
+parent = "apps/web/components"
+entries = "all"
 
 [[batches]]
-id = "6.2"
-descriptor = "packages/types/global — key runtime enum values"
-predecessor = "6.1"
-justification = """
-The concrete enum values: ArchivedFormat (png=0, jpeg=1, pdf=2,
-readability=3, monolith=4) and MigrationFormat (linkwarden, htmlFile,
-wallabag, omnivore, pocket). Often zero-follow-up for 'which int
-maps to which format' — these are queried everywhere
-(archiveHandler, generatePreview, getFormatFromContentType, …).
-"""
+id = "7.1"
+descriptor = "apps/mobile UI directory listing (app/, components/, store/, lib/)"
+justification = "The Expo app's file-based routes (app/(tabs)/{collections,dashboard,links,settings,tags}, app/links/[id].tsx, app/incoming.tsx for share-intent), its components/ (ActionSheets/, Formats/, ui/), and store/+lib/ (zustand stores, MMKV cache, theme) — mobile's counterpart to 6.1."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "apps/mobile/app"
+entries = "all"
+[[batches.content.groups]]
+parent = "apps/mobile/components"
+entries = "all"
+[[batches.content.groups]]
+parent = "apps/mobile/store"
+entries = "all"
+[[batches.content.groups]]
+parent = "apps/mobile/lib"
+entries = "all"
+
+[[batches]]
+id = "8.1"
+descriptor = ".github/workflows directory listing"
+justification = "check-branch.yml (dev-branch-only merge policy to main), locale-action.yml (i18n PR bot), playwright-tests.yml (e2e against a real Postgres service container), release-container.yml (tag-triggered multi-arch GHCR image publish) — the whole CI surface, one hop from any workflow's body."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+
+[[batches]]
+id = "9.1"
+descriptor = "crowdin.yml"
+justification = "The Crowdin sync config: en/common.json is the source-of-truth translation file, mirrored per-locale — pairs with 1.6's locale roster and public/locales/ to close the i18n picture."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "packages/types/global.ts", start = 139, end = 145, render = { kind = "full" } },
-  { path = "packages/types/global.ts", start = 160, end = 173, render = { kind = "full" } },
-]
-
-
+[[batches.content.spans]]
+path = "crowdin.yml"
+start = 1
+end = 3
+render = { kind = "full" }

@@ -1,1 +1,1 @@
-Score(3000)=0.690 I=0.705 C=0.674 ns_rows≤3K=25/43 (reached=10 partial=0 missing=15)
+Score(3000)=0.642 I=0.824 C=0.501 ns_rows≤3K=24/47 (reached=9 partial=2 missing=13)

@@ -1,810 +1,1123 @@
 fixture = "superstruct"
 revision_pin = "e414c8af"
 summary = """
-Superstruct is a TypeScript runtime data-validation library: you compose
-small `Struct<T, S>` validators (`object`, `array`, `string`, `union`,
-`refine`, `coerce`, `defaulted`, …) and run them with `assert` / `is` /
-`validate` / `create` / `mask`. Everything is one file's worth of core
-plumbing (`src/struct.ts`, ~270 lines) plus a flat menu of factory
-functions in `src/structs/{types,refinements,coercions,utilities}.ts`,
-re-exported through `src/index.ts`. Tests are a generic harness over
-hundreds of `test/validation/<kind>/<name>.ts` fixture modules, plus
-`test/api/*.test.ts` for behavior of the top-level helpers and
-`test/typings/*.ts` for compile-time type-level tests via `Describe` /
-`Infer`. Docs live in `docs/{guides,reference}/` and get the rendered
-site treatment via `.gitbook.yaml`.
-
-The ranking serves the full distribution of agent tasks: explaining
-what a struct is, picking the right factory ("is there a built-in for
-emails / nullable optionals / records?"), wiring coercion vs. validation
-correctly (`create` vs. `assert`), authoring custom types with
-`define`, debugging StructError shape (`path` / `branch` / `failures()`
-generator), adding a new factory in the right file, threading the
-`Context` through `entries`/`coercer`/`validator`/`refiner`, and
-extending the test fixture harness. Catastrophic-omission risk is
-high here because the public surface is a flat *menu* of small
-factories — listing only some is worse than listing none.
+Superstruct: a small (~1800 LoC across 8 src files) TypeScript library for \
+runtime data validation. Its whole public surface is composable "struct" \
+factories (src/structs/types.ts), coercions (structs/coercions.ts), \
+refinements (structs/refinements.ts) and utilities (structs/utilities.ts) \
+that build `Struct` objects (src/struct.ts), which `assert`/`create`/`is`/ \
+`mask`/`validate` then run against unknown input, throwing/returning a \
+`StructError` (src/error.ts) on failure. Query distribution: (a) "how do I \
+validate/coerce/refine/compose shape X" — answered by the type-factory \
+catalog + docs/reference + docs/guides + examples/, all of which show the \
+same ~25 factory names from different angles; (b) "why did validation fail \
+this way" / "what does the error look like" — src/error.ts + \
+docs/reference/errors.md + the `run()` traversal in src/utils.ts; (c) "add \
+a new struct kind" or "fix a validation bug" — needs struct.ts's Struct \
+class contract, utils.ts's run()/toFailures(), and the matching \
+test/validation/<kind>/*.ts fixture format; (d) build/test/lint/publish \
+questions — package.json scripts, tsconfig, rollup, CI, jsr.json (this \
+package ships to both npm and JSR); (e) "is this a breaking change" / \
+migration — Changelog.md's 2.0.0 entry. The library has no runtime \
+dependencies and a tiny, flat module layout, so breadth (knowing every \
+factory/refinement/coercion/utility exists and where) usually beats depth \
+for a first tool call; depth pays off specifically in struct.ts/utils.ts \
+(the shared machinery every factory routes through) and in the \
+test/validation fixture format (needed verbatim to add a test).
 """
 
-# ─── Tier 1 — identity, lede, and where to look ────────────────────────
+# ============================================================
+# Tier 1 — Identity & top-level orientation
+# ============================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "Readme one-line lede"
-justification = """
-The 30-second pitch in one sentence: validation library, schema-as-DSL
-inspired by TypeScript / Flow / Go / GraphQL. Anchors what the rest of
-the snapshot is talking about. The follow-up paragraph (runtime errors,
-REST/GraphQL framing) gets its own batch later in the tier so this can
-be tiny.
-"""
+descriptor = "Repo root listing"
+justification = "First orientation: every top-level file/dir, so the agent knows src/docs/examples/test/config all exist before digging into any one of them — avoids assuming e.g. a build config or CI file doesn't exist."
+
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "Readme.md", start = 36, end = 36, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
 
 [[batches]]
 id = "1.2"
-descriptor = "Repo root listing"
-justification = """
-The complete top-level layout. Cheap and high-value: tells the agent
-what kind of repo this is (TypeScript pkg with src/test/docs/examples,
-rollup build, vitest, eslint+prettier, gitbook docs site) and that
-there's a Changelog. Using `all` keeps it complete so the agent never
-mistakenly assumes a missing file.
-"""
+descriptor = "src/ and src/structs/ listings"
+justification = "The entire runtime source is 8 files across two directories (src/index.ts is the public re-export barrel); showing both listings together fixes the module map before any code is read, so the agent doesn't miss e.g. utils.ts, index.ts, or a structs/ file."
+
 [batches.content]
 kind = "fs"
-groups = [
-  { parent = ".", entries = "all" },
-]
+[[batches.content.groups]]
+parent = "src"
+entries = "all"
+[[batches.content.groups]]
+parent = "src/structs"
+entries = "all"
 
 [[batches]]
 id = "1.3"
-descriptor = "Public entry — src/index.ts in full"
-justification = """
-The entire public surface in 6 lines: re-exports from `error.js`,
-`struct.js`, `structs/coercions.js`, `structs/refinements.js`,
-`structs/types.js`, `structs/utilities.js`. Establishes the four-bucket
-mental model that the rest of the NS is organised around.
-"""
+descriptor = "test/ top-level listing"
+justification = "Shows the test suite has four distinct parts (api/, typings/, validation/, plus loose .test.ts files) before committing to reading any one of them — prevents assuming e.g. typings/ doesn't exist."
+
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "src/index.ts", start = 1, end = 6, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "test"
+entries = "all"
 
 [[batches]]
 id = "1.4"
-descriptor = "Readme runtime-errors paragraph"
-justification = """
-Second half of the lede: "designed for validating data at runtime, so
-it throws (or returns) detailed runtime errors". Tells the agent the
-library is positioned for input-validation use cases (REST/GraphQL,
-internal runtime checks), which steers later understanding of error
-ergonomics.
-"""
+descriptor = "examples/ listing"
+justification = "Nine runnable usage examples plus their own package.json/README — a distinct, self-contained demo surface the agent should know exists for 'show me a working example of X' queries."
+
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "Readme.md", start = 38, end = 38, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "examples"
+entries = "all"
 
 [[batches]]
 id = "1.5"
-descriptor = "package.json — name, version, license"
-justification = """
-Three lines that pin down the library identity (`superstruct`),
-release (`2.0.2`), and license (MIT). Cheap; rest of package.json is
-batched separately so this can rank early under a tight budget.
-"""
+descriptor = "docs/ listing (all levels)"
+justification = "The published docs site (guides/reference/resources/images) is a large, separate documentation surface from Readme.md; listing every subdir and its files up front avoids the agent assuming only Readme.md documents the API."
+
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "docs"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/guides"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/reference"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/resources"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/images"
+entries = "all"
+
+[[batches]]
+id = "1.6"
+descriptor = "package.json identity (name/desc/version)"
+justification = "Name, one-line description, version, license — answers 'what is this' in the fewest tokens; module entry points and engines follow in the next batch rather than paying for both at once this early."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "package.json", start = 2, end = 6, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "package.json"
+start = 1
+end = 6
+[batches.content.spans.render]
+kind = "full"
 
-# ─── Tier 2 — directory map + doc TOC ──────────────────────────────────
+[[batches]]
+id = "1.7"
+descriptor = "package.json entry points, files, engines"
+justification = "type:module + main/module/types entry points, sideEffects, published files, and the Node engine floor — the parts of package.json that matter for 'how is this consumed' (import resolution, minimum Node version) rather than identity."
+predecessor = "1.6"
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 7
+end = 20
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "1.8"
+descriptor = "Readme concept lede"
+justification = "The two-sentence pitch: composable interfaces validated at runtime, throwing/returning detailed errors. This is the concept every other file is an implementation detail of."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Readme.md"
+start = 36
+end = 38
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "1.9"
+descriptor = "docs/summary.md (site nav)"
+justification = "The gitbook nav tree names every guide/reference/resource page in reading order — a one-shot map of 'which doc answers which question' cheaper than inferring it from filenames alone, and confirms the docs/ listing in 1.5 didn't miss a page."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "docs/summary.md"
+start = 1
+end = 25
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "1.10"
+descriptor = "Readme design principles"
+justification = "The five numbered principles (customizable types, unopinionated defaults, composable interfaces, useful errors, familiar API) are the closest thing to a design constitution — useful context before proposing an API change that might cut against one of them. The preceding 'Why vs. other validators' marketing section is omitted as low value for coding tasks."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Readme.md"
+start = 167
+end = 177
+[batches.content.spans.render]
+kind = "full"
+
+# ============================================================
+# Tier 2 — Core API surface: src/struct.ts
+# ============================================================
 
 [[batches]]
 id = "2.1"
-descriptor = "src/ tree (flat layout)"
-justification = """
-src/ is small and flat: one file per concern. Showing every entry here
-prevents the agent from inferring (e.g.) that there's a separate
-`object.ts` or `union.ts` — there isn't, all type factories live in
-`structs/types.ts`.
-"""
+descriptor = "struct.ts symbol locations"
+justification = "Every symbol struct.ts exports or defines — the Struct class, its 5 methods, the 5 matching top-level helper functions — as a one-line-each roster before any body is shown, so the agent knows e.g. `mask` exists as both a method and a function without reading the whole file."
+
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "src", entries = "all" },
-  { parent = "src/structs", entries = "all" },
-]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 10
+end = 10
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 22
+end = 22
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 67
+end = 67
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 75
+end = 75
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 83
+end = 83
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 93
+end = 93
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 107
+end = 107
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 123
+end = 123
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 139
+end = 139
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 157
+end = 157
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 175
+end = 175
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 185
+end = 185
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "2.2"
-descriptor = "package.json — module shape & engines"
-justification = """
-ESM-with-types-and-CJS dual exports (`main`/`module`/`types`),
-`sideEffects: false` (tree-shakeable), `files: ["dist"]`, and the
-node>=14 engine. Tells the agent how the library is consumed without
-yet pulling devDeps and scripts.
-"""
+descriptor = "Struct class fields"
+justification = "The instance fields (type, schema, coercer, validator, refiner, entries) that every struct value carries — the shape every factory in structs/*.ts constructs an instance of."
+predecessor = "2.1"
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "package.json", start = 7, end = 20, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 10
+end = 21
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "2.3"
-descriptor = "docs/ subtree listings"
-justification = """
-Filesystem listing of guides/, reference/, resources/. Lets the agent
-jump straight to a doc file by path (e.g. `docs/reference/types.md`)
-without needing the rendered TOC.
-"""
+descriptor = "Struct constructor body"
+justification = "How the constructor defaults coercer/entries and wraps validator/refiner to route through toFailures — the piece every custom-struct-writing question (`new Struct({...})`) needs verbatim."
+predecessor = "2.1"
+
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "docs", entries = "all" },
-  { parent = "docs/guides", entries = "all" },
-  { parent = "docs/reference", entries = "all" },
-  { parent = "docs/resources", entries = "all" },
-]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 22
+end = 61
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "2.4"
-descriptor = "examples/ + test/ + test/api/ tree"
-justification = """
-Inventories the runnable examples (one per common pattern) and the
-test layout: `test/api/*.test.ts` for top-level helpers, `index.test.ts`
-for the validation-fixture harness, plus `deprecated.test.ts`. Doesn't
-yet expand `test/validation/` or `test/typings/` — those have ~40+
-entries each and get their own batches later.
-"""
+descriptor = "Struct instance methods (assert/create/is/mask/validate)"
+justification = "Each one-line method body just forwards to the matching top-level function — confirms the method/function pair is a thin delegation, not independent logic."
+predecessor = "2.1"
+
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "examples", entries = "all" },
-  { parent = "test", entries = "all" },
-  { parent = "test/api", entries = "all" },
-]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 63
+end = 117
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "2.5"
-descriptor = "Readme section headings (locations only)"
-justification = """
-The seven H3s of Readme.md: Usage, Why?, Principles, Demo, Examples,
-Documentation, License. Tells the agent which Readme sections exist
-and where, so a follow-up read is one targeted slice instead of pulling
-233 lines.
-"""
+descriptor = "top-level assert/create/mask/is/validate"
+justification = "The actual entry points nearly every usage of this library calls: how `validate` drives the iterator from `run()`, how `assert`/`create`/`mask` throw on the first failure, how `is` swallows the error into a boolean."
+predecessor = "2.1"
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "Readme.md", start = 42, end = 42, render = { kind = "full" } },
-  { path = "Readme.md", start = 145, end = 145, render = { kind = "full" } },
-  { path = "Readme.md", start = 167, end = 167, render = { kind = "full" } },
-  { path = "Readme.md", start = 181, end = 181, render = { kind = "full" } },
-  { path = "Readme.md", start = 189, end = 189, render = { kind = "full" } },
-  { path = "Readme.md", start = 205, end = 205, render = { kind = "full" } },
-  { path = "Readme.md", start = 231, end = 231, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 119
+end = 211
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 id = "2.6"
-descriptor = "docs/summary.md (the GitBook TOC)"
-justification = """
-The canonical reading order for the rendered GitBook site, and a
-complete inventory of guides + API reference pages in 25 lines. With
-.gitbook.yaml at the root pointing here, this file *is* the docs
-table of contents. Ranks after the per-directory listings since the
-listings give the file paths agents need without prose framing.
-"""
+descriptor = "struct.ts supporting types (Context/Infer/Describe/Result/Coercer/Validator/Refiner)"
+justification = "The public type vocabulary referenced throughout every other src file and the TypeScript guide/reference docs — Context (branch/path/mask), Infer/Describe (the two directions of type extraction), and the Coercer/Validator/Refiner function shapes custom structs must match."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "docs/summary.md", start = 1, end = 25, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/struct.ts"
+start = 221
+end = 266
+[batches.content.spans.render]
+kind = "full"
 
-# ─── Tier 3 — public API surface (catastrophic-omission breadth) ───────
+# ============================================================
+# Tier 3 — Error model: src/error.ts
+# ============================================================
 
 [[batches]]
 id = "3.1"
-descriptor = "structs/types.ts — all 24 type-factory names"
-justification = """
-The flat menu of struct factories. Each fn's first signature line is
-included; for single-line full signatures the `^[^(]+` truncation
-drops the return-type tail, leaving e.g. `export function any …`,
-while multi-line signature starts (which already end at `(`) render
-in full. Listing all 24 in one batch is the catastrophic-omission
-hedge: if only some show up the agent will assume the rest don't
-exist. Order matches source order, which matches the alphabetical
-ordering used in the Types reference.
-"""
+descriptor = "error.ts full (Failure type + StructError class)"
+justification = "Only two symbols in this file — the `Failure` shape every refiner/validator produces, and the `StructError` class that formats/caches them (note path-based message, `.cause` preservation, lazy `.failures()` generator). Small enough to show whole rather than split into locations+body."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/structs/types.ts", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 105, end = 105, render = { kind = "full" } },
-  { path = "src/structs/types.ts", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 144, end = 144, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 159, end = 159, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 172, end = 172, render = { kind = "full" } },
-  { path = "src/structs/types.ts", start = 204, end = 204, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 230, end = 230, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 258, end = 258, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 266, end = 266, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 278, end = 278, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 298, end = 298, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 351, end = 351, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 367, end = 367, render = { kind = "full" } },
-  { path = "src/structs/types.ts", start = 402, end = 402, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 415, end = 415, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 442, end = 442, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/types.ts", start = 456, end = 456, render = { kind = "full" } },
-  { path = "src/structs/types.ts", start = 492, end = 492, render = { kind = "full" } },
-  { path = "src/structs/types.ts", start = 522, end = 522, render = { kind = "full" } },
-  { path = "src/structs/types.ts", start = 574, end = 574, render = { kind = "truncated", pattern = "^[^(]+" } },
-]
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 1
+end = 49
+[batches.content.spans.render]
+kind = "full"
 
-[[batches]]
-id = "3.2"
-descriptor = "structs/refinements.ts — all 7 refinement names"
-justification = """
-empty / max / min / nonempty / pattern / size + the `refine` factory
-that builds custom ones. Same catastrophic-omission shape as 3.1.
-All 7 sigs span multiple lines so each renders in full.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/structs/refinements.ts", start = 8, end = 8, render = { kind = "full" } },
-  { path = "src/structs/refinements.ts", start = 33, end = 33, render = { kind = "full" } },
-  { path = "src/structs/refinements.ts", start = 55, end = 55, render = { kind = "full" } },
-  { path = "src/structs/refinements.ts", start = 77, end = 77, render = { kind = "full" } },
-  { path = "src/structs/refinements.ts", start = 93, end = 93, render = { kind = "full" } },
-  { path = "src/structs/refinements.ts", start = 109, end = 109, render = { kind = "full" } },
-  { path = "src/structs/refinements.ts", start = 146, end = 146, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.3"
-descriptor = "structs/coercions.ts — coerce / defaulted / trimmed"
-justification = """
-The 3 coercion factories. Tiny but its own batch so the threshold can
-fall here cleanly when an agent only cares about the validation /
-refinement surface.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/structs/coercions.ts", start = 16, end = 16, render = { kind = "full" } },
-  { path = "src/structs/coercions.ts", start = 38, end = 38, render = { kind = "full" } },
-  { path = "src/structs/coercions.ts", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
-]
-
-[[batches]]
-id = "3.4"
-descriptor = "structs/utilities.ts — assign/define/deprecated/dynamic/lazy/omit/partial/pick/struct"
-justification = """
-Nine utility factories: `assign` (merge two object/type structs),
-`define` (custom validator), `deprecated`, `dynamic` (struct from
-value), `lazy` (recursive structs), `omit`/`partial`/`pick` (TS-style
-schema transforms), and the legacy `struct` (deprecated alias for
-`define`). Catastrophic-omission hedge — these are the only entries
-in this file.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/structs/utilities.ts", start = 17, end = 17, render = { kind = "full" } },
-  { path = "src/structs/utilities.ts", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/utilities.ts", start = 80, end = 80, render = { kind = "full" } },
-  { path = "src/structs/utilities.ts", start = 106, end = 106, render = { kind = "full" } },
-  { path = "src/structs/utilities.ts", start = 140, end = 140, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/structs/utilities.ts", start = 171, end = 171, render = { kind = "full" } },
-  { path = "src/structs/utilities.ts", start = 197, end = 197, render = { kind = "full" } },
-  { path = "src/structs/utilities.ts", start = 221, end = 221, render = { kind = "full" } },
-  { path = "src/structs/utilities.ts", start = 247, end = 247, render = { kind = "truncated", pattern = "^[^(]+" } },
-]
-
-[[batches]]
-id = "3.5"
-descriptor = "struct.ts — Struct class + assert/create/is/mask/validate signatures"
-justification = """
-Top-level helpers (the names every example calls) and the Struct class
-declaration line + its 5 instance methods (assert / create / is / mask
-/ validate, all delegating to the function-form helpers). This is the
-"how do I run a struct?" answer in one batch.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/struct.ts", start = 10, end = 10, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/struct.ts", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/struct.ts", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/struct.ts", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/struct.ts", start = 107, end = 107, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 123, end = 123, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 139, end = 139, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 157, end = 157, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 175, end = 175, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/struct.ts", start = 185, end = 185, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.6"
-descriptor = "struct.ts — public types (Context, Infer, Describe, Result, Coercer, Validator, Refiner)"
-justification = """
-The TypeScript types every advanced user touches: `Context` (path /
-branch / mask passed through validation), `Infer` / `Describe` (TS
-↔ struct bridges), and the function-shape types `Result` / `Coercer`
-/ `Validator` / `Refiner`. Listed together because they're the
-exhaustive type-export set from struct.ts.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/struct.ts", start = 221, end = 225, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 231, end = 231, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 237, end = 237, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 243, end = 247, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 253, end = 253, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 259, end = 259, render = { kind = "full" } },
-  { path = "src/struct.ts", start = 266, end = 266, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.7"
-descriptor = "error.ts — Failure type + StructError class signature"
-justification = """
-The full Failure record shape (value/key/type/refinement/message/
-explanation/branch/path) and the StructError class declaration. Both
-are tiny enough to keep `Full`-rendered: the field names *are* the
-content debug-an-error queries need.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/error.ts", start = 5, end = 14, render = { kind = "full" } },
-  { path = "src/error.ts", start = 25, end = 33, render = { kind = "full" } },
-]
-
-# ─── Tier 4 — reference docs index + canonical usage ───────────────────
+# ============================================================
+# Tier 4 — Type factories: src/structs/types.ts
+# ============================================================
 
 [[batches]]
 id = "4.1"
-descriptor = "docs/reference/types.md — H3 catalog (all 27 entries)"
-justification = """
-The 24 type-factory names + the 'Custom Types' section, as a single
-location batch (one heading line each). Doubles as a confirmation
-to the agent that the public-API list in 3.1 matches the documented
-catalog one-for-one — and pins the line numbers so a follow-up read
-of e.g. `### object` is one targeted slice instead of a 398-line
-file pull.
-"""
+descriptor = "types.ts factory locations (all 25)"
+justification = "The library's primary value surface: every exported struct-factory name (any/array/bigint/boolean/date/enums/func/instance/integer/intersection/literal/map/never/nullable/number/object/optional/record/regexp/set/string/tuple/type/union/unknown), one line each, in the file's alphabetical order — the single most catastrophic-omission-sensitive batch in this NS: showing only some of these would make the agent assume the rest don't exist."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "docs/reference/types.md", start = 5, end = 5, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 26, end = 26, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 40, end = 40, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 55, end = 55, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 68, end = 68, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 82, end = 82, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 95, end = 95, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 107, end = 107, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 119, end = 119, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 133, end = 133, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 145, end = 145, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 157, end = 157, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 174, end = 174, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 186, end = 186, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 201, end = 201, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 214, end = 214, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 234, end = 234, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 249, end = 249, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 264, end = 264, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 279, end = 279, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 293, end = 293, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 305, end = 305, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 317, end = 317, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 341, end = 341, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 354, end = 354, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 373, end = 373, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 19
+end = 19
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 31
+end = 31
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 60
+end = 60
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 70
+end = 70
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 83
+end = 83
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 99
+end = 99
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 131
+end = 131
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 144
+end = 144
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 159
+end = 159
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 172
+end = 172
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 200
+end = 200
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 225
+end = 225
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 258
+end = 258
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 266
+end = 266
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 278
+end = 278
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 294
+end = 294
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 351
+end = 351
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 367
+end = 367
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 402
+end = 402
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 413
+end = 413
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 442
+end = 442
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 456
+end = 456
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 492
+end = 492
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 522
+end = 522
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 574
+end = 574
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
 
 [[batches]]
 id = "4.2"
-descriptor = "docs/reference/{refinements,coercions,utilities,core,typescript}.md headings"
-justification = """
-H3 catalogs for the five sibling reference pages (alongside types.md
-in 4.1). Mirrors 4.1: a flat list of section names with their line
-numbers so the agent can target a specific section
-(e.g. `docs/reference/utilities.md:38` for `dynamic`) rather than
-read the whole page. Catastrophic-omission hedge across all five.
-"""
+descriptor = "array + object factory bodies"
+justification = "The two most-used composite factories, worked in full: `array`'s `entries`/`coercer`/`validator` triple, and `object`'s extra `unknowns` bookkeeping (Never-typed unknown keys) plus its mask-aware coercer. Together these are the template every other composite factory (map/set/tuple/record/type) follows — the remaining 23 factories are reachable from the 4.1 locations in one read."
+predecessor = "4.1"
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "docs/reference/refinements.md", start = 5, end = 5, render = { kind = "full" } },
-  { path = "docs/reference/refinements.md", start = 21, end = 21, render = { kind = "full" } },
-  { path = "docs/reference/refinements.md", start = 35, end = 35, render = { kind = "full" } },
-  { path = "docs/reference/refinements.md", start = 49, end = 49, render = { kind = "full" } },
-  { path = "docs/reference/refinements.md", start = 58, end = 58, render = { kind = "full" } },
-  { path = "docs/reference/refinements.md", start = 70, end = 70, render = { kind = "full" } },
-  { path = "docs/reference/refinements.md", start = 88, end = 88, render = { kind = "full" } },
-  { path = "docs/reference/coercions.md", start = 5, end = 5, render = { kind = "full" } },
-  { path = "docs/reference/coercions.md", start = 21, end = 21, render = { kind = "full" } },
-  { path = "docs/reference/coercions.md", start = 29, end = 29, render = { kind = "full" } },
-  { path = "docs/reference/utilities.md", start = 5, end = 5, render = { kind = "full" } },
-  { path = "docs/reference/utilities.md", start = 20, end = 20, render = { kind = "full" } },
-  { path = "docs/reference/utilities.md", start = 38, end = 38, render = { kind = "full" } },
-  { path = "docs/reference/utilities.md", start = 51, end = 51, render = { kind = "full" } },
-  { path = "docs/reference/utilities.md", start = 64, end = 64, render = { kind = "full" } },
-  { path = "docs/reference/utilities.md", start = 78, end = 78, render = { kind = "full" } },
-  { path = "docs/reference/utilities.md", start = 97, end = 97, render = { kind = "full" } },
-  { path = "docs/reference/core.md", start = 3, end = 3, render = { kind = "full" } },
-  { path = "docs/reference/core.md", start = 15, end = 15, render = { kind = "full" } },
-  { path = "docs/reference/core.md", start = 27, end = 27, render = { kind = "full" } },
-  { path = "docs/reference/core.md", start = 41, end = 41, render = { kind = "full" } },
-  { path = "docs/reference/core.md", start = 56, end = 56, render = { kind = "full" } },
-  { path = "docs/reference/typescript.md", start = 7, end = 7, render = { kind = "full" } },
-  { path = "docs/reference/typescript.md", start = 25, end = 25, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 31
+end = 54
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "src/structs/types.ts"
+start = 294
+end = 345
+[batches.content.spans.render]
+kind = "full"
 
-[[batches]]
-id = "4.3"
-descriptor = "Canonical usage — examples/basic-validation.js (full file)"
-justification = """
-A complete, runnable example: imports, `object({...})` schema with
-`number/string/array/optional(boolean())`, sample data, `assert`.
-30 lines that capture the most common usage pattern, more
-informative than any single fragment from the Readme. Zero-follow-up
-material for "show me a typical superstruct snippet" queries.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "examples/basic-validation.js", start = 1, end = 31, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.4"
-descriptor = "errors.md — StructError property table"
-justification = """
-The complete property table for StructError: branch, failures, key,
-path, type, value, cause. Each row pairs a property with a one-cell
-example, giving denser zero-follow-up understanding for "how do I
-read a struct error?" than the guide's prose. Errors are prominent
-enough to deserve a dedicated batch.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "docs/reference/errors.md", start = 19, end = 31, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.5"
-descriptor = "core.md — `assert` / `create` / `validate` definitions"
-predecessor = "4.2"
-justification = """
-The TS signatures plus 1-2-line usage descriptions of the three
-most-used helpers. Refines the heading-only lines for those three
-sections from 4.2 (predecessor) with their bodies — including the
-key shape `[StructError, T]` returned by `validate` and the coerce-
-then-validate flow of `create`. Together with 3.5 this gives a
-complete understanding of the run-a-struct entry points.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "docs/reference/core.md", start = 3, end = 25, render = { kind = "full" } },
-  { path = "docs/reference/core.md", start = 56, end = 66, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.6"
-descriptor = "coercions.md — `defaulted` worked example"
-predecessor = "4.2"
-justification = """
-The complete `defaulted` worked example block (an `object` with a
-defaulted auto-incrementing id and a defaulted-enum role). Refines
-the 4.2 heading-only line with the body. Coercions are easy to get
-wrong (`create` not `assert`!) so a worked example is the highest-
-value form.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "docs/reference/coercions.md", start = 5, end = 19, render = { kind = "full" } },
-]
-
-# ─── Tier 5 — key implementation bodies ────────────────────────────────
+# ============================================================
+# Tier 5 — Coercions: src/structs/coercions.ts
+# ============================================================
 
 [[batches]]
 id = "5.1"
-descriptor = "utils.ts run() — the central traversal generator"
-justification = """
-The recursion engine: coerce → validate → walk entries → recurse →
-refine, with three-state status tracking ('valid' / 'not_refined' /
-'not_valid'). This is what every assert/is/validate/create/mask call
-ultimately drives. Anchors questions about: traversal order, when
-refiners run vs. validators, how coerced values flow back up
-(Map/Set/object special-cased at lines 174-180), how Context's
-path/branch are extended (lines 158-159).
-"""
+descriptor = "coercions.ts symbol locations"
+justification = "All 3 exported coercions (coerce/defaulted/trimmed) — `coerce` is the primitive `defaulted` and `trimmed` are both built from (only runs its transform when the input matches a narrowing struct), shown next via `defaulted`'s more involved object-merge body."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/utils.ts", start = 130, end = 196, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/structs/coercions.ts"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/coercions.ts"
+start = 38
+end = 38
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/coercions.ts"
+start = 79
+end = 79
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
 
 [[batches]]
 id = "5.2"
-descriptor = "struct.ts validate() body"
-predecessor = "3.5"
-justification = """
-The wrapper that turns the run() generator into the
-[StructError, undefined] | [undefined, T] tuple that all helpers
-return. Shows the lazy-failures generator pattern (line 199-203):
-StructError holds the *first* failure plus a generator over the rest,
-which is what makes 'on-demand' failure iteration work. Refines
-3.5's signature line (185) with the body.
-"""
+descriptor = "defaulted() body"
+justification = "The most involved of the 3 coercions: applies a fallback (calling it if it's a function) when the input is `undefined`, and — unless `{ strict: true }` — also mixes in default keys one-by-one into plain-object fallbacks so partially-`undefined` nested objects still get defaults. `coerce`/`trimmed` are short one-liners fully visible in the reference docs; this branch isn't."
+predecessor = "5.1"
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/struct.ts", start = 185, end = 211, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/structs/coercions.ts"
+start = 31
+end = 70
+[batches.content.spans.render]
+kind = "full"
 
-[[batches]]
-id = "5.3"
-descriptor = "struct.ts Struct class constructor + 4 hook fields"
-justification = """
-The class body around the type/schema/coercer/validator/refiner/
-entries fields and the constructor that wires them up — with
-defaults for `coercer` (identity), `validator` and `refiner` (no
-failures), and `entries` (no children). Shows how toFailures()
-gets injected around user validators/refiners (lines 44-60).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/struct.ts", start = 11, end = 61, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "5.4"
-descriptor = "object() implementation"
-predecessor = "3.1"
-justification = """
-The canonical struct factory. Shows how `entries` yields [key, value,
-schema[key]] for known keys and [key, value, never()] for unknowns
-(this is what makes `object` strict), plus the mask-mode coercer
-that *deletes* unknown props instead of failing them (lines 333-340).
-Refines 3.1's signature line at 298.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/structs/types.ts", start = 298, end = 345, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "5.5"
-descriptor = "union() implementation"
-predecessor = "3.1"
-justification = """
-The trickiest factory: tries each member's coercer and returns the
-first that validates (line 530-540), then collects failures from
-*all* members on failure for a useful aggregate error. Anchors
-questions about union coercion order, why unions return composite
-errors, and the per-member ctx threading. Refines 3.1's signature
-line at 522.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/structs/types.ts", start = 522, end = 568, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "5.6"
-descriptor = "refine() implementation"
-predecessor = "3.2"
-justification = """
-The combinator that composes two refiners (struct's existing one
-plus the new one) and stamps `refinement: name` on emitted failures.
-Tiny but central: every built-in refinement (max/min/size/empty/
-nonempty/pattern) is a thin wrapper over refine(). Refines 3.2's
-signature line at 146.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/structs/refinements.ts", start = 146, end = 163, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "5.7"
-descriptor = "coerce() + defaulted() implementations"
-predecessor = "3.3"
-justification = """
-coerce(): wraps a struct's coercer to first run a user-supplied
-coercer iff the value matches a `condition` struct (`is(value,
-condition)` gate). defaulted(): the most common consumer of coerce,
-which special-cases plain-object fallbacks for partial-default
-mixin (lines 52-66). Refines 3.3's signature lines at 16 and 38.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/structs/coercions.ts", start = 16, end = 70, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "5.8"
-descriptor = "error.ts StructError constructor"
-predecessor = "3.7"
-justification = """
-The constructor pattern that makes `error.failures()` a *cached
-generator* (lazy: nothing runs until you call it; once called, the
-result is memoised). Also shows how `cause` is derived (line 41):
-a custom user message becomes the surface message, the original
-becomes `cause`. Refines 3.7's class declaration at 25-33.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/error.ts", start = 35, end = 48, render = { kind = "full" } },
-]
-
-# ─── Tier 6 — test infrastructure + remaining bodies (filling toward cap) ─
+# ============================================================
+# Tier 6 — Refinements: src/structs/refinements.ts
+# ============================================================
 
 [[batches]]
 id = "6.1"
-descriptor = "test/validation/ tree — all 41 kind directories"
-justification = """
-The complete enumeration of validation test kinds (one per struct/
-refinement/coercion factory, plus a few semantic groupings: `coerce`,
-`defaulted`, `deprecated`, `function`, etc.). Matches the public-API
-menu from tier 3 but framed as test fixtures. Catastrophic-omission
-hedge: the agent won't go looking for `nullable/` if it can see all
-41 kinds and notes its absence (it's actually under coerce/etc.).
-Cheap and ranks early in the tier as the foundation for the rest.
-"""
+descriptor = "refinements.ts symbol locations"
+justification = "All 7 exported refinements (empty/max/min/nonempty/pattern/size/refine) plus the private `getSize` helper they share — a full roster with exact line pointers; bodies for empty/max/min/nonempty/pattern/size are simple threshold/size comparisons already described in docs/reference/refinements.md, so only `refine` (the combinator underlying all of them) gets its body shown next."
+
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "test/validation", entries = "all" },
-]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 8
+end = 8
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 21
+end = 21
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 33
+end = 33
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 55
+end = 55
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 77
+end = 77
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 93
+end = 93
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 109
+end = 109
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 146
+end = 146
+[batches.content.spans.render]
+kind = "full"
+
 
 [[batches]]
 id = "6.2"
-descriptor = "test/typings/ tree — all type-level test files"
-justification = """
-The complete enumeration of compile-time type-level tests (45 files,
-one per type/utility for compile-only `Describe`/`Infer` checks).
-Combined with 6.1, the agent has a full picture of what's tested
-where. Anchors "how do I verify a type-level change doesn't break
-inference?" — the `npm run test:types` target tsc-checks this dir.
-"""
+descriptor = "refine() body"
+justification = "The combinator every other refinement (and any custom refinement) is built from: it chains onto the struct's existing refiner, runs the new refiner only after existing refinement passes, and stamps `refinement: name` onto any resulting failures — explains where `error.refinement` (docs/reference/errors.md) comes from."
+predecessor = "6.1"
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/structs/refinements.ts"
+start = 138
+end = 163
+[batches.content.spans.render]
+kind = "full"
+
+# ============================================================
+# Tier 7 — Utilities: src/structs/utilities.ts
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "utilities.ts symbol locations"
+justification = "All 9 exported utilities (assign/define/deprecated/dynamic/lazy/omit/partial/pick/struct) — `struct` is a deprecated alias for `define` that logs a console warning, worth knowing exists so an agent doesn't reintroduce it. `define` is shown next since every primitive factory in types.ts is built from it."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 17
+end = 17
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 71
+end = 71
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 80
+end = 80
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 106
+end = 106
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 140
+end = 140
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 171
+end = 171
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 197
+end = 197
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 221
+end = 221
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 247
+end = 247
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^[^(]+"
+
+
+
+[[batches]]
+id = "7.2"
+descriptor = "define() body"
+justification = "The primitive every simple type factory (any/bigint/boolean/date/func/instance/integer/never/number/regexp/string/unknown, all shown in 4.2's sibling batches via their locations) is built from: it just wraps a name + validator into a bare `Struct` with no schema — the shortest path to writing a brand-new custom type."
+predecessor = "7.1"
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/structs/utilities.ts"
+start = 68
+end = 73
+[batches.content.spans.render]
+kind = "full"
+
+# ============================================================
+# Tier 8 — Internal machinery: src/utils.ts
+# ============================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "utils.ts value-helper locations"
+justification = "The internal helpers every struct factory and the top-level validate/assert/create indirectly depend on: the private isIterable guard, isObject/isNonArrayObject/isPlainObject (used throughout types.ts's `object`/`type`/`record` validators), print (formats values into error messages), shiftIterator, toFailure/toFailures (Result → Failure conversion), and run (the traversal engine, shown next)."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 8
+end = 8
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 24
+end = 24
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 32
+end = 32
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 45
+end = 45
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 58
+end = 58
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 67
+end = 67
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 106
+end = 106
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 130
+end = 130
+[batches.content.spans.render]
+kind = "full"
+
+
+[[batches]]
+id = "8.2"
+descriptor = "run() traversal body"
+justification = "The single generator every `validate`/`assert`/`create`/`mask`/`is` call drives: applies the struct's coercer, runs its validator, then recurses into `struct.entries()` for each child (coercing/writing back into Maps/Sets/objects/arrays as it goes), and only runs the refiner if every child validated — the definitive answer to 'in what order does coercion/validation/refinement happen' and 'why did my nested error short-circuit'."
+predecessor = "8.1"
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/utils.ts"
+start = 125
+end = 196
+[batches.content.spans.render]
+kind = "full"
+
+# ============================================================
+# Tier 9 — Reference-doc depth: docs/reference/errors.md
+# ============================================================
+
+[[batches]]
+id = "9.1"
+descriptor = "StructError property table"
+justification = "The full shape of every thrown/returned error (branch/failures/key/path/type/value/cause) with an example value for each — this table is not reproduced in src/error.ts's doc comments, so it's the fastest path to 'what can I read off a caught StructError' without constructing one and inspecting it at runtime."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "docs/reference/errors.md"
+start = 19
+end = 31
+[batches.content.spans.render]
+kind = "full"
+
+# ============================================================
+# Tier 10 — Test suite structure & fixture format
+# ============================================================
+
+[[batches]]
+id = "10.1"
+descriptor = "test/validation/ kind roster"
+justification = "All 41 struct-kind subdirectories the dynamic test harness (test/index.test.ts, next) discovers and runs — each kind is a real name (any/array/assign/.../unknown) an agent adding coverage for a struct kind needs to locate or create. Listing all 41 avoids the agent assuming e.g. 'assign' or 'deprecated' isn't covered."
+
 [batches.content]
 kind = "fs"
-groups = [
-  { parent = "test/typings", entries = "all" },
-]
+[[batches.content.groups]]
+parent = "test/validation"
+entries = "all"
 
 [[batches]]
-id = "6.3"
-descriptor = "Sample validation fixture — three exemplar modules"
-justification = """
-Three concrete fixture modules that show the shape the harness in
-6.4 expects: each exports `Struct`, `data`, plus *either* `output`
-(success path) *or* `failures` (failure path with a rich per-failure
-record). Authoring a new validation test is one-pattern-shot after
-seeing these.
-"""
+id = "10.2"
+descriptor = "test/typings/ file roster"
+justification = "All 45 dtslint-style type-assertion files (one per feature, e.g. object.ts/union.ts/describe.ts/infer.ts) — the TypeScript-compile-time counterpart to the runtime test/validation/ fixtures; listed in full for the same catastrophic-omission reason."
+
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "test/validation/object/valid.ts", start = 1, end = 16, render = { kind = "full" } },
-  { path = "test/validation/object/invalid.ts", start = 1, end = 18, render = { kind = "full" } },
-  { path = "test/validation/refine/valid.ts", start = 1, end = 7, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "test/typings"
+entries = "all"
 
 [[batches]]
-id = "6.4"
-descriptor = "test/index.test.ts — the validation-fixture harness"
-justification = """
-The generic test driver: walks `test/validation/<kind>/<name>.ts`,
-imports each module, dispatches on `create` vs `assert`, and asserts
-either the `output` matches OR the iterable `failures` matches a
-property-picked subset (`type/path/refinement/value/branch`). Anchors
-"how do I add a new validation test?" in 81 lines. Crucial for any
-agent task touching the test/validation/ tree.
-"""
+id = "10.3"
+descriptor = "test/validation/object/valid.ts (fixture shape)"
+justification = "The exact contract every file under test/validation/<kind>/ must satisfy for test/index.test.ts's dynamic loader to pick it up: export `Struct`, `data`, and `output` (or, for an invalid case, `failures` — see test/validation/object/invalid-property.ts one directory up) — this is the one piece of 'how do I add a validation test' that isn't written down anywhere in prose."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "test/index.test.ts", start = 1, end = 81, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "test/validation/object/valid.ts"
+start = 1
+end = 16
+[batches.content.spans.render]
+kind = "full"
+
+# ============================================================
+# Tier 11 — Examples
+# ============================================================
 
 [[batches]]
-id = "6.5"
-descriptor = "types.ts — `object` and `type` reference bodies"
-predecessor = "4.1"
-justification = """
-The two object-shaped struct factories and the design note that
-distinguishes them: `object` rejects unknown props, `type` allows
-them; `mask()` interaction differs accordingly. The single most
-common factory-choice question in superstruct usage. Refines 4.1's
-heading-only lines for `### object` (214) and `### type` (317).
-"""
+id = "11.1"
+descriptor = "examples/basic-validation.js"
+justification = "The canonical worked example: import a handful of type factories, build an `object` struct, `assert` data against it — the shortest 'show me it working end-to-end' answer, complementing the Readme snippet (1.8) with a complete runnable file including imports."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "docs/reference/types.md", start = 214, end = 232, render = { kind = "full" } },
-  { path = "docs/reference/types.md", start = 317, end = 339, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "examples/basic-validation.js"
+start = 1
+end = 31
+[batches.content.spans.render]
+kind = "full"
+
+# ============================================================
+# Tier 12 — Build, lint, publish & CI configuration
+# ============================================================
 
 [[batches]]
-id = "6.6"
-descriptor = "examples/default-values.js — defaulted + create"
-justification = """
-The canonical defaulted example: an `object` schema with mixed
-function-defaults (auto-incrementing id, `() => new Date()`) and
-literal defaults (`false` for is_admin), invoked via `create()`
-(*not* assert!). Different shape from 4.3's basic-validation, and
-covers the create-vs-assert footgun more concretely than the
-reference page.
-"""
+id = "12.1"
+descriptor = "package.json scripts"
+justification = "Every npm script (build via rollup, clean, fix/lint via eslint+prettier, the 3-stage test = build + test:types + test:vitest, release via `np`, watch) — the canonical build/test/lint entry points for this repo, not documented anywhere in prose."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "examples/default-values.js", start = 1, end = 38, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "package.json"
+start = 38
+end = 53
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
-id = "6.7"
-descriptor = "Guide H2 headings — all 14 across guides 02-06"
-justification = """
-Heading-only locations across the remaining guides (02-validating-data,
-03-coercing-data, 04-refining-validation, 05-handling-errors,
-06-using-typescript). Tiny catastrophic-omission hedge that tells the
-agent which guide sections exist and where, so a follow-up read of
-e.g. `docs/guides/05-handling-errors.md:53` for "Customizing Errors"
-is one targeted slice. Gating is `## ` (H2) — these guides use H2 for
-the in-page structure (H1 is implicit in the file title). The 01-
-getting-started guide is omitted here because it only has two H2s
-(Installing / Defining Structs) which the agent can guess from the
-filename.
-"""
+id = "12.2"
+descriptor = "tsconfig.json"
+justification = "Compiler options for the library build: `strict` is on, `declaration`/`declarationMap` are emitted, target is es2020/esnext — relevant to any 'why doesn't this type-check' or 'why isn't there a .d.ts for X' question. Note test/tsconfig.json (test/ listing, 1.3) is a separate config for the test suite."
+
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "docs/guides/02-validating-data.md", start = 5, end = 5, render = { kind = "full" } },
-  { path = "docs/guides/02-validating-data.md", start = 37, end = 37, render = { kind = "full" } },
-  { path = "docs/guides/02-validating-data.md", start = 114, end = 114, render = { kind = "full" } },
-  { path = "docs/guides/02-validating-data.md", start = 157, end = 157, render = { kind = "full" } },
-  { path = "docs/guides/03-coercing-data.md", start = 7, end = 7, render = { kind = "full" } },
-  { path = "docs/guides/03-coercing-data.md", start = 49, end = 49, render = { kind = "full" } },
-  { path = "docs/guides/04-refining-validation.md", start = 7, end = 7, render = { kind = "full" } },
-  { path = "docs/guides/04-refining-validation.md", start = 47, end = 47, render = { kind = "full" } },
-  { path = "docs/guides/05-handling-errors.md", start = 53, end = 53, render = { kind = "full" } },
-  { path = "docs/guides/05-handling-errors.md", start = 102, end = 102, render = { kind = "full" } },
-  { path = "docs/guides/06-using-typescript.md", start = 7, end = 7, render = { kind = "full" } },
-  { path = "docs/guides/06-using-typescript.md", start = 37, end = 37, render = { kind = "full" } },
-  { path = "docs/guides/06-using-typescript.md", start = 55, end = 55, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "tsconfig.json"
+start = 1
+end = 17
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "12.3"
+descriptor = ".github/workflows/ci.yml"
+justification = "CI runs `npm install && npm test && npm run lint` across Node 16/18/20/22 on every push/PR — confirms what 'passing CI' actually checks (build + type tests + vitest + eslint/prettier, per the package.json scripts in 12.1) and the supported Node matrix."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/ci.yml"
+start = 1
+end = 16
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "12.4"
+descriptor = "jsr.json"
+justification = "This package publishes to JSR as `@superstruct/core` in addition to npm (package.json, 1.6/1.7) — an agent asked to 'bump the version' or 'cut a release' needs to know both manifests carry a version field that has to move together. The `publish.include` allowlist (Readme.md, License.md, src, docs) also confirms which top-level dirs actually ship to JSR."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "jsr.json"
+start = 1
+end = 9
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "12.5"
+descriptor = "rollup.config.js"
+justification = "The build produces both an ESM (`dist/index.mjs`) and a UMD (`dist/index.cjs`, global name `Superstruct`) bundle via @rollup/plugin-typescript — explains the `main`/`module` split already seen in package.json (1.7) and where the `<script>` UMD tag in the getting-started guide's build comes from."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "rollup.config.js"
+start = 1
+end = 20
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "12.6"
+descriptor = "editor/format config (.editorconfig, .prettierrc)"
+justification = "2-space indent, LF, 80-col soft wrap (.editorconfig) and single-quote/no-semicolon/es5-trailing-comma (.prettierrc) — the exact formatting a hand-written edit must match to pass `npm run lint:prettier` (12.1) without a reformat pass."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".editorconfig"
+start = 1
+end = 10
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = ".prettierrc"
+start = 1
+end = 5
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "12.7"
+descriptor = "editor + gitbook publish config (.vscode/settings.json, .gitbook.yaml)"
+justification = "Workspace TS SDK pin (uses the local node_modules TypeScript, relevant if a hover/type-check disagrees with `npm run test:types`) and the gitbook config confirming docs/readme.md + docs/summary.md (1.6/1.9) are the actual published-site roots, not just repo-local docs."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".vscode/settings.json"
+start = 1
+end = 3
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = ".gitbook.yaml"
+start = 1
+end = 4
+[batches.content.spans.render]
+kind = "full"
+
+# ============================================================
+# Tier 13 — History
+# ============================================================
+
+[[batches]]
+id = "13.1"
+descriptor = "Changelog.md — 2.0.0 breaking changes"
+justification = "The most recent (and, per the file, first in almost 2 years) release intentionally shipped fixes as breaking changes: `object()`/`type()`/`record()` now correctly reject arrays, and coercing an `object()` no longer turns arrays into index-keyed objects. Load-bearing for 'is this behavior a bug or intentional' and 'what changed going from 1.x to 2.x' questions. Two ellipsis markers hedge what's cut: the 2.0.0 entry's own New/Fixed sections (line 16), and the 17 further version headers below it (line 38, `1.0.0`)."
+
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Changelog.md"
+start = 5
+end = 5
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "Changelog.md"
+start = 11
+end = 14
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "Changelog.md"
+start = 16
+end = 16
+[batches.content.spans.render]
+kind = "ellipsis"
+[[batches.content.spans]]
+path = "Changelog.md"
+start = 38
+end = 38
+[batches.content.spans.render]
+kind = "ellipsis"

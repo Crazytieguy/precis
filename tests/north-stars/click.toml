@@ -1,1703 +1,732 @@
 fixture = "click"
 revision_pin = "c943271a"
 summary = """
-Click 8.3.3 — the Pallets "Command Line Interface Creation Kit". A
-declarative Python framework for building CLIs: decorate a function
-with @click.command, declare options/arguments via further decorators,
-and get a parser, help-page generator, type-conversion machinery, and
-runner for free. Groups (@click.group) nest commands arbitrarily.
+Click (Pallets' "Command Line Interface Creation Kit") is a mature, widely-used
+Python library for building composable CLI applications via decorators
+(`@click.command`, `@click.group`, `@click.option`, `@click.argument`). The
+repo is: a ~11.5k-line `src/click/` package (core object model in `core.py`,
+declarative decorators in `decorators.py`, a typed parameter-type system in
+`types.py`, an internal/deprecated `parser.py`, error hierarchy in
+`exceptions.py`, help-text layout in `formatting.py`, terminal UI helpers in
+`termui.py`/`_termui_impl.py`, stream/encoding compat in `_compat.py`/
+`_winconsole.py`/`_textwrap.py`/`_utils.py`, a `CliRunner` test harness in
+`testing.py`, and shell completion in `shell_completion.py`); a large
+Diataxis-structured Sphinx/MyST doc site (`docs/`); ~11.4k lines of pytest
+tests (`tests/`, plus `tests/typing/` type-checking fixtures); ten standalone
+example apps (`examples/`); and standard OSS project plumbing (`pyproject.toml`
+with `uv`/`tox`/`ruff`/`mypy`/`pyright` config, GitHub Actions workflows,
+pre-commit, a devcontainer).
 
-Query distribution this ranking serves:
-- "How do I declare an option/argument with X behaviour?" — the
-  decorator API in src/click/decorators.py is the highest-traffic
-  surface; the docs (quickstart, options.md, parameters.md) are the
-  semantic anchors.
-- "What public symbols does click expose?" — answered up front by
-  src/click/__init__.py's flat re-export wall.
-- "How does X work internally?" — Command/Group/Context/Parameter/
-  Option/Argument live in the 3500-line core.py monolith; we need
-  cheap structural pointers (class headers + method signatures) so
-  the agent can grep one hop.
-- "How do I write a custom param type / exception?" — types.py and
-  exceptions.py: shallow class trees, surface every class name.
-- "How do I test a Click app?" — testing.py's CliRunner/Result.
-- "What's available for terminal UI?" — termui.py: prompt, confirm,
-  echo, progressbar, style/secho, edit, launch, getchar, pause.
-- Examples folder (naval, repo, complex, ...) provides concrete
-  patterns the docs reference; surface the layout.
-
-Strategy: lead with README + package __init__ + identity, then the
-decorator-API surface in decorators.py, then core's class skeletons
-(signatures and method-name location batches as omission hedges),
-then the param-type catalog and exceptions, then termui/testing/utils,
-then a long tail of helper-module signatures, doc-section locations,
-and the examples layout.
+Session query distribution this NS is built to serve: (1) "how do I do X with
+Click" usage questions (options/arguments/flags/prompts/completion/testing),
+(2) "why does Click behave this way" semantic questions (callback ordering,
+UNSET vs None, chain groups, default_map, help-text markers), (3) debugging a
+specific behavior in `core.py`'s Context/Command/Group/Parameter pipeline, (4)
+extending Click (custom ParamType, custom Group, shell completion), (5)
+operational questions (how the test suite actually runs — testpaths/addopts/
+stress-marker deselection — and CI workflow existence), and (6) orientation
+questions ("what does this repo contain",
+"where are the tests for X"). Given the hard 10,000-token cap, the ranking
+spends almost all of its budget on cheap breadth (full directory rosters,
+per-class/per-file method-location listings, tight signature slices) and
+reserves full method/doc-section bodies for the handful of mechanisms most
+likely to need a "why"/"how" answer rather than a "where" pointer — most such
+bodies are one grep away from the location pointers this NS does include.
 """
 
-# =============================================================================
-# Tier 1 — entry orientation: what is Click, what does it look like, what
-# does it export. Smallest budgets must know this is the Pallets Click CLI
-# framework, that the user-facing API is decorator-based, and roughly which
-# symbols exist.
-# =============================================================================
+# ============================================================
+# Tier 1 — Identity & sitemap
+# ============================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "Top-level directory listing"
-justification = """
-Cheapest, highest-information batch: lists the Python package under
-src/click, the docs/ tree, examples/, tests/, pyproject.toml,
-CHANGES.rst, README. Catastrophic-omission hedge for "is there a
-config / examples / docs subtree?".
-"""
+descriptor = "Root directory listing"
+justification = "Cheapest possible orientation: every top-level entry (src/, docs/, tests/, examples/, pyproject.toml, README.md, CHANGES.rst, config dotfiles). Prevents the agent from assuming a file/dir doesn't exist because it wasn't mentioned elsewhere."
 [batches.content]
 kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = "all"
+groups = [{ parent = ".", entries = "all" }]
 
 [[batches]]
 id = "1.2"
-descriptor = "Package name + version"
-justification = """
-Four lines of pyproject identity: package "click", version 8.3.3,
-description. Frames everything else.
-"""
+descriptor = "README title + lede"
+justification = "Project identity in one glance: what Click is, in one sentence. Kept intentionally tiny (6 lines) to respect the growth envelope at rank 2."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 1
-end = 4
-render = { kind = "full" }
+spans = [{ path = "README.md", start = 3, end = 8, render = { kind = "full" } }]
 
 [[batches]]
 id = "1.3"
-descriptor = "README headline + tagline"
-justification = """
-The one-paragraph "Click is a Python package for creating beautiful
-command line interfaces ..." headline. Agents who've heard of Click
-recognize it instantly.
-"""
+descriptor = "pyproject.toml package identity"
+justification = "Package name/version/description/license/maintainer. Answers 'what is this package' cheaply; the version (8.3.3) grounds later CHANGES.rst references. Kept tiny (8 lines) to respect the growth envelope."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 3
-end = 8
-render = { kind = "full" }
+spans = [{ path = "pyproject.toml", start = 1, end = 8, render = { kind = "full" } }]
 
 [[batches]]
 id = "1.4"
-descriptor = "Python version floor + runtime dep"
-justification = """
-requires-python >= 3.10 and the sole runtime dep (colorama; Windows
-only). Disambiguates Python-version questions zero-follow-up.
-"""
-predecessor = "1.2"
+descriptor = "CHANGES.rst range markers"
+justification = "Two location markers (the newest and oldest version headings in the 1427-line changelog) establish that the file spans Click 1.0 through the unreleased 8.4.0, without paying for all ~50 intermediate headings. A version-specific query is one grep away."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 16
-end = 19
-render = { kind = "full" }
+spans = [
+  { path = "CHANGES.rst", start = 3, end = 3, render = { kind = "full" } },
+  { path = "CHANGES.rst", start = 1422, end = 1422, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "README differentiators (three-bullet pitch)"
-justification = """
-"Arbitrary nesting of commands / Automatic help page generation /
-Supports lazy loading of subcommands at runtime" — the three points
-the README leads with. Tells the agent what design goals Click is
-optimized for.
-"""
-predecessor = "1.3"
+descriptor = "docs/ sitemap (index.rst toctree, Documentation + Tutorials)"
+justification = "The start of the Sphinx toctree: the top-level Documentation heading (with its faqs entry) and the Tutorials group (quickstart, virtualenv) — a semantic map of docs/ a raw directory listing can't provide. Split from the How-to Guides group (1.6) to respect the growth envelope."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 10
-end = 18
-render = { kind = "full" }
+spans = [{ path = "docs/index.rst", start = 59, end = 74, render = { kind = "full" } }]
 
 [[batches]]
 id = "1.6"
-descriptor = "__init__.py: core-class re-exports"
-justification = """
-The eight names re-exported from .core: Argument, Command,
-CommandCollection, Context, Group, Option, Parameter, ParameterSource.
-Highest-traffic public symbols.
-"""
+descriptor = "docs/ sitemap (index.rst toctree, How to Guides)"
+justification = "The next toctree group: entry-points, setuptools, standalone-apps, upgrade-guides, support-multiple-versions. Continues 1.5; stops before the Conceptual Guides toctree entries — docs/ + docs/_static/ listing (1.8) already covers every doc filename regardless."
+predecessor = "1.5"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/__init__.py"
-start = 10
-end = 17
-render = { kind = "full" }
+spans = [{ path = "docs/index.rst", start = 75, end = 84, render = { kind = "full" } }]
 
 [[batches]]
 id = "1.7"
-descriptor = "README hello-world example"
-justification = """
-Canonical @click.command + @click.option pattern, the snippet most
-tutorials lead with. Agents can frame a wide range of decorator-API
-queries without further reading.
-"""
-predecessor = "1.3"
+descriptor = "src/click/ module listing"
+justification = "Every implementation module in the package (core.py, decorators.py, types.py, parser.py, exceptions.py, formatting.py, termui.py, testing.py, shell_completion.py, utils.py, globals.py, and the underscore-prefixed compat/impl modules)."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 21
-end = 36
-render = { kind = "full" }
+kind = "fs"
+groups = [{ parent = "src/click", entries = "all" }]
 
 [[batches]]
 id = "1.8"
-descriptor = "__init__.py: decorator re-exports"
-justification = """
-The complete decorator vocabulary as one closed list: argument,
-command, confirmation_option, group, help_option, make_pass_decorator,
-option, pass_context, pass_obj, password_option, version_option.
-Prevents "I assumed help_option / version_option didn't exist".
-"""
-predecessor = "1.6"
+descriptor = "docs/ + docs/_static/ listing"
+justification = "Complete doc-file roster (complements the toctree in 1.5/1.6, which omits conf.py and _static/ assets)."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/__init__.py"
-start = 18
-end = 28
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "docs/_static", entries = "all" },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "__init__.py: exception + formatting + globals re-exports"
-justification = """
-All click.* exception names (Abort, BadArgumentUsage, BadOptionUsage,
-BadParameter, ClickException, FileError, MissingParameter,
-NoSuchCommand, NoSuchOption, UsageError), HelpFormatter, wrap_text,
-get_current_context. Closed set of public exceptions.
-"""
-predecessor = "1.8"
+descriptor = "tests/ + tests/typing/ listing"
+justification = "Complete test-file roster, ~11.4k lines across 21 top-level test modules plus a tests/typing/ folder of static-typing fixtures. Colocated test files are exactly the kind of class that must be shown whole, not sampled."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/__init__.py"
-start = 29
-end = 41
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "tests", entries = "all" },
+  { parent = "tests/typing", entries = "all" },
+]
 
 [[batches]]
 id = "1.10"
-descriptor = "__init__.py: termui re-exports"
-justification = """
-Every termui helper Click exports: clear, confirm, echo_via_pager,
-edit, get_pager_file, getchar, launch, pause, progressbar, prompt,
-secho, style, unstyle. Closes the "what terminal-UI helpers exist"
-question without a grep.
-"""
-predecessor = "1.9"
+descriptor = "examples/ tree listing"
+justification = "All ten example apps and their subdirectories/files (aliases, colors, completion, complex — including its nested complex/complex/commands/ package, imagepipe, inout, naval, repo, termui, validation)."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/__init__.py"
-start = 42
-end = 54
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "examples/aliases", entries = "all" },
+  { parent = "examples/colors", entries = "all" },
+  { parent = "examples/completion", entries = "all" },
+  { parent = "examples/complex", entries = "all" },
+  { parent = "examples/complex/complex", entries = "all" },
+  { parent = "examples/complex/complex/commands", entries = "all" },
+  { parent = "examples/imagepipe", entries = "all" },
+  { parent = "examples/inout", entries = "all" },
+  { parent = "examples/naval", entries = "all" },
+  { parent = "examples/repo", entries = "all" },
+  { parent = "examples/termui", entries = "all" },
+  { parent = "examples/validation", entries = "all" },
+]
 
 [[batches]]
 id = "1.11"
-descriptor = "__init__.py: built-in type re-exports"
-justification = """
-All ParamType subclasses + module-level type constants exported:
-BOOL, Choice, DateTime, File, FLOAT, FloatRange, INT, IntRange,
-ParamType, Path, STRING, Tuple, UNPROCESSED, UUID. Closed list of
-what types you can pass to @option(type=...) without a hop.
-"""
-predecessor = "1.10"
+descriptor = ".github/ + .devcontainer/ listing"
+justification = "CI/contribution plumbing: five workflows (lock, pre-commit, publish, tests, zizmor), issue templates, PR template, and the devcontainer."
 [batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/__init__.py"
-start = 55
-end = 68
-render = { kind = "full" }
+kind = "fs"
+groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+  { parent = ".devcontainer", entries = "all" },
+]
 
 [[batches]]
 id = "1.12"
-descriptor = "__init__.py: utils re-exports"
-justification = """
-utils helpers exported by click: echo, format_filename, get_app_dir,
-get_binary_stream, get_text_stream, open_file. Closes the public-API
-re-export wall.
-"""
-predecessor = "1.11"
+descriptor = "pyproject.toml: pytest invocation config"
+justification = "How `pytest` actually runs here: testpaths restricts collection to tests/, and addopts (`-m 'not stress'`) deselects the stress-test marker by default — the concrete answer to 'how do I run the test suite' and 'why didn't the stress tests run'. One targeted table, not a claim to cover the file's other ~20 [tool.*] tables (ruff/mypy/pyright/tox/coverage/flit), which are named only in the top-level summary."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/__init__.py"
-start = 69
-end = 75
-render = { kind = "full" }
+spans = [{ path = "pyproject.toml", start = 86, end = 94, render = { kind = "full" } }]
 
-[[batches]]
-id = "1.13"
-descriptor = "Deprecation shim: BaseCommand → Command, MultiCommand → Group"
-justification = """
-First half of the __getattr__ shim: how click.BaseCommand and
-click.MultiCommand resolve (and the DeprecationWarning text). Answers
-"why don't I see BaseCommand in re-exports?" — these were the 7.x
-public names. Catastrophic-omission hedge: agents otherwise wouldn't
-know these names still resolve.
-"""
-predecessor = "1.12"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/__init__.py"
-start = 77
-end = 100
-render = { kind = "full" }
-
-[[batches]]
-id = "1.14"
-descriptor = "Deprecation shim: OptionParser, __version__"
-justification = """
-Second half of the __getattr__ shim: OptionParser (the legacy parser
-class, available privately as parser._OptionParser) and __version__
-(deprecated in favour of importlib.metadata.version('click')).
-"""
-predecessor = "1.13"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/__init__.py"
-start = 102
-end = 126
-render = { kind = "full" }
-
-# =============================================================================
-# Tier 2 — decorator API surface. decorators.py is the single highest-traffic
-# user-facing module. Surface every top-level function name as locations,
-# then docstring/signature ledes for the four primary ones (command, group,
-# option, argument), then the convenience decorators.
-# =============================================================================
+# ============================================================
+# Tier 2 — Public API roster (click/__init__.py)
+# ============================================================
 
 [[batches]]
 id = "2.1"
-descriptor = "decorators.py: location of every public decorator"
-justification = """
-A locations-only batch: one truncated line per top-level def in
-decorators.py, naming every decorator the module exposes
-(pass_context, pass_obj, make_pass_decorator, pass_meta_key, command,
-group, argument, option, confirmation_option, password_option,
-version_option, help_option). Catastrophic-omission hedge for the
-decorator API: agents see the complete closed set in ~12 cheap lines
-and can jump straight to any of them.
-"""
+descriptor = "click/__init__.py: docstring + core exports"
+justification = "click/__init__.py IS the public API surface. This slice gives the package docstring plus every symbol re-exported from core.py (Argument, Command, CommandCollection, Context, Group, Option, Parameter, ParameterSource)."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 28
-end = 28
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 39
-end = 39
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 51
-end = 51
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 100
-end = 100
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 168
-end = 168
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 293
-end = 293
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 324
-end = 324
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 352
-end = 352
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 380
-end = 380
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 404
-end = 404
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 421
-end = 421
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 527
-end = 527
-render = { kind = "full" }
+spans = [{ path = "src/click/__init__.py", start = 1, end = 17, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.2"
-descriptor = "@command: signature + 1-liner"
-justification = """
-The signature of click.command (the most-used decorator) — accepts
-name, cls, **attrs and returns a Command. Followed by its one-line
-docstring ("Creates a new Command and uses the decorated function as
-callback ..."). Lets the agent answer "what does @command take?"
-without reading core.py.
-"""
-predecessor = "2.1"
+descriptor = "click/__init__.py: decorators + exceptions exports"
+justification = "Every public decorator (command/group/option/argument/pass_context/pass_obj/make_pass_decorator/confirmation_option/help_option/password_option/version_option) and every public exception class re-exported at top level."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 168
-end = 173
-render = { kind = "full" }
+spans = [{ path = "src/click/__init__.py", start = 18, end = 38, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.3"
-descriptor = "@option: signature + 1-liner"
-justification = """
-click.option(*param_decls, cls=Option | None, **attrs) — the second-
-most-used decorator. Just signature + first lines of docstring.
-"""
-predecessor = "2.1"
+descriptor = "click/__init__.py: formatting/globals/termui exports"
+justification = "HelpFormatter, wrap_text, get_current_context, and every terminal-UI helper (clear/confirm/echo_via_pager/edit/get_pager_file/getchar/launch/pause/progressbar/prompt/secho/style/unstyle)."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 352
-end = 361
-render = { kind = "full" }
+spans = [{ path = "src/click/__init__.py", start = 39, end = 54, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.4"
-descriptor = "@argument: signature + 1-liner"
-justification = """
-click.argument(*param_decls, cls=Argument | None, **attrs) — declares
-a positional argument on the wrapped command.
-"""
-predecessor = "2.1"
+descriptor = "click/__init__.py: parameter-type exports"
+justification = "Every public ParamType and singleton instance (BOOL/Choice/DateTime/File/FLOAT/FloatRange/INT/IntRange/ParamType/Path/STRING/Tuple/UNPROCESSED/UUID) — the vocabulary used in every `type=` kwarg."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 324
-end = 333
-render = { kind = "full" }
+spans = [{ path = "src/click/__init__.py", start = 55, end = 68, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.5"
-descriptor = "@group: signature + 1-liner"
-justification = """
-click.group — the @command sibling that produces a Group instead of a
-Command. Just signature and the one-line docstring.
-"""
-predecessor = "2.1"
+descriptor = "click/__init__.py: utils exports"
+justification = "echo, format_filename, get_app_dir, get_binary_stream, get_text_stream, open_file — completes the exhaustive __init__.py public-symbol roster (2.1-2.5)."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 293
-end = 304
-render = { kind = "full" }
+spans = [{ path = "src/click/__init__.py", start = 69, end = 74, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.6"
-descriptor = "@pass_context / @pass_obj signatures + docstrings"
-justification = """
-Two short, complete decorator definitions — pass_context injects the
-current Context as first arg; pass_obj injects ctx.obj. Common in any
-non-trivial CLI; full bodies are <15 lines.
-"""
-predecessor = "2.1"
+descriptor = "_utils.py: UNSET / FLAG_NEEDS_VALUE sentinels"
+justification = "The whole (36-line) module defining the two sentinel values threaded through every default-resolution and flag-parsing code path in core.py/parser.py/types.py — a prerequisite for reading almost any Parameter/Option method body."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 28
-end = 48
-render = { kind = "full" }
+spans = [{ path = "src/click/_utils.py", start = 1, end = 36, render = { kind = "full" } }]
 
 [[batches]]
 id = "2.7"
-descriptor = "@make_pass_decorator: signature + docstring + how-it-works"
-justification = """
-The Pythonic recipe for chained-context patterns: builds a custom
-@pass_X decorator that walks ctx.find_object(object_type). Worked
-example baked into the docstring; agents see the canonical pattern
-without a follow-up.
-"""
-predecessor = "2.1"
+descriptor = "globals.py: context-stack push/pop"
+justification = "push_context/pop_context (the thread-local stack `with ctx:` uses) and resolve_color_default — how Context-as-context-manager works under the hood. (get_current_context's own signature/docstring is already named in the 2.3 export roster.)"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 51
-end = 75
-render = { kind = "full" }
+spans = [{ path = "src/click/globals.py", start = 44, end = 67, render = { kind = "full" } }]
 
-[[batches]]
-id = "2.8"
-descriptor = "@confirmation_option / @password_option full bodies"
-justification = """
-The shorthand convenience decorators. Bodies are tiny and reveal
-exactly what they default option(...) to (is_flag=True,
-expose_value=False, prompt='...', etc.). Cheaper to read in full than
-to grep.
-"""
-predecessor = "2.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 380
-end = 380
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 388
-end = 401
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 404
-end = 404
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 411
-end = 418
-render = { kind = "full" }
-
-[[batches]]
-id = "2.9"
-descriptor = "@version_option signature + key kwargs"
-justification = """
-version_option auto-detects the version via importlib.metadata if not
-passed — agents reasonably want to know whether to pass `version=` or
-`package_name=`. The signature + first docstring paragraph gives the
-answer.
-"""
-predecessor = "2.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/decorators.py"
-start = 421
-end = 438
-render = { kind = "full" }
-
-[[batches]]
-id = "2.10"
-descriptor = "quickstart.md: 'Basic Concepts - Creating a Command' section"
-justification = """
-The narrative explanation of @click.command: how a decorated function
-becomes a Click cli, how to invoke it, and an example. Bridges
-README minimal example and the decorator-API source above.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "docs/quickstart.md"
-start = 40
-end = 72
-render = { kind = "full" }
-
-# =============================================================================
-# Tier 3 — core.py class skeletons. core.py is a 3500-line monolith holding
-# Context, Command, Group, CommandCollection, Parameter, Option, Argument.
-# Surface class headers + key __init__ signatures + a method-locations batch
-# per class, so the agent can grep one hop to any concrete method body.
-# =============================================================================
+# ============================================================
+# Tier 3 — core.py: Context
+# ============================================================
 
 [[batches]]
 id = "3.1"
-descriptor = "core.py: every class header (top-level inventory)"
-justification = """
-Closed set of classes defined in core.py: ParameterSource (IntEnum),
-Context, Command, _BaseCommand (deprecated alias), Group,
-_MultiCommand (deprecated alias), CommandCollection, Parameter,
-Option, Argument, plus the _FakeSubclassCheck metaclass. Single hop
-to any of them. Tells the agent the inheritance shape at a glance.
-"""
+descriptor = "ParameterSource enum members"
+justification = "The 5-member IntEnum (PROMPT > COMMANDLINE > ENVIRONMENT > DEFAULT_MAP > DEFAULT, most-to-least-explicit) returned by Context.get_parameter_source, each with its one-line meaning."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 146
-end = 146
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 185
-end = 185
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 903
-end = 903
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1516
-end = 1516
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1524
-end = 1524
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1531
-end = 1531
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1981
-end = 1981
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1988
-end = 1988
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2054
-end = 2054
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2671
-end = 2671
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 3399
-end = 3399
-render = { kind = "full" }
+spans = [{ path = "src/click/core.py", start = 173, end = 182, render = { kind = "full" } }]
 
 [[batches]]
 id = "3.2"
-descriptor = "Context: one-paragraph lede"
-justification = """
-"The context is a special internal object that holds state relevant
-for the script execution at every single level" — plus its role in
-nested commands. Semantic anchor for any Context-related question.
-"""
-predecessor = "3.1"
+descriptor = "Context.__init__ signature"
+justification = "Every constructor parameter (parent/info_name/obj/auto_envvar_prefix/default_map/terminal_width/max_content_width/resilient_parsing/allow_extra_args/allow_interspersed_args/ignore_unknown_options/help_option_names/token_normalize_func/color/show_default) in one place."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 185
-end = 196
-render = { kind = "full" }
+spans = [{ path = "src/click/core.py", start = 289, end = 307, render = { kind = "full" } }]
 
 [[batches]]
 id = "3.3"
-descriptor = "Context.__init__ signature"
-justification = """
-The full Context constructor signature — every kwarg an agent might
-pass via context_settings or directly: command, parent, info_name,
-obj, auto_envvar_prefix, default_map, terminal_width,
-max_content_width, resilient_parsing, allow_extra_args,
-allow_interspersed_args, ignore_unknown_options, help_option_names,
-token_normalize_func, color, show_default. Catastrophic-omission
-hedge: agents otherwise might think a kwarg doesn't exist.
-"""
-predecessor = "3.2"
+descriptor = "Context — public method locations"
+justification = "Location-only roster of every public method/property on Context (protected_args, to_info_dict, __enter__/__exit__, scope, meta, make_formatter, with_resource, call_on_close, close, command_path, find_root, find_object, ensure_object, lookup_default, fail, abort, exit, get_usage, get_help, invoke, forward, set_parameter_source, get_parameter_source). __init__ already shown Full in 3.2. Showing only some of these would wrongly imply the rest don't exist."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 289
-end = 307
-render = { kind = "full" }
+spans = [
+  { path = "src/click/core.py", start = 460, end = 460, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 471, end = 471, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 492, end = 492, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 497, end = 497, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 512, end = 512, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 550, end = 550, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 577, end = 577, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 591, end = 591, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 620, end = 620, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 632, end = 632, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 658, end = 658, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 676, end = 676, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 683, end = 683, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 695, end = 695, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 728, end = 728, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 750, end = 750, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 758, end = 758, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 762, end = 762, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 772, end = 772, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 778, end = 778, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 800, end = 800, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 856, end = 856, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 875, end = 875, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 884, end = 884, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.4"
-descriptor = "Context: location of every method"
-justification = """
-Names every Context method (to_info_dict, scope, meta,
-make_formatter, with_resource, call_on_close, close, command_path,
-find_root, find_object, ensure_object, lookup_default, fail, abort,
-exit, get_usage, get_help, invoke, forward, set_parameter_source,
-get_parameter_source, …). Closed-set hedge: agents jump straight to
-the one they need.
-"""
-predecessor = "3.2"
+descriptor = "Context.invoke — Command branch"
+justification = "How `ctx.invoke(some_command, ...)` fills in defaults for params the caller didn't pass, hiding the UNSET sentinel behind a plain None, and tracks kwargs onto ctx.params so a later forward() sees them; the trailing `else`/`with` lines are the plain-callback path and the actual call, shared by both branches. The single most load-bearing branch for anyone composing commands."
+predecessor = "3.3"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 460
-end = 460
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 471
-end = 471
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 492
-end = 492
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 512
-end = 512
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 550
-end = 550
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 577
-end = 577
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 591
-end = 591
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 620
-end = 620
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 632
-end = 632
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 658
-end = 658
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 676
-end = 676
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 683
-end = 683
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 695
-end = 695
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 728
-end = 728
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 750
-end = 750
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 758
-end = 758
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 762
-end = 762
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 772
-end = 772
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 778
-end = 778
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 800
-end = 800
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 856
-end = 856
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 875
-end = 875
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 884
-end = 884
-render = { kind = "full" }
+spans = [{ path = "src/click/core.py", start = 820, end = 854, render = { kind = "full" } }]
 
-[[batches]]
-id = "3.5"
-descriptor = "Command: one-paragraph lede + headline kwargs"
-justification = """
-"Commands are the basic building block of command line interfaces in
-Click" plus the public-facing :param: list (name, context_settings,
-callback, params, help, epilog, short_help, add_help_option,
-no_args_is_help, hidden, deprecated). Semantic anchor.
-"""
-predecessor = "3.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 903
-end = 911
-render = { kind = "full" }
-
-[[batches]]
-id = "3.6"
-descriptor = "Command.__init__ signature"
-justification = """
-The constructor: every kwarg the agent can pass directly to
-Command(...). Pair with the @click.command decorator from tier 2.
-"""
-predecessor = "3.5"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 965
-end = 979
-render = { kind = "full" }
-
-[[batches]]
-id = "3.7"
-descriptor = "Command: location of every method"
-justification = """
-Names every Command method (to_info_dict, get_usage, get_params,
-format_usage, collect_usage_pieces, get_help_option_names,
-get_help_option, make_parser, get_help, get_short_help_str,
-format_help, format_help_text, format_options, format_epilog,
-make_context, parse_args, invoke, shell_complete, main,
-_main_shell_completion). Closed list; jump to any of them in one hop.
-"""
-predecessor = "3.5"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1009
-end = 1009
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1023
-end = 1023
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1032
-end = 1032
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1057
-end = 1057
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1065
-end = 1065
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1076
-end = 1076
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1084
-end = 1084
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1111
-end = 1111
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1118
-end = 1118
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1127
-end = 1127
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1149
-end = 1149
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1166
-end = 1166
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1189
-end = 1189
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1201
-end = 1201
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1210
-end = 1210
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1247
-end = 1247
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1283
-end = 1283
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1299
-end = 1299
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1366
-end = 1366
-render = { kind = "full" }
-
-[[batches]]
-id = "3.8"
-descriptor = "Group: lede + __init__ signature"
-justification = """
-"A group is a command that nests other commands (or more groups)"
-plus the constructor params (commands, invoke_without_command,
-no_args_is_help, subcommand_metavar, chain, result_callback). The
-*chain* mode is one of Click's distinctive features.
-"""
-predecessor = "3.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1531
-end = 1546
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1584
-end = 1596
-render = { kind = "full" }
-
-[[batches]]
-id = "3.9"
-descriptor = "Group: method-locations + decorator-style command/group registrars"
-justification = """
-Every Group method: add_command, command (decorator), group
-(decorator), result_callback (decorator), get_command, list_commands,
-format_commands, resolve_command, shell_complete, invoke. Including
-that `Group.command` / `Group.group` *are* the decorators users call
-as `@cli.command()` is the answer to a frequent question.
-"""
-predecessor = "3.8"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1650
-end = 1650
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1668
-end = 1668
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1717
-end = 1717
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1761
-end = 1761
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1806
-end = 1806
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1812
-end = 1812
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1825
-end = 1825
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1853
-end = 1853
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1867
-end = 1867
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1935
-end = 1935
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1961
-end = 1961
-render = { kind = "full" }
-
-[[batches]]
-id = "3.10"
-descriptor = "Parameter (ABC): lede + key kwargs paragraph"
-justification = """
-"A parameter to a command comes in two versions: they are either
-Options or Arguments" + the :param: paragraph describing the kwargs
-shared by both subclasses (type, required, default, callback, nargs,
-metavar, expose_value, is_eager, envvar, shell_complete, deprecated).
-Without this, the agent doesn't know which kwargs are inherited.
-"""
-predecessor = "3.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2054
-end = 2064
-render = { kind = "full" }
-
-[[batches]]
-id = "3.11"
-descriptor = "Parameter.__init__ signature"
-justification = """
-The actual constructor parameters in code form. Confirms types and
-defaults (`default: Any | Callable | None = UNSET`,
-`nargs: int | None = None`, `is_eager: bool = False`, etc.).
-"""
-predecessor = "3.10"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2147
-end = 2151
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2162
-end = 2175
-render = { kind = "full" }
-
-[[batches]]
-id = "3.12"
-descriptor = "Option: lede + __init__ signature"
-justification = """
-The Option subclass's extra kwargs are the busiest API surface
-besides @option itself: show_default, prompt, confirmation_prompt,
-prompt_required, hide_input, is_flag, flag_value, multiple, count,
-allow_from_autoenv, help, hidden, show_choices, show_envvar,
-deprecated. Anyone configuring an option will land here.
-"""
-predecessor = "3.10"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2671
-end = 2675
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2745
-end = 2765
-render = { kind = "full" }
-
-[[batches]]
-id = "3.13"
-descriptor = "Argument: lede + __init__ signature + required-by-default logic"
-justification = """
-"Arguments are positional parameters to a command. They generally
-provide fewer features than options but can have infinite nargs and
-are required by default." Plus the constructor — the auto-required
-logic that surprises many users (required = (default is UNSET and
-nargs > 0)) is right in the body.
-"""
-predecessor = "3.10"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 3399
-end = 3405
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 3409
-end = 3414
-render = { kind = "full" }
-
-[[batches]]
-id = "3.14"
-descriptor = "Parameter/Option/Argument: method locations"
-justification = """
-Names every public method on Parameter and its subclasses:
-to_info_dict, human_readable_name, make_metavar, get_default,
-consume_value, type_cast_value, value_is_missing, process_value,
-resolve_envvar_value, value_from_envvar, handle_parse_result,
-get_help_record, get_usage_pieces, get_error_hint, shell_complete,
-prompt_for_value (Option), add_to_parser. Closed-set hedge.
-"""
-predecessor = "3.11"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2218
-end = 2218
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2255
-end = 2255
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2261
-end = 2261
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2285
-end = 2285
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2319
-end = 2319
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2321
-end = 2321
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2369
-end = 2369
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2425
-end = 2425
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2443
-end = 2443
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2509
-end = 2509
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2554
-end = 2554
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2570
-end = 2570
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2631
-end = 2631
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2634
-end = 2634
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2637
-end = 2637
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 2647
-end = 2647
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 3074
-end = 3074
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 3203
-end = 3203
-render = { kind = "full" }
-
-# =============================================================================
-# Tier 4 — Parameter types and exceptions. Both modules are shallow and
-# enumerable; surface every class header so the agent gets the full set in
-# one or two batches, then a docstring lede per cornerstone.
-# =============================================================================
+# ============================================================
+# Tier 4 — core.py: Command
+# ============================================================
 
 [[batches]]
 id = "4.1"
-descriptor = "types.py: every ParamType subclass header"
-justification = """
-Closed list of param-type classes Click defines: ParamType (ABC),
-CompositeParamType, FuncParamType, UnprocessedParamType,
-StringParamType, Choice, DateTime, _NumberParamTypeBase,
-_NumberRangeBase, IntParamType, IntRange, FloatParamType, FloatRange,
-BoolParamType, UUIDParameterType, File, Path, Tuple. Anyone asking
-"what types ship?" or "how do I subclass?" lands here in one hop.
-"""
+descriptor = "Command.__init__ signature"
+justification = "Command's full constructor signature (name/context_settings/callback/params/help/epilog/short_help/options_metavar/add_help_option/no_args_is_help/hidden/deprecated) — the exact kwargs `@click.command(...)` forwards."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 37
-end = 37
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 173
-end = 173
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 185
-end = 185
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 210
-end = 210
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 222
-end = 222
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 253
-end = 253
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 426
-end = 426
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 495
-end = 495
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 521
-end = 521
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 611
-end = 611
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 619
-end = 619
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 643
-end = 643
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 651
-end = 651
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 694
-end = 694
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 763
-end = 763
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 790
-end = 790
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 930
-end = 930
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 1114
-end = 1114
-render = { kind = "full" }
+spans = [{ path = "src/click/core.py", start = 965, end = 979, render = { kind = "full" } }]
 
 [[batches]]
 id = "4.2"
-descriptor = "ParamType: the subclassing recipe"
-justification = """
-The Class docstring of ParamType spells out exactly what to implement
-in a custom type: set `name`, implement `convert`, handle ctx/param=
-None, support already-converted values. Highest-value semantic batch
-for "how do I write my own type?".
-"""
-predecessor = "4.1"
+descriptor = "Command — public method locations"
+justification = "Location-only roster of every public Command method (to_info_dict, __repr__, get_usage, get_params, format_usage, collect_usage_pieces, get_help_option_names, get_help_option, make_parser, get_help, get_short_help_str, format_help, format_help_text, format_options, format_epilog, make_context, parse_args, invoke, shell_complete, main, __call__)."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 37
-end = 53
-render = { kind = "full" }
+spans = [
+  { path = "src/click/core.py", start = 1009, end = 1009, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1020, end = 1020, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1023, end = 1023, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1032, end = 1032, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1057, end = 1057, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1065, end = 1065, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1076, end = 1076, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1084, end = 1084, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1111, end = 1111, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1118, end = 1118, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1127, end = 1127, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1149, end = 1149, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1166, end = 1166, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1189, end = 1189, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1201, end = 1201, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1210, end = 1210, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1247, end = 1247, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1283, end = 1283, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1299, end = 1299, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1366, end = 1366, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1511, end = 1511, render = { kind = "full" } },
+]
 
-[[batches]]
-id = "4.3"
-descriptor = "ParamType.convert + ParamType.shell_complete signatures"
-justification = """
-The two methods most custom param types override. Signatures + first
-docstring lines so the agent sees what to override.
-"""
-predecessor = "4.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 110
-end = 118
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 155
-end = 158
-render = { kind = "full" }
-
-[[batches]]
-id = "4.4"
-descriptor = "exceptions.py: every class header"
-justification = """
-Closed list of click exceptions in inheritance order: ClickException
-(base), UsageError, BadParameter, MissingParameter, NoSuchOption,
-NoSuchCommand, BadOptionUsage, BadArgumentUsage, NoArgsIsHelpError,
-FileError, Abort, Exit. Catastrophic-omission hedge for "what
-exceptions does click raise?".
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 35
-end = 35
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 65
-end = 65
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 108
-end = 108
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 150
-end = 150
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 221
-end = 221
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 251
-end = 251
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 278
-end = 278
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 295
-end = 295
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 304
-end = 304
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 313
-end = 313
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 330
-end = 330
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 334
-end = 334
-render = { kind = "full" }
-
-[[batches]]
-id = "4.5"
-descriptor = "ClickException + UsageError ledes + exit_code"
-justification = """
-ClickException is the base for anything click handles natively;
-UsageError extends it for parsing/usage problems and changes
-exit_code to 2. Both class bodies are short enough to show in full —
-agents writing custom raise statements need the exit_code values and
-constructor args.
-"""
-predecessor = "4.4"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 38
-end = 47
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 73
-end = 80
-render = { kind = "full" }
-
-# =============================================================================
-# Tier 5 — testing & terminal-UI essentials. CliRunner + Result is the
-# canonical pytest entry point. termui's echo / prompt / confirm / style /
-# secho / progressbar are common in CLIs.
-# =============================================================================
+# ============================================================
+# Tier 5 — core.py: Group & CommandCollection
+# ============================================================
 
 [[batches]]
 id = "5.1"
-descriptor = "testing.py: CliRunner, Result, helper class locations"
-justification = """
-Closed list of classes/funcs in testing.py: CliRunner, Result,
-EchoingStdin, BytesIOCopy, StreamMixer, _NamedTextIOWrapper,
-make_input_stream. Anyone writing tests jumps to CliRunner or Result.
-"""
+descriptor = "Group.__init__ signature + defaulting rules"
+justification = "Group's constructor (commands/invoke_without_command/no_args_is_help/subcommand_metavar/chain/result_callback) plus the concrete rule that no_args_is_help defaults to `not invoke_without_command`. Body continues past this excerpt (marked) with the subcommand_metavar chain-vs-non-chain default and the chain-mode 'no optional Arguments' validation."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 26
-end = 26
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 70
-end = 70
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 89
-end = 89
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 163
-end = 163
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 183
-end = 183
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 261
-end = 261
-render = { kind = "full" }
+spans = [
+  { path = "src/click/core.py", start = 1584, end = 1610, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1611, end = 1611, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "CliRunner.invoke signature"
-justification = """
-The single most-called method in any click test suite. Its kwargs
-(cli, args, input, env, catch_exceptions, color) are the test
-author's whole API.
-"""
-predecessor = "5.1"
+descriptor = "Group + CommandCollection — public method locations"
+justification = "Location-only roster covering both classes: Group's to_info_dict/add_command/command/group/result_callback/get_command/list_commands/collect_usage_pieces/format_options/format_commands/parse_args/invoke/resolve_command/shell_complete, and CommandCollection's class line plus __init__/add_source/get_command/list_commands (which fan lookups out across `sources`)."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 525
-end = 534
-render = { kind = "full" }
+spans = [
+  { path = "src/click/core.py", start = 1632, end = 1632, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1650, end = 1650, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1668, end = 1668, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1717, end = 1717, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1761, end = 1761, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1806, end = 1806, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1812, end = 1812, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1816, end = 1816, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1821, end = 1821, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1825, end = 1825, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1853, end = 1853, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1867, end = 1867, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1935, end = 1935, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1961, end = 1961, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1988, end = 1988, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2004, end = 2004, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2014, end = 2014, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2018, end = 2018, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2035, end = 2035, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "Result: attribute documentation"
-justification = """
-The class docstring lists what Result holds: stdout_bytes,
-stderr_bytes, output_bytes, return_value, exit_code, exception,
-exc_info. Zero-follow-up for "how do I assert on stderr?".
-"""
-predecessor = "5.1"
+descriptor = "Group.invoke — non-chain dispatch"
+justification = "The default (non-chain) dispatch: resolve_command, set ctx.invoked_subcommand, invoke the group's own callback, then make_context+invoke the subcommand inside its own `with sub_ctx:` block so its result is still returned to the caller. The marked ellipsis is the chain=True branch (a separate loop right below this) that instead builds every sub-Context up front."
+predecessor = "5.2"
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 183
-end = 195
-render = { kind = "full" }
+spans = [
+  { path = "src/click/core.py", start = 1891, end = 1901, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 1902, end = 1902, render = { kind = "ellipsis" } },
+]
 
-[[batches]]
-id = "5.4"
-descriptor = "tests/conftest.py: the canonical 'runner' fixture"
-justification = """
-The seven-line pytest fixture file. Every test file in the corpus
-gets `runner` from here; tells the agent immediately what the
-fixture name and shape is.
-"""
-predecessor = "5.1"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tests/conftest.py"
-start = 1
-end = 8
-render = { kind = "full" }
-
-[[batches]]
-id = "5.5"
-descriptor = "termui.py: every public function location"
-justification = """
-Closed list of termui top-level functions: prompt, confirm,
-get_pager_file, echo_via_pager, progressbar, clear, style, unstyle,
-secho, edit, launch, getchar, pause, raw_terminal. Catastrophic-
-omission hedge.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 129
-end = 129
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 242
-end = 242
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 301
-end = 301
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 320
-end = 320
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 392
-end = 392
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 551
-end = 551
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 576
-end = 576
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 705
-end = 705
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 717
-end = 717
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 782
-end = 782
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 840
-end = 840
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 874
-end = 874
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 904
-end = 904
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/click/termui.py"
-start = 910
-end = 910
-render = { kind = "full" }
-
-[[batches]]
-id = "5.6"
-descriptor = "utils.py: echo() signature + key kwargs"
-justification = """
-echo's signature (message, file, nl, err, color) — the single most-
-used utility. Lets the agent know it accepts `err=True` for stderr
-routing without a hop.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/click/utils.py"
-start = 226
-end = 232
-render = { kind = "full" }
-
-# =============================================================================
-# Tier 6 — long-tail breadth. Examples folder layout, doc-page locations,
-# helper-module signatures the agent might need on rare queries.
-# =============================================================================
+# ============================================================
+# Tier 6 — core.py: Parameter / Option / Argument
+# ============================================================
 
 [[batches]]
 id = "6.1"
-descriptor = "examples/ subdirectory listing"
-justification = """
-Lists the ten worked examples (aliases, colors, completion, complex,
-imagepipe, inout, naval, repo, termui, validation). Tells the agent
-which canonical patterns exist so it can grep an example by name
-without searching the tree.
-"""
+descriptor = "Parameter.__init__ signature"
+justification = "Parameter is the abstract base of Option and Argument (as of 8.2, cannot be instantiated directly); this is the full constructor signature (param_decls/type/required/default/callback/nargs/multiple/metavar/expose_value/is_eager/envvar/shell_complete/deprecated) shared by both subclasses (a 9-line internal comment about the `default` param mid-signature is skipped)."
 [batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "examples"
-entries = "all"
+kind = "lines"
+spans = [
+  { path = "src/click/core.py", start = 2147, end = 2151, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2162, end = 2175, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.2"
-descriptor = "examples/naval/naval.py: canonical nested-group example"
-justification = """
-The docopt naval-fate example ported to Click. First 24 lines show
-the cli group, the ship subgroup, and the @ship.command("new") with
-@click.argument — the @cli.group / @subgroup.command / @argument
-pattern for nested CLIs. Quickstart and commands-and-groups.md both
-reference this example by name.
-"""
+descriptor = "Parameter — public method locations"
+justification = "Location-only roster of Parameter's shared method surface (to_info_dict, __repr__, _parse_decls abstract hook, human_readable_name, make_metavar, get_default, add_to_parser abstract hook, consume_value, type_cast_value, value_is_missing, process_value, resolve_envvar_value, value_from_envvar, handle_parse_result, get_help_record, get_usage_pieces, get_error_hint, shell_complete) — inherited by both Option and Argument."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "examples/naval/naval.py"
-start = 1
-end = 24
-render = { kind = "full" }
+spans = [
+  { path = "src/click/core.py", start = 2218, end = 2218, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2246, end = 2246, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2250, end = 2250, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2255, end = 2255, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2261, end = 2261, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2285, end = 2285, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2319, end = 2319, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2321, end = 2321, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2369, end = 2369, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2425, end = 2425, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2443, end = 2443, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2509, end = 2509, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2554, end = 2554, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2570, end = 2570, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2631, end = 2631, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2634, end = 2634, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2637, end = 2637, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2647, end = 2647, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "6.3"
-descriptor = "docs/index.rst: General Reference toctree"
-justification = """
-The Sphinx toctree of the General Reference section: parameters,
-parameter-types, options, option-decorators, arguments,
-commands-and-groups, commands, documentation, prompts,
-handling-files, advanced, complex, extending-click, testing, utils,
-shell-completion, exceptions, command-line-reference,
-unicode-support, wincmd. Catastrophic-omission hedge for "is there a
-doc page about X?"; every reference page is reachable by name."""
+descriptor = "Option + Argument — public method locations"
+justification = "Location-only roster of what Option (to_info_dict, get_default, get_error_hint, add_to_parser, get_help_record, get_help_extra, prompt_for_value, resolve_envvar_value, value_from_envvar, consume_value, process_value) and Argument (__init__, human_readable_name, make_metavar, get_usage_pieces, get_error_hint, add_to_parser) each override on top of Parameter (6.2)."
 [batches.content]
 kind = "lines"
-[[batches.content.spans]]
-path = "docs/index.rst"
-start = 95
-end = 120
-render = { kind = "full" }
+spans = [
+  { path = "src/click/core.py", start = 2916, end = 2916, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2935, end = 2935, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 2968, end = 2968, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3035, end = 3035, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3074, end = 3074, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3119, end = 3119, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3203, end = 3203, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3253, end = 3253, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3277, end = 3277, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3319, end = 3319, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3381, end = 3381, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3409, end = 3409, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3431, end = 3431, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3436, end = 3436, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3469, end = 3469, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3472, end = 3472, render = { kind = "full" } },
+  { path = "src/click/core.py", start = 3477, end = 3477, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 7 — decorators.py: the declarative API
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "decorators.py — public function locations"
+justification = "Location-only roster of every decorator/factory a user could import: pass_context, pass_obj, make_pass_decorator, pass_meta_key, command, group, argument, option, confirmation_option, password_option, version_option, help_option — the file behind `@click.command`/`@click.option`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/decorators.py", start = 28, end = 28, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 39, end = 39, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 51, end = 51, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 100, end = 100, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 168, end = 168, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 293, end = 293, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 324, end = 324, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 352, end = 352, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 380, end = 380, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 404, end = 404, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 421, end = 421, render = { kind = "full" } },
+  { path = "src/click/decorators.py", start = 527, end = 527, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 8 — types.py: the parameter-type system
+# ============================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "types.py — class locations"
+justification = "Location-only roster of the full ParamType hierarchy: ParamType, CompositeParamType, FuncParamType, UnprocessedParamType, StringParamType, Choice, DateTime, IntParamType, IntRange, FloatParamType, FloatRange, BoolParamType, UUIDParameterType, File, Path, Tuple. Prevents assuming e.g. IntRange or Tuple don't exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/types.py", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 173, end = 173, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 185, end = 185, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 210, end = 210, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 222, end = 222, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 253, end = 253, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 426, end = 426, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 611, end = 611, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 619, end = 619, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 643, end = 643, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 651, end = 651, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 694, end = 694, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 763, end = 763, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 790, end = 790, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 930, end = 930, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 1114, end = 1114, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.2"
+descriptor = "ParamType.convert() contract"
+justification = "convert() must accept values already the correct type, and ctx/param may be None (prompt input) — the abstract contract every custom type and every built-in File/Path/Choice implementation satisfies."
+predecessor = "8.1"
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/click/types.py", start = 110, end = 124, render = { kind = "full" } }]
+
+[[batches]]
+id = "8.3"
+descriptor = "convert_type() dispatch (tail)"
+justification = "Part of the tail of the function that turns a bare Python type/default (int, float, bool) into the right ParamType instance — runs whenever `type=` is omitted or given as a plain Python type rather than a ParamType instance. Marked ellipsis is the function's further fallback (non-guessed types, a debug-only assertion) down to its final `FuncParamType(guessed)` return."
+predecessor = "8.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/types.py", start = 1234, end = 1244, render = { kind = "full" } },
+  { path = "src/click/types.py", start = 1245, end = 1245, render = { kind = "ellipsis" } },
+]
+
+# ============================================================
+# Tier 9 — parser.py (internal, deprecated) & exceptions.py
+# ============================================================
+
+[[batches]]
+id = "9.1"
+descriptor = "parser.py — internal class locations"
+justification = "Location roster of the four classes making up the whole (deprecated-since-8.2, removed-in-9.0) internal option parser: _Option, _Argument, _ParsingState, _OptionParser."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/parser.py", start = 127, end = 127, render = { kind = "full" } },
+  { path = "src/click/parser.py", start = 185, end = 185, render = { kind = "full" } },
+  { path = "src/click/parser.py", start = 216, end = 216, render = { kind = "full" } },
+  { path = "src/click/parser.py", start = 224, end = 224, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "9.2"
+descriptor = "exceptions.py — class locations"
+justification = "Location roster of the full exception hierarchy: ClickException, UsageError, BadParameter, MissingParameter, NoSuchOption, NoSuchCommand, BadOptionUsage, BadArgumentUsage, NoArgsIsHelpError, FileError, Abort, Exit. Showing a subset would wrongly suggest e.g. BadArgumentUsage doesn't exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/exceptions.py", start = 35, end = 35, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 65, end = 65, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 108, end = 108, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 150, end = 150, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 221, end = 221, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 251, end = 251, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 278, end = 278, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 295, end = 295, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 304, end = 304, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 313, end = 313, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 330, end = 330, render = { kind = "full" } },
+  { path = "src/click/exceptions.py", start = 334, end = 334, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 10 — formatting.py & termui.py / _termui_impl.py
+# ============================================================
+
+[[batches]]
+id = "10.1"
+descriptor = "formatting.py — function/class locations"
+justification = "Location roster of every top-level helper (measure_table, iter_rows, wrap_text, join_options) and the HelpFormatter class plus all its methods (__init__, write, indent, dedent, write_usage, write_heading, write_paragraph, write_text, write_dl, section, indentation, getvalue) — the whole file that renders --help output."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/formatting.py", start = 14, end = 14, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 24, end = 24, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 31, end = 31, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 104, end = 104, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 116, end = 116, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 135, end = 135, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 139, end = 139, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 143, end = 143, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 147, end = 147, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 185, end = 185, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 189, end = 189, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 194, end = 194, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 210, end = 210, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 255, end = 255, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 270, end = 270, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 278, end = 278, render = { kind = "full" } },
+  { path = "src/click/formatting.py", start = 283, end = 283, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "10.2"
+descriptor = "termui.py — public function locations"
+justification = "Location roster of every terminal-UI helper: hidden_prompt_func, prompt, confirm, get_pager_file, echo_via_pager, progressbar, clear, style, unstyle, secho, edit, launch, getchar, raw_terminal, pause."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/termui.py", start = 78, end = 78, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 129, end = 129, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 242, end = 242, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 301, end = 301, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 320, end = 320, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 392, end = 392, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 551, end = 551, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 576, end = 576, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 705, end = 705, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 717, end = 717, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 782, end = 782, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 840, end = 840, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 874, end = 874, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 904, end = 904, render = { kind = "full" } },
+  { path = "src/click/termui.py", start = 910, end = 910, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "10.3"
+descriptor = "_termui_impl.py — top-level locations"
+justification = "Location roster of the internal implementations lazily imported by termui.py: ProgressBar, MaybeStripAnsi, get_pager_file, Editor, open_url — kept out of termui.py itself to keep Click's import time low."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/_termui_impl.py", start = 43, end = 43, render = { kind = "full" } },
+  { path = "src/click/_termui_impl.py", start = 375, end = 375, render = { kind = "full" } },
+  { path = "src/click/_termui_impl.py", start = 418, end = 418, render = { kind = "full" } },
+  { path = "src/click/_termui_impl.py", start = 608, end = 608, render = { kind = "full" } },
+  { path = "src/click/_termui_impl.py", start = 724, end = 724, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 11 — utils.py, _compat.py
+# ============================================================
+
+[[batches]]
+id = "11.1"
+descriptor = "utils.py — public function/class locations"
+justification = "Location roster of safecall, make_str, make_default_short_help, LazyFile, KeepOpenFile, echo, get_binary_stream, get_text_stream, open_file, format_filename, get_app_dir, PacifyFlushWrapper — the general-purpose helpers `click.echo`/`click.open_file`/`click.get_app_dir` wrap."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/utils.py", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 50, end = 50, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 60, end = 60, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 113, end = 113, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 201, end = 201, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 226, end = 226, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 329, end = 329, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 341, end = 341, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 362, end = 362, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 411, end = 411, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 453, end = 453, render = { kind = "full" } },
+  { path = "src/click/utils.py", start = 502, end = 502, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "11.2"
+descriptor = "_compat.py: platform flags + '-' stream handling"
+justification = "The WIN/CYGWIN platform-detection flags used throughout the compat layer, plus open_stream()'s handling of '-' as stdin/stdout depending on mode — the first thing to check when a File/Path argument behaves oddly across platforms."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/_compat.py", start = 13, end = 16, render = { kind = "full" } },
+  { path = "src/click/_compat.py", start = 378, end = 390, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 12 — Testing (CliRunner) & shell completion
+# ============================================================
+
+[[batches]]
+id = "12.1"
+descriptor = "testing.py — class/method locations"
+justification = "Location roster of EchoingStdin, BytesIOCopy, StreamMixer, _NamedTextIOWrapper, make_input_stream, Result, and CliRunner's own methods (get_default_prog_name, make_env, isolation, invoke, isolated_filesystem) — the whole click.testing.CliRunner test harness."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/testing.py", start = 26, end = 26, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 70, end = 70, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 89, end = 89, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 103, end = 103, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 163, end = 163, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 183, end = 183, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 261, end = 261, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 295, end = 295, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 302, end = 302, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 312, end = 312, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 525, end = 525, render = { kind = "full" } },
+  { path = "src/click/testing.py", start = 639, end = 639, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "12.2"
+descriptor = "CliRunner.invoke() signature"
+justification = "The full signature of the one method every Click test calls: `runner.invoke(cli, args, input=..., env=..., catch_exceptions=..., color=..., **extra)` — the entry point for testing any Click command."
+predecessor = "12.1"
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/click/testing.py", start = 525, end = 534, render = { kind = "full" } }]
+
+[[batches]]
+id = "12.3"
+descriptor = "shell_completion.py — public locations"
+justification = "Location roster of shell_complete (the dispatcher invoked via `_FOO_COMPLETE=bash_source`), CompletionItem, ShellComplete (the base class subclassed per-shell), BashComplete, ZshComplete, FishComplete, add_completion_class, get_completion_class, split_arg_string."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/click/shell_completion.py", start = 19, end = 19, render = { kind = "full" } },
+  { path = "src/click/shell_completion.py", start = 57, end = 57, render = { kind = "full" } },
+  { path = "src/click/shell_completion.py", start = 204, end = 204, render = { kind = "full" } },
+  { path = "src/click/shell_completion.py", start = 308, end = 308, render = { kind = "full" } },
+  { path = "src/click/shell_completion.py", start = 367, end = 367, render = { kind = "full" } },
+  { path = "src/click/shell_completion.py", start = 403, end = 403, render = { kind = "full" } },
+  { path = "src/click/shell_completion.py", start = 449, end = 449, render = { kind = "full" } },
+  { path = "src/click/shell_completion.py", start = 469, end = 469, render = { kind = "full" } },
+  { path = "src/click/shell_completion.py", start = 479, end = 479, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 13 — Conceptual docs
+# ============================================================
+
+[[batches]]
+id = "13.1"
+descriptor = "docs/options.md — default/flag_value interaction table"
+justification = "The single most information-dense semantic table in the docs: exactly what value the callback receives for every combination of default/flag_value/passed-or-not on a non-boolean feature-switch flag — genuinely hard to reconstruct correctly from Option.__init__/get_default alone, and not restated in any docstring."
+[batches.content]
+kind = "lines"
+spans = [{ path = "docs/options.md", start = 452, end = 481, render = { kind = "full" } }]

@@ -1,1010 +1,747 @@
 fixture = "beets"
 revision_pin = "5df37abc"
 summary = """
-beets is a Python media-library manager: it catalogs music files in a
-SQLite database, fetches/normalizes metadata from MusicBrainz and other
-sources, and reorganizes/renames files via path-format templates. The
-codebase has three big concentric layers:
-
-  1. **dbcore** (`beets/dbcore/`) — a tiny ORM over SQLite. Defines
-     `Model`, `Database`, the `Query`/`FieldQuery`/`Sort` hierarchy,
-     and the `Type` hierarchy for field types. Library-agnostic.
-  2. **library** (`beets/library/`) — concrete `Item` (track) and
-     `Album` models, the `Library` subclass of `Database`, the
-     `TYPE_BY_FIELD` mapping, query parsing wrappers, and schema
-     migrations.
-  3. **importer** (`beets/importer/`) + **autotag**
-     (`beets/autotag/`) — the user-facing workflow. `ImportSession`
-     drives a `pipeline.Pipeline` of coroutine stages (`read_tasks` →
-     `lookup_candidates` → `user_query` → `manipulate_files` …);
-     `autotag.match` produces `AlbumMatch`/`TrackMatch` candidates
-     scored by a weighted `Distance`.
-
-The CLI lives in `beets/ui/__init__.py` (`main()` → `_raw_main()` →
-`SubcommandsOptionParser`), with built-in subcommands under
-`beets/ui/commands/`. Almost everything user-visible is extensible
-through plugins in `beetsplug/` (60+ shipped): a plugin subclasses
-`BeetsPlugin` and may register commands, queries, types, template
-funcs, import stages, or event listeners. Metadata sources subclass
-`MetadataSourcePlugin`.
-
-Likely dev queries this ranking serves: "how does a beet command get
-wired up?", "what fields can I query?", "how is metadata matching
-scored?", "what's the import pipeline?", "how do I write a plugin /
-register a stage / listener?", "how do paths get stored?", "where's
-the config schema?", "what's the model migration story?".
+beets (tests/fixtures/beets) is a Python 3.10-3.14 CLI + library for tagging,
+organizing, and querying a personal music collection. `beet` (entry point
+`beets.ui:main`) drives a plugin-extensible pipeline: `beets/importer/` walks
+source directories and builds `ImportTask`s, `beets/autotag/` matches them
+against MusicBrainz/Discogs/etc. candidates and scores `Distance`, and
+`beets/library/` (built on the generic ORM-ish `beets/dbcore/`) persists
+`Item`/`Album` rows to a SQLite `library.db` and renders/parses path templates
+and query strings. `beets/ui/commands/` holds one module per CLI subcommand
+(list, import, modify, move, ...). `beetsplug/` has ~80 first-party plugins
+(one file/package each) registered via `beets/plugins.py`'s `BeetsPlugin`
+base + `EventType` hook literal; `beets/metadata_plugins.py` adds the
+autotag-source-plugin ABC (MusicBrainz, Discogs, Spotify, Deezer, ...).
+Config is YAML via `confuse`, documented end-to-end in `docs/reference/` and
+`docs/plugins/*.rst`; dev docs live under `docs/dev/`. Tests are pytest,
+mirroring source layout under `test/` (plus `beets/test/helper.py`'s
+TestHelper/ImportHelper mixins used by nearly every test module). Plausible
+sessions: implement/debug a plugin hook or CLI flag, add a query operator or
+path-template function, trace an import-pipeline stage, extend the Item/Album
+schema, or wire up a new metadata-source plugin. The ranking favors: (1) the
+CLI/plugin/import/autotag/dbcore architecture and its exact extension points
+(signatures + line coordinates), (2) a full roster of every plugin, command,
+util module, and config key so nothing looks card-carrying-absent, (3) the
+concrete config/CLI/event/query surfaces an agent would otherwise have to
+grep for, ahead of (4) plugin-body and test-suite depth.
 """
 
-# =============================================================================
-# Tier 1 — Repo identity & top-level layout
-# =============================================================================
+# ================== Tier 1: orientation (identity + breadth) ==================
+# Small identity facts and cheap directory-breadth listings first (growth-
+# envelope + "prefer breadth over depth" both push full-file/full-listing
+# content later, once cumulative budget can absorb it). Repo identity
+# (root listing, package listing, README) is established before the
+# .github/ operational surface, not after.
 
 [[batches]]
 id = "1.1"
-descriptor = "README lede + tagline"
-justification = """
-Names the product and sets the domain (music library management) in
-seven lines. Tiny, universally useful — every query benefits from
-knowing what beets is.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "README.rst", start = 13, end = 20, render.kind = "full" },
-]
+descriptor = "Repo root listing"
+justification = "First orientation for any session: confirms this is the beets source tree (not a vendored copy), shows top-level docs/config/CI surface (pyproject.toml, setup.cfg, .github, docs, test, beets, beetsplug) in one cheap listing so nothing at the root looks absent."
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Top-level repo listing"
-justification = """
-Reveals the dual-package layout (`beets/` core + `beetsplug/`
-plugins), the `docs/`, `test/`, `extra/` trees, and config files
-(`pyproject.toml`, `setup.cfg`). One hop from any unfamiliar path.
-"""
-content.kind = "fs"
-content.groups = [
-  { parent = ".", entries = "all" },
-]
+descriptor = "beets/ package listing"
+justification = "Full immediate-child listing of the core package: top-level modules (plugins.py, mediafile.py, metadata_plugins.py, context.py, logging.py, config_default.yaml) plus the six subpackages (ui, importer, library, autotag, dbcore, util) and beets/test/. Catastrophic-omission guard — an agent must see every module name to know what exists before guessing paths."
+content = { kind = "fs", groups = [ { parent = "beets", entries = "all" } ] }
 
 [[batches]]
 id = "1.3"
-descriptor = "Entry-point scripts (`beet = beets.ui:main`)"
-justification = """
-The poetry script declaration is *the* answer to "how do you run
-beets and where does it start?". Pin this very early.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 184, end = 186, render.kind = "full" },
-]
+descriptor = "README lede: what beets is"
+justification = "One-paragraph identity — the fastest way to frame 'what does this repo do' before any code read. Ranked ahead of the .github/ CI listing (1.7): knowing what the repo *is* outranks knowing how its CI runs. Ends at the lead-in to the tagging example, which 1.4 renders next."
+content = { kind = "lines", spans = [
+  { path = "README.rst", start = 13, end = 23, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.4"
-descriptor = "`python -m beets` shim"
-justification = """
-Two-liner: `__main__` defers to `beets.ui.main`. Confirms the entry
-point and lets the agent jump there without `grep -r main`.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/__main__.py", start = 15, end = 24, render.kind = "full" },
-]
+descriptor = "README: the canonical `beet import` example"
+justification = "The brainy-tag-corrector example promised by 1.3's lede: a `beet import` run and all four of its metadata corrections verbatim, so no correction looks cherry-picked. Split out of 1.3 to keep both batches inside the growth envelope. README continues for 113 more lines (the plugins_ feature list, installation, getting-help) — the trailing ellipsis marks that so the agent doesn't infer the file ends here."
+content = { kind = "lines", spans = [
+  { path = "README.rst", start = 24, end = 33, render = { kind = "full" } },
+  { path = "README.rst", start = 34, end = 34, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "1.5"
-descriptor = "Package version + global config singleton"
-justification = """
-Pins the version (2.11.0) and shows where the global `beets.config`
-object is created — `IncludeLazyConfig` (a confuse `LazyConfig`
-subclass) at the bottom of `beets/__init__.py`. Agents asking "where
-is `beets.config` defined?" land one read away.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/__init__.py", start = 22, end = 23, render.kind = "full" },
-  { path = "beets/__init__.py", start = 35, end = 36, render.kind = "full" },
-  { path = "beets/__init__.py", start = 52, end = 52, render.kind = "full" },
-]
+descriptor = "CLI entry point + build backend"
+justification = "The single most load-bearing line for 'how does `beet` get invoked': `beet = \"beets.ui:main\"`. Also the poetry build backend, needed for any packaging question."
+content = { kind = "lines", spans = [
+  { path = "pyproject.toml", start = 184, end = 189, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "Project metadata + Python version constraint"
-justification = """
-Project name/version/license + Python >=3.10,<3.15. Answers
-"what Python versions does this support?" / "what package name
-on PyPI?".
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 1, end = 11, render.kind = "full" },
-  { path = "pyproject.toml", start = 44, end = 46, render.kind = "full" },
-]
-
-[[batches]]
-id = "1.7"
-descriptor = "Core (non-optional) runtime deps"
-justification = """
-The non-optional deps that make beets work without any extras:
-`confuse` (config), `mediafile` (tag I/O), `jellyfish` (string
-distance), `lap` (linear assignment for track matching), and
-ancillary I/O/numeric libraries. Knowing these is load-bearing for
-any "where does library X come from?" question.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "pyproject.toml", start = 47, end = 62, render.kind = "full" },
-]
-
-# =============================================================================
-# Tier 2 — Module map of the core package
-# =============================================================================
-
-[[batches]]
-id = "2.1"
-descriptor = "`beets/` core package listing"
-justification = """
-Enumerates every immediate child of `beets/`: the subpackages
-(`autotag`, `dbcore`, `importer`, `library`, `ui`, `util`, `test`)
-and the leaf modules (`plugins.py`, `metadata_plugins.py`,
-`logging.py`, `context.py`, `mediafile.py`, `config_default.yaml`).
-Pins down the high-level architecture before per-module batches.
-"""
-content.kind = "fs"
-content.groups = [
-  { parent = "beets", entries = "all" },
-]
-
-[[batches]]
-id = "2.2"
-descriptor = "Core subpackage listings: dbcore, library, autotag, importer"
-justification = """
-One batch listing the four central subpackages' interiors.
-Catastrophic-omission hedge: shows that `library` splits into
-models/fields/queries/migrations/library/exceptions; `dbcore` into
-db/query/queryparse/types/pathutils; `importer` into
-session/stages/tasks/state; `autotag` into distance/hooks/match.
-"""
-content.kind = "fs"
-content.groups = [
-  { parent = "beets/dbcore", entries = "all" },
-  { parent = "beets/library", entries = "all" },
-  { parent = "beets/importer", entries = "all" },
-  { parent = "beets/autotag", entries = "all" },
-]
-
-[[batches]]
-id = "2.3"
-descriptor = "UI + util + commands listings"
-justification = """
-Lists `beets/ui/`, `beets/ui/commands/` (including `import_/`
-subpackage), and `beets/util/` (path/pipeline/template/etc. files).
-Together with 2.2 this completes the module map of `beets/`.
-"""
-content.kind = "fs"
-content.groups = [
+descriptor = "beets/ui and beets/ui/commands listing"
+justification = "Shows the CLI layer's shape: ui/__init__.py (framework) plus commands/ with one module per subcommand, and the import_/ sub-package (renamed from `import` to dodge the keyword). Needed before any 'which file implements `beet <subcommand>`' question."
+content = { kind = "fs", groups = [
   { parent = "beets/ui", entries = "all" },
   { parent = "beets/ui/commands", entries = "all" },
   { parent = "beets/ui/commands/import_", entries = "all" },
-  { parent = "beets/util", entries = "all" },
-]
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = ".github/ workflows + config listing"
+justification = "CI/ops surface: workflows/ (ci.yaml, lint.yaml, integration_test.yaml, make_release.yaml, label-issues.yaml, changelog_reminder.yaml), CODEOWNERS, labeler.yaml, ISSUE_TEMPLATE/, copilot-instructions.md, problem-matchers/. Needed before any 'how does CI run' question, and to know these workflow files exist at all. Ranked after repo identity (1.3/1.4) and the CLI entry point/package shape (1.5/1.6) — operational tooling outranked by 'what is this and how do I run it'."
+content = { kind = "fs", groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "docs/reference, docs/dev, docs/dev/plugins listings"
+justification = "The developer/reference half of the doc tree: reference/ (cli, config, pathformat, query, index — user-facing reference, given depth in tier 7), dev/ (plugins/, importer, library, cli, paths, index — the 'for developers' docs)."
+content = { kind = "fs", groups = [
+  { parent = "docs/reference", entries = "all" },
+  { parent = "docs/dev", entries = "all" },
+  { parent = "docs/dev/plugins", entries = "all" },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "docs/guides, docs/api listings"
+justification = "The remaining doc tree halves: guides/ (main, installation, advanced, tagger — user-facing walkthroughs) and api/ (sphinx autodoc index pages). Split from 1.8 to keep both batches small and to let the reference/dev split land first (closer to the tier-7 reference depth that follows later)."
+content = { kind = "fs", groups = [
+  { parent = "docs/guides", entries = "all" },
+  { parent = "docs/api", entries = "all" },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "test/ top-level listing"
+justification = "Top-level test/ children: one test_*.py per core module (test_importer.py, test_library.py, test_query.py, ...) plus subdirs (ui, util, plugins, library, autotag, rsrc) and conftest.py/testall.py. Establishes the test tree exists and roughly mirrors src layout before any 'where are the tests for X' question."
+content = { kind = "fs", groups = [ { parent = "test", entries = "all" } ] }
+
+[[batches]]
+id = "1.11"
+descriptor = "pyproject.toml project identity"
+justification = "Name/version/license/homepage/repository/docs URL — grounds version-specific questions (e.g. changelog cross-refs) and confirms package name `beets` vs. distribution metadata. Also the `[tool.poetry.dependencies]` Python version bound, grounding the summary's '3.10-3.14' support claim."
+content = { kind = "lines", spans = [
+  { path = "pyproject.toml", start = 1, end = 11, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 44, end = 45, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.12"
+descriptor = "beets/library listing"
+justification = "library/ children (library.py, models.py, fields.py, queries.py, migrations.py, exceptions.py) — the persistence + schema subpackage, given depth in tier 4. Split out of the old five-subpackage bundle so each core subpackage's listing can sit at its own rank and small budgets still see package breadth."
+content = { kind = "fs", groups = [ { parent = "beets/library", entries = "all" } ] }
+
+[[batches]]
+id = "1.13"
+descriptor = "beets/importer listing"
+justification = "importer/ children (tasks.py, session.py, stages.py, state.py, __init__.py) — the import-pipeline subpackage, given depth in tier 5."
+content = { kind = "fs", groups = [ { parent = "beets/importer", entries = "all" } ] }
+
+[[batches]]
+id = "1.14"
+descriptor = "beets/autotag listing"
+justification = "autotag/ children (match.py, hooks.py, distance.py, __init__.py) — the candidate-matching subpackage, given depth in tier 6."
+content = { kind = "fs", groups = [ { parent = "beets/autotag", entries = "all" } ] }
+
+[[batches]]
+id = "1.15"
+descriptor = "beets/dbcore listing"
+justification = "dbcore/ children (db.py, query.py, types.py, queryparse.py, pathutils.py, __init__.py) — the generic ORM/query engine `beets/library` is built on, given depth in tier 4."
+content = { kind = "fs", groups = [ { parent = "beets/dbcore", entries = "all" } ] }
+
+[[batches]]
+id = "1.16"
+descriptor = "beets/util listing"
+justification = "util/ children (~16 helper modules: functemplate, hidden, confit-adjacent path helpers, etc.) — completes the package-tree orientation started in 1.2, one subpackage per batch instead of the old five-in-one bundle."
+content = { kind = "fs", groups = [ { parent = "beets/util", entries = "all" } ] }
+
+[[batches]]
+id = "1.17"
+descriptor = "beetsplug/_utils, web/, bpd/ sub-listings"
+justification = "The three plugin sub-packages (not flat files): _utils/ (shared musicbrainz/art/vfs/requests/playcount helpers reused by several plugins), web/ (Flask app + static/templates dirs), bpd/ (MPD-protocol server + gstplayer backend). Ranked immediately before 1.18's full beetsplug/ roster so neither implies the other is a flat file — the two are now adjacent rather than ten batches apart."
+content = { kind = "fs", groups = [
+  { parent = "beetsplug/_utils", entries = "all" },
+  { parent = "beetsplug/web", entries = "all" },
+  { parent = "beetsplug/bpd", entries = "all" },
+] }
+
+[[batches]]
+id = "1.18"
+descriptor = "beetsplug/ full plugin-file listing"
+justification = "Every first-party plugin is one file (or package) here (~80 entries: musicbrainz.py, fetchart.py, lyrics.py, convert.py, web/, bpd/, _utils/, ...). This is the single highest-value catastrophic-omission mitigation in the fixture: any partial plugin list would make the agent assume the rest don't exist. Cheap (names only) relative to its coverage; ranked as soon as cumulative budget can absorb it."
+content = { kind = "fs", groups = [ { parent = "beetsplug", entries = "all" } ] }
+
+[[batches]]
+id = "1.19"
+descriptor = "docs/ top-level + docs/plugins/ listing"
+justification = "docs/ top level (guides, reference, dev, api, plugins, changelog.rst, faq.rst, conf.py) plus the full docs/plugins/*.rst roster (~80 files, one per plugin, matching 1.18's beetsplug/ roster). Confirms every plugin is documented and shows the doc tree shape."
+content = { kind = "fs", groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "docs/plugins", entries = "all" },
+] }
+
+[[batches]]
+id = "1.20"
+descriptor = "test/ subdirectory listings (ui, util, plugins, library, autotag)"
+justification = "Expands the five test subdirectories named in 1.10 (excluding test/rsrc, which holds binary/audio fixtures rather than source): ui/ (test_ui.py, test_ui_importer.py, test_ui_init.py, plus a commands/ sub-package mirroring beets/ui/commands/), util/ (per-util-module tests), plugins/ (~70 per-plugin test files, mirroring beetsplug/), library/ (test_migrations.py), autotag/ (test_match.py, test_hooks.py, test_distance.py). Avoids the catastrophic-omission risk of showing only test/ top-level and leaving these opaque."
+content = { kind = "fs", groups = [
+  { parent = "test/ui", entries = "all" },
+  { parent = "test/util", entries = "all" },
+  { parent = "test/plugins", entries = "all" },
+  { parent = "test/library", entries = "all" },
+  { parent = "test/autotag", entries = "all" },
+] }
+
+[[batches]]
+id = "1.21"
+descriptor = "beets/__init__.py in full"
+justification = "The package's own __init__: `__version__`, the module-level `config` object every other module imports (`from beets import config`), and the deprecated-import shim (`beets.art`/`beets.vfs` moved to `beetsplug._utils`). Small and universally relevant — almost every source file touches `beets.config`. Skips the 13-line MIT license-header comment (identical boilerplate atop nearly every file in the tree) to make room for tier 4-7 depth."
+content = { kind = "lines", spans = [
+  { path = "beets/__init__.py", start = 16, end = 52, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.22"
+descriptor = "config_default.yaml: main/plugins/import options"
+justification = "The shipped default config is the cheapest, most concrete evidence of the config schema — cheaper than reading the confuse-based parser. This chunk covers library/directory/statefile, the `plugins:` list default (musicbrainz only), and every `import:` sub-option (write/copy/move/timid/.../duplicate_action) — a common 'does beets support X on import' lookup."
+content = { kind = "lines", spans = [
+  { path = "beets/config_default.yaml", start = 1, end = 61, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.23"
+descriptor = "config_default.yaml: paths/tagging options"
+justification = "Continues the config sample: path-sanitization `replace:` regexes, `aunique`/`sunique` disambiguation, and the `paths:` templates (default/singleton/comp) that drive file layout — directly answers 'where does beets put files'."
+content = { kind = "lines", spans = [
+  { path = "beets/config_default.yaml", start = 62, end = 110, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.24"
+descriptor = "config_default.yaml: performance/UI options + search key roster"
+justification = "Trimmed to make room for the tier 4-7 depth batches: keeps threaded/timeout and the full `ui:` block shape (terminal_width, color toggle) with the first three `colors:` entries as a concrete example of the common customization ask, then an ellipsis for the remaining eleven colors plus the `import:` indentation sub-block. The trailing `format_item`/`format_album`/`time_format`/`sort_*` search keys are named (truncated, dropping their default values) rather than spelled out — grep config_default.yaml for the literal defaults if needed."
+content = { kind = "lines", spans = [
+  { path = "beets/config_default.yaml", start = 111, end = 128, render = { kind = "full" } },
+  { path = "beets/config_default.yaml", start = 129, end = 129, render = { kind = "ellipsis" } },
+  { path = "beets/config_default.yaml", start = 150, end = 150, render = { kind = "truncated", pattern = "^[a-z_]+" } },
+  { path = "beets/config_default.yaml", start = 151, end = 151, render = { kind = "truncated", pattern = "^[a-z_]+" } },
+  { path = "beets/config_default.yaml", start = 152, end = 152, render = { kind = "truncated", pattern = "^[a-z_]+" } },
+  { path = "beets/config_default.yaml", start = 153, end = 153, render = { kind = "truncated", pattern = "^[a-z_]+" } },
+  { path = "beets/config_default.yaml", start = 155, end = 155, render = { kind = "truncated", pattern = "^[a-z_]+" } },
+  { path = "beets/config_default.yaml", start = 156, end = 156, render = { kind = "truncated", pattern = "^[a-z_]+" } },
+  { path = "beets/config_default.yaml", start = 157, end = 157, render = { kind = "truncated", pattern = "^[a-z_]+" } },
+] }
+
+[[batches]]
+id = "1.25"
+descriptor = "config_default.yaml: autotagger matching weights"
+justification = "The `match:` block: recommendation thresholds and 7 of the 20 `distance_weights` entries (data_source through country, the album-level weights) — ground truth for 'why did beets rank this candidate lower/higher', a frequent autotag-debugging question. Complements tier 6's `Distance` class depth (the code that consumes these weights) with the actual shipped numbers. Trimmed the remaining 13 track-level weights behind an ellipsis, and the trailing `preferred`/`ignored`/disambig-field keys, to make room for the tier 4-7 depth batches."
+content = { kind = "lines", spans = [
+  { path = "beets/config_default.yaml", start = 159, end = 179, render = { kind = "full" } },
+  { path = "beets/config_default.yaml", start = 180, end = 180, render = { kind = "ellipsis" } },
+] }
+
+# ========================= Tier 2: CLI framework =========================
+
+[[batches]]
+id = "2.1"
+descriptor = "ui/__init__.py top-level signature roster"
+justification = "Location batch: every top-level class/def in the 1044-line CLI framework module (UserError, encoding helpers, decargs, print_, input_/input_options/input_yn/input_select_objects prompts, get_path_formats, show_model_changes, CommonOptionsParser, Subcommand, SubcommandsOptionParser, _setup/_configure/_open_library/_raw_main/main). Cheap (name-only) but forecloses catastrophic omission — an agent must see the full set before assuming a helper doesn't exist here."
+content = { kind = "lines", spans = [
+  { path = "beets/ui/__init__.py", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 80, end = 80, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 85, end = 85, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 122, end = 122, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 150, end = 150, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 160, end = 160, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 167, end = 167, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 187, end = 187, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 207, end = 207, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 383, end = 383, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 395, end = 395, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 433, end = 433, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 445, end = 445, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 460, end = 460, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 466, end = 466, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 498, end = 498, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 637, end = 637, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 676, end = 676, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 807, end = 807, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 830, end = 830, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 867, end = 867, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 879, end = 879, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 905, end = 905, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/__init__.py", start = 996, end = 996, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "CLI subcommand roster: every `beet <cmd>` name/aliases/help"
+justification = "Full name+aliases+help-string for every registered subcommand (import/imp/im, list/ls, remove/rm, modify/mod, move/mv, update, write, stats, fields, config, version, completion, help). Directly answers 'what commands exist and what are their aliases' — a very common orientation query — without opening 13 separate files."
+content = { kind = "lines", spans = [
+  { path = "beets/ui/commands/import_/__init__.py", start = 160, end = 162, render = { kind = "full" } },
+  { path = "beets/ui/commands/list.py", start = 22, end = 22, render = { kind = "full" } },
+  { path = "beets/ui/commands/remove.py", start = 74, end = 76, render = { kind = "full" } },
+  { path = "beets/ui/commands/modify.py", start = 123, end = 125, render = { kind = "full" } },
+  { path = "beets/ui/commands/move.py", start = 168, end = 168, render = { kind = "full" } },
+  { path = "beets/ui/commands/update.py", start = 151, end = 158, render = { kind = "full" } },
+  { path = "beets/ui/commands/write.py", start = 47, end = 47, render = { kind = "full" } },
+  { path = "beets/ui/commands/stats.py", start = 56, end = 58, render = { kind = "full" } },
+  { path = "beets/ui/commands/fields.py", start = 38, end = 40, render = { kind = "full" } },
+  { path = "beets/ui/commands/config.py", start = 69, end = 69, render = { kind = "full" } },
+  { path = "beets/ui/commands/version.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "beets/ui/commands/completion.py", start = 25, end = 28, render = { kind = "full" } },
+  { path = "beets/ui/commands/help.py", start = 6, end = 12, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "ui/commands/*.py function signature roster"
+justification = "Location batch for every top-level function/class inside the 16 command modules (list_items, modify_items/print_and_modify/modify_parse_args, move_items/show_path_changes, remove_items, update_items, write_items, show_stats, do_query, HelpCommand.func, the import_/ package's paths_from_logfile/import_files/TerminalImportSession/choose_candidate/ChangeRepresentation/AlbumChange, ...). Complements 2.2 (which shows only the registration line, or for `help` only the class line) so no command's implementation entry point is left unlocated."
+content = { kind = "lines", spans = [
+  { path = "beets/ui/commands/completion.py", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/completion.py", start = 44, end = 44, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/config.py", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/config.py", start = 47, end = 47, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/fields.py", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/fields.py", start = 16, end = 16, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/help.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/list.py", start = 6, end = 6, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/list.py", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/modify.py", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/modify.py", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/modify.py", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/modify.py", start = 106, end = 106, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/move.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/move.py", start = 62, end = 62, render = { kind = "full" } },
+  { path = "beets/ui/commands/move.py", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/remove.py", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/remove.py", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/stats.py", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/stats.py", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/update.py", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/update.py", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/utils.py", start = 6, end = 6, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/version.py", start = 9, end = 9, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/write.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/write.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/__init__.py", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/display.py", start = 28, end = 28, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/display.py", start = 304, end = 304, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/display.py", start = 362, end = 362, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/display.py", start = 368, end = 368, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/display.py", start = 385, end = 385, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/session.py", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/session.py", start = 285, end = 285, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/session.py", start = 328, end = 328, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/session.py", start = 367, end = 367, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/session.py", start = 513, end = 513, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/session.py", start = 529, end = 529, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/ui/commands/import_/session.py", start = 544, end = 544, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "2.4"
-descriptor = "`beets.dbcore` public re-exports"
-justification = """
-The import-visible contract for the ORM layer: `Database`, `Model`,
-`Results`, `Index`, `Query`/`FieldQuery`/`AndQuery`/`OrQuery`/
-`MatchQuery`/`InvalidQueryError`, `Type`, and the
-`parse_sorted_query`/`query_from_strings`/`sort_from_strings`
-parsers. Answers "is X exported from `beets.dbcore`?" without
-grepping.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/dbcore/__init__.py", start = 19, end = 50, render.kind = "full" },
-]
+descriptor = "Global CLI flags (`beet -l/-d/-v/-c/-p/-P/-h/--version`)"
+justification = "The root parser's global options, defined in `_raw_main` before subcommand dispatch — these apply to every invocation regardless of subcommand (library path override, directory override, verbosity, config path, plugin enable/disable lists, help, version). A frequent 'what does -v do' / 'how do I point beet at a different library' lookup that isn't discoverable from any single subcommand file. Two ellipses mark elided body: the `parse_csl_callback` helper between the two flag spans, and the rest of `_raw_main` after option parsing (the `config --edit` special case, subcommand dispatch, and `cli_exit`/`lib._close()` teardown) — neither is rendered anywhere else in this draft."
+content = { kind = "lines", spans = [
+  { path = "beets/ui/__init__.py", start = 909, end = 931, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 932, end = 932, render = { kind = "ellipsis" } },
+  { path = "beets/ui/__init__.py", start = 942, end = 970, render = { kind = "full" } },
+  { path = "beets/ui/__init__.py", start = 971, end = 971, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "2.5"
-descriptor = "`beets.library` public re-exports"
-justification = """
-The library package's `__all__`: `Album`, `Item`, `LibModel`,
-`Library`, `FileOperationError`/`ReadError`/`WriteError`, plus the
-two query-string parsers. Also shows the deprecation shim that
-re-homes `DateType`/`PathType`/`SingletonQuery` etc. to `dbcore`
-submodules.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/__init__.py", start = 1, end = 29, render.kind = "full" },
-]
+descriptor = "Subcommand class constructor"
+justification = "The `Subcommand.__init__` (name/parser/help/aliases/hide fields) is what every `*_cmd = ui.Subcommand(...)` registration in 2.2 instantiates — needed to understand what fields a new subcommand can set. Trimmed to the constructor (dropping print_help/parse_args/root_parser, thin wrappers around `self.parser`) to make room for the tier 4-7 depth batches."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "beets/ui/__init__.py", start = 637, end = 656, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.6"
-descriptor = "`beets.autotag` public re-exports"
-justification = """
-The autotagger contract: `AlbumInfo`, `AlbumMatch`, `TrackInfo`,
-`TrackMatch`, `Proposal`, `Recommendation`, `tag_album`, `tag_item`
-— plus the deprecation hook for `current_metadata` → `util.
-get_most_common_tags` and `Distance` → `beets.autotag.distance`.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/autotag/__init__.py", start = 15, end = 49, render.kind = "full" },
-]
+descriptor = "`beet import` full flag surface, part 1"
+justification = "The `import` subcommand is the most flag-heavy and most-used command; this is the most fundamental slice of its option surface (-c/-C copy, -m/-M move) verbatim so an agent can answer 'does import support flag X' without parsing optparse boilerplate itself. Trimmed from the original 10-option span (which ran through -w/-W/-a/-A/-p/-P) to make room for the tier 4-7 depth batches; those six flags move to 2.8 as a name-only roster."
+content = { kind = "lines", spans = [
+  { path = "beets/ui/commands/import_/__init__.py", start = 163, end = 190, render = { kind = "full" } },
+] }
+predecessor = "2.2"
 
 [[batches]]
 id = "2.7"
-descriptor = "`beets.importer` public re-exports"
-justification = """
-The importer contract: `Action`, `ImportSession`, `ImportTask`,
-`SingletonImportTask`, `SentinelImportTask`, `ArchiveImportTask`,
-`ImportAbortError`. Note: stages are explicitly *not* exposed.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/importer/__init__.py", start = 15, end = 38, render.kind = "full" },
-]
+descriptor = "`beet import` full flag surface, part 2 (most-used flags)"
+justification = "Continues 2.6 with the single next most commonly reached-for import flag in full: quiet. Trimmed from the original single 115-line span (which ran through set-field) to make room for the tier 4-7 depth batches; quiet-fallback/log/singletons/timid/library/incremental/noincremental and the remaining flags move to 2.8 as a name-only roster instead of full optparse blocks."
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "beets/ui/commands/import_/__init__.py", start = 233, end = 239, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.8"
-descriptor = "Docs tree + reference + dev-doc table-of-contents"
-justification = """
-Lists `docs/` and exposes the developer/reference/guides
-sub-listings. These prose docs are often the cheapest
-zero-follow-up answer for design questions.
-"""
-content.kind = "fs"
-content.groups = [
-  { parent = "docs", entries = "all" },
-  { parent = "docs/dev", entries = "all" },
-  { parent = "docs/dev/plugins", entries = "all" },
-  { parent = "docs/reference", entries = "all" },
-  { parent = "docs/guides", entries = "all" },
-  { parent = "docs/api", entries = "all" },
-]
+descriptor = "`beet import` remaining flag names (roster)"
+justification = "Name-only roster for the seventeen import flags 2.6/2.7 trim to make room for tier 4-7 (write/nowrite, autotag/noautotag, resume/noresume, quiet-fallback, log, singletons, timid, library, incremental/noincremental, incremental-skip-later/-r, from-scratch, flat, group-albums, pretend, search-id, from-logfile, set) — catastrophic-omission guard so those cuts don't make these flags look absent, at a fraction of the full optparse-block cost since only the flag-string lines render."
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "beets/ui/commands/import_/__init__.py", start = 253, end = 254, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 192, end = 193, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 199, end = 200, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 206, end = 207, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 213, end = 214, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 220, end = 221, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 227, end = 228, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 241, end = 241, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 247, end = 248, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 259, end = 260, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 266, end = 267, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 273, end = 274, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 280, end = 281, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 287, end = 288, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 294, end = 295, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 301, end = 301, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 307, end = 307, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 313, end = 314, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 320, end = 320, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 326, end = 327, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 334, end = 334, render = { kind = "full" } },
+  { path = "beets/ui/commands/import_/__init__.py", start = 341, end = 341, render = { kind = "full" } },
+] }
 
-# =============================================================================
-# Tier 3 — CLI surface (entry, parser, default subcommands)
-# =============================================================================
+# =================== Tier 3: plugin/autotag extension points ===================
+# The summary's architecture paragraph names beets/plugins.py's BeetsPlugin
+# base + EventType hook literal, beets/metadata_plugins.py's autotag-source
+# ABC, autotag/distance.py's Distance scorer, and library/models.py's
+# Item/Album — 3.1/3.3 land these at the signature/line-coordinate level;
+# 3.2 renders the EventType hook names in full (the summary names this
+# literal but no earlier draft rendered its contents, only its declaration
+# line). Tiers 4-7 go deeper still on each of these areas.
 
 [[batches]]
 id = "3.1"
-descriptor = "`UserError` + `Subcommand` class header"
-justification = """
-`UserError` is the exception every command throws for user-visible
-errors. `Subcommand` is the value type registered in
-`default_commands` — name, parser, aliases, hide, func.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/__init__.py", start = 71, end = 75, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 637, end = 645, render.kind = "full" },
-]
+descriptor = "beets/plugins.py extension-point signature roster"
+justification = "Location batch: every top-level class/def in the plugin host module (EventType hook-name literal, PluginConflictError/PluginImportError/PluginLogFilter, BeetsPluginMeta/BeetsPlugin, get_plugin_names/load_plugins/find_plugins, commands/queries/types/named_queries, notify_info_yielded, template_funcs, early_import_stages/import_stages, item_field_getters/album_field_getters, send, feat_tokens, apply_item_changes). Grounds the summary's `BeetsPlugin`/`EventType` claim at line-coordinate precision — this is the file every one of the ~80 beetsplug/ modules subclasses or calls into."
+content = { kind = "lines", spans = [
+  { path = "beets/plugins.py", start = 68, end = 68, render = { kind = "truncated", pattern = "^EventType" } },
+  { path = "beets/plugins.py", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 116, end = 116, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 127, end = 127, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 147, end = 147, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 153, end = 153, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 401, end = 401, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 442, end = 442, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 485, end = 485, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 500, end = 500, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 507, end = 507, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 515, end = 515, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 525, end = 525, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 542, end = 542, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 552, end = 552, render = { kind = "full" } },
+  { path = "beets/plugins.py", start = 576, end = 576, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 586, end = 586, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 594, end = 594, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 607, end = 607, render = { kind = "full" } },
+  { path = "beets/plugins.py", start = 624, end = 624, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 634, end = 634, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 645, end = 645, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/plugins.py", start = 661, end = 661, render = { kind = "full" } },
+  { path = "beets/plugins.py", start = 679, end = 679, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "Top-level fns in `beets/ui/__init__.py` (signature heads only)"
-justification = """
-Locations batch: every top-level public def/class header in the UI
-module's grab-bag — `print_`, `should_write`/`should_move`,
-`input_*` family (`input_`, `input_options`, `input_yn`,
-`input_select_objects`), `get_path_formats`, `get_replacements`,
-`term_width`, `show_model_changes`, plus class anchors
-`CommonOptionsParser`, `Subcommand`, `SubcommandsOptionParser`, and
-the bootstrap fns `_setup`/`_configure`/`_open_library`/`_raw_main`/
-`main`. Tells the agent the whole help-shape of `beets.ui` without
-grep. Catastrophic-omission hedge: lists *all* the helpers.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/__init__.py", start = 122, end = 122, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 150, end = 150, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 160, end = 160, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 167, end = 167, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 187, end = 187, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 207, end = 207, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 383, end = 383, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 395, end = 395, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 433, end = 433, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 445, end = 445, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 460, end = 460, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 466, end = 466, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 498, end = 498, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 676, end = 676, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 807, end = 807, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 830, end = 830, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 879, end = 879, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 905, end = 905, render.kind = "full" },
-  { path = "beets/ui/__init__.py", start = 996, end = 996, render.kind = "full" },
-]
+descriptor = "EventType hook-name literal in full"
+justification = "The summary names `EventType` as a headline plugin extension point, but 3.1 only shows its declaration line (truncated). This overrides that one line and renders the full `Literal[...]` — every hook name a plugin can `@BeetsPlugin.listen()` for or `plugins.send()` (after_write, album_imported, import_task_apply, item_copied/hardlinked/linked/reflinked, mb_album_extract, pluginload, cli_exit, the convert/smartplaylist plugin-specific hooks, ...). Directly answers 'what hooks can my plugin listen for' without opening the file."
+predecessor = "3.1"
+content = { kind = "lines", spans = [
+  { path = "beets/plugins.py", start = 68, end = 103, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.3"
-descriptor = "`main()` top-level exception handlers"
-justification = """
-The friendly-error wrapper around `_raw_main`: catches `UserError`,
-`HumanReadableError`, `FileOperationError`, `ConfigError`,
-`InvalidQueryError`, `EPIPE`, `KeyboardInterrupt`, `DBAccessError`.
-Answers "what errors propagate to the top?" and "what's the
-exit-status convention?". Refines the `main` signature pointed to
-by 3.2.
-"""
-predecessor = "3.2"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/__init__.py", start = 996, end = 1028, render.kind = "full" },
-]
+descriptor = "Distance / MetadataSourcePlugin / Item / Album / ImportTask locations"
+justification = "Five single-line pointers to the classes the summary names by exact identifier but no earlier batch renders: `Distance` (the scoring engine autotag/match.py feeds candidate distances into), `MetadataSourcePlugin` (metadata_plugins.py's autotag-source-plugin ABC that musicbrainz.py/discogs/spotify.py/deezer.py subclass), and `Item`/`Album` (the dbcore-backed row models) plus `ImportTask` (the importer's per-album unit of work). Not full-file rosters — just the one load-bearing class each file is best known for. Tiers 4-6 give each of these classes real depth."
+content = { kind = "lines", spans = [
+  { path = "beets/autotag/distance.py", start = 125, end = 125, render = { kind = "full" } },
+  { path = "beets/metadata_plugins.py", start = 171, end = 171, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "beets/library/models.py", start = 242, end = 242, render = { kind = "full" } },
+  { path = "beets/library/models.py", start = 609, end = 609, render = { kind = "full" } },
+  { path = "beets/importer/tasks.py", start = 134, end = 134, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "3.4"
-descriptor = "`_raw_main()` global-option setup"
-justification = """
-First half of `_raw_main`: register global options
-(`--library`/`-d`/`-v`/`-c`/`-p`/`-P`/`-h`/`--version`) on a
-`SubcommandsOptionParser`, including the comma-sep-list callback
-for `--plugins`/`--disable-plugins`. Refines the `_raw_main`
-signature in 3.2.
-"""
-predecessor = "3.2"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/__init__.py", start = 909, end = 914, render.kind = "full" },
-]
-
-[[batches]]
-id = "3.5"
-descriptor = "`_raw_main()` parse + dispatch tail"
-justification = """
-Second half of `_raw_main`: parse global opts, special-case `config
---edit`, call `_setup()` to load plugins + open library, dispatch to
-the subcommand, send `cli_exit` event. The clearest read for "how
-does `beet foo` get to its command handler?". Refines 3.4.
-"""
-predecessor = "3.4"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/__init__.py", start = 972, end = 993, render.kind = "full" },
-]
-
-[[batches]]
-id = "3.6"
-descriptor = "`_setup()` body: load plugins, build commands, open library"
-justification = """
-The plugin-loading + library-opening helper. Tiny but load-bearing:
-shows that plugin-provided commands extend the built-in list, and
-`library_opened` is sent immediately after. Refines the `_setup`
-signature in 3.2.
-"""
-predecessor = "3.2"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/__init__.py", start = 808, end = 827, render.kind = "full" },
-]
-
-[[batches]]
-id = "3.7"
-descriptor = "`default_commands` list (built-in subcommands)"
-justification = """
-Catastrophic-omission hedge: the *complete* list of built-in
-subcommands — fields, help, import, list, update, remove, stats,
-version, modify, move, write, config, completion. Without this an
-agent might assume e.g. `play` or `duplicates` is built-in when it
-actually comes from a plugin. Also shows the deprecation shim that
-re-homes `TerminalImportSession` and `PromptChoice`.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/commands/__init__.py", start = 21, end = 33, render.kind = "full" },
-  { path = "beets/ui/commands/__init__.py", start = 36, end = 64, render.kind = "full" },
-]
-
-[[batches]]
-id = "3.8"
-descriptor = "Built-in command registrations (one `Subcommand` line per cmd)"
-justification = """
-Locations batch: the one-liner where each built-in subcommand is
-constructed. Lets the agent grep no further to find e.g. "what's
-the `list` command's help text?" or "does `move` have an alias?".
-Visible aliases: `ls` (list), `mv` (move).
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/commands/list.py", start = 22, end = 22, render.kind = "full" },
-  { path = "beets/ui/commands/modify.py", start = 123, end = 123, render.kind = "full" },
-  { path = "beets/ui/commands/move.py", start = 168, end = 168, render.kind = "full" },
-  { path = "beets/ui/commands/remove.py", start = 74, end = 74, render.kind = "full" },
-  { path = "beets/ui/commands/update.py", start = 151, end = 151, render.kind = "full" },
-  { path = "beets/ui/commands/write.py", start = 47, end = 47, render.kind = "full" },
-  { path = "beets/ui/commands/stats.py", start = 56, end = 56, render.kind = "full" },
-  { path = "beets/ui/commands/version.py", start = 20, end = 20, render.kind = "full" },
-  { path = "beets/ui/commands/config.py", start = 69, end = 69, render.kind = "full" },
-  { path = "beets/ui/commands/fields.py", start = 38, end = 38, render.kind = "full" },
-  { path = "beets/ui/commands/completion.py", start = 25, end = 25, render.kind = "full" },
-  { path = "beets/ui/commands/import_/__init__.py", start = 160, end = 160, render.kind = "full" },
-]
-
-[[batches]]
-id = "3.9"
-descriptor = "Smallest command as concrete template (`list`)"
-justification = """
-The `list` command in full (25 lines). A complete, miniature
-worked example: parse query, fetch via `lib.items()` /
-`lib.albums()`, print via `ui.print_`. Best zero-follow-up answer
-for "how do I write a beets subcommand?".
-"""
-predecessor = "3.8"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/ui/commands/list.py", start = 1, end = 25, render.kind = "full" },
-]
-
-
-# =============================================================================
-# Tier 4 — Library models: Item, Album, LibModel
-# =============================================================================
+# ================= Tier 4: dbcore/library depth (query surface) =================
+# The summary promises "add a query operator", "add a path-template
+# function", and "extend the Item/Album schema" as plausible sessions; 3.3
+# only bare-pointed at Item/Album. This tier renders the query-operator
+# class set, the CLI-query-string-to-Query-class glue, the Item/Album field
+# schema, and the Library persistence entry points.
 
 [[batches]]
 id = "4.1"
-descriptor = "`Library` class header + `_models` + `_migrations`"
-justification = """
-`Library(dbcore.Database)` registers the two `_models = (Item,
-Album)` and pins the migration sequence applied at open time.
-Knowing this scaffolds every "open / query / migrate" path.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/library.py", start = 20, end = 32, render.kind = "full" },
-]
+descriptor = "dbcore/query.py: Query & Sort operator class roster"
+justification = "Location batch for every Query/Sort subclass in the 1147-line query engine (Query/FieldQuery bases, MatchQuery/NoneQuery/StringFieldQuery/StringQuery/SubstringQuery/PathQuery/RegexpQuery/BooleanQuery/NumericQuery/InQuery, CollectionQuery/MutableCollectionQuery/AndQuery/OrQuery/NotQuery/TrueQuery/FalseQuery, DateQuery/DurationQuery, SingletonQuery, Sort/MultipleSort/FieldSort/FixedFieldSort/SlowFieldSort/NullSort/SmartArtistSort — the private `Period`/`DateInterval` date-parsing helpers `DateQuery` uses internally are skipped, not being Query/Sort classes themselves). Directly serves the summary's 'add a query operator' session and the audit's query-surface gap — an agent extending query syntax must see every existing operator class before adding a new one."
+content = { kind = "lines", spans = [
+  { path = "beets/dbcore/query.py", start = 85, end = 85, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 134, end = 134, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 193, end = 193, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 204, end = 204, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 220, end = 220, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 244, end = 244, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 262, end = 262, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 281, end = 281, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 379, end = 379, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 413, end = 413, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 432, end = 432, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 506, end = 506, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 528, end = 528, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 587, end = 587, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 601, end = 601, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 611, end = 611, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 621, end = 621, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 656, end = 656, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 666, end = 666, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 849, end = 849, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 894, end = 894, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 922, end = 922, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 943, end = 943, render = { kind = "full" } },
+  { path = "beets/dbcore/query.py", start = 974, end = 974, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 1033, end = 1033, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 1085, end = 1085, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 1102, end = 1102, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 1111, end = 1111, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/dbcore/query.py", start = 1130, end = 1130, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+] }
 
 [[batches]]
 id = "4.2"
-descriptor = "`Library` query/fetch method headers"
-justification = """
-The library's public methods, one-line signatures: `add`,
-`add_album`, `albums`, `items`, `get_item`, `get_album`, plus the
-two `get_default_*_sort` helpers. Resolves "how do I query the
-library?" to one read.
-"""
-predecessor = "4.1"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/library.py", start = 63, end = 63, render.kind = "full" },
-  { path = "beets/library/library.py", start = 73, end = 73, render.kind = "full" },
-  { path = "beets/library/library.py", start = 128, end = 129, render.kind = "full" },
-  { path = "beets/library/library.py", start = 135, end = 136, render.kind = "full" },
-  { path = "beets/library/library.py", start = 142, end = 142, render.kind = "full" },
-  { path = "beets/library/library.py", start = 146, end = 146, render.kind = "full" },
-  { path = "beets/library/library.py", start = 151, end = 151, render.kind = "full" },
-  { path = "beets/library/library.py", start = 158, end = 158, render.kind = "full" },
-]
+descriptor = "beets/library/queries.py: query-string prefix → Query-class mapping"
+justification = "The glue between what a user types and 4.1's operator classes: `parse_query_parts`'s `prefixes` dict (`:` → RegexpQuery, `=~` → StringQuery, `=` → MatchQuery, extended by `plugins.queries()`) and `parse_query_string`'s shlex-based entry point. This is the query surface the audit flagged as unserved — the exact mapping an agent needs to add a new query prefix or trace how `beet list foo:bar` becomes a `Query` object."
+content = { kind = "lines", spans = [
+  { path = "beets/library/queries.py", start = 11, end = 11, render = { kind = "full" } },
+  { path = "beets/library/queries.py", start = 25, end = 29, render = { kind = "full" } },
+  { path = "beets/library/queries.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^def [^(]+" } },
+] }
 
 [[batches]]
 id = "4.3"
-descriptor = "`LibModel` + `Item` + `Album` class headers"
-justification = """
-The three shared-class anchors. `LibModel` is the base both derive
-from; `Album` maps to "albums" table, `Item` to "items". Knowing
-the class-header lines unlocks file navigation in this 1535-line
-file.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/models.py", start = 42, end = 43, render.kind = "full" },
-  { path = "beets/library/models.py", start = 242, end = 252, render.kind = "full" },
-  { path = "beets/library/models.py", start = 609, end = 615, render.kind = "full" },
-]
+descriptor = "Album/Item schema: field-name sets (hedged)"
+justification = "3.3 bare-pointed at the `Album`/`Item` class lines; this renders the start of each `_field_names` set literal (the actual DB/flexattr schema an agent extends) with a representative run of real field names, then an ellipsis marking the ~36/~48 remaining fields (to line 298 and 672 respectively) instead of spending ~100 lines on an exhaustive dump. Directly serves the summary's 'extend the Item/Album schema' session."
+content = { kind = "lines", spans = [
+  { path = "beets/library/models.py", start = 254, end = 261, render = { kind = "full" } },
+  { path = "beets/library/models.py", start = 262, end = 262, render = { kind = "ellipsis" } },
+  { path = "beets/library/models.py", start = 616, end = 623, render = { kind = "full" } },
+  { path = "beets/library/models.py", start = 624, end = 624, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "4.4"
-descriptor = "`_search_fields` for Item + Album (default query targets)"
-justification = """
-Determines which fields an unqualified query term matches against
-("artist", "title", "comments", "album", "albumartist", "genres"
-for Item; "album", "albumartist", "genres" for Album). Resolves
-"what does `beet ls beatles` actually search?".
-"""
-predecessor = "4.3"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/models.py", start = 300, end = 300, render.kind = "full" },
-  { path = "beets/library/models.py", start = 675, end = 682, render.kind = "full" },
-]
+descriptor = "beets/library/library.py: Library class method roster"
+justification = "Location roster for the small (167-line) `Library(dbcore.Database)` class: __init__ (path/directory/path_formats/replacements), music_dir_context, add/add_album, _fetch, get_default_album_sort/get_default_item_sort, albums/items query entry points, get_item/get_album. This is the top-level persistence API every command module calls into to read or write the SQLite library."
+content = { kind = "lines", spans = [
+  { path = "beets/library/library.py", start = 34, end = 34, render = { kind = "full" } },
+  { path = "beets/library/library.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/library/library.py", start = 63, end = 63, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/library/library.py", start = 73, end = 73, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/library/library.py", start = 102, end = 102, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/library/library.py", start = 129, end = 129, render = { kind = "full" } },
+  { path = "beets/library/library.py", start = 136, end = 136, render = { kind = "full" } },
+  { path = "beets/library/library.py", start = 142, end = 142, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/library/library.py", start = 146, end = 146, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/library/library.py", start = 151, end = 151, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/library/library.py", start = 158, end = 158, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+] }
 
-[[batches]]
-id = "4.5"
-descriptor = "`TYPE_BY_FIELD` lede + first dozen fields"
-justification = """
-The single source of truth for "what's the type of field X?" — a
-plain dict literal mapping ~85 field names to `dbcore.types`
-instances (STRING, PaddedInt, DurationType, MusicalKey,
-MULTI_VALUE_DSV, etc.). Shown partially here; the rest is a grep
-away in this 103-line file. Resolves at least the most common
-fields without follow-up.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/fields.py", start = 1, end = 15, render.kind = "full" },
-]
-
-[[batches]]
-id = "4.6"
-descriptor = "`parse_query_parts` + `parse_query_string` (library-level query entry)"
-justification = """
-The entry from a query string to a `(Query, Sort)` pair: uses
-shlex, recognizes `:` (regex), `=~` (string), `=` (match) prefixes,
-folds in plugin prefixes, and special-cases path-like terms.
-Tight hop from `lib.items("artist:beatles")` into dbcore.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/queries.py", start = 17, end = 46, render.kind = "full" },
-]
-
-[[batches]]
-id = "4.7"
-descriptor = "`LibModel` + `Item` + `Album` method names (locations)"
-justification = """
-Locations batch: every method header on the three model classes so
-the agent can find e.g. `Item.read`, `Item.write`, `Item.move`,
-`Item.destination`, `Album.move_art`, `Album.set_art`,
-`Album.items`, `LibModel.field_query`, `LibModel.duplicates_query`
-without grep. Catastrophic-omission hedge over the model API.
-"""
-predecessor = "4.3"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/models.py", start = 82, end = 82, render.kind = "full" },
-  { path = "beets/library/models.py", start = 86, end = 86, render.kind = "full" },
-  { path = "beets/library/models.py", start = 90, end = 90, render.kind = "full" },
-  { path = "beets/library/models.py", start = 110, end = 112, render.kind = "full" },
-  { path = "beets/library/models.py", start = 137, end = 137, render.kind = "full" },
-  { path = "beets/library/models.py", start = 149, end = 149, render.kind = "full" },
-  { path = "beets/library/models.py", start = 346, end = 346, render.kind = "full" },
-  { path = "beets/library/models.py", start = 357, end = 357, render.kind = "full" },
-  { path = "beets/library/models.py", start = 383, end = 383, render.kind = "full" },
-  { path = "beets/library/models.py", start = 433, end = 433, render.kind = "full" },
-  { path = "beets/library/models.py", start = 463, end = 463, render.kind = "full" },
-  { path = "beets/library/models.py", start = 492, end = 492, render.kind = "full" },
-  { path = "beets/library/models.py", start = 522, end = 522, render.kind = "full" },
-  { path = "beets/library/models.py", start = 554, end = 554, render.kind = "full" },
-  { path = "beets/library/models.py", start = 762, end = 762, render.kind = "full" },
-  { path = "beets/library/models.py", start = 858, end = 858, render.kind = "full" },
-  { path = "beets/library/models.py", start = 889, end = 889, render.kind = "full" },
-  { path = "beets/library/models.py", start = 977, end = 977, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1059, end = 1059, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1089, end = 1089, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1146, end = 1146, render.kind = "full" },
-]
-
-[[batches]]
-id = "4.8"
-descriptor = "`DefaultTemplateFunctions` header + `tmpl_*` method locations"
-justification = """
-Catastrophic-omission hedge: every built-in `%foo{}` path-template
-function (lower, upper, capitalize, title, left, right, if,
-asciify, time, aunique, sunique, first, ifdef). Plugins register
-more via `@BeetsPlugin.template_func`. Answers "what template fns
-ship with beets?".
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/models.py", start = 1228, end = 1228, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1240, end = 1240, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1266, end = 1266, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1271, end = 1271, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1276, end = 1276, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1281, end = 1281, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1286, end = 1286, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1291, end = 1291, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1296, end = 1296, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1314, end = 1314, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1319, end = 1319, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1324, end = 1324, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1366, end = 1366, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1505, end = 1505, render.kind = "full" },
-  { path = "beets/library/models.py", start = 1520, end = 1520, render.kind = "full" },
-]
-
-[[batches]]
-id = "4.9"
-descriptor = "Library migration class headers (full chain)"
-justification = """
-Catastrophic-omission hedge: every concrete schema-migration class
-the library applies. Without this an agent could miss e.g. that
-`RelativePathMigration` rewrites stored paths.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/library/migrations.py", start = 23, end = 23, render.kind = "full" },
-  { path = "beets/library/migrations.py", start = 89, end = 89, render.kind = "full" },
-  { path = "beets/library/migrations.py", start = 106, end = 106, render.kind = "full" },
-  { path = "beets/library/migrations.py", start = 113, end = 113, render.kind = "full" },
-  { path = "beets/library/migrations.py", start = 120, end = 120, render.kind = "full" },
-  { path = "beets/library/migrations.py", start = 127, end = 127, render.kind = "full" },
-  { path = "beets/library/migrations.py", start = 139, end = 139, render.kind = "full" },
-  { path = "beets/library/migrations.py", start = 221, end = 221, render.kind = "full" },
-]
-
-# =============================================================================
-# Tier 5 — dbcore: ORM (Model/Database/Query/Type)
-# =============================================================================
+# ======================= Tier 5: importer pipeline depth =======================
+# The summary promises "trace an import-pipeline stage" as a plausible
+# session; no earlier batch renders beets/importer/ beyond its filename in
+# 1.13's listing. This tier covers the pipeline-stage functions, the
+# per-task decision states, and the ImportTask/ImportSession class family.
 
 [[batches]]
 id = "5.1"
-descriptor = "`Model` + `Database` class headers"
-justification = """
-The two core dbcore classes. `Model` is the ORM-like base; the
-docstring spells out the three field kinds (fixed/flexible/computed).
-`Database` is the SQLite-wrapping container; pins `_models` and
-`_migrations` slots that `Library` overrides.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/dbcore/db.py", start = 279, end = 290, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 1107, end = 1110, render.kind = "full" },
-]
+descriptor = "importer/stages.py: pipeline stage function roster"
+justification = "Location batch for every stage function in the pipeline `import_asis`/`lookup_candidates` runs through: read_tasks, query_tasks, group_albums, lookup_candidates, user_query, import_asis, plugin_stage (the hook for plugin-contributed stages), log_files, manipulate_files, plus the private _apply_choice/_resolve_duplicates/_freshen_items/_extend_pipeline helpers. This is exactly the 'import-pipeline stages' the summary names — an agent tracing or adding a stage needs this roster before guessing which function does what."
+content = { kind = "lines", spans = [
+  { path = "beets/importer/stages.py", start = 46, end = 46, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 70, end = 70, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 102, end = 102, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 130, end = 130, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 150, end = 150, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 222, end = 222, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 238, end = 238, render = { kind = "full" } },
+  { path = "beets/importer/stages.py", start = 259, end = 259, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 276, end = 276, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 314, end = 314, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 337, end = 337, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 377, end = 377, render = { kind = "truncated", pattern = "^def [^(]+" } },
+  { path = "beets/importer/stages.py", start = 385, end = 385, render = { kind = "truncated", pattern = "^def [^(]+" } },
+] }
 
 [[batches]]
 id = "5.2"
-descriptor = "Top-level classes in `beets/dbcore/db.py` (locations)"
-justification = """
-Catastrophic-omission hedge: every top-level class in this 1489-
-line file — `DBAccessError`, `DBCustomFunctionError`,
-`NotFoundError`, `FormattedMapping`, `LazyConvertDict`, `Model`,
-`Results`, `Transaction`, `Migration`, `TableInfo`, `Database`,
-`Index`. Lets the agent navigate without grep.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/dbcore/db.py", start = 74, end = 74, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 84, end = 84, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 94, end = 94, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 98, end = 98, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 182, end = 182, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 783, end = 783, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 951, end = 951, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 1065, end = 1065, render.kind = "full" },
-  { path = "beets/dbcore/db.py", start = 1483, end = 1483, render.kind = "full" },
-]
+descriptor = "importer/tasks.py: Action enum (import-task decision states) in full"
+justification = "The full set of decisions a task can resolve to (SKIP/ASIS/TRACKS/APPLY/ALBUMS/RETAG, with the RETAG-is-plugin-only comment) — consumed by `ImportTask.set_choice`/`choose_match` and the CLI's interactive prompts. Small (13 lines) and a common 'what can happen to an import task' lookup."
+content = { kind = "lines", spans = [
+  { path = "beets/importer/tasks.py", start = 83, end = 95, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.3"
-descriptor = "`Query` hierarchy class headers (full chain)"
-justification = """
-Catastrophic-omission hedge: every `Query` subclass in
-`dbcore/query.py` — `Query`, `FieldQuery`, `MatchQuery`,
-`NoneQuery`, `StringFieldQuery`, `StringQuery`, `SubstringQuery`,
-`PathQuery`, `RegexpQuery`, `BooleanQuery`, `NumericQuery`,
-`InQuery`, `CollectionQuery`, `MutableCollectionQuery`,
-`AndQuery`, `OrQuery`, `NotQuery`, `TrueQuery`, `FalseQuery`,
-`DateQuery`, `DurationQuery`, `SingletonQuery`. Plus the
-`ParsingError`/`InvalidQueryError` hierarchy and the `Period`/
-`DateInterval` helpers. Without this hedge an agent could miss
-that e.g. `DurationQuery` exists.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/dbcore/query.py", start = 52, end = 52, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 58, end = 58, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 71, end = 71, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 85, end = 85, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 134, end = 134, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 193, end = 193, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 204, end = 204, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 244, end = 244, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 262, end = 262, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 281, end = 281, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 379, end = 379, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 413, end = 413, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 432, end = 432, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 506, end = 506, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 528, end = 528, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 601, end = 601, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 611, end = 611, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 621, end = 621, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 656, end = 656, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 666, end = 666, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 849, end = 849, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 894, end = 894, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 922, end = 922, render.kind = "full" },
-]
+descriptor = "importer/tasks.py: ImportTask family class roster"
+justification = "Location roster for the task-class hierarchy: ImportAbortError, BaseImportTask, ImportTask (re-surfaced here alongside its siblings for a coherent family view — 3.3 already renders this line in full), SingletonImportTask (per-track variant), SentinelImportTask (directory markers), ArchiveImportTask (zip/tar extraction), ImportTaskFactory. Each subclass overrides a handful of ImportTask methods (chosen_info, imported_items, find_duplicates, ...) for its own semantics."
+predecessor = "3.3"
+content = { kind = "lines", spans = [
+  { path = "beets/importer/tasks.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/importer/tasks.py", start = 97, end = 97, render = { kind = "full" } },
+  { path = "beets/importer/tasks.py", start = 134, end = 134, render = { kind = "full" } },
+  { path = "beets/importer/tasks.py", start = 680, end = 680, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/importer/tasks.py", start = 786, end = 786, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/importer/tasks.py", start = 832, end = 832, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/importer/tasks.py", start = 968, end = 968, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.4"
-descriptor = "`Sort` class hierarchy (locations)"
-justification = """
-Locations: `Sort`, `MultipleSort`, `FieldSort`, `FixedFieldSort`,
-`SlowFieldSort`, `NullSort`, `SmartArtistSort`. Resolves "how is
-sort-direction encoded?" or "what's `SmartArtistSort`?".
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/dbcore/query.py", start = 943, end = 943, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 974, end = 974, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 1033, end = 1033, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 1085, end = 1085, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 1102, end = 1102, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 1111, end = 1111, render.kind = "full" },
-  { path = "beets/dbcore/query.py", start = 1130, end = 1130, render.kind = "full" },
-]
+descriptor = "importer/session.py + state.py: ImportSession/ImportState roster"
+justification = "Location roster for the session-level driver: ImportSession (set_config, choose_match, run — the top-level loop that pumps tasks through 5.1's stages) and ImportState (the on-disk resume/history tracker: progress_add, history_add). Completes the importer/ picture alongside 5.1's stages and 5.2/5.3's task states."
+content = { kind = "lines", spans = [
+  { path = "beets/importer/session.py", start = 48, end = 48, render = { kind = "full" } },
+  { path = "beets/importer/session.py", start = 100, end = 100, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/importer/session.py", start = 182, end = 182, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/importer/session.py", start = 191, end = 191, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/importer/state.py", start = 35, end = 35, render = { kind = "full" } },
+  { path = "beets/importer/state.py", start = 107, end = 107, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/importer/state.py", start = 139, end = 139, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+] }
 
-[[batches]]
-id = "5.5"
-descriptor = "`Type` hierarchy class headers"
-justification = """
-Catastrophic-omission hedge for `dbcore/types.py`: the `Type` ABC,
-`Default`, the integer family (`BaseInteger`, `Integer`,
-`NullInteger`, `BasePaddedInt`, `PaddedInt`, `ScaledInt`, `Id`),
-floats, strings (`String`, `DelimitedString`), `Boolean`,
-`DateType`, the path family (`BasePathType`, `NullPathType`,
-`PathType`), `MusicalKey`, `DurationType`. Each is queryable in
-its own way.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/dbcore/types.py", start = 56, end = 56, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 155, end = 155, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 179, end = 179, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 185, end = 185, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 203, end = 203, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 207, end = 207, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 220, end = 220, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 250, end = 250, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 258, end = 258, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 279, end = 279, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 285, end = 285, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 340, end = 340, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 354, end = 354, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 415, end = 415, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 424, end = 424, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 433, end = 433, render.kind = "full" },
-  { path = "beets/dbcore/types.py", start = 464, end = 464, render.kind = "full" },
-]
-
-[[batches]]
-id = "5.6"
-descriptor = "`queryparse` top-level fn locations"
-justification = """
-Locations in `dbcore/queryparse.py`: `parse_query_part`,
-`construct_query_part`, `query_from_strings`, `construct_sort_part`,
-`sort_from_strings`, `parse_sorted_query`. The path a query string
-takes after splitting.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/dbcore/queryparse.py", start = 46, end = 46, render.kind = "full" },
-  { path = "beets/dbcore/queryparse.py", start = 116, end = 116, render.kind = "full" },
-  { path = "beets/dbcore/queryparse.py", start = 169, end = 169, render.kind = "full" },
-  { path = "beets/dbcore/queryparse.py", start = 187, end = 187, render.kind = "full" },
-  { path = "beets/dbcore/queryparse.py", start = 218, end = 218, render.kind = "full" },
-  { path = "beets/dbcore/queryparse.py", start = 237, end = 237, render.kind = "full" },
-]
-
-[[batches]]
-id = "5.7"
-descriptor = "`PARSE_QUERY_PART_REGEX` — the query-string syntax"
-justification = """
-A single regex (with commented fragments) that defines the syntax
-of one query part: `(-|^)?(field:)?term`. The clearest answer to
-"what's the grammar of a beets query string?".
-"""
-predecessor = "5.6"
-content.kind = "lines"
-content.spans = [
-  { path = "beets/dbcore/queryparse.py", start = 34, end = 43, render.kind = "full" },
-]
-
-# =============================================================================
-# Tier 6 — Autotag (Distance, Match, tag_album/tag_item)
-# =============================================================================
+# ========================= Tier 6: autotag depth =========================
+# 3.3 bare-pointed at Distance and (via metadata_plugins.py) the source-
+# plugin ABC. This tier gives both real depth, plus the AlbumInfo/TrackInfo
+# candidate-data shape and the Recommendation/tag_album/tag_item matching
+# entry points the summary's 'wire up a new metadata-source plugin' and
+# autotag-debugging sessions need.
 
 [[batches]]
 id = "6.1"
-descriptor = "Autotag entry points: `tag_album` + `tag_item` signatures"
-justification = """
-The two public entry points returning `Proposal(candidates, rec)`.
-Pulls metadata from `metadata_plugins.candidates(...)` and ranks
-via `Distance`. The starting point for every autotag question.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/autotag/match.py", start = 240, end = 246, render.kind = "full" },
-  { path = "beets/autotag/match.py", start = 328, end = 331, render.kind = "full" },
-]
+descriptor = "autotag/hooks.py: candidate-data class roster"
+justification = "Location roster for the candidate/result data model: Info (shared base), AlbumInfo/TrackInfo (what a metadata-source plugin returns from a lookup), Match (shared distance/disambiguation base), AlbumMatch/TrackMatch (what autotag/match.py hands back to the importer). A plugin author wiring up a new metadata source needs to know this shape before returning data from it."
+content = { kind = "lines", spans = [
+  { path = "beets/autotag/hooks.py", start = 134, end = 134, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/autotag/hooks.py", start = 262, end = 262, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/autotag/hooks.py", start = 385, end = 385, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/autotag/hooks.py", start = 526, end = 526, render = { kind = "full" } },
+  { path = "beets/autotag/hooks.py", start = 583, end = 583, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/autotag/hooks.py", start = 645, end = 645, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+] }
 
 [[batches]]
 id = "6.2"
-descriptor = "`Recommendation` + `Proposal` + `Match`/`AlbumMatch`/`TrackMatch` + `Distance` + `Info`/`AlbumInfo`/`TrackInfo`"
-justification = """
-Catastrophic-omission hedge across autotag value types and class
-anchors. Plus the helper fns `string_dist`/`track_distance`/
-`distance`. Resolves "where is each named autotag type defined?".
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/autotag/match.py", start = 51, end = 51, render.kind = "full" },
-  { path = "beets/autotag/match.py", start = 67, end = 67, render.kind = "full" },
-  { path = "beets/autotag/hooks.py", start = 134, end = 134, render.kind = "full" },
-  { path = "beets/autotag/hooks.py", start = 262, end = 262, render.kind = "full" },
-  { path = "beets/autotag/hooks.py", start = 385, end = 385, render.kind = "full" },
-  { path = "beets/autotag/hooks.py", start = 526, end = 526, render.kind = "full" },
-  { path = "beets/autotag/hooks.py", start = 583, end = 583, render.kind = "full" },
-  { path = "beets/autotag/hooks.py", start = 645, end = 645, render.kind = "full" },
-  { path = "beets/autotag/distance.py", start = 125, end = 125, render.kind = "full" },
-  { path = "beets/autotag/distance.py", start = 396, end = 396, render.kind = "full" },
-  { path = "beets/autotag/distance.py", start = 444, end = 444, render.kind = "full" },
-]
+descriptor = "autotag/match.py: Recommendation enum + tag_album/tag_item entry points"
+justification = "The `Recommendation` IntEnum (none/low/medium/strong) that `_recommendation` computes from a `Distance` and that gates auto-apply-vs-prompt behavior, plus the two top-level entry points (`tag_album`, `tag_item`) that assemble candidates into 6.1's `AlbumMatch`/`TrackMatch`. Directly answers 'why did beets auto-apply (or not) this match'."
+content = { kind = "lines", spans = [
+  { path = "beets/autotag/match.py", start = 51, end = 59, render = { kind = "full" } },
+  { path = "beets/autotag/match.py", start = 240, end = 240, render = { kind = "full" } },
+  { path = "beets/autotag/match.py", start = 328, end = 328, render = { kind = "full" } },
+] }
 
-# =============================================================================
-# Tier 7 — Importer pipeline
-# =============================================================================
+[[batches]]
+id = "6.3"
+descriptor = "autotag/distance.py: Distance class method depth"
+justification = "3.3 bare-pointed at the `Distance` class line; this adds its scoring API — __init__, the `distance`/`max_distance` properties config_default.yaml's 1.25 weights feed into, and the `add`/`add_ratio` methods plugins call to contribute their own penalty terms. Answers 'how do I make my plugin affect match ranking'."
+content = { kind = "lines", spans = [
+  { path = "beets/autotag/distance.py", start = 131, end = 131, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/autotag/distance.py", start = 155, end = 155, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/autotag/distance.py", start = 165, end = 165, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/autotag/distance.py", start = 271, end = 271, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/autotag/distance.py", start = 347, end = 347, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "metadata_plugins.py: MetadataSourcePlugin extension-point roster"
+justification = "3.3 bare-pointed at this class's declaration line (truncated); this overrides that line in full and adds its abstract/overridable surface — data_source, album_for_id/track_for_id (single-ID lookups), candidates/item_candidates (search-based lookups). This is the exact ABC musicbrainz.py/discogs/spotify.py/deezer.py implement, and the summary's 'wire up a new metadata-source plugin' session needs it located precisely."
+predecessor = "3.3"
+content = { kind = "lines", spans = [
+  { path = "beets/metadata_plugins.py", start = 171, end = 171, render = { kind = "truncated", pattern = "^class [^(:]+" } },
+  { path = "beets/metadata_plugins.py", start = 182, end = 182, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/metadata_plugins.py", start = 206, end = 206, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/metadata_plugins.py", start = 212, end = 212, render = { kind = "truncated", pattern = "^    def [^(]+" } },
+  { path = "beets/metadata_plugins.py", start = 221, end = 221, render = { kind = "full" } },
+  { path = "beets/metadata_plugins.py", start = 240, end = 240, render = { kind = "full" } },
+] }
+
+# ===================== Tier 7: docs/reference depth =====================
+# docs/reference/ was only ever fs-listed (1.8), never given body content.
+# These are the section/heading rosters (cheap, closure-complete — no
+# partial-list omission risk since headings are the whole class of thing
+# being listed) plus the one place the summary's 'path-template function'
+# claim gets rendered as prose: pathformat.rst's built-in function bullets.
 
 [[batches]]
 id = "7.1"
-descriptor = "`Action` enum + `ImportTask` class header"
-justification = """
-The `Action` enum (SKIP/ASIS/TRACKS/APPLY/ALBUMS/RETAG) is the
-choice value flowing through stages. `ImportTask` is the unit of
-work; its docstring (above) enumerates the call sequence
-(`lookup_candidates` → `choose_match` → `find_duplicates` →
-`apply_metadata` → `add` → `manipulate_files` → `set_fields`).
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/importer/tasks.py", start = 83, end = 95, render.kind = "full" },
-  { path = "beets/importer/tasks.py", start = 134, end = 137, render.kind = "full" },
-]
-
-[[batches]]
-id = "7.2"
-descriptor = "`ImportSession.run()` — pipeline assembly"
-justification = """
-The heart of the importer: builds the list of pipeline stages
-(`read_tasks`/`query_tasks` → optional `group_albums` → either
-`lookup_candidates+user_query` or `import_asis` → plugin stages →
-`manipulate_files`) and runs them sequentially or threaded. Best
-zero-follow-up answer for "what's the import pipeline?".
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/importer/session.py", start = 191, end = 209, render.kind = "full" },
-  { path = "beets/importer/session.py", start = 215, end = 221, render.kind = "full" },
-  { path = "beets/importer/session.py", start = 231, end = 231, render.kind = "full" },
-]
+descriptor = "docs/reference/cli.rst: section + subcommand heading roster"
+justification = "Every heading in the CLI reference doc: the top-level Commands/Global Flags/Shell Completion/See Also sections, and every per-subcommand subsection under Commands (import, list, remove, modify, move, update, write, stats, fields, config, zsh-completion). Cross-references 2.2's subcommand roster from the docs side — confirms every command is documented and shows where."
+content = { kind = "lines", spans = [
+  { path = "docs/reference/cli.rst", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 29, end = 29, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 44, end = 44, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 197, end = 197, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 228, end = 228, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 257, end = 257, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 314, end = 314, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 337, end = 337, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 374, end = 374, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 400, end = 400, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 416, end = 416, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 429, end = 429, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 454, end = 454, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 484, end = 484, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 525, end = 525, render = { kind = "full" } },
+  { path = "docs/reference/cli.rst", start = 549, end = 549, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "7.3"
-descriptor = "Importer stage functions (locations)"
-justification = """
-Catastrophic-omission hedge over `beets/importer/stages.py`:
-`read_tasks`, `query_tasks`, `group_albums`, `lookup_candidates`,
-`user_query`, `import_asis`, `plugin_stage`, `log_files`,
-`manipulate_files`, plus the `_apply_choice`/`_resolve_duplicates`
-helpers. Resolves "which stage does X happen in?" to one read.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/importer/stages.py", start = 46, end = 46, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 70, end = 70, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 102, end = 102, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 130, end = 130, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 150, end = 150, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 222, end = 222, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 238, end = 238, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 259, end = 259, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 276, end = 276, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 314, end = 314, render.kind = "full" },
-  { path = "beets/importer/stages.py", start = 337, end = 337, render.kind = "full" },
-]
-
-# =============================================================================
-# Tier 8 — Plugin system: BeetsPlugin, events, metadata sources
-# =============================================================================
+descriptor = "docs/reference/query.rst: query-syntax section heading roster"
+justification = "Every section of the query-string reference: Keyword, Combining Keywords, Specific Fields, Phrases, Exact Matches, Regular Expressions, Numeric Range Queries, Date and Date Range Queries, Query Term Negation, Path Queries, Cover Art Queries, Sort Order. This is the query surface from the user-facing-syntax side, complementing 4.1's Query-class roster and 4.2's prefix mapping from the implementation side — an agent can now answer 'does beets support X query syntax' from either direction."
+content = { kind = "lines", spans = [
+  { path = "docs/reference/query.rst", start = 3, end = 3, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 13, end = 13, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 38, end = 38, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 67, end = 67, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 114, end = 114, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 138, end = 138, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 177, end = 177, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 212, end = 212, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 243, end = 243, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 346, end = 346, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 380, end = 380, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 410, end = 410, render = { kind = "full" } },
+  { path = "docs/reference/query.rst", start = 436, end = 436, render = { kind = "full" } },
+] }
 
 [[batches]]
-id = "8.1"
-descriptor = "`BeetsPlugin` class header + registration-method locations"
-justification = """
-The plugin-author contract. Class header + the registration
-methods plugins override or call: `commands`, `queries`,
-`add_media_field`, `register_listener`, `get_early_import_stages`,
-`get_import_stages`, classmethods `template_func` and
-`template_field`. Catastrophic-omission hedge over the plugin API
-surface.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/plugins.py", start = 153, end = 157, render.kind = "full" },
-  { path = "beets/plugins.py", start = 280, end = 280, render.kind = "full" },
-  { path = "beets/plugins.py", start = 296, end = 296, render.kind = "full" },
-  { path = "beets/plugins.py", start = 306, end = 306, render.kind = "full" },
-  { path = "beets/plugins.py", start = 345, end = 345, render.kind = "full" },
-  { path = "beets/plugins.py", start = 349, end = 351, render.kind = "full" },
-  { path = "beets/plugins.py", start = 365, end = 365, render.kind = "full" },
-  { path = "beets/plugins.py", start = 374, end = 374, render.kind = "full" },
-  { path = "beets/plugins.py", start = 387, end = 387, render.kind = "full" },
-]
-
-[[batches]]
-id = "8.2"
-descriptor = "`EventType` literal — every event a listener can hook"
-justification = """
-Catastrophic-omission hedge: the complete enumeration of events
-plugins can subscribe to. Resolves "is there an `album_imported`
-event?" or "what gets fired when…?" with zero follow-up.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/plugins.py", start = 68, end = 98, render.kind = "full" },
-  { path = "beets/plugins.py", start = 103, end = 103, render.kind = "full" },
-]
-
-[[batches]]
-id = "8.3"
-descriptor = "`load_plugins`, `find_plugins`, dispatch entry points (signatures)"
-justification = """
-The module-level fns the rest of the code calls into: load + cache
-plugins, list them, collect their `commands()`/`queries()`/`types()`/
-`template_funcs()`/`early_import_stages()`/`import_stages()`/
-`item_field_getters()`/`album_field_getters()`, and `send(event,
-...)` to fire listeners. Plus `feat_tokens` helper.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/plugins.py", start = 401, end = 401, render.kind = "full" },
-  { path = "beets/plugins.py", start = 485, end = 485, render.kind = "full" },
-  { path = "beets/plugins.py", start = 500, end = 500, render.kind = "full" },
-  { path = "beets/plugins.py", start = 507, end = 507, render.kind = "full" },
-  { path = "beets/plugins.py", start = 515, end = 515, render.kind = "full" },
-  { path = "beets/plugins.py", start = 525, end = 525, render.kind = "full" },
-  { path = "beets/plugins.py", start = 542, end = 542, render.kind = "full" },
-  { path = "beets/plugins.py", start = 576, end = 576, render.kind = "full" },
-  { path = "beets/plugins.py", start = 586, end = 586, render.kind = "full" },
-  { path = "beets/plugins.py", start = 594, end = 594, render.kind = "full" },
-  { path = "beets/plugins.py", start = 624, end = 624, render.kind = "full" },
-  { path = "beets/plugins.py", start = 634, end = 634, render.kind = "full" },
-  { path = "beets/plugins.py", start = 645, end = 645, render.kind = "full" },
-]
-
-[[batches]]
-id = "8.4"
-descriptor = "`MetadataSourcePlugin` + entry-fn locations"
-justification = """
-The base class for plugins that fetch album/track metadata from
-remote sources (MusicBrainz, Discogs, Spotify, Beatport, etc.).
-Plus module-level dispatchers `candidates`, `item_candidates`,
-`albums_for_ids`, `tracks_for_ids`, `album_for_id`, `track_for_id`,
-`get_penalty`.
-"""
-content.kind = "lines"
-content.spans = [
-  { path = "beets/metadata_plugins.py", start = 46, end = 46, render.kind = "full" },
-  { path = "beets/metadata_plugins.py", start = 54, end = 54, render.kind = "full" },
-  { path = "beets/metadata_plugins.py", start = 114, end = 114, render.kind = "full" },
-  { path = "beets/metadata_plugins.py", start = 120, end = 120, render.kind = "full" },
-  { path = "beets/metadata_plugins.py", start = 126, end = 126, render.kind = "full" },
-  { path = "beets/metadata_plugins.py", start = 136, end = 136, render.kind = "full" },
-  { path = "beets/metadata_plugins.py", start = 159, end = 159, render.kind = "full" },
-  { path = "beets/metadata_plugins.py", start = 171, end = 171, render.kind = "full" },
-]
-
-# =============================================================================
-# Tier 9 — Plugin catalog + key util modules
-# =============================================================================
-
-[[batches]]
-id = "9.1"
-descriptor = "`beetsplug/` listing — every shipped plugin"
-justification = """
-Catastrophic-omission hedge: enumerates every plugin in the
-shipped catalog (~70 modules + subpackages: `bpd`, `discogs`,
-`lastgenre`, `metasync`, `tidal`, `web`, plus `_utils`, plus the
-single-file plugins from `absubmit.py` to `zero.py`). One hop from
-any "is plugin X built-in?" or "what's the plugin name for Y?"
-question.
-"""
-content.kind = "fs"
-content.groups = [
-  { parent = "beetsplug", entries = "all" },
-]
-
+id = "7.4"
+descriptor = "docs/reference/pathformat.rst: built-in template-function roster"
+justification = "The summary names 'path-template function' as a plausible session but no earlier batch renders any; this is the complete (closure-checked against the doc's own 'these functions are built in to beets' list) roster of %lower/%upper/%capitalize/%title/%left/%right/%if/%asciify/%aunique/%sunique/%time/%first/%ifdef, truncated to each function's signature (dropping the prose description, which stays in the doc for a follow-up read). Directly serves 'what template functions exist for path formats'."
+content = { kind = "lines", spans = [
+  { path = "docs/reference/pathformat.rst", start = 57, end = 57, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 58, end = 58, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 59, end = 59, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 61, end = 61, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 62, end = 62, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 63, end = 63, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 64, end = 64, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 68, end = 68, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 71, end = 71, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 73, end = 73, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 75, end = 75, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 78, end = 78, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+  { path = "docs/reference/pathformat.rst", start = 106, end = 106, render = { kind = "truncated", pattern = "^-\\s+\\S+" } },
+] }

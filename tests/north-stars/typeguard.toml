@@ -1,724 +1,613 @@
 fixture = "typeguard"
 revision_pin = "b05b7dab"
 summary = """
-Typeguard is a Python run-time type checker. It exposes two principal
-modes: a one-shot ``check_type(value, T)`` function (independent of
-global config), and code instrumentation via the ``@typechecked``
-decorator + ``install_import_hook()``, both of which rewrite Python
-ASTs through ``TypeguardTransformer`` to inject ``check_argument_types``
-/ ``check_return_type`` / ``check_yield_type`` / ``check_send_type`` /
-``check_variable_assignment`` calls. The bulk of the codebase is two
-big files: ``_checkers.py`` (the registry of per-annotation ``check_*``
-functions, ``check_type_internal``, plus the ``checker_lookup_functions``
-plug-in mechanism) and ``_transformer.py`` (the AST transformer plus
-``AnnotationTransformer`` that handles forward refs, PEP 604 unions,
-generic builtins).
-
-The ranking serves the full distribution of dev tasks against this
-crate: orientation queries (what does this do, what's the public API),
-architectural questions (how does instrumentation work, how does
-``check_type`` differ from ``@typechecked``), debugging questions about
-specific annotation kinds (NamedTuple, TypedDict, Protocol, generators,
-forward refs), config / pytest-plugin questions, extension questions
-(adding a custom checker via ``checker_lookup_functions`` or entry
-point), and contributor-style questions about the test suite. Early
-tiers establish layout + the public API surface; mid tiers map the two
-big internal modules at function-name granularity; late tiers fill in
-bodies and test-file maps.
+Typeguard is a run-time type-checking library for Python: `check_type()` for
+direct isinstance-like checks against `typing` annotations, plus two AST-based
+instrumentation paths (`@typechecked` decorator, `install_import_hook()`) that
+recompile functions to inject argument/return/yield/send/local-variable checks.
+`_checkers.py` holds the per-annotation-shape dispatch table, `_transformer.py`
+holds the AST rewriter, `_config.py`/`typeguard.config` hold global behavior
+toggles. Sessions on this repo are expected to span: using the library
+(check_type vs decorator vs import hook vs pytest plugin), extending it with
+custom checkers, debugging a specific type's check behavior, and working on
+the instrumentation/transformer internals themselves. The NS front-loads the
+public surface and the type-support matrix (most sessions start by asking
+"does/how does typeguard handle type X"), then layers in module-by-module
+depth with roster batches ahead of full-body excerpts to avoid implying any
+function or test class doesn't exist. Given the fixture's size (~9.4k lines
+of src+tests) against a tight token budget, most big files get only a cheap
+name roster plus a single highest-value excerpt rather than full-body
+coverage everywhere; several lower-traffic docs/config files and a handful
+of docstrings are left unexpanded (visible only via the tier-2 fs rosters,
+or one grep away from a roster pointer) to keep that budget for the checker
+dispatch core and the transformer.
 """
 
-# ============================================================
-# Tier 1 — Orientation: what is this repo, what files exist
-# ============================================================
+# ---------------------------------------------------------------------------
+# Tier 1 — Identity & orientation
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
 descriptor = "Repo root listing"
-justification = """
-First touch: every file at the crate root. README, pyproject.toml,
-LICENSE, docs/, src/, tests/, the .github/.readthedocs/.pre-commit
-config, plus the .precis-pin marker. Establishes Python src-layout +
-Sphinx docs.
-"""
-content = { kind = "fs", groups = [{ parent = ".", entries = "all" }] }
+justification = "Every session's first structural fact: confirms this is a single-package src-layout project (src/typeguard, tests, docs) with no nested sub-packages or monorepo surprises."
+[batches.content]
+kind = "fs"
+groups = [ { parent = ".", entries = "all" } ]
 
 [[batches]]
 id = "1.2"
-descriptor = "docs/ listing"
-justification = """
-Names every doc page: versionhistory, userguide, features, extending,
-contributing, api, index, conf.py. Doc pages cover semantics not
-visible from source (the supported standard-library annotation table,
-generator-function rules, forward-reference handling).
-"""
-content = { kind = "fs", groups = [{ parent = "docs", entries = "all" }] }
+descriptor = "README lede opening"
+justification = "The one sentence that frames typeguard as a PEP-484 run-time checker usable both standalone and alongside static type checkers, before any code; kept very short to fit this early in the ranking (the two-mechanism split is reconstructed more precisely from check_type's and typechecked's own docstrings later)."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.rst", start = 14, end = 17, render = { kind = "full" } } ]
 
 [[batches]]
 id = "1.3"
-descriptor = "src/typeguard/ module listing"
-justification = """
-Names every module in the package. The dunder-prefixed names map onto
-the conceptual surface: _checkers (the per-annotation registry),
-_transformer (AST instrumentation), _decorators (@typechecked),
-_importhook (install_import_hook), _functions (the public check_type
-+ internal check_argument_types/check_return_type/...),
-_pytest_plugin, _config, _memo, _exceptions, _suppression, _utils,
-plus py.typed.
-"""
-content = { kind = "fs", groups = [{ parent = "src/typeguard", entries = "all" }] }
+descriptor = "Package identity: name, Python support, deps"
+justification = "Answers 'what is this, what Python versions, what does it depend on' in one glance; skips license/authors (11-13, low query relevance) and the PyPI classifier block (14-25, redundant with requires-python and the tox env_list in tier 4)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 8, end = 10, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 26, end = 31, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "tests/ listing"
-justification = """
-Names every test file. The big four (test_checkers, test_transformer,
-test_typechecked, test_instrumentation) map onto the source modules
-1:1; small ones reveal scope (test_plugins, test_suppression,
-test_warn_on_error, test_pytest_plugin, test_importhook, test_utils).
-Plus the dummymodule.py / dummymodule_py312.py / deferredannos.py
-fixtures used by instrumentation tests.
-"""
-content = { kind = "fs", groups = [{ parent = "tests", entries = "all" }] }
+descriptor = "Project URLs + pytest entry point"
+justification = "Shows where docs/changelog/issues live and, notably, the `pytest11` entry point that makes the pytest plugin auto-register — a fact nowhere else in fs listings alone."
+[batches.content]
+kind = "lines"
+spans = [ { path = "pyproject.toml", start = 33, end = 40, render = { kind = "full" } } ]
 
-[[batches]]
-id = "1.5"
-descriptor = "README — one-paragraph lede"
-justification = """
-The opening prose: what Typeguard does (run-time type checking via
-PEP 484 annotations) and the role it plays alongside static checkers.
-Cheapest answer to ``what is this library?''.
-"""
-content = { kind = "lines", spans = [
-    { path = "README.rst", start = 14, end = 18, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.6"
-descriptor = "README — check_type vs. code instrumentation modes"
-justification = """
-The README's two-principal-modes block: ``check_type'' as
-isinstance-with-typing-annotations, vs. code instrumentation that
-recompiles modules with type-checking injection. Names ``@typechecked''
-and the import hook.
-"""
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-    { path = "README.rst", start = 20, end = 33, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.7"
-descriptor = "README — instrumentation options (@typechecked vs import hook)"
-justification = """
-Continuation: the trade-off between @typechecked (per-function) and
-install_import_hook (per-package, automatic, may clash with other
-hooks). Useful zero-follow-up for ``which one should I use?'' queries.
-"""
-predecessor = "1.6"
-content = { kind = "lines", spans = [
-    { path = "README.rst", start = 35, end = 47, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.8"
-descriptor = "Public re-exports — head of typeguard/__init__.py"
-justification = """
-The init file's ``from ._foo import X as X'' lines reveal every
-public name. First half: TypeCheckerCallable, TypeCheckLookupCallback,
-check_type_internal, checker_lookup_functions, load_plugins, the three
-config classes (CollectionCheckStrategy, ForwardRefPolicy,
-TypeCheckConfiguration), typechecked / typeguard_ignore, the four
-exception/warning classes.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/__init__.py", start = 1, end = 17, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.9"
-descriptor = "Public re-exports — tail of typeguard/__init__.py"
-justification = """
-Continuation of 1.8: TypeCheckFailCallback, check_type, warn_on_error,
-ImportHookManager, TypeguardFinder, install_import_hook, TypeCheckMemo,
-suppress_type_checks, Unset. Catastrophic-omission paired with 1.8.
-"""
-predecessor = "1.8"
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/__init__.py", start = 18, end = 26, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.10"
-descriptor = "typeguard/__init__.py — module rewrite, lazy `config`, autoload"
-justification = """
-The trailer of __init__.py: the ``__module__'' rewrite loop that makes
-re-exports look native, the lazy ``config`` global routed through
-__getattr__ to avoid circular imports, and the
-TYPEGUARD_DISABLE_PLUGIN_AUTOLOAD env-var-gated automatic
-``load_plugins()'' call. Important behavioral details often asked
-about (``why is config not in dir()?'', ``how do I disable autoload?'').
-"""
-predecessor = "1.9"
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/__init__.py", start = 28, end = 48, render = { kind = "full" } },
-] }
-
-# ============================================================
-# Tier 2 — Public API surface: signatures + key types
-# ============================================================
+# ---------------------------------------------------------------------------
+# Tier 2 — Breadth: exhaustive directory rosters
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "_exceptions.py — class signatures + summary docstrings"
-justification = """
-The four exception/warning classes with their one-line docstrings,
-plus TypeCheckError's append_path_element + custom __str__ that joins
-the path-element deque (the mechanism behind error messages like
-``argument "x" (str) of foo() is not an instance of int''). Bodies of
-the trivial __init__s are elided as ellipses; their content is the
-docstring + the standard ``super().__init__(message)'' line.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_exceptions.py", start = 1, end = 13, render = { kind = "full" } },
-    { path = "src/typeguard/_exceptions.py", start = 19, end = 19, render = { kind = "full" } },
-    { path = "src/typeguard/_exceptions.py", start = 26, end = 33, render = { kind = "full" } },
-    { path = "src/typeguard/_exceptions.py", start = 35, end = 35, render = { kind = "full" } },
-    { path = "src/typeguard/_exceptions.py", start = 38, end = 42, render = { kind = "full" } },
-] }
+descriptor = "Source + docs file rosters"
+justification = "Full sibling rosters for src/typeguard and docs so the agent never has to wonder whether an unlisted _foo.py exists; split from the tests roster (2.2) purely to keep both halves envelope-small this early."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "src/typeguard", entries = "all" },
+  { parent = "docs", entries = "all" },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "check_type — primary entry-point signature"
-justification = """
-The most important public function. Its keyword arguments
-(forward_ref_policy, typecheck_fail_callback, collection_check_strategy)
-double as the configuration surface for one-shot calls. Includes the
-docstring summary that documents how it differs from @typechecked +
-import hook (independent of typeguard.config).
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_functions.py", start = 50, end = 91, render = { kind = "full" } },
-] }
+descriptor = "Tests directory roster"
+justification = "Completes the top-level tests/ listing (test_*.py, dummymodule*.py, conftest.py, mypy/) — the single highest-leverage catastrophic-omission hedge for the test suite."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "tests", entries = "all" } ]
 
 [[batches]]
 id = "2.3"
-descriptor = "@typechecked — overloaded signatures"
-justification = """
-The two ``@typechecked'' overloads (kw-only-config form returning a
-decorator, and bare-target form) plus the actual definition's
-parameters and ``.. note:: -O / -OO disables this'' lines from the
-docstring. Tells the agent the calling shapes (``@typechecked'' vs
-``@typechecked(forward_ref_policy=...)'').
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_decorators.py", start = 136, end = 173, render = { kind = "full" } },
-] }
+descriptor = "CI, community-health, and mypy-fixture file rosters"
+justification = "Closes the class for the remaining directories (tests/mypy, .github and its subfolders). These, plus tier 1's root listing, are the only place several minor files (LICENSE, .gitignore, ISSUE_TEMPLATE/*, dependabot.yml, .readthedocs.yml) appear in this NS — their existence is established here even though their bodies aren't expanded."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "tests/mypy", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
 
-[[batches]]
-id = "2.4"
-descriptor = "install_import_hook — signature + docstring"
-justification = """
-The other public way to instrument code, plus a hint that it's a
-context manager. Names ImportHookManager and the cls= override hook
-that lets users plug in a custom TypeguardFinder.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_importhook.py", start = 183, end = 200, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.5"
-descriptor = "suppress_type_checks — overloaded signatures + docstring"
-justification = """
-The third public top-level callable: dual-mode (decorator OR context
-manager) suppression of all type checks. Includes the both-modes
-explanation in the docstring.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_suppression.py", start = 22, end = 53, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.6"
-descriptor = "TypeCheckConfiguration — dataclass + attribute docstrings"
-justification = """
-The configuration dataclass with full attribute docs:
-typecheck_fail_callback, forward_ref_policy, collection_check_strategy,
-debug_instrumentation. Plus the ``global_config'' module-level instance
-that backs ``typeguard.config''.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_config.py", start = 62, end = 106, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.7"
-descriptor = "ForwardRefPolicy + CollectionCheckStrategy enums"
-justification = """
-Both config enums with their member docstrings (ERROR/WARN/IGNORE for
-forward refs; FIRST_ITEM/ALL_ITEMS for collection sampling), plus the
-CollectionCheckStrategy.iterate_samples helper that downstream
-``check_*`` functions call.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_config.py", start = 14, end = 32, render = { kind = "full" } },
-    { path = "src/typeguard/_config.py", start = 43, end = 59, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.8"
-descriptor = "TypeCheckMemo — class skeleton + __init__"
-justification = """
-The TypeCheckMemo class threaded through every checker — its imports,
-__slots__, and __init__ signature naming the four attributes
-(globals/locals for forward-ref resolution, self_type for instance/
-classmethod checks, config for per-call configuration). Verbose
-attribute docstrings are elided; their facts are documented in 2.6.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_memo.py", start = 1, end = 9, render = { kind = "full" } },
-    { path = "src/typeguard/_memo.py", start = 35, end = 48, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.9"
-descriptor = "Checker plug-in API — TypeCheckerCallable / TypeCheckLookupCallback / checker_lookup_functions"
-justification = """
-The type aliases extension authors write against, plus the global
-``checker_lookup_functions: list[TypeCheckLookupCallback]'' registry,
-plus ``generic_alias_types''. Pairs with docs/extending.rst.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_checkers.py", start = 81, end = 96, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.10"
-descriptor = "TypeguardFinder + ImportHookManager — class + key methods"
-justification = """
-The two public classes from _importhook.py: TypeguardFinder
-(should_instrument override point — see docs/userguide ``CustomFinder''
-example) and ImportHookManager (context-manager protocol +
-.uninstall()). Skips bodies of __init__ / find_spec to keep the batch
-small; users mostly subclass should_instrument.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_importhook.py", start = 109, end = 119, render = { kind = "full" } },
-    { path = "src/typeguard/_importhook.py", start = 124, end = 129, render = { kind = "full" } },
-    { path = "src/typeguard/_importhook.py", start = 138, end = 145, render = { kind = "full" } },
-    { path = "src/typeguard/_importhook.py", start = 156, end = 159, render = { kind = "full" } },
-    { path = "src/typeguard/_importhook.py", start = 175, end = 176, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.11"
-descriptor = "warn_on_error + load_plugins — signatures"
-justification = """
-warn_on_error: the ready-made TypeCheckFailCallback that converts a
-TypeCheckError into a warning. load_plugins: scans the
-``typeguard.checker_lookup'' entry-point group and registers each
-function on checker_lookup_functions; auto-called from __init__.py
-unless TYPEGUARD_DISABLE_PLUGIN_AUTOLOAD is set.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_functions.py", start = 291, end = 299, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 1099, end = 1108, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.12"
-descriptor = "check_type_internal — signature + docstring"
-justification = """
-The fan-out for extension checker functions and for ``check_*''
-recursion. Public-but-low-level: extension authors call this when they
-need to recurse into a contained type. Body comes later.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_checkers.py", start = 924, end = 939, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.13"
-descriptor = "Internal check_argument_types / check_return_type / check_yield_type / check_send_type / check_variable_assignment — signatures"
-justification = """
-The five hooks that instrumented code calls into. They aren't
-re-exported from the package, but anyone reading instrumented code
-output, debugging instrumentation, or writing tests will see them.
-Signatures only; bodies are very similar (catch TypeCheckError, append
-path element, optionally call config.typecheck_fail_callback).
-"""
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_functions.py", start = 118, end = 122, render = { kind = "full" } },
-    { path = "src/typeguard/_functions.py", start = 149, end = 154, render = { kind = "full" } },
-    { path = "src/typeguard/_functions.py", start = 185, end = 190, render = { kind = "full" } },
-    { path = "src/typeguard/_functions.py", start = 216, end = 221, render = { kind = "full" } },
-    { path = "src/typeguard/_functions.py", start = 245, end = 249, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.14"
-descriptor = "Unset sentinel + small _utils helpers"
-justification = """
-The Unset sentinel (used for kw-defaults of @typechecked and
-``configuration_overrides''), plus the qualified_name / function_name
-/ resolve_reference / is_method_of / get_stacklevel utility signatures
-that show up across the codebase.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_utils.py", start = 66, end = 66, render = { kind = "full" } },
-    { path = "src/typeguard/_utils.py", start = 104, end = 104, render = { kind = "full" } },
-    { path = "src/typeguard/_utils.py", start = 127, end = 127, render = { kind = "full" } },
-    { path = "src/typeguard/_utils.py", start = 142, end = 142, render = { kind = "full" } },
-    { path = "src/typeguard/_utils.py", start = 154, end = 154, render = { kind = "full" } },
-    { path = "src/typeguard/_utils.py", start = 162, end = 162, render = { kind = "full" } },
-    { path = "src/typeguard/_utils.py", start = 172, end = 180, render = { kind = "full" } },
-] }
-
-# ============================================================
-# Tier 3 — Architecture: function/class locations + module fronts
-# ============================================================
+# ---------------------------------------------------------------------------
+# Tier 3 — Public API surface
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "_checkers.py — every check_* function name (locations)"
-justification = """
-The complete list of per-annotation checkers in _checkers.py: each
-``def check_X(`` line, truncated to drop the param block. With
-predecessors 2.9 (the plug-in API) and 2.12 (check_type_internal),
-this is the table of contents for the registry. Catastrophic-omission
-on a class of names: showing only some checkers misleads.
-The trailing predecessor on 2.9 ensures the list lands after the API.
-"""
-predecessor = "2.9"
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_checkers.py", start = 153, end = 153, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 212, end = 212, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 247, end = 247, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 305, end = 305, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 324, end = 324, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 343, end = 343, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 365, end = 365, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 423, end = 423, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 447, end = 447, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 474, end = 474, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 536, end = 536, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 545, end = 545, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 555, end = 555, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 590, end = 590, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 623, end = 623, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 632, end = 632, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 641, end = 641, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 651, end = 651, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 663, end = 663, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 679, end = 679, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 834, end = 834, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 885, end = 885, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 895, end = 895, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 915, end = 915, render = { kind = "full" } },
-    { path = "src/typeguard/_checkers.py", start = 1061, end = 1061, render = { kind = "full" } },
-] }
+descriptor = "typeguard/__init__.py: import re-exports (checkers/config/decorators)"
+justification = "The first half of the authoritative symbol table for `from typeguard import X` (checker/config/decorator exports); split from 3.2 to keep both halves small enough for their early position in the ranking."
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/__init__.py", start = 1, end = 13, render = { kind = "full" } } ]
 
 [[batches]]
 id = "3.2"
-descriptor = "_checkers.py — origin_type_checkers dispatch table"
-justification = """
-The dict that maps each typing/builtin to its check_* function. Reading
-this dict tells the agent exactly which annotations get which checker
-(bytes→check_byteslike, dict→check_mapping, list→check_list,
-typing.Literal→check_literal, etc.) — the missing piece next to 3.1.
-Includes the >=3.10 add-ons (UnionType, TypeGuard).
-"""
+descriptor = "typeguard/__init__.py: import re-exports (exceptions/functions/importhook/memo/suppression/utils) + rebinding loop"
+justification = "The second half of the export list — completes the roster so no exported name is left unaccounted for — plus the trailing loop that rewrites each re-export's `__module__` so it appears to live directly in `typeguard` rather than in its private submodule."
 predecessor = "3.1"
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_checkers.py", start = 1004, end = 1048, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/__init__.py", start = 14, end = 31, render = { kind = "full" } } ]
 
 [[batches]]
 id = "3.3"
-descriptor = "_checkers.py — builtin_checker_lookup dispatch fallbacks"
-justification = """
-After origin_type_checkers misses, builtin_checker_lookup tries
-``is_typeddict'' (TypedDict), NamedTuple shape (issubclass of Tuple),
-Protocol, ParamSpec, TypeVar, NewType. Critical for understanding
-``how is X annotation actually checked?''.
-"""
+descriptor = "typeguard/__init__.py: config attr + plugin autoload"
+justification = "The two behaviors not visible from the import list alone: `typeguard.config` is a lazy `__getattr__`-backed alias for `_config.global_config` (not a plain module attribute), and checker-lookup plugins load automatically at import time unless TYPEGUARD_DISABLE_PLUGIN_AUTOLOAD is set."
 predecessor = "3.2"
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_checkers.py", start = 1061, end = 1096, render = { kind = "full" } },
-] }
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/__init__.py", start = 32, end = 48, render = { kind = "full" } } ]
 
-[[batches]]
-id = "3.4"
-descriptor = "_transformer.py — class locations"
-justification = """
-The five top-level classes in _transformer.py: TransformMemo (per-scope
-state), NameCollector, GeneratorDetector, AnnotationTransformer (PEP
-604 / typing.Any erasure / forward-ref unquoting), TypeguardTransformer
-(the entry-point NodeTransformer). Tells the agent the module's shape.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_transformer.py", start = 117, end = 117, render = { kind = "full" } },
-    { path = "src/typeguard/_transformer.py", start = 285, end = 285, render = { kind = "full" } },
-    { path = "src/typeguard/_transformer.py", start = 313, end = 314, render = { kind = "full" } },
-    { path = "src/typeguard/_transformer.py", start = 338, end = 338, render = { kind = "full" } },
-    { path = "src/typeguard/_transformer.py", start = 488, end = 488, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.5"
-descriptor = "_transformer.py — TypeguardTransformer visit_* methods (locations)"
-justification = """
-Every visit_* method on TypeguardTransformer: Module, Import,
-ImportFrom, ClassDef, FunctionDef, AsyncFunctionDef, Return, Yield,
-AnnAssign, Assign, NamedExpr, AugAssign, If, Name. The shape of the
-transform — which AST nodes get rewritten. Plus the AnnotationTransformer
-visit_* table (BinOp/Subscript/Attribute/Name/Call/Constant) for the
-type-rewrite pass.
-"""
-predecessor = "3.4"
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_transformer.py", start = 374, end = 374, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 401, end = 401, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 407, end = 407, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 466, end = 466, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 472, end = 472, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 476, end = 476, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 596, end = 596, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 600, end = 600, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 608, end = 608, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 615, end = 615, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 624, end = 624, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 650, end = 650, render = { kind = "full" } },
-    { path = "src/typeguard/_transformer.py", start = 913, end = 913, render = { kind = "full" } },
-    { path = "src/typeguard/_transformer.py", start = 918, end = 918, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 945, end = 945, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 994, end = 994, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 1036, end = 1036, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 1138, end = 1138, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 1181, end = 1181, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_transformer.py", start = 1224, end = 1224, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "3.6"
-descriptor = "_transformer.py — generator_names + annotated_names + ignore_decorators tables"
-justification = """
-The string-name tables the transformer uses: generator_names (12
-typing/collections.abc generator-like names that gate yield/send
-checks), anytype_names, literal_names, annotated_names,
-ignore_decorators. Useful zero-follow-up for ``which annotations does
-Typeguard treat as generators?''.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_transformer.py", start = 70, end = 99, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.7"
-descriptor = "_decorators.py — function locations"
-justification = """
-The internal callables in _decorators.py (the public typechecked
-overloads are already covered in 2.3): typeguard_ignore (the
-TYPE_CHECKING fork that aliases to typing.no_type_check), make_cell,
-find_target_function, instrument. Maps how @typechecked actually
-compiles a single function: parse module source → run
-TypeguardTransformer → compile → locate the new code object → wrap in
-FunctionType.
-"""
-content = { kind = "lines", spans = [
-    { path = "src/typeguard/_decorators.py", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_decorators.py", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "src/typeguard/_decorators.py", start = 36, end = 36, render = { kind = "full" } },
-    { path = "src/typeguard/_decorators.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-
-[[batches]]
-id = "3.8"
-descriptor = "docs/api.rst — public API by topic group (head)"
-justification = """
-Sphinx API reference, head: Type checking (check_type / typechecked) /
-Import hook (install_import_hook + TypeguardFinder + ImportHookManager
-classes) / Configuration (the config global with its non-effect on
-check_type, TypeCheckConfiguration, CollectionCheckStrategy, Unset,
-ForwardRefPolicy, warn_on_error). Useful zero-follow-up TOC.
-"""
-content = { kind = "lines", spans = [
-    { path = "docs/api.rst", start = 1, end = 44, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.9"
-descriptor = "docs/userguide.rst — H2 section locations"
-justification = """
-The user guide's section headings without bodies — tells the agent
-which section to read for ``forward references'', ``pytest plugin'',
-``setting configuration options'', ``suppressing type checks'',
-``debugging instrumented code'', etc. Catastrophic-omission hedge for
-the userguide's structure.
-"""
-content = { kind = "lines", spans = [
-    { path = "docs/userguide.rst", start = 1, end = 2, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 6, end = 7, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 43, end = 44, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 89, end = 90, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 131, end = 132, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 148, end = 149, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 179, end = 180, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 213, end = 214, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 235, end = 236, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 258, end = 259, render = { kind = "full" } },
-    { path = "docs/userguide.rst", start = 271, end = 272, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.10"
-descriptor = "docs/features.rst — H2 section locations"
-justification = """
-The features doc structure: ``What does Typeguard check?'' / ``What
-does Typeguard NOT check?'' / ``Other limitations'' / ``Special
-considerations for if TYPE_CHECKING:'' / ``Support for generator
-functions'' / ``Support for PEP 604 unions'' / ``Support for generic
-built-in collection types'' / ``Support for mock objects'' /
-``Supported standard library annotations''. Tells agent where to look
-for behavioral edge cases.
-"""
-content = { kind = "lines", spans = [
-    { path = "docs/features.rst", start = 1, end = 2, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 6, end = 7, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 17, end = 18, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 31, end = 32, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 71, end = 72, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 80, end = 81, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 124, end = 125, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 132, end = 133, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 141, end = 142, render = { kind = "full" } },
-    { path = "docs/features.rst", start = 148, end = 149, render = { kind = "full" } },
-] }
-
-
-
-# ============================================================
-# Tier 4 — Bodies + extension docs
-# ============================================================
+# ---------------------------------------------------------------------------
+# Tier 4 — Operational coverage: build, lint, test, CI
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "docs/api.rst — Custom checkers / Suppression / Exceptions sections"
-justification = """
-Tail of api.rst paired with 3.8: Custom checkers
-(check_type_internal, load_plugins, the
-checker_lookup_functions data declaration with its full type sig,
-TypeCheckMemo); Type check suppression (typeguard_ignore decorator,
-suppress_type_checks fn); Exceptions and warnings (the four
-auto*-directives). Closes the API-reference catastrophic-omission.
-"""
-predecessor = "3.8"
-content = { kind = "lines", spans = [
-    { path = "docs/api.rst", start = 46, end = 77, render = { kind = "full" } },
-] }
+descriptor = "pytest config (pyproject.toml)"
+justification = "`filterwarnings = [\"error\"]` and `xfail_strict = true` materially change how test failures present — a warning that would otherwise be silent now fails the suite, and an xfail that starts passing now fails too."
+[batches.content]
+kind = "lines"
+spans = [ { path = "pyproject.toml", start = 62, end = 66, render = { kind = "full" } } ]
 
 [[batches]]
 id = "4.2"
-descriptor = "docs/extending.rst — writing a lookup + checker function (head)"
-justification = """
-The first half of the extension guide: what arguments the lookup
-function and checker function each receive (origin_type / args /
-extras for lookup; value / origin_type / args / memo for checker),
-plus the constraints (use check_type_internal, respect
-collection_check_strategy). Pairs with 2.9.
-"""
-predecessor = "2.9"
-content = { kind = "lines", spans = [
-    { path = "docs/extending.rst", start = 1, end = 41, render = { kind = "full" } },
-] }
+descriptor = "ruff lint config (pyproject.toml)"
+justification = "Exact rule selection/ignores an agent needs before proposing a lint-clean diff — e.g. B008 and UP006/UP035 are deliberately ignored, so 'fix this lint issue' requests shouldn't churn on those."
+[batches.content]
+kind = "lines"
+spans = [ { path = "pyproject.toml", start = 78, end = 97, render = { kind = "full" } } ]
 
 [[batches]]
 id = "4.3"
-descriptor = "docs/extending.rst — MySpecialType worked example"
-justification = """
-The worked example pairing a checker function (check_my_special_type)
-with a lookup function (my_checker_lookup) — concretely shows the
-TypeCheckerCallable / TypeCheckLookupCallback shapes from 2.9 and how
-to raise TypeCheckError.
-"""
-predecessor = "4.2"
-content = { kind = "lines", spans = [
-    { path = "docs/extending.rst", start = 47, end = 74, render = { kind = "full" } },
-] }
-
+descriptor = "mypy + tox config (pyproject.toml)"
+justification = "The tox env matrix (py39-py314) is the canonical 'how do I run the full test suite across versions' answer; the separate docs tox env (110-118, sphinx-build invocation) is left for on-demand reading."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 99, end = 103, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 105, end = 107, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "tests/test_checkers.py — TestX class locations"
-justification = """
-The 28 TestX classes in test_checkers.py: TestAnyStr, TestBytesLike,
-TestFloat, TestComplexNumber, TestCallable, TestLiteral, TestMapping,
-TestMutableMapping, TestDict, TestTypedDict, TestList, TestSequence,
-TestAbstractSet, TestSet, TestFrozenSet, TestTuple, TestNamedTuple,
-TestUnion, TestTypevar, TestNewType, TestType, TestIO,
-TestIntersectingProtocol, TestProtocol, TestRecursiveType,
-TestAnnotated, TestLiteralString, TestTypeGuard. Each maps to a
-check_* function in 3.1. Plus the few module-level test_*() functions
-that follow.
-"""
-content = { kind = "lines", spans = [
-    { path = "tests/test_checkers.py", start = 85, end = 85, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 98, end = 98, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 116, end = 116, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 129, end = 129, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 147, end = 147, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 274, end = 274, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 301, end = 301, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 356, end = 356, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 403, end = 403, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 446, end = 446, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 651, end = 651, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 678, end = 678, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 709, end = 709, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 744, end = 744, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 769, end = 769, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 817, end = 817, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 872, end = 872, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 887, end = 887, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1015, end = 1015, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1041, end = 1041, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1059, end = 1059, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1117, end = 1117, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1165, end = 1165, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1245, end = 1245, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1546, end = 1546, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1573, end = 1573, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1583, end = 1583, render = { kind = "full" } },
-    { path = "tests/test_checkers.py", start = 1593, end = 1593, render = { kind = "full" } },
-] }
+descriptor = "CI test workflow (.github/workflows/test.yml)"
+justification = "Ground truth for 'does CI cover version X' (3.9 through 3.14 plus PyPy 3.11) and the exact command CI runs (`coverage run -m pytest`), independent of what the tox config claims; the intervening setup steps (21-28: Python/pip/cache setup, dependency install) are generic CI boilerplate and are elided."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".github/workflows/test.yml", start = 1, end = 20, render = { kind = "full" } },
+  { path = ".github/workflows/test.yml", start = 29, end = 29, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 5 — Type-checking support matrix (the semantic core)
+# ---------------------------------------------------------------------------
 
 [[batches]]
-id = "4.5"
-descriptor = "tests/test_typechecked.py — Test class + module test locations"
-justification = """
-test_typechecked.py covers @typechecked specifically: TestCoroutineFunction,
-TestGenerator, TestAsyncGenerator, TestSelf, TestMock, plus module-level
-tests for classmethod / staticmethod / debug_instrumentation /
-keyword_argument_default / existing_method_decorator /
-typechecked_disabled_in_optimized_mode / getter_setter / duplicate_method
-/ duplicate_function. Maps onto 2.3 (the @typechecked overloads) and
-3.7 (instrument()).
-"""
-content = { kind = "lines", spans = [
-    { path = "tests/test_typechecked.py", start = 30, end = 30, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 66, end = 66, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 213, end = 213, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 368, end = 368, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 483, end = 483, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 499, end = 499, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 511, end = 511, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 523, end = 523, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 535, end = 535, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 547, end = 547, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 560, end = 560, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 605, end = 605, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 624, end = 624, render = { kind = "full" } },
-    { path = "tests/test_typechecked.py", start = 660, end = 660, render = { kind = "full" } },
-] }
+id = "5.1"
+descriptor = "_checkers.py: every check_* function's signature"
+justification = "'Does typeguard support type X' is likely the single most common query shape; this roster is the exhaustive answer key (all ~27 checker + dispatch functions) and the load-bearing predecessor for every deeper checker excerpt below."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_checkers.py", start = 153, end = 153, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 212, end = 212, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 247, end = 247, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 305, end = 305, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 324, end = 324, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 343, end = 343, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 365, end = 365, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 423, end = 423, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 447, end = 447, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 474, end = 474, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 536, end = 536, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 545, end = 545, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 555, end = 555, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 590, end = 590, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 623, end = 623, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 632, end = 632, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 641, end = 641, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 651, end = 651, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 663, end = 663, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 679, end = 679, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 834, end = 834, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 885, end = 885, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 895, end = 895, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 915, end = 915, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 924, end = 924, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 1061, end = 1061, render = { kind = "full" } },
+  { path = "src/typeguard/_checkers.py", start = 1099, end = 1099, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "_checkers.py: origin_type_checkers dispatch table"
+justification = "The literal type-to-checker-function mapping is the fastest way to answer 'which checker actually runs for annotation Y' without tracing lookup logic; the 3.10/3.11/3.12 version-gated additions are omitted here (all reachable one line below at 1046, already named by tier 5.1's builtin_checker_lookup entry)."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_checkers.py", start = 1004, end = 1045, render = { kind = "full" } } ]
+
+[[batches]]
+id = "5.3"
+descriptor = "_checkers.py: check_type_internal's dispatch loop"
+justification = "The tail half of the one function every check_type/check_argument_types/... call funnels through: the checker_lookup_functions loop plus the isclass()/string-forward-ref fallback. (The head half — forward-ref resolution and Annotated unwrapping — is one hop away via tier 5.1's pointer at line 924.)"
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_checkers.py", start = 975, end = 1002, render = { kind = "full" } } ]
+
+[[batches]]
+id = "5.4"
+descriptor = "_checkers.py: check_typed_dict's extra_items handling"
+justification = "The exact new-in-UNRELEASED logic (tier 17) for `extra_items` in TypedDict: unexpected keys are only an error when the TypedDict has no `__extra_items__` override, otherwise they're type-checked against it."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_checkers.py", start = 259, end = 275, render = { kind = "full" } } ]
+
+[[batches]]
+id = "5.5"
+descriptor = "_checkers.py: check_union (exemplar checker body)"
+justification = "A compact, representative checker body (try-each-arm-collect-errors) that stands in for the shared shape of check_uniontype/check_class's union branch, so one full read generalizes to several roster entries."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_checkers.py", start = 423, end = 444, render = { kind = "full" } } ]
+
+# ---------------------------------------------------------------------------
+# Tier 6 — Configuration & data types
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "_config.py: policy enums (members + iterate_samples)"
+justification = "ForwardRefPolicy and CollectionCheckStrategy's members plus iterate_samples()'s FIRST_ITEM-vs-ALL_ITEMS behavior; the enums' own descriptive docstrings are skipped since the member names are largely self-explanatory."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_config.py", start = 1, end = 14, render = { kind = "full" } },
+  { path = "src/typeguard/_config.py", start = 25, end = 27, render = { kind = "full" } },
+  { path = "src/typeguard/_config.py", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/typeguard/_config.py", start = 49, end = 59, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "_config.py: TypeCheckConfiguration (incl. docstring defaults)"
+justification = "The complete settings surface with its docstring's per-field defaults (forward_ref_policy=WARN, collection_check_strategy=FIRST_ITEM, etc.) plus the global_config singleton every instrumented call reads from — the single most reusable answer to 'how do I configure typeguard'. The debug_instrumentation paragraph (89-95) is skipped — that flag is fully covered by tier 16.3's userguide excerpt."
+predecessor = "6.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_config.py", start = 62, end = 88, render = { kind = "full" } },
+  { path = "src/typeguard/_config.py", start = 96, end = 106, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 7 — Exceptions & memo
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "_exceptions.py (full)"
+justification = "All four exception/warning classes typeguard raises, including TypeCheckError's path-accumulation machinery (append_path_element/__str__) that produces the 'of X of Y ...' error message format users see."
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_exceptions.py", start = 1, end = 42, render = { kind = "full" } } ]
+
+[[batches]]
+id = "7.2"
+descriptor = "_memo.py: TypeCheckMemo (slots + init)"
+justification = "The context object threaded through every checker call: globals/locals for forward-ref resolution, self_type for Self checks, config. The attribute-by-attribute docstring (9-33) restates exactly these four __slots__ names and is skipped."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_memo.py", start = 1, end = 8, render = { kind = "full" } },
+  { path = "src/typeguard/_memo.py", start = 34, end = 48, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 8 — check_type(): the direct-call API
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "8.1"
+descriptor = "_functions.py: check_type() signature + how-it-differs"
+justification = "The most commonly imported single symbol in the library; this excerpt is the signature plus the docstring's three-bullet list of how check_type differs from check_type_internal (suppression respect, memo construction, fail-callback dispatch). The two @overload variants (28-47) and the trailing param docs (75-91) are left for on-demand reading."
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_functions.py", start = 50, end = 74, render = { kind = "full" } } ]
+
+[[batches]]
+id = "8.2"
+descriptor = "_functions.py: check_type() body"
+justification = "Shows the tuple-to-Union coercion, suppression short-circuit, and TypeCheckError enrichment (append_path_element with the value's qualified name) that the docstring in 8.1 promises but doesn't show."
+predecessor = "8.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_functions.py", start = 92, end = 115, render = { kind = "full" } } ]
+
+# ---------------------------------------------------------------------------
+# Tier 9 — Suppression mechanism
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "9.1"
+descriptor = "_suppression.py: suppress_type_checks (signature + body)"
+justification = "The thread-safe global counter and both wrapper implementations (context-manager and decorator mode) that make nesting/thread-safety actually work; the two @overload declarations (22-27) and the docstring (33-53) restate what the code already shows and are skipped."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_suppression.py", start = 1, end = 19, render = { kind = "full" } },
+  { path = "src/typeguard/_suppression.py", start = 30, end = 32, render = { kind = "full" } },
+  { path = "src/typeguard/_suppression.py", start = 54, end = 86, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 10 — @typechecked decorator + instrument()
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "10.1"
+descriptor = "_decorators.py: top-level function/class name roster"
+justification = "Names every top-level def in the file (including both typechecked overloads) before any full body is shown, so later partial excerpts can't be mistaken for the whole file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_decorators.py", start = 32, end = 32, render = { kind = "full" } },
+  { path = "src/typeguard/_decorators.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "src/typeguard/_decorators.py", start = 56, end = 56, render = { kind = "full" } },
+  { path = "src/typeguard/_decorators.py", start = 137, end = 137, render = { kind = "full" } },
+  { path = "src/typeguard/_decorators.py", start = 147, end = 147, render = { kind = "full" } },
+  { path = "src/typeguard/_decorators.py", start = 150, end = 150, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "10.2"
+descriptor = "_decorators.py: typechecked() signature + summary"
+justification = "The decorator's core contract: works on functions and entire classes (all annotated methods get instrumented). The fuller docstring (the -O/-OO no-op note, per-param overrides) and the two @overload variants are left for on-demand reading; 10.3 shows what it actually does."
+predecessor = "10.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_decorators.py", start = 150, end = 163, render = { kind = "full" } } ]
+
+[[batches]]
+id = "10.3"
+descriptor = "_decorators.py: instrument() — locate the target in the re-parsed AST"
+justification = "The core of the AST-recompile mechanism: re-parse the module's source, walk it with TypeguardTransformer to find the target function/method, bail out if not found. instrument()'s guard clauses (57-67) and the final compile+extract step (78-84) are left for on-demand reading via 10.1's pointer."
+predecessor = "10.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_decorators.py", start = 56, end = 56, render = { kind = "full" } },
+  { path = "src/typeguard/_decorators.py", start = 69, end = 76, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 11 — check_argument_types / check_return_type family
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "11.1"
+descriptor = "_functions.py: remaining check_*_type roster"
+justification = "Names the five instrumentation-injected check functions (check_argument_types, check_return_type, check_send_type, check_yield_type, check_variable_assignment) plus warn_on_error, none of which are check_type itself (already fully shown in tier 8)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_functions.py", start = 118, end = 118, render = { kind = "full" } },
+  { path = "src/typeguard/_functions.py", start = 149, end = 149, render = { kind = "full" } },
+  { path = "src/typeguard/_functions.py", start = 185, end = 185, render = { kind = "full" } },
+  { path = "src/typeguard/_functions.py", start = 216, end = 216, render = { kind = "full" } },
+  { path = "src/typeguard/_functions.py", start = 245, end = 245, render = { kind = "full" } },
+  { path = "src/typeguard/_functions.py", start = 291, end = 291, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "11.2"
+descriptor = "_functions.py: check_return_type() — the NotImplemented exemption"
+justification = "The one genuinely distinct branch in this family: a NotImplemented/BINARY_MAGIC_METHODS exemption so `__eq__` et al. can legally return NotImplemented despite a `bool` annotation. check_argument_types/check_send_type/check_yield_type/check_variable_assignment follow the same try/except-append_path_element shape (tier 11.1 names all of them)."
+predecessor = "11.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_functions.py", start = 149, end = 173, render = { kind = "full" } } ]
+
+# ---------------------------------------------------------------------------
+# Tier 12 — Import hook
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "12.1"
+descriptor = "_importhook.py: class/function roster"
+justification = "Names TypeguardLoader, TypeguardFinder (incl. find_spec/should_instrument), ImportHookManager and install_import_hook before install_import_hook's body below; TypeguardFinder/ImportHookManager bodies are left for on-demand reading."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_importhook.py", start = 45, end = 45, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 51, end = 51, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 55, end = 55, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 57, end = 57, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 109, end = 109, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 124, end = 124, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 138, end = 138, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 156, end = 156, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 175, end = 175, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 183, end = 183, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "12.2"
+descriptor = "_importhook.py: install_import_hook() body"
+justification = "The public entry point's behavior: normalizes the `packages` argument, locates the stdlib PathFinder to wrap, and returns the ImportHookManager handle. The docstring (188-201) restates this in prose and is skipped."
+predecessor = "12.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_importhook.py", start = 183, end = 187, render = { kind = "full" } },
+  { path = "src/typeguard/_importhook.py", start = 202, end = 221, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 13 — pytest plugin
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "13.1"
+descriptor = "_pytest_plugin.py: function roster"
+justification = "Names both top-level functions: pytest_addoption defines the 5 --typeguard-* flags, pytest_configure applies them to global_config (packages -> install_import_hook, debug/forward-ref-policy/collection-check-strategy/fail-callback -> global_config fields)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_pytest_plugin.py", start = 16, end = 16, render = { kind = "full" } },
+  { path = "src/typeguard/_pytest_plugin.py", start = 75, end = 75, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 14 — Utilities
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "14.1"
+descriptor = "_utils.py: function/class roster"
+justification = "Names this file's ten top-level names (three version-gated evaluate_forwardref variants included) — get_type_name formats types for error messages, qualified_name formats values, resolve_reference parses 'module:attr' strings (used by the pytest plugin's fail-callback option), is_method_of backs @typechecked's class-decorator path."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_utils.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 42, end = 42, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 48, end = 48, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 66, end = 66, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 104, end = 104, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 127, end = 127, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 142, end = 142, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 154, end = 154, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 162, end = 162, render = { kind = "full" } },
+  { path = "src/typeguard/_utils.py", start = 173, end = 173, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 15 — Transformer internals (the AST rewriter)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "15.1"
+descriptor = "_transformer.py: class/method roster"
+justification = "The biggest and most obscure file in the fixture (1241 lines, 6 classes, ~50 methods); this trimmed roster (the 15 most load-bearing names) is the hedge against assuming the transformer's key extension points don't exist. Not exhaustive — the fs listing (tier 2.1) already confirms the file, and the rest of its methods are one grep away."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/typeguard/_transformer.py", start = 118, end = 118, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 225, end = 225, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 238, end = 238, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 285, end = 285, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 313, end = 313, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 338, end = 338, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 407, end = 407, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 466, end = 466, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 488, end = 488, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 517, end = 517, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 600, end = 600, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 624, end = 624, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 650, end = 650, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 918, end = 918, render = { kind = "full" } },
+  { path = "src/typeguard/_transformer.py", start = 945, end = 945, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "15.2"
+descriptor = "_transformer.py: recognized-annotation name tables"
+justification = "The literal string tuples (generator_names, anytype_names, literal_names, annotated_names, ignore_decorators, aug_assign_functions) the transformer pattern-matches against by dotted name — the exhaustive, ground-truth answer to 'which spellings of Generator/Any/Literal/etc. does the transformer recognize', not derivable from the visitor logic alone."
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_transformer.py", start = 70, end = 114, render = { kind = "full" } } ]
+
+[[batches]]
+id = "15.3"
+descriptor = "_transformer.py: TransformMemo fields"
+justification = "Every piece of per-scope state the transformer tracks while walking one class/function (annotations, ignored/local/imported names, memo var, code_inject_index, etc.); understanding this dataclass is a prerequisite for reading any visit_* method's body."
+predecessor = "15.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_transformer.py", start = 117, end = 140, render = { kind = "full" } } ]
+
+[[batches]]
+id = "15.4"
+descriptor = "_transformer.py: visit_FunctionDef (target selection + overload handling)"
+justification = "The instrumentation entry point's opening logic: skipping functions outside a single-target instrumentation path and stripping @typing.overload entirely (returns None, so overload stubs never get instrumented). The @typechecked-decorator-stripping branch just below (688-698) is one hop away."
+predecessor = "15.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "src/typeguard/_transformer.py", start = 650, end = 674, render = { kind = "full" } } ]
+
+# ---------------------------------------------------------------------------
+# Tier 16 — Docs: features, userguide
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "16.1"
+descriptor = "features.rst: what is checked"
+justification = "A concise, code-independent checklist of the 5 checked categories (argument/return/yield/send types, local-variable assignments) that would otherwise require reading _transformer.py and _functions.py side by side to reconstruct. The mirrored 'what does typeguard NOT check' list (17-30) is left for on-demand reading rather than truncating it partway."
+[batches.content]
+kind = "lines"
+spans = [ { path = "docs/features.rst", start = 1, end = 15, render = { kind = "full" } } ]
+
+[[batches]]
+id = "16.2"
+descriptor = "userguide.rst: forward reference handling notes"
+justification = "Documents a genuinely surprising runtime behavior (instrumented code uses 'naked' annotations, so forward_ref_policy mostly only matters for TypeVar bounds/constraints and type aliases) that isn't obvious from _utils.py's evaluate_forwardref alone."
+[batches.content]
+kind = "lines"
+spans = [ { path = "docs/userguide.rst", start = 129, end = 146, render = { kind = "full" } } ]
+
+[[batches]]
+id = "16.3"
+descriptor = "userguide.rst: debugging instrumented code"
+justification = "The one-line recipe (set typeguard.config.debug_instrumentation = True, or pass --typeguard-debug-instrumentation -s under pytest) for a very common 'my instrumented code is doing something weird' debugging session — the direct complement to tier 6.2's dropped debug_instrumentation docstring paragraph."
+[batches.content]
+kind = "lines"
+spans = [ { path = "docs/userguide.rst", start = 271, end = 280, render = { kind = "full" } } ]
+
+# ---------------------------------------------------------------------------
+# Tier 17 — Recent history
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "17.1"
+descriptor = "versionhistory.rst: latest UNRELEASED entry"
+justification = "'What changed recently / what's the current unreleased state' is a common session opener; this also grounds tier 5.4's TypedDict extra_items excerpt as an in-flight, unreleased feature rather than settled behavior. The other five UNRELEASED bullets (13-24) and prior releases are left for on-demand reading."
+[batches.content]
+kind = "lines"
+spans = [ { path = "docs/versionhistory.rst", start = 7, end = 12, render = { kind = "full" } } ]
+
+# ---------------------------------------------------------------------------
+# Tier 18 — Test-suite roster
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "18.1"
+descriptor = "tests/dummymodule.py: function/class roster"
+justification = "This module is the shared instrumentation fixture imported by nearly every test in test_instrumentation.py (via the `dummymodule` fixture); a trimmed roster of its top-level defs/classes is the concrete vocabulary those tests assert against (e.g. `test_pep_604_union_args` exercises `pep_604_union_args` here). Not exhaustive — see tier 2.2's fs listing for the file's existence and grep for the rest."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tests/dummymodule.py", start = 58, end = 58, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 72, end = 72, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 77, end = 77, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 118, end = 118, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 136, end = 136, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 141, end = 141, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 185, end = 185, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 196, end = 196, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 213, end = 213, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 225, end = 225, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 343, end = 343, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 359, end = 359, render = { kind = "full" } },
+  { path = "tests/dummymodule.py", start = 369, end = 369, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 19 — Misc small test fixture
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "19.1"
+descriptor = "tests/dummymodule_py312.py: type-alias + generic-syntax patterns"
+justification = "The PEP 695 (Python 3.12+ `type` statement and `[T]` generic syntax) instrumentation fixture, isolated into its own file specifically because ruff's per-file-target-version pins it to py312 (tier 4.2's sibling setting) while the rest of the package targets 3.9+. Shows the `type Foo = list[int]` alias plus both `[T]`-generic forms (class and function); `func_using_type_of_type_alias` (11-13), which merely consumes the alias the same way the first function does, is elided between the two spans."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tests/dummymodule_py312.py", start = 1, end = 7, render = { kind = "full" } },
+  { path = "tests/dummymodule_py312.py", start = 16, end = 24, render = { kind = "full" } },
+]

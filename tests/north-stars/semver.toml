@@ -1,181 +1,331 @@
 fixture = "semver"
 revision_pin = "5993c2e4"
 summary = """
-node-semver is the JavaScript implementation of the SemVer 2.0.0 spec used
-by npm. The repo is a thin top-level `index.js` re-exporting from a strict
-directory layout: `classes/` for the OOP core (`SemVer`, `Range`,
-`Comparator`), `functions/` for ~24 small free functions (most are 5-line
-delegators to `compare` / `SemVer` / `Range`), `ranges/` for higher-level
-range queries (`subset`, `outside`, `min-version`, `simplify`,
-`max-satisfying`, etc.), `internal/` for the regex tokenizer + constants +
-helpers, and `bin/semver.js` for the CLI. The README is the canonical
-prose reference for range semantics — hyphen / X / tilde / caret
-desugaring, prerelease semantics, options, and coercion.
-
-Likely query distribution: explanations of how a range desugars; what the
-options mean; where a public API like `satisfies` / `inc` / `coerce` is
-implemented; how versions and prereleases are compared; what the SemVer
-regex tokens are; what the CLI flags are; where to add a new free
-function. Authoring favors breadth — listing every public function, every
-regex token, every README section heading — because the API is a long
-list of small files and "what does X do?" / "where is X?" are the
-dominant queries.
+node-semver: the reference JS implementation of the semver.org v2.0.0 spec, used by npm itself.
+Small (~2k LoC), mature, almost entirely pure functions. Shape: classes/{SemVer,Range,Comparator}
+hold the real parsing/comparison/range-matching logic; functions/ and ranges/ are thin one-file-
+per-function wrappers around the classes (function name == file name); internal/ holds the regex
+tokenizer (re.js), constants, identifier-compare, an LRU memo cache, and options normalization;
+bin/semver.js is the CLI; index.js is a lazy-getter barrel re-export. README.md is a genuine
+worked spec (range grammar, prerelease semantics, CLI flags) and is treated as first-class content
+here rather than boilerplate. Query distribution: (a) "how do I use function/flag X" — served by
+the fs rosters + README; (b) "why does version/range Y behave like Z" — served by the class bodies
+(SemVer parsing/compare, ranges/subset.js's algorithm) where the actual behavior is decided; (c)
+"what does this project support/build as" — served by package.json + fs breadth. Given this
+fixture's token density, this NS spends most of its 10k budget on breadth (complete fs listings +
+signature rosters, so no follow-up read can turn up an unlisted file or function) and reserves a
+smaller number of full-body batches for the handful of places where the real logic — not just the
+name — is what an agent would actually need to read.
 """
 
-# =====================================================================
-# Tier 1 — orientation: what this repo is and what it exposes
-# =====================================================================
+# ============================================================
+# TIER 1 — identity nugget + full-repo breadth (fs listings)
+# ============================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "package.json — name, description, main"
-justification = """
-First impression in ~5 lines: name, "The semantic version parser used by
-npm", and the `main: index.js` entry that anchors the rest of the NS.
-Tiny so a budget-1 cut still has the lede.
-"""
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 1, end = 5, render = { kind = "full" } },
-] }
+descriptor = "package.json tiny identity"
+justification = "Cheapest possible answer to 'what is this project': name, version, description, main entry. Kept to 5 lines so it can legally be the very first batch."
+[batches.content]
+kind = "lines"
+spans = [ { path = "package.json", start = 1, end = 5, render = { kind = "full" } } ]
 
 [[batches]]
 id = "1.2"
-descriptor = "Repo top-level listing"
-justification = """
-Top-level layout (classes/, functions/, internal/, ranges/, bin/, index.js,
-range.bnf, README.md, package.json, test/, benchmarks/) shows the entire
-shape of the project. Cheap catastrophic-omission mitigation: list
-everything. After this an agent can name every major area before reading
-any code.
-"""
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
-] }
+descriptor = "Root directory listing"
+justification = "Complete top-level file/dir roster: every subsystem (classes/, functions/, ranges/, internal/, bin/, test/, benchmarks/, .github/) and every root doc/config file, so no later batch can be mistaken for exhaustive on its own."
+[batches.content]
+kind = "fs"
+groups = [ { parent = ".", entries = "all" } ]
 
 [[batches]]
 id = "1.3"
-descriptor = "package.json — bin entry and Node engines floor"
-justification = """
-`bin: { semver: bin/semver.js }` tells the agent there is a CLI and where
-to find it; `engines: node >= 10` is the runtime floor. Both useful on
-the way to almost any task.
-"""
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 22, end = 29, render = { kind = "full" } },
-  { path = "package.json", start = 49, end = 51, render = { kind = "full" } },
-] }
+descriptor = "README title + install"
+justification = "The one-line identity ('semver(1) -- The semantic versioner for npm') plus the install command."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 1, end = 9, render = { kind = "full" } } ]
 
 [[batches]]
 id = "1.4"
-descriptor = "classes/ + bin/ listings"
-justification = """
-Two small directories listed exhaustively: classes/ has just three real
-files (semver.js, range.js, comparator.js + an aggregator index.js), and
-bin/ has just semver.js. Cheap names that anchor the OOP core and the
-CLI entry.
-"""
-content = { kind = "fs", groups = [
-  { parent = "classes", entries = "all" },
-  { parent = "bin", entries = "all" },
-] }
+descriptor = "classes/ listing"
+justification = "The four files backing the whole public data model (SemVer, Range, Comparator, plus the barrel index.js) — complete, so a later method-roster batch can't be mistaken for covering an unlisted fifth class."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "classes", entries = "all" } ]
 
 [[batches]]
 id = "1.5"
-descriptor = "internal/ listing"
-justification = """
-The six internal/ files (constants, debug, identifiers, lrucache,
-parse-options, re) name the entire support layer. `re.js` in particular
-is the regex tokenizer that powers parsing — agents asking "where do
-versions get validated?" need this name.
-"""
-content = { kind = "fs", groups = [
-  { parent = "internal", entries = "all" },
-] }
+descriptor = "functions/ listing"
+justification = "One file per exported function (filename == function name), 24 total. Complete listing means 'does semver export an isValid helper' is answerable by scanning filenames alone."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "functions", entries = "all" } ]
 
-# =====================================================================
-# Tier 2 — public API surface and the range grammar
-# =====================================================================
+[[batches]]
+id = "1.6"
+descriptor = "ranges/ listing"
+justification = "The range-comparison entry points, 11 files, one function per file."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "ranges", entries = "all" } ]
+
+[[batches]]
+id = "1.7"
+descriptor = "internal/ listing"
+justification = "The non-exported implementation layer: regex tokenizer, constants, identifier comparison, LRU cache, option normalization, debug logger. Complete so there is no hidden sixth internal module."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "internal", entries = "all" } ]
+
+[[batches]]
+id = "1.8"
+descriptor = "bin/ listing"
+justification = "The CLI entry point directory — establishes there is exactly one bin script, not a family."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "bin", entries = "all" } ]
+
+[[batches]]
+id = "1.9"
+descriptor = "benchmarks/ listing"
+justification = "Perf benchmark scripts (compare/diff/parse/parse-options/satisfies/subset) — answers 'how do I benchmark a change' without assuming their existence from the README."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "benchmarks", entries = "all" } ]
+
+[[batches]]
+id = "1.10"
+descriptor = "test/ top-level listing"
+justification = "Confirms the test tree mirrors src 1:1 (test/classes, test/functions, test/ranges, test/internal) plus fixtures/, bin/, integration/, and top-level test/index.js, test/map.js, test/preload.js."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "test", entries = "all" } ]
+
+[[batches]]
+id = "1.11"
+descriptor = "test/classes/ listing"
+justification = "Confirms all three classes (and their barrel) have a mirrored test file, none silently untested."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "test/classes", entries = "all" } ]
+
+[[batches]]
+id = "1.12"
+descriptor = "test/functions/ listing"
+justification = "Confirms all 24 functions/ files have a same-named test file — complete roster, not a sample."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "test/functions", entries = "all" } ]
+
+[[batches]]
+id = "1.13"
+descriptor = "test/ranges/ listing"
+justification = "Confirms all 11 ranges/ files have a same-named test file."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "test/ranges", entries = "all" } ]
+
+[[batches]]
+id = "1.14"
+descriptor = "test/internal/ listing"
+justification = "Confirms all internal/ modules (including re.js, the tokenizer) have dedicated tests."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "test/internal", entries = "all" } ]
+
+[[batches]]
+id = "1.15"
+descriptor = "test leaf directories: fixtures/, bin/, integration/"
+justification = "test/fixtures/ holds the shared data tables (valid/invalid versions, increments, range parse/include/exclude, comparator intersection) reused across many *.js test files. test/bin/ and test/integration/ are single-file leaves grouped here since each is tiny."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "test/fixtures", entries = "all" },
+  { parent = "test/bin", entries = "all" },
+  { parent = "test/integration", entries = "all" },
+]
+
+[[batches]]
+id = "1.16"
+descriptor = ".github/ top-level listing"
+justification = "Complete roster of CI/ops surface: actions/, ISSUE_TEMPLATE/, matchers/, workflows/, plus CODEOWNERS, dependabot.yml, settings.yml."
+[batches.content]
+kind = "fs"
+groups = [ { parent = ".github", entries = "all" } ]
+
+[[batches]]
+id = "1.17"
+descriptor = ".github/workflows/ listing"
+justification = "All 8 workflow files (audit, ci, ci-release, codeql-analysis, post-dependabot, pull-request, release, release-integration), self-descriptive by filename."
+[batches.content]
+kind = "fs"
+groups = [ { parent = ".github/workflows", entries = "all" } ]
+
+[[batches]]
+id = "1.18"
+descriptor = ".github/actions/ and ISSUE_TEMPLATE/ listing"
+justification = "The two custom composite actions used by release workflows, plus the bug-report/config issue templates."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".github/actions", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+]
+
+[[batches]]
+id = "1.19"
+descriptor = "tap-snapshots/test/bin/ listing"
+justification = "The one tap snapshot file (CLI output golden file) — establishes snapshot testing applies to the CLI specifically."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "tap-snapshots/test/bin", entries = "all" } ]
+
+# ============================================================
+# TIER 2 — cheap signature rosters + tiny full files
+# ============================================================
 
 [[batches]]
 id = "2.1"
-descriptor = "README — title (lede)"
-justification = """
-"The semantic versioner for npm" — three lines, sets the tone before the
-rest of the README catalogue lands.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 1, end = 2, render = { kind = "full" } },
-] }
+descriptor = "classes/semver.js method roster"
+justification = "Name-only location roster for all 8 SemVer methods. Showing only some would wrongly imply the others don't exist. format/toString shown Full (their args-less signature has nothing meaningful left to truncate)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "classes/semver.js", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/semver.js", start = 81, end = 81, render = { kind = "full" } },
+  { path = "classes/semver.js", start = 89, end = 89, render = { kind = "full" } },
+  { path = "classes/semver.js", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/semver.js", start = 109, end = 109, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/semver.js", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/semver.js", start = 168, end = 168, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/semver.js", start = 194, end = 194, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "functions/ + ranges/ listings"
-justification = """
-The two largest source directories listed exhaustively: functions/ (24
-files — every comparison/utility free function) and ranges/ (11 files —
-every range-level query). The file names are themselves precise pointers;
-e.g. `functions/satisfies.js` and `ranges/subset.js` answer "where is X"
-without any further hop.
-"""
-content = { kind = "fs", groups = [
-  { parent = "functions", entries = "all" },
-  { parent = "ranges", entries = "all" },
-] }
+descriptor = "classes/range.js method + helper roster"
+justification = "Range.js is unusually dense: 7 class methods plus 13 module-level desugaring helpers (isSatisfiable, parseComparator, isX, replaceTilde(s), replaceCaret(s), replaceXRange(s), replaceStars, replaceGTE0, hyphenReplace, testSet) defined after the class closes. All 20 listed together so none reads as undiscovered."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "classes/range.js", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 73, end = 73, render = { kind = "full" } },
+  { path = "classes/range.js", start = 92, end = 92, render = { kind = "full" } },
+  { path = "classes/range.js", start = 96, end = 96, render = { kind = "full" } },
+  { path = "classes/range.js", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 193, end = 193, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 238, end = 238, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 257, end = 257, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 271, end = 271, render = { kind = "full" } },
+  { path = "classes/range.js", start = 280, end = 280, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 288, end = 288, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 324, end = 324, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 332, end = 332, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 385, end = 385, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 393, end = 393, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 470, end = 470, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 478, end = 478, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 491, end = 491, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/range.js", start = 523, end = 523, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "README — Usage example (calls into the public API)"
-justification = """
-A nine-line block showing the principal calls of the library:
-`semver.valid`, `semver.clean`, `semver.satisfies`, `semver.gt/lt`,
-`semver.minVersion`, `semver.coerce`. After this batch the agent has a
-running mental model of what the library _does_ in addition to what it
-exports.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 17, end = 25, render = { kind = "full" } },
-] }
+descriptor = "classes/comparator.js method roster"
+justification = "Name-only roster for all 6 Comparator members (static get ANY, constructor, parse, toString, test, intersects)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "classes/comparator.js", start = 6, end = 6, render = { kind = "full" } },
+  { path = "classes/comparator.js", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/comparator.js", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/comparator.js", start = 57, end = 57, render = { kind = "full" } },
+  { path = "classes/comparator.js", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "classes/comparator.js", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "range.bnf — canonical range grammar"
-justification = """
-The full Backus-Naur grammar for ranges, 16 lines. This is the canonical
-reference that every parsing question routes back to: what is a hyphen
-range, what is a tilde, what is the partial-version syntax. Cheap and
-authoritative.
-"""
-content = { kind = "lines", spans = [
-  { path = "range.bnf", start = 1, end = 16, render = { kind = "full" } },
-] }
+descriptor = "bin/semver.js function roster"
+justification = "The CLI's 4 top-level functions (main, failInc, fail, help), all shown Full since each is either argument-less or already a one-liner."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "bin/semver.js", start = 37, end = 37, render = { kind = "full" } },
+  { path = "bin/semver.js", start = 132, end = 132, render = { kind = "full" } },
+  { path = "bin/semver.js", start = 137, end = 137, render = { kind = "full" } },
+  { path = "bin/semver.js", start = 139, end = 139, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "index.js — module.exports object body (canonical public API list)"
-justification = """
-The `module.exports = { ... }` object pins which names are publicly
-exposed and how they relate to the imported requires (e.g. `re:
-internalRe.re`, `tokens: internalRe.t`, `compareIdentifiers:
-identifiers.compareIdentifiers`). The cleanest single source of "what
-does this package export". Catastrophic-omission mitigation: every
-exported name is here.
-"""
-content = { kind = "lines", spans = [
-  { path = "index.js", start = 45, end = 91, render = { kind = "full" } },
-] }
+descriptor = "internal/re.js token roster (12 most-referenced tokens)"
+justification = "re.js is the regex tokenizer backing every parse/valid/range operation: 42 createToken(...) calls in total (see 1.7 for the file's existence). This roster picks the 12 tokens an agent is most likely to grep for by name (FULL, LOOSE, COMPARATOR, XRANGE, TILDE, CARET, HYPHENRANGE, STAR, GTE0, COERCE, BUILD, PRERELEASE) rather than all 42, to stay inside budget; the remaining ones are one grep away given the file is already known to exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/re.js", start = 94, end = 94, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 109, end = 109, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 125, end = 125, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 134, end = 134, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 158, end = 158, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 167, end = 167, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 182, end = 182, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 192, end = 192, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 197, end = 197, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 209, end = 209, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 220, end = 220, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+  { path = "internal/re.js", start = 222, end = 222, render = { kind = "truncated", pattern = "createToken\\('[A-Za-z0-9]+'" } },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "README — all section heading locations"
-justification = """
-Every README heading from Install through Exported Modules, including
-the four advanced-range subsections (Hyphen / X-Range / Tilde / Caret).
-Catastrophic-omission mitigation for prose: tells the agent what
-explanations exist and at exactly what line, so any later "where does X
-get explained?" needs at most one file-read hop.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 4,   end = 4,   render = { kind = "full" } },
+descriptor = "internal/constants.js"
+justification = "Every magic number/list in the library in one small file: SEMVER_SPEC_VERSION, MAX_LENGTH (256), MAX_SAFE_INTEGER, MAX_SAFE_COMPONENT_LENGTH (16, coercion), RELEASE_TYPES, and the two FLAG bits used by Range's parse memo key."
+[batches.content]
+kind = "lines"
+spans = [ { path = "internal/constants.js", start = 1, end = 37, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.7"
+descriptor = "internal/identifiers.js"
+justification = "compareIdentifiers: the numeric-vs-alphanumeric prerelease-id ordering rule (numeric ids always sort before non-numeric) that SemVer.comparePre delegates to — small file, high explanatory value for 'why does 1.0.0-2 sort before 1.0.0-alpha'."
+[batches.content]
+kind = "lines"
+spans = [ { path = "internal/identifiers.js", start = 1, end = 29, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.8"
+descriptor = "package.json scripts"
+justification = "The npm scripts block (test, snap, lint, postlint, lintfix, posttest, template-oss-apply, eslint) — the exact commands behind 'npm test' / 'npm run lint', matching the canonical-commands convention agents look for first."
+[batches.content]
+kind = "lines"
+spans = [ { path = "package.json", start = 6, end = 14, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.9"
+descriptor = "package.json: bin, files, engines"
+justification = "The remaining operationally-relevant package.json keys beyond 1.1's identity fields and 2.8's scripts: the bin entry (confirms 'semver' is the installed CLI command name), the files allowlist (what actually ships to npm), and engines.node (>=10, the supported runtime floor). Two ellipsis markers disclose that devDependencies/license/repository (between scripts and bin) and tap/author/templateOSS (between engines and EOF) are real but lower-value for a coding-agent session and are not rendered here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 16, end = 16, render = { kind = "ellipsis" } },
+  { path = "package.json", start = 27, end = 29, render = { kind = "full" } },
+  { path = "package.json", start = 30, end = 40, render = { kind = "full" } },
+  { path = "package.json", start = 49, end = 51, render = { kind = "full" } },
+  { path = "package.json", start = 52, end = 52, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "README.md heading roster (all 24 sections)"
+justification = "Location-only roster of every remaining heading in README.md (Install, at line 4, is already fully shown by 1.3): Usage, Versions, Ranges, Prerelease Tags, Prerelease Identifiers, Prerelease Identifier Base, Advanced Range Syntax, Hyphen Ranges, X-Ranges, Tilde Ranges, Caret Ranges, Range Grammar, Functions, Comparison, Sorting, Comparators, Ranges, Coercion, Clean, Constants, RELEASE_TYPES, SEMVER_SPEC_VERSION, Exported Modules. Several of these — the Functions section's per-function semantic gloss, the Hyphen/X/Tilde/Caret desugaring-rule prose, Coercion, Clean, Exported Modules — are not separately rendered elsewhere in this NS given budget; this roster at least establishes they exist and exactly where, so a follow-up read of README.md lands directly on the right heading instead of a blind scroll through 665 lines. Versions/Ranges (3.3), Prerelease Tags (3.1), and Range Grammar (3.2) are later overridden here-to-full-section by their own batches (predecessor edges below)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 10, end = 10, render = { kind = "full" } },
   { path = "README.md", start = 139, end = 139, render = { kind = "full" } },
   { path = "README.md", start = 148, end = 148, render = { kind = "full" } },
   { path = "README.md", start = 184, end = 184, render = { kind = "full" } },
@@ -198,552 +348,154 @@ content = { kind = "lines", spans = [
   { path = "README.md", start = 580, end = 580, render = { kind = "full" } },
   { path = "README.md", start = 600, end = 600, render = { kind = "full" } },
   { path = "README.md", start = 610, end = 610, render = { kind = "full" } },
-] }
+]
 
-# =====================================================================
-# Tier 3 — README narrative: range/prerelease/desugaring semantics
-# =====================================================================
+# ============================================================
+# TIER 3 — README semantics + cheap full-body bundles
+# ============================================================
 
 [[batches]]
 id = "3.1"
-descriptor = "README — Versions section (leading = and v)"
-justification = """
-Short prose pinning the version syntax to semver.org/v2.0.0 and
-documenting the leading `=` / `v` strip behavior. Cheap and answers a
-common parsing question.
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 139, end = 146, render = { kind = "full" } },
-] }
+descriptor = "README: Prerelease Tags rule"
+justification = "The single most-surprising semver rule (prereleases only satisfy a range if some comparator shares their exact [major,minor,patch] tuple), stated with one worked example. High value/token for 'why doesn't my prerelease version satisfy this range'."
+predecessor = "2.10"
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 184, end = 197, render = { kind = "full" } } ]
 
 [[batches]]
 id = "3.2"
-descriptor = "README — Ranges intro (operators, comparator sets, ||)"
-justification = """
-Defines the core range vocabulary: comparator (operator + version),
-comparator set (whitespace-joined intersection), range (||-joined union).
-Concrete examples (`>=1.2.7`, `>=1.2.7 <1.3.0`, `1.2.7 || >=1.2.9
-<2.0.0`). Zero-follow-up answer for "what is a range" / "what does ||
-mean".
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 148, end = 182, render = { kind = "full" } },
-] }
+descriptor = "README: Range Grammar (BNF)"
+justification = "The formal Backus-Naur grammar for the whole range mini-language — also present verbatim in the standalone range.bnf file (listed in the root fs batch, 1.2); not re-rendered separately there to avoid paying for the same ~20 lines twice."
+predecessor = "2.10"
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 384, end = 406, render = { kind = "full" } } ]
 
 [[batches]]
 id = "3.3"
-descriptor = "README — Prerelease Tags semantics"
-justification = """
-The most subtle behavior of the library: prerelease versions only
-satisfy a comparator set if some comparator with the same [major, minor,
-patch] tuple also has a prerelease tag, unless `includePrerelease` is
-set. Worked examples for `>1.2.3-alpha.3`. Without this prose, the agent
-cannot answer "why does my range not match my alpha version?" without
-reading test fixtures.
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 184, end = 217, render = { kind = "full" } },
-] }
+descriptor = "README: Versions + Ranges core vocabulary"
+justification = "Defines what a 'version' and a 'range' are and the primitive comparator operators (<, <=, >, >=, =) with one worked example — the vocabulary every range-syntax question assumes."
+predecessor = "2.10"
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 139, end = 167, render = { kind = "full" } } ]
 
 [[batches]]
 id = "3.4"
-descriptor = "README — Hyphen Ranges desugaring"
-justification = """
-`X.Y.Z - A.B.C` desugars to `>=X.Y.Z <=A.B.C`. Documents the partial-
-version cases (`1.2 - 2.3.4` => `>=1.2.0 <=2.3.4`) and right-tail-
-inclusive behavior (`1.2.3 - 2` => `>=1.2.3 <3.0.0-0`). Zero-follow-up
-answer for hyphen-range questions.
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 287, end = 305, render = { kind = "full" } },
-] }
+descriptor = "ranges/ trivial bundle part A: gtr, ltr, intersects"
+justification = "Three one-line-of-real-logic wrapper files (gtr/ltr delegate to outside(); intersects delegates to Range.intersects) shown in full since each is a handful of lines."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "ranges/gtr.js", start = 1, end = 6, render = { kind = "full" } },
+  { path = "ranges/ltr.js", start = 1, end = 6, render = { kind = "full" } },
+  { path = "ranges/intersects.js", start = 1, end = 9, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.5"
-descriptor = "README — X-Ranges desugaring"
-justification = """
-`x`/`X`/`*` partial-version syntax. `*` => `>=0.0.0`, `1.x` =>
-`>=1.0.0 <2.0.0-0`, `1.2.x` => `>=1.2.0 <1.3.0-0`. Also documents that
-empty / partial strings are X-ranges (`""` => `*`, `1` => `1.x.x`).
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 306, end = 323, render = { kind = "full" } },
-] }
+descriptor = "ranges/ trivial bundle part B: to-comparators, valid"
+justification = "The remaining pure single-line wrappers in ranges/: toComparators (legacy/testing helper) and validRange (returns '*' for the any-version range instead of an empty string, for truthiness). Two ranges/ files are deliberately not bundled as trivial here: outside.js (the actual boundary-check algorithm 3.4 says gtr/ltr delegate to) and min-version.js (the lowest-satisfying-version search) both hold real, non-wrapper logic; their existence is established by the ranges/ listing (1.6) but their bodies aren't rendered given budget."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "ranges/to-comparators.js", start = 1, end = 10, render = { kind = "full" } },
+  { path = "ranges/valid.js", start = 1, end = 13, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.6"
-descriptor = "README — Tilde Ranges desugaring"
-justification = """
-`~1.2.3` => `>=1.2.3 <1.3.0-0` etc. Documents patch-level allowance and
-the prerelease-with-tuple-allowed rule (`~1.2.3-beta.2` allows
-`1.2.3-beta.4` but not `1.2.4-beta.2`).
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 324, end = 340, render = { kind = "full" } },
-] }
+descriptor = "functions/ comparison-wrapper pattern: gt, rcompare"
+justification = "gt.js and rcompare.js as the representative pattern for the compare()-derived predicate family: gte, lt, lte, eq, neq (all listed in 1.5) are the identical one-line shape with only the comparison operator swapped, so showing all 7 has near-zero marginal value over these two once the pattern is visible."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "functions/gt.js", start = 1, end = 5, render = { kind = "full" } },
+  { path = "functions/rcompare.js", start = 1, end = 5, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.7"
-descriptor = "README — Caret Ranges desugaring (the most complex)"
-justification = """
-`^1.2.3` => `>=1.2.3 <2.0.0-0`; the special `0.x` and `0.0.x` cases;
-prerelease-tuple-allowance; `^1.2.x` / `^0.0.x` / `^0.0` desugaring.
-The most non-obvious advanced range; this prose is the canonical
-explanation users need.
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 341, end = 383, render = { kind = "full" } },
-] }
+descriptor = "functions/ compare-family + sort: compare, compare-loose, compare-build, sort"
+justification = "The compare-family members that actually differ in behavior (compareLoose forces loose mode; compareBuild also tiebreaks on build metadata, see 4.2) plus sort(), compareBuild's real consumer. major.js/minor.js/patch.js (also listed in 1.5) are the identical one-line `new SemVer(v, options).X` accessor repeated three times and are skipped here for the same reason as 3.6."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "functions/compare.js", start = 1, end = 7, render = { kind = "full" } },
+  { path = "functions/compare-loose.js", start = 1, end = 5, render = { kind = "full" } },
+  { path = "functions/compare-build.js", start = 1, end = 9, render = { kind = "full" } },
+  { path = "functions/sort.js", start = 1, end = 5, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.8"
-descriptor = "README — Functions section preface (options doc)"
-justification = """
-Documents the two universal options every API call accepts: `loose`
-(forgiving parsing; boolean second arg is interpreted as loose) and
-`includePrerelease` (suppresses prerelease exclusion in ranges).
-Critical for understanding any function's behavior.
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 408, end = 426, render = { kind = "full" } },
-] }
+descriptor = "functions/ trivial bundle: satisfies, valid, clean, prerelease, parse, inc"
+justification = "The satisfies/valid/clean identity-checking trio, prerelease (array-of-parts accessor), the parse() throwErrors shim, and inc()'s thin try/catch wrapper around SemVer.inc — the switch-driven bump logic itself stays roster-only (2.1) given budget, so this file is the deepest inc() coverage in this NS. rsort.js (also listed in 1.5) is skipped: it's compareBuild in the identical one-line shape as sort.js (3.7), just with swapped comparator args. Three other functions/ files are not bundled as trivial because they hold real, non-wrapper logic: cmp.js (the operator-dispatch switch used by Comparator.test), coerce.js (regex-based forgiving-version extraction), and diff.js (release-type classification between two versions) — their existence is established by the functions/ listing (1.5) but their bodies aren't rendered here given budget."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "functions/satisfies.js", start = 1, end = 12, render = { kind = "full" } },
+  { path = "functions/valid.js", start = 1, end = 8, render = { kind = "full" } },
+  { path = "functions/clean.js", start = 1, end = 8, render = { kind = "full" } },
+  { path = "functions/prerelease.js", start = 1, end = 8, render = { kind = "full" } },
+  { path = "functions/parse.js", start = 1, end = 18, render = { kind = "full" } },
+  { path = "functions/inc.js", start = 1, end = 21, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "3.9"
-descriptor = "README — Coercion semantics"
-justification = """
-Documents the surprisingly forgiving `coerce` algorithm: digit-leading
-extraction, max-256-char truncation, max-16-char-per-component cap,
-`rtl` flag for right-to-left coercion, `includePrerelease` preserves
-pre/build parts. Zero-follow-up answer for any `coerce` question.
-"""
-predecessor = "2.6"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 531, end = 556, render = { kind = "full" } },
-] }
+descriptor = "README: CLI options reference"
+justification = "The full `semver -h` output verbatim: every flag (-r/--range, -i/--increment with its level enum, --preid, -l/--loose, -n, -p/--include-prerelease, -c/--coerce, --rtl/--ltr) with descriptions, plus the exit-code/sort-order contract. Same text bin/semver.js's help() emits (2.4); rendered from README instead of duplicating out of source."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 85, end = 137, render = { kind = "full" } } ]
 
-# =====================================================================
-# Tier 4 — class API surfaces (SemVer / Range / Comparator method names)
-# =====================================================================
+[[batches]]
+id = "3.10"
+descriptor = "ranges/subset.js: algorithm specification (header comment)"
+justification = "A 35-line, deliberately-written proof sketch of the subset-checking algorithm (EQ/GT/LT comparator extraction, null-set short-circuits, prerelease-tuple exceptions) — this comment IS the spec for the single most complex piece of logic in the repo, and is cheap relative to its explanatory value."
+[batches.content]
+kind = "lines"
+spans = [ { path = "ranges/subset.js", start = 9, end = 43, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.11"
+descriptor = "ranges/max-satisfying.js + min-satisfying.js"
+justification = "Near-identical linear-scan loops paired together since a diff between the two is often the actual question ('why does maxSatisfying pick this and minSatisfying pick that')."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "ranges/max-satisfying.js", start = 1, end = 27, render = { kind = "full" } },
+  { path = "ranges/min-satisfying.js", start = 1, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "ranges/simplify.js"
+justification = "The greedy interval-merge algorithm behind simplifyRange: groups a sorted version list into satisfying runs and emits the shorter of the simplified-vs-original range string."
+[batches.content]
+kind = "lines"
+spans = [ { path = "ranges/simplify.js", start = 1, end = 49, render = { kind = "full" } } ]
+
+# ============================================================
+# TIER 4 — the two largest, highest-value class bodies
+# ============================================================
 
 [[batches]]
 id = "4.1"
-descriptor = "SemVer class — method signatures (locations)"
-justification = """
-Every public method of SemVer in one batch with the signature truncated
-at the opening paren: constructor, format, toString, compare,
-compareMain, comparePre, compareBuild, inc. Catastrophic-omission
-mitigation: showing some without the rest would imply the missing ones
-don't exist. After this batch any "where is SemVer.X" question is
-zero-hop.
-"""
-content = { kind = "lines", spans = [
-  { path = "classes/semver.js", start = 9,   end = 9,   render = { kind = "full" } },
-  { path = "classes/semver.js", start = 10,  end = 10,  render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/semver.js", start = 81,  end = 81,  render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/semver.js", start = 89,  end = 89,  render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/semver.js", start = 93,  end = 93,  render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/semver.js", start = 109, end = 109, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/semver.js", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/semver.js", start = 168, end = 168, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/semver.js", start = 194, end = 194, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "SemVer: constructor + format + toString"
+justification = "The actual parse path: regex match against re[FULL]/re[LOOSE], MAX_LENGTH/MAX_SAFE_INTEGER validation, numberified prerelease ids, and format()/toString() turning parsed fields back into a string. Ground truth for 'why did parsing this version string throw'."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "classes/semver.js", start = 9, end = 91, render = { kind = "full" } } ]
 
 [[batches]]
 id = "4.2"
-descriptor = "Range class — method signatures (locations)"
-justification = """
-Every public method of Range: constructor, get range, format, toString,
-parseRange, intersects, test. Pinned by line so any follow-up lands
-exactly on the method.
-"""
-content = { kind = "lines", spans = [
-  { path = "classes/range.js", start = 6,   end = 6,   render = { kind = "full" } },
-  { path = "classes/range.js", start = 7,   end = 7,   render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/range.js", start = 73,  end = 73,  render = { kind = "full" } },
-  { path = "classes/range.js", start = 92,  end = 92,  render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/range.js", start = 96,  end = 96,  render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/range.js", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/range.js", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/range.js", start = 193, end = 193, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "4.3"
-descriptor = "Range module — internal helpers (locations)"
-justification = """
-The module-level desugaring helpers in classes/range.js: isNullSet,
-isAny, isSatisfiable, parseComparator, isX, replaceTildes,
-replaceTilde, replaceCarets, replaceCaret, replaceXRanges,
-replaceXRange, replaceStars, replaceGTE0, hyphenReplace, testSet.
-This is where tilde/caret/X-range/hyphen-range desugaring _actually
-lives_; the README documents the rules, and these names point at the
-implementations.
-"""
-content = { kind = "lines", spans = [
-  { path = "classes/range.js", start = 233, end = 234, render = { kind = "full" } },
-  { path = "classes/range.js", start = 238, end = 238, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 257, end = 257, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 271, end = 271, render = { kind = "full" } },
-  { path = "classes/range.js", start = 280, end = 280, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 288, end = 288, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 324, end = 324, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 332, end = 332, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 385, end = 385, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 393, end = 393, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 470, end = 470, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 478, end = 478, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 491, end = 491, render = { kind = "truncated", pattern = "^[^(]+= " } },
-  { path = "classes/range.js", start = 523, end = 523, render = { kind = "truncated", pattern = "^[^(]+= " } },
-] }
-
-[[batches]]
-id = "4.4"
-descriptor = "Comparator class — method signatures (locations)"
-justification = """
-Comparator's full surface: static `ANY` Symbol getter (sentinel for
-"any version"), constructor, parse, toString, test, intersects.
-Catastrophic-omission mitigation for the smallest of the three classes.
-"""
-content = { kind = "lines", spans = [
-  { path = "classes/comparator.js", start = 3, end = 5, render = { kind = "full" } },
-  { path = "classes/comparator.js", start = 6,  end = 6,  render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/comparator.js", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/comparator.js", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/comparator.js", start = 57, end = 57, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/comparator.js", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "classes/comparator.js", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "4.5"
-descriptor = "internal/constants.js — full file"
-justification = """
-All exported constants and flag bits in 37 lines: SEMVER_SPEC_VERSION
-(2.0.0), MAX_LENGTH (256), MAX_SAFE_COMPONENT_LENGTH (16),
-MAX_SAFE_BUILD_LENGTH, MAX_SAFE_INTEGER, RELEASE_TYPES (the seven
-inc()-able levels), FLAG_INCLUDE_PRERELEASE, FLAG_LOOSE. Tiny and
-load-bearing for any limits/options question.
-"""
-content = { kind = "lines", spans = [
-  { path = "internal/constants.js", start = 1, end = 37, render = { kind = "full" } },
-] }
-
-# =====================================================================
-# Tier 5 — heart of parsing: regex tokens + key bodies
-# =====================================================================
-
-[[batches]]
-id = "5.1"
-descriptor = "internal/re.js — every token name (locations)"
-justification = """
-Every regex token defined in re.js, name-only (truncated at the first
-quoted string close). NUMERICIDENTIFIER, MAINVERSION, FULL, LOOSE,
-GTLT, XRANGE, COERCE, COERCERTL, TILDE, CARET, COMPARATOR, HYPHENRANGE,
-STAR, GTE0, etc. Catastrophic-omission mitigation: the token list IS
-the parser's vocabulary; a partial list would mislead. Each token is
-one or two hops from its source pattern.
-"""
-content = { kind = "lines", spans = [
-  { path = "internal/re.js", start = 59,  end = 60,  render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 66,  end = 66,  render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 71,  end = 71,  render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 75,  end = 75,  render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 84,  end = 84,  render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 87,  end = 87,  render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 94,  end = 94,  render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 97,  end = 97,  render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 103, end = 103, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 109, end = 109, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 121, end = 121, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 125, end = 125, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 130, end = 130, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 134, end = 134, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 136, end = 136, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 141, end = 142, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 144, end = 144, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 151, end = 151, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 158, end = 159, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 163, end = 163, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 167, end = 168, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 172, end = 173, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 177, end = 177, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 179, end = 179, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 182, end = 183, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 187, end = 187, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 189, end = 189, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 192, end = 193, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 196, end = 197, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 209, end = 209, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 214, end = 214, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 220, end = 220, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 222, end = 222, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-  { path = "internal/re.js", start = 223, end = 223, render = { kind = "truncated", pattern = "^createToken\\('[A-Z0-9]+'" } },
-] }
-
-[[batches]]
-id = "5.2"
-descriptor = "internal/re.js — section comments and exports header"
-justification = """
-The header comment block explaining the safeRe vs re distinction (DoS-
-mitigated bounded forms of the otherwise-greedy patterns), the
-LETTERDASHNUMBER constant, and the exports/createToken plumbing. After
-this batch the agent knows _why_ there are two parallel regex tables.
-"""
-predecessor = "5.1"
-content = { kind = "lines", spans = [
-  { path = "internal/re.js", start = 1,  end = 17, render = { kind = "full" } },
-  { path = "internal/re.js", start = 19, end = 19, render = { kind = "full" } },
-  { path = "internal/re.js", start = 22, end = 31, render = { kind = "full" } },
-  { path = "internal/re.js", start = 42, end = 51, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.3"
-descriptor = "SemVer.compare — body (entry into compareMain || comparePre)"
-justification = """
-The 14-line compare() body: short-circuit equal-versions check, then
-`compareMain(other) || comparePre(other)`. Pins the dispatch pattern;
-the line-numbered pointer in 4.1 lands the agent on compareMain
-(line 109) and comparePre (line 135) when needed.
-"""
-predecessor = "4.1"
-content = { kind = "lines", spans = [
-  { path = "classes/semver.js", start = 93, end = 107, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.4"
-descriptor = "internal/identifiers.js — full file"
-justification = """
-The compareIdentifiers (numeric < numeric, alpha-string sort, numerics
-before strings) used by SemVer.comparePre. 29 lines, the canonical
-identifier ordering rule.
-"""
-content = { kind = "lines", spans = [
-  { path = "internal/identifiers.js", start = 1, end = 29, render = { kind = "full" } },
-] }
-
-
-[[batches]]
-id = "5.5"
-descriptor = "bin/semver.js — CLI flag case lines (truncated)"
-justification = """
-Just the `case '-X': case '--Y':` heads of the argv-loop switch — every
-CLI flag the binary accepts (-rv/--reverse, -l/--loose,
--p/--include-prerelease, -v/--version, -i/--inc, --preid, -r/--range,
--n, -c/--coerce, --rtl, --ltr, -h/--help) plus the inc-level cases
-(major/minor/patch/etc.). Catastrophic-omission mitigation for "what
-flags does the CLI accept?".
-"""
-content = { kind = "lines", spans = [
-  { path = "bin/semver.js", start = 50,  end = 50,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 53,  end = 53,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 56,  end = 56,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 59,  end = 59,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 62,  end = 62,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 64,  end = 66,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 74,  end = 74,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 77,  end = 77,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 80,  end = 80,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 86,  end = 86,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 89,  end = 89,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 92,  end = 92,  render = { kind = "full" } },
-  { path = "bin/semver.js", start = 95,  end = 95,  render = { kind = "full" } },
-] }
-
-# =====================================================================
-# Tier 6 — function/range bodies + remaining locations
-# =====================================================================
-
-[[batches]]
-id = "6.1"
-descriptor = "functions/ — module.exports lines (locations of every public function)"
-justification = """
-Each free function in functions/ exports itself as `module.exports =
-<name>` on its last line. Pinning these lines together gives one
-batch's worth of "where is the export of every function" — a precise
-landing spot for `require('semver/functions/X')` lookups. Catastrophic-
-omission mitigation: the FS listing earlier (2.2) shows file names, but
-the export name is not always exactly the file name (compare-build →
-compareBuild, compare-loose → compareLoose, etc.). Showing each
-file's exact module.exports anchors the actual symbol.
-"""
-content = { kind = "lines", spans = [
-  { path = "functions/clean.js",         start = 8,  end = 8,  render = { kind = "full" } },
-  { path = "functions/cmp.js",           start = 54, end = 54, render = { kind = "full" } },
-  { path = "functions/coerce.js",        start = 62, end = 62, render = { kind = "full" } },
-  { path = "functions/compare-build.js", start = 9,  end = 9,  render = { kind = "full" } },
-  { path = "functions/compare-loose.js", start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/compare.js",       start = 7,  end = 7,  render = { kind = "full" } },
-  { path = "functions/diff.js",          start = 60, end = 60, render = { kind = "full" } },
-  { path = "functions/eq.js",            start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/gt.js",            start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/gte.js",           start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/inc.js",           start = 21, end = 21, render = { kind = "full" } },
-  { path = "functions/lt.js",            start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/lte.js",           start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/major.js",         start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/minor.js",         start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/neq.js",           start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/parse.js",         start = 18, end = 18, render = { kind = "full" } },
-  { path = "functions/patch.js",         start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/prerelease.js",    start = 8,  end = 8,  render = { kind = "full" } },
-  { path = "functions/rcompare.js",      start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/rsort.js",         start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/satisfies.js",     start = 12, end = 12, render = { kind = "full" } },
-  { path = "functions/sort.js",          start = 5,  end = 5,  render = { kind = "full" } },
-  { path = "functions/valid.js",         start = 8,  end = 8,  render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.2"
-descriptor = "ranges/ — module.exports lines (locations of every range function)"
-justification = """
-Same pattern for ranges/: each file's terminal `module.exports =
-<name>` line. Tells the agent the exact exported symbol of every
-range-level helper (toComparators, maxSatisfying, minSatisfying,
-minVersion, validRange, outside, gtr, ltr, intersects, simplifyRange
-[file: simplify.js], subset).
-"""
-content = { kind = "lines", spans = [
-  { path = "ranges/gtr.js",            start = 6,   end = 6,   render = { kind = "full" } },
-  { path = "ranges/intersects.js",     start = 9,   end = 9,   render = { kind = "full" } },
-  { path = "ranges/ltr.js",            start = 6,   end = 6,   render = { kind = "full" } },
-  { path = "ranges/max-satisfying.js", start = 27,  end = 27,  render = { kind = "full" } },
-  { path = "ranges/min-satisfying.js", start = 26,  end = 26,  render = { kind = "full" } },
-  { path = "ranges/min-version.js",    start = 63,  end = 63,  render = { kind = "full" } },
-  { path = "ranges/outside.js",        start = 82,  end = 82,  render = { kind = "full" } },
-  { path = "ranges/simplify.js",       start = 8,   end = 8,   render = { kind = "full" } },
-  { path = "ranges/subset.js",         start = 249, end = 249, render = { kind = "full" } },
-  { path = "ranges/to-comparators.js", start = 10,  end = 10,  render = { kind = "full" } },
-  { path = "ranges/valid.js",          start = 13,  end = 13,  render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.3"
-descriptor = "functions/cmp.js — operator switch body"
-justification = """
-The `cmp(a, op, b)` switch over '===', '!==', '', '=', '==', '!=',
-'>', '>=', '<', '<=' that delegates to eq/neq/gt/gte/lt/lte. This is
-the dispatcher every dynamic operator query routes through; one
-zero-follow-up read.
-"""
-content = { kind = "lines", spans = [
-  { path = "functions/cmp.js", start = 10, end = 53, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.4"
-descriptor = "functions/diff.js — release-type comparison body"
-justification = """
-The `diff(v1, v2)` body that returns 'major' / 'minor' / 'patch' /
-'premajor' / 'preminor' / 'prepatch' / 'prerelease' / null, plus the
-prerelease-to-non-prerelease special cases. Zero-follow-up answer for
-"what changed between two versions?". The mid-block comment example
-table (lines 22-27) is replaced by an ellipsis since the README's
-prerelease section already covers the rule.
-"""
-content = { kind = "lines", spans = [
-  { path = "functions/diff.js", start = 5, end = 21, render = { kind = "full" } },
-  { path = "functions/diff.js", start = 22, end = 22, render = { kind = "ellipsis" } },
-  { path = "functions/diff.js", start = 28, end = 58, render = { kind = "full" } },
-] }
-
-# =====================================================================
-# Tier 7 — tail: small support files, range-helper bodies, CLI tail
-# =====================================================================
-
-[[batches]]
-id = "7.1"
-descriptor = "internal/parse-options.js — full file"
-justification = """
-17 lines — the universal options-normalizer used by every public API
-entry. Documents the boolean-shorthand quirk: a non-object truthy
-options arg gets interpreted as `{ loose: true }`.
-"""
-content = { kind = "lines", spans = [
-  { path = "internal/parse-options.js", start = 1, end = 17, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.2"
-descriptor = "internal/debug.js — full file"
-justification = """
-11 lines. The NODE_DEBUG=semver tracer. Useful for any "how do I
-debug a parsing problem" question and small enough to include verbatim.
-"""
-content = { kind = "lines", spans = [
-  { path = "internal/debug.js", start = 1, end = 11, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.3"
-descriptor = "internal/lrucache.js — class signature + max constant"
-justification = """
-The bounded-Map LRU used by Range.parseRange to memoize range parsing.
-Locations of constructor + get/set/delete + the `max = 1000` literal —
-the only tunable.
-"""
-content = { kind = "lines", spans = [
-  { path = "internal/lrucache.js", start = 3,  end = 7,  render = { kind = "full" } },
-  { path = "internal/lrucache.js", start = 9,  end = 9,  render = { kind = "truncated", pattern = "^  [a-z]+ " } },
-  { path = "internal/lrucache.js", start = 21, end = 21, render = { kind = "truncated", pattern = "^  [a-z]+ " } },
-  { path = "internal/lrucache.js", start = 25, end = 25, render = { kind = "truncated", pattern = "^  [a-z]+ " } },
-] }
-
-[[batches]]
-id = "7.4"
-descriptor = "ranges/min-version.js — function signature + 0.0.0 fast path"
-justification = """
-The minVersion(range, loose) signature plus the early-return for the
-trivial case where 0.0.0 is in the range. The full walk-the-comparators
-body lives at lines 21-62; this batch is the cheap pointer.
-"""
-content = { kind = "lines", spans = [
-  { path = "ranges/min-version.js", start = 7, end = 12, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.5"
-descriptor = "LICENSE first line + CONTRIBUTING.md headings"
-justification = """
-LICENSE first line (ISC) plus CONTRIBUTING.md section headings
-(Reporting Bugs, Pull Request Conventions, Commits, Test Coverage,
-Linting, What not to contribute). Tells the agent what's documented
-for contributors without paying for the body prose.
-"""
-content = { kind = "lines", spans = [
-  { path = "LICENSE", start = 1, end = 1, render = { kind = "full" } },
-  { path = "CONTRIBUTING.md", start = 5, end = 5, render = { kind = "full" } },
-  { path = "CONTRIBUTING.md", start = 9, end = 9, render = { kind = "full" } },
-  { path = "CONTRIBUTING.md", start = 17, end = 17, render = { kind = "full" } },
-  { path = "CONTRIBUTING.md", start = 19, end = 19, render = { kind = "full" } },
-  { path = "CONTRIBUTING.md", start = 30, end = 30, render = { kind = "full" } },
-  { path = "CONTRIBUTING.md", start = 36, end = 36, render = { kind = "full" } },
-  { path = "CONTRIBUTING.md", start = 42, end = 42, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "7.6"
-descriptor = "bin/semver.js — entry skeleton (shebang, version load, main call)"
-justification = """
-The shebang + lede comment, the `require('../package.json').version`
-load (line 16) used in the help banner, the `require('../')` semver
-import (line 30), and the `main()` invocation at the bottom (line
-191). Pinpoints how the CLI is wired without paying for the body.
-"""
-content = { kind = "lines", spans = [
-  { path = "bin/semver.js", start = 1, end = 2, render = { kind = "full" } },
-  { path = "bin/semver.js", start = 16, end = 16, render = { kind = "full" } },
-  { path = "bin/semver.js", start = 30, end = 30, render = { kind = "full" } },
-  { path = "bin/semver.js", start = 191, end = 191, render = { kind = "full" } },
-] }
+descriptor = "SemVer: compare / compareMain / comparePre / compareBuild"
+justification = "The full ordering algorithm: main-tuple comparison, then the prerelease tiebreak (no-prerelease > has-prerelease; compareIdentifiers per dot-separated id, see 2.7), then the separate build-metadata tiebreak used only by compareBuild/sort. This is where 'why does A sort before B' is actually decided."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "classes/semver.js", start = 93, end = 190, render = { kind = "full" } } ]

@@ -1,667 +1,378 @@
 fixture = "mongoose"
 revision_pin = "1d373ce5"
 summary = """
-Mongoose is a single-header embedded C network library (v7.21) from
-Cesanta — event-driven TCP/UDP/HTTP/WebSocket/MQTT/MQTT5/SNTP/Modbus
-plus a built-in TCP/IP stack ("mip") with bare-metal drivers for
-STM32/NXP/Microchip/TI/Renesas/Infineon/Wiznet/Cypress/WCH, OTA flash
-backends, multiple TLS backends (built-in / mbedTLS / OpenSSL /
-WolfSSL), and a device-dashboard subsystem. Dual GPL-2.0-or-commercial
-licensed.
-
-Distribution shape is unusual and load-bearing: the library is
-shipped as two amalgamated artifacts at the root, `mongoose.h`
-(~4.3k lines) and `mongoose.c` (~30.5k lines), produced from the
-modular `src/` tree (97 files including 39 driver pairs under
-`src/drivers/`). End users typically drop those two files into their
-project; contributors edit the `src/` tree and regenerate. The single
-public API is a flat namespace of `mg_*` functions and `struct mg_*`
-types.
-
-Plausible queries this ranking serves: "how do I serve files with
-HTTP?", "what's the MQTT client event handler signature?", "how is
-TLS configured?", "what fields are on `struct mg_connection`?", "how
-does the built-in TCP/IP stack interact with a driver?", "where do I
-add a new MCU driver?", "what MG_ENABLE_* options exist?", "where's
-the test for X?", and "what does a minimal mongoose program look
-like?". The walker should front-load the public API surface (header
-signatures, struct fields, event enum) and the breadth of supported
-protocols / drivers / tutorials, because most user questions are
-"where is X named" or "what's the shape of Y" rather than "how does
-the implementation of Z work".
+Mongoose is a single event-driven C/C++ networking library (cesanta/mongoose):
+one mg_mgr + mg_connection model with MG_EV_* callbacks drives TCP/UDP, HTTP,
+WebSocket, MQTT (3.1.1/5), DNS/mDNS, SNTP, Modbus, JSON-RPC, and TLS (builtin
+or mbedTLS/OpenSSL/WolfSSL), plus an optional built-in TCP/IP stack with 38
+embedded MAC/PHY/Wi-Fi driver backends. Canonical source of truth is the
+per-module split under src/*.{c,h} (~118 files); root mongoose.c/mongoose.h
+are the generated single-file amalgamation end users copy into their own
+build (see resources/pack.js / test/pack.c for the generation tooling).
+Ranking serves: (a) "how do I wire up protocol X" (dense public headers for
+the README-advertised protocols: HTTP/MQTT/WS/JSON/SNTP, plus entry points
+for the less-advertised ones: DNS/mDNS, Modbus — JSON-RPC/rpc.h, like most
+other subsystems, is named via the src/ listing only, one grep away), (b) "what config
+knob controls Y" (config.h, arch.h), (c) build/test/CI entry points, and
+(d) breadth-first orientation across src/, drivers/, test/, and tutorials/
+so an agent never has to guess what else exists before drilling in. Given a
+hard token budget, depth is deliberately biased toward the core event model
+and the two headline protocols (HTTP, MQTT); most other subsystems (TLS
+internals, the built-in TCP/IP stack, OTA, the device-dashboard framework,
+per-chip drivers) are named via filesystem listings only, one grep away.
 """
-
-# ============================================================
-# Tier 1 — repository identity, top-level layout, license model.
-# Anchors the agent: what this repo is, how it's organized, where
-# the canonical entry points live.
-# ============================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "README title"
-justification = """
-Smallest possible identification: name + tagline. Tells the agent
-"Mongoose — embedded web server / network library" in one line.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "README.md", start = 1, end = 1, render = { kind = "full" } }]
+descriptor = "Repository root listing"
+justification = "Cheapest possible orientation: every top-level entry (LICENSE, README, mongoose.c/.h amalgamation, resources/, src/, test/, tutorials/) at near-zero budget."
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Version constant"
-justification = """
-`src/version.h` is one line that names the release (`MG_VERSION
-"7.21"`). Tiny, identifies the snapshot the agent is reading.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/version.h", start = 1, end = 1, render = { kind = "full" } }]
+descriptor = "test/dirtest/ listing"
+justification = "Tiny fixture dir (fuzz.c + version.h) used by the directory-listing test in unit_test.c; cheap enough to slot in immediately after the root listing."
+content = { kind = "fs", groups = [ { parent = "test/dirtest", entries = "all" } ] }
 
 [[batches]]
 id = "1.3"
-descriptor = "Dual-license SPDX header"
-justification = """
-GPL-2.0-or-commercial is a load-bearing fact for this codebase —
-contributors must sign a CLA and the commercial licensing is part of
-the product. One line settles "what license is this?" in zero
-follow-ups.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/license.h", start = 18, end = 18, render = { kind = "full" } }]
+descriptor = "test/wizard/ listing"
+justification = "Names the Makefile + test.sh backing the 'Mongoose Wizard' board-config generator mentioned in tutorials/README.md (5.1)."
+content = { kind = "fs", groups = [ { parent = "test/wizard", entries = "all" } ] }
 
 [[batches]]
 id = "1.4"
-descriptor = "Documentation URL pointer"
-justification = """
-Mongoose's full documentation (tutorials, build options, API
-reference) lives off-tree at https://mongoose.ws/. The single line
-that mentions this is load-bearing: it tells an agent where
-authoritative answers live for questions the in-tree headers alone
-don't answer.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "README.md", start = 35, end = 35, render = { kind = "full" } }]
+descriptor = ".github/ISSUE_TEMPLATE/ listing"
+justification = "Names the issue template (issue.md) and its config (config.yml) — cheap process detail for 'how do I file a bug'."
+content = { kind = "fs", groups = [ { parent = ".github/ISSUE_TEMPLATE", entries = "all" } ] }
 
 [[batches]]
 id = "1.5"
-descriptor = "Top-level filesystem layout"
-justification = """
-Catastrophic-omission hedge for the root: every immediate child
-listed so the agent knows the amalgamated `mongoose.h` / `mongoose.c`
-sit at the root next to `src/` (modular sources), `test/`,
-`tutorials/`, `resources/`, plus `.precis-pin`, `.clang-format`,
-`LICENSE`, `README.md`, and `.github/`.
-"""
-[batches.content]
-kind = "fs"
-groups = [{ parent = ".", entries = "all" }]
+descriptor = ".clang-format (full)"
+justification = "6-line file: BasedOnStyle Google + a few overrides. Answers 'what code style/formatter' with zero follow-up."
+content = { kind = "lines", spans = [ { path = ".clang-format", start = 1, end = 6, render = { kind = "full" } } ] }
 
 [[batches]]
 id = "1.6"
-descriptor = "README lede (prose)"
-justification = """
-Five lines of prose: "Mongoose is a network library for C/C++. It
-provides event-driven non-blocking APIs for TCP, UDP, HTTP,
-WebSocket, MQTT, and other protocols. It is designed for connecting
-devices and bringing them online. On the market since 2004 …". Skips
-the img-tag-heavy line 8.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "README.md", start = 9, end = 13, render = { kind = "full" } }]
+descriptor = "resources/downloads/ listing"
+justification = "Names the STM32CubeMX .ioc board files and init.sh/Makefile backing hardware-specific quick-starts (see resources/AGENTS.md, not expanded here per host-injected-file policy)."
+content = { kind = "fs", groups = [ { parent = "resources/downloads", entries = "all" } ] }
 
 [[batches]]
 id = "1.7"
-descriptor = "README features bullets — cross-platform OS/MCU support"
-justification = """
-First quarter of the feature list (lines 15-19): cross-platform
-support across Linux/UNIX/MacOS/Windows/Android and a wide vendor
-spread (ST, NXP, ESP32, Nordic, TI, Microchip, Infineon, Renesas).
-Concise enough to land at small budgets.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "README.md", start = 15, end = 19, render = { kind = "full" } }]
+descriptor = "test/certs/ listing"
+justification = "Names the test TLS material (ca/server/client .crt/.key + generate.sh) used by the TLS unit test (test_tls, see 3.5) and tls_multirec fixture."
+content = { kind = "fs", groups = [ { parent = "test/certs", entries = "all" } ] }
 
 [[batches]]
 id = "1.8"
-descriptor = "README features bullets — protocols + integration + footprint"
-justification = """
-Middle of the feature list (lines 20-25): built-in protocols
-(TCP/UDP/SNTP/HTTP/MQTT/Websocket), asynchronous DNS resolver, tiny
-footprint, ISO C/C++ compliance, and the "drop mongoose.c +
-mongoose.h into your source tree" distribution model.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "README.md", start = 20, end = 25, render = { kind = "full" } }]
+descriptor = "README: H2 section-heading roster"
+justification = "All 7 second-level headings in README.md (Supported platforms, Usage Examples, Commercial use, Security, How to report security vulnerabilities, Articles, Contributions) at their exact line numbers, without pulling in body text — cheap orientation for which section to open for a given query."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 37, end = 37, render = { kind = "full" } },
+  { path = "README.md", start = 66, end = 66, render = { kind = "full" } },
+  { path = "README.md", start = 162, end = 162, render = { kind = "full" } },
+  { path = "README.md", start = 176, end = 176, render = { kind = "full" } },
+  { path = "README.md", start = 201, end = 201, render = { kind = "full" } },
+  { path = "README.md", start = 206, end = 206, render = { kind = "full" } },
+  { path = "README.md", start = 226, end = 226, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.9"
-descriptor = "README features bullets — built-in stack + drivers + TLS + OTA"
-justification = """
-Bottom of the feature list (lines 26-33): the built-in TCP/IP stack
-with bare-metal drivers (STM32F/H, NXP RT1xxx, TI, Microchip SAME54,
-Wiznet W5500), running on external stacks (lwIP/Zephyr/Azure),
-built-in TLS 1.3 ECC plus external mbedTLS/OpenSSL backends, and
-OTA firmware updates for STM32 H5/H7.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "README.md", start = 26, end = 33, render = { kind = "full" } }]
+descriptor = "README: title + lede paragraph"
+justification = "The H1 title and the 6-line identity paragraph (event-driven, cross-platform, on the market since 2004). Skips the 4 badge-image lines (3-6, long CI/coverage badge URLs with no semantic content, plus their surrounding blank lines 2/7) to keep cost down. The paragraph ends '...Features include:' — an Ellipsis at line 15 signals the bulleted feature list (cross-platform, built-in protocols, TLS, built-in TCP/IP stack, ...) that follows rather than implying no such list exists."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 8, end = 13, render = { kind = "full" } },
+  { path = "README.md", start = 15, end = 15, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "1.10"
-descriptor = "Public-API anchors in amalgamated mongoose.h"
-justification = """
-`mongoose.h` is 4259 lines of amalgamated single-header with no
-`#line` markers. This batch surfaces the first line of every major
-struct/enum cluster (mg_str, mg_timer, mg_fs, MG_EV_*, mg_addr,
-mg_mgr, mg_connection, mg_http_*, mg_tls_opts, mg_ws_message,
-mg_mqtt_*, mg_dns_message, mg_modbus_req, mg_rpc_*, mg_dash,
-mg_tcpip_if) so a follow-up read can land at the exact public-surface
-chunk. Catastrophic-omission hedge for "what protocols does mongoose
-expose?".
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "mongoose.h", start = 20, end = 23, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1191, end = 1194, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1314, end = 1314, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1348, end = 1348, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1666, end = 1666, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1702, end = 1702, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1707, end = 1707, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1718, end = 1718, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1741, end = 1741, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1817, end = 1817, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1822, end = 1822, render = { kind = "full" } },
-  { path = "mongoose.h", start = 1894, end = 1894, render = { kind = "full" } },
-  { path = "mongoose.h", start = 2840, end = 2840, render = { kind = "full" } },
-  { path = "mongoose.h", start = 2926, end = 2926, render = { kind = "full" } },
-  { path = "mongoose.h", start = 2951, end = 2951, render = { kind = "full" } },
-  { path = "mongoose.h", start = 2995, end = 2995, render = { kind = "full" } },
-  { path = "mongoose.h", start = 3076, end = 3076, render = { kind = "full" } },
-  { path = "mongoose.h", start = 3118, end = 3118, render = { kind = "full" } },
-  { path = "mongoose.h", start = 3193, end = 3193, render = { kind = "full" } },
-  { path = "mongoose.h", start = 3452, end = 3452, render = { kind = "full" } },
-]
+descriptor = "test/data/ listing"
+justification = "Names the fixtures the HTTP/static-file tests serve against (index.html, range.txt, gzip.txt(.gz), a UTF-8-named file, ssi/ dir, packed ws.hex) — grounds what test_http_server/test_http_range/test_packed actually read from disk."
+content = { kind = "fs", groups = [ { parent = "test/data", entries = "all" } ] }
 
 [[batches]]
 id = "1.11"
-descriptor = "README quick HTTP-server example"
-justification = """
-A 22-line copy-pasteable HTTP server that exercises the load-bearing
-shape of every Mongoose program: `struct mg_mgr` + `mg_mgr_init` +
-`mg_http_listen` + `for(;;) mg_mgr_poll`, with an event handler that
-matches on `MG_EV_HTTP_MSG` and calls `mg_http_serve_dir`. The single
-best zero-follow-up source for "what does a minimal program look
-like".
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "README.md", start = 74, end = 95, render = { kind = "full" } }]
+descriptor = ".github/workflows/ + resources/ listing"
+justification = "All 9 CI workflow files (quicktest/test/nightly/nightly_tests/fuzz/cifuzz/codeql/zephyr/on_demand) and the resources/ tooling dir (pack.js, html2c.js, dashboard.js, watch.js, inline.js, I-CUBE-Mongoose) as classes."
+content = { kind = "fs", groups = [ { parent = ".github/workflows", entries = "all" }, { parent = "resources", entries = "all" } ] }
 
+[[batches]]
+id = "1.12"
+descriptor = "LICENSE (dual GPLv2/commercial, full)"
+justification = "Full 16-line license file. Answers licensing questions (a frequent onboarding query for a dual-licensed embedded lib) with zero follow-up."
+content = { kind = "lines", spans = [ { path = "LICENSE", start = 1, end = 16, render = { kind = "full" } } ] }
 
-# ============================================================
-# Tier 2 — public API surface (mongoose.h signatures, structs,
-# event enum, logging macros). Most queries are "what's the
-# signature of mg_*?" or "what fields does struct mg_* have?";
-# this tier answers them in zero follow-ups.
-#
-# Order interleaves small batches first so each respects the
-# 100 + 0.3·cum growth envelope. Predecessors are 1.10 wherever
-# the cluster's first line was anchored there.
-# ============================================================
+[[batches]]
+id = "1.13"
+descriptor = "src/drivers/ full file listing"
+justification = "The 38 embedded MAC/PHY/Wi-Fi driver source files (stm32f, stm32h, w5500, imxrt, xmc, rw612, cyw, nxp_wifi, st67w6, ...) named as a class, so 'is there a driver for chip X' is answered by one grep instead of assuming absence."
+content = { kind = "fs", groups = [ { parent = "src/drivers", entries = "all" } ] }
+
+[[batches]]
+id = "1.14"
+descriptor = "test/ full listing"
+justification = "Names the unit test (unit_test.c), fuzz targets, Makefile, per-toolchain example dirs (arduino, cube, keil, zephyr, xpresso, pico-sdk, esp-idf...), and setup scripts (mosquitto/mqtt, ga docker) as a class up front."
+content = { kind = "fs", groups = [ { parent = "test", entries = "all" } ] }
+
+[[batches]]
+id = "1.15"
+descriptor = "tutorials/ full listing"
+justification = "Top-level tutorial categories (http, mqtt, tcp, udp, websocket, tls, tcpip, arduino, micropython, and per-vendor stm32/nxp/ti/wch/infineon/renesas/pico-sdk/zephyr dirs) so 'is there a tutorial for protocol/board X' doesn't require a blind search."
+content = { kind = "fs", groups = [ { parent = "tutorials", entries = "all" } ] }
 
 [[batches]]
 id = "2.1"
-descriptor = "Core net API — mg_mgr_init / poll / listen / connect / send"
-justification = """
-mongoose.h:1779-1793. The lifecycle and connection-establishment
-verbs every mongoose program calls: mg_mgr_init/poll/free, mg_listen,
-mg_connect, mg_wrapfd, mg_connect_resolved, mg_send, mg_printf,
-mg_vprintf, mg_aton. Single-batch answer to "how do I make a
-connection?".
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1779, end = 1793, render = { kind = "full" } }]
+descriptor = "arch.h: MG_ARCH_* platform enumeration"
+justification = "All 17 supported architecture defines (UNIX, WIN32, ESP32/8266, FreeRTOS, ThreadX, Zephyr, ARMGCC, CMSIS-RTOS1/2, TI-RTOS, Pico-SDK, ARMCC, RT-Thread, ARM-CGT, Cube) plus the deprecated NEWLIB alias — the complete platform-selector class, in one place."
+content = { kind = "lines", spans = [ { path = "src/arch.h", start = 1, end = 21, render = { kind = "full" } } ] }
 
 [[batches]]
 id = "2.2"
-descriptor = "mg_str + helpers (cmp / dup / match / span)"
-justification = """
-mongoose.h:1191-1208. struct mg_str (buf+len pair) is mongoose's
-universal byte-slice — every protocol message hands callbacks
-mg_strs. Plus mg_strcmp/strcasecmp/strdup/match/span/str_to_num.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1191, end = 1208, render = { kind = "full" } }]
+descriptor = "event.h: the MG_EV_* event enum (full)"
+justification = "The single most load-bearing file conceptually: every mg_connection event handler switches on this enum. Full 34-line file so the complete event vocabulary (open/poll/connect/http/ws/mqtt/sntp/mdns/modbus/user) is visible in one shot, each with its ev_data type documented inline."
+content = { kind = "lines", spans = [ { path = "src/event.h", start = 1, end = 34, render = { kind = "full" } } ] }
 
 [[batches]]
 id = "2.3"
-descriptor = "Timer API"
-justification = """
-mongoose.h:1314-1333. struct mg_timer (period/expire/flags/fn/arg
-linked list), MG_TIMER_ONCE/REPEAT/RUN_NOW/CALLED/AUTODELETE flags,
-mg_timer_init/free/poll, mg_timer_expired. Note mg_timer_add (the
-more common entry point) lives in 2.1's net-API block.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1314, end = 1333, render = { kind = "full" } }]
+descriptor = "src/ full file listing"
+justification = "Catastrophic-omission hedge: all ~118 files under src/ (protocol .c/.h pairs, arch_*.h, tls_*, ota_*, and the drivers/ subdir) named up front so later per-module content batches don't imply the unlisted ones don't exist."
+content = { kind = "fs", groups = [ { parent = "src", entries = "all" } ] }
 
 [[batches]]
 id = "2.4"
-descriptor = "WebSocket API"
-justification = """
-mongoose.h:2831-2854. WEBSOCKET_OP_* (CONTINUE/TEXT/BINARY/CLOSE/
-PING/PONG), struct mg_ws_message (data + flags), mg_ws_connect,
-mg_ws_upgrade, mg_ws_send, mg_ws_wrap, mg_ws_printf, mg_ws_vprintf.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 2831, end = 2854, render = { kind = "full" } }]
+descriptor = "net.h: mg_mgr struct"
+justification = "mg_mgr is the top-level object every program owns (mg_mgr_init/poll/free); shows its exact fields (conns list, dns4/6, timers, tls_ctx, userdata). mg_dns/mg_addr (lines 1-25, referenced by loc/rem in mg_connection, 2.5) are omitted wholesale to bound cost — one grep on the already-named src/net.h (2.3) resolves them."
+content = { kind = "lines", spans = [
+  { path = "src/net.h", start = 11, end = 11, render = { kind = "ellipsis" } },
+  { path = "src/net.h", start = 27, end = 48, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.5"
-descriptor = "struct mg_mgr fields"
-justification = """
-mongoose.h:1718-1739. The event-manager struct: connections list,
-DNS server URLs, timers, optional epoll fd, optional mip interface
-pointer, MQTT id counter, userdata.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1718, end = 1739, render = { kind = "full" } }]
+descriptor = "net.h: mg_connection struct"
+justification = "The per-connection object passed to every event handler: recv/send iobufs, the bitfield of is_listening/is_client/is_tls/is_websocket/... flags that most protocol logic branches on. Grounds 'how do I tell if a connection is X' without grepping net.c."
+content = { kind = "lines", spans = [ { path = "src/net.h", start = 50, end = 86, render = { kind = "full" } } ] }
 
 [[batches]]
 id = "2.6"
-descriptor = "HTTP message struct + serve-opts + multipart part"
-justification = """
-mongoose.h:1817-1845. struct mg_http_message
-(method/uri/query/proto/headers/body/head/message), struct
-mg_http_serve_opts (root_dir / ssi_pattern / extra_headers /
-mime_types / page404 / fs), struct mg_http_part (multipart upload).
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1817, end = 1845, render = { kind = "full" } }]
+descriptor = "README worked example: minimal HTTP file server"
+justification = "The canonical 'cc main.c mongoose.c' HTTP static-file-server snippet, using mg_mgr_init/mg_http_listen/mg_http_serve_dir/mg_mgr_poll together. Zero-follow-up answer for 'how do I start a basic mongoose HTTP server'."
+content = { kind = "lines", spans = [ { path = "README.md", start = 74, end = 96, render = { kind = "full" } } ] }
 
 [[batches]]
 id = "2.7"
-descriptor = "Logging macros (MG_LL_* / MG_LOG / MG_ERROR / MG_INFO / MG_DEBUG)"
-justification = """
-mongoose.h:1274-1309. Log level enum (NONE/ERROR/INFO/DEBUG/VERBOSE),
-mg_log_level extern, mg_log / mg_log_prefix / mg_hexdump /
-mg_log_set_fn, mg_log_set macro, and the MG_LOG dispatcher with
-MG_ERROR/INFO/DEBUG/VERBOSE shortcuts. Used throughout mongoose.c
-and every tutorial. The double-paren calling convention
-`MG_INFO(("fmt %d", n))` is defined here.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1274, end = 1309, render = { kind = "full" } }]
+descriptor = "README worked example: MQTT event handler (pub/sub)"
+justification = "Full ev_handler from the README's MQTT client (mg_mqtt_sub/mg_mqtt_pub, MG_EV_MQTT_OPEN/MSG/CLOSE branches). Trimmed to the handler only (drops the reconnect-timer/main-loop boilerplate, which mirrors the HTTP example's main loop in 2.6) to bound cost."
+content = { kind = "lines", spans = [ { path = "README.md", start = 111, end = 140, render = { kind = "full" } } ] }
 
 [[batches]]
 id = "2.8"
-descriptor = "Event enum (MG_EV_*)"
-justification = """
-mongoose.h:1666-1691. The 26-entry enum is the central abstraction:
-every protocol delivers events through this enum, each annotated
-inline with the `ev_data` type the user callback receives
-(MG_EV_HTTP_MSG → mg_http_message *; MG_EV_MQTT_MSG → mg_mqtt_message
-*; MG_EV_WS_MSG → mg_ws_message *; etc.). Reading this batch makes
-every event-handler example self-explanatory in zero follow-ups.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1666, end = 1691, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.9"
-descriptor = "TLS backend selector + struct mg_tls_opts"
-justification = """
-mongoose.h:1879-1900. MG_TLS_NONE/MBED/OPENSSL/WOLFSSL/BUILTIN/CUSTOM
-backend constants (chosen at compile time with -DMG_TLS=…) and
-struct mg_tls_opts (ca/cert/key/name/skip_verification) — the input
-to mg_tls_init. The TLS function surface follows at 2.19.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1879, end = 1900, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.10"
-descriptor = "HTTP API functions (listen/serve/reply/upload/auth)"
-justification = """
-mongoose.h:1847-1876. mg_http_parse, mg_http_get_request_len,
-mg_http_printf_chunk / write_chunk, mg_http_listen / connect,
-mg_http_serve_dir / serve_file / reply, mg_http_get_header,
-mg_http_var / get_var, mg_url_decode / encode, mg_http_creds,
-mg_http_upload, mg_http_bauth, mg_http_get_header_var,
-mg_http_next_multipart, mg_http_status, mg_http_serve_ssi.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1847, end = 1876, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.11"
-descriptor = "Filesystem vtable (struct mg_fs + three impls)"
-justification = """
-mongoose.h:1339-1365. MG_FS_READ/WRITE/DIR enum, struct mg_fs (the
-vtable: st/ls/op/cl/rd/wr/sk/mv/rm/mkd) with the rationale for the
-short names, and the three exported implementations
-(mg_fs_posix / mg_fs_packed / mg_fs_fat). The mg_fd descriptor and
-the user-facing read/write helpers split out to 2.20.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1339, end = 1365, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.12"
-descriptor = "struct mg_connection — data members"
-justification = """
-mongoose.h:1741-1757. Data half of the struct every callback
-receives: next/mgr/loc/rem (linkage + addresses), fd (socket or LWIP
-data), id, the four mg_iobufs recv/send/prof/rtls, the user-fn /
-protocol-fn pair (fn/fn_data, pfn/pfn_data), the inline
-char data[MG_DATA_SIZE] for application use, and the void *tls. The
-bit-flag half follows at 2.13.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1741, end = 1757, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.13"
-descriptor = "JSON path-accessor API"
-justification = """
-mongoose.h:3094-3112. MG_JSON_MAX_DEPTH, error codes
-(TOO_DEEP/INVALID/NOT_FOUND), mg_json_get, mg_json_get_tok,
-mg_json_get_num/bool/long/str/hex/b64, mg_json_unescape, mg_json_next.
-Mongoose's path-based JSON accessor (`$.foo[0].bar`) used by RPC and
-dashboard subsystems.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 3094, end = 3112, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.14"
-descriptor = "MQTT — struct mg_mqtt_opts (client config)"
-justification = """
-mongoose.h:2933-2949. The client / pub / sub config struct passed
-to mg_mqtt_connect / login / pub / sub / unsub: user, pass,
-client_id, topic, message, qos, version (4 → MQTT 3.1.1; 5 →
-MQTT5), keepalive, retransmit_id, retain, clean, props arrays for
-MQTT5. The single most-read MQTT struct.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 2933, end = 2949, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.15"
-descriptor = "MQTT API functions"
-justification = """
-mongoose.h:2963-2979. mg_mqtt_connect/listen/login, mg_mqtt_pub/sub/
-unsub, mg_mqtt_parse, mg_mqtt_send_header, mg_mqtt_ping/pong,
-mg_mqtt_disconnect, mg_mqtt_next_prop.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 2963, end = 2979, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.16"
-descriptor = "JSON-RPC API"
-justification = """
-mongoose.h:3117-3145. struct mg_rpc_req, struct mg_rpc (linked-list of
-method-pattern handlers with fn+fn_data), mg_rpc_add/del/process,
-plus response helpers mg_rpc_ok/vok/err/verr/list.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 3117, end = 3145, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.17"
-descriptor = "struct mg_connection — bit-flag fields"
-justification = """
-mongoose.h:1758-1777. The 20 single-bit flag fields callbacks query
-and mutate: is_listening / is_client / is_accepted / is_resolving /
-is_arplooking / is_connecting / is_tls / is_tls_hs / is_udp /
-is_websocket / is_mqtt5 / is_hexdumping / is_draining / is_closing /
-is_full / is_tls_throttled / is_resp / is_readable / is_writable.
-Splits off from 2.12 so the data-member half lands at smaller
-budgets while the agent still gets every flag at moderate budgets.
-"""
-predecessor = "2.12"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1758, end = 1777, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.18"
-descriptor = "MQTT — struct mg_mqtt_message + struct mg_mqtt_prop"
-justification = """
-mongoose.h:2926-2932 (mg_mqtt_prop: id + iv + key + val for MQTT5
-properties) and 2951-2961 (mg_mqtt_message: topic + data + dgram +
-id + cmd + qos + ack + props_start + props_size — what arrives in
-ev_data for MG_EV_MQTT_MSG and MG_EV_MQTT_CMD). Splits from 2.14
-since these are read-only fields, ranked after the writeable
-options struct.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "mongoose.h", start = 2926, end = 2932, render = { kind = "full" } },
-  { path = "mongoose.h", start = 2951, end = 2961, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.19"
-descriptor = "TLS — mg_tls_init / free / send / recv / handshake"
-justification = """
-mongoose.h:1902-1918. The unified user-facing TLS function surface:
-mg_tls_init (takes the mg_tls_opts from 2.9), mg_tls_free,
-mg_tls_send, mg_tls_recv, mg_tls_pending, mg_tls_flush,
-mg_tls_handshake, plus the private mg_tls_ctx_init/free for the
-mgr-shared TLS context, MG_IS_DER, and the low-level mg_io_send/recv
-primitives (with MG_IO_ERR / WAIT / RESET return codes) the TLS
-layer composes over.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1902, end = 1918, render = { kind = "full" } }]
-
-[[batches]]
-id = "2.20"
-descriptor = "Filesystem — mg_fd + open/read/write/printf"
-justification = """
-mongoose.h:1367-1378. struct mg_fd (fd+fs pair returned by open),
-mg_fs_open/close/ls (vtable-driven directory enumeration), and the
-one-shot helpers mg_file_read / write / printf that wrap the
-mg_fs vtable for typical "load a cert file" / "log to a file"
-use cases.
-"""
-predecessor = "2.11"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 1367, end = 1378, render = { kind = "full" } }]
-
-
-# ============================================================
-# Tier 3 — modular sources, tutorials taxonomy, drivers, and the
-# protocol surfaces deferred from tier 2 (DNS/Modbus/OTA/WiFi/
-# dashboard). Switch from Full to Truncated/location-only render
-# for breadth; tier 2 already covered the canonical signature
-# clusters in depth.
-# ============================================================
+descriptor = "config.h: feature-toggle flags (part 1, hedged)"
+justification = "The first 60 lines of the single build-time config surface: MG_ENABLE_LOG, the mutually-exclusive stack choice (TCPIP/LWIP/FREERTOS_TCP/RL), MG_ENABLE_SOCKET/POLL/EPOLL/FATFS/SSI/IPV6/MD5. An Ellipsis at line 61 signals more toggles follow (WINSOCK, DIRLIST, ASSERT, IO/buffer sizes, TCP/IP address defaults, MG_ENABLE_CHACHA20 — not rendered here to bound cost) rather than implying this is the complete knob set."
+content = { kind = "lines", spans = [
+  { path = "src/config.h", start = 1, end = 60, render = { kind = "full" } },
+  { path = "src/config.h", start = 61, end = 61, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "3.1"
-descriptor = "src/ modular sources — full directory listing"
-justification = """
-Listing every immediate child of `src/`. Catastrophic-omission hedge
-for "what modules does Mongoose have?" — the 97 entries here name
-every protocol (http.c/h, mqtt.c/h, ws.c/h, dns.c/h, sntp.c/h,
-modbus.c/h, sock.c, dash.c/h), every TLS backend (tls_mbed.c,
-tls_openssl.c, tls_builtin.c, tls_rsa.c, tls_uecc.c, tls_chacha20.c,
-tls_aes128.c, tls_x25519.c, tls_dummy.c), each OTA backend
-(ota_stm32f/h5/h7/esp32/imxrt/mcxn/picosdk/rw612/ch32v307/dummy.c),
-the cross-platform arch headers (arch_unix/win32/esp32/zephyr/
-freertos/threadx/picosdk/cube/rtthread/rtx/armgcc/armcgc/tirtos.h),
-config.h, license.h, version.h, util.c/h, str.c/h, log.c/h, json.c/h,
-rpc.c/h, base64.c, md5.c, sha1.c, sha256.c, l2.c/h + l2_eth.c +
-l2_ppp.c, net.c/h, net_builtin.c/h, net_ft.h, net_lwip.h, net_rl.h,
-fs.c/h + fs_fat.c + fs_packed.c + fs_posix.c, flash.c/h, ssi.c/h,
-timer.c/h, queue.c/h, iobuf.c/h, fmt.c/h, printf.c/h, profile.h,
-wifi.h + wifi_dummy.c, url.c/h, event.c/h, mongoose_custom-style
-hooks. Plus the `drivers/` subdirectory.
-"""
-[batches.content]
-kind = "fs"
-groups = [{ parent = "src", entries = "all" }]
+descriptor = "test/Makefile: canonical build/test targets (roster)"
+justification = "Name+deps line for 18 of the top-level Make targets (all, tall, test, mip_test/mip_tap_test/mip_port_test, mg_prefix, musl, unamalgamated, fuzz/fuzz_tls, coverage, valgrind, armhf/arm/riscv, mingw, tutorials); the remaining targets (misra, install/uninstall, clean*, ...) are dropped from this roster to bound cost, not to imply they don't exist — test/Makefile is already named in 1.14. Answers 'how do I build/test this' precisely without reading the whole 300+ line Makefile."
+content = { kind = "lines", spans = [
+  { path = "test/Makefile", start = 81, end = 81, render = { kind = "full" } },
+  { path = "test/Makefile", start = 84, end = 84, render = { kind = "full" } },
+  { path = "test/Makefile", start = 86, end = 86, render = { kind = "full" } },
+  { path = "test/Makefile", start = 90, end = 90, render = { kind = "full" } },
+  { path = "test/Makefile", start = 99, end = 99, render = { kind = "full" } },
+  { path = "test/Makefile", start = 112, end = 112, render = { kind = "full" } },
+  { path = "test/Makefile", start = 115, end = 115, render = { kind = "full" } },
+  { path = "test/Makefile", start = 122, end = 122, render = { kind = "full" } },
+  { path = "test/Makefile", start = 126, end = 126, render = { kind = "full" } },
+  { path = "test/Makefile", start = 136, end = 136, render = { kind = "full" } },
+  { path = "test/Makefile", start = 147, end = 147, render = { kind = "full" } },
+  { path = "test/Makefile", start = 162, end = 162, render = { kind = "full" } },
+  { path = "test/Makefile", start = 170, end = 170, render = { kind = "full" } },
+  { path = "test/Makefile", start = 174, end = 174, render = { kind = "ellipsis" } },
+  { path = "test/Makefile", start = 182, end = 182, render = { kind = "full" } },
+  { path = "test/Makefile", start = 208, end = 208, render = { kind = "full" } },
+  { path = "test/Makefile", start = 212, end = 212, render = { kind = "full" } },
+  { path = "test/Makefile", start = 228, end = 228, render = { kind = "full" } },
+  { path = "test/Makefile", start = 264, end = 264, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "src/drivers/ — every MCU/PHY driver"
-justification = """
-Every NIC/MAC/PHY/WiFi/SDIO driver Mongoose ships, named at one
-shot: at_cmd, cmsis, cyw (Cypress WiFi), imxrt (NXP IMXRT),
-nxp_wifi, phy (generic PHY), pico-w, ra (Renesas RA),
-rw612 (NXP RW612), same54 (Microchip SAME54), sdio, st67w6, stm32f,
-stm32h, tm4c (TI Tiva), tms570 (TI TMS570), w5100, w5500
-(Wiznet), xmc (Infineon XMC4), xmc7 (Infineon XMC7). Header + impl
-pair for each (except w5100/w5500 which are .c only).
-"""
-[batches.content]
-kind = "fs"
-groups = [{ parent = "src/drivers", entries = "all" }]
+descriptor = "CI: quicktest.yml essentials workflow (excerpt)"
+justification = "Shows the fast-path CI job matrix (gcc/clang++, test/mip_test targets, SSL='' / BUILTIN) and the path-filtered trigger. Grounds 'what does CI actually run' for the everyday push case; the other 8 workflows are named (not expanded) in 1.11. An Ellipsis at line 21 signals the file continues (this job's steps, plus the s390/armhf/... jobs) well past this excerpt, in this 727-line file."
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/quicktest.yml", start = 1, end = 20, render = { kind = "full" } },
+  { path = ".github/workflows/quicktest.yml", start = 21, end = 21, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "3.3"
-descriptor = "tutorials/ top-level taxonomy"
-justification = """
-The top-level `tutorials/` directory is organized by protocol
-(http, mqtt, websocket, udp, tcp, tcpip, tls, smtp) and by board
-vendor (arduino, stm32, nxp, ti, infineon, renesas, wch, pico-sdk,
-zephyr, micropython). Plus core (multi-threaded, memory, timers,
-embedded-filesystem), device-dashboard, and webui. Tells agents
-"there are dozens of working examples per protocol and per board".
-"""
-[batches.content]
-kind = "fs"
-groups = [{ parent = "tutorials", entries = "all" }]
-
+descriptor = "resources/pack.js: static-filesystem packer (excerpt)"
+justification = "Explains how mg_fs_packed / mg_packed_files (referenced from src/fs.h) get generated: pack.js turns arbitrary files into a C byte-array + mg_mem_file table, optionally gzipped. Answers 'how do I embed a web UI/static assets' at the tool level. Cuts off inside the argv.map() callback (the gzip branch); an Ellipsis at line 17 signals the rest of the callback plus the stdout-template writer that follows, in this 43-line file."
+content = { kind = "lines", spans = [
+  { path = "resources/pack.js", start = 1, end = 16, render = { kind = "full" } },
+  { path = "resources/pack.js", start = 17, end = 17, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "3.4"
-descriptor = "Built-in TCP/IP driver vtable (struct mg_tcpip_driver)"
-justification = """
-mongoose.h:3424-3432 — struct mg_tcpip_driver (init/tx/rx/poll
-function pointers) and the mg_tcpip_event_handler_t typedef. The
-minimum surface for "how does a driver plug into mip?". The full
-struct mg_tcpip_if (with all DHCP / link-state / statistics fields)
-and the mg_tcpip_init/free/qwrite/arp_request entry points sit
-nearby at mongoose.h:3434-3513; not included here to stay under the
-budget cap but the agent has the location.
-"""
-predecessor = "1.10"
-[batches.content]
-kind = "lines"
-spans = [{ path = "mongoose.h", start = 3424, end = 3432, render = { kind = "full" } }]
-
+descriptor = "test/pack.c: alternative data-packer CLI (excerpt)"
+justification = "A second, standalone (non-Node) packer used to build fs.c from a list of files, with usage documented in its header comment. Complements 3.3 for the C-only toolchain case. Cuts off mid-way through the header's numbered usage list (steps 1-2 of 4); an Ellipsis at line 13 signals steps 3-4 (which name the mg_unpack() accessor function) continue below."
+content = { kind = "lines", spans = [
+  { path = "test/pack.c", start = 1, end = 12, render = { kind = "full" } },
+  { path = "test/pack.c", start = 13, end = 13, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "3.5"
-descriptor = "src/config.h pointer — MG_ENABLE_TCPIP and key build switches"
-justification = """
-src/config.h:4 / :16 / :70. Three concrete lines from the
-compile-time switch file: MG_ENABLE_LOG (default 1), MG_ENABLE_TCPIP
-(default 0, opt-in for the built-in stack), MG_ENABLE_DIRLIST
-(default 0, opt-in for HTTP directory listing). Tells the agent the
-file exists and shows the canonical `#define MG_ENABLE_X N`
-pattern — every other build switch follows the same shape, with
-~25 distinct switches between lines 3 and 212.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/config.h", start = 4, end = 4, render = { kind = "full" } },
-  { path = "src/config.h", start = 16, end = 16, render = { kind = "full" } },
-  { path = "src/config.h", start = 70, end = 70, render = { kind = "full" } },
-]
+descriptor = "unit_test.c: test function roster, part 1 of 2 (29 entries)"
+justification = "Name-only roster of the first 29 of 57 test_*/main functions in the 4606-line unit test file, truncated at the opening paren (test_match through test_http_chunked). Directly maps 'is FEATURE tested' to an exact function name/line (test_mqtt, test_ws, test_http_server, test_tls, test_dns, ...); part 2 (3.6) continues the class through end of file, so no roster entry is silently dropped."
+content = { kind = "lines", spans = [
+  { path = "test/unit_test.c", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 263, end = 263, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 306, end = 306, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 356, end = 356, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 568, end = 568, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 609, end = 609, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 690, end = 690, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 790, end = 790, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 802, end = 802, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 998, end = 998, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1079, end = 1079, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1415, end = 1415, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1450, end = 1450, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1556, end = 1556, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1675, end = 1675, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1722, end = 1722, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 1746, end = 1746, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2007, end = 2007, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2057, end = 2057, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2250, end = 2250, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2591, end = 2591, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2609, end = 2609, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2680, end = 2680, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2946, end = 2946, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 2986, end = 2986, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3062, end = 3062, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "3.6"
-descriptor = "Reference tutorial Makefile (desktop/server)"
-justification = """
-tutorials/http/http-server/Makefile is the AGENTS.md-designated
-golden reference for desktop/server tutorial Makefiles
-(SOURCES=main.c mongoose.c, CFLAGS pattern, CFLAGS_MONGOOSE for
-mongoose-specific flags like MG_ENABLE_LINES / MG_ENABLE_IPV6 /
-MG_ENABLE_SSI, CFLAGS_EXTRA defaulting to -DMG_TLS=MG_TLS_BUILTIN,
-Windows MinGW branch). Lines 1-5 capture the variable-setup core (PROG / DELETE / OUT / SOURCES / CFLAGS); the rest
-of the file is a Windows-specific extension and the `all` /
-`clean` rules.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "tutorials/http/http-server/Makefile", start = 1, end = 5, render = { kind = "full" } }]
+descriptor = "unit_test.c: test function roster, part 2 of 2 (28 entries)"
+justification = "Continues 3.5's roster with the remaining 28 test_*/main functions (test_http_chunked_case through main), truncated at the opening paren: test_invalid_listen_addr, test_ws_fragmentation, test_json, test_rpc, the md5/sha1/sha256/sha384 family, test_x25519/rsa/crypto, test_modbus, and main itself. Together with 3.5, closes the full 57-entry class with no gap."
+content = { kind = "lines", spans = [
+  { path = "test/unit_test.c", start = 3086, end = 3086, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3101, end = 3101, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3182, end = 3182, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3203, end = 3203, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3244, end = 3244, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3299, end = 3299, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3313, end = 3313, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3386, end = 3386, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3412, end = 3412, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3430, end = 3430, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3462, end = 3462, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3727, end = 3727, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3808, end = 3808, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3882, end = 3882, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3895, end = 3895, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3905, end = 3905, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3920, end = 3920, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3930, end = 3930, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3945, end = 3945, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3952, end = 3952, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3972, end = 3972, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 3979, end = 3979, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4002, end = 4002, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4053, end = 4053, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4068, end = 4068, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4124, end = 4124, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4273, end = 4273, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "test/unit_test.c", start = 4475, end = 4475, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
-id = "3.7"
-descriptor = ".github/workflows — CI taxonomy"
-justification = """
-Lists the nine CI workflow files: cifuzz.yml, codeql.yml, fuzz.yml,
-nightly_tests.yml, nightly.yml, on_demand.yml, quicktest.yml, test.yml,
-zephyr.yml. Tells an agent "fuzzing is integrated", "there's a
-quicktest matrix and a nightly matrix", and where to look for build
-matrix logic when changing source files.
-"""
-[batches.content]
-kind = "fs"
-groups = [{ parent = ".github/workflows", entries = "all" }]
+id = "4.1"
+descriptor = "http.h: request/response structs (full)"
+justification = "struct mg_http_header (name/value), mg_http_message (method/uri/query/headers/body), mg_http_serve_opts (root_dir/ssi_pattern/mime_types/fs), and mg_http_part (multipart) — the four data shapes every HTTP handler touches. Complete for this file's struct class (function decls omitted wholesale, not partially, to bound cost — one grep on src/http.h resolves any specific signature)."
+content = { kind = "lines", spans = [ { path = "src/http.h", start = 1, end = 38, render = { kind = "full" } } ] }
 
 [[batches]]
-id = "3.8"
-descriptor = "Unit-test entry point pointer"
-justification = """
-test/unit_test.c is a single ~4700-line file with ~56 test_*
-functions (test_match / http_get_var / url / base64 / iobuf / sntp /
-mqtt / ws / http_server / http_404 / tls / http_client /
-http_pipeline / http_parse / http_range / timer / str / dns / util /
-crc32 / http_upload / http_chunked / packed / udp / check_ip_acl /
-ws_fragmentation / rewrites / get_header_var / json / queue / rpc /
-modbus / crypto / split / multipart / invalid_listen_addr /
-http_stream_buffer …) invoked from main(). Anchors the "where are
-the tests for X?" question — grep test_X in test/unit_test.c is
-one hop.
-"""
-[batches.content]
-kind = "lines"
-spans = [{ path = "test/unit_test.c", start = 4475, end = 4475, render = { kind = "full" } }]
+id = "4.2"
+descriptor = "mqtt.h: opts + message structs"
+justification = "mg_mqtt_opts (user/pass/client_id/topic/message/qos/version/props) and mg_mqtt_message (the parsed-message shape delivered on MG_EV_MQTT_MSG/CMD) — the two structs an MQTT integration actually touches. mg_mqtt_prop, the raw MQTT_CMD_*/MQTT_PROP_* wire-constant tables, and the function declarations are omitted wholesale (not partially) to bound cost; src/mqtt.h is already named in 2.3."
+content = { kind = "lines", spans = [
+  { path = "src/mqtt.h", start = 62, end = 62, render = { kind = "ellipsis" } },
+  { path = "src/mqtt.h", start = 69, end = 97, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "ws.h: WebSocket API (full)"
+justification = "Full 26-line file: WEBSOCKET_OP_* frame types, mg_ws_message, and mg_ws_connect/upgrade/send/wrap/printf. Small enough to include whole; covers WS end to end."
+content = { kind = "lines", spans = [ { path = "src/ws.h", start = 1, end = 26, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.4"
+descriptor = "json.h: JSON query API (full)"
+justification = "Full 24-line file: mg_json_get/get_tok/get_num/get_bool/get_long/get_str/get_hex/get_b64/unescape/next — Mongoose's JSONPath-lite reader used throughout http/mqtt/rpc/dash code, not a full JSON DOM."
+content = { kind = "lines", spans = [ { path = "src/json.h", start = 1, end = 24, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.5"
+descriptor = "sntp.h: SNTP client (full)"
+justification = "Tiny (10-line) full file: mg_sntp_connect/request/parse and mg_now(). Complete SNTP surface in one batch."
+content = { kind = "lines", spans = [ { path = "src/sntp.h", start = 1, end = 10, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.6"
+descriptor = "str.h: mg_str + glob matcher (full)"
+justification = "struct mg_str (buf+len, the ubiquitous non-owning string view) plus mg_match's glob-style pattern matching (mg_match/mg_span) used for URI routing everywhere in http/dash examples."
+content = { kind = "lines", spans = [ { path = "src/str.h", start = 1, end = 23, render = { kind = "full" } } ] }
+
+[[batches]]
+id = "4.7"
+descriptor = "Secondary protocols: DNS/mDNS, Modbus entry points"
+justification = "Function-only rosters (structs omitted wholesale) for two protocols the README bullets don't name but MG_EV_MDNS_*/MG_EV_MODBUS_REQ (2.2) wire up: dns.h's mg_resolve/mg_dns_parse/mg_mdns_listen/mg_mdns_query and modbus.h's mg_modbus_listen. rpc.h (JSON-RPC, see src/ listing 2.3) and struct definitions are one grep away in the already-named src/ files."
+content = { kind = "lines", spans = [
+  { path = "src/dns.h", start = 67, end = 75, render = { kind = "full" } },
+  { path = "src/modbus.h", start = 33, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.1"
+descriptor = "tutorials/README.md: how to navigate examples (excerpt)"
+justification = "Explains the per-example convention: each dir has its own README.md linking to a mongoose.ws tutorial, embedded ones link a Wizard. Lets an agent generalize from the one example dir it drills into (5.2/5.3) to any other tutorial category. Ends at '...Steps to get the most out of this code base:'; an Ellipsis at line 12 signals the numbered navigation steps that follow (in this 41-line file) rather than implying the list stops here."
+content = { kind = "lines", spans = [
+  { path = "tutorials/README.md", start = 1, end = 10, render = { kind = "full" } },
+  { path = "tutorials/README.md", start = 12, end = 12, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "tutorials/http/ listing"
+justification = "All HTTP example categories (http-server, http-client, file-transfer/upload variants, reverse-proxy, streaming-client, redirect-to-https, uart-bridge, video-stream, wifi-router-dashboard) named as a class, one hop from the top-level tutorials/ listing (1.15)."
+content = { kind = "fs", groups = [ { parent = "tutorials/http", entries = "all" } ] }
+
+[[batches]]
+id = "5.3"
+descriptor = "tutorials/http/http-server/ listing (golden-reference example)"
+justification = "The Makefile golden-reference example named in tutorials/README.md (5.1): shows the concrete per-example shape (main.c, Makefile, mongoose.c/.h symlinks, per-toolchain subdirs arduino/esp8266/zephyr, README.md) that every other example dir follows."
+content = { kind = "fs", groups = [ { parent = "tutorials/http/http-server", entries = "all" } ] }
+
+[[batches]]
+id = "5.4"
+descriptor = "tutorials/mqtt/ listing"
+justification = "Names the MQTT example categories (mqtt-client, mqtt-client-aws-iot, mqtt-dashboard, mqtt-over-ws-client, mqtt-server, ota-over-mqtt), complementing the MQTT protocol content in 4.2/2.6 with concrete runnable examples."
+content = { kind = "fs", groups = [ { parent = "tutorials/mqtt", entries = "all" } ] }

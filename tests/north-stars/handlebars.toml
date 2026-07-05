@@ -1,885 +1,633 @@
 fixture = "handlebars"
 revision_pin = "3105ca73"
 summary = """
-Handlebars.js is the canonical implementation of the Handlebars template
-language: parse a `{{...}}` template, compile it to a JavaScript function
-(or a precompiled spec for runtime-only environments), then execute it
-with a context. The crate splits roughly into four layers:
-
-1. `lib/handlebars.js` (full build) and `lib/handlebars.runtime.js`
-   (runtime-only): the public Handlebars object factories that wire
-   together the environment, utils, helpers, decorators, and (in the
-   full build) the compiler.
-2. `lib/handlebars/base.js` + `lib/handlebars/runtime.js`: the
-   `HandlebarsEnvironment` class (helpers / partials / decorators
-   registries, version constants, revision-compat table) and the
-   `template()` runtime that turns a precompiled spec into a callable
-   template, plus the `container` object whose `lookupProperty` /
-   `lookup` / `program` / `invokePartial` machinery is what generated
-   template code calls into.
-3. `lib/handlebars/helpers/` (7 built-in helpers: each, if/unless,
-   with, log, lookup, helperMissing, blockHelperMissing) and
-   `lib/handlebars/decorators/inline.js` — the user-visible building
-   blocks of the templating language.
-4. `lib/handlebars/compiler/`: a two-pass compiler. `compiler.js`
-   walks the AST and emits opcodes; `javascript-compiler.js` (1208
-   lines, the largest file in `lib/`) consumes those opcodes and emits
-   JavaScript via `code-gen.js`. `bin/handlebars.js` + `lib/precompiler.js`
-   are the CLI for precompiling `.handlebars` files to JS.
-
-Cross-cutting concerns: `internal/proto-access.js` (prototype-pollution
-mitigation), `internal/wrapHelper.js` (helper-options shim), and the
-`#source-node` import map split between `source-node.node.js` (the
-real `source-map` package) and `source-node.browser.js` (a minimal
-stub). Type definitions live in `types/index.d.ts`; a deep `spec/`
-folder holds vitest tests + the Mustache spec submodule; `tasks/`
-holds release / publish scripts; root-level files include `runtime.js`
-+ `runtime.d.ts` re-export shims, the README, FAQ, release-notes, and
-the rspack/vitest/oxlint/eslint configs.
-
-Query distribution to serve:
-- "How does Handlebars compile / render a template?" — entry-point
-  fan-out, `template()`, `compile()` / `precompile()`, opcode flow.
-- "How do I register / extend helpers / partials / decorators?" —
-  `HandlebarsEnvironment` registry methods, built-in helper bodies.
-- "What's the built-in `if` / `each` / `with` etc. doing?" — every
-  helper body is small and fits inline.
-- "How does the prototype-access security work?" — proto-access.js
-  and where it's wired in.
-- "How do I extend the JS compiler?" — `nameLookup` / `appendToBuffer`
-  / `initializeBuffer` overrides and the `compiler-api.md` doc.
-- "What's the runtime-vs-compile split?" — `lib/handlebars.runtime.js`
-  vs `lib/handlebars.js` and the revision-compat table.
-- Tasks / release / CI plumbing, type signatures, configs, and the
-  legacy-package-manager `components/` directory for the long tail.
+handlebars.js: the reference JS implementation of the Handlebars templating
+language (a Mustache superset). Repo shape: `lib/handlebars/` holds the
+runtime (base.js/runtime.js/utils.js), the built-in helpers
+(helpers.js + helpers/*.js), decorators, and the compiler pipeline
+(compiler/{ast,compiler,javascript-compiler,code-gen}.js) that turns a
+parsed template AST into a JS function; `lib/index.js` /
+`lib/handlebars.js` / `lib/handlebars.runtime.js` assemble the public
+`Handlebars` object (full vs. runtime-only builds), mirrored by
+`types/index.d.ts` for consumers. `bin/handlebars.js` + `lib/precompiler.js`
+implement the `handlebars` CLI for precompilation. `spec/` is an
+~6.6k-line Vitest suite (one file per template feature) run via
+`vitest.config.js`'s multi-project setup; `tasks/` holds release tooling;
+`tests/` holds benchmarks + bundler-integration smoke tests;
+`components/` holds legacy package-manager shims (bower/component/
+composer/nuspec/gem). Docs of record: README (usage + Mustache-compat),
+FAQ, CONTRIBUTING (build/lint/release), docs/*.md (AST + compiler-hook +
+decorator APIs), release-notes.md (68-version changelog). The query
+distribution this NS serves spans: understanding/extending template
+semantics (helpers, partials, decorators, whitespace control, strict/
+proto-access security), debugging compiled output (opcodes -> JS
+codegen), working the CLI/precompiler, and build/test/release operations.
+Given the size of this repo, most of the compiler/JS-codegen internals
+and the changelog are represented as cheap location rosters rather than
+full bodies — the roster + one grep/read hop is the intended path there.
 """
 
-# ============================================================================
-# TIER 1 — Repository identity + top-level shape (small early batches)
-# ============================================================================
+# ---------------------------------------------------------------------
+# Tier 1 — Orientation
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "README headline — what is Handlebars"
-justification = """
-Smallest possible orientation: the H1 + the value-prop one-liner +
-the Mustache-compatibility claim. A budget that only fits 1 batch
-should still know what this repo is.
-"""
+descriptor = "package.json — name/version"
+justification = "The absolute minimum identity facts — smallest possible first batch so even a tiny budget gets something."
 [batches.content]
 kind = "lines"
-spans = [{ path = "README.md", start = 8, end = 11, render = { kind = "full" } }]
+spans = [ { path = "package.json", start = 2, end = 3, render = { kind = "full" } } ]
 
 [[batches]]
 id = "1.2"
-descriptor = "package.json — name, version, license, ESM marker"
-justification = """
-Tiny identity card: name, semver (5.0.0-alpha.1 → v5 rewrite branch),
-license, and `type: module` (ESM-only). Together with 1.1 enough for
-a 'what is this' query.
-"""
+descriptor = "Root directory listing"
+justification = "Every top-level file/dir in one batch so an unlisted root entry is never wrongly assumed absent."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "package.json", start = 2, end = 3, render = { kind = "full" } },
-  { path = "package.json", start = 12, end = 12, render = { kind = "full" } },
-  { path = "package.json", start = 30, end = 30, render = { kind = "full" } },
-]
+kind = "fs"
+groups = [ { parent = ".", entries = "all" } ]
 
 [[batches]]
 id = "1.3"
-descriptor = "package.json — main / types / bin entries"
-justification = """
-Three lines that pin down 'where does `require('handlebars')` go?'
-(`main` → `lib/index.js`), 'where do TS types live?' (`types/index.d.ts`),
-and 'what does the `handlebars` CLI run?' (`bin/handlebars.js`).
-"""
+descriptor = "package.json — description/keywords/homepage/license/author"
+justification = "The remaining identity fields — one-line pitch, keywords, license/author — completing the manifest header."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "package.json", start = 18, end = 20, render = { kind = "full" } },
-  { path = "package.json", start = 31, end = 32, render = { kind = "full" } },
-]
+spans = [ { path = "package.json", start = 4, end = 13, render = { kind = "full" } } ]
 
 [[batches]]
 id = "1.4"
-descriptor = "Public version + compiler-revision constants (base.js)"
-justification = """
-`VERSION`, `COMPILER_REVISION`, `LAST_COMPATIBLE_COMPILER_REVISION` —
-the three values the runtime checks when loading a precompiled
-template. Three lines that answer 'what version is this?' and 'why
-is precompiled output throwing revision-mismatch?' with zero
-follow-up.
-"""
+descriptor = "package.json — bin/main/types entry points"
+justification = "The `bin`, `main`, and `types` fields — answers 'how is this package consumed' (CLI binary, ESM entry, typings) without opening the file."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "lib/handlebars/base.js", start = 8, end = 10, render = { kind = "full" } },
-]
+spans = [ { path = "package.json", start = 18, end = 20, render = { kind = "full" } },
+  { path = "package.json", start = 30, end = 32, render = { kind = "full" } } ]
 
 [[batches]]
 id = "1.5"
-descriptor = "package.json — `exports` map (./ vs ./runtime split)"
-justification = """
-The `exports` map is the canonical statement of the dual-entry
-contract: `.` resolves to the full build (`lib/index.js`),
-`./runtime` to the runtime-only build (`lib/handlebars.runtime.js`).
-Critical for bundler-config debugging and for understanding the
-runtime-vs-compile split before reading the source.
-"""
+descriptor = "package.json — key npm scripts (build/lint/test/bench)"
+justification = "The handful of scripts a session most needs — build, format+lint, the main test runner, and bench — cheaper subset of the full scripts table, with the rest one `Read` away."
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "package.json", start = 39, end = 49, render = { kind = "full" } },
+  { path = "package.json", start = 51, end = 52, render = { kind = "full" } },
+  { path = "package.json", start = 55, end = 56, render = { kind = "full" } },
+  { path = "package.json", start = 61, end = 61, render = { kind = "full" } },
+  { path = "package.json", start = 69, end = 69, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "1.6"
-descriptor = "Root directory listing"
-justification = """
-Every immediate child of the fixture root. Catastrophic-omission
-hedge — names alone tell the agent this is a JS project (no
-`Cargo.toml` / `pyproject.toml`), uses rspack + vitest + oxlint,
-ships root-level entry shims `runtime.js` / `runtime.d.ts`, and that
-deeper subtrees exist (`lib`, `spec`, `tests`, `tasks`, `types`,
-`docs`, `components`, `bin`, `.github`). De-risks downstream
-inferences about file existence.
-"""
+descriptor = "package.json — dependencies/peerDependencies/engines"
+justification = "Runtime deps (@handlebars/parser, neo-async, source-map, yargs), the uglify-js peer dep, and the Node engine floor."
 [batches.content]
-kind = "fs"
-groups = [{ parent = ".", entries = "all" }]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 75, end = 80, render = { kind = "full" } },
+  { path = "package.json", start = 106, end = 108, render = { kind = "full" } },
+  { path = "package.json", start = 129, end = 131, render = { kind = "full" } },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "lib/ + lib/handlebars/ directory listings"
-justification = """
-The two layers the whole crate's source is organized into. `lib/`
-contains the two build-entry shims (`handlebars.js`,
-`handlebars.runtime.js`), the npm-main (`index.js`), and the CLI
-loader (`precompiler.js`). `lib/handlebars/` contains the actual
-implementation modules + the four subdirs (`compiler/`, `helpers/`,
-`decorators/`, `internal/`). Together: the full top-level map of
-where everything lives.
-"""
+descriptor = "README — compile/render usage example"
+justification = "The canonical 'what is Handlebars, how do I call .compile()' example most new-to-the-repo queries need before any source file is opened."
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "lib", entries = "all" },
-  { parent = "lib/handlebars", entries = "all" },
-]
+kind = "lines"
+spans = [ { path = "README.md", start = 26, end = 45, render = { kind = "full" } } ]
 
-# ============================================================================
-# TIER 2 — Entry-point fan-out + architectural anchors
-# ============================================================================
+[[batches]]
+id = "1.8"
+descriptor = "README — differences from Mustache (bullets)"
+justification = "The specific behavioral deltas from Mustache (helpers, block expressions, no space after `{{`) are exactly the subtle-semantics facts an agent would otherwise get wrong."
+[batches.content]
+kind = "lines"
+spans = [ { path = "README.md", start = 66, end = 70, render = { kind = "full" } } ]
+
+# ---------------------------------------------------------------------
+# Tier 2 — Public entry points & TypeScript surface
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "lib/handlebars/compiler/ + helpers/ + decorators/ + internal/ — directory listings"
-justification = """
-Catastrophic-omission hedge for the four nested subdirs of
-`lib/handlebars/`. Names alone tell the agent there are 5 compiler
-files (ast, compiler, javascript-compiler, code-gen, plus the
-node/browser `source-node` pair), 7 built-in helper files, 1
-decorator (`inline.js`), and 2 internal utilities (`proto-access`,
-`wrapHelper`). Every later 'is there a built-in for X?' or 'is X
-shared between Y and Z?' is now one hop away.
-"""
+descriptor = "lib/index.js — full-build named exports"
+justification = "The full build's public export list (named + default) — answers 'what can I import from \"handlebars\"' in one shot."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/index.js", start = 1, end = 6, render = { kind = "full" } },
+  { path = "lib/index.js", start = 16, end = 46, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "lib/handlebars.js — create() factory (full build)"
+justification = "How the full (compiler+runtime) instance is assembled — `create()` wiring AST/Compiler/JavaScriptCompiler onto the runtime instance."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/handlebars.js", start = 21, end = 40, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.3"
+descriptor = "lib/handlebars.runtime.js — create() factory (runtime-only)"
+justification = "Companion to 2.2: the runtime-only `create()` (no compiler) and why `hb.VM` is spread into a plain object rather than the sealed ESM namespace."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/handlebars.runtime.js", start = 13, end = 31, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.4"
+descriptor = "runtime.js + runtime.d.ts — root runtime re-export shims"
+justification = "The two tiny root files that let consumers `import Handlebars from 'handlebars/runtime'`; trivial but easy to miss among the lib/ files."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "runtime.js", start = 1, end = 3, render = { kind = "full" } },
+  { path = "runtime.d.ts", start = 1, end = 4, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "types/index.d.ts — RuntimeOptions/HelperOptions/HelperDelegate"
+justification = "The exact typed shape of the options object every helper/partial call receives — cheaper evidence than the untyped JS runtime source."
+[batches.content]
+kind = "lines"
+spans = [ { path = "types/index.d.ts", start = 30, end = 62, render = { kind = "full" } } ]
+
+[[batches]]
+id = "2.6"
+descriptor = "types/index.d.ts — compile/precompile/template signatures + CompileOptions"
+justification = "The three main entry-point signatures plus the full CompileOptions field list (data/compat/knownHelpers/noEscape/strict/assumeObjects/...) — the typed contract for the compiler's public API."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "types/index.d.ts", start = 86, end = 96, render = { kind = "full" } },
+  { path = "types/index.d.ts", start = 234, end = 245, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------
+# Tier 3 — Runtime core
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "base.js — version constants + REVISION_CHANGES"
+justification = "VERSION/COMPILER_REVISION/LAST_COMPATIBLE_COMPILER_REVISION and the full revision-to-version-range table used in checkRevision's error messages."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/handlebars/base.js", start = 8, end = 21, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.2"
+descriptor = "base.js — HandlebarsEnvironment register/unregister method roster"
+justification = "One line per register/unregisterHelper/Partial/Decorator method — the full public registration API at a glance, so no register* method is assumed missing."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/handlebars/base.js", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/base.js", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/base.js", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/base.js", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/base.js", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/base.js", start = 80, end = 80, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "utils.js — escapeExpression"
+justification = "The HTML-escaping heart of every `{{expr}}` — SafeString bypass, null/undefined coercion, and the badChars regex fast path."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/handlebars/utils.js", start = 61, end = 82, render = { kind = "full" } } ]
+
+[[batches]]
+id = "3.4"
+descriptor = "safe-string.js + no-conflict.js"
+justification = "SafeString (opt out of escaping) and noConflict (restore globalThis.Handlebars) — two small runtime-support files."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/handlebars/safe-string.js", start = 1, end = 10, render = { kind = "full" } },
+  { path = "lib/handlebars/no-conflict.js", start = 1, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "runtime.js — checkRevision() core"
+justification = "The precompiler/runtime version-mismatch check's happy-path control flow (the compatible-range early return) — a common real-world error a session might be debugging. The two mismatch-error branches with their exact wording continue at line 27 (marked)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/handlebars/runtime.js", start = 16, end = 26, render = { kind = "full" } },
+  { path = "lib/handlebars/runtime.js", start = 27, end = 27, render = { kind = "ellipsis" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "runtime.js — container object method roster"
+justification = "One line per method on the `container` object passed to every compiled template body (strict/strictLookup/lookupProperty/lookup/lambda/program/data/mergeIfNeeded) — the execution contract compiled templates rely on, without the ~100-line bodies."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/handlebars/runtime.js", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/runtime.js", start = 119, end = 119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/runtime.js", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/runtime.js", start = 153, end = 153, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/runtime.js", start = 162, end = 162, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/runtime.js", start = 176, end = 176, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/runtime.js", start = 195, end = 195, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/runtime.js", start = 201, end = 201, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+# ---------------------------------------------------------------------
+# Tier 4 — Built-in helpers, decorators, proto-access control
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "lib/handlebars/{helpers,decorators,internal}/ directory listings"
+justification = "All three lib/ subdirectories at once: the 7 built-in helper files, the 1 built-in decorator, and the 2 internal-support files — establishes the full roster before any single helper's body is shown."
 [batches.content]
 kind = "fs"
 groups = [
-  { parent = "lib/handlebars/compiler", entries = "all" },
   { parent = "lib/handlebars/helpers", entries = "all" },
   { parent = "lib/handlebars/decorators", entries = "all" },
   { parent = "lib/handlebars/internal", entries = "all" },
 ]
 
 [[batches]]
-id = "2.2"
-descriptor = "REVISION_CHANGES table — compiler revision → handlebars version"
-justification = """
-The lookup `checkRevision()` uses to format error messages when a
-precompiled template carries the wrong revision. Eight one-liners
-that let an agent say 'a spec with compiler[0]=6 came from
-Handlebars >= 2.0.0-beta.1' without re-reading base.js. Cheap
-follow-up to the 1.4 version-constants batch.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/base.js", start = 12, end = 21, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.3"
-descriptor = "lib/index.js — file shape (import + augmentations + export trailer)"
-justification = """
-The 1-line import + the two lines that attach `PrintVisitor` / `print`
-to the Handlebars instance + the `default` re-export at the bottom.
-Frames the file before the big named-export list lands in 2.5.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/index.js", start = 1, end = 5, render = { kind = "full" } },
-  { path = "lib/index.js", start = 45, end = 46, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.4"
-descriptor = "lib/index.js — why named exports exist (CJS-of-ESM interop comment)"
-justification = """
-The leading comment that explains *why* the next batch's enormous
-destructure list is needed: Node v22+ runs `require()` on ESM
-modules and only direct named exports become properties; without
-these, `require('handlebars').precompile` would be undefined. This
-context is what the agent needs before being shown the names.
-"""
-predecessor = "2.3"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/index.js", start = 6, end = 15, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.5"
-descriptor = "lib/index.js — named export list (full public API surface)"
-justification = """
-The 28 names a consumer can `import` or destructure from
-`require('handlebars')`. Catastrophic-omission hedge — partial
-listings would falsely imply omitted names are unavailable. This is
-the single best 'what does Handlebars export?' answer in the repo.
-"""
-predecessor = "2.4"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/index.js", start = 16, end = 44, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.6"
-descriptor = "HandlebarsEnvironment constructor + register/unregister method names"
-justification = """
-The class agents instantiate (directly or via `Handlebars.create()`)
-when they want a fresh helper / partial / decorator namespace. The
-constructor (25-32) wires the three registries and calls
-`registerDefaultHelpers` / `registerDefaultDecorators`. The named
-prototype methods cover the public API surface:
-`registerHelper`, `unregisterHelper`, `registerPartial`,
-`unregisterPartial`, `registerDecorator`, `unregisterDecorator`.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/base.js", start = 25, end = 32, render = { kind = "full" } },
-  { path = "lib/handlebars/base.js", start = 40, end = 40, render = { kind = "full" } },
-  { path = "lib/handlebars/base.js", start = 50, end = 50, render = { kind = "full" } },
-  { path = "lib/handlebars/base.js", start = 54, end = 54, render = { kind = "full" } },
-  { path = "lib/handlebars/base.js", start = 66, end = 66, render = { kind = "full" } },
-  { path = "lib/handlebars/base.js", start = 70, end = 70, render = { kind = "full" } },
-  { path = "lib/handlebars/base.js", start = 80, end = 80, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.7"
-descriptor = "lib/handlebars.runtime.js — `create()` factory body"
-justification = """
-The foundational factory: instantiates `HandlebarsEnvironment`,
-extends it with `base` exports + `SafeString` / `Exception` / `Utils`
-/ `escapeExpression`, and crucially does `hb.VM = { ...runtime }`
-(line 25 — spreading the ESM namespace into a plain object so
-consumers can monkey-patch `VM.checkRevision` etc.). The
-`hb.template = …` wrapper at 26-28 is the runtime-side glue that
-turns a precompiled spec into a callable template.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars.runtime.js", start = 13, end = 31, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.8"
-descriptor = "lib/handlebars/runtime.js — top-level export locations"
-justification = """
-Six exported fns (`checkRevision`, `template`, `wrapProgram`,
-`resolvePartial`, `invokePartial`, `noop`) plus four module-private
-helpers (`initData`, `executeDecorators`, `addHelpers`,
-`passLookupPropertyOption`). With this batch the agent can answer
-'is `X` exported from the runtime?' for every X without opening
-the file. Tier-4 batches drill into bodies; this is the cheap
-shape hedge.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/runtime.js", start = 16, end = 16, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/runtime.js", start = 49, end = 49, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/runtime.js", start = 307, end = 315, render = { kind = "full" } },
-  { path = "lib/handlebars/runtime.js", start = 348, end = 348, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/runtime.js", start = 363, end = 363, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/runtime.js", start = 401, end = 401, render = { kind = "full" } },
-  { path = "lib/handlebars/runtime.js", start = 405, end = 405, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/runtime.js", start = 413, end = 413, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/runtime.js", start = 430, end = 430, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/runtime.js", start = 438, end = 438, render = { kind = "truncated", pattern = "^[^(]+" } },
-]
-
-[[batches]]
-id = "2.9"
-descriptor = "lib/handlebars.runtime.js — imports + module trailer"
-justification = """
-The shape around `create()`: imports (`Exception`, `base`,
-`SafeString`, `Utils`, `runtime`, `noConflict`); the `inst = create()`
-setup + `noConflict(inst)` call + the named re-exports of `VERSION`
-/ `COMPILER_REVISION` / `LAST_COMPATIBLE_COMPILER_REVISION` /
-`REVISION_CHANGES` from base. Pins down which top-level constants
-the runtime entry file actually re-exports.
-"""
-predecessor = "2.7"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars.runtime.js", start = 1, end = 12, render = { kind = "full" } },
-  { path = "lib/handlebars.runtime.js", start = 33, end = 51, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.10"
-descriptor = "lib/handlebars.js — full-build `create()` (extends runtime with compiler)"
-justification = """
-The full-build factory: calls the runtime's `_create()` then attaches
-`compile`, `precompile`, `AST`, `Compiler`, `JavaScriptCompiler`,
-`Parser`, `parse`, `parseWithoutProcessing`. This 19-line fn is the
-single statement of how the full-vs-runtime build split is
-implemented at runtime.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars.js", start = 21, end = 40, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.11"
-descriptor = "lib/handlebars.js — imports + module trailer (Visitor, default export)"
-justification = """
-Imports (`@handlebars/parser` for `parser` / `parse` / `Visitor`;
-the runtime; the compiler modules) and the trailer that creates the
-default `inst`, attaches `.create`, calls `noConflict`, and assigns
-`Visitor`. Frames `create()` so the agent doesn't have to open the
-file to see how it's wired up at top level.
-"""
-predecessor = "2.10"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars.js", start = 1, end = 20, render = { kind = "full" } },
-  { path = "lib/handlebars.js", start = 42, end = 51, render = { kind = "full" } },
-]
-
-# ============================================================================
-# TIER 3 — Built-in helpers, decorators, utility surface
-# ============================================================================
-
-[[batches]]
-id = "3.1"
-descriptor = "registerDefaultHelpers — the 7 built-in helpers"
-justification = """
-The single statement of which helpers ship with Handlebars: each /
-if / with / log / lookup / helperMissing / blockHelperMissing. With
-2.1's directory listing this batch makes 'what does Handlebars
-register by default?' a zero-follow-up query.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/helpers.js", start = 1, end = 17, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.2"
-descriptor = "moveHelperToHooks — helperMissing / blockHelperMissing relocation"
-justification = """
-The non-obvious bit of `helpers.js`: at template setup,
-`helperMissing` and `blockHelperMissing` are moved from
-`instance.helpers` into `instance.hooks` so user `helpers` overrides
-can't shadow them. Explains a real source of confusion when users
-register `{helperMissing: fn}` and see it ignored.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/helpers.js", start = 19, end = 27, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.3"
-descriptor = "registerDefaultDecorators — only `inline` ships"
-justification = """
-The whole decorators.js file. Catastrophic-omission hedge: the
-decorators dir-listing already shows `inline.js`, but this batch
-confirms `registerDefaultDecorators` registers exactly one
-(deprecated) decorator. Answers 'what decorators come with
-Handlebars?' inline.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/decorators.js", start = 1, end = 5, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.4"
-descriptor = "SafeString — entire file (constructor + toString/toHTML)"
-justification = """
-The whole 10-line `SafeString` module. SafeString is what consumers
-return from a helper to opt out of HTML escaping; this batch makes
-'how do I tell Handlebars not to escape my helper output?'
-zero-follow-up.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/safe-string.js", start = 1, end = 10, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.5"
-descriptor = "Utils — escape table + escapeChar"
-justification = """
-The `escape` lookup that drives `escapeExpression`. Lists every
-character Handlebars HTML-escapes (`& < > \" ' ` =`). Together with
-the next batch a zero-follow-up answer to 'what does
-escapeExpression actually do?'.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/utils.js", start = 1, end = 16, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.6"
-descriptor = "Utils — exported function locations"
-justification = """
-Every exported name in `utils.js`: `extend`, `toString`,
-`isFunction`, `isArray`, `isMap`, `isSet`, `indexOf`,
-`escapeExpression`, `isEmpty`, `createFrame`. With 3.5 + the file's
-own signature locations the agent can answer 'is `X` in
-`Handlebars.Utils`?' for every X.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/utils.js", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/utils.js", start = 30, end = 30, render = { kind = "full" } },
-  { path = "lib/handlebars/utils.js", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/utils.js", start = 47, end = 49, render = { kind = "full" } },
-  { path = "lib/handlebars/utils.js", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/utils.js", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/utils.js", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/utils.js", start = 94, end = 94, render = { kind = "truncated", pattern = "^[^(]+" } },
-]
-
-[[batches]]
-id = "3.7"
-descriptor = "Utils.escapeExpression — body"
-justification = """
-The function that HTML-escapes a string for safe template output,
-with SafeString opt-out, null/falsy handling, and the regex
-fast-path. The piece of the security story every consumer cares
-about; full body is small.
-"""
-predecessor = "3.6"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/utils.js", start = 61, end = 82, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.8"
-descriptor = "helpers/if.js — `if` + `unless` bodies"
-justification = """
-Whole file. The two helpers that drive boolean rendering. Shows the
-`isEmpty` interaction (truthy-but-empty arrays render the inverse)
-and the `includeZero` hash option. `unless` is implemented as a
-flip of `if`'s fn/inverse.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/helpers/if.js", start = 1, end = 33, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.9"
-descriptor = "helpers/with.js — `with` body"
-justification = """
-Whole file. Context-shift helper: `{{#with foo}}…{{/with}}`
-re-binds `this` to `foo` inside the block. Block-params output is
-`[context]`. Empty context renders the inverse.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/helpers/with.js", start = 1, end = 26, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.10"
-descriptor = "helpers/lookup.js + helpers/log.js — `lookup` and `log` helpers"
-justification = """
-Two small helpers as one batch: `{{lookup obj field}}` (dynamic
-property access via `options.lookupProperty`, the proto-access-
-controlled path) and `{{log level=… msg}}` (delegates to
-`instance.log` with hash- or data-level override). Together: ~20
-lines.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/helpers/lookup.js", start = 1, end = 9, render = { kind = "full" } },
-  { path = "lib/handlebars/helpers/log.js", start = 1, end = 19, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.11"
-descriptor = "helpers/helper-missing.js + block-helper-missing.js — fallbacks"
-justification = """
-`helperMissing` returns undefined for `{{foo}}` lookups (one arg)
-and throws otherwise. `blockHelperMissing` dispatches based on the
-context type: array → delegates to `each`, true → fn(this), false /
-null → inverse(this), else → fn(context, options). The default
-machinery for ambiguous-mustache resolution.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/helpers/helper-missing.js", start = 1, end = 15, render = { kind = "full" } },
-  { path = "lib/handlebars/helpers/block-helper-missing.js", start = 1, end = 22, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.12"
-descriptor = "helpers/each.js — signature + execIteration helper"
-justification = """
-The largest built-in helper, split for thresholding. This first half:
-imports, helper signature (`each` registered on `instance`), the
-options/fn/inverse setup, the `isFunction(context)` lambda
-resolution, the `createFrame` for `data`, and the `execIteration`
-closure that sets `data.key` / `data.index` / `data.first` /
-`data.last` and passes `blockParams: [context[field], field]` to
-`fn`. The next batch lays the type-dispatch tree on top.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/helpers/each.js", start = 1, end = 39, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.12b"
-descriptor = "helpers/each.js — dispatch by context type (array/Map/Set/iterable/object)"
-justification = """
-Type-dispatch tree: `isArray` → indexed loop; `isMap` → for-of with
-size; `isSet` → for-of with i++ key; `Symbol.iterator` →
-materialize then loop; plain object → keys() with one-step-out-of-sync
-trick to detect last iteration. Sets `data.key` / `data.index` /
-`data.first` / `data.last` per iteration. The `i === 0` empty-array
-tail invokes inverse(this).
-"""
-predecessor = "3.12"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/helpers/each.js", start = 40, end = 92, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.13"
-descriptor = "decorators/inline.js — the `{{#*inline}}…{{/inline}}` decorator"
-justification = """
-The only built-in decorator. Captures the block as a partial via
-`props.partials[name] = options.fn` and wraps `fn` to swap
-`container.partials` on each call. Deprecated (per docs) but still
-shipped; serves as the example for decorator authoring.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/decorators/inline.js", start = 1, end = 25, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.14"
-descriptor = "logger.js — entire logger module"
-justification = """
-The whole `logger` object: `methodMap` (debug/info/warn/error),
-`level` default ('info'), `lookupLevel` (string-or-int → index),
-and `log` (dispatches to `console[method]`). Overridable per
-environment instance — `Handlebars.logger.log = fn` is the
-extension point.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/logger.js", start = 1, end = 39, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.15"
-descriptor = "no-conflict.js — globalThis.Handlebars shim"
-justification = """
-The whole 11-line module. Snapshots `globalThis.Handlebars` at load
-time and exposes `.noConflict()` to restore it. Browser-only path
-(`/* v8 ignore next */` on Node coverage).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/no-conflict.js", start = 1, end = 11, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.16"
-descriptor = "internal/wrapHelper.js — helper-options shim"
-justification = """
-The whole 13-line module. Wraps a helper so its options arg goes
-through `transformOptionsFn` first; used by `passLookupPropertyOption`
-in `lib/handlebars/runtime.js` to inject `options.lookupProperty`
-into every helper call. Frees helpers from having to know about
-proto-access policy.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/internal/wrapHelper.js", start = 1, end = 13, render = { kind = "full" } },
-]
-
-# ============================================================================
-# TIER 4 — Compile / runtime depth + security
-# ============================================================================
-
-[[batches]]
-id = "4.1"
-descriptor = "lib/handlebars/runtime.js — `checkRevision` body"
-justification = """
-Reads `compilerInfo[0]` as the spec's compiler revision, checks it
-against `[LAST_COMPATIBLE_COMPILER_REVISION, COMPILER_REVISION]`,
-and throws a versioned `Exception` keyed off `REVISION_CHANGES`
-(documented in 1.4 + 2.2). Direct answer to 'why is my precompiled
-template throwing on `template()`?'.
-"""
-predecessor = "2.8"
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "lib/handlebars/runtime.js", start = 16, end = 47, render = { kind = "full" } },
-]
-
-[[batches]]
 id = "4.2"
-descriptor = "lib/handlebars/runtime.js — `container.lookupProperty` + `container.lookup` (security-aware path resolution)"
-justification = """
-The two functions every emitted opcode that reads a context
-property routes through. `lookupProperty` checks `Map.get` first,
-then `hasOwnProperty`, then defers to `resultIsAllowed(...,
-container.protoAccessControl, ...)` — the gate that blocks
-`constructor` / `__proto__` / etc. `lookup` walks the depth stack
-for `../foo` paths. Pairs with the proto-access batch below.
-"""
+descriptor = "helpers.js — registerDefaultHelpers/moveHelperToHooks"
+justification = "The registration entry point that wires all 7 built-ins onto a new environment, plus moveHelperToHooks (how helperMissing/blockHelperMissing get promoted to `hooks`)."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "lib/handlebars/runtime.js", start = 135, end = 161, render = { kind = "full" } },
-]
+spans = [ { path = "lib/handlebars/helpers.js", start = 1, end = 27, render = { kind = "full" } } ]
 
 [[batches]]
 id = "4.3"
-descriptor = "internal/proto-access.js — prototype-access security policy"
-justification = """
-Whole 68-line file. `createProtoAccessControl(runtimeOptions)` builds
-white-lists from `allowedProtoProperties` / `allowedProtoMethods`
-plus hard-coded denies (`__proto__`, `constructor`,
-`__defineGetter__`, `__defineSetter__`, `__lookupGetter__`).
-`resultIsAllowed` dispatches function/property to the appropriate
-white-list. `logUnexpectedPropertyAccessOnce` prints the security
-warning. The piece every 'prototype pollution / GH-1495' question
-points back to.
-"""
+descriptor = "helpers/each.js — setup, array-iteration and empty-context fallback"
+justification = "`{{#each}}` is the most-used block helper; shows the setup + array-iteration branch (the common case) and the empty/inverse fallback. The Map/Set/iterable/plain-object branches are elided (marked) — one grep away at the same file."
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "lib/handlebars/internal/proto-access.js", start = 1, end = 68, render = { kind = "full" } },
+  { path = "lib/handlebars/helpers/each.js", start = 1, end = 46, render = { kind = "full" } },
+  { path = "lib/handlebars/helpers/each.js", start = 47, end = 47, render = { kind = "ellipsis" } },
+  { path = "lib/handlebars/helpers/each.js", start = 86, end = 92, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "4.4"
-descriptor = "lib/handlebars/compiler/ast.js — full AST helpers"
-justification = """
-Whole 32-line file. The `AST.helpers` exports (`helperExpression`,
-`scopedId`, `simpleId`) the Compiler uses to classify a path as a
-helper invocation, a `.`/`this`-scoped reference, or a single-part
-name. Plus the comment explaining why this lives on a mutable
-object (jison lexer requirement).
-"""
+descriptor = "helpers/if.js — #if/#unless"
+justification = "The `includeZero` hash option and isEmpty-based truthiness semantics that back `{{#if}}`/`{{#unless}}` — the most-used conditional helper."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "lib/handlebars/compiler/ast.js", start = 1, end = 32, render = { kind = "full" } },
-]
+spans = [ { path = "lib/handlebars/helpers/if.js", start = 1, end = 33, render = { kind = "full" } } ]
 
 [[batches]]
 id = "4.5"
-descriptor = "compiler/compiler.js — top-level export + private-helper locations"
-justification = """
-Catastrophic-omission hedge for compiler.js's exports: `Compiler`
-constructor, `precompile()`, `compile()`, plus four private helpers
-(`validateInput`, `compileEnvironment`, `argEquals`,
-`transformLiteralToPath`). Tells the agent what compiler.js
-actually exposes without opening it.
-"""
+descriptor = "helpers/with.js — #with"
+justification = "Context-swap-with-inverse-on-empty semantics for `{{#with}}` — the third most-used scope/conditional block helper."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "lib/handlebars/compiler/compiler.js", start = 7, end = 7, render = { kind = "full" } },
-  { path = "lib/handlebars/compiler/compiler.js", start = 442, end = 442, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/compiler.js", start = 449, end = 449, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/compiler.js", start = 476, end = 476, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/compiler.js", start = 500, end = 500, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/compiler.js", start = 505, end = 505, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/compiler.js", start = 520, end = 520, render = { kind = "truncated", pattern = "^[^(]+" } },
-]
+spans = [ { path = "lib/handlebars/helpers/with.js", start = 1, end = 26, render = { kind = "full" } } ]
 
 [[batches]]
 id = "4.6"
-descriptor = "compiler/compiler.js — `Compiler.prototype.compile` + `knownHelpers` defaults"
-justification = """
-`Compiler.compile(program, options)` resets state then merges the
-caller's `knownHelpers` with the eight default names: `helperMissing`
-/ `blockHelperMissing` / `each` / `if` / `unless` / `with` / `log` /
-`lookup`. The single source of truth for which helpers the compiler
-short-circuits past the `helperMissing` indirection.
-"""
-predecessor = "4.5"
+descriptor = "helpers/log.js + helpers/lookup.js"
+justification = "`{{log}}`'s level-resolution (hash.level > data.level > default 1) and `{{lookup}}`'s single-line delegation to `options.lookupProperty` — the two smallest built-ins."
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "lib/handlebars/compiler/compiler.js", start = 48, end = 72, render = { kind = "full" } },
+  { path = "lib/handlebars/helpers/log.js", start = 1, end = 19, render = { kind = "full" } },
+  { path = "lib/handlebars/helpers/lookup.js", start = 1, end = 9, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "4.7"
-descriptor = "compiler/javascript-compiler.js — public override-API locations"
-justification = """
-The four documented public override points (per docs/compiler-api.md):
-`nameLookup`, `depthedLookup`, `compilerInfo`, `appendToBuffer`,
-`initializeBuffer` — plus the entry `compile(environment, options,
-context, asObject)`. Locations only; once the agent knows where
-they live, a single hop fetches a body.
-"""
+descriptor = "helpers/block-helper-missing.js + helper-missing.js"
+justification = "The two fallback helpers invoked when a mustache/block resolves to a non-helper value or an unknown name."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/handlebars/helpers/block-helper-missing.js", start = 1, end = 22, render = { kind = "full" } },
+  { path = "lib/handlebars/helpers/helper-missing.js", start = 1, end = 15, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "internal/proto-access.js — createProtoAccessControl"
+justification = "The core of the implementation behind `allowedProtoProperties`/`allowProtoMethodsByDefault`, exercised heavily by spec/security.js (9.4). resultIsAllowed and checkWhiteList's logging helper are one grep further in the same file (marked)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/handlebars/internal/proto-access.js", start = 6, end = 31, render = { kind = "full" } },
+  { path = "lib/handlebars/internal/proto-access.js", start = 33, end = 33, render = { kind = "ellipsis" } },
+]
+
+# ---------------------------------------------------------------------
+# Tier 5 — Compiler pipeline: AST → opcodes → JS source
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "compiler/ast.js — AST helper predicates"
+justification = "helperExpression/scopedId/simpleId — the three tiny predicates deciding whether a mustache/subexpression is 'a helper call', referenced throughout compiler.js's classifySexpr."
+[batches.content]
+kind = "lines"
+spans = [ { path = "lib/handlebars/compiler/ast.js", start = 1, end = 32, render = { kind = "full" } } ]
+
+[[batches]]
+id = "5.2"
+descriptor = "compiler.js — Compiler.prototype method roster (locations)"
+justification = "One truncated line per Compiler.prototype method (all 31 AST-node visitors plus opcode-emission helpers) — without this, the file's true shape (every AST node type it handles) would be invisible; each line is a precise one-hop grep target for its body."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lib/handlebars/compiler/compiler.js", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 48, end = 48, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 116, end = 116, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 152, end = 152, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 200, end = 200, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 204, end = 204, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 213, end = 213, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 223, end = 223, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 225, end = 225, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 237, end = 237, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 253, end = 253, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 260, end = 260, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 286, end = 286, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 313, end = 313, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 317, end = 317, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 321, end = 321, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 325, end = 325, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 329, end = 329, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 333, end = 333, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 350, end = 350, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 358, end = 358, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 366, end = 366, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 401, end = 401, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 407, end = 407, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 411, end = 411, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/compiler.js", start = 427, end = 427, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "compiler/javascript-compiler.js — method roster (locations)"
+justification = "One truncated line per method across this 1208-line file (the largest in the repo) — the JS-codegen backend has 57 methods (stack management, helper-call setup, lookups, buffer emission); without this roster the file's true size/shape would be invisible."
 [batches.content]
 kind = "lines"
 spans = [
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 27, end = 27, render = { kind = "full" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 53, end = 53, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 57, end = 57, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 217, end = 217, render = { kind = "full" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 225, end = 225, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 278, end = 278, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1160, end = 1160, render = { kind = "truncated", pattern = "^[^=]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1208, end = 1208, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.8"
-descriptor = "compiler/javascript-compiler.js — opcode-handler method locations"
-justification = """
-The opcodes emitted by the AST-walker compiler are method names on
-JavaScriptCompiler.prototype; this batch lists every one (truncated
-to the method-name prefix) so an agent debugging a generated-code
-issue can jump straight to the right handler. Catastrophic-omission
-hedge — partial lists would imply unlisted opcodes don't exist.
-"""
-[batches.content]
-kind = "lines"
-spans = [
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 339, end = 339, render = { kind = "full" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 359, end = 359, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 378, end = 378, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 378, end = 378, render = { kind = "full" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 408, end = 408, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 427, end = 427, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 457, end = 457, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 427, end = 427, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 457, end = 457, render = { kind = "full" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 475, end = 475, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 485, end = 485, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 485, end = 485, render = { kind = "full" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 496, end = 496, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 517, end = 517, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 530, end = 530, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 579, end = 579, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 540, end = 540, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 579, end = 579, render = { kind = "full" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 590, end = 590, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 593, end = 593, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 599, end = 599, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 593, end = 593, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 599, end = 599, render = { kind = "full" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 612, end = 612, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 624, end = 624, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 636, end = 636, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 651, end = 651, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 676, end = 676, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 707, end = 707, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 722, end = 722, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 739, end = 739, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 782, end = 782, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "lib/handlebars/compiler/javascript-compiler.js", start = 819, end = 819, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 827, end = 827, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 865, end = 865, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 874, end = 874, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 888, end = 888, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 895, end = 895, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 904, end = 904, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 908, end = 908, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 924, end = 924, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 963, end = 963, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 970, end = 970, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 973, end = 973, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 988, end = 988, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 992, end = 992, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1010, end = 1010, render = { kind = "full" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1022, end = 1022, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1030, end = 1030, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1034, end = 1034, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1038, end = 1038, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1052, end = 1052, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1070, end = 1070, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "lib/handlebars/compiler/javascript-compiler.js", start = 1113, end = 1113, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
+# ---------------------------------------------------------------------
+# Tier 6 — CLI & precompiler
+# ---------------------------------------------------------------------
+
 [[batches]]
-id = "4.9"
-descriptor = "compiler/code-gen.js — file shape (CodeGen class + method locations)"
-justification = """
-The 126-line module the JavaScript compiler builds output through.
-Constructor + the method names (`prepend`, `push`, `merge`,
-`empty`, `wrap`, `functionCall`, `quotedString`, `objectLiteral`,
-`generateList`, `generateArray`) and `isEmpty`. Lets the agent
-answer 'where does the output buffer get built?' without re-reading.
-"""
+id = "6.1"
+descriptor = "bin/handlebars.js — CLI flag roster (locations)"
+justification = "One line per `.option(...)` call — the complete short/long flag surface (`-f/--output`, `-m/--min`, `-n/--namespace`, ...) without the full 116-line yargs chain; pairs with 6.2's --help ground truth."
 [batches.content]
 kind = "lines"
 spans = [
-  { path = "lib/handlebars/compiler/code-gen.js", start = 19, end = 19, render = { kind = "full" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 28, end = 28, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 35, end = 35, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 49, end = 49, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 68, end = 68, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 103, end = 103, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "lib/handlebars/compiler/code-gen.js", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "bin/handlebars.js", start = 10, end = 10, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 15, end = 15, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 19, end = 19, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 24, end = 24, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 29, end = 29, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 34, end = 34, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 40, end = 40, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 45, end = 45, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 51, end = 51, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 57, end = 57, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 63, end = 63, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 68, end = 68, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 73, end = 73, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 79, end = 79, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 85, end = 85, render = { kind = "full" } },
+  { path = "bin/handlebars.js", start = 90, end = 90, render = { kind = "full" } },
 ]
 
-# ============================================================================
-# TIER 5 — Tests, CLI, types, docs, configs
-# ============================================================================
+[[batches]]
+id = "6.2"
+descriptor = "spec/expected/help.menu.txt — verbatim CLI --help output (opening flags)"
+justification = "The literal `--help` text the test suite asserts on, opening with the usage line and first 6 flags; cross-checks 6.1's flag roster's exact formatting. The remaining flag rows continue at line 11 (marked)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "spec/expected/help.menu.txt", start = 1, end = 10, render = { kind = "full" } },
+  { path = "spec/expected/help.menu.txt", start = 11, end = 11, render = { kind = "ellipsis" } },
+]
 
 [[batches]]
-id = "5.1"
-descriptor = "spec/ + spec/env/ — directory listings"
-justification = """
-The vitest spec tree's shape: every per-feature spec file
-(`basic.js`, `blocks.js`, `builtins.js`, `compiler.js`, `helpers.js`,
-`partials.js`, `precompiler.js`, `runtime.js`, `security.js`,
-`spec.js` (mustache spec runner), `strict.js`, `subexpressions.js`,
-`whitespace-control.js`, `data.js`, `ast.js`, `javascript-compiler.js`,
-`regressions.js`, `source-map.js`, `utils.js`) plus the env helpers
-(`common.js`, `node.js`, `browser.js`, `browser-vitest.js`,
-`browser-vitest-pre.js`). Names alone tell the agent where any given
-behavior is tested.
-"""
+id = "6.3"
+descriptor = "spec/expected/compiled.string.txt + empty.namespace.js — precompiled-output samples"
+justification = "The literal `{\"compiler\":[...],\"main\":function(...){...}}` shape precompile() produces, in both simple and namespaced-object output modes — answers 'what does precompiled output actually look like'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "spec/expected/compiled.string.txt", start = 1, end = 3, render = { kind = "full" } },
+  { path = "spec/expected/empty.namespace.js", start = 1, end = 5, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------
+# Tier 7 — Docs of record
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "docs/ directory listing"
+justification = "Establishes the docs/ directory the summary promises (compiler-api.md, decorators-api.md) before either doc's content is shown."
+[batches.content]
+kind = "fs"
+groups = [ { parent = "docs", entries = "all" } ]
+
+[[batches]]
+id = "7.2"
+descriptor = "docs/compiler-api.md — top-level section headings"
+justification = "Companion to 7.1: the three H2 sections of the compiler API doc, as location pointers into a 365-line file."
+predecessor = "7.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/compiler-api.md", start = 5, end = 5, render = { kind = "full" } },
+  { path = "docs/compiler-api.md", start = 264, end = 264, render = { kind = "full" } },
+  { path = "docs/compiler-api.md", start = 294, end = 294, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "docs/decorators-api.md — decorator-hook argument list"
+justification = "The decorator-hook contract (program/props/container/context/data/blockParams/depths) referenced nowhere else in this NS. The doc's opening deprecation notice/intro and closing paragraph (one more grep) are elided."
+predecessor = "7.1"
+[batches.content]
+kind = "lines"
+spans = [ { path = "docs/decorators-api.md", start = 9, end = 17, render = { kind = "full" } } ]
+
+[[batches]]
+id = "7.4"
+descriptor = "FAQ.md — first two Q&A (bug reports, Mustache compat)"
+justification = "Answers two of the most recurring real-world questions verbatim — exactly what a coding-agent session is likely to be asked. The remaining Q&A (precompile perf, CSP, script-tag escaping) are one `Read` away in the same small file."
+[batches.content]
+kind = "lines"
+spans = [ { path = "FAQ.md", start = 1, end = 9, render = { kind = "full" } } ]
+
+[[batches]]
+id = "7.5"
+descriptor = "CONTRIBUTING.md — building (mustache submodule + npm run build)"
+justification = "The mustache-submodule setup step required before tests pass, and the exact command to build — the operational fact a 'why won't tests run' session needs verbatim."
+[batches.content]
+kind = "lines"
+spans = [ { path = "CONTRIBUTING.md", start = 36, end = 47, render = { kind = "full" } } ]
+
+# ---------------------------------------------------------------------
+# Tier 8 — Build/lint/CI configuration + changelog
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "8.1"
+descriptor = ".github/ + .github/workflows/ directory listings"
+justification = "The full GitHub-automation roster (issue/PR templates, dependabot, ci.yml, release.yml) — cheap breadth so no workflow file is assumed absent."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
+
+[[batches]]
+id = "8.2"
+descriptor = "vitest.config.js — test project names (locations)"
+justification = "The 5 vitest projects (node/tasks/rspack/publish/browser) that package.json's `npm test`/`test:browser`/`test:tasks` scripts select via `--project` — the map of 'which command runs which tests'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "vitest.config.js", start = 9, end = 9, render = { kind = "full" } },
+  { path = "vitest.config.js", start = 18, end = 18, render = { kind = "full" } },
+  { path = "vitest.config.js", start = 27, end = 27, render = { kind = "full" } },
+  { path = "vitest.config.js", start = 34, end = 34, render = { kind = "full" } },
+  { path = "vitest.config.js", start = 42, end = 42, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.3"
+descriptor = "vitest.config.js — coverage thresholds"
+justification = "The exact coverage gate (99% statements, 98% branches, 100% functions, 99% lines on lib/**) — a concrete number a 'why did coverage fail CI' session needs verbatim."
+[batches.content]
+kind = "lines"
+spans = [ { path = "vitest.config.js", start = 64, end = 77, render = { kind = "full" } } ]
+
+[[batches]]
+id = "8.4"
+descriptor = ".github/workflows/ci.yml — job names + triggers"
+justification = "The trigger (push to master + all PRs) plus each of the three job ids and names (lint/Lint, test/Test (Node), browser/Test (Browser)) — answers 'does CI run on this platform' at a glance without the ~90-line step bodies."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".github/workflows/ci.yml", start = 1, end = 9, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 10, end = 11, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 28, end = 29, render = { kind = "full" } },
+  { path = ".github/workflows/ci.yml", start = 63, end = 64, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.5"
+descriptor = "SECURITY.md — full"
+justification = "Supported-version table (5.0.x/4.7.x) and the vulnerability-reporting link — a security-relevant question should never require a source read to answer."
+[batches.content]
+kind = "lines"
+spans = [ { path = "SECURITY.md", start = 1, end = 15, render = { kind = "full" } } ]
+
+[[batches]]
+id = "8.7"
+descriptor = "release-notes.md — recent version headings + elided-history markers"
+justification = "The 6 most recent version headings in full, plus 3 ellipsis markers positioned at representative deeper headings (v4.5.3/v4.0.12/Prior Versions) signaling the changelog continues all the way back through 68 released versions — avoids implying the changelog is only 6 versions deep while staying cheap."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "release-notes.md", start = 3, end = 3, render = { kind = "full" } },
+  { path = "release-notes.md", start = 7, end = 7, render = { kind = "full" } },
+  { path = "release-notes.md", start = 26, end = 26, render = { kind = "full" } },
+  { path = "release-notes.md", start = 38, end = 38, render = { kind = "full" } },
+  { path = "release-notes.md", start = 50, end = 50, render = { kind = "full" } },
+  { path = "release-notes.md", start = 62, end = 62, render = { kind = "full" } },
+  { path = "release-notes.md", start = 160, end = 160, render = { kind = "ellipsis" } },
+  { path = "release-notes.md", start = 508, end = 508, render = { kind = "ellipsis" } },
+  { path = "release-notes.md", start = 1081, end = 1081, render = { kind = "ellipsis" } },
+]
+
+# ---------------------------------------------------------------------
+# Tier 9 — Test suite (spec/)
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "9.1"
+descriptor = "spec/ + spec/env/ directory listings"
+justification = "The full roster of ~18 behavior-spec files plus artifacts/expected/mustache/tmp subdirs, and the 5 environment-bootstrap files under spec/env/ — establishes the complete test-suite shape before any single spec file's content is shown."
 [batches.content]
 kind = "fs"
 groups = [
@@ -888,91 +636,75 @@ groups = [
 ]
 
 [[batches]]
-id = "5.2"
-descriptor = "spec/artifacts/ + spec/expected/ — template fixtures + golden output"
-justification = """
-The `precompiler.js` spec exercises the CLI against `*.handlebars`
-fixtures here (`empty`, `bom`, `example_1/2`, `known.helpers`,
-`partial.template`, `non.default.extension`). `spec/expected/`
-holds the compiled-output goldens. Catastrophic-omission hedge —
-without listing both, an agent might add a new fixture without
-noticing the parallel goldens dir.
-"""
+id = "9.2"
+descriptor = "spec/env/common.js — expectTemplate test-bench API (locations)"
+justification = "One line per method on the fluent HandlebarsTestBench API (.withInput/.withHelper/.withPartial/.withCompileOptions/.toCompileTo/.toThrow) that literally every spec file is written against — a prerequisite for reading or writing any test in this repo."
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "spec/artifacts", entries = "all" },
-  { parent = "spec/expected", entries = "all" },
+kind = "lines"
+spans = [
+  { path = "spec/env/common.js", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "spec/env/common.js", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "spec/env/common.js", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "spec/env/common.js", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "spec/env/common.js", start = 81, end = 81, render = { kind = "full" } },
+  { path = "spec/env/common.js", start = 85, end = 85, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
-id = "5.3"
-descriptor = "tests/ + tests/bench/ + tests/browser/ + tests/rspack/ — directory listings"
-justification = """
-The non-spec test trees. `tests/bench/` (`perf.js`, `compare.js`,
-`report.js`, `size.js`, `templates.js`) is the tinybench harness
-exposed via `npm run bench`. `tests/browser/` is the Playwright
-smoke entry (`playwright.config.js`, `tests/lib.spec.js`).
-`tests/rspack/` runs against the bundled dist. `tests/print-script.js`
-is a one-off utility. Catastrophic-omission hedge for the bench /
-e2e surface.
-"""
+id = "9.3"
+descriptor = "Top-level describe() blocks across all spec/*.js files (locations)"
+justification = "One line per spec file naming its outermost describe() block — a one-hop map of 'which file covers behavior X' across the whole suite, cheaper than opening each file."
+predecessor = "9.1"
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "tests", entries = "all" },
-  { parent = "tests/bench", entries = "all" },
-  { parent = "tests/browser", entries = "all" },
-  { parent = "tests/browser/tests", entries = "all" },
-  { parent = "tests/rspack", entries = "all" },
+kind = "lines"
+spans = [
+  { path = "spec/ast.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/basic.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/blocks.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/builtins.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/compiler.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/data.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/helpers.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/javascript-compiler.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/partials.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/precompiler.js", start = 11, end = 11, render = { kind = "full" } },
+  { path = "spec/regressions.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/runtime.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/security.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/source-map.js", start = 11, end = 11, render = { kind = "full" } },
+  { path = "spec/spec.js", start = 7, end = 7, render = { kind = "full" } },
+  { path = "spec/strict.js", start = 3, end = 3, render = { kind = "full" } },
+  { path = "spec/subexpressions.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/utils.js", start = 1, end = 1, render = { kind = "full" } },
+  { path = "spec/whitespace-control.js", start = 1, end = 1, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "5.4"
-descriptor = "tests/integration/ — bundler-compat integration tests"
-justification = """
-Three subfolders, one shell driver: `multi-nodejs-test/`,
-`rollup-test/`, `webpack-test/`. Each subfolder follows the
-`test.sh` + `package.json` + `src/` + (optional) `dist/`
-convention documented in `tests/integration/README.md`. Run via
-`npm run test:integration`. Linux-only per CI config.
-"""
+id = "9.4"
+descriptor = "Nested describe() blocks in builtins.js + security.js (locations)"
+justification = "One level deeper for the two files most likely needed mid-session: per-helper sections in builtins.js (#if/#with/#each/#log/#lookup) and security.js's GH-numbered vulnerability regression groups (ties to 4.9's proto-access.js)."
+predecessor = "9.3"
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "tests/integration", entries = "all" },
-  { parent = "tests/integration/multi-nodejs-test", entries = "all" },
-  { parent = "tests/integration/rollup-test", entries = "all" },
-  { parent = "tests/integration/webpack-test", entries = "all" },
-  { parent = "tests/integration/webpack-test/src", entries = "all" },
+kind = "lines"
+spans = [
+  { path = "spec/builtins.js", start = 2, end = 2, render = { kind = "full" } },
+  { path = "spec/builtins.js", start = 136, end = 136, render = { kind = "full" } },
+  { path = "spec/builtins.js", start = 186, end = 186, render = { kind = "full" } },
+  { path = "spec/builtins.js", start = 600, end = 600, render = { kind = "full" } },
+  { path = "spec/builtins.js", start = 795, end = 795, render = { kind = "full" } },
+  { path = "spec/security.js", start = 2, end = 2, render = { kind = "full" } },
+  { path = "spec/security.js", start = 37, end = 37, render = { kind = "full" } },
+  { path = "spec/security.js", start = 111, end = 111, render = { kind = "full" } },
+  { path = "spec/security.js", start = 131, end = 131, render = { kind = "full" } },
+  { path = "spec/security.js", start = 162, end = 162, render = { kind = "full" } },
+  { path = "spec/security.js", start = 429, end = 429, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "5.5"
-descriptor = "tasks/ + docs/ + types/ + components/ + bin/ + .github/ — long-tail dirs"
-justification = """
-Catastrophic-omission hedge across the remaining trees:
-`tasks/` (publish-to-aws.js, version.js, util/git.js, tests/),
-`docs/` (compiler-api.md, decorators-api.md), `types/`
-(index.d.ts + tstyche type-tests), `components/` (legacy package
-manager descriptors — bower / composer / gemspec / nuspec / npm
-package.json / a ruby source-wrapper), `bin/handlebars.js` (the
-yargs CLI entry), and `.github/` (PR/issue templates, workflows,
-dependabot).
-"""
+id = "9.5"
+descriptor = "spec/basic.js — sample test body (basic context)"
+justification = "A worked example of the expectTemplate DSL from 9.2 in use — grounds the harness description in a real, complete assertion."
+predecessor = "9.3"
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "tasks", entries = "all" },
-  { parent = "tasks/tests", entries = "all" },
-  { parent = "tasks/util", entries = "all" },
-  { parent = "docs", entries = "all" },
-  { parent = "types", entries = "all" },
-  { parent = "types/__typetests__", entries = "all" },
-  { parent = "components", entries = "all" },
-  { parent = "components/lib", entries = "all" },
-  { parent = "components/lib/handlebars", entries = "all" },
-  { parent = "bin", entries = "all" },
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-]
+kind = "lines"
+spans = [ { path = "spec/basic.js", start = 1, end = 4, render = { kind = "full" } } ]

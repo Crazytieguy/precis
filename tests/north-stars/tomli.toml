@@ -1,750 +1,969 @@
 fixture = "tomli"
 revision_pin = "920e20b1"
 summary = """
-Tomli is a small (~1k LoC) pure-Python TOML parser. The public surface
-is just three names — `loads`, `load`, `TOMLDecodeError` — re-exported
-from `src/tomli/__init__.py`; the implementation is a single-pass
-recursive-descent parser in `src/tomli/_parser.py` plus a few datetime
-and number regexes in `src/tomli/_re.py`. Tomli is the upstream of the
-3.11+ standard-library `tomllib` module and is mypyc-compiled into
-binary wheels for speed.
-
-The query distribution this NS serves: API/usage questions
-(`how do I parse a string / file / handle errors / use Decimal floats`),
-parser internals (`how does the table/inline-table/string parser
-work`, `how does it track which namespaces are frozen`, `how are
-dates/numbers matched`), error-message and exception-shape questions,
-packaging / mypyc / tomllib-backport / CI / fuzzer / benchmark
-questions, and TOML spec edge cases visible from the large
-`tests/data/{valid,invalid}` corpus. Breadth over depth: many small
-location batches early so the agent can pinpoint where to dig, then
-selected bodies of the most-asked-about pieces (the parse loop,
-`parse_value` dispatch, inline-table/array parsers, the
-`TOMLDecodeError` constructor that turns a `pos` into line/column).
+tomli is a small, mature, pure-Python TOML parser (the library that became
+CPython's stdlib `tomllib`). The entire runtime surface is five files under
+src/tomli/ (four Python modules plus a `py.typed` marker; ~920 lines of
+Python total, dominated by the 782-line recursive-descent parser in
+_parser.py); everything else in the repo is packaging (dual build
+backends: flit_core normally, setuptools+mypyc for binary wheels), a
+data-driven test suite (tests/data/ holds ~80 hand-written fixtures plus a
+vendored ~900-file BurntSushi toml-test corpus), and small auxiliary scripts
+(benchmark/fuzzer/profiler). Plausible sessions: debugging a specific TOML
+construct's parse/error behavior, extending spec support, investigating a
+failing data-driven test, adjusting packaging/CI, or asking "how do I use
+this" / "how does tomli map to tomllib". Given a tight token budget relative
+to the parser's centrality, the ranking spends most of its depth budget on
+_parser.py's own semantics (entry point, error formatting, value dispatch,
+namespace-mutability tracking, dotted-key handling) reached via a full
+function/class roster, and keeps everything else (tests, docs, packaging,
+scripts) at breadth-only or small-excerpt granularity.
 """
 
-# ---------------------------------------------------------------------------
-# Tier 1: orientation. What is this repo, what is its public surface,
-# where do its files live. Cheapest possible answer to "summarize this
-# project" and "what's the API?".
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------
+# Tier 1: directory breadth + the cheapest signature rosters. Establishes
+# what exists everywhere before spending on any single file's content.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root listing"
-justification = """
-Single cheap FS listing of the repo root: shows the agent that this is
-a Python project (pyproject.toml, src/, tests/), with auxiliary
-benchmark/, fuzzer/, profiler/, scripts/ trees, a tomllib.md (the
-hint that this is the upstream of stdlib tomllib), README, CHANGELOG,
-LICENSE, plus bumpversion / flake8 / pre-commit configs.
-"""
+descriptor = "fuzzer/ listing"
+justification = "Both fuzzer files shown together (fuzz.py, requirements.txt) - cheapest possible orientation for the fuzzing setup."
 [batches.content]
 kind = "fs"
-groups = [{ parent = ".", entries = "all" }]
+[[batches.content.groups]]
+parent = "fuzzer"
+entries = "all"
 
 [[batches]]
 id = "1.2"
-descriptor = "README title + tagline"
-justification = """
-Two lines of README — the project name and its one-line self-description
-("A lil' TOML parser"). Tiny; gives the agent a noun to use.
-"""
+descriptor = "profiler/ listing"
+justification = "Both profiler files shown together (profiler_script.py, requirements.txt)."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "README.md", start = 5, end = 7, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "profiler"
+entries = "all"
 
 [[batches]]
 id = "1.3"
-descriptor = "Public API: __init__ __all__ + version"
-justification = """
-The entire public surface: `__all__ = ("loads", "load", "TOMLDecodeError")`
-plus `__version__` and the re-export from `_parser`. After this batch
-the agent knows exactly what names are importable from `tomli`.
-"""
+descriptor = "scripts/ listing"
+justification = "All 3 dev-scripts files (mypyc_tox, use_setuptools.py, requirements.txt) so the mypyc-build-swap mechanism's file set is known up front."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/__init__.py", start = 5, end = 8, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "scripts"
+entries = "all"
 
 [[batches]]
 id = "1.4"
-descriptor = "src/tomli/ module listing"
-justification = """
-The implementation is just `__init__.py`, `_parser.py`, `_re.py`,
-`_types.py`, `py.typed`. Tells the agent the entire library is
-~3 source files and where to look next.
-"""
+descriptor = "src/tomli/ listing"
+justification = "The entire runtime package is 5 files; showing all of them together avoids implying any file (e.g. py.typed, or a private module) doesn't exist."
 [batches.content]
 kind = "fs"
-groups = [{ parent = "src/tomli", entries = "all" }]
+[[batches.content.groups]]
+parent = "src/tomli"
+entries = "all"
 
 [[batches]]
 id = "1.5"
-descriptor = "loads / load signatures + docstrings"
-justification = """
-The two public parsing entry points with their full signatures (showing
-the `parse_float` keyword and the binary-file vs str distinction) and
-their one-line docstrings. Answers 'how do I call this library?'
-zero-follow-up.
-"""
+descriptor = "benchmark/ listing"
+justification = "All 5 benchmark files (data.toml, LICENSE, README.md, requirements.txt, run.py) shown together."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 137, end = 138, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 149, end = 151, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "benchmark"
+entries = "all"
 
 [[batches]]
 id = "1.6"
-descriptor = "TOMLDecodeError class + docstring"
-justification = """
-The public exception class header + its docstring listing the post-2.1
-attribute surface (`msg`, `doc`, `pos`, `lineno`, `colno`). Answers
-'what does the exception look like?' without dragging in the long
-deprecated-args constructor body.
-"""
+descriptor = "tests/ top-level listing"
+justification = "Top-level test layout: the three unittest modules, the tomllib-aliasing __init__.py, burntsushi.py helper, and the data/ fixture directory."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests"
+entries = "all"
+
+[[batches]]
+id = "1.7"
+descriptor = "tests/data/invalid/dotted-keys/ listing"
+justification = "The 4 dotted-key-specific invalid fixtures (access-non-table, extend-defined-aot, extend-defined-table, extend-defined-table-with-subtable) - a bonus hook into the subtle Flags/relative_path_cont_keys semantics (tier 5), one directory level below the tests/data/invalid/ top-level listing (2.8)."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests/data/invalid/dotted-keys"
+entries = "all"
+
+[[batches]]
+id = "1.8"
+descriptor = "External toml-test invalid/ category listing"
+justification = "The vendored BurntSushi toml-test suite's invalid/ top level: one subdirectory per rejected-input category (array, bool, control, datetime, encoding, float, inline-table, integer, key, local-date, local-datetime, local-time, spec-1.1.0, string, table). Tells the agent which spec areas have dedicated negative conformance coverage without walking ~300 files."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests/data/invalid/_external/toml-test/invalid"
+entries = "all"
+
+[[batches]]
+id = "1.9"
+descriptor = "Repo root listing"
+justification = "What top-level dirs/files exist (src, tests, benchmark, fuzzer, profiler, scripts, .github, tomllib.md, packaging configs). Prevents assuming an unlisted top-level file/dir doesn't exist."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.10"
+descriptor = "MANIFEST.in (full, 1 line)"
+justification = "The sdist rule ('prune tests/') - trivially cheap and explains why a setuptools-built sdist excludes the test suite (and its huge data/ corpus)."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 76, end = 85, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "MANIFEST.in"
+start = 1
+end = 1
+render = { kind = "full" }
 
-# ---------------------------------------------------------------------------
-# Tier 2: structural map. Tests directory, the small `_types` module in
-# full, the README intro/TOC for project framing, locations-only
-# function-name sweeps over `_parser.py` and `_re.py`, and the
-# most-asked README usage examples.
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "1.11"
+descriptor = "_parser.py roster: entry points + error class"
+justification = "Signature locations for load, loads, TOMLDecodeError and its deprecated-args __init__ - the smallest, highest-traffic slice of the parser roster. Predecessor for the fuller bodies in tier 5."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 71
+end = 71
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 76
+end = 76
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 87
+end = 87
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 137
+end = 137
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 149
+end = 149
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "1.12"
+descriptor = "CI workflow job roster"
+justification = "Every top-level job in .github/workflows/tests.yaml (linters, tests, coverage, binary-wheels, pure-python-wheel-and-sdist, allgood, pypi-publish) as bare names - the job graph shape without any step detail, so no job is assumed missing."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/tests.yaml"
+start = 19
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/tests.yaml"
+start = 38
+end = 38
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/tests.yaml"
+start = 62
+end = 62
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/tests.yaml"
+start = 84
+end = 84
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/tests.yaml"
+start = 115
+end = 115
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/tests.yaml"
+start = 134
+end = 134
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".github/workflows/tests.yaml"
+start = 145
+end = 145
+render = { kind = "full" }
+
+[[batches]]
+id = "1.13"
+descriptor = "_re.py function roster"
+justification = "Signature locations for the 4 conversion helpers (match_to_datetime, cached_tz, match_to_localtime, match_to_number) that turn a regex Match into a Python value."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/tomli/_re.py"
+start = 59
+end = 59
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_re.py"
+start = 99
+end = 99
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_re.py"
+start = 109
+end = 109
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_re.py"
+start = 116
+end = 116
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "1.14"
+descriptor = "pyproject.toml tox environment roster"
+justification = "Every tox env table header (env_run_base, profile, pre-commit, benchmark, benchmark-pypi, benchmark-import, fuzz) - the answer to 'what can I `tox -e ...`' without the per-env command detail."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 46
+end = 46
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 51
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 58
+end = 58
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 75
+end = 75
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 83
+end = 83
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 92
+end = 92
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 105
+end = 105
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 111
+end = 111
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------
+# Tier 2: tiny full files, the rest of the parser roster, and other cheap
+# signature/location batches.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "tests/ directory listing"
-justification = """
-Top of `tests/`: `test_data.py`, `test_error.py`, `test_misc.py`,
-`burntsushi.py` helper, `__init__.py`, plus the giant `data/` subdir.
-Tells the agent the test suite is unittest-based and most of the
-content is data-driven.
-"""
+descriptor = "tomli/__init__.py (full public API)"
+justification = "8-line file that IS the entire public surface: __all__, __version__, and the three re-exported names. Zero-follow-up for 'what does this package export'."
 [batches.content]
-kind = "fs"
-groups = [{ parent = "tests", entries = "all" }]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/tomli/__init__.py"
+start = 1
+end = 8
+render = { kind = "full" }
 
 [[batches]]
 id = "2.2"
-descriptor = "_types.py — full"
-justification = """
-The whole `_types.py` module (3 type aliases: `ParseFloat = Callable[[str], Any]`,
-`Key = Tuple[str, ...]`, `Pos = int`). These aliases recur throughout
-`_parser.py` signatures; having the full file inline makes those
-signatures self-explanatory.
-"""
+descriptor = "_parser.py roster: table/array/key rules"
+justification = "Signature locations for skip_* cursor helpers, create_dict_rule/create_list_rule ([table]/[[array]] headers), and the key/dotted-key parsing chain (key_value_rule through parse_one_line_basic_str)."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_types.py", start = 5, end = 10, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 318
+end = 318
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 327
+end = 327
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 349
+end = 349
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 361
+end = 361
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 370
+end = 370
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 390
+end = 390
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 413
+end = 413
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 447
+end = 447
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 463
+end = 463
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 481
+end = 481
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 497
+end = 497
+render = { kind = "truncated", pattern = "^[^(]+" }
 
 [[batches]]
 id = "2.3"
-descriptor = "_parser.py: state-class headers + Flags constants"
-justification = """
-The four small classes in `_parser.py` other than `TOMLDecodeError`:
-`DEPRECATED_DEFAULT` sentinel, `Flags` (the FROZEN / EXPLICIT_NEST
-namespace-state machine), `NestedDict` (the dict-of-dicts builder
-backing `[a.b.c]` table syntax), and `Output` bundle. The Flags
-constants drive the parser's correctness rules around redefining
-tables and inline-table/array immutability.
-"""
+descriptor = "pyproject.toml mypy strict config"
+justification = "The strict-mode mypy settings (strict, strict_bytes, warn_unreachable, local_partial_types, enable_error_code) - a concrete config sample, cheaper evidence of the type-checking bar than inferring it from CI."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 71, end = 73, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 220, end = 228, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 278, end = 278, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 312, end = 315, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 145
+end = 156
+render = { kind = "full" }
 
 [[batches]]
 id = "2.4"
-descriptor = "_re.py: regex constants + match-helper locations"
-justification = """
-Locations of the four module-level regex/constant defs and the four
-match-helper functions in `_re.py`. Tells the agent which regexes
-exist (`RE_NUMBER`, `RE_LOCALTIME`, `RE_DATETIME`) and which
-match-to-X helpers (`match_to_datetime`, `match_to_localtime`,
-`match_to_number`, `cached_tz`) — without dragging in the regex bodies.
-"""
+descriptor = "_parser.py roster: value parsing"
+justification = "Signature locations for parse_array, parse_inline_table, the string-escape/hex/literal/multiline family, parse_value, and the two tail utilities (is_unicode_scalar_value, make_safe_parse_float)."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_re.py", start = 17, end = 17, render = { kind = "full" } },
-  { path = "src/tomli/_re.py", start = 26, end = 26, render = { kind = "full" } },
-  { path = "src/tomli/_re.py", start = 45, end = 46, render = { kind = "full" } },
-  { path = "src/tomli/_re.py", start = 59, end = 59, render = { kind = "full" } },
-  { path = "src/tomli/_re.py", start = 99, end = 99, render = { kind = "full" } },
-  { path = "src/tomli/_re.py", start = 109, end = 109, render = { kind = "full" } },
-  { path = "src/tomli/_re.py", start = 116, end = 116, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 502
+end = 502
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 528
+end = 528
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 564
+end = 564
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 595
+end = 595
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 599
+end = 599
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 612
+end = 612
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 621
+end = 621
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 652
+end = 652
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 684
+end = 684
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 760
+end = 760
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 764
+end = 764
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 776
+end = 776
+render = { kind = "truncated", pattern = "^[^(]+" }
 
 [[batches]]
 id = "2.5"
-descriptor = "README intro paragraph"
-justification = """
-The Intro section: Tomli is a Python TOML library, version 2.4+ is
-TOML v1.1.0 compatible, and the all-important note that the `tomllib`
-stdlib module (Python 3.11+, PEP 680) is a vendored copy of this code,
-with mypyc binary wheels for speed.
-"""
+descriptor = "_parser.py roster: namespace state machinery"
+justification = "Signature locations for Flags (namespace mutability tracking) and NestedDict/Output (the parsed-data structure). Predecessor for the Flags-class body in tier 5."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "README.md", start = 32, end = 48, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 220
+end = 220
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 229
+end = 229
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 233
+end = 233
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 236
+end = 236
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 241
+end = 241
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 249
+end = 249
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 260
+end = 260
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 278
+end = 278
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 279
+end = 279
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 283
+end = 283
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 300
+end = 300
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 312
+end = 312
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 313
+end = 313
+render = { kind = "truncated", pattern = "^[^(]+" }
 
 [[batches]]
 id = "2.6"
-descriptor = "README table of contents"
-justification = """
-The README's auto-generated TOC names every section that exists.
-Catastrophic-omission hedge: tells the agent *all* the README sections
-without paying for their bodies. Lets a later batch refine specific
-section bodies without surprising the agent that some FAQ entry exists.
-"""
+descriptor = ".pre-commit-config.yaml hook-id roster"
+justification = "All 12 pre-commit hook ids in pipeline order (insert-license, mdformat, yesqa, absolufy-imports, isort, black, check-yaml, 3x pygrep hooks, flake8, mypy) without their rev-pins/args - what will run without the version-pin noise."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "README.md", start = 13, end = 28, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 5
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 11
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 19
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 33
+end = 33
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 37
+end = 37
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 41
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 45
+end = 45
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 46
+end = 46
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 47
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 51
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".pre-commit-config.yaml"
+start = 59
+end = 59
+render = { kind = "full" }
 
 [[batches]]
 id = "2.7"
-descriptor = "_parser.py: parse_* and skip_* function locations"
-justification = """
-Locations sweep of every top-level `def` in `_parser.py` not already
-shown by 1.5 (load/loads). Catastrophic-omission mitigation: if the
-agent later wonders 'is there a function that does X?', this batch
-tells them which functions exist (parse_value, parse_array,
-parse_inline_table, parse_basic_str/_escape, parse_literal_str,
-parse_multiline_str, parse_key/_part, key_value_rule,
-create_dict_rule, create_list_rule, the four skip_* helpers,
-is_unicode_scalar_value, make_safe_parse_float) and at what line.
-"""
+descriptor = "tests/data/valid/ listing"
+justification = "All locally hand-written valid fixtures and their subject subdirectories (array/, dates-and-times/, inline-table/, multiline-basic-str/) alongside the vendored _external/ corpus."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 318, end = 318, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 327, end = 327, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 349, end = 349, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 361, end = 361, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 370, end = 370, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 390, end = 390, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 413, end = 413, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 447, end = 447, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 463, end = 463, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 481, end = 481, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 497, end = 497, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 502, end = 502, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 528, end = 528, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 564, end = 564, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 595, end = 595, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 599, end = 599, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 612, end = 612, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 621, end = 621, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 652, end = 652, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 684, end = 684, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 760, end = 760, render = { kind = "full" } },
-  { path = "src/tomli/_parser.py", start = 764, end = 764, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests/data/valid"
+entries = "all"
 
 [[batches]]
 id = "2.8"
-descriptor = "README usage: parse a TOML string"
-justification = """
-The first usage example — `tomli.loads(toml_str)` returning a dict.
-Probably the single most-asked question; zero-follow-up answer if
-the agent is being asked 'how do I use this'.
-"""
+descriptor = "tests/data/invalid/ listing"
+justification = "All locally hand-written invalid fixtures and subdirectories (array/, array-of-tables/, boolean/, dates-and-times/, dotted-keys/, inline-table/, keys-and-vals/, literal-str/, multiline-basic-str/, multiline-literal-str/, table/) plus _external/."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "README.md", start = 58, end = 77, render = { kind = "full" } },
-]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests/data/invalid"
+entries = "all"
 
 [[batches]]
 id = "2.9"
-descriptor = "README usage: parse a file + handle errors"
-justification = """
-Second + third usage examples: `tomli.load(open('f', 'rb'))` (with
-the binary-mode caveat in prose) and the `try / except TOMLDecodeError`
-pattern. Together they cover the read-from-file path and error-handling
-path that aren't obvious from signatures alone.
-"""
+descriptor = "Sample invalid TOML fixture (dotted-keys/extend-defined-aot)"
+justification = "A 3-line invalid fixture exercising the dotted-key/array-of-tables interaction (tier 5's Flags/key_value_rule logic): opening [[tab.arr]] then redeclaring tab.arr via a dotted key."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "README.md", start = 79, end = 104, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "tests/data/invalid/dotted-keys/extend-defined-aot.toml"
+start = 1
+end = 3
+render = { kind = "full" }
 
-# ---------------------------------------------------------------------------
-# Tier 3: parser semantics + corpus structure. The bodies of the
-# central pieces — `loads`'s parse loop, `parse_value`'s dispatch
-# (split into two halves), the `TOMLDecodeError` constructor that turns
-# `pos` into line/col, the `Flags` state machine, plus the test-data
-# subdirectory layout and method-name sweep.
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "2.10"
+descriptor = "Test method roster (test_data/test_error/test_misc)"
+justification = "Every TestCase class and test_* method name across the three unittest modules, truncated to signature. A failing test name resolves to its exact location here in one hop."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tests/test_data.py"
+start = 27
+end = 27
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_data.py"
+start = 28
+end = 28
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_data.py"
+start = 40
+end = 40
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_error.py"
+start = 13
+end = 13
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_error.py"
+start = 14
+end = 14
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_error.py"
+start = 35
+end = 35
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_error.py"
+start = 40
+end = 40
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_error.py"
+start = 45
+end = 45
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_error.py"
+start = 62
+end = 62
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_error.py"
+start = 76
+end = 76
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_error.py"
+start = 92
+end = 92
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 17
+end = 17
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 18
+end = 18
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 29
+end = 29
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 47
+end = 47
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 75
+end = 75
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 103
+end = 103
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 118
+end = 118
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 133
+end = 133
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "2.11"
+descriptor = "_types.py (full)"
+justification = "10-line type-alias module (ParseFloat, Key, Pos) referenced throughout _parser.py's signatures; cheap to include in full."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/tomli/_types.py"
+start = 1
+end = 10
+render = { kind = "full" }
+
+# ---------------------------------------------------------------------
+# Tier 3: small full-file/excerpt anchors once cumulative headroom allows.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "load body"
-predecessor = "1.5"
-justification = """
-The `load` body — read the binary file, decode UTF-8, hand off to
-`loads`. The interesting bit is the `TypeError` raised when handed a
-text-mode file ('File must be opened in binary mode...'); this is
-the exact error message that tests pin against and that users hit
-first.
-"""
+descriptor = "Sample valid TOML/JSON fixture pair (array-subtables)"
+justification = "A concrete, small valid/*.toml + valid/*.json pair, illustrating the burntsushi typed-JSON shape ({\"type\":\"integer\",\"value\":\"1\"}) for a nested array-of-tables case - the exact shape test_data.py's test_valid compares against."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 139, end = 146, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "tests/data/valid/array/array-subtables.toml"
+start = 1
+end = 7
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/data/valid/array/array-subtables.json"
+start = 1
+end = 11
+render = { kind = "full" }
 
 [[batches]]
 id = "3.2"
-descriptor = "tests/data/{valid,invalid}/ top listing"
-justification = """
-Two FS listings of the top of the test-corpus directories. `valid/`
-holds eight standalone `.toml`/`.json` pairs plus subdirs (array,
-inline-table, dates-and-times, multiline-basic-str, _external) and
-`invalid/` is organized by parser rule (array, inline-table, table,
-keys-and-vals, dotted-keys, dates-and-times, boolean, literal-str,
-multiline-{basic,literal}-str, array-of-tables) plus loose top-level
-counterexamples and the `_external` toml-test mirror. Tells the agent
-*all* the categories of corner case the parser is pinned against.
-"""
+descriptor = "tests/__init__.py (tomllib aliasing)"
+justification = "9-line trick that lets the whole suite run against 'tomli as tomllib' - explains why test files import '.tomllib' rather than 'tomli' directly, and hints at the CPython-stdlib compatibility angle (tomllib.md, tier 4)."
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "tests/data/valid", entries = "all" },
-  { parent = "tests/data/invalid", entries = "all" },
-]
+kind = "lines"
+[[batches.content.spans]]
+path = "tests/__init__.py"
+start = 1
+end = 9
+render = { kind = "full" }
 
 [[batches]]
 id = "3.3"
-descriptor = "tests/* test method names"
-justification = """
-Every `def test_*` across `test_misc.py`, `test_error.py`, and
-`test_data.py`, plus the test-class headers. Catastrophic-omission
-hedge: with 16 tests total this is the entire bespoke (non-corpus)
-test surface — close to what `pytest --collect-only` would show.
-"""
+descriptor = "External toml-test valid/ category listing"
+justification = "The vendored BurntSushi toml-test suite's valid/ top level: one subdirectory per spec area (array, bool, comment, datetime, float, inline-table, integer, key, spec-1.1.0, string, table) plus loose example/empty-file cases."
 [batches.content]
-kind = "lines"
-spans = [
-  { path = "tests/test_misc.py", start = 17, end = 17, render = { kind = "full" } },
-  { path = "tests/test_misc.py", start = 18, end = 18, render = { kind = "full" } },
-  { path = "tests/test_misc.py", start = 29, end = 29, render = { kind = "full" } },
-  { path = "tests/test_misc.py", start = 47, end = 47, render = { kind = "full" } },
-  { path = "tests/test_misc.py", start = 75, end = 75, render = { kind = "full" } },
-  { path = "tests/test_misc.py", start = 103, end = 103, render = { kind = "full" } },
-  { path = "tests/test_misc.py", start = 118, end = 118, render = { kind = "full" } },
-  { path = "tests/test_misc.py", start = 133, end = 133, render = { kind = "full" } },
-  { path = "tests/test_error.py", start = 13, end = 13, render = { kind = "full" } },
-  { path = "tests/test_error.py", start = 14, end = 14, render = { kind = "full" } },
-  { path = "tests/test_error.py", start = 35, end = 35, render = { kind = "full" } },
-  { path = "tests/test_error.py", start = 40, end = 40, render = { kind = "full" } },
-  { path = "tests/test_error.py", start = 45, end = 45, render = { kind = "full" } },
-  { path = "tests/test_error.py", start = 62, end = 62, render = { kind = "full" } },
-  { path = "tests/test_error.py", start = 76, end = 76, render = { kind = "full" } },
-  { path = "tests/test_error.py", start = 92, end = 92, render = { kind = "full" } },
-  { path = "tests/test_data.py", start = 27, end = 27, render = { kind = "full" } },
-  { path = "tests/test_data.py", start = 28, end = 28, render = { kind = "full" } },
-  { path = "tests/test_data.py", start = 40, end = 40, render = { kind = "full" } },
-]
-
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests/data/valid/_external/toml-test/valid"
+entries = "all"
 
 [[batches]]
 id = "3.4"
-descriptor = "loads body — prelude + skip / dispatch comments"
-predecessor = "1.5"
-justification = """
-First half of `loads`: the CRLF→LF normalization, `pos = 0`, the
-`Output()` / header / `parse_float` setup, the start of the
-'parse one statement at a time' while-loop with the numbered
-'1. Skip leading whitespace' / '2. Parse rules' comment block that
-documents what statements look like (eof / newline / comment /
-key=value / `[`...). 3.5 covers the body of those rules.
-"""
+descriptor = "pyproject.toml build-system + core [project] identity"
+justification = "Build backend (flit_core, swapped to setuptools+mypyc only for binary wheels via scripts/use_setuptools.py) plus name/version/description/authors/license/requires-python. Concrete config sample for 'how is this packaged'."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 152, end = 178, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 15
+render = { kind = "full" }
 
 [[batches]]
 id = "3.5"
-descriptor = "loads body — rule dispatch + statement terminator"
-predecessor = "3.4"
-justification = """
-Second half of `loads`: the per-character dispatch on `src[pos]`
-(handle `\\n` / KEY_INITIAL_CHARS → `key_value_rule` / `[` → either
-`create_dict_rule` or `create_list_rule` based on `[[` lookahead /
-`#` → comment, else `Invalid statement`), plus the post-statement
-'expect newline or EOF' check that produces 'Expected newline or end
-of document after a statement'.
-"""
+descriptor = "README intro"
+justification = "Crate-doc lede: what tomli is, TOML version compatibility, its relationship to stdlib tomllib, and mypyc vs pure-Python wheels. Answers 'what is this repo' with no follow-up."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 179, end = 217, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "README.md"
+start = 32
+end = 49
+render = { kind = "full" }
 
-[[batches]]
-id = "3.6"
-descriptor = "TOMLDecodeError.__init__ — pos→line/col body"
-predecessor = "1.6"
-justification = """
-The interesting tail of the constructor (lines 117-134): turn `pos`
-into 1-indexed `lineno`/`colno` by counting newlines, prepend a
-'(at line L, column C)' or '(at end of document)' suffix, and stash
-{msg, doc, pos, lineno, colno} as attributes. Skips the noisy
-deprecation-shim branch.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 117, end = 134, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.7"
-descriptor = "parse_value — dispatch head (strings/bools/array/inline-table)"
-predecessor = "2.7"
-justification = """
-First half of `parse_value`: the `MAX_INLINE_NESTING` recursion guard
-(with the mypyc-segfault rationale comment) and the speed-ordered
-char dispatch for strings (one-line + triple), bools (`true`/`false`),
-arrays, and inline tables. The design comment 'IMPORTANT: order
-conditions based on speed of checking and likelihood' lives here.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 685, end = 728, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.8"
-descriptor = "parse_value — datetime/number/special-float tail"
-predecessor = "3.7"
-justification = """
-Second half of `parse_value`: `RE_DATETIME` then `RE_LOCALTIME` then
-`RE_NUMBER` matches (regex order matters — number would greedily
-swallow a date), and the `inf`/`nan`/`+inf`/`-inf`/`+nan`/`-nan`
-special-float fallback. Source of 'Invalid value' / 'Invalid date or
-datetime' errors.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 729, end = 757, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.9"
-descriptor = "Flags — __init__, add_pending, finalize_pending, unset_all"
-predecessor = "2.3"
-justification = """
-First half of `Flags`: the dual storage (`_flags` tree of {flags,
-recursive_flags, nested} + `_pending_flags` set), `add_pending` /
-`finalize_pending` (the queue that gets committed at the next
-table boundary, used by `key_value_rule`'s relative-path walk),
-and `unset_all` (used by `create_list_rule` to reopen `[[arr]]`'s
-namespace).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 229, end = 247, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.10"
-descriptor = "Flags — set + is_ (the actual lookup)"
-predecessor = "3.9"
-justification = """
-Second half of `Flags`: `set` (write a recursive or non-recursive
-flag at a dotted-key path, building tree nodes as it walks) and
-`is_` (lookup with recursive-flag inheritance — a recursive flag
-on an ancestor wins). This is what every 'is FROZEN' / 'is
-EXPLICIT_NEST' check across the parser actually runs.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 249, end = 275, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.11"
-descriptor = "NestedDict body — table-tree builder"
-predecessor = "2.3"
-justification = """
-The body of `NestedDict`. Two methods: `get_or_create_nest(key)` walks
-or builds the dict-of-dicts for a dotted-key path, optionally
-auto-descending into the last item of an array-of-tables; and
-`append_nest_to_list(key)` appends `{}` to a list under `key` (the
-`[[arr]]` rule). Together with `Flags` this is the entire mutable
-state of the parse.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 279, end = 309, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.12"
-descriptor = "README usage: Decimal floats"
-justification = """
-The `parse_float=Decimal` recipe: how to get exact decimals for
-floats, and the `dict`/`list` blacklist that prevents pathological
-`parse_float` callbacks from confusing the parser.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "README.md", start = 106, end = 122, render = { kind = "full" } },
-]
-
-
-# ---------------------------------------------------------------------------
-# Tier 4: second-tier parser internals. Bodies of the table / array /
-# inline-table / basic-str parsers and the [table] / [[arr]] header
-# rules, plus the tomllib-compat README recipe.
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------
+# Tier 4: docs/test excerpts, once cumulative headroom supports ~300-500
+# token batches.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "create_dict_rule body — [table] header"
-predecessor = "2.7"
-justification = """
-The `[table]` header rule. Parses the dotted key, sets EXPLICIT_NEST
-(can't be reopened with `[...]`), creates the dict via
-`get_or_create_nest`. Source of 'Cannot declare X twice' / 'Cannot
-overwrite a value' / 'Expected ]' errors.
-"""
+descriptor = "README usage: parse a TOML string"
+justification = "The single most representative usage recipe (tomli.loads on a literal string, with the expected dict shape) - the fastest answer to 'how do I call this library'."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 371, end = 388, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "README.md"
+start = 56
+end = 78
+render = { kind = "full" }
 
 [[batches]]
 id = "4.2"
-descriptor = "create_list_rule body — [[arr]] header"
-predecessor = "2.7"
-justification = """
-The `[[array.of.tables]]` header. Parses the dotted key, *unsets all*
-flags (so the namespace is reopenable for the new item) but keeps
-EXPLICIT_NEST on the key itself, then appends `{}` via
-`append_nest_to_list`. Source of 'Cannot mutate immutable namespace
-{key}' / 'Expected ]]' errors.
-"""
+descriptor = "tomllib.md - intro + sync status"
+justification = "Why tomllib exists (PEP 680, CPython issue links) and the exact commit pins showing the current tomli<->tomllib sync point - answers 'why does this look like tomllib' and 'is this in sync with stdlib' without the full conversion checklist."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 390, end = 410, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "tomllib.md"
+start = 1
+end = 19
+render = { kind = "full" }
 
 [[batches]]
 id = "4.3"
-descriptor = "key_value_rule body"
-predecessor = "2.7"
-justification = """
-The `key = value` statement. Walks every relative parent of the
-dotted key adding pending EXPLICIT_NEST flags (so `a.b.c = 1` later
-forbids `[a.b]`), checks FROZEN, calls `get_or_create_nest`, and
-recursively freezes the inserted value if it's an inline table or
-array. The pending-flags trick is essential to TOML's redefine rules.
-"""
+descriptor = "README: TOML->Python type mapping table"
+justification = "The authoritative table of how each TOML type (string/integer/float/boolean/date-time variants/array/table/inline table) maps to a Python type - frequently the fastest answer to 'what type will this value come back as'."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 414, end = 444, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "README.md"
+start = 183
+end = 199
+render = { kind = "full" }
 
 [[batches]]
 id = "4.4"
-descriptor = "parse_inline_table — head + first key/value insert"
-predecessor = "2.7"
-justification = """
-First half of `parse_inline_table`. Sets up *fresh* `Flags` and
-`NestedDict` (not the parser-global ones, so dotted keys can't
-escape the inline table), handles the empty-`{}` case, and runs
-the first iteration of the key/value insertion loop with the
-'Cannot mutate immutable namespace' / 'Cannot overwrite a value' /
-'Duplicate inline table key' error sites.
-"""
+descriptor = "CHANGELOG.md - latest two releases"
+justification = "The most recent behavior changes (2.4.0's TOML v1.1.0 compatibility + Windows arm64 wheels; 2.3.0's Python 3.14 wheels) - highest-value slice of the changelog for 'did this change recently' questions, without the full historical tail."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 529, end = 549, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "CHANGELOG.md"
+start = 1
+end = 15
+render = { kind = "full" }
 
 [[batches]]
 id = "4.5"
-descriptor = "parse_inline_table — comma/close loop tail"
-predecessor = "4.4"
-justification = """
-Second half of `parse_inline_table`: skip whitespace/newlines/comments
-in the `,` separator, recognize the closing `}`, error with
-'Unclosed inline table', and recursively freeze any inserted
-inline-table or array value (so dotted reads through it can't
-mutate it).
-"""
+descriptor = "burntsushi.py: convert() (partial)"
+justification = "The start of the BurntSushi typed-JSON conversion used by test_data.py's test_valid: convert() wraps Python str/bool/int/float values in {type,value} dicts. Enough to read a valid/*.json fixture's scalar entries; the datetime/array/dict branches and normalize() continue past this excerpt in the same function/file."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 550, end = 561, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "tests/burntsushi.py"
+start = 1
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "tests/burntsushi.py"
+start = 20
+end = 20
+render = { kind = "ellipsis" }
 
 [[batches]]
 id = "4.6"
-descriptor = "parse_array body"
-predecessor = "2.7"
-justification = """
-Body of `parse_array` (`[a, b, c]` syntax). Allows trailing comma,
-allows comments and newlines between elements, recursively calls
-`parse_value`. Source of the 'Unclosed array' error.
-"""
+descriptor = "test_misc.py: test_parse_float"
+justification = "The test backing the README's Decimal-parse_float recipe (4.1/1.6): parses inf/nan/-nan variants through parse_float=Decimal and checks NaN handling - the concrete spec for a custom parse_float callable's expected behavior."
+predecessor = "2.10"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 503, end = 525, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "tests/test_misc.py"
+start = 47
+end = 73
+render = { kind = "full" }
 
 [[batches]]
 id = "4.7"
-descriptor = "parse_basic_str body"
-predecessor = "2.7"
-justification = """
-Hot loop for `\"...\"` strings (and the inner loop for `\"\"\"...\"\"\"`).
-Walks character by character, accumulates spans verbatim, hands off
-to `parse_escapes` (one-line vs multi-line variant) on backslash, and
-errors on any character in `error_on` (the `ILLEGAL_*_CHARS` sets).
-Source of 'Unterminated string' / 'Illegal character' errors.
-"""
+descriptor = "test_data.py (full, data-driven glob mechanism)"
+justification = "How the huge tests/data/ corpus actually gets exercised: glob '**/*.toml' under valid/ and invalid/, load each valid file's sibling .json via burntsushi, assert TOMLDecodeError on every invalid file (skipping non-UTF8 ones). Essential for anyone adding/debugging a data fixture."
+predecessor = "2.10"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 653, end = 681, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "tests/test_data.py"
+start = 1
+end = 47
+render = { kind = "full" }
 
-[[batches]]
-id = "4.8"
-descriptor = "README usage: tomllib compat shim"
-justification = """
-The canonical `if sys.version_info >= (3, 11): import tomllib else:
-import tomli as tomllib` snippet, plus the recommended dependency
-specifier `tomli >= 1.1.0 ; python_version < "3.11"`. Lets a
-downstream library use Tomli only when the stdlib version isn't
-available.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "README.md", start = 123, end = 150, render = { kind = "full" } },
-]
-
-# ---------------------------------------------------------------------------
-# Tier 5: long-tail. The skip_* lexer helpers, the README FAQ
-# type-mapping table, the most relevant CHANGELOG entries, the
-# project metadata block, periphery FS listings.
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------
+# Tier 5: the parser's own core semantics - largest single batches, placed
+# last so the growth envelope and roster predecessors are both satisfied.
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "README FAQ: type mapping table"
-justification = """
-The TOML-to-Python type-mapping table from the FAQ — the canonical
-answer to 'what does tomli return for a date / inline table / array
-of tables'. Standalone, frequently asked, cheap.
-"""
+descriptor = "Flags class (namespace mutability tracking)"
+justification = "The subtlest piece of parser state: tracks which key-paths are FROZEN (inline array/table) or EXPLICIT_NEST (opened via [table]/[[array]]), including pending-flag deferral. Central to any 'why did this redefinition/overwrite raise/not raise' debugging question."
+predecessor = "2.5"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "README.md", start = 183, end = 199, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 220
+end = 276
+render = { kind = "full" }
 
 [[batches]]
 id = "5.2"
-descriptor = "skip_chars / skip_until / skip_comment / skip_comments_and_array_ws"
-predecessor = "2.7"
-justification = """
-Four shared lexer helpers. `skip_chars` advances while in a char set;
-`skip_until` advances until a literal substring (with an `error_on`
-check); `skip_comment` is a one-call wrapper for `#...\\n`;
-`skip_comments_and_array_ws` is the loop used inside arrays /
-inline-tables that lets whitespace, newlines, and comments mix freely.
-"""
+descriptor = "TOMLDecodeError (+ deprecation sentinel) full body"
+justification = "The sole public exception type: deprecated free-form-args shim, and the lineno/colno computation from a byte offset. Directly answers 'what does an error message look like' and 'how is line/column computed'."
+predecessor = "1.11"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "src/tomli/_parser.py", start = 319, end = 367, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 71
+end = 135
+render = { kind = "full" }
 
 [[batches]]
 id = "5.3"
-descriptor = "CHANGELOG: 2.4 + 2.1 entries"
-justification = """
-The two changelog entries that anchor the most-asked timeline
-questions: TOML v1.1.0 in 2.4, and the
-`TOMLDecodeError.{msg,doc,pos,lineno,colno}` attrs +
-free-form-arguments deprecation in 2.1.
-"""
+descriptor = "_re.py regex definitions (RE_NUMBER/RE_LOCALTIME/RE_DATETIME)"
+justification = "The exact lexical grammar (as verbose regexes) for numbers, local times, and datetimes/offsets. Ground truth for 'why doesn't this number/date string parse' questions, cheaper to read than reverse-engineering from parse_value's call sites."
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "CHANGELOG.md", start = 3, end = 8, render = { kind = "full" } },
-  { path = "CHANGELOG.md", start = 26, end = 32, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/tomli/_re.py"
+start = 1
+end = 56
+render = { kind = "full" }
 
 [[batches]]
 id = "5.4"
-descriptor = "benchmark/, fuzzer/, profiler/, scripts/, .github/ listings"
-justification = """
-FS listings for the auxiliary tool dirs and the GitHub workflows
-dir. Tells the agent exactly what files exist (one bench script, one
-fuzzer, one profiler, three scripts, one workflow) — catastrophic-
-omission hedge for the periphery.
-"""
+descriptor = "parse_value() type dispatch"
+justification = "The central 'what TOML value is this' dispatch: strings, booleans, arrays, inline tables, datetimes/localtimes (regex-based), numbers, and special floats (inf/nan), in the order chosen for dispatch speed. High-value for 'how are TOML types recognized/how would I add a new value kind' questions."
+predecessor = "2.4"
 [batches.content]
-kind = "fs"
-groups = [
-  { parent = "benchmark", entries = "all" },
-  { parent = "fuzzer", entries = "all" },
-  { parent = "profiler", entries = "all" },
-  { parent = "scripts", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 684
+end = 757
+render = { kind = "full" }
 
 [[batches]]
 id = "5.5"
-descriptor = "pyproject.toml [project] block"
-justification = """
-The `[project]` section: name, version 2.4.0, MIT license,
-requires-python>=3.8, classifiers (CPython + PyPy + typed),
-homepage / changelog URLs. Tells the agent what Pythons / OSes
-are supported and where to find upstream.
-"""
+descriptor = "loads()/load() entry point + parse loop"
+justification = "The whole-document algorithm: read/decode, then a single while-loop reading one statement (key/value, [table], [[array-of-tables]], comment) per line. First place to look for 'how does parsing actually proceed' and for CRLF/newline handling."
+predecessor = "1.11"
 [batches.content]
 kind = "lines"
-spans = [
-  { path = "pyproject.toml", start = 5, end = 31, render = { kind = "full" } },
-]
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 137
+end = 217
+render = { kind = "full" }
+
+[[batches]]
+id = "5.6"
+descriptor = "key_value_rule / parse_key_value_pair / parse_key (full bodies)"
+justification = "Dotted-key handling end to end: how 'a.b.c = 1' is split into parts, validated against already-declared namespaces (relative_path_cont_keys), and written into the nested dict. Needed for any dotted-key bug or feature question (see the 2.9 fixture). parse_key_part (the single-char-class helper parse_key calls into) is signature-located in 2.2; the ellipsis below marks where its body continues past this excerpt."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 413
+end = 478
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/tomli/_parser.py"
+start = 479
+end = 479
+render = { kind = "ellipsis" }

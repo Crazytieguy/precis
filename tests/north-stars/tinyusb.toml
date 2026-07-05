@@ -1,380 +1,344 @@
 fixture = "tinyusb"
 revision_pin = "7f146c9f"
 summary = """
-TinyUSB is an open-source cross-platform USB Host/Device stack for
-embedded MCUs. It is written in C99, has no dynamic allocation, and
-defers all USB ISR work to task context for thread safety. It
-supports 50+ MCU families through MCU-specific DCD/HCD drivers under
-`src/portable/`, an OS abstraction layer in `src/osal/`, and a
-multi-class architecture under `src/class/` (CDC, HID, MSC, Audio,
-MIDI, Video, MTP, DFU, Net (ECM/NCM/RNDIS), Printer, BTH, USBTMC,
-Vendor, plus host-only `serial/` drivers for FTDI/CP210x/CH34x/
-PL2303). The aggregator header `src/tusb.h` selects which class +
-role headers are compiled based on `CFG_TUD_*` / `CFG_TUH_*` macros
-from the user's `tusb_config.h`.
-
-The repository is large (~150 KLOC, ~13 device classes + 5 host
-classes, ~22 vendor directories under `src/portable/`, ~30+ example
-apps, dozens of supported boards in `hw/bsp/`). It is also a
-documentation-rich crate: `docs/reference/architecture.rst` covers
-the layered design, `docs/integration.rst` shows a minimal init flow,
-`docs/porting.rst` is the porting recipe, and the top-level README is
-the entry point for board/MCU support tables.
-
-Plausible agent queries span the full distribution:
-
-* "How do I use the CDC device API?" — needs the `tud_cdc_*` API
-  surface in `src/class/cdc/cdc_device.h` plus the example main.c.
-* "Add support for a new class driver." — needs the `usbd_class_driver_t`
-  vtable in `src/device/usbd_pvt.h` + the static driver array in
-  `src/device/usbd.c` + `usbd_app_driver_get_cb` extension hook.
-* "Port to a new MCU." — needs `src/portable/template/`, the porting
-  doc, the DCD/HCD interfaces in `src/device/dcd.h` + `src/host/hcd.h`,
-  and `src/tusb_option.h` MCU enum.
-* "What does `tusb_init` actually do?" — needs `src/tusb.c` body +
-  `tud_rhport_init` / `tuh_rhport_init` in their `.c` files.
-* "Where is USB descriptor type X defined?" — needs `src/common/tusb_types.h`
-  enums + descriptor struct catalog.
-* "Configure CDC FIFO sizes." — needs `CFG_TUD_CDC_*` defaults in
-  `cdc_device.h` and the example `tusb_config.h`.
-* "Why is my device not enumerating?" — needs `tud_task` event loop
-  in `usbd.c`, `dcd_event_t` definition in `dcd.h`, the deferred-ISR
-  architecture explanation.
-
-The ranking prioritises (1) breadth — locations of every public API
-symbol (`tud_*`/`tuh_*`/`hcd_*`/`dcd_*`), every class subdir, every
-portable vendor dir, every example; (2) the high-signal snippets
-that anchor concepts (descriptor structs, class-driver vtable,
-init/task control flow, OSAL contract).
+TinyUSB is a C99, no-malloc, thread-safe USB Host/Device/TypeC(PD) protocol
+stack for 50+ embedded MCU families (src/ is the portable core; hw/bsp+hw/mcu
+are board/chip glue; examples/ are the primary "how do I use this" reference;
+test/ is Ceedling unit tests + libFuzzer harnesses + a HIL rig). AGENTS.md and
+its CLAUDE.md symlink already give the coding agent the full build/flash/test/
+release runbook, so this North Star deliberately buys the complement: (a)
+exhaustive breadth over the huge fan-out (13 device/host classes, ~30 portable
+driver backends, ~79 BSP board families, ~40 examples, 4 test surfaces) so an
+agent never mistakes "not shown" for "does not exist", and (b) exact,
+line-addressed shapes for the handful of files that matter regardless of task:
+the tusb.h class-enable switchboard, the usbd/usbh application APIs and their
+dcd/hcd driver contracts, tusb_option.h's CFG_TUD_*/CFG_TUH_* config surface,
+one fully-worked example (cdc_msc) end to end, and the architecture doc that
+explains ISR-deferral + class-driver dispatch (topics AGENTS.md never covers).
+Expected query distribution: "how do I enable/configure class X", "where is
+the dcd/hcd entry point for board Y", "why does tud_task() not see my data",
+"add a new example/class/port", "what does this callback do", "how is this
+tested", spanning explanation, debugging, feature-add, and porting tasks.
 """
 
-# ---------------------------------------------------------------
-# Tier 1 — Orientation: what is this repo, where do things live?
-# ---------------------------------------------------------------
+# ============================================================
+# Tier 1 — orientation: title, features, and root/top breadth
+# ============================================================
 
 [[batches]]
 id = "1.1"
 descriptor = "README title"
-justification = """
-The crate name. Cheapest possible orientation atom; at any budget
-the agent should at least learn what repo this is.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 1, end = 2, render = { kind = "full" } },
-]}
+justification = "Smallest possible first batch: bare project name, before any structural cost."
+content.kind = "lines"
+content.spans = [
+  { path = "README.rst", start = 1, end = 2, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "src/ subdirectory listing"
-justification = """
-First level under `src/`: class, common, device, host, osal, portable,
-typec + tusb.c, tusb.h, tusb_option.h, tinyusb.mk, CMakeLists.txt.
-Tells the agent which top-level concerns exist as code without any
-prose. Catastrophic-omission hedge — listing only some of these would
-imply (incorrectly) that e.g. typec doesn't exist.
-"""
-content = { kind = "fs", groups = [{ parent = "src", entries = "all" }] }
+descriptor = "README overview paragraph"
+justification = "One-paragraph pitch (embedded USB Host/Device stack, memory/thread safety, 50+ MCU families) — the framing every later batch assumes."
+content.kind = "lines"
+content.spans = [
+  { path = "README.rst", start = 20, end = 21, render.kind = "full" },
+  { path = "README.rst", start = 31, end = 33, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "README headline overview"
-justification = """
-One paragraph that captures TinyUSB's design objectives: open-source
-cross-platform USB Host/Device stack for embedded systems, memory-
-safe (no dynamic allocation), thread-safe (ISR deferred to non-ISR
-task functions), portable to 50+ MCU families, small footprint,
-real-time. Zero-follow-up answer for "what is this for?" / "design
-goals?" — densest pure-prose orientation snippet in the repo.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 31, end = 33, render = { kind = "full" } },
-]}
+descriptor = "README key features bullets"
+justification = "Compact semantic anchor (thread-safe/memory-safe/portable/class coverage)."
+content.kind = "lines"
+content.spans = [
+  { path = "README.rst", start = 35, end = 42, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "README repo-layout tree (top of tree)"
-justification = """
-First half of the ASCII tree at the top of the README naming docs/,
-examples/, hw/{bsp,mcu}/, lib/ with one-line annotations. Highest-
-leverage location pointer in the whole repo; split into 1.4 + 1.5
-to honor the growth envelope.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 55, end = 61, render = { kind = "full" } },
-]}
+descriptor = "Root directory listing"
+justification = "Full top-level fs listing: every real top-level entry (dotfiles, docs, config, source trees) so nothing is silently assumed absent."
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "Class subdirectory listing under src/class/"
-justification = """
-Every supported USB class directory: audio, bth, cdc, dfu, hid,
-midi, msc, mtp, net, printer, usbtmc, vendor, video. Catastrophic-
-omission hedge — agent can otherwise reasonably assume an unlisted
-class (printer, mtp, usbtmc, video) is unsupported. Each entry is
-the answer to "is class X supported?" and a precise grep location.
-"""
-content = { kind = "fs", groups = [{ parent = "src/class", entries = "all" }] }
+descriptor = "src/ top-level listing"
+justification = "Names every subsystem directory (class/, common/, device/, host/, osal/, portable/, typec/) plus the 5 top-level source/header files, before any of them get detail."
+content.kind = "fs"
+content.groups = [
+  { parent = "src", entries = "all" },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "README repo-layout tree (rest)"
-justification = """
-Second half of the ASCII tree: src/ (TinyUSB stack itself), test/
-(unit/fuzz/hil), tools/. Together with batch 1.4 covers the layout
-without exceeding the early-rank growth budget.
-"""
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 62, end = 64, render = { kind = "full" } },
-]}
+descriptor = "examples/ top-level listing"
+justification = "device/host/dual/typec/build_system plus the example-suite CMake entry points, all at once so no example category looks unlisted."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples", entries = "all" },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "tusb.h — tusb_rhport_init / tusb_init macro / tusb_inited / tusb_int_handler / tusb_deinit"
-justification = """
-The five canonical public entry points. `tusb_rhport_init` opens a
-roothub port with a role; `tusb_init(...)` is the variadic-macro
-backward-compat shim; `tusb_int_handler` is what the user's ISR
-calls; `tusb_inited` / `tusb_deinit` round out lifecycle. One window
-onto the entire init/task/teardown contract.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/tusb.h", start = 146, end = 147, render = { kind = "full" } },
-  { path = "src/tusb.h", start = 161, end = 161, render = { kind = "full" } },
-  { path = "src/tusb.h", start = 163, end = 170, render = { kind = "full" } },
-]}
+descriptor = "test/ and hw/ top-level listings"
+justification = "Cheap two-parent breadth batch: test's 3 surfaces (fuzz/hil/unit-test) and hw's 2 (bsp/mcu)."
+content.kind = "fs"
+content.groups = [
+  { parent = "test", entries = "all" },
+  { parent = "hw", entries = "all" },
+]
 
 [[batches]]
 id = "1.8"
-descriptor = "Top-level fixture listing"
-justification = """
-Every file at repo root: README.rst, LICENSE, CONTRIBUTORS.rst,
-CODE_OF_CONDUCT.rst, library.json (PlatformIO), pkg.yml (Mynewt),
-repository.yml (Newt), version.yml, SConscript,
-sonar-project.properties, src/, docs/, examples/, hw/, lib/, test/,
-tools/, AGENTS.md, CLAUDE.md. Discoverability for non-obvious
-top-level files (multiple package metadata for different
-ecosystems).
-"""
-content = { kind = "fs", groups = [{ parent = ".", entries = "all" }] }
+descriptor = "docs/, tools/, lib/ top-level listings"
+justification = "Remaining top-level source-adjacent trees named in one cheap sweep, so a 'where are the docs/tools/vendored libs' query has a direct pointer."
+content.kind = "fs"
+content.groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "tools", entries = "all" },
+  { parent = "lib", entries = "all" },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "Portable vendor subdirectory listing"
-justification = """
-Every vendor directory under `src/portable/` — analog, bridgetek,
-chipidea, dialog, ehci, mentor, microchip, mindmotion, nordic,
-nuvoton, nxp, ohci, raspberrypi, renesas, sony, st, sunxi, synopsys,
-template, ti, valentyusb, wch. Together with the README CPU-support
-table (later), this is the catastrophic-omission hedge for "is this
-silicon supported?" and the precise location for any port-level
-follow-up.
-"""
-content = { kind = "fs", groups = [{ parent = "src/portable", entries = "all" }] }
+descriptor = "README project layout tree"
+justification = "Author's own one-paragraph map of docs/examples/hw/lib/src/test/tools — cross-checks the fs listings above with intent ('hw/mcu = low level mcu core & peripheral drivers', etc)."
+content.kind = "lines"
+content.spans = [
+  { path = "README.rst", start = 55, end = 64, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.10"
-descriptor = "README — device class support list (part 1)"
-justification = """
-First half of the device-class enumeration: Audio (UAC1/2), BTH HCI,
-CDC, DFU (mode + runtime), HID. Pairs with batch 1.5 — the bare
-class-dir listing plus one-line characterisations cover "what
-classes exist and what each does" as a zero-follow-up case.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 80, end = 89, render = { kind = "full" } },
-]}
+descriptor = "README Device Stack intro + first 7 classes"
+justification = "Device-side is the larger, more commonly-used half of the stack; first half of the 13-class list (Audio, BTH, CDC, DFU, HID, Printer, MSC) plus the framing sentence."
+content.kind = "lines"
+content.spans = [
+  { path = "README.rst", start = 80, end = 91, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.11"
-descriptor = "README — device class support list (part 2)"
-justification = """
-Second half of the device-class enumeration: Printer, MSC (multiple
-LUNs), MIDI, MTP, Net (RNDIS/ECM/NCM), USBTMC, Video 1.5 (WIP),
-Vendor + WebUSB + `usbd_app_driver_get_cb()` extension hint.
-"""
-predecessor = "1.10"
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 90, end = 100, render = { kind = "full" } },
-]}
+descriptor = "README Device Stack remaining classes + escape hatch"
+justification = "Second half of the device class list (MIDI, MTP, Network, USBTMC, Video, Vendor, WebUSB) plus the usbd_app_driver_get_cb() extension point — completing the class-closure started in 1.10."
+content.kind = "lines"
+content.spans = [
+  { path = "README.rst", start = 92, end = 100, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.12"
-descriptor = "README — host stack capabilities"
-justification = """
-Host-stack capabilities: CDC-ACM, vendor serial via FTDI/CP210x/
-CH34x/PL2303, HID (Keyboard/Mouse/Generic), MSC, MIDI, multi-level
-Hub. Without this, an agent might believe host-mode is symmetric
-with device-mode and have wrong expectations about supported
-classes.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 102, end = 112, render = { kind = "full" } },
-]}
+descriptor = "README Host Stack class list"
+justification = "Host-side class coverage is much narrower than device (CDC-ACM, vendor-serial chips, HID, MSC, MIDI, hub) — a common 'is host mode supported for X' question."
+content.kind = "lines"
+content.spans = [
+  { path = "README.rst", start = 102, end = 112, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.13"
-descriptor = "README — Power Delivery + OS abstraction lists"
-justification = """
-PD3.0 status (STM32 G4 only, WIP) and supported OSes
-(NoOS/FreeRTOS/RT-Thread/Mynewt). Cheap, very high recall on
-"is X supported?" for both axes.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 114, end = 129, render = { kind = "full" } },
-]}
+descriptor = "README Power Delivery + OSAL support lists"
+justification = "The WIP Type-C PD stack's scope caveat (STM32 G4 only) and the supported RTOS/OSAL list (No OS/FreeRTOS/RT-Thread/Mynewt) — rounds out 'what's supported' from 1.10-1.12. (The OS-abstraction intro paragraph, line 124, is skipped as redundant with 1.3's Thread-safe bullet and 9.1's Threading Model section pointer.)"
+content.kind = "lines"
+content.spans = [
+  { path = "README.rst", start = 114, end = 123, render.kind = "full" },
+  { path = "README.rst", start = 126, end = 129, render.kind = "full" },
+]
 
-# ---------------------------------------------------------------
-# Tier 2 — Public device API: every tud_* signature an integrator
-# needs (names-and-locations breadth + the key callback contracts).
-# ---------------------------------------------------------------
+# ============================================================
+# Tier 2 — second-level directory breadth (classes, ports,
+# examples, tests, docs, CI) before any file content
+# ============================================================
 
 [[batches]]
 id = "2.1"
-descriptor = "device/ and host/ subdirectory listings"
-justification = """
-Catastrophic-omission hedge for the two role subtrees: dcd.h,
-usbd.c, usbd.h, usbd_pvt.h under `src/device/`; hcd.h, hub.c, hub.h,
-usbh.c, usbh.h, usbh_pvt.h under `src/host/`. Tells the agent both
-roles have a public header + private header + main implementation +
-controller-driver interface.
-"""
-content = { kind = "fs", groups = [
-  { parent = "src/device", entries = "all" },
-  { parent = "src/host", entries = "all" },
-]}
+descriptor = "src/class/ listing"
+justification = "All 13 USB class driver directories in one sweep (audio, bth, cdc, dfu, hid, midi, msc, mtp, net, printer, usbtmc, vendor, video) — matches the README class lists (1.10/1.11) to concrete source locations."
+content.kind = "fs"
+content.groups = [
+  { parent = "src/class", entries = "all" },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "usbd.h — tud_ lifecycle / status / control API names"
-justification = """
-Names-surface for the device-stack lifecycle and status query API:
-`tud_configure`, `tud_rhport_init`, `tud_init` (deprecated inline),
-`tud_deinit`, `tud_inited`, `tud_task_ext`, `tud_task`,
-`tud_task_event_ready`, `tud_speed_get`, `tud_connected`,
-`tud_mounted`, `tud_suspended`, `tud_ready`, `tud_remote_wakeup`,
-`tud_disconnect`, `tud_connect`, `tud_sof_cb_enable`,
-`tud_control_xfer`, `tud_control_status`. Truncated at the open
-paren so the agent learns _what exists_ at very low cost; full
-bodies/comments can be read on demand.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/device/usbd.h", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 91, end = 91, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 110, end = 110, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 120, end = 120, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 124, end = 124, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 147, end = 147, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 150, end = 150, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
+descriptor = "src/portable/ listing"
+justification = "All ~22 vendor driver-backend directories (dcd/hcd implementations) — direct 'is there already a port for vendor X' answer, and the set every hw/bsp/FAMILY build links against."
+content.kind = "fs"
+content.groups = [
+  { parent = "src/portable", entries = "all" },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "usbd.h — tud_ descriptor + lifecycle callback names"
-justification = """
-The application-implemented callbacks. Five descriptor callbacks
-(`tud_descriptor_device_cb`, `tud_descriptor_configuration_cb`,
-`tud_descriptor_string_cb`, `tud_descriptor_bos_cb`,
-`tud_descriptor_device_qualifier_cb`,
-`tud_descriptor_other_speed_configuration_cb`) plus lifecycle
-hooks (`tud_mount_cb`, `tud_umount_cb`, `tud_suspend_cb`,
-`tud_resume_cb`, `tud_event_hook_cb`, `tud_sof_cb`,
-`tud_vendor_control_xfer_cb`). Catastrophic-omission risk: an
-integrator missing e.g. `tud_descriptor_bos_cb` could write WebUSB
-support without it. Truncated-at-paren keeps cost low.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/device/usbd.h", start = 158, end = 158, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 162, end = 162, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 166, end = 166, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 176, end = 176, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 181, end = 181, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 184, end = 184, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 187, end = 187, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 191, end = 191, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 194, end = 194, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 197, end = 197, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 200, end = 200, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/usbd.h", start = 203, end = 203, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
+descriptor = "src/osal/ + hw/mcu/ listings"
+justification = "OS abstraction backends (one header per supported RTOS, matching 1.13's OSAL list to files) and the small set of hw/mcu/ vendor dirs actually vendored in-tree (most MCU SDKs are fetched by tools/get_deps.py instead)."
+content.kind = "fs"
+content.groups = [
+  { parent = "src/osal", entries = "all" },
+  { parent = "hw/mcu", entries = "all" },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "usbd.h — task & control-xfer signatures (with prose)"
-justification = """
-Full signatures + comments for `tud_task_ext`, `tud_task`,
-`tud_task_event_ready`, `tud_control_xfer`, `tud_control_status`.
-These are the cooperative-scheduler contract and the only way to
-respond to a custom (vendor) setup request from application code —
-densest single explanation of how the device stack runs.
-"""
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/device/usbd.h", start = 88, end = 97, render = { kind = "full" } },
-  { path = "src/device/usbd.h", start = 99, end = 100, render = { kind = "full" } },
-  { path = "src/device/usbd.h", start = 144, end = 150, render = { kind = "full" } },
-]}
+descriptor = "examples/device/ listing"
+justification = "All 34 entries (32 device example dirs + CMakeLists.txt/CMakePresets.json + the udev rules file) — the largest single example category, so partial listing here would be the worst catastrophic-omission risk in the repo."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/device", entries = "all" },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "usbh.h — tuh_ lifecycle / status API names"
-justification = """
-Names-surface for host-stack lifecycle and per-device status:
-`tuh_configure`, `tuh_rhport_init`, `tuh_init` (deprecated inline),
-`tuh_deinit`, `tuh_inited`, `tuh_task_ext`, `tuh_task`,
-`tuh_task_event_ready`, `tuh_rhport_is_active`,
-`tuh_rhport_reset_bus`, `tuh_vid_pid_get`,
-`tuh_descriptor_get_device_local`, `tuh_speed_get`, `tuh_mounted`,
-`tuh_connected`, `tuh_suspended`, `tuh_ready`, `tuh_bus_info_get`.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/host/usbh.h", start = 155, end = 155, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 159, end = 159, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 175, end = 175, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 179, end = 179, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 184, end = 184, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 187, end = 187, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 192, end = 192, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 207, end = 207, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 210, end = 210, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 220, end = 220, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 223, end = 223, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 226, end = 226, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 230, end = 230, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 233, end = 233, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 240, end = 240, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 245, end = 245, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
+descriptor = "examples/host/ listing"
+justification = "All 8 host-role example dirs plus their build entry points — much smaller than device/ (matches README 1.12's narrower host class list)."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/host", entries = "all" },
+]
 
 [[batches]]
 id = "2.6"
-descriptor = "usbh.h — tuh_ transfer + descriptor-get API names"
-justification = """
-Names-only for the transfer API (`tuh_control_xfer`, `tuh_edpt_xfer`,
-`tuh_edpt_open`, `tuh_edpt_close`, `tuh_edpt_abort_xfer`,
-`tuh_address_set`, `tuh_configuration_set`, `tuh_interface_set`)
-and the descriptor-get family (`tuh_descriptor_get`,
-`tuh_descriptor_get_{device,configuration,hid_report,string,
-manufacturer_string,product_string,serial_string}`). Plus the sync
-variants. Catastrophic-omission risk: developer doesn't realise
-both async (callback) and sync (blocking) forms exist.
-"""
-content = { kind = "lines", spans = [
+descriptor = "examples/dual/ + examples/typec/ listings"
+justification = "The two smallest example categories (simultaneous host+device role-switching, and the WIP Type-C PD demo) — completes the examples/* class-closure started in 2.4/2.5."
+content.kind = "fs"
+content.groups = [
+  { parent = "examples/dual", entries = "all" },
+  { parent = "examples/typec", entries = "all" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "test/ subtree listings (unit-test, fuzz, hil)"
+justification = "All three test surfaces' immediate contents in one batch: Ceedling project files, libFuzzer harness set (dcd/msc/net/usbd + device/{cdc,msc,net}), and the HIL rig's scripts/configs."
+content.kind = "fs"
+content.groups = [
+  { parent = "test/unit-test", entries = "all" },
+  { parent = "test/fuzz", entries = "all" },
+  { parent = "test/hil", entries = "all" },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "docs/reference/ listing"
+justification = "The 7 reference docs (architecture, boards, concurrency, dependencies, glossary, usb_concepts, index) — names every deep-dive doc up front so later batches pulling from specific ones don't look like the only docs that exist."
+content.kind = "fs"
+content.groups = [
+  { parent = "docs/reference", entries = "all" },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = ".github/workflows/ + .github/actions/ listings"
+justification = "All 13 CI workflows (build, static analysis, fuzzing, membrowse size-tracking, pre-commit, Claude review/triage) plus the 2 composite actions they share — CI surface is otherwise invisible from source alone."
+content.kind = "fs"
+content.groups = [
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/actions", entries = "all" },
+]
+
+# ============================================================
+# Tier 3 — central control-flow API: tusb.h switchboard,
+# tud_*/tuh_* application entry points
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "tusb.h TypeC/Host include switchboard"
+justification = "The master file every app includes, TypeC + host half: shows exactly which CFG_TUC_ENABLED/CFG_TUH_ENABLED and CFG_TUH_<CLASS> macros gate which class headers — the fastest way to answer 'how do I turn on host-side class X'."
+content.kind = "lines"
+content.spans = [
+  { path = "src/tusb.h", start = 34, end = 73, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "tusb.h Device include switchboard"
+justification = "Device half of the same switchboard: CFG_TUD_ENABLED + one CFG_TUD_<CLASS> per class header — completes 3.1's class-closure for the device side."
+content.kind = "lines"
+content.spans = [
+  { path = "src/tusb.h", start = 75, end = 133, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "tusb.h role-agnostic init API (tusb_init/tusb_task/tusb_deinit)"
+justification = "The single entry point apps call regardless of device/host role: tusb_init(rhport, rh_init), tusb_inited(), tusb_int_handler(), tusb_deinit() — this is what examples/*/src/main.c actually calls."
+content.kind = "lines"
+content.spans = [
+  { path = "src/tusb.h", start = 141, end = 178, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "usbd.h device application API (tud_configure..tud_control_status)"
+justification = "Every function an app calls to drive the device stack (init/task/connect/suspend/control-xfer); the doc comments above each spell out when/why to call it, cutting most 'how do I do device-side X' searches to zero follow-ups. (tud_init()'s deprecated inline wrapper body, lines 69-79, is elided — tud_rhport_init() above it is the current entry point.)"
+content.kind = "lines"
+content.spans = [
+  { path = "src/device/usbd.h", start = 55, end = 68, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 69, end = 69, render.kind = "ellipsis" },
+  { path = "src/device/usbd.h", start = 80, end = 151, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "usbd.h application callbacks (weak, app-implemented)"
+justification = "The tud_*_cb() descriptor-getter and lifecycle callbacks every device app must/may implement (device/config/string/BOS descriptor getters, mount/umount/suspend/resume) — the other half of the device app contract from 3.4. (The 3 rarer callbacks — device_qualifier/other_speed_configuration descriptor getters and event_hook/sof/vendor_control_xfer — are named-only, not full, to keep this batch cheap; their doc comments are one grep away.)"
+content.kind = "lines"
+content.spans = [
+  { path = "src/device/usbd.h", start = 156, end = 170, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 176, end = 176, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 181, end = 181, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 183, end = 194, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 197, end = 197, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 200, end = 200, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd.h", start = 203, end = 203, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "usbd.h descriptor-template section headings (locations only)"
+justification = "usbd.h's remaining ~600 lines (out of 1061) are TUD_*_DESCRIPTOR() macro templates, one section per class (BOS, Configuration, CDC, MSC, Printer, MTP, HID, MIDI, Audio, USBTMC, Vendor, DFU Runtime, DFU, CDC-ECM, RNDIS, BTH, CDC-NCM) — heading-only locations so no template class looks unlisted without paying for all ~600 macro-heavy lines."
+content.kind = "lines"
+content.spans = [
+  { path = "src/device/usbd.h", start = 206, end = 206, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 244, end = 244, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 254, end = 254, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 285, end = 285, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 301, end = 301, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 315, end = 315, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 334, end = 334, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 366, end = 366, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 428, end = 428, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 777, end = 777, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 810, end = 810, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 825, end = 825, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 843, end = 843, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 892, end = 892, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 923, end = 923, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 966, end = 966, render.kind = "full" },
+  { path = "src/device/usbd.h", start = 1023, end = 1023, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "usbh.h host application API (init/task/mount checks)"
+justification = "Host-side mirror of 3.3/3.4: tuh_configure/tuh_rhport_init/tuh_task/tuh_mounted/tuh_ready — what a host-role main loop calls. (tuh_init()'s deprecated inline wrapper body, lines 161-171, is elided — tuh_rhport_init() above it is the current entry point.)"
+content.kind = "lines"
+content.spans = [
+  { path = "src/host/usbh.h", start = 150, end = 160, render.kind = "full" },
+  { path = "src/host/usbh.h", start = 161, end = 161, render.kind = "ellipsis" },
+  { path = "src/host/usbh.h", start = 172, end = 242, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "usbh.h remaining tuh_* API (locations only)"
+justification = "Name-only catalog of every other public tuh_* entry point in the file (device-info getters, transfer submission, descriptor-get async/sync variants) — cheap breadth so the app-facing host API surface isn't silently truncated at 3.7's excerpt."
+content.kind = "lines"
+content.spans = [
+  { path = "src/host/usbh.h", start = 245, end = 245, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/usbh.h", start = 264, end = 264, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/usbh.h", start = 269, end = 269, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/usbh.h", start = 272, end = 272, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -392,423 +356,44 @@ content = { kind = "lines", spans = [
   { path = "src/host/usbh.h", start = 337, end = 337, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/usbh.h", start = 342, end = 342, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/usbh.h", start = 347, end = 347, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/host/usbh.h", start = 357, end = 357, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
+  { path = "src/host/usbh.h", start = 357, end = 357, render.kind = "ellipsis" },
+]
 
 [[batches]]
-id = "2.7"
-descriptor = "usbh.h — tuh_xfer_s struct + application callbacks"
-justification = """
-The struct that ties together async transfer requests
-(`daddr`/`ep_addr`/`actual_len`/setup/buffer/complete_cb/user_data)
-plus the four application callbacks
-(`tuh_enum_descriptor_device_cb`, `tuh_enum_descriptor_configuration_cb`,
-`tuh_mount_cb`, `tuh_umount_cb`, `tuh_event_hook_cb`). The
-zero-follow-up answer for "how do I write an async USB host
-transfer?".
-"""
-predecessor = "2.5"
-content = { kind = "lines", spans = [
-  { path = "src/host/usbh.h", start = 47, end = 73, render = { kind = "full" } },
-  { path = "src/host/usbh.h", start = 122, end = 145, render = { kind = "full" } },
-]}
+id = "3.9"
+descriptor = "usbh.h application callbacks (locations only)"
+justification = "Name-only catalog of the tuh_*_cb() callbacks a host app implements (enum descriptor cbs, mount/umount, event hook) — mirrors 3.5 for the host side."
+content.kind = "lines"
+content.spans = [
+  { path = "src/host/usbh.h", start = 128, end = 128, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 136, end = 136, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/usbh.h", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
-# ---------------------------------------------------------------
-# Tier 3 — Class APIs: device-side (tud_*) + host-side (tuh_*).
-# Names-and-locations breadth for the user-facing class headers.
-# ---------------------------------------------------------------
-
-[[batches]]
-id = "3.1"
-descriptor = "CDC device — public file listing under src/class/cdc/"
-justification = """
-The CDC subdir: cdc_device.h/c, cdc_host.h/c, cdc.h (protocol
-constants shared by both), cdc_rndis.h, serial/ (host-side vendor
-drivers). Catastrophic-omission hedge: CDC is the canonical example
-class, and the agent needs to know which file holds what
-(serial/ vs cdc_host.c).
-"""
-content = { kind = "fs", groups = [
-  { parent = "src/class/cdc", entries = "all" },
-  { parent = "src/class/cdc/serial", entries = "all" },
-]}
-
-[[batches]]
-id = "3.2"
-descriptor = "cdc_device.h — tud_cdc_n_* multi-port API names"
-justification = """
-Names-only for the multi-port CDC device API (`CFG_TUD_CDC > 1`):
-`tud_cdc_n_ready`, `tud_cdc_n_connected`, `tud_cdc_n_get_line_state`,
-`tud_cdc_n_get_line_coding`, `tud_cdc_n_set_wanted_char`,
-`tud_cdc_n_available`, `tud_cdc_n_read`, `tud_cdc_n_read_flush`,
-`tud_cdc_n_peek`, `tud_cdc_n_write`, `tud_cdc_n_write_flush`,
-`tud_cdc_n_write_available`, `tud_cdc_n_write_clear`. The single-
-port `tud_cdc_*` variants are inline wrappers of these, so this
-batch is the canonical surface.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/class/cdc/cdc_device.h", start = 105, end = 105, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 120, end = 120, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 123, end = 123, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 132, end = 132, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 274, end = 274, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 277, end = 277, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 280, end = 280, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 283, end = 283, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 286, end = 286, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 289, end = 289, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_device.h", start = 295, end = 295, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
-
-[[batches]]
-id = "3.3"
-descriptor = "cdc_host.h — tuh_cdc_* API names"
-justification = """
-Host-side CDC API: `tuh_cdc_itf_get_{index,info}`, `tuh_cdc_mounted`,
-`tuh_cdc_get_control_line_state_local`, `tuh_cdc_get_{dtr,rts}`,
-`tuh_cdc_get_line_coding_local`, `tuh_cdc_write` family,
-`tuh_cdc_read` family, `tuh_cdc_set_{control_line_state,baudrate,
-data_format,line_coding}`, `tuh_cdc_{connect,disconnect}`, the
-sync variants, and the application callbacks
-(`tuh_cdc_{mount,umount,rx,tx_complete}_cb`).
-"""
-content = { kind = "lines", spans = [
-  { path = "src/class/cdc/cdc_host.h", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 103, end = 103, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 115, end = 115, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 128, end = 128, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 137, end = 137, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 168, end = 168, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 171, end = 171, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 176, end = 176, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 242, end = 242, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 245, end = 245, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 248, end = 248, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/cdc/cdc_host.h", start = 251, end = 251, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
-
-[[batches]]
-id = "3.4"
-descriptor = "hid_device.h — tud_hid_n_* + callback names"
-justification = """
-Multi-instance HID device API + callbacks. Includes the convenience
-helpers for keyboard / mouse / absolute-mouse / gamepad / stylus
-reports — these are the only place in the codebase that documents
-which prebuilt report shapes are supported. Plus the five GET/SET
-report and PROTOCOL/IDLE callbacks.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/class/hid/hid_device.h", start = 55, end = 55, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 68, end = 68, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 72, end = 72, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 80, end = 80, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 130, end = 130, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 143, end = 143, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 148, end = 148, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 153, end = 153, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_device.h", start = 156, end = 156, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
-
-[[batches]]
-id = "3.5"
-descriptor = "hid_host.h — tuh_hid_* + callback names"
-justification = """
-Host-side HID API. The interface-discovery
-(`tuh_hid_itf_get_*`/`interface_protocol`/`mounted`), report descriptor
-parser (`tuh_hid_parse_report_descriptor`), boot vs report protocol
-switching (`tuh_hid_set_{default_,}protocol`/`get_protocol`),
-GET/SET report, send/receive report + 6 application callbacks. The
-zero-follow-up surface for "wire up a USB keyboard / mouse on host".
-"""
-content = { kind = "lines", spans = [
-  { path = "src/class/hid/hid_host.h", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 69, end = 69, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 82, end = 82, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 85, end = 85, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 103, end = 103, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 107, end = 107, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 116, end = 116, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 124, end = 124, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 129, end = 129, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 132, end = 132, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 140, end = 140, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 158, end = 158, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/hid/hid_host.h", start = 174, end = 174, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
-
-[[batches]]
-id = "3.6"
-descriptor = "msc_device.h + msc_host.h — MSC API names"
-justification = """
-MSC device: `tud_msc_set_sense`, `tud_msc_async_io_done`,
-`tud_msc_{read10,write10,inquiry,inquiry2,test_unit_ready,
-capacity,scsi,get_maxlun,start_stop,prevent_allow_medium_removal,
-request_sense,read10_complete,write10_complete,scsi_complete,
-is_writable}_cb`. MSC host: `tuh_msc_{mounted,ready,get_maxlun,
-get_block_count,get_block_size,scsi_command,inquiry,test_unit_ready,
-request_sense,read10,write10,read_capacity}` + 2 callbacks. The
-single best place to learn "how do I expose a USB drive?" or
-"how do I read a thumb drive on the host?".
-"""
-content = { kind = "lines", spans = [
-  { path = "src/class/msc/msc_device.h", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 91, end = 91, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 104, end = 104, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 126, end = 126, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 136, end = 136, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 148, end = 148, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_device.h", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 68, end = 68, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 88, end = 88, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 105, end = 105, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/msc/msc_host.h", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
-
-[[batches]]
-id = "3.7"
-descriptor = "midi_device.h — tud_midi_* API names"
-justification = """
-MIDI device API: `tud_midi_rx_cb`, multi-port `tud_midi_n_mounted`,
-stream / packet read/write APIs (`tud_midi_n_{stream,packet}_{read,
-write}{_n}`), demux variant. Plus single-port wrappers. Cheap and
-ensures the agent doesn't miss that MIDI has both stream-oriented
-and raw 4-byte packet APIs.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/class/midi/midi_device.h", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 68, end = 68, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/class/midi/midi_device.h", start = 96, end = 96, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
-
-[[batches]]
-id = "3.8"
-descriptor = "Class catalog — secondary class header file paths"
-justification = """
-Filesystem catalog of the remaining class subdirs: audio (with
-audio.h + audio_device.h), dfu (dfu.h + dfu_device.h + dfu_rt_device.h),
-mtp, net, printer, usbtmc, vendor, video, bth. Catastrophic-omission
-hedge — without this, an agent might assume e.g. DFU has only one
-mode header or that net doesn't separate ecm_rndis_device.c from
-ncm_device.c.
-"""
-content = { kind = "fs", groups = [
-  { parent = "src/class/audio", entries = "all" },
-  { parent = "src/class/bth", entries = "all" },
-  { parent = "src/class/dfu", entries = "all" },
-  { parent = "src/class/midi", entries = "all" },
-  { parent = "src/class/mtp", entries = "all" },
-  { parent = "src/class/net", entries = "all" },
-  { parent = "src/class/printer", entries = "all" },
-  { parent = "src/class/usbtmc", entries = "all" },
-  { parent = "src/class/vendor", entries = "all" },
-  { parent = "src/class/video", entries = "all" },
-  { parent = "src/class/hid", entries = "all" },
-  { parent = "src/class/msc", entries = "all" },
-]}
-
-# ---------------------------------------------------------------
-# Tier 4 — Architecture, USB types, DCD/HCD interfaces.
-# ---------------------------------------------------------------
+# ============================================================
+# Tier 4 — driver contracts every MCU port implements (dcd.h/hcd.h)
+# ============================================================
 
 [[batches]]
 id = "4.1"
-descriptor = "docs/ directory listing"
-justification = """
-Every file directly under docs/: conf.py, faq.rst, getting_started.rst,
-index.rst, integration.rst, porting.rst, troubleshooting.rst +
-reference/ (architecture, boards, concurrency, dependencies, glossary,
-usb_concepts) + info/ (changelog, contributors, code_of_conduct).
-"""
-content = { kind = "fs", groups = [
-  { parent = "docs", entries = "all" },
-  { parent = "docs/reference", entries = "all" },
-  { parent = "docs/info", entries = "all" },
-]}
+descriptor = "dcd_event_t + dcd_eventid_t (the ISR->task handoff shape)"
+justification = "The single struct every DCD port fills in and every ISR-deferral discussion (architecture.rst) refers to — smallest complete excerpt that explains the deferred-interrupt model concretely. The event-specific union arm shown (bus_reset) is representative; the other 3 arms (sof/xfer_complete/func_call) are elided."
+content.kind = "lines"
+content.spans = [
+  { path = "src/device/dcd.h", start = 42, end = 53, render.kind = "full" },
+  { path = "src/device/dcd.h", start = 55, end = 63, render.kind = "full" },
+  { path = "src/device/dcd.h", start = 64, end = 64, render.kind = "ellipsis" },
+  { path = "src/device/dcd.h", start = 85, end = 86, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "common/ + osal/ subdirectory listings"
-justification = """
-`src/common/`: tusb_common.h, tusb_compiler.h, tusb_debug.h,
-tusb_fifo.h/c, tusb_mcu.h, tusb_private.h, tusb_types.h,
-tusb_verify.h. `src/osal/`: osal.h dispatcher + 8 RTOS backends
-(freertos, mynewt, none, pico, rtthread, rtx4, threadx, zephyr).
-Catastrophic-omission hedge for "is OS X / utility Y supported?".
-"""
-content = { kind = "fs", groups = [
-  { parent = "src/common", entries = "all" },
-  { parent = "src/osal", entries = "all" },
-]}
-
-[[batches]]
-id = "4.3"
-descriptor = "tusb_types.h — role/speed/xfer/dir enums"
-justification = """
-The basic USB enums every caller hits: `tusb_role_t` (DEVICE/HOST),
-`tusb_speed_t` (FULL/LOW/HIGH), `tusb_xfer_type_t` (CONTROL/ISO/
-BULK/INTERRUPT), `tusb_dir_t` (IN/OUT) + the `TUSB_EPNUM_MASK` and
-`TUSB_DIR_IN_MASK` helpers. The most-grepped USB-spec constants in
-the codebase. 4.4 follows with descriptor-type and class-code enums.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/common/tusb_types.h", start = 79, end = 110, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "4.4"
-descriptor = "tusb_types.h — descriptor-type + class-code enums"
-justification = """
-Continues 4.3 with the full enums for descriptor types (Device 0x01,
-Configuration 0x02, String 0x03, Interface 0x04, Endpoint 0x05,
-Qualifier, BOS, IAD, CS_INTERFACE / CS_ENDPOINT, SS companions) and
-class codes (AUDIO=1, CDC=2, HID=3, MSC=8, HUB=9, CDC_DATA=10,
-VIDEO=14, WIRELESS_CONTROLLER, VENDOR_SPECIFIC, ...).
-"""
-content = { kind = "lines", spans = [
-  { path = "src/common/tusb_types.h", start = 136, end = 163, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 202, end = 226, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "4.5"
-descriptor = "integration.rst — minimal init C example"
-justification = """
-The canonical `tusb_rhport_init_t` init code: dual-port (device +
-host) init, main-loop calling `tud_task()`/`tuh_task()`, ISRs
-forwarding to `tusb_int_handler`. Single most cited code snippet
-for "how do I bootstrap TinyUSB?".
-"""
-content = { kind = "lines", spans = [
-  { path = "docs/integration.rst", start = 27, end = 65, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "4.6"
-descriptor = "tusb_types.h — descriptor structs (device/config/interface/endpoint/control_request)"
-justification = """
-The four core USB descriptor structs + control request struct,
-with comments truncated off each field line by `^[^;]+;` to keep
-the snippet at the level of field-names-and-types. Zero-follow-up
-"what fields are in descriptor X?" without paying for verbose Doxygen
-comments.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/common/tusb_types.h", start = 351, end = 352, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 353, end = 366, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 367, end = 367, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 381, end = 382, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 383, end = 385, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 387, end = 391, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 392, end = 392, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 396, end = 397, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 398, end = 399, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 401, end = 407, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 408, end = 408, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 412, end = 413, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 414, end = 415, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 417, end = 417, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 433, end = 433, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 435, end = 436, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 437, end = 437, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 539, end = 541, render = { kind = "full" } },
-  { path = "src/common/tusb_types.h", start = 543, end = 545, render = { kind = "truncated", pattern = "^[^;]+;" } },
-  { path = "src/common/tusb_types.h", start = 553, end = 562, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "4.7"
-descriptor = "dcd.h — dcd_eventid_t + dcd_event_t shape"
-justification = """
-The event enum every DCD driver feeds (BUS_RESET, UNPLUGGED, SOF,
-SUSPEND, RESUME, SETUP_RECEIVED, XFER_COMPLETE, FUNC_CALL) and the
-event union shape. The bridge between hardware ISRs and the
-deferred USBD task.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/device/dcd.h", start = 42, end = 53, render = { kind = "full" } },
-  { path = "src/device/dcd.h", start = 55, end = 59, render = { kind = "full" } },
-  { path = "src/device/dcd.h", start = 61, end = 63, render = { kind = "full" } },
-  { path = "src/device/dcd.h", start = 66, end = 68, render = { kind = "full" } },
-  { path = "src/device/dcd.h", start = 71, end = 71, render = { kind = "full" } },
-  { path = "src/device/dcd.h", start = 74, end = 78, render = { kind = "full" } },
-  { path = "src/device/dcd.h", start = 81, end = 86, render = { kind = "full" } },
-]}
-
-[[batches]]
-id = "4.8"
-descriptor = "dcd.h — DCD controller + endpoint function name surface"
-justification = """
-Every DCD-driver entry point a port must implement (24 functions).
-Truncated at the open-paren — names are the porting checklist;
-full signatures + comments are one read away.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/device/dcd.h", start = 96, end = 96, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/dcd.h", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/device/dcd.h", start = 104, end = 104, render = { kind = "truncated", pattern = "^[^(]+" } },
+descriptor = "dcd_*/hcd_* controller+endpoint API (locations only)"
+justification = "Name-only catalog of every function a new MCU port must/may implement, both device (dcd_configure..dcd_edpt_iso_activate) and host (hcd_configure..hcd_edpt_clear_stall) sides — this is exactly docs/porting.rst's 'now implement dcd.h/hcd.h' step, addressed in one cheap sweep. (The dcd_dcache_*/hcd_dcache_* DMA cache API is a separate, narrower Memory API and is out of scope here.)"
+content.kind = "lines"
+content.spans = [
   { path = "src/device/dcd.h", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -820,6 +405,7 @@ content = { kind = "lines", spans = [
   { path = "src/device/dcd.h", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 141, end = 141, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/dcd.h", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 153, end = 153, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 156, end = 156, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
@@ -827,102 +413,228 @@ content = { kind = "lines", spans = [
   { path = "src/device/dcd.h", start = 168, end = 168, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 171, end = 171, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 175, end = 175, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/dcd.h", start = 179, end = 179, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 185, end = 185, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/device/dcd.h", start = 188, end = 188, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
-
-[[batches]]
-id = "4.9"
-descriptor = "hcd.h — hcd_eventid_t + hcd_event_t + controller/port/edpt API names"
-justification = """
-Host-side mirror of 4.7+4.8 condensed. `hcd_eventid_t`
-(ATTACH/REMOVE/XFER_COMPLETE) + `hcd_event_t` union, plus every
-HCD entry point name (init/deinit/int_*/frame_number/port_*/edpt_*/
-setup_send/clear_stall/dcache_*) truncated at paren.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/host/hcd.h", start = 56, end = 90, render = { kind = "full" } },
-  { path = "src/host/hcd.h", start = 98, end = 98, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 113, end = 113, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 116, end = 116, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 119, end = 119, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 122, end = 122, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/hcd.h", start = 125, end = 125, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/hcd.h", start = 128, end = 128, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/hcd.h", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 148, end = 148, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 159, end = 159, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 162, end = 162, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/hcd.h", start = 169, end = 169, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 172, end = 172, render = { kind = "truncated", pattern = "^[^(]+" } },
   { path = "src/host/hcd.h", start = 175, end = 175, render = { kind = "truncated", pattern = "^[^(]+" } },
-]}
+]
 
 [[batches]]
-id = "4.10"
-descriptor = "usbd_pvt.h — usbd_class_driver_t vtable"
-justification = """
-The class-driver vtable (`init/deinit/reset/open/control_xfer_cb/
-xfer_cb/xfer_isr/sof`) + `usbd_app_driver_get_cb` injection hook.
-The canonical "add a class" entry point — required reading for any
-custom-driver task.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/device/usbd_pvt.h", start = 52, end = 67, render = { kind = "full" } },
-]}
+id = "4.3"
+descriptor = "dcd_event_xxx()/hcd_event_xxx() ISR-side helper signatures (locations only)"
+justification = "The inline helpers a DCD/HCD calls from its own ISR to hand events to the core (dcd_event_bus_reset, dcd_event_xfer_complete, hcd_event_device_attach, ...) — the other end of 4.1's struct."
+content.kind = "lines"
+content.spans = [
+  { path = "src/device/dcd.h", start = 197, end = 197, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/dcd.h", start = 200, end = 200, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/dcd.h", start = 208, end = 208, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/dcd.h", start = 217, end = 217, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/dcd.h", start = 231, end = 231, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/dcd.h", start = 241, end = 241, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/hcd.h", start = 182, end = 182, render.kind = "full" },
+  { path = "src/host/hcd.h", start = 186, end = 186, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/hcd.h", start = 198, end = 198, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/host/hcd.h", start = 210, end = 210, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
 
-# ---------------------------------------------------------------
-# Tier 5 — Discovery for examples, BSPs, tests, tools.
-# ---------------------------------------------------------------
+[[batches]]
+id = "4.4"
+descriptor = "usbd_pvt.h class-driver dispatch struct + usbd_edpt_* API (locations only)"
+justification = "The usbd_class_driver_t vtable (name/init/deinit/reset/open/control_xfer_cb/xfer_cb/xfer_isr/sof) that every class driver in src/class/*/*_device.c registers, plus the endpoint helper API those drivers call — the missing link between usbd.h (3.4) and the class headers (tier 6)."
+content.kind = "lines"
+content.spans = [
+  { path = "src/device/usbd_pvt.h", start = 52, end = 67, render.kind = "full" },
+  { path = "src/device/usbd_pvt.h", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 92, end = 92, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 96, end = 96, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 102, end = 102, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 105, end = 105, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/device/usbd_pvt.h", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+# ============================================================
+# Tier 5 — core vocabulary: descriptor/protocol enums + the
+# CFG_TUD_<CLASS>/CFG_TUH_<CLASS> config surface
+# ============================================================
 
 [[batches]]
 id = "5.1"
-descriptor = "examples/{device,host,dual} subdirectory listings"
-justification = """
-Every example directory: device (audio_*, board_test, cdc_*, dfu*,
-dynamic_configuration, hid_*, midi_*, msc_*, mtp, net_*, printer_*,
-uac2_*, usbtmc, video_*, webusb_serial), host (bare_api, cdc_msc_hid,
-device_info, hid_controller, midi_rx, msc_file_explorer), dual
-(dynamic_switch, host_hid_to_device_cdc, host_info_to_device_cdc).
-Catastrophic-omission hedge for "is there an example for X?".
-"""
-content = { kind = "fs", groups = [
-  { parent = "examples/device", entries = "all" },
-  { parent = "examples/host", entries = "all" },
-  { parent = "examples/dual", entries = "all" },
-]}
+descriptor = "tusb_types.h core enum/struct names (locations only)"
+justification = "One line per USB-protocol vocabulary type used everywhere (tusb_role_t, tusb_speed_t, tusb_xfer_type_t, tusb_desc_type_t, tusb_request_code_t, tusb_class_code_t, tusb_desc_device_t, tusb_desc_configuration_t, tusb_desc_endpoint_t, tusb_control_request_t) — the shared nouns every class/driver file assumes the reader already knows."
+content.kind = "lines"
+content.spans = [
+  { path = "src/common/tusb_types.h", start = 83, end = 83, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 92, end = 92, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 100, end = 100, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 163, end = 163, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 179, end = 179, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 226, end = 226, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 367, end = 367, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 392, end = 392, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 437, end = 437, render.kind = "full" },
+  { path = "src/common/tusb_types.h", start = 562, end = 562, render.kind = "full" },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "test/ + tools/ listings"
-justification = """
-`test/`: fuzz/ (dcd/usbd/msc/net fuzz harnesses), hil/ (hardware-in-
-the-loop scripts), unit-test/ (Ceedling). `tools/`: build.py,
-build_utils.py, codespell/, file2carray.py, gen_doc.py,
-gen_presets.py, get_deps.py, iar_gen.py, make_release.py,
-metrics_compare_base.py, metrics.py, mksunxi.py, pcapng_to_corpus.py,
-usb_drivers/. Discoverability for tests + build/release tooling.
-"""
-content = { kind = "fs", groups = [
-  { parent = "test", entries = "all" },
-  { parent = "test/fuzz", entries = "all" },
-  { parent = "test/hil", entries = "all" },
-  { parent = "test/unit-test", entries = "all" },
-  { parent = "tools", entries = "all" },
-]}
+descriptor = "tusb_option.h device class-enable macros (CFG_TUD_<CLASS>)"
+justification = "The exact 'flip this to 1' config knob for every device class, in one place — this is the concrete answer to 'how do I enable HID/MSC/CDC/...' that tusb.h's switchboard (3.2) only shows the #include side of."
+content.kind = "lines"
+content.spans = [
+  { path = "src/tusb_option.h", start = 614, end = 614, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 622, end = 622, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 626, end = 626, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 630, end = 630, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 634, end = 634, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 638, end = 638, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 642, end = 642, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 646, end = 646, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 650, end = 650, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 654, end = 654, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 658, end = 658, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 662, end = 662, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 670, end = 670, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 675, end = 675, render.kind = "full" },
+  { path = "src/tusb_option.h", start = 679, end = 679, render.kind = "full" },
+]
+
+# ============================================================
+# Tier 6 — per-class application API (cdc/hid/msc detailed;
+# remaining 10 classes as cheap pointers)
+# ============================================================
 
 [[batches]]
-id = "5.3"
-descriptor = "examples/device/cdc_msc/ — main + tusb_config + descriptors listing"
-justification = """
-The example new TinyUSB users are told to start with (per the
-README). Just the file listing under `src/` of cdc_msc — main.c,
-msc_disk.c, tusb_config.h, usb_descriptors.c — plus the example
-root listing (CMakeLists.txt, Makefile, prj.conf, skip.txt). Tells
-the agent exactly what files make up "a TinyUSB example".
-"""
-content = { kind = "fs", groups = [
-  { parent = "examples/device/cdc_msc", entries = "all" },
-  { parent = "examples/device/cdc_msc/src", entries = "all" },
-]}
+id = "6.1"
+descriptor = "cdc_device.h / hid_device.h / msc_device.h core entry points (locations only)"
+justification = "The 3 most-used device classes (README 1.10 recommends starting with cdc_msc): tud_cdc_n_read/write + tud_hid_n_report + tud_msc_*_cb signatures, name-only — a direct pointer into each header's app-facing API before diving into a specific one."
+content.kind = "lines"
+content.spans = [
+  { path = "src/class/cdc/cdc_device.h", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/cdc/cdc_device.h", start = 123, end = 123, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/cdc/cdc_device.h", start = 286, end = 286, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/hid/hid_device.h", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/hid/hid_device.h", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/hid/hid_device.h", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/msc/msc_device.h", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/msc/msc_device.h", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/msc/msc_device.h", start = 148, end = 148, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "Remaining 10 class headers' first entry point (locations only)"
+justification = "One-line-per-header pointer into every other class this stack ships (audio/bth/dfu/dfu-rt/midi device+host/mtp/net/printer/usbtmc/vendor device+host/video) — completes the class-closure from 6.1 so 'is class X's API anywhere' never needs a directory search."
+content.kind = "lines"
+content.spans = [
+  { path = "src/class/audio/audio_device.h", start = 177, end = 177, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/bth/bth_device.h", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/dfu/dfu_device.h", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/dfu/dfu_rt_device.h", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/midi/midi_device.h", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/midi/midi_host.h", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/mtp/mtp_device.h", start = 98, end = 98, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/net/net_device.h", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/printer/printer_device.h", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/usbtmc/usbtmc_device.h", start = 57, end = 57, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/vendor/vendor_device.h", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/vendor/vendor_host.h", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/class/video/video_device.h", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+# ============================================================
+# Tier 7 — worked example: cdc_msc (the README-recommended
+# first example) config + entry points
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "cdc_msc tusb_config.h class-enable block"
+justification = "The concrete config sample every new example/port copies: which classes are on (CDC+MSC), the CDC notify/buffer/endpoint-size knobs (elided after the first), and the MSC buffer size — cheaper, more concrete evidence of the config format than reading tusb_option.h's defaults (5.2) alone."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/device/cdc_msc/src/tusb_config.h", start = 89, end = 100, render.kind = "full" },
+  { path = "examples/device/cdc_msc/src/tusb_config.h", start = 103, end = 103, render.kind = "ellipsis" },
+  { path = "examples/device/cdc_msc/src/tusb_config.h", start = 112, end = 112, render.kind = "full" },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "cdc_msc main.c entry points (locations only)"
+justification = "Name-only shape of the canonical example's main.c: main(), device callbacks (tud_mount/umount/suspend/resume_cb), and cdc_task/led_blinking_task — the template a 'write me a new example' task starts from."
+content.kind = "lines"
+content.spans = [
+  { path = "examples/device/cdc_msc/src/main.c", start = 51, end = 51, render.kind = "full" },
+  { path = "examples/device/cdc_msc/src/main.c", start = 73, end = 73, render.kind = "full" },
+  { path = "examples/device/cdc_msc/src/main.c", start = 78, end = 78, render.kind = "full" },
+  { path = "examples/device/cdc_msc/src/main.c", start = 85, end = 85, render.kind = "full" },
+  { path = "examples/device/cdc_msc/src/main.c", start = 91, end = 91, render.kind = "full" },
+  { path = "examples/device/cdc_msc/src/main.c", start = 99, end = 99, render.kind = "full" },
+  { path = "examples/device/cdc_msc/src/main.c", start = 157, end = 157, render.kind = "full" },
+]
+
+# ============================================================
+# Tier 8 — board porting surface
+# ============================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "hw/bsp/board_api.h porting entry points (locations only)"
+justification = "Every hw/bsp/FAMILY/family.c must implement this small set (board_init, board_init_after_tusb, board_reset_to_bootloader, board_led_write, board_button_read, board_get_unique_id, board_uart_read/write, board_getchar/putchar) — docs/porting.rst's BSP step made concrete, and a direct answer to 'how do I blink the LED/read the button on board X'."
+content.kind = "lines"
+content.spans = [
+  { path = "hw/bsp/board_api.h", start = 73, end = 73, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 76, end = 76, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 79, end = 79, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 82, end = 82, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 90, end = 90, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 93, end = 93, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 96, end = 96, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 99, end = 99, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 155, end = 155, render.kind = "full" },
+  { path = "hw/bsp/board_api.h", start = 156, end = 156, render.kind = "full" },
+]
+
+# ============================================================
+# Tier 9 — architecture doc section map (the one doc that
+# explains ISR-deferral + class-driver dispatch; AGENTS.md
+# never covers this, so even a heading-only map earns its cost)
+# ============================================================
+
+[[batches]]
+id = "9.1"
+descriptor = "architecture.rst section headings (locations only)"
+justification = "The 7 top-level sections of the only doc explaining *why* the stack is shaped this way (ISR deferral, DCD/USBD/class-driver layering, memory model, threading model) — a heading map so 'why does X work this way' queries know exactly which section to read in full."
+content.kind = "lines"
+content.spans = [
+  { path = "docs/reference/architecture.rst", start = 7, end = 7, render.kind = "full" },
+  { path = "docs/reference/architecture.rst", start = 37, end = 37, render.kind = "full" },
+  { path = "docs/reference/architecture.rst", start = 63, end = 63, render.kind = "full" },
+  { path = "docs/reference/architecture.rst", start = 124, end = 124, render.kind = "full" },
+  { path = "docs/reference/architecture.rst", start = 166, end = 166, render.kind = "full" },
+  { path = "docs/reference/architecture.rst", start = 212, end = 212, render.kind = "full" },
+  { path = "docs/reference/architecture.rst", start = 233, end = 233, render.kind = "full" },
+]

@@ -1,263 +1,128 @@
 fixture = "pluggy"
 revision_pin = "4cc08c15"
 summary = """
-pluggy is the Python plugin / hook-calling framework that backs pytest,
-tox, devpi, and many other tools. The repo is small and focused: a
-hand-rolled `src/pluggy/` package (markers, manager, hook caller, the
-multicall execution engine, a Result wrapper helper, a tracer, and a
-warnings module), plus a comprehensive Sphinx guide in `docs/index.rst`
-that doubles as the conceptual reference, two runnable tutorial
-projects under `docs/examples/`, and a thorough pytest suite under
-`testing/`.
-
-The ranking front-loads breadth - the top-level layout, the public
-API surface (`src/pluggy/__init__.py`'s `__all__` and the re-exports
-that pin each symbol to a file), the README headline + canonical
-example, and signatures for every public class/method - so that a
-coding agent landing in the repo can answer "what is pluggy / what's
-its surface area / where does X live" without a follow-up. Mid-tier
-batches cover the conceptual machinery the docs articulate (hookspec
-opts, hookimpl opts, call-order rules, wrapper / hookwrapper, historic,
-firstresult) plus the core call loop in `_multicall`, which is the
-single most load-bearing function in the codebase. Later tiers fill
-in the tutorial examples, test-suite shape (per-file fn name lists),
-configuration files, and changelog so debugging / feature work has
-the right pointers.
+pluggy is the small, mature Python library that implements pytest's plugin/hook
+system: `HookspecMarker`/`HookimplMarker` decorators mark functions, a
+`PluginManager` registers plugins and hookspecs, `HookCaller` holds the
+ordered list of `HookImpl`s for one named hook, and `_multicall` (in
+_callers.py) is the actual call loop that runs non-wrapper impls, then
+new-style (`wrapper=True`) and old-style (`hookwrapper=True`) wrapper
+teardowns, handling firstresult / historic / exception-propagation
+semantics. `Result` carries the outcome through old-style wrappers;
+`TagTracer` is the built-in debug tracer. The whole runtime is ~1600 lines
+across 6 files in src/pluggy/, everything else is tests, sphinx docs (with
+a worked toy example), and packaging/release/CI plumbing (tox, GitHub
+Actions matrix over CPython 3.10-3.14 + PyPy, towncrier changelog
+fragments, a scripted release process, and shell scripts that smoke-test
+pluggy against real downstream consumers). CLAUDE.md/AGENTS.md already
+give a one-paragraph architecture summary, file-to-concept map, and the
+`uv run pytest` / `uv run pre-commit run -a` command pair, so this NS
+buys the complement: exact class/method signatures with line coordinates,
+the option-semantics prose that lives in the marker docstrings, the
+hookimpl-ordering and call-loop algorithms themselves, the test roster,
+and concrete config/CI shapes. Query distribution: "how does firstresult/
+historic/wrapper work", "where is X defined", "is Y tested and how", "how
+do I run/lint/release/configure this", "what's pluggy's public API
+surface", and debugging a specific hook-call-order or
+exception-propagation question.
 """
 
-# ---------------------------------------------------------------
-# Tier 1 - Orientation: what is this repo and what's at the top.
-# ---------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Tier 1: identity, public export surface, directory breadth.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "README headline + tagline"
-justification = """
-Three lines that pin down what pluggy is - its name, its one-line
-slogan, and the fact that pytest/tox/devpi all depend on it. Highest
-zero-follow-up value for "what is this repo?" at almost no cost.
-"""
+descriptor = "README title + tagline"
+justification = "The first three lines an agent sees: what pluggy is, one-line pitch. Trivially cheap, establishes framing before anything else."
 content = { kind = "lines", spans = [
   { path = "README.rst", start = 1, end = 3, render = { kind = "full" } },
-  { path = "README.rst", start = 7, end = 7, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Top-level fs listing"
-justification = """
-Every immediate child of the repo root - src/, testing/, docs/,
-changelog/, downstream/, scripts/, the long-form RST docs, the config
-files. Catastrophic-omission mitigation: showing only some of these
-would let an agent assume the others don't exist. The cheapest
-breadth batch we can buy.
-"""
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
+descriptor = "README badges line + who depends on pluggy + doc pointer"
+justification = "Names the three consumer projects (pytest/tox/devpi) and points at the hosted docs -- small addition to identity framing."
+content = { kind = "lines", spans = [
+  { path = "README.rst", start = 5, end = 9, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.3"
-descriptor = "src/pluggy listing"
-justification = """
-Every file in the package: `_hooks.py`, `_manager.py`, `_callers.py`,
-`_result.py`, `_tracing.py`, `_warnings.py`, `__init__.py`, plus
-`py.typed`. Tells the agent the implementation is split across these
-specific six private modules.
-"""
+descriptor = "Directory listing: docs/ and its worked-example subtree"
+justification = "Full listing of docs/ plus the examples/ subdirectory (toy example, eggsample host package, eggsample-spam plugin package) so the agent knows the complete set of documentation/example files up front, even though most of their bodies aren't scheduled below at this budget."
 content = { kind = "fs", groups = [
-  { parent = "src/pluggy", entries = "all" },
+  { parent = "docs", entries = "all" },
+  { parent = "docs/examples", entries = "all" },
+  { parent = "docs/examples/eggsample", entries = "all" },
+  { parent = "docs/examples/eggsample/eggsample", entries = "all" },
+  { parent = "docs/examples/eggsample-spam", entries = "all" },
 ] }
 
 [[batches]]
 id = "1.4"
-descriptor = "Public API surface (__all__)"
-justification = """
-The full `__all__` list in `src/pluggy/__init__.py` is the public-API
-spec. Any agent doing API work needs to see exactly which symbols are
-public - and any name omitted from this batch would falsely read as
-"not exported". Placed after the src/pluggy listing so the symbol
-list lands once the agent already knows which files exist.
-"""
+descriptor = "Directory listing: changelog, CI, downstream smoke-tests, scripts"
+justification = "Full listing of the project's process/ops directories. Cheap and forecloses an agent assuming e.g. only one downstream smoke-test script exists, or missing that .github/dependabot.yml and FUNDING.yml sit alongside the CI workflow."
+content = { kind = "fs", groups = [
+  { parent = "changelog", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = "downstream", entries = "all" },
+  { parent = "scripts", entries = "all" },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "pluggy/__init__.py: __all__ (the literal public export list)"
+justification = "The exhaustive, ordered list of every name `import pluggy` exposes. Catastrophic-omission-critical: this IS the complete public surface, must be shown whole rather than sampled via grep hits on individual classes."
 content = { kind = "lines", spans = [
   { path = "src/pluggy/__init__.py", start = 1, end = 16, render = { kind = "full" } },
 ] }
 
-# ---------------------------------------------------------------
-# Tier 2 - Public-symbol -> file map, project metadata, and the
-# canonical usage example. Metadata is split into a small build/
-# authors batch and a larger description+deps batch so the growth
-# envelope stays clean, then the README example follows in two halves.
-# ---------------------------------------------------------------
+[[batches]]
+id = "1.6"
+descriptor = "Directory listing: repo root, src/pluggy, testing"
+justification = "Full immediate-child listing of the three most code-dense directories, so the agent knows every source and test file that exists, not just the ones CLAUDE.md happens to name. Ranked after 1.5 (not before) purely so its cost fits the gradual-growth envelope this early on."
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+  { parent = "src/pluggy", entries = "all" },
+  { parent = "testing", entries = "all" },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "pluggy/__init__.py: re-export imports + dynamic __version__"
+justification = "Where each exported name actually comes from (which internal module), plus the module-level __getattr__ trick that lazily resolves __version__ via importlib.metadata instead of a hardcoded string -- a detail that surprises anyone grepping for a version constant."
+predecessor = "1.5"
+content = { kind = "lines", spans = [
+  { path = "src/pluggy/__init__.py", start = 17, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "README definitive example, part 1: markers + spec/impl namespaces"
+justification = "First half of the single most information-dense usage example in the repo: defining a hookspec namespace and two competing hookimpl namespaces. Split from part 2 (wiring) purely to respect gradual token growth this early; each half is independently readable."
+content = { kind = "lines", spans = [
+  { path = "README.rst", start = 11, end = 44, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "README definitive example, part 2: manager wiring + call + real output"
+justification = "Second half: create the PluginManager, add_hookspecs, register both plugins, call the hook, and the actual printed output from running the file. An agent can answer 'how do I use pluggy end to end' from 1.8+1.9 alone with zero follow-up."
+predecessor = "1.8"
+content = { kind = "lines", spans = [
+  { path = "README.rst", start = 46, end = 65, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 2: exhaustive signature/location rosters per source file.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "__init__ re-export map (which file each symbol comes from)"
-justification = """
-The thirteen `from ._X import Y` lines that map every public symbol
-to the private module that defines it. After 1.4 told the agent what's
-public, this batch lets them jump straight to the defining file
-without grepping. Pairs naturally with the src/pluggy listing in 1.3.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/pluggy/__init__.py", start = 17, end = 29, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.2"
-descriptor = "pyproject.toml build-system + license + authors"
-justification = """
-The build-system block (setuptools + setuptools-scm) and the
-license/authors/maintainers fields. Cheap top-of-file fixture; the
-larger description + deps follow in 2.3.
-"""
-content = { kind = "lines", spans = [
-  { path = "pyproject.toml", start = 1, end = 11, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.3"
-descriptor = "pyproject.toml description + requires-python + dep groups + package layout"
-justification = """
-The substantive project metadata: the one-line description ("plugin
-and hook calling mechanisms for python"), Python>=3.10 floor, dev /
-testing dependency groups, and the `src/`-based package layout
-(`packages=["pluggy"]`, `package-dir={""="src"}`, py.typed marker).
-"""
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "pyproject.toml", start = 33, end = 46, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.4"
-descriptor = "README example: spec + impls"
-justification = """
-First half of the README's definitive example: HookspecMarker /
-HookimplMarker construction, a MySpec class with one `@hookspec`,
-two Plugin classes each with `@hookimpl` returning different
-results. Shows the decorator pattern and the class-as-plugin idiom
-in one self-contained chunk.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 13, end = 44, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.5"
-descriptor = "README example: register + call + output"
-justification = """
-Second half of the same example: build a PluginManager, add_hookspecs,
-register both plugins, call `pm.hook.myhook(arg1=1, arg2=2)`, and the
-literal `[-1, 3]` output showing LIFO order. Completes the toy
-end-to-end picture.
-"""
-predecessor = "2.4"
-content = { kind = "lines", spans = [
-  { path = "README.rst", start = 46, end = 66, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------
-# Tier 3 - Signatures for every public class/function in src/pluggy.
-# Threshold consideration: a slice that stops mid-tier still gives a
-# coherent "public symbol catalog" because each batch is independently
-# useful; ordering within is by how user-facing the file is.
-# ---------------------------------------------------------------
-
-[[batches]]
-id = "3.1"
-descriptor = "_hooks.py: marker + caller class/fn name surface"
-justification = """
-First line (`class X:` / `def f(...)`) of every top-level class and
-function plus public methods in `_hooks.py` - the file that hosts
-HookspecMarker, HookimplMarker, HookCaller, HookRelay, HookImpl,
-HookSpec, and the TypedDicts. The "name only" variant of catastrophic
-omission: revealing some method names without others would mislead
-the agent. Spans are truncated at the opening paren so multi-line
-signatures cost only one line each.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/pluggy/_hooks.py", start = 40, end = 40, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 56, end = 56, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 78, end = 78, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 165, end = 165, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 281, end = 281, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_hooks.py", start = 293, end = 293, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_hooks.py", start = 359, end = 359, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 382, end = 382, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 420, end = 420, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_hooks.py", start = 438, end = 438, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_hooks.py", start = 449, end = 449, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_hooks.py", start = 499, end = 499, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_hooks.py", start = 516, end = 516, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 543, end = 543, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 593, end = 593, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 638, end = 639, render = { kind = "full" } },
-  { path = "src/pluggy/_hooks.py", start = 696, end = 696, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.2"
-descriptor = "_manager.py: PluginManager + helpers method-name surface"
-justification = """
-All top-level classes and PluginManager's public-ish method names
-(register, unregister, add_hookspecs, set_blocked, get_plugin,
-load_setuptools_entrypoints, ...) - the surface area an agent needs to
-answer "which method on the manager does X". Same name-only treatment
-as 3.1.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/pluggy/_manager.py", start = 52, end = 52, render = { kind = "full" } },
-  { path = "src/pluggy/_manager.py", start = 65, end = 65, render = { kind = "full" } },
-  { path = "src/pluggy/_manager.py", start = 83, end = 83, render = { kind = "full" } },
-  { path = "src/pluggy/_manager.py", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 125, end = 125, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 176, end = 176, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 201, end = 201, render = { kind = "full" } },
-  { path = "src/pluggy/_manager.py", start = 233, end = 233, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 238, end = 238, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 242, end = 242, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 252, end = 252, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 278, end = 278, render = { kind = "full" } },
-  { path = "src/pluggy/_manager.py", start = 296, end = 296, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 300, end = 300, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 304, end = 304, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 315, end = 315, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 319, end = 319, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 323, end = 323, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 379, end = 379, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 395, end = 395, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 425, end = 425, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 430, end = 430, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 434, end = 434, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 450, end = 450, render = { kind = "full" } },
-  { path = "src/pluggy/_manager.py", start = 487, end = 487, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_manager.py", start = 512, end = 512, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.3"
-descriptor = "Tutorial: toy-example.py in full"
-justification = """
-The smallest end-to-end runnable example - the same code embedded in
-docs/index.rst's "A toy example" section. ~40 lines, covers spec /
-impl / register / call, and gives a complete mental model for any
-"how do I use this" follow-up. Worth Full-rendering because every
-line is conceptually load-bearing and short.
-"""
-content = { kind = "lines", spans = [
-  { path = "docs/examples/toy-example.py", start = 1, end = 42, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.4"
-descriptor = "_callers.py top-level function names"
-justification = """
-The four top-level functions in the execution engine -
-`run_old_style_hookwrapper`, `_raise_wrapfail`, `_warn_teardown_exception`,
-`_multicall` - so the agent knows what's in this file without
-reading it.
-"""
+descriptor = "_callers.py: every def location (signatures only)"
+justification = "Name-only roster of the call-loop module's four functions (run_old_style_hookwrapper, _raise_wrapfail, _warn_teardown_exception, _multicall). Small file but this is where the actual hook-invocation algorithm lives -- worth its own roster before 3.x reveals the bodies. Each signature is already a single short line, so it's shown Full rather than Truncated (truncation would save nothing)."
 content = { kind = "lines", spans = [
   { path = "src/pluggy/_callers.py", start = 27, end = 27, render = { kind = "full" } },
   { path = "src/pluggy/_callers.py", start = 60, end = 60, render = { kind = "full" } },
@@ -266,502 +131,483 @@ content = { kind = "lines", spans = [
 ] }
 
 [[batches]]
-id = "3.5"
-descriptor = "_result.py class + method surface"
-justification = """
-Result methods (force_result, force_exception, get_result, from_call,
-exception, excinfo) plus HookCallError. These are the wrapper /
-old-style-hookwrapper API surface; any "how do I override a hook
-result?" question needs these names.
-"""
+id = "2.2"
+descriptor = "_result.py / _tracing.py / _warnings.py: every class/def location"
+justification = "Roster for the three smallest support modules in one batch: Result + HookCallError (every method: __init__/excinfo/exception/from_call/force_result/force_exception/get_result), TagTracer + TagTracerSub (every method, including the internal _format_message/_processmessage pair that do the actual formatting/dispatch), PluggyWarning + PluggyTeardownRaisedWarning. Grouped since each file alone is tiny; still a complete-class-set hedge for all three."
 content = { kind = "lines", spans = [
   { path = "src/pluggy/_result.py", start = 20, end = 20, render = { kind = "full" } },
-  { path = "src/pluggy/_result.py", start = 25, end = 25, render = { kind = "full" } },
-  { path = "src/pluggy/_result.py", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_result.py", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/pluggy/_result.py", start = 57, end = 57, render = { kind = "full" } },
-  { path = "src/pluggy/_result.py", start = 67, end = 67, render = { kind = "full" } },
-  { path = "src/pluggy/_result.py", start = 80, end = 80, render = { kind = "full" } },
-  { path = "src/pluggy/_result.py", start = 91, end = 91, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
-
-[[batches]]
-id = "3.6"
-descriptor = "_warnings.py classes"
-justification = """
-PluggyWarning + PluggyTeardownRaisedWarning. The latter fires when
-an old-style hookwrapper raises during teardown - one of the few
-runtime-emitted warnings the library produces.
-"""
-content = { kind = "lines", spans = [
+  { path = "src/pluggy/_result.py", start = 24, end = 25, render = { kind = "full" } },
+  { path = "src/pluggy/_result.py", start = 31, end = 31, render = { kind = "full" } },
+  { path = "src/pluggy/_result.py", start = 42, end = 43, render = { kind = "full" } },
+  { path = "src/pluggy/_result.py", start = 51, end = 52, render = { kind = "full" } },
+  { path = "src/pluggy/_result.py", start = 56, end = 57, render = { kind = "full" } },
+  { path = "src/pluggy/_result.py", start = 67, end = 67, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_result.py", start = 80, end = 80, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_result.py", start = 91, end = 91, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 16, end = 16, render = { kind = "full" } },
+  { path = "src/pluggy/_tracing.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 22, end = 22, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 25, end = 25, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 42, end = 42, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 48, end = 48, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 51, end = 51, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 59, end = 59, render = { kind = "full" } },
+  { path = "src/pluggy/_tracing.py", start = 60, end = 60, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 64, end = 64, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_tracing.py", start = 67, end = 67, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
   { path = "src/pluggy/_warnings.py", start = 4, end = 4, render = { kind = "full" } },
   { path = "src/pluggy/_warnings.py", start = 11, end = 11, render = { kind = "full" } },
 ] }
 
-# ---------------------------------------------------------------
-# Tier 4 - Core behaviour: opts, docs map, key fn bodies. Body
-# batches descend from their sig batches via `predecessor` so the
-# deeper Full render legitimately overrides the earlier sig line.
-# `_add_hookimpl` (the ordering algorithm) is ranked just before
-# `_multicall` so the call-loop body lands after the data-structure
-# layout it relies on - and the envelope has room for it.
-# ---------------------------------------------------------------
-
 [[batches]]
-id = "4.1"
-descriptor = "HookspecOpts TypedDict fields"
-justification = """
-Every per-hookspec option keyword: firstresult, historic,
-warn_on_impl, warn_on_impl_args. Each option appears as a labelled
-field with a short docstring referencing the conceptual docs. Lets
-"what does firstresult / historic / warn_on_impl mean?" land
-zero-follow-up.
-"""
-predecessor = "3.1"
+id = "2.3"
+descriptor = "_hooks.py: every class/def location, part 1 (markers + helpers)"
+justification = "Truncated name-only roster covering HookspecOpts/HookimplOpts, HookspecMarker, HookimplMarker, normalize_hookimpl_opts and varnames. Mitigates catastrophic omission of the marker/option surface before 3.x fills in the option docstrings."
 content = { kind = "lines", spans = [
-  { path = "src/pluggy/_hooks.py", start = 40, end = 54, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 40, end = 40, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 56, end = 56, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 77, end = 78, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 88, end = 88, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 111, end = 111, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 164, end = 165, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 175, end = 175, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 202, end = 202, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 281, end = 281, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 293, end = 293, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
 ] }
 
 [[batches]]
-id = "4.2"
-descriptor = "HookimplOpts TypedDict fields"
-justification = """
-Every per-hookimpl option keyword: wrapper, hookwrapper, optionalhook,
-tryfirst, trylast, specname. Companion to 4.1; split so a small
-budget can pick up the spec opts alone if needed.
-"""
-predecessor = "3.1"
+id = "2.4"
+descriptor = "_hooks.py: every class/def location, part 2 (HookRelay + the full HookCaller method list)"
+justification = "HookRelay's class header, then the full HookCaller method list: __init__/has_spec/set_specification/is_historic/_remove_plugin/get_hookimpls/__repr__/_verify_all_args_are_provided/__call__/call_historic/call_extra/_maybe_apply_history. This is the roster an agent needs before asking 'does HookCaller have a method for X'."
 content = { kind = "lines", spans = [
-  { path = "src/pluggy/_hooks.py", start = 56, end = 75, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 358, end = 359, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 382, end = 383, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 393, end = 393, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 420, end = 420, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 424, end = 424, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 438, end = 438, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 442, end = 442, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 449, end = 449, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 477, end = 477, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 480, end = 480, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 499, end = 499, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 516, end = 516, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 543, end = 543, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 577, end = 577, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
 ] }
 
 [[batches]]
-id = "4.3"
-descriptor = "docs/index.rst section heading map"
-justification = """
-Major section headings of the Sphinx guide - "What is it?", "How does
-it work?", "A toy example", "Marking hooks", "Implementations", "Call
-time order", "Wrappers", "Old-style wrappers", "Specifications", "First
-result only", "Historic hooks", "Calling hooks", "Tracing", "Public
-API", etc. Lets the agent navigate the canonical conceptual doc in
-one or two hops.
-"""
+id = "2.5"
+descriptor = "_hooks.py: every class/def location, part 3 (_SubsetHookCaller/HookImpl/HookSpec)"
+justification = "_SubsetHookCaller's full method set (__init__/_hookimpls/spec/_call_history/__repr__) -- not just its class header, since that proxy's whole point is which HookCaller members it overrides -- plus HookImpl's full method set (__init__/__repr__) and HookSpec's class header + __init__."
 content = { kind = "lines", spans = [
-  { path = "docs/index.rst", start = 1, end = 2, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 5, end = 5, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 21, end = 21, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 42, end = 42, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 72, end = 72, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 87, end = 87, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 157, end = 157, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 171, end = 171, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 185, end = 185, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 220, end = 220, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 256, end = 256, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 275, end = 275, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 321, end = 321, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 376, end = 376, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 442, end = 442, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 507, end = 507, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 566, end = 566, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 607, end = 607, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 628, end = 628, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 650, end = 651, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 691, end = 691, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 713, end = 714, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 771, end = 772, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 844, end = 844, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 857, end = 857, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 911, end = 911, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 953, end = 953, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 961, end = 961, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 975, end = 976, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 1012, end = 1013, render = { kind = "full" } },
-  { path = "docs/index.rst", start = 1036, end = 1037, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 593, end = 594, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 612, end = 612, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 619, end = 619, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 627, end = 627, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 631, end = 631, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 634, end = 634, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 638, end = 639, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 656, end = 656, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 692, end = 692, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_hooks.py", start = 696, end = 697, render = { kind = "full" } },
+  { path = "src/pluggy/_hooks.py", start = 709, end = 709, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
 ] }
 
 [[batches]]
-id = "4.4"
-descriptor = "HookCaller._add_hookimpl - the ordering algorithm"
-justification = """
-The actual ordering of hook implementations: tryfirst / trylast and
-wrapper-vs-nonwrapper split. Ranked before the multicall body so the
-data-structure invariant is in mind when reading the iteration order.
-Combined with the 6-step `_hookimpls` layout comment (5.7) this nails
-"what order do my hooks run in" in one hop.
-"""
+id = "2.6"
+descriptor = "_manager.py: every class/def location, part 1 (registration + introspection)"
+justification = "Roster covering the module-level _warn_for_function helper, PluginValidationError, DistFacade, PluginManager.__init__ + its private _hookexec dispatcher, and the registration/introspection half of its API: register/parse_hookimpl_opts/unregister/set_blocked/is_blocked/unblock/add_hookspecs/parse_hookspec_opts/get_plugins/is_registered/get_canonical_name/get_plugin/has_plugin/get_name."
 content = { kind = "lines", spans = [
+  { path = "src/pluggy/_manager.py", start = 42, end = 42, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 52, end = 52, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 59, end = 59, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 65, end = 65, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 68, end = 68, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 71, end = 72, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 79, end = 79, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 83, end = 83, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 100, end = 100, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 114, end = 114, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 125, end = 125, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 176, end = 176, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 201, end = 201, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 233, end = 233, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 238, end = 238, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 242, end = 242, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 252, end = 252, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 278, end = 278, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 296, end = 296, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 300, end = 300, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 304, end = 304, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 315, end = 315, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 319, end = 319, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 323, end = 323, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "_manager.py: every class/def location, part 2 (validation, pending, plugins, tracing)"
+justification = "Rest of PluginManager's surface: _verify_hook/check_pending/load_setuptools_entrypoints/list_plugin_distinfo/list_name_plugin/get_hookcallers/add_hookcall_monitoring/enable_tracing/subset_hook_caller, plus the module-level _formatdef helper."
+content = { kind = "lines", spans = [
+  { path = "src/pluggy/_manager.py", start = 331, end = 331, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 379, end = 379, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 395, end = 395, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 425, end = 425, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 430, end = 430, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 434, end = 434, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 450, end = 450, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 487, end = 487, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "src/pluggy/_manager.py", start = 512, end = 512, render = { kind = "full" } },
+  { path = "src/pluggy/_manager.py", start = 525, end = 525, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 3: the semantically load-bearing bodies -- what the signatures do.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "HookspecMarker.__call__: full option docs (firstresult/historic/warn_on_impl)"
+justification = "The full docstring+body is the canonical reference for what a hookspec's options mean -- firstresult, historic, warn_on_impl, warn_on_impl_args -- material an agent needs verbatim rather than re-deriving from usage. Overrides the truncated line at 2.3:111 with the real content."
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/pluggy/_hooks.py", start = 111, end = 161, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "HookCaller: hookimpl call-order algorithm (_add_hookimpl + its ordering comment)"
+justification = "The ordering comment in __init__ (the 6-bucket LIFO/tryfirst/trylast/wrapper layout) plus the _add_hookimpl method that implements it is the single most debugging-relevant algorithm in the codebase for 'why did my hookimpls run in this order' questions, and it is not restated anywhere else in the docs."
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "src/pluggy/_hooks.py", start = 404, end = 410, render = { kind = "full" } },
   { path = "src/pluggy/_hooks.py", start = 453, end = 476, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "4.5"
-descriptor = "_multicall body - the call loop"
-justification = """
-The single most load-bearing function in the whole library. It
-iterates registered hookimpls in reverse, sets up wrapper teardowns,
-collects results, handles firstresult short-circuiting, and
-orchestrates exception propagation through wrapper teardowns.
-Inlining its body makes "how does multicall work" / "wrapper
-exception semantics" / "firstresult behaviour" zero-follow-up. ~90
-lines but uniquely high-value.
-"""
-predecessor = "3.4"
+id = "3.3"
+descriptor = "HookimplMarker.__call__: full option docs (wrapper/hookwrapper/optionalhook/tryfirst/trylast/specname)"
+justification = "This docstring is pluggy's de facto options reference for hookimpl -- every hookimpl kwarg an agent will encounter in the wild is defined here with exact semantics and version-added notes. The single highest-value body batch for 'what does @hookimpl(...=True) do' queries."
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/pluggy/_hooks.py", start = 202, end = 278, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "_multicall(): full body -- the actual call loop"
+justification = "This is the engine of the whole library: iterates hookimpls in reverse, splits wrapper setup from non-wrapper calls, runs teardowns in reverse with throw/send, and handles the StopIteration/RuntimeError special case (see changelog #544). Any debugging question about hook exception propagation or wrapper result flow terminates here."
+predecessor = "2.1"
 content = { kind = "lines", spans = [
   { path = "src/pluggy/_callers.py", start = 82, end = 174, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "4.6"
-descriptor = "PluginManager.register body"
-justification = """
-The other deeply load-bearing routine: how a plugin is discovered,
-how each method on it is matched against existing or new HookCallers,
-how `specname` is honored, how name conflicts and re-registration are
-handled. Inlining makes "how does registration work" / "what's the
-error if I register twice" answerable without a file read.
-"""
-predecessor = "3.2"
+id = "3.5"
+descriptor = "PluggyWarning / PluggyTeardownRaisedWarning: full body"
+justification = "The two warning classes' full docstrings, explaining when PluggyTeardownRaisedWarning fires and how to fix or intentionally silence it via force_exception -- directly actionable if an agent sees this warning in test output. Cheap (27 lines) and high value."
+predecessor = "2.2"
 content = { kind = "lines", spans = [
-  { path = "src/pluggy/_manager.py", start = 125, end = 174, render = { kind = "full" } },
+  { path = "src/pluggy/_warnings.py", start = 1, end = 27, render = { kind = "full" } },
 ] }
 
+# ---------------------------------------------------------------------------
+# Tier 4: test roster + shared fixtures.
+# ---------------------------------------------------------------------------
+
 [[batches]]
-id = "4.7"
-descriptor = "HookCaller.__call__ body"
-justification = """
-The main `__call__` entry point. Shows the kwargs-only constraint
-(`Only accepts keyword arguments`), the historic-incompatibility
-assertion, the firstresult lookup from the spec, and the
-`_hookimpls.copy()` defensive snapshot (#438). Split off from
-call_historic / call_extra so a small budget gets the most common
-path first.
-"""
-predecessor = "3.1"
+id = "4.1"
+descriptor = "Test roster: test_pluginmanager.py (32 tests)"
+justification = "Name-only location roster of every test in the file exercising PluginManager registration/validation/tracing/historic-hook bookkeeping. Catastrophic-omission hedge for 'is X behavior tested' -- without a full roster an agent shown 2-3 tests via grep would assume the rest of the surface is untested."
 content = { kind = "lines", spans = [
-  { path = "src/pluggy/_hooks.py", start = 499, end = 514, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "4.8"
-descriptor = "HookCaller.call_historic body"
-justification = """
-The deferred-delivery path: appends to `_call_history`, executes the
-current set of hookimpls, optionally fans the list of results out
-through `result_callback`. Pairs with the historic hookspec opt
-(4.1) and `_maybe_apply_history` (only referenced from register, not
-shown verbatim).
-"""
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/pluggy/_hooks.py", start = 516, end = 541, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "4.9"
-descriptor = "HookCaller.call_extra body"
-justification = """
-The temporarily-inject-methods entry point: wraps each extra method
-in a HookImpl with default opts and splices it into the hookimpl list
-after the last non-tryfirst nonwrapper. Documents how `call_extra`
-preserves wrapper / tryfirst order.
-"""
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/pluggy/_hooks.py", start = 543, end = 575, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "4.10"
-descriptor = "PluginManager._verify_hook body - validation rules"
-justification = """
-The exact validation enforced at register time: historic vs wrapper,
-warn_on_impl, argnames-must-be-subset-of-spec, wrapper-must-be-
-generator, mutually exclusive wrapper/hookwrapper. Almost every
-PluginValidationError raised in the wild comes from one of these
-branches.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/pluggy/_manager.py", start = 331, end = 377, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------
-# Tier 5 - Tutorial + tests + docs breadth, plus the
-# HookCaller.__init__ layout comment that qualitatively changes how
-# to read 4.4.
-# ---------------------------------------------------------------
-
-[[batches]]
-id = "5.1"
-descriptor = "docs/examples listing (eggsample + eggsample-spam)"
-justification = """
-Every file in the runnable tutorial - eggsample host (hookspecs.py,
-lib.py, host.py, __init__.py, setup.py) and eggsample-spam plugin
-(eggsample_spam.py, setup.py). Tells the agent what to read for a
-non-trivial host/plugin pair.
-"""
-content = { kind = "fs", groups = [
-  { parent = "docs/examples", entries = "all" },
-  { parent = "docs/examples/eggsample", entries = "all" },
-  { parent = "docs/examples/eggsample/eggsample", entries = "all" },
-  { parent = "docs/examples/eggsample-spam", entries = "all" },
-] }
-
-[[batches]]
-id = "5.2"
-descriptor = "eggsample hookspecs"
-justification = """
-The host's two hookspec functions (`eggsample_add_ingredients`,
-`eggsample_prep_condiments`) with their docstrings. Shows the
-docstring-only hookspec convention from the docs.
-"""
-content = { kind = "lines", spans = [
-  { path = "docs/examples/eggsample/eggsample/__init__.py", start = 1, end = 5, render = { kind = "full" } },
-  { path = "docs/examples/eggsample/eggsample/hookspecs.py", start = 1, end = 22, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.3"
-descriptor = "eggsample host wiring + main()"
-justification = """
-The `get_plugin_manager()` + `main()` glue that builds the manager,
-adds the specs, loads setuptools entry-points, and registers the
-default lib. Trimmed of the `EggsellentCook` class body; the cook's
-role is obvious from main()'s call sequence (add_ingredients /
-prepare_the_food / serve_the_food).
-"""
-predecessor = "5.2"
-content = { kind = "lines", spans = [
-  { path = "docs/examples/eggsample/eggsample/host.py", start = 1, end = 27, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.4"
-descriptor = "eggsample-spam plugin code"
-justification = """
-The companion third-party plugin: two `@eggsample.hookimpl`
-implementations - one that appends to ingredients, one that mutates
-the condiments dict and returns a witty comment.
-"""
-content = { kind = "lines", spans = [
-  { path = "docs/examples/eggsample-spam/eggsample_spam.py", start = 1, end = 22, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.5"
-descriptor = "eggsample + eggsample-spam setup.py: entry-point wiring"
-justification = """
-Both setup.py files: eggsample declares a console_script
-(`eggsample=eggsample.host:main`); eggsample-spam declares the
-entry-point `eggsample: spam = eggsample_spam` that the host loads
-via `load_setuptools_entrypoints`. The two files together explain
-how a third-party plugin is discovered.
-"""
-content = { kind = "lines", spans = [
-  { path = "docs/examples/eggsample/setup.py", start = 1, end = 10, render = { kind = "full" } },
-  { path = "docs/examples/eggsample-spam/setup.py", start = 1, end = 9, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.6"
-descriptor = "testing/ directory listing"
-justification = """
-Every test file: test_pluginmanager, test_hookcaller, test_multicall,
-test_invocations, test_details, test_helpers, test_warnings,
-test_result, test_tracer, plus benchmark.py and conftest.py. The
-test-file taxonomy mirrors the source modules - knowing what's there
-lets the agent find existing coverage for a behaviour fast.
-"""
-content = { kind = "fs", groups = [
-  { parent = "testing", entries = "all" },
-] }
-
-[[batches]]
-id = "5.7"
-descriptor = "Shared test fixtures (conftest.py)"
-justification = """
-The two pytest fixtures every test file relies on: `pm` (a fresh
-PluginManager("example")) and `he_pm` (a manager with a `he_method1`
-hookspec already added, parametrized as class and instance). Reading
-any test file requires knowing these.
-"""
-content = { kind = "lines", spans = [
-  { path = "testing/conftest.py", start = 1, end = 25, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.8"
-descriptor = "docs/ listing"
-justification = """
-Top-level docs directory: index.rst (the guide), api_reference.rst
-(autoclass-driven reference), changelog.rst, conf.py, requirements.txt,
-plus examples/ and _static/. Tells the agent both that there's a
-Sphinx setup and exactly which top-level pages exist.
-"""
-content = { kind = "fs", groups = [
-  { parent = "docs", entries = "all" },
-] }
-
-[[batches]]
-id = "5.9"
-descriptor = "HookCaller.__init__ + the hookimpls-list layout comment"
-justification = """
-The six-step comment block in __init__ describing the ordering of
-the `_hookimpls` list (trylast nonwrappers, nonwrappers, tryfirst
-nonwrappers, trylast wrappers, wrappers, tryfirst wrappers). Together
-with 4.4's `_add_hookimpl` body this fully specifies the call order.
-The comment lives nowhere else in the codebase, so this is the only
-batch that explains the data-structure layout the rest of the
-ordering logic relies on.
-"""
-predecessor = "3.1"
-content = { kind = "lines", spans = [
-  { path = "src/pluggy/_hooks.py", start = 393, end = 418, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "5.10"
-descriptor = "test_pluginmanager.py: test function name list"
-justification = """
-Every test_* function in the largest test file. Catastrophic-omission
-mitigation: showing some but not all would lead the agent to assume
-a behaviour isn't covered when it is. Names alone telegraph what each
-test exercises (test_register_historic, test_subset_hook_caller,
-test_load_setuptools_instantiation, test_check_pending_*, ...).
-Mixed Full/Truncated: very short single-line defs use Full; longer
-multi-line signatures truncate at the opening paren.
-"""
-content = { kind = "lines", spans = [
-  { path = "testing/test_pluginmanager.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 96, end = 96, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 127, end = 127, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 141, end = 141, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 167, end = 167, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 182, end = 182, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 204, end = 204, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 216, end = 216, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 237, end = 237, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 266, end = 266, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 299, end = 299, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 341, end = 341, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 375, end = 375, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 394, end = 394, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 411, end = 411, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 426, end = 426, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 448, end = 448, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 500, end = 500, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 532, end = 532, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 578, end = 578, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 586, end = 586, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 622, end = 622, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_pluginmanager.py", start = 661, end = 661, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "testing/test_pluginmanager.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 30, end = 30, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 53, end = 53, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 63, end = 63, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 96, end = 96, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 127, end = 127, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 141, end = 141, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 154, end = 154, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 167, end = 167, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 182, end = 182, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 204, end = 204, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 216, end = 216, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 237, end = 237, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 266, end = 266, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 299, end = 299, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 341, end = 341, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 375, end = 375, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 394, end = 394, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 411, end = 411, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 426, end = 426, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 448, end = 448, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 500, end = 500, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 532, end = 532, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 578, end = 578, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 586, end = 586, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 622, end = 622, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_pluginmanager.py", start = 661, end = 661, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
   { path = "testing/test_pluginmanager.py", start = 699, end = 699, render = { kind = "full" } },
-  { path = "testing/test_pluginmanager.py", start = 774, end = 774, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "testing/test_pluginmanager.py", start = 774, end = 774, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
   { path = "testing/test_pluginmanager.py", start = 786, end = 786, render = { kind = "full" } },
   { path = "testing/test_pluginmanager.py", start = 799, end = 799, render = { kind = "full" } },
 ] }
 
-# ---------------------------------------------------------------
-# Tier 6 - Supplementary breadth: changelog, smaller-test names,
-# api_reference, ancillary directory listings, one more src body.
-# ---------------------------------------------------------------
+[[batches]]
+id = "4.2"
+descriptor = "Test roster: test_details.py (10 tests)"
+justification = "Name-only roster for the file covering hookimpl-override parsing, deprecation warnings (warn_on_impl/warn_on_impl_args), DistFacade, and the not-all-arguments-provided warning. Same catastrophic-omission hedge, split from 4.1 purely to keep each batch's cost moderate."
+content = { kind = "lines", spans = [
+  { path = "testing/test_details.py", start = 15, end = 15, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 75, end = 75, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 99, end = 99, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 132, end = 132, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 155, end = 155, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 184, end = 184, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 199, end = 199, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 208, end = 208, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 214, end = 214, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_details.py", start = 228, end = 228, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "Test roster: test_hookcaller.py (15 tests)"
+justification = "Name-only roster for HookCaller ordering tests: nonwrapper/wrapper insertion order (tryfirst/trylast variants), call_extra ordering, hookspec/hookrelay registration incl. registration-by-specname, hook-conflict detection."
+content = { kind = "lines", spans = [
+  { path = "testing/test_hookcaller.py", start = 69, end = 69, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 85, end = 85, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 101, end = 101, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 126, end = 126, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 142, end = 142, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 158, end = 158, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 188, end = 188, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 204, end = 204, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 304, end = 304, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 329, end = 329, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 340, end = 340, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 368, end = 368, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 393, end = 393, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 425, end = 425, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_hookcaller.py", start = 445, end = 445, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "Test roster: test_invocations.py (13 tests)"
+justification = "Name-only roster for hook-invocation semantics tests: arg-mismatch/opt-in args, call order, the firstresult variants (definition/force_result/returns_none/no_plugin), no-hookspec calls, and the non-wrapper-generator / wrapper-yield-count edge cases."
+content = { kind = "lines", spans = [
+  { path = "testing/test_invocations.py", start = 16, end = 16, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 35, end = 35, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 126, end = 126, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 173, end = 173, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 208, end = 208, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 243, end = 243, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 265, end = 265, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 280, end = 280, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 296, end = 296, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 339, end = 339, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_invocations.py", start = 360, end = 360, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "Test roster: test_multicall.py (21 tests)"
+justification = "Name-only roster for the low-level _multicall wrapper/hookwrapper mechanics tests (yield-count violations, exception/StopIteration handling, teardown suppression) -- the test file most directly exercising 3.4's call loop."
+content = { kind = "lines", spans = [
+  { path = "testing/test_multicall.py", start = 31, end = 31, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 45, end = 45, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 54, end = 54, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 63, end = 63, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 78, end = 78, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 101, end = 101, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 111, end = 111, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 135, end = 135, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 145, end = 145, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 187, end = 187, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 196, end = 196, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 206, end = 206, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 218, end = 218, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 228, end = 228, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 250, end = 250, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 270, end = 270, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 320, end = 320, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 345, end = 345, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 378, end = 378, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 417, end = 417, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+  { path = "testing/test_multicall.py", start = 446, end = 446, render = { kind = "truncated", pattern = "^\\s*def \\w+" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "testing/conftest.py: full body (shared pm / he_pm fixtures)"
+justification = "The `pm` and `he_pm` fixtures used by nearly every test in the suite (a bare PluginManager('example'), and one with a Hooks spec already added, parametrized over class-vs-instance). Small (25 lines) and load-bearing for reading any test file. (test_helpers.py/test_result.py/test_tracer.py/test_warnings.py/benchmark.py have no dedicated roster batch at this budget -- their existence is still visible via the 1.6 directory listing.)"
+content = { kind = "lines", spans = [
+  { path = "testing/conftest.py", start = 1, end = 25, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 5: docs prose not superseded by tier-3 docstrings.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "docs/api_reference.rst: autodoc roster (which classes are documented, in order)"
+justification = "Just the `.. autoclass::`/`.. autodecorator::` directive lines (skipping the near-boilerplate `:members:`/`:show-inheritance:` continuation lines repeated under almost every entry): the exact ordered list of what Sphinx publishes as pluggy's public API. A second, docs-authored cross-check on the __init__.py export list from 1.5."
+content = { kind = "lines", spans = [
+  { path = "docs/api_reference.rst", start = 8, end = 8, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 11, end = 11, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 15, end = 15, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 17, end = 17, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 19, end = 19, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 28, end = 28, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 32, end = 32, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 36, end = 36, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 40, end = 40, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 43, end = 43, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 47, end = 47, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 52, end = 53, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 57, end = 57, render = { kind = "full" } },
+  { path = "docs/api_reference.rst", start = 60, end = 60, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "docs/index.rst: 'How does it work?' overview"
+justification = "The host/plugin/pluggy vocabulary paragraph that frames every other doc section -- not restated in CLAUDE.md (which jumps straight to file-level architecture) or in any docstring, so this is the one place an agent gets the conceptual model in prose. Extended two lines past the original cut (58->60) so the third bullet's sentence ('the hook caller...collecting the results') isn't left mid-sentence; a trailing ellipsis line marks that a fourth bullet (`user`) and a closing clause still follow, rather than silently implying the vocabulary list ends at 'pluggy'."
+content = { kind = "lines", spans = [
+  { path = "docs/index.rst", start = 42, end = 60, render = { kind = "full" } },
+  { path = "docs/index.rst", start = 64, end = 64, render = { kind = "ellipsis" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 6: build/config/CI shapes.
+# ---------------------------------------------------------------------------
 
 [[batches]]
 id = "6.1"
-descriptor = "CHANGELOG.rst recent-release headers"
-justification = """
-Latest release headers (1.6.0, 1.5.0, 1.4.0, 1.3.0, 1.2.0, 1.1.0,
-1.0.0) - lets the agent gauge what's recent / what wrapper styles
-exist / when historic+firstresult was disallowed without opening the
-whole file.
-"""
+descriptor = "pyproject.toml: every distinct [section] header (config-key roster)"
+justification = "Location roster of every top-level and [tool.*] table header in the file. The six [[tool.towncrier.type]] entries (feature/bugfix/doc/removal/vendor/trivial, each just a `directory=`/`name=`/`showcontent=` triple) are represented by their first instance only -- showing all six identical-looking header lines with no distinguishing content on them would be noise, not signal; the fragment-type vocabulary itself is covered in 7.3."
 content = { kind = "lines", spans = [
-  { path = "CHANGELOG.rst", start = 24, end = 24, render = { kind = "full" } },
-  { path = "CHANGELOG.rst", start = 51, end = 51, render = { kind = "full" } },
-  { path = "CHANGELOG.rst", start = 69, end = 69, render = { kind = "full" } },
-  { path = "CHANGELOG.rst", start = 88, end = 88, render = { kind = "full" } },
-  { path = "CHANGELOG.rst", start = 121, end = 121, render = { kind = "full" } },
-  { path = "CHANGELOG.rst", start = 130, end = 130, render = { kind = "full" } },
-  { path = "CHANGELOG.rst", start = 171, end = 171, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 1, end = 1, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 8, end = 8, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 38, end = 38, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 43, end = 43, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 49, end = 49, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 57, end = 57, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 61, end = 61, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 69, end = 69, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 71, end = 71, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 74, end = 74, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 82, end = 82, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 112, end = 112, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "6.2"
-descriptor = "Test files: per-file test-fn name lists (smaller files)"
-justification = """
-For each remaining test file (multicall, invocations, details,
-helpers, warnings, tracer, result), one line per test fn - the same
-catastrophic-omission hedge as 5.10 but for the secondary files.
-Names alone telegraph coverage (test_keyword_args, test_argmismatch,
-test_only_kwargs, test_call_order, ...).
-"""
+descriptor = "tox.ini: [tox] envlist + [testenv]"
+justification = "The exact tox environment matrix (py310-py314, pypy3, pytestmain, coverage) and how `pytest`/`coverage run` get invoked -- the ground-truth for 'how is this project actually tested' beyond CLAUDE.md's `uv run pytest` shorthand. (A separate `[testenv:benchmark]` section immediately follows, at line 17 -- not scheduled at this budget; CLAUDE.md already names `uv run pytest testing/benchmark.py`.)"
 content = { kind = "lines", spans = [
-  { path = "testing/test_multicall.py", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_multicall.py", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_invocations.py", start = 16, end = 16, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_invocations.py", start = 35, end = 35, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_invocations.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_invocations.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_details.py", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_helpers.py", start = 11, end = 11, render = { kind = "full" } },
-  { path = "testing/test_helpers.py", start = 28, end = 28, render = { kind = "full" } },
-  { path = "testing/test_warnings.py", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_tracer.py", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_tracer.py", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_tracer.py", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_tracer.py", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "testing/test_result.py", start = 6, end = 6, render = { kind = "full" } },
+  { path = "tox.ini", start = 1, end = 15, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "6.3"
-descriptor = "api_reference.rst - autoclass directives"
-justification = """
-The complete `autoclass`/`autodecorator` directive list (trimmed of
-the Warnings sub-section since PluggyWarning + PluggyTeardownRaisedWarning
-are already pinned in 3.6). Pairs with `__all__` - useful when
-answering "what's in the official API reference" / "what's documented
-vs internal".
-"""
+descriptor = "tox.ini: [testenv:docs] + [pytest]"
+justification = "How the docs build actually runs (towncrier draft-to-file then sphinx-build -W), and the pytest config -- notably filterwarnings=error, meaning every warning (including 3.5's PluggyTeardownRaisedWarning) is a hard test failure, not just a printed note. A 3-line inline comment explaining the sphinx `-t changelog_towncrier_draft` tag (lines 28-30) is skipped as prose that doesn't change the command itself."
+predecessor = "6.2"
 content = { kind = "lines", spans = [
-  { path = "docs/api_reference.rst", start = 1, end = 49, render = { kind = "full" } },
+  { path = "tox.ini", start = 23, end = 27, render = { kind = "full" } },
+  { path = "tox.ini", start = 31, end = 39, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "6.4"
-descriptor = "downstream/ + scripts/ + .github/ + changelog/ listings"
-justification = """
-Four small support-directory listings batched together: downstream/
-(release-validation scripts for pytest, datasette, devpi, hatch,
-python-lsp-server, tox, conda); scripts/ (release.py +
-towncrier-draft-to-file.py); .github/ (workflows + dependabot +
-FUNDING); changelog/ (pending towncrier fragments). Cheap breadth
-that fixes "where's CI / release tooling / changelog fragments?" in
-one batch.
-"""
-content = { kind = "fs", groups = [
-  { parent = "downstream", entries = "all" },
-  { parent = "scripts", entries = "all" },
-  { parent = ".github", entries = "all" },
-  { parent = ".github/workflows", entries = "all" },
-  { parent = "changelog", entries = "all" },
+descriptor = "tox.ini: [testenv:release]"
+justification = "The release tox environment invoked by RELEASING.rst's `tox -e release -- VERSION` (its own deps: colorama/gitpython/towncrier, running scripts/release.py). (A `[flake8]` section -- a secondary linter behind ruff, just line-length/min-python settings -- immediately precedes this at line 41; not scheduled at this budget.)"
+predecessor = "6.2"
+content = { kind = "lines", spans = [
+  { path = "tox.ini", start = 45, end = 55, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "6.5"
-descriptor = "load_setuptools_entrypoints body"
-justification = """
-The exact loop over `importlib.metadata.distributions()` that
-discovers plugins via entry points - what dist filters apply, how
-`is_blocked` interacts, and that loaded plugins go into
-`_plugin_distinfo`. Common pytest-plugin-discovery question.
-"""
-predecessor = "3.2"
+descriptor = ".pre-commit-config.yaml: repo + hook-id roster"
+justification = "Which repo/hook-id pairs run under `uv run pre-commit run -a` (ruff-check, ruff-format, autoflake, trailing-whitespace, end-of-file-fixer, flake8, rst-backticks, pyupgrade, blacken-docs, a local rst-lint hook, mypy), skipping each hook's `rev`/`args`/`additional_dependencies` lines. Answers 'which linter touched my file' precisely; exact args are a 1-hop grep away in the 51-line file if needed."
 content = { kind = "lines", spans = [
-  { path = "src/pluggy/_manager.py", start = 395, end = 423, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 2, end = 2, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 5, end = 5, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 7, end = 7, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 8, end = 8, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 11, end = 11, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 19, end = 19, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 20, end = 20, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 21, end = 21, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 26, end = 26, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 30, end = 30, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 35, end = 35, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 39, end = 39, render = { kind = "full" } },
+  { path = ".pre-commit-config.yaml", start = 48, end = 48, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = ".coveragerc: [run] section (what coverage.py tracks)"
+justification = "Which paths coverage.py includes (pluggy/*, src/pluggy/*, testing/*) and that branch coverage is on. The three remaining `include` lines (installed-site-packages fallback path variants for the sdist/wheel case -- lib/python*, pypy*, and the Windows `Lib\\site-packages` spelling) are the same fact repeated for each install layout, so they're marked with an ellipsis rather than spelled out. The [report] exclude_lines patterns are lower-value boilerplate (pragma: no cover, TYPE_CHECKING, etc.) omitted at this budget."
+content = { kind = "lines", spans = [
+  { path = ".coveragerc", start = 1, end = 5, render = { kind = "full" } },
+  { path = ".coveragerc", start = 6, end = 6, render = { kind = "ellipsis" } },
+  { path = ".coveragerc", start = 9, end = 9, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "MANIFEST.in: full (sdist inclusion rules)"
+justification = "What the sdist explicitly includes beyond the wheel (CHANGELOG/README/setup.py/tox.ini/LICENSE, the whole testing/ tree) and that .pyc/.pyo are excluded recursively."
+content = { kind = "lines", spans = [
+  { path = "MANIFEST.in", start = 1, end = 7, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 7: changelog + release process.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "CHANGELOG.rst: pluggy 1.6.0 -- version header + deprecations"
+justification = "The current version number/date and the one deprecation (Python 3.8 support dropped) -- ground truth for 'what Python versions does this release support' alongside the classifiers/tox matrix."
+content = { kind = "lines", spans = [
+  { path = "CHANGELOG.rst", start = 22, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "CHANGELOG.rst: pluggy 1.6.0 -- bug fixes"
+justification = "The two bugfixes most relevant to reading 3.4/3.5's code: #504 (Result.get_result() traceback growing longer on repeated calls) and #544 (StopIteration raised inside a generator must pass through hook wrappers as itself, not the RuntimeError CPython wraps it in). The Bug Fixes list has a third, lower-interest entry (#573, a Python 3.14 SyntaxError fix) immediately after; the trailing ellipsis line marks that the list continues rather than silently ending at #544."
+predecessor = "7.1"
+content = { kind = "lines", spans = [
+  { path = "CHANGELOG.rst", start = 34, end = 45, render = { kind = "full" } },
+  { path = "CHANGELOG.rst", start = 48, end = 48, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "changelog/README.rst: newsfragment type taxonomy + naming convention"
+justification = "The exact fragment-type vocabulary (feature/bugfix/doc/removal/vendor/trivial) and naming convention (<issue>.<type>.rst) an agent needs before adding a changelog fragment for any user-facing change -- directly actionable, not inferable from CHANGELOG.rst alone."
+content = { kind = "lines", spans = [
+  { path = "changelog/README.rst", start = 11, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "RELEASING.rst: full release procedure"
+justification = "The exact release steps: optionally smoke-test downstream/ scripts, `tox -e release -- VERSION` (mechanics in 6.2/6.4), open a PR, tag+push to trigger the deploy job in .github/workflows/main.yml (not scheduled at this budget -- its existence is in the 1.4 listing, its CPython-3.10-3.14+PyPy test matrix is a 1-hop read away). Kept whole -- a partial release procedure is worse than none."
+content = { kind = "lines", spans = [
+  { path = "RELEASING.rst", start = 1, end = 27, render = { kind = "full" } },
 ] }

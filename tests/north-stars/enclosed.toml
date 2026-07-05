@@ -1,781 +1,516 @@
 fixture = "enclosed"
 revision_pin = "461c3d41"
 summary = """
-Enclosed is an end-to-end encrypted private-notes web app, organized as a
-pnpm monorepo with six packages: a SolidJS frontend (`app-client`), a
-HonoJS backend with Node and Cloudflare Workers entrypoints
-(`app-server`), a shared TypeScript library exposing the high-level
-`createNote`/`decryptNote` API (`lib`), cross-environment crypto
-primitives over SubtleCrypto and `node:crypto` (`crypto`), a citty CLI
-(`cli`), and a VitePress documentation site (`docs`). The
-walker-targeted query distribution is dominated by self-host /
-configuration questions (env vars, Docker, Cloudflare KV), end-to-end
-encryption explainers (AES-256-GCM + PBKDF2, base key in URL hash),
-backend route + storage tracing, lib API consumers (CLI / app-client /
-external npm users), and i18n / UI questions on the SolidJS client.
-Ranking favors orientation + the public lib surface + server routing +
-the env-var config schema in the early tiers, then descends into
-package-internal detail.
+Enclosed ("@enclosed/*") is a pnpm-workspace TypeScript monorepo: a
+minimalistic end-to-end-encrypted note/file sharing web app (like
+PrivateBin/Bitwarden Send). Seven packages under packages/: `crypto`
+(cross-env AES-256-GCM + PBKDF2 primitives, node:crypto vs SubtleCrypto),
+`lib` (core note creation/decryption orchestration, CBOR serialization,
+API client — the package README calls "the core functionalities"),
+`app-server` (Hono API, pluggable storage: fs-lite/memory/Cloudflare-KV,
+JWT auth, cron-based expired-note cleanup, zod+figue env-var config),
+`app-client` (SolidJS UI: create/view-note pages, i18n in 17 locales,
+dark mode, QR/file-attachment UX), `cli` (`enclosed create|view|config`),
+`docs` (VitePress self-hosting/config/CLI guides, cross-importing
+app-server's config schema to render an env-var table), and
+`deploy-cloudflare` (build.sh + wrangler.toml Cloudflare Pages deploy
+scripts — the README's own Project Structure prose names this as one of
+its 5 highlighted packages but omits `crypto` and `docs`). Deploys as a
+single Docker image (client build served as static assets by the node
+server) or split across Cloudflare Pages (client+worker) / Cloudflare KV.
+
+Query distribution this ranks for: understanding the E2E-encryption flow
+(crypto+lib), adding/debugging API routes or storage drivers, adding a
+config option or CLI flag, fixing a UI flow (create/view note, auth,
+i18n), and operational tasks (build/test/docker/env-config). Given the
+scale (7 packages, ~9k source lines) most of the tree is necessarily
+surfaced only via exhaustive fs listings, name rosters, or heading
+outlines — full-body rendering is reserved for the small set of files
+that most directly implement the README's "How It Works" contract and
+the handful of highest-traffic API/CLI entry points.
 """
 
-# =============================================================================
-# Tier 1: top-level orientation — what is this repo, what's inside it.
-# Threshold test: at any cut inside this tier the agent already knows the
-# concept of the project (e2e-encrypted notes), the workspace shape, and
-# can map a follow-up to the right package directory.
-# =============================================================================
+# ---------------------------------------------------------------------
+# Tier 1 — repo identity, orientation, build/test/deploy entry points
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root listing"
-justification = """
-First-look orientation. Names every immediate child of the repo root so
-the agent sees the monorepo shape (Dockerfiles, docker-compose,
-pnpm-workspace, README, LICENSE, packages/) — catastrophic-omission
-hedge: a partial root listing would mislead self-host queries about
-the existence of Dockerfile.rootless, docker-compose.yml, or
-renovate.json.
-"""
-content = { kind = "fs", groups = [{ parent = ".", entries = "all" }] }
+descriptor = "Root directory listing"
+justification = "Cheapest catastrophic-omission mitigation: every top-level file/dir in one small batch, before any prose narrative can mislead about what exists."
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
 
 [[batches]]
 id = "1.2"
-descriptor = "README h1 + tagline"
-justification = """
-The two most concept-dense lines in the repo: \"Enclosed - Send
-private and secure notes\" and the one-line description. Without this,
-every other batch reads as decontextualized files.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 9, end = 14, render = { kind = "full" } },
-] }
+descriptor = "packages/ directory listing"
+justification = "All 7 workspace members, including `crypto`/`docs` which the README's own Project Structure prose (ranked later, 1.11) omits — ranked before that prose so the omission can't mislead."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages", entries = "all" },
+]
 
 [[batches]]
 id = "1.3"
-descriptor = "packages/ directory listing"
-justification = """
-Names every package directory under `packages/` (app-client,
-app-server, cli, crypto, deploy-cloudflare, docs, lib). Lets the agent
-route most questions to the right package in one hop. Critical
-catastrophic-omission hedge: the README's project-structure section
-later (1.9) omits `crypto` and `docs`; without this fs listing the
-agent would believe those packages don't exist.
-"""
-content = { kind = "fs", groups = [{ parent = "packages", entries = "all" }] }
+descriptor = "README title + tagline"
+justification = "Title + one-line pitch; the cheapest possible 'what is this repo' answer."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 9, end = 14, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.4"
-descriptor = "pnpm workspace glob"
-justification = """
-The `packages: - 'packages/*'` pair from `pnpm-workspace.yaml`.
-Tells the agent every directory under `packages/` is a workspace
-package (which 1.3 already enumerates) — a one-line confirmation that
-this is a single-glob workspace, no nested workspaces.
-"""
-content = { kind = "lines", spans = [
-  { path = "pnpm-workspace.yaml", start = 1, end = 2, render = { kind = "full" } },
-] }
+descriptor = "README intro paragraph"
+justification = "The zero-knowledge/E2E claim spelled out in prose, plus the live-instance pointer; split from 1.3 so each clears the growth envelope on its own."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 26, end = 32, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.5"
-descriptor = "Root package.json — name + version + license"
-justification = """
-Smallest possible identity slice: workspace name (`@enclosed/root`),
-version 1.16.0, packageManager (pnpm@9.15.0), and license
-(Apache-2.0). Splitting the manifest lets the early-cut budget land
-on identity alone before paying for repository/engines/scripts.
-"""
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 1, end = 6, render = { kind = "full" } },
-] }
+descriptor = ".github/ directory listing"
+justification = "Reveals the workflows/ and ISSUE_TEMPLATE/ subdirs plus FUNDING.yml/icons exist, ahead of the CI-workflow content batches ranked later."
+content.kind = "fs"
+content.groups = [
+  { parent = ".github", entries = "all" },
+]
 
 [[batches]]
 id = "1.6"
-descriptor = "Root package.json — author + repo + engines"
-justification = """
-Author, repository URL (GitHub `CorentinTh/enclosed`), and the Node
-`>=22.0.0` engine constraint. Predecessor: 1.5 (the rest of the
-manifest's identity block).
-"""
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 7, end = 14, render = { kind = "full" } },
-] }
+descriptor = "docker-compose.yml"
+justification = "Smallest complete self-host recipe (image, port, persistent volume, restart policy); cheap and directly runnable."
+content.kind = "lines"
+content.spans = [
+  { path = "docker-compose.yml", start = 1, end = 11, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.7"
-descriptor = "pnpm-workspace.yaml — catalog versions"
-justification = """
-Shared catalog versions: antfu eslint config@3.6, @types/node@22.5,
-eslint@9.10, tsx@4.17, typescript@5.6, vitest@3.0.9,
-@vitest/coverage-v8@3.0.9, @corentinth/chisels@1.2. These are the
-single source of truth for the workspace's lint+test+TS toolchain
-versions. Predecessor: 1.4 (workspace glob lines from the same file).
-"""
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "pnpm-workspace.yaml", start = 4, end = 12, render = { kind = "full" } },
-] }
+descriptor = ".github/workflows listing"
+justification = "All 13 workflow files named up front, so the representative-workflow batch ranked later (1.15) doesn't read as if it's the only CI present."
+content.kind = "fs"
+content.groups = [
+  { parent = ".github/workflows", entries = "all" },
+]
 
 [[batches]]
 id = "1.8"
-descriptor = "Root package.json — scripts + keywords + devDeps"
-justification = """
-The only root-level npm scripts (release via `bumpp --recursive`,
-docker:build, docker:run), keywords list, and the single root devDep
-(`bumpp@9.5`). Tells the agent how the workspace is released and that
-all real build/lint/test scripts live per-package. Predecessor: 1.6
-(the rest of this same manifest).
-"""
-predecessor = "1.6"
-content = { kind = "lines", spans = [
-  { path = "package.json", start = 15, end = 33, render = { kind = "full" } },
-] }
+descriptor = ".github/ISSUE_TEMPLATE listing"
+justification = "The 2 issue-template files (bug-report.yml, config.yml), split from 1.7 as its own cheap batch."
+content.kind = "fs"
+content.groups = [
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+]
 
 [[batches]]
 id = "1.9"
-descriptor = "README — project structure (per-package one-liners)"
-justification = """
-The README's authoritative one-liner-per-package map: app-client
-(SolidJS), app-server (HonoJS), deploy-cloudflare, lib (core), cli.
-Fastest path from a feature question to the right package, in prose
-form. Already paired with 1.3 (the fs listing) to mitigate the omission
-of `crypto` and `docs` from this README section.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 140, end = 149, render = { kind = "full" } },
-] }
+descriptor = "pnpm workspace + node version"
+justification = "pnpm-workspace.yaml's package glob + shared dependency catalog (pins eslint-config/typescript/vitest versions across all packages) plus .nvmrc; answers 'which node/pnpm version' and 'why is this dep version shared' in one hop."
+content.kind = "lines"
+content.spans = [
+  { path = "pnpm-workspace.yaml", start = 1, end = 11, render.kind = "full" },
+  { path = ".nvmrc", start = 1, end = 1, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.10"
-descriptor = "README — features list"
-justification = """
-Enumerates the advertised features (e2e encryption, file attachments,
-zero-knowledge, configurable security, i18n, optional auth, dark mode,
-CLI, self-hostable, low carbon). High zero-follow-up value for \"does
-this app support X?\" framing questions.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 36, end = 51, render = { kind = "full" } },
-] }
+descriptor = "Repo hygiene: renovate config"
+justification = "renovate.json (automated dependency updates via config:recommended); low-traffic but cheap, occasionally load-bearing for 'why did a bot PR appear' questions."
+content.kind = "lines"
+content.spans = [
+  { path = "renovate.json", start = 1, end = 6, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.11"
-descriptor = "README — how-it-works (creator side)"
-justification = """
-Steps 1–8 of the encryption flow: note created client-side, base key
-generated, master key derived via PBKDF2/SHA-256 from base key +
-optional password, AES-GCM encryption, ciphertext + metadata posted
-to server, server assigns ID, link generated containing the note ID
-plus the base key as a URL hash fragment (never sent to the server),
-link shared. The first half of the highest zero-follow-up value
-narrative in the repo.
-"""
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 75, end = 84, render = { kind = "full" } },
-] }
+descriptor = "README Project Structure prose"
+justification = "Names 5 of the 7 packages the README calls out with one-line descriptions each, omitting `crypto` and `docs` (packages/ listing at 1.2 already established the real, complete set of 7). The generic monorepo-framing sentence (original line 142) is dropped; the heading + bullets carry the same information."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 140, end = 140, render.kind = "full" },
+  { path = "README.md", start = 144, end = 148, render.kind = "full" },
+]
 
 [[batches]]
 id = "1.12"
-descriptor = "README — how-it-works (recipient side)"
-justification = """
-Steps 9–13 of the encryption flow: recipient retrieves ciphertext +
-metadata by note ID, base key extracted from URL hash fragment,
-optional password prompt, master key re-derived via PBKDF2, AES-GCM
-decryption. Predecessor: 1.11 (creator-side half of the same numbered
-narrative). Splitting the narrative in half keeps both halves under
-the growth envelope while preserving the single-list reading.
-"""
-predecessor = "1.11"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 85, end = 91, render = { kind = "full" } },
-] }
+descriptor = "README Features bullet list"
+justification = "Enumerates the product's feature surface (E2E encryption, file attachments, self-destruct, i18n, auth, self-hostable, CLI); a common one-hop answer for 'does it support X' questions."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 36, end = 50, render.kind = "full" },
+]
 
-# =============================================================================
-# Tier 2: per-package shape and the public lib API surface.
-#
-# This is where an agent learns how the packages connect. The lib's
-# `index.ts` is the highest-leverage cross-package surface — both
-# app-client and CLI consume it. Per-package directory listings are
-# cheap catastrophic-omission hedges: knowing what *files* live in
-# `app-server/src/modules/` makes a single grep land precisely.
-# =============================================================================
+[[batches]]
+id = "1.13"
+descriptor = "Root package.json"
+justification = "Workspace root manifest metadata + scripts (release/docker:build/docker:run); the 'how do I build/release' entry point. Keywords + the single bumpp devDependency are lower-value; an ellipsis marks that the object continues past scripts rather than silently ending."
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 1, end = 19, render.kind = "full" },
+  { path = "package.json", start = 20, end = 20, render.kind = "ellipsis" },
+]
+
+[[batches]]
+id = "1.14"
+descriptor = "CONTRIBUTING: i18n pointer"
+justification = "The i18n contribution pointer (to packages/app-client/src/locales/README.md, ranked in tier 5); PR/branching conventions and the coding-style bullets (generic GitHub-flow / functional-programming advice, lower unique value) are omitted."
+content.kind = "lines"
+content.spans = [
+  { path = "CONTRIBUTING.md", start = 38, end = 44, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.15"
+descriptor = "CI: representative per-package workflow"
+justification = "ci-app-server.yaml's trigger + job header (pull_request/push-to-main, working-directory: packages/app-server) is representative of the 7 near-identical per-package CI workflows (one per packages/ member) named in full by 1.7's exhaustive listing; the step list itself (checkout/pnpm/node-setup/lint/typecheck/test/build, not rendered here — cut before `steps:` rather than into it) differs from file to file only in which steps are commented out (e.g. ci-cli.yaml skips test, ci-lib.yaml skips typecheck)."
+content.kind = "lines"
+content.spans = [
+  { path = ".github/workflows/ci-app-server.yaml", start = 1, end = 15, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.16"
+descriptor = "README 'How It Works' 13-step flow"
+justification = "The authoritative plain-English description of the whole encryption/URL-fragment protocol implemented across crypto+lib+app-server+app-client; directly grounds the crypto/lib usecases batches ranked in tiers 2-3. High semantic value per token — the best zero-follow-up answer for 'how does encryption/sharing work'."
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 75, end = 91, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.17"
+descriptor = "CONTRIBUTING: local dev setup + testing"
+justification = "The canonical 'how do I run this locally / run tests' steps: dev servers per package (backend on :8787, frontend on :3000) and the Vitest command. The clone/pnpm-install preamble (lines 46-62, omitted) is generic and already implied by 1.9's workspace manifest; the watch-mode variant (lines 91-95, omitted) is a minor variant of the same `pnpm test` command."
+content.kind = "lines"
+content.spans = [
+  { path = "CONTRIBUTING.md", start = 63, end = 89, render.kind = "full" },
+  { path = "CONTRIBUTING.md", start = 97, end = 97, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.18"
+descriptor = "Root Dockerfile"
+justification = "The exact per-package build order (crypto -> lib -> app-client -> app-server:build:node) that produces the single Docker image README/docker-compose.yml (1.6) run; the surrounding multi-stage copy/runtime-image boilerplate (the rest of the 42-line file, node:22-slim builder -> node:22-alpine runtime) is standard and lower-value than the build sequence itself. The builder-stage comment (original lines 1-3, an arm/v7-hang rationale for node:22-slim) is dropped in favor of the FROM line itself."
+content.kind = "lines"
+content.spans = [
+  { path = "Dockerfile", start = 4, end = 4, render.kind = "full" },
+  { path = "Dockerfile", start = 23, end = 27, render.kind = "full" },
+]
+
+# ---------------------------------------------------------------------
+# Tier 2 — packages/crypto: cross-env AES-256-GCM + PBKDF2 primitives
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "Top-level lib package contents"
-justification = """
-Direct listing of `packages/lib/` — package.json, README, build.config,
-tsconfig, src/. Smallest possible second-tier batch and primes the
-agent for the lib API surface that follows.
-"""
-content = { kind = "fs", groups = [{ parent = "packages/lib", entries = "all" }] }
+descriptor = "crypto/ directory structure"
+justification = "Full subtree (src/, encryption-algorithms/, node/, node/encryption-algorithms/, web/, web/encryption-algorithms/) in one batch before any content batch, so the node/web split and its test files are established up front."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/crypto", entries = "all" },
+  { parent = "packages/crypto/src", entries = "all" },
+  { parent = "packages/crypto/src/encryption-algorithms", entries = "all" },
+  { parent = "packages/crypto/src/node", entries = "all" },
+  { parent = "packages/crypto/src/node/encryption-algorithms", entries = "all" },
+  { parent = "packages/crypto/src/web", entries = "all" },
+  { parent = "packages/crypto/src/web/encryption-algorithms", entries = "all" },
+]
 
 [[batches]]
 id = "2.2"
-descriptor = "lib/src — top-level source modules"
-justification = """
-Names the lib's submodules: api/, crypto/, files/, notes/, plus the
-`index.ts` aggregator. Single fastest hop to \"where does cryptography
-/ note URL building / API client live\" inside the lib package.
-"""
-content = { kind = "fs", groups = [{ parent = "packages/lib/src", entries = "all" }] }
+descriptor = "crypto package README"
+justification = "States the package's purpose in one sentence: cross-env compatibility shim exposing the same API over node:crypto and SubtleCrypto — the load-bearing design fact for every file in this tier. Trimmed to the description paragraph; the generic npm/yarn/pnpm install-command block (lines 5-16) is boilerplate already implied by every other package's install story."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/crypto/README.md", start = 1, end = 3, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.3"
-descriptor = "@enclosed/lib public API — index.ts re-exports"
-justification = """
-The single file every external consumer (CLI, app-client, npm users)
-imports from. Its named exports are the *complete* public API:
-createNote, createNoteUrl, createNoteUrlHashFragment, decryptNote,
-encryptionAlgorithms, encryptNote, fetchNote, filesToNoteAssets,
-fileToNoteAsset, isApiClientErrorWithCode/StatusCode,
-noteAssets/AssetToFile(s), parseNoteUrl/HashFragment,
-serializationFormats, storeNote. Highest zero-follow-up value batch
-in the lib package — answers \"what does the lib expose / how do I
-use it\" without any further reads.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/lib/src/index.ts", start = 1, end = 28, render = { kind = "full" } },
-] }
+descriptor = "createEnclosedCryptoApi factory"
+justification = "The shared factory both index.node.ts and index.web.ts call to assemble the public crypto API from an env-specific usecases module + the algorithm registry; the one file that ties this whole tier together."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/crypto/src/api-definition.ts", start = 1, end = 25, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.4"
-descriptor = "Top-level app-server package contents"
-justification = """
-Lists `packages/app-server/` — package.json, eslint.config, tsconfig,
-wrangler.toml, src/. Tells the agent the server has a wrangler config
-(Cloudflare Workers) at this level and no separate README; primes
-follow-ups about the dual Node/Cloudflare entrypoints.
-"""
-content = { kind = "fs", groups = [{ parent = "packages/app-server", entries = "all" }] }
+descriptor = "Node key-derivation + buffer usecases"
+justification = "node:crypto-backed base64url conversion, base-key generation, and PBKDF2-SHA256 master-key derivation (100_000 iterations) — half of the README's 'How It Works' step 3, node side."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/crypto/src/node/crypto.node.usecases.ts", start = 1, end = 40, render.kind = "full" },
+]
 
 [[batches]]
 id = "2.5"
-descriptor = "Top-level app-client package contents"
-justification = """
-Lists `packages/app-client/` — package.json, vite.config, uno.config,
-playwright.config, components.json (shadcn-solid), index.html, src/,
-e2e-tests/, public/, .env.example, README.md. Tells the agent the
-client uses Vite + UnoCSS + shadcn-solid + Playwright, all visible at
-a glance.
-"""
-content = { kind = "fs", groups = [{ parent = "packages/app-client", entries = "all" }] }
+descriptor = "Node AES-256-GCM implementation"
+justification = "encryptBuffer/decryptString via node:crypto createCipheriv/createDecipheriv; encrypted-string wire format is `base64url(iv):base64url(ciphertext+authTag)`, relied on by lib's crypto.usecases.ts (3.3). The web-side counterpart (crypto.web.aes-256-gcm.ts, named by 2.1's listing) implements the same wire format over SubtleCrypto but isn't rendered given budget."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts", start = 1, end = 40, render.kind = "full" },
+]
 
-[[batches]]
-id = "2.6"
-descriptor = "Top-level cli + crypto + docs package contents"
-justification = """
-Combined listing of the three smaller packages: cli/ (build.config,
-bin/, src/, README), crypto/ (build.config, src/, README), docs/
-(package.json, .vitepress/, src/). Bundling them keeps a single batch
-under the growth envelope while still hedging catastrophic omission
-across all three at once. CLI has a `bin/` entrypoint dir; crypto has
-no top-level config beyond build.config.ts; docs has VitePress config.
-"""
-content = { kind = "fs", groups = [
-  { parent = "packages/cli", entries = "all" },
-  { parent = "packages/crypto", entries = "all" },
-  { parent = "packages/docs", entries = "all" },
-] }
-
-[[batches]]
-id = "2.7"
-descriptor = "@enclosed/lib README — install + usage example"
-justification = """
-The npm-package README: install commands and a 6-line usage example
-that calls `createNote({ content, password, ttlInSeconds,
-deleteAfterReading })` and logs `noteUrl`. The single highest
-zero-follow-up value batch for \"how do I use the lib\" — no further
-reads required for the basic case.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/lib/README.md", start = 1, end = 31, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "2.8"
-descriptor = "lib package.json — runtime dependencies"
-justification = """
-The `@enclosed/lib` runtime deps that drive its behaviour:
-`@enclosed/crypto` (workspace dep — supplies the AES-GCM + PBKDF2
-primitives), `cbor-x` (note serialization), `msgpackr`, `ofetch`
-(HTTP client used by `notes.services`), `@corentinth/chisels`,
-`lodash-es`. Selecting only the deps block keeps this small while
-still answering \"what does the lib actually depend on\".
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/lib/package.json", start = 39, end = 46, render = { kind = "full" } },
-] }
-
-# =============================================================================
-# Tier 3: server topology — entrypoints, route registration, module map.
-#
-# This is the highest-leverage backend tier. The server is split into a
-# Hono `createServer` factory plus two thin entrypoints (Node + Cloudflare
-# Workers); registering routes happens in `notes.routes.ts`,
-# `auth.routes.ts`, `config.routes.ts`. Knowing the routes and the
-# middleware stack makes most backend questions one hop away.
-# =============================================================================
+# ---------------------------------------------------------------------
+# Tier 3 — packages/lib: note/crypto orchestration ("core functionalities")
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "app-server/src — top-level entry layout"
-justification = """
-Lists the app-server entry surface: `index.cloudflare.ts`,
-`index.node.ts`, `modules/`, `reset.d.ts`, `scripts/`. Tells the agent
-the server has two entrypoints (Node + Cloudflare) and that the rest
-lives under `modules/`. Catastrophic-omission hedge for the dual-entry
-pattern.
-"""
-content = { kind = "fs", groups = [{ parent = "packages/app-server/src", entries = "all" }] }
+descriptor = "lib/ directory structure"
+justification = "Full subtree (api/, crypto/, crypto/encryption-algorithms/, crypto/serialization/, crypto/serialization/cbor-array/, files/, notes/) in one batch before any content, establishing every module this package's public index.ts (3.2) re-exports from."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/lib", entries = "all" },
+  { parent = "packages/lib/src", entries = "all" },
+  { parent = "packages/lib/src/api", entries = "all" },
+  { parent = "packages/lib/src/crypto", entries = "all" },
+  { parent = "packages/lib/src/crypto/encryption-algorithms", entries = "all" },
+  { parent = "packages/lib/src/crypto/serialization", entries = "all" },
+  { parent = "packages/lib/src/crypto/serialization/cbor-array", entries = "all" },
+  { parent = "packages/lib/src/files", entries = "all" },
+  { parent = "packages/lib/src/notes", entries = "all" },
+]
 
 [[batches]]
 id = "3.2"
-descriptor = "app-server/src/modules — module map"
-justification = """
-Names every top-level module under `modules/`: app/, notes/, shared/,
-storage/, tasks/. This is the navigational backbone for the server —
-tells the agent the domain modules (`notes`), the framework wiring
-(`app`: server, auth, config, middlewares, users), the cross-cutting
-helpers (`shared`: errors, logger, utils, validation), the storage
-layer, and the cron scheduler.
-"""
-content = { kind = "fs", groups = [
-  { parent = "packages/app-server/src/modules", entries = "all" },
-  { parent = "packages/app-server/src/modules/app", entries = "all" },
-  { parent = "packages/app-server/src/modules/notes", entries = "all" },
-  { parent = "packages/app-server/src/modules/storage", entries = "all" },
-  { parent = "packages/app-server/src/modules/storage/factories", entries = "all" },
-  { parent = "packages/app-server/src/modules/tasks", entries = "all" },
-] }
+descriptor = "lib public API surface (index.ts)"
+justification = "Every symbol @enclosed/lib exports (createNote, encrypt/decryptNote, note-URL parsing, file<->asset conversion, api-error predicates) in one place — the roster an agent needs before importing anything from this package."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/lib/src/index.ts", start = 1, end = 28, render.kind = "full" },
+]
 
 [[batches]]
 id = "3.3"
-descriptor = "Cloudflare Workers entrypoint (full)"
-justification = """
-The complete `index.cloudflare.ts` (8 lines): wires
-`createCloudflareKVStorageFactory` into `createServer` and exports
-`app` as the Workers default. Smallest of the two entrypoints; reads
-in full and answers \"what gets deployed to Cloudflare\" with zero
-follow-up.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/index.cloudflare.ts", start = 1, end = 8, render = { kind = "full" } },
-] }
+descriptor = "crypto.usecases.ts: encryptNote/decryptNote"
+justification = "The single highest-value file in this tier: the orchestration that ties serialization + @enclosed/crypto together, implementing README 'How It Works' steps 1-4 (encrypt) and 9-13 (decrypt) as actual code."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/lib/src/crypto/crypto.usecases.ts", start = 1, end = 63, render.kind = "full" },
+]
 
-[[batches]]
-id = "3.4"
-descriptor = "Hono createServer factory + middleware stack"
-justification = """
-The full `app/server.ts`: composes the Hono app, applies the middleware
-stack in order (logger, config, timeout, cors, storage, secureHeaders,
-authentication), registers error middleware, then registers the auth /
-config / notes route groups, and adds the `/api/ping` healthcheck.
-Highest zero-follow-up value batch in the server — anyone asking
-\"what middlewares run / what routes exist / how is the server wired\"
-gets a complete answer here.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/app/server.ts", start = 1, end = 41, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.5"
-descriptor = "Notes routes — endpoint registrations (locations only)"
-justification = """
-Catastrophic-omission hedge: lists every endpoint registered by
-`notes.routes.ts` in one batch — `GET /api/notes/:noteId`,
-`GET /api/notes/:noteId/exists`, `POST /api/notes` — by including the
-three `setupX` calls in `registerNotesRoutes` plus the route-string
-literals. Without this batch, an agent who reads only one of the
-later sub-batches could believe there are fewer endpoints than there
-are. Cheap (1-20 line slice).
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/notes/notes.routes.ts", start = 1, end = 20, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.6"
-descriptor = "Notes routes — POST /api/notes payload schema + validation handler"
-justification = """
-The create-note endpoint: `protectedRouteMiddleware` gating, full zod
-schema (`payload: string`, `deleteAfterReading: boolean`,
-`ttlInSeconds` bounded by `TEN_MINUTES_IN_SECONDS` and
-`ONE_MONTH_IN_SECONDS`, `encryptionAlgorithm` / `serializationFormat`
-enums sourced from `@enclosed/lib`, `isPublic` defaulting to true),
-the per-payload validation that throws
-`createNotePayloadTooLargeError` /
-`createCannotCreatePrivateNoteOnPublicInstanceError` /
-`createExpirationDelayRequiredError`, and the storage-side handler
-that calls `notesRepository.saveNote` and returns `{ noteId }`.
-Highest zero-follow-up value sub-batch in the routes file — the
-create-note path is the most commonly traced flow.
-"""
-predecessor = "3.5"
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/notes/notes.routes.ts", start = 86, end = 126, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.7"
-descriptor = "Notes routes — GET /api/notes/:noteId + private-note auth gating"
-justification = """
-The view-note endpoint with its per-note authorization middleware:
-when `config.public.isAuthenticationRequired` is true, the gate
-fetches the note, lets public notes through unauthenticated, and
-throws `createUnauthorizedError` for private notes when
-`isAuthenticated` is false. The handler then calls `getRefreshedNote`
-(which deletes expired or `deleteAfterReading` notes) and emits the
-note via `formatNoteForApi`. Predecessor: 3.5 (the route registrar
-already named this endpoint).
-"""
-predecessor = "3.5"
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/notes/notes.routes.ts", start = 22, end = 68, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.8"
-descriptor = "Notes routes — GET /api/notes/:noteId/exists"
-justification = """
-The exists-check endpoint used by the client when previewing a
-delete-after-reading note before triggering the destructive read.
-Smallest sub-batch; closes the routes file.
-"""
-predecessor = "3.5"
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/notes/notes.routes.ts", start = 70, end = 84, render = { kind = "full" } },
-] }
-
-# =============================================================================
-# Tier 4: configuration schema, Node + Cloudflare wiring, storage layer.
-#
-# After tier 3 the agent knows the routes but not what the server is
-# *configured with* nor *how it boots*. The figue/zod env-var schema
-# in `config.ts` is the most-asked-about backend artifact (every
-# self-host doc question bottoms out here).
-# =============================================================================
+# ---------------------------------------------------------------------
+# Tier 4 — packages/app-server: Hono API, storage drivers, auth, tasks
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "Config — env var name catalog (locations only)"
-justification = """
-Catastrophic-omission hedge: lists every `env: 'X'` line in
-`config.ts` with one Truncated span each, surfacing all NODE_ENV /
-PORT / SERVER_API_ROUTES_TIMEOUT_MS / SERVER_CORS_ORIGINS /
-SERVER_USE_HTTPS / SERVER_HTTPS_(KEY|CERT|CA|PFX|PASSPHRASE) /
-NOTES_MAX_ENCRYPTED_PAYLOAD_LENGTH /
-TASK_DELETE_EXPIRED_NOTES_(ENABLED|CRON|RUN_ON_STARTUP) /
-STORAGE_DRIVER_FS_LITE_PATH / STORAGE_DRIVER_CLOUDFLARE_KV_BINDING /
-PUBLIC_BASE_API_URL / PUBLIC_IS_AUTHENTICATION_REQUIRED /
-PUBLIC_DEFAULT_DELETE_NOTE_AFTER_READING /
-PUBLIC_DEFAULT_NOTE_TTL_SECONDS /
-PUBLIC_IS_SETTING_NO_EXPIRATION_ALLOWED /
-PUBLIC_DEFAULT_NOTE_NO_EXPIRATION /
-PUBLIC_VIEW_NOTE_PATH_PREFIX / AUTHENTICATION_JWT_SECRET /
-AUTHENTICATION_JWT_DURATION_SECONDS / AUTHENTICATION_USERS env-var
-names without bodies. Most self-host questions resolve here in zero
-hops — a grep on the env-var name then anchors a precise read.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 10, end = 10, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 17, end = 17, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 23, end = 23, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 32, end = 32, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 43, end = 43, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 50, end = 50, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 56, end = 56, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 62, end = 62, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 68, end = 68, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 74, end = 74, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 83, end = 83, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 97, end = 97, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 103, end = 103, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 114, end = 114, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 125, end = 125, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 133, end = 133, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 143, end = 143, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 154, end = 154, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 165, end = 165, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 179, end = 179, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 190, end = 190, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 201, end = 201, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 207, end = 207, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 215, end = 215, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 221, end = 221, render = { kind = "truncated", pattern = "^.*env: '" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 253, end = 253, render = { kind = "truncated", pattern = "^.*env: '" } },
-] }
+descriptor = "app-server/ directory structure"
+justification = "Full subtree across `modules/` itself and all its children (app/auth, app/config, app/middlewares, app/users, notes, notes/e2e, notes/tasks, shared/ itself plus shared/errors, shared/logger, shared/utils, shared/validation, storage, storage/factories, tasks) plus scripts/ — this package has the most files in the repo (60), so exhaustive listing here is the load-bearing catastrophic-omission guard for the whole tier."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/app-server", entries = "all" },
+  { parent = "packages/app-server/src", entries = "all" },
+  { parent = "packages/app-server/src/modules", entries = "all" },
+  { parent = "packages/app-server/src/modules/app", entries = "all" },
+  { parent = "packages/app-server/src/modules/app/auth", entries = "all" },
+  { parent = "packages/app-server/src/modules/app/auth/e2e", entries = "all" },
+  { parent = "packages/app-server/src/modules/app/config", entries = "all" },
+  { parent = "packages/app-server/src/modules/app/middlewares", entries = "all" },
+  { parent = "packages/app-server/src/modules/app/users", entries = "all" },
+  { parent = "packages/app-server/src/modules/notes", entries = "all" },
+  { parent = "packages/app-server/src/modules/notes/e2e", entries = "all" },
+  { parent = "packages/app-server/src/modules/notes/tasks", entries = "all" },
+  { parent = "packages/app-server/src/modules/shared", entries = "all" },
+  { parent = "packages/app-server/src/modules/shared/errors", entries = "all" },
+  { parent = "packages/app-server/src/modules/shared/logger", entries = "all" },
+  { parent = "packages/app-server/src/modules/shared/utils", entries = "all" },
+  { parent = "packages/app-server/src/modules/shared/validation", entries = "all" },
+  { parent = "packages/app-server/src/modules/storage", entries = "all" },
+  { parent = "packages/app-server/src/modules/storage/factories", entries = "all" },
+  { parent = "packages/app-server/src/modules/tasks", entries = "all" },
+  { parent = "packages/app-server/src/scripts", entries = "all" },
+]
 
 [[batches]]
 id = "4.2"
-descriptor = "Config — defaults for the most-asked-about env vars"
-justification = """
-Adds the *default values* for the highest-traffic config keys: the
-`/path-with-slash` defaults of PUBLIC_* (baseApiUrl, authentication-
-required, view-note-path-prefix, etc.), TTL bounds for
-PUBLIC_DEFAULT_NOTE_TTL_SECONDS, the `change-me` jwtSecret, the
-`AUTHENTICATION_USERS = email:hash,email:hash` parser. Predecessor:
-4.1 has the names; this batch refines the *behavior* of the public
-+ auth subsections so a self-host configurator can answer \"what's
-the default / valid range\" without reading 266 lines of figue.
-"""
-predecessor = "4.1"
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 138, end = 180, render = { kind = "full" } },
-] }
+descriptor = "REST API surface (method + path per route)"
+justification = "Every HTTP route the server exposes, extracted across notes.routes.ts/auth.routes.ts/config.routes.ts as bare `app.get/post(path, ...)` lines: GET/POST /api/notes(/:noteId)(/exists), POST /api/auth/login, GET /api/config, plus the always-on GET /api/ping in server.ts (4.3). The single cheapest, highest-value atom in this tier for 'what endpoints exist' — a one-hop answer that would otherwise require reading 3+ files."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/app-server/src/modules/notes/notes.routes.ts", start = 23, end = 24, render.kind = "full" },
+  { path = "packages/app-server/src/modules/notes/notes.routes.ts", start = 71, end = 72, render.kind = "full" },
+  { path = "packages/app-server/src/modules/notes/notes.routes.ts", start = 87, end = 88, render.kind = "full" },
+  { path = "packages/app-server/src/modules/app/auth/auth.routes.ts", start = 22, end = 23, render.kind = "full" },
+  { path = "packages/app-server/src/modules/app/config/config.routes.ts", start = 8, end = 8, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.3"
-descriptor = "Config — getConfig export + figue setup"
-justification = """
-The `getConfig({ env })` wrapper at the bottom of `config.ts` plus
-the figue/zod imports at the top. Tells the agent how the schema
-becomes a typed config object — `createConfigMiddleware` calls
-`getConfig({ env })` per request on Cloudflare and once at boot on
-Node. Predecessor: 4.1 (named the env-var slots).
-"""
-predecessor = "4.1"
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 1, end = 4, render = { kind = "full" } },
-  { path = "packages/app-server/src/modules/app/config/config.ts", start = 256, end = 265, render = { kind = "full" } },
-] }
+descriptor = "server.ts: Hono app assembly"
+justification = "createServer: the exact middleware order (logger -> config -> timeout -> cors -> storage -> secureHeaders -> auth -> error/route registration) plus the GET /api/ping healthcheck — the one file that shows how every other module in this tier is wired together."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/app-server/src/modules/app/server.ts", start = 1, end = 41, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.4"
-descriptor = "Node.js entrypoint — config + storage + server build"
-justification = """
-First half of `index.node.ts`: imports, `getConfig({ env })` boot
-with safe-sync error exit on bad config, `createFsLiteStorage`,
-`createServer({ config, storageFactory })`. The wiring half — what
-makes the Hono app go.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/index.node.ts", start = 16, end = 27, render = { kind = "full" } },
-] }
+descriptor = "config.ts top-level section keys"
+justification = "The 7 top-level sections of the env-var config schema (env, server, notes, tasks, storage, public, authentication) as bare key lines, without the ~250 lines of zod schema/doc/default per leaf key. Answers 'what areas of behavior are configurable' cheaply. docs/self-hosting/configuration.md (named by 7.1's listing, not otherwise rendered here) is VitePress-rendered from this same config.ts at doc-build time via a walk() over configDefinition, and is where the leaf-level env-var names/defaults actually live."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/app-server/src/modules/app/config/config.ts", start = 5, end = 6, render.kind = "full" },
+  { path = "packages/app-server/src/modules/app/config/config.ts", start = 12, end = 12, render.kind = "full" },
+  { path = "packages/app-server/src/modules/app/config/config.ts", start = 78, end = 78, render.kind = "full" },
+  { path = "packages/app-server/src/modules/app/config/config.ts", start = 86, end = 86, render.kind = "full" },
+  { path = "packages/app-server/src/modules/app/config/config.ts", start = 118, end = 118, render.kind = "full" },
+  { path = "packages/app-server/src/modules/app/config/config.ts", start = 138, end = 138, render.kind = "full" },
+  { path = "packages/app-server/src/modules/app/config/config.ts", start = 210, end = 210, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.5"
-descriptor = "Node.js entrypoint — static + SPA fallback + cron + listen"
-justification = """
-Second half of `index.node.ts`: `serveStatic` middleware on
-`public/`, the SPA-fallback that injects the public config into
-`index.html` via `injectPublicConfigInIndex`, the
-`createTaskScheduler({ taskDefinitions: [deleteExpiredNotesTask] })`
-+ `start()` call, the `serve()` listener with optional HTTPS, and
-the SIGINT cleanup. Predecessor: 4.4.
-"""
-predecessor = "4.4"
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/index.node.ts", start = 35, end = 70, render = { kind = "full" } },
-] }
+descriptor = "auth.middleware.ts: JWT gate"
+justification = "authenticationMiddleware (sets isAuthenticated from the Bearer JWT, or skips entirely if the instance doesn't require auth) + protectedRouteMiddleware (the 401-throwing gate notes.routes.ts's create-note route uses) — the whole authorization decision in one 42-line file."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/app-server/src/modules/app/auth/auth.middleware.ts", start = 1, end = 42, render.kind = "full" },
+]
 
 [[batches]]
 id = "4.6"
-descriptor = "Storage drivers — memory + fs-lite"
-justification = """
-The two unstorage-backed drivers in full. Memory (`createMemoryStorage`,
-9 lines, used by tests) and fs-lite (`createFsLiteStorage`, 14 lines,
-Node default writing to `STORAGE_DRIVER_FS_LITE_PATH=./.data`). The
-Cloudflare KV driver is in the next batch because it carries the
-413 translation.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/storage/factories/memory.storage.ts", start = 1, end = 9, render = { kind = "full" } },
-  { path = "packages/app-server/src/modules/storage/factories/fs-lite.storage.ts", start = 1, end = 14, render = { kind = "full" } },
-] }
+descriptor = "notes.models.ts + notes.constants.ts"
+justification = "isNoteExpired/formatNoteForApi/getNoteExpirationDate (the expiration and API-shape rules notes.repository.ts, notes.routes.ts (4.2), and the delete-expired-notes cron task all depend on) plus the TTL bound constants (10min floor, 1-month ceiling) enforced by notes.routes.ts's zod schema."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/app-server/src/modules/notes/notes.models.ts", start = 1, end = 25, render.kind = "full" },
+  { path = "packages/app-server/src/modules/notes/notes.constants.ts", start = 1, end = 3, render.kind = "full" },
+]
 
-[[batches]]
-id = "4.7"
-descriptor = "Storage driver — Cloudflare KV (with 413 translation)"
-justification = """
-The Cloudflare KV driver: pulls the binding off `context.env` by name
-(default `notes`), wraps `setItem` to translate the
-`KV PUT failed: 413 Value length of` error from
-`looksLikeCloudflare413Error` into the
-`KV_VALUE_LENGTH_EXCEEDED_ERROR_CODE` custom error that
-`notes.repository.saveNote` catches and re-throws as
-`createNotePayloadTooLargeError`. The 413-translation chain answers
-\"why does the API return 413 instead of a Cloudflare error\".
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.ts", start = 11, end = 42, render = { kind = "full" } },
-] }
-
-# =============================================================================
-# Tier 5: notes domain bodies + auth + crypto + lib internals + CLI/client.
-# Highly compact from here — under-1600-token budget remains.
-# =============================================================================
+# ---------------------------------------------------------------------
+# Tier 5 — packages/app-client: SolidJS UI
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "Notes — models + types + constants"
-justification = """
-Combined catalog of three small notes-domain files: models
-(`isNoteExpired`, `formatNoteForApi`, `getNoteExpirationDate` —
-the helpers used by both routes and the `getRefreshedNote`
-usecase), types (`DatabaseNote` with ISO-string `expirationDate` and
-`Note` with the date coerced back), and the TTL constants
-(`TEN_MINUTES_IN_SECONDS` / `ONE_DAY_IN_SECONDS` /
-`ONE_MONTH_IN_SECONDS`). Cheap full-file include — the four custom
-error factories are reachable via the route batches (3.6 already
-references `createNotePayloadTooLargeError` etc. by name).
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/notes/notes.models.ts", start = 5, end = 25, render = { kind = "full" } },
-  { path = "packages/app-server/src/modules/notes/notes.types.ts", start = 1, end = 19, render = { kind = "full" } },
-  { path = "packages/app-server/src/modules/notes/notes.constants.ts", start = 1, end = 3, render = { kind = "full" } },
-] }
+descriptor = "app-client/ directory structure"
+justification = "Full subtree across modules/ itself and its children (auth,config,docs,files,i18n,notes,notes/components,notes/pages,shared/ itself plus shared/*,theme,ui/ itself plus ui/components,ui/layouts), locales/, e2e-tests/, and public/ — this package has the most files after app-server (91), so exhaustive listing is the load-bearing catastrophic-omission guard here."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/app-client", entries = "all" },
+  { parent = "packages/app-client/src", entries = "all" },
+  { parent = "packages/app-client/src/locales", entries = "all" },
+  { parent = "packages/app-client/src/modules", entries = "all" },
+  { parent = "packages/app-client/src/modules/auth", entries = "all" },
+  { parent = "packages/app-client/src/modules/auth/pages", entries = "all" },
+  { parent = "packages/app-client/src/modules/config", entries = "all" },
+  { parent = "packages/app-client/src/modules/docs", entries = "all" },
+  { parent = "packages/app-client/src/modules/files", entries = "all" },
+  { parent = "packages/app-client/src/modules/i18n", entries = "all" },
+  { parent = "packages/app-client/src/modules/notes", entries = "all" },
+  { parent = "packages/app-client/src/modules/notes/components", entries = "all" },
+  { parent = "packages/app-client/src/modules/notes/pages", entries = "all" },
+  { parent = "packages/app-client/src/modules/shared", entries = "all" },
+  { parent = "packages/app-client/src/modules/shared/files", entries = "all" },
+  { parent = "packages/app-client/src/modules/shared/http", entries = "all" },
+  { parent = "packages/app-client/src/modules/shared/hooks", entries = "all" },
+  { parent = "packages/app-client/src/modules/shared/style", entries = "all" },
+  { parent = "packages/app-client/src/modules/shared/utils", entries = "all" },
+  { parent = "packages/app-client/src/modules/theme", entries = "all" },
+  { parent = "packages/app-client/src/modules/ui", entries = "all" },
+  { parent = "packages/app-client/src/modules/ui/components", entries = "all" },
+  { parent = "packages/app-client/src/modules/ui/layouts", entries = "all" },
+  { parent = "packages/app-client/src/scripts", entries = "all" },
+  { parent = "packages/app-client/e2e-tests", entries = "all" },
+]
 
 [[batches]]
 id = "5.2"
-descriptor = "Notes repository — exports + factory + getRefreshedNote usecase"
-justification = """
-Tight notes-persistence catalog: the `createNoteRepository` factory
-and the `export { ... }` line naming the five exposed functions
-(`saveNote`, `getNoteById`, `getNotesIds`, `deleteNoteById`,
-`getNoteExists`), plus the full `getRefreshedNote({ noteId,
-notesRepository, now })` usecase from `notes.usecases.ts` which
-implements the TTL-expiry + delete-after-read semantics. Bodies of
-saveNote/getNoteById are reachable in one read once their names
-land here.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/notes/notes.repository.ts", start = 10, end = 25, render = { kind = "full" } },
-  { path = "packages/app-server/src/modules/notes/notes.usecases.ts", start = 1, end = 31, render = { kind = "full" } },
-] }
+descriptor = "routes.tsx: page routing table"
+justification = "The whole app in one file: '/' -> CreateNotePage, the (config-driven, prefixable) note-id path -> ViewNotePage, '/login' -> LoginPage, plus the 404 fallback — the fastest orientation for 'where does page X live'. All four route entries are shown; the 404 page's JSX markup body (lines 35-44, a static not-found div) is elided behind an ellipsis since the route's existence and path are the useful part, not its markup."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/app-client/src/routes.tsx", start = 1, end = 33, render.kind = "full" },
+  { path = "packages/app-client/src/routes.tsx", start = 34, end = 34, render.kind = "ellipsis" },
+  { path = "packages/app-client/src/routes.tsx", start = 45, end = 54, render.kind = "full" },
+]
 
 [[batches]]
 id = "5.3"
-descriptor = "Auth catalog — errors + models + services signatures"
-justification = """
-Three tiny auth-helper files plus the signatures of
-`arePasswordsMatching` / `createJwtToken` / `isJwtValid` in
-`auth.services.ts`. `auth.errors.ts` owns the single
-`createUnauthorizedError` factory (code `auth.unauthorized`/401);
-`auth.models.ts` owns `extractAccessToken` for `Authorization:
-Bearer X`. Truncated signatures of the three services keep this
-batch small while still naming what's available.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/app/auth/auth.errors.ts", start = 1, end = 7, render = { kind = "full" } },
-  { path = "packages/app-server/src/modules/app/auth/auth.models.ts", start = 1, end = 15, render = { kind = "full" } },
-  { path = "packages/app-server/src/modules/app/auth/auth.services.ts", start = 4, end = 4, render = { kind = "full" } },
-  { path = "packages/app-server/src/modules/app/auth/auth.services.ts", start = 6, end = 6, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "packages/app-server/src/modules/app/auth/auth.services.ts", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "packages/app-server/src/modules/app/auth/auth.services.ts", start = 24, end = 24, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+descriptor = "notes.usecases.ts + notes.services.ts"
+justification = "encryptAndCreateNote (calls @enclosed/lib's createNote with the browser-side file assets + storeNote callback) and the three API calls (storeNote/fetchNoteById/fetchNoteExists) — the client-side half of the create/view-note flow, mirroring app-server's notes.routes.ts (4.2). storeNote rendered in full (its POST /api/notes body shape is the interesting part); fetchNoteById/fetchNoteExists reduced to signature + ellipsis since both are one-line apiClient GET wrappers with no comparable shape detail."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/app-client/src/modules/notes/notes.usecases.ts", start = 1, end = 23, render.kind = "full" },
+  { path = "packages/app-client/src/modules/notes/notes.services.ts", start = 1, end = 34, render.kind = "full" },
+  { path = "packages/app-client/src/modules/notes/notes.services.ts", start = 36, end = 36, render.kind = "full" },
+  { path = "packages/app-client/src/modules/notes/notes.services.ts", start = 37, end = 37, render.kind = "ellipsis" },
+  { path = "packages/app-client/src/modules/notes/notes.services.ts", start = 51, end = 51, render.kind = "full" },
+  { path = "packages/app-client/src/modules/notes/notes.services.ts", start = 52, end = 52, render.kind = "ellipsis" },
+]
 
 [[batches]]
 id = "5.4"
-descriptor = "Auth middleware — gating + protected-route guard"
-justification = """
-`authenticationMiddleware` parses the `Authorization: Bearer X`
-header and sets `isAuthenticated` on the Hono context — but only
-when `config.public.isAuthenticationRequired` is true (otherwise
-it's a no-op pass-through). `protectedRouteMiddleware` throws
-`createUnauthorizedError` when auth is required and the request
-isn't authenticated.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/app/auth/auth.middleware.ts", start = 1, end = 29, render = { kind = "full" } },
-] }
+descriptor = "Locales roster"
+justification = "All 17 supported-locale keys, exhaustively (not a sample) — the roster an agent needs before touching translations. locales/README.md (contribution steps: add a JSON file, register it here, run script:get-missing-i18n-keys) is named by 5.1's listing but not rendered given budget."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/app-client/src/locales/locales.ts", start = 1, end = 20, render.kind = "full" },
+]
 
-[[batches]]
-id = "5.5"
-descriptor = "Auth login route — handler body (timing-safe bcrypt + JWT issue)"
-justification = """
-The handler body of POST `/api/auth/login`: zod-validated `{ email,
-password }`, `getUserByEmail` lookup, **timing-safe** bcrypt compare
-against a `'dummy'` hash on missing user (prevents user-existence
-leaks via timing), JWT issued via `createJwtToken({ jwtSecret,
-durationSec })` with the `AUTHENTICATION_JWT_DURATION_SECONDS` from
-config. Returns `{ accessToken }`.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-server/src/modules/app/auth/auth.routes.ts", start = 14, end = 50, render = { kind = "full" } },
-] }
-
-# =============================================================================
-# Tier 6: lib + CLI + client — one batch per package.
-# =============================================================================
+# ---------------------------------------------------------------------
+# Tier 6 — packages/cli: `enclosed create|view|config`
+# ---------------------------------------------------------------------
 
 [[batches]]
 id = "6.1"
-descriptor = "Lib — encryptNote body (crypto.usecases)"
-justification = """
-`encryptNote({ content, password, assets, encryptionAlgorithm,
-serializationFormat })`: pulls serialization + encryption methods
-from the `@enclosed/crypto` registries, generates the base key,
-derives the master key with optional password, AES-GCM-encrypts the
-serialized note buffer, and base64url-encodes the base key as
-`encryptionKey`. The bridge between `lib`'s `createNote` flow and
-`@enclosed/crypto` primitives. `decryptNote` is the inverse.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/lib/src/crypto/crypto.usecases.ts", start = 9, end = 36, render = { kind = "full" } },
-] }
+descriptor = "cli/ directory structure"
+justification = "Full subtree (src/config, src/create-note, src/files, src/shared, src/view-note, bin/) in one batch — the smallest of the six source packages (deploy-cloudflare, tier 7, is smaller still but is a 3-file build-script package rather than a product surface), but its own tier since the README/docs both document it as an installable, standalone product surface."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/cli", entries = "all" },
+  { parent = "packages/cli/src", entries = "all" },
+  { parent = "packages/cli/src/config", entries = "all" },
+  { parent = "packages/cli/src/create-note", entries = "all" },
+  { parent = "packages/cli/src/files", entries = "all" },
+  { parent = "packages/cli/src/shared", entries = "all" },
+  { parent = "packages/cli/src/view-note", entries = "all" },
+  { parent = "packages/cli/bin", entries = "all" },
+]
 
 [[batches]]
 id = "6.2"
-descriptor = "Lib — note URL hash-fragment markers (`pw` / `dar`)"
-justification = """
-The two URL-hash markers `pw` (password-protected) and `dar`
-(deleted-after-reading) that the share link encodes alongside the
-base64url base key, plus the export list naming the four URL
-helpers. A grep on `pw:` or `dar:` in the URL hash lands here.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/lib/src/notes/notes.models.ts", start = 1, end = 7, render = { kind = "full" } },
-] }
+descriptor = "cli.ts: subcommand registration"
+justification = "The whole CLI's shape in 18 lines: `enclosed create|view|config` via citty's defineCommand/runMain — the entrypoint every flag-level detail (create-note.command.ts etc., named by 6.1 but not otherwise rendered given budget) hangs off."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/cli/src/cli.ts", start = 1, end = 18, render.kind = "full" },
+]
+
+# ---------------------------------------------------------------------
+# Tier 7 — packages/docs + packages/deploy-cloudflare
+# ---------------------------------------------------------------------
 
 [[batches]]
-id = "6.3"
-descriptor = "CLI dispatcher + create-note args"
-justification = """
-`packages/cli/src/cli.ts` (citty `defineCommand` with subcommands
-`create` / `view` / `config`) plus the create-note args block
-(`content` positional, `--password/-p`, `--ttl/-t` defaulting to
-`ONE_HOUR_IN_SECONDS = 3600`, `--deleteAfterReading/-d`,
-`--file/-f` repeatable, `--stdin/-s`). The full surface for \"what
-flags does the CLI support / how do I script note creation\".
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/cli/src/cli.ts", start = 1, end = 18, render = { kind = "full" } },
-  { path = "packages/cli/src/create-note/create-note.command.ts", start = 13, end = 24, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.4"
-descriptor = "App-client — Solid Router routes"
-justification = """
-The client routing topology: `/` → `CreateNotePage`, the dynamic
-view-note path under `viewNotePathPrefix` → `ViewNotePage` filtered
-by `NOTE_ID_REGEX` (Crockford ULID), 404 fallback, `/login` →
-`LoginPage`.
-"""
-content = { kind = "lines", spans = [
-  { path = "packages/app-client/src/routes.tsx", start = 1, end = 32, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.5"
-descriptor = "Docs site — page map (VitePress src layout)"
-justification = """
-Lists the pages under `packages/docs/src/`: top-level `index.md` /
-`how-it-works.md` and the `self-hosting/` (docker.md,
-docker-compose.md, configuration.md, troubleshooting.md,
-other-platforms.md, users-authentication-key-generator.md),
-`integrations/` (cli.md, npm-package.md, versioning.md), and
-`resources/` (i18n.md, brand-kit.md) subdirectories. Catastrophic-
-omission hedge: agents asking \"is there a Docker Compose / Cloudflare
-/ troubleshooting / CLI doc page\" can answer in zero hops without
-spelunking the VitePress sidebar config.
-"""
-content = { kind = "fs", groups = [
+id = "7.1"
+descriptor = "docs/ + deploy-cloudflare/ directory structure"
+justification = "The VitePress self-hosting/config/CLI-guide site (including its .vitepress/theme customization — icons.ts, index.js, custom.css — and its build-time cross-import of app-server's config.ts to render an env-var table) and the Cloudflare Pages build-script package, named exhaustively so their existence isn't gated on the handful of docs pages that fit the remaining budget."
+content.kind = "fs"
+content.groups = [
+  { parent = "packages/docs", entries = "all" },
   { parent = "packages/docs/src", entries = "all" },
   { parent = "packages/docs/src/self-hosting", entries = "all" },
   { parent = "packages/docs/src/integrations", entries = "all" },
   { parent = "packages/docs/src/resources", entries = "all" },
-] }
+  { parent = "packages/docs/src/data", entries = "all" },
+  { parent = "packages/docs/src/components", entries = "all" },
+  { parent = "packages/docs/.vitepress", entries = "all" },
+  { parent = "packages/docs/.vitepress/theme", entries = "all" },
+  { parent = "packages/deploy-cloudflare", entries = "all" },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "docs: versioning policy"
+justification = "SemVer across all packages, unified since 1.5.0 — the one-fact answer for 'can I mix package versions when self-hosting'; cheap (5 lines)."
+content.kind = "lines"
+content.spans = [
+  { path = "packages/docs/src/integrations/versioning.md", start = 1, end = 5, render.kind = "full" },
+]

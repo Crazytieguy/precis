@@ -1,765 +1,442 @@
 fixture = "act"
 revision_pin = "123167dc"
 summary = """
-`act` is a Go CLI that runs GitHub Actions workflows locally. It parses
-`.github/workflows/*.yml` into a plan of stages (serial) of jobs
-(parallel), then drives Docker containers (or host environments) through
-each step, implementing the GitHub Actions runtime — including `${{ }}`
-expression evaluation, secrets/vars/inputs handling, an artifact server,
-and an artifact-cache server — entirely on the developer's machine.
-
-The codebase is organized as:
-
-- `main.go` + `cmd/` — Cobra CLI, flag parsing into an `Input` struct,
-  and the `Execute`/`newRunCommand` entry point that wires everything.
-- `pkg/model/` — YAML schema for `Workflow`/`Job`/`Action`, plus the
-  `WorkflowPlanner` that turns workflow files into a `Plan`.
-- `pkg/runner/` — execution engine: `Runner`, `RunContext` (per-job
-  state), the `step` interface and its concrete impls (action local/
-  remote, docker, composite, run-script, reusable workflow).
-- `pkg/container/` — Docker API wrapper + host-environment fallback;
-  `Container`/`ExecutionsEnvironment` interfaces.
-- `pkg/common/` — the load-bearing `Executor` combinator type (.Then,
-  .Finally, .OnError, NewParallelExecutor, NewPipelineExecutor) used
-  as the composable unit of work everywhere.
-- `pkg/exprparser/` — interpreter for the `${{ }}` expression language.
-- `pkg/artifacts/` + `pkg/artifactcache/` — embedded HTTP servers that
-  emulate Actions' artifact-upload and cache APIs.
-- Smaller pkgs: `pkg/schema/` (JSON-schema validation of action/workflow
-  YAML), `pkg/lookpath/` (cross-platform PATH search), `pkg/gh/` (token
-  lookup), `pkg/workflowpattern/` (path-filter globs), `pkg/filecollector/`
-  (file-tree copy with gitignore).
-
-Plausible agent queries span: "where is flag X defined / what does it
-default to?" (cmd/root.go is one 806-line file holding ~70 flags), "how
-does act decide what to run?" (Input → WorkflowPlanner.PlanEvent →
-Plan{Stages} → Runner.NewPlanExecutor), "how is `${{ }}` evaluated?"
-(pkg/runner/expression.go + pkg/exprparser), "how are containers run?"
-(pkg/container/docker_run.go + the Container/ExecutionsEnvironment
-interfaces), plus debugging, adding step types, intercepting the
-artifact server, schema-validation surface, the offline-mode action
-cache, etc.
-
-Ranking priorities: lead with broad orientation (README lede, main.go,
-root fs), then the most load-bearing abstractions (`Executor` and the
-cmd `Input` struct), then breadth across `pkg/` listings before going
-deep into any one package. `cmd/root.go` is huge and dominates the CLI
-surface — its flag list is sliced so a small budget gets a useful chunk
-and a large budget sees the whole catalogue.
+`act` is a Go CLI (github.com/nektos/act) that runs GitHub Actions workflows
+locally, mostly by driving Docker containers. Shape: a Cobra CLI (cmd/)
+parses flags into an `Input`/`Config`; `pkg/model` parses `.github/workflows/*.yml`
+and `action.yml` into `Workflow`/`Job`/`Step`/`Action`; `pkg/model.Planner`
+turns that into a `Plan` of `Stage`s of parallel `Run`s; `pkg/runner` is the
+execution engine (`RunContext` holds job state, `pkg/runner/step*.go` has one
+implementation per step kind); `pkg/container` wraps the Docker API (plus a
+host-exec fallback and a `WITHOUT_DOCKER` build-tag stub); `pkg/exprparser`
+implements the `${{ }}` GitHub Actions expression language; `pkg/artifacts`
+and `pkg/artifactcache` are local HTTP servers standing in for the real
+actions/upload-artifact and actions/cache backends. CLAUDE.md already gives
+an agent this architecture narrative and the common dev commands, so this
+ranking buys the complement within a tight token budget: the CLI flag
+surface, exact struct/interface shapes with line coordinates, concrete
+workflow/action.yml/`.actrc` samples, and enough of the CI/lint config to
+ground CLAUDE.md's prose. Given the fixture's size (~18K LOC across 8
+packages) far exceeds what a single NS can afford verbatim, this ranking
+front-loads package-existence breadth (every package directory listed before
+any single package's internals are shown in depth) and then prioritizes the
+CLI entrypoint and the model/runner core data shapes over exhaustive per-file
+function rosters — a follow-up `grep`/read against a listed file is assumed
+to be an acceptable single hop. Expected query distribution: "how do I
+run/configure act on my workflow", "why did step X behave this way", "add a
+new CLI flag / step kind", "how does the docker vs host-exec vs
+WITHOUT_DOCKER path differ", and general code tours of a specific package.
 """
 
-# =============================================================================
-# Tier 1 — Top-level orientation. What is this repo, where is the entry point,
-# what files are at root?
-# =============================================================================
+# ============================================================
+# Tier 1 — orientation
+# ============================================================
 
 [[batches]]
 id = "1.1"
-descriptor = "README headline + tagline + How-it-works heading"
-justification = """
-The headline lines plus the "How Does It Work?" H1. Line 3 holds the
-top "# Overview" (truncated to drop the badges tail), line 5 the
-tagline `"Think globally, act locally"`, line 7 the one-paragraph
-definition ("Run your GitHub Actions locally!"), line 16 the H1 "How
-Does It Work?" — the next paragraph (line 18) explains the read-
-workflows-then-Docker-API flow but is huge with inline links, so we
-stop after the heading and let later batches carry the details.
-"""
-content = { kind = "lines", spans = [
-    { path = "README.md", start = 3, end = 3, render = { kind = "truncated", pattern = "^# Overview" } },
-    { path = "README.md", start = 5, end = 5, render = { kind = "full" } },
-    { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
-    { path = "README.md", start = 16, end = 16, render = { kind = "full" } },
-] }
+descriptor = "Root directory listing — source and docs"
+justification = "The source/docs half of the root listing (cmd/, pkg/, main.go(+test), README/CLAUDE/CONTRIBUTING/IMAGES, go.mod/go.sum, Makefile, LICENSE, VERSION*) — kept small so a tiny budget still gets the codebase shape."
+content = { kind = "fs", groups = [
+    { parent = ".", entries = ["cmd", "pkg", "main.go", "main_test.go", "README.md", "CLAUDE.md", "CONTRIBUTING.md", "IMAGES.md", "go.mod", "go.sum", "Makefile", "LICENSE", "VERSION", "VERIFICATION"] },
+]}
 
 [[batches]]
 id = "1.2"
-descriptor = "main.go func main body"
-justification = """
-The six-line func main: it creates a graceful-cancel context via
-common.CreateGracefulJobCancellationContext and delegates to
-cmd.Execute(ctx, version). Anchors "where does the program start?"
-in the cheapest possible way; imports/embed come later in 1.4.
-"""
-content = { kind = "lines", spans = [
-    { path = "main.go", start = 13, end = 19, render = { kind = "full" } },
-] }
+descriptor = "Root directory listing — tooling config and packaging"
+justification = "The other half: linter/formatter dotfiles (.golangci.yml, .editorconfig, .prettierrc.yml, .markdownlint.yml, .mega-linter.yml, .codespellrc, .gitleaks*), release tooling (.goreleaser.yml, install.sh, act-cli.nuspec, codecov.yml), .github/, .vscode/ — split from 1.1 so neither root-listing batch is oversized for an early rank."
+predecessor = "1.1"
+content = { kind = "fs", groups = [
+    { parent = ".", entries = [".actrc", ".codespellrc", ".editorconfig", ".github", ".gitignore", ".gitleaks.toml", ".gitleaksignore", ".golangci.yml", ".goreleaser.yml", ".markdownlint.yml", ".mega-linter.yml", ".mergify.yml", ".prettierignore", ".prettierrc.yml", ".vscode", "act-cli.nuspec", "codecov.yml", "install.sh"] },
+]}
 
 [[batches]]
 id = "1.3"
-descriptor = "Repository root listing"
-justification = """
-Naming every top-level file/dir is the cheapest catastrophic-omission
-mitigation available. With this batch the agent knows main.go + cmd/ +
-pkg/ are the code surfaces, install.sh + Makefile + go.mod are the build
-entry points, README/CONTRIBUTING/IMAGES.md are docs, plus LICENSE/
-VERSION/codecov.yml/act-cli.nuspec/VERIFICATION/CLAUDE.md exist. Body
-for CLAUDE.md is host-auto-injected; we only show its name here. Using
-`FsEntries::All` so the resolved listing is exhaustive.
-"""
-content = { kind = "fs", groups = [
-    { parent = ".", entries = "all" },
-] }
+descriptor = "go.mod — module + Go version"
+justification = "Module path and the go1.25 toolchain requirement — the two facts needed before touching build tooling."
+content = { kind = "lines", spans = [
+    { path = "go.mod", start = 1, end = 4, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "1.4"
-descriptor = "main.go imports + go:embed VERSION"
-justification = """
-The imports block (only cmd and pkg/common are direct deps from main)
-plus the //go:embed VERSION + var version string. Tells the agent
-the version string is compiled in from the VERSION file at root —
-useful for "how does --version work?" and release-related questions.
-"""
-predecessor = "1.2"
+descriptor = "Binary entrypoint (main.go) + VERSION"
+justification = "The `//go:embed VERSION` directive and func main (creates the cancellation context, calls cmd.Execute) — the one place 'where does execution start' resolves to."
 content = { kind = "lines", spans = [
-    { path = "main.go", start = 3, end = 11, render = { kind = "full" } },
-] }
+    { path = "main.go", start = 10, end = 19, render = { kind = "full" } },
+    { path = "VERSION", start = 1, end = 1, render = { kind = "full" } },
+]}
 
-# =============================================================================
-# Tier 2 — cmd/ package shape: where the CLI lives, what files compose it,
-# and the entry-point function signatures.
-# =============================================================================
+# ============================================================
+# Tier 2 — package breadth (every package directory, cheapest first)
+# ============================================================
 
 [[batches]]
 id = "2.1"
-descriptor = "cmd/ directory listing"
-justification = """
-Names every file under cmd/ — root.go (the giant 806-line flag-defining
-file), input.go (the Input struct), list.go (--list), graph.go (--graph),
-notices.go (the version-check that pings api.nektosact.com), platforms.go
-(default-image map), secrets.go (the secrets-prompt logic), dir.go
-(XDG init), execute_test.go + root_test.go, plus the testdata/ subdir.
-Catalogues the cmd/ surface so the agent can grep precisely.
-"""
+descriptor = "pkg/exprparser/ directory listing"
+justification = "Both non-test files (interpreter.go, functions.go) plus testdata/ (used by hashFiles()) — the cheapest package listing, so package-existence breadth starts accumulating at minimal cost."
 content = { kind = "fs", groups = [
-    { parent = "cmd", entries = "all" },
-] }
+    { parent = "pkg/exprparser", entries = "all" },
+]}
 
 [[batches]]
 id = "2.2"
-descriptor = "cmd.Execute entry-point function"
-justification = """
-The 8-line Execute function main calls. Allocates a new Input, calls
-createRootCommand, then rootCmd.Execute() — with exitFunc(1) as the
-test-hookable error path. Anchors the boundary between main.go's shim
-and the Cobra command tree.
-"""
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 44, end = 54, render = { kind = "full" } },
-] }
+descriptor = "pkg/artifacts/ and pkg/artifactcache/ directory listings"
+justification = "The two local-server packages behind `--artifact-server-path` and the (enabled-by-default) cache server, enumerated for discoverability even though their bodies aren't budget-affordable here — a follow-up read of handler.go/server.go is one hop from this listing."
+content = { kind = "fs", groups = [
+    { parent = "pkg/artifacts", entries = "all" },
+    { parent = "pkg/artifactcache", entries = "all" },
+]}
 
 [[batches]]
 id = "2.3"
-descriptor = "createRootCommand Cobra shape"
-justification = """
-The 10-line Cobra command block — Use:, Short:, Args:,
-RunE: newRunCommand(ctx, input), PersistentPreRun: setup(input),
-PersistentPostRun: cleanup(input). Tells the agent act is a single
-root command (no subcommands) taking an optional event-name positional,
-and that setup/cleanup are the pre/post hooks.
-"""
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 56, end = 66, render = { kind = "full" } },
-] }
+descriptor = "pkg/model/ directory listing"
+justification = "All 7 non-test files (workflow.go, planner.go, action.go, github_context.go, anchors.go, job_context.go, step_result.go) plus its testdata/ tree, enumerated together so none look missing."
+content = { kind = "fs", groups = [
+    { parent = "pkg/model", entries = "all" },
+]}
 
-# =============================================================================
-# Tier 3 — Input struct + cmd/root.go flag surface. The Input struct lists
-# every flag in one place; the flag-definition block in createRootCommand is
-# huge so we slice it into a sequence of small blocks.
-# =============================================================================
+[[batches]]
+id = "2.4"
+descriptor = "cmd/ directory listing"
+justification = "All 8 non-test + 2 test files and testdata/ in one shot — the CLI package is small enough to enumerate completely rather than risk hiding e.g. secrets.go or notices.go behind a partial view."
+content = { kind = "fs", groups = [
+    { parent = "cmd", entries = "all" },
+    { parent = "cmd/testdata", entries = "all" },
+]}
+
+[[batches]]
+id = "2.5"
+descriptor = "pkg/common/ and pkg/common/git/ directory listing"
+justification = "Full enumeration of both dirs so the small utility files (auth.go, dryrun.go, outbound_ip.go, job_error.go, line_writer.go) aren't hidden behind the one this NS pulls content from."
+content = { kind = "fs", groups = [
+    { parent = "pkg/common", entries = "all" },
+    { parent = "pkg/common/git", entries = "all" },
+]}
+
+[[batches]]
+id = "2.6"
+descriptor = "gh/, lookpath/, filecollector/, workflowpattern/, schema/ directory listings"
+justification = "All five smaller supporting packages enumerated together, including lookpath's platform-specific build-tag files (lp_unix/lp_windows/lp_plan9/lp_js) and schema's embedded JSON files — discoverability for packages this budget can't otherwise afford to open in depth."
+content = { kind = "fs", groups = [
+    { parent = "pkg/gh", entries = "all" },
+    { parent = "pkg/lookpath", entries = "all" },
+    { parent = "pkg/filecollector", entries = "all" },
+    { parent = "pkg/workflowpattern", entries = "all" },
+    { parent = "pkg/schema", entries = "all" },
+]}
+
+[[batches]]
+id = "2.7"
+descriptor = "pkg/container/ directory listing"
+justification = "All 20 non-test .go files (plus DOCKER_LICENSE) including the build-tag-gated variants (docker_stub.go, util_windows.go, util_plan9.go, util_openbsd_mips64.go) and testdata/ — enumerated together so build-tag alternatives aren't mistaken for dead code."
+content = { kind = "fs", groups = [
+    { parent = "pkg/container", entries = "all" },
+]}
+
+[[batches]]
+id = "2.8"
+descriptor = "pkg/runner/ directory listing"
+justification = "All 18 non-test files of the largest package (runner.go, run_context.go, step*.go, action*.go, expression.go, command.go, job_executor.go, reusable_workflow.go, local_repository_cache.go, logger.go) plus res/ and hashfiles/ JS helpers, enumerated together — closes out package-existence breadth before any per-package depth follows."
+content = { kind = "fs", groups = [
+    { parent = "pkg/runner", entries = "all" },
+    { parent = "pkg/runner/res", entries = "all" },
+    { parent = "pkg/runner/hashfiles", entries = "all" },
+]}
+
+# ============================================================
+# Tier 3 — README / build prose
+# ============================================================
 
 [[batches]]
 id = "3.1"
-descriptor = "Input struct (first half) — workflow/secrets/env/platform/container fields"
-justification = """
-First 30 fields of the Input struct: actor, workdir, workflowsPath,
-autodetectEvent, eventPath, reuseContainers, bindWorkdir, secrets,
-vars, envs, inputs, platforms, dryrun, forcePull, forceRebuild,
-noOutput, envfile/inputfile/secretfile/varfile, insecureSecrets,
-defaultBranch, privileged, usernsMode, containerArchitecture,
-containerDaemonSocket, containerOptions, noWorkflowRecurse,
-useGitIgnore, githubInstance. Each field name maps 1:1 to a CLI flag.
-"""
+descriptor = "README — how it works"
+justification = "The one-paragraph execution summary (reads .github/workflows/, uses the Docker API to pull/build images and run containers per the dependency graph) — the shortest path to 'what does act actually do when invoked'."
 content = { kind = "lines", spans = [
-    { path = "cmd/input.go", start = 9, end = 38, render = { kind = "full" } },
-] }
+    { path = "README.md", start = 16, end = 18, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "3.2"
-descriptor = "Input struct (second half) — caps/servers/cache/matrix/network fields"
-justification = """
-Remaining 28 fields: containerCapAdd, containerCapDrop, autoRemove,
-artifactServer{Path,Addr,Port}, noCacheServer, cacheServer{Path,
-ExternalURL,Addr,Port}, jsonLogger, noSkipCheckout, remoteName,
-replaceGheActionWithGithubCom, replaceGheActionTokenWithGithubCom,
-matrix, actionCachePath, actionOfflineMode, logPrefixJobID, networkName,
-useNewActionCache, localRepository, listOptions, validate, strict,
-concurrentJobs. Predecessor is 3.1 so the two halves chain.
-"""
+descriptor = "README — user guide / contributing / manual build"
+justification = "Points to the external user guide (nektosact.com), the Support discussions link, CONTRIBUTING.md, and the four manual-build steps (install Go 1.20+, clone, `make test`, `make install`) — cheap operational pointer complementing CLAUDE.md's command list."
 predecessor = "3.1"
 content = { kind = "lines", spans = [
-    { path = "cmd/input.go", start = 39, end = 68, render = { kind = "full" } },
-] }
+    { path = "README.md", start = 24, end = 41, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "3.3"
-descriptor = "Input path-resolving method names"
-justification = """
-The receiver methods on *Input — resolve, Envfile, Secretfile, Varfile,
-Workdir, WorkflowsPath, EventPath, Inputfile — that turn raw flag
-strings into absolute paths relative to --directory. One truncated
-line per method.
-"""
-predecessor = "3.2"
+descriptor = "Makefile — pr/build/format targets"
+justification = "Exact recipes behind `make build`, `make format(-all)`, and the `make pr` full-checklist target CLAUDE.md names — ldflags-injected version, go fmt, npx prettier."
 content = { kind = "lines", spans = [
-    { path = "cmd/input.go", start = 70, end = 70, render = { kind = "full" } },
-    { path = "cmd/input.go", start = 85, end = 85, render = { kind = "full" } },
-    { path = "cmd/input.go", start = 90, end = 90, render = { kind = "full" } },
-    { path = "cmd/input.go", start = 94, end = 94, render = { kind = "full" } },
-    { path = "cmd/input.go", start = 99, end = 99, render = { kind = "full" } },
-    { path = "cmd/input.go", start = 104, end = 104, render = { kind = "full" } },
-    { path = "cmd/input.go", start = 109, end = 109, render = { kind = "full" } },
-    { path = "cmd/input.go", start = 114, end = 114, render = { kind = "full" } },
-] }
+    { path = "Makefile", start = 22, end = 36, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "3.4"
-descriptor = "Run-mode flags (root.go 68-82) — list/graph/job/secrets/env"
-justification = """
-First ~15 flag defs in createRootCommand: --watch, --validate, --strict,
---list, --graph, --job, --bug-report, --man-page, --remote-name,
---secret, --var, --env, --input, --platform, --reuse. Includes default
-values and help text — the most user-visible flags.
-"""
+descriptor = "Makefile — test/lint targets"
+justification = "`make test` (go test ./... then runs act itself), and the lint-go/lint-js/lint-md/lint-rest split (golangci-lint, `npx standard`, `npx markdownlint`, dockerized megalinter) — what `make lint`/`make pr` actually invoke."
+predecessor = "3.3"
 content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 68, end = 82, render = { kind = "full" } },
-] }
+    { path = "Makefile", start = 38, end = 64, render = { kind = "full" } },
+]}
 
-[[batches]]
-id = "3.5"
-descriptor = "Run-mode flags (root.go 83-98) — bind/pull/event/privileged/caps"
-justification = """
-Next slice: --bind, --pull, --rebuild, --detect-event, --eventpath,
---defaultbranch, --privileged, --userns, --use-gitignore,
---container-cap-add, --container-cap-drop, --rm,
---replace-ghe-action-{with-github-com,token-with-github-com}, --matrix,
-plus --actor (PersistentFlags starts here).
-"""
-predecessor = "3.4"
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 83, end = 98, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.6"
-descriptor = "Persistent flags (root.go 99-117) — workflows path / logging / env files / container"
-justification = """
-The PersistentFlags block: --workflows, --no-recurse, --directory,
---verbose, --json, --log-prefix-job-id, --quiet, --dryrun, --secret-file,
---var-file, --insecure-secrets, --env-file, --input-file,
---container-architecture, --container-daemon-socket, --container-options,
---github-instance.
-"""
-predecessor = "3.5"
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 99, end = 117, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.7"
-descriptor = "Server/cache flags + SetArgs (root.go 118-135)"
-justification = """
-The tail of the flag block — artifact-server-{path,addr,port},
-no-skip-checkout, no-cache-server, cache-server-{path,external-url,
-addr,port}, action-cache-path, action-offline-mode, network,
-use-new-action-cache, local-repository, list-options, concurrent-jobs
-— plus SetArgs(args()) wiring the merged actrc+argv back into Cobra.
-"""
-predecessor = "3.6"
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 118, end = 135, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.8"
-descriptor = "configLocations + args (.actrc precedence + merge)"
-justification = """
-How act discovers and merges .actrc files — XDG → $HOME/.actrc →
-./.actrc, prepended to argv before Cobra parses. The answer to many
-"where does --foo's default come from?" questions.
-"""
-content = { kind = "lines", spans = [
-    { path = "cmd/root.go", start = 137, end = 165, render = { kind = "full" } },
-] }
-
-# =============================================================================
-# Tier 4 — pkg/ architecture. The subdirectory list is the architectural map;
-# individual package file-listings make grep-precise navigation possible.
-# =============================================================================
+# ============================================================
+# Tier 4 — CI job + dependency roster
+# ============================================================
 
 [[batches]]
 id = "4.1"
-descriptor = "pkg/ subdirectory listing"
-justification = """
-12 immediate children under pkg/ — model, runner, container, common,
-exprparser, artifacts, artifactcache, schema, lookpath, workflowpattern,
-gh, filecollector. Names alone give the agent the architectural map;
-this is the highest-leverage breadth batch for "where does X live?"
-"""
-content = { kind = "fs", groups = [
-    { parent = "pkg", entries = "all" },
-] }
+descriptor = "CI checks.yml — lint job"
+justification = "The exact PR-gating lint job: golangci-lint-action + megalinter/megalinter go flavor — the ground truth behind `make lint`'s CI enforcement."
+content = { kind = "lines", spans = [
+    { path = ".github/workflows/checks.yml", start = 1, end = 33, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "4.2"
-descriptor = "pkg/runner file listing"
-justification = """
-The biggest single package (~9k lines). 37 entries: runner.go,
-run_context.go, action.go + action_test.go, action_composite.go,
-action_cache.go + action_cache_offline_mode.go + action_cache_test.go,
-command.go + command_test.go, container_mock_test.go, expression.go +
-expression_test.go, job_executor.go + job_executor_test.go,
-local_repository_cache.go, logger.go, reusable_workflow.go,
-run_context_test.go, runner_test.go, step.go + step_test.go,
-step_action_local.go + step_action_local_test.go,
-step_action_remote.go + step_action_remote_test.go, step_docker.go +
-step_docker_test.go, step_factory.go + step_factory_test.go,
-step_run.go + step_run_test.go, plus res/, hashfiles/, testdata/.
-Catalogues where every step type and runner concern lives.
-"""
-content = { kind = "fs", groups = [
-    { parent = "pkg/runner", entries = "all" },
-] }
+descriptor = "go.mod — primary direct dependencies"
+justification = "The first ~16 lines of the primary require block (cobra, docker/cli, go-git, actionlint, bolthold, survey, ...) — the dependency roster an agent needs before touching imports. Ellipsis signals the block (and a second direct-ish require block, and the indirect block) continues without spending tokens enumerating all ~50 remaining entries."
+content = { kind = "lines", spans = [
+    { path = "go.mod", start = 5, end = 20, render = { kind = "full" } },
+    { path = "go.mod", start = 21, end = 21, render = { kind = "ellipsis" } },
+]}
 
-[[batches]]
-id = "4.3"
-descriptor = "pkg/model + pkg/common file listings"
-justification = """
-Two foundational packages. pkg/model: action.go, anchors.go +
-anchors_test.go, github_context.go + github_context_test.go,
-job_context.go, planner.go + planner_test.go, step_result.go,
-workflow.go + workflow_test.go, testdata/. pkg/common: auth.go +
-auth_test.go, cartesian.go + cartesian_test.go, context.go +
-context_test.go, draw.go, dryrun.go, executor.go + executor_test.go,
-file.go, git/, job_error.go, line_writer.go + line_writer_test.go,
-logger.go, outbound_ip.go.
-"""
-content = { kind = "fs", groups = [
-    { parent = "pkg/model", entries = "all" },
-    { parent = "pkg/common", entries = "all" },
-] }
-
-[[batches]]
-id = "4.4"
-descriptor = "pkg/container file listing"
-justification = """
-30 entries — docker_cli.go (1.1k lines), docker_run.go (960 lines),
-docker_build/pull/images/network/socket/auth/logger/stub/volume.go +
-their _test.go siblings, container_types.go (the public interfaces),
-executions_environment.go (the interface), host_environment.go +
-host_environment_test.go (host fallback, 470 lines),
-linux_container_environment_extensions{,_test}.go, parse_env_file.go,
-the per-OS util_{openbsd_mips64,plan9,windows}.go build-tagged stubs +
-util.go, DOCKER_LICENSE, testdata/. Where the Docker integration is.
-"""
-content = { kind = "fs", groups = [
-    { parent = "pkg/container", entries = "all" },
-] }
-
-# =============================================================================
-# Tier 5 — The Executor combinator (pkg/common/executor.go). Pervasive
-# throughout the codebase; show the type def, the constructors, and the
-# chaining method signatures.
-# =============================================================================
+# ============================================================
+# Tier 5 — cmd package content
+# ============================================================
 
 [[batches]]
 id = "5.1"
-descriptor = "Executor + Conditional type defs + Warning helper"
-justification = """
-The Warning error type, type Executor = func(ctx) error and type
-Conditional = func(ctx) bool. These four short type lines are the
-keystone of the codebase — every executable thing in pkg/runner /
-pkg/container / cmd is built from this single function-type alias.
-"""
+descriptor = "Input struct — flag-bound fields (part 1: run behavior)"
+justification = "The first half of the unexported field roster cobra flags bind into: actor/workdir/workflows/event/container-reuse/secrets/vars/envs/inputs/platforms/dryrun/pull/rebuild flags."
 content = { kind = "lines", spans = [
-    { path = "pkg/common/executor.go", start = 11, end = 33, render = { kind = "full" } },
-] }
+    { path = "cmd/input.go", start = 9, end = 39, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "5.2"
-descriptor = "Executor constructor signatures"
-justification = """
-One truncated line per public constructor — NewInfoExecutor,
-NewDebugExecutor, NewPipelineExecutor, NewConditionalExecutor,
-NewErrorExecutor, NewParallelExecutor, NewFieldExecutor — dropping
-the body and arg-list tail. These are the entry points used throughout
-runner.go and cmd/root.go's executor composition.
-"""
+descriptor = "Input struct — flag-bound fields (part 2: container/cache/misc)"
+justification = "The remaining Input fields: container capabilities, artifact- and cache-server address/path/port, GHE action replacement, local-repository override, concurrent-jobs (container architecture/daemon-socket are the tail of 5.1's span, not this one) — this is the single place that answers 'does Input already have a field for X' before an agent adds a duplicate. Extended one line past the last field to the struct's closing brace so it doesn't read as truncated mid-body."
 predecessor = "5.1"
 content = { kind = "lines", spans = [
-    { path = "pkg/common/executor.go", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 72, end = 72, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 88, end = 88, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+    { path = "cmd/input.go", start = 40, end = 68, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "5.3"
-descriptor = "Executor chaining method signatures (.Then/.Finally/.If/...)"
-justification = """
-Receiver-method signatures turning Executor into a fluent combinator
-language: ThenError, Then, OnError, If, IfNot, IfBool, Finally, plus
-Conditional.Not. The .Then(...).Finally(...) idiom appears throughout
-cmd/root.go (e.g. NewPlanExecutor(plan).Finally(cancel)). One
-truncated line per method.
-"""
-predecessor = "5.1"
+descriptor = "cmd/root.go — Flag struct, Execute, createRootCommand header"
+justification = "Execute() is the fn main.go calls; createRootCommand's cobra.Command literal (Use/Short/Args/RunE/PersistentPreRun etc.) is the root command's shape before its flag registrations."
 content = { kind = "lines", spans = [
-    { path = "pkg/common/executor.go", start = 141, end = 141, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 160, end = 160, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 179, end = 179, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 198, end = 198, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 208, end = 208, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 218, end = 218, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 225, end = 225, render = { kind = "truncated", pattern = "^[^(]+" } },
-    { path = "pkg/common/executor.go", start = 237, end = 237, render = { kind = "truncated", pattern = "^[^(]+" } },
-] }
+    { path = "cmd/root.go", start = 37, end = 66, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "5.4"
-descriptor = "NewPipelineExecutor body (canonical fold-via-.Then example)"
-justification = """
-The 16-line body: fold a list of executors via repeated .Then(). The
-canonical worked example of the combinator pattern. NewParallelExecutor
-is more complex (channel-based worker pool) but is the second-most-used
-constructor.
-"""
+descriptor = "cmd/root.go — most-queried CLI flags"
+justification = "A representative, high-traffic subset of the ~60 flag registrations (list/graph/job, secret/env/input/platform, workflows-path/directory, verbose/json/quiet/dryrun, concurrent-jobs) with real defaults and help text. Predecessor is the complete Input field roster (5.1/5.2), so the full set of flag-bound names is already established; this shows real bodies for the ones an agent is most likely to look up. Line-number gaps between entries signal more flags exist between them."
 predecessor = "5.2"
 content = { kind = "lines", spans = [
-    { path = "pkg/common/executor.go", start = 54, end = 69, render = { kind = "full" } },
-] }
+    { path = "cmd/root.go", start = 71, end = 73, render = { kind = "full" } },
+    { path = "cmd/root.go", start = 78, end = 82, render = { kind = "full" } },
+    { path = "cmd/root.go", start = 100, end = 107, render = { kind = "full" } },
+    { path = "cmd/root.go", start = 132, end = 132, render = { kind = "full" } },
+]}
 
-# =============================================================================
-# Tier 6 — Workflow / Job / Action model. The YAML domain types that planning
-# and runtime hang off.
-# =============================================================================
+[[batches]]
+id = "5.5"
+descriptor = "platforms.go — default runs-on image mapping"
+justification = "The hardcoded `ubuntu-latest/22.04/20.04/18.04 -> node:16-*` image defaults, overridable via repeated `-P` flags — the concrete answer to 'what image does act use for runs-on: ubuntu-latest' without reading Docker pull logs."
+content = { kind = "lines", spans = [
+    { path = "cmd/platforms.go", start = 7, end = 22, render = { kind = "full" } },
+]}
+
+# ============================================================
+# Tier 6 — pkg/common content
+# ============================================================
 
 [[batches]]
 id = "6.1"
-descriptor = "Plan / Stage / Run / WorkflowPlanner types"
-justification = """
-The four types that flow from the planner into the runner:
-WorkflowPlanner interface (PlanEvent/PlanJob/PlanAll/GetEvents), Plan
-(list of stages), Stage (list of parallel Runs), Run (workflow+jobID
-pair). Plus String()/Job() methods on Run. Answers "how is execution
-scheduled?"
-"""
+descriptor = "Executor / Conditional / Warning types"
+justification = "CLAUDE.md names the Executor pattern conceptually; this is the exact type (`func(ctx context.Context) error`) and its Warning sentinel-error wrapper that every step/job/action function in the codebase returns."
 content = { kind = "lines", spans = [
-    { path = "pkg/model/planner.go", start = 16, end = 51, render = { kind = "full" } },
-] }
+    { path = "pkg/common/executor.go", start = 12, end = 33, render = { kind = "full" } },
+]}
 
-[[batches]]
-id = "6.2"
-descriptor = "Workflow struct + Job struct (YAML schema fields)"
-justification = """
-The two big YAML-mapped structs. Workflow: File/Name/RawOn/Env/Jobs/
-Defaults. Job: Name/RawNeeds/RawRunsOn/Env/If/Steps/TimeoutMinutes/
-Services/Strategy/RawContainer/Defaults/Outputs/Uses/With/RawSecrets/
-Result. The RawX yaml.Nodes are the polymorphic GitHub Actions surface.
-Answers "what workflow fields does act understand?"
-"""
-content = { kind = "lines", spans = [
-    { path = "pkg/model/workflow.go", start = 18, end = 26, render = { kind = "full" } },
-    { path = "pkg/model/workflow.go", start = 195, end = 213, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.3"
-descriptor = "Action runtime constants + Action struct + Input/Output"
-justification = """
-The action.yml side: ActionRunsUsing constants (node12/16/20/24,
-docker, composite), the Action struct (Name/Author/Description/Inputs/
-Outputs/Runs/Branding), Input{Description,Required,Default},
-Output{Description,Value}. These define what an action.yml can declare.
-"""
-content = { kind = "lines", spans = [
-    { path = "pkg/model/action.go", start = 39, end = 52, render = { kind = "full" } },
-    { path = "pkg/model/action.go", start = 89, end = 100, render = { kind = "full" } },
-    { path = "pkg/model/action.go", start = 119, end = 130, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.4"
-descriptor = "ActionRuns struct (action-execution fields)"
-justification = """
-The ActionRuns struct that lives at action.runs in the YAML — Using,
-Env, Main, Pre/PreIf, Post/PostIf, Image, PreEntrypoint, Entrypoint,
-PostEntrypoint, Args, Steps (for composite). Tells the agent what
-runs.<thing> keys act supports.
-"""
-predecessor = "6.3"
-content = { kind = "lines", spans = [
-    { path = "pkg/model/action.go", start = 71, end = 86, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.5"
-descriptor = "Workflow.On RawOn dispatcher (yaml.Node polymorphism pattern)"
-justification = """
-On() dispatches yaml.Node.Kind through Scalar/Sequence/Mapping — the
-load-bearing pattern act uses to handle GitHub's polymorphic YAML (a
-field can be a string, a list, or a map). Useful as a worked example
-of how every other Raw* field gets decoded (RawNeeds, RawRunsOn,
-RawContainer, RawSecrets).
-"""
-predecessor = "6.2"
-content = { kind = "lines", spans = [
-    { path = "pkg/model/workflow.go", start = 28, end = 58, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.6"
-descriptor = "WorkflowDispatch / WorkflowCall input+output types"
-justification = """
-The reusable-workflow boundary types: WorkflowDispatchInput (the manual-
-trigger input shape — Description/Required/Default/Type/Options),
-WorkflowDispatch (Inputs map), WorkflowCallInput/Output/Result, and
-WorkflowCall (Inputs+Outputs). Predecessor is 6.2 since this rounds out
-the workflow YAML schema. The WorkflowDispatchConfig method body (105-152
-between these structs) is intentionally elided via ellipsis below.
-"""
-predecessor = "6.2"
-content = { kind = "lines", spans = [
-    { path = "pkg/model/workflow.go", start = 105, end = 115, render = { kind = "full" } },
-    { path = "pkg/model/workflow.go", start = 117, end = 117, render = { kind = "ellipsis" } },
-    { path = "pkg/model/workflow.go", start = 154, end = 173, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.7"
-descriptor = "Strategy / Defaults / RunDefaults structs"
-justification = """
-The job.strategy and defaults.run shapes: Strategy
-(FailFast/MaxParallel/FailFastString/MaxParallelString/RawMatrix),
-Defaults wrapping RunDefaults (Shell/WorkingDirectory). Useful for
-matrix-strategy and default-shell questions.
-"""
-predecessor = "6.2"
-content = { kind = "lines", spans = [
-    { path = "pkg/model/workflow.go", start = 216, end = 234, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "6.8"
-descriptor = "WorkflowPlanner constructor signature"
-justification = """
-NewWorkflowPlanner(path, noWorkflowRecurse, strict bool) (WorkflowPlanner,
-error) — the function cmd/root.go calls to load workflows from disk.
-One-line anchor to the planner's entry point.
-"""
-content = { kind = "lines", spans = [
-    { path = "pkg/model/planner.go", start = 58, end = 59, render = { kind = "full" } },
-] }
-
-
-# =============================================================================
-# Tier 7 — Runner core. The runtime equivalent of tier 6's model — Runner,
-# Config, RunContext, step interface — but kept lean since cumulative is
-# already large.
-# =============================================================================
+# ============================================================
+# Tier 7 — pkg/model content
+# ============================================================
 
 [[batches]]
 id = "7.1"
-descriptor = "Runner interface + step interface"
-justification = """
-Runner is a one-method interface (NewPlanExecutor). step is the six-method
-interface every step type implements (pre/main/post + getRunContext/
-getGithubContext/getStepModel/getEnv/getIfExpression). Bounds the
-runner's plug-in surface — see step_run/step_docker/step_action_*/
-action_composite for the concrete impls catalogued in 4.2.
-"""
+descriptor = "Workflow struct — top-level YAML shape"
+justification = "The struct every `.github/workflows/*.yml` file unmarshals into (File/Name/RawOn/Env/Jobs/Defaults) — the entry point for 'what top-level workflow keys does act understand'."
 content = { kind = "lines", spans = [
-    { path = "pkg/runner/runner.go", start = 16, end = 19, render = { kind = "full" } },
-    { path = "pkg/runner/step.go", start = 21, end = 54, render = { kind = "full" } },
-] }
+    { path = "pkg/model/workflow.go", start = 18, end = 26, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "7.2"
-descriptor = "RunContext struct (per-job execution state)"
-justification = """
-The ~26-field struct that carries everything one job execution needs:
-Config, Matrix, Run, EventJSON, Env/GlobalEnv/ExtraPath, CurrentStep,
-StepResults, IntraActionState, ExprEval, JobContainer,
-ServiceContainers, OutputMappings, JobName, ActionPath, Parent, Masks,
-plus internals. The struct most other runner files reach into.
-"""
+descriptor = "Job struct — per-job YAML shape"
+justification = "The per-job fields (needs/runs-on/env/if/steps/services/strategy/container/secrets/outputs/uses/with) — the shape an agent edits when authoring or debugging a job."
+predecessor = "7.1"
 content = { kind = "lines", spans = [
-    { path = "pkg/runner/run_context.go", start = 31, end = 56, render = { kind = "full" } },
-] }
-
+    { path = "pkg/model/workflow.go", start = 195, end = 213, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "7.3"
-descriptor = "Runner Config struct (first half — basic fields)"
-justification = """
-First half of the Config struct that newRunCommand fills from Input —
-Actor, Workdir, ActionCacheDir, ActionOfflineMode, BindWorkdir,
-EventName, EventPath, DefaultBranch, ReuseContainers, ForcePull,
-ForceRebuild, LogOutput, JSONLogger, LogPrefixJobID, Env, Inputs,
-Secrets, Vars, Token, InsecureSecrets, Platforms. Each comment maps
-the field to its CLI flag.
-"""
+descriptor = "Strategy / Defaults / RunDefaults structs"
+justification = "The Strategy.matrix/fail-fast/max-parallel knobs and the Defaults.run.shell/working-directory inheritance fields referenced by Job.Strategy and Job.Defaults."
+predecessor = "7.2"
 content = { kind = "lines", spans = [
-    { path = "pkg/runner/runner.go", start = 22, end = 43, render = { kind = "full" } },
-] }
+    { path = "pkg/model/workflow.go", start = 216, end = 233, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "7.4"
-descriptor = "Runner Config struct (second half — container/server/cache fields)"
-justification = """
-Second half of Config: Privileged, UsernsMode, ContainerArchitecture,
-ContainerDaemonSocket, ContainerOptions, UseGitIgnore, GitHubInstance,
-ContainerCapAdd/Drop, AutoRemove, ArtifactServer{Path,Addr,Port},
-NoSkipCheckout, RemoteName, ReplaceGheAction*, Matrix,
-ContainerNetworkMode, ActionCache, ConcurrentJobs.
-"""
-predecessor = "7.3"
+descriptor = "Step struct — per-step YAML shape"
+justification = "The per-step fields (id/if/name/uses/run/shell/env/with/continue-on-error/timeout-minutes) — the shape an agent edits when authoring or debugging a workflow step."
+predecessor = "7.2"
 content = { kind = "lines", spans = [
-    { path = "pkg/runner/runner.go", start = 44, end = 65, render = { kind = "full" } },
-] }
+    { path = "pkg/model/workflow.go", start = 568, end = 583, render = { kind = "full" } },
+]}
 
-# =============================================================================
-# Tier 8 — Container abstraction interfaces.
-# =============================================================================
+[[batches]]
+id = "7.5"
+descriptor = "GithubContext struct — every github.* expression field"
+justification = "All 30 fields of the `github` context object exposed to `${{ github.* }}` expressions and step env (sha/ref/actor/repository/workspace/action_path/server_url/...) — the answer to 'is github.<x> available' without grepping the setter functions."
+content = { kind = "lines", spans = [
+    { path = "pkg/model/github_context.go", start = 12, end = 43, render = { kind = "full" } },
+]}
+
+[[batches]]
+id = "7.6"
+descriptor = "action.go — ActionRuns struct"
+justification = "The `runs:` section of action.yml (main/pre/post entrypoints with their -if guards, docker image/env/args, composite steps) — the schema an agent checks before adding a new action.yml `runs.*` field."
+content = { kind = "lines", spans = [
+    { path = "pkg/model/action.go", start = 71, end = 86, render = { kind = "full" } },
+]}
+
+[[batches]]
+id = "7.7"
+descriptor = "action.go — Action / Input / Output structs"
+justification = "The top-level action.yml shape (name/description/inputs/outputs/runs/branding) and the per-input/output Description/Required/Default/Value fields."
+predecessor = "7.6"
+content = { kind = "lines", spans = [
+    { path = "pkg/model/action.go", start = 89, end = 100, render = { kind = "full" } },
+    { path = "pkg/model/action.go", start = 120, end = 130, render = { kind = "full" } },
+]}
+
+[[batches]]
+id = "7.8"
+descriptor = "planner.go — Plan/Stage/Run + WorkflowPlanner interface"
+justification = "The output shape of workflow planning that runner.go consumes: Plan{Stages}, Stage{Runs} (serial), Run{Workflow,JobID} (parallel within a stage), and the WorkflowPlanner interface (PlanEvent/PlanJob/PlanAll/GetEvents)."
+content = { kind = "lines", spans = [
+    { path = "pkg/model/planner.go", start = 17, end = 57, render = { kind = "full" } },
+]}
+
+# ============================================================
+# Tier 8 — concrete config samples (workflow/action/actrc)
+# ============================================================
 
 [[batches]]
 id = "8.1"
-descriptor = "ExecutionsEnvironment interface (host vs docker boundary)"
-justification = """
-The 8-method interface that extends Container with host-vs-docker
-path translation (ToContainerPath, GetActPath, GetPathVariableName,
-DefaultPathVariable, JoinPathVariable, GetRunnerContext,
-IsEnvironmentCaseInsensitive). The boundary point between
-pkg/runner and pkg/container.
-"""
+descriptor = "Example workflow file (integration fixture)"
+justification = "A real, complete `.github/workflows/*.yml` (pkg/runner/testdata/basic/push.yml) exercising env, multiple jobs with `needs:`, a `docker://` step, expression interpolation, and a local action reference — cheaper, more concrete evidence of the workflow-file shape than the Go struct fields alone. Extended through the `build` job's body so the `needs: [check]` line and its `uses: ./actions/action1` local-action reference are actually rendered, not just the job's `runs-on:` header."
 content = { kind = "lines", spans = [
-    { path = "pkg/container/executions_environment.go", start = 5, end = 15, render = { kind = "full" } },
-] }
+    { path = "pkg/runner/testdata/basic/push.yml", start = 1, end = 29, render = { kind = "full" } },
+]}
 
 [[batches]]
 id = "8.2"
-descriptor = "Container interface method signatures"
-justification = """
-The 14-method Container interface that ExecutionsEnvironment extends —
-Create/Copy/CopyTarStream/CopyDir/GetContainerArchive/Pull/Start/Exec/
-UpdateFromEnv/UpdateFromImageEnv/Remove/Close/ReplaceLogWriter/GetHealth.
-Truncated to drop the parameter lists; for full sigs see container_types.go.
-"""
-predecessor = "8.1"
+descriptor = "Example action.yml (docker action)"
+justification = "A complete action.yml (docker-local) showing inputs-with-default, outputs, and `runs: {using: docker, image, env, args}` — the concrete counterpart to the Action/ActionRuns struct fields (7.6/7.7). Span runs to the file's last line so `args:`'s actual value is rendered, not just its key."
 content = { kind = "lines", spans = [
-    { path = "pkg/container/container_types.go", start = 43, end = 43, render = { kind = "full" } },
-    { path = "pkg/container/container_types.go", start = 44, end = 44, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 45, end = 45, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 46, end = 46, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 47, end = 47, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 48, end = 48, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 49, end = 49, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 50, end = 50, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 51, end = 51, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 52, end = 52, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 53, end = 53, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 54, end = 54, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 55, end = 55, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 56, end = 56, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-    { path = "pkg/container/container_types.go", start = 57, end = 57, render = { kind = "truncated", pattern = "^\\s*\\w+" } },
-] }
+    { path = "pkg/runner/testdata/actions/docker-local/action.yml", start = 1, end = 17, render = { kind = "full" } },
+]}
 
-# =============================================================================
-# Tier 9 — Expression evaluator. The ${{ }} surface that runs in every step.
-# =============================================================================
+[[batches]]
+id = "8.3"
+descriptor = "Sample .actrc / secrets files"
+justification = "Four tiny real config files showing the exact `.actrc` line syntax (one flag per line, `--flag=value` and `--flag value` both used, and split.actrc's single `--container-options` flag carrying several space-separated `--volume` sub-values on that one line) an agent needs before hand-writing one."
+content = { kind = "lines", spans = [
+    { path = "cmd/testdata/env.actrc", start = 1, end = 2, render = { kind = "full" } },
+    { path = "cmd/testdata/simple.actrc", start = 1, end = 2, render = { kind = "full" } },
+    { path = "cmd/testdata/split.actrc", start = 1, end = 1, render = { kind = "full" } },
+    { path = "cmd/testdata/secrets.yml", start = 1, end = 4, render = { kind = "full" } },
+]}
+
+# ============================================================
+# Tier 9 — pkg/runner content
+# ============================================================
 
 [[batches]]
 id = "9.1"
-descriptor = "EvaluationEnvironment record (${{ }} context shape)"
-justification = """
-The record exprparser.Interpreter resolves ${{ }} against: Github,
-Env, Job, Jobs, Steps, Runner, Secrets, Vars, Strategy, Matrix, Needs,
-Inputs, HashFiles. This is the answer to "what does `${{ steps.foo.outputs.bar }}`
-actually evaluate?" — Steps comes from rc.StepResults, Needs from the
-job graph (see expression.go 47-55), Inputs from getEvaluatorInputs.
-"""
+descriptor = "Runner interface + Config struct (part 1: run behavior)"
+justification = "Config is the runner-side mirror of cmd.Input (5.1/5.2) with doc comments on every field — often more useful than Input since it explains *why* each knob exists, not just its flag name. First half: actor/workdir/action-cache, event, container reuse/pull/rebuild, logging."
 content = { kind = "lines", spans = [
-    { path = "pkg/exprparser/interpreter.go", start = 14, end = 22, render = { kind = "full" } },
-] }
+    { path = "pkg/runner/runner.go", start = 16, end = 36, render = { kind = "full" } },
+]}
 
-# =============================================================================
-# Tier 10 — Remaining package listings + build surface, for completeness on
-# larger budgets.
-# =============================================================================
+[[batches]]
+id = "9.2"
+descriptor = "Config struct (part 2: container/artifact-server/misc)"
+justification = "The container-daemon/capabilities/network fields and the artifact-server address/path/port fields — the rest of the Config knobs mirroring cmd's `--container-*`/`--artifact-server-*` flags. (Config has no cache-server fields at all — the cache server is wired up directly from cmd.Input, not threaded through runner.Config — so this batch doesn't claim any.)"
+predecessor = "9.1"
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/runner.go", start = 37, end = 65, render = { kind = "full" } },
+]}
+
+[[batches]]
+id = "9.3"
+descriptor = "step_factory.go — Step.Type() to step-kind dispatch (full file)"
+justification = "The single switch that turns a model.Step's Type() into the concrete stepRun/stepActionLocal/stepActionRemote/stepDocker struct — the exact answer to 'which step implementation handles my step', small enough (38 lines) to show whole."
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/step_factory.go", start = 9, end = 46, render = { kind = "full" } },
+]}
+
+[[batches]]
+id = "9.4"
+descriptor = "RunContext struct — per-job execution state"
+justification = "The struct threaded through every step of a job's lifecycle (Env/GlobalEnv/ExtraPath/StepResults/IntraActionState/JobContainer/ServiceContainers/Masks/caller-for-reusable-workflows) — the answer to 'where does step X's output/env end up' before reading step.go."
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/run_context.go", start = 31, end = 56, render = { kind = "full" } },
+]}
+
+# ============================================================
+# Tier 10 — pkg/container content
+# ============================================================
 
 [[batches]]
 id = "10.1"
-descriptor = "pkg/exprparser + pkg/artifacts + pkg/artifactcache + pkg/schema listings"
-justification = """
-Files in the four packages that haven't had their listing shown yet —
-exprparser (functions.go/interpreter.go + tests + testdata),
-artifacts (artifact.pb.go gRPC protobuf at 1.1k lines / artifacts_v4.go
-/ server.go + tests + testdata), artifactcache (handler.go / model.go /
-storage.go / doc.go + tests + testdata), schema (schema.go + the two
-embedded action_schema.json / workflow_schema.json + tests).
-"""
-content = { kind = "fs", groups = [
-    { parent = "pkg/exprparser", entries = "all" },
-    { parent = "pkg/artifacts", entries = "all" },
-    { parent = "pkg/artifactcache", entries = "all" },
-    { parent = "pkg/schema", entries = "all" },
-] }
+descriptor = "Container interface — the execution-backend contract"
+justification = "The interface every execution environment (Docker container, host-exec, WITHOUT_DOCKER stub) implements (Create/Copy/Exec/Start/Pull/Remove/GetHealth/...) — the contract to satisfy when adding a new backend."
+content = { kind = "lines", spans = [
+    { path = "pkg/container/container_types.go", start = 42, end = 58, render = { kind = "full" } },
+]}
 
-[[batches]]
-id = "10.2"
-descriptor = "pkg/lookpath + pkg/workflowpattern + pkg/gh + pkg/filecollector listings"
-justification = """
-The four smaller utility packages. lookpath has per-OS lp_{unix,
-windows,plan9,js}.go variants (a partial go stdlib fork). workflowpattern
-handles `on.push.paths` glob filters. gh is the GITHUB_TOKEN discovery
-helper. filecollector copies a tree honouring .gitignore.
-"""
-content = { kind = "fs", groups = [
-    { parent = "pkg/lookpath", entries = "all" },
-    { parent = "pkg/workflowpattern", entries = "all" },
-    { parent = "pkg/gh", entries = "all" },
-    { parent = "pkg/filecollector", entries = "all" },
-] }
+# ============================================================
+# Tier 11 — pkg/exprparser content
+# ============================================================
 
 [[batches]]
 id = "11.1"
-descriptor = "go.mod module + direct dependency block header"
-justification = """
-Module path (github.com/nektos/act), Go toolchain (1.25.0), and a head
-of the first `require (...)` block. Surfaces direct deps:
-AlecAivazis/survey (interactive prompts), Masterminds/semver, adrg/xdg,
-andreaskoch/go-fswatch, docker/cli, go-git, joho/godotenv,
-julienschmidt/httprouter (artifact server), moby/*, rhysd/actionlint
-(used by exprparser), sirupsen/logrus, spf13/cobra+pflag, etc.
-"""
+descriptor = "functions.go — every builtin GitHub Actions expression function"
+justification = "The complete catalog of `${{ }}` builtin functions act implements: contains/startsWith/endsWith/format/join/toJSON/fromJSON/hashFiles/success/always/cancelled/failure (job- and step-scoped variants) — directly answers 'what functions are available in expressions', a near-certain query given this is a scripting-language surface users write into every workflow."
 content = { kind = "lines", spans = [
-    { path = "go.mod", start = 1, end = 12, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "11.2"
-descriptor = "Makefile pr + test target bodies"
-justification = """
-The three most-run developer targets. pr (= tidy format-all lint test
-— what CI calls); build (the go build invocation with -ldflags -X
-main.version=$(VERSION) writing to dist/local/act); test (go test ./...
-+ a self-run of the freshly-built act). Answers "how do I build/test
-this?"
-"""
-content = { kind = "lines", spans = [
-    { path = "Makefile", start = 22, end = 23, render = { kind = "full" } },
-    { path = "Makefile", start = 38, end = 40, render = { kind = "full" } },
-] }
+    { path = "pkg/exprparser/functions.go", start = 22, end = 22, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 47, end = 47, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 54, end = 54, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 67, end = 67, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 140, end = 140, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 155, end = 155, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 168, end = 168, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 183, end = 183, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 255, end = 255, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 259, end = 259, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 272, end = 272, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 276, end = 276, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 289, end = 289, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+    { path = "pkg/exprparser/functions.go", start = 293, end = 293, render = { kind = "truncated", pattern = '^func(\s*\([^)]*\))?\s*[A-Za-z0-9_]+' } },
+]}

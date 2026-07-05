@@ -1,1883 +1,621 @@
 fixture = "requests"
 revision_pin = "6e83187b"
 summary = """
-Requests is the canonical Python HTTP client library — a thin, ergonomic
-facade over urllib3. The public surface is two layered APIs: a flat
-functional API (`get`, `post`, `put`, `patch`, `delete`, `head`,
-`options`, `request`) in `api.py`, and a `Session` class (in
-`sessions.py`) carrying cookies, headers, auth, proxies, and adapters
-across calls. Underneath, `Request` -> `PreparedRequest` -> `Response`
-data flow lives in `models.py`, transport in `adapters.py` (HTTPAdapter
-wrapping urllib3 PoolManagers), authentication in `auth.py`
-(HTTPBasicAuth, HTTPDigestAuth, HTTPProxyAuth, plus AuthBase for
-plugins), cookies in `cookies.py` (RequestsCookieJar with dict-like
-behavior over http.cookiejar), and a large pile of URL/encoding/proxy/
-netrc helpers in `utils.py`. Errors are a tree rooted at
-RequestException in `exceptions.py`.
-
-Plausible queries this NS serves: "how do I send a POST with JSON?",
-"how does Session reuse connections?", "what does prepare_url do to my
-URL?", "how do redirects work?", "where is digest auth implemented?",
-"how does requests pick a CA bundle / proxy / netrc credentials?",
-"which exceptions can my call raise?", "what version of Python is
-supported?", "how do I write a custom auth handler / transport
-adapter?", plus debugging tasks ("why is content-length being set
-this way?", "how is the Cookie header constructed?", "what triggers
-strip-auth on redirect?").
+`requests` (psf/requests) is the canonical Python "HTTP for Humans" client
+library: a thin, well-documented layer over urllib3 providing Request/
+PreparedRequest/Response modeling, a Session object for connection pooling
+and cookie/auth persistence, pluggable transport adapters, and Basic/Digest
+auth. Source lives under src/requests/ (~7.4k LoC across 18 modules); the
+test suite under tests/ (~4k LoC, dominated by tests/test_requests.py's
+3068-line integration suite) is a large share of the repo and a common
+target for "where's the test for X" queries. Sessions against this fixture
+skew toward: understanding the request lifecycle (Request -> prepare ->
+Session.send -> HTTPAdapter -> urllib3 -> Response), debugging redirect/
+auth/cookie/proxy/SSL edge cases, adding a utility or exception, writing or
+locating a test, and routine build/lint/typecheck/CI operations. Per-line
+rendering cost in this fixture is high relative to entry count, so the
+ranking favors breadth (complete, honest symbol rosters with exact line
+locations) over depth; only the two highest-value, hardest-to-reconstruct
+control-flow bodies (Session's redirect-resolution loop, HTTPAdapter's
+send()/exception-mapping) get full-body treatment. Everything else is one
+grep/Read hop away from its roster-listed line number.
 """
+
+# ============================== TIER 1: Orientation ==============================
 
 [[batches]]
 id = "1.1"
-descriptor = "Root listing"
-justification = """
-The repo's top-level layout names the building blocks an agent will
-need to reach for: src/, tests/, docs/, ext/, plus the standard packaging
-files (pyproject, setup.py, MANIFEST.in, Makefile, tox.ini,
-requirements-dev.txt) and the prose files (README.md, HISTORY.md,
-AUTHORS.rst, LICENSE, NOTICE). Listing them all up front mitigates
-catastrophic-omission: any later batch that names a file implies the
-unlisted ones don't exist; ranking the full listing first prevents
-that mistake.
-"""
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "."
-entries = "all"
+descriptor = "Root directory listing"
+justification = "First orientation: names every top-level file/dir (src, tests, docs, ext, .github, config files) so the agent never has to guess what exists at repo root."
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
 
 [[batches]]
 id = "1.2"
-descriptor = "README one-line description"
-justification = """
-The single-line summary "Requests is a simple, yet elegant, HTTP
-library." plus the H1 — cheapest possible "what is this crate?"
-signal, fits the small-budget threshold.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 1
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "README.md"
-start = 9
-end = 9
-render = { kind = "full" }
+descriptor = "src/requests/ package listing"
+justification = "The entire installable package is 18 files under src/requests/; listing them all up front prevents assuming a module (e.g. certs.py, packages.py) doesn't exist."
+content = { kind = "fs", groups = [ { parent = "src/requests", entries = "all" } ] }
 
 [[batches]]
 id = "1.3"
-descriptor = "Package title + version"
-justification = """
-Two cheap one-liners: __title__ and __version__ from __version__.py.
-Tells the agent the canonical package name and exact version (2.34.2)
-without paying for the rest of the file.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/__version__.py"
-start = 5
-end = 5
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/__version__.py"
-start = 8
-end = 8
-render = { kind = "full" }
+descriptor = "tests/ top-level listing"
+justification = "tests/ holds ~4k LoC across many files plus certs/ and testserver/ subdirs; a complete listing anchors later per-file test batches."
+content = { kind = "fs", groups = [ { parent = "tests", entries = "all" } ] }
 
 [[batches]]
 id = "1.4"
-descriptor = "src/requests/ listing"
-justification = """
-Names every module under the package so later batches that zoom into
-one file (sessions.py, models.py, etc.) don't imply the others don't
-exist. Highest-leverage breadth signal for the source tree; cheap
-(one fs listing).
-"""
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "src/requests"
-entries = "all"
+descriptor = "docs/ directory listing"
+justification = "Sphinx docs tree (user guide, community, dev, api.rst, conf.py, themes) — names every doc file so later doc batches aren't mistaken for the whole set."
+content = { kind = "fs", groups = [ { parent = "docs", entries = "all" } ] }
 
 [[batches]]
 id = "1.5"
-descriptor = "pyproject: name, description, Python floor, deps"
-justification = """
-Identity (`name = "requests"`, description), `requires-python =
-">=3.10"`, and the four hard deps (charset_normalizer, idna, urllib3,
-certifi). Every one of those deps drives behavior visible in source:
-urllib3 wraps the transport, idna handles IDN hosts, certifi supplies
-the default CA bundle, charset_normalizer/chardet does response
-encoding detection.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 5
-end = 9
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 17
-end = 23
-render = { kind = "full" }
+descriptor = ".github/ and workflows/ listing"
+justification = "Shows CODEOWNERS, CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md, ISSUE_TEMPLATE/, dependabot.yml, FUNDING.yml, and all 8 CI workflow names in one cheap batch — 'how is CI/community process structured' without paying for any workflow body."
+content = { kind = "fs", groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "README usage snippet"
-justification = """
-The canonical worked example — import, get, status_code, headers,
-encoding, text, json — anchors the "how do I make a request?"
-question class. Comes after the identity/dep batches so a small budget
-still gets the cheaper context first.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "README.md"
-start = 11
-end = 24
-render = { kind = "full" }
+descriptor = "README lede + usage example"
+justification = "The one-paragraph pitch plus the canonical >>> requests.get(...) doctest is the fastest way to confirm 'this is the requests HTTP client' and its basic call shape."
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 9, end = 24, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.7"
-descriptor = "Public re-exports (__all__) from package __init__"
-justification = """
-`__all__` is the authoritative list of what `from requests import X`
-resolves to: ConnectionError, ConnectTimeout, HTTPError,
-JSONDecodeError, PreparedRequest, ReadTimeout, Request,
-RequestException, Response, Session, Timeout, TooManyRedirects,
-URLRequired, codes, the verbs (delete/get/head/options/patch/post/put/
-request), packages, session, utils. Highest-density public-surface
-signal in the repo: any "where does X come from" query lands here.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 188
-end = 214
-render = { kind = "full" }
+descriptor = "pyproject.toml identity"
+justification = "Name, description, license, author/maintainer identity — the fastest 'what is this package' answer."
+content = { kind = "lines", spans = [
+  { path = "pyproject.toml", start = 1, end = 16, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.8"
-descriptor = "Package import wiring (api, exceptions, models, sessions, status_codes)"
-justification = """
-The `from .X import Y` block in __init__.py is the dependency graph
-in miniature: api.py supplies the verbs, exceptions.py the error
-tree, models.py the data classes, sessions.py Session, status_codes.py
-codes. Locating this lets an agent jump from a name in __all__
-straight to its defining module without searching.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 171
-end = 186
-render = { kind = "full" }
+descriptor = "pyproject.toml Python-version support + dependencies"
+predecessor = "1.7"
+justification = "requires-python (3.10+) and the runtime dependency list (charset_normalizer/idna/urllib3/certifi) with version bounds — the fastest 'what does this depend on' answer, split from 1.7 to keep both batches small."
+content = { kind = "lines", spans = [
+  { path = "pyproject.toml", start = 17, end = 23, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.9"
-descriptor = "Crate-doc lede (package docstring)"
-justification = """
-The module docstring at the top of __init__.py — "Requests is an HTTP
-library, written in Python, for human beings." plus the GET and POST
-examples — duplicates some README content but lands at the actual
-import site and includes the `requests.api` cross-reference and the
-docs URL.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 6
-end = 39
-render = { kind = "full" }
+descriptor = "Makefile build/test targets"
+predecessor = "1.7"
+justification = "Operational entry points: `make init`/`test`/`ci`/`test-readme`/`coverage` — the concrete answer to 'how do I build/test this repo'; the ellipsis after `coverage` signals the remaining `.publishenv`/`publish`/`docs` targets continue below rather than implying the Makefile stops there."
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 1, end = 14, render = { kind = "full" } },
+  { path = "Makefile", start = 16, end = 16, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "__version__.py package metadata"
+justification = "Single source of truth for the installed version (2.34.2), title, author, license string — tiny and frequently the first thing 'what version is this' queries need."
+content = { kind = "lines", spans = [
+  { path = "src/requests/__version__.py", start = 1, end = 14, render = { kind = "full" } },
+] }
+
+# ============================== TIER 2: Public API surface ==============================
 
 [[batches]]
 id = "2.1"
-descriptor = "api.py module docstring"
-justification = """
-"This module implements the Requests API." — confirms api.py is the
-entry point. Cheap and orients later batches that zoom into specific
-verbs.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 1
-end = 9
-render = { kind = "full" }
+descriptor = "api.py function locations"
+justification = "Names all 8 module-level functions (request/get/head/options/post/put/patch/delete) — this IS requests' public functional API; catastrophic to show only get/post."
+content = { kind = "lines", spans = [
+  { path = "src/requests/api.py", start = 24, end = 24, render = { kind = "full" } },
+  { path = "src/requests/api.py", start = 74, end = 74, render = { kind = "full" } },
+  { path = "src/requests/api.py", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/api.py", start = 102, end = 102, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/api.py", start = 117, end = 117, render = { kind = "full" } },
+  { path = "src/requests/api.py", start = 137, end = 137, render = { kind = "full" } },
+  { path = "src/requests/api.py", start = 154, end = 154, render = { kind = "full" } },
+  { path = "src/requests/api.py", start = 171, end = 171, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "2.2"
-descriptor = "api.py: all eight verb names"
-justification = """
-Names every public function in api.py (request, get, options, head,
-post, put, patch, delete). Catastrophic-omission hedge: without
-this an agent might infer only some verbs exist. Each span renders
-the first line of the def (which is just `def name(` for the
-multi-line ones, or the entire short signature for single-line ones).
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 24
-end = 24
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 74
-end = 74
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 90
-end = 90
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 102
-end = 102
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 117
-end = 117
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 137
-end = 137
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 154
-end = 154
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 171
-end = 171
-render = { kind = "full" }
+descriptor = "__init__.py public export tuple"
+justification = "The __all__ tuple is the ground truth for what `import requests` actually exposes (verbs, exceptions, Request/PreparedRequest/Response, Session, codes, packages, utils)."
+content = { kind = "lines", spans = [
+  { path = "src/requests/__init__.py", start = 188, end = 214, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "2.3"
-descriptor = "api.request() full signature"
-justification = """
-`request()` is the function all other verbs delegate to; its kwargs
-define what every call accepts. The full three-line signature names
-method, url, and the Unpack[_t.RequestKwargs] kwarg cloud.
-Predecessor 2.2 already placed the name; this fills in the body.
-"""
-predecessor = "2.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 24
-end = 26
-render = { kind = "full" }
-
-[[batches]]
-id = "2.4"
-descriptor = "api.request() body — delegates to a one-shot Session"
-justification = """
-The body is a five-line nugget: open a Session via `with`, call
-session.request(method, url, **kwargs). Means the functional API is
-just sugar for Session — every Session config option / hook /
-exception applies.
-"""
-predecessor = "2.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/api.py"
-start = 67
-end = 71
-render = { kind = "full" }
-
-[[batches]]
-id = "2.5"
-descriptor = "Session class header + attribute declarations"
-justification = """
-Class-level type annotations on Session enumerate every state field
-the session carries across calls (headers, auth, proxies, hooks,
-params, stream, verify, cert, max_redirects, trust_env, cookies,
-adapters). This is the "Session has these slots" reference for any
-config/inheritance question.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 395
-end = 395
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 414
-end = 425
-render = { kind = "full" }
-
-[[batches]]
-id = "2.6"
-descriptor = "Session method names + module-level helpers"
-justification = """
-Names every method on Session (prepare_request, request, get, options,
-head, post, put, patch, delete, send, merge_environment_settings,
-get_adapter, close, mount) and on SessionRedirectMixin
-(get_redirect_target, should_strip_auth, resolve_redirects,
-rebuild_auth, rebuild_proxies, rebuild_method), plus the module-level
-merge_setting / merge_hooks helpers and the deprecated `session()`
-factory. Catastrophic-omission hedge over the Session surface.
-factory. Each span renders just the def line, which is either
-the whole short signature or `def name(` for the multi-line ones.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 76
-end = 76
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 108
-end = 108
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 127
-end = 127
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 134
-end = 134
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 154
-end = 154
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 186
-end = 186
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 309
-end = 309
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 334
-end = 334
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 370
-end = 370
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 511
-end = 511
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 557
-end = 557
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 655
-end = 655
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 673
-end = 673
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 684
-end = 684
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 695
-end = 695
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 714
-end = 714
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 728
-end = 728
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 742
-end = 742
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 752
-end = 752
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 831
-end = 831
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 870
-end = 870
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 883
-end = 883
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 888
-end = 888
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 908
-end = 908
-render = { kind = "full" }
-
-[[batches]]
-id = "2.7"
-descriptor = "Session.__init__ defaults — attribute settings"
-justification = """
-Just the assignment lines from the constructor (no doc comments):
-default_headers(), auth=None, proxies={}, default_hooks(),
-params={}, stream=False, verify=True, cert=None,
-max_redirects=DEFAULT_REDIRECT_LIMIT, trust_env=True,
-cookies=cookiejar_from_dict({}), adapters=OrderedDict(), mount
-HTTPAdapter for https:// and http://. Answers "what does Session()
-configure by default?" cheaply.
-"""
-predecessor = "2.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 446
-end = 446
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 450
-end = 450
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 455
-end = 455
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 458
-end = 458
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 463
-end = 463
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 466
-end = 466
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 478
-end = 478
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 482
-end = 482
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 488
-end = 488
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 492
-end = 492
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 498
-end = 498
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 501
-end = 503
-render = { kind = "full" }
-
-[[batches]]
-id = "2.8"
-descriptor = "Session.request body — Request->prepare->send pipeline"
-justification = """
-The full inner pipeline of a single call: build a Request, prepare it
-(via self.prepare_request which merges session defaults),
-merge_environment_settings for proxies/verify/cert/stream, then
-self.send. This is the spine for any "how does X travel through a
-call" question.
-"""
-predecessor = "2.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 619
-end = 653
-render = { kind = "full" }
+# ============================== TIER 3: Foundational small modules ==============================
 
 [[batches]]
 id = "3.1"
-descriptor = "exceptions.py: class header lines"
-justification = """
-All 21 exception class declarations — RequestException root,
-InvalidJSONError, JSONDecodeError, HTTPError, ConnectionError,
-ProxyError, SSLError, Timeout, ConnectTimeout, ReadTimeout,
-URLRequired, TooManyRedirects, MissingSchema, InvalidSchema,
-InvalidURL, InvalidHeader, InvalidProxyURL, ChunkedEncodingError,
-ContentDecodingError, StreamConsumedError, RetryError,
-UnrewindableBodyError — plus the three warnings (RequestsWarning,
-FileModeWarning, RequestsDependencyWarning). Renders the `class X(...)`
-line of every exception, which already shows inheritance (so the
-agent sees ConnectTimeout extends both ConnectionError and Timeout,
-JSONDecodeError extends InvalidJSONError and CompatJSONDecodeError,
-etc.). Catastrophic-omission hedge: enumerates the whole error tree.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 20
-end = 20
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 38
-end = 38
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 42
-end = 42
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 66
-end = 66
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 70
-end = 70
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 74
-end = 74
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 78
-end = 78
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 82
-end = 82
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 91
-end = 91
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 98
-end = 98
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 102
-end = 102
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 106
-end = 106
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 110
-end = 110
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 114
-end = 114
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 118
-end = 118
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 122
-end = 122
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 126
-end = 126
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 130
-end = 130
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 134
-end = 134
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 138
-end = 138
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 142
-end = 142
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 146
-end = 146
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 153
-end = 153
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 157
-end = 157
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 161
-end = 161
-render = { kind = "full" }
+descriptor = "exceptions.py class hierarchy locations"
+justification = "Names all 25 exception/warning classes and their base classes (RequestException -> HTTPError/ConnectionError/Timeout/... , MissingSchema, InvalidURL, RequestsWarning) referenced from every other module."
+content = { kind = "lines", spans = [
+  { path = "src/requests/exceptions.py", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 82, end = 82, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 91, end = 91, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 98, end = 98, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 102, end = 102, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 106, end = 106, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 110, end = 110, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 122, end = 122, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 126, end = 126, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 130, end = 130, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 142, end = 142, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 146, end = 146, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 153, end = 153, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/exceptions.py", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "models.py: top-level constants"
-justification = """
-The few module-level constants in models.py: REDIRECT_STATI (which
-HTTP codes trigger automatic redirect), DEFAULT_REDIRECT_LIMIT (30),
-CONTENT_CHUNK_SIZE (10*1024), ITER_CHUNK_SIZE (512). Used downstream
-in resolve_redirects, iter_content, etc.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 96
-end = 106
-render = { kind = "full" }
+descriptor = "hooks.py full (event hook dispatch)"
+justification = "The entire hook system is 48 lines: HOOKS=['response'], default_hooks(), dispatch_hook() — foundational for auth/redirect callback questions and cheap to show complete."
+content = { kind = "lines", spans = [
+  { path = "src/requests/hooks.py", start = 1, end = 48, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.3"
-descriptor = "models.py: class names + key method names"
-justification = """
-Names every method on the four classes in models.py:
-RequestEncodingMixin (path_url, _encode_params, _encode_files),
-RequestHooksMixin (register_hook, deregister_hook), Request (__init__,
-__repr__, prepare), PreparedRequest (__init__, prepare, __repr__,
-copy, prepare_method, _get_idna_encoded_host, prepare_url,
-prepare_headers, prepare_body, prepare_content_length, prepare_auth,
-prepare_cookies, prepare_hooks), and Response (__init__, ok,
-is_redirect, is_permanent_redirect, next, apparent_encoding,
-iter_content, iter_lines, content, text, json, links,
-raise_for_status, close, plus dunder methods). Catastrophic-omission
-hedge over the entire models surface.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 109
-end = 109
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 113
-end = 113
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 152
-end = 152
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 184
-end = 184
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 255
-end = 255
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 258
-end = 258
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 271
-end = 271
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 283
-end = 283
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 358
-end = 358
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 376
-end = 376
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 422
-end = 422
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 454
-end = 454
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 465
-end = 465
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 471
-end = 471
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 481
-end = 481
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 563
-end = 563
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 574
-end = 574
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 652
-end = 652
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 668
-end = 668
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 697
-end = 697
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 720
-end = 720
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 730
-end = 730
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 859
-end = 860
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 874
-end = 875
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 881
-end = 882
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 889
-end = 890
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 894
-end = 895
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 912
-end = 912
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 990
-end = 990
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 1030
-end = 1031
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 1049
-end = 1050
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 1087
-end = 1087
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 1122
-end = 1123
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 1140
-end = 1140
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 1169
-end = 1169
-render = { kind = "full" }
+descriptor = "structures.py class/method locations"
+justification = "Names CaseInsensitiveDict (the dict type backing every Headers object) and LookupDict (backs requests.codes) plus their key methods; ellipses hedge the dunders in between (__init__/__delitem__/__iter__/__len__/__repr__/get) so none of them reads as absent — small, foundational, cheap to enumerate."
+content = { kind = "lines", spans = [
+  { path = "src/requests/structures.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "src/requests/structures.py", start = 49, end = 49, render = { kind = "ellipsis" } },
+  { path = "src/requests/structures.py", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/structures.py", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/structures.py", start = 67, end = 67, render = { kind = "ellipsis" } },
+  { path = "src/requests/structures.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/structures.py", start = 80, end = 80, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/structures.py", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/structures.py", start = 92, end = 92, render = { kind = "ellipsis" } },
+  { path = "src/requests/structures.py", start = 96, end = 96, render = { kind = "full" } },
+  { path = "src/requests/structures.py", start = 101, end = 101, render = { kind = "ellipsis" } },
+  { path = "src/requests/structures.py", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/structures.py", start = 124, end = 124, render = { kind = "ellipsis" } },
+] }
 
 [[batches]]
 id = "3.4"
-descriptor = "PreparedRequest class header + attrs"
-justification = """
-PreparedRequest's attribute annotations name the exact bytes-on-wire
-shape: method, url, headers (CaseInsensitiveDict), _cookies, body,
-hooks, _body_position. Pairs with 3.3's method list to give an agent
-the full PreparedRequest contract.
-"""
-predecessor = "3.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 376
-end = 376
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 397
-end = 404
-render = { kind = "full" }
+descriptor = "status_codes.py docstring + init logic"
+justification = "Explains requests.codes.ok / codes.teapot / codes['\\o/'] access patterns and how _init() populates both lower- and upper-case attribute names from the numeric-code table."
+content = { kind = "lines", spans = [
+  { path = "src/requests/status_codes.py", start = 1, end = 19, render = { kind = "full" } },
+  { path = "src/requests/status_codes.py", start = 106, end = 128, render = { kind = "full" } },
+] }
 
-[[batches]]
-id = "3.5"
-descriptor = "PreparedRequest.prepare body — full pipeline order"
-justification = """
-The eight-step order of preparing a Request: method, url, headers,
-cookies, body, auth, hooks — and the load-bearing comments noting
-auth must be last (so it sees a fully prepared request) and hooks
-must come after auth (because authenticators can register hooks).
-This is the single highest-value chunk for "why is X being mutated
-when?" debugging in models.py.
-"""
-predecessor = "3.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 422
-end = 449
-render = { kind = "full" }
-
-[[batches]]
-id = "3.6"
-descriptor = "Response.json body"
-justification = """
-The most-called Response method besides text/.content. Body shows
-guess_json_utf detection on bytes, fallback to self.text, and the
-RequestsJSONDecodeError wrapping that aliases stdlib/simplejson
-errors into requests's own exception namespace. Important for any
-JSON-handling query.
-"""
-predecessor = "3.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 1087
-end = 1120
-render = { kind = "full" }
-
-[[batches]]
-id = "3.7"
-descriptor = "Response.text body — encoding detection"
-justification = """
-The encoding contract: if Response.encoding is set use it; else
-fall back to apparent_encoding (charset_normalizer/chardet). Critical
-for "why is my response decoded wrong" questions. Shorter sibling to
-3.6.
-"""
-predecessor = "3.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 1049
-end = 1085
-render = { kind = "full" }
-
-[[batches]]
-id = "3.8"
-descriptor = "_types.py: TypeAlias names"
-justification = """
-The TypeAlias declarations name every public type vocabulary the
-library exposes via Unpack[...] in api/sessions signatures: UriType,
-ParamsType, KVDataType, RawDataType, StreamDataType, EncodableDataType,
-DataType, BodyType, HeadersType, CookiesType, FilesType, AuthType,
-TimeoutType, ProxiesType, HooksType, VerifyType, CertType, JsonType,
-plus the kwarg TypedDicts (BaseRequestKwargs, RequestKwargs, GetKwargs,
-PostKwargs, DataKwargs). Answers "what types does this kwarg accept?"
-at the source-of-truth.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 77
-end = 77
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 83
-end = 83
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 92
-end = 92
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 94
-end = 96
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 98
-end = 98
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 108
-end = 108
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 112
-end = 112
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 114
-end = 114
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 127
-end = 127
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 131
-end = 131
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 135
-end = 140
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 152
-end = 152
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 165
-end = 165
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 172
-end = 172
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 176
-end = 176
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/_types.py"
-start = 179
-end = 179
-render = { kind = "full" }
+# ============================== TIER 4: Core data model (models.py) — rosters only ==============================
 
 [[batches]]
 id = "4.1"
-descriptor = "adapters.py: HTTPAdapter pool defaults"
-justification = """
-The four module-level constants — DEFAULT_POOLBLOCK=False,
-DEFAULT_POOLSIZE=10, DEFAULT_RETRIES=0, DEFAULT_POOL_TIMEOUT=None —
-are the visible knobs every Session inherits when it mounts the
-default HTTPAdapter. Tiny, high-value.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 79
-end = 82
-render = { kind = "full" }
+descriptor = "models.py class roster"
+justification = "Names all 5 top-level classes (RequestEncodingMixin, RequestHooksMixin, Request, PreparedRequest, Response) so no class in this 1180-line core file is assumed absent."
+content = { kind = "lines", spans = [
+  { path = "src/requests/models.py", start = 109, end = 109, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 255, end = 255, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 283, end = 283, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 376, end = 376, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 730, end = 730, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.2"
-descriptor = "adapters.py: class names + method names"
-justification = """
-BaseAdapter (send, close), HTTPAdapter (init_poolmanager,
-proxy_manager_for, cert_verify, build_response,
-build_connection_pool_key_attributes, get_connection_with_tls_context,
-get_connection [deprecated], close, request_url, add_headers,
-proxy_headers, send), plus the module-level _urllib3_request_context
-helper and the SOCKSProxyManager import fallback. Catastrophic-omission
-hedge over the transport surface.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 85
-end = 85
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 122
-end = 122
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 128
-end = 128
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 153
-end = 153
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 158
-end = 158
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 201
-end = 201
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 239
-end = 239
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 269
-end = 269
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 307
-end = 307
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 365
-end = 365
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 403
-end = 403
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 455
-end = 455
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 512
-end = 512
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 555
-end = 555
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 565
-end = 565
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 599
-end = 599
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 613
-end = 613
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 634
-end = 634
-render = { kind = "full" }
+descriptor = "PreparedRequest method locations"
+predecessor = "4.1"
+justification = "Names all 13 PreparedRequest methods (init/prepare/__repr__/copy/prepare_method/_get_idna_encoded_host/prepare_url/prepare_headers/prepare_body/prepare_content_length/prepare_auth/prepare_cookies/prepare_hooks) — the class most bug reports reference by method name."
+content = { kind = "lines", spans = [
+  { path = "src/requests/models.py", start = 405, end = 405, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 422, end = 422, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 451, end = 451, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 454, end = 454, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 465, end = 465, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 472, end = 472, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 481, end = 481, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 563, end = 563, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 574, end = 574, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 652, end = 652, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 668, end = 668, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 697, end = 697, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 720, end = 720, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "4.3"
-descriptor = "auth.py: class names + key method names"
-justification = """
-AuthBase (__call__), HTTPBasicAuth (__init__, __eq__, __ne__,
-__call__), HTTPProxyAuth (__call__), HTTPDigestAuth (__init__,
-init_per_thread_state, build_digest_header, handle_redirect,
-handle_401, __call__, __eq__, __ne__), plus the module-level
-_basic_auth_str helper. Catastrophic-omission hedge over the auth
-surface — important because "where is OAuth?" answers "not here, see
-3rd-party requests-oauthlib" (per api.rst migration notes).
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 34
-end = 34
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 78
-end = 78
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 81
-end = 81
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 85
-end = 85
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 96
-end = 96
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 111
-end = 111
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 116
-end = 116
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 119
-end = 119
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 124
-end = 124
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 141
-end = 141
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 147
-end = 147
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 157
-end = 157
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 268
-end = 268
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 273
-end = 273
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 321
-end = 321
-render = { kind = "full" }
+descriptor = "Response method/property locations"
+predecessor = "4.1"
+justification = "Names all 22 Response members (init, context-manager/pickle dunders, ok/is_redirect/is_permanent_redirect/next/apparent_encoding, iter_content, iter_lines, content, text, json, links, raise_for_status, close) — the class virtually every session touches."
+content = { kind = "lines", spans = [
+  { path = "src/requests/models.py", start = 763, end = 763, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 810, end = 810, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 813, end = 813, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 816, end = 816, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 824, end = 824, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 832, end = 832, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 835, end = 835, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 845, end = 845, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 855, end = 855, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 860, end = 860, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 875, end = 875, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 882, end = 882, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 890, end = 890, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 895, end = 895, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 912, end = 912, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 990, end = 990, render = { kind = "full" } },
+  { path = "src/requests/models.py", start = 1031, end = 1031, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 1050, end = 1050, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 1087, end = 1087, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 1123, end = 1123, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 1140, end = 1140, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/models.py", start = 1169, end = 1169, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
-[[batches]]
-id = "4.4"
-descriptor = "HTTPBasicAuth __call__ and _basic_auth_str header"
-justification = """
-The HTTPBasicAuth.__call__ body is two lines (sets Authorization
-header from _basic_auth_str). _basic_auth_str's signature shows it
-accepts bytes|str for username/password. Most-asked-about
-authentication path; answers "what does Basic auth do to my
-request?" zero-follow-up.
-"""
-predecessor = "4.3"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 34
-end = 35
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/auth.py"
-start = 111
-end = 113
-render = { kind = "full" }
-
-[[batches]]
-id = "4.5"
-descriptor = "cookies.py: class names + helper fn names"
-justification = """
-MockRequest, MockResponse, CookieConflictError, RequestsCookieJar
-(the dict-over-CookieJar adapter) and the module-level helpers
-extract_cookies_to_jar, get_cookie_header, remove_cookie_by_name,
-_copy_cookie_jar, create_cookie, morsel_to_cookie, cookiejar_from_dict,
-merge_cookies. Catastrophic-omission hedge: cookie handling spans
-many small pieces.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 31
-end = 31
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 114
-end = 114
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 135
-end = 135
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 153
-end = 153
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 164
-end = 164
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 185
-end = 185
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 191
-end = 191
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 479
-end = 479
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 494
-end = 494
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 531
-end = 531
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 579
-end = 579
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 604
-end = 604
-render = { kind = "full" }
-
-
-[[batches]]
-id = "4.6"
-descriptor = "Session.send body — spine"
-justification = """
-The send pipeline's structure (defaults, get_adapter, adapter.send,
-response hook dispatch, cookie persistence, redirect resolution,
-content prefetch). High value for "how does a request actually go
-out?" with most of the body shown.
-"""
-predecessor = "2.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 752
-end = 805
-render = { kind = "full" }
-
-[[batches]]
-id = "4.7"
-descriptor = "Session.send body — history shuffle + _next"
-justification = """
-The tail of Session.send: history reordering so r.history reflects
-intermediate responses, and the _next-on-Response stashing for
-manual redirect follow-up via Response.next(). Predecessor 4.6 placed
-the spine; this is the tail.
-"""
-predecessor = "4.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 809
-end = 829
-render = { kind = "full" }
-
-[[batches]]
-id = "4.8"
-descriptor = "SessionRedirectMixin.should_strip_auth body"
-justification = """
-The hostname-comparison logic for stripping the Authorization header
-on cross-host redirects, plus the http->https default-port allowlist
-that has been a recurring source of CVE-style discussion. Answers
-"when does requests strip auth?" zero-follow-up.
-"""
-predecessor = "2.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 154
-end = 184
-render = { kind = "full" }
-
-[[batches]]
-id = "4.9"
-descriptor = "SessionRedirectMixin.rebuild_method body"
-justification = """
-The browser-compat method-rewrite rules at redirect: 303->GET,
-302/found->GET, 301+POST->GET. The single chunk answering "why did my
-POST become a GET on redirect?" — well-known footgun.
-"""
-predecessor = "2.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 370
-end = 392
-render = { kind = "full" }
-
-
-[[batches]]
-id = "4.10"
-descriptor = "resolve_redirects — TooManyRedirects guard + header purge"
-justification = """
-Two of the most-asked snippets from resolve_redirects: the
-TooManyRedirects raise when history hits max_redirects, and the
-"non-307/308 redirect purges Content-Length / Content-Type /
-Transfer-Encoding and zeroes the body" block. Highest-density-per-line
-within the redirect machinery.
-"""
-predecessor = "2.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 216
-end = 219
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 249
-end = 258
-render = { kind = "full" }
-
-[[batches]]
-id = "4.11"
-descriptor = "resolve_redirects signature + outer loop scaffold"
-justification = """
-Signature names every kwarg the redirect loop respects (stream,
-timeout, verify, cert, proxies, yield_requests). The first few lines
-show the `while url:` loop driven by self.get_redirect_target. Lets
-the agent see the surface without paying for the full body.
-"""
-predecessor = "2.6"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 186
-end = 205
-render = { kind = "full" }
-
-[[batches]]
-id = "4.12"
-descriptor = "HTTPAdapter.send — urlopen call + exception map"
-justification = """
-The except blocks translate urllib3 errors (ProtocolError/OSError,
-MaxRetryError unpacking ConnectTimeoutError/ResponseError/_ProxyError/
-_SSLError, ClosedPoolError, _ProxyError, _SSLError/_HTTPError unpacking
-ReadTimeoutError/_InvalidHeader) into requests's exception types
-(ConnectionError, ConnectTimeout, RetryError, ProxyError, SSLError,
-ReadTimeout, InvalidHeader). The single most-asked chunk for "why am I
-getting exception X?" at the transport layer.
-"""
-predecessor = "4.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/adapters.py"
-start = 695
-end = 748
-render = { kind = "full" }
+# ============================== TIER 5: Session & redirect lifecycle (sessions.py) ==============================
 
 [[batches]]
 id = "5.1"
-descriptor = "tests/ listing"
-justification = """
-Names every test file: test_requests.py (3068 lines, the bulk of
-coverage), test_utils.py, test_lowlevel.py, test_hooks.py,
-test_adapters.py, test_help.py, test_packages.py, test_structures.py,
-test_testserver.py, conftest.py, compat.py, utils.py, plus the certs/
-subtree and testserver/ subpackage. Catastrophic-omission hedge for
-"where do I add a test?" / "where is X tested?" questions.
-"""
-[batches.content]
-kind = "fs"
-[[batches.content.groups]]
-parent = "tests"
-entries = "all"
+descriptor = "sessions.py module-level roster"
+justification = "Names merge_setting/merge_hooks (session-vs-request merge policy), SessionRedirectMixin, Session, and the deprecated session() factory — the whole module's top-level symbol set."
+content = { kind = "lines", spans = [
+  { path = "src/requests/sessions.py", start = 76, end = 76, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 108, end = 108, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 127, end = 127, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 395, end = 395, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 908, end = 908, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.2"
-descriptor = "utils.py: public function names"
-justification = """
-A trimmed catalog of the highest-value public helpers in utils.py
-(URL/proxy/auth/encoding pieces re-used across the package).
-Catastrophic-omission hedge: a partial list would let an agent
-re-implement helpers that already exist.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 160
-end = 160
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 231
-end = 231
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 376
-end = 376
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 440
-end = 440
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 569
-end = 569
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 594
-end = 594
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 621
-end = 621
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 704
-end = 704
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 810
-end = 810
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 873
-end = 873
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 885
-end = 885
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 911
-end = 911
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 951
-end = 951
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 1008
-end = 1008
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 1040
-end = 1040
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 1070
-end = 1070
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 1087
-end = 1087
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 1139
-end = 1139
-render = { kind = "full" }
-
-[[batches]]
-id = "5.3"
-descriptor = "default_headers body — User-Agent + Accept + Connection"
-justification = """
-The exact dict every Session starts with: User-Agent =
-"python-requests/<version>", Accept-Encoding from urllib3 (gzip+
-deflate+zstd), Accept = "*/*", Connection = "keep-alive". The
-zero-follow-up answer to "what headers does requests send by
-default?".
-"""
-predecessor = "5.2"
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 942
-end = 962
-render = { kind = "full" }
+descriptor = "SessionRedirectMixin method locations"
+predecessor = "5.1"
+justification = "Names all 7 redirect-handling methods (send stub, get_redirect_target, should_strip_auth, resolve_redirects, rebuild_auth, rebuild_proxies, rebuild_method) — the mixin responsible for every multi-hop redirect."
+content = { kind = "lines", spans = [
+  { path = "src/requests/sessions.py", start = 132, end = 132, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 134, end = 134, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 186, end = 186, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 309, end = 309, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 334, end = 334, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 370, end = 370, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.4"
-descriptor = "compat.py: JSONDecodeError + cookielib aliases"
-justification = """
-Two pieces that downstream code depends on: simplejson-vs-json
-JSONDecodeError selection (drives exceptions.JSONDecodeError MRO),
-and the `from http import cookiejar as cookielib` alias used
-everywhere RequestsCookieJar interacts with stdlib types.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/compat.py"
-start = 65
-end = 82
-render = { kind = "full" }
+descriptor = "Session method locations"
+predecessor = "5.1"
+justification = "Names all 19 Session methods (init, context-manager dunders, prepare_request, request, get/options/head/post/put/patch/delete, send, merge_environment_settings, get_adapter, close, mount, pickle dunders) — the full public surface of Session."
+content = { kind = "lines", spans = [
+  { path = "src/requests/sessions.py", start = 442, end = 442, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 505, end = 505, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 508, end = 508, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 511, end = 511, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 557, end = 557, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 655, end = 655, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 673, end = 673, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 684, end = 684, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 695, end = 695, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 714, end = 714, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 728, end = 728, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 742, end = 742, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 752, end = 752, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 831, end = 831, render = { kind = "full" } },
+  { path = "src/requests/sessions.py", start = 870, end = 870, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 883, end = 883, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 888, end = 888, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 899, end = 899, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/sessions.py", start = 903, end = 903, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
-[[batches]]
-id = "5.5"
-descriptor = "structures.py: class names"
-justification = """
-The two classes — CaseInsensitiveDict (the headers container) and
-LookupDict (the codes lookup). Names only; predecessors can refine.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/structures.py"
-start = 20
-end = 20
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/structures.py"
-start = 96
-end = 96
-render = { kind = "full" }
-
-[[batches]]
-id = "5.6"
-descriptor = "hooks.py: HOOKS list + module docstring lede"
-justification = """
-HOOKS = ["response"] (the only hook event in requests) plus the
-module docstring naming that as the sole event. Answers "which hooks
-can I register?" zero-follow-up.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/hooks.py"
-start = 1
-end = 11
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/hooks.py"
-start = 22
-end = 22
-render = { kind = "full" }
-
-[[batches]]
-id = "5.7"
-descriptor = "certs.where — CA bundle default"
-justification = """
-The single line `from certifi import where` plus the module docstring
-explaining it returns the certifi CA bundle, and the
-DEFAULT_CA_BUNDLE_PATH = certs.where() definition in utils.py.
-Answers "which CA bundle does requests trust by default?".
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "src/requests/certs.py"
-start = 3
-end = 16
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "src/requests/utils.py"
-start = 81
-end = 82
-render = { kind = "full" }
-
+# ============================== TIER 6: Test suite overview ==============================
 
 [[batches]]
 id = "6.1"
-descriptor = "pyproject pytest config"
-justification = """
-pytest addopts (--doctest-modules with ELLIPSIS), testpaths =
-["tests"], minversion. Names the doctest-driven test convention used
-across all modules.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 108
-end = 112
-render = { kind = "full" }
+descriptor = "tests/conftest.py full"
+justification = "The pytest fixtures every httpbin-based test depends on: httpbin/httpbin_secure URL-trailing-slash wrapping, clean_proxy_environ autouse fixture, and the trustme-backed nosan_server fixture — essential for 'how do I run/write a test'."
+content = { kind = "lines", spans = [
+  { path = "tests/conftest.py", start = 1, end = 67, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.2"
-descriptor = "tox envlist — Python matrix"
-justification = """
-tox envlist names the Python version matrix (3.10-3.14) and the
-use_chardet_on_py3 variant. Cheap CI-target signal.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "tox.ini"
-start = 1
-end = 2
-render = { kind = "full" }
+descriptor = "tests/utils.py + tests/__init__.py full"
+justification = "Two tiny test-support files: override_environ context manager, and the SNIMissingWarning always-fire setup — completes the smallest test-helper roster cheaply."
+content = { kind = "lines", spans = [
+  { path = "tests/utils.py", start = 1, end = 17, render = { kind = "full" } },
+  { path = "tests/__init__.py", start = 1, end = 14, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.3"
-descriptor = "advanced.rst section heading locations"
-justification = """
-Locations of section H2 headings in advanced.rst: Session Objects,
-Request/Response Objects, Prepared Requests, SSL Cert Verification,
-Client Side Certificates, CA Certificates, Body Content Workflow,
-Streaming Uploads, POST Multiple Multipart-Encoded Files, Event
-Hooks. Each heading line locates a topic the agent can jump to;
-actual section text comes via one follow-up read. Pairs with 6.4.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 3
-end = 3
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 10
-end = 10
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 87
-end = 87
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 121
-end = 121
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 211
-end = 211
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 254
-end = 254
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 279
-end = 279
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 300
-end = 300
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 349
-end = 349
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 391
-end = 391
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 423
-end = 423
-render = { kind = "full" }
+descriptor = "test_structures.py locations"
+justification = "Names both test classes (TestCaseInsensitiveDict, TestLookupDict) and all 15 of their test methods — confirms exactly what CaseInsensitiveDict/LookupDict behavior is covered."
+content = { kind = "lines", spans = [
+  { path = "tests/test_structures.py", start = 6, end = 6, render = { kind = "full" } },
+  { path = "tests/test_structures.py", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 29, end = 29, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 54, end = 54, render = { kind = "full" } },
+  { path = "tests/test_structures.py", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 61, end = 61, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 80, end = 80, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_structures.py", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
 
 [[batches]]
 id = "6.4"
-descriptor = "advanced.rst section heading locations (cont.)"
-justification = """
-Second half of advanced.rst H2 headings: Custom Authentication,
-Proxies, and Transport Adapters — the three deepest topics for
-library extensibility. Pairs with 6.3.
-"""
-[batches.content]
-kind = "lines"
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 488
-end = 488
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 578
-end = 578
-render = { kind = "full" }
-[[batches.content.spans]]
-path = "docs/user/advanced.rst"
-start = 968
-end = 968
-render = { kind = "full" }
+descriptor = "test_testserver.py + tests/testserver/server.py locations"
+justification = "Names the raw-socket TLS test server and its own tests in one batch: consume_socket_content, Server's constructor (ellipsis right after hedges its run()/text_response_server()/basic_response_server() factory methods and private socket-lifecycle helpers so they aren't assumed absent), TLSServer (init + its _create_socket_and_bind override), and all 11 of TestTestServer's test methods."
+content = { kind = "lines", spans = [
+  { path = "tests/test_testserver.py", start = 11, end = 11, render = { kind = "full" } },
+  { path = "tests/test_testserver.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 55, end = 55, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 95, end = 95, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 130, end = 130, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 144, end = 144, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/test_testserver.py", start = 156, end = 156, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/testserver/server.py", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/testserver/server.py", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/testserver/server.py", start = 30, end = 30, render = { kind = "full" } },
+  { path = "tests/testserver/server.py", start = 31, end = 31, render = { kind = "ellipsis" } },
+  { path = "tests/testserver/server.py", start = 138, end = 138, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "tests/testserver/server.py", start = 139, end = 139, render = { kind = "full" } },
+  { path = "tests/testserver/server.py", start = 171, end = 171, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "test_lowlevel.py locations"
+justification = "Names all 13 low-level socket tests (chunked upload/encoding errors, host-header edge cases, digest-auth 401 counting, proxy-from-environment, URL-fragment handling, non-ASCII redirect locations) — tests that bypass httpbin entirely."
+content = { kind = "lines", spans = [
+  { path = "tests/test_lowlevel.py", start = 24, end = 24, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 39, end = 39, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 63, end = 63, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 81, end = 81, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 127, end = 127, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 192, end = 192, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 238, end = 238, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 290, end = 290, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 308, end = 308, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 342, end = 342, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 364, end = 364, render = { kind = "full" } },
+  { path = "tests/test_lowlevel.py", start = 407, end = 407, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "test_utils.py class roster (sampled)"
+justification = "Names the 12 Test* classes covering every utils.py function (SuperLen, GetNetrcAuth, GuessJSONUTF, ContentEncodingDetection, ...); an ellipsis after the last one hedges the ~24 additional standalone parametrized test_ functions in this 1013-line file rather than exhaustively pricing all of them."
+content = { kind = "lines", spans = [
+  { path = "tests/test_utils.py", start = 50, end = 50, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 156, end = 156, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 184, end = 184, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 202, end = 202, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 220, end = 220, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 285, end = 285, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 294, end = 294, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 312, end = 312, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 320, end = 320, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 342, end = 342, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 376, end = 376, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 408, end = 408, render = { kind = "full" } },
+  { path = "tests/test_utils.py", start = 472, end = 472, render = { kind = "ellipsis" } },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "test_requests.py class roster (sampled)"
+justification = "Names all 7 top-level classes in the 3068-line main integration suite (TestRequests, TestCaseInsensitiveDict, TestMorselToCookieExpires, TestMorselToCookieMaxAge, TestTimeout, RedirectSession, TestPreparingURLs); an ellipsis after TestRequests hedges its ~185 individual test methods (redirects, auth, cookies, proxies, SSL, multipart, hooks, pickling, header validation) rather than exhaustively pricing each one — grep test_requests.py for a specific behavior is a fast one-hop follow-up."
+content = { kind = "lines", spans = [
+  { path = "tests/test_requests.py", start = 84, end = 84, render = { kind = "full" } },
+  { path = "tests/test_requests.py", start = 87, end = 87, render = { kind = "ellipsis" } },
+  { path = "tests/test_requests.py", start = 2305, end = 2305, render = { kind = "full" } },
+  { path = "tests/test_requests.py", start = 2456, end = 2456, render = { kind = "full" } },
+  { path = "tests/test_requests.py", start = 2490, end = 2490, render = { kind = "full" } },
+  { path = "tests/test_requests.py", start = 2510, end = 2510, render = { kind = "full" } },
+  { path = "tests/test_requests.py", start = 2582, end = 2582, render = { kind = "full" } },
+  { path = "tests/test_requests.py", start = 2734, end = 2734, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.8"
+descriptor = "tests/certs/ directory listing"
+justification = "Names the expired/, mtls/, valid/ cert fixture subdirs (used by SSL-verification tests) so their existence is known without paying for binary/PEM content."
+content = { kind = "fs", groups = [ { parent = "tests/certs", entries = "all" } ] }
+
+[[batches]]
+id = "6.9"
+descriptor = "resolve_redirects() full body"
+predecessor = "5.2"
+justification = "DEEP DIVE #1: the single trickiest method in the codebase — history tracking, TooManyRedirects, RFC 1808/7231 URL rebuilding, cookie carry-over, and body-rewind gating. High enough per-token value (unique, hard-to-guess control flow) to justify the full-body cost even though it lands here in array order once enough cheaper breadth batches precede it."
+content = { kind = "lines", spans = [
+  { path = "src/requests/sessions.py", start = 186, end = 307, render = { kind = "full" } },
+] }
+
+# ============================== TIER 7: Transport adapter (adapters.py) ==============================
+
+[[batches]]
+id = "7.1"
+descriptor = "adapters.py class/method locations"
+justification = "Names all 3 BaseAdapter methods (init/send/close) and all 15 HTTPAdapter methods (init/pickle dunders/init_poolmanager/proxy_manager_for/cert_verify/build_response/build_connection_pool_key_attributes/get_connection_with_tls_context/get_connection(deprecated)/close/request_url/add_headers/proxy_headers/send) — every transport-layer hook point, none silently omitted."
+content = { kind = "lines", spans = [
+  { path = "src/requests/adapters.py", start = 122, end = 122, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 125, end = 125, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/adapters.py", start = 128, end = 128, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 153, end = 153, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/adapters.py", start = 158, end = 158, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/adapters.py", start = 201, end = 201, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 223, end = 223, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/adapters.py", start = 226, end = 226, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/adapters.py", start = 239, end = 239, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 269, end = 269, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 307, end = 307, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 365, end = 365, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 403, end = 403, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 455, end = 455, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 512, end = 512, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 555, end = 555, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/adapters.py", start = 565, end = 565, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 599, end = 599, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 613, end = 613, render = { kind = "full" } },
+  { path = "src/requests/adapters.py", start = 634, end = 634, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "HTTPAdapter.send() full body"
+predecessor = "7.1"
+justification = "DEEP DIVE #2: the final hop before urllib3 — connection acquisition, chunked-encoding detection, timeout resolution, and the full urllib3-exception-to-requests-exception mapping table (MaxRetryError/SSLError/ReadTimeoutError/etc.). Definitive source for 'what exception does X network failure raise', worth the full-body cost."
+content = { kind = "lines", spans = [
+  { path = "src/requests/adapters.py", start = 634, end = 748, render = { kind = "full" } },
+] }
+
+# ============================== TIER 8: Authentication (auth.py) ==============================
+
+[[batches]]
+id = "8.1"
+descriptor = "auth.py class/method locations"
+justification = "Names every auth class and method, including the easy-to-miss __eq__/__ne__ pairs on HTTPBasicAuth and HTTPDigestAuth — the complete pluggable-auth surface (subclass AuthBase + __call__ is the documented extension point)."
+content = { kind = "lines", spans = [
+  { path = "src/requests/auth.py", start = 34, end = 34, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 78, end = 78, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/auth.py", start = 85, end = 85, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/auth.py", start = 96, end = 96, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/auth.py", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/auth.py", start = 111, end = 111, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 116, end = 116, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/auth.py", start = 119, end = 119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/auth.py", start = 124, end = 124, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/auth.py", start = 141, end = 141, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 147, end = 147, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 157, end = 157, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 268, end = 268, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 273, end = 273, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 321, end = 321, render = { kind = "full" } },
+  { path = "src/requests/auth.py", start = 345, end = 345, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/auth.py", start = 353, end = 353, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+# ============================== TIER 9: Cookies (cookies.py) ==============================
+
+[[batches]]
+id = "9.1"
+descriptor = "cookies.py top-level class/function locations"
+justification = "Names MockRequest, MockResponse, extract_cookies_to_jar, get_cookie_header, remove_cookie_by_name, CookieConflictError, RequestsCookieJar, _copy_cookie_jar, create_cookie, morsel_to_cookie, cookiejar_from_dict, merge_cookies — the module's full top-level roster."
+content = { kind = "lines", spans = [
+  { path = "src/requests/cookies.py", start = 31, end = 31, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 114, end = 114, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 135, end = 135, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 153, end = 153, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 164, end = 164, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 185, end = 185, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/cookies.py", start = 191, end = 191, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/requests/cookies.py", start = 479, end = 479, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 494, end = 494, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 531, end = 531, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 579, end = 579, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 604, end = 604, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.2"
+descriptor = "RequestsCookieJar method locations (sampled)"
+predecessor = "9.1"
+justification = "Names the first 2 of this class's 25 dict-like methods (get/set) in file order, the ones most bug reports reference by name; the ellipsis right after set() signals iterkeys/keys/values/items/list_domains/list_paths/multiple_domains/get_dict/dunders/_find/_find_no_duplicates/pickle/copy continue below rather than implying only get/set exist."
+content = { kind = "lines", spans = [
+  { path = "src/requests/cookies.py", start = 211, end = 211, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 229, end = 229, render = { kind = "full" } },
+  { path = "src/requests/cookies.py", start = 250, end = 250, render = { kind = "ellipsis" } },
+] }
+
+# ============================== TIER 10: Utilities (utils.py) ==============================
+
+[[batches]]
+id = "10.1"
+descriptor = "utils.py function locations (sampled)"
+justification = "Names the first 5 of ~41 top-level functions in file order (dict_to_sequence, super_len, get_netrc_auth, guess_filename, extract_zipped_paths); the ellipsis right after signals the remaining ~36 (proxy resolution, header/encoding parsing, URI quoting, header validation, rewind_body, ...) continue below in this 1155-line grab-bag file rather than implying they do not exist."
+content = { kind = "lines", spans = [
+  { path = "src/requests/utils.py", start = 149, end = 149, render = { kind = "full" } },
+  { path = "src/requests/utils.py", start = 160, end = 160, render = { kind = "full" } },
+  { path = "src/requests/utils.py", start = 231, end = 231, render = { kind = "full" } },
+  { path = "src/requests/utils.py", start = 283, end = 283, render = { kind = "full" } },
+  { path = "src/requests/utils.py", start = 290, end = 290, render = { kind = "full" } },
+  { path = "src/requests/utils.py", start = 329, end = 329, render = { kind = "ellipsis" } },
+] }
+
+# ============================== TIER 11: Support modules ==============================
+
+[[batches]]
+id = "11.1"
+descriptor = "certs.py full + packages.py (near-complete)"
+justification = "Two tiny modules bundled: CA-bundle path resolution (delegates to certifi.where()), and the requests.packages.{urllib3,idna} shim plus its chardet branch (the ellipsis after `if chardet is not None:` hedges that branch's traversal loop, mirroring the urllib3/idna one above it) — a recurring source of 'why does requests.packages.urllib3 exist' confusion."
+content = { kind = "lines", spans = [
+  { path = "src/requests/certs.py", start = 1, end = 18, render = { kind = "full" } },
+  { path = "src/requests/packages.py", start = 1, end = 16, render = { kind = "full" } },
+  { path = "src/requests/packages.py", start = 17, end = 17, render = { kind = "ellipsis" } },
+] }
+
+# ============================== TIER 12: User docs ==============================
+
+[[batches]]
+id = "12.1"
+descriptor = "docs/user/quickstart.rst heading roster (sampled)"
+justification = "Names the first 6 of 16 quickstart sections in document order (Make a Request, Params, Response Content/Binary/JSON/Raw); the ellipsis right after signals Custom-Headers/complicated-POST/Multipart/Status-Codes/Headers/Cookies/Redirection/Timeouts/Errors continue below rather than implying the guide stops at raw response content — cheap and high-recall for 'how do I do X with requests' queries."
+content = { kind = "lines", spans = [
+  { path = "docs/user/quickstart.rst", start = 3, end = 3, render = { kind = "full" } },
+  { path = "docs/user/quickstart.rst", start = 20, end = 20, render = { kind = "full" } },
+  { path = "docs/user/quickstart.rst", start = 54, end = 54, render = { kind = "full" } },
+  { path = "docs/user/quickstart.rst", start = 84, end = 84, render = { kind = "full" } },
+  { path = "docs/user/quickstart.rst", start = 121, end = 121, render = { kind = "full" } },
+  { path = "docs/user/quickstart.rst", start = 143, end = 143, render = { kind = "full" } },
+  { path = "docs/user/quickstart.rst", start = 167, end = 167, render = { kind = "ellipsis" } },
+] }
+
+# ============================== TIER 13: Build & CI configuration ==============================
+
+[[batches]]
+id = "13.1"
+descriptor = "tox.ini (near-complete)"
+justification = "The tox envlist (py310-314 x default/use_chardet_on_py3) and the shared [testenv] deps/extras/commands — the multi-Python-version test matrix definition referenced from CI; the ellipsis after signals the [testenv:default]/[testenv:use_chardet_on_py3] per-variant extras sections continue below rather than implying the file ends there."
+content = { kind = "lines", spans = [
+  { path = "tox.ini", start = 1, end = 11, render = { kind = "full" } },
+  { path = "tox.ini", start = 12, end = 12, render = { kind = "ellipsis" } },
+] }
+
+# ============================== TIER 14: Changelog ==============================
+
+[[batches]]
+id = "14.1"
+descriptor = "HISTORY.md recent release heading roster"
+justification = "Names the 'dev' unreleased section plus the latest released version (2.34.2) as a contiguous, honest prefix of the 2102-line changelog; the ellipsis right after 2.34.2 signals ~155 older releases (2.34.1 downward) continue below rather than skipping some of them silently or implying history stops there."
+content = { kind = "lines", spans = [
+  { path = "HISTORY.md", start = 4, end = 4, render = { kind = "full" } },
+  { path = "HISTORY.md", start = 10, end = 10, render = { kind = "full" } },
+  { path = "HISTORY.md", start = 17, end = 17, render = { kind = "ellipsis" } },
+] }
