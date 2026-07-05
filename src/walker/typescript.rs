@@ -1734,8 +1734,16 @@ fn is_pinned_entrypoint(path: &Path, ctx: &WalkCtx) -> bool {
         .nearest_subpackage_dir(path, ctx.root())
         .map(|dir| ctx.depth_from_root(&dir))
         .unwrap_or(0);
-    let relative_depth = ctx.depth_from_root(path).saturating_sub(package_dir_depth);
-    let hit = relative_depth <= 2 || is_api_spine_entrypoint(path, ctx);
+    // When `path` isn't under the root, `depth_from_root` fails open to
+    // 0, which reads as relative_depth 0 and would re-pin every deep
+    // entrypoint. Fail closed: with depth unknown, only the export-spine
+    // check can grant the pin.
+    let hit = if path.starts_with(ctx.root()) {
+        let relative_depth = ctx.depth_from_root(path).saturating_sub(package_dir_depth);
+        relative_depth <= 2 || is_api_spine_entrypoint(path, ctx)
+    } else {
+        is_api_spine_entrypoint(path, ctx)
+    };
     state
         .pinned_entrypoint_lookup
         .borrow_mut()
