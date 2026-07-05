@@ -85,6 +85,11 @@ pub struct Scheduler<W: Walker> {
     cost_cache: HashMap<BatchId, Cost>,
     /// Cached approx token count per emitted batch (for approx ranking).
     approx_cost_cache: HashMap<BatchId, usize>,
+    /// File → span batches touching it. Applying a batch to a file can
+    /// change the synthesized `…` marker delta of every other batch
+    /// touching that file, so their cached costs are dropped when one
+    /// of them is scheduled.
+    batches_by_path: HashMap<PathBuf, Vec<BatchId>>,
     /// Parent → unscheduled children index, maintained incrementally.
     /// Vec order within each entry must match `entries` order — it's
     /// observable via floating-point accumulation in
@@ -129,6 +134,7 @@ impl<W: Walker> Scheduler<W> {
             scheduled_log: Vec::new(),
             cost_cache: HashMap::new(),
             approx_cost_cache: HashMap::new(),
+            batches_by_path: HashMap::new(),
             children_index: HashMap::new(),
             pending_children: HashMap::new(),
             #[cfg(debug_assertions)]
@@ -247,6 +253,20 @@ impl<W: Walker> Scheduler<W> {
             // just minted), so direct insert is safe. Pending list is
             // FIFO over absorb order → entries-order is preserved.
             self.children_index.insert(id, waiting);
+        }
+
+        if let BatchContent::Lines { spans } = &batch.content {
+            let mut last: Option<&PathBuf> = None;
+            for span in spans {
+                // Spans arrive grouped by file; dedup consecutively.
+                if last != Some(&span.path) {
+                    self.batches_by_path
+                        .entry(span.path.clone())
+                        .or_default()
+                        .push(id);
+                    last = Some(&span.path);
+                }
+            }
         }
 
         self.entries.push(batch);
@@ -546,9 +566,27 @@ impl<W: Walker> Scheduler<W> {
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
 
-        // Drop the scheduled batch's cached cost; others stay stable
-        // under walker invariants.
+        // Drop the scheduled batch's cached cost, plus every cached
+        // cost for batches touching the same files — the apply may
+        // have changed their synthesized-marker deltas. Costs of
+        // batches on untouched files stay stable under walker
+        // invariants (line-disjoint outside predecessor chains).
         self.cost_cache.remove(&id);
+        if let BatchContent::Lines { spans } = &entry_content {
+            let mut last: Option<&PathBuf> = None;
+            for span in spans {
+                if last == Some(&span.path) {
+                    continue;
+                }
+                last = Some(&span.path);
+                if let Some(ids) = self.batches_by_path.get(&span.path) {
+                    for other in ids {
+                        self.cost_cache.remove(other);
+                        self.approx_cost_cache.remove(other);
+                    }
+                }
+            }
+        }
 
         // Remove `id` from its parent's child list — `retain`
         // preserves entries-order.

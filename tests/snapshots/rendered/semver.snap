@@ -10,7 +10,6 @@ expression: rendered
 .npmrc
 .release-please-manifest.json
 CHANGELOG.md
-    1→# Changelog
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 LICENSE
@@ -18,12 +17,10 @@ README.md
     1→semver(1) -- The semantic versioner for npm
     2→===========================================
     4→## Install
-    …
     6→```bash
     7→npm install semver
     8→````
     10→## Usage
-    …
     12→As a node module:
     14→```js
     15→const semver = require('semver')
@@ -37,8 +34,8 @@ README.md
     24→semver.valid(semver.coerce('v2')) // '2.0.0'
     25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
     26→```
-    139→## Versions
     …
+    139→## Versions
     141→A "version" is described by the `v2.0.0` specification found at
     142→<https://semver.org/>.
     144→A leading `"="` or `"v"` character is stripped off and ignored.
@@ -49,17 +46,16 @@ README.md
     184→### Prerelease Tags
     …
     279→### Advanced Range Syntax
-    …
     281→Advanced range syntax desugars to primitive comparators in
     282→deterministic ways.
     284→Advanced ranges may be combined in the same way as primitive
     285→comparators using white space or `||`.
+    …
     384→### Range Grammar
     …
     408→## Functions
     …
     453→### Comparison
-    …
     455→* `gt(v1, v2)`: `v1 > v2`
     456→* `gte(v1, v2)`: `v1 >= v2`
     457→* `lt(v1, v2)`: `v1 < v2`
@@ -68,18 +64,18 @@ README.md
     460→  even if they're not the same string.  You already know how to
     461→  compare strings.
     462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
+    …
     469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
     470→  in descending order when passed to `Array.sort()`.
     471→* `compareBuild(v1, v2)`: The same as `compare` but considers `build` when two versions
     472→  are equal.  Sorts in ascending order if passed to `Array.sort()`.
     473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
+    …
     478→### Sorting
     …
     485→### Comparators
-    …
     487→* `intersects(comparator)`: Return true if the comparators intersect
     489→### Ranges
-    …
     491→* `validRange(range)`: Return the valid range or null if it's not valid.
     492→* `satisfies(version, range)`: Return true if the version satisfies the
     493→  range.
@@ -93,22 +89,24 @@ README.md
     501→  versions possible in the range.
     502→* `ltr(version, range)`: Return `true` if the version is less than all the
     503→  versions possible in the range.
+    …
     508→* `intersects(range)`: Return true if any of the range comparators intersect.
+    …
     517→* `subset(subRange, superRange)`: Return `true` if the `subRange` range is
     518→  entirely contained by the `superRange` range.
+    …
     528→If you want to know if a version satisfies or does not satisfy a
     529→range, use the `satisfies(version, range)` function.
     531→### Coercion
-    …
     533→* `coerce(version, options)`: Coerces a string to semver if possible
-    558→### Clean
     …
+    558→### Clean
     560→* `clean(version)`: Clean a string to be a valid semver if possible
     562→This will return a cleaned and trimmed semver version. If the provided
     563→version is not valid a null will be returned. This does not work for
     564→ranges.
-    576→## Constants
     …
+    576→## Constants
     578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
     580→### `RELEASE_TYPES`
     …
@@ -157,6 +155,7 @@ functions/
     sort.js
     valid.js
 index.js
+    …
     45→module.exports = {
     46→  parse,
     47→  valid,
@@ -213,6 +212,7 @@ internal/
     re.js
 map.js
 package.json
+    …
     2→  "name": "semver",
     3→  "version": "7.7.4",
     4→  "description": "The semantic version parser used by npm.",
@@ -252,10 +252,12 @@ package.json
     38→    "preload.js",
     39→    "range.bnf"
     40→  ],
+    …
     49→  "engines": {
     50→    "node": ">=10"
     51→  },
     52→  "author": "GitHub Inc.",
+    …
 preload.js
 range.bnf
 ranges/
@@ -281,6 +283,20 @@ test/
         range.js
         semver.js
     fixtures/
+        comparator-intersection.js
+        comparisons.js
+        equality.js
+        increments.js
+        invalid-versions.js
+        range-exclude.js
+        range-include.js
+        range-intersection.js
+        range-parse.js
+        valid-versions.js
+        version-gt-range.js
+        version-lt-range.js
+        version-not-gt-range.js
+        version-not-lt-range.js
     functions/
         clean.js
         cmp.js

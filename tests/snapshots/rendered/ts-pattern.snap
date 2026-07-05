@@ -12,15 +12,19 @@ README.md
     4→The exhaustive Pattern Matching library for <a href="https://github.com/microsoft/TypeScript">TypeScript</a>
     5→with smart type inference.
     6→</p>
+    …
     40→## About
     42→Write **better** and **safer conditions**. Pattern matching lets you express complex conditions in a single, compact expression. Your code becomes **shorter** and **more readable**. Exhaustiveness checking ensures you haven’t forgotten **any possible case**.
     44→![ts-pattern](https://user-images.githubusercontent.com/9265418/231688650-7cd957a9-8edc-4db8-a5fe-61e1c2179d91.gif)
     46→<p align="center"><i>Animation by <a target="_blank" href="https://twitter.com/nicoespeon/status/1644342570389061634?s=20">@nicoespeon</a></i></p>
+    …
     51→- **Typesafe**, with helpful [type inference](#type-inference).
     52→- **Exhaustiveness checking** support, enforcing that you are matching every possible case with [`.exhaustive()`](#exhaustive).
     53→- Use [patterns](#patterns) to **validate** the shape of your data with [`isMatching`](#ismatching).
+    …
     56→- Supports properties selection, via the [`P.select(name?)`](#pselect-patterns) function.
     57→- Tiny bundle footprint ([**only ~2kB**](https://bundlephobia.com/package/ts-pattern)).
+    …
 benchmarks/
     always-last-digit.ts
     nested-objects.ts
@@ -36,17 +40,13 @@ examples/
         package.json
         public/
         src/
-            App.tsx
-            constants.ts
-            index.tsx
-            searchGif.ts
-            styles.css
         tsconfig.json
     one-file-demo/
 jest.config.cjs
 jsr.json
 package-lock.json
 package.json
+    …
     2→  "name": "ts-pattern",
     3→  "version": "5.9.0",
     4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
@@ -119,6 +119,7 @@ package.json
     71→    "url": "https://github.com/gvergnaud/ts-pattern/issues"
     72→  },
     73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
+    …
 scripts/
 src/
     errors.ts
@@ -135,6 +136,7 @@ src/
         11→      displayedValue = input;
         12→    }
         13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
+        …
     index.ts
         1→import * as Pattern from './patterns';
         3→export { match } from './match';
@@ -145,9 +147,11 @@ src/
         helpers.ts
         symbols.ts
     is-matching.ts
+        …
         32→export function isMatching<const p extends Pattern<unknown>>(
         33→  pattern: p
         34→): (value: unknown) => value is P.infer<p>;
+        …
         48→export function isMatching<const T, const P extends PatternConstraint<T>>(
         49→  pattern: P,
         50→  value: T
@@ -167,11 +171,14 @@ src/
         66→  throw new Error(
         67→    `isMatching wasn't given the right number of arguments: expected 1 or 2, received ${args.length}.`
         68→  );
+        …
     match.ts
+        …
         32→export function match<const input, output = symbols.unset>(
         33→  value: input
         34→): Match<input, output> {
         35→  return new MatchExpression(value, unmatched) as any;
+        …
         38→/**
         39→ * This class represents a match expression. It follows the
         40→ * builder pattern, we chain methods to add features to the expression
@@ -217,6 +224,7 @@ src/
         88→        }
         89→      : unmatched;
         91→    return new MatchExpression(this.input, state);
+        …
         94→  when(
         95→    predicate: (value: input) => unknown,
         96→    handler: (selection: input, value: input) => output
@@ -229,18 +237,24 @@ src/
         105→        ? { matched: true, value: handler(this.input, this.input) }
         106→        : unmatched
         107→    );
+        …
         110→  otherwise(handler: (value: input) => output): output {
         111→    if (this.state.matched) return this.state.value;
         112→    return handler(this.input);
+        …
         115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
         116→    if (this.state.matched) return this.state.value;
         117→    return unexpectedValueHandler(this.input);
+        …
         120→  run(): output {
         121→    return this.exhaustive();
+        …
         124→  returnType() {
         125→    return this;
+        …
         128→  narrow() {
         129→    return this;
+        …
     patterns.ts
     types/
         BuildMany.ts

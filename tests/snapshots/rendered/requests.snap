@@ -33,6 +33,7 @@ Makefile
 NOTICE
 README.md
     1→# Requests
+    …
     9→**Requests** is a simple, yet elegant, HTTP library.
     11→```python
     12→>>> import requests
@@ -51,7 +52,6 @@ README.md
     26→Requests allows you to send HTTP/1.1 requests extremely easily. There’s no need to manually add query strings to your URLs, or to form-encode your `PUT` & `POST` data — but nowadays, just use the `json` method!
     28→Requests is one of the most downloaded Python packages today, pulling in around `300M downloads / week` — according to GitHub, Requests is currently [depended upon](https://github.com/psf/requests/network/dependents?package_id=UGFja2FnZS01NzA4OTExNg%3D%3D) by `4,000,000+` repositories.
     30→## Installing Requests and Supported Versions
-    …
     32→Requests is available on PyPI:
     34→```console
     35→$ python -m pip install requests
@@ -103,10 +103,12 @@ ext/
     requests-logo.png
     requests-logo.svg
 pyproject.toml
+    …
     5→[project]
     6→name = "requests"
     7→description = "Python HTTP for Humans."
     8→readme = "README.md"
+    …
     17→requires-python = ">=3.10"
     18→dependencies = [
     19→    "charset_normalizer>=2,<4",
@@ -114,10 +116,13 @@ pyproject.toml
     21→    "urllib3>=1.26,<3",
     22→    "certifi>=2023.5.7"
     23→]
+    …
 requirements-dev.txt
 setup.py
     1→import sys
+    …
     7→from setuptools import setup
+    …
 src/
     requests/
         __init__.py
@@ -157,14 +162,18 @@ src/
             43→import warnings
             45→import urllib3
             47→from .exceptions import RequestsDependencyWarning
+            …
             60→def check_compatibility(
             61→    urllib3_version: str,
             62→    chardet_version: str | None,
             63→    charset_normalizer_version: str | None,
             64→) -> None:
+            …
             99→def _check_cryptography(cryptography_version: str) -> None:
             100→    # cryptography < 1.3.4
+            …
             150→from urllib3.exceptions import DependencyWarning
+            …
             155→import logging
             156→from logging import NullHandler
             158→from . import packages, utils
@@ -223,6 +232,7 @@ src/
             212→    "session",
             213→    "utils",
             214→)
+            …
         __version__.py
         _internal_utils.py
         _types.py
@@ -232,22 +242,27 @@ src/
         certs.py
         compat.py
         cookies.py
+            …
             560→_CookieJarT = TypeVar("_CookieJarT", bound=CookieJar)
+            …
         exceptions.py
-            161→class RequestsDependencyWarning(RequestsWarning):
-            162→    """An imported dependency doesn't match the expected version range."""
         help.py
+            …
             37→def _implementation():
             …
             69→def info() -> dict[str, Any]:
             70→    """Generate information for a bug report."""
+            …
             128→def main():
             129→    """Pretty-print the bug information as JSON."""
             130→    print(json.dumps(info(), sort_keys=True, indent=2))
+            …
         hooks.py
+            …
             22→HOOKS: list[str] = ["response"]
             25→def default_hooks() -> dict[str, list[_t.HookType]]:
             26→    return {event: [] for event in HOOKS}
+            …
             32→def dispatch_hook(
             33→    key: str,
             34→    hooks: _t.HooksInputType | None,
@@ -255,15 +270,19 @@ src/
             36→    **kwargs: Any,
             37→) -> Response:
             38→    """Dispatches a hook dictionary on a given piece of data."""
+            …
         models.py
         packages.py
             1→import sys
             3→from .compat import chardet
+            …
         py.typed
         sessions.py
+            …
             76→def merge_setting(
             77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
             78→) -> Any:
+            …
             108→def merge_hooks(
             109→    request_hooks: _t.HooksType,
             110→    session_hooks: _t.HooksType,
@@ -273,10 +292,12 @@ src/
             115→    This is necessary because when request_hooks == {'response': []}, the
             116→    merge breaks Session hooks entirely.
             117→    """
+            …
             127→class SessionRedirectMixin:
             128→    max_redirects: int
             129→    trust_env: bool
             130→    cookies: RequestsCookieJar
+            …
             395→class Session(SessionRedirectMixin):
             …
             414→    headers: CaseInsensitiveDict[str]
@@ -305,22 +326,27 @@ src/
             438→        "trust_env",
             439→        "max_redirects",
             440→    ]
+            …
             908→def session() -> Session:
             …
             920→    return Session()
         status_codes.py
+            …
             23→_codes = {
+            …
             106→codes: LookupDict[int] = LookupDict(name="status_codes")
             109→def _init():
             …
         structures.py
+            …
             16→_VT = TypeVar("_VT")
             17→_D = TypeVar("_D")
             20→class CaseInsensitiveDict(MutableMapping[str, _VT], Generic[_VT]):
-            21→    """A case-insensitive ``dict``-like object.
+            …
             96→class LookupDict(dict[str, _VT]):
-            97→    """Dictionary lookup object."""
+            …
             99→    name: Any
+            …
         utils.py
 tests/
     __init__.py

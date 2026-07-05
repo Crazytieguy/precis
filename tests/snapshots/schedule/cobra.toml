@@ -1,6 +1,6 @@
 fixture = "cobra"
 budget = 10000
-cumulative_tokens = 9992
+cumulative_tokens = 9994
 batch_count = 316
 
 [[batches]]
@@ -33,10 +33,24 @@ entries = ["content"]
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: "assets" })'
+descriptor = "listing of 'assets'"
+cost_tokens = 5
+cum_tokens = 199
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "assets"
+entries = ["CobraMain.png"]
+
+[[batches]]
+position = 4
 key = 'Go(GoModIdentity { file: "go.mod" })'
 descriptor = "go module identity in go.mod"
-cost_tokens = 23
-cum_tokens = 217
+cost_tokens = 25
+cum_tokens = 224
 
 [batches.content]
 kind = "lines"
@@ -58,25 +72,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "assets" })'
-descriptor = "listing of 'assets'"
-cost_tokens = 5
-cum_tokens = 222
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "assets"
-entries = ["CobraMain.png"]
-
-[[batches]]
 position = 5
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
-cost_tokens = 85
-cum_tokens = 307
+cost_tokens = 91
+cum_tokens = 315
 
 [batches.content]
 kind = "lines"
@@ -109,8 +109,8 @@ kind = "full"
 position = 6
 key = 'Go(PackageDocLede { file: "command.go" })'
 descriptor = "go package doc lede in command.go"
-cost_tokens = 44
-cum_tokens = 351
+cost_tokens = 48
+cum_tokens = 363
 
 [batches.content]
 kind = "lines"
@@ -128,7 +128,7 @@ position = 7
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 63
-cum_tokens = 414
+cum_tokens = 426
 
 [batches.content]
 kind = "lines"
@@ -249,8 +249,8 @@ kind = "ellipsis"
 position = 8
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
-cost_tokens = 14
-cum_tokens = 428
+cost_tokens = 12
+cum_tokens = 438
 
 [batches.content]
 kind = "lines"
@@ -267,8 +267,8 @@ kind = "full"
 position = 9
 key = 'Markdown(HeadingsOutline { file: "CONDUCT.md" })'
 descriptor = "headings outline in CONDUCT.md"
-cost_tokens = 91
-cum_tokens = 519
+cost_tokens = 89
+cum_tokens = 527
 
 [batches.content]
 kind = "lines"
@@ -422,7 +422,7 @@ position = 10
 key = 'Fs(DirListing { dir: "doc" })'
 descriptor = "listing of 'doc'"
 cost_tokens = 59
-cum_tokens = 578
+cum_tokens = 586
 
 [batches.content]
 kind = "fs"
@@ -435,8 +435,8 @@ entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.
 position = 11
 key = 'Go(GoMod { file: "go.mod" })'
 descriptor = "go module file go.mod"
-cost_tokens = 96
-cum_tokens = 674
+cost_tokens = 94
+cum_tokens = 680
 
 [batches.content]
 kind = "lines"
@@ -469,8 +469,8 @@ kind = "full"
 position = 12
 key = 'Go(DeclNames { file: "fish_completions.go", chunk_index: 0 })'
 descriptor = "go decl names surface in fish_completions.go"
-cost_tokens = 73
-cum_tokens = 747
+cost_tokens = 75
+cum_tokens = 755
 
 [batches.content]
 kind = "lines"
@@ -528,7 +528,7 @@ position = 13
 key = 'Go(Decl { file: "fish_completions.go", start_line: 25 })'
 descriptor = "go decl at fish_completions.go:25"
 cost_tokens = 0
-cum_tokens = 747
+cum_tokens = 755
 
 [batches.content]
 kind = "lines"
@@ -546,7 +546,7 @@ position = 14
 key = 'Go(Decl { file: "fish_completions.go", start_line: 276 })'
 descriptor = "go decl at fish_completions.go:276"
 cost_tokens = 0
-cum_tokens = 747
+cum_tokens = 755
 
 [batches.content]
 kind = "lines"
@@ -564,7 +564,7 @@ position = 15
 key = 'Go(Decl { file: "fish_completions.go", start_line: 284 })'
 descriptor = "go decl at fish_completions.go:284"
 cost_tokens = 0
-cum_tokens = 747
+cum_tokens = 755
 
 [batches.content]
 kind = "lines"
@@ -582,7 +582,7 @@ position = 16
 key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 284 })'
 descriptor = "go decl doc at fish_completions.go:284"
 cost_tokens = 14
-cum_tokens = 761
+cum_tokens = 769
 
 [batches.content]
 kind = "lines"
@@ -600,7 +600,7 @@ position = 17
 key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 276 })'
 descriptor = "go decl doc at fish_completions.go:276"
 cost_tokens = 19
-cum_tokens = 780
+cum_tokens = 788
 
 [batches.content]
 kind = "lines"
@@ -615,10 +615,36 @@ kind = "full"
 
 [[batches]]
 position = 18
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
+descriptor = "README.md section #5"
+cost_tokens = 23
+cum_tokens = 811
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
 key = 'Go(DeclNames { file: "command.go", chunk_index: 0 })'
 descriptor = "go decl names surface in command.go"
-cost_tokens = 178
-cum_tokens = 958
+cost_tokens = 176
+cum_tokens = 987
 
 [batches.content]
 kind = "lines"
@@ -768,11 +794,11 @@ end = 290
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Go(Decl { file: "command.go", start_line: 42 })'
 descriptor = "go decl at command.go:42"
 cost_tokens = 0
-cum_tokens = 958
+cum_tokens = 987
 
 [batches.content]
 kind = "lines"
@@ -786,11 +812,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Go(Decl { file: "command.go", start_line: 269 })'
 descriptor = "go decl at command.go:269"
 cost_tokens = 0
-cum_tokens = 958
+cum_tokens = 987
 
 [batches.content]
 kind = "lines"
@@ -804,11 +830,11 @@ end = 269
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Go(Decl { file: "command.go", start_line: 275 })'
 descriptor = "go decl at command.go:275"
 cost_tokens = 0
-cum_tokens = 958
+cum_tokens = 987
 
 [batches.content]
 kind = "lines"
@@ -822,11 +848,11 @@ end = 275
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Go(Decl { file: "command.go", start_line: 281 })'
 descriptor = "go decl at command.go:281"
 cost_tokens = 0
-cum_tokens = 958
+cum_tokens = 987
 
 [batches.content]
 kind = "lines"
@@ -840,11 +866,11 @@ end = 281
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Go(Decl { file: "command.go", start_line: 289 })'
 descriptor = "go decl at command.go:289"
 cost_tokens = 0
-cum_tokens = 958
+cum_tokens = 987
 
 [batches.content]
 kind = "lines"
@@ -858,11 +884,11 @@ end = 289
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Go(Decl { file: "command.go", start_line: 54 })'
 descriptor = "go decl at command.go:54"
-cost_tokens = 5
-cum_tokens = 963
+cost_tokens = 7
+cum_tokens = 994
 
 [batches.content]
 kind = "lines"
@@ -884,29 +910,11 @@ end = 260
 kind = "full"
 
 [[batches]]
-position = 25
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 218 })'
-descriptor = "go struct field group at command.go:54 group 218"
-cost_tokens = 8
-cum_tokens = 971
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 218
-end = 218
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 26
 key = 'Go(Decl { file: "command.go", start_line: 33 })'
 descriptor = "go decl at command.go:33"
-cost_tokens = 9
-cum_tokens = 980
+cost_tokens = 11
+cum_tokens = 1005
 
 [batches.content]
 kind = "lines"
@@ -929,18 +937,18 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Go(DeclBody { file: "command.go", start_line: 269 })'
-descriptor = "go decl body at command.go:269"
-cost_tokens = 6
-cum_tokens = 986
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 218 })'
+descriptor = "go struct field group at command.go:54 group 218"
+cost_tokens = 10
+cum_tokens = 1015
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "command.go"
-start = 270
-end = 270
+start = 218
+end = 218
 
 [batches.content.spans.render]
 kind = "full"
@@ -949,8 +957,8 @@ kind = "full"
 position = 28
 key = 'Go(Decl { file: "command.go", start_line: 45 })'
 descriptor = "go decl at command.go:45"
-cost_tokens = 19
-cum_tokens = 1005
+cost_tokens = 21
+cum_tokens = 1036
 
 [batches.content]
 kind = "lines"
@@ -965,46 +973,28 @@ kind = "full"
 
 [[batches]]
 position = 29
-key = 'Go(DeclBody { file: "command.go", start_line: 275 })'
-descriptor = "go decl body at command.go:275"
-cost_tokens = 7
-cum_tokens = 1012
+key = 'Go(DeclBody { file: "command.go", start_line: 269 })'
+descriptor = "go decl body at command.go:269"
+cost_tokens = 8
+cum_tokens = 1044
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "command.go"
-start = 276
-end = 276
+start = 270
+end = 270
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 30
-key = 'Go(DeclBody { file: "command.go", start_line: 281 })'
-descriptor = "go decl body at command.go:281"
-cost_tokens = 7
-cum_tokens = 1019
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 282
-end = 282
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
 key = 'Go(DeclDoc { file: "command.go", start_line: 45 })'
 descriptor = "go decl doc at command.go:45"
-cost_tokens = 13
-cum_tokens = 1032
+cost_tokens = 11
+cum_tokens = 1055
 
 [batches.content]
 kind = "lines"
@@ -1018,46 +1008,46 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 32
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 92 })'
-descriptor = "go struct field group at command.go:54 group 92"
-cost_tokens = 19
-cum_tokens = 1051
+position = 31
+key = 'Go(DeclBody { file: "command.go", start_line: 275 })'
+descriptor = "go decl body at command.go:275"
+cost_tokens = 9
+cum_tokens = 1064
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "command.go"
-start = 92
-end = 93
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Go(DeclBody { file: "command.go", start_line: 281 })'
+descriptor = "go decl body at command.go:281"
+cost_tokens = 9
+cum_tokens = 1073
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 282
+end = 282
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 33
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 148 })'
-descriptor = "go struct field group at command.go:54 group 148"
-cost_tokens = 20
-cum_tokens = 1071
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 148
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
 key = 'Go(DeclDoc { file: "command.go", start_line: 42 })'
 descriptor = "go decl doc at command.go:42"
-cost_tokens = 18
+cost_tokens = 16
 cum_tokens = 1089
 
 [batches.content]
@@ -1072,11 +1062,47 @@ end = 41
 kind = "full"
 
 [[batches]]
+position = 34
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 92 })'
+descriptor = "go struct field group at command.go:54 group 92"
+cost_tokens = 21
+cum_tokens = 1110
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 92
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 35
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 148 })'
+descriptor = "go struct field group at command.go:54 group 148"
+cost_tokens = 22
+cum_tokens = 1132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 148
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 82 })'
 descriptor = "go struct field group at command.go:54 group 82"
-cost_tokens = 24
-cum_tokens = 1113
+cost_tokens = 26
+cum_tokens = 1158
 
 [batches.content]
 kind = "lines"
@@ -1090,11 +1116,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 194 })'
 descriptor = "go struct field group at command.go:54 group 194"
-cost_tokens = 25
-cum_tokens = 1138
+cost_tokens = 27
+cum_tokens = 1185
 
 [batches.content]
 kind = "lines"
@@ -1108,11 +1134,11 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 191 })'
 descriptor = "go struct field group at command.go:54 group 191"
 cost_tokens = 26
-cum_tokens = 1164
+cum_tokens = 1211
 
 [batches.content]
 kind = "lines"
@@ -1126,11 +1152,11 @@ end = 192
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 73 })'
 descriptor = "go struct field group at command.go:54 group 73"
-cost_tokens = 27
-cum_tokens = 1191
+cost_tokens = 29
+cum_tokens = 1240
 
 [batches.content]
 kind = "lines"
@@ -1144,47 +1170,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 39
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 229 })'
-descriptor = "go struct field group at command.go:54 group 229"
-cost_tokens = 27
-cum_tokens = 1218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 229
-end = 230
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 40
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 235 })'
-descriptor = "go struct field group at command.go:54 group 235"
-cost_tokens = 27
-cum_tokens = 1245
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 235
-end = 236
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 79 })'
 descriptor = "go struct field group at command.go:54 group 79"
 cost_tokens = 29
-cum_tokens = 1274
+cum_tokens = 1269
 
 [batches.content]
 kind = "lines"
@@ -1198,11 +1188,47 @@ end = 80
 kind = "full"
 
 [[batches]]
+position = 41
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 229 })'
+descriptor = "go struct field group at command.go:54 group 229"
+cost_tokens = 29
+cum_tokens = 1298
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 229
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 42
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 235 })'
+descriptor = "go struct field group at command.go:54 group 235"
+cost_tokens = 29
+cum_tokens = 1327
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 235
+end = 236
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 238 })'
 descriptor = "go struct field group at command.go:54 group 238"
 cost_tokens = 29
-cum_tokens = 1303
+cum_tokens = 1356
 
 [batches.content]
 kind = "lines"
@@ -1216,29 +1242,11 @@ end = 239
 kind = "full"
 
 [[batches]]
-position = 43
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 104 })'
-descriptor = "go struct field group at command.go:54 group 104"
-cost_tokens = 30
-cum_tokens = 1333
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 104
-end = 105
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 44
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 188 })'
 descriptor = "go struct field group at command.go:54 group 188"
 cost_tokens = 30
-cum_tokens = 1363
+cum_tokens = 1386
 
 [batches.content]
 kind = "lines"
@@ -1253,64 +1261,10 @@ kind = "full"
 
 [[batches]]
 position = 45
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 204 })'
-descriptor = "go struct field group at command.go:54 group 204"
-cost_tokens = 30
-cum_tokens = 1393
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 204
-end = 205
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 207 })'
-descriptor = "go struct field group at command.go:54 group 207"
-cost_tokens = 31
-cum_tokens = 1424
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 207
-end = 208
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 66 })'
-descriptor = "go struct field group at command.go:54 group 66"
-cost_tokens = 34
-cum_tokens = 1458
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 66
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 76 })'
 descriptor = "go struct field group at command.go:54 group 76"
-cost_tokens = 34
-cum_tokens = 1492
+cost_tokens = 32
+cum_tokens = 1418
 
 [batches.content]
 kind = "lines"
@@ -1324,11 +1278,65 @@ end = 77
 kind = "full"
 
 [[batches]]
+position = 46
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 104 })'
+descriptor = "go struct field group at command.go:54 group 104"
+cost_tokens = 32
+cum_tokens = 1450
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 104
+end = 105
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 204 })'
+descriptor = "go struct field group at command.go:54 group 204"
+cost_tokens = 32
+cum_tokens = 1482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 204
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 207 })'
+descriptor = "go struct field group at command.go:54 group 207"
+cost_tokens = 31
+cum_tokens = 1513
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 207
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 49
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 232 })'
 descriptor = "go struct field group at command.go:54 group 232"
-cost_tokens = 34
-cum_tokens = 1526
+cost_tokens = 32
+cum_tokens = 1545
 
 [batches.content]
 kind = "lines"
@@ -1343,10 +1351,28 @@ kind = "full"
 
 [[batches]]
 position = 50
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 66 })'
+descriptor = "go struct field group at command.go:54 group 66"
+cost_tokens = 36
+cum_tokens = 1581
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 66
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
 key = 'Go(DeclBody { file: "command.go", start_line: 289 })'
 descriptor = "go decl body at command.go:289"
-cost_tokens = 18
-cum_tokens = 1544
+cost_tokens = 20
+cum_tokens = 1601
 
 [batches.content]
 kind = "lines"
@@ -1360,11 +1386,11 @@ end = 291
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 257 })'
 descriptor = "go struct field group at command.go:54 group 257"
 cost_tokens = 41
-cum_tokens = 1585
+cum_tokens = 1642
 
 [batches.content]
 kind = "lines"
@@ -1378,29 +1404,11 @@ end = 259
 kind = "full"
 
 [[batches]]
-position = 52
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 253 })'
-descriptor = "go struct field group at command.go:54 group 253"
-cost_tokens = 44
-cum_tokens = 1629
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 253
-end = 255
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 53
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 69 })'
 descriptor = "go struct field group at command.go:54 group 69"
-cost_tokens = 45
-cum_tokens = 1674
+cost_tokens = 43
+cum_tokens = 1685
 
 [batches.content]
 kind = "lines"
@@ -1415,10 +1423,28 @@ kind = "full"
 
 [[batches]]
 position = 54
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 253 })'
+descriptor = "go struct field group at command.go:54 group 253"
+cost_tokens = 44
+cum_tokens = 1729
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 253
+end = 255
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 107 })'
 descriptor = "go struct field group at command.go:54 group 107"
 cost_tokens = 45
-cum_tokens = 1719
+cum_tokens = 1774
 
 [batches.content]
 kind = "lines"
@@ -1432,11 +1458,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 241 })'
 descriptor = "go struct field group at command.go:54 group 241"
 cost_tokens = 45
-cum_tokens = 1764
+cum_tokens = 1819
 
 [batches.content]
 kind = "lines"
@@ -1450,11 +1476,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Go(DeclDoc { file: "command.go", start_line: 275 })'
 descriptor = "go decl doc at command.go:275"
 cost_tokens = 34
-cum_tokens = 1798
+cum_tokens = 1853
 
 [batches.content]
 kind = "lines"
@@ -1468,11 +1494,11 @@ end = 274
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 245 })'
 descriptor = "go struct field group at command.go:54 group 245"
 cost_tokens = 52
-cum_tokens = 1850
+cum_tokens = 1905
 
 [batches.content]
 kind = "lines"
@@ -1486,11 +1512,11 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 249 })'
 descriptor = "go struct field group at command.go:54 group 249"
-cost_tokens = 52
-cum_tokens = 1902
+cost_tokens = 50
+cum_tokens = 1955
 
 [batches.content]
 kind = "lines"
@@ -1504,11 +1530,11 @@ end = 251
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Go(DeclDoc { file: "command.go", start_line: 281 })'
 descriptor = "go decl doc at command.go:281"
 cost_tokens = 42
-cum_tokens = 1944
+cum_tokens = 1997
 
 [batches.content]
 kind = "lines"
@@ -1522,11 +1548,11 @@ end = 280
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 100 })'
 descriptor = "go struct field group at command.go:54 group 100"
 cost_tokens = 55
-cum_tokens = 1999
+cum_tokens = 2052
 
 [batches.content]
 kind = "lines"
@@ -1540,11 +1566,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 95 })'
 descriptor = "go struct field group at command.go:54 group 95"
-cost_tokens = 56
-cum_tokens = 2055
+cost_tokens = 54
+cum_tokens = 2106
 
 [batches.content]
 kind = "lines"
@@ -1558,11 +1584,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Go(DeclDoc { file: "command.go", start_line: 54 })'
 descriptor = "go decl doc at command.go:54"
-cost_tokens = 69
-cum_tokens = 2124
+cost_tokens = 67
+cum_tokens = 2173
 
 [batches.content]
 kind = "lines"
@@ -1576,11 +1602,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Go(DeclDoc { file: "command.go", start_line: 289 })'
 descriptor = "go decl doc at command.go:289"
 cost_tokens = 53
-cum_tokens = 2177
+cum_tokens = 2226
 
 [batches.content]
 kind = "lines"
@@ -1594,11 +1620,11 @@ end = 288
 kind = "full"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 210 })'
 descriptor = "go struct field group at command.go:54 group 210"
-cost_tokens = 83
-cum_tokens = 2260
+cost_tokens = 81
+cum_tokens = 2307
 
 [batches.content]
 kind = "lines"
@@ -1612,11 +1638,11 @@ end = 216
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 197 })'
 descriptor = "go struct field group at command.go:54 group 197"
-cost_tokens = 84
-cum_tokens = 2344
+cost_tokens = 82
+cum_tokens = 2389
 
 [batches.content]
 kind = "lines"
@@ -1630,55 +1656,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 66
-key = 'Go(DeclNames { file: "command_notwin.go", chunk_index: 0 })'
-descriptor = "go decl names surface in command_notwin.go"
-cost_tokens = 13
-cum_tokens = 2357
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command_notwin.go"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 67
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
-descriptor = "README.md section #5"
-cost_tokens = 25
-cum_tokens = 2382
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 131
-end = 131
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 133
-end = 133
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
 key = 'Go(DeclNames { file: "bash_completionsV2.go", chunk_index: 0 })'
 descriptor = "go decl names surface in bash_completionsV2.go"
-cost_tokens = 106
-cum_tokens = 2488
+cost_tokens = 108
+cum_tokens = 2497
 
 [batches.content]
 kind = "lines"
@@ -1748,11 +1730,11 @@ end = 483
 kind = "ellipsis"
 
 [[batches]]
-position = 69
+position = 68
 key = 'Go(Decl { file: "bash_completionsV2.go", start_line: 24 })'
 descriptor = "go decl at bash_completionsV2.go:24"
 cost_tokens = 0
-cum_tokens = 2488
+cum_tokens = 2497
 
 [batches.content]
 kind = "lines"
@@ -1766,11 +1748,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 70
+position = 69
 key = 'Go(Decl { file: "bash_completionsV2.go", start_line: 31 })'
 descriptor = "go decl at bash_completionsV2.go:31"
 cost_tokens = 0
-cum_tokens = 2488
+cum_tokens = 2497
 
 [batches.content]
 kind = "lines"
@@ -1784,11 +1766,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 71
+position = 70
 key = 'Go(Decl { file: "bash_completionsV2.go", start_line: 470 })'
 descriptor = "go decl at bash_completionsV2.go:470"
 cost_tokens = 0
-cum_tokens = 2488
+cum_tokens = 2497
 
 [batches.content]
 kind = "lines"
@@ -1802,11 +1784,11 @@ end = 470
 kind = "full"
 
 [[batches]]
-position = 72
+position = 71
 key = 'Go(Decl { file: "bash_completionsV2.go", start_line: 482 })'
 descriptor = "go decl at bash_completionsV2.go:482"
 cost_tokens = 0
-cum_tokens = 2488
+cum_tokens = 2497
 
 [batches.content]
 kind = "lines"
@@ -1820,11 +1802,11 @@ end = 482
 kind = "full"
 
 [[batches]]
-position = 73
+position = 72
 key = 'Go(DeclBody { file: "bash_completionsV2.go", start_line: 482 })'
 descriptor = "go decl body at bash_completionsV2.go:482"
-cost_tokens = 13
-cum_tokens = 2501
+cost_tokens = 15
+cum_tokens = 2512
 
 [batches.content]
 kind = "lines"
@@ -1838,11 +1820,11 @@ end = 483
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'Go(DeclDoc { file: "bash_completionsV2.go", start_line: 470 })'
 descriptor = "go decl doc at bash_completionsV2.go:470"
 cost_tokens = 19
-cum_tokens = 2520
+cum_tokens = 2531
 
 [batches.content]
 kind = "lines"
@@ -1856,11 +1838,11 @@ end = 469
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'Go(DeclDoc { file: "bash_completionsV2.go", start_line: 482 })'
 descriptor = "go decl doc at bash_completionsV2.go:482"
 cost_tokens = 32
-cum_tokens = 2552
+cum_tokens = 2563
 
 [batches.content]
 kind = "lines"
@@ -1874,11 +1856,11 @@ end = 481
 kind = "full"
 
 [[batches]]
-position = 76
+position = 75
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 220 })'
 descriptor = "go struct field group at command.go:54 group 220"
-cost_tokens = 103
-cum_tokens = 2655
+cost_tokens = 101
+cum_tokens = 2664
 
 [batches.content]
 kind = "lines"
@@ -1892,11 +1874,29 @@ end = 227
 kind = "full"
 
 [[batches]]
+position = 76
+key = 'Go(DeclNames { file: "command_notwin.go", chunk_index: 0 })'
+descriptor = "go decl names surface in command_notwin.go"
+cost_tokens = 15
+cum_tokens = 2679
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command_notwin.go"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 77
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 111 })'
 descriptor = "go struct field group at command.go:54 group 111"
 cost_tokens = 104
-cum_tokens = 2759
+cum_tokens = 2783
 
 [batches.content]
 kind = "lines"
@@ -1914,7 +1914,7 @@ position = 78
 key = 'Fs(DirListing { dir: "site/content" })'
 descriptor = "listing of 'site/content'"
 cost_tokens = 26
-cum_tokens = 2785
+cum_tokens = 2809
 
 [batches.content]
 kind = "fs"
@@ -1927,8 +1927,8 @@ entries = ["active_help.md", "completions", "docgen", "projects_using_cobra.md",
 position = 79
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 85 })'
 descriptor = "go struct field group at command.go:54 group 85"
-cost_tokens = 108
-cum_tokens = 2893
+cost_tokens = 106
+cum_tokens = 2915
 
 [batches.content]
 kind = "lines"
@@ -1943,114 +1943,28 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Go(PackageImports { file: "shell_completions.go" })'
-descriptor = "go package + imports in shell_completions.go"
-cost_tokens = 31
-cum_tokens = 2924
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 141 })'
+descriptor = "go struct field group at command.go:54 group 141"
+cost_tokens = 114
+cum_tokens = 3029
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "shell_completions.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "shell_completions.go"
-start = 17
-end = 19
+path = "command.go"
+start = 141
+end = 146
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 81
-key = 'Go(PackageImports { file: "active_help.go" })'
-descriptor = "go package + imports in active_help.go"
-cost_tokens = 32
-cum_tokens = 2956
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "active_help.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "active_help.go"
-start = 17
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 82
-key = 'Go(PackageImports { file: "args.go" })'
-descriptor = "go package + imports in args.go"
-cost_tokens = 32
-cum_tokens = 2988
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "args.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "args.go"
-start = 17
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
-key = 'Go(PackageImports { file: "cobra.go" })'
-descriptor = "go package + imports in cobra.go"
-cost_tokens = 84
-cum_tokens = 3072
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cobra.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "cobra.go"
-start = 20
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
 key = 'Go(DeclNames { file: "active_help.go", chunk_index: 0 })'
 descriptor = "go decl names surface in active_help.go"
-cost_tokens = 125
-cum_tokens = 3197
+cost_tokens = 127
+cum_tokens = 3156
 
 [batches.content]
 kind = "lines"
@@ -2136,11 +2050,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 82
 key = 'Go(Decl { file: "active_help.go", start_line: 38 })'
 descriptor = "go decl at active_help.go:38"
 cost_tokens = 0
-cum_tokens = 3197
+cum_tokens = 3156
 
 [batches.content]
 kind = "lines"
@@ -2154,11 +2068,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 86
+position = 83
 key = 'Go(Decl { file: "active_help.go", start_line: 47 })'
 descriptor = "go decl at active_help.go:47"
 cost_tokens = 0
-cum_tokens = 3197
+cum_tokens = 3156
 
 [batches.content]
 kind = "lines"
@@ -2172,11 +2086,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 87
+position = 84
 key = 'Go(Decl { file: "active_help.go", start_line: 58 })'
 descriptor = "go decl at active_help.go:58"
 cost_tokens = 0
-cum_tokens = 3197
+cum_tokens = 3156
 
 [batches.content]
 kind = "lines"
@@ -2190,11 +2104,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 88
+position = 85
 key = 'Go(DeclBody { file: "active_help.go", start_line: 38 })'
 descriptor = "go decl body at active_help.go:38"
-cost_tokens = 21
-cum_tokens = 3218
+cost_tokens = 23
+cum_tokens = 3179
 
 [batches.content]
 kind = "lines"
@@ -2208,47 +2122,63 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 89
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 141 })'
-descriptor = "go struct field group at command.go:54 group 141"
-cost_tokens = 114
-cum_tokens = 3332
+position = 86
+key = 'Go(PackageImports { file: "cobra.go" })'
+descriptor = "go package + imports in cobra.go"
+cost_tokens = 88
+cum_tokens = 3267
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "command.go"
-start = 141
-end = 146
+path = "cobra.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "cobra.go"
+start = 20
+end = 30
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 90
-key = 'Go(DeclBody { file: "active_help.go", start_line: 58 })'
-descriptor = "go decl body at active_help.go:58"
-cost_tokens = 14
-cum_tokens = 3346
+position = 87
+key = 'Go(PackageImports { file: "active_help.go" })'
+descriptor = "go package + imports in active_help.go"
+cost_tokens = 34
+cum_tokens = 3301
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "active_help.go"
-start = 59
-end = 59
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "active_help.go"
+start = 17
+end = 20
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 91
+position = 88
 key = 'Go(DeclDoc { file: "command.go", start_line: 269 })'
 descriptor = "go decl doc at command.go:269"
-cost_tokens = 115
-cum_tokens = 3461
+cost_tokens = 113
+cum_tokens = 3414
 
 [batches.content]
 kind = "lines"
@@ -2262,11 +2192,63 @@ end = 268
 kind = "full"
 
 [[batches]]
-position = 92
+position = 89
+key = 'Go(PackageImports { file: "shell_completions.go" })'
+descriptor = "go package + imports in shell_completions.go"
+cost_tokens = 35
+cum_tokens = 3449
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "shell_completions.go"
+start = 17
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Go(PackageImports { file: "args.go" })'
+descriptor = "go package + imports in args.go"
+cost_tokens = 36
+cum_tokens = 3485
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "args.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "args.go"
+start = 17
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
 key = 'Go(PackageImports { file: "command.go" })'
 descriptor = "go package + imports in command.go"
-cost_tokens = 98
-cum_tokens = 3559
+cost_tokens = 96
+cum_tokens = 3581
 
 [batches.content]
 kind = "lines"
@@ -2296,11 +2278,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 163 })'
 descriptor = "go struct field group at command.go:54 group 163"
-cost_tokens = 126
-cum_tokens = 3685
+cost_tokens = 128
+cum_tokens = 3709
 
 [batches.content]
 kind = "lines"
@@ -2314,11 +2296,29 @@ end = 169
 kind = "full"
 
 [[batches]]
+position = 93
+key = 'Go(DeclBody { file: "active_help.go", start_line: 58 })'
+descriptor = "go decl body at active_help.go:58"
+cost_tokens = 16
+cum_tokens = 3725
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "active_help.go"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 94
 key = 'Go(DeclNames { file: "cobra.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cobra.go"
-cost_tokens = 419
-cum_tokens = 4104
+cost_tokens = 417
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2696,7 +2696,7 @@ position = 95
 key = 'Go(Decl { file: "cobra.go", start_line: 55 })'
 descriptor = "go decl at cobra.go:55"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2714,7 +2714,7 @@ position = 96
 key = 'Go(Decl { file: "cobra.go", start_line: 59 })'
 descriptor = "go decl at cobra.go:59"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2732,7 +2732,7 @@ position = 97
 key = 'Go(Decl { file: "cobra.go", start_line: 62 })'
 descriptor = "go decl at cobra.go:62"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2750,7 +2750,7 @@ position = 98
 key = 'Go(Decl { file: "cobra.go", start_line: 66 })'
 descriptor = "go decl at cobra.go:66"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2768,7 +2768,7 @@ position = 99
 key = 'Go(Decl { file: "cobra.go", start_line: 81 })'
 descriptor = "go decl at cobra.go:81"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2786,7 +2786,7 @@ position = 100
 key = 'Go(Decl { file: "cobra.go", start_line: 85 })'
 descriptor = "go decl at cobra.go:85"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2804,7 +2804,7 @@ position = 101
 key = 'Go(Decl { file: "cobra.go", start_line: 91 })'
 descriptor = "go decl at cobra.go:91"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2822,7 +2822,7 @@ position = 102
 key = 'Go(Decl { file: "cobra.go", start_line: 99 })'
 descriptor = "go decl at cobra.go:99"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2840,7 +2840,7 @@ position = 103
 key = 'Go(Decl { file: "cobra.go", start_line: 105 })'
 descriptor = "go decl at cobra.go:105"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2858,7 +2858,7 @@ position = 104
 key = 'Go(Decl { file: "cobra.go", start_line: 114 })'
 descriptor = "go decl at cobra.go:114"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2876,7 +2876,7 @@ position = 105
 key = 'Go(Decl { file: "cobra.go", start_line: 144 })'
 descriptor = "go decl at cobra.go:144"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2894,7 +2894,7 @@ position = 106
 key = 'Go(Decl { file: "cobra.go", start_line: 159 })'
 descriptor = "go decl at cobra.go:159"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2912,7 +2912,7 @@ position = 107
 key = 'Go(Decl { file: "cobra.go", start_line: 166 })'
 descriptor = "go decl at cobra.go:166"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2930,7 +2930,7 @@ position = 108
 key = 'Go(Decl { file: "cobra.go", start_line: 174 })'
 descriptor = "go decl at cobra.go:174"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2948,7 +2948,7 @@ position = 109
 key = 'Go(Decl { file: "cobra.go", start_line: 179 })'
 descriptor = "go decl at cobra.go:179"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2966,7 +2966,7 @@ position = 110
 key = 'Go(Decl { file: "cobra.go", start_line: 192 })'
 descriptor = "go decl at cobra.go:192"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -2984,7 +2984,7 @@ position = 111
 key = 'Go(Decl { file: "cobra.go", start_line: 225 })'
 descriptor = "go decl at cobra.go:225"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -3002,7 +3002,7 @@ position = 112
 key = 'Go(Decl { file: "cobra.go", start_line: 235 })'
 descriptor = "go decl at cobra.go:235"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -3020,7 +3020,7 @@ position = 113
 key = 'Go(Decl { file: "cobra.go", start_line: 243 })'
 descriptor = "go decl at cobra.go:243"
 cost_tokens = 0
-cum_tokens = 4104
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -3035,64 +3035,10 @@ kind = "full"
 
 [[batches]]
 position = 114
-key = 'Go(DeclBody { file: "cobra.go", start_line: 85 })'
-descriptor = "go decl body at cobra.go:85"
-cost_tokens = 10
-cum_tokens = 4114
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cobra.go"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Go(DeclBody { file: "cobra.go", start_line: 99 })'
-descriptor = "go decl body at cobra.go:99"
-cost_tokens = 11
-cum_tokens = 4125
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cobra.go"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'Go(DeclBody { file: "cobra.go", start_line: 105 })'
-descriptor = "go decl body at cobra.go:105"
-cost_tokens = 11
-cum_tokens = 4136
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cobra.go"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
 key = 'Go(Decl { file: "cobra.go", start_line: 45 })'
 descriptor = "go decl at cobra.go:45"
 cost_tokens = 9
-cum_tokens = 4145
+cum_tokens = 4151
 
 [batches.content]
 kind = "lines"
@@ -3106,11 +3052,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 118
+position = 115
 key = 'Go(Decl { file: "cobra.go", start_line: 72 })'
 descriptor = "go decl at cobra.go:72"
 cost_tokens = 21
-cum_tokens = 4166
+cum_tokens = 4172
 
 [batches.content]
 kind = "lines"
@@ -3132,19 +3078,73 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 119
-key = 'Go(DeclBody { file: "cobra.go", start_line: 243 })'
-descriptor = "go decl body at cobra.go:243"
-cost_tokens = 19
-cum_tokens = 4185
+position = 116
+key = 'Go(DeclBody { file: "cobra.go", start_line: 85 })'
+descriptor = "go decl body at cobra.go:85"
+cost_tokens = 12
+cum_tokens = 4184
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "cobra.go"
-start = 244
-end = 245
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Go(DeclBody { file: "cobra.go", start_line: 99 })'
+descriptor = "go decl body at cobra.go:99"
+cost_tokens = 13
+cum_tokens = 4197
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cobra.go"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Go(DeclBody { file: "cobra.go", start_line: 105 })'
+descriptor = "go decl body at cobra.go:105"
+cost_tokens = 13
+cum_tokens = 4210
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cobra.go"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Go(DeclDoc { file: "cobra.go", start_line: 85 })'
+descriptor = "go decl doc at cobra.go:85"
+cost_tokens = 25
+cum_tokens = 4235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cobra.go"
+start = 83
+end = 84
 
 [batches.content.spans.render]
 kind = "full"
@@ -3154,7 +3154,7 @@ position = 120
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 243 })'
 descriptor = "go decl doc at cobra.go:243"
 cost_tokens = 25
-cum_tokens = 4210
+cum_tokens = 4260
 
 [batches.content]
 kind = "lines"
@@ -3169,18 +3169,18 @@ kind = "full"
 
 [[batches]]
 position = 121
-key = 'Go(DeclDoc { file: "cobra.go", start_line: 85 })'
-descriptor = "go decl doc at cobra.go:85"
-cost_tokens = 27
-cum_tokens = 4237
+key = 'Go(DeclDoc { file: "cobra.go", start_line: 62 })'
+descriptor = "go decl doc at cobra.go:62"
+cost_tokens = 19
+cum_tokens = 4279
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "cobra.go"
-start = 83
-end = 84
+start = 61
+end = 61
 
 [batches.content.spans.render]
 kind = "full"
@@ -3190,7 +3190,7 @@ position = 122
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 91 })'
 descriptor = "go decl doc at cobra.go:91"
 cost_tokens = 28
-cum_tokens = 4265
+cum_tokens = 4307
 
 [batches.content]
 kind = "lines"
@@ -3208,7 +3208,7 @@ position = 123
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 144 })'
 descriptor = "go decl doc at cobra.go:144"
 cost_tokens = 28
-cum_tokens = 4293
+cum_tokens = 4335
 
 [batches.content]
 kind = "lines"
@@ -3223,18 +3223,18 @@ kind = "full"
 
 [[batches]]
 position = 124
-key = 'Go(DeclDoc { file: "cobra.go", start_line: 62 })'
-descriptor = "go decl doc at cobra.go:62"
+key = 'Go(DeclBody { file: "cobra.go", start_line: 243 })'
+descriptor = "go decl body at cobra.go:243"
 cost_tokens = 21
-cum_tokens = 4314
+cum_tokens = 4356
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "cobra.go"
-start = 61
-end = 61
+start = 244
+end = 245
 
 [batches.content.spans.render]
 kind = "full"
@@ -3244,7 +3244,7 @@ position = 125
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 99 })'
 descriptor = "go decl doc at cobra.go:99"
 cost_tokens = 29
-cum_tokens = 4343
+cum_tokens = 4385
 
 [batches.content]
 kind = "lines"
@@ -3262,7 +3262,7 @@ position = 126
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 105 })'
 descriptor = "go decl doc at cobra.go:105"
 cost_tokens = 29
-cum_tokens = 4372
+cum_tokens = 4414
 
 [batches.content]
 kind = "lines"
@@ -3280,7 +3280,7 @@ position = 127
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 235 })'
 descriptor = "go decl doc at cobra.go:235"
 cost_tokens = 34
-cum_tokens = 4406
+cum_tokens = 4448
 
 [batches.content]
 kind = "lines"
@@ -3298,7 +3298,7 @@ position = 128
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 174 })'
 descriptor = "go decl doc at cobra.go:174"
 cost_tokens = 16
-cum_tokens = 4422
+cum_tokens = 4464
 
 [batches.content]
 kind = "lines"
@@ -3313,42 +3313,6 @@ kind = "full"
 
 [[batches]]
 position = 129
-key = 'Go(DeclBody { file: "cobra.go", start_line: 159 })'
-descriptor = "go decl body at cobra.go:159"
-cost_tokens = 13
-cum_tokens = 4435
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cobra.go"
-start = 160
-end = 160
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Go(DeclBody { file: "cobra.go", start_line: 91 })'
-descriptor = "go decl body at cobra.go:91"
-cost_tokens = 29
-cum_tokens = 4464
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cobra.go"
-start = 92
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 131
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 192 })'
 descriptor = "go decl doc at cobra.go:192"
 cost_tokens = 19
@@ -3366,11 +3330,29 @@ end = 191
 kind = "full"
 
 [[batches]]
-position = 132
+position = 130
+key = 'Go(DeclBody { file: "cobra.go", start_line: 91 })'
+descriptor = "go decl body at cobra.go:91"
+cost_tokens = 31
+cum_tokens = 4514
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cobra.go"
+start = 92
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 59 })'
 descriptor = "go decl doc at cobra.go:59"
-cost_tokens = 37
-cum_tokens = 4520
+cost_tokens = 35
+cum_tokens = 4549
 
 [batches.content]
 kind = "lines"
@@ -3384,11 +3366,29 @@ end = 58
 kind = "full"
 
 [[batches]]
+position = 132
+key = 'Go(DeclBody { file: "cobra.go", start_line: 159 })'
+descriptor = "go decl body at cobra.go:159"
+cost_tokens = 15
+cum_tokens = 4564
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cobra.go"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 133
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 66 })'
 descriptor = "go decl doc at cobra.go:66"
-cost_tokens = 45
-cum_tokens = 4565
+cost_tokens = 43
+cum_tokens = 4607
 
 [batches.content]
 kind = "lines"
@@ -3405,8 +3405,8 @@ kind = "full"
 position = 134
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 55 })'
 descriptor = "go decl doc at cobra.go:55"
-cost_tokens = 48
-cum_tokens = 4613
+cost_tokens = 46
+cum_tokens = 4653
 
 [batches.content]
 kind = "lines"
@@ -3423,8 +3423,8 @@ kind = "full"
 position = 135
 key = 'Go(DeclBody { file: "cobra.go", start_line: 235 })'
 descriptor = "go decl body at cobra.go:235"
-cost_tokens = 40
-cum_tokens = 4653
+cost_tokens = 42
+cum_tokens = 4695
 
 [batches.content]
 kind = "lines"
@@ -3442,7 +3442,7 @@ position = 136
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 114 })'
 descriptor = "go decl doc at cobra.go:114"
 cost_tokens = 70
-cum_tokens = 4723
+cum_tokens = 4765
 
 [batches.content]
 kind = "lines"
@@ -3460,7 +3460,7 @@ position = 137
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 166 })'
 descriptor = "go decl doc at cobra.go:166"
 cost_tokens = 30
-cum_tokens = 4753
+cum_tokens = 4795
 
 [batches.content]
 kind = "lines"
@@ -3477,8 +3477,8 @@ kind = "full"
 position = 138
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 72 })'
 descriptor = "go decl doc at cobra.go:72"
-cost_tokens = 64
-cum_tokens = 4817
+cost_tokens = 62
+cum_tokens = 4857
 
 [batches.content]
 kind = "lines"
@@ -3493,28 +3493,10 @@ kind = "full"
 
 [[batches]]
 position = 139
-key = 'Go(DeclBody { file: "cobra.go", start_line: 174 })'
-descriptor = "go decl body at cobra.go:174"
-cost_tokens = 28
-cum_tokens = 4845
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cobra.go"
-start = 175
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 140
 key = 'Go(DeclDoc { file: "cobra.go", start_line: 81 })'
 descriptor = "go decl doc at cobra.go:81"
-cost_tokens = 88
-cum_tokens = 4933
+cost_tokens = 86
+cum_tokens = 4943
 
 [batches.content]
 kind = "lines"
@@ -3528,11 +3510,29 @@ end = 80
 kind = "full"
 
 [[batches]]
+position = 140
+key = 'Go(DeclBody { file: "cobra.go", start_line: 174 })'
+descriptor = "go decl body at cobra.go:174"
+cost_tokens = 30
+cum_tokens = 4973
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cobra.go"
+start = 175
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 141
 key = 'Fs(DirListing { dir: "site/content/docgen" })'
 descriptor = "listing of 'site/content/docgen'"
 cost_tokens = 21
-cum_tokens = 4954
+cum_tokens = 4994
 
 [batches.content]
 kind = "fs"
@@ -3543,402 +3543,10 @@ entries = ["_index.md", "man.md", "md.md", "rest.md", "yaml.md"]
 
 [[batches]]
 position = 142
-key = 'Go(DeclNames { file: "powershell_completions.go", chunk_index: 0 })'
-descriptor = "go decl names surface in powershell_completions.go"
-cost_tokens = 168
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 313
-end = 313
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 320
-end = 320
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 331
-end = 331
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 337
-end = 337
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 342
-end = 342
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 348
-end = 348
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 314
-end = 314
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 321
-end = 321
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 332
-end = 332
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 338
-end = 338
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 343
-end = 343
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 349
-end = 349
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 143
-key = 'Go(Decl { file: "powershell_completions.go", start_line: 28 })'
-descriptor = "go decl at powershell_completions.go:28"
-cost_tokens = 0
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 144
-key = 'Go(Decl { file: "powershell_completions.go", start_line: 313 })'
-descriptor = "go decl at powershell_completions.go:313"
-cost_tokens = 0
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 313
-end = 313
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 145
-key = 'Go(Decl { file: "powershell_completions.go", start_line: 320 })'
-descriptor = "go decl at powershell_completions.go:320"
-cost_tokens = 0
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 320
-end = 320
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 146
-key = 'Go(Decl { file: "powershell_completions.go", start_line: 331 })'
-descriptor = "go decl at powershell_completions.go:331"
-cost_tokens = 0
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 331
-end = 331
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 147
-key = 'Go(Decl { file: "powershell_completions.go", start_line: 337 })'
-descriptor = "go decl at powershell_completions.go:337"
-cost_tokens = 0
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 337
-end = 337
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 148
-key = 'Go(Decl { file: "powershell_completions.go", start_line: 342 })'
-descriptor = "go decl at powershell_completions.go:342"
-cost_tokens = 0
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 342
-end = 342
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 149
-key = 'Go(Decl { file: "powershell_completions.go", start_line: 348 })'
-descriptor = "go decl at powershell_completions.go:348"
-cost_tokens = 0
-cum_tokens = 5122
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 348
-end = 348
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 150
-key = 'Go(DeclBody { file: "powershell_completions.go", start_line: 337 })'
-descriptor = "go decl body at powershell_completions.go:337"
-cost_tokens = 12
-cum_tokens = 5134
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 338
-end = 338
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 151
-key = 'Go(DeclBody { file: "powershell_completions.go", start_line: 348 })'
-descriptor = "go decl body at powershell_completions.go:348"
-cost_tokens = 12
-cum_tokens = 5146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 349
-end = 349
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 152
-key = 'Go(DeclBody { file: "powershell_completions.go", start_line: 331 })'
-descriptor = "go decl body at powershell_completions.go:331"
-cost_tokens = 13
-cum_tokens = 5159
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 332
-end = 332
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 153
-key = 'Go(DeclBody { file: "powershell_completions.go", start_line: 342 })'
-descriptor = "go decl body at powershell_completions.go:342"
-cost_tokens = 13
-cum_tokens = 5172
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 343
-end = 343
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'Go(DeclDoc { file: "powershell_completions.go", start_line: 331 })'
-descriptor = "go decl doc at powershell_completions.go:331"
-cost_tokens = 18
-cum_tokens = 5190
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 330
-end = 330
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Go(DeclDoc { file: "powershell_completions.go", start_line: 342 })'
-descriptor = "go decl doc at powershell_completions.go:342"
-cost_tokens = 20
-cum_tokens = 5210
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 341
-end = 341
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
-key = 'Go(DeclDoc { file: "powershell_completions.go", start_line: 337 })'
-descriptor = "go decl doc at powershell_completions.go:337"
-cost_tokens = 30
-cum_tokens = 5240
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 335
-end = 336
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
-key = 'Go(DeclDoc { file: "powershell_completions.go", start_line: 348 })'
-descriptor = "go decl doc at powershell_completions.go:348"
-cost_tokens = 32
-cum_tokens = 5272
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "powershell_completions.go"
-start = 346
-end = 347
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
 key = 'Go(DeclNames { file: "command.go", chunk_index: 1 })'
 descriptor = "go decl names surface #1 in command.go"
 cost_tokens = 172
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4072,11 +3680,11 @@ end = 339
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 143
 key = 'Go(Decl { file: "command.go", start_line: 296 })'
 descriptor = "go decl at command.go:296"
 cost_tokens = 0
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4090,11 +3698,11 @@ end = 296
 kind = "full"
 
 [[batches]]
-position = 160
+position = 144
 key = 'Go(Decl { file: "command.go", start_line: 302 })'
 descriptor = "go decl at command.go:302"
 cost_tokens = 0
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4108,11 +3716,11 @@ end = 302
 kind = "full"
 
 [[batches]]
-position = 161
+position = 145
 key = 'Go(Decl { file: "command.go", start_line: 308 })'
 descriptor = "go decl at command.go:308"
 cost_tokens = 0
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4126,11 +3734,11 @@ end = 308
 kind = "full"
 
 [[batches]]
-position = 162
+position = 146
 key = 'Go(Decl { file: "command.go", start_line: 313 })'
 descriptor = "go decl at command.go:313"
 cost_tokens = 0
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4144,11 +3752,11 @@ end = 313
 kind = "full"
 
 [[batches]]
-position = 163
+position = 147
 key = 'Go(Decl { file: "command.go", start_line: 318 })'
 descriptor = "go decl at command.go:318"
 cost_tokens = 0
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4162,11 +3770,11 @@ end = 318
 kind = "full"
 
 [[batches]]
-position = 164
+position = 148
 key = 'Go(Decl { file: "command.go", start_line: 328 })'
 descriptor = "go decl at command.go:328"
 cost_tokens = 0
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4180,11 +3788,11 @@ end = 328
 kind = "full"
 
 [[batches]]
-position = 165
+position = 149
 key = 'Go(Decl { file: "command.go", start_line: 333 })'
 descriptor = "go decl at command.go:333"
 cost_tokens = 0
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4198,11 +3806,11 @@ end = 333
 kind = "full"
 
 [[batches]]
-position = 166
+position = 150
 key = 'Go(Decl { file: "command.go", start_line: 338 })'
 descriptor = "go decl at command.go:338"
 cost_tokens = 0
-cum_tokens = 5444
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4216,11 +3824,11 @@ end = 338
 kind = "full"
 
 [[batches]]
-position = 167
+position = 151
 key = 'Go(DeclBody { file: "command.go", start_line: 333 })'
 descriptor = "go decl body at command.go:333"
-cost_tokens = 8
-cum_tokens = 5452
+cost_tokens = 10
+cum_tokens = 5176
 
 [batches.content]
 kind = "lines"
@@ -4234,11 +3842,11 @@ end = 334
 kind = "full"
 
 [[batches]]
-position = 168
+position = 152
 key = 'Go(DeclBody { file: "command.go", start_line: 338 })'
 descriptor = "go decl body at command.go:338"
-cost_tokens = 8
-cum_tokens = 5460
+cost_tokens = 10
+cum_tokens = 5186
 
 [batches.content]
 kind = "lines"
@@ -4252,101 +3860,11 @@ end = 339
 kind = "full"
 
 [[batches]]
-position = 169
-key = 'Go(DeclBody { file: "command.go", start_line: 296 })'
-descriptor = "go decl body at command.go:296"
-cost_tokens = 9
-cum_tokens = 5469
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 297
-end = 297
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 170
-key = 'Go(DeclBody { file: "command.go", start_line: 302 })'
-descriptor = "go decl body at command.go:302"
-cost_tokens = 9
-cum_tokens = 5478
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 303
-end = 303
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 171
-key = 'Go(DeclBody { file: "command.go", start_line: 308 })'
-descriptor = "go decl body at command.go:308"
-cost_tokens = 9
-cum_tokens = 5487
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 309
-end = 309
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
-key = 'Go(DeclBody { file: "command.go", start_line: 313 })'
-descriptor = "go decl body at command.go:313"
-cost_tokens = 9
-cum_tokens = 5496
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 314
-end = 314
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 173
-key = 'Go(DeclBody { file: "command.go", start_line: 328 })'
-descriptor = "go decl body at command.go:328"
-cost_tokens = 9
-cum_tokens = 5505
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 329
-end = 329
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 174
+position = 153
 key = 'Go(DeclDoc { file: "command.go", start_line: 338 })'
 descriptor = "go decl doc at command.go:338"
 cost_tokens = 12
-cum_tokens = 5517
+cum_tokens = 5198
 
 [batches.content]
 kind = "lines"
@@ -4360,11 +3878,101 @@ end = 337
 kind = "full"
 
 [[batches]]
-position = 175
+position = 154
+key = 'Go(DeclBody { file: "command.go", start_line: 296 })'
+descriptor = "go decl body at command.go:296"
+cost_tokens = 11
+cum_tokens = 5209
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Go(DeclBody { file: "command.go", start_line: 302 })'
+descriptor = "go decl body at command.go:302"
+cost_tokens = 11
+cum_tokens = 5220
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 303
+end = 303
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Go(DeclBody { file: "command.go", start_line: 308 })'
+descriptor = "go decl body at command.go:308"
+cost_tokens = 11
+cum_tokens = 5231
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 309
+end = 309
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Go(DeclBody { file: "command.go", start_line: 313 })'
+descriptor = "go decl body at command.go:313"
+cost_tokens = 11
+cum_tokens = 5242
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 314
+end = 314
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Go(DeclBody { file: "command.go", start_line: 328 })'
+descriptor = "go decl body at command.go:328"
+cost_tokens = 11
+cum_tokens = 5253
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 329
+end = 329
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
 key = 'Go(DeclDoc { file: "command.go", start_line: 318 })'
 descriptor = "go decl doc at command.go:318"
 cost_tokens = 18
-cum_tokens = 5535
+cum_tokens = 5271
 
 [batches.content]
 kind = "lines"
@@ -4378,11 +3986,11 @@ end = 317
 kind = "full"
 
 [[batches]]
-position = 176
+position = 160
 key = 'Go(DeclDoc { file: "command.go", start_line: 333 })'
 descriptor = "go decl doc at command.go:333"
 cost_tokens = 18
-cum_tokens = 5553
+cum_tokens = 5289
 
 [batches.content]
 kind = "lines"
@@ -4396,11 +4004,11 @@ end = 332
 kind = "full"
 
 [[batches]]
-position = 177
+position = 161
 key = 'Go(DeclDoc { file: "command.go", start_line: 313 })'
 descriptor = "go decl doc at command.go:313"
 cost_tokens = 19
-cum_tokens = 5572
+cum_tokens = 5308
 
 [batches.content]
 kind = "lines"
@@ -4414,11 +4022,11 @@ end = 312
 kind = "full"
 
 [[batches]]
-position = 178
+position = 162
 key = 'Go(DeclDoc { file: "command.go", start_line: 328 })'
 descriptor = "go decl doc at command.go:328"
 cost_tokens = 27
-cum_tokens = 5599
+cum_tokens = 5335
 
 [batches.content]
 kind = "lines"
@@ -4432,11 +4040,11 @@ end = 327
 kind = "full"
 
 [[batches]]
-position = 179
+position = 163
 key = 'Go(DeclDoc { file: "command.go", start_line: 296 })'
 descriptor = "go decl doc at command.go:296"
 cost_tokens = 31
-cum_tokens = 5630
+cum_tokens = 5366
 
 [batches.content]
 kind = "lines"
@@ -4450,11 +4058,11 @@ end = 295
 kind = "full"
 
 [[batches]]
-position = 180
+position = 164
 key = 'Go(DeclDoc { file: "command.go", start_line: 302 })'
 descriptor = "go decl doc at command.go:302"
 cost_tokens = 31
-cum_tokens = 5661
+cum_tokens = 5397
 
 [batches.content]
 kind = "lines"
@@ -4468,11 +4076,11 @@ end = 301
 kind = "full"
 
 [[batches]]
-position = 181
+position = 165
 key = 'Go(DeclDoc { file: "command.go", start_line: 308 })'
 descriptor = "go decl doc at command.go:308"
 cost_tokens = 31
-cum_tokens = 5692
+cum_tokens = 5428
 
 [batches.content]
 kind = "lines"
@@ -4486,11 +4094,11 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 182
+position = 166
 key = 'Go(DeclBody { file: "command.go", start_line: 318 })'
 descriptor = "go decl body at command.go:318"
-cost_tokens = 44
-cum_tokens = 5736
+cost_tokens = 46
+cum_tokens = 5474
 
 [batches.content]
 kind = "lines"
@@ -4504,11 +4112,403 @@ end = 323
 kind = "full"
 
 [[batches]]
+position = 167
+key = 'Go(DeclNames { file: "powershell_completions.go", chunk_index: 0 })'
+descriptor = "go decl names surface in powershell_completions.go"
+cost_tokens = 170
+cum_tokens = 5644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 313
+end = 313
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 320
+end = 320
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 331
+end = 331
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 342
+end = 342
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 348
+end = 348
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 314
+end = 314
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 321
+end = 321
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 332
+end = 332
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 338
+end = 338
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 343
+end = 343
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 168
+key = 'Go(Decl { file: "powershell_completions.go", start_line: 28 })'
+descriptor = "go decl at powershell_completions.go:28"
+cost_tokens = 0
+cum_tokens = 5644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Go(Decl { file: "powershell_completions.go", start_line: 313 })'
+descriptor = "go decl at powershell_completions.go:313"
+cost_tokens = 0
+cum_tokens = 5644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 313
+end = 313
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Go(Decl { file: "powershell_completions.go", start_line: 320 })'
+descriptor = "go decl at powershell_completions.go:320"
+cost_tokens = 0
+cum_tokens = 5644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 320
+end = 320
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'Go(Decl { file: "powershell_completions.go", start_line: 331 })'
+descriptor = "go decl at powershell_completions.go:331"
+cost_tokens = 0
+cum_tokens = 5644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 331
+end = 331
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Go(Decl { file: "powershell_completions.go", start_line: 337 })'
+descriptor = "go decl at powershell_completions.go:337"
+cost_tokens = 0
+cum_tokens = 5644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Go(Decl { file: "powershell_completions.go", start_line: 342 })'
+descriptor = "go decl at powershell_completions.go:342"
+cost_tokens = 0
+cum_tokens = 5644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 342
+end = 342
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Go(Decl { file: "powershell_completions.go", start_line: 348 })'
+descriptor = "go decl at powershell_completions.go:348"
+cost_tokens = 0
+cum_tokens = 5644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 348
+end = 348
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'Go(DeclBody { file: "powershell_completions.go", start_line: 337 })'
+descriptor = "go decl body at powershell_completions.go:337"
+cost_tokens = 14
+cum_tokens = 5658
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 338
+end = 338
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Go(DeclBody { file: "powershell_completions.go", start_line: 348 })'
+descriptor = "go decl body at powershell_completions.go:348"
+cost_tokens = 14
+cum_tokens = 5672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Go(DeclDoc { file: "powershell_completions.go", start_line: 331 })'
+descriptor = "go decl doc at powershell_completions.go:331"
+cost_tokens = 18
+cum_tokens = 5690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 330
+end = 330
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Go(DeclBody { file: "powershell_completions.go", start_line: 331 })'
+descriptor = "go decl body at powershell_completions.go:331"
+cost_tokens = 15
+cum_tokens = 5705
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 332
+end = 332
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Go(DeclBody { file: "powershell_completions.go", start_line: 342 })'
+descriptor = "go decl body at powershell_completions.go:342"
+cost_tokens = 15
+cum_tokens = 5720
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 343
+end = 343
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Go(DeclDoc { file: "powershell_completions.go", start_line: 342 })'
+descriptor = "go decl doc at powershell_completions.go:342"
+cost_tokens = 20
+cum_tokens = 5740
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 341
+end = 341
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Go(DeclDoc { file: "powershell_completions.go", start_line: 337 })'
+descriptor = "go decl doc at powershell_completions.go:337"
+cost_tokens = 30
+cum_tokens = 5770
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 335
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Go(DeclDoc { file: "powershell_completions.go", start_line: 348 })'
+descriptor = "go decl doc at powershell_completions.go:348"
+cost_tokens = 32
+cum_tokens = 5802
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "powershell_completions.go"
+start = 346
+end = 347
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 183
 key = 'Go(PackageImports { file: "bash_completionsV2.go" })'
 descriptor = "go package + imports in bash_completionsV2.go"
 cost_tokens = 46
-cum_tokens = 5782
+cum_tokens = 5848
 
 [batches.content]
 kind = "lines"
@@ -4531,36 +4531,10 @@ kind = "full"
 
 [[batches]]
 position = 184
-key = 'Go(PackageImports { file: "zsh_completions.go" })'
-descriptor = "go package + imports in zsh_completions.go"
-cost_tokens = 46
-cum_tokens = 5828
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "zsh_completions.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "zsh_completions.go"
-start = 17
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
 key = 'Fs(DirListing { dir: "site/content/completions" })'
 descriptor = "listing of 'site/content/completions'"
 cost_tokens = 23
-cum_tokens = 5851
+cum_tokens = 5871
 
 [batches.content]
 kind = "fs"
@@ -4570,11 +4544,11 @@ parent = "site/content/completions"
 entries = ["_index.md", "bash.md", "fish.md", "powershell.md", "zsh.md"]
 
 [[batches]]
-position = 186
+position = 185
 key = 'Markdown(HeadingsOutline { file: "site/content/completions/bash.md" })'
 descriptor = "headings outline in site/content/completions/bash.md"
 cost_tokens = 31
-cum_tokens = 5882
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -4612,11 +4586,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 187
+position = 186
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 151 })'
 descriptor = "go struct field group at command.go:54 group 151"
-cost_tokens = 157
-cum_tokens = 6039
+cost_tokens = 155
+cum_tokens = 6057
 
 [batches.content]
 kind = "lines"
@@ -4630,29 +4604,37 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 188
-key = 'Go(DeclBody { file: "cobra.go", start_line: 166 })'
-descriptor = "go decl body at cobra.go:166"
-cost_tokens = 40
-cum_tokens = 6079
+position = 187
+key = 'Go(PackageImports { file: "zsh_completions.go" })'
+descriptor = "go package + imports in zsh_completions.go"
+cost_tokens = 50
+cum_tokens = 6107
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "cobra.go"
-start = 167
-end = 170
+path = "zsh_completions.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "zsh_completions.go"
+start = 17
+end = 22
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 189
+position = 188
 key = 'Go(PackageImports { file: "command_notwin.go" })'
 descriptor = "go package + imports in command_notwin.go"
 cost_tokens = 7
-cum_tokens = 6086
+cum_tokens = 6114
 
 [batches.content]
 kind = "lines"
@@ -4666,11 +4648,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 190
+position = 189
 key = 'Go(PackageImports { file: "fish_completions.go" })'
 descriptor = "go package + imports in fish_completions.go"
 cost_tokens = 53
-cum_tokens = 6139
+cum_tokens = 6167
 
 [batches.content]
 kind = "lines"
@@ -4692,11 +4674,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 191
+position = 190
 key = 'Go(PackageImports { file: "powershell_completions.go" })'
 descriptor = "go package + imports in powershell_completions.go"
 cost_tokens = 53
-cum_tokens = 6192
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -4718,11 +4700,47 @@ end = 26
 kind = "full"
 
 [[batches]]
+position = 191
+key = 'Go(DeclBody { file: "cobra.go", start_line: 166 })'
+descriptor = "go decl body at cobra.go:166"
+cost_tokens = 42
+cum_tokens = 6262
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cobra.go"
+start = 167
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 192
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 117 })'
+descriptor = "go struct field group at command.go:54 group 117"
+cost_tokens = 173
+cum_tokens = 6435
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 117
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
 key = 'Go(PackageImports { file: "flag_groups.go" })'
 descriptor = "go package + imports in flag_groups.go"
-cost_tokens = 54
-cum_tokens = 6246
+cost_tokens = 58
+cum_tokens = 6493
 
 [batches.content]
 kind = "lines"
@@ -4752,165 +4770,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 193
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 117 })'
-descriptor = "go struct field group at command.go:54 group 117"
-cost_tokens = 173
-cum_tokens = 6419
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 117
-end = 128
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 194
-key = 'Go(DeclBody { file: "fish_completions.go", start_line: 276 })'
-descriptor = "go decl body at fish_completions.go:276"
-cost_tokens = 43
-cum_tokens = 6462
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 277
-end = 280
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 195
-key = 'Markdown(HeadingsOutline { file: "site/content/docgen/_index.md" })'
-descriptor = "headings outline in site/content/docgen/_index.md"
-cost_tokens = 43
-cum_tokens = 6505
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "site/content/docgen/_index.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "site/content/docgen/_index.md"
-start = 8
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "site/content/docgen/_index.md"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "site/content/docgen/_index.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "site/content/docgen/_index.md"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "site/content/docgen/_index.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 196
-key = 'Go(DeclNames { file: "command_win.go", chunk_index: 0 })'
-descriptor = "go decl names surface in command_win.go"
-cost_tokens = 31
-cum_tokens = 6536
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command_win.go"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "command_win.go"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "command_win.go"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "command_win.go"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 197
-key = 'Go(Decl { file: "command_win.go", start_line: 30 })'
-descriptor = "go decl at command_win.go:30"
-cost_tokens = 0
-cum_tokens = 6536
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command_win.go"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 198
 key = 'Go(DeclNames { file: "args.go", chunk_index: 0 })'
 descriptor = "go decl names surface in args.go"
-cost_tokens = 225
-cum_tokens = 6761
+cost_tokens = 223
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5108,11 +4972,11 @@ end = 143
 kind = "ellipsis"
 
 [[batches]]
-position = 199
+position = 195
 key = 'Go(Decl { file: "args.go", start_line: 28 })'
 descriptor = "go decl at args.go:28"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5126,11 +4990,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 200
+position = 196
 key = 'Go(Decl { file: "args.go", start_line: 42 })'
 descriptor = "go decl at args.go:42"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5144,11 +5008,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 201
+position = 197
 key = 'Go(Decl { file: "args.go", start_line: 51 })'
 descriptor = "go decl at args.go:51"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5162,11 +5026,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 202
+position = 198
 key = 'Go(Decl { file: "args.go", start_line: 69 })'
 descriptor = "go decl at args.go:69"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5180,11 +5044,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 203
+position = 199
 key = 'Go(Decl { file: "args.go", start_line: 82 })'
 descriptor = "go decl at args.go:82"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5198,11 +5062,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 204
+position = 200
 key = 'Go(Decl { file: "args.go", start_line: 87 })'
 descriptor = "go decl at args.go:87"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5216,11 +5080,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 205
+position = 201
 key = 'Go(Decl { file: "args.go", start_line: 97 })'
 descriptor = "go decl at args.go:97"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5234,11 +5098,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 206
+position = 202
 key = 'Go(Decl { file: "args.go", start_line: 107 })'
 descriptor = "go decl at args.go:107"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5252,11 +5116,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 207
+position = 203
 key = 'Go(Decl { file: "args.go", start_line: 117 })'
 descriptor = "go decl at args.go:117"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5270,11 +5134,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 208
+position = 204
 key = 'Go(Decl { file: "args.go", start_line: 127 })'
 descriptor = "go decl at args.go:127"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5288,11 +5152,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 209
+position = 205
 key = 'Go(Decl { file: "args.go", start_line: 142 })'
 descriptor = "go decl at args.go:142"
 cost_tokens = 0
-cum_tokens = 6761
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -5306,11 +5170,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 210
+position = 206
 key = 'Go(DeclBody { file: "args.go", start_line: 82 })'
 descriptor = "go decl body at args.go:82"
-cost_tokens = 5
-cum_tokens = 6766
+cost_tokens = 7
+cum_tokens = 6723
 
 [batches.content]
 kind = "lines"
@@ -5324,11 +5188,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 211
+position = 207
 key = 'Go(DeclDoc { file: "args.go", start_line: 82 })'
 descriptor = "go decl doc at args.go:82"
 cost_tokens = 13
-cum_tokens = 6779
+cum_tokens = 6736
 
 [batches.content]
 kind = "lines"
@@ -5342,11 +5206,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 212
+position = 208
 key = 'Go(DeclDoc { file: "args.go", start_line: 42 })'
 descriptor = "go decl doc at args.go:42"
 cost_tokens = 16
-cum_tokens = 6795
+cum_tokens = 6752
 
 [batches.content]
 kind = "lines"
@@ -5360,11 +5224,83 @@ end = 41
 kind = "full"
 
 [[batches]]
+position = 209
+key = 'Go(DeclDoc { file: "args.go", start_line: 107 })'
+descriptor = "go decl doc at args.go:107"
+cost_tokens = 18
+cum_tokens = 6770
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "args.go"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'Go(DeclDoc { file: "args.go", start_line: 127 })'
+descriptor = "go decl doc at args.go:127"
+cost_tokens = 18
+cum_tokens = 6788
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "args.go"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'Go(DeclDoc { file: "args.go", start_line: 69 })'
+descriptor = "go decl doc at args.go:69"
+cost_tokens = 19
+cum_tokens = 6807
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "args.go"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 212
+key = 'Go(DeclDoc { file: "args.go", start_line: 97 })'
+descriptor = "go decl doc at args.go:97"
+cost_tokens = 19
+cum_tokens = 6826
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "args.go"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 213
 key = 'Go(DeclBody { file: "args.go", start_line: 142 })'
 descriptor = "go decl body at args.go:142"
-cost_tokens = 14
-cum_tokens = 6809
+cost_tokens = 16
+cum_tokens = 6842
 
 [batches.content]
 kind = "lines"
@@ -5379,82 +5315,10 @@ kind = "full"
 
 [[batches]]
 position = 214
-key = 'Go(DeclDoc { file: "args.go", start_line: 107 })'
-descriptor = "go decl doc at args.go:107"
-cost_tokens = 18
-cum_tokens = 6827
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "args.go"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 215
-key = 'Go(DeclDoc { file: "args.go", start_line: 127 })'
-descriptor = "go decl doc at args.go:127"
-cost_tokens = 18
-cum_tokens = 6845
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "args.go"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 216
-key = 'Go(DeclDoc { file: "args.go", start_line: 69 })'
-descriptor = "go decl doc at args.go:69"
-cost_tokens = 19
-cum_tokens = 6864
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "args.go"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 217
-key = 'Go(DeclDoc { file: "args.go", start_line: 97 })'
-descriptor = "go decl doc at args.go:97"
-cost_tokens = 19
-cum_tokens = 6883
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "args.go"
-start = 96
-end = 96
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 218
 key = 'Go(DeclDoc { file: "args.go", start_line: 87 })'
 descriptor = "go decl doc at args.go:87"
 cost_tokens = 20
-cum_tokens = 6903
+cum_tokens = 6862
 
 [batches.content]
 kind = "lines"
@@ -5468,11 +5332,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 219
+position = 215
 key = 'Go(DeclDoc { file: "args.go", start_line: 117 })'
 descriptor = "go decl doc at args.go:117"
 cost_tokens = 22
-cum_tokens = 6925
+cum_tokens = 6884
 
 [batches.content]
 kind = "lines"
@@ -5486,11 +5350,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 220
+position = 216
 key = 'Go(DeclDoc { file: "args.go", start_line: 51 })'
 descriptor = "go decl doc at args.go:51"
 cost_tokens = 37
-cum_tokens = 6962
+cum_tokens = 6921
 
 [batches.content]
 kind = "lines"
@@ -5504,11 +5368,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 221
+position = 217
 key = 'Go(DeclDoc { file: "args.go", start_line: 142 })'
 descriptor = "go decl doc at args.go:142"
 cost_tokens = 71
-cum_tokens = 7033
+cum_tokens = 6992
 
 [batches.content]
 kind = "lines"
@@ -5522,11 +5386,129 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 222
+position = 218
+key = 'Markdown(HeadingsOutline { file: "site/content/docgen/_index.md" })'
+descriptor = "headings outline in site/content/docgen/_index.md"
+cost_tokens = 43
+cum_tokens = 7035
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "site/content/docgen/_index.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 219
+key = 'Go(DeclNames { file: "command_win.go", chunk_index: 0 })'
+descriptor = "go decl names surface in command_win.go"
+cost_tokens = 31
+cum_tokens = 7066
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command_win.go"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "command_win.go"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "command_win.go"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "command_win.go"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 220
+key = 'Go(Decl { file: "command_win.go", start_line: 30 })'
+descriptor = "go decl at command_win.go:30"
+cost_tokens = 0
+cum_tokens = 7066
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command_win.go"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 221
 key = 'Go(DeclNames { file: "zsh_completions.go", chunk_index: 0 })'
 descriptor = "go decl names surface in zsh_completions.go"
 cost_tokens = 228
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5676,11 +5658,11 @@ end = 88
 kind = "ellipsis"
 
 [[batches]]
-position = 223
+position = 222
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 25 })'
 descriptor = "go decl at zsh_completions.go:25"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5694,11 +5676,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 224
+position = 223
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 31 })'
 descriptor = "go decl at zsh_completions.go:31"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5712,11 +5694,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 225
+position = 224
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 36 })'
 descriptor = "go decl at zsh_completions.go:36"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5730,11 +5712,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 226
+position = 225
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 42 })'
 descriptor = "go decl at zsh_completions.go:42"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5748,11 +5730,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 227
+position = 226
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 55 })'
 descriptor = "go decl at zsh_completions.go:55"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5766,11 +5748,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 228
+position = 227
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 66 })'
 descriptor = "go decl at zsh_completions.go:66"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5784,11 +5766,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 229
+position = 228
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 70 })'
 descriptor = "go decl at zsh_completions.go:70"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5802,11 +5784,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 230
+position = 229
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 80 })'
 descriptor = "go decl at zsh_completions.go:80"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5820,11 +5802,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 231
+position = 230
 key = 'Go(Decl { file: "zsh_completions.go", start_line: 87 })'
 descriptor = "go decl at zsh_completions.go:87"
 cost_tokens = 0
-cum_tokens = 7261
+cum_tokens = 7294
 
 [batches.content]
 kind = "lines"
@@ -5838,11 +5820,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 232
+position = 231
 key = 'Go(DeclBody { file: "zsh_completions.go", start_line: 55 })'
 descriptor = "go decl body at zsh_completions.go:55"
-cost_tokens = 5
-cum_tokens = 7266
+cost_tokens = 7
+cum_tokens = 7301
 
 [batches.content]
 kind = "lines"
@@ -5856,11 +5838,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 233
+position = 232
 key = 'Go(DeclBody { file: "zsh_completions.go", start_line: 66 })'
 descriptor = "go decl body at zsh_completions.go:66"
-cost_tokens = 5
-cum_tokens = 7271
+cost_tokens = 7
+cum_tokens = 7308
 
 [batches.content]
 kind = "lines"
@@ -5874,11 +5856,29 @@ end = 67
 kind = "full"
 
 [[batches]]
+position = 233
+key = 'Go(DeclDoc { file: "zsh_completions.go", start_line: 25 })'
+descriptor = "go decl doc at zsh_completions.go:25"
+cost_tokens = 16
+cum_tokens = 7324
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "zsh_completions.go"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 234
 key = 'Go(DeclBody { file: "zsh_completions.go", start_line: 31 })'
 descriptor = "go decl body at zsh_completions.go:31"
-cost_tokens = 12
-cum_tokens = 7283
+cost_tokens = 14
+cum_tokens = 7338
 
 [batches.content]
 kind = "lines"
@@ -5895,8 +5895,8 @@ kind = "full"
 position = 235
 key = 'Go(DeclBody { file: "zsh_completions.go", start_line: 42 })'
 descriptor = "go decl body at zsh_completions.go:42"
-cost_tokens = 12
-cum_tokens = 7295
+cost_tokens = 14
+cum_tokens = 7352
 
 [batches.content]
 kind = "lines"
@@ -5913,8 +5913,8 @@ kind = "full"
 position = 236
 key = 'Go(DeclBody { file: "zsh_completions.go", start_line: 25 })'
 descriptor = "go decl body at zsh_completions.go:25"
-cost_tokens = 13
-cum_tokens = 7308
+cost_tokens = 15
+cum_tokens = 7367
 
 [batches.content]
 kind = "lines"
@@ -5931,8 +5931,8 @@ kind = "full"
 position = 237
 key = 'Go(DeclBody { file: "zsh_completions.go", start_line: 36 })'
 descriptor = "go decl body at zsh_completions.go:36"
-cost_tokens = 13
-cum_tokens = 7321
+cost_tokens = 15
+cum_tokens = 7382
 
 [batches.content]
 kind = "lines"
@@ -5947,28 +5947,10 @@ kind = "full"
 
 [[batches]]
 position = 238
-key = 'Go(DeclDoc { file: "zsh_completions.go", start_line: 25 })'
-descriptor = "go decl doc at zsh_completions.go:25"
-cost_tokens = 18
-cum_tokens = 7339
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "zsh_completions.go"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 239
 key = 'Go(DeclDoc { file: "zsh_completions.go", start_line: 36 })'
 descriptor = "go decl doc at zsh_completions.go:36"
 cost_tokens = 20
-cum_tokens = 7359
+cum_tokens = 7402
 
 [batches.content]
 kind = "lines"
@@ -5982,11 +5964,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 240
+position = 239
 key = 'Go(DeclDoc { file: "zsh_completions.go", start_line: 31 })'
 descriptor = "go decl doc at zsh_completions.go:31"
 cost_tokens = 30
-cum_tokens = 7389
+cum_tokens = 7432
 
 [batches.content]
 kind = "lines"
@@ -6000,11 +5982,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 241
+position = 240
 key = 'Go(DeclDoc { file: "zsh_completions.go", start_line: 42 })'
 descriptor = "go decl doc at zsh_completions.go:42"
 cost_tokens = 32
-cum_tokens = 7421
+cum_tokens = 7464
 
 [batches.content]
 kind = "lines"
@@ -6018,11 +6000,29 @@ end = 41
 kind = "full"
 
 [[batches]]
+position = 241
+key = 'Go(DeclBody { file: "fish_completions.go", start_line: 276 })'
+descriptor = "go decl body at fish_completions.go:276"
+cost_tokens = 45
+cum_tokens = 7509
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 277
+end = 280
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 242
 key = 'Go(DeclBody { file: "args.go", start_line: 42 })'
 descriptor = "go decl body at args.go:42"
-cost_tokens = 48
-cum_tokens = 7469
+cost_tokens = 50
+cum_tokens = 7559
 
 [batches.content]
 kind = "lines"
@@ -6039,8 +6039,8 @@ kind = "full"
 position = 243
 key = 'Go(DeclBody { file: "cobra.go", start_line: 225 })'
 descriptor = "go decl body at cobra.go:225"
-cost_tokens = 47
-cum_tokens = 7516
+cost_tokens = 49
+cum_tokens = 7608
 
 [batches.content]
 kind = "lines"
@@ -6058,7 +6058,7 @@ position = 244
 key = 'Go(DeclNames { file: "shell_completions.go", chunk_index: 0 })'
 descriptor = "go decl names surface in shell_completions.go"
 cost_tokens = 252
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6244,7 +6244,7 @@ position = 245
 key = 'Go(Decl { file: "shell_completions.go", start_line: 24 })'
 descriptor = "go decl at shell_completions.go:24"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6262,7 +6262,7 @@ position = 246
 key = 'Go(Decl { file: "shell_completions.go", start_line: 31 })'
 descriptor = "go decl at shell_completions.go:31"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6280,7 +6280,7 @@ position = 247
 key = 'Go(Decl { file: "shell_completions.go", start_line: 38 })'
 descriptor = "go decl at shell_completions.go:38"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6298,7 +6298,7 @@ position = 248
 key = 'Go(Decl { file: "shell_completions.go", start_line: 44 })'
 descriptor = "go decl at shell_completions.go:44"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6316,7 +6316,7 @@ position = 249
 key = 'Go(Decl { file: "shell_completions.go", start_line: 54 })'
 descriptor = "go decl at shell_completions.go:54"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6334,7 +6334,7 @@ position = 250
 key = 'Go(Decl { file: "shell_completions.go", start_line: 61 })'
 descriptor = "go decl at shell_completions.go:61"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6352,7 +6352,7 @@ position = 251
 key = 'Go(Decl { file: "shell_completions.go", start_line: 67 })'
 descriptor = "go decl at shell_completions.go:67"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6370,7 +6370,7 @@ position = 252
 key = 'Go(Decl { file: "shell_completions.go", start_line: 77 })'
 descriptor = "go decl at shell_completions.go:77"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6388,7 +6388,7 @@ position = 253
 key = 'Go(Decl { file: "shell_completions.go", start_line: 83 })'
 descriptor = "go decl at shell_completions.go:83"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6406,7 +6406,7 @@ position = 254
 key = 'Go(Decl { file: "shell_completions.go", start_line: 90 })'
 descriptor = "go decl at shell_completions.go:90"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6424,7 +6424,7 @@ position = 255
 key = 'Go(Decl { file: "shell_completions.go", start_line: 96 })'
 descriptor = "go decl at shell_completions.go:96"
 cost_tokens = 0
-cum_tokens = 7768
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -6441,8 +6441,8 @@ kind = "full"
 position = 256
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 24 })'
 descriptor = "go decl body at shell_completions.go:24"
-cost_tokens = 11
-cum_tokens = 7779
+cost_tokens = 13
+cum_tokens = 7873
 
 [batches.content]
 kind = "lines"
@@ -6459,8 +6459,8 @@ kind = "full"
 position = 257
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 31 })'
 descriptor = "go decl body at shell_completions.go:31"
-cost_tokens = 12
-cum_tokens = 7791
+cost_tokens = 14
+cum_tokens = 7887
 
 [batches.content]
 kind = "lines"
@@ -6477,8 +6477,8 @@ kind = "full"
 position = 258
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 83 })'
 descriptor = "go decl body at shell_completions.go:83"
-cost_tokens = 12
-cum_tokens = 7803
+cost_tokens = 14
+cum_tokens = 7901
 
 [batches.content]
 kind = "lines"
@@ -6495,8 +6495,8 @@ kind = "full"
 position = 259
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 44 })'
 descriptor = "go decl body at shell_completions.go:44"
-cost_tokens = 13
-cum_tokens = 7816
+cost_tokens = 15
+cum_tokens = 7916
 
 [batches.content]
 kind = "lines"
@@ -6513,8 +6513,8 @@ kind = "full"
 position = 260
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 54 })'
 descriptor = "go decl body at shell_completions.go:54"
-cost_tokens = 13
-cum_tokens = 7829
+cost_tokens = 15
+cum_tokens = 7931
 
 [batches.content]
 kind = "lines"
@@ -6531,8 +6531,8 @@ kind = "full"
 position = 261
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 90 })'
 descriptor = "go decl body at shell_completions.go:90"
-cost_tokens = 13
-cum_tokens = 7842
+cost_tokens = 15
+cum_tokens = 7946
 
 [batches.content]
 kind = "lines"
@@ -6549,8 +6549,8 @@ kind = "full"
 position = 262
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 67 })'
 descriptor = "go decl body at shell_completions.go:67"
-cost_tokens = 15
-cum_tokens = 7857
+cost_tokens = 17
+cum_tokens = 7963
 
 [batches.content]
 kind = "lines"
@@ -6567,8 +6567,8 @@ kind = "full"
 position = 263
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 61 })'
 descriptor = "go decl body at shell_completions.go:61"
-cost_tokens = 14
-cum_tokens = 7871
+cost_tokens = 16
+cum_tokens = 7979
 
 [batches.content]
 kind = "lines"
@@ -6585,8 +6585,8 @@ kind = "full"
 position = 264
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 77 })'
 descriptor = "go decl body at shell_completions.go:77"
-cost_tokens = 17
-cum_tokens = 7888
+cost_tokens = 19
+cum_tokens = 7998
 
 [batches.content]
 kind = "lines"
@@ -6603,8 +6603,8 @@ kind = "full"
 position = 265
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 96 })'
 descriptor = "go decl body at shell_completions.go:96"
-cost_tokens = 18
-cum_tokens = 7906
+cost_tokens = 20
+cum_tokens = 8018
 
 [batches.content]
 kind = "lines"
@@ -6621,8 +6621,8 @@ kind = "full"
 position = 266
 key = 'Go(DeclBody { file: "shell_completions.go", start_line: 38 })'
 descriptor = "go decl body at shell_completions.go:38"
-cost_tokens = 19
-cum_tokens = 7925
+cost_tokens = 21
+cum_tokens = 8039
 
 [batches.content]
 kind = "lines"
@@ -6640,7 +6640,7 @@ position = 267
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 96 })'
 descriptor = "go decl doc at shell_completions.go:96"
 cost_tokens = 34
-cum_tokens = 7959
+cum_tokens = 8073
 
 [batches.content]
 kind = "lines"
@@ -6658,7 +6658,7 @@ position = 268
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 67 })'
 descriptor = "go decl doc at shell_completions.go:67"
 cost_tokens = 35
-cum_tokens = 7994
+cum_tokens = 8108
 
 [batches.content]
 kind = "lines"
@@ -6676,7 +6676,7 @@ position = 269
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 83 })'
 descriptor = "go decl doc at shell_completions.go:83"
 cost_tokens = 34
-cum_tokens = 8028
+cum_tokens = 8142
 
 [batches.content]
 kind = "lines"
@@ -6694,7 +6694,7 @@ position = 270
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 44 })'
 descriptor = "go decl doc at shell_completions.go:44"
 cost_tokens = 35
-cum_tokens = 8063
+cum_tokens = 8177
 
 [batches.content]
 kind = "lines"
@@ -6712,7 +6712,7 @@ position = 271
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 90 })'
 descriptor = "go decl doc at shell_completions.go:90"
 cost_tokens = 42
-cum_tokens = 8105
+cum_tokens = 8219
 
 [batches.content]
 kind = "lines"
@@ -6730,7 +6730,7 @@ position = 272
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 61 })'
 descriptor = "go decl doc at shell_completions.go:61"
 cost_tokens = 43
-cum_tokens = 8148
+cum_tokens = 8262
 
 [batches.content]
 kind = "lines"
@@ -6748,7 +6748,7 @@ position = 273
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 38 })'
 descriptor = "go decl doc at shell_completions.go:38"
 cost_tokens = 49
-cum_tokens = 8197
+cum_tokens = 8311
 
 [batches.content]
 kind = "lines"
@@ -6765,8 +6765,8 @@ kind = "full"
 position = 274
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 24 })'
 descriptor = "go decl doc at shell_completions.go:24"
-cost_tokens = 49
-cum_tokens = 8246
+cost_tokens = 47
+cum_tokens = 8358
 
 [batches.content]
 kind = "lines"
@@ -6784,7 +6784,7 @@ position = 275
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 31 })'
 descriptor = "go decl doc at shell_completions.go:31"
 cost_tokens = 51
-cum_tokens = 8297
+cum_tokens = 8409
 
 [batches.content]
 kind = "lines"
@@ -6802,7 +6802,7 @@ position = 276
 key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 55 })'
 descriptor = "go struct field group at command.go:54 group 55"
 cost_tokens = 203
-cum_tokens = 8500
+cum_tokens = 8612
 
 [batches.content]
 kind = "lines"
@@ -6817,10 +6817,28 @@ kind = "full"
 
 [[batches]]
 position = 277
+key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 129 })'
+descriptor = "go struct field group at command.go:54 group 129"
+cost_tokens = 204
+cum_tokens = 8816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 129
+end = 140
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 278
 key = 'Go(DeclDoc { file: "active_help.go", start_line: 47 })'
 descriptor = "go decl doc at active_help.go:47"
 cost_tokens = 96
-cum_tokens = 8596
+cum_tokens = 8912
 
 [batches.content]
 kind = "lines"
@@ -6834,11 +6852,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 278
+position = 279
 key = 'Go(DeclNames { file: "doc/util.go", chunk_index: 0 })'
 descriptor = "go decl names surface in doc/util.go"
 cost_tokens = 128
-cum_tokens = 8724
+cum_tokens = 9040
 
 [batches.content]
 kind = "lines"
@@ -6900,11 +6918,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 279
+position = 280
 key = 'Go(Decl { file: "doc/util.go", start_line: 26 })'
 descriptor = "go decl at doc/util.go:26"
 cost_tokens = 0
-cum_tokens = 8724
+cum_tokens = 9040
 
 [batches.content]
 kind = "lines"
@@ -6918,11 +6936,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 280
+position = 281
 key = 'Go(Decl { file: "doc/util.go", start_line: 41 })'
 descriptor = "go decl at doc/util.go:41"
 cost_tokens = 0
-cum_tokens = 8724
+cum_tokens = 9040
 
 [batches.content]
 kind = "lines"
@@ -6936,29 +6954,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 281
-key = 'Go(StructFieldGroup { file: "command.go", start_line: 54, group_start_line: 129 })'
-descriptor = "go struct field group at command.go:54 group 129"
-cost_tokens = 206
-cum_tokens = 8930
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 129
-end = 140
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 282
 key = 'Go(DeclDoc { file: "shell_completions.go", start_line: 77 })'
 descriptor = "go decl doc at shell_completions.go:77"
 cost_tokens = 97
-cum_tokens = 9027
+cum_tokens = 9137
 
 [batches.content]
 kind = "lines"
@@ -6976,7 +6976,7 @@ position = 283
 key = 'Markdown(HeadingsOutline { file: "site/content/completions/zsh.md" })'
 descriptor = "headings outline in site/content/completions/zsh.md"
 cost_tokens = 53
-cum_tokens = 9080
+cum_tokens = 9190
 
 [batches.content]
 kind = "lines"
@@ -7047,78 +7047,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 284
-key = 'Go(PackageImports { file: "bash_completions.go" })'
-descriptor = "go package + imports in bash_completions.go"
-cost_tokens = 74
-cum_tokens = 9154
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bash_completions.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bash_completions.go"
-start = 17
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bash_completions.go"
-start = 25
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 285
-key = 'Go(PackageImports { file: "completions.go" })'
-descriptor = "go package + imports in completions.go"
-cost_tokens = 74
-cum_tokens = 9228
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "completions.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "completions.go"
-start = 17
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "completions.go"
-start = 25
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 286
 key = 'Go(DeclNames { file: "command.go", chunk_index: 2 })'
 descriptor = "go decl names surface #2 in command.go"
 cost_tokens = 174
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7252,11 +7184,11 @@ end = 399
 kind = "ellipsis"
 
 [[batches]]
-position = 287
+position = 285
 key = 'Go(Decl { file: "command.go", start_line: 343 })'
 descriptor = "go decl at command.go:343"
 cost_tokens = 0
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7270,11 +7202,11 @@ end = 343
 kind = "full"
 
 [[batches]]
-position = 288
+position = 286
 key = 'Go(Decl { file: "command.go", start_line: 352 })'
 descriptor = "go decl at command.go:352"
 cost_tokens = 0
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7288,11 +7220,11 @@ end = 352
 kind = "full"
 
 [[batches]]
-position = 289
+position = 287
 key = 'Go(Decl { file: "command.go", start_line: 358 })'
 descriptor = "go decl at command.go:358"
 cost_tokens = 0
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7306,11 +7238,11 @@ end = 358
 kind = "full"
 
 [[batches]]
-position = 290
+position = 288
 key = 'Go(Decl { file: "command.go", start_line: 367 })'
 descriptor = "go decl at command.go:367"
 cost_tokens = 0
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7324,11 +7256,11 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 291
+position = 289
 key = 'Go(Decl { file: "command.go", start_line: 376 })'
 descriptor = "go decl at command.go:376"
 cost_tokens = 0
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7342,11 +7274,11 @@ end = 376
 kind = "full"
 
 [[batches]]
-position = 292
+position = 290
 key = 'Go(Decl { file: "command.go", start_line: 382 })'
 descriptor = "go decl at command.go:382"
 cost_tokens = 0
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7360,11 +7292,11 @@ end = 382
 kind = "full"
 
 [[batches]]
-position = 293
+position = 291
 key = 'Go(Decl { file: "command.go", start_line: 393 })'
 descriptor = "go decl at command.go:393"
 cost_tokens = 0
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7378,11 +7310,11 @@ end = 393
 kind = "full"
 
 [[batches]]
-position = 294
+position = 292
 key = 'Go(Decl { file: "command.go", start_line: 398 })'
 descriptor = "go decl at command.go:398"
 cost_tokens = 0
-cum_tokens = 9402
+cum_tokens = 9364
 
 [batches.content]
 kind = "lines"
@@ -7396,11 +7328,11 @@ end = 398
 kind = "full"
 
 [[batches]]
-position = 295
+position = 293
 key = 'Go(DeclBody { file: "command.go", start_line: 376 })'
 descriptor = "go decl body at command.go:376"
-cost_tokens = 8
-cum_tokens = 9410
+cost_tokens = 10
+cum_tokens = 9374
 
 [batches.content]
 kind = "lines"
@@ -7414,11 +7346,47 @@ end = 377
 kind = "full"
 
 [[batches]]
+position = 294
+key = 'Go(DeclDoc { file: "command.go", start_line: 393 })'
+descriptor = "go decl doc at command.go:393"
+cost_tokens = 14
+cum_tokens = 9388
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 392
+end = 392
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 295
+key = 'Go(DeclDoc { file: "command.go", start_line: 398 })'
+descriptor = "go decl doc at command.go:398"
+cost_tokens = 14
+cum_tokens = 9402
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 397
+end = 397
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 296
 key = 'Go(DeclBody { file: "command.go", start_line: 393 })'
 descriptor = "go decl body at command.go:393"
-cost_tokens = 10
-cum_tokens = 9420
+cost_tokens = 12
+cum_tokens = 9414
 
 [batches.content]
 kind = "lines"
@@ -7435,8 +7403,8 @@ kind = "full"
 position = 297
 key = 'Go(DeclBody { file: "command.go", start_line: 398 })'
 descriptor = "go decl body at command.go:398"
-cost_tokens = 10
-cum_tokens = 9430
+cost_tokens = 12
+cum_tokens = 9426
 
 [batches.content]
 kind = "lines"
@@ -7451,46 +7419,10 @@ kind = "full"
 
 [[batches]]
 position = 298
-key = 'Go(DeclDoc { file: "command.go", start_line: 393 })'
-descriptor = "go decl doc at command.go:393"
-cost_tokens = 14
-cum_tokens = 9444
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 392
-end = 392
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 299
-key = 'Go(DeclDoc { file: "command.go", start_line: 398 })'
-descriptor = "go decl doc at command.go:398"
-cost_tokens = 14
-cum_tokens = 9458
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "command.go"
-start = 397
-end = 397
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 300
 key = 'Go(DeclDoc { file: "command.go", start_line: 343 })'
 descriptor = "go decl doc at command.go:343"
 cost_tokens = 19
-cum_tokens = 9477
+cum_tokens = 9445
 
 [batches.content]
 kind = "lines"
@@ -7504,11 +7436,11 @@ end = 342
 kind = "full"
 
 [[batches]]
-position = 301
+position = 299
 key = 'Go(DeclDoc { file: "command.go", start_line: 352 })'
 descriptor = "go decl doc at command.go:352"
 cost_tokens = 19
-cum_tokens = 9496
+cum_tokens = 9464
 
 [batches.content]
 kind = "lines"
@@ -7522,11 +7454,11 @@ end = 351
 kind = "full"
 
 [[batches]]
-position = 302
+position = 300
 key = 'Go(DeclDoc { file: "command.go", start_line: 358 })'
 descriptor = "go decl doc at command.go:358"
 cost_tokens = 24
-cum_tokens = 9520
+cum_tokens = 9488
 
 [batches.content]
 kind = "lines"
@@ -7540,11 +7472,11 @@ end = 357
 kind = "full"
 
 [[batches]]
-position = 303
+position = 301
 key = 'Go(DeclDoc { file: "command.go", start_line: 367 })'
 descriptor = "go decl doc at command.go:367"
 cost_tokens = 24
-cum_tokens = 9544
+cum_tokens = 9512
 
 [batches.content]
 kind = "lines"
@@ -7558,11 +7490,11 @@ end = 366
 kind = "full"
 
 [[batches]]
-position = 304
+position = 302
 key = 'Go(DeclDoc { file: "command.go", start_line: 376 })'
 descriptor = "go decl doc at command.go:376"
 cost_tokens = 25
-cum_tokens = 9569
+cum_tokens = 9537
 
 [batches.content]
 kind = "lines"
@@ -7576,11 +7508,11 @@ end = 375
 kind = "full"
 
 [[batches]]
-position = 305
+position = 303
 key = 'Go(DeclDoc { file: "command.go", start_line: 382 })'
 descriptor = "go decl doc at command.go:382"
 cost_tokens = 39
-cum_tokens = 9608
+cum_tokens = 9576
 
 [batches.content]
 kind = "lines"
@@ -7594,11 +7526,11 @@ end = 381
 kind = "full"
 
 [[batches]]
-position = 306
+position = 304
 key = 'Go(DeclBody { file: "command.go", start_line: 352 })'
 descriptor = "go decl body at command.go:352"
-cost_tokens = 35
-cum_tokens = 9643
+cost_tokens = 37
+cum_tokens = 9613
 
 [batches.content]
 kind = "lines"
@@ -7612,11 +7544,11 @@ end = 354
 kind = "full"
 
 [[batches]]
-position = 307
+position = 305
 key = 'Go(DeclBody { file: "command.go", start_line: 358 })'
 descriptor = "go decl body at command.go:358"
-cost_tokens = 42
-cum_tokens = 9685
+cost_tokens = 44
+cum_tokens = 9657
 
 [batches.content]
 kind = "lines"
@@ -7630,11 +7562,11 @@ end = 363
 kind = "full"
 
 [[batches]]
-position = 308
+position = 306
 key = 'Go(DeclBody { file: "command.go", start_line: 367 })'
 descriptor = "go decl body at command.go:367"
-cost_tokens = 42
-cum_tokens = 9727
+cost_tokens = 44
+cum_tokens = 9701
 
 [batches.content]
 kind = "lines"
@@ -7648,11 +7580,11 @@ end = 372
 kind = "full"
 
 [[batches]]
-position = 309
+position = 307
 key = 'Go(DeclBody { file: "command.go", start_line: 343 })'
 descriptor = "go decl body at command.go:343"
-cost_tokens = 64
-cum_tokens = 9791
+cost_tokens = 66
+cum_tokens = 9767
 
 [batches.content]
 kind = "lines"
@@ -7666,11 +7598,11 @@ end = 348
 kind = "full"
 
 [[batches]]
-position = 310
+position = 308
 key = 'Go(DeclBody { file: "command.go", start_line: 382 })'
 descriptor = "go decl body at command.go:382"
-cost_tokens = 64
-cum_tokens = 9855
+cost_tokens = 66
+cum_tokens = 9833
 
 [batches.content]
 kind = "lines"
@@ -7692,11 +7624,11 @@ end = 389
 kind = "full"
 
 [[batches]]
-position = 311
+position = 309
 key = 'Go(DeclNames { file: "doc/md_docs.go", chunk_index: 0 })'
 descriptor = "go decl names surface in doc/md_docs.go"
 cost_tokens = 137
-cum_tokens = 9992
+cum_tokens = 9970
 
 [batches.content]
 kind = "lines"
@@ -7798,11 +7730,11 @@ end = 134
 kind = "ellipsis"
 
 [[batches]]
-position = 312
+position = 310
 key = 'Go(Decl { file: "doc/md_docs.go", start_line: 32 })'
 descriptor = "go decl at doc/md_docs.go:32"
 cost_tokens = 0
-cum_tokens = 9992
+cum_tokens = 9970
 
 [batches.content]
 kind = "lines"
@@ -7816,11 +7748,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 313
+position = 311
 key = 'Go(Decl { file: "doc/md_docs.go", start_line: 52 })'
 descriptor = "go decl at doc/md_docs.go:52"
 cost_tokens = 0
-cum_tokens = 9992
+cum_tokens = 9970
 
 [batches.content]
 kind = "lines"
@@ -7834,11 +7766,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 314
+position = 312
 key = 'Go(Decl { file: "doc/md_docs.go", start_line: 57 })'
 descriptor = "go decl at doc/md_docs.go:57"
 cost_tokens = 0
-cum_tokens = 9992
+cum_tokens = 9970
 
 [batches.content]
 kind = "lines"
@@ -7852,11 +7784,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 315
+position = 313
 key = 'Go(Decl { file: "doc/md_docs.go", start_line: 125 })'
 descriptor = "go decl at doc/md_docs.go:125"
 cost_tokens = 0
-cum_tokens = 9992
+cum_tokens = 9970
 
 [batches.content]
 kind = "lines"
@@ -7870,11 +7802,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 316
+position = 314
 key = 'Go(Decl { file: "doc/md_docs.go", start_line: 133 })'
 descriptor = "go decl at doc/md_docs.go:133"
 cost_tokens = 0
-cum_tokens = 9992
+cum_tokens = 9970
 
 [batches.content]
 kind = "lines"
@@ -7883,6 +7815,42 @@ kind = "lines"
 path = "doc/md_docs.go"
 start = 133
 end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 315
+key = 'Go(DeclDoc { file: "doc/md_docs.go", start_line: 52 })'
+descriptor = "go decl doc at doc/md_docs.go:52"
+cost_tokens = 11
+cum_tokens = 9981
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "doc/md_docs.go"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 316
+key = 'Go(DeclDoc { file: "doc/md_docs.go", start_line: 57 })'
+descriptor = "go decl doc at doc/md_docs.go:57"
+cost_tokens = 13
+cum_tokens = 9994
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "doc/md_docs.go"
+start = 56
+end = 56
 
 [batches.content.spans.render]
 kind = "full"

@@ -17,21 +17,17 @@ COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
 CONTRIBUTORS.md
     1→# Contributors
-    …
     3→Thank you to all the wonderful people who have contributed to axios!
     5→## Core Team
     …
     11→## Notable Contributors
-    …
     13→<!-- Add contributors here in alphabetical order by GitHub username -->
     15→## How to Contribute
     …
 ECOSYSTEM.md
     1→# Ecosystem
-    …
     3→This is a list of axios related libraries and resources. If you have a suggestion on what to add, please don't hesitate to submit a PR.
     5→## Libraries
-    …
     7→### General
     …
     23→### API clients
@@ -51,14 +47,16 @@ docs/
 eslint.config.js
 examples/
 gulpfile.js
+    …
     79→export { env, clear, version, packageJSON };
 index.d.cts
 index.d.ts
-    4→export type AxiosHeaderValue = AxiosHeaders | string | string[] | number | boolean | null;
     …
+    4→export type AxiosHeaderValue = AxiosHeaders | string | string[] | number | boolean | null;
     6→export interface RawAxiosHeaders {
     7→  [key: string]: AxiosHeaderValue;
     8→}
+    …
     23→export class AxiosHeaders {
     …
     112→export type RawAxiosRequestHeaders = Partial<
@@ -66,9 +64,7 @@ index.d.ts
     120→export type AxiosRequestHeaders = RawAxiosRequestHeaders & AxiosHeaders;
     …
     137→export type RawAxiosResponseHeaders = Partial<RawAxiosHeaders & RawCommonResponseHeaders>;
-    …
     139→export type AxiosResponseHeaders = RawAxiosResponseHeaders & AxiosHeaders;
-    …
     141→export interface AxiosRequestTransformer {
     …
     145→export interface AxiosResponseTransformer {
@@ -85,7 +81,6 @@ index.d.ts
     170→export enum HttpStatusCode {
     …
     249→export type Method = (UppercaseMethod | Lowercase<UppercaseMethod>) & {};
-    …
     251→export type ResponseType =
     …
     274→export type responseEncoding = (
@@ -101,7 +96,6 @@ index.d.ts
     309→export interface SerializerOptions {
     …
     317→export interface FormSerializerOptions extends SerializerOptions {}
-    …
     319→export interface ParamEncoder {
     …
     323→export interface CustomParamsSerializer {
@@ -111,11 +105,9 @@ index.d.ts
     338→export interface AxiosProgressEvent {
     …
     357→export type AddressFamily = 4 | 6 | undefined;
-    …
     359→export interface LookupAddressEntry {
     …
     364→export type LookupAddress = string | LookupAddressEntry;
-    …
     366→export interface AxiosRequestConfig<D = any> {
     367→  url?: string;
     368→  method?: StringLiteralsOrString<Method>;
@@ -170,8 +162,8 @@ index.d.ts
     …
     450→  formDataHeaderPolicy?: 'legacy' | 'content-only';
     451→  redact?: string[];
-    455→export type RawAxiosRequestConfig<D = any> = AxiosRequestConfig<D>;
     …
+    455→export type RawAxiosRequestConfig<D = any> = AxiosRequestConfig<D>;
     457→export interface InternalAxiosRequestConfig<D = any> extends AxiosRequestConfig<D> {
     458→  headers: AxiosRequestHeaders;
     459→}
@@ -188,6 +180,7 @@ index.d.ts
     471→  link?: RawAxiosRequestHeaders;
     472→  unlink?: RawAxiosRequestHeaders;
     473→  query?: RawAxiosRequestHeaders;
+    …
     476→export interface AxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
     477→  headers: HeadersDefaults;
     478→}
@@ -199,8 +192,8 @@ index.d.ts
     …
     535→export class CanceledError<T> extends AxiosError<T> {
     536→  readonly name: 'CanceledError';
-    539→export type AxiosPromise<T = any> = Promise<AxiosResponse<T>>;
     …
+    539→export type AxiosPromise<T = any> = Promise<AxiosResponse<T>>;
     541→export interface CancelStatic {
     542→  new (message?: string): Cancel;
     543→}
@@ -223,6 +216,7 @@ index.d.ts
     …
 index.js
     1→import axios from './lib/axios.js';
+    …
     26→export {
     27→  axios as default,
     28→  create,
@@ -248,11 +242,13 @@ lib/
         README.md
             1→# axios // adapters
             3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
+            …
         adapters.js
         fetch.js
         http.js
         xhr.js
     axios.js
+        …
         89→export default axios;
     cancel/
         CancelToken.js
@@ -277,6 +273,7 @@ lib/
         transformData.js
     defaults/
         index.js
+            …
             177→export default defaults;
         transitional.js
     env/
@@ -332,10 +329,12 @@ lib/
                 FormData.js
                 URLSearchParams.js
             index.js
+                …
                 5→export default {
                 …
         common/
         index.js
+            …
             4→export default {
             5→  ...utils,
             6→  ...platform,
@@ -343,18 +342,24 @@ lib/
         node/
             classes/
             index.js
+                …
                 27→export default {
                 …
     utils.js
+        …
         872→export default {
         …
 package-lock.json
 package.json
+    …
     2→  "name": "axios",
     3→  "version": "1.16.1",
     4→  "description": "Promise based HTTP client for the browser and node.js",
+    …
     7→  "type": "module",
+    …
     95→  "license": "MIT",
+    …
 rollup.config.js
 sandbox/
     client.html

@@ -6,13 +6,13 @@ expression: rendered
 .pre-commit-config.yaml
 LICENSE
 README.md
+    …
     3→# Swarm (experimental, educational)
     5→> [!IMPORTANT]
     6→> Swarm is now replaced by the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), which is a production-ready evolution of Swarm. The Agents SDK features key improvements and will be actively maintained by the OpenAI team.
     7→>
     8→> We recommend migrating to the Agents SDK for all production use cases.
     10→## Install
-    …
     12→Requires Python 3.10+
     14→```shell
     15→pip install git+ssh://git@github.com/openai/swarm.git
@@ -22,7 +22,6 @@ README.md
     21→pip install git+https://github.com/openai/swarm.git
     22→```
     24→## Usage
-    …
     26→```python
     27→from swarm import Swarm, Agent
     29→client = Swarm()
@@ -49,7 +48,6 @@ README.md
     57→What can I assist?
     58→```
     60→## Table of Contents
-    …
     62→- [Overview](#overview)
     63→- [Examples](#examples)
     64→- [Documentation](#documentation)
@@ -86,10 +84,8 @@ README.md
     321→## Streaming
     …
     336→# Evaluations
-    …
     338→Evaluations are crucial to any project, and we encourage developers to bring their own eval suites to test the performance of their swarms. For reference, we have some examples for how to eval swarm in the `airline`, `weather_agent` and `triage_agent` quickstart examples. See the READMEs for more details.
     340→# Utils
-    …
     342→Use the `run_demo_loop` to test out your swarm! This will run a REPL on your command line. Supports streaming.
     344→```python
     345→from swarm.repl import run_demo_loop
@@ -229,6 +225,7 @@ swarm/
         2→from .types import Agent, Response
         4→__all__ = ["Swarm", "Agent", "Response"]
     core.py
+        …
         26→class Swarm:
         27→    def __init__(self, client=None):
         28→        if not client:
@@ -243,6 +240,7 @@ swarm/
         38→        stream: bool,
         39→        debug: bool,
         40→    ) -> ChatCompletionMessage:
+        …
         71→    def handle_function_result(self, result, debug) -> Result:
         …
         89→    def handle_tool_calls(
@@ -252,6 +250,7 @@ swarm/
         93→        context_variables: dict,
         94→        debug: bool,
         95→    ) -> Response:
+        …
         139→    def run_and_stream(
         140→        self,
         141→        agent: Agent,
@@ -262,6 +261,7 @@ swarm/
         146→        max_turns: int = float("inf"),
         147→        execute_tools: bool = True,
         148→    ):
+        …
         231→    def run(
         232→        self,
         233→        agent: Agent,
@@ -273,6 +273,7 @@ swarm/
         239→        max_turns: int = float("inf"),
         240→        execute_tools: bool = True,
         241→    ) -> Response:
+        …
     repl/
         __init__.py
             1→from .repl import run_demo_loop
@@ -286,6 +287,7 @@ swarm/
             60→def run_demo_loop(
             61→    starting_agent, context_variables=None, stream=False, debug=False
             62→) -> None:
+            …
     types.py
         1→from openai.types.chat import ChatCompletionMessage
         2→from openai.types.chat.chat_completion_message_tool_call import (
@@ -293,6 +295,7 @@ swarm/
         4→    Function,
         5→)
         6→from typing import List, Callable, Union, Optional
+        …
         9→from pydantic import BaseModel
         11→AgentFunction = Callable[[], Union[str, "Agent", dict]]
         14→class Agent(BaseModel):
@@ -340,6 +343,7 @@ swarm/
         40→    Returns:
         41→        A dictionary representing the function's signature in JSON format.
         42→    """
+        …
 tests/
     __init__.py
     mock_client.py

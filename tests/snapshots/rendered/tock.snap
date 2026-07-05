@@ -11,6 +11,7 @@ LICENSE
 Makefile
 README.md
     1→# Tock
+    …
     5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
     6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
     8→## Features
@@ -25,9 +26,11 @@ README.md
     21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
     22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
     24→<hr clear="right"/>
+    …
     602→## Update Check
     604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
     606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
+    …
     709→## Inspiration
     711→Tock is inspired by and compatible with [Bartib](https://github.com/nikolassv/bartib) - an excellent time tracking tool written in Rust by Nikolas Schmidt-Voigt. It's saved me countless hours and helped me stay organized, so I wanted to create a similar tool in Go with a clean architecture approach and an interactive terminal UI.
     713→## License
@@ -46,37 +49,36 @@ cmd/
             5→)
             7→func main() {
             8→	cli.Execute()
+            …
 demo/
 docs/
     commands.md
         1→# Commands Reference
         …
         23→## Core Commands
-        …
         25→### `start`
-        …
         27→Start a new activity.
+        …
         55→---
         57→### `stop` (alias: `s`)
-        …
         59→Stop the current activity.
+        …
         84→---
         86→### `add`
-        …
         88→Add a completed activity manually.
+        …
         116→---
         118→### `remove` (alias: `rm`)
-        …
         120→Remove an activity.
+        …
         141→---
         143→### `continue` (alias: `c`)
         …
         186→---
         188→## Viewing & Reporting
-        …
         190→### `calendar`
-        …
         192→Open the comprehensive interactive dashboard.
+        …
         215→---
         217→### `list` (alias: `ls`)
         …
@@ -108,6 +110,7 @@ go.mod
     16→	gopkg.in/yaml.v3 v3.0.1
     17→)
     19→require (
+    …
     52→)
 go.sum
 install.sh
@@ -119,6 +122,7 @@ internal/
             calendar.go
             calendar_sidebar.go
             continue.go
+                …
                 15→const (
                 16→	defaultRecentActivitiesForContinuation = 10
                 17→)
@@ -126,9 +130,9 @@ internal/
                 20→func NewContinueCmd() *cobra.Command {
                 …
             current.go
+                …
                 19→type currentCmdActivity struct {
-                20→	models.Activity
-                21→}
+                …
                 23→func (a currentCmdActivity) Duration() time.Duration {
                 …
                 27→func (a currentCmdActivity) DurationHMS() string {
@@ -138,10 +142,9 @@ internal/
             ical.go
             interactive.go
             last.go
+                …
                 16→type lastOptions struct {
-                17→	Limit      int
-                18→	JSONOutput bool
-                19→}
+                …
                 21→func NewLastCmd() *cobra.Command {
                 …
                 42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
@@ -149,6 +152,7 @@ internal/
             list_gui.go
             remove.go
             report.go
+                …
                 20→type reportOptions struct {
                 …
                 31→func NewReportCmd() *cobra.Command {
@@ -157,14 +161,17 @@ internal/
                 …
             root.go
             start.go
+                …
                 16→//nolint:gocognit,funlen // Include all logic in one function
                 17→func NewStartCmd() *cobra.Command {
                 …
             stop.go
+                …
                 14→func NewStopCmd() *cobra.Command {
                 …
             theme.go
             update.go
+                …
                 17→type githubRelease struct {
                 …
                 22→func checkUpdate() (githubRelease, error) {
@@ -172,6 +179,7 @@ internal/
                 45→func runUpdateCheck(cmd *cobra.Command) {
                 …
             version.go
+                …
                 10→var (
                 11→	version = "dev"
                 12→	commit  = "none"
@@ -190,6 +198,7 @@ internal/
             timewarrior/
     config/
         config.go
+            …
             12→type Config struct {
             …
             25→type CalendarConfig struct {
@@ -214,25 +223,28 @@ internal/
             49→type ThemeConfig struct {
             …
             60→type Option func(*viper.Viper)
-            …
             62→func WithConfigPath(path string) Option {
             63→	return func(v *viper.Viper) {
             64→		v.AddConfigPath(path)
             65→	}
+            …
             68→func WithConfigName(name string) Option {
             69→	return func(v *viper.Viper) {
             70→		v.SetConfigName(name)
             71→	}
+            …
             74→func WithConfigFile(file string) Option {
             75→	return func(v *viper.Viper) {
             76→		v.SetConfigFile(file)
             77→	}
+            …
             80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
             …
         config_test.go
     core/
         dto/
             activity_dto.go
+                …
                 9→type StartActivityRequest struct {
                 10→	Description string
                 11→	Project     string
@@ -282,10 +294,12 @@ internal/
                 10→)
         models/
             activity.go
+                …
                 10→type Activity struct {
                 …
                 19→func (a Activity) ID() string {
                 20→	return a.StartTime.Format("150405")
+                …
                 23→func (a Activity) Duration() time.Duration {
                 …
                 30→// DurationString returns the duration formatted as "HH:MM:SS".
@@ -296,6 +310,7 @@ internal/
         ports/
             mocks/
             ports.go
+                …
                 11→type ActivityResolver interface {
                 …
                 22→type ActivityRepository interface {
@@ -306,6 +321,7 @@ internal/
                 32→}
     extra/
         extra.go
+            …
             11→func CalculateEndTime(tf *timeutil.Formatter, startTime time.Time, endStr, durationStr string) (time.Time, error) {
             …
         extra_test.go
@@ -313,10 +329,12 @@ internal/
         activity/
         ics/
             generator.go
+                …
                 11→// Generate returns a full iCalendar string for a single activity.
                 12→func Generate(act models.Activity, uidKey string) string {
                 13→	event := GenerateEvent(act, uidKey)
                 14→	return WrapCalendar(event)
+                …
                 17→// WrapCalendar wraps the given event(s) string in a VCALENDAR block.
                 18→func WrapCalendar(eventsBody string) string {
                 …

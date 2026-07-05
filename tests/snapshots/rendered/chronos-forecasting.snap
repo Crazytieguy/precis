@@ -11,6 +11,7 @@ CONTRIBUTING.md
 LICENSE
 NOTICE
 README.md
+    …
     3→# Chronos: Pretrained Models for Time Series Forecasting
     5→[![preprint](https://img.shields.io/static/v1?label=Chronos-Paper&message=2403.07815&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2403.07815)
     6→[![preprint](https://img.shields.io/static/v1?label=Chronos-2-Report&message=2510.15821&color=B31B1B&logo=arXiv)](https://arxiv.org/abs/2510.15821)
@@ -24,6 +25,7 @@ README.md
     17→## 🚀 News
     …
     20→- **12 Dec 2024**: 📊 We released [`fev`](https://github.com/autogluon/fev), a lightweight package for benchmarking time series forecasting models based on the [Hugging Face `datasets`](https://huggingface.co/docs/datasets/en/index) library.
+    …
     22→- **13 Mar 2024**: 🚀 Chronos [paper](https://arxiv.org/abs/2403.07815) and inference code released.
     24→## ✨ Introduction
     …
@@ -39,10 +41,8 @@ README.md
     130→## 📝 Citation
     …
     153→## 🛡️ Security
-    …
     155→See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
     157→## 📃 License
-    …
     159→This project is licensed under the Apache-2.0 License.
 ci/
     evaluate/
@@ -52,8 +52,10 @@ notebooks/
 pyproject.toml
     1→[project]
     2→name = "chronos-forecasting"
+    …
     12→description = "Chronos: Pretrained models for time series forecasting"
     13→readme = "README.md"
+    …
     15→requires-python = ">=3.10"
     16→dependencies = [
     17→  "torch>=2.2,<3",
@@ -63,9 +65,9 @@ pyproject.toml
     21→  "einops>=0.7.0,<1",
     22→  "scikit-learn>=1.6.0,<2",
     23→]
+    …
 scripts/
     README.md
-        1→# Usage Examples
     evaluation/
     kernel-synth.py
     training/
@@ -103,6 +105,7 @@ src/
             29→    "Chronos2Pipeline",
             30→]
         base.py
+            …
             27→class ForecastType(Enum):
             28→    SAMPLES = "samples"
             29→    QUANTILES = "quantiles"
@@ -110,6 +113,7 @@ src/
             33→    REGISTRY: Dict[str, "PipelineRegistry"] = {}
             35→    def __new__(cls, name, bases, attrs):
             36→        """See, https://github.com/faif/python-patterns."""
+            …
             44→class BaseChronosPipeline(metaclass=PipelineRegistry):
             45→    forecast_type: ForecastType
             46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
@@ -120,6 +124,7 @@ src/
             52→        inner_model : PreTrainedModel
             53→            A hugging-face transformers PreTrainedModel, e.g., T5ForConditionalGeneration
             54→        """
+            …
             58→    @property
             59→    def model_context_length(self) -> int:
             60→        raise NotImplementedError()
@@ -138,6 +143,7 @@ src/
             104→        quantile_levels: List[float] = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
             105→        **kwargs,
             106→    ) -> Tuple[torch.Tensor, torch.Tensor]:
+            …
             133→        raise NotImplementedError()
             135→    def predict_df(
             136→        self,
@@ -152,9 +158,11 @@ src/
             145→        freq: str | None = None,
             146→        **predict_kwargs,
             147→    ) -> "pd.DataFrame":
+            …
             252→    def predict_fev(
             253→        self, task: "fev.Task", batch_size: int = 32, **kwargs
             254→    ) -> tuple[list["datasets.DatasetDict"], float]:
+            …
             336→    @classmethod
             337→    def from_pretrained(
             338→        cls,
@@ -167,6 +175,7 @@ src/
             345→        Load the model, either from a local path, S3 prefix, or from the HuggingFace Hub.
             346→        Supports the same arguments as ``AutoConfig`` and ``AutoModel`` from ``transformers``.
             347→        """
+            …
         boto_utils.py
         chronos.py
         chronos2/
@@ -180,23 +189,29 @@ src/
                 9→from .dataset import Chronos2Dataset
                 11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
             config.py
+                …
                 12→class Chronos2CoreConfig(PretrainedConfig):
                 13→    """
                 14→    HF transformers-style pretrained model config for Chronos-2.0, based on T5Config.
+                …
                 54→    def __init__(
                 …
                 102→@dataclass
                 103→class Chronos2ForecastingConfig:
+                …
                 114→    @classmethod
                 115→    def editable_fields(cls) -> list[str]:
+                …
             dataset.py
             layers.py
             model.py
             pipeline.py
+                …
                 36→logger = logging.getLogger(__name__)
                 39→class Chronos2Pipeline(BaseChronosPipeline):
                 40→    forecast_type: ForecastType = ForecastType.QUANTILES
                 41→    default_context_length: int = 2048
+                …
             trainer.py
         chronos_bolt.py
         df_utils.py

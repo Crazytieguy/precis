@@ -11,19 +11,20 @@ Dockerfile
 Dockerfile.rootless
 LICENSE
 README.md
+    …
     9→<h1 align="center">
     10→  Enclosed - Send private and secure notes
     11→</h1>
     12→<p align="center">
     13→  Minimalistic web application designed for sending end-to-end encrypted notes and files.
     14→</p>
+    …
     26→## Introduction
     28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
     30→All notes are end-to-end encrypted, ensuring that the server and storage have zero knowledge of the content. Users can set a password, define an expiration period (TTL), and choose to have the note self-destruct after being read.
     32→A live instance is available at [enclosed.cc](https://enclosed.cc).
     34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
     36→## Features
-    …
     38→- **End-to-End Encryption**: Your notes are encrypted on the client side, using AES-GCM with a 256-bit key derived using PBKDF2.
     39→- **File Attachments**: Share files securely with your notes.
     40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
@@ -36,8 +37,8 @@ README.md
     47→- **Open Source**: The source code is available under the Apache 2.0 License.
     48→- **Self-Hostable**: Run your instance of Enclosed for private note sharing.
     49→- **CLI**: A command-line interface for creating notes from the terminal.
-    52→## Self host
     …
+    52→## Self host
     54→### Try it with Docker
     …
     62→### To go further
@@ -47,7 +48,6 @@ README.md
     75→## How It Works
     …
     93→## CLI
-    …
     95→The Enclosed CLI allows you to create notes from the terminal. You can install it globally using npm, yarn, or pnpm.
     97→### Installation
     …
@@ -62,7 +62,6 @@ README.md
     150→## Contributing
     …
     155→## License
-    …
     157→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
     159→## Credits and Acknowledgements
     …
@@ -73,7 +72,6 @@ README.md
     188→### Inspiration
     …
     194→## Contact Information
-    …
     196→Please use the issue tracker on GitHub for any questions or feedback.
 docker-compose.yml
     1→services:
@@ -88,6 +86,7 @@ docker-compose.yml
     11→  enclosed-data:
     12→    driver: local
 package.json
+    …
     2→  "name": "@enclosed/root",
     3→  "version": "1.16.0",
     4→  "description": "Send private and secure note",
@@ -119,6 +118,7 @@ package.json
     30→  "devDependencies": {
     31→    "bumpp": "^9.5.2"
     32→  }
+    …
 packages/
     app-client/
         .env.example
@@ -131,7 +131,6 @@ packages/
             8→$ npm install # or pnpm install or yarn install
             9→```
             11→### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
-            …
             13→## Available Scripts
             …
             17→### `npm run dev` or `npm start`
@@ -139,7 +138,6 @@ packages/
             24→### `npm run build`
             …
             32→## Deployment
-            …
             34→You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
             36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
         components.json
@@ -219,7 +217,6 @@ packages/
             22→### Configure the enclosed instance to use
             …
             29→## Usage
-            …
             31→```bash
             32→enclosed <command> [options]
             33→```
@@ -230,10 +227,8 @@ packages/
             68→### Configure the enclosed instance to use
             …
             75→## License
-            …
             77→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
             79→## Credits and Acknowledgements
-            …
             81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         bin/
             enclosed.mjs
@@ -259,10 +254,8 @@ packages/
             5→## Installation
             …
             18→## License
-            …
             20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
             22→## Credits and Acknowledgements
-            …
             24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
         eslint.config.js
@@ -291,6 +284,7 @@ packages/
             data/
             how-it-works.md
             index.md
+                …
                 5→# Enclosed
                 …
                 11→## Key Features
@@ -307,6 +301,7 @@ packages/
             resources/
             self-hosting/
                 configuration.md
+                    …
                     5→# Self-Host Configuration
                     …
                     9→## Environment Variables
@@ -322,7 +317,6 @@ packages/
                 other-platforms.md
                 troubleshooting.md
                     1→# Troubleshooting
-                    …
                     3→## Why do I see a warning about insecure connection?
                     …
                 users-authentication-key-generator.md
@@ -335,10 +329,8 @@ packages/
             18→## Usage
             …
             33→## License
-            …
             35→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
             37→## Credits and Acknowledgements
-            …
             39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
         eslint.config.js
@@ -357,6 +349,7 @@ packages/
                 serialization/
             files/
             index.ts
+                …
                 10→export {
                 11→  createNote,
                 12→  createNoteUrl,

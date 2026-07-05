@@ -8,10 +8,10 @@ expression: rendered
 LICENSE
 README.md
     1→# debug
+    …
     7→A tiny JavaScript debugging utility modelled after Node.js core's debugging
     8→technique. Works in Node.js and web browsers.
     10→## Installation
-    …
     12→```bash
     13→$ npm install debug
     14→```
@@ -20,13 +20,11 @@ README.md
     110→## Namespace Colors
     …
     134→## Millisecond diff
-    …
     136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
     138→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
     140→When stdout is not a TTY, `Date#toISOString()` is used, making it more useful for logging the debug information as shown below:
     142→<img width="647" src="https://user-images.githubusercontent.com/71256/29091956-6bd78372-7c39-11e7-8c55-c948396d6edd.png">
     145→## Conventions
-    …
     147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
     149→## Wildcards
     …
@@ -49,7 +47,6 @@ README.md
     357→## Usage in child processes
     …
     379→## Authors
-    …
     381→ - TJ Holowaychuk
     382→ - Nathan Rajlich
     383→ - Andrew Rhyne
@@ -64,6 +61,7 @@ karma.conf.js
     1→module.exports = function (config) {
     …
 package.json
+    …
     2→  "name": "debug",
     3→  "version": "4.4.3",
     4→  "repository": {
@@ -121,8 +119,10 @@ package.json
     56→  "engines": {
     57→    "node": ">=6.0"
     58→  },
+    …
 src/
     browser.js
+        …
         7→exports.formatArgs = formatArgs;
         8→exports.save = save;
         9→exports.load = load;
@@ -137,6 +137,7 @@ src/
         19→		}
         20→	};
         21→})();
+        …
         27→exports.colors = [
         …
         115→function useColors() {
@@ -152,6 +153,7 @@ src/
         258→module.exports = require('./common')(exports);
         …
     common.js
+        …
         7→function setup(env) {
         8→	createDebug.debug = createDebug;
         9→	createDebug.default = createDebug;
@@ -161,6 +163,7 @@ src/
         13→	createDebug.enabled = enabled;
         14→	createDebug.humanize = require('ms');
         15→	createDebug.destroy = destroy;
+        …
         41→	function selectColor(namespace) {
         42→		let hash = 0;
         44→		for (let i = 0; i < namespace.length; i++) {
@@ -168,25 +171,30 @@ src/
         46→			hash |= 0; // Convert to 32bit integer
         47→		}
         49→		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
+        …
         60→	function createDebug(namespace) {
         61→		let prevTime;
         62→		let enableOverride = null;
         63→		let namespacesCache;
         64→		let enabledCache;
+        …
         116→		debug.namespace = namespace;
         117→		debug.useColors = createDebug.useColors();
         118→		debug.color = createDebug.selectColor(namespace);
         119→		debug.extend = extend;
         120→		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
+        …
         141→		// Env-specific initialization logic for debug instances
         142→		if (typeof createDebug.init === 'function') {
         143→			createDebug.init(debug);
         144→		}
         146→		return debug;
+        …
         149→	function extend(namespace, delimiter) {
         150→		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
         151→		newDebug.log = this.log;
         152→		return newDebug;
+        …
         162→	function enable(namespaces) {
         163→		createDebug.save(namespaces);
         164→		createDebug.namespaces = namespaces;
@@ -204,16 +212,19 @@ src/
         179→				createDebug.names.push(ns);
         180→			}
         181→		}
+        …
         192→	function matchesTemplate(search, template) {
         193→		let searchIndex = 0;
         194→		let templateIndex = 0;
         195→		let starIndex = -1;
         196→		let matchIndex = 0;
+        …
         219→		// Handle trailing '*' in template
         220→		while (templateIndex < template.length && template[templateIndex] === '*') {
         221→			templateIndex++;
         222→		}
         224→		return templateIndex === template.length;
+        …
         233→	function disable() {
         234→		const namespaces = [
         235→			...createDebug.names,
@@ -221,6 +232,7 @@ src/
         237→		].join(',');
         238→		createDebug.enable('');
         239→		return namespaces;
+        …
         249→	function enabled(name) {
         250→		for (const skip of createDebug.skips) {
         251→			if (matchesTemplate(name, skip)) {
@@ -233,22 +245,28 @@ src/
         259→			}
         260→		}
         262→		return false;
+        …
         272→	function coerce(val) {
         273→		if (val instanceof Error) {
         274→			return val.stack || val.message;
         275→		}
         276→		return val;
+        …
         283→	function destroy() {
         284→		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+        …
         292→module.exports = setup;
     index.js
         1→/**
         2→ * Detect Electron renderer / nwjs process, which is node, but we should
         3→ * treat as a browser.
         4→ */
+        …
     node.js
+        …
         5→const tty = require('tty');
         6→const util = require('util');
+        …
         203→function save(namespaces) {
         204→	if (namespaces) {
         205→		process.env.DEBUG = namespaces;
@@ -257,6 +275,7 @@ src/
         208→		// string 'null' or 'undefined'. Just delete instead.
         209→		delete process.env.DEBUG;
         210→	}
+        …
         220→function load() {
         …
         231→function init(debug) {
@@ -264,10 +283,14 @@ src/
         240→module.exports = require('./common')(exports);
         …
 test.js
+    …
     3→const assert = require('assert');
     4→const debug = require('./src');
+    …
 test.node.js
+    …
     3→const assert = require('assert');
     4→const util = require('util');
     5→const sinon = require('sinon');
     6→const debug = require('./src/node');
+    …

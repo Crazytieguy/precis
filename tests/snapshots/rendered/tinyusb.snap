@@ -24,9 +24,11 @@ README.rst
     1→TinyUSB
     2→=======
     4→|Build Status| |CircleCI Status| |Documentation Status| |Static Analysis| |Fuzzing Status| |Membrowse| |License|
+    …
     31→TinyUSB is an open-source cross-platform USB Host/Device stack for embedded systems. It’s designed for memory safety
     32→(no dynamic allocation) and thread safety (all interrupts deferred to non-ISR task functions). The stack emphasizes portability,
     33→small footprint, and real-time performance across 50+ MCU families.
+    …
     102→Host Stack
     103→----------
     105→- Communication Device Class: CDC-ACM
@@ -36,13 +38,7 @@ README.rst
     109→- Musical Instrument Digital Interface (MIDI)
     110→- Hub with multiple-level support
     112→Similar to the Device Stack, if you have a special requirement, ``usbh_app_driver_get_cb()`` can be used to write your own class driver without modifying the stack.
-    121→OS Abstraction layer
-    122→--------------------
-    124→TinyUSB is completely thread-safe by pushing all Interrupt Service Request (ISR) events into a central queue, then processing them later in the non-ISR context task function. It also uses semaphore/mutex to access shared resources such as Communication Device Class (CDC) FIFO. Therefore the stack needs to use some of the OS's basic APIs. Following OSes are already supported out of the box.
-    126→- **No OS**
-    127→- **FreeRTOS**
-    128→- `RT-Thread <https://github.com/RT-Thread/rt-thread>`_: `repo <https://github.com/RT-Thread-packages/tinyusb>`_
-    129→- **Mynewt** Due to the newt package build system, Mynewt examples are better to be on its `own repo <https://github.com/hathach/mynewt-tinyusb-example>`_
+    …
 SConscript
 docs/
 examples/
@@ -63,6 +59,7 @@ lib/
             4→SEGGER RTT Sources
             6→https://www.segger.com/products/debug-probes/j-link/technology/about-real-time-transfer
             7→https://wiki.segger.com/RTT
+            …
         RTT/
             SEGGER_RTT.c
             SEGGER_RTT.h
@@ -72,6 +69,7 @@ lib/
     networking/
         dhserver.c
         dhserver.h
+            …
             42→typedef struct dhcp_entry
             43→{
             44→	uint8_t    mac[6];
@@ -85,6 +83,7 @@ lib/
             …
         dnserver.c
         dnserver.h
+            …
             42→typedef bool (*dns_query_proc_t)(const char *name, ip4_addr_t *addr);
             …
             47→err_t dnserv_init(const ip_addr_t *bind, uint16_t port, dns_query_proc_t query_proc);
@@ -120,6 +119,7 @@ src/
         video/
     common/
         tusb_common.h
+            …
             68→#define TU_GENMASK(h, l)              ( (UINT32_MAX << (l)) & (UINT32_MAX >> (31 - (h))) )
             …
             94→extern uint32_t tusb_time_millis_api(void);
@@ -147,17 +147,15 @@ src/
             176→TU_ATTR_ALWAYS_INLINE static inline uint32_t tu_u32(uint8_t b3, uint8_t b2, uint8_t b1, uint8_t b0) {
             …
             180→TU_ATTR_ALWAYS_INLINE static inline uint32_t tu_u32_from_u16(uint16_t high, uint16_t low) {
-            181→  return (((uint32_t)high) << 16) | low;
+            …
             184→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u16(uint8_t high, uint8_t low) {
             …
             188→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte3(uint32_t ui32) { return TU_U32_BYTE3(ui32); }
             189→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte2(uint32_t ui32) { return TU_U32_BYTE2(ui32); }
             190→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte1(uint32_t ui32) { return TU_U32_BYTE1(ui32); }
             191→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte0(uint32_t ui32) { return TU_U32_BYTE0(ui32); }
-            …
             193→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u32_high16(uint32_t ui32) { return (uint16_t) (ui32 >> 16); }
             194→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u32_low16 (uint32_t ui32) { return (uint16_t) (ui32 & 0x0000ffffu); }
-            …
             196→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u16_high(uint16_t ui16) { return TU_U16_HIGH(ui16); }
             197→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u16_low (uint16_t ui16) { return TU_U16_LOW(ui16); }
             …
@@ -211,6 +209,7 @@ src/
     tusb_option.h
     typec/
         pd_types.h
+            …
             39→TU_ATTR_PACKED_BEGIN
             40→TU_ATTR_BIT_FIELD_ORDER_BEGIN
             42→//--------------------------------------------------------------------+
@@ -248,6 +247,7 @@ src/
             143→  PD_PDO_TYPE_VARIABLE, // non-battery
             144→  PD_PDO_TYPE_APDO, // Augmented Power Data Object
             145→};
+            …
             148→typedef struct TU_ATTR_PACKED {
             …
             165→typedef struct TU_ATTR_PACKED {
@@ -262,11 +262,13 @@ src/
             …
             229→TU_ATTR_PACKED_END  // End of all packed definitions
             230→TU_ATTR_BIT_FIELD_ORDER_END
+            …
         tcd.h
         usbc.c
         usbc.h
-            50→bool tuc_init(uint8_t rhport, uint32_t port_type);
             …
+            50→bool tuc_init(uint8_t rhport, uint32_t port_type);
+            52→// Check if typec port is initialized
             53→bool tuc_inited(uint8_t rhport);
             …
             58→void tuc_task_ext(uint32_t timeout_ms, bool in_isr);
@@ -274,6 +276,7 @@ src/
             61→TU_ATTR_ALWAYS_INLINE static inline
             62→void tuc_task (void) {
             63→  tuc_task_ext(UINT32_MAX, false);
+            …
             67→extern void tcd_int_handler(uint8_t rhport);
             …
             71→#define tuc_int_handler tcd_int_handler

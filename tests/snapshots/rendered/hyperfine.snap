@@ -24,6 +24,7 @@ Cargo.toml
     15→[features]
     16→# Use the nightly feature windows_process_extensions_main_thread_handle
     17→windows_process_extensions_main_thread_handle = []
+    …
 LICENSE-APACHE
 LICENSE-MIT
 README.md
@@ -45,6 +46,7 @@ README.md
     21→* Export results to various formats: CSV, JSON, Markdown, AsciiDoc.
     22→* Parameterized benchmarks (e.g. vary the number of threads).
     23→* Cross-platform
+    …
 build.rs
 doc/
     execution-order.png
@@ -58,19 +60,21 @@ src/
         benchmark_result.rs
         executor.rs
         mod.rs
+            …
             31→/// Threshold for warning about fast execution time
             32→pub const MIN_EXECUTION_TIME: Second = 5e-3;
-            …
             34→pub struct Benchmark<'a> {
             35→    number: usize,
             36→    command: &'a Command<'a>,
             37→    options: &'a Options,
             38→    executor: &'a dyn Executor,
             39→}
+            …
         relative_speed.rs
         scheduler.rs
         timing_result.rs
     cli.rs
+        …
         8→pub fn get_cli_arguments<'a, I, T>(args: I) -> ArgMatches
         9→where
         10→    I: IntoIterator<Item = T>,
@@ -78,39 +82,43 @@ src/
         12→{
         13→    let command = build_command();
         14→    command.get_matches_from(args)
+        …
     command.rs
-        20→/// A command that should be benchmarked.
-        21→#[derive(Debug, Clone, PartialEq, Eq)]
+        …
         22→pub struct Command<'a> {
-        23→    /// The command name (without parameter substitution)
-        24→    name: Option<&'a str>,
-        26→    /// The command that should be executed (without parameter substitution)
-        27→    expression: &'a str,
-        29→    /// Zero or more parameter values.
-        30→    parameters: Vec<ParameterNameAndValue<'a>>,
-        31→}
+        …
         133→/// A collection of commands that should be benchmarked
         134→pub struct Commands<'a>(Vec<Command<'a>>);
         …
     error.rs
+        …
         7→pub enum ParameterScanError {
         …
         37→pub enum OptionsError<'a> {
         …
     export/
         asciidoc.rs
+            …
             4→#[derive(Default)]
             5→pub struct AsciidocExporter {}
+            …
         csv.rs
+            …
             12→#[derive(Default)]
             13→pub struct CsvExporter {}
+            …
         json.rs
+            …
             16→#[derive(Default)]
             17→pub struct JsonExporter {}
+            …
         markdown.rs
+            …
             5→#[derive(Default)]
             6→pub struct MarkdownExporter {}
+            …
         markup.rs
+            …
             10→pub enum Alignment {
             11→    Left,
             12→    Right,
@@ -118,6 +126,7 @@ src/
             15→pub trait MarkupExporter {
             …
         mod.rs
+            …
             26→/// The desired form of exporter to use for a given file.
             27→#[derive(Clone)]
             28→pub enum ExportType {
@@ -132,21 +141,27 @@ src/
             41→    /// Emacs org-mode tables
             42→    Orgmode,
             43→}
+            …
             56→pub enum ExportTarget {
             57→    File(String),
             58→    Stdout,
             59→}
+            …
             66→/// Handles the management of multiple file exporters.
             67→pub struct ExportManager {
             68→    exporters: Vec<ExporterWithTarget>,
             69→    time_unit: Option<Unit>,
             70→    sort_order: SortOrder,
             71→}
+            …
         orgmode.rs
+            …
             4→#[derive(Default)]
             5→pub struct OrgmodeExporter {}
+            …
         tests.rs
     main.rs
+        …
         6→use std::env;
         8→use benchmark::scheduler::Scheduler;
         9→use cli::get_cli_arguments;
@@ -184,6 +199,7 @@ src/
         47→    scheduler.print_relative_speed_comparison();
         48→    scheduler.final_export()?;
         50→    Ok(())
+        …
         53→fn main() {
         54→    match run() {
         55→        Ok(_) => {}
@@ -192,8 +208,10 @@ src/
         58→            std::process::exit(1);
         59→        }
         60→    }
+        …
     options.rs
     outlier_detection.rs
+        …
         13→pub const OUTLIER_THRESHOLD: f64 = 1.4826 * 10.0;
         …
         21→pub fn modified_zscores(xs: &[f64]) -> Vec<f64> {
@@ -207,9 +225,11 @@ src/
             2→pub mod progress_bar;
             3→pub mod warnings;
         progress_bar.rs
+            …
             13→pub fn get_progress_bar(length: u64, msg: &str, option: OutputStyleOption) -> ProgressBar {
             …
         warnings.rs
+            …
             7→pub struct OutlierWarningOptions {
             8→    pub warmup_in_use: bool,
             9→    pub prepare_in_use: bool,
@@ -221,6 +241,7 @@ src/
             16→    SlowInitialRun(Second, OutlierWarningOptions),
             17→    OutliersDetected(OutlierWarningOptions),
             18→}
+            …
     parameter/
         mod.rs
             1→use crate::util::number::Number;
@@ -237,6 +258,7 @@ src/
             …
             23→pub type ParameterNameAndValue<'a> = (&'a str, ParameterValue);
         range_step.rs
+            …
             7→pub trait Numeric:
             …
             33→#[derive(Debug)]
@@ -245,11 +267,13 @@ src/
             36→    end: T,
             37→    step: T,
             38→}
+            …
         tokenize.rs
             1→pub fn tokenize(values: &str) -> Vec<String> {
             …
     timer/
         mod.rs
+            …
             40→/// Used to indicate the result of running a command
             41→#[derive(Debug, Copy, Clone)]
             42→pub struct TimerResult {
@@ -260,30 +284,34 @@ src/
             47→    /// The exit status of the process
             48→    pub status: ExitStatus,
             49→}
+            …
             82→/// Execute the given command and return a timing summary
             83→pub fn execute_and_measure(mut command: Command) -> Result<TimerResult> {
             …
         unix_timer.rs
+            …
             10→pub struct CPUInterval {
             …
             18→pub struct CPUTimer {
             19→    start_cpu: CPUTimes,
             20→}
+            …
         wall_clock_timer.rs
+            …
             5→pub struct WallClockTimer {
             6→    start: Instant,
             7→}
+            …
         windows_timer.rs
+            …
             49→pub struct CPUTimer {
             50→    job_object: HANDLE,
             51→}
+            …
     util/
         exit_code.rs
-            4→pub fn extract_exit_code(status: ExitStatus) -> Option<i32> {
-            …
-            20→pub fn extract_exit_code(status: ExitStatus) -> Option<i32> {
-            21→    status.code()
         min_max.rs
+            …
             2→pub fn max(vals: &[f64]) -> f64 {
             …
             10→pub fn min(vals: &[f64]) -> f64 {
@@ -295,19 +323,24 @@ src/
             4→pub mod randomized_environment_offset;
             5→pub mod units;
         number.rs
+            …
             8→#[derive(Debug, Clone, Serialize, Copy, PartialEq, Eq)]
+            …
             10→pub enum Number {
             11→    Int(i32),
             12→    Decimal(Decimal),
             13→}
+            …
         randomized_environment_offset.rs
+            …
             6→pub fn value() -> String {
             7→    "X".repeat(rand::random::<usize>() % 4096usize)
+            …
         units.rs
+            …
             3→pub type Scalar = f64;
             …
             6→pub type Second = Scalar;
-            …
             8→/// Supported time units
             9→#[derive(Debug, Clone, Copy, PartialEq, Eq)]
             10→pub enum Unit {
@@ -315,4 +348,5 @@ src/
             12→    MilliSecond,
             13→    MicroSecond,
             14→}
+            …
 tests/

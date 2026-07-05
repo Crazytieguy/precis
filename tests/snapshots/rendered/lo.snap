@@ -9,14 +9,15 @@ LICENSE
 Makefile
 README.md
     2→# lo - Iterate over slices, maps, channels...
+    …
     13→✨ **`samber/lo` is a Lodash-style Go library based on Go 1.18+ Generics.**
     15→A utility library based on Go 1.18+ generics that makes it easier to work with slices, maps, strings, channels, and functions. It provides dozens of handy methods to simplify common coding tasks and improve code readability. It may look like [Lodash](https://github.com/lodash/lodash) in some aspects.
+    …
     53→## 🚀 Install
     …
     68→## 💡 Usage
     …
     100→## 🤠 Spec
-    …
     102→GoDoc: [godoc.org/github.com/samber/lo](https://godoc.org/github.com/samber/lo)
     104→Documentation: [lo.samber.dev](https://lo.samber.dev/docs/about)
     106→Supported helpers for slices:
@@ -117,14 +118,12 @@ README.md
     206→- [Mean](#mean)
     207→- [MeanBy](#meanby)
     208→- [Mode](#mode)
-    1624→Creates a slice of the map keys.
-    1671→Creates a slice of the map values.
+    …
     5036→## 🛩 Benchmark
     …
     5073→## 🤝 Contributing
     …
     5093→## 👤 Contributors
-    …
     5095→![Contributors](https://contrib.rocks/image?repo=samber/lo)
     5097→## 💫 Show your support
     …
@@ -140,9 +139,11 @@ concurrency.go
     5→	"sync"
     6→	"time"
     7→)
+    …
 concurrency_test.go
 condition.go
     1→package lo
+    …
 condition_test.go
 constraints.go
     1→package lo
@@ -158,12 +159,12 @@ errors.go
     5→	"fmt"
     6→	"reflect"
     7→)
+    …
 errors_test.go
 exp/
     simd/
         BENCHMARK.md
             1→# Benchmark
-            …
             3→## Summary
             …
             23→## Run
@@ -174,6 +175,14 @@ exp/
             1→# SIMD experiment (Go 1.26+)
             3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
             5→See [benchmarks](./BENCHMARK.md).
+            7→## CPU compatibility (avoiding SIGILL)
+            …
+            11→### Check support on Linux
+            …
+            29→### What the tests do
+            …
+            37→### Run only AVX tests
+            …
         cpu_amd64.go
         cpu_amd64_test.go
         go.mod
@@ -196,12 +205,14 @@ exp/
         math_bench_test.go
         simd.go
             1→package simd
+            …
         simd_test.go
         unsafe.go
 find.go
 find_test.go
 func.go
     1→package lo
+    …
 func_test.go
 go.mod
     1→module github.com/samber/lo
@@ -216,6 +227,7 @@ go.mod
     13→	golang.org/x/text v0.22.0
     14→)
     16→require (
+    …
     23→)
 go.sum
 internal/
@@ -224,13 +236,18 @@ internal/
             2→# Constraints
             4→This package is for Go 1.18 retrocompatiblity purpose.
         constraints.go
+            …
             7→package constraints
+            …
         ordered_go118.go
+            …
             3→package constraints
+            …
             9→type Ordered interface {
             10→	Integer | Float | ~string
             11→}
         ordered_go121.go
+            …
             13→type Ordered = cmp.Ordered
     xrand/
     xtime/
@@ -241,6 +258,7 @@ internal/
         fake.go
         noCopy.go
             1→package xtime
+            …
             10→type noCopy struct{}
             …
             13→func (*noCopy) Lock()   {}
@@ -249,6 +267,7 @@ internal/
         time.go
 intersect.go
     1→package lo
+    …
 intersect_test.go
 it/
     channel.go
@@ -270,8 +289,10 @@ it/
     seq_example_test.go
     seq_test.go
     string.go
+        …
         3→package it
         5→import "iter"
+        …
         13→func ChunkString[T ~string](str T, size int) iter.Seq[T] {
         …
     string_example_test.go
@@ -285,13 +306,9 @@ lo_example_test.go
 lo_test.go
 map.go
     1→package lo
+    …
 map_test.go
 math.go
-    1→package lo
-    3→import (
-    4→	"math"
-    6→	"github.com/samber/lo/internal/constraints"
-    7→)
 math_test.go
 mutable/
     slice.go
@@ -301,6 +318,7 @@ parallel/
     slice.go
         1→package parallel
         3→import "sync"
+        …
     slice_test.go
 retry.go
 retry_example_test.go
@@ -314,13 +332,17 @@ time.go
     3→import (
     4→	"time"
     5→)
+    …
 time_test.go
 tuples.go
     1→package lo
+    …
 tuples_test.go
 type_manipulation.go
     1→package lo
     3→import "reflect"
+    …
 type_manipulation_test.go
 types.go
     1→package lo
+    …

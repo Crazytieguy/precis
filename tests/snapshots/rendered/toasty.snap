@@ -35,6 +35,7 @@ Cargo.toml
     33→    # Benchmarks
     34→    "benches",
     35→]
+    …
 LICENSE
 README.md
     1→# Toasty
@@ -65,10 +66,6 @@ crates/
         Cargo.toml
         src/
             apply_update.rs
-                9→pub trait ApplyUpdate {
-                …
-                19→pub struct Query;
-                …
             batch/
                 create.rs
             batch.rs
@@ -224,6 +221,7 @@ crates/
                 validation.rs
             error.rs
             lib.rs
+                …
                 2→mod macros;
                 4→pub mod driver;
                 5→pub use driver::Connection;
@@ -236,6 +234,7 @@ crates/
                 16→pub type Result<T, E = Error> = core::result::Result<T, E>;
                 18→pub use async_trait::async_trait;
             macros.rs
+                …
                 2→macro_rules! path {
                 …
             schema/
@@ -340,30 +339,28 @@ crates/
 docs/
     ARCHITECTURE.md
         1→# Toasty Architecture Overview
-        …
         3→## Project Structure
-        …
         5→Toasty is an ORM for Rust that supports SQL and NoSQL databases. The codebase is a Cargo workspace with separate crates for each layer.
         7→## Crates
-        …
         9→### 1. toasty
         10→User-facing crate with query engine and runtime.
+        …
         26→### 2. toasty-core
         …
         39→### 3. toasty-codegen
         40→Generates Rust code from the `#[derive(Model)]` macro.
+        …
         54→### 4. toasty-driver-*
         …
         63→### 5. toasty-sql
         64→Converts statement AST to SQL strings. Used by SQL-based drivers.
-        74→## Further Reading
         …
+        74→## Further Reading
         76→- [Query Engine Architecture](architecture/query-engine.md) - Query compilation and execution pipeline
         77→- [Type System](architecture/type-system.md) - Type system design and conversions
     CHANGE_GUIDE.md
     CONTEXT.md
         1→# Documentation Context
-        …
         3→Load this file when editing anything in the `docs/` directory.
         5→## Writing Style
         …
@@ -378,8 +375,10 @@ docs/
         README.md
             1→# Toasty ORM - Development Roadmap
             3→This roadmap outlines potential enhancements and missing features for the Toasty ORM.
+            …
         composite-keys.md
             1→# Composite Key Support
+            …
         order_limit_pagination.md
         query-constraints.md
 examples/

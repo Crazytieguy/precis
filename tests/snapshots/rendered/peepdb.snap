@@ -11,7 +11,6 @@ README.md
     1→# peepDB
     3→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, Firebase, MSSQL and OracleDB. peepDB is lightweight, secure, and incredibly easy to use.
     5→## 🚀 Features
-    …
     7→- **Multi-Database Support**: Works with MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, MSSQL, OracleDB, and Firebase.
     8→- **Quick Data Inspection**: View all tables or a specific table with a simple command.
     9→- **User-Friendly CLI**: Easy-to-use command-line interface powered by Click.
@@ -20,21 +19,17 @@ README.md
     12→- **Formatted Output**: View data in a clean, formatted table or JSON format.
     13→- **Pagination**: Efficiently handle large datasets by viewing data in manageable chunks.
     15→## 🎬 peepDB in Action
-    …
     17→Here's a quick demonstration of peepDB:
     19→![peepDB Demo](images/demo.gif)
     21→## 🖼️ peepDB stills
-    …
     23→![peepDB example 2](images/peepdb_example2.png)
     25→> **Note:** The above image reflects the commands used in the official release (v0.1.3)
     27→## 📦 Installation
-    …
     29→You can install peepDB directly from PyPI:
     31→```bash
     32→pip install peepdb
     33→```
     35→## 🛠️ Usage
-    …
     37→peepDB uses a command-based structure for easier and more intuitive use. Here are the main commands with examples:
     39→### 1. Save Your Database Connection Details
     …
@@ -52,13 +47,10 @@ README.md
     154→## 🔒 Security
     …
     162→## 🤝 Contributing
-    …
     164→Contributions to peepDB are welcome! Please refer to our [Contributing Guide](CONTRIBUTING.md) for more information.
     166→## 📜 License
-    …
     168→Distributed under the GNU General Public License Version 3. See the [LICENSE](LICENSE) file for more details.
     170→## 📚 Documentation
-    …
     172→For more detailed documentation, please visit our [GitHub Pages](https://peepdb.dev/).
 docs/
     CNAME
@@ -80,12 +72,10 @@ docs/
         19→If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](#hosting-your-docs-from-an-existing-project-repo).
         21→After completing the creation of your new site on GitHub, update it as needed:
         23→## Replace the content of the template pages
-        …
         25→Update the following files to your own content:
         27→- `index.md` (your new home page)
         28→- `README.md` (information for those who access your site repo on GitHub)
         30→## Changing the version of the theme and/or Jekyll
-        …
         32→Simply edit the relevant line(s) in the `Gemfile`.
         34→## Adding a plugin
         …
@@ -94,10 +84,8 @@ docs/
         76→## Building and previewing your site locally
         …
         88→## Publishing your built site on a different platform
-        …
         90→Just upload all the files in the directory `_site`.
         92→## Customization
-        …
         94→You're free to customize sites that you create with this template, however you like!
         96→[Browse our documentation][Just the Docs] to learn more about how to use this theme.
         98→## Hosting your docs from an existing project repo
@@ -111,8 +99,8 @@ docs/
     _config.yml
     contributing.md
     index.md
-        6→# peepDB
         …
+        6→# peepDB
         8→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, and MariaDB, peepDB is lightweight, secure, and incredibly easy to use.
         10→## 🚀 Features
         …
@@ -123,15 +111,14 @@ docs/
         40→## 📜 License
         …
     installation.md
-        6→# 📦 Installation
         …
+        6→# 📦 Installation
         8→You can install peepDB directly from PyPI using pip:
         10→```bash
         11→pip install peepdb
         12→```
         14→This will install the latest version of peepDB along with all its dependencies.
         16→## Requirements
-        …
         18→- Python 3.9 or higher
         19→- pip (Python package installer)
         21→## System Dependencies
@@ -141,8 +128,8 @@ docs/
         42→## Next Steps
         …
     usage.md
-        6→# 🛠️ Usage
         …
+        6→# 🛠️ Usage
         8→peepDB provides a user-friendly command-line interface for interacting with your databases. Here are the main commands and their usage:
         10→## Saving Database Connection Details
         …
@@ -169,13 +156,16 @@ peepdb/
     __init__.py
     __main__.py
         1→from .cli import main
+        …
     cli.py
+        …
         16→class CustomEncoder(json.JSONEncoder):
         17→    def default(self, obj):
         …
         25→@click.group()
         26→@click.version_option()
         27→def cli():
+        …
         50→    pass
         53→@cli.command()
         …
@@ -196,6 +186,10 @@ peepdb/
         104→    Example:
         105→    peepdb remove mydb
         106→    """
+        107→    if remove_connection(connection_name):
+        108→        click.echo(f"Connection '{connection_name}' has been removed.")
+        109→    else:
+        110→        click.echo(f"No connection named '{connection_name}' found.")
         113→@cli.command()
         114→@click.confirmation_option(prompt='Are you sure you want to remove ALL saved connections?')
         115→def remove_all():
@@ -205,14 +199,19 @@ peepdb/
         120→    peepdb remove-all
         121→    """
         122→    count = remove_all_connections()
+        …
         126→@cli.command()
         …
         181→def main():
         182→    cli()
+        …
     config.py
     core.py
+        …
         18→logger = logging.getLogger(__name__)
+        …
         21→console_handler = logging.StreamHandler()
+        …
         27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
         …
         56→def peep_db(db_type: str,
@@ -226,6 +225,7 @@ peepdb/
         64→            page_size: int = 100,
         65→            scientific: bool = False,
         66→            trusted: bool = False) -> Any:
+        …
         101→def format_as_table(data: Dict[str, Any]) -> str:
         …
         118→def format_value(value, scientific: bool, output_format: str):
@@ -253,6 +253,7 @@ peepdb/
             20→    'OracleDatabase'
             21→]
         base.py
+            …
             5→class BaseDatabase(ABC):
             6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
             …
@@ -279,12 +280,8 @@ peepdb/
         mssql.py
         mysql.py
         oracle.py
-            7→class OracleDatabase(BaseDatabase):
-            …
         postgresql.py
         sqlite.py
-            6→class SQLiteDatabase(BaseDatabase):
-            …
     exceptions.py
         1→class InvalidPassword(Exception):
         2→    pass
@@ -297,8 +294,11 @@ peepdb/
         test_peepdb.py
         test_sqlite.py
 project.toml
+    …
     46→[project.scripts]
     47→peepdb = "peepdb.cli:main"
+    …
 requirements.txt
 setup.py
     1→from setuptools import setup, find_packages
+    …

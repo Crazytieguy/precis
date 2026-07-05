@@ -30,6 +30,7 @@ README.md
     3→  <h1>Linkwarden</h1>
     4→  <h3>Bookmarks, Evolved</h3>
     6→<a href="https://trendshift.io/repositories/4006" target="_blank"><img src="https://trendshift.io/api/badge/repositories/4006" alt="linkwarden%2Flinkwarden | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+    …
     28→## Intro & motivation
     30→**Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.**
     32→The objective is to organize useful webpages and articles you find across the web in one place, and since useful webpages can go away (see the inevitability of [Link Rot](https://en.wikipedia.org/wiki/Link_rot)), Linkwarden also saves a copy of each webpage as a Screenshot and PDF, ensuring accessibility even if the original content is no longer available.
@@ -38,9 +39,9 @@ README.md
     38→> [!TIP]  
     39→> Our official [Cloud](https://linkwarden.app/#pricing) offering provides the simplest way to begin using Linkwarden and it's the preferred choice for many due to its time-saving benefits. <br> Your subscription supports our hosting infrastructure and ongoing development. <br> Alternatively, if you prefer self-hosting Linkwarden, you can do so by following our [Installation documentation](https://docs.linkwarden.app/self-hosting/installation).
     41→## Features
-    …
     43→- 📸 Auto capture a screenshot, PDF, and single html file of each webpage
     44→- 📖 Reader view of the webpage, with the ability to highlight and annotate text
+    …
     46→- ✨ Local AI Tagging to automatically tag your links based on their content (optional)
     47→- 📂 Organize links by collection, sub-collection, name, description and multiple tags
     48→- 👥 Collaborate on gathering links in a collection
@@ -51,6 +52,7 @@ README.md
     53→- 🌓 Dark/Light mode support
     54→- 🧩 Browser extension (star it [here](https://github.com/linkwarden/browser-extension)!)
     55→- 🔄 Browser Synchronization (using [Floccus](https://floccus.org)!)
+    …
     57→- 🔐 SSO integration (Enterprise and Self-hosted users only)
     58→- 🍎 iOS Shortcut to save links to Linkwarden
     59→- 🔑 API keys
@@ -64,14 +66,12 @@ README.md
     68→## Get Our Official Mobile App
     …
     87→## Like what we're doing? Give us a Star ⭐
-    …
     89→![Star Us](https://raw.githubusercontent.com/linkwarden/linkwarden/main/assets/star_repo.gif)
     91→## We're building our Community 🌐
     …
     101→## Suggestions
     …
     105→## Roadmap
-    …
     107→Make sure to check out our [public roadmap](https://github.com/orgs/linkwarden/projects/1).
     109→## Community Projects
     …
@@ -91,6 +91,7 @@ apps/
     worker/
         index.ts
             1→import { spawn } from "node:child_process";
+            …
         lib/
             archiveHandler.ts
             autoTagLink.ts
@@ -152,6 +153,7 @@ docker-compose.yml
     27→    volumes:
     28→      - ./meili_data:/meili_data
 package.json
+    …
     2→  "name": "linkwarden",
     3→  "packageManager": "yarn@4.12.0+sha512.f45ab632439a67f8bc759bf32ead036a1f413287b9042726b7cc4818b7b49e14e9423ba49b18f9e06ea4941c1ad062385b1d8760a8d5091a1a31e5f6219afca8",
     4→  "version": "0.0.0",
@@ -178,6 +180,7 @@ package.json
     25→    "coverage": "vitest run --coverage",
     26→    "postinstall": "yarn workspace @linkwarden/web run postinstall && patch-package"
     27→  },
+    …
 packages/
     filesystem/
         createFile.ts
@@ -215,6 +218,7 @@ packages/
         client/
         index.ts
             1→import { PrismaClient } from "@prisma/client";
+            …
             5→export const prisma =
             6→  globalForPrisma.prisma ||
             7→  new PrismaClient({
@@ -223,19 +227,29 @@ packages/
             10→        ? ["query", "info", "warn", "error"]
             11→        : ["warn", "error"],
             12→  });
+            …
         migrations/
         package.json
         schema.prisma
             1→generator client {
+            …
             5→datasource db {
+            …
             10→model Account {
+            …
             28→model User {
+            …
             77→enum Theme {
             78→  dark
             79→  light
             80→  auto
             81→}
             83→enum AiTaggingMethod {
+            84→  DISABLED
+            85→  GENERATE
+            86→  EXISTING
+            87→  PREDEFINED
+            88→}
             90→enum LinksRouteTo {
             91→  ORIGINAL
             92→  PDF
@@ -245,35 +259,38 @@ packages/
             96→  DETAILS
             97→}
             99→model WhitelistedUser {
+            …
             108→model VerificationToken {
+            …
             118→model PasswordResetToken {
+            …
             126→model Collection {
+            …
             151→model UsersAndCollections {
+            …
             166→model Link {
-            167→  id              Int         @id @default(autoincrement())
-            168→  name            String      @default("")
-            169→  type            String      @default("url")
-            170→  description     String      @default("")
-            171→  highlight       Highlight[]
-            172→  pinnedBy        User[]      @relation("PinnedLinks")
-            173→  createdBy       User?       @relation("CreatedLinks", fields: [createdById], references: [id], onDelete: Cascade)
-            174→  createdById     Int?
-            175→  collection      Collection  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-            176→  collectionId    Int
-            177→  tags            Tag[]
-            178→  icon            String?
-            179→  iconWeight      String?
-            180→  color           String?
-            181→  url             String?
+            …
             200→model Tag {
+            …
             220→model Subscription {
+            …
             234→model AccessToken {
+            …
             248→model RssSubscription {
+            …
             260→model Highlight {
+            …
             275→model DashboardSection {
+            …
             289→enum DashboardSectionType {
+            …
             296→model AppMigration {
+            …
             304→enum AppMigrationStatus {
+            305→  APPLIED
+            306→  PENDING
+            307→  FAILED
+            308→}
         seed.js
     router/
     types/

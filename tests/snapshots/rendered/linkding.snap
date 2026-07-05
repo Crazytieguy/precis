@@ -13,6 +13,7 @@ CHANGELOG.md
 LICENSE.txt
 Makefile
 README.md
+    …
     9→##  Introduction
     11→linkding is a bookmark manager that you can host yourself.
     12→It's designed be to be minimal, fast, and easy to set up using Docker.
@@ -41,10 +42,8 @@ README.md
     47→## Documentation
     …
     55→## Contributing
-    …
     57→Small improvements, bugfixes and documentation improvements are always welcome. If you want to contribute a larger feature, consider opening an issue first to discuss it. I may choose to ignore PRs for features that don't align with the project's goals or that I don't want to maintain.
     59→## Development
-    …
     61→The application is built using the Django web framework. You can get started by checking out the excellent [Django docs](https://docs.djangoproject.com/en/4.1/). The `bookmarks` folder contains the actual bookmark application. Other than that the code should be self-explanatory / standard Django stuff 🙂.
     63→### Prerequisites
     …
@@ -60,6 +59,7 @@ README.md
     114→### DevContainers
     …
     118→Once checked out, only the following commands are required to get started:
+    …
     132→The frontend is now available under http://localhost:8000
 SECURITY.md
 assets/
@@ -75,6 +75,7 @@ assets/
 bookmarks/
     __init__.py
     admin.py
+        …
         324→class AdminApiToken(admin.ModelAdmin):
         325→    form = ApiTokenAdminForm
         326→    list_display = ("name", "user", "created")
@@ -82,11 +83,16 @@ bookmarks/
         328→    list_filter = ("user__username",)
         329→    ordering = ("-created",)
         332→linkding_admin_site = LinkdingAdminSite()
+        …
     api/
         __init__.py
         auth.py
-            8→class LinkdingTokenAuthentication(TokenAuthentication):
             …
+            8→class LinkdingTokenAuthentication(TokenAuthentication):
+            9→    """
+            10→    Extends DRF TokenAuthentication to add support for multiple keywords and
+            11→    multiple tokens per user.
+            12→    """
             14→    model = ApiToken
             15→    keywords = [keyword.lower().encode() for keyword in ["Token", "Bearer"]]
             17→    def authenticate(self, request):
@@ -125,15 +131,18 @@ bookmarks/
     management/
         commands/
     middlewares.py
+        …
         7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
         8→    header = settings.LD_AUTH_PROXY_USERNAME_HEADER
         11→default_global_settings = GlobalSettings()
         13→standard_profile = UserProfile()
+        …
         17→class LinkdingMiddleware:
         18→    def __init__(self, get_response):
         19→        self.get_response = get_response
         21→    def __call__(self, request):
         22→        # add global settings to request
+        …
     migrations/
     models.py
     queries.py
@@ -147,8 +156,10 @@ bookmarks/
         favicon_loader.py
         importer.py
         monolith.py
+            …
             9→class MonolithError(Exception):
             10→    pass
+            …
             16→def create_snapshot(url: str, filepath: str):
             …
         parser.py
@@ -158,23 +169,29 @@ bookmarks/
         tags.py
         tasks.py
         wayback.py
+            1→import datetime
+            3→from django.utils import timezone
             6→def generate_fallback_webarchive_url(
             7→    url: str, timestamp: datetime.datetime
             8→) -> str | None:
+            …
         website_loader.py
     settings/
         __init__.py
             1→# Use dev settings as default, use production if dev settings do not exist
             2→# ruff: noqa
+            …
         base.py
         custom.py
         dev.py
         prod.py
     signals.py
+        …
         6→@receiver(connection_created)
         7→def extend_sqlite(connection=None, **kwargs):
         8→    # Load ICU extension into Sqlite connection to support case-insensitive
         9→    # comparisons with unicode characters
+        …
     static/
     styles/
         auth.css
@@ -205,6 +222,9 @@ bookmarks/
             preview.html
         opensearch.xml
         registration/
+            login.html
+            password_change_done.html
+            password_change_form.html
         settings/
             bookmarklet.js
             bookmarklet_clientside.js
@@ -230,23 +250,29 @@ bookmarks/
     templatetags/
         __init__.py
         bookmarks.py
+            …
             6→register = template.Library()
             9→@register.inclusion_tag(
             10→    "bookmarks/search.html", name="bookmark_search", takes_context=True
             11→)
             12→def bookmark_search(context, search: BookmarkSearch, mode: str = ""):
+            …
         pagination.py
         shared.py
     tests/
     tests_e2e/
     type_defs.py
+        …
         11→class HttpRequest(http.HttpRequest):
         12→    global_settings: GlobalSettings
         13→    user_profile: UserProfile
         14→    user: User | AnonymousUser
     urls.py
+        …
         21→urlpatterns = [
+        …
         127→urlpatterns = [path("", include((urlpatterns, "linkding")))]
+        …
     utils.py
     validators.py
         1→from django.conf import settings
@@ -272,41 +298,34 @@ bookmarks/
             6→def custom_css(request):
             …
         health.py
+            …
             7→def health(request):
             …
         manifest.py
+            …
             5→def manifest(request):
             …
         opensearch.py
+            …
             5→def opensearch(request):
             …
         reload.py
         root.py
+            …
             7→def root(request):
             8→    # Redirect unauthenticated users to the configured landing page
+            …
         settings.py
-            28→logger = logging.getLogger(__name__)
         tags.py
         toasts.py
+            …
             9→@login_required
             10→def acknowledge(request):
+            …
         turbo.py
     widgets.py
-        7→class FormErrorList(ErrorList):
-        8→    template_name = "shared/error_list.html"
-        11→class FormInput(forms.TextInput):
-        …
-        19→class FormNumberInput(forms.NumberInput):
-        …
-        27→class FormSelect(forms.Select):
-        …
-        35→class FormTextarea(forms.Textarea):
-        …
-        43→class FormCheckbox(forms.CheckboxInput):
-        …
-        63→class TagAutocomplete(forms.TextInput):
-        …
     wsgi.py
+        …
         13→application = get_wsgi_application()
 bootstrap.sh
 docker/
@@ -370,6 +389,7 @@ pyproject.toml
     18→    "uwsgi>=2.0.31",
     19→    "waybackpy>=3.0.6",
     20→]
+    …
 pytest.ini
 rollup.config.mjs
 scripts/

@@ -27,14 +27,12 @@ README.md
     26→Using certificates from real certificate authorities (CAs) for development can be dangerous or impossible (for hosts like `example.test`, `localhost` or `127.0.0.1`), but self-signed certificates cause trust errors. Managing your own CA is the best solution, but usually involves arcane commands, specialized knowledge and manual steps.
     28→mkcert automatically creates and installs a local CA in the system root store, and generates locally-trusted certificates. mkcert does not automatically configure servers to use the certificates, though, that's up to you.
     30→## Installation
-    …
     32→> **Warning**: the `rootCA-key.pem` file that mkcert automatically generates gives complete power to intercept secure requests from your machine. Do not share it.
     34→### macOS
     …
     51→### Linux
     …
     92→### Windows
-    …
     94→On Windows, use [Chocolatey](https://chocolatey.org)
     96→```
     97→choco install mkcert
@@ -49,10 +47,10 @@ README.md
     111→## Supported root stores
     …
     127→## Advanced topics
-    …
     129→### Advanced options
     …
     150→> **Note:** You _must_ place these options before the domain names list.
+    …
     158→### S/MIME
     …
     166→### Mobile devices
@@ -64,8 +62,8 @@ README.md
     188→### Installing the CA on other systems
     …
 cert.go
-    35→var userAndHostname string
     …
+    35→var userAndHostname string
     37→func init() {
     …
     50→func (m *mkcert) makeCert(hosts []string) {
@@ -81,6 +79,7 @@ cert.go
     204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
     205→	fatalIfErr(err, "failed to generate serial number")
     206→	return serialNumber
+    …
     209→func (m *mkcert) makeCertFromCSR() {
     …
     281→// loadCA will load or create the CA at CAROOT.
@@ -90,6 +89,7 @@ cert.go
     …
     366→func (m *mkcert) caUniqueName() string {
     367→	return "mkcert development CA " + m.caCert.SerialNumber.String()
+    …
 go.mod
     1→module filippo.io/mkcert
     3→go 1.18
@@ -99,9 +99,11 @@ go.mod
     8→	software.sslmate.com/src/go-pkcs12 v0.2.0
     9→)
     11→require (
+    …
     14→)
 go.sum
 main.go
+    …
     5→// Command mkcert is a simple zero-config tool to make development certificates.
     6→package main
     8→import (
@@ -125,7 +127,6 @@ main.go
     27→	"golang.org/x/net/idna"
     28→)
     30→const shortUsage = `Usage of mkcert:
-    …
     32→	$ mkcert -install
     33→	Install the local CA in the system trust store.
     35→	$ mkcert example.org
@@ -143,12 +144,10 @@ main.go
     83→// which is "(devel)" when building from within the module. See
     84→// golang.org/issue/29814 and golang.org/issue/29228.
     85→var Version string
-    …
     87→func main() {
     …
     152→const rootName = "rootCA.pem"
     153→const rootKeyName = "rootCA-key.pem"
-    …
     155→type mkcert struct {
     156→	installMode, uninstallMode bool
     157→	pkcs12, ecdsa, client      bool
@@ -176,6 +175,7 @@ main.go
     339→	}
     341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
     342→	return err == nil
+    …
     345→func storeEnabled(name string) bool {
     346→	stores := os.Getenv("TRUST_STORES")
     347→	if stores == "" {
@@ -187,30 +187,34 @@ main.go
     353→		}
     354→	}
     355→	return false
+    …
     358→func fatalIfErr(err error, msg string) {
     359→	if err != nil {
     360→		log.Fatalf("ERROR: %s: %s", msg, err)
     361→	}
+    …
     364→func fatalIfCmdErr(err error, cmd string, out []byte) {
     365→	if err != nil {
     366→		log.Fatalf("ERROR: failed to execute \"%s\": %s\n\n%s\n", cmd, err, out)
     367→	}
+    …
     370→func pathExists(path string) bool {
     371→	_, err := os.Stat(path)
     372→	return err == nil
+    …
     375→func binaryExists(name string) bool {
     376→	_, err := exec.LookPath(name)
     377→	return err == nil
-    380→var sudoWarningOnce sync.Once
     …
+    380→var sudoWarningOnce sync.Once
     382→func commandWithSudo(cmd ...string) *exec.Cmd {
     …
 truststore_darwin.go
 truststore_java.go
+    …
     21→var (
     22→	hasJava    bool
     23→	hasKeytool bool
-    …
     25→	javaHome    string
     26→	cacertsPath string
     27→	keytoolPath string
@@ -230,6 +234,7 @@ truststore_java.go
     …
 truststore_linux.go
 truststore_nss.go
+    …
     5→package main
     7→import (
     8→	"bytes"
@@ -240,6 +245,7 @@ truststore_nss.go
     13→	"runtime"
     14→	"strings"
     15→)
+    …
     18→	hasNSS       bool
     19→	hasCertutil  bool
     20→	certutilPath string

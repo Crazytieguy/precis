@@ -6,7 +6,9 @@ expression: rendered
 .gitignore
 Justfile
 README.md
+    …
     12→<b>microbootstrap</b> assists you in creating applications with all the necessary instruments already set up.
+    …
     55→## Table of Contents
     57→- [Installation](#installation)
     58→- [Quickstart](#quickstart)
@@ -56,7 +58,6 @@ README.md
     563→### Health checks
     …
     586→## Configuration
-    …
     588→While settings provide a convenient mechanism, it's not always feasible to store everything within them.
     590→There may be cases where you need to configure a tool directly. Here's how it can be done.
     592→### Instruments configuration
@@ -122,6 +123,7 @@ microbootstrap/
     bootstrappers/
         __init__.py
         base.py
+            …
             17→class DataclassInstance(typing.Protocol):
             18→    __dataclass_fields__: typing.ClassVar[dict[str, typing.Any]]
             21→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
@@ -137,14 +139,17 @@ microbootstrap/
             40→        self,
             41→        application_config: DataclassT,
             42→    ) -> typing_extensions.Self:
+            …
             46→    def configure_instrument(
             47→        self,
             48→        instrument_config: InstrumentConfigT,
             49→    ) -> typing_extensions.Self:
+            …
             53→    def configure_instruments(
             54→        self,
             55→        *instrument_configs: InstrumentConfigT,
             56→    ) -> typing_extensions.Self:
+            …
             61→    @classmethod
             62→    def use_instrument(
             63→        cls,
@@ -152,6 +157,7 @@ microbootstrap/
             65→        [type[Instrument[InstrumentConfigT]]],
             66→        type[Instrument[InstrumentConfigT]],
             67→    ]:
+            …
             72→    def bootstrap(self) -> ApplicationT:
             …
             99→    def bootstrap_before(self) -> dict[str, typing.Any]:
@@ -171,15 +177,22 @@ microbootstrap/
     config/
         __init__.py
         fastapi.py
+            …
             20→@dataclasses.dataclass
             21→class FastApiConfig:
+            …
         faststream.py
+            …
             20→@dataclasses.dataclass
             21→class FastStreamConfig:
+            …
         litestar.py
+            …
             13→@dataclasses.dataclass
             14→class LitestarConfig(AppConfig):
+            …
     console_writer.py
+        …
         10→@dataclasses.dataclass
         11→class ConsoleWriter:
         12→    writer_enabled: bool = True
@@ -193,6 +206,7 @@ microbootstrap/
         25→        is_enabled: bool,
         26→        disable_reason: str | None = None,
         27→    ) -> None:
+        …
         31→    def print_bootstrap_table(self) -> None:
         …
     exceptions.py
@@ -203,16 +217,20 @@ microbootstrap/
         9→class MissingInstrumentError(MicroBootstrapBaseError):
         10→    """Raises when attempting to configure instrument, that is not supported yet."""
     granian_server.py
+        …
         16→GRANIAN_LOG_LEVELS_MAP = {
+        …
         27→def create_granian_server(
         28→    target: str,
         29→    settings: ServerConfig,
         30→    **granian_options: typing.Any,  # noqa: ANN401
         31→) -> GranianServer[typing.Any]:
+        …
     helpers.py
     instruments/
         __init__.py
         base.py
+            …
             15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
             16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
             19→class BaseInstrumentConfig(pydantic.BaseModel):
@@ -226,10 +244,11 @@ microbootstrap/
             30→        self,
             31→        incoming_config: InstrumentConfigT,
             32→    ) -> None:
+            …
             35→    def write_status(self, console_writer: ConsoleWriter) -> None:
             …
             42→    @abc.abstractmethod
-            43→    def is_ready(self) -> bool: ...
+            …
             45→    @classmethod
             46→    @abc.abstractmethod
             47→    def get_config_type(cls) -> type[InstrumentConfigT]:
@@ -254,6 +273,7 @@ microbootstrap/
         sentry_instrument.py
         swagger_instrument.py
     instruments_setupper.py
+        …
         19→class InstrumentsSetupper:
         20→    console_writer: ConsoleWriter
         21→    instrument_box: InstrumentBox
@@ -262,9 +282,7 @@ microbootstrap/
         28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
         …
         32→    def configure_instruments(
-        33→        self,
-        34→        *instrument_configs: InstrumentConfigT,
-        35→    ) -> typing_extensions.Self:
+        …
         40→    @classmethod
         …
         51→    def setup(self) -> None:
@@ -275,16 +293,21 @@ microbootstrap/
         63→        self.setup()
         65→    def __exit__(self, *args: object) -> None:
         66→        self.teardown()
+        …
     middlewares/
         __init__.py
         fastapi.py
+            …
             12→def build_fastapi_logging_middleware(
             13→    exclude_endpoints: typing.Iterable[str],
             14→) -> type[BaseHTTPMiddleware]:
+            …
         litestar.py
+            …
             14→def build_litestar_logging_middleware(
             15→    exclude_endpoints: typing.Iterable[str],
             16→) -> type[MiddlewareProtocol]:
+            …
     py.typed
     settings.py
 package-lock.json
@@ -295,7 +318,9 @@ pyproject.toml
     3→description = "Package for bootstrapping new micro-services"
     4→readme = "README.md"
     5→requires-python = ">=3.10,<4"
+    …
     59→version = "0"
+    …
 tests/
     __init__.py
     bootstrappers/

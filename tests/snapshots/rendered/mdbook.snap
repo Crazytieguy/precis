@@ -18,11 +18,13 @@ Cargo.toml
     4→    "crates/*",
     5→    "examples/remove-emphasis/mdbook-remove-emphasis", "guide/guide-helper",
     6→]
+    …
     21→[workspace.package]
     22→edition = "2024"
     23→license = "MPL-2.0"
     24→repository = "https://github.com/rust-lang/mdBook"
     25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
+    …
     72→[package]
     73→name = "mdbook"
     74→version = "0.5.2"
@@ -40,33 +42,42 @@ Cargo.toml
     86→repository.workspace = true
     87→description = "Creates a book from markdown files"
     88→rust-version.workspace = true
+    …
     129→[features]
     130→default = ["watch", "serve", "search"]
     131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
     132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
     133→search = ["mdbook-html/search"]
+    …
 LICENSE
 README.md
     1→# mdBook
+    …
     7→mdBook is a utility to create modern online books from Markdown files.
     9→Check out the **[User Guide]** for a list of features and installation and usage information.
     10→The User Guide also serves as a demonstration to showcase what a book looks like.
     12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
+    …
 ci/
 crates/
     mdbook-compare/
         Cargo.toml
+            …
             9→[dependencies]
+            …
         README.md
             1→# mdbook-compare
             3→This is a simple utility to compare the output of two different versions of mdbook.
             5→To use this:
+            …
         src/
     mdbook-core/
         Cargo.toml
         README.md
             1→# mdbook-core
+            …
             7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+            …
         src/
             book/
                 tests.rs
@@ -74,10 +85,15 @@ crates/
             config.rs
             lib.rs
                 1→//! The base support library for mdbook, intended for internal use only.
+                3→/// The current version of `mdbook`.
+                4→///
+                5→/// This is provided as a way for custom preprocessors and renderers to do
+                6→/// compatibility checks.
                 7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
                 9→pub mod book;
                 10→pub mod config;
                 11→pub mod utils;
+                …
                 14→pub mod errors {
                 …
             utils/
@@ -93,16 +109,9 @@ crates/
                     9→mod toml_ext;
                     11→pub(crate) use self::toml_ext::TomlExt;
                     13→pub use self::html::{escape_html, escape_html_attribute};
+                    …
                     17→macro_rules! static_regex {
-                    18→    ($name:ident, $regex:literal) => {
-                    19→        static $name: std::sync::LazyLock<regex::Regex> =
-                    20→            std::sync::LazyLock::new(|| regex::Regex::new($regex).unwrap());
-                    21→    };
-                    22→    ($name:ident, bytes, $regex:literal) => {
-                    23→        static $name: std::sync::LazyLock<regex::bytes::Regex> =
-                    24→            std::sync::LazyLock::new(|| regex::bytes::Regex::new($regex).unwrap());
-                    25→    };
-                    26→}
+                    …
                     28→/// Prints a "backtrace" of some `Error`.
                     29→pub fn log_backtrace(e: &Error) {
                     30→    let mut message = format!("{e}");
@@ -110,25 +119,31 @@ crates/
                     33→        write!(message, "\n\tCaused by: {cause}").unwrap();
                     34→    }
                     36→    error!("{message}");
+                    …
                 toml_ext.rs
     mdbook-driver/
     mdbook-html/
         Cargo.toml
+            …
             36→[features]
             37→search = ["dep:elasticlunr-rs"]
         README.md
             1→# mdbook-html
+            …
             7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
             9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
+            …
         front-end/
         src/
             html/
                 admonitions.rs
                 hide_lines.rs
                 mod.rs
+                    …
                     34→pub(crate) struct HtmlRenderOptions<'a> {
                     …
                     45→impl<'a> HtmlRenderOptions<'a> {
+                    …
                     47→    pub(crate) fn new(
                     48→        path: &'a Path,
                     49→        config: &'a HtmlConfig,
@@ -152,6 +167,7 @@ crates/
                 mod.rs
                     1→mod hbs_renderer;
                     2→mod helpers;
+                    …
                     4→mod search;
                     5→mod static_files;
                     7→pub use self::hbs_renderer::HtmlHandlebars;
@@ -168,6 +184,7 @@ crates/
                 fonts.rs
                 mod.rs
                     1→//! Support for theme files.
+                    …
                     39→#[derive(Debug, PartialEq)]
                     40→pub struct Theme {
                     41→    pub(crate) index: Vec<u8>,
@@ -192,6 +209,7 @@ crates/
                     60→    pub(crate) clipboard_js: Vec<u8>,
                     61→}
                     63→impl Theme {
+                    …
                     66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
                     …
                     166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
@@ -238,17 +256,20 @@ rustfmt.toml
 src/
     cmd/
         build.rs
+            …
             8→pub fn make_subcommand() -> Command {
             …
             17→pub fn execute(args: &ArgMatches) -> Result<()> {
             …
         clean.rs
         command_prelude.rs
+            …
             7→pub trait CommandExt: Sized {
             …
             62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
             …
         init.rs
+            …
             12→pub fn make_subcommand() -> ClapCommand {
             …
             32→pub fn execute(args: &ArgMatches) -> Result<()> {
@@ -259,15 +280,19 @@ src/
             4→pub mod clean;
             5→pub mod command_prelude;
             6→pub mod init;
+            …
             8→pub mod serve;
             9→pub mod test;
+            …
             11→pub mod watch;
         serve.rs
+            …
             23→pub fn make_subcommand() -> Command {
             …
             51→pub fn execute(args: &ArgMatches) -> Result<()> {
             …
         test.rs
+            …
             9→pub fn make_subcommand() -> Command {
             …
             35→pub fn execute(args: &ArgMatches) -> Result<()> {
@@ -276,12 +301,14 @@ src/
             native.rs
             poller.rs
         watch.rs
+            …
             12→pub fn make_subcommand() -> Command {
             …
             21→pub enum WatcherKind {
             22→    Poll,
             23→    Native,
             24→}
+            …
             37→pub fn execute(args: &ArgMatches) -> Result<()> {
             …
             62→pub fn rebuild_on_change(
@@ -293,6 +320,7 @@ src/
             …
     main.rs
         1→//! The mdbook CLI.
+        …
         5→use anyhow::anyhow;
         6→use clap::{Arg, ArgMatches, Command};
         7→use clap_complete::Shell;
@@ -302,14 +330,17 @@ src/
         11→use std::path::PathBuf;
         12→use tracing::{error, info};
         14→mod cmd;
+        …
         18→fn main() {
         19→    init_logger();
         21→    let command = create_clap_command();
         23→    // Check which subcommand the user ran...
+        …
         50→    if let Err(e) = res {
         51→        utils::log_backtrace(&e);
         53→        std::process::exit(101);
         54→    }
+        …
 tests/
     gui/
     testsuite/

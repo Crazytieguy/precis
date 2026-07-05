@@ -57,6 +57,7 @@ README.rst
     63→    inside Plugin_2.myhook()
     64→    inside Plugin_1.myhook()
     65→    [-1, 3]
+    …
 RELEASING.rst
 SECURITY.md
 TIDELIFT.rst
@@ -86,10 +87,14 @@ downstream/
     python-lsp-server.sh
     tox.sh
 pyproject.toml
+    …
     8→[project]
     9→name = "pluggy"
+    …
     33→description = "plugin and hook calling mechanisms for python"
+    …
     35→requires-python = ">=3.10"
+    …
 scripts/
 src/
     pluggy/
@@ -130,7 +135,9 @@ src/
             38→    raise AttributeError(f"module {__name__} has no attribute {name!r}")
         _callers.py
         _hooks.py
+            …
             28→_T = TypeVar("_T")
+            …
             40→class HookspecOpts(TypedDict):
             41→    """Options for a hook specification."""
             43→    #: Whether the hook is :ref:`first result only <firstresult>`.
@@ -164,10 +171,14 @@ src/
             74→    specname: str | None
             77→@final
             78→class HookspecMarker:
+            …
             86→    __slots__ = ("project_name",)
+            …
             164→@final
             165→class HookimplMarker:
+            …
             173→    __slots__ = ("project_name",)
+            …
             281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
             …
             293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
@@ -177,8 +188,10 @@ src/
             360→    """Hook holder object for performing 1:N hook calls where N is the number
             361→    of registered plugins."""
             363→    __slots__ = ("__dict__",)
+            …
             368→    if TYPE_CHECKING:
             370→        def __getattr__(self, name: str) -> HookCaller: ...
+            …
             382→class HookCaller:
             383→    """A caller of all registered implementations of a hook specification."""
             385→    __slots__ = (
@@ -188,11 +201,13 @@ src/
             389→        "_hookimpls",
             390→        "_call_history",
             391→    )
+            …
             419→    # TODO: Document, or make private.
+            …
             423→    # TODO: Document, or make private.
+            …
             593→class _SubsetHookCaller(HookCaller):
-            594→    """A proxy to another HookCaller which manages calls to all registered
-            595→    plugins except the ones from remove_plugins."""
+            …
             638→@final
             639→class HookImpl:
             640→    """A hook implementation in a :class:`HookCaller`."""
@@ -209,6 +224,7 @@ src/
             652→        "tryfirst",
             653→        "trylast",
             654→    )
+            …
             696→@final
             697→class HookSpec:
             698→    __slots__ = (
@@ -221,7 +237,9 @@ src/
             705→        "warn_on_impl",
             706→        "warn_on_impl_args",
             707→    )
+            …
         _manager.py
+            …
             36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
             37→_AfterTrace: TypeAlias = Callable[
             38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
@@ -233,13 +251,16 @@ src/
             55→    :param plugin: The plugin which failed validation.
             56→    :param message: Error message.
             57→    """
+            …
             65→class DistFacade:
             66→    """Emulate a pkg_resources Distribution"""
+            …
             83→class PluginManager:
             …
             525→def _formatdef(func: Callable[..., object]) -> str:
             526→    return f"{func.__name__}{inspect.signature(func)}"
         _result.py
+            …
             16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
             17→ResultType = TypeVar("ResultType")
             20→class HookCallError(Exception):
@@ -255,9 +276,11 @@ src/
             34→        exception: BaseException | None,
             35→    ) -> None:
             36→        """:meta private:"""
+            …
             42→    @property
             43→    def excinfo(self) -> _ExcInfo | None:
             44→        """:meta private:"""
+            …
             51→    @property
             52→    def exception(self) -> BaseException | None:
             53→        """:meta private:"""
@@ -265,6 +288,7 @@ src/
             56→    @classmethod
             57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
             58→        """:meta private:"""
+            …
             67→    def force_result(self, result: ResultType) -> None:
             …
             80→    def force_exception(self, exception: BaseException) -> None:
@@ -280,6 +304,7 @@ src/
             7→    __module__ = "pluggy"
             10→@final
             11→class PluggyTeardownRaisedWarning(PluggyWarning):
+            …
             27→    __module__ = "pluggy"
         py.typed
 testing/

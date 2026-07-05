@@ -11,7 +11,9 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 LICENSE.md
 README.md
+    …
     7→Sync and Async Object-oriented Python SDK for the 3x-ui API.
+    …
     17→[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/iwatkot/py3xui)](https://github.com/iwatkot/py3xui/releases)
     18→[![PyPI - Version](https://img.shields.io/pypi/v/py3xui)](https://pypi.org/project/py3xui/)
     19→[![GitHub issues](https://img.shields.io/github/issues/iwatkot/py3xui)](https://github.com/iwatkot/py3xui/issues)
@@ -20,6 +22,7 @@ README.md
     22→[![PyPI - Downloads](https://img.shields.io/pypi/dm/py3xui)](https://pypi.org/project/py3xui/)
     23→[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/py3xui)](https://pypi.org/project/py3xui/)
     24→[![codecov](https://codecov.io/github/iwatkot/py3xui/graph/badge.svg?token=M9EYR3D23P)](https://codecov.io/github/iwatkot/py3xui)
+    …
     29→## Overview
     30→This SDK is designed to interact with the [3x-ui](https://github.com/MHSanaei/3x-ui) app in a more object-oriented way. It provides both synchronous and asynchronous methods to interact with the app. The SDK is designed to be as simple as possible to use, while still providing a lot of flexibility and uses `Pydantic` models to validate the data.<br>
     31→Used dependencies:
@@ -62,10 +65,6 @@ README.md
     338→You're also welcome to contribute to the project by opening a pull request.
 SECURITY.md
 demo.py
-    1→from py3xui import Api
-    63→from py3xui import Inbound
-    98→import os
-    100→import qrcode
 dev/
     clean_trash.sh
     create_venv.sh
@@ -86,6 +85,7 @@ py3xui/
             3→# api.api\_database
             5→This module contains the DatabaseApi class, which is responsible handling database operations
             6→in the XUI API.
+            …
         __init__.py
             1→# pylint: disable=missing-module-docstring
             2→from py3xui.api.api_client import ClientApi
@@ -93,34 +93,48 @@ py3xui/
             4→from py3xui.api.api_inbound import InboundApi
             5→from py3xui.api.api_server import ServerApi
         api.py
+            …
             13→class Api:
             14→    """This class provides a high-level interface to interact with the XUI API.
             15→    Access to the client, inbound, and database APIs is provided through this class.
+            …
         api_base.py
+            …
             15→class ApiFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
+            …
             28→class BaseApi:
             29→    """Base class for the XUI API. Contains common methods for making requests.
+            …
         api_client.py
+            …
             13→class ClientApi(BaseApi):
             14→    """This class provides methods to interact with the clients in the XUI API.
+            …
         api_database.py
+            …
             7→class DatabaseApi(BaseApi):
             8→    """This class provides methods to interact with the database in the XUI API.
+            …
             32→    def export(self) -> None:
             …
         api_inbound.py
+            …
             9→class InboundApi(BaseApi):
             10→    """This class provides methods to interact with the inbounds in the XUI API.
+            …
         api_server.py
+            …
             7→class ServerApi(BaseApi):
             8→    """This class provides methods to interact with the server in the XUI API.
+            …
     async_api/
         README.md
             1→<a id="async_api.async_api_inbound"></a>
             3→# async\_api.async\_api\_inbound
             5→This module contains the InboundApi class which provides methods to interact with the
             6→clients in the XUI API asynchronously.
+            …
         __init__.py
             1→# pylint: disable=missing-module-docstring
             2→from py3xui.async_api.async_api_client import AsyncClientApi
@@ -128,27 +142,39 @@ py3xui/
             4→from py3xui.async_api.async_api_inbound import AsyncInboundApi
             5→from py3xui.async_api.async_api_server import AsyncServerApi
         async_api.py
+            …
             18→class AsyncApi:
             19→    """This class provides a high-level interface to interact with the XUI API.
             20→    Access to the client, inbound, and database APIs is provided through this class.
+            …
         async_api_base.py
+            …
             16→class AsyncBaseApi:
             17→    """Base class for the XUI API. Contains async common methods for making requests.
+            …
         async_api_client.py
+            …
             12→class AsyncClientApi(AsyncBaseApi):
             13→    """This class provides async methods to interact with the clients in the XUI API.
+            …
         async_api_database.py
+            …
             7→class AsyncDatabaseApi(AsyncBaseApi):
             8→    """This class provides methods to interact with the database in the XUI API.
+            …
             32→    async def export(self) -> None:
             …
         async_api_inbound.py
+            …
             11→class AsyncInboundApi(AsyncBaseApi):
             12→    """This class provides methods to interact with the inbounds in the XUI API.
+            …
         async_api_server.py
+            …
             8→class AsyncServerApi(AsyncBaseApi):
             …
             43→    # pylint: disable=R0801
+            …
     client/
         README.md
             1→<a id="client.client"></a>
@@ -163,8 +189,27 @@ py3xui/
             1→# pylint: disable=missing-module-docstring
             2→from py3xui.client.client import Client
         client.py
+            …
             7→class ClientFields:
             8→    """Stores the fields returned by the XUI API for parsing."""
+            10→    EMAIL = "email"
+            11→    ENABLE = "enable"
+            12→    PASSWORD = "password"
+            14→    ID = "id"
+            15→    INBOUND_ID = "inboundId"
+            17→    UP = "up"
+            18→    DOWN = "down"
+            20→    EXPIRY_TIME = "expiryTime"
+            22→    TOTAL = "total"
+            23→    RESET = "reset"
+            25→    FLOW = "flow"
+            26→    METHOD = "method"
+            27→    LIMIT_IP = "limitIp"
+            28→    SUB_ID = "subId"
+            29→    COMMENT = "comment"
+            30→    TG_ID = "tgId"
+            31→    TOTAL_GB = "totalGB"
+            33→    UUID = "uuid"
             36→class Client(BaseModel):
             …
     inbound/
@@ -173,6 +218,7 @@ py3xui/
             3→# inbound.settings
             5→This module contains the Settings class, which is used to parse the JSON response
             6→from the XUI API.
+            …
         __init__.py
             1→# pylint: disable=missing-module-docstring
             2→from py3xui.inbound.inbound import Inbound
@@ -180,29 +226,23 @@ py3xui/
             4→from py3xui.inbound.sniffing import Sniffing
             5→from py3xui.inbound.stream_settings import StreamSettings
         bases.py
+            …
             9→class JsonStringModel(BaseModel):
             10→    """Base class for models that have a JSON string as a field."""
             12→    @model_validator(mode="before")
             …
         inbound.py
+            …
             15→class InboundFields:
             16→    """Stores the fields returned by the XUI API for parsing."""
+            …
             38→class Inbound(BaseModel):
             …
             88→    @field_validator("stream_settings")
-            89→    def validate_stream_settings(  # pylint: disable=no-self-argument
-            90→        cls, value: StreamSettings | str
-            91→    ) -> StreamSettings | str:
+            …
             114→    def to_json(self) -> dict[str, Any]:
             …
         settings.py
-            9→class SettingsFields:
-            10→    """Stores the fields returned by the XUI API for parsing."""
-            17→class Settings(JsonStringModel):
-            …
-            26→    clients: list[Client] = []
-            27→    decryption: str = ""
-            28→    fallbacks: list = []
         sniffing.py
         stream_settings.py
     server/
@@ -211,6 +251,7 @@ py3xui/
             3→# server.server
             5→This module contains the Server class which represents server information in XUI API.
             7→<a id="server.server.ServerFields"></a>
+            …
         __init__.py
             1→# pylint: disable=missing-module-docstring
             2→from py3xui.server.server import RealityKeyPair, Server
@@ -221,22 +262,27 @@ py3xui/
             3→# utils.env
             5→This module contains utility functions for parsing environment variables.
             7→<a id="utils.env.parse_env"></a>
+            …
         __init__.py
             1→# pylint: disable=consider-using-from-import, missing-module-docstring
             2→from py3xui.utils import env
             4→COOKIE_NAMES = ["3x-ui", "session"]
         env.py
 pyproject.toml
+    …
     5→[project]
     6→name = "py3xui"
     7→version = "0.5.0"
     8→description = "Sync and Async Object-oriented Python SDK for the 3x-ui app."
+    …
     11→readme = "README.md"
+    …
     19→dependencies = [
     20→    "pydantic>=2.0.0",
     21→    "requests>=2.0.0",
     22→    "httpx>=0.20.0",
     23→]
+    …
 tests/
     __init__.py
     responses/

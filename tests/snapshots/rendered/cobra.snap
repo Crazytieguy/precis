@@ -8,7 +8,6 @@ expression: rendered
 .mailmap
 CONDUCT.md
     1→## Cobra User Contract
-    …
     3→### Versioning
     …
     6→### Backward Compatibility
@@ -30,8 +29,10 @@ LICENSE.txt
 MAINTAINERS
 Makefile
 README.md
+    …
     7→Cobra is a library for creating powerful modern CLI applications.
     9→<a href="https://cobra.dev">Visit Cobra.dev for extensive documentation</a> 
+    …
     29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
     30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
     32→</div>
@@ -49,27 +50,17 @@ README.md
     116→# Usage
     …
     131→# License
-    …
     133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
-    15→package cobra
-    17→import (
-    18→	"fmt"
-    19→	"os"
-    20→)
 active_help_test.go
 args.go
-    15→package cobra
-    17→import (
-    18→	"fmt"
-    19→	"strings"
-    20→)
 args_test.go
 assets/
     CobraMain.png
 bash_completions.go
 bash_completionsV2.go
+    …
     24→func (c *Command) genBashCompletion(w io.Writer, includeDesc bool) error {
     …
     31→func genBashComp(buf io.StringWriter, name string, includeDesc bool) {
@@ -81,23 +72,24 @@ bash_completionsV2.go
     481→// and writes it to the passed writer.
     482→func (c *Command) GenBashCompletionV2(w io.Writer, includeDesc bool) error {
     483→	return c.genBashCompletion(w, includeDesc)
+    …
 bash_completionsV2_test.go
 bash_completions_test.go
 cobra.go
 cobra_test.go
 command.go
+    …
     15→// Package cobra is a commander providing a simple interface to create powerful modern CLI interfaces.
     16→// In addition to providing an interface, Cobra simultaneously provides a controller to organize your application code.
+    …
     33→const (
     34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
     35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
-    …
     37→	helpFlagName    = "help"
     38→	helpCommandName = "help"
     39→)
     41→// FParseErrWhitelist configures Flag parse errors to be ignored
     42→type FParseErrWhitelist flag.ParseErrorsAllowlist
-    …
     44→// Group Structure to manage groups for commands
     45→type Group struct {
     46→	ID    string
@@ -147,8 +139,10 @@ command.go
     113→	// will print content of the "Version" variable. A shorthand "v" flag will also be added if the
     114→	// command does not define one.
     115→	Version string
+    …
     148→	// groups for subcommands
     149→	commandgroups []*Group
+    …
     188→	// completionCommandGroupID is the group id for the completion command
     189→	completionCommandGroupID string
     191→	// versionTemplate is the version template defined by user.
@@ -205,16 +199,20 @@ command.go
     258→	// Must be > 0.
     259→	SuggestionsMinimumDistance int
     260→}
+    …
     269→func (c *Command) Context() context.Context {
     270→	return c.ctx
+    …
     273→// SetContext sets context for the command. This context will be overwritten by
     274→// Command.ExecuteContext or Command.ExecuteContextC.
     275→func (c *Command) SetContext(ctx context.Context) {
     276→	c.ctx = ctx
+    …
     279→// SetArgs sets arguments for the command. It is set to os.Args[1:] by default, if desired, can be overridden
     280→// particularly useful when testing.
     281→func (c *Command) SetArgs(a []string) {
     282→	c.args = a
+    …
     285→// SetOutput sets the destination for usage and error messages.
     286→// If output is nil, os.Stderr is used.
     287→//
@@ -222,7 +220,9 @@ command.go
     289→func (c *Command) SetOutput(output io.Writer) {
     290→	c.outWriter = output
     291→	c.errWriter = output
+    …
 command_notwin.go
+    …
     20→var preExecHookFn func(*Command)
 command_test.go
 command_win.go
@@ -241,6 +241,7 @@ doc/
     yaml_docs.go
     yaml_docs_test.go
 fish_completions.go
+    …
     25→func genFishComp(buf io.StringWriter, name string, includeDesc bool) {
     …
     275→// GenFishCompletion generates fish completion file and writes to the passed writer.
@@ -265,10 +266,6 @@ go.sum
 powershell_completions.go
 powershell_completions_test.go
 shell_completions.go
-    15→package cobra
-    17→import (
-    18→	"github.com/spf13/pflag"
-    19→)
 site/
     content/
         active_help.md

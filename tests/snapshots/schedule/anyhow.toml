@@ -1,6 +1,6 @@
 fixture = "anyhow"
 budget = 10000
-cumulative_tokens = 8944
+cumulative_tokens = 9082
 batch_count = 102
 
 [[batches]]
@@ -21,8 +21,8 @@ entries = [".github", ".gitignore", "Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT
 position = 2
 key = 'Toml(Features { file: "Cargo.toml" })'
 descriptor = "[features] in Cargo.toml"
-cost_tokens = 23
-cum_tokens = 57
+cost_tokens = 27
+cum_tokens = 61
 
 [batches.content]
 kind = "lines"
@@ -39,8 +39,8 @@ kind = "full"
 position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
-cost_tokens = 63
-cum_tokens = 120
+cost_tokens = 67
+cum_tokens = 128
 
 [batches.content]
 kind = "lines"
@@ -66,7 +66,7 @@ position = 4
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 44
-cum_tokens = 164
+cum_tokens = 172
 
 [batches.content]
 kind = "lines"
@@ -139,8 +139,8 @@ kind = "ellipsis"
 position = 5
 key = 'Toml(Identity { file: "Cargo.toml" })'
 descriptor = "[package] in Cargo.toml"
-cost_tokens = 167
-cum_tokens = 331
+cost_tokens = 165
+cum_tokens = 337
 
 [batches.content]
 kind = "lines"
@@ -157,8 +157,8 @@ kind = "full"
 position = 6
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
-cost_tokens = 66
-cum_tokens = 397
+cost_tokens = 64
+cum_tokens = 401
 
 [batches.content]
 kind = "lines"
@@ -192,7 +192,7 @@ position = 7
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 49
-cum_tokens = 446
+cum_tokens = 450
 
 [batches.content]
 kind = "fs"
@@ -205,8 +205,8 @@ entries = ["backtrace.rs", "chain.rs", "context.rs", "ensure.rs", "error.rs", "f
 position = 8
 key = 'Rust(PubItemNames { file: "src/lib.rs" })'
 descriptor = "pub-item names surface in src/lib.rs"
-cost_tokens = 88
-cum_tokens = 534
+cost_tokens = 90
+cum_tokens = 540
 
 [batches.content]
 kind = "lines"
@@ -296,7 +296,7 @@ position = 9
 key = 'Rust(PubItem { file: "src/lib.rs", start_line: 468 })'
 descriptor = "pub item at src/lib.rs:468"
 cost_tokens = 0
-cum_tokens = 534
+cum_tokens = 540
 
 [batches.content]
 kind = "lines"
@@ -313,8 +313,8 @@ kind = "full"
 position = 10
 key = 'Rust(PubItem { file: "src/lib.rs", start_line: 650 })'
 descriptor = "pub item at src/lib.rs:650"
-cost_tokens = 11
-cum_tokens = 545
+cost_tokens = 13
+cum_tokens = 553
 
 [batches.content]
 kind = "lines"
@@ -345,28 +345,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 11
-key = 'Rust(PubItemBody { file: "src/lib.rs", start_line: 650, body_start_line: 651 })'
-descriptor = "pub item body at src/lib.rs:650 body 651"
-cost_tokens = 8
-cum_tokens = 553
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 651
-end = 651
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
 key = 'Rust(PubItem { file: "src/lib.rs", start_line: 390 })'
 descriptor = "pub item at src/lib.rs:390"
-cost_tokens = 24
-cum_tokens = 577
+cost_tokens = 26
+cum_tokens = 579
 
 [batches.content]
 kind = "lines"
@@ -380,11 +362,29 @@ end = 392
 kind = "full"
 
 [[batches]]
+position = 12
+key = 'Rust(PubItemBody { file: "src/lib.rs", start_line: 650, body_start_line: 651 })'
+descriptor = "pub item body at src/lib.rs:650 body 651"
+cost_tokens = 10
+cum_tokens = 589
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 651
+end = 651
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 13
 key = 'Rust(PubItem { file: "src/lib.rs", start_line: 415 })'
 descriptor = "pub item at src/lib.rs:415"
-cost_tokens = 27
-cum_tokens = 604
+cost_tokens = 29
+cum_tokens = 618
 
 [batches.content]
 kind = "lines"
@@ -401,8 +401,8 @@ kind = "full"
 position = 14
 key = 'Rust(PubItem { file: "src/lib.rs", start_line: 616 })'
 descriptor = "pub item at src/lib.rs:616"
-cost_tokens = 153
-cum_tokens = 757
+cost_tokens = 155
+cum_tokens = 773
 
 [batches.content]
 kind = "lines"
@@ -427,8 +427,8 @@ kind = "full"
 position = 15
 key = 'Rust(MacroNames { src_dir: "src" })'
 descriptor = "macro_export names across src"
-cost_tokens = 78
-cum_tokens = 835
+cost_tokens = 82
+cum_tokens = 855
 
 [batches.content]
 kind = "lines"
@@ -531,10 +531,28 @@ kind = "ellipsis"
 
 [[batches]]
 position = 16
+key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 415 })'
+descriptor = "pub-item doc lede at src/lib.rs:415"
+cost_tokens = 41
+cum_tokens = 896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 394
+end = 397
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
 key = 'Rust(ModUse { file: "src/lib.rs" })'
 descriptor = "mod/use plumbing in src/lib.rs"
-cost_tokens = 173
-cum_tokens = 1008
+cost_tokens = 185
+cum_tokens = 1081
 
 [batches.content]
 kind = "lines"
@@ -612,29 +630,11 @@ end = 657
 kind = "ellipsis"
 
 [[batches]]
-position = 17
-key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 415 })'
-descriptor = "pub-item doc lede at src/lib.rs:415"
-cost_tokens = 41
-cum_tokens = 1049
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 394
-end = 397
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 18
 key = 'Rust(CrateDocLede { file: "src/lib.rs" })'
 descriptor = "crate-doc lede in src/lib.rs"
 cost_tokens = 274
-cum_tokens = 1323
+cum_tokens = 1355
 
 [batches.content]
 kind = "lines"
@@ -652,7 +652,7 @@ position = 19
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 616 })'
 descriptor = "pub-item doc lede at src/lib.rs:616"
 cost_tokens = 65
-cum_tokens = 1388
+cum_tokens = 1420
 
 [batches.content]
 kind = "lines"
@@ -670,7 +670,7 @@ position = 20
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 90
-cum_tokens = 1478
+cum_tokens = 1510
 
 [batches.content]
 kind = "fs"
@@ -683,8 +683,8 @@ entries = ["common", "compiletest.rs", "crate", "drop", "test_autotrait.rs", "te
 position = 21
 key = 'Rust(MethodSigs { file: "src/context.rs" })'
 descriptor = "impl method sigs in src/context.rs"
-cost_tokens = 137
-cum_tokens = 1615
+cost_tokens = 141
+cum_tokens = 1651
 
 [batches.content]
 kind = "lines"
@@ -765,8 +765,8 @@ kind = "ellipsis"
 position = 22
 key = 'Rust(MacroBody { file: "src/macros.rs", start_line: 58 })'
 descriptor = "macro_export body at src/macros.rs:58"
-cost_tokens = 136
-cum_tokens = 1751
+cost_tokens = 138
+cum_tokens = 1789
 
 [batches.content]
 kind = "lines"
@@ -784,7 +784,7 @@ position = 23
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 390 })'
 descriptor = "pub-item doc lede at src/lib.rs:390"
 cost_tokens = 174
-cum_tokens = 1925
+cum_tokens = 1963
 
 [batches.content]
 kind = "lines"
@@ -802,7 +802,7 @@ position = 24
 key = 'Toml(Dependencies { file: "Cargo.toml" })'
 descriptor = "[dependencies] in Cargo.toml"
 cost_tokens = 207
-cum_tokens = 2132
+cum_tokens = 2170
 
 [batches.content]
 kind = "lines"
@@ -828,7 +828,7 @@ position = 25
 key = 'Rust(PubItemNames { file: "src/ensure.rs" })'
 descriptor = "pub-item names surface in src/ensure.rs"
 cost_tokens = 23
-cum_tokens = 2155
+cum_tokens = 2193
 
 [batches.content]
 kind = "lines"
@@ -869,8 +869,8 @@ kind = "ellipsis"
 position = 26
 key = 'Rust(MacroBody { file: "src/macros.rs", start_line: 204 })'
 descriptor = "macro_export body at src/macros.rs:204"
-cost_tokens = 220
-cum_tokens = 2375
+cost_tokens = 222
+cum_tokens = 2415
 
 [batches.content]
 kind = "lines"
@@ -885,104 +885,10 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Rust(MethodSigs { file: "src/chain.rs" })'
-descriptor = "impl method sigs in src/chain.rs"
-cost_tokens = 38
-cum_tokens = 2413
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chain.rs"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chain.rs"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chain.rs"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 28
-key = 'Rust(PubItemNames { file: "src/chain.rs" })'
-descriptor = "pub-item names surface in src/chain.rs"
-cost_tokens = 31
-cum_tokens = 2444
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chain.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chain.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/chain.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chain.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 29
-key = 'Rust(PubItem { file: "src/chain.rs", start_line: 11 })'
-descriptor = "pub item at src/chain.rs:11"
-cost_tokens = 15
-cum_tokens = 2459
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/chain.rs"
-start = 11
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
 key = 'Rust(MethodSigs { file: "src/error.rs" })'
 descriptor = "impl method sigs in src/error.rs"
-cost_tokens = 324
-cum_tokens = 2783
+cost_tokens = 328
+cum_tokens = 2743
 
 [batches.content]
 kind = "lines"
@@ -1220,11 +1126,105 @@ end = 687
 kind = "ellipsis"
 
 [[batches]]
+position = 28
+key = 'Rust(MethodSigs { file: "src/chain.rs" })'
+descriptor = "impl method sigs in src/chain.rs"
+cost_tokens = 42
+cum_tokens = 2785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chain.rs"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chain.rs"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chain.rs"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 29
+key = 'Rust(PubItemNames { file: "src/chain.rs" })'
+descriptor = "pub-item names surface in src/chain.rs"
+cost_tokens = 31
+cum_tokens = 2816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chain.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chain.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/chain.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/chain.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 30
+key = 'Rust(PubItem { file: "src/chain.rs", start_line: 11 })'
+descriptor = "pub item at src/chain.rs:11"
+cost_tokens = 17
+cum_tokens = 2833
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/chain.rs"
+start = 11
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 31
 key = 'Rust(MethodSigs { file: "src/ptr.rs" })'
 descriptor = "impl method sigs in src/ptr.rs"
-cost_tokens = 390
-cum_tokens = 3173
+cost_tokens = 398
+cum_tokens = 3231
 
 [batches.content]
 kind = "lines"
@@ -1511,44 +1511,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 32
-key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 468 })'
-descriptor = "pub-item doc lede at src/lib.rs:468"
-cost_tokens = 222
-cum_tokens = 3395
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 419
-end = 429
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 431
-end = 435
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 437
-end = 438
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
 key = 'Rust(PubItemNames { file: "src/error.rs" })'
 descriptor = "pub-item names surface in src/error.rs"
 cost_tokens = 34
-cum_tokens = 3429
+cum_tokens = 3265
 
 [batches.content]
 kind = "lines"
@@ -1586,11 +1552,11 @@ end = 953
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Rust(PubItem { file: "src/error.rs", start_line: 952 })'
 descriptor = "pub item at src/error.rs:952"
-cost_tokens = 31
-cum_tokens = 3460
+cost_tokens = 33
+cum_tokens = 3298
 
 [batches.content]
 kind = "lines"
@@ -1604,11 +1570,45 @@ end = 955
 kind = "full"
 
 [[batches]]
+position = 34
+key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 468 })'
+descriptor = "pub-item doc lede at src/lib.rs:468"
+cost_tokens = 226
+cum_tokens = 3524
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 419
+end = 429
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 431
+end = 435
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 437
+end = 438
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 35
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 650 })'
 descriptor = "pub-item doc lede at src/lib.rs:650"
-cost_tokens = 286
-cum_tokens = 3746
+cost_tokens = 284
+cum_tokens = 3808
 
 [batches.content]
 kind = "lines"
@@ -1625,8 +1625,8 @@ kind = "full"
 position = 36
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
-cost_tokens = 124
-cum_tokens = 3870
+cost_tokens = 122
+cum_tokens = 3930
 
 [batches.content]
 kind = "lines"
@@ -1668,7 +1668,7 @@ position = 37
 key = 'Rust(PubItemNames { file: "src/ptr.rs" })'
 descriptor = "pub-item names surface in src/ptr.rs"
 cost_tokens = 50
-cum_tokens = 3920
+cum_tokens = 3980
 
 [batches.content]
 kind = "lines"
@@ -1741,8 +1741,8 @@ kind = "ellipsis"
 position = 38
 key = 'Rust(PubItem { file: "src/ptr.rs", start_line: 181 })'
 descriptor = "pub item at src/ptr.rs:181"
-cost_tokens = 11
-cum_tokens = 3931
+cost_tokens = 13
+cum_tokens = 3993
 
 [batches.content]
 kind = "lines"
@@ -1759,8 +1759,8 @@ kind = "full"
 position = 39
 key = 'Rust(PubItem { file: "src/ptr.rs", start_line: 6 })'
 descriptor = "pub item at src/ptr.rs:6"
-cost_tokens = 45
-cum_tokens = 3976
+cost_tokens = 47
+cum_tokens = 4040
 
 [batches.content]
 kind = "lines"
@@ -1777,8 +1777,8 @@ kind = "full"
 position = 40
 key = 'Rust(PubItem { file: "src/ptr.rs", start_line: 64 })'
 descriptor = "pub item at src/ptr.rs:64"
-cost_tokens = 59
-cum_tokens = 4035
+cost_tokens = 61
+cum_tokens = 4101
 
 [batches.content]
 kind = "lines"
@@ -1795,8 +1795,8 @@ kind = "full"
 position = 41
 key = 'Rust(PubItem { file: "src/ptr.rs", start_line: 125 })'
 descriptor = "pub item at src/ptr.rs:125"
-cost_tokens = 60
-cum_tokens = 4095
+cost_tokens = 62
+cum_tokens = 4163
 
 [batches.content]
 kind = "lines"
@@ -1813,8 +1813,8 @@ kind = "full"
 position = 42
 key = 'Rust(PubItemNames { file: "src/wrapper.rs" })'
 descriptor = "pub-item names surface in src/wrapper.rs"
-cost_tokens = 52
-cum_tokens = 4147
+cost_tokens = 54
+cum_tokens = 4217
 
 [batches.content]
 kind = "lines"
@@ -1872,7 +1872,7 @@ position = 43
 key = 'Rust(PubItem { file: "src/wrapper.rs", start_line: 11 })'
 descriptor = "pub item at src/wrapper.rs:11"
 cost_tokens = 9
-cum_tokens = 4156
+cum_tokens = 4226
 
 [batches.content]
 kind = "lines"
@@ -1890,7 +1890,7 @@ position = 44
 key = 'Rust(PubItem { file: "src/wrapper.rs", start_line: 34 })'
 descriptor = "pub item at src/wrapper.rs:34"
 cost_tokens = 9
-cum_tokens = 4165
+cum_tokens = 4235
 
 [batches.content]
 kind = "lines"
@@ -1908,7 +1908,7 @@ position = 45
 key = 'Rust(PubItem { file: "src/wrapper.rs", start_line: 58 })'
 descriptor = "pub item at src/wrapper.rs:58"
 cost_tokens = 9
-cum_tokens = 4174
+cum_tokens = 4244
 
 [batches.content]
 kind = "lines"
@@ -1925,8 +1925,8 @@ kind = "full"
 position = 46
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
-cost_tokens = 200
-cum_tokens = 4374
+cost_tokens = 198
+cum_tokens = 4442
 
 [batches.content]
 kind = "lines"
@@ -1975,8 +1975,8 @@ kind = "full"
 position = 47
 key = 'Rust(PubItem { file: "src/chain.rs", start_line: 16 })'
 descriptor = "pub item at src/chain.rs:16"
-cost_tokens = 101
-cum_tokens = 4475
+cost_tokens = 99
+cum_tokens = 4541
 
 [batches.content]
 kind = "lines"
@@ -1993,8 +1993,8 @@ kind = "full"
 position = 48
 key = 'Rust(PubItem { file: "src/error.rs", start_line: 934 })'
 descriptor = "pub item at src/error.rs:934"
-cost_tokens = 81
-cum_tokens = 4556
+cost_tokens = 83
+cum_tokens = 4624
 
 [batches.content]
 kind = "lines"
@@ -2009,92 +2009,10 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'Rust(MethodSigs { file: "src/kind.rs" })'
-descriptor = "impl method sigs in src/kind.rs"
-cost_tokens = 92
-cum_tokens = 4648
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 115
-end = 115
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/kind.rs"
-start = 118
-end = 118
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 50
 key = 'Rust(PubItemNames { file: "src/kind.rs" })'
 descriptor = "pub-item names surface in src/kind.rs"
-cost_tokens = 73
-cum_tokens = 4721
+cost_tokens = 75
+cum_tokens = 4699
 
 [batches.content]
 kind = "lines"
@@ -2196,11 +2114,93 @@ end = 105
 kind = "ellipsis"
 
 [[batches]]
+position = 50
+key = 'Rust(MethodSigs { file: "src/kind.rs" })'
+descriptor = "impl method sigs in src/kind.rs"
+cost_tokens = 98
+cum_tokens = 4797
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/kind.rs"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 51
 key = 'Fs(DirListing { dir: "tests/ui" })'
 descriptor = "listing of 'tests/ui'"
 cost_tokens = 82
-cum_tokens = 4803
+cum_tokens = 4879
 
 [batches.content]
 kind = "fs"
@@ -2211,200 +2211,10 @@ entries = ["chained-comparison.rs", "chained-comparison.stderr", "empty-ensure.r
 
 [[batches]]
 position = 52
-key = 'Rust(PubItemNames { file: "src/nightly.rs" })'
-descriptor = "pub-item names surface in src/nightly.rs"
-cost_tokens = 89
-cum_tokens = 4892
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 53
-key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 41 })'
-descriptor = "pub item at src/nightly.rs:41"
-cost_tokens = 0
-cum_tokens = 4892
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 54
-key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 52 })'
-descriptor = "pub item at src/nightly.rs:52"
-cost_tokens = 0
-cum_tokens = 4892
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 55
-key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 56 })'
-descriptor = "pub item at src/nightly.rs:56"
-cost_tokens = 0
-cum_tokens = 4892
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 56
-key = 'Rust(PubItemBody { file: "src/nightly.rs", start_line: 56, body_start_line: 57 })'
-descriptor = "pub item body at src/nightly.rs:56 body 57"
-cost_tokens = 10
-cum_tokens = 4902
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Rust(PubItemBody { file: "src/nightly.rs", start_line: 41, body_start_line: 42 })'
-descriptor = "pub item body at src/nightly.rs:41 body 42"
-cost_tokens = 11
-cum_tokens = 4913
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 58
-key = 'Rust(PubItemBody { file: "src/nightly.rs", start_line: 52, body_start_line: 53 })'
-descriptor = "pub item body at src/nightly.rs:52 body 53"
-cost_tokens = 12
-cum_tokens = 4925
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 4933
+cum_tokens = 4887
 
 [batches.content]
 kind = "fs"
@@ -2414,11 +2224,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
-position = 60
+position = 53
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 4937
+cum_tokens = 4891
 
 [batches.content]
 kind = "fs"
@@ -2428,11 +2238,201 @@ parent = ".github/workflows"
 entries = ["ci.yml"]
 
 [[batches]]
+position = 54
+key = 'Rust(PubItemNames { file: "src/nightly.rs" })'
+descriptor = "pub-item names surface in src/nightly.rs"
+cost_tokens = 91
+cum_tokens = 4982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 41 })'
+descriptor = "pub item at src/nightly.rs:41"
+cost_tokens = 0
+cum_tokens = 4982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 56
+key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 52 })'
+descriptor = "pub item at src/nightly.rs:52"
+cost_tokens = 0
+cum_tokens = 4982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 57
+key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 56 })'
+descriptor = "pub item at src/nightly.rs:56"
+cost_tokens = 0
+cum_tokens = 4982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 58
+key = 'Rust(PubItemBody { file: "src/nightly.rs", start_line: 56, body_start_line: 57 })'
+descriptor = "pub item body at src/nightly.rs:56 body 57"
+cost_tokens = 12
+cum_tokens = 4994
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Rust(PubItemBody { file: "src/nightly.rs", start_line: 41, body_start_line: 42 })'
+descriptor = "pub item body at src/nightly.rs:41 body 42"
+cost_tokens = 13
+cum_tokens = 5007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Rust(PubItemBody { file: "src/nightly.rs", start_line: 52, body_start_line: 53 })'
+descriptor = "pub item body at src/nightly.rs:52 body 53"
+cost_tokens = 14
+cum_tokens = 5021
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 61
 key = 'Rust(CrateDocBody { file: "src/lib.rs" })'
 descriptor = "crate-doc body in src/lib.rs"
-cost_tokens = 1564
-cum_tokens = 6501
+cost_tokens = 1590
+cum_tokens = 6611
 
 [batches.content]
 kind = "lines"
@@ -2553,8 +2553,8 @@ kind = "full"
 position = 62
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
-cost_tokens = 259
-cum_tokens = 6760
+cost_tokens = 257
+cum_tokens = 6868
 
 [batches.content]
 kind = "lines"
@@ -2627,8 +2627,8 @@ kind = "full"
 position = 63
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
 descriptor = "README.md section #6"
-cost_tokens = 120
-cum_tokens = 6880
+cost_tokens = 122
+cum_tokens = 6990
 
 [batches.content]
 kind = "lines"
@@ -2669,8 +2669,8 @@ kind = "full"
 position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
-cost_tokens = 138
-cum_tokens = 7018
+cost_tokens = 140
+cum_tokens = 7130
 
 [batches.content]
 kind = "lines"
@@ -2693,46 +2693,10 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'Rust(PubItem { file: "src/ensure.rs", start_line: 10 })'
-descriptor = "pub item at src/ensure.rs:10"
-cost_tokens = 24
-cum_tokens = 7042
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ensure.rs"
-start = 10
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Rust(PubItem { file: "src/ensure.rs", start_line: 25 })'
-descriptor = "pub item at src/ensure.rs:25"
-cost_tokens = 24
-cum_tokens = 7066
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ensure.rs"
-start = 25
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
 key = 'Rust(PubItemDocBody { file: "src/lib.rs", start_line: 415 })'
 descriptor = "pub-item doc body at src/lib.rs:415"
 cost_tokens = 151
-cum_tokens = 7217
+cum_tokens = 7281
 
 [batches.content]
 kind = "lines"
@@ -2746,11 +2710,47 @@ end = 412
 kind = "full"
 
 [[batches]]
+position = 66
+key = 'Rust(PubItem { file: "src/ensure.rs", start_line: 10 })'
+descriptor = "pub item at src/ensure.rs:10"
+cost_tokens = 26
+cum_tokens = 7307
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ensure.rs"
+start = 10
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Rust(PubItem { file: "src/ensure.rs", start_line: 25 })'
+descriptor = "pub item at src/ensure.rs:25"
+cost_tokens = 26
+cum_tokens = 7333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ensure.rs"
+start = 25
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 68
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 199
-cum_tokens = 7416
+cum_tokens = 7532
 
 [batches.content]
 kind = "lines"
@@ -2799,8 +2799,8 @@ kind = "full"
 position = 69
 key = 'Rust(PubItemDocBody { file: "src/lib.rs", start_line: 468 })'
 descriptor = "pub-item doc body at src/lib.rs:468"
-cost_tokens = 124
-cum_tokens = 7540
+cost_tokens = 126
+cum_tokens = 7658
 
 [batches.content]
 kind = "lines"
@@ -2834,7 +2834,7 @@ position = 70
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 205
-cum_tokens = 7745
+cum_tokens = 7863
 
 [batches.content]
 kind = "lines"
@@ -2867,8 +2867,8 @@ kind = "full"
 position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
-cost_tokens = 215
-cum_tokens = 7960
+cost_tokens = 213
+cum_tokens = 8076
 
 [batches.content]
 kind = "lines"
@@ -2901,8 +2901,8 @@ kind = "full"
 position = 72
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
-cost_tokens = 241
-cum_tokens = 8201
+cost_tokens = 239
+cum_tokens = 8315
 
 [batches.content]
 kind = "lines"
@@ -2959,8 +2959,8 @@ kind = "full"
 position = 73
 key = 'Rust(PubItem { file: "src/kind.rs", start_line: 80 })'
 descriptor = "pub item at src/kind.rs:80"
-cost_tokens = 38
-cum_tokens = 8239
+cost_tokens = 40
+cum_tokens = 8355
 
 [batches.content]
 kind = "lines"
@@ -2977,8 +2977,8 @@ kind = "full"
 position = 74
 key = 'Rust(PubItem { file: "src/kind.rs", start_line: 58 })'
 descriptor = "pub item at src/kind.rs:58"
-cost_tokens = 40
-cum_tokens = 8279
+cost_tokens = 42
+cum_tokens = 8397
 
 [batches.content]
 kind = "lines"
@@ -2995,8 +2995,8 @@ kind = "full"
 position = 75
 key = 'Rust(PubItem { file: "src/kind.rs", start_line: 104 })'
 descriptor = "pub item at src/kind.rs:104"
-cost_tokens = 40
-cum_tokens = 8319
+cost_tokens = 42
+cum_tokens = 8439
 
 [batches.content]
 kind = "lines"
@@ -3013,8 +3013,8 @@ kind = "full"
 position = 76
 key = 'Rust(PubItemNames { file: "tests/test_ffi.rs" })'
 descriptor = "pub-item names surface in tests/test_ffi.rs"
-cost_tokens = 69
-cum_tokens = 8388
+cost_tokens = 71
+cum_tokens = 8510
 
 [batches.content]
 kind = "lines"
@@ -3072,7 +3072,7 @@ position = 77
 key = 'Rust(PubItem { file: "tests/test_ffi.rs", start_line: 7 })'
 descriptor = "pub item at tests/test_ffi.rs:7"
 cost_tokens = 0
-cum_tokens = 8388
+cum_tokens = 8510
 
 [batches.content]
 kind = "lines"
@@ -3098,7 +3098,7 @@ position = 78
 key = 'Rust(PubItem { file: "tests/test_ffi.rs", start_line: 12 })'
 descriptor = "pub item at tests/test_ffi.rs:12"
 cost_tokens = 0
-cum_tokens = 8388
+cum_tokens = 8510
 
 [batches.content]
 kind = "lines"
@@ -3124,7 +3124,7 @@ position = 79
 key = 'Rust(PubItem { file: "tests/test_ffi.rs", start_line: 17 })'
 descriptor = "pub item at tests/test_ffi.rs:17"
 cost_tokens = 0
-cum_tokens = 8388
+cum_tokens = 8510
 
 [batches.content]
 kind = "lines"
@@ -3149,8 +3149,8 @@ kind = "ellipsis"
 position = 80
 key = 'Rust(PubItemBody { file: "tests/test_ffi.rs", start_line: 7, body_start_line: 8 })'
 descriptor = "pub item body at tests/test_ffi.rs:7 body 8"
-cost_tokens = 9
-cum_tokens = 8397
+cost_tokens = 11
+cum_tokens = 8521
 
 [batches.content]
 kind = "lines"
@@ -3167,8 +3167,8 @@ kind = "full"
 position = 81
 key = 'Rust(PubItemBody { file: "tests/test_ffi.rs", start_line: 17, body_start_line: 18 })'
 descriptor = "pub item body at tests/test_ffi.rs:17 body 18"
-cost_tokens = 10
-cum_tokens = 8407
+cost_tokens = 12
+cum_tokens = 8533
 
 [batches.content]
 kind = "lines"
@@ -3185,8 +3185,8 @@ kind = "full"
 position = 82
 key = 'Rust(PubItemBody { file: "tests/test_ffi.rs", start_line: 12, body_start_line: 13 })'
 descriptor = "pub item body at tests/test_ffi.rs:12 body 13"
-cost_tokens = 13
-cum_tokens = 8420
+cost_tokens = 15
+cum_tokens = 8548
 
 [batches.content]
 kind = "lines"
@@ -3204,7 +3204,7 @@ position = 83
 key = 'Fs(DirListing { dir: "tests/crate" })'
 descriptor = "listing of 'tests/crate'"
 cost_tokens = 14
-cum_tokens = 8434
+cum_tokens = 8562
 
 [batches.content]
 kind = "fs"
@@ -3217,8 +3217,8 @@ entries = [".gitignore", "Cargo.toml", "test.rs"]
 position = 84
 key = 'Toml(Identity { file: "tests/crate/Cargo.toml" })'
 descriptor = "[package] in tests/crate/Cargo.toml"
-cost_tokens = 67
-cum_tokens = 8501
+cost_tokens = 69
+cum_tokens = 8631
 
 [batches.content]
 kind = "lines"
@@ -3236,7 +3236,7 @@ position = 85
 key = 'Toml(Features { file: "tests/crate/Cargo.toml" })'
 descriptor = "[features] in tests/crate/Cargo.toml"
 cost_tokens = 40
-cum_tokens = 8541
+cum_tokens = 8671
 
 [batches.content]
 kind = "lines"
@@ -3254,7 +3254,7 @@ position = 86
 key = 'Fs(DirListing { dir: "tests/common" })'
 descriptor = "listing of 'tests/common'"
 cost_tokens = 4
-cum_tokens = 8545
+cum_tokens = 8675
 
 [batches.content]
 kind = "fs"
@@ -3267,8 +3267,8 @@ entries = ["mod.rs"]
 position = 87
 key = 'Rust(PubItemNames { file: "tests/common/mod.rs" })'
 descriptor = "pub-item names surface in tests/common/mod.rs"
-cost_tokens = 45
-cum_tokens = 8590
+cost_tokens = 47
+cum_tokens = 8722
 
 [batches.content]
 kind = "lines"
@@ -3326,7 +3326,7 @@ position = 88
 key = 'Rust(PubItem { file: "tests/common/mod.rs", start_line: 4 })'
 descriptor = "pub item at tests/common/mod.rs:4"
 cost_tokens = 0
-cum_tokens = 8590
+cum_tokens = 8722
 
 [batches.content]
 kind = "lines"
@@ -3352,7 +3352,7 @@ position = 89
 key = 'Rust(PubItem { file: "tests/common/mod.rs", start_line: 8 })'
 descriptor = "pub item at tests/common/mod.rs:8"
 cost_tokens = 0
-cum_tokens = 8590
+cum_tokens = 8722
 
 [batches.content]
 kind = "lines"
@@ -3378,7 +3378,7 @@ position = 90
 key = 'Rust(PubItem { file: "tests/common/mod.rs", start_line: 12 })'
 descriptor = "pub item at tests/common/mod.rs:12"
 cost_tokens = 0
-cum_tokens = 8590
+cum_tokens = 8722
 
 [batches.content]
 kind = "lines"
@@ -3403,8 +3403,8 @@ kind = "ellipsis"
 position = 91
 key = 'Rust(PubItemBody { file: "tests/common/mod.rs", start_line: 4, body_start_line: 5 })'
 descriptor = "pub item body at tests/common/mod.rs:4 body 5"
-cost_tokens = 8
-cum_tokens = 8598
+cost_tokens = 10
+cum_tokens = 8732
 
 [batches.content]
 kind = "lines"
@@ -3421,8 +3421,8 @@ kind = "full"
 position = 92
 key = 'Rust(PubItemBody { file: "tests/common/mod.rs", start_line: 8, body_start_line: 9 })'
 descriptor = "pub item body at tests/common/mod.rs:8 body 9"
-cost_tokens = 14
-cum_tokens = 8612
+cost_tokens = 16
+cum_tokens = 8748
 
 [batches.content]
 kind = "lines"
@@ -3439,8 +3439,8 @@ kind = "full"
 position = 93
 key = 'Rust(PubItemBody { file: "tests/common/mod.rs", start_line: 12, body_start_line: 13 })'
 descriptor = "pub item body at tests/common/mod.rs:12 body 13"
-cost_tokens = 22
-cum_tokens = 8634
+cost_tokens = 24
+cum_tokens = 8772
 
 [batches.content]
 kind = "lines"
@@ -3457,8 +3457,8 @@ kind = "full"
 position = 94
 key = 'Rust(ModUse { file: "tests/common/mod.rs" })'
 descriptor = "mod/use plumbing in tests/common/mod.rs"
-cost_tokens = 21
-cum_tokens = 8655
+cost_tokens = 19
+cum_tokens = 8791
 
 [batches.content]
 kind = "lines"
@@ -3476,7 +3476,7 @@ position = 95
 key = 'Fs(DirListing { dir: "tests/drop" })'
 descriptor = "listing of 'tests/drop'"
 cost_tokens = 4
-cum_tokens = 8659
+cum_tokens = 8795
 
 [batches.content]
 kind = "fs"
@@ -3489,8 +3489,8 @@ entries = ["mod.rs"]
 position = 96
 key = 'Rust(PubItemNames { file: "tests/drop/mod.rs" })'
 descriptor = "pub-item names surface in tests/drop/mod.rs"
-cost_tokens = 21
-cum_tokens = 8680
+cost_tokens = 23
+cum_tokens = 8818
 
 [batches.content]
 kind = "lines"
@@ -3531,8 +3531,8 @@ kind = "ellipsis"
 position = 97
 key = 'Rust(PubItem { file: "tests/drop/mod.rs", start_line: 26 })'
 descriptor = "pub item at tests/drop/mod.rs:26"
-cost_tokens = 22
-cum_tokens = 8702
+cost_tokens = 24
+cum_tokens = 8842
 
 [batches.content]
 kind = "lines"
@@ -3549,8 +3549,8 @@ kind = "full"
 position = 98
 key = 'Rust(PubItem { file: "tests/drop/mod.rs", start_line: 9 })'
 descriptor = "pub item at tests/drop/mod.rs:9"
-cost_tokens = 23
-cum_tokens = 8725
+cost_tokens = 25
+cum_tokens = 8867
 
 [batches.content]
 kind = "lines"
@@ -3568,7 +3568,7 @@ position = 99
 key = 'Rust(ModUse { file: "tests/drop/mod.rs" })'
 descriptor = "mod/use plumbing in tests/drop/mod.rs"
 cost_tokens = 54
-cum_tokens = 8779
+cum_tokens = 8921
 
 [batches.content]
 kind = "lines"
@@ -3585,8 +3585,8 @@ kind = "full"
 position = 100
 key = 'Rust(MethodSigs { file: "tests/drop/mod.rs" })'
 descriptor = "impl method sigs in tests/drop/mod.rs"
-cost_tokens = 124
-cum_tokens = 8903
+cost_tokens = 120
+cum_tokens = 9041
 
 [batches.content]
 kind = "lines"
@@ -3676,7 +3676,7 @@ position = 101
 key = 'Toml(Dependencies { file: "tests/crate/Cargo.toml" })'
 descriptor = "[dependencies] in tests/crate/Cargo.toml"
 cost_tokens = 26
-cum_tokens = 8929
+cum_tokens = 9067
 
 [batches.content]
 kind = "lines"
@@ -3694,7 +3694,7 @@ position = 102
 key = 'Plaintext(Whole { file: ".gitignore" })'
 descriptor = "plaintext config .gitignore"
 cost_tokens = 15
-cum_tokens = 8944
+cum_tokens = 9082
 
 [batches.content]
 kind = "lines"

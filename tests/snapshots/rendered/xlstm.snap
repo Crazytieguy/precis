@@ -7,7 +7,9 @@ expression: rendered
 AUTHORS
 LICENSE
 README.md
+    …
     3→# xLSTM: Extended Long Short-Term Memory
+    …
     15→> **Paper:** https://arxiv.org/abs/2405.04517
     16→>
     17→> **Authors:** Maximilian Beck, Korbinian Pöppel, Markus Spanring, Andreas Auer, Oleksandra Prudnikova, Michael Kopp, Günter Klambauer, Johannes Brandstetter, Sepp Hochreiter
@@ -54,14 +56,17 @@ experiments/
                 __init__.py
                 cycle_navigation.py
                 even_pairs.py
+                    …
                     8→def even_pairs(
                     …
                 modular_arithmetic.py
                 parity.py
+                    …
                     9→def parity(
                     …
         utils.py
     lr_scheduler.py
+        …
         9→class BaseLRScheduler(lr_scheduler._LRScheduler):
         10→    def __init__(self, optimizer, last_epoch=-1):
         11→        super().__init__(optimizer, last_epoch)
@@ -78,9 +83,12 @@ experiments/
         …
         33→    @staticmethod
         34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
+        …
         47→    def get_lr(self) -> list[float]:
         48→        """Returns the current learning rate for each parameter group."""
+        …
     main.py
+        …
         21→dataset_registry: dict[str, Type[DataGen]] = {
         22→    "form_language": FormLangDatasetGenerator
         23→}
@@ -95,6 +103,7 @@ experiments/
         37→def main(cfg: DictConfig):
         …
     metrics.py
+        …
         9→class SequenceAccuracy(Metric):
         10→    is_differentiable: Optional[bool] = False
         11→    higher_is_better: Optional[bool] = True
@@ -113,12 +122,16 @@ notebooks/
     xlstm/
     xlstm_large/
 pyproject.toml
+    …
     5→[project]
     6→name = "xlstm"
     7→version = "2.0.5"
+    …
     13→description = "A novel LSTM variant with promising performance compared to Transformers or State Space Models."
     14→readme = "README.md"
+    …
     16→requires-python = ">=3.9"
+    …
     22→dependencies = [
     23→    "torch",
     24→    "einops",
@@ -139,6 +152,7 @@ pyproject.toml
     39→    "seaborn",
     40→    "mlstm_kernels",
     41→]
+    …
 pytest.ini
 res/
     desc_xlstm_overview.pdf
@@ -200,29 +214,38 @@ xlstm/
                     lstm.py
                     slstm.py
         xlstm_block.py
+            …
             16→@dataclass
             17→class xLSTMBlockConfig:
+            …
             43→class xLSTMBlock(nn.Module):
             …
             49→    config_class = xLSTMBlockConfig
+            …
     components/
         __init__.py
         conv.py
         feedforward.py
         init.py
         linear_headwise.py
+            …
             12→@dataclass
             13→class LinearHeadwiseExpandConfig:
+            …
             42→class LinearHeadwiseExpand(nn.Module):
             …
             47→    config_class = LinearHeadwiseExpandConfig
+            …
         ln.py
+            …
             8→class LayerNorm(nn.Module):
             9→    """LayerNorm but with an optional bias. PyTorch doesn't support simply bias=False."""
+            …
             51→class MultiHeadLayerNorm(LayerNorm):
             …
         util.py
     utils.py
+        …
         11→@dataclass
         12→class UpProjConfigMixin:
         13→    proj_factor: float = None  # will be overridden by subclasses
@@ -230,11 +253,14 @@ xlstm/
         15→    round_proj_up_to_multiple_of: int = 64
         17→    # internal
         18→    _proj_up_dim: int = None  # will be computed from embedding_dim and proj_factor
+        …
         32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
         …
     xlstm_block_stack.py
+        …
         15→@dataclass
         16→class xLSTMBlockStackConfig:
+        …
         36→    @property
         37→    def block_map(self) -> list[int]:
         38→        return list(map(int, self._block_map.split(",")))
@@ -255,20 +281,21 @@ xlstm/
         126→    def step(
         127→        self, x: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None
         128→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
+        …
     xlstm_large/
         __init__.py
             1→from .model import xLSTMLarge, xLSTMLargeConfig
             2→from .model import mLSTMLayer, mLSTMLayerConfig
         components.py
         from_pretrained.py
+            …
             9→def load_from_pretrained(
             …
         generate.py
         model.py
         utils.py
-            1→import torch
-            2→import re
     xlstm_lm_model.py
+        …
         14→@dataclass
         15→class xLSTMLMModelConfig(xLSTMBlockStackConfig):
         16→    vocab_size: int = -1
@@ -284,7 +311,6 @@ xlstm/
         49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
         …
         56→    def step(
-        57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
-        58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
+        …
         65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
         …

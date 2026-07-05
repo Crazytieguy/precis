@@ -17,9 +17,11 @@ Cargo.toml
     9→readme = "README.md"
     10→repository = "https://github.com/fioncat/otree"
     11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
+    …
 LICENSE
 README.md
     1→# OTree - Object Tree TUI Viewer
+    …
     5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
     7→## Install
     …
@@ -46,12 +48,14 @@ docs/
 examples/
 src/
     clipboard.rs
+        …
         28→pub fn write_clipboard(text: &str) -> Result<()> {
         …
     cmd.rs
     config/
         colors.rs
         keys.rs
+            …
             54→pub enum Key {
             …
             195→pub struct Keys {
@@ -61,7 +65,9 @@ src/
             352→    pub key: Key,
             353→    pub action: Option<Action>,
             354→}
+            …
         mod.rs
+            …
             17→pub struct Config {
             …
             52→#[derive(Debug, Clone, Serialize, Deserialize)]
@@ -124,21 +130,27 @@ src/
             123→    #[serde(default = "Config::disable")]
             124→    pub wrap: bool,
             125→}
+            …
         types.rs
     debug.rs
+        …
         8→macro_rules! debug {
         …
         19→pub fn set_file(file: String) {
         20→    FILE.set(file).unwrap();
+        …
         23→pub fn write_logs(mut msg: String) -> Result<()> {
         …
     edit.rs
+        …
         10→pub struct Edit {
         11→    path: String,
         12→    data: String,
         13→    cmd: Command,
         14→}
+        …
     live_reload.rs
+        …
         16→pub struct FileWatcher {
         17→    path: PathBuf,
         19→    cfg: Rc<Config>,
@@ -146,7 +158,9 @@ src/
         22→    max_data_size: usize,
         24→    data: Arc<Mutex<Data>>,
         25→}
+        …
     main.rs
+        …
         27→fn run() -> Result<()> {
         28→    let Some(args) = CommandArgs::parse()? else {
         29→        return Ok(());
@@ -172,6 +186,7 @@ src/
         55→    let content_type = args.get_content_type();
         57→    let max_data_size = args.max_data_size.unwrap_or(cfg.data.max_data_size) * 1024 * 1024;
         58→    let mut fw = None;
+        …
         79→    if let Some(target_type) = args.to {
         80→        if matches!(target_type, ContentType::Any) {
         81→            bail!("target content type cannot be 'any' when using '--to' option");
@@ -195,20 +210,25 @@ src/
         105→        app.set_header(&header_ctx);
         106→    }
         108→    ui::start(app)
+        …
         111→fn main() {
         112→    if let Err(err) = run() {
         113→        eprintln!("Error: {err:#}");
         114→        process::exit(1);
         115→    }
+        …
     parse/
         any.rs
+            …
             9→pub struct AnyParser {
             10→    inner: RefCell<Option<Box<dyn Parser>>>,
             11→}
+            …
         hcl.rs
         json.rs
         jsonl.rs
         mod.rs
+            …
             17→#[derive(Debug, Clone, Copy, ValueEnum, EnumIter)]
             18→pub enum ContentType {
             19→    Json,
@@ -235,6 +255,7 @@ src/
         xml.rs
         yaml.rs
     tree.rs
+        …
         14→pub struct Tree {
         15→    pub parser: Rc<Box<dyn Parser>>,
         17→    pub items: Vec<TreeItem<'static, String>>,
@@ -263,22 +284,23 @@ src/
         47→    Obj,
         48→    Arr,
         49→}
+        …
     ui/
         app.rs
-            47→#[derive(Debug, Clone, Copy)]
+            …
             48→pub enum ScrollDirection {
-            49→    Up,
-            50→    Down,
-            51→}
+            …
             53→pub struct App {
             …
             86→pub enum ShowResult {
             87→    Edit(Box<Edit>),
             88→    Quit,
             89→}
+            …
         data_block.rs
         filter.rs
         footer.rs
+            …
             10→pub enum FooterText<'a> {
             11→    Identify(&'a [String], Option<String>),
             12→    Message(String),
@@ -287,17 +309,22 @@ src/
             16→pub struct Footer {
             17→    cfg: Rc<Config>,
             18→}
+            …
         header.rs
+            …
             11→pub struct HeaderContext {
             …
             41→pub struct Header {
             42→    cfg: Rc<Config>,
             43→    data: String,
             44→}
+            …
         mod.rs
+            …
             35→pub fn start(mut app: App) -> Result<()> {
             …
         popup.rs
+            …
             13→pub struct PopupData {
             14→    pub title: Cow<'static, str>,
             15→    pub text: Text<'static>,
@@ -307,5 +334,6 @@ src/
             21→    cfg: Rc<Config>,
             23→    scroll: usize,
             24→}
+            …
         tree_overview.rs
 typos.toml

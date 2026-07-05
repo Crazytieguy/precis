@@ -8,10 +8,11 @@ expression: rendered
 .gitignore
 .npmrc
 benchmark.js
+    …
     2→import chalk from './index.js';
+    …
 code-of-conduct.md
     1→# Contributor Covenant Code of Conduct
-    …
     3→## Our Pledge
     …
     12→## Our Standards
@@ -32,6 +33,7 @@ media/
     logo.svg
     screenshot.png
 package.json
+    …
     2→	"name": "chalk",
     3→	"version": "5.6.2",
     4→	"description": "Terminal string styling done right",
@@ -83,13 +85,15 @@ package.json
     50→		"command-line",
     51→		"text"
     52→	],
+    …
 readme.md
+    …
     10→> Terminal string styling done right
+    …
     18→## Info
     20→- [Why not switch to a smaller coloring package?](https://github.com/chalk/chalk?tab=readme-ov-file#why-not-switch-to-a-smaller-coloring-package)
     21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
     23→## Highlights
-    …
     25→- Expressive API
     26→- Highly performant
     27→- No dependencies
@@ -101,7 +105,6 @@ readme.md
     33→- Actively maintained
     34→- [Used by ~115,000 packages](https://www.npmjs.com/browse/depended/chalk) as of July 4, 2024
     36→## Install
-    …
     38→```sh
     39→npm install chalk
     40→```
@@ -109,27 +112,24 @@ readme.md
     44→## Usage
     …
     112→## API
-    …
     114→### chalk.`<style>[.<style>...](string, [string...])`
-    …
     116→Example: `chalk.red.bold.underline('Hello', 'world');`
+    …
     120→Multiple arguments will be separated by space.
     122→### chalk.level
-    …
     124→Specifies the level of color support.
-    143→### supportsColor
     …
+    143→### supportsColor
     145→Detect whether the terminal [supports color](https://github.com/chalk/supports-color). Used internally and handled for you, but exposed for convenience.
+    …
     149→Explicit 256/Truecolor mode can be enabled using the `--color=256` and `--color=16m` flags, respectively.
     151→### chalkStderr and supportsColorStderr
     …
     155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
-    …
     157→All supported style strings are exposed as an array of strings for convenience. `colorNames` is the combination of `foregroundColorNames` and `backgroundColorNames`.
+    …
     171→## Styles
-    …
     173→### Modifiers
-    …
     175→- `reset` - Reset the current style.
     176→- `bold` - Make the text bold.
     177→- `dim` - Make the text have lower opacity.
@@ -141,7 +141,6 @@ readme.md
     183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
     184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
     186→### Colors
-    …
     188→- `black`
     189→- `red`
     190→- `green`
@@ -159,7 +158,6 @@ readme.md
     202→- `cyanBright`
     203→- `whiteBright`
     205→### Background colors
-    …
     207→- `bgBlack`
     208→- `bgRed`
     209→- `bgGreen`
@@ -179,13 +177,10 @@ readme.md
     224→## 256 and Truecolor color support
     …
     246→## Browser support
-    …
     248→Since Chrome 69, ANSI escape codes are natively supported in the developer console.
     250→## Windows
-    …
     252→If you're on Windows, do yourself a favor and use [Windows Terminal](https://github.com/microsoft/terminal) instead of `cmd.exe`.
     254→## FAQ
-    …
     256→### Why not switch to a smaller coloring package?
     …
     268→*\- [Sindre](https://github.com/sindresorhus)*
@@ -194,7 +189,6 @@ readme.md
     274→## Related
     …
     294→## Maintainers
-    …
     296→- [Sindre Sorhus](https://github.com/sindresorhus)
     297→- [Josh Junon](https://github.com/qix-)
 source/
@@ -210,6 +204,7 @@ source/
         10→const GENERATOR = Symbol('GENERATOR');
         11→const STYLER = Symbol('STYLER');
         12→const IS_EMPTY = Symbol('IS_EMPTY');
+        …
         15→const levelMapping = [
         16→	'ansi',
         17→	'ansi',
@@ -224,21 +219,27 @@ source/
         29→	// Detect level if not set manually
         30→	const colorLevel = stdoutColor ? stdoutColor.level : 0;
         31→	object.level = options.level === undefined ? colorLevel : options.level;
+        …
         34→export class Chalk {
         35→	constructor(options) {
         36→		// eslint-disable-next-line no-constructor-return
         37→		return chalkFactory(options);
+        …
         41→const chalkFactory = options => {
         42→	const chalk = (...strings) => strings.join(' ');
         43→	applyOptions(chalk, options);
         45→	Object.setPrototypeOf(chalk, createChalk.prototype);
         47→	return chalk;
+        …
         50→function createChalk(options) {
         51→	return chalkFactory(options);
+        …
         74→const getModelAnsi = (model, level, type, ...arguments_) => {
         …
         94→const usedModels = ['rgb', 'hex', 'ansi256'];
+        …
         119→const proto = Object.defineProperties(() => {}, {
+        …
         132→const createStyler = (open, close, parent) => {
         …
         152→const createBuilder = (self, _styler, _isEmpty) => {
@@ -255,23 +256,27 @@ source/
         225→export default chalk;
     index.test-d.ts
     utilities.js
-        2→export function stringReplaceAll(string, substring, replacer) {
-        …
-        21→export function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
-        …
     vendor/
         ansi-styles/
             index.d.ts
             index.js
+                1→const ANSI_BACKGROUND_OFFSET = 10;
+                …
+                73→function assembleStyles() {
+                …
+                221→const ansiStyles = assembleStyles();
+                …
         supports-color/
             browser.d.ts
             browser.js
             index.d.ts
             index.js
+                …
                 7→function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : process.argv) {
                 …
                 14→const {env} = process;
                 16→let flagForceColor;
+                …
                 33→function envForceColor() {
                 …
                 47→function translateLevel(level) {
@@ -284,6 +289,7 @@ source/
                 179→		...options,
                 180→	});
                 182→	return translateLevel(level);
+                …
                 190→export default supportsColor;
 test/
     _fixture.js

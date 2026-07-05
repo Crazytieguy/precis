@@ -22,12 +22,14 @@ Cargo.toml
     15→exclude = ["rfcs/**/*"]
     16→rust-version = "1.68.0"
     17→edition = "2021"
+    …
 LICENSE-APACHE
 LICENSE-MIT
 README.md
     1→log
     2→===
     4→A Rust library providing a lightweight logging *facade*.
+    …
     11→* [`log` documentation](https://docs.rs/log)
     13→A logging facade provides a single logging API that abstracts over the actual
     14→logging implementation. Libraries can use the logging API provided by this
@@ -36,7 +38,6 @@ README.md
     19→## Minimum supported `rustc`
     …
     25→## Usage
-    …
     27→### In libraries
     …
     58→### In executables
@@ -49,20 +50,25 @@ src/
     __private_api.rs
     kv/
         error.rs
+            …
             4→#[derive(Debug)]
             5→pub struct Error {
             6→    inner: Inner,
             7→}
+            …
         key.rs
+            …
             7→pub trait ToKey {
             8→    /// Perform the conversion.
             9→    fn to_key(&self) -> Key<'_>;
             10→}
+            …
             36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
             37→pub struct Key<'k> {
             38→    // NOTE: This may become `Cow<'k, str>`
             39→    key: &'k str,
             40→}
+            …
         mod.rs
             1→//! Structured logging.
             2→//!
@@ -74,22 +80,28 @@ src/
             8→//! features = ["kv"]
             9→//! ```
             10→//!
+            …
         source.rs
+            …
             51→pub trait Source {
             …
             235→pub trait VisitSource<'kvs> {
             236→    /// Visit a key-value pair.
             237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
             238→}
+            …
         value.rs
+            …
             11→pub trait ToValue {
             12→    /// Perform the conversion.
             13→    fn to_value(&self) -> Value<'_>;
             14→}
+            …
             118→#[derive(Clone)]
             119→pub struct Value<'v> {
             120→    inner: inner::Inner<'v>,
             121→}
+            …
             462→pub trait VisitValue<'v> {
             …
             1129→macro_rules! as_debug {
@@ -103,6 +115,7 @@ src/
             1169→macro_rules! as_sval {
             …
     lib.rs
+        …
         11→//! A lightweight logging facade.
         12→//!
         13→//! The `log` crate provides a single logging API that abstracts over the
@@ -119,16 +132,24 @@ src/
         24→//! though that default may be overridden. Logger implementations typically use
         25→//! the target to filter requests based on some user configuration.
         26→//!
+        …
         399→use std::cfg;
+        …
         401→use std::error;
         402→use std::str::FromStr;
         403→use std::{cmp, fmt, mem};
+        …
         406→mod macros;
         407→mod serde;
+        …
         410→pub mod kv;
+        …
         413→use std::sync::atomic::{AtomicUsize, Ordering};
+        …
         416→use std::cell::Cell;
+        …
         418→use std::sync::atomic::Ordering;
+        …
         473→#[repr(usize)]
         474→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
         475→pub enum Level {
@@ -156,6 +177,7 @@ src/
         497→    /// Designates very low priority, often extremely verbose, information.
         498→    Trace,
         499→}
+        …
         634→#[repr(usize)]
         635→#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash)]
         636→pub enum LevelFilter {
@@ -172,8 +194,10 @@ src/
         647→    /// Corresponds to the `Trace` log level.
         648→    Trace,
         649→}
+        …
         796→/// The "payload" of a log message.
         797→///
+        …
         841→#[derive(Clone, Debug)]
         842→pub struct Record<'a> {
         843→    metadata: Metadata<'a>,
@@ -184,65 +208,45 @@ src/
         848→    #[cfg(feature = "kv")]
         849→    key_values: KeyValues<'a>,
         850→}
+        …
         1002→#[derive(Debug)]
         1003→pub struct RecordBuilder<'a> {
         1004→    record: Record<'a>,
         1005→}
+        …
         1119→/// Metadata about a log message.
         1120→///
+        …
         1157→#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
         1158→pub struct Metadata<'a> {
         1159→    level: Level,
         1160→    target: &'a str,
         1161→}
+        …
         1199→#[derive(Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
         1200→pub struct MetadataBuilder<'a> {
         1201→    metadata: Metadata<'a>,
         1202→}
-        1248→/// A trait encapsulating the operations required of a logger.
+        …
         1249→pub trait Log: Sync + Send {
-        1250→    /// Determines if a log message with the specified metadata would be
-        1251→    /// logged.
-        1252→    ///
-        1253→    /// This is used by the `log_enabled!` macro to allow callers to avoid
-        1254→    /// expensive computation of log message arguments if the message would be
-        1255→    /// discarded anyway.
-        1256→    ///
-        1257→    /// # For implementors
-        1258→    ///
-        1259→    /// This method isn't called automatically by the `log!` macros.
-        1260→    /// It's up to an implementation of the `Log` trait to call `enabled` in its own
-        1261→    /// `log` method implementation to guarantee that filtering is applied.
-        1262→    fn enabled(&self, metadata: &Metadata) -> bool;
-        1264→    /// Logs the `Record`.
-        1265→    ///
-        1266→    /// # For implementors
-        1267→    ///
-        1268→    /// Note that `enabled` is *not* necessarily called before this method.
-        1269→    /// Implementations of `log` should perform all necessary filtering
-        1270→    /// internally.
-        1271→    fn log(&self, record: &Record);
-        1273→    /// Flushes any buffered records.
-        1274→    ///
-        1275→    /// # For implementors
-        1276→    ///
-        1277→    /// This method isn't called automatically by the `log!` macros.
-        1278→    /// It can be called manually on shut-down to ensure any in-flight records are flushed.
-        1279→    fn flush(&self);
-        1280→}
+        …
         1351→pub fn set_max_level(level: LevelFilter) {
         1352→    MAX_LOG_LEVEL_FILTER.store(level as usize, Ordering::Relaxed);
+        …
         1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
         1376→    // `MAX_LOG_LEVEL_FILTER` uses a `Cell` as the underlying primitive when a
         1377→    // platform doesn't support `target_has_atomic = "ptr"`, so even though this looks the same
         1378→    // as `set_max_level` it may have different safety properties.
         1379→    MAX_LOG_LEVEL_FILTER.store(level as usize, Ordering::Relaxed);
+        …
         1396→pub fn max_level() -> LevelFilter {
         …
         1420→pub fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), SetLoggerError> {
         1421→    set_logger_inner(|| Box::leak(logger))
+        …
         1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
         1479→    set_logger_inner(|| logger)
+        …
         1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
         …
         1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
@@ -262,6 +266,7 @@ src/
         1581→pub fn logger() -> &'static dyn Log {
         …
         1600→pub mod __private_api;
+        …
         1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
         …
         1627→mod tests {

@@ -10,7 +10,9 @@ expression: rendered
 LICENSE
 Makefile
 README.md
+    …
     3→Sokol + Lua = Soluna
+    …
     7→# Soluna
     9→[中文](./README.zh-CN.md)
     11→[Live Examples](https://cloudwu.github.io/soluna/)
@@ -18,22 +20,18 @@ README.md
     15→It is built on top of [sokol](https://github.com/floooh/sokol) and leverages the power of ltask for multithreading.
     17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
     19→## Documentation
-    …
     21→- [API Reference](./docs)
     22→- [Examples](./test)
     23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
     25→## Precompiled Binaries
-    …
     27→You can download precompiled binaries for Windows, Linux, macOS and WebAssembly from the [Nightly Releases](/../../releases/tag/nightly) page.
     29→## Building from Source
     …
     33→### Integration with the Actions of your projects
     …
     53→## Projects made with Soluna
-    …
     55→- [Deep Future](https://github.com/cloudwu/deepfuture), a digital version of boardgame Deep Future.
     57→## License
-    …
     59→Soluna is licensed under the MIT License. See [LICENSE](./LICENSE) for details.
 README.zh-CN.md
 asset/
@@ -53,9 +51,11 @@ clibs/
         make.lua
     soluna/
         compile_lua.lua
+            …
             4→local function compile_lua_code(script, src, name)
             …
         compile_shader.lua
+            …
             5→local function shdc_plat()
             …
             27→local function compile_shader(src, name, lang)
@@ -103,6 +103,7 @@ docs/
         35→function app.set_ime_rect(rect) end
         37→return app
     args.lua
+        …
         18→function batch:add(sprite, x, y) end
         …
         41→function batch:layer(scale, rotation, x, y) end
@@ -286,17 +287,20 @@ docs/
         19→function zip.open(filename, mode) end
         21→return zip
 make.lua
+    …
     4→local function detect_emcc()
     …
 script/
     build_web.lua
     datalist2c.lua
+        …
         14→local function tohex(c)
         …
     hashversion.lua
         1→local function get_rev()
         …
     lua2c.lua
+        …
         13→local function tohex(c)
         …
 src/

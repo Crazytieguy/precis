@@ -25,10 +25,10 @@ MAINTAINING.md
     …
 README.md
     1→# Monaco Editor
+    …
     8→The Monaco Editor is the fully featured code editor from [VS Code](https://github.com/microsoft/vscode). Check out the [VS Code docs](https://code.visualstudio.com/docs/editor/editingevolved) to see some of the supported features.
     10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
     12→## Try it out
-    …
     14→Try out the editor and see various examples [in our interactive playground](https://microsoft.github.io/monaco-editor/playground.html).
     16→The playground is the best way to learn about how to use the editor, which features is supports, to try out different versions and to create minimal reproducible examples for bug reports.
     18→## Installing
@@ -36,7 +36,6 @@ README.md
     31→## Localization
     …
     40→## Concepts
-    …
     42→Monaco editor is best known for being the text editor that powers VS Code. However, it's a bit more nuanced. Some basic understanding about the underlying concepts is needed to use Monaco editor effectively.
     44→### Models
     …
@@ -51,7 +50,6 @@ README.md
     66→## Documentation
     …
     76→## Issues
-    …
     78→Create [issues](https://github.com/microsoft/monaco-editor/issues) in this repository for anything related to the Monaco Editor. Please search for existing issues to avoid duplicates.
     80→## FAQ
     …
@@ -60,7 +58,6 @@ README.md
     117→## Code of Conduct
     …
     121→## License
-    …
     123→Licensed under the [MIT](https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt) License.
 SECURITY.md
 ThirdPartyNotices.txt
@@ -95,32 +92,39 @@ monaco-lsp-client/
         index.ts
     package-lock.json
     package.json
+        …
         2→	"name": "@vscode/monaco-lsp-client",
         3→	"description": "description",
         4→	"authors": "vscode",
         5→	"version": "0.1.0",
         6→	"main": "out/index.js",
         7→	"types": "out/index.d.ts",
+        …
     rolldown.config.mjs
     src/
         adapters/
         index.ts
+            …
             5→export { MonacoLspClient, WebSocketTransport, createTransportToWorker, createTransportToIFrame };
         types.ts
         utils.ts
 package-lock.json
 package.json
+    …
     2→	"name": "monaco-editor",
     3→	"version": "0.55.1",
+    …
     5→	"private": true,
     6→	"description": "A browser based code editor",
     7→	"homepage": "https://github.com/microsoft/monaco-editor",
     8→	"author": "Microsoft Corporation",
     9→	"license": "MIT",
+    …
     49→	"repository": {
     50→		"type": "git",
     51→		"url": "https://github.com/microsoft/monaco-editor"
     52→	},
+    …
 samples/
 scripts/
     ci/
@@ -206,6 +210,7 @@ src/
         1→import * as lsp from '@vscode/monaco-lsp-client';
         2→import { css, html, json, typescript } from './languages/register.all';
         3→import './features/register.all';
+        …
         6→import 'monaco-editor-core';
         8→export * from './editor';
         9→export { css, html, json, typescript, lsp };
@@ -304,30 +309,6 @@ src/
                 cssMode.ts
                 cssWorker.ts
                 register.ts
-                    9→export interface CSSFormatConfiguration {
-                    …
-                    24→export interface Options {
-                    …
-                    57→export interface ModeConfiguration {
-                    …
-                    124→export interface LanguageServiceDefaults {
-                    …
-                    140→export type DiagnosticsOptions = Options;
-                    …
-                    240→export const cssDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
-                    …
-                    245→export const scssDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
-                    …
-                    250→export const lessDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
-                    …
-                    276→export interface CSSDataConfiguration {
-                    …
-                    291→export interface CSSDataV1 {
-                    …
-                    299→export type EntryStatus = 'standard' | 'experimental' | 'nonstandard' | 'obsolete';
-                    …
-                    301→export interface IReference {
-                    …
                 workerManager.ts
             html/
                 html.worker.ts
@@ -340,6 +321,7 @@ src/
                 jsonMode.ts
                 jsonWorker.ts
                 register.ts
+                    …
                     10→export interface BaseASTNode {
                     …
                     18→export interface ObjectASTNode extends BaseASTNode {
@@ -378,13 +360,14 @@ src/
                     64→	getNodeFromOffset(offset: number, includeRightBound?: boolean): ASTNode | undefined;
                     65→};
                     67→export type JSONSchemaRef = JSONSchema | boolean;
-                    …
                     69→export interface JSONSchemaMap {
                     70→	[name: string]: JSONSchemaRef;
                     71→}
+                    …
                 tokenization.ts
                 workerManager.ts
             register.all.ts
+                …
                 6→export { css, html, json, typescript };
             typescript/
                 languageFeatures.ts
@@ -409,7 +392,6 @@ webpack-plugin/
         1→# Monaco Editor Webpack Loader Plugin
         3→A plugin to simplify loading the [Monaco Editor](https://github.com/microsoft/monaco-editor) with [webpack](https://webpack.js.org/).
         5→## Installing
-        …
         7→```sh
         8→npm install monaco-editor-webpack-plugin
         9→```
@@ -423,12 +405,16 @@ webpack-plugin/
         …
     package-lock.json
     package.json
+        …
         2→	"name": "monaco-editor-webpack-plugin",
         3→	"version": "7.1.1",
         4→	"description": "A webpack plugin for the Monaco Editor",
+        …
         23→	"license": "MIT",
+        …
     src/
         index.ts
+            …
             159→class MonacoEditorWebpackPlugin implements webpack.WebpackPluginInstance {
             160→	private readonly options: IInternalMonacoEditorWebpackPluginOpts;
             162→	constructor(options: MonacoEditorWebpackPlugin.IMonacoEditorWebpackPluginOpts = {}) {
@@ -438,9 +424,11 @@ webpack-plugin/
             179→		const compilationPublicPath = getCompilationPublicPath(compiler);
             180→		const modules = [EDITOR_MODULE].concat(languages).concat(features);
             181→		const workers: ILabeledWorkerDefinition[] = [];
+            …
             201→		const plugins = createPlugins(compiler, workers, filename, monacoEditorPath);
             202→		addCompilerRules(compiler, rules);
             203→		addCompilerPlugins(compiler, plugins);
+            …
         loader-utils.d.ts
         loaders/
         plugins/

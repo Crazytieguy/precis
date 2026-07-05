@@ -13,6 +13,7 @@ media/
     logo.png
     logo.svg
 package.json
+    …
     2→	"name": "ky",
     3→	"version": "1.14.3",
     4→	"description": "Tiny and elegant HTTP client based on the Fetch API",
@@ -32,9 +33,7 @@ package.json
     18→	"main": "./distribution/index.js",
     19→	"types": "./distribution/index.d.ts",
     20→	"sideEffects": false,
-    21→	"engines": {
-    22→		"node": ">=18"
-    23→	},
+    …
     31→	"files": [
     32→		"distribution"
     33→	],
@@ -60,8 +59,11 @@ package.json
     53→		"axios",
     54→		"node-fetch"
     55→	],
+    …
 readme.md
+    …
     11→> Ky is a tiny and elegant HTTP client based on the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
+    …
     20→## Benefits over plain `fetch`
     22→- Simpler API
     23→- Method shortcuts (`ky.post()`)
@@ -74,7 +76,6 @@ readme.md
     30→- Hooks
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
     33→## Install
-    …
     35→```sh
     36→npm install ky
     37→```
@@ -85,7 +86,6 @@ readme.md
     45→## Usage
     …
     85→## API
-    …
     87→### ky(input, options?)
     …
     122→### ky.get(input, options?)
@@ -94,30 +94,29 @@ readme.md
     125→### ky.patch(input, options?)
     126→### ky.head(input, options?)
     127→### ky.delete(input, options?)
-    …
     129→Sets `options.method` to the method name and makes a request.
     131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
-    745→### ky.extend(defaultOptions)
     …
+    745→### ky.extend(defaultOptions)
     747→Create a new `ky` instance with some defaults overridden with your own.
     749→In contrast to `ky.create()`, `ky.extend()` inherits defaults from its parent.
     751→You can pass headers as a `Headers` instance or a plain object.
+    …
     811→### ky.create(defaultOptions)
     …
     829→#### defaultOptions
     831→Type: `object`
     833→### ky.stop
-    …
     835→A `Symbol` that can be returned by a `beforeRetry` hook to stop the retry. This will also short circuit the remaining `beforeRetry` hooks.
-    864→### ky.retry(options?)
     …
+    864→### ky.retry(options?)
     866→Force a retry from an `afterResponse` hook.
+    …
     1000→### HTTPError
     …
     1046→### TimeoutError
     …
     1050→## Tips
-    …
     1052→### Sending form data
     …
     1109→### Setting a custom `Content-Type`
@@ -136,27 +135,25 @@ readme.md
     1292→## FAQ
     …
     1339→## Browser support
-    …
     1341→The latest version of Chrome, Firefox, and Safari.
     1343→## Node.js support
-    …
     1345→Node.js 18 and later.
     1347→## Related
-    …
     1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
     1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
     1352→## Maintainers
-    …
     1354→- [Sindre Sorhus](https://github.com/sindresorhus)
     1355→- [Seth Holladay](https://github.com/sholladay)
     1356→- [Szymon Marczak](https://github.com/szmarczak)
 source/
     core/
         Ky.ts
+            …
             33→export class Ky {
             34→	static create(input: Input, options: Options): ResponsePromise {
             …
             189→	public request: Request;
+            …
             200→	constructor(input: Input, options: Options = {}) {
             …
         constants.ts
@@ -186,7 +183,9 @@ source/
             26→		this.customDelay = options?.delay;
             27→		this.code = options?.code;
             28→		this.customRequest = options?.request;
+            …
         HTTPError.ts
+            …
             5→export class HTTPError<T = unknown> extends Error {
             6→	public response: KyResponse<T>;
             7→	public request: KyRequest;
@@ -201,7 +200,9 @@ source/
             19→		this.response = response;
             20→		this.request = request;
             21→		this.options = options;
+            …
         NonError.ts
+            …
             6→export class NonError extends Error {
             7→	override name = 'NonError';
             8→	readonly value: unknown;
@@ -215,18 +216,23 @@ source/
             7→		super(`Request timed out: ${request.method} ${request.url}`);
             8→		this.name = 'TimeoutError';
             9→		this.request = request;
+            …
     index.ts
+        …
         3→import {Ky} from './core/Ky.js';
         4→import {requestMethods, stop, retry} from './core/constants.js';
         5→import type {KyInstance} from './types/ky.js';
         6→import type {Input, Options} from './types/options.js';
         7→import {validateAndMerge} from './utils/merge.js';
         8→import {type Mutable} from './utils/types.js';
+        …
         36→export default ky;
         …
     types/
         ResponsePromise.ts
+            …
             4→import {type KyResponse} from './response.js';
+            …
         common.ts
         hooks.ts
         ky.ts
@@ -235,9 +241,11 @@ source/
         response.ts
         retry.ts
             1→import type {HttpMethod} from './options.js';
+            …
     utils/
         body.ts
         delay.ts
+            …
             5→export type DelayOptions = {
             6→	signal?: InternalOptions['signal'];
             7→};
@@ -251,10 +259,12 @@ source/
         normalize.ts
         options.ts
         timeout.ts
+            …
             3→export type TimeoutOptions = {
             4→	timeout: number;
             5→	fetch: typeof fetch;
             6→};
+            …
             9→export default async function timeout(
             10→	request: Request,
             11→	init: RequestInit,
@@ -263,14 +273,19 @@ source/
             14→): Promise<Response> {
             …
         type-guards.ts
+            …
             27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
             28→	return isHTTPError(error) || isTimeoutError(error) || isForceRetryError(error);
+            …
             49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
             50→	return error instanceof HTTPError || ((error as any)?.name === HTTPError.name);
+            …
             71→export function isTimeoutError(error: unknown): error is TimeoutError {
             72→	return error instanceof TimeoutError || ((error as any)?.name === TimeoutError.name);
+            …
             98→export function isForceRetryError(error: unknown): error is ForceRetryError {
             99→	return error instanceof ForceRetryError || ((error as any)?.name === ForceRetryError.name);
+            …
         types.ts
 test/
     browser.ts

@@ -38,8 +38,10 @@ include/
         7→void getSmeltingOutput (PlayerData *player);
         9→#endif
     globals.h
+        …
         4→#include <stdint.h>
         5→#include <unistd.h>
+        …
         8→  #define WIFI_SSID "your-ssid"
         9→  #define WIFI_PASS "your-password"
         10→  void task_yield ();
@@ -48,53 +50,40 @@ include/
         …
         15→#define true 1
         16→#define false 0
-        …
         18→// TCP port, Minecraft's default is 25565
         19→#define PORT 25565
         …
         23→#define MAX_PLAYERS 16
-        …
         25→// How many mobs to allocate memory for
         26→#define MAX_MOBS (MAX_PLAYERS)
-        …
         28→// Manhattan distance at which mobs despawn
         29→#define MOB_DESPAWN_DISTANCE 256
-        …
         31→// Server game mode: 0 - survival; 1 - creative; 2 - adventure; 3 - spectator
         32→#define GAMEMODE 0
-        …
         34→// Max render distance, determines how many chunks to send
         35→#define VIEW_DISTANCE 2
-        …
         37→// Time between server ticks in microseconds (default = 1s)
         38→#define TIME_BETWEEN_TICKS 1000000
-        …
         40→// Calculated from TIME_BETWEEN_TICKS
         41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
-        …
         43→// Initial world generation seed, will be hashed on startup
         44→// Used in generating terrain and biomes
         45→#define INITIAL_WORLD_SEED 0xA103DE6C
-        …
         47→// Initial general RNG seed, will be hashed on startup
         48→// Used in random game events like item drops and mob behavior
         49→#define INITIAL_RNG_SEED 0xE2B9419
         …
         53→#define CHUNK_SIZE 8
-        …
         55→// Terrain low point - should start a bit below sea level for rivers/lakes
         56→#define TERRAIN_BASE_HEIGHT 60
-        …
         58→// Cave generation Y level
         59→#define CAVE_BASE_DEPTH 24
         …
         63→#define BIOME_SIZE (CHUNK_SIZE * 8)
-        …
         65→// Calculated from BIOME_SIZE
         66→#define BIOME_RADIUS (BIOME_SIZE / 2)
         …
         71→#define VISITED_HISTORY 4
-        …
         73→// How many player-made block changes to allow
         74→// Determines the fixed amount of memory allocated to blocks
         75→#define MAX_BLOCK_CHANGES 20000
@@ -102,6 +91,7 @@ include/
         93→#define DISK_SYNC_INTERVAL 15000000
         …
     packets.h
+        …
         4→// Serverbound packets
         5→int cs_handshake (int client_fd);
         6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
@@ -124,11 +114,11 @@ include/
         23→int cs_playerInput (int client_fd);
         24→int cs_playerCommand (int client_fd);
         25→int cs_playerLoaded (int client_fd);
-        …
         27→// Clientbound packets
         28→int sc_statusResponse (int client_fd);
         29→int sc_loginSuccess (int client_fd, uint8_t *uuid, char *name);
         30→int sc_knownPacks (int client_fd);
+        …
     procedures.h
     serialize.h
         1→#ifndef SERIALIZE_H
@@ -155,24 +145,25 @@ include/
         4→void placeTreeStructure (short x, uint8_t y, short z);
         6→#endif
     tools.h
+        …
         4→#include <unistd.h>
         6→#include "globals.h"
         8→static inline int mod_abs (int a, int b) {
         9→  return ((a % b) + b) % b;
+        …
         11→static inline int div_floor (int a, int b) {
         12→  return a % b < 0 ? (a - b) / b : a / b;
+        …
         15→extern uint64_t total_bytes_received;
         16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
         17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
         18→void discard_all (int client_fd, size_t remaining, uint8_t require_first);
-        …
         20→ssize_t writeByte (int client_fd, uint8_t byte);
         21→ssize_t writeUint16 (int client_fd, uint16_t num);
         22→ssize_t writeUint32 (int client_fd, uint32_t num);
         23→ssize_t writeUint64 (int client_fd, uint64_t num);
         24→ssize_t writeFloat (int client_fd, float num);
         25→ssize_t writeDouble (int client_fd, double num);
-        …
         27→uint8_t readByte (int client_fd);
         28→uint16_t readUint16 (int client_fd);
         29→int16_t readInt16 (int client_fd);
@@ -181,11 +172,9 @@ include/
         32→int64_t readInt64 (int client_fd);
         33→float readFloat (int client_fd);
         34→double readDouble (int client_fd);
-        …
         36→ssize_t readLengthPrefixedData (int client_fd);
         37→void readString (int client_fd);
         38→void readStringN (int client_fd, uint32_t max_length);
-        …
         40→uint32_t fast_rand ();
         41→uint64_t splitmix64 (uint64_t state);
         …
@@ -232,6 +221,7 @@ include/
 src/
     CMakeLists.txt
     crafting.c
+        …
         9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
         …
         349→#define registerSmeltingRecipe(a, b) \
@@ -240,23 +230,27 @@ src/
         …
     globals.c
     main.c
+        …
         68→void handlePacket (int client_fd, int length, int packet_id, int state) {
         …
     packets.c
     procedures.c
     serialize.c
         1→#include "globals.h"
+        …
     structures.c
+        …
         9→void setBlockIfReplaceable (short x, uint8_t y, short z, uint8_t block) {
         …
         16→void placeTreeStructure (short x, uint8_t y, short z) {
         …
     tools.c
-        42→uint64_t total_bytes_received = 0;
         …
+        42→uint64_t total_bytes_received = 0;
         44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
         …
     varnum.c
+        …
         14→int32_t readVarInt (int client_fd) {
         …
         34→int sizeVarInt (uint32_t value) {
