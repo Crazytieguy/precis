@@ -92,6 +92,23 @@ never listed the repo's colocated `*_test.go` files anywhere):
   the actual directory or symbol set against your entries before
   moving on — a hedge batch with a silent omission is worse than no
   hedge, because it certifies the wrong class.
+- **Symbol-level closure, not just filesystem closure.** A five-draft
+  audit found `entries="all"` listings essentially perfect while
+  symbol rosters carried silent holes in 5 of 5 drafts (a method
+  roster missing `Execute()`, a "complete" flag roster missing
+  `--help`, split structs dropping tail fields unhedged). For every
+  roster/split batch claiming lines X–Y of a file, mechanically diff
+  your span-start set against a grep-derived symbol/field/item list
+  restricted to X–Y before moving on.
+- **Prose–span consistency.** Every symbol or noun a descriptor or
+  justification names must be literally visible in that batch's
+  rendered lines, and every content class the top-level summary
+  promises must map to a concrete batch — re-check both against the
+  FINAL spans, not the draft you remember writing.
+- **End-of-draft hedge pass.** List every span that ends inside a
+  class/list/function body and give each an ellipsis span or an
+  extension. Zero rendered ellipses across a whole draft is a red
+  flag, not a style choice.
 - **Hedge in rendered content, not in justification prose.** A
   justification saying "the remaining toggles continue to line 117"
   never reaches the consuming agent. If elided content needs
