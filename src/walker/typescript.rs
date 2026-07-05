@@ -1950,7 +1950,10 @@ fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
                     pkg_dir.join(source_prefix).join(variant)
                 };
                 for ext in ENTRY_SOURCE_EXTS {
-                    if base.with_extension(ext).canonicalize().ok().as_ref()
+                    // `append_extension`, not `with_extension`: a dotted
+                    // stem like `foo.config` would have its `.config`
+                    // treated as an extension and replaced (→ `foo.ts`).
+                    if append_extension(&base, ext).canonicalize().ok().as_ref()
                         == Some(&canonical_file)
                     {
                         return true;
