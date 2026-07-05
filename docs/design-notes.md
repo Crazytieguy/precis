@@ -217,6 +217,22 @@ inventory-only gate kept monaco +0.213 with one −0.006).
   signal that distinguishes "wide-but-shallow sweep" (htop's `darwin/`)
   from "one primary + helpers" (vaul's `src/`); sibling count alone
   can't.
+- **Empty-vs-elided dir marker — measured and reverted (2026-07-04).**
+  Rendering a synthesized `…` child under every childless-but-non-empty
+  listed directory (so it can't be misread as empty) costs −0.0031
+  corpus with severe flat-tree hits (tinyusb −0.140, migrate −0.086,
+  mdbook −0.054, chalk −0.045) against scattered wins (semver +0.057,
+  vite +0.028): the marker taxes every shallow listing row in wide
+  trees where no misleading contrast exists. The correct gate — marker
+  only when a *sibling* dir in the same parent is expanded (the actual
+  confusion case: monaco `ini/` childless between expanded `html/` and
+  `java/`) — makes cost accounting non-local: expanding one dir flips
+  sibling markers on, so every FsGroup application would need to
+  re-price sibling rows. If retried, prefer a walker-side shape (e.g.
+  force one child entry into the parent's listing) over a renderer
+  invariant. Implementation note for the retry: the WIP's cost path
+  probed children by bare span name — `list_dir(p)` resolved against
+  the process CWD; probe `parent.join(name)` as `apply_fs_group` does.
 - **Go spine centrality — four proxies measured and failed (2026-07-04)**,
   targeting the mcphost/bubbletea/gin unscheduled cluster: (a)
   `roster_mass_factor` on `GoKey::DeclNames` — grouped const/var specs
