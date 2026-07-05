@@ -14,11 +14,11 @@ struct Cli {
     path: PathBuf,
 
     /// Token budget for output
-    #[arg(long, default_value = "3000")]
+    #[arg(long, default_value = "3000", visible_alias = "budget")]
     token_budget: usize,
 
     /// Byte budget for output (hard upper bound; tokens are still the optimization target)
-    #[arg(long)]
+    #[arg(long, visible_alias = "char-budget")]
     byte_budget: Option<usize>,
 }
 
