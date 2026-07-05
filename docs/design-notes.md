@@ -143,6 +143,17 @@ Two related conventions worth resisting drift on:
 - Per-walker run state goes in named fields on `WalkCtx` (`rust_state`,
   `typescript_state`, …), not a `TypeId` bag or thread-local.
 
+## ⚠️ Score-history break at the 2026-07-05 NS re-freeze (22d2f7b3)
+
+All 93 North Stars were re-authored (Sonnet, audited repair pipeline)
+and re-frozen. Every Score/sweep/failed-lever magnitude recorded below
+predates the new answer key unless said otherwise: **directions are
+plausible hypotheses, magnitudes are void.** The settled-knob sweeps
+(concavity, C0, mix_signals, …) are UNLOCKED — old optima no longer
+bind. New zero point: training mean 0.5250 (old key: 0.6285). Start
+any new calibration from the post-refreeze decomposition rather than
+the entries below.
+
 ## Value/cost ranking — settled vs open
 
 Per-fixture priority lives in the per-fixture reports
