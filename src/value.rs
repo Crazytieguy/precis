@@ -120,7 +120,9 @@ pub(crate) fn non_essential_factor_inner(
             }
         } else if first.starts_with('.') && first != "." {
             return 0.2;
-        } else if is_root_level_vendor_dir_name(first) {
+        } else if is_root_level_vendor_dir_name(first)
+            || is_root_level_build_tooling_dir_name(first)
+        {
             // Depth-1-only: a project that vendors *as part of* its
             // own `source/` (chalk) keeps full weight on its vendored
             // modules.
@@ -266,6 +268,18 @@ fn is_root_level_vendor_dir_name(s: &str) -> bool {
     matches!(
         lower.as_str(),
         "deps" | "vendor" | "third_party" | "third-party" | "external" | "3rd" | "sig"
+    )
+}
+
+/// Root-level vendored build-tooling dirs — autotools macro stashes and
+/// linter/tool config trees (htop's `m4/`, `iwyu/`). Their listings are
+/// tiny, so at full weight they win the ratio race over wide source
+/// dirs and read as prominent; nothing an NS anchors on lives there.
+fn is_root_level_build_tooling_dir_name(s: &str) -> bool {
+    let lower = s.to_ascii_lowercase();
+    matches!(
+        lower.as_str(),
+        "m4" | "iwyu" | "build-aux" | "autom4te.cache" | "gnulib"
     )
 }
 
