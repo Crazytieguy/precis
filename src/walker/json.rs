@@ -471,16 +471,24 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     out
 }
 
-/// The `types` / `typings` target declared by `<root>/package.json`,
-/// resolved against `root`. `None` when neither field is a string.
-pub(super) fn declared_types_target(root: &Path) -> Option<PathBuf> {
-    let manifest = root.join(PACKAGE_JSON_FILENAME);
-    let text = std::fs::read_to_string(&manifest).ok()?;
+/// Parse `<dir>/package.json` into its source text + tree. The caller
+/// re-derives the root object node (tree-sitter nodes borrow the tree,
+/// so it can't be returned from here). The one manifest-parse prologue —
+/// grammar setup or root-node conventions change here, nowhere else.
+fn parse_manifest(dir: &Path) -> Option<(String, tree_sitter::Tree)> {
+    let text = std::fs::read_to_string(dir.join(PACKAGE_JSON_FILENAME)).ok()?;
     let mut parser = tree_sitter::Parser::new();
     parser
         .set_language(&tree_sitter_json::LANGUAGE.into())
         .ok()?;
     let tree = parser.parse(text.as_bytes(), None)?;
+    Some((text, tree))
+}
+
+/// The `types` / `typings` target declared by `<root>/package.json`,
+/// resolved against `root`. `None` when neither field is a string.
+pub(super) fn declared_types_target(root: &Path) -> Option<PathBuf> {
+    let (text, tree) = parse_manifest(root)?;
     let object = first_child_of_kind(tree.root_node(), "object")?;
     ["types", "typings"].iter().find_map(|field| {
         let value = object_field_value(object, field, &text)?;
@@ -501,18 +509,7 @@ pub(super) fn declared_types_target(root: &Path) -> Option<PathBuf> {
 /// (conditional-export objects are descended; subpath keys other than
 /// `"."` are not).
 pub(super) fn package_entry_targets(pkg_dir: &Path) -> Vec<String> {
-    let manifest = pkg_dir.join(PACKAGE_JSON_FILENAME);
-    let Ok(text) = std::fs::read_to_string(&manifest) else {
-        return Vec::new();
-    };
-    let mut parser = tree_sitter::Parser::new();
-    if parser
-        .set_language(&tree_sitter_json::LANGUAGE.into())
-        .is_err()
-    {
-        return Vec::new();
-    }
-    let Some(tree) = parser.parse(text.as_bytes(), None) else {
+    let Some((text, tree)) = parse_manifest(pkg_dir) else {
         return Vec::new();
     };
     let Some(object) = first_child_of_kind(tree.root_node(), "object") else {
@@ -578,22 +575,10 @@ fn collect_string_leaves(value: Node, source: &str, depth: usize, out: &mut Vec<
 /// Raw entries from the `workspaces` field on `<root>/package.json`.
 /// Supports both array and object (`{"packages": […]}`) forms.
 fn npm_workspaces_entries(root: &Path) -> Vec<String> {
-    let manifest = root.join("package.json");
-    let Ok(text) = std::fs::read_to_string(&manifest) else {
+    let Some((text, tree)) = parse_manifest(root) else {
         return Vec::new();
     };
-    let mut parser = tree_sitter::Parser::new();
-    if parser
-        .set_language(&tree_sitter_json::LANGUAGE.into())
-        .is_err()
-    {
-        return Vec::new();
-    }
-    let Some(tree) = parser.parse(text.as_bytes(), None) else {
-        return Vec::new();
-    };
-    let root_node = tree.root_node();
-    let Some(object) = first_child_of_kind(root_node, "object") else {
+    let Some(object) = first_child_of_kind(tree.root_node(), "object") else {
         return Vec::new();
     };
     let Some(workspaces_value) = object_field_value(object, "workspaces", &text) else {

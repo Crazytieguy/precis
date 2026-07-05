@@ -223,23 +223,28 @@ pub(crate) fn non_essential_factor_inner(
         {
             return 0.3;
         }
-        // Co-located test file conventions: `*.test.*`, `*.spec.*`,
-        // `*_test.<go|ts|js|tsx|py>`, `test_*.py`.
-        let lower = name.to_ascii_lowercase();
-        if lower.contains(".test.")
-            || lower.contains(".test-d.")
-            || lower.contains(".spec.")
-            || lower.ends_with("_test.go")
-            || lower.ends_with("_test.ts")
-            || lower.ends_with("_test.js")
-            || lower.ends_with("_test.tsx")
-            || lower.ends_with("_test.py")
-            || (lower.starts_with("test_") && lower.ends_with(".py"))
-        {
+        if is_colocated_test_filename(name) {
             return 0.2;
         }
     }
     1.0
+}
+
+/// Filename carrying the co-located unit-test convention (`foo.test.js`,
+/// `foo.spec.ts`, `foo_test.go`, `test_foo.py`). Shared by the
+/// non-essential demotion here and the fs walker's spec-catalog gate —
+/// the two must agree on what counts as a co-located test.
+pub(crate) fn is_colocated_test_filename(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    lower.contains(".test.")
+        || lower.contains(".test-d.")
+        || lower.contains(".spec.")
+        || lower.ends_with("_test.go")
+        || lower.ends_with("_test.ts")
+        || lower.ends_with("_test.js")
+        || lower.ends_with("_test.tsx")
+        || lower.ends_with("_test.py")
+        || (lower.starts_with("test_") && lower.ends_with(".py"))
 }
 
 /// Detect a depth-1 docs-site sub-app — directory named like a docs

@@ -280,12 +280,17 @@ impl RenderedTree {
             let anchors_before = existing.map(content_anchor_lines).unwrap_or_default();
             let has_records_before = existing.is_some_and(|c| !c.is_empty());
             let mut anchors_after = anchors_before.clone();
-            anchors_after.extend(
-                entries
-                    .iter()
-                    .filter(|(_, r)| !matches!(r, Render::Ellipsis))
-                    .map(|(n, _)| *n),
-            );
+            for (n, r) in &entries {
+                if matches!(r, Render::Ellipsis) {
+                    // `apply_spans` replaces records unconditionally, so
+                    // an Ellipsis entry un-anchors a line a predecessor
+                    // rendered as content — mirror that removal here or
+                    // the marker delta drifts from what render() emits.
+                    anchors_after.remove(n);
+                } else {
+                    anchors_after.insert(*n);
+                }
+            }
             let mut d_tokens: isize = 0;
             let mut d_bytes: isize = 0;
             for (line_num, render) in entries {
@@ -434,23 +439,18 @@ impl RenderedTree {
         // are gap occupants, not rows — synthesis subsumes them.
         let anchors = content_anchor_lines(content);
         let marker_row = format_marker_row(indent_depth);
-        let mut prev = 0usize;
-        for &number in &anchors {
-            if number > prev + 1 && gap_has_content(&src_lines, prev + 1, number - 1) {
-                out.push_str(&marker_row);
+        walk_anchor_gaps(&anchors, &src_lines, |event| match event {
+            GapWalkEvent::Gap => out.push_str(&marker_row),
+            GapWalkEvent::Anchor(number) => {
+                let source_line = src_lines.get(number - 1).copied().unwrap_or("");
+                out.push_str(&format_line_row(
+                    number,
+                    &content[&number].render,
+                    source_line,
+                    indent_depth,
+                ));
             }
-            let source_line = src_lines.get(number - 1).copied().unwrap_or("");
-            out.push_str(&format_line_row(
-                number,
-                &content[&number].render,
-                source_line,
-                indent_depth,
-            ));
-            prev = number;
-        }
-        if gap_has_content(&src_lines, prev + 1, src_lines.len()) {
-            out.push_str(&marker_row);
-        }
+        });
     }
 }
 
@@ -495,17 +495,40 @@ fn marker_count(anchors: &BTreeSet<usize>, has_records: bool, src_lines: &[&str]
         return 0;
     }
     let mut count = 0;
+    walk_anchor_gaps(anchors, src_lines, |event| {
+        if matches!(event, GapWalkEvent::Gap) {
+            count += 1;
+        }
+    });
+    count
+}
+
+enum GapWalkEvent {
+    Gap,
+    Anchor(usize),
+}
+
+/// The single traversal behind both marker counting and row emission:
+/// visits each anchor in order and each elision gap (leading / between
+/// anchors / trailing) that holds non-blank source. Charged tokens ==
+/// rendered tokens depends on cost and render never walking gaps
+/// differently, so both must go through here.
+fn walk_anchor_gaps(
+    anchors: &BTreeSet<usize>,
+    src_lines: &[&str],
+    mut visit: impl FnMut(GapWalkEvent),
+) {
     let mut prev = 0usize;
     for &a in anchors {
         if a > prev + 1 && gap_has_content(src_lines, prev + 1, a - 1) {
-            count += 1;
+            visit(GapWalkEvent::Gap);
         }
+        visit(GapWalkEvent::Anchor(a));
         prev = a;
     }
     if gap_has_content(src_lines, prev + 1, src_lines.len()) {
-        count += 1;
+        visit(GapWalkEvent::Gap);
     }
-    count
 }
 
 /// One synthesized elision marker row.

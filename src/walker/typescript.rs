@@ -89,6 +89,11 @@ pub struct TypescriptState {
     nearest_subpackage_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
     declared_api_contract: OnceCell<Option<PathBuf>>,
     pinned_entrypoint_lookup: RefCell<HashMap<PathBuf, bool>>,
+    api_spine_lookup: RefCell<HashMap<PathBuf, bool>>,
+    /// `package_entry_targets` results per package dir — the manifest
+    /// is immutable for the run, and the uncached form re-parses it
+    /// once per entrypoint-named file in the package.
+    entry_targets_lookup: RefCell<HashMap<PathBuf, Vec<String>>>,
 }
 
 /// Reachability results over the TS/JS import graph, canonicalized.
@@ -1885,11 +1890,17 @@ fn reexport_wall_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
 /// members keep imports pricing — boosting their walls measured
 /// d2ts −0.023 / linkwarden −0.028 while the spine walls won.
 fn is_api_spine_entrypoint(file: &Path, ctx: &WalkCtx) -> bool {
-    if secondary_ts_workspace_member_factor(file, ctx) < 1.0 {
-        return false;
+    let state = ctx.typescript_state();
+    if let Some(&hit) = state.api_spine_lookup.borrow().get(file) {
+        return hit;
     }
-    ctx.typescript_state().is_reexport_target(file, ctx)
-        || is_declared_package_entry_source(file, ctx)
+    let hit = secondary_ts_workspace_member_factor(file, ctx) >= 1.0
+        && (state.is_reexport_target(file, ctx) || is_declared_package_entry_source(file, ctx));
+    state
+        .api_spine_lookup
+        .borrow_mut()
+        .insert(file.to_path_buf(), hit);
+    hit
 }
 
 /// Generated-output prefixes a manifest entry path may carry; stripped
@@ -1912,7 +1923,14 @@ fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
     let Ok(canonical_file) = file.canonicalize() else {
         return false;
     };
-    for target in super::json::package_entry_targets(&pkg_dir) {
+    let state = ctx.typescript_state();
+    let targets = state
+        .entry_targets_lookup
+        .borrow_mut()
+        .entry(pkg_dir.clone())
+        .or_insert_with(|| super::json::package_entry_targets(&pkg_dir))
+        .clone();
+    for target in targets {
         let rel = target.trim_start_matches("./");
         if rel.is_empty() {
             continue;

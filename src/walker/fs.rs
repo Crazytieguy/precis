@@ -14,7 +14,7 @@ use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 use crate::fs_util::EntryKind;
 pub use crate::fs_util::list_dir;
-use crate::value::mix_signals;
+use crate::value::{is_colocated_test_filename, mix_signals};
 
 use super::{WalkCtx, file_depth_factor, path_depth_factor};
 
@@ -483,22 +483,6 @@ fn is_large_root_test_inventory_dir(
         })
         .count();
     catalog_files >= MIN_TEST_INDEX_FILES
-}
-
-/// Filename carrying the co-located unit-test convention
-/// (`foo.test.js`, `foo.spec.ts`, `foo_test.go`, `test_foo.py`) — a test
-/// of a specific module, not a standalone spec-catalog entry.
-fn is_colocated_test_filename(name: &str) -> bool {
-    let lower = name.to_ascii_lowercase();
-    lower.contains(".test.")
-        || lower.contains(".test-d.")
-        || lower.contains(".spec.")
-        || lower.ends_with("_test.go")
-        || lower.ends_with("_test.ts")
-        || lower.ends_with("_test.js")
-        || lower.ends_with("_test.tsx")
-        || lower.ends_with("_test.py")
-        || (lower.starts_with("test_") && lower.ends_with(".py"))
 }
 
 /// True when `dir` lies under a root-level `src`/`lib`/`source`/`pkg/` dir.
