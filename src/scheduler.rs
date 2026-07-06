@@ -27,19 +27,6 @@ use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::ratio_with_exponent as score_ratio;
 use crate::walker::{WalkCtx, Walker};
 
-/// Cap on per-child descendant-value flow into a predecessor.
-const GATED_DESCENDANT_BONUS_MAX_PARENT_MULTIPLE_PER_CHILD: f64 = 0.15;
-const GATED_DESCENDANT_BONUS_MAX_PARENT_MULTIPLE_CAP: f64 = 3.0;
-/// Minimum fan-out for a predecessor edge to count as a gate.
-const GATED_DESCENDANT_MIN_DIRECT_CHILDREN: usize = 4;
-/// Raw descendant value is normalized by this multiple of the parent's
-/// own value before applying the saturating curve.
-const GATED_DESCENDANT_BONUS_SATURATION_PARENT_MULTIPLE: f64 = 2.0;
-/// Per-depth decay for grandchild value flowing back to a predecessor.
-const GATED_DESCENDANT_DEPTH_DECAY: f64 = 0.5;
-
-type ChildrenByParent = HashMap<BatchId, Vec<BatchId>>;
-
 /// `best_exact` narrows the eligible set to the top-K by approx score
 /// before exact tokenization. Corpus boundary is K=66 (htop); 2× margin
 /// for off-corpus inputs.
@@ -90,18 +77,6 @@ pub struct Scheduler<W: Walker> {
     /// touching that file, so their cached costs are dropped when one
     /// of them is scheduled.
     batches_by_path: HashMap<PathBuf, Vec<BatchId>>,
-    /// Parent → unscheduled children index, maintained incrementally.
-    /// Vec order within each entry must match `entries` order — it's
-    /// observable via floating-point accumulation in
-    /// `raw_gated_descendant_value`.
-    children_index: ChildrenByParent,
-    /// Children whose predecessor key hasn't been absorbed yet —
-    /// drained into `children_index` when the parent is absorbed.
-    pending_children: HashMap<W::Key, Vec<BatchId>>,
-    /// Debug-only: recompute `children_index` from scratch each call
-    /// and assert it matches the incrementally-maintained version.
-    #[cfg(debug_assertions)]
-    verify_children_index: bool,
     /// Debug-only owner map for FS render cells — overlapping sibling
     /// FS atoms are a walker-contract violation.
     #[cfg(debug_assertions)]
@@ -135,19 +110,9 @@ impl<W: Walker> Scheduler<W> {
             cost_cache: HashMap::new(),
             approx_cost_cache: HashMap::new(),
             batches_by_path: HashMap::new(),
-            children_index: HashMap::new(),
-            pending_children: HashMap::new(),
-            #[cfg(debug_assertions)]
-            verify_children_index: false,
             #[cfg(debug_assertions)]
             fs_atom_owners: BTreeMap::new(),
         }
-    }
-
-    /// Debug-only: turn on the `children_index` invariant verifier.
-    #[cfg(debug_assertions)]
-    pub fn enable_children_index_verifier(&mut self) {
-        self.verify_children_index = true;
     }
 
     /// Run the scheduler and return just the rendered tree.
@@ -232,28 +197,7 @@ impl<W: Walker> Scheduler<W> {
         self.assert_disjoint_fs_atoms(&batch);
         let id = BatchId::new(self.entries.len());
 
-        if let Some(pred) = batch.predecessor.as_ref() {
-            match self.key_to_id.get(pred) {
-                Some(&parent_id) => {
-                    self.children_index.entry(parent_id).or_default().push(id);
-                }
-                None => {
-                    self.pending_children
-                        .entry(pred.clone())
-                        .or_default()
-                        .push(id);
-                }
-            }
-        }
-
         self.key_to_id.insert(batch.key.clone(), id);
-
-        if let Some(waiting) = self.pending_children.remove(&batch.key) {
-            // The new id has no prior entry in `children_index` (it was
-            // just minted), so direct insert is safe. Pending list is
-            // FIFO over absorb order → entries-order is preserved.
-            self.children_index.insert(id, waiting);
-        }
 
         if let BatchContent::Lines { spans } = &batch.content {
             let mut last: Option<&PathBuf> = None;
@@ -327,19 +271,7 @@ impl<W: Walker> Scheduler<W> {
             return None;
         }
 
-        #[cfg(debug_assertions)]
-        if self.verify_children_index {
-            let rebuilt = self.children_by_parent_rebuilt();
-            debug_assert_eq!(
-                rebuilt, self.children_index,
-                "children_index out of sync with rebuild"
-            );
-        }
-
-        // Shared across approx and exact passes — `effective_value`
-        // depends only on stable state within a `best_exact` call.
-        let mut descendant_value_cache = HashMap::new();
-        let pool = self.select_contender_pool(&eligible, &mut descendant_value_cache);
+        let pool = self.select_contender_pool(&eligible);
 
         crate::time_counter!(best_exact_rank_pass);
         let mut best: Option<(f64, BatchId, Cost)> = None;
@@ -351,10 +283,8 @@ impl<W: Walker> Scheduler<W> {
             }
             let exact_cost = self.cost_cache[&id];
             let entry = &self.entries[id.index()];
-            let effective_value =
-                self.effective_value(id, &self.children_index, &mut descendant_value_cache);
             let ratio = score_ratio(
-                effective_value,
+                entry.value,
                 exact_cost.tokens,
                 entry.key.concavity_exponent(),
             ) * crate::value::orientation_tier_multiplier(
@@ -380,11 +310,7 @@ impl<W: Walker> Scheduler<W> {
     /// Narrow `eligible` to the top-K contender pool by approx score
     /// for the exact pass to rerank. Skips the approx pass when the
     /// eligible set already fits in the pool.
-    fn select_contender_pool(
-        &mut self,
-        eligible: &[BatchId],
-        descendant_value_cache: &mut HashMap<BatchId, f64>,
-    ) -> Vec<BatchId> {
+    fn select_contender_pool(&mut self, eligible: &[BatchId]) -> Vec<BatchId> {
         if eligible.len() <= CONTENDER_POOL_K {
             return eligible.to_vec();
         }
@@ -404,20 +330,16 @@ impl<W: Walker> Scheduler<W> {
         for &id in eligible {
             let approx_tokens = self.approx_cost_cache[&id];
             let entry = &self.entries[id.index()];
-            let effective_value =
-                self.effective_value(id, &self.children_index, descendant_value_cache);
-            let ratio = score_ratio(
-                effective_value,
-                approx_tokens,
-                entry.key.concavity_exponent(),
-            ) * crate::value::orientation_tier_multiplier(
-                self.consumed.tokens,
-                entry.key.is_orientation(),
-            ) * crate::value::prose_mass_tier_multiplier(
-                self.consumed.tokens,
-                self.token_budget,
-                entry.key.is_deferred_mass_prose(),
-            );
+            let ratio = score_ratio(entry.value, approx_tokens, entry.key.concavity_exponent())
+                * crate::value::orientation_tier_multiplier(
+                    self.consumed.tokens,
+                    entry.key.is_orientation(),
+                )
+                * crate::value::prose_mass_tier_multiplier(
+                    self.consumed.tokens,
+                    self.token_budget,
+                    entry.key.is_deferred_mass_prose(),
+                );
             candidates.push((ratio, id));
         }
 
@@ -432,96 +354,6 @@ impl<W: Walker> Scheduler<W> {
                 .then_with(|| entries[b.1.index()].key.cmp(&entries[a.1.index()].key))
         });
         candidates[pivot..].iter().map(|(_, id)| *id).collect()
-    }
-
-    fn effective_value(
-        &self,
-        id: BatchId,
-        children_by_parent: &ChildrenByParent,
-        descendant_value_cache: &mut HashMap<BatchId, f64>,
-    ) -> f64 {
-        let base = self.entries[id.index()].value;
-        if base <= 0.0 {
-            return base;
-        }
-        let key_weight = self.entries[id.index()].key.gated_descendant_value_weight();
-        if key_weight <= 0.0 {
-            return base;
-        }
-        let direct_child_count = children_by_parent.get(&id).map_or(0, Vec::len);
-        if direct_child_count < GATED_DESCENDANT_MIN_DIRECT_CHILDREN {
-            return base;
-        }
-        let raw_descendant_value = self.raw_gated_descendant_value(
-            id,
-            children_by_parent,
-            descendant_value_cache,
-            &mut HashSet::new(),
-        );
-        if raw_descendant_value <= 0.0 {
-            return base;
-        }
-        let max_multiple = (direct_child_count as f64
-            * GATED_DESCENDANT_BONUS_MAX_PARENT_MULTIPLE_PER_CHILD)
-            .min(GATED_DESCENDANT_BONUS_MAX_PARENT_MULTIPLE_CAP);
-        let max_bonus = base * max_multiple * key_weight;
-        let saturation =
-            (base * GATED_DESCENDANT_BONUS_SATURATION_PARENT_MULTIPLE).max(f64::EPSILON);
-        let bonus = max_bonus * (1.0 - (-raw_descendant_value / saturation).exp());
-        base + bonus
-    }
-
-    /// Rebuild the parent→children index from scratch — debug verifier.
-    #[cfg(debug_assertions)]
-    fn children_by_parent_rebuilt(&self) -> ChildrenByParent {
-        let mut children: ChildrenByParent = HashMap::new();
-        for (idx, entry) in self.entries.iter().enumerate() {
-            let child_id = BatchId::new(idx);
-            if self.scheduled.contains(&child_id) {
-                continue;
-            }
-            let Some(pred) = entry.predecessor.as_ref() else {
-                continue;
-            };
-            let Some(parent_id) = self.key_to_id.get(pred) else {
-                continue;
-            };
-            children.entry(*parent_id).or_default().push(child_id);
-        }
-        children
-    }
-
-    fn raw_gated_descendant_value(
-        &self,
-        id: BatchId,
-        children_by_parent: &ChildrenByParent,
-        cache: &mut HashMap<BatchId, f64>,
-        visiting: &mut HashSet<BatchId>,
-    ) -> f64 {
-        if let Some(value) = cache.get(&id) {
-            return *value;
-        }
-        if !visiting.insert(id) {
-            if cfg!(debug_assertions) {
-                panic!(
-                    "predecessor cycle detected while scoring gated descendants at {:?}",
-                    self.entries[id.index()].key
-                );
-            }
-            return 0.0;
-        }
-
-        let mut total = 0.0;
-        for &child_id in children_by_parent.get(&id).into_iter().flatten() {
-            let entry = &self.entries[child_id.index()];
-            let descendants =
-                self.raw_gated_descendant_value(child_id, children_by_parent, cache, visiting);
-            total += entry.value + GATED_DESCENDANT_DEPTH_DECAY * descendants;
-        }
-
-        visiting.remove(&id);
-        cache.insert(id, total);
-        total
     }
 
     fn fits(&self, cost: Cost) -> bool {
@@ -603,21 +435,6 @@ impl<W: Walker> Scheduler<W> {
                         self.batches_by_path.remove(&span.path);
                     }
                 }
-            }
-        }
-
-        // Remove `id` from its parent's child list — `retain`
-        // preserves entries-order.
-        let parent_id = self.entries[id.index()]
-            .predecessor
-            .as_ref()
-            .and_then(|p| self.key_to_id.get(p).copied());
-        if let Some(parent_id) = parent_id
-            && let Some(siblings) = self.children_index.get_mut(&parent_id)
-        {
-            siblings.retain(|&c| c != id);
-            if siblings.is_empty() {
-                self.children_index.remove(&parent_id);
             }
         }
 

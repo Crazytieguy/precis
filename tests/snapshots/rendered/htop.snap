@@ -64,6 +64,33 @@ GPUMeter.c
 GPUMeter.h
 Hashtable.c
 Hashtable.h
+    …
+       2→#define HEADER_Hashtable
+    …
+      14→typedef unsigned int ht_key_t;
+      15→
+      16→typedef void(*Hashtable_PairFunction)(ht_key_t key, void* value, void* userdata);
+      17→
+      18→typedef struct Hashtable_ Hashtable;
+    …
+      22→size_t Hashtable_count(const Hashtable* this);
+    …
+      26→Hashtable* Hashtable_new(size_t size, bool owner);
+      27→
+      28→void Hashtable_delete(Hashtable* this);
+      29→
+      30→void Hashtable_clear(Hashtable* this);
+      31→
+      32→void Hashtable_setSize(Hashtable* this, size_t size);
+      33→
+      34→void Hashtable_put(Hashtable* this, ht_key_t key, void* value);
+      35→
+      36→void* Hashtable_remove(Hashtable* this, ht_key_t key);
+      37→
+      38→void* Hashtable_get(Hashtable* this, ht_key_t key);
+      39→
+      40→void Hashtable_foreach(Hashtable* this, Hashtable_PairFunction f, void* userData);
+    …
 Header.c
 Header.h
 HeaderLayout.h
@@ -85,6 +112,55 @@ LoadAverageMeter.c
 LoadAverageMeter.h
 Machine.c
 Machine.h
+    …
+       2→#define HEADER_Machine
+    …
+      35→typedef unsigned long long int memory_t;
+      36→#define MEMORY_MAX ULLONG_MAX
+      37→
+      38→typedef struct Machine_ {
+      39→   struct Settings_* settings;
+    …
+      46→   int64_t iterationsRemaining;
+      48→   #ifdef HAVE_LIBHWLOC
+      49→   hwloc_topology_t topology;
+      50→   bool topologyOk;
+      51→   #endif
+      53→   memory_t totalMem;
+      55→   memory_t totalSwap;
+      56→   memory_t usedSwap;
+      57→   memory_t cachedSwap;
+      59→   unsigned int activeCPUs;
+      60→   unsigned int existingCPUs;
+    …
+      67→   pid_t maxProcessId; /* largest PID seen at runtime */
+      69→   size_t tableCount;
+      70→   Table **tables;
+      71→   Table *activeTable;
+      72→   Table *processTable;
+      73→} Machine;
+      76→Machine* Machine_new(UsersTable* usersTable, uid_t userId);
+      77→
+      78→void Machine_init(Machine* this, UsersTable* usersTable, uid_t userId);
+      79→
+      80→void Machine_delete(Machine* this);
+      81→
+      82→void Machine_done(Machine* this);
+      83→
+      84→bool Machine_isCPUonline(const Machine* this, unsigned int id);
+      85→
+      86→int Machine_getCPUPhysicalCoreID(const Machine* this, unsigned int id);
+      87→
+      88→int Machine_getCPUThreadIndex(const Machine* this, unsigned int id);
+      89→
+      90→void Machine_populateTablesFromSettings(Machine* this, Settings* settings, Table* processTable);
+      91→
+      92→void Machine_setTablesPanel(Machine* this, Panel* panel);
+      93→
+      94→void Machine_scan(Machine* this);
+      95→
+      96→void Machine_scanTables(Machine* this);
+    …
 Macros.h
 MainPanel.c
 MainPanel.h
@@ -266,68 +342,15 @@ Process.h
      239→#define Process_uidDigits Row_uidDigits
      240→
      241→typedef Process* (*Process_New)(const struct Machine_*);
-     242→typedef int (*Process_CompareByKey)(const Process*, const Process*, ProcessField);
-     243→
-     244→typedef struct ProcessClass_ {
-     245→   const RowClass super;
-     246→   const Process_CompareByKey compareByKey;
-     247→} ProcessClass;
-     249→#define As_Process(this_)   ((const ProcessClass*)((this_)->super.super.klass))
-     250→
-     251→#define Process_compareByKey(p1_, p2_, key_)   (As_Process(p1_)->compareByKey ? (As_Process(p1_)->compareByKey(p1_, p2_, key_)) : Process_compareByKey_Base(p1_, p2_, key_))
-     252→
-     253→
-     254→static inline void Process_setPid(Process* this, pid_t pid) {
-     255→   this->super.id = pid;
-    …
-     258→static inline pid_t Process_getPid(const Process* this) {
-     259→   return (pid_t)this->super.id;
-    …
-     262→static inline void Process_setThreadGroup(Process* this, pid_t pid) {
-     263→   this->super.group = pid;
-    …
-     266→static inline pid_t Process_getThreadGroup(const Process* this) {
-     267→   return (pid_t)this->super.group;
-    …
-     270→static inline void Process_setParent(Process* this, pid_t pid) {
-     271→   this->super.parent = pid;
-    …
-     274→static inline pid_t Process_getParent(const Process* this) {
-     275→   return (pid_t)this->super.parent;
-    …
-     278→static inline pid_t Process_getGroupOrParent(const Process* this) {
-     279→   return Row_getGroupOrParent(&this->super);
-    …
-     282→static inline bool Process_isKernelThread(const Process* this) {
-     283→   return this->isKernelThread;
-    …
-     286→static inline bool Process_isUserlandThread(const Process* this) {
-     287→   return this->isUserlandThread;
-    …
-     290→static inline bool Process_isThread(const Process* this) {
-     291→   return Process_isUserlandThread(this) || Process_isKernelThread(this);
-    …
-     294→#define CMDLINE_HIGHLIGHT_FLAG_SEPARATOR  0x00000001
-     295→#define CMDLINE_HIGHLIGHT_FLAG_BASENAME   0x00000002
-     296→#define CMDLINE_HIGHLIGHT_FLAG_COMM       0x00000004
-     297→#define CMDLINE_HIGHLIGHT_FLAG_DELETED    0x00000008
-     298→#define CMDLINE_HIGHLIGHT_FLAG_PREFIXDIR  0x00000010
-     299→
-     300→void Process_fillStarttimeBuffer(Process* this);
-     301→
-     302→void Process_done(Process* this);
-     303→
-     304→extern const ProcessClass Process_class;
-     305→
-     306→void Process_init(Process* this, const struct Machine_* host);
-     307→
-     308→const char* Process_rowGetSortKey(Row* super);
     …
 ProcessLocksScreen.c
 ProcessLocksScreen.h
 ProcessTable.c
 ProcessTable.h
 ProvideCurses.h
+    …
+       2→#define HEADER_ProvideCurses
+    …
 ProvideTerm.h
 README
 README.md
@@ -374,6 +397,8 @@ Vector.h
 XUtils.c
 XUtils.h
 autogen.sh
+       1→#!/bin/sh
+       2→autoreconf --force --install --verbose -Wall
 check-pcp-style.sh
 configure.ac
 darwin/

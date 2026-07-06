@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use precis::batch::{Batch, BatchKey, FsKey, RustKey, TsKey, WalkerKey};
+use precis::batch::{Batch, BatchKey, FsKey, RustKey};
 use precis::content::{BatchContent, FsEntries, FsGroup, Render, Span};
 use precis::render::SourceCache;
 use precis::scheduler::Scheduler;
@@ -187,85 +187,6 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     );
 }
 
-#[test]
-fn scheduler_invariants_gated_descendant_value_promotes_predecessor() {
-    struct GatedValueWalker;
-    impl Walker for GatedValueWalker {
-        type Key = BatchKey;
-
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-            let gate_file = stub_file("api.ts");
-            let gate = BatchKey::Typescript(TsKey::ExportNames {
-                file: gate_file.clone(),
-                chunk_index: 0,
-                export_count: 12,
-                type_only_export_count: 12,
-            });
-            let mut out = vec![
-                Batch {
-                    key: gate.clone(),
-                    predecessor: None,
-                    content: BatchContent::Lines {
-                        spans: single_span(gate_file.clone(), 1, 1, Render::Full),
-                    },
-                    value: 100.0,
-                },
-                Batch {
-                    key: BatchKey::Typescript(TsKey::Imports {
-                        file: stub_file("other.rs"),
-                    }),
-                    predecessor: None,
-                    content: BatchContent::Lines {
-                        spans: single_span(stub_file("other.rs"), 1, 1, Render::Full),
-                    },
-                    value: 180.0,
-                },
-            ];
-            for line in 2..=13 {
-                out.push(Batch {
-                    key: BatchKey::Typescript(TsKey::Export {
-                        file: gate_file.clone(),
-                        start_line: line,
-                    }),
-                    predecessor: Some(gate.clone()),
-                    content: BatchContent::Lines {
-                        spans: single_span(gate_file.clone(), line, line, Render::Full),
-                    },
-                    value: if line == 2 { 1_000.0 } else { 50.0 },
-                });
-            }
-            out
-        }
-
-        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-            Vec::new()
-        }
-    }
-
-    let cache = SourceCache::new();
-    let gate_file = stub_file("api.ts");
-    let gate_source: String = (1..=13)
-        .map(|line| format!("export type T{line} = string;\n"))
-        .collect();
-    preload(&cache, &gate_file, &gate_source);
-    preload(&cache, &stub_file("other.rs"), "impl Other {}\n");
-    let scheduler = Scheduler::with_source_cache(stub_dir(), GatedValueWalker, 10_000, None, cache);
-    let report = scheduler.run_with_report();
-
-    assert!(
-        matches!(
-            report.scheduled.first().map(|r| &r.key),
-            Some(BatchKey::Typescript(TsKey::ExportNames { .. }))
-        ),
-        "scheduled order: {:?}",
-        report
-            .scheduled
-            .iter()
-            .map(|r| r.key.describe(&stub_dir()))
-            .collect::<Vec<_>>()
-    );
-}
-
 #[cfg(debug_assertions)]
 #[test]
 #[should_panic(expected = "non-ancestor overlap")]
@@ -379,86 +300,5 @@ fn scheduler_invariants_overlapping_fs_atoms_panic_in_debug() {
 
     let cache = SourceCache::new();
     let scheduler = Scheduler::with_source_cache(stub_dir(), OverlapWalker, 10_000, None, cache);
-    let _ = scheduler.run();
-}
-
-#[test]
-fn scheduler_invariants_children_index_matches_rebuild() {
-    // Exercise the incremental `children_index` (in `Scheduler`) against
-    // the reference rebuild. Hits both absorb paths — child-before-parent
-    // (pending drain) and the straight parent-then-child case — plus
-    // `schedule()` removal as batches are scheduled. The verifier (turned
-    // on via `enable_children_index_verifier` below) panics on any
-    // mismatch.
-
-    struct ChildBeforeParent;
-    impl Walker for ChildBeforeParent {
-        type Key = BatchKey;
-
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-            let gate_file = stub_file("api.ts");
-            let gate = BatchKey::Typescript(TsKey::ExportNames {
-                file: gate_file.clone(),
-                chunk_index: 0,
-                export_count: 6,
-                type_only_export_count: 6,
-            });
-            let mut out = Vec::new();
-            // Three children absorbed BEFORE the parent → must land in
-            // `pending_children` and be drained on the parent's absorb.
-            for line in 2..=4 {
-                out.push(Batch {
-                    key: BatchKey::Typescript(TsKey::Export {
-                        file: gate_file.clone(),
-                        start_line: line,
-                    }),
-                    predecessor: Some(gate.clone()),
-                    content: BatchContent::Lines {
-                        spans: single_span(gate_file.clone(), line, line, Render::Full),
-                    },
-                    value: 80.0,
-                });
-            }
-            // Parent — drains pending children into `children_index`.
-            out.push(Batch {
-                key: gate.clone(),
-                predecessor: None,
-                content: BatchContent::Lines {
-                    spans: single_span(gate_file.clone(), 1, 1, Render::Full),
-                },
-                value: 200.0,
-            });
-            // Two more children absorbed AFTER the parent → must take
-            // the direct-append branch and preserve absorb order.
-            for line in 5..=6 {
-                out.push(Batch {
-                    key: BatchKey::Typescript(TsKey::Export {
-                        file: gate_file.clone(),
-                        start_line: line,
-                    }),
-                    predecessor: Some(gate.clone()),
-                    content: BatchContent::Lines {
-                        spans: single_span(gate_file.clone(), line, line, Render::Full),
-                    },
-                    value: 80.0,
-                });
-            }
-            out
-        }
-
-        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-            Vec::new()
-        }
-    }
-
-    let cache = SourceCache::new();
-    let gate_file = stub_file("api.ts");
-    let gate_source: String = (1..=6)
-        .map(|line| format!("export type T{line} = string;\n"))
-        .collect();
-    preload(&cache, &gate_file, &gate_source);
-    let mut scheduler =
-        Scheduler::with_source_cache(stub_dir(), ChildBeforeParent, 10_000, None, cache);
-    scheduler.enable_children_index_verifier();
     let _ = scheduler.run();
 }

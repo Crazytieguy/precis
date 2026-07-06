@@ -50,7 +50,8 @@ README.md
       66→## Documentation
     …
       76→## Issues
-    …
+      77→
+      78→Create [issues](https://github.com/microsoft/monaco-editor/issues) in this repository for anything related to the Monaco Editor. Please search for existing issues to avoid duplicates.
       80→## FAQ
     …
      112→## Contributing / Local Development
@@ -123,12 +124,89 @@ package.json
        8→	"author": "Microsoft Corporation",
        9→	"license": "MIT",
     …
+      37→	"typings": "./esm/vs/editor/editor.main.d.ts",
+      38→	"main": "./min/vs/editor/editor.main.js",
+      39→	"module": "./esm/vs/editor/editor.main.js",
+      40→	"exports": {
+      41→		".": {
+      42→			"types": "./esm/vs/index.d.ts",
+      43→			"import": "./esm/vs/index.js",
+      44→			"require": "./min/vs/index.js"
+      45→		},
+      46→		"./*.js": "./esm/vs/*.js",
+      47→		"./*": "./esm/vs/*.js"
+      48→	},
       49→	"repository": {
       50→		"type": "git",
       51→		"url": "https://github.com/microsoft/monaco-editor"
       52→	},
     …
 samples/
+    README.md
+           1→# Monaco Editor Samples
+           2→
+           3→Standalone HTML samples showing how to integrate the Monaco Editor.
+           5→## Running
+        …
+          17→## Loading variations
+        …
+          26→## Other examples & techniques
+        …
+          34→## License
+          35→
+          36→MIT
+    browser-esm-esbuild/
+        .gitignore
+        build.js
+        dist/
+        index.html
+        index.js
+        package.json
+            …
+               2→	"name": "helloworld",
+            …
+    browser-esm-parcel/
+        .gitignore
+        index.html
+        package-lock.json
+        package.json
+            …
+               2→	"name": "helloworld",
+            …
+        src/
+    browser-esm-vite/
+    browser-esm-vite-react/
+    browser-esm-webpack/
+    browser-esm-webpack-monaco-plugin/
+    browser-esm-webpack-small/
+    browser-esm-webpack-typescript/
+        .gitignore
+        package.json
+            …
+               2→	"name": "monaco-esm-webpack-typescript",
+            …
+        src/
+        tsconfig.json
+        webpack.config.js
+    browser-esm-webpack-typescript-react/
+    electron-esm-webpack/
+    legacy/
+    nwjs-amd/
+    nwjs-amd-v2/
+    package-lock.json
+    package.json
+        …
+           2→	"name": "monaco-editor-samples",
+           3→	"version": "0.0.1",
+           4→	"private": true,
+           5→	"description": "Samples for using the Monaco Editor",
+           6→	"main": "index.js",
+           7→	"scripts": {
+           8→		"simpleserver": "yaserver --root ./ --port 8888"
+           9→	},
+          10→	"author": "Microsoft Corporation",
+          11→	"license": "MIT",
+        …
 scripts/
     ci/
     lib/
@@ -313,44 +391,6 @@ src/
                 cssMode.ts
                 cssWorker.ts
                 register.ts
-                    …
-                       9→export interface CSSFormatConfiguration {
-                    …
-                      24→export interface Options {
-                    …
-                      57→export interface ModeConfiguration {
-                    …
-                     124→export interface LanguageServiceDefaults {
-                    …
-                     140→export type DiagnosticsOptions = Options;
-                    …
-                     240→export const cssDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
-                     241→	'css',
-                     242→	optionsDefault,
-                     243→	modeConfigurationDefault
-                     244→);
-                     245→export const scssDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
-                     246→	'scss',
-                     247→	optionsDefault,
-                     248→	modeConfigurationDefault
-                     249→);
-                     250→export const lessDefaults: LanguageServiceDefaults = new LanguageServiceDefaultsImpl(
-                     251→	'less',
-                     252→	optionsDefault,
-                     253→	modeConfigurationDefault
-                     254→);
-                    …
-                     276→export interface CSSDataConfiguration {
-                    …
-                     291→export interface CSSDataV1 {
-                    …
-                     299→export type EntryStatus = 'standard' | 'experimental' | 'nonstandard' | 'obsolete';
-                     300→
-                     301→export interface IReference {
-                     302→	name: string;
-                     303→	url: string;
-                     304→}
-                    …
                 workerManager.ts
             html/
                 html.worker.ts
@@ -363,50 +403,6 @@ src/
                 jsonMode.ts
                 jsonWorker.ts
                 register.ts
-                    …
-                      10→export interface BaseASTNode {
-                    …
-                      18→export interface ObjectASTNode extends BaseASTNode {
-                      19→	readonly type: 'object';
-                      20→	readonly properties: PropertyASTNode[];
-                      21→	readonly children: ASTNode[];
-                      22→}
-                      23→export interface PropertyASTNode extends BaseASTNode {
-                    …
-                      30→export interface ArrayASTNode extends BaseASTNode {
-                      31→	readonly type: 'array';
-                      32→	readonly items: ASTNode[];
-                      33→	readonly children: ASTNode[];
-                      34→}
-                      35→export interface StringASTNode extends BaseASTNode {
-                      36→	readonly type: 'string';
-                      37→	readonly value: string;
-                      38→}
-                      39→export interface NumberASTNode extends BaseASTNode {
-                      40→	readonly type: 'number';
-                      41→	readonly value: number;
-                      42→	readonly isInteger: boolean;
-                      43→}
-                      44→export interface BooleanASTNode extends BaseASTNode {
-                      45→	readonly type: 'boolean';
-                      46→	readonly value: boolean;
-                      47→}
-                      48→export interface NullASTNode extends BaseASTNode {
-                      49→	readonly type: 'null';
-                      50→	readonly value: null;
-                      51→}
-                      53→export type ASTNode =
-                    …
-                      62→export type JSONDocument = {
-                      63→	root: ASTNode | undefined;
-                      64→	getNodeFromOffset(offset: number, includeRightBound?: boolean): ASTNode | undefined;
-                      65→};
-                      67→export type JSONSchemaRef = JSONSchema | boolean;
-                      68→
-                      69→export interface JSONSchemaMap {
-                      70→	[name: string]: JSONSchemaRef;
-                      71→}
-                    …
                 tokenization.ts
                 workerManager.ts
             register.all.ts
@@ -459,6 +455,22 @@ webpack-plugin/
         …
     src/
         index.ts
+            …
+             159→class MonacoEditorWebpackPlugin implements webpack.WebpackPluginInstance {
+             160→	private readonly options: IInternalMonacoEditorWebpackPluginOpts;
+             161→
+             162→	constructor(options: MonacoEditorWebpackPlugin.IMonacoEditorWebpackPluginOpts = {}) {
+            …
+             177→	apply(compiler: webpack.Compiler): void {
+             178→		const { languages, features, filename, monacoEditorPath, publicPath, globalAPI } = this.options;
+             179→		const compilationPublicPath = getCompilationPublicPath(compiler);
+             180→		const modules = [EDITOR_MODULE].concat(languages).concat(features);
+             181→		const workers: ILabeledWorkerDefinition[] = [];
+            …
+             201→		const plugins = createPlugins(compiler, workers, filename, monacoEditorPath);
+             202→		addCompilerRules(compiler, rules);
+             203→		addCompilerPlugins(compiler, plugins);
+            …
         loader-utils.d.ts
         loaders/
         plugins/

@@ -116,50 +116,15 @@ src/
         video/
     common/
         tusb_common.h
-            …
-              68→#define TU_GENMASK(h, l)              ( (UINT32_MAX << (l)) & (UINT32_MAX >> (31 - (h))) )
-            …
-              94→extern uint32_t tusb_time_millis_api(void);
-            …
-              97→extern void tusb_time_delay_ms_api(uint32_t ms);
-            …
-             100→extern void tusb_app_dcache_flush(uintptr_t addr, uint32_t data_size);
-            …
-             103→extern void tusb_app_dcache_invalidate(uintptr_t addr, uint32_t data_size);
-            …
-             106→extern void* tusb_app_virt_to_phys(void *virt_addr);
-             107→extern void* tusb_app_phys_to_virt(void *phys_addr);
-            …
-             114→#define tu_memclr(buffer, size)  (void) memset((buffer), 0, (size))
-             115→#define tu_varclr(_var)          tu_memclr(_var, sizeof(*(_var)))
-            …
-             118→TU_ATTR_ALWAYS_INLINE static inline int tu_memset_s(void *dest, size_t destsz, int ch, size_t count) {
-            …
-             137→TU_ATTR_ALWAYS_INLINE static inline int tu_memcpy_s(void *dest, size_t destsz, const void *src, size_t count) {
-            …
-             158→TU_ATTR_ALWAYS_INLINE static inline bool tu_mem_is_zero(const void *buffer, size_t size) {
-            …
-             166→TU_ATTR_ALWAYS_INLINE static inline bool tu_mem_is_ff(const void *buffer, size_t size) {
-            …
-             176→TU_ATTR_ALWAYS_INLINE static inline uint32_t tu_u32(uint8_t b3, uint8_t b2, uint8_t b1, uint8_t b0) {
-            …
-             180→TU_ATTR_ALWAYS_INLINE static inline uint32_t tu_u32_from_u16(uint16_t high, uint16_t low) {
-            …
-             184→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u16(uint8_t high, uint8_t low) {
-            …
-             188→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte3(uint32_t ui32) { return TU_U32_BYTE3(ui32); }
-             189→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte2(uint32_t ui32) { return TU_U32_BYTE2(ui32); }
-             190→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte1(uint32_t ui32) { return TU_U32_BYTE1(ui32); }
-             191→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u32_byte0(uint32_t ui32) { return TU_U32_BYTE0(ui32); }
-             192→
-             193→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u32_high16(uint32_t ui32) { return (uint16_t) (ui32 >> 16); }
-             194→TU_ATTR_ALWAYS_INLINE static inline uint16_t tu_u32_low16 (uint32_t ui32) { return (uint16_t) (ui32 & 0x0000ffffu); }
-             195→
-             196→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u16_high(uint16_t ui16) { return TU_U16_HIGH(ui16); }
-             197→TU_ATTR_ALWAYS_INLINE static inline uint8_t tu_u16_low (uint16_t ui16) { return TU_U16_LOW(ui16); }
-            …
         tusb_compiler.h
         tusb_debug.h
+            …
+             144→#define TU_LOG0(...)
+             145→#define TU_LOG0_MEM(...)
+             146→#define TU_LOG0_BUF(...)
+             147→#define TU_LOG0_INT(...)
+             148→#define TU_LOG0_HEX(...)
+            …
         tusb_fifo.c
         tusb_fifo.h
         tusb_mcu.h
@@ -205,6 +170,24 @@ src/
     tinyusb.mk
     tusb.c
     tusb.h
+        …
+         147→bool tusb_rhport_init(uint8_t rhport, const tusb_rhport_init_t* rh_init);
+        …
+         159→#define _tusb_init_arg1(_rhport)             _tusb_init_arg0()
+         160→#define _tusb_init_arg2(_rhport, _rh_init)   tusb_rhport_init(_rhport, _rh_init)
+         161→#define tusb_init(...)                       TU_FUNC_OPTIONAL_ARG(_tusb_init, __VA_ARGS__)
+         163→// Check if stack is initialized
+         164→bool tusb_inited(void);
+        …
+         167→void tusb_int_handler(uint8_t rhport, bool in_isr);
+        …
+         170→bool tusb_deinit(uint8_t rhport);
+        …
+         174→#define tusb_init(...)  (false)
+         175→#define tusb_int_handler(...)  do {}while(0)
+         176→#define tusb_inited()  (false)
+         177→#define tusb_deinit(...) (false)
+        …
     tusb_option.h
     typec/
         pd_types.h

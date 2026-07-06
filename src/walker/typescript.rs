@@ -335,8 +335,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             } else {
                 NAMES_SURFACE_CHUNK_SIZE
             };
-            let export_count = exports.len();
-            let type_only_export_count = exports.iter().filter(|item| item.is_type_only).count();
             let has_split_js_class_export = is_js_file(file)
                 && exports
                     .iter()
@@ -346,8 +344,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     BatchKey::Typescript(TsKey::ExportNames {
                         file: file.clone(),
                         chunk_index,
-                        export_count,
-                        type_only_export_count,
                     })
                 })
                 .collect();

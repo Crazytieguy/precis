@@ -172,16 +172,14 @@ Score(3000)=0.641 I=0.811 C=0.507 ns_rows≤3K=17/43 (reached=7 partial=1 missin
 | walker |  | 8974 | 178 | export body at source/errors/NonError.ts:6 body 11 |  |  | 0.513 |
 | ns | 9105 |  | 318 | utils/options.ts — findUnknownOptions | 12.5 |  | 0.505 |
 | walker |  | 9130 | 156 | readme.md section #17 |  |  | 0.505 |
-| ns | 9401 |  | 296 | utils/timeout.ts | 12.6 |  | 0.519 |
-| walker |  | 9470 | 340 | export names surface in source/types/options.ts |  |  | 0.519 |
-| walker |  | 9470 | 0 | export at source/types/options.ts:33 |  |  | 0.519 |
-| walker |  | 9470 | 0 | export at source/types/options.ts:307 |  |  | 0.519 |
-| walker |  | 9543 | 73 | export at source/types/options.ts:16 |  |  | 0.519 |
-| walker |  | 9559 | 16 | export doc at source/types/options.ts:33 |  |  | 0.519 |
-| ns | 9711 |  | 310 | utils/delay.ts | 12.7 |  | 0.528 |
-| walker |  | 9726 | 167 | readme.md section #4 |  |  | 0.528 |
-| walker |  | 9797 | 71 | export names surface #1 in source/core/constants.ts |  |  | 0.532 |
-| walker |  | 9797 | 0 | export at source/core/constants.ts:235 |  |  | 0.532 |
-| walker |  | 9825 | 28 | export at source/core/constants.ts:256 |  |  | 0.532 |
-| walker |  | 9949 | 124 | export at source/core/constants.ts:237 |  |  | 0.532 |
+| walker |  | 9297 | 167 | readme.md section #4 |  |  | 0.505 |
+| walker |  | 9368 | 71 | export names surface #1 in source/core/constants.ts |  |  | 0.508 |
+| walker |  | 9368 | 0 | export at source/core/constants.ts:235 |  |  | 0.508 |
+| walker |  | 9396 | 28 | export at source/core/constants.ts:256 |  |  | 0.508 |
+| ns | 9401 |  | 296 | utils/timeout.ts | 12.6 |  | 0.523 |
+| walker |  | 9520 | 124 | export at source/core/constants.ts:237 |  |  | 0.523 |
+| walker |  | 9649 | 129 | export at source/core/constants.ts:265 |  |  | 0.523 |
+| walker |  | 9706 | 57 | export doc at source/errors/NonError.ts:6 |  |  | 0.523 |
+| ns | 9711 |  | 310 | utils/delay.ts | 12.7 |  | 0.532 |
+| walker |  | 9876 | 170 | readme.md section #29 |  |  | 0.532 |
 | ns | 9997 |  | 286 | test/{context,fetch,http-error}.ts — test title rosters | 13.1 |  | 0.526 |

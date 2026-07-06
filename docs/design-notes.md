@@ -315,6 +315,12 @@ captures it.
   (htop's `Object/Row/Process/Meter/Panel` headers still lose the
   ratio race) is the one identified lever class still viable —
   structural pattern recognition, not value/ordering tuning.
+  Note: the *gated-descendant-value* form of this (scheduler routing
+  descendant value into hub `DeclNames`) was measured dead on the
+  post-refreeze keys and removed 2026-07-06 — htop was unmoved by its
+  removal, and the TS type-only variant was net negative (axios +0.031
+  / monaco +0.059 / vite +0.022 vs d2ts −0.051, corpus +0.0009). Any
+  retry needs a different mechanism, not a revert.
 
 ## Post-refreeze calibration state (waves 3–5, 2026-07-05/06)
 

@@ -69,6 +69,33 @@ README.md
       66→  </a>
       67→</p>
 docs/
+    .vitepress/
+        buildEnd.config.ts
+        config.ts
+        inlined-scripts/
+        theme/
+            components/
+            composables/
+            index.ts
+            landing/
+            live/
+            styles.css
+    _data/
+    acknowledgements.md
+    blog/
+    blog.md
+    changes/
+    config/
+    guide/
+    images/
+    index.md
+    live.md
+    package.json
+    plugins/
+    public/
+    releases.md
+    team.md
+    tsconfig.json
 eslint.config.js
 netlify.toml
 package.json
@@ -85,6 +112,30 @@ packages/
         src/
             __tests__/
             index.ts
+                …
+                 128→export const modulePreloadLinkRE: RegExp =
+                 129→  /<link(?![\w-])[^>]*?\srel=(['"])modulepreload\1[^>]*>/g
+                …
+                 149→function viteLegacyPlugin(options: Options = {}): Plugin[] {
+                …
+                 794→export async function detectPolyfills(
+                 795→  code: string,
+                 796→  targets: any,
+                 797→  assumptions: Record<string, boolean>,
+                 798→  list: Set<string>,
+                 799→): Promise<void> {
+                …
+                1057→export const cspHashes: string[] = [
+                1058→  safari10NoModuleFix,
+                1059→  systemJSInlineCode,
+                1060→  detectModernBrowserCode,
+                1061→  dynamicFallbackInlineCode,
+                1062→].map((i) => crypto.hash('sha256', i, 'base64'))
+                1064→export type { Options }
+                1065→
+                1066→export default viteLegacyPlugin
+                …
+                1078→export { viteLegacyPluginCjs as 'module.exports' }
             shims.d.ts
             snippets.ts
             types.ts
@@ -131,6 +182,11 @@ packages/
         rollupLicensePlugin.ts
             …
                7→export default function licensePlugin(
+               8→  licenseFilePath: string,
+               9→  licenseTitle: string,
+              10→  packageName: string,
+              11→  additionalSection?: string,
+              12→): Plugin {
             …
         scripts/
         src/
@@ -157,6 +213,11 @@ packages/
             node/
                 __tests__/
                 __tests_dts__/
+                    config.ts
+                    plugin.ts
+                    tsconfig.json
+                    typeOptions.ts
+                    utils.ts
                 assetSource.ts
                 baseEnvironment.ts
                 build.ts
@@ -255,6 +316,7 @@ packages/
                       42→export { createIdResolver } from './idResolver'
                       44→export { formatPostcssSourceMap, preprocessCSS } from './plugins/css'
                       45→export { transformWithEsbuild } from './plugins/esbuild'
+                      46→export { transformWithOxc } from './plugins/oxc'
                     …
                       87→export const esbuildVersion = '0.25.0'
                     …
@@ -264,58 +326,6 @@ packages/
                 optimizer/
                 packages.ts
                 plugin.ts
-                    …
-                      62→export interface PluginContextExtension {
-                      63→  /**
-                      64→   * Vite-specific environment instance
-                      65→   */
-                      66→  environment: Environment
-                      67→}
-                      69→export interface PluginContextMetaExtension {
-                      70→  viteVersion: string
-                      71→}
-                      73→export interface ConfigPluginContext extends Omit<
-                      74→  MinimalPluginContext,
-                      75→  'meta' | 'environment'
-                      76→> {
-                      77→  meta: Omit<PluginContextMeta, 'watchMode'>
-                      78→}
-                      80→export interface MinimalPluginContextWithoutEnvironment extends Omit<
-                      81→  MinimalPluginContext,
-                      82→  'environment'
-                      83→> {}
-                    …
-                     101→export interface Plugin<A = any> extends RolldownPlugin<A> {
-                    …
-                     373→export type HookHandler<T> = T extends ObjectHook<infer H> ? H : T
-                     374→
-                     375→export type PluginWithRequiredHook<K extends keyof Plugin> = Plugin & {
-                     376→  [P in K]: NonNullable<Plugin[P]>
-                     377→}
-                    …
-                     381→export type FalsyPlugin = false | null | undefined
-                     382→
-                     383→export type PluginOption = Thenable<
-                     384→  | Plugin
-                     385→  | { name: string } // for rollup plugin compatibility
-                     386→  | FalsyPlugin
-                     387→  | PluginOption[]
-                     388→>
-                     390→export async function resolveEnvironmentPlugins(
-                     391→  environment: PartialEnvironment,
-                     392→): Promise<Plugin[]> {
-                    …
-                     417→export function perEnvironmentPlugin(
-                     418→  name: string,
-                     419→  applyToEnvironment: (
-                     420→    environment: PartialEnvironment,
-                     421→  ) => boolean | Promise<boolean> | PluginOption,
-                     422→): Plugin {
-                     423→  return {
-                     424→    name,
-                     425→    applyToEnvironment,
-                     426→  }
-                    …
                 plugins/
                 preview.ts
                 publicDir.ts
@@ -339,6 +349,11 @@ packages/
             importGlob.d.ts
             importMeta.d.ts
             internal/
+                cssPreprocessorOptions.d.ts
+                esbuildOptions.d.ts
+                lightningcssOptions.d.ts
+                rollupTypeCompat.d.ts
+                terserOptions.d.ts
             metadata.d.ts
 patches/
     chokidar@3.6.0.patch

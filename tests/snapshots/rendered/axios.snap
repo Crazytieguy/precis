@@ -3,6 +3,20 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    CODEOWNERS
+    FUNDING.yml
+    ISSUE_TEMPLATE.md
+    PULL_REQUEST_TEMPLATE.md
+    copilot-instructions.md
+    dependabot.yml
+    workflows/
+        lockfile-lint.yml
+        moderator.yml
+        publish.yml
+        release-branch.yml
+        run-ci.yml
+        verify-build-reproducibility.yml
+        zizmor.yml
 .gitignore
 .husky/
 .npmignore
@@ -15,7 +29,8 @@ CLAUDE.md
 CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
        1→# Collaborator Guide
-    …
+       2→
+       3→As a collaborator you share in the administrative responsibility for axios. This guide covers what we expect from you and how we keep the project healthy. For the technical bar (architecture, lifecycle, security-sensitive code, conventions), see [AGENTS.md](./AGENTS.md) — it is the canonical contributor guide.
        5→## Code of Conduct
     …
        9→## Triage Issues
@@ -87,7 +102,8 @@ index.d.ts
      139→export type AxiosResponseHeaders = RawAxiosResponseHeaders & AxiosHeaders;
      140→
      141→export interface AxiosRequestTransformer {
-    …
+     142→  (this: InternalAxiosRequestConfig, data: any, headers: AxiosRequestHeaders): any;
+     143→}
      145→export interface AxiosResponseTransformer {
     …
      154→export interface AxiosAdapter {
@@ -98,7 +114,11 @@ index.d.ts
      160→  password: string;
      161→}
      163→export interface AxiosProxyConfig {
-    …
+     164→  host: string;
+     165→  port: number;
+     166→  auth?: AxiosBasicCredentials;
+     167→  protocol?: string;
+     168→}
      170→export enum HttpStatusCode {
     …
      249→export type Method = (UppercaseMethod | Lowercase<UppercaseMethod>) & {};
@@ -106,7 +126,9 @@ index.d.ts
      251→export type ResponseType =
     …
      274→export type responseEncoding = (
-    …
+     275→  | UppercaseResponseEncoding
+     276→  | Lowercase<UppercaseResponseEncoding>
+     277→) & {};
      279→export interface TransitionalOptions {
     …
      286→export interface GenericAbortSignal {
@@ -120,111 +142,31 @@ index.d.ts
      317→export interface FormSerializerOptions extends SerializerOptions {}
      318→
      319→export interface ParamEncoder {
-    …
+     320→  (value: any, defaultEncoder: (value: any) => any): any;
+     321→}
      323→export interface CustomParamsSerializer {
+     324→  (params: Record<string, any>, options?: ParamsSerializerOptions): string;
+     325→}
     …
-     327→export interface ParamsSerializerOptions extends SerializerOptions {
+     713→export interface AxiosStatic extends AxiosInstance {
+     714→  Cancel: CancelStatic;
+     715→  CancelToken: CancelTokenStatic;
+     716→  Axios: typeof Axios;
+     717→  AxiosError: typeof AxiosError;
+     718→  HttpStatusCode: typeof HttpStatusCode;
+     719→  readonly VERSION: string;
+     720→  isCancel: typeof isCancel;
+     721→  all: typeof all;
+     722→  spread: typeof spread;
+     723→  isAxiosError: typeof isAxiosError;
+     724→  toFormData: typeof toFormData;
+     725→  formToJSON: typeof formToJSON;
+     726→  getAdapter: typeof getAdapter;
+     727→  CanceledError: typeof CanceledError;
+     728→  AxiosHeaders: typeof AxiosHeaders;
+     729→  mergeConfig: typeof mergeConfig;
     …
-     338→export interface AxiosProgressEvent {
-    …
-     357→export type AddressFamily = 4 | 6 | undefined;
-     358→
-     359→export interface LookupAddressEntry {
-    …
-     364→export type LookupAddress = string | LookupAddressEntry;
-     365→
-     366→export interface AxiosRequestConfig<D = any> {
-     367→  url?: string;
-     368→  method?: StringLiteralsOrString<Method>;
-     369→  baseURL?: string;
-     370→  allowAbsoluteUrls?: boolean;
-     371→  transformRequest?: AxiosRequestTransformer | AxiosRequestTransformer[];
-     372→  transformResponse?: AxiosResponseTransformer | AxiosResponseTransformer[];
-     373→  headers?: (RawAxiosRequestHeaders & MethodsHeaders) | AxiosHeaders;
-     374→  params?: any;
-     375→  paramsSerializer?: ParamsSerializerOptions | CustomParamsSerializer;
-     376→  data?: D;
-     377→  timeout?: Milliseconds;
-     378→  timeoutErrorMessage?: string;
-     379→  withCredentials?: boolean;
-     380→  adapter?: AxiosAdapterConfig | AxiosAdapterConfig[];
-     381→  auth?: AxiosBasicCredentials;
-     382→  responseType?: ResponseType;
-     383→  responseEncoding?: StringLiteralsOrString<responseEncoding>;
-     384→  xsrfCookieName?: string;
-     385→  xsrfHeaderName?: string;
-     386→  onUploadProgress?: (progressEvent: AxiosProgressEvent) => void;
-     387→  onDownloadProgress?: (progressEvent: AxiosProgressEvent) => void;
-     388→  maxContentLength?: number;
-     389→  validateStatus?: ((status: number) => boolean) | null;
-     390→  maxBodyLength?: number;
-     391→  maxRedirects?: number;
-     392→  maxRate?: number | [MaxUploadRate, MaxDownloadRate];
-     393→  beforeRedirect?: (
-    …
-     405→  socketPath?: string | null;
-     406→  allowedSocketPaths?: string | string[] | null;
-     407→  transport?: any;
-     408→  httpAgent?: any;
-     409→  httpsAgent?: any;
-     410→  proxy?: AxiosProxyConfig | false;
-     411→  cancelToken?: CancelToken | undefined;
-     412→  decompress?: boolean;
-     413→  transitional?: TransitionalOptions;
-    …
-     455→export type RawAxiosRequestConfig<D = any> = AxiosRequestConfig<D>;
-     456→
-     457→export interface InternalAxiosRequestConfig<D = any> extends AxiosRequestConfig<D> {
-     458→  headers: AxiosRequestHeaders;
-     459→}
-     461→export interface HeadersDefaults {
-     462→  common: RawAxiosRequestHeaders;
-     463→  delete: RawAxiosRequestHeaders;
-     464→  get: RawAxiosRequestHeaders;
-     465→  head: RawAxiosRequestHeaders;
-     466→  post: RawAxiosRequestHeaders;
-     467→  put: RawAxiosRequestHeaders;
-     468→  patch: RawAxiosRequestHeaders;
-     469→  options?: RawAxiosRequestHeaders;
-     470→  purge?: RawAxiosRequestHeaders;
-     471→  link?: RawAxiosRequestHeaders;
-     472→  unlink?: RawAxiosRequestHeaders;
-     473→  query?: RawAxiosRequestHeaders;
-    …
-     476→export interface AxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
-     477→  headers: HeadersDefaults;
-     478→}
-     480→export interface CreateAxiosDefaults<D = any> extends Omit<AxiosRequestConfig<D>, 'headers'> {
-    …
-     484→export interface AxiosResponse<T = any, D = any, H = {}> {
-    …
-     493→export class AxiosError<T = unknown, D = any> extends Error {
-    …
-     535→export class CanceledError<T> extends AxiosError<T> {
-     536→  readonly name: 'CanceledError';
-    …
-     539→export type AxiosPromise<T = any> = Promise<AxiosResponse<T>>;
-     540→
-     541→export interface CancelStatic {
-     542→  new (message?: string): Cancel;
-     543→}
-     545→export interface Cancel {
-     546→  message: string | undefined;
-     547→}
-     549→export interface Canceler {
-    …
-     553→export interface CancelTokenStatic {
-    …
-     558→export interface CancelToken {
-    …
-     564→export interface CancelTokenSource {
-    …
-     569→export interface AxiosInterceptorOptions {
-    …
-     595→export interface AxiosInterceptorManager<V> {
-    …
-     602→export class Axios {
-    …
+     734→export default axios;
 index.js
        1→import axios from './lib/axios.js';
     …
@@ -256,6 +198,9 @@ lib/
                3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
             …
         adapters.js
+            …
+             120→export default {
+            …
         fetch.js
         http.js
         xhr.js
@@ -264,13 +209,25 @@ lib/
           89→export default axios;
     cancel/
         CancelToken.js
+            …
+             135→export default CancelToken;
         CanceledError.js
+            …
+              22→export default CanceledError;
         isCancel.js
     core/
         Axios.js
+            …
+             281→export default Axios;
         AxiosError.js
+            …
+             176→export default AxiosError;
         AxiosHeaders.js
+            …
+             348→export default AxiosHeaders;
         InterceptorManager.js
+            …
+              72→export default InterceptorManager;
         README.md
                1→# axios // core
                2→
@@ -287,6 +244,8 @@ lib/
     defaults/
         index.js
             …
+              23→function stringifySafely(rawValue, parser, encoder) {
+            …
              177→export default defaults;
         transitional.js
     env/
@@ -298,8 +257,14 @@ lib/
         data.js
     helpers/
         AxiosTransformStream.js
+            …
+             156→export default AxiosTransformStream;
         AxiosURLSearchParams.js
+            …
+              61→export default AxiosURLSearchParams;
         HttpStatusCode.js
+            …
+              77→export default HttpStatusCode;
         README.md
                1→# axios // helpers
                2→
@@ -311,32 +276,55 @@ lib/
         bind.js
         buildURL.js
         callbackify.js
+            …
+              18→export default callbackify;
         combineURLs.js
         composeSignals.js
+            …
+              57→export default composeSignals;
         cookies.js
         deprecatedMethod.js
         estimateDataURLDecodedBytes.js
         formDataToJSON.js
+            …
+              97→export default formDataToJSON;
         formDataToStream.js
+            …
+             119→export default formDataToStream;
         fromDataURI.js
         isAbsoluteURL.js
         isAxiosError.js
         isURLSameOrigin.js
         null.js
+            …
+               2→export default null;
         parseHeaders.js
         parseProtocol.js
         progressEventReducer.js
         readBlob.js
+            …
+              15→export default readBlob;
         resolveConfig.js
         sanitizeHeaderValue.js
         shouldBypassProxy.js
         speedometer.js
+            …
+              55→export default speedometer;
         spread.js
         throttle.js
+            …
+              44→export default throttle;
         toFormData.js
+            …
+             249→export default toFormData;
         toURLEncodedForm.js
         trackStream.js
         validator.js
+            …
+             109→export default {
+             110→  assertOptions,
+             111→  validators,
+             112→};
     platform/
         browser/
             classes/
@@ -346,8 +334,16 @@ lib/
             index.js
                 …
                    5→export default {
-                …
+                   6→  isBrowser: true,
+                   7→  classes: {
+                   8→    URLSearchParams,
+                   9→    FormData,
+                  10→    Blob,
+                  11→  },
+                  12→  protocols: ['http', 'https', 'file', 'blob', 'url', 'data'],
+                  13→};
         common/
+            utils.js
         index.js
             …
                4→export default {
@@ -358,8 +354,20 @@ lib/
             classes/
             index.js
                 …
-                  27→export default {
+                   5→const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
+                   7→const DIGIT = '0123456789';
                 …
+                  27→export default {
+                  28→  isNode: true,
+                  29→  classes: {
+                  30→    URLSearchParams,
+                  31→    FormData,
+                  32→    Blob: (typeof Blob !== 'undefined' && Blob) || null,
+                  33→  },
+                  34→  ALPHABET,
+                  35→  generateString,
+                  36→  protocols: ['http', 'https', 'file', 'data'],
+                  37→};
     utils.js
         …
          872→export default {
@@ -387,8 +395,25 @@ tests/
     module/
     setup/
     smoke/
+        bun/
+        cjs/
+        deno/
+        esm/
+            package-lock.json
+            package.json
+            tests/
+            vitest.config.js
     unit/
 tsconfig.json
+       1→{
+       2→  "compilerOptions": {
+       3→    "module": "node16",
+       4→    "lib": ["dom", "es2015"],
+       5→    "types": [],
+       6→    "strict": true,
+       7→    "noEmit": true
+       8→  }
+       9→}
 tslint.json
 vitest.config.js
 webpack.config.js

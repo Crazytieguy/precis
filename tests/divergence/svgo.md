@@ -122,52 +122,44 @@ Score(3000)=0.435 I=0.742 C=0.256 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | walker |  | 5067 | 36 | export doc at lib/path.js:302 |  |  | 0.568 |
 | walker |  | 5105 | 38 | imports in lib/xast.js |  |  | 0.568 |
 | walker |  | 5126 | 21 | imports in lib/svgo/tools.js |  |  | 0.568 |
-| walker |  | 5314 | 188 | export names surface in lib/types.ts |  |  | 0.569 |
-| walker |  | 5314 | 0 | export at lib/types.ts:30 |  |  | 0.569 |
-| walker |  | 5323 | 9 | export at lib/types.ts:108 |  |  | 0.569 |
-| walker |  | 5347 | 24 | export at lib/types.ts:67 |  |  | 0.569 |
-| walker |  | 5371 | 24 | export at lib/types.ts:175 |  |  | 0.569 |
-| walker |  | 5411 | 40 | export doc at lib/path.js:141 |  |  | 0.569 |
-| walker |  | 5433 | 22 | imports in lib/svgo/css-select-adapter.js |  |  | 0.569 |
-| walker |  | 5556 | 123 | README.md section #11 |  |  | 0.599 |
+| walker |  | 5166 | 40 | export doc at lib/path.js:141 |  |  | 0.568 |
+| walker |  | 5188 | 22 | imports in lib/svgo/css-select-adapter.js |  |  | 0.568 |
+| walker |  | 5311 | 123 | README.md section #11 |  |  | 0.599 |
 | ns | 5878 |  | 1003 | Plugin name + description roster (1/2: addAttributesToSVGElement..removeDesc) | 4.2 |  | 0.557 |
-| walker |  | 6207 | 651 | package dependencies in package.json |  |  | 0.578 |
-| walker |  | 6370 | 163 | export names surface in lib/svgo/tools.js |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:21 |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:43 |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:78 |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:134 |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:163 |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:194 |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:206 |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:215 |  |  | 0.600 |
-| walker |  | 6370 | 0 | export at lib/svgo/tools.js:250 |  |  | 0.600 |
-| walker |  | 6415 | 45 | export doc at lib/style.js:211 |  |  | 0.600 |
-| walker |  | 6587 | 172 | README.md section #6 |  |  | 0.600 |
-| walker |  | 6739 | 152 | export body at lib/svgo-node.js:83 body 84 |  |  | 0.600 |
-| walker |  | 6786 | 47 | export doc at lib/version.js:7 |  |  | 0.600 |
+| walker |  | 5962 | 651 | package dependencies in package.json |  |  | 0.577 |
+| walker |  | 6125 | 163 | export names surface in lib/svgo/tools.js |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:21 |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:43 |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:78 |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:134 |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:163 |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:194 |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:206 |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:215 |  |  | 0.600 |
+| walker |  | 6125 | 0 | export at lib/svgo/tools.js:250 |  |  | 0.600 |
+| walker |  | 6170 | 45 | export doc at lib/style.js:211 |  |  | 0.600 |
+| walker |  | 6342 | 172 | README.md section #6 |  |  | 0.600 |
+| walker |  | 6494 | 152 | export body at lib/svgo-node.js:83 body 84 |  |  | 0.600 |
+| walker |  | 6541 | 47 | export doc at lib/version.js:7 |  |  | 0.600 |
+| walker |  | 6716 | 175 | README.md section #9 |  |  | 0.600 |
+| walker |  | 6851 | 135 | README.md section #12 |  |  | 0.600 |
 | ns | 6860 |  | 982 | Plugin name + description roster (2/2: removeDimensions..sortDefsChildren) | 4.3 |  | 0.564 |
-| walker |  | 6961 | 175 | README.md section #9 |  |  | 0.564 |
-| walker |  | 7096 | 135 | README.md section #12 |  |  | 0.564 |
-| walker |  | 7145 | 49 | export doc at lib/xast.js:50 |  |  | 0.564 |
-| walker |  | 7176 | 31 | export at lib/types.ts:111 |  |  | 0.564 |
-| walker |  | 7207 | 31 | export at lib/types.ts:169 |  |  | 0.564 |
+| walker |  | 6900 | 49 | export doc at lib/xast.js:50 |  |  | 0.564 |
+| walker |  | 6957 | 57 | imports in lib/svgo-node.js |  |  | 0.564 |
+| walker |  | 7020 | 63 | export doc at lib/style.js:253 |  |  | 0.564 |
 | ns | 7230 |  | 370 | plugins/preset-default.js — the default pipeline, in order | 4.4 |  | 0.543 |
-| walker |  | 7264 | 57 | imports in lib/svgo-node.js |  |  | 0.543 |
-| walker |  | 7302 | 38 | export at lib/types.ts:155 |  |  | 0.543 |
-| walker |  | 7365 | 63 | export doc at lib/style.js:253 |  |  | 0.543 |
+| walker |  | 7231 | 211 | export body at lib/style.js:253 body 254 |  |  | 0.543 |
 | ns | 7464 |  | 234 | plugins/_collections.js — export location roster | 4.5 |  | 0.536 |
-| walker |  | 7576 | 211 | export body at lib/style.js:253 body 254 |  |  | 0.536 |
 | ns | 7682 |  | 218 | plugins/convertPathData.js — function location roster | 4.6 |  | 0.527 |
 | ns | 8191 |  | 509 | plugins/removeComments.js — full plugin, as a worked example | 4.7 | 4.2 | 0.505 |
 | ns | 8234 |  | 43 | docs/ directory listing | 5.1 |  | 0.509 |
-| ns | 8406 |  | 172 | docs/05-plugins-api.mdx — custom plugin shape | 5.2 |  | 0.502 |
-| ns | 8580 |  | 174 | docs/06-migrations/01-migration-from-v3-to-v4.mdx — default-preset changes | 5.3 |  | 0.499 |
-| ns | 8803 |  | 223 | .github/workflows/ci.yml — trigger + lint job | 6.2 |  | 0.490 |
-| ns | 8815 |  | 12 | .github/ directory listing | 6.3 |  | 0.492 |
+| ns | 8406 |  | 172 | docs/05-plugins-api.mdx — custom plugin shape | 5.2 |  | 0.501 |
+| ns | 8580 |  | 174 | docs/06-migrations/01-migration-from-v3-to-v4.mdx — default-preset changes | 5.3 |  | 0.498 |
+| ns | 8803 |  | 223 | .github/workflows/ci.yml — trigger + lint job | 6.2 |  | 0.489 |
+| ns | 8815 |  | 12 | .github/ directory listing | 6.3 |  | 0.491 |
 | ns | 8837 |  | 22 | .github/workflows/ directory listing | 6.4 |  | 0.495 |
 | ns | 9003 |  | 166 | CONTRIBUTING.md — regression-test host-dependence caveat | 6.5 |  | 0.492 |
 | ns | 9147 |  | 144 | scripts/sync-version.js | 6.6 |  | 0.489 |
-| ns | 9181 |  | 34 | test/ directory listing | 7.1 |  | 0.495 |
+| ns | 9181 |  | 34 | test/ directory listing | 7.1 |  | 0.494 |
 | ns | 9853 |  | 672 | test/plugins/_index.test.js — per-plugin fixture convention | 7.2 |  | 0.477 |
 | ns | 9963 |  | 110 | test/plugins/removeComments.01.svg.txt — a worked fixture example | 7.3 |  | 0.473 |

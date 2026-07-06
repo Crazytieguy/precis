@@ -72,9 +72,6 @@ macro_rules! impl_batchkey {
             fn concavity_exponent(&self) -> f64 {
                 match self { $(BatchKey::$variant(k) => InnerKey::concavity_exponent(k),)* }
             }
-            fn gated_descendant_value_weight(&self) -> f64 {
-                match self { $(BatchKey::$variant(k) => InnerKey::gated_descendant_value_weight(k),)* }
-            }
             fn is_orientation(&self) -> bool {
                 match self { $(BatchKey::$variant(k) => InnerKey::is_orientation(k),)* }
             }
@@ -108,9 +105,6 @@ trait InnerKey {
     fn describe(&self, fixture_root: &Path) -> String;
     fn concavity_exponent(&self) -> f64 {
         crate::value::DEFAULT_CONCAVITY_EXPONENT
-    }
-    fn gated_descendant_value_weight(&self) -> f64 {
-        0.0
     }
     fn is_orientation(&self) -> bool {
         false
@@ -208,12 +202,7 @@ pub enum TsKey {
     ImportChunk { file: PathBuf, chunk_index: usize },
     /// Surface listing of every top-level export's first line —
     /// catastrophic-omission hedge.
-    ExportNames {
-        file: PathBuf,
-        chunk_index: usize,
-        export_count: usize,
-        type_only_export_count: usize,
-    },
+    ExportNames { file: PathBuf, chunk_index: usize },
     /// Top-level export's declaration (sig with body marker for fn).
     Export { file: PathBuf, start_line: usize },
     /// JSDoc above a single export. Predecessor: matching `Export`.
@@ -352,15 +341,8 @@ pub enum CKey {
     HeaderBanner { file: PathBuf },
     /// `#include` directives.
     Includes { file: PathBuf },
-    /// Names-surface chunk for top-level public decls. `hub` marks a
-    /// top-tier include-graph hub header (htop `Object`/`Meter`/`Panel`),
-    /// the only tier that routes gated-descendant value — elsewhere the
-    /// routing pulls a header's decl train ahead of NS tier-1 orientation.
-    DeclNames {
-        file: PathBuf,
-        chunk_index: usize,
-        hub: bool,
-    },
+    /// Names-surface chunk for top-level public decls.
+    DeclNames { file: PathBuf, chunk_index: usize },
     /// One top-level public declaration (sig with body marker for fn).
     Decl { file: PathBuf, start_line: usize },
     /// Body interior of a fn definition. Predecessor: matching `Decl`.
@@ -549,12 +531,6 @@ pub trait WalkerKey:
         crate::value::DEFAULT_CONCAVITY_EXPONENT
     }
 
-    /// Weight for routing descendant value back into this key's
-    /// rank. Off by default — only broad gates opt in.
-    fn gated_descendant_value_weight(&self) -> f64 {
-        0.0
-    }
-
     /// True for orientation-class batches — directory-structure
     /// listings, README / man-page orientation prose, manifest
     /// identity — as opposed to source-code bodies. The scheduler
@@ -710,29 +686,6 @@ impl InnerKey for TsKey {
         }
     }
 
-    fn gated_descendant_value_weight(&self) -> f64 {
-        // Broad, mostly type-only export-name surfaces are real gates.
-        // Runtime-heavy catalogs and tiny type files keep standalone rank.
-        let TsKey::ExportNames {
-            export_count,
-            type_only_export_count,
-            ..
-        } = self
-        else {
-            return 0.0;
-        };
-        if *export_count < 10 {
-            0.0
-        } else {
-            let type_only_ratio = *type_only_export_count as f64 / *export_count as f64;
-            if type_only_ratio >= 0.75 {
-                type_only_ratio
-            } else {
-                0.0
-            }
-        }
-    }
-
     fn describe(&self, root: &Path) -> String {
         match self {
             TsKey::ModuleDocLede { file } => describe_in("module-doc lede", file, root),
@@ -740,9 +693,9 @@ impl InnerKey for TsKey {
             TsKey::ImportChunk { file, chunk_index } => {
                 describe_chunked_surface("imports", file, *chunk_index, root)
             }
-            TsKey::ExportNames {
-                file, chunk_index, ..
-            } => describe_chunked_surface("export names surface", file, *chunk_index, root),
+            TsKey::ExportNames { file, chunk_index } => {
+                describe_chunked_surface("export names surface", file, *chunk_index, root)
+            }
             TsKey::Export { file, start_line } => describe_at("export", file, *start_line, root),
             TsKey::ExportDoc { file, start_line } => {
                 describe_at("export doc", file, *start_line, root)
@@ -1038,29 +991,14 @@ impl InnerKey for CKey {
         }
     }
 
-    /// A header's names surface gates every decl/struct/enum body in the
-    /// header. In OOP-backbone C (htop `Meter.h`/`Panel.h`/`Row.h`) and
-    /// single-header catalogs (chibicc), the NS wants those gated decls
-    /// early, but the flat names-surface value loses the ratio race to
-    /// tiny sibling headers and doc scraps, so the whole gated train lands
-    /// past 3K. Routing gated-descendant value lets a surface that fronts
-    /// NS-heavy decls borrow rank. Scoped to headers — `.c` name surfaces
-    /// gate function bodies, which are NS-tail.
-    fn gated_descendant_value_weight(&self) -> f64 {
-        match self {
-            CKey::DeclNames { hub: true, .. } => 0.6,
-            _ => 0.0,
-        }
-    }
-
     fn describe(&self, root: &Path) -> String {
         match self {
             CKey::WholeFile { file } => describe_in("c whole header", file, root),
             CKey::HeaderBanner { file } => describe_in("c header banner", file, root),
             CKey::Includes { file } => describe_in("c includes", file, root),
-            CKey::DeclNames {
-                file, chunk_index, ..
-            } => describe_chunked_surface("c decl names surface", file, *chunk_index, root),
+            CKey::DeclNames { file, chunk_index } => {
+                describe_chunked_surface("c decl names surface", file, *chunk_index, root)
+            }
             CKey::Decl { file, start_line } => describe_at("c decl", file, *start_line, root),
             CKey::DeclBody { file, start_line } => {
                 describe_at("c decl body", file, *start_line, root)

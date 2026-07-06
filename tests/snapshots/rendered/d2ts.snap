@@ -123,6 +123,29 @@ packages/
         eslint.config.mjs
         package.json
         src/
+            compiler.ts
+            evaluators.ts
+            extractors.ts
+            functions.ts
+            group-by.ts
+            index.ts
+                   1→/**
+                   2→ * D2QL is a SQL-like query language for D2TS.
+                   3→ * It's a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2 pipeline.
+                   4→ */
+                …
+            joins.ts
+            key-by.ts
+            order-by.ts
+            query-builder/
+                index.ts
+                query-builder.ts
+            schema.json
+            schema.ts
+            select.ts
+            store.ts
+            types.ts
+            utils.ts
         tests/
         tsconfig.json
     d2ts/
@@ -137,6 +160,24 @@ packages/
         package.json
         src/
             d2.ts
+                …
+                  11→export type D2Options = {
+                  12→  initialFrontier: Antichain | Version | number | number[]
+                  13→}
+                  15→export class D2 implements ID2 {
+                …
+                  93→export class StreamBuilder<T> implements IStreamBuilder<T> {
+                …
+                 166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
+                 167→  sendData(
+                 168→    version: Version | number | number[],
+                 169→    collection: MultiSet<T> | MultiSetArray<T>,
+                 170→  ): void {
+                 171→    this.writer.sendData(version, collection)
+                …
+                 174→  sendFrontier(frontier: Antichain | Version | number | number[]): void {
+                 175→    this.writer.sendFrontier(frontier)
+                …
             electric/
                 index.ts
             graph.ts
@@ -165,7 +206,22 @@ packages/
                       62→export function buffer<T>(): PipedOperator<T, T> {
                     …
                 concat.ts
+                    …
+                      11→export class ConcatOperator<T, T2> extends BinaryOperator<T | T2> {
+                      12→  run(): void {
+                    …
+                      54→export function concat<T, T2>(
+                      55→  other: IStreamBuilder<T2>,
+                      56→): PipedOperator<T, T | T2> {
+                    …
                 consolidate.ts
+                    …
+                      16→export class ConsolidateOperator<T> extends UnaryOperator<T> {
+                    …
+                      19→  run(): void {
+                    …
+                      61→export function consolidate<T>(): PipedOperator<T, T> {
+                    …
                 count.ts
                     …
                       10→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
@@ -239,10 +295,22 @@ packages/
                 keying.ts
                 map.ts
                 negate.ts
+                    …
+                      10→export class NegateOperator<T> extends LinearUnaryOperator<T, T> {
+                      11→  inner(collection: MultiSet<T>): MultiSet<T> {
+                      12→    return collection.negate()
+                    …
+                      19→export function negate<T>(): PipedOperator<T, T> {
+                    …
                 orderBy.ts
                 output.ts
                 pipe.ts
                 reduce.ts
+                    …
+                      15→export class ReduceOperator<K, V1, V2> extends UnaryOperator<[K, V1 | V2]> {
+                    …
+                     127→export function reduce<
+                    …
                 topK.ts
                     …
                       22→export function topK<
@@ -250,7 +318,13 @@ packages/
                       60→export function topKWithIndex<
                     …
                 topKWithFractionalIndex.ts
+                    …
+                      29→export class TopKWithFractionalIndexOperator<K, V1> extends UnaryOperator<
+                    …
+                     372→export function topKWithFractionalIndex<
+                    …
             order.ts
+                   1→import { WeakRefMap } from './utils.js'
                 …
                   10→export function v(version: number | number[]): Version {
                 …
@@ -269,64 +343,6 @@ packages/
                 operators/
                 version-index.ts
             types.ts
-                …
-                   5→export type KeyValue<K, V> = [K, V]
-                   6→
-                   7→export const MessageType = {
-                   8→  DATA: 1,
-                   9→  FRONTIER: 2,
-                  10→} as const
-                  12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
-                  13→
-                  14→export type Message<T> =
-                  15→  | {
-                  16→      type: typeof MessageType.DATA
-                  17→      data: DataMessage<T>
-                  18→    }
-                  19→  | {
-                  20→      type: typeof MessageType.FRONTIER
-                  21→      data: FrontierMessage
-                  22→    }
-                  24→export type DataMessage<T> = {
-                  25→  version: Version
-                  26→  collection: MultiSet<T>
-                  27→}
-                  29→export type FrontierMessage = Version | Antichain
-                  30→
-                  31→export interface IOperator<_T> {
-                  32→  run(): void
-                  33→  hasPendingWork(): boolean
-                  34→  frontiers(): [Antichain[], Antichain]
-                  35→}
-                  37→export interface IDifferenceStreamReader<T> {
-                  38→  drain(): Message<T>[]
-                  39→  isEmpty(): boolean
-                  40→  probeFrontierLessThan(frontier: Antichain): boolean
-                  41→}
-                  43→export interface IDifferenceStreamWriter<T> {
-                  44→  sendData(
-                  45→    version: Version | number | number[],
-                  46→    collection: MultiSet<T> | MultiSetArray<T>,
-                  47→  ): void
-                  48→  sendFrontier(frontier: Antichain | Version | number | number[]): void
-                  49→  newReader(): IDifferenceStreamReader<T>
-                  50→}
-                  52→export interface ID2 {
-                  53→  getNextOperatorId(): number
-                  54→  newInput<T>(): IStreamBuilder<T>
-                  55→  addOperator(operator: IOperator<any>): void
-                  56→  addStream(stream: DifferenceStreamReader<any>): void
-                  57→  frontier(): Antichain
-                  58→  pushFrontier(newFrontier: Antichain): void
-                  59→  popFrontier(): void
-                  60→  finalize(): void
-                  61→  step(): void
-                  62→}
-                  64→export interface IStreamBuilder<T> {
-                …
-                 117→export type PipedOperator<I, O> = (
-                 118→  stream: IStreamBuilder<I>,
-                 119→) => IStreamBuilder<O>
             utils.ts
             version-index.ts
                 …
