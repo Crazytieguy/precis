@@ -155,6 +155,8 @@ pub enum RustKey {
     PubItemDocBody { file: PathBuf, start_line: usize },
     /// Impl-block headers + method signatures in a single file.
     MethodSigs { file: PathBuf },
+    /// Private function signature plus same-constructor registration call anchors.
+    RegistrationRoster { file: PathBuf, start_line: usize },
     /// `#[macro_export] macro_rules!` names across `src_dir`.
     MacroNames { src_dir: PathBuf },
     /// Full body of one `#[macro_export] macro_rules!`. Predecessor:
@@ -592,6 +594,9 @@ impl InnerKey for RustKey {
                 describe_at("pub-item doc body", file, *start_line, root)
             }
             RustKey::MethodSigs { file } => describe_in("impl method sigs", file, root),
+            RustKey::RegistrationRoster { file, start_line } => {
+                describe_at("registration roster", file, *start_line, root)
+            }
             RustKey::MacroNames { src_dir } => {
                 format!("macro_export names across {}", display_path(src_dir, root))
             }
