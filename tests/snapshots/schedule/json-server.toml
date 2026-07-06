@@ -1,7 +1,7 @@
 fixture = "json-server"
 budget = 10000
-cumulative_tokens = 9997
-batch_count = 84
+cumulative_tokens = 9916
+batch_count = 82
 
 [[batches]]
 position = 1
@@ -2307,54 +2307,18 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Typescript(Imports { file: "src/bin.ts" })'
-descriptor = "imports in src/bin.ts"
-cost_tokens = 263
-cum_tokens = 9915
+key = 'Yaml(Whole { file: ".github/workflows/publish.yml" })'
+descriptor = "YAML config at .github/workflows/publish.yml"
+cost_tokens = 264
+cum_tokens = 9916
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/bin.ts"
-start = 2
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
-key = 'Json(Whole { file: ".oxfmtrc.json" })'
-descriptor = "json config .oxfmtrc.json"
-cost_tokens = 31
-cum_tokens = 9946
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".oxfmtrc.json"
+path = ".github/workflows/publish.yml"
 start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
-key = 'Plaintext(Whole { file: ".gitignore" })'
-descriptor = "plaintext config .gitignore"
-cost_tokens = 51
-cum_tokens = 9997
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".gitignore"
-start = 1
-end = 7
+end = 24
 
 [batches.content.spans.render]
 kind = "full"

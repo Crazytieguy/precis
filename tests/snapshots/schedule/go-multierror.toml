@@ -1,7 +1,7 @@
 fixture = "go-multierror"
 budget = 10000
-cumulative_tokens = 6860
-batch_count = 100
+cumulative_tokens = 7062
+batch_count = 101
 
 [[batches]]
 position = 1
@@ -2029,10 +2029,28 @@ kind = "full"
 
 [[batches]]
 position = 91
+key = 'Yaml(Whole { file: ".github/workflows/actionlint.yml" })'
+descriptor = "YAML config at .github/workflows/actionlint.yml"
+cost_tokens = 202
+cum_tokens = 6553
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/actionlint.yml"
+start = 1
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
 key = 'Go(TestNames { file: "group_test.go" })'
 descriptor = "go test names surface in group_test.go"
 cost_tokens = 17
-cum_tokens = 6368
+cum_tokens = 6570
 
 [batches.content]
 kind = "lines"
@@ -2054,11 +2072,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 0, reference_shaped: false })'
 descriptor = ".github/pull_request_template.md section #0"
 cost_tokens = 24
-cum_tokens = 6392
+cum_tokens = 6594
 
 [batches.content]
 kind = "lines"
@@ -2072,11 +2090,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Go(TestNames { file: "flatten_test.go" })'
 descriptor = "go test names surface in flatten_test.go"
 cost_tokens = 34
-cum_tokens = 6426
+cum_tokens = 6628
 
 [batches.content]
 kind = "lines"
@@ -2114,11 +2132,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Go(TestNames { file: "sort_test.go" })'
 descriptor = "go test names surface in sort_test.go"
 cost_tokens = 34
-cum_tokens = 6460
+cum_tokens = 6662
 
 [batches.content]
 kind = "lines"
@@ -2156,11 +2174,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Go(TestNames { file: "format_test.go" })'
 descriptor = "go test names surface in format_test.go"
 cost_tokens = 38
-cum_tokens = 6498
+cum_tokens = 6700
 
 [batches.content]
 kind = "lines"
@@ -2198,11 +2216,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 2, reference_shaped: false })'
 descriptor = ".github/pull_request_template.md section #2"
 cost_tokens = 23
-cum_tokens = 6521
+cum_tokens = 6723
 
 [batches.content]
 kind = "lines"
@@ -2216,11 +2234,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Go(TestNames { file: "prefix_test.go" })'
 descriptor = "go test names surface in prefix_test.go"
 cost_tokens = 54
-cum_tokens = 6575
+cum_tokens = 6777
 
 [batches.content]
 kind = "lines"
@@ -2274,11 +2292,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 1, reference_shaped: false })'
 descriptor = ".github/pull_request_template.md section #1"
 cost_tokens = 37
-cum_tokens = 6612
+cum_tokens = 6814
 
 [batches.content]
 kind = "lines"
@@ -2292,11 +2310,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Go(TestNames { file: "append_test.go" })'
 descriptor = "go test names surface in append_test.go"
 cost_tokens = 112
-cum_tokens = 6724
+cum_tokens = 6926
 
 [batches.content]
 kind = "lines"
@@ -2398,11 +2416,11 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Go(TestNames { file: "multierror_test.go" })'
 descriptor = "go test names surface in multierror_test.go"
 cost_tokens = 136
-cum_tokens = 6860
+cum_tokens = 7062
 
 [batches.content]
 kind = "lines"

@@ -18,7 +18,7 @@
 //! rather than baking secrets directly; baked-in credentials are an
 //! upstream-fixture choice the agent would also see on `Read`.
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use crate::batch::{Batch, BatchKey, YamlKey};
 use crate::value::mix_signals;
@@ -55,8 +55,14 @@ const WORKFLOW_HEAD_BYTE_GATE: usize = 3_000;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
-    for file in files_with_any_extension(dir, &["yml", "yaml"]) {
-        let Some(class) = yaml_class(&file, ctx) else {
+    let yaml_files = files_with_any_extension(dir, &["yml", "yaml"]);
+    let workflow_file_count = is_github_workflow_dir(dir, ctx).then_some(yaml_files.len());
+    let primary_workflow = workflow_file_count
+        .filter(|count| *count > 2)
+        .and_then(|_| primary_ci_workflow(&yaml_files));
+    for file in yaml_files {
+        let Some(class) = yaml_class(&file, ctx, workflow_file_count, primary_workflow.as_ref())
+        else {
             continue;
         };
         let Some(content) = class.content(&file, ctx) else {
@@ -76,6 +82,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 enum YamlClass {
     Compose,
     Workflow,
+    WorkflowPeripheral,
     Travis,
     Lint,
     Hook,
@@ -88,7 +95,7 @@ impl YamlClass {
             YamlClass::Compose => {
                 gated_whole_file_content(file, ctx, COMPOSE_BYTE_GATE, COMPOSE_LINE_CAP)
             }
-            YamlClass::Workflow => head_capped_yaml_content(
+            YamlClass::Workflow | YamlClass::WorkflowPeripheral => head_capped_yaml_content(
                 file,
                 ctx,
                 TOOLING_BYTE_GATE,
@@ -113,6 +120,7 @@ impl YamlClass {
         match self {
             YamlClass::Compose => compose_value(file, ctx),
             YamlClass::Workflow | YamlClass::Travis => ci_value(file, ctx),
+            YamlClass::WorkflowPeripheral => peripheral_ci_value(file, ctx),
             YamlClass::Lint | YamlClass::Hook => lint_hook_value(file, ctx),
             YamlClass::DocsSite => docs_site_value(file, ctx),
         }
@@ -139,26 +147,35 @@ fn head_capped_yaml_content(
     }
     let source = ctx.read_source(file)?;
     let line_count = source.lines().count();
-    if line_count <= whole_line_cap {
+    if line_count == 0 || line_count <= whole_line_cap {
         return None;
     }
+    let head_line_count = head_line_cap.min(line_count);
     single_file_lines_content(
         file,
         &source,
-        FileLines::new((1..=head_line_cap).collect()).with_ellipses(vec![head_line_cap + 1]),
+        FileLines::new((1..=head_line_count).collect()).with_ellipses(vec![head_line_count + 1]),
     )
 }
 
-fn yaml_class(file: &Path, ctx: &WalkCtx) -> Option<YamlClass> {
+fn yaml_class(
+    file: &Path,
+    ctx: &WalkCtx,
+    workflow_file_count: Option<usize>,
+    primary_workflow: Option<&PathBuf>,
+) -> Option<YamlClass> {
     let name = file.file_name()?.to_str()?;
     if is_docker_compose_name(name) {
         return Some(YamlClass::Compose);
     }
-    if is_github_workflow(file, ctx)
-        && compact_workflow_dir(file)
-        && is_primary_ci_workflow_name(name)
-    {
-        return Some(YamlClass::Workflow);
+    if is_github_workflow(file, ctx) {
+        let count = workflow_file_count.unwrap_or(usize::MAX);
+        if count <= 2 {
+            return Some(workflow_class_for_name(name));
+        }
+        if primary_workflow.is_some_and(|primary| primary == file) {
+            return Some(YamlClass::WorkflowPeripheral);
+        }
     }
     if name.eq_ignore_ascii_case(".travis.yml") {
         return Some(YamlClass::Travis);
@@ -175,44 +192,72 @@ fn yaml_class(file: &Path, ctx: &WalkCtx) -> Option<YamlClass> {
     None
 }
 
-fn is_primary_ci_workflow_name(name: &str) -> bool {
+fn workflow_name_rank(name: &str) -> Option<usize> {
     let lower = name.to_ascii_lowercase();
     let stem = lower
         .strip_suffix(".yaml")
         .or_else(|| lower.strip_suffix(".yml"))
         .unwrap_or(&lower);
-    stem == "ci"
-        || stem == "test"
-        || stem == "tests"
-        || stem == "main"
-        || stem == "node.js"
-        || stem == "node"
-        || stem.ends_with("-test")
-        || stem.ends_with("-tests")
+    if stem.contains("release") || stem.contains("publish") || stem.contains("deploy") {
+        return None;
+    }
+    if stem == "ci" {
+        Some(0)
+    } else if matches!(stem, "test" | "tests") {
+        Some(1)
+    } else if stem == "build" {
+        Some(2)
+    } else if stem == "lint" {
+        Some(3)
+    } else if stem == "main" {
+        Some(4)
+    } else if matches!(stem, "node.js" | "node") {
+        Some(5)
+    } else if stem.ends_with("-test") || stem.ends_with("-tests") {
+        Some(6)
+    } else {
+        None
+    }
 }
 
-fn compact_workflow_dir(file: &Path) -> bool {
-    let Some(dir) = file.parent() else {
-        return false;
-    };
-    let Ok(entries) = std::fs::read_dir(dir) else {
-        return false;
-    };
-    let workflow_files = entries
-        .filter_map(Result::ok)
-        .filter(|entry| {
-            entry.file_type().is_ok_and(|ty| ty.is_file())
-                && entry
-                    .path()
-                    .extension()
-                    .and_then(|e| e.to_str())
-                    .is_some_and(|e| {
-                        e.eq_ignore_ascii_case("yml") || e.eq_ignore_ascii_case("yaml")
-                    })
+fn legacy_workflow_name_rank(name: &str) -> Option<usize> {
+    let lower = name.to_ascii_lowercase();
+    let stem = lower
+        .strip_suffix(".yaml")
+        .or_else(|| lower.strip_suffix(".yml"))
+        .unwrap_or(&lower);
+    if stem == "ci" {
+        Some(0)
+    } else if matches!(stem, "test" | "tests") {
+        Some(1)
+    } else if stem == "main" {
+        Some(4)
+    } else if matches!(stem, "node.js" | "node") {
+        Some(5)
+    } else if stem.ends_with("-test") || stem.ends_with("-tests") {
+        Some(6)
+    } else {
+        None
+    }
+}
+
+fn workflow_class_for_name(name: &str) -> YamlClass {
+    if legacy_workflow_name_rank(name).is_some() {
+        YamlClass::Workflow
+    } else {
+        YamlClass::WorkflowPeripheral
+    }
+}
+
+fn primary_ci_workflow(files: &[PathBuf]) -> Option<PathBuf> {
+    files
+        .iter()
+        .filter_map(|file| {
+            let name = file.file_name()?.to_str()?;
+            workflow_name_rank(name).map(|rank| (rank, name.to_ascii_lowercase(), file.clone()))
         })
-        .take(3)
-        .count();
-    workflow_files <= 2
+        .min_by(|a, b| a.0.cmp(&b.0).then_with(|| a.1.cmp(&b.1)))
+        .map(|(_, _, file)| file)
 }
 
 fn is_github_workflow(file: &Path, ctx: &WalkCtx) -> bool {
@@ -223,6 +268,16 @@ fn is_github_workflow(file: &Path, ctx: &WalkCtx) -> bool {
     components.next().is_some_and(|c| c == ".github")
         && components.next().is_some_and(|c| c == "workflows")
         && components.next().is_some()
+        && components.next().is_none()
+}
+
+fn is_github_workflow_dir(dir: &Path, ctx: &WalkCtx) -> bool {
+    let Ok(rel) = dir.strip_prefix(ctx.root()) else {
+        return false;
+    };
+    let mut components = rel.components().filter_map(|c| c.as_os_str().to_str());
+    components.next().is_some_and(|c| c == ".github")
+        && components.next().is_some_and(|c| c == "workflows")
         && components.next().is_none()
 }
 
@@ -263,9 +318,16 @@ fn compose_value(file: &Path, ctx: &WalkCtx) -> f64 {
 fn ci_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // CI YAML answers the operational "what versions/platforms/checks
     // gate this project" question once the workflow directory is known.
-    // The class gate is narrow because compact primary workflows need
-    // enough value to beat source-body batches once emitted.
+    // The strong value is reserved for CI-like primary names; compact
+    // arbitrary workflow stems use `peripheral_ci_value`.
     mix_signals(3.2, 1.2, 2.0, path_depth_factor(file, ctx))
+}
+
+fn peripheral_ci_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // Compact workflow directories can contain release/publish/docs
+    // automation whose filename is not a CI signal. Admit them for
+    // recall, but keep them below source/API anchors.
+    mix_signals(0.25, 0.20, 0.20, path_depth_factor(file, ctx))
 }
 
 fn lint_hook_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -334,7 +396,60 @@ mod tests {
             if !path.exists() {
                 std::fs::write(&path, "key: value\n").unwrap();
             }
-            assert_eq!(yaml_class(&path, &ctx), Some(class), "{path:?}");
+            let workflow_file_count = is_github_workflow(&path, &ctx).then_some(1);
+            assert_eq!(
+                yaml_class(&path, &ctx, workflow_file_count, None),
+                Some(class),
+                "{path:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn yaml_compact_workflow_dir_accepts_any_stem() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let workflow = root.join(".github/workflows/release.yml");
+        std::fs::create_dir_all(workflow.parent().unwrap()).unwrap();
+        std::fs::write(&workflow, "name: release\non: [push]\n").unwrap();
+
+        assert_eq!(
+            yaml_class(&workflow, &ctx, Some(1), None),
+            Some(YamlClass::WorkflowPeripheral)
+        );
+    }
+
+    #[test]
+    fn yaml_large_workflow_dir_picks_one_ci_primary() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let workflow_dir = root.join(".github/workflows");
+        std::fs::create_dir_all(&workflow_dir).unwrap();
+        let files = ["release.yml", "publish.yml", "lint.yml", "build.yml"]
+            .into_iter()
+            .map(|name| {
+                let path = workflow_dir.join(name);
+                std::fs::write(&path, "name: x\non: [push]\n").unwrap();
+                path
+            })
+            .collect::<Vec<_>>();
+        let primary = primary_ci_workflow(&files);
+        let expected_primary = workflow_dir.join("build.yml");
+
+        assert_eq!(primary.as_deref(), Some(expected_primary.as_path()));
+        for file in files {
+            let expected = if file.ends_with("build.yml") {
+                Some(YamlClass::WorkflowPeripheral)
+            } else {
+                None
+            };
+            assert_eq!(
+                yaml_class(&file, &ctx, Some(4), primary.as_ref()),
+                expected,
+                "{file:?}"
+            );
         }
     }
 

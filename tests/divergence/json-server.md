@@ -133,7 +133,5 @@ Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missi
 | walker |  | 9652 | 863 | export body at src/app.ts:94 body 95 |  |  | 0.788 |
 | ns | 9763 |  | 1062 | matches-where.test.ts (full file) | 6.2 | 6.1 | 0.756 |
 | ns | 9906 |  | 143 | views/index.html: resource-listing loop | 7.1 |  | 0.752 |
-| walker |  | 9915 | 263 | imports in src/bin.ts |  |  | 0.752 |
-| ns | 9923 |  | 17 | public/test.html (full) | 7.2 |  | 0.751 |
-| walker |  | 9946 | 31 | json config .oxfmtrc.json |  |  | 0.755 |
-| walker |  | 9997 | 51 | plaintext config .gitignore |  |  | 0.757 |
+| walker |  | 9916 | 264 | YAML config at .github/workflows/publish.yml |  |  | 0.753 |
+| ns | 9923 |  | 17 | public/test.html (full) | 7.2 |  | 0.753 |

@@ -129,30 +129,31 @@ Score(3000)=0.645 I=0.807 C=0.515 ns_rows≤3K=17/54 (reached=8 partial=1 missin
 | ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.788 |
 | ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.786 |
 | walker |  | 6351 | 1112 | README.md section #3 |  |  | 0.906 |
-| walker |  | 6368 | 17 | go test names surface in group_test.go |  |  | 0.906 |
-| walker |  | 6392 | 24 | .github/pull_request_template.md section #0 |  |  | 0.906 |
-| walker |  | 6426 | 34 | go test names surface in flatten_test.go |  |  | 0.907 |
-| walker |  | 6460 | 34 | go test names surface in sort_test.go |  |  | 0.909 |
-| walker |  | 6498 | 38 | go test names surface in format_test.go |  |  | 0.912 |
-| walker |  | 6521 | 23 | .github/pull_request_template.md section #2 |  |  | 0.912 |
-| walker |  | 6575 | 54 | go test names surface in prefix_test.go |  |  | 0.918 |
-| ns | 6587 |  | 364 | TestErrorUnwrap | 9.1 | 1.6 | 0.887 |
-| walker |  | 6612 | 37 | .github/pull_request_template.md section #1 |  |  | 0.887 |
-| walker |  | 6724 | 112 | go test names surface in append_test.go |  |  | 0.907 |
-| walker |  | 6860 | 136 | go test names surface in multierror_test.go |  |  | 0.924 |
-| ns | 6939 |  | 352 | TestAppend_Error | 9.2 | 1.7 | 0.896 |
-| ns | 7396 |  | 457 | TestGroup (whole file) | 9.3 | 1.7 | 0.864 |
-| ns | 7642 |  | 246 | TestFlatten | 9.4 | 1.7 | 0.844 |
-| ns | 7934 |  | 292 | prefix_test.go (whole file) | 9.5 | 1.7 | 0.822 |
-| ns | 8213 |  | 279 | format_test.go (whole file) | 9.6 | 1.7 | 0.799 |
-| ns | 8453 |  | 240 | TestSortMultiple (sort_test.go) | 9.7 | 1.7 | 0.782 |
-| ns | 8594 |  | 141 | TestErrorErrorOrNil | 9.8 | 1.6 | 0.775 |
-| ns | 8982 |  | 388 | Makefile | 10.1 |  | 0.781 |
-| ns | 9024 |  | 42 | CI job-name locations (go-multierror.yml) | 10.2 |  | 0.779 |
-| ns | 9224 |  | 200 | linux-tests job body | 10.3 | 10.2 | 0.769 |
-| ns | 9426 |  | 202 | actionlint.yml | 10.4 |  | 0.760 |
-| ns | 9610 |  | 184 | dependabot.yml | 10.5 |  | 0.751 |
-| ns | 9690 |  | 80 | CODEOWNERS | 10.6 |  | 0.748 |
-| ns | 9843 |  | 153 | PR template | 10.7 |  | 0.748 |
-| ns | 9899 |  | 56 | CHANGELOG.md | 10.8 |  | 0.750 |
-| ns | 9936 |  | 37 | LICENSE header | 10.9 |  | 0.748 |
+| walker |  | 6553 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.908 |
+| walker |  | 6570 | 17 | go test names surface in group_test.go |  |  | 0.908 |
+| ns | 6587 |  | 364 | TestErrorUnwrap | 9.1 | 1.6 | 0.877 |
+| walker |  | 6594 | 24 | .github/pull_request_template.md section #0 |  |  | 0.877 |
+| walker |  | 6628 | 34 | go test names surface in flatten_test.go |  |  | 0.878 |
+| walker |  | 6662 | 34 | go test names surface in sort_test.go |  |  | 0.879 |
+| walker |  | 6700 | 38 | go test names surface in format_test.go |  |  | 0.883 |
+| walker |  | 6723 | 23 | .github/pull_request_template.md section #2 |  |  | 0.883 |
+| walker |  | 6777 | 54 | go test names surface in prefix_test.go |  |  | 0.888 |
+| walker |  | 6814 | 37 | .github/pull_request_template.md section #1 |  |  | 0.889 |
+| walker |  | 6926 | 112 | go test names surface in append_test.go |  |  | 0.908 |
+| ns | 6939 |  | 352 | TestAppend_Error | 9.2 | 1.7 | 0.881 |
+| walker |  | 7062 | 136 | go test names surface in multierror_test.go |  |  | 0.898 |
+| ns | 7396 |  | 457 | TestGroup (whole file) | 9.3 | 1.7 | 0.866 |
+| ns | 7642 |  | 246 | TestFlatten | 9.4 | 1.7 | 0.845 |
+| ns | 7934 |  | 292 | prefix_test.go (whole file) | 9.5 | 1.7 | 0.823 |
+| ns | 8213 |  | 279 | format_test.go (whole file) | 9.6 | 1.7 | 0.800 |
+| ns | 8453 |  | 240 | TestSortMultiple (sort_test.go) | 9.7 | 1.7 | 0.783 |
+| ns | 8594 |  | 141 | TestErrorErrorOrNil | 9.8 | 1.6 | 0.776 |
+| ns | 8982 |  | 388 | Makefile | 10.1 |  | 0.782 |
+| ns | 9024 |  | 42 | CI job-name locations (go-multierror.yml) | 10.2 |  | 0.780 |
+| ns | 9224 |  | 200 | linux-tests job body | 10.3 | 10.2 | 0.771 |
+| ns | 9426 |  | 202 | actionlint.yml | 10.4 |  | 0.774 |
+| ns | 9610 |  | 184 | dependabot.yml | 10.5 |  | 0.765 |
+| ns | 9690 |  | 80 | CODEOWNERS | 10.6 |  | 0.762 |
+| ns | 9843 |  | 153 | PR template | 10.7 |  | 0.761 |
+| ns | 9899 |  | 56 | CHANGELOG.md | 10.8 |  | 0.763 |
+| ns | 9936 |  | 37 | LICENSE header | 10.9 |  | 0.762 |

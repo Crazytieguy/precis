@@ -68,34 +68,35 @@ Score(3000)=0.786 I=0.857 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | ns | 4787 |  | 202 | test-types-compilation.ts: setup | 4.10 |  | 0.622 |
 | walker |  | 4912 | 533 | README.md section #3 |  |  | 0.626 |
 | ns | 4983 |  | 196 | test-types-compilation.ts: on() type inference checks | 4.11 |  | 0.611 |
-| walker |  | 5104 | 192 | README.md section #17 |  |  | 0.612 |
-| walker |  | 5123 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.612 |
-| walker |  | 5139 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.612 |
-| walker |  | 5167 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.612 |
+| walker |  | 5032 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.612 |
 | ns | 5179 |  | 196 | test-types-compilation.ts: off() type inference checks | 4.12 |  | 0.597 |
-| walker |  | 5277 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.598 |
-| walker |  | 5290 | 13 | imports in test/test-types-compilation.ts |  |  | 0.598 |
-| walker |  | 5364 | 74 | plaintext config .gitignore |  |  | 0.599 |
-| ns | 5375 |  | 196 | test-types-compilation.ts: emit() type inference checks | 4.13 |  | 0.585 |
-| ns | 5534 |  | 159 | package.json: repository/keywords/homepage/authors/license/files | 5.1 |  | 0.599 |
-| walker |  | 5673 | 309 | plaintext config LICENSE |  |  | 0.600 |
-| ns | 5674 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.589 |
-| walker |  | 5838 | 165 | plaintext config .editorconfig |  |  | 0.590 |
-| walker |  | 5900 | 62 | imports in test/index_test.ts |  |  | 0.592 |
-| ns | 6043 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.609 |
+| walker |  | 5224 | 192 | README.md section #17 |  |  | 0.598 |
+| walker |  | 5243 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.598 |
+| walker |  | 5259 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.598 |
+| walker |  | 5287 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.598 |
+| ns | 5375 |  | 196 | test-types-compilation.ts: emit() type inference checks | 4.13 |  | 0.584 |
+| walker |  | 5397 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.585 |
+| walker |  | 5410 | 13 | imports in test/test-types-compilation.ts |  |  | 0.585 |
+| walker |  | 5484 | 74 | plaintext config .gitignore |  |  | 0.585 |
+| ns | 5534 |  | 159 | package.json: repository/keywords/homepage/authors/license/files | 5.1 |  | 0.600 |
+| ns | 5674 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.588 |
+| walker |  | 5793 | 309 | plaintext config LICENSE |  |  | 0.590 |
+| walker |  | 5958 | 165 | plaintext config .editorconfig |  |  | 0.591 |
+| walker |  | 6020 | 62 | imports in test/index_test.ts |  |  | 0.593 |
+| ns | 6043 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.610 |
 | ns | 6192 |  | 149 | tsconfig.json (full) | 6.1 |  | 0.620 |
-| walker |  | 6400 | 500 | plaintext config .eslintrc |  |  | 0.624 |
-| ns | 6417 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.639 |
-| ns | 6692 |  | 275 | .eslintrc: rule overrides | 6.3 |  | 0.655 |
-| ns | 6857 |  | 165 | .editorconfig (full) | 6.4 |  | 0.664 |
-| ns | 6931 |  | 74 | .gitignore (full) | 6.5 |  | 0.668 |
-| ns | 7148 |  | 217 | CI workflow: main.yml (full) | 6.6 |  | 0.678 |
-| ns | 7268 |  | 120 | CI workflow: compressed-size.yml (full) | 6.7 |  | 0.671 |
-| ns | 7557 |  | 289 | README: Install section | 7.1 |  | 0.681 |
-| ns | 7791 |  | 234 | README: Usage section (core example) | 7.2 |  | 0.689 |
-| ns | 8104 |  | 313 | README: TypeScript usage section | 7.3 |  | 0.699 |
-| ns | 8215 |  | 111 | README: Examples & Demos | 7.4 |  | 0.701 |
-| ns | 8544 |  | 329 | README: Contribute section | 7.5 |  | 0.705 |
-| ns | 8756 |  | 212 | PULL_REQUEST_TEMPLATE.md (full) | 7.6 |  | 0.704 |
-| ns | 9065 |  | 309 | LICENSE (full) | 7.7 |  | 0.709 |
-| ns | 9103 |  | 38 | README: License section | 7.8 |  | 0.710 |
+| ns | 6417 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.605 |
+| walker |  | 6520 | 500 | plaintext config .eslintrc |  |  | 0.640 |
+| ns | 6692 |  | 275 | .eslintrc: rule overrides | 6.3 |  | 0.656 |
+| ns | 6857 |  | 165 | .editorconfig (full) | 6.4 |  | 0.665 |
+| ns | 6931 |  | 74 | .gitignore (full) | 6.5 |  | 0.669 |
+| ns | 7148 |  | 217 | CI workflow: main.yml (full) | 6.6 |  | 0.679 |
+| ns | 7268 |  | 120 | CI workflow: compressed-size.yml (full) | 6.7 |  | 0.684 |
+| ns | 7557 |  | 289 | README: Install section | 7.1 |  | 0.693 |
+| ns | 7791 |  | 234 | README: Usage section (core example) | 7.2 |  | 0.701 |
+| ns | 8104 |  | 313 | README: TypeScript usage section | 7.3 |  | 0.710 |
+| ns | 8215 |  | 111 | README: Examples & Demos | 7.4 |  | 0.712 |
+| ns | 8544 |  | 329 | README: Contribute section | 7.5 |  | 0.716 |
+| ns | 8756 |  | 212 | PULL_REQUEST_TEMPLATE.md (full) | 7.6 |  | 0.714 |
+| ns | 9065 |  | 309 | LICENSE (full) | 7.7 |  | 0.719 |
+| ns | 9103 |  | 38 | README: License section | 7.8 |  | 0.720 |
