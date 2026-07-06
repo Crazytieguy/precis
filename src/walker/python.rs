@@ -1178,6 +1178,11 @@ fn def_body_parts(inner: Node, src_lines: &[&str]) -> Vec<BodyPart> {
 fn block_child_parts(body: Node, src_lines: &[&str]) -> Vec<BodyPart> {
     let mut parts = Vec::new();
     let mut cursor = body.walk();
+    // First-claimer wins on shared rows — a trailing end-of-line
+    // comment is a named sibling starting on the previous statement's
+    // final row, and sibling parts double-claiming that row is a
+    // walker-contract overlap (non-ancestor sibling batches).
+    let mut claimed_lines = std::collections::HashSet::new();
     for child in body.named_children(&mut cursor) {
         let mut lines = Vec::new();
         extend_nonblank_rows(
@@ -1186,7 +1191,10 @@ fn block_child_parts(body: Node, src_lines: &[&str]) -> Vec<BodyPart> {
             child.start_position().row,
             child.end_position().row,
         );
-        let lines = dedup_sorted(lines);
+        let lines: Vec<usize> = dedup_sorted(lines)
+            .into_iter()
+            .filter(|line| claimed_lines.insert(*line))
+            .collect();
         if !lines.is_empty() {
             parts.push(BodyPart { lines });
         }
@@ -1653,6 +1661,18 @@ mod tests {
 
         let scheduler = Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None);
         let _ = scheduler.run_with_report();
+    }
+
+    /// A small docstring-led method body splits via `block_child_parts`;
+    /// a trailing end-of-line comment on a multi-line statement's final
+    /// row is a named sibling starting on that same row, and both parts
+    /// claiming it panics the scheduler's overlap assert (xonsh
+    /// events.py at 1M).
+    #[test]
+    fn python_body_parts_trailing_comment_row_claimed_once() {
+        assert_python_scheduler_overlap_free(
+            "class Events:\n    def method(self):\n        \"\"\"Doc line.\"\"\"\n        x = call(\n            1,\n        )  # trailing note\n",
+        );
     }
 
     #[test]
