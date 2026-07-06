@@ -163,7 +163,7 @@ fn yaml_class(file: &Path, ctx: &WalkCtx) -> Option<YamlClass> {
     if name.eq_ignore_ascii_case(".travis.yml") {
         return Some(YamlClass::Travis);
     }
-    if name.eq_ignore_ascii_case(".golangci.yml") {
+    if name.eq_ignore_ascii_case(".golangci.yml") || name.eq_ignore_ascii_case(".golangci.yaml") {
         return Some(YamlClass::Lint);
     }
     if name.eq_ignore_ascii_case(".pre-commit-config.yaml") {
@@ -327,6 +327,7 @@ mod tests {
             (workflow, YamlClass::Workflow),
             (root.join(".travis.yml"), YamlClass::Travis),
             (root.join(".golangci.yml"), YamlClass::Lint),
+            (root.join(".golangci.yaml"), YamlClass::Lint),
             (root.join(".pre-commit-config.yaml"), YamlClass::Hook),
             (root.join("mkdocs.yml"), YamlClass::DocsSite),
         ] {
