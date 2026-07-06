@@ -638,9 +638,29 @@ pub(crate) fn coalesce_body_parts_tail(parts: Vec<BodyPart>, cap: usize) -> Vec<
     head
 }
 
+/// Drop lines already claimed by earlier parts. Use this when a caller merges
+/// body parts from multiple independent sources; [`statement_block_parts`]
+/// already owns line-disjointness for one parsed statement block.
+pub(crate) fn disjoint_body_parts(parts: Vec<BodyPart>) -> Vec<BodyPart> {
+    let mut seen = HashSet::new();
+    parts
+        .into_iter()
+        .filter_map(|part| {
+            let lines: Vec<usize> = part
+                .lines
+                .into_iter()
+                .filter(|line| seen.insert(*line))
+                .collect();
+            (!lines.is_empty()).then_some(BodyPart { lines })
+        })
+        .collect()
+}
+
 /// Body slices for a brace-delimited statement block, using top-level
 /// statements inside the block. Blank lines are filtered exactly like
-/// materialized spans.
+/// materialized spans. This is the line-disjointness owner for a single
+/// statement block; callers should only re-dedup when combining multiple
+/// independently collected part lists.
 pub(crate) fn statement_block_parts(
     body: Option<Node>,
     src_lines: &[&str],

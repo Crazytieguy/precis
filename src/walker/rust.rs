@@ -347,7 +347,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     start_line: item.start_line,
                 };
                 let item_lines = collect_pub_item(item.node, &source);
-                let parts = disjoint_body_parts(body_parts_for_item(item.node, &src_lines));
+                let parts = body_parts_for_item(item.node, &src_lines);
                 // Pre-classify the doc-shape so empty Lede / empty Body
                 // candidates aren't emitted. An empty Lede with a Body
                 // predecessored on it would render the body unreachable.
@@ -501,7 +501,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         continue;
                     }
                     let item_key = BatchKey::Rust(entry_item_key);
-                    let mut parts = disjoint_body_parts(body_parts_for_item(item.node, &src_lines));
+                    let mut parts = body_parts_for_item(item.node, &src_lines);
                     // A README-cited *example* main (note: its parent dir
                     // is `src`, so `src_main_entry` is also true — check
                     // this case first) is a usage demo whose body is often
@@ -1587,21 +1587,6 @@ fn collect_item_lines(child: Node, source: &str, whole: bool) -> FileLines {
 
 fn body_parts_for_item(child: Node, src_lines: &[&str]) -> Vec<BodyPart> {
     statement_block_parts(child.child_by_field_name("body"), src_lines, "block")
-}
-
-fn disjoint_body_parts(parts: Vec<BodyPart>) -> Vec<BodyPart> {
-    let mut seen = HashSet::new();
-    parts
-        .into_iter()
-        .filter_map(|part| {
-            let lines: Vec<usize> = part
-                .lines
-                .into_iter()
-                .filter(|line| seen.insert(*line))
-                .collect();
-            (!lines.is_empty()).then_some(BodyPart { lines })
-        })
-        .collect()
 }
 
 /// Lines of the lede or body section of the outer rustdoc preceding

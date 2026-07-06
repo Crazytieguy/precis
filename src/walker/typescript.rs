@@ -59,7 +59,8 @@ use super::import_chunks::{
 };
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, build_per_file_content, dedup_sorted,
-    extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
+    disjoint_body_parts, extend_nonblank_rows, extend_span, file_depth_factor,
+    file_lines_covered_by,
     fs::{JS_MODULE_ENTRYPOINT_FILES, files_with_any_extension, is_source_dir},
     name_of, node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
     statement_block_parts,
@@ -281,7 +282,22 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
         let src_lines: Vec<&str> = source.lines().collect();
-        let exports = find_export_starts(file, &tree, &source, &src_lines);
+        let local_value_reexports = collect_local_value_reexports(&tree, &source);
+        let commonjs_value_reexports = collect_commonjs_value_reexports(&tree, &source);
+        let default_implementation_exports = if is_entrypoint_file(file) {
+            collect_default_implementation_exports(&tree, &source)
+        } else {
+            HashMap::new()
+        };
+        let exports = find_export_starts(
+            file,
+            &tree,
+            &source,
+            &src_lines,
+            &local_value_reexports,
+            &commonjs_value_reexports,
+            &default_implementation_exports,
+        );
         let top_level_decl_start_lines = top_level_decl_start_lines(&tree);
         // The declared API contract's roster shapes (names surface,
         // member-chunked decls and their catalogs) are exempt from the
@@ -547,8 +563,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 }
             }
         }
-        let mut reexported_local_names = collect_local_value_reexports(&tree, &source);
-        reexported_local_names.extend(collect_commonjs_value_reexports(&tree, &source));
+        let mut reexported_local_names = local_value_reexports.clone();
+        reexported_local_names.extend(commonjs_value_reexports.iter().cloned());
         let module_items = find_module_items(
             &tree,
             &source,
@@ -713,21 +729,6 @@ fn emit_export_body_parts(
     }
 }
 
-fn disjoint_body_parts(parts: Vec<BodyPart>) -> Vec<BodyPart> {
-    let mut seen = HashSet::new();
-    parts
-        .into_iter()
-        .filter_map(|part| {
-            let lines: Vec<usize> = part
-                .lines
-                .into_iter()
-                .filter(|line| seen.insert(*line))
-                .collect();
-            (!lines.is_empty()).then_some(BodyPart { lines })
-        })
-        .collect()
-}
-
 fn body_segment_value_factor(body_segment_index: usize) -> f64 {
     if body_segment_index < FULL_VALUE_BODY_SEGMENTS_PER_FILE {
         1.0
@@ -834,6 +835,9 @@ fn find_export_starts<'a>(
     tree: &'a Tree,
     source: &str,
     src_lines: &[&str],
+    reexports: &HashSet<String>,
+    commonjs_reexports: &HashSet<String>,
+    default_identifier_reexports: &HashMap<String, usize>,
 ) -> Vec<ExportInfo<'a>> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -861,13 +865,6 @@ fn find_export_starts<'a>(
         ));
     }
 
-    let reexports = collect_local_value_reexports(tree, source);
-    let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
-    let default_identifier_reexports = if is_entrypoint_file(file) {
-        collect_default_implementation_exports(tree, source)
-    } else {
-        HashMap::new()
-    };
     let mut needs_sort = false;
     if !reexports.is_empty()
         || !commonjs_reexports.is_empty()
@@ -885,11 +882,11 @@ fn find_export_starts<'a>(
             let kind = if default_predecessor.is_some() {
                 decl_kind(child)
             } else if matches!(child.kind(), "lexical_declaration" | "variable_declaration")
-                && synthetic_export_name(child, source, &reexports).is_some()
+                && synthetic_export_name(child, source, reexports).is_some()
             {
                 Some(ItemKind::Const)
             } else {
-                synthetic_commonjs_export_kind(child, source, &commonjs_reexports)
+                synthetic_commonjs_export_kind(child, source, commonjs_reexports)
             };
 
             let Some(kind) = kind else { continue };
@@ -1156,7 +1153,9 @@ fn collect_local_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
 
 /// Implementation declarations behind entrypoint default aliases. Handles
 /// both `export default fnName` and the thin instance shape
-/// `export default instance; const instance = factory();`.
+/// `export default instance; const instance = factory();`, plus single-hop
+/// direct calls / constructors (`export default factory()` and
+/// `const instance = new LocalClass(); export default instance`).
 fn collect_default_implementation_exports(tree: &Tree, source: &str) -> HashMap<String, usize> {
     let root = tree.root_node();
     let mut decls: HashMap<String, Node> = HashMap::new();
@@ -1176,16 +1175,20 @@ fn collect_default_implementation_exports(tree: &Tree, source: &str) -> HashMap<
         let Some(value) = first_decl_or_value_child(stmt) else {
             continue;
         };
-        let Some(default_name) = identifier_text(value, source) else {
-            continue;
-        };
         let export_line = stmt.start_position().row + 1;
-        let Some(default_decl) = decls.get(default_name).copied() else {
-            continue;
-        };
-        if local_decl_has_implementation_body(default_decl) {
-            out.insert(default_name.to_string(), export_line);
-        } else if let Some(factory_name) = const_call_callee_name(default_decl, source)
+        if let Some(default_name) = identifier_text(value, source)
+            && let Some(default_decl) = decls.get(default_name).copied()
+        {
+            if local_decl_has_implementation_body(default_decl) {
+                out.insert(default_name.to_string(), export_line);
+            } else if let Some(factory_name) = const_factory_callee_name(default_decl, source)
+                && decls
+                    .get(factory_name)
+                    .is_some_and(|decl| local_decl_has_implementation_body(*decl))
+            {
+                out.insert(factory_name.to_string(), export_line);
+            }
+        } else if let Some(factory_name) = expression_callee_name(value, source)
             && decls
                 .get(factory_name)
                 .is_some_and(|decl| local_decl_has_implementation_body(*decl))
@@ -1204,7 +1207,7 @@ fn local_decl_has_implementation_body(decl: Node) -> bool {
     }
 }
 
-fn const_call_callee_name<'a>(decl: Node, source: &'a str) -> Option<&'a str> {
+fn const_factory_callee_name<'a>(decl: Node, source: &'a str) -> Option<&'a str> {
     if !matches!(decl.kind(), "lexical_declaration" | "variable_declaration") {
         return None;
     }
@@ -1213,13 +1216,21 @@ fn const_call_callee_name<'a>(decl: Node, source: &'a str) -> Option<&'a str> {
         .children(&mut cursor)
         .find(|c| matches!(c.kind(), "variable_declarator" | "lexical_binding"))?;
     let value = declarator.child_by_field_name("value")?;
-    if value.kind() != "call_expression" {
-        return None;
+    expression_callee_name(value, source)
+}
+
+fn expression_callee_name<'a>(expr: Node, source: &'a str) -> Option<&'a str> {
+    match expr.kind() {
+        "call_expression" => expr
+            .child_by_field_name("function")
+            .or_else(|| expr.named_child(0))
+            .and_then(|callee| identifier_text(callee, source)),
+        "new_expression" => expr
+            .child_by_field_name("constructor")
+            .or_else(|| expr.named_child(0))
+            .and_then(|callee| identifier_text(callee, source)),
+        _ => None,
     }
-    value
-        .child_by_field_name("function")
-        .or_else(|| value.named_child(0))
-        .and_then(|callee| identifier_text(callee, source))
 }
 
 /// Local identifier names on the RHS of top-level CommonJS export
@@ -2883,12 +2894,28 @@ fn has_multiline_statement_block(body: Node) -> bool {
 
 #[cfg(test)]
 fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> Vec<BodyPart> {
+    let file = Path::new("fixture.ts");
     let src_lines: Vec<&str> = source.lines().collect();
-    find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines)
-        .into_iter()
-        .find(|e| e.start_line == start_line)
-        .map(|e| e.body_parts)
-        .unwrap_or_default()
+    let reexports = collect_local_value_reexports(tree, source);
+    let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
+    let default_identifier_reexports = if is_entrypoint_file(file) {
+        collect_default_implementation_exports(tree, source)
+    } else {
+        HashMap::new()
+    };
+    find_export_starts(
+        file,
+        tree,
+        source,
+        &src_lines,
+        &reexports,
+        &commonjs_reexports,
+        &default_identifier_reexports,
+    )
+    .into_iter()
+    .find(|e| e.start_line == start_line)
+    .map(|e| e.body_parts)
+    .unwrap_or_default()
 }
 
 /// Body slices that the materializer emits for a declaration, after applying
@@ -3636,9 +3663,28 @@ mod tests {
         parser.parse(source, None).unwrap()
     }
 
-    fn export_infos<'a>(tree: &'a Tree, source: &str) -> Vec<ExportInfo<'a>> {
+    fn export_infos_for_path<'a>(file: &Path, tree: &'a Tree, source: &str) -> Vec<ExportInfo<'a>> {
         let src_lines: Vec<&str> = source.lines().collect();
-        find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines)
+        let reexports = collect_local_value_reexports(tree, source);
+        let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
+        let default_identifier_reexports = if is_entrypoint_file(file) {
+            collect_default_implementation_exports(tree, source)
+        } else {
+            HashMap::new()
+        };
+        find_export_starts(
+            file,
+            tree,
+            source,
+            &src_lines,
+            &reexports,
+            &commonjs_reexports,
+            &default_identifier_reexports,
+        )
+    }
+
+    fn export_infos<'a>(tree: &'a Tree, source: &str) -> Vec<ExportInfo<'a>> {
+        export_infos_for_path(Path::new("fixture.ts"), tree, source)
     }
 
     /// Lines for a single export's decl. For interface/type/class/enum, the
@@ -3648,8 +3694,7 @@ mod tests {
     /// arrow/function or wrapped through `forwardRef(props => {...})` etc.),
     /// otherwise the whole declaration.
     fn collect_export_lines(tree: &Tree, source: &str, start_line: usize) -> FileLines {
-        let src_lines: Vec<&str> = source.lines().collect();
-        let exports = find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines);
+        let exports = export_infos(tree, source);
         let Some(item) = exports.iter().find(|e| e.start_line == start_line) else {
             return FileLines::new(Vec::new());
         };
@@ -3805,8 +3850,7 @@ function setup(env) {
 module.exports = setup;
 ";
         let tree = parse(src);
-        let src_lines: Vec<&str> = src.lines().collect();
-        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let exports = export_infos_for_path(Path::new("fixture.js"), &tree, src);
         let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
         // One merged body part = the three R.x assignments (lines 2..4),
         // *not* the rest of the body (helper line 5).
@@ -3835,8 +3879,7 @@ function setup(env) {
 module.exports = setup;
 ";
         let tree = parse(src);
-        let src_lines: Vec<&str> = src.lines().collect();
-        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let exports = export_infos_for_path(Path::new("fixture.js"), &tree, src);
         let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
         assert!(setup.factory_sibling_body_parts);
         // Two pre-existing parts (table, locations) plus three
@@ -3881,8 +3924,7 @@ function setup(env) {
 module.exports = setup;
 ";
         let tree = parse(src);
-        let src_lines: Vec<&str> = src.lines().collect();
-        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let exports = export_infos_for_path(Path::new("fixture.js"), &tree, src);
         let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
         // 1 receiver table + 1 locations + 3 inner-fn bodies = 5 parts.
         assert_eq!(setup.body_parts.len(), 5);
@@ -3907,8 +3949,7 @@ function setup() {
 module.exports = setup;
 ";
         let tree = parse(src);
-        let src_lines: Vec<&str> = src.lines().collect();
-        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let exports = export_infos_for_path(Path::new("fixture.js"), &tree, src);
         let setup = exports.iter().find(|e| e.start_line == 1).unwrap();
         // Falls back to statement_block_parts — merged via
         // `merged_body_parts` in `make_export_info` to a single part
@@ -3930,8 +3971,7 @@ function init() {
 module.exports = init;
 ";
         let tree = parse(src);
-        let src_lines: Vec<&str> = src.lines().collect();
-        let exports = find_export_starts(Path::new("fixture.js"), &tree, src, &src_lines);
+        let exports = export_infos_for_path(Path::new("fixture.js"), &tree, src);
         let init = exports.iter().find(|e| e.start_line == 1).unwrap();
         let lines = &init.body_parts[0].lines;
         // Without a return-identifier the fold doesn't fire — fallback
@@ -4077,6 +4117,41 @@ export { composeRefs, useComposedRefs };
         assert_eq!(exports.len(), 1);
         assert_eq!(exports[0].start_line, 7);
         assert!(matches!(exports[0].kind, ItemKind::NamedReexport));
+    }
+
+    #[test]
+    fn walker_typescript_default_direct_call_synthesizes_local_function() {
+        let src = "\
+function createInstance() {
+  return {};
+}
+export default createInstance();
+";
+        let tree = parse(src);
+        let exports = export_infos_for_path(Path::new("index.ts"), &tree, src);
+        let local = exports.iter().find(|e| e.start_line == 1).unwrap();
+        assert!(matches!(local.kind, ItemKind::Function));
+        assert_eq!(local.predecessor_start_line, Some(4));
+        assert!(local.body_parts.iter().any(|part| part.lines == vec![2]));
+    }
+
+    #[test]
+    fn walker_typescript_default_new_initializer_synthesizes_local_class() {
+        let src = "\
+class Client {
+  run() {
+    return 1;
+  }
+}
+const instance = new Client();
+export default instance;
+";
+        let tree = parse(src);
+        let exports = export_infos_for_path(Path::new("index.ts"), &tree, src);
+        let local = exports.iter().find(|e| e.start_line == 1).unwrap();
+        assert!(matches!(local.kind, ItemKind::Class));
+        assert_eq!(local.predecessor_start_line, Some(7));
+        assert!(local.body_parts.iter().any(|part| part.lines == vec![3]));
     }
 
     #[test]

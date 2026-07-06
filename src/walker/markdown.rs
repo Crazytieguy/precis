@@ -866,7 +866,9 @@ const RST_MAX_SECTION_BYTES: usize = 1800;
 
 /// One RST README body section: the heading row + body rows (directive
 /// blocks already stripped), 1-based, plus its post-title index and
-/// whether its title is a canonical-usage marker.
+/// whether its title is a canonical-usage marker. RST stays out of the
+/// Markdown-only deferred prose tier for now: the line scanner does not have
+/// the same README/dev-workflow calibration that stamps Markdown sections.
 struct RstSection {
     rows: Vec<usize>,
     /// Position among body sections (0-based), used for index decay —

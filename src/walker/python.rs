@@ -386,7 +386,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
 
             match decl.kind {
                 DeclKind::Function => {
-                    let parts = disjoint_body_parts(def_body_parts(decl.inner_node, &src_lines));
+                    let parts = def_body_parts(decl.inner_node, &src_lines);
                     let part_value_factor = body_part_value_factor(parts.len());
                     for part in parts {
                         let Some(body_start_line) = part.start_line() else {
@@ -548,7 +548,7 @@ fn emit_methods(
             });
         }
 
-        let parts = disjoint_body_parts(def_body_parts(method.inner_node, src_lines));
+        let parts = def_body_parts(method.inner_node, src_lines);
         let part_value_factor = body_part_value_factor(parts.len());
         for part in parts {
             let Some(body_start_line) = part.start_line() else {
@@ -1173,21 +1173,6 @@ fn def_body_parts(inner: Node, src_lines: &[&str]) -> Vec<BodyPart> {
         });
     }
     parts
-}
-
-fn disjoint_body_parts(parts: Vec<BodyPart>) -> Vec<BodyPart> {
-    let mut seen = HashSet::new();
-    parts
-        .into_iter()
-        .filter_map(|part| {
-            let lines: Vec<usize> = part
-                .lines
-                .into_iter()
-                .filter(|line| seen.insert(*line))
-                .collect();
-            (!lines.is_empty()).then_some(BodyPart { lines })
-        })
-        .collect()
 }
 
 fn block_child_parts(body: Node, src_lines: &[&str]) -> Vec<BodyPart> {
