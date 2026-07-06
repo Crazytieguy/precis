@@ -4287,6 +4287,41 @@ mod tests {
         assert_eq!(starts, vec![5, 9, 13]);
     }
 
+    /// Adjacent top-level bullets with nested sub-bullets must split
+    /// into line-disjoint per-item sections. tree-sitter-markdown list
+    /// items swallow the next sibling's leading indentation, so a
+    /// newline-only end trim let item N's range claim item N+1's first
+    /// row — sibling Section batches then hit the scheduler's
+    /// non-ancestor overlap panic (tinyusb SEGGER_RTT README at 1M).
+    #[test]
+    fn walker_markdown_adjacent_nested_bullets_split_disjoint() {
+        let pad = "x".repeat(60);
+        let mut src =
+            String::from("Title\n=====\n\nIntro paragraph prose.\n\n## Included files\n\n");
+        for name in ["alpha", "beta", "gamma", "delta"] {
+            src.push_str(&format!("  * `{name}/`\n"));
+            src.push_str(&format!("    * `{name}.c` - {pad}\n"));
+            src.push_str(&format!("    * `{name}.h` - {pad}\n"));
+        }
+        let tree = parse(&src);
+        let ranges = logical_sections(Path::new("/x/README.md"), &tree, &src, true, false, false);
+        let items: Vec<(usize, usize)> = ranges
+            .iter()
+            .filter(|r| matches!(r.kind, SectionKind::BodyBlock))
+            .map(|r| (r.start, r.end))
+            .collect();
+        assert!(
+            items.len() >= 4,
+            "expected per-bullet split, got {ranges:?}"
+        );
+        for pair in items.windows(2) {
+            assert!(
+                pair[0].1 < pair[1].0,
+                "sibling item ranges overlap: {items:?}"
+            );
+        }
+    }
+
     /// Overline-form headings must not leak their overline punctuation row
     /// into the *preceding* section's span: a section bounds at the next
     /// heading's `start_row - 1` (the overline row), not its title row.

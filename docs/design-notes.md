@@ -356,6 +356,14 @@ Measured-dead this cycle (specifics block retries):
 - **superstruct struct.ts**: not a ranking miss — the walker emits a
   class slab where NS wants compact field/member/body batches; the fix
   class is TS class-member batch granularity, not value tuning.
+  **Mechanical extension measured dead (2026-07-06):** flipping the
+  existing JS class-member split (`should_split_js_class_export` +
+  member collection) from `is_js_file` to all non-declaration sources
+  does split `Struct` into member batches, but they lose the purchase
+  race — superstruct headline unmoved, while de-slabbing classes that
+  were being bought whole costs ky −0.026 / json-server −0.025 /
+  d2ts −0.016. A retry needs member batches that *win purchase inside
+  3K* (value-side or scheduler-tier treatment), not just granularity.
 
 ## Known pre-existing walker contract violation (debug-only)
 

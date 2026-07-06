@@ -546,16 +546,15 @@ pub(crate) fn extend_span(out: &mut Vec<usize>, node: Node, source: &str) {
     );
 }
 
-/// 0-based final row covered by `node`, ignoring trailing newline bytes.
+/// 0-based final row covered by `node`, ignoring trailing whitespace.
+/// Trimming all whitespace (not just newlines) matters for grammars
+/// whose block nodes swallow the next sibling's leading indentation
+/// (tree-sitter-markdown list items): a final row the node covers only
+/// with whitespace renders nothing and must not be claimed — sibling
+/// batches each claiming it is a walker-contract overlap.
 pub(crate) fn node_end_row_trimmed(node: Node, source: &str) -> usize {
     let text = &source[node.start_byte()..node.end_byte()];
-    node.start_position().row
-        + text
-            .trim_end_matches(['\n', '\r'])
-            .split('\n')
-            .count()
-            .max(1)
-        - 1
+    node.start_position().row + text.trim_end().split('\n').count().max(1) - 1
 }
 
 /// Declared `name` field as source text, when the grammar exposes one.
