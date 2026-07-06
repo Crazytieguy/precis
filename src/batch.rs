@@ -444,6 +444,8 @@ pub enum PythonKey {
         start_line: usize,
         body_start_line: usize,
     },
+    /// Legacy packaging script's top-level `setup(...)` call.
+    SetupManifest { file: PathBuf, start_line: usize },
     /// Surface listing of every `def test_*` first line in a `test_*.py`
     /// / `*_test.py` file (top-level + class-body, decorator-aware).
     TestNames { file: PathBuf },
@@ -937,6 +939,9 @@ impl InnerKey for PythonKey {
                 *body_start_line,
                 root,
             ),
+            PythonKey::SetupManifest { file, start_line } => {
+                describe_at("python setup manifest", file, *start_line, root)
+            }
             PythonKey::TestNames { file } => describe_in("python test names surface", file, root),
         }
     }

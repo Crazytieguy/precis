@@ -1,4 +1,4 @@
-Score(3000)=0.567 I=0.820 C=0.393 ns_rows≤3K=16/52 (reached=7 partial=2 missing=7)
+Score(3000)=0.665 I=0.873 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missing=6)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -53,182 +53,184 @@ Score(3000)=0.567 I=0.820 C=0.393 ns_rows≤3K=16/52 (reached=7 partial=2 missin
 | walker |  | 1745 | 87 | python decl doc at swarm/types.py:29 |  |  | 0.667 |
 | walker |  | 1768 | 23 | listing of 'examples/triage_agent' |  |  | 0.667 |
 | ns | 1807 |  | 428 | swarm/types.py — Agent/Response/Result models | 2.1 |  | 0.647 |
-| walker |  | 1808 | 40 | listing of 'examples/support_bot' |  |  | 0.648 |
-| ns | 1887 |  | 80 | core.py — Swarm class method locations | 2.2 |  | 0.659 |
-| walker |  | 1890 | 82 | README.md section #5 |  |  | 0.659 |
+| ns | 1887 |  | 80 | core.py — Swarm class method locations | 2.2 |  | 0.658 |
 | ns | 1923 |  | 36 | core.py — Swarm.__init__ | 2.3 | 2.2 | 0.649 |
-| walker |  | 1933 | 43 | python decl names surface in swarm/repl/repl.py |  |  | 0.649 |
-| walker |  | 1933 | 0 | python decl at swarm/repl/repl.py:6 |  |  | 0.649 |
-| walker |  | 1933 | 0 | python decl at swarm/repl/repl.py:37 |  |  | 0.649 |
-| walker |  | 1959 | 26 | python decl at swarm/repl/repl.py:60 |  |  | 0.649 |
-| walker |  | 1979 | 20 | python imports in swarm/repl/repl.py |  |  | 0.649 |
-| walker |  | 2053 | 74 | python method at swarm/core.py:32 |  |  | 0.650 |
-| walker |  | 2080 | 27 | python method body at swarm/core.py:27 body 28 |  |  | 0.664 |
-| walker |  | 2083 | 3 | listing of 'examples/airline/data' |  |  | 0.664 |
-| walker |  | 2175 | 92 | python method at swarm/core.py:139 |  |  | 0.664 |
-| walker |  | 2283 | 108 | python decl doc at swarm/util.py:31 |  |  | 0.665 |
-| walker |  | 2295 | 12 | listing of 'examples/airline/data/routines' |  |  | 0.665 |
-| walker |  | 2356 | 61 | python decl body at swarm/util.py:13 body 14 |  |  | 0.665 |
-| walker |  | 2390 | 34 | listing of 'examples/basic' |  |  | 0.666 |
-| walker |  | 2424 | 34 | listing of 'examples/customer_service_streaming' |  |  | 0.667 |
-| walker |  | 2449 | 25 | listing of 'examples/customer_service_streaming/configs' |  |  | 0.667 |
-| walker |  | 2481 | 32 | listing of 'examples/customer_service_streaming/src' |  |  | 0.667 |
-| walker |  | 2500 | 19 | listing of 'examples/customer_service_streaming/src/swarm' |  |  | 0.668 |
-| walker |  | 2512 | 12 | listing of 'examples/customer_service_streaming/configs/tools' |  |  | 0.668 |
-| ns | 2563 |  | 640 | core.py — Swarm.run() body | 2.4 | 2.2 | 0.562 |
-| walker |  | 2853 | 341 | listing of 'logs' |  |  | 0.562 |
-| walker |  | 2959 | 106 | python method at swarm/core.py:231 |  |  | 0.567 |
-| walker |  | 2973 | 14 | listing of 'examples/customer_service_streaming/src/swarm/engines' |  |  | 0.567 |
-| walker |  | 3053 | 80 | python imports in swarm/types.py |  |  | 0.610 |
-| ns | 3108 |  | 545 | core.py — handle_tool_calls() body | 2.5 | 2.2 | 0.550 |
-| walker |  | 3143 | 90 | python decl body at swarm/util.py:5 body 6 |  |  | 0.550 |
-| walker |  | 3295 | 152 | README.md section #6 |  |  | 0.550 |
-| walker |  | 3497 | 202 | README.md section #2 |  |  | 0.580 |
-| walker |  | 3591 | 94 | python decl body at swarm/util.py:21 body 22 |  |  | 0.581 |
-| walker |  | 3926 | 335 | README.md section #1 |  |  | 0.603 |
-| walker |  | 3934 | 8 | python decl body at swarm/repl/repl.py:6 body 7 |  |  | 0.603 |
-| ns | 4028 |  | 920 | swarm/util.py — full file | 2.6 |  | 0.553 |
-| walker |  | 4100 | 166 | python imports in swarm/core.py |  |  | 0.553 |
-| walker |  | 4195 | 95 | json config logs/session_20240425-135655.json |  |  | 0.553 |
-| walker |  | 4204 | 9 | python decl body at swarm/repl/repl.py:6 body 8 |  |  | 0.553 |
-| walker |  | 4301 | 97 | json config logs/session_20240402-112456.json |  |  | 0.553 |
-| walker |  | 4398 | 97 | json config logs/session_20240425-135657.json |  |  | 0.553 |
-| ns | 4438 |  | 410 | core.py — get_chat_completion() body | 2.7 | 2.2 | 0.526 |
-| ns | 4463 |  | 25 | tests/ directory listing | 3.1 |  | 0.532 |
-| walker |  | 4497 | 99 | json config logs/session_20240425-140516.json |  |  | 0.532 |
-| ns | 4524 |  | 61 | test_core.py — test function locations | 3.2 |  | 0.528 |
-| walker |  | 4596 | 99 | json config logs/session_20240425-145907.json |  |  | 0.528 |
-| walker |  | 4695 | 99 | json config logs/session_20240425-211732.json |  |  | 0.528 |
-| walker |  | 4796 | 101 | json config logs/session_20240402-112443.json |  |  | 0.528 |
-| walker |  | 4897 | 101 | json config logs/session_20240402-112501.json |  |  | 0.528 |
-| walker |  | 4998 | 101 | json config logs/session_20240425-140502.json |  |  | 0.528 |
-| ns | 5061 |  | 537 | tests/test_util.py — full file | 3.3 |  | 0.496 |
-| ns | 5095 |  | 34 | examples/basic/ directory listing | 4.1 |  | 0.502 |
-| walker |  | 5099 | 101 | json config logs/session_20240425-141509.json |  |  | 0.502 |
-| walker |  | 5200 | 101 | json config logs/session_20240425-211942.json |  |  | 0.502 |
-| ns | 5218 |  | 123 | basic/bare_minimum.py | 4.2 |  | 0.494 |
-| walker |  | 5302 | 102 | json config logs/session_20240402-113222.json |  |  | 0.494 |
-| ns | 5400 |  | 182 | basic/function_calling.py | 4.3 |  | 0.484 |
-| walker |  | 5405 | 103 | json config logs/session_20240425-135728.json |  |  | 0.484 |
-| walker |  | 5508 | 103 | json config logs/session_20240425-141709.json |  |  | 0.484 |
-| walker |  | 5611 | 103 | json config logs/session_20240425-145129.json |  |  | 0.484 |
-| ns | 5638 |  | 238 | basic/agent_handoff.py | 4.4 |  | 0.470 |
-| ns | 5678 |  | 40 | triage_agent/ + weather_agent/ directory listings | 5.1 |  | 0.479 |
-| walker |  | 5714 | 103 | json config logs/session_20240425-145930.json |  |  | 0.479 |
-| walker |  | 5817 | 103 | json config logs/session_20240425-212431.json |  |  | 0.479 |
-| walker |  | 5922 | 105 | json config logs/session_20240425-212748.json |  |  | 0.479 |
-| walker |  | 6027 | 105 | json config logs/session_20240425-213023.json |  |  | 0.479 |
-| walker |  | 6134 | 107 | json config logs/session_20240425-145324.json |  |  | 0.479 |
-| walker |  | 6241 | 107 | json config logs/session_20240425-212341.json |  |  | 0.479 |
-| ns | 6247 |  | 569 | triage_agent/agents.py + run.py | 5.2 |  | 0.455 |
-| ns | 6271 |  | 24 | examples/airline/ directory listing | 6.1 |  | 0.461 |
-| walker |  | 6352 | 111 | json config logs/session_20240425-140427.json |  |  | 0.461 |
-| walker |  | 6464 | 112 | json config logs/session_20240425-155814.json |  |  | 0.461 |
-| ns | 6541 |  | 270 | airline/README.md — agents + setup | 6.2 |  | 0.452 |
-| ns | 6555 |  | 14 | examples/airline/configs/ listing | 6.3 |  | 0.455 |
-| walker |  | 6578 | 114 | json config logs/session_20240402-112114.json |  |  | 0.455 |
-| walker |  | 6693 | 115 | json config logs/session_20240425-150004.json |  |  | 0.455 |
-| walker |  | 6810 | 117 | json config logs/session_20240425-211813.json |  |  | 0.455 |
-| walker |  | 6928 | 118 | json config logs/session_20240425-140553.json |  |  | 0.455 |
-| walker |  | 7046 | 118 | json config logs/session_20240425-172809.json |  |  | 0.455 |
-| walker |  | 7166 | 120 | json config logs/session_20240425-141416.json |  |  | 0.455 |
-| walker |  | 7287 | 121 | json config logs/session_20240425-150040.json |  |  | 0.455 |
-| ns | 7316 |  | 761 | airline/configs/agents.py — triage + flight_modification agents | 6.4 |  | 0.433 |
-| ns | 7349 |  | 33 | airline/configs/agents.py — remaining agent locations | 6.5 | 6.4 | 0.432 |
-| ns | 7367 |  | 18 | examples/personal_shopper/ directory listing | 7.1 |  | 0.436 |
-| walker |  | 7458 | 171 | json config logs/session_20240402-113415.json |  |  | 0.436 |
-| walker |  | 7633 | 175 | python method body at swarm/core.py:71 body 72 |  |  | 0.436 |
-| ns | 7637 |  | 270 | personal_shopper/README.md | 7.2 |  | 0.428 |
-| walker |  | 7642 | 9 | python method body at swarm/core.py:89 body 137 |  |  | 0.429 |
-| walker |  | 7693 | 51 | README headline in examples/weather_agent/README.md |  |  | 0.429 |
-| ns | 7701 |  | 64 | personal_shopper/main.py — imports | 7.3 |  | 0.426 |
-| walker |  | 7710 | 17 | headings outline in examples/weather_agent/README.md |  |  | 0.426 |
-| ns | 7741 |  | 40 | examples/support_bot/ directory listing | 8.1 |  | 0.434 |
-| walker |  | 7964 | 254 | python decl body at swarm/repl/repl.py:37 body 38 |  |  | 0.434 |
-| walker |  | 8025 | 61 | README headline in examples/triage_agent/README.md |  |  | 0.434 |
-| walker |  | 8042 | 17 | headings outline in examples/triage_agent/README.md |  |  | 0.434 |
-| walker |  | 8109 | 67 | README headline in examples/support_bot/README.md |  |  | 0.434 |
-| ns | 8114 |  | 373 | support_bot/README.md | 8.2 |  | 0.422 |
-| walker |  | 8125 | 16 | headings outline in examples/support_bot/README.md |  |  | 0.424 |
-| ns | 8182 |  | 68 | support_bot Makefile + requirements.txt | 8.3 |  | 0.421 |
-| walker |  | 8198 | 73 | README headline in examples/basic/README.md |  |  | 0.421 |
-| walker |  | 8216 | 18 | headings outline in examples/basic/README.md |  |  | 0.421 |
-| walker |  | 8226 | 10 | python decl body at swarm/util.py:31 body 60 |  |  | 0.422 |
-| walker |  | 8237 | 11 | python decl names surface in examples/customer_service_streaming/main.py |  |  | 0.422 |
-| walker |  | 8237 | 0 | python decl at examples/customer_service_streaming/main.py:10 |  |  | 0.422 |
-| walker |  | 8247 | 10 | python decl body at swarm/repl/repl.py:60 body 63 |  |  | 0.422 |
-| walker |  | 8257 | 10 | python decl body at swarm/repl/repl.py:60 body 66 |  |  | 0.422 |
-| walker |  | 8267 | 10 | python decl body at swarm/repl/repl.py:60 body 67 |  |  | 0.422 |
-| walker |  | 8354 | 87 | README headline in examples/airline/README.md |  |  | 0.424 |
-| walker |  | 8380 | 26 | headings outline in examples/airline/README.md |  |  | 0.427 |
-| ns | 8419 |  | 237 | support_bot/main.py — agent definitions | 8.4 |  | 0.421 |
-| walker |  | 8467 | 87 | README headline in examples/personal_shopper/README.md |  |  | 0.423 |
-| walker |  | 8483 | 16 | headings outline in examples/personal_shopper/README.md |  |  | 0.425 |
-| walker |  | 8495 | 12 | python decl names surface in examples/airline/main.py |  |  | 0.425 |
-| walker |  | 8498 | 3 | listing of 'examples/customer_service' |  |  | 0.425 |
-| walker |  | 8501 | 3 | listing of 'examples/customer_service_lite' |  |  | 0.425 |
-| walker |  | 8520 | 19 | listing of 'examples/airline/evals' |  |  | 0.425 |
-| walker |  | 8533 | 13 | python decl body at swarm/repl/repl.py:60 body 64 |  |  | 0.425 |
-| walker |  | 8552 | 19 | python method body at swarm/core.py:89 body 96 |  |  | 0.425 |
-| walker |  | 8564 | 12 | python decl names surface in examples/customer_service_streaming/src/arg_parser.py |  |  | 0.425 |
-| walker |  | 8564 | 0 | python decl at examples/customer_service_streaming/src/arg_parser.py:3 |  |  | 0.425 |
-| walker |  | 8569 | 5 | python imports in examples/customer_service_streaming/src/arg_parser.py |  |  | 0.425 |
-| walker |  | 8578 | 9 | python decl names surface in examples/customer_service_streaming/src/swarm/conversation.py |  |  | 0.425 |
-| walker |  | 8578 | 0 | python decl at examples/customer_service_streaming/src/swarm/conversation.py:1 |  |  | 0.425 |
-| walker |  | 8588 | 10 | python imports in examples/personal_shopper/database.py |  |  | 0.425 |
-| ns | 8603 |  | 184 | support_bot/customer_service.py — imports + TODO | 8.5 |  | 0.419 |
-| walker |  | 8612 | 24 | python method body at swarm/core.py:89 body 97 |  |  | 0.420 |
-| walker |  | 8622 | 10 | python method body at swarm/core.py:139 body 149 |  |  | 0.420 |
-| walker |  | 8633 | 11 | python imports in examples/triage_agent/agents.py |  |  | 0.420 |
-| ns | 8637 |  | 34 | customer_service_streaming/ top-level listing | 9.1 |  | 0.427 |
-| walker |  | 8710 | 77 | docker-compose at examples/support_bot/docker-compose.yaml |  |  | 0.427 |
-| ns | 8715 |  | 78 | customer_service_streaming/src/ tree listing | 9.2 |  | 0.435 |
-| walker |  | 8722 | 12 | python decl names surface in examples/customer_service_streaming/src/swarm/swarm.py |  |  | 0.435 |
-| walker |  | 8722 | 0 | python decl at examples/customer_service_streaming/src/swarm/swarm.py:11 |  |  | 0.435 |
-| walker |  | 8736 | 14 | python imports in examples/basic/agent_handoff.py |  |  | 0.435 |
-| walker |  | 8750 | 14 | python imports in examples/basic/bare_minimum.py |  |  | 0.435 |
-| walker |  | 8764 | 14 | python imports in examples/basic/context_variables.py |  |  | 0.435 |
-| walker |  | 8778 | 14 | python imports in examples/basic/function_calling.py |  |  | 0.435 |
-| ns | 8784 |  | 69 | customer_service_streaming/configs/ tree listing | 9.3 |  | 0.435 |
-| walker |  | 8792 | 14 | python imports in examples/basic/simple_loop_no_helpers.py |  |  | 0.435 |
-| walker |  | 8805 | 13 | python decl names surface in examples/customer_service_streaming/src/swarm/assistants.py |  |  | 0.435 |
-| walker |  | 8805 | 0 | python decl at examples/customer_service_streaming/src/swarm/assistants.py:10 |  |  | 0.435 |
-| walker |  | 8818 | 13 | python method body at swarm/core.py:139 body 150 |  |  | 0.435 |
-| walker |  | 8829 | 11 | python method body at swarm/core.py:139 body 151 |  |  | 0.435 |
-| walker |  | 8840 | 11 | python method body at swarm/core.py:139 body 152 |  |  | 0.435 |
-| walker |  | 8930 | 90 | docker-compose at examples/customer_service_streaming/docker-compose.yaml |  |  | 0.435 |
-| walker |  | 8974 | 44 | listing of 'examples/customer_service_lite/logs' |  |  | 0.435 |
-| ns | 9038 |  | 254 | customer_service_streaming/src/arg_parser.py | 9.4 |  | 0.431 |
-| walker |  | 9056 | 82 | python decl names surface in tests/mock_client.py |  |  | 0.431 |
-| walker |  | 9056 | 0 | python decl at tests/mock_client.py:8 |  |  | 0.431 |
-| walker |  | 9056 | 0 | python decl at tests/mock_client.py:44 |  |  | 0.431 |
-| walker |  | 9123 | 67 | python method sigs in tests/mock_client.py |  |  | 0.431 |
-| walker |  | 9123 | 0 | python method at tests/mock_client.py:45 |  |  | 0.431 |
-| walker |  | 9123 | 0 | python method at tests/mock_client.py:49 |  |  | 0.431 |
-| walker |  | 9123 | 0 | python method at tests/mock_client.py:56 |  |  | 0.431 |
-| walker |  | 9123 | 0 | python method at tests/mock_client.py:63 |  |  | 0.431 |
-| walker |  | 9139 | 16 | python method body at tests/mock_client.py:49 body 54 |  |  | 0.431 |
-| walker |  | 9155 | 16 | python method body at tests/mock_client.py:56 body 61 |  |  | 0.431 |
-| walker |  | 9172 | 17 | python method body at tests/mock_client.py:63 body 64 |  |  | 0.431 |
-| walker |  | 9196 | 24 | python test names surface in tests/test_util.py |  |  | 0.431 |
-| walker |  | 9201 | 5 | listing of 'examples/customer_service_streaming/logs' |  |  | 0.431 |
-| walker |  | 9224 | 23 | python decl names surface in examples/customer_service_streaming/src/utils.py |  |  | 0.431 |
-| walker |  | 9224 | 0 | python decl at examples/customer_service_streaming/src/utils.py:39 |  |  | 0.431 |
-| walker |  | 9237 | 13 | python decl body at examples/customer_service_streaming/src/utils.py:39 body 40 |  |  | 0.431 |
-| walker |  | 9248 | 11 | python decl names surface in examples/customer_service_streaming/src/swarm/engines/engine.py |  |  | 0.431 |
-| walker |  | 9248 | 0 | python decl at examples/customer_service_streaming/src/swarm/engines/engine.py:2 |  |  | 0.431 |
-| walker |  | 9263 | 15 | python method sigs in examples/customer_service_streaming/src/swarm/engines/engine.py |  |  | 0.431 |
-| walker |  | 9263 | 0 | python method at examples/customer_service_streaming/src/swarm/engines/engine.py:3 |  |  | 0.431 |
-| ns | 9284 |  | 246 | customer_service_streaming/configs/general.py | 9.5 |  | 0.425 |
-| walker |  | 9303 | 40 | python method doc at tests/mock_client.py:49 |  |  | 0.425 |
-| walker |  | 9326 | 23 | python method body at tests/mock_client.py:45 body 46 |  |  | 0.425 |
-| ns | 9439 |  | 155 | customer_service_streaming/configs/swarm_tasks.json | 9.6 |  | 0.421 |
-| walker |  | 9462 | 136 | SECURITY.md section #0 |  |  | 0.428 |
-| walker |  | 9517 | 55 | listing of 'examples/customer_service/logs' |  |  | 0.428 |
-| walker |  | 9529 | 12 | python decl names surface in examples/customer_service_streaming/src/swarm/engines/local_engine.py |  |  | 0.428 |
-| walker |  | 9529 | 0 | python decl at examples/customer_service_streaming/src/swarm/engines/local_engine.py:14 |  |  | 0.428 |
-| ns | 9572 |  | 133 | customer_service_streaming assistant.json sample | 9.7 |  | 0.425 |
-| ns | 9765 |  | 193 | local_engine.py — LocalEngine method locations | 9.8 |  | 0.421 |
-| ns | 9870 |  | 105 | customer_service/ + customer_service_lite/ listings | 10.1 |  | 0.428 |
-| ns | 9881 |  | 11 | tests/test_runs/ listing | 10.2 |  | 0.428 |
-| ns | 9995 |  | 114 | Sample session log content | 10.3 |  | 0.429 |
+| walker |  | 2036 | 268 | plaintext config setup.cfg |  |  | 0.771 |
+| walker |  | 2076 | 40 | listing of 'examples/support_bot' |  |  | 0.771 |
+| walker |  | 2158 | 82 | README.md section #5 |  |  | 0.771 |
+| walker |  | 2201 | 43 | python decl names surface in swarm/repl/repl.py |  |  | 0.771 |
+| walker |  | 2201 | 0 | python decl at swarm/repl/repl.py:6 |  |  | 0.771 |
+| walker |  | 2201 | 0 | python decl at swarm/repl/repl.py:37 |  |  | 0.771 |
+| walker |  | 2227 | 26 | python decl at swarm/repl/repl.py:60 |  |  | 0.771 |
+| walker |  | 2247 | 20 | python imports in swarm/repl/repl.py |  |  | 0.771 |
+| walker |  | 2321 | 74 | python method at swarm/core.py:32 |  |  | 0.772 |
+| walker |  | 2348 | 27 | python method body at swarm/core.py:27 body 28 |  |  | 0.785 |
+| walker |  | 2351 | 3 | listing of 'examples/airline/data' |  |  | 0.785 |
+| walker |  | 2443 | 92 | python method at swarm/core.py:139 |  |  | 0.785 |
+| walker |  | 2551 | 108 | python decl doc at swarm/util.py:31 |  |  | 0.786 |
+| walker |  | 2563 | 12 | listing of 'examples/airline/data/routines' |  |  | 0.661 |
+| ns | 2563 |  | 640 | core.py — Swarm.run() body | 2.4 | 2.2 | 0.661 |
+| walker |  | 2624 | 61 | python decl body at swarm/util.py:13 body 14 |  |  | 0.662 |
+| walker |  | 2658 | 34 | listing of 'examples/basic' |  |  | 0.663 |
+| walker |  | 2692 | 34 | listing of 'examples/customer_service_streaming' |  |  | 0.664 |
+| walker |  | 2717 | 25 | listing of 'examples/customer_service_streaming/configs' |  |  | 0.664 |
+| walker |  | 2749 | 32 | listing of 'examples/customer_service_streaming/src' |  |  | 0.664 |
+| walker |  | 2768 | 19 | listing of 'examples/customer_service_streaming/src/swarm' |  |  | 0.664 |
+| walker |  | 2780 | 12 | listing of 'examples/customer_service_streaming/configs/tools' |  |  | 0.665 |
+| ns | 3108 |  | 545 | core.py — handle_tool_calls() body | 2.5 | 2.2 | 0.599 |
+| walker |  | 3121 | 341 | listing of 'logs' |  |  | 0.599 |
+| walker |  | 3227 | 106 | python method at swarm/core.py:231 |  |  | 0.603 |
+| walker |  | 3241 | 14 | listing of 'examples/customer_service_streaming/src/swarm/engines' |  |  | 0.603 |
+| walker |  | 3321 | 80 | python imports in swarm/types.py |  |  | 0.639 |
+| walker |  | 3411 | 90 | python decl body at swarm/util.py:5 body 6 |  |  | 0.639 |
+| walker |  | 3563 | 152 | README.md section #6 |  |  | 0.639 |
+| walker |  | 3765 | 202 | README.md section #2 |  |  | 0.667 |
+| walker |  | 3859 | 94 | python decl body at swarm/util.py:21 body 22 |  |  | 0.668 |
+| ns | 4028 |  | 920 | swarm/util.py — full file | 2.6 |  | 0.607 |
+| walker |  | 4194 | 335 | README.md section #1 |  |  | 0.626 |
+| walker |  | 4202 | 8 | python decl body at swarm/repl/repl.py:6 body 7 |  |  | 0.626 |
+| walker |  | 4368 | 166 | python imports in swarm/core.py |  |  | 0.626 |
+| ns | 4438 |  | 410 | core.py — get_chat_completion() body | 2.7 | 2.2 | 0.595 |
+| walker |  | 4463 | 95 | json config logs/session_20240425-135655.json |  |  | 0.599 |
+| ns | 4463 |  | 25 | tests/ directory listing | 3.1 |  | 0.599 |
+| walker |  | 4472 | 9 | python decl body at swarm/repl/repl.py:6 body 8 |  |  | 0.599 |
+| ns | 4524 |  | 61 | test_core.py — test function locations | 3.2 |  | 0.595 |
+| walker |  | 4569 | 97 | json config logs/session_20240402-112456.json |  |  | 0.595 |
+| walker |  | 4666 | 97 | json config logs/session_20240425-135657.json |  |  | 0.595 |
+| walker |  | 4765 | 99 | json config logs/session_20240425-140516.json |  |  | 0.595 |
+| walker |  | 4864 | 99 | json config logs/session_20240425-145907.json |  |  | 0.595 |
+| walker |  | 4963 | 99 | json config logs/session_20240425-211732.json |  |  | 0.595 |
+| ns | 5061 |  | 537 | tests/test_util.py — full file | 3.3 |  | 0.558 |
+| walker |  | 5064 | 101 | json config logs/session_20240402-112443.json |  |  | 0.558 |
+| ns | 5095 |  | 34 | examples/basic/ directory listing | 4.1 |  | 0.563 |
+| walker |  | 5165 | 101 | json config logs/session_20240402-112501.json |  |  | 0.563 |
+| ns | 5218 |  | 123 | basic/bare_minimum.py | 4.2 |  | 0.555 |
+| walker |  | 5266 | 101 | json config logs/session_20240425-140502.json |  |  | 0.555 |
+| walker |  | 5367 | 101 | json config logs/session_20240425-141509.json |  |  | 0.555 |
+| ns | 5400 |  | 182 | basic/function_calling.py | 4.3 |  | 0.543 |
+| walker |  | 5468 | 101 | json config logs/session_20240425-211942.json |  |  | 0.543 |
+| walker |  | 5570 | 102 | json config logs/session_20240402-113222.json |  |  | 0.543 |
+| ns | 5638 |  | 238 | basic/agent_handoff.py | 4.4 |  | 0.528 |
+| walker |  | 5673 | 103 | json config logs/session_20240425-135728.json |  |  | 0.528 |
+| ns | 5678 |  | 40 | triage_agent/ + weather_agent/ directory listings | 5.1 |  | 0.536 |
+| walker |  | 5776 | 103 | json config logs/session_20240425-141709.json |  |  | 0.536 |
+| walker |  | 5879 | 103 | json config logs/session_20240425-145129.json |  |  | 0.536 |
+| walker |  | 5982 | 103 | json config logs/session_20240425-145930.json |  |  | 0.536 |
+| walker |  | 6085 | 103 | json config logs/session_20240425-212431.json |  |  | 0.536 |
+| walker |  | 6190 | 105 | json config logs/session_20240425-212748.json |  |  | 0.536 |
+| ns | 6247 |  | 569 | triage_agent/agents.py + run.py | 5.2 |  | 0.509 |
+| ns | 6271 |  | 24 | examples/airline/ directory listing | 6.1 |  | 0.514 |
+| walker |  | 6295 | 105 | json config logs/session_20240425-213023.json |  |  | 0.514 |
+| walker |  | 6402 | 107 | json config logs/session_20240425-145324.json |  |  | 0.514 |
+| walker |  | 6509 | 107 | json config logs/session_20240425-212341.json |  |  | 0.514 |
+| ns | 6541 |  | 270 | airline/README.md — agents + setup | 6.2 |  | 0.505 |
+| ns | 6555 |  | 14 | examples/airline/configs/ listing | 6.3 |  | 0.507 |
+| walker |  | 6620 | 111 | json config logs/session_20240425-140427.json |  |  | 0.507 |
+| walker |  | 6732 | 112 | json config logs/session_20240425-155814.json |  |  | 0.507 |
+| walker |  | 6846 | 114 | json config logs/session_20240402-112114.json |  |  | 0.507 |
+| walker |  | 6961 | 115 | json config logs/session_20240425-150004.json |  |  | 0.507 |
+| walker |  | 7078 | 117 | json config logs/session_20240425-211813.json |  |  | 0.507 |
+| walker |  | 7196 | 118 | json config logs/session_20240425-140553.json |  |  | 0.507 |
+| walker |  | 7314 | 118 | json config logs/session_20240425-172809.json |  |  | 0.507 |
+| ns | 7316 |  | 761 | airline/configs/agents.py — triage + flight_modification agents | 6.4 |  | 0.483 |
+| ns | 7349 |  | 33 | airline/configs/agents.py — remaining agent locations | 6.5 | 6.4 | 0.481 |
+| ns | 7367 |  | 18 | examples/personal_shopper/ directory listing | 7.1 |  | 0.485 |
+| walker |  | 7434 | 120 | json config logs/session_20240425-141416.json |  |  | 0.485 |
+| walker |  | 7555 | 121 | json config logs/session_20240425-150040.json |  |  | 0.485 |
+| ns | 7637 |  | 270 | personal_shopper/README.md | 7.2 |  | 0.476 |
+| ns | 7701 |  | 64 | personal_shopper/main.py — imports | 7.3 |  | 0.473 |
+| walker |  | 7726 | 171 | json config logs/session_20240402-113415.json |  |  | 0.473 |
+| ns | 7741 |  | 40 | examples/support_bot/ directory listing | 8.1 |  | 0.480 |
+| walker |  | 7901 | 175 | python method body at swarm/core.py:71 body 72 |  |  | 0.480 |
+| walker |  | 7910 | 9 | python method body at swarm/core.py:89 body 137 |  |  | 0.481 |
+| walker |  | 7961 | 51 | README headline in examples/weather_agent/README.md |  |  | 0.481 |
+| walker |  | 7978 | 17 | headings outline in examples/weather_agent/README.md |  |  | 0.481 |
+| ns | 8114 |  | 373 | support_bot/README.md | 8.2 |  | 0.466 |
+| ns | 8182 |  | 68 | support_bot Makefile + requirements.txt | 8.3 |  | 0.464 |
+| walker |  | 8232 | 254 | python decl body at swarm/repl/repl.py:37 body 38 |  |  | 0.464 |
+| walker |  | 8293 | 61 | README headline in examples/triage_agent/README.md |  |  | 0.464 |
+| walker |  | 8310 | 17 | headings outline in examples/triage_agent/README.md |  |  | 0.464 |
+| walker |  | 8377 | 67 | README headline in examples/support_bot/README.md |  |  | 0.465 |
+| walker |  | 8393 | 16 | headings outline in examples/support_bot/README.md |  |  | 0.466 |
+| ns | 8419 |  | 237 | support_bot/main.py — agent definitions | 8.4 |  | 0.460 |
+| walker |  | 8466 | 73 | README headline in examples/basic/README.md |  |  | 0.460 |
+| walker |  | 8484 | 18 | headings outline in examples/basic/README.md |  |  | 0.460 |
+| walker |  | 8494 | 10 | python decl body at swarm/util.py:31 body 60 |  |  | 0.461 |
+| walker |  | 8505 | 11 | python decl names surface in examples/customer_service_streaming/main.py |  |  | 0.461 |
+| walker |  | 8505 | 0 | python decl at examples/customer_service_streaming/main.py:10 |  |  | 0.461 |
+| walker |  | 8515 | 10 | python decl body at swarm/repl/repl.py:60 body 63 |  |  | 0.461 |
+| walker |  | 8525 | 10 | python decl body at swarm/repl/repl.py:60 body 66 |  |  | 0.461 |
+| walker |  | 8535 | 10 | python decl body at swarm/repl/repl.py:60 body 67 |  |  | 0.461 |
+| walker |  | 8544 | 9 | plaintext config examples/support_bot/requirements.txt |  |  | 0.461 |
+| ns | 8603 |  | 184 | support_bot/customer_service.py — imports + TODO | 8.5 |  | 0.454 |
+| walker |  | 8631 | 87 | README headline in examples/airline/README.md |  |  | 0.456 |
+| ns | 8637 |  | 34 | customer_service_streaming/ top-level listing | 9.1 |  | 0.463 |
+| walker |  | 8657 | 26 | headings outline in examples/airline/README.md |  |  | 0.465 |
+| ns | 8715 |  | 78 | customer_service_streaming/src/ tree listing | 9.2 |  | 0.472 |
+| walker |  | 8744 | 87 | README headline in examples/personal_shopper/README.md |  |  | 0.474 |
+| walker |  | 8760 | 16 | headings outline in examples/personal_shopper/README.md |  |  | 0.475 |
+| walker |  | 8772 | 12 | python decl names surface in examples/airline/main.py |  |  | 0.475 |
+| walker |  | 8775 | 3 | listing of 'examples/customer_service' |  |  | 0.475 |
+| walker |  | 8778 | 3 | listing of 'examples/customer_service_lite' |  |  | 0.476 |
+| ns | 8784 |  | 69 | customer_service_streaming/configs/ tree listing | 9.3 |  | 0.475 |
+| walker |  | 8797 | 19 | listing of 'examples/airline/evals' |  |  | 0.475 |
+| walker |  | 8810 | 13 | python decl body at swarm/repl/repl.py:60 body 64 |  |  | 0.475 |
+| walker |  | 8829 | 19 | python method body at swarm/core.py:89 body 96 |  |  | 0.475 |
+| walker |  | 8841 | 12 | python decl names surface in examples/customer_service_streaming/src/arg_parser.py |  |  | 0.475 |
+| walker |  | 8841 | 0 | python decl at examples/customer_service_streaming/src/arg_parser.py:3 |  |  | 0.475 |
+| walker |  | 8846 | 5 | python imports in examples/customer_service_streaming/src/arg_parser.py |  |  | 0.475 |
+| walker |  | 8855 | 9 | python decl names surface in examples/customer_service_streaming/src/swarm/conversation.py |  |  | 0.475 |
+| walker |  | 8855 | 0 | python decl at examples/customer_service_streaming/src/swarm/conversation.py:1 |  |  | 0.475 |
+| walker |  | 8865 | 10 | python imports in examples/personal_shopper/database.py |  |  | 0.475 |
+| walker |  | 8889 | 24 | python method body at swarm/core.py:89 body 97 |  |  | 0.476 |
+| walker |  | 8899 | 10 | python method body at swarm/core.py:139 body 149 |  |  | 0.476 |
+| walker |  | 8910 | 11 | python imports in examples/triage_agent/agents.py |  |  | 0.476 |
+| walker |  | 8987 | 77 | docker-compose at examples/support_bot/docker-compose.yaml |  |  | 0.476 |
+| walker |  | 8999 | 12 | python decl names surface in examples/customer_service_streaming/src/swarm/swarm.py |  |  | 0.476 |
+| walker |  | 8999 | 0 | python decl at examples/customer_service_streaming/src/swarm/swarm.py:11 |  |  | 0.476 |
+| walker |  | 9013 | 14 | python imports in examples/basic/agent_handoff.py |  |  | 0.476 |
+| walker |  | 9027 | 14 | python imports in examples/basic/bare_minimum.py |  |  | 0.476 |
+| ns | 9038 |  | 254 | customer_service_streaming/src/arg_parser.py | 9.4 |  | 0.472 |
+| walker |  | 9041 | 14 | python imports in examples/basic/context_variables.py |  |  | 0.472 |
+| walker |  | 9055 | 14 | python imports in examples/basic/function_calling.py |  |  | 0.472 |
+| walker |  | 9069 | 14 | python imports in examples/basic/simple_loop_no_helpers.py |  |  | 0.472 |
+| walker |  | 9082 | 13 | python decl names surface in examples/customer_service_streaming/src/swarm/assistants.py |  |  | 0.472 |
+| walker |  | 9082 | 0 | python decl at examples/customer_service_streaming/src/swarm/assistants.py:10 |  |  | 0.472 |
+| walker |  | 9095 | 13 | python method body at swarm/core.py:139 body 150 |  |  | 0.472 |
+| walker |  | 9106 | 11 | python method body at swarm/core.py:139 body 151 |  |  | 0.472 |
+| walker |  | 9117 | 11 | python method body at swarm/core.py:139 body 152 |  |  | 0.472 |
+| walker |  | 9207 | 90 | docker-compose at examples/customer_service_streaming/docker-compose.yaml |  |  | 0.472 |
+| walker |  | 9251 | 44 | listing of 'examples/customer_service_lite/logs' |  |  | 0.472 |
+| ns | 9284 |  | 246 | customer_service_streaming/configs/general.py | 9.5 |  | 0.466 |
+| walker |  | 9333 | 82 | python decl names surface in tests/mock_client.py |  |  | 0.466 |
+| walker |  | 9333 | 0 | python decl at tests/mock_client.py:8 |  |  | 0.466 |
+| walker |  | 9333 | 0 | python decl at tests/mock_client.py:44 |  |  | 0.466 |
+| walker |  | 9400 | 67 | python method sigs in tests/mock_client.py |  |  | 0.466 |
+| walker |  | 9400 | 0 | python method at tests/mock_client.py:45 |  |  | 0.466 |
+| walker |  | 9400 | 0 | python method at tests/mock_client.py:49 |  |  | 0.466 |
+| walker |  | 9400 | 0 | python method at tests/mock_client.py:56 |  |  | 0.466 |
+| walker |  | 9400 | 0 | python method at tests/mock_client.py:63 |  |  | 0.466 |
+| walker |  | 9416 | 16 | python method body at tests/mock_client.py:49 body 54 |  |  | 0.466 |
+| walker |  | 9432 | 16 | python method body at tests/mock_client.py:56 body 61 |  |  | 0.466 |
+| ns | 9439 |  | 155 | customer_service_streaming/configs/swarm_tasks.json | 9.6 |  | 0.462 |
+| walker |  | 9449 | 17 | python method body at tests/mock_client.py:63 body 64 |  |  | 0.462 |
+| walker |  | 9473 | 24 | python test names surface in tests/test_util.py |  |  | 0.462 |
+| walker |  | 9478 | 5 | listing of 'examples/customer_service_streaming/logs' |  |  | 0.462 |
+| walker |  | 9501 | 23 | python decl names surface in examples/customer_service_streaming/src/utils.py |  |  | 0.462 |
+| walker |  | 9501 | 0 | python decl at examples/customer_service_streaming/src/utils.py:39 |  |  | 0.462 |
+| walker |  | 9514 | 13 | python decl body at examples/customer_service_streaming/src/utils.py:39 body 40 |  |  | 0.462 |
+| walker |  | 9525 | 11 | python decl names surface in examples/customer_service_streaming/src/swarm/engines/engine.py |  |  | 0.462 |
+| walker |  | 9525 | 0 | python decl at examples/customer_service_streaming/src/swarm/engines/engine.py:2 |  |  | 0.462 |
+| walker |  | 9540 | 15 | python method sigs in examples/customer_service_streaming/src/swarm/engines/engine.py |  |  | 0.462 |
+| walker |  | 9540 | 0 | python method at examples/customer_service_streaming/src/swarm/engines/engine.py:3 |  |  | 0.462 |
+| ns | 9572 |  | 133 | customer_service_streaming assistant.json sample | 9.7 |  | 0.458 |
+| walker |  | 9580 | 40 | python method doc at tests/mock_client.py:49 |  |  | 0.458 |
+| walker |  | 9603 | 23 | python method body at tests/mock_client.py:45 body 46 |  |  | 0.458 |
+| walker |  | 9739 | 136 | SECURITY.md section #0 |  |  | 0.465 |
+| ns | 9765 |  | 193 | local_engine.py — LocalEngine method locations | 9.8 |  | 0.460 |
+| walker |  | 9794 | 55 | listing of 'examples/customer_service/logs' |  |  | 0.460 |
+| walker |  | 9806 | 12 | python decl names surface in examples/customer_service_streaming/src/swarm/engines/local_engine.py |  |  | 0.460 |
+| walker |  | 9806 | 0 | python decl at examples/customer_service_streaming/src/swarm/engines/local_engine.py:14 |  |  | 0.460 |
+| ns | 9870 |  | 105 | customer_service/ + customer_service_lite/ listings | 10.1 |  | 0.467 |
+| ns | 9881 |  | 11 | tests/test_runs/ listing | 10.2 |  | 0.467 |
+| ns | 9995 |  | 114 | Sample session log content | 10.3 |  | 0.467 |

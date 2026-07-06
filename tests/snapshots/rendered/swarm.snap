@@ -170,9 +170,6 @@ examples/
                 assistants.py
                 conversation.py
                 engines/
-                    assistants_engine.py
-                    engine.py
-                    local_engine.py
                 swarm.py
                 tool.py
             tasks/
@@ -206,42 +203,40 @@ examples/
         evals.py
         run.py
 logs/
-    session_20240402-112114.json
-    session_20240402-112443.json
-    session_20240402-112456.json
-    session_20240402-112501.json
-    session_20240402-113222.json
-    session_20240402-113415.json
-    session_20240425-135655.json
-    session_20240425-135657.json
-    session_20240425-135728.json
-    session_20240425-140427.json
-    session_20240425-140502.json
-    session_20240425-140516.json
-    session_20240425-140553.json
-    session_20240425-141416.json
-    session_20240425-141509.json
-    session_20240425-141709.json
-    session_20240425-145129.json
-    session_20240425-145324.json
-    session_20240425-145907.json
-    session_20240425-145930.json
-    session_20240425-150004.json
-    session_20240425-150040.json
-    session_20240425-155814.json
-    session_20240425-172809.json
-    session_20240425-211732.json
-    session_20240425-211813.json
-    session_20240425-211942.json
-    session_20240425-212341.json
-    session_20240425-212431.json
-    session_20240425-212748.json
-    session_20240425-213023.json
 pyproject.toml
        1→[build-system]
        2→requires = ["setuptools"]
        3→build-backend = "setuptools.build_meta"
 setup.cfg
+       1→[metadata]
+       2→name = swarm
+       3→version = 0.1.0
+       4→author = OpenAI Solutions
+       5→description = A lightweight, stateless multi-agent orchestration framework.
+       6→long_description = file: README.md
+       7→long_description_content_type = text/markdown
+       8→license = MIT
+       9→
+      10→[options]
+      11→packages = find:
+      12→zip_safe = True
+      13→include_package_data = True
+      14→install_requires =
+      15→    numpy
+      16→    openai>=1.33.0
+      17→    pytest
+      18→    requests
+      19→    tqdm
+      20→    pre-commit
+      21→    instructor
+      22→python_requires = >=3.10
+      23→
+      24→[tool.autopep8]
+      25→max_line_length = 120
+      26→ignore = E501,W6
+      27→in-place = true
+      28→recursive = true
+      29→aggressive = 3
 swarm/
     __init__.py
            1→from .core import Swarm
@@ -287,16 +282,6 @@ swarm/
          148→    ):
         …
          231→    def run(
-         232→        self,
-         233→        agent: Agent,
-         234→        messages: List,
-         235→        context_variables: dict = {},
-         236→        model_override: str = None,
-         237→        stream: bool = False,
-         238→        debug: bool = False,
-         239→        max_turns: int = float("inf"),
-         240→        execute_tools: bool = True,
-         241→    ) -> Response:
         …
     repl/
         __init__.py

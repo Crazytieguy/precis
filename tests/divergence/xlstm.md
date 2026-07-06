@@ -341,50 +341,42 @@ Score(3000)=0.499 I=0.804 C=0.310 ns_rows≤3K=18/68 (reached=6 partial=0 missin
 | ns | 8532 |  | 117 | xLSTMLarge.forward + mLSTMLayer.forward - soft_cap gate/logit capping | 8.2 | 2.13 | 0.403 |
 | ns | 8568 |  | 36 | components.py - soft_cap formula | 8.3 | 2.13 | 0.402 |
 | walker |  | 8576 | 115 | python decl at xlstm/xlstm_large/from_pretrained.py:9 |  |  | 0.402 |
-| walker |  | 8659 | 83 | python decl names surface in xlstm/components/feedforward.py |  |  | 0.412 |
-| walker |  | 8659 | 0 | python decl at xlstm/components/feedforward.py:22 |  |  | 0.412 |
-| walker |  | 8659 | 0 | python decl at xlstm/components/feedforward.py:49 |  |  | 0.412 |
-| walker |  | 8659 | 0 | python decl at xlstm/components/feedforward.py:90 |  |  | 0.412 |
-| walker |  | 8673 | 14 | python decl at xlstm/components/feedforward.py:31 |  |  | 0.416 |
-| walker |  | 8685 | 12 | python class body at xlstm/components/feedforward.py:49 |  |  | 0.416 |
-| walker |  | 8751 | 66 | python method sigs in xlstm/components/feedforward.py |  |  | 0.424 |
-| walker |  | 8751 | 0 | python method at xlstm/components/feedforward.py:42 |  |  | 0.424 |
-| walker |  | 8751 | 0 | python method at xlstm/components/feedforward.py:52 |  |  | 0.424 |
-| walker |  | 8751 | 0 | python method at xlstm/components/feedforward.py:72 |  |  | 0.424 |
-| walker |  | 8751 | 0 | python method at xlstm/components/feedforward.py:77 |  |  | 0.424 |
-| ns | 8826 |  | 258 | from_pretrained.py - sharded safetensors loading + forced single weight_mode | 8.4 | 2.14 | 0.417 |
-| walker |  | 8857 | 106 | python class body at xlstm/components/feedforward.py:31 |  |  | 0.417 |
-| walker |  | 8909 | 52 | python decl body at xlstm/components/feedforward.py:90 body 91 |  |  | 0.417 |
-| ns | 8936 |  | 110 | experiments/ + data/formal_language/{,tasks}/ directory listings | 9.1 |  | 0.438 |
-| walker |  | 8986 | 77 | python imports in xlstm/utils.py |  |  | 0.438 |
-| ns | 9029 |  | 93 | main.py - CLI entry point + dataset registry | 9.2 |  | 0.437 |
-| walker |  | 9147 | 161 | python class body at xlstm/blocks/mlstm/layer.py:18 |  |  | 0.437 |
-| walker |  | 9203 | 56 | python method at xlstm/blocks/slstm/layer.py:92 |  |  | 0.446 |
-| ns | 9209 |  | 180 | lr_scheduler.py - LinearWarmupCosineAnnealing.compute_lr formula | 9.3 |  | 0.442 |
-| walker |  | 9309 | 106 | python class body at xlstm/blocks/slstm/layer.py:18 |  |  | 0.442 |
-| ns | 9331 |  | 122 | FormLangDataset.__getitem__ - mask-based causal LM framing | 9.4 |  | 0.439 |
-| ns | 9379 |  | 48 | tasks/{parity,cycle_navigation,even_pairs,modular_arithmetic}.py - function locations | 9.5 |  | 0.443 |
-| walker |  | 9398 | 89 | python decl names surface in xlstm/components/init.py |  |  | 0.449 |
-| walker |  | 9398 | 0 | python decl at xlstm/components/init.py:8 |  |  | 0.449 |
-| walker |  | 9398 | 0 | python decl at xlstm/components/init.py:18 |  |  | 0.449 |
-| walker |  | 9398 | 0 | python decl at xlstm/components/init.py:28 |  |  | 0.449 |
-| walker |  | 9412 | 14 | python decl doc at xlstm/components/init.py:8 |  |  | 0.449 |
-| walker |  | 9444 | 32 | python decl doc at xlstm/components/init.py:28 |  |  | 0.449 |
-| walker |  | 9538 | 94 | python decl doc at xlstm/components/init.py:18 |  |  | 0.449 |
-| ns | 9553 |  | 174 | parity_xlstm{01,10,11}.yaml - the mLSTM-only / sLSTM-only / mixed variants | 9.6 |  | 0.444 |
-| walker |  | 9584 | 46 | python method body at xlstm/xlstm_block_stack.py:111 body 112 |  |  | 0.444 |
-| ns | 9606 |  | 53 | tests/ directory listing | 10.1 |  | 0.450 |
-| walker |  | 9630 | 46 | python imports in xlstm/components/init.py |  |  | 0.450 |
-| ns | 9653 |  | 47 | conftest.py - CUDA-required skip-all guard | 10.2 |  | 0.448 |
-| walker |  | 9676 | 46 | python imports in xlstm/components/util.py |  |  | 0.448 |
-| walker |  | 9774 | 98 | python class body at xlstm/blocks/slstm/block.py:12 |  |  | 0.448 |
-| ns | 9788 |  | 135 | Test-function locations across the pytest suite | 10.3 |  | 0.445 |
-| walker |  | 9830 | 56 | listing of 'xlstm/blocks/slstm/src/cuda' |  |  | 0.448 |
-| walker |  | 9842 | 12 | c decl names surface in xlstm/blocks/slstm/src/cuda/slstm.h |  |  | 0.448 |
-| walker |  | 9842 | 0 | c decl at xlstm/blocks/slstm/src/cuda/slstm.h:44 |  |  | 0.448 |
-| walker |  | 9855 | 13 | c includes in xlstm/blocks/slstm/src/cuda/slstm.h |  |  | 0.448 |
-| ns | 9864 |  | 76 | res/ + notebooks/ directory listings | 11.1 |  | 0.455 |
-| ns | 9872 |  | 8 | .github/workflows/ - no test/lint CI, only CLA + repo-sync | 11.2 |  | 0.456 |
-| ns | 9887 |  | 15 | LICENSE header | 11.3 |  | 0.456 |
-| ns | 9961 |  | 74 | pytest.ini - full | 11.4 |  | 0.454 |
-| ns | 9996 |  | 35 | README - Citation BibTeX keys | 11.5 |  | 0.453 |
+| ns | 8826 |  | 258 | from_pretrained.py - sharded safetensors loading + forced single weight_mode | 8.4 | 2.14 | 0.396 |
+| ns | 8936 |  | 110 | experiments/ + data/formal_language/{,tasks}/ directory listings | 9.1 |  | 0.418 |
+| ns | 9029 |  | 93 | main.py - CLI entry point + dataset registry | 9.2 |  | 0.417 |
+| walker |  | 9103 | 527 | plaintext config setup.cfg |  |  | 0.417 |
+| walker |  | 9186 | 83 | python decl names surface in xlstm/components/feedforward.py |  |  | 0.426 |
+| walker |  | 9186 | 0 | python decl at xlstm/components/feedforward.py:22 |  |  | 0.426 |
+| walker |  | 9186 | 0 | python decl at xlstm/components/feedforward.py:49 |  |  | 0.426 |
+| walker |  | 9186 | 0 | python decl at xlstm/components/feedforward.py:90 |  |  | 0.426 |
+| walker |  | 9200 | 14 | python decl at xlstm/components/feedforward.py:31 |  |  | 0.429 |
+| ns | 9209 |  | 180 | lr_scheduler.py - LinearWarmupCosineAnnealing.compute_lr formula | 9.3 |  | 0.426 |
+| walker |  | 9212 | 12 | python class body at xlstm/components/feedforward.py:49 |  |  | 0.426 |
+| walker |  | 9278 | 66 | python method sigs in xlstm/components/feedforward.py |  |  | 0.433 |
+| walker |  | 9278 | 0 | python method at xlstm/components/feedforward.py:42 |  |  | 0.433 |
+| walker |  | 9278 | 0 | python method at xlstm/components/feedforward.py:52 |  |  | 0.433 |
+| walker |  | 9278 | 0 | python method at xlstm/components/feedforward.py:72 |  |  | 0.433 |
+| walker |  | 9278 | 0 | python method at xlstm/components/feedforward.py:77 |  |  | 0.433 |
+| ns | 9331 |  | 122 | FormLangDataset.__getitem__ - mask-based causal LM framing | 9.4 |  | 0.430 |
+| ns | 9379 |  | 48 | tasks/{parity,cycle_navigation,even_pairs,modular_arithmetic}.py - function locations | 9.5 |  | 0.434 |
+| walker |  | 9384 | 106 | python class body at xlstm/components/feedforward.py:31 |  |  | 0.434 |
+| walker |  | 9436 | 52 | python decl body at xlstm/components/feedforward.py:90 body 91 |  |  | 0.434 |
+| walker |  | 9513 | 77 | python imports in xlstm/utils.py |  |  | 0.434 |
+| ns | 9553 |  | 174 | parity_xlstm{01,10,11}.yaml - the mLSTM-only / sLSTM-only / mixed variants | 9.6 |  | 0.429 |
+| ns | 9606 |  | 53 | tests/ directory listing | 10.1 |  | 0.435 |
+| ns | 9653 |  | 47 | conftest.py - CUDA-required skip-all guard | 10.2 |  | 0.433 |
+| walker |  | 9674 | 161 | python class body at xlstm/blocks/mlstm/layer.py:18 |  |  | 0.433 |
+| walker |  | 9730 | 56 | python method at xlstm/blocks/slstm/layer.py:92 |  |  | 0.442 |
+| ns | 9788 |  | 135 | Test-function locations across the pytest suite | 10.3 |  | 0.439 |
+| walker |  | 9836 | 106 | python class body at xlstm/blocks/slstm/layer.py:18 |  |  | 0.439 |
+| ns | 9864 |  | 76 | res/ + notebooks/ directory listings | 11.1 |  | 0.445 |
+| ns | 9872 |  | 8 | .github/workflows/ - no test/lint CI, only CLA + repo-sync | 11.2 |  | 0.447 |
+| ns | 9887 |  | 15 | LICENSE header | 11.3 |  | 0.446 |
+| walker |  | 9925 | 89 | python decl names surface in xlstm/components/init.py |  |  | 0.452 |
+| walker |  | 9925 | 0 | python decl at xlstm/components/init.py:8 |  |  | 0.452 |
+| walker |  | 9925 | 0 | python decl at xlstm/components/init.py:18 |  |  | 0.452 |
+| walker |  | 9925 | 0 | python decl at xlstm/components/init.py:28 |  |  | 0.452 |
+| walker |  | 9939 | 14 | python decl doc at xlstm/components/init.py:8 |  |  | 0.452 |
+| ns | 9961 |  | 74 | pytest.ini - full | 11.4 |  | 0.450 |
+| walker |  | 9971 | 32 | python decl doc at xlstm/components/init.py:28 |  |  | 0.450 |
+| ns | 9996 |  | 35 | README - Citation BibTeX keys | 11.5 |  | 0.449 |

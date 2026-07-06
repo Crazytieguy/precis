@@ -97,6 +97,10 @@ docs/
     examples/
     index.rst
     requirements.txt
+           1→# Higher bound for safety, can bump it if builds fine with new major versions.
+           2→sphinx>=6,<8
+           3→pygments
+           4→towncrier
 downstream/
     .gitignore
     README.md
@@ -166,22 +170,7 @@ src/
             …
               56→class HookimplOpts(TypedDict):
               57→    """Options for a hook implementation."""
-              59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
-              60→    wrapper: bool
-              61→    #: Whether the hook implementation is an :ref:`old-style wrapper
-              62→    #: <old_style_hookwrappers>`.
-              63→    hookwrapper: bool
-              64→    #: Whether validation against a hook specification is :ref:`optional
-              65→    #: <optionalhook>`.
-              66→    optionalhook: bool
-              67→    #: Whether to try to order this hook implementation :ref:`first
-              68→    #: <callorder>`.
-              69→    tryfirst: bool
-              70→    #: Whether to try to order this hook implementation :ref:`last
-              71→    #: <callorder>`.
-              72→    trylast: bool
-              73→    #: The name of the hook specification to match, see :ref:`specname`.
-              74→    specname: str | None
+            …
               77→@final
               78→class HookspecMarker:
             …

@@ -41,7 +41,6 @@ README.md
       37→peepDB uses a command-based structure for easier and more intuitive use. Here are the main commands with examples:
       39→### 1. Save Your Database Connection Details
     …
-      59→For improved security, consider using environment variables or a configuration file to store sensitive information like passwords.
       61→### 2. List Saved Connections
     …
       74→### 3. View Tables
@@ -136,9 +135,7 @@ docs/
            6→# 📦 Installation
         …
           16→## Requirements
-          17→
-          18→- Python 3.9 or higher
-          19→- pip (Python package installer)
+        …
           21→## System Dependencies
         …
           30→## Verifying the Installation
@@ -266,8 +263,7 @@ peepdb/
               30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
               31→        pass
               33→    def __enter__(self):
-              34→        self.connect()
-              35→        return self
+            …
               37→    def __exit__(self, exc_type, exc_val, exc_tb):
               38→        self.disconnect()
         firebase.py
@@ -313,6 +309,13 @@ project.toml
       51→include = ["peepdb*"]
       52→exclude = ["tests*"]
 requirements.txt
+       1→async-timeout==4.0.3
+    …
+      40→-e git+https://github.com/evangelosmeklis/peepDB.git@4db25b049fce0058fa21e8f95b4b8840a9f3261e#egg=peepdb
+    …
 setup.py
        1→from setuptools import setup, find_packages
+    …
+      16→    install_requires=[
+      17→        "mysql-connector-python>=9.0.0",
     …

@@ -16,6 +16,8 @@
 //!   first line across every top-level class. Decorator-aware.
 //! - [`PythonKey::TestNames`]: in `test_*.py` / `*_test.py` only,
 //!   surface listing of `def test_*` first lines.
+//! - [`PythonKey::SetupManifest`]: in `setup.py` only, the top-level
+//!   `setup(...)` call that carries legacy package metadata.
 //!
 //! Per-decl keys (keyed by start line):
 //! - [`PythonKey::Decl`]: one top-level class / def / non-dunder
@@ -166,6 +168,21 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 predecessor: None,
                 content,
                 value: imports_value(file, ctx),
+            });
+        }
+
+        if let Some((start_line, lines)) = collect_setup_manifest(file, &tree, &source)
+            && let Some(content) = single_file_lines_content(file, &source, lines)
+        {
+            out.push(Batch {
+                key: PythonKey::SetupManifest {
+                    file: file.clone(),
+                    start_line,
+                }
+                .into(),
+                predecessor: None,
+                content,
+                value: setup_manifest_value(file, ctx),
             });
         }
 
@@ -374,6 +391,81 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         }
     }
     out
+}
+
+fn collect_setup_manifest(file: &Path, tree: &Tree, source: &str) -> Option<(usize, FileLines)> {
+    if file.file_name().and_then(|n| n.to_str()) != Some("setup.py") {
+        return None;
+    }
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "expression_statement" {
+            continue;
+        }
+        let Some(call) = first_named_child_of_kind(child, "call") else {
+            continue;
+        };
+        let Some(function) = call.child_by_field_name("function") else {
+            continue;
+        };
+        if function.kind() != "identifier"
+            || source[function.start_byte()..function.end_byte()].trim() != "setup"
+        {
+            continue;
+        }
+        if function.start_position().row != call.start_position().row {
+            continue;
+        }
+        let start_line = call.start_position().row + 1;
+        if start_line == 0 || call.end_position().row < call.start_position().row {
+            continue;
+        }
+        let end_line = call.end_position().row + 1;
+        let lines = setup_install_requires_lines(source, start_line, end_line)?;
+        return Some((lines.full[0], lines));
+    }
+    None
+}
+
+fn setup_install_requires_lines(
+    source: &str,
+    start_line: usize,
+    end_line: usize,
+) -> Option<FileLines> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let mut full = Vec::new();
+    let mut depth = 0isize;
+    let mut collecting = false;
+    for line_no in start_line..=end_line {
+        let line = src_lines.get(line_no - 1).copied().unwrap_or("");
+        let trimmed = line.trim_start();
+        if !collecting
+            && !(trimmed.starts_with("install_requires")
+                && (trimmed.contains('=') || trimmed.ends_with(':')))
+        {
+            continue;
+        }
+        collecting = true;
+        full.push(line_no);
+        for ch in line.chars() {
+            match ch {
+                '[' | '(' | '{' => depth += 1,
+                ']' | ')' | '}' => depth -= 1,
+                _ => {}
+            }
+        }
+        if full.len() > 1 && depth <= 1 && trimmed.ends_with(',') {
+            break;
+        }
+    }
+    (!full.is_empty()).then_some(FileLines::new(full))
+}
+
+fn first_named_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
+    let mut cursor = node.walk();
+    node.children(&mut cursor)
+        .find(|child| child.is_named() && child.kind() == kind)
 }
 
 fn emit_methods(
@@ -1282,6 +1374,10 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
 
 fn imports_chunk_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
     imports_value(file, ctx) * reexport_import_chunk_factor(chunk_index, chunk_count)
+}
+
+fn setup_manifest_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.45, 0.55, 0.45, python_depth_factor(file, ctx))
 }
 
 fn is_init_py(file: &Path) -> bool {

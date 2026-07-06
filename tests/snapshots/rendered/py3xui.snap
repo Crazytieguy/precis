@@ -73,6 +73,8 @@ dev/
     push.sh
     pydoc.sh
     requirements.txt
+           1→# Only for development:
+        …
 py3xui/
     __init__.py
            1→# pylint: disable=missing-module-docstring
@@ -108,7 +110,6 @@ py3xui/
               16→    """Stores the fields returned by the XUI API for parsing."""
             …
               28→class BaseApi:
-              29→    """Base class for the XUI API. Contains common methods for making requests.
             …
         api_client.py
             …
