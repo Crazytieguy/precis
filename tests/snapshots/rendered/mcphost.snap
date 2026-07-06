@@ -125,15 +125,6 @@ internal/
     agent/
         agent.go
         factory.go
-            …
-              15→type SpinnerFunc func(message string, fn func() error) error
-            …
-              19→type AgentCreationOptions struct {
-            …
-              43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
-            …
-              76→func ParseModelName(modelString string) (provider, model string) {
-            …
         streaming.go
             …
               19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
@@ -327,7 +318,14 @@ sdk/
          124→### Methods
         …
          136→## Environment Variables
-        …
+         137→
+         138→All CLI environment variables work with the SDK:
+         139→
+         140→- `MCPHOST_MODEL` - Override model
+         141→- `ANTHROPIC_API_KEY` - Anthropic API key
+         142→- `OPENAI_API_KEY` - OpenAI API key
+         143→- `GEMINI_API_KEY` - Google API key
+         144→- etc.
          146→## License
          147→
          148→Same as MCPHost CLI

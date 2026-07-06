@@ -45,9 +45,26 @@ README.md
     …
       74→### 3. View Tables
     …
+      81→View a specific table:
+      82→```bash
+      83→peepdb view <connection_name> --table <table_name>
+      84→```
+      86→Example:
+      87→```bash
+      88→peepdb view myapp_db --table users
+      89→```
+    …
      103→### 4. Pagination
     …
      115→### 5. Choose Output Format
+     117→Get output in JSON format:
+     118→```bash
+     119→peepdb view <connection_name> --format json
+     120→```
+     122→Example:
+     123→```bash
+     124→peepdb view myapp_db --table users --format json
+     125→```
     …
      142→### 6. Remove Saved Connections
     …

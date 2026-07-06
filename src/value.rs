@@ -556,11 +556,28 @@ pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 pub const ORIENTATION_TIER_WINDOW: usize = 300;
 pub const ORIENTATION_TIER_BOOST: f64 = 1.4;
 
+/// Late-budget tier for operationally dense prose sections. These
+/// batches keep their normal ratio while the protected early budget is
+/// filling, then compete with a multiplier once compact source rosters
+/// have had first chance to schedule.
+pub const PROSE_MASS_WINDOW: usize = 1500;
+pub const PROSE_MASS_BOOST: f64 = 1.3;
+
 /// Ratio multiplier for the early-budget orientation tier. `1.0` once the
 /// window is past or for non-orientation batches.
 pub fn orientation_tier_multiplier(consumed_tokens: usize, is_orientation: bool) -> f64 {
     if is_orientation && consumed_tokens < ORIENTATION_TIER_WINDOW {
         ORIENTATION_TIER_BOOST
+    } else {
+        1.0
+    }
+}
+
+/// Ratio multiplier for deferred operational prose after the early
+/// source-roster window.
+pub fn prose_mass_tier_multiplier(consumed_tokens: usize, is_deferred_mass_prose: bool) -> f64 {
+    if is_deferred_mass_prose && consumed_tokens >= PROSE_MASS_WINDOW {
+        PROSE_MASS_BOOST
     } else {
         1.0
     }

@@ -82,56 +82,56 @@ Score(3000)=0.611 I=0.720 C=0.518 ns_rows≤3K=29/43 (reached=14 partial=2 missi
 | ns | 2816 |  | 310 | README.md heading roster (all 24 sections) | 2.10 |  | 0.587 |
 | walker |  | 2851 | 56 | listing of 'test/ranges' |  |  | 0.611 |
 | walker |  | 2901 | 50 | README.md section #30 |  |  | 0.611 |
-| walker |  | 2956 | 55 | README.md section #25 |  |  | 0.611 |
-| walker |  | 3040 | 84 | listing of 'test/fixtures' |  |  | 0.636 |
-| walker |  | 3050 | 10 | CHANGELOG.md section #0 |  |  | 0.636 |
-| ns | 3090 |  | 274 | README: Prerelease Tags rule | 3.1 | 2.10 | 0.622 |
-| walker |  | 3120 | 70 | README.md section #32 |  |  | 0.622 |
-| walker |  | 3191 | 71 | README.md section #28 |  |  | 0.622 |
-| walker |  | 3268 | 77 | README.md section #6 |  |  | 0.626 |
-| walker |  | 3344 | 76 | README.md section #27 |  |  | 0.626 |
+| walker |  | 2974 | 73 | README.md section #57 |  |  | 0.611 |
+| walker |  | 3029 | 55 | README.md section #25 |  |  | 0.611 |
+| ns | 3090 |  | 274 | README: Prerelease Tags rule | 3.1 | 2.10 | 0.597 |
+| walker |  | 3113 | 84 | listing of 'test/fixtures' |  |  | 0.622 |
+| walker |  | 3123 | 10 | CHANGELOG.md section #0 |  |  | 0.622 |
+| walker |  | 3193 | 70 | README.md section #32 |  |  | 0.622 |
+| walker |  | 3264 | 71 | README.md section #28 |  |  | 0.622 |
+| walker |  | 3341 | 77 | README.md section #6 |  |  | 0.626 |
 | ns | 3406 |  | 316 | README: Range Grammar (BNF) | 3.2 | 2.10 | 0.604 |
-| walker |  | 3426 | 82 | README.md section #8 |  |  | 0.604 |
-| walker |  | 3511 | 85 | README.md section #51 |  |  | 0.604 |
+| walker |  | 3417 | 76 | README.md section #27 |  |  | 0.604 |
+| walker |  | 3499 | 82 | README.md section #8 |  |  | 0.604 |
+| walker |  | 3584 | 85 | README.md section #51 |  |  | 0.604 |
 | ns | 3831 |  | 425 | README: Versions + Ranges core vocabulary | 3.3 | 2.10 | 0.584 |
-| walker |  | 4087 | 576 | imports in index.js |  |  | 0.584 |
 | ns | 4090 |  | 259 | ranges/ trivial bundle part A: gtr, ltr, intersects | 3.4 |  | 0.568 |
-| walker |  | 4101 | 14 | export names surface in preload.js |  |  | 0.568 |
-| walker |  | 4122 | 21 | export names surface in map.js |  |  | 0.568 |
-| walker |  | 4128 | 6 | imports in map.js |  |  | 0.568 |
-| walker |  | 4136 | 8 | imports in preload.js |  |  | 0.568 |
-| walker |  | 4227 | 91 | README.md section #10 |  |  | 0.568 |
-| walker |  | 4313 | 86 | README.md section #42 |  |  | 0.568 |
+| walker |  | 4160 | 576 | imports in index.js |  |  | 0.568 |
+| walker |  | 4174 | 14 | export names surface in preload.js |  |  | 0.568 |
+| walker |  | 4195 | 21 | export names surface in map.js |  |  | 0.568 |
+| walker |  | 4201 | 6 | imports in map.js |  |  | 0.568 |
+| walker |  | 4209 | 8 | imports in preload.js |  |  | 0.568 |
+| walker |  | 4300 | 91 | README.md section #10 |  |  | 0.568 |
 | ns | 4338 |  | 248 | ranges/ trivial bundle part B: to-comparators, valid | 3.5 |  | 0.552 |
-| walker |  | 4389 | 76 | README.md section #33 |  |  | 0.552 |
+| walker |  | 4386 | 86 | README.md section #42 |  |  | 0.552 |
 | ns | 4454 |  | 116 | functions/ comparison-wrapper pattern: gt, rcompare | 3.6 |  | 0.545 |
-| walker |  | 4462 | 73 | README.md section #57 |  |  | 0.545 |
+| walker |  | 4462 | 76 | README.md section #33 |  |  | 0.545 |
 | walker |  | 4574 | 112 | README.md section #9 |  |  | 0.545 |
-| walker |  | 4707 | 133 | README.md section #50 |  |  | 0.545 |
+| walker |  | 4726 | 152 | README.md section #56 |  |  | 0.545 |
 | ns | 4762 |  | 308 | functions/ compare-family + sort: compare, compare-loose, compare-build, sort | 3.7 |  | 0.528 |
-| walker |  | 4862 | 155 | README.md section #44 |  |  | 0.528 |
-| walker |  | 5032 | 170 | README.md section #46 |  |  | 0.528 |
-| walker |  | 5217 | 185 | README.md section #7 |  |  | 0.544 |
-| walker |  | 5245 | 28 | listing of '.github' |  |  | 0.556 |
-| walker |  | 5286 | 41 | listing of '.github/workflows' |  |  | 0.569 |
-| ns | 5496 |  | 734 | functions/ trivial bundle: satisfies, valid, clean, prerelease, parse, inc | 3.8 |  | 0.525 |
-| walker |  | 5884 | 598 | README.md section #5 |  |  | 0.556 |
-| ns | 6061 |  | 565 | README: CLI options reference | 3.9 |  | 0.529 |
-| walker |  | 6234 | 350 | json config release-please-config.json |  |  | 0.529 |
-| walker |  | 6386 | 152 | README.md section #56 |  |  | 0.529 |
-| walker |  | 6608 | 222 | README.md section #54 |  |  | 0.529 |
-| ns | 6746 |  | 685 | ranges/subset.js: algorithm specification (header comment) | 3.10 |  | 0.513 |
-| ns | 7303 |  | 557 | ranges/max-satisfying.js + min-satisfying.js | 3.11 |  | 0.490 |
-| walker |  | 7356 | 748 | README.md section #20 |  |  | 0.490 |
-| walker |  | 7475 | 119 | headings outline in CONTRIBUTING.md |  |  | 0.490 |
-| walker |  | 7475 | 0 | CONTRIBUTING.md section #0 |  |  | 0.490 |
-| walker |  | 7760 | 285 | README.md section #15 |  |  | 0.493 |
-| ns | 7857 |  | 554 | ranges/simplify.js | 3.12 |  | 0.474 |
-| walker |  | 8535 | 775 | README.md section #58 |  |  | 0.474 |
-| ns | 8733 |  | 876 | SemVer: constructor + format + toString | 4.1 | 2.1 | 0.447 |
-| walker |  | 8828 | 293 | README.md section #49 |  |  | 0.447 |
-| walker |  | 9144 | 316 | README.md section #11 |  |  | 0.449 |
-| walker |  | 9470 | 326 | README.md section #12 |  |  | 0.451 |
+| walker |  | 4859 | 133 | README.md section #50 |  |  | 0.528 |
+| walker |  | 5014 | 155 | README.md section #44 |  |  | 0.528 |
+| walker |  | 5330 | 316 | README.md section #11 |  |  | 0.531 |
+| ns | 5496 |  | 734 | functions/ trivial bundle: satisfies, valid, clean, prerelease, parse, inc | 3.8 |  | 0.490 |
+| walker |  | 5500 | 170 | README.md section #46 |  |  | 0.490 |
+| walker |  | 5826 | 326 | README.md section #12 |  |  | 0.492 |
+| walker |  | 6011 | 185 | README.md section #7 |  |  | 0.507 |
+| walker |  | 6039 | 28 | listing of '.github' |  |  | 0.517 |
+| ns | 6061 |  | 565 | README: CLI options reference | 3.9 |  | 0.492 |
+| walker |  | 6080 | 41 | listing of '.github/workflows' |  |  | 0.503 |
+| walker |  | 6678 | 598 | README.md section #5 |  |  | 0.533 |
+| ns | 6746 |  | 685 | ranges/subset.js: algorithm specification (header comment) | 3.10 |  | 0.517 |
+| walker |  | 7028 | 350 | json config release-please-config.json |  |  | 0.517 |
+| walker |  | 7250 | 222 | README.md section #54 |  |  | 0.517 |
+| ns | 7303 |  | 557 | ranges/max-satisfying.js + min-satisfying.js | 3.11 |  | 0.494 |
+| ns | 7857 |  | 554 | ranges/simplify.js | 3.12 |  | 0.476 |
+| walker |  | 7998 | 748 | README.md section #20 |  |  | 0.476 |
+| walker |  | 8117 | 119 | headings outline in CONTRIBUTING.md |  |  | 0.476 |
+| walker |  | 8117 | 0 | CONTRIBUTING.md section #0 |  |  | 0.476 |
+| walker |  | 8402 | 285 | README.md section #15 |  |  | 0.478 |
+| ns | 8733 |  | 876 | SemVer: constructor + format + toString | 4.1 | 2.1 | 0.451 |
+| walker |  | 9177 | 775 | README.md section #58 |  |  | 0.451 |
+| walker |  | 9470 | 293 | README.md section #49 |  |  | 0.451 |
 | ns | 9724 |  | 991 | SemVer: compare / compareMain / comparePre / compareBuild | 4.2 | 2.1 | 0.424 |
 | walker |  | 9806 | 336 | README.md section #16 |  |  | 0.426 |
 | walker |  | 9809 | 3 | listing of 'tap-snapshots/test' |  |  | 0.426 |

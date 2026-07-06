@@ -48,25 +48,25 @@ Score(3000)=0.788 I=0.860 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | walker |  | 2914 | 149 | json config tsconfig.json |  |  | 0.788 |
 | walker |  | 2947 | 33 | README.md section #10 |  |  | 0.788 |
 | walker |  | 3058 | 111 | README.md section #4 |  |  | 0.789 |
-| walker |  | 3093 | 35 | README.md section #6 |  |  | 0.789 |
 | ns | 3096 |  | 301 | index_test.ts: on() - registration and append semantics | 4.4 |  | 0.740 |
-| walker |  | 3373 | 280 | README.md section #2 |  |  | 0.743 |
+| walker |  | 3338 | 280 | README.md section #2 |  |  | 0.743 |
+| walker |  | 3373 | 35 | README.md section #6 |  |  | 0.743 |
 | walker |  | 3428 | 55 | README.md section #16 |  |  | 0.743 |
-| walker |  | 3438 | 10 | listing of '.github' |  |  | 0.752 |
-| walker |  | 3447 | 9 | listing of '.github/workflows' |  |  | 0.767 |
-| ns | 3460 |  | 364 | index_test.ts: on() - case sensitivity, symbols, duplicates | 4.5 |  | 0.724 |
-| walker |  | 3664 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.726 |
-| ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.687 |
-| walker |  | 4032 | 368 | package dependencies in package.json |  |  | 0.690 |
-| walker |  | 4044 | 12 | listing of 'test' |  |  | 0.713 |
-| ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.687 |
-| walker |  | 4143 | 99 | README.md section #14 |  |  | 0.687 |
-| walker |  | 4259 | 116 | README.md section #11 |  |  | 0.687 |
-| walker |  | 4379 | 120 | README.md section #9 |  |  | 0.687 |
-| ns | 4406 |  | 338 | index_test.ts: emit() - dispatch and case sensitivity | 4.8 |  | 0.656 |
-| ns | 4585 |  | 179 | index_test.ts: emit() - wildcard ('*') handler invocation | 4.9 |  | 0.641 |
-| ns | 4787 |  | 202 | test-types-compilation.ts: setup | 4.10 |  | 0.622 |
-| walker |  | 4912 | 533 | README.md section #3 |  |  | 0.626 |
+| ns | 3460 |  | 364 | index_test.ts: on() - case sensitivity, symbols, duplicates | 4.5 |  | 0.701 |
+| ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.663 |
+| walker |  | 3961 | 533 | README.md section #3 |  |  | 0.668 |
+| walker |  | 3971 | 10 | listing of '.github' |  |  | 0.676 |
+| walker |  | 3980 | 9 | listing of '.github/workflows' |  |  | 0.690 |
+| ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.665 |
+| walker |  | 4197 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.667 |
+| ns | 4406 |  | 338 | index_test.ts: emit() - dispatch and case sensitivity | 4.8 |  | 0.637 |
+| walker |  | 4565 | 368 | package dependencies in package.json |  |  | 0.640 |
+| walker |  | 4577 | 12 | listing of 'test' |  |  | 0.661 |
+| ns | 4585 |  | 179 | index_test.ts: emit() - wildcard ('*') handler invocation | 4.9 |  | 0.645 |
+| walker |  | 4676 | 99 | README.md section #14 |  |  | 0.645 |
+| ns | 4787 |  | 202 | test-types-compilation.ts: setup | 4.10 |  | 0.626 |
+| walker |  | 4792 | 116 | README.md section #11 |  |  | 0.626 |
+| walker |  | 4912 | 120 | README.md section #9 |  |  | 0.626 |
 | ns | 4983 |  | 196 | test-types-compilation.ts: on() type inference checks | 4.11 |  | 0.611 |
 | walker |  | 5032 | 120 | YAML config at .github/workflows/compressed-size.yml |  |  | 0.612 |
 | ns | 5179 |  | 196 | test-types-compilation.ts: off() type inference checks | 4.12 |  | 0.597 |

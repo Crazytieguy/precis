@@ -45,6 +45,7 @@
 //!
 //! Parse trees are cached in [`WalkCtx`].
 
+use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -380,12 +381,16 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             })
             .collect();
         // chunk_count == 1: single batch covers all decls.
+        let all_name_lines: HashSet<usize> = decls
+            .iter()
+            .flat_map(|(_, info)| info.name_lines.iter().copied())
+            .collect();
         let names_lines_by_chunk: Vec<FileLines> = if chunk_count == 1 {
-            vec![collect_decl_names_from(&decls)]
+            vec![collect_decl_names_from(&decls, &all_name_lines)]
         } else {
             decls
                 .chunks(GO_DECL_NAMES_CHUNK_SIZE)
-                .map(collect_decl_names_from)
+                .map(|chunk| collect_decl_names_from(chunk, &all_name_lines))
                 .collect()
         };
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
@@ -1093,13 +1098,19 @@ fn truncate_at_first_blank_row(lines: FileLines, source: &str) -> FileLines {
 
 /// One full + ellipsis pair per name line so a grouped block surfaces
 /// every inner spec, not just the `type (` opener.
-fn collect_decl_names_from(decls: &[(Node, DeclInfo)]) -> FileLines {
+fn collect_decl_names_from(
+    decls: &[(Node, DeclInfo)],
+    all_name_lines: &HashSet<usize>,
+) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for (_, info) in decls {
         for &line in &info.name_lines {
             full.push(line);
-            ellipses.push(line + 1);
+            let ellipsis_line = line + 1;
+            if !all_name_lines.contains(&ellipsis_line) {
+                ellipses.push(ellipsis_line);
+            }
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
@@ -1262,7 +1273,11 @@ const (
         let (source, tree) = parse(src);
         let decls = find_decls(&tree, &source);
         assert_eq!(decls.len(), 2);
-        let names = collect_decl_names_from(&decls);
+        let all_name_lines: HashSet<usize> = decls
+            .iter()
+            .flat_map(|(_, info)| info.name_lines.iter().copied())
+            .collect();
+        let names = collect_decl_names_from(&decls, &all_name_lines);
         // Inner spec lines: Public@4, Other@5, Format12Hour@9, Format24Hour@10.
         assert_eq!(names.full, vec![4, 5, 9, 10]);
     }

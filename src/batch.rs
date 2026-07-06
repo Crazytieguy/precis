@@ -78,6 +78,9 @@ macro_rules! impl_batchkey {
             fn is_orientation(&self) -> bool {
                 match self { $(BatchKey::$variant(k) => InnerKey::is_orientation(k),)* }
             }
+            fn is_deferred_mass_prose(&self) -> bool {
+                match self { $(BatchKey::$variant(k) => InnerKey::is_deferred_mass_prose(k),)* }
+            }
         }
     };
 }
@@ -110,6 +113,9 @@ trait InnerKey {
         0.0
     }
     fn is_orientation(&self) -> bool {
+        false
+    }
+    fn is_deferred_mass_prose(&self) -> bool {
         false
     }
 }
@@ -178,10 +184,13 @@ pub enum MarkdownKey {
     /// `reference_shaped` marks README ranges dominated by list / table
     /// / fence rows — they keep the default concavity instead of the
     /// steeper prose exponent.
+    /// `deferred_mass_prose` marks operationally dense prose that only
+    /// competes in the late scheduler window.
     Section {
         file: PathBuf,
         section_index: usize,
         reference_shaped: bool,
+        deferred_mass_prose: bool,
     },
 }
 
@@ -547,6 +556,12 @@ pub trait WalkerKey:
     fn is_orientation(&self) -> bool {
         false
     }
+
+    /// True for prose batches that should only receive their ratio
+    /// lift after the protected early source window.
+    fn is_deferred_mass_prose(&self) -> bool {
+        false
+    }
 }
 
 impl InnerKey for FsKey {
@@ -647,6 +662,16 @@ impl InnerKey for MarkdownKey {
             } if *section_index >= 1 && !reference_shaped => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
+    }
+
+    fn is_deferred_mass_prose(&self) -> bool {
+        matches!(
+            self,
+            MarkdownKey::Section {
+                deferred_mass_prose: true,
+                ..
+            }
+        )
     }
 }
 

@@ -118,28 +118,28 @@ Score(3000)=0.438 I=0.753 C=0.255 ns_rows≤3K=21/48 (reached=5 partial=2 missin
 | walker |  | 4735 | 13 | c decl doc at include/globals.h:106 |  |  | 0.549 |
 | ns | 4832 |  | 145 | globals.h: platform bootstrap (#define/#ifdef) | 3.6 |  | 0.547 |
 | walker |  | 4876 | 141 | c decl at include/globals.h:240 |  |  | 0.590 |
-| walker |  | 4890 | 14 | c decl doc at src/structures.c:16 |  |  | 0.590 |
-| walker |  | 4942 | 52 | c decl doc at include/globals.h:103 |  |  | 0.594 |
-| ns | 5405 |  | 573 | packets.h: every C->S / S->C packet function name | 4.1 |  | 0.562 |
-| walker |  | 5471 | 529 | plaintext config build.sh |  |  | 0.562 |
-| walker |  | 5525 | 54 | c decl doc at include/globals.h:71 |  |  | 0.578 |
-| walker |  | 5565 | 40 | README.md section #6 |  |  | 0.579 |
-| walker |  | 5606 | 41 | README.md section #7 |  |  | 0.579 |
-| walker |  | 5622 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.579 |
-| ns | 5804 |  | 399 | procedures.h: every core game-logic function name | 4.2 |  | 0.609 |
-| ns | 6196 |  | 392 | tools.h: byte/network primitives + inline helpers | 4.3 |  | 0.619 |
-| ns | 6296 |  | 100 | varnum.h: VarInt protocol primitives | 4.4 |  | 0.623 |
-| walker |  | 6374 | 752 | c decl names surface #1 in include/packets.h |  |  | 0.690 |
-| walker |  | 6419 | 45 | README.md section #8 |  |  | 0.695 |
-| ns | 6504 |  | 208 | worldgen.h: chunk types + terrain-query API | 4.5 |  | 0.702 |
-| ns | 6700 |  | 196 | serialize.h: disk-sync API, with its no-op fallback | 4.6 |  | 0.706 |
-| ns | 6770 |  | 70 | structures.h + crafting.h: world-structure and crafting API | 4.7 |  | 0.707 |
-| walker |  | 6917 | 498 | c decl at include/globals.h:200 |  |  | 0.770 |
-| walker |  | 7145 | 228 | c decl names surface in src/globals.c |  |  | 0.770 |
-| ns | 7179 |  | 409 | main.c: handlePacket doc comment + signature | 5.1 |  | 0.749 |
-| walker |  | 7192 | 47 | README.md section #9 |  |  | 0.755 |
-| ns | 7512 |  | 333 | main.c: login/configuration handshake dispatch (packet 0x00) | 5.2 |  | 0.735 |
-| walker |  | 7521 | 329 | README.md section #3 |  |  | 0.753 |
+| walker |  | 5205 | 329 | README.md section #3 |  |  | 0.616 |
+| walker |  | 5219 | 14 | c decl doc at src/structures.c:16 |  |  | 0.616 |
+| walker |  | 5271 | 52 | c decl doc at include/globals.h:103 |  |  | 0.620 |
+| ns | 5405 |  | 573 | packets.h: every C->S / S->C packet function name | 4.1 |  | 0.585 |
+| walker |  | 5800 | 529 | plaintext config build.sh |  |  | 0.586 |
+| ns | 5804 |  | 399 | procedures.h: every core game-logic function name | 4.2 |  | 0.616 |
+| walker |  | 5854 | 54 | c decl doc at include/globals.h:71 |  |  | 0.630 |
+| walker |  | 5894 | 40 | README.md section #6 |  |  | 0.630 |
+| walker |  | 5935 | 41 | README.md section #7 |  |  | 0.631 |
+| walker |  | 5951 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.631 |
+| ns | 6196 |  | 392 | tools.h: byte/network primitives + inline helpers | 4.3 |  | 0.640 |
+| ns | 6296 |  | 100 | varnum.h: VarInt protocol primitives | 4.4 |  | 0.644 |
+| ns | 6504 |  | 208 | worldgen.h: chunk types + terrain-query API | 4.5 |  | 0.653 |
+| ns | 6700 |  | 196 | serialize.h: disk-sync API, with its no-op fallback | 4.6 |  | 0.659 |
+| walker |  | 6703 | 752 | c decl names surface #1 in include/packets.h |  |  | 0.721 |
+| walker |  | 6748 | 45 | README.md section #8 |  |  | 0.726 |
+| ns | 6770 |  | 70 | structures.h + crafting.h: world-structure and crafting API | 4.7 |  | 0.727 |
+| ns | 7179 |  | 409 | main.c: handlePacket doc comment + signature | 5.1 |  | 0.707 |
+| walker |  | 7246 | 498 | c decl at include/globals.h:200 |  |  | 0.768 |
+| walker |  | 7474 | 228 | c decl names surface in src/globals.c |  |  | 0.768 |
+| ns | 7512 |  | 333 | main.c: login/configuration handshake dispatch (packet 0x00) | 5.2 |  | 0.748 |
+| walker |  | 7521 | 47 | README.md section #9 |  |  | 0.753 |
 | walker |  | 7582 | 61 | c includes in src/structures.c |  |  | 0.753 |
 | walker |  | 7608 | 26 | imports in build_registries.js |  |  | 0.753 |
 | walker |  | 7713 | 105 | c decl doc at include/globals.h:93 |  |  | 0.760 |

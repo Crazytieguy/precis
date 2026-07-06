@@ -360,6 +360,9 @@ impl<W: Walker> Scheduler<W> {
             ) * crate::value::orientation_tier_multiplier(
                 self.consumed.tokens,
                 entry.key.is_orientation(),
+            ) * crate::value::prose_mass_tier_multiplier(
+                self.consumed.tokens,
+                entry.key.is_deferred_mass_prose(),
             );
             let better = best.as_ref().is_none_or(|(br, b_id, _)| {
                 ratio > *br
@@ -409,6 +412,9 @@ impl<W: Walker> Scheduler<W> {
             ) * crate::value::orientation_tier_multiplier(
                 self.consumed.tokens,
                 entry.key.is_orientation(),
+            ) * crate::value::prose_mass_tier_multiplier(
+                self.consumed.tokens,
+                entry.key.is_deferred_mass_prose(),
             );
             candidates.push((ratio, id));
         }

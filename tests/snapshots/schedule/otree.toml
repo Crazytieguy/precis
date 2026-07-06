@@ -1,7 +1,7 @@
 fixture = "otree"
 budget = 10000
-cumulative_tokens = 9800
-batch_count = 128
+cumulative_tokens = 9923
+batch_count = 129
 
 [[batches]]
 position = 1
@@ -2625,7 +2625,7 @@ kind = "full"
 
 [[batches]]
 position = 103
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 87
 cum_tokens = 5762
@@ -3733,10 +3733,28 @@ kind = "full"
 
 [[batches]]
 position = 119
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #4"
+cost_tokens = 215
+cum_tokens = 8263
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 33
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
 key = 'Rust(PubItemBody { file: "src/parse/syntax.rs", start_line: 201, body_start_line: 202 })'
 descriptor = "pub item body at src/parse/syntax.rs:201 body 202"
 cost_tokens = 102
-cum_tokens = 8150
+cum_tokens = 8365
 
 [batches.content]
 kind = "lines"
@@ -3750,11 +3768,29 @@ end = 213
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #2"
+cost_tokens = 78
+cum_tokens = 8443
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 17
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
 key = 'Rust(MethodSigs { file: "src/ui/popup.rs" })'
 descriptor = "impl method sigs in src/ui/popup.rs"
 cost_tokens = 144
-cum_tokens = 8294
+cum_tokens = 8587
 
 [batches.content]
 kind = "lines"
@@ -3872,11 +3908,11 @@ end = 92
 kind = "ellipsis"
 
 [[batches]]
-position = 121
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
+position = 123
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 104
-cum_tokens = 8398
+cum_tokens = 8691
 
 [batches.content]
 kind = "lines"
@@ -3890,11 +3926,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 122
+position = 124
 key = 'Rust(PubItem { file: "src/ui/app.rs", start_line: 53 })'
 descriptor = "pub item at src/ui/app.rs:53"
 cost_tokens = 279
-cum_tokens = 8677
+cum_tokens = 8970
 
 [batches.content]
 kind = "lines"
@@ -3908,11 +3944,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 123
+position = 125
 key = 'Rust(MethodSigs { file: "src/config/colors.rs" })'
 descriptor = "impl method sigs in src/config/colors.rs"
 cost_tokens = 21
-cum_tokens = 8698
+cum_tokens = 8991
 
 [batches.content]
 kind = "lines"
@@ -3934,11 +3970,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 126
 key = 'Toml(Dependencies { file: "Cargo.toml" })'
 descriptor = "[dependencies] in Cargo.toml"
 cost_tokens = 324
-cum_tokens = 9022
+cum_tokens = 9315
 
 [batches.content]
 kind = "lines"
@@ -3952,11 +3988,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 125
+position = 127
 key = 'Rust(PubItemBody { file: "src/parse/syntax.rs", start_line: 139, body_start_line: 140 })'
 descriptor = "pub item body at src/parse/syntax.rs:139 body 140"
 cost_tokens = 120
-cum_tokens = 9142
+cum_tokens = 9435
 
 [batches.content]
 kind = "lines"
@@ -3970,11 +4006,11 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 126
+position = 128
 key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 78 })'
 descriptor = "pub item at src/config/colors.rs:78"
 cost_tokens = 320
-cum_tokens = 9462
+cum_tokens = 9755
 
 [batches.content]
 kind = "lines"
@@ -3988,11 +4024,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 127
+position = 129
 key = 'Rust(MethodSigs { file: "src/ui/filter.rs" })'
 descriptor = "impl method sigs in src/ui/filter.rs"
 cost_tokens = 168
-cum_tokens = 9630
+cum_tokens = 9923
 
 [batches.content]
 kind = "lines"
@@ -4105,128 +4141,6 @@ kind = "ellipsis"
 path = "src/ui/filter.rs"
 start = 154
 end = 154
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 128
-key = 'Rust(MethodSigs { file: "src/parse/any.rs" })'
-descriptor = "impl method sigs in src/parse/any.rs"
-cost_tokens = 170
-cum_tokens = 9800
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 13
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 25
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 47
-end = 47
 
 [batches.content.spans.render]
 kind = "ellipsis"

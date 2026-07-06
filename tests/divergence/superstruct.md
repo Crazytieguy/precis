@@ -141,48 +141,46 @@ Score(3000)=0.588 I=0.856 C=0.404 ns_rows≤3K=14/40 (reached=6 partial=0 missin
 | walker |  | 6703 | 324 | package scripts in package.json |  |  | 0.667 |
 | walker |  | 6727 | 24 | module-doc lede in test/index.ts |  |  | 0.667 |
 | walker |  | 6780 | 53 | docs/reference/refinements.md section #0 |  |  | 0.667 |
-| walker |  | 6905 | 125 | listing of 'test/validation' |  |  | 0.670 |
-| walker |  | 6950 | 45 | Readme.md section #4 |  |  | 0.671 |
-| walker |  | 6994 | 44 | Readme.md section #5 |  |  | 0.672 |
+| walker |  | 6986 | 206 | Readme.md section #8 |  |  | 0.667 |
+| walker |  | 7111 | 125 | listing of 'test/validation' |  |  | 0.670 |
+| walker |  | 7156 | 45 | Readme.md section #4 |  |  | 0.671 |
+| walker |  | 7200 | 44 | Readme.md section #5 |  |  | 0.672 |
 | ns | 7474 |  | 789 | run() traversal body | 8.2 | 8.1 | 0.632 |
 | ns | 7929 |  | 455 | StructError property table | 9.1 |  | 0.626 |
-| walker |  | 7986 | 992 | Readme.md section #0 |  |  | 0.626 |
-| walker |  | 8034 | 48 | imports in src/structs/coercions.ts |  |  | 0.626 |
 | ns | 8054 |  | 125 | test/validation/ kind roster | 10.1 |  | 0.643 |
-| walker |  | 8219 | 185 | json config tsconfig.json |  |  | 0.644 |
-| ns | 8237 |  | 183 | test/typings/ file roster | 10.2 |  | 0.624 |
-| walker |  | 8282 | 63 | docs/reference/coercions.md section #0 |  |  | 0.624 |
-| walker |  | 8286 | 4 | listing of '.vscode' |  |  | 0.624 |
-| walker |  | 8336 | 50 | Readme.md section #3 |  |  | 0.625 |
-| walker |  | 8354 | 18 | export names surface in test/index.ts |  |  | 0.625 |
-| ns | 8369 |  | 132 | test/validation/object/valid.ts (fixture shape) | 10.3 |  | 0.618 |
-| walker |  | 8407 | 53 | Readme.md section #2 |  |  | 0.620 |
-| walker |  | 8643 | 236 | export body at src/structs/coercions.ts:38 body 45 |  |  | 0.641 |
-| ns | 8645 |  | 276 | examples/basic-validation.js | 11.1 |  | 0.627 |
-| walker |  | 8826 | 183 | listing of 'test/typings' |  |  | 0.665 |
-| ns | 8971 |  | 326 | package.json scripts | 12.1 |  | 0.670 |
-| walker |  | 9019 | 193 | export names surface in src/structs/utilities.ts |  |  | 0.678 |
-| walker |  | 9019 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.678 |
-| walker |  | 9019 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.678 |
-| walker |  | 9019 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.678 |
-| walker |  | 9038 | 19 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.679 |
-| walker |  | 9071 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.679 |
-| walker |  | 9108 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.679 |
-| walker |  | 9146 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.679 |
-| ns | 9156 |  | 185 | tsconfig.json | 12.2 |  | 0.684 |
-| walker |  | 9189 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.684 |
-| walker |  | 9233 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.684 |
-| walker |  | 9278 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.684 |
+| walker |  | 8192 | 992 | Readme.md section #0 |  |  | 0.643 |
+| ns | 8237 |  | 183 | test/typings/ file roster | 10.2 |  | 0.623 |
+| walker |  | 8240 | 48 | imports in src/structs/coercions.ts |  |  | 0.623 |
+| ns | 8369 |  | 132 | test/validation/object/valid.ts (fixture shape) | 10.3 |  | 0.616 |
+| walker |  | 8425 | 185 | json config tsconfig.json |  |  | 0.617 |
+| walker |  | 8488 | 63 | docs/reference/coercions.md section #0 |  |  | 0.617 |
+| walker |  | 8492 | 4 | listing of '.vscode' |  |  | 0.617 |
+| walker |  | 8542 | 50 | Readme.md section #3 |  |  | 0.618 |
+| walker |  | 8560 | 18 | export names surface in test/index.ts |  |  | 0.618 |
+| walker |  | 8613 | 53 | Readme.md section #2 |  |  | 0.620 |
+| ns | 8645 |  | 276 | examples/basic-validation.js | 11.1 |  | 0.608 |
+| walker |  | 8849 | 236 | export body at src/structs/coercions.ts:38 body 45 |  |  | 0.627 |
+| ns | 8971 |  | 326 | package.json scripts | 12.1 |  | 0.633 |
+| walker |  | 9032 | 183 | listing of 'test/typings' |  |  | 0.670 |
+| ns | 9156 |  | 185 | tsconfig.json | 12.2 |  | 0.675 |
+| walker |  | 9225 | 193 | export names surface in src/structs/utilities.ts |  |  | 0.683 |
+| walker |  | 9225 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.683 |
+| walker |  | 9225 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.683 |
+| walker |  | 9225 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.683 |
+| walker |  | 9244 | 19 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.684 |
+| walker |  | 9277 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.684 |
+| walker |  | 9314 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.684 |
 | ns | 9331 |  | 175 | .github/workflows/ci.yml | 12.3 |  | 0.677 |
-| walker |  | 9380 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.677 |
+| walker |  | 9352 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.677 |
+| walker |  | 9395 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.677 |
+| walker |  | 9439 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.677 |
 | ns | 9441 |  | 110 | jsr.json | 12.4 |  | 0.673 |
-| walker |  | 9447 | 67 | export body at src/structs/utilities.ts:60 body 61 |  |  | 0.673 |
-| walker |  | 9473 | 26 | export doc at src/structs/utilities.ts:71 |  |  | 0.675 |
-| walker |  | 9623 | 150 | export at src/structs/utilities.ts:30 |  |  | 0.675 |
-| ns | 9628 |  | 187 | rollup.config.js | 12.5 |  | 0.667 |
+| walker |  | 9484 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.673 |
+| walker |  | 9586 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.673 |
+| ns | 9628 |  | 187 | rollup.config.js | 12.5 |  | 0.665 |
+| walker |  | 9653 | 67 | export body at src/structs/utilities.ts:60 body 61 |  |  | 0.665 |
+| walker |  | 9679 | 26 | export doc at src/structs/utilities.ts:71 |  |  | 0.667 |
 | ns | 9765 |  | 137 | editor/format config (.editorconfig, .prettierrc) | 12.6 |  | 0.661 |
-| walker |  | 9805 | 182 | export at src/structs/utilities.ts:44 |  |  | 0.661 |
+| walker |  | 9829 | 150 | export at src/structs/utilities.ts:30 |  |  | 0.661 |
 | ns | 9831 |  | 66 | editor + gitbook publish config (.vscode/settings.json, .gitbook.yaml) | 12.7 |  | 0.658 |
-| walker |  | 9926 | 121 | export body at src/structs/utilities.ts:80 body 84 |  |  | 0.658 |
 | ns | 9979 |  | 148 | Changelog.md — 2.0.0 breaking changes | 13.1 |  | 0.655 |
-| walker |  | 9981 | 55 | export doc at src/structs/utilities.ts:80 |  |  | 0.655 |

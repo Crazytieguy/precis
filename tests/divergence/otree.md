@@ -150,25 +150,26 @@ Score(3000)=0.530 I=0.784 C=0.359 ns_rows≤3K=16/42 (reached=6 partial=1 missin
 | ns | 7813 |  | 362 | tree.rs: build_item Object arm (recursive case) | 5.4 | 5.3 | 0.458 |
 | walker |  | 7816 | 206 | pub item at src/config/types.rs:28 |  |  | 0.460 |
 | walker |  | 8048 | 232 | pub item at src/config/colors.rs:21 |  |  | 0.460 |
-| walker |  | 8150 | 102 | pub item body at src/parse/syntax.rs:201 body 202 |  |  | 0.460 |
-| walker |  | 8294 | 144 | impl method sigs in src/ui/popup.rs |  |  | 0.460 |
-| walker |  | 8398 | 104 | README.md section #6 |  |  | 0.460 |
-| walker |  | 8677 | 279 | pub item at src/ui/app.rs:53 |  |  | 0.460 |
-| ns | 8684 |  | 871 | parse/mod.rs: ContentType + Parser trait + dispatch | 6.1 |  | 0.487 |
-| walker |  | 8698 | 21 | impl method sigs in src/config/colors.rs |  |  | 0.487 |
-| walker |  | 9022 | 324 | [dependencies] in Cargo.toml |  |  | 0.518 |
-| ns | 9094 |  | 410 | toml.rs: section-path tracking + complex-field deferral (distinctive logic) | 6.2 |  | 0.505 |
-| walker |  | 9142 | 120 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.505 |
-| ns | 9227 |  | 133 | syntax.rs: SyntaxToken enum | 7.1 |  | 0.514 |
-| ns | 9313 |  | 86 | ui/*: one struct-declaration line per widget (locations) | 8.1 |  | 0.518 |
-| walker |  | 9462 | 320 | pub item at src/config/colors.rs:78 |  |  | 0.518 |
-| ns | 9573 |  | 260 | app.rs: App::on_key action dispatch (the keybinding-to-widget hub) | 8.2 | 8.1 | 0.512 |
-| walker |  | 9630 | 168 | impl method sigs in src/ui/filter.rs |  |  | 0.512 |
-| ns | 9649 |  | 76 | clipboard/debug/edit/live_reload: entry-point locations | 9.1 |  | 0.511 |
-| ns | 9657 |  | 8 | .github/ listing | 10.1 |  | 0.510 |
-| ns | 9673 |  | 16 | .github/workflows/ listing | 10.2 |  | 0.509 |
-| walker |  | 9800 | 170 | impl method sigs in src/parse/any.rs |  |  | 0.509 |
-| ns | 9881 |  | 208 | cargo-check.yml: the CI test command | 10.3 |  | 0.501 |
-| ns | 9921 |  | 40 | examples/ listing | 11.1 |  | 0.498 |
-| ns | 9942 |  | 21 | src/parse/test_cases/ listing | 11.2 |  | 0.497 |
-| ns | 9946 |  | 4 | assets/ listing | 11.3 |  | 0.497 |
+| walker |  | 8263 | 215 | README.md section #4 |  |  | 0.488 |
+| walker |  | 8365 | 102 | pub item body at src/parse/syntax.rs:201 body 202 |  |  | 0.488 |
+| walker |  | 8443 | 78 | README.md section #2 |  |  | 0.488 |
+| walker |  | 8587 | 144 | impl method sigs in src/ui/popup.rs |  |  | 0.488 |
+| ns | 8684 |  | 871 | parse/mod.rs: ContentType + Parser trait + dispatch | 6.1 |  | 0.513 |
+| walker |  | 8691 | 104 | README.md section #6 |  |  | 0.513 |
+| walker |  | 8970 | 279 | pub item at src/ui/app.rs:53 |  |  | 0.513 |
+| walker |  | 8991 | 21 | impl method sigs in src/config/colors.rs |  |  | 0.513 |
+| ns | 9094 |  | 410 | toml.rs: section-path tracking + complex-field deferral (distinctive logic) | 6.2 |  | 0.499 |
+| ns | 9227 |  | 133 | syntax.rs: SyntaxToken enum | 7.1 |  | 0.509 |
+| ns | 9313 |  | 86 | ui/*: one struct-declaration line per widget (locations) | 8.1 |  | 0.513 |
+| walker |  | 9315 | 324 | [dependencies] in Cargo.toml |  |  | 0.543 |
+| walker |  | 9435 | 120 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.543 |
+| ns | 9573 |  | 260 | app.rs: App::on_key action dispatch (the keybinding-to-widget hub) | 8.2 | 8.1 | 0.536 |
+| ns | 9649 |  | 76 | clipboard/debug/edit/live_reload: entry-point locations | 9.1 |  | 0.535 |
+| ns | 9657 |  | 8 | .github/ listing | 10.1 |  | 0.534 |
+| ns | 9673 |  | 16 | .github/workflows/ listing | 10.2 |  | 0.533 |
+| walker |  | 9755 | 320 | pub item at src/config/colors.rs:78 |  |  | 0.533 |
+| ns | 9881 |  | 208 | cargo-check.yml: the CI test command | 10.3 |  | 0.525 |
+| ns | 9921 |  | 40 | examples/ listing | 11.1 |  | 0.522 |
+| walker |  | 9923 | 168 | impl method sigs in src/ui/filter.rs |  |  | 0.522 |
+| ns | 9942 |  | 21 | src/parse/test_cases/ listing | 11.2 |  | 0.520 |
+| ns | 9946 |  | 4 | assets/ listing | 11.3 |  | 0.521 |
