@@ -10,13 +10,13 @@ Score(3000)=0.535 I=0.767 C=0.373 ns_rows≤3K=17/47 (reached=5 partial=2 missin
 | ns | 122 |  | 35 | Secondary directory listings (tests/, benches/, CI, test_max_level_features/, rfcs/) | 1.4 |  | 0.587 |
 | walker |  | 154 | 56 | headings outline in README.md |  |  | 0.587 |
 | ns | 159 |  | 37 | triagebot.toml + .gitignore + .precis-pin | 1.5 |  | 0.534 |
-| walker |  | 218 | 64 | README.md section #0 |  |  | 0.534 |
-| ns | 293 |  | 134 | Cargo.toml package identity (name/version/license/repo) | 1.6 |  | 0.446 |
-| walker |  | 409 | 191 | [package] in Cargo.toml |  |  | 0.650 |
-| walker |  | 430 | 21 | listing of 'src' |  |  | 0.743 |
-| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.661 |
-| walker |  | 450 | 20 | listing of 'src/kv' |  |  | 0.736 |
-| walker |  | 541 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.736 |
+| ns | 293 |  | 134 | Cargo.toml package identity (name/version/license/repo) | 1.6 |  | 0.445 |
+| walker |  | 345 | 191 | [package] in Cargo.toml |  |  | 0.650 |
+| walker |  | 366 | 21 | listing of 'src' |  |  | 0.743 |
+| walker |  | 386 | 20 | listing of 'src/kv' |  |  | 0.827 |
+| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.735 |
+| walker |  | 477 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.736 |
+| walker |  | 541 | 64 | README.md section #0 |  |  | 0.736 |
 | ns | 551 |  | 103 | Cargo.toml package identity (MSRV, edition, docs.rs features) | 1.8 |  | 0.702 |
 | walker |  | 577 | 36 | manifest config in Cargo.toml |  |  | 0.743 |
 | walker |  | 603 | 26 | pub-item names surface in src/kv/key.rs |  |  | 0.743 |
@@ -55,9 +55,9 @@ Score(3000)=0.535 I=0.767 C=0.373 ns_rows≤3K=17/47 (reached=5 partial=2 missin
 | ns | 1945 |  | 145 | Level & LevelFilter public method roster | 2.3 |  | 0.478 |
 | walker |  | 1977 | 106 | pub item at src/lib.rs:842 |  |  | 0.479 |
 | walker |  | 1997 | 20 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.479 |
-| walker |  | 2018 | 21 | pub-item doc lede at src/lib.rs:842 |  |  | 0.479 |
 | ns | 2092 |  | 147 | FromStr for Level | 2.4 |  | 0.461 |
-| walker |  | 2192 | 174 | pub item at src/lib.rs:636 |  |  | 0.501 |
+| walker |  | 2171 | 174 | pub item at src/lib.rs:636 |  |  | 0.501 |
+| walker |  | 2192 | 21 | pub-item doc lede at src/lib.rs:842 |  |  | 0.501 |
 | walker |  | 2284 | 92 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.501 |
 | ns | 2419 |  | 327 | Record struct + KeyValues wrapper | 2.5 |  | 0.476 |
 | ns | 2557 |  | 138 | Record accessor method roster | 2.6 |  | 0.461 |
@@ -70,22 +70,22 @@ Score(3000)=0.535 I=0.767 C=0.373 ns_rows≤3K=17/47 (reached=5 partial=2 missin
 | ns | 3280 |  | 276 | NopLogger + blanket impl for &T | 2.8 |  | 0.557 |
 | walker |  | 3383 | 278 | pub item at src/lib.rs:1611 |  |  | 0.557 |
 | walker |  | 3532 | 149 | pub item body at src/lib.rs:1529 body 1530 |  |  | 0.557 |
-| walker |  | 3595 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.557 |
 | ns | 3615 |  | 335 | set_max_level + max_level | 2.9 |  | 0.537 |
-| walker |  | 3760 | 165 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.552 |
+| walker |  | 3697 | 165 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.552 |
+| walker |  | 3760 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.552 |
 | walker |  | 3774 | 14 | pub-item doc lede at src/kv/error.rs:5 |  |  | 0.552 |
-| walker |  | 3794 | 20 | pub-item doc lede at src/kv/key.rs:7 |  |  | 0.552 |
-| walker |  | 3814 | 20 | pub-item doc lede at src/kv/value.rs:11 |  |  | 0.553 |
-| ns | 3906 |  | 291 | set_boxed_logger + set_logger | 2.10 |  | 0.535 |
-| walker |  | 3914 | 100 | pub-item doc lede at src/lib.rs:475 |  |  | 0.570 |
-| walker |  | 3989 | 75 | pub-item doc lede at src/lib.rs:1351 |  |  | 0.586 |
-| walker |  | 4010 | 21 | pub-item doc lede at src/kv/source.rs:235 |  |  | 0.587 |
-| ns | 4179 |  | 273 | logger() fn | 2.11 |  | 0.569 |
-| walker |  | 4268 | 258 | macro_export names across src |  |  | 0.572 |
-| walker |  | 4356 | 88 | pub-item doc lede at src/lib.rs:1003 |  |  | 0.572 |
-| walker |  | 4400 | 44 | macro_export body at src/kv/value.rs:1129 |  |  | 0.572 |
+| ns | 3906 |  | 291 | set_boxed_logger + set_logger | 2.10 |  | 0.534 |
+| walker |  | 4032 | 258 | macro_export names across src |  |  | 0.537 |
+| walker |  | 4107 | 75 | pub-item doc lede at src/lib.rs:1351 |  |  | 0.554 |
+| ns | 4179 |  | 273 | logger() fn | 2.11 |  | 0.538 |
+| walker |  | 4207 | 100 | pub-item doc lede at src/lib.rs:475 |  |  | 0.572 |
+| walker |  | 4227 | 20 | pub-item doc lede at src/kv/key.rs:7 |  |  | 0.572 |
+| walker |  | 4247 | 20 | pub-item doc lede at src/kv/value.rs:11 |  |  | 0.572 |
+| walker |  | 4335 | 88 | pub-item doc lede at src/lib.rs:1003 |  |  | 0.572 |
+| walker |  | 4379 | 44 | macro_export body at src/kv/value.rs:1129 |  |  | 0.572 |
+| walker |  | 4423 | 44 | macro_export body at src/kv/value.rs:1139 |  |  | 0.572 |
 | ns | 4437 |  | 258 | macro_rules! definition roster | 3.1 |  | 0.591 |
-| walker |  | 4444 | 44 | macro_export body at src/kv/value.rs:1139 |  |  | 0.591 |
+| walker |  | 4444 | 21 | pub-item doc lede at src/kv/source.rs:235 |  |  | 0.591 |
 | walker |  | 4489 | 45 | macro_export body at src/kv/value.rs:1149 |  |  | 0.591 |
 | walker |  | 4534 | 45 | macro_export body at src/kv/value.rs:1159 |  |  | 0.591 |
 | walker |  | 4579 | 45 | macro_export body at src/kv/value.rs:1169 |  |  | 0.591 |
@@ -96,9 +96,9 @@ Score(3000)=0.535 I=0.767 C=0.373 ns_rows≤3K=17/47 (reached=5 partial=2 missin
 | walker |  | 5023 | 96 | pub-item doc lede at src/lib.rs:1529 |  |  | 0.587 |
 | walker |  | 5122 | 99 | pub-item doc lede at src/lib.rs:1375 |  |  | 0.587 |
 | walker |  | 5141 | 19 | README.md section #6 |  |  | 0.587 |
-| walker |  | 5252 | 111 | pub-item doc lede at src/lib.rs:1420 |  |  | 0.600 |
-| ns | 5555 |  | 616 | error! macro | 3.3 | 3.1 | 0.570 |
-| walker |  | 5664 | 412 | [features] in Cargo.toml |  |  | 0.642 |
+| walker |  | 5553 | 412 | [features] in Cargo.toml |  |  | 0.663 |
+| ns | 5555 |  | 616 | error! macro | 3.3 | 3.1 | 0.630 |
+| walker |  | 5664 | 111 | pub-item doc lede at src/lib.rs:1420 |  |  | 0.642 |
 | ns | 5890 |  | 335 | log_enabled! macro | 3.4 | 3.1 | 0.625 |
 | ns | 6413 |  | 523 | __log_value! kv capture-modifier dispatch | 3.5 | 3.1 | 0.593 |
 | ns | 6838 |  | 425 | GlobalLogger + log/enabled/loc public fns | 4.1 |  | 0.565 |
@@ -115,11 +115,11 @@ Score(3000)=0.535 I=0.767 C=0.373 ns_rows≤3K=17/47 (reached=5 partial=2 missin
 | ns | 8101 |  | 46 | kv/source.rs: Source trait method roster | 5.6 |  | 0.568 |
 | ns | 8185 |  | 84 | kv/source.rs: VisitSource trait | 5.7 |  | 0.571 |
 | walker |  | 8268 | 215 | pub-item doc lede at src/lib.rs:1396 |  |  | 0.571 |
+| walker |  | 8271 | 3 | listing of '.github' |  |  | 0.571 |
+| walker |  | 8275 | 4 | listing of '.github/workflows' |  |  | 0.571 |
 | ns | 8288 |  | 103 | kv/value.rs: ToValue trait + Value struct | 5.8 |  | 0.576 |
 | ns | 8429 |  | 141 | kv/value.rs: dependency-free Inner enum (data model) | 5.9 |  | 0.569 |
-| walker |  | 8705 | 437 | pub item at src/kv/source.rs:51 |  |  | 0.573 |
-| walker |  | 8708 | 3 | listing of '.github' |  |  | 0.573 |
-| walker |  | 8712 | 4 | listing of '.github/workflows' |  |  | 0.573 |
+| walker |  | 8712 | 437 | pub item at src/kv/source.rs:51 |  |  | 0.573 |
 | ns | 8713 |  | 284 | tests/macros.rs test-fn roster | 6.1 |  | 0.562 |
 | walker |  | 8884 | 172 | impl method sigs in src/kv/key.rs |  |  | 0.568 |
 | walker |  | 8912 | 28 | impl method sigs in src/kv/error.rs |  |  | 0.570 |

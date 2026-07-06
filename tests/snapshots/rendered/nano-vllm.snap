@@ -172,9 +172,7 @@ nanovllm/
             …
     layers/
         activation.py
-               1→import torch
-               2→from torch import nn
-               3→import torch.nn.functional as F
+            …
                6→class SiluAndMul(nn.Module):
                8→    def __init__(self):
                9→        super().__init__()
@@ -236,9 +234,7 @@ nanovllm/
             …
         linear.py
         rotary_embedding.py
-               1→from functools import lru_cache
-               2→import torch
-               3→from torch import nn
+            …
                6→def apply_rotary_emb(
                7→    x: torch.Tensor,
                8→    cos: torch.Tensor,

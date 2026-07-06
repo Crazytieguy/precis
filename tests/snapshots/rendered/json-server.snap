@@ -214,7 +214,6 @@ src/
               44→  async write(data: Data): Promise<void> {
             …
         observer.ts
-               1→import type { Adapter } from 'lowdb'
             …
                4→export class Observer<T> {
             …
@@ -251,16 +250,6 @@ src/
     parse-where.ts
         …
           58→export function parseWhere(query: string): JsonObject {
-          59→  const out: JsonObject = {}
-          60→  const params = new URLSearchParams(query)
-          61→
-          62→  for (const [rawKey, rawValue] of params.entries()) {
-          63→    const { path, op } = splitKey(rawKey)
-          64→    if (op === null) continue
-          65→    setPathOp(out, path, op, rawValue)
-          66→  }
-          67→
-          68→  return out
         …
     random-id.ts
            1→import { randomBytes } from 'node:crypto'

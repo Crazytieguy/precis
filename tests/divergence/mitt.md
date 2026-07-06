@@ -1,4 +1,4 @@
-Score(3000)=0.786 I=0.857 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missing=4)
+Score(3000)=0.788 I=0.860 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missing=4)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -34,8 +34,8 @@ Score(3000)=0.786 I=0.857 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | walker |  | 1423 | 212 | package entrypoints in package.json |  |  | 0.737 |
 | ns | 1437 |  | 240 | off() implementation | 2.8 | 2.6 | 0.677 |
 | walker |  | 1442 | 19 | README.md section #13 |  |  | 0.677 |
-| walker |  | 1459 | 17 | README.md section #7 |  |  | 0.677 |
-| walker |  | 1692 | 233 | package scripts in package.json |  |  | 0.682 |
+| walker |  | 1675 | 233 | package scripts in package.json |  |  | 0.682 |
+| walker |  | 1692 | 17 | README.md section #7 |  |  | 0.682 |
 | ns | 1788 |  | 351 | emit() implementation | 2.9 | 2.6 | 0.600 |
 | ns | 2021 |  | 233 | package.json: identity + entry points | 3.1 |  | 0.626 |
 | ns | 2256 |  | 235 | package.json: scripts | 3.2 |  | 0.642 |
@@ -45,9 +45,9 @@ Score(3000)=0.786 I=0.857 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | walker |  | 2735 | 145 | README.md section #5 |  |  | 0.796 |
 | walker |  | 2765 | 30 | README.md section #12 |  |  | 0.796 |
 | ns | 2795 |  | 61 | index_test.ts: properties block | 4.3 |  | 0.786 |
-| walker |  | 2798 | 33 | README.md section #10 |  |  | 0.786 |
-| walker |  | 2909 | 111 | README.md section #4 |  |  | 0.786 |
-| walker |  | 3058 | 149 | json config tsconfig.json |  |  | 0.789 |
+| walker |  | 2914 | 149 | json config tsconfig.json |  |  | 0.788 |
+| walker |  | 2947 | 33 | README.md section #10 |  |  | 0.788 |
+| walker |  | 3058 | 111 | README.md section #4 |  |  | 0.789 |
 | walker |  | 3093 | 35 | README.md section #6 |  |  | 0.789 |
 | ns | 3096 |  | 301 | index_test.ts: on() - registration and append semantics | 4.4 |  | 0.740 |
 | walker |  | 3373 | 280 | README.md section #2 |  |  | 0.743 |
@@ -58,9 +58,9 @@ Score(3000)=0.786 I=0.857 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | walker |  | 3664 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.726 |
 | ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.687 |
 | walker |  | 4032 | 368 | package dependencies in package.json |  |  | 0.690 |
-| ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.665 |
-| walker |  | 4131 | 99 | README.md section #14 |  |  | 0.665 |
-| walker |  | 4143 | 12 | listing of 'test' |  |  | 0.687 |
+| walker |  | 4044 | 12 | listing of 'test' |  |  | 0.713 |
+| ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.687 |
+| walker |  | 4143 | 99 | README.md section #14 |  |  | 0.687 |
 | walker |  | 4259 | 116 | README.md section #11 |  |  | 0.687 |
 | walker |  | 4379 | 120 | README.md section #9 |  |  | 0.687 |
 | ns | 4406 |  | 338 | index_test.ts: emit() - dispatch and case sensitivity | 4.8 |  | 0.656 |
@@ -79,14 +79,14 @@ Score(3000)=0.786 I=0.857 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | walker |  | 5410 | 13 | imports in test/test-types-compilation.ts |  |  | 0.585 |
 | walker |  | 5484 | 74 | plaintext config .gitignore |  |  | 0.585 |
 | ns | 5534 |  | 159 | package.json: repository/keywords/homepage/authors/license/files | 5.1 |  | 0.600 |
-| ns | 5674 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.588 |
-| walker |  | 5793 | 309 | plaintext config LICENSE |  |  | 0.590 |
-| walker |  | 5958 | 165 | plaintext config .editorconfig |  |  | 0.591 |
-| walker |  | 6020 | 62 | imports in test/index_test.ts |  |  | 0.593 |
-| ns | 6043 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.610 |
-| ns | 6192 |  | 149 | tsconfig.json (full) | 6.1 |  | 0.620 |
-| ns | 6417 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.605 |
-| walker |  | 6520 | 500 | plaintext config .eslintrc |  |  | 0.640 |
+| walker |  | 5649 | 165 | plaintext config .editorconfig |  |  | 0.601 |
+| ns | 5674 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.590 |
+| walker |  | 5958 | 309 | plaintext config LICENSE |  |  | 0.591 |
+| ns | 6043 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.608 |
+| ns | 6192 |  | 149 | tsconfig.json (full) | 6.1 |  | 0.619 |
+| ns | 6417 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.603 |
+| walker |  | 6458 | 500 | plaintext config .eslintrc |  |  | 0.639 |
+| walker |  | 6520 | 62 | imports in test/index_test.ts |  |  | 0.640 |
 | ns | 6692 |  | 275 | .eslintrc: rule overrides | 6.3 |  | 0.656 |
 | ns | 6857 |  | 165 | .editorconfig (full) | 6.4 |  | 0.665 |
 | ns | 6931 |  | 74 | .gitignore (full) | 6.5 |  | 0.669 |

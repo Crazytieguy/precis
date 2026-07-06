@@ -53,24 +53,57 @@ docs/
     release-policy.md
     terminology.md
     zh-CN/
+        不再推荐使用的功能.md
+        可变参数的选项.md
+        术语表.md
 eslint.config.js
 esm.mjs
-       1→import commander from './index.js';
-    …
-       4→export const {
-       5→  program,
-       6→  createCommand,
-       7→  createArgument,
-       8→  createOption,
-       9→  CommanderError,
-      10→  InvalidArgumentError,
-      11→  InvalidOptionArgumentError, // deprecated old name
-      12→  Command,
-      13→  Argument,
-      14→  Option,
-      15→  Help,
-      16→} = commander;
 examples/
+    action-this.js
+    alias.js
+    argument.js
+    arguments-custom-processing.js
+    arguments-extra.js
+    color-help-replacement.mjs
+    color-help.mjs
+    configure-help.js
+    configure-output.js
+    custom-command-class.js
+    custom-help
+    custom-help-description
+    custom-help-text.js
+    custom-version
+    defaultCommand.js
+    deploy
+    description
+    global-options-added.js
+    global-options-nested.js
+    help-centered.mjs
+    help-groups.js
+    help-subcommands-usage.js
+    hook.js
+    man-style-help.mjs
+    nestedCommands.js
+    options-boolean-or-value.js
+    options-common.js
+    options-conflicts.js
+    options-custom-processing.js
+    options-defaults.js
+    options-env.js
+    options-extra.js
+    options-implies.js
+    options-negatable.js
+    options-required.js
+    options-variadic.js
+    pass-through-options.js
+    pizza
+    pm
+    pm-install
+    pm-list.js
+    positional-options.js
+    split.js
+    string-util.js
+    thank.js
 index.js
        1→const { Argument } = require('./lib/argument.js');
        2→const { Command } = require('./lib/command.js');
@@ -281,30 +314,6 @@ lib/
          535→  displayWidth…
         …
          545→  styleTitle…
-        …
-         549→  styleUsage…
-        …
-         563→  styleCommandDescription…
-        …
-         566→  styleOptionDescription…
-        …
-         569→  styleSubcommandDescription…
-        …
-         572→  styleArgumentDescription…
-        …
-         575→  styleDescriptionText…
-        …
-         578→  styleOptionTerm…
-        …
-         581→  styleSubcommandTerm…
-        …
-         594→  styleArgumentTerm…
-        …
-         597→  styleOptionText…
-        …
-         600→  styleArgumentText…
-        …
-         603→  styleSubcommandText…
         …
          740→function stripColor(str) {
          741→  // eslint-disable-next-line no-control-regex

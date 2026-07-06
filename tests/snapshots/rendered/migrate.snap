@@ -116,7 +116,6 @@ cmd/
         main.go
             …
                5→func main() {
-               6→	cli.Main(Version)
             …
         version.go
                1→package main
@@ -335,6 +334,9 @@ source/
     stub/
     testing/
 testing/
+    docker.go
+    testing.go
+    testing_test.go
 util.go
     …
       13→type MultiError struct {

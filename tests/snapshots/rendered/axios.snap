@@ -14,6 +14,20 @@ CHANGELOG.md
 CLAUDE.md
 CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
+       1→# Collaborator Guide
+    …
+       5→## Code of Conduct
+    …
+       9→## Triage Issues
+    …
+      16→## Answer Questions
+    …
+      20→## Submit PRs
+    …
+      44→## Security Disclosures
+    …
+      48→## What Collaborators Should Not Do
+    …
 CONTRIBUTING.md
 CONTRIBUTORS.md
        1→# Contributors
@@ -80,7 +94,9 @@ index.d.ts
      155→  (config: InternalAxiosRequestConfig): AxiosPromise;
      156→}
      158→export interface AxiosBasicCredentials {
-    …
+     159→  username: string;
+     160→  password: string;
+     161→}
      163→export interface AxiosProxyConfig {
     …
      170→export enum HttpStatusCode {
@@ -345,6 +361,9 @@ lib/
                   27→export default {
                 …
     utils.js
+        …
+         872→export default {
+        …
 package-lock.json
 package.json
     …
@@ -363,6 +382,12 @@ sandbox/
     server.js
 scripts/
 tests/
+    README.md
+    browser/
+    module/
+    setup/
+    smoke/
+    unit/
 tsconfig.json
 tslint.json
 vitest.config.js

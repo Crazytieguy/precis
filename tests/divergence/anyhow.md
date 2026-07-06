@@ -1,4 +1,4 @@
-Score(3000)=0.558 I=0.811 C=0.385 ns_rows≤3K=18/46 (reached=10 partial=0 missing=8)
+Score(3000)=0.558 I=0.811 C=0.384 ns_rows≤3K=18/46 (reached=10 partial=0 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -20,21 +20,21 @@ Score(3000)=0.558 I=0.811 C=0.385 ns_rows≤3K=18/46 (reached=10 partial=0 missi
 | walker |  | 550 | 0 | pub item at src/lib.rs:468 |  |  | 0.646 |
 | walker |  | 563 | 13 | pub item at src/lib.rs:650 |  |  | 0.646 |
 | walker |  | 589 | 26 | pub item at src/lib.rs:390 |  |  | 0.646 |
-| walker |  | 599 | 10 | pub item body at src/lib.rs:650 body 651 |  |  | 0.646 |
+| walker |  | 618 | 29 | pub item at src/lib.rs:415 |  |  | 0.647 |
 | ns | 620 |  | 110 | Cargo.toml dependencies | 1.8 |  | 0.618 |
-| walker |  | 628 | 29 | pub item at src/lib.rs:415 |  |  | 0.618 |
+| walker |  | 628 | 10 | pub item body at src/lib.rs:650 body 651 |  |  | 0.618 |
 | ns | 673 |  | 53 | Misc root config: toolchain, gitignore, funding, pin | 1.9 |  | 0.592 |
 | walker |  | 788 | 160 | pub item at src/lib.rs:616 |  |  | 0.593 |
 | walker |  | 870 | 82 | macro_export names across src |  |  | 0.593 |
 | ns | 898 |  | 225 | Cargo.toml dev-dependencies + docs.rs metadata | 1.10 |  | 0.537 |
-| walker |  | 911 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.537 |
-| ns | 933 |  | 35 | README install snippet | 1.11 |  | 0.552 |
+| ns | 933 |  | 35 | README install snippet | 1.11 |  | 0.551 |
 | ns | 1071 |  | 138 | lib.rs module declarations + extern crate | 1.12 |  | 0.503 |
-| walker |  | 1185 | 274 | crate-doc lede in src/lib.rs |  |  | 0.503 |
+| walker |  | 1144 | 274 | crate-doc lede in src/lib.rs |  |  | 0.503 |
 | ns | 1291 |  | 220 | README no-std support section | 1.13 |  | 0.471 |
-| walker |  | 1375 | 190 | mod/use plumbing in src/lib.rs |  |  | 0.506 |
-| walker |  | 1440 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.506 |
-| walker |  | 1530 | 90 | listing of 'tests' |  |  | 0.633 |
+| walker |  | 1334 | 190 | mod/use plumbing in src/lib.rs |  |  | 0.505 |
+| walker |  | 1375 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.506 |
+| walker |  | 1465 | 90 | listing of 'tests' |  |  | 0.633 |
+| walker |  | 1530 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.633 |
 | walker |  | 1655 | 125 | manifest config in Cargo.toml |  |  | 0.663 |
 | ns | 1692 |  | 401 | lib.rs crate-level attributes | 1.14 |  | 0.594 |
 | walker |  | 1796 | 141 | impl method sigs in src/context.rs |  |  | 0.594 |
@@ -46,14 +46,14 @@ Score(3000)=0.558 I=0.811 C=0.385 ns_rows≤3K=18/46 (reached=10 partial=0 missi
 | walker |  | 2341 | 23 | pub-item names surface in src/ensure.rs |  |  | 0.648 |
 | ns | 2366 |  | 398 | error.rs Error impl method roster | 2.2 |  | 0.599 |
 | walker |  | 2563 | 222 | macro_export body at src/macros.rs:204 |  |  | 0.601 |
-| walker |  | 2891 | 328 | impl method sigs in src/error.rs |  |  | 0.622 |
-| walker |  | 2933 | 42 | impl method sigs in src/chain.rs |  |  | 0.622 |
-| walker |  | 2964 | 31 | pub-item names surface in src/chain.rs |  |  | 0.622 |
+| walker |  | 2596 | 33 | pub-item names surface in src/chain.rs |  |  | 0.601 |
+| walker |  | 2613 | 17 | pub item at src/chain.rs:11 |  |  | 0.601 |
+| walker |  | 2941 | 328 | impl method sigs in src/error.rs |  |  | 0.622 |
 | ns | 2971 |  | 605 | Rest-of-crate public/crate-visible item roster | 2.3 |  | 0.558 |
-| walker |  | 2981 | 17 | pub item at src/chain.rs:11 |  |  | 0.558 |
-| walker |  | 3379 | 398 | impl method sigs in src/ptr.rs |  |  | 0.579 |
-| walker |  | 3413 | 34 | pub-item names surface in src/error.rs |  |  | 0.579 |
-| walker |  | 3446 | 33 | pub item at src/error.rs:952 |  |  | 0.579 |
+| walker |  | 2975 | 34 | pub-item names surface in src/error.rs |  |  | 0.558 |
+| walker |  | 3008 | 33 | pub item at src/error.rs:952 |  |  | 0.558 |
+| walker |  | 3048 | 40 | impl method sigs in src/chain.rs |  |  | 0.558 |
+| walker |  | 3446 | 398 | impl method sigs in src/ptr.rs |  |  | 0.579 |
 | walker |  | 3672 | 226 | pub-item doc lede at src/lib.rs:468 |  |  | 0.580 |
 | ns | 3703 |  | 732 | Context trait doc (prose, code examples elided) | 3.1 | 2.1 | 0.526 |
 | walker |  | 3956 | 284 | pub-item doc lede at src/lib.rs:650 |  |  | 0.526 |
@@ -70,21 +70,21 @@ Score(3000)=0.558 I=0.811 C=0.385 ns_rows≤3K=18/46 (reached=10 partial=0 missi
 | walker |  | 4407 | 9 | pub item at src/wrapper.rs:58 |  |  | 0.537 |
 | ns | 4461 |  | 449 | macros.rs anyhow! doc + expansion | 3.3 |  | 0.528 |
 | walker |  | 4506 | 99 | pub item at src/chain.rs:16 |  |  | 0.528 |
+| walker |  | 4589 | 83 | pub item at src/error.rs:934 |  |  | 0.528 |
 | ns | 4691 |  | 230 | macros.rs ensure! doc summary | 3.4 |  | 0.516 |
-| walker |  | 4724 | 218 | README.md section #7 |  |  | 0.550 |
-| walker |  | 4807 | 83 | pub item at src/error.rs:934 |  |  | 0.550 |
+| walker |  | 4807 | 218 | README.md section #7 |  |  | 0.550 |
 | walker |  | 4882 | 75 | pub-item names surface in src/kind.rs |  |  | 0.565 |
-| walker |  | 4980 | 98 | impl method sigs in src/kind.rs |  |  | 0.572 |
-| walker |  | 5062 | 82 | listing of 'tests/ui' |  |  | 0.601 |
-| walker |  | 5070 | 8 | listing of '.github' |  |  | 0.601 |
-| walker |  | 5074 | 4 | listing of '.github/workflows' |  |  | 0.601 |
-| walker |  | 5165 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.611 |
-| walker |  | 5165 | 0 | pub item at src/nightly.rs:41 |  |  | 0.611 |
-| walker |  | 5165 | 0 | pub item at src/nightly.rs:52 |  |  | 0.611 |
-| walker |  | 5165 | 0 | pub item at src/nightly.rs:56 |  |  | 0.611 |
-| walker |  | 5177 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.611 |
-| walker |  | 5190 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.611 |
-| walker |  | 5204 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.611 |
+| walker |  | 4964 | 82 | listing of 'tests/ui' |  |  | 0.594 |
+| walker |  | 5062 | 98 | impl method sigs in src/kind.rs |  |  | 0.601 |
+| walker |  | 5153 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.611 |
+| walker |  | 5153 | 0 | pub item at src/nightly.rs:41 |  |  | 0.611 |
+| walker |  | 5153 | 0 | pub item at src/nightly.rs:52 |  |  | 0.611 |
+| walker |  | 5153 | 0 | pub item at src/nightly.rs:56 |  |  | 0.611 |
+| walker |  | 5165 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.611 |
+| walker |  | 5178 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.611 |
+| walker |  | 5192 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.611 |
+| walker |  | 5200 | 8 | listing of '.github' |  |  | 0.611 |
+| walker |  | 5204 | 4 | listing of '.github/workflows' |  |  | 0.611 |
 | ns | 5275 |  | 584 | kind.rs tagged-dispatch explanation (top comment) | 3.5 | 2.3 | 0.574 |
 | ns | 5624 |  | 349 | Error struct: Display/Debug output forms | 3.6 |  | 0.555 |
 | ns | 5711 |  | 87 | Chain doc + struct def | 3.7 | 2.1 | 0.557 |
@@ -99,15 +99,15 @@ Score(3000)=0.558 I=0.811 C=0.385 ns_rows≤3K=18/46 (reached=10 partial=0 missi
 | walker |  | 7223 | 137 | README.md section #6 |  |  | 0.559 |
 | ns | 7279 |  | 239 | ensure.rs BothDebug/NotBothDebug dispatch + render() | 4.6 | 2.3 | 0.550 |
 | walker |  | 7368 | 145 | README.md section #3 |  |  | 0.550 |
-| walker |  | 7519 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.551 |
-| walker |  | 7545 | 26 | pub item at src/ensure.rs:10 |  |  | 0.551 |
-| walker |  | 7571 | 26 | pub item at src/ensure.rs:25 |  |  | 0.551 |
-| walker |  | 7697 | 126 | pub-item doc body at src/lib.rs:468 |  |  | 0.551 |
+| walker |  | 7394 | 26 | pub item at src/ensure.rs:10 |  |  | 0.550 |
+| walker |  | 7420 | 26 | pub item at src/ensure.rs:25 |  |  | 0.550 |
+| walker |  | 7571 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.551 |
 | ns | 7708 |  | 429 | build.rs cfg flags emitted | 5.1 |  | 0.539 |
 | ns | 7784 |  | 76 | CI job roster | 5.2 |  | 0.535 |
-| walker |  | 7912 | 215 | README.md section #5 |  |  | 0.535 |
+| walker |  | 7786 | 215 | README.md section #5 |  |  | 0.535 |
+| walker |  | 8005 | 219 | README.md section #1 |  |  | 0.535 |
 | ns | 8115 |  | 331 | CI test job: rust matrix + commands | 5.3 | 5.2 | 0.525 |
-| walker |  | 8131 | 219 | README.md section #1 |  |  | 0.525 |
+| walker |  | 8131 | 126 | pub-item doc body at src/lib.rs:468 |  |  | 0.525 |
 | ns | 8236 |  | 121 | test_fmt.rs expected Debug strings (2- and 3-level context) | 6.1 |  | 0.519 |
 | ns | 8338 |  | 102 | test_repr.rs size/niche assertions | 6.2 |  | 0.515 |
 | walker |  | 8354 | 223 | README.md section #4 |  |  | 0.515 |

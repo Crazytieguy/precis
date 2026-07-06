@@ -125,6 +125,15 @@ internal/
     agent/
         agent.go
         factory.go
+            …
+              15→type SpinnerFunc func(message string, fn func() error) error
+            …
+              19→type AgentCreationOptions struct {
+            …
+              43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
+            …
+              76→func ParseModelName(modelString string) (provider, model string) {
+            …
         streaming.go
             …
               19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
@@ -185,11 +194,6 @@ internal/
               27→}
             …
               32→type PostToolUseInput struct {
-              33→	CommonInput
-              34→	ToolName     string          `json:"tool_name"`
-              35→	ToolInput    json.RawMessage `json:"tool_input"`
-              36→	ToolResponse json.RawMessage `json:"tool_response"`
-              37→}
             …
               42→type UserPromptSubmitInput struct {
               43→	CommonInput
@@ -212,8 +216,6 @@ internal/
             …
               37→type Cost struct {
             …
-              48→// Limit represents the context and output limits for a model.
-              49→// Used during code generation to parse token limit data from models.dev.
               50→type Limit struct {
               51→	// Context is the maximum number of input tokens
               52→	Context int `json:"context"`

@@ -98,9 +98,6 @@ Readme.md
      209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
      210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
     …
-     213→* [Phillip9587](https://github.com/Phillip9587) - **Phillip Barta**
-     214→* [efekrskl](https://github.com/efekrskl) - **Efe Karasakal**
-     215→* [rxmarbles](https://github.com/rxmarbles) - **Rick Markins** (he/him)
      216→* [krzysdz](https://github.com/krzysdz)
     …
      219→<details>
@@ -172,22 +169,8 @@ lib/
         …
          439→app.disabled = function disabled(setting) {
         …
-         443→/**
-         444→ * Enable `setting`.
-         445→ *
-         446→ * @param {String} setting
-         447→ * @return {app} for chaining
-         448→ * @public
-         449→ */
          451→app.enable = function enable(setting) {
         …
-         455→/**
-         456→ * Disable `setting`.
-         457→ *
-         458→ * @param {String} setting
-         459→ * @return {app} for chaining
-         460→ * @public
-         461→ */
          463→app.disable = function disable(setting) {
         …
          494→app.all = function all(path) {
@@ -270,13 +253,6 @@ lib/
          128→  var accept = accepts(this);
          129→  return accept.types.apply(accept, arguments);
         …
-         132→/**
-         133→ * Check if the given `encoding`s are accepted.
-         134→ *
-         135→ * @param {String} ...encoding
-         136→ * @return {String|Array}
-         137→ * @public
-         138→ */
          140→req.acceptsEncodings = function(){
          141→  var accept = accepts(this);
          142→  return accept.encodings.apply(accept, arguments);

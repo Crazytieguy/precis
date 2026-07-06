@@ -127,6 +127,12 @@ crates/
                     …
                 toml_ext.rs
     mdbook-driver/
+        Cargo.toml
+            …
+              31→[features]
+              32→search = ["mdbook-html/search"]
+        README.md
+        src/
     mdbook-html/
         Cargo.toml
             …
@@ -136,7 +142,6 @@ crates/
                1→# mdbook-html
             …
                7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
-               9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
             …
         front-end/
         src/

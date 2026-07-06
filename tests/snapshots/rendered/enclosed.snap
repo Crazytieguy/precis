@@ -8,6 +8,49 @@ expression: rendered
 .nvmrc
 CONTRIBUTING.md
 Dockerfile
+       1→# Base image is node:22-slim, we cannot use node:22-alpine because of
+       2→# a known issue for arm/v7 architecture (hangs on dependency installation)
+       3→# see https://github.com/nodejs/docker-node/issues/2077
+       4→FROM node:22-slim AS builder
+       5→
+       6→# Set the working directory for the app
+       7→WORKDIR /app
+       8→
+       9→# Copy package.json and pnpm-lock.yaml to install dependencies
+      10→COPY pnpm-lock.yaml ./
+      11→COPY pnpm-workspace.yaml ./
+      12→COPY packages/crypto/package.json packages/crypto/package.json
+      13→COPY packages/lib/package.json packages/lib/package.json
+      14→COPY packages/app-client/package.json packages/app-client/package.json
+      15→COPY packages/app-server/package.json packages/app-server/package.json
+      16→
+      17→# Install pnpm
+      18→RUN npm install -g pnpm --ignore-scripts && pnpm install --frozen-lockfile --ignore-scripts
+      19→
+      20→# Copy the entire app
+      21→COPY . .
+      22→
+      23→# Build the apps
+      24→RUN pnpm --filter @enclosed/crypto run build && \
+      25→    pnpm --filter @enclosed/lib run build && \
+      26→    pnpm --filter @enclosed/app-client run build && \
+      27→    pnpm --filter @enclosed/app-server run build:node
+      28→
+      29→# Production image 
+      30→FROM node:22-alpine
+      31→
+      32→WORKDIR /app
+      33→
+      34→# Copy the built apps
+      35→COPY --from=builder /app/packages/app-client/dist ./public
+      36→COPY --from=builder /app/packages/app-server/dist-node/index.cjs ./index.cjs
+      37→
+      38→# Create the .data directory 
+      39→RUN mkdir -p /app/.data 
+      40→
+      41→EXPOSE 8787
+      42→
+      43→CMD ["node", "index.cjs"]
 Dockerfile.rootless
 LICENSE
 README.md
@@ -150,8 +193,7 @@ packages/
               24→### `npm run build`
             …
               32→## Deployment
-              33→
-              34→You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+            …
               36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
         components.json
         e2e-tests/
@@ -216,8 +258,7 @@ packages/
               75→## License
             …
               79→## Credits and Acknowledgements
-              80→
-              81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
+            …
         bin/
         build.config.ts
         eslint.config.js
@@ -242,8 +283,7 @@ packages/
                5→## Installation
             …
               18→## License
-              19→
-              20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
+            …
               22→## Credits and Acknowledgements
               23→
               24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).

@@ -683,28 +683,10 @@ kind = "full"
 
 [[batches]]
 position = 20
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
-descriptor = "README.md section #7"
-cost_tokens = 17
-cum_tokens = 1459
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 144
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 233
-cum_tokens = 1692
+cum_tokens = 1675
 
 [batches.content]
 kind = "lines"
@@ -713,6 +695,24 @@ kind = "lines"
 path = "package.json"
 start = 18
 end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
+descriptor = "README.md section #7"
+cost_tokens = 17
+cum_tokens = 1692
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 144
+end = 146
 
 [batches.content.spans.render]
 kind = "full"
@@ -773,10 +773,28 @@ kind = "full"
 
 [[batches]]
 position = 25
+key = 'Json(Whole { file: "tsconfig.json" })'
+descriptor = "json config tsconfig.json"
+cost_tokens = 149
+cum_tokens = 2914
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tsconfig.json"
+start = 1
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
 descriptor = "README.md section #10"
 cost_tokens = 33
-cum_tokens = 2798
+cum_tokens = 2947
 
 [batches.content]
 kind = "lines"
@@ -790,11 +808,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 111
-cum_tokens = 2909
+cum_tokens = 3058
 
 [batches.content]
 kind = "lines"
@@ -803,24 +821,6 @@ kind = "lines"
 path = "README.md"
 start = 113
 end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Json(Whole { file: "tsconfig.json" })'
-descriptor = "json config tsconfig.json"
-cost_tokens = 149
-cum_tokens = 3058
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tsconfig.json"
-start = 1
-end = 15
 
 [batches.content.spans.render]
 kind = "full"
@@ -945,10 +945,24 @@ kind = "full"
 
 [[batches]]
 position = 35
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 12
+cum_tokens = 4044
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["index_test.ts", "test-types-compilation.ts"]
+
+[[batches]]
+position = 36
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false })'
 descriptor = "README.md section #14"
 cost_tokens = 99
-cum_tokens = 4131
+cum_tokens = 4143
 
 [batches.content]
 kind = "lines"
@@ -960,20 +974,6 @@ end = 177
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 36
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 12
-cum_tokens = 4143
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["index_test.ts", "test-types-compilation.ts"]
 
 [[batches]]
 position = 37
@@ -1175,28 +1175,10 @@ kind = "full"
 
 [[batches]]
 position = 48
-key = 'Plaintext(Whole { file: "LICENSE" })'
-descriptor = "plaintext config LICENSE"
-cost_tokens = 309
-cum_tokens = 5793
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "LICENSE"
-start = 1
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
 key = 'Plaintext(Whole { file: ".editorconfig" })'
 descriptor = "plaintext config .editorconfig"
 cost_tokens = 165
-cum_tokens = 5958
+cum_tokens = 5649
 
 [batches.content]
 kind = "lines"
@@ -1210,29 +1192,29 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 50
-key = 'Typescript(Imports { file: "test/index_test.ts" })'
-descriptor = "imports in test/index_test.ts"
-cost_tokens = 62
-cum_tokens = 6020
+position = 49
+key = 'Plaintext(Whole { file: "LICENSE" })'
+descriptor = "plaintext config LICENSE"
+cost_tokens = 309
+cum_tokens = 5958
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "test/index_test.ts"
+path = "LICENSE"
 start = 1
-end = 4
+end = 21
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 51
+position = 50
 key = 'Plaintext(Whole { file: ".eslintrc" })'
 descriptor = "plaintext config .eslintrc"
 cost_tokens = 500
-cum_tokens = 6520
+cum_tokens = 6458
 
 [batches.content]
 kind = "lines"
@@ -1241,6 +1223,24 @@ kind = "lines"
 path = ".eslintrc"
 start = 1
 end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Typescript(Imports { file: "test/index_test.ts" })'
+descriptor = "imports in test/index_test.ts"
+cost_tokens = 62
+cum_tokens = 6520
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 1
+end = 4
 
 [batches.content.spans.render]
 kind = "full"

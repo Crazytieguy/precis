@@ -67,6 +67,18 @@ agent/
     connection_manager_test.go
     cpu.go
     data_dir.go
+        …
+          16→func GetDataDir(dataDirs ...string) (string, error) {
+        …
+          40→func testDataDirs(paths []string) (string, error) {
+        …
+          70→func isValidDataDir(path string, createIfNotExists bool) (bool, error) {
+        …
+          93→// directoryExists checks if a directory exists
+          94→func directoryExists(path string) (bool, error) {
+        …
+         110→func directoryIsWritable(path string) (bool, error) {
+        …
     data_dir_test.go
     deltatracker/
     disk.go
@@ -263,7 +275,6 @@ internal/
             …
               14→// DeleteOldAlertsHistory exposes deleteOldAlertsHistory for testing
               15→func DeleteOldAlertsHistory(app core.App, countToKeep, countBeforeDeletion int) error {
-              16→	return deleteOldAlertsHistory(app, countToKeep, countBeforeDeletion)
             …
               19→// TwoDecimals exposes twoDecimals for testing
               20→func TwoDecimals(value float64) float64 {
@@ -309,7 +320,7 @@ readme.md
       48→- **Network usage** - Host system and containers.
       49→- **Load average** - Host system.
       50→- **Temperature** - Host system sensors.
-      51→- **GPU usage / power draw** - Nvidia, AMD, and Intel.
+    …
       52→- **Battery** - Host system battery charge.
     …
       56→## Help and discussion

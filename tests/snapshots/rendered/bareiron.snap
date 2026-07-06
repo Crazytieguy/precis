@@ -74,8 +74,7 @@ include/
           43→// Initial world generation seed, will be hashed on startup
           44→// Used in generating terrain and biomes
           45→#define INITIAL_WORLD_SEED 0xA103DE6C
-          47→// Initial general RNG seed, will be hashed on startup
-          48→// Used in random game events like item drops and mob behavior
+        …
           49→#define INITIAL_RNG_SEED 0xE2B9419
         …
           53→#define CHUNK_SIZE 8
@@ -96,6 +95,33 @@ include/
           93→#define DISK_SYNC_INTERVAL 15000000
         …
     packets.h
+        …
+           5→int cs_handshake (int client_fd);
+           6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
+           7→int cs_clientInformation (int client_fd);
+           8→int cs_pluginMessage (int client_fd);
+           9→int cs_playerAction (int client_fd);
+          10→int cs_useItemOn (int client_fd);
+          11→int cs_useItem (int client_fd);
+          12→int cs_setPlayerPositionAndRotation (int client_fd, double *x, double *y, double *z, float *yaw, float *pitch, uint8_t *on_ground);
+          13→int cs_setPlayerPosition (int client_fd, double *x, double *y, double *z, uint8_t *on_ground);
+          14→int cs_setPlayerRotation (int client_fd, float *yaw, float *pitch, uint8_t *on_ground);
+          15→int cs_setPlayerMovementFlags (int client_fd, uint8_t *on_ground);
+          16→int cs_setHeldItem (int client_fd);
+          17→int cs_swingArm (int client_fd);
+          18→int cs_clickContainer (int client_fd);
+          19→int cs_closeContainer (int client_fd);
+          20→int cs_clientStatus (int client_fd);
+          21→int cs_chat (int client_fd);
+          22→int cs_interact (int client_fd);
+          23→int cs_playerInput (int client_fd);
+          24→int cs_playerCommand (int client_fd);
+          25→int cs_playerLoaded (int client_fd);
+          27→// Clientbound packets
+          28→int sc_statusResponse (int client_fd);
+          29→int sc_loginSuccess (int client_fd, uint8_t *uuid, char *name);
+          30→int sc_knownPacks (int client_fd);
+        …
     procedures.h
     serialize.h
            1→#ifndef SERIALIZE_H
@@ -218,13 +244,6 @@ include/
 src/
     CMakeLists.txt
     crafting.c
-        …
-           9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
-        …
-         349→#define registerSmeltingRecipe(a, b) \
-        …
-         352→void getSmeltingOutput (PlayerData *player) {
-        …
     globals.c
     main.c
         …

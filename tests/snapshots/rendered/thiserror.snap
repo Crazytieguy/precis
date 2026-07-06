@@ -136,17 +136,25 @@ impl/
     LICENSE-MIT
     src/
         ast.rs
+            …
+              10→pub enum Input<'a> {
+              11→    Struct(Struct<'a>),
+              12→    Enum(Enum<'a>),
+              13→}
+              15→pub struct Struct<'a> {
+            …
+              22→pub struct Enum<'a> {
+            …
+              29→pub struct Variant<'a> {
+            …
+              36→pub struct Field<'a> {
+            …
+              45→pub enum ContainerKind {
+            …
         attr.rs
         expand.rs
             …
               12→pub fn derive(input: &DeriveInput) -> TokenStream {
-              13→    match try_expand(input) {
-              14→        Ok(expanded) => expanded,
-              15→        // If there are invalid attributes in the input, expand to an Error impl
-              16→        // anyway to minimize spurious secondary errors in other code that uses
-              17→        // this type as an Error.
-              18→        Err(error) => fallback::expand(input, error),
-              19→    }
             …
              505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
             …

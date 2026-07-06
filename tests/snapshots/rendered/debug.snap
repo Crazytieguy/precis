@@ -140,6 +140,9 @@ package.json
 src/
     browser.js
         …
+           3→/**
+           4→ * This is the web browser implementation of `debug()`.
+           5→ */
            7→exports.formatArgs = formatArgs;
            8→exports.save = save;
            9→exports.load = load;
@@ -165,6 +168,16 @@ src/
          192→exports.log = console.debug || console.log || (() => {});
         …
          200→function save(namespaces) {
+         201→	try {
+         202→		if (namespaces) {
+         203→			exports.storage.setItem('debug', namespaces);
+         204→		} else {
+         205→			exports.storage.removeItem('debug');
+         206→		}
+         207→	} catch (error) {
+         208→		// Swallow
+         209→		// XXX (@Qix-) should we be logging these?
+         210→	}
         …
          219→function load() {
         …
@@ -254,19 +267,6 @@ src/
          239→		return namespaces;
         …
          249→	function enabled(name) {
-         250→		for (const skip of createDebug.skips) {
-         251→			if (matchesTemplate(name, skip)) {
-         252→				return false;
-         253→			}
-         254→		}
-         255→
-         256→		for (const ns of createDebug.names) {
-         257→			if (matchesTemplate(name, ns)) {
-         258→				return true;
-         259→			}
-         260→		}
-         261→
-         262→		return false;
         …
          272→	function coerce(val) {
          273→		if (val instanceof Error) {

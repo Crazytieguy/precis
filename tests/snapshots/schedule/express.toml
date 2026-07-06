@@ -1,7 +1,7 @@
 fixture = "express"
 budget = 10000
-cumulative_tokens = 9954
-batch_count = 158
+cumulative_tokens = 9790
+batch_count = 157
 
 [[batches]]
 position = 1
@@ -63,10 +63,24 @@ kind = "full"
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 24
+cum_tokens = 145
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib"
+entries = ["application.js", "express.js", "request.js", "response.js", "utils.js", "view.js"]
+
+[[batches]]
+position = 5
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 8
-cum_tokens = 129
+cum_tokens = 153
 
 [batches.content]
 kind = "lines"
@@ -78,20 +92,6 @@ end = 9
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "lib" })'
-descriptor = "listing of 'lib'"
-cost_tokens = 24
-cum_tokens = 153
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib"
-entries = ["application.js", "express.js", "request.js", "response.js", "utils.js", "view.js"]
 
 [[batches]]
 position = 6
@@ -1041,10 +1041,28 @@ kind = "full"
 
 [[batches]]
 position = 33
+key = 'Typescript(ExportDoc { file: "lib/request.js", start_line: 37 })'
+descriptor = "export doc at lib/request.js:37"
+cost_tokens = 26
+cum_tokens = 1621
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 32
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
 key = 'Typescript(Imports { file: "lib/express.js" })'
 descriptor = "imports in lib/express.js"
 cost_tokens = 25
-cum_tokens = 1620
+cum_tokens = 1646
 
 [batches.content]
 kind = "lines"
@@ -1061,24 +1079,6 @@ kind = "full"
 path = "lib/express.js"
 start = 15
 end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Typescript(ExportDoc { file: "lib/request.js", start_line: 37 })'
-descriptor = "export doc at lib/request.js:37"
-cost_tokens = 26
-cum_tokens = 1646
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/request.js"
-start = 32
-end = 35
 
 [batches.content.spans.render]
 kind = "full"
@@ -1111,10 +1111,24 @@ kind = "full"
 
 [[batches]]
 position = 36
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 101
+cum_tokens = 1774
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["README.md", "auth", "content-negotiation", "cookie-sessions", "cookies", "downloads", "ejs", "error", "error-pages", "hello-world", "markdown", "multi-router", "mvc", "online", "params", "resource", "route-map", "route-middleware", "route-separation", "search", "session", "static-files", "vhost", "view-constructor", "view-locals", "web-service"]
+
+[[batches]]
+position = 37
 key = 'Typescript(ExportDoc { file: "lib/express.js", start_line: 36 })'
 descriptor = "export doc at lib/express.js:36"
 cost_tokens = 42
-cum_tokens = 1715
+cum_tokens = 1816
 
 [batches.content]
 kind = "lines"
@@ -1128,25 +1142,711 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 37
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 101
-cum_tokens = 1816
+position = 38
+key = 'Typescript(ExportNames { file: "lib/application.js", chunk_index: 0, export_count: 16, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/application.js"
+cost_tokens = 236
+cum_tokens = 2052
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "examples"
-entries = ["README.md", "auth", "content-negotiation", "cookie-sessions", "cookies", "downloads", "ejs", "error", "error-pages", "hello-world", "markdown", "multi-router", "mvc", "online", "params", "resource", "route-map", "route-middleware", "route-separation", "search", "session", "static-files", "vhost", "view-constructor", "view-locals", "web-service"]
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 190
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 322
+end = 322
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 351
+end = 351
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 399
+end = 399
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 420
+end = 420
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 439
+end = 439
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 451
+end = 451
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 463
+end = 463
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 494
+end = 494
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 522
+end = 522
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 598
+end = 598
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 323
+end = 323
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 352
+end = 352
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 400
+end = 400
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 421
+end = 421
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 440
+end = 440
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 452
+end = 452
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 464
+end = 464
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 495
+end = 495
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 523
+end = 523
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 599
+end = 599
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 39
+key = 'Typescript(Export { file: "lib/application.js", start_line: 59 })'
+descriptor = "export at lib/application.js:59"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 40
+key = 'Typescript(Export { file: "lib/application.js", start_line: 90 })'
+descriptor = "export at lib/application.js:90"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 41
+key = 'Typescript(Export { file: "lib/application.js", start_line: 152 })'
+descriptor = "export at lib/application.js:152"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'Typescript(Export { file: "lib/application.js", start_line: 190 })'
+descriptor = "export at lib/application.js:190"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 190
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 43
+key = 'Typescript(Export { file: "lib/application.js", start_line: 256 })'
+descriptor = "export at lib/application.js:256"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 44
+key = 'Typescript(Export { file: "lib/application.js", start_line: 294 })'
+descriptor = "export at lib/application.js:294"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 45
+key = 'Typescript(Export { file: "lib/application.js", start_line: 322 })'
+descriptor = "export at lib/application.js:322"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 322
+end = 322
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 323
+end = 323
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 46
+key = 'Typescript(Export { file: "lib/application.js", start_line: 351 })'
+descriptor = "export at lib/application.js:351"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 351
+end = 351
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 352
+end = 352
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 47
+key = 'Typescript(Export { file: "lib/application.js", start_line: 399 })'
+descriptor = "export at lib/application.js:399"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 399
+end = 399
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 400
+end = 400
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 48
+key = 'Typescript(Export { file: "lib/application.js", start_line: 420 })'
+descriptor = "export at lib/application.js:420"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 420
+end = 420
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 421
+end = 421
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'Typescript(Export { file: "lib/application.js", start_line: 439 })'
+descriptor = "export at lib/application.js:439"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 439
+end = 439
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 440
+end = 440
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 50
+key = 'Typescript(Export { file: "lib/application.js", start_line: 451 })'
+descriptor = "export at lib/application.js:451"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 451
+end = 451
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 452
+end = 452
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 51
+key = 'Typescript(Export { file: "lib/application.js", start_line: 463 })'
+descriptor = "export at lib/application.js:463"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 463
+end = 463
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 464
+end = 464
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 52
+key = 'Typescript(Export { file: "lib/application.js", start_line: 494 })'
+descriptor = "export at lib/application.js:494"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 494
+end = 494
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 495
+end = 495
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 53
+key = 'Typescript(Export { file: "lib/application.js", start_line: 522 })'
+descriptor = "export at lib/application.js:522"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 522
+end = 522
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 523
+end = 523
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'Typescript(Export { file: "lib/application.js", start_line: 598 })'
+descriptor = "export at lib/application.js:598"
+cost_tokens = 0
+cum_tokens = 2052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 598
+end = 598
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 599
+end = 599
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 90 })'
+descriptor = "export doc at lib/application.js:90"
+cost_tokens = 27
+cum_tokens = 2079
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 85
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
 key = 'Markdown(Section { file: "Readme.md", section_index: 19, reference_shaped: false })'
 descriptor = "Readme.md section #19"
 cost_tokens = 23
-cum_tokens = 1839
+cum_tokens = 2102
 
 [batches.content]
 kind = "lines"
@@ -1160,11 +1860,11 @@ end = 193
 kind = "full"
 
 [[batches]]
-position = 39
+position = 57
 key = 'Markdown(Section { file: "Readme.md", section_index: 30, reference_shaped: false })'
 descriptor = "Readme.md section #30"
 cost_tokens = 23
-cum_tokens = 1862
+cum_tokens = 2125
 
 [batches.content]
 kind = "lines"
@@ -1178,11 +1878,11 @@ end = 216
 kind = "full"
 
 [[batches]]
-position = 40
+position = 58
 key = 'Markdown(Section { file: "Readme.md", section_index: 12, reference_shaped: false })'
 descriptor = "Readme.md section #12"
 cost_tokens = 24
-cum_tokens = 1886
+cum_tokens = 2149
 
 [batches.content]
 kind = "lines"
@@ -1196,11 +1896,11 @@ end = 184
 kind = "full"
 
 [[batches]]
-position = 41
+position = 59
 key = 'Markdown(Section { file: "Readme.md", section_index: 32, reference_shaped: false })'
 descriptor = "Readme.md section #32"
 cost_tokens = 24
-cum_tokens = 1910
+cum_tokens = 2173
 
 [batches.content]
 kind = "lines"
@@ -1209,706 +1909,6 @@ kind = "lines"
 path = "Readme.md"
 start = 219
 end = 220
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Typescript(ExportNames { file: "lib/application.js", chunk_index: 0, export_count: 16, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/application.js"
-cost_tokens = 236
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 152
-end = 152
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 190
-end = 190
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 256
-end = 256
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 294
-end = 294
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 322
-end = 322
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 351
-end = 351
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 399
-end = 399
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 420
-end = 420
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 439
-end = 439
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 451
-end = 451
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 463
-end = 463
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 494
-end = 494
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 522
-end = 522
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 598
-end = 598
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 153
-end = 153
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 257
-end = 257
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 295
-end = 295
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 323
-end = 323
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 352
-end = 352
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 400
-end = 400
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 421
-end = 421
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 440
-end = 440
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 452
-end = 452
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 464
-end = 464
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 495
-end = 495
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 523
-end = 523
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 599
-end = 599
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 43
-key = 'Typescript(Export { file: "lib/application.js", start_line: 59 })'
-descriptor = "export at lib/application.js:59"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 44
-key = 'Typescript(Export { file: "lib/application.js", start_line: 90 })'
-descriptor = "export at lib/application.js:90"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 45
-key = 'Typescript(Export { file: "lib/application.js", start_line: 152 })'
-descriptor = "export at lib/application.js:152"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 152
-end = 152
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 153
-end = 153
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 46
-key = 'Typescript(Export { file: "lib/application.js", start_line: 190 })'
-descriptor = "export at lib/application.js:190"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 190
-end = 190
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 47
-key = 'Typescript(Export { file: "lib/application.js", start_line: 256 })'
-descriptor = "export at lib/application.js:256"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 256
-end = 256
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 257
-end = 257
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 48
-key = 'Typescript(Export { file: "lib/application.js", start_line: 294 })'
-descriptor = "export at lib/application.js:294"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 294
-end = 294
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 295
-end = 295
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 49
-key = 'Typescript(Export { file: "lib/application.js", start_line: 322 })'
-descriptor = "export at lib/application.js:322"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 322
-end = 322
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 323
-end = 323
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 50
-key = 'Typescript(Export { file: "lib/application.js", start_line: 351 })'
-descriptor = "export at lib/application.js:351"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 351
-end = 351
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 352
-end = 352
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 51
-key = 'Typescript(Export { file: "lib/application.js", start_line: 399 })'
-descriptor = "export at lib/application.js:399"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 399
-end = 399
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 400
-end = 400
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 52
-key = 'Typescript(Export { file: "lib/application.js", start_line: 420 })'
-descriptor = "export at lib/application.js:420"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 420
-end = 420
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 421
-end = 421
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 53
-key = 'Typescript(Export { file: "lib/application.js", start_line: 439 })'
-descriptor = "export at lib/application.js:439"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 439
-end = 439
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 440
-end = 440
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 54
-key = 'Typescript(Export { file: "lib/application.js", start_line: 451 })'
-descriptor = "export at lib/application.js:451"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 451
-end = 451
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 452
-end = 452
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 55
-key = 'Typescript(Export { file: "lib/application.js", start_line: 463 })'
-descriptor = "export at lib/application.js:463"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 463
-end = 463
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 464
-end = 464
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 56
-key = 'Typescript(Export { file: "lib/application.js", start_line: 494 })'
-descriptor = "export at lib/application.js:494"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 494
-end = 494
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 495
-end = 495
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 57
-key = 'Typescript(Export { file: "lib/application.js", start_line: 522 })'
-descriptor = "export at lib/application.js:522"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 522
-end = 522
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 523
-end = 523
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 58
-key = 'Typescript(Export { file: "lib/application.js", start_line: 598 })'
-descriptor = "export at lib/application.js:598"
-cost_tokens = 0
-cum_tokens = 2146
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 598
-end = 598
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 599
-end = 599
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 59
-key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 90 })'
-descriptor = "export doc at lib/application.js:90"
-cost_tokens = 27
-cum_tokens = 2173
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 85
-end = 88
 
 [batches.content.spans.render]
 kind = "full"
@@ -1951,10 +1951,46 @@ kind = "full"
 
 [[batches]]
 position = 62
+key = 'Markdown(Section { file: "Readme.md", section_index: 23, reference_shaped: false })'
+descriptor = "Readme.md section #23"
+cost_tokens = 26
+cum_tokens = 2306
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Markdown(Section { file: "Readme.md", section_index: 24, reference_shaped: false })'
+descriptor = "Readme.md section #24"
+cost_tokens = 25
+cum_tokens = 2331
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 210
+end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
 key = 'Typescript(Imports { file: "lib/response.js" })'
 descriptor = "imports in lib/response.js"
 cost_tokens = 41
-cum_tokens = 2321
+cum_tokens = 2372
 
 [batches.content]
 kind = "lines"
@@ -1976,11 +2012,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 63
+position = 65
 key = 'Typescript(ExportBody { file: "lib/request.js", start_line: 63, body_start_line: 65 })'
 descriptor = "export body at lib/request.js:63 body 65"
 cost_tokens = 178
-cum_tokens = 2499
+cum_tokens = 2550
 
 [batches.content]
 kind = "lines"
@@ -1989,42 +2025,6 @@ kind = "lines"
 path = "lib/request.js"
 start = 65
 end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'Markdown(Section { file: "Readme.md", section_index: 23, reference_shaped: false })'
-descriptor = "Readme.md section #23"
-cost_tokens = 26
-cum_tokens = 2525
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 209
-end = 209
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 65
-key = 'Markdown(Section { file: "Readme.md", section_index: 24, reference_shaped: false })'
-descriptor = "Readme.md section #24"
-cost_tokens = 25
-cum_tokens = 2550
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 210
-end = 210
 
 [batches.content.spans.render]
 kind = "full"
@@ -2121,46 +2121,10 @@ kind = "full"
 
 [[batches]]
 position = 71
-key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 451 })'
-descriptor = "export doc at lib/application.js:451"
-cost_tokens = 57
-cum_tokens = 2738
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 443
-end = 449
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 463 })'
-descriptor = "export doc at lib/application.js:463"
-cost_tokens = 57
-cum_tokens = 2795
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 455
-end = 461
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
 key = 'Markdown(Section { file: "Readme.md", section_index: 22, reference_shaped: false })'
 descriptor = "Readme.md section #22"
 cost_tokens = 28
-cum_tokens = 2823
+cum_tokens = 2709
 
 [batches.content]
 kind = "lines"
@@ -2174,83 +2138,11 @@ end = 208
 kind = "full"
 
 [[batches]]
-position = 74
-key = 'Typescript(ExportDoc { file: "lib/request.js", start_line: 140 })'
-descriptor = "export doc at lib/request.js:140"
-cost_tokens = 63
-cum_tokens = 2886
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/request.js"
-start = 132
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
-key = 'Markdown(Section { file: "Readme.md", section_index: 27, reference_shaped: false })'
-descriptor = "Readme.md section #27"
-cost_tokens = 30
-cum_tokens = 2916
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 213
-end = 213
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 76
-key = 'Markdown(Section { file: "Readme.md", section_index: 29, reference_shaped: false })'
-descriptor = "Readme.md section #29"
-cost_tokens = 30
-cum_tokens = 2946
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 215
-end = 215
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
-key = 'Markdown(Section { file: "Readme.md", section_index: 28, reference_shaped: false })'
-descriptor = "Readme.md section #28"
-cost_tokens = 29
-cum_tokens = 2975
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 214
-end = 214
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 78
+position = 72
 key = 'Typescript(ExportNames { file: "lib/response.js", chunk_index: 0, export_count: 21, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/response.js"
 cost_tokens = 310
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2592,11 +2484,11 @@ end = 895
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 73
 key = 'Typescript(Export { file: "lib/response.js", start_line: 49 })'
 descriptor = "export at lib/response.js:49"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2610,11 +2502,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 80
+position = 74
 key = 'Typescript(Export { file: "lib/response.js", start_line: 64 })'
 descriptor = "export at lib/response.js:64"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2636,11 +2528,11 @@ end = 65
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 75
 key = 'Typescript(Export { file: "lib/response.js", start_line: 97 })'
 descriptor = "export at lib/response.js:97"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2662,11 +2554,11 @@ end = 98
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 76
 key = 'Typescript(Export { file: "lib/response.js", start_line: 125 })'
 descriptor = "export at lib/response.js:125"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2688,11 +2580,11 @@ end = 126
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 77
 key = 'Typescript(Export { file: "lib/response.js", start_line: 232 })'
 descriptor = "export at lib/response.js:232"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2714,11 +2606,11 @@ end = 233
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 78
 key = 'Typescript(Export { file: "lib/response.js", start_line: 260 })'
 descriptor = "export at lib/response.js:260"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2740,11 +2632,11 @@ end = 261
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 79
 key = 'Typescript(Export { file: "lib/response.js", start_line: 321 })'
 descriptor = "export at lib/response.js:321"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2766,11 +2658,11 @@ end = 322
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 80
 key = 'Typescript(Export { file: "lib/response.js", start_line: 371 })'
 descriptor = "export at lib/response.js:371"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2792,11 +2684,11 @@ end = 372
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 81
 key = 'Typescript(Export { file: "lib/response.js", start_line: 433 })'
 descriptor = "export at lib/response.js:433"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2818,11 +2710,11 @@ end = 434
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 82
 key = 'Typescript(Export { file: "lib/response.js", start_line: 569 })'
 descriptor = "export at lib/response.js:569"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2844,11 +2736,11 @@ end = 570
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 83
 key = 'Typescript(Export { file: "lib/response.js", start_line: 604 })'
 descriptor = "export at lib/response.js:604"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2870,11 +2762,11 @@ end = 605
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 84
 key = 'Typescript(Export { file: "lib/response.js", start_line: 629 })'
 descriptor = "export at lib/response.js:629"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2896,11 +2788,11 @@ end = 630
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 85
 key = 'Typescript(Export { file: "lib/response.js", start_line: 696 })'
 descriptor = "export at lib/response.js:696"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2922,11 +2814,11 @@ end = 697
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 86
 key = 'Typescript(Export { file: "lib/response.js", start_line: 709 })'
 descriptor = "export at lib/response.js:709"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2840,11 @@ end = 710
 kind = "ellipsis"
 
 [[batches]]
-position = 93
+position = 87
 key = 'Typescript(Export { file: "lib/response.js", start_line: 742 })'
 descriptor = "export at lib/response.js:742"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -2974,11 +2866,11 @@ end = 743
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 88
 key = 'Typescript(Export { file: "lib/response.js", start_line: 794 })'
 descriptor = "export at lib/response.js:794"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -3000,11 +2892,11 @@ end = 795
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 89
 key = 'Typescript(Export { file: "lib/response.js", start_line: 812 })'
 descriptor = "export at lib/response.js:812"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -3026,11 +2918,11 @@ end = 813
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 90
 key = 'Typescript(Export { file: "lib/response.js", start_line: 875 })'
 descriptor = "export at lib/response.js:875"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -3052,11 +2944,11 @@ end = 876
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 91
 key = 'Typescript(Export { file: "lib/response.js", start_line: 894 })'
 descriptor = "export at lib/response.js:894"
 cost_tokens = 0
-cum_tokens = 3285
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -3078,11 +2970,11 @@ end = 895
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 92
 key = 'Typescript(Export { file: "lib/response.js", start_line: 503 })'
 descriptor = "export at lib/response.js:503"
 cost_tokens = 13
-cum_tokens = 3298
+cum_tokens = 3032
 
 [batches.content]
 kind = "lines"
@@ -3104,11 +2996,11 @@ end = 505
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 93
 key = 'Typescript(Export { file: "lib/response.js", start_line: 664 })'
 descriptor = "export at lib/response.js:664"
 cost_tokens = 14
-cum_tokens = 3312
+cum_tokens = 3046
 
 [batches.content]
 kind = "lines"
@@ -3130,11 +3022,11 @@ end = 666
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 94
 key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 49 })'
 descriptor = "export doc at lib/response.js:49"
 cost_tokens = 26
-cum_tokens = 3338
+cum_tokens = 3072
 
 [batches.content]
 kind = "lines"
@@ -3148,11 +3040,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 101
+position = 95
 key = 'Typescript(ExportBody { file: "lib/response.js", start_line: 232, body_start_line: 233 })'
 descriptor = "export body at lib/response.js:232 body 233"
 cost_tokens = 145
-cum_tokens = 3483
+cum_tokens = 3217
 
 [batches.content]
 kind = "lines"
@@ -3166,11 +3058,11 @@ end = 245
 kind = "full"
 
 [[batches]]
-position = 102
+position = 96
 key = 'Typescript(ExportBody { file: "lib/response.js", start_line: 64, body_start_line: 65 })'
 descriptor = "export body at lib/response.js:64 body 65"
 cost_tokens = 164
-cum_tokens = 3647
+cum_tokens = 3381
 
 [batches.content]
 kind = "lines"
@@ -3184,11 +3076,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 103
+position = 97
 key = 'Typescript(ExportBody { file: "lib/response.js", start_line: 97, body_start_line: 98 })'
 descriptor = "export body at lib/response.js:97 body 98"
 cost_tokens = 171
-cum_tokens = 3818
+cum_tokens = 3552
 
 [batches.content]
 kind = "lines"
@@ -3202,11 +3094,61 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 104
+position = 98
+key = 'Fs(DirListing { dir: "test/support" })'
+descriptor = "listing of 'test/support'"
+cost_tokens = 12
+cum_tokens = 3564
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/support"
+entries = ["env.js", "tmpl.js", "utils.js"]
+
+[[batches]]
+position = 99
+key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 451 })'
+descriptor = "export doc at lib/application.js:451"
+cost_tokens = 57
+cum_tokens = 3621
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 443
+end = 449
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 463 })'
+descriptor = "export doc at lib/application.js:463"
+cost_tokens = 57
+cum_tokens = 3678
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 455
+end = 461
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
 key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 696 })'
 descriptor = "export doc at lib/response.js:696"
 cost_tokens = 57
-cum_tokens = 3875
+cum_tokens = 3735
 
 [batches.content]
 kind = "lines"
@@ -3220,11 +3162,83 @@ end = 694
 kind = "full"
 
 [[batches]]
+position = 102
+key = 'Markdown(Section { file: "Readme.md", section_index: 27, reference_shaped: false })'
+descriptor = "Readme.md section #27"
+cost_tokens = 30
+cum_tokens = 3765
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 213
+end = 213
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Markdown(Section { file: "Readme.md", section_index: 29, reference_shaped: false })'
+descriptor = "Readme.md section #29"
+cost_tokens = 30
+cum_tokens = 3795
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Markdown(Section { file: "Readme.md", section_index: 28, reference_shaped: false })'
+descriptor = "Readme.md section #28"
+cost_tokens = 29
+cum_tokens = 3824
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 214
+end = 214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 105
+key = 'Typescript(ExportDoc { file: "lib/request.js", start_line: 140 })'
+descriptor = "export doc at lib/request.js:140"
+cost_tokens = 63
+cum_tokens = 3887
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 132
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
 key = 'Typescript(ExportBody { file: "lib/application.js", start_line: 59, body_start_line: 60 })'
 descriptor = "export body at lib/application.js:59 body 60"
 cost_tokens = 217
-cum_tokens = 4092
+cum_tokens = 4104
 
 [batches.content]
 kind = "lines"
@@ -3238,11 +3252,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Typescript(ExportBody { file: "lib/express.js", start_line: 36, body_start_line: 37 })'
 descriptor = "export body at lib/express.js:36 body 37"
 cost_tokens = 217
-cum_tokens = 4309
+cum_tokens = 4321
 
 [batches.content]
 kind = "lines"
@@ -3256,115 +3270,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 107
-key = 'Fs(DirListing { dir: "test/support" })'
-descriptor = "listing of 'test/support'"
-cost_tokens = 12
-cum_tokens = 4321
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/support"
-entries = ["env.js", "tmpl.js", "utils.js"]
-
-[[batches]]
 position = 108
-key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 604 })'
-descriptor = "export doc at lib/response.js:604"
-cost_tokens = 66
-cum_tokens = 4387
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/response.js"
-start = 596
-end = 602
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Markdown(Section { file: "Readme.md", section_index: 11, reference_shaped: false })'
-descriptor = "Readme.md section #11"
-cost_tokens = 32
-cum_tokens = 4419
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 183
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Markdown(Section { file: "Readme.md", section_index: 21, reference_shaped: false })'
-descriptor = "Readme.md section #21"
-cost_tokens = 32
-cum_tokens = 4451
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 207
-end = 207
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Markdown(Section { file: "Readme.md", section_index: 31, reference_shaped: false })'
-descriptor = "Readme.md section #31"
-cost_tokens = 32
-cum_tokens = 4483
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 217
-end = 217
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Markdown(Section { file: "Readme.md", section_index: 3, reference_shaped: false })'
-descriptor = "Readme.md section #3"
-cost_tokens = 131
-cum_tokens = 4614
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 79
-end = 85
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 340
-cum_tokens = 4954
+cum_tokens = 4661
 
 [batches.content]
 kind = "lines"
@@ -3386,11 +3296,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 114
+position = 109
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 52
-cum_tokens = 5006
+cum_tokens = 4713
 
 [batches.content]
 kind = "lines"
@@ -3404,11 +3314,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 115
+position = 110
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 29
-cum_tokens = 5035
+cum_tokens = 4742
 
 [batches.content]
 kind = "lines"
@@ -3422,11 +3332,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 116
+position = 111
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 176
-cum_tokens = 5211
+cum_tokens = 4918
 
 [batches.content]
 kind = "lines"
@@ -3440,29 +3350,101 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 117
-key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 59 })'
-descriptor = "export doc at lib/application.js:59"
-cost_tokens = 71
-cum_tokens = 5282
+position = 112
+key = 'Markdown(Section { file: "Readme.md", section_index: 11, reference_shaped: false })'
+descriptor = "Readme.md section #11"
+cost_tokens = 32
+cum_tokens = 4950
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "lib/application.js"
-start = 49
-end = 57
+path = "Readme.md"
+start = 183
+end = 183
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 118
+position = 113
+key = 'Markdown(Section { file: "Readme.md", section_index: 21, reference_shaped: false })'
+descriptor = "Readme.md section #21"
+cost_tokens = 32
+cum_tokens = 4982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Markdown(Section { file: "Readme.md", section_index: 31, reference_shaped: false })'
+descriptor = "Readme.md section #31"
+cost_tokens = 32
+cum_tokens = 5014
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 217
+end = 217
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Markdown(Section { file: "Readme.md", section_index: 3, reference_shaped: false })'
+descriptor = "Readme.md section #3"
+cost_tokens = 131
+cum_tokens = 5145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 79
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 604 })'
+descriptor = "export doc at lib/response.js:604"
+cost_tokens = 66
+cum_tokens = 5211
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 596
+end = 602
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
 key = 'Markdown(Section { file: "Readme.md", section_index: 26, reference_shaped: false })'
 descriptor = "Readme.md section #26"
 cost_tokens = 33
-cum_tokens = 5315
+cum_tokens = 5244
 
 [batches.content]
 kind = "lines"
@@ -3476,11 +3458,11 @@ end = 212
 kind = "full"
 
 [[batches]]
-position = 119
+position = 118
 key = 'Markdown(Section { file: "Readme.md", section_index: 25, reference_shaped: false })'
 descriptor = "Readme.md section #25"
 cost_tokens = 32
-cum_tokens = 5347
+cum_tokens = 5276
 
 [batches.content]
 kind = "lines"
@@ -3494,29 +3476,11 @@ end = 211
 kind = "full"
 
 [[batches]]
-position = 120
-key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 709 })'
-descriptor = "export doc at lib/response.js:709"
-cost_tokens = 72
-cum_tokens = 5419
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/response.js"
-start = 700
-end = 707
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
+position = 119
 key = 'Markdown(Section { file: "Readme.md", section_index: 10, reference_shaped: false })'
 descriptor = "Readme.md section #10"
 cost_tokens = 104
-cum_tokens = 5523
+cum_tokens = 5380
 
 [batches.content]
 kind = "lines"
@@ -3530,29 +3494,47 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 122
-key = 'Typescript(ExportBody { file: "lib/application.js", start_line: 152, body_start_line: 153 })'
-descriptor = "export body at lib/application.js:152 body 153"
-cost_tokens = 252
-cum_tokens = 5775
+position = 120
+key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 59 })'
+descriptor = "export doc at lib/application.js:59"
+cost_tokens = 71
+cum_tokens = 5451
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "lib/application.js"
-start = 153
-end = 177
+start = 49
+end = 57
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 123
+position = 121
+key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 709 })'
+descriptor = "export doc at lib/response.js:709"
+cost_tokens = 72
+cum_tokens = 5523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 700
+end = 707
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
 key = 'Markdown(Section { file: "Readme.md", section_index: 5, reference_shaped: false })'
 descriptor = "Readme.md section #5"
 cost_tokens = 124
-cum_tokens = 5899
+cum_tokens = 5647
 
 [batches.content]
 kind = "lines"
@@ -3561,6 +3543,24 @@ kind = "lines"
 path = "Readme.md"
 start = 117
 end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Typescript(ExportBody { file: "lib/application.js", start_line: 152, body_start_line: 153 })'
+descriptor = "export body at lib/application.js:152 body 153"
+cost_tokens = 252
+cum_tokens = 5899
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 153
+end = 177
 
 [batches.content.spans.render]
 kind = "full"
@@ -3693,28 +3693,10 @@ kind = "full"
 
 [[batches]]
 position = 131
-key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 260 })'
-descriptor = "export doc at lib/response.js:260"
-cost_tokens = 99
-cum_tokens = 6615
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/response.js"
-start = 248
-end = 258
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 132
 key = 'Markdown(Section { file: "Readme.md", section_index: 6, reference_shaped: false })'
 descriptor = "Readme.md section #6"
 cost_tokens = 146
-cum_tokens = 6761
+cum_tokens = 6662
 
 [batches.content]
 kind = "lines"
@@ -3728,11 +3710,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'Markdown(Section { file: "Readme.md", section_index: 8, reference_shaped: false })'
 descriptor = "Readme.md section #8"
 cost_tokens = 37
-cum_tokens = 6798
+cum_tokens = 6699
 
 [batches.content]
 kind = "lines"
@@ -3746,29 +3728,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 134
-key = 'Typescript(Imports { file: "lib/view.js" })'
-descriptor = "imports in lib/view.js"
-cost_tokens = 12
-cum_tokens = 6810
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/view.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 135
+position = 133
 key = 'Typescript(ExportNames { file: "lib/view.js", chunk_index: 0, export_count: 5, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/view.js"
-cost_tokens = 73
-cum_tokens = 6883
+cost_tokens = 75
+cum_tokens = 6774
 
 [batches.content]
 kind = "lines"
@@ -3854,11 +3818,11 @@ end = 170
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 134
 key = 'Typescript(Export { file: "lib/view.js", start_line: 36 })'
 descriptor = "export at lib/view.js:36"
 cost_tokens = 0
-cum_tokens = 6883
+cum_tokens = 6774
 
 [batches.content]
 kind = "lines"
@@ -3872,11 +3836,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 137
+position = 135
 key = 'Typescript(Export { file: "lib/view.js", start_line: 52 })'
 descriptor = "export at lib/view.js:52"
 cost_tokens = 0
-cum_tokens = 6883
+cum_tokens = 6774
 
 [batches.content]
 kind = "lines"
@@ -3898,11 +3862,11 @@ end = 53
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 136
 key = 'Typescript(Export { file: "lib/view.js", start_line: 104 })'
 descriptor = "export at lib/view.js:104"
 cost_tokens = 0
-cum_tokens = 6883
+cum_tokens = 6774
 
 [batches.content]
 kind = "lines"
@@ -3924,11 +3888,11 @@ end = 105
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 137
 key = 'Typescript(Export { file: "lib/view.js", start_line: 133 })'
 descriptor = "export at lib/view.js:133"
 cost_tokens = 0
-cum_tokens = 6883
+cum_tokens = 6774
 
 [batches.content]
 kind = "lines"
@@ -3950,11 +3914,11 @@ end = 134
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 138
 key = 'Typescript(Export { file: "lib/view.js", start_line: 169 })'
 descriptor = "export at lib/view.js:169"
 cost_tokens = 0
-cum_tokens = 6883
+cum_tokens = 6774
 
 [batches.content]
 kind = "lines"
@@ -3976,11 +3940,29 @@ end = 170
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 139
+key = 'Typescript(Imports { file: "lib/view.js" })'
+descriptor = "imports in lib/view.js"
+cost_tokens = 10
+cum_tokens = 6784
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/view.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
 key = 'Fs(DirListing { dir: "test/acceptance" })'
 descriptor = "listing of 'test/acceptance'"
 cost_tokens = 86
-cum_tokens = 6969
+cum_tokens = 6870
 
 [batches.content]
 kind = "fs"
@@ -3988,6 +3970,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "test/acceptance"
 entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
+
+[[batches]]
+position = 141
+key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 260 })'
+descriptor = "export doc at lib/response.js:260"
+cost_tokens = 99
+cum_tokens = 6969
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 248
+end = 258
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 142
@@ -4171,10 +4171,38 @@ kind = "full"
 
 [[batches]]
 position = 152
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 8
+cum_tokens = 8370
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["dependabot.yml", "workflows"]
+
+[[batches]]
+position = 153
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 18
+cum_tokens = 8388
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml", "codeql.yml", "legacy.yml", "scorecard.yml"]
+
+[[batches]]
+position = 154
 key = 'Typescript(ExportBody { file: "lib/application.js", start_line: 190, body_start_line: 191 })'
 descriptor = "export body at lib/application.js:190 body 191"
 cost_tokens = 540
-cum_tokens = 8902
+cum_tokens = 8928
 
 [batches.content]
 kind = "lines"
@@ -4188,57 +4216,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 153
-key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 522 })'
-descriptor = "export doc at lib/application.js:522"
-cost_tokens = 159
-cum_tokens = 9061
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/application.js"
-start = 505
-end = 520
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 8
-cum_tokens = 9069
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "workflows"]
-
-[[batches]]
 position = 155
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 18
-cum_tokens = 9087
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml", "codeql.yml", "legacy.yml", "scorecard.yml"]
-
-[[batches]]
-position = 156
 key = 'Typescript(ExportBody { file: "lib/application.js", start_line: 90, body_start_line: 91 })'
 descriptor = "export body at lib/application.js:90 body 91"
 cost_tokens = 542
-cum_tokens = 9629
+cum_tokens = 9470
 
 [batches.content]
 kind = "lines"
@@ -4247,6 +4229,24 @@ kind = "lines"
 path = "lib/application.js"
 start = 91
 end = 140
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Typescript(ExportDoc { file: "lib/application.js", start_line: 522 })'
+descriptor = "export doc at lib/application.js:522"
+cost_tokens = 159
+cum_tokens = 9629
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 505
+end = 520
 
 [batches.content.spans.render]
 kind = "full"
@@ -4265,24 +4265,6 @@ kind = "lines"
 path = "lib/response.js"
 start = 777
 end = 792
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
-key = 'Typescript(ExportDoc { file: "lib/response.js", start_line: 629 })'
-descriptor = "export doc at lib/response.js:629"
-cost_tokens = 164
-cum_tokens = 9954
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/response.js"
-start = 614
-end = 627
 
 [batches.content.spans.render]
 kind = "full"

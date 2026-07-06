@@ -156,6 +156,12 @@ microbootstrap/
               56→    ) -> typing_extensions.Self:
             …
               61→    @classmethod
+              62→    def use_instrument(
+              63→        cls,
+              64→    ) -> typing.Callable[
+              65→        [type[Instrument[InstrumentConfigT]]],
+              66→        type[Instrument[InstrumentConfigT]],
+              67→    ]:
             …
               72→    def bootstrap(self) -> ApplicationT:
             …
@@ -167,7 +173,6 @@ microbootstrap/
              105→        return application
              107→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
             …
-             109→        return application
              111→    def teardown(self) -> None:
             …
         fastapi.py
@@ -249,7 +254,7 @@ microbootstrap/
               35→    def write_status(self, console_writer: ConsoleWriter) -> None:
             …
               42→    @abc.abstractmethod
-              43→    def is_ready(self) -> bool: ...
+            …
               45→    @classmethod
               46→    @abc.abstractmethod
               47→    def get_config_type(cls) -> type[InstrumentConfigT]:

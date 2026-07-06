@@ -8,14 +8,16 @@
 //! triple — the weights live here so per-batch numbers stay comparable
 //! across walkers. It's not load-bearing: a walker is free to skip the
 //! helper and compute its value however. The weights are sweep-confirmed
-//! at the training optimum (2026-06) — every direction regresses; don't
-//! re-sweep (see `docs/design-notes.md`).
+//! at the training optimum on the post-refreeze keys (2026-07): cat and
+//! ztu regress in both directions, fu is non-monotone with 280 > 400 >
+//! 340; don't re-sweep without a new answer key (see
+//! `docs/design-notes.md`).
 
 /// Mix three signal axes — catastrophic-omission,
 /// follow-up minimization, zero-tool-call understanding — into a scalar
 /// value, scaled by the path-relative depth/non-essential factor.
 pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
-    (1000.0 * cat + 400.0 * fu + 300.0 * ztu) * depth.max(0.0)
+    (1000.0 * cat + 280.0 * fu + 300.0 * ztu) * depth.max(0.0)
 }
 
 /// Chunk size for names-surface gates — roughly one screenful of API.

@@ -97,40 +97,40 @@ Score(3000)=0.290 I=0.374 C=0.225 ns_rows≤3K=26/44 (reached=6 partial=0 missin
 | walker |  | 2976 | 32 | ARCHITECTURE.md section #4 |  |  | 0.308 |
 | ns | 2987 |  | 433 | README FAQ | 3.4 | 3.1 | 0.290 |
 | walker |  | 2995 | 19 | README.md section #24 |  |  | 0.290 |
-| walker |  | 3107 | 112 | package dependencies in package.json |  |  | 0.290 |
-| walker |  | 3149 | 42 | package identity in cmdk/package.json |  |  | 0.291 |
-| walker |  | 3175 | 26 | README.md section #19 |  |  | 0.291 |
-| walker |  | 3201 | 26 | README.md section #22 |  |  | 0.291 |
+| walker |  | 3037 | 42 | package identity in cmdk/package.json |  |  | 0.291 |
 | ns | 3310 |  | 323 | index.tsx component + helper location roster | 4.1 |  | 0.321 |
+| walker |  | 3494 | 457 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.321 |
 | ns | 3592 |  | 282 | CommandProps core knobs | 4.2 |  | 0.307 |
-| walker |  | 3658 | 457 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.307 |
+| walker |  | 3606 | 112 | package dependencies in package.json |  |  | 0.307 |
+| walker |  | 3632 | 26 | README.md section #19 |  |  | 0.307 |
+| walker |  | 3658 | 26 | README.md section #22 |  |  | 0.307 |
 | walker |  | 3731 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.325 |
 | walker |  | 3756 | 25 | README.md section #23 |  |  | 0.325 |
-| walker |  | 3791 | 35 | README.md section #21 |  |  | 0.325 |
-| walker |  | 3845 | 54 | listing of 'website' |  |  | 0.357 |
-| walker |  | 3859 | 14 | listing of 'website/components' |  |  | 0.371 |
-| walker |  | 3882 | 23 | listing of 'website/components/cmdk' |  |  | 0.387 |
+| walker |  | 3810 | 54 | listing of 'website' |  |  | 0.357 |
+| walker |  | 3824 | 14 | listing of 'website/components' |  |  | 0.371 |
+| walker |  | 3847 | 23 | listing of 'website/components/cmdk' |  |  | 0.387 |
+| walker |  | 3882 | 35 | README.md section #21 |  |  | 0.387 |
 | ns | 3954 |  | 362 | ItemProps + GroupProps | 4.3 |  | 0.369 |
 | walker |  | 4565 | 683 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.377 |
-| walker |  | 4584 | 19 | imports in playwright.config.ts |  |  | 0.342 |
 | ns | 4584 |  | 630 | Command keyboard-navigation switch | 5.1 |  | 0.342 |
-| walker |  | 4642 | 58 | listing of 'test' |  |  | 0.371 |
-| walker |  | 4668 | 26 | export names surface in cmdk/src/command-score.ts |  |  | 0.371 |
-| walker |  | 4668 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.371 |
-| walker |  | 4680 | 12 | imports in cmdk/tsup.config.ts |  |  | 0.377 |
-| walker |  | 4748 | 68 | ARCHITECTURE.md section #3 |  |  | 0.377 |
+| walker |  | 4623 | 58 | listing of 'test' |  |  | 0.371 |
+| walker |  | 4649 | 26 | export names surface in cmdk/src/command-score.ts |  |  | 0.371 |
+| walker |  | 4649 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.371 |
+| walker |  | 4668 | 19 | imports in playwright.config.ts |  |  | 0.371 |
+| walker |  | 4736 | 68 | ARCHITECTURE.md section #3 |  |  | 0.371 |
+| walker |  | 4748 | 12 | imports in cmdk/tsup.config.ts |  |  | 0.377 |
 | walker |  | 4800 | 52 | README.md section #4 |  |  | 0.377 |
 | walker |  | 4852 | 52 | README.md section #5 |  |  | 0.377 |
 | walker |  | 4892 | 40 | README.md section #34 |  |  | 0.377 |
 | walker |  | 4909 | 17 | listing of 'website/pages' |  |  | 0.386 |
-| walker |  | 5050 | 141 | README.md section #37 |  |  | 0.422 |
-| walker |  | 5201 | 151 | README.md section #36 |  |  | 0.422 |
-| walker |  | 5206 | 5 | listing of '.husky' |  |  | 0.422 |
+| walker |  | 4914 | 5 | listing of '.husky' |  |  | 0.386 |
+| walker |  | 5055 | 141 | README.md section #37 |  |  | 0.422 |
+| walker |  | 5206 | 151 | README.md section #36 |  |  | 0.422 |
 | walker |  | 5269 | 63 | README.md section #10 |  |  | 0.422 |
 | walker |  | 5332 | 63 | README.md section #17 |  |  | 0.422 |
-| walker |  | 5398 | 66 | README.md section #26 |  |  | 0.422 |
-| walker |  | 5640 | 242 | json config tsconfig.json |  |  | 0.422 |
-| walker |  | 5700 | 60 | listing of 'test/pages' |  |  | 0.450 |
+| walker |  | 5574 | 242 | json config tsconfig.json |  |  | 0.422 |
+| walker |  | 5634 | 60 | listing of 'test/pages' |  |  | 0.450 |
+| walker |  | 5700 | 66 | README.md section #26 |  |  | 0.450 |
 | walker |  | 5771 | 71 | README.md section #20 |  |  | 0.450 |
 | walker |  | 5844 | 73 | README.md section #27 |  |  | 0.450 |
 | ns | 5845 |  | 1261 | Command filter/sort/select algorithm | 5.2 |  | 0.390 |
@@ -154,11 +154,11 @@ Score(3000)=0.290 I=0.374 C=0.225 ns_rows≤3K=26/44 (reached=6 partial=0 missin
 | walker |  | 7652 | 131 | README.md section #9 |  |  | 0.406 |
 | ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.401 |
 | walker |  | 7787 | 135 | README.md section #8 |  |  | 0.401 |
-| walker |  | 7915 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.407 |
+| walker |  | 7797 | 10 | export names surface in test/pages/index.tsx |  |  | 0.401 |
+| walker |  | 7925 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.407 |
 | ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.418 |
-| walker |  | 8071 | 156 | README.md section #12 |  |  | 0.418 |
-| walker |  | 8227 | 156 | README.md section #11 |  |  | 0.418 |
-| walker |  | 8237 | 10 | export names surface in test/pages/index.tsx |  |  | 0.418 |
+| walker |  | 8081 | 156 | README.md section #12 |  |  | 0.418 |
+| walker |  | 8237 | 156 | README.md section #11 |  |  | 0.418 |
 | ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.409 |
 | walker |  | 8670 | 433 | README.md section #35 |  |  | 0.436 |
 | ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.427 |

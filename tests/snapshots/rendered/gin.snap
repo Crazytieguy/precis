@@ -45,7 +45,6 @@ binding/
            9→type queryBinding struct{}
           10→
           11→func (queryBinding) Name() string {
-          12→	return "query"
         …
           15→func (queryBinding) Bind(req *http.Request, obj any) error {
         …
@@ -57,7 +56,6 @@ binding/
            7→type uriBinding struct{}
            8→
            9→func (uriBinding) Name() string {
-          10→	return "uri"
         …
           13→func (uriBinding) BindUri(m map[string][]string, obj any) error {
         …
@@ -121,12 +119,6 @@ errors_test.go
 examples/
 fs.go
     …
-       5→package gin
-       6→
-       7→import (
-       8→	"net/http"
-       9→	"os"
-      10→)
       12→// OnlyFilesFS implements an http.FileSystem without `Readdir` functionality.
       13→type OnlyFilesFS struct {
       14→	FileSystem http.FileSystem
@@ -200,7 +192,10 @@ gin.go
      142→	// UseEscapedPath if enable, the url.EscapedPath() will be used to find parameters
      143→	// It overrides UseRawPath
      144→	UseEscapedPath bool
-    …
+     146→	// UnescapePathValues if true, the path value will be unescaped.
+     147→	// If UseRawPath and UseEscapedPath are false (by default), the UnescapePathValues effectively is true,
+     148→	// as url.Path gonna be used, which is already unescaped.
+     149→	UnescapePathValues bool
      151→	// RemoveExtraSlash a parameter can be parsed from the URL even with extra slashes.
      152→	// See the PR #1817 and issue #1644
      153→	RemoveExtraSlash bool
@@ -223,6 +218,10 @@ gin.go
     …
      235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
      236→func Default(opts ...OptionFunc) *Engine {
+     237→	debugPrintWARNINGDefault()
+     238→	engine := New()
+     239→	engine.Use(Logger(), Recovery())
+     240→	return engine.With(opts...)
     …
      243→func (engine *Engine) Handler() http.Handler {
     …
@@ -288,7 +287,7 @@ render/
           15→	Data any
           16→}
           18→var bsonContentType = []string{"application/bson"}
-          20→// Render (BSON) marshals the given interface object and writes data with custom ContentType.
+        …
           21→func (r BSON) Render(w http.ResponseWriter) error {
         …
           31→// WriteContentType (BSONBuf) writes BSONBuf ContentType.
@@ -307,7 +306,6 @@ render/
         …
           28→// WriteContentType (Data) writes custom ContentType.
           29→func (r Data) WriteContentType(w http.ResponseWriter) {
-          30→	writeContentType(w, []string{r.ContentType})
         …
     html.go
     json.go

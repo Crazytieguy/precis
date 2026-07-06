@@ -1,7 +1,7 @@
 fixture = "soluna"
 budget = 10000
-cumulative_tokens = 9989
-batch_count = 160
+cumulative_tokens = 9988
+batch_count = 166
 
 [[batches]]
 position = 1
@@ -511,28 +511,10 @@ kind = "full"
 
 [[batches]]
 position = 22
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
-descriptor = "README.md section #4"
-cost_tokens = 31
-cum_tokens = 577
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 53
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
 key = 'Fs(DirListing { dir: "clibs/soluna" })'
 descriptor = "listing of 'clibs/soluna'"
 cost_tokens = 26
-cum_tokens = 603
+cum_tokens = 572
 
 [batches.content]
 kind = "fs"
@@ -542,11 +524,37 @@ parent = "clibs/soluna"
 entries = ["compile_lua.lua", "compile_shader.lua", "make.lua", "runlua.lua", "shader2c.lua"]
 
 [[batches]]
-position = 24
+position = 23
 key = 'Lua(DeclNames { file: "clibs/soluna/compile_lua.lua", chunk_index: 0 })'
 descriptor = "lua decl names surface in clibs/soluna/compile_lua.lua"
 cost_tokens = 20
-cum_tokens = 623
+cum_tokens = 592
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "clibs/soluna/compile_lua.lua"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "clibs/soluna/compile_lua.lua"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 24
+key = 'Lua(Decl { file: "clibs/soluna/compile_lua.lua", start_line: 4 })'
+descriptor = "lua decl at clibs/soluna/compile_lua.lua:4"
+cost_tokens = 0
+cum_tokens = 592
 
 [batches.content]
 kind = "lines"
@@ -569,36 +577,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 25
-key = 'Lua(Decl { file: "clibs/soluna/compile_lua.lua", start_line: 4 })'
-descriptor = "lua decl at clibs/soluna/compile_lua.lua:4"
-cost_tokens = 0
-cum_tokens = 623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_lua.lua"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_lua.lua"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 26
 key = 'Fs(DirListing { dir: "web/layouts" })'
 descriptor = "listing of 'web/layouts'"
 cost_tokens = 26
-cum_tokens = 649
+cum_tokens = 618
 
 [batches.content]
 kind = "fs"
@@ -606,6 +588,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "web/layouts"
 entries = ["_default", "docs", "examples", "index.html", "partials", "playframe", "shortcodes"]
+
+[[batches]]
+position = 26
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
+descriptor = "README.md section #4"
+cost_tokens = 31
+cum_tokens = 649
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 53
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 27
@@ -1115,10 +1115,38 @@ entries = ["heading.html", "hero.html", "menubar.html", "plain_list.html", "pre.
 
 [[batches]]
 position = 52
+key = 'Fs(DirListing { dir: "web/layouts/docs" })'
+descriptor = "listing of 'web/layouts/docs'"
+cost_tokens = 4
+cum_tokens = 2838
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/layouts/docs"
+entries = ["list.html"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "web/layouts/playframe" })'
+descriptor = "listing of 'web/layouts/playframe'"
+cost_tokens = 4
+cum_tokens = 2842
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/layouts/playframe"
+entries = ["single.html"]
+
+[[batches]]
+position = 54
 key = 'Lua(MetaFileWhole { file: "docs/layout.lua" })'
 descriptor = "lua meta-file at docs/layout.lua"
 cost_tokens = 373
-cum_tokens = 3207
+cum_tokens = 3215
 
 [batches.content]
 kind = "lines"
@@ -1130,34 +1158,6 @@ end = 34
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 53
-key = 'Fs(DirListing { dir: "web/layouts/docs" })'
-descriptor = "listing of 'web/layouts/docs'"
-cost_tokens = 4
-cum_tokens = 3211
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/layouts/docs"
-entries = ["list.html"]
-
-[[batches]]
-position = 54
-key = 'Fs(DirListing { dir: "web/layouts/playframe" })'
-descriptor = "listing of 'web/layouts/playframe'"
-cost_tokens = 4
-cum_tokens = 3215
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/layouts/playframe"
-entries = ["single.html"]
 
 [[batches]]
 position = 55
@@ -1887,46 +1887,10 @@ kind = "full"
 
 [[batches]]
 position = 80
-key = 'Lua(DeclBody { file: "script/build_web.lua", start_line: 23 })'
-descriptor = "lua decl body at script/build_web.lua:23"
-cost_tokens = 35
-cum_tokens = 6483
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/build_web.lua"
-start = 24
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 81
-key = 'Lua(MetaFileWhole { file: "docs/material_text.lua" })'
-descriptor = "lua meta-file at docs/material_text.lua"
-cost_tokens = 505
-cum_tokens = 6988
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/material_text.lua"
-start = 1
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 82
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 322
-cum_tokens = 7310
+cum_tokens = 6770
 
 [batches.content]
 kind = "fs"
@@ -1936,11 +1900,11 @@ parent = "src"
 entries = ["appevent.h", "batch.c", "batch.h", "blit.glsl", "colorquad.glsl", "data", "drawmgr.c", "embedlua.c", "entry.c", "file.c", "font.c", "font_define.h", "font_manager.c", "font_manager.h", "font_system.c", "gamepad.c", "image.c", "ime_char_filter.h", "ime_state.h", "lcrypt.c", "lfs.c", "loginfo.h", "lsha1.c", "luabuffer.h", "lualib", "luamods.c", "luayoga.c", "luazip.c", "maskquad.glsl", "material_blit.c", "material_default.c", "material_mask.c", "material_perspective_quad.c", "material_quad.c", "material_text.c", "material_util.c", "material_util.h", "mutex.h", "openlibs.c", "openurl.c", "perspective_quad.glsl", "platform", "render.c", "render_bindings.c", "render_bindings.h", "render_uniform.c", "sdfimage.c", "sdftext.glsl", "service", "sprite_submit.h", "spritemgr.c", "spritemgr.h", "srbuffer.c", "srbuffer.h", "texquad.glsl", "tmpbuffer.h", "transform.c", "transform.h", "truetype.c", "truetype.h", "version.h", "winfile.c", "writelog.c", "yogaone.cpp"]
 
 [[batches]]
-position = 83
+position = 81
 key = 'C(DeclNames { file: "src/mutex.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/mutex.h"
 cost_tokens = 15
-cum_tokens = 7325
+cum_tokens = 6785
 
 [batches.content]
 kind = "lines"
@@ -1962,11 +1926,11 @@ end = 3
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 82
 key = 'C(DeclNames { file: "src/loginfo.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/loginfo.h"
 cost_tokens = 26
-cum_tokens = 7351
+cum_tokens = 6811
 
 [batches.content]
 kind = "lines"
@@ -2004,11 +1968,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 83
 key = 'C(DeclNames { file: "src/luabuffer.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/luabuffer.h"
 cost_tokens = 30
-cum_tokens = 7381
+cum_tokens = 6841
 
 [batches.content]
 kind = "lines"
@@ -2046,11 +2010,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 84
 key = 'Fs(DirListing { dir: "src/platform" })'
 descriptor = "listing of 'src/platform'"
 cost_tokens = 13
-cum_tokens = 7394
+cum_tokens = 6854
 
 [batches.content]
 kind = "fs"
@@ -2060,11 +2024,11 @@ parent = "src/platform"
 entries = ["linux", "macos", "wasm", "windows"]
 
 [[batches]]
-position = 87
+position = 85
 key = 'C(DeclNames { file: "src/ime_state.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/ime_state.h"
 cost_tokens = 37
-cum_tokens = 7431
+cum_tokens = 6891
 
 [batches.content]
 kind = "lines"
@@ -2102,11 +2066,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 86
 key = 'C(Decl { file: "src/luabuffer.h", start_line: 8 })'
 descriptor = "c decl at src/luabuffer.h:8"
 cost_tokens = 19
-cum_tokens = 7450
+cum_tokens = 6910
 
 [batches.content]
 kind = "lines"
@@ -2128,29 +2092,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 89
-key = 'C(Includes { file: "src/loginfo.h" })'
-descriptor = "c includes in src/loginfo.h"
-cost_tokens = 8
-cum_tokens = 7458
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/loginfo.h"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 90
+position = 87
 key = 'C(DeclNames { file: "src/spritemgr.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/spritemgr.h"
 cost_tokens = 56
-cum_tokens = 7514
+cum_tokens = 6966
 
 [batches.content]
 kind = "lines"
@@ -2204,11 +2150,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 88
 key = 'C(DeclNames { file: "src/render_bindings.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/render_bindings.h"
 cost_tokens = 57
-cum_tokens = 7571
+cum_tokens = 7023
 
 [batches.content]
 kind = "lines"
@@ -2262,11 +2208,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 89
 key = 'C(Decl { file: "src/render_bindings.h", start_line: 6 })'
 descriptor = "c decl at src/render_bindings.h:6"
 cost_tokens = 20
-cum_tokens = 7591
+cum_tokens = 7043
 
 [batches.content]
 kind = "lines"
@@ -2280,11 +2226,29 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 93
+position = 90
+key = 'C(Includes { file: "src/loginfo.h" })'
+descriptor = "c includes in src/loginfo.h"
+cost_tokens = 8
+cum_tokens = 7051
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/loginfo.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
 key = 'C(DeclNames { file: "src/ime_char_filter.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/ime_char_filter.h"
 cost_tokens = 67
-cum_tokens = 7658
+cum_tokens = 7118
 
 [batches.content]
 kind = "lines"
@@ -2386,11 +2350,11 @@ end = 53
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 92
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 41 })'
 descriptor = "c decl at src/ime_char_filter.h:41"
 cost_tokens = 22
-cum_tokens = 7680
+cum_tokens = 7140
 
 [batches.content]
 kind = "lines"
@@ -2412,11 +2376,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 93
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 27 })'
 descriptor = "c decl at src/ime_char_filter.h:27"
 cost_tokens = 28
-cum_tokens = 7708
+cum_tokens = 7168
 
 [batches.content]
 kind = "lines"
@@ -2438,11 +2402,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 94
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 47 })'
 descriptor = "c decl at src/ime_char_filter.h:47"
 cost_tokens = 28
-cum_tokens = 7736
+cum_tokens = 7196
 
 [batches.content]
 kind = "lines"
@@ -2464,11 +2428,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 95
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 52 })'
 descriptor = "c decl at src/ime_char_filter.h:52"
 cost_tokens = 28
-cum_tokens = 7764
+cum_tokens = 7224
 
 [batches.content]
 kind = "lines"
@@ -2490,11 +2454,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 96
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 16 })'
 descriptor = "c decl at src/ime_char_filter.h:16"
 cost_tokens = 30
-cum_tokens = 7794
+cum_tokens = 7254
 
 [batches.content]
 kind = "lines"
@@ -2516,11 +2480,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 97
 key = 'C(DeclNames { file: "src/version.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/version.h"
 cost_tokens = 33
-cum_tokens = 7827
+cum_tokens = 7287
 
 [batches.content]
 kind = "lines"
@@ -2542,141 +2506,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 100
-key = 'C(DeclNames { file: "src/font_system.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/font_system.c"
-cost_tokens = 10
-cum_tokens = 7837
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/font_system.c"
-start = 287
-end = 287
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/font_system.c"
-start = 288
-end = 288
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 101
-key = 'C(DeclNames { file: "src/lfs.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/lfs.c"
-cost_tokens = 10
-cum_tokens = 7847
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lfs.c"
-start = 825
-end = 825
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/lfs.c"
-start = 826
-end = 826
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'C(DeclNames { file: "src/openurl.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/openurl.c"
-cost_tokens = 10
-cum_tokens = 7857
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/openurl.c"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/openurl.c"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 103
-key = 'C(DeclNames { file: "src/truetype.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/truetype.c"
-cost_tokens = 10
-cum_tokens = 7867
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/truetype.c"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/truetype.c"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 104
-key = 'C(DeclNames { file: "src/writelog.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/writelog.c"
-cost_tokens = 10
-cum_tokens = 7877
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/writelog.c"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/writelog.c"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 105
+position = 98
 key = 'C(DeclNames { file: "src/tmpbuffer.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/tmpbuffer.h"
 cost_tokens = 83
-cum_tokens = 7960
+cum_tokens = 7370
 
 [batches.content]
 kind = "lines"
@@ -2730,11 +2564,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 99
 key = 'C(Decl { file: "src/tmpbuffer.h", start_line: 7 })'
 descriptor = "c decl at src/tmpbuffer.h:7"
 cost_tokens = 19
-cum_tokens = 7979
+cum_tokens = 7389
 
 [batches.content]
 kind = "lines"
@@ -2748,11 +2582,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 107
+position = 100
 key = 'C(Decl { file: "src/tmpbuffer.h", start_line: 15 })'
 descriptor = "c decl at src/tmpbuffer.h:15"
 cost_tokens = 28
-cum_tokens = 8007
+cum_tokens = 7417
 
 [batches.content]
 kind = "lines"
@@ -2774,47 +2608,141 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 108
-key = 'C(Includes { file: "src/render_bindings.h" })'
-descriptor = "c includes in src/render_bindings.h"
-cost_tokens = 13
-cum_tokens = 8020
+position = 101
+key = 'C(DeclNames { file: "src/font_system.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/font_system.c"
+cost_tokens = 10
+cum_tokens = 7427
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/render_bindings.h"
-start = 4
-end = 4
+path = "src/font_system.c"
+start = 287
+end = 287
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "src/font_system.c"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 109
-key = 'C(Decl { file: "src/spritemgr.h", start_line: 16 })'
-descriptor = "c decl at src/spritemgr.h:16"
-cost_tokens = 46
-cum_tokens = 8066
+position = 102
+key = 'C(DeclNames { file: "src/lfs.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/lfs.c"
+cost_tokens = 10
+cum_tokens = 7437
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/spritemgr.h"
-start = 16
-end = 22
+path = "src/lfs.c"
+start = 825
+end = 825
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "src/lfs.c"
+start = 826
+end = 826
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 110
+position = 103
+key = 'C(DeclNames { file: "src/openurl.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/openurl.c"
+cost_tokens = 10
+cum_tokens = 7447
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/openurl.c"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/openurl.c"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 104
+key = 'C(DeclNames { file: "src/truetype.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/truetype.c"
+cost_tokens = 10
+cum_tokens = 7457
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/truetype.c"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.c"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 105
+key = 'C(DeclNames { file: "src/writelog.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/writelog.c"
+cost_tokens = 10
+cum_tokens = 7467
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/writelog.c"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/writelog.c"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 106
 key = 'C(DeclNames { file: "src/batch.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/batch.h"
 cost_tokens = 96
-cum_tokens = 8162
+cum_tokens = 7563
 
 [batches.content]
 kind = "lines"
@@ -2884,11 +2812,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 107
 key = 'C(Decl { file: "src/batch.h", start_line: 13 })'
 descriptor = "c decl at src/batch.h:13"
 cost_tokens = 10
-cum_tokens = 8172
+cum_tokens = 7573
 
 [batches.content]
 kind = "lines"
@@ -2902,11 +2830,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 112
+position = 108
 key = 'C(Includes { file: "src/batch.h" })'
 descriptor = "c includes in src/batch.h"
 cost_tokens = 8
-cum_tokens = 8180
+cum_tokens = 7581
 
 [batches.content]
 kind = "lines"
@@ -2920,11 +2848,47 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 113
+position = 109
+key = 'C(Includes { file: "src/render_bindings.h" })'
+descriptor = "c includes in src/render_bindings.h"
+cost_tokens = 13
+cum_tokens = 7594
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/render_bindings.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'C(Decl { file: "src/spritemgr.h", start_line: 16 })'
+descriptor = "c decl at src/spritemgr.h:16"
+cost_tokens = 46
+cum_tokens = 7640
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/spritemgr.h"
+start = 16
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
 key = 'C(DeclNames { file: "src/srbuffer.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/srbuffer.h"
 cost_tokens = 105
-cum_tokens = 8285
+cum_tokens = 7745
 
 [batches.content]
 kind = "lines"
@@ -2994,11 +2958,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 114
+position = 112
 key = 'C(Decl { file: "src/srbuffer.h", start_line: 7 })'
 descriptor = "c decl at src/srbuffer.h:7"
 cost_tokens = 12
-cum_tokens = 8297
+cum_tokens = 7757
 
 [batches.content]
 kind = "lines"
@@ -3012,83 +2976,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 115
-key = 'C(Decl { file: "src/ime_state.h", start_line: 7 })'
-descriptor = "c decl at src/ime_state.h:7"
-cost_tokens = 54
-cum_tokens = 8351
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ime_state.h"
-start = 7
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 8 })'
-descriptor = "c decl at src/ime_char_filter.h:8"
-cost_tokens = 55
-cum_tokens = 8406
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ime_char_filter.h"
-start = 8
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'C(Includes { file: "src/spritemgr.h" })'
-descriptor = "c includes in src/spritemgr.h"
-cost_tokens = 18
-cum_tokens = 8424
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/spritemgr.h"
-start = 4
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
-key = 'C(Includes { file: "src/srbuffer.h" })'
-descriptor = "c includes in src/srbuffer.h"
-cost_tokens = 18
-cum_tokens = 8442
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/srbuffer.h"
-start = 4
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
+position = 113
 key = 'C(DeclNames { file: "src/sprite_submit.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/sprite_submit.h"
 cost_tokens = 120
-cum_tokens = 8562
+cum_tokens = 7877
 
 [batches.content]
 kind = "lines"
@@ -3270,11 +3162,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 114
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 27 })'
 descriptor = "c decl at src/sprite_submit.h:27"
 cost_tokens = 11
-cum_tokens = 8573
+cum_tokens = 7888
 
 [batches.content]
 kind = "lines"
@@ -3296,11 +3188,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 115
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 56 })'
 descriptor = "c decl at src/sprite_submit.h:56"
 cost_tokens = 11
-cum_tokens = 8584
+cum_tokens = 7899
 
 [batches.content]
 kind = "lines"
@@ -3322,11 +3214,11 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 116
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 9 })'
 descriptor = "c decl at src/sprite_submit.h:9"
 cost_tokens = 12
-cum_tokens = 8596
+cum_tokens = 7911
 
 [batches.content]
 kind = "lines"
@@ -3348,11 +3240,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 117
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 43 })'
 descriptor = "c decl at src/sprite_submit.h:43"
 cost_tokens = 15
-cum_tokens = 8611
+cum_tokens = 7926
 
 [batches.content]
 kind = "lines"
@@ -3374,11 +3266,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 118
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 66 })'
 descriptor = "c decl at src/sprite_submit.h:66"
 cost_tokens = 18
-cum_tokens = 8629
+cum_tokens = 7944
 
 [batches.content]
 kind = "lines"
@@ -3400,11 +3292,11 @@ end = 68
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 119
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 71 })'
 descriptor = "c decl at src/sprite_submit.h:71"
 cost_tokens = 18
-cum_tokens = 8647
+cum_tokens = 7962
 
 [batches.content]
 kind = "lines"
@@ -3426,11 +3318,11 @@ end = 73
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 120
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 15 })'
 descriptor = "c decl at src/sprite_submit.h:15"
 cost_tokens = 21
-cum_tokens = 8668
+cum_tokens = 7983
 
 [batches.content]
 kind = "lines"
@@ -3452,11 +3344,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 121
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 21 })'
 descriptor = "c decl at src/sprite_submit.h:21"
 cost_tokens = 21
-cum_tokens = 8689
+cum_tokens = 8004
 
 [batches.content]
 kind = "lines"
@@ -3478,11 +3370,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 122
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 76 })'
 descriptor = "c decl at src/sprite_submit.h:76"
 cost_tokens = 21
-cum_tokens = 8710
+cum_tokens = 8025
 
 [batches.content]
 kind = "lines"
@@ -3504,11 +3396,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 123
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 81 })'
 descriptor = "c decl at src/sprite_submit.h:81"
 cost_tokens = 22
-cum_tokens = 8732
+cum_tokens = 8047
 
 [batches.content]
 kind = "lines"
@@ -3530,11 +3422,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 124
 key = 'C(DeclBody { file: "src/sprite_submit.h", start_line: 71 })'
 descriptor = "c decl body at src/sprite_submit.h:71"
 cost_tokens = 13
-cum_tokens = 8745
+cum_tokens = 8060
 
 [batches.content]
 kind = "lines"
@@ -3548,47 +3440,47 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 131
-key = 'C(DeclBody { file: "src/sprite_submit.h", start_line: 66 })'
-descriptor = "c decl body at src/sprite_submit.h:66"
-cost_tokens = 17
-cum_tokens = 8762
+position = 125
+key = 'C(Decl { file: "src/ime_state.h", start_line: 7 })'
+descriptor = "c decl at src/ime_state.h:7"
+cost_tokens = 54
+cum_tokens = 8114
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/sprite_submit.h"
-start = 68
-end = 68
+path = "src/ime_state.h"
+start = 7
+end = 14
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 132
-key = 'C(DeclBody { file: "src/sprite_submit.h", start_line: 9 })'
-descriptor = "c decl body at src/sprite_submit.h:9"
-cost_tokens = 18
-cum_tokens = 8780
+position = 126
+key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 8 })'
+descriptor = "c decl at src/ime_char_filter.h:8"
+cost_tokens = 55
+cum_tokens = 8169
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/sprite_submit.h"
-start = 11
-end = 12
+path = "src/ime_char_filter.h"
+start = 8
+end = 14
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 133
+position = 127
 key = 'C(DeclNames { file: "src/transform.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/transform.h"
 cost_tokens = 126
-cum_tokens = 8906
+cum_tokens = 8295
 
 [batches.content]
 kind = "lines"
@@ -3650,11 +3542,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 128
 key = 'C(Decl { file: "src/transform.h", start_line: 16 })'
 descriptor = "c decl at src/transform.h:16"
 cost_tokens = 13
-cum_tokens = 8919
+cum_tokens = 8308
 
 [batches.content]
 kind = "lines"
@@ -3676,11 +3568,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 129
 key = 'C(Includes { file: "src/transform.h" })'
 descriptor = "c includes in src/transform.h"
 cost_tokens = 8
-cum_tokens = 8927
+cum_tokens = 8316
 
 [batches.content]
 kind = "lines"
@@ -3694,17 +3586,35 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 136
-key = 'C(Includes { file: "src/ime_state.h" })'
-descriptor = "c includes in src/ime_state.h"
-cost_tokens = 20
-cum_tokens = 8947
+position = 130
+key = 'C(DeclBody { file: "src/sprite_submit.h", start_line: 66 })'
+descriptor = "c decl body at src/sprite_submit.h:66"
+cost_tokens = 17
+cum_tokens = 8333
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/ime_state.h"
+path = "src/sprite_submit.h"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'C(Includes { file: "src/spritemgr.h" })'
+descriptor = "c includes in src/spritemgr.h"
+cost_tokens = 18
+cum_tokens = 8351
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/spritemgr.h"
 start = 4
 end = 5
 
@@ -3712,17 +3622,17 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 137
-key = 'C(Includes { file: "src/tmpbuffer.h" })'
-descriptor = "c includes in src/tmpbuffer.h"
-cost_tokens = 20
-cum_tokens = 8967
+position = 132
+key = 'C(Includes { file: "src/srbuffer.h" })'
+descriptor = "c includes in src/srbuffer.h"
+cost_tokens = 18
+cum_tokens = 8369
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/tmpbuffer.h"
+path = "src/srbuffer.h"
 start = 4
 end = 5
 
@@ -3730,11 +3640,29 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 138
+position = 133
+key = 'C(DeclBody { file: "src/sprite_submit.h", start_line: 9 })'
+descriptor = "c decl body at src/sprite_submit.h:9"
+cost_tokens = 18
+cum_tokens = 8387
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/sprite_submit.h"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
 key = 'C(Decl { file: "src/loginfo.h", start_line: 6 })'
 descriptor = "c decl at src/loginfo.h:6"
 cost_tokens = 63
-cum_tokens = 9030
+cum_tokens = 8450
 
 [batches.content]
 kind = "lines"
@@ -3748,11 +3676,47 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 139
+position = 135
+key = 'C(Includes { file: "src/ime_state.h" })'
+descriptor = "c includes in src/ime_state.h"
+cost_tokens = 20
+cum_tokens = 8470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ime_state.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'C(Includes { file: "src/tmpbuffer.h" })'
+descriptor = "c includes in src/tmpbuffer.h"
+cost_tokens = 20
+cum_tokens = 8490
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tmpbuffer.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
 key = 'C(Decl { file: "src/batch.h", start_line: 6 })'
 descriptor = "c decl at src/batch.h:6"
 cost_tokens = 67
-cum_tokens = 9097
+cum_tokens = 8557
 
 [batches.content]
 kind = "lines"
@@ -3766,71 +3730,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 140
-key = 'C(DeclBody { file: "src/sprite_submit.h", start_line: 76 })'
-descriptor = "c decl body at src/sprite_submit.h:76"
-cost_tokens = 22
-cum_tokens = 9119
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/sprite_submit.h"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 141
-key = 'C(DeclNames { file: "src/material_blit.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/material_blit.c"
-cost_tokens = 21
-cum_tokens = 9140
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/material_blit.c"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/material_blit.c"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/material_blit.c"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/material_blit.c"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 142
+position = 138
 key = 'C(DeclNames { file: "src/font_define.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/font_define.h"
 cost_tokens = 174
-cum_tokens = 9314
+cum_tokens = 8731
 
 [batches.content]
 kind = "lines"
@@ -3900,11 +3804,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 139
 key = 'C(Decl { file: "src/font_define.h", start_line: 31 })'
 descriptor = "c decl at src/font_define.h:31"
 cost_tokens = 10
-cum_tokens = 9324
+cum_tokens = 8741
 
 [batches.content]
 kind = "lines"
@@ -3926,11 +3830,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 140
 key = 'C(Decl { file: "src/font_define.h", start_line: 26 })'
 descriptor = "c decl at src/font_define.h:26"
 cost_tokens = 15
-cum_tokens = 9339
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -3952,11 +3856,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 145
+position = 141
 key = 'C(Includes { file: "src/font_define.h" })'
 descriptor = "c includes in src/font_define.h"
 cost_tokens = 8
-cum_tokens = 9347
+cum_tokens = 8764
 
 [batches.content]
 kind = "lines"
@@ -3970,11 +3874,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 146
+position = 142
 key = 'C(DeclBody { file: "src/font_define.h", start_line: 31 })'
 descriptor = "c decl body at src/font_define.h:31"
 cost_tokens = 18
-cum_tokens = 9365
+cum_tokens = 8782
 
 [batches.content]
 kind = "lines"
@@ -3988,11 +3892,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 147
+position = 143
 key = 'C(DeclBody { file: "src/font_define.h", start_line: 26 })'
 descriptor = "c decl body at src/font_define.h:26"
 cost_tokens = 19
-cum_tokens = 9384
+cum_tokens = 8801
 
 [batches.content]
 kind = "lines"
@@ -4006,11 +3910,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 148
+position = 144
 key = 'Fs(DirListing { dir: "src/platform/wasm" })'
 descriptor = "listing of 'src/platform/wasm'"
 cost_tokens = 23
-cum_tokens = 9407
+cum_tokens = 8824
 
 [batches.content]
 kind = "fs"
@@ -4020,29 +3924,71 @@ parent = "src/platform/wasm"
 entries = ["soluna_ime.js", "soluna_openurl.js", "soluna_wasm_ime.h"]
 
 [[batches]]
-position = 149
-key = 'C(DeclBody { file: "src/ime_char_filter.h", start_line: 47 })'
-descriptor = "c decl body at src/ime_char_filter.h:47"
-cost_tokens = 25
-cum_tokens = 9432
+position = 145
+key = 'C(DeclBody { file: "src/sprite_submit.h", start_line: 76 })'
+descriptor = "c decl body at src/sprite_submit.h:76"
+cost_tokens = 22
+cum_tokens = 8846
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/ime_char_filter.h"
-start = 49
-end = 49
+path = "src/sprite_submit.h"
+start = 78
+end = 78
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 150
+position = 146
+key = 'C(DeclNames { file: "src/material_blit.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/material_blit.c"
+cost_tokens = 21
+cum_tokens = 8867
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_blit.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_blit.c"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_blit.c"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_blit.c"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 147
 key = 'C(Decl { file: "src/font_define.h", start_line: 11 })'
 descriptor = "c decl at src/font_define.h:11"
 cost_tokens = 79
-cum_tokens = 9511
+cum_tokens = 8946
 
 [batches.content]
 kind = "lines"
@@ -4056,119 +4002,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 151
-key = 'C(DeclBody { file: "src/ime_char_filter.h", start_line: 41 })'
-descriptor = "c decl body at src/ime_char_filter.h:41"
-cost_tokens = 26
-cum_tokens = 9537
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ime_char_filter.h"
-start = 43
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 152
-key = 'C(Decl { file: "src/spritemgr.h", start_line: 9 })'
-descriptor = "c decl at src/spritemgr.h:9"
-cost_tokens = 81
-cum_tokens = 9618
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/spritemgr.h"
-start = 9
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 153
-key = 'C(Decl { file: "src/transform.h", start_line: 6 })'
-descriptor = "c decl at src/transform.h:6"
-cost_tokens = 81
-cum_tokens = 9699
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/transform.h"
-start = 6
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'C(Includes { file: "src/ime_char_filter.h" })'
-descriptor = "c includes in src/ime_char_filter.h"
-cost_tokens = 30
-cum_tokens = 9729
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ime_char_filter.h"
-start = 4
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'C(Includes { file: "src/luabuffer.h" })'
-descriptor = "c includes in src/luabuffer.h"
-cost_tokens = 30
-cum_tokens = 9759
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/luabuffer.h"
-start = 4
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
-key = 'C(Decl { file: "src/srbuffer.h", start_line: 11 })'
-descriptor = "c decl at src/srbuffer.h:11"
-cost_tokens = 84
-cum_tokens = 9843
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/srbuffer.h"
-start = 11
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
+position = 148
 key = 'C(DeclNames { file: "src/appevent.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/appevent.h"
 cost_tokens = 89
-cum_tokens = 9932
+cum_tokens = 9035
 
 [batches.content]
 kind = "lines"
@@ -4286,11 +4124,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 158
+position = 149
 key = 'C(Decl { file: "src/appevent.h", start_line: 11 })'
 descriptor = "c decl at src/appevent.h:11"
 cost_tokens = 19
-cum_tokens = 9951
+cum_tokens = 9054
 
 [batches.content]
 kind = "lines"
@@ -4312,11 +4150,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 150
 key = 'C(Decl { file: "src/appevent.h", start_line: 33 })'
 descriptor = "c decl at src/appevent.h:33"
 cost_tokens = 19
-cum_tokens = 9970
+cum_tokens = 9073
 
 [batches.content]
 kind = "lines"
@@ -4338,11 +4176,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 160
+position = 151
 key = 'C(Decl { file: "src/appevent.h", start_line: 58 })'
 descriptor = "c decl at src/appevent.h:58"
 cost_tokens = 19
-cum_tokens = 9989
+cum_tokens = 9092
 
 [batches.content]
 kind = "lines"
@@ -4359,6 +4197,540 @@ kind = "full"
 path = "src/appevent.h"
 start = 60
 end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'C(Decl { file: "src/appevent.h", start_line: 84 })'
+descriptor = "c decl at src/appevent.h:84"
+cost_tokens = 19
+cum_tokens = 9111
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/appevent.h"
+start = 84
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/appevent.h"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 153
+key = 'C(Decl { file: "src/appevent.h", start_line: 99 })'
+descriptor = "c decl at src/appevent.h:99"
+cost_tokens = 19
+cum_tokens = 9130
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/appevent.h"
+start = 99
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/appevent.h"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'C(Decl { file: "src/appevent.h", start_line: 115 })'
+descriptor = "c decl at src/appevent.h:115"
+cost_tokens = 20
+cum_tokens = 9150
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/appevent.h"
+start = 115
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/appevent.h"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 155
+key = 'C(Decl { file: "src/appevent.h", start_line: 4 })'
+descriptor = "c decl at src/appevent.h:4"
+cost_tokens = 37
+cum_tokens = 9187
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/appevent.h"
+start = 4
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'C(Decl { file: "src/spritemgr.h", start_line: 9 })'
+descriptor = "c decl at src/spritemgr.h:9"
+cost_tokens = 81
+cum_tokens = 9268
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/spritemgr.h"
+start = 9
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'C(Decl { file: "src/transform.h", start_line: 6 })'
+descriptor = "c decl at src/transform.h:6"
+cost_tokens = 81
+cum_tokens = 9349
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/transform.h"
+start = 6
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'C(DeclBody { file: "src/ime_char_filter.h", start_line: 47 })'
+descriptor = "c decl body at src/ime_char_filter.h:47"
+cost_tokens = 25
+cum_tokens = 9374
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ime_char_filter.h"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'C(Decl { file: "src/srbuffer.h", start_line: 11 })'
+descriptor = "c decl at src/srbuffer.h:11"
+cost_tokens = 84
+cum_tokens = 9458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/srbuffer.h"
+start = 11
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'C(DeclBody { file: "src/ime_char_filter.h", start_line: 41 })'
+descriptor = "c decl body at src/ime_char_filter.h:41"
+cost_tokens = 26
+cum_tokens = 9484
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ime_char_filter.h"
+start = 43
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'C(DeclNames { file: "src/material_util.h", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/material_util.h"
+cost_tokens = 225
+cum_tokens = 9709
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_util.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_util.h"
+start = 8
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_util.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_util.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 162
+key = 'C(DeclNames { file: "src/truetype.h", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/truetype.h"
+cost_tokens = 225
+cum_tokens = 9934
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 11
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 163
+key = 'C(Decl { file: "src/truetype.h", start_line: 147 })'
+descriptor = "c decl at src/truetype.h:147"
+cost_tokens = 12
+cum_tokens = 9946
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 147
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
+key = 'C(Decl { file: "src/truetype.h", start_line: 23 })'
+descriptor = "c decl at src/truetype.h:23"
+cost_tokens = 14
+cum_tokens = 9960
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 23
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 165
+key = 'C(Decl { file: "src/truetype.h", start_line: 34 })'
+descriptor = "c decl at src/truetype.h:34"
+cost_tokens = 14
+cum_tokens = 9974
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 34
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 166
+key = 'C(Decl { file: "src/truetype.h", start_line: 83 })'
+descriptor = "c decl at src/truetype.h:83"
+cost_tokens = 14
+cum_tokens = 9988
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 83
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 85
+end = 85
 
 [batches.content.spans.render]
 kind = "ellipsis"

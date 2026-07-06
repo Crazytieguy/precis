@@ -343,192 +343,10 @@ entries = ["build.yml"]
 
 [[batches]]
 position = 16
-key = 'C(Includes { file: "src/serialize.c" })'
-descriptor = "c includes in src/serialize.c"
-cost_tokens = 12
-cum_tokens = 1260
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/serialize.c"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'C(DeclNames { file: "src/tools.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/tools.c"
-cost_tokens = 52
-cum_tokens = 1312
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/tools.c"
-start = 42
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tools.c"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 18
-key = 'C(Decl { file: "src/tools.c", start_line: 42 })'
-descriptor = "c decl at src/tools.c:42"
-cost_tokens = 0
-cum_tokens = 1312
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/tools.c"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'C(Decl { file: "src/tools.c", start_line: 44 })'
-descriptor = "c decl at src/tools.c:44"
-cost_tokens = 0
-cum_tokens = 1312
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/tools.c"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tools.c"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 20
-key = 'C(DeclNames { file: "src/structures.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/structures.c"
-cost_tokens = 55
-cum_tokens = 1367
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/structures.c"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/structures.c"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/structures.c"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/structures.c"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 21
-key = 'C(Decl { file: "src/structures.c", start_line: 9 })'
-descriptor = "c decl at src/structures.c:9"
-cost_tokens = 0
-cum_tokens = 1367
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/structures.c"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/structures.c"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 22
-key = 'C(Decl { file: "src/structures.c", start_line: 16 })'
-descriptor = "c decl at src/structures.c:16"
-cost_tokens = 0
-cum_tokens = 1367
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/structures.c"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/structures.c"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 23
 key = 'C(DeclNames { file: "include/tools.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in include/tools.h"
 cost_tokens = 478
-cum_tokens = 1845
+cum_tokens = 1726
 
 [batches.content]
 kind = "lines"
@@ -614,11 +432,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 17
 key = 'C(Decl { file: "include/tools.h", start_line: 8 })'
 descriptor = "c decl at include/tools.h:8"
 cost_tokens = 0
-cum_tokens = 1845
+cum_tokens = 1726
 
 [batches.content]
 kind = "lines"
@@ -640,11 +458,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 18
 key = 'C(Decl { file: "include/tools.h", start_line: 11 })'
 descriptor = "c decl at include/tools.h:11"
 cost_tokens = 0
-cum_tokens = 1845
+cum_tokens = 1726
 
 [batches.content]
 kind = "lines"
@@ -666,11 +484,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 19
 key = 'C(DeclBody { file: "include/tools.h", start_line: 8 })'
 descriptor = "c decl body at include/tools.h:8"
 cost_tokens = 17
-cum_tokens = 1862
+cum_tokens = 1743
 
 [batches.content]
 kind = "lines"
@@ -684,11 +502,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 27
+position = 20
 key = 'C(Includes { file: "include/tools.h" })'
 descriptor = "c includes in include/tools.h"
 cost_tokens = 25
-cum_tokens = 1887
+cum_tokens = 1768
 
 [batches.content]
 kind = "lines"
@@ -702,11 +520,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 28
+position = 21
 key = 'C(DeclBody { file: "include/tools.h", start_line: 11 })'
 descriptor = "c decl body at include/tools.h:11"
 cost_tokens = 25
-cum_tokens = 1912
+cum_tokens = 1793
 
 [batches.content]
 kind = "lines"
@@ -720,147 +538,175 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 29
-key = 'C(DeclNames { file: "src/varnum.c", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in src/varnum.c"
-cost_tokens = 58
-cum_tokens = 1970
+position = 22
+key = 'C(DeclNames { file: "src/tools.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/tools.c"
+cost_tokens = 52
+cum_tokens = 1845
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 14
-end = 14
+path = "src/tools.c"
+start = 42
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/varnum.c"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/varnum.c"
-start = 15
-end = 15
+path = "src/tools.c"
+start = 45
+end = 45
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
+[[batches]]
+position = 23
+key = 'C(Decl { file: "src/tools.c", start_line: 42 })'
+descriptor = "c decl at src/tools.c:42"
+cost_tokens = 0
+cum_tokens = 1845
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 35
-end = 35
+path = "src/tools.c"
+start = 42
+end = 42
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'C(Decl { file: "src/tools.c", start_line: 44 })'
+descriptor = "c decl at src/tools.c:44"
+cost_tokens = 0
+cum_tokens = 1845
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
+path = "src/tools.c"
 start = 44
 end = 44
 
 [batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tools.c"
+start = 45
+end = 45
+
+[batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 30
-key = 'C(Decl { file: "src/varnum.c", start_line: 14 })'
-descriptor = "c decl at src/varnum.c:14"
-cost_tokens = 0
-cum_tokens = 1970
+position = 25
+key = 'C(DeclNames { file: "src/structures.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/structures.c"
+cost_tokens = 55
+cum_tokens = 1900
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 14
-end = 14
+path = "src/structures.c"
+start = 9
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 15
-end = 15
+path = "src/structures.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/structures.c"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/structures.c"
+start = 17
+end = 17
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 31
-key = 'C(Decl { file: "src/varnum.c", start_line: 34 })'
-descriptor = "c decl at src/varnum.c:34"
+position = 26
+key = 'C(Decl { file: "src/structures.c", start_line: 9 })'
+descriptor = "c decl at src/structures.c:9"
 cost_tokens = 0
-cum_tokens = 1970
+cum_tokens = 1900
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 34
-end = 34
+path = "src/structures.c"
+start = 9
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 35
-end = 35
+path = "src/structures.c"
+start = 10
+end = 10
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 32
-key = 'C(Decl { file: "src/varnum.c", start_line: 43 })'
-descriptor = "c decl at src/varnum.c:43"
+position = 27
+key = 'C(Decl { file: "src/structures.c", start_line: 16 })'
+descriptor = "c decl at src/structures.c:16"
 cost_tokens = 0
-cum_tokens = 1970
+cum_tokens = 1900
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 43
-end = 43
+path = "src/structures.c"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/varnum.c"
-start = 44
-end = 44
+path = "src/structures.c"
+start = 17
+end = 17
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 28
 key = 'C(DeclNames { file: "include/globals.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in include/globals.h"
 cost_tokens = 380
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1048,11 @@ end = 94
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 29
 key = 'C(Decl { file: "include/globals.h", start_line: 19 })'
 descriptor = "c decl at include/globals.h:19"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1220,11 +1066,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 35
+position = 30
 key = 'C(Decl { file: "include/globals.h", start_line: 23 })'
 descriptor = "c decl at include/globals.h:23"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1238,11 +1084,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 36
+position = 31
 key = 'C(Decl { file: "include/globals.h", start_line: 26 })'
 descriptor = "c decl at include/globals.h:26"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1256,11 +1102,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 37
+position = 32
 key = 'C(Decl { file: "include/globals.h", start_line: 29 })'
 descriptor = "c decl at include/globals.h:29"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1274,11 +1120,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 38
+position = 33
 key = 'C(Decl { file: "include/globals.h", start_line: 32 })'
 descriptor = "c decl at include/globals.h:32"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1292,11 +1138,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 39
+position = 34
 key = 'C(Decl { file: "include/globals.h", start_line: 35 })'
 descriptor = "c decl at include/globals.h:35"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1310,11 +1156,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 40
+position = 35
 key = 'C(Decl { file: "include/globals.h", start_line: 38 })'
 descriptor = "c decl at include/globals.h:38"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1328,11 +1174,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 41
+position = 36
 key = 'C(Decl { file: "include/globals.h", start_line: 41 })'
 descriptor = "c decl at include/globals.h:41"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1346,11 +1192,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 42
+position = 37
 key = 'C(Decl { file: "include/globals.h", start_line: 45 })'
 descriptor = "c decl at include/globals.h:45"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1364,11 +1210,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 43
+position = 38
 key = 'C(Decl { file: "include/globals.h", start_line: 49 })'
 descriptor = "c decl at include/globals.h:49"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1382,11 +1228,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 44
+position = 39
 key = 'C(Decl { file: "include/globals.h", start_line: 53 })'
 descriptor = "c decl at include/globals.h:53"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1400,11 +1246,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 45
+position = 40
 key = 'C(Decl { file: "include/globals.h", start_line: 56 })'
 descriptor = "c decl at include/globals.h:56"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1418,11 +1264,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 46
+position = 41
 key = 'C(Decl { file: "include/globals.h", start_line: 59 })'
 descriptor = "c decl at include/globals.h:59"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1436,11 +1282,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 47
+position = 42
 key = 'C(Decl { file: "include/globals.h", start_line: 63 })'
 descriptor = "c decl at include/globals.h:63"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1454,11 +1300,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 48
+position = 43
 key = 'C(Decl { file: "include/globals.h", start_line: 66 })'
 descriptor = "c decl at include/globals.h:66"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1472,11 +1318,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 49
+position = 44
 key = 'C(Decl { file: "include/globals.h", start_line: 71 })'
 descriptor = "c decl at include/globals.h:71"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1490,11 +1336,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 50
+position = 45
 key = 'C(Decl { file: "include/globals.h", start_line: 75 })'
 descriptor = "c decl at include/globals.h:75"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1508,11 +1354,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 51
+position = 46
 key = 'C(Decl { file: "include/globals.h", start_line: 93 })'
 descriptor = "c decl at include/globals.h:93"
 cost_tokens = 0
-cum_tokens = 2350
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1526,11 +1372,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 52
+position = 47
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 59 })'
 descriptor = "c decl doc at include/globals.h:59"
 cost_tokens = 8
-cum_tokens = 2358
+cum_tokens = 2288
 
 [batches.content]
 kind = "lines"
@@ -1544,11 +1390,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 53
+position = 48
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 66 })'
 descriptor = "c decl doc at include/globals.h:66"
 cost_tokens = 10
-cum_tokens = 2368
+cum_tokens = 2298
 
 [batches.content]
 kind = "lines"
@@ -1562,11 +1408,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 54
+position = 49
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 26 })'
 descriptor = "c decl doc at include/globals.h:26"
 cost_tokens = 11
-cum_tokens = 2379
+cum_tokens = 2309
 
 [batches.content]
 kind = "lines"
@@ -1580,11 +1426,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 55
+position = 50
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 29 })'
 descriptor = "c decl doc at include/globals.h:29"
 cost_tokens = 11
-cum_tokens = 2390
+cum_tokens = 2320
 
 [batches.content]
 kind = "lines"
@@ -1598,11 +1444,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 56
+position = 51
 key = 'C(Includes { file: "include/globals.h" })'
 descriptor = "c includes in include/globals.h"
 cost_tokens = 22
-cum_tokens = 2412
+cum_tokens = 2342
 
 [batches.content]
 kind = "lines"
@@ -1616,11 +1462,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 57
+position = 52
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 41 })'
 descriptor = "c decl doc at include/globals.h:41"
 cost_tokens = 13
-cum_tokens = 2425
+cum_tokens = 2355
 
 [batches.content]
 kind = "lines"
@@ -1634,11 +1480,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 58
+position = 53
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 19 })'
 descriptor = "c decl doc at include/globals.h:19"
 cost_tokens = 14
-cum_tokens = 2439
+cum_tokens = 2369
 
 [batches.content]
 kind = "lines"
@@ -1652,11 +1498,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 59
+position = 54
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 35 })'
 descriptor = "c decl doc at include/globals.h:35"
 cost_tokens = 14
-cum_tokens = 2453
+cum_tokens = 2383
 
 [batches.content]
 kind = "lines"
@@ -1670,11 +1516,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 60
+position = 55
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 38 })'
 descriptor = "c decl doc at include/globals.h:38"
 cost_tokens = 17
-cum_tokens = 2470
+cum_tokens = 2400
 
 [batches.content]
 kind = "lines"
@@ -1688,11 +1534,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 61
+position = 56
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 56 })'
 descriptor = "c decl doc at include/globals.h:56"
 cost_tokens = 19
-cum_tokens = 2489
+cum_tokens = 2419
 
 [batches.content]
 kind = "lines"
@@ -1706,11 +1552,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 62
+position = 57
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 32 })'
 descriptor = "c decl doc at include/globals.h:32"
 cost_tokens = 27
-cum_tokens = 2516
+cum_tokens = 2446
 
 [batches.content]
 kind = "lines"
@@ -1724,11 +1570,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 63
+position = 58
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 45 })'
 descriptor = "c decl doc at include/globals.h:45"
 cost_tokens = 27
-cum_tokens = 2543
+cum_tokens = 2473
 
 [batches.content]
 kind = "lines"
@@ -1742,11 +1588,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 64
+position = 59
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 75 })'
 descriptor = "c decl doc at include/globals.h:75"
 cost_tokens = 27
-cum_tokens = 2570
+cum_tokens = 2500
 
 [batches.content]
 kind = "lines"
@@ -1760,11 +1606,271 @@ end = 74
 kind = "full"
 
 [[batches]]
+position = 60
+key = 'C(DeclNames { file: "src/varnum.c", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in src/varnum.c"
+cost_tokens = 58
+cum_tokens = 2558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 61
+key = 'C(Decl { file: "src/varnum.c", start_line: 14 })'
+descriptor = "c decl at src/varnum.c:14"
+cost_tokens = 0
+cum_tokens = 2558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 62
+key = 'C(Decl { file: "src/varnum.c", start_line: 34 })'
+descriptor = "c decl at src/varnum.c:34"
+cost_tokens = 0
+cum_tokens = 2558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 63
+key = 'C(Decl { file: "src/varnum.c", start_line: 43 })'
+descriptor = "c decl at src/varnum.c:43"
+cost_tokens = 0
+cum_tokens = 2558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 64
+key = 'C(Includes { file: "src/serialize.c" })'
+descriptor = "c includes in src/serialize.c"
+cost_tokens = 12
+cum_tokens = 2570
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/serialize.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 65
+key = 'C(DeclNames { file: "include/packets.h", chunk_index: 0, hub: false })'
+descriptor = "c decl names surface in include/packets.h"
+cost_tokens = 416
+cum_tokens = 2986
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 5
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 28
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 66
+key = 'C(Decl { file: "include/packets.h", start_line: 5 })'
+descriptor = "c decl at include/packets.h:5"
+cost_tokens = 0
+cum_tokens = 2986
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'C(Decl { file: "include/packets.h", start_line: 28 })'
+descriptor = "c decl at include/packets.h:28"
+cost_tokens = 0
+cum_tokens = 2986
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'C(DeclDoc { file: "include/packets.h", start_line: 28 })'
+descriptor = "c decl doc at include/packets.h:28"
+cost_tokens = 7
+cum_tokens = 2993
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'C(DeclDoc { file: "include/packets.h", start_line: 5 })'
+descriptor = "c decl doc at include/packets.h:5"
+cost_tokens = 9
+cum_tokens = 3002
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 49 })'
 descriptor = "c decl doc at include/globals.h:49"
 cost_tokens = 31
-cum_tokens = 2601
+cum_tokens = 3033
 
 [batches.content]
 kind = "lines"
@@ -1778,11 +1884,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 66
+position = 71
 key = 'C(DeclNames { file: "src/crafting.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/crafting.c"
 cost_tokens = 67
-cum_tokens = 2668
+cum_tokens = 3100
 
 [batches.content]
 kind = "lines"
@@ -1836,11 +1942,11 @@ end = 353
 kind = "ellipsis"
 
 [[batches]]
-position = 67
+position = 72
 key = 'C(Decl { file: "src/crafting.c", start_line: 9 })'
 descriptor = "c decl at src/crafting.c:9"
 cost_tokens = 0
-cum_tokens = 2668
+cum_tokens = 3100
 
 [batches.content]
 kind = "lines"
@@ -1862,11 +1968,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 73
 key = 'C(Decl { file: "src/crafting.c", start_line: 352 })'
 descriptor = "c decl at src/crafting.c:352"
 cost_tokens = 0
-cum_tokens = 2668
+cum_tokens = 3100
 
 [batches.content]
 kind = "lines"
@@ -1888,135 +1994,11 @@ end = 353
 kind = "ellipsis"
 
 [[batches]]
-position = 69
-key = 'C(DeclNames { file: "include/packets.h", chunk_index: 0, hub: false })'
-descriptor = "c decl names surface in include/packets.h"
-cost_tokens = 416
-cum_tokens = 3084
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 5
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 28
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 70
-key = 'C(Decl { file: "include/packets.h", start_line: 5 })'
-descriptor = "c decl at include/packets.h:5"
-cost_tokens = 0
-cum_tokens = 3084
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 71
-key = 'C(Decl { file: "include/packets.h", start_line: 28 })'
-descriptor = "c decl at include/packets.h:28"
-cost_tokens = 0
-cum_tokens = 3084
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'C(DeclDoc { file: "include/packets.h", start_line: 28 })'
-descriptor = "c decl doc at include/packets.h:28"
-cost_tokens = 7
-cum_tokens = 3091
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
-key = 'C(DeclDoc { file: "include/packets.h", start_line: 5 })'
-descriptor = "c decl doc at include/packets.h:5"
-cost_tokens = 9
-cum_tokens = 3100
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 74
-key = 'C(DeclDoc { file: "include/globals.h", start_line: 63 })'
-descriptor = "c decl doc at include/globals.h:63"
-cost_tokens = 33
-cum_tokens = 3133
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/globals.h"
-start = 61
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
 key = 'C(DeclNames { file: "include/procedures.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in include/procedures.h"
 cost_tokens = 468
-cum_tokens = 3601
+cum_tokens = 3568
 
 [batches.content]
 kind = "lines"
@@ -2030,11 +2012,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 76
+position = 75
 key = 'C(Includes { file: "include/procedures.h" })'
 descriptor = "c includes in include/procedures.h"
 cost_tokens = 25
-cum_tokens = 3626
+cum_tokens = 3593
 
 [batches.content]
 kind = "lines"
@@ -2043,6 +2025,24 @@ kind = "lines"
 path = "include/procedures.h"
 start = 4
 end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'C(DeclDoc { file: "include/globals.h", start_line: 63 })'
+descriptor = "c decl doc at include/globals.h:63"
+cost_tokens = 33
+cum_tokens = 3626
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 61
+end = 62
 
 [batches.content.spans.render]
 kind = "full"
@@ -2067,28 +2067,10 @@ kind = "full"
 
 [[batches]]
 position = 78
-key = 'C(DeclDoc { file: "include/globals.h", start_line: 23 })'
-descriptor = "c decl doc at include/globals.h:23"
-cost_tokens = 38
-cum_tokens = 3701
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/globals.h"
-start = 21
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 79
 key = 'C(Decl { file: "src/crafting.c", start_line: 349 })'
 descriptor = "c decl at src/crafting.c:349"
 cost_tokens = 28
-cum_tokens = 3729
+cum_tokens = 3691
 
 [batches.content]
 kind = "lines"
@@ -2097,6 +2079,24 @@ kind = "lines"
 path = "src/crafting.c"
 start = 349
 end = 350
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'C(DeclDoc { file: "include/globals.h", start_line: 23 })'
+descriptor = "c decl doc at include/globals.h:23"
+cost_tokens = 38
+cum_tokens = 3729
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 21
+end = 22
 
 [batches.content.spans.render]
 kind = "full"
@@ -2121,28 +2121,10 @@ kind = "full"
 
 [[batches]]
 position = 81
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
-descriptor = "README.md section #5"
-cost_tokens = 25
-cum_tokens = 3873
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 82
 key = 'C(DeclNames { file: "include/procedures.h", chunk_index: 1, hub: false })'
 descriptor = "c decl names surface #1 in include/procedures.h"
 cost_tokens = 358
-cum_tokens = 4231
+cum_tokens = 4206
 
 [batches.content]
 kind = "lines"
@@ -2162,6 +2144,24 @@ end = 59
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 82
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
+descriptor = "README.md section #5"
+cost_tokens = 25
+cum_tokens = 4231
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 83
@@ -2497,28 +2497,10 @@ kind = "full"
 
 [[batches]]
 position = 93
-key = 'C(DeclDoc { file: "include/globals.h", start_line: 71 })'
-descriptor = "c decl doc at include/globals.h:71"
-cost_tokens = 54
-cum_tokens = 4996
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/globals.h"
-start = 68
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
 key = 'Plaintext(Whole { file: "build.sh" })'
 descriptor = "plaintext config build.sh"
 cost_tokens = 529
-cum_tokens = 5525
+cum_tokens = 5471
 
 [batches.content]
 kind = "lines"
@@ -2527,6 +2509,24 @@ kind = "lines"
 path = "build.sh"
 start = 1
 end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'C(DeclDoc { file: "include/globals.h", start_line: 71 })'
+descriptor = "c decl doc at include/globals.h:71"
+cost_tokens = 54
+cum_tokens = 5525
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 68
+end = 70
 
 [batches.content.spans.render]
 kind = "full"
@@ -2569,10 +2569,50 @@ kind = "full"
 
 [[batches]]
 position = 97
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+cost_tokens = 16
+cum_tokens = 5622
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/ISSUE_TEMPLATE"
+entries = ["bug_report.md", "feature_request.md", "optimization-idea.md"]
+
+[[batches]]
+position = 98
+key = 'C(DeclNames { file: "include/packets.h", chunk_index: 1, hub: false })'
+descriptor = "c decl names surface #1 in include/packets.h"
+cost_tokens = 752
+cum_tokens = 6374
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 31
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 99
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
 cost_tokens = 45
-cum_tokens = 5651
+cum_tokens = 6419
 
 [batches.content]
 kind = "lines"
@@ -2586,25 +2626,29 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 98
-key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
-descriptor = "listing of '.github/ISSUE_TEMPLATE'"
-cost_tokens = 16
-cum_tokens = 5667
+position = 100
+key = 'C(Decl { file: "include/globals.h", start_line: 200 })'
+descriptor = "c decl at include/globals.h:200"
+cost_tokens = 498
+cum_tokens = 6917
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = ["bug_report.md", "feature_request.md", "optimization-idea.md"]
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 200
+end = 238
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
-position = 99
+position = 101
 key = 'C(DeclNames { file: "src/globals.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/globals.c"
 cost_tokens = 228
-cum_tokens = 5895
+cum_tokens = 7145
 
 [batches.content]
 kind = "lines"
@@ -2634,11 +2678,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 102
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
 cost_tokens = 47
-cum_tokens = 5942
+cum_tokens = 7192
 
 [batches.content]
 kind = "lines"
@@ -2647,50 +2691,6 @@ kind = "lines"
 path = "README.md"
 start = 53
 end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'C(DeclNames { file: "include/packets.h", chunk_index: 1, hub: false })'
-descriptor = "c decl names surface #1 in include/packets.h"
-cost_tokens = 752
-cum_tokens = 6694
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 31
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "include/packets.h"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'C(Decl { file: "include/globals.h", start_line: 200 })'
-descriptor = "c decl at include/globals.h:200"
-cost_tokens = 498
-cum_tokens = 7192
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "include/globals.h"
-start = 200
-end = 238
 
 [batches.content.spans.render]
 kind = "full"
@@ -2733,28 +2733,10 @@ kind = "full"
 
 [[batches]]
 position = 105
-key = 'C(Includes { file: "src/crafting.c" })'
-descriptor = "c includes in src/crafting.c"
-cost_tokens = 65
-cum_tokens = 7647
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/crafting.c"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
 key = 'Typescript(Imports { file: "build_registries.js" })'
 descriptor = "imports in build_registries.js"
 cost_tokens = 26
-cum_tokens = 7673
+cum_tokens = 7608
 
 [batches.content]
 kind = "lines"
@@ -2768,11 +2750,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 107
+position = 106
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 93 })'
 descriptor = "c decl doc at include/globals.h:93"
 cost_tokens = 105
-cum_tokens = 7778
+cum_tokens = 7713
 
 [batches.content]
 kind = "lines"
@@ -2781,6 +2763,24 @@ kind = "lines"
 path = "include/globals.h"
 start = 88
 end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'C(Includes { file: "src/crafting.c" })'
+descriptor = "c includes in src/crafting.c"
+cost_tokens = 65
+cum_tokens = 7778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/crafting.c"
+start = 1
+end = 7
 
 [batches.content.spans.render]
 kind = "full"
@@ -3353,46 +3353,10 @@ kind = "full"
 
 [[batches]]
 position = 123
-key = 'C(Includes { file: "src/worldgen.c" })'
-descriptor = "c includes in src/worldgen.c"
-cost_tokens = 106
-cum_tokens = 8358
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/worldgen.c"
-start = 1
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
-key = 'C(Includes { file: "src/globals.c" })'
-descriptor = "c includes in src/globals.c"
-cost_tokens = 109
-cum_tokens = 8467
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/globals.c"
-start = 1
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 275
-cum_tokens = 8742
+cum_tokens = 8527
 
 [batches.content]
 kind = "lines"
@@ -3406,29 +3370,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 126
-key = 'C(Includes { file: "src/varnum.c" })'
-descriptor = "c includes in src/varnum.c"
-cost_tokens = 118
-cum_tokens = 8860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/varnum.c"
-start = 1
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
+position = 124
 key = 'C(DeclDoc { file: "src/tools.c", start_line: 42 })'
 descriptor = "c decl doc at src/tools.c:42"
 cost_tokens = 34
-cum_tokens = 8894
+cum_tokens = 8561
 
 [batches.content]
 kind = "lines"
@@ -3442,11 +3388,29 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 128
+position = 125
+key = 'C(Includes { file: "src/worldgen.c" })'
+descriptor = "c includes in src/worldgen.c"
+cost_tokens = 106
+cum_tokens = 8667
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/worldgen.c"
+start = 1
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
 key = 'C(DeclBody { file: "src/structures.c", start_line: 9 })'
 descriptor = "c decl body at src/structures.c:9"
 cost_tokens = 59
-cum_tokens = 8953
+cum_tokens = 8726
 
 [batches.content]
 kind = "lines"
@@ -3460,11 +3424,29 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 129
+position = 127
+key = 'C(Includes { file: "src/globals.c" })'
+descriptor = "c includes in src/globals.c"
+cost_tokens = 109
+cum_tokens = 8835
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/globals.c"
+start = 1
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
 key = 'C(DeclBody { file: "src/varnum.c", start_line: 34 })'
 descriptor = "c decl body at src/varnum.c:34"
 cost_tokens = 61
-cum_tokens = 9014
+cum_tokens = 8896
 
 [batches.content]
 kind = "lines"
@@ -3473,6 +3455,24 @@ kind = "lines"
 path = "src/varnum.c"
 start = 35
 end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'C(Includes { file: "src/varnum.c" })'
+descriptor = "c includes in src/varnum.c"
+cost_tokens = 118
+cum_tokens = 9014
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/varnum.c"
+start = 1
+end = 12
 
 [batches.content.spans.render]
 kind = "full"

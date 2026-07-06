@@ -17,6 +17,13 @@ README.md
     …
 Taskfile.yaml
 UPGRADE_GUIDE_V2.md
+       1→# Bubble Tea v2 Upgrade Guide
+       2→
+       3→This guide covers everything you need to change when upgrading from Bubble Tea v1 to v2. For a tour of all the exciting new features, check out the [What's New](https://github.com/charmbracelet/bubbletea/releases/tag/v2.0.0) doc.
+       4→
+       5→> [!NOTE]
+       6→> We don't take API changes lightly and strive to make the upgrade process as simple as possible. If something feels way off, let us know.
+    …
 clipboard.go
        1→package tea
     …
@@ -49,9 +56,6 @@ cursor.go
       27→	return requestCursorPosMsg{}
     …
 environ.go
-       1→package tea
-       2→
-       3→import uv "github.com/charmbracelet/ultraviolet"
     …
       19→type EnvMsg uv.Environ
     …
@@ -138,9 +142,6 @@ raw.go
        7→}
     …
       33→func Raw(r any) Cmd {
-      34→	return func() Msg {
-      35→		return RawMsg{r}
-      36→	}
     …
 renderer.go
     …
@@ -160,9 +161,6 @@ renderer.go
       96→func encodeCursorStyle(style CursorShape, blink bool) int {
     …
 screen.go
-       1→package tea
-       2→
-       3→import "github.com/charmbracelet/x/ansi"
     …
        9→type WindowSizeMsg struct {
       10→	Width  int
@@ -271,9 +269,6 @@ termcap.go
        5→type requestCapabilityMsg string
     …
       30→func RequestCapability(s string) Cmd {
-      31→	return func() Msg {
-      32→		return requestCapabilityMsg(s)
-      33→	}
     …
       41→type CapabilityMsg struct {
       42→	Content string

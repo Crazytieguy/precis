@@ -280,18 +280,6 @@ src/
         …
     jv_parse.c
     jv_print.c
-        …
-          24→#define ESC "\033"
-          25→#define COL(c) (ESC "[" c "m")
-          26→#define COLRESET (ESC "[0m")
-        …
-          31→#define DEFAULT_COLORS \
-        …
-          36→#define COLORS_LEN (sizeof(colors) / sizeof(colors[0]))
-          37→#define FIELD_COLOR (colors[7])
-        …
-          40→int jq_set_colors(const char *code_str) {
-        …
     jv_private.h
            1→#ifndef JV_PRIVATE
            2→#define JV_PRIVATE
@@ -327,6 +315,13 @@ src/
          435→int load_program(jq_state *jq, struct locfile* src, block *out_block) {
         …
     linker.h
+           1→#ifndef LINKER_H
+           2→#define LINKER_H
+           3→
+           4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
+           5→jv load_module_meta(jq_state *jq, jv modname);
+           6→
+           7→#endif
     locfile.c
     locfile.h
     main.c

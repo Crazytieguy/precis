@@ -49,11 +49,11 @@ Score(3000)=0.873 I=0.953 C=0.800 ns_rows≤3K=21/42 (reached=15 partial=3 missi
 | ns | 967 |  | 218 | README Documentation + Installation + License sections | 1.11 |  | 0.496 |
 | walker |  | 985 | 52 | lua decl body at middleclass.lua:186 |  |  | 0.496 |
 | walker |  | 1044 | 59 | lua decl body at middleclass.lua:144 |  |  | 0.498 |
-| walker |  | 1108 | 64 | lua decl body at middleclass.lua:178 |  |  | 0.500 |
-| ns | 1346 |  | 379 | .travis.yml CI matrix | 1.12 |  | 0.414 |
-| ns | 1561 |  | 215 | middleclass.lua function/table locations | 2.1 |  | 0.479 |
-| ns | 1624 |  | 63 | Module metadata (_VERSION/_DESCRIPTION/_URL) | 2.2 |  | 0.491 |
-| walker |  | 1698 | 590 | README.md section #0 |  |  | 0.832 |
+| ns | 1346 |  | 379 | .travis.yml CI matrix | 1.12 |  | 0.412 |
+| ns | 1561 |  | 215 | middleclass.lua function/table locations | 2.1 |  | 0.478 |
+| ns | 1624 |  | 63 | Module metadata (_VERSION/_DESCRIPTION/_URL) | 2.2 |  | 0.490 |
+| walker |  | 1634 | 590 | README.md section #0 |  |  | 0.830 |
+| walker |  | 1698 | 64 | lua decl body at middleclass.lua:178 |  |  | 0.832 |
 | ns | 1726 |  | 102 | middleclass.class() public entry point | 2.3 | 2.1 | 0.814 |
 | ns | 2024 |  | 298 | _createClass: class table + metatable wiring | 2.4 | 2.1 | 0.744 |
 | walker |  | 2077 | 379 | YAML config at .travis.yml |  |  | 0.876 |

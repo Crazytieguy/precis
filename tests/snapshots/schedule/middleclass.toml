@@ -1109,28 +1109,10 @@ kind = "full"
 
 [[batches]]
 position = 37
-key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 178 })'
-descriptor = "lua decl body at middleclass.lua:178"
-cost_tokens = 64
-cum_tokens = 1108
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "middleclass.lua"
-start = 179
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 590
-cum_tokens = 1698
+cum_tokens = 1634
 
 [batches.content]
 kind = "lines"
@@ -1139,6 +1121,24 @@ kind = "lines"
 path = "README.md"
 start = 9
 end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Lua(DeclBody { file: "middleclass.lua", start_line: 178 })'
+descriptor = "lua decl body at middleclass.lua:178"
+cost_tokens = 64
+cum_tokens = 1698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "middleclass.lua"
+start = 179
+end = 181
 
 [batches.content.spans.render]
 kind = "full"

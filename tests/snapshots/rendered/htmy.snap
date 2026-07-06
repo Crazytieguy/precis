@@ -202,6 +202,10 @@ htmy/
           65→    """
           66→    Base class with utilities for safe context use.
         …
+         100→    __slots__ = ()
+         101→
+         102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
+        …
          146→class SkipProperty(Exception):
          147→    """Exception raised by property formatters if the property should be skipped."""
          149→    ...
@@ -227,12 +231,7 @@ htmy/
     error_boundary.py
         …
           15→class ErrorBoundary:
-          16→    """
-          17→    Error boundary component for graceful error handling.
-          18→
-          19→    If an error occurs during the rendering of the error boundary's subtree,
-          20→    the fallback component will be rendered instead.
-          21→    """
+        …
           23→    __slots__ = ("_children", "_errors", "_fallback")
           25→    def __init__(
         …
@@ -295,9 +294,7 @@ htmy/
         context.py
             …
                6→class RendererContext:
-               7→    """
-               8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
-               9→    """
+            …
               11→    @classmethod
               12→    def from_context(cls, context: Context) -> RendererType:
             …
@@ -336,3 +333,14 @@ pyproject.toml
       16→lxml = ["lxml>=6.0.0"]
     …
 tests/
+    __init__.py
+    conftest.py
+    data/
+    renderer/
+    test_formatter.py
+    test_function_component.py
+    test_i18n.py
+    test_main_components.py
+    test_md.py
+    test_snippet.py
+    utils.py

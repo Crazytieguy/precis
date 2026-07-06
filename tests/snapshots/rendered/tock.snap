@@ -61,11 +61,7 @@ assets/
 cmd/
     tock/
         main.go
-               1→package main
-               2→
-               3→import (
-               4→	"github.com/kriuchkov/tock/internal/adapters/cli"
-               5→)
+            …
                7→func main() {
                8→	cli.Execute()
             …
@@ -85,7 +81,6 @@ docs/
         …
           84→---
           86→### `add`
-          88→Add a completed activity manually.
         …
          116→---
          118→### `remove` (alias: `rm`)
@@ -98,7 +93,6 @@ docs/
          188→## Viewing & Reporting
          189→
          190→### `calendar`
-         192→Open the comprehensive interactive dashboard.
         …
          215→---
          217→### `list` (alias: `ls`)
@@ -227,8 +221,6 @@ internal/
                 …
                   11→// Generate returns a full iCalendar string for a single activity.
                   12→func Generate(act models.Activity, uidKey string) string {
-                  13→	event := GenerateEvent(act, uidKey)
-                  14→	return WrapCalendar(event)
                 …
                   17→// WrapCalendar wraps the given event(s) string in a VCALENDAR block.
                   18→func WrapCalendar(eventsBody string) string {
