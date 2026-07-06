@@ -444,6 +444,8 @@ pub enum PythonKey {
         start_line: usize,
         body_start_line: usize,
     },
+    /// Legacy packaging script's top-level `setup(...)` call.
+    SetupManifest { file: PathBuf, start_line: usize },
     /// Surface listing of every `def test_*` first line in a `test_*.py`
     /// / `*_test.py` file (top-level + class-body, decorator-aware).
     TestNames { file: PathBuf },
@@ -490,6 +492,9 @@ pub enum TomlKey {
     /// `[dependencies]` / `[dev-dependencies]` / `[build-dependencies]` /
     /// `[workspace.dependencies]`.
     Dependencies { file: PathBuf },
+    /// Manifest-level operational config: build systems, tool/task tables,
+    /// package metadata, targets, and profiles.
+    Config { file: PathBuf },
 }
 
 /// Opaque walker-key contract — scheduler + renderer depend on this
@@ -737,6 +742,7 @@ impl InnerKey for TomlKey {
             TomlKey::Scripts { file } => describe_in("entry-point scripts", file, root),
             TomlKey::Features { file } => describe_in("[features]", file, root),
             TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
+            TomlKey::Config { file } => describe_in("manifest config", file, root),
         }
     }
 }
@@ -933,6 +939,9 @@ impl InnerKey for PythonKey {
                 *body_start_line,
                 root,
             ),
+            PythonKey::SetupManifest { file, start_line } => {
+                describe_at("python setup manifest", file, *start_line, root)
+            }
             PythonKey::TestNames { file } => describe_in("python test names surface", file, root),
         }
     }

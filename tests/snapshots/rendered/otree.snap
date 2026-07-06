@@ -18,6 +18,11 @@ Cargo.toml
       10→repository = "https://github.com/fioncat/otree"
       11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
     …
+      38→[profile.release]
+      39→lto = true
+      40→strip = true
+      41→incremental = false
+    …
 LICENSE
 README.md
        1→# OTree - Object Tree TUI Viewer

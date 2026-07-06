@@ -295,7 +295,9 @@ nanovllm/
               12→def load_model(model: nn.Module, path: str):
             …
 pyproject.toml
-    …
+       1→[build-system]
+       2→requires = ["setuptools>=61"]
+       3→build-backend = "setuptools.build_meta"
        5→[project]
        6→name = "nano-vllm"
        7→version = "0.2.0"
@@ -312,4 +314,9 @@ pyproject.toml
       18→    "flash-attn",
       19→    "xxhash",
       20→]
-    …
+      22→[project.urls]
+      23→Homepage="https://github.com/GeeeekExplorer/nano-vllm"
+      24→
+      25→[tool.setuptools.packages.find]
+      26→where = ["."]
+      27→include = ["nanovllm*"]

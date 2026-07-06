@@ -33,7 +33,15 @@ Cargo.toml
       28→syn = { version = "2.0", features = ["full"] }
       29→thiserror = "2"
       30→trybuild = { version = "1.0.108", features = ["diff"] }
-    …
+      32→[package.metadata.docs.rs]
+      33→targets = ["x86_64-unknown-linux-gnu"]
+      34→rustdoc-args = [
+      35→    "--generate-link-to-definition",
+      36→    "--generate-macro-expansion",
+      37→    "--extern-html-root-url=core=https://doc.rust-lang.org",
+      38→    "--extern-html-root-url=alloc=https://doc.rust-lang.org",
+      39→    "--extern-html-root-url=std=https://doc.rust-lang.org",
+      40→]
 LICENSE-APACHE
 LICENSE-MIT
 README.md

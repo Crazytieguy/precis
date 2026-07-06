@@ -13,6 +13,22 @@ SECURITY.md
 agent/
     agent.go
     agent_cache.go
+        …
+          10→type systemDataCache struct {
+          11→	sync.RWMutex
+          12→	cache map[uint16]*cacheNode
+          13→}
+          15→type cacheNode struct {
+          16→	data       *system.CombinedData
+          17→	lastUpdate time.Time
+          18→}
+          20→// NewSystemDataCache creates a cache keyed by the polling interval in milliseconds.
+          21→func NewSystemDataCache() *systemDataCache {
+        …
+          28→func (c *systemDataCache) Get(cacheTimeMs uint16) (stats *system.CombinedData, isCached bool) {
+        …
+          44→func (c *systemDataCache) Set(data *system.CombinedData, cacheTimeMs uint16) {
+        …
     agent_cache_test.go
     agent_test_helpers.go
         …
@@ -25,7 +41,14 @@ agent/
         battery.go
             …
                2→package battery
-            …
+               4→const (
+               5→	stateUnknown uint8 = iota
+               6→	stateEmpty
+               7→	stateFull
+               8→	stateCharging
+               9→	stateDischarging
+              10→	stateIdle
+              11→)
         battery_darwin.go
         battery_linux.go
         battery_linux_test.go
@@ -35,6 +58,7 @@ agent/
                8→	return false
             …
               11→func GetBatteryStats() (uint8, uint8, error) {
+              12→	return 0, 0, errors.ErrUnsupported
             …
         battery_windows.go
     client.go
@@ -61,6 +85,7 @@ agent/
            8→	return nil
         …
           11→func (sm *SmartManager) collectEmmcHealth(deviceInfo *DeviceInfo) (bool, error) {
+          12→	return false, nil
         …
     fingerprint.go
     fingerprint_test.go
@@ -73,6 +98,7 @@ agent/
           10→	return false
         …
           13→func (gm *GPUManager) collectAmdStats() error {
+          14→	return errors.ErrUnsupported
         …
     gpu_darwin.go
     gpu_darwin_test.go
@@ -88,6 +114,9 @@ agent/
     gpu_nvml_linux.go
     gpu_nvml_unsupported.go
         …
+           3→package agent
+           4→
+           5→import "fmt"
            7→type nvmlCollector struct {
            8→	gm *GPUManager
            9→}
@@ -110,6 +139,7 @@ agent/
            6→	return nil
         …
            9→func (sm *SmartManager) collectMdraidHealth(deviceInfo *DeviceInfo) (bool, error) {
+          10→	return false, nil
         …
     network.go
     network_test.go
@@ -128,7 +158,11 @@ agent/
     smart.go
     smart_nonwindows.go
         …
+           3→package agent
+           4→
+           5→import "errors"
            7→func ensureEmbeddedSmartctl() (string, error) {
+           8→	return "", errors.ErrUnsupported
         …
     smart_test.go
     smart_windows.go
@@ -144,6 +178,11 @@ agent/
         container2.json
         nvtop.json
         smart/
+            apple_nvme.json
+            nvme0.json
+            scan.json
+            scsi.json
+            sda.json
         system_info.json
     tools/
     update.go
@@ -169,33 +208,7 @@ go.mod
        1→module github.com/henrygd/beszel
        2→
        3→go 1.26.1
-       4→
-       5→require (
-       6→	github.com/blang/semver v3.5.1+incompatible
-       7→	github.com/coreos/go-systemd/v22 v22.7.0
-       8→	github.com/ebitengine/purego v0.10.0
-       9→	github.com/fxamacker/cbor/v2 v2.9.0
-      10→	github.com/gliderlabs/ssh v0.3.8
-      11→	github.com/google/uuid v1.6.0
-      12→	github.com/lxzan/gws v1.9.1
-      13→	github.com/nicholas-fedor/shoutrrr v0.14.3
-      14→	github.com/pocketbase/dbx v1.12.0
-      15→	github.com/pocketbase/pocketbase v0.36.8
-      16→	github.com/shirou/gopsutil/v4 v4.26.3
-      17→	github.com/spf13/cast v1.10.0
-      18→	github.com/spf13/cobra v1.10.2
-      19→	github.com/spf13/pflag v1.0.10
-      20→	github.com/stretchr/testify v1.11.1
-      21→	golang.org/x/crypto v0.49.0
-      22→	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
-      23→	golang.org/x/sys v0.42.0
-      24→	gopkg.in/yaml.v3 v3.0.1
-      25→	howett.net/plist v1.0.1
-      26→)
-      27→
-      28→require (
     …
-      68→)
 go.sum
 i18n.yml
 internal/

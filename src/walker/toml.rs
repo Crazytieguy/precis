@@ -1,6 +1,6 @@
 //! TOML walker. Uses `tree-sitter-toml-ng` to identify top-level `[table]`
 //! headers and their line ranges. Emits one batch per ontology-recognized
-//! section group (identity / scripts / features / dependencies).
+//! section group (identity / scripts / features / dependencies / config).
 //!
 //! Keys:
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
@@ -9,8 +9,10 @@
 //! - `Features { file }` — `[features]`
 //! - `Dependencies { file }` — `[dependencies]`, `[dev-dependencies]`,
 //!   `[build-dependencies]`, `[workspace.dependencies]`,
-//!   `[tool.poetry.dependencies]`, and the PEP 621 `dependencies = [...]`
-//!   array under `[project]` in `pyproject.toml`
+//!   `[tool.poetry.dependencies]`, Cargo target/dotted dependency tables,
+//!   and the PEP 621 dependency arrays under `[project]`
+//! - `Config { file }` — manifest-level build-system, package metadata,
+//!   task-runner/tool config, Cargo profiles/targets, and packaging config
 
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
@@ -81,6 +83,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: dependencies_value(&file, ctx),
             });
         }
+        if let Some(content) = build_config_content(&file, ctx) {
+            out.push(Batch {
+                key: TomlKey::Config { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: config_value(&file, ctx),
+            });
+        }
     }
     out
 }
@@ -91,21 +101,33 @@ fn build_dependencies_content(file: &Path, ctx: &WalkCtx) -> Option<crate::conte
     let (source, tree) = parse_toml(ctx, file)?;
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start, end) in collect_sections(&tree, &source) {
-        if matches!(
-            name.as_str(),
-            "dependencies"
-                | "dev-dependencies"
-                | "build-dependencies"
-                | "workspace.dependencies"
-                | "tool.poetry.dependencies"
-        ) {
+        if is_dependency_section(&name) {
             line_numbers.extend(start..=end);
         }
     }
-    if is_pyproject_filename(file)
-        && let Some((start, end)) = project_pair_array_rows(&tree, &source, "dependencies")
-    {
-        line_numbers.extend(start..=end);
+    if is_python_project_manifest(file) {
+        for key in ["dependencies", "optional-dependencies"] {
+            if let Some((start, end)) = project_pair_array_rows(&tree, &source, key) {
+                line_numbers.extend(start..=end);
+            }
+        }
+    }
+    if line_numbers.is_empty() {
+        return None;
+    }
+    single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
+}
+
+fn build_config_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+    if !is_manifest_toml(file) {
+        return None;
+    }
+    let (source, tree) = parse_toml(ctx, file)?;
+    let mut line_numbers: Vec<usize> = Vec::new();
+    for (name, start, end) in collect_sections(&tree, &source) {
+        if is_config_section(&name) {
+            line_numbers.extend(start..=end);
+        }
     }
     if line_numbers.is_empty() {
         return None;
@@ -179,7 +201,7 @@ fn build_section_content(
 ) -> Option<crate::content::BatchContent> {
     let (source, tree) = parse_toml(ctx, file)?;
     let sections = collect_sections(&tree, &source);
-    let pyproject = is_pyproject_filename(file);
+    let pyproject = is_python_project_manifest(file);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start_line, end_line) in sections {
         if name_match(&name) {
@@ -202,6 +224,45 @@ fn is_pyproject_filename(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()) == Some("pyproject.toml")
 }
 
+fn is_python_project_manifest(file: &Path) -> bool {
+    matches!(
+        file.file_name().and_then(|n| n.to_str()),
+        Some("pyproject.toml" | "project.toml")
+    )
+}
+
+fn is_manifest_toml(file: &Path) -> bool {
+    matches!(
+        file.file_name().and_then(|n| n.to_str()),
+        Some("Cargo.toml" | "pyproject.toml" | "project.toml")
+    )
+}
+
+fn is_dependency_section(name: &str) -> bool {
+    matches!(
+        name,
+        "dependencies"
+            | "dev-dependencies"
+            | "build-dependencies"
+            | "workspace.dependencies"
+            | "tool.poetry.dependencies"
+            | "project.optional-dependencies"
+    ) || name.starts_with("dependencies.")
+        || name.starts_with("dev-dependencies.")
+        || name.starts_with("build-dependencies.")
+        || (name.starts_with("target.") && name.ends_with(".dependencies"))
+}
+
+fn is_config_section(name: &str) -> bool {
+    name == "build-system"
+        || name == "project.urls"
+        || name == "project.entry-points"
+        || name.starts_with("tool.")
+        || name.starts_with("package.metadata.")
+        || name.starts_with("profile.")
+        || matches!(name, "bin" | "example" | "test" | "bench")
+}
+
 fn project_identity_lines(
     source: &str,
     start_line: usize,
@@ -222,8 +283,7 @@ fn project_identity_lines(
 }
 
 /// `broad_scalars` widens the captured keys from {name, description}
-/// to the full PEP 621 lede. Only `pyproject.toml` uses the broad set
-/// — alternative-named TOMLs with a `[project]` table stay narrow.
+/// to the full PEP 621 lede for Python project manifests.
 fn is_project_scalar_pair_line(line: &str, broad_scalars: bool) -> bool {
     let Some((key, value)) = line.trim_start().split_once('=') else {
         return false;
@@ -308,6 +368,10 @@ fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.7, 0.4, path_depth_factor(file, ctx))
 }
 
+fn config_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.45, 0.6, 0.45, path_depth_factor(file, ctx))
+}
+
 // --- parser ---
 
 fn parse_toml(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
@@ -317,23 +381,26 @@ fn parse_toml(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
 // --- section collection ---
 
 /// `(header_name, start_1based, end_1based)` for every top-level
-/// `table`. End is the row before the next table, the next
-/// `[[array-of-tables]]` block, or EOF — `[[bin]]`-style blocks bound
-/// the preceding section but don't emit one themselves.
+/// `table` or `[[array-of-tables]]`. End is the row before the next
+/// table/array block or EOF.
 fn collect_sections(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    // (name, start_row); `name` is None for boundary-only nodes.
-    let mut raw: Vec<(Option<String>, usize)> = Vec::new();
+    let mut raw: Vec<(String, usize)> = Vec::new();
     for child in root.children(&mut cursor) {
         let name = match child.kind() {
             "table" => {
                 let Some(name) = extract_table_name(child, source) else {
                     continue;
                 };
-                Some(name)
+                name
             }
-            "table_array_element" => None,
+            "table_array_element" => {
+                let Some(name) = extract_table_name(child, source) else {
+                    continue;
+                };
+                name
+            }
             _ => continue,
         };
         raw.push((name, child.start_position().row));
@@ -341,9 +408,7 @@ fn collect_sections(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     let total_rows = source.lines().count();
     let mut out = Vec::new();
     for i in 0..raw.len() {
-        let Some(name) = raw[i].0.clone() else {
-            continue;
-        };
+        let name = raw[i].0.clone();
         let start = raw[i].1 + 1;
         let end = if i + 1 < raw.len() {
             raw[i + 1].1
@@ -468,7 +533,7 @@ mod tests {
     }
 
     #[test]
-    fn walker_toml_sections_end_at_array_of_tables() {
+    fn walker_toml_sections_include_array_of_tables() {
         let source = "[package]\nname = \"demo\"\nversion = \"1.0\"\n\n\
                       [[bin]]\nname = \"demo-cli\"\n\n\
                       [dependencies]\nserde = \"1\"\n";
@@ -482,6 +547,7 @@ mod tests {
             sections,
             vec![
                 ("package".to_string(), 1, 4),
+                ("bin".to_string(), 5, 7),
                 ("dependencies".to_string(), 8, 9),
             ],
         );

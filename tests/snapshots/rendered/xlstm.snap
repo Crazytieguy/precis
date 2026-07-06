@@ -122,7 +122,9 @@ notebooks/
     xlstm/
     xlstm_large/
 pyproject.toml
-    …
+       1→[build-system]
+       2→requires = ["setuptools>=42", "wheel"]
+       3→build-backend = "setuptools.build_meta"
        5→[project]
        6→name = "xlstm"
        7→version = "2.0.5"
@@ -153,6 +155,12 @@ pyproject.toml
       40→    "mlstm_kernels",
       41→]
     …
+      47→[tool.setuptools.package-data]
+      48→"xlstm" = ["blocks/slstm/src/cuda/*.c", "blocks/slstm/src/cuda/*.cc", "blocks/slstm/src/cuda/*.h", "blocks/slstm/src/cuda/*.cu", "blocks/slstm/src/cuda/*.cuh", "blocks/slstm/src/util/*.c", "blocks/slstm/src/util/*.cc", "blocks/slstm/src/util/*.h", "blocks/slstm/src/util/*.cu", "blocks/slstm/src/util/*.cuh"]
+      49→
+      50→[project.urls]
+      51→Repository = "https://github.com/NX-AI/xlstm"
+      52→Issues = "https://github.com/NX-AI/xlstm/issues"
 pytest.ini
 res/
     desc_xlstm_overview.pdf
@@ -298,9 +306,6 @@ xlstm/
         generate.py
         model.py
         utils.py
-               1→import torch
-               2→import re
-            …
     xlstm_lm_model.py
         …
           14→@dataclass
@@ -318,8 +323,6 @@ xlstm/
           49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
         …
           56→    def step(
-          57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
-          58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
         …
           65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
         …

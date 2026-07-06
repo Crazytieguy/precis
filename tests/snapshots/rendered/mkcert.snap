@@ -42,12 +42,6 @@ README.md
     …
       92→### Windows
     …
-     100→or use Scoop
-     101→
-     102→```
-     103→scoop bucket add extras
-     104→scoop install mkcert
-     105→```
      107→or build from source (requires Go 1.10+), or use [the pre-built binaries](https://github.com/FiloSottile/mkcert/releases).
      109→If you're running into permission problems try running `mkcert` as an Administrator.
      111→## Supported root stores
@@ -110,7 +104,8 @@ go.mod
        9→)
       10→
       11→require (
-    …
+      12→	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
+      13→	golang.org/x/text v0.3.7 // indirect
       14→)
 go.sum
 main.go

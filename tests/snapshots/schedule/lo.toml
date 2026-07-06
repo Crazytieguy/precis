@@ -1,7 +1,7 @@
 fixture = "lo"
 budget = 10000
-cumulative_tokens = 9981
-batch_count = 212
+cumulative_tokens = 9976
+batch_count = 208
 
 [[batches]]
 position = 1
@@ -445,36 +445,10 @@ kind = "full"
 
 [[batches]]
 position = 19
-key = 'Go(GoMod { file: "go.mod" })'
-descriptor = "go module file go.mod"
-cost_tokens = 133
-cum_tokens = 710
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
 key = 'Go(PackageImports { file: "type_manipulation.go" })'
 descriptor = "go package + imports in type_manipulation.go"
 cost_tokens = 22
-cum_tokens = 732
+cum_tokens = 599
 
 [batches.content]
 kind = "lines"
@@ -488,11 +462,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Fs(DirListing { dir: "internal/constraints" })'
 descriptor = "listing of 'internal/constraints'"
 cost_tokens = 20
-cum_tokens = 752
+cum_tokens = 619
 
 [batches.content]
 kind = "fs"
@@ -502,11 +476,11 @@ parent = "internal/constraints"
 entries = ["README.md", "constraints.go", "ordered_go118.go", "ordered_go121.go"]
 
 [[batches]]
-position = 22
+position = 21
 key = 'Markdown(ReadmeHeadline { file: "internal/constraints/README.md" })'
 descriptor = "README headline in internal/constraints/README.md"
 cost_tokens = 31
-cum_tokens = 783
+cum_tokens = 650
 
 [batches.content]
 kind = "lines"
@@ -520,11 +494,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Go(DeclNames { file: "internal/constraints/ordered_go118.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/constraints/ordered_go118.go"
 cost_tokens = 12
-cum_tokens = 795
+cum_tokens = 662
 
 [batches.content]
 kind = "lines"
@@ -546,11 +520,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Go(Decl { file: "internal/constraints/ordered_go118.go", start_line: 9 })'
 descriptor = "go decl at internal/constraints/ordered_go118.go:9"
 cost_tokens = 14
-cum_tokens = 809
+cum_tokens = 676
 
 [batches.content]
 kind = "lines"
@@ -564,11 +538,29 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Go(DeclNames { file: "internal/constraints/ordered_go121.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/constraints/ordered_go121.go"
 cost_tokens = 13
-cum_tokens = 822
+cum_tokens = 689
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/constraints/ordered_go121.go"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Go(Decl { file: "internal/constraints/ordered_go121.go", start_line: 13 })'
+descriptor = "go decl at internal/constraints/ordered_go121.go:13"
+cost_tokens = 0
+cum_tokens = 689
 
 [batches.content]
 kind = "lines"
@@ -583,28 +575,10 @@ kind = "full"
 
 [[batches]]
 position = 26
-key = 'Go(Decl { file: "internal/constraints/ordered_go121.go", start_line: 13 })'
-descriptor = "go decl at internal/constraints/ordered_go121.go:13"
-cost_tokens = 0
-cum_tokens = 822
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/constraints/ordered_go121.go"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
 key = 'Fs(DirListing { dir: "internal/xtime" })'
 descriptor = "listing of 'internal/xtime'"
 cost_tokens = 21
-cum_tokens = 843
+cum_tokens = 710
 
 [batches.content]
 kind = "fs"
@@ -614,11 +588,11 @@ parent = "internal/xtime"
 entries = ["README.md", "fake.go", "noCopy.go", "real.go", "time.go"]
 
 [[batches]]
-position = 28
+position = 27
 key = 'Fs(DirListing { dir: "exp/simd" })'
 descriptor = "listing of 'exp/simd'"
 cost_tokens = 124
-cum_tokens = 967
+cum_tokens = 834
 
 [batches.content]
 kind = "fs"
@@ -628,11 +602,11 @@ parent = "exp/simd"
 entries = ["BENCHMARK.md", "README.md", "cpu_amd64.go", "cpu_amd64_test.go", "go.mod", "go.sum", "intersect_avx512.go", "intersect_avx512_test.go", "intersect_bench_test.go", "math.go", "math_avx.go", "math_avx2.go", "math_avx2_test.go", "math_avx512.go", "math_avx512_test.go", "math_avx_test.go", "math_bench_test.go", "simd.go", "simd_test.go", "unsafe.go"]
 
 [[batches]]
-position = 29
+position = 28
 key = 'Go(GoModIdentity { file: "exp/simd/go.mod" })'
 descriptor = "go module identity in exp/simd/go.mod"
 cost_tokens = 35
-cum_tokens = 1002
+cum_tokens = 869
 
 [batches.content]
 kind = "lines"
@@ -646,11 +620,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Fs(DirListing { dir: "it" })'
 descriptor = "listing of 'it'"
 cost_tokens = 134
-cum_tokens = 1136
+cum_tokens = 1003
 
 [batches.content]
 kind = "fs"
@@ -660,11 +634,11 @@ parent = "it"
 entries = ["channel.go", "channel_test.go", "find.go", "find_example_test.go", "find_test.go", "intersect.go", "intersect_example_test.go", "intersect_test.go", "lo_test.go", "map.go", "map_example_test.go", "map_test.go", "math.go", "math_example_test.go", "math_test.go", "seq.go", "seq_example_test.go", "seq_test.go", "string.go", "string_example_test.go", "string_test.go", "tuples.go", "tuples_example_test.go", "tuples_test.go", "type_manipulation.go", "type_manipulation_test.go"]
 
 [[batches]]
-position = 31
+position = 30
 key = 'Go(DeclNames { file: "it/string.go", chunk_index: 0 })'
 descriptor = "go decl names surface in it/string.go"
 cost_tokens = 27
-cum_tokens = 1163
+cum_tokens = 1030
 
 [batches.content]
 kind = "lines"
@@ -686,11 +660,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Go(Decl { file: "it/string.go", start_line: 13 })'
 descriptor = "go decl at it/string.go:13"
 cost_tokens = 0
-cum_tokens = 1163
+cum_tokens = 1030
 
 [batches.content]
 kind = "lines"
@@ -704,11 +678,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Markdown(ReadmeHeadline { file: "exp/simd/README.md" })'
 descriptor = "README headline in exp/simd/README.md"
 cost_tokens = 72
-cum_tokens = 1235
+cum_tokens = 1102
 
 [batches.content]
 kind = "lines"
@@ -722,11 +696,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Markdown(Section { file: "README.md", section_index: 435, reference_shaped: false })'
 descriptor = "README.md section #435"
 cost_tokens = 27
-cum_tokens = 1262
+cum_tokens = 1129
 
 [batches.content]
 kind = "lines"
@@ -740,11 +714,11 @@ end = 5095
 kind = "full"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Go(PackageImports { file: "time.go" })'
 descriptor = "go package + imports in time.go"
 cost_tokens = 32
-cum_tokens = 1294
+cum_tokens = 1161
 
 [batches.content]
 kind = "lines"
@@ -758,11 +732,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Markdown(HeadingsOutline { file: "exp/simd/BENCHMARK.md" })'
 descriptor = "headings outline in exp/simd/BENCHMARK.md"
 cost_tokens = 39
-cum_tokens = 1333
+cum_tokens = 1200
 
 [batches.content]
 kind = "lines"
@@ -816,11 +790,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Markdown(Section { file: "exp/simd/BENCHMARK.md", section_index: 0, reference_shaped: false })'
 descriptor = "exp/simd/BENCHMARK.md section #0"
 cost_tokens = 0
-cum_tokens = 1333
+cum_tokens = 1200
 
 [batches.content]
 kind = "lines"
@@ -834,11 +808,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Markdown(ReadmeHeadline { file: "internal/xtime/README.md" })'
 descriptor = "README headline in internal/xtime/README.md"
 cost_tokens = 88
-cum_tokens = 1421
+cum_tokens = 1288
 
 [batches.content]
 kind = "lines"
@@ -852,11 +826,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Go(PackageImports { file: "internal/constraints/ordered_go118.go" })'
 descriptor = "go package + imports in internal/constraints/ordered_go118.go"
 cost_tokens = 9
-cum_tokens = 1430
+cum_tokens = 1297
 
 [batches.content]
 kind = "lines"
@@ -870,11 +844,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Go(GoMod { file: "exp/simd/go.mod" })'
 descriptor = "go module file exp/simd/go.mod"
 cost_tokens = 64
-cum_tokens = 1494
+cum_tokens = 1361
 
 [batches.content]
 kind = "lines"
@@ -888,11 +862,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Go(DeclNames { file: "internal/xtime/noCopy.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/xtime/noCopy.go"
 cost_tokens = 38
-cum_tokens = 1532
+cum_tokens = 1399
 
 [batches.content]
 kind = "lines"
@@ -922,11 +896,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Go(Decl { file: "internal/xtime/noCopy.go", start_line: 10 })'
 descriptor = "go decl at internal/xtime/noCopy.go:10"
 cost_tokens = 0
-cum_tokens = 1532
+cum_tokens = 1399
 
 [batches.content]
 kind = "lines"
@@ -940,11 +914,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Go(Decl { file: "internal/xtime/noCopy.go", start_line: 13 })'
 descriptor = "go decl at internal/xtime/noCopy.go:13"
 cost_tokens = 0
-cum_tokens = 1532
+cum_tokens = 1399
 
 [batches.content]
 kind = "lines"
@@ -958,11 +932,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Go(PackageImports { file: "internal/xtime/noCopy.go" })'
 descriptor = "go package + imports in internal/xtime/noCopy.go"
 cost_tokens = 8
-cum_tokens = 1540
+cum_tokens = 1407
 
 [batches.content]
 kind = "lines"
@@ -976,11 +950,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 45
+position = 44
 key = 'Go(PackageImports { file: "exp/simd/simd.go" })'
 descriptor = "go package + imports in exp/simd/simd.go"
 cost_tokens = 10
-cum_tokens = 1550
+cum_tokens = 1417
 
 [batches.content]
 kind = "lines"
@@ -994,11 +968,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: true })'
 descriptor = "README.md section #3"
 cost_tokens = 867
-cum_tokens = 2417
+cum_tokens = 2284
 
 [batches.content]
 kind = "lines"
@@ -1012,11 +986,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Markdown(HeadingsOutline { file: "exp/simd/README.md" })'
 descriptor = "headings outline in exp/simd/README.md"
 cost_tokens = 50
-cum_tokens = 2467
+cum_tokens = 2334
 
 [batches.content]
 kind = "lines"
@@ -1086,11 +1060,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 47
 key = 'Go(PackageImports { file: "internal/constraints/constraints.go" })'
 descriptor = "go package + imports in internal/constraints/constraints.go"
 cost_tokens = 11
-cum_tokens = 2478
+cum_tokens = 2345
 
 [batches.content]
 kind = "lines"
@@ -1104,11 +1078,29 @@ end = 7
 kind = "full"
 
 [[batches]]
+position = 48
+key = 'Go(GoMod { file: "go.mod" })'
+descriptor = "go module file go.mod"
+cost_tokens = 286
+cum_tokens = 2631
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 49
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: true })'
 descriptor = "README.md section #4"
 cost_tokens = 355
-cum_tokens = 2833
+cum_tokens = 2986
 
 [batches.content]
 kind = "lines"
@@ -1126,7 +1118,7 @@ position = 50
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: true })'
 descriptor = "README.md section #5"
 cost_tokens = 134
-cum_tokens = 2967
+cum_tokens = 3120
 
 [batches.content]
 kind = "lines"
@@ -1144,7 +1136,7 @@ position = 51
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: true })'
 descriptor = "README.md section #6"
 cost_tokens = 156
-cum_tokens = 3123
+cum_tokens = 3276
 
 [batches.content]
 kind = "lines"
@@ -1162,7 +1154,7 @@ position = 52
 key = 'Markdown(Section { file: "README.md", section_index: 138, reference_shaped: false })'
 descriptor = "README.md section #138"
 cost_tokens = 15
-cum_tokens = 3138
+cum_tokens = 3291
 
 [batches.content]
 kind = "lines"
@@ -1180,7 +1172,7 @@ position = 53
 key = 'Markdown(Section { file: "README.md", section_index: 143, reference_shaped: false })'
 descriptor = "README.md section #143"
 cost_tokens = 15
-cum_tokens = 3153
+cum_tokens = 3306
 
 [batches.content]
 kind = "lines"
@@ -1198,7 +1190,7 @@ position = 54
 key = 'Go(PackageImports { file: "concurrency.go" })'
 descriptor = "go package + imports in concurrency.go"
 cost_tokens = 46
-cum_tokens = 3199
+cum_tokens = 3352
 
 [batches.content]
 kind = "lines"
@@ -1216,7 +1208,7 @@ position = 55
 key = 'Go(PackageImports { file: "it/string.go" })'
 descriptor = "go package + imports in it/string.go"
 cost_tokens = 22
-cum_tokens = 3221
+cum_tokens = 3374
 
 [batches.content]
 kind = "lines"
@@ -1234,7 +1226,7 @@ position = 56
 key = 'Go(PackageImports { file: "parallel/slice.go" })'
 descriptor = "go package + imports in parallel/slice.go"
 cost_tokens = 22
-cum_tokens = 3243
+cum_tokens = 3396
 
 [batches.content]
 kind = "lines"
@@ -1252,7 +1244,7 @@ position = 57
 key = 'Go(PackageImports { file: "errors.go" })'
 descriptor = "go package + imports in errors.go"
 cost_tokens = 47
-cum_tokens = 3290
+cum_tokens = 3443
 
 [batches.content]
 kind = "lines"
@@ -1270,7 +1262,7 @@ position = 58
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: true })'
 descriptor = "README.md section #7"
 cost_tokens = 198
-cum_tokens = 3488
+cum_tokens = 3641
 
 [batches.content]
 kind = "lines"
@@ -1288,7 +1280,7 @@ position = 59
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: true })'
 descriptor = "README.md section #8"
 cost_tokens = 193
-cum_tokens = 3681
+cum_tokens = 3834
 
 [batches.content]
 kind = "lines"
@@ -1306,7 +1298,7 @@ position = 60
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: true })'
 descriptor = "README.md section #9"
 cost_tokens = 235
-cum_tokens = 3916
+cum_tokens = 4069
 
 [batches.content]
 kind = "lines"
@@ -1324,7 +1316,7 @@ position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: true })'
 descriptor = "README.md section #10"
 cost_tokens = 535
-cum_tokens = 4451
+cum_tokens = 4604
 
 [batches.content]
 kind = "lines"
@@ -1342,7 +1334,7 @@ position = 62
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: true })'
 descriptor = "README.md section #11"
 cost_tokens = 418
-cum_tokens = 4869
+cum_tokens = 5022
 
 [batches.content]
 kind = "lines"
@@ -1360,7 +1352,7 @@ position = 63
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: true })'
 descriptor = "README.md section #12"
 cost_tokens = 281
-cum_tokens = 5150
+cum_tokens = 5303
 
 [batches.content]
 kind = "lines"
@@ -1378,7 +1370,7 @@ position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: true })'
 descriptor = "README.md section #13"
 cost_tokens = 208
-cum_tokens = 5358
+cum_tokens = 5511
 
 [batches.content]
 kind = "lines"
@@ -1396,7 +1388,7 @@ position = 65
 key = 'Go(DeclNames { file: "it/channel.go", chunk_index: 0 })'
 descriptor = "go decl names surface in it/channel.go"
 cost_tokens = 92
-cum_tokens = 5450
+cum_tokens = 5603
 
 [batches.content]
 kind = "lines"
@@ -1454,7 +1446,7 @@ position = 66
 key = 'Go(Decl { file: "it/channel.go", start_line: 13 })'
 descriptor = "go decl at it/channel.go:13"
 cost_tokens = 0
-cum_tokens = 5450
+cum_tokens = 5603
 
 [batches.content]
 kind = "lines"
@@ -1472,7 +1464,7 @@ position = 67
 key = 'Go(Decl { file: "it/channel.go", start_line: 29 })'
 descriptor = "go decl at it/channel.go:29"
 cost_tokens = 0
-cum_tokens = 5450
+cum_tokens = 5603
 
 [batches.content]
 kind = "lines"
@@ -1490,7 +1482,7 @@ position = 68
 key = 'Go(Decl { file: "it/channel.go", start_line: 45 })'
 descriptor = "go decl at it/channel.go:45"
 cost_tokens = 0
-cum_tokens = 5450
+cum_tokens = 5603
 
 [batches.content]
 kind = "lines"
@@ -1508,7 +1500,7 @@ position = 69
 key = 'Go(DeclNames { file: "internal/constraints/constraints.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/constraints/constraints.go"
 cost_tokens = 51
-cum_tokens = 5501
+cum_tokens = 5654
 
 [batches.content]
 kind = "lines"
@@ -1598,7 +1590,7 @@ position = 70
 key = 'Go(Decl { file: "internal/constraints/constraints.go", start_line: 26 })'
 descriptor = "go decl at internal/constraints/constraints.go:26"
 cost_tokens = 15
-cum_tokens = 5516
+cum_tokens = 5669
 
 [batches.content]
 kind = "lines"
@@ -1616,7 +1608,7 @@ position = 71
 key = 'Go(Decl { file: "internal/constraints/constraints.go", start_line: 40 })'
 descriptor = "go decl at internal/constraints/constraints.go:40"
 cost_tokens = 16
-cum_tokens = 5532
+cum_tokens = 5685
 
 [batches.content]
 kind = "lines"
@@ -1634,7 +1626,7 @@ position = 72
 key = 'Go(Decl { file: "internal/constraints/constraints.go", start_line: 33 })'
 descriptor = "go decl at internal/constraints/constraints.go:33"
 cost_tokens = 18
-cum_tokens = 5550
+cum_tokens = 5703
 
 [batches.content]
 kind = "lines"
@@ -1652,7 +1644,7 @@ position = 73
 key = 'Go(Decl { file: "internal/constraints/constraints.go", start_line: 12 })'
 descriptor = "go decl at internal/constraints/constraints.go:12"
 cost_tokens = 29
-cum_tokens = 5579
+cum_tokens = 5732
 
 [batches.content]
 kind = "lines"
@@ -1670,7 +1662,7 @@ position = 74
 key = 'Go(Decl { file: "internal/constraints/constraints.go", start_line: 19 })'
 descriptor = "go decl at internal/constraints/constraints.go:19"
 cost_tokens = 32
-cum_tokens = 5611
+cum_tokens = 5764
 
 [batches.content]
 kind = "lines"
@@ -1688,7 +1680,7 @@ position = 75
 key = 'Go(PackageImports { file: "math.go" })'
 descriptor = "go package + imports in math.go"
 cost_tokens = 53
-cum_tokens = 5664
+cum_tokens = 5817
 
 [batches.content]
 kind = "lines"
@@ -1706,7 +1698,7 @@ position = 76
 key = 'Go(DeclDoc { file: "it/channel.go", start_line: 13 })'
 descriptor = "go decl doc at it/channel.go:13"
 cost_tokens = 38
-cum_tokens = 5702
+cum_tokens = 5855
 
 [batches.content]
 kind = "lines"
@@ -1724,7 +1716,7 @@ position = 77
 key = 'Markdown(Section { file: "README.md", section_index: 407, reference_shaped: false })'
 descriptor = "README.md section #407"
 cost_tokens = 19
-cum_tokens = 5721
+cum_tokens = 5874
 
 [batches.content]
 kind = "lines"
@@ -1742,7 +1734,7 @@ position = 78
 key = 'Go(PackageImports { file: "retry.go" })'
 descriptor = "go package + imports in retry.go"
 cost_tokens = 60
-cum_tokens = 5781
+cum_tokens = 5934
 
 [batches.content]
 kind = "lines"
@@ -1760,7 +1752,7 @@ position = 79
 key = 'Markdown(Section { file: "README.md", section_index: 301, reference_shaped: false })'
 descriptor = "README.md section #301"
 cost_tokens = 20
-cum_tokens = 5801
+cum_tokens = 5954
 
 [batches.content]
 kind = "lines"
@@ -1778,7 +1770,7 @@ position = 80
 key = 'Markdown(Section { file: "README.md", section_index: 315, reference_shaped: false })'
 descriptor = "README.md section #315"
 cost_tokens = 20
-cum_tokens = 5821
+cum_tokens = 5974
 
 [batches.content]
 kind = "lines"
@@ -1796,7 +1788,7 @@ position = 81
 key = 'Go(PackageImports { file: "mutable/slice.go" })'
 descriptor = "go package + imports in mutable/slice.go"
 cost_tokens = 30
-cum_tokens = 5851
+cum_tokens = 6004
 
 [batches.content]
 kind = "lines"
@@ -1814,7 +1806,7 @@ position = 82
 key = 'Go(DeclDoc { file: "it/channel.go", start_line: 29 })'
 descriptor = "go decl doc at it/channel.go:29"
 cost_tokens = 41
-cum_tokens = 5892
+cum_tokens = 6045
 
 [batches.content]
 kind = "lines"
@@ -1832,7 +1824,7 @@ position = 83
 key = 'Go(PackageImports { file: "channel.go" })'
 descriptor = "go package + imports in channel.go"
 cost_tokens = 66
-cum_tokens = 5958
+cum_tokens = 6111
 
 [batches.content]
 kind = "lines"
@@ -1850,7 +1842,7 @@ position = 84
 key = 'Go(DeclDoc { file: "it/channel.go", start_line: 45 })'
 descriptor = "go decl doc at it/channel.go:45"
 cost_tokens = 43
-cum_tokens = 6001
+cum_tokens = 6154
 
 [batches.content]
 kind = "lines"
@@ -1868,7 +1860,7 @@ position = 85
 key = 'Go(PackageImports { file: "find.go" })'
 descriptor = "go package + imports in find.go"
 cost_tokens = 67
-cum_tokens = 6068
+cum_tokens = 6221
 
 [batches.content]
 kind = "lines"
@@ -1886,7 +1878,7 @@ position = 86
 key = 'Go(PackageImports { file: "slice.go" })'
 descriptor = "go package + imports in slice.go"
 cost_tokens = 67
-cum_tokens = 6135
+cum_tokens = 6288
 
 [batches.content]
 kind = "lines"
@@ -1904,7 +1896,7 @@ position = 87
 key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false })'
 descriptor = "README.md section #27"
 cost_tokens = 21
-cum_tokens = 6156
+cum_tokens = 6309
 
 [batches.content]
 kind = "lines"
@@ -1922,7 +1914,7 @@ position = 88
 key = 'Markdown(Section { file: "README.md", section_index: 437, reference_shaped: false })'
 descriptor = "README.md section #437"
 cost_tokens = 49
-cum_tokens = 6205
+cum_tokens = 6358
 
 [batches.content]
 kind = "lines"
@@ -1940,7 +1932,7 @@ position = 89
 key = 'Markdown(Section { file: "README.md", section_index: 205, reference_shaped: false })'
 descriptor = "README.md section #205"
 cost_tokens = 22
-cum_tokens = 6227
+cum_tokens = 6380
 
 [batches.content]
 kind = "lines"
@@ -1958,7 +1950,7 @@ position = 90
 key = 'Markdown(Section { file: "README.md", section_index: 206, reference_shaped: false })'
 descriptor = "README.md section #206"
 cost_tokens = 20
-cum_tokens = 6247
+cum_tokens = 6400
 
 [batches.content]
 kind = "lines"
@@ -1976,7 +1968,7 @@ position = 91
 key = 'Markdown(Section { file: "README.md", section_index: 310, reference_shaped: false })'
 descriptor = "README.md section #310"
 cost_tokens = 22
-cum_tokens = 6269
+cum_tokens = 6422
 
 [batches.content]
 kind = "lines"
@@ -1994,7 +1986,7 @@ position = 92
 key = 'Markdown(Section { file: "README.md", section_index: 326, reference_shaped: false })'
 descriptor = "README.md section #326"
 cost_tokens = 22
-cum_tokens = 6291
+cum_tokens = 6444
 
 [batches.content]
 kind = "lines"
@@ -2012,7 +2004,7 @@ position = 93
 key = 'Markdown(Section { file: "README.md", section_index: 397, reference_shaped: false })'
 descriptor = "README.md section #397"
 cost_tokens = 22
-cum_tokens = 6313
+cum_tokens = 6466
 
 [batches.content]
 kind = "lines"
@@ -2030,7 +2022,7 @@ position = 94
 key = 'Go(DeclNames { file: "find.go", chunk_index: 0 })'
 descriptor = "go decl names surface in find.go"
 cost_tokens = 208
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2168,7 +2160,7 @@ position = 95
 key = 'Go(Decl { file: "find.go", start_line: 13 })'
 descriptor = "go decl at find.go:13"
 cost_tokens = 0
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2186,7 +2178,7 @@ position = 96
 key = 'Go(Decl { file: "find.go", start_line: 26 })'
 descriptor = "go decl at find.go:26"
 cost_tokens = 0
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2204,7 +2196,7 @@ position = 97
 key = 'Go(Decl { file: "find.go", start_line: 40 })'
 descriptor = "go decl at find.go:40"
 cost_tokens = 0
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2222,7 +2214,7 @@ position = 98
 key = 'Go(Decl { file: "find.go", start_line: 56 })'
 descriptor = "go decl at find.go:56"
 cost_tokens = 0
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2240,7 +2232,7 @@ position = 99
 key = 'Go(Decl { file: "find.go", start_line: 72 })'
 descriptor = "go decl at find.go:72"
 cost_tokens = 0
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2258,7 +2250,7 @@ position = 100
 key = 'Go(Decl { file: "find.go", start_line: 88 })'
 descriptor = "go decl at find.go:88"
 cost_tokens = 0
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2276,7 +2268,7 @@ position = 101
 key = 'Go(Decl { file: "find.go", start_line: 107 })'
 descriptor = "go decl at find.go:107"
 cost_tokens = 0
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2294,7 +2286,7 @@ position = 102
 key = 'Go(Decl { file: "find.go", start_line: 121 })'
 descriptor = "go decl at find.go:121"
 cost_tokens = 0
-cum_tokens = 6521
+cum_tokens = 6674
 
 [batches.content]
 kind = "lines"
@@ -2312,7 +2304,7 @@ position = 103
 key = 'Go(DeclDoc { file: "find.go", start_line: 56 })'
 descriptor = "go decl doc at find.go:56"
 cost_tokens = 36
-cum_tokens = 6557
+cum_tokens = 6710
 
 [batches.content]
 kind = "lines"
@@ -2330,7 +2322,7 @@ position = 104
 key = 'Go(DeclDoc { file: "find.go", start_line: 40 })'
 descriptor = "go decl doc at find.go:40"
 cost_tokens = 38
-cum_tokens = 6595
+cum_tokens = 6748
 
 [batches.content]
 kind = "lines"
@@ -2348,7 +2340,7 @@ position = 105
 key = 'Go(DeclDoc { file: "find.go", start_line: 72 })'
 descriptor = "go decl doc at find.go:72"
 cost_tokens = 49
-cum_tokens = 6644
+cum_tokens = 6797
 
 [batches.content]
 kind = "lines"
@@ -2366,7 +2358,7 @@ position = 106
 key = 'Go(DeclDoc { file: "find.go", start_line: 13 })'
 descriptor = "go decl doc at find.go:13"
 cost_tokens = 59
-cum_tokens = 6703
+cum_tokens = 6856
 
 [batches.content]
 kind = "lines"
@@ -2384,7 +2376,7 @@ position = 107
 key = 'Go(DeclDoc { file: "find.go", start_line: 26 })'
 descriptor = "go decl doc at find.go:26"
 cost_tokens = 62
-cum_tokens = 6765
+cum_tokens = 6918
 
 [batches.content]
 kind = "lines"
@@ -2402,7 +2394,7 @@ position = 108
 key = 'Go(DeclDoc { file: "find.go", start_line: 107 })'
 descriptor = "go decl doc at find.go:107"
 cost_tokens = 64
-cum_tokens = 6829
+cum_tokens = 6982
 
 [batches.content]
 kind = "lines"
@@ -2420,7 +2412,7 @@ position = 109
 key = 'Go(DeclDoc { file: "find.go", start_line: 121 })'
 descriptor = "go decl doc at find.go:121"
 cost_tokens = 69
-cum_tokens = 6898
+cum_tokens = 7051
 
 [batches.content]
 kind = "lines"
@@ -2438,7 +2430,7 @@ position = 110
 key = 'Go(DeclBody { file: "find.go", start_line: 13 })'
 descriptor = "go decl body at find.go:13"
 cost_tokens = 56
-cum_tokens = 6954
+cum_tokens = 7107
 
 [batches.content]
 kind = "lines"
@@ -2456,7 +2448,7 @@ position = 111
 key = 'Markdown(Section { file: "exp/simd/README.md", section_index: 1, reference_shaped: false })'
 descriptor = "exp/simd/README.md section #1"
 cost_tokens = 36
-cum_tokens = 6990
+cum_tokens = 7143
 
 [batches.content]
 kind = "lines"
@@ -2474,7 +2466,7 @@ position = 112
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false })'
 descriptor = "README.md section #26"
 cost_tokens = 23
-cum_tokens = 7013
+cum_tokens = 7166
 
 [batches.content]
 kind = "lines"
@@ -2492,7 +2484,7 @@ position = 113
 key = 'Markdown(Section { file: "README.md", section_index: 29, reference_shaped: false })'
 descriptor = "README.md section #29"
 cost_tokens = 23
-cum_tokens = 7036
+cum_tokens = 7189
 
 [batches.content]
 kind = "lines"
@@ -2510,7 +2502,7 @@ position = 114
 key = 'Markdown(Section { file: "README.md", section_index: 32, reference_shaped: false })'
 descriptor = "README.md section #32"
 cost_tokens = 23
-cum_tokens = 7059
+cum_tokens = 7212
 
 [batches.content]
 kind = "lines"
@@ -2528,7 +2520,7 @@ position = 115
 key = 'Markdown(Section { file: "README.md", section_index: 35, reference_shaped: false })'
 descriptor = "README.md section #35"
 cost_tokens = 23
-cum_tokens = 7082
+cum_tokens = 7235
 
 [batches.content]
 kind = "lines"
@@ -2546,7 +2538,7 @@ position = 116
 key = 'Markdown(Section { file: "README.md", section_index: 40, reference_shaped: false })'
 descriptor = "README.md section #40"
 cost_tokens = 23
-cum_tokens = 7105
+cum_tokens = 7258
 
 [batches.content]
 kind = "lines"
@@ -2564,7 +2556,7 @@ position = 117
 key = 'Markdown(Section { file: "README.md", section_index: 43, reference_shaped: false })'
 descriptor = "README.md section #43"
 cost_tokens = 23
-cum_tokens = 7128
+cum_tokens = 7281
 
 [batches.content]
 kind = "lines"
@@ -2582,7 +2574,7 @@ position = 118
 key = 'Markdown(Section { file: "README.md", section_index: 57, reference_shaped: false })'
 descriptor = "README.md section #57"
 cost_tokens = 23
-cum_tokens = 7151
+cum_tokens = 7304
 
 [batches.content]
 kind = "lines"
@@ -2600,7 +2592,7 @@ position = 119
 key = 'Markdown(Section { file: "README.md", section_index: 59, reference_shaped: false })'
 descriptor = "README.md section #59"
 cost_tokens = 23
-cum_tokens = 7174
+cum_tokens = 7327
 
 [batches.content]
 kind = "lines"
@@ -2618,7 +2610,7 @@ position = 120
 key = 'Markdown(Section { file: "README.md", section_index: 73, reference_shaped: false })'
 descriptor = "README.md section #73"
 cost_tokens = 23
-cum_tokens = 7197
+cum_tokens = 7350
 
 [batches.content]
 kind = "lines"
@@ -2636,7 +2628,7 @@ position = 121
 key = 'Markdown(Section { file: "README.md", section_index: 199, reference_shaped: false })'
 descriptor = "README.md section #199"
 cost_tokens = 23
-cum_tokens = 7220
+cum_tokens = 7373
 
 [batches.content]
 kind = "lines"
@@ -2654,7 +2646,7 @@ position = 122
 key = 'Markdown(Section { file: "README.md", section_index: 212, reference_shaped: false })'
 descriptor = "README.md section #212"
 cost_tokens = 23
-cum_tokens = 7243
+cum_tokens = 7396
 
 [batches.content]
 kind = "lines"
@@ -2672,7 +2664,7 @@ position = 123
 key = 'Markdown(Section { file: "README.md", section_index: 271, reference_shaped: false })'
 descriptor = "README.md section #271"
 cost_tokens = 23
-cum_tokens = 7266
+cum_tokens = 7419
 
 [batches.content]
 kind = "lines"
@@ -2690,7 +2682,7 @@ position = 124
 key = 'Markdown(Section { file: "README.md", section_index: 278, reference_shaped: false })'
 descriptor = "README.md section #278"
 cost_tokens = 23
-cum_tokens = 7289
+cum_tokens = 7442
 
 [batches.content]
 kind = "lines"
@@ -2708,7 +2700,7 @@ position = 125
 key = 'Markdown(Section { file: "README.md", section_index: 277, reference_shaped: false })'
 descriptor = "README.md section #277"
 cost_tokens = 22
-cum_tokens = 7311
+cum_tokens = 7464
 
 [batches.content]
 kind = "lines"
@@ -2726,7 +2718,7 @@ position = 126
 key = 'Go(DeclDoc { file: "find.go", start_line: 88 })'
 descriptor = "go decl doc at find.go:88"
 cost_tokens = 104
-cum_tokens = 7415
+cum_tokens = 7568
 
 [batches.content]
 kind = "lines"
@@ -2744,7 +2736,7 @@ position = 127
 key = 'Markdown(Section { file: "exp/simd/README.md", section_index: 3, reference_shaped: false })'
 descriptor = "exp/simd/README.md section #3"
 cost_tokens = 12
-cum_tokens = 7427
+cum_tokens = 7580
 
 [batches.content]
 kind = "lines"
@@ -2762,7 +2754,7 @@ position = 128
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false })'
 descriptor = "README.md section #16"
 cost_tokens = 24
-cum_tokens = 7451
+cum_tokens = 7604
 
 [batches.content]
 kind = "lines"
@@ -2780,7 +2772,7 @@ position = 129
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false })'
 descriptor = "README.md section #20"
 cost_tokens = 24
-cum_tokens = 7475
+cum_tokens = 7628
 
 [batches.content]
 kind = "lines"
@@ -2798,7 +2790,7 @@ position = 130
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false })'
 descriptor = "README.md section #22"
 cost_tokens = 24
-cum_tokens = 7499
+cum_tokens = 7652
 
 [batches.content]
 kind = "lines"
@@ -2816,7 +2808,7 @@ position = 131
 key = 'Markdown(Section { file: "README.md", section_index: 50, reference_shaped: false })'
 descriptor = "README.md section #50"
 cost_tokens = 24
-cum_tokens = 7523
+cum_tokens = 7676
 
 [batches.content]
 kind = "lines"
@@ -2834,7 +2826,7 @@ position = 132
 key = 'Markdown(Section { file: "README.md", section_index: 53, reference_shaped: false })'
 descriptor = "README.md section #53"
 cost_tokens = 24
-cum_tokens = 7547
+cum_tokens = 7700
 
 [batches.content]
 kind = "lines"
@@ -2852,7 +2844,7 @@ position = 133
 key = 'Markdown(Section { file: "README.md", section_index: 64, reference_shaped: false })'
 descriptor = "README.md section #64"
 cost_tokens = 24
-cum_tokens = 7571
+cum_tokens = 7724
 
 [batches.content]
 kind = "lines"
@@ -2870,7 +2862,7 @@ position = 134
 key = 'Markdown(Section { file: "README.md", section_index: 69, reference_shaped: false })'
 descriptor = "README.md section #69"
 cost_tokens = 24
-cum_tokens = 7595
+cum_tokens = 7748
 
 [batches.content]
 kind = "lines"
@@ -2888,7 +2880,7 @@ position = 135
 key = 'Markdown(Section { file: "README.md", section_index: 77, reference_shaped: false })'
 descriptor = "README.md section #77"
 cost_tokens = 24
-cum_tokens = 7619
+cum_tokens = 7772
 
 [batches.content]
 kind = "lines"
@@ -2906,7 +2898,7 @@ position = 136
 key = 'Markdown(Section { file: "README.md", section_index: 81, reference_shaped: false })'
 descriptor = "README.md section #81"
 cost_tokens = 24
-cum_tokens = 7643
+cum_tokens = 7796
 
 [batches.content]
 kind = "lines"
@@ -2924,7 +2916,7 @@ position = 137
 key = 'Markdown(Section { file: "README.md", section_index: 115, reference_shaped: false })'
 descriptor = "README.md section #115"
 cost_tokens = 24
-cum_tokens = 7667
+cum_tokens = 7820
 
 [batches.content]
 kind = "lines"
@@ -2942,7 +2934,7 @@ position = 138
 key = 'Markdown(Section { file: "README.md", section_index: 126, reference_shaped: false })'
 descriptor = "README.md section #126"
 cost_tokens = 24
-cum_tokens = 7691
+cum_tokens = 7844
 
 [batches.content]
 kind = "lines"
@@ -2960,7 +2952,7 @@ position = 139
 key = 'Markdown(Section { file: "README.md", section_index: 140, reference_shaped: false })'
 descriptor = "README.md section #140"
 cost_tokens = 24
-cum_tokens = 7715
+cum_tokens = 7868
 
 [batches.content]
 kind = "lines"
@@ -2978,7 +2970,7 @@ position = 140
 key = 'Markdown(Section { file: "README.md", section_index: 151, reference_shaped: false })'
 descriptor = "README.md section #151"
 cost_tokens = 24
-cum_tokens = 7739
+cum_tokens = 7892
 
 [batches.content]
 kind = "lines"
@@ -2996,7 +2988,7 @@ position = 141
 key = 'Markdown(Section { file: "README.md", section_index: 175, reference_shaped: false })'
 descriptor = "README.md section #175"
 cost_tokens = 24
-cum_tokens = 7763
+cum_tokens = 7916
 
 [batches.content]
 kind = "lines"
@@ -3014,7 +3006,7 @@ position = 142
 key = 'Markdown(Section { file: "README.md", section_index: 178, reference_shaped: false })'
 descriptor = "README.md section #178"
 cost_tokens = 24
-cum_tokens = 7787
+cum_tokens = 7940
 
 [batches.content]
 kind = "lines"
@@ -3032,7 +3024,7 @@ position = 143
 key = 'Markdown(Section { file: "README.md", section_index: 221, reference_shaped: false })'
 descriptor = "README.md section #221"
 cost_tokens = 24
-cum_tokens = 7811
+cum_tokens = 7964
 
 [batches.content]
 kind = "lines"
@@ -3050,7 +3042,7 @@ position = 144
 key = 'Markdown(Section { file: "README.md", section_index: 242, reference_shaped: false })'
 descriptor = "README.md section #242"
 cost_tokens = 24
-cum_tokens = 7835
+cum_tokens = 7988
 
 [batches.content]
 kind = "lines"
@@ -3068,7 +3060,7 @@ position = 145
 key = 'Markdown(Section { file: "README.md", section_index: 268, reference_shaped: false })'
 descriptor = "README.md section #268"
 cost_tokens = 24
-cum_tokens = 7859
+cum_tokens = 8012
 
 [batches.content]
 kind = "lines"
@@ -3086,7 +3078,7 @@ position = 146
 key = 'Markdown(Section { file: "README.md", section_index: 288, reference_shaped: false })'
 descriptor = "README.md section #288"
 cost_tokens = 24
-cum_tokens = 7883
+cum_tokens = 8036
 
 [batches.content]
 kind = "lines"
@@ -3104,7 +3096,7 @@ position = 147
 key = 'Markdown(Section { file: "README.md", section_index: 302, reference_shaped: false })'
 descriptor = "README.md section #302"
 cost_tokens = 24
-cum_tokens = 7907
+cum_tokens = 8060
 
 [batches.content]
 kind = "lines"
@@ -3122,7 +3114,7 @@ position = 148
 key = 'Markdown(Section { file: "README.md", section_index: 316, reference_shaped: false })'
 descriptor = "README.md section #316"
 cost_tokens = 24
-cum_tokens = 7931
+cum_tokens = 8084
 
 [batches.content]
 kind = "lines"
@@ -3140,7 +3132,7 @@ position = 149
 key = 'Markdown(Section { file: "README.md", section_index: 353, reference_shaped: false })'
 descriptor = "README.md section #353"
 cost_tokens = 24
-cum_tokens = 7955
+cum_tokens = 8108
 
 [batches.content]
 kind = "lines"
@@ -3158,7 +3150,7 @@ position = 150
 key = 'Markdown(Section { file: "README.md", section_index: 406, reference_shaped: false })'
 descriptor = "README.md section #406"
 cost_tokens = 24
-cum_tokens = 7979
+cum_tokens = 8132
 
 [batches.content]
 kind = "lines"
@@ -3176,7 +3168,7 @@ position = 151
 key = 'Markdown(Section { file: "README.md", section_index: 409, reference_shaped: false })'
 descriptor = "README.md section #409"
 cost_tokens = 24
-cum_tokens = 8003
+cum_tokens = 8156
 
 [batches.content]
 kind = "lines"
@@ -3194,7 +3186,7 @@ position = 152
 key = 'Markdown(Section { file: "README.md", section_index: 411, reference_shaped: false })'
 descriptor = "README.md section #411"
 cost_tokens = 24
-cum_tokens = 8027
+cum_tokens = 8180
 
 [batches.content]
 kind = "lines"
@@ -3212,7 +3204,7 @@ position = 153
 key = 'Markdown(Section { file: "README.md", section_index: 416, reference_shaped: false })'
 descriptor = "README.md section #416"
 cost_tokens = 24
-cum_tokens = 8051
+cum_tokens = 8204
 
 [batches.content]
 kind = "lines"
@@ -3230,7 +3222,7 @@ position = 154
 key = 'Go(DeclNames { file: "parallel/slice.go", chunk_index: 0 })'
 descriptor = "go decl names surface in parallel/slice.go"
 cost_tokens = 151
-cum_tokens = 8202
+cum_tokens = 8355
 
 [batches.content]
 kind = "lines"
@@ -3320,7 +3312,7 @@ position = 155
 key = 'Go(Decl { file: "parallel/slice.go", start_line: 8 })'
 descriptor = "go decl at parallel/slice.go:8"
 cost_tokens = 0
-cum_tokens = 8202
+cum_tokens = 8355
 
 [batches.content]
 kind = "lines"
@@ -3338,7 +3330,7 @@ position = 156
 key = 'Go(Decl { file: "parallel/slice.go", start_line: 32 })'
 descriptor = "go decl at parallel/slice.go:32"
 cost_tokens = 0
-cum_tokens = 8202
+cum_tokens = 8355
 
 [batches.content]
 kind = "lines"
@@ -3356,7 +3348,7 @@ position = 157
 key = 'Go(Decl { file: "parallel/slice.go", start_line: 50 })'
 descriptor = "go decl at parallel/slice.go:50"
 cost_tokens = 0
-cum_tokens = 8202
+cum_tokens = 8355
 
 [batches.content]
 kind = "lines"
@@ -3374,7 +3366,7 @@ position = 158
 key = 'Go(Decl { file: "parallel/slice.go", start_line: 75 })'
 descriptor = "go decl at parallel/slice.go:75"
 cost_tokens = 0
-cum_tokens = 8202
+cum_tokens = 8355
 
 [batches.content]
 kind = "lines"
@@ -3392,7 +3384,7 @@ position = 159
 key = 'Go(Decl { file: "parallel/slice.go", start_line: 95 })'
 descriptor = "go decl at parallel/slice.go:95"
 cost_tokens = 0
-cum_tokens = 8202
+cum_tokens = 8355
 
 [batches.content]
 kind = "lines"
@@ -3410,7 +3402,7 @@ position = 160
 key = 'Markdown(Section { file: "README.md", section_index: 38, reference_shaped: false })'
 descriptor = "README.md section #38"
 cost_tokens = 25
-cum_tokens = 8227
+cum_tokens = 8380
 
 [batches.content]
 kind = "lines"
@@ -3428,7 +3420,7 @@ position = 161
 key = 'Markdown(Section { file: "README.md", section_index: 86, reference_shaped: false })'
 descriptor = "README.md section #86"
 cost_tokens = 25
-cum_tokens = 8252
+cum_tokens = 8405
 
 [batches.content]
 kind = "lines"
@@ -3446,7 +3438,7 @@ position = 162
 key = 'Markdown(Section { file: "README.md", section_index: 85, reference_shaped: false })'
 descriptor = "README.md section #85"
 cost_tokens = 24
-cum_tokens = 8276
+cum_tokens = 8429
 
 [batches.content]
 kind = "lines"
@@ -3464,7 +3456,7 @@ position = 163
 key = 'Markdown(Section { file: "README.md", section_index: 101, reference_shaped: false })'
 descriptor = "README.md section #101"
 cost_tokens = 25
-cum_tokens = 8301
+cum_tokens = 8454
 
 [batches.content]
 kind = "lines"
@@ -3482,7 +3474,7 @@ position = 164
 key = 'Markdown(Section { file: "README.md", section_index: 111, reference_shaped: false })'
 descriptor = "README.md section #111"
 cost_tokens = 25
-cum_tokens = 8326
+cum_tokens = 8479
 
 [batches.content]
 kind = "lines"
@@ -3500,7 +3492,7 @@ position = 165
 key = 'Markdown(Section { file: "README.md", section_index: 156, reference_shaped: false })'
 descriptor = "README.md section #156"
 cost_tokens = 25
-cum_tokens = 8351
+cum_tokens = 8504
 
 [batches.content]
 kind = "lines"
@@ -3518,7 +3510,7 @@ position = 166
 key = 'Markdown(Section { file: "README.md", section_index: 160, reference_shaped: false })'
 descriptor = "README.md section #160"
 cost_tokens = 25
-cum_tokens = 8376
+cum_tokens = 8529
 
 [batches.content]
 kind = "lines"
@@ -3536,7 +3528,7 @@ position = 167
 key = 'Markdown(Section { file: "README.md", section_index: 166, reference_shaped: false })'
 descriptor = "README.md section #166"
 cost_tokens = 25
-cum_tokens = 8401
+cum_tokens = 8554
 
 [batches.content]
 kind = "lines"
@@ -3554,7 +3546,7 @@ position = 168
 key = 'Markdown(Section { file: "README.md", section_index: 184, reference_shaped: false })'
 descriptor = "README.md section #184"
 cost_tokens = 25
-cum_tokens = 8426
+cum_tokens = 8579
 
 [batches.content]
 kind = "lines"
@@ -3572,7 +3564,7 @@ position = 169
 key = 'Markdown(Section { file: "README.md", section_index: 187, reference_shaped: false })'
 descriptor = "README.md section #187"
 cost_tokens = 25
-cum_tokens = 8451
+cum_tokens = 8604
 
 [batches.content]
 kind = "lines"
@@ -3590,7 +3582,7 @@ position = 170
 key = 'Markdown(Section { file: "README.md", section_index: 192, reference_shaped: false })'
 descriptor = "README.md section #192"
 cost_tokens = 25
-cum_tokens = 8476
+cum_tokens = 8629
 
 [batches.content]
 kind = "lines"
@@ -3608,7 +3600,7 @@ position = 171
 key = 'Markdown(Section { file: "README.md", section_index: 226, reference_shaped: false })'
 descriptor = "README.md section #226"
 cost_tokens = 25
-cum_tokens = 8501
+cum_tokens = 8654
 
 [batches.content]
 kind = "lines"
@@ -3626,7 +3618,7 @@ position = 172
 key = 'Markdown(Section { file: "README.md", section_index: 238, reference_shaped: false })'
 descriptor = "README.md section #238"
 cost_tokens = 25
-cum_tokens = 8526
+cum_tokens = 8679
 
 [batches.content]
 kind = "lines"
@@ -3644,7 +3636,7 @@ position = 173
 key = 'Markdown(Section { file: "README.md", section_index: 286, reference_shaped: false })'
 descriptor = "README.md section #286"
 cost_tokens = 25
-cum_tokens = 8551
+cum_tokens = 8704
 
 [batches.content]
 kind = "lines"
@@ -3662,7 +3654,7 @@ position = 174
 key = 'Markdown(Section { file: "README.md", section_index: 290, reference_shaped: false })'
 descriptor = "README.md section #290"
 cost_tokens = 25
-cum_tokens = 8576
+cum_tokens = 8729
 
 [batches.content]
 kind = "lines"
@@ -3680,7 +3672,7 @@ position = 175
 key = 'Markdown(Section { file: "README.md", section_index: 324, reference_shaped: false })'
 descriptor = "README.md section #324"
 cost_tokens = 25
-cum_tokens = 8601
+cum_tokens = 8754
 
 [batches.content]
 kind = "lines"
@@ -3698,7 +3690,7 @@ position = 176
 key = 'Markdown(Section { file: "README.md", section_index: 345, reference_shaped: false })'
 descriptor = "README.md section #345"
 cost_tokens = 25
-cum_tokens = 8626
+cum_tokens = 8779
 
 [batches.content]
 kind = "lines"
@@ -3716,7 +3708,7 @@ position = 177
 key = 'Markdown(Section { file: "README.md", section_index: 349, reference_shaped: false })'
 descriptor = "README.md section #349"
 cost_tokens = 25
-cum_tokens = 8651
+cum_tokens = 8804
 
 [batches.content]
 kind = "lines"
@@ -3734,7 +3726,7 @@ position = 178
 key = 'Markdown(Section { file: "README.md", section_index: 388, reference_shaped: false })'
 descriptor = "README.md section #388"
 cost_tokens = 25
-cum_tokens = 8676
+cum_tokens = 8829
 
 [batches.content]
 kind = "lines"
@@ -3752,7 +3744,7 @@ position = 179
 key = 'Markdown(Section { file: "README.md", section_index: 394, reference_shaped: false })'
 descriptor = "README.md section #394"
 cost_tokens = 25
-cum_tokens = 8701
+cum_tokens = 8854
 
 [batches.content]
 kind = "lines"
@@ -3770,7 +3762,7 @@ position = 180
 key = 'Markdown(Section { file: "README.md", section_index: 428, reference_shaped: false })'
 descriptor = "README.md section #428"
 cost_tokens = 25
-cum_tokens = 8726
+cum_tokens = 8879
 
 [batches.content]
 kind = "lines"
@@ -3788,7 +3780,7 @@ position = 181
 key = 'Markdown(Section { file: "README.md", section_index: 431, reference_shaped: false })'
 descriptor = "README.md section #431"
 cost_tokens = 25
-cum_tokens = 8751
+cum_tokens = 8904
 
 [batches.content]
 kind = "lines"
@@ -3806,7 +3798,7 @@ position = 182
 key = 'Go(DeclNames { file: "func.go", chunk_index: 0 })'
 descriptor = "go decl names surface in func.go"
 cost_tokens = 325
-cum_tokens = 9076
+cum_tokens = 9229
 
 [batches.content]
 kind = "lines"
@@ -3912,7 +3904,7 @@ position = 183
 key = 'Go(Decl { file: "func.go", start_line: 5 })'
 descriptor = "go decl at func.go:5"
 cost_tokens = 0
-cum_tokens = 9076
+cum_tokens = 9229
 
 [batches.content]
 kind = "lines"
@@ -3930,7 +3922,7 @@ position = 184
 key = 'Go(Decl { file: "func.go", start_line: 13 })'
 descriptor = "go decl at func.go:13"
 cost_tokens = 0
-cum_tokens = 9076
+cum_tokens = 9229
 
 [batches.content]
 kind = "lines"
@@ -3948,7 +3940,7 @@ position = 185
 key = 'Go(Decl { file: "func.go", start_line: 19 })'
 descriptor = "go decl at func.go:19"
 cost_tokens = 0
-cum_tokens = 9076
+cum_tokens = 9229
 
 [batches.content]
 kind = "lines"
@@ -3966,7 +3958,7 @@ position = 186
 key = 'Go(Decl { file: "func.go", start_line: 27 })'
 descriptor = "go decl at func.go:27"
 cost_tokens = 0
-cum_tokens = 9076
+cum_tokens = 9229
 
 [batches.content]
 kind = "lines"
@@ -3984,7 +3976,7 @@ position = 187
 key = 'Go(Decl { file: "func.go", start_line: 35 })'
 descriptor = "go decl at func.go:35"
 cost_tokens = 0
-cum_tokens = 9076
+cum_tokens = 9229
 
 [batches.content]
 kind = "lines"
@@ -4002,7 +3994,7 @@ position = 188
 key = 'Go(Decl { file: "func.go", start_line: 43 })'
 descriptor = "go decl at func.go:43"
 cost_tokens = 0
-cum_tokens = 9076
+cum_tokens = 9229
 
 [batches.content]
 kind = "lines"
@@ -4020,7 +4012,7 @@ position = 189
 key = 'Go(DeclBody { file: "func.go", start_line: 13 })'
 descriptor = "go decl body at func.go:13"
 cost_tokens = 11
-cum_tokens = 9087
+cum_tokens = 9240
 
 [batches.content]
 kind = "lines"
@@ -4038,7 +4030,7 @@ position = 190
 key = 'Go(DeclDoc { file: "func.go", start_line: 5 })'
 descriptor = "go decl doc at func.go:5"
 cost_tokens = 46
-cum_tokens = 9133
+cum_tokens = 9286
 
 [batches.content]
 kind = "lines"
@@ -4056,7 +4048,7 @@ position = 191
 key = 'Go(DeclDoc { file: "func.go", start_line: 13 })'
 descriptor = "go decl doc at func.go:13"
 cost_tokens = 46
-cum_tokens = 9179
+cum_tokens = 9332
 
 [batches.content]
 kind = "lines"
@@ -4074,7 +4066,7 @@ position = 192
 key = 'Go(DeclDoc { file: "func.go", start_line: 19 })'
 descriptor = "go decl doc at func.go:19"
 cost_tokens = 47
-cum_tokens = 9226
+cum_tokens = 9379
 
 [batches.content]
 kind = "lines"
@@ -4092,7 +4084,7 @@ position = 193
 key = 'Go(DeclDoc { file: "func.go", start_line: 27 })'
 descriptor = "go decl doc at func.go:27"
 cost_tokens = 47
-cum_tokens = 9273
+cum_tokens = 9426
 
 [batches.content]
 kind = "lines"
@@ -4110,7 +4102,7 @@ position = 194
 key = 'Go(DeclDoc { file: "func.go", start_line: 35 })'
 descriptor = "go decl doc at func.go:35"
 cost_tokens = 47
-cum_tokens = 9320
+cum_tokens = 9473
 
 [batches.content]
 kind = "lines"
@@ -4128,7 +4120,7 @@ position = 195
 key = 'Go(DeclBody { file: "func.go", start_line: 5 })'
 descriptor = "go decl body at func.go:5"
 cost_tokens = 32
-cum_tokens = 9352
+cum_tokens = 9505
 
 [batches.content]
 kind = "lines"
@@ -4146,7 +4138,7 @@ position = 196
 key = 'Go(DeclDoc { file: "func.go", start_line: 43 })'
 descriptor = "go decl doc at func.go:43"
 cost_tokens = 49
-cum_tokens = 9401
+cum_tokens = 9554
 
 [batches.content]
 kind = "lines"
@@ -4164,7 +4156,7 @@ position = 197
 key = 'Go(DeclBody { file: "func.go", start_line: 19 })'
 descriptor = "go decl body at func.go:19"
 cost_tokens = 40
-cum_tokens = 9441
+cum_tokens = 9594
 
 [batches.content]
 kind = "lines"
@@ -4182,7 +4174,7 @@ position = 198
 key = 'Go(DeclBody { file: "func.go", start_line: 27 })'
 descriptor = "go decl body at func.go:27"
 cost_tokens = 48
-cum_tokens = 9489
+cum_tokens = 9642
 
 [batches.content]
 kind = "lines"
@@ -4200,7 +4192,7 @@ position = 199
 key = 'Go(DeclBody { file: "func.go", start_line: 35 })'
 descriptor = "go decl body at func.go:35"
 cost_tokens = 56
-cum_tokens = 9545
+cum_tokens = 9698
 
 [batches.content]
 kind = "lines"
@@ -4218,7 +4210,7 @@ position = 200
 key = 'Go(DeclDoc { file: "parallel/slice.go", start_line: 32 })'
 descriptor = "go decl doc at parallel/slice.go:32"
 cost_tokens = 56
-cum_tokens = 9601
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -4236,7 +4228,7 @@ position = 201
 key = 'Go(DeclBody { file: "func.go", start_line: 43 })'
 descriptor = "go decl body at func.go:43"
 cost_tokens = 64
-cum_tokens = 9665
+cum_tokens = 9818
 
 [batches.content]
 kind = "lines"
@@ -4254,7 +4246,7 @@ position = 202
 key = 'Go(DeclNames { file: "mutable/slice.go", chunk_index: 0 })'
 descriptor = "go decl names surface in mutable/slice.go"
 cost_tokens = 158
-cum_tokens = 9823
+cum_tokens = 9976
 
 [batches.content]
 kind = "lines"
@@ -4360,7 +4352,7 @@ position = 203
 key = 'Go(Decl { file: "mutable/slice.go", start_line: 11 })'
 descriptor = "go decl at mutable/slice.go:11"
 cost_tokens = 0
-cum_tokens = 9823
+cum_tokens = 9976
 
 [batches.content]
 kind = "lines"
@@ -4378,7 +4370,7 @@ position = 204
 key = 'Go(Decl { file: "mutable/slice.go", start_line: 27 })'
 descriptor = "go decl at mutable/slice.go:27"
 cost_tokens = 0
-cum_tokens = 9823
+cum_tokens = 9976
 
 [batches.content]
 kind = "lines"
@@ -4396,7 +4388,7 @@ position = 205
 key = 'Go(Decl { file: "mutable/slice.go", start_line: 41 })'
 descriptor = "go decl at mutable/slice.go:41"
 cost_tokens = 0
-cum_tokens = 9823
+cum_tokens = 9976
 
 [batches.content]
 kind = "lines"
@@ -4414,7 +4406,7 @@ position = 206
 key = 'Go(Decl { file: "mutable/slice.go", start_line: 49 })'
 descriptor = "go decl at mutable/slice.go:49"
 cost_tokens = 0
-cum_tokens = 9823
+cum_tokens = 9976
 
 [batches.content]
 kind = "lines"
@@ -4432,7 +4424,7 @@ position = 207
 key = 'Go(Decl { file: "mutable/slice.go", start_line: 57 })'
 descriptor = "go decl at mutable/slice.go:57"
 cost_tokens = 0
-cum_tokens = 9823
+cum_tokens = 9976
 
 [batches.content]
 kind = "lines"
@@ -4450,7 +4442,7 @@ position = 208
 key = 'Go(Decl { file: "mutable/slice.go", start_line: 65 })'
 descriptor = "go decl at mutable/slice.go:65"
 cost_tokens = 0
-cum_tokens = 9823
+cum_tokens = 9976
 
 [batches.content]
 kind = "lines"
@@ -4459,78 +4451,6 @@ kind = "lines"
 path = "mutable/slice.go"
 start = 65
 end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 209
-key = 'Go(DeclDoc { file: "mutable/slice.go", start_line: 57 })'
-descriptor = "go decl doc at mutable/slice.go:57"
-cost_tokens = 43
-cum_tokens = 9866
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "mutable/slice.go"
-start = 55
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 210
-key = 'Go(DeclBody { file: "mutable/slice.go", start_line: 41 })'
-descriptor = "go decl body at mutable/slice.go:41"
-cost_tokens = 30
-cum_tokens = 9896
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "mutable/slice.go"
-start = 42
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 211
-key = 'Go(DeclBody { file: "mutable/slice.go", start_line: 49 })'
-descriptor = "go decl body at mutable/slice.go:49"
-cost_tokens = 32
-cum_tokens = 9928
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "mutable/slice.go"
-start = 50
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 212
-key = 'Go(DeclDoc { file: "mutable/slice.go", start_line: 65 })'
-descriptor = "go decl doc at mutable/slice.go:65"
-cost_tokens = 53
-cum_tokens = 9981
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "mutable/slice.go"
-start = 63
-end = 64
 
 [batches.content.spans.render]
 kind = "full"

@@ -1,7 +1,7 @@
 fixture = "mdbook"
 budget = 10000
-cumulative_tokens = 9988
-batch_count = 198
+cumulative_tokens = 9845
+batch_count = 195
 
 [[batches]]
 position = 1
@@ -4548,93 +4548,3 @@ end = 31
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 196
-key = 'Fs(DirListing { dir: "guide/src/format" })'
-descriptor = "listing of 'guide/src/format'"
-cost_tokens = 35
-cum_tokens = 9880
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "guide/src/format"
-entries = ["README.md", "configuration", "example.rs", "images", "markdown.md", "mathjax.md", "mdbook.md", "summary.md", "theme"]
-
-[[batches]]
-position = 197
-key = 'Markdown(HeadingsOutline { file: "guide/src/format/mathjax.md" })'
-descriptor = "headings outline in guide/src/format/mathjax.md"
-cost_tokens = 32
-cum_tokens = 9912
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "guide/src/format/mathjax.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "guide/src/format/mathjax.md"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "guide/src/format/mathjax.md"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "guide/src/format/mathjax.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "guide/src/format/mathjax.md"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "guide/src/format/mathjax.md"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 198
-key = 'Markdown(ReadmeHeadline { file: "guide/src/format/README.md" })'
-descriptor = "README headline in guide/src/format/README.md"
-cost_tokens = 76
-cum_tokens = 9988
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "guide/src/format/README.md"
-start = 1
-end = 8
-
-[batches.content.spans.render]
-kind = "full"

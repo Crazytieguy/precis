@@ -24,7 +24,7 @@ use crate::batch::{Batch, BatchKey, PlaintextKey};
 use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, fs::list_dir, gated_whole_file_content, path_depth_factor,
+    FileLines, WalkCtx, dedup_sorted, fs::list_dir, gated_whole_file_content, path_depth_factor,
     single_file_lines_content,
 };
 
@@ -49,6 +49,10 @@ pub(crate) enum Class {
     BuildEntrypoint,
     /// Compact build/test plumbing scripts and manifests.
     BuildScript,
+    /// Legacy Python packaging metadata (`setup.cfg`).
+    PackageConfig,
+    /// Python requirements freeze/list files, sampled when long.
+    Requirements,
     /// One-line version stamp.
     Version,
     /// Plain-text backlog.
@@ -83,6 +87,8 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         }
         "Makefile" | "Dockerfile" => return Some(Class::BuildEntrypoint),
         ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
+        "setup.cfg" => return Some(Class::PackageConfig),
+        "requirements.txt" => return Some(Class::Requirements),
         _ => {}
     }
     if lower.ends_with(".sh") {
@@ -126,9 +132,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if matches!(class, Class::BuildScript) && !is_build_script_location(&file, dir, ctx) {
             continue;
         }
-        let Some(content) =
-            gated_whole_file_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP)
-        else {
+        let content = match class {
+            Class::Requirements => requirements_content(&file, ctx),
+            _ => gated_whole_file_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
+        };
+        let Some(content) = content else {
             continue;
         };
         out.push(Batch {
@@ -154,6 +162,8 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::Toolchain => (0.30, 0.35, 0.30),
         Class::BuildEntrypoint => (0.70, 0.55, 0.60),
         Class::BuildScript => (0.60, 0.50, 0.55),
+        Class::PackageConfig => (0.45, 0.55, 0.45),
+        Class::Requirements => (0.35, 0.45, 0.35),
         // Version stamp: a single short line answers "what version is
         // this?" — high orientation value relative to the trivial cost.
         Class::Version => (0.55, 0.40, 0.45),
@@ -177,6 +187,44 @@ fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
                 .file_name()
                 .and_then(|name| name.to_str())
                 .is_some_and(|name| name == "scripts"))
+}
+
+fn requirements_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+    let source = ctx.read_source(file)?;
+    let lines: Vec<&str> = source.lines().collect();
+    if lines.is_empty() {
+        return None;
+    }
+    if lines.len() <= 8 {
+        return single_file_lines_content(
+            file,
+            &source,
+            FileLines::new((1..=lines.len()).collect()),
+        );
+    }
+    let mut full = vec![1];
+    for (idx, line) in lines.iter().enumerate() {
+        let trimmed = line.trim_start();
+        if trimmed.starts_with("-e ") || trimmed.starts_with("git+") || trimmed.contains("://") {
+            full.push(idx + 1);
+        }
+    }
+    full.sort_unstable();
+    full.dedup();
+    let mut ellipses = Vec::new();
+    for pair in full.windows(2) {
+        if pair[1] > pair[0] + 1 {
+            ellipses.push(pair[0] + 1);
+        }
+    }
+    if full.last().is_some_and(|last| *last < lines.len()) {
+        ellipses.push(full.last().copied().unwrap_or(1) + 1);
+    }
+    single_file_lines_content(
+        file,
+        &source,
+        FileLines::new(full).with_ellipses(dedup_sorted(ellipses)),
+    )
 }
 
 // --- man pages ----------------------------------------------------------
@@ -331,6 +379,8 @@ mod tests {
             ("testall.sh", Some(Class::BuildScript)),
             (".gitmodules", Some(Class::BuildScript)),
             ("configure.ac", Some(Class::BuildScript)),
+            ("setup.cfg", Some(Class::PackageConfig)),
+            ("requirements.txt", Some(Class::Requirements)),
             // Extensionless orientation files (case-insensitive on the
             // stem). `VERSION` is a one-line version stamp common in
             // C-shaped projects; `TODO` is a plain backlog file. The

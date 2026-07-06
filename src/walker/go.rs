@@ -17,11 +17,10 @@
 //!   `go.mod` / `go.work` covering the `module`, `go`, and `toolchain`
 //!   directive lines. Predecessor of the whole-file `GoMod` batch so
 //!   the cheap lede can land first at small budgets.
-//! - `GoMod { file }`: line-set batch for `go.mod` / `go.work`. Drops
-//!   `// indirect` lines from inside `require ( … )` blocks; module /
-//!   `go` / `toolchain` / `replace` / `exclude` / `retract` / `use`
-//!   directives stay. Predecessor: matching `GoModIdentity` (identity
-//!   lines are an ancestor subset).
+//! - `GoMod { file }`: line-set batch for `go.mod` / `go.work`.
+//!   Retains direct and indirect `require` rows plus `replace` /
+//!   `exclude` / `retract` / `use` directives. Predecessor: matching
+//!   `GoModIdentity` (identity lines are an ancestor subset).
 //!
 //! Per-decl keys (keyed by start line):
 //! - `Decl { file, start_line }`: one top-level declaration's
@@ -146,7 +145,8 @@ fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchConte
     single_file_lines_content(file, &source, FileLines::new(lines))
 }
 
-/// `GoMod` content — drops `// indirect` lines inside `require (…)`.
+/// `GoMod` content — direct and indirect dependency closure plus other
+/// module directives.
 fn build_gomod_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let total_lines = source.lines().count();
@@ -167,9 +167,6 @@ fn build_gomod_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
         if in_require_block && trimmed == ")" {
             in_require_block = false;
             lines.push(line_no);
-            continue;
-        }
-        if in_require_block && raw.contains("// indirect") {
             continue;
         }
         lines.push(line_no);
@@ -1289,7 +1286,7 @@ func ExampleFoo()                 {}
     }
 
     #[test]
-    fn go_mod_indirect_filter_keeps_replace_and_retract() {
+    fn go_mod_keeps_indirect_requires_replace_and_retract() {
         let src = "\
 module example.com/foo
 
@@ -1305,11 +1302,10 @@ replace github.com/x/y => github.com/forked/y v2.0.0
 retract v0.1.0
 ";
         let lines = gomod_lines(src);
-        // Indirect line (line 7) dropped; everything else kept.
         assert!(lines.contains(&1), "module clause kept");
         assert!(lines.contains(&5), "require ( kept");
         assert!(lines.contains(&6), "direct require kept");
-        assert!(!lines.contains(&7), "indirect require dropped");
+        assert!(lines.contains(&7), "indirect require kept");
         assert!(lines.contains(&8), "require ) kept");
         assert!(lines.contains(&10), "replace kept");
         assert!(lines.contains(&12), "retract kept");

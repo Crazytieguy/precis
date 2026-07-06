@@ -121,6 +121,9 @@ docs/
     index.rst
     make.bat
     requirements.txt
+           1→# Pinning to avoid unexpected breakages.
+           2→# Used by RTD to generate docs.
+           3→Sphinx==7.2.6
     user/
         advanced.rst
         authentication.rst
@@ -148,6 +151,11 @@ pyproject.toml
       21→    "urllib3>=1.26,<3",
       22→    "certifi>=2023.5.7"
       23→]
+    …
+      53→[project.optional-dependencies]
+      54→security = []
+      55→socks = ["PySocks>=1.5.6, !=1.5.7"]
+      56→use_chardet_on_py3 = ["chardet>=3.0.2,<8"]
     …
 requirements-dev.txt
 setup.py
@@ -323,23 +331,6 @@ src/
             …
         py.typed
         sessions.py
-            …
-              76→def merge_setting(
-              77→    request_setting: Any, session_setting: Any, dict_class: type = OrderedDict
-              78→) -> Any:
-            …
-             108→def merge_hooks(
-            …
-             127→class SessionRedirectMixin:
-             128→    max_redirects: int
-             129→    trust_env: bool
-             130→    cookies: RequestsCookieJar
-            …
-             395→class Session(SessionRedirectMixin):
-            …
-             908→def session() -> Session:
-            …
-             920→    return Session()
         status_codes.py
             …
               23→_codes = {

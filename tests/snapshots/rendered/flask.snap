@@ -136,11 +136,6 @@ docs/
     web-security.rst
 examples/
     celery/
-        README.md
-        make_celery.py
-        pyproject.toml
-        requirements.txt
-        src/
     javascript/
     tutorial/
 pyproject.toml
@@ -160,6 +155,10 @@ pyproject.toml
       28→    "markupsafe>=2.1.1",
       29→    "werkzeug>=3.1.0",
       30→]
+      31→
+      32→[project.optional-dependencies]
+      33→async = ["asgiref>=3.2"]
+      34→dotenv = ["python-dotenv"]
     …
       81→[project.scripts]
       82→flask = "flask.cli:main"
@@ -300,7 +299,7 @@ src/
             …
              115→    @max_form_memory_size.setter
              116→    def max_form_memory_size(self, value: int | None) -> None:
-             117→        self._max_form_memory_size = value
+            …
              119→    @property  # type: ignore[override]
              120→    def max_form_parts(self) -> int | None:
             …
