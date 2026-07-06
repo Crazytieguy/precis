@@ -52,6 +52,8 @@ const TOOLING_HEAD_LINE_CAP: usize = 80;
 const TOOLING_HEAD_BYTE_GATE: usize = TOOLING_HEAD_LINE_CAP * 200;
 const WORKFLOW_HEAD_LINE_CAP: usize = 60;
 const WORKFLOW_HEAD_BYTE_GATE: usize = 3_000;
+const REFERENCE_MAP_BYTE_GATE: usize = 80_000;
+const REFERENCE_MAP_KEY_LINE_CAP: usize = 80;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
@@ -68,8 +70,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some(content) = class.content(&file, ctx) else {
             continue;
         };
+        let key = match class {
+            YamlClass::ReferenceMap => YamlKey::TopLevelKeys { file: file.clone() },
+            _ => YamlKey::Whole { file: file.clone() },
+        };
         out.push(Batch {
-            key: YamlKey::Whole { file: file.clone() }.into(),
+            key: key.into(),
             predecessor: None,
             content,
             value: class.value(&file, ctx),
@@ -87,6 +93,7 @@ enum YamlClass {
     Lint,
     Hook,
     DocsSite,
+    ReferenceMap,
 }
 
 impl YamlClass {
@@ -113,6 +120,7 @@ impl YamlClass {
                     TOOLING_HEAD_LINE_CAP,
                 )
             }
+            YamlClass::ReferenceMap => reference_map_key_content(file, ctx),
         }
     }
 
@@ -123,8 +131,24 @@ impl YamlClass {
             YamlClass::WorkflowPeripheral => peripheral_ci_value(file, ctx),
             YamlClass::Lint | YamlClass::Hook => lint_hook_value(file, ctx),
             YamlClass::DocsSite => docs_site_value(file, ctx),
+            YamlClass::ReferenceMap => reference_map_value(file, ctx),
         }
     }
+}
+
+fn reference_map_key_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+    let byte_len = std::fs::metadata(file)
+        .map(|m| m.len() as usize)
+        .unwrap_or(usize::MAX);
+    if byte_len > REFERENCE_MAP_BYTE_GATE {
+        return None;
+    }
+    let source = ctx.read_source(file)?;
+    let lines = reference_map_key_lines(&source);
+    if lines.full.len() > REFERENCE_MAP_KEY_LINE_CAP {
+        return None;
+    }
+    single_file_lines_content(file, &source, lines)
 }
 
 fn head_capped_yaml_content(
@@ -189,7 +213,70 @@ fn yaml_class(
     if name.eq_ignore_ascii_case("mkdocs.yml") && is_root_file(file, ctx) {
         return Some(YamlClass::DocsSite);
     }
+    if is_root_file(file, ctx) && is_reference_map_name(name) {
+        return Some(YamlClass::ReferenceMap);
+    }
     None
+}
+
+fn is_reference_map_name(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    let stem = lower
+        .strip_suffix(".yaml")
+        .or_else(|| lower.strip_suffix(".yml"))
+        .unwrap_or(&lower);
+    stem == "reference"
+        || stem == "references"
+        || stem == "api"
+        || stem == "api-reference"
+        || stem == "api_reference"
+        || stem == "openapi"
+        || stem == "swagger"
+        || stem == "spec"
+        || stem == "schema"
+}
+
+fn reference_map_key_lines(source: &str) -> FileLines {
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
+    let mut previous_kept = None;
+    for (idx, raw) in source.lines().enumerate() {
+        let line_no = idx + 1;
+        let trimmed = raw.trim();
+        if trimmed.is_empty()
+            || trimmed.starts_with('#')
+            || trimmed.starts_with('-')
+            || !trimmed.contains(':')
+        {
+            continue;
+        }
+        if raw
+            .chars()
+            .next()
+            .is_some_and(|c| c.is_whitespace() && c != ' ')
+        {
+            continue;
+        }
+        let indent = raw.chars().take_while(|c| *c == ' ').count();
+        if indent > 2 {
+            continue;
+        }
+        if is_yaml_document_marker(trimmed) {
+            continue;
+        }
+        if let Some(prev) = previous_kept
+            && line_no > prev + 1
+        {
+            ellipses.push(prev + 1);
+        }
+        full.push(line_no);
+        previous_kept = Some(line_no);
+    }
+    FileLines::new(full).with_ellipses(ellipses)
+}
+
+fn is_yaml_document_marker(trimmed: &str) -> bool {
+    matches!(trimmed, "---" | "...")
 }
 
 fn workflow_name_rank(name: &str) -> Option<usize> {
@@ -342,6 +429,14 @@ fn docs_site_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // and plugins. It is useful orientation for docs-heavy repos, but
     // less universally load-bearing than CI or lint policy.
     mix_signals(1.0, 0.55, 0.85, path_depth_factor(file, ctx))
+}
+
+fn reference_map_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // A root reference/spec map is often the structured source of truth
+    // for public API docs. Its root and child keys give the agent a
+    // compact "what domains and entries exist here" catalog without
+    // spending budget on each nested entry's prose.
+    mix_signals(1.9, 1.0, 1.45, path_depth_factor(file, ctx))
 }
 
 #[cfg(test)]
@@ -515,6 +610,52 @@ mod tests {
                 .iter()
                 .any(|k| matches!(k, BatchKey::Yaml(YamlKey::Whole { .. }))),
             "unclassified yaml should not emit Yaml::Whole; scheduled keys: {keys:?}",
+        );
+    }
+
+    #[test]
+    fn yaml_emits_root_reference_map_top_level_keys() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(
+            root.join("reference.yaml"),
+            "constructors:\n  vec_f32:\n    desc: Vector constructors\n    functions:\n      - vec_f32\nmeta:\n  vec_version:\n    params: []\n",
+        )
+        .unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let report = scheduler.run_with_report();
+        let rendered = report.tree.render();
+
+        assert!(rendered.contains("constructors:"), "{rendered}");
+        assert!(rendered.contains("meta:"), "{rendered}");
+        assert!(rendered.contains("vec_f32:"), "{rendered}");
+        assert!(rendered.contains("vec_version:"), "{rendered}");
+        assert!(!rendered.contains("params"), "{rendered}");
+        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
+        assert!(
+            keys.iter()
+                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::TopLevelKeys { .. }))),
+            "missing Yaml::TopLevelKeys batch; scheduled keys: {keys:?}",
+        );
+    }
+
+    #[test]
+    fn yaml_reference_map_rule_is_root_only() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let nested = root.join("docs/reference.yaml");
+        std::fs::create_dir_all(nested.parent().unwrap()).unwrap();
+        std::fs::write(nested, "constructors:\n  - vec_f32\n").unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let report = scheduler.run_with_report();
+        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
+        assert!(
+            !keys
+                .iter()
+                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::TopLevelKeys { .. }))),
+            "nested reference map should not emit Yaml::TopLevelKeys; scheduled keys: {keys:?}",
         );
     }
 

@@ -296,14 +296,15 @@ pub enum PlaintextKey {
     ManLede { file: PathBuf },
 }
 
-/// YAML batches. Narrowly scoped to `docker-compose.{yml,yaml}` —
-/// other YAML configs are out of scope; the agent can `Read` them
-/// after seeing the dir listing.
+/// YAML batches. Narrowly scoped to operational configs and root
+/// reference/spec maps whose top-level keys are useful orientation.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum YamlKey {
     /// Whole-file render of a `docker-compose.{yml,yaml}` file. Skipped
     /// when the source exceeds the walker's line cap.
     Whole { file: PathBuf },
+    /// Root and child keys in a root reference/API/spec map.
+    TopLevelKeys { file: PathBuf },
 }
 
 /// Prisma schema batches.
@@ -869,8 +870,15 @@ impl InnerKey for PrismaKey {
 
 impl InnerKey for YamlKey {
     fn describe(&self, root: &Path) -> String {
-        let YamlKey::Whole { file } = self;
-        format!("YAML config at {}", display_path(file, root))
+        match self {
+            YamlKey::Whole { file } => format!("YAML config at {}", display_path(file, root)),
+            YamlKey::TopLevelKeys { file } => {
+                format!(
+                    "YAML reference map key roster in {}",
+                    display_path(file, root)
+                )
+            }
+        }
     }
 }
 
