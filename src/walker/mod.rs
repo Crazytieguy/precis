@@ -132,6 +132,12 @@ impl WalkCtx {
     }
 
     /// Depth of `path` relative to the seed root (root itself = 0).
+    /// **Fails open**: a path outside the root also reads as depth 0 —
+    /// the same as the root itself — which un-damps every depth-priced
+    /// value. Callers handling possibly-out-of-root paths
+    /// (canonicalized paths, workspace members) must check containment
+    /// first; `walker/typescript.rs` carries a workaround note at its
+    /// relative-depth call site.
     pub fn depth_from_root(&self, path: &Path) -> usize {
         path.strip_prefix(&self.root)
             .map(|p| p.components().count())

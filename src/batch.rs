@@ -531,9 +531,12 @@ pub trait WalkerKey:
         crate::value::DEFAULT_CONCAVITY_EXPONENT
     }
 
-    /// True for orientation-class batches — directory-structure
-    /// listings, README / man-page orientation prose, manifest
-    /// identity — as opposed to source-code bodies. The scheduler
+    /// True for orientation-class batches — README / man-page
+    /// orientation prose, manifest identity — as opposed to
+    /// source-code bodies. Directory listings (`FsKey`) are
+    /// deliberately *not* orientation: boosting the cheap dir-listing
+    /// flood measured negative (see
+    /// [`crate::value::ORIENTATION_TIER_WINDOW`]'s doc). The scheduler
     /// gives these an early-budget ratio boost (see
     /// [`crate::value::orientation_tier_multiplier`]) so high-rank
     /// orientation atoms aren't crowded out of the first ~1K tokens by

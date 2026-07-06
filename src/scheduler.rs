@@ -4,10 +4,13 @@
 //! content + scalar value). The scheduler absorbs each into a single
 //! pool, gates eligibility on whether the batch's predecessor (if any)
 //! is already scheduled, and ranks eligible batches by
-//! `value / cost^k`. Each iteration picks the best eligible exact
-//! batch — under prefix-monotone scheduling
-//! (see `docs/design-notes.md`), if the top-ranked exact doesn't fit
-//! the scheduler stops, no fallback to smaller batches.
+//! `value / cost^k`. Each iteration narrows the eligible set to a
+//! top-K contender pool by *approximate* cost ([`CONTENDER_POOL_K`]),
+//! then picks the best contender by exact cost — a batch whose approx
+//! ranking falls outside the pool can be picked a round late, which is
+//! an accepted approximation. Under prefix-monotone scheduling (see
+//! `docs/design-notes.md`), if the top-ranked exact doesn't fit the
+//! scheduler stops, no fallback to smaller batches.
 //!
 //! Generic over `W: Walker` so the scheduler never names any walker-
 //! specific key variant. `W::Key` is an opaque [`WalkerKey`] as far as

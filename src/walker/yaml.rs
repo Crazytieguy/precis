@@ -197,6 +197,11 @@ fn yaml_class(
         if count <= 2 {
             return Some(workflow_class_for_name(name));
         }
+        // Busy workflow dirs (>2 files): admit only the primary
+        // workflow, and at the compact peripheral tier — full ci_value
+        // on a busy dir's primary floods the early budget (measured:
+        // flask −0.338, click −0.039). The full tier is reserved for
+        // dirs small enough that CI config is plausibly load-bearing.
         if primary_workflow.is_some_and(|primary| primary == file) {
             return Some(YamlClass::WorkflowPeripheral);
         }
@@ -405,8 +410,10 @@ fn compose_value(file: &Path, ctx: &WalkCtx) -> f64 {
 fn ci_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // CI YAML answers the operational "what versions/platforms/checks
     // gate this project" question once the workflow directory is known.
-    // The strong value is reserved for CI-like primary names; compact
-    // arbitrary workflow stems use `peripheral_ci_value`.
+    // The strong value is reserved for CI-named workflows in *small*
+    // (≤2-file) workflow dirs; everything else — arbitrary stems, and
+    // even the primary workflow of a busy dir — uses
+    // `peripheral_ci_value` (see `yaml_class`).
     mix_signals(3.2, 1.2, 2.0, path_depth_factor(file, ctx))
 }
 

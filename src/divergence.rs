@@ -355,6 +355,13 @@ impl<'a> BuildCtx<'a> {
                 batch: b,
             })
             .collect();
+        // Scoring walks rows in order and stops at the budget; an
+        // out-of-order schedule (e.g. hand-edited TOML) would silently
+        // undercount everything after the first too-large cum_tokens.
+        debug_assert!(
+            walker_rows.windows(2).all(|w| w[0].seen_t <= w[1].seen_t),
+            "schedule batches must be ordered by cum_tokens"
+        );
         Ok(Self {
             ns_rows,
             walker_rows,

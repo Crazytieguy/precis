@@ -210,7 +210,7 @@ fn pair_key_matches(pair: Node, source: &str, key: &str) -> bool {
     let mut cursor = pair.walk();
     for child in pair.children(&mut cursor) {
         if matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key") {
-            return source[child.start_byte()..child.end_byte()].trim() == key;
+            return normalize_key_path(source[child.start_byte()..child.end_byte()].trim()) == key;
         }
     }
     false
@@ -502,10 +502,20 @@ fn extract_table_name(node: Node, source: &str) -> Option<String> {
     for child in node.children(&mut cursor) {
         if matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key") {
             let text = &source[child.start_byte()..child.end_byte()];
-            return Some(text.trim().to_string());
+            return Some(normalize_key_path(text.trim()));
         }
     }
     None
+}
+
+/// Strip quotes from each dotted-key segment so `[tool."poetry".scripts]`
+/// classifies the same as `[tool.poetry.scripts]`. Quoted segments
+/// containing a literal dot are rare enough in manifests to ignore.
+fn normalize_key_path(text: &str) -> String {
+    text.split('.')
+        .map(|segment| segment.trim().trim_matches(['"', '\'']))
+        .collect::<Vec<_>>()
+        .join(".")
 }
 
 // --- workspace-member resolution ---
