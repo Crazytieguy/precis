@@ -2111,28 +2111,10 @@ kind = "full"
 
 [[batches]]
 position = 68
-key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #20"
-cost_tokens = 36
-cum_tokens = 2476
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 86
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 69
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 35
-cum_tokens = 2511
+cum_tokens = 2475
 
 [batches.content]
 kind = "lines"
@@ -2146,11 +2128,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 70
+position = 69
 key = 'Python(SetupManifest { file: "setup.py", start_line: 16 })'
 descriptor = "python setup manifest at setup.py:16"
 cost_tokens = 185
-cum_tokens = 2696
+cum_tokens = 2660
 
 [batches.content]
 kind = "lines"
@@ -2159,6 +2141,24 @@ kind = "lines"
 path = "setup.py"
 start = 16
 end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #20"
+cost_tokens = 36
+cum_tokens = 2696
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 86
+end = 89
 
 [batches.content.spans.render]
 kind = "full"

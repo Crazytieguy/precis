@@ -48,22 +48,22 @@ Score(3000)=0.780 I=0.920 C=0.662 ns_rows≤3K=23/51 (reached=14 partial=2 missi
 | walker |  | 1412 | 30 | README.md section #13 |  |  | 0.722 |
 | ns | 1513 |  | 131 | Misc dev-process config (husky, gitattributes, gitignore, funding, publish CI) | 2.4 |  | 0.679 |
 | walker |  | 1564 | 152 | json config tsconfig.json |  |  | 0.684 |
+| walker |  | 1619 | 55 | export names surface in src/where-operators.ts |  |  | 0.685 |
+| walker |  | 1619 | 0 | export at src/where-operators.ts:16 |  |  | 0.685 |
+| walker |  | 1637 | 18 | export body at src/where-operators.ts:16 body 17 |  |  | 0.685 |
+| walker |  | 1650 | 13 | imports in src/random-id.ts |  |  | 0.685 |
 | ns | 1665 |  | 152 | tsconfig.json | 2.5 |  | 0.707 |
-| walker |  | 1681 | 117 | README.md section #19 |  |  | 0.709 |
-| ns | 1696 |  | 31 | oxfmt config (.oxfmtrc.json) | 2.6 |  | 0.699 |
-| walker |  | 1844 | 163 | README.md section #8 |  |  | 0.704 |
-| ns | 1865 |  | 169 | fixtures/db.json — canonical data-file sample | 2.7 |  | 0.674 |
-| walker |  | 1899 | 55 | export names surface in src/where-operators.ts |  |  | 0.674 |
-| walker |  | 1899 | 0 | export at src/where-operators.ts:16 |  |  | 0.674 |
-| walker |  | 1917 | 18 | export body at src/where-operators.ts:16 body 17 |  |  | 0.675 |
-| walker |  | 1930 | 13 | imports in src/random-id.ts |  |  | 0.675 |
-| walker |  | 2075 | 145 | README.md section #7 |  |  | 0.678 |
-| walker |  | 2080 | 5 | listing of '.husky' |  |  | 0.678 |
-| ns | 2090 |  | 225 | fixtures/db.json5 — JSON5 data-file sample | 2.8 |  | 0.625 |
-| walker |  | 2168 | 88 | export at src/where-operators.ts:1 |  |  | 0.627 |
-| ns | 2192 |  | 102 | schema.json | 2.9 |  | 0.610 |
-| walker |  | 2216 | 48 | README.md section #15 |  |  | 0.610 |
-| walker |  | 2256 | 40 | README.md section #16 |  |  | 0.611 |
+| ns | 1696 |  | 31 | oxfmt config (.oxfmtrc.json) | 2.6 |  | 0.697 |
+| walker |  | 1795 | 145 | README.md section #7 |  |  | 0.701 |
+| ns | 1865 |  | 169 | fixtures/db.json — canonical data-file sample | 2.7 |  | 0.671 |
+| walker |  | 1912 | 117 | README.md section #19 |  |  | 0.673 |
+| walker |  | 1917 | 5 | listing of '.husky' |  |  | 0.673 |
+| walker |  | 2005 | 88 | export at src/where-operators.ts:1 |  |  | 0.675 |
+| walker |  | 2053 | 48 | README.md section #15 |  |  | 0.675 |
+| ns | 2090 |  | 225 | fixtures/db.json5 — JSON5 data-file sample | 2.8 |  | 0.623 |
+| walker |  | 2093 | 40 | README.md section #16 |  |  | 0.624 |
+| ns | 2192 |  | 102 | schema.json | 2.9 |  | 0.607 |
+| walker |  | 2256 | 163 | README.md section #8 |  |  | 0.611 |
 | walker |  | 2341 | 85 | export names surface in src/service.ts |  |  | 0.611 |
 | walker |  | 2341 | 0 | export at src/service.ts:13 |  |  | 0.611 |
 | walker |  | 2364 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.611 |

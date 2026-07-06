@@ -633,28 +633,10 @@ kind = "full"
 
 [[batches]]
 position = 29
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #2"
-cost_tokens = 523
-cum_tokens = 2243
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 61
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
 key = 'Fs(DirListing { dir: "site" })'
 descriptor = "listing of 'site'"
 cost_tokens = 72
-cum_tokens = 2315
+cum_tokens = 1792
 
 [batches.content]
 kind = "fs"
@@ -664,11 +646,11 @@ parent = "site"
 entries = [".gitignore", ".vitepress", "api-reference.md", "build-ref.mjs", "compiling.md", "features", "getting-started", "guides", "index.md", "package-lock.json", "package.json", "project.data.ts", "public", "sqlite.tmlanguage.json", "using", "versioning.md"]
 
 [[batches]]
-position = 31
+position = 30
 key = 'Fs(DirListing { dir: "tests/fuzz" })'
 descriptor = "listing of 'tests/fuzz'"
 cost_tokens = 48
-cum_tokens = 2363
+cum_tokens = 1840
 
 [batches.content]
 kind = "fs"
@@ -678,11 +660,11 @@ parent = "tests/fuzz"
 entries = [".gitignore", "Makefile", "README.md", "corpus", "exec.c", "exec.dict", "json.c", "numpy.c", "numpy.dict", "vec0-create.c", "vec0-create.dict"]
 
 [[batches]]
-position = 32
+position = 31
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 80
-cum_tokens = 2443
+cum_tokens = 1920
 
 [batches.content]
 kind = "fs"
@@ -692,11 +674,11 @@ parent = "examples"
 entries = ["nbc-headlines", "python-recipes", "simple-bun", "simple-c", "simple-deno", "simple-go-cgo", "simple-go-ncruces", "simple-node", "simple-node2", "simple-python", "simple-ruby", "simple-rust", "simple-sqlite", "simple-wasm", "sqlite3-cli", "wasm"]
 
 [[batches]]
-position = 33
+position = 32
 key = 'Plaintext(Whole { file: "TODO" })'
 descriptor = "plaintext config TODO"
 cost_tokens = 249
-cum_tokens = 2692
+cum_tokens = 2169
 
 [batches.content]
 kind = "lines"
@@ -710,11 +692,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Fs(DirListing { dir: "bindings/go/ncruces" })'
 descriptor = "listing of 'bindings/go/ncruces'"
 cost_tokens = 8
-cum_tokens = 2700
+cum_tokens = 2177
 
 [batches.content]
 kind = "fs"
@@ -724,11 +706,11 @@ parent = "bindings/go/ncruces"
 entries = ["go-sqlite3.patch"]
 
 [[batches]]
-position = 35
+position = 34
 key = 'Python(Imports { file: "bindings/python/extra_init.py" })'
 descriptor = "python imports in bindings/python/extra_init.py"
 cost_tokens = 26
-cum_tokens = 2726
+cum_tokens = 2203
 
 [batches.content]
 kind = "lines"
@@ -742,11 +724,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Fs(DirListing { dir: "benchmarks/self-params" })'
 descriptor = "listing of 'benchmarks/self-params'"
 cost_tokens = 13
-cum_tokens = 2739
+cum_tokens = 2216
 
 [batches.content]
 kind = "fs"
@@ -756,11 +738,11 @@ parent = "benchmarks/self-params"
 entries = ["build.py", "knn.py", "test.py"]
 
 [[batches]]
-position = 37
+position = 36
 key = 'Fs(DirListing { dir: "benchmarks/micro/src" })'
 descriptor = "listing of 'benchmarks/micro/src'"
 cost_tokens = 4
-cum_tokens = 2743
+cum_tokens = 2220
 
 [batches.content]
 kind = "fs"
@@ -770,11 +752,11 @@ parent = "benchmarks/micro/src"
 entries = ["lib.rs"]
 
 [[batches]]
-position = 38
+position = 37
 key = 'Rust(PubItem { file: "benchmarks/micro/src/lib.rs", start_line: 8 })'
 descriptor = "pub item at benchmarks/micro/src/lib.rs:8"
 cost_tokens = 14
-cum_tokens = 2757
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -796,11 +778,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Fs(DirListing { dir: "site/guides" })'
 descriptor = "listing of 'site/guides'"
 cost_tokens = 45
-cum_tokens = 2802
+cum_tokens = 2279
 
 [batches.content]
 kind = "fs"
@@ -810,11 +792,11 @@ parent = "site/guides"
 entries = ["arithmetic.md", "binary-quant.md", "classifiers.md", "hybrid-search.md", "matryoshka.md", "performance.md", "rag.md", "scalar-quant.md", "semantic-search.md"]
 
 [[batches]]
-position = 40
+position = 39
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 157
-cum_tokens = 2959
+cum_tokens = 2436
 
 [batches.content]
 kind = "lines"
@@ -828,11 +810,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Fs(DirListing { dir: "site/using" })'
 descriptor = "listing of 'site/using'"
 cost_tokens = 49
-cum_tokens = 3008
+cum_tokens = 2485
 
 [batches.content]
 kind = "fs"
@@ -840,6 +822,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "site/using"
 entries = ["android-ios.md", "c.md", "datasette.md", "go.md", "js.md", "python.md", "rqlite.md", "ruby.md", "rust.md", "sqlite-utils.md", "wasm.md"]
+
+[[batches]]
+position = 41
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #2"
+cost_tokens = 523
+cum_tokens = 3008
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 61
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 42

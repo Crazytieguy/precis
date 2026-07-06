@@ -68,11 +68,11 @@ Score(3000)=0.434 I=0.757 C=0.248 ns_rows≤3K=21/50 (reached=6 partial=2 missin
 | walker |  | 1471 | 18 | readme.md section #23 |  |  | 0.445 |
 | walker |  | 1488 | 17 | readme.md section #24 |  |  | 0.445 |
 | walker |  | 1603 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.446 |
+| walker |  | 1623 | 20 | readme.md section #20 |  |  | 0.446 |
+| walker |  | 1646 | 23 | readme.md section #21 |  |  | 0.446 |
+| walker |  | 1668 | 22 | readme.md section #22 |  |  | 0.446 |
 | ns | 1672 |  | 260 | CI workflow (.github/workflows/main.yml) | 2.4 |  | 0.404 |
-| walker |  | 1694 | 91 | readme.md section #2 |  |  | 0.443 |
-| walker |  | 1714 | 20 | readme.md section #20 |  |  | 0.443 |
-| walker |  | 1737 | 23 | readme.md section #21 |  |  | 0.443 |
-| walker |  | 1759 | 22 | readme.md section #22 |  |  | 0.443 |
+| walker |  | 1759 | 91 | readme.md section #2 |  |  | 0.443 |
 | walker |  | 1780 | 21 | readme.md section #37 |  |  | 0.443 |
 | ns | 1996 |  | 324 | index.d.ts imports + Options interface + Chalk const | 3.1 |  | 0.407 |
 | walker |  | 2011 | 231 | package identity metadata in package.json |  |  | 0.424 |

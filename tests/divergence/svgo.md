@@ -62,29 +62,29 @@ Score(3000)=0.518 I=0.783 C=0.342 ns_rows≤3K=15/40 (reached=5 partial=1 missin
 | ns | 1373 |  | 165 | README — optimize() API usage | 2.3 |  | 0.453 |
 | ns | 1530 |  | 157 | lib/svgo/coa.js — function location roster | 2.4 |  | 0.425 |
 | walker |  | 1705 | 356 | listing of 'plugins' |  |  | 0.432 |
-| ns | 1833 |  | 303 | lib/svgo/coa.js — flag definitions (makeProgram) | 2.5 | 2.4 | 0.391 |
-| walker |  | 1870 | 165 | README.md section #3 |  |  | 0.506 |
-| ns | 1923 |  | 90 | lib/ directory listing | 3.1 |  | 0.555 |
-| walker |  | 2225 | 355 | README.md section #4 |  |  | 0.660 |
-| walker |  | 2278 | 53 | export at lib/svgo.js:136 |  |  | 0.662 |
-| walker |  | 2282 | 4 | listing of 'test/fixtures' |  |  | 0.662 |
-| ns | 2307 |  | 384 | lib/svgo.js — resolvePluginConfig() | 3.2 |  | 0.595 |
-| walker |  | 2400 | 118 | README.md section #13 |  |  | 0.595 |
-| walker |  | 2431 | 31 | export names surface in lib/svgo/coa.js |  |  | 0.597 |
-| walker |  | 2431 | 0 | export at lib/svgo/coa.js:19 |  |  | 0.597 |
-| walker |  | 2431 | 0 | export at lib/svgo/coa.js:30 |  |  | 0.597 |
-| walker |  | 2463 | 32 | export names surface in lib/svgo/plugins.js |  |  | 0.597 |
-| walker |  | 2463 | 0 | export at lib/svgo/plugins.js:40 |  |  | 0.597 |
-| walker |  | 2496 | 33 | export names surface in lib/util/visit.js |  |  | 0.597 |
-| walker |  | 2496 | 0 | export at lib/util/visit.js:8 |  |  | 0.597 |
-| walker |  | 2545 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.597 |
-| walker |  | 2768 | 223 | json config tsconfig.json |  |  | 0.597 |
-| walker |  | 2773 | 5 | listing of 'scripts' |  |  | 0.597 |
-| walker |  | 2842 | 69 | export names surface in lib/style.js |  |  | 0.598 |
-| walker |  | 2842 | 0 | export at lib/style.js:195 |  |  | 0.598 |
-| walker |  | 2842 | 0 | export at lib/style.js:211 |  |  | 0.598 |
-| walker |  | 2842 | 0 | export at lib/style.js:253 |  |  | 0.598 |
-| walker |  | 2882 | 40 | export at lib/style.js:286 |  |  | 0.598 |
+| walker |  | 1758 | 53 | export at lib/svgo.js:136 |  |  | 0.433 |
+| walker |  | 1762 | 4 | listing of 'test/fixtures' |  |  | 0.433 |
+| ns | 1833 |  | 303 | lib/svgo/coa.js — flag definitions (makeProgram) | 2.5 | 2.4 | 0.393 |
+| walker |  | 1880 | 118 | README.md section #13 |  |  | 0.393 |
+| walker |  | 1911 | 31 | export names surface in lib/svgo/coa.js |  |  | 0.395 |
+| walker |  | 1911 | 0 | export at lib/svgo/coa.js:19 |  |  | 0.395 |
+| walker |  | 1911 | 0 | export at lib/svgo/coa.js:30 |  |  | 0.395 |
+| ns | 1923 |  | 90 | lib/ directory listing | 3.1 |  | 0.464 |
+| walker |  | 1943 | 32 | export names surface in lib/svgo/plugins.js |  |  | 0.465 |
+| walker |  | 1943 | 0 | export at lib/svgo/plugins.js:40 |  |  | 0.465 |
+| walker |  | 2108 | 165 | README.md section #3 |  |  | 0.558 |
+| walker |  | 2141 | 33 | export names surface in lib/util/visit.js |  |  | 0.558 |
+| walker |  | 2141 | 0 | export at lib/util/visit.js:8 |  |  | 0.558 |
+| walker |  | 2190 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.558 |
+| ns | 2307 |  | 384 | lib/svgo.js — resolvePluginConfig() | 3.2 |  | 0.502 |
+| walker |  | 2413 | 223 | json config tsconfig.json |  |  | 0.502 |
+| walker |  | 2418 | 5 | listing of 'scripts' |  |  | 0.502 |
+| walker |  | 2487 | 69 | export names surface in lib/style.js |  |  | 0.503 |
+| walker |  | 2487 | 0 | export at lib/style.js:195 |  |  | 0.503 |
+| walker |  | 2487 | 0 | export at lib/style.js:211 |  |  | 0.503 |
+| walker |  | 2487 | 0 | export at lib/style.js:253 |  |  | 0.503 |
+| walker |  | 2527 | 40 | export at lib/style.js:286 |  |  | 0.503 |
+| walker |  | 2882 | 355 | README.md section #4 |  |  | 0.598 |
 | ns | 3000 |  | 693 | lib/svgo.js — optimize() core loop | 3.3 |  | 0.518 |
 | ns | 3059 |  | 59 | lib/svgo.js — public re-exports | 3.4 |  | 0.530 |
 | walker |  | 3386 | 504 | package identity metadata in package.json |  |  | 0.538 |

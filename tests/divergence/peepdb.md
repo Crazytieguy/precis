@@ -87,10 +87,10 @@ Score(3000)=0.481 I=0.775 C=0.298 ns_rows≤3K=19/53 (reached=8 partial=0 missin
 | ns | 2337 |  | 200 | cli.py: imports + CustomEncoder | 3.2 |  | 0.450 |
 | walker |  | 2393 | 58 | docs/README.md section #1 |  |  | 0.450 |
 | walker |  | 2440 | 47 | python decl doc at peepdb/cli.py:97 |  |  | 0.451 |
-| walker |  | 2476 | 36 | README.md section #20 |  |  | 0.451 |
-| walker |  | 2511 | 35 | README.md section #1 |  |  | 0.462 |
+| walker |  | 2475 | 35 | README.md section #1 |  |  | 0.462 |
 | ns | 2647 |  | 310 | cli.py: `cli` group docstring | 3.3 |  | 0.436 |
-| walker |  | 2696 | 185 | python setup manifest at setup.py:16 |  |  | 0.481 |
+| walker |  | 2660 | 185 | python setup manifest at setup.py:16 |  |  | 0.481 |
+| walker |  | 2696 | 36 | README.md section #20 |  |  | 0.481 |
 | walker |  | 2735 | 39 | README.md section #23 |  |  | 0.481 |
 | walker |  | 2772 | 37 | README.md section #24 |  |  | 0.481 |
 | walker |  | 2987 | 215 | docs/README.md section #0 |  |  | 0.481 |

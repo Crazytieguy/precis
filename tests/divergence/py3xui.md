@@ -92,17 +92,17 @@ Score(3000)=0.499 I=0.796 C=0.313 ns_rows≤3K=33/52 (reached=11 partial=1 missi
 | ns | 2177 |  | 184 | Model classes: locations across bases/settings/sniffing/stream_settings/server + Inbound's own methods | 3.2 |  | 0.517 |
 | walker |  | 2232 | 167 | headings outline in README.md |  |  | 0.517 |
 | walker |  | 2394 | 162 | README.md section #0 |  |  | 0.519 |
-| walker |  | 2416 | 22 | README.md section #2 |  |  | 0.519 |
-| walker |  | 2459 | 43 | README.md section #22 |  |  | 0.519 |
-| walker |  | 2476 | 17 | python decl names surface in py3xui/async_api/async_api_client.py |  |  | 0.519 |
-| walker |  | 2476 | 0 | python decl at py3xui/async_api/async_api_client.py:12 |  |  | 0.519 |
-| walker |  | 2493 | 17 | python decl names surface in py3xui/async_api/async_api_database.py |  |  | 0.519 |
-| walker |  | 2493 | 0 | python decl at py3xui/async_api/async_api_database.py:7 |  |  | 0.519 |
-| ns | 2495 |  | 318 | tests/test_api.py: test-function + _prepare_inbound locations | 3.3 |  | 0.487 |
-| walker |  | 2508 | 15 | python method sigs in py3xui/async_api/async_api_database.py |  |  | 0.488 |
-| walker |  | 2508 | 0 | python method at py3xui/async_api/async_api_database.py:32 |  |  | 0.488 |
-| walker |  | 2525 | 17 | python decl names surface in py3xui/async_api/async_api_inbound.py |  |  | 0.488 |
-| walker |  | 2525 | 0 | python decl at py3xui/async_api/async_api_inbound.py:11 |  |  | 0.488 |
+| walker |  | 2437 | 43 | README.md section #22 |  |  | 0.519 |
+| walker |  | 2454 | 17 | python decl names surface in py3xui/async_api/async_api_client.py |  |  | 0.519 |
+| walker |  | 2454 | 0 | python decl at py3xui/async_api/async_api_client.py:12 |  |  | 0.519 |
+| walker |  | 2471 | 17 | python decl names surface in py3xui/async_api/async_api_database.py |  |  | 0.519 |
+| walker |  | 2471 | 0 | python decl at py3xui/async_api/async_api_database.py:7 |  |  | 0.519 |
+| walker |  | 2486 | 15 | python method sigs in py3xui/async_api/async_api_database.py |  |  | 0.519 |
+| walker |  | 2486 | 0 | python method at py3xui/async_api/async_api_database.py:32 |  |  | 0.519 |
+| ns | 2495 |  | 318 | tests/test_api.py: test-function + _prepare_inbound locations | 3.3 |  | 0.488 |
+| walker |  | 2503 | 17 | python decl names surface in py3xui/async_api/async_api_inbound.py |  |  | 0.488 |
+| walker |  | 2503 | 0 | python decl at py3xui/async_api/async_api_inbound.py:11 |  |  | 0.488 |
+| walker |  | 2525 | 22 | README.md section #2 |  |  | 0.488 |
 | walker |  | 2542 | 17 | python decl names surface in py3xui/async_api/async_api_server.py |  |  | 0.488 |
 | walker |  | 2542 | 0 | python decl at py3xui/async_api/async_api_server.py:8 |  |  | 0.488 |
 | walker |  | 2558 | 16 | python class body at py3xui/async_api/async_api_server.py:8 |  |  | 0.488 |

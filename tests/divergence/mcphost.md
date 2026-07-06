@@ -86,30 +86,30 @@ Score(3000)=0.551 I=0.816 C=0.372 ns_rows≤3K=18/46 (reached=7 partial=0 missin
 | walker |  | 1486 | 120 | headings outline in sdk/README.md |  |  | 0.645 |
 | walker |  | 1499 | 13 | sdk/README.md section #17 |  |  | 0.645 |
 | walker |  | 1532 | 33 | sdk/README.md section #1 |  |  | 0.645 |
-| walker |  | 1580 | 48 | README.md section #31 |  |  | 0.645 |
+| walker |  | 1549 | 17 | README.md section #27 |  |  | 0.645 |
+| walker |  | 1565 | 16 | README.md section #26 |  |  | 0.645 |
+| walker |  | 1582 | 17 | README.md section #25 |  |  | 0.645 |
 | ns | 1595 |  | 241 | main.go (full) | 3.5 |  | 0.612 |
-| walker |  | 1597 | 17 | README.md section #27 |  |  | 0.612 |
-| walker |  | 1613 | 16 | README.md section #26 |  |  | 0.612 |
-| walker |  | 1630 | 17 | README.md section #25 |  |  | 0.612 |
-| walker |  | 1662 | 32 | go decl doc at sdk/types.go:18 |  |  | 0.612 |
-| walker |  | 1719 | 57 | go decl names surface in internal/config/merger.go |  |  | 0.612 |
-| walker |  | 1719 | 0 | go decl at internal/config/merger.go:13 |  |  | 0.612 |
-| walker |  | 1719 | 0 | go decl at internal/config/merger.go:28 |  |  | 0.612 |
-| walker |  | 1719 | 0 | go decl at internal/config/merger.go:48 |  |  | 0.612 |
-| walker |  | 1778 | 59 | go decl names surface in internal/models/models_data.go |  |  | 0.612 |
-| walker |  | 1778 | 0 | go decl at internal/models/models_data.go:41 |  |  | 0.612 |
-| walker |  | 1798 | 20 | go decl at internal/models/models_data.go:26 |  |  | 0.612 |
-| walker |  | 1814 | 16 | go decl doc at internal/models/models_data.go:26 |  |  | 0.612 |
-| walker |  | 1831 | 17 | go decl doc at internal/models/models_data.go:41 |  |  | 0.612 |
-| walker |  | 1875 | 44 | go decl at internal/models/models_data.go:18 |  |  | 0.612 |
-| walker |  | 1889 | 14 | go decl doc at internal/models/models_data.go:18 |  |  | 0.612 |
-| walker |  | 1923 | 34 | go decl doc at sdk/types.go:24 |  |  | 0.612 |
-| walker |  | 1938 | 15 | go decl body at internal/tokens/init.go:21 |  |  | 0.612 |
-| walker |  | 1953 | 15 | go decl body at internal/tokens/init.go:50 |  |  | 0.612 |
+| walker |  | 1614 | 32 | go decl doc at sdk/types.go:18 |  |  | 0.612 |
+| walker |  | 1671 | 57 | go decl names surface in internal/config/merger.go |  |  | 0.612 |
+| walker |  | 1671 | 0 | go decl at internal/config/merger.go:13 |  |  | 0.612 |
+| walker |  | 1671 | 0 | go decl at internal/config/merger.go:28 |  |  | 0.612 |
+| walker |  | 1671 | 0 | go decl at internal/config/merger.go:48 |  |  | 0.612 |
+| walker |  | 1730 | 59 | go decl names surface in internal/models/models_data.go |  |  | 0.612 |
+| walker |  | 1730 | 0 | go decl at internal/models/models_data.go:41 |  |  | 0.612 |
+| walker |  | 1750 | 20 | go decl at internal/models/models_data.go:26 |  |  | 0.612 |
+| walker |  | 1766 | 16 | go decl doc at internal/models/models_data.go:26 |  |  | 0.612 |
+| walker |  | 1783 | 17 | go decl doc at internal/models/models_data.go:41 |  |  | 0.612 |
+| walker |  | 1827 | 44 | go decl at internal/models/models_data.go:18 |  |  | 0.612 |
+| walker |  | 1841 | 14 | go decl doc at internal/models/models_data.go:18 |  |  | 0.612 |
+| walker |  | 1875 | 34 | go decl doc at sdk/types.go:24 |  |  | 0.612 |
+| walker |  | 1890 | 15 | go decl body at internal/tokens/init.go:21 |  |  | 0.612 |
+| walker |  | 1905 | 15 | go decl body at internal/tokens/init.go:50 |  |  | 0.612 |
 | ns | 1954 |  | 359 | cmd/root.go package-level flag vars | 4.1 |  | 0.554 |
+| walker |  | 1955 | 50 | go decl at internal/models/models_data.go:32 |  |  | 0.554 |
+| walker |  | 1967 | 12 | go decl doc at internal/models/models_data.go:32 |  |  | 0.554 |
 | ns | 1998 |  | 44 | cmd/root.go rootCmd identity (Use/Short) | 4.2 | 4.1 | 0.549 |
-| walker |  | 2003 | 50 | go decl at internal/models/models_data.go:32 |  |  | 0.549 |
-| walker |  | 2015 | 12 | go decl doc at internal/models/models_data.go:32 |  |  | 0.549 |
+| walker |  | 2015 | 48 | README.md section #31 |  |  | 0.549 |
 | walker |  | 2055 | 40 | README.md section #38 |  |  | 0.549 |
 | walker |  | 2075 | 20 | README.md section #19 |  |  | 0.549 |
 | walker |  | 2096 | 21 | README.md section #28 |  |  | 0.549 |

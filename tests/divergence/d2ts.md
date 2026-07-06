@@ -64,17 +64,17 @@ Score(3000)=0.406 I=0.681 C=0.242 ns_rows≤3K=25/65 (reached=7 partial=2 missin
 | walker |  | 2228 | 31 | export names surface in packages/d2ts/src/operators/debug.ts |  |  | 0.475 |
 | ns | 2255 |  | 186 | multiset.ts: MultiSet.map/filter | 3.8 |  | 0.453 |
 | walker |  | 2261 | 33 | export at packages/d2ts/src/operators/debug.ts:74 |  |  | 0.453 |
-| walker |  | 2291 | 30 | README.md section #6 |  |  | 0.453 |
-| walker |  | 2315 | 24 | README.md section #2 |  |  | 0.459 |
-| walker |  | 2351 | 36 | export names surface in packages/d2ts/src/operators/count.ts |  |  | 0.459 |
-| walker |  | 2388 | 37 | export names surface in packages/d2ts/src/operators/distinct.ts |  |  | 0.459 |
-| walker |  | 2443 | 55 | export names surface in packages/d2ts/src/order.ts |  |  | 0.459 |
-| walker |  | 2443 | 0 | export at packages/d2ts/src/order.ts:10 |  |  | 0.459 |
-| walker |  | 2455 | 12 | export at packages/d2ts/src/order.ts:277 |  |  | 0.459 |
-| walker |  | 2463 | 8 | export body at packages/d2ts/src/order.ts:277 body 279 |  |  | 0.459 |
+| walker |  | 2285 | 24 | README.md section #2 |  |  | 0.459 |
+| walker |  | 2321 | 36 | export names surface in packages/d2ts/src/operators/count.ts |  |  | 0.459 |
+| walker |  | 2358 | 37 | export names surface in packages/d2ts/src/operators/distinct.ts |  |  | 0.459 |
+| walker |  | 2413 | 55 | export names surface in packages/d2ts/src/order.ts |  |  | 0.459 |
+| walker |  | 2413 | 0 | export at packages/d2ts/src/order.ts:10 |  |  | 0.459 |
+| walker |  | 2425 | 12 | export at packages/d2ts/src/order.ts:277 |  |  | 0.459 |
+| walker |  | 2433 | 8 | export body at packages/d2ts/src/order.ts:277 body 279 |  |  | 0.459 |
+| walker |  | 2489 | 56 | export names surface in packages/d2ts/src/multiset.ts |  |  | 0.459 |
 | ns | 2498 |  | 243 | multiset.ts: MultiSet.join | 3.9 |  | 0.439 |
-| walker |  | 2519 | 56 | export names surface in packages/d2ts/src/multiset.ts |  |  | 0.439 |
-| walker |  | 2588 | 69 | export at packages/d2ts/src/operators/count.ts:10 |  |  | 0.439 |
+| walker |  | 2558 | 69 | export at packages/d2ts/src/operators/count.ts:10 |  |  | 0.439 |
+| walker |  | 2588 | 30 | README.md section #6 |  |  | 0.439 |
 | ns | 2620 |  | 122 | order.ts: v() / Version core | 3.10 |  | 0.427 |
 | walker |  | 2657 | 69 | export at packages/d2ts/src/operators/distinct.ts:10 |  |  | 0.427 |
 | ns | 2722 |  | 102 | order.ts: Antichain minimal-set invariant | 3.11 | 3.10 | 0.418 |

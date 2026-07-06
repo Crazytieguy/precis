@@ -1915,28 +1915,10 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Markdown(Section { file: "Readme.md", section_index: 6, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "Readme.md section #6"
-cost_tokens = 146
-cum_tokens = 2319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 127
-end = 145
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
 key = 'Markdown(Section { file: "Readme.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #18"
 cost_tokens = 25
-cum_tokens = 2344
+cum_tokens = 2198
 
 [batches.content]
 kind = "lines"
@@ -1950,11 +1932,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 62
+position = 61
 key = 'Markdown(Section { file: "Readme.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #7"
 cost_tokens = 82
-cum_tokens = 2426
+cum_tokens = 2280
 
 [batches.content]
 kind = "lines"
@@ -1968,11 +1950,11 @@ end = 153
 kind = "full"
 
 [[batches]]
-position = 63
+position = 62
 key = 'Markdown(Section { file: "Readme.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #23"
 cost_tokens = 26
-cum_tokens = 2452
+cum_tokens = 2306
 
 [batches.content]
 kind = "lines"
@@ -1986,11 +1968,11 @@ end = 209
 kind = "full"
 
 [[batches]]
-position = 64
+position = 63
 key = 'Markdown(Section { file: "Readme.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #24"
 cost_tokens = 25
-cum_tokens = 2477
+cum_tokens = 2331
 
 [batches.content]
 kind = "lines"
@@ -2004,11 +1986,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 65
+position = 64
 key = 'Typescript(Imports { file: "lib/response.js" })'
 descriptor = "imports in lib/response.js"
 cost_tokens = 41
-cum_tokens = 2518
+cum_tokens = 2372
 
 [batches.content]
 kind = "lines"
@@ -2030,11 +2012,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 66
+position = 65
 key = 'Typescript(ExportBody { file: "lib/request.js", start_line: 63, body_start_line: 65 })'
 descriptor = "export body at lib/request.js:63 body 65"
 cost_tokens = 178
-cum_tokens = 2696
+cum_tokens = 2550
 
 [batches.content]
 kind = "lines"
@@ -2043,6 +2025,24 @@ kind = "lines"
 path = "lib/request.js"
 start = 65
 end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Markdown(Section { file: "Readme.md", section_index: 6, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "Readme.md section #6"
+cost_tokens = 146
+cum_tokens = 2696
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 127
+end = 145
 
 [batches.content.spans.render]
 kind = "full"

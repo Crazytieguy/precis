@@ -362,6 +362,7 @@ impl<W: Walker> Scheduler<W> {
                 entry.key.is_orientation(),
             ) * crate::value::prose_mass_tier_multiplier(
                 self.consumed.tokens,
+                self.token_budget,
                 entry.key.is_deferred_mass_prose(),
             );
             let better = best.as_ref().is_none_or(|(br, b_id, _)| {
@@ -414,6 +415,7 @@ impl<W: Walker> Scheduler<W> {
                 entry.key.is_orientation(),
             ) * crate::value::prose_mass_tier_multiplier(
                 self.consumed.tokens,
+                self.token_budget,
                 entry.key.is_deferred_mass_prose(),
             );
             candidates.push((ratio, id));

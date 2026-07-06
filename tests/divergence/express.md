@@ -74,14 +74,14 @@ Score(3000)=0.605 I=0.810 C=0.452 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | walker |  | 2125 | 23 | Readme.md section #30 |  |  | 0.664 |
 | walker |  | 2149 | 24 | Readme.md section #12 |  |  | 0.664 |
 | walker |  | 2173 | 24 | Readme.md section #32 |  |  | 0.664 |
+| walker |  | 2198 | 25 | Readme.md section #18 |  |  | 0.664 |
+| walker |  | 2280 | 82 | Readme.md section #7 |  |  | 0.664 |
 | ns | 2290 |  | 225 | package.json dependencies (merge-descriptors..vary) | 1.14 | 1.13 | 0.642 |
-| walker |  | 2319 | 146 | Readme.md section #6 |  |  | 0.642 |
-| walker |  | 2344 | 25 | Readme.md section #18 |  |  | 0.642 |
-| walker |  | 2426 | 82 | Readme.md section #7 |  |  | 0.642 |
-| walker |  | 2452 | 26 | Readme.md section #23 |  |  | 0.642 |
-| walker |  | 2477 | 25 | Readme.md section #24 |  |  | 0.642 |
-| walker |  | 2518 | 41 | imports in lib/response.js |  |  | 0.642 |
-| walker |  | 2696 | 178 | export body at lib/request.js:63 body 65 |  |  | 0.642 |
+| walker |  | 2306 | 26 | Readme.md section #23 |  |  | 0.642 |
+| walker |  | 2331 | 25 | Readme.md section #24 |  |  | 0.642 |
+| walker |  | 2372 | 41 | imports in lib/response.js |  |  | 0.642 |
+| walker |  | 2550 | 178 | export body at lib/request.js:63 body 65 |  |  | 0.642 |
+| walker |  | 2696 | 146 | Readme.md section #6 |  |  | 0.642 |
 | walker |  | 2723 | 27 | Readme.md section #13 |  |  | 0.642 |
 | walker |  | 2749 | 26 | Readme.md section #14 |  |  | 0.642 |
 | walker |  | 2776 | 27 | Readme.md section #15 |  |  | 0.642 |

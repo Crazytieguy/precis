@@ -1081,28 +1081,10 @@ kind = "full"
 
 [[batches]]
 position = 51
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #10"
-cost_tokens = 150
-cum_tokens = 2346
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 67
-end = 85
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 52
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 206
-cum_tokens = 2552
+cum_tokens = 2402
 
 [batches.content]
 kind = "lines"
@@ -1124,11 +1106,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 53
+position = 52
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 360
-cum_tokens = 2912
+cum_tokens = 2762
 
 [batches.content]
 kind = "lines"
@@ -1150,11 +1132,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 54
+position = 53
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 269
-cum_tokens = 3181
+cum_tokens = 3031
 
 [batches.content]
 kind = "lines"
@@ -1163,6 +1145,24 @@ kind = "lines"
 path = "package.json"
 start = 36
 end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #10"
+cost_tokens = 150
+cum_tokens = 3181
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 67
+end = 85
 
 [batches.content.spans.render]
 kind = "full"

@@ -1143,28 +1143,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 42
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #6"
-cost_tokens = 30
-cum_tokens = 2291
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 75
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 24
-cum_tokens = 2315
+cum_tokens = 2285
 
 [batches.content]
 kind = "lines"
@@ -1178,11 +1160,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/count.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2ts/src/operators/count.ts"
 cost_tokens = 36
-cum_tokens = 2351
+cum_tokens = 2321
 
 [batches.content]
 kind = "lines"
@@ -1220,11 +1202,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 45
+position = 44
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/distinct.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2ts/src/operators/distinct.ts"
 cost_tokens = 37
-cum_tokens = 2388
+cum_tokens = 2358
 
 [batches.content]
 kind = "lines"
@@ -1262,11 +1244,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/order.ts", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2ts/src/order.ts"
 cost_tokens = 55
-cum_tokens = 2443
+cum_tokens = 2413
 
 [batches.content]
 kind = "lines"
@@ -1336,11 +1318,11 @@ end = 278
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Typescript(Export { file: "packages/d2ts/src/order.ts", start_line: 10 })'
 descriptor = "export at packages/d2ts/src/order.ts:10"
 cost_tokens = 0
-cum_tokens = 2443
+cum_tokens = 2413
 
 [batches.content]
 kind = "lines"
@@ -1362,11 +1344,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 47
 key = 'Typescript(Export { file: "packages/d2ts/src/order.ts", start_line: 277 })'
 descriptor = "export at packages/d2ts/src/order.ts:277"
 cost_tokens = 12
-cum_tokens = 2455
+cum_tokens = 2425
 
 [batches.content]
 kind = "lines"
@@ -1388,11 +1370,11 @@ end = 279
 kind = "ellipsis"
 
 [[batches]]
-position = 49
+position = 48
 key = 'Typescript(ExportBody { file: "packages/d2ts/src/order.ts", start_line: 277, body_start_line: 279 })'
 descriptor = "export body at packages/d2ts/src/order.ts:277 body 279"
 cost_tokens = 8
-cum_tokens = 2463
+cum_tokens = 2433
 
 [batches.content]
 kind = "lines"
@@ -1406,11 +1388,11 @@ end = 279
 kind = "full"
 
 [[batches]]
-position = 50
+position = 49
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/multiset.ts", chunk_index: 0, export_count: 3, type_only_export_count: 2 })'
 descriptor = "export names surface in packages/d2ts/src/multiset.ts"
 cost_tokens = 56
-cum_tokens = 2519
+cum_tokens = 2489
 
 [batches.content]
 kind = "lines"
@@ -1448,11 +1430,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 51
+position = 50
 key = 'Typescript(Export { file: "packages/d2ts/src/operators/count.ts", start_line: 10 })'
 descriptor = "export at packages/d2ts/src/operators/count.ts:10"
 cost_tokens = 69
-cum_tokens = 2588
+cum_tokens = 2558
 
 [batches.content]
 kind = "lines"
@@ -1472,6 +1454,24 @@ end = 17
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 51
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #6"
+cost_tokens = 30
+cum_tokens = 2588
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 75
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 52

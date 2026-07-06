@@ -1347,28 +1347,10 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #2"
-cost_tokens = 22
-cum_tokens = 2416
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 48
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 43
-cum_tokens = 2459
+cum_tokens = 2437
 
 [batches.content]
 kind = "lines"
@@ -1382,11 +1364,29 @@ end = 338
 kind = "full"
 
 [[batches]]
-position = 62
+position = 61
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api_client.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_client.py"
 cost_tokens = 17
-cum_tokens = 2476
+cum_tokens = 2454
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "py3xui/async_api/async_api_client.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Python(Decl { file: "py3xui/async_api/async_api_client.py", start_line: 12 })'
+descriptor = "python decl at py3xui/async_api/async_api_client.py:12"
+cost_tokens = 0
+cum_tokens = 2454
 
 [batches.content]
 kind = "lines"
@@ -1401,28 +1401,28 @@ kind = "full"
 
 [[batches]]
 position = 63
-key = 'Python(Decl { file: "py3xui/async_api/async_api_client.py", start_line: 12 })'
-descriptor = "python decl at py3xui/async_api/async_api_client.py:12"
-cost_tokens = 0
-cum_tokens = 2476
+key = 'Python(DeclNames { file: "py3xui/async_api/async_api_database.py", chunk_index: 0 })'
+descriptor = "python decl names surface in py3xui/async_api/async_api_database.py"
+cost_tokens = 17
+cum_tokens = 2471
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "py3xui/async_api/async_api_client.py"
-start = 12
-end = 12
+path = "py3xui/async_api/async_api_database.py"
+start = 7
+end = 7
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 64
-key = 'Python(DeclNames { file: "py3xui/async_api/async_api_database.py", chunk_index: 0 })'
-descriptor = "python decl names surface in py3xui/async_api/async_api_database.py"
-cost_tokens = 17
-cum_tokens = 2493
+key = 'Python(Decl { file: "py3xui/async_api/async_api_database.py", start_line: 7 })'
+descriptor = "python decl at py3xui/async_api/async_api_database.py:7"
+cost_tokens = 0
+cum_tokens = 2471
 
 [batches.content]
 kind = "lines"
@@ -1437,28 +1437,10 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'Python(Decl { file: "py3xui/async_api/async_api_database.py", start_line: 7 })'
-descriptor = "python decl at py3xui/async_api/async_api_database.py:7"
-cost_tokens = 0
-cum_tokens = 2493
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "py3xui/async_api/async_api_database.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
 key = 'Python(MethodSigs { file: "py3xui/async_api/async_api_database.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/async_api/async_api_database.py"
 cost_tokens = 15
-cum_tokens = 2508
+cum_tokens = 2486
 
 [batches.content]
 kind = "lines"
@@ -1480,11 +1462,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 67
+position = 66
 key = 'Python(Method { file: "py3xui/async_api/async_api_database.py", start_line: 32 })'
 descriptor = "python method at py3xui/async_api/async_api_database.py:32"
 cost_tokens = 0
-cum_tokens = 2508
+cum_tokens = 2486
 
 [batches.content]
 kind = "lines"
@@ -1498,11 +1480,29 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 68
+position = 67
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api_inbound.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_inbound.py"
 cost_tokens = 17
-cum_tokens = 2525
+cum_tokens = 2503
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "py3xui/async_api/async_api_inbound.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Python(Decl { file: "py3xui/async_api/async_api_inbound.py", start_line: 11 })'
+descriptor = "python decl at py3xui/async_api/async_api_inbound.py:11"
+cost_tokens = 0
+cum_tokens = 2503
 
 [batches.content]
 kind = "lines"
@@ -1517,18 +1517,18 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'Python(Decl { file: "py3xui/async_api/async_api_inbound.py", start_line: 11 })'
-descriptor = "python decl at py3xui/async_api/async_api_inbound.py:11"
-cost_tokens = 0
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #2"
+cost_tokens = 22
 cum_tokens = 2525
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "py3xui/async_api/async_api_inbound.py"
-start = 11
-end = 11
+path = "README.md"
+start = 48
+end = 51
 
 [batches.content.spans.render]
 kind = "full"

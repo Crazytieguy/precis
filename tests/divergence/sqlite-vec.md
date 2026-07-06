@@ -1,4 +1,4 @@
-Score(3000)=0.391 I=0.692 C=0.221 ns_rows≤3K=17/52 (reached=3 partial=0 missing=14)
+Score(3000)=0.323 I=0.670 C=0.156 ns_rows≤3K=17/52 (reached=2 partial=0 missing=15)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -39,27 +39,27 @@ Score(3000)=0.391 I=0.692 C=0.221 ns_rows≤3K=17/52 (reached=3 partial=0 missin
 | walker |  | 1570 | 24 | listing of 'benchmarks/micro' |  |  | 0.377 |
 | ns | 1662 |  | 339 | reference.yaml: section catalog + meta functions | 2.1 |  | 0.322 |
 | walker |  | 1720 | 150 | python decl at tmp-static.py:13 |  |  | 0.322 |
+| walker |  | 1792 | 72 | listing of 'site' |  |  | 0.322 |
 | ns | 1837 |  | 175 | reference.yaml: full function-name roster (locations) | 2.2 |  | 0.304 |
-| ns | 2020 |  | 183 | reference.yaml: vec_f32 constructor (worked exemplar) | 2.3 | 2.2 | 0.291 |
-| ns | 2099 |  | 79 | reference.yaml: vec0 entry | 2.4 |  | 0.283 |
-| walker |  | 2243 | 523 | README.md section #2 |  |  | 0.377 |
-| walker |  | 2315 | 72 | listing of 'site' |  |  | 0.378 |
-| ns | 2323 |  | 224 | site/features/vec0.md: 3 column-type summary table | 3.1 |  | 0.367 |
-| walker |  | 2363 | 48 | listing of 'tests/fuzz' |  |  | 0.367 |
-| walker |  | 2443 | 80 | listing of 'examples' |  |  | 0.368 |
-| ns | 2546 |  | 223 | site/features/vec0.md: metadata columns (intro + example) | 3.2 |  | 0.349 |
-| ns | 2688 |  | 142 | site/features/vec0.md: partition key columns (core example) | 3.3 |  | 0.337 |
-| walker |  | 2692 | 249 | plaintext config TODO |  |  | 0.412 |
-| walker |  | 2700 | 8 | listing of 'bindings/go/ncruces' |  |  | 0.412 |
-| walker |  | 2726 | 26 | python imports in bindings/python/extra_init.py |  |  | 0.412 |
-| walker |  | 2739 | 13 | listing of 'benchmarks/self-params' |  |  | 0.412 |
-| walker |  | 2743 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.412 |
-| walker |  | 2757 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.412 |
-| ns | 2796 |  | 108 | test.sql: live vec0 constructor with partition + auxiliary columns | 3.4 |  | 0.402 |
-| walker |  | 2802 | 45 | listing of 'site/guides' |  |  | 0.402 |
-| ns | 2922 |  | 126 | test.sql: metadata-filter KNN query | 3.5 |  | 0.391 |
-| walker |  | 2959 | 157 | README.md section #4 |  |  | 0.391 |
-| walker |  | 3008 | 49 | listing of 'site/using' |  |  | 0.391 |
+| walker |  | 1840 | 48 | listing of 'tests/fuzz' |  |  | 0.304 |
+| walker |  | 1920 | 80 | listing of 'examples' |  |  | 0.305 |
+| ns | 2020 |  | 183 | reference.yaml: vec_f32 constructor (worked exemplar) | 2.3 | 2.2 | 0.292 |
+| ns | 2099 |  | 79 | reference.yaml: vec0 entry | 2.4 |  | 0.284 |
+| walker |  | 2169 | 249 | plaintext config TODO |  |  | 0.383 |
+| walker |  | 2177 | 8 | listing of 'bindings/go/ncruces' |  |  | 0.383 |
+| walker |  | 2203 | 26 | python imports in bindings/python/extra_init.py |  |  | 0.383 |
+| walker |  | 2216 | 13 | listing of 'benchmarks/self-params' |  |  | 0.383 |
+| walker |  | 2220 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.383 |
+| walker |  | 2234 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.383 |
+| walker |  | 2279 | 45 | listing of 'site/guides' |  |  | 0.384 |
+| ns | 2323 |  | 224 | site/features/vec0.md: 3 column-type summary table | 3.1 |  | 0.373 |
+| walker |  | 2436 | 157 | README.md section #4 |  |  | 0.373 |
+| walker |  | 2485 | 49 | listing of 'site/using' |  |  | 0.374 |
+| ns | 2546 |  | 223 | site/features/vec0.md: metadata columns (intro + example) | 3.2 |  | 0.354 |
+| ns | 2688 |  | 142 | site/features/vec0.md: partition key columns (core example) | 3.3 |  | 0.342 |
+| ns | 2796 |  | 108 | test.sql: live vec0 constructor with partition + auxiliary columns | 3.4 |  | 0.333 |
+| ns | 2922 |  | 126 | test.sql: metadata-filter KNN query | 3.5 |  | 0.323 |
+| walker |  | 3008 | 523 | README.md section #2 |  |  | 0.391 |
 | ns | 3015 |  | 93 | sqlite-vec.c: VectorElementType enum | 4.1 |  | 0.386 |
 | ns | 3177 |  | 162 | sqlite-vec.c: #pragma region map | 4.2 |  | 0.376 |
 | walker |  | 3404 | 396 | c decl names surface in sqlite-vec.c |  |  | 0.376 |

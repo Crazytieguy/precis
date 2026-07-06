@@ -1,4 +1,4 @@
-Score(3000)=0.422 I=0.770 C=0.232 ns_rows≤3K=17/45 (reached=5 partial=1 missing=11)
+Score(3000)=0.422 I=0.770 C=0.231 ns_rows≤3K=17/45 (reached=5 partial=1 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -67,12 +67,12 @@ Score(3000)=0.422 I=0.770 C=0.232 ns_rows≤3K=17/45 (reached=5 partial=1 missin
 | walker |  | 1998 | 55 | module item body at src/match.ts:47 body 78 |  |  | 0.479 |
 | walker |  | 2095 | 97 | module item body at src/match.ts:47 body 59 |  |  | 0.481 |
 | walker |  | 2196 | 101 | module item body at src/match.ts:47 body 98 |  |  | 0.483 |
-| walker |  | 2346 | 150 | README.md section #10 |  |  | 0.483 |
-| ns | 2406 |  | 464 | README section map: every H2 + every Patterns-catalog item | 2.3 |  | 0.438 |
-| walker |  | 2552 | 206 | package identity metadata in package.json |  |  | 0.449 |
-| ns | 2842 |  | 436 | match.ts: MatchState type + match() entry function | 3.1 |  | 0.416 |
-| walker |  | 2912 | 360 | package entrypoints in package.json |  |  | 0.422 |
-| walker |  | 3181 | 269 | package scripts in package.json |  |  | 0.472 |
+| walker |  | 2402 | 206 | package identity metadata in package.json |  |  | 0.495 |
+| ns | 2406 |  | 464 | README section map: every H2 + every Patterns-catalog item | 2.3 |  | 0.449 |
+| walker |  | 2762 | 360 | package entrypoints in package.json |  |  | 0.456 |
+| ns | 2842 |  | 436 | match.ts: MatchState type + match() entry function | 3.1 |  | 0.422 |
+| walker |  | 3031 | 269 | package scripts in package.json |  |  | 0.472 |
+| walker |  | 3181 | 150 | README.md section #10 |  |  | 0.472 |
 | walker |  | 3204 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.494 |
 | walker |  | 3371 | 167 | export names surface in src/patterns.ts |  |  | 0.494 |
 | walker |  | 3371 | 0 | export at src/patterns.ts:116 |  |  | 0.494 |

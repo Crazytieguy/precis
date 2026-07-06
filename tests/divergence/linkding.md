@@ -74,29 +74,29 @@ Score(3000)=0.600 I=0.803 C=0.449 ns_rows≤3K=17/60 (reached=6 partial=2 missin
 | ns | 1557 |  | 259 | bookmarks/ Python subpackage listings: api, services, views, management/commands, settings, templatetags | 2.2 |  | 0.590 |
 | walker |  | 1615 | 202 | [dependencies] in pyproject.toml |  |  | 0.616 |
 | walker |  | 1632 | 17 | python imports in bookmarks/context_processors.py |  |  | 0.616 |
-| walker |  | 1661 | 29 | README.md section #6 |  |  | 0.616 |
 | ns | 1662 |  | 105 | Frontend directory listings | 2.3 |  | 0.590 |
-| walker |  | 1698 | 37 | python imports in manage.py |  |  | 0.590 |
+| walker |  | 1669 | 37 | python imports in manage.py |  |  | 0.590 |
 | ns | 1935 |  | 273 | Template and stylesheet directory listings | 2.4 |  | 0.527 |
-| walker |  | 2059 | 361 | plaintext config Makefile |  |  | 0.583 |
+| walker |  | 2030 | 361 | plaintext config Makefile |  |  | 0.583 |
 | ns | 2067 |  | 132 | docs/ Astro site directory listing | 2.5 |  | 0.549 |
-| walker |  | 2116 | 57 | python decl names surface in bookmarks/middlewares.py |  |  | 0.549 |
-| walker |  | 2116 | 0 | python decl at bookmarks/middlewares.py:7 |  |  | 0.549 |
-| walker |  | 2116 | 0 | python decl at bookmarks/middlewares.py:17 |  |  | 0.549 |
-| walker |  | 2129 | 13 | python class body at bookmarks/middlewares.py:7 |  |  | 0.549 |
+| walker |  | 2087 | 57 | python decl names surface in bookmarks/middlewares.py |  |  | 0.549 |
+| walker |  | 2087 | 0 | python decl at bookmarks/middlewares.py:7 |  |  | 0.549 |
+| walker |  | 2087 | 0 | python decl at bookmarks/middlewares.py:17 |  |  | 0.549 |
+| walker |  | 2100 | 13 | python class body at bookmarks/middlewares.py:7 |  |  | 0.549 |
+| walker |  | 2129 | 29 | python method sigs in bookmarks/middlewares.py |  |  | 0.549 |
+| walker |  | 2129 | 0 | python method at bookmarks/middlewares.py:18 |  |  | 0.549 |
 | ns | 2136 |  | 69 | Docker, CI workflow, and brand-asset listings | 2.6 |  | 0.550 |
-| walker |  | 2158 | 29 | python method sigs in bookmarks/middlewares.py |  |  | 0.550 |
-| walker |  | 2158 | 0 | python method at bookmarks/middlewares.py:18 |  |  | 0.550 |
-| walker |  | 2170 | 12 | python method at bookmarks/middlewares.py:21 |  |  | 0.550 |
-| walker |  | 2180 | 10 | python method body at bookmarks/middlewares.py:18 body 19 |  |  | 0.551 |
-| walker |  | 2213 | 33 | python class body at bookmarks/api/auth.py:8 |  |  | 0.551 |
-| walker |  | 2231 | 18 | python imports in bookmarks/validators.py |  |  | 0.551 |
-| walker |  | 2248 | 17 | README.md section #11 |  |  | 0.551 |
-| walker |  | 2265 | 17 | README.md section #20 |  |  | 0.551 |
-| walker |  | 2295 | 30 | README.md section #19 |  |  | 0.551 |
-| walker |  | 2326 | 31 | README.md section #10 |  |  | 0.551 |
-| walker |  | 2340 | 14 | python method body at bookmarks/apps.py:7 body 10 |  |  | 0.551 |
-| walker |  | 2700 | 360 | README.md section #0 |  |  | 0.633 |
+| walker |  | 2141 | 12 | python method at bookmarks/middlewares.py:21 |  |  | 0.550 |
+| walker |  | 2151 | 10 | python method body at bookmarks/middlewares.py:18 body 19 |  |  | 0.551 |
+| walker |  | 2184 | 33 | python class body at bookmarks/api/auth.py:8 |  |  | 0.551 |
+| walker |  | 2202 | 18 | python imports in bookmarks/validators.py |  |  | 0.551 |
+| walker |  | 2219 | 17 | README.md section #11 |  |  | 0.551 |
+| walker |  | 2236 | 17 | README.md section #20 |  |  | 0.551 |
+| walker |  | 2250 | 14 | python method body at bookmarks/apps.py:7 body 10 |  |  | 0.551 |
+| walker |  | 2610 | 360 | README.md section #0 |  |  | 0.633 |
+| walker |  | 2639 | 29 | README.md section #6 |  |  | 0.633 |
+| walker |  | 2669 | 30 | README.md section #19 |  |  | 0.633 |
+| walker |  | 2700 | 31 | README.md section #10 |  |  | 0.633 |
 | ns | 2704 |  | 568 | Unit-test directory listing: full (79 files) | 2.7 |  | 0.560 |
 | walker |  | 2751 | 51 | python decl doc at bookmarks/validators.py:5 |  |  | 0.560 |
 | ns | 2797 |  | 93 | Migration filenames: initial + most recent 8 (of 54 total) | 2.8 |  | 0.553 |
