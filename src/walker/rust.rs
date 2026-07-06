@@ -1048,7 +1048,7 @@ fn method_sigs_value(file: &Path, ctx: &WalkCtx, exported_method_count: usize) -
 }
 
 fn registration_roster_value(file: &Path, ctx: &WalkCtx, entry_count: usize) -> f64 {
-    mix_signals(1.0, 1.0, 0.8, rust_depth_factor(file, ctx)) * roster_mass_factor(entry_count)
+    mix_signals(0.995, 0.995, 0.795, rust_depth_factor(file, ctx)) * roster_mass_factor(entry_count)
 }
 
 fn macro_names_value(depth: usize) -> f64 {
