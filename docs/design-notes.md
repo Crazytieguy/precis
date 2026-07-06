@@ -160,20 +160,25 @@ Per-fixture priority lives in the per-fixture reports
 (`tests/divergence/<fixture>.md`); cross-fixture survey via
 `head -1 tests/divergence/*.md`.
 
-### Settled — measured training optima; don't re-sweep
+### Settled — re-swept on the post-refreeze keys (2026-07-05); don't re-sweep
 
-All four global ranking knobs are at their training peak (sweeps
-2026-05/06; every direction regresses):
+All global ranking knobs re-swept against the new answer keys after the
+wave-3 recall levers landed:
 
-- **Concavity exponent 0.35** (`DEFAULT_CONCAVITY_EXPONENT`): 0.32 →
-  0.5817, 0.34 → 0.5876, 0.35 → 0.5908, 0.36 → 0.5854, 0.38 → 0.5711.
-  Re-confirmed after the early-atom recall levers landed.
-- **Additive ranking-cost floor** `value/(cost+C0)^k`: C0=0 optimal
-  (C0=20 → 0.5838; otree +0.078 / toasty +0.049 vs tock −0.130 /
-  mcphost −0.058).
-- **FS source-dir value**: at optimum.
-- **`mix_signals` weights** `1000·cat + 400·fu + 300·ztu`: cat ±,
-  fu +, ztu +, fu−ztu− all regress (0.5807–0.5849 vs baseline 0.5916).
+- **Concavity exponent 0.35** (`DEFAULT_CONCAVITY_EXPONENT`): confirmed
+  optimal on new keys (0.30 → 0.52248, 0.33 → 0.52375, 0.35 → 0.52503,
+  0.38 → 0.51913, 0.42 → 0.50501; pre-recall baseline).
+- **Additive ranking-cost floor** `value/(cost+C0)^k`: C0=0 still
+  optimal — C0=5 won in isolation (+0.0011) but lost to no-floor in the
+  combined post-knob state. Interaction-check before believing any
+  isolated C0 win.
+- **`mix_signals` weights** now `1000·cat + 280·fu + 300·ztu`: cat and
+  ztu regress in both directions; fu is **non-monotone** (280 → 0.53654,
+  400 → 0.53569, 340 → 0.53480 on the post-fix state) — a midpoint
+  re-sweep will mislead.
+- **`ORIENTATION_TIER_WINDOW` 300 / boost 1.4**: 300 edges 500, beats
+  0 and 900; boosts ≥1.7 regress.
+- **`ROSTER_MASS_FACTOR_CAP` 2.2**: flat across 1.8/2.2/2.8.
 
 Common overfit signature: shifting any of these toward the validation
 optimum raises validation but lowers training — training is the
@@ -310,6 +315,41 @@ captures it.
   (htop's `Object/Row/Process/Meter/Panel` headers still lose the
   ratio race) is the one identified lever class still viable —
   structural pattern recognition, not value/ordering tuning.
+
+## Wave-3 residue (2026-07-05): ops/config recall landed; what's still open
+
+The post-refreeze absent bucket was dominated by ops/config files the
+walkers deliberately excluded; wave 3 added CI/tooling YAML, Makefile /
+Dockerfile / build scripts, legacy Python packaging, go.mod indirect
+deps, manifest TOML config sections, and dev-doc markdown promotion
+(training 0.5250 → 0.5365). Known remaining gaps, all needing
+**structural extraction rather than whole-file/line-head emission**
+(blunt variants measured negative and were reverted):
+
+- `.env.sample` / `*.example` config templates (linkwarden 0.370,
+  sqlite-vec `reference.yaml` 0.285 absent-loss) — want env-var-name /
+  config-key rosters, not raw bodies.
+- Large CI workflows — want trigger/job/run-command summaries; capped
+  line-heads only cover compact workflows.
+- `.pre-commit-config.yaml` / `.golangci.yaml` enter the pool but rarely
+  get bought — likely need hook/linter rosters.
+- package.json ranking: broad root-manifest boosts measured express
+  +0.099 / monaco +0.058 **against** vaul −0.151 / linkwarden −0.098;
+  needs an app/library role discriminator before retry.
+- README semantic-mass promotion (content-shape signal on section
+  bodies): big targeted wins (dockly +0.127, debug +0.074) but evicts
+  rank-1 source atoms in small single-file libraries (mitt −0.215,
+  p-queue −0.152); the missing piece is a repo-shape gate, not a better
+  section signal.
+
+## Known pre-existing walker contract violation (debug-only)
+
+`precis --token-budget 1000000 tests/fixtures/rich` panics at
+`src/scheduler.rs:560`: `Python(MethodSigs { markdown.py, chunk 3 })`
+overlaps `Python(DeclNames { chunk 1 })` on line 415. Present at
+915c1824 (predates wave 3); release builds tolerate it by design.
+Surfaces only at budgets far beyond the tested range. Fix belongs in
+the Python walker's chunk-boundary construction.
 
 ## Divergence open items
 
