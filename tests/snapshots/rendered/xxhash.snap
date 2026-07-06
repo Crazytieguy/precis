@@ -58,6 +58,16 @@ go.mod
        3→go 1.11
 go.sum
 testall.sh
+       1→#!/bin/bash
+       2→set -eu -o pipefail
+       3→
+       4→# Small convenience script for running the tests with various combinations of
+       5→# arch/tags. This assumes we're running on amd64 and have qemu available.
+       6→
+       7→go test ./...
+       8→go test -tags purego ./...
+       9→GOARCH=arm64 go test
+      10→GOARCH=arm64 go test -tags purego
 xxhash.go
        1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
        2→// at https://xxhash.com/.
@@ -199,7 +209,7 @@ xxhash_asm.go
 xxhash_other.go
     …
        4→package xxhash
-       6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
+    …
        7→func Sum64(b []byte) uint64 {
     …
       64→func writeBlocks(d *Digest, b []byte) int {

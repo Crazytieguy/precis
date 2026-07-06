@@ -1,6 +1,6 @@
 fixture = "bareiron"
 budget = 10000
-cumulative_tokens = 9636
+cumulative_tokens = 9998
 batch_count = 169
 
 [[batches]]
@@ -2515,10 +2515,28 @@ kind = "full"
 
 [[batches]]
 position = 94
+key = 'Plaintext(Whole { file: "build.sh" })'
+descriptor = "plaintext config build.sh"
+cost_tokens = 529
+cum_tokens = 5525
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "build.sh"
+start = 1
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
 descriptor = "README.md section #6"
 cost_tokens = 40
-cum_tokens = 5036
+cum_tokens = 5565
 
 [batches.content]
 kind = "lines"
@@ -2532,11 +2550,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 41
-cum_tokens = 5077
+cum_tokens = 5606
 
 [batches.content]
 kind = "lines"
@@ -2550,11 +2568,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
 cost_tokens = 45
-cum_tokens = 5122
+cum_tokens = 5651
 
 [batches.content]
 kind = "lines"
@@ -2568,11 +2586,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 16
-cum_tokens = 5138
+cum_tokens = 5667
 
 [batches.content]
 kind = "fs"
@@ -2582,11 +2600,11 @@ parent = ".github/ISSUE_TEMPLATE"
 entries = ["bug_report.md", "feature_request.md", "optimization-idea.md"]
 
 [[batches]]
-position = 98
+position = 99
 key = 'C(DeclNames { file: "src/globals.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/globals.c"
 cost_tokens = 228
-cum_tokens = 5366
+cum_tokens = 5895
 
 [batches.content]
 kind = "lines"
@@ -2616,11 +2634,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
 cost_tokens = 47
-cum_tokens = 5413
+cum_tokens = 5942
 
 [batches.content]
 kind = "lines"
@@ -2634,11 +2652,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 100
+position = 101
 key = 'C(DeclNames { file: "include/packets.h", chunk_index: 1, hub: false })'
 descriptor = "c decl names surface #1 in include/packets.h"
 cost_tokens = 752
-cum_tokens = 6165
+cum_tokens = 6694
 
 [batches.content]
 kind = "lines"
@@ -2660,11 +2678,11 @@ end = 64
 kind = "ellipsis"
 
 [[batches]]
-position = 101
+position = 102
 key = 'C(Decl { file: "include/globals.h", start_line: 200 })'
 descriptor = "c decl at include/globals.h:200"
 cost_tokens = 498
-cum_tokens = 6663
+cum_tokens = 7192
 
 [batches.content]
 kind = "lines"
@@ -2678,11 +2696,11 @@ end = 238
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
 cost_tokens = 329
-cum_tokens = 6992
+cum_tokens = 7521
 
 [batches.content]
 kind = "lines"
@@ -2696,11 +2714,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'C(Includes { file: "src/structures.c" })'
 descriptor = "c includes in src/structures.c"
 cost_tokens = 61
-cum_tokens = 7053
+cum_tokens = 7582
 
 [batches.content]
 kind = "lines"
@@ -2714,11 +2732,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'C(Includes { file: "src/crafting.c" })'
 descriptor = "c includes in src/crafting.c"
 cost_tokens = 65
-cum_tokens = 7118
+cum_tokens = 7647
 
 [batches.content]
 kind = "lines"
@@ -2732,11 +2750,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Typescript(Imports { file: "build_registries.js" })'
 descriptor = "imports in build_registries.js"
 cost_tokens = 26
-cum_tokens = 7144
+cum_tokens = 7673
 
 [batches.content]
 kind = "lines"
@@ -2750,11 +2768,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'C(DeclDoc { file: "include/globals.h", start_line: 93 })'
 descriptor = "c decl doc at include/globals.h:93"
 cost_tokens = 105
-cum_tokens = 7249
+cum_tokens = 7778
 
 [batches.content]
 kind = "lines"
@@ -2768,11 +2786,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'C(DeclNames { file: "src/worldgen.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/worldgen.c"
 cost_tokens = 409
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -2986,11 +3004,11 @@ end = 402
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 109
 key = 'C(Decl { file: "src/worldgen.c", start_line: 13 })'
 descriptor = "c decl at src/worldgen.c:13"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3012,11 +3030,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 110
 key = 'C(Decl { file: "src/worldgen.c", start_line: 24 })'
 descriptor = "c decl at src/worldgen.c:24"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3038,11 +3056,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 111
 key = 'C(Decl { file: "src/worldgen.c", start_line: 51 })'
 descriptor = "c decl at src/worldgen.c:51"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3064,11 +3082,11 @@ end = 52
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 112
 key = 'C(Decl { file: "src/worldgen.c", start_line: 117 })'
 descriptor = "c decl at src/worldgen.c:117"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3090,11 +3108,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 113
 key = 'C(Decl { file: "src/worldgen.c", start_line: 126 })'
 descriptor = "c decl at src/worldgen.c:126"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3116,11 +3134,11 @@ end = 127
 kind = "ellipsis"
 
 [[batches]]
-position = 113
+position = 114
 key = 'C(Decl { file: "src/worldgen.c", start_line: 142 })'
 descriptor = "c decl at src/worldgen.c:142"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3142,11 +3160,11 @@ end = 143
 kind = "ellipsis"
 
 [[batches]]
-position = 114
+position = 115
 key = 'C(Decl { file: "src/worldgen.c", start_line: 160 })'
 descriptor = "c decl at src/worldgen.c:160"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3168,11 +3186,11 @@ end = 161
 kind = "ellipsis"
 
 [[batches]]
-position = 115
+position = 116
 key = 'C(Decl { file: "src/worldgen.c", start_line: 173 })'
 descriptor = "c decl at src/worldgen.c:173"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3194,11 +3212,11 @@ end = 174
 kind = "ellipsis"
 
 [[batches]]
-position = 116
+position = 117
 key = 'C(Decl { file: "src/worldgen.c", start_line: 323 })'
 descriptor = "c decl at src/worldgen.c:323"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3220,11 +3238,11 @@ end = 324
 kind = "ellipsis"
 
 [[batches]]
-position = 117
+position = 118
 key = 'C(Decl { file: "src/worldgen.c", start_line: 358 })'
 descriptor = "c decl at src/worldgen.c:358"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3246,11 +3264,11 @@ end = 359
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 119
 key = 'C(Decl { file: "src/worldgen.c", start_line: 374 })'
 descriptor = "c decl at src/worldgen.c:374"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3290,11 @@ end = 375
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 120
 key = 'C(Decl { file: "src/worldgen.c", start_line: 401 })'
 descriptor = "c decl at src/worldgen.c:401"
 cost_tokens = 0
-cum_tokens = 7658
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -3298,11 +3316,11 @@ end = 402
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 121
 key = 'C(DeclDoc { file: "src/worldgen.c", start_line: 160 })'
 descriptor = "c decl doc at src/worldgen.c:160"
 cost_tokens = 27
-cum_tokens = 7685
+cum_tokens = 8214
 
 [batches.content]
 kind = "lines"
@@ -3316,11 +3334,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'C(DeclDoc { file: "src/worldgen.c", start_line: 401 })'
 descriptor = "c decl doc at src/worldgen.c:401"
 cost_tokens = 38
-cum_tokens = 7723
+cum_tokens = 8252
 
 [batches.content]
 kind = "lines"
@@ -3334,11 +3352,11 @@ end = 400
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'C(Includes { file: "src/worldgen.c" })'
 descriptor = "c includes in src/worldgen.c"
 cost_tokens = 106
-cum_tokens = 7829
+cum_tokens = 8358
 
 [batches.content]
 kind = "lines"
@@ -3352,11 +3370,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'C(Includes { file: "src/globals.c" })'
 descriptor = "c includes in src/globals.c"
 cost_tokens = 109
-cum_tokens = 7938
+cum_tokens = 8467
 
 [batches.content]
 kind = "lines"
@@ -3370,11 +3388,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 275
-cum_tokens = 8213
+cum_tokens = 8742
 
 [batches.content]
 kind = "lines"
@@ -3388,11 +3406,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'C(Includes { file: "src/varnum.c" })'
 descriptor = "c includes in src/varnum.c"
 cost_tokens = 118
-cum_tokens = 8331
+cum_tokens = 8860
 
 [batches.content]
 kind = "lines"
@@ -3406,11 +3424,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'C(DeclDoc { file: "src/tools.c", start_line: 42 })'
 descriptor = "c decl doc at src/tools.c:42"
 cost_tokens = 34
-cum_tokens = 8365
+cum_tokens = 8894
 
 [batches.content]
 kind = "lines"
@@ -3424,11 +3442,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'C(DeclBody { file: "src/structures.c", start_line: 9 })'
 descriptor = "c decl body at src/structures.c:9"
 cost_tokens = 59
-cum_tokens = 8424
+cum_tokens = 8953
 
 [batches.content]
 kind = "lines"
@@ -3442,11 +3460,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'C(DeclBody { file: "src/varnum.c", start_line: 34 })'
 descriptor = "c decl body at src/varnum.c:34"
 cost_tokens = 61
-cum_tokens = 8485
+cum_tokens = 9014
 
 [batches.content]
 kind = "lines"
@@ -3460,11 +3478,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'C(DeclDoc { file: "src/worldgen.c", start_line: 126 })'
 descriptor = "c decl doc at src/worldgen.c:126"
 cost_tokens = 52
-cum_tokens = 8537
+cum_tokens = 9066
 
 [batches.content]
 kind = "lines"
@@ -3478,11 +3496,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'C(DeclNames { file: "src/procedures.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/procedures.c"
 cost_tokens = 519
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -3840,11 +3858,11 @@ end = 776
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 132
 key = 'C(Decl { file: "src/procedures.c", start_line: 21 })'
 descriptor = "c decl at src/procedures.c:21"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -3866,11 +3884,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 133
 key = 'C(Decl { file: "src/procedures.c", start_line: 37 })'
 descriptor = "c decl at src/procedures.c:37"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -3892,11 +3910,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 134
 key = 'C(Decl { file: "src/procedures.c", start_line: 45 })'
 descriptor = "c decl at src/procedures.c:45"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -3918,11 +3936,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 135
 key = 'C(Decl { file: "src/procedures.c", start_line: 54 })'
 descriptor = "c decl at src/procedures.c:54"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -3944,11 +3962,11 @@ end = 55
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 136
 key = 'C(Decl { file: "src/procedures.c", start_line: 75 })'
 descriptor = "c decl at src/procedures.c:75"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -3970,11 +3988,11 @@ end = 76
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 137
 key = 'C(Decl { file: "src/procedures.c", start_line: 119 })'
 descriptor = "c decl at src/procedures.c:119"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -3996,11 +4014,11 @@ end = 120
 kind = "ellipsis"
 
 [[batches]]
-position = 137
+position = 138
 key = 'C(Decl { file: "src/procedures.c", start_line: 130 })'
 descriptor = "c decl at src/procedures.c:130"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4022,11 +4040,11 @@ end = 131
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 139
 key = 'C(Decl { file: "src/procedures.c", start_line: 146 })'
 descriptor = "c decl at src/procedures.c:146"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4048,11 +4066,11 @@ end = 147
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 140
 key = 'C(Decl { file: "src/procedures.c", start_line: 177 })'
 descriptor = "c decl at src/procedures.c:177"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4074,11 +4092,11 @@ end = 178
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 141
 key = 'C(Decl { file: "src/procedures.c", start_line: 199 })'
 descriptor = "c decl at src/procedures.c:199"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4100,11 +4118,11 @@ end = 200
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 142
 key = 'C(Decl { file: "src/procedures.c", start_line: 214 })'
 descriptor = "c decl at src/procedures.c:214"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4126,11 +4144,11 @@ end = 215
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 143
 key = 'C(Decl { file: "src/procedures.c", start_line: 239 })'
 descriptor = "c decl at src/procedures.c:239"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4152,11 +4170,11 @@ end = 240
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 144
 key = 'C(Decl { file: "src/procedures.c", start_line: 286 })'
 descriptor = "c decl at src/procedures.c:286"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4178,11 +4196,11 @@ end = 287
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 145
 key = 'C(Decl { file: "src/procedures.c", start_line: 321 })'
 descriptor = "c decl at src/procedures.c:321"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4204,11 +4222,11 @@ end = 322
 kind = "ellipsis"
 
 [[batches]]
-position = 145
+position = 146
 key = 'C(Decl { file: "src/procedures.c", start_line: 396 })'
 descriptor = "c decl at src/procedures.c:396"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4230,11 +4248,11 @@ end = 397
 kind = "ellipsis"
 
 [[batches]]
-position = 146
+position = 147
 key = 'C(Decl { file: "src/procedures.c", start_line: 434 })'
 descriptor = "c decl at src/procedures.c:434"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4256,11 +4274,11 @@ end = 435
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 148
 key = 'C(Decl { file: "src/procedures.c", start_line: 478 })'
 descriptor = "c decl at src/procedures.c:478"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4282,11 +4300,11 @@ end = 479
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 149
 key = 'C(Decl { file: "src/procedures.c", start_line: 495 })'
 descriptor = "c decl at src/procedures.c:495"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4308,11 +4326,11 @@ end = 496
 kind = "ellipsis"
 
 [[batches]]
-position = 149
+position = 150
 key = 'C(Decl { file: "src/procedures.c", start_line: 512 })'
 descriptor = "c decl at src/procedures.c:512"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4334,11 +4352,11 @@ end = 513
 kind = "ellipsis"
 
 [[batches]]
-position = 150
+position = 151
 key = 'C(Decl { file: "src/procedures.c", start_line: 652 })'
 descriptor = "c decl at src/procedures.c:652"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4360,11 +4378,11 @@ end = 653
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 152
 key = 'C(Decl { file: "src/procedures.c", start_line: 721 })'
 descriptor = "c decl at src/procedures.c:721"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4386,11 +4404,11 @@ end = 722
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 153
 key = 'C(Decl { file: "src/procedures.c", start_line: 746 })'
 descriptor = "c decl at src/procedures.c:746"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4412,11 +4430,11 @@ end = 747
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 154
 key = 'C(Decl { file: "src/procedures.c", start_line: 775 })'
 descriptor = "c decl at src/procedures.c:775"
 cost_tokens = 0
-cum_tokens = 9056
+cum_tokens = 9585
 
 [batches.content]
 kind = "lines"
@@ -4438,11 +4456,11 @@ end = 776
 kind = "ellipsis"
 
 [[batches]]
-position = 154
+position = 155
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 495 })'
 descriptor = "c decl doc at src/procedures.c:495"
 cost_tokens = 15
-cum_tokens = 9071
+cum_tokens = 9600
 
 [batches.content]
 kind = "lines"
@@ -4456,11 +4474,11 @@ end = 494
 kind = "full"
 
 [[batches]]
-position = 155
+position = 156
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 54 })'
 descriptor = "c decl doc at src/procedures.c:54"
 cost_tokens = 16
-cum_tokens = 9087
+cum_tokens = 9616
 
 [batches.content]
 kind = "lines"
@@ -4474,11 +4492,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 75 })'
 descriptor = "c decl doc at src/procedures.c:75"
 cost_tokens = 16
-cum_tokens = 9103
+cum_tokens = 9632
 
 [batches.content]
 kind = "lines"
@@ -4492,11 +4510,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 157
+position = 158
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 146 })'
 descriptor = "c decl doc at src/procedures.c:146"
 cost_tokens = 16
-cum_tokens = 9119
+cum_tokens = 9648
 
 [batches.content]
 kind = "lines"
@@ -4510,11 +4528,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 321 })'
 descriptor = "c decl doc at src/procedures.c:321"
 cost_tokens = 17
-cum_tokens = 9136
+cum_tokens = 9665
 
 [batches.content]
 kind = "lines"
@@ -4528,11 +4546,11 @@ end = 320
 kind = "full"
 
 [[batches]]
-position = 159
+position = 160
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 775 })'
 descriptor = "c decl doc at src/procedures.c:775"
 cost_tokens = 17
-cum_tokens = 9153
+cum_tokens = 9682
 
 [batches.content]
 kind = "lines"
@@ -4546,11 +4564,11 @@ end = 774
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 177 })'
 descriptor = "c decl doc at src/procedures.c:177"
 cost_tokens = 18
-cum_tokens = 9171
+cum_tokens = 9700
 
 [batches.content]
 kind = "lines"
@@ -4564,11 +4582,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 161
+position = 162
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 721 })'
 descriptor = "c decl doc at src/procedures.c:721"
 cost_tokens = 18
-cum_tokens = 9189
+cum_tokens = 9718
 
 [batches.content]
 kind = "lines"
@@ -4582,11 +4600,11 @@ end = 720
 kind = "full"
 
 [[batches]]
-position = 162
+position = 163
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 130 })'
 descriptor = "c decl doc at src/procedures.c:130"
 cost_tokens = 19
-cum_tokens = 9208
+cum_tokens = 9737
 
 [batches.content]
 kind = "lines"
@@ -4600,11 +4618,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 163
+position = 164
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 746 })'
 descriptor = "c decl doc at src/procedures.c:746"
 cost_tokens = 19
-cum_tokens = 9227
+cum_tokens = 9756
 
 [batches.content]
 kind = "lines"
@@ -4618,11 +4636,11 @@ end = 745
 kind = "full"
 
 [[batches]]
-position = 164
+position = 165
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 396 })'
 descriptor = "c decl doc at src/procedures.c:396"
 cost_tokens = 23
-cum_tokens = 9250
+cum_tokens = 9779
 
 [batches.content]
 kind = "lines"
@@ -4636,11 +4654,11 @@ end = 395
 kind = "full"
 
 [[batches]]
-position = 165
+position = 166
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 434 })'
 descriptor = "c decl doc at src/procedures.c:434"
 cost_tokens = 33
-cum_tokens = 9283
+cum_tokens = 9812
 
 [batches.content]
 kind = "lines"
@@ -4654,11 +4672,11 @@ end = 433
 kind = "full"
 
 [[batches]]
-position = 166
+position = 167
 key = 'C(DeclDoc { file: "src/procedures.c", start_line: 652 })'
 descriptor = "c decl doc at src/procedures.c:652"
 cost_tokens = 45
-cum_tokens = 9328
+cum_tokens = 9857
 
 [batches.content]
 kind = "lines"
@@ -4672,11 +4690,11 @@ end = 651
 kind = "full"
 
 [[batches]]
-position = 167
+position = 168
 key = 'C(DeclBody { file: "src/procedures.c", start_line: 45 })'
 descriptor = "c decl body at src/procedures.c:45"
 cost_tokens = 68
-cum_tokens = 9396
+cum_tokens = 9925
 
 [batches.content]
 kind = "lines"
@@ -4690,11 +4708,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 168
+position = 169
 key = 'C(DeclBody { file: "src/procedures.c", start_line: 37 })'
 descriptor = "c decl body at src/procedures.c:37"
 cost_tokens = 73
-cum_tokens = 9469
+cum_tokens = 9998
 
 [batches.content]
 kind = "lines"
@@ -4703,24 +4721,6 @@ kind = "lines"
 path = "src/procedures.c"
 start = 38
 end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 169
-key = 'C(Includes { file: "src/procedures.c" })'
-descriptor = "c includes in src/procedures.c"
-cost_tokens = 167
-cum_tokens = 9636
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/procedures.c"
-start = 1
-end = 17
 
 [batches.content.spans.render]
 kind = "full"

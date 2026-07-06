@@ -64,6 +64,15 @@ README.md
 SECURITY.md
 codefresh.yml
 dockerRunScript.sh
+       1→#!/usr/bin/env bash
+       2→
+       3→# disable mouse as input source
+       4→printf '\e[?1000l'
+       5→
+       6→docker exec -it "$1" /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
+       7→
+       8→# enable mouse as input source for dockly
+       9→#printf '\e[?1000h'
 docs/
 hooks/
     containers.hook.js
@@ -153,16 +162,6 @@ src/
           62→    })
         …
           65→  listContainers (cb) {
-          66→    this.dockerCon.listContainers({
-          67→      'all': true,
-          68→      'filters': this.containerFilters
-          69→    }, function (err, containers) {
-          70→      if (err) {
-          71→        return cb(err, {})
-          72→      }
-          73→
-          74→      return cb(null, containers)
-          75→    })
         …
           78→  listServices (cb) {
           79→    this.dockerCon.listServices({ 'all': true }, function (err, containers) {

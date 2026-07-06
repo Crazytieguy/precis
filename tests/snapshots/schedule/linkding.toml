@@ -1,7 +1,7 @@
 fixture = "linkding"
 budget = 10000
-cumulative_tokens = 9957
-batch_count = 333
+cumulative_tokens = 9817
+batch_count = 329
 
 [[batches]]
 position = 1
@@ -8169,78 +8169,6 @@ kind = "lines"
 path = "README.md"
 start = 128
 end = 131
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 330
-key = 'Python(MethodBody { file: "bookmarks/admin.py", start_line: 30, body_start_line: 31 })'
-descriptor = "python method body at bookmarks/admin.py:30 body 31"
-cost_tokens = 27
-cum_tokens = 9844
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 31
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 331
-key = 'Python(Imports { file: "bookmarks/middlewares.py" })'
-descriptor = "python imports in bookmarks/middlewares.py"
-cost_tokens = 41
-cum_tokens = 9885
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 332
-key = 'Python(Imports { file: "bookmarks/tasks.py" })'
-descriptor = "python imports in bookmarks/tasks.py"
-cost_tokens = 41
-cum_tokens = 9926
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/tasks.py"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 333
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
-descriptor = "README.md section #10"
-cost_tokens = 31
-cum_tokens = 9957
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 86
-end = 89
 
 [batches.content.spans.render]
 kind = "full"

@@ -47,6 +47,8 @@ pub(crate) enum Class {
     Toolchain,
     /// Compact build/deploy entrypoints.
     BuildEntrypoint,
+    /// Compact build/test plumbing scripts and manifests.
+    BuildScript,
     /// One-line version stamp.
     Version,
     /// Plain-text backlog.
@@ -80,7 +82,11 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
             return Some(Class::Toolchain);
         }
         "Makefile" | "Dockerfile" => return Some(Class::BuildEntrypoint),
+        ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
         _ => {}
+    }
+    if lower.ends_with(".sh") {
+        return Some(Class::BuildScript);
     }
     // Orientation stamps matched case-insensitively by exact name —
     // exact equality (no stem matching) is what keeps `version.h` and
@@ -117,6 +123,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if matches!(class, Class::BuildEntrypoint) && dir != ctx.root() {
             continue;
         }
+        if matches!(class, Class::BuildScript) && !is_build_script_location(&file, dir, ctx) {
+            continue;
+        }
         let Some(content) =
             gated_whole_file_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP)
         else {
@@ -144,6 +153,7 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::EditorConfig => (0.25, 0.35, 0.30),
         Class::Toolchain => (0.30, 0.35, 0.30),
         Class::BuildEntrypoint => (0.70, 0.55, 0.60),
+        Class::BuildScript => (0.60, 0.50, 0.55),
         // Version stamp: a single short line answers "what version is
         // this?" — high orientation value relative to the trivial cost.
         Class::Version => (0.55, 0.40, 0.45),
@@ -152,6 +162,21 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::Todo => (0.40, 0.50, 0.40),
     };
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
+}
+
+fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
+    let Some(name) = file.file_name().and_then(|name| name.to_str()) else {
+        return false;
+    };
+    if matches!(name, ".gitmodules" | "configure.ac") {
+        return dir == ctx.root();
+    }
+    name.ends_with(".sh")
+        && (dir == ctx.root()
+            || dir
+                .file_name()
+                .and_then(|name| name.to_str())
+                .is_some_and(|name| name == "scripts"))
 }
 
 // --- man pages ----------------------------------------------------------
@@ -303,6 +328,9 @@ mod tests {
             ("pnpm-workspace.yaml", Some(Class::Toolchain)),
             ("Makefile", Some(Class::BuildEntrypoint)),
             ("Dockerfile", Some(Class::BuildEntrypoint)),
+            ("testall.sh", Some(Class::BuildScript)),
+            (".gitmodules", Some(Class::BuildScript)),
+            ("configure.ac", Some(Class::BuildScript)),
             // Extensionless orientation files (case-insensitive on the
             // stem). `VERSION` is a one-line version stamp common in
             // C-shaped projects; `TODO` is a plain backlog file. The

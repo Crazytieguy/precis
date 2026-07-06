@@ -100,19 +100,7 @@ cmd/
                4→var Version = "dev"
 database/
     cassandra/
-        README.md
-        cassandra.go
-        cassandra_test.go
-        examples/
     clickhouse/
-        README.md
-               1→# ClickHouse
-               2→
-               3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
-            …
-        clickhouse.go
-        clickhouse_test.go
-        examples/
     cockroachdb/
     crate/
     driver.go
@@ -147,10 +135,6 @@ database/
     spanner/
     sqlcipher/
     sqlite/
-        README.md
-        examples/
-        sqlite.go
-        sqlite_test.go
     sqlite3/
     sqlserver/
     stub/
@@ -175,6 +159,11 @@ dktesting/
         …
     example_test.go
 docker-deploy.sh
+       1→#!/bin/bash
+       2→
+       3→echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && \
+       4→docker build --build-arg VERSION="$TRAVIS_TAG" . -t migrate/migrate -t migrate/migrate:"$TRAVIS_TAG" && \
+       5→docker push migrate/migrate:"$TRAVIS_TAG" && docker push migrate/migrate
 go.mod
        1→module github.com/golang-migrate/migrate/v4
        2→

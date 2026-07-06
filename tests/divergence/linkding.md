@@ -389,9 +389,5 @@ Score(3000)=0.626 I=0.811 C=0.483 ns_rows≤3K=17/60 (reached=6 partial=3 missin
 | walker |  | 9697 | 11 | python method body at bookmarks/admin.py:240 body 241 |  |  | 0.456 |
 | walker |  | 9787 | 90 | python class body at bookmarks/admin.py:228 |  |  | 0.456 |
 | walker |  | 9817 | 30 | README.md section #19 |  |  | 0.456 |
-| walker |  | 9844 | 27 | python method body at bookmarks/admin.py:30 body 31 |  |  | 0.456 |
 | ns | 9862 |  | 228 | bootstrap.sh: container entrypoint startup sequence | 17.1 |  | 0.451 |
-| walker |  | 9885 | 41 | python imports in bookmarks/middlewares.py |  |  | 0.451 |
-| walker |  | 9926 | 41 | python imports in bookmarks/tasks.py |  |  | 0.451 |
-| walker |  | 9957 | 31 | README.md section #10 |  |  | 0.451 |
 | ns | 9977 |  | 115 | options.md: heading locations for the most commonly configured options | 18.1 |  | 0.449 |
