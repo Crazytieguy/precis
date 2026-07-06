@@ -86,7 +86,7 @@ Score(3000)=0.266 I=0.268 C=0.265 ns_rows≤3K=29/43 (reached=8 partial=0 missin
 | walker |  | 2553 | 24 | python decl body at src/tomli/_parser.py:497 body 498 |  |  | 0.233 |
 | walker |  | 2619 | 66 | python decl at src/tomli/_parser.py:327 |  |  | 0.233 |
 | walker |  | 2699 | 80 | python class body at src/tomli/_parser.py:220 |  |  | 0.233 |
-| ns | 2711 |  | 194 | pyproject.toml build-system + core [project] identity | 3.4 |  | 0.233 |
+| ns | 2711 |  | 194 | pyproject.toml build-system + core [project] identity | 3.4 |  | 0.232 |
 | walker |  | 2902 | 203 | python method sigs in src/tomli/_parser.py |  |  | 0.266 |
 | walker |  | 2902 | 0 | python method at src/tomli/_parser.py:229 |  |  | 0.266 |
 | walker |  | 2902 | 0 | python method at src/tomli/_parser.py:233 |  |  | 0.266 |

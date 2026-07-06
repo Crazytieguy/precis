@@ -191,6 +191,12 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             continue;
         }
 
+        let flat_methods: Vec<(usize, DeclInfo)> = collect_methods_by_class(&decls, &source)
+            .into_iter()
+            .flat_map(|(class_index, methods)| methods.into_iter().map(move |m| (class_index, m)))
+            .collect();
+        let all_name_lines = collect_all_name_lines(&decls, &flat_methods);
+
         let roster = names_roster(&decls, &source);
         let chunk_of_decl = decl_chunk_indices(&decls, &roster, &source);
         let names_chunk_count = names_surface_chunk_count(roster.len());
@@ -206,7 +212,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             .chunks(NAMES_SURFACE_CHUNK_SIZE)
             .map(|chunk| {
                 let chunk_decls: Vec<_> = chunk.iter().map(|&i| decls[i]).collect();
-                collect_decl_names_from(&chunk_decls)
+                collect_decl_names_from(&chunk_decls, &all_name_lines)
             })
             .collect();
         let signature_roster: Vec<_> = roster
@@ -221,7 +227,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             && let Some(content) = single_file_lines_content(
                 file,
                 &source,
-                collect_decl_signature_roster_from(&signature_roster),
+                collect_decl_signature_roster_from(&signature_roster, &all_name_lines),
             )
         {
             out.push(Batch {
@@ -257,10 +263,6 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // batch for a falloff-damped pair and only delays the skeleton
         // (measured: nano-vllm's 13-17-method engine classes regress
         // chunked; pluggy's ~30-method PluginManager regresses whole).
-        let flat_methods: Vec<(usize, DeclInfo)> = collect_methods_by_class(&decls, &source)
-            .into_iter()
-            .flat_map(|(class_index, methods)| methods.into_iter().map(move |m| (class_index, m)))
-            .collect();
         let sigs_chunk_size = if flat_methods.len() > 2 * NAMES_SURFACE_CHUNK_SIZE {
             NAMES_SURFACE_CHUNK_SIZE
         } else {
@@ -271,9 +273,11 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             .then(|| BatchKey::Python(PythonKey::MethodSigsRoster { file: file.clone() }));
         if let Some(key) = method_sigs_roster_key.as_ref() {
             let methods: Vec<_> = flat_methods.iter().map(|(_, m)| *m).collect();
-            if let Some(content) =
-                single_file_lines_content(file, &source, collect_method_signature_roster(&methods))
-            {
+            if let Some(content) = single_file_lines_content(
+                file,
+                &source,
+                collect_method_signature_roster(&methods, &all_name_lines),
+            ) {
                 let first_class_index = flat_methods[0].0;
                 out.push(Batch {
                     key: key.clone(),
@@ -287,7 +291,11 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         let mut sigs_chunk_of_method = HashMap::new();
         for (chunk_index, chunk) in flat_methods.chunks(sigs_chunk_size).enumerate() {
             let full: Vec<_> = chunk.iter().map(|(_, m)| signature_line(m)).collect();
-            let ellipses: Vec<_> = chunk.iter().map(|(_, m)| signature_line(m) + 1).collect();
+            let ellipses: Vec<_> = full
+                .iter()
+                .map(|line| *line + 1)
+                .filter(|line| !all_name_lines.contains(line))
+                .collect();
             let lines = FileLines::new(full).with_ellipses(ellipses);
             let Some(content) = single_file_lines_content(file, &source, lines) else {
                 continue;
@@ -953,21 +961,46 @@ fn is_overload_stub(decl: &DeclInfo, source: &str) -> bool {
     })
 }
 
-fn collect_decl_names_from(decls: &[DeclInfo]) -> FileLines {
+fn collect_all_name_lines(
+    decls: &[DeclInfo],
+    flat_methods: &[(usize, DeclInfo)],
+) -> HashSet<usize> {
+    decls
+        .iter()
+        .map(|decl| decl.start_line)
+        .chain(
+            flat_methods
+                .iter()
+                .map(|(_, method)| signature_line(method)),
+        )
+        .collect()
+}
+
+fn collect_decl_names_from(decls: &[DeclInfo], all_name_lines: &HashSet<usize>) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for decl in decls {
         full.push(decl.start_line);
         if decl.kind == DeclKind::Function {
-            ellipses.push(decl.start_line + 1);
+            let ellipsis_line = decl.start_line + 1;
+            if !all_name_lines.contains(&ellipsis_line) {
+                ellipses.push(ellipsis_line);
+            }
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
 }
 
-fn collect_decl_signature_roster_from(decls: &[DeclInfo]) -> FileLines {
+fn collect_decl_signature_roster_from(
+    decls: &[DeclInfo],
+    all_name_lines: &HashSet<usize>,
+) -> FileLines {
     let full: Vec<_> = decls.iter().map(|decl| decl.start_line).collect();
-    let ellipses: Vec<_> = decls.iter().map(|decl| decl.start_line + 1).collect();
+    let ellipses: Vec<_> = full
+        .iter()
+        .map(|line| *line + 1)
+        .filter(|line| !all_name_lines.contains(line))
+        .collect();
     FileLines::new(full).with_ellipses(ellipses)
 }
 
@@ -988,9 +1021,16 @@ fn signature_line(info: &DeclInfo) -> usize {
     info.inner_node.start_position().row + 1
 }
 
-fn collect_method_signature_roster(methods: &[DeclInfo]) -> FileLines {
+fn collect_method_signature_roster(
+    methods: &[DeclInfo],
+    all_name_lines: &HashSet<usize>,
+) -> FileLines {
     let full: Vec<_> = methods.iter().map(signature_line).collect();
-    let ellipses: Vec<_> = methods.iter().map(|m| signature_line(m) + 1).collect();
+    let ellipses: Vec<_> = full
+        .iter()
+        .map(|line| *line + 1)
+        .filter(|line| !all_name_lines.contains(line))
+        .collect();
     FileLines::new(full).with_ellipses(ellipses)
 }
 
@@ -1619,6 +1659,15 @@ mod tests {
         out
     }
 
+    fn assert_python_scheduler_overlap_free(src: &str) {
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("catalog.py");
+        std::fs::write(&file, src).unwrap();
+
+        let scheduler = Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None);
+        let _ = scheduler.run_with_report();
+    }
+
     #[test]
     fn python_setup_manifest_captures_full_install_requires_keyword() {
         let src = "\
@@ -1806,6 +1855,30 @@ class A:
     }
 
     #[test]
+    fn python_decl_name_chunk_ellipsis_skips_next_decl_line() {
+        let mut src = String::new();
+        for i in 0..14 {
+            src.push_str(&format!("def f{i:02}(): pass\n"));
+        }
+
+        assert_python_scheduler_overlap_free(&src);
+    }
+
+    #[test]
+    fn python_method_sigs_roster_ellipsis_skips_following_decl_line() {
+        let mut src = String::new();
+        for class_index in 0..12 {
+            src.push_str(&format!("class C{class_index:02}:\n"));
+            for method_index in 0..3 {
+                src.push_str(&format!("    def m{method_index}(self): pass\n"));
+            }
+        }
+        src.push_str("X = 1\n");
+
+        assert_python_scheduler_overlap_free(&src);
+    }
+
+    #[test]
     fn python_chunked_method_sigs_get_whole_roster_ancestor() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
@@ -1968,7 +2041,8 @@ __all__ = [
         assert_eq!(decls.len(), 1);
         assert_eq!(decls[0].kind, DeclKind::Const);
         assert_eq!(decls[0].start_line, 1);
-        let names = collect_decl_names_from(&decls);
+        let all_name_lines = collect_all_name_lines(&decls, &[]);
+        let names = collect_decl_names_from(&decls, &all_name_lines);
         assert_eq!(names.full, vec![1]);
     }
 
