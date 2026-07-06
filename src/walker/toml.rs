@@ -50,12 +50,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
         let sections = collect_sections(&tree, &source);
-        if let Some(content) = build_section_content(&file, &source, &sections, |n| {
-            matches!(
-                n,
-                "package" | "workspace" | "workspace.package" | "project" | "tool.poetry"
-            )
-        }) {
+        let python_project_manifest = is_python_project_manifest(&file, &sections, &source);
+        if let Some(content) = build_section_content(
+            &file,
+            &source,
+            &sections,
+            |n| {
+                matches!(n, "package" | "workspace" | "workspace.package")
+                    || (python_project_manifest && matches!(n, "project" | "tool.poetry"))
+            },
+            python_project_manifest,
+        ) {
             out.push(Batch {
                 key: TomlKey::Identity { file: file.clone() }.into(),
                 predecessor: None,
@@ -63,8 +68,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: identity_value(&file, ctx),
             });
         }
-        if let Some(content) = build_section_content(&file, &source, &sections, is_scripts_section)
-        {
+        if let Some(content) = build_section_content(
+            &file,
+            &source,
+            &sections,
+            |n| is_scripts_section(n) && python_project_manifest,
+            python_project_manifest,
+        ) {
             out.push(Batch {
                 key: TomlKey::Scripts { file: file.clone() }.into(),
                 predecessor: None,
@@ -72,8 +82,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: scripts_value(&file, ctx),
             });
         }
-        if let Some(content) = build_section_content(&file, &source, &sections, |n| n == "features")
-        {
+        if let Some(content) = build_section_content(
+            &file,
+            &source,
+            &sections,
+            |n| n == "features",
+            python_project_manifest,
+        ) {
             out.push(Batch {
                 key: TomlKey::Features { file: file.clone() }.into(),
                 predecessor: None,
@@ -81,7 +96,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: features_value(&file, ctx),
             });
         }
-        if let Some(content) = build_dependencies_content(&file, &source, &tree, &sections) {
+        if let Some(content) =
+            build_dependencies_content(&file, &source, &tree, &sections, python_project_manifest)
+        {
             out.push(Batch {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
                 predecessor: None,
@@ -89,7 +106,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: dependencies_value(&file, ctx),
             });
         }
-        if let Some(content) = build_config_content(&file, &source, &sections) {
+        if let Some(content) =
+            build_config_content(&file, &source, &sections, python_project_manifest)
+        {
             out.push(Batch {
                 key: TomlKey::Config { file: file.clone() }.into(),
                 predecessor: None,
@@ -108,14 +127,18 @@ fn build_dependencies_content(
     source: &str,
     tree: &Tree,
     sections: &[Section],
+    python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start, end) in sections {
-        if is_dependency_section(name) {
+        if is_dependency_section(name)
+            && (python_project_manifest
+                || !(name.starts_with("project.") || name.starts_with("tool.poetry.")))
+        {
             line_numbers.extend(*start..=*end);
         }
     }
-    if is_python_project_manifest(file) {
+    if python_project_manifest {
         for key in ["dependencies", "optional-dependencies"] {
             if let Some((start, end)) = project_pair_array_rows(tree, source, key) {
                 line_numbers.extend(start..=end);
@@ -132,8 +155,9 @@ fn build_config_content(
     file: &Path,
     source: &str,
     sections: &[Section],
+    python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
-    if !is_manifest_toml(file) {
+    if !is_manifest_toml(file, python_project_manifest) {
         return None;
     }
     let mut line_numbers: Vec<usize> = Vec::new();
@@ -212,8 +236,8 @@ fn build_section_content(
     source: &str,
     sections: &[Section],
     name_match: impl Fn(&str) -> bool,
+    python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
-    let pyproject = is_python_project_manifest(file);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start_line, end_line) in sections {
         if name_match(name) {
@@ -222,7 +246,7 @@ fn build_section_content(
                     source,
                     *start_line,
                     *end_line,
-                    pyproject,
+                    python_project_manifest,
                 ));
             } else {
                 line_numbers.extend(*start_line..=*end_line);
@@ -239,17 +263,52 @@ fn is_pyproject_filename(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()) == Some("pyproject.toml")
 }
 
-fn is_python_project_manifest(file: &Path) -> bool {
-    matches!(
-        file.file_name().and_then(|n| n.to_str()),
-        Some("pyproject.toml" | "project.toml")
-    )
+fn is_python_project_manifest(file: &Path, sections: &[Section], source: &str) -> bool {
+    match file.file_name().and_then(|n| n.to_str()) {
+        Some("pyproject.toml") => true,
+        Some("project.toml") => project_table_has_pep621_key(sections, source),
+        _ => false,
+    }
 }
 
-fn is_manifest_toml(file: &Path) -> bool {
+fn is_manifest_toml(file: &Path, python_project_manifest: bool) -> bool {
     matches!(
         file.file_name().and_then(|n| n.to_str()),
-        Some("Cargo.toml" | "pyproject.toml" | "project.toml")
+        Some("Cargo.toml" | "pyproject.toml")
+    ) || (file.file_name().and_then(|n| n.to_str()) == Some("project.toml")
+        && python_project_manifest)
+}
+
+fn project_table_has_pep621_key(sections: &[Section], source: &str) -> bool {
+    let Some((_, start, end)) = sections.iter().find(|(name, _, _)| name == "project") else {
+        return false;
+    };
+    source
+        .lines()
+        .enumerate()
+        .filter_map(|(idx, line)| {
+            let line_no = idx + 1;
+            (line_no > *start && line_no <= *end).then_some(line)
+        })
+        .filter_map(|line| line.trim_start().split_once('=').map(|(key, _)| key.trim()))
+        .any(is_pep621_project_key)
+}
+
+fn is_pep621_project_key(key: &str) -> bool {
+    matches!(
+        key,
+        "name"
+            | "version"
+            | "description"
+            | "readme"
+            | "requires-python"
+            | "license"
+            | "authors"
+            | "maintainers"
+            | "keywords"
+            | "classifiers"
+            | "dependencies"
+            | "dynamic"
     )
 }
 
@@ -598,6 +657,42 @@ Homepage = "https://example.com"
         let narrow = project_identity_lines(source, 1, 9, false);
         // Narrow set: header + name + description.
         assert_eq!(narrow, vec![1, 2, 4]);
+    }
+
+    #[test]
+    fn walker_toml_project_toml_requires_pep621_project_table() {
+        let parse_sections = |source: &str| {
+            let mut parser = tree_sitter::Parser::new();
+            parser
+                .set_language(&tree_sitter_toml_ng::LANGUAGE.into())
+                .unwrap();
+            let tree = parser.parse(source, None).unwrap();
+            collect_sections(&tree, source)
+        };
+
+        let generic_project = "[project]\nowner = \"infra\"\n";
+        let generic_sections = parse_sections(generic_project);
+        assert!(!is_python_project_manifest(
+            &PathBuf::from("project.toml"),
+            &generic_sections,
+            generic_project,
+        ));
+
+        let pep621_project = "[project]\nname = \"demo\"\ndependencies = [\"click\"]\n";
+        let pep621_sections = parse_sections(pep621_project);
+        assert!(is_python_project_manifest(
+            &PathBuf::from("project.toml"),
+            &pep621_sections,
+            pep621_project,
+        ));
+
+        let pyproject_without_project = "[tool.ruff]\nline-length = 100\n";
+        let pyproject_sections = parse_sections(pyproject_without_project);
+        assert!(is_python_project_manifest(
+            &PathBuf::from("pyproject.toml"),
+            &pyproject_sections,
+            pyproject_without_project,
+        ));
     }
 
     /// Poetry-style pyproject (`[tool.poetry]` as lede table) is
