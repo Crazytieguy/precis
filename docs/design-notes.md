@@ -316,31 +316,40 @@ captures it.
   ratio race) is the one identified lever class still viable —
   structural pattern recognition, not value/ordering tuning.
 
-## Wave-3 residue (2026-07-05): ops/config recall landed; what's still open
+## Post-refreeze calibration state (waves 3–5, 2026-07-05/06)
 
-The post-refreeze absent bucket was dominated by ops/config files the
-walkers deliberately excluded; wave 3 added CI/tooling YAML, Makefile /
-Dockerfile / build scripts, legacy Python packaging, go.mod indirect
-deps, manifest TOML config sections, and dev-doc markdown promotion
-(training 0.5250 → 0.5365). Known remaining gaps, all needing
-**structural extraction rather than whole-file/line-head emission**
-(blunt variants measured negative and were reverted):
+Training 0.5250 → 0.5442; oracle 0.8489; buckets late 0.228 / unsched
+0.219 / absent 0.107. The absent bucket is largely spent — remaining
+loss is ordering/purchase, where the measured pattern is: **recall and
+coherence levers keep paying small; broad ranking boosts keep failing
+guards**. Session ledgers: `ignore/session-2026-07-05-wave3.md`,
+`ignore/session-2026-07-06-wave45.md`.
 
-- `.env.sample` / `*.example` config templates (linkwarden 0.370,
-  sqlite-vec `reference.yaml` 0.285 absent-loss) — want env-var-name /
-  config-key rosters, not raw bodies.
-- Large CI workflows — want trigger/job/run-command summaries; capped
-  line-heads only cover compact workflows.
-- `.pre-commit-config.yaml` / `.golangci.yaml` enter the pool but rarely
-  get bought — likely need hook/linter rosters.
-- package.json ranking: broad root-manifest boosts measured express
-  +0.099 / monaco +0.058 **against** vaul −0.151 / linkwarden −0.098;
-  needs an app/library role discriminator before retry.
-- README semantic-mass promotion (content-shape signal on section
-  bodies): big targeted wins (dockly +0.127, debug +0.074) but evicts
-  rank-1 source atoms in small single-file libraries (mitt −0.215,
-  p-queue −0.152); the missing piece is a repo-shape gate, not a better
-  section signal.
+Measured-dead this cycle (specifics block retries):
+- **Config-template extraction** for `.env.sample`-class files: env
+  assignment-line selection measured flat (+0.00001) — the content
+  enters the pool but never wins purchase within 3K. The one surviving
+  piece shipped: root reference/spec YAML key rosters (sqlite-vec
+  +0.070).
+- **Workflow structural summaries** and **hook/linter rosters**: flat
+  to negative; compact whole workflows already cover what NS buys.
+- **Broad roster promotion (Go/C)**: neco −0.42 / gin −0.19; only the
+  Python signature-roster **ancestor** form (typeguard +0.069) and the
+  JS oversize-class analog (commander +0.019) survived, and both needed
+  the sibling-ellipsis suppression + predecessor-gating discipline.
+- **Require/import reachability tier (JS)**: dockly +0.108 but
+  vaul −0.249 / p-queue −0.078 — reachability alone over-promotes in
+  small libraries; needs the package-role signal folded in before any
+  retry.
+- **Script-flow batches** (entry-file expression statements): built,
+  measured zero movement, reverted.
+- **Dev-doc routing past the peripheral damp** (mdbook/vite/enclosed
+  CONTRIBUTING): both variants negative (peepdb −0.066 unflagged);
+  mdbook's test-command section is outside the frontier even at 30K —
+  treat as NS-rank-vs-feasibility mismatch, revisit at next re-freeze.
+- **superstruct struct.ts**: not a ranking miss — the walker emits a
+  class slab where NS wants compact field/member/body batches; the fix
+  class is TS class-member batch granularity, not value tuning.
 
 ## Known pre-existing walker contract violation (debug-only)
 
