@@ -145,10 +145,18 @@ Score(3000)=0.548 I=0.820 C=0.366 ns_rows≤3K=21/45 (reached=9 partial=2 missin
 | walker |  | 9438 | 25 | pub item at tests/ui/fallback-impl-with-display.rs:6 |  |  | 0.508 |
 | walker |  | 9463 | 25 | pub item at tests/ui/invalid-input-impl-anyway.rs:5 |  |  | 0.508 |
 | walker |  | 9488 | 25 | pub item at tests/ui/transparent-struct-unnamed-field-not-error.rs:5 |  |  | 0.508 |
-| walker |  | 9860 | 372 | README.md section #10 |  |  | 0.508 |
-| walker |  | 9886 | 26 | pub item at tests/ui/numbered-positional-tuple.rs:5 |  |  | 0.508 |
-| walker |  | 9912 | 26 | pub item at tests/ui/struct-with-fmt.rs:5 |  |  | 0.546 |
+| walker |  | 9514 | 26 | pub item at tests/ui/numbered-positional-tuple.rs:5 |  |  | 0.508 |
+| walker |  | 9540 | 26 | pub item at tests/ui/struct-with-fmt.rs:5 |  |  | 0.508 |
+| walker |  | 9568 | 28 | pub item at tests/ui/duplicate-transparent.rs:6 |  |  | 0.508 |
+| walker |  | 9596 | 28 | pub item at tests/ui/transparent-display.rs:6 |  |  | 0.508 |
+| walker |  | 9620 | 24 | pub-item names surface in tests/ui/no-display.rs |  |  | 0.508 |
+| walker |  | 9647 | 27 | pub item at tests/ui/no-display.rs:8 |  |  | 0.508 |
+| walker |  | 9672 | 25 | pub item at tests/ui/no-display.rs:14 |  |  | 0.508 |
+| walker |  | 9696 | 24 | pub-item names surface in tests/ui/source-enum-not-error.rs |  |  | 0.508 |
+| walker |  | 9704 | 8 | pub item at tests/ui/source-enum-not-error.rs:4 |  |  | 0.508 |
+| walker |  | 9731 | 27 | pub item at tests/ui/source-enum-not-error.rs:8 |  |  | 0.508 |
+| walker |  | 9755 | 24 | pub-item names surface in tests/ui/source-enum-unnamed-field-not-error.rs |  |  | 0.508 |
+| walker |  | 9763 | 8 | pub item at tests/ui/source-enum-unnamed-field-not-error.rs:4 |  |  | 0.508 |
+| walker |  | 9791 | 28 | pub item at tests/ui/source-enum-unnamed-field-not-error.rs:8 |  |  | 0.508 |
+| walker |  | 9858 | 67 | pub item at tests/test_path.rs:35 |  |  | 0.508 |
 | ns | 9912 |  | 528 | tests/ui/ directory listing (all 37 compile-fail cases + their .stderr) | 13.1 |  | 0.546 |
-| walker |  | 9940 | 28 | pub item at tests/ui/duplicate-transparent.rs:6 |  |  | 0.546 |
-| walker |  | 9968 | 28 | pub item at tests/ui/transparent-display.rs:6 |  |  | 0.546 |
-| walker |  | 9992 | 24 | pub-item names surface in tests/ui/no-display.rs |  |  | 0.546 |

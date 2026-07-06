@@ -2389,28 +2389,10 @@ kind = "full"
 
 [[batches]]
 position = 105
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #2"
-cost_tokens = 311
-cum_tokens = 4897
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 45
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
 key = 'Go(DeclBody { file: "xxhsum/xxhsum.go", start_line: 43 })'
 descriptor = "go decl body at xxhsum/xxhsum.go:43"
 cost_tokens = 75
-cum_tokens = 4972
+cum_tokens = 4661
 
 [batches.content]
 kind = "lines"
@@ -2424,11 +2406,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 107
+position = 106
 key = 'Go(DeclBody { file: "xxhash.go", start_line: 75 })'
 descriptor = "go decl body at xxhash.go:75"
 cost_tokens = 384
-cum_tokens = 5356
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -2437,6 +2419,24 @@ kind = "lines"
 path = "xxhash.go"
 start = 76
 end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
+cost_tokens = 311
+cum_tokens = 5356
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 45
+end = 64
 
 [batches.content.spans.render]
 kind = "full"

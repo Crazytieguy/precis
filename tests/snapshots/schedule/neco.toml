@@ -1,7 +1,7 @@
 fixture = "neco"
 budget = 10000
-cumulative_tokens = 9927
-batch_count = 169
+cumulative_tokens = 9951
+batch_count = 174
 
 [[batches]]
 position = 1
@@ -4395,28 +4395,10 @@ kind = "full"
 
 [[batches]]
 position = 166
-key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #8"
-cost_tokens = 361
-cum_tokens = 9286
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 228
-end = 260
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 167
 key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/assets/API_head.md section #10"
 cost_tokens = 16
-cum_tokens = 9302
+cum_tokens = 8941
 
 [batches.content]
 kind = "lines"
@@ -4430,11 +4412,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 168
+position = 167
 key = 'C(DeclNames { file: "neco.h", chunk_index: 4, hub: false })'
 descriptor = "c decl names surface #4 in neco.h"
 cost_tokens = 453
-cum_tokens = 9755
+cum_tokens = 9394
 
 [batches.content]
 kind = "lines"
@@ -4552,11 +4534,11 @@ end = 349
 kind = "ellipsis"
 
 [[batches]]
-position = 169
+position = 168
 key = 'C(Decl { file: "neco.h", start_line: 287 })'
 descriptor = "c decl at neco.h:287"
 cost_tokens = 172
-cum_tokens = 9927
+cum_tokens = 9566
 
 [batches.content]
 kind = "lines"
@@ -4565,6 +4547,114 @@ kind = "lines"
 path = "neco.h"
 start = 287
 end = 299
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Markdown(Section { file: "docs/API.md", section_index: 121, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/API.md section #121"
+cost_tokens = 81
+cum_tokens = 9647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/API.md"
+start = 1847
+end = 1852
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Markdown(Section { file: "docs/API.md", section_index: 135, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/API.md section #135"
+cost_tokens = 83
+cum_tokens = 9730
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/API.md"
+start = 2125
+end = 2130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'C(DeclBody { file: "neco.c", start_line: 2094 })'
+descriptor = "c decl body at neco.c:2094"
+cost_tokens = 103
+cum_tokens = 9833
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "neco.c"
+start = 2096
+end = 2103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/assets/API_head.md section #8"
+cost_tokens = 17
+cum_tokens = 9850
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/assets/API_head.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Markdown(Section { file: "docs/assets/API_head.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/assets/API_head.md section #9"
+cost_tokens = 15
+cum_tokens = 9865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/assets/API_head.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Markdown(Section { file: "docs/API.md", section_index: 86, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/API.md section #86"
+cost_tokens = 86
+cum_tokens = 9951
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/API.md"
+start = 1389
+end = 1394
 
 [batches.content.spans.render]
 kind = "full"

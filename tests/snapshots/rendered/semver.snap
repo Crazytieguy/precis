@@ -66,7 +66,9 @@ README.md
      456→* `gte(v1, v2)`: `v1 >= v2`
      457→* `lt(v1, v2)`: `v1 < v2`
      458→* `lte(v1, v2)`: `v1 <= v2`
-    …
+     459→* `eq(v1, v2)`: `v1 == v2` This is true if they're logically equivalent,
+     460→  even if they're not the same string.  You already know how to
+     461→  compare strings.
      462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
     …
      469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
@@ -117,14 +119,7 @@ README.md
      580→### `RELEASE_TYPES`
     …
      600→### `SEMVER_SPEC_VERSION`
-     601→
-     602→2.0.0
-     603→
-     604→```
-     605→const semver = require('semver');
-     606→
-     607→console.log('We are currently using the semver specification version:', semver.SEMVER_SPEC_VERSION);
-     608→```
+    …
      610→## Exported Modules
     …
 SECURITY.md

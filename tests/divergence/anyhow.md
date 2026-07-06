@@ -70,49 +70,49 @@ Score(3000)=0.558 I=0.811 C=0.384 ns_rows≤3K=18/46 (reached=10 partial=0 missi
 | walker |  | 4407 | 9 | pub item at src/wrapper.rs:58 |  |  | 0.537 |
 | ns | 4461 |  | 449 | macros.rs anyhow! doc + expansion | 3.3 |  | 0.528 |
 | walker |  | 4506 | 99 | pub item at src/chain.rs:16 |  |  | 0.528 |
-| walker |  | 4643 | 137 | README.md section #6 |  |  | 0.528 |
+| walker |  | 4589 | 83 | pub item at src/error.rs:934 |  |  | 0.528 |
 | ns | 4691 |  | 230 | macros.rs ensure! doc summary | 3.4 |  | 0.516 |
-| walker |  | 4726 | 83 | pub item at src/error.rs:934 |  |  | 0.516 |
-| walker |  | 4944 | 218 | README.md section #7 |  |  | 0.550 |
-| walker |  | 5019 | 75 | pub-item names surface in src/kind.rs |  |  | 0.565 |
-| walker |  | 5101 | 82 | listing of 'tests/ui' |  |  | 0.594 |
-| walker |  | 5199 | 98 | impl method sigs in src/kind.rs |  |  | 0.601 |
-| ns | 5275 |  | 584 | kind.rs tagged-dispatch explanation (top comment) | 3.5 | 2.3 | 0.565 |
-| walker |  | 5290 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.574 |
-| walker |  | 5290 | 0 | pub item at src/nightly.rs:41 |  |  | 0.574 |
-| walker |  | 5290 | 0 | pub item at src/nightly.rs:52 |  |  | 0.574 |
-| walker |  | 5290 | 0 | pub item at src/nightly.rs:56 |  |  | 0.574 |
-| walker |  | 5302 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.574 |
-| walker |  | 5315 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.574 |
-| walker |  | 5329 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.574 |
-| walker |  | 5337 | 8 | listing of '.github' |  |  | 0.574 |
-| walker |  | 5341 | 4 | listing of '.github/workflows' |  |  | 0.574 |
+| walker |  | 4807 | 218 | README.md section #7 |  |  | 0.550 |
+| walker |  | 4882 | 75 | pub-item names surface in src/kind.rs |  |  | 0.565 |
+| walker |  | 4964 | 82 | listing of 'tests/ui' |  |  | 0.594 |
+| walker |  | 5062 | 98 | impl method sigs in src/kind.rs |  |  | 0.601 |
+| walker |  | 5153 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.611 |
+| walker |  | 5153 | 0 | pub item at src/nightly.rs:41 |  |  | 0.611 |
+| walker |  | 5153 | 0 | pub item at src/nightly.rs:52 |  |  | 0.611 |
+| walker |  | 5153 | 0 | pub item at src/nightly.rs:56 |  |  | 0.611 |
+| walker |  | 5165 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.611 |
+| walker |  | 5178 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.611 |
+| walker |  | 5192 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.611 |
+| walker |  | 5200 | 8 | listing of '.github' |  |  | 0.611 |
+| walker |  | 5204 | 4 | listing of '.github/workflows' |  |  | 0.611 |
+| ns | 5275 |  | 584 | kind.rs tagged-dispatch explanation (top comment) | 3.5 | 2.3 | 0.574 |
 | ns | 5624 |  | 349 | Error struct: Display/Debug output forms | 3.6 |  | 0.555 |
 | ns | 5711 |  | 87 | Chain doc + struct def | 3.7 | 2.1 | 0.557 |
 | ns | 5951 |  | 240 | Result alias doc | 3.8 | 2.1 | 0.568 |
 | ns | 6324 |  | 373 | error.rs unsafe construct() — the type-erasure trick | 4.1 | 2.2 | 0.551 |
 | ns | 6540 |  | 216 | error.rs object_downcast — concrete unsafe cast | 4.2 |  | 0.540 |
 | ns | 6692 |  | 152 | ptr.rs Own/Ref/Mut struct shapes | 4.3 | 2.3 | 0.556 |
+| walker |  | 6794 | 1590 | crate-doc body in src/lib.rs |  |  | 0.556 |
 | ns | 6816 |  | 124 | chain.rs Iterator::next impl | 4.4 | 2.3 | 0.550 |
-| walker |  | 6931 | 1590 | crate-doc body in src/lib.rs |  |  | 0.550 |
+| walker |  | 7021 | 227 | README.md section #4 |  |  | 0.550 |
 | ns | 7040 |  | 224 | fmt.rs ErrorImpl::debug impl | 4.5 | 2.3 | 0.538 |
-| walker |  | 7158 | 227 | README.md section #4 |  |  | 0.538 |
 | ns | 7279 |  | 239 | ensure.rs BothDebug/NotBothDebug dispatch + render() | 4.6 | 2.3 | 0.530 |
-| walker |  | 7450 | 292 | README.md section #9 |  |  | 0.550 |
+| walker |  | 7313 | 292 | README.md section #9 |  |  | 0.550 |
+| walker |  | 7450 | 137 | README.md section #6 |  |  | 0.550 |
 | walker |  | 7593 | 143 | README.md section #3 |  |  | 0.550 |
+| walker |  | 7619 | 26 | pub item at src/ensure.rs:10 |  |  | 0.550 |
+| walker |  | 7645 | 26 | pub item at src/ensure.rs:25 |  |  | 0.550 |
 | ns | 7708 |  | 429 | build.rs cfg flags emitted | 5.1 |  | 0.538 |
 | ns | 7784 |  | 76 | CI job roster | 5.2 |  | 0.534 |
-| walker |  | 7859 | 266 | README.md section #2 |  |  | 0.534 |
-| walker |  | 7885 | 26 | pub item at src/ensure.rs:10 |  |  | 0.534 |
-| walker |  | 7911 | 26 | pub item at src/ensure.rs:25 |  |  | 0.534 |
-| walker |  | 8062 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.535 |
+| walker |  | 7796 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.535 |
+| walker |  | 8009 | 213 | README.md section #5 |  |  | 0.535 |
 | ns | 8115 |  | 331 | CI test job: rust matrix + commands | 5.3 | 5.2 | 0.525 |
+| walker |  | 8228 | 219 | README.md section #1 |  |  | 0.525 |
 | ns | 8236 |  | 121 | test_fmt.rs expected Debug strings (2- and 3-level context) | 6.1 |  | 0.519 |
-| walker |  | 8275 | 213 | README.md section #5 |  |  | 0.519 |
 | ns | 8338 |  | 102 | test_repr.rs size/niche assertions | 6.2 |  | 0.515 |
-| walker |  | 8492 | 217 | README.md section #1 |  |  | 0.515 |
+| walker |  | 8354 | 126 | pub-item doc body at src/lib.rs:468 |  |  | 0.515 |
 | ns | 8517 |  | 179 | test_downcast.rs test_downcast | 6.3 |  | 0.507 |
-| walker |  | 8618 | 126 | pub-item doc body at src/lib.rs:468 |  |  | 0.507 |
+| walker |  | 8618 | 264 | README.md section #2 |  |  | 0.507 |
 | walker |  | 8658 | 40 | pub item at src/kind.rs:80 |  |  | 0.507 |
 | walker |  | 8700 | 42 | pub item at src/kind.rs:58 |  |  | 0.507 |
 | walker |  | 8742 | 42 | pub item at src/kind.rs:104 |  |  | 0.507 |

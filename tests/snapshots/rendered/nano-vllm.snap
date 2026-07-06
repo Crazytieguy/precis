@@ -28,16 +28,7 @@ README.md
       31→  --local-dir-use-symlinks False
       32→```
       34→## Quick Start
-      35→
-      36→See `example.py` for usage. The API mirrors vLLM's interface with minor differences in the `LLM.generate` method:
-      37→```python
-      38→from nanovllm import LLM, SamplingParams
-      39→llm = LLM("/YOUR/MODEL/PATH", enforce_eager=True, tensor_parallel_size=1)
-      40→sampling_params = SamplingParams(temperature=0.6, max_tokens=256)
-      41→prompts = ["Hello, Nano-vLLM."]
-      42→outputs = llm.generate(prompts, sampling_params)
-      43→outputs[0]["text"]
-      44→```
+    …
       46→## Benchmark
     …
       64→## Star History

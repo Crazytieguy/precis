@@ -39,9 +39,7 @@ README.md
       43→## Quick Start
     …
       48→### Installation
-      49→```bash
-      50→pip install py3xui
-      51→```
+    …
       53→### Create a new instance of the API
     …
       89→### Using TLS and custom certificates
@@ -145,6 +143,8 @@ py3xui/
         async_api.py
             …
               18→class AsyncApi:
+              19→    """This class provides a high-level interface to interact with the XUI API.
+              20→    Access to the client, inbound, and database APIs is provided through this class.
             …
         async_api_base.py
             …

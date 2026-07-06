@@ -123,49 +123,48 @@ Score(3000)=0.290 I=0.373 C=0.225 ns_rows≤3K=26/44 (reached=6 partial=0 missin
 | walker |  | 4966 | 52 | README.md section #5 |  |  | 0.411 |
 | walker |  | 5006 | 40 | README.md section #34 |  |  | 0.411 |
 | walker |  | 5023 | 17 | listing of 'website/pages' |  |  | 0.420 |
-| walker |  | 5115 | 92 | README.md section #32 |  |  | 0.420 |
-| walker |  | 5120 | 5 | listing of '.husky' |  |  | 0.420 |
-| walker |  | 5227 | 107 | README.md section #14 |  |  | 0.420 |
-| walker |  | 5378 | 151 | README.md section #36 |  |  | 0.420 |
-| walker |  | 5441 | 63 | README.md section #10 |  |  | 0.420 |
-| walker |  | 5504 | 63 | README.md section #17 |  |  | 0.420 |
-| walker |  | 5746 | 242 | json config tsconfig.json |  |  | 0.420 |
-| walker |  | 5806 | 60 | listing of 'test/pages' |  |  | 0.447 |
+| walker |  | 5028 | 5 | listing of '.husky' |  |  | 0.420 |
+| walker |  | 5179 | 151 | README.md section #36 |  |  | 0.420 |
+| walker |  | 5242 | 63 | README.md section #10 |  |  | 0.420 |
+| walker |  | 5305 | 63 | README.md section #17 |  |  | 0.420 |
+| walker |  | 5547 | 242 | json config tsconfig.json |  |  | 0.420 |
+| walker |  | 5607 | 60 | listing of 'test/pages' |  |  | 0.447 |
+| walker |  | 5673 | 66 | README.md section #26 |  |  | 0.447 |
+| walker |  | 5744 | 71 | README.md section #20 |  |  | 0.447 |
+| walker |  | 5817 | 73 | README.md section #27 |  |  | 0.447 |
 | ns | 5845 |  | 1261 | Command filter/sort/select algorithm | 5.2 |  | 0.388 |
-| walker |  | 5872 | 66 | README.md section #26 |  |  | 0.388 |
+| walker |  | 5894 | 77 | README.md section #18 |  |  | 0.388 |
 | ns | 5922 |  | 77 | Empty component | 6.1 | 4.1 | 0.386 |
-| walker |  | 5943 | 71 | README.md section #20 |  |  | 0.386 |
-| walker |  | 6016 | 73 | README.md section #27 |  |  | 0.386 |
-| walker |  | 6093 | 77 | README.md section #18 |  |  | 0.386 |
-| walker |  | 6532 | 439 | ARCHITECTURE.md section #0 |  |  | 0.386 |
-| walker |  | 6612 | 80 | README.md section #15 |  |  | 0.386 |
+| walker |  | 6333 | 439 | ARCHITECTURE.md section #0 |  |  | 0.386 |
+| walker |  | 6415 | 82 | README.md section #15 |  |  | 0.386 |
+| walker |  | 6423 | 8 | listing of '.github' |  |  | 0.386 |
+| walker |  | 6427 | 4 | listing of '.github/workflows' |  |  | 0.386 |
 | ns | 6616 |  | 694 | Item component | 6.2 | 4.1 | 0.426 |
-| walker |  | 6620 | 8 | listing of '.github' |  |  | 0.426 |
-| walker |  | 6624 | 4 | listing of '.github/workflows' |  |  | 0.426 |
-| ns | 6832 |  | 216 | commandScore exported entrypoint | 7.1 |  | 0.420 |
-| walker |  | 6963 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.422 |
+| walker |  | 6766 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.428 |
+| ns | 6832 |  | 216 | commandScore exported entrypoint | 7.1 |  | 0.422 |
+| walker |  | 6858 | 92 | README.md section #32 |  |  | 0.422 |
+| walker |  | 6962 | 104 | README.md section #7 |  |  | 0.422 |
+| walker |  | 7067 | 105 | README.md section #14 |  |  | 0.422 |
+| walker |  | 7156 | 89 | README.md section #25 |  |  | 0.422 |
+| walker |  | 7250 | 94 | README.md section #13 |  |  | 0.422 |
+| walker |  | 7368 | 118 | README.md section #16 |  |  | 0.422 |
+| walker |  | 7494 | 126 | README.md section #6 |  |  | 0.422 |
 | ns | 7577 |  | 745 | command-score weighting constants | 7.2 |  | 0.404 |
-| walker |  | 7604 | 641 | README.md section #2 |  |  | 0.404 |
-| walker |  | 7708 | 104 | README.md section #7 |  |  | 0.404 |
+| walker |  | 7625 | 131 | README.md section #9 |  |  | 0.404 |
 | ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.399 |
-| walker |  | 7797 | 89 | README.md section #25 |  |  | 0.399 |
-| walker |  | 7891 | 94 | README.md section #13 |  |  | 0.399 |
-| ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.412 |
-| walker |  | 8009 | 118 | README.md section #16 |  |  | 0.412 |
-| walker |  | 8135 | 126 | README.md section #6 |  |  | 0.412 |
-| walker |  | 8266 | 131 | README.md section #9 |  |  | 0.412 |
-| ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.402 |
-| walker |  | 8401 | 135 | README.md section #8 |  |  | 0.402 |
-| walker |  | 8411 | 10 | export names surface in test/pages/index.tsx |  |  | 0.402 |
-| walker |  | 8411 | 0 | export at test/pages/index.tsx:28 |  |  | 0.402 |
-| walker |  | 8539 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.407 |
-| ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.398 |
-| walker |  | 8695 | 156 | README.md section #12 |  |  | 0.398 |
-| walker |  | 8851 | 156 | README.md section #11 |  |  | 0.398 |
-| walker |  | 8863 | 12 | export at test/pages/index.tsx:3 |  |  | 0.398 |
-| ns | 8937 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.391 |
-| ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.387 |
-| walker |  | 9296 | 433 | README.md section #35 |  |  | 0.413 |
+| walker |  | 7760 | 135 | README.md section #8 |  |  | 0.399 |
+| walker |  | 7770 | 10 | export names surface in test/pages/index.tsx |  |  | 0.399 |
+| walker |  | 7770 | 0 | export at test/pages/index.tsx:28 |  |  | 0.399 |
+| walker |  | 7898 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.405 |
+| ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.417 |
+| walker |  | 8054 | 156 | README.md section #12 |  |  | 0.417 |
+| walker |  | 8210 | 156 | README.md section #11 |  |  | 0.417 |
+| walker |  | 8222 | 12 | export at test/pages/index.tsx:3 |  |  | 0.417 |
+| ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.407 |
+| walker |  | 8655 | 433 | README.md section #35 |  |  | 0.434 |
+| ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.425 |
+| ns | 8937 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.417 |
+| ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.413 |
 | ns | 9452 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.403 |
 | ns | 9595 |  | 143 | Format/lint-staged tooling | 11.1 |  | 0.399 |
 | ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.393 |

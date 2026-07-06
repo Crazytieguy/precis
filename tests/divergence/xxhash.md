@@ -131,12 +131,12 @@ Score(3000)=0.568 I=0.838 C=0.385 ns_rows≤3K=18/48 (reached=7 partial=3 missin
 | ns | 4241 |  | 136 | Sum method body | 4.6 | 1.10 | 0.765 |
 | walker |  | 4439 | 204 | go decl body at xxhash.go:190 |  |  | 0.768 |
 | walker |  | 4586 | 147 | README.md section #3 |  |  | 0.768 |
+| walker |  | 4661 | 75 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.769 |
 | ns | 4730 |  | 489 | Sum64 method body (finalize) | 4.7 | 1.10 | 0.724 |
-| walker |  | 4897 | 311 | README.md section #2 |  |  | 0.725 |
-| walker |  | 4972 | 75 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.725 |
-| ns | 5187 |  | 457 | MarshalBinary / UnmarshalBinary + magic const | 4.8 | 1.10 | 0.736 |
-| ns | 5257 |  | 70 | Marshal helpers + u64/u32 readers roster | 4.9 |  | 0.737 |
-| walker |  | 5356 | 384 | go decl body at xxhash.go:75 |  |  | 0.790 |
+| walker |  | 5045 | 384 | go decl body at xxhash.go:75 |  |  | 0.782 |
+| ns | 5187 |  | 457 | MarshalBinary / UnmarshalBinary + magic const | 4.8 | 1.10 | 0.788 |
+| ns | 5257 |  | 70 | Marshal helpers + u64/u32 readers roster | 4.9 |  | 0.789 |
+| walker |  | 5356 | 311 | README.md section #2 |  |  | 0.790 |
 | ns | 5586 |  | 329 | round / mergeRound / rolN mixing primitives | 4.10 |  | 0.790 |
 | ns | 5675 |  | 89 | xxhash_test.go function roster | 5.1 |  | 0.783 |
 | walker |  | 5827 | 471 | go decl body at xxhash.go:129 |  |  | 0.835 |

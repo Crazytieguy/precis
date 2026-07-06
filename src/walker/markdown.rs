@@ -1780,12 +1780,35 @@ const DEV_WORKFLOW_MAX_BYTES: usize = 2200;
 const OPERATIONAL_DENSITY_MIN_SIGNALS: usize = 3;
 
 fn range_has_dev_workflow_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
+    let (bytes, signals) = range_density_signal_count(src_lines, start, end, DensitySignal::Dev);
+    bytes <= DEV_WORKFLOW_MAX_BYTES && signals >= DEV_WORKFLOW_MIN_SIGNALS
+}
+
+fn range_has_operational_density_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
+    let (_, signals) =
+        range_density_signal_count(src_lines, start, end, DensitySignal::Operational);
+    signals >= OPERATIONAL_DENSITY_MIN_SIGNALS
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum DensitySignal {
+    Dev,
+    Operational,
+}
+
+fn range_density_signal_count(
+    src_lines: &[&str],
+    start: usize,
+    end: usize,
+    mode: DensitySignal,
+) -> (usize, usize) {
     let last = end.min(src_lines.len());
     if start > last {
-        return false;
+        return (0, 0);
     }
     let mut bytes = 0usize;
     let mut signals = 0usize;
+    let mut fence_has_signal = false;
     let mut in_fence = false;
     for line in &src_lines[start - 1..last] {
         bytes += line.len() + 1;
@@ -1794,71 +1817,128 @@ fn range_has_dev_workflow_signal(src_lines: &[&str], start: usize, end: usize) -
             continue;
         }
         if t.starts_with("```") || t.starts_with("~~~") {
+            if in_fence && fence_has_signal {
+                signals += 1;
+            }
             in_fence = !in_fence;
+            fence_has_signal = false;
             continue;
         }
         if in_fence {
-            if is_dev_command_line(t) || is_repo_path_line(t) {
-                signals += 1;
+            if line_has_density_signal(t, true, mode) {
+                fence_has_signal = true;
             }
             continue;
         }
-        if is_dev_command_line(t)
-            || is_dev_config_line(t)
-            || is_repo_path_line(t)
-            || (is_numbered_step_line(t) && contains_dev_action(t))
-        {
+        if line_has_density_signal(t, false, mode) {
             signals += 1;
         }
     }
-    bytes <= DEV_WORKFLOW_MAX_BYTES && signals >= DEV_WORKFLOW_MIN_SIGNALS
+    if in_fence && fence_has_signal {
+        signals += 1;
+    }
+    (bytes, signals)
 }
 
-fn range_has_operational_density_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
-    let last = end.min(src_lines.len());
-    if start > last {
-        return false;
-    }
-    let mut signals = 0usize;
-    let mut in_fence = false;
-    for line in &src_lines[start - 1..last] {
-        let t = line.trim_start();
-        if t.is_empty() {
-            continue;
-        }
-        if t.starts_with("```") || t.starts_with("~~~") {
-            in_fence = !in_fence;
-            signals += 1;
-            continue;
-        }
-        if in_fence {
-            if is_dev_command_line(t) || is_repo_path_line(t) || looks_like_option_or_env_row(t) {
-                signals += 1;
-            }
-            continue;
-        }
-        if is_dev_command_line(t)
+fn line_has_density_signal(t: &str, in_fence: bool, mode: DensitySignal) -> bool {
+    if in_fence {
+        return is_dev_command_line(t)
             || is_dev_config_line(t)
-            || is_repo_path_line(t)
-            || looks_like_option_or_env_row(t)
-            || (is_numbered_step_line(t) && contains_dev_action(t))
-        {
-            signals += 1;
-        }
+            || is_dev_config_snippet_line(t)
+            || is_repo_path_line(t);
     }
-    signals >= OPERATIONAL_DENSITY_MIN_SIGNALS
+    is_dev_command_line(t)
+        || is_dev_config_line(t)
+        || is_repo_path_line(t)
+        || (mode == DensitySignal::Operational && looks_like_option_or_env_row(t))
+        || (is_numbered_step_line(t) && contains_dev_action(t))
 }
 
 fn looks_like_option_or_env_row(t: &str) -> bool {
-    if t.starts_with('|') && (t.contains("--") || t.contains('`')) {
-        return true;
+    if is_markdown_rule_row(t) {
+        return false;
+    }
+    let table = t.starts_with('|');
+    let list = is_list_item_line(t) || is_numbered_step_line(t);
+    if !table && !list {
+        return false;
+    }
+    if table {
+        return t
+            .trim_matches('|')
+            .split('|')
+            .any(|cell| cell_has_option_env_or_config(cell.trim()));
     }
     t.split_whitespace().any(|token| {
         let trimmed = token.trim_matches(|c: char| {
             matches!(c, '`' | ',' | '.' | ':' | ';' | ')' | '(' | '[' | ']')
         });
-        trimmed.starts_with("--") || is_env_var_token(trimmed)
+        trimmed.starts_with("--") || is_env_var_token(trimmed) || is_config_key_token(trimmed)
     })
+}
+
+fn is_markdown_rule_row(t: &str) -> bool {
+    let stripped = t.trim_matches('|').trim();
+    !stripped.is_empty()
+        && stripped
+            .bytes()
+            .all(|b| matches!(b, b'-' | b':' | b' ' | b'\t' | b'|'))
+}
+
+fn is_list_item_line(t: &str) -> bool {
+    t.starts_with("- ") || t.starts_with("* ") || t.starts_with("+ ")
+}
+
+fn cell_has_option_env_or_config(cell: &str) -> bool {
+    cell.split_whitespace().any(|token| {
+        let trimmed = token.trim_matches(|c: char| {
+            matches!(c, '`' | ',' | '.' | ':' | ';' | ')' | '(' | '[' | ']')
+        });
+        trimmed.starts_with("--") || is_env_var_token(trimmed) || is_config_key_token(trimmed)
+    })
+}
+
+fn is_config_key_token(token: &str) -> bool {
+    matches!(
+        token,
+        "bin"
+            | "browser"
+            | "dependencies"
+            | "devDependencies"
+            | "exports"
+            | "files"
+            | "main"
+            | "module"
+            | "scripts"
+            | "types"
+    ) || token.ends_with(".json")
+        || token.ends_with(".toml")
+        || token.ends_with(".yaml")
+        || token.ends_with(".yml")
+        || token.contains("config")
+}
+
+fn is_dev_config_snippet_line(t: &str) -> bool {
+    let Some((key, _)) = t.split_once([':', '=']) else {
+        return false;
+    };
+    let key = key
+        .trim()
+        .trim_matches(|c: char| matches!(c, '"' | '\'' | '`' | '{' | '[' | ',' | ' ' | '\t'));
+    matches!(
+        key,
+        "compilerOptions"
+            | "dependencies"
+            | "devDependencies"
+            | "extends"
+            | "module"
+            | "options"
+            | "parser"
+            | "plugins"
+            | "presets"
+            | "rules"
+            | "scripts"
+    ) || is_config_key_token(key)
 }
 
 fn is_dev_command_line(t: &str) -> bool {
@@ -1975,6 +2055,7 @@ fn logical_sections(
         matches!(entries.first(), Some(TopLevelEntry::SyntheticIntro { .. }));
 
     let readme = is_readme(file);
+    let src_lines: Vec<&str> = source.lines().collect();
     let mut out = Vec::with_capacity(entries.len());
     for (parent_idx, entry) in entries.iter().enumerate() {
         match entry {
@@ -2111,7 +2192,6 @@ fn logical_sections(
     // the per-driver README flood the NS treats as catalog-listing
     // material.
     if root_readme {
-        let src_lines: Vec<&str> = source.lines().collect();
         for range in &mut out {
             if range.roster_entries > 0 {
                 continue; // link-index chunks set the flag themselves
@@ -2121,7 +2201,6 @@ fn logical_sections(
         }
     }
     if is_dev_workflow_doc(file) {
-        let src_lines: Vec<&str> = source.lines().collect();
         for range in &mut out {
             range.dev_workflow_section =
                 range_has_dev_workflow_signal(&src_lines, range.start, range.end);
@@ -2129,13 +2208,22 @@ fn logical_sections(
         }
     }
     if readme || is_dev_workflow_doc(file) {
-        let src_lines: Vec<&str> = source.lines().collect();
-        for (idx, range) in out.iter_mut().enumerate() {
-            range.deferred_mass_prose = idx >= 2
+        for range in &mut out {
+            range.deferred_mass_prose = range.roster_entries == 0
+                && !range.reference_shaped
+                && !is_initial_orientation_range(range)
                 && range_has_operational_density_signal(&src_lines, range.start, range.end);
         }
     }
     out
+}
+
+fn is_initial_orientation_range(range: &SectionRange) -> bool {
+    if range.synthetic_intro_present {
+        range.parent_index <= 1
+    } else {
+        range.parent_index == 0
+    }
 }
 
 /// Minimum intra-doc link entries for a body to count as a link index,
@@ -3692,6 +3780,70 @@ mod tests {
         assert_eq!(rosters[1].roster_entries, 20);
         assert!(rosters[1].chained_to_previous);
         assert!(rosters.iter().all(|r| r.reference_shaped));
+    }
+
+    #[test]
+    fn markdown_density_signals_ignore_bare_fence_delimiters() {
+        let src = [
+            "```",
+            "plain text",
+            "```",
+            "~~~",
+            "more prose",
+            "~~~",
+            "```",
+            "npm test",
+            "```",
+        ];
+        assert!(!range_has_operational_density_signal(&src, 1, 6));
+        assert!(!range_has_operational_density_signal(&src, 1, 9));
+    }
+
+    #[test]
+    fn markdown_option_rows_require_table_or_list_context() {
+        assert!(!looks_like_option_or_env_row(
+            "Use --token in ordinary prose."
+        ));
+        assert!(!looks_like_option_or_env_row("| --- | --- |"));
+        assert!(!looks_like_option_or_env_row("| `name` | `value` |"));
+        assert!(looks_like_option_or_env_row(
+            "- `--token` controls the budget."
+        ));
+        assert!(looks_like_option_or_env_row("| `--token` | budget |"));
+        assert!(looks_like_option_or_env_row("| `NODE_ENV` | production |"));
+        assert!(looks_like_option_or_env_row("| `exports` | ./index.js |"));
+        assert!(line_has_density_signal(
+            "\"plugins\": [\"svgo\"]",
+            true,
+            DensitySignal::Operational
+        ));
+    }
+
+    #[test]
+    fn markdown_deferred_mass_excludes_rosters_and_reference_shapes() {
+        let mut src =
+            String::from("# lo\n\nTagline.\n\n## Spec\n\nSupported helpers for slices:\n\n");
+        for i in 0..30 {
+            src.push_str(&format!("- [Helper{i}](#helper{i})\n"));
+        }
+        src.push('\n');
+        for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
+            src.push_str(&format!(
+                "\n### Helper{i}\n\nRun `npm test -- --filter thing`.\n"
+            ));
+        }
+        src.push_str(
+            "\n## Options\n\n| `--token` | budget |\n| `NODE_ENV` | prod |\n| `exports` | path |\n",
+        );
+
+        let ranges = sections("README.md", &src);
+        assert!(
+            ranges
+                .iter()
+                .filter(|r| r.roster_entries > 0 || r.reference_shaped)
+                .all(|r| !r.deferred_mass_prose),
+            "roster/reference-shaped ranges must not be deferred: {ranges:?}",
+        );
     }
 
     #[test]

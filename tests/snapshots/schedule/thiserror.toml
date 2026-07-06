@@ -1,7 +1,7 @@
 fixture = "thiserror"
 budget = 10000
-cumulative_tokens = 9992
-batch_count = 105
+cumulative_tokens = 9858
+batch_count = 113
 
 [[batches]]
 position = 1
@@ -2739,28 +2739,10 @@ kind = "full"
 
 [[batches]]
 position = 100
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #10"
-cost_tokens = 372
-cum_tokens = 9860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 169
-end = 202
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
 key = 'Rust(PubItem { file: "tests/ui/numbered-positional-tuple.rs", start_line: 5 })'
 descriptor = "pub item at tests/ui/numbered-positional-tuple.rs:5"
 cost_tokens = 26
-cum_tokens = 9886
+cum_tokens = 9514
 
 [batches.content]
 kind = "lines"
@@ -2775,6 +2757,32 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "tests/ui/numbered-positional-tuple.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Rust(PubItem { file: "tests/ui/struct-with-fmt.rs", start_line: 5 })'
+descriptor = "pub item at tests/ui/struct-with-fmt.rs:5"
+cost_tokens = 26
+cum_tokens = 9540
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/struct-with-fmt.rs"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/struct-with-fmt.rs"
 start = 5
 end = 5
 
@@ -2783,16 +2791,16 @@ kind = "full"
 
 [[batches]]
 position = 102
-key = 'Rust(PubItem { file: "tests/ui/struct-with-fmt.rs", start_line: 5 })'
-descriptor = "pub item at tests/ui/struct-with-fmt.rs:5"
-cost_tokens = 26
-cum_tokens = 9912
+key = 'Rust(PubItem { file: "tests/ui/duplicate-transparent.rs", start_line: 6 })'
+descriptor = "pub item at tests/ui/duplicate-transparent.rs:6"
+cost_tokens = 28
+cum_tokens = 9568
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "tests/ui/struct-with-fmt.rs"
+path = "tests/ui/duplicate-transparent.rs"
 start = 3
 end = 3
 
@@ -2800,25 +2808,25 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "tests/ui/struct-with-fmt.rs"
-start = 5
-end = 5
+path = "tests/ui/duplicate-transparent.rs"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 103
-key = 'Rust(PubItem { file: "tests/ui/duplicate-transparent.rs", start_line: 6 })'
-descriptor = "pub item at tests/ui/duplicate-transparent.rs:6"
+key = 'Rust(PubItem { file: "tests/ui/transparent-display.rs", start_line: 6 })'
+descriptor = "pub item at tests/ui/transparent-display.rs:6"
 cost_tokens = 28
-cum_tokens = 9940
+cum_tokens = 9596
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "tests/ui/duplicate-transparent.rs"
+path = "tests/ui/transparent-display.rs"
 start = 3
 end = 3
 
@@ -2826,7 +2834,7 @@ end = 3
 kind = "full"
 
 [[batches.content.spans]]
-path = "tests/ui/duplicate-transparent.rs"
+path = "tests/ui/transparent-display.rs"
 start = 6
 end = 6
 
@@ -2835,36 +2843,10 @@ kind = "full"
 
 [[batches]]
 position = 104
-key = 'Rust(PubItem { file: "tests/ui/transparent-display.rs", start_line: 6 })'
-descriptor = "pub item at tests/ui/transparent-display.rs:6"
-cost_tokens = 28
-cum_tokens = 9968
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tests/ui/transparent-display.rs"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "tests/ui/transparent-display.rs"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
 key = 'Rust(PubItemNames { file: "tests/ui/no-display.rs" })'
 descriptor = "pub-item names surface in tests/ui/no-display.rs"
 cost_tokens = 24
-cum_tokens = 9992
+cum_tokens = 9620
 
 [batches.content]
 kind = "lines"
@@ -2900,3 +2882,245 @@ end = 15
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 105
+key = 'Rust(PubItem { file: "tests/ui/no-display.rs", start_line: 8 })'
+descriptor = "pub item at tests/ui/no-display.rs:8"
+cost_tokens = 27
+cum_tokens = 9647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/no-display.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/no-display.rs"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Rust(PubItem { file: "tests/ui/no-display.rs", start_line: 14 })'
+descriptor = "pub item at tests/ui/no-display.rs:14"
+cost_tokens = 25
+cum_tokens = 9672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/no-display.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/no-display.rs"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Rust(PubItemNames { file: "tests/ui/source-enum-not-error.rs" })'
+descriptor = "pub-item names surface in tests/ui/source-enum-not-error.rs"
+cost_tokens = 24
+cum_tokens = 9696
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-not-error.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-not-error.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-not-error.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-not-error.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 108
+key = 'Rust(PubItem { file: "tests/ui/source-enum-not-error.rs", start_line: 4 })'
+descriptor = "pub item at tests/ui/source-enum-not-error.rs:4"
+cost_tokens = 8
+cum_tokens = 9704
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-not-error.rs"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Rust(PubItem { file: "tests/ui/source-enum-not-error.rs", start_line: 8 })'
+descriptor = "pub item at tests/ui/source-enum-not-error.rs:8"
+cost_tokens = 27
+cum_tokens = 9731
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-not-error.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-not-error.rs"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Rust(PubItemNames { file: "tests/ui/source-enum-unnamed-field-not-error.rs" })'
+descriptor = "pub-item names surface in tests/ui/source-enum-unnamed-field-not-error.rs"
+cost_tokens = 24
+cum_tokens = 9755
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 111
+key = 'Rust(PubItem { file: "tests/ui/source-enum-unnamed-field-not-error.rs", start_line: 4 })'
+descriptor = "pub item at tests/ui/source-enum-unnamed-field-not-error.rs:4"
+cost_tokens = 8
+cum_tokens = 9763
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'Rust(PubItem { file: "tests/ui/source-enum-unnamed-field-not-error.rs", start_line: 8 })'
+descriptor = "pub item at tests/ui/source-enum-unnamed-field-not-error.rs:8"
+cost_tokens = 28
+cum_tokens = 9791
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "tests/ui/source-enum-unnamed-field-not-error.rs"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Rust(PubItem { file: "tests/test_path.rs", start_line: 35 })'
+descriptor = "pub item at tests/test_path.rs:35"
+cost_tokens = 67
+cum_tokens = 9858
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/test_path.rs"
+start = 34
+end = 40
+
+[batches.content.spans.render]
+kind = "full"

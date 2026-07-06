@@ -98,14 +98,14 @@ Score(3000)=0.645 I=0.807 C=0.515 ns_rows≤3K=17/54 (reached=8 partial=1 missin
 | walker |  | 3008 | 99 | go decl body at flatten.go:8 |  |  | 0.646 |
 | walker |  | 3109 | 101 | go decl body at group.go:20 |  |  | 0.648 |
 | ns | 3144 |  | 173 | README: extracting an error via errors.As | 2.8 |  | 0.626 |
-| ns | 3308 |  | 164 | README: checking for an exact error value via errors.Is | 2.9 |  | 0.609 |
-| walker |  | 3416 | 307 | README.md section #2 |  |  | 0.678 |
-| ns | 3463 |  | 155 | Error.WrappedErrors() | 2.10 | 1.4 | 0.685 |
-| ns | 3483 |  | 20 | Error.GoString() | 2.11 | 1.4 | 0.685 |
-| walker |  | 3558 | 142 | go decl body at format.go:17 |  |  | 0.688 |
-| walker |  | 3639 | 81 | go decl body at flatten.go:20 |  |  | 0.689 |
-| ns | 3834 |  | 351 | Append() doc + *Error branch | 3.1 | 1.5 | 0.659 |
-| walker |  | 3837 | 198 | go decl body at prefix.go:16 |  |  | 0.661 |
+| walker |  | 3251 | 142 | go decl body at format.go:17 |  |  | 0.629 |
+| ns | 3308 |  | 164 | README: checking for an exact error value via errors.Is | 2.9 |  | 0.611 |
+| walker |  | 3332 | 81 | go decl body at flatten.go:20 |  |  | 0.612 |
+| ns | 3463 |  | 155 | Error.WrappedErrors() | 2.10 | 1.4 | 0.624 |
+| ns | 3483 |  | 20 | Error.GoString() | 2.11 | 1.4 | 0.624 |
+| walker |  | 3530 | 198 | go decl body at prefix.go:16 |  |  | 0.627 |
+| ns | 3834 |  | 351 | Append() doc + *Error branch | 3.1 | 1.5 | 0.601 |
+| walker |  | 3837 | 307 | README.md section #2 |  |  | 0.661 |
 | walker |  | 3851 | 14 | listing of '.github' |  |  | 0.670 |
 | walker |  | 3863 | 12 | listing of '.github/workflows' |  |  | 0.683 |
 | ns | 3939 |  | 105 | Append() default branch | 3.2 | 3.1 | 0.671 |
@@ -121,16 +121,16 @@ Score(3000)=0.645 I=0.807 C=0.515 ns_rows≤3K=17/54 (reached=8 partial=1 missin
 | ns | 4945 |  | 62 | Group struct | 5.1 | 1.5 | 0.676 |
 | ns | 5106 |  | 161 | Group.Go() | 5.2 | 1.5 | 0.683 |
 | ns | 5176 |  | 70 | Group.Wait() | 5.3 | 1.5 | 0.686 |
-| walker |  | 5351 | 1112 | README.md section #3 |  |  | 0.835 |
-| ns | 5517 |  | 341 | README: migrating Group to errgroup / a manual mutex | 5.4 |  | 0.802 |
-| ns | 5655 |  | 138 | Flatten() | 6.1 | 1.5 | 0.804 |
-| ns | 5754 |  | 99 | flatten() recursive helper (unexported) | 6.2 |  | 0.804 |
-| ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.807 |
-| ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.805 |
-| walker |  | 6317 | 966 | README.md section #1 |  |  | 0.906 |
-| walker |  | 6351 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.906 |
-| walker |  | 6368 | 17 | go test names surface in group_test.go |  |  | 0.906 |
-| walker |  | 6570 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.908 |
+| walker |  | 5205 | 966 | README.md section #1 |  |  | 0.773 |
+| walker |  | 5239 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.773 |
+| walker |  | 5256 | 17 | go test names surface in group_test.go |  |  | 0.773 |
+| walker |  | 5458 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.775 |
+| ns | 5517 |  | 341 | README: migrating Group to errgroup / a manual mutex | 5.4 |  | 0.783 |
+| ns | 5655 |  | 138 | Flatten() | 6.1 | 1.5 | 0.785 |
+| ns | 5754 |  | 99 | flatten() recursive helper (unexported) | 6.2 |  | 0.786 |
+| ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.789 |
+| ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.787 |
+| walker |  | 6570 | 1112 | README.md section #3 |  |  | 0.908 |
 | ns | 6587 |  | 364 | TestErrorUnwrap | 9.1 | 1.6 | 0.877 |
 | walker |  | 6594 | 24 | .github/pull_request_template.md section #0 |  |  | 0.877 |
 | walker |  | 6628 | 34 | go test names surface in flatten_test.go |  |  | 0.878 |

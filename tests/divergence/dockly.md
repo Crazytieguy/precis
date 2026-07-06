@@ -131,46 +131,46 @@ Score(3000)=0.434 I=0.700 C=0.270 ns_rows≤3K=19/43 (reached=4 partial=1 missin
 | ns | 3787 |  | 365 | cli.js: showVersion / showUsage / cliParse | 3.5 | 3.4 | 0.429 |
 | walker |  | 3950 | 184 | module item body at index.js:47 body 48 |  |  | 0.459 |
 | ns | 3997 |  | 210 | screen.js: requires + per-mode GRID_LAYOUT map | 4.1 |  | 0.448 |
-| walker |  | 4110 | 160 | README.md section #2 |  |  | 0.493 |
-| ns | 4149 |  | 152 | screen.js: Screen constructor | 4.2 |  | 0.507 |
-| walker |  | 4217 | 107 | imports in index.js |  |  | 0.515 |
-| walker |  | 4254 | 37 | export at src/assetsLoader.js:10 |  |  | 0.515 |
-| walker |  | 4412 | 158 | export body at src/screen.js:18 body 181 |  |  | 0.516 |
-| walker |  | 4464 | 52 | listing of 'docs' |  |  | 0.531 |
-| walker |  | 4473 | 9 | listing of 'docs/src' |  |  | 0.541 |
-| walker |  | 4486 | 13 | listing of 'docs/src/pages' |  |  | 0.541 |
-| ns | 4496 |  | 347 | screen.js: initScreen + init (boot sequence) | 4.3 |  | 0.524 |
-| walker |  | 4511 | 25 | listing of 'docs/src/components' |  |  | 0.524 |
-| walker |  | 4539 | 28 | export names surface in src/widgetsTemplates/list.widget.template.js |  |  | 0.524 |
-| walker |  | 4539 | 0 | export at src/widgetsTemplates/list.widget.template.js:8 |  |  | 0.524 |
-| walker |  | 4549 | 10 | export member at src/widgetsTemplates/list.widget.template.js:8 member 21 |  |  | 0.524 |
-| walker |  | 4560 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 88 |  |  | 0.524 |
-| walker |  | 4571 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 107 |  |  | 0.524 |
-| walker |  | 4582 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 127 |  |  | 0.524 |
-| walker |  | 4597 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 128 |  |  | 0.524 |
-| walker |  | 4609 | 12 | export member at src/widgetsTemplates/list.widget.template.js:8 member 155 |  |  | 0.524 |
-| walker |  | 4628 | 19 | export at src/themes/styles.js:55 |  |  | 0.524 |
-| walker |  | 4641 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 147 |  |  | 0.524 |
-| walker |  | 4656 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 148 |  |  | 0.524 |
-| walker |  | 4669 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 151 |  |  | 0.524 |
-| walker |  | 4684 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 152 |  |  | 0.524 |
-| walker |  | 4710 | 26 | export names surface in src/widgetsTemplates/help.widget.template.js |  |  | 0.524 |
-| walker |  | 4736 | 26 | export names surface in src/widgetsTemplates/info.widget.template.js |  |  | 0.524 |
-| walker |  | 4762 | 26 | export names surface in src/widgetsTemplates/logs.widget.template.js |  |  | 0.524 |
-| walker |  | 4790 | 28 | export names surface in src/widgetsTemplates/base.hook.template.js |  |  | 0.524 |
-| ns | 4804 |  | 308 | screen.js: initHooks + initWidgets | 4.4 |  | 0.512 |
-| walker |  | 4814 | 24 | export at src/widgetsTemplates/base.hook.template.js:6 |  |  | 0.512 |
-| walker |  | 4828 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 119 |  |  | 0.512 |
-| walker |  | 4842 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 131 |  |  | 0.512 |
-| walker |  | 4858 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 132 |  |  | 0.512 |
-| walker |  | 4872 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 135 |  |  | 0.512 |
-| walker |  | 4888 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 136 |  |  | 0.512 |
-| walker |  | 4902 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 139 |  |  | 0.512 |
-| walker |  | 4918 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 140 |  |  | 0.512 |
-| walker |  | 4932 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 143 |  |  | 0.512 |
-| walker |  | 4948 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 144 |  |  | 0.512 |
-| walker |  | 4970 | 22 | export body at src/widgetsTemplates/list.widget.template.js:8 body 156 |  |  | 0.512 |
-| walker |  | 4974 | 4 | listing of '.vscode' |  |  | 0.512 |
+| walker |  | 4057 | 107 | imports in index.js |  |  | 0.457 |
+| walker |  | 4094 | 37 | export at src/assetsLoader.js:10 |  |  | 0.457 |
+| ns | 4149 |  | 152 | screen.js: Screen constructor | 4.2 |  | 0.473 |
+| walker |  | 4252 | 158 | export body at src/screen.js:18 body 181 |  |  | 0.475 |
+| walker |  | 4304 | 52 | listing of 'docs' |  |  | 0.489 |
+| walker |  | 4313 | 9 | listing of 'docs/src' |  |  | 0.500 |
+| walker |  | 4326 | 13 | listing of 'docs/src/pages' |  |  | 0.500 |
+| walker |  | 4351 | 25 | listing of 'docs/src/components' |  |  | 0.500 |
+| walker |  | 4379 | 28 | export names surface in src/widgetsTemplates/list.widget.template.js |  |  | 0.500 |
+| walker |  | 4379 | 0 | export at src/widgetsTemplates/list.widget.template.js:8 |  |  | 0.500 |
+| walker |  | 4389 | 10 | export member at src/widgetsTemplates/list.widget.template.js:8 member 21 |  |  | 0.500 |
+| walker |  | 4400 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 88 |  |  | 0.500 |
+| walker |  | 4411 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 107 |  |  | 0.500 |
+| walker |  | 4422 | 11 | export member at src/widgetsTemplates/list.widget.template.js:8 member 127 |  |  | 0.500 |
+| walker |  | 4437 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 128 |  |  | 0.500 |
+| walker |  | 4449 | 12 | export member at src/widgetsTemplates/list.widget.template.js:8 member 155 |  |  | 0.500 |
+| walker |  | 4468 | 19 | export at src/themes/styles.js:55 |  |  | 0.500 |
+| walker |  | 4481 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 147 |  |  | 0.500 |
+| walker |  | 4496 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 148 |  |  | 0.485 |
+| ns | 4496 |  | 347 | screen.js: initScreen + init (boot sequence) | 4.3 |  | 0.485 |
+| walker |  | 4509 | 13 | export member at src/widgetsTemplates/list.widget.template.js:8 member 151 |  |  | 0.485 |
+| walker |  | 4524 | 15 | export body at src/widgetsTemplates/list.widget.template.js:8 body 152 |  |  | 0.485 |
+| walker |  | 4550 | 26 | export names surface in src/widgetsTemplates/help.widget.template.js |  |  | 0.485 |
+| walker |  | 4576 | 26 | export names surface in src/widgetsTemplates/info.widget.template.js |  |  | 0.485 |
+| walker |  | 4602 | 26 | export names surface in src/widgetsTemplates/logs.widget.template.js |  |  | 0.485 |
+| walker |  | 4630 | 28 | export names surface in src/widgetsTemplates/base.hook.template.js |  |  | 0.485 |
+| walker |  | 4654 | 24 | export at src/widgetsTemplates/base.hook.template.js:6 |  |  | 0.485 |
+| walker |  | 4668 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 119 |  |  | 0.485 |
+| walker |  | 4682 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 131 |  |  | 0.485 |
+| walker |  | 4698 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 132 |  |  | 0.485 |
+| walker |  | 4712 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 135 |  |  | 0.485 |
+| walker |  | 4728 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 136 |  |  | 0.485 |
+| walker |  | 4742 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 139 |  |  | 0.485 |
+| walker |  | 4758 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 140 |  |  | 0.485 |
+| walker |  | 4772 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 143 |  |  | 0.485 |
+| walker |  | 4788 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 144 |  |  | 0.485 |
+| ns | 4804 |  | 308 | screen.js: initHooks + initWidgets | 4.4 |  | 0.475 |
+| walker |  | 4810 | 22 | export body at src/widgetsTemplates/list.widget.template.js:8 body 156 |  |  | 0.475 |
+| walker |  | 4814 | 4 | listing of '.vscode' |  |  | 0.475 |
+| walker |  | 4974 | 160 | README.md section #2 |  |  | 0.512 |
 | ns | 5021 |  | 217 | screen.js: setWidgetsRepo/setWidgetsUtils/setWidgetsInit + renderWidgets | 4.5 |  | 0.520 |
 | walker |  | 5036 | 62 | imports in src/cli.js |  |  | 0.522 |
 | walker |  | 5181 | 145 | README.md section #4 |  |  | 0.522 |
@@ -183,15 +183,15 @@ Score(3000)=0.434 I=0.700 C=0.270 ns_rows≤3K=19/43 (reached=4 partial=1 missin
 | ns | 6068 |  | 415 | assetsLoader.js (full) | 4.8 |  | 0.529 |
 | walker |  | 6135 | 224 | package dependencies in package.json |  |  | 0.555 |
 | walker |  | 6140 | 5 | listing of '.devcontainer' |  |  | 0.556 |
-| walker |  | 6161 | 21 | export member at src/widgetsTemplates/list.widget.template.js:8 member 9 |  |  | 0.556 |
-| walker |  | 6270 | 109 | imports in src/screen.js |  |  | 0.562 |
-| walker |  | 6361 | 91 | export at src/enum.js:1 |  |  | 0.563 |
-| walker |  | 6410 | 49 | export body at src/widgetsTemplates/list.widget.template.js:8 body 120 |  |  | 0.563 |
-| walker |  | 6496 | 86 | export at src/widgetsTemplates/logs.widget.template.js:7 |  |  | 0.563 |
-| walker |  | 6516 | 20 | imports in src/baseWidget.js |  |  | 0.563 |
-| ns | 6552 |  | 484 | grid.config.js: CONTAINERS_GRID_LAYOUT (full) + SERVICES/IMAGES widget-name rosters | 4.9 |  | 0.546 |
-| ns | 6736 |  | 184 | lib/modes.js + src/enum.js + lib/node.version.js (full) | 4.10 |  | 0.557 |
-| walker |  | 6895 | 379 | README.md section #1 |  |  | 0.604 |
+| walker |  | 6519 | 379 | README.md section #1 |  |  | 0.606 |
+| walker |  | 6540 | 21 | export member at src/widgetsTemplates/list.widget.template.js:8 member 9 |  |  | 0.606 |
+| ns | 6552 |  | 484 | grid.config.js: CONTAINERS_GRID_LAYOUT (full) + SERVICES/IMAGES widget-name rosters | 4.9 |  | 0.587 |
+| walker |  | 6649 | 109 | imports in src/screen.js |  |  | 0.592 |
+| ns | 6736 |  | 184 | lib/modes.js + src/enum.js + lib/node.version.js (full) | 4.10 |  | 0.587 |
+| walker |  | 6740 | 91 | export at src/enum.js:1 |  |  | 0.604 |
+| walker |  | 6789 | 49 | export body at src/widgetsTemplates/list.widget.template.js:8 body 120 |  |  | 0.604 |
+| walker |  | 6875 | 86 | export at src/widgetsTemplates/logs.widget.template.js:7 |  |  | 0.604 |
+| walker |  | 6895 | 20 | imports in src/baseWidget.js |  |  | 0.604 |
 | ns | 6942 |  | 206 | dockerUtil.js: method-name roster (all 20 methods, name-only) | 5.1 |  | 0.614 |
 | walker |  | 7002 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.615 |
 | ns | 7290 |  | 348 | dockerUtil.js: constructor (connection config + containerFilters parsing) | 5.2 | 5.1 | 0.600 |

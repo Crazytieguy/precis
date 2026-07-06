@@ -84,34 +84,34 @@ Score(3000)=0.654 I=0.817 C=0.524 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | ns | 2615 |  | 354 | advancedUsage const body | 3.2 | 2.1 | 0.656 |
 | walker |  | 2775 | 422 | README.md section #0 |  |  | 0.696 |
 | walker |  | 2854 | 79 | go package + imports in truststore_nss.go |  |  | 0.696 |
-| walker |  | 2922 | 68 | README.md section #7 |  |  | 0.696 |
-| walker |  | 2961 | 39 | README.md section #10 |  |  | 0.696 |
+| walker |  | 2893 | 39 | README.md section #10 |  |  | 0.696 |
+| walker |  | 2961 | 68 | go decl body at cert.go:202 |  |  | 0.696 |
 | ns | 2962 |  | 347 | main() — flag vars + flag.Usage/Parse | 3.3 | 2.1 | 0.654 |
-| walker |  | 3029 | 68 | go decl body at cert.go:202 |  |  | 0.654 |
-| walker |  | 3107 | 78 | README.md section #5 |  |  | 0.654 |
-| walker |  | 3152 | 45 | README.md section #9 |  |  | 0.654 |
-| walker |  | 3196 | 44 | README.md section #8 |  |  | 0.654 |
+| walker |  | 3006 | 45 | README.md section #9 |  |  | 0.654 |
+| walker |  | 3050 | 44 | README.md section #8 |  |  | 0.654 |
 | ns | 3201 |  | 239 | main() — -help/-version/-CAROOT handling | 3.4 | 3.3 | 0.620 |
-| ns | 3467 |  | 266 | main() — mutual-exclusion guards + mkcert construction | 3.5 |  | 0.601 |
-| walker |  | 3548 | 352 | go decl at main.go:49 |  |  | 0.681 |
+| walker |  | 3402 | 352 | go decl at main.go:49 |  |  | 0.702 |
+| ns | 3467 |  | 266 | main() — mutual-exclusion guards + mkcert construction | 3.5 |  | 0.681 |
+| walker |  | 3568 | 166 | go decl body at main.go:382 |  |  | 0.681 |
 | ns | 3646 |  | 179 | mkcert struct fields | 4.1 | 2.1 | 0.693 |
-| walker |  | 3714 | 166 | go decl body at main.go:382 |  |  | 0.693 |
-| walker |  | 3833 | 119 | go package + imports in truststore_java.go |  |  | 0.693 |
-| walker |  | 3886 | 53 | README.md section #4 |  |  | 0.693 |
-| walker |  | 3968 | 82 | go decl body at cert.go:166 |  |  | 0.693 |
-| walker |  | 4008 | 40 | README.md section #22 |  |  | 0.693 |
-| walker |  | 4051 | 43 | README.md section #17 |  |  | 0.693 |
-| walker |  | 4095 | 44 | README.md section #15 |  |  | 0.699 |
+| walker |  | 3687 | 119 | go package + imports in truststore_java.go |  |  | 0.693 |
+| walker |  | 3769 | 82 | go decl body at cert.go:166 |  |  | 0.693 |
+| walker |  | 3824 | 55 | README.md section #4 |  |  | 0.693 |
+| walker |  | 3864 | 40 | README.md section #22 |  |  | 0.693 |
+| walker |  | 3907 | 43 | README.md section #17 |  |  | 0.693 |
+| walker |  | 3951 | 44 | README.md section #15 |  |  | 0.699 |
+| walker |  | 3996 | 45 | README.md section #24 |  |  | 0.699 |
 | ns | 4136 |  | 490 | Run() — full body: CAROOT setup, install/uninstall/warning dispatch, -csr branch, handoff to makeCert | 4.2 | 2.1 | 0.649 |
-| walker |  | 4140 | 45 | README.md section #24 |  |  | 0.649 |
-| walker |  | 4348 | 208 | go decl at truststore_nss.go:17 |  |  | 0.651 |
-| walker |  | 4395 | 47 | README.md section #19 |  |  | 0.625 |
+| walker |  | 4204 | 208 | go decl at truststore_nss.go:17 |  |  | 0.651 |
+| walker |  | 4251 | 47 | README.md section #19 |  |  | 0.651 |
+| walker |  | 4298 | 47 | README.md section #21 |  |  | 0.651 |
+| walker |  | 4366 | 68 | README.md section #7 |  |  | 0.651 |
 | ns | 4395 |  | 259 | getCAROOT() — CA storage location resolution | 4.3 | 2.1 | 0.625 |
-| walker |  | 4442 | 47 | README.md section #21 |  |  | 0.625 |
+| walker |  | 4482 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.625 |
 | ns | 4526 |  | 131 | install() — system-store install | 4.4 | 2.1 | 0.614 |
-| walker |  | 4558 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.614 |
-| walker |  | 4675 | 117 | go decl body at cert.go:37 |  |  | 0.616 |
-| walker |  | 4931 | 256 | go decl body at main.go:240 |  |  | 0.661 |
+| walker |  | 4599 | 117 | go decl body at cert.go:37 |  |  | 0.616 |
+| walker |  | 4855 | 256 | go decl body at main.go:240 |  |  | 0.661 |
+| walker |  | 4931 | 76 | README.md section #5 |  |  | 0.661 |
 | ns | 4961 |  | 435 | install() — NSS + Java install | 4.5 |  | 0.635 |
 | walker |  | 5071 | 140 | go decl names surface in truststore_darwin.go |  |  | 0.647 |
 | walker |  | 5071 | 0 | go decl at truststore_darwin.go:25 |  |  | 0.647 |
@@ -131,30 +131,30 @@ Score(3000)=0.654 I=0.817 C=0.524 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | walker |  | 5767 | 253 | go package + imports in cert.go |  |  | 0.682 |
 | ns | 5899 |  | 813 | makeCert() — template construction (SANs, KeyUsage, ExtKeyUsage) | 5.2 | 2.2 | 0.635 |
 | walker |  | 5901 | 134 | go decl body at truststore_java.go:81 |  |  | 0.635 |
-| walker |  | 6035 | 134 | README.md section #2 |  |  | 0.635 |
-| walker |  | 6173 | 138 | go decl body at truststore_java.go:94 |  |  | 0.635 |
-| walker |  | 6323 | 150 | go decl body at truststore_java.go:110 |  |  | 0.635 |
-| walker |  | 6466 | 143 | go decl body at truststore_nss.go:73 |  |  | 0.636 |
-| walker |  | 6521 | 55 | README.md section #16 |  |  | 0.636 |
+| walker |  | 6039 | 138 | go decl body at truststore_java.go:94 |  |  | 0.635 |
+| walker |  | 6189 | 150 | go decl body at truststore_java.go:110 |  |  | 0.635 |
+| walker |  | 6332 | 143 | go decl body at truststore_nss.go:73 |  |  | 0.636 |
+| walker |  | 6387 | 55 | README.md section #16 |  |  | 0.636 |
+| walker |  | 6486 | 99 | README.md section #20 |  |  | 0.636 |
 | ns | 6545 |  | 646 | makeCert() — signing, file writes (PEM/PKCS12), and expiry message | 5.3 |  | 0.607 |
-| walker |  | 6620 | 99 | README.md section #20 |  |  | 0.607 |
-| walker |  | 6769 | 149 | go decl body at truststore_nss.go:106 |  |  | 0.607 |
+| walker |  | 6635 | 149 | go decl body at truststore_nss.go:106 |  |  | 0.607 |
+| walker |  | 6738 | 103 | README.md section #3 |  |  | 0.607 |
 | ns | 6770 |  | 225 | printHosts() — certificate-creation banner | 5.4 | 2.2 | 0.596 |
-| walker |  | 6872 | 103 | README.md section #3 |  |  | 0.596 |
-| walker |  | 6979 | 107 | README.md section #6 |  |  | 0.596 |
-| walker |  | 6986 | 7 | listing of '.github' |  |  | 0.600 |
-| walker |  | 6994 | 8 | listing of '.github/workflows' |  |  | 0.609 |
-| ns | 7154 |  | 384 | generateKey() + fileNames() | 5.5 | 2.2 | 0.591 |
-| walker |  | 7247 | 253 | YAML config at .github/workflows/test.yml |  |  | 0.593 |
+| walker |  | 6845 | 107 | README.md section #6 |  |  | 0.596 |
+| walker |  | 6852 | 7 | listing of '.github' |  |  | 0.600 |
+| walker |  | 6860 | 8 | listing of '.github/workflows' |  |  | 0.609 |
+| walker |  | 7113 | 253 | YAML config at .github/workflows/test.yml |  |  | 0.610 |
+| ns | 7154 |  | 384 | generateKey() + fileNames() | 5.5 | 2.2 | 0.593 |
+| walker |  | 7503 | 390 | go decl body at main.go:307 |  |  | 0.593 |
 | ns | 7548 |  | 394 | loadCA() — load existing CA or trigger creation | 5.6 | 2.2 | 0.578 |
-| walker |  | 7637 | 390 | go decl body at main.go:307 |  |  | 0.578 |
-| walker |  | 7727 | 90 | README.md section #18 |  |  | 0.578 |
-| walker |  | 7824 | 97 | README.md section #23 |  |  | 0.578 |
-| walker |  | 8041 | 217 | go decl body at cert.go:148 |  |  | 0.598 |
-| walker |  | 8258 | 217 | go decl body at truststore_nss.go:131 |  |  | 0.599 |
+| walker |  | 7593 | 90 | README.md section #18 |  |  | 0.578 |
+| walker |  | 7690 | 97 | README.md section #23 |  |  | 0.578 |
+| walker |  | 7907 | 217 | go decl body at cert.go:148 |  |  | 0.598 |
+| walker |  | 8124 | 217 | go decl body at truststore_nss.go:131 |  |  | 0.599 |
+| walker |  | 8199 | 75 | go package + imports in truststore_linux.go |  |  | 0.599 |
 | ns | 8280 |  | 732 | newCA() — full body: key + self-signed CA template + sign/write | 5.7 | 2.2 | 0.570 |
 | ns | 8302 |  | 22 | caUniqueName() | 5.8 | 2.2 | 0.570 |
-| walker |  | 8333 | 75 | go package + imports in truststore_linux.go |  |  | 0.570 |
+| walker |  | 8333 | 134 | README.md section #2 |  |  | 0.570 |
 | ns | 8570 |  | 268 | NSS var block — DB paths and Firefox profile globs | 6.1 |  | 0.582 |
 | walker |  | 8589 | 256 | go decl body at truststore_nss.go:89 |  |  | 0.584 |
 | walker |  | 8852 | 263 | go decl body at cert.go:176 |  |  | 0.615 |

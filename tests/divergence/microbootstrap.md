@@ -128,136 +128,141 @@ Score(3000)=0.563 I=0.784 C=0.404 ns_rows≤3K=15/45 (reached=7 partial=1 missin
 | walker |  | 3169 | 21 | python method body at microbootstrap/instruments_setupper.py:28 body 29 |  |  | 0.547 |
 | walker |  | 3248 | 79 | python decl at microbootstrap/granian_server.py:16 |  |  | 0.547 |
 | ns | 3374 |  | 262 | settings.py: LitestarSettings + FastApiSettings | 2.9 |  | 0.522 |
-| walker |  | 3411 | 163 | python decl names surface in microbootstrap/settings.py |  |  | 0.523 |
-| walker |  | 3411 | 0 | python decl at microbootstrap/settings.py:53 |  |  | 0.523 |
-| walker |  | 3428 | 17 | python decl at microbootstrap/settings.py:29 |  |  | 0.523 |
-| walker |  | 3479 | 51 | python decl at microbootstrap/settings.py:105 |  |  | 0.524 |
-| walker |  | 3489 | 10 | python decl doc at microbootstrap/settings.py:105 |  |  | 0.524 |
-| walker |  | 3570 | 81 | python decl at microbootstrap/settings.py:90 |  |  | 0.525 |
-| walker |  | 3587 | 17 | python class body at microbootstrap/settings.py:90 |  |  | 0.526 |
-| ns | 3596 |  | 222 | settings.py: FastStreamSettings + InstrumentsSetupperSettings | 2.10 |  | 0.541 |
-| walker |  | 3598 | 11 | python decl doc at microbootstrap/settings.py:90 |  |  | 0.547 |
-| walker |  | 3662 | 64 | python class body at microbootstrap/settings.py:53 |  |  | 0.550 |
-| walker |  | 3757 | 95 | python decl at microbootstrap/settings.py:60 |  |  | 0.563 |
-| walker |  | 3769 | 12 | python decl doc at microbootstrap/settings.py:60 |  |  | 0.566 |
-| walker |  | 3864 | 95 | python decl at microbootstrap/settings.py:75 |  |  | 0.596 |
-| walker |  | 3876 | 12 | python decl doc at microbootstrap/settings.py:75 |  |  | 0.601 |
-| ns | 3938 |  | 342 | cors_instrument.py (full) | 3.1 |  | 0.576 |
-| walker |  | 4110 | 234 | python class body at microbootstrap/settings.py:29 |  |  | 0.621 |
-| walker |  | 4192 | 82 | python class body at microbootstrap/config/litestar.py:13 |  |  | 0.621 |
-| ns | 4270 |  | 332 | swagger_instrument.py (full) | 3.2 |  | 0.596 |
-| walker |  | 4354 | 162 | python decl names surface in microbootstrap/helpers.py |  |  | 0.596 |
-| walker |  | 4354 | 0 | python decl at microbootstrap/helpers.py:19 |  |  | 0.596 |
-| walker |  | 4354 | 0 | python decl at microbootstrap/helpers.py:96 |  |  | 0.596 |
-| walker |  | 4393 | 39 | python decl at microbootstrap/helpers.py:48 |  |  | 0.596 |
-| walker |  | 4433 | 40 | python decl at microbootstrap/helpers.py:60 |  |  | 0.596 |
-| walker |  | 4449 | 16 | python decl body at microbootstrap/helpers.py:96 body 97 |  |  | 0.596 |
-| walker |  | 4491 | 42 | python decl at microbootstrap/helpers.py:35 |  |  | 0.596 |
-| walker |  | 4533 | 42 | python decl at microbootstrap/helpers.py:100 |  |  | 0.596 |
-| walker |  | 4542 | 9 | python decl body at microbootstrap/helpers.py:60 body 93 |  |  | 0.596 |
-| walker |  | 4571 | 29 | README.md section #42 |  |  | 0.596 |
-| walker |  | 4600 | 29 | python method doc at microbootstrap/bootstrappers/base.py:103 |  |  | 0.596 |
-| walker |  | 4603 | 3 | listing of '.github' |  |  | 0.596 |
-| walker |  | 4612 | 9 | listing of '.github/workflows' |  |  | 0.596 |
-| walker |  | 4638 | 26 | python imports in microbootstrap/config/faststream.py |  |  | 0.596 |
-| walker |  | 4652 | 14 | python decl names surface in microbootstrap/instruments/instrument_box.py |  |  | 0.596 |
-| walker |  | 4660 | 8 | python decl at microbootstrap/instruments/instrument_box.py:9 |  |  | 0.596 |
-| walker |  | 4694 | 34 | README.md section #15 |  |  | 0.596 |
+| walker |  | 3461 | 213 | README.md section #1 |  |  | 0.522 |
+| ns | 3596 |  | 222 | settings.py: FastStreamSettings + InstrumentsSetupperSettings | 2.10 |  | 0.503 |
+| walker |  | 3624 | 163 | python decl names surface in microbootstrap/settings.py |  |  | 0.504 |
+| walker |  | 3624 | 0 | python decl at microbootstrap/settings.py:53 |  |  | 0.504 |
+| walker |  | 3641 | 17 | python decl at microbootstrap/settings.py:29 |  |  | 0.505 |
+| walker |  | 3692 | 51 | python decl at microbootstrap/settings.py:105 |  |  | 0.511 |
+| walker |  | 3702 | 10 | python decl doc at microbootstrap/settings.py:105 |  |  | 0.514 |
+| walker |  | 3783 | 81 | python decl at microbootstrap/settings.py:90 |  |  | 0.536 |
+| walker |  | 3800 | 17 | python class body at microbootstrap/settings.py:90 |  |  | 0.541 |
+| walker |  | 3811 | 11 | python decl doc at microbootstrap/settings.py:90 |  |  | 0.547 |
+| walker |  | 3875 | 64 | python class body at microbootstrap/settings.py:53 |  |  | 0.550 |
+| ns | 3938 |  | 342 | cors_instrument.py (full) | 3.1 |  | 0.527 |
+| walker |  | 3970 | 95 | python decl at microbootstrap/settings.py:60 |  |  | 0.539 |
+| walker |  | 3982 | 12 | python decl doc at microbootstrap/settings.py:60 |  |  | 0.542 |
+| walker |  | 4077 | 95 | python decl at microbootstrap/settings.py:75 |  |  | 0.571 |
+| walker |  | 4089 | 12 | python decl doc at microbootstrap/settings.py:75 |  |  | 0.576 |
+| ns | 4270 |  | 332 | swagger_instrument.py (full) | 3.2 |  | 0.552 |
+| walker |  | 4323 | 234 | python class body at microbootstrap/settings.py:29 |  |  | 0.596 |
+| walker |  | 4405 | 82 | python class body at microbootstrap/config/litestar.py:13 |  |  | 0.596 |
+| walker |  | 4567 | 162 | python decl names surface in microbootstrap/helpers.py |  |  | 0.596 |
+| walker |  | 4567 | 0 | python decl at microbootstrap/helpers.py:19 |  |  | 0.596 |
+| walker |  | 4567 | 0 | python decl at microbootstrap/helpers.py:96 |  |  | 0.596 |
+| walker |  | 4606 | 39 | python decl at microbootstrap/helpers.py:48 |  |  | 0.596 |
+| walker |  | 4646 | 40 | python decl at microbootstrap/helpers.py:60 |  |  | 0.596 |
+| walker |  | 4662 | 16 | python decl body at microbootstrap/helpers.py:96 body 97 |  |  | 0.596 |
+| walker |  | 4704 | 42 | python decl at microbootstrap/helpers.py:35 |  |  | 0.596 |
 | ns | 4722 |  | 452 | health_checks_instrument.py (full) | 3.3 |  | 0.565 |
-| walker |  | 4800 | 106 | README.md section #7 |  |  | 0.565 |
-| walker |  | 4862 | 62 | listing of 'tests/instruments' |  |  | 0.602 |
-| walker |  | 4912 | 50 | python imports in microbootstrap/helpers.py |  |  | 0.602 |
-| walker |  | 4931 | 19 | python method body at microbootstrap/instruments/base.py:29 body 33 |  |  | 0.606 |
-| walker |  | 5118 | 187 | python class body at microbootstrap/config/faststream.py:20 |  |  | 0.606 |
-| walker |  | 5154 | 36 | README.md section #18 |  |  | 0.606 |
-| walker |  | 5185 | 31 | python method body at microbootstrap/instruments_setupper.py:32 body 36 |  |  | 0.606 |
-| walker |  | 5216 | 31 | python method body at microbootstrap/instruments_setupper.py:57 body 58 |  |  | 0.606 |
+| walker |  | 4746 | 42 | python decl at microbootstrap/helpers.py:100 |  |  | 0.565 |
+| walker |  | 4755 | 9 | python decl body at microbootstrap/helpers.py:60 body 93 |  |  | 0.565 |
+| walker |  | 4784 | 29 | README.md section #42 |  |  | 0.565 |
+| walker |  | 4813 | 29 | python method doc at microbootstrap/bootstrappers/base.py:103 |  |  | 0.565 |
+| walker |  | 4816 | 3 | listing of '.github' |  |  | 0.565 |
+| walker |  | 4825 | 9 | listing of '.github/workflows' |  |  | 0.565 |
+| walker |  | 4851 | 26 | python imports in microbootstrap/config/faststream.py |  |  | 0.565 |
+| walker |  | 4865 | 14 | python decl names surface in microbootstrap/instruments/instrument_box.py |  |  | 0.565 |
+| walker |  | 4873 | 8 | python decl at microbootstrap/instruments/instrument_box.py:9 |  |  | 0.565 |
+| walker |  | 4907 | 34 | README.md section #15 |  |  | 0.565 |
+| walker |  | 5013 | 106 | README.md section #7 |  |  | 0.565 |
+| walker |  | 5075 | 62 | listing of 'tests/instruments' |  |  | 0.602 |
+| walker |  | 5125 | 50 | python imports in microbootstrap/helpers.py |  |  | 0.602 |
+| walker |  | 5144 | 19 | python method body at microbootstrap/instruments/base.py:29 body 33 |  |  | 0.606 |
+| walker |  | 5331 | 187 | python class body at microbootstrap/config/faststream.py:20 |  |  | 0.606 |
 | ns | 5353 |  | 631 | pyroscope_instrument.py (full) | 3.4 |  | 0.570 |
+| walker |  | 5367 | 36 | README.md section #18 |  |  | 0.570 |
+| walker |  | 5398 | 31 | python method body at microbootstrap/instruments_setupper.py:32 body 36 |  |  | 0.570 |
+| walker |  | 5429 | 31 | python method body at microbootstrap/instruments_setupper.py:57 body 58 |  |  | 0.570 |
 | ns | 5758 |  | 405 | sentry_instrument.py: SentryConfig | 3.5 |  | 0.553 |
-| walker |  | 5916 | 700 | python class body at microbootstrap/config/fastapi.py:20 |  |  | 0.553 |
-| walker |  | 5954 | 38 | README.md section #9 |  |  | 0.553 |
+| walker |  | 6129 | 700 | python class body at microbootstrap/config/fastapi.py:20 |  |  | 0.553 |
 | ns | 6161 |  | 403 | sentry_instrument.py: is_ready + bootstrap() + before_send helper locations | 3.6 |  | 0.536 |
+| walker |  | 6167 | 38 | README.md section #9 |  |  | 0.536 |
 | ns | 6413 |  | 252 | prometheus_instrument.py: Base/Litestar/FastApi configs | 3.7 |  | 0.527 |
 | ns | 6505 |  | 92 | prometheus_instrument.py: FastStream protocol location + config | 3.8 |  | 0.523 |
-| walker |  | 6650 | 696 | [dependencies] in pyproject.toml |  |  | 0.523 |
-| walker |  | 6671 | 21 | python method body at microbootstrap/bootstrappers/base.py:46 body 50 |  |  | 0.523 |
-| walker |  | 6730 | 59 | python imports in microbootstrap/console_writer.py |  |  | 0.523 |
-| walker |  | 6791 | 61 | python imports in microbootstrap/granian_server.py |  |  | 0.523 |
+| walker |  | 6863 | 696 | [dependencies] in pyproject.toml |  |  | 0.523 |
+| walker |  | 6884 | 21 | python method body at microbootstrap/bootstrappers/base.py:46 body 50 |  |  | 0.523 |
 | ns | 6888 |  | 383 | opentelemetry_instrument.py: OpentelemetryConfig | 3.9 |  | 0.512 |
+| walker |  | 6943 | 59 | python imports in microbootstrap/console_writer.py |  |  | 0.512 |
+| walker |  | 7004 | 61 | python imports in microbootstrap/granian_server.py |  |  | 0.512 |
 | ns | 7145 |  | 257 | opentelemetry_instrument.py: bootstrap() resource + tracer_provider | 3.10 |  | 0.504 |
-| walker |  | 7338 | 547 | manifest config in pyproject.toml |  |  | 0.504 |
-| walker |  | 7375 | 37 | python method body at microbootstrap/instruments_setupper.py:23 body 24 |  |  | 0.504 |
-| ns | 7383 |  | 238 | opentelemetry_instrument.py: bootstrap() exporters + instrumentors | 3.11 |  | 0.497 |
-| walker |  | 7412 | 37 | python method body at microbootstrap/instruments_setupper.py:40 body 47 |  |  | 0.497 |
-| walker |  | 7458 | 46 | README.md section #21 |  |  | 0.497 |
+| ns | 7383 |  | 238 | opentelemetry_instrument.py: bootstrap() exporters + instrumentors | 3.11 |  | 0.496 |
+| walker |  | 7551 | 547 | manifest config in pyproject.toml |  |  | 0.496 |
+| walker |  | 7588 | 37 | python method body at microbootstrap/instruments_setupper.py:23 body 24 |  |  | 0.497 |
+| walker |  | 7625 | 37 | python method body at microbootstrap/instruments_setupper.py:40 body 47 |  |  | 0.497 |
 | ns | 7662 |  | 279 | logging_instrument.py: LoggingConfig | 3.12 |  | 0.488 |
-| walker |  | 7671 | 213 | README.md section #1 |  |  | 0.488 |
+| walker |  | 7671 | 46 | README.md section #21 |  |  | 0.488 |
 | walker |  | 7697 | 26 | python method body at microbootstrap/bootstrappers/base.py:39 body 43 |  |  | 0.488 |
 | walker |  | 7739 | 42 | python method body at microbootstrap/instruments_setupper.py:51 body 52 |  |  | 0.489 |
 | walker |  | 7820 | 81 | python decl body at microbootstrap/helpers.py:48 body 52 |  |  | 0.489 |
 | walker |  | 7868 | 48 | python imports in microbootstrap/instruments/health_checks_instrument.py |  |  | 0.489 |
 | ns | 7884 |  | 222 | logging_instrument.py: _configure_structlog_loggers (debug vs prod) | 3.13 |  | 0.481 |
 | walker |  | 7914 | 46 | python method body at microbootstrap/console_writer.py:31 body 32 |  |  | 0.481 |
-| ns | 8056 |  | 172 | litestar.py: Bootstrapper + instrument-class roster | 4.1 |  | 0.477 |
-| ns | 8212 |  | 156 | fastapi.py: Bootstrapper + instrument-class roster | 4.2 |  | 0.474 |
-| walker |  | 8292 | 378 | README.md section #2 |  |  | 0.474 |
-| walker |  | 8341 | 49 | python imports in microbootstrap/instruments/cors_instrument.py |  |  | 0.475 |
-| walker |  | 8367 | 26 | python decl names surface in microbootstrap/instruments/cors_instrument.py |  |  | 0.476 |
-| walker |  | 8367 | 0 | python decl at microbootstrap/instruments/cors_instrument.py:8 |  |  | 0.476 |
-| walker |  | 8367 | 0 | python decl at microbootstrap/instruments/cors_instrument.py:18 |  |  | 0.476 |
-| ns | 8379 |  | 167 | faststream.py: Bootstrapper + instrument-class roster | 4.3 |  | 0.473 |
-| walker |  | 8393 | 26 | python class body at microbootstrap/instruments/cors_instrument.py:18 |  |  | 0.474 |
-| walker |  | 8425 | 32 | python method sigs in microbootstrap/instruments/cors_instrument.py |  |  | 0.476 |
-| walker |  | 8425 | 0 | python method at microbootstrap/instruments/cors_instrument.py:22 |  |  | 0.476 |
-| ns | 8426 |  | 47 | bootstrappers/base.py: ApplicationBootstrapper.configure_application/configure_instrument(s)/use_instrument locations | 5.1 |  | 0.479 |
-| walker |  | 8433 | 8 | python method at microbootstrap/instruments/cors_instrument.py:27 |  |  | 0.480 |
-| walker |  | 8440 | 7 | python method body at microbootstrap/instruments/cors_instrument.py:27 body 29 |  |  | 0.480 |
+| walker |  | 7963 | 49 | python imports in microbootstrap/instruments/cors_instrument.py |  |  | 0.482 |
+| walker |  | 7989 | 26 | python decl names surface in microbootstrap/instruments/cors_instrument.py |  |  | 0.483 |
+| walker |  | 7989 | 0 | python decl at microbootstrap/instruments/cors_instrument.py:8 |  |  | 0.483 |
+| walker |  | 7989 | 0 | python decl at microbootstrap/instruments/cors_instrument.py:18 |  |  | 0.483 |
+| walker |  | 8015 | 26 | python class body at microbootstrap/instruments/cors_instrument.py:18 |  |  | 0.484 |
+| walker |  | 8047 | 32 | python method sigs in microbootstrap/instruments/cors_instrument.py |  |  | 0.486 |
+| walker |  | 8047 | 0 | python method at microbootstrap/instruments/cors_instrument.py:22 |  |  | 0.486 |
+| walker |  | 8055 | 8 | python method at microbootstrap/instruments/cors_instrument.py:27 |  |  | 0.487 |
+| ns | 8056 |  | 172 | litestar.py: Bootstrapper + instrument-class roster | 4.1 |  | 0.483 |
+| walker |  | 8062 | 7 | python method body at microbootstrap/instruments/cors_instrument.py:27 body 29 |  |  | 0.484 |
+| ns | 8212 |  | 156 | fastapi.py: Bootstrapper + instrument-class roster | 4.2 |  | 0.480 |
+| ns | 8379 |  | 167 | faststream.py: Bootstrapper + instrument-class roster | 4.3 |  | 0.477 |
+| ns | 8426 |  | 47 | bootstrappers/base.py: ApplicationBootstrapper.configure_application/configure_instrument(s)/use_instrument locations | 5.1 |  | 0.480 |
+| walker |  | 8427 | 365 | README.md section #5 |  |  | 0.480 |
+| walker |  | 8458 | 31 | python method body at microbootstrap/bootstrappers/base.py:53 body 57 |  |  | 0.480 |
+| walker |  | 8489 | 31 | python method body at microbootstrap/bootstrappers/base.py:111 body 112 |  |  | 0.480 |
+| walker |  | 8545 | 56 | python imports in microbootstrap/config/litestar.py |  |  | 0.480 |
 | ns | 8574 |  | 148 | instruments_setupper.py: InstrumentsSetupper fields + __init__ + configure_instrument(s)/use_instrument locations | 5.2 |  | 0.487 |
-| ns | 8747 |  | 173 | instruments_setupper.py: setup()/teardown() + instrument registrations | 5.3 |  | 0.488 |
-| walker |  | 8805 | 365 | README.md section #5 |  |  | 0.488 |
-| walker |  | 8836 | 31 | python method body at microbootstrap/bootstrappers/base.py:53 body 57 |  |  | 0.488 |
-| walker |  | 8867 | 31 | python method body at microbootstrap/bootstrappers/base.py:111 body 112 |  |  | 0.488 |
-| walker |  | 8923 | 56 | python imports in microbootstrap/config/litestar.py |  |  | 0.488 |
-| walker |  | 8979 | 56 | python imports in microbootstrap/instruments/pyroscope_instrument.py |  |  | 0.488 |
-| walker |  | 9031 | 52 | python method body at microbootstrap/console_writer.py:22 body 28 |  |  | 0.488 |
-| walker |  | 9088 | 57 | python imports in microbootstrap/instruments/instrument_box.py |  |  | 0.491 |
-| ns | 9186 |  | 439 | helpers.py: merge_dict_configs | 5.4 |  | 0.480 |
-| walker |  | 9293 | 205 | README.md section #6 |  |  | 0.482 |
-| ns | 9293 |  | 107 | exceptions.py (full) | 5.5 |  | 0.482 |
-| walker |  | 9323 | 30 | python decl names surface in microbootstrap/instruments/swagger_instrument.py |  |  | 0.482 |
-| walker |  | 9323 | 0 | python decl at microbootstrap/instruments/swagger_instrument.py:10 |  |  | 0.482 |
-| walker |  | 9323 | 0 | python decl at microbootstrap/instruments/swagger_instrument.py:21 |  |  | 0.482 |
-| walker |  | 9348 | 25 | python class body at microbootstrap/instruments/swagger_instrument.py:21 |  |  | 0.483 |
-| ns | 9365 |  | 72 | config/ + middlewares/ locations | 5.6 |  | 0.486 |
-| walker |  | 9380 | 32 | python method sigs in microbootstrap/instruments/swagger_instrument.py |  |  | 0.487 |
-| walker |  | 9380 | 0 | python method at microbootstrap/instruments/swagger_instrument.py:25 |  |  | 0.487 |
-| walker |  | 9388 | 8 | python method at microbootstrap/instruments/swagger_instrument.py:28 |  |  | 0.488 |
-| walker |  | 9395 | 7 | python method body at microbootstrap/instruments/swagger_instrument.py:28 body 30 |  |  | 0.488 |
-| ns | 9400 |  | 35 | console_writer.py locations | 5.7 |  | 0.490 |
-| walker |  | 9416 | 21 | python method body at microbootstrap/instruments/swagger_instrument.py:25 body 26 |  |  | 0.491 |
-| walker |  | 9519 | 103 | python decl body at microbootstrap/helpers.py:35 body 39 |  |  | 0.491 |
-| ns | 9567 |  | 167 | tests/conftest.py: fixture roster (session/app + first half of instrument configs) | 9.1 |  | 0.488 |
-| walker |  | 9579 | 60 | README.md section #39 |  |  | 0.488 |
-| walker |  | 9610 | 31 | python decl names surface in microbootstrap/instruments/pyroscope_instrument.py |  |  | 0.489 |
-| walker |  | 9610 | 0 | python decl at microbootstrap/instruments/pyroscope_instrument.py:15 |  |  | 0.489 |
-| walker |  | 9610 | 0 | python decl at microbootstrap/instruments/pyroscope_instrument.py:27 |  |  | 0.489 |
-| walker |  | 9636 | 26 | python class body at microbootstrap/instruments/pyroscope_instrument.py:27 |  |  | 0.490 |
-| walker |  | 9697 | 61 | python method sigs in microbootstrap/instruments/pyroscope_instrument.py |  |  | 0.492 |
-| walker |  | 9697 | 0 | python method at microbootstrap/instruments/pyroscope_instrument.py:31 |  |  | 0.492 |
-| walker |  | 9697 | 0 | python method at microbootstrap/instruments/pyroscope_instrument.py:34 |  |  | 0.492 |
-| walker |  | 9697 | 0 | python method at microbootstrap/instruments/pyroscope_instrument.py:37 |  |  | 0.492 |
-| walker |  | 9704 | 7 | python method body at microbootstrap/instruments/pyroscope_instrument.py:34 body 35 |  |  | 0.492 |
-| walker |  | 9712 | 8 | python method at microbootstrap/instruments/pyroscope_instrument.py:52 |  |  | 0.492 |
-| walker |  | 9720 | 8 | python method body at microbootstrap/instruments/pyroscope_instrument.py:52 body 54 |  |  | 0.493 |
-| walker |  | 9736 | 16 | python method body at microbootstrap/instruments/pyroscope_instrument.py:31 body 32 |  |  | 0.494 |
-| ns | 9750 |  | 183 | tests/conftest.py: fixture roster (remaining configs + settings/console-writer + generic mocks/autouse) | 9.2 |  | 0.490 |
-| walker |  | 9798 | 62 | python method sigs in microbootstrap/instruments/instrument_box.py |  |  | 0.492 |
-| walker |  | 9798 | 0 | python method at microbootstrap/instruments/instrument_box.py:14 |  |  | 0.492 |
-| walker |  | 9806 | 8 | python method at microbootstrap/instruments/instrument_box.py:48 |  |  | 0.492 |
-| walker |  | 9816 | 10 | python method body at microbootstrap/instruments/instrument_box.py:48 body 50 |  |  | 0.492 |
-| walker |  | 9844 | 28 | python method at microbootstrap/instruments/instrument_box.py:21 |  |  | 0.493 |
-| ns | 9867 |  | 117 | Justfile: core recipes | 10.1 |  | 0.489 |
-| walker |  | 9892 | 48 | python class body at microbootstrap/instruments/instrument_box.py:9 |  |  | 0.493 |
-| ns | 9940 |  | 73 | README: simple vs complex type override semantics | 11.1 |  | 0.492 |
-| walker |  | 9957 | 65 | python imports in microbootstrap/instruments/swagger_instrument.py |  |  | 0.499 |
-| walker |  | 9995 | 38 | python method at microbootstrap/instruments/instrument_box.py:34 |  |  | 0.501 |
+| walker |  | 8601 | 56 | python imports in microbootstrap/instruments/pyroscope_instrument.py |  |  | 0.487 |
+| walker |  | 8653 | 52 | python method body at microbootstrap/console_writer.py:22 body 28 |  |  | 0.487 |
+| walker |  | 8710 | 57 | python imports in microbootstrap/instruments/instrument_box.py |  |  | 0.490 |
+| ns | 8747 |  | 173 | instruments_setupper.py: setup()/teardown() + instrument registrations | 5.3 |  | 0.491 |
+| walker |  | 8915 | 205 | README.md section #6 |  |  | 0.491 |
+| walker |  | 8945 | 30 | python decl names surface in microbootstrap/instruments/swagger_instrument.py |  |  | 0.491 |
+| walker |  | 8945 | 0 | python decl at microbootstrap/instruments/swagger_instrument.py:10 |  |  | 0.491 |
+| walker |  | 8945 | 0 | python decl at microbootstrap/instruments/swagger_instrument.py:21 |  |  | 0.491 |
+| walker |  | 8970 | 25 | python class body at microbootstrap/instruments/swagger_instrument.py:21 |  |  | 0.492 |
+| walker |  | 9002 | 32 | python method sigs in microbootstrap/instruments/swagger_instrument.py |  |  | 0.493 |
+| walker |  | 9002 | 0 | python method at microbootstrap/instruments/swagger_instrument.py:25 |  |  | 0.493 |
+| walker |  | 9010 | 8 | python method at microbootstrap/instruments/swagger_instrument.py:28 |  |  | 0.494 |
+| walker |  | 9017 | 7 | python method body at microbootstrap/instruments/swagger_instrument.py:28 body 30 |  |  | 0.494 |
+| walker |  | 9038 | 21 | python method body at microbootstrap/instruments/swagger_instrument.py:25 body 26 |  |  | 0.496 |
+| walker |  | 9141 | 103 | python decl body at microbootstrap/helpers.py:35 body 39 |  |  | 0.496 |
+| ns | 9186 |  | 439 | helpers.py: merge_dict_configs | 5.4 |  | 0.484 |
+| walker |  | 9201 | 60 | README.md section #39 |  |  | 0.484 |
+| walker |  | 9232 | 31 | python decl names surface in microbootstrap/instruments/pyroscope_instrument.py |  |  | 0.485 |
+| walker |  | 9232 | 0 | python decl at microbootstrap/instruments/pyroscope_instrument.py:15 |  |  | 0.485 |
+| walker |  | 9232 | 0 | python decl at microbootstrap/instruments/pyroscope_instrument.py:27 |  |  | 0.485 |
+| walker |  | 9258 | 26 | python class body at microbootstrap/instruments/pyroscope_instrument.py:27 |  |  | 0.485 |
+| ns | 9293 |  | 107 | exceptions.py (full) | 5.5 |  | 0.488 |
+| walker |  | 9319 | 61 | python method sigs in microbootstrap/instruments/pyroscope_instrument.py |  |  | 0.490 |
+| walker |  | 9319 | 0 | python method at microbootstrap/instruments/pyroscope_instrument.py:31 |  |  | 0.490 |
+| walker |  | 9319 | 0 | python method at microbootstrap/instruments/pyroscope_instrument.py:34 |  |  | 0.490 |
+| walker |  | 9319 | 0 | python method at microbootstrap/instruments/pyroscope_instrument.py:37 |  |  | 0.490 |
+| walker |  | 9326 | 7 | python method body at microbootstrap/instruments/pyroscope_instrument.py:34 body 35 |  |  | 0.490 |
+| walker |  | 9334 | 8 | python method at microbootstrap/instruments/pyroscope_instrument.py:52 |  |  | 0.491 |
+| walker |  | 9342 | 8 | python method body at microbootstrap/instruments/pyroscope_instrument.py:52 body 54 |  |  | 0.491 |
+| walker |  | 9358 | 16 | python method body at microbootstrap/instruments/pyroscope_instrument.py:31 body 32 |  |  | 0.492 |
+| ns | 9365 |  | 72 | config/ + middlewares/ locations | 5.6 |  | 0.495 |
+| ns | 9400 |  | 35 | console_writer.py locations | 5.7 |  | 0.497 |
+| walker |  | 9420 | 62 | python method sigs in microbootstrap/instruments/instrument_box.py |  |  | 0.498 |
+| walker |  | 9420 | 0 | python method at microbootstrap/instruments/instrument_box.py:14 |  |  | 0.498 |
+| walker |  | 9428 | 8 | python method at microbootstrap/instruments/instrument_box.py:48 |  |  | 0.499 |
+| walker |  | 9438 | 10 | python method body at microbootstrap/instruments/instrument_box.py:48 body 50 |  |  | 0.499 |
+| walker |  | 9466 | 28 | python method at microbootstrap/instruments/instrument_box.py:21 |  |  | 0.500 |
+| walker |  | 9514 | 48 | python class body at microbootstrap/instruments/instrument_box.py:9 |  |  | 0.504 |
+| ns | 9567 |  | 167 | tests/conftest.py: fixture roster (session/app + first half of instrument configs) | 9.1 |  | 0.501 |
+| walker |  | 9579 | 65 | python imports in microbootstrap/instruments/swagger_instrument.py |  |  | 0.508 |
+| walker |  | 9617 | 38 | python method at microbootstrap/instruments/instrument_box.py:34 |  |  | 0.510 |
+| walker |  | 9637 | 20 | python method doc at microbootstrap/instruments/instrument_box.py:34 |  |  | 0.511 |
+| walker |  | 9674 | 37 | python method body at microbootstrap/bootstrappers/base.py:61 body 68 |  |  | 0.511 |
+| walker |  | 9711 | 37 | python method body at microbootstrap/instruments/cors_instrument.py:22 body 23 |  |  | 0.515 |
+| ns | 9750 |  | 183 | tests/conftest.py: fixture roster (remaining configs + settings/console-writer + generic mocks/autouse) | 9.2 |  | 0.511 |
+| walker |  | 9780 | 69 | README.md section #11 |  |  | 0.511 |
+| walker |  | 9847 | 67 | python imports in microbootstrap/instruments/base.py |  |  | 0.523 |
+| ns | 9867 |  | 117 | Justfile: core recipes | 10.1 |  | 0.519 |
+| ns | 9940 |  | 73 | README: simple vs complex type override semantics | 11.1 |  | 0.518 |
+| walker |  | 9962 | 115 | python decl body at microbootstrap/granian_server.py:27 body 32 |  |  | 0.518 |

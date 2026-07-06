@@ -174,51 +174,56 @@ Score(3000)=0.555 I=0.743 C=0.415 ns_rows≤3K=18/40 (reached=8 partial=0 missin
 | walker |  | 7424 | 14 | module item at examples/split.js:9 |  |  | 0.443 |
 | walker |  | 7438 | 14 | module item at examples/string-util.js:2 |  |  | 0.443 |
 | walker |  | 7452 | 14 | module item at examples/thank.js:6 |  |  | 0.443 |
+| walker |  | 7467 | 15 | module item at examples/arguments-extra.js:6 |  |  | 0.443 |
+| walker |  | 7482 | 15 | module item at examples/defaultCommand.js:4 |  |  | 0.443 |
+| walker |  | 7497 | 15 | module item at examples/options-defaults.js:7 |  |  | 0.443 |
+| walker |  | 7512 | 15 | module item at examples/options-required.js:9 |  |  | 0.454 |
 | ns | 7512 |  | 237 | lib/option.js: public method/class/function name roster | 5.1 |  | 0.454 |
-| walker |  | 7742 | 290 | Readme.md section #3 |  |  | 0.454 |
-| walker |  | 7757 | 15 | module item at examples/arguments-extra.js:6 |  |  | 0.454 |
-| walker |  | 7772 | 15 | module item at examples/defaultCommand.js:4 |  |  | 0.454 |
-| walker |  | 7787 | 15 | module item at examples/options-defaults.js:7 |  |  | 0.454 |
-| walker |  | 7802 | 15 | module item at examples/options-required.js:9 |  |  | 0.454 |
-| walker |  | 7817 | 15 | module item at examples/options-variadic.js:6 |  |  | 0.456 |
+| walker |  | 7527 | 15 | module item at examples/options-variadic.js:6 |  |  | 0.454 |
+| walker |  | 7542 | 15 | module item at examples/split.js:10 |  |  | 0.454 |
+| walker |  | 7552 | 10 | imports in examples/configure-output.js |  |  | 0.454 |
+| walker |  | 7664 | 112 | export doc at lib/option.js:268 |  |  | 0.454 |
+| walker |  | 7757 | 93 | listing of 'tests/fixtures' |  |  | 0.454 |
 | ns | 7817 |  | 305 | lib/help.js: method roster part 1 of 2 (visibility-filtering, term/description, layout) | 5.2 |  | 0.456 |
-| walker |  | 7832 | 15 | module item at examples/split.js:10 |  |  | 0.456 |
-| walker |  | 7842 | 10 | imports in examples/configure-output.js |  |  | 0.456 |
-| walker |  | 7954 | 112 | export doc at lib/option.js:268 |  |  | 0.456 |
-| walker |  | 8047 | 93 | listing of 'tests/fixtures' |  |  | 0.456 |
 | ns | 8083 |  | 266 | lib/help.js: method roster part 2 of 2 (style hooks + layout helpers) + stripColor | 5.3 |  | 0.459 |
-| walker |  | 8415 | 368 | export body at lib/command.js:2752 body 2753 |  |  | 0.459 |
-| walker |  | 8427 | 12 | imports in examples/arguments-custom-processing.js |  |  | 0.459 |
-| walker |  | 8439 | 12 | imports in examples/arguments-extra.js |  |  | 0.459 |
-| walker |  | 8451 | 12 | imports in examples/defaultCommand.js |  |  | 0.459 |
-| walker |  | 8463 | 12 | imports in examples/nestedCommands.js |  |  | 0.459 |
-| walker |  | 8475 | 12 | imports in examples/options-boolean-or-value.js |  |  | 0.459 |
-| walker |  | 8487 | 12 | imports in examples/options-common.js |  |  | 0.459 |
+| walker |  | 8125 | 368 | export body at lib/command.js:2752 body 2753 |  |  | 0.459 |
+| walker |  | 8137 | 12 | imports in examples/arguments-custom-processing.js |  |  | 0.459 |
+| walker |  | 8149 | 12 | imports in examples/arguments-extra.js |  |  | 0.459 |
+| walker |  | 8161 | 12 | imports in examples/defaultCommand.js |  |  | 0.459 |
+| walker |  | 8173 | 12 | imports in examples/nestedCommands.js |  |  | 0.459 |
+| walker |  | 8185 | 12 | imports in examples/options-boolean-or-value.js |  |  | 0.459 |
+| walker |  | 8197 | 12 | imports in examples/options-common.js |  |  | 0.459 |
+| walker |  | 8209 | 12 | imports in examples/options-custom-processing.js |  |  | 0.459 |
+| walker |  | 8221 | 12 | imports in examples/options-defaults.js |  |  | 0.459 |
+| walker |  | 8233 | 12 | imports in examples/options-negatable.js |  |  | 0.459 |
+| walker |  | 8245 | 12 | imports in examples/options-required.js |  |  | 0.459 |
+| walker |  | 8257 | 12 | imports in examples/options-variadic.js |  |  | 0.459 |
+| walker |  | 8269 | 12 | imports in examples/string-util.js |  |  | 0.459 |
+| walker |  | 8290 | 21 | module item at examples/options-negatable.js:18 |  |  | 0.459 |
+| walker |  | 8351 | 61 | module item body at examples/custom-command-class.js:6 body 8 |  |  | 0.459 |
+| walker |  | 8365 | 14 | imports in examples/action-this.js |  |  | 0.459 |
+| walker |  | 8379 | 14 | imports in examples/alias.js |  |  | 0.459 |
+| walker |  | 8393 | 14 | imports in examples/argument.js |  |  | 0.459 |
+| walker |  | 8407 | 14 | imports in examples/custom-command-class.js |  |  | 0.459 |
+| walker |  | 8421 | 14 | imports in examples/pass-through-options.js |  |  | 0.459 |
+| walker |  | 8435 | 14 | imports in examples/positional-options.js |  |  | 0.459 |
+| walker |  | 8449 | 14 | imports in examples/split.js |  |  | 0.459 |
+| walker |  | 8463 | 14 | imports in examples/thank.js |  |  | 0.459 |
 | ns | 8495 |  | 412 | lib/error.js full body | 5.4 |  | 0.461 |
-| walker |  | 8499 | 12 | imports in examples/options-custom-processing.js |  |  | 0.461 |
-| walker |  | 8511 | 12 | imports in examples/options-defaults.js |  |  | 0.461 |
-| walker |  | 8523 | 12 | imports in examples/options-negatable.js |  |  | 0.461 |
-| walker |  | 8535 | 12 | imports in examples/options-required.js |  |  | 0.461 |
-| walker |  | 8547 | 12 | imports in examples/options-variadic.js |  |  | 0.461 |
-| walker |  | 8559 | 12 | imports in examples/string-util.js |  |  | 0.461 |
-| walker |  | 8580 | 21 | module item at examples/options-negatable.js:18 |  |  | 0.461 |
-| walker |  | 8641 | 61 | module item body at examples/custom-command-class.js:6 body 8 |  |  | 0.461 |
-| walker |  | 8655 | 14 | imports in examples/action-this.js |  |  | 0.461 |
-| walker |  | 8669 | 14 | imports in examples/alias.js |  |  | 0.461 |
-| walker |  | 8683 | 14 | imports in examples/argument.js |  |  | 0.461 |
-| walker |  | 8697 | 14 | imports in examples/custom-command-class.js |  |  | 0.461 |
-| walker |  | 8711 | 14 | imports in examples/pass-through-options.js |  |  | 0.461 |
-| walker |  | 8725 | 14 | imports in examples/positional-options.js |  |  | 0.461 |
-| walker |  | 8739 | 14 | imports in examples/split.js |  |  | 0.461 |
-| walker |  | 8753 | 14 | imports in examples/thank.js |  |  | 0.461 |
-| ns | 8936 |  | 441 | lib/argument.js: constructor (full) | 5.5 |  | 0.448 |
-| walker |  | 8963 | 210 | docs/help-in-depth.md section #0 |  |  | 0.450 |
+| walker |  | 8673 | 210 | docs/help-in-depth.md section #0 |  |  | 0.463 |
+| walker |  | 8899 | 226 | package dependencies in package.json |  |  | 0.463 |
+| ns | 8936 |  | 441 | lib/argument.js: constructor (full) | 5.5 |  | 0.450 |
 | ns | 9135 |  | 199 | typings/index.d.ts: TS-only declarations not mirrored in lib/ JSDoc | 6.1 |  | 0.445 |
 | ns | 9183 |  | 48 | tests/: argument-parsing test files | 7.1 |  | 0.449 |
-| walker |  | 9189 | 226 | package dependencies in package.json |  |  | 0.449 |
-| ns | 9523 |  | 340 | tests/: command.* test files | 7.2 |  | 0.477 |
-| ns | 9703 |  | 180 | tests/: help.* test files | 7.3 |  | 0.490 |
-| walker |  | 9762 | 573 | export body at lib/argument.js:3 body 14 |  |  | 0.508 |
+| walker |  | 9472 | 573 | export body at lib/argument.js:3 body 14 |  |  | 0.471 |
+| ns | 9523 |  | 340 | tests/: command.* test files | 7.2 |  | 0.496 |
+| walker |  | 9695 | 223 | docs/options-in-depth.md section #0 |  |  | 0.496 |
+| ns | 9703 |  | 180 | tests/: help.* test files | 7.3 |  | 0.508 |
+| walker |  | 9711 | 16 | imports in examples/help-groups.js |  |  | 0.508 |
+| walker |  | 9727 | 16 | imports in examples/hook.js |  |  | 0.508 |
+| walker |  | 9743 | 16 | imports in examples/options-conflicts.js |  |  | 0.508 |
+| walker |  | 9759 | 16 | imports in examples/options-env.js |  |  | 0.508 |
+| walker |  | 9775 | 16 | imports in examples/options-extra.js |  |  | 0.508 |
+| walker |  | 9791 | 16 | imports in examples/options-implies.js |  |  | 0.508 |
 | ns | 9883 |  | 180 | tests/: option.*/options.* test files | 7.4 |  | 0.520 |
 | ns | 9948 |  | 65 | tests/: remaining root-level test files + fixtures/, fixtures-extensions/ | 7.5 |  | 0.525 |
-| walker |  | 9985 | 223 | docs/options-in-depth.md section #0 |  |  | 0.525 |
