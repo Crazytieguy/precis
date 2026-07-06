@@ -15,10 +15,10 @@ Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missi
 | ns | 333 |  | 28 | package.json: license + author | 1.6 |  | 0.508 |
 | walker |  | 337 | 201 | headings outline in README.md |  |  | 0.515 |
 | walker |  | 362 | 25 | README.md section #1 |  |  | 0.515 |
-| ns | 461 |  | 128 | package.json: repository/bin/files/type | 1.7 |  | 0.452 |
-| walker |  | 513 | 151 | README.md section #0 |  |  | 0.455 |
-| walker |  | 584 | 71 | listing of 'src' |  |  | 0.657 |
-| walker |  | 601 | 17 | listing of 'src/adapters' |  |  | 0.695 |
+| walker |  | 433 | 71 | listing of 'src' |  |  | 0.745 |
+| walker |  | 450 | 17 | listing of 'src/adapters' |  |  | 0.788 |
+| ns | 461 |  | 128 | package.json: repository/bin/files/type | 1.7 |  | 0.691 |
+| walker |  | 601 | 151 | README.md section #0 |  |  | 0.695 |
 | ns | 625 |  | 164 | package.json: scripts | 1.8 |  | 0.633 |
 | walker |  | 631 | 30 | README.md section #18 |  |  | 0.634 |
 | walker |  | 642 | 11 | README.md section #9 |  |  | 0.634 |

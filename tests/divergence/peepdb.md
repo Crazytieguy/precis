@@ -20,20 +20,20 @@ Score(3000)=0.548 I=0.799 C=0.376 ns_rows≤3K=19/53 (reached=9 partial=0 missin
 | walker |  | 273 | 14 | python decl names surface in peepdb/db/base.py |  |  | 0.709 |
 | walker |  | 273 | 0 | python decl at peepdb/db/base.py:5 |  |  | 0.709 |
 | walker |  | 301 | 28 | listing of 'images' |  |  | 0.762 |
+| walker |  | 313 | 12 | python imports in peepdb/__main__.py |  |  | 0.763 |
+| walker |  | 327 | 14 | python imports in setup.py |  |  | 0.763 |
 | ns | 333 |  | 97 | README title + one-line description | 1.8 |  | 0.769 |
-| walker |  | 494 | 193 | headings outline in README.md |  |  | 0.769 |
-| ns | 512 |  | 179 | README feature list | 1.9 |  | 0.703 |
-| walker |  | 529 | 35 | README.md section #8 |  |  | 0.703 |
-| walker |  | 541 | 12 | python imports in peepdb/__main__.py |  |  | 0.704 |
-| walker |  | 555 | 14 | python imports in setup.py |  |  | 0.704 |
-| walker |  | 596 | 41 | listing of 'docs' |  |  | 0.815 |
-| walker |  | 692 | 96 | README headline in docs/README.md |  |  | 0.815 |
+| walker |  | 368 | 41 | listing of 'docs' |  |  | 0.892 |
+| walker |  | 464 | 96 | README headline in docs/README.md |  |  | 0.892 |
+| ns | 512 |  | 179 | README feature list | 1.9 |  | 0.815 |
+| walker |  | 518 | 54 | headings outline in docs/installation.md |  |  | 0.815 |
+| walker |  | 574 | 56 | headings outline in docs/index.md |  |  | 0.815 |
 | ns | 693 |  | 181 | MANIFEST.in + .gitignore | 2.1 |  | 0.670 |
-| walker |  | 746 | 54 | headings outline in docs/installation.md |  |  | 0.671 |
-| walker |  | 802 | 56 | headings outline in docs/index.md |  |  | 0.671 |
-| walker |  | 832 | 30 | README.md section #11 |  |  | 0.671 |
-| ns | 978 |  | 285 | Installation: pip install + system deps + verification | 2.2 |  | 0.578 |
-| walker |  | 1047 | 215 | python imports in peepdb/db/__init__.py |  |  | 0.580 |
+| walker |  | 789 | 215 | python imports in peepdb/db/__init__.py |  |  | 0.672 |
+| ns | 978 |  | 285 | Installation: pip install + system deps + verification | 2.2 |  | 0.577 |
+| walker |  | 982 | 193 | headings outline in README.md |  |  | 0.580 |
+| walker |  | 1017 | 35 | README.md section #8 |  |  | 0.580 |
+| walker |  | 1047 | 30 | README.md section #11 |  |  | 0.580 |
 | walker |  | 1075 | 28 | README.md section #30 |  |  | 0.580 |
 | walker |  | 1094 | 19 | README.md section #5 |  |  | 0.582 |
 | walker |  | 1124 | 30 | README.md section #29 |  |  | 0.582 |

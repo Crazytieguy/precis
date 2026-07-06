@@ -16,15 +16,15 @@ Score(3000)=0.611 I=0.720 C=0.518 ns_rows≤3K=29/43 (reached=14 partial=2 missi
 | walker |  | 289 | 62 | package identity metadata in package.json |  |  | 0.703 |
 | walker |  | 316 | 27 | listing of 'internal' |  |  | 0.712 |
 | ns | 358 |  | 105 | functions/ listing | 1.5 |  | 0.549 |
-| ns | 414 |  | 56 | ranges/ listing | 1.6 |  | 0.502 |
-| ns | 441 |  | 27 | internal/ listing | 1.7 |  | 0.521 |
-| ns | 446 |  | 5 | bin/ listing | 1.8 |  | 0.523 |
-| ns | 484 |  | 38 | benchmarks/ listing | 1.9 |  | 0.503 |
-| walker |  | 496 | 180 | headings outline in README.md |  |  | 0.520 |
-| ns | 517 |  | 33 | test/ top-level listing | 1.10 |  | 0.489 |
-| walker |  | 521 | 25 | README.md section #1 |  |  | 0.519 |
-| ns | 534 |  | 17 | test/classes/ listing | 1.11 |  | 0.507 |
-| walker |  | 577 | 56 | listing of 'ranges' |  |  | 0.576 |
+| walker |  | 372 | 56 | listing of 'ranges' |  |  | 0.563 |
+| ns | 414 |  | 56 | ranges/ listing | 1.6 |  | 0.591 |
+| ns | 441 |  | 27 | internal/ listing | 1.7 |  | 0.601 |
+| ns | 446 |  | 5 | bin/ listing | 1.8 |  | 0.603 |
+| ns | 484 |  | 38 | benchmarks/ listing | 1.9 |  | 0.580 |
+| ns | 517 |  | 33 | test/ top-level listing | 1.10 |  | 0.545 |
+| ns | 534 |  | 17 | test/classes/ listing | 1.11 |  | 0.533 |
+| walker |  | 552 | 180 | headings outline in README.md |  |  | 0.548 |
+| walker |  | 577 | 25 | README.md section #1 |  |  | 0.576 |
 | walker |  | 604 | 27 | README.md section #55 |  |  | 0.576 |
 | ns | 639 |  | 105 | test/functions/ listing | 1.12 |  | 0.511 |
 | ns | 695 |  | 56 | test/ranges/ listing | 1.13 |  | 0.487 |

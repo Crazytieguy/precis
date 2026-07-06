@@ -28,23 +28,23 @@ Score(3000)=0.500 I=0.796 C=0.314 ns_rows≤3K=33/52 (reached=11 partial=1 missi
 | ns | 368 |  | 23 | .github/workflows/ listing | 1.13 |  | 0.638 |
 | ns | 382 |  | 14 | .github/ISSUE_TEMPLATE/ listing | 1.14 |  | 0.629 |
 | ns | 394 |  | 12 | .vscode/ listing | 1.15 |  | 0.615 |
-| walker |  | 418 | 61 | [dependencies] in pyproject.toml |  |  | 0.615 |
-| walker |  | 458 | 40 | listing of 'py3xui/api' |  |  | 0.701 |
-| ns | 488 |  | 94 | py3xui/__init__.py -- public export surface | 2.1 |  | 0.715 |
-| walker |  | 522 | 64 | README headline in py3xui/inbound/README.md |  |  | 0.715 |
-| walker |  | 568 | 46 | listing of 'py3xui/async_api' |  |  | 0.788 |
-| walker |  | 579 | 11 | python decl names surface in py3xui/api/api.py |  |  | 0.788 |
-| walker |  | 579 | 0 | python decl at py3xui/api/api.py:13 |  |  | 0.788 |
+| walker |  | 397 | 40 | listing of 'py3xui/api' |  |  | 0.701 |
+| walker |  | 443 | 46 | listing of 'py3xui/async_api' |  |  | 0.779 |
+| walker |  | 454 | 11 | python decl names surface in py3xui/api/api.py |  |  | 0.779 |
+| walker |  | 454 | 0 | python decl at py3xui/api/api.py:13 |  |  | 0.779 |
+| ns | 488 |  | 94 | py3xui/__init__.py -- public export surface | 2.1 |  | 0.788 |
+| walker |  | 534 | 80 | python imports in py3xui/api/__init__.py |  |  | 0.788 |
 | ns | 603 |  | 115 | README Examples index (per-package doc pointers) | 2.2 |  | 0.753 |
-| walker |  | 659 | 80 | python imports in py3xui/api/__init__.py |  |  | 0.753 |
+| walker |  | 616 | 82 | python imports in py3xui/inbound/__init__.py |  |  | 0.753 |
+| walker |  | 628 | 12 | python decl names surface in py3xui/async_api/async_api.py |  |  | 0.753 |
+| walker |  | 628 | 0 | python decl at py3xui/async_api/async_api.py:18 |  |  | 0.753 |
 | ns | 668 |  | 65 | Api: method/property locations | 2.3 |  | 0.726 |
-| walker |  | 741 | 82 | python imports in py3xui/inbound/__init__.py |  |  | 0.726 |
-| ns | 746 |  | 78 | InboundApi: method locations | 2.4 |  | 0.698 |
-| walker |  | 753 | 12 | python decl names surface in py3xui/async_api/async_api.py |  |  | 0.698 |
-| walker |  | 753 | 0 | python decl at py3xui/async_api/async_api.py:18 |  |  | 0.698 |
-| ns | 783 |  | 37 | ServerApi: method locations | 2.5 |  | 0.687 |
-| walker |  | 844 | 91 | python imports in py3xui/async_api/__init__.py |  |  | 0.687 |
-| walker |  | 871 | 27 | listing of 'dev' |  |  | 0.721 |
+| walker |  | 719 | 91 | python imports in py3xui/async_api/__init__.py |  |  | 0.726 |
+| walker |  | 746 | 27 | listing of 'dev' |  |  | 0.732 |
+| ns | 746 |  | 78 | InboundApi: method locations | 2.4 |  | 0.732 |
+| ns | 783 |  | 37 | ServerApi: method locations | 2.5 |  | 0.721 |
+| walker |  | 807 | 61 | [dependencies] in pyproject.toml |  |  | 0.721 |
+| walker |  | 871 | 64 | README headline in py3xui/inbound/README.md |  |  | 0.721 |
 | ns | 896 |  | 113 | ClientApi: method locations | 2.6 |  | 0.685 |
 | walker |  | 937 | 66 | README headline in py3xui/api/README.md |  |  | 0.685 |
 | walker |  | 960 | 23 | python decl names surface in py3xui/client/client.py |  |  | 0.685 |

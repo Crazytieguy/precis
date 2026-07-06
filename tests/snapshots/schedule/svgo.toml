@@ -278,10 +278,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 7
+key = 'Fs(DirListing { dir: "logo" })'
+descriptor = "listing of 'logo'"
+cost_tokens = 25
+cum_tokens = 346
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "logo"
+entries = ["isotype-white.svg", "isotype.svg", "logo-web.svg", "logo-white.svg", "logo.svg"]
+
+[[batches]]
+position = 8
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
 descriptor = "README.md section #10"
 cost_tokens = 16
-cum_tokens = 337
+cum_tokens = 362
 
 [batches.content]
 kind = "lines"
@@ -295,11 +309,99 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 43
+cum_tokens = 405
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["01-index.mdx", "02-usage", "03-preset-default.mdx", "04-plugins", "05-plugins-api.mdx", "06-migrations"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 12
+cum_tokens = 417
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 22
+cum_tokens = 439
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml", "codeql.yml", "publish.yml", "regression.yml", "test-report.yml"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 90
+cum_tokens = 529
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib"
+entries = ["builtin.js", "parser.js", "parser.test.js", "path.js", "path.test.js", "stringifier.js", "style.js", "style.test.js", "svgo", "svgo-node.js", "svgo-node.test.js", "svgo.js", "svgo.test.js", "types.js", "types.ts", "util", "version.js", "xast.js", "xast.test.js"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "lib/svgo" })'
+descriptor = "listing of 'lib/svgo'"
+cost_tokens = 19
+cum_tokens = 548
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/svgo"
+entries = ["coa.js", "css-select-adapter.js", "plugins.js", "tools.js"]
+
+[[batches]]
+position = 14
+key = 'Typescript(ExportNames { file: "lib/types.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/types.js"
+cost_tokens = 7
+cum_tokens = 555
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/types.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
 cost_tokens = 11
-cum_tokens = 348
+cum_tokens = 566
 
 [batches.content]
 kind = "lines"
@@ -313,11 +415,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 9
+position = 16
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 55
-cum_tokens = 403
+cum_tokens = 621
 
 [batches.content]
 kind = "lines"
@@ -326,108 +428,6 @@ kind = "lines"
 path = "README.md"
 start = 9
 end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "logo" })'
-descriptor = "listing of 'logo'"
-cost_tokens = 25
-cum_tokens = 428
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "logo"
-entries = ["isotype-white.svg", "isotype.svg", "logo-web.svg", "logo-white.svg", "logo.svg"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 43
-cum_tokens = 471
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["01-index.mdx", "02-usage", "03-preset-default.mdx", "04-plugins", "05-plugins-api.mdx", "06-migrations"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 12
-cum_tokens = 483
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 22
-cum_tokens = 505
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml", "codeql.yml", "publish.yml", "regression.yml", "test-report.yml"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "lib" })'
-descriptor = "listing of 'lib'"
-cost_tokens = 90
-cum_tokens = 595
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib"
-entries = ["builtin.js", "parser.js", "parser.test.js", "path.js", "path.test.js", "stringifier.js", "style.js", "style.test.js", "svgo", "svgo-node.js", "svgo-node.test.js", "svgo.js", "svgo.test.js", "types.js", "types.ts", "util", "version.js", "xast.js", "xast.test.js"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "lib/svgo" })'
-descriptor = "listing of 'lib/svgo'"
-cost_tokens = 19
-cum_tokens = 614
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/svgo"
-entries = ["coa.js", "css-select-adapter.js", "plugins.js", "tools.js"]
-
-[[batches]]
-position = 16
-key = 'Typescript(ExportNames { file: "lib/types.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/types.js"
-cost_tokens = 7
-cum_tokens = 621
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/types.js"
-start = 1
-end = 1
 
 [batches.content.spans.render]
 kind = "full"

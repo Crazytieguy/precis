@@ -13,21 +13,21 @@ Score(3000)=0.786 I=0.857 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | ns | 335 |  | 94 | README table of contents | 1.5 |  | 0.678 |
 | ns | 424 |  | 89 | src/index.ts export roster (all 8 exports, names only) | 2.1 |  | 0.595 |
 | walker |  | 428 | 144 | headings outline in README.md |  |  | 0.600 |
-| walker |  | 459 | 31 | README.md section #18 |  |  | 0.600 |
-| walker |  | 497 | 38 | README.md section #15 |  |  | 0.600 |
 | ns | 506 |  | 82 | Type aliases: EventType, Handler, WildcardHandler | 2.2 | 2.1 | 0.533 |
-| walker |  | 510 | 13 | README.md section #8 |  |  | 0.533 |
-| ns | 618 |  | 112 | Type aliases: EventHandlerList, WildCardEventHandlerList, EventHandlerMap | 2.3 | 2.1 | 0.473 |
-| walker |  | 670 | 160 | export names surface in src/index.ts |  |  | 0.624 |
-| walker |  | 684 | 14 | export at src/index.ts:13 |  |  | 0.637 |
-| walker |  | 707 | 23 | export at src/index.ts:46 |  |  | 0.639 |
-| walker |  | 735 | 28 | export at src/index.ts:6 |  |  | 0.669 |
-| walker |  | 770 | 35 | export at src/index.ts:18 |  |  | 0.704 |
+| walker |  | 588 | 160 | export names surface in src/index.ts |  |  | 0.686 |
+| walker |  | 602 | 14 | export at src/index.ts:13 |  |  | 0.688 |
+| ns | 618 |  | 112 | Type aliases: EventHandlerList, WildCardEventHandlerList, EventHandlerMap | 2.3 | 2.1 | 0.637 |
+| walker |  | 625 | 23 | export at src/index.ts:46 |  |  | 0.638 |
+| walker |  | 653 | 28 | export at src/index.ts:6 |  |  | 0.669 |
+| walker |  | 688 | 35 | export at src/index.ts:18 |  |  | 0.704 |
 | ns | 824 |  | 206 | Emitter<Events> interface (full) | 2.4 | 2.1 | 0.609 |
-| ns | 902 |  | 78 | mitt() factory: JSDoc + signature | 2.5 | 2.1 | 0.588 |
-| walker |  | 967 | 197 | export at src/index.ts:23 |  |  | 0.723 |
-| ns | 996 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.677 |
-| walker |  | 1013 | 46 | export doc at src/index.ts:46 |  |  | 0.721 |
+| walker |  | 885 | 197 | export at src/index.ts:23 |  |  | 0.754 |
+| ns | 902 |  | 78 | mitt() factory: JSDoc + signature | 2.5 | 2.1 | 0.723 |
+| walker |  | 931 | 46 | export doc at src/index.ts:46 |  |  | 0.769 |
+| walker |  | 962 | 31 | README.md section #18 |  |  | 0.769 |
+| ns | 996 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.721 |
+| walker |  | 1000 | 38 | README.md section #15 |  |  | 0.721 |
+| walker |  | 1013 | 13 | README.md section #8 |  |  | 0.721 |
 | walker |  | 1096 | 83 | README.md section #1 |  |  | 0.787 |
 | ns | 1197 |  | 201 | on() implementation | 2.7 | 2.6 | 0.726 |
 | walker |  | 1211 | 115 | package identity metadata in package.json |  |  | 0.728 |

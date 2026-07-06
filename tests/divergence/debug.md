@@ -18,37 +18,37 @@ Score(3000)=0.592 I=0.816 C=0.429 ns_rows≤3K=22/60 (reached=9 partial=1 missin
 | walker |  | 430 | 14 | export names surface in karma.conf.js |  |  | 0.712 |
 | walker |  | 430 | 0 | export at karma.conf.js:1 |  |  | 0.712 |
 | ns | 529 |  | 134 | README section-heading roster (part 2, all levels) | 1.7 |  | 0.752 |
-| walker |  | 613 | 183 | package identity metadata in package.json |  |  | 0.760 |
-| ns | 639 |  | 110 | package.json scripts block | 2.1 |  | 0.708 |
-| walker |  | 679 | 66 | package entrypoints in package.json |  |  | 0.737 |
-| walker |  | 709 | 30 | package runtime metadata in package.json |  |  | 0.739 |
-| ns | 771 |  | 132 | .travis.yml — CI matrix + script sequence | 2.2 |  | 0.640 |
-| walker |  | 817 | 108 | package scripts in package.json |  |  | 0.705 |
-| walker |  | 949 | 132 | YAML config at .travis.yml |  |  | 0.847 |
-| walker |  | 971 | 22 | export names surface in src/common.js |  |  | 0.847 |
-| walker |  | 971 | 0 | export at src/common.js:7 |  |  | 0.847 |
-| ns | 975 |  | 204 | karma.conf.js — browser test runner config (structure, comments elided) | 2.3 |  | 0.747 |
-| walker |  | 981 | 10 | export body at src/common.js:7 body 146 |  |  | 0.747 |
-| walker |  | 992 | 11 | export body at src/common.js:7 body 61 |  |  | 0.747 |
-| walker |  | 1003 | 11 | export body at src/common.js:7 body 62 |  |  | 0.747 |
-| walker |  | 1012 | 9 | export body at src/common.js:7 body 63 |  |  | 0.747 |
-| walker |  | 1021 | 9 | export body at src/common.js:7 body 64 |  |  | 0.747 |
-| walker |  | 1033 | 12 | export body at src/common.js:7 body 116 |  |  | 0.747 |
-| walker |  | 1045 | 12 | export body at src/common.js:7 body 119 |  |  | 0.747 |
-| ns | 1048 |  | 73 | package.json dependencies + optional peer dep | 2.4 |  | 0.713 |
-| walker |  | 1057 | 12 | export body at src/common.js:7 body 166 |  |  | 0.713 |
-| walker |  | 1068 | 11 | export body at src/common.js:7 body 167 |  |  | 0.713 |
-| walker |  | 1080 | 12 | export body at src/common.js:7 body 164 |  |  | 0.713 |
-| walker |  | 1091 | 11 | export body at src/common.js:7 body 163 |  |  | 0.713 |
-| walker |  | 1105 | 14 | export body at src/common.js:7 body 117 |  |  | 0.713 |
-| walker |  | 1117 | 12 | export body at src/common.js:7 body 118 |  |  | 0.713 |
-| walker |  | 1131 | 14 | export body at src/common.js:7 body 193 |  |  | 0.713 |
-| walker |  | 1143 | 12 | export body at src/common.js:7 body 194 |  |  | 0.713 |
-| walker |  | 1155 | 12 | export body at src/common.js:7 body 195 |  |  | 0.714 |
-| walker |  | 1167 | 12 | export body at src/common.js:7 body 196 |  |  | 0.714 |
-| walker |  | 1181 | 14 | export body at src/common.js:7 body 224 |  |  | 0.714 |
-| walker |  | 1196 | 15 | export body at src/common.js:7 body 219 |  |  | 0.714 |
-| walker |  | 1213 | 17 | export body at src/common.js:7 body 141 |  |  | 0.714 |
+| walker |  | 562 | 132 | YAML config at .travis.yml |  |  | 0.774 |
+| walker |  | 584 | 22 | export names surface in src/common.js |  |  | 0.774 |
+| walker |  | 584 | 0 | export at src/common.js:7 |  |  | 0.774 |
+| walker |  | 594 | 10 | export body at src/common.js:7 body 146 |  |  | 0.774 |
+| walker |  | 605 | 11 | export body at src/common.js:7 body 61 |  |  | 0.774 |
+| walker |  | 616 | 11 | export body at src/common.js:7 body 62 |  |  | 0.774 |
+| walker |  | 625 | 9 | export body at src/common.js:7 body 63 |  |  | 0.774 |
+| walker |  | 634 | 9 | export body at src/common.js:7 body 64 |  |  | 0.774 |
+| ns | 639 |  | 110 | package.json scripts block | 2.1 |  | 0.721 |
+| walker |  | 646 | 12 | export body at src/common.js:7 body 116 |  |  | 0.721 |
+| walker |  | 658 | 12 | export body at src/common.js:7 body 119 |  |  | 0.721 |
+| walker |  | 670 | 12 | export body at src/common.js:7 body 166 |  |  | 0.721 |
+| walker |  | 681 | 11 | export body at src/common.js:7 body 167 |  |  | 0.721 |
+| walker |  | 693 | 12 | export body at src/common.js:7 body 164 |  |  | 0.721 |
+| walker |  | 704 | 11 | export body at src/common.js:7 body 163 |  |  | 0.721 |
+| walker |  | 718 | 14 | export body at src/common.js:7 body 117 |  |  | 0.721 |
+| walker |  | 730 | 12 | export body at src/common.js:7 body 118 |  |  | 0.721 |
+| walker |  | 744 | 14 | export body at src/common.js:7 body 193 |  |  | 0.721 |
+| walker |  | 756 | 12 | export body at src/common.js:7 body 194 |  |  | 0.721 |
+| walker |  | 768 | 12 | export body at src/common.js:7 body 195 |  |  | 0.721 |
+| ns | 771 |  | 132 | .travis.yml — CI matrix + script sequence | 2.2 |  | 0.755 |
+| walker |  | 780 | 12 | export body at src/common.js:7 body 196 |  |  | 0.755 |
+| walker |  | 794 | 14 | export body at src/common.js:7 body 224 |  |  | 0.755 |
+| walker |  | 809 | 15 | export body at src/common.js:7 body 219 |  |  | 0.755 |
+| walker |  | 826 | 17 | export body at src/common.js:7 body 141 |  |  | 0.755 |
+| ns | 975 |  | 204 | karma.conf.js — browser test runner config (structure, comments elided) | 2.3 |  | 0.665 |
+| walker |  | 1009 | 183 | package identity metadata in package.json |  |  | 0.672 |
+| ns | 1048 |  | 73 | package.json dependencies + optional peer dep | 2.4 |  | 0.642 |
+| walker |  | 1075 | 66 | package entrypoints in package.json |  |  | 0.662 |
+| walker |  | 1105 | 30 | package runtime metadata in package.json |  |  | 0.664 |
+| walker |  | 1213 | 108 | package scripts in package.json |  |  | 0.714 |
 | walker |  | 1238 | 25 | export body at src/common.js:7 body 120 |  |  | 0.714 |
 | ns | 1245 |  | 197 | package.json devDependencies | 2.5 |  | 0.667 |
 | walker |  | 1255 | 17 | export names surface #1 in src/browser.js |  |  | 0.667 |

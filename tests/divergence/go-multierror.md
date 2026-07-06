@@ -14,16 +14,16 @@ Score(3000)=0.645 I=0.807 C=0.515 ns_rows≤3K=17/54 (reached=8 partial=1 missin
 | walker |  | 145 | 0 | go decl at append.go:14 |  |  | 0.872 |
 | ns | 228 |  | 87 | Public API locations: multierror.go | 1.4 |  | 0.784 |
 | walker |  | 303 | 158 | README headline in README.md |  |  | 0.788 |
-| walker |  | 352 | 49 | headings outline in README.md |  |  | 0.788 |
-| ns | 372 |  | 144 | Public API locations: append/flatten/format/group/prefix/sort | 1.5 |  | 0.677 |
-| walker |  | 384 | 32 | go decl names surface in flatten.go |  |  | 0.681 |
-| walker |  | 384 | 0 | go decl at flatten.go:8 |  |  | 0.681 |
-| walker |  | 384 | 0 | go decl at flatten.go:20 |  |  | 0.681 |
-| walker |  | 418 | 34 | go decl names surface in format.go |  |  | 0.707 |
-| walker |  | 418 | 0 | go decl at format.go:13 |  |  | 0.707 |
-| walker |  | 418 | 0 | go decl at format.go:17 |  |  | 0.707 |
-| walker |  | 428 | 10 | go package + imports in append.go |  |  | 0.707 |
-| walker |  | 438 | 10 | go package + imports in flatten.go |  |  | 0.707 |
+| walker |  | 335 | 32 | go decl names surface in flatten.go |  |  | 0.788 |
+| walker |  | 335 | 0 | go decl at flatten.go:8 |  |  | 0.788 |
+| walker |  | 335 | 0 | go decl at flatten.go:20 |  |  | 0.788 |
+| walker |  | 369 | 34 | go decl names surface in format.go |  |  | 0.793 |
+| walker |  | 369 | 0 | go decl at format.go:13 |  |  | 0.793 |
+| walker |  | 369 | 0 | go decl at format.go:17 |  |  | 0.793 |
+| ns | 372 |  | 144 | Public API locations: append/flatten/format/group/prefix/sort | 1.5 |  | 0.706 |
+| walker |  | 379 | 10 | go package + imports in append.go |  |  | 0.706 |
+| walker |  | 389 | 10 | go package + imports in flatten.go |  |  | 0.706 |
+| walker |  | 438 | 49 | headings outline in README.md |  |  | 0.707 |
 | walker |  | 450 | 12 | go package + imports in sort.go |  |  | 0.707 |
 | ns | 468 |  | 96 | Test-function locations: multierror_test.go | 1.6 |  | 0.645 |
 | walker |  | 498 | 48 | go decl names surface in group.go |  |  | 0.690 |

@@ -26,14 +26,14 @@ Score(3000)=0.290 I=0.374 C=0.225 ns_rows≤3K=26/44 (reached=6 partial=0 missin
 | ns | 470 |  | 54 | website/ listing | 2.13 |  | 0.219 |
 | walker |  | 474 | 202 | package scripts in package.json |  |  | 0.224 |
 | walker |  | 484 | 10 | export names surface in playwright.config.ts |  |  | 0.224 |
-| ns | 573 |  | 103 | cmdk/tsup.config.ts | 2.14 |  | 0.210 |
-| walker |  | 772 | 288 | headings outline in README.md |  |  | 0.219 |
-| walker |  | 786 | 14 | README.md section #28 |  |  | 0.219 |
-| ns | 795 |  | 222 | test/package.json | 2.15 |  | 0.199 |
-| walker |  | 812 | 26 | README.md section #1 |  |  | 0.199 |
-| walker |  | 856 | 44 | README.md section #3 |  |  | 0.199 |
-| walker |  | 869 | 13 | export names surface in cmdk/tsup.config.ts |  |  | 0.201 |
-| walker |  | 903 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.274 |
+| walker |  | 497 | 13 | export names surface in cmdk/tsup.config.ts |  |  | 0.224 |
+| walker |  | 531 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.312 |
+| ns | 573 |  | 103 | cmdk/tsup.config.ts | 2.14 |  | 0.293 |
+| ns | 795 |  | 222 | test/package.json | 2.15 |  | 0.267 |
+| walker |  | 819 | 288 | headings outline in README.md |  |  | 0.274 |
+| walker |  | 833 | 14 | README.md section #28 |  |  | 0.274 |
+| walker |  | 859 | 26 | README.md section #1 |  |  | 0.274 |
+| walker |  | 903 | 44 | README.md section #3 |  |  | 0.274 |
 | walker |  | 913 | 10 | listing of 'cmdk/src' |  |  | 0.290 |
 | walker |  | 931 | 18 | module item at cmdk/src/index.tsx:10 |  |  | 0.290 |
 | walker |  | 948 | 17 | module item at cmdk/src/index.tsx:981 |  |  | 0.290 |

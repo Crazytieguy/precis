@@ -1,4 +1,4 @@
-Score(3000)=0.523 I=0.726 C=0.376 ns_rows≤3K=20/42 (reached=6 partial=0 missing=14)
+Score(3000)=0.527 I=0.738 C=0.376 ns_rows≤3K=20/42 (reached=6 partial=0 missing=14)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -11,87 +11,87 @@ Score(3000)=0.523 I=0.726 C=0.376 ns_rows≤3K=20/42 (reached=6 partial=0 missin
 | walker |  | 223 | 36 | listing of 'include' |  |  | 0.829 |
 | ns | 338 |  | 143 | CLI flags, part A: output/link-mode/preprocess switches | 1.4 |  | 0.720 |
 | walker |  | 434 | 211 | listing of 'test' |  |  | 0.756 |
-| walker |  | 533 | 99 | README.md section #5 |  |  | 0.756 |
 | ns | 536 |  | 198 | README lede | 1.5 |  | 0.649 |
 | ns | 562 |  | 26 | test/thirdparty/ directory listing | 1.6 |  | 0.606 |
 | ns | 714 |  | 152 | README: supported-feature bullet list | 1.7 |  | 0.529 |
-| ns | 928 |  | 214 | CLI flags, part B: --help/include/define/undef/-x | 1.8 | 1.4 | 0.485 |
-| walker |  | 939 | 406 | c decl names surface in chibicc.h |  |  | 0.486 |
-| walker |  | 939 | 0 | c decl at chibicc.h:73 |  |  | 0.486 |
-| walker |  | 970 | 31 | c decl at chibicc.h:38 |  |  | 0.487 |
-| walker |  | 978 | 8 | c decl doc at chibicc.h:73 |  |  | 0.487 |
-| walker |  | 1045 | 67 | c decl at chibicc.h:62 |  |  | 0.489 |
-| ns | 1096 |  | 168 | README: pipeline stage names | 1.9 |  | 0.450 |
-| walker |  | 1150 | 105 | c decl at chibicc.h:52 |  |  | 0.452 |
-| walker |  | 1157 | 7 | c decl doc at chibicc.h:52 |  |  | 0.452 |
+| walker |  | 840 | 406 | c decl names surface in chibicc.h |  |  | 0.531 |
+| walker |  | 840 | 0 | c decl at chibicc.h:73 |  |  | 0.531 |
+| walker |  | 871 | 31 | c decl at chibicc.h:38 |  |  | 0.532 |
+| walker |  | 879 | 8 | c decl doc at chibicc.h:73 |  |  | 0.532 |
+| ns | 928 |  | 214 | CLI flags, part B: --help/include/define/undef/-x | 1.8 | 1.4 | 0.487 |
+| walker |  | 946 | 67 | c decl at chibicc.h:62 |  |  | 0.489 |
+| walker |  | 1051 | 105 | c decl at chibicc.h:52 |  |  | 0.491 |
+| walker |  | 1058 | 7 | c decl doc at chibicc.h:52 |  |  | 0.491 |
+| ns | 1096 |  | 168 | README: pipeline stage names | 1.9 |  | 0.452 |
 | ns | 1280 |  | 184 | CLI flags, part C: -s/dependency-file/-fpic family | 1.10 | 1.8 | 0.426 |
-| walker |  | 1450 | 293 | c decl names surface #1 in chibicc.h |  |  | 0.426 |
-| walker |  | 1450 | 0 | c decl at chibicc.h:126 |  |  | 0.426 |
-| walker |  | 1450 | 0 | c decl at chibicc.h:167 |  |  | 0.426 |
-| walker |  | 1455 | 5 | c decl at chibicc.h:228 |  |  | 0.426 |
-| walker |  | 1462 | 7 | c decl at chibicc.h:127 |  |  | 0.426 |
-| walker |  | 1469 | 7 | c decl at chibicc.h:320 |  |  | 0.426 |
-| walker |  | 1479 | 10 | c decl at chibicc.h:176 |  |  | 0.426 |
-| walker |  | 1489 | 10 | c aggregate member group at chibicc.h:127 group 136 |  |  | 0.426 |
+| walker |  | 1351 | 293 | c decl names surface #1 in chibicc.h |  |  | 0.426 |
+| walker |  | 1351 | 0 | c decl at chibicc.h:126 |  |  | 0.426 |
+| walker |  | 1351 | 0 | c decl at chibicc.h:167 |  |  | 0.426 |
+| walker |  | 1356 | 5 | c decl at chibicc.h:228 |  |  | 0.426 |
+| walker |  | 1363 | 7 | c decl at chibicc.h:127 |  |  | 0.426 |
+| walker |  | 1370 | 7 | c decl at chibicc.h:320 |  |  | 0.426 |
+| walker |  | 1380 | 10 | c decl at chibicc.h:176 |  |  | 0.426 |
+| walker |  | 1390 | 10 | c aggregate member group at chibicc.h:127 group 136 |  |  | 0.426 |
+| walker |  | 1401 | 11 | c aggregate member group at chibicc.h:228 group 249 |  |  | 0.426 |
+| walker |  | 1412 | 11 | c aggregate member group at chibicc.h:228 group 252 |  |  | 0.426 |
+| walker |  | 1423 | 11 | c aggregate member group at chibicc.h:228 group 286 |  |  | 0.426 |
+| walker |  | 1434 | 11 | c aggregate member group at chibicc.h:320 group 336 |  |  | 0.426 |
+| walker |  | 1445 | 11 | c aggregate member group at chibicc.h:320 group 343 |  |  | 0.426 |
+| walker |  | 1457 | 12 | c aggregate member group at chibicc.h:228 group 274 |  |  | 0.426 |
+| walker |  | 1478 | 21 | c decl at chibicc.h:108 |  |  | 0.426 |
+| walker |  | 1485 | 7 | c decl doc at chibicc.h:228 |  |  | 0.426 |
 | ns | 1491 |  | 211 | test/ directory listing | 1.11 |  | 0.598 |
-| walker |  | 1500 | 11 | c aggregate member group at chibicc.h:228 group 249 |  |  | 0.598 |
-| walker |  | 1511 | 11 | c aggregate member group at chibicc.h:228 group 252 |  |  | 0.598 |
-| walker |  | 1522 | 11 | c aggregate member group at chibicc.h:228 group 286 |  |  | 0.598 |
-| walker |  | 1533 | 11 | c aggregate member group at chibicc.h:320 group 336 |  |  | 0.598 |
-| walker |  | 1544 | 11 | c aggregate member group at chibicc.h:320 group 343 |  |  | 0.598 |
-| walker |  | 1556 | 12 | c aggregate member group at chibicc.h:228 group 274 |  |  | 0.598 |
-| walker |  | 1577 | 21 | c decl at chibicc.h:108 |  |  | 0.598 |
-| walker |  | 1584 | 7 | c decl doc at chibicc.h:228 |  |  | 0.598 |
-| walker |  | 1592 | 8 | c decl doc at chibicc.h:176 |  |  | 0.598 |
-| walker |  | 1610 | 18 | c aggregate member group at chibicc.h:228 group 270 |  |  | 0.599 |
-| ns | 1618 |  | 127 | CLI flags, part D: cc1-internal/-idirafter/-static/-shared/-L | 1.12 | 1.10 | 0.583 |
-| walker |  | 1619 | 9 | c decl doc at chibicc.h:126 |  |  | 0.583 |
-| walker |  | 1658 | 39 | c decl at chibicc.h:168 |  |  | 0.584 |
-| walker |  | 1678 | 20 | c aggregate member group at chibicc.h:228 group 289 |  |  | 0.584 |
-| walker |  | 1699 | 21 | c aggregate member group at chibicc.h:320 group 339 |  |  | 0.584 |
-| walker |  | 1721 | 22 | c aggregate member group at chibicc.h:228 group 266 |  |  | 0.584 |
-| walker |  | 1743 | 22 | c aggregate member group at chibicc.h:228 group 282 |  |  | 0.585 |
-| walker |  | 1766 | 23 | c aggregate member group at chibicc.h:228 group 245 |  |  | 0.585 |
-| walker |  | 1793 | 27 | c aggregate member group at chibicc.h:127 group 159 |  |  | 0.585 |
-| walker |  | 1822 | 29 | c aggregate member group at chibicc.h:127 group 139 |  |  | 0.585 |
+| walker |  | 1493 | 8 | c decl doc at chibicc.h:176 |  |  | 0.598 |
+| walker |  | 1511 | 18 | c aggregate member group at chibicc.h:228 group 270 |  |  | 0.599 |
+| walker |  | 1520 | 9 | c decl doc at chibicc.h:126 |  |  | 0.599 |
+| walker |  | 1559 | 39 | c decl at chibicc.h:168 |  |  | 0.600 |
+| walker |  | 1579 | 20 | c aggregate member group at chibicc.h:228 group 289 |  |  | 0.600 |
+| walker |  | 1600 | 21 | c aggregate member group at chibicc.h:320 group 339 |  |  | 0.600 |
+| ns | 1618 |  | 127 | CLI flags, part D: cc1-internal/-idirafter/-static/-shared/-L | 1.12 | 1.10 | 0.584 |
+| walker |  | 1622 | 22 | c aggregate member group at chibicc.h:228 group 266 |  |  | 0.584 |
+| walker |  | 1644 | 22 | c aggregate member group at chibicc.h:228 group 282 |  |  | 0.585 |
+| walker |  | 1667 | 23 | c aggregate member group at chibicc.h:228 group 245 |  |  | 0.585 |
+| walker |  | 1694 | 27 | c aggregate member group at chibicc.h:127 group 159 |  |  | 0.585 |
+| walker |  | 1723 | 29 | c aggregate member group at chibicc.h:127 group 139 |  |  | 0.585 |
+| walker |  | 1754 | 31 | c aggregate member group at chibicc.h:228 group 261 |  |  | 0.585 |
+| walker |  | 1785 | 31 | c aggregate member group at chibicc.h:320 group 350 |  |  | 0.586 |
+| walker |  | 1817 | 32 | c aggregate member group at chibicc.h:228 group 234 |  |  | 0.586 |
 | ns | 1844 |  | 226 | CLI flags, part E: -hashmap-test + ignored-for-compat flags | 1.13 | 1.12 | 0.559 |
-| walker |  | 1853 | 31 | c aggregate member group at chibicc.h:228 group 261 |  |  | 0.559 |
-| walker |  | 1884 | 31 | c aggregate member group at chibicc.h:320 group 350 |  |  | 0.559 |
-| walker |  | 1916 | 32 | c aggregate member group at chibicc.h:228 group 234 |  |  | 0.559 |
-| walker |  | 1948 | 32 | c aggregate member group at chibicc.h:228 group 277 |  |  | 0.560 |
-| walker |  | 1982 | 34 | c aggregate member group at chibicc.h:320 group 346 |  |  | 0.560 |
-| walker |  | 2020 | 38 | c aggregate member group at chibicc.h:320 group 355 |  |  | 0.560 |
-| walker |  | 2061 | 41 | c aggregate member group at chibicc.h:228 group 255 |  |  | 0.561 |
-| walker |  | 2103 | 42 | c aggregate member group at chibicc.h:127 group 144 |  |  | 0.561 |
-| walker |  | 2150 | 47 | c aggregate member group at chibicc.h:228 group 238 |  |  | 0.562 |
+| walker |  | 1849 | 32 | c aggregate member group at chibicc.h:228 group 277 |  |  | 0.560 |
+| walker |  | 1883 | 34 | c aggregate member group at chibicc.h:320 group 346 |  |  | 0.560 |
+| walker |  | 1921 | 38 | c aggregate member group at chibicc.h:320 group 355 |  |  | 0.560 |
+| walker |  | 1962 | 41 | c aggregate member group at chibicc.h:228 group 255 |  |  | 0.561 |
+| walker |  | 2004 | 42 | c aggregate member group at chibicc.h:127 group 144 |  |  | 0.561 |
+| walker |  | 2051 | 47 | c aggregate member group at chibicc.h:228 group 238 |  |  | 0.562 |
 | ns | 2152 |  | 308 | Makefile: stage-1 build + test targets | 1.14 |  | 0.521 |
-| ns | 2242 |  | 90 | Makefile: stage-2 self-hosting rule names | 1.15 |  | 0.513 |
-| walker |  | 2260 | 110 | c decl at chibicc.h:362 |  |  | 0.514 |
-| walker |  | 2266 | 6 | c decl doc at chibicc.h:362 |  |  | 0.514 |
-| ns | 2326 |  | 84 | Makefile: clean target | 1.16 | 1.15 | 0.505 |
-| walker |  | 2327 | 61 | c aggregate member group at chibicc.h:228 group 229 |  |  | 0.506 |
-| walker |  | 2469 | 142 | c decl at chibicc.h:301 |  |  | 0.509 |
-| walker |  | 2537 | 68 | c aggregate member group at chibicc.h:127 group 150 |  |  | 0.510 |
-| walker |  | 2614 | 77 | c aggregate member group at chibicc.h:127 group 128 |  |  | 0.512 |
-| walker |  | 2653 | 39 | c decl doc at chibicc.h:167 |  |  | 0.512 |
-| ns | 2683 |  | 357 | chibicc.h: includes, MAX/MIN, opaque forward-typedefs | 2.1 |  | 0.482 |
-| ns | 2725 |  | 42 | chibicc.h: StringArray struct | 2.2 |  | 0.492 |
-| walker |  | 2735 | 82 | c aggregate member group at chibicc.h:320 group 321 |  |  | 0.493 |
-| walker |  | 2745 | 10 | c whole header in test/include3.h |  |  | 0.493 |
-| walker |  | 2755 | 10 | c whole header in test/include4.h |  |  | 0.493 |
-| walker |  | 2766 | 11 | c whole header in test/include2.h |  |  | 0.493 |
+| walker |  | 2161 | 110 | c decl at chibicc.h:362 |  |  | 0.522 |
+| walker |  | 2167 | 6 | c decl doc at chibicc.h:362 |  |  | 0.522 |
+| walker |  | 2228 | 61 | c aggregate member group at chibicc.h:228 group 229 |  |  | 0.523 |
+| ns | 2242 |  | 90 | Makefile: stage-2 self-hosting rule names | 1.15 |  | 0.515 |
+| ns | 2326 |  | 84 | Makefile: clean target | 1.16 | 1.15 | 0.506 |
+| walker |  | 2370 | 142 | c decl at chibicc.h:301 |  |  | 0.509 |
+| walker |  | 2438 | 68 | c aggregate member group at chibicc.h:127 group 150 |  |  | 0.510 |
+| walker |  | 2515 | 77 | c aggregate member group at chibicc.h:127 group 128 |  |  | 0.512 |
+| walker |  | 2554 | 39 | c decl doc at chibicc.h:167 |  |  | 0.512 |
+| walker |  | 2636 | 82 | c aggregate member group at chibicc.h:320 group 321 |  |  | 0.513 |
+| walker |  | 2646 | 10 | c whole header in test/include3.h |  |  | 0.513 |
+| walker |  | 2656 | 10 | c whole header in test/include4.h |  |  | 0.513 |
+| walker |  | 2667 | 11 | c whole header in test/include2.h |  |  | 0.513 |
+| ns | 2683 |  | 357 | chibicc.h: includes, MAX/MIN, opaque forward-typedefs | 2.1 |  | 0.483 |
+| ns | 2725 |  | 42 | chibicc.h: StringArray struct | 2.2 |  | 0.493 |
 | ns | 2816 |  | 91 | chibicc.h: TokenKind enum | 2.3 |  | 0.509 |
 | ns | 2892 |  | 76 | chibicc.h: File struct | 2.4 |  | 0.523 |
-| walker |  | 3046 | 280 | c decl at chibicc.h:74 |  |  | 0.527 |
+| walker |  | 2947 | 280 | c decl at chibicc.h:74 |  |  | 0.527 |
 | ns | 3192 |  | 300 | chibicc.h: Token struct | 2.5 |  | 0.554 |
 | ns | 3532 |  | 340 | chibicc.h: Obj struct (variables & functions) | 2.6 |  | 0.561 |
 | ns | 3594 |  | 62 | chibicc.h: Relocation struct | 2.7 |  | 0.568 |
-| walker |  | 3728 | 682 | plaintext config Makefile |  |  | 0.644 |
-| walker |  | 3870 | 142 | c aggregate member group at chibicc.h:176 group 177 |  |  | 0.645 |
-| walker |  | 3907 | 37 | c decl names surface in strings.c |  |  | 0.645 |
-| walker |  | 3907 | 0 | c decl at strings.c:3 |  |  | 0.645 |
-| walker |  | 3907 | 0 | c decl at strings.c:20 |  |  | 0.645 |
-| walker |  | 4055 | 148 | c aggregate member group at chibicc.h:176 group 189 |  |  | 0.647 |
+| walker |  | 3629 | 682 | plaintext config Makefile |  |  | 0.644 |
+| walker |  | 3771 | 142 | c aggregate member group at chibicc.h:176 group 177 |  |  | 0.645 |
+| walker |  | 3808 | 37 | c decl names surface in strings.c |  |  | 0.645 |
+| walker |  | 3808 | 0 | c decl at strings.c:3 |  |  | 0.645 |
+| walker |  | 3808 | 0 | c decl at strings.c:20 |  |  | 0.645 |
+| walker |  | 3956 | 148 | c aggregate member group at chibicc.h:176 group 189 |  |  | 0.647 |
+| walker |  | 4055 | 99 | README.md section #5 |  |  | 0.647 |
 | walker |  | 4065 | 10 | c includes in strings.c |  |  | 0.647 |
 | ns | 4122 |  | 528 | chibicc.h: NodeKind enum (every AST node kind) | 2.8 |  | 0.618 |
 | walker |  | 4252 | 187 | c includes in chibicc.h |  |  | 0.658 |

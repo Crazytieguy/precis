@@ -13,20 +13,20 @@ Score(3000)=0.552 I=0.762 C=0.400 ns_rows≤3K=16/43 (reached=6 partial=1 missin
 | ns | 371 |  | 138 | Repo root listing, part 1: Go source/test files | 1.4 |  | 0.755 |
 | walker |  | 373 | 48 | go package doc lede in command.go |  |  | 0.755 |
 | ns | 424 |  | 53 | Repo root listing, part 2: docs, CI, and meta | 1.5 | 1.4 | 0.762 |
-| walker |  | 436 | 63 | headings outline in README.md |  |  | 0.762 |
-| walker |  | 448 | 12 | README.md section #0 |  |  | 0.762 |
-| ns | 497 |  | 73 | site/content/ doc-tree subdirectory listings | 1.6 |  | 0.652 |
-| walker |  | 542 | 94 | headings outline in CONDUCT.md |  |  | 0.652 |
-| ns | 578 |  | 81 | doc/ and .github/ subdirectory listings | 1.7 |  | 0.576 |
-| walker |  | 601 | 59 | listing of 'doc' |  |  | 0.633 |
-| ns | 697 |  | 119 | README Overview: feature bullets, part 1 | 1.8 |  | 0.593 |
-| walker |  | 700 | 99 | go module file go.mod |  |  | 0.714 |
-| walker |  | 775 | 75 | go decl names surface in fish_completions.go |  |  | 0.714 |
-| walker |  | 775 | 0 | go decl at fish_completions.go:25 |  |  | 0.714 |
-| walker |  | 775 | 0 | go decl at fish_completions.go:276 |  |  | 0.714 |
-| walker |  | 775 | 0 | go decl at fish_completions.go:284 |  |  | 0.714 |
-| walker |  | 789 | 14 | go decl doc at fish_completions.go:284 |  |  | 0.714 |
-| walker |  | 808 | 19 | go decl doc at fish_completions.go:276 |  |  | 0.714 |
+| walker |  | 432 | 59 | listing of 'doc' |  |  | 0.774 |
+| walker |  | 495 | 63 | headings outline in README.md |  |  | 0.774 |
+| ns | 497 |  | 73 | site/content/ doc-tree subdirectory listings | 1.6 |  | 0.662 |
+| walker |  | 507 | 12 | README.md section #0 |  |  | 0.662 |
+| ns | 578 |  | 81 | doc/ and .github/ subdirectory listings | 1.7 |  | 0.633 |
+| walker |  | 606 | 99 | go module file go.mod |  |  | 0.762 |
+| walker |  | 681 | 75 | go decl names surface in fish_completions.go |  |  | 0.762 |
+| walker |  | 681 | 0 | go decl at fish_completions.go:25 |  |  | 0.762 |
+| walker |  | 681 | 0 | go decl at fish_completions.go:276 |  |  | 0.762 |
+| walker |  | 681 | 0 | go decl at fish_completions.go:284 |  |  | 0.762 |
+| walker |  | 695 | 14 | go decl doc at fish_completions.go:284 |  |  | 0.762 |
+| ns | 697 |  | 119 | README Overview: feature bullets, part 1 | 1.8 |  | 0.714 |
+| walker |  | 714 | 19 | go decl doc at fish_completions.go:276 |  |  | 0.714 |
+| walker |  | 808 | 94 | headings outline in CONDUCT.md |  |  | 0.714 |
 | ns | 861 |  | 164 | README Overview: feature bullets, part 2 | 1.9 | 1.8 | 0.676 |
 | walker |  | 989 | 181 | go decl names surface in command.go |  |  | 0.677 |
 | walker |  | 989 | 0 | go decl at command.go:42 |  |  | 0.677 |

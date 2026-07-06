@@ -13,16 +13,16 @@ Score(3000)=0.479 I=0.738 C=0.311 ns_rows≤3K=13/41 (reached=5 partial=0 missin
 | ns | 295 |  | 134 | .env.sample: NextAuth + database settings | 1.4 |  | 0.536 |
 | walker |  | 374 | 198 | README headline in README.md |  |  | 0.716 |
 | walker |  | 389 | 15 | listing of 'packages' |  |  | 0.834 |
+| walker |  | 422 | 33 | listing of 'assets' |  |  | 0.834 |
 | ns | 423 |  | 128 | vitest.config.mts | 1.5 |  | 0.709 |
-| walker |  | 526 | 137 | headings outline in README.md |  |  | 0.709 |
-| walker |  | 559 | 33 | listing of 'assets' |  |  | 0.709 |
-| walker |  | 585 | 26 | README.md section #26 |  |  | 0.709 |
-| walker |  | 596 | 11 | README.md section #18 |  |  | 0.709 |
-| walker |  | 606 | 10 | README.md section #17 |  |  | 0.709 |
-| walker |  | 616 | 10 | README.md section #19 |  |  | 0.709 |
-| ns | 631 |  | 208 | next-i18next.config.js (supported locales) | 1.6 |  | 0.576 |
-| walker |  | 639 | 23 | listing of 'packages/prisma' |  |  | 0.577 |
-| walker |  | 651 | 12 | export names surface in packages/prisma/index.ts |  |  | 0.577 |
+| walker |  | 445 | 23 | listing of 'packages/prisma' |  |  | 0.711 |
+| walker |  | 457 | 12 | export names surface in packages/prisma/index.ts |  |  | 0.711 |
+| walker |  | 594 | 137 | headings outline in README.md |  |  | 0.711 |
+| walker |  | 620 | 26 | README.md section #26 |  |  | 0.711 |
+| walker |  | 631 | 11 | README.md section #18 |  |  | 0.577 |
+| ns | 631 |  | 208 | next-i18next.config.js (supported locales) | 1.6 |  | 0.577 |
+| walker |  | 641 | 10 | README.md section #17 |  |  | 0.577 |
+| walker |  | 651 | 10 | README.md section #19 |  |  | 0.577 |
 | walker |  | 677 | 26 | listing of 'apps/worker' |  |  | 0.577 |
 | walker |  | 690 | 13 | README.md section #23 |  |  | 0.577 |
 | walker |  | 703 | 13 | README.md section #24 |  |  | 0.577 |

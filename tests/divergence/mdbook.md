@@ -21,28 +21,28 @@ Score(3000)=0.543 I=0.812 C=0.364 ns_rows≤3K=21/46 (reached=8 partial=1 missin
 | walker |  | 311 | 52 | entry item body at src/main.rs:18 body 50 |  |  | 0.565 |
 | walker |  | 323 | 12 | listing of 'guide' |  |  | 0.591 |
 | ns | 332 |  | 60 | Workspace Cargo.toml: [workspace].members | 1.7 |  | 0.556 |
-| walker |  | 427 | 104 | [features] in Cargo.toml |  |  | 0.559 |
-| ns | 436 |  | 104 | package.json (JS lint tooling) | 1.8 |  | 0.511 |
-| walker |  | 465 | 38 | listing of 'src/cmd' |  |  | 0.636 |
-| walker |  | 483 | 18 | crate-doc lede in src/cmd/mod.rs |  |  | 0.636 |
-| walker |  | 492 | 9 | listing of 'src/cmd/watch' |  |  | 0.636 |
-| ns | 582 |  | 146 | Root README, part 1: pitch + guide/contributing links | 1.9 |  | 0.624 |
-| ns | 760 |  | 178 | Workspace Cargo.toml: main package metadata | 1.10 |  | 0.563 |
-| walker |  | 845 | 353 | [package] in Cargo.toml |  |  | 0.723 |
-| walker |  | 852 | 7 | listing of 'tests' |  |  | 0.747 |
-| walker |  | 888 | 36 | pub-item names surface in src/cmd/build.rs |  |  | 0.747 |
-| walker |  | 888 | 0 | pub item at src/cmd/build.rs:8 |  |  | 0.747 |
-| walker |  | 888 | 0 | pub item at src/cmd/build.rs:17 |  |  | 0.747 |
-| walker |  | 924 | 36 | pub-item names surface in src/cmd/serve.rs |  |  | 0.747 |
-| walker |  | 924 | 0 | pub item at src/cmd/serve.rs:23 |  |  | 0.747 |
-| walker |  | 924 | 0 | pub item at src/cmd/serve.rs:51 |  |  | 0.747 |
-| walker |  | 960 | 36 | pub-item names surface in src/cmd/test.rs |  |  | 0.747 |
-| walker |  | 960 | 0 | pub item at src/cmd/test.rs:9 |  |  | 0.747 |
-| walker |  | 960 | 0 | pub item at src/cmd/test.rs:35 |  |  | 0.747 |
-| walker |  | 1021 | 61 | mod/use plumbing in src/cmd/mod.rs |  |  | 0.748 |
-| walker |  | 1058 | 37 | pub-item names surface in src/cmd/init.rs |  |  | 0.748 |
-| walker |  | 1058 | 0 | pub item at src/cmd/init.rs:12 |  |  | 0.748 |
-| walker |  | 1058 | 0 | pub item at src/cmd/init.rs:32 |  |  | 0.748 |
+| walker |  | 361 | 38 | listing of 'src/cmd' |  |  | 0.692 |
+| walker |  | 379 | 18 | crate-doc lede in src/cmd/mod.rs |  |  | 0.692 |
+| walker |  | 388 | 9 | listing of 'src/cmd/watch' |  |  | 0.692 |
+| walker |  | 395 | 7 | listing of 'tests' |  |  | 0.730 |
+| ns | 436 |  | 104 | package.json (JS lint tooling) | 1.8 |  | 0.668 |
+| walker |  | 499 | 104 | [features] in Cargo.toml |  |  | 0.670 |
+| walker |  | 535 | 36 | pub-item names surface in src/cmd/build.rs |  |  | 0.670 |
+| walker |  | 535 | 0 | pub item at src/cmd/build.rs:8 |  |  | 0.670 |
+| walker |  | 535 | 0 | pub item at src/cmd/build.rs:17 |  |  | 0.670 |
+| walker |  | 571 | 36 | pub-item names surface in src/cmd/serve.rs |  |  | 0.670 |
+| walker |  | 571 | 0 | pub item at src/cmd/serve.rs:23 |  |  | 0.670 |
+| walker |  | 571 | 0 | pub item at src/cmd/serve.rs:51 |  |  | 0.670 |
+| ns | 582 |  | 146 | Root README, part 1: pitch + guide/contributing links | 1.9 |  | 0.654 |
+| walker |  | 607 | 36 | pub-item names surface in src/cmd/test.rs |  |  | 0.654 |
+| walker |  | 607 | 0 | pub item at src/cmd/test.rs:9 |  |  | 0.654 |
+| walker |  | 607 | 0 | pub item at src/cmd/test.rs:35 |  |  | 0.654 |
+| walker |  | 668 | 61 | mod/use plumbing in src/cmd/mod.rs |  |  | 0.655 |
+| walker |  | 705 | 37 | pub-item names surface in src/cmd/init.rs |  |  | 0.655 |
+| walker |  | 705 | 0 | pub item at src/cmd/init.rs:12 |  |  | 0.655 |
+| walker |  | 705 | 0 | pub item at src/cmd/init.rs:32 |  |  | 0.655 |
+| ns | 760 |  | 178 | Workspace Cargo.toml: main package metadata | 1.10 |  | 0.591 |
+| walker |  | 1058 | 353 | [package] in Cargo.toml |  |  | 0.748 |
 | ns | 1066 |  | 306 | CONTRIBUTING.md: test commands | 1.11 |  | 0.700 |
 | walker |  | 1098 | 40 | pub-item names surface in src/cmd/command_prelude.rs |  |  | 0.700 |
 | walker |  | 1098 | 0 | pub item at src/cmd/command_prelude.rs:62 |  |  | 0.700 |

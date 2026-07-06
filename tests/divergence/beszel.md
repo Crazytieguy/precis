@@ -22,24 +22,24 @@ Score(3000)=0.365 I=0.663 C=0.201 ns_rows≤3K=31/50 (reached=6 partial=1 missin
 | walker |  | 371 | 37 | go decl at beszel.go:7 |  |  | 0.478 |
 | ns | 385 |  | 29 | internal/site/src/ directory listing | 1.8 |  | 0.444 |
 | walker |  | 396 | 25 | go package + imports in beszel.go |  |  | 0.447 |
-| walker |  | 424 | 28 | readme.md section #23 |  |  | 0.447 |
-| ns | 437 |  | 52 | internal/site/src/lib/ directory listing | 1.9 |  | 0.405 |
-| walker |  | 450 | 26 | listing of 'supplemental' |  |  | 0.499 |
-| walker |  | 469 | 19 | readme.md section #1 |  |  | 0.499 |
-| walker |  | 486 | 17 | readme.md section #2 |  |  | 0.499 |
-| walker |  | 509 | 23 | readme.md section #3 |  |  | 0.499 |
-| walker |  | 519 | 10 | listing of 'supplemental/docker' |  |  | 0.499 |
-| walker |  | 585 | 66 | listing of 'internal' |  |  | 0.506 |
-| walker |  | 598 | 13 | listing of 'internal/entities' |  |  | 0.564 |
-| walker |  | 628 | 30 | listing of 'internal/ghupdate' |  |  | 0.564 |
+| walker |  | 422 | 26 | listing of 'supplemental' |  |  | 0.551 |
+| walker |  | 432 | 10 | listing of 'supplemental/docker' |  |  | 0.551 |
+| ns | 437 |  | 52 | internal/site/src/lib/ directory listing | 1.9 |  | 0.499 |
+| walker |  | 460 | 28 | readme.md section #23 |  |  | 0.499 |
+| walker |  | 526 | 66 | listing of 'internal' |  |  | 0.506 |
+| walker |  | 539 | 13 | listing of 'internal/entities' |  |  | 0.564 |
+| walker |  | 569 | 30 | listing of 'internal/ghupdate' |  |  | 0.564 |
+| walker |  | 605 | 36 | go decl names surface in internal/ghupdate/selinux.go |  |  | 0.564 |
+| walker |  | 605 | 0 | go decl at internal/ghupdate/selinux.go:10 |  |  | 0.564 |
+| walker |  | 605 | 0 | go decl at internal/ghupdate/selinux.go:41 |  |  | 0.564 |
+| walker |  | 624 | 19 | readme.md section #1 |  |  | 0.564 |
+| walker |  | 641 | 17 | readme.md section #2 |  |  | 0.564 |
 | ns | 652 |  | 215 | beszel.go — version/AppName constants | 1.10 |  | 0.622 |
-| walker |  | 664 | 36 | go decl names surface in internal/ghupdate/selinux.go |  |  | 0.622 |
-| walker |  | 664 | 0 | go decl at internal/ghupdate/selinux.go:10 |  |  | 0.622 |
-| walker |  | 664 | 0 | go decl at internal/ghupdate/selinux.go:41 |  |  | 0.622 |
-| walker |  | 700 | 36 | listing of 'internal/records' |  |  | 0.625 |
+| walker |  | 677 | 36 | listing of 'internal/records' |  |  | 0.625 |
 | ns | 707 |  | 55 | internal/hub/ws/, transport/, expirymap/ directory listings | 1.11 |  | 0.583 |
-| walker |  | 737 | 37 | listing of 'supplemental/debian' |  |  | 0.584 |
-| walker |  | 741 | 4 | listing of 'internal/users' |  |  | 0.584 |
+| walker |  | 714 | 37 | listing of 'supplemental/debian' |  |  | 0.584 |
+| walker |  | 718 | 4 | listing of 'internal/users' |  |  | 0.584 |
+| walker |  | 741 | 23 | readme.md section #3 |  |  | 0.584 |
 | ns | 764 |  | 57 | internal/hub/systems/ directory listing | 1.12 |  | 0.552 |
 | walker |  | 765 | 24 | readme.md section #7 |  |  | 0.552 |
 | walker |  | 789 | 24 | readme.md section #6 |  |  | 0.552 |

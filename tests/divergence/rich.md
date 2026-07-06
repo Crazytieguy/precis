@@ -9,12 +9,12 @@ Score(3000)=0.435 I=0.553 C=0.343 ns_rows≤3K=22/104 (reached=5 partial=0 missi
 | ns | 296 |  | 86 | tox.ini: multi-Python test matrix + lint/docs envs | 1.4 |  | 0.000 |
 | walker |  | 338 | 147 | README headline in README.md |  |  | 0.127 |
 | walker |  | 350 | 12 | listing of 'assets' |  |  | 0.127 |
-| walker |  | 441 | 91 | headings outline in README.md |  |  | 0.127 |
+| walker |  | 369 | 19 | listing of 'docs' |  |  | 0.127 |
 | ns | 443 |  | 147 | CONTRIBUTING.md: prerequisites, tests, typecheck, formatting | 1.5 | 1.3 | 0.105 |
-| walker |  | 463 | 22 | README.md section #0 |  |  | 0.105 |
-| walker |  | 546 | 83 | [dependencies] in pyproject.toml |  |  | 0.105 |
+| walker |  | 460 | 91 | headings outline in README.md |  |  | 0.105 |
+| walker |  | 482 | 22 | README.md section #0 |  |  | 0.105 |
 | ns | 560 |  | 117 | .pre-commit-config.yaml: hooks run on every commit | 1.6 |  | 0.090 |
-| walker |  | 565 | 19 | listing of 'docs' |  |  | 0.090 |
+| walker |  | 565 | 83 | [dependencies] in pyproject.toml |  |  | 0.090 |
 | ns | 590 |  | 30 | .github/workflows/ listing | 1.7 |  | 0.083 |
 | ns | 665 |  | 75 | pythonpackage.yml: main CI test matrix | 1.8 | 1.7 | 0.074 |
 | walker |  | 719 | 154 | plaintext config Makefile |  |  | 0.288 |

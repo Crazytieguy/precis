@@ -11,18 +11,18 @@ Score(3000)=0.435 I=0.742 C=0.256 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | walker |  | 215 | 5 | listing of 'bin' |  |  | 0.966 |
 | ns | 304 |  | 134 | README title + tagline | 1.3 |  | 0.915 |
 | walker |  | 321 | 106 | headings outline in README.md |  |  | 0.916 |
-| walker |  | 337 | 16 | README.md section #10 |  |  | 0.917 |
-| walker |  | 348 | 11 | README.md section #8 |  |  | 0.917 |
-| walker |  | 403 | 55 | README.md section #1 |  |  | 0.922 |
-| walker |  | 428 | 25 | listing of 'logo' |  |  | 0.922 |
-| ns | 467 |  | 163 | package.json — bin/types/exports | 1.4 |  | 0.752 |
-| walker |  | 471 | 43 | listing of 'docs' |  |  | 0.752 |
-| walker |  | 483 | 12 | listing of '.github' |  |  | 0.753 |
-| walker |  | 505 | 22 | listing of '.github/workflows' |  |  | 0.753 |
-| ns | 594 |  | 127 | package.json — key scripts | 1.5 |  | 0.716 |
-| walker |  | 595 | 90 | listing of 'lib' |  |  | 0.726 |
-| walker |  | 614 | 19 | listing of 'lib/svgo' |  |  | 0.726 |
-| walker |  | 621 | 7 | export names surface in lib/types.js |  |  | 0.726 |
+| walker |  | 346 | 25 | listing of 'logo' |  |  | 0.916 |
+| walker |  | 362 | 16 | README.md section #10 |  |  | 0.917 |
+| walker |  | 405 | 43 | listing of 'docs' |  |  | 0.918 |
+| walker |  | 417 | 12 | listing of '.github' |  |  | 0.918 |
+| walker |  | 439 | 22 | listing of '.github/workflows' |  |  | 0.919 |
+| ns | 467 |  | 163 | package.json — bin/types/exports | 1.4 |  | 0.749 |
+| walker |  | 529 | 90 | listing of 'lib' |  |  | 0.759 |
+| walker |  | 548 | 19 | listing of 'lib/svgo' |  |  | 0.759 |
+| walker |  | 555 | 7 | export names surface in lib/types.js |  |  | 0.759 |
+| walker |  | 566 | 11 | README.md section #8 |  |  | 0.759 |
+| ns | 594 |  | 127 | package.json — key scripts | 1.5 |  | 0.722 |
+| walker |  | 621 | 55 | README.md section #1 |  |  | 0.726 |
 | walker |  | 629 | 8 | listing of 'test-d/lib' |  |  | 0.726 |
 | walker |  | 648 | 19 | listing of 'docs/02-usage' |  |  | 0.726 |
 | walker |  | 664 | 16 | export names surface in lib/builtin.js |  |  | 0.726 |

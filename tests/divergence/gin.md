@@ -24,52 +24,52 @@ Score(3000)=0.573 I=0.576 C=0.571 ns_rows≤3K=16/41 (reached=6 partial=1 missin
 | walker |  | 360 | 25 | go decl names surface in deprecated.go |  |  | 0.066 |
 | walker |  | 360 | 0 | go decl at deprecated.go:17 |  |  | 0.066 |
 | walker |  | 367 | 7 | go package + imports in context_appengine.go |  |  | 0.066 |
-| walker |  | 378 | 11 | docs/doc.md section #0 |  |  | 0.066 |
-| walker |  | 393 | 15 | listing of 'ginS' |  |  | 0.161 |
-| walker |  | 408 | 15 | listing of 'testdata' |  |  | 0.194 |
-| walker |  | 417 | 9 | go package + imports in version.go |  |  | 0.197 |
-| walker |  | 429 | 12 | go decl doc at version.go:8 |  |  | 0.210 |
-| walker |  | 440 | 11 | go package + imports in path.go |  |  | 0.210 |
+| walker |  | 382 | 15 | listing of 'ginS' |  |  | 0.161 |
+| walker |  | 397 | 15 | listing of 'testdata' |  |  | 0.194 |
+| walker |  | 406 | 9 | go package + imports in version.go |  |  | 0.197 |
+| walker |  | 418 | 12 | go decl doc at version.go:8 |  |  | 0.210 |
+| walker |  | 429 | 11 | go package + imports in path.go |  |  | 0.210 |
 | ns | 495 |  | 156 | binding/ directory listing | 1.9 |  | 0.165 |
-| walker |  | 585 | 145 | README headline in ginS/README.md |  |  | 0.165 |
-| walker |  | 660 | 75 | listing of 'render' |  |  | 0.338 |
-| walker |  | 676 | 16 | go package + imports in doc.go |  |  | 0.339 |
+| walker |  | 504 | 75 | listing of 'render' |  |  | 0.338 |
+| walker |  | 520 | 16 | go package + imports in doc.go |  |  | 0.339 |
+| walker |  | 587 | 67 | go decl names surface in path.go |  |  | 0.339 |
+| walker |  | 587 | 0 | go decl at path.go:23 |  |  | 0.339 |
+| walker |  | 587 | 0 | go decl at path.go:128 |  |  | 0.339 |
+| walker |  | 587 | 0 | go decl at path.go:155 |  |  | 0.339 |
+| walker |  | 598 | 11 | docs/doc.md section #0 |  |  | 0.339 |
 | ns | 710 |  | 215 | Package doc lede (doc.go) | 1.10 |  | 0.303 |
-| walker |  | 743 | 67 | go decl names surface in path.go |  |  | 0.303 |
-| walker |  | 743 | 0 | go decl at path.go:23 |  |  | 0.303 |
-| walker |  | 743 | 0 | go decl at path.go:128 |  |  | 0.303 |
-| walker |  | 743 | 0 | go decl at path.go:155 |  |  | 0.303 |
-| walker |  | 919 | 176 | go decl names surface in gin.go |  |  | 0.303 |
-| walker |  | 919 | 0 | go decl at gin.go:51 |  |  | 0.303 |
-| walker |  | 919 | 0 | go decl at gin.go:54 |  |  | 0.303 |
-| walker |  | 919 | 0 | go decl at gin.go:57 |  |  | 0.303 |
-| walker |  | 919 | 0 | go decl at gin.go:60 |  |  | 0.303 |
-| walker |  | 931 | 12 | go decl doc at gin.go:57 |  |  | 0.303 |
-| ns | 939 |  | 229 | Root directory listing | 1.11 |  | 0.440 |
-| walker |  | 945 | 14 | go decl doc at gin.go:54 |  |  | 0.441 |
-| walker |  | 954 | 9 | go decl at gin.go:32 |  |  | 0.441 |
-| walker |  | 963 | 9 | go decl at gin.go:25 |  |  | 0.441 |
-| walker |  | 981 | 18 | go decl doc at gin.go:51 |  |  | 0.441 |
-| walker |  | 1004 | 23 | go decl doc at gin.go:60 |  |  | 0.442 |
-| walker |  | 1043 | 39 | go decl body at gin.go:60 |  |  | 0.443 |
-| walker |  | 1065 | 22 | listing of 'codec/json' |  |  | 0.515 |
-| walker |  | 1164 | 99 | go decl names surface in fs.go |  |  | 0.515 |
-| walker |  | 1164 | 0 | go decl at fs.go:18 |  |  | 0.515 |
-| walker |  | 1164 | 0 | go decl at fs.go:33 |  |  | 0.515 |
-| walker |  | 1164 | 0 | go decl at fs.go:42 |  |  | 0.515 |
-| walker |  | 1179 | 15 | go decl at fs.go:13 |  |  | 0.515 |
-| walker |  | 1191 | 12 | go decl at fs.go:28 |  |  | 0.515 |
-| walker |  | 1211 | 20 | go decl doc at fs.go:13 |  |  | 0.515 |
+| walker |  | 774 | 176 | go decl names surface in gin.go |  |  | 0.303 |
+| walker |  | 774 | 0 | go decl at gin.go:51 |  |  | 0.303 |
+| walker |  | 774 | 0 | go decl at gin.go:54 |  |  | 0.303 |
+| walker |  | 774 | 0 | go decl at gin.go:57 |  |  | 0.303 |
+| walker |  | 774 | 0 | go decl at gin.go:60 |  |  | 0.303 |
+| walker |  | 786 | 12 | go decl doc at gin.go:57 |  |  | 0.303 |
+| walker |  | 800 | 14 | go decl doc at gin.go:54 |  |  | 0.304 |
+| walker |  | 809 | 9 | go decl at gin.go:32 |  |  | 0.304 |
+| walker |  | 818 | 9 | go decl at gin.go:25 |  |  | 0.304 |
+| walker |  | 836 | 18 | go decl doc at gin.go:51 |  |  | 0.304 |
+| walker |  | 859 | 23 | go decl doc at gin.go:60 |  |  | 0.304 |
+| walker |  | 898 | 39 | go decl body at gin.go:60 |  |  | 0.305 |
+| walker |  | 920 | 22 | listing of 'codec/json' |  |  | 0.379 |
+| ns | 939 |  | 229 | Root directory listing | 1.11 |  | 0.515 |
+| walker |  | 1019 | 99 | go decl names surface in fs.go |  |  | 0.515 |
+| walker |  | 1019 | 0 | go decl at fs.go:18 |  |  | 0.515 |
+| walker |  | 1019 | 0 | go decl at fs.go:33 |  |  | 0.515 |
+| walker |  | 1019 | 0 | go decl at fs.go:42 |  |  | 0.515 |
+| walker |  | 1034 | 15 | go decl at fs.go:13 |  |  | 0.515 |
+| walker |  | 1046 | 12 | go decl at fs.go:28 |  |  | 0.515 |
+| walker |  | 1066 | 20 | go decl doc at fs.go:13 |  |  | 0.515 |
+| walker |  | 1085 | 19 | go decl doc at fs.go:18 |  |  | 0.515 |
+| walker |  | 1133 | 48 | go decl names surface in render/redirect.go |  |  | 0.515 |
+| walker |  | 1133 | 0 | go decl at render/redirect.go:20 |  |  | 0.515 |
+| walker |  | 1133 | 0 | go decl at render/redirect.go:29 |  |  | 0.515 |
+| walker |  | 1164 | 31 | go decl at render/redirect.go:13 |  |  | 0.515 |
+| walker |  | 1182 | 18 | go decl doc at render/redirect.go:13 |  |  | 0.515 |
+| walker |  | 1194 | 12 | go decl body at context_appengine.go:9 |  |  | 0.515 |
+| walker |  | 1211 | 17 | go decl doc at render/redirect.go:29 |  |  | 0.515 |
+| walker |  | 1227 | 16 | go decl doc at fs.go:33 |  |  | 0.515 |
 | ns | 1229 |  | 290 | README: what Gin is + key features list | 1.12 |  | 0.496 |
-| walker |  | 1230 | 19 | go decl doc at fs.go:18 |  |  | 0.496 |
-| walker |  | 1278 | 48 | go decl names surface in render/redirect.go |  |  | 0.496 |
-| walker |  | 1278 | 0 | go decl at render/redirect.go:20 |  |  | 0.496 |
-| walker |  | 1278 | 0 | go decl at render/redirect.go:29 |  |  | 0.496 |
-| walker |  | 1309 | 31 | go decl at render/redirect.go:13 |  |  | 0.496 |
-| walker |  | 1327 | 18 | go decl doc at render/redirect.go:13 |  |  | 0.496 |
-| walker |  | 1339 | 12 | go decl body at context_appengine.go:9 |  |  | 0.496 |
-| walker |  | 1356 | 17 | go decl doc at render/redirect.go:29 |  |  | 0.496 |
-| walker |  | 1372 | 16 | go decl doc at fs.go:33 |  |  | 0.496 |
+| walker |  | 1372 | 145 | README headline in ginS/README.md |  |  | 0.496 |
 | walker |  | 1426 | 54 | go decl names surface in render/data.go |  |  | 0.496 |
 | walker |  | 1426 | 0 | go decl at render/data.go:19 |  |  | 0.496 |
 | walker |  | 1426 | 0 | go decl at render/data.go:29 |  |  | 0.496 |

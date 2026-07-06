@@ -14,42 +14,42 @@ Score(3000)=0.663 I=0.876 C=0.503 ns_rows≤3K=20/54 (reached=12 partial=0 missi
 | ns | 339 |  | 82 | README key-features bullets, part 2a | 1.6 | 1.3 | 0.625 |
 | walker |  | 355 | 56 | headings outline in docs/components-guide.md |  |  | 0.625 |
 | walker |  | 355 | 0 | docs/components-guide.md section #0 |  |  | 0.625 |
-| walker |  | 414 | 59 | headings outline in docs/function-components.md |  |  | 0.626 |
-| walker |  | 479 | 65 | listing of 'htmy' |  |  | 0.636 |
-| ns | 492 |  | 153 | README key-features bullets, part 2b | 1.7 | 1.3 | 0.559 |
-| walker |  | 496 | 17 | python imports in htmy/__init__.py |  |  | 0.559 |
-| walker |  | 513 | 17 | python imports #2 in htmy/__init__.py |  |  | 0.559 |
-| walker |  | 526 | 13 | python imports #3 in htmy/__init__.py |  |  | 0.559 |
-| walker |  | 544 | 18 | python imports #5 in htmy/__init__.py |  |  | 0.559 |
-| walker |  | 568 | 24 | python imports #4 in htmy/__init__.py |  |  | 0.560 |
-| ns | 603 |  | 111 | README section map (heading locations), part 3 | 1.8 | 1.5 | 0.486 |
-| walker |  | 688 | 120 | python imports #1 in htmy/__init__.py |  |  | 0.490 |
-| walker |  | 714 | 26 | python imports #6 in htmy/__init__.py |  |  | 0.492 |
-| walker |  | 728 | 14 | listing of 'htmy/md' |  |  | 0.495 |
-| ns | 729 |  | 126 | pyproject.toml -- project metadata & runtime deps | 1.9 |  | 0.473 |
-| walker |  | 770 | 42 | python imports #7 in htmy/__init__.py |  |  | 0.475 |
-| walker |  | 792 | 22 | listing of 'htmy/renderer' |  |  | 0.481 |
-| walker |  | 817 | 25 | python decl names surface in htmy/__init__.py |  |  | 0.481 |
+| walker |  | 420 | 65 | listing of 'htmy' |  |  | 0.635 |
+| walker |  | 437 | 17 | python imports in htmy/__init__.py |  |  | 0.635 |
+| walker |  | 454 | 17 | python imports #2 in htmy/__init__.py |  |  | 0.636 |
+| walker |  | 467 | 13 | python imports #3 in htmy/__init__.py |  |  | 0.636 |
+| walker |  | 485 | 18 | python imports #5 in htmy/__init__.py |  |  | 0.636 |
+| ns | 492 |  | 153 | README key-features bullets, part 2b | 1.7 | 1.3 | 0.558 |
+| walker |  | 509 | 24 | python imports #4 in htmy/__init__.py |  |  | 0.559 |
+| ns | 603 |  | 111 | README section map (heading locations), part 3 | 1.8 | 1.5 | 0.485 |
+| walker |  | 629 | 120 | python imports #1 in htmy/__init__.py |  |  | 0.489 |
+| walker |  | 655 | 26 | python imports #6 in htmy/__init__.py |  |  | 0.491 |
+| walker |  | 669 | 14 | listing of 'htmy/md' |  |  | 0.494 |
+| walker |  | 711 | 42 | python imports #7 in htmy/__init__.py |  |  | 0.496 |
+| ns | 729 |  | 126 | pyproject.toml -- project metadata & runtime deps | 1.9 |  | 0.475 |
+| walker |  | 733 | 22 | listing of 'htmy/renderer' |  |  | 0.481 |
+| walker |  | 758 | 25 | python decl names surface in htmy/__init__.py |  |  | 0.481 |
+| walker |  | 820 | 62 | python imports in htmy/renderer/__init__.py |  |  | 0.481 |
 | ns | 835 |  | 106 | pyproject.toml -- poe task shortcuts | 1.10 |  | 0.448 |
 | ns | 854 |  | 19 | CI workflow listing | 1.11 |  | 0.434 |
-| walker |  | 879 | 62 | python imports in htmy/renderer/__init__.py |  |  | 0.434 |
+| walker |  | 856 | 36 | python decl names surface in htmy/renderer/__init__.py |  |  | 0.434 |
+| walker |  | 868 | 12 | python decl names surface in htmy/error_boundary.py |  |  | 0.434 |
+| walker |  | 868 | 0 | python decl at htmy/error_boundary.py:15 |  |  | 0.434 |
 | ns | 905 |  | 51 | CI: tests workflow -- actual test invocation | 1.12 |  | 0.418 |
-| walker |  | 915 | 36 | python decl names surface in htmy/renderer/__init__.py |  |  | 0.418 |
-| walker |  | 927 | 12 | python decl names surface in htmy/error_boundary.py |  |  | 0.418 |
-| walker |  | 927 | 0 | python decl at htmy/error_boundary.py:15 |  |  | 0.418 |
+| walker |  | 956 | 88 | python imports in htmy/md/__init__.py |  |  | 0.418 |
+| walker |  | 969 | 13 | python decl names surface in htmy/etree.py |  |  | 0.418 |
+| walker |  | 969 | 0 | python decl at htmy/etree.py:23 |  |  | 0.418 |
 | ns | 1006 |  | 101 | htmy/ package listing (incl. md/ and renderer/ subpackages) | 1.13 |  | 0.540 |
-| walker |  | 1015 | 88 | python imports in htmy/md/__init__.py |  |  | 0.541 |
-| walker |  | 1028 | 13 | python decl names surface in htmy/etree.py |  |  | 0.541 |
-| walker |  | 1028 | 0 | python decl at htmy/etree.py:23 |  |  | 0.541 |
-| walker |  | 1136 | 108 | python imports #9 in htmy/__init__.py |  |  | 0.542 |
-| walker |  | 1157 | 21 | python class body at htmy/error_boundary.py:15 |  |  | 0.542 |
-| walker |  | 1178 | 21 | python decl names surface in htmy/snippet.py |  |  | 0.542 |
-| walker |  | 1178 | 0 | python decl at htmy/snippet.py:27 |  |  | 0.542 |
-| walker |  | 1178 | 0 | python decl at htmy/snippet.py:158 |  |  | 0.542 |
-| walker |  | 1200 | 22 | python decl names surface in htmy/io.py |  |  | 0.542 |
-| walker |  | 1200 | 0 | python decl at htmy/io.py:11 |  |  | 0.542 |
-| walker |  | 1215 | 15 | python decl doc at htmy/io.py:11 |  |  | 0.542 |
-| walker |  | 1241 | 26 | python class body at htmy/snippet.py:158 |  |  | 0.542 |
+| walker |  | 1077 | 108 | python imports #9 in htmy/__init__.py |  |  | 0.542 |
+| walker |  | 1098 | 21 | python class body at htmy/error_boundary.py:15 |  |  | 0.542 |
+| walker |  | 1119 | 21 | python decl names surface in htmy/snippet.py |  |  | 0.542 |
+| walker |  | 1119 | 0 | python decl at htmy/snippet.py:27 |  |  | 0.542 |
+| walker |  | 1119 | 0 | python decl at htmy/snippet.py:158 |  |  | 0.542 |
+| walker |  | 1141 | 22 | python decl names surface in htmy/io.py |  |  | 0.542 |
+| walker |  | 1141 | 0 | python decl at htmy/io.py:11 |  |  | 0.542 |
+| walker |  | 1156 | 15 | python decl doc at htmy/io.py:11 |  |  | 0.542 |
+| walker |  | 1182 | 26 | python class body at htmy/snippet.py:158 |  |  | 0.542 |
+| walker |  | 1241 | 59 | headings outline in docs/function-components.md |  |  | 0.542 |
 | walker |  | 1252 | 11 | python decl names surface in htmy/renderer/baseline.py |  |  | 0.542 |
 | walker |  | 1252 | 0 | python decl at htmy/renderer/baseline.py:18 |  |  | 0.542 |
 | ns | 1344 |  | 338 | htmy/__init__.py -- public export surface, part 1 | 1.14 |  | 0.562 |

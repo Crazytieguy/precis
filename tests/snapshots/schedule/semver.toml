@@ -171,10 +171,24 @@ entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-o
 
 [[batches]]
 position = 10
+key = 'Fs(DirListing { dir: "ranges" })'
+descriptor = "listing of 'ranges'"
+cost_tokens = 56
+cum_tokens = 372
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "ranges"
+entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
+
+[[batches]]
+position = 11
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 180
-cum_tokens = 496
+cum_tokens = 552
 
 [batches.content]
 kind = "lines"
@@ -468,11 +482,11 @@ end = 611
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 25
-cum_tokens = 521
+cum_tokens = 577
 
 [batches.content]
 kind = "lines"
@@ -484,20 +498,6 @@ end = 8
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "ranges" })'
-descriptor = "listing of 'ranges'"
-cost_tokens = 56
-cum_tokens = 577
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "ranges"
-entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
 
 [[batches]]
 position = 13

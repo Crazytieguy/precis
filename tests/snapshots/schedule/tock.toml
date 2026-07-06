@@ -369,154 +369,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 11
-key = 'Markdown(Section { file: "docs/commands.md", section_index: 5, reference_shaped: false })'
-descriptor = "docs/commands.md section #5"
-cost_tokens = 5
-cum_tokens = 453
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/commands.md"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Markdown(Section { file: "docs/commands.md", section_index: 10, reference_shaped: false })'
-descriptor = "docs/commands.md section #10"
-cost_tokens = 5
-cum_tokens = 458
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/commands.md"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Markdown(Section { file: "docs/commands.md", section_index: 15, reference_shaped: false })'
-descriptor = "docs/commands.md section #15"
-cost_tokens = 5
-cum_tokens = 463
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/commands.md"
-start = 116
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Markdown(Section { file: "docs/commands.md", section_index: 20, reference_shaped: false })'
-descriptor = "docs/commands.md section #20"
-cost_tokens = 5
-cum_tokens = 468
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/commands.md"
-start = 141
-end = 141
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Markdown(Section { file: "docs/commands.md", section_index: 30, reference_shaped: false })'
-descriptor = "docs/commands.md section #30"
-cost_tokens = 5
-cum_tokens = 473
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/commands.md"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Markdown(Section { file: "docs/commands.md", section_index: 35, reference_shaped: false })'
-descriptor = "docs/commands.md section #35"
-cost_tokens = 5
-cum_tokens = 478
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/commands.md"
-start = 215
-end = 215
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Markdown(Section { file: "docs/commands.md", section_index: 40, reference_shaped: false })'
-descriptor = "docs/commands.md section #40"
-cost_tokens = 5
-cum_tokens = 483
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/commands.md"
-start = 238
-end = 238
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Markdown(Section { file: "docs/commands.md", section_index: 16, reference_shaped: false })'
-descriptor = "docs/commands.md section #16"
-cost_tokens = 8
-cum_tokens = 491
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/commands.md"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
 key = 'Fs(DirListing { dir: "cmd/tock" })'
 descriptor = "listing of 'cmd/tock'"
 cost_tokens = 4
-cum_tokens = 495
+cum_tokens = 452
 
 [batches.content]
 kind = "fs"
@@ -526,11 +382,11 @@ parent = "cmd/tock"
 entries = ["main.go"]
 
 [[batches]]
-position = 20
+position = 12
 key = 'Go(DeclNames { file: "cmd/tock/main.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cmd/tock/main.go"
 cost_tokens = 12
-cum_tokens = 507
+cum_tokens = 464
 
 [batches.content]
 kind = "lines"
@@ -552,11 +408,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 13
 key = 'Go(Decl { file: "cmd/tock/main.go", start_line: 7 })'
 descriptor = "go decl at cmd/tock/main.go:7"
 cost_tokens = 0
-cum_tokens = 507
+cum_tokens = 464
 
 [batches.content]
 kind = "lines"
@@ -570,11 +426,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 22
+position = 14
 key = 'Go(DeclBody { file: "cmd/tock/main.go", start_line: 7 })'
 descriptor = "go decl body at cmd/tock/main.go:7"
 cost_tokens = 8
-cum_tokens = 515
+cum_tokens = 472
 
 [batches.content]
 kind = "lines"
@@ -588,11 +444,137 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 23
+position = 15
+key = 'Markdown(Section { file: "docs/commands.md", section_index: 5, reference_shaped: false })'
+descriptor = "docs/commands.md section #5"
+cost_tokens = 5
+cum_tokens = 477
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/commands.md"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Markdown(Section { file: "docs/commands.md", section_index: 10, reference_shaped: false })'
+descriptor = "docs/commands.md section #10"
+cost_tokens = 5
+cum_tokens = 482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/commands.md"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Markdown(Section { file: "docs/commands.md", section_index: 15, reference_shaped: false })'
+descriptor = "docs/commands.md section #15"
+cost_tokens = 5
+cum_tokens = 487
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/commands.md"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Markdown(Section { file: "docs/commands.md", section_index: 20, reference_shaped: false })'
+descriptor = "docs/commands.md section #20"
+cost_tokens = 5
+cum_tokens = 492
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/commands.md"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Markdown(Section { file: "docs/commands.md", section_index: 30, reference_shaped: false })'
+descriptor = "docs/commands.md section #30"
+cost_tokens = 5
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/commands.md"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "docs/commands.md", section_index: 35, reference_shaped: false })'
+descriptor = "docs/commands.md section #35"
+cost_tokens = 5
+cum_tokens = 502
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/commands.md"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Markdown(Section { file: "docs/commands.md", section_index: 40, reference_shaped: false })'
+descriptor = "docs/commands.md section #40"
+cost_tokens = 5
+cum_tokens = 507
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/commands.md"
+start = 238
+end = 238
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 333
-cum_tokens = 848
+cum_tokens = 840
 
 [batches.content]
 kind = "lines"
@@ -606,11 +588,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Fs(DirListing { dir: "internal/adapters" })'
 descriptor = "listing of 'internal/adapters'"
 cost_tokens = 6
-cum_tokens = 854
+cum_tokens = 846
 
 [batches.content]
 kind = "fs"
@@ -620,11 +602,11 @@ parent = "internal/adapters"
 entries = ["cli", "repositories"]
 
 [[batches]]
-position = 25
+position = 24
 key = 'Fs(DirListing { dir: "internal/adapters/repositories" })'
 descriptor = "listing of 'internal/adapters/repositories'"
 cost_tokens = 11
-cum_tokens = 865
+cum_tokens = 857
 
 [batches.content]
 kind = "fs"
@@ -634,11 +616,11 @@ parent = "internal/adapters/repositories"
 entries = ["file", "notes", "timewarrior"]
 
 [[batches]]
-position = 26
+position = 25
 key = 'Fs(DirListing { dir: "internal/adapters/repositories/file" })'
 descriptor = "listing of 'internal/adapters/repositories/file'"
 cost_tokens = 18
-cum_tokens = 883
+cum_tokens = 875
 
 [batches.content]
 kind = "fs"
@@ -648,11 +630,11 @@ parent = "internal/adapters/repositories/file"
 entries = ["parser.go", "parser_test.go", "repository.go", "repository_test.go"]
 
 [[batches]]
-position = 27
+position = 26
 key = 'Fs(DirListing { dir: "internal/services" })'
 descriptor = "listing of 'internal/services'"
 cost_tokens = 7
-cum_tokens = 890
+cum_tokens = 882
 
 [batches.content]
 kind = "fs"
@@ -662,11 +644,11 @@ parent = "internal/services"
 entries = ["activity", "ics"]
 
 [[batches]]
-position = 28
+position = 27
 key = 'Fs(DirListing { dir: "internal/core/errors" })'
 descriptor = "listing of 'internal/core/errors'"
 cost_tokens = 4
-cum_tokens = 894
+cum_tokens = 886
 
 [batches.content]
 kind = "fs"
@@ -676,11 +658,11 @@ parent = "internal/core/errors"
 entries = ["errors.go"]
 
 [[batches]]
-position = 29
+position = 28
 key = 'Fs(DirListing { dir: "internal/core/models" })'
 descriptor = "listing of 'internal/core/models'"
 cost_tokens = 4
-cum_tokens = 898
+cum_tokens = 890
 
 [batches.content]
 kind = "fs"
@@ -690,11 +672,11 @@ parent = "internal/core/models"
 entries = ["activity.go"]
 
 [[batches]]
-position = 30
+position = 29
 key = 'Fs(DirListing { dir: "internal/services/ics" })'
 descriptor = "listing of 'internal/services/ics'"
 cost_tokens = 4
-cum_tokens = 902
+cum_tokens = 894
 
 [batches.content]
 kind = "fs"
@@ -704,11 +686,11 @@ parent = "internal/services/ics"
 entries = ["generator.go"]
 
 [[batches]]
-position = 31
+position = 30
 key = 'Fs(DirListing { dir: "internal/config" })'
 descriptor = "listing of 'internal/config'"
 cost_tokens = 9
-cum_tokens = 911
+cum_tokens = 903
 
 [batches.content]
 kind = "fs"
@@ -718,11 +700,11 @@ parent = "internal/config"
 entries = ["config.go", "config_test.go"]
 
 [[batches]]
-position = 32
+position = 31
 key = 'Fs(DirListing { dir: "internal/extra" })'
 descriptor = "listing of 'internal/extra'"
 cost_tokens = 9
-cum_tokens = 920
+cum_tokens = 912
 
 [batches.content]
 kind = "fs"
@@ -732,11 +714,11 @@ parent = "internal/extra"
 entries = ["extra.go", "extra_test.go"]
 
 [[batches]]
-position = 33
+position = 32
 key = 'Go(DeclNames { file: "internal/extra/extra.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/extra/extra.go"
 cost_tokens = 38
-cum_tokens = 958
+cum_tokens = 950
 
 [batches.content]
 kind = "lines"
@@ -758,11 +740,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Go(Decl { file: "internal/extra/extra.go", start_line: 11 })'
 descriptor = "go decl at internal/extra/extra.go:11"
 cost_tokens = 0
-cum_tokens = 958
+cum_tokens = 950
 
 [batches.content]
 kind = "lines"
@@ -771,6 +753,24 @@ kind = "lines"
 path = "internal/extra/extra.go"
 start = 11
 end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Markdown(Section { file: "docs/commands.md", section_index: 16, reference_shaped: false })'
+descriptor = "docs/commands.md section #16"
+cost_tokens = 8
+cum_tokens = 958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/commands.md"
+start = 120
+end = 120
 
 [batches.content.spans.render]
 kind = "full"

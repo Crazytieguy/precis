@@ -15,20 +15,20 @@ Score(3000)=0.511 I=0.797 C=0.327 ns_rows≤3K=21/42 (reached=7 partial=3 missin
 | walker |  | 266 | 63 | export names surface in source/index.ts |  |  | 0.714 |
 | ns | 315 |  | 59 | package.json — name, version, description, license | 2.3 |  | 0.719 |
 | walker |  | 387 | 121 | headings outline in readme.md |  |  | 0.734 |
-| walker |  | 397 | 10 | readme.md section #5 |  |  | 0.734 |
-| walker |  | 412 | 15 | readme.md section #24 |  |  | 0.734 |
+| walker |  | 424 | 37 | export names surface in source/priority-queue.ts |  |  | 0.734 |
+| walker |  | 441 | 17 | export at source/priority-queue.ts:7 |  |  | 0.735 |
 | ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.638 |
-| walker |  | 449 | 37 | export names surface in source/priority-queue.ts |  |  | 0.638 |
-| walker |  | 466 | 17 | export at source/priority-queue.ts:7 |  |  | 0.638 |
 | ns | 554 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.598 |
-| walker |  | 595 | 129 | export at source/priority-queue.ts:11 |  |  | 0.598 |
+| walker |  | 570 | 129 | export at source/priority-queue.ts:11 |  |  | 0.598 |
+| walker |  | 580 | 10 | readme.md section #5 |  |  | 0.598 |
 | ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.642 |
 | ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.552 |
 | ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.534 |
 | ns | 1080 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.500 |
-| walker |  | 1135 | 540 | export at source/index.ts:16 |  |  | 0.503 |
-| walker |  | 1155 | 20 | export doc at source/index.ts:16 |  |  | 0.503 |
-| walker |  | 1175 | 20 | imports in source/options.ts |  |  | 0.503 |
+| walker |  | 1120 | 540 | export at source/index.ts:16 |  |  | 0.503 |
+| walker |  | 1140 | 20 | export doc at source/index.ts:16 |  |  | 0.503 |
+| walker |  | 1160 | 20 | imports in source/options.ts |  |  | 0.503 |
+| walker |  | 1175 | 15 | readme.md section #24 |  |  | 0.503 |
 | walker |  | 1259 | 84 | imports in source/index.ts |  |  | 0.504 |
 | walker |  | 1306 | 47 | readme.md section #34 |  |  | 0.504 |
 | ns | 1352 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.445 |

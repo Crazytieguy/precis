@@ -18,19 +18,18 @@ Score(3000)=0.509 I=0.735 C=0.352 ns_rows≤3K=22/71 (reached=7 partial=5 missin
 | ns | 432 |  | 165 | README Project Structure | 1.5 |  | 0.683 |
 | walker |  | 448 | 188 | headings outline in docs/commands.md |  |  | 0.683 |
 | ns | 451 |  | 19 | internal/ directory listing | 2.1 |  | 0.712 |
-| walker |  | 453 | 5 | docs/commands.md section #5 |  |  | 0.712 |
-| walker |  | 458 | 5 | docs/commands.md section #10 |  |  | 0.712 |
-| ns | 461 |  | 10 | cmd/tock/ + internal/adapters/ listings | 2.2 |  | 0.684 |
-| walker |  | 463 | 5 | docs/commands.md section #15 |  |  | 0.684 |
-| walker |  | 468 | 5 | docs/commands.md section #20 |  |  | 0.684 |
-| walker |  | 473 | 5 | docs/commands.md section #30 |  |  | 0.684 |
-| walker |  | 478 | 5 | docs/commands.md section #35 |  |  | 0.684 |
-| walker |  | 483 | 5 | docs/commands.md section #40 |  |  | 0.684 |
-| walker |  | 491 | 8 | docs/commands.md section #16 |  |  | 0.684 |
-| walker |  | 495 | 4 | listing of 'cmd/tock' |  |  | 0.689 |
-| walker |  | 507 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.689 |
-| walker |  | 507 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.689 |
-| walker |  | 515 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.690 |
+| walker |  | 452 | 4 | listing of 'cmd/tock' |  |  | 0.713 |
+| ns | 461 |  | 10 | cmd/tock/ + internal/adapters/ listings | 2.2 |  | 0.689 |
+| walker |  | 464 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.689 |
+| walker |  | 464 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.689 |
+| walker |  | 472 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.690 |
+| walker |  | 477 | 5 | docs/commands.md section #5 |  |  | 0.690 |
+| walker |  | 482 | 5 | docs/commands.md section #10 |  |  | 0.690 |
+| walker |  | 487 | 5 | docs/commands.md section #15 |  |  | 0.690 |
+| walker |  | 492 | 5 | docs/commands.md section #20 |  |  | 0.690 |
+| walker |  | 497 | 5 | docs/commands.md section #30 |  |  | 0.690 |
+| walker |  | 502 | 5 | docs/commands.md section #35 |  |  | 0.690 |
+| walker |  | 507 | 5 | docs/commands.md section #40 |  |  | 0.690 |
 | ns | 540 |  | 79 | internal/adapters/cli/ listing | 2.3 |  | 0.561 |
 | ns | 587 |  | 47 | internal/adapters/repositories/ + backend subdirs | 2.4 |  | 0.511 |
 | ns | 638 |  | 51 | internal/core/ + subpackage listings | 2.5 |  | 0.481 |
@@ -38,18 +37,19 @@ Score(3000)=0.509 I=0.735 C=0.352 ns_rows≤3K=22/71 (reached=7 partial=5 missin
 | ns | 687 |  | 29 | internal/config/, timeutil/, extra/ listings | 2.7 |  | 0.448 |
 | ns | 709 |  | 22 | .github/ + workflows/ listings | 2.8 |  | 0.435 |
 | ns | 734 |  | 25 | assets/ + demo/ listings | 2.9 |  | 0.447 |
-| walker |  | 848 | 333 | plaintext config Makefile |  |  | 0.485 |
-| walker |  | 854 | 6 | listing of 'internal/adapters' |  |  | 0.507 |
-| walker |  | 865 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.513 |
-| walker |  | 883 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.540 |
-| walker |  | 890 | 7 | listing of 'internal/services' |  |  | 0.546 |
-| walker |  | 894 | 4 | listing of 'internal/core/errors' |  |  | 0.552 |
-| walker |  | 898 | 4 | listing of 'internal/core/models' |  |  | 0.558 |
-| walker |  | 902 | 4 | listing of 'internal/services/ics' |  |  | 0.565 |
-| walker |  | 911 | 9 | listing of 'internal/config' |  |  | 0.570 |
-| walker |  | 920 | 9 | listing of 'internal/extra' |  |  | 0.583 |
-| walker |  | 958 | 38 | go decl names surface in internal/extra/extra.go |  |  | 0.584 |
-| walker |  | 958 | 0 | go decl at internal/extra/extra.go:11 |  |  | 0.584 |
+| walker |  | 840 | 333 | plaintext config Makefile |  |  | 0.485 |
+| walker |  | 846 | 6 | listing of 'internal/adapters' |  |  | 0.507 |
+| walker |  | 857 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.513 |
+| walker |  | 875 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.540 |
+| walker |  | 882 | 7 | listing of 'internal/services' |  |  | 0.546 |
+| walker |  | 886 | 4 | listing of 'internal/core/errors' |  |  | 0.552 |
+| walker |  | 890 | 4 | listing of 'internal/core/models' |  |  | 0.558 |
+| walker |  | 894 | 4 | listing of 'internal/services/ics' |  |  | 0.565 |
+| walker |  | 903 | 9 | listing of 'internal/config' |  |  | 0.570 |
+| walker |  | 912 | 9 | listing of 'internal/extra' |  |  | 0.583 |
+| walker |  | 950 | 38 | go decl names surface in internal/extra/extra.go |  |  | 0.584 |
+| walker |  | 950 | 0 | go decl at internal/extra/extra.go:11 |  |  | 0.584 |
+| walker |  | 958 | 8 | docs/commands.md section #16 |  |  | 0.584 |
 | ns | 1012 |  | 278 | docs/commands.md table of contents | 2.10 |  | 0.526 |
 | walker |  | 1026 | 68 | go decl names surface in internal/services/ics/generator.go |  |  | 0.527 |
 | walker |  | 1026 | 0 | go decl at internal/services/ics/generator.go:12 |  |  | 0.527 |

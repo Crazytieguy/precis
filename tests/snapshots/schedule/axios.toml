@@ -259,28 +259,10 @@ entries = ["README.md", "adapters.js", "fetch.js", "http.js", "xhr.js"]
 
 [[batches]]
 position = 12
-key = 'Markdown(ReadmeHeadline { file: "lib/adapters/README.md" })'
-descriptor = "README headline in lib/adapters/README.md"
-cost_tokens = 49
-cum_tokens = 442
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/adapters/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
 key = 'Typescript(ExportNames { file: "lib/defaults/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/defaults/index.js"
 cost_tokens = 10
-cum_tokens = 452
+cum_tokens = 403
 
 [batches.content]
 kind = "lines"
@@ -294,11 +276,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Fs(DirListing { dir: "lib/env" })'
 descriptor = "listing of 'lib/env'"
 cost_tokens = 11
-cum_tokens = 463
+cum_tokens = 414
 
 [batches.content]
 kind = "fs"
@@ -308,29 +290,11 @@ parent = "lib/env"
 entries = ["README.md", "classes", "data.js"]
 
 [[batches]]
-position = 15
-key = 'Markdown(ReadmeHeadline { file: "lib/env/README.md" })'
-descriptor = "README headline in lib/env/README.md"
-cost_tokens = 41
-cum_tokens = 504
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/env/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
+position = 14
 key = 'Typescript(ExportNames { file: "lib/platform/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/platform/index.js"
 cost_tokens = 11
-cum_tokens = 515
+cum_tokens = 425
 
 [batches.content]
 kind = "lines"
@@ -352,11 +316,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 15
 key = 'Typescript(Export { file: "lib/platform/index.js", start_line: 4 })'
 descriptor = "export at lib/platform/index.js:4"
 cost_tokens = 19
-cum_tokens = 534
+cum_tokens = 444
 
 [batches.content]
 kind = "lines"
@@ -370,11 +334,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 18
+position = 16
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 13
-cum_tokens = 547
+cum_tokens = 457
 
 [batches.content]
 kind = "lines"
@@ -388,11 +352,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 19
+position = 17
 key = 'Typescript(ExportNames { file: "index.d.ts", chunk_index: 1, export_count: 62, type_only_export_count: 47 })'
 descriptor = "export names surface #1 in index.d.ts"
 cost_tokens = 163
-cum_tokens = 710
+cum_tokens = 620
 
 [batches.content]
 kind = "lines"
@@ -558,11 +522,11 @@ end = 324
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 18
 key = 'Typescript(ExportNames { file: "index.d.ts", chunk_index: 0, export_count: 62, type_only_export_count: 47 })'
 descriptor = "export names surface in index.d.ts"
 cost_tokens = 196
-cum_tokens = 906
+cum_tokens = 816
 
 [batches.content]
 kind = "lines"
@@ -712,11 +676,11 @@ end = 164
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 19
 key = 'Fs(DirListing { dir: "lib/cancel" })'
 descriptor = "listing of 'lib/cancel'"
 cost_tokens = 16
-cum_tokens = 922
+cum_tokens = 832
 
 [batches.content]
 kind = "fs"
@@ -726,11 +690,29 @@ parent = "lib/cancel"
 entries = ["CancelToken.js", "CanceledError.js", "isCancel.js"]
 
 [[batches]]
-position = 22
+position = 20
+key = 'Markdown(ReadmeHeadline { file: "lib/env/README.md" })'
+descriptor = "README headline in lib/env/README.md"
+cost_tokens = 41
+cum_tokens = 873
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/env/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
 key = 'Fs(DirListing { dir: "lib/core" })'
 descriptor = "listing of 'lib/core'"
 cost_tokens = 49
-cum_tokens = 971
+cum_tokens = 922
 
 [batches.content]
 kind = "fs"
@@ -738,6 +720,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "lib/core"
 entries = ["Axios.js", "AxiosError.js", "AxiosHeaders.js", "InterceptorManager.js", "README.md", "buildFullPath.js", "dispatchRequest.js", "mergeConfig.js", "settle.js", "transformData.js"]
+
+[[batches]]
+position = 22
+key = 'Markdown(ReadmeHeadline { file: "lib/adapters/README.md" })'
+descriptor = "README headline in lib/adapters/README.md"
+cost_tokens = 49
+cum_tokens = 971
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 23

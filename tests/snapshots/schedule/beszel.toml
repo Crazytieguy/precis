@@ -369,10 +369,38 @@ kind = "full"
 
 [[batches]]
 position = 13
+key = 'Fs(DirListing { dir: "supplemental" })'
+descriptor = "listing of 'supplemental'"
+cost_tokens = 26
+cum_tokens = 422
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental"
+entries = ["CHANGELOG.md", "debian", "docker", "guides", "kubernetes", "licenses", "scripts"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "supplemental/docker" })'
+descriptor = "listing of 'supplemental/docker'"
+cost_tokens = 10
+cum_tokens = 432
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/docker"
+entries = ["agent", "hub", "same-system"]
+
+[[batches]]
+position = 15
 key = 'Markdown(Section { file: "readme.md", section_index: 23, reference_shaped: false })'
 descriptor = "readme.md section #23"
 cost_tokens = 28
-cum_tokens = 424
+cum_tokens = 460
 
 [batches.content]
 kind = "lines"
@@ -386,93 +414,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "supplemental" })'
-descriptor = "listing of 'supplemental'"
-cost_tokens = 26
-cum_tokens = 450
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental"
-entries = ["CHANGELOG.md", "debian", "docker", "guides", "kubernetes", "licenses", "scripts"]
-
-[[batches]]
-position = 15
-key = 'Markdown(Section { file: "readme.md", section_index: 1, reference_shaped: false })'
-descriptor = "readme.md section #1"
-cost_tokens = 19
-cum_tokens = 469
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 16
-key = 'Markdown(Section { file: "readme.md", section_index: 2, reference_shaped: false })'
-descriptor = "readme.md section #2"
-cost_tokens = 17
-cum_tokens = 486
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Markdown(Section { file: "readme.md", section_index: 3, reference_shaped: false })'
-descriptor = "readme.md section #3"
-cost_tokens = 23
-cum_tokens = 509
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "supplemental/docker" })'
-descriptor = "listing of 'supplemental/docker'"
-cost_tokens = 10
-cum_tokens = 519
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/docker"
-entries = ["agent", "hub", "same-system"]
-
-[[batches]]
-position = 19
 key = 'Fs(DirListing { dir: "internal" })'
 descriptor = "listing of 'internal'"
 cost_tokens = 66
-cum_tokens = 585
+cum_tokens = 526
 
 [batches.content]
 kind = "fs"
@@ -482,11 +428,11 @@ parent = "internal"
 entries = ["alerts", "cmd", "common", "dockerfile_agent", "dockerfile_agent_alpine", "dockerfile_agent_intel", "dockerfile_agent_nvidia", "dockerfile_hub", "entities", "ghupdate", "hub", "migrations", "records", "site", "tests", "users"]
 
 [[batches]]
-position = 20
+position = 17
 key = 'Fs(DirListing { dir: "internal/entities" })'
 descriptor = "listing of 'internal/entities'"
 cost_tokens = 13
-cum_tokens = 598
+cum_tokens = 539
 
 [batches.content]
 kind = "fs"
@@ -496,11 +442,11 @@ parent = "internal/entities"
 entries = ["container", "smart", "system", "systemd"]
 
 [[batches]]
-position = 21
+position = 18
 key = 'Fs(DirListing { dir: "internal/ghupdate" })'
 descriptor = "listing of 'internal/ghupdate'"
 cost_tokens = 30
-cum_tokens = 628
+cum_tokens = 569
 
 [batches.content]
 kind = "fs"
@@ -510,11 +456,11 @@ parent = "internal/ghupdate"
 entries = ["extract.go", "ghupdate.go", "ghupdate_test.go", "release.go", "selinux.go", "selinux_test.go"]
 
 [[batches]]
-position = 22
+position = 19
 key = 'Go(DeclNames { file: "internal/ghupdate/selinux.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/ghupdate/selinux.go"
 cost_tokens = 36
-cum_tokens = 664
+cum_tokens = 605
 
 [batches.content]
 kind = "lines"
@@ -552,11 +498,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 23
+position = 20
 key = 'Go(Decl { file: "internal/ghupdate/selinux.go", start_line: 10 })'
 descriptor = "go decl at internal/ghupdate/selinux.go:10"
 cost_tokens = 0
-cum_tokens = 664
+cum_tokens = 605
 
 [batches.content]
 kind = "lines"
@@ -570,11 +516,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 24
+position = 21
 key = 'Go(Decl { file: "internal/ghupdate/selinux.go", start_line: 41 })'
 descriptor = "go decl at internal/ghupdate/selinux.go:41"
 cost_tokens = 0
-cum_tokens = 664
+cum_tokens = 605
 
 [batches.content]
 kind = "lines"
@@ -588,11 +534,47 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 25
+position = 22
+key = 'Markdown(Section { file: "readme.md", section_index: 1, reference_shaped: false })'
+descriptor = "readme.md section #1"
+cost_tokens = 19
+cum_tokens = 624
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Markdown(Section { file: "readme.md", section_index: 2, reference_shaped: false })'
+descriptor = "readme.md section #2"
+cost_tokens = 17
+cum_tokens = 641
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
 key = 'Fs(DirListing { dir: "internal/records" })'
 descriptor = "listing of 'internal/records'"
 cost_tokens = 36
-cum_tokens = 700
+cum_tokens = 677
 
 [batches.content]
 kind = "fs"
@@ -602,11 +584,11 @@ parent = "internal/records"
 entries = ["records.go", "records_averaging_test.go", "records_deletion.go", "records_deletion_test.go", "records_test.go", "records_test_helpers.go"]
 
 [[batches]]
-position = 26
+position = 25
 key = 'Fs(DirListing { dir: "supplemental/debian" })'
 descriptor = "listing of 'supplemental/debian'"
 cost_tokens = 37
-cum_tokens = 737
+cum_tokens = 714
 
 [batches.content]
 kind = "fs"
@@ -616,11 +598,11 @@ parent = "supplemental/debian"
 entries = ["beszel-agent.service", "config.sh", "copyright", "lintian-overrides", "postinstall.sh", "postrm.sh", "prerm.sh", "templates"]
 
 [[batches]]
-position = 27
+position = 26
 key = 'Fs(DirListing { dir: "internal/users" })'
 descriptor = "listing of 'internal/users'"
 cost_tokens = 4
-cum_tokens = 741
+cum_tokens = 718
 
 [batches.content]
 kind = "fs"
@@ -628,6 +610,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "internal/users"
 entries = ["users.go"]
+
+[[batches]]
+position = 27
+key = 'Markdown(Section { file: "readme.md", section_index: 3, reference_shaped: false })'
+descriptor = "readme.md section #3"
+cost_tokens = 23
+cum_tokens = 741
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 28

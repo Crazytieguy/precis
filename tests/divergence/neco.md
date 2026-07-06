@@ -15,17 +15,17 @@ Score(3000)=0.838 I=0.933 C=0.753 ns_rows≤3K=20/42 (reached=14 partial=1 missi
 | ns | 470 |  | 14 | docs/tools/ listing | 2.3 |  | 0.483 |
 | ns | 486 |  | 16 | docs/tools/doxygen-md/ listing | 2.4 |  | 0.461 |
 | walker |  | 491 | 427 | README headline in README.md |  |  | 0.636 |
-| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.570 |
-| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.467 |
-| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.439 |
-| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.431 |
-| walker |  | 724 | 233 | headings outline in README.md |  |  | 0.431 |
-| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.431 |
-| walker |  | 768 | 44 | README.md section #0 |  |  | 0.431 |
-| walker |  | 787 | 19 | README.md section #21 |  |  | 0.431 |
-| walker |  | 808 | 21 | listing of 'docs/assets' |  |  | 0.467 |
-| walker |  | 934 | 126 | listing of 'tests' |  |  | 0.658 |
-| walker |  | 1023 | 89 | c header banner in neco.h |  |  | 0.594 |
+| walker |  | 512 | 21 | listing of 'docs/assets' |  |  | 0.690 |
+| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.618 |
+| walker |  | 638 | 126 | listing of 'tests' |  |  | 0.643 |
+| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.715 |
+| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.672 |
+| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.660 |
+| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.657 |
+| walker |  | 727 | 89 | c header banner in neco.h |  |  | 0.657 |
+| walker |  | 960 | 233 | headings outline in README.md |  |  | 0.658 |
+| walker |  | 1004 | 44 | README.md section #0 |  |  | 0.658 |
+| walker |  | 1023 | 19 | README.md section #21 |  |  | 0.594 |
 | ns | 1023 |  | 299 | neco.h — Basic operations group | 3.1 |  | 0.594 |
 | walker |  | 1094 | 71 | headings outline in docs/assets/API_head.md |  |  | 0.594 |
 | walker |  | 1157 | 63 | README.md section #2 |  |  | 0.643 |

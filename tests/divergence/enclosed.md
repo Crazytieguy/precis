@@ -13,13 +13,13 @@ Score(3000)=0.527 I=0.785 C=0.354 ns_rows≤3K=20/40 (reached=7 partial=1 missin
 | ns | 303 |  | 29 | .github/ directory listing | 1.5 |  | 0.804 |
 | ns | 402 |  | 99 | docker-compose.yml | 1.6 |  | 0.695 |
 | walker |  | 454 | 198 | headings outline in README.md |  |  | 0.695 |
-| ns | 483 |  | 81 | .github/workflows listing | 1.7 |  | 0.607 |
-| ns | 497 |  | 14 | .github/ISSUE_TEMPLATE listing | 1.8 |  | 0.591 |
-| walker |  | 560 | 106 | README.md section #0 |  |  | 0.655 |
-| walker |  | 586 | 26 | listing of 'packages/lib' |  |  | 0.655 |
-| walker |  | 602 | 16 | listing of 'packages/lib/src' |  |  | 0.656 |
-| walker |  | 612 | 10 | export names surface in packages/lib/src/index.ts |  |  | 0.656 |
-| walker |  | 629 | 17 | listing of 'packages/docs' |  |  | 0.656 |
+| walker |  | 480 | 26 | listing of 'packages/lib' |  |  | 0.696 |
+| ns | 483 |  | 81 | .github/workflows listing | 1.7 |  | 0.608 |
+| walker |  | 496 | 16 | listing of 'packages/lib/src' |  |  | 0.608 |
+| ns | 497 |  | 14 | .github/ISSUE_TEMPLATE listing | 1.8 |  | 0.592 |
+| walker |  | 506 | 10 | export names surface in packages/lib/src/index.ts |  |  | 0.592 |
+| walker |  | 523 | 17 | listing of 'packages/docs' |  |  | 0.592 |
+| walker |  | 629 | 106 | README.md section #0 |  |  | 0.656 |
 | ns | 646 |  | 149 | pnpm workspace + node version | 1.9 |  | 0.595 |
 | walker |  | 688 | 59 | README headline in packages/lib/README.md |  |  | 0.595 |
 | ns | 706 |  | 60 | Repo hygiene: renovate config | 1.10 |  | 0.570 |

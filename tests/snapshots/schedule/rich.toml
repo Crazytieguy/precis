@@ -59,10 +59,24 @@ entries = ["logo.ai", "logo.svg", "logo.txt"]
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 19
+cum_tokens = 369
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["Makefile", "images", "make.bat", "requirements.txt", "source"]
+
+[[batches]]
+position = 5
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 91
-cum_tokens = 441
+cum_tokens = 460
 
 [batches.content]
 kind = "lines"
@@ -212,11 +226,11 @@ end = 442
 kind = "ellipsis"
 
 [[batches]]
-position = 5
+position = 6
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 22
-cum_tokens = 463
+cum_tokens = 482
 
 [batches.content]
 kind = "lines"
@@ -230,11 +244,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 6
+position = 7
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 83
-cum_tokens = 546
+cum_tokens = 565
 
 [batches.content]
 kind = "lines"
@@ -246,20 +260,6 @@ end = 33
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 19
-cum_tokens = 565
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["Makefile", "images", "make.bat", "requirements.txt", "source"]
 
 [[batches]]
 position = 8

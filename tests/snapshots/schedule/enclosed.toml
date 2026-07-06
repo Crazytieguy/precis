@@ -383,28 +383,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 6
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
-descriptor = "README.md section #0"
-cost_tokens = 106
-cum_tokens = 560
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 30
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'Fs(DirListing { dir: "packages/lib" })'
 descriptor = "listing of 'packages/lib'"
 cost_tokens = 26
-cum_tokens = 586
+cum_tokens = 480
 
 [batches.content]
 kind = "fs"
@@ -414,11 +396,11 @@ parent = "packages/lib"
 entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: "packages/lib/src" })'
 descriptor = "listing of 'packages/lib/src'"
 cost_tokens = 16
-cum_tokens = 602
+cum_tokens = 496
 
 [batches.content]
 kind = "fs"
@@ -428,11 +410,11 @@ parent = "packages/lib/src"
 entries = ["api", "crypto", "files", "index.ts", "notes"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Typescript(ExportNames { file: "packages/lib/src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/src/index.ts"
 cost_tokens = 10
-cum_tokens = 612
+cum_tokens = 506
 
 [batches.content]
 kind = "lines"
@@ -454,11 +436,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 9
 key = 'Fs(DirListing { dir: "packages/docs" })'
 descriptor = "listing of 'packages/docs'"
 cost_tokens = 17
-cum_tokens = 629
+cum_tokens = 523
 
 [batches.content]
 kind = "fs"
@@ -466,6 +448,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "packages/docs"
 entries = [".vitepress", "eslint.config.js", "package.json", "src"]
+
+[[batches]]
+position = 10
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
+descriptor = "README.md section #0"
+cost_tokens = 106
+cum_tokens = 629
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 30
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 11

@@ -18,37 +18,37 @@ Score(3000)=0.551 I=0.816 C=0.372 ns_rows≤3K=18/46 (reached=7 partial=0 missin
 | walker |  | 281 | 12 | README.md section #2 |  |  | 0.574 |
 | walker |  | 293 | 12 | README.md section #3 |  |  | 0.574 |
 | walker |  | 307 | 14 | README.md section #5 |  |  | 0.574 |
-| walker |  | 320 | 13 | README.md section #4 |  |  | 0.574 |
-| walker |  | 334 | 14 | README.md section #12 |  |  | 0.574 |
-| walker |  | 348 | 14 | README.md section #11 |  |  | 0.574 |
-| walker |  | 363 | 15 | README.md section #6 |  |  | 0.574 |
-| ns | 377 |  | 153 | internal/{agent,auth,builtin,config,hooks} file listings | 2.2 |  | 0.420 |
-| walker |  | 379 | 16 | README.md section #13 |  |  | 0.420 |
-| walker |  | 389 | 10 | contribute/contribute.md section #2 |  |  | 0.420 |
-| walker |  | 413 | 24 | listing of 'sdk' |  |  | 0.444 |
-| walker |  | 453 | 40 | README headline in sdk/README.md |  |  | 0.444 |
-| walker |  | 473 | 20 | contribute/contribute.md section #0 |  |  | 0.444 |
-| ns | 474 |  | 97 | internal/{models,session,tokens,tools} + models subpackage listings | 2.3 |  | 0.389 |
-| walker |  | 486 | 13 | README.md section #20 |  |  | 0.389 |
-| walker |  | 499 | 13 | README.md section #21 |  |  | 0.389 |
-| walker |  | 512 | 13 | README.md section #22 |  |  | 0.389 |
-| walker |  | 518 | 6 | listing of 'examples' |  |  | 0.402 |
-| walker |  | 548 | 30 | listing of 'internal' |  |  | 0.502 |
-| walker |  | 565 | 17 | listing of 'internal/auth' |  |  | 0.459 |
-| ns | 565 |  | 91 | internal/ui/{.,progress} file listing | 2.4 |  | 0.459 |
-| walker |  | 601 | 36 | listing of 'cmd' |  |  | 0.554 |
-| walker |  | 631 | 30 | go decl names surface in internal/auth/browser.go |  |  | 0.554 |
-| walker |  | 631 | 0 | go decl at internal/auth/browser.go:14 |  |  | 0.554 |
-| walker |  | 631 | 0 | go decl at internal/auth/browser.go:34 |  |  | 0.554 |
-| ns | 641 |  | 76 | sdk/examples, examples/{hooks,scripts}, contribute/conf, hooks testdata listings | 2.5 |  | 0.518 |
-| walker |  | 710 | 79 | go package + imports in main.go |  |  | 0.519 |
-| walker |  | 775 | 65 | go decl names surface in sdk/types.go |  |  | 0.519 |
-| walker |  | 775 | 0 | go decl at sdk/types.go:10 |  |  | 0.519 |
-| walker |  | 775 | 0 | go decl at sdk/types.go:14 |  |  | 0.519 |
-| walker |  | 775 | 0 | go decl at sdk/types.go:18 |  |  | 0.519 |
-| walker |  | 775 | 0 | go decl at sdk/types.go:24 |  |  | 0.519 |
-| walker |  | 786 | 11 | go decl body at sdk/types.go:18 |  |  | 0.519 |
-| walker |  | 798 | 12 | go decl body at sdk/types.go:24 |  |  | 0.519 |
+| walker |  | 331 | 24 | listing of 'sdk' |  |  | 0.608 |
+| walker |  | 371 | 40 | README headline in sdk/README.md |  |  | 0.608 |
+| walker |  | 377 | 6 | listing of 'examples' |  |  | 0.459 |
+| ns | 377 |  | 153 | internal/{agent,auth,builtin,config,hooks} file listings | 2.2 |  | 0.459 |
+| walker |  | 407 | 30 | listing of 'internal' |  |  | 0.574 |
+| walker |  | 424 | 17 | listing of 'internal/auth' |  |  | 0.578 |
+| walker |  | 460 | 36 | listing of 'cmd' |  |  | 0.699 |
+| walker |  | 473 | 13 | README.md section #4 |  |  | 0.699 |
+| ns | 474 |  | 97 | internal/{models,session,tokens,tools} + models subpackage listings | 2.3 |  | 0.612 |
+| walker |  | 487 | 14 | README.md section #12 |  |  | 0.612 |
+| walker |  | 501 | 14 | README.md section #11 |  |  | 0.612 |
+| walker |  | 516 | 15 | README.md section #6 |  |  | 0.612 |
+| walker |  | 532 | 16 | README.md section #13 |  |  | 0.612 |
+| walker |  | 562 | 30 | go decl names surface in internal/auth/browser.go |  |  | 0.612 |
+| walker |  | 562 | 0 | go decl at internal/auth/browser.go:14 |  |  | 0.612 |
+| walker |  | 562 | 0 | go decl at internal/auth/browser.go:34 |  |  | 0.612 |
+| ns | 565 |  | 91 | internal/ui/{.,progress} file listing | 2.4 |  | 0.554 |
+| walker |  | 641 | 79 | go package + imports in main.go |  |  | 0.519 |
+| ns | 641 |  | 76 | sdk/examples, examples/{hooks,scripts}, contribute/conf, hooks testdata listings | 2.5 |  | 0.519 |
+| walker |  | 651 | 10 | contribute/contribute.md section #2 |  |  | 0.519 |
+| walker |  | 671 | 20 | contribute/contribute.md section #0 |  |  | 0.519 |
+| walker |  | 736 | 65 | go decl names surface in sdk/types.go |  |  | 0.519 |
+| walker |  | 736 | 0 | go decl at sdk/types.go:10 |  |  | 0.519 |
+| walker |  | 736 | 0 | go decl at sdk/types.go:14 |  |  | 0.519 |
+| walker |  | 736 | 0 | go decl at sdk/types.go:18 |  |  | 0.519 |
+| walker |  | 736 | 0 | go decl at sdk/types.go:24 |  |  | 0.519 |
+| walker |  | 747 | 11 | go decl body at sdk/types.go:18 |  |  | 0.519 |
+| walker |  | 759 | 12 | go decl body at sdk/types.go:24 |  |  | 0.519 |
+| walker |  | 772 | 13 | README.md section #20 |  |  | 0.519 |
+| walker |  | 785 | 13 | README.md section #21 |  |  | 0.519 |
+| walker |  | 798 | 13 | README.md section #22 |  |  | 0.519 |
 | ns | 803 |  | 162 | README Overview: host/client/server framing | 3.1 |  | 0.494 |
 | walker |  | 811 | 13 | README.md section #23 |  |  | 0.494 |
 | walker |  | 823 | 12 | listing of 'internal/agent' |  |  | 0.501 |

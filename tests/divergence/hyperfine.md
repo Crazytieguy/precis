@@ -11,9 +11,9 @@ Score(3000)=0.607 I=0.840 C=0.439 ns_rows≤3K=15/41 (reached=7 partial=1 missin
 | ns | 229 |  | 78 | src/output, src/parameter, src/timer, src/util directory listings | 1.4 |  | 0.416 |
 | ns | 339 |  | 110 | tests/, scripts/, doc/, .github/ directory listings | 1.5 |  | 0.347 |
 | walker |  | 368 | 168 | [package] in Cargo.toml |  |  | 0.352 |
-| ns | 512 |  | 173 | README lede + feature list | 1.6 |  | 0.321 |
-| walker |  | 519 | 151 | README.md section #1 |  |  | 0.439 |
-| walker |  | 544 | 25 | listing of 'doc' |  |  | 0.451 |
+| walker |  | 393 | 25 | listing of 'doc' |  |  | 0.368 |
+| ns | 512 |  | 173 | README lede + feature list | 1.6 |  | 0.335 |
+| walker |  | 544 | 151 | README.md section #1 |  |  | 0.451 |
 | walker |  | 588 | 44 | listing of 'src' |  |  | 0.588 |
 | walker |  | 601 | 13 | listing of 'src/parameter' |  |  | 0.593 |
 | walker |  | 613 | 12 | entry item at src/main.rs:53 |  |  | 0.593 |

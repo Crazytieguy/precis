@@ -11,16 +11,16 @@ Score(3000)=0.406 I=0.681 C=0.242 ns_rows≤3K=25/65 (reached=7 partial=2 missin
 | walker |  | 192 | 22 | listing of 'packages' |  |  | 0.889 |
 | ns | 288 |  | 108 | README operator name roster (part 2a: buffer..join) | 1.4 | 1.3 | 0.725 |
 | walker |  | 365 | 173 | headings outline in README.md |  |  | 0.725 |
+| walker |  | 382 | 17 | listing of 'packages/d2ts-benchmark' |  |  | 0.725 |
 | ns | 383 |  | 95 | README operator name roster (part 2b: keyBy..pipe) | 1.5 | 1.4 | 0.634 |
+| walker |  | 393 | 11 | export names surface in eslint.base.mjs |  |  | 0.634 |
 | ns | 405 |  | 22 | packages/* listing | 1.6 |  | 0.660 |
-| walker |  | 537 | 172 | README.md section #0 |  |  | 0.660 |
+| walker |  | 418 | 25 | listing of 'packages/d2ql' |  |  | 0.660 |
+| walker |  | 495 | 77 | README headline in packages/d2ql/README.md |  |  | 0.660 |
+| walker |  | 528 | 33 | packages/d2ql/README.md section #0 |  |  | 0.660 |
 | ns | 539 |  | 134 | Root package.json scripts | 1.7 |  | 0.583 |
-| walker |  | 554 | 17 | listing of 'packages/d2ts-benchmark' |  |  | 0.583 |
-| walker |  | 565 | 11 | export names surface in eslint.base.mjs |  |  | 0.562 |
 | ns | 565 |  | 26 | pnpm workspace globs | 1.8 |  | 0.562 |
-| walker |  | 590 | 25 | listing of 'packages/d2ql' |  |  | 0.562 |
-| walker |  | 667 | 77 | README headline in packages/d2ql/README.md |  |  | 0.562 |
-| walker |  | 700 | 33 | packages/d2ql/README.md section #0 |  |  | 0.562 |
+| walker |  | 700 | 172 | README.md section #0 |  |  | 0.562 |
 | ns | 717 |  | 152 | d2ts package manifest: exports map | 2.1 |  | 0.487 |
 | walker |  | 730 | 30 | listing of 'packages/d2mini' |  |  | 0.487 |
 | walker |  | 789 | 59 | README headline in packages/d2mini/README.md |  |  | 0.488 |

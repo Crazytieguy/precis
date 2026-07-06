@@ -548,12 +548,10 @@ pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 /// high-rank orientation atoms out of the early budget, where score
 /// importance is concentrated. Deliberately excludes the cheap
 /// directory-listing (`FsKey`) flood, which the greedy already
-/// over-surfaces. A short window + gentle boost, calibrated to hold the
-/// primary training budget Score(3000) flat (0.5908); the smaller budgets
-/// take a tiny training nick (≤0.0019) that buys a held-out generalization
-/// gain at every budget. Not free, and primary-neutral — see the
-/// per-budget trade table in `docs/design-notes.md`.
-pub const ORIENTATION_TIER_WINDOW: usize = 500;
+/// over-surfaces. The window stays short so the boost only breaks early
+/// ties; wider windows start displacing later structural wins (post-
+/// refreeze sweep: 300 > 500 > 0 > 900 on training).
+pub const ORIENTATION_TIER_WINDOW: usize = 300;
 pub const ORIENTATION_TIER_BOOST: f64 = 1.4;
 
 /// Ratio multiplier for the early-budget orientation tier. `1.0` once the

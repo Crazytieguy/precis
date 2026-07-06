@@ -21,14 +21,14 @@ Score(3000)=0.425 I=0.787 C=0.230 ns_rows≤3K=14/44 (reached=5 partial=0 missin
 | walker |  | 471 | 19 | module item at index.js:38 |  |  | 0.498 |
 | ns | 483 |  | 174 | server/{scanner,objects,...} listings | 1.5 |  | 0.401 |
 | walker |  | 494 | 23 | listing of 'docs' |  |  | 0.401 |
-| walker |  | 592 | 98 | README headline in docs/README.md |  |  | 0.401 |
+| walker |  | 515 | 21 | module item at index.js:43 |  |  | 0.401 |
+| walker |  | 536 | 21 | module item at index.js:45 |  |  | 0.401 |
+| walker |  | 558 | 22 | module item at index.js:44 |  |  | 0.401 |
+| walker |  | 582 | 24 | module item at index.js:47 |  |  | 0.401 |
 | ns | 606 |  | 123 | client/{store,plugins,middleware,mixins,layouts,players} listings | 1.6 |  | 0.353 |
-| walker |  | 613 | 21 | module item at index.js:43 |  |  | 0.353 |
-| walker |  | 634 | 21 | module item at index.js:45 |  |  | 0.353 |
-| walker |  | 656 | 22 | module item at index.js:44 |  |  | 0.353 |
-| walker |  | 680 | 24 | module item at index.js:47 |  |  | 0.353 |
+| walker |  | 612 | 30 | module item at index.js:52 |  |  | 0.353 |
 | ns | 696 |  | 90 | client/cypress/ full listing | 1.7 |  | 0.328 |
-| walker |  | 710 | 30 | module item at index.js:52 |  |  | 0.328 |
+| walker |  | 710 | 98 | README headline in docs/README.md |  |  | 0.328 |
 | walker |  | 758 | 48 | headings outline in docs/README.md |  |  | 0.328 |
 | ns | 788 |  | 92 | .github/ full listing | 1.8 |  | 0.309 |
 | walker |  | 821 | 63 | listing of 'server' |  |  | 0.432 |

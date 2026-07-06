@@ -17,41 +17,41 @@ Score(3000)=0.690 I=0.890 C=0.536 ns_rows≤3K=19/41 (reached=10 partial=2 missi
 | ns | 280 |  | 22 | pkg/exprparser/ directory listing | 2.1 |  | 0.805 |
 | walker |  | 318 | 55 | headings outline in README.md |  |  | 0.805 |
 | ns | 329 |  | 49 | pkg/artifacts/ and pkg/artifactcache/ directory listings | 2.2 |  | 0.717 |
-| walker |  | 383 | 65 | headings outline in IMAGES.md |  |  | 0.717 |
-| ns | 385 |  | 56 | pkg/model/ directory listing | 2.3 |  | 0.645 |
-| walker |  | 411 | 28 | README.md section #2 |  |  | 0.646 |
-| ns | 450 |  | 65 | cmd/ directory listing | 2.4 |  | 0.579 |
-| walker |  | 457 | 46 | listing of 'cmd' |  |  | 0.647 |
-| walker |  | 485 | 28 | README.md section #3 |  |  | 0.648 |
-| walker |  | 503 | 18 | go decl names surface in cmd/graph.go |  |  | 0.648 |
-| walker |  | 503 | 0 | go decl at cmd/graph.go:10 |  |  | 0.648 |
-| walker |  | 521 | 18 | go decl names surface in cmd/list.go |  |  | 0.648 |
-| walker |  | 521 | 0 | go decl at cmd/list.go:11 |  |  | 0.648 |
-| ns | 538 |  | 88 | pkg/common/ and pkg/common/git/ directory listing | 2.5 |  | 0.578 |
-| walker |  | 542 | 21 | go decl names surface in cmd/platforms.go |  |  | 0.578 |
-| walker |  | 542 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.578 |
-| walker |  | 583 | 41 | listing of 'pkg' |  |  | 0.578 |
-| walker |  | 616 | 33 | listing of 'pkg/lookpath' |  |  | 0.580 |
-| ns | 628 |  | 90 | gh/, lookpath/, filecollector/, workflowpattern/, schema/ directory listings | 2.6 |  | 0.545 |
-| walker |  | 638 | 22 | listing of 'pkg/exprparser' |  |  | 0.580 |
-| walker |  | 662 | 24 | listing of 'pkg/artifacts' |  |  | 0.595 |
-| walker |  | 687 | 25 | listing of 'pkg/artifactcache' |  |  | 0.652 |
-| walker |  | 743 | 56 | listing of 'pkg/model' |  |  | 0.724 |
-| walker |  | 756 | 13 | go decl names surface in pkg/model/job_context.go |  |  | 0.724 |
-| walker |  | 772 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.739 |
-| ns | 788 |  | 160 | pkg/container/ directory listing | 2.7 |  | 0.655 |
-| walker |  | 851 | 79 | listing of 'pkg/common' |  |  | 0.727 |
-| walker |  | 867 | 16 | go decl names surface in pkg/common/outbound_ip.go |  |  | 0.727 |
-| walker |  | 867 | 0 | go decl at pkg/common/outbound_ip.go:13 |  |  | 0.727 |
-| walker |  | 901 | 34 | go decl names surface in cmd/dir.go |  |  | 0.727 |
-| walker |  | 901 | 0 | go decl at cmd/dir.go:15 |  |  | 0.727 |
-| walker |  | 910 | 9 | go decl at cmd/dir.go:10 |  |  | 0.727 |
-| walker |  | 915 | 5 | go package + imports in pkg/model/job_context.go |  |  | 0.727 |
-| walker |  | 934 | 19 | listing of 'cmd/testdata' |  |  | 0.760 |
-| walker |  | 953 | 19 | listing of 'pkg/schema' |  |  | 0.783 |
-| ns | 982 |  | 194 | pkg/runner/ directory listing | 2.8 |  | 0.691 |
-| walker |  | 1001 | 48 | go decl body at main.go:13 |  |  | 0.732 |
-| walker |  | 1066 | 65 | go package + imports in main.go |  |  | 0.732 |
+| walker |  | 364 | 46 | listing of 'cmd' |  |  | 0.725 |
+| walker |  | 382 | 18 | go decl names surface in cmd/graph.go |  |  | 0.725 |
+| walker |  | 382 | 0 | go decl at cmd/graph.go:10 |  |  | 0.725 |
+| ns | 385 |  | 56 | pkg/model/ directory listing | 2.3 |  | 0.653 |
+| walker |  | 400 | 18 | go decl names surface in cmd/list.go |  |  | 0.653 |
+| walker |  | 400 | 0 | go decl at cmd/list.go:11 |  |  | 0.653 |
+| walker |  | 421 | 21 | go decl names surface in cmd/platforms.go |  |  | 0.653 |
+| walker |  | 421 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.653 |
+| ns | 450 |  | 65 | cmd/ directory listing | 2.4 |  | 0.647 |
+| walker |  | 462 | 41 | listing of 'pkg' |  |  | 0.647 |
+| walker |  | 495 | 33 | listing of 'pkg/lookpath' |  |  | 0.649 |
+| walker |  | 517 | 22 | listing of 'pkg/exprparser' |  |  | 0.692 |
+| ns | 538 |  | 88 | pkg/common/ and pkg/common/git/ directory listing | 2.5 |  | 0.617 |
+| walker |  | 541 | 24 | listing of 'pkg/artifacts' |  |  | 0.634 |
+| walker |  | 566 | 25 | listing of 'pkg/artifactcache' |  |  | 0.697 |
+| walker |  | 622 | 56 | listing of 'pkg/model' |  |  | 0.777 |
+| ns | 628 |  | 90 | gh/, lookpath/, filecollector/, workflowpattern/, schema/ directory listings | 2.6 |  | 0.723 |
+| walker |  | 635 | 13 | go decl names surface in pkg/model/job_context.go |  |  | 0.723 |
+| walker |  | 700 | 65 | headings outline in IMAGES.md |  |  | 0.723 |
+| walker |  | 716 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.738 |
+| ns | 788 |  | 160 | pkg/container/ directory listing | 2.7 |  | 0.654 |
+| walker |  | 795 | 79 | listing of 'pkg/common' |  |  | 0.726 |
+| walker |  | 811 | 16 | go decl names surface in pkg/common/outbound_ip.go |  |  | 0.726 |
+| walker |  | 811 | 0 | go decl at pkg/common/outbound_ip.go:13 |  |  | 0.726 |
+| walker |  | 845 | 34 | go decl names surface in cmd/dir.go |  |  | 0.726 |
+| walker |  | 845 | 0 | go decl at cmd/dir.go:15 |  |  | 0.726 |
+| walker |  | 854 | 9 | go decl at cmd/dir.go:10 |  |  | 0.726 |
+| walker |  | 859 | 5 | go package + imports in pkg/model/job_context.go |  |  | 0.726 |
+| walker |  | 878 | 19 | listing of 'cmd/testdata' |  |  | 0.758 |
+| walker |  | 897 | 19 | listing of 'pkg/schema' |  |  | 0.782 |
+| walker |  | 925 | 28 | README.md section #2 |  |  | 0.782 |
+| walker |  | 973 | 48 | go decl body at main.go:13 |  |  | 0.828 |
+| ns | 982 |  | 194 | pkg/runner/ directory listing | 2.8 |  | 0.731 |
+| walker |  | 1038 | 65 | go package + imports in main.go |  |  | 0.731 |
+| walker |  | 1066 | 28 | README.md section #3 |  |  | 0.732 |
 | walker |  | 1094 | 28 | go decl names surface in pkg/lookpath/error.go |  |  | 0.732 |
 | walker |  | 1094 | 0 | go decl at pkg/lookpath/error.go:8 |  |  | 0.732 |
 | walker |  | 1112 | 18 | go decl at pkg/lookpath/error.go:3 |  |  | 0.732 |

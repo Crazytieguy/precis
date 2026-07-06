@@ -261,118 +261,10 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
-descriptor = "README.md section #4"
-cost_tokens = 13
-cum_tokens = 320
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
-descriptor = "README.md section #12"
-cost_tokens = 14
-cum_tokens = 334
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
-descriptor = "README.md section #11"
-cost_tokens = 14
-cum_tokens = 348
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
-descriptor = "README.md section #6"
-cost_tokens = 15
-cum_tokens = 363
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
-descriptor = "README.md section #13"
-cost_tokens = 16
-cum_tokens = 379
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Markdown(Section { file: "contribute/contribute.md", section_index: 2, reference_shaped: false })'
-descriptor = "contribute/contribute.md section #2"
-cost_tokens = 10
-cum_tokens = 389
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "contribute/contribute.md"
-start = 30
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
 key = 'Fs(DirListing { dir: "sdk" })'
 descriptor = "listing of 'sdk'"
 cost_tokens = 24
-cum_tokens = 413
+cum_tokens = 331
 
 [batches.content]
 kind = "fs"
@@ -382,11 +274,11 @@ parent = "sdk"
 entries = ["README.md", "examples", "mcphost.go", "mcphost_test.go", "types.go"]
 
 [[batches]]
-position = 20
+position = 14
 key = 'Markdown(ReadmeHeadline { file: "sdk/README.md" })'
 descriptor = "README headline in sdk/README.md"
 cost_tokens = 40
-cum_tokens = 453
+cum_tokens = 371
 
 [batches.content]
 kind = "lines"
@@ -400,83 +292,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 21
-key = 'Markdown(Section { file: "contribute/contribute.md", section_index: 0, reference_shaped: false })'
-descriptor = "contribute/contribute.md section #0"
-cost_tokens = 20
-cum_tokens = 473
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "contribute/contribute.md"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false })'
-descriptor = "README.md section #20"
-cost_tokens = 13
-cum_tokens = 486
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false })'
-descriptor = "README.md section #21"
-cost_tokens = 13
-cum_tokens = 499
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false })'
-descriptor = "README.md section #22"
-cost_tokens = 13
-cum_tokens = 512
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
+position = 15
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 6
-cum_tokens = 518
+cum_tokens = 377
 
 [batches.content]
 kind = "fs"
@@ -486,11 +306,11 @@ parent = "examples"
 entries = ["hooks", "scripts"]
 
 [[batches]]
-position = 26
+position = 16
 key = 'Fs(DirListing { dir: "internal" })'
 descriptor = "listing of 'internal'"
 cost_tokens = 30
-cum_tokens = 548
+cum_tokens = 407
 
 [batches.content]
 kind = "fs"
@@ -500,11 +320,11 @@ parent = "internal"
 entries = ["agent", "auth", "builtin", "config", "hooks", "models", "session", "tokens", "tools", "ui"]
 
 [[batches]]
-position = 27
+position = 17
 key = 'Fs(DirListing { dir: "internal/auth" })'
 descriptor = "listing of 'internal/auth'"
 cost_tokens = 17
-cum_tokens = 565
+cum_tokens = 424
 
 [batches.content]
 kind = "fs"
@@ -514,11 +334,11 @@ parent = "internal/auth"
 entries = ["browser.go", "credentials.go", "credentials_test.go", "oauth.go"]
 
 [[batches]]
-position = 28
+position = 18
 key = 'Fs(DirListing { dir: "cmd" })'
 descriptor = "listing of 'cmd'"
 cost_tokens = 36
-cum_tokens = 601
+cum_tokens = 460
 
 [batches.content]
 kind = "fs"
@@ -528,11 +348,101 @@ parent = "cmd"
 entries = ["auth.go", "hooks.go", "root.go", "script.go", "script_deepseek_test.go", "script_integration_test.go", "script_test.go"]
 
 [[batches]]
-position = 29
+position = 19
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
+descriptor = "README.md section #4"
+cost_tokens = 13
+cum_tokens = 473
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
+descriptor = "README.md section #12"
+cost_tokens = 14
+cum_tokens = 487
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
+descriptor = "README.md section #11"
+cost_tokens = 14
+cum_tokens = 501
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
+descriptor = "README.md section #6"
+cost_tokens = 15
+cum_tokens = 516
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
+descriptor = "README.md section #13"
+cost_tokens = 16
+cum_tokens = 532
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
 key = 'Go(DeclNames { file: "internal/auth/browser.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/auth/browser.go"
 cost_tokens = 30
-cum_tokens = 631
+cum_tokens = 562
 
 [batches.content]
 kind = "lines"
@@ -570,11 +480,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 25
 key = 'Go(Decl { file: "internal/auth/browser.go", start_line: 14 })'
 descriptor = "go decl at internal/auth/browser.go:14"
 cost_tokens = 0
-cum_tokens = 631
+cum_tokens = 562
 
 [batches.content]
 kind = "lines"
@@ -588,11 +498,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 31
+position = 26
 key = 'Go(Decl { file: "internal/auth/browser.go", start_line: 34 })'
 descriptor = "go decl at internal/auth/browser.go:34"
 cost_tokens = 0
-cum_tokens = 631
+cum_tokens = 562
 
 [batches.content]
 kind = "lines"
@@ -606,11 +516,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 32
+position = 27
 key = 'Go(PackageImports { file: "main.go" })'
 descriptor = "go package + imports in main.go"
 cost_tokens = 79
-cum_tokens = 710
+cum_tokens = 641
 
 [batches.content]
 kind = "lines"
@@ -624,11 +534,47 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 33
+position = 28
+key = 'Markdown(Section { file: "contribute/contribute.md", section_index: 2, reference_shaped: false })'
+descriptor = "contribute/contribute.md section #2"
+cost_tokens = 10
+cum_tokens = 651
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "contribute/contribute.md"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Markdown(Section { file: "contribute/contribute.md", section_index: 0, reference_shaped: false })'
+descriptor = "contribute/contribute.md section #0"
+cost_tokens = 20
+cum_tokens = 671
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "contribute/contribute.md"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
 key = 'Go(DeclNames { file: "sdk/types.go", chunk_index: 0 })'
 descriptor = "go decl names surface in sdk/types.go"
 cost_tokens = 65
-cum_tokens = 775
+cum_tokens = 736
 
 [batches.content]
 kind = "lines"
@@ -698,11 +644,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 31
 key = 'Go(Decl { file: "sdk/types.go", start_line: 10 })'
 descriptor = "go decl at sdk/types.go:10"
 cost_tokens = 0
-cum_tokens = 775
+cum_tokens = 736
 
 [batches.content]
 kind = "lines"
@@ -716,11 +662,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 35
+position = 32
 key = 'Go(Decl { file: "sdk/types.go", start_line: 14 })'
 descriptor = "go decl at sdk/types.go:14"
 cost_tokens = 0
-cum_tokens = 775
+cum_tokens = 736
 
 [batches.content]
 kind = "lines"
@@ -734,11 +680,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 36
+position = 33
 key = 'Go(Decl { file: "sdk/types.go", start_line: 18 })'
 descriptor = "go decl at sdk/types.go:18"
 cost_tokens = 0
-cum_tokens = 775
+cum_tokens = 736
 
 [batches.content]
 kind = "lines"
@@ -752,11 +698,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 37
+position = 34
 key = 'Go(Decl { file: "sdk/types.go", start_line: 24 })'
 descriptor = "go decl at sdk/types.go:24"
 cost_tokens = 0
-cum_tokens = 775
+cum_tokens = 736
 
 [batches.content]
 kind = "lines"
@@ -770,11 +716,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 38
+position = 35
 key = 'Go(DeclBody { file: "sdk/types.go", start_line: 18 })'
 descriptor = "go decl body at sdk/types.go:18"
 cost_tokens = 11
-cum_tokens = 786
+cum_tokens = 747
 
 [batches.content]
 kind = "lines"
@@ -788,11 +734,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 39
+position = 36
 key = 'Go(DeclBody { file: "sdk/types.go", start_line: 24 })'
 descriptor = "go decl body at sdk/types.go:24"
 cost_tokens = 12
-cum_tokens = 798
+cum_tokens = 759
 
 [batches.content]
 kind = "lines"
@@ -801,6 +747,60 @@ kind = "lines"
 path = "sdk/types.go"
 start = 25
 end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false })'
+descriptor = "README.md section #20"
+cost_tokens = 13
+cum_tokens = 772
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false })'
+descriptor = "README.md section #21"
+cost_tokens = 13
+cum_tokens = 785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false })'
+descriptor = "README.md section #22"
+cost_tokens = 13
+cum_tokens = 798
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 69
+end = 69
 
 [batches.content.spans.render]
 kind = "full"

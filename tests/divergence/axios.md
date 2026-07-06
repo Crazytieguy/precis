@@ -20,20 +20,20 @@ Score(3000)=0.494 I=0.801 C=0.305 ns_rows≤3K=21/40 (reached=9 partial=1 missin
 | walker |  | 363 | 13 | listing of 'lib/platform' |  |  | 0.708 |
 | walker |  | 373 | 10 | export names surface in lib/axios.js |  |  | 0.708 |
 | walker |  | 393 | 20 | listing of 'lib/adapters' |  |  | 0.727 |
-| walker |  | 442 | 49 | README headline in lib/adapters/README.md |  |  | 0.727 |
-| ns | 447 |  | 99 | lib/helpers listing, part 1 (A-N) | 1.8 |  | 0.652 |
-| walker |  | 452 | 10 | export names surface in lib/defaults/index.js |  |  | 0.652 |
-| walker |  | 463 | 11 | listing of 'lib/env' |  |  | 0.667 |
-| walker |  | 504 | 41 | README headline in lib/env/README.md |  |  | 0.667 |
-| walker |  | 515 | 11 | export names surface in lib/platform/index.js |  |  | 0.667 |
-| walker |  | 534 | 19 | export at lib/platform/index.js:4 |  |  | 0.667 |
-| ns | 538 |  | 91 | lib/helpers listing, part 2 (N-Z) | 1.9 |  | 0.609 |
-| walker |  | 547 | 13 | imports in index.js |  |  | 0.609 |
-| walker |  | 710 | 163 | export names surface #1 in index.d.ts |  |  | 0.609 |
+| walker |  | 403 | 10 | export names surface in lib/defaults/index.js |  |  | 0.727 |
+| walker |  | 414 | 11 | listing of 'lib/env' |  |  | 0.743 |
+| walker |  | 425 | 11 | export names surface in lib/platform/index.js |  |  | 0.743 |
+| walker |  | 444 | 19 | export at lib/platform/index.js:4 |  |  | 0.743 |
+| ns | 447 |  | 99 | lib/helpers listing, part 1 (A-N) | 1.8 |  | 0.667 |
+| walker |  | 457 | 13 | imports in index.js |  |  | 0.667 |
+| ns | 538 |  | 91 | lib/helpers listing, part 2 (N-Z) | 1.9 |  | 0.608 |
+| walker |  | 620 | 163 | export names surface #1 in index.d.ts |  |  | 0.608 |
 | ns | 743 |  | 205 | tests/ top-level + unit top-level + unit/adapters,core,cancel listings | 1.10 |  | 0.511 |
-| walker |  | 906 | 196 | export names surface in index.d.ts |  |  | 0.511 |
-| walker |  | 922 | 16 | listing of 'lib/cancel' |  |  | 0.525 |
-| walker |  | 971 | 49 | listing of 'lib/core' |  |  | 0.606 |
+| walker |  | 816 | 196 | export names surface in index.d.ts |  |  | 0.511 |
+| walker |  | 832 | 16 | listing of 'lib/cancel' |  |  | 0.525 |
+| walker |  | 873 | 41 | README headline in lib/env/README.md |  |  | 0.525 |
+| walker |  | 922 | 49 | listing of 'lib/core' |  |  | 0.606 |
+| walker |  | 971 | 49 | README headline in lib/adapters/README.md |  |  | 0.606 |
 | ns | 1013 |  | 270 | unit/helpers, unit/utils, browser, setup listings | 1.11 |  | 0.527 |
 | walker |  | 1138 | 167 | export names surface #3 in index.d.ts |  |  | 0.527 |
 | walker |  | 1285 | 147 | export at index.js:26 |  |  | 0.528 |

@@ -383,10 +383,38 @@ kind = "full"
 
 [[batches]]
 position = 8
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 71
+cum_tokens = 433
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["adapters", "app.test.ts", "app.ts", "bin.ts", "matches-where.test.ts", "matches-where.ts", "paginate.test.ts", "paginate.ts", "parse-where.test.ts", "parse-where.ts", "random-id.ts", "service.test.ts", "service.ts", "where-operators.ts"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "src/adapters" })'
+descriptor = "listing of 'src/adapters'"
+cost_tokens = 17
+cum_tokens = 450
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/adapters"
+entries = ["normalized-adapter.test.ts", "normalized-adapter.ts", "observer.ts"]
+
+[[batches]]
+position = 10
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 151
-cum_tokens = 513
+cum_tokens = 601
 
 [batches.content]
 kind = "lines"
@@ -398,34 +426,6 @@ end = 9
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 71
-cum_tokens = 584
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["adapters", "app.test.ts", "app.ts", "bin.ts", "matches-where.test.ts", "matches-where.ts", "paginate.test.ts", "paginate.ts", "parse-where.test.ts", "parse-where.ts", "random-id.ts", "service.test.ts", "service.ts", "where-operators.ts"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "src/adapters" })'
-descriptor = "listing of 'src/adapters'"
-cost_tokens = 17
-cum_tokens = 601
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/adapters"
-entries = ["normalized-adapter.test.ts", "normalized-adapter.ts", "observer.ts"]
 
 [[batches]]
 position = 11

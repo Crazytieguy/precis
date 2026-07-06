@@ -11,20 +11,20 @@ Score(3000)=0.548 I=0.820 C=0.366 ns_rows≤3K=21/45 (reached=9 partial=2 missin
 | ns | 207 |  | 16 | build/, .github/, .github/workflows/ listings | 1.4 |  | 0.412 |
 | ns | 257 |  | 50 | Cargo.toml — package identity (name/version/authors) | 1.5 |  | 0.393 |
 | walker |  | 301 | 187 | [package] in Cargo.toml |  |  | 0.471 |
-| ns | 370 |  | 113 | Cargo.toml — categories/description/docs/edition/keywords/license/repo/rust-version | 1.6 |  | 0.529 |
-| walker |  | 373 | 72 | README.md section #0 |  |  | 0.529 |
-| ns | 391 |  | 21 | Cargo.toml — [features] header | 1.7 |  | 0.514 |
-| walker |  | 398 | 25 | listing of 'src' |  |  | 0.547 |
-| walker |  | 460 | 62 | mod/use plumbing in src/lib.rs |  |  | 0.548 |
-| walker |  | 479 | 19 | listing of 'impl' |  |  | 0.548 |
+| walker |  | 326 | 25 | listing of 'src' |  |  | 0.511 |
+| ns | 370 |  | 113 | Cargo.toml — categories/description/docs/edition/keywords/license/repo/rust-version | 1.6 |  | 0.564 |
+| walker |  | 388 | 62 | mod/use plumbing in src/lib.rs |  |  | 0.564 |
+| ns | 391 |  | 21 | Cargo.toml — [features] header | 1.7 |  | 0.548 |
+| walker |  | 407 | 19 | listing of 'impl' |  |  | 0.548 |
+| walker |  | 479 | 72 | README.md section #0 |  |  | 0.548 |
 | ns | 536 |  | 145 | Cargo.toml — std feature doc comment | 1.8 |  | 0.494 |
 | ns | 568 |  | 32 | Cargo.toml — [dependencies] | 1.9 |  | 0.487 |
 | ns | 592 |  | 24 | Cargo.toml — [workspace] | 1.10 |  | 0.497 |
-| walker |  | 645 | 166 | [features] in Cargo.toml |  |  | 0.635 |
-| ns | 671 |  | 79 | impl/Cargo.toml — package identity (name/version/authors/description/edition) | 1.11 |  | 0.604 |
-| ns | 744 |  | 73 | impl/Cargo.toml — [lib]/[dependencies] | 1.12 |  | 0.576 |
-| ns | 835 |  | 91 | impl/src/lib.rs — module list | 1.13 |  | 0.536 |
-| walker |  | 912 | 267 | crate-doc lede in src/lib.rs |  |  | 0.537 |
+| ns | 671 |  | 79 | impl/Cargo.toml — package identity (name/version/authors/description/edition) | 1.11 |  | 0.473 |
+| ns | 744 |  | 73 | impl/Cargo.toml — [lib]/[dependencies] | 1.12 |  | 0.451 |
+| walker |  | 746 | 267 | crate-doc lede in src/lib.rs |  |  | 0.452 |
+| ns | 835 |  | 91 | impl/src/lib.rs — module list | 1.13 |  | 0.421 |
+| walker |  | 912 | 166 | [features] in Cargo.toml |  |  | 0.537 |
 | walker |  | 984 | 72 | listing of 'tests' |  |  | 0.636 |
 | walker |  | 1031 | 47 | listing of 'impl/src' |  |  | 0.777 |
 | walker |  | 1073 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.777 |

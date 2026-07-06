@@ -249,28 +249,10 @@ entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
 
 [[batches]]
 position = 11
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
-descriptor = "README.md section #7"
-cost_tokens = 83
-cum_tokens = 519
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 67
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
 key = 'Fs(DirListing { dir: "docs/public" })'
 descriptor = "listing of 'docs/public'"
 cost_tokens = 31
-cum_tokens = 550
+cum_tokens = 467
 
 [batches.content]
 kind = "fs"
@@ -280,11 +262,11 @@ parent = "docs/public"
 entries = [".htaccess", "CNAME", "css", "icon.png", "icon.svg", "jq.svg", "js", "robots.txt"]
 
 [[batches]]
-position = 13
+position = 12
 key = 'Fs(DirListing { dir: "config/m4" })'
 descriptor = "listing of 'config/m4'"
 cost_tokens = 47
-cum_tokens = 597
+cum_tokens = 514
 
 [batches.content]
 kind = "fs"
@@ -294,11 +276,11 @@ parent = "config/m4"
 entries = [".gitignore", "check-math-func.m4", "find-func-no-libs.m4", "find-func-no-libs2.m4", "find-func.m4", "misc.m4"]
 
 [[batches]]
-position = 14
+position = 13
 key = 'Plaintext(Whole { file: "Dockerfile" })'
 descriptor = "plaintext config Dockerfile"
 cost_tokens = 346
-cum_tokens = 943
+cum_tokens = 860
 
 [batches.content]
 kind = "lines"
@@ -312,11 +294,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 233
-cum_tokens = 1176
+cum_tokens = 1093
 
 [batches.content]
 kind = "fs"
@@ -326,11 +308,37 @@ parent = "src"
 entries = ["builtin.c", "builtin.h", "builtin.jq", "bytecode.c", "bytecode.h", "compile.c", "compile.h", "exec_stack.h", "execute.c", "inject_errors.c", "jq.h", "jq_parser.h", "jq_test.c", "jv.c", "jv.h", "jv_alloc.c", "jv_alloc.h", "jv_aux.c", "jv_dtoa.c", "jv_dtoa.h", "jv_dtoa_tsd.c", "jv_dtoa_tsd.h", "jv_file.c", "jv_parse.c", "jv_print.c", "jv_private.h", "jv_thread.h", "jv_unicode.c", "jv_unicode.h", "jv_utf8_tables.h", "lexer.c", "lexer.h", "lexer.l", "libm.h", "linker.c", "linker.h", "locfile.c", "locfile.h", "main.c", "opcode_list.h", "parser.c", "parser.h", "parser.y", "util.c", "util.h"]
 
 [[batches]]
-position = 16
+position = 15
 key = 'C(DeclNames { file: "src/jv_file.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/jv_file.c"
 cost_tokens = 23
-cum_tokens = 1199
+cum_tokens = 1116
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_file.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_file.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 16
+key = 'C(Decl { file: "src/jv_file.c", start_line: 12 })'
+descriptor = "c decl at src/jv_file.c:12"
+cost_tokens = 0
+cum_tokens = 1116
 
 [batches.content]
 kind = "lines"
@@ -353,36 +361,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 17
-key = 'C(Decl { file: "src/jv_file.c", start_line: 12 })'
-descriptor = "c decl at src/jv_file.c:12"
-cost_tokens = 0
-cum_tokens = 1199
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_file.c"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_file.c"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 18
 key = 'C(DeclNames { file: "src/jq_test.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/jq_test.c"
 cost_tokens = 38
-cum_tokens = 1237
+cum_tokens = 1154
 
 [batches.content]
 kind = "lines"
@@ -420,11 +402,11 @@ end = 79
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 18
 key = 'C(Decl { file: "src/jq_test.c", start_line: 21 })'
 descriptor = "c decl at src/jq_test.c:21"
 cost_tokens = 0
-cum_tokens = 1237
+cum_tokens = 1154
 
 [batches.content]
 kind = "lines"
@@ -446,11 +428,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 19
 key = 'C(Decl { file: "src/jq_test.c", start_line: 78 })'
 descriptor = "c decl at src/jq_test.c:78"
 cost_tokens = 16
-cum_tokens = 1253
+cum_tokens = 1170
 
 [batches.content]
 kind = "lines"
@@ -464,11 +446,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 21
+position = 20
 key = 'C(DeclNames { file: "src/jv.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/jv.h"
 cost_tokens = 327
-cum_tokens = 1580
+cum_tokens = 1497
 
 [batches.content]
 kind = "lines"
@@ -546,11 +528,11 @@ end = 52
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 21
 key = 'C(Decl { file: "src/jv.h", start_line: 19 })'
 descriptor = "c decl at src/jv.h:19"
 cost_tokens = 79
-cum_tokens = 1659
+cum_tokens = 1576
 
 [batches.content]
 kind = "lines"
@@ -564,11 +546,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'C(Decl { file: "src/jv.h", start_line: 34 })'
 descriptor = "c decl at src/jv.h:34"
 cost_tokens = 85
-cum_tokens = 1744
+cum_tokens = 1661
 
 [batches.content]
 kind = "lines"
@@ -582,11 +564,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'C(Includes { file: "src/jv.h" })'
 descriptor = "c includes in src/jv.h"
 cost_tokens = 33
-cum_tokens = 1777
+cum_tokens = 1694
 
 [batches.content]
 kind = "lines"
@@ -600,11 +582,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'C(DeclDoc { file: "src/jv.h", start_line: 34 })'
 descriptor = "c decl doc at src/jv.h:34"
 cost_tokens = 27
-cum_tokens = 1804
+cum_tokens = 1721
 
 [batches.content]
 kind = "lines"
@@ -618,11 +600,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 26
+position = 25
 key = 'C(DeclNames { file: "src/jv_dtoa_tsd.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/jv_dtoa_tsd.c"
 cost_tokens = 60
-cum_tokens = 1864
+cum_tokens = 1781
 
 [batches.content]
 kind = "lines"
@@ -671,42 +653,42 @@ kind = "ellipsis"
 path = "src/jv_dtoa_tsd.c"
 start = 40
 end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 26
+key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 22 })'
+descriptor = "c decl at src/jv_dtoa_tsd.c:22"
+cost_tokens = 0
+cum_tokens = 1781
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/jv_dtoa_tsd.c"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/jv_dtoa_tsd.c"
+start = 23
+end = 23
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 27
-key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 22 })'
-descriptor = "c decl at src/jv_dtoa_tsd.c:22"
-cost_tokens = 0
-cum_tokens = 1864
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/jv_dtoa_tsd.c"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/jv_dtoa_tsd.c"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 28
 key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 31 })'
 descriptor = "c decl at src/jv_dtoa_tsd.c:31"
 cost_tokens = 0
-cum_tokens = 1864
+cum_tokens = 1781
 
 [batches.content]
 kind = "lines"
@@ -728,11 +710,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 28
 key = 'C(Decl { file: "src/jv_dtoa_tsd.c", start_line: 39 })'
 descriptor = "c decl at src/jv_dtoa_tsd.c:39"
 cost_tokens = 0
-cum_tokens = 1864
+cum_tokens = 1781
 
 [batches.content]
 kind = "lines"
@@ -754,11 +736,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 29
 key = 'C(DeclNames { file: "src/jq.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/jq.h"
 cost_tokens = 396
-cum_tokens = 2260
+cum_tokens = 2177
 
 [batches.content]
 kind = "lines"
@@ -788,11 +770,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 30
 key = 'C(Decl { file: "src/jq.h", start_line: 11 })'
 descriptor = "c decl at src/jq.h:11"
 cost_tokens = 52
-cum_tokens = 2312
+cum_tokens = 2229
 
 [batches.content]
 kind = "lines"
@@ -806,11 +788,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'C(Includes { file: "src/jq.h" })'
 descriptor = "c includes in src/jq.h"
 cost_tokens = 23
-cum_tokens = 2335
+cum_tokens = 2252
 
 [batches.content]
 kind = "lines"
@@ -824,11 +806,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 33
+position = 32
 key = 'C(WholeFile { file: "src/jv_dtoa_tsd.h" })'
 descriptor = "c whole header in src/jv_dtoa_tsd.h"
 cost_tokens = 52
-cum_tokens = 2387
+cum_tokens = 2304
 
 [batches.content]
 kind = "lines"
@@ -842,11 +824,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'C(DeclNames { file: "src/linker.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/linker.c"
 cost_tokens = 74
-cum_tokens = 2461
+cum_tokens = 2378
 
 [batches.content]
 kind = "lines"
@@ -908,11 +890,11 @@ end = 436
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 34
 key = 'C(Decl { file: "src/linker.c", start_line: 409 })'
 descriptor = "c decl at src/linker.c:409"
 cost_tokens = 0
-cum_tokens = 2461
+cum_tokens = 2378
 
 [batches.content]
 kind = "lines"
@@ -934,11 +916,11 @@ end = 410
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 35
 key = 'C(Decl { file: "src/linker.c", start_line: 435 })'
 descriptor = "c decl at src/linker.c:435"
 cost_tokens = 0
-cum_tokens = 2461
+cum_tokens = 2378
 
 [batches.content]
 kind = "lines"
@@ -960,11 +942,11 @@ end = 436
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 36
 key = 'C(Decl { file: "src/linker.c", start_line: 28 })'
 descriptor = "c decl at src/linker.c:28"
 cost_tokens = 26
-cum_tokens = 2487
+cum_tokens = 2404
 
 [batches.content]
 kind = "lines"
@@ -978,11 +960,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'C(Decl { file: "src/linker.c", start_line: 23 })'
 descriptor = "c decl at src/linker.c:23"
 cost_tokens = 28
-cum_tokens = 2515
+cum_tokens = 2432
 
 [batches.content]
 kind = "lines"
@@ -996,11 +978,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'C(DeclNames { file: "src/jv_utf8_tables.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/jv_utf8_tables.h"
 cost_tokens = 20
-cum_tokens = 2535
+cum_tokens = 2452
 
 [batches.content]
 kind = "lines"
@@ -1022,11 +1004,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Fs(DirListing { dir: "docs/content/download" })'
 descriptor = "listing of 'docs/content/download'"
 cost_tokens = 4
-cum_tokens = 2539
+cum_tokens = 2456
 
 [batches.content]
 kind = "fs"
@@ -1036,11 +1018,11 @@ parent = "docs/content/download"
 entries = ["default.yml"]
 
 [[batches]]
-position = 41
+position = 40
 key = 'Fs(DirListing { dir: "docs/content/tutorial" })'
 descriptor = "listing of 'docs/content/tutorial'"
 cost_tokens = 4
-cum_tokens = 2543
+cum_tokens = 2460
 
 [batches.content]
 kind = "fs"
@@ -1050,11 +1032,11 @@ parent = "docs/content/tutorial"
 entries = ["default.yml"]
 
 [[batches]]
-position = 42
+position = 41
 key = 'Fs(DirListing { dir: "docs/public/css" })'
 descriptor = "listing of 'docs/public/css'"
 cost_tokens = 4
-cum_tokens = 2547
+cum_tokens = 2464
 
 [batches.content]
 kind = "fs"
@@ -1064,11 +1046,11 @@ parent = "docs/public/css"
 entries = ["style.css"]
 
 [[batches]]
-position = 43
+position = 42
 key = 'C(DeclNames { file: "src/main.c", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in src/main.c"
 cost_tokens = 85
-cum_tokens = 2632
+cum_tokens = 2549
 
 [batches.content]
 kind = "lines"
@@ -1138,11 +1120,11 @@ end = 174
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Fs(DirListing { dir: "docs/content/manual" })'
 descriptor = "listing of 'docs/content/manual'"
 cost_tokens = 43
-cum_tokens = 2675
+cum_tokens = 2592
 
 [batches.content]
 kind = "fs"
@@ -1150,6 +1132,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "docs/content/manual"
 entries = ["dev", "manual.yml", "v1.3", "v1.4", "v1.5", "v1.6", "v1.7", "v1.8"]
+
+[[batches]]
+position = 44
+key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
+descriptor = "README.md section #7"
+cost_tokens = 83
+cum_tokens = 2675
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 67
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 45
