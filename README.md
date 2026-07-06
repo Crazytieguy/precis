@@ -7,6 +7,7 @@ A CLI tool that extracts a token-efficient summary of a path, designed to replac
 Here's what `precis` shows for [developit/mitt](https://github.com/developit/mitt), a tiny TypeScript event emitter, at a 900-token budget:
 
 <!-- precis-example-start -->
+
 ```
 .editorconfig
 .eslintrc
@@ -43,23 +44,19 @@ README.md
      144→### all
     …
      148→### on
-     150→Register an event handler for the given type.
     …
      157→### off
     …
      167→### emit
     …
      179→## Contribute
-     180→
-     181→First off, thanks for taking the time to contribute!
-     182→Now, take a moment to be sure your contributions make sense to everyone else.
+    …
      184→### Reporting Issues
     …
      189→### Submitting pull requests
     …
      203→## License
-     204→
-     205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+    …
 package.json
     …
        2→  "name": "mitt",
@@ -88,6 +85,22 @@ src/
           20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
           21→>;
           23→export interface Emitter<Events extends Record<EventType, unknown>> {
+          24→	all: EventHandlerMap<Events>;
+          25→
+          26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
+          27→	on(type: '*', handler: WildcardHandler<Events>): void;
+          28→
+          29→	off<Key extends keyof Events>(
+          30→		type: Key,
+          31→		handler?: Handler<Events[Key]>
+          32→	): void;
+          33→	off(type: '*', handler: WildcardHandler<Events>): void;
+          34→
+          35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
+          36→	emit<Key extends keyof Events>(
+          37→		type: undefined extends Events[Key] ? Key : never
+          38→	): void;
+          39→}
         …
           46→export default function mitt<Events extends Record<EventType, unknown>>(
           47→	all?: EventHandlerMap<Events>
@@ -96,6 +109,7 @@ src/
 test/
 tsconfig.json
 ```
+
 <!-- precis-example-end -->
 
 The file tree shows everything that exists; the README lede and heading outline give orientation; `package.json` identifies the package; and `src/index.ts` shows the full exported type surface with signatures. Line numbers make every entry a precise jump target for follow-up reads.
