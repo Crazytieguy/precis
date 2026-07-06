@@ -45,10 +45,6 @@ README.md
     …
       74→### 3. View Tables
     …
-      81→View a specific table:
-      82→```bash
-      83→peepdb view <connection_name> --table <table_name>
-      84→```
       86→Example:
       87→```bash
       88→peepdb view myapp_db --table users
@@ -267,15 +263,16 @@ peepdb/
                5→class BaseDatabase(ABC):
                6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
             …
+              17→    @abstractmethod
               18→    def connect(self) -> None:
               19→        pass
-            …
+              21→    @abstractmethod
               22→    def disconnect(self) -> None:
               23→        pass
-            …
+              25→    @abstractmethod
               26→    def fetch_tables(self) -> List[str]:
               27→        pass
-            …
+              29→    @abstractmethod
               30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
               31→        pass
               33→    def __enter__(self):

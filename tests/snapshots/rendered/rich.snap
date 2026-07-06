@@ -248,7 +248,7 @@ rich/
            5→
            6→class Stack(List[T]):
            7→    """A small shim over builtin list."""
-        …
+           9→    @property
           10→    def top(self) -> T:
           11→        """Get top of stack."""
           12→        return self[-1]
@@ -277,6 +277,7 @@ rich/
            1→from abc import ABC
            4→class RichRenderable(ABC):
         …
+          15→    @classmethod
           16→    def __subclasshook__(cls, other: type) -> bool:
         …
     align.py

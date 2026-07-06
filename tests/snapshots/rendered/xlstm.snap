@@ -267,6 +267,7 @@ xlstm/
           15→@dataclass
           16→class xLSTMBlockStackConfig:
         …
+          36→    @property
           37→    def block_map(self) -> list[int]:
           38→        return list(map(int, self._block_map.split(",")))
           40→    def _create_block_map(self) -> str:

@@ -170,22 +170,7 @@ src/
             …
               56→class HookimplOpts(TypedDict):
               57→    """Options for a hook implementation."""
-              59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
-              60→    wrapper: bool
-              61→    #: Whether the hook implementation is an :ref:`old-style wrapper
-              62→    #: <old_style_hookwrappers>`.
-              63→    hookwrapper: bool
-              64→    #: Whether validation against a hook specification is :ref:`optional
-              65→    #: <optionalhook>`.
-              66→    optionalhook: bool
-              67→    #: Whether to try to order this hook implementation :ref:`first
-              68→    #: <callorder>`.
-              69→    tryfirst: bool
-              70→    #: Whether to try to order this hook implementation :ref:`last
-              71→    #: <callorder>`.
-              72→    trylast: bool
-              73→    #: The name of the hook specification to match, see :ref:`specname`.
-              74→    specname: str | None
+            …
               77→@final
               78→class HookspecMarker:
             …
@@ -298,13 +283,15 @@ src/
               35→    ) -> None:
               36→        """:meta private:"""
             …
+              42→    @property
               43→    def excinfo(self) -> _ExcInfo | None:
               44→        """:meta private:"""
             …
+              51→    @property
               52→    def exception(self) -> BaseException | None:
               53→        """:meta private:"""
               54→        return self._exception
-            …
+              56→    @classmethod
               57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
               58→        """:meta private:"""
             …

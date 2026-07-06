@@ -444,8 +444,9 @@ pub enum PythonKey {
     /// `__slots__`, class-level constants. Predecessor: matching
     /// class `Decl`.
     ClassBody { file: PathBuf, start_line: usize },
-    /// Surface listing of every method def first line across every
-    /// top-level class. Decorator-aware. Catastrophic-omission hedge.
+    /// Surface listing of every method's inner `def` line across every
+    /// top-level class; decorator rows are owned by the per-method batch.
+    /// Catastrophic-omission hedge.
     MethodSigs { file: PathBuf, chunk_index: usize },
     /// Whole method-signature roster for files whose method surface is
     /// chunked. Predecessor of same-file `MethodSigs` chunks.

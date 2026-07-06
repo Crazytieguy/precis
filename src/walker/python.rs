@@ -12,8 +12,9 @@
 //! - [`PythonKey::DeclNames`]: surface listing of every top-level
 //!   class, def, and module-level non-dunder simple-assignment first
 //!   line — catastrophic-omission hedge.
-//! - [`PythonKey::MethodSigs`]: surface listing of every method's
-//!   first line across every top-level class. Decorator-aware.
+//! - [`PythonKey::MethodSigs`]: surface listing of every method's inner
+//!   `def` line across every top-level class. Decorator rows are owned by
+//!   the per-method batch.
 //! - [`PythonKey::TestNames`]: in `test_*.py` / `*_test.py` only,
 //!   surface listing of `def test_*` first lines.
 //! - [`PythonKey::SetupManifest`]: in `setup.py` only, the top-level
@@ -1048,12 +1049,13 @@ fn collect_decl(info: &DeclInfo) -> FileLines {
 }
 
 fn collect_method_decl(info: &DeclInfo) -> FileLines {
+    let unit_start = info.unit_node.start_position().row;
     let signature_start = info.inner_node.start_position().row;
     let end_row = signature_end_row(info.inner_node)
         .saturating_sub(1)
         .max(signature_start);
     let mut lines = Vec::new();
-    push_rows(&mut lines, signature_start, end_row);
+    push_rows(&mut lines, unit_start, end_row);
     FileLines::new(dedup_sorted(lines))
 }
 
@@ -1786,6 +1788,37 @@ class C:
         // Decorator rows are start lines for decorated methods.
         let starts: Vec<_> = methods.iter().map(|(l, _, _)| *l).collect();
         assert_eq!(starts, vec![2, 6, 10]);
+    }
+
+    #[test]
+    fn python_method_decl_includes_decorator_lines() {
+        let src = "\
+class C:
+    @property
+    @cached_property
+    def value(self):
+        return self._value
+";
+        let (source, tree) = parse(src);
+        let decls = find_top_level_decls(&tree, &source);
+        let by_class = collect_methods_by_class(&decls, &source);
+        let method = by_class[0].1[0];
+
+        let lines = collect_method_decl(&method);
+        assert_eq!(lines.full, vec![2, 3, 4]);
+        assert_eq!(signature_line(&method), 4);
+    }
+
+    #[test]
+    fn python_decorated_methods_remain_overlap_free() {
+        let src = "\
+class C:
+    @property
+    def one(self): pass
+    @property
+    def two(self): pass
+";
+        assert_python_scheduler_overlap_free(src);
     }
 
     #[test]

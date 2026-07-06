@@ -139,24 +139,25 @@ nanovllm/
               32→        return self.num_tokens
               34→    def __getitem__(self, key):
               35→        return self.token_ids[key]
-            …
+              37→    @property
               38→    def is_finished(self):
               39→        return self.status == SequenceStatus.FINISHED
-            …
+              41→    @property
               42→    def num_completion_tokens(self):
               43→        return self.num_tokens - self.num_prompt_tokens
-            …
+              45→    @property
               46→    def prompt_token_ids(self):
               47→        return self.token_ids[:self.num_prompt_tokens]
-            …
+              49→    @property
               50→    def completion_token_ids(self):
               51→        return self.token_ids[self.num_prompt_tokens:]
-            …
+              53→    @property
               54→    def num_cached_blocks(self):
               55→        return self.num_cached_tokens // self.block_size
-            …
+              57→    @property
               58→    def num_blocks(self):
             …
+              61→    @property
               62→    def last_block_num_tokens(self):
             …
               65→    def block(self, i):
@@ -175,7 +176,7 @@ nanovllm/
                6→class SiluAndMul(nn.Module):
                8→    def __init__(self):
                9→        super().__init__()
-            …
+              11→    @torch.compile
               12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
             …
         attention.py
@@ -212,11 +213,13 @@ nanovllm/
               10→        eps: float = 1e-6,
               11→    ) -> None:
             …
+              16→    @torch.compile
               17→    def rms_forward(
               18→        self,
               19→        x: torch.Tensor,
               20→    ) -> torch.Tensor:
             …
+              28→    @torch.compile
               29→    def add_rms_forward(
               30→        self,
               31→        x: torch.Tensor,
@@ -250,11 +253,6 @@ nanovllm/
               25→    ) -> None:
             …
               38→    def forward(
-              39→        self,
-              40→        positions: torch.Tensor,
-              41→        query: torch.Tensor,
-              42→        key: torch.Tensor,
-              43→    ) -> tuple[torch.Tensor, torch.Tensor]:
             …
               51→@lru_cache(1)
               52→def get_rope(
@@ -271,7 +269,7 @@ nanovllm/
                5→class Sampler(nn.Module):
                7→    def __init__(self):
                8→        super().__init__()
-            …
+              10→    @torch.compile
               11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
             …
     llm.py

@@ -145,8 +145,6 @@ py3xui/
         async_api.py
             …
               18→class AsyncApi:
-              19→    """This class provides a high-level interface to interact with the XUI API.
-              20→    Access to the client, inbound, and database APIs is provided through this class.
             …
         async_api_base.py
             …
@@ -228,6 +226,7 @@ py3xui/
             …
               38→class Inbound(BaseModel):
             …
+              88→    @field_validator("stream_settings")
               89→    def validate_stream_settings(  # pylint: disable=no-self-argument
               90→        cls, value: StreamSettings | str
               91→    ) -> StreamSettings | str:
