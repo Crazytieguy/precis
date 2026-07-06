@@ -365,14 +365,17 @@ Measured-dead this cycle (specifics block retries):
   d2ts −0.016. A retry needs member batches that *win purchase inside
   3K* (value-side or scheduler-tier treatment), not just granularity.
 
-## Known pre-existing walker contract violation (debug-only)
+## Extreme-budget contract sweep (2026-07-06): corpus clean
 
-`precis --token-budget 1000000 tests/fixtures/rich` panics at
-`src/scheduler.rs:560`: `Python(MethodSigs { markdown.py, chunk 3 })`
-overlaps `Python(DeclNames { chunk 1 })` on line 415. Present at
-915c1824 (predates wave 3); release builds tolerate it by design.
-Surfaces only at budgets far beyond the tested range. Fix belongs in
-the Python walker's chunk-boundary construction.
+`for f in tests/fixtures/*/; do cargo run -q -- --budget 1000000 $f;
+done` (debug build) is the cheap way to shake out walker overlap
+contract violations that only surface far past the tested budget
+range. As of this session all 93 fixtures pass. Three violations of
+this class have been found and fixed so far: rich Python chunk
+overlap (wave-4 disjointness fix), tinyusb markdown per-bullet ranges
+(`node_end_row_trimmed` whitespace trim), xonsh Python
+`block_child_parts` trailing-comment row. Re-run the sweep when
+touching span-boundary construction in any walker.
 
 ## Divergence open items
 
