@@ -129,7 +129,7 @@ Score(3000)=0.425 I=0.787 C=0.230 ns_rows≤3K=14/44 (reached=5 partial=0 missin
 | walker |  | 3662 | 173 | module item at index.js:1 |  |  | 0.470 |
 | ns | 3716 |  | 86 | docs/ listing (OpenAPI spec tree) | 1.19 |  | 0.487 |
 | ns | 4043 |  | 327 | readme.md heading map | 2.1 |  | 0.504 |
-| walker |  | 4064 | 402 | docker-compose at docker-compose.yml |  |  | 0.506 |
+| walker |  | 4064 | 402 | YAML config at docker-compose.yml |  |  | 0.506 |
 | walker |  | 4107 | 43 | readme.md section #15 |  |  | 0.506 |
 | ns | 4123 |  | 80 | readme.md reverse-proxy websocket/subfolder callout | 2.2 | 2.1 | 0.509 |
 | walker |  | 4159 | 52 | listing of 'client/components/app' |  |  | 0.517 |

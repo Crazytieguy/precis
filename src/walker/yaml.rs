@@ -1,21 +1,14 @@
-//! YAML walker. Narrowly scoped to `docker-compose.{yml,yaml}` files —
-//! the only YAML shape NS authors consistently anchor on (which services
-//! exist, what images they run, which ports / volumes / env they wire).
-//!
-//! Scope rationale: docker-compose is the deployment-shape document for
-//! a wide swath of self-hostable apps; without surfacing it an agent
-//! has to make a `Read` call just to answer "how is this packaged".
-//! Other YAML configs (GitHub workflows, CI configs, application YAML)
-//! aren't unified enough to warrant per-shape walker work and stay
-//! reachable via their parent dir listing.
+//! YAML walker. Emits bounded whole-file batches for compact operational
+//! YAML whose shape is more informative than its filename: compose
+//! deployment files, CI workflows, lint/hook configs, and docs-site
+//! configs.
 //!
 //! Implementation: hand-rolled, no tree-sitter dependency. The file is
-//! emitted as a single `Whole` batch capped at [`COMPOSE_LINE_CAP`]
-//! lines. Compose files are line-oriented enough that the whole-file
-//! Whole batch is sufficient — splitting per-service would either
-//! produce many tiny batches or require a real YAML parser to handle
-//! block-style nesting; neither pays for itself on the current fixture
-//! shape.
+//! emitted as a single `Whole` batch capped by class. These operational
+//! configs are line-oriented enough that the whole-file Whole batch is
+//! sufficient — splitting per-service/job/hook would either produce many
+//! tiny batches or require a real YAML parser to handle block-style
+//! nesting.
 //!
 //! **Secrets safety**: env values inlined in `environment:` blocks
 //! (`DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@…`) are
@@ -30,7 +23,10 @@ use std::path::Path;
 use crate::batch::{Batch, BatchKey, YamlKey};
 use crate::value::mix_signals;
 
-use super::{WalkCtx, fs::files_with_any_extension, gated_whole_file_content, path_depth_factor};
+use super::{
+    FileLines, WalkCtx, fs::files_with_any_extension, gated_whole_file_content, path_depth_factor,
+    single_file_lines_content,
+};
 
 /// Hard cap on the number of source lines a docker-compose file may
 /// have to be considered for a `Whole` batch. Typical real-world
@@ -47,28 +43,191 @@ const COMPOSE_LINE_CAP: usize = 80;
 /// ~30 chars/line).
 const COMPOSE_BYTE_GATE: usize = COMPOSE_LINE_CAP * 100;
 
+/// Compact CI/tooling configs stay cheap enough to render whole. Larger
+/// workflows/configs are intentionally left for explicit reads rather
+/// than partially summarized by a YAML parser we do not have.
+const TOOLING_LINE_CAP: usize = 80;
+const TOOLING_BYTE_GATE: usize = TOOLING_LINE_CAP * 120;
+const TOOLING_HEAD_LINE_CAP: usize = 80;
+const TOOLING_HEAD_BYTE_GATE: usize = TOOLING_HEAD_LINE_CAP * 200;
+const WORKFLOW_HEAD_LINE_CAP: usize = 60;
+const WORKFLOW_HEAD_BYTE_GATE: usize = 3_000;
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in files_with_any_extension(dir, &["yml", "yaml"]) {
-        let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
+        let Some(class) = yaml_class(&file, ctx) else {
             continue;
         };
-        if !is_docker_compose_name(name) {
-            continue;
-        }
-        let Some(content) =
-            gated_whole_file_content(&file, ctx, COMPOSE_BYTE_GATE, COMPOSE_LINE_CAP)
-        else {
+        let Some(content) = class.content(&file, ctx) else {
             continue;
         };
         out.push(Batch {
             key: YamlKey::Whole { file: file.clone() }.into(),
             predecessor: None,
             content,
-            value: compose_value(&file, ctx),
+            value: class.value(&file, ctx),
         });
     }
     out
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum YamlClass {
+    Compose,
+    Workflow,
+    Travis,
+    Lint,
+    Hook,
+    DocsSite,
+}
+
+impl YamlClass {
+    fn content(self, file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+        match self {
+            YamlClass::Compose => {
+                gated_whole_file_content(file, ctx, COMPOSE_BYTE_GATE, COMPOSE_LINE_CAP)
+            }
+            YamlClass::Workflow => head_capped_yaml_content(
+                file,
+                ctx,
+                TOOLING_BYTE_GATE,
+                TOOLING_LINE_CAP,
+                WORKFLOW_HEAD_BYTE_GATE,
+                WORKFLOW_HEAD_LINE_CAP,
+            ),
+            YamlClass::Travis | YamlClass::Lint | YamlClass::Hook | YamlClass::DocsSite => {
+                head_capped_yaml_content(
+                    file,
+                    ctx,
+                    TOOLING_BYTE_GATE,
+                    TOOLING_LINE_CAP,
+                    TOOLING_HEAD_BYTE_GATE,
+                    TOOLING_HEAD_LINE_CAP,
+                )
+            }
+        }
+    }
+
+    fn value(self, file: &Path, ctx: &WalkCtx) -> f64 {
+        match self {
+            YamlClass::Compose => compose_value(file, ctx),
+            YamlClass::Workflow | YamlClass::Travis => ci_value(file, ctx),
+            YamlClass::Lint | YamlClass::Hook => lint_hook_value(file, ctx),
+            YamlClass::DocsSite => docs_site_value(file, ctx),
+        }
+    }
+}
+
+fn head_capped_yaml_content(
+    file: &Path,
+    ctx: &WalkCtx,
+    whole_byte_gate: usize,
+    whole_line_cap: usize,
+    head_byte_gate: usize,
+    head_line_cap: usize,
+) -> Option<crate::content::BatchContent> {
+    if let Some(content) = gated_whole_file_content(file, ctx, whole_byte_gate, whole_line_cap) {
+        return Some(content);
+    }
+
+    let byte_len = std::fs::metadata(file)
+        .map(|m| m.len() as usize)
+        .unwrap_or(usize::MAX);
+    if byte_len > head_byte_gate {
+        return None;
+    }
+    let source = ctx.read_source(file)?;
+    let line_count = source.lines().count();
+    if line_count <= whole_line_cap {
+        return None;
+    }
+    single_file_lines_content(
+        file,
+        &source,
+        FileLines::new((1..=head_line_cap).collect()).with_ellipses(vec![head_line_cap + 1]),
+    )
+}
+
+fn yaml_class(file: &Path, ctx: &WalkCtx) -> Option<YamlClass> {
+    let name = file.file_name()?.to_str()?;
+    if is_docker_compose_name(name) {
+        return Some(YamlClass::Compose);
+    }
+    if is_github_workflow(file, ctx)
+        && compact_workflow_dir(file)
+        && is_primary_ci_workflow_name(name)
+    {
+        return Some(YamlClass::Workflow);
+    }
+    if name.eq_ignore_ascii_case(".travis.yml") {
+        return Some(YamlClass::Travis);
+    }
+    if name.eq_ignore_ascii_case(".golangci.yml") {
+        return Some(YamlClass::Lint);
+    }
+    if name.eq_ignore_ascii_case(".pre-commit-config.yaml") {
+        return Some(YamlClass::Hook);
+    }
+    if name.eq_ignore_ascii_case("mkdocs.yml") && is_root_file(file, ctx) {
+        return Some(YamlClass::DocsSite);
+    }
+    None
+}
+
+fn is_primary_ci_workflow_name(name: &str) -> bool {
+    let lower = name.to_ascii_lowercase();
+    let stem = lower
+        .strip_suffix(".yaml")
+        .or_else(|| lower.strip_suffix(".yml"))
+        .unwrap_or(&lower);
+    stem == "ci"
+        || stem == "test"
+        || stem == "tests"
+        || stem == "main"
+        || stem == "node.js"
+        || stem == "node"
+        || stem.ends_with("-test")
+        || stem.ends_with("-tests")
+}
+
+fn compact_workflow_dir(file: &Path) -> bool {
+    let Some(dir) = file.parent() else {
+        return false;
+    };
+    let Ok(entries) = std::fs::read_dir(dir) else {
+        return false;
+    };
+    let workflow_files = entries
+        .filter_map(Result::ok)
+        .filter(|entry| {
+            entry.file_type().is_ok_and(|ty| ty.is_file())
+                && entry
+                    .path()
+                    .extension()
+                    .and_then(|e| e.to_str())
+                    .is_some_and(|e| {
+                        e.eq_ignore_ascii_case("yml") || e.eq_ignore_ascii_case("yaml")
+                    })
+        })
+        .take(3)
+        .count();
+    workflow_files <= 2
+}
+
+fn is_github_workflow(file: &Path, ctx: &WalkCtx) -> bool {
+    let Ok(rel) = file.strip_prefix(ctx.root()) else {
+        return false;
+    };
+    let mut components = rel.components().filter_map(|c| c.as_os_str().to_str());
+    components.next().is_some_and(|c| c == ".github")
+        && components.next().is_some_and(|c| c == "workflows")
+        && components.next().is_some()
+        && components.next().is_none()
+}
+
+fn is_root_file(file: &Path, ctx: &WalkCtx) -> bool {
+    file.parent().is_some_and(|p| p == ctx.root())
 }
 
 /// True iff `name` is a docker-compose filename. Matches the base
@@ -101,6 +260,28 @@ fn compose_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.6, 0.45, 0.65, path_depth_factor(file, ctx))
 }
 
+fn ci_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // CI YAML answers the operational "what versions/platforms/checks
+    // gate this project" question once the workflow directory is known.
+    // The class gate is narrow because compact primary workflows need
+    // enough value to beat source-body batches once emitted.
+    mix_signals(3.2, 1.2, 2.0, path_depth_factor(file, ctx))
+}
+
+fn lint_hook_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // Lint/hook configs are compact policy rosters: enabled linters,
+    // exclusions, and hook ids. They are broad operational context but
+    // usually secondary to source APIs and runtime manifests.
+    mix_signals(1.3, 0.65, 1.0, path_depth_factor(file, ctx))
+}
+
+fn docs_site_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // Root docs-site YAML names the published documentation structure
+    // and plugins. It is useful orientation for docs-heavy repos, but
+    // less universally load-bearing than CI or lint policy.
+    mix_signals(1.0, 0.55, 0.85, path_depth_factor(file, ctx))
+}
+
 #[cfg(test)]
 mod tests {
     use crate::scheduler::Scheduler;
@@ -129,6 +310,30 @@ mod tests {
             "config.yaml",
         ] {
             assert!(!is_docker_compose_name(name), "{name} should not match");
+        }
+    }
+
+    #[test]
+    fn yaml_classifies_tooling_configs() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let ctx = WalkCtx::new(root.to_path_buf());
+
+        let workflow = root.join(".github/workflows/test.yml");
+        std::fs::create_dir_all(workflow.parent().unwrap()).unwrap();
+        std::fs::write(&workflow, "name: test\non: [push]\n").unwrap();
+
+        for (path, class) in [
+            (workflow, YamlClass::Workflow),
+            (root.join(".travis.yml"), YamlClass::Travis),
+            (root.join(".golangci.yml"), YamlClass::Lint),
+            (root.join(".pre-commit-config.yaml"), YamlClass::Hook),
+            (root.join("mkdocs.yml"), YamlClass::DocsSite),
+        ] {
+            if !path.exists() {
+                std::fs::write(&path, "key: value\n").unwrap();
+            }
+            assert_eq!(yaml_class(&path, &ctx), Some(class), "{path:?}");
         }
     }
 
@@ -181,7 +386,7 @@ mod tests {
     }
 
     #[test]
-    fn yaml_skips_non_compose_yaml() {
+    fn yaml_skips_unclassified_yaml() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         std::fs::write(root.join("config.yaml"), "key: value\n").unwrap();
@@ -193,7 +398,52 @@ mod tests {
             !keys
                 .iter()
                 .any(|k| matches!(k, BatchKey::Yaml(YamlKey::Whole { .. }))),
-            "non-compose yaml should not emit Yaml::Whole; scheduled keys: {keys:?}",
+            "unclassified yaml should not emit Yaml::Whole; scheduled keys: {keys:?}",
+        );
+    }
+
+    #[test]
+    fn yaml_emits_whole_batch_for_small_github_workflow() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let workflow_dir = root.join(".github/workflows");
+        std::fs::create_dir_all(&workflow_dir).unwrap();
+        std::fs::write(
+            workflow_dir.join("test.yml"),
+            "name: test\non: [push]\njobs:\n  test:\n    runs-on: ubuntu-latest\n",
+        )
+        .unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let report = scheduler.run_with_report();
+        let rendered = report.tree.render();
+
+        assert!(
+            rendered.contains("runs-on: ubuntu-latest"),
+            "rendered output is missing workflow body:\n{rendered}",
+        );
+    }
+
+    #[test]
+    fn yaml_emits_head_for_long_tooling_config() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let body: String = (1..=(TOOLING_HEAD_LINE_CAP + 10))
+            .map(|i| format!("rule_{i}: true\n"))
+            .collect();
+        std::fs::write(root.join(".golangci.yml"), body).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let report = scheduler.run_with_report();
+        let rendered = report.tree.render();
+
+        assert!(
+            rendered.contains("rule_80: true"),
+            "rendered output is missing capped tooling head:\n{rendered}",
+        );
+        assert!(
+            !rendered.contains("rule_90: true"),
+            "rendered output should not include lines past the capped tooling head:\n{rendered}",
         );
     }
 }

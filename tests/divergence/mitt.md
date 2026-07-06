@@ -55,46 +55,47 @@ Score(3000)=0.786 I=0.857 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | walker |  | 3438 | 10 | listing of '.github' |  |  | 0.752 |
 | walker |  | 3447 | 9 | listing of '.github/workflows' |  |  | 0.767 |
 | ns | 3460 |  | 364 | index_test.ts: on() - case sensitivity, symbols, duplicates | 4.5 |  | 0.724 |
-| ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.685 |
-| walker |  | 3815 | 368 | package dependencies in package.json |  |  | 0.688 |
-| walker |  | 3914 | 99 | README.md section #14 |  |  | 0.688 |
-| walker |  | 3926 | 12 | listing of 'test' |  |  | 0.710 |
-| walker |  | 4042 | 116 | README.md section #11 |  |  | 0.710 |
-| ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.685 |
-| walker |  | 4162 | 120 | README.md section #9 |  |  | 0.685 |
-| ns | 4406 |  | 338 | index_test.ts: emit() - dispatch and case sensitivity | 4.8 |  | 0.654 |
-| ns | 4585 |  | 179 | index_test.ts: emit() - wildcard ('*') handler invocation | 4.9 |  | 0.638 |
-| walker |  | 4695 | 533 | README.md section #3 |  |  | 0.643 |
-| ns | 4787 |  | 202 | test-types-compilation.ts: setup | 4.10 |  | 0.624 |
-| walker |  | 4887 | 192 | README.md section #17 |  |  | 0.625 |
-| walker |  | 4906 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.625 |
-| walker |  | 4922 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.625 |
-| walker |  | 4950 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.625 |
-| ns | 4983 |  | 196 | test-types-compilation.ts: on() type inference checks | 4.11 |  | 0.610 |
-| walker |  | 5060 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.611 |
-| walker |  | 5073 | 13 | imports in test/test-types-compilation.ts |  |  | 0.611 |
-| walker |  | 5147 | 74 | plaintext config .gitignore |  |  | 0.611 |
+| walker |  | 3664 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.726 |
+| ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.687 |
+| walker |  | 4032 | 368 | package dependencies in package.json |  |  | 0.690 |
+| ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.665 |
+| walker |  | 4131 | 99 | README.md section #14 |  |  | 0.665 |
+| walker |  | 4143 | 12 | listing of 'test' |  |  | 0.687 |
+| walker |  | 4259 | 116 | README.md section #11 |  |  | 0.687 |
+| walker |  | 4379 | 120 | README.md section #9 |  |  | 0.687 |
+| ns | 4406 |  | 338 | index_test.ts: emit() - dispatch and case sensitivity | 4.8 |  | 0.656 |
+| ns | 4585 |  | 179 | index_test.ts: emit() - wildcard ('*') handler invocation | 4.9 |  | 0.641 |
+| ns | 4787 |  | 202 | test-types-compilation.ts: setup | 4.10 |  | 0.622 |
+| walker |  | 4912 | 533 | README.md section #3 |  |  | 0.626 |
+| ns | 4983 |  | 196 | test-types-compilation.ts: on() type inference checks | 4.11 |  | 0.611 |
+| walker |  | 5104 | 192 | README.md section #17 |  |  | 0.612 |
+| walker |  | 5123 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.612 |
+| walker |  | 5139 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.612 |
+| walker |  | 5167 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.612 |
 | ns | 5179 |  | 196 | test-types-compilation.ts: off() type inference checks | 4.12 |  | 0.597 |
-| ns | 5375 |  | 196 | test-types-compilation.ts: emit() type inference checks | 4.13 |  | 0.583 |
-| walker |  | 5456 | 309 | plaintext config LICENSE |  |  | 0.584 |
-| ns | 5534 |  | 159 | package.json: repository/keywords/homepage/authors/license/files | 5.1 |  | 0.598 |
-| walker |  | 5621 | 165 | plaintext config .editorconfig |  |  | 0.599 |
-| ns | 5674 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.588 |
-| walker |  | 5683 | 62 | imports in test/index_test.ts |  |  | 0.590 |
-| ns | 6043 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.607 |
-| walker |  | 6183 | 500 | plaintext config .eslintrc |  |  | 0.612 |
-| ns | 6192 |  | 149 | tsconfig.json (full) | 6.1 |  | 0.622 |
-| ns | 6417 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.637 |
-| ns | 6692 |  | 275 | .eslintrc: rule overrides | 6.3 |  | 0.653 |
-| ns | 6857 |  | 165 | .editorconfig (full) | 6.4 |  | 0.661 |
-| ns | 6931 |  | 74 | .gitignore (full) | 6.5 |  | 0.666 |
-| ns | 7148 |  | 217 | CI workflow: main.yml (full) | 6.6 |  | 0.650 |
-| ns | 7268 |  | 120 | CI workflow: compressed-size.yml (full) | 6.7 |  | 0.644 |
-| ns | 7557 |  | 289 | README: Install section | 7.1 |  | 0.655 |
-| ns | 7791 |  | 234 | README: Usage section (core example) | 7.2 |  | 0.664 |
-| ns | 8104 |  | 313 | README: TypeScript usage section | 7.3 |  | 0.675 |
-| ns | 8215 |  | 111 | README: Examples & Demos | 7.4 |  | 0.678 |
-| ns | 8544 |  | 329 | README: Contribute section | 7.5 |  | 0.683 |
-| ns | 8756 |  | 212 | PULL_REQUEST_TEMPLATE.md (full) | 7.6 |  | 0.682 |
-| ns | 9065 |  | 309 | LICENSE (full) | 7.7 |  | 0.688 |
-| ns | 9103 |  | 38 | README: License section | 7.8 |  | 0.689 |
+| walker |  | 5277 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.598 |
+| walker |  | 5290 | 13 | imports in test/test-types-compilation.ts |  |  | 0.598 |
+| walker |  | 5364 | 74 | plaintext config .gitignore |  |  | 0.599 |
+| ns | 5375 |  | 196 | test-types-compilation.ts: emit() type inference checks | 4.13 |  | 0.585 |
+| ns | 5534 |  | 159 | package.json: repository/keywords/homepage/authors/license/files | 5.1 |  | 0.599 |
+| walker |  | 5673 | 309 | plaintext config LICENSE |  |  | 0.600 |
+| ns | 5674 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.589 |
+| walker |  | 5838 | 165 | plaintext config .editorconfig |  |  | 0.590 |
+| walker |  | 5900 | 62 | imports in test/index_test.ts |  |  | 0.592 |
+| ns | 6043 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.609 |
+| ns | 6192 |  | 149 | tsconfig.json (full) | 6.1 |  | 0.620 |
+| walker |  | 6400 | 500 | plaintext config .eslintrc |  |  | 0.624 |
+| ns | 6417 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.639 |
+| ns | 6692 |  | 275 | .eslintrc: rule overrides | 6.3 |  | 0.655 |
+| ns | 6857 |  | 165 | .editorconfig (full) | 6.4 |  | 0.664 |
+| ns | 6931 |  | 74 | .gitignore (full) | 6.5 |  | 0.668 |
+| ns | 7148 |  | 217 | CI workflow: main.yml (full) | 6.6 |  | 0.678 |
+| ns | 7268 |  | 120 | CI workflow: compressed-size.yml (full) | 6.7 |  | 0.671 |
+| ns | 7557 |  | 289 | README: Install section | 7.1 |  | 0.681 |
+| ns | 7791 |  | 234 | README: Usage section (core example) | 7.2 |  | 0.689 |
+| ns | 8104 |  | 313 | README: TypeScript usage section | 7.3 |  | 0.699 |
+| ns | 8215 |  | 111 | README: Examples & Demos | 7.4 |  | 0.701 |
+| ns | 8544 |  | 329 | README: Contribute section | 7.5 |  | 0.705 |
+| ns | 8756 |  | 212 | PULL_REQUEST_TEMPLATE.md (full) | 7.6 |  | 0.704 |
+| ns | 9065 |  | 309 | LICENSE (full) | 7.7 |  | 0.709 |
+| ns | 9103 |  | 38 | README: License section | 7.8 |  | 0.710 |

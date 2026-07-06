@@ -100,29 +100,81 @@ docs/
     stylesheets/
         extra.css
 mkdocs.yml
+       1→site_name: Posting
+       2→site_url: https://posting.sh
+       3→repo_url: https://github.com/darrenburns/posting
+       4→repo_name: darrenburns/posting
+       5→theme:
+       6→  name: material
+       7→  palette:
+       8→    scheme: slate
+       9→    primary: custom
+      10→  custom_dir: docs/overrides
+      11→  icon:
+      12→    logo: fontawesome/solid/paper-plane
+      13→  font:
+      14→    text: Open Sans
+      15→  features:
+      16→    - search.suggest
+      17→    - search.highlight
+      18→    - header.autohide
+      19→    - navigation.tabs
+      20→    - navigation.tabs.sticky
+      21→    - navigation.footer
+      22→    - toc.integrate
+      23→extra_css:
+      24→  - stylesheets/extra.css
+      25→nav:
+      26→  - Home: "index.md"
+      27→  - Guide:
+      28→    - "Getting Started": "guide/index.md"
+      29→    - "Navigation": "guide/navigation.md"
+      30→    - "Collections": "guide/collections.md"
+      31→    - "Requests": "guide/requests.md"
+      32→    - "Configuration": "guide/configuration.md"
+      33→    - "Environments": "guide/environments.md"
+      34→    - "Command Palette": "guide/command_palette.md"
+      35→    - "Themes": "guide/themes.md"
+      36→    - "External Tools": "guide/external_tools.md"
+      37→    - "Keymaps": "guide/keymap.md"
+      38→    - "Importing": "guide/importing.md"
+      39→    - "Scripting": "guide/scripting.md"
+      40→    - "Help System": "guide/help_system.md"
+      41→  - Roadmap: "roadmap.md"
+      42→  - Changelog: "CHANGELOG.md"
+      43→  - FAQ: "faq.md"
+      44→plugins:
+      45→  - search
+      46→  - tags
+      47→markdown_extensions:
+      48→  - abbr
+      49→  - admonition
+      50→  - attr_list
+      51→  - def_list
+      52→  - toc:
+      53→      permalink: true
+      54→  - footnotes
+      55→  - tables
+      56→  - pymdownx.keys
+      57→  - pymdownx.highlight:
+      58→      use_pygments: true
+      59→  - pymdownx.superfences
+      60→  - pymdownx.details
+      61→extra:
+      62→  social:
+      63→    - icon: fontawesome/brands/mastodon 
+      64→      link: https://fosstodon.org/@darrenburns
+      65→    - icon: fontawesome/brands/x-twitter
+      66→      link: https://x.com/_darrenburns
+      67→    - icon: fontawesome/brands/github
+      68→      link: https://github.com/darrenburns
+      69→copyright: Copyright &copy; 2024 Darren Burns
 pyproject.toml
        1→[project]
        2→name = "posting"
        3→version = "2.10.0"
        4→description = "The modern API client that lives in your terminal."
     …
-       8→dependencies = [
-       9→    "click>=8.1.7,<9.0.0",
-      10→    "xdg-base-dirs>=6.0.1,<7.0.0",
-      11→    "click-default-group>=1.2.4,<2.0.0",
-      12→    "httpx[brotli]==0.28.1",
-      13→    # pinned httpx automatically since we monkeypatch _main.py
-      14→    "openapi-pydantic>=0.5.0",
-      15→    "pyperclip>=1.9.0,<2.0.0",
-      16→    "pydantic>=2.9.2,<3.0.0",
-      17→    "pyyaml>=6.0.2,<7.0.0",
-      18→    "pydantic-settings>=2.4.0,<3.0.0",
-      19→    "python-dotenv>=1.0.1,<2.0.0",
-      20→    # pinned intentionally
-      21→    "watchfiles>=0.24.0",
-      22→    "textual[syntax]==6.1.0",
-      23→    "textual-autocomplete==4.0.6",
-      24→]
       25→readme = "README.md"
       26→requires-python = ">= 3.11"
     …
@@ -165,55 +217,6 @@ src/
               34→    "Posting",
               35→]
         __main__.py
-            …
-              21→def create_config_file() -> None:
-              22→    f = config_file()
-              23→    if f.exists():
-              24→        return
-              25→
-              26→    try:
-              27→        f.touch()
-              28→    except OSError:
-              29→        pass
-              32→def create_default_collection() -> Path:
-            …
-              45→@click.group(cls=DefaultGroup, default="default", default_if_no_args=True)
-              46→def cli() -> None:
-              47→    """A TUI for testing HTTP APIs."""
-              50→@cli.command()
-            …
-              76→@cli.command()
-              77→@click.argument(
-              78→    "thing_to_locate",
-              79→)
-              80→def locate(thing_to_locate: str) -> None:
-            …
-              96→@cli.command(name="import")
-              97→@click.argument("spec_path", type=click.Path(exists=True))
-              98→@click.option(
-              99→    "--output",
-             100→    "-o",
-             101→    type=click.Path(),
-             102→    help="Path to save the imported collection",
-             103→    default=None,
-             104→)
-             105→@click.option(
-             106→    "--type", "-t", default="openapi", help="Specify spec type [openapi, postman]"
-             107→)
-             108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
-             109→    """Import an OpenAPI specification into a Posting collection."""
-            …
-             177→@cli.command(name="sponsors")
-             178→def sponsors() -> None:
-             179→    """Show the list of sponsors."""
-            …
-             194→def make_posting(
-             195→    collection: Path,
-             196→    env: tuple[str, ...] = (),
-             197→    using_default_collection: bool = False,
-             198→) -> Posting:
-             199→    """Return a Posting instance with the given collection and environment."""
-            …
         _start_time.py
                1→import time
                4→START_TIME = time.perf_counter_ns()
@@ -236,10 +239,7 @@ src/
                4→@dataclass
                5→class HelpData:
                6→    """Data relating to the widget to be displayed in the HelpScreen"""
-               8→    title: str = field(default="")
-               9→    """Title of the widget"""
-              10→    description: str = field(default="")
-              11→    """Markdown description to be displayed in the HelpScreen"""
+            …
         help_screen.py
         highlight_url.py
         highlighters.py
@@ -298,10 +298,6 @@ src/
         widgets/
             __init__.py
             center_middle.py
-                   1→from textual.widget import Widget
-                   4→class CenterMiddle(Widget, inherit_bindings=False):
-                   5→    """A container which aligns children on both axes."""
-                …
             collection/
             confirmation.py
                 …

@@ -148,58 +148,54 @@ Score(3000)=0.434 I=0.757 C=0.248 ns_rows≤3K=21/50 (reached=6 partial=2 missin
 | walker |  | 5803 | 11 | listing of '.github' |  |  | 0.446 |
 | walker |  | 5807 | 4 | listing of '.github/workflows' |  |  | 0.451 |
 | ns | 5832 |  | 180 | stringEncaseCRLFWithFirstIndex | 5.2 |  | 0.445 |
-| walker |  | 5939 | 132 | module item body at source/vendor/supports-color/index.js:33 body 34 |  |  | 0.446 |
-| walker |  | 6006 | 67 | readme.md section #38 |  |  | 0.446 |
-| walker |  | 6111 | 105 | readme.md section #16 |  |  | 0.446 |
-| walker |  | 6219 | 108 | readme.md section #12 |  |  | 0.446 |
-| walker |  | 6237 | 18 | imports in source/vendor/supports-color/index.d.ts |  |  | 0.446 |
-| walker |  | 6461 | 224 | code-of-conduct.md section #2 |  |  | 0.446 |
-| ns | 6533 |  | 701 | test/chalk.js — base call, casting, chaining, nesting | 6.1 |  | 0.427 |
-| walker |  | 6615 | 154 | export body at source/utilities.js:21 body 22 |  |  | 0.446 |
-| ns | 6772 |  | 239 | test/chalk.js — reset + line-break re-opening (LF and CRLF) | 6.2 |  | 0.442 |
-| walker |  | 6784 | 169 | export body at source/utilities.js:2 body 3 |  |  | 0.464 |
-| walker |  | 7207 | 423 | readme.md section #29 |  |  | 0.464 |
-| walker |  | 7287 | 80 | imports in source/index.d.ts |  |  | 0.466 |
-| ns | 7341 |  | 569 | test/chalk.js — RGB/hex downsampling per level + chalkStderr | 6.3 |  | 0.453 |
-| ns | 7659 |  | 318 | test/instance.js — isolated per-instance level | 6.4 |  | 0.444 |
-| walker |  | 7767 | 480 | readme.md section #39 |  |  | 0.444 |
-| ns | 8283 |  | 624 | vendor/ansi-styles: wrap fns + modifier/color tables (+ellipsis for bgColor) | 7.1 |  | 0.476 |
-| ns | 8350 |  | 67 | vendor/ansi-styles: exported name arrays | 7.2 |  | 0.479 |
-| ns | 8440 |  | 90 | vendor/ansi-styles: table-building + conversion-math function map (locations) | 7.3 |  | 0.476 |
-| walker |  | 8454 | 687 | readme.md section #3 |  |  | 0.488 |
-| walker |  | 8583 | 129 | module item body at source/index.js:74 body 75 |  |  | 0.498 |
-| walker |  | 8636 | 53 | contributing.md section #0 |  |  | 0.498 |
-| walker |  | 8675 | 39 | export names surface #1 in source/index.d.ts |  |  | 0.499 |
-| walker |  | 8675 | 0 | export at source/index.d.ts:316 |  |  | 0.499 |
-| walker |  | 8675 | 0 | export at source/index.d.ts:323 |  |  | 0.499 |
-| walker |  | 8725 | 50 | .github/security.md section #0 |  |  | 0.499 |
-| walker |  | 8735 | 10 | module item body at source/vendor/ansi-styles/index.js:73 body 74 |  |  | 0.499 |
-| walker |  | 8765 | 30 | plaintext config .gitignore |  |  | 0.499 |
-| walker |  | 8803 | 38 | export doc at source/index.d.ts:316 |  |  | 0.499 |
-| ns | 8968 |  | 528 | vendor/supports-color: CLI flag + FORCE_COLOR parsing | 8.1 |  | 0.496 |
-| walker |  | 8991 | 188 | export names surface in source/index.d.ts |  |  | 0.510 |
-| walker |  | 8991 | 0 | export at source/index.d.ts:30 |  |  | 0.510 |
-| walker |  | 8991 | 0 | export at source/index.d.ts:32 |  |  | 0.510 |
-| walker |  | 8991 | 0 | export at source/index.d.ts:268 |  |  | 0.510 |
-| walker |  | 8991 | 0 | export at source/index.d.ts:277 |  |  | 0.510 |
-| walker |  | 8991 | 0 | export at source/index.d.ts:286 |  |  | 0.510 |
-| walker |  | 8991 | 0 | export at source/index.d.ts:295 |  |  | 0.510 |
-| walker |  | 8991 | 0 | export at source/index.d.ts:302 |  |  | 0.510 |
-| walker |  | 8991 | 0 | export at source/index.d.ts:309 |  |  | 0.510 |
-| ns | 9070 |  | 102 | vendor/supports-color: translateLevel | 8.2 |  | 0.516 |
-| walker |  | 9183 | 192 | export member names at source/index.d.ts:32 chunk 0 |  |  | 0.525 |
-| walker |  | 9325 | 142 | export member names at source/index.d.ts:32 chunk 1 |  |  | 0.537 |
-| ns | 9411 |  | 341 | vendor/supports-color: _supportsColor() — Windows + CI vendor detection (+ellipsis for the rest of the cascade) | 8.3 |  | 0.526 |
-| walker |  | 9465 | 140 | export at source/index.d.ts:12 |  |  | 0.542 |
-| ns | 9565 |  | 154 | vendor/supports-color: createSupportsColor + module-level stdout/stderr detection | 8.4 |  | 0.547 |
-| walker |  | 9603 | 138 | export member names at source/index.d.ts:32 chunk 2 |  |  | 0.550 |
-| walker |  | 9621 | 18 | export doc at source/index.d.ts:30 |  |  | 0.550 |
-| walker |  | 9657 | 36 | export doc at source/index.d.ts:268 |  |  | 0.550 |
-| ns | 9669 |  | 104 | readme.md API section — chaining precedence rule | 9.1 |  | 0.552 |
-| walker |  | 9802 | 145 | export member names at source/index.d.ts:32 chunk 3 |  |  | 0.570 |
-| walker |  | 9876 | 74 | export member names at source/index.d.ts:32 chunk 4 |  |  | 0.570 |
-| walker |  | 9910 | 34 | export doc at source/index.d.ts:302 |  |  | 0.570 |
-| walker |  | 9946 | 36 | export doc at source/index.d.ts:309 |  |  | 0.570 |
-| ns | 9951 |  | 282 | examples/screenshot.js | 10.1 |  | 0.560 |
-| walker |  | 9989 | 43 | export doc at source/index.d.ts:323 |  |  | 0.560 |
-| ns | 9996 |  | 45 | license (MIT) — title + copyright line | 11.1 |  | 0.559 |
+| walker |  | 6067 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.493 |
+| walker |  | 6199 | 132 | module item body at source/vendor/supports-color/index.js:33 body 34 |  |  | 0.493 |
+| walker |  | 6266 | 67 | readme.md section #38 |  |  | 0.493 |
+| walker |  | 6371 | 105 | readme.md section #16 |  |  | 0.493 |
+| walker |  | 6479 | 108 | readme.md section #12 |  |  | 0.493 |
+| walker |  | 6497 | 18 | imports in source/vendor/supports-color/index.d.ts |  |  | 0.493 |
+| ns | 6533 |  | 701 | test/chalk.js — base call, casting, chaining, nesting | 6.1 |  | 0.473 |
+| walker |  | 6721 | 224 | code-of-conduct.md section #2 |  |  | 0.473 |
+| ns | 6772 |  | 239 | test/chalk.js — reset + line-break re-opening (LF and CRLF) | 6.2 |  | 0.468 |
+| walker |  | 6875 | 154 | export body at source/utilities.js:21 body 22 |  |  | 0.486 |
+| walker |  | 7044 | 169 | export body at source/utilities.js:2 body 3 |  |  | 0.507 |
+| ns | 7341 |  | 569 | test/chalk.js — RGB/hex downsampling per level + chalkStderr | 6.3 |  | 0.493 |
+| walker |  | 7467 | 423 | readme.md section #29 |  |  | 0.493 |
+| walker |  | 7547 | 80 | imports in source/index.d.ts |  |  | 0.495 |
+| ns | 7659 |  | 318 | test/instance.js — isolated per-instance level | 6.4 |  | 0.485 |
+| walker |  | 8027 | 480 | readme.md section #39 |  |  | 0.485 |
+| ns | 8283 |  | 624 | vendor/ansi-styles: wrap fns + modifier/color tables (+ellipsis for bgColor) | 7.1 |  | 0.513 |
+| ns | 8350 |  | 67 | vendor/ansi-styles: exported name arrays | 7.2 |  | 0.515 |
+| ns | 8440 |  | 90 | vendor/ansi-styles: table-building + conversion-math function map (locations) | 7.3 |  | 0.513 |
+| walker |  | 8714 | 687 | readme.md section #3 |  |  | 0.524 |
+| walker |  | 8843 | 129 | module item body at source/index.js:74 body 75 |  |  | 0.534 |
+| walker |  | 8896 | 53 | contributing.md section #0 |  |  | 0.534 |
+| walker |  | 8935 | 39 | export names surface #1 in source/index.d.ts |  |  | 0.535 |
+| walker |  | 8935 | 0 | export at source/index.d.ts:316 |  |  | 0.535 |
+| walker |  | 8935 | 0 | export at source/index.d.ts:323 |  |  | 0.535 |
+| ns | 8968 |  | 528 | vendor/supports-color: CLI flag + FORCE_COLOR parsing | 8.1 |  | 0.530 |
+| walker |  | 8985 | 50 | .github/security.md section #0 |  |  | 0.530 |
+| walker |  | 8995 | 10 | module item body at source/vendor/ansi-styles/index.js:73 body 74 |  |  | 0.530 |
+| walker |  | 9025 | 30 | plaintext config .gitignore |  |  | 0.530 |
+| walker |  | 9063 | 38 | export doc at source/index.d.ts:316 |  |  | 0.530 |
+| ns | 9070 |  | 102 | vendor/supports-color: translateLevel | 8.2 |  | 0.536 |
+| walker |  | 9251 | 188 | export names surface in source/index.d.ts |  |  | 0.549 |
+| walker |  | 9251 | 0 | export at source/index.d.ts:30 |  |  | 0.549 |
+| walker |  | 9251 | 0 | export at source/index.d.ts:32 |  |  | 0.549 |
+| walker |  | 9251 | 0 | export at source/index.d.ts:268 |  |  | 0.549 |
+| walker |  | 9251 | 0 | export at source/index.d.ts:277 |  |  | 0.549 |
+| walker |  | 9251 | 0 | export at source/index.d.ts:286 |  |  | 0.549 |
+| walker |  | 9251 | 0 | export at source/index.d.ts:295 |  |  | 0.549 |
+| walker |  | 9251 | 0 | export at source/index.d.ts:302 |  |  | 0.549 |
+| walker |  | 9251 | 0 | export at source/index.d.ts:309 |  |  | 0.549 |
+| ns | 9411 |  | 341 | vendor/supports-color: _supportsColor() — Windows + CI vendor detection (+ellipsis for the rest of the cascade) | 8.3 |  | 0.538 |
+| walker |  | 9443 | 192 | export member names at source/index.d.ts:32 chunk 0 |  |  | 0.547 |
+| ns | 9565 |  | 154 | vendor/supports-color: createSupportsColor + module-level stdout/stderr detection | 8.4 |  | 0.552 |
+| walker |  | 9585 | 142 | export member names at source/index.d.ts:32 chunk 1 |  |  | 0.563 |
+| ns | 9669 |  | 104 | readme.md API section — chaining precedence rule | 9.1 |  | 0.565 |
+| walker |  | 9725 | 140 | export at source/index.d.ts:12 |  |  | 0.580 |
+| walker |  | 9863 | 138 | export member names at source/index.d.ts:32 chunk 2 |  |  | 0.583 |
+| walker |  | 9881 | 18 | export doc at source/index.d.ts:30 |  |  | 0.583 |
+| walker |  | 9917 | 36 | export doc at source/index.d.ts:268 |  |  | 0.583 |
+| ns | 9951 |  | 282 | examples/screenshot.js | 10.1 |  | 0.573 |
+| ns | 9996 |  | 45 | license (MIT) — title + copyright line | 11.1 |  | 0.571 |

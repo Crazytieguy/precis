@@ -212,21 +212,4 @@ Score(3000)=0.223 I=0.244 C=0.203 ns_rows≤3K=29/43 (reached=6 partial=0 missin
 | walker |  | 9545 | 304 | README.md section #26 |  |  | 0.465 |
 | walker |  | 9577 | 32 | python decl at profiler/profiler_script.py:12 |  |  | 0.465 |
 | walker |  | 9588 | 11 | python imports in fuzzer/fuzz.py |  |  | 0.465 |
-| walker |  | 9596 | 8 | python method body at src/tomli/_parser.py:260 body 275 |  |  | 0.466 |
-| walker |  | 9619 | 23 | python decl body at src/tomli/_parser.py:481 body 494 |  |  | 0.466 |
-| walker |  | 9691 | 72 | python decl body at src/tomli/_parser.py:137 body 140 |  |  | 0.468 |
-| walker |  | 9707 | 16 | python decl body at src/tomli/_parser.py:528 body 535 |  |  | 0.468 |
-| walker |  | 9767 | 60 | python decl at benchmark/run.py:15 |  |  | 0.468 |
-| walker |  | 9792 | 25 | python decl body at src/tomli/_parser.py:481 body 490 |  |  | 0.468 |
-| walker |  | 9815 | 23 | python decl body at src/tomli/_parser.py:481 body 492 |  |  | 0.468 |
-| walker |  | 9840 | 25 | python decl body at src/tomli/_parser.py:502 body 509 |  |  | 0.468 |
-| walker |  | 9852 | 12 | python decl body at src/tomli/_parser.py:564 body 568 |  |  | 0.468 |
-| walker |  | 9858 | 6 | listing of 'tests/data' |  |  | 0.468 |
-| walker |  | 9918 | 60 | python decl names surface in fuzzer/fuzz.py |  |  | 0.468 |
-| walker |  | 9918 | 0 | python decl at fuzzer/fuzz.py:53 |  |  | 0.468 |
-| walker |  | 9918 | 0 | python decl at fuzzer/fuzz.py:59 |  |  | 0.468 |
-| walker |  | 9933 | 15 | python decl at fuzzer/fuzz.py:20 |  |  | 0.468 |
-| walker |  | 9957 | 24 | python decl at fuzzer/fuzz.py:71 |  |  | 0.468 |
-| walker |  | 9975 | 18 | python decl doc at fuzzer/fuzz.py:59 |  |  | 0.468 |
-| ns | 9987 |  | 882 | key_value_rule / parse_key_value_pair / parse_key (full bodies) | 5.6 | 2.2 | 0.453 |
-| walker |  | 9989 | 14 | python decl body at src/tomli/_parser.py:564 body 567 |  |  | 0.453 |
+| ns | 9987 |  | 882 | key_value_rule / parse_key_value_pair / parse_key (full bodies) | 5.6 | 2.2 | 0.451 |

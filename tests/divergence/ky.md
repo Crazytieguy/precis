@@ -127,68 +127,66 @@ Score(3000)=0.590 I=0.821 C=0.424 ns_rows≤3K=17/43 (reached=8 partial=0 missin
 | walker |  | 5214 | 11 | listing of '.github' |  |  | 0.452 |
 | walker |  | 5218 | 4 | listing of '.github/workflows' |  |  | 0.452 |
 | ns | 5296 |  | 242 | types/options.ts — KyOptions/Options field roster | 7.1 |  | 0.444 |
-| walker |  | 5307 | 89 | export names surface in source/utils/body.ts |  |  | 0.444 |
-| walker |  | 5307 | 0 | export at source/utils/body.ts:5 |  |  | 0.444 |
-| walker |  | 5307 | 0 | export at source/utils/body.ts:90 |  |  | 0.444 |
-| walker |  | 5307 | 0 | export at source/utils/body.ts:119 |  |  | 0.444 |
 | ns | 5454 |  | 158 | types/options.ts — InternalOptions | 7.2 |  | 0.438 |
-| walker |  | 5667 | 360 | readme.md section #2 |  |  | 0.457 |
-| walker |  | 5777 | 110 | readme.md section #9 |  |  | 0.457 |
-| walker |  | 5993 | 216 | export doc at source/utils/type-guards.ts:27 |  |  | 0.457 |
-| walker |  | 6152 | 159 | export body at source/utils/timeout.ts:9 body 15 |  |  | 0.459 |
-| ns | 6167 |  | 713 | types/hooks.ts — hook signatures and state types | 8.1 |  | 0.431 |
-| walker |  | 6372 | 220 | export doc at source/utils/type-guards.ts:98 |  |  | 0.431 |
-| walker |  | 6488 | 116 | readme.md section #5 |  |  | 0.431 |
-| ns | 6505 |  | 338 | types/hooks.ts — beforeRetry short-circuit rule | 8.2 |  | 0.427 |
-| walker |  | 6605 | 117 | readme.md section #20 |  |  | 0.427 |
-| ns | 6670 |  | 165 | types/retry.ts — RetryOptions field roster | 9.1 |  | 0.421 |
-| walker |  | 6772 | 167 | export body at source/utils/delay.ts:9 body 13 |  |  | 0.422 |
-| ns | 6790 |  | 120 | types/retry.ts — shouldRetry contract | 9.2 | 9.1 | 0.419 |
-| walker |  | 6891 | 119 | export names surface in source/utils/merge.ts |  |  | 0.419 |
-| walker |  | 6891 | 0 | export at source/utils/merge.ts:6 |  |  | 0.419 |
-| walker |  | 6891 | 0 | export at source/utils/merge.ts:16 |  |  | 0.419 |
-| walker |  | 6891 | 0 | export at source/utils/merge.ts:86 |  |  | 0.419 |
-| walker |  | 6985 | 94 | export at source/utils/merge.ts:38 |  |  | 0.419 |
-| walker |  | 7069 | 84 | export body at source/utils/merge.ts:6 body 7 |  |  | 0.419 |
-| ns | 7126 |  | 336 | core/constants.ts — request methods, response types, misc constants | 10.1 |  | 0.409 |
-| walker |  | 7151 | 82 | export at source/types/retry.ts:3 |  |  | 0.410 |
-| ns | 7167 |  | 41 | core/constants.ts — ForceRetryOptions field roster | 10.2 |  | 0.409 |
-| walker |  | 7183 | 32 | imports in source/utils/body.ts |  |  | 0.409 |
-| ns | 7219 |  | 52 | core/constants.ts — RetryMarker class and the retry() factory | 10.3 |  | 0.407 |
-| ns | 7260 |  | 41 | core/constants.ts — option registries roster | 10.4 |  | 0.406 |
-| walker |  | 7361 | 178 | export body at source/errors/NonError.ts:6 body 11 |  |  | 0.406 |
-| walker |  | 7517 | 156 | readme.md section #17 |  |  | 0.406 |
-| ns | 7545 |  | 285 | errors/HTTPError.ts | 11.1 |  | 0.427 |
-| walker |  | 7574 | 57 | export doc at source/errors/NonError.ts:6 |  |  | 0.427 |
-| walker |  | 7613 | 39 | imports in source/utils/options.ts |  |  | 0.427 |
-| ns | 7654 |  | 109 | errors/TimeoutError.ts | 11.2 |  | 0.434 |
-| walker |  | 7780 | 167 | readme.md section #4 |  |  | 0.434 |
-| walker |  | 7950 | 170 | readme.md section #29 |  |  | 0.434 |
-| ns | 8010 |  | 356 | errors/ForceRetryError.ts | 11.3 |  | 0.458 |
-| walker |  | 8085 | 135 | export body at source/utils/body.ts:119 body 120 |  |  | 0.458 |
-| ns | 8092 |  | 82 | utils/merge.ts — function roster | 12.1 |  | 0.458 |
-| walker |  | 8256 | 171 | readme.md section #16 |  |  | 0.458 |
-| ns | 8381 |  | 289 | utils/merge.ts — deepMerge's context special-casing | 12.2 | 12.1 | 0.450 |
-| walker |  | 8429 | 173 | readme.md section #30 |  |  | 0.450 |
-| ns | 8524 |  | 143 | utils/normalize.ts — default retry options | 12.3 |  | 0.446 |
-| walker |  | 8769 | 340 | export names surface in source/types/options.ts |  |  | 0.446 |
-| walker |  | 8769 | 0 | export at source/types/options.ts:33 |  |  | 0.446 |
-| walker |  | 8769 | 0 | export at source/types/options.ts:307 |  |  | 0.446 |
-| ns | 8787 |  | 263 | utils/body.ts — progress-callback edge cases | 12.4 |  | 0.440 |
-| walker |  | 8842 | 73 | export at source/types/options.ts:16 |  |  | 0.440 |
-| walker |  | 8858 | 16 | export doc at source/types/options.ts:33 |  |  | 0.440 |
-| walker |  | 8997 | 139 | export at source/types/options.ts:373 |  |  | 0.440 |
-| walker |  | 9039 | 42 | imports in source/core/constants.ts |  |  | 0.440 |
-| ns | 9105 |  | 318 | utils/options.ts — findUnknownOptions | 12.5 |  | 0.432 |
-| walker |  | 9108 | 69 | export names surface #1 in source/core/constants.ts |  |  | 0.437 |
-| walker |  | 9108 | 0 | export at source/core/constants.ts:235 |  |  | 0.437 |
-| walker |  | 9136 | 28 | export at source/core/constants.ts:256 |  |  | 0.437 |
-| walker |  | 9260 | 124 | export at source/core/constants.ts:237 |  |  | 0.437 |
-| walker |  | 9389 | 129 | export at source/core/constants.ts:265 |  |  | 0.437 |
-| ns | 9401 |  | 296 | utils/timeout.ts | 12.6 |  | 0.455 |
-| walker |  | 9532 | 143 | readme.md section #43 |  |  | 0.455 |
-| walker |  | 9684 | 152 | export body at source/utils/merge.ts:16 body 17 |  |  | 0.455 |
-| ns | 9711 |  | 310 | utils/delay.ts | 12.7 |  | 0.467 |
-| walker |  | 9868 | 184 | readme.md section #42 |  |  | 0.467 |
-| walker |  | 9918 | 50 | imports in source/utils/normalize.ts |  |  | 0.467 |
-| ns | 9997 |  | 286 | test/{context,fetch,http-error}.ts — test title rosters | 13.1 |  | 0.462 |
+| walker |  | 5553 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.494 |
+| walker |  | 5642 | 89 | export names surface in source/utils/body.ts |  |  | 0.494 |
+| walker |  | 5642 | 0 | export at source/utils/body.ts:5 |  |  | 0.494 |
+| walker |  | 5642 | 0 | export at source/utils/body.ts:90 |  |  | 0.494 |
+| walker |  | 5642 | 0 | export at source/utils/body.ts:119 |  |  | 0.494 |
+| walker |  | 6002 | 360 | readme.md section #2 |  |  | 0.513 |
+| walker |  | 6112 | 110 | readme.md section #9 |  |  | 0.513 |
+| ns | 6167 |  | 713 | types/hooks.ts — hook signatures and state types | 8.1 |  | 0.481 |
+| walker |  | 6328 | 216 | export doc at source/utils/type-guards.ts:27 |  |  | 0.481 |
+| walker |  | 6487 | 159 | export body at source/utils/timeout.ts:9 body 15 |  |  | 0.483 |
+| ns | 6505 |  | 338 | types/hooks.ts — beforeRetry short-circuit rule | 8.2 |  | 0.478 |
+| ns | 6670 |  | 165 | types/retry.ts — RetryOptions field roster | 9.1 |  | 0.472 |
+| walker |  | 6707 | 220 | export doc at source/utils/type-guards.ts:98 |  |  | 0.472 |
+| ns | 6790 |  | 120 | types/retry.ts — shouldRetry contract | 9.2 | 9.1 | 0.468 |
+| walker |  | 6823 | 116 | readme.md section #5 |  |  | 0.468 |
+| walker |  | 6940 | 117 | readme.md section #20 |  |  | 0.468 |
+| walker |  | 7107 | 167 | export body at source/utils/delay.ts:9 body 13 |  |  | 0.469 |
+| ns | 7126 |  | 336 | core/constants.ts — request methods, response types, misc constants | 10.1 |  | 0.458 |
+| ns | 7167 |  | 41 | core/constants.ts — ForceRetryOptions field roster | 10.2 |  | 0.456 |
+| ns | 7219 |  | 52 | core/constants.ts — RetryMarker class and the retry() factory | 10.3 |  | 0.455 |
+| walker |  | 7226 | 119 | export names surface in source/utils/merge.ts |  |  | 0.455 |
+| walker |  | 7226 | 0 | export at source/utils/merge.ts:6 |  |  | 0.455 |
+| walker |  | 7226 | 0 | export at source/utils/merge.ts:16 |  |  | 0.455 |
+| walker |  | 7226 | 0 | export at source/utils/merge.ts:86 |  |  | 0.455 |
+| ns | 7260 |  | 41 | core/constants.ts — option registries roster | 10.4 |  | 0.453 |
+| walker |  | 7320 | 94 | export at source/utils/merge.ts:38 |  |  | 0.453 |
+| walker |  | 7404 | 84 | export body at source/utils/merge.ts:6 body 7 |  |  | 0.453 |
+| walker |  | 7486 | 82 | export at source/types/retry.ts:3 |  |  | 0.455 |
+| walker |  | 7518 | 32 | imports in source/utils/body.ts |  |  | 0.455 |
+| ns | 7545 |  | 285 | errors/HTTPError.ts | 11.1 |  | 0.473 |
+| ns | 7654 |  | 109 | errors/TimeoutError.ts | 11.2 |  | 0.479 |
+| walker |  | 7696 | 178 | export body at source/errors/NonError.ts:6 body 11 |  |  | 0.479 |
+| walker |  | 7852 | 156 | readme.md section #17 |  |  | 0.479 |
+| walker |  | 7909 | 57 | export doc at source/errors/NonError.ts:6 |  |  | 0.479 |
+| walker |  | 7948 | 39 | imports in source/utils/options.ts |  |  | 0.479 |
+| ns | 8010 |  | 356 | errors/ForceRetryError.ts | 11.3 |  | 0.499 |
+| ns | 8092 |  | 82 | utils/merge.ts — function roster | 12.1 |  | 0.500 |
+| walker |  | 8115 | 167 | readme.md section #4 |  |  | 0.500 |
+| walker |  | 8285 | 170 | readme.md section #29 |  |  | 0.500 |
+| ns | 8381 |  | 289 | utils/merge.ts — deepMerge's context special-casing | 12.2 | 12.1 | 0.490 |
+| walker |  | 8420 | 135 | export body at source/utils/body.ts:119 body 120 |  |  | 0.490 |
+| ns | 8524 |  | 143 | utils/normalize.ts — default retry options | 12.3 |  | 0.486 |
+| walker |  | 8591 | 171 | readme.md section #16 |  |  | 0.486 |
+| walker |  | 8764 | 173 | readme.md section #30 |  |  | 0.486 |
+| ns | 8787 |  | 263 | utils/body.ts — progress-callback edge cases | 12.4 |  | 0.479 |
+| walker |  | 9104 | 340 | export names surface in source/types/options.ts |  |  | 0.479 |
+| walker |  | 9104 | 0 | export at source/types/options.ts:33 |  |  | 0.479 |
+| walker |  | 9104 | 0 | export at source/types/options.ts:307 |  |  | 0.479 |
+| ns | 9105 |  | 318 | utils/options.ts — findUnknownOptions | 12.5 |  | 0.471 |
+| walker |  | 9177 | 73 | export at source/types/options.ts:16 |  |  | 0.471 |
+| walker |  | 9193 | 16 | export doc at source/types/options.ts:33 |  |  | 0.471 |
+| walker |  | 9332 | 139 | export at source/types/options.ts:373 |  |  | 0.471 |
+| walker |  | 9374 | 42 | imports in source/core/constants.ts |  |  | 0.471 |
+| ns | 9401 |  | 296 | utils/timeout.ts | 12.6 |  | 0.488 |
+| walker |  | 9443 | 69 | export names surface #1 in source/core/constants.ts |  |  | 0.491 |
+| walker |  | 9443 | 0 | export at source/core/constants.ts:235 |  |  | 0.491 |
+| walker |  | 9471 | 28 | export at source/core/constants.ts:256 |  |  | 0.491 |
+| walker |  | 9595 | 124 | export at source/core/constants.ts:237 |  |  | 0.491 |
+| ns | 9711 |  | 310 | utils/delay.ts | 12.7 |  | 0.501 |
+| walker |  | 9724 | 129 | export at source/core/constants.ts:265 |  |  | 0.501 |
+| walker |  | 9867 | 143 | readme.md section #43 |  |  | 0.501 |
+| ns | 9997 |  | 286 | test/{context,fetch,http-error}.ts — test title rosters | 13.1 |  | 0.496 |

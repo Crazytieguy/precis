@@ -67,7 +67,7 @@ Score(3000)=0.479 I=0.738 C=0.311 ns_rows≤3K=13/41 (reached=5 partial=0 missin
 | walker |  | 2533 | 109 | listing of 'packages/lib' |  |  | 0.320 |
 | walker |  | 2559 | 26 | Prisma decl at packages/prisma/schema.prisma:304 |  |  | 0.320 |
 | ns | 2630 |  | 457 | Root package.json (workspace scripts) | 1.12 |  | 0.401 |
-| walker |  | 2869 | 310 | docker-compose at docker-compose.yml |  |  | 0.502 |
+| walker |  | 2869 | 310 | YAML config at docker-compose.yml |  |  | 0.502 |
 | ns | 2897 |  | 267 | apps/mobile/package.json (identity + scripts) | 1.13 |  | 0.478 |
 | walker |  | 2904 | 35 | Prisma decl at packages/prisma/schema.prisma:83 |  |  | 0.479 |
 | walker |  | 3114 | 210 | Prisma decl at packages/prisma/schema.prisma:166 |  |  | 0.480 |

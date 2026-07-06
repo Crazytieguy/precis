@@ -181,71 +181,64 @@ Score(3000)=0.406 I=0.681 C=0.242 ns_rows≤3K=25/65 (reached=7 partial=2 missin
 | walker |  | 6840 | 4 | listing of '.github/workflows' |  |  | 0.405 |
 | ns | 6951 |  | 212 | electric/index.ts: electricStreamToD2Input | 7.1 |  | 0.398 |
 | ns | 6984 |  | 33 | d2mini/src listing | 8.1 |  | 0.406 |
-| walker |  | 6986 | 146 | export at packages/d2ts/src/operators/topKWithFractionalIndex.ts:29 |  |  | 0.406 |
 | ns | 7088 |  | 104 | d2mini/src/operators listing | 8.2 |  | 0.424 |
-| walker |  | 7102 | 116 | export at packages/d2ts/src/operators/topKWithFractionalIndex.ts:372 |  |  | 0.424 |
-| walker |  | 7134 | 32 | listing of 'examples/d2ql' |  |  | 0.424 |
 | ns | 7135 |  | 47 | d2mini public export barrel | 8.3 |  | 0.423 |
-| walker |  | 7161 | 27 | export doc at packages/d2ts/src/operators/negate.ts:10 |  |  | 0.423 |
 | ns | 7355 |  | 220 | d2mini: version/frontier-free D2 constructor + simplified Index | 8.4 | 3.6 | 0.416 |
-| walker |  | 7397 | 236 | export at packages/d2ts/src/version-index.ts:28 |  |  | 0.416 |
-| walker |  | 7420 | 23 | export doc at packages/d2ts/src/operators/consolidate.ts:61 |  |  | 0.416 |
 | ns | 7424 |  | 69 | d2ql/src listing | 9.1 |  | 0.429 |
-| walker |  | 7443 | 23 | export doc at packages/d2ts/src/operators/count.ts:32 |  |  | 0.429 |
-| walker |  | 7471 | 28 | export doc at packages/d2ts/src/operators/map.ts:11 |  |  | 0.429 |
+| walker |  | 7492 | 652 | YAML config at .github/workflows/ci.yml |  |  | 0.429 |
 | ns | 7520 |  | 96 | d2ql public export barrel | 9.2 |  | 0.434 |
-| walker |  | 7576 | 105 | README.md section #44 |  |  | 0.434 |
+| walker |  | 7638 | 146 | export at packages/d2ts/src/operators/topKWithFractionalIndex.ts:29 |  |  | 0.434 |
 | ns | 7729 |  | 209 | schema.ts: BaseQuery shape | 9.3 |  | 0.428 |
-| walker |  | 7823 | 247 | export at packages/d2ts/src/order.ts:138 |  |  | 0.428 |
+| walker |  | 7754 | 116 | export at packages/d2ts/src/operators/topKWithFractionalIndex.ts:372 |  |  | 0.428 |
+| walker |  | 7786 | 32 | listing of 'examples/d2ql' |  |  | 0.428 |
+| walker |  | 7813 | 27 | export doc at packages/d2ts/src/operators/negate.ts:10 |  |  | 0.428 |
 | ns | 7860 |  | 131 | compiler.ts: compileQuery signature | 9.4 | 9.3 | 0.424 |
-| walker |  | 7863 | 40 | export doc at packages/d2ts/src/order.ts:138 |  |  | 0.424 |
-| walker |  | 7944 | 81 | export names surface in packages/d2ts/src/operators/keying.ts |  |  | 0.429 |
-| walker |  | 7944 | 0 | export at packages/d2ts/src/operators/keying.ts:7 |  |  | 0.429 |
-| walker |  | 7944 | 0 | export at packages/d2ts/src/operators/keying.ts:22 |  |  | 0.429 |
-| walker |  | 7977 | 33 | export at packages/d2ts/src/operators/keying.ts:13 |  |  | 0.429 |
-| walker |  | 7998 | 21 | export body at packages/d2ts/src/operators/keying.ts:22 body 23 |  |  | 0.429 |
-| walker |  | 8038 | 40 | export at packages/d2ts/src/operators/keying.ts:30 |  |  | 0.429 |
-| ns | 8049 |  | 189 | d2ql per-clause processor + Store surface (locations) | 9.5 |  | 0.424 |
-| walker |  | 8064 | 26 | export body at packages/d2ts/src/operators/keying.ts:13 body 16 |  |  | 0.424 |
-| walker |  | 8097 | 33 | export body at packages/d2ts/src/operators/keying.ts:30 body 33 |  |  | 0.424 |
-| walker |  | 8118 | 21 | export doc at packages/d2ts/src/operators/keying.ts:7 |  |  | 0.424 |
-| walker |  | 8141 | 23 | export doc at packages/d2ts/src/operators/keying.ts:22 |  |  | 0.424 |
-| ns | 8145 |  | 96 | query-builder.ts fluent-API roster | 9.6 | 9.3 | 0.423 |
-| ns | 8180 |  | 35 | examples/ listing | 10.1 |  | 0.428 |
-| walker |  | 8223 | 82 | export names surface in packages/d2ts/src/electric/index.ts |  |  | 0.429 |
-| walker |  | 8297 | 74 | export at packages/d2ts/src/electric/index.ts:328 |  |  | 0.429 |
-| ns | 8419 |  | 239 | examples/join.ts: rekey + innerJoin + distinct pipeline | 10.2 | 5.6 | 0.421 |
-| walker |  | 8439 | 142 | export at packages/d2ts/src/electric/index.ts:222 |  |  | 0.421 |
-| ns | 8552 |  | 133 | examples/iterate.ts (fixed-point pattern) | 10.3 |  | 0.416 |
-| walker |  | 8560 | 121 | export at packages/d2ts/src/electric/index.ts:103 |  |  | 0.418 |
-| walker |  | 8585 | 25 | export doc at packages/d2ts/src/operators/negate.ts:19 |  |  | 0.418 |
-| walker |  | 8610 | 25 | export doc at packages/d2ts/src/operators/reduce.ts:127 |  |  | 0.418 |
-| ns | 8702 |  | 150 | examples/min_max.ts: reduce with negative multiplicity | 10.4 | 5.1 | 0.414 |
-| walker |  | 8720 | 110 | export body at packages/d2ts/src/operators/count.ts:10 body 17 |  |  | 0.428 |
-| walker |  | 8741 | 21 | imports in packages/d2ts/src/operators/pipe.ts |  |  | 0.428 |
-| walker |  | 8788 | 47 | imports in packages/d2mini/src/index.ts |  |  | 0.432 |
-| walker |  | 8809 | 21 | export names surface in packages/d2ql/src/compiler.ts |  |  | 0.433 |
-| walker |  | 8850 | 41 | listing of 'packages/d2ts/tests' |  |  | 0.433 |
-| walker |  | 8891 | 41 | listing of 'packages/d2ts/tests/operators-sqlite' |  |  | 0.433 |
-| ns | 8903 |  | 201 | examples/d2ql/basic_select.ts: compileQuery usage | 10.5 | 9.4 | 0.427 |
-| walker |  | 9040 | 149 | README.md section #11 |  |  | 0.427 |
-| walker |  | 9062 | 22 | packages/d2ts/README.md section #5 |  |  | 0.427 |
-| ns | 9071 |  | 168 | examples/electric/src/types.ts (data model) | 10.6 |  | 0.422 |
-| walker |  | 9124 | 62 | package identity in packages/d2ts-benchmark/package.json |  |  | 0.422 |
-| ns | 9208 |  | 137 | CI workflow: build/typecheck/lint/test gate order | 11.1 |  | 0.417 |
-| walker |  | 9211 | 87 | package scripts in packages/d2ts-benchmark/package.json |  |  | 0.417 |
-| walker |  | 9258 | 47 | README.md section #41 |  |  | 0.417 |
-| walker |  | 9305 | 47 | README.md section #42 |  |  | 0.417 |
-| walker |  | 9340 | 35 | export at packages/d2ql/src/compiler.ts:16 |  |  | 0.419 |
-| walker |  | 9366 | 26 | imports in packages/d2ts/src/operators/keying.ts |  |  | 0.419 |
-| ns | 9384 |  | 176 | eslint.base.mjs lint rules | 11.2 |  | 0.414 |
-| walker |  | 9415 | 49 | README.md section #13 |  |  | 0.414 |
-| ns | 9565 |  | 181 | Formatter/test tooling configs | 11.3 |  | 0.409 |
-| walker |  | 9666 | 251 | export at packages/d2ts/src/electric/index.ts:40 |  |  | 0.409 |
-| walker |  | 9725 | 59 | README.md section #8 |  |  | 0.409 |
-| walker |  | 9749 | 24 | packages/d2ts/README.md section #2 |  |  | 0.409 |
-| walker |  | 9825 | 76 | json config packages/d2mini/tsconfig.json |  |  | 0.409 |
+| walker |  | 8049 | 236 | export at packages/d2ts/src/version-index.ts:28 |  |  | 0.420 |
+| ns | 8049 |  | 189 | d2ql per-clause processor + Store surface (locations) | 9.5 |  | 0.420 |
+| walker |  | 8072 | 23 | export doc at packages/d2ts/src/operators/consolidate.ts:61 |  |  | 0.420 |
+| walker |  | 8095 | 23 | export doc at packages/d2ts/src/operators/count.ts:32 |  |  | 0.420 |
+| walker |  | 8123 | 28 | export doc at packages/d2ts/src/operators/map.ts:11 |  |  | 0.420 |
+| ns | 8145 |  | 96 | query-builder.ts fluent-API roster | 9.6 | 9.3 | 0.418 |
+| ns | 8180 |  | 35 | examples/ listing | 10.1 |  | 0.424 |
+| walker |  | 8228 | 105 | README.md section #44 |  |  | 0.424 |
+| ns | 8419 |  | 239 | examples/join.ts: rekey + innerJoin + distinct pipeline | 10.2 | 5.6 | 0.416 |
+| walker |  | 8475 | 247 | export at packages/d2ts/src/order.ts:138 |  |  | 0.416 |
+| walker |  | 8515 | 40 | export doc at packages/d2ts/src/order.ts:138 |  |  | 0.416 |
+| ns | 8552 |  | 133 | examples/iterate.ts (fixed-point pattern) | 10.3 |  | 0.411 |
+| walker |  | 8596 | 81 | export names surface in packages/d2ts/src/operators/keying.ts |  |  | 0.415 |
+| walker |  | 8596 | 0 | export at packages/d2ts/src/operators/keying.ts:7 |  |  | 0.415 |
+| walker |  | 8596 | 0 | export at packages/d2ts/src/operators/keying.ts:22 |  |  | 0.415 |
+| walker |  | 8629 | 33 | export at packages/d2ts/src/operators/keying.ts:13 |  |  | 0.415 |
+| walker |  | 8650 | 21 | export body at packages/d2ts/src/operators/keying.ts:22 body 23 |  |  | 0.415 |
+| walker |  | 8690 | 40 | export at packages/d2ts/src/operators/keying.ts:30 |  |  | 0.415 |
+| ns | 8702 |  | 150 | examples/min_max.ts: reduce with negative multiplicity | 10.4 | 5.1 | 0.412 |
+| walker |  | 8716 | 26 | export body at packages/d2ts/src/operators/keying.ts:13 body 16 |  |  | 0.412 |
+| walker |  | 8749 | 33 | export body at packages/d2ts/src/operators/keying.ts:30 body 33 |  |  | 0.412 |
+| walker |  | 8770 | 21 | export doc at packages/d2ts/src/operators/keying.ts:7 |  |  | 0.412 |
+| walker |  | 8793 | 23 | export doc at packages/d2ts/src/operators/keying.ts:22 |  |  | 0.412 |
+| walker |  | 8875 | 82 | export names surface in packages/d2ts/src/electric/index.ts |  |  | 0.412 |
+| ns | 8903 |  | 201 | examples/d2ql/basic_select.ts: compileQuery usage | 10.5 | 9.4 | 0.407 |
+| walker |  | 8949 | 74 | export at packages/d2ts/src/electric/index.ts:328 |  |  | 0.407 |
+| ns | 9071 |  | 168 | examples/electric/src/types.ts (data model) | 10.6 |  | 0.401 |
+| walker |  | 9091 | 142 | export at packages/d2ts/src/electric/index.ts:222 |  |  | 0.401 |
+| ns | 9208 |  | 137 | CI workflow: build/typecheck/lint/test gate order | 11.1 |  | 0.399 |
+| walker |  | 9212 | 121 | export at packages/d2ts/src/electric/index.ts:103 |  |  | 0.401 |
+| walker |  | 9237 | 25 | export doc at packages/d2ts/src/operators/negate.ts:19 |  |  | 0.401 |
+| walker |  | 9262 | 25 | export doc at packages/d2ts/src/operators/reduce.ts:127 |  |  | 0.401 |
+| walker |  | 9372 | 110 | export body at packages/d2ts/src/operators/count.ts:10 body 17 |  |  | 0.414 |
+| ns | 9384 |  | 176 | eslint.base.mjs lint rules | 11.2 |  | 0.410 |
+| walker |  | 9393 | 21 | imports in packages/d2ts/src/operators/pipe.ts |  |  | 0.410 |
+| walker |  | 9440 | 47 | imports in packages/d2mini/src/index.ts |  |  | 0.414 |
+| walker |  | 9461 | 21 | export names surface in packages/d2ql/src/compiler.ts |  |  | 0.414 |
+| walker |  | 9502 | 41 | listing of 'packages/d2ts/tests' |  |  | 0.414 |
+| walker |  | 9543 | 41 | listing of 'packages/d2ts/tests/operators-sqlite' |  |  | 0.414 |
+| ns | 9565 |  | 181 | Formatter/test tooling configs | 11.3 |  | 0.408 |
+| walker |  | 9692 | 149 | README.md section #11 |  |  | 0.408 |
+| walker |  | 9714 | 22 | packages/d2ts/README.md section #5 |  |  | 0.408 |
+| walker |  | 9776 | 62 | package identity in packages/d2ts-benchmark/package.json |  |  | 0.408 |
 | ns | 9835 |  | 270 | d2ts + d2mini tests listing | 12.1 |  | 0.405 |
-| walker |  | 9901 | 76 | json config packages/d2ql/tsconfig.json |  |  | 0.405 |
+| walker |  | 9863 | 87 | package scripts in packages/d2ts-benchmark/package.json |  |  | 0.405 |
+| walker |  | 9910 | 47 | README.md section #41 |  |  | 0.405 |
 | ns | 9950 |  | 115 | d2ql tests listing | 12.2 |  | 0.400 |
-| walker |  | 9977 | 76 | json config packages/d2ts/tsconfig.json |  |  | 0.400 |
+| walker |  | 9957 | 47 | README.md section #42 |  |  | 0.400 |
+| walker |  | 9992 | 35 | export at packages/d2ql/src/compiler.ts:16 |  |  | 0.401 |

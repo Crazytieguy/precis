@@ -56,7 +56,7 @@ Score(3000)=0.587 I=0.761 C=0.453 ns_rows≤3K=17/60 (reached=5 partial=3 missin
 | walker |  | 1225 | 12 | python decl names surface in bookmarks/views/toasts.py |  |  | 0.487 |
 | walker |  | 1233 | 8 | python decl at bookmarks/views/toasts.py:9 |  |  | 0.487 |
 | ns | 1298 |  | 119 | bookmarks/ package layout | 2.1 |  | 0.556 |
-| walker |  | 1360 | 127 | docker-compose at docker-compose.yml |  |  | 0.605 |
+| walker |  | 1360 | 127 | YAML config at docker-compose.yml |  |  | 0.605 |
 | walker |  | 1391 | 31 | python decl names surface in bookmarks/urls.py |  |  | 0.605 |
 | walker |  | 1394 | 3 | listing of 'bookmarks/management' |  |  | 0.605 |
 | walker |  | 1438 | 44 | python decl at bookmarks/signals.py:6 |  |  | 0.605 |
