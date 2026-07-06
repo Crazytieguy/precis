@@ -735,8 +735,9 @@ impl InnerKey for TsKey {
 
 impl InnerKey for TomlKey {
     fn is_orientation(&self) -> bool {
-        true
+        !matches!(self, TomlKey::Config { .. })
     }
+
     fn describe(&self, root: &Path) -> String {
         match self {
             TomlKey::Identity { file } => describe_in("[package]", file, root),

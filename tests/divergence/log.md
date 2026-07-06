@@ -13,12 +13,12 @@ Score(3000)=0.535 I=0.767 C=0.373 ns_rows≤3K=17/47 (reached=5 partial=2 missin
 | walker |  | 218 | 64 | README.md section #0 |  |  | 0.534 |
 | ns | 293 |  | 134 | Cargo.toml package identity (name/version/license/repo) | 1.6 |  | 0.446 |
 | walker |  | 409 | 191 | [package] in Cargo.toml |  |  | 0.650 |
-| walker |  | 445 | 36 | manifest config in Cargo.toml |  |  | 0.656 |
-| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.583 |
-| walker |  | 466 | 21 | listing of 'src' |  |  | 0.666 |
-| walker |  | 486 | 20 | listing of 'src/kv' |  |  | 0.741 |
-| ns | 551 |  | 103 | Cargo.toml package identity (MSRV, edition, docs.rs features) | 1.8 |  | 0.743 |
-| walker |  | 577 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.743 |
+| walker |  | 430 | 21 | listing of 'src' |  |  | 0.743 |
+| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.661 |
+| walker |  | 450 | 20 | listing of 'src/kv' |  |  | 0.736 |
+| walker |  | 541 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.736 |
+| ns | 551 |  | 103 | Cargo.toml package identity (MSRV, edition, docs.rs features) | 1.8 |  | 0.702 |
+| walker |  | 577 | 36 | manifest config in Cargo.toml |  |  | 0.743 |
 | walker |  | 603 | 26 | pub-item names surface in src/kv/key.rs |  |  | 0.743 |
 | walker |  | 634 | 31 | pub item at src/kv/key.rs:7 |  |  | 0.743 |
 | walker |  | 661 | 27 | pub-item names surface in src/kv/source.rs |  |  | 0.743 |

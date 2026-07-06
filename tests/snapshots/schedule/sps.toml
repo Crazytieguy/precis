@@ -281,28 +281,10 @@ entries = ["Cargo.toml", "src"]
 
 [[batches]]
 position = 17
-key = 'Toml(Config { file: "Cargo.toml" })'
-descriptor = "manifest config in Cargo.toml"
-cost_tokens = 37
-cum_tokens = 381
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 43
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 85 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 85"
 cost_tokens = 51
-cum_tokens = 432
+cum_tokens = 395
 
 [batches.content]
 kind = "lines"
@@ -316,11 +298,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 78 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 78"
 cost_tokens = 58
-cum_tokens = 490
+cum_tokens = 453
 
 [batches.content]
 kind = "lines"
@@ -334,11 +316,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 141 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 141"
 cost_tokens = 58
-cum_tokens = 548
+cum_tokens = 511
 
 [batches.content]
 kind = "lines"
@@ -352,11 +334,11 @@ end = 144
 kind = "full"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Fs(DirListing { dir: "sps/src/cli" })'
 descriptor = "listing of 'sps/src/cli'"
 cost_tokens = 40
-cum_tokens = 588
+cum_tokens = 551
 
 [batches.content]
 kind = "fs"
@@ -366,11 +348,11 @@ parent = "sps/src/cli"
 entries = ["info.rs", "init.rs", "install.rs", "list.rs", "reinstall.rs", "search.rs", "status.rs", "uninstall.rs", "update.rs", "upgrade.rs"]
 
 [[batches]]
-position = 22
+position = 21
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 72 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 72"
 cost_tokens = 66
-cum_tokens = 654
+cum_tokens = 617
 
 [batches.content]
 kind = "lines"
@@ -384,11 +366,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 135 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 135"
 cost_tokens = 72
-cum_tokens = 726
+cum_tokens = 689
 
 [batches.content]
 kind = "lines"
@@ -402,11 +384,11 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 159 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 159"
 cost_tokens = 80
-cum_tokens = 806
+cum_tokens = 769
 
 [batches.content]
 kind = "lines"
@@ -420,11 +402,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Rust(PubItemNames { file: "sps/src/cli.rs" })'
 descriptor = "pub-item names surface in sps/src/cli.rs"
 cost_tokens = 23
-cum_tokens = 829
+cum_tokens = 792
 
 [batches.content]
 kind = "lines"
@@ -462,11 +444,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Fs(DirListing { dir: "sps-net/src" })'
 descriptor = "listing of 'sps-net/src'"
 cost_tokens = 21
-cum_tokens = 850
+cum_tokens = 813
 
 [batches.content]
 kind = "fs"
@@ -476,11 +458,11 @@ parent = "sps-net/src"
 entries = ["api.rs", "http.rs", "lib.rs", "oci.rs", "validation.rs"]
 
 [[batches]]
-position = 27
+position = 26
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 60 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 60"
 cost_tokens = 126
-cum_tokens = 976
+cum_tokens = 939
 
 [batches.content]
 kind = "lines"
@@ -494,11 +476,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 146 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 146"
 cost_tokens = 129
-cum_tokens = 1105
+cum_tokens = 1068
 
 [batches.content]
 kind = "lines"
@@ -507,6 +489,24 @@ kind = "lines"
 path = "sps/src/main.rs"
 start = 146
 end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Toml(Config { file: "Cargo.toml" })'
+descriptor = "manifest config in Cargo.toml"
+cost_tokens = 37
+cum_tokens = 1105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 43
+end = 46
 
 [batches.content.spans.render]
 kind = "full"

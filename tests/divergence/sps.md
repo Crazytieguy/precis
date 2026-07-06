@@ -22,24 +22,24 @@ Score(3000)=0.369 I=0.655 C=0.208 ns_rows≤3K=23/81 (reached=4 partial=0 missin
 | walker |  | 328 | 8 | listing of 'sps-common' |  |  | 0.777 |
 | walker |  | 336 | 8 | listing of 'sps-core' |  |  | 0.777 |
 | walker |  | 344 | 8 | listing of 'sps-net' |  |  | 0.777 |
-| walker |  | 381 | 37 | manifest config in Cargo.toml |  |  | 0.777 |
-| walker |  | 432 | 51 | entry item body at sps/src/main.rs:57 body 85 |  |  | 0.777 |
+| walker |  | 395 | 51 | entry item body at sps/src/main.rs:57 body 85 |  |  | 0.777 |
+| walker |  | 453 | 58 | entry item body at sps/src/main.rs:57 body 78 |  |  | 0.777 |
 | ns | 460 |  | 152 | README: CLI verb surface (usage examples) | 1.5 |  | 0.617 |
-| walker |  | 490 | 58 | entry item body at sps/src/main.rs:57 body 78 |  |  | 0.617 |
+| walker |  | 511 | 58 | entry item body at sps/src/main.rs:57 body 141 |  |  | 0.618 |
 | ns | 527 |  | 67 | README: build-from-source instructions | 1.6 |  | 0.572 |
-| walker |  | 548 | 58 | entry item body at sps/src/main.rs:57 body 141 |  |  | 0.572 |
-| walker |  | 588 | 40 | listing of 'sps/src/cli' |  |  | 0.574 |
+| walker |  | 551 | 40 | listing of 'sps/src/cli' |  |  | 0.574 |
 | ns | 603 |  | 76 | sps-common directory map | 2.1 |  | 0.474 |
-| walker |  | 654 | 66 | entry item body at sps/src/main.rs:57 body 72 |  |  | 0.474 |
+| walker |  | 617 | 66 | entry item body at sps/src/main.rs:57 body 72 |  |  | 0.474 |
+| walker |  | 689 | 72 | entry item body at sps/src/main.rs:57 body 135 |  |  | 0.474 |
 | ns | 717 |  | 114 | sps-common/Cargo.toml: package header | 2.2 |  | 0.444 |
-| walker |  | 726 | 72 | entry item body at sps/src/main.rs:57 body 135 |  |  | 0.444 |
-| walker |  | 806 | 80 | entry item body at sps/src/main.rs:57 body 159 |  |  | 0.444 |
-| walker |  | 829 | 23 | pub-item names surface in sps/src/cli.rs |  |  | 0.444 |
-| walker |  | 850 | 21 | listing of 'sps-net/src' |  |  | 0.445 |
+| walker |  | 769 | 80 | entry item body at sps/src/main.rs:57 body 159 |  |  | 0.444 |
+| walker |  | 792 | 23 | pub-item names surface in sps/src/cli.rs |  |  | 0.444 |
+| walker |  | 813 | 21 | listing of 'sps-net/src' |  |  | 0.445 |
 | ns | 892 |  | 175 | sps-common lib.rs: module map & top-level re-exports | 2.3 |  | 0.395 |
-| walker |  | 976 | 126 | entry item body at sps/src/main.rs:57 body 60 |  |  | 0.395 |
+| walker |  | 939 | 126 | entry item body at sps/src/main.rs:57 body 60 |  |  | 0.395 |
 | ns | 977 |  | 85 | error.rs: the SpsError enum (head) & Result alias | 2.4 |  | 0.379 |
-| walker |  | 1105 | 129 | entry item body at sps/src/main.rs:57 body 146 |  |  | 0.379 |
+| walker |  | 1068 | 129 | entry item body at sps/src/main.rs:57 body 146 |  |  | 0.379 |
+| walker |  | 1105 | 37 | manifest config in Cargo.toml |  |  | 0.379 |
 | walker |  | 1130 | 25 | listing of 'sps-core/src' |  |  | 0.353 |
 | ns | 1130 |  | 153 | config.rs: Config struct & sps_root path-layout convention | 2.5 |  | 0.353 |
 | walker |  | 1142 | 12 | listing of 'sps-core/src/check' |  |  | 0.353 |

@@ -155,28 +155,10 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'Toml(Config { file: "Cargo.toml" })'
-descriptor = "manifest config in Cargo.toml"
-cost_tokens = 36
-cum_tokens = 445
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 19
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 21
-cum_tokens = 466
+cum_tokens = 430
 
 [batches.content]
 kind = "fs"
@@ -186,11 +168,11 @@ parent = "src"
 entries = ["__private_api.rs", "kv", "lib.rs", "macros.rs", "serde.rs"]
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: "src/kv" })'
 descriptor = "listing of 'src/kv'"
 cost_tokens = 20
-cum_tokens = 486
+cum_tokens = 450
 
 [batches.content]
 kind = "fs"
@@ -200,11 +182,11 @@ parent = "src/kv"
 entries = ["error.rs", "key.rs", "mod.rs", "source.rs", "value.rs"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Rust(CrateDocLede { file: "src/kv/mod.rs" })'
 descriptor = "crate-doc lede in src/kv/mod.rs"
 cost_tokens = 91
-cum_tokens = 577
+cum_tokens = 541
 
 [batches.content]
 kind = "lines"
@@ -213,6 +195,24 @@ kind = "lines"
 path = "src/kv/mod.rs"
 start = 1
 end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Toml(Config { file: "Cargo.toml" })'
+descriptor = "manifest config in Cargo.toml"
+cost_tokens = 36
+cum_tokens = 577
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 19
+end = 20
 
 [batches.content.spans.render]
 kind = "full"

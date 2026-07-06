@@ -101,28 +101,10 @@ kind = "full"
 
 [[batches]]
 position = 7
-key = 'Toml(Config { file: "pyproject.toml" })'
-descriptor = "manifest config in pyproject.toml"
-cost_tokens = 32
-cum_tokens = 175
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
 key = 'Fs(DirListing { dir: "assets" })'
 descriptor = "listing of 'assets'"
 cost_tokens = 14
-cum_tokens = 189
+cum_tokens = 157
 
 [batches.content]
 kind = "fs"
@@ -132,11 +114,11 @@ parent = "assets"
 entries = ["diagram.png", "logo.png", "swarm_diagram.png"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Python(DeclNames { file: "swarm/core.py", chunk_index: 0 })'
 descriptor = "python decl names surface in swarm/core.py"
 cost_tokens = 12
-cum_tokens = 201
+cum_tokens = 169
 
 [batches.content]
 kind = "lines"
@@ -158,11 +140,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 9
 key = 'Python(Decl { file: "swarm/core.py", start_line: 26 })'
 descriptor = "python decl at swarm/core.py:26"
 cost_tokens = 0
-cum_tokens = 201
+cum_tokens = 169
 
 [batches.content]
 kind = "lines"
@@ -171,6 +153,24 @@ kind = "lines"
 path = "swarm/core.py"
 start = 26
 end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Toml(Config { file: "pyproject.toml" })'
+descriptor = "manifest config in pyproject.toml"
+cost_tokens = 32
+cum_tokens = 201
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 3
 
 [batches.content.spans.render]
 kind = "full"

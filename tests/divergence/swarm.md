@@ -11,10 +11,10 @@ Score(3000)=0.665 I=0.873 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missin
 | walker |  | 120 | 46 | python imports in swarm/__init__.py |  |  | 0.897 |
 | walker |  | 130 | 10 | listing of 'swarm/repl' |  |  | 1.000 |
 | walker |  | 143 | 13 | python imports in swarm/repl/__init__.py |  |  | 1.000 |
-| walker |  | 175 | 32 | manifest config in pyproject.toml |  |  | 1.000 |
-| walker |  | 189 | 14 | listing of 'assets' |  |  | 1.000 |
-| walker |  | 201 | 12 | python decl names surface in swarm/core.py |  |  | 1.000 |
-| walker |  | 201 | 0 | python decl at swarm/core.py:26 |  |  | 1.000 |
+| walker |  | 157 | 14 | listing of 'assets' |  |  | 1.000 |
+| walker |  | 169 | 12 | python decl names surface in swarm/core.py |  |  | 1.000 |
+| walker |  | 169 | 0 | python decl at swarm/core.py:26 |  |  | 1.000 |
+| walker |  | 201 | 32 | manifest config in pyproject.toml |  |  | 1.000 |
 | ns | 245 |  | 131 | README title + deprecation notice | 1.4 |  | 0.816 |
 | ns | 353 |  | 108 | README install instructions | 1.5 |  | 0.661 |
 | walker |  | 394 | 193 | headings outline in README.md |  |  | 0.680 |
