@@ -1,4 +1,4 @@
-Score(3000)=0.545 I=0.813 C=0.366 ns_rows≤3K=18/46 (reached=6 partial=0 missing=12)
+Score(3000)=0.551 I=0.816 C=0.372 ns_rows≤3K=18/46 (reached=7 partial=0 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -117,279 +117,260 @@ Score(3000)=0.545 I=0.813 C=0.366 ns_rows≤3K=18/46 (reached=6 partial=0 missin
 | walker |  | 2170 | 74 | go decl names surface in internal/hooks/schemas.go |  |  | 0.544 |
 | walker |  | 2194 | 24 | go decl at internal/hooks/schemas.go:42 |  |  | 0.544 |
 | walker |  | 2238 | 44 | go decl at internal/hooks/schemas.go:23 |  |  | 0.544 |
-| walker |  | 2314 | 76 | go decl names surface in internal/models/generate_models.go |  |  | 0.544 |
-| walker |  | 2314 | 0 | go decl at internal/models/generate_models.go:156 |  |  | 0.544 |
-| walker |  | 2371 | 57 | go decl at internal/models/generate_models.go:50 |  |  | 0.544 |
-| walker |  | 2405 | 34 | go decl doc at internal/models/generate_models.go:50 |  |  | 0.544 |
-| walker |  | 2466 | 61 | go decl at internal/hooks/schemas.go:32 |  |  | 0.544 |
-| walker |  | 2546 | 80 | go decl names surface in internal/agent/factory.go |  |  | 0.544 |
-| walker |  | 2546 | 0 | go decl at internal/agent/factory.go:15 |  |  | 0.544 |
-| walker |  | 2546 | 0 | go decl at internal/agent/factory.go:43 |  |  | 0.544 |
-| walker |  | 2546 | 0 | go decl at internal/agent/factory.go:76 |  |  | 0.544 |
 | ns | 2592 |  | 485 | cmd/root.go InitConfig(): config file search-path precedence | 4.4 |  | 0.503 |
-| walker |  | 2673 | 127 | go decl body at main.go:14 |  |  | 0.559 |
-| walker |  | 2737 | 64 | go decl at internal/models/models_data.go:7 |  |  | 0.559 |
-| ns | 2747 |  | 155 | cmd/root.go InitConfig(): hooks bootstrap | 4.5 | 4.4 | 0.545 |
-| walker |  | 2749 | 12 | go decl doc at internal/models/models_data.go:7 |  |  | 0.545 |
-| walker |  | 2837 | 88 | go decl names surface in internal/hooks/config.go |  |  | 0.545 |
-| walker |  | 2837 | 0 | go decl at internal/hooks/config.go:41 |  |  | 0.545 |
-| walker |  | 2837 | 0 | go decl at internal/hooks/config.go:97 |  |  | 0.545 |
-| walker |  | 2837 | 0 | go decl at internal/hooks/config.go:113 |  |  | 0.545 |
-| walker |  | 2864 | 27 | go decl at internal/hooks/config.go:14 |  |  | 0.545 |
-| walker |  | 2893 | 29 | go decl doc at internal/hooks/config.go:14 |  |  | 0.545 |
-| walker |  | 2948 | 55 | go decl at internal/hooks/config.go:30 |  |  | 0.545 |
-| walker |  | 3013 | 65 | go decl at internal/hooks/config.go:21 |  |  | 0.545 |
-| walker |  | 3173 | 160 | go decl names surface in cmd/auth.go |  |  | 0.545 |
-| walker |  | 3173 | 0 | go decl at cmd/auth.go:91 |  |  | 0.545 |
-| walker |  | 3173 | 0 | go decl at cmd/auth.go:97 |  |  | 0.545 |
-| walker |  | 3173 | 0 | go decl at cmd/auth.go:108 |  |  | 0.545 |
-| walker |  | 3173 | 0 | go decl at cmd/auth.go:119 |  |  | 0.545 |
-| walker |  | 3173 | 0 | go decl at cmd/auth.go:165 |  |  | 0.545 |
-| walker |  | 3173 | 0 | go decl at cmd/auth.go:239 |  |  | 0.545 |
-| walker |  | 3211 | 38 | go decl doc at internal/agent/factory.go:15 |  |  | 0.545 |
-| walker |  | 3219 | 8 | listing of 'contribute/conf' |  |  | 0.546 |
-| walker |  | 3227 | 8 | listing of 'internal/session' |  |  | 0.553 |
-| walker |  | 3241 | 14 | go decl doc at internal/hooks/config.go:113 |  |  | 0.553 |
-| walker |  | 3254 | 13 | sdk/README.md section #15 |  |  | 0.553 |
-| ns | 3338 |  | 591 | README: Flags + Authentication Subcommands + Model Generation Parameters tables | 4.6 |  | 0.525 |
-| walker |  | 3340 | 86 | listing of 'internal/ui' |  |  | 0.572 |
-| walker |  | 3361 | 21 | go decl names surface in internal/ui/callbacks.go |  |  | 0.572 |
-| walker |  | 3361 | 0 | go decl at internal/ui/callbacks.go:17 |  |  | 0.572 |
-| walker |  | 3370 | 9 | go package + imports in internal/ui/commands.go |  |  | 0.572 |
-| walker |  | 3428 | 58 | go decl names surface in internal/ui/commands.go |  |  | 0.572 |
-| walker |  | 3428 | 0 | go decl at internal/ui/commands.go:65 |  |  | 0.572 |
-| walker |  | 3428 | 0 | go decl at internal/ui/commands.go:83 |  |  | 0.572 |
+| ns | 2747 |  | 155 | cmd/root.go InitConfig(): hooks bootstrap | 4.5 | 4.4 | 0.490 |
+| walker |  | 2752 | 514 | go module file go.mod |  |  | 0.551 |
+| walker |  | 2828 | 76 | go decl names surface in internal/models/generate_models.go |  |  | 0.551 |
+| walker |  | 2828 | 0 | go decl at internal/models/generate_models.go:156 |  |  | 0.551 |
+| walker |  | 2885 | 57 | go decl at internal/models/generate_models.go:50 |  |  | 0.551 |
+| walker |  | 2919 | 34 | go decl doc at internal/models/generate_models.go:50 |  |  | 0.551 |
+| walker |  | 2980 | 61 | go decl at internal/hooks/schemas.go:32 |  |  | 0.551 |
+| walker |  | 3060 | 80 | go decl names surface in internal/agent/factory.go |  |  | 0.551 |
+| walker |  | 3060 | 0 | go decl at internal/agent/factory.go:15 |  |  | 0.551 |
+| walker |  | 3060 | 0 | go decl at internal/agent/factory.go:43 |  |  | 0.551 |
+| walker |  | 3060 | 0 | go decl at internal/agent/factory.go:76 |  |  | 0.551 |
+| walker |  | 3187 | 127 | go decl body at main.go:14 |  |  | 0.602 |
+| walker |  | 3251 | 64 | go decl at internal/models/models_data.go:7 |  |  | 0.602 |
+| walker |  | 3263 | 12 | go decl doc at internal/models/models_data.go:7 |  |  | 0.602 |
+| ns | 3338 |  | 591 | README: Flags + Authentication Subcommands + Model Generation Parameters tables | 4.6 |  | 0.572 |
+| walker |  | 3351 | 88 | go decl names surface in internal/hooks/config.go |  |  | 0.572 |
+| walker |  | 3351 | 0 | go decl at internal/hooks/config.go:41 |  |  | 0.572 |
+| walker |  | 3351 | 0 | go decl at internal/hooks/config.go:97 |  |  | 0.572 |
+| walker |  | 3351 | 0 | go decl at internal/hooks/config.go:113 |  |  | 0.572 |
+| walker |  | 3378 | 27 | go decl at internal/hooks/config.go:14 |  |  | 0.572 |
+| walker |  | 3407 | 29 | go decl doc at internal/hooks/config.go:14 |  |  | 0.572 |
 | ns | 3438 |  | 100 | cmd/root.go runNormalMode(): flag-combination validation | 4.7 |  | 0.564 |
-| walker |  | 3479 | 51 | go decl at internal/ui/commands.go:6 |  |  | 0.564 |
-| walker |  | 3546 | 67 | go decl names surface in internal/ui/factory.go |  |  | 0.564 |
-| walker |  | 3546 | 0 | go decl at internal/ui/factory.go:33 |  |  | 0.564 |
-| walker |  | 3546 | 0 | go decl at internal/ui/factory.go:45 |  |  | 0.564 |
-| walker |  | 3599 | 53 | go decl at internal/ui/factory.go:13 |  |  | 0.564 |
-| walker |  | 3673 | 74 | go decl names surface in internal/ui/fuzzy.go |  |  | 0.564 |
-| walker |  | 3673 | 0 | go decl at internal/ui/fuzzy.go:18 |  |  | 0.564 |
-| walker |  | 3673 | 0 | go decl at internal/ui/fuzzy.go:60 |  |  | 0.564 |
-| walker |  | 3673 | 0 | go decl at internal/ui/fuzzy.go:117 |  |  | 0.564 |
-| walker |  | 3696 | 23 | go decl at internal/ui/fuzzy.go:10 |  |  | 0.564 |
-| walker |  | 3729 | 33 | go decl doc at internal/ui/factory.go:13 |  |  | 0.564 |
-| ns | 3743 |  | 305 | internal/config/config.go: MCPServerConfig struct fields | 5.1 |  | 0.546 |
-| walker |  | 3808 | 79 | go decl names surface in internal/ui/debug_logger.go |  |  | 0.546 |
-| walker |  | 3808 | 0 | go decl at internal/ui/debug_logger.go:20 |  |  | 0.546 |
-| walker |  | 3808 | 0 | go decl at internal/ui/debug_logger.go:28 |  |  | 0.546 |
-| walker |  | 3808 | 0 | go decl at internal/ui/debug_logger.go:84 |  |  | 0.546 |
-| walker |  | 3822 | 14 | go decl at internal/ui/debug_logger.go:13 |  |  | 0.546 |
-| walker |  | 3837 | 15 | go decl body at internal/ui/debug_logger.go:20 |  |  | 0.546 |
-| walker |  | 3851 | 14 | go decl body at internal/ui/debug_logger.go:84 |  |  | 0.546 |
-| walker |  | 3866 | 15 | go decl doc at internal/ui/fuzzy.go:117 |  |  | 0.546 |
-| walker |  | 3924 | 58 | README.md section #36 |  |  | 0.546 |
-| walker |  | 3929 | 5 | listing of 'internal/models/anthropic' |  |  | 0.550 |
-| walker |  | 3934 | 5 | listing of 'internal/models/gemini' |  |  | 0.553 |
-| walker |  | 3939 | 5 | listing of 'internal/models/openai' |  |  | 0.557 |
-| walker |  | 3944 | 5 | listing of 'internal/ui/progress' |  |  | 0.562 |
-| walker |  | 3988 | 44 | go decl doc at internal/ui/fuzzy.go:10 |  |  | 0.562 |
-| walker |  | 4092 | 104 | go decl names surface in internal/ui/tool_approval_input.go |  |  | 0.562 |
-| walker |  | 4092 | 0 | go decl at internal/ui/tool_approval_input.go:22 |  |  | 0.562 |
-| walker |  | 4092 | 0 | go decl at internal/ui/tool_approval_input.go:48 |  |  | 0.562 |
-| walker |  | 4092 | 0 | go decl at internal/ui/tool_approval_input.go:52 |  |  | 0.562 |
-| walker |  | 4092 | 0 | go decl at internal/ui/tool_approval_input.go:83 |  |  | 0.562 |
-| walker |  | 4101 | 9 | go decl body at internal/ui/tool_approval_input.go:48 |  |  | 0.562 |
-| walker |  | 4117 | 16 | go decl doc at internal/ui/fuzzy.go:60 |  |  | 0.562 |
-| walker |  | 4193 | 76 | go decl at internal/ui/tool_approval_input.go:12 |  |  | 0.562 |
-| walker |  | 4221 | 28 | go package + imports in internal/ui/fuzzy.go |  |  | 0.562 |
-| walker |  | 4267 | 46 | go decl doc at internal/ui/commands.go:6 |  |  | 0.562 |
-| ns | 4291 |  | 548 | internal/config/config.go: Config struct (top-level app settings) | 5.2 |  | 0.537 |
-| walker |  | 4319 | 52 | go package + imports in sdk/types.go |  |  | 0.537 |
-| walker |  | 4431 | 112 | go decl names surface in internal/hooks/events.go |  |  | 0.537 |
-| walker |  | 4431 | 0 | go decl at internal/hooks/events.go:5 |  |  | 0.537 |
-| walker |  | 4431 | 0 | go decl at internal/hooks/events.go:23 |  |  | 0.537 |
-| walker |  | 4431 | 0 | go decl at internal/hooks/events.go:34 |  |  | 0.537 |
-| walker |  | 4448 | 17 | go decl body at internal/hooks/events.go:34 |  |  | 0.537 |
-| walker |  | 4487 | 39 | go decl doc at internal/hooks/events.go:5 |  |  | 0.538 |
-| walker |  | 4504 | 17 | go decl doc at internal/ui/factory.go:33 |  |  | 0.538 |
-| walker |  | 4582 | 78 | go decl at internal/ui/factory.go:22 |  |  | 0.538 |
-| walker |  | 4625 | 43 | go decl doc at internal/ui/factory.go:22 |  |  | 0.538 |
-| ns | 4669 |  | 378 | internal/config/config.go: Validate() | 5.3 | 5.1 | 0.517 |
-| walker |  | 4838 | 213 | go decl names surface in sdk/mcphost.go |  |  | 0.517 |
-| walker |  | 4838 | 0 | go decl at sdk/mcphost.go:40 |  |  | 0.517 |
-| walker |  | 4838 | 0 | go decl at sdk/mcphost.go:130 |  |  | 0.517 |
-| walker |  | 4838 | 0 | go decl at sdk/mcphost.go:201 |  |  | 0.517 |
-| walker |  | 4838 | 0 | go decl at sdk/mcphost.go:207 |  |  | 0.517 |
-| walker |  | 4838 | 0 | go decl at sdk/mcphost.go:218 |  |  | 0.517 |
-| walker |  | 4838 | 0 | go decl at sdk/mcphost.go:224 |  |  | 0.517 |
-| walker |  | 4838 | 0 | go decl at sdk/mcphost.go:230 |  |  | 0.517 |
-| walker |  | 4838 | 0 | go decl at sdk/mcphost.go:237 |  |  | 0.517 |
-| walker |  | 4847 | 9 | go decl body at sdk/mcphost.go:201 |  |  | 0.517 |
-| walker |  | 4856 | 9 | go decl body at sdk/mcphost.go:230 |  |  | 0.517 |
-| walker |  | 4865 | 9 | go decl body at sdk/mcphost.go:237 |  |  | 0.517 |
-| walker |  | 4900 | 35 | go decl at sdk/mcphost.go:19 |  |  | 0.517 |
-| walker |  | 4912 | 12 | go decl body at sdk/mcphost.go:224 |  |  | 0.517 |
-| walker |  | 4928 | 16 | go decl body at sdk/mcphost.go:218 |  |  | 0.517 |
-| walker |  | 4957 | 29 | go decl doc at sdk/mcphost.go:201 |  |  | 0.517 |
-| walker |  | 4986 | 29 | go decl doc at sdk/mcphost.go:224 |  |  | 0.517 |
-| walker |  | 5023 | 37 | go decl doc at sdk/mcphost.go:218 |  |  | 0.517 |
-| walker |  | 5062 | 39 | go decl doc at sdk/mcphost.go:207 |  |  | 0.517 |
-| walker |  | 5114 | 52 | go decl doc at sdk/mcphost.go:19 |  |  | 0.517 |
-| ns | 5178 |  | 509 | README: Builtin Servers config shape + available builtin names | 5.4 | 5.1 | 0.492 |
-| walker |  | 5182 | 68 | go decl at sdk/mcphost.go:163 |  |  | 0.492 |
-| walker |  | 5230 | 48 | go decl doc at sdk/mcphost.go:237 |  |  | 0.492 |
-| walker |  | 5279 | 49 | go decl doc at sdk/mcphost.go:230 |  |  | 0.492 |
-| walker |  | 5386 | 107 | go decl at sdk/mcphost.go:28 |  |  | 0.492 |
-| walker |  | 5433 | 47 | go decl doc at sdk/mcphost.go:28 |  |  | 0.492 |
-| walker |  | 5490 | 57 | go decl doc at sdk/mcphost.go:40 |  |  | 0.492 |
-| ns | 5516 |  | 338 | README: Transport Types + one Legacy STDIO example | 5.5 | 5.3 | 0.476 |
-| walker |  | 5546 | 56 | go decl doc at sdk/mcphost.go:163 |  |  | 0.476 |
-| walker |  | 5604 | 58 | go decl doc at sdk/mcphost.go:130 |  |  | 0.476 |
-| walker |  | 5670 | 66 | README.md section #39 |  |  | 0.476 |
-| walker |  | 5701 | 31 | go package + imports in internal/hooks/schemas.go |  |  | 0.476 |
-| walker |  | 5754 | 53 | go decl doc at internal/hooks/schemas.go:23 |  |  | 0.476 |
-| walker |  | 5807 | 53 | go decl doc at internal/hooks/schemas.go:42 |  |  | 0.476 |
-| walker |  | 5823 | 16 | sdk/README.md section #12 |  |  | 0.476 |
-| walker |  | 5839 | 16 | sdk/README.md section #11 |  |  | 0.476 |
-| walker |  | 5855 | 16 | sdk/README.md section #10 |  |  | 0.476 |
-| ns | 5857 |  | 341 | internal/config/substitution.go: env-var and script-arg substitution patterns | 5.6 |  | 0.463 |
-| walker |  | 5871 | 16 | sdk/README.md section #14 |  |  | 0.463 |
-| walker |  | 5887 | 16 | sdk/README.md section #13 |  |  | 0.463 |
-| walker |  | 5906 | 19 | go decl doc at internal/hooks/config.go:97 |  |  | 0.463 |
-| walker |  | 5936 | 30 | go decl body at internal/tokens/counter.go:21 |  |  | 0.463 |
-| walker |  | 5977 | 41 | go decl doc at internal/hooks/events.go:23 |  |  | 0.463 |
-| walker |  | 6066 | 89 | go decl at internal/hooks/schemas.go:62 |  |  | 0.463 |
-| walker |  | 6097 | 31 | go decl body at internal/auth/browser.go:34 |  |  | 0.463 |
-| walker |  | 6153 | 56 | go decl doc at internal/hooks/config.go:30 |  |  | 0.463 |
-| ns | 6157 |  | 300 | README: Environment Variable Substitution syntax | 5.7 | 5.6 | 0.452 |
-| walker |  | 6200 | 47 | go decl doc at internal/config/merger.go:28 |  |  | 0.452 |
-| walker |  | 6226 | 26 | listing of 'internal/tools' |  |  | 0.471 |
-| walker |  | 6329 | 103 | README.md section #29 |  |  | 0.471 |
-| walker |  | 6467 | 138 | go decl names surface in internal/ui/styles.go |  |  | 0.471 |
-| walker |  | 6467 | 0 | go decl at internal/ui/styles.go:14 |  |  | 0.471 |
-| walker |  | 6467 | 0 | go decl at internal/ui/styles.go:21 |  |  | 0.471 |
-| walker |  | 6467 | 0 | go decl at internal/ui/styles.go:28 |  |  | 0.471 |
-| walker |  | 6467 | 0 | go decl at internal/ui/styles.go:37 |  |  | 0.471 |
-| walker |  | 6467 | 0 | go decl at internal/ui/styles.go:359 |  |  | 0.471 |
-| walker |  | 6478 | 11 | go decl body at internal/ui/styles.go:21 |  |  | 0.471 |
-| walker |  | 6487 | 9 | go decl doc at internal/ui/styles.go:14 |  |  | 0.471 |
-| walker |  | 6500 | 13 | go decl doc at internal/ui/styles.go:359 |  |  | 0.471 |
-| walker |  | 6518 | 18 | go decl doc at internal/ui/styles.go:37 |  |  | 0.471 |
-| ns | 6550 |  | 393 | internal/config/merger.go: MergeConfigs + LoadAndValidateConfig | 5.8 |  | 0.457 |
-| walker |  | 6565 | 47 | go decl doc at internal/ui/styles.go:21 |  |  | 0.457 |
-| walker |  | 6625 | 60 | go decl doc at internal/hooks/config.go:21 |  |  | 0.457 |
-| ns | 6682 |  | 132 | contribute/conf/demo.yml (legacy sample config) | 5.9 |  | 0.450 |
-| walker |  | 6767 | 142 | go decl names surface in internal/builtin/bash.go |  |  | 0.450 |
-| walker |  | 6767 | 0 | go decl at internal/builtin/bash.go:44 |  |  | 0.450 |
-| walker |  | 6767 | 0 | go decl at internal/builtin/bash.go:71 |  |  | 0.450 |
-| walker |  | 6776 | 9 | go decl at internal/builtin/bash.go:14 |  |  | 0.450 |
-| walker |  | 6792 | 16 | go decl doc at internal/builtin/bash.go:71 |  |  | 0.450 |
-| walker |  | 6853 | 61 | go decl doc at internal/hooks/schemas.go:32 |  |  | 0.450 |
-| walker |  | 6871 | 18 | sdk/README.md section #7 |  |  | 0.450 |
-| walker |  | 6889 | 18 | sdk/README.md section #8 |  |  | 0.450 |
-| walker |  | 6941 | 52 | go decl doc at internal/config/merger.go:13 |  |  | 0.450 |
-| ns | 7048 |  | 366 | internal/agent/agent.go: Agent + AgentConfig structs | 6.1 |  | 0.438 |
-| walker |  | 7088 | 147 | go decl names surface in internal/hooks/validator.go |  |  | 0.438 |
-| walker |  | 7088 | 0 | go decl at internal/hooks/validator.go:17 |  |  | 0.438 |
-| walker |  | 7088 | 0 | go decl at internal/hooks/validator.go:44 |  |  | 0.438 |
-| walker |  | 7088 | 0 | go decl at internal/hooks/validator.go:75 |  |  | 0.438 |
-| walker |  | 7088 | 0 | go decl at internal/hooks/validator.go:110 |  |  | 0.438 |
-| walker |  | 7099 | 11 | go decl at internal/hooks/validator.go:10 |  |  | 0.438 |
-| walker |  | 7113 | 14 | go decl doc at internal/hooks/validator.go:17 |  |  | 0.438 |
-| walker |  | 7127 | 14 | go decl doc at internal/hooks/validator.go:110 |  |  | 0.438 |
-| walker |  | 7143 | 16 | go decl doc at internal/hooks/validator.go:44 |  |  | 0.438 |
-| walker |  | 7156 | 13 | go decl doc at internal/hooks/validator.go:10 |  |  | 0.438 |
-| ns | 7166 |  | 118 | Agent loop + tool-manager entry-point locations | 6.2 | 6.1 | 0.437 |
-| walker |  | 7219 | 63 | go decl doc at internal/ui/debug_logger.go:13 |  |  | 0.437 |
-| walker |  | 7315 | 96 | sdk/README.md section #16 |  |  | 0.437 |
-| walker |  | 7369 | 54 | go decl doc at internal/ui/styles.go:28 |  |  | 0.437 |
-| walker |  | 7424 | 55 | go decl doc at internal/ui/commands.go:65 |  |  | 0.437 |
-| ns | 7451 |  | 285 | internal/tools/mcp.go: tool name prefixing (serverName__toolName) | 6.3 |  | 0.427 |
-| walker |  | 7479 | 55 | go decl doc at internal/ui/debug_logger.go:20 |  |  | 0.427 |
-| walker |  | 7759 | 280 | go decl names surface in cmd/script.go |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:78 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:84 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:148 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:208 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:255 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:279 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:288 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:431 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:442 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:480 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:499 |  |  | 0.427 |
-| walker |  | 7759 | 0 | go decl at cmd/script.go:511 |  |  | 0.427 |
-| ns | 7800 |  | 349 | internal/tools/connection_pool.go: pool config + defaults | 6.4 |  | 0.418 |
-| walker |  | 7824 | 65 | go decl at cmd/script.go:423 |  |  | 0.418 |
-| walker |  | 7835 | 11 | go decl body at cmd/script.go:78 |  |  | 0.418 |
-| walker |  | 7851 | 16 | go decl doc at cmd/script.go:148 |  |  | 0.418 |
-| walker |  | 7867 | 16 | go decl doc at cmd/script.go:279 |  |  | 0.418 |
-| walker |  | 7885 | 18 | go decl doc at cmd/script.go:511 |  |  | 0.418 |
-| walker |  | 7938 | 53 | go decl doc at cmd/script.go:423 |  |  | 0.418 |
-| walker |  | 7957 | 19 | go decl doc at cmd/script.go:288 |  |  | 0.418 |
-| walker |  | 7977 | 20 | go decl doc at cmd/script.go:255 |  |  | 0.418 |
-| walker |  | 8008 | 31 | go decl doc at cmd/script.go:480 |  |  | 0.418 |
-| walker |  | 8041 | 33 | go decl doc at cmd/script.go:431 |  |  | 0.418 |
-| walker |  | 8077 | 36 | go decl doc at cmd/script.go:442 |  |  | 0.418 |
-| ns | 8112 |  | 312 | Likely-dead duplicate: MCPToolManager.createMCPClient vs MCPConnectionPool.createMCPClient | 6.5 | 6.4 | 0.410 |
-| walker |  | 8118 | 41 | go package + imports in internal/ui/block_renderer.go |  |  | 0.410 |
-| walker |  | 8142 | 24 | go decl doc at internal/config/merger.go:48 |  |  | 0.410 |
-| walker |  | 8199 | 57 | go decl doc at internal/ui/fuzzy.go:18 |  |  | 0.410 |
-| walker |  | 8243 | 44 | go decl doc at cmd/script.go:499 |  |  | 0.410 |
-| ns | 8253 |  | 141 | internal/builtin/registry.go: the 5 registered builtin server names | 7.1 |  | 0.405 |
-| walker |  | 8285 | 42 | go package + imports in internal/ui/debug_logger.go |  |  | 0.405 |
-| walker |  | 8288 | 3 | listing of '.github' |  |  | 0.405 |
-| ns | 8291 |  | 38 | Two different builtin tools both named "fetch" | 7.2 | 7.1 | 0.405 |
-| walker |  | 8296 | 8 | listing of '.github/workflows' |  |  | 0.414 |
-| walker |  | 8450 | 154 | YAML config at .github/workflows/ci.yml |  |  | 0.414 |
-| ns | 8457 |  | 166 | internal/builtin/bash.go: banned command prefixes | 7.3 |  | 0.408 |
-| ns | 8560 |  | 103 | internal/builtin/todo.go + http.go: remaining tool-name locations | 7.4 | 7.2 | 0.406 |
-| walker |  | 8612 | 162 | go decl names surface in internal/ui/spinner.go |  |  | 0.406 |
-| walker |  | 8612 | 0 | go decl at internal/ui/spinner.go:31 |  |  | 0.406 |
-| walker |  | 8612 | 0 | go decl at internal/ui/spinner.go:35 |  |  | 0.406 |
-| walker |  | 8612 | 0 | go decl at internal/ui/spinner.go:52 |  |  | 0.406 |
-| walker |  | 8612 | 0 | go decl at internal/ui/spinner.go:75 |  |  | 0.406 |
-| walker |  | 8612 | 0 | go decl at internal/ui/spinner.go:80 |  |  | 0.406 |
-| walker |  | 8612 | 0 | go decl at internal/ui/spinner.go:107 |  |  | 0.406 |
-| walker |  | 8612 | 0 | go decl at internal/ui/spinner.go:133 |  |  | 0.406 |
-| walker |  | 8612 | 0 | go decl at internal/ui/spinner.go:149 |  |  | 0.406 |
-| walker |  | 8628 | 16 | go decl body at internal/ui/spinner.go:149 |  |  | 0.406 |
-| ns | 8664 |  | 104 | internal/models/providers.go: CreateProvider's actual provider roster | 8.1 |  | 0.403 |
-| walker |  | 8680 | 52 | go decl at internal/ui/spinner.go:16 |  |  | 0.403 |
-| walker |  | 8689 | 9 | go decl body at internal/ui/spinner.go:31 |  |  | 0.403 |
-| walker |  | 8706 | 17 | go decl doc at internal/ui/spinner.go:75 |  |  | 0.403 |
-| walker |  | 8736 | 30 | go decl at internal/ui/spinner.go:25 |  |  | 0.403 |
-| walker |  | 8749 | 13 | go decl doc at internal/ui/spinner.go:25 |  |  | 0.403 |
-| walker |  | 8787 | 38 | go decl doc at internal/ui/spinner.go:149 |  |  | 0.403 |
-| walker |  | 8839 | 52 | go decl doc at internal/ui/spinner.go:16 |  |  | 0.403 |
-| ns | 8889 |  | 225 | internal/hooks/events.go: the actual 4 hook events (vs README's 6) | 9.1 |  | 0.405 |
-| walker |  | 8892 | 53 | go decl doc at internal/ui/spinner.go:107 |  |  | 0.405 |
-| walker |  | 8948 | 56 | go decl doc at internal/ui/spinner.go:80 |  |  | 0.405 |
-| walker |  | 9006 | 58 | go decl doc at internal/ui/commands.go:83 |  |  | 0.405 |
-| walker |  | 9049 | 43 | go package + imports in internal/hooks/validator.go |  |  | 0.405 |
-| ns | 9094 |  | 205 | internal/hooks/executor.go: blocking via exit code 2 | 9.2 | 9.1 | 0.400 |
-| walker |  | 9156 | 107 | go decl at internal/hooks/schemas.go:50 |  |  | 0.400 |
-| ns | 9189 |  | 95 | internal/ui/commands.go: the real slash-command registry (vs README's /history claim) | 10.1 |  | 0.398 |
-| walker |  | 9211 | 55 | go decl doc at internal/hooks/schemas.go:50 |  |  | 0.398 |
-| ns | 9268 |  | 79 | internal/auth/credentials.go: API key precedence order | 11.1 |  | 0.397 |
-| walker |  | 9270 | 59 | go decl doc at internal/agent/factory.go:43 |  |  | 0.397 |
-| walker |  | 9324 | 54 | go decl doc at internal/ui/debug_logger.go:84 |  |  | 0.397 |
-| walker |  | 9395 | 71 | go decl doc at internal/hooks/schemas.go:62 |  |  | 0.397 |
-| walker |  | 9415 | 20 | sdk/README.md section #9 |  |  | 0.397 |
-| walker |  | 9475 | 60 | go decl doc at internal/auth/browser.go:34 |  |  | 0.397 |
-| walker |  | 9530 | 55 | go decl doc at internal/hooks/events.go:34 |  |  | 0.397 |
-| walker |  | 9577 | 47 | go decl doc at cmd/script.go:84 |  |  | 0.397 |
-| walker |  | 9633 | 56 | go decl doc at internal/ui/spinner.go:133 |  |  | 0.397 |
-| ns | 9646 |  | 378 | internal/session/session.go: Session/Message struct fields | 12.1 |  | 0.389 |
-| walker |  | 9695 | 62 | go decl doc at internal/hooks/validator.go:75 |  |  | 0.389 |
-| ns | 9700 |  | 54 | sdk/mcphost.go: New + Prompt entry points | 12.2 | 12.1 | 0.391 |
-| walker |  | 9871 | 176 | go decl names surface in internal/ui/slash_command_input.go |  |  | 0.391 |
-| walker |  | 9871 | 0 | go decl at internal/ui/slash_command_input.go:34 |  |  | 0.391 |
-| walker |  | 9871 | 0 | go decl at internal/ui/slash_command_input.go:63 |  |  | 0.391 |
-| walker |  | 9871 | 0 | go decl at internal/ui/slash_command_input.go:70 |  |  | 0.391 |
-| walker |  | 9871 | 0 | go decl at internal/ui/slash_command_input.go:181 |  |  | 0.391 |
-| walker |  | 9871 | 0 | go decl at internal/ui/slash_command_input.go:248 |  |  | 0.391 |
-| walker |  | 9871 | 0 | go decl at internal/ui/slash_command_input.go:338 |  |  | 0.391 |
-| walker |  | 9871 | 0 | go decl at internal/ui/slash_command_input.go:344 |  |  | 0.391 |
-| walker |  | 9871 | 0 | go decl at internal/ui/slash_command_input.go:351 |  |  | 0.391 |
-| walker |  | 9879 | 8 | go decl body at internal/ui/slash_command_input.go:338 |  |  | 0.391 |
-| walker |  | 9888 | 9 | go decl body at internal/ui/slash_command_input.go:63 |  |  | 0.391 |
-| walker |  | 9898 | 10 | go decl body at internal/ui/slash_command_input.go:351 |  |  | 0.391 |
-| walker |  | 9911 | 13 | go decl body at internal/ui/slash_command_input.go:344 |  |  | 0.391 |
-| walker |  | 9923 | 12 | go decl doc at internal/ui/slash_command_input.go:248 |  |  | 0.391 |
-| walker |  | 9956 | 33 | go decl doc at internal/ui/slash_command_input.go:338 |  |  | 0.391 |
-| ns | 9967 |  | 267 | cmd/script.go: substitution order (env vars, then script args) | 13.1 |  | 0.386 |
-| walker |  | 9990 | 34 | go decl doc at internal/ui/slash_command_input.go:63 |  |  | 0.386 |
+| walker |  | 3462 | 55 | go decl at internal/hooks/config.go:30 |  |  | 0.564 |
+| walker |  | 3527 | 65 | go decl at internal/hooks/config.go:21 |  |  | 0.564 |
+| walker |  | 3687 | 160 | go decl names surface in cmd/auth.go |  |  | 0.564 |
+| walker |  | 3687 | 0 | go decl at cmd/auth.go:91 |  |  | 0.564 |
+| walker |  | 3687 | 0 | go decl at cmd/auth.go:97 |  |  | 0.564 |
+| walker |  | 3687 | 0 | go decl at cmd/auth.go:108 |  |  | 0.564 |
+| walker |  | 3687 | 0 | go decl at cmd/auth.go:119 |  |  | 0.564 |
+| walker |  | 3687 | 0 | go decl at cmd/auth.go:165 |  |  | 0.564 |
+| walker |  | 3687 | 0 | go decl at cmd/auth.go:239 |  |  | 0.564 |
+| walker |  | 3725 | 38 | go decl doc at internal/agent/factory.go:15 |  |  | 0.564 |
+| walker |  | 3733 | 8 | listing of 'contribute/conf' |  |  | 0.565 |
+| walker |  | 3741 | 8 | listing of 'internal/session' |  |  | 0.571 |
+| ns | 3743 |  | 305 | internal/config/config.go: MCPServerConfig struct fields | 5.1 |  | 0.553 |
+| walker |  | 3755 | 14 | go decl doc at internal/hooks/config.go:113 |  |  | 0.553 |
+| walker |  | 3768 | 13 | sdk/README.md section #15 |  |  | 0.553 |
+| walker |  | 3854 | 86 | listing of 'internal/ui' |  |  | 0.596 |
+| walker |  | 3875 | 21 | go decl names surface in internal/ui/callbacks.go |  |  | 0.596 |
+| walker |  | 3875 | 0 | go decl at internal/ui/callbacks.go:17 |  |  | 0.596 |
+| walker |  | 3884 | 9 | go package + imports in internal/ui/commands.go |  |  | 0.596 |
+| walker |  | 3942 | 58 | go decl names surface in internal/ui/commands.go |  |  | 0.596 |
+| walker |  | 3942 | 0 | go decl at internal/ui/commands.go:65 |  |  | 0.596 |
+| walker |  | 3942 | 0 | go decl at internal/ui/commands.go:83 |  |  | 0.596 |
+| walker |  | 3993 | 51 | go decl at internal/ui/commands.go:6 |  |  | 0.596 |
+| walker |  | 4060 | 67 | go decl names surface in internal/ui/factory.go |  |  | 0.596 |
+| walker |  | 4060 | 0 | go decl at internal/ui/factory.go:33 |  |  | 0.596 |
+| walker |  | 4060 | 0 | go decl at internal/ui/factory.go:45 |  |  | 0.596 |
+| walker |  | 4113 | 53 | go decl at internal/ui/factory.go:13 |  |  | 0.596 |
+| walker |  | 4187 | 74 | go decl names surface in internal/ui/fuzzy.go |  |  | 0.596 |
+| walker |  | 4187 | 0 | go decl at internal/ui/fuzzy.go:18 |  |  | 0.596 |
+| walker |  | 4187 | 0 | go decl at internal/ui/fuzzy.go:60 |  |  | 0.596 |
+| walker |  | 4187 | 0 | go decl at internal/ui/fuzzy.go:117 |  |  | 0.596 |
+| walker |  | 4210 | 23 | go decl at internal/ui/fuzzy.go:10 |  |  | 0.596 |
+| walker |  | 4243 | 33 | go decl doc at internal/ui/factory.go:13 |  |  | 0.596 |
+| ns | 4291 |  | 548 | internal/config/config.go: Config struct (top-level app settings) | 5.2 |  | 0.569 |
+| walker |  | 4322 | 79 | go decl names surface in internal/ui/debug_logger.go |  |  | 0.569 |
+| walker |  | 4322 | 0 | go decl at internal/ui/debug_logger.go:20 |  |  | 0.569 |
+| walker |  | 4322 | 0 | go decl at internal/ui/debug_logger.go:28 |  |  | 0.569 |
+| walker |  | 4322 | 0 | go decl at internal/ui/debug_logger.go:84 |  |  | 0.569 |
+| walker |  | 4336 | 14 | go decl at internal/ui/debug_logger.go:13 |  |  | 0.569 |
+| walker |  | 4351 | 15 | go decl body at internal/ui/debug_logger.go:20 |  |  | 0.569 |
+| walker |  | 4365 | 14 | go decl body at internal/ui/debug_logger.go:84 |  |  | 0.569 |
+| walker |  | 4380 | 15 | go decl doc at internal/ui/fuzzy.go:117 |  |  | 0.569 |
+| walker |  | 4438 | 58 | README.md section #36 |  |  | 0.569 |
+| walker |  | 4443 | 5 | listing of 'internal/models/anthropic' |  |  | 0.573 |
+| walker |  | 4448 | 5 | listing of 'internal/models/gemini' |  |  | 0.576 |
+| walker |  | 4453 | 5 | listing of 'internal/models/openai' |  |  | 0.580 |
+| walker |  | 4458 | 5 | listing of 'internal/ui/progress' |  |  | 0.584 |
+| walker |  | 4502 | 44 | go decl doc at internal/ui/fuzzy.go:10 |  |  | 0.584 |
+| walker |  | 4606 | 104 | go decl names surface in internal/ui/tool_approval_input.go |  |  | 0.584 |
+| walker |  | 4606 | 0 | go decl at internal/ui/tool_approval_input.go:22 |  |  | 0.584 |
+| walker |  | 4606 | 0 | go decl at internal/ui/tool_approval_input.go:48 |  |  | 0.584 |
+| walker |  | 4606 | 0 | go decl at internal/ui/tool_approval_input.go:52 |  |  | 0.584 |
+| walker |  | 4606 | 0 | go decl at internal/ui/tool_approval_input.go:83 |  |  | 0.584 |
+| walker |  | 4615 | 9 | go decl body at internal/ui/tool_approval_input.go:48 |  |  | 0.584 |
+| walker |  | 4631 | 16 | go decl doc at internal/ui/fuzzy.go:60 |  |  | 0.584 |
+| ns | 4669 |  | 378 | internal/config/config.go: Validate() | 5.3 | 5.1 | 0.562 |
+| walker |  | 4707 | 76 | go decl at internal/ui/tool_approval_input.go:12 |  |  | 0.562 |
+| walker |  | 4735 | 28 | go package + imports in internal/ui/fuzzy.go |  |  | 0.562 |
+| walker |  | 4781 | 46 | go decl doc at internal/ui/commands.go:6 |  |  | 0.562 |
+| walker |  | 4833 | 52 | go package + imports in sdk/types.go |  |  | 0.562 |
+| walker |  | 4945 | 112 | go decl names surface in internal/hooks/events.go |  |  | 0.562 |
+| walker |  | 4945 | 0 | go decl at internal/hooks/events.go:5 |  |  | 0.562 |
+| walker |  | 4945 | 0 | go decl at internal/hooks/events.go:23 |  |  | 0.562 |
+| walker |  | 4945 | 0 | go decl at internal/hooks/events.go:34 |  |  | 0.562 |
+| walker |  | 4962 | 17 | go decl body at internal/hooks/events.go:34 |  |  | 0.562 |
+| walker |  | 5001 | 39 | go decl doc at internal/hooks/events.go:5 |  |  | 0.562 |
+| walker |  | 5018 | 17 | go decl doc at internal/ui/factory.go:33 |  |  | 0.562 |
+| walker |  | 5096 | 78 | go decl at internal/ui/factory.go:22 |  |  | 0.562 |
+| walker |  | 5139 | 43 | go decl doc at internal/ui/factory.go:22 |  |  | 0.562 |
+| ns | 5178 |  | 509 | README: Builtin Servers config shape + available builtin names | 5.4 | 5.1 | 0.535 |
+| walker |  | 5352 | 213 | go decl names surface in sdk/mcphost.go |  |  | 0.535 |
+| walker |  | 5352 | 0 | go decl at sdk/mcphost.go:40 |  |  | 0.535 |
+| walker |  | 5352 | 0 | go decl at sdk/mcphost.go:130 |  |  | 0.535 |
+| walker |  | 5352 | 0 | go decl at sdk/mcphost.go:201 |  |  | 0.535 |
+| walker |  | 5352 | 0 | go decl at sdk/mcphost.go:207 |  |  | 0.535 |
+| walker |  | 5352 | 0 | go decl at sdk/mcphost.go:218 |  |  | 0.535 |
+| walker |  | 5352 | 0 | go decl at sdk/mcphost.go:224 |  |  | 0.535 |
+| walker |  | 5352 | 0 | go decl at sdk/mcphost.go:230 |  |  | 0.535 |
+| walker |  | 5352 | 0 | go decl at sdk/mcphost.go:237 |  |  | 0.535 |
+| walker |  | 5361 | 9 | go decl body at sdk/mcphost.go:201 |  |  | 0.535 |
+| walker |  | 5370 | 9 | go decl body at sdk/mcphost.go:230 |  |  | 0.535 |
+| walker |  | 5379 | 9 | go decl body at sdk/mcphost.go:237 |  |  | 0.535 |
+| walker |  | 5414 | 35 | go decl at sdk/mcphost.go:19 |  |  | 0.535 |
+| walker |  | 5426 | 12 | go decl body at sdk/mcphost.go:224 |  |  | 0.535 |
+| walker |  | 5442 | 16 | go decl body at sdk/mcphost.go:218 |  |  | 0.535 |
+| walker |  | 5471 | 29 | go decl doc at sdk/mcphost.go:201 |  |  | 0.535 |
+| walker |  | 5500 | 29 | go decl doc at sdk/mcphost.go:224 |  |  | 0.535 |
+| ns | 5516 |  | 338 | README: Transport Types + one Legacy STDIO example | 5.5 | 5.3 | 0.517 |
+| walker |  | 5537 | 37 | go decl doc at sdk/mcphost.go:218 |  |  | 0.517 |
+| walker |  | 5576 | 39 | go decl doc at sdk/mcphost.go:207 |  |  | 0.517 |
+| walker |  | 5628 | 52 | go decl doc at sdk/mcphost.go:19 |  |  | 0.517 |
+| walker |  | 5696 | 68 | go decl at sdk/mcphost.go:163 |  |  | 0.517 |
+| walker |  | 5744 | 48 | go decl doc at sdk/mcphost.go:237 |  |  | 0.517 |
+| walker |  | 5793 | 49 | go decl doc at sdk/mcphost.go:230 |  |  | 0.517 |
+| ns | 5857 |  | 341 | internal/config/substitution.go: env-var and script-arg substitution patterns | 5.6 |  | 0.503 |
+| walker |  | 5900 | 107 | go decl at sdk/mcphost.go:28 |  |  | 0.503 |
+| walker |  | 5947 | 47 | go decl doc at sdk/mcphost.go:28 |  |  | 0.503 |
+| walker |  | 6004 | 57 | go decl doc at sdk/mcphost.go:40 |  |  | 0.503 |
+| walker |  | 6060 | 56 | go decl doc at sdk/mcphost.go:163 |  |  | 0.503 |
+| walker |  | 6118 | 58 | go decl doc at sdk/mcphost.go:130 |  |  | 0.503 |
+| ns | 6157 |  | 300 | README: Environment Variable Substitution syntax | 5.7 | 5.6 | 0.492 |
+| walker |  | 6184 | 66 | README.md section #39 |  |  | 0.492 |
+| walker |  | 6215 | 31 | go package + imports in internal/hooks/schemas.go |  |  | 0.492 |
+| walker |  | 6268 | 53 | go decl doc at internal/hooks/schemas.go:23 |  |  | 0.492 |
+| walker |  | 6321 | 53 | go decl doc at internal/hooks/schemas.go:42 |  |  | 0.492 |
+| walker |  | 6337 | 16 | sdk/README.md section #12 |  |  | 0.492 |
+| walker |  | 6353 | 16 | sdk/README.md section #11 |  |  | 0.492 |
+| walker |  | 6369 | 16 | sdk/README.md section #10 |  |  | 0.492 |
+| walker |  | 6385 | 16 | sdk/README.md section #14 |  |  | 0.492 |
+| walker |  | 6401 | 16 | sdk/README.md section #13 |  |  | 0.492 |
+| walker |  | 6420 | 19 | go decl doc at internal/hooks/config.go:97 |  |  | 0.492 |
+| walker |  | 6450 | 30 | go decl body at internal/tokens/counter.go:21 |  |  | 0.492 |
+| walker |  | 6491 | 41 | go decl doc at internal/hooks/events.go:23 |  |  | 0.492 |
+| ns | 6550 |  | 393 | internal/config/merger.go: MergeConfigs + LoadAndValidateConfig | 5.8 |  | 0.475 |
+| walker |  | 6580 | 89 | go decl at internal/hooks/schemas.go:62 |  |  | 0.475 |
+| walker |  | 6611 | 31 | go decl body at internal/auth/browser.go:34 |  |  | 0.475 |
+| walker |  | 6667 | 56 | go decl doc at internal/hooks/config.go:30 |  |  | 0.475 |
+| ns | 6682 |  | 132 | contribute/conf/demo.yml (legacy sample config) | 5.9 |  | 0.468 |
+| walker |  | 6714 | 47 | go decl doc at internal/config/merger.go:28 |  |  | 0.470 |
+| walker |  | 6740 | 26 | listing of 'internal/tools' |  |  | 0.487 |
+| walker |  | 6843 | 103 | README.md section #29 |  |  | 0.487 |
+| walker |  | 6981 | 138 | go decl names surface in internal/ui/styles.go |  |  | 0.487 |
+| walker |  | 6981 | 0 | go decl at internal/ui/styles.go:14 |  |  | 0.487 |
+| walker |  | 6981 | 0 | go decl at internal/ui/styles.go:21 |  |  | 0.487 |
+| walker |  | 6981 | 0 | go decl at internal/ui/styles.go:28 |  |  | 0.487 |
+| walker |  | 6981 | 0 | go decl at internal/ui/styles.go:37 |  |  | 0.487 |
+| walker |  | 6981 | 0 | go decl at internal/ui/styles.go:359 |  |  | 0.487 |
+| walker |  | 6992 | 11 | go decl body at internal/ui/styles.go:21 |  |  | 0.487 |
+| walker |  | 7001 | 9 | go decl doc at internal/ui/styles.go:14 |  |  | 0.487 |
+| walker |  | 7014 | 13 | go decl doc at internal/ui/styles.go:359 |  |  | 0.487 |
+| walker |  | 7032 | 18 | go decl doc at internal/ui/styles.go:37 |  |  | 0.487 |
+| ns | 7048 |  | 366 | internal/agent/agent.go: Agent + AgentConfig structs | 6.1 |  | 0.474 |
+| walker |  | 7079 | 47 | go decl doc at internal/ui/styles.go:21 |  |  | 0.474 |
+| walker |  | 7139 | 60 | go decl doc at internal/hooks/config.go:21 |  |  | 0.474 |
+| ns | 7166 |  | 118 | Agent loop + tool-manager entry-point locations | 6.2 | 6.1 | 0.472 |
+| walker |  | 7281 | 142 | go decl names surface in internal/builtin/bash.go |  |  | 0.472 |
+| walker |  | 7281 | 0 | go decl at internal/builtin/bash.go:44 |  |  | 0.472 |
+| walker |  | 7281 | 0 | go decl at internal/builtin/bash.go:71 |  |  | 0.472 |
+| walker |  | 7290 | 9 | go decl at internal/builtin/bash.go:14 |  |  | 0.472 |
+| walker |  | 7306 | 16 | go decl doc at internal/builtin/bash.go:71 |  |  | 0.472 |
+| walker |  | 7367 | 61 | go decl doc at internal/hooks/schemas.go:32 |  |  | 0.472 |
+| walker |  | 7385 | 18 | sdk/README.md section #7 |  |  | 0.472 |
+| walker |  | 7403 | 18 | sdk/README.md section #8 |  |  | 0.472 |
+| ns | 7451 |  | 285 | internal/tools/mcp.go: tool name prefixing (serverName__toolName) | 6.3 |  | 0.462 |
+| walker |  | 7455 | 52 | go decl doc at internal/config/merger.go:13 |  |  | 0.462 |
+| walker |  | 7602 | 147 | go decl names surface in internal/hooks/validator.go |  |  | 0.462 |
+| walker |  | 7602 | 0 | go decl at internal/hooks/validator.go:17 |  |  | 0.462 |
+| walker |  | 7602 | 0 | go decl at internal/hooks/validator.go:44 |  |  | 0.462 |
+| walker |  | 7602 | 0 | go decl at internal/hooks/validator.go:75 |  |  | 0.462 |
+| walker |  | 7602 | 0 | go decl at internal/hooks/validator.go:110 |  |  | 0.462 |
+| walker |  | 7613 | 11 | go decl at internal/hooks/validator.go:10 |  |  | 0.462 |
+| walker |  | 7627 | 14 | go decl doc at internal/hooks/validator.go:17 |  |  | 0.462 |
+| walker |  | 7641 | 14 | go decl doc at internal/hooks/validator.go:110 |  |  | 0.462 |
+| walker |  | 7657 | 16 | go decl doc at internal/hooks/validator.go:44 |  |  | 0.462 |
+| walker |  | 7670 | 13 | go decl doc at internal/hooks/validator.go:10 |  |  | 0.462 |
+| walker |  | 7733 | 63 | go decl doc at internal/ui/debug_logger.go:13 |  |  | 0.462 |
+| ns | 7800 |  | 349 | internal/tools/connection_pool.go: pool config + defaults | 6.4 |  | 0.452 |
+| walker |  | 7829 | 96 | sdk/README.md section #16 |  |  | 0.452 |
+| walker |  | 7883 | 54 | go decl doc at internal/ui/styles.go:28 |  |  | 0.452 |
+| walker |  | 7938 | 55 | go decl doc at internal/ui/commands.go:65 |  |  | 0.452 |
+| walker |  | 7993 | 55 | go decl doc at internal/ui/debug_logger.go:20 |  |  | 0.452 |
+| ns | 8112 |  | 312 | Likely-dead duplicate: MCPToolManager.createMCPClient vs MCPConnectionPool.createMCPClient | 6.5 | 6.4 | 0.444 |
+| ns | 8253 |  | 141 | internal/builtin/registry.go: the 5 registered builtin server names | 7.1 |  | 0.438 |
+| walker |  | 8273 | 280 | go decl names surface in cmd/script.go |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:78 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:84 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:148 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:208 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:255 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:279 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:288 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:431 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:442 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:480 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:499 |  |  | 0.438 |
+| walker |  | 8273 | 0 | go decl at cmd/script.go:511 |  |  | 0.438 |
+| ns | 8291 |  | 38 | Two different builtin tools both named "fetch" | 7.2 | 7.1 | 0.438 |
+| walker |  | 8338 | 65 | go decl at cmd/script.go:423 |  |  | 0.438 |
+| walker |  | 8349 | 11 | go decl body at cmd/script.go:78 |  |  | 0.438 |
+| walker |  | 8365 | 16 | go decl doc at cmd/script.go:148 |  |  | 0.438 |
+| walker |  | 8381 | 16 | go decl doc at cmd/script.go:279 |  |  | 0.438 |
+| walker |  | 8399 | 18 | go decl doc at cmd/script.go:511 |  |  | 0.438 |
+| walker |  | 8452 | 53 | go decl doc at cmd/script.go:423 |  |  | 0.438 |
+| ns | 8457 |  | 166 | internal/builtin/bash.go: banned command prefixes | 7.3 |  | 0.431 |
+| walker |  | 8471 | 19 | go decl doc at cmd/script.go:288 |  |  | 0.431 |
+| walker |  | 8491 | 20 | go decl doc at cmd/script.go:255 |  |  | 0.431 |
+| walker |  | 8522 | 31 | go decl doc at cmd/script.go:480 |  |  | 0.431 |
+| walker |  | 8555 | 33 | go decl doc at cmd/script.go:431 |  |  | 0.431 |
+| ns | 8560 |  | 103 | internal/builtin/todo.go + http.go: remaining tool-name locations | 7.4 | 7.2 | 0.429 |
+| walker |  | 8591 | 36 | go decl doc at cmd/script.go:442 |  |  | 0.429 |
+| walker |  | 8632 | 41 | go package + imports in internal/ui/block_renderer.go |  |  | 0.429 |
+| walker |  | 8656 | 24 | go decl doc at internal/config/merger.go:48 |  |  | 0.429 |
+| ns | 8664 |  | 104 | internal/models/providers.go: CreateProvider's actual provider roster | 8.1 |  | 0.426 |
+| walker |  | 8713 | 57 | go decl doc at internal/ui/fuzzy.go:18 |  |  | 0.426 |
+| walker |  | 8757 | 44 | go decl doc at cmd/script.go:499 |  |  | 0.426 |
+| walker |  | 8799 | 42 | go package + imports in internal/ui/debug_logger.go |  |  | 0.426 |
+| walker |  | 8802 | 3 | listing of '.github' |  |  | 0.426 |
+| walker |  | 8810 | 8 | listing of '.github/workflows' |  |  | 0.435 |
+| ns | 8889 |  | 225 | internal/hooks/events.go: the actual 4 hook events (vs README's 6) | 9.1 |  | 0.437 |
+| walker |  | 8964 | 154 | YAML config at .github/workflows/ci.yml |  |  | 0.437 |
+| ns | 9094 |  | 205 | internal/hooks/executor.go: blocking via exit code 2 | 9.2 | 9.1 | 0.431 |
+| walker |  | 9126 | 162 | go decl names surface in internal/ui/spinner.go |  |  | 0.431 |
+| walker |  | 9126 | 0 | go decl at internal/ui/spinner.go:31 |  |  | 0.431 |
+| walker |  | 9126 | 0 | go decl at internal/ui/spinner.go:35 |  |  | 0.431 |
+| walker |  | 9126 | 0 | go decl at internal/ui/spinner.go:52 |  |  | 0.431 |
+| walker |  | 9126 | 0 | go decl at internal/ui/spinner.go:75 |  |  | 0.431 |
+| walker |  | 9126 | 0 | go decl at internal/ui/spinner.go:80 |  |  | 0.431 |
+| walker |  | 9126 | 0 | go decl at internal/ui/spinner.go:107 |  |  | 0.431 |
+| walker |  | 9126 | 0 | go decl at internal/ui/spinner.go:133 |  |  | 0.431 |
+| walker |  | 9126 | 0 | go decl at internal/ui/spinner.go:149 |  |  | 0.431 |
+| walker |  | 9142 | 16 | go decl body at internal/ui/spinner.go:149 |  |  | 0.431 |
+| ns | 9189 |  | 95 | internal/ui/commands.go: the real slash-command registry (vs README's /history claim) | 10.1 |  | 0.429 |
+| walker |  | 9194 | 52 | go decl at internal/ui/spinner.go:16 |  |  | 0.429 |
+| walker |  | 9203 | 9 | go decl body at internal/ui/spinner.go:31 |  |  | 0.429 |
+| walker |  | 9220 | 17 | go decl doc at internal/ui/spinner.go:75 |  |  | 0.429 |
+| walker |  | 9250 | 30 | go decl at internal/ui/spinner.go:25 |  |  | 0.429 |
+| walker |  | 9263 | 13 | go decl doc at internal/ui/spinner.go:25 |  |  | 0.429 |
+| ns | 9268 |  | 79 | internal/auth/credentials.go: API key precedence order | 11.1 |  | 0.427 |
+| walker |  | 9301 | 38 | go decl doc at internal/ui/spinner.go:149 |  |  | 0.427 |
+| walker |  | 9353 | 52 | go decl doc at internal/ui/spinner.go:16 |  |  | 0.427 |
+| walker |  | 9406 | 53 | go decl doc at internal/ui/spinner.go:107 |  |  | 0.427 |
+| walker |  | 9462 | 56 | go decl doc at internal/ui/spinner.go:80 |  |  | 0.427 |
+| walker |  | 9520 | 58 | go decl doc at internal/ui/commands.go:83 |  |  | 0.427 |
+| walker |  | 9563 | 43 | go package + imports in internal/hooks/validator.go |  |  | 0.427 |
+| ns | 9646 |  | 378 | internal/session/session.go: Session/Message struct fields | 12.1 |  | 0.419 |
+| walker |  | 9670 | 107 | go decl at internal/hooks/schemas.go:50 |  |  | 0.419 |
+| ns | 9700 |  | 54 | sdk/mcphost.go: New + Prompt entry points | 12.2 | 12.1 | 0.421 |
+| walker |  | 9725 | 55 | go decl doc at internal/hooks/schemas.go:50 |  |  | 0.421 |
+| walker |  | 9784 | 59 | go decl doc at internal/agent/factory.go:43 |  |  | 0.421 |
+| walker |  | 9838 | 54 | go decl doc at internal/ui/debug_logger.go:84 |  |  | 0.421 |
+| walker |  | 9909 | 71 | go decl doc at internal/hooks/schemas.go:62 |  |  | 0.421 |
+| walker |  | 9929 | 20 | sdk/README.md section #9 |  |  | 0.421 |
+| ns | 9967 |  | 267 | cmd/script.go: substitution order (env vars, then script args) | 13.1 |  | 0.416 |
+| walker |  | 9989 | 60 | go decl doc at internal/auth/browser.go:34 |  |  | 0.416 |

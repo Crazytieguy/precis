@@ -18,9 +18,11 @@
 //!   directive lines. Predecessor of the whole-file `GoMod` batch so
 //!   the cheap lede can land first at small budgets.
 //! - `GoMod { file }`: line-set batch for `go.mod` / `go.work`.
-//!   Retains direct and indirect `require` rows plus `replace` /
-//!   `exclude` / `retract` / `use` directives. Predecessor: matching
-//!   `GoModIdentity` (identity lines are an ancestor subset).
+//!   Small module files are kept whole. Large files retain identity
+//!   directives, direct `require` rows, and `replace` / `exclude` /
+//!   `retract` / `use` directives, with indirect-only tails elided.
+//!   Predecessor: matching `GoModIdentity` (identity lines are an
+//!   ancestor subset).
 //!
 //! Per-decl keys (keyed by start line):
 //! - `Decl { file, start_line }`: one top-level declaration's
@@ -61,6 +63,7 @@ use super::{
 
 const VISIBILITY_FACTOR_EXPORTED: f64 = 1.0;
 const VISIBILITY_FACTOR_UNEXPORTED: f64 = 0.6;
+const GOMOD_WHOLE_LINE_CAP: usize = 72;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
@@ -145,34 +148,116 @@ fn build_gomod_identity_content(file: &Path, ctx: &WalkCtx) -> Option<BatchConte
     single_file_lines_content(file, &source, FileLines::new(lines))
 }
 
-/// `GoMod` content — direct and indirect dependency closure plus other
-/// module directives.
+/// `GoMod` content — whole for compact module files; sampled for large
+/// generated dependency closures.
 fn build_gomod_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let total_lines = source.lines().count();
     if total_lines == 0 {
         return None;
     }
-
-    let mut lines = Vec::with_capacity(total_lines);
-    let mut in_require_block = false;
-    for (i, raw) in source.lines().enumerate() {
-        let trimmed = raw.trim();
-        let line_no = i + 1;
-        if !in_require_block && trimmed.starts_with("require") && trimmed.ends_with('(') {
-            in_require_block = true;
-            lines.push(line_no);
-            continue;
-        }
-        if in_require_block && trimmed == ")" {
-            in_require_block = false;
-            lines.push(line_no);
-            continue;
-        }
-        lines.push(line_no);
+    if total_lines <= GOMOD_WHOLE_LINE_CAP {
+        return single_file_lines_content(
+            file,
+            &source,
+            FileLines::new((1..=total_lines).collect()),
+        );
     }
 
-    single_file_lines_content(file, &source, FileLines::new(lines))
+    single_file_lines_content(file, &source, bounded_gomod_lines(&source))
+}
+
+fn bounded_gomod_lines(source: &str) -> FileLines {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let mut full = Vec::new();
+    let mut i = 0;
+    while i < src_lines.len() {
+        let line_no = i + 1;
+        let trimmed = src_lines[i].trim();
+        if let Some(block) = gomod_block_start(trimmed) {
+            let start_line = line_no;
+            let mut body = Vec::new();
+            i += 1;
+            while i < src_lines.len() && src_lines[i].trim() != ")" {
+                if keep_gomod_block_entry(block, src_lines[i].trim()) {
+                    body.push(i + 1);
+                }
+                i += 1;
+            }
+            let close_line = (i < src_lines.len() && src_lines[i].trim() == ")").then_some(i + 1);
+            if !body.is_empty() {
+                full.push(start_line);
+                full.extend(body);
+                if let Some(close_line) = close_line {
+                    full.push(close_line);
+                }
+            }
+            if close_line.is_some() {
+                i += 1;
+            }
+            continue;
+        }
+        if keep_gomod_directive_line(trimmed) {
+            full.push(line_no);
+        }
+        i += 1;
+    }
+    full.sort_unstable();
+    full.dedup();
+    let ellipses = gomod_ellipses_for_gaps(&full, &src_lines);
+    FileLines::new(full).with_ellipses(ellipses)
+}
+
+fn gomod_ellipses_for_gaps(full: &[usize], src_lines: &[&str]) -> Vec<usize> {
+    if full.is_empty() {
+        return Vec::new();
+    }
+    let mut boundaries = full.to_vec();
+    boundaries.push(src_lines.len() + 1);
+    let mut ellipses = Vec::new();
+    for pair in boundaries.windows(2) {
+        let omitted_start = pair[0] + 1;
+        let omitted_end = pair[1].saturating_sub(1);
+        if omitted_start > omitted_end {
+            continue;
+        }
+        let has_substantive_omission = (omitted_start..=omitted_end).any(|line_no| {
+            src_lines
+                .get(line_no - 1)
+                .is_some_and(|line| is_substantive_gomod_line(line.trim()))
+        });
+        if has_substantive_omission {
+            ellipses.push(omitted_start);
+        }
+    }
+    ellipses
+}
+
+fn is_substantive_gomod_line(trimmed: &str) -> bool {
+    !trimmed.is_empty() && !trimmed.starts_with("//") && trimmed != ")"
+}
+
+fn gomod_block_start(trimmed: &str) -> Option<&str> {
+    let (first, rest) = trimmed.split_once(char::is_whitespace)?;
+    (rest.trim() == "(" && matches!(first, "require" | "replace" | "exclude" | "retract" | "use"))
+        .then_some(first)
+}
+
+fn keep_gomod_directive_line(trimmed: &str) -> bool {
+    let Some(first) = trimmed.split_whitespace().next() else {
+        return false;
+    };
+    matches!(
+        first,
+        "module" | "go" | "toolchain" | "replace" | "exclude" | "retract" | "use"
+    ) || (first == "require" && !trimmed.contains("// indirect"))
+}
+
+fn keep_gomod_block_entry(block: &str, trimmed: &str) -> bool {
+    if trimmed.is_empty() || trimmed.starts_with("//") {
+        return false;
+    }
+    block != "require" || !trimmed.contains("// indirect")
 }
 
 fn expand_test_files(test_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -1036,6 +1121,7 @@ fn collect_decl_body(info: &DeclInfo, src_lines: &[&str]) -> FileLines {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::content::Render;
     use crate::scheduler::Scheduler;
     use crate::walker::FsWalker;
 
@@ -1049,6 +1135,13 @@ mod tests {
     }
 
     fn gomod_lines(src: &str) -> Vec<usize> {
+        gomod_rendered_lines(src)
+            .into_iter()
+            .map(|(line, _)| line)
+            .collect()
+    }
+
+    fn gomod_rendered_lines(src: &str) -> Vec<(usize, Render)> {
         let dir = tempfile::tempdir().unwrap();
         let path = dir.path().join("go.mod");
         std::fs::write(&path, src).unwrap();
@@ -1059,7 +1152,7 @@ mod tests {
         };
         spans
             .iter()
-            .flat_map(|span| span.start..=span.end)
+            .flat_map(|span| (span.start..=span.end).map(|line| (line, span.render.clone())))
             .collect()
     }
 
@@ -1351,6 +1444,59 @@ replace github.com/x/y => github.com/forked/y v2.0.0
         let src = "module example.com/foo\n\ngo 1.22\n";
         let lines = gomod_lines(src);
         assert!(!lines.is_empty());
+    }
+
+    #[test]
+    fn go_mod_over_cap_elides_indirect_require_tail() {
+        let mut src = String::from(
+            "\
+module example.com/foo
+
+go 1.22
+
+require (
+\tgithub.com/direct/a v1.0.0
+",
+        );
+        let first_indirect_line = src.lines().count() + 1;
+        for i in 0..65 {
+            src.push_str(&format!("\tgithub.com/indirect/{i} v0.0.1 // indirect\n"));
+        }
+        let close_line = src.lines().count() + 1;
+        src.push_str(")\n\n");
+        let replace_line = src.lines().count() + 1;
+        src.push_str("replace github.com/direct/a => ../a\n\n");
+        let exclude_line = src.lines().count() + 1;
+        src.push_str("exclude github.com/bad/module v1.0.0\n");
+
+        let rendered = gomod_rendered_lines(&src);
+        assert!(rendered.contains(&(1, Render::Full)), "module kept");
+        assert!(rendered.contains(&(3, Render::Full)), "go directive kept");
+        assert!(
+            rendered.contains(&(5, Render::Full)),
+            "require block opener kept"
+        );
+        assert!(rendered.contains(&(6, Render::Full)), "direct require kept");
+        assert!(
+            rendered.contains(&(close_line, Render::Full)),
+            "require block closer kept"
+        );
+        assert!(
+            rendered.contains(&(replace_line, Render::Full)),
+            "replace directive kept"
+        );
+        assert!(
+            rendered.contains(&(exclude_line, Render::Full)),
+            "exclude directive kept"
+        );
+        assert!(
+            !rendered.contains(&(first_indirect_line, Render::Full)),
+            "indirect require must not render in full"
+        );
+        assert!(
+            rendered.contains(&(first_indirect_line, Render::Ellipsis)),
+            "indirect require tail should be represented by one ellipsis"
+        );
     }
 
     #[test]
