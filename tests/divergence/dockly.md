@@ -180,10 +180,10 @@ Score(3000)=0.434 I=0.700 C=0.270 ns_rows≤3K=19/43 (reached=4 partial=1 missin
 | walker |  | 5761 | 109 | package entrypoints in package.json |  |  | 0.521 |
 | walker |  | 5791 | 30 | package runtime metadata in package.json |  |  | 0.534 |
 | walker |  | 5911 | 120 | package scripts in package.json |  |  | 0.551 |
-| walker |  | 5916 | 5 | listing of '.devcontainer' |  |  | 0.552 |
-| walker |  | 5937 | 21 | export member at src/widgetsTemplates/list.widget.template.js:8 member 9 |  |  | 0.552 |
-| ns | 6068 |  | 415 | assetsLoader.js (full) | 4.8 |  | 0.530 |
-| walker |  | 6161 | 224 | package dependencies in package.json |  |  | 0.556 |
+| ns | 6068 |  | 415 | assetsLoader.js (full) | 4.8 |  | 0.529 |
+| walker |  | 6135 | 224 | package dependencies in package.json |  |  | 0.555 |
+| walker |  | 6140 | 5 | listing of '.devcontainer' |  |  | 0.556 |
+| walker |  | 6161 | 21 | export member at src/widgetsTemplates/list.widget.template.js:8 member 9 |  |  | 0.556 |
 | walker |  | 6270 | 109 | imports in src/screen.js |  |  | 0.562 |
 | walker |  | 6361 | 91 | export at src/enum.js:1 |  |  | 0.563 |
 | walker |  | 6410 | 49 | export body at src/widgetsTemplates/list.widget.template.js:8 body 120 |  |  | 0.563 |

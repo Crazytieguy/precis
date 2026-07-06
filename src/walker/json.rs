@@ -103,13 +103,8 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     } else {
         1.0
     };
-    // App-style manifests get a Scripts/Dependencies boost — see
-    // `is_app_package_json` for the predicate.
-    let app_factor = if is_app_package_json(&pairs) {
-        APP_SCRIPTS_DEPS_FACTOR
-    } else {
-        1.0
-    };
+    let manifest_role = package_json_role(&tree, &source, &pairs);
+    let scripts_deps_factor = manifest_role.scripts_deps_factor();
     let mut prev: Option<BatchKey> = None;
     let mut push = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
         let Some(content) = section_content(file, &source, &pairs, name_match) else {
@@ -147,36 +142,67 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     );
     push(
         JsonKey::Scripts { file: f.clone() },
-        scripts_value(file, ctx) * app_factor,
+        scripts_value(file, ctx) * scripts_deps_factor,
         is_scripts_key,
     );
     push(
         JsonKey::Dependencies { file: f },
-        dependencies_value(file, ctx) * app_factor,
+        dependencies_value(file, ctx) * scripts_deps_factor,
         is_dependencies_key,
     );
 }
 
-/// Boost factor for `scripts` / `dependencies` on app-style
-/// `package.json`s (see [`is_app_package_json`]).
+/// Boost factor for `scripts` / `dependencies` on operational or
+/// implicit-entry `package.json`s (see [`PackageJsonRole`]).
 const APP_SCRIPTS_DEPS_FACTOR: f64 = 1.3;
 
-/// True for application-shaped `package.json` (not library): either
-/// `"private": true`, or `"bin"` without a `"files"` allowlist.
-fn is_app_package_json(pairs: &[(String, usize, usize, bool)]) -> bool {
-    // Match the legacy byte-scanner: only the FIRST top-level `"private"` (in
-    // source/traversal order) decides, so a duplicate-key manifest behaves the
-    // same as before this was folded into the parsed pairs.
-    if pairs
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum PackageJsonRole {
+    MonorepoRoot,
+    AppOrCli,
+    Library,
+    ImplicitEntryPackage,
+}
+
+impl PackageJsonRole {
+    fn scripts_deps_factor(self) -> f64 {
+        match self {
+            PackageJsonRole::MonorepoRoot
+            | PackageJsonRole::AppOrCli
+            | PackageJsonRole::ImplicitEntryPackage => APP_SCRIPTS_DEPS_FACTOR,
+            PackageJsonRole::Library => 1.0,
+        }
+    }
+}
+
+/// Classify a manifest by its own top-level content so app/CLI
+/// manifests can price run/dependency surfaces without promoting
+/// publishable library manifests wholesale.
+fn package_json_role(
+    _tree: &Tree,
+    _source: &str,
+    pairs: &[(String, usize, usize, bool)],
+) -> PackageJsonRole {
+    let private_true = pairs
         .iter()
         .find(|(name, _, _, _)| name == "private")
-        .is_some_and(|(_, _, _, value_is_true)| *value_is_true)
-    {
-        return true;
-    }
+        .is_some_and(|(_, _, _, value_is_true)| *value_is_true);
     let has_bin = pairs.iter().any(|(name, _, _, _)| name == "bin");
-    let has_files = pairs.iter().any(|(name, _, _, _)| name == "files");
-    has_bin && !has_files
+    let has_workspaces = pairs.iter().any(|(name, _, _, _)| name == "workspaces");
+    let has_entry_metadata = pairs
+        .iter()
+        .any(|(name, _, _, _)| matches!(name.as_str(), "main" | "exports" | "types" | "typings"));
+
+    if private_true && has_workspaces {
+        return PackageJsonRole::MonorepoRoot;
+    }
+    if has_bin || private_true {
+        return PackageJsonRole::AppOrCli;
+    }
+    if has_entry_metadata && !has_bin {
+        return PackageJsonRole::Library;
+    }
+    PackageJsonRole::ImplicitEntryPackage
 }
 
 /// True iff the manifest's top-level `"name"` ends with `suffix`.

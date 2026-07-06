@@ -1,4 +1,4 @@
-Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missing=9)
+Score(3000)=0.780 I=0.920 C=0.662 ns_rows≤3K=23/51 (reached=14 partial=2 missing=7)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -68,37 +68,37 @@ Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missi
 | walker |  | 2341 | 0 | export at src/service.ts:13 |  |  | 0.611 |
 | walker |  | 2364 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.611 |
 | ns | 2389 |  | 197 | README heading locations | 3.1 |  | 0.642 |
-| walker |  | 2466 | 102 | json config schema.json |  |  | 0.674 |
-| walker |  | 2527 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.674 |
-| walker |  | 2540 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.674 |
-| walker |  | 2589 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.674 |
-| ns | 2608 |  | 219 | README: title, v1-beta warning, Install, Usage lede | 3.2 | 3.1 | 0.680 |
-| ns | 2664 |  | 56 | README: starting the server + --help pointer | 3.3 |  | 0.671 |
-| walker |  | 2764 | 175 | README.md section #20 |  |  | 0.672 |
-| ns | 2809 |  | 145 | README: Query Capabilities quick reference | 3.4 | 3.1 | 0.685 |
-| walker |  | 2819 | 55 | README.md section #12 |  |  | 0.686 |
-| walker |  | 2827 | 8 | listing of '.github' |  |  | 0.686 |
-| walker |  | 2836 | 9 | listing of '.github/workflows' |  |  | 0.686 |
-| ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.705 |
-| walker |  | 3032 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.751 |
-| walker |  | 3046 | 14 | imports in src/adapters/observer.ts |  |  | 0.751 |
-| walker |  | 3163 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.751 |
-| walker |  | 3172 | 9 | listing of 'fixtures' |  |  | 0.751 |
-| ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.714 |
-| walker |  | 3326 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.715 |
-| ns | 3330 |  | 55 | README: Sort | 3.7 | 3.1 | 0.720 |
-| walker |  | 3412 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.721 |
-| walker |  | 3483 | 71 | README.md section #17 |  |  | 0.723 |
-| ns | 3578 |  | 248 | README: Pagination | 3.8 | 3.1 | 0.700 |
-| ns | 3618 |  | 40 | README: Embed | 3.9 | 3.1 | 0.704 |
-| ns | 3689 |  | 71 | README: Complex filter with _where | 3.10 | 3.1 | 0.708 |
-| ns | 3719 |  | 30 | README: Delete dependents | 3.11 | 3.1 | 0.711 |
-| ns | 3836 |  | 117 | README: Static Files | 3.12 | 3.1 | 0.717 |
-| walker |  | 3838 | 355 | export at src/service.ts:81 |  |  | 0.719 |
-| ns | 4011 |  | 175 | README: Migration Notes (v0 -> v1) | 3.13 | 3.1 | 0.723 |
-| ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.720 |
-| ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.716 |
-| walker |  | 4225 | 387 | package dependencies in package.json |  |  | 0.777 |
+| ns | 2608 |  | 219 | README: title, v1-beta warning, Install, Usage lede | 3.2 | 3.1 | 0.650 |
+| ns | 2664 |  | 56 | README: starting the server + --help pointer | 3.3 |  | 0.642 |
+| walker |  | 2751 | 387 | package dependencies in package.json |  |  | 0.732 |
+| ns | 2809 |  | 145 | README: Query Capabilities quick reference | 3.4 | 3.1 | 0.742 |
+| walker |  | 2853 | 102 | json config schema.json |  |  | 0.767 |
+| walker |  | 2914 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.767 |
+| walker |  | 2927 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.767 |
+| walker |  | 2976 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.768 |
+| ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.780 |
+| walker |  | 3151 | 175 | README.md section #20 |  |  | 0.782 |
+| walker |  | 3206 | 55 | README.md section #12 |  |  | 0.783 |
+| walker |  | 3214 | 8 | listing of '.github' |  |  | 0.783 |
+| walker |  | 3223 | 9 | listing of '.github/workflows' |  |  | 0.783 |
+| ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.745 |
+| ns | 3330 |  | 55 | README: Sort | 3.7 | 3.1 | 0.748 |
+| walker |  | 3419 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.790 |
+| walker |  | 3433 | 14 | imports in src/adapters/observer.ts |  |  | 0.790 |
+| walker |  | 3550 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.790 |
+| walker |  | 3559 | 9 | listing of 'fixtures' |  |  | 0.790 |
+| ns | 3578 |  | 248 | README: Pagination | 3.8 | 3.1 | 0.764 |
+| ns | 3618 |  | 40 | README: Embed | 3.9 | 3.1 | 0.767 |
+| ns | 3689 |  | 71 | README: Complex filter with _where | 3.10 | 3.1 | 0.759 |
+| walker |  | 3713 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.760 |
+| ns | 3719 |  | 30 | README: Delete dependents | 3.11 | 3.1 | 0.763 |
+| walker |  | 3799 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.764 |
+| ns | 3836 |  | 117 | README: Static Files | 3.12 | 3.1 | 0.769 |
+| walker |  | 3870 | 71 | README.md section #17 |  |  | 0.780 |
+| ns | 4011 |  | 175 | README: Migration Notes (v0 -> v1) | 3.13 | 3.1 | 0.784 |
+| ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.780 |
+| ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.775 |
+| walker |  | 4225 | 355 | export at src/service.ts:81 |  |  | 0.777 |
 | walker |  | 4267 | 42 | imports in src/matches-where.ts |  |  | 0.777 |
 | ns | 4349 |  | 250 | service.ts: exported types + Service class member signatures | 4.3 |  | 0.768 |
 | walker |  | 4373 | 106 | README.md section #4 |  |  | 0.768 |

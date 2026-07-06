@@ -43,23 +43,23 @@ Score(3000)=0.611 I=0.720 C=0.518 ns_rows≤3K=29/43 (reached=14 partial=2 missi
 | ns | 1298 |  | 61 | classes/comparator.js method roster | 2.3 |  | 0.514 |
 | ns | 1353 |  | 55 | bin/semver.js function roster | 2.4 |  | 0.509 |
 | walker |  | 1396 | 380 | export at index.js:45 |  |  | 0.509 |
-| walker |  | 1429 | 33 | listing of 'test' |  |  | 0.545 |
-| walker |  | 1446 | 17 | listing of 'test/classes' |  |  | 0.559 |
-| walker |  | 1484 | 38 | listing of 'benchmarks' |  |  | 0.580 |
-| walker |  | 1505 | 21 | README.md section #21 |  |  | 0.580 |
-| ns | 1516 |  | 163 | internal/re.js token roster (12 most-referenced tokens) | 2.5 |  | 0.562 |
-| walker |  | 1526 | 21 | README.md section #22 |  |  | 0.562 |
-| walker |  | 1547 | 21 | README.md section #23 |  |  | 0.562 |
-| walker |  | 1568 | 21 | README.md section #24 |  |  | 0.562 |
-| walker |  | 1590 | 22 | README.md section #35 |  |  | 0.562 |
-| walker |  | 1612 | 22 | README.md section #52 |  |  | 0.562 |
-| walker |  | 1637 | 25 | README.md section #13 |  |  | 0.562 |
-| walker |  | 1661 | 24 | README.md section #43 |  |  | 0.562 |
-| walker |  | 1685 | 24 | README.md section #48 |  |  | 0.562 |
-| walker |  | 1714 | 29 | README.md section #14 |  |  | 0.562 |
-| walker |  | 1737 | 23 | README.md section #34 |  |  | 0.562 |
-| walker |  | 1764 | 27 | listing of 'test/internal' |  |  | 0.581 |
-| walker |  | 1846 | 82 | package dependencies in package.json |  |  | 0.581 |
+| walker |  | 1478 | 82 | package dependencies in package.json |  |  | 0.509 |
+| walker |  | 1511 | 33 | listing of 'test' |  |  | 0.545 |
+| ns | 1516 |  | 163 | internal/re.js token roster (12 most-referenced tokens) | 2.5 |  | 0.528 |
+| walker |  | 1528 | 17 | listing of 'test/classes' |  |  | 0.542 |
+| walker |  | 1566 | 38 | listing of 'benchmarks' |  |  | 0.563 |
+| walker |  | 1587 | 21 | README.md section #21 |  |  | 0.563 |
+| walker |  | 1608 | 21 | README.md section #22 |  |  | 0.563 |
+| walker |  | 1629 | 21 | README.md section #23 |  |  | 0.563 |
+| walker |  | 1650 | 21 | README.md section #24 |  |  | 0.563 |
+| walker |  | 1672 | 22 | README.md section #35 |  |  | 0.563 |
+| walker |  | 1694 | 22 | README.md section #52 |  |  | 0.563 |
+| walker |  | 1719 | 25 | README.md section #13 |  |  | 0.563 |
+| walker |  | 1743 | 24 | README.md section #43 |  |  | 0.563 |
+| walker |  | 1767 | 24 | README.md section #48 |  |  | 0.563 |
+| walker |  | 1796 | 29 | README.md section #14 |  |  | 0.563 |
+| walker |  | 1819 | 23 | README.md section #34 |  |  | 0.563 |
+| walker |  | 1846 | 27 | listing of 'test/internal' |  |  | 0.581 |
 | walker |  | 1875 | 29 | README.md section #26 |  |  | 0.581 |
 | walker |  | 1904 | 29 | README.md section #36 |  |  | 0.581 |
 | ns | 1907 |  | 391 | internal/constants.js | 2.6 |  | 0.534 |

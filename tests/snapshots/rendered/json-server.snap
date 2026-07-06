@@ -4,10 +4,6 @@ expression: rendered
 ---
 .gitattributes
 .github/
-    FUNDING.yml
-    workflows/
-        node.js.yml
-        publish.yml
 .gitignore
 .husky/
     pre-commit
@@ -81,12 +77,7 @@ README.md
      161→Use `field:operator=value`.
     …
      186→### Sort
-     187→
-     188→```http
-     189→GET /posts?_sort=title
-     190→GET /posts?_sort=-views
-     191→GET /posts?_sort=author.name,-views
-     192→```
+    …
      194→### Pagination
      196→```http
      197→GET /posts?_page=1&_per_page=25
@@ -121,15 +112,7 @@ README.md
      251→
      252→Static files are served with standard MIME types and can include HTML, CSS, JavaScript, images, and other assets.
      254→## Migration Notes (v0 → v1)
-     255→
-     256→If you are upgrading from json-server v0.x, note these behavioral changes:
-     257→
-     258→- **ID handling:** `id` is always a string and will be auto-generated if not provided
-     259→- **Pagination:** Use `_per_page` with `_page` instead of the deprecated `_limit` parameter
-     260→- **Relationships:** Use `_embed` instead of `_expand` for including related resources
-     261→- **Request delays:** Use browser DevTools (Network tab > throttling) instead of the removed `--delay` CLI option
-     262→
-     263→> **New to json-server?** These notes are for users migrating from v0. If this is your first time using json-server, you can ignore this section.
+    …
 fixtures/
 package.json
     …
@@ -177,7 +160,32 @@ package.json
       43→    "fmt:check": "oxfmt --check",
       44→    "prepare": "husky"
       45→  },
-    …
+      46→  "dependencies": {
+      47→    "@tinyhttp/app": "^3.0.1",
+      48→    "@tinyhttp/cors": "^2.0.1",
+      49→    "@tinyhttp/logger": "^2.1.0",
+      50→    "chalk": "^5.6.2",
+      51→    "chokidar": "^5.0.0",
+      52→    "dot-prop": "^10.1.0",
+      53→    "eta": "^4.5.0",
+      54→    "inflection": "^3.0.2",
+      55→    "json5": "^2.2.3",
+      56→    "lowdb": "^7.0.1",
+      57→    "milliparsec": "^5.1.0",
+      58→    "sirv": "^3.0.2",
+      59→    "sort-on": "^7.0.0"
+      60→  },
+      61→  "devDependencies": {
+      62→    "@types/node": "^25.0.8",
+      63→    "concurrently": "^9.2.1",
+      64→    "get-port": "^7.1.0",
+      65→    "husky": "^9.1.7",
+      66→    "oxfmt": "^0.24.0",
+      67→    "oxlint": "^1.39.0",
+      68→    "tempy": "^3.1.0",
+      69→    "type-fest": "^5.4.0",
+      70→    "typescript": "^5.9.3"
+      71→  },
       72→  "engines": {
       73→    "node": ">=22.12.0"
       74→  }

@@ -3517,10 +3517,28 @@ kind = "full"
 
 [[batches]]
 position = 151
+key = 'Json(Dependencies { file: "package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 224
+cum_tokens = 6135
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 68
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
 key = 'Fs(DirListing { dir: ".devcontainer" })'
 descriptor = "listing of '.devcontainer'"
 cost_tokens = 5
-cum_tokens = 5916
+cum_tokens = 6140
 
 [batches.content]
 kind = "fs"
@@ -3530,11 +3548,11 @@ parent = ".devcontainer"
 entries = ["devcontainer.json"]
 
 [[batches]]
-position = 152
+position = 153
 key = 'Typescript(ExportMember { file: "src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 9 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 9"
 cost_tokens = 21
-cum_tokens = 5937
+cum_tokens = 6161
 
 [batches.content]
 kind = "lines"
@@ -3554,24 +3572,6 @@ end = 10
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 153
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 224
-cum_tokens = 6161
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 68
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 154

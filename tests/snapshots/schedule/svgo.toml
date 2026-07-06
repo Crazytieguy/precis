@@ -2188,10 +2188,28 @@ entries = ["addAttributesToSVGElement.mdx", "addClassesToSVGElement.mdx", "clean
 
 [[batches]]
 position = 88
+key = 'Json(Dependencies { file: "package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 651
+cum_tokens = 5430
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 104
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
 key = 'Typescript(ExportBody { file: "lib/svgo/coa.js", start_line: 19, body_start_line: 20 })'
 descriptor = "export body at lib/svgo/coa.js:19 body 20"
 cost_tokens = 50
-cum_tokens = 4829
+cum_tokens = 5480
 
 [batches.content]
 kind = "lines"
@@ -2205,11 +2223,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Typescript(Imports { file: "lib/path.js" })'
 descriptor = "imports in lib/path.js"
 cost_tokens = 22
-cum_tokens = 4851
+cum_tokens = 5502
 
 [batches.content]
 kind = "lines"
@@ -2223,11 +2241,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Typescript(Imports { file: "lib/util/map-nodes-to-parents.js" })'
 descriptor = "imports in lib/util/map-nodes-to-parents.js"
 cost_tokens = 13
-cum_tokens = 4864
+cum_tokens = 5515
 
 [batches.content]
 kind = "lines"
@@ -2241,11 +2259,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Typescript(Imports { file: "lib/parser.js" })'
 descriptor = "imports in lib/parser.js"
 cost_tokens = 25
-cum_tokens = 4889
+cum_tokens = 5540
 
 [batches.content]
 kind = "lines"
@@ -2259,11 +2277,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Typescript(ExportDoc { file: "lib/svgo/coa.js", start_line: 30 })'
 descriptor = "export doc at lib/svgo/coa.js:30"
 cost_tokens = 27
-cum_tokens = 4916
+cum_tokens = 5567
 
 [batches.content]
 kind = "lines"
@@ -2277,11 +2295,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Typescript(Imports { file: "lib/svgo/plugins.js" })'
 descriptor = "imports in lib/svgo/plugins.js"
 cost_tokens = 15
-cum_tokens = 4931
+cum_tokens = 5582
 
 [batches.content]
 kind = "lines"
@@ -2295,11 +2313,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 195, body_start_line: 196 })'
 descriptor = "export body at lib/style.js:195 body 196"
 cost_tokens = 100
-cum_tokens = 5031
+cum_tokens = 5682
 
 [batches.content]
 kind = "lines"
@@ -2313,11 +2331,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 302 })'
 descriptor = "export doc at lib/path.js:302"
 cost_tokens = 36
-cum_tokens = 5067
+cum_tokens = 5718
 
 [batches.content]
 kind = "lines"
@@ -2331,11 +2349,11 @@ end = 301
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Typescript(Imports { file: "lib/xast.js" })'
 descriptor = "imports in lib/xast.js"
 cost_tokens = 38
-cum_tokens = 5105
+cum_tokens = 5756
 
 [batches.content]
 kind = "lines"
@@ -2349,11 +2367,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Typescript(Imports { file: "lib/svgo/tools.js" })'
 descriptor = "imports in lib/svgo/tools.js"
 cost_tokens = 21
-cum_tokens = 5126
+cum_tokens = 5777
 
 [batches.content]
 kind = "lines"
@@ -2367,11 +2385,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Typescript(ExportNames { file: "lib/types.ts", chunk_index: 0, export_count: 37, type_only_export_count: 37 })'
 descriptor = "export names surface in lib/types.ts"
 cost_tokens = 188
-cum_tokens = 5314
+cum_tokens = 5965
 
 [batches.content]
 kind = "lines"
@@ -2569,11 +2587,11 @@ end = 176
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 30 })'
 descriptor = "export at lib/types.ts:30"
 cost_tokens = 0
-cum_tokens = 5314
+cum_tokens = 5965
 
 [batches.content]
 kind = "lines"
@@ -2595,11 +2613,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 108 })'
 descriptor = "export at lib/types.ts:108"
 cost_tokens = 9
-cum_tokens = 5323
+cum_tokens = 5974
 
 [batches.content]
 kind = "lines"
@@ -2613,11 +2631,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 67 })'
 descriptor = "export at lib/types.ts:67"
 cost_tokens = 24
-cum_tokens = 5347
+cum_tokens = 5998
 
 [batches.content]
 kind = "lines"
@@ -2631,11 +2649,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Typescript(Export { file: "lib/types.ts", start_line: 175 })'
 descriptor = "export at lib/types.ts:175"
 cost_tokens = 24
-cum_tokens = 5371
+cum_tokens = 6022
 
 [batches.content]
 kind = "lines"
@@ -2649,11 +2667,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 141 })'
 descriptor = "export doc at lib/path.js:141"
 cost_tokens = 40
-cum_tokens = 5411
+cum_tokens = 6062
 
 [batches.content]
 kind = "lines"
@@ -2667,11 +2685,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Typescript(Imports { file: "lib/svgo/css-select-adapter.js" })'
 descriptor = "imports in lib/svgo/css-select-adapter.js"
 cost_tokens = 22
-cum_tokens = 5433
+cum_tokens = 6084
 
 [batches.content]
 kind = "lines"
@@ -2685,11 +2703,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
 descriptor = "README.md section #11"
 cost_tokens = 123
-cum_tokens = 5556
+cum_tokens = 6207
 
 [batches.content]
 kind = "lines"
@@ -2698,24 +2716,6 @@ kind = "lines"
 path = "README.md"
 start = 138
 end = 151
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 651
-cum_tokens = 6207
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 104
-end = 143
 
 [batches.content.spans.render]
 kind = "full"

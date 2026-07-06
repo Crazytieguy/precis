@@ -1299,10 +1299,28 @@ kind = "full"
 
 [[batches]]
 position = 48
+key = 'Json(Dependencies { file: "package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 387
+cum_tokens = 2751
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 46
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
 key = 'Json(Whole { file: "schema.json" })'
 descriptor = "json config schema.json"
 cost_tokens = 102
-cum_tokens = 2466
+cum_tokens = 2853
 
 [batches.content]
 kind = "lines"
@@ -1316,11 +1334,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Typescript(ExportNames { file: "src/adapters/normalized-adapter.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
 descriptor = "export names surface in src/adapters/normalized-adapter.ts"
 cost_tokens = 61
-cum_tokens = 2527
+cum_tokens = 2914
 
 [batches.content]
 kind = "lines"
@@ -1358,11 +1376,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Typescript(Export { file: "src/adapters/normalized-adapter.ts", start_line: 7 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:7"
 cost_tokens = 13
-cum_tokens = 2540
+cum_tokens = 2927
 
 [batches.content]
 kind = "lines"
@@ -1376,11 +1394,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Typescript(Export { file: "src/adapters/normalized-adapter.ts", start_line: 11 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:11"
 cost_tokens = 49
-cum_tokens = 2589
+cum_tokens = 2976
 
 [batches.content]
 kind = "lines"
@@ -1442,11 +1460,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false })'
 descriptor = "README.md section #20"
 cost_tokens = 175
-cum_tokens = 2764
+cum_tokens = 3151
 
 [batches.content]
 kind = "lines"
@@ -1460,11 +1478,11 @@ end = 263
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
 cost_tokens = 55
-cum_tokens = 2819
+cum_tokens = 3206
 
 [batches.content]
 kind = "lines"
@@ -1478,11 +1496,11 @@ end = 192
 kind = "full"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 2827
+cum_tokens = 3214
 
 [batches.content]
 kind = "fs"
@@ -1492,11 +1510,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
-position = 55
+position = 56
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 2836
+cum_tokens = 3223
 
 [batches.content]
 kind = "fs"
@@ -1506,11 +1524,11 @@ parent = ".github/workflows"
 entries = ["node.js.yml", "publish.yml"]
 
 [[batches]]
-position = 56
+position = 57
 key = 'Yaml(Whole { file: ".github/workflows/node.js.yml" })'
 descriptor = "YAML config at .github/workflows/node.js.yml"
 cost_tokens = 196
-cum_tokens = 3032
+cum_tokens = 3419
 
 [batches.content]
 kind = "lines"
@@ -1524,11 +1542,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Typescript(Imports { file: "src/adapters/observer.ts" })'
 descriptor = "imports in src/adapters/observer.ts"
 cost_tokens = 14
-cum_tokens = 3046
+cum_tokens = 3433
 
 [batches.content]
 kind = "lines"
@@ -1542,11 +1560,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Typescript(ExportBody { file: "src/parse-where.ts", start_line: 58, body_start_line: 59 })'
 descriptor = "export body at src/parse-where.ts:58 body 59"
 cost_tokens = 117
-cum_tokens = 3163
+cum_tokens = 3550
 
 [batches.content]
 kind = "lines"
@@ -1560,11 +1578,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Fs(DirListing { dir: "fixtures" })'
 descriptor = "listing of 'fixtures'"
 cost_tokens = 9
-cum_tokens = 3172
+cum_tokens = 3559
 
 [batches.content]
 kind = "fs"
@@ -1574,11 +1592,11 @@ parent = "fixtures"
 entries = ["db.json", "db.json5"]
 
 [[batches]]
-position = 60
+position = 61
 key = 'Typescript(Export { file: "src/adapters/observer.ts", start_line: 4 })'
 descriptor = "export at src/adapters/observer.ts:4"
 cost_tokens = 154
-cum_tokens = 3326
+cum_tokens = 3713
 
 [batches.content]
 kind = "lines"
@@ -1640,11 +1658,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Typescript(ExportBody { file: "src/adapters/observer.ts", start_line: 4, body_start_line: 21 })'
 descriptor = "export body at src/adapters/observer.ts:4 body 21"
 cost_tokens = 86
-cum_tokens = 3412
+cum_tokens = 3799
 
 [batches.content]
 kind = "lines"
@@ -1674,11 +1692,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false })'
 descriptor = "README.md section #17"
 cost_tokens = 71
-cum_tokens = 3483
+cum_tokens = 3870
 
 [batches.content]
 kind = "lines"
@@ -1692,11 +1710,11 @@ end = 233
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Typescript(Export { file: "src/service.ts", start_line: 81 })'
 descriptor = "export at src/service.ts:81"
 cost_tokens = 355
-cum_tokens = 3838
+cum_tokens = 4225
 
 [batches.content]
 kind = "lines"
@@ -1868,24 +1886,6 @@ end = 207
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 64
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 387
-cum_tokens = 4225
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 46
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 65
