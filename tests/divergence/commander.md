@@ -1,4 +1,4 @@
-Score(3000)=0.555 I=0.743 C=0.415 ns_rows≤3K=18/40 (reached=8 partial=0 missing=10)
+Score(3000)=0.574 I=0.764 C=0.431 ns_rows≤3K=18/40 (reached=8 partial=1 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,62 +57,64 @@ Score(3000)=0.555 I=0.743 C=0.415 ns_rows≤3K=18/40 (reached=8 partial=0 missin
 | walker |  | 1076 | 158 | export names surface in index.js |  |  | 0.516 |
 | walker |  | 1076 | 0 | export at index.js:17 |  |  | 0.516 |
 | walker |  | 1093 | 17 | export doc at index.js:17 |  |  | 0.517 |
-| walker |  | 1217 | 124 | export member names at lib/help.js:12 chunk 0 |  |  | 0.518 |
-| ns | 1229 |  | 271 | index.js (CommonJS entry point) full body | 1.13 |  | 0.522 |
-| walker |  | 1267 | 50 | export names surface in lib/argument.js |  |  | 0.522 |
-| walker |  | 1267 | 0 | export at lib/argument.js:143 |  |  | 0.522 |
-| walker |  | 1320 | 53 | export names surface in lib/command.js |  |  | 0.522 |
-| walker |  | 1320 | 0 | export at lib/command.js:13 |  |  | 0.522 |
-| walker |  | 1320 | 0 | export at lib/command.js:2752 |  |  | 0.522 |
-| walker |  | 1442 | 122 | export member names at lib/command.js:13 chunk 0 |  |  | 0.522 |
-| walker |  | 1495 | 53 | export names surface in lib/error.js |  |  | 0.522 |
-| walker |  | 1506 | 11 | export at lib/error.js:25 |  |  | 0.522 |
-| ns | 1514 |  | 285 | command.js: public-method roster, part 1 of 3 (constructor..action) | 2.1 |  | 0.493 |
-| walker |  | 1522 | 16 | export at lib/error.js:4 |  |  | 0.493 |
-| walker |  | 1642 | 120 | export member names at lib/command.js:13 chunk 1 |  |  | 0.503 |
-| walker |  | 1685 | 43 | export body at lib/option.js:3 body 204 |  |  | 0.503 |
-| walker |  | 1754 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.503 |
-| walker |  | 1801 | 47 | export body at lib/option.js:3 body 218 |  |  | 0.503 |
-| ns | 1859 |  | 345 | command.js: public-method roster, part 2 of 3 (addOption..error) | 2.2 |  | 0.470 |
-| walker |  | 1897 | 96 | export at lib/argument.js:3 |  |  | 0.470 |
-| walker |  | 1954 | 57 | export body at lib/error.js:25 body 31 |  |  | 0.470 |
-| walker |  | 2011 | 57 | export body at lib/option.js:3 body 166 |  |  | 0.470 |
-| walker |  | 2028 | 17 | export doc at lib/error.js:4 |  |  | 0.470 |
-| walker |  | 2080 | 52 | export body at lib/help.js:740 body 741 |  |  | 0.470 |
-| ns | 2106 |  | 247 | command.js: public-method roster, part 3 of 3 (version..addHelpText) | 2.3 |  | 0.447 |
-| walker |  | 2135 | 55 | export body at lib/argument.js:143 body 144 |  |  | 0.447 |
-| walker |  | 2262 | 127 | export member names at lib/help.js:12 chunk 1 |  |  | 0.448 |
-| walker |  | 2282 | 20 | export doc at lib/error.js:25 |  |  | 0.448 |
-| walker |  | 2296 | 14 | imports in lib/argument.js |  |  | 0.448 |
-| walker |  | 2310 | 14 | imports in lib/option.js |  |  | 0.448 |
-| walker |  | 2451 | 141 | export member names at lib/command.js:13 chunk 2 |  |  | 0.460 |
-| ns | 2460 |  | 354 | Readme.md: Quick Start, part 1 (boolean+value options example) | 3.1 |  | 0.423 |
-| walker |  | 2533 | 82 | export body at lib/error.js:4 body 12 |  |  | 0.424 |
-| walker |  | 2550 | 17 | imports in lib/help.js |  |  | 0.424 |
-| walker |  | 2655 | 105 | export body at lib/option.js:3 body 101 |  |  | 0.424 |
-| walker |  | 2892 | 237 | listing of 'examples' |  |  | 0.580 |
-| walker |  | 2917 | 25 | listing of 'docs/zh-CN' |  |  | 0.580 |
-| ns | 2993 |  | 533 | Readme.md: Quick Start, part 2 (subcommand-with-action example) | 3.2 |  | 0.526 |
-| walker |  | 2998 | 81 | imports in index.js |  |  | 0.555 |
-| walker |  | 3009 | 11 | export names surface in esm.mjs |  |  | 0.555 |
-| walker |  | 3020 | 11 | imports in esm.mjs |  |  | 0.556 |
-| walker |  | 3117 | 97 | export at esm.mjs:4 |  |  | 0.593 |
-| walker |  | 3266 | 149 | package identity metadata in package.json |  |  | 0.593 |
-| walker |  | 3400 | 134 | export member names at lib/help.js:12 chunk 2 |  |  | 0.594 |
-| walker |  | 3451 | 51 | export member names at lib/help.js:12 chunk 3 |  |  | 0.594 |
-| walker |  | 3588 | 137 | export member names at lib/command.js:13 chunk 3 |  |  | 0.602 |
-| ns | 3789 |  | 796 | command.js: .addOption() body | 3.3 | 2.2 | 0.537 |
-| walker |  | 3872 | 284 | package entrypoints in package.json |  |  | 0.537 |
-| walker |  | 3900 | 28 | package runtime metadata in package.json |  |  | 0.545 |
-| walker |  | 4157 | 257 | package scripts in package.json |  |  | 0.578 |
-| walker |  | 4191 | 34 | export doc at lib/command.js:2752 |  |  | 0.578 |
-| walker |  | 4318 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.578 |
-| walker |  | 4346 | 28 | export names surface in lib/suggestSimilar.js |  |  | 0.578 |
-| walker |  | 4346 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.578 |
-| ns | 4358 |  | 569 | Readme.md: Common option types, boolean and value | 3.4 |  | 0.542 |
-| walker |  | 4372 | 26 | module item at examples/custom-command-class.js:6 |  |  | 0.542 |
-| walker |  | 4499 | 127 | export member names at lib/command.js:13 chunk 4 |  |  | 0.546 |
-| walker |  | 4555 | 56 | export member names at lib/command.js:13 chunk 5 |  |  | 0.550 |
+| walker |  | 1143 | 50 | export names surface in lib/argument.js |  |  | 0.517 |
+| walker |  | 1143 | 0 | export at lib/argument.js:143 |  |  | 0.517 |
+| walker |  | 1196 | 53 | export names surface in lib/command.js |  |  | 0.517 |
+| walker |  | 1196 | 0 | export at lib/command.js:13 |  |  | 0.517 |
+| walker |  | 1196 | 0 | export at lib/command.js:2752 |  |  | 0.517 |
+| ns | 1229 |  | 271 | index.js (CommonJS entry point) full body | 1.13 |  | 0.521 |
+| walker |  | 1249 | 53 | export names surface in lib/error.js |  |  | 0.521 |
+| walker |  | 1260 | 11 | export at lib/error.js:25 |  |  | 0.522 |
+| walker |  | 1276 | 16 | export at lib/error.js:4 |  |  | 0.522 |
+| walker |  | 1319 | 43 | export body at lib/option.js:3 body 204 |  |  | 0.522 |
+| walker |  | 1388 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.522 |
+| walker |  | 1435 | 47 | export body at lib/option.js:3 body 218 |  |  | 0.522 |
+| ns | 1514 |  | 285 | command.js: public-method roster, part 1 of 3 (constructor..action) | 2.1 |  | 0.486 |
+| walker |  | 1531 | 96 | export at lib/argument.js:3 |  |  | 0.486 |
+| walker |  | 1588 | 57 | export body at lib/error.js:25 body 31 |  |  | 0.486 |
+| walker |  | 1645 | 57 | export body at lib/option.js:3 body 166 |  |  | 0.486 |
+| walker |  | 1662 | 17 | export doc at lib/error.js:4 |  |  | 0.486 |
+| walker |  | 1714 | 52 | export body at lib/help.js:740 body 741 |  |  | 0.486 |
+| walker |  | 1769 | 55 | export body at lib/argument.js:143 body 144 |  |  | 0.486 |
+| walker |  | 1789 | 20 | export doc at lib/error.js:25 |  |  | 0.486 |
+| walker |  | 1803 | 14 | imports in lib/argument.js |  |  | 0.486 |
+| walker |  | 1817 | 14 | imports in lib/option.js |  |  | 0.486 |
+| ns | 1859 |  | 345 | command.js: public-method roster, part 2 of 3 (addOption..error) | 2.2 |  | 0.454 |
+| walker |  | 1899 | 82 | export body at lib/error.js:4 body 12 |  |  | 0.455 |
+| walker |  | 1916 | 17 | imports in lib/help.js |  |  | 0.455 |
+| walker |  | 2021 | 105 | export body at lib/option.js:3 body 101 |  |  | 0.455 |
+| ns | 2106 |  | 247 | command.js: public-method roster, part 3 of 3 (version..addHelpText) | 2.3 |  | 0.432 |
+| walker |  | 2258 | 237 | listing of 'examples' |  |  | 0.606 |
+| walker |  | 2283 | 25 | listing of 'docs/zh-CN' |  |  | 0.606 |
+| walker |  | 2364 | 81 | imports in index.js |  |  | 0.641 |
+| walker |  | 2375 | 11 | export names surface in esm.mjs |  |  | 0.641 |
+| walker |  | 2386 | 11 | imports in esm.mjs |  |  | 0.642 |
+| ns | 2460 |  | 354 | Readme.md: Quick Start, part 1 (boolean+value options example) | 3.1 |  | 0.591 |
+| walker |  | 2483 | 97 | export at esm.mjs:4 |  |  | 0.632 |
+| walker |  | 2632 | 149 | package identity metadata in package.json |  |  | 0.632 |
+| ns | 2993 |  | 533 | Readme.md: Quick Start, part 2 (subcommand-with-action example) | 3.2 |  | 0.574 |
+| walker |  | 3068 | 436 | export member names roster at lib/help.js:12 |  |  | 0.576 |
+| walker |  | 3068 | 0 | export member names at lib/help.js:12 chunk 0 |  |  | 0.576 |
+| walker |  | 3068 | 0 | export member names at lib/help.js:12 chunk 1 |  |  | 0.576 |
+| walker |  | 3068 | 0 | export member names at lib/help.js:12 chunk 2 |  |  | 0.576 |
+| walker |  | 3068 | 0 | export member names at lib/help.js:12 chunk 3 |  |  | 0.576 |
+| walker |  | 3352 | 284 | package entrypoints in package.json |  |  | 0.576 |
+| walker |  | 3380 | 28 | package runtime metadata in package.json |  |  | 0.585 |
+| walker |  | 3637 | 257 | package scripts in package.json |  |  | 0.623 |
+| ns | 3789 |  | 796 | command.js: .addOption() body | 3.3 | 2.2 | 0.556 |
+| walker |  | 4340 | 703 | export member names roster at lib/command.js:13 |  |  | 0.586 |
+| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 0 |  |  | 0.586 |
+| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 1 |  |  | 0.586 |
+| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 2 |  |  | 0.586 |
+| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 3 |  |  | 0.586 |
+| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 4 |  |  | 0.586 |
+| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 5 |  |  | 0.586 |
+| ns | 4358 |  | 569 | Readme.md: Common option types, boolean and value | 3.4 |  | 0.550 |
+| walker |  | 4374 | 34 | export doc at lib/command.js:2752 |  |  | 0.550 |
+| walker |  | 4501 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.550 |
+| walker |  | 4529 | 28 | export names surface in lib/suggestSimilar.js |  |  | 0.550 |
+| walker |  | 4529 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.550 |
+| walker |  | 4555 | 26 | module item at examples/custom-command-class.js:6 |  |  | 0.550 |
 | ns | 4584 |  | 226 | Readme.md: Required option | 3.5 |  | 0.535 |
 | walker |  | 4718 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.535 |
 | walker |  | 4730 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.535 |
