@@ -227,6 +227,13 @@ pub enum TsKey {
         /// First line of the class member surface.
         member_start_line: usize,
     },
+    /// Whole member-name catalog of one oversize exported JS class.
+    /// Predecessor: the matching `Export` header.
+    ExportMemberNamesRoster {
+        file: PathBuf,
+        /// Parent export line.
+        start_line: usize,
+    },
     /// Chunked member-name catalog of one big exported declaration
     /// (interface / object-type alias / class above the per-member
     /// split range). Predecessor: the matching `Export` header for
@@ -698,6 +705,7 @@ impl InnerKey for TsKey {
                 0.38
             }
             TsKey::ExportMember { .. } => 0.45,
+            TsKey::ExportMemberNamesRoster { .. } => 0.37,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -745,6 +753,10 @@ impl InnerKey for TsKey {
                 member_start_line,
             } => format!(
                 "export member at {}:{start_line} member {member_start_line}",
+                display_path(file, root)
+            ),
+            TsKey::ExportMemberNamesRoster { file, start_line } => format!(
+                "export member names roster at {}:{start_line}",
                 display_path(file, root)
             ),
             TsKey::ExportMemberNames {

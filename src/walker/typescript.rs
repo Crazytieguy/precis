@@ -457,7 +457,38 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         .iter()
                         .map(|chunk| chunk.full.len())
                         .sum();
-                    let mut chunk_predecessor = export_predecessor.clone();
+                    let member_roster_key =
+                        should_emit_member_names_roster(file, item).then(|| {
+                            TsKey::ExportMemberNamesRoster {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                            }
+                        });
+                    if let Some(key) = member_roster_key.as_ref() {
+                        let roster_lines = member_names_roster_lines(&member_chunks);
+                        let content = if member_chunks.truncate_to_name {
+                            truncated_member_names_content(file, &source, &roster_lines)
+                        } else {
+                            single_file_lines_content(file, &source, roster_lines)
+                        };
+                        if let Some(content) = content {
+                            out.push(Batch {
+                                key: key.clone().into(),
+                                predecessor: Some(export_predecessor.clone()),
+                                content,
+                                value: export_member_names_roster_value(
+                                    file,
+                                    item.kind,
+                                    ctx,
+                                    js_factor,
+                                    member_count,
+                                ) * contract_roster_factor(true),
+                            });
+                        }
+                    }
+                    let mut chunk_predecessor = member_roster_key
+                        .map(BatchKey::Typescript)
+                        .unwrap_or_else(|| export_predecessor.clone());
                     for (chunk_index, lines) in member_chunks.chunks.into_iter().enumerate() {
                         let content = if member_chunks.truncate_to_name {
                             truncated_member_names_content(file, &source, &lines)
@@ -784,6 +815,13 @@ fn should_split_js_class_export(file: &Path, item: &ExportInfo<'_>) -> bool {
         && is_class_node(item.decl)
         && (JS_CLASS_MEMBER_SPLIT_MIN..=JS_CLASS_MEMBER_SPLIT_MAX)
             .contains(&item.class_members.len())
+}
+
+fn should_emit_member_names_roster(file: &Path, item: &ExportInfo<'_>) -> bool {
+    is_js_file(file)
+        && matches!(item.kind, ItemKind::Class | ItemKind::Default)
+        && is_class_node(item.decl)
+        && item.class_members.len() > JS_CLASS_MEMBER_SPLIT_MAX
 }
 
 #[derive(Debug, Clone)]
@@ -2193,6 +2231,16 @@ fn export_member_names_value(
         * roster_mass_factor(member_count)
 }
 
+fn export_member_names_roster_value(
+    file: &Path,
+    kind: ItemKind,
+    ctx: &WalkCtx,
+    js_factor: f64,
+    member_count: usize,
+) -> f64 {
+    export_member_value(file, kind, ctx, js_factor) * roster_mass_factor(member_count)
+}
+
 /// Module-private classes carry per-method query value (constructors,
 /// member sigs) — lift cat so each surface can compete against
 /// peer-level orientation batches in the early budget.
@@ -2712,6 +2760,16 @@ struct MemberNamesChunks {
     /// methods exist*); interface/object-type catalogs keep full lines
     /// (the field's type IS the content).
     truncate_to_name: bool,
+}
+
+fn member_names_roster_lines(chunks: &MemberNamesChunks) -> FileLines {
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
+    for chunk in &chunks.chunks {
+        full.extend(chunk.full.iter().copied());
+        ellipses.extend(chunk.ellipses.iter().copied());
+    }
+    FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
 /// Chunked member-first-line surfaces for a big declaration — the
@@ -3654,6 +3712,8 @@ mod tests {
     //! nextest.
 
     use super::*;
+    use crate::scheduler::Scheduler;
+    use crate::walker::FsWalker;
 
     fn parse(source: &str) -> Tree {
         let mut parser = tree_sitter::Parser::new();
@@ -3713,6 +3773,49 @@ mod tests {
         // Sanity: helper-precomputed parts match actual emit non-emptiness.
         assert_eq!(!item.body_parts.is_empty(), !full.is_empty());
         full
+    }
+
+    #[test]
+    fn walker_typescript_oversize_js_class_gets_member_roster_ancestor() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut src = String::from("export class Command {\n");
+        for index in 0..=JS_CLASS_MEMBER_SPLIT_MAX {
+            src.push_str(&format!("  method_{index}() {{ return {index}; }}\n"));
+        }
+        src.push_str("}\n");
+        let file = root.join("catalog.js");
+        std::fs::write(&file, src).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
+        let report = scheduler.run_with_report();
+        let export_key = BatchKey::Typescript(TsKey::Export {
+            file: file.clone(),
+            start_line: 1,
+        });
+        let roster_key = BatchKey::Typescript(TsKey::ExportMemberNamesRoster {
+            file: file.clone(),
+            start_line: 1,
+        });
+        let chunk0_key = BatchKey::Typescript(TsKey::ExportMemberNames {
+            file: file.clone(),
+            start_line: 1,
+            chunk_index: 0,
+        });
+        let pred_for = |key: &BatchKey| {
+            report
+                .candidates
+                .iter()
+                .find(|b| &b.key == key)
+                .and_then(|b| b.predecessor.as_ref())
+        };
+
+        assert!(
+            report.candidates.iter().any(|b| b.key == roster_key),
+            "expected whole JS member-name roster"
+        );
+        assert_eq!(pred_for(&roster_key), Some(&export_key));
+        assert_eq!(pred_for(&chunk0_key), Some(&roster_key));
     }
 
     #[test]
