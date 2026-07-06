@@ -147,10 +147,9 @@ src/
               46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
               48→    def __init__(self, inner_model: "PreTrainedModel"):
             …
-              58→    @property
               59→    def model_context_length(self) -> int:
               60→        raise NotImplementedError()
-              62→    @property
+            …
               63→    def model_prediction_length(self) -> int:
               64→        raise NotImplementedError()
               66→    def _prepare_and_validate_context(self, context: Union[torch.Tensor, List[torch.Tensor]]):
@@ -185,7 +184,6 @@ src/
              253→        self, task: "fev.Task", batch_size: int = 32, **kwargs
              254→    ) -> tuple[list["datasets.DatasetDict"], float]:
             …
-             336→    @classmethod
              337→    def from_pretrained(
              338→        cls,
              339→        pretrained_model_name_or_path: Union[str, Path],

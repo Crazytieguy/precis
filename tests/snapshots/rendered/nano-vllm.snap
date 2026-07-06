@@ -77,31 +77,8 @@ nanovllm/
         block_manager.py
             …
                8→class Block:
-              10→    def __init__(self, block_id):
-            …
-              16→    def update(self, hash: int, token_ids: list[int]):
-            …
-              20→    def reset(self):
             …
               26→class BlockManager:
-              28→    def __init__(self, num_blocks: int, block_size: int):
-            …
-              35→    @classmethod
-              36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
-            …
-              43→    def _allocate_block(self, block_id: int) -> Block:
-            …
-              51→    def _deallocate_block(self, block_id: int) -> Block:
-            …
-              56→    def can_allocate(self, seq: Sequence) -> bool:
-              57→        return len(self.free_block_ids) >= seq.num_blocks
-              59→    def allocate(self, seq: Sequence):
-            …
-              84→    def deallocate(self, seq: Sequence):
-            …
-              93→    def can_append(self, seq: Sequence) -> bool:
-            …
-              96→    def may_append(self, seq: Sequence):
             …
         llm_engine.py
             …
@@ -125,6 +102,18 @@ nanovllm/
         scheduler.py
             …
                8→class Scheduler:
+              10→    def __init__(self, config: Config):
+            …
+              18→    def is_finished(self):
+              19→        return not self.waiting and not self.running
+              21→    def add(self, seq: Sequence):
+              22→        self.waiting.append(seq)
+              24→    def schedule(self) -> tuple[list[Sequence], bool]:
+              25→        # prefill
+            …
+              60→    def preempt(self, seq: Sequence):
+            …
+              65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
             …
         sequence.py
             …
@@ -141,25 +130,24 @@ nanovllm/
               32→        return self.num_tokens
               34→    def __getitem__(self, key):
               35→        return self.token_ids[key]
-              37→    @property
+            …
               38→    def is_finished(self):
               39→        return self.status == SequenceStatus.FINISHED
-              41→    @property
+            …
               42→    def num_completion_tokens(self):
               43→        return self.num_tokens - self.num_prompt_tokens
-              45→    @property
+            …
               46→    def prompt_token_ids(self):
               47→        return self.token_ids[:self.num_prompt_tokens]
-              49→    @property
+            …
               50→    def completion_token_ids(self):
               51→        return self.token_ids[self.num_prompt_tokens:]
-              53→    @property
+            …
               54→    def num_cached_blocks(self):
               55→        return self.num_cached_tokens // self.block_size
-              57→    @property
+            …
               58→    def num_blocks(self):
             …
-              61→    @property
               62→    def last_block_num_tokens(self):
             …
               65→    def block(self, i):
@@ -172,11 +160,13 @@ nanovllm/
             …
     layers/
         activation.py
-            …
+               1→import torch
+               2→from torch import nn
+               3→import torch.nn.functional as F
                6→class SiluAndMul(nn.Module):
                8→    def __init__(self):
                9→        super().__init__()
-              11→    @torch.compile
+            …
               12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
             …
         attention.py
@@ -213,13 +203,11 @@ nanovllm/
               10→        eps: float = 1e-6,
               11→    ) -> None:
             …
-              16→    @torch.compile
               17→    def rms_forward(
               18→        self,
               19→        x: torch.Tensor,
               20→    ) -> torch.Tensor:
             …
-              28→    @torch.compile
               29→    def add_rms_forward(
               30→        self,
               31→        x: torch.Tensor,
@@ -234,7 +222,9 @@ nanovllm/
             …
         linear.py
         rotary_embedding.py
-            …
+               1→from functools import lru_cache
+               2→import torch
+               3→from torch import nn
                6→def apply_rotary_emb(
                7→    x: torch.Tensor,
                8→    cos: torch.Tensor,
@@ -243,8 +233,19 @@ nanovllm/
             …
               17→class RotaryEmbedding(nn.Module):
               19→    def __init__(
+              20→        self,
+              21→        head_size: int,
+              22→        rotary_dim: int,
+              23→        max_position_embeddings: int,
+              24→        base: float,
+              25→    ) -> None:
             …
-              37→    @torch.compile
+              38→    def forward(
+              39→        self,
+              40→        positions: torch.Tensor,
+              41→        query: torch.Tensor,
+              42→        key: torch.Tensor,
+              43→    ) -> tuple[torch.Tensor, torch.Tensor]:
             …
               51→@lru_cache(1)
               52→def get_rope(
@@ -261,7 +262,7 @@ nanovllm/
                5→class Sampler(nn.Module):
                7→    def __init__(self):
                8→        super().__init__()
-              10→    @torch.compile
+            …
               11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
             …
     llm.py

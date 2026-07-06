@@ -52,9 +52,9 @@ Score(3000)=0.663 I=0.870 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missin
 | ns | 1243 |  | 211 | README Examples section | 1.11 |  | 0.542 |
 | ns | 1379 |  | 136 | SECURITY.md | 1.12 |  | 0.529 |
 | walker |  | 1721 | 597 | README.md section #0 |  |  | 0.664 |
-| ns | 1807 |  | 428 | swarm/types.py — Agent/Response/Result models | 2.1 |  | 0.602 |
+| ns | 1807 |  | 428 | swarm/types.py — Agent/Response/Result models | 2.1 |  | 0.601 |
 | ns | 1887 |  | 80 | core.py — Swarm class method locations | 2.2 |  | 0.615 |
-| ns | 1923 |  | 36 | core.py — Swarm.__init__ | 2.3 | 2.2 | 0.607 |
+| ns | 1923 |  | 36 | core.py — Swarm.__init__ | 2.3 | 2.2 | 0.606 |
 | walker |  | 1989 | 268 | plaintext config setup.cfg |  |  | 0.732 |
 | walker |  | 2076 | 87 | python decl doc at swarm/types.py:29 |  |  | 0.771 |
 | walker |  | 2158 | 82 | README.md section #5 |  |  | 0.771 |

@@ -155,22 +155,14 @@ microbootstrap/
               55→        *instrument_configs: InstrumentConfigT,
               56→    ) -> typing_extensions.Self:
             …
-              61→    @classmethod
               62→    def use_instrument(
-              63→        cls,
-              64→    ) -> typing.Callable[
-              65→        [type[Instrument[InstrumentConfigT]]],
-              66→        type[Instrument[InstrumentConfigT]],
-              67→    ]:
             …
               72→    def bootstrap(self) -> ApplicationT:
             …
               99→    def bootstrap_before(self) -> dict[str, typing.Any]:
             …
-             101→        return {}
              103→    def bootstrap_before_instruments_after_app_created(self, application: ApplicationT) -> ApplicationT:
             …
-             105→        return application
              107→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
             …
              111→    def teardown(self) -> None:
@@ -253,10 +245,8 @@ microbootstrap/
             …
               35→    def write_status(self, console_writer: ConsoleWriter) -> None:
             …
-              42→    @abc.abstractmethod
+              43→    def is_ready(self) -> bool: ...
             …
-              45→    @classmethod
-              46→    @abc.abstractmethod
               47→    def get_config_type(cls) -> type[InstrumentConfigT]:
               48→        raise NotImplementedError
               50→    def bootstrap(self) -> None:
@@ -292,7 +282,12 @@ microbootstrap/
           34→        *instrument_configs: InstrumentConfigT,
           35→    ) -> typing_extensions.Self:
         …
-          40→    @classmethod
+          41→    def use_instrument(
+          42→        cls,
+          43→    ) -> typing.Callable[
+          44→        [type[Instrument[InstrumentConfigT]]],
+          45→        type[Instrument[InstrumentConfigT]],
+          46→    ]:
         …
           51→    def setup(self) -> None:
         …

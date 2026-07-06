@@ -72,7 +72,7 @@ Score(3000)=0.223 I=0.244 C=0.203 ns_rows≤3K=29/43 (reached=6 partial=0 missin
 | walker |  | 2130 | 66 | python decl at src/tomli/_parser.py:327 |  |  | 0.214 |
 | ns | 2179 |  | 155 | Sample valid TOML/JSON fixture pair (array-subtables) | 3.1 |  | 0.205 |
 | walker |  | 2210 | 80 | python class body at src/tomli/_parser.py:220 |  |  | 0.205 |
-| ns | 2287 |  | 108 | tests/__init__.py (tomllib aliasing) | 3.2 |  | 0.201 |
+| ns | 2287 |  | 108 | tests/__init__.py (tomllib aliasing) | 3.2 |  | 0.200 |
 | walker |  | 2413 | 203 | python method sigs in src/tomli/_parser.py |  |  | 0.240 |
 | walker |  | 2413 | 0 | python method at src/tomli/_parser.py:229 |  |  | 0.240 |
 | walker |  | 2413 | 0 | python method at src/tomli/_parser.py:233 |  |  | 0.240 |

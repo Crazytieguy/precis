@@ -685,6 +685,7 @@ pub(crate) fn statement_block_parts(
     }
 
     let mut parts = Vec::new();
+    let mut claimed_lines = HashSet::new();
     for child in named_children {
         let start_row = child.start_position().row.max(content_start);
         let end_row = child.end_position().row.min(content_end);
@@ -693,7 +694,10 @@ pub(crate) fn statement_block_parts(
         }
         let mut lines = Vec::new();
         extend_nonblank_rows(&mut lines, src_lines, start_row, end_row);
-        let lines = dedup_sorted(lines);
+        let lines: Vec<usize> = dedup_sorted(lines)
+            .into_iter()
+            .filter(|line| claimed_lines.insert(*line))
+            .collect();
         if !lines.is_empty() {
             parts.push(BodyPart { lines });
         }

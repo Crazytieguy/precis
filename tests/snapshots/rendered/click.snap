@@ -300,7 +300,6 @@ src/
                8→class TextWrapper(textwrap.TextWrapper):
                9→    def _handle_long_word(
             …
-              27→    @contextmanager
               28→    def extra_indent(self, indent: str) -> cabc.Iterator[None]:
             …
               40→    def indent_only(self, text: str) -> str:

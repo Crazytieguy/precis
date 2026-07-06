@@ -246,8 +246,8 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         let sigs_chunk_count = flat_methods.len().div_ceil(sigs_chunk_size);
         let mut sigs_chunk_of_method = HashMap::new();
         for (chunk_index, chunk) in flat_methods.chunks(sigs_chunk_size).enumerate() {
-            let full: Vec<_> = chunk.iter().map(|(_, m)| m.start_line).collect();
-            let ellipses: Vec<_> = chunk.iter().map(|(_, m)| m.start_line + 1).collect();
+            let full: Vec<_> = chunk.iter().map(|(_, m)| signature_line(m)).collect();
+            let ellipses: Vec<_> = chunk.iter().map(|(_, m)| signature_line(m) + 1).collect();
             let lines = FileLines::new(full).with_ellipses(ellipses);
             let Some(content) = single_file_lines_content(file, &source, lines) else {
                 continue;
@@ -466,7 +466,8 @@ fn emit_methods(
             file: file.to_path_buf(),
             start_line: method.start_line,
         };
-        if let Some(content) = single_file_lines_content(file, source, collect_decl(&method)) {
+        if let Some(content) = single_file_lines_content(file, source, collect_method_decl(&method))
+        {
             out.push(Batch {
                 key: method_key.clone().into(),
                 predecessor: Some(
@@ -915,7 +916,7 @@ fn collect_decl_names_from(decls: &[DeclInfo]) -> FileLines {
     let mut ellipses = Vec::new();
     for decl in decls {
         full.push(decl.start_line);
-        if matches!(decl.kind, DeclKind::Class | DeclKind::Function) {
+        if decl.kind == DeclKind::Function {
             ellipses.push(decl.start_line + 1);
         }
     }
@@ -935,6 +936,10 @@ fn collect_methods_by_class<'a>(
         .collect()
 }
 
+fn signature_line(info: &DeclInfo) -> usize {
+    info.inner_node.start_position().row + 1
+}
+
 fn collect_decl(info: &DeclInfo) -> FileLines {
     let unit_start = info.unit_node.start_position().row;
     let end_row = match info.kind {
@@ -945,6 +950,16 @@ fn collect_decl(info: &DeclInfo) -> FileLines {
     };
     let mut lines = Vec::new();
     push_rows(&mut lines, unit_start, end_row);
+    FileLines::new(dedup_sorted(lines))
+}
+
+fn collect_method_decl(info: &DeclInfo) -> FileLines {
+    let signature_start = info.inner_node.start_position().row;
+    let end_row = signature_end_row(info.inner_node)
+        .saturating_sub(1)
+        .max(signature_start);
+    let mut lines = Vec::new();
+    push_rows(&mut lines, signature_start, end_row);
     FileLines::new(dedup_sorted(lines))
 }
 

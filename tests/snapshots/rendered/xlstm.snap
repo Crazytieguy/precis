@@ -68,24 +68,8 @@ experiments/
     lr_scheduler.py
         …
            9→class BaseLRScheduler(lr_scheduler._LRScheduler):
-          10→    def __init__(self, optimizer, last_epoch=-1):
-          11→        super().__init__(optimizer, last_epoch)
-          13→    @abstractmethod
-          14→    def get_lr(self) -> list[float]:
-          15→        """Returns the current learning rate for each parameter group."""
-          16→        raise NotImplementedError
-          18→    @abstractmethod
-          19→    def reinitialize(self, **kwargs) -> None:
-          20→        """Reinitializes the learning rate scheduler."""
-          21→        raise NotImplementedError
+        …
           24→class LinearWarmupCosineAnnealing(BaseLRScheduler):
-          25→    def __init__(self, optimizer, warmup_steps, decay_until_step, max_lr, min_lr, last_epoch=-1):
-        …
-          33→    @staticmethod
-          34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
-        …
-          47→    def get_lr(self) -> list[float]:
-          48→        """Returns the current learning rate for each parameter group."""
         …
     main.py
         …
@@ -221,6 +205,16 @@ xlstm/
                           17→def slstm_forward(
                         …
                           77→def slstm_forward_step(
+                          78→    x: torch.Tensor,  # [B, G*I]
+                          79→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
+                          80→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
+                          81→    b: torch.Tensor,  # [T*H]
+                          82→    pointwise_forward: Callable[
+                          83→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
+                          84→        tuple[torch.Tensor, torch.Tensor],
+                          85→    ],
+                          86→    constants: dict[str, float] = {},
+                          87→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
                         …
                     lstm.py
                     slstm.py
@@ -273,7 +267,6 @@ xlstm/
           15→@dataclass
           16→class xLSTMBlockStackConfig:
         …
-          36→    @property
           37→    def block_map(self) -> list[int]:
           38→        return list(map(int, self._block_map.split(",")))
           40→    def _create_block_map(self) -> str:
@@ -323,6 +316,8 @@ xlstm/
           49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
         …
           56→    def step(
+          57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
+          58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
         …
           65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
         …
