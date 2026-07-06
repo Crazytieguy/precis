@@ -129,8 +129,9 @@ Score(3000)=0.611 I=0.720 C=0.518 ns_rows≤3K=29/43 (reached=14 partial=2 missi
 | walker |  | 8535 | 119 | headings outline in CONTRIBUTING.md |  |  | 0.474 |
 | walker |  | 8535 | 0 | CONTRIBUTING.md section #0 |  |  | 0.474 |
 | ns | 8733 |  | 876 | SemVer: constructor + format + toString | 4.1 | 2.1 | 0.447 |
-| walker |  | 8904 | 369 | CONTRIBUTING.md section #3 |  |  | 0.447 |
-| walker |  | 9197 | 293 | README.md section #49 |  |  | 0.447 |
-| walker |  | 9513 | 316 | README.md section #11 |  |  | 0.449 |
-| ns | 9724 |  | 991 | SemVer: compare / compareMain / comparePre / compareBuild | 4.2 | 2.1 | 0.422 |
-| walker |  | 9839 | 326 | README.md section #12 |  |  | 0.424 |
+| walker |  | 8828 | 293 | README.md section #49 |  |  | 0.447 |
+| walker |  | 9144 | 316 | README.md section #11 |  |  | 0.449 |
+| walker |  | 9470 | 326 | README.md section #12 |  |  | 0.451 |
+| ns | 9724 |  | 991 | SemVer: compare / compareMain / comparePre / compareBuild | 4.2 | 2.1 | 0.424 |
+| walker |  | 9806 | 336 | README.md section #16 |  |  | 0.426 |
+| walker |  | 9809 | 3 | listing of 'tap-snapshots/test' |  |  | 0.426 |

@@ -1809,30 +1809,55 @@ fn range_has_dev_workflow_signal(src_lines: &[&str], start: usize, end: usize) -
 }
 
 fn is_dev_command_line(t: &str) -> bool {
-    let code = t.trim_matches('`').trim();
-    code.starts_with("npm ")
-        || code.starts_with("pnpm ")
-        || code.starts_with("yarn ")
-        || code.starts_with("cargo ")
-        || code.starts_with("rustup ")
-        || code.starts_with("git ")
-        || code.starts_with("go ")
-        || code.starts_with("make ")
-        || code.starts_with("./")
-        || code.contains(" npm ")
-        || code.contains(" pnpm ")
-        || code.contains(" cargo ")
-        || code.contains("`npm ")
-        || code.contains("`pnpm ")
-        || code.contains("`yarn ")
-        || code.contains("`cargo ")
-        || code.contains("`go ")
-        || code.contains("`make ")
-        || code.contains("`./")
+    const DEV_COMMAND_TOKENS: &[&str] = &[
+        "npm",
+        "pnpm",
+        "yarn",
+        "cargo",
+        "rustup",
+        "go",
+        "make",
+        "git",
+        "pip",
+        "pip3",
+        "python",
+        "python3",
+        "pytest",
+        "poetry",
+        "uv",
+        "docker",
+        "docker-compose",
+        "gradle",
+        "mvn",
+    ];
+    let Some(token) = first_command_token(t) else {
+        return false;
+    };
+    token.starts_with("./") || DEV_COMMAND_TOKENS.contains(&token)
+}
+
+fn first_command_token(t: &str) -> Option<&str> {
+    let mut code = t.trim_start();
+    while let Some(rest) = code.strip_prefix('`') {
+        code = rest.trim_start();
+    }
+    if let Some(rest) = code.strip_prefix("$ ") {
+        code = rest.trim_start();
+    } else if let Some(rest) = code.strip_prefix("> ") {
+        code = rest.trim_start();
+    }
+    code.split_whitespace()
+        .next()
+        .map(|token| token.trim_end_matches('`'))
 }
 
 fn is_dev_config_line(t: &str) -> bool {
     t.contains("package.json")
+        || t.contains("pyproject.toml")
+        || t.contains("setup.py")
+        || t.contains("requirements.txt")
+        || t.contains("Makefile")
+        || t.contains("Dockerfile")
         || t.contains("pnpm-workspace")
         || t.contains("vitest")
         || t.contains("playwright")
@@ -1841,8 +1866,7 @@ fn is_dev_config_line(t: &str) -> bool {
 }
 
 fn is_repo_path_line(t: &str) -> bool {
-    t.contains("/src/")
-        || t.contains("src/")
+    t.contains("src/")
         || t.contains("packages/")
         || t.contains("crates/")
         || t.contains("tests/")
@@ -1850,6 +1874,7 @@ fn is_repo_path_line(t: &str) -> bool {
         || t.contains(".ts")
         || t.contains(".js")
         || t.contains(".rs")
+        || t.contains(".py")
         || t.contains(".json")
 }
 
@@ -3112,6 +3137,43 @@ mod tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn markdown_dev_command_line_uses_first_token() {
+        for line in [
+            "npm test",
+            "`$ pnpm install`",
+            "> cargo test",
+            "python3 -m pytest",
+            "uv sync",
+            "docker-compose up",
+            "./scripts/check",
+        ] {
+            assert!(is_dev_command_line(line), "{line}");
+        }
+
+        for line in [
+            "Install with npm after cloning.",
+            "The `cargo test` command is useful.",
+            "Run this in your shell.",
+        ] {
+            assert!(!is_dev_command_line(line), "{line}");
+        }
+    }
+
+    #[test]
+    fn markdown_dev_signal_lines_cover_python_configs() {
+        for line in [
+            "pyproject.toml",
+            "setup.py",
+            "requirements.txt",
+            "Makefile",
+            "Dockerfile",
+        ] {
+            assert!(is_dev_config_line(line), "{line}");
+        }
+        assert!(is_repo_path_line("src/package/module.py"));
     }
 
     // Nested H1→H2 immediately. Headline must NOT pull the H2 body into
