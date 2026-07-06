@@ -19,8 +19,8 @@ use crate::value::mix_signals;
 
 use super::workspace::{WorkspaceMembership, canonical_member, expand_member_entry};
 use super::{
-    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, gated_whole_file_content,
-    path_depth_factor, single_file_lines_content,
+    FileLines, WalkCtx, dedup_sorted, first_child_of_kind, fs::files_with_extension,
+    gated_whole_file_content, path_depth_factor, single_file_lines_content,
 };
 
 /// Hard cap on `Whole` JSON config rendering — generated files
@@ -181,7 +181,7 @@ fn is_app_package_json(pairs: &[(String, usize, usize, bool)]) -> bool {
 
 /// True iff the manifest's top-level `"name"` ends with `suffix`.
 fn package_json_name_ends_with(tree: &Tree, source: &str, suffix: &str) -> bool {
-    first_child_of_kind(tree.root_node(), "object")
+    first_child_of_kind(tree.root_node(), "object", false)
         .and_then(|o| object_field_value(o, "name", source))
         .is_some_and(|v| v.kind() == "string" && unquote_string(v, source).ends_with(suffix))
 }
@@ -402,7 +402,7 @@ fn parse_json(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
 /// `(unquoted_key, start_1based, end_1based, value_is_true)` for each top-level pair.
 fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize, bool)> {
     let root = tree.root_node();
-    let Some(object) = first_child_of_kind(root, "object") else {
+    let Some(object) = first_child_of_kind(root, "object", false) else {
         return Vec::new();
     };
     let mut cur = object.walk();
@@ -411,7 +411,7 @@ fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize, bool
         if child.kind() != "pair" {
             continue;
         }
-        let Some(key_node) = first_child_of_kind(child, "string") else {
+        let Some(key_node) = first_child_of_kind(child, "string", false) else {
             continue;
         };
         let key = unquote_string(key_node, source);
@@ -423,11 +423,6 @@ fn top_level_pairs(tree: &Tree, source: &str) -> Vec<(String, usize, usize, bool
         out.push((key, start, end, value_is_true));
     }
     out
-}
-
-fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
-    let mut cur = node.walk();
-    node.children(&mut cur).find(|c| c.kind() == kind)
 }
 
 fn unquote_string(node: Node, source: &str) -> String {
@@ -489,7 +484,7 @@ fn parse_manifest(dir: &Path) -> Option<(String, tree_sitter::Tree)> {
 /// resolved against `root`. `None` when neither field is a string.
 pub(super) fn declared_types_target(root: &Path) -> Option<PathBuf> {
     let (text, tree) = parse_manifest(root)?;
-    let object = first_child_of_kind(tree.root_node(), "object")?;
+    let object = first_child_of_kind(tree.root_node(), "object", false)?;
     ["types", "typings"].iter().find_map(|field| {
         let value = object_field_value(object, field, &text)?;
         if value.kind() != "string" {
@@ -512,7 +507,7 @@ pub(super) fn package_entry_targets(pkg_dir: &Path) -> Vec<String> {
     let Some((text, tree)) = parse_manifest(pkg_dir) else {
         return Vec::new();
     };
-    let Some(object) = first_child_of_kind(tree.root_node(), "object") else {
+    let Some(object) = first_child_of_kind(tree.root_node(), "object", false) else {
         return Vec::new();
     };
     let mut out = Vec::new();
@@ -546,7 +541,7 @@ fn object_has_subpath_key(object: Node, source: &str) -> bool {
     let mut cur = object.walk();
     object.children(&mut cur).any(|child| {
         child.kind() == "pair"
-            && first_child_of_kind(child, "string")
+            && first_child_of_kind(child, "string", false)
                 .is_some_and(|key| unquote_string(key, source).starts_with('.'))
     })
 }
@@ -595,7 +590,7 @@ fn npm_workspaces_entries(root: &Path) -> Vec<String> {
     let Some((text, tree)) = parse_manifest(root) else {
         return Vec::new();
     };
-    let Some(object) = first_child_of_kind(tree.root_node(), "object") else {
+    let Some(object) = first_child_of_kind(tree.root_node(), "object", false) else {
         return Vec::new();
     };
     let Some(workspaces_value) = object_field_value(object, "workspaces", &text) else {
@@ -623,7 +618,7 @@ fn object_field_value<'a>(object: Node<'a>, name: &str, source: &str) -> Option<
         if child.kind() != "pair" {
             continue;
         }
-        let key_node = first_child_of_kind(child, "string")?;
+        let key_node = first_child_of_kind(child, "string", false)?;
         if unquote_string(key_node, source) != name {
             continue;
         }

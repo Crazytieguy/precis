@@ -444,7 +444,8 @@ pub enum PythonKey {
         start_line: usize,
         body_start_line: usize,
     },
-    /// Legacy packaging script's top-level `setup(...)` call.
+    /// Legacy packaging dependency metadata: the `install_requires`
+    /// keyword argument span within the top-level `setup(...)` call.
     SetupManifest { file: PathBuf, start_line: usize },
     /// Surface listing of every `def test_*` first line in a `test_*.py`
     /// / `*_test.py` file (top-level + class-body, decorator-aware).

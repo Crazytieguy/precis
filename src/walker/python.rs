@@ -63,8 +63,9 @@ use super::import_chunks::{
 };
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, dedup_sorted, extend_nonblank_rows,
-    extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_extension, name_of,
-    push_rows, signature_end_row, single_file_lines_content, statement_block_parts,
+    extend_span, file_depth_factor, file_lines_covered_by, first_child_of_kind,
+    fs::files_with_extension, name_of, push_rows, signature_end_row, single_file_lines_content,
+    statement_block_parts,
 };
 
 const VISIBILITY_PUBLIC: f64 = 1.0;
@@ -403,7 +404,7 @@ fn collect_setup_manifest(file: &Path, tree: &Tree, source: &str) -> Option<(usi
         if child.kind() != "expression_statement" {
             continue;
         }
-        let Some(call) = first_named_child_of_kind(child, "call") else {
+        let Some(call) = first_child_of_kind(child, "call", true) else {
             continue;
         };
         let Some(function) = call.child_by_field_name("function") else {
@@ -417,55 +418,37 @@ fn collect_setup_manifest(file: &Path, tree: &Tree, source: &str) -> Option<(usi
         if function.start_position().row != call.start_position().row {
             continue;
         }
-        let start_line = call.start_position().row + 1;
-        if start_line == 0 || call.end_position().row < call.start_position().row {
-            continue;
-        }
-        let end_line = call.end_position().row + 1;
-        let lines = setup_install_requires_lines(source, start_line, end_line)?;
+        let lines = setup_install_requires_lines(call, source)?;
         return Some((lines.full[0], lines));
     }
     None
 }
 
-fn setup_install_requires_lines(
-    source: &str,
-    start_line: usize,
-    end_line: usize,
-) -> Option<FileLines> {
-    let src_lines: Vec<&str> = source.lines().collect();
-    let mut full = Vec::new();
-    let mut depth = 0isize;
-    let mut collecting = false;
-    for line_no in start_line..=end_line {
-        let line = src_lines.get(line_no - 1).copied().unwrap_or("");
-        let trimmed = line.trim_start();
-        if !collecting
-            && !(trimmed.starts_with("install_requires")
-                && (trimmed.contains('=') || trimmed.ends_with(':')))
-        {
+fn setup_install_requires_lines(call: Node, source: &str) -> Option<FileLines> {
+    let args = first_child_of_kind(call, "argument_list", true)?;
+    let mut cursor = args.walk();
+    for child in args.children(&mut cursor) {
+        if child.kind() != "keyword_argument" {
             continue;
         }
-        collecting = true;
-        full.push(line_no);
-        for ch in line.chars() {
-            match ch {
-                '[' | '(' | '{' => depth += 1,
-                ']' | ')' | '}' => depth -= 1,
-                _ => {}
-            }
+        let Some(name) = keyword_argument_name(child, source) else {
+            continue;
+        };
+        if name != "install_requires" {
+            continue;
         }
-        if full.len() > 1 && depth <= 1 && trimmed.ends_with(',') {
-            break;
-        }
+        let start = child.start_position().row + 1;
+        let end = child.end_position().row + 1;
+        return Some(FileLines::new((start..=end).collect()));
     }
-    (!full.is_empty()).then_some(FileLines::new(full))
+    None
 }
 
-fn first_named_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
-    let mut cursor = node.walk();
-    node.children(&mut cursor)
-        .find(|child| child.is_named() && child.kind() == kind)
+fn keyword_argument_name<'a>(keyword: Node<'a>, source: &'a str) -> Option<&'a str> {
+    let name = keyword
+        .child_by_field_name("name")
+        .or_else(|| first_child_of_kind(keyword, "identifier", true))?;
+    Some(source[name.start_byte()..name.end_byte()].trim())
 }
 
 fn emit_methods(
@@ -1550,6 +1533,45 @@ mod tests {
             }
         }
         out
+    }
+
+    #[test]
+    fn python_setup_manifest_captures_full_install_requires_keyword() {
+        let src = "\
+from setuptools import setup
+
+setup(
+    name=\"demo\",
+    install_requires=[
+        \"a\",
+        \"b\",
+    ],
+    extras_require={\"dev\": [\"pytest\"]},
+)
+";
+        let (source, tree) = parse(src);
+        let (start_line, lines) =
+            collect_setup_manifest(Path::new("setup.py"), &tree, &source).unwrap();
+        assert_eq!(start_line, 5);
+        assert_eq!(lines.full, vec![5, 6, 7, 8]);
+    }
+
+    #[test]
+    fn python_setup_manifest_single_line_install_requires_stops_at_keyword() {
+        let src = "\
+from setuptools import setup
+
+setup(
+    name=\"demo\",
+    install_requires=[\"a\", \"b\"],
+    extras_require={\"dev\": [\"pytest\"]},
+)
+";
+        let (source, tree) = parse(src);
+        let (start_line, lines) =
+            collect_setup_manifest(Path::new("setup.py"), &tree, &source).unwrap();
+        assert_eq!(start_line, 5);
+        assert_eq!(lines.full, vec![5]);
     }
 
     #[test]

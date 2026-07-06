@@ -51,8 +51,8 @@ use crate::tokenizer;
 use crate::value::{is_orientation_doc, mix_signals, roster_mass_factor};
 
 use super::{
-    FileLines, WalkCtx, extend_nonblank_rows, fs::files_with_extension, node_end_row_trimmed,
-    path_depth_factor, single_file_lines_content, whole_file_lines_content,
+    FileLines, WalkCtx, extend_nonblank_rows, first_child_of_kind, fs::files_with_extension,
+    node_end_row_trimmed, path_depth_factor, single_file_lines_content, whole_file_lines_content,
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
@@ -1338,7 +1338,7 @@ fn is_decorative_inline(node: Node, source: &str) -> bool {
     match node.kind() {
         "image" => true,
         "inline_link" | "full_reference_link" | "collapsed_reference_link" | "shortcut_link" => {
-            let Some(link_text) = first_child_of_kind(node, "link_text") else {
+            let Some(link_text) = first_child_of_kind(node, "link_text", false) else {
                 return false;
             };
             link_text_is_image_only_direct(link_text, source)
@@ -1378,7 +1378,7 @@ fn link_text_is_image_only_direct(link_text: Node, source: &str) -> bool {
 /// decorative AND there's at least one. Plain-text paragraphs (no
 /// named inline children) return `false`.
 fn is_decorative_paragraph(para: Node, source: &str) -> bool {
-    let Some(inline_block) = first_child_of_kind(para, "inline") else {
+    let Some(inline_block) = first_child_of_kind(para, "inline", false) else {
         return false;
     };
     let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
@@ -1469,7 +1469,7 @@ fn is_admin_block_quote(block: Node, source: &str) -> bool {
 /// budget where the headline lives — treat as decorative so the
 /// headline walker doesn't burn its prelude on them.
 fn is_nav_link_paragraph(para: Node, source: &str) -> bool {
-    let Some(inline_block) = first_child_of_kind(para, "inline") else {
+    let Some(inline_block) = first_child_of_kind(para, "inline", false) else {
         return false;
     };
     let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
@@ -1583,7 +1583,7 @@ fn strip_html_tags(s: &str) -> String {
 /// Returns `None` whenever any condition fails — caller renders the
 /// heading row verbatim.
 fn compute_heading_truncation(heading: Node, source: &str) -> Option<TruncatedRow> {
-    let inline_block = first_child_of_kind(heading, "inline")?;
+    let inline_block = first_child_of_kind(heading, "inline", false)?;
     let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
     let tree = parse_inline(inline_text)?;
     let named = named_decorative_candidates(tree.root_node(), inline_text);
@@ -2767,7 +2767,7 @@ fn section_is_code_dominant(section: Node<'_>, _source: &str) -> bool {
 /// found. Used by [`is_canonical_usage_h2_title`].
 fn h2_title_core(h2_section: Node<'_>, source: &str) -> Option<String> {
     let heading = first_heading_child(h2_section)?;
-    let inline = first_child_of_kind(heading, "inline")?;
+    let inline = first_child_of_kind(heading, "inline", false)?;
     let text = source[inline.start_byte()..inline.end_byte()]
         .trim()
         .to_ascii_lowercase();
@@ -2955,11 +2955,6 @@ fn is_intro_section_title(heading: Node, source: &str) -> bool {
         text.as_str(),
         "introduction" | "overview" | "about" | "summary" | "synopsis"
     ) || text.starts_with("what is")
-}
-
-fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
-    let mut cur = node.walk();
-    node.children(&mut cur).find(|c| c.kind() == kind)
 }
 
 #[cfg(test)]

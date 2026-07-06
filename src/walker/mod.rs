@@ -243,6 +243,16 @@ impl WalkCtx {
     }
 }
 
+pub(in crate::walker) fn first_child_of_kind<'a>(
+    node: Node<'a>,
+    kind: &str,
+    named_only: bool,
+) -> Option<Node<'a>> {
+    let mut cursor = node.walk();
+    node.children(&mut cursor)
+        .find(|child| (!named_only || child.is_named()) && child.kind() == kind)
+}
+
 /// Scan the seed root's README for relative-path hyperlinks to source
 /// files. Returns canonicalized paths.
 fn collect_readme_cited_paths(root: &Path) -> HashSet<PathBuf> {
