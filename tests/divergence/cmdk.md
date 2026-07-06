@@ -155,13 +155,15 @@ Score(3000)=0.290 I=0.374 C=0.225 ns_rows≤3K=26/44 (reached=6 partial=0 missin
 | ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.401 |
 | walker |  | 7787 | 135 | README.md section #8 |  |  | 0.401 |
 | walker |  | 7797 | 10 | export names surface in test/pages/index.tsx |  |  | 0.401 |
+| walker |  | 7797 | 0 | export at test/pages/index.tsx:28 |  |  | 0.401 |
 | walker |  | 7925 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.407 |
 | ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.418 |
 | walker |  | 8081 | 156 | README.md section #12 |  |  | 0.418 |
 | walker |  | 8237 | 156 | README.md section #11 |  |  | 0.418 |
+| walker |  | 8249 | 12 | export at test/pages/index.tsx:3 |  |  | 0.418 |
 | ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.409 |
-| walker |  | 8670 | 433 | README.md section #35 |  |  | 0.436 |
-| ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.427 |
+| ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.400 |
+| walker |  | 8682 | 433 | README.md section #35 |  |  | 0.427 |
 | ns | 8937 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.418 |
 | ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.415 |
 | ns | 9452 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.405 |

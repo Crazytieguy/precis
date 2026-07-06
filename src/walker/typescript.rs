@@ -359,6 +359,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     ) * contract_roster_factor(true),
                 });
             }
+            let dependent_export_start_lines: HashSet<_> = exports
+                .iter()
+                .filter_map(|item| item.predecessor_start_line)
+                .collect();
             for (item_index, item) in exports.iter().enumerate() {
                 let chunk_index = item_index / chunk_size;
                 let names_predecessor = names_predecessors[chunk_index].clone();
@@ -366,6 +370,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     file: file.clone(),
                     start_line: item.start_line,
                 };
+                let export_surface_predecessor = item
+                    .predecessor_start_line
+                    .map(|start_line| {
+                        BatchKey::Typescript(TsKey::Export {
+                            file: file.clone(),
+                            start_line,
+                        })
+                    })
+                    .unwrap_or_else(|| names_predecessor.clone());
                 let split_js_class = should_split_js_class_export(file, item);
                 let member_names_chunks = if split_js_class {
                     None
@@ -395,14 +408,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 let export_has_descendants = !doc_lines.is_empty()
                     || (split_js_class && !item.class_members.is_empty())
                     || member_names_chunks.is_some()
-                    || (!split_js_class && !item.body_parts.is_empty());
+                    || (!split_js_class && !item.body_parts.is_empty())
+                    || dependent_export_start_lines.contains(&item.start_line);
                 if (!file_lines_covered_by(&export_lines, &names_lines_by_chunk[chunk_index])
                     || export_has_descendants)
                     && let Some(content) = single_file_lines_content(file, &source, export_lines)
                 {
                     out.push(Batch {
                         key: export_key.clone().into(),
-                        predecessor: Some(names_predecessor.clone()),
+                        predecessor: Some(export_surface_predecessor),
                         content,
                         value: export_value(file, item.kind, ctx, js_factor)
                             * contract_roster_factor(member_names_chunks.is_some()),
@@ -760,6 +774,9 @@ struct ExportInfo<'a> {
     /// True when `body_parts` are sibling anchors from a factory match
     /// — the emitter skips per-part value damping.
     factory_sibling_body_parts: bool,
+    /// Export surface line that this synthesized local implementation
+    /// refines. Used for thin `export default localName` entrypoints.
+    predecessor_start_line: Option<usize>,
 }
 
 #[derive(Debug, Clone)]
@@ -815,8 +832,16 @@ fn find_export_starts<'a>(
 
     let reexports = collect_local_value_reexports(tree, source);
     let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
+    let default_identifier_reexports = if is_entrypoint_file(file) {
+        collect_default_implementation_exports(tree, source)
+    } else {
+        HashMap::new()
+    };
     let mut needs_sort = false;
-    if !reexports.is_empty() || !commonjs_reexports.is_empty() {
+    if !reexports.is_empty()
+        || !commonjs_reexports.is_empty()
+        || !default_identifier_reexports.is_empty()
+    {
         let mut cursor = root.walk();
         for child in root.children(&mut cursor) {
             let start_line = child.start_position().row + 1;
@@ -824,7 +849,11 @@ fn find_export_starts<'a>(
                 continue;
             }
 
-            let kind = if matches!(child.kind(), "lexical_declaration" | "variable_declaration")
+            let default_predecessor = local_decl_name(child, source)
+                .and_then(|name| default_identifier_reexports.get(name).copied());
+            let kind = if default_predecessor.is_some() {
+                decl_kind(child)
+            } else if matches!(child.kind(), "lexical_declaration" | "variable_declaration")
                 && synthetic_export_name(child, source, &reexports).is_some()
             {
                 Some(ItemKind::Const)
@@ -833,9 +862,11 @@ fn find_export_starts<'a>(
             };
 
             let Some(kind) = kind else { continue };
-            out.push(make_export_info(
+            let mut info = make_export_info(
                 start_line, kind, child, child, file, source, src_lines, false, false,
-            ));
+            );
+            info.predecessor_start_line = default_predecessor;
+            out.push(info);
             emitted_lines.insert(start_line);
             needs_sort = true;
         }
@@ -927,6 +958,7 @@ fn make_export_info<'a>(
         is_type_only,
         is_prototype_method,
         factory_sibling_body_parts,
+        predecessor_start_line: None,
     }
 }
 
@@ -972,6 +1004,19 @@ fn is_private_props_type(node: Node, kind: ItemKind, source: &str) -> bool {
         return false;
     }
     name_of(node, source).is_some_and(|name| name.ends_with("Props"))
+}
+
+fn local_decl_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
+    if matches!(node.kind(), "lexical_declaration" | "variable_declaration") {
+        let mut cursor = node.walk();
+        let declarator = node
+            .children(&mut cursor)
+            .find(|c| matches!(c.kind(), "variable_declarator" | "lexical_binding"))?;
+        return declarator
+            .child_by_field_name("name")
+            .and_then(|name| identifier_text(name, source));
+    }
+    name_of(node, source)
 }
 
 /// True when an export carries no runtime value. `Enum` and
@@ -1072,6 +1117,74 @@ fn collect_local_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
         }
     }
     out
+}
+
+/// Implementation declarations behind entrypoint default aliases. Handles
+/// both `export default fnName` and the thin instance shape
+/// `export default instance; const instance = factory();`.
+fn collect_default_implementation_exports(tree: &Tree, source: &str) -> HashMap<String, usize> {
+    let root = tree.root_node();
+    let mut decls: HashMap<String, Node> = HashMap::new();
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        if let Some(name) = local_decl_name(stmt, source) {
+            decls.insert(name.to_string(), stmt);
+        }
+    }
+
+    let mut out = HashMap::new();
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() != "export_statement" || !has_default_keyword(stmt, source) {
+            continue;
+        }
+        let Some(value) = first_decl_or_value_child(stmt) else {
+            continue;
+        };
+        let Some(default_name) = identifier_text(value, source) else {
+            continue;
+        };
+        let export_line = stmt.start_position().row + 1;
+        let Some(default_decl) = decls.get(default_name).copied() else {
+            continue;
+        };
+        if local_decl_has_implementation_body(default_decl) {
+            out.insert(default_name.to_string(), export_line);
+        } else if let Some(factory_name) = const_call_callee_name(default_decl, source)
+            && decls
+                .get(factory_name)
+                .is_some_and(|decl| local_decl_has_implementation_body(*decl))
+        {
+            out.insert(factory_name.to_string(), export_line);
+        }
+    }
+    out
+}
+
+fn local_decl_has_implementation_body(decl: Node) -> bool {
+    match decl_kind(decl) {
+        Some(ItemKind::Function | ItemKind::Class) => decl.child_by_field_name("body").is_some(),
+        Some(ItemKind::Const) => find_fn_init_body(decl).is_some(),
+        _ => false,
+    }
+}
+
+fn const_call_callee_name<'a>(decl: Node, source: &'a str) -> Option<&'a str> {
+    if !matches!(decl.kind(), "lexical_declaration" | "variable_declaration") {
+        return None;
+    }
+    let mut cursor = decl.walk();
+    let declarator = decl
+        .children(&mut cursor)
+        .find(|c| matches!(c.kind(), "variable_declarator" | "lexical_binding"))?;
+    let value = declarator.child_by_field_name("value")?;
+    if value.kind() != "call_expression" {
+        return None;
+    }
+    value
+        .child_by_field_name("function")
+        .or_else(|| value.named_child(0))
+        .and_then(|callee| identifier_text(callee, source))
 }
 
 /// Local identifier names on the RHS of top-level CommonJS export
@@ -2346,6 +2459,9 @@ fn collect_export_names_from(
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for item in items {
+        if item.predecessor_start_line.is_some() {
+            continue;
+        }
         full.push(item.start_line);
         let ellipsis_line = item.start_line + 1;
         // Suppress the courtesy ellipsis when the next source line is

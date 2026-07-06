@@ -1,7 +1,7 @@
 fixture = "cmdk"
 budget = 10000
-cumulative_tokens = 8670
-batch_count = 121
+cumulative_tokens = 8682
+batch_count = 123
 
 [[batches]]
 position = 1
@@ -2814,7 +2814,7 @@ kind = "full"
 
 [[batches]]
 position = 117
-key = 'Typescript(ExportNames { file: "test/pages/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+key = 'Typescript(ExportNames { file: "test/pages/index.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in test/pages/index.tsx"
 cost_tokens = 10
 cum_tokens = 7797
@@ -2832,6 +2832,24 @@ kind = "full"
 
 [[batches]]
 position = 118
+key = 'Typescript(Export { file: "test/pages/index.tsx", start_line: 28 })'
+descriptor = "export at test/pages/index.tsx:28"
+cost_tokens = 0
+cum_tokens = 7797
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/pages/index.tsx"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
 key = 'Typescript(ExportBody { file: "cmdk/src/command-score.ts", start_line: 155, body_start_line: 156 })'
 descriptor = "export body at cmdk/src/command-score.ts:155 body 156"
 cost_tokens = 128
@@ -2849,7 +2867,7 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
 cost_tokens = 156
@@ -2867,7 +2885,7 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
 descriptor = "README.md section #11"
 cost_tokens = 156
@@ -2885,11 +2903,37 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
+key = 'Typescript(Export { file: "test/pages/index.tsx", start_line: 3 })'
+descriptor = "export at test/pages/index.tsx:3"
+cost_tokens = 12
+cum_tokens = 8249
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/pages/index.tsx"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "test/pages/index.tsx"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 123
 key = 'Markdown(Section { file: "README.md", section_index: 35, reference_shaped: false })'
 descriptor = "README.md section #35"
 cost_tokens = 433
-cum_tokens = 8670
+cum_tokens = 8682
 
 [batches.content]
 kind = "lines"
