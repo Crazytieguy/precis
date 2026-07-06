@@ -111,27 +111,27 @@ Score(3000)=0.435 I=0.742 C=0.256 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | walker |  | 4391 | 16 | imports in lib/stringifier.js |  |  | 0.532 |
 | ns | 4519 |  | 231 | lib/types.ts — PathDataCommand + PathDataItem | 3.10 |  | 0.513 |
 | walker |  | 4779 | 388 | listing of 'docs/04-plugins' |  |  | 0.513 |
+| walker |  | 4829 | 50 | export body at lib/svgo/coa.js:19 body 20 |  |  | 0.513 |
+| walker |  | 4851 | 22 | imports in lib/path.js |  |  | 0.513 |
+| walker |  | 4864 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.513 |
 | ns | 4875 |  | 356 | plugins/ directory listing | 4.1 |  | 0.568 |
-| walker |  | 5430 | 651 | package dependencies in package.json |  |  | 0.590 |
-| walker |  | 5480 | 50 | export body at lib/svgo/coa.js:19 body 20 |  |  | 0.590 |
-| walker |  | 5502 | 22 | imports in lib/path.js |  |  | 0.590 |
-| walker |  | 5515 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.590 |
-| walker |  | 5540 | 25 | imports in lib/parser.js |  |  | 0.590 |
-| walker |  | 5567 | 27 | export doc at lib/svgo/coa.js:30 |  |  | 0.590 |
-| walker |  | 5582 | 15 | imports in lib/svgo/plugins.js |  |  | 0.590 |
-| walker |  | 5682 | 100 | export body at lib/style.js:195 body 196 |  |  | 0.590 |
-| walker |  | 5718 | 36 | export doc at lib/path.js:302 |  |  | 0.590 |
-| walker |  | 5756 | 38 | imports in lib/xast.js |  |  | 0.590 |
-| walker |  | 5777 | 21 | imports in lib/svgo/tools.js |  |  | 0.590 |
-| ns | 5878 |  | 1003 | Plugin name + description roster (1/2: addAttributesToSVGElement..removeDesc) | 4.2 |  | 0.549 |
-| walker |  | 5965 | 188 | export names surface in lib/types.ts |  |  | 0.549 |
-| walker |  | 5965 | 0 | export at lib/types.ts:30 |  |  | 0.549 |
-| walker |  | 5974 | 9 | export at lib/types.ts:108 |  |  | 0.549 |
-| walker |  | 5998 | 24 | export at lib/types.ts:67 |  |  | 0.549 |
-| walker |  | 6022 | 24 | export at lib/types.ts:175 |  |  | 0.549 |
-| walker |  | 6062 | 40 | export doc at lib/path.js:141 |  |  | 0.549 |
-| walker |  | 6084 | 22 | imports in lib/svgo/css-select-adapter.js |  |  | 0.549 |
-| walker |  | 6207 | 123 | README.md section #11 |  |  | 0.578 |
+| walker |  | 4889 | 25 | imports in lib/parser.js |  |  | 0.568 |
+| walker |  | 4916 | 27 | export doc at lib/svgo/coa.js:30 |  |  | 0.568 |
+| walker |  | 4931 | 15 | imports in lib/svgo/plugins.js |  |  | 0.568 |
+| walker |  | 5031 | 100 | export body at lib/style.js:195 body 196 |  |  | 0.568 |
+| walker |  | 5067 | 36 | export doc at lib/path.js:302 |  |  | 0.568 |
+| walker |  | 5105 | 38 | imports in lib/xast.js |  |  | 0.568 |
+| walker |  | 5126 | 21 | imports in lib/svgo/tools.js |  |  | 0.568 |
+| walker |  | 5314 | 188 | export names surface in lib/types.ts |  |  | 0.569 |
+| walker |  | 5314 | 0 | export at lib/types.ts:30 |  |  | 0.569 |
+| walker |  | 5323 | 9 | export at lib/types.ts:108 |  |  | 0.569 |
+| walker |  | 5347 | 24 | export at lib/types.ts:67 |  |  | 0.569 |
+| walker |  | 5371 | 24 | export at lib/types.ts:175 |  |  | 0.569 |
+| walker |  | 5411 | 40 | export doc at lib/path.js:141 |  |  | 0.569 |
+| walker |  | 5433 | 22 | imports in lib/svgo/css-select-adapter.js |  |  | 0.569 |
+| walker |  | 5556 | 123 | README.md section #11 |  |  | 0.599 |
+| ns | 5878 |  | 1003 | Plugin name + description roster (1/2: addAttributesToSVGElement..removeDesc) | 4.2 |  | 0.557 |
+| walker |  | 6207 | 651 | package dependencies in package.json |  |  | 0.578 |
 | walker |  | 6370 | 163 | export names surface in lib/svgo/tools.js |  |  | 0.600 |
 | walker |  | 6370 | 0 | export at lib/svgo/tools.js:21 |  |  | 0.600 |
 | walker |  | 6370 | 0 | export at lib/svgo/tools.js:43 |  |  | 0.600 |

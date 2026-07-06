@@ -103,7 +103,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     } else {
         1.0
     };
-    let manifest_role = package_json_role(&tree, &source, &pairs);
+    let manifest_role = package_json_role(&pairs);
     let scripts_deps_factor = manifest_role.scripts_deps_factor();
     let mut prev: Option<BatchKey> = None;
     let mut push = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
@@ -152,8 +152,8 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     );
 }
 
-/// Boost factor for `scripts` / `dependencies` on operational or
-/// implicit-entry `package.json`s (see [`PackageJsonRole`]).
+/// Boost factor for `scripts` / `dependencies` on operational
+/// `package.json`s (see [`PackageJsonRole`]).
 const APP_SCRIPTS_DEPS_FACTOR: f64 = 1.3;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -167,10 +167,10 @@ enum PackageJsonRole {
 impl PackageJsonRole {
     fn scripts_deps_factor(self) -> f64 {
         match self {
+            PackageJsonRole::AppOrCli => APP_SCRIPTS_DEPS_FACTOR,
             PackageJsonRole::MonorepoRoot
-            | PackageJsonRole::AppOrCli
-            | PackageJsonRole::ImplicitEntryPackage => APP_SCRIPTS_DEPS_FACTOR,
-            PackageJsonRole::Library => 1.0,
+            | PackageJsonRole::Library
+            | PackageJsonRole::ImplicitEntryPackage => 1.0,
         }
     }
 }
@@ -178,29 +178,35 @@ impl PackageJsonRole {
 /// Classify a manifest by its own top-level content so app/CLI
 /// manifests can price run/dependency surfaces without promoting
 /// publishable library manifests wholesale.
-fn package_json_role(
-    _tree: &Tree,
-    _source: &str,
-    pairs: &[(String, usize, usize, bool)],
-) -> PackageJsonRole {
+fn package_json_role(pairs: &[(String, usize, usize, bool)]) -> PackageJsonRole {
     let private_true = pairs
         .iter()
         .find(|(name, _, _, _)| name == "private")
         .is_some_and(|(_, _, _, value_is_true)| *value_is_true);
     let has_bin = pairs.iter().any(|(name, _, _, _)| name == "bin");
     let has_workspaces = pairs.iter().any(|(name, _, _, _)| name == "workspaces");
-    let has_entry_metadata = pairs
-        .iter()
-        .any(|(name, _, _, _)| matches!(name.as_str(), "main" | "exports" | "types" | "typings"));
+    let has_files = pairs.iter().any(|(name, _, _, _)| name == "files");
+    let has_entry_metadata = pairs.iter().any(|(name, _, _, _)| {
+        matches!(
+            name.as_str(),
+            "main" | "module" | "browser" | "exports" | "types" | "typings" | "files"
+        )
+    });
 
     if private_true && has_workspaces {
         return PackageJsonRole::MonorepoRoot;
     }
-    if has_bin || private_true {
+    if private_true {
         return PackageJsonRole::AppOrCli;
     }
-    if has_entry_metadata && !has_bin {
+    if has_bin && has_files {
         return PackageJsonRole::Library;
+    }
+    if has_entry_metadata {
+        return PackageJsonRole::Library;
+    }
+    if has_bin {
+        return PackageJsonRole::AppOrCli;
     }
     PackageJsonRole::ImplicitEntryPackage
 }
@@ -757,6 +763,68 @@ mod tests {
 
     fn member_path(root: &Path, rel: &str) -> PathBuf {
         root.join(rel).join("package.json").canonicalize().unwrap()
+    }
+
+    fn role_for_manifest(source: &str) -> PackageJsonRole {
+        let mut parser = tree_sitter::Parser::new();
+        parser
+            .set_language(&tree_sitter_json::LANGUAGE.into())
+            .unwrap();
+        let tree = parser.parse(source.as_bytes(), None).unwrap();
+        let pairs = top_level_pairs(&tree, source);
+        package_json_role(&pairs)
+    }
+
+    #[test]
+    fn walker_json_package_role_private_workspace_root_is_neutral() {
+        let role = role_for_manifest(
+            r#"{
+                "private": true,
+                "workspaces": ["packages/*"],
+                "scripts": {"build": "pnpm -r build"}
+            }"#,
+        );
+        assert_eq!(role, PackageJsonRole::MonorepoRoot);
+        assert_eq!(role.scripts_deps_factor(), 1.0);
+    }
+
+    #[test]
+    fn walker_json_package_role_private_app_with_start_script_is_boosted() {
+        let role = role_for_manifest(
+            r#"{
+                "private": true,
+                "module": "./src/main.ts",
+                "scripts": {"start": "vite --host 0.0.0.0"}
+            }"#,
+        );
+        assert_eq!(role, PackageJsonRole::AppOrCli);
+        assert_eq!(role.scripts_deps_factor(), APP_SCRIPTS_DEPS_FACTOR);
+    }
+
+    #[test]
+    fn walker_json_package_role_published_cli_with_files_is_library_leaning() {
+        let role = role_for_manifest(
+            r#"{
+                "bin": "./cli.js",
+                "files": ["cli.js", "dist"]
+            }"#,
+        );
+        assert_eq!(role, PackageJsonRole::Library);
+        assert_eq!(role.scripts_deps_factor(), 1.0);
+    }
+
+    #[test]
+    fn walker_json_package_role_implicit_entry_package_is_neutral() {
+        let role = role_for_manifest(r#"{"name": "plain-package"}"#);
+        assert_eq!(role, PackageJsonRole::ImplicitEntryPackage);
+        assert_eq!(role.scripts_deps_factor(), 1.0);
+    }
+
+    #[test]
+    fn walker_json_package_role_module_field_is_library() {
+        let role = role_for_manifest(r#"{"module": "./dist/index.mjs"}"#);
+        assert_eq!(role, PackageJsonRole::Library);
+        assert_eq!(role.scripts_deps_factor(), 1.0);
     }
 
     #[test]

@@ -180,11 +180,11 @@ Score(3000)=0.434 I=0.700 C=0.270 ns_rows≤3K=19/43 (reached=4 partial=1 missin
 | walker |  | 5761 | 109 | package entrypoints in package.json |  |  | 0.521 |
 | walker |  | 5791 | 30 | package runtime metadata in package.json |  |  | 0.534 |
 | walker |  | 5911 | 120 | package scripts in package.json |  |  | 0.551 |
-| ns | 6068 |  | 415 | assetsLoader.js (full) | 4.8 |  | 0.529 |
-| walker |  | 6135 | 224 | package dependencies in package.json |  |  | 0.555 |
-| walker |  | 6140 | 5 | listing of '.devcontainer' |  |  | 0.556 |
-| walker |  | 6519 | 379 | README.md section #1 |  |  | 0.606 |
-| walker |  | 6540 | 21 | export member at src/widgetsTemplates/list.widget.template.js:8 member 9 |  |  | 0.606 |
+| walker |  | 5916 | 5 | listing of '.devcontainer' |  |  | 0.552 |
+| ns | 6068 |  | 415 | assetsLoader.js (full) | 4.8 |  | 0.530 |
+| walker |  | 6295 | 379 | README.md section #1 |  |  | 0.580 |
+| walker |  | 6316 | 21 | export member at src/widgetsTemplates/list.widget.template.js:8 member 9 |  |  | 0.580 |
+| walker |  | 6540 | 224 | package dependencies in package.json |  |  | 0.606 |
 | ns | 6552 |  | 484 | grid.config.js: CONTAINERS_GRID_LAYOUT (full) + SERVICES/IMAGES widget-name rosters | 4.9 |  | 0.587 |
 | walker |  | 6649 | 109 | imports in src/screen.js |  |  | 0.592 |
 | ns | 6736 |  | 184 | lib/modes.js + src/enum.js + lib/node.version.js (full) | 4.10 |  | 0.587 |

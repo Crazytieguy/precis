@@ -48,6 +48,9 @@ client/
             PreviewCover.vue
         modals/
         player/
+            PlayerPlaybackControls.vue
+            PlayerTrackBar.vue
+            PlayerUi.vue
         prompt/
         readers/
             ComicReader.vue
@@ -56,6 +59,13 @@ client/
             PdfReader.vue
             Reader.vue
         stats/
+            DailyListeningChart.vue
+            Heatmap.vue
+            PreviewIcons.vue
+            YearInReview.vue
+            YearInReviewBanner.vue
+            YearInReviewServer.vue
+            YearInReviewShort.vue
         tables/
         ui/
         widgets/
@@ -93,19 +103,31 @@ client/
     pages/
         account.vue
         audiobook/
+            _id/
         author/
         batch/
+            index.vue
         collection/
         config/
         config.vue
         index.vue
         item/
+            _id/
         library/
+            _library/
+                bookshelf/
+                index.vue
+                narrators.vue
+                podcast/
+                search.vue
+                series/
+                stats.vue
         login.vue
         oops.vue
         playlist/
         share/
         upload/
+            index.vue
     players/
         AudioTrack.js
         CastPlayer.js
@@ -129,6 +151,10 @@ client/
         fonts/
             MaterialSymbolsRounded.woff2
             Source_Sans_Pro/
+                OFL.txt
+                SourceSansPro-Light.ttf
+                SourceSansPro-Regular.ttf
+                SourceSansPro-SemiBold.ttf
             Ubuntu_Mono/
             absicons/
                 absicons.eot
@@ -170,7 +196,8 @@ docs/
           15→### Linting the spec
         …
           21→### Generating documentation
-        …
+          22→
+          23→Redocly allows for creating a static HTML page to document the API. This is done by using `redocly build-docs [file]` and supports exploded specs.
           25→### Putting it all together
         …
     controllers/
@@ -190,6 +217,9 @@ docs/
             PodcastEpisode.yaml
             Series.yaml
         files/
+            AudioFile.yaml
+            AudioTrack.yaml
+            EBookFile.yaml
         mediaTypes/
             Book.yaml
             Podcast.yaml
@@ -232,22 +262,7 @@ package.json
     …
        5→  "description": "Self-hosted audiobook and podcast server",
        6→  "main": "index.js",
-       7→  "scripts": {
-       8→    "dev": "nodemon --watch server index.js -- --dev",
-       9→    "start": "node index.js",
-      10→    "start-dev": "node index.js --prod-with-dev-env",
-      11→    "client": "cd client && npm ci && npm run generate",
-      12→    "prod": "npm run client && npm ci && node index.js",
-      13→    "build-win": "npm run client && pkg -t node20-win-x64 -o ./dist/win/audiobookshelf -C GZip .",
-      14→    "build-win-no-compress": "npm run client && pkg -t node20-win-x64 -o ./dist/win/audiobookshelf .",
-      15→    "build-linux": "build/linuxpackager",
-      16→    "docker": "docker buildx build --platform linux/amd64,linux/arm64 --push .  -t advplyr/audiobookshelf",
-      17→    "docker-amd64-local": "docker buildx build --platform linux/amd64 --load .  -t advplyr/audiobookshelf-amd64-local",
-      18→    "docker-arm64-local": "docker buildx build --platform linux/arm64 --load .  -t advplyr/audiobookshelf-arm64-local",
-      19→    "deploy-linux": "node deploy/linux",
-      20→    "test": "mocha",
-      21→    "coverage": "nyc mocha"
-      22→  },
+    …
       23→  "bin": "index.js",
     …
       38→  "author": "advplyr",
@@ -270,7 +285,7 @@ readme.md
       16→
       17→Audiobookshelf is a self-hosted audiobook and podcast server.
       19→### Features
-    …
+      21→- Fully **open-source**, including the [android & iOS app](https://github.com/advplyr/audiobookshelf-app) _(in beta)_
       22→- Stream all audio formats on the fly
       23→- Search and add podcasts to download episodes w/ auto-download
       24→- Multi-user support w/ custom permissions
@@ -320,11 +335,14 @@ readme.md
     …
      200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
     …
+     243→6. **Advanced Settings Tab**
+     244→   - Leave as is.
      246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)
     …
      258→### Example Caddyfile - [Caddy Reverse Proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
     …
      267→### HAProxy
+     269→Below is a generic HAProxy config, using `audiobookshelf.YOUR_DOMAIN.COM`.
     …
      310→### pfSense and HAProxy
      312→For pfSense the inputs are graphical, and `Health checking` is enabled.
@@ -383,6 +401,9 @@ server/
             LibraryFile.js
         metadata/
         settings/
+            EmailSettings.js
+            NotificationSettings.js
+            ServerSettings.js
     providers/
         Audible.js
         AudiobookCovers.js
@@ -398,6 +419,19 @@ server/
         HlsRouter.js
         PublicRouter.js
     scanner/
+        AbsMetadataFileScanner.js
+        AudioFileScanner.js
+        BookScanner.js
+        LibraryItemScanData.js
+        LibraryItemScanner.js
+        LibraryScan.js
+        LibraryScanner.js
+        MediaProbeData.js
+        NfoFileScanner.js
+        OpfFileScanner.js
+        PodcastScanner.js
+        ScanLogger.js
+        Scanner.js
     utils/
 tailwind.config.js
 test/

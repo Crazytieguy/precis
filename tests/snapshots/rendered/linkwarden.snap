@@ -46,7 +46,7 @@ README.md
       41→## Features
       43→- 📸 Auto capture a screenshot, PDF, and single html file of each webpage
       44→- 📖 Reader view of the webpage, with the ability to highlight and annotate text
-    …
+      45→- 🏛️ Send your webpage to Wayback Machine ([archive.org](https://archive.org)) for a snapshot (optional)
       46→- ✨ Local AI Tagging to automatically tag your links based on their content (optional)
       47→- 📂 Organize links by collection, sub-collection, name, description and multiple tags
       48→- 👥 Collaborate on gathering links in a collection
@@ -94,6 +94,33 @@ README.md
     …
 apps/
     mobile/
+        .easignore
+        .env.sample
+        .gitignore
+        app/
+        app.json
+        assets/
+        babel.config.js
+        components/
+        eas.json
+        lib/
+            cache.ts
+            colors.ts
+            queryClient.ts
+            queryPersister.ts
+            theme.ts
+        metro.config.js
+        nativewind-env.d.ts
+        package.json
+        plugins/
+        store/
+            auth.ts
+            data.ts
+            tmp.ts
+        styles/
+        tailwind.config.js
+        tsconfig.json
+        types/
     web/
     worker/
         index.ts
@@ -169,24 +196,6 @@ package.json
        7→    "apps/*",
        8→    "packages/*"
        9→  ],
-      10→  "scripts": {
-      11→    "web:dev": "dotenv -- yarn workspace @linkwarden/web dev",
-      12→    "web:build": "dotenv -- yarn workspace @linkwarden/web build",
-      13→    "web:start": "dotenv -- yarn workspace @linkwarden/web start",
-      14→    "update:browserslist-db": "npx update-browserslist-db@latest",
-      15→    "worker:dev": "dotenv -- yarn workspace @linkwarden/worker dev",
-      16→    "worker:start": "dotenv -- yarn workspace @linkwarden/worker start",
-      17→    "concurrently:dev": "concurrently \"dotenv -- yarn workspace @linkwarden/web dev\" \"dotenv -- yarn workspace @linkwarden/worker dev\"",
-      18→    "concurrently:start": "concurrently \"dotenv -- yarn workspace @linkwarden/web start\" \"dotenv -- yarn workspace @linkwarden/worker start\"",
-      19→    "prisma:deploy": "dotenv -- yarn workspace @linkwarden/prisma deploy",
-      20→    "prisma:dev": "dotenv -- yarn workspace @linkwarden/prisma dev",
-      21→    "prisma:generate": "yarn workspace @linkwarden/prisma generate",
-      22→    "prisma:studio": "yarn workspace @linkwarden/prisma studio",
-      23→    "format": "yarn workspaces run format",
-      24→    "test": "vitest",
-      25→    "coverage": "vitest run --coverage",
-      26→    "postinstall": "yarn workspace @linkwarden/web run postinstall && patch-package"
-      27→  },
     …
 packages/
     filesystem/
@@ -276,6 +285,21 @@ packages/
              151→model UsersAndCollections {
             …
              166→model Link {
+             167→  id              Int         @id @default(autoincrement())
+             168→  name            String      @default("")
+             169→  type            String      @default("url")
+             170→  description     String      @default("")
+             171→  highlight       Highlight[]
+             172→  pinnedBy        User[]      @relation("PinnedLinks")
+             173→  createdBy       User?       @relation("CreatedLinks", fields: [createdById], references: [id], onDelete: Cascade)
+             174→  createdById     Int?
+             175→  collection      Collection  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+             176→  collectionId    Int
+             177→  tags            Tag[]
+             178→  icon            String?
+             179→  iconWeight      String?
+             180→  color           String?
+             181→  url             String?
             …
              200→model Tag {
             …
@@ -290,7 +314,11 @@ packages/
              275→model DashboardSection {
             …
              289→enum DashboardSectionType {
-            …
+             290→  STATS
+             291→  RECENT_LINKS
+             292→  PINNED_LINKS
+             293→  COLLECTION
+             294→}
              296→model AppMigration {
             …
              304→enum AppMigrationStatus {
@@ -300,6 +328,20 @@ packages/
              308→}
         seed.js
     router/
+        collections.tsx
+        config.tsx
+        dashboardData.tsx
+        highlights.tsx
+        links.tsx
+        package.json
+        publicLinks.tsx
+        publicTags.tsx
+        rss.tsx
+        tags.tsx
+        tokens.tsx
+        user.tsx
+        users.tsx
+        worker.tsx
     types/
         global.ts
         inputSelect.ts
