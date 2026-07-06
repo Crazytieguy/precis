@@ -242,7 +242,4 @@ Score(3000)=0.543 I=0.812 C=0.364 ns_rows≤3K=21/46 (reached=8 partial=1 missin
 | ns | 9821 |  | 352 | Remaining directory shape: guide/src subsections, front-end assets, testsuite | 5.1 |  | 0.497 |
 | ns | 9832 |  | 11 | examples/ listing | 5.2 |  | 0.498 |
 | walker |  | 9845 | 27 | headings outline in guide/src/for_developers/README.md |  |  | 0.498 |
-| walker |  | 9880 | 35 | listing of 'guide/src/format' |  |  | 0.503 |
-| walker |  | 9912 | 32 | headings outline in guide/src/format/mathjax.md |  |  | 0.503 |
-| walker |  | 9988 | 76 | README headline in guide/src/format/README.md |  |  | 0.503 |
-| ns | 9990 |  | 158 | tests/gui listing | 5.3 |  | 0.497 |
+| ns | 9990 |  | 158 | tests/gui listing | 5.3 |  | 0.492 |

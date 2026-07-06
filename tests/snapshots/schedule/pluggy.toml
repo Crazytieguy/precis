@@ -1,7 +1,7 @@
 fixture = "pluggy"
 budget = 10000
-cumulative_tokens = 9930
-batch_count = 256
+cumulative_tokens = 9667
+batch_count = 252
 
 [[batches]]
 position = 1
@@ -6107,78 +6107,6 @@ kind = "lines"
 path = "src/pluggy/_manager.py"
 start = 435
 end = 440
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 253
-key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 450 })'
-descriptor = "python method doc at src/pluggy/_manager.py:450"
-cost_tokens = 179
-cum_tokens = 9846
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/pluggy/_manager.py"
-start = 453
-end = 464
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 254
-key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 17, body_start_line: 18 })'
-descriptor = "python method body at src/pluggy/_tracing.py:17 body 18"
-cost_tokens = 49
-cum_tokens = 9895
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/pluggy/_tracing.py"
-start = 18
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 255
-key = 'Python(MethodBody { file: "src/pluggy/_manager.py", start_line: 304, body_start_line: 312 })'
-descriptor = "python method body at src/pluggy/_manager.py:304 body 312"
-cost_tokens = 17
-cum_tokens = 9912
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/pluggy/_manager.py"
-start = 312
-end = 312
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 256
-key = 'Python(DeclNames { file: "docs/examples/eggsample/eggsample/__init__.py", chunk_index: 0 })'
-descriptor = "python decl names surface in docs/examples/eggsample/eggsample/__init__.py"
-cost_tokens = 18
-cum_tokens = 9930
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/examples/eggsample/eggsample/__init__.py"
-start = 4
-end = 4
 
 [batches.content.spans.render]
 kind = "full"

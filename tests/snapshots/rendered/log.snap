@@ -23,6 +23,8 @@ Cargo.toml
       15→exclude = ["rfcs/**/*"]
       16→rust-version = "1.68.0"
       17→edition = "2021"
+      19→[package.metadata.docs.rs]
+      20→features = ["std", "serde", "kv_std", "kv_sval", "kv_serde"]
     …
 LICENSE-APACHE
 LICENSE-MIT

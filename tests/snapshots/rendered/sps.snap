@@ -16,6 +16,10 @@ Cargo.toml
        7→    "sps-net",
        8→]
     …
+      43→[profile.release]
+      44→lto = true
+      45→codegen-units = 1
+      46→strip = true
 LICENSE.md
 NOTICE.md
 README.md
@@ -49,6 +53,11 @@ README.md
 rustfmt.toml
 sps/
     Cargo.toml
+        …
+          13→[[bin]]
+          14→name = "sps"
+          15→path = "src/main.rs"
+        …
     src/
         cli/
             info.rs
@@ -70,15 +79,7 @@ sps/
             upgrade.rs
         cli.rs
             …
-              32→#[derive(Parser, Debug)]
-            …
               35→pub struct CliArgs {
-              36→    #[arg(short, long, action = ArgAction::Count, global = true)]
-              37→    pub verbose: u8,
-              38→
-              39→    #[command(subcommand)]
-              40→    pub command: Command,
-              41→}
             …
               44→pub enum Command {
             …

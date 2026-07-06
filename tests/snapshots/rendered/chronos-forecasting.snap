@@ -25,8 +25,6 @@ README.md
       14→</div>
       17→## 🚀 News
     …
-      20→- **12 Dec 2024**: 📊 We released [`fev`](https://github.com/autogluon/fev), a lightweight package for benchmarking time series forecasting models based on the [Hugging Face `datasets`](https://huggingface.co/docs/datasets/en/index) library.
-    …
       22→- **13 Mar 2024**: 🚀 Chronos [paper](https://arxiv.org/abs/2403.07815) and inference code released.
       24→## ✨ Introduction
     …
@@ -38,7 +36,6 @@ README.md
     …
      117→## Example Notebooks
     …
-     128→- [Deploy Chronos-2 on Amazon SageMaker](notebooks/deploy-chronos-to-amazon-sagemaker.ipynb)
      130→## 📝 Citation
     …
      153→## 🛡️ Security
@@ -48,7 +45,6 @@ README.md
      158→
      159→This project is licensed under the Apache-2.0 License.
 ci/
-    evaluate/
 notebooks/
     chronos-2-quickstart.ipynb
     deploy-chronos-to-amazon-sagemaker.ipynb
@@ -68,6 +64,33 @@ pyproject.toml
       21→  "einops>=0.7.0,<1",
       22→  "scikit-learn>=1.6.0,<2",
       23→]
+    …
+      41→[project.optional-dependencies]
+      42→extras = [
+      43→  "boto3>=1.10,<2",
+      44→  "peft>=0.13.0,<0.18",
+      45→  "fev>=0.6.1",
+      46→  "pandas[pyarrow]>=2.0,<2.4",
+      47→]
+      48→test = [
+      49→  "pytest~=8.0",
+      50→  "boto3>=1.10,<2",
+      51→  "peft>=0.13.0,<1",
+      52→  "fev>=0.6.1",
+      53→  "pandas[pyarrow]>=2.0,<2.4",
+      54→]
+      55→typecheck = ["mypy~=1.9"]
+      56→dev = [
+      57→  "gluonts[pro]~=0.16",
+      58→  "datasets>=3.0,<4",
+      59→  "typer",
+      60→  "tensorboard",
+      61→  "typer-config",
+      62→  "joblib",
+      63→  "fev>=0.6.1",
+      64→  "rich",
+      65→  "pandas>=2.0,<2.4",
+      66→]
     …
 scripts/
     README.md
@@ -123,12 +146,6 @@ src/
               45→    forecast_type: ForecastType
               46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
               48→    def __init__(self, inner_model: "PreTrainedModel"):
-              49→        """
-              50→        Parameters
-              51→        ----------
-              52→        inner_model : PreTrainedModel
-              53→            A hugging-face transformers PreTrainedModel, e.g., T5ForConditionalGeneration
-              54→        """
             …
               58→    @property
               59→    def model_context_length(self) -> int:
@@ -176,10 +193,6 @@ src/
              341→        force_s3_download=False,
              342→        **kwargs,
              343→    ):
-             344→        """
-             345→        Load the model, either from a local path, S3 prefix, or from the HuggingFace Hub.
-             346→        Supports the same arguments as ``AutoConfig`` and ``AutoModel`` from ``transformers``.
-             347→        """
             …
         boto_utils.py
         chronos.py
@@ -197,31 +210,10 @@ src/
                   10→
                   11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
             config.py
-                …
-                  12→class Chronos2CoreConfig(PretrainedConfig):
-                  13→    """
-                  14→    HF transformers-style pretrained model config for Chronos-2.0, based on T5Config.
-                …
-                  54→    def __init__(
-                …
-                 102→@dataclass
-                 103→class Chronos2ForecastingConfig:
-                …
-                 114→    @classmethod
-                 115→    def editable_fields(cls) -> list[str]:
-                …
             dataset.py
             layers.py
             model.py
             pipeline.py
-                …
-                  36→logger = logging.getLogger(__name__)
-                  37→
-                  38→
-                  39→class Chronos2Pipeline(BaseChronosPipeline):
-                  40→    forecast_type: ForecastType = ForecastType.QUANTILES
-                  41→    default_context_length: int = 2048
-                …
             trainer.py
         chronos_bolt.py
         df_utils.py

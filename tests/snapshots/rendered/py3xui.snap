@@ -102,23 +102,6 @@ py3xui/
               14→    """This class provides a high-level interface to interact with the XUI API.
               15→    Access to the client, inbound, and database APIs is provided through this class.
             …
-              67→    def __init__(
-            …
-              93→    @property
-              94→    def session(self) -> str | None:
-            …
-             102→    @session.setter
-             103→    def session(self, value: str) -> None:
-            …
-             115→    @property
-             116→    def cookie_name(self) -> str | None:
-            …
-             124→    @cookie_name.setter
-            …
-             139→    @classmethod
-            …
-             189→    def login(self, two_factor_code: str | int | None = None) -> None:
-            …
         api_base.py
             …
               15→class ApiFields:
@@ -286,7 +269,9 @@ py3xui/
                4→COOKIE_NAMES = ["3x-ui", "session"]
         env.py
 pyproject.toml
-    …
+       1→[build-system]
+       2→requires = ["setuptools>=42", "wheel"]
+       3→build-backend = "setuptools.build_meta"
        5→[project]
        6→name = "py3xui"
        7→version = "0.5.0"
@@ -299,7 +284,14 @@ pyproject.toml
       21→    "requests>=2.0.0",
       22→    "httpx>=0.20.0",
       23→]
-    …
+      25→[project.urls]
+      26→Homepage = "https://github.com/iwatkot/py3xui"
+      27→Repository = "https://github.com/iwatkot/py3xui"
+      28→
+      29→[tool.setuptools.packages.find]
+      30→where = ["."]
+      31→include = ["py3xui*"]
+      32→exclude = ["dev*"]
 tests/
     __init__.py
     responses/

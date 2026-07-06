@@ -1,6 +1,6 @@
 fixture = "htmy"
 budget = 10000
-cumulative_tokens = 9947
+cumulative_tokens = 9979
 batch_count = 351
 
 [[batches]]
@@ -39,8 +39,8 @@ kind = "full"
 position = 3
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 65
-cum_tokens = 247
+cost_tokens = 97
+cum_tokens = 279
 
 [batches.content]
 kind = "lines"
@@ -48,7 +48,7 @@ kind = "lines"
 [[batches.content.spans]]
 path = "pyproject.toml"
 start = 9
-end = 13
+end = 16
 
 [batches.content.spans.render]
 kind = "full"
@@ -58,7 +58,7 @@ position = 4
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 20
-cum_tokens = 267
+cum_tokens = 299
 
 [batches.content]
 kind = "fs"
@@ -72,7 +72,7 @@ position = 5
 key = 'Markdown(HeadingsOutline { file: "docs/components-guide.md" })'
 descriptor = "headings outline in docs/components-guide.md"
 cost_tokens = 56
-cum_tokens = 323
+cum_tokens = 355
 
 [batches.content]
 kind = "lines"
@@ -130,7 +130,7 @@ position = 6
 key = 'Markdown(Section { file: "docs/components-guide.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/components-guide.md section #0"
 cost_tokens = 0
-cum_tokens = 323
+cum_tokens = 355
 
 [batches.content]
 kind = "lines"
@@ -148,7 +148,7 @@ position = 7
 key = 'Markdown(HeadingsOutline { file: "docs/function-components.md" })'
 descriptor = "headings outline in docs/function-components.md"
 cost_tokens = 59
-cum_tokens = 382
+cum_tokens = 414
 
 [batches.content]
 kind = "lines"
@@ -254,7 +254,7 @@ position = 8
 key = 'Fs(DirListing { dir: "htmy" })'
 descriptor = "listing of 'htmy'"
 cost_tokens = 65
-cum_tokens = 447
+cum_tokens = 479
 
 [batches.content]
 kind = "fs"
@@ -268,7 +268,7 @@ position = 9
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 0 })'
 descriptor = "python imports in htmy/__init__.py"
 cost_tokens = 17
-cum_tokens = 464
+cum_tokens = 496
 
 [batches.content]
 kind = "lines"
@@ -286,7 +286,7 @@ position = 10
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 2 })'
 descriptor = "python imports #2 in htmy/__init__.py"
 cost_tokens = 17
-cum_tokens = 481
+cum_tokens = 513
 
 [batches.content]
 kind = "lines"
@@ -304,7 +304,7 @@ position = 11
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 3 })'
 descriptor = "python imports #3 in htmy/__init__.py"
 cost_tokens = 13
-cum_tokens = 494
+cum_tokens = 526
 
 [batches.content]
 kind = "lines"
@@ -322,7 +322,7 @@ position = 12
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 5 })'
 descriptor = "python imports #5 in htmy/__init__.py"
 cost_tokens = 18
-cum_tokens = 512
+cum_tokens = 544
 
 [batches.content]
 kind = "lines"
@@ -340,7 +340,7 @@ position = 13
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 4 })'
 descriptor = "python imports #4 in htmy/__init__.py"
 cost_tokens = 24
-cum_tokens = 536
+cum_tokens = 568
 
 [batches.content]
 kind = "lines"
@@ -358,7 +358,7 @@ position = 14
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 1 })'
 descriptor = "python imports #1 in htmy/__init__.py"
 cost_tokens = 120
-cum_tokens = 656
+cum_tokens = 688
 
 [batches.content]
 kind = "lines"
@@ -376,7 +376,7 @@ position = 15
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 6 })'
 descriptor = "python imports #6 in htmy/__init__.py"
 cost_tokens = 26
-cum_tokens = 682
+cum_tokens = 714
 
 [batches.content]
 kind = "lines"
@@ -394,7 +394,7 @@ position = 16
 key = 'Fs(DirListing { dir: "htmy/md" })'
 descriptor = "listing of 'htmy/md'"
 cost_tokens = 14
-cum_tokens = 696
+cum_tokens = 728
 
 [batches.content]
 kind = "fs"
@@ -408,7 +408,7 @@ position = 17
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 7 })'
 descriptor = "python imports #7 in htmy/__init__.py"
 cost_tokens = 42
-cum_tokens = 738
+cum_tokens = 770
 
 [batches.content]
 kind = "lines"
@@ -426,7 +426,7 @@ position = 18
 key = 'Fs(DirListing { dir: "htmy/renderer" })'
 descriptor = "listing of 'htmy/renderer'"
 cost_tokens = 22
-cum_tokens = 760
+cum_tokens = 792
 
 [batches.content]
 kind = "fs"
@@ -440,7 +440,7 @@ position = 19
 key = 'Python(DeclNames { file: "htmy/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/__init__.py"
 cost_tokens = 25
-cum_tokens = 785
+cum_tokens = 817
 
 [batches.content]
 kind = "lines"
@@ -458,7 +458,7 @@ position = 20
 key = 'Python(Imports { file: "htmy/renderer/__init__.py" })'
 descriptor = "python imports in htmy/renderer/__init__.py"
 cost_tokens = 62
-cum_tokens = 847
+cum_tokens = 879
 
 [batches.content]
 kind = "lines"
@@ -476,7 +476,7 @@ position = 21
 key = 'Python(DeclNames { file: "htmy/renderer/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/__init__.py"
 cost_tokens = 36
-cum_tokens = 883
+cum_tokens = 915
 
 [batches.content]
 kind = "lines"
@@ -510,7 +510,7 @@ position = 22
 key = 'Python(DeclNames { file: "htmy/error_boundary.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/error_boundary.py"
 cost_tokens = 12
-cum_tokens = 895
+cum_tokens = 927
 
 [batches.content]
 kind = "lines"
@@ -536,7 +536,7 @@ position = 23
 key = 'Python(Decl { file: "htmy/error_boundary.py", start_line: 15 })'
 descriptor = "python decl at htmy/error_boundary.py:15"
 cost_tokens = 0
-cum_tokens = 895
+cum_tokens = 927
 
 [batches.content]
 kind = "lines"
@@ -554,7 +554,7 @@ position = 24
 key = 'Python(Imports { file: "htmy/md/__init__.py" })'
 descriptor = "python imports in htmy/md/__init__.py"
 cost_tokens = 88
-cum_tokens = 983
+cum_tokens = 1015
 
 [batches.content]
 kind = "lines"
@@ -572,7 +572,7 @@ position = 25
 key = 'Python(DeclNames { file: "htmy/etree.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/etree.py"
 cost_tokens = 13
-cum_tokens = 996
+cum_tokens = 1028
 
 [batches.content]
 kind = "lines"
@@ -598,7 +598,7 @@ position = 26
 key = 'Python(Decl { file: "htmy/etree.py", start_line: 23 })'
 descriptor = "python decl at htmy/etree.py:23"
 cost_tokens = 0
-cum_tokens = 996
+cum_tokens = 1028
 
 [batches.content]
 kind = "lines"
@@ -616,7 +616,7 @@ position = 27
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 9 })'
 descriptor = "python imports #9 in htmy/__init__.py"
 cost_tokens = 108
-cum_tokens = 1104
+cum_tokens = 1136
 
 [batches.content]
 kind = "lines"
@@ -634,7 +634,7 @@ position = 28
 key = 'Python(ClassBody { file: "htmy/error_boundary.py", start_line: 15 })'
 descriptor = "python class body at htmy/error_boundary.py:15"
 cost_tokens = 21
-cum_tokens = 1125
+cum_tokens = 1157
 
 [batches.content]
 kind = "lines"
@@ -652,7 +652,7 @@ position = 29
 key = 'Python(DeclNames { file: "htmy/snippet.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/snippet.py"
 cost_tokens = 21
-cum_tokens = 1146
+cum_tokens = 1178
 
 [batches.content]
 kind = "lines"
@@ -694,7 +694,7 @@ position = 30
 key = 'Python(Decl { file: "htmy/snippet.py", start_line: 27 })'
 descriptor = "python decl at htmy/snippet.py:27"
 cost_tokens = 0
-cum_tokens = 1146
+cum_tokens = 1178
 
 [batches.content]
 kind = "lines"
@@ -712,7 +712,7 @@ position = 31
 key = 'Python(Decl { file: "htmy/snippet.py", start_line: 158 })'
 descriptor = "python decl at htmy/snippet.py:158"
 cost_tokens = 0
-cum_tokens = 1146
+cum_tokens = 1178
 
 [batches.content]
 kind = "lines"
@@ -730,7 +730,7 @@ position = 32
 key = 'Python(DeclNames { file: "htmy/io.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/io.py"
 cost_tokens = 22
-cum_tokens = 1168
+cum_tokens = 1200
 
 [batches.content]
 kind = "lines"
@@ -756,7 +756,7 @@ position = 33
 key = 'Python(Decl { file: "htmy/io.py", start_line: 11 })'
 descriptor = "python decl at htmy/io.py:11"
 cost_tokens = 0
-cum_tokens = 1168
+cum_tokens = 1200
 
 [batches.content]
 kind = "lines"
@@ -774,7 +774,7 @@ position = 34
 key = 'Python(DeclDoc { file: "htmy/io.py", start_line: 11 })'
 descriptor = "python decl doc at htmy/io.py:11"
 cost_tokens = 15
-cum_tokens = 1183
+cum_tokens = 1215
 
 [batches.content]
 kind = "lines"
@@ -792,7 +792,7 @@ position = 35
 key = 'Python(ClassBody { file: "htmy/snippet.py", start_line: 158 })'
 descriptor = "python class body at htmy/snippet.py:158"
 cost_tokens = 26
-cum_tokens = 1209
+cum_tokens = 1241
 
 [batches.content]
 kind = "lines"
@@ -810,7 +810,7 @@ position = 36
 key = 'Python(DeclNames { file: "htmy/renderer/baseline.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/baseline.py"
 cost_tokens = 11
-cum_tokens = 1220
+cum_tokens = 1252
 
 [batches.content]
 kind = "lines"
@@ -836,7 +836,7 @@ position = 37
 key = 'Python(Decl { file: "htmy/renderer/baseline.py", start_line: 18 })'
 descriptor = "python decl at htmy/renderer/baseline.py:18"
 cost_tokens = 0
-cum_tokens = 1220
+cum_tokens = 1252
 
 [batches.content]
 kind = "lines"
@@ -854,7 +854,7 @@ position = 38
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 8 })'
 descriptor = "python imports #8 in htmy/__init__.py"
 cost_tokens = 226
-cum_tokens = 1446
+cum_tokens = 1478
 
 [batches.content]
 kind = "lines"
@@ -872,7 +872,7 @@ position = 39
 key = 'Python(DeclNames { file: "htmy/renderer/context.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/context.py"
 cost_tokens = 12
-cum_tokens = 1458
+cum_tokens = 1490
 
 [batches.content]
 kind = "lines"
@@ -898,7 +898,7 @@ position = 40
 key = 'Python(Decl { file: "htmy/renderer/context.py", start_line: 6 })'
 descriptor = "python decl at htmy/renderer/context.py:6"
 cost_tokens = 0
-cum_tokens = 1458
+cum_tokens = 1490
 
 [batches.content]
 kind = "lines"
@@ -916,7 +916,7 @@ position = 41
 key = 'Python(MethodSigs { file: "htmy/renderer/context.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/renderer/context.py"
 cost_tokens = 10
-cum_tokens = 1468
+cum_tokens = 1500
 
 [batches.content]
 kind = "lines"
@@ -942,7 +942,7 @@ position = 42
 key = 'Python(DeclDoc { file: "htmy/snippet.py", start_line: 158 })'
 descriptor = "python decl doc at htmy/snippet.py:158"
 cost_tokens = 25
-cum_tokens = 1493
+cum_tokens = 1525
 
 [batches.content]
 kind = "lines"
@@ -960,7 +960,7 @@ position = 43
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 69
-cum_tokens = 1562
+cum_tokens = 1594
 
 [batches.content]
 kind = "lines"
@@ -994,7 +994,7 @@ position = 44
 key = 'Python(ClassBody { file: "htmy/renderer/baseline.py", start_line: 18 })'
 descriptor = "python class body at htmy/renderer/baseline.py:18"
 cost_tokens = 20
-cum_tokens = 1582
+cum_tokens = 1614
 
 [batches.content]
 kind = "lines"
@@ -1012,7 +1012,7 @@ position = 45
 key = 'Python(Method { file: "htmy/renderer/context.py", start_line: 11 })'
 descriptor = "python method at htmy/renderer/context.py:11"
 cost_tokens = 18
-cum_tokens = 1600
+cum_tokens = 1632
 
 [batches.content]
 kind = "lines"
@@ -1030,7 +1030,7 @@ position = 46
 key = 'Python(MethodSigs { file: "htmy/error_boundary.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/error_boundary.py"
 cost_tokens = 50
-cum_tokens = 1650
+cum_tokens = 1682
 
 [batches.content]
 kind = "lines"
@@ -1088,7 +1088,7 @@ position = 47
 key = 'Python(Method { file: "htmy/error_boundary.py", start_line: 45 })'
 descriptor = "python method at htmy/error_boundary.py:45"
 cost_tokens = 0
-cum_tokens = 1650
+cum_tokens = 1682
 
 [batches.content]
 kind = "lines"
@@ -1106,7 +1106,7 @@ position = 48
 key = 'Python(Method { file: "htmy/error_boundary.py", start_line: 56 })'
 descriptor = "python method at htmy/error_boundary.py:56"
 cost_tokens = 0
-cum_tokens = 1650
+cum_tokens = 1682
 
 [batches.content]
 kind = "lines"
@@ -1124,7 +1124,7 @@ position = 49
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 212
-cum_tokens = 1862
+cum_tokens = 1894
 
 [batches.content]
 kind = "lines"
@@ -1486,7 +1486,7 @@ position = 50
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false })'
 descriptor = "README.md section #14"
 cost_tokens = 11
-cum_tokens = 1873
+cum_tokens = 1905
 
 [batches.content]
 kind = "lines"
@@ -1504,7 +1504,7 @@ position = 51
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
 descriptor = "README.md section #4"
 cost_tokens = 16
-cum_tokens = 1889
+cum_tokens = 1921
 
 [batches.content]
 kind = "lines"
@@ -1522,7 +1522,7 @@ position = 52
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false })'
 descriptor = "README.md section #7"
 cost_tokens = 16
-cum_tokens = 1905
+cum_tokens = 1937
 
 [batches.content]
 kind = "lines"
@@ -1540,7 +1540,7 @@ position = 53
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false })'
 descriptor = "README.md section #8"
 cost_tokens = 14
-cum_tokens = 1919
+cum_tokens = 1951
 
 [batches.content]
 kind = "lines"
@@ -1558,7 +1558,7 @@ position = 54
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false })'
 descriptor = "README.md section #13"
 cost_tokens = 17
-cum_tokens = 1936
+cum_tokens = 1968
 
 [batches.content]
 kind = "lines"
@@ -1576,7 +1576,7 @@ position = 55
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
 descriptor = "README.md section #3"
 cost_tokens = 19
-cum_tokens = 1955
+cum_tokens = 1987
 
 [batches.content]
 kind = "lines"
@@ -1594,7 +1594,7 @@ position = 56
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
 descriptor = "README.md section #9"
 cost_tokens = 21
-cum_tokens = 1976
+cum_tokens = 2008
 
 [batches.content]
 kind = "lines"
@@ -1612,7 +1612,7 @@ position = 57
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
 descriptor = "README.md section #12"
 cost_tokens = 21
-cum_tokens = 1997
+cum_tokens = 2029
 
 [batches.content]
 kind = "lines"
@@ -1630,7 +1630,7 @@ position = 58
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
 descriptor = "README.md section #5"
 cost_tokens = 22
-cum_tokens = 2019
+cum_tokens = 2051
 
 [batches.content]
 kind = "lines"
@@ -1648,7 +1648,7 @@ position = 59
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
 descriptor = "README.md section #1"
 cost_tokens = 23
-cum_tokens = 2042
+cum_tokens = 2074
 
 [batches.content]
 kind = "lines"
@@ -1666,7 +1666,7 @@ position = 60
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
 descriptor = "README.md section #2"
 cost_tokens = 21
-cum_tokens = 2063
+cum_tokens = 2095
 
 [batches.content]
 kind = "lines"
@@ -1684,7 +1684,7 @@ position = 61
 key = 'Fs(DirListing { dir: "docs/api" })'
 descriptor = "listing of 'docs/api'"
 cost_tokens = 42
-cum_tokens = 2105
+cum_tokens = 2137
 
 [batches.content]
 kind = "fs"
@@ -1698,7 +1698,7 @@ position = 62
 key = 'Markdown(HeadingsOutline { file: "docs/api/md.md" })'
 descriptor = "headings outline in docs/api/md.md"
 cost_tokens = 27
-cum_tokens = 2132
+cum_tokens = 2164
 
 [batches.content]
 kind = "lines"
@@ -1740,7 +1740,7 @@ position = 63
 key = 'Markdown(Section { file: "README.md", section_index: 51, reference_shaped: false })'
 descriptor = "README.md section #51"
 cost_tokens = 33
-cum_tokens = 2165
+cum_tokens = 2197
 
 [batches.content]
 kind = "lines"
@@ -1758,7 +1758,7 @@ position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
 descriptor = "README.md section #11"
 cost_tokens = 24
-cum_tokens = 2189
+cum_tokens = 2221
 
 [batches.content]
 kind = "lines"
@@ -1776,7 +1776,7 @@ position = 65
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false })'
 descriptor = "README.md section #6"
 cost_tokens = 25
-cum_tokens = 2214
+cum_tokens = 2246
 
 [batches.content]
 kind = "lines"
@@ -1794,7 +1794,7 @@ position = 66
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 22
-cum_tokens = 2236
+cum_tokens = 2268
 
 [batches.content]
 kind = "fs"
@@ -1808,7 +1808,7 @@ position = 67
 key = 'Fs(DirListing { dir: "examples/internationalization" })'
 descriptor = "listing of 'examples/internationalization'"
 cost_tokens = 13
-cum_tokens = 2249
+cum_tokens = 2281
 
 [batches.content]
 kind = "fs"
@@ -1822,7 +1822,7 @@ position = 68
 key = 'Fs(DirListing { dir: "examples/markdown_customization" })'
 descriptor = "listing of 'examples/markdown_customization'"
 cost_tokens = 14
-cum_tokens = 2263
+cum_tokens = 2295
 
 [batches.content]
 kind = "fs"
@@ -1836,7 +1836,7 @@ position = 69
 key = 'Fs(DirListing { dir: "examples/markdown_essentials" })'
 descriptor = "listing of 'examples/markdown_essentials'"
 cost_tokens = 14
-cum_tokens = 2277
+cum_tokens = 2309
 
 [batches.content]
 kind = "fs"
@@ -1850,7 +1850,7 @@ position = 70
 key = 'Python(DeclBody { file: "htmy/io.py", start_line: 11, body_start_line: 13 })'
 descriptor = "python decl body at htmy/io.py:11 body 13"
 cost_tokens = 26
-cum_tokens = 2303
+cum_tokens = 2335
 
 [batches.content]
 kind = "lines"
@@ -1868,7 +1868,7 @@ position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 41, reference_shaped: false })'
 descriptor = "README.md section #41"
 cost_tokens = 16
-cum_tokens = 2319
+cum_tokens = 2351
 
 [batches.content]
 kind = "lines"
@@ -1886,7 +1886,7 @@ position = 72
 key = 'Markdown(Section { file: "docs/api/md.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/md.md section #0"
 cost_tokens = 21
-cum_tokens = 2340
+cum_tokens = 2372
 
 [batches.content]
 kind = "lines"
@@ -1904,7 +1904,7 @@ position = 73
 key = 'Fs(DirListing { dir: "docs/api/renderer" })'
 descriptor = "listing of 'docs/api/renderer'"
 cost_tokens = 12
-cum_tokens = 2352
+cum_tokens = 2384
 
 [batches.content]
 kind = "fs"
@@ -1918,7 +1918,7 @@ position = 74
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false })'
 descriptor = "README.md section #10"
 cost_tokens = 31
-cum_tokens = 2383
+cum_tokens = 2415
 
 [batches.content]
 kind = "lines"
@@ -1936,7 +1936,7 @@ position = 75
 key = 'Markdown(Section { file: "README.md", section_index: 46, reference_shaped: false })'
 descriptor = "README.md section #46"
 cost_tokens = 46
-cum_tokens = 2429
+cum_tokens = 2461
 
 [batches.content]
 kind = "lines"
@@ -1954,7 +1954,7 @@ position = 76
 key = 'Python(DeclNames { file: "htmy/md/core.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/md/core.py"
 cost_tokens = 26
-cum_tokens = 2455
+cum_tokens = 2487
 
 [batches.content]
 kind = "lines"
@@ -1996,7 +1996,7 @@ position = 77
 key = 'Python(Decl { file: "htmy/md/core.py", start_line: 20 })'
 descriptor = "python decl at htmy/md/core.py:20"
 cost_tokens = 0
-cum_tokens = 2455
+cum_tokens = 2487
 
 [batches.content]
 kind = "lines"
@@ -2014,7 +2014,7 @@ position = 78
 key = 'Python(Decl { file: "htmy/md/core.py", start_line: 81 })'
 descriptor = "python decl at htmy/md/core.py:81"
 cost_tokens = 0
-cum_tokens = 2455
+cum_tokens = 2487
 
 [batches.content]
 kind = "lines"
@@ -2032,7 +2032,7 @@ position = 79
 key = 'Python(ClassBody { file: "htmy/md/core.py", start_line: 81 })'
 descriptor = "python class body at htmy/md/core.py:81"
 cost_tokens = 34
-cum_tokens = 2489
+cum_tokens = 2521
 
 [batches.content]
 kind = "lines"
@@ -2050,7 +2050,7 @@ position = 80
 key = 'Python(DeclDoc { file: "htmy/renderer/context.py", start_line: 6 })'
 descriptor = "python decl doc at htmy/renderer/context.py:6"
 cost_tokens = 32
-cum_tokens = 2521
+cum_tokens = 2553
 
 [batches.content]
 kind = "lines"
@@ -2068,7 +2068,7 @@ position = 81
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false })'
 descriptor = "README.md section #16"
 cost_tokens = 72
-cum_tokens = 2593
+cum_tokens = 2625
 
 [batches.content]
 kind = "lines"
@@ -2086,7 +2086,7 @@ position = 82
 key = 'Python(DeclDoc { file: "htmy/error_boundary.py", start_line: 15 })'
 descriptor = "python decl doc at htmy/error_boundary.py:15"
 cost_tokens = 60
-cum_tokens = 2653
+cum_tokens = 2685
 
 [batches.content]
 kind = "lines"
@@ -2104,7 +2104,7 @@ position = 83
 key = 'Python(DeclNames { file: "htmy/core.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/core.py"
 cost_tokens = 104
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2258,7 +2258,7 @@ position = 84
 key = 'Python(Decl { file: "htmy/core.py", start_line: 19 })'
 descriptor = "python decl at htmy/core.py:19"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2276,7 +2276,7 @@ position = 85
 key = 'Python(Decl { file: "htmy/core.py", start_line: 38 })'
 descriptor = "python decl at htmy/core.py:38"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2294,7 +2294,7 @@ position = 86
 key = 'Python(Decl { file: "htmy/core.py", start_line: 64 })'
 descriptor = "python decl at htmy/core.py:64"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2312,7 +2312,7 @@ position = 87
 key = 'Python(Decl { file: "htmy/core.py", start_line: 146 })'
 descriptor = "python decl at htmy/core.py:146"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2330,7 +2330,7 @@ position = 88
 key = 'Python(Decl { file: "htmy/core.py", start_line: 157 })'
 descriptor = "python decl at htmy/core.py:157"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2348,7 +2348,7 @@ position = 89
 key = 'Python(Decl { file: "htmy/core.py", start_line: 163 })'
 descriptor = "python decl at htmy/core.py:163"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2366,7 +2366,7 @@ position = 90
 key = 'Python(Decl { file: "htmy/core.py", start_line: 175 })'
 descriptor = "python decl at htmy/core.py:175"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2384,7 +2384,7 @@ position = 91
 key = 'Python(Decl { file: "htmy/core.py", start_line: 196 })'
 descriptor = "python decl at htmy/core.py:196"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2402,7 +2402,7 @@ position = 92
 key = 'Python(Decl { file: "htmy/core.py", start_line: 201 })'
 descriptor = "python decl at htmy/core.py:201"
 cost_tokens = 0
-cum_tokens = 2757
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2420,7 +2420,7 @@ position = 93
 key = 'Python(ClassBody { file: "htmy/core.py", start_line: 157 })'
 descriptor = "python class body at htmy/core.py:157"
 cost_tokens = 6
-cum_tokens = 2763
+cum_tokens = 2795
 
 [batches.content]
 kind = "lines"
@@ -2438,7 +2438,7 @@ position = 94
 key = 'Python(ClassBody { file: "htmy/core.py", start_line: 163 })'
 descriptor = "python class body at htmy/core.py:163"
 cost_tokens = 6
-cum_tokens = 2769
+cum_tokens = 2801
 
 [batches.content]
 kind = "lines"
@@ -2456,7 +2456,7 @@ position = 95
 key = 'Python(ClassBody { file: "htmy/core.py", start_line: 146 })'
 descriptor = "python class body at htmy/core.py:146"
 cost_tokens = 8
-cum_tokens = 2777
+cum_tokens = 2809
 
 [batches.content]
 kind = "lines"
@@ -2474,7 +2474,7 @@ position = 96
 key = 'Python(ClassBody { file: "htmy/core.py", start_line: 19 })'
 descriptor = "python class body at htmy/core.py:19"
 cost_tokens = 16
-cum_tokens = 2793
+cum_tokens = 2825
 
 [batches.content]
 kind = "lines"
@@ -2492,7 +2492,7 @@ position = 97
 key = 'Python(ClassBody { file: "htmy/core.py", start_line: 38 })'
 descriptor = "python class body at htmy/core.py:38"
 cost_tokens = 16
-cum_tokens = 2809
+cum_tokens = 2841
 
 [batches.content]
 kind = "lines"
@@ -2510,7 +2510,7 @@ position = 98
 key = 'Python(DeclDoc { file: "htmy/core.py", start_line: 19 })'
 descriptor = "python decl doc at htmy/core.py:19"
 cost_tokens = 14
-cum_tokens = 2823
+cum_tokens = 2855
 
 [batches.content]
 kind = "lines"
@@ -2528,7 +2528,7 @@ position = 99
 key = 'Python(DeclDoc { file: "htmy/core.py", start_line: 157 })'
 descriptor = "python decl doc at htmy/core.py:157"
 cost_tokens = 15
-cum_tokens = 2838
+cum_tokens = 2870
 
 [batches.content]
 kind = "lines"
@@ -2546,7 +2546,7 @@ position = 100
 key = 'Python(ClassBody { file: "htmy/core.py", start_line: 175 })'
 descriptor = "python class body at htmy/core.py:175"
 cost_tokens = 20
-cum_tokens = 2858
+cum_tokens = 2890
 
 [batches.content]
 kind = "lines"
@@ -2564,7 +2564,7 @@ position = 101
 key = 'Python(DeclDoc { file: "htmy/core.py", start_line: 146 })'
 descriptor = "python decl doc at htmy/core.py:146"
 cost_tokens = 17
-cum_tokens = 2875
+cum_tokens = 2907
 
 [batches.content]
 kind = "lines"
@@ -2582,7 +2582,7 @@ position = 102
 key = 'Python(ClassBody { file: "htmy/core.py", start_line: 201 })'
 descriptor = "python class body at htmy/core.py:201"
 cost_tokens = 25
-cum_tokens = 2900
+cum_tokens = 2932
 
 [batches.content]
 kind = "lines"
@@ -2600,7 +2600,7 @@ position = 103
 key = 'Python(DeclDoc { file: "htmy/core.py", start_line: 64 })'
 descriptor = "python decl doc at htmy/core.py:64"
 cost_tokens = 20
-cum_tokens = 2920
+cum_tokens = 2952
 
 [batches.content]
 kind = "lines"
@@ -2618,7 +2618,7 @@ position = 104
 key = 'Python(DeclDoc { file: "htmy/core.py", start_line: 38 })'
 descriptor = "python decl doc at htmy/core.py:38"
 cost_tokens = 23
-cum_tokens = 2943
+cum_tokens = 2975
 
 [batches.content]
 kind = "lines"
@@ -2636,7 +2636,7 @@ position = 105
 key = 'Python(DeclBody { file: "htmy/core.py", start_line: 196, body_start_line: 198 })'
 descriptor = "python decl body at htmy/core.py:196 body 198"
 cost_tokens = 19
-cum_tokens = 2962
+cum_tokens = 2994
 
 [batches.content]
 kind = "lines"
@@ -2654,7 +2654,7 @@ position = 106
 key = 'Python(ClassBody { file: "htmy/core.py", start_line: 64 })'
 descriptor = "python class body at htmy/core.py:64"
 cost_tokens = 40
-cum_tokens = 3002
+cum_tokens = 3034
 
 [batches.content]
 kind = "lines"
@@ -2672,7 +2672,7 @@ position = 107
 key = 'Python(DeclDoc { file: "htmy/core.py", start_line: 196 })'
 descriptor = "python decl doc at htmy/core.py:196"
 cost_tokens = 29
-cum_tokens = 3031
+cum_tokens = 3063
 
 [batches.content]
 kind = "lines"
@@ -2690,7 +2690,7 @@ position = 108
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 57
-cum_tokens = 3088
+cum_tokens = 3120
 
 [batches.content]
 kind = "fs"
@@ -2704,7 +2704,7 @@ position = 109
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false })'
 descriptor = "README.md section #26"
 cost_tokens = 21
-cum_tokens = 3109
+cum_tokens = 3141
 
 [batches.content]
 kind = "lines"
@@ -2722,7 +2722,7 @@ position = 110
 key = 'Markdown(Section { file: "README.md", section_index: 39, reference_shaped: false })'
 descriptor = "README.md section #39"
 cost_tokens = 21
-cum_tokens = 3130
+cum_tokens = 3162
 
 [batches.content]
 kind = "lines"
@@ -2740,7 +2740,7 @@ position = 111
 key = 'Python(MethodSigs { file: "htmy/snippet.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/snippet.py"
 cost_tokens = 134
-cum_tokens = 3264
+cum_tokens = 3296
 
 [batches.content]
 kind = "lines"
@@ -2878,7 +2878,7 @@ position = 112
 key = 'Python(Method { file: "htmy/snippet.py", start_line: 110 })'
 descriptor = "python method at htmy/snippet.py:110"
 cost_tokens = 0
-cum_tokens = 3264
+cum_tokens = 3296
 
 [batches.content]
 kind = "lines"
@@ -2896,7 +2896,7 @@ position = 113
 key = 'Python(Method { file: "htmy/snippet.py", start_line: 126 })'
 descriptor = "python method at htmy/snippet.py:126"
 cost_tokens = 0
-cum_tokens = 3264
+cum_tokens = 3296
 
 [batches.content]
 kind = "lines"
@@ -2914,7 +2914,7 @@ position = 114
 key = 'Python(Method { file: "htmy/snippet.py", start_line: 241 })'
 descriptor = "python method at htmy/snippet.py:241"
 cost_tokens = 0
-cum_tokens = 3264
+cum_tokens = 3296
 
 [batches.content]
 kind = "lines"
@@ -2932,7 +2932,7 @@ position = 115
 key = 'Python(Method { file: "htmy/snippet.py", start_line: 256 })'
 descriptor = "python method at htmy/snippet.py:256"
 cost_tokens = 0
-cum_tokens = 3264
+cum_tokens = 3296
 
 [batches.content]
 kind = "lines"
@@ -2950,7 +2950,7 @@ position = 116
 key = 'Python(Method { file: "htmy/snippet.py", start_line: 265 })'
 descriptor = "python method at htmy/snippet.py:265"
 cost_tokens = 0
-cum_tokens = 3264
+cum_tokens = 3296
 
 [batches.content]
 kind = "lines"
@@ -2968,7 +2968,7 @@ position = 117
 key = 'Python(MethodDoc { file: "htmy/snippet.py", start_line: 241 })'
 descriptor = "python method doc at htmy/snippet.py:241"
 cost_tokens = 11
-cum_tokens = 3275
+cum_tokens = 3307
 
 [batches.content]
 kind = "lines"
@@ -2986,7 +2986,7 @@ position = 118
 key = 'Python(MethodBody { file: "htmy/snippet.py", start_line: 110, body_start_line: 124 })'
 descriptor = "python method body at htmy/snippet.py:110 body 124"
 cost_tokens = 13
-cum_tokens = 3288
+cum_tokens = 3320
 
 [batches.content]
 kind = "lines"
@@ -3004,7 +3004,7 @@ position = 119
 key = 'Python(Method { file: "htmy/error_boundary.py", start_line: 25 })'
 descriptor = "python method at htmy/error_boundary.py:25"
 cost_tokens = 55
-cum_tokens = 3343
+cum_tokens = 3375
 
 [batches.content]
 kind = "lines"
@@ -3022,7 +3022,7 @@ position = 120
 key = 'Python(DeclNames { file: "htmy/tag.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/tag.py"
 cost_tokens = 76
-cum_tokens = 3419
+cum_tokens = 3451
 
 [batches.content]
 kind = "lines"
@@ -3112,7 +3112,7 @@ position = 121
 key = 'Python(Decl { file: "htmy/tag.py", start_line: 12 })'
 descriptor = "python decl at htmy/tag.py:12"
 cost_tokens = 0
-cum_tokens = 3419
+cum_tokens = 3451
 
 [batches.content]
 kind = "lines"
@@ -3130,7 +3130,7 @@ position = 122
 key = 'Python(Decl { file: "htmy/tag.py", start_line: 24 })'
 descriptor = "python decl at htmy/tag.py:24"
 cost_tokens = 0
-cum_tokens = 3419
+cum_tokens = 3451
 
 [batches.content]
 kind = "lines"
@@ -3148,7 +3148,7 @@ position = 123
 key = 'Python(Decl { file: "htmy/tag.py", start_line: 56 })'
 descriptor = "python decl at htmy/tag.py:56"
 cost_tokens = 0
-cum_tokens = 3419
+cum_tokens = 3451
 
 [batches.content]
 kind = "lines"
@@ -3166,7 +3166,7 @@ position = 124
 key = 'Python(Decl { file: "htmy/tag.py", start_line: 73 })'
 descriptor = "python decl at htmy/tag.py:73"
 cost_tokens = 0
-cum_tokens = 3419
+cum_tokens = 3451
 
 [batches.content]
 kind = "lines"
@@ -3184,7 +3184,7 @@ position = 125
 key = 'Python(ClassBody { file: "htmy/tag.py", start_line: 56 })'
 descriptor = "python class body at htmy/tag.py:56"
 cost_tokens = 15
-cum_tokens = 3434
+cum_tokens = 3466
 
 [batches.content]
 kind = "lines"
@@ -3202,7 +3202,7 @@ position = 126
 key = 'Python(ClassBody { file: "htmy/tag.py", start_line: 73 })'
 descriptor = "python class body at htmy/tag.py:73"
 cost_tokens = 16
-cum_tokens = 3450
+cum_tokens = 3482
 
 [batches.content]
 kind = "lines"
@@ -3220,7 +3220,7 @@ position = 127
 key = 'Python(ClassBody { file: "htmy/tag.py", start_line: 12 })'
 descriptor = "python class body at htmy/tag.py:12"
 cost_tokens = 15
-cum_tokens = 3465
+cum_tokens = 3497
 
 [batches.content]
 kind = "lines"
@@ -3238,7 +3238,7 @@ position = 128
 key = 'Python(Decl { file: "htmy/tag.py", start_line: 84 })'
 descriptor = "python decl at htmy/tag.py:84"
 cost_tokens = 57
-cum_tokens = 3522
+cum_tokens = 3554
 
 [batches.content]
 kind = "lines"
@@ -3256,7 +3256,7 @@ position = 129
 key = 'Python(DeclBody { file: "htmy/tag.py", start_line: 84, body_start_line: 100 })'
 descriptor = "python decl body at htmy/tag.py:84 body 100"
 cost_tokens = 22
-cum_tokens = 3544
+cum_tokens = 3576
 
 [batches.content]
 kind = "lines"
@@ -3274,7 +3274,7 @@ position = 130
 key = 'Python(ClassBody { file: "htmy/tag.py", start_line: 24 })'
 descriptor = "python class body at htmy/tag.py:24"
 cost_tokens = 22
-cum_tokens = 3566
+cum_tokens = 3598
 
 [batches.content]
 kind = "lines"
@@ -3292,7 +3292,7 @@ position = 131
 key = 'Python(DeclDoc { file: "htmy/tag.py", start_line: 56 })'
 descriptor = "python decl doc at htmy/tag.py:56"
 cost_tokens = 51
-cum_tokens = 3617
+cum_tokens = 3649
 
 [batches.content]
 kind = "lines"
@@ -3310,7 +3310,7 @@ position = 132
 key = 'Python(DeclDoc { file: "htmy/core.py", start_line: 175 })'
 descriptor = "python decl doc at htmy/core.py:175"
 cost_tokens = 68
-cum_tokens = 3685
+cum_tokens = 3717
 
 [batches.content]
 kind = "lines"
@@ -3328,7 +3328,7 @@ position = 133
 key = 'Python(MethodSigs { file: "htmy/core.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/core.py"
 cost_tokens = 304
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3610,7 +3610,7 @@ position = 134
 key = 'Python(Method { file: "htmy/core.py", start_line: 24 })'
 descriptor = "python method at htmy/core.py:24"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3628,7 +3628,7 @@ position = 135
 key = 'Python(Method { file: "htmy/core.py", start_line: 33 })'
 descriptor = "python method at htmy/core.py:33"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3646,7 +3646,7 @@ position = 136
 key = 'Python(Method { file: "htmy/core.py", start_line: 45 })'
 descriptor = "python method at htmy/core.py:45"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3664,7 +3664,7 @@ position = 137
 key = 'Python(Method { file: "htmy/core.py", start_line: 56 })'
 descriptor = "python method at htmy/core.py:56"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3682,7 +3682,7 @@ position = 138
 key = 'Python(Method { file: "htmy/core.py", start_line: 104 })'
 descriptor = "python method at htmy/core.py:104"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3700,7 +3700,7 @@ position = 139
 key = 'Python(Method { file: "htmy/core.py", start_line: 108 })'
 descriptor = "python method at htmy/core.py:108"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3718,7 +3718,7 @@ position = 140
 key = 'Python(Method { file: "htmy/core.py", start_line: 115 })'
 descriptor = "python method at htmy/core.py:115"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3736,7 +3736,7 @@ position = 141
 key = 'Python(Method { file: "htmy/core.py", start_line: 186 })'
 descriptor = "python method at htmy/core.py:186"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3754,7 +3754,7 @@ position = 142
 key = 'Python(Method { file: "htmy/core.py", start_line: 241 })'
 descriptor = "python method at htmy/core.py:241"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3772,7 +3772,7 @@ position = 143
 key = 'Python(Method { file: "htmy/core.py", start_line: 246 })'
 descriptor = "python method at htmy/core.py:246"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3790,7 +3790,7 @@ position = 144
 key = 'Python(Method { file: "htmy/core.py", start_line: 259 })'
 descriptor = "python method at htmy/core.py:259"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3808,7 +3808,7 @@ position = 145
 key = 'Python(Method { file: "htmy/core.py", start_line: 268 })'
 descriptor = "python method at htmy/core.py:268"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3826,7 +3826,7 @@ position = 146
 key = 'Python(Method { file: "htmy/core.py", start_line: 281 })'
 descriptor = "python method at htmy/core.py:281"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3844,7 +3844,7 @@ position = 147
 key = 'Python(Method { file: "htmy/core.py", start_line: 286 })'
 descriptor = "python method at htmy/core.py:286"
 cost_tokens = 0
-cum_tokens = 3989
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -3862,7 +3862,7 @@ position = 148
 key = 'Python(Method { file: "htmy/core.py", start_line: 151 })'
 descriptor = "python method at htmy/core.py:151"
 cost_tokens = 16
-cum_tokens = 4005
+cum_tokens = 4037
 
 [batches.content]
 kind = "lines"
@@ -3880,7 +3880,7 @@ position = 149
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 33 })'
 descriptor = "python method doc at htmy/core.py:33"
 cost_tokens = 11
-cum_tokens = 4016
+cum_tokens = 4048
 
 [batches.content]
 kind = "lines"
@@ -3898,7 +3898,7 @@ position = 150
 key = 'Python(MethodBody { file: "htmy/core.py", start_line: 33, body_start_line: 35 })'
 descriptor = "python method body at htmy/core.py:33 body 35"
 cost_tokens = 8
-cum_tokens = 4024
+cum_tokens = 4056
 
 [batches.content]
 kind = "lines"
@@ -3916,7 +3916,7 @@ position = 151
 key = 'Python(Method { file: "htmy/core.py", start_line: 127 })'
 descriptor = "python method at htmy/core.py:127"
 cost_tokens = 25
-cum_tokens = 4049
+cum_tokens = 4081
 
 [batches.content]
 kind = "lines"
@@ -3934,7 +3934,7 @@ position = 152
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 56 })'
 descriptor = "python method doc at htmy/core.py:56"
 cost_tokens = 13
-cum_tokens = 4062
+cum_tokens = 4094
 
 [batches.content]
 kind = "lines"
@@ -3952,7 +3952,7 @@ position = 153
 key = 'Python(MethodBody { file: "htmy/core.py", start_line: 56, body_start_line: 58 })'
 descriptor = "python method body at htmy/core.py:56 body 58"
 cost_tokens = 10
-cum_tokens = 4072
+cum_tokens = 4104
 
 [batches.content]
 kind = "lines"
@@ -3970,7 +3970,7 @@ position = 154
 key = 'Python(MethodBody { file: "htmy/core.py", start_line: 24, body_start_line: 31 })'
 descriptor = "python method body at htmy/core.py:24 body 31"
 cost_tokens = 11
-cum_tokens = 4083
+cum_tokens = 4115
 
 [batches.content]
 kind = "lines"
@@ -3988,7 +3988,7 @@ position = 155
 key = 'Python(MethodBody { file: "htmy/core.py", start_line: 151, body_start_line: 154 })'
 descriptor = "python method body at htmy/core.py:151 body 154"
 cost_tokens = 11
-cum_tokens = 4094
+cum_tokens = 4126
 
 [batches.content]
 kind = "lines"
@@ -4006,7 +4006,7 @@ position = 156
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 241 })'
 descriptor = "python method doc at htmy/core.py:241"
 cost_tokens = 16
-cum_tokens = 4110
+cum_tokens = 4142
 
 [batches.content]
 kind = "lines"
@@ -4024,7 +4024,7 @@ position = 157
 key = 'Python(MethodBody { file: "htmy/core.py", start_line: 259, body_start_line: 266 })'
 descriptor = "python method body at htmy/core.py:259 body 266"
 cost_tokens = 12
-cum_tokens = 4122
+cum_tokens = 4154
 
 [batches.content]
 kind = "lines"
@@ -4042,7 +4042,7 @@ position = 158
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 151 })'
 descriptor = "python method doc at htmy/core.py:151"
 cost_tokens = 20
-cum_tokens = 4142
+cum_tokens = 4174
 
 [batches.content]
 kind = "lines"
@@ -4060,7 +4060,7 @@ position = 159
 key = 'Python(MethodBody { file: "htmy/core.py", start_line: 108, body_start_line: 113 })'
 descriptor = "python method body at htmy/core.py:108 body 113"
 cost_tokens = 16
-cum_tokens = 4158
+cum_tokens = 4190
 
 [batches.content]
 kind = "lines"
@@ -4078,7 +4078,7 @@ position = 160
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 281 })'
 descriptor = "python method doc at htmy/core.py:281"
 cost_tokens = 12
-cum_tokens = 4170
+cum_tokens = 4202
 
 [batches.content]
 kind = "lines"
@@ -4096,7 +4096,7 @@ position = 161
 key = 'Python(Method { file: "htmy/core.py", start_line: 222 })'
 descriptor = "python method at htmy/core.py:222"
 cost_tokens = 58
-cum_tokens = 4228
+cum_tokens = 4260
 
 [batches.content]
 kind = "lines"
@@ -4114,7 +4114,7 @@ position = 162
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 286 })'
 descriptor = "python method doc at htmy/core.py:286"
 cost_tokens = 15
-cum_tokens = 4243
+cum_tokens = 4275
 
 [batches.content]
 kind = "lines"
@@ -4132,7 +4132,7 @@ position = 163
 key = 'Python(ClassBody { file: "htmy/etree.py", start_line: 23 })'
 descriptor = "python class body at htmy/etree.py:23"
 cost_tokens = 93
-cum_tokens = 4336
+cum_tokens = 4368
 
 [batches.content]
 kind = "lines"
@@ -4150,7 +4150,7 @@ position = 164
 key = 'Markdown(Section { file: "docs/function-components.md", section_index: 14, reference_shaped: false })'
 descriptor = "docs/function-components.md section #14"
 cost_tokens = 7
-cum_tokens = 4343
+cum_tokens = 4375
 
 [batches.content]
 kind = "lines"
@@ -4168,7 +4168,7 @@ position = 165
 key = 'Markdown(Section { file: "README.md", section_index: 49, reference_shaped: false })'
 descriptor = "README.md section #49"
 cost_tokens = 57
-cum_tokens = 4400
+cum_tokens = 4432
 
 [batches.content]
 kind = "lines"
@@ -4186,7 +4186,7 @@ position = 166
 key = 'Python(MethodDoc { file: "htmy/snippet.py", start_line: 256 })'
 descriptor = "python method doc at htmy/snippet.py:256"
 cost_tokens = 16
-cum_tokens = 4416
+cum_tokens = 4448
 
 [batches.content]
 kind = "lines"
@@ -4204,7 +4204,7 @@ position = 167
 key = 'Python(ClassBody { file: "htmy/snippet.py", start_line: 27 })'
 descriptor = "python class body at htmy/snippet.py:27"
 cost_tokens = 447
-cum_tokens = 4863
+cum_tokens = 4895
 
 [batches.content]
 kind = "lines"
@@ -4222,7 +4222,7 @@ position = 168
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 186 })'
 descriptor = "python method doc at htmy/core.py:186"
 cost_tokens = 37
-cum_tokens = 4900
+cum_tokens = 4932
 
 [batches.content]
 kind = "lines"
@@ -4240,7 +4240,7 @@ position = 169
 key = 'Markdown(HeadingsOutline { file: "docs/index.md" })'
 descriptor = "headings outline in docs/index.md"
 cost_tokens = 217
-cum_tokens = 5117
+cum_tokens = 5149
 
 [batches.content]
 kind = "lines"
@@ -4602,7 +4602,7 @@ position = 170
 key = 'Markdown(Section { file: "docs/index.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/index.md section #0"
 cost_tokens = 57
-cum_tokens = 5174
+cum_tokens = 5206
 
 [batches.content]
 kind = "lines"
@@ -4620,7 +4620,7 @@ position = 171
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 108 })'
 descriptor = "python method doc at htmy/core.py:108"
 cost_tokens = 38
-cum_tokens = 5212
+cum_tokens = 5244
 
 [batches.content]
 kind = "lines"
@@ -4638,7 +4638,7 @@ position = 172
 key = 'Python(MethodBody { file: "htmy/snippet.py", start_line: 265, body_start_line: 270 })'
 descriptor = "python method body at htmy/snippet.py:265 body 270"
 cost_tokens = 10
-cum_tokens = 5222
+cum_tokens = 5254
 
 [batches.content]
 kind = "lines"
@@ -4656,7 +4656,7 @@ position = 173
 key = 'Markdown(Section { file: "docs/api/core.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/core.md section #0"
 cost_tokens = 33
-cum_tokens = 5255
+cum_tokens = 5287
 
 [batches.content]
 kind = "lines"
@@ -4674,7 +4674,7 @@ position = 174
 key = 'Markdown(Section { file: "docs/api/html.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/html.md section #0"
 cost_tokens = 33
-cum_tokens = 5288
+cum_tokens = 5320
 
 [batches.content]
 kind = "lines"
@@ -4692,7 +4692,7 @@ position = 175
 key = 'Markdown(Section { file: "docs/api/utils.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/utils.md section #0"
 cost_tokens = 33
-cum_tokens = 5321
+cum_tokens = 5353
 
 [batches.content]
 kind = "lines"
@@ -4710,7 +4710,7 @@ position = 176
 key = 'Python(MethodSigs { file: "htmy/tag.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/tag.py"
 cost_tokens = 167
-cum_tokens = 5488
+cum_tokens = 5520
 
 [batches.content]
 kind = "lines"
@@ -4848,7 +4848,7 @@ position = 177
 key = 'Python(Method { file: "htmy/tag.py", start_line: 15 })'
 descriptor = "python method at htmy/tag.py:15"
 cost_tokens = 0
-cum_tokens = 5488
+cum_tokens = 5520
 
 [batches.content]
 kind = "lines"
@@ -4866,7 +4866,7 @@ position = 178
 key = 'Python(Method { file: "htmy/tag.py", start_line: 19 })'
 descriptor = "python method at htmy/tag.py:19"
 cost_tokens = 0
-cum_tokens = 5488
+cum_tokens = 5520
 
 [batches.content]
 kind = "lines"
@@ -4884,7 +4884,7 @@ position = 179
 key = 'Python(Method { file: "htmy/tag.py", start_line: 39 })'
 descriptor = "python method at htmy/tag.py:39"
 cost_tokens = 0
-cum_tokens = 5488
+cum_tokens = 5520
 
 [batches.content]
 kind = "lines"
@@ -4902,7 +4902,7 @@ position = 180
 key = 'Python(Method { file: "htmy/tag.py", start_line: 66 })'
 descriptor = "python method at htmy/tag.py:66"
 cost_tokens = 0
-cum_tokens = 5488
+cum_tokens = 5520
 
 [batches.content]
 kind = "lines"
@@ -4920,7 +4920,7 @@ position = 181
 key = 'Python(Method { file: "htmy/tag.py", start_line: 69 })'
 descriptor = "python method at htmy/tag.py:69"
 cost_tokens = 0
-cum_tokens = 5488
+cum_tokens = 5520
 
 [batches.content]
 kind = "lines"
@@ -4938,7 +4938,7 @@ position = 182
 key = 'Python(Method { file: "htmy/tag.py", start_line: 76 })'
 descriptor = "python method at htmy/tag.py:76"
 cost_tokens = 0
-cum_tokens = 5488
+cum_tokens = 5520
 
 [batches.content]
 kind = "lines"
@@ -4956,7 +4956,7 @@ position = 183
 key = 'Python(Method { file: "htmy/tag.py", start_line: 80 })'
 descriptor = "python method at htmy/tag.py:80"
 cost_tokens = 0
-cum_tokens = 5488
+cum_tokens = 5520
 
 [batches.content]
 kind = "lines"
@@ -4974,7 +4974,7 @@ position = 184
 key = 'Python(MethodBody { file: "htmy/tag.py", start_line: 66, body_start_line: 67 })'
 descriptor = "python method body at htmy/tag.py:66 body 67"
 cost_tokens = 8
-cum_tokens = 5496
+cum_tokens = 5528
 
 [batches.content]
 kind = "lines"
@@ -4992,7 +4992,7 @@ position = 185
 key = 'Python(MethodBody { file: "htmy/tag.py", start_line: 69, body_start_line: 70 })'
 descriptor = "python method body at htmy/tag.py:69 body 70"
 cost_tokens = 14
-cum_tokens = 5510
+cum_tokens = 5542
 
 [batches.content]
 kind = "lines"
@@ -5010,7 +5010,7 @@ position = 186
 key = 'Python(MethodBody { file: "htmy/tag.py", start_line: 15, body_start_line: 16 })'
 descriptor = "python method body at htmy/tag.py:15 body 16"
 cost_tokens = 18
-cum_tokens = 5528
+cum_tokens = 5560
 
 [batches.content]
 kind = "lines"
@@ -5028,7 +5028,7 @@ position = 187
 key = 'Python(MethodBody { file: "htmy/tag.py", start_line: 80, body_start_line: 81 })'
 descriptor = "python method body at htmy/tag.py:80 body 81"
 cost_tokens = 18
-cum_tokens = 5546
+cum_tokens = 5578
 
 [batches.content]
 kind = "lines"
@@ -5046,7 +5046,7 @@ position = 188
 key = 'Python(Method { file: "htmy/tag.py", start_line: 27 })'
 descriptor = "python method at htmy/tag.py:27"
 cost_tokens = 55
-cum_tokens = 5601
+cum_tokens = 5633
 
 [batches.content]
 kind = "lines"
@@ -5064,7 +5064,7 @@ position = 189
 key = 'Python(MethodBody { file: "htmy/tag.py", start_line: 76, body_start_line: 77 })'
 descriptor = "python method body at htmy/tag.py:76 body 77"
 cost_tokens = 20
-cum_tokens = 5621
+cum_tokens = 5653
 
 [batches.content]
 kind = "lines"
@@ -5082,7 +5082,7 @@ position = 190
 key = 'Python(ClassBody { file: "htmy/md/core.py", start_line: 20 })'
 descriptor = "python class body at htmy/md/core.py:20"
 cost_tokens = 60
-cum_tokens = 5681
+cum_tokens = 5713
 
 [batches.content]
 kind = "lines"
@@ -5100,7 +5100,7 @@ position = 191
 key = 'Python(Method { file: "htmy/snippet.py", start_line: 83 })'
 descriptor = "python method at htmy/snippet.py:83"
 cost_tokens = 66
-cum_tokens = 5747
+cum_tokens = 5779
 
 [batches.content]
 kind = "lines"
@@ -5118,7 +5118,7 @@ position = 192
 key = 'Markdown(Section { file: "docs/api/etree.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/etree.md section #0"
 cost_tokens = 34
-cum_tokens = 5781
+cum_tokens = 5813
 
 [batches.content]
 kind = "lines"
@@ -5136,7 +5136,7 @@ position = 193
 key = 'Markdown(Section { file: "docs/api/function_component.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/function_component.md section #0"
 cost_tokens = 34
-cum_tokens = 5815
+cum_tokens = 5847
 
 [batches.content]
 kind = "lines"
@@ -5154,7 +5154,7 @@ position = 194
 key = 'Markdown(Section { file: "docs/api/snippet.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/snippet.md section #0"
 cost_tokens = 34
-cum_tokens = 5849
+cum_tokens = 5881
 
 [batches.content]
 kind = "lines"
@@ -5172,7 +5172,7 @@ position = 195
 key = 'Markdown(Section { file: "docs/api/typing.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/typing.md section #0"
 cost_tokens = 34
-cum_tokens = 5883
+cum_tokens = 5915
 
 [batches.content]
 kind = "lines"
@@ -5190,7 +5190,7 @@ position = 196
 key = 'Markdown(Section { file: "README.md", section_index: 38, reference_shaped: false })'
 descriptor = "README.md section #38"
 cost_tokens = 26
-cum_tokens = 5909
+cum_tokens = 5941
 
 [batches.content]
 kind = "lines"
@@ -5208,7 +5208,7 @@ position = 197
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 24 })'
 descriptor = "python method doc at htmy/core.py:24"
 cost_tokens = 41
-cum_tokens = 5950
+cum_tokens = 5982
 
 [batches.content]
 kind = "lines"
@@ -5226,7 +5226,7 @@ position = 198
 key = 'Markdown(Section { file: "docs/api/i18n.md", section_index: 0, reference_shaped: false })'
 descriptor = "docs/api/i18n.md section #0"
 cost_tokens = 35
-cum_tokens = 5985
+cum_tokens = 6017
 
 [batches.content]
 kind = "lines"
@@ -5244,7 +5244,7 @@ position = 199
 key = 'Python(Method { file: "htmy/snippet.py", start_line: 218 })'
 descriptor = "python method at htmy/snippet.py:218"
 cost_tokens = 68
-cum_tokens = 6053
+cum_tokens = 6085
 
 [batches.content]
 kind = "lines"
@@ -5262,7 +5262,7 @@ position = 200
 key = 'Python(MethodSigs { file: "htmy/etree.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/etree.py"
 cost_tokens = 135
-cum_tokens = 6188
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -5368,7 +5368,7 @@ position = 201
 key = 'Python(Method { file: "htmy/etree.py", start_line: 46 })'
 descriptor = "python method at htmy/etree.py:46"
 cost_tokens = 0
-cum_tokens = 6188
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -5386,7 +5386,7 @@ position = 202
 key = 'Python(Method { file: "htmy/etree.py", start_line: 55 })'
 descriptor = "python method at htmy/etree.py:55"
 cost_tokens = 0
-cum_tokens = 6188
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -5404,7 +5404,7 @@ position = 203
 key = 'Python(Method { file: "htmy/etree.py", start_line: 63 })'
 descriptor = "python method at htmy/etree.py:63"
 cost_tokens = 0
-cum_tokens = 6188
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -5422,7 +5422,7 @@ position = 204
 key = 'Python(Method { file: "htmy/etree.py", start_line: 83 })'
 descriptor = "python method at htmy/etree.py:83"
 cost_tokens = 0
-cum_tokens = 6188
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -5440,7 +5440,7 @@ position = 205
 key = 'Python(Method { file: "htmy/etree.py", start_line: 91 })'
 descriptor = "python method at htmy/etree.py:91"
 cost_tokens = 0
-cum_tokens = 6188
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -5458,7 +5458,7 @@ position = 206
 key = 'Python(Method { file: "htmy/etree.py", start_line: 103 })'
 descriptor = "python method at htmy/etree.py:103"
 cost_tokens = 0
-cum_tokens = 6188
+cum_tokens = 6220
 
 [batches.content]
 kind = "lines"
@@ -5476,7 +5476,7 @@ position = 207
 key = 'Python(MethodBody { file: "htmy/etree.py", start_line: 46, body_start_line: 53 })'
 descriptor = "python method body at htmy/etree.py:46 body 53"
 cost_tokens = 11
-cum_tokens = 6199
+cum_tokens = 6231
 
 [batches.content]
 kind = "lines"
@@ -5494,7 +5494,7 @@ position = 208
 key = 'Python(MethodDoc { file: "htmy/etree.py", start_line: 63 })'
 descriptor = "python method doc at htmy/etree.py:63"
 cost_tokens = 17
-cum_tokens = 6216
+cum_tokens = 6248
 
 [batches.content]
 kind = "lines"
@@ -5512,7 +5512,7 @@ position = 209
 key = 'Python(MethodDoc { file: "htmy/etree.py", start_line: 55 })'
 descriptor = "python method doc at htmy/etree.py:55"
 cost_tokens = 21
-cum_tokens = 6237
+cum_tokens = 6269
 
 [batches.content]
 kind = "lines"
@@ -5530,7 +5530,7 @@ position = 210
 key = 'Python(MethodDoc { file: "htmy/etree.py", start_line: 103 })'
 descriptor = "python method doc at htmy/etree.py:103"
 cost_tokens = 15
-cum_tokens = 6252
+cum_tokens = 6284
 
 [batches.content]
 kind = "lines"
@@ -5548,7 +5548,7 @@ position = 211
 key = 'Python(MethodDoc { file: "htmy/etree.py", start_line: 46 })'
 descriptor = "python method doc at htmy/etree.py:46"
 cost_tokens = 43
-cum_tokens = 6295
+cum_tokens = 6327
 
 [batches.content]
 kind = "lines"
@@ -5566,7 +5566,7 @@ position = 212
 key = 'Python(Imports { file: "htmy/typing.py" })'
 descriptor = "python imports in htmy/typing.py"
 cost_tokens = 37
-cum_tokens = 6332
+cum_tokens = 6364
 
 [batches.content]
 kind = "lines"
@@ -5584,7 +5584,7 @@ position = 213
 key = 'Python(Method { file: "htmy/snippet.py", start_line: 272 })'
 descriptor = "python method at htmy/snippet.py:272"
 cost_tokens = 30
-cum_tokens = 6362
+cum_tokens = 6394
 
 [batches.content]
 kind = "lines"
@@ -5602,7 +5602,7 @@ position = 214
 key = 'Python(MethodDoc { file: "htmy/snippet.py", start_line: 272 })'
 descriptor = "python method doc at htmy/snippet.py:272"
 cost_tokens = 15
-cum_tokens = 6377
+cum_tokens = 6409
 
 [batches.content]
 kind = "lines"
@@ -5620,7 +5620,7 @@ position = 215
 key = 'Python(MethodBody { file: "htmy/snippet.py", start_line: 272, body_start_line: 276 })'
 descriptor = "python method body at htmy/snippet.py:272 body 276"
 cost_tokens = 10
-cum_tokens = 6387
+cum_tokens = 6419
 
 [batches.content]
 kind = "lines"
@@ -5638,7 +5638,7 @@ position = 216
 key = 'Python(DeclDoc { file: "htmy/core.py", start_line: 163 })'
 descriptor = "python decl doc at htmy/core.py:163"
 cost_tokens = 97
-cum_tokens = 6484
+cum_tokens = 6516
 
 [batches.content]
 kind = "lines"
@@ -5656,7 +5656,7 @@ position = 217
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 259 })'
 descriptor = "python method doc at htmy/core.py:259"
 cost_tokens = 47
-cum_tokens = 6531
+cum_tokens = 6563
 
 [batches.content]
 kind = "lines"
@@ -5674,7 +5674,7 @@ position = 218
 key = 'Markdown(Section { file: "README.md", section_index: 48, reference_shaped: false })'
 descriptor = "README.md section #48"
 cost_tokens = 70
-cum_tokens = 6601
+cum_tokens = 6633
 
 [batches.content]
 kind = "lines"
@@ -5692,7 +5692,7 @@ position = 219
 key = 'Python(MethodDoc { file: "htmy/core.py", start_line: 115 })'
 descriptor = "python method doc at htmy/core.py:115"
 cost_tokens = 49
-cum_tokens = 6650
+cum_tokens = 6682
 
 [batches.content]
 kind = "lines"
@@ -5710,7 +5710,7 @@ position = 220
 key = 'Python(DeclNames { file: "htmy/typing.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/typing.py"
 cost_tokens = 164
-cum_tokens = 6814
+cum_tokens = 6846
 
 [batches.content]
 kind = "lines"
@@ -5848,7 +5848,7 @@ position = 221
 key = 'Python(Decl { file: "htmy/typing.py", start_line: 37 })'
 descriptor = "python decl at htmy/typing.py:37"
 cost_tokens = 0
-cum_tokens = 6814
+cum_tokens = 6846
 
 [batches.content]
 kind = "lines"
@@ -5866,7 +5866,7 @@ position = 222
 key = 'Python(Decl { file: "htmy/typing.py", start_line: 45 })'
 descriptor = "python decl at htmy/typing.py:45"
 cost_tokens = 0
-cum_tokens = 6814
+cum_tokens = 6846
 
 [batches.content]
 kind = "lines"
@@ -5884,7 +5884,7 @@ position = 223
 key = 'Python(Decl { file: "htmy/typing.py", start_line: 73 })'
 descriptor = "python decl at htmy/typing.py:73"
 cost_tokens = 0
-cum_tokens = 6814
+cum_tokens = 6846
 
 [batches.content]
 kind = "lines"
@@ -5902,7 +5902,7 @@ position = 224
 key = 'Python(Decl { file: "htmy/typing.py", start_line: 81 })'
 descriptor = "python decl at htmy/typing.py:81"
 cost_tokens = 0
-cum_tokens = 6814
+cum_tokens = 6846
 
 [batches.content]
 kind = "lines"
@@ -5920,7 +5920,7 @@ position = 225
 key = 'Python(Decl { file: "htmy/typing.py", start_line: 103 })'
 descriptor = "python decl at htmy/typing.py:103"
 cost_tokens = 0
-cum_tokens = 6814
+cum_tokens = 6846
 
 [batches.content]
 kind = "lines"
@@ -5938,7 +5938,7 @@ position = 226
 key = 'Python(DeclDoc { file: "htmy/typing.py", start_line: 73 })'
 descriptor = "python decl doc at htmy/typing.py:73"
 cost_tokens = 13
-cum_tokens = 6827
+cum_tokens = 6859
 
 [batches.content]
 kind = "lines"
@@ -5956,7 +5956,7 @@ position = 227
 key = 'Python(DeclDoc { file: "htmy/typing.py", start_line: 81 })'
 descriptor = "python decl doc at htmy/typing.py:81"
 cost_tokens = 13
-cum_tokens = 6840
+cum_tokens = 6872
 
 [batches.content]
 kind = "lines"
@@ -5974,7 +5974,7 @@ position = 228
 key = 'Python(DeclDoc { file: "htmy/typing.py", start_line: 37 })'
 descriptor = "python decl doc at htmy/typing.py:37"
 cost_tokens = 16
-cum_tokens = 6856
+cum_tokens = 6888
 
 [batches.content]
 kind = "lines"
@@ -5992,7 +5992,7 @@ position = 229
 key = 'Python(DeclDoc { file: "htmy/typing.py", start_line: 45 })'
 descriptor = "python decl doc at htmy/typing.py:45"
 cost_tokens = 16
-cum_tokens = 6872
+cum_tokens = 6904
 
 [batches.content]
 kind = "lines"
@@ -6010,7 +6010,7 @@ position = 230
 key = 'Python(DeclDoc { file: "htmy/typing.py", start_line: 103 })'
 descriptor = "python decl doc at htmy/typing.py:103"
 cost_tokens = 30
-cum_tokens = 6902
+cum_tokens = 6934
 
 [batches.content]
 kind = "lines"
@@ -6028,7 +6028,7 @@ position = 231
 key = 'Python(MethodSigs { file: "htmy/typing.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/typing.py"
 cost_tokens = 87
-cum_tokens = 6989
+cum_tokens = 7021
 
 [batches.content]
 kind = "lines"
@@ -6118,7 +6118,7 @@ position = 232
 key = 'Python(Method { file: "htmy/typing.py", start_line: 40 })'
 descriptor = "python method at htmy/typing.py:40"
 cost_tokens = 0
-cum_tokens = 6989
+cum_tokens = 7021
 
 [batches.content]
 kind = "lines"
@@ -6136,7 +6136,7 @@ position = 233
 key = 'Python(Method { file: "htmy/typing.py", start_line: 48 })'
 descriptor = "python method at htmy/typing.py:48"
 cost_tokens = 0
-cum_tokens = 6989
+cum_tokens = 7021
 
 [batches.content]
 kind = "lines"
@@ -6154,7 +6154,7 @@ position = 234
 key = 'Python(Method { file: "htmy/typing.py", start_line: 76 })'
 descriptor = "python method at htmy/typing.py:76"
 cost_tokens = 0
-cum_tokens = 6989
+cum_tokens = 7021
 
 [batches.content]
 kind = "lines"
@@ -6172,7 +6172,7 @@ position = 235
 key = 'Python(Method { file: "htmy/typing.py", start_line: 84 })'
 descriptor = "python method at htmy/typing.py:84"
 cost_tokens = 0
-cum_tokens = 6989
+cum_tokens = 7021
 
 [batches.content]
 kind = "lines"
@@ -6190,7 +6190,7 @@ position = 236
 key = 'Python(Method { file: "htmy/typing.py", start_line: 108 })'
 descriptor = "python method at htmy/typing.py:108"
 cost_tokens = 0
-cum_tokens = 6989
+cum_tokens = 7021
 
 [batches.content]
 kind = "lines"
@@ -6208,7 +6208,7 @@ position = 237
 key = 'Python(MethodBody { file: "htmy/typing.py", start_line: 40, body_start_line: 42 })'
 descriptor = "python method body at htmy/typing.py:40 body 42"
 cost_tokens = 6
-cum_tokens = 6995
+cum_tokens = 7027
 
 [batches.content]
 kind = "lines"
@@ -6226,7 +6226,7 @@ position = 238
 key = 'Python(MethodBody { file: "htmy/typing.py", start_line: 76, body_start_line: 78 })'
 descriptor = "python method body at htmy/typing.py:76 body 78"
 cost_tokens = 6
-cum_tokens = 7001
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -6244,7 +6244,7 @@ position = 239
 key = 'Python(MethodBody { file: "htmy/typing.py", start_line: 108, body_start_line: 118 })'
 descriptor = "python method body at htmy/typing.py:108 body 118"
 cost_tokens = 6
-cum_tokens = 7007
+cum_tokens = 7039
 
 [batches.content]
 kind = "lines"
@@ -6262,7 +6262,7 @@ position = 240
 key = 'Python(MethodDoc { file: "htmy/typing.py", start_line: 40 })'
 descriptor = "python method doc at htmy/typing.py:40"
 cost_tokens = 9
-cum_tokens = 7016
+cum_tokens = 7048
 
 [batches.content]
 kind = "lines"
@@ -6280,7 +6280,7 @@ position = 241
 key = 'Python(MethodBody { file: "htmy/typing.py", start_line: 48, body_start_line: 50 })'
 descriptor = "python method body at htmy/typing.py:48 body 50"
 cost_tokens = 8
-cum_tokens = 7024
+cum_tokens = 7056
 
 [batches.content]
 kind = "lines"
@@ -6298,7 +6298,7 @@ position = 242
 key = 'Python(MethodDoc { file: "htmy/typing.py", start_line: 48 })'
 descriptor = "python method doc at htmy/typing.py:48"
 cost_tokens = 9
-cum_tokens = 7033
+cum_tokens = 7065
 
 [batches.content]
 kind = "lines"
@@ -6316,7 +6316,7 @@ position = 243
 key = 'Python(MethodBody { file: "htmy/typing.py", start_line: 84, body_start_line: 86 })'
 descriptor = "python method body at htmy/typing.py:84 body 86"
 cost_tokens = 8
-cum_tokens = 7041
+cum_tokens = 7073
 
 [batches.content]
 kind = "lines"
@@ -6334,7 +6334,7 @@ position = 244
 key = 'Python(MethodDoc { file: "htmy/typing.py", start_line: 76 })'
 descriptor = "python method doc at htmy/typing.py:76"
 cost_tokens = 11
-cum_tokens = 7052
+cum_tokens = 7084
 
 [batches.content]
 kind = "lines"
@@ -6352,7 +6352,7 @@ position = 245
 key = 'Python(MethodDoc { file: "htmy/typing.py", start_line: 84 })'
 descriptor = "python method doc at htmy/typing.py:84"
 cost_tokens = 11
-cum_tokens = 7063
+cum_tokens = 7095
 
 [batches.content]
 kind = "lines"
@@ -6370,7 +6370,7 @@ position = 246
 key = 'Python(DeclNames { file: "htmy/html.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/html.py"
 cost_tokens = 167
-cum_tokens = 7230
+cum_tokens = 7262
 
 [batches.content]
 kind = "lines"
@@ -6508,7 +6508,7 @@ position = 247
 key = 'Python(Decl { file: "htmy/html.py", start_line: 13 })'
 descriptor = "python decl at htmy/html.py:13"
 cost_tokens = 0
-cum_tokens = 7230
+cum_tokens = 7262
 
 [batches.content]
 kind = "lines"
@@ -6526,7 +6526,7 @@ position = 248
 key = 'Python(Decl { file: "htmy/html.py", start_line: 63 })'
 descriptor = "python decl at htmy/html.py:63"
 cost_tokens = 0
-cum_tokens = 7230
+cum_tokens = 7262
 
 [batches.content]
 kind = "lines"
@@ -6544,7 +6544,7 @@ position = 249
 key = 'Python(Decl { file: "htmy/html.py", start_line: 79 })'
 descriptor = "python decl at htmy/html.py:79"
 cost_tokens = 0
-cum_tokens = 7230
+cum_tokens = 7262
 
 [batches.content]
 kind = "lines"
@@ -6562,7 +6562,7 @@ position = 250
 key = 'Python(Decl { file: "htmy/html.py", start_line: 831 })'
 descriptor = "python decl at htmy/html.py:831"
 cost_tokens = 0
-cum_tokens = 7230
+cum_tokens = 7262
 
 [batches.content]
 kind = "lines"
@@ -6580,7 +6580,7 @@ position = 251
 key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 13 })'
 descriptor = "python decl doc at htmy/html.py:13"
 cost_tokens = 10
-cum_tokens = 7240
+cum_tokens = 7272
 
 [batches.content]
 kind = "lines"
@@ -6598,7 +6598,7 @@ position = 252
 key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 63 })'
 descriptor = "python decl doc at htmy/html.py:63"
 cost_tokens = 12
-cum_tokens = 7252
+cum_tokens = 7284
 
 [batches.content]
 kind = "lines"
@@ -6616,7 +6616,7 @@ position = 253
 key = 'Python(DeclDoc { file: "htmy/html.py", start_line: 79 })'
 descriptor = "python decl doc at htmy/html.py:79"
 cost_tokens = 12
-cum_tokens = 7264
+cum_tokens = 7296
 
 [batches.content]
 kind = "lines"
@@ -6634,7 +6634,7 @@ position = 254
 key = 'Python(ClassBody { file: "htmy/html.py", start_line: 13 })'
 descriptor = "python class body at htmy/html.py:13"
 cost_tokens = 22
-cum_tokens = 7286
+cum_tokens = 7318
 
 [batches.content]
 kind = "lines"
@@ -6652,7 +6652,7 @@ position = 255
 key = 'Python(MethodSigs { file: "htmy/html.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/html.py"
 cost_tokens = 56
-cum_tokens = 7342
+cum_tokens = 7374
 
 [batches.content]
 kind = "lines"
@@ -6758,7 +6758,7 @@ position = 256
 key = 'Python(Method { file: "htmy/html.py", start_line: 82 })'
 descriptor = "python method at htmy/html.py:82"
 cost_tokens = 15
-cum_tokens = 7357
+cum_tokens = 7389
 
 [batches.content]
 kind = "lines"
@@ -6776,7 +6776,7 @@ position = 257
 key = 'Python(Method { file: "htmy/html.py", start_line: 90 })'
 descriptor = "python method at htmy/html.py:90"
 cost_tokens = 15
-cum_tokens = 7372
+cum_tokens = 7404
 
 [batches.content]
 kind = "lines"
@@ -6794,7 +6794,7 @@ position = 258
 key = 'Python(Method { file: "htmy/html.py", start_line: 94 })'
 descriptor = "python method at htmy/html.py:94"
 cost_tokens = 15
-cum_tokens = 7387
+cum_tokens = 7419
 
 [batches.content]
 kind = "lines"
@@ -6812,7 +6812,7 @@ position = 259
 key = 'Python(Method { file: "htmy/html.py", start_line: 66 })'
 descriptor = "python method at htmy/html.py:66"
 cost_tokens = 16
-cum_tokens = 7403
+cum_tokens = 7435
 
 [batches.content]
 kind = "lines"
@@ -6830,7 +6830,7 @@ position = 260
 key = 'Python(Method { file: "htmy/html.py", start_line: 86 })'
 descriptor = "python method at htmy/html.py:86"
 cost_tokens = 21
-cum_tokens = 7424
+cum_tokens = 7456
 
 [batches.content]
 kind = "lines"
@@ -6848,7 +6848,7 @@ position = 261
 key = 'Python(Method { file: "htmy/html.py", start_line: 98 })'
 descriptor = "python method at htmy/html.py:98"
 cost_tokens = 27
-cum_tokens = 7451
+cum_tokens = 7483
 
 [batches.content]
 kind = "lines"
@@ -6866,7 +6866,7 @@ position = 262
 key = 'Python(MethodBody { file: "htmy/html.py", start_line: 86, body_start_line: 88 })'
 descriptor = "python method body at htmy/html.py:86 body 88"
 cost_tokens = 10
-cum_tokens = 7461
+cum_tokens = 7493
 
 [batches.content]
 kind = "lines"
@@ -6884,7 +6884,7 @@ position = 263
 key = 'Python(MethodBody { file: "htmy/html.py", start_line: 82, body_start_line: 84 })'
 descriptor = "python method body at htmy/html.py:82 body 84"
 cost_tokens = 13
-cum_tokens = 7474
+cum_tokens = 7506
 
 [batches.content]
 kind = "lines"
@@ -6902,7 +6902,7 @@ position = 264
 key = 'Python(MethodBody { file: "htmy/html.py", start_line: 90, body_start_line: 92 })'
 descriptor = "python method body at htmy/html.py:90 body 92"
 cost_tokens = 13
-cum_tokens = 7487
+cum_tokens = 7519
 
 [batches.content]
 kind = "lines"
@@ -6920,7 +6920,7 @@ position = 265
 key = 'Python(MethodBody { file: "htmy/html.py", start_line: 94, body_start_line: 96 })'
 descriptor = "python method body at htmy/html.py:94 body 96"
 cost_tokens = 13
-cum_tokens = 7500
+cum_tokens = 7532
 
 [batches.content]
 kind = "lines"
@@ -6938,7 +6938,7 @@ position = 266
 key = 'Python(MethodBody { file: "htmy/html.py", start_line: 98, body_start_line: 100 })'
 descriptor = "python method body at htmy/html.py:98 body 100"
 cost_tokens = 13
-cum_tokens = 7513
+cum_tokens = 7545
 
 [batches.content]
 kind = "lines"
@@ -6956,7 +6956,7 @@ position = 267
 key = 'Python(ClassBody { file: "htmy/html.py", start_line: 831 })'
 descriptor = "python class body at htmy/html.py:831"
 cost_tokens = 197
-cum_tokens = 7710
+cum_tokens = 7742
 
 [batches.content]
 kind = "lines"
@@ -6974,7 +6974,7 @@ position = 268
 key = 'Python(MethodBody { file: "htmy/html.py", start_line: 66, body_start_line: 68 })'
 descriptor = "python method body at htmy/html.py:66 body 68"
 cost_tokens = 18
-cum_tokens = 7728
+cum_tokens = 7760
 
 [batches.content]
 kind = "lines"
@@ -6992,7 +6992,7 @@ position = 269
 key = 'Python(MethodBody { file: "htmy/core.py", start_line: 104, body_start_line: 105 })'
 descriptor = "python method body at htmy/core.py:104 body 105"
 cost_tokens = 27
-cum_tokens = 7755
+cum_tokens = 7787
 
 [batches.content]
 kind = "lines"
@@ -7010,7 +7010,7 @@ position = 270
 key = 'Python(DeclNames { file: "htmy/i18n.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/i18n.py"
 cost_tokens = 137
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7076,7 +7076,7 @@ position = 271
 key = 'Python(Decl { file: "htmy/i18n.py", start_line: 15 })'
 descriptor = "python decl at htmy/i18n.py:15"
 cost_tokens = 0
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7094,7 +7094,7 @@ position = 272
 key = 'Python(Decl { file: "htmy/i18n.py", start_line: 18 })'
 descriptor = "python decl at htmy/i18n.py:18"
 cost_tokens = 0
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7112,7 +7112,7 @@ position = 273
 key = 'Python(Decl { file: "htmy/i18n.py", start_line: 21 })'
 descriptor = "python decl at htmy/i18n.py:21"
 cost_tokens = 0
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7130,7 +7130,7 @@ position = 274
 key = 'Python(Decl { file: "htmy/i18n.py", start_line: 24 })'
 descriptor = "python decl at htmy/i18n.py:24"
 cost_tokens = 0
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7148,7 +7148,7 @@ position = 275
 key = 'Python(Decl { file: "htmy/i18n.py", start_line: 147 })'
 descriptor = "python decl at htmy/i18n.py:147"
 cost_tokens = 0
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7166,7 +7166,7 @@ position = 276
 key = 'Python(ClassBody { file: "htmy/i18n.py", start_line: 15 })'
 descriptor = "python class body at htmy/i18n.py:15"
 cost_tokens = 0
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7184,7 +7184,7 @@ position = 277
 key = 'Python(ClassBody { file: "htmy/i18n.py", start_line: 18 })'
 descriptor = "python class body at htmy/i18n.py:18"
 cost_tokens = 0
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7202,7 +7202,7 @@ position = 278
 key = 'Python(ClassBody { file: "htmy/i18n.py", start_line: 21 })'
 descriptor = "python class body at htmy/i18n.py:21"
 cost_tokens = 0
-cum_tokens = 7892
+cum_tokens = 7924
 
 [batches.content]
 kind = "lines"
@@ -7220,7 +7220,7 @@ position = 279
 key = 'Python(Decl { file: "htmy/i18n.py", start_line: 115 })'
 descriptor = "python decl at htmy/i18n.py:115"
 cost_tokens = 17
-cum_tokens = 7909
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -7238,7 +7238,7 @@ position = 280
 key = 'Python(DeclDoc { file: "htmy/i18n.py", start_line: 24 })'
 descriptor = "python decl doc at htmy/i18n.py:24"
 cost_tokens = 24
-cum_tokens = 7933
+cum_tokens = 7965
 
 [batches.content]
 kind = "lines"
@@ -7256,7 +7256,7 @@ position = 281
 key = 'Python(ClassBody { file: "htmy/i18n.py", start_line: 24 })'
 descriptor = "python class body at htmy/i18n.py:24"
 cost_tokens = 71
-cum_tokens = 8004
+cum_tokens = 8036
 
 [batches.content]
 kind = "lines"
@@ -7274,7 +7274,7 @@ position = 282
 key = 'Python(MethodSigs { file: "htmy/i18n.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/i18n.py"
 cost_tokens = 91
-cum_tokens = 8095
+cum_tokens = 8127
 
 [batches.content]
 kind = "lines"
@@ -7364,7 +7364,7 @@ position = 283
 key = 'Python(Method { file: "htmy/i18n.py", start_line: 34 })'
 descriptor = "python method at htmy/i18n.py:34"
 cost_tokens = 0
-cum_tokens = 8095
+cum_tokens = 8127
 
 [batches.content]
 kind = "lines"
@@ -7382,7 +7382,7 @@ position = 284
 key = 'Python(Method { file: "htmy/i18n.py", start_line: 45 })'
 descriptor = "python method at htmy/i18n.py:45"
 cost_tokens = 0
-cum_tokens = 8095
+cum_tokens = 8127
 
 [batches.content]
 kind = "lines"
@@ -7400,7 +7400,7 @@ position = 285
 key = 'Python(Method { file: "htmy/i18n.py", start_line: 48 })'
 descriptor = "python method at htmy/i18n.py:48"
 cost_tokens = 0
-cum_tokens = 8095
+cum_tokens = 8127
 
 [batches.content]
 kind = "lines"
@@ -7418,7 +7418,7 @@ position = 286
 key = 'Python(Method { file: "htmy/i18n.py", start_line: 51 })'
 descriptor = "python method at htmy/i18n.py:51"
 cost_tokens = 0
-cum_tokens = 8095
+cum_tokens = 8127
 
 [batches.content]
 kind = "lines"
@@ -7436,7 +7436,7 @@ position = 287
 key = 'Python(MethodBody { file: "htmy/i18n.py", start_line: 45, body_start_line: 46 })'
 descriptor = "python method body at htmy/i18n.py:45 body 46"
 cost_tokens = 21
-cum_tokens = 8116
+cum_tokens = 8148
 
 [batches.content]
 kind = "lines"
@@ -7454,7 +7454,7 @@ position = 288
 key = 'Python(MethodBody { file: "htmy/i18n.py", start_line: 48, body_start_line: 49 })'
 descriptor = "python method body at htmy/i18n.py:48 body 49"
 cost_tokens = 26
-cum_tokens = 8142
+cum_tokens = 8174
 
 [batches.content]
 kind = "lines"
@@ -7472,7 +7472,7 @@ position = 289
 key = 'Python(DeclNames { file: "htmy/utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/utils.py"
 cost_tokens = 139
-cum_tokens = 8281
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -7594,7 +7594,7 @@ position = 290
 key = 'Python(Decl { file: "htmy/utils.py", start_line: 42 })'
 descriptor = "python decl at htmy/utils.py:42"
 cost_tokens = 0
-cum_tokens = 8281
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -7612,7 +7612,7 @@ position = 291
 key = 'Python(Decl { file: "htmy/utils.py", start_line: 49 })'
 descriptor = "python decl at htmy/utils.py:49"
 cost_tokens = 0
-cum_tokens = 8281
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -7630,7 +7630,7 @@ position = 292
 key = 'Python(Decl { file: "htmy/utils.py", start_line: 55 })'
 descriptor = "python decl at htmy/utils.py:55"
 cost_tokens = 0
-cum_tokens = 8281
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -7648,7 +7648,7 @@ position = 293
 key = 'Python(Decl { file: "htmy/utils.py", start_line: 62 })'
 descriptor = "python decl at htmy/utils.py:62"
 cost_tokens = 0
-cum_tokens = 8281
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -7666,7 +7666,7 @@ position = 294
 key = 'Python(Decl { file: "htmy/utils.py", start_line: 67 })'
 descriptor = "python decl at htmy/utils.py:67"
 cost_tokens = 0
-cum_tokens = 8281
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -7684,7 +7684,7 @@ position = 295
 key = 'Python(Decl { file: "htmy/utils.py", start_line: 73 })'
 descriptor = "python decl at htmy/utils.py:73"
 cost_tokens = 0
-cum_tokens = 8281
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -7702,7 +7702,7 @@ position = 296
 key = 'Python(DeclBody { file: "htmy/utils.py", start_line: 62, body_start_line: 64 })'
 descriptor = "python decl body at htmy/utils.py:62 body 64"
 cost_tokens = 14
-cum_tokens = 8295
+cum_tokens = 8327
 
 [batches.content]
 kind = "lines"
@@ -7720,7 +7720,7 @@ position = 297
 key = 'Python(DeclDoc { file: "htmy/utils.py", start_line: 62 })'
 descriptor = "python decl doc at htmy/utils.py:62"
 cost_tokens = 16
-cum_tokens = 8311
+cum_tokens = 8343
 
 [batches.content]
 kind = "lines"
@@ -7738,7 +7738,7 @@ position = 298
 key = 'Python(DeclDoc { file: "htmy/utils.py", start_line: 67 })'
 descriptor = "python decl doc at htmy/utils.py:67"
 cost_tokens = 17
-cum_tokens = 8328
+cum_tokens = 8360
 
 [batches.content]
 kind = "lines"
@@ -7756,7 +7756,7 @@ position = 299
 key = 'Python(DeclDoc { file: "htmy/utils.py", start_line: 55 })'
 descriptor = "python decl doc at htmy/utils.py:55"
 cost_tokens = 18
-cum_tokens = 8346
+cum_tokens = 8378
 
 [batches.content]
 kind = "lines"
@@ -7774,7 +7774,7 @@ position = 300
 key = 'Python(DeclBody { file: "htmy/utils.py", start_line: 42, body_start_line: 46 })'
 descriptor = "python decl body at htmy/utils.py:42 body 46"
 cost_tokens = 16
-cum_tokens = 8362
+cum_tokens = 8394
 
 [batches.content]
 kind = "lines"
@@ -7792,7 +7792,7 @@ position = 301
 key = 'Python(DeclDoc { file: "htmy/utils.py", start_line: 73 })'
 descriptor = "python decl doc at htmy/utils.py:73"
 cost_tokens = 21
-cum_tokens = 8383
+cum_tokens = 8415
 
 [batches.content]
 kind = "lines"
@@ -7810,7 +7810,7 @@ position = 302
 key = 'Python(Decl { file: "htmy/utils.py", start_line: 12 })'
 descriptor = "python decl at htmy/utils.py:12"
 cost_tokens = 46
-cum_tokens = 8429
+cum_tokens = 8461
 
 [batches.content]
 kind = "lines"
@@ -7828,7 +7828,7 @@ position = 303
 key = 'Python(DeclDoc { file: "htmy/utils.py", start_line: 49 })'
 descriptor = "python decl doc at htmy/utils.py:49"
 cost_tokens = 29
-cum_tokens = 8458
+cum_tokens = 8490
 
 [batches.content]
 kind = "lines"
@@ -7846,7 +7846,7 @@ position = 304
 key = 'Python(DeclDoc { file: "htmy/utils.py", start_line: 42 })'
 descriptor = "python decl doc at htmy/utils.py:42"
 cost_tokens = 31
-cum_tokens = 8489
+cum_tokens = 8521
 
 [batches.content]
 kind = "lines"
@@ -7864,7 +7864,7 @@ position = 305
 key = 'Python(DeclDoc { file: "htmy/utils.py", start_line: 12 })'
 descriptor = "python decl doc at htmy/utils.py:12"
 cost_tokens = 84
-cum_tokens = 8573
+cum_tokens = 8605
 
 [batches.content]
 kind = "lines"
@@ -7882,7 +7882,7 @@ position = 306
 key = 'Python(Method { file: "htmy/i18n.py", start_line: 79 })'
 descriptor = "python method at htmy/i18n.py:79"
 cost_tokens = 33
-cum_tokens = 8606
+cum_tokens = 8638
 
 [batches.content]
 kind = "lines"
@@ -7900,7 +7900,7 @@ position = 307
 key = 'Fs(DirListing { dir: "tests/renderer" })'
 descriptor = "listing of 'tests/renderer'"
 cost_tokens = 28
-cum_tokens = 8634
+cum_tokens = 8666
 
 [batches.content]
 kind = "fs"
@@ -7914,7 +7914,7 @@ position = 308
 key = 'Python(Imports { file: "htmy/io.py" })'
 descriptor = "python imports in htmy/io.py"
 cost_tokens = 46
-cum_tokens = 8680
+cum_tokens = 8712
 
 [batches.content]
 kind = "lines"
@@ -7932,7 +7932,7 @@ position = 309
 key = 'Markdown(Section { file: "docs/index.md", section_index: 50, reference_shaped: false })'
 descriptor = "docs/index.md section #50"
 cost_tokens = 33
-cum_tokens = 8713
+cum_tokens = 8745
 
 [batches.content]
 kind = "lines"
@@ -7950,7 +7950,7 @@ position = 310
 key = 'Python(DeclDoc { file: "htmy/md/core.py", start_line: 20 })'
 descriptor = "python decl doc at htmy/md/core.py:20"
 cost_tokens = 68
-cum_tokens = 8781
+cum_tokens = 8813
 
 [batches.content]
 kind = "lines"
@@ -7968,7 +7968,7 @@ position = 311
 key = 'Python(MethodSigs { file: "htmy/md/core.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/md/core.py"
 cost_tokens = 104
-cum_tokens = 8885
+cum_tokens = 8917
 
 [batches.content]
 kind = "lines"
@@ -8074,7 +8074,7 @@ position = 312
 key = 'Python(Method { file: "htmy/md/core.py", start_line: 43 })'
 descriptor = "python method at htmy/md/core.py:43"
 cost_tokens = 0
-cum_tokens = 8885
+cum_tokens = 8917
 
 [batches.content]
 kind = "lines"
@@ -8092,7 +8092,7 @@ position = 313
 key = 'Python(Method { file: "htmy/md/core.py", start_line: 53 })'
 descriptor = "python method at htmy/md/core.py:53"
 cost_tokens = 0
-cum_tokens = 8885
+cum_tokens = 8917
 
 [batches.content]
 kind = "lines"
@@ -8110,7 +8110,7 @@ position = 314
 key = 'Python(Method { file: "htmy/md/core.py", start_line: 64 })'
 descriptor = "python method at htmy/md/core.py:64"
 cost_tokens = 0
-cum_tokens = 8885
+cum_tokens = 8917
 
 [batches.content]
 kind = "lines"
@@ -8128,7 +8128,7 @@ position = 315
 key = 'Python(Method { file: "htmy/md/core.py", start_line: 131 })'
 descriptor = "python method at htmy/md/core.py:131"
 cost_tokens = 0
-cum_tokens = 8885
+cum_tokens = 8917
 
 [batches.content]
 kind = "lines"
@@ -8146,7 +8146,7 @@ position = 316
 key = 'Python(Method { file: "htmy/md/core.py", start_line: 33 })'
 descriptor = "python method at htmy/md/core.py:33"
 cost_tokens = 13
-cum_tokens = 8898
+cum_tokens = 8930
 
 [batches.content]
 kind = "lines"
@@ -8164,7 +8164,7 @@ position = 317
 key = 'Python(MethodDoc { file: "htmy/md/core.py", start_line: 33 })'
 descriptor = "python method doc at htmy/md/core.py:33"
 cost_tokens = 22
-cum_tokens = 8920
+cum_tokens = 8952
 
 [batches.content]
 kind = "lines"
@@ -8182,7 +8182,7 @@ position = 318
 key = 'Python(MethodDoc { file: "htmy/md/core.py", start_line: 53 })'
 descriptor = "python method doc at htmy/md/core.py:53"
 cost_tokens = 27
-cum_tokens = 8947
+cum_tokens = 8979
 
 [batches.content]
 kind = "lines"
@@ -8200,7 +8200,7 @@ position = 319
 key = 'Markdown(Section { file: "docs/api/md.md", section_index: 1, reference_shaped: false })'
 descriptor = "docs/api/md.md section #1"
 cost_tokens = 21
-cum_tokens = 8968
+cum_tokens = 9000
 
 [batches.content]
 kind = "lines"
@@ -8218,7 +8218,7 @@ position = 320
 key = 'Python(DeclNames { file: "htmy/function_component.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/function_component.py"
 cost_tokens = 224
-cum_tokens = 9192
+cum_tokens = 9224
 
 [batches.content]
 kind = "lines"
@@ -8332,7 +8332,7 @@ position = 321
 key = 'Python(Decl { file: "htmy/function_component.py", start_line: 31 })'
 descriptor = "python decl at htmy/function_component.py:31"
 cost_tokens = 0
-cum_tokens = 9192
+cum_tokens = 9224
 
 [batches.content]
 kind = "lines"
@@ -8350,7 +8350,7 @@ position = 322
 key = 'Python(Decl { file: "htmy/function_component.py", start_line: 46 })'
 descriptor = "python decl at htmy/function_component.py:46"
 cost_tokens = 0
-cum_tokens = 9192
+cum_tokens = 9224
 
 [batches.content]
 kind = "lines"
@@ -8368,7 +8368,7 @@ position = 323
 key = 'Python(Decl { file: "htmy/function_component.py", start_line: 71 })'
 descriptor = "python decl at htmy/function_component.py:71"
 cost_tokens = 0
-cum_tokens = 9192
+cum_tokens = 9224
 
 [batches.content]
 kind = "lines"
@@ -8386,7 +8386,7 @@ position = 324
 key = 'Python(DeclDoc { file: "htmy/function_component.py", start_line: 71 })'
 descriptor = "python decl doc at htmy/function_component.py:71"
 cost_tokens = 21
-cum_tokens = 9213
+cum_tokens = 9245
 
 [batches.content]
 kind = "lines"
@@ -8404,7 +8404,7 @@ position = 325
 key = 'Python(MethodSigs { file: "htmy/function_component.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/function_component.py"
 cost_tokens = 198
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8686,7 +8686,7 @@ position = 326
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 37 })'
 descriptor = "python method at htmy/function_component.py:37"
 cost_tokens = 0
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8704,7 +8704,7 @@ position = 327
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 52 })'
 descriptor = "python method at htmy/function_component.py:52"
 cost_tokens = 0
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8722,7 +8722,7 @@ position = 328
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 80 })'
 descriptor = "python method at htmy/function_component.py:80"
 cost_tokens = 0
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8740,7 +8740,7 @@ position = 329
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 83 })'
 descriptor = "python method at htmy/function_component.py:83"
 cost_tokens = 0
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8758,7 +8758,7 @@ position = 330
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 141 })'
 descriptor = "python method at htmy/function_component.py:141"
 cost_tokens = 0
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8776,7 +8776,7 @@ position = 331
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 144 })'
 descriptor = "python method at htmy/function_component.py:144"
 cost_tokens = 0
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8794,7 +8794,7 @@ position = 332
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 37, body_start_line: 37 })'
 descriptor = "python method body at htmy/function_component.py:37 body 37"
 cost_tokens = 0
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8812,7 +8812,7 @@ position = 333
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 52, body_start_line: 52 })'
 descriptor = "python method body at htmy/function_component.py:52 body 52"
 cost_tokens = 0
-cum_tokens = 9411
+cum_tokens = 9443
 
 [batches.content]
 kind = "lines"
@@ -8830,7 +8830,7 @@ position = 334
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 184 })'
 descriptor = "python method at htmy/function_component.py:184"
 cost_tokens = 25
-cum_tokens = 9436
+cum_tokens = 9468
 
 [batches.content]
 kind = "lines"
@@ -8848,7 +8848,7 @@ position = 335
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 189 })'
 descriptor = "python method at htmy/function_component.py:189"
 cost_tokens = 25
-cum_tokens = 9461
+cum_tokens = 9493
 
 [batches.content]
 kind = "lines"
@@ -8866,7 +8866,7 @@ position = 336
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 305 })'
 descriptor = "python method at htmy/function_component.py:305"
 cost_tokens = 27
-cum_tokens = 9488
+cum_tokens = 9520
 
 [batches.content]
 kind = "lines"
@@ -8884,7 +8884,7 @@ position = 337
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 310 })'
 descriptor = "python method at htmy/function_component.py:310"
 cost_tokens = 27
-cum_tokens = 9515
+cum_tokens = 9547
 
 [batches.content]
 kind = "lines"
@@ -8902,7 +8902,7 @@ position = 338
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 234 })'
 descriptor = "python method at htmy/function_component.py:234"
 cost_tokens = 28
-cum_tokens = 9543
+cum_tokens = 9575
 
 [batches.content]
 kind = "lines"
@@ -8920,7 +8920,7 @@ position = 339
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 239 })'
 descriptor = "python method at htmy/function_component.py:239"
 cost_tokens = 28
-cum_tokens = 9571
+cum_tokens = 9603
 
 [batches.content]
 kind = "lines"
@@ -8938,7 +8938,7 @@ position = 340
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 305, body_start_line: 308 })'
 descriptor = "python method body at htmy/function_component.py:305 body 308"
 cost_tokens = 14
-cum_tokens = 9585
+cum_tokens = 9617
 
 [batches.content]
 kind = "lines"
@@ -8956,7 +8956,7 @@ position = 341
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 310, body_start_line: 313 })'
 descriptor = "python method body at htmy/function_component.py:310 body 313"
 cost_tokens = 14
-cum_tokens = 9599
+cum_tokens = 9631
 
 [batches.content]
 kind = "lines"
@@ -8974,7 +8974,7 @@ position = 342
 key = 'Python(ClassBody { file: "htmy/function_component.py", start_line: 71 })'
 descriptor = "python class body at htmy/function_component.py:71"
 cost_tokens = 61
-cum_tokens = 9660
+cum_tokens = 9692
 
 [batches.content]
 kind = "lines"
@@ -9016,7 +9016,7 @@ position = 343
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 184, body_start_line: 187 })'
 descriptor = "python method body at htmy/function_component.py:184 body 187"
 cost_tokens = 15
-cum_tokens = 9675
+cum_tokens = 9707
 
 [batches.content]
 kind = "lines"
@@ -9034,7 +9034,7 @@ position = 344
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 189, body_start_line: 192 })'
 descriptor = "python method body at htmy/function_component.py:189 body 192"
 cost_tokens = 15
-cum_tokens = 9690
+cum_tokens = 9722
 
 [batches.content]
 kind = "lines"
@@ -9052,7 +9052,7 @@ position = 345
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 234, body_start_line: 237 })'
 descriptor = "python method body at htmy/function_component.py:234 body 237"
 cost_tokens = 17
-cum_tokens = 9707
+cum_tokens = 9739
 
 [batches.content]
 kind = "lines"
@@ -9070,7 +9070,7 @@ position = 346
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 239, body_start_line: 242 })'
 descriptor = "python method body at htmy/function_component.py:239 body 242"
 cost_tokens = 17
-cum_tokens = 9724
+cum_tokens = 9756
 
 [batches.content]
 kind = "lines"
@@ -9088,7 +9088,7 @@ position = 347
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 86 })'
 descriptor = "python method at htmy/function_component.py:86"
 cost_tokens = 53
-cum_tokens = 9777
+cum_tokens = 9809
 
 [batches.content]
 kind = "lines"
@@ -9106,7 +9106,7 @@ position = 348
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 147 })'
 descriptor = "python method at htmy/function_component.py:147"
 cost_tokens = 53
-cum_tokens = 9830
+cum_tokens = 9862
 
 [batches.content]
 kind = "lines"
@@ -9124,7 +9124,7 @@ position = 349
 key = 'Python(MethodBody { file: "htmy/function_component.py", start_line: 147, body_start_line: 180 })'
 descriptor = "python method body at htmy/function_component.py:147 body 180"
 cost_tokens = 9
-cum_tokens = 9839
+cum_tokens = 9871
 
 [batches.content]
 kind = "lines"
@@ -9142,7 +9142,7 @@ position = 350
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 194 })'
 descriptor = "python method at htmy/function_component.py:194"
 cost_tokens = 53
-cum_tokens = 9892
+cum_tokens = 9924
 
 [batches.content]
 kind = "lines"
@@ -9160,7 +9160,7 @@ position = 351
 key = 'Python(Method { file: "htmy/function_component.py", start_line: 315 })'
 descriptor = "python method at htmy/function_component.py:315"
 cost_tokens = 55
-cum_tokens = 9947
+cum_tokens = 9979
 
 [batches.content]
 kind = "lines"

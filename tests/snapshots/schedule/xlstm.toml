@@ -1,7 +1,7 @@
 fixture = "xlstm"
 budget = 10000
-cumulative_tokens = 10000
-batch_count = 321
+cumulative_tokens = 9855
+batch_count = 318
 
 [[batches]]
 position = 1
@@ -2519,10 +2519,36 @@ kind = "full"
 
 [[batches]]
 position = 98
+key = 'Toml(Config { file: "pyproject.toml" })'
+descriptor = "manifest config in pyproject.toml"
+cost_tokens = 204
+cum_tokens = 2842
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 47
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
 key = 'Python(Method { file: "xlstm/xlstm_block_stack.py", start_line: 126 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:126"
 cost_tokens = 56
-cum_tokens = 2694
+cum_tokens = 2898
 
 [batches.content]
 kind = "lines"
@@ -2536,11 +2562,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Python(ClassBody { file: "xlstm/utils.py", start_line: 11 })'
 descriptor = "python class body at xlstm/utils.py:11"
 cost_tokens = 89
-cum_tokens = 2783
+cum_tokens = 2987
 
 [batches.content]
 kind = "lines"
@@ -2554,11 +2580,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Python(Method { file: "xlstm/xlstm_lm_model.py", start_line: 56 })'
 descriptor = "python method at xlstm/xlstm_lm_model.py:56"
 cost_tokens = 59
-cum_tokens = 2842
+cum_tokens = 3046
 
 [batches.content]
 kind = "lines"
@@ -2572,11 +2598,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Python(Imports { file: "xlstm/xlstm_large/utils.py" })'
 descriptor = "python imports in xlstm/xlstm_large/utils.py"
 cost_tokens = 16
-cum_tokens = 2858
+cum_tokens = 3062
 
 [batches.content]
 kind = "lines"
@@ -2590,11 +2616,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Python(ClassBody { file: "xlstm/xlstm_block_stack.py", start_line: 15 })'
 descriptor = "python class body at xlstm/xlstm_block_stack.py:15"
 cost_tokens = 250
-cum_tokens = 3108
+cum_tokens = 3312
 
 [batches.content]
 kind = "lines"
@@ -2608,11 +2634,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
 descriptor = "README.md section #0"
 cost_tokens = 516
-cum_tokens = 3624
+cum_tokens = 3828
 
 [batches.content]
 kind = "lines"
@@ -2626,11 +2652,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Python(Decl { file: "xlstm/blocks/slstm/src/vanilla/__init__.py", start_line: 77 })'
 descriptor = "python decl at xlstm/blocks/slstm/src/vanilla/__init__.py:77"
 cost_tokens = 174
-cum_tokens = 3798
+cum_tokens = 4002
 
 [batches.content]
 kind = "lines"
@@ -2644,11 +2670,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Python(Decl { file: "xlstm/blocks/slstm/src/vanilla/__init__.py", start_line: 17 })'
 descriptor = "python decl at xlstm/blocks/slstm/src/vanilla/__init__.py:17"
 cost_tokens = 176
-cum_tokens = 3974
+cum_tokens = 4178
 
 [batches.content]
 kind = "lines"
@@ -2662,11 +2688,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Python(MethodBody { file: "experiments/metrics.py", start_line: 25, body_start_line: 26 })'
 descriptor = "python method body at experiments/metrics.py:25 body 26"
 cost_tokens = 22
-cum_tokens = 3996
+cum_tokens = 4200
 
 [batches.content]
 kind = "lines"
@@ -2680,11 +2706,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Fs(DirListing { dir: "notebooks/xlstm" })'
 descriptor = "listing of 'notebooks/xlstm'"
 cost_tokens = 33
-cum_tokens = 4029
+cum_tokens = 4233
 
 [batches.content]
 kind = "fs"
@@ -2694,11 +2720,11 @@ parent = "notebooks/xlstm"
 entries = ["mLSTM_test_notebook.ipynb", "xLSTM_readme_example.ipynb", "xLSTM_test_notebook.ipynb"]
 
 [[batches]]
-position = 108
+position = 109
 key = 'Python(MethodSigs { file: "xlstm/components/ln.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/components/ln.py"
 cost_tokens = 69
-cum_tokens = 4098
+cum_tokens = 4302
 
 [batches.content]
 kind = "lines"
@@ -2784,11 +2810,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Python(Method { file: "xlstm/components/ln.py", start_line: 36 })'
 descriptor = "python method at xlstm/components/ln.py:36"
 cost_tokens = 0
-cum_tokens = 4098
+cum_tokens = 4302
 
 [batches.content]
 kind = "lines"
@@ -2802,11 +2828,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Python(Method { file: "xlstm/components/ln.py", start_line: 41 })'
 descriptor = "python method at xlstm/components/ln.py:41"
 cost_tokens = 0
-cum_tokens = 4098
+cum_tokens = 4302
 
 [batches.content]
 kind = "lines"
@@ -2820,11 +2846,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Python(Method { file: "xlstm/components/ln.py", start_line: 53 })'
 descriptor = "python method at xlstm/components/ln.py:53"
 cost_tokens = 0
-cum_tokens = 4098
+cum_tokens = 4302
 
 [batches.content]
 kind = "lines"
@@ -2838,11 +2864,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Python(Method { file: "xlstm/components/ln.py", start_line: 27 })'
 descriptor = "python method at xlstm/components/ln.py:27"
 cost_tokens = 14
-cum_tokens = 4112
+cum_tokens = 4316
 
 [batches.content]
 kind = "lines"
@@ -2856,11 +2882,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Python(DeclNames { file: "xlstm/xlstm_large/utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/xlstm_large/utils.py"
 cost_tokens = 38
-cum_tokens = 4150
+cum_tokens = 4354
 
 [batches.content]
 kind = "lines"
@@ -2898,11 +2924,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Python(Decl { file: "xlstm/xlstm_large/utils.py", start_line: 5 })'
 descriptor = "python decl at xlstm/xlstm_large/utils.py:5"
 cost_tokens = 0
-cum_tokens = 4150
+cum_tokens = 4354
 
 [batches.content]
 kind = "lines"
@@ -2916,11 +2942,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Python(Decl { file: "xlstm/xlstm_large/utils.py", start_line: 10 })'
 descriptor = "python decl at xlstm/xlstm_large/utils.py:10"
 cost_tokens = 28
-cum_tokens = 4178
+cum_tokens = 4382
 
 [batches.content]
 kind = "lines"
@@ -2934,11 +2960,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Python(DeclDoc { file: "xlstm/xlstm_large/utils.py", start_line: 5 })'
 descriptor = "python decl doc at xlstm/xlstm_large/utils.py:5"
 cost_tokens = 17
-cum_tokens = 4195
+cum_tokens = 4399
 
 [batches.content]
 kind = "lines"
@@ -2952,11 +2978,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Python(DeclBody { file: "xlstm/xlstm_large/utils.py", start_line: 5, body_start_line: 7 })'
 descriptor = "python decl body at xlstm/xlstm_large/utils.py:5 body 7"
 cost_tokens = 22
-cum_tokens = 4217
+cum_tokens = 4421
 
 [batches.content]
 kind = "lines"
@@ -2970,11 +2996,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Python(MethodBody { file: "experiments/metrics.py", start_line: 13, body_start_line: 14 })'
 descriptor = "python method body at experiments/metrics.py:13 body 14"
 cost_tokens = 23
-cum_tokens = 4240
+cum_tokens = 4444
 
 [batches.content]
 kind = "lines"
@@ -2988,11 +3014,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Python(DeclNames { file: "xlstm/components/conv.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/components/conv.py"
 cost_tokens = 39
-cum_tokens = 4279
+cum_tokens = 4483
 
 [batches.content]
 kind = "lines"
@@ -3046,11 +3072,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Python(Decl { file: "xlstm/components/conv.py", start_line: 55 })'
 descriptor = "python decl at xlstm/components/conv.py:55"
 cost_tokens = 0
-cum_tokens = 4279
+cum_tokens = 4483
 
 [batches.content]
 kind = "lines"
@@ -3064,11 +3090,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Python(Decl { file: "xlstm/components/conv.py", start_line: 12 })'
 descriptor = "python decl at xlstm/components/conv.py:12"
 cost_tokens = 12
-cum_tokens = 4291
+cum_tokens = 4495
 
 [batches.content]
 kind = "lines"
@@ -3082,11 +3108,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Python(Decl { file: "xlstm/components/conv.py", start_line: 24 })'
 descriptor = "python decl at xlstm/components/conv.py:24"
 cost_tokens = 63
-cum_tokens = 4354
+cum_tokens = 4558
 
 [batches.content]
 kind = "lines"
@@ -3100,11 +3126,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Python(DeclNames { file: "xlstm/blocks/mlstm/cell.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/mlstm/cell.py"
 cost_tokens = 26
-cum_tokens = 4380
+cum_tokens = 4584
 
 [batches.content]
 kind = "lines"
@@ -3142,11 +3168,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Python(Decl { file: "xlstm/blocks/mlstm/cell.py", start_line: 20 })'
 descriptor = "python decl at xlstm/blocks/mlstm/cell.py:20"
 cost_tokens = 0
-cum_tokens = 4380
+cum_tokens = 4584
 
 [batches.content]
 kind = "lines"
@@ -3160,11 +3186,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Python(Decl { file: "xlstm/blocks/mlstm/cell.py", start_line: 13 })'
 descriptor = "python decl at xlstm/blocks/mlstm/cell.py:13"
 cost_tokens = 11
-cum_tokens = 4391
+cum_tokens = 4595
 
 [batches.content]
 kind = "lines"
@@ -3178,11 +3204,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Python(ClassBody { file: "xlstm/blocks/mlstm/cell.py", start_line: 20 })'
 descriptor = "python class body at xlstm/blocks/mlstm/cell.py:20"
 cost_tokens = 14
-cum_tokens = 4405
+cum_tokens = 4609
 
 [batches.content]
 kind = "lines"
@@ -3196,11 +3222,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Python(ClassBody { file: "xlstm/blocks/mlstm/cell.py", start_line: 13 })'
 descriptor = "python class body at xlstm/blocks/mlstm/cell.py:13"
 cost_tokens = 37
-cum_tokens = 4442
+cum_tokens = 4646
 
 [batches.content]
 kind = "lines"
@@ -3214,11 +3240,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Python(DeclNames { file: "xlstm/components/util.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/components/util.py"
 cost_tokens = 42
-cum_tokens = 4484
+cum_tokens = 4688
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3298,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Python(Decl { file: "xlstm/components/util.py", start_line: 7 })'
 descriptor = "python decl at xlstm/components/util.py:7"
 cost_tokens = 0
-cum_tokens = 4484
+cum_tokens = 4688
 
 [batches.content]
 kind = "lines"
@@ -3290,11 +3316,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Python(Decl { file: "xlstm/components/util.py", start_line: 11 })'
 descriptor = "python decl at xlstm/components/util.py:11"
 cost_tokens = 0
-cum_tokens = 4484
+cum_tokens = 4688
 
 [batches.content]
 kind = "lines"
@@ -3308,11 +3334,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Python(Decl { file: "xlstm/components/util.py", start_line: 26 })'
 descriptor = "python decl at xlstm/components/util.py:26"
 cost_tokens = 0
-cum_tokens = 4484
+cum_tokens = 4688
 
 [batches.content]
 kind = "lines"
@@ -3326,11 +3352,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Python(DeclBody { file: "xlstm/components/util.py", start_line: 7, body_start_line: 8 })'
 descriptor = "python decl body at xlstm/components/util.py:7 body 8"
 cost_tokens = 18
-cum_tokens = 4502
+cum_tokens = 4706
 
 [batches.content]
 kind = "lines"
@@ -3344,11 +3370,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Python(DeclDoc { file: "xlstm/components/util.py", start_line: 11 })'
 descriptor = "python decl doc at xlstm/components/util.py:11"
 cost_tokens = 24
-cum_tokens = 4526
+cum_tokens = 4730
 
 [batches.content]
 kind = "lines"
@@ -3362,11 +3388,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Python(MethodSigs { file: "xlstm/components/util.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/components/util.py"
 cost_tokens = 103
-cum_tokens = 4629
+cum_tokens = 4833
 
 [batches.content]
 kind = "lines"
@@ -3500,11 +3526,11 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Python(Method { file: "xlstm/components/util.py", start_line: 58 })'
 descriptor = "python method at xlstm/components/util.py:58"
 cost_tokens = 0
-cum_tokens = 4629
+cum_tokens = 4833
 
 [batches.content]
 kind = "lines"
@@ -3518,11 +3544,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Python(Method { file: "xlstm/components/util.py", start_line: 73 })'
 descriptor = "python method at xlstm/components/util.py:73"
 cost_tokens = 0
-cum_tokens = 4629
+cum_tokens = 4833
 
 [batches.content]
 kind = "lines"
@@ -3536,11 +3562,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Python(Method { file: "xlstm/components/util.py", start_line: 61 })'
 descriptor = "python method at xlstm/components/util.py:61"
 cost_tokens = 9
-cum_tokens = 4638
+cum_tokens = 4842
 
 [batches.content]
 kind = "lines"
@@ -3554,11 +3580,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'Python(Method { file: "xlstm/components/util.py", start_line: 65 })'
 descriptor = "python method at xlstm/components/util.py:65"
 cost_tokens = 9
-cum_tokens = 4647
+cum_tokens = 4851
 
 [batches.content]
 kind = "lines"
@@ -3572,11 +3598,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'Python(Method { file: "xlstm/components/util.py", start_line: 69 })'
 descriptor = "python method at xlstm/components/util.py:69"
 cost_tokens = 9
-cum_tokens = 4656
+cum_tokens = 4860
 
 [batches.content]
 kind = "lines"
@@ -3590,11 +3616,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Python(Method { file: "xlstm/components/util.py", start_line: 46 })'
 descriptor = "python method at xlstm/components/util.py:46"
 cost_tokens = 17
-cum_tokens = 4673
+cum_tokens = 4877
 
 [batches.content]
 kind = "lines"
@@ -3608,11 +3634,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Python(Method { file: "xlstm/components/util.py", start_line: 51 })'
 descriptor = "python method at xlstm/components/util.py:51"
 cost_tokens = 18
-cum_tokens = 4691
+cum_tokens = 4895
 
 [batches.content]
 kind = "lines"
@@ -3626,11 +3652,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Python(MethodSigs { file: "xlstm/components/linear_headwise.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/components/linear_headwise.py"
 cost_tokens = 80
-cum_tokens = 4771
+cum_tokens = 4975
 
 [batches.content]
 kind = "lines"
@@ -3716,11 +3742,11 @@ end = 85
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 144
 key = 'Python(Method { file: "xlstm/components/linear_headwise.py", start_line: 31 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:31"
 cost_tokens = 0
-cum_tokens = 4771
+cum_tokens = 4975
 
 [batches.content]
 kind = "lines"
@@ -3734,11 +3760,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 144
+position = 145
 key = 'Python(Method { file: "xlstm/components/linear_headwise.py", start_line: 49 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:49"
 cost_tokens = 0
-cum_tokens = 4771
+cum_tokens = 4975
 
 [batches.content]
 kind = "lines"
@@ -3752,11 +3778,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 145
+position = 146
 key = 'Python(Method { file: "xlstm/components/linear_headwise.py", start_line: 75 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:75"
 cost_tokens = 0
-cum_tokens = 4771
+cum_tokens = 4975
 
 [batches.content]
 kind = "lines"
@@ -3770,11 +3796,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 146
+position = 147
 key = 'Python(Method { file: "xlstm/components/linear_headwise.py", start_line: 84 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:84"
 cost_tokens = 0
-cum_tokens = 4771
+cum_tokens = 4975
 
 [batches.content]
 kind = "lines"
@@ -3788,11 +3814,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Python(Method { file: "xlstm/components/linear_headwise.py", start_line: 67 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:67"
 cost_tokens = 9
-cum_tokens = 4780
+cum_tokens = 4984
 
 [batches.content]
 kind = "lines"
@@ -3806,11 +3832,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Python(DeclDoc { file: "xlstm/blocks/xlstm_block.py", start_line: 43 })'
 descriptor = "python decl doc at xlstm/blocks/xlstm_block.py:43"
 cost_tokens = 53
-cum_tokens = 4833
+cum_tokens = 5037
 
 [batches.content]
 kind = "lines"
@@ -3824,11 +3850,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Python(DeclDoc { file: "xlstm/components/linear_headwise.py", start_line: 42 })'
 descriptor = "python decl doc at xlstm/components/linear_headwise.py:42"
 cost_tokens = 53
-cum_tokens = 4886
+cum_tokens = 5090
 
 [batches.content]
 kind = "lines"
@@ -3842,11 +3868,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Python(DeclNames { file: "xlstm/blocks/mlstm/layer.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/mlstm/layer.py"
 cost_tokens = 27
-cum_tokens = 4913
+cum_tokens = 5117
 
 [batches.content]
 kind = "lines"
@@ -3884,11 +3910,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Python(Decl { file: "xlstm/blocks/mlstm/layer.py", start_line: 39 })'
 descriptor = "python decl at xlstm/blocks/mlstm/layer.py:39"
 cost_tokens = 0
-cum_tokens = 4913
+cum_tokens = 5117
 
 [batches.content]
 kind = "lines"
@@ -3897,34 +3923,34 @@ kind = "lines"
 path = "xlstm/blocks/mlstm/layer.py"
 start = 39
 end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 152
-key = 'Python(Decl { file: "xlstm/blocks/mlstm/layer.py", start_line: 18 })'
-descriptor = "python decl at xlstm/blocks/mlstm/layer.py:18"
-cost_tokens = 17
-cum_tokens = 4930
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "xlstm/blocks/mlstm/layer.py"
-start = 18
-end = 19
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 153
+key = 'Python(Decl { file: "xlstm/blocks/mlstm/layer.py", start_line: 18 })'
+descriptor = "python decl at xlstm/blocks/mlstm/layer.py:18"
+cost_tokens = 17
+cum_tokens = 5134
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "xlstm/blocks/mlstm/layer.py"
+start = 18
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
 key = 'Python(ClassBody { file: "xlstm/blocks/mlstm/layer.py", start_line: 39 })'
 descriptor = "python class body at xlstm/blocks/mlstm/layer.py:39"
 cost_tokens = 15
-cum_tokens = 4945
+cum_tokens = 5149
 
 [batches.content]
 kind = "lines"
@@ -3938,11 +3964,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Python(DeclNames { file: "xlstm/blocks/slstm/layer.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/slstm/layer.py"
 cost_tokens = 27
-cum_tokens = 4972
+cum_tokens = 5176
 
 [batches.content]
 kind = "lines"
@@ -3980,11 +4006,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 155
+position = 156
 key = 'Python(Decl { file: "xlstm/blocks/slstm/layer.py", start_line: 33 })'
 descriptor = "python decl at xlstm/blocks/slstm/layer.py:33"
 cost_tokens = 0
-cum_tokens = 4972
+cum_tokens = 5176
 
 [batches.content]
 kind = "lines"
@@ -3998,11 +4024,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Python(Decl { file: "xlstm/blocks/slstm/layer.py", start_line: 18 })'
 descriptor = "python decl at xlstm/blocks/slstm/layer.py:18"
 cost_tokens = 17
-cum_tokens = 4989
+cum_tokens = 5193
 
 [batches.content]
 kind = "lines"
@@ -4016,11 +4042,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 157
+position = 158
 key = 'Python(ClassBody { file: "xlstm/blocks/slstm/layer.py", start_line: 33 })'
 descriptor = "python class body at xlstm/blocks/slstm/layer.py:33"
 cost_tokens = 15
-cum_tokens = 5004
+cum_tokens = 5208
 
 [batches.content]
 kind = "lines"
@@ -4034,11 +4060,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'Python(MethodSigs { file: "xlstm/utils.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/utils.py"
 cost_tokens = 148
-cum_tokens = 5152
+cum_tokens = 5356
 
 [batches.content]
 kind = "lines"
@@ -4140,11 +4166,11 @@ end = 98
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 160
 key = 'Python(Method { file: "xlstm/utils.py", start_line: 20 })'
 descriptor = "python method at xlstm/utils.py:20"
 cost_tokens = 0
-cum_tokens = 5152
+cum_tokens = 5356
 
 [batches.content]
 kind = "lines"
@@ -4158,11 +4184,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'Python(Method { file: "xlstm/utils.py", start_line: 33 })'
 descriptor = "python method at xlstm/utils.py:33"
 cost_tokens = 0
-cum_tokens = 5152
+cum_tokens = 5356
 
 [batches.content]
 kind = "lines"
@@ -4176,11 +4202,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 161
+position = 162
 key = 'Python(Method { file: "xlstm/utils.py", start_line: 36 })'
 descriptor = "python method at xlstm/utils.py:36"
 cost_tokens = 0
-cum_tokens = 5152
+cum_tokens = 5356
 
 [batches.content]
 kind = "lines"
@@ -4194,11 +4220,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 162
+position = 163
 key = 'Python(Method { file: "xlstm/utils.py", start_line: 61 })'
 descriptor = "python method at xlstm/utils.py:61"
 cost_tokens = 0
-cum_tokens = 5152
+cum_tokens = 5356
 
 [batches.content]
 kind = "lines"
@@ -4212,11 +4238,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 163
+position = 164
 key = 'Python(Method { file: "xlstm/utils.py", start_line: 77 })'
 descriptor = "python method at xlstm/utils.py:77"
 cost_tokens = 0
-cum_tokens = 5152
+cum_tokens = 5356
 
 [batches.content]
 kind = "lines"
@@ -4230,11 +4256,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 164
+position = 165
 key = 'Python(MethodBody { file: "xlstm/utils.py", start_line: 33, body_start_line: 34 })'
 descriptor = "python method body at xlstm/utils.py:33 body 34"
 cost_tokens = 10
-cum_tokens = 5162
+cum_tokens = 5366
 
 [batches.content]
 kind = "lines"
@@ -4248,11 +4274,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 165
+position = 166
 key = 'Python(MethodBody { file: "xlstm/components/util.py", start_line: 73, body_start_line: 74 })'
 descriptor = "python method body at xlstm/components/util.py:73 body 74"
 cost_tokens = 16
-cum_tokens = 5178
+cum_tokens = 5382
 
 [batches.content]
 kind = "lines"
@@ -4266,11 +4292,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 166
+position = 167
 key = 'Python(ClassBody { file: "xlstm/components/conv.py", start_line: 12 })'
 descriptor = "python class body at xlstm/components/conv.py:12"
 cost_tokens = 71
-cum_tokens = 5249
+cum_tokens = 5453
 
 [batches.content]
 kind = "lines"
@@ -4284,11 +4310,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 167
+position = 168
 key = 'Python(MethodDoc { file: "xlstm/xlstm_block_stack.py", start_line: 40 })'
 descriptor = "python method doc at xlstm/xlstm_block_stack.py:40"
 cost_tokens = 21
-cum_tokens = 5270
+cum_tokens = 5474
 
 [batches.content]
 kind = "lines"
@@ -4302,11 +4328,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 168
+position = 169
 key = 'Python(DeclNames { file: "xlstm/blocks/mlstm/block.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/mlstm/block.py"
 cost_tokens = 28
-cum_tokens = 5298
+cum_tokens = 5502
 
 [batches.content]
 kind = "lines"
@@ -4344,11 +4370,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 169
+position = 170
 key = 'Python(Decl { file: "xlstm/blocks/mlstm/block.py", start_line: 22 })'
 descriptor = "python decl at xlstm/blocks/mlstm/block.py:22"
 cost_tokens = 0
-cum_tokens = 5298
+cum_tokens = 5502
 
 [batches.content]
 kind = "lines"
@@ -4362,11 +4388,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 170
+position = 171
 key = 'Python(Decl { file: "xlstm/blocks/mlstm/block.py", start_line: 9 })'
 descriptor = "python decl at xlstm/blocks/mlstm/block.py:9"
 cost_tokens = 11
-cum_tokens = 5309
+cum_tokens = 5513
 
 [batches.content]
 kind = "lines"
@@ -4380,11 +4406,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 171
+position = 172
 key = 'Python(ClassBody { file: "xlstm/blocks/mlstm/block.py", start_line: 22 })'
 descriptor = "python class body at xlstm/blocks/mlstm/block.py:22"
 cost_tokens = 14
-cum_tokens = 5323
+cum_tokens = 5527
 
 [batches.content]
 kind = "lines"
@@ -4398,11 +4424,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 172
+position = 173
 key = 'Python(MethodSigs { file: "xlstm/blocks/mlstm/block.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/blocks/mlstm/block.py"
 cost_tokens = 36
-cum_tokens = 5359
+cum_tokens = 5563
 
 [batches.content]
 kind = "lines"
@@ -4440,11 +4466,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 173
+position = 174
 key = 'Python(Method { file: "xlstm/blocks/mlstm/block.py", start_line: 17 })'
 descriptor = "python method at xlstm/blocks/mlstm/block.py:17"
 cost_tokens = 0
-cum_tokens = 5359
+cum_tokens = 5563
 
 [batches.content]
 kind = "lines"
@@ -4458,11 +4484,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 174
+position = 175
 key = 'Python(Method { file: "xlstm/blocks/mlstm/block.py", start_line: 25 })'
 descriptor = "python method at xlstm/blocks/mlstm/block.py:25"
 cost_tokens = 0
-cum_tokens = 5359
+cum_tokens = 5563
 
 [batches.content]
 kind = "lines"
@@ -4476,11 +4502,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 175
+position = 176
 key = 'Python(DeclNames { file: "xlstm/blocks/slstm/block.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/slstm/block.py"
 cost_tokens = 28
-cum_tokens = 5387
+cum_tokens = 5591
 
 [batches.content]
 kind = "lines"
@@ -4518,11 +4544,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 176
+position = 177
 key = 'Python(Decl { file: "xlstm/blocks/slstm/block.py", start_line: 29 })'
 descriptor = "python decl at xlstm/blocks/slstm/block.py:29"
 cost_tokens = 0
-cum_tokens = 5387
+cum_tokens = 5591
 
 [batches.content]
 kind = "lines"
@@ -4536,11 +4562,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 177
+position = 178
 key = 'Python(Decl { file: "xlstm/blocks/slstm/block.py", start_line: 12 })'
 descriptor = "python decl at xlstm/blocks/slstm/block.py:12"
 cost_tokens = 11
-cum_tokens = 5398
+cum_tokens = 5602
 
 [batches.content]
 kind = "lines"
@@ -4554,11 +4580,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 178
+position = 179
 key = 'Python(ClassBody { file: "xlstm/blocks/slstm/block.py", start_line: 29 })'
 descriptor = "python class body at xlstm/blocks/slstm/block.py:29"
 cost_tokens = 14
-cum_tokens = 5412
+cum_tokens = 5616
 
 [batches.content]
 kind = "lines"
@@ -4572,11 +4598,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 179
+position = 180
 key = 'Python(MethodSigs { file: "xlstm/blocks/slstm/block.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/blocks/slstm/block.py"
 cost_tokens = 33
-cum_tokens = 5445
+cum_tokens = 5649
 
 [batches.content]
 kind = "lines"
@@ -4614,11 +4640,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 180
+position = 181
 key = 'Python(Method { file: "xlstm/blocks/slstm/block.py", start_line: 21 })'
 descriptor = "python method at xlstm/blocks/slstm/block.py:21"
 cost_tokens = 0
-cum_tokens = 5445
+cum_tokens = 5649
 
 [batches.content]
 kind = "lines"
@@ -4632,11 +4658,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 181
+position = 182
 key = 'Python(Method { file: "xlstm/blocks/slstm/block.py", start_line: 32 })'
 descriptor = "python method at xlstm/blocks/slstm/block.py:32"
 cost_tokens = 0
-cum_tokens = 5445
+cum_tokens = 5649
 
 [batches.content]
 kind = "lines"
@@ -4650,11 +4676,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 182
+position = 183
 key = 'Python(MethodSigs { file: "xlstm/components/conv.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/components/conv.py"
 cost_tokens = 85
-cum_tokens = 5530
+cum_tokens = 5734
 
 [batches.content]
 kind = "lines"
@@ -4756,11 +4782,11 @@ end = 132
 kind = "ellipsis"
 
 [[batches]]
-position = 183
+position = 184
 key = 'Python(Method { file: "xlstm/components/conv.py", start_line: 20 })'
 descriptor = "python method at xlstm/components/conv.py:20"
 cost_tokens = 0
-cum_tokens = 5530
+cum_tokens = 5734
 
 [batches.content]
 kind = "lines"
@@ -4774,11 +4800,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 184
+position = 185
 key = 'Python(Method { file: "xlstm/components/conv.py", start_line: 71 })'
 descriptor = "python method at xlstm/components/conv.py:71"
 cost_tokens = 0
-cum_tokens = 5530
+cum_tokens = 5734
 
 [batches.content]
 kind = "lines"
@@ -4792,11 +4818,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 185
+position = 186
 key = 'Python(Method { file: "xlstm/components/conv.py", start_line: 95 })'
 descriptor = "python method at xlstm/components/conv.py:95"
 cost_tokens = 0
-cum_tokens = 5530
+cum_tokens = 5734
 
 [batches.content]
 kind = "lines"
@@ -4810,11 +4836,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 186
+position = 187
 key = 'Python(MethodBody { file: "xlstm/components/conv.py", start_line: 95, body_start_line: 96 })'
 descriptor = "python method body at xlstm/components/conv.py:95 body 96"
 cost_tokens = 8
-cum_tokens = 5538
+cum_tokens = 5742
 
 [batches.content]
 kind = "lines"
@@ -4828,11 +4854,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 187
+position = 188
 key = 'Python(Method { file: "xlstm/components/conv.py", start_line: 131 })'
 descriptor = "python method at xlstm/components/conv.py:131"
 cost_tokens = 50
-cum_tokens = 5588
+cum_tokens = 5792
 
 [batches.content]
 kind = "lines"
@@ -4846,11 +4872,11 @@ end = 135
 kind = "full"
 
 [[batches]]
-position = 188
+position = 189
 key = 'Python(MethodDoc { file: "xlstm/utils.py", start_line: 36 })'
 descriptor = "python method doc at xlstm/utils.py:36"
 cost_tokens = 54
-cum_tokens = 5642
+cum_tokens = 5846
 
 [batches.content]
 kind = "lines"
@@ -4864,11 +4890,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 189
+position = 190
 key = 'Python(DeclNames { file: "xlstm/blocks/slstm/src/vanilla/lstm.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/slstm/src/vanilla/lstm.py"
 cost_tokens = 15
-cum_tokens = 5657
+cum_tokens = 5861
 
 [batches.content]
 kind = "lines"
@@ -4890,11 +4916,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 191
 key = 'Python(DeclNames { file: "xlstm/blocks/slstm/src/vanilla/slstm.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/slstm/src/vanilla/slstm.py"
 cost_tokens = 15
-cum_tokens = 5672
+cum_tokens = 5876
 
 [batches.content]
 kind = "lines"
@@ -4916,11 +4942,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 191
+position = 192
 key = 'Python(MethodDoc { file: "xlstm/utils.py", start_line: 61 })'
 descriptor = "python method doc at xlstm/utils.py:61"
 cost_tokens = 56
-cum_tokens = 5728
+cum_tokens = 5932
 
 [batches.content]
 kind = "lines"
@@ -4934,11 +4960,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 192
+position = 193
 key = 'Python(MethodBody { file: "xlstm/components/util.py", start_line: 58, body_start_line: 59 })'
 descriptor = "python method body at xlstm/components/util.py:58 body 59"
 cost_tokens = 19
-cum_tokens = 5747
+cum_tokens = 5951
 
 [batches.content]
 kind = "lines"
@@ -4952,11 +4978,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 193
+position = 194
 key = 'Python(MethodBody { file: "xlstm/components/util.py", start_line: 61, body_start_line: 63 })'
 descriptor = "python method body at xlstm/components/util.py:61 body 63"
 cost_tokens = 19
-cum_tokens = 5766
+cum_tokens = 5970
 
 [batches.content]
 kind = "lines"
@@ -4970,11 +4996,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 194
+position = 195
 key = 'Python(MethodBody { file: "xlstm/components/util.py", start_line: 69, body_start_line: 71 })'
 descriptor = "python method body at xlstm/components/util.py:69 body 71"
 cost_tokens = 19
-cum_tokens = 5785
+cum_tokens = 5989
 
 [batches.content]
 kind = "lines"
@@ -4988,11 +5014,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 195
+position = 196
 key = 'Python(Method { file: "xlstm/components/conv.py", start_line: 110 })'
 descriptor = "python method at xlstm/components/conv.py:110"
 cost_tokens = 56
-cum_tokens = 5841
+cum_tokens = 6045
 
 [batches.content]
 kind = "lines"
@@ -5006,11 +5032,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 196
+position = 197
 key = 'Python(DeclNames { file: "experiments/data/utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in experiments/data/utils.py"
 cost_tokens = 54
-cum_tokens = 5895
+cum_tokens = 6099
 
 [batches.content]
 kind = "lines"
@@ -5080,11 +5106,11 @@ end = 91
 kind = "ellipsis"
 
 [[batches]]
-position = 197
+position = 198
 key = 'Python(Decl { file: "experiments/data/utils.py", start_line: 17 })'
 descriptor = "python decl at experiments/data/utils.py:17"
 cost_tokens = 0
-cum_tokens = 5895
+cum_tokens = 6099
 
 [batches.content]
 kind = "lines"
@@ -5098,11 +5124,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 198
+position = 199
 key = 'Python(Decl { file: "experiments/data/utils.py", start_line: 39 })'
 descriptor = "python decl at experiments/data/utils.py:39"
 cost_tokens = 0
-cum_tokens = 5895
+cum_tokens = 6099
 
 [batches.content]
 kind = "lines"
@@ -5116,11 +5142,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 199
+position = 200
 key = 'Python(Decl { file: "experiments/data/utils.py", start_line: 55 })'
 descriptor = "python decl at experiments/data/utils.py:55"
 cost_tokens = 0
-cum_tokens = 5895
+cum_tokens = 6099
 
 [batches.content]
 kind = "lines"
@@ -5134,11 +5160,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 200
+position = 201
 key = 'Python(Decl { file: "experiments/data/utils.py", start_line: 90 })'
 descriptor = "python decl at experiments/data/utils.py:90"
 cost_tokens = 0
-cum_tokens = 5895
+cum_tokens = 6099
 
 [batches.content]
 kind = "lines"
@@ -5152,11 +5178,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 201
+position = 202
 key = 'Python(MethodSigs { file: "experiments/data/utils.py", chunk_index: 0 })'
 descriptor = "python method sigs in experiments/data/utils.py"
 cost_tokens = 117
-cum_tokens = 6012
+cum_tokens = 6216
 
 [batches.content]
 kind = "lines"
@@ -5322,11 +5348,11 @@ end = 86
 kind = "ellipsis"
 
 [[batches]]
-position = 202
+position = 203
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 41 })'
 descriptor = "python method at experiments/data/utils.py:41"
 cost_tokens = 0
-cum_tokens = 6012
+cum_tokens = 6216
 
 [batches.content]
 kind = "lines"
@@ -5340,11 +5366,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 203
+position = 204
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 85 })'
 descriptor = "python method at experiments/data/utils.py:85"
 cost_tokens = 11
-cum_tokens = 6023
+cum_tokens = 6227
 
 [batches.content]
 kind = "lines"
@@ -5358,11 +5384,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 204
+position = 205
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 77 })'
 descriptor = "python method at experiments/data/utils.py:77"
 cost_tokens = 12
-cum_tokens = 6035
+cum_tokens = 6239
 
 [batches.content]
 kind = "lines"
@@ -5376,11 +5402,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 205
+position = 206
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 50 })'
 descriptor = "python method at experiments/data/utils.py:50"
 cost_tokens = 13
-cum_tokens = 6048
+cum_tokens = 6252
 
 [batches.content]
 kind = "lines"
@@ -5394,11 +5420,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 206
+position = 207
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 46 })'
 descriptor = "python method at experiments/data/utils.py:46"
 cost_tokens = 14
-cum_tokens = 6062
+cum_tokens = 6266
 
 [batches.content]
 kind = "lines"
@@ -5412,11 +5438,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 207
+position = 208
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 57 })'
 descriptor = "python method at experiments/data/utils.py:57"
 cost_tokens = 19
-cum_tokens = 6081
+cum_tokens = 6285
 
 [batches.content]
 kind = "lines"
@@ -5430,11 +5456,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 208
+position = 209
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 19 })'
 descriptor = "python method at experiments/data/utils.py:19"
 cost_tokens = 25
-cum_tokens = 6106
+cum_tokens = 6310
 
 [batches.content]
 kind = "lines"
@@ -5448,11 +5474,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 209
+position = 210
 key = 'Python(MethodBody { file: "experiments/data/utils.py", start_line: 19, body_start_line: 22 })'
 descriptor = "python method body at experiments/data/utils.py:19 body 22"
 cost_tokens = 5
-cum_tokens = 6111
+cum_tokens = 6315
 
 [batches.content]
 kind = "lines"
@@ -5466,11 +5492,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 210
+position = 211
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 29 })'
 descriptor = "python method at experiments/data/utils.py:29"
 cost_tokens = 26
-cum_tokens = 6137
+cum_tokens = 6341
 
 [batches.content]
 kind = "lines"
@@ -5484,11 +5510,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 211
+position = 212
 key = 'Python(MethodBody { file: "experiments/data/utils.py", start_line: 29, body_start_line: 32 })'
 descriptor = "python method body at experiments/data/utils.py:29 body 32"
 cost_tokens = 5
-cum_tokens = 6142
+cum_tokens = 6346
 
 [batches.content]
 kind = "lines"
@@ -5502,11 +5528,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 212
+position = 213
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 34 })'
 descriptor = "python method at experiments/data/utils.py:34"
 cost_tokens = 26
-cum_tokens = 6168
+cum_tokens = 6372
 
 [batches.content]
 kind = "lines"
@@ -5520,11 +5546,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 213
+position = 214
 key = 'Python(MethodBody { file: "experiments/data/utils.py", start_line: 34, body_start_line: 37 })'
 descriptor = "python method body at experiments/data/utils.py:34 body 37"
 cost_tokens = 5
-cum_tokens = 6173
+cum_tokens = 6377
 
 [batches.content]
 kind = "lines"
@@ -5538,11 +5564,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 214
+position = 215
 key = 'Python(MethodBody { file: "experiments/data/utils.py", start_line: 50, body_start_line: 52 })'
 descriptor = "python method body at experiments/data/utils.py:50 body 52"
 cost_tokens = 9
-cum_tokens = 6182
+cum_tokens = 6386
 
 [batches.content]
 kind = "lines"
@@ -5556,11 +5582,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 215
+position = 216
 key = 'Python(Method { file: "experiments/data/utils.py", start_line: 24 })'
 descriptor = "python method at experiments/data/utils.py:24"
 cost_tokens = 28
-cum_tokens = 6210
+cum_tokens = 6414
 
 [batches.content]
 kind = "lines"
@@ -5574,11 +5600,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 216
+position = 217
 key = 'Python(MethodBody { file: "experiments/data/utils.py", start_line: 24, body_start_line: 27 })'
 descriptor = "python method body at experiments/data/utils.py:24 body 27"
 cost_tokens = 5
-cum_tokens = 6215
+cum_tokens = 6419
 
 [batches.content]
 kind = "lines"
@@ -5592,11 +5618,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 217
+position = 218
 key = 'Python(MethodBody { file: "experiments/data/utils.py", start_line: 46, body_start_line: 48 })'
 descriptor = "python method body at experiments/data/utils.py:46 body 48"
 cost_tokens = 10
-cum_tokens = 6225
+cum_tokens = 6429
 
 [batches.content]
 kind = "lines"
@@ -5610,11 +5636,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 218
+position = 219
 key = 'Python(MethodBody { file: "experiments/data/utils.py", start_line: 85, body_start_line: 87 })'
 descriptor = "python method body at experiments/data/utils.py:85 body 87"
 cost_tokens = 17
-cum_tokens = 6242
+cum_tokens = 6446
 
 [batches.content]
 kind = "lines"
@@ -5628,11 +5654,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 219
+position = 220
 key = 'Python(DeclNames { file: "experiments/data/formal_language/tasks/cycle_navigation.py", chunk_index: 0 })'
 descriptor = "python decl names surface in experiments/data/formal_language/tasks/cycle_navigation.py"
 cost_tokens = 23
-cum_tokens = 6265
+cum_tokens = 6469
 
 [batches.content]
 kind = "lines"
@@ -5662,11 +5688,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 220
+position = 221
 key = 'Python(Decl { file: "experiments/data/formal_language/tasks/cycle_navigation.py", start_line: 51 })'
 descriptor = "python decl at experiments/data/formal_language/tasks/cycle_navigation.py:51"
 cost_tokens = 26
-cum_tokens = 6291
+cum_tokens = 6495
 
 [batches.content]
 kind = "lines"
@@ -5680,11 +5706,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 221
+position = 222
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 6294
+cum_tokens = 6498
 
 [batches.content]
 kind = "fs"
@@ -5694,11 +5720,11 @@ parent = ".github"
 entries = ["workflows"]
 
 [[batches]]
-position = 222
+position = 223
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 6302
+cum_tokens = 6506
 
 [batches.content]
 kind = "fs"
@@ -5708,11 +5734,11 @@ parent = ".github/workflows"
 entries = ["cla.yaml", "sync.yaml"]
 
 [[batches]]
-position = 223
+position = 224
 key = 'Python(MethodSigs { file: "xlstm/blocks/slstm/layer.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/blocks/slstm/layer.py"
 cost_tokens = 66
-cum_tokens = 6368
+cum_tokens = 6572
 
 [batches.content]
 kind = "lines"
@@ -5798,11 +5824,11 @@ end = 124
 kind = "ellipsis"
 
 [[batches]]
-position = 224
+position = 225
 key = 'Python(Method { file: "xlstm/blocks/slstm/layer.py", start_line: 28 })'
 descriptor = "python method at xlstm/blocks/slstm/layer.py:28"
 cost_tokens = 0
-cum_tokens = 6368
+cum_tokens = 6572
 
 [batches.content]
 kind = "lines"
@@ -5816,11 +5842,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 225
+position = 226
 key = 'Python(Method { file: "xlstm/blocks/slstm/layer.py", start_line: 36 })'
 descriptor = "python method at xlstm/blocks/slstm/layer.py:36"
 cost_tokens = 0
-cum_tokens = 6368
+cum_tokens = 6572
 
 [batches.content]
 kind = "lines"
@@ -5834,11 +5860,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 226
+position = 227
 key = 'Python(Method { file: "xlstm/blocks/slstm/layer.py", start_line: 84 })'
 descriptor = "python method at xlstm/blocks/slstm/layer.py:84"
 cost_tokens = 0
-cum_tokens = 6368
+cum_tokens = 6572
 
 [batches.content]
 kind = "lines"
@@ -5852,11 +5878,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 227
+position = 228
 key = 'Python(MethodBody { file: "xlstm/components/conv.py", start_line: 20, body_start_line: 21 })'
 descriptor = "python method body at xlstm/components/conv.py:20 body 21"
 cost_tokens = 20
-cum_tokens = 6388
+cum_tokens = 6592
 
 [batches.content]
 kind = "lines"
@@ -5870,11 +5896,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 228
+position = 229
 key = 'Python(MethodBody { file: "xlstm/components/util.py", start_line: 65, body_start_line: 67 })'
 descriptor = "python method body at xlstm/components/util.py:65 body 67"
 cost_tokens = 20
-cum_tokens = 6408
+cum_tokens = 6612
 
 [batches.content]
 kind = "lines"
@@ -5888,11 +5914,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 229
+position = 230
 key = 'Python(MethodSigs { file: "xlstm/blocks/xlstm_block.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/blocks/xlstm_block.py"
 cost_tokens = 110
-cum_tokens = 6518
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -5978,11 +6004,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 230
+position = 231
 key = 'Python(Method { file: "xlstm/blocks/xlstm_block.py", start_line: 27 })'
 descriptor = "python method at xlstm/blocks/xlstm_block.py:27"
 cost_tokens = 0
-cum_tokens = 6518
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -5996,11 +6022,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 231
+position = 232
 key = 'Python(Method { file: "xlstm/blocks/xlstm_block.py", start_line: 51 })'
 descriptor = "python method at xlstm/blocks/xlstm_block.py:51"
 cost_tokens = 0
-cum_tokens = 6518
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -6014,11 +6040,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 232
+position = 233
 key = 'Python(Method { file: "xlstm/blocks/xlstm_block.py", start_line: 76 })'
 descriptor = "python method at xlstm/blocks/xlstm_block.py:76"
 cost_tokens = 0
-cum_tokens = 6518
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -6032,11 +6058,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 233
+position = 234
 key = 'Python(Method { file: "xlstm/blocks/xlstm_block.py", start_line: 82 })'
 descriptor = "python method at xlstm/blocks/xlstm_block.py:82"
 cost_tokens = 0
-cum_tokens = 6518
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -6050,11 +6076,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 234
+position = 235
 key = 'Python(Method { file: "xlstm/blocks/xlstm_block.py", start_line: 89 })'
 descriptor = "python method at xlstm/blocks/xlstm_block.py:89"
 cost_tokens = 0
-cum_tokens = 6518
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -6068,11 +6094,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 235
+position = 236
 key = 'Fs(DirListing { dir: "notebooks/xlstm_large" })'
 descriptor = "listing of 'notebooks/xlstm_large'"
 cost_tokens = 15
-cum_tokens = 6533
+cum_tokens = 6737
 
 [batches.content]
 kind = "fs"
@@ -6082,11 +6108,11 @@ parent = "notebooks/xlstm_large"
 entries = ["demo.ipynb", "load_from_pretrained.ipynb"]
 
 [[batches]]
-position = 236
+position = 237
 key = 'Python(Method { file: "xlstm/utils.py", start_line: 97 })'
 descriptor = "python method at xlstm/utils.py:97"
 cost_tokens = 39
-cum_tokens = 6572
+cum_tokens = 6776
 
 [batches.content]
 kind = "lines"
@@ -6100,11 +6126,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 237
+position = 238
 key = 'Python(ClassBody { file: "xlstm/components/conv.py", start_line: 55 })'
 descriptor = "python class body at xlstm/components/conv.py:55"
 cost_tokens = 213
-cum_tokens = 6785
+cum_tokens = 6989
 
 [batches.content]
 kind = "lines"
@@ -6118,11 +6144,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 238
+position = 239
 key = 'Python(ClassBody { file: "xlstm/components/linear_headwise.py", start_line: 12 })'
 descriptor = "python class body at xlstm/components/linear_headwise.py:12"
 cost_tokens = 230
-cum_tokens = 7015
+cum_tokens = 7219
 
 [batches.content]
 kind = "lines"
@@ -6136,11 +6162,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 239
+position = 240
 key = 'Python(Method { file: "xlstm/components/util.py", start_line: 34 })'
 descriptor = "python method at xlstm/components/util.py:34"
 cost_tokens = 62
-cum_tokens = 7077
+cum_tokens = 7281
 
 [batches.content]
 kind = "lines"
@@ -6154,11 +6180,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 240
+position = 241
 key = 'Python(Imports { file: "xlstm/xlstm_large/components.py" })'
 descriptor = "python imports in xlstm/xlstm_large/components.py"
 cost_tokens = 30
-cum_tokens = 7107
+cum_tokens = 7311
 
 [batches.content]
 kind = "lines"
@@ -6172,11 +6198,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 241
+position = 242
 key = 'Python(DeclNames { file: "experiments/data/formal_language/tasks/modular_arithmetic.py", chunk_index: 0 })'
 descriptor = "python decl names surface in experiments/data/formal_language/tasks/modular_arithmetic.py"
 cost_tokens = 26
-cum_tokens = 7133
+cum_tokens = 7337
 
 [batches.content]
 kind = "lines"
@@ -6206,11 +6232,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 242
+position = 243
 key = 'Python(DeclNames { file: "xlstm/blocks/slstm/cell.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in xlstm/blocks/slstm/cell.py"
 cost_tokens = 16
-cum_tokens = 7149
+cum_tokens = 7353
 
 [batches.content]
 kind = "lines"
@@ -6224,11 +6250,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 243
+position = 244
 key = 'Python(MethodSigs { file: "xlstm/blocks/mlstm/cell.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/blocks/mlstm/cell.py"
 cost_tokens = 74
-cum_tokens = 7223
+cum_tokens = 7427
 
 [batches.content]
 kind = "lines"
@@ -6298,11 +6324,11 @@ end = 134
 kind = "ellipsis"
 
 [[batches]]
-position = 244
+position = 245
 key = 'Python(Method { file: "xlstm/blocks/mlstm/cell.py", start_line: 23 })'
 descriptor = "python method at xlstm/blocks/mlstm/cell.py:23"
 cost_tokens = 0
-cum_tokens = 7223
+cum_tokens = 7427
 
 [batches.content]
 kind = "lines"
@@ -6316,11 +6342,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 245
+position = 246
 key = 'Python(Method { file: "xlstm/blocks/mlstm/cell.py", start_line: 43 })'
 descriptor = "python method at xlstm/blocks/mlstm/cell.py:43"
 cost_tokens = 0
-cum_tokens = 7223
+cum_tokens = 7427
 
 [batches.content]
 kind = "lines"
@@ -6334,11 +6360,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 246
+position = 247
 key = 'Python(Method { file: "xlstm/blocks/mlstm/cell.py", start_line: 133 })'
 descriptor = "python method at xlstm/blocks/mlstm/cell.py:133"
 cost_tokens = 0
-cum_tokens = 7223
+cum_tokens = 7427
 
 [batches.content]
 kind = "lines"
@@ -6352,11 +6378,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 247
+position = 248
 key = 'Python(DeclNames { file: "xlstm/blocks/mlstm/backends.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/mlstm/backends.py"
 cost_tokens = 40
-cum_tokens = 7263
+cum_tokens = 7467
 
 [batches.content]
 kind = "lines"
@@ -6410,11 +6436,11 @@ end = 150
 kind = "ellipsis"
 
 [[batches]]
-position = 248
+position = 249
 key = 'Python(Method { file: "xlstm/components/conv.py", start_line: 98 })'
 descriptor = "python method at xlstm/components/conv.py:98"
 cost_tokens = 26
-cum_tokens = 7289
+cum_tokens = 7493
 
 [batches.content]
 kind = "lines"
@@ -6428,11 +6454,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 249
+position = 250
 key = 'Python(Imports { file: "experiments/metrics.py" })'
 descriptor = "python imports in experiments/metrics.py"
 cost_tokens = 57
-cum_tokens = 7346
+cum_tokens = 7550
 
 [batches.content]
 kind = "lines"
@@ -6446,11 +6472,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 250
+position = 251
 key = 'Python(DeclNames { file: "experiments/data/formal_language/online_generate.py", chunk_index: 0 })'
 descriptor = "python decl names surface in experiments/data/formal_language/online_generate.py"
 cost_tokens = 41
-cum_tokens = 7387
+cum_tokens = 7591
 
 [batches.content]
 kind = "lines"
@@ -6504,11 +6530,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 251
+position = 252
 key = 'Python(Decl { file: "experiments/data/formal_language/online_generate.py", start_line: 9 })'
 descriptor = "python decl at experiments/data/formal_language/online_generate.py:9"
 cost_tokens = 0
-cum_tokens = 7387
+cum_tokens = 7591
 
 [batches.content]
 kind = "lines"
@@ -6522,11 +6548,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 252
+position = 253
 key = 'Python(Decl { file: "experiments/data/formal_language/online_generate.py", start_line: 29 })'
 descriptor = "python decl at experiments/data/formal_language/online_generate.py:29"
 cost_tokens = 0
-cum_tokens = 7387
+cum_tokens = 7591
 
 [batches.content]
 kind = "lines"
@@ -6540,11 +6566,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 253
+position = 254
 key = 'Python(Decl { file: "experiments/data/formal_language/online_generate.py", start_line: 41 })'
 descriptor = "python decl at experiments/data/formal_language/online_generate.py:41"
 cost_tokens = 0
-cum_tokens = 7387
+cum_tokens = 7591
 
 [batches.content]
 kind = "lines"
@@ -6558,11 +6584,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 254
+position = 255
 key = 'Python(DeclDoc { file: "experiments/data/formal_language/online_generate.py", start_line: 41 })'
 descriptor = "python decl doc at experiments/data/formal_language/online_generate.py:41"
 cost_tokens = 50
-cum_tokens = 7437
+cum_tokens = 7641
 
 [batches.content]
 kind = "lines"
@@ -6576,11 +6602,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 255
+position = 256
 key = 'Python(ClassBody { file: "xlstm/blocks/xlstm_block.py", start_line: 16 })'
 descriptor = "python class body at xlstm/blocks/xlstm_block.py:16"
 cost_tokens = 110
-cum_tokens = 7547
+cum_tokens = 7751
 
 [batches.content]
 kind = "lines"
@@ -6594,11 +6620,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 256
+position = 257
 key = 'Python(MethodSigs { file: "xlstm/blocks/mlstm/layer.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/blocks/mlstm/layer.py"
 cost_tokens = 79
-cum_tokens = 7626
+cum_tokens = 7830
 
 [batches.content]
 kind = "lines"
@@ -6684,11 +6710,11 @@ end = 159
 kind = "ellipsis"
 
 [[batches]]
-position = 257
+position = 258
 key = 'Python(Method { file: "xlstm/blocks/mlstm/layer.py", start_line: 34 })'
 descriptor = "python method at xlstm/blocks/mlstm/layer.py:34"
 cost_tokens = 0
-cum_tokens = 7626
+cum_tokens = 7830
 
 [batches.content]
 kind = "lines"
@@ -6702,11 +6728,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 258
+position = 259
 key = 'Python(Method { file: "xlstm/blocks/mlstm/layer.py", start_line: 42 })'
 descriptor = "python method at xlstm/blocks/mlstm/layer.py:42"
 cost_tokens = 0
-cum_tokens = 7626
+cum_tokens = 7830
 
 [batches.content]
 kind = "lines"
@@ -6720,11 +6746,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 259
+position = 260
 key = 'Python(Method { file: "xlstm/blocks/mlstm/layer.py", start_line: 101 })'
 descriptor = "python method at xlstm/blocks/mlstm/layer.py:101"
 cost_tokens = 0
-cum_tokens = 7626
+cum_tokens = 7830
 
 [batches.content]
 kind = "lines"
@@ -6738,11 +6764,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 260
+position = 261
 key = 'Python(Method { file: "xlstm/blocks/mlstm/layer.py", start_line: 158 })'
 descriptor = "python method at xlstm/blocks/mlstm/layer.py:158"
 cost_tokens = 10
-cum_tokens = 7636
+cum_tokens = 7840
 
 [batches.content]
 kind = "lines"
@@ -6756,11 +6782,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 261
+position = 262
 key = 'Python(Imports { file: "experiments/lr_scheduler.py" })'
 descriptor = "python imports in experiments/lr_scheduler.py"
 cost_tokens = 60
-cum_tokens = 7696
+cum_tokens = 7900
 
 [batches.content]
 kind = "lines"
@@ -6774,11 +6800,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 262
+position = 263
 key = 'Python(Imports { file: "xlstm/xlstm_large/generate.py" })'
 descriptor = "python imports in xlstm/xlstm_large/generate.py"
 cost_tokens = 35
-cum_tokens = 7731
+cum_tokens = 7935
 
 [batches.content]
 kind = "lines"
@@ -6792,11 +6818,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 263
+position = 264
 key = 'Python(ClassBody { file: "xlstm/blocks/mlstm/block.py", start_line: 9 })'
 descriptor = "python class body at xlstm/blocks/mlstm/block.py:9"
 cost_tokens = 75
-cum_tokens = 7806
+cum_tokens = 8010
 
 [batches.content]
 kind = "lines"
@@ -6810,11 +6836,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 264
+position = 265
 key = 'Python(MethodSigs { file: "experiments/data/formal_language/online_generate.py", chunk_index: 0 })'
 descriptor = "python method sigs in experiments/data/formal_language/online_generate.py"
 cost_tokens = 177
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7012,11 +7038,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 265
+position = 266
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 11 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:11"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7030,11 +7056,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 266
+position = 267
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 19 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:19"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7048,11 +7074,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 267
+position = 268
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 25 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:25"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7066,11 +7092,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 268
+position = 269
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 30 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:30"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7084,11 +7110,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 269
+position = 270
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 34 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:34"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7102,11 +7128,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 270
+position = 271
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 37 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:37"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7120,11 +7146,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 271
+position = 272
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 47 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:47"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7138,11 +7164,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 272
+position = 273
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 54 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:54"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7156,11 +7182,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 273
+position = 274
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 59 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:59"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7174,11 +7200,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 274
+position = 275
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 63 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:63"
 cost_tokens = 0
-cum_tokens = 7983
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -7192,11 +7218,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 275
+position = 276
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 67 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:67"
 cost_tokens = 9
-cum_tokens = 7992
+cum_tokens = 8196
 
 [batches.content]
 kind = "lines"
@@ -7210,11 +7236,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 276
+position = 277
 key = 'Python(Method { file: "experiments/data/formal_language/online_generate.py", start_line: 71 })'
 descriptor = "python method at experiments/data/formal_language/online_generate.py:71"
 cost_tokens = 10
-cum_tokens = 8002
+cum_tokens = 8206
 
 [batches.content]
 kind = "lines"
@@ -7228,11 +7254,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 277
+position = 278
 key = 'Python(MethodBody { file: "experiments/data/formal_language/online_generate.py", start_line: 25, body_start_line: 26 })'
 descriptor = "python method body at experiments/data/formal_language/online_generate.py:25 body 26"
 cost_tokens = 8
-cum_tokens = 8010
+cum_tokens = 8214
 
 [batches.content]
 kind = "lines"
@@ -7246,11 +7272,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 278
+position = 279
 key = 'Python(MethodBody { file: "experiments/data/formal_language/online_generate.py", start_line: 37, body_start_line: 38 })'
 descriptor = "python method body at experiments/data/formal_language/online_generate.py:37 body 38"
 cost_tokens = 9
-cum_tokens = 8019
+cum_tokens = 8223
 
 [batches.content]
 kind = "lines"
@@ -7264,11 +7290,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 279
+position = 280
 key = 'Python(MethodBody { file: "experiments/data/formal_language/online_generate.py", start_line: 67, body_start_line: 69 })'
 descriptor = "python method body at experiments/data/formal_language/online_generate.py:67 body 69"
 cost_tokens = 9
-cum_tokens = 8028
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -7282,11 +7308,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 280
+position = 281
 key = 'Python(MethodBody { file: "experiments/data/formal_language/online_generate.py", start_line: 34, body_start_line: 35 })'
 descriptor = "python method body at experiments/data/formal_language/online_generate.py:34 body 35"
 cost_tokens = 10
-cum_tokens = 8038
+cum_tokens = 8242
 
 [batches.content]
 kind = "lines"
@@ -7300,11 +7326,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 281
+position = 282
 key = 'Python(MethodBody { file: "experiments/data/formal_language/online_generate.py", start_line: 71, body_start_line: 73 })'
 descriptor = "python method body at experiments/data/formal_language/online_generate.py:71 body 73"
 cost_tokens = 10
-cum_tokens = 8048
+cum_tokens = 8252
 
 [batches.content]
 kind = "lines"
@@ -7318,11 +7344,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 282
+position = 283
 key = 'Python(DeclDoc { file: "xlstm/components/util.py", start_line: 26 })'
 descriptor = "python decl doc at xlstm/components/util.py:26"
 cost_tokens = 95
-cum_tokens = 8143
+cum_tokens = 8347
 
 [batches.content]
 kind = "lines"
@@ -7336,11 +7362,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 283
+position = 284
 key = 'Python(Method { file: "xlstm/components/ln.py", start_line: 11 })'
 descriptor = "python method at xlstm/components/ln.py:11"
 cost_tokens = 74
-cum_tokens = 8217
+cum_tokens = 8421
 
 [batches.content]
 kind = "lines"
@@ -7354,11 +7380,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 284
+position = 285
 key = 'Python(MethodBody { file: "experiments/metrics.py", start_line: 17, body_start_line: 18 })'
 descriptor = "python method body at experiments/metrics.py:17 body 18"
 cost_tokens = 40
-cum_tokens = 8257
+cum_tokens = 8461
 
 [batches.content]
 kind = "lines"
@@ -7372,11 +7398,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 285
+position = 286
 key = 'Python(Decl { file: "xlstm/xlstm_large/from_pretrained.py", start_line: 9 })'
 descriptor = "python decl at xlstm/xlstm_large/from_pretrained.py:9"
 cost_tokens = 115
-cum_tokens = 8372
+cum_tokens = 8576
 
 [batches.content]
 kind = "lines"
@@ -7390,11 +7416,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 286
+position = 287
 key = 'Python(DeclNames { file: "xlstm/components/feedforward.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/components/feedforward.py"
 cost_tokens = 83
-cum_tokens = 8455
+cum_tokens = 8659
 
 [batches.content]
 kind = "lines"
@@ -7472,11 +7498,11 @@ end = 91
 kind = "ellipsis"
 
 [[batches]]
-position = 287
+position = 288
 key = 'Python(Decl { file: "xlstm/components/feedforward.py", start_line: 22 })'
 descriptor = "python decl at xlstm/components/feedforward.py:22"
 cost_tokens = 0
-cum_tokens = 8455
+cum_tokens = 8659
 
 [batches.content]
 kind = "lines"
@@ -7490,11 +7516,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 288
+position = 289
 key = 'Python(Decl { file: "xlstm/components/feedforward.py", start_line: 49 })'
 descriptor = "python decl at xlstm/components/feedforward.py:49"
 cost_tokens = 0
-cum_tokens = 8455
+cum_tokens = 8659
 
 [batches.content]
 kind = "lines"
@@ -7508,11 +7534,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 289
+position = 290
 key = 'Python(Decl { file: "xlstm/components/feedforward.py", start_line: 90 })'
 descriptor = "python decl at xlstm/components/feedforward.py:90"
 cost_tokens = 0
-cum_tokens = 8455
+cum_tokens = 8659
 
 [batches.content]
 kind = "lines"
@@ -7526,11 +7552,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 290
+position = 291
 key = 'Python(Decl { file: "xlstm/components/feedforward.py", start_line: 31 })'
 descriptor = "python decl at xlstm/components/feedforward.py:31"
 cost_tokens = 14
-cum_tokens = 8469
+cum_tokens = 8673
 
 [batches.content]
 kind = "lines"
@@ -7544,11 +7570,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 291
+position = 292
 key = 'Python(ClassBody { file: "xlstm/components/feedforward.py", start_line: 49 })'
 descriptor = "python class body at xlstm/components/feedforward.py:49"
 cost_tokens = 12
-cum_tokens = 8481
+cum_tokens = 8685
 
 [batches.content]
 kind = "lines"
@@ -7562,11 +7588,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 292
+position = 293
 key = 'Python(MethodSigs { file: "xlstm/components/feedforward.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/components/feedforward.py"
 cost_tokens = 66
-cum_tokens = 8547
+cum_tokens = 8751
 
 [batches.content]
 kind = "lines"
@@ -7636,11 +7662,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 293
+position = 294
 key = 'Python(Method { file: "xlstm/components/feedforward.py", start_line: 42 })'
 descriptor = "python method at xlstm/components/feedforward.py:42"
 cost_tokens = 0
-cum_tokens = 8547
+cum_tokens = 8751
 
 [batches.content]
 kind = "lines"
@@ -7654,11 +7680,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 294
+position = 295
 key = 'Python(Method { file: "xlstm/components/feedforward.py", start_line: 52 })'
 descriptor = "python method at xlstm/components/feedforward.py:52"
 cost_tokens = 0
-cum_tokens = 8547
+cum_tokens = 8751
 
 [batches.content]
 kind = "lines"
@@ -7672,11 +7698,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 295
+position = 296
 key = 'Python(Method { file: "xlstm/components/feedforward.py", start_line: 72 })'
 descriptor = "python method at xlstm/components/feedforward.py:72"
 cost_tokens = 0
-cum_tokens = 8547
+cum_tokens = 8751
 
 [batches.content]
 kind = "lines"
@@ -7690,11 +7716,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 296
+position = 297
 key = 'Python(Method { file: "xlstm/components/feedforward.py", start_line: 77 })'
 descriptor = "python method at xlstm/components/feedforward.py:77"
 cost_tokens = 0
-cum_tokens = 8547
+cum_tokens = 8751
 
 [batches.content]
 kind = "lines"
@@ -7708,11 +7734,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 297
+position = 298
 key = 'Python(ClassBody { file: "xlstm/components/feedforward.py", start_line: 31 })'
 descriptor = "python class body at xlstm/components/feedforward.py:31"
 cost_tokens = 106
-cum_tokens = 8653
+cum_tokens = 8857
 
 [batches.content]
 kind = "lines"
@@ -7726,11 +7752,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 298
+position = 299
 key = 'Python(DeclBody { file: "xlstm/components/feedforward.py", start_line: 90, body_start_line: 91 })'
 descriptor = "python decl body at xlstm/components/feedforward.py:90 body 91"
 cost_tokens = 52
-cum_tokens = 8705
+cum_tokens = 8909
 
 [batches.content]
 kind = "lines"
@@ -7744,11 +7770,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 299
+position = 300
 key = 'Python(Imports { file: "xlstm/utils.py" })'
 descriptor = "python imports in xlstm/utils.py"
 cost_tokens = 77
-cum_tokens = 8782
+cum_tokens = 8986
 
 [batches.content]
 kind = "lines"
@@ -7762,11 +7788,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 300
+position = 301
 key = 'Python(ClassBody { file: "xlstm/blocks/mlstm/layer.py", start_line: 18 })'
 descriptor = "python class body at xlstm/blocks/mlstm/layer.py:18"
 cost_tokens = 161
-cum_tokens = 8943
+cum_tokens = 9147
 
 [batches.content]
 kind = "lines"
@@ -7780,11 +7806,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 301
+position = 302
 key = 'Python(Method { file: "xlstm/blocks/slstm/layer.py", start_line: 92 })'
 descriptor = "python method at xlstm/blocks/slstm/layer.py:92"
 cost_tokens = 56
-cum_tokens = 8999
+cum_tokens = 9203
 
 [batches.content]
 kind = "lines"
@@ -7798,11 +7824,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 302
+position = 303
 key = 'Python(ClassBody { file: "xlstm/blocks/slstm/layer.py", start_line: 18 })'
 descriptor = "python class body at xlstm/blocks/slstm/layer.py:18"
 cost_tokens = 106
-cum_tokens = 9105
+cum_tokens = 9309
 
 [batches.content]
 kind = "lines"
@@ -7816,11 +7842,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 303
+position = 304
 key = 'Python(DeclNames { file: "xlstm/components/init.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/components/init.py"
 cost_tokens = 89
-cum_tokens = 9194
+cum_tokens = 9398
 
 [batches.content]
 kind = "lines"
@@ -7874,11 +7900,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 304
+position = 305
 key = 'Python(Decl { file: "xlstm/components/init.py", start_line: 8 })'
 descriptor = "python decl at xlstm/components/init.py:8"
 cost_tokens = 0
-cum_tokens = 9194
+cum_tokens = 9398
 
 [batches.content]
 kind = "lines"
@@ -7892,11 +7918,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 305
+position = 306
 key = 'Python(Decl { file: "xlstm/components/init.py", start_line: 18 })'
 descriptor = "python decl at xlstm/components/init.py:18"
 cost_tokens = 0
-cum_tokens = 9194
+cum_tokens = 9398
 
 [batches.content]
 kind = "lines"
@@ -7910,11 +7936,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 306
+position = 307
 key = 'Python(Decl { file: "xlstm/components/init.py", start_line: 28 })'
 descriptor = "python decl at xlstm/components/init.py:28"
 cost_tokens = 0
-cum_tokens = 9194
+cum_tokens = 9398
 
 [batches.content]
 kind = "lines"
@@ -7928,11 +7954,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 307
+position = 308
 key = 'Python(DeclDoc { file: "xlstm/components/init.py", start_line: 8 })'
 descriptor = "python decl doc at xlstm/components/init.py:8"
 cost_tokens = 14
-cum_tokens = 9208
+cum_tokens = 9412
 
 [batches.content]
 kind = "lines"
@@ -7946,11 +7972,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 308
+position = 309
 key = 'Python(DeclDoc { file: "xlstm/components/init.py", start_line: 28 })'
 descriptor = "python decl doc at xlstm/components/init.py:28"
 cost_tokens = 32
-cum_tokens = 9240
+cum_tokens = 9444
 
 [batches.content]
 kind = "lines"
@@ -7964,11 +7990,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 309
+position = 310
 key = 'Python(DeclDoc { file: "xlstm/components/init.py", start_line: 18 })'
 descriptor = "python decl doc at xlstm/components/init.py:18"
 cost_tokens = 94
-cum_tokens = 9334
+cum_tokens = 9538
 
 [batches.content]
 kind = "lines"
@@ -7982,11 +8008,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 310
+position = 311
 key = 'Python(MethodBody { file: "xlstm/xlstm_block_stack.py", start_line: 111, body_start_line: 112 })'
 descriptor = "python method body at xlstm/xlstm_block_stack.py:111 body 112"
 cost_tokens = 46
-cum_tokens = 9380
+cum_tokens = 9584
 
 [batches.content]
 kind = "lines"
@@ -8000,11 +8026,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 311
+position = 312
 key = 'Python(Imports { file: "xlstm/components/init.py" })'
 descriptor = "python imports in xlstm/components/init.py"
 cost_tokens = 46
-cum_tokens = 9426
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
@@ -8018,11 +8044,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 312
+position = 313
 key = 'Python(Imports { file: "xlstm/components/util.py" })'
 descriptor = "python imports in xlstm/components/util.py"
 cost_tokens = 46
-cum_tokens = 9472
+cum_tokens = 9676
 
 [batches.content]
 kind = "lines"
@@ -8036,11 +8062,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 313
+position = 314
 key = 'Python(ClassBody { file: "xlstm/blocks/slstm/block.py", start_line: 12 })'
 descriptor = "python class body at xlstm/blocks/slstm/block.py:12"
 cost_tokens = 98
-cum_tokens = 9570
+cum_tokens = 9774
 
 [batches.content]
 kind = "lines"
@@ -8054,11 +8080,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 314
+position = 315
 key = 'Fs(DirListing { dir: "xlstm/blocks/slstm/src/cuda" })'
 descriptor = "listing of 'xlstm/blocks/slstm/src/cuda'"
 cost_tokens = 56
-cum_tokens = 9626
+cum_tokens = 9830
 
 [batches.content]
 kind = "fs"
@@ -8068,37 +8094,11 @@ parent = "xlstm/blocks/slstm/src/cuda"
 entries = ["lstm_pointwise.cu", "slstm.cc", "slstm.h", "slstm_backward.cu", "slstm_backward_cut.cu", "slstm_forward.cu", "slstm_pointwise.cu", "slstm_pointwise.cuh"]
 
 [[batches]]
-position = 315
+position = 316
 key = 'C(DeclNames { file: "xlstm/blocks/slstm/src/cuda/slstm.h", chunk_index: 0, hub: false })'
 descriptor = "c decl names surface in xlstm/blocks/slstm/src/cuda/slstm.h"
 cost_tokens = 12
-cum_tokens = 9638
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "xlstm/blocks/slstm/src/cuda/slstm.h"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "xlstm/blocks/slstm/src/cuda/slstm.h"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 316
-key = 'C(Decl { file: "xlstm/blocks/slstm/src/cuda/slstm.h", start_line: 44 })'
-descriptor = "c decl at xlstm/blocks/slstm/src/cuda/slstm.h:44"
-cost_tokens = 0
-cum_tokens = 9638
+cum_tokens = 9842
 
 [batches.content]
 kind = "lines"
@@ -8121,146 +8121,44 @@ kind = "ellipsis"
 
 [[batches]]
 position = 317
-key = 'C(Includes { file: "xlstm/blocks/slstm/src/cuda/slstm.h" })'
-descriptor = "c includes in xlstm/blocks/slstm/src/cuda/slstm.h"
-cost_tokens = 13
-cum_tokens = 9651
+key = 'C(Decl { file: "xlstm/blocks/slstm/src/cuda/slstm.h", start_line: 44 })'
+descriptor = "c decl at xlstm/blocks/slstm/src/cuda/slstm.h:44"
+cost_tokens = 0
+cum_tokens = 9842
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "xlstm/blocks/slstm/src/cuda/slstm.h"
-start = 24
-end = 24
+start = 44
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches.content.spans]]
+path = "xlstm/blocks/slstm/src/cuda/slstm.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 318
-key = 'C(HeaderBanner { file: "xlstm/blocks/slstm/src/cuda/slstm.h" })'
-descriptor = "c header banner in xlstm/blocks/slstm/src/cuda/slstm.h"
-cost_tokens = 253
-cum_tokens = 9904
+key = 'C(Includes { file: "xlstm/blocks/slstm/src/cuda/slstm.h" })'
+descriptor = "c includes in xlstm/blocks/slstm/src/cuda/slstm.h"
+cost_tokens = 13
+cum_tokens = 9855
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "xlstm/blocks/slstm/src/cuda/slstm.h"
-start = 1
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 319
-key = 'Python(DeclNames { file: "xlstm/xlstm_large/generate.py", chunk_index: 0 })'
-descriptor = "python decl names surface in xlstm/xlstm_large/generate.py"
-cost_tokens = 96
-cum_tokens = 10000
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 6
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
 start = 24
 end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 320
-key = 'Python(Decl { file: "xlstm/xlstm_large/generate.py", start_line: 13 })'
-descriptor = "python decl at xlstm/xlstm_large/generate.py:13"
-cost_tokens = 0
-cum_tokens = 10000
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 321
-key = 'Python(Decl { file: "xlstm/xlstm_large/generate.py", start_line: 23 })'
-descriptor = "python decl at xlstm/xlstm_large/generate.py:23"
-cost_tokens = 0
-cum_tokens = 10000
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "xlstm/xlstm_large/generate.py"
-start = 23
-end = 23
 
 [batches.content.spans.render]
 kind = "full"

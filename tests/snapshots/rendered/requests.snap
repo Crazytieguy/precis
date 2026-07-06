@@ -122,6 +122,11 @@ pyproject.toml
       22→    "certifi>=2023.5.7"
       23→]
     …
+      53→[project.optional-dependencies]
+      54→security = []
+      55→socks = ["PySocks>=1.5.6, !=1.5.7"]
+      56→use_chardet_on_py3 = ["chardet>=3.0.2,<8"]
+    …
 requirements-dev.txt
 setup.py
        1→import sys
@@ -313,34 +318,6 @@ src/
              130→    cookies: RequestsCookieJar
             …
              395→class Session(SessionRedirectMixin):
-            …
-             414→    headers: CaseInsensitiveDict[str]
-             415→    auth: _t.AuthType
-             416→    proxies: dict[str, str]
-             417→    hooks: dict[str, list[_t.HookType]]
-             418→    params: MutableMapping[str, Any]
-             419→    stream: bool
-             420→    verify: _t.VerifyType
-             421→    cert: _t.CertType
-             422→    max_redirects: int
-             423→    trust_env: bool
-             424→    cookies: RequestsCookieJar
-             425→    adapters: MutableMapping[str, BaseAdapter]
-             426→
-             427→    __attrs__: list[str] = [
-             428→        "headers",
-             429→        "cookies",
-             430→        "auth",
-             431→        "proxies",
-             432→        "hooks",
-             433→        "params",
-             434→        "verify",
-             435→        "cert",
-             436→        "adapters",
-             437→        "stream",
-             438→        "trust_env",
-             439→        "max_redirects",
-             440→    ]
             …
              908→def session() -> Session:
             …

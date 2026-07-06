@@ -293,8 +293,4 @@ Score(3000)=0.615 I=0.712 C=0.531 ns_rows≤3K=16/40 (reached=6 partial=1 missin
 | walker |  | 9602 | 50 | python method doc at src/pluggy/_manager.py:512 |  |  | 0.536 |
 | ns | 9646 |  | 203 | changelog/README.rst: newsfragment type taxonomy + naming convention | 7.3 |  | 0.532 |
 | walker |  | 9667 | 65 | python method doc at src/pluggy/_manager.py:434 |  |  | 0.532 |
-| walker |  | 9846 | 179 | python method doc at src/pluggy/_manager.py:450 |  |  | 0.532 |
-| walker |  | 9895 | 49 | python method body at src/pluggy/_tracing.py:17 body 18 |  |  | 0.532 |
-| walker |  | 9912 | 17 | python method body at src/pluggy/_manager.py:304 body 312 |  |  | 0.532 |
-| walker |  | 9930 | 18 | python decl names surface in docs/examples/eggsample/eggsample/__init__.py |  |  | 0.532 |
 | ns | 9971 |  | 325 | RELEASING.rst: full release procedure | 7.4 |  | 0.522 |
