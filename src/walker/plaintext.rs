@@ -34,6 +34,9 @@ const PLAINTEXT_LINE_CAP: usize = 60;
 /// FS-metadata pre-flight gate (≈80 bytes/line × line cap).
 const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 
+/// Head rows retained from long `requirements.txt` files.
+const REQUIREMENTS_HEAD_LINE_CAP: usize = 8;
+
 /// Plaintext file class — drives the (filename → signal preset) table.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
@@ -190,41 +193,38 @@ fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
 }
 
 fn requirements_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
-    let source = ctx.read_source(file)?;
-    let lines: Vec<&str> = source.lines().collect();
-    if lines.is_empty() {
+    let byte_len = std::fs::metadata(file)
+        .map(|m| m.len() as usize)
+        .unwrap_or(usize::MAX);
+    if byte_len > PLAINTEXT_BYTE_GATE {
         return None;
     }
-    if lines.len() <= 8 {
+    let source = ctx.read_source(file)?;
+    let line_count = source.lines().count();
+    if line_count == 0 {
+        return None;
+    }
+    if line_count <= REQUIREMENTS_HEAD_LINE_CAP {
         return single_file_lines_content(
             file,
             &source,
-            FileLines::new((1..=lines.len()).collect()),
+            FileLines::new((1..=line_count).collect()),
         );
     }
-    let mut full = vec![1];
-    for (idx, line) in lines.iter().enumerate() {
-        let trimmed = line.trim_start();
-        if trimmed.starts_with("-e ") || trimmed.starts_with("git+") || trimmed.contains("://") {
-            full.push(idx + 1);
-        }
-    }
-    full.sort_unstable();
-    full.dedup();
+    single_file_lines_content(file, &source, sampled_requirements_lines(line_count))
+}
+
+fn sampled_requirements_lines(line_count: usize) -> FileLines {
+    let full: Vec<usize> = (1..=REQUIREMENTS_HEAD_LINE_CAP.min(line_count)).collect();
     let mut ellipses = Vec::new();
-    for pair in full.windows(2) {
+    let mut boundaries = full.clone();
+    boundaries.push(line_count + 1);
+    for pair in boundaries.windows(2) {
         if pair[1] > pair[0] + 1 {
             ellipses.push(pair[0] + 1);
         }
     }
-    if full.last().is_some_and(|last| *last < lines.len()) {
-        ellipses.push(full.last().copied().unwrap_or(1) + 1);
-    }
-    single_file_lines_content(
-        file,
-        &source,
-        FileLines::new(full).with_ellipses(dedup_sorted(ellipses)),
-    )
+    FileLines::new(full).with_ellipses(dedup_sorted(ellipses))
 }
 
 // --- man pages ----------------------------------------------------------
@@ -482,6 +482,28 @@ mod tests {
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         assert_no_plaintext_whole(&report, "LICENSE");
+    }
+
+    #[test]
+    fn plaintext_requirements_samples_head_not_url_lines() {
+        let lines = sampled_requirements_lines(12);
+        assert_eq!(lines.full, vec![1, 2, 3, 4, 5, 6, 7, 8]);
+        assert_eq!(lines.ellipses, vec![9]);
+    }
+
+    #[test]
+    fn plaintext_oversized_requirements_skipped() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let long_line = "x".repeat(250);
+        let body: String = std::iter::repeat_n(long_line.as_str(), 60)
+            .collect::<Vec<_>>()
+            .join("\n");
+        std::fs::write(root.join("requirements.txt"), body).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let report = scheduler.run_with_report();
+        assert_no_plaintext_whole(&report, "requirements.txt");
     }
 
     fn assert_has_plaintext_whole(report: &crate::scheduler::RunReport<BatchKey>, suffix: &str) {
