@@ -39,7 +39,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, RustKey};
 use crate::content::{BatchContent, Span};
-use crate::value::{depth_factor, mix_signals};
+use crate::value::{depth_factor, mix_signals, roster_mass_factor};
 
 use super::{
     BodyPart, ENTRY_BODY_PART_CAP, FileLines, WalkCtx, body_part_value_factor, build_file_spans,
@@ -301,6 +301,23 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some((source, tree)) = parse_rust(ctx, file) else {
             continue;
         };
+        if !is_entrypoint_file(file) && is_package_source_file(file, ctx) {
+            for roster in collect_registration_rosters(&tree, &source) {
+                if let Some(content) =
+                    single_file_lines_content(file, &source, roster.lines.clone())
+                {
+                    out.push(batch(
+                        RustKey::RegistrationRoster {
+                            file: file.clone(),
+                            start_line: roster.start_line,
+                        },
+                        None,
+                        content,
+                        registration_roster_value(file, ctx, roster.entry_count),
+                    ));
+                }
+            }
+        }
         let items = find_top_level_item_starts(&tree, &source, TopLevelItemVisibility::Public);
         let src_lines: Vec<&str> = source.lines().collect();
         if !items.is_empty() {
@@ -1030,6 +1047,10 @@ fn method_sigs_value(file: &Path, ctx: &WalkCtx, exported_method_count: usize) -
         * crate::value::roster_mass_factor(exported_method_count)
 }
 
+fn registration_roster_value(file: &Path, ctx: &WalkCtx, entry_count: usize) -> f64 {
+    mix_signals(1.0, 1.0, 0.8, rust_depth_factor(file, ctx)) * roster_mass_factor(entry_count)
+}
+
 fn macro_names_value(depth: usize) -> f64 {
     mix_signals(0.75, 0.6, 0.4, depth_factor(depth))
 }
@@ -1043,6 +1064,102 @@ fn macro_body_value(file: &Path, info: &MacroInfo, ctx: &WalkCtx) -> f64 {
     let cat = (0.50 * axis * entrypoint_boost(file)).min(1.0);
     let fu = (0.70 * axis).min(1.0);
     mix_signals(cat, fu, 0.55 * axis, rust_depth_factor(file, ctx))
+}
+
+struct RegistrationRoster {
+    start_line: usize,
+    entry_count: usize,
+    lines: FileLines,
+}
+
+const REGISTRATION_ROSTER_MIN: usize = 8;
+
+fn collect_registration_rosters(tree: &Tree, source: &str) -> Vec<RegistrationRoster> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = Vec::new();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "function_item" || item_visibility(child, source).is_some() {
+            continue;
+        }
+        if let Some(roster) = registration_roster_for_fn(child, source) {
+            out.push(roster);
+        }
+    }
+    out
+}
+
+fn registration_roster_for_fn(function: Node, source: &str) -> Option<RegistrationRoster> {
+    let body = function.child_by_field_name("body")?;
+    let mut calls: HashMap<String, Vec<usize>> = HashMap::new();
+    collect_constructor_call_lines(body, source, &mut calls);
+    let (_path, mut call_lines) = calls
+        .into_iter()
+        .filter(|(_, lines)| lines.len() >= REGISTRATION_ROSTER_MIN)
+        .max_by_key(|(_, lines)| lines.len())?;
+    call_lines = dedup_sorted(call_lines);
+    let entry_count = call_lines.len();
+    if entry_count < REGISTRATION_ROSTER_MIN {
+        return None;
+    }
+
+    let mut full = Vec::new();
+    push_rows(
+        &mut full,
+        function.start_position().row,
+        signature_end_row(function),
+    );
+    full.extend(call_lines);
+    let full = dedup_sorted(full);
+    let ellipses = sparse_gap_ellipses(&full);
+    Some(RegistrationRoster {
+        start_line: function.start_position().row + 1,
+        entry_count,
+        lines: FileLines::new(full).with_ellipses(ellipses),
+    })
+}
+
+fn collect_constructor_call_lines(
+    node: Node,
+    source: &str,
+    calls: &mut HashMap<String, Vec<usize>>,
+) {
+    if node.kind() == "call_expression"
+        && let Some(path) = constructor_call_path(node, source)
+    {
+        calls
+            .entry(path)
+            .or_default()
+            .push(node.start_position().row + 1);
+    }
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        collect_constructor_call_lines(child, source, calls);
+    }
+}
+
+fn constructor_call_path(node: Node, source: &str) -> Option<String> {
+    let callee = node
+        .child_by_field_name("function")
+        .or_else(|| node.named_child(0))?;
+    if !matches!(callee.kind(), "identifier" | "scoped_identifier") {
+        return None;
+    }
+    let path: String = source[callee.start_byte()..callee.end_byte()]
+        .chars()
+        .filter(|c| !c.is_whitespace())
+        .collect();
+    path.ends_with("::new").then_some(path)
+}
+
+fn sparse_gap_ellipses(full: &[usize]) -> Vec<usize> {
+    full.windows(2)
+        .filter_map(|pair| {
+            let prev = pair[0];
+            let next = pair[1];
+            (next > prev + 1).then_some(prev + 1)
+        })
+        .collect()
 }
 
 // --- parser ---

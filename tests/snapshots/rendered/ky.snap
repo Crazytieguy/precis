@@ -18,37 +18,8 @@ package.json
        3→	"version": "1.14.3",
        4→	"description": "Tiny and elegant HTTP client based on the Fetch API",
        5→	"license": "MIT",
-       6→	"repository": "sindresorhus/ky",
-       7→	"funding": "https://github.com/sindresorhus/ky?sponsor=1",
-       8→	"author": {
-       9→		"name": "Sindre Sorhus",
-      10→		"email": "sindresorhus@gmail.com",
-      11→		"url": "https://sindresorhus.com"
-      12→	},
-      13→	"type": "module",
     …
-      34→	"keywords": [
-      35→		"fetch",
-      36→		"request",
-      37→		"requests",
-      38→		"http",
-      39→		"https",
-      40→		"fetching",
-      41→		"get",
-      42→		"url",
-      43→		"curl",
-      44→		"wget",
-      45→		"net",
-      46→		"network",
-      47→		"ajax",
-      48→		"api",
-      49→		"rest",
-      50→		"xhr",
-      51→		"browser",
-      52→		"got",
-      53→		"axios",
-      54→		"node-fetch"
-      55→	],
+      13→	"type": "module",
     …
 readme.md
     …
@@ -103,7 +74,6 @@ readme.md
      830→
      831→Type: `object`
      833→### ky.stop
-     835→A `Symbol` that can be returned by a `beforeRetry` hook to stop the retry. This will also short circuit the remaining `beforeRetry` hooks.
     …
      864→### ky.retry(options?)
      866→Force a retry from an `afterResponse` hook.
@@ -234,6 +204,28 @@ source/
            6→import type {Input, Options} from './types/options.js';
            7→import {validateAndMerge} from './utils/merge.js';
            8→import {type Mutable} from './utils/types.js';
+          10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
+          11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
+          12→	const ky: Partial<Mutable<KyInstance>> = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options));
+          13→
+          14→	for (const method of requestMethods) {
+          15→		// eslint-disable-next-line @typescript-eslint/promise-function-async
+          16→		ky[method] = (input: Input, options?: Options) => Ky.create(input, validateAndMerge(defaults, options, {method}));
+          17→	}
+          18→
+          19→	ky.create = (newDefaults?: Partial<Options>) => createInstance(validateAndMerge(newDefaults));
+          20→	ky.extend = (newDefaults?: Partial<Options> | ((parentDefaults: Partial<Options>) => Partial<Options>)) => {
+          21→		if (typeof newDefaults === 'function') {
+          22→			newDefaults = newDefaults(defaults ?? {});
+          23→		}
+          24→
+          25→		return createInstance(validateAndMerge(defaults, newDefaults));
+          26→	};
+          27→
+          28→	ky.stop = stop;
+          29→	ky.retry = retry;
+          30→
+          31→	return ky as KyInstance;
         …
           36→export default ky;
         …
