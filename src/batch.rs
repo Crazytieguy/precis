@@ -410,6 +410,10 @@ pub enum PythonKey {
     ImportChunk { file: PathBuf, chunk_index: usize },
     /// Names-surface chunk for top-level class/def/non-dunder consts.
     DeclNames { file: PathBuf, chunk_index: usize },
+    /// Whole top-level class/def signature roster for files whose
+    /// declaration surface is chunked. Predecessor of same-file
+    /// `DeclNames` chunks.
+    DeclSigsRoster { file: PathBuf },
     /// One top-level item — header + up to 2 docstring-summary rows
     /// for class/def, or assignment line(s) for const.
     Decl { file: PathBuf, start_line: usize },
@@ -434,6 +438,9 @@ pub enum PythonKey {
     /// Surface listing of every method def first line across every
     /// top-level class. Decorator-aware. Catastrophic-omission hedge.
     MethodSigs { file: PathBuf, chunk_index: usize },
+    /// Whole method-signature roster for files whose method surface is
+    /// chunked. Predecessor of same-file `MethodSigs` chunks.
+    MethodSigsRoster { file: PathBuf },
     /// Method-level `Decl` analog for a method inside a top-level
     /// class. Predecessor: enclosing class's `Decl`.
     Method { file: PathBuf, start_line: usize },
@@ -885,7 +892,9 @@ impl InnerKey for PythonKey {
     fn concavity_exponent(&self) -> f64 {
         match self {
             PythonKey::ImportChunk { .. } => 0.37,
-            PythonKey::DeclNames { .. } => 0.37,
+            PythonKey::DeclNames { .. }
+            | PythonKey::DeclSigsRoster { .. }
+            | PythonKey::MethodSigsRoster { .. } => 0.37,
             PythonKey::Decl { .. }
             | PythonKey::DeclBody { .. }
             | PythonKey::Method { .. }
@@ -902,6 +911,9 @@ impl InnerKey for PythonKey {
             }
             PythonKey::DeclNames { file, chunk_index } => {
                 describe_chunked_surface("python decl names surface", file, *chunk_index, root)
+            }
+            PythonKey::DeclSigsRoster { file } => {
+                describe_in("python decl sigs roster", file, root)
             }
             PythonKey::Decl { file, start_line } => {
                 describe_at("python decl", file, *start_line, root)
@@ -928,6 +940,9 @@ impl InnerKey for PythonKey {
             }
             PythonKey::MethodSigs { file, chunk_index } => {
                 describe_chunked_surface("python method sigs", file, *chunk_index, root)
+            }
+            PythonKey::MethodSigsRoster { file } => {
+                describe_in("python method sigs roster", file, root)
             }
             PythonKey::Method { file, start_line } => {
                 describe_at("python method", file, *start_line, root)

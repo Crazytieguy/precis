@@ -209,6 +209,29 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 collect_decl_names_from(&chunk_decls)
             })
             .collect();
+        let signature_roster: Vec<_> = roster
+            .iter()
+            .filter_map(|&i| {
+                matches!(decls[i].kind, DeclKind::Class | DeclKind::Function).then_some(decls[i])
+            })
+            .collect();
+        let decl_sigs_roster_key = (signature_roster.len() > NAMES_SURFACE_CHUNK_SIZE)
+            .then(|| BatchKey::Python(PythonKey::DeclSigsRoster { file: file.clone() }));
+        if let Some(key) = decl_sigs_roster_key.as_ref()
+            && let Some(content) = single_file_lines_content(
+                file,
+                &source,
+                collect_decl_signature_roster_from(&signature_roster),
+            )
+        {
+            out.push(Batch {
+                key: key.clone(),
+                predecessor: None,
+                content,
+                value: decl_names_value(file, ctx, 0, 1)
+                    * python_roster_mass_factor(file, signature_roster.len()),
+            });
+        }
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
             else {
@@ -220,7 +243,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 - chunk_index * NAMES_SURFACE_CHUNK_SIZE;
             out.push(Batch {
                 key: names_predecessors[chunk_index].clone(),
-                predecessor: None,
+                predecessor: decl_sigs_roster_key.clone(),
                 content,
                 value: decl_names_value(file, ctx, chunk_index, names_chunk_count)
                     * python_roster_mass_factor(file, chunk_entry_count),
@@ -244,6 +267,23 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             flat_methods.len().max(1)
         };
         let sigs_chunk_count = flat_methods.len().div_ceil(sigs_chunk_size);
+        let method_sigs_roster_key = (sigs_chunk_count > 1)
+            .then(|| BatchKey::Python(PythonKey::MethodSigsRoster { file: file.clone() }));
+        if let Some(key) = method_sigs_roster_key.as_ref() {
+            let methods: Vec<_> = flat_methods.iter().map(|(_, m)| *m).collect();
+            if let Some(content) =
+                single_file_lines_content(file, &source, collect_method_signature_roster(&methods))
+            {
+                let first_class_index = flat_methods[0].0;
+                out.push(Batch {
+                    key: key.clone(),
+                    predecessor: Some(names_predecessors[chunk_of_decl[first_class_index]].clone()),
+                    content,
+                    value: method_sigs_value(file, ctx)
+                        * python_roster_mass_factor(file, methods.len()),
+                });
+            }
+        }
         let mut sigs_chunk_of_method = HashMap::new();
         for (chunk_index, chunk) in flat_methods.chunks(sigs_chunk_size).enumerate() {
             let full: Vec<_> = chunk.iter().map(|(_, m)| signature_line(m)).collect();
@@ -266,7 +306,9 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             // on their predecessor chunk — ungated tails are cheaper
             // than heads and would deliver the catalog bottom-first.
             let predecessor = if chunk_index == 0 {
-                names_predecessors[chunk_of_decl[chunk[0].0]].clone()
+                method_sigs_roster_key
+                    .clone()
+                    .unwrap_or_else(|| names_predecessors[chunk_of_decl[chunk[0].0]].clone())
             } else {
                 BatchKey::Python(PythonKey::MethodSigs {
                     file: file.clone(),
@@ -923,6 +965,12 @@ fn collect_decl_names_from(decls: &[DeclInfo]) -> FileLines {
     FileLines::new(full).with_ellipses(ellipses)
 }
 
+fn collect_decl_signature_roster_from(decls: &[DeclInfo]) -> FileLines {
+    let full: Vec<_> = decls.iter().map(|decl| decl.start_line).collect();
+    let ellipses: Vec<_> = decls.iter().map(|decl| decl.start_line + 1).collect();
+    FileLines::new(full).with_ellipses(ellipses)
+}
+
 fn collect_methods_by_class<'a>(
     decls: &[DeclInfo<'a>],
     source: &str,
@@ -938,6 +986,12 @@ fn collect_methods_by_class<'a>(
 
 fn signature_line(info: &DeclInfo) -> usize {
     info.inner_node.start_position().row + 1
+}
+
+fn collect_method_signature_roster(methods: &[DeclInfo]) -> FileLines {
+    let full: Vec<_> = methods.iter().map(signature_line).collect();
+    let ellipses: Vec<_> = methods.iter().map(|m| signature_line(m) + 1).collect();
+    FileLines::new(full).with_ellipses(ellipses)
 }
 
 fn collect_decl(info: &DeclInfo) -> FileLines {
@@ -1696,6 +1750,87 @@ class A:
             .flat_map(|(_, methods)| methods.iter().map(|m| m.start_line))
             .collect();
         assert_eq!(starts, vec![2, 3, 4]);
+    }
+
+    #[test]
+    fn python_chunked_decl_names_get_signature_roster_ancestor() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut src = String::new();
+        for i in 0..=NAMES_SURFACE_CHUNK_SIZE {
+            src.push_str(&format!("def check_{i}(value):\n    return value\n\n"));
+        }
+        let file = root.join("catalog.py");
+        std::fs::write(&file, src).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
+        let report = scheduler.run_with_report();
+        let roster_key = BatchKey::Python(PythonKey::DeclSigsRoster { file: file.clone() });
+        assert!(
+            report.candidates.iter().any(|b| b.key == roster_key),
+            "expected whole decl-sigs roster; candidates: {:?}",
+            report.candidates.iter().map(|b| &b.key).collect::<Vec<_>>()
+        );
+        let decl_chunks: Vec<_> = report
+            .candidates
+            .iter()
+            .filter(|b| {
+                matches!(
+                    b.key,
+                    BatchKey::Python(PythonKey::DeclNames { ref file, .. }) if file.ends_with("catalog.py")
+                )
+            })
+            .collect();
+        assert_eq!(decl_chunks.len(), 2, "got {decl_chunks:?}");
+        assert!(
+            decl_chunks
+                .iter()
+                .all(|b| b.predecessor.as_ref() == Some(&roster_key)),
+            "decl chunks should descend from roster: {decl_chunks:?}"
+        );
+    }
+
+    #[test]
+    fn python_chunked_method_sigs_get_whole_roster_ancestor() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut src = String::from("class Catalog:\n");
+        for i in 0..=(2 * NAMES_SURFACE_CHUNK_SIZE) {
+            src.push_str(&format!("    def method_{i}(self): pass\n"));
+        }
+        let file = root.join("catalog.py");
+        std::fs::write(&file, src).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
+        let report = scheduler.run_with_report();
+        let roster_key = BatchKey::Python(PythonKey::MethodSigsRoster { file: file.clone() });
+        let chunk0_key = BatchKey::Python(PythonKey::MethodSigs {
+            file: file.clone(),
+            chunk_index: 0,
+        });
+        let chunk1_key = BatchKey::Python(PythonKey::MethodSigs {
+            file: file.clone(),
+            chunk_index: 1,
+        });
+        let chunk2_key = BatchKey::Python(PythonKey::MethodSigs {
+            file: file.clone(),
+            chunk_index: 2,
+        });
+        let pred_for = |key: &BatchKey| {
+            report
+                .candidates
+                .iter()
+                .find(|b| &b.key == key)
+                .and_then(|b| b.predecessor.as_ref())
+        };
+
+        assert!(
+            report.candidates.iter().any(|b| b.key == roster_key),
+            "expected whole method-sigs roster"
+        );
+        assert_eq!(pred_for(&chunk0_key), Some(&roster_key));
+        assert_eq!(pred_for(&chunk1_key), Some(&chunk0_key));
+        assert_eq!(pred_for(&chunk2_key), Some(&chunk1_key));
     }
 
     #[test]

@@ -309,17 +309,6 @@ src/
         core.py
         decorators.py
         exceptions.py
-            …
-             330→class Abort(RuntimeError):
-             331→    """An internal signalling exception that signals Click to abort."""
-             334→class Exit(RuntimeError):
-             335→    """An exception that indicates that the application should exit with some
-             336→    status code.
-             337→
-             338→    :param code: the status code to exit with.
-             339→    """
-             341→    __slots__ = ("exit_code",)
-            …
         formatting.py
         globals.py
         parser.py

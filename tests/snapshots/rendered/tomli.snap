@@ -5,8 +5,6 @@ expression: rendered
 .bumpversion.cfg
 .flake8
 .github/
-    workflows/
-        tests.yaml
 .gitignore
 .pre-commit-config.yaml
 CHANGELOG.md
@@ -55,8 +53,6 @@ README.md
     …
      106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
     …
-     120→Illegal types are `dict` and `list`, and their subtypes.
-     121→A `ValueError` will be raised if `parse_float` produces illegal types.
      123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
     …
      152→## FAQ<a name="faq"></a>
@@ -66,16 +62,14 @@ README.md
      157→- pure Python with zero dependencies
     …
      161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
-     162→- 100% spec compliant: passes all tests in
-     163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
-     164→  test suite
+    …
      165→- thoroughly tested: 100% branch coverage
      167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
      169→No.
     …
      175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
      177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
-     179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
+    …
      181→The core library does not include write capability, as most TOML use cases are read-only, and Tomli intends to be minimal.
      183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
     …
@@ -126,22 +120,8 @@ src/
               72→    """Sentinel to be used as default arg during deprecation
               73→    period of TOMLDecodeError's free-form arguments."""
               76→class TOMLDecodeError(ValueError):
-              77→    """An error raised if a document is not valid TOML.
-              78→
-              79→    Adds the following attributes to ValueError:
-              80→    msg: The unformatted error message
-              81→    doc: The TOML document being parsed
-              82→    pos: The index of doc where parsing failed
-              83→    lineno: The line corresponding to pos
-              84→    colno: The column corresponding to pos
-              85→    """
+            …
               87→    def __init__(
-              88→        self,
-              89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-              90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-              91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-              92→        *args: Any,
-              93→    ):
             …
              137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
              138→    """Parse TOML from a binary file object."""
@@ -157,14 +137,11 @@ src/
              226→    # be opened using the "[table]" syntax.
              227→    EXPLICIT_NEST: Final = 1
              229→    def __init__(self) -> None:
-             230→        self._flags: dict[str, dict[Any, Any]] = {}
-             231→        self._pending_flags: set[tuple[Key, int]] = set()
+            …
              233→    def add_pending(self, key: Key, flag: int) -> None:
              234→        self._pending_flags.add((key, flag))
              236→    def finalize_pending(self) -> None:
-             237→        for key, flag in self._pending_flags:
-             238→            self.set(key, flag, recursive=False)
-             239→        self._pending_flags.clear()
+            …
              241→    def unset_all(self, key: Key) -> None:
             …
              249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
@@ -186,15 +163,9 @@ src/
             …
              312→class Output:
              313→    def __init__(self) -> None:
-             314→        self.data = NestedDict()
-             315→        self.flags = Flags()
+            …
              318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
-             319→    try:
-             320→        while src[pos] in chars:
-             321→            pos += 1
-             322→    except IndexError:
-             323→        pass
-             324→    return pos
+            …
              327→def skip_until(
              328→    src: str,
              329→    pos: Pos,
@@ -207,13 +178,53 @@ src/
              349→def skip_comment(src: str, pos: Pos) -> Pos:
             …
              361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
-             362→    while True:
-             363→        pos_before_skip = pos
-             364→        pos = skip_chars(src, pos, TOML_WS_AND_NEWLINE)
-             365→        pos = skip_comment(src, pos)
-             366→        if pos == pos_before_skip:
-             367→            return pos
+            …
              370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+            …
+             390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+            …
+             413→def key_value_rule(
+             414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
+             415→) -> Pos:
+            …
+             447→def parse_key_value_pair(
+             448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+             449→) -> tuple[Pos, Key, Any]:
+            …
+             463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
+            …
+             481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
+            …
+             497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
+             498→    pos += 1
+             499→    return parse_basic_str(src, pos, multiline=False)
+             502→def parse_array(
+             503→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+             504→) -> tuple[Pos, list[Any]]:
+            …
+             528→def parse_inline_table(
+             529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+             530→) -> tuple[Pos, dict[str, Any]]:
+            …
+             564→def parse_basic_str_escape(
+             565→    src: str, pos: Pos, *, multiline: bool = False
+             566→) -> tuple[Pos, str]:
+            …
+             595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
+             596→    return parse_basic_str_escape(src, pos, multiline=True)
+             599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
+            …
+             612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
+            …
+             621→def parse_multiline_str(src: str, pos: Pos, *, literal: bool) -> tuple[Pos, str]:
+            …
+             652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
+            …
+             684→def parse_value(
+            …
+             760→def is_unicode_scalar_value(codepoint: int) -> bool:
+            …
+             764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
             …
         _re.py
         _types.py
