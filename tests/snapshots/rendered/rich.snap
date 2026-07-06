@@ -27,6 +27,21 @@ CONTRIBUTORS.md
 FAQ.md
 LICENSE
 Makefile
+       1→test:
+       2→	TERM=unknown pytest --cov-report term-missing --cov=rich tests/ -vv
+       3→test-no-cov:
+       4→	TERM=unknown pytest tests/ -vv
+       5→format-check:
+       6→	black --check .
+       7→format:
+       8→	black .
+       9→typecheck:
+      10→	mypy -p rich --no-incremental
+      11→typecheck-report:
+      12→	mypy -p rich --html-report mypy_report
+      13→.PHONY: docs
+      14→docs:
+      15→	cd docs; make html
 README.cn.md
 README.de-ch.md
 README.de.md
@@ -227,19 +242,16 @@ rich/
           22→SPINNERS = {
         …
     _stack.py
-           1→from typing import List, TypeVar
+        …
            3→T = TypeVar("T")
            4→
            5→
            6→class Stack(List[T]):
            7→    """A small shim over builtin list."""
            9→    @property
-          10→    def top(self) -> T:
-          11→        """Get top of stack."""
-          12→        return self[-1]
+        …
           14→    def push(self, item: T) -> None:
         …
-          16→        self.append(item)
     _timer.py
         …
           12→@contextlib.contextmanager
@@ -289,14 +301,6 @@ rich/
     columns.py
         …
           16→class Columns(JupyterMixin):
-        …
-          31→    def __init__(
-        …
-          54→    def add_renderable(self, renderable: RenderableType) -> None:
-        …
-          62→    def __rich_console__(
-          63→        self, console: Console, options: ConsoleOptions
-          64→    ) -> RenderResult:
         …
     console.py
     constrain.py
@@ -411,8 +415,6 @@ rich/
           28→    def __init__(
         …
           40→    def __rich_console__(
-          41→        self, console: "Console", options: "ConsoleOptions"
-          42→    ) -> "RenderResult":
         …
     segment.py
     spinner.py

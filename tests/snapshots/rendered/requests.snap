@@ -30,6 +30,33 @@ HISTORY.md
 LICENSE
 MANIFEST.in
 Makefile
+       1→.PHONY: docs
+       2→init:
+       3→	python -m pip install -r requirements-dev.txt
+       4→test:
+       5→	python -m pytest tests
+       6→
+       7→ci:
+       8→	python -m pytest tests --junitxml=report.xml
+       9→
+      10→test-readme:
+      11→	python setup.py check --restructuredtext --strict && ([ $$? -eq 0 ] && echo "README.rst and HISTORY.rst ok") || echo "Invalid markup in README.rst or HISTORY.rst!"
+      12→
+      13→coverage:
+      14→	python -m pytest --cov-config .coveragerc --verbose --cov-report term --cov-report xml --cov=src/requests tests
+      15→
+      16→.publishenv:
+      17→	python -m venv .publishenv
+      18→	.publishenv/bin/pip install 'twine>=1.5.0' build
+      19→
+      20→publish: .publishenv
+      21→	.publishenv/bin/python -m build
+      22→	.publishenv/bin/python -m twine upload --skip-existing dist/*
+      23→	rm -fr build dist .egg requests.egg-info
+      24→
+      25→docs:
+      26→	cd docs && make html
+      27→	@echo "\033[95m\n\nBuild successful! View the docs homepage at docs/_build/html/index.html.\n\033[0m"
 NOTICE
 README.md
        1→# Requests
@@ -302,10 +329,6 @@ src/
               78→) -> Any:
             …
              108→def merge_hooks(
-             109→    request_hooks: _t.HooksType,
-             110→    session_hooks: _t.HooksType,
-             111→    dict_class: type = OrderedDict,
-             112→) -> _t.HooksType:
             …
              127→class SessionRedirectMixin:
              128→    max_redirects: int
@@ -313,34 +336,6 @@ src/
              130→    cookies: RequestsCookieJar
             …
              395→class Session(SessionRedirectMixin):
-            …
-             414→    headers: CaseInsensitiveDict[str]
-             415→    auth: _t.AuthType
-             416→    proxies: dict[str, str]
-             417→    hooks: dict[str, list[_t.HookType]]
-             418→    params: MutableMapping[str, Any]
-             419→    stream: bool
-             420→    verify: _t.VerifyType
-             421→    cert: _t.CertType
-             422→    max_redirects: int
-             423→    trust_env: bool
-             424→    cookies: RequestsCookieJar
-             425→    adapters: MutableMapping[str, BaseAdapter]
-             426→
-             427→    __attrs__: list[str] = [
-             428→        "headers",
-             429→        "cookies",
-             430→        "auth",
-             431→        "proxies",
-             432→        "hooks",
-             433→        "params",
-             434→        "verify",
-             435→        "cert",
-             436→        "adapters",
-             437→        "stream",
-             438→        "trust_env",
-             439→        "max_redirects",
-             440→    ]
             …
              908→def session() -> Session:
             …

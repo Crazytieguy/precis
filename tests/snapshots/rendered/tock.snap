@@ -9,6 +9,18 @@ expression: rendered
 .mockery.yaml
 LICENSE
 Makefile
+       2→linter:
+       3→	docker run -t --rm -v $$(pwd):/app -w /app \
+       4→	-v $$(go env GOCACHE):/.cache/go-build -e GOCACHE=/.cache/go-build \
+       5→	-v $$(go env GOMODCACHE):/.cache/mod -e GOMODCACHE=/.cache/mod \
+       6→	-v ~/.cache/golangci-lint:/.cache/golangci-lint -e GOLANGCI_LINT_CACHE=/.cache/golangci-lint \
+       7→	golangci/golangci-lint:v2.6.2-alpine golangci-lint run --fix --config .golangci.yaml --timeout 5m --concurrency 4
+       8→
+       9→test:
+      10→	docker run -t --rm -v $$(pwd):/app -w /app \
+      11→	-v $$(go env GOCACHE):/.cache/go-build -e GOCACHE=/.cache/go-build \
+      12→	-v $$(go env GOMODCACHE):/.cache/mod -e GOMODCACHE=/.cache/mod \
+      13→	--entrypoint "" golang:1.25.6-alpine sh -c "go test -v -count=1 -p 4 -coverprofile=coverage.out ./... && go tool cover -func=coverage.out && go tool cover -html=coverage.out -o coverage.html"
 README.md
        1→# Tock
     …
@@ -130,27 +142,7 @@ internal/
     adapters/
         cli/
             add.go
-                …
-                  16→type addOptions struct {
-                …
-                  26→func NewAddCmd() *cobra.Command {
-                …
-                  64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
-                …
-                 124→func resolveStartTime(startStr string, theme Theme) (string, error) {
-                …
-                 163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
-                …
             analyze.go
-                …
-                  20→func NewAnalyzeCmd() *cobra.Command {
-                …
-                  70→type AnalysisStats struct {
-                …
-                  84→func analyzeData(activities []models.Activity) AnalysisStats {
-                …
-                 206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
-                …
             calendar.go
             calendar_sidebar.go
             continue.go
@@ -186,15 +178,6 @@ internal/
                 …
             list_gui.go
             remove.go
-                …
-                  22→func NewRemoveCmd() *cobra.Command {
-                …
-                  95→func parseRemoveIndex(s string) (time.Time, int, error) {
-                …
-                 116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
-                …
-                 127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
-                …
             report.go
                 …
                   20→type reportOptions struct {
@@ -317,11 +300,7 @@ internal/
                   11→type ActivityResolver interface {
                 …
                   22→type ActivityRepository interface {
-                  23→	Save(ctx context.Context, activity models.Activity) error
-                  24→	FindLast(ctx context.Context) (*models.Activity, error)
-                  25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
-                  26→	Remove(ctx context.Context, activity models.Activity) error
-                  27→}
+                …
                   29→type NotesRepository interface {
                   30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
                   31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)

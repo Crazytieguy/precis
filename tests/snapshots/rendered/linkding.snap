@@ -12,6 +12,44 @@ expression: rendered
 CHANGELOG.md
 LICENSE.txt
 Makefile
+       1→.PHONY: serve
+       2→
+       3→init:
+       4→	uv sync
+       5→	[ -d data ] || mkdir data data/assets data/favicons data/previews
+       6→	uv run manage.py migrate
+       7→	npm install
+       8→
+       9→serve:
+      10→	uv run manage.py runserver
+      11→
+      12→tasks:
+      13→	uv run manage.py run_huey
+      14→
+      15→test:
+      16→	uv run pytest -n auto
+      17→
+      18→lint:
+      19→	uv run ruff check bookmarks
+      20→
+      21→format:
+      22→	uv run ruff format bookmarks
+      23→	uv run djlint bookmarks/templates --reformat --quiet --warn
+      24→	npx prettier bookmarks/frontend --write
+      25→	npx prettier bookmarks/styles --write
+      26→
+      27→prepare-e2e:
+      28→	uv run playwright install chromium
+      29→	rm -rf static
+      30→	npm run build
+      31→	uv run manage.py collectstatic --no-input
+      32→
+      33→e2e:
+      34→	make prepare-e2e
+      35→	uv run pytest bookmarks/tests_e2e -n auto -o "python_files=e2e_test_*.py"
+      36→
+      37→frontend:
+      38→	npm run dev
 README.md
     …
        9→##  Introduction
@@ -82,24 +120,12 @@ assets/
 bookmarks/
     __init__.py
     admin.py
-        …
-         324→class AdminApiToken(admin.ModelAdmin):
-         325→    form = ApiTokenAdminForm
-         326→    list_display = ("name", "user", "created")
-         327→    search_fields = ["name", "user__username"]
-         328→    list_filter = ("user__username",)
-         329→    ordering = ("-created",)
-         332→linkding_admin_site = LinkdingAdminSite()
-        …
     api/
         __init__.py
         auth.py
             …
                8→class LinkdingTokenAuthentication(TokenAuthentication):
-               9→    """
-              10→    Extends DRF TokenAuthentication to add support for multiple keywords and
-              11→    multiple tokens per user.
-              12→    """
+            …
               14→    model = ApiToken
               15→    keywords = [keyword.lower().encode() for keyword in ["Token", "Bearer"]]
               17→    def authenticate(self, request):
@@ -164,12 +190,6 @@ bookmarks/
         favicon_loader.py
         importer.py
         monolith.py
-            …
-               9→class MonolithError(Exception):
-              10→    pass
-            …
-              16→def create_snapshot(url: str, filepath: str):
-            …
         parser.py
         preview_image_loader.py
         search_query_parser.py
@@ -229,9 +249,6 @@ bookmarks/
             preview.html
         opensearch.xml
         registration/
-            login.html
-            password_change_done.html
-            password_change_form.html
         settings/
             bookmarklet.js
             bookmarklet_clientside.js
@@ -322,21 +339,6 @@ bookmarks/
             …
         turbo.py
     widgets.py
-        …
-           7→class FormErrorList(ErrorList):
-           8→    template_name = "shared/error_list.html"
-          11→class FormInput(forms.TextInput):
-        …
-          19→class FormNumberInput(forms.NumberInput):
-        …
-          27→class FormSelect(forms.Select):
-        …
-          35→class FormTextarea(forms.Textarea):
-        …
-          43→class FormCheckbox(forms.CheckboxInput):
-        …
-          63→class TagAutocomplete(forms.TextInput):
-        …
     wsgi.py
         …
           13→application = get_wsgi_application()
@@ -364,11 +366,6 @@ docs/
     package.json
     public/
     src/
-        assets/
-        components/
-        content/
-        env.d.ts
-        styles/
     tsconfig.json
 install-linkding.sh
 manage.py

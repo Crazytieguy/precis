@@ -320,37 +320,29 @@ Score(3000)=0.552 I=0.762 C=0.400 ns_rows≤3K=16/43 (reached=6 partial=1 missin
 | walker |  | 9012 | 96 | go decl doc at active_help.go:47 |  |  | 0.450 |
 | walker |  | 9109 | 97 | go decl doc at shell_completions.go:77 |  |  | 0.450 |
 | ns | 9125 |  | 191 | active_help.go: AppendActiveHelp | 9.1 |  | 0.447 |
-| walker |  | 9162 | 53 | headings outline in site/content/completions/zsh.md |  |  | 0.447 |
-| walker |  | 9295 | 133 | go decl names surface in doc/util.go |  |  | 0.447 |
-| walker |  | 9295 | 0 | go decl at doc/util.go:26 |  |  | 0.447 |
-| walker |  | 9295 | 0 | go decl at doc/util.go:41 |  |  | 0.447 |
 | ns | 9325 |  | 200 | completions/_index.md heading outline, part 1 | 9.2 |  | 0.442 |
-| walker |  | 9469 | 174 | go decl names surface #2 in command.go |  |  | 0.454 |
-| walker |  | 9469 | 0 | go decl at command.go:343 |  |  | 0.454 |
-| walker |  | 9469 | 0 | go decl at command.go:352 |  |  | 0.454 |
-| walker |  | 9469 | 0 | go decl at command.go:358 |  |  | 0.454 |
-| walker |  | 9469 | 0 | go decl at command.go:367 |  |  | 0.454 |
-| walker |  | 9469 | 0 | go decl at command.go:376 |  |  | 0.454 |
-| walker |  | 9469 | 0 | go decl at command.go:382 |  |  | 0.454 |
-| walker |  | 9469 | 0 | go decl at command.go:393 |  |  | 0.454 |
-| walker |  | 9469 | 0 | go decl at command.go:398 |  |  | 0.454 |
-| walker |  | 9479 | 10 | go decl body at command.go:376 |  |  | 0.454 |
-| ns | 9480 |  | 155 | completions/_index.md heading outline, part 2 | 9.3 |  | 0.449 |
-| walker |  | 9493 | 14 | go decl doc at command.go:393 |  |  | 0.449 |
-| walker |  | 9507 | 14 | go decl doc at command.go:398 |  |  | 0.449 |
-| walker |  | 9519 | 12 | go decl body at command.go:393 |  |  | 0.449 |
-| walker |  | 9531 | 12 | go decl body at command.go:398 |  |  | 0.449 |
-| walker |  | 9550 | 19 | go decl doc at command.go:343 |  |  | 0.449 |
-| walker |  | 9569 | 19 | go decl doc at command.go:352 |  |  | 0.449 |
-| walker |  | 9593 | 24 | go decl doc at command.go:358 |  |  | 0.449 |
-| walker |  | 9617 | 24 | go decl doc at command.go:367 |  |  | 0.449 |
-| walker |  | 9642 | 25 | go decl doc at command.go:376 |  |  | 0.449 |
-| walker |  | 9681 | 39 | go decl doc at command.go:382 |  |  | 0.449 |
-| walker |  | 9718 | 37 | go decl body at command.go:352 |  |  | 0.449 |
-| walker |  | 9762 | 44 | go decl body at command.go:358 |  |  | 0.449 |
-| walker |  | 9806 | 44 | go decl body at command.go:367 |  |  | 0.449 |
-| ns | 9865 |  | 385 | Makefile | 10.1 |  | 0.439 |
-| walker |  | 9872 | 66 | go decl body at command.go:343 |  |  | 0.439 |
-| walker |  | 9943 | 71 | go decl body at command.go:382 |  |  | 0.439 |
-| walker |  | 9990 | 47 | go decl at active_help.go:22 |  |  | 0.439 |
-| ns | 9993 |  | 128 | CONTRIBUTING.md: CLA + test commands | 10.2 |  | 0.438 |
+| ns | 9480 |  | 155 | completions/_index.md heading outline, part 2 | 9.3 |  | 0.438 |
+| walker |  | 9494 | 385 | plaintext config Makefile |  |  | 0.440 |
+| walker |  | 9547 | 53 | headings outline in site/content/completions/zsh.md |  |  | 0.440 |
+| walker |  | 9680 | 133 | go decl names surface in doc/util.go |  |  | 0.440 |
+| walker |  | 9680 | 0 | go decl at doc/util.go:26 |  |  | 0.440 |
+| walker |  | 9680 | 0 | go decl at doc/util.go:41 |  |  | 0.440 |
+| walker |  | 9854 | 174 | go decl names surface #2 in command.go |  |  | 0.451 |
+| walker |  | 9854 | 0 | go decl at command.go:343 |  |  | 0.451 |
+| walker |  | 9854 | 0 | go decl at command.go:352 |  |  | 0.451 |
+| walker |  | 9854 | 0 | go decl at command.go:358 |  |  | 0.451 |
+| walker |  | 9854 | 0 | go decl at command.go:367 |  |  | 0.451 |
+| walker |  | 9854 | 0 | go decl at command.go:376 |  |  | 0.451 |
+| walker |  | 9854 | 0 | go decl at command.go:382 |  |  | 0.451 |
+| walker |  | 9854 | 0 | go decl at command.go:393 |  |  | 0.451 |
+| walker |  | 9854 | 0 | go decl at command.go:398 |  |  | 0.451 |
+| walker |  | 9864 | 10 | go decl body at command.go:376 |  |  | 0.451 |
+| ns | 9865 |  | 385 | Makefile | 10.1 |  | 0.473 |
+| walker |  | 9878 | 14 | go decl doc at command.go:393 |  |  | 0.473 |
+| walker |  | 9892 | 14 | go decl doc at command.go:398 |  |  | 0.473 |
+| walker |  | 9904 | 12 | go decl body at command.go:393 |  |  | 0.473 |
+| walker |  | 9916 | 12 | go decl body at command.go:398 |  |  | 0.473 |
+| walker |  | 9935 | 19 | go decl doc at command.go:343 |  |  | 0.473 |
+| walker |  | 9954 | 19 | go decl doc at command.go:352 |  |  | 0.473 |
+| walker |  | 9978 | 24 | go decl doc at command.go:358 |  |  | 0.473 |
+| ns | 9993 |  | 128 | CONTRIBUTING.md: CLA + test commands | 10.2 |  | 0.471 |

@@ -45,6 +45,8 @@ pub(crate) enum Class {
     EditorConfig,
     /// .nvmrc / .python-version / .tool-versions / pnpm-workspace.yaml.
     Toolchain,
+    /// Compact build/deploy entrypoints.
+    BuildEntrypoint,
     /// One-line version stamp.
     Version,
     /// Plain-text backlog.
@@ -77,6 +79,7 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
             return Some(Class::Toolchain);
         }
+        "Makefile" | "Dockerfile" => return Some(Class::BuildEntrypoint),
         _ => {}
     }
     // Orientation stamps matched case-insensitively by exact name —
@@ -111,6 +114,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some(class) = classify_plaintext(&name) else {
             continue;
         };
+        if matches!(class, Class::BuildEntrypoint) && dir != ctx.root() {
+            continue;
+        }
         let Some(content) =
             gated_whole_file_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP)
         else {
@@ -137,6 +143,7 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::IgnoreList => (0.20, 0.30, 0.25),
         Class::EditorConfig => (0.25, 0.35, 0.30),
         Class::Toolchain => (0.30, 0.35, 0.30),
+        Class::BuildEntrypoint => (0.70, 0.55, 0.60),
         // Version stamp: a single short line answers "what version is
         // this?" — high orientation value relative to the trivial cost.
         Class::Version => (0.55, 0.40, 0.45),
@@ -294,6 +301,8 @@ mod tests {
             (".python-version", Some(Class::Toolchain)),
             (".tool-versions", Some(Class::Toolchain)),
             ("pnpm-workspace.yaml", Some(Class::Toolchain)),
+            ("Makefile", Some(Class::BuildEntrypoint)),
+            ("Dockerfile", Some(Class::BuildEntrypoint)),
             // Extensionless orientation files (case-insensitive on the
             // stem). `VERSION` is a one-line version stamp common in
             // C-shaped projects; `TODO` is a plain backlog file. The
@@ -317,8 +326,6 @@ mod tests {
             (".pypirc", None),
             // Out of scope by design.
             ("LICENSE-HEADER", None),
-            ("Makefile", None),
-            ("Dockerfile", None),
             ("README", None),
             ("notes.txt", None),
         ];

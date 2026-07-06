@@ -6,6 +6,14 @@ expression: rendered
 Changelog
 LICENSE
 Makefile
+       1→all: sds-test
+       2→
+       3→sds-test: sds.c sds.h testhelp.h sdsalloc.h
+       4→	$(CC) -o sds-test sds.c -Wall -std=c99 -pedantic -O2 -DSDS_TEST_MAIN
+       5→	@echo ">>> Type ./sds-test to run the sds.c unit tests."
+       6→
+       7→clean: 
+       8→	rm -f sds-test
 README.md
        1→Simple Dynamic Strings
        2→===

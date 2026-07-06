@@ -11,6 +11,22 @@ expression: rendered
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Dockerfile
+       1→FROM node:24-alpine
+       2→
+       3→LABEL maintainer="Liran Tal <liran.tal@gmail.com>"
+       4→LABEL contributor="Eitan Schichmanter <eitan.sch@gmail.com>"
+       5→
+       6→RUN apk update && apk upgrade && apk add docker && rm -rf /var/apk/cache/*
+       7→
+       8→ENV LANG C.UTF-8
+       9→ENV LC_ALL C.UTF-8
+      10→
+      11→COPY . /app
+      12→WORKDIR /app
+      13→ENV NODE_ENV production
+      14→RUN npm ci
+      15→
+      16→ENTRYPOINT ["node", "index.js"]
 LICENSE
 README.md
        1→<p align="center">
@@ -226,17 +242,6 @@ src/
          191→    }, cb)
         …
          194→  getContainerStats (containerId, cb) {
-         195→    if (!containerId) {
-         196→      return cb(null)
-         197→    }
-         198→
-         199→    const container = this.dockerCon.getContainer(containerId)
-         200→    container.stats({ stream: false }, function (err, stream) {
-         201→      if (err) {
-         202→        return cb(null)
-         203→      }
-         204→      return cb(stream)
-         205→    })
         …
          208→  getContainerLogs (containerId, cb) {
          209→    const container = this.dockerCon.getContainer(containerId)

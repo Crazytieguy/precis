@@ -10,6 +10,20 @@ expression: rendered
 CONTRIBUTING.md
 LICENSE
 Makefile
+       2→.PHONY: test
+       3→test:
+       4→	$(run) pytest --cov=posting tests/ -n 24 -m "not serial" $(ARGS)
+       5→	$(run) pytest --cov-report term-missing --cov-append --cov=posting tests/ -m serial $(ARGS)
+       6→
+       7→.PHONY: test-snapshot-update
+       8→test-snapshot-update:
+       9→	$(run) pytest --cov=posting tests/ -n 24 -m "not serial" --snapshot-update $(ARGS)
+      10→	$(run) pytest --cov-report term-missing --cov-append --cov=posting tests/ -m serial --snapshot-update $(ARGS)
+      11→
+      12→
+      13→.PHONY: test-ci
+      14→test-ci:
+      15→	$(run) pytest --cov=posting tests/ --cov-report term-missing $(ARGS)
 NOTICE
 README.md
        1→# Posting
@@ -189,19 +203,6 @@ src/
               80→def locate(thing_to_locate: str) -> None:
             …
               96→@cli.command(name="import")
-              97→@click.argument("spec_path", type=click.Path(exists=True))
-              98→@click.option(
-              99→    "--output",
-             100→    "-o",
-             101→    type=click.Path(),
-             102→    help="Path to save the imported collection",
-             103→    default=None,
-             104→)
-             105→@click.option(
-             106→    "--type", "-t", default="openapi", help="Specify spec type [openapi, postman]"
-             107→)
-             108→def import_spec(spec_path: str, output: str | None, type: str) -> None:
-             109→    """Import an OpenAPI specification into a Posting collection."""
             …
              177→@cli.command(name="sponsors")
              178→def sponsors() -> None:

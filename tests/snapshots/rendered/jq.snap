@@ -10,6 +10,40 @@ AUTHORS
 COPYING
 ChangeLog
 Dockerfile
+       1→FROM debian:12-slim AS builder
+       2→
+       3→ENV DEBIAN_FRONTEND=noninteractive \
+       4→    DEBCONF_NONINTERACTIVE_SEEN=true \
+       5→    LC_ALL=C.UTF-8 \
+       6→    LANG=C.UTF-8
+       7→
+       8→RUN apt-get update \
+       9→ && apt-get install -y \
+      10→      build-essential \
+      11→      autoconf \
+      12→      libtool \
+      13→      git \
+      14→ && apt-get clean \
+      15→ && rm -rf /var/lib/apt/lists/*
+      16→
+      17→WORKDIR /app
+      18→COPY . /app
+      19→RUN autoreconf -i \
+      20→ && ./configure \
+      21→      --disable-docs \
+      22→      --with-oniguruma=builtin \
+      23→      --enable-static \
+      24→      --enable-all-static \
+      25→      --prefix=/usr/local \
+      26→ && make -j$(nproc) \
+      27→ && make check VERBOSE=yes \
+      28→ && make install-strip
+      29→
+      30→FROM scratch
+      31→
+      32→COPY --from=builder /app/AUTHORS /app/COPYING /usr/local/bin/jq /
+      33→RUN ["/jq", "--version"]
+      34→ENTRYPOINT ["/jq"]
 KEYS
 Makefile.am
 NEWS.md
@@ -24,8 +58,7 @@ README.md
       10→## Installation
       11→
       12→### Prebuilt Binaries
-      13→
-      14→Download the latest releases from the [GitHub release page](https://github.com/jqlang/jq/releases).
+    …
       16→### Docker Image
       18→Pull the [jq image](https://github.com/jqlang/jq/pkgs/container/jq) to start quickly with Docker.
     …
@@ -100,9 +133,6 @@ docs/
         index.html.j2
         manual.html.j2
         shared/
-            _footer.html.j2
-            _head.html.j2
-            _navbar.html.j2
     validate_manual_schema.py
 jq.1.prebuilt
 jq.spec
@@ -297,13 +327,6 @@ src/
          435→int load_program(jq_state *jq, struct locfile* src, block *out_block) {
         …
     linker.h
-           1→#ifndef LINKER_H
-           2→#define LINKER_H
-           3→
-           4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
-           5→jv load_module_meta(jq_state *jq, jv modname);
-           6→
-           7→#endif
     locfile.c
     locfile.h
     main.c

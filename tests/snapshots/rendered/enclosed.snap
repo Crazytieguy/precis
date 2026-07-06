@@ -28,7 +28,7 @@ README.md
       33→
       34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
       36→## Features
-      38→- **End-to-End Encryption**: Your notes are encrypted on the client side, using AES-GCM with a 256-bit key derived using PBKDF2.
+    …
       39→- **File Attachments**: Share files securely with your notes.
       40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
       41→- **Configurable Security Options**: Set a password, expiration time, and choose self-destruction after the note is read.
@@ -166,24 +166,6 @@ packages/
             index.tsx
             locales/
             modules/
-                auth/
-                    auth.models.ts
-                    auth.services.ts
-                    auth.store.ts
-                    pages/
-                config/
-                docs/
-                files/
-                i18n/
-                notes/
-                shared/
-                    files/
-                    hooks/
-                    http/
-                    style/
-                    utils/
-                theme/
-                ui/
             routes.tsx
             scripts/
         tsconfig.json
@@ -197,12 +179,6 @@ packages/
             index.node.ts
             modules/
                 app/
-                    auth/
-                    config/
-                    middlewares/
-                    server.ts
-                    server.types.ts
-                    users/
                 notes/
                 shared/
                     errors/
@@ -238,13 +214,11 @@ packages/
               68→### Configure the enclosed instance to use
             …
               75→## License
-              76→
-              77→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
+            …
               79→## Credits and Acknowledgements
               80→
               81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         bin/
-            enclosed.mjs
         build.config.ts
         eslint.config.js
         package.json
@@ -313,16 +287,6 @@ packages/
             public/
             resources/
             self-hosting/
-                configuration.md
-                docker-compose.md
-                docker.md
-                other-platforms.md
-                troubleshooting.md
-                       1→# Troubleshooting
-                       2→
-                       3→## Why do I see a warning about insecure connection?
-                    …
-                users-authentication-key-generator.md
     lib/
         README.md
                1→### Enclosed lib
@@ -335,8 +299,7 @@ packages/
               33→## License
             …
               37→## Credits and Acknowledgements
-              38→
-              39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
+            …
         build.config.ts
         eslint.config.js
         package.json
@@ -356,24 +319,7 @@ packages/
             index.ts
                 …
                   10→export {
-                  11→  createNote,
-                  12→  createNoteUrl,
-                  13→  createNoteUrlHashFragment,
-                  14→  decryptNote,
-                  15→  encryptionAlgorithms,
-                  16→  encryptNote,
-                  17→  fetchNote,
-                  18→  filesToNoteAssets,
-                  19→  fileToNoteAsset,
-                  20→  isApiClientErrorWithCode,
-                  21→  isApiClientErrorWithStatusCode,
-                  22→  noteAssetsToFiles,
-                  23→  noteAssetToFile,
-                  24→  parseNoteUrl,
-                  25→  parseNoteUrlHashFragment,
-                  26→  serializationFormats,
-                  27→  storeNote,
-                  28→};
+                …
             notes/
                 notes.models.test.ts
                 notes.models.ts
