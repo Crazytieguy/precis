@@ -1,17 +1,20 @@
-//! Plaintext walker. Emits `Whole` content batches for small,
-//! known-plaintext config / license files that none of the format-aware
-//! walkers (Rust, Markdown, TOML, JSON, TypeScript) cover. Today these
-//! files only appear in directory listings; without this walker their
-//! content is unreachable from the scheduler.
+//! Plaintext walker. Emits `Whole` content batches for small known
+//! plaintext files that none of the format-aware walkers (Rust,
+//! Markdown, TOML, JSON, TypeScript, YAML, etc.) cover: license and
+//! ignore files, compact toolchain/build/package manifests, selected
+//! build scripts, requirement lists, version/TODO stamps, and man-page
+//! ledes. Without this walker, these files only appear in directory
+//! listings and their content is unreachable from the scheduler.
 //!
-//! Whitelist is deliberately narrow (see [`classify_plaintext`]). Files
-//! with format-specific siblings (`.eslintrc.json`, `.prettierrc.js`,
-//! `LICENSE.md`) stay with the owning walker — only the extensionless or
-//! plain-text variants land here. **Credential-bearing dotfiles
-//! (`.npmrc`, `.netrc`, `.env`, `.pypirc`) are NOT in the whitelist** —
-//! a project-local `.npmrc` commonly carries `_authToken` or registry
-//! passwords, and `precis` output is intended for downstream agents /
-//! logs.
+//! The whitelist remains credential-aware (see [`classify_plaintext`]).
+//! Files with format-specific siblings (`.eslintrc.json`,
+//! `.prettierrc.js`, `LICENSE.md`) stay with the owning walker, and
+//! credential-bearing dotfiles (`.npmrc`, `.netrc`, `.env`, `.pypirc`)
+//! are NOT in the whitelist. Shell scripts are only admitted from
+//! build-script locations, and exact env/secret/credential stems
+//! (`env`, `.env`, `secret`, `secrets`, `credential`, `credentials`,
+//! `creds`) are denied before `.sh` classification because they
+//! commonly export tokens for local tooling.
 //!
 //! Budget protection: `PLAINTEXT_LINE_CAP` skips any file whose source
 //! line count exceeds the cap. Plaintext files this walker owns are
@@ -94,7 +97,13 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         "requirements.txt" => return Some(Class::Requirements),
         _ => {}
     }
-    if lower.ends_with(".sh") {
+    if let Some(stem) = lower.strip_suffix(".sh") {
+        if matches!(
+            stem,
+            "env" | ".env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
+        ) {
+            return None;
+        }
         return Some(Class::BuildScript);
     }
     // Orientation stamps matched case-insensitively by exact name —
@@ -377,6 +386,7 @@ mod tests {
             ("Makefile", Some(Class::BuildEntrypoint)),
             ("Dockerfile", Some(Class::BuildEntrypoint)),
             ("testall.sh", Some(Class::BuildScript)),
+            ("build.sh", Some(Class::BuildScript)),
             (".gitmodules", Some(Class::BuildScript)),
             ("configure.ac", Some(Class::BuildScript)),
             ("setup.cfg", Some(Class::PackageConfig)),
@@ -402,6 +412,12 @@ mod tests {
             (".netrc", None),
             (".env", None),
             (".pypirc", None),
+            ("env.sh", None),
+            (".env.sh", None),
+            ("secrets.sh", None),
+            ("secret.sh", None),
+            ("credentials.sh", None),
+            ("creds.sh", None),
             // Out of scope by design.
             ("LICENSE-HEADER", None),
             ("README", None),
