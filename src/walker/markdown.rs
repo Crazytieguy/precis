@@ -411,6 +411,11 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     ) * scale
 }
 
+fn dev_workflow_section_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
+    let depth = crate::value::depth_factor(ctx.depth_from_root(file));
+    mix_signals(1.15, 1.0, 0.85, depth) * index_decay(parent_index, 0.2, 0.75)
+}
+
 /// Per-section value. Child ranges scale the parent's value so they
 /// don't over-rank once cost drops. `Intro` keeps full weight.
 fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_count: usize) -> f64 {
@@ -423,7 +428,9 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_coun
             * readme_index_decay(range, total_h2_count)
             * roster_mass_factor(range.roster_entries);
     }
-    let parent = if is_readme(file) {
+    let parent = if range.dev_workflow_section {
+        dev_workflow_section_value(file, range.parent_index, ctx)
+    } else if is_readme(file) {
         readme_section_value(file, range, ctx, total_h2_count)
     } else {
         heading_slab_value(file, range.parent_index, ctx)
@@ -1652,6 +1659,10 @@ struct SectionRange {
     /// `Section` key so the scheduler prices the range at the default
     /// concavity instead of the steeper prose exponent.
     reference_shaped: bool,
+    /// Dev-workflow doc section whose body carries repo-ops mechanics
+    /// (commands, setup/test/debug steps, env vars, or concrete repo
+    /// paths). Valued above peripheral-doc prose.
+    dev_workflow_section: bool,
     /// Non-zero for a link-index roster chunk: the count of intra-doc
     /// link entries this chunk catalogs. Valued as a names surface
     /// (cat lift + [`roster_mass_factor`]) instead of section prose.
@@ -1750,6 +1761,124 @@ fn is_catalog_line(line: &str) -> bool {
             .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
 }
 
+fn is_dev_workflow_doc(file: &Path) -> bool {
+    file.file_stem().and_then(|s| s.to_str()).is_some_and(|s| {
+        matches!(
+            s.to_ascii_uppercase().as_str(),
+            "CONTRIBUTING" | "DEVELOPING" | "DEVELOPMENT" | "HACKING"
+        )
+    })
+}
+
+const DEV_WORKFLOW_MIN_SIGNALS: usize = 2;
+const DEV_WORKFLOW_MAX_BYTES: usize = 2200;
+
+fn range_has_dev_workflow_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
+    let last = end.min(src_lines.len());
+    if start > last {
+        return false;
+    }
+    let mut bytes = 0usize;
+    let mut signals = 0usize;
+    let mut in_fence = false;
+    for line in &src_lines[start - 1..last] {
+        bytes += line.len() + 1;
+        let t = line.trim_start();
+        if t.is_empty() {
+            continue;
+        }
+        if t.starts_with("```") || t.starts_with("~~~") {
+            in_fence = !in_fence;
+            continue;
+        }
+        if in_fence {
+            if is_dev_command_line(t) || is_repo_path_line(t) {
+                signals += 1;
+            }
+            continue;
+        }
+        if is_dev_command_line(t)
+            || is_dev_config_line(t)
+            || is_repo_path_line(t)
+            || (is_numbered_step_line(t) && contains_dev_action(t))
+        {
+            signals += 1;
+        }
+    }
+    bytes <= DEV_WORKFLOW_MAX_BYTES && signals >= DEV_WORKFLOW_MIN_SIGNALS
+}
+
+fn is_dev_command_line(t: &str) -> bool {
+    let code = t.trim_matches('`').trim();
+    code.starts_with("npm ")
+        || code.starts_with("pnpm ")
+        || code.starts_with("yarn ")
+        || code.starts_with("cargo ")
+        || code.starts_with("rustup ")
+        || code.starts_with("git ")
+        || code.starts_with("go ")
+        || code.starts_with("make ")
+        || code.starts_with("./")
+        || code.contains(" npm ")
+        || code.contains(" pnpm ")
+        || code.contains(" cargo ")
+        || code.contains("`npm ")
+        || code.contains("`pnpm ")
+        || code.contains("`yarn ")
+        || code.contains("`cargo ")
+        || code.contains("`go ")
+        || code.contains("`make ")
+        || code.contains("`./")
+}
+
+fn is_dev_config_line(t: &str) -> bool {
+    t.contains("package.json")
+        || t.contains("pnpm-workspace")
+        || t.contains("vitest")
+        || t.contains("playwright")
+        || t.split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'))
+            .any(is_env_var_token)
+}
+
+fn is_repo_path_line(t: &str) -> bool {
+    t.contains("/src/")
+        || t.contains("src/")
+        || t.contains("packages/")
+        || t.contains("crates/")
+        || t.contains("tests/")
+        || t.contains(".github/")
+        || t.contains(".ts")
+        || t.contains(".js")
+        || t.contains(".rs")
+        || t.contains(".json")
+}
+
+fn is_numbered_step_line(t: &str) -> bool {
+    t.split_once(". ")
+        .is_some_and(|(n, _)| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit()))
+}
+
+fn contains_dev_action(t: &str) -> bool {
+    let lower = t.to_ascii_lowercase();
+    lower.contains("run ")
+        || lower.contains("test")
+        || lower.contains("build")
+        || lower.contains("debug")
+        || lower.contains("install")
+        || lower.contains("clone")
+        || lower.contains("create")
+        || lower.contains("edit")
+        || lower.contains("update")
+}
+
+fn is_env_var_token(token: &str) -> bool {
+    token.len() >= 5
+        && token.contains('_')
+        && token
+            .bytes()
+            .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit() || b == b'_')
+}
+
 /// Section ranges for batching. H2s that satisfy a split rule expand
 /// to an optional `Intro` plus per-child sub-ranges (bullet split,
 /// H3 split, or body-block split). Other top-level entries emit one
@@ -1781,6 +1910,7 @@ fn logical_sections(
                     parent_is_canonical_usage_h2: false,
                     is_reference_usage_section: false,
                     reference_shaped: false,
+                    dev_workflow_section: false,
                     roster_entries: 0,
                     chained_to_previous: false,
                 });
@@ -1881,6 +2011,7 @@ fn logical_sections(
                             parent_is_canonical_usage_h2: usage_h2,
                             is_reference_usage_section: reference_h2,
                             reference_shaped: false,
+                            dev_workflow_section: false,
                             roster_entries: 0,
                             chained_to_previous: false,
                         });
@@ -1907,6 +2038,14 @@ fn logical_sections(
             }
             range.reference_shaped = range.is_reference_usage_section
                 && range_is_reference_shaped(&src_lines, range.start, range.end);
+        }
+    }
+    if is_dev_workflow_doc(file) {
+        let src_lines: Vec<&str> = source.lines().collect();
+        for range in &mut out {
+            range.dev_workflow_section =
+                range_has_dev_workflow_signal(&src_lines, range.start, range.end);
+            range.reference_shaped |= range.dev_workflow_section;
         }
     }
     out
@@ -2025,6 +2164,7 @@ fn push_link_index_chunks(
             parent_is_canonical_usage_h2: false,
             is_reference_usage_section: false,
             reference_shaped: true,
+            dev_workflow_section: false,
             roster_entries: entries,
             chained_to_previous: i > 0,
         });
@@ -2075,6 +2215,7 @@ fn push_canonical_usage_fence_split(
         parent_is_canonical_usage_h2: true,
         is_reference_usage_section: false,
         reference_shaped: false,
+        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2087,6 +2228,7 @@ fn push_canonical_usage_fence_split(
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: false,
         reference_shaped: false,
+        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2130,6 +2272,7 @@ fn push_intro<'a>(
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: reference_h2,
         reference_shaped: false,
+        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2168,6 +2311,7 @@ fn push_h3_child_or_body_blocks(
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: reference_h3,
         reference_shaped: false,
+        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2191,6 +2335,7 @@ fn push_body_block_ranges(
         parent_is_canonical_usage_h2: false,
         is_reference_usage_section: false,
         reference_shaped: false,
+        dev_workflow_section: false,
         roster_entries: 0,
         chained_to_previous: false,
     }));

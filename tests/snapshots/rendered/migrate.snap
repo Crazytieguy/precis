@@ -10,6 +10,30 @@ expression: rendered
 .goreleaser.yml
 .travis.yml
 CONTRIBUTING.md
+       1→# Development, Testing and Contributing
+       2→
+       3→  1. Make sure you have a running Docker daemon
+       4→     (Install for [MacOS](https://docs.docker.com/docker-for-mac/))
+       5→  1. Use a version of Go that supports [modules](https://golang.org/cmd/go/#hdr-Modules__module_versions__and_more) (e.g. Go 1.11+)
+       6→  1. Fork this repo and `git clone` somewhere to `$GOPATH/src/github.com/golang-migrate/migrate`
+       7→      * Ensure that [Go modules are enabled](https://golang.org/cmd/go/#hdr-Preliminary_module_support) (e.g. your repo path or the `GO111MODULE` environment variable are set correctly)
+       8→  1. Install [golangci-lint](https://github.com/golangci/golangci-lint#install)
+       9→  1. Run the linter: `golangci-lint run`
+      10→  1. Confirm tests are working: `make test-short`
+      11→  1. Write awesome code ...
+      12→  1. `make test` to run all tests against all database versions
+      13→  1. Push code and open Pull Request
+      14→ 
+      15→Some more helpful commands:
+      16→
+      17→  * You can specify which database/ source tests to run:
+      18→    `make test-short SOURCE='file go_bindata' DATABASE='postgres cassandra'`
+      19→  * After `make test`, run `make html-coverage` which opens a shiny test coverage overview.
+      20→  * `make build-cli` builds the CLI in directory `cli/build/`.
+      21→  * `make list-external-deps` lists all external dependencies for each package
+      22→  * `make docs && make open-docs` opens godoc in your browser, `make kill-docs` kills the godoc server.
+      23→    Repeatedly call `make docs` to refresh the server.
+      24→  * Set the `DOCKER_API_VERSION` environment variable to the latest supported version if you get errors regarding the docker client API version being too new.
 Dockerfile
 Dockerfile.circleci
 Dockerfile.github-actions
@@ -99,49 +123,6 @@ cmd/
             …
                4→var Version = "dev"
 database/
-    cassandra/
-    clickhouse/
-    cockroachdb/
-    crate/
-    driver.go
-    driver_test.go
-    error.go
-        …
-           8→type Error struct {
-        …
-          22→func (e Error) Error() string {
-        …
-    firebird/
-    mongodb/
-        README.md
-        examples/
-        mongodb.go
-        mongodb_test.go
-    multistmt/
-    mysql/
-        README.md
-        examples/
-        mysql.go
-        mysql_test.go
-    neo4j/
-    parse_test.go
-    pgx/
-    postgres/
-    ql/
-    redshift/
-    rqlite/
-    shell/
-    snowflake/
-    spanner/
-    sqlcipher/
-    sqlite/
-    sqlite3/
-    sqlserver/
-    stub/
-    testing/
-    util.go
-    util_test.go
-    yugabytedb/
 dktesting/
     dktesting.go
         …
@@ -150,7 +131,7 @@ dktesting/
           15→	ImageName string
           16→	Options   dktest.Options
           17→}
-          19→// Cleanup cleanups the ContainerSpec after a test run by removing the ContainerSpec's image
+        …
           20→func (s *ContainerSpec) Cleanup() (retErr error) {
         …
           43→// ParallelTest runs Docker tests in parallel
@@ -191,11 +172,6 @@ migrate.go
        3→// interface. The driver interfaces are kept "dumb", all migration logic is kept
        4→// in this package.
     …
-      19→// DefaultPrefetchMigrations sets the number of migrations to pre-read
-      20→// from the source. This is helpful if the source is remote, but has little
-      21→// effect for a local source (i.e. file system).
-      22→// Please note that this setting has a major impact on the memory usage,
-      23→// since each pre-read migration is buffered in memory. See DefaultBufferSize.
       24→var DefaultPrefetchMigrations = uint(10)
       26→// DefaultLockTimeout sets the max time a database driver has to acquire a lock.
       27→var DefaultLockTimeout = 15 * time.Second
@@ -226,8 +202,6 @@ migrate.go
 migrate_test.go
 migration.go
     …
-      11→// DefaultBufferSize sets the in memory buffer size (in Bytes) for every
-      12→// pre-read migration (see DefaultPrefetchMigrations).
       13→var DefaultBufferSize = uint(100000)
     …
       18→type Migration struct {
@@ -267,18 +241,13 @@ source/
     driver.go
     driver_test.go
     errors.go
-           1→package source
-           2→
-           3→import "os"
-           5→// ErrDuplicateMigration is an error type for reporting duplicate migration
-           6→// files.
+        …
            7→type ErrDuplicateMigration struct {
            8→	Migration
            9→	os.FileInfo
           10→}
           12→// Error implements error interface.
           13→func (e ErrDuplicateMigration) Error() string {
-          14→	return "duplicate migration file: " + e.Name()
         …
     file/
         README.md
@@ -329,8 +298,7 @@ source/
                4→## Import
             …
               12→## Connection String
-              13→
-              14→`gcs://<bucket>/<prefix>`
+            …
         storage.go
         storage_test.go
     httpfs/
@@ -367,22 +335,12 @@ source/
     stub/
     testing/
 testing/
-    docker.go
-    testing.go
-    testing_test.go
 util.go
     …
-       9→// MultiError holds multiple errors.
-      10→//
-      11→// Deprecated: Use stdlib's [errors.Join] et al. instead
-      12→// This will be removed in the v5 release.
       13→type MultiError struct {
       14→	Errs []error
       15→}
-      17→// NewMultiError returns an error type holding multiple errors.
-      18→//
-      19→// Deprecated: Use stdlib's [errors.Join] et al. instead
-      20→// This will be removed in the v5 release.
+    …
       21→func NewMultiError(errs ...error) MultiError {
     …
       31→// Error implements error. Multiple errors are concatenated with 'and's.
