@@ -37,6 +37,8 @@ const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
 const PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR: f64 = 0.4;
 const PYPROJECT_NON_LEDE_IDENTITY_FACTOR: f64 = 0.1;
 
+type Section = (String, usize, usize);
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let toml_files = files_with_extension(dir, "toml");
     if toml_files.is_empty() {
@@ -44,7 +46,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     }
     let mut out = Vec::new();
     for file in toml_files {
-        if let Some(content) = build_section_content(&file, ctx, |n| {
+        let Some((source, tree)) = parse_toml(ctx, &file) else {
+            continue;
+        };
+        let sections = collect_sections(&tree, &source);
+        if let Some(content) = build_section_content(&file, &source, &sections, |n| {
             matches!(
                 n,
                 "package" | "workspace" | "workspace.package" | "project" | "tool.poetry"
@@ -57,9 +63,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: identity_value(&file, ctx),
             });
         }
-        if let Some(content) = build_section_content(&file, ctx, |n| {
-            matches!(n, "project.scripts" | "tool.poetry.scripts")
-        }) {
+        if let Some(content) = build_section_content(&file, &source, &sections, is_scripts_section)
+        {
             out.push(Batch {
                 key: TomlKey::Scripts { file: file.clone() }.into(),
                 predecessor: None,
@@ -67,7 +72,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: scripts_value(&file, ctx),
             });
         }
-        if let Some(content) = build_section_content(&file, ctx, |n| n == "features") {
+        if let Some(content) = build_section_content(&file, &source, &sections, |n| n == "features")
+        {
             out.push(Batch {
                 key: TomlKey::Features { file: file.clone() }.into(),
                 predecessor: None,
@@ -75,7 +81,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: features_value(&file, ctx),
             });
         }
-        if let Some(content) = build_dependencies_content(&file, ctx) {
+        if let Some(content) = build_dependencies_content(&file, &source, &tree, &sections) {
             out.push(Batch {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
                 predecessor: None,
@@ -83,7 +89,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: dependencies_value(&file, ctx),
             });
         }
-        if let Some(content) = build_config_content(&file, ctx) {
+        if let Some(content) = build_config_content(&file, &source, &sections) {
             out.push(Batch {
                 key: TomlKey::Config { file: file.clone() }.into(),
                 predecessor: None,
@@ -97,17 +103,21 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
 /// Dependency content for Cargo (table-based) and pyproject (array
 /// under `[project]`).
-fn build_dependencies_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
-    let (source, tree) = parse_toml(ctx, file)?;
+fn build_dependencies_content(
+    file: &Path,
+    source: &str,
+    tree: &Tree,
+    sections: &[Section],
+) -> Option<crate::content::BatchContent> {
     let mut line_numbers: Vec<usize> = Vec::new();
-    for (name, start, end) in collect_sections(&tree, &source) {
-        if is_dependency_section(&name) {
-            line_numbers.extend(start..=end);
+    for (name, start, end) in sections {
+        if is_dependency_section(name) {
+            line_numbers.extend(*start..=*end);
         }
     }
     if is_python_project_manifest(file) {
         for key in ["dependencies", "optional-dependencies"] {
-            if let Some((start, end)) = project_pair_array_rows(&tree, &source, key) {
+            if let Some((start, end)) = project_pair_array_rows(tree, source, key) {
                 line_numbers.extend(start..=end);
             }
         }
@@ -115,24 +125,27 @@ fn build_dependencies_content(file: &Path, ctx: &WalkCtx) -> Option<crate::conte
     if line_numbers.is_empty() {
         return None;
     }
-    single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
+    single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
-fn build_config_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+fn build_config_content(
+    file: &Path,
+    source: &str,
+    sections: &[Section],
+) -> Option<crate::content::BatchContent> {
     if !is_manifest_toml(file) {
         return None;
     }
-    let (source, tree) = parse_toml(ctx, file)?;
     let mut line_numbers: Vec<usize> = Vec::new();
-    for (name, start, end) in collect_sections(&tree, &source) {
-        if is_config_section(&name) {
-            line_numbers.extend(start..=end);
+    for (name, start, end) in sections {
+        if is_config_section(file, name) {
+            line_numbers.extend(*start..=*end);
         }
     }
     if line_numbers.is_empty() {
         return None;
     }
-    single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
+    single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
 /// Row span of `<key> = [...]` inside the `[project]` table.
@@ -196,28 +209,30 @@ fn pair_value_node(pair: Node) -> Option<Node> {
 
 fn build_section_content(
     file: &Path,
-    ctx: &WalkCtx,
+    source: &str,
+    sections: &[Section],
     name_match: impl Fn(&str) -> bool,
 ) -> Option<crate::content::BatchContent> {
-    let (source, tree) = parse_toml(ctx, file)?;
-    let sections = collect_sections(&tree, &source);
     let pyproject = is_python_project_manifest(file);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start_line, end_line) in sections {
-        if name_match(&name) {
-            if is_pyproject_identity_table(&name) {
+        if name_match(name) {
+            if is_pyproject_identity_table(name) {
                 line_numbers.extend(project_identity_lines(
-                    &source, start_line, end_line, pyproject,
+                    source,
+                    *start_line,
+                    *end_line,
+                    pyproject,
                 ));
             } else {
-                line_numbers.extend(start_line..=end_line);
+                line_numbers.extend(*start_line..=*end_line);
             }
         }
     }
     if line_numbers.is_empty() {
         return None;
     }
-    single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
+    single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
 fn is_pyproject_filename(file: &Path) -> bool {
@@ -253,14 +268,23 @@ fn is_dependency_section(name: &str) -> bool {
         || (name.starts_with("target.") && name.ends_with(".dependencies"))
 }
 
-fn is_config_section(name: &str) -> bool {
+fn is_scripts_section(name: &str) -> bool {
+    matches!(name, "project.scripts" | "tool.poetry.scripts")
+}
+
+fn is_config_section(file: &Path, name: &str) -> bool {
+    if is_pyproject_identity_table(name) || is_scripts_section(name) || is_dependency_section(name)
+    {
+        return false;
+    }
     name == "build-system"
         || name == "project.urls"
         || name == "project.entry-points"
         || name.starts_with("tool.")
         || name.starts_with("package.metadata.")
         || name.starts_with("profile.")
-        || matches!(name, "bin" | "example" | "test" | "bench")
+        || (file.file_name().and_then(|n| n.to_str()) == Some("Cargo.toml")
+            && matches!(name, "bin" | "example" | "test" | "bench"))
 }
 
 fn project_identity_lines(
@@ -389,13 +413,7 @@ fn collect_sections(tree: &Tree, source: &str) -> Vec<(String, usize, usize)> {
     let mut raw: Vec<(String, usize)> = Vec::new();
     for child in root.children(&mut cursor) {
         let name = match child.kind() {
-            "table" => {
-                let Some(name) = extract_table_name(child, source) else {
-                    continue;
-                };
-                name
-            }
-            "table_array_element" => {
+            "table" | "table_array_element" => {
                 let Some(name) = extract_table_name(child, source) else {
                     continue;
                 };
@@ -608,6 +626,29 @@ readme = "README.md"
         // license (8) + readme (9). homepage / documentation are not
         // in the broad set; authors is array-valued.
         assert_eq!(broad, vec![1, 2, 5, 6, 8, 9]);
+    }
+
+    #[test]
+    fn walker_toml_config_sections_do_not_overlap_owned_sections() {
+        let file = PathBuf::from("pyproject.toml");
+        let owned = [
+            "tool.poetry",
+            "tool.poetry.dependencies",
+            "tool.poetry.scripts",
+            "dependencies.foo",
+            "dev-dependencies.foo",
+            "build-dependencies.foo",
+            "target.'cfg(unix)'.dependencies",
+        ];
+        for name in owned {
+            assert!(
+                !is_config_section(&file, name),
+                "{name} must stay with its owning TOML batch"
+            );
+        }
+        assert!(is_config_section(&file, "tool.ruff"));
+        assert!(!is_config_section(&file, "test"));
+        assert!(is_config_section(&PathBuf::from("Cargo.toml"), "test"));
     }
 
     /// mdbook fixture: explicit `crates/*` glob, three literal entries
