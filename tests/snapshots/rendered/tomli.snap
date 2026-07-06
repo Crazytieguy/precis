@@ -5,6 +5,8 @@ expression: rendered
 .bumpversion.cfg
 .flake8
 .github/
+    workflows/
+        tests.yaml
 .gitignore
 .pre-commit-config.yaml
 CHANGELOG.md
@@ -53,6 +55,8 @@ README.md
     …
      106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
     …
+     120→Illegal types are `dict` and `list`, and their subtypes.
+     121→A `ValueError` will be raised if `parse_float` produces illegal types.
      123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
     …
      152→## FAQ<a name="faq"></a>
@@ -116,12 +120,34 @@ src/
                8→from ._parser import TOMLDecodeError, load, loads
         _parser.py
             …
+              19→TYPE_CHECKING = False
+            …
+              35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
+              36→
+              37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
+            …
+              41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
+              42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
+              43→
+              44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+              45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
+              46→
+              47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+              48→
+              49→TOML_WS: Final = frozenset(" \t")
+              50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
+              51→BARE_KEY_CHARS: Final = frozenset(
+              52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
+              53→)
+              54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
+              55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
+              56→
+              57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
+            …
               71→class DEPRECATED_DEFAULT:
               72→    """Sentinel to be used as default arg during deprecation
               73→    period of TOMLDecodeError's free-form arguments."""
               76→class TOMLDecodeError(ValueError):
-            …
-              87→    def __init__(
             …
              137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
              138→    """Parse TOML from a binary file object."""
@@ -131,49 +157,14 @@ src/
             …
              220→class Flags:
              221→    """Flags that map to parsed keys/namespaces."""
-             223→    # Marks an immutable namespace (inline array or inline table).
-             224→    FROZEN: Final = 0
-             225→    # Marks a nest that has been explicitly created and can no longer
-             226→    # be opened using the "[table]" syntax.
-             227→    EXPLICIT_NEST: Final = 1
-             229→    def __init__(self) -> None:
-            …
-             233→    def add_pending(self, key: Key, flag: int) -> None:
-             234→        self._pending_flags.add((key, flag))
-             236→    def finalize_pending(self) -> None:
-            …
-             241→    def unset_all(self, key: Key) -> None:
-            …
-             249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
-            …
-             260→    def is_(self, key: Key, flag: int) -> bool:
             …
              278→class NestedDict:
-             279→    def __init__(self) -> None:
-             280→        # The parsed content of the TOML document
-             281→        self.dict: dict[str, Any] = {}
-             283→    def get_or_create_nest(
-             284→        self,
-             285→        key: Key,
-             286→        *,
-             287→        access_lists: bool = True,
-             288→    ) -> dict[str, Any]:
-            …
-             300→    def append_nest_to_list(self, key: Key) -> None:
             …
              312→class Output:
-             313→    def __init__(self) -> None:
             …
              318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
             …
              327→def skip_until(
-             328→    src: str,
-             329→    pos: Pos,
-             330→    expect: str,
-             331→    *,
-             332→    error_on: frozenset[str],
-             333→    error_on_eof: bool,
-             334→) -> Pos:
             …
              349→def skip_comment(src: str, pos: Pos) -> Pos:
             …
@@ -221,6 +212,8 @@ src/
              652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
             …
              684→def parse_value(
+             685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+             686→) -> tuple[Pos, Any]:
             …
              760→def is_unicode_scalar_value(codepoint: int) -> bool:
             …

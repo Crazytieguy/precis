@@ -20,12 +20,9 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
     (1000.0 * cat + 280.0 * fu + 300.0 * ztu) * depth.max(0.0)
 }
 
-/// Chunk size for names-surface gates — roughly one screenful of API.
-pub const NAMES_SURFACE_CHUNK_SIZE: usize = 12;
-
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
-pub const ROSTER_MASS_BASELINE: f64 = NAMES_SURFACE_CHUNK_SIZE as f64;
+pub const ROSTER_MASS_BASELINE: f64 = 12.0;
 /// Cap on the roster-mass boost (reached around ~110 entries).
 pub const ROSTER_MASS_FACTOR_CAP: f64 = 2.2;
 
@@ -57,15 +54,9 @@ const CHUNKED_NAMES_FIRST_CHUNK_FACTOR: f64 = 0.9;
 /// Falloff per later chunk — 0.25 puts chunk 4 at ~half chunk 1.
 const CHUNKED_NAMES_FALLOFF: f64 = 0.25;
 
-pub fn names_surface_chunk_count(dependent_count: usize) -> usize {
-    dependent_count.div_ceil(NAMES_SURFACE_CHUNK_SIZE)
-}
-
-pub fn names_surface_chunk_index(item_index: usize) -> usize {
-    item_index / NAMES_SURFACE_CHUNK_SIZE
-}
-
-/// Per-chunk multiplier for a chunked names-surface batch.
+/// Per-chunk multiplier for a chunked names-surface batch. Only the C
+/// and Go walkers still chunk, behind their own size gates; the other
+/// walkers emit one unified names surface per file.
 pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
     if chunk_count <= 1 {
         1.0

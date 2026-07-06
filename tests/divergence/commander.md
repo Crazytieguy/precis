@@ -93,22 +93,12 @@ Score(3000)=0.574 I=0.764 C=0.431 ns_rows≤3K=18/40 (reached=8 partial=1 missin
 | walker |  | 2483 | 97 | export at esm.mjs:4 |  |  | 0.632 |
 | walker |  | 2632 | 149 | package identity metadata in package.json |  |  | 0.632 |
 | ns | 2993 |  | 533 | Readme.md: Quick Start, part 2 (subcommand-with-action example) | 3.2 |  | 0.574 |
-| walker |  | 3068 | 436 | export member names roster at lib/help.js:12 |  |  | 0.576 |
-| walker |  | 3068 | 0 | export member names at lib/help.js:12 chunk 0 |  |  | 0.576 |
-| walker |  | 3068 | 0 | export member names at lib/help.js:12 chunk 1 |  |  | 0.576 |
-| walker |  | 3068 | 0 | export member names at lib/help.js:12 chunk 2 |  |  | 0.576 |
-| walker |  | 3068 | 0 | export member names at lib/help.js:12 chunk 3 |  |  | 0.576 |
+| walker |  | 3068 | 436 | export member names at lib/help.js:12 |  |  | 0.576 |
 | walker |  | 3352 | 284 | package entrypoints in package.json |  |  | 0.576 |
 | walker |  | 3380 | 28 | package runtime metadata in package.json |  |  | 0.585 |
 | walker |  | 3637 | 257 | package scripts in package.json |  |  | 0.623 |
 | ns | 3789 |  | 796 | command.js: .addOption() body | 3.3 | 2.2 | 0.556 |
-| walker |  | 4340 | 703 | export member names roster at lib/command.js:13 |  |  | 0.586 |
-| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 0 |  |  | 0.586 |
-| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 1 |  |  | 0.586 |
-| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 2 |  |  | 0.586 |
-| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 3 |  |  | 0.586 |
-| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 4 |  |  | 0.586 |
-| walker |  | 4340 | 0 | export member names at lib/command.js:13 chunk 5 |  |  | 0.586 |
+| walker |  | 4340 | 703 | export member names at lib/command.js:13 |  |  | 0.586 |
 | ns | 4358 |  | 569 | Readme.md: Common option types, boolean and value | 3.4 |  | 0.550 |
 | walker |  | 4374 | 34 | export doc at lib/command.js:2752 |  |  | 0.550 |
 | walker |  | 4501 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.550 |

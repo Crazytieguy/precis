@@ -1,7 +1,7 @@
 fixture = "linkding"
 budget = 10000
-cumulative_tokens = 9777
-batch_count = 312
+cumulative_tokens = 9769
+batch_count = 341
 
 [[batches]]
 position = 1
@@ -55,7 +55,7 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Python(DeclNames { file: "manage.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "manage.py" })'
 descriptor = "python decl names surface in manage.py"
 cost_tokens = 11
 cum_tokens = 190
@@ -357,7 +357,7 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Python(DeclNames { file: "bookmarks/wsgi.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/wsgi.py" })'
 descriptor = "python decl names surface in bookmarks/wsgi.py"
 cost_tokens = 12
 cum_tokens = 520
@@ -375,7 +375,7 @@ kind = "full"
 
 [[batches]]
 position = 14
-key = 'Python(DeclNames { file: "bookmarks/signals.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/signals.py" })'
 descriptor = "python decl names surface in bookmarks/signals.py"
 cost_tokens = 13
 cum_tokens = 533
@@ -429,7 +429,7 @@ entries = ["__init__.py", "assets.py", "auto_tagging.py", "bookmarks.py", "bundl
 
 [[batches]]
 position = 17
-key = 'Python(DeclNames { file: "bookmarks/apps.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/apps.py" })'
 descriptor = "python decl names surface in bookmarks/apps.py"
 cost_tokens = 15
 cum_tokens = 703
@@ -465,7 +465,7 @@ kind = "full"
 
 [[batches]]
 position = 19
-key = 'Python(MethodSigs { file: "bookmarks/apps.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/apps.py" })'
 descriptor = "python method sigs in bookmarks/apps.py"
 cost_tokens = 11
 cum_tokens = 714
@@ -509,7 +509,7 @@ kind = "full"
 
 [[batches]]
 position = 21
-key = 'Python(DeclNames { file: "bookmarks/type_defs.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/type_defs.py" })'
 descriptor = "python decl names surface in bookmarks/type_defs.py"
 cost_tokens = 15
 cum_tokens = 738
@@ -545,7 +545,7 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'Python(DeclNames { file: "bookmarks/validators.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/validators.py" })'
 descriptor = "python decl names surface in bookmarks/validators.py"
 cost_tokens = 17
 cum_tokens = 755
@@ -581,7 +581,7 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'Python(MethodSigs { file: "bookmarks/validators.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/validators.py" })'
 descriptor = "python method sigs in bookmarks/validators.py"
 cost_tokens = 15
 cum_tokens = 770
@@ -653,7 +653,7 @@ entries = ["header.afdesign", "header.png", "header.svg", "logo-inset.afdesign",
 
 [[batches]]
 position = 29
-key = 'Python(DeclNames { file: "bookmarks/context_processors.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/context_processors.py" })'
 descriptor = "python decl names surface in bookmarks/context_processors.py"
 cost_tokens = 24
 cum_tokens = 856
@@ -831,7 +831,7 @@ entries = ["commands"]
 
 [[batches]]
 position = 38
-key = 'Python(DeclNames { file: "bookmarks/views/health.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/views/health.py" })'
 descriptor = "python decl names surface in bookmarks/views/health.py"
 cost_tokens = 12
 cum_tokens = 1068
@@ -875,7 +875,7 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'Python(DeclNames { file: "bookmarks/views/manifest.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/views/manifest.py" })'
 descriptor = "python decl names surface in bookmarks/views/manifest.py"
 cost_tokens = 12
 cum_tokens = 1080
@@ -919,7 +919,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'Python(DeclNames { file: "bookmarks/views/root.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/views/root.py" })'
 descriptor = "python decl names surface in bookmarks/views/root.py"
 cost_tokens = 12
 cum_tokens = 1092
@@ -963,7 +963,7 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'Python(DeclNames { file: "bookmarks/views/toasts.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/views/toasts.py" })'
 descriptor = "python decl names surface in bookmarks/views/toasts.py"
 cost_tokens = 12
 cum_tokens = 1121
@@ -1007,7 +1007,7 @@ kind = "full"
 
 [[batches]]
 position = 46
-key = 'Python(DeclNames { file: "bookmarks/urls.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/urls.py" })'
 descriptor = "python decl names surface in bookmarks/urls.py"
 cost_tokens = 31
 cum_tokens = 1160
@@ -1069,7 +1069,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'Python(DeclNames { file: "bookmarks/views/opensearch.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/views/opensearch.py" })'
 descriptor = "python decl names surface in bookmarks/views/opensearch.py"
 cost_tokens = 14
 cum_tokens = 1250
@@ -1141,7 +1141,7 @@ entries = ["edit.html", "form.html", "index.html", "merge.html", "new.html"]
 
 [[batches]]
 position = 53
-key = 'Python(DeclNames { file: "bookmarks/api/auth.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/api/auth.py" })'
 descriptor = "python decl names surface in bookmarks/api/auth.py"
 cost_tokens = 16
 cum_tokens = 1306
@@ -1177,7 +1177,7 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'Python(MethodSigs { file: "bookmarks/api/auth.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/api/auth.py" })'
 descriptor = "python method sigs in bookmarks/api/auth.py"
 cost_tokens = 13
 cum_tokens = 1319
@@ -1221,7 +1221,7 @@ kind = "full"
 
 [[batches]]
 position = 57
-key = 'Python(DeclNames { file: "bookmarks/services/wayback.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/services/wayback.py" })'
 descriptor = "python decl names surface in bookmarks/services/wayback.py"
 cost_tokens = 16
 cum_tokens = 1335
@@ -1365,7 +1365,7 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'Python(DeclNames { file: "bookmarks/middlewares.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/middlewares.py" })'
 descriptor = "python decl names surface in bookmarks/middlewares.py"
 cost_tokens = 57
 cum_tokens = 2087
@@ -1453,7 +1453,7 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'Python(MethodSigs { file: "bookmarks/middlewares.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/middlewares.py" })'
 descriptor = "python method sigs in bookmarks/middlewares.py"
 cost_tokens = 29
 cum_tokens = 2129
@@ -1817,7 +1817,7 @@ entries = ["login.html", "password_change_done.html", "password_change_form.html
 
 [[batches]]
 position = 89
-key = 'Python(DeclNames { file: "bookmarks/services/monolith.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/services/monolith.py" })'
 descriptor = "python decl names surface in bookmarks/services/monolith.py"
 cost_tokens = 31
 cum_tokens = 3047
@@ -1905,7 +1905,7 @@ kind = "full"
 
 [[batches]]
 position = 93
-key = 'Python(DeclNames { file: "bookmarks/widgets.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/widgets.py" })'
 descriptor = "python decl names surface in bookmarks/widgets.py"
 cost_tokens = 94
 cum_tokens = 3148
@@ -2115,7 +2115,7 @@ kind = "full"
 
 [[batches]]
 position = 102
-key = 'Python(MethodSigs { file: "bookmarks/widgets.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/widgets.py" })'
 descriptor = "python method sigs in bookmarks/widgets.py"
 cost_tokens = 126
 cum_tokens = 3286
@@ -2429,7 +2429,7 @@ entries = ["backup.py", "create_initial_superuser.py", "enable_wal.py", "ensure_
 
 [[batches]]
 position = 113
-key = 'Python(DeclNames { file: "bookmarks/management/commands/backup.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/management/commands/backup.py" })'
 descriptor = "python decl names surface in bookmarks/management/commands/backup.py"
 cost_tokens = 13
 cum_tokens = 3367
@@ -2483,7 +2483,7 @@ kind = "full"
 
 [[batches]]
 position = 116
-key = 'Python(DeclNames { file: "bookmarks/management/commands/ensure_superuser.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/management/commands/ensure_superuser.py" })'
 descriptor = "python decl names surface in bookmarks/management/commands/ensure_superuser.py"
 cost_tokens = 13
 cum_tokens = 3397
@@ -2519,7 +2519,7 @@ kind = "full"
 
 [[batches]]
 position = 118
-key = 'Python(DeclNames { file: "bookmarks/management/commands/full_backup.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/management/commands/full_backup.py" })'
 descriptor = "python decl names surface in bookmarks/management/commands/full_backup.py"
 cost_tokens = 13
 cum_tokens = 3410
@@ -2573,7 +2573,7 @@ kind = "full"
 
 [[batches]]
 position = 121
-key = 'Python(DeclNames { file: "bookmarks/management/commands/import_netscape.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/management/commands/import_netscape.py" })'
 descriptor = "python decl names surface in bookmarks/management/commands/import_netscape.py"
 cost_tokens = 13
 cum_tokens = 3441
@@ -2627,7 +2627,7 @@ kind = "full"
 
 [[batches]]
 position = 124
-key = 'Python(DeclNames { file: "bookmarks/management/commands/migrate_tasks.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/management/commands/migrate_tasks.py" })'
 descriptor = "python decl names surface in bookmarks/management/commands/migrate_tasks.py"
 cost_tokens = 13
 cum_tokens = 3469
@@ -2663,7 +2663,7 @@ kind = "full"
 
 [[batches]]
 position = 126
-key = 'Python(MethodSigs { file: "bookmarks/management/commands/migrate_tasks.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/management/commands/migrate_tasks.py" })'
 descriptor = "python method sigs in bookmarks/management/commands/migrate_tasks.py"
 cost_tokens = 17
 cum_tokens = 3486
@@ -2743,7 +2743,7 @@ kind = "full"
 
 [[batches]]
 position = 130
-key = 'Python(MethodSigs { file: "bookmarks/management/commands/backup.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/management/commands/backup.py" })'
 descriptor = "python method sigs in bookmarks/management/commands/backup.py"
 cost_tokens = 29
 cum_tokens = 3553
@@ -2821,7 +2821,7 @@ kind = "full"
 
 [[batches]]
 position = 133
-key = 'Python(MethodSigs { file: "bookmarks/management/commands/ensure_superuser.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/management/commands/ensure_superuser.py" })'
 descriptor = "python method sigs in bookmarks/management/commands/ensure_superuser.py"
 cost_tokens = 29
 cum_tokens = 3582
@@ -2899,7 +2899,7 @@ kind = "full"
 
 [[batches]]
 position = 136
-key = 'Python(MethodSigs { file: "bookmarks/management/commands/import_netscape.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/management/commands/import_netscape.py" })'
 descriptor = "python method sigs in bookmarks/management/commands/import_netscape.py"
 cost_tokens = 29
 cum_tokens = 3611
@@ -2977,7 +2977,7 @@ kind = "full"
 
 [[batches]]
 position = 139
-key = 'Python(DeclNames { file: "bookmarks/feeds.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/feeds.py" })'
 descriptor = "python decl names surface in bookmarks/feeds.py"
 cost_tokens = 95
 cum_tokens = 3706
@@ -3267,7 +3267,7 @@ kind = "full"
 
 [[batches]]
 position = 152
-key = 'Python(MethodSigs { file: "bookmarks/feeds.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/feeds.py" })'
 descriptor = "python method sigs in bookmarks/feeds.py"
 cost_tokens = 306
 cum_tokens = 4147
@@ -4017,7 +4017,7 @@ kind = "full"
 
 [[batches]]
 position = 179
-key = 'Python(DeclNames { file: "bookmarks/utils.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/utils.py" })'
 descriptor = "python decl names surface in bookmarks/utils.py"
 cost_tokens = 148
 cum_tokens = 4389
@@ -4421,7 +4421,7 @@ kind = "full"
 
 [[batches]]
 position = 193
-key = 'Python(DeclNames { file: "bookmarks/forms.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/forms.py" })'
 descriptor = "python decl names surface in bookmarks/forms.py"
 cost_tokens = 111
 cum_tokens = 4742
@@ -4719,7 +4719,7 @@ kind = "full"
 
 [[batches]]
 position = 206
-key = 'Python(MethodSigs { file: "bookmarks/forms.py", chunk_index: 0 })'
+key = 'Python(MethodSigs { file: "bookmarks/forms.py" })'
 descriptor = "python method sigs in bookmarks/forms.py"
 cost_tokens = 212
 cum_tokens = 5181
@@ -5241,7 +5241,7 @@ kind = "full"
 
 [[batches]]
 position = 223
-key = 'Python(DeclNames { file: "bookmarks/templatetags/bookmarks.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/templatetags/bookmarks.py" })'
 descriptor = "python decl names surface in bookmarks/templatetags/bookmarks.py"
 cost_tokens = 33
 cum_tokens = 6592
@@ -5303,355 +5303,143 @@ kind = "full"
 
 [[batches]]
 position = 226
-key = 'Python(DeclSigsRoster { file: "bookmarks/admin.py" })'
-descriptor = "python decl sigs roster in bookmarks/admin.py"
-cost_tokens = 179
-cum_tokens = 6888
+key = 'Fs(DirListing { dir: "bookmarks/templates/admin" })'
+descriptor = "listing of 'bookmarks/templates/admin'"
+cost_tokens = 5
+cum_tokens = 6714
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 108
-end = 108
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 215
-end = 215
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 228
-end = 228
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 272
-end = 272
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 289
-end = 289
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 297
-end = 297
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 306
-end = 306
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 312
-end = 312
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 318
-end = 318
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 324
-end = 324
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 109
-end = 109
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 216
-end = 216
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 229
-end = 229
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 273
-end = 273
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 290
-end = 290
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 298
-end = 298
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 307
-end = 307
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 313
-end = 313
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 319
-end = 319
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 325
-end = 325
-
-[batches.content.spans.render]
-kind = "ellipsis"
+[[batches.content.groups]]
+parent = "bookmarks/templates/admin"
+entries = ["background_tasks.html"]
 
 [[batches]]
 position = 227
-key = 'Python(DeclNames { file: "bookmarks/admin.py", chunk_index: 0 })'
-descriptor = "python decl names surface in bookmarks/admin.py"
-cost_tokens = 0
-cum_tokens = 6888
+key = 'Python(ClassBody { file: "bookmarks/forms.py", start_line: 248 })'
+descriptor = "python class body at bookmarks/forms.py:248"
+cost_tokens = 370
+cum_tokens = 7084
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 29
-end = 29
+path = "bookmarks/forms.py"
+start = 249
+end = 273
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 108
-end = 108
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 215
-end = 215
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 228
-end = 228
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 272
-end = 272
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 289
-end = 289
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 297
-end = 297
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 306
-end = 306
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 312
-end = 312
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 318
-end = 318
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 228
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 29 })'
-descriptor = "python decl at bookmarks/admin.py:29"
-cost_tokens = 0
-cum_tokens = 6888
+key = 'Python(MethodBody { file: "bookmarks/feeds.py", start_line: 77, body_start_line: 78 })'
+descriptor = "python method body at bookmarks/feeds.py:77 body 78"
+cost_tokens = 19
+cum_tokens = 7103
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 29
-end = 29
+path = "bookmarks/feeds.py"
+start = 78
+end = 78
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 229
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 62 })'
-descriptor = "python decl at bookmarks/admin.py:62"
-cost_tokens = 0
-cum_tokens = 6888
+key = 'Python(MethodBody { file: "bookmarks/feeds.py", start_line: 80, body_start_line: 81 })'
+descriptor = "python method body at bookmarks/feeds.py:80 body 81"
+cost_tokens = 19
+cum_tokens = 7122
 
 [batches.content]
 kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/feeds.py"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 230
+key = 'Python(MethodBody { file: "bookmarks/feeds.py", start_line: 106, body_start_line: 107 })'
+descriptor = "python method body at bookmarks/feeds.py:106 body 107"
+cost_tokens = 19
+cum_tokens = 7141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/feeds.py"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 231
+key = 'Python(MethodBody { file: "bookmarks/forms.py", start_line: 244, body_start_line: 245 })'
+descriptor = "python method body at bookmarks/forms.py:244 body 245"
+cost_tokens = 19
+cum_tokens = 7160
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/forms.py"
+start = 245
+end = 245
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 232
+key = 'Python(DeclDoc { file: "bookmarks/api/auth.py", start_line: 8 })'
+descriptor = "python decl doc at bookmarks/api/auth.py:8"
+cost_tokens = 39
+cum_tokens = 7199
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/api/auth.py"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 233
+key = 'Python(DeclNames { file: "bookmarks/admin.py" })'
+descriptor = "python decl names surface in bookmarks/admin.py"
+cost_tokens = 195
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
@@ -5661,16 +5449,6 @@ end = 62
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 230
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 77 })'
-descriptor = "python decl at bookmarks/admin.py:77"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
 start = 77
@@ -5678,16 +5456,6 @@ end = 77
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 231
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 108 })'
-descriptor = "python decl at bookmarks/admin.py:108"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
@@ -5697,16 +5465,6 @@ end = 108
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 232
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 215 })'
-descriptor = "python decl at bookmarks/admin.py:215"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
 start = 215
@@ -5714,16 +5472,6 @@ end = 215
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 233
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 228 })'
-descriptor = "python decl at bookmarks/admin.py:228"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
@@ -5733,16 +5481,6 @@ end = 228
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 234
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 272 })'
-descriptor = "python decl at bookmarks/admin.py:272"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
 start = 272
@@ -5750,16 +5488,6 @@ end = 272
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 235
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 289 })'
-descriptor = "python decl at bookmarks/admin.py:289"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
@@ -5769,16 +5497,6 @@ end = 289
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 236
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 297 })'
-descriptor = "python decl at bookmarks/admin.py:297"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
 start = 297
@@ -5786,16 +5504,6 @@ end = 297
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 237
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 306 })'
-descriptor = "python decl at bookmarks/admin.py:306"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
@@ -5805,16 +5513,6 @@ end = 306
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 238
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 312 })'
-descriptor = "python decl at bookmarks/admin.py:312"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
 start = 312
@@ -5823,16 +5521,6 @@ end = 312
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 239
-key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 318 })'
-descriptor = "python decl at bookmarks/admin.py:318"
-cost_tokens = 0
-cum_tokens = 6888
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
 start = 318
@@ -5840,106 +5528,6 @@ end = 318
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 240
-key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 297 })'
-descriptor = "python class body at bookmarks/admin.py:297"
-cost_tokens = 14
-cum_tokens = 6902
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 298
-end = 298
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 241
-key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 29 })'
-descriptor = "python class body at bookmarks/admin.py:29"
-cost_tokens = 23
-cum_tokens = 6925
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 242
-key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 77 })'
-descriptor = "python class body at bookmarks/admin.py:77"
-cost_tokens = 26
-cum_tokens = 6951
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 78
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 243
-key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 318 })'
-descriptor = "python class body at bookmarks/admin.py:318"
-cost_tokens = 29
-cum_tokens = 6980
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 319
-end = 321
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 244
-key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 312 })'
-descriptor = "python class body at bookmarks/admin.py:312"
-cost_tokens = 37
-cum_tokens = 7017
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/admin.py"
-start = 313
-end = 315
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 245
-key = 'Python(DeclNames { file: "bookmarks/admin.py", chunk_index: 1 })'
-descriptor = "python decl names surface #1 in bookmarks/admin.py"
-cost_tokens = 16
-cum_tokens = 7033
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/admin.py"
@@ -5957,12 +5545,236 @@ end = 332
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 234
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 29 })'
+descriptor = "python decl at bookmarks/admin.py:29"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 62 })'
+descriptor = "python decl at bookmarks/admin.py:62"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 77 })'
+descriptor = "python decl at bookmarks/admin.py:77"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 108 })'
+descriptor = "python decl at bookmarks/admin.py:108"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 215 })'
+descriptor = "python decl at bookmarks/admin.py:215"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 239
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 228 })'
+descriptor = "python decl at bookmarks/admin.py:228"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 228
+end = 228
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 272 })'
+descriptor = "python decl at bookmarks/admin.py:272"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 272
+end = 272
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 289 })'
+descriptor = "python decl at bookmarks/admin.py:289"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 289
+end = 289
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 297 })'
+descriptor = "python decl at bookmarks/admin.py:297"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 306 })'
+descriptor = "python decl at bookmarks/admin.py:306"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 306
+end = 306
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 244
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 312 })'
+descriptor = "python decl at bookmarks/admin.py:312"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 312
+end = 312
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 245
+key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 318 })'
+descriptor = "python decl at bookmarks/admin.py:318"
+cost_tokens = 0
+cum_tokens = 7394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 318
+end = 318
+
+[batches.content.spans.render]
+kind = "full"
+
 [[batches]]
 position = 246
 key = 'Python(Decl { file: "bookmarks/admin.py", start_line: 324 })'
 descriptor = "python decl at bookmarks/admin.py:324"
 cost_tokens = 0
-cum_tokens = 7033
+cum_tokens = 7394
 
 [batches.content]
 kind = "lines"
@@ -5977,10 +5789,100 @@ kind = "full"
 
 [[batches]]
 position = 247
+key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 297 })'
+descriptor = "python class body at bookmarks/admin.py:297"
+cost_tokens = 14
+cum_tokens = 7408
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 298
+end = 298
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 248
+key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 29 })'
+descriptor = "python class body at bookmarks/admin.py:29"
+cost_tokens = 23
+cum_tokens = 7431
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
+key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 77 })'
+descriptor = "python class body at bookmarks/admin.py:77"
+cost_tokens = 26
+cum_tokens = 7457
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 78
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 250
+key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 318 })'
+descriptor = "python class body at bookmarks/admin.py:318"
+cost_tokens = 29
+cum_tokens = 7486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 319
+end = 321
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 251
+key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 312 })'
+descriptor = "python class body at bookmarks/admin.py:312"
+cost_tokens = 37
+cum_tokens = 7523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/admin.py"
+start = 313
+end = 315
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 252
 key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 306 })'
 descriptor = "python class body at bookmarks/admin.py:306"
 cost_tokens = 48
-cum_tokens = 7081
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -5994,11 +5896,11 @@ end = 309
 kind = "full"
 
 [[batches]]
-position = 248
+position = 253
 key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 289 })'
 descriptor = "python class body at bookmarks/admin.py:289"
 cost_tokens = 54
-cum_tokens = 7135
+cum_tokens = 7625
 
 [batches.content]
 kind = "lines"
@@ -6012,11 +5914,11 @@ end = 294
 kind = "full"
 
 [[batches]]
-position = 249
+position = 254
 key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 108 })'
 descriptor = "python class body at bookmarks/admin.py:108"
 cost_tokens = 228
-cum_tokens = 7363
+cum_tokens = 7853
 
 [batches.content]
 kind = "lines"
@@ -6030,11 +5932,11 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 250
+position = 255
 key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 272 })'
 descriptor = "python class body at bookmarks/admin.py:272"
 cost_tokens = 140
-cum_tokens = 7503
+cum_tokens = 7993
 
 [batches.content]
 kind = "lines"
@@ -6048,11 +5950,11 @@ end = 286
 kind = "full"
 
 [[batches]]
-position = 251
+position = 256
 key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 215 })'
 descriptor = "python class body at bookmarks/admin.py:215"
 cost_tokens = 64
-cum_tokens = 7567
+cum_tokens = 8057
 
 [batches.content]
 kind = "lines"
@@ -6066,11 +5968,11 @@ end = 225
 kind = "full"
 
 [[batches]]
-position = 252
+position = 257
 key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 324 })'
 descriptor = "python class body at bookmarks/admin.py:324"
 cost_tokens = 69
-cum_tokens = 7636
+cum_tokens = 8126
 
 [batches.content]
 kind = "lines"
@@ -6084,11 +5986,11 @@ end = 329
 kind = "full"
 
 [[batches]]
-position = 253
-key = 'Python(MethodSigs { file: "bookmarks/admin.py", chunk_index: 0 })'
+position = 258
+key = 'Python(MethodSigs { file: "bookmarks/admin.py" })'
 descriptor = "python method sigs in bookmarks/admin.py"
 cost_tokens = 275
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6366,11 +6268,11 @@ end = 301
 kind = "ellipsis"
 
 [[batches]]
-position = 254
+position = 259
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 30 })'
 descriptor = "python method at bookmarks/admin.py:30"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6384,11 +6286,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 255
+position = 260
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 38 })'
 descriptor = "python method at bookmarks/admin.py:38"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6402,11 +6304,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 256
+position = 261
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 48 })'
 descriptor = "python method at bookmarks/admin.py:48"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6420,11 +6322,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 257
+position = 262
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 81 })'
 descriptor = "python method at bookmarks/admin.py:81"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6438,11 +6340,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 258
+position = 263
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 88 })'
 descriptor = "python method at bookmarks/admin.py:88"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6456,11 +6358,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 259
+position = 264
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 133 })'
 descriptor = "python method at bookmarks/admin.py:133"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6474,11 +6376,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 260
+position = 265
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 141 })'
 descriptor = "python method at bookmarks/admin.py:141"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6492,11 +6394,11 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 261
+position = 266
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 156 })'
 descriptor = "python method at bookmarks/admin.py:156"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6510,11 +6412,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 262
+position = 267
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 171 })'
 descriptor = "python method at bookmarks/admin.py:171"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6528,11 +6430,11 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 263
+position = 268
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 186 })'
 descriptor = "python method at bookmarks/admin.py:186"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6546,11 +6448,11 @@ end = 186
 kind = "full"
 
 [[batches]]
-position = 264
+position = 269
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 200 })'
 descriptor = "python method at bookmarks/admin.py:200"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6564,11 +6466,11 @@ end = 200
 kind = "full"
 
 [[batches]]
-position = 265
+position = 270
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 235 })'
 descriptor = "python method at bookmarks/admin.py:235"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6582,11 +6484,11 @@ end = 235
 kind = "full"
 
 [[batches]]
-position = 266
+position = 271
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 240 })'
 descriptor = "python method at bookmarks/admin.py:240"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6600,11 +6502,11 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 267
+position = 272
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 245 })'
 descriptor = "python method at bookmarks/admin.py:245"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6618,11 +6520,11 @@ end = 245
 kind = "full"
 
 [[batches]]
-position = 268
+position = 273
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 300 })'
 descriptor = "python method at bookmarks/admin.py:300"
 cost_tokens = 0
-cum_tokens = 7911
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -6636,11 +6538,11 @@ end = 300
 kind = "full"
 
 [[batches]]
-position = 269
+position = 274
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 34 })'
 descriptor = "python method at bookmarks/admin.py:34"
 cost_tokens = 8
-cum_tokens = 7919
+cum_tokens = 8409
 
 [batches.content]
 kind = "lines"
@@ -6654,11 +6556,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 270
+position = 275
 key = 'Python(Method { file: "bookmarks/admin.py", start_line: 216 })'
 descriptor = "python method at bookmarks/admin.py:216"
 cost_tokens = 11
-cum_tokens = 7930
+cum_tokens = 8420
 
 [batches.content]
 kind = "lines"
@@ -6672,11 +6574,11 @@ end = 217
 kind = "full"
 
 [[batches]]
-position = 271
+position = 276
 key = 'Python(MethodBody { file: "bookmarks/admin.py", start_line: 216, body_start_line: 218 })'
 descriptor = "python method body at bookmarks/admin.py:216 body 218"
 cost_tokens = 7
-cum_tokens = 7937
+cum_tokens = 8427
 
 [batches.content]
 kind = "lines"
@@ -6690,11 +6592,11 @@ end = 218
 kind = "full"
 
 [[batches]]
-position = 272
+position = 277
 key = 'Python(MethodBody { file: "bookmarks/admin.py", start_line: 34, body_start_line: 36 })'
 descriptor = "python method body at bookmarks/admin.py:34 body 36"
 cost_tokens = 8
-cum_tokens = 7945
+cum_tokens = 8435
 
 [batches.content]
 kind = "lines"
@@ -6708,11 +6610,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 273
+position = 278
 key = 'Python(MethodBody { file: "bookmarks/admin.py", start_line: 240, body_start_line: 241 })'
 descriptor = "python method body at bookmarks/admin.py:240 body 241"
 cost_tokens = 11
-cum_tokens = 7956
+cum_tokens = 8446
 
 [batches.content]
 kind = "lines"
@@ -6726,11 +6628,11 @@ end = 241
 kind = "full"
 
 [[batches]]
-position = 274
+position = 279
 key = 'Python(ClassBody { file: "bookmarks/admin.py", start_line: 228 })'
 descriptor = "python class body at bookmarks/admin.py:228"
 cost_tokens = 90
-cum_tokens = 8046
+cum_tokens = 8536
 
 [batches.content]
 kind = "lines"
@@ -6752,821 +6654,39 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 275
-key = 'Fs(DirListing { dir: "bookmarks/templates/admin" })'
-descriptor = "listing of 'bookmarks/templates/admin'"
-cost_tokens = 5
-cum_tokens = 8051
+position = 280
+key = 'Fs(DirListing { dir: "bookmarks/static" })'
+descriptor = "listing of 'bookmarks/static'"
+cost_tokens = 92
+cum_tokens = 8628
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "bookmarks/templates/admin"
-entries = ["background_tasks.html"]
-
-[[batches]]
-position = 276
-key = 'Python(ClassBody { file: "bookmarks/forms.py", start_line: 248 })'
-descriptor = "python class body at bookmarks/forms.py:248"
-cost_tokens = 370
-cum_tokens = 8421
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/forms.py"
-start = 249
-end = 273
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 277
-key = 'Python(MethodBody { file: "bookmarks/feeds.py", start_line: 77, body_start_line: 78 })'
-descriptor = "python method body at bookmarks/feeds.py:77 body 78"
-cost_tokens = 19
-cum_tokens = 8440
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/feeds.py"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 278
-key = 'Python(MethodBody { file: "bookmarks/feeds.py", start_line: 80, body_start_line: 81 })'
-descriptor = "python method body at bookmarks/feeds.py:80 body 81"
-cost_tokens = 19
-cum_tokens = 8459
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/feeds.py"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 279
-key = 'Python(MethodBody { file: "bookmarks/feeds.py", start_line: 106, body_start_line: 107 })'
-descriptor = "python method body at bookmarks/feeds.py:106 body 107"
-cost_tokens = 19
-cum_tokens = 8478
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/feeds.py"
-start = 107
-end = 107
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 280
-key = 'Python(MethodBody { file: "bookmarks/forms.py", start_line: 244, body_start_line: 245 })'
-descriptor = "python method body at bookmarks/forms.py:244 body 245"
-cost_tokens = 19
-cum_tokens = 8497
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/forms.py"
-start = 245
-end = 245
-
-[batches.content.spans.render]
-kind = "full"
+parent = "bookmarks/static"
+entries = ["apple-touch-icon.png", "favicon.ico", "favicon.svg", "icons.svg", "linkding-screenshot.png", "live-reload.js", "logo-192.png", "logo-512.png", "logo.png", "logo.svg", "maskable-logo-192.png", "maskable-logo-512.png", "maskable-logo.svg", "preview-placeholder.svg", "robots.txt", "safari-pinned-tab.svg", "vendor"]
 
 [[batches]]
 position = 281
-key = 'Python(DeclDoc { file: "bookmarks/api/auth.py", start_line: 8 })'
-descriptor = "python decl doc at bookmarks/api/auth.py:8"
-cost_tokens = 39
-cum_tokens = 8536
+key = 'Fs(DirListing { dir: "bookmarks/static/vendor" })'
+descriptor = "listing of 'bookmarks/static/vendor'"
+cost_tokens = 5
+cum_tokens = 8633
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "bookmarks/api/auth.py"
-start = 9
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "bookmarks/static/vendor"
+entries = ["Readability.js"]
 
 [[batches]]
 position = 282
-key = 'Python(DeclSigsRoster { file: "bookmarks/models.py" })'
-descriptor = "python decl sigs roster in bookmarks/models.py"
-cost_tokens = 236
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 116
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 129
-end = 129
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 172
-end = 172
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 183
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 224
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 346
-end = 346
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 472
-end = 472
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 478
-end = 478
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 483
-end = 483
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 490
-end = 490
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 516
-end = 516
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 539
-end = 539
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 130
-end = 130
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 184
-end = 184
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 347
-end = 347
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 473
-end = 473
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 479
-end = 479
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 484
-end = 484
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 491
-end = 491
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 517
-end = 517
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 540
-end = 540
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 283
-key = 'Python(DeclNames { file: "bookmarks/models.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "bookmarks/models.py" })'
 descriptor = "python decl names surface in bookmarks/models.py"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 116
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 129
-end = 129
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 172
-end = 172
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 183
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 224
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 346
-end = 346
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 472
-end = 472
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 473
-end = 473
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 284
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 21 })'
-descriptor = "python decl at bookmarks/models.py:21"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 285
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 36 })'
-descriptor = "python decl at bookmarks/models.py:36"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 286
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 49 })'
-descriptor = "python decl at bookmarks/models.py:49"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 287
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 53 })'
-descriptor = "python decl at bookmarks/models.py:53"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 288
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 129 })'
-descriptor = "python decl at bookmarks/models.py:129"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 129
-end = 129
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 289
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 183 })'
-descriptor = "python decl at bookmarks/models.py:183"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 183
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 290
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 224 })'
-descriptor = "python decl at bookmarks/models.py:224"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 224
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 291
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 346 })'
-descriptor = "python decl at bookmarks/models.py:346"
-cost_tokens = 0
-cum_tokens = 8772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 346
-end = 346
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 292
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 116 })'
-descriptor = "python decl at bookmarks/models.py:116"
-cost_tokens = 14
-cum_tokens = 8786
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 116
-end = 117
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 293
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 172 })'
-descriptor = "python decl at bookmarks/models.py:172"
-cost_tokens = 15
-cum_tokens = 8801
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 172
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 294
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 472 })'
-descriptor = "python decl at bookmarks/models.py:472"
-cost_tokens = 17
-cum_tokens = 8818
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 472
-end = 473
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 295
-key = 'Python(DeclBody { file: "bookmarks/models.py", start_line: 49, body_start_line: 50 })'
-descriptor = "python decl body at bookmarks/models.py:49 body 50"
-cost_tokens = 9
-cum_tokens = 8827
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 296
-key = 'Python(Decl { file: "bookmarks/models.py", start_line: 30 })'
-descriptor = "python decl at bookmarks/models.py:30"
-cost_tokens = 25
-cum_tokens = 8852
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 30
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 297
-key = 'Python(DeclBody { file: "bookmarks/models.py", start_line: 30, body_start_line: 33 })'
-descriptor = "python decl body at bookmarks/models.py:30 body 33"
-cost_tokens = 13
-cum_tokens = 8865
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/models.py"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 298
-key = 'Python(DeclNames { file: "bookmarks/models.py", chunk_index: 1 })'
-descriptor = "python decl names surface #1 in bookmarks/models.py"
-cost_tokens = 12
-cum_tokens = 8877
+cost_tokens = 258
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -7574,7 +6694,95 @@ kind = "lines"
 [[batches.content.spans]]
 path = "bookmarks/models.py"
 start = 18
-end = 18
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 224
+end = 224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 346
+end = 346
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 472
+end = 472
 
 [batches.content.spans.render]
 kind = "full"
@@ -7621,6 +6829,54 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "bookmarks/models.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 473
+end = 473
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
 start = 479
 end = 479
 
@@ -7628,11 +6884,155 @@ end = 479
 kind = "ellipsis"
 
 [[batches]]
-position = 299
+position = 283
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 21 })'
+descriptor = "python decl at bookmarks/models.py:21"
+cost_tokens = 0
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 284
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 36 })'
+descriptor = "python decl at bookmarks/models.py:36"
+cost_tokens = 0
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 285
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 49 })'
+descriptor = "python decl at bookmarks/models.py:49"
+cost_tokens = 0
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 286
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 53 })'
+descriptor = "python decl at bookmarks/models.py:53"
+cost_tokens = 0
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 287
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 129 })'
+descriptor = "python decl at bookmarks/models.py:129"
+cost_tokens = 0
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 288
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 183 })'
+descriptor = "python decl at bookmarks/models.py:183"
+cost_tokens = 0
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 289
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 224 })'
+descriptor = "python decl at bookmarks/models.py:224"
+cost_tokens = 0
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 224
+end = 224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 290
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 346 })'
+descriptor = "python decl at bookmarks/models.py:346"
+cost_tokens = 0
+cum_tokens = 8891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 346
+end = 346
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 291
 key = 'Python(Decl { file: "bookmarks/models.py", start_line: 483 })'
 descriptor = "python decl at bookmarks/models.py:483"
 cost_tokens = 0
-cum_tokens = 8877
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -7646,11 +7046,11 @@ end = 483
 kind = "full"
 
 [[batches]]
-position = 300
+position = 292
 key = 'Python(Decl { file: "bookmarks/models.py", start_line: 490 })'
 descriptor = "python decl at bookmarks/models.py:490"
 cost_tokens = 0
-cum_tokens = 8877
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -7664,11 +7064,11 @@ end = 490
 kind = "full"
 
 [[batches]]
-position = 301
+position = 293
 key = 'Python(Decl { file: "bookmarks/models.py", start_line: 516 })'
 descriptor = "python decl at bookmarks/models.py:516"
 cost_tokens = 0
-cum_tokens = 8877
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -7682,11 +7082,11 @@ end = 516
 kind = "full"
 
 [[batches]]
-position = 302
+position = 294
 key = 'Python(Decl { file: "bookmarks/models.py", start_line: 539 })'
 descriptor = "python decl at bookmarks/models.py:539"
 cost_tokens = 0
-cum_tokens = 8877
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -7700,11 +7100,47 @@ end = 539
 kind = "full"
 
 [[batches]]
-position = 303
+position = 295
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 116 })'
+descriptor = "python decl at bookmarks/models.py:116"
+cost_tokens = 14
+cum_tokens = 8905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 116
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 296
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 172 })'
+descriptor = "python decl at bookmarks/models.py:172"
+cost_tokens = 15
+cum_tokens = 8920
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 172
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 297
 key = 'Python(Decl { file: "bookmarks/models.py", start_line: 478 })'
 descriptor = "python decl at bookmarks/models.py:478"
 cost_tokens = 15
-cum_tokens = 8892
+cum_tokens = 8935
 
 [batches.content]
 kind = "lines"
@@ -7718,11 +7154,29 @@ end = 479
 kind = "full"
 
 [[batches]]
-position = 304
+position = 298
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 472 })'
+descriptor = "python decl at bookmarks/models.py:472"
+cost_tokens = 17
+cum_tokens = 8952
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 472
+end = 473
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 299
 key = 'Python(DeclBody { file: "bookmarks/models.py", start_line: 478, body_start_line: 480 })'
 descriptor = "python decl body at bookmarks/models.py:478 body 480"
 cost_tokens = 7
-cum_tokens = 8899
+cum_tokens = 8959
 
 [batches.content]
 kind = "lines"
@@ -7736,11 +7190,65 @@ end = 480
 kind = "full"
 
 [[batches]]
-position = 305
+position = 300
+key = 'Python(DeclBody { file: "bookmarks/models.py", start_line: 49, body_start_line: 50 })'
+descriptor = "python decl body at bookmarks/models.py:49 body 50"
+cost_tokens = 9
+cum_tokens = 8968
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 301
+key = 'Python(Decl { file: "bookmarks/models.py", start_line: 30 })'
+descriptor = "python decl at bookmarks/models.py:30"
+cost_tokens = 25
+cum_tokens = 8993
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 30
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 302
+key = 'Python(DeclBody { file: "bookmarks/models.py", start_line: 30, body_start_line: 33 })'
+descriptor = "python decl body at bookmarks/models.py:30 body 33"
+cost_tokens = 13
+cum_tokens = 9006
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 303
 key = 'Python(DeclDoc { file: "bookmarks/models.py", start_line: 490 })'
 descriptor = "python decl doc at bookmarks/models.py:490"
 cost_tokens = 26
-cum_tokens = 8925
+cum_tokens = 9032
 
 [batches.content]
 kind = "lines"
@@ -7754,11 +7262,11 @@ end = 493
 kind = "full"
 
 [[batches]]
-position = 306
+position = 304
 key = 'Python(DeclBody { file: "bookmarks/models.py", start_line: 472, body_start_line: 474 })'
 descriptor = "python decl body at bookmarks/models.py:472 body 474"
 cost_tokens = 19
-cum_tokens = 8944
+cum_tokens = 9051
 
 [batches.content]
 kind = "lines"
@@ -7772,11 +7280,11 @@ end = 475
 kind = "full"
 
 [[batches]]
-position = 307
+position = 305
 key = 'Python(ClassBody { file: "bookmarks/models.py", start_line: 21 })'
 descriptor = "python class body at bookmarks/models.py:21"
 cost_tokens = 45
-cum_tokens = 8989
+cum_tokens = 9096
 
 [batches.content]
 kind = "lines"
@@ -7790,11 +7298,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 308
+position = 306
 key = 'Python(ClassBody { file: "bookmarks/models.py", start_line: 483 })'
 descriptor = "python class body at bookmarks/models.py:483"
 cost_tokens = 54
-cum_tokens = 9043
+cum_tokens = 9150
 
 [batches.content]
 kind = "lines"
@@ -7808,73 +7316,1087 @@ end = 487
 kind = "full"
 
 [[batches]]
-position = 309
-key = 'Python(ClassBody { file: "bookmarks/models.py", start_line: 224 })'
-descriptor = "python class body at bookmarks/models.py:224"
-cost_tokens = 350
-cum_tokens = 9393
+position = 307
+key = 'Python(MethodSigs { file: "bookmarks/models.py" })'
+descriptor = "python method sigs in bookmarks/models.py"
+cost_tokens = 409
+cum_tokens = 9559
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/models.py"
-start = 225
-end = 258
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 220
+end = 220
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 260
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 287
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 292
+end = 292
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 296
+end = 296
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 304
+end = 304
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 308
+end = 308
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 312
+end = 312
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 323
+end = 323
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 329
+end = 329
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 462
+end = 462
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 503
+end = 503
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 509
+end = 509
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 512
+end = 512
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 526
+end = 526
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 532
+end = 532
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 535
+end = 535
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 559
+end = 559
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 566
+end = 566
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 221
+end = 221
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 261
+end = 261
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 305
+end = 305
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 309
+end = 309
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 313
+end = 313
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 330
+end = 330
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 463
+end = 463
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 504
+end = 504
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 510
+end = 510
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 513
+end = 513
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 527
+end = 527
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 533
+end = 533
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 536
+end = 536
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 560
+end = 560
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 567
+end = 567
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 308
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 26 })'
+descriptor = "python method at bookmarks/models.py:26"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 309
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 98 })'
+descriptor = "python method at bookmarks/models.py:98"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 98
+end = 98
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 310
-key = 'Python(ClassBody { file: "bookmarks/models.py", start_line: 490 })'
-descriptor = "python class body at bookmarks/models.py:490"
-cost_tokens = 82
-cum_tokens = 9475
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 102 })'
+descriptor = "python method at bookmarks/models.py:102"
+cost_tokens = 0
+cum_tokens = 9559
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/models.py"
-start = 495
-end = 501
+start = 102
+end = 102
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 311
-key = 'Python(ClassBody { file: "bookmarks/models.py", start_line: 516 })'
-descriptor = "python class body at bookmarks/models.py:516"
-cost_tokens = 97
-cum_tokens = 9572
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 158 })'
+descriptor = "python method at bookmarks/models.py:158"
+cost_tokens = 0
+cum_tokens = 9559
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/models.py"
-start = 517
-end = 524
+start = 158
+end = 158
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 312
-key = 'Python(ClassBody { file: "bookmarks/models.py", start_line: 539 })'
-descriptor = "python class body at bookmarks/models.py:539"
-cost_tokens = 205
-cum_tokens = 9777
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 168 })'
+descriptor = "python method at bookmarks/models.py:168"
+cost_tokens = 0
+cum_tokens = 9559
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "bookmarks/models.py"
-start = 540
-end = 556
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 313
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 220 })'
+descriptor = "python method at bookmarks/models.py:220"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 220
+end = 220
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 314
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 287 })'
+descriptor = "python method at bookmarks/models.py:287"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 287
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 315
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 462 })'
+descriptor = "python method at bookmarks/models.py:462"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 462
+end = 462
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 316
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 503 })'
+descriptor = "python method at bookmarks/models.py:503"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 503
+end = 503
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 317
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 512 })'
+descriptor = "python method at bookmarks/models.py:512"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 512
+end = 512
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 318
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 526 })'
+descriptor = "python method at bookmarks/models.py:526"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 526
+end = 526
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 319
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 535 })'
+descriptor = "python method at bookmarks/models.py:535"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 535
+end = 535
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 320
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 566 })'
+descriptor = "python method at bookmarks/models.py:566"
+cost_tokens = 0
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 566
+end = 566
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 321
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 82 })'
+descriptor = "python method at bookmarks/models.py:82"
+cost_tokens = 8
+cum_tokens = 9567
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 82
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 322
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 89 })'
+descriptor = "python method at bookmarks/models.py:89"
+cost_tokens = 8
+cum_tokens = 9575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 89
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 323
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 93 })'
+descriptor = "python method at bookmarks/models.py:93"
+cost_tokens = 8
+cum_tokens = 9583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 93
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 324
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 150 })'
+descriptor = "python method at bookmarks/models.py:150"
+cost_tokens = 8
+cum_tokens = 9591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 150
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 325
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 291 })'
+descriptor = "python method at bookmarks/models.py:291"
+cost_tokens = 8
+cum_tokens = 9599
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 291
+end = 292
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 326
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 295 })'
+descriptor = "python method at bookmarks/models.py:295"
+cost_tokens = 8
+cum_tokens = 9607
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 295
+end = 296
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 327
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 303 })'
+descriptor = "python method at bookmarks/models.py:303"
+cost_tokens = 8
+cum_tokens = 9615
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 303
+end = 304
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 328
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 307 })'
+descriptor = "python method at bookmarks/models.py:307"
+cost_tokens = 8
+cum_tokens = 9623
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 307
+end = 308
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 329
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 311 })'
+descriptor = "python method at bookmarks/models.py:311"
+cost_tokens = 8
+cum_tokens = 9631
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 311
+end = 312
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 330
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 322 })'
+descriptor = "python method at bookmarks/models.py:322"
+cost_tokens = 8
+cum_tokens = 9639
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 322
+end = 323
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 331
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 328 })'
+descriptor = "python method at bookmarks/models.py:328"
+cost_tokens = 8
+cum_tokens = 9647
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 328
+end = 329
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 332
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 508 })'
+descriptor = "python method at bookmarks/models.py:508"
+cost_tokens = 8
+cum_tokens = 9655
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 508
+end = 509
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 333
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 531 })'
+descriptor = "python method at bookmarks/models.py:531"
+cost_tokens = 8
+cum_tokens = 9663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 531
+end = 532
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 334
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 558 })'
+descriptor = "python method at bookmarks/models.py:558"
+cost_tokens = 8
+cum_tokens = 9671
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 558
+end = 559
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 335
+key = 'Python(MethodBody { file: "bookmarks/models.py", start_line: 26, body_start_line: 27 })'
+descriptor = "python method body at bookmarks/models.py:26 body 27"
+cost_tokens = 7
+cum_tokens = 9678
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 336
+key = 'Python(MethodBody { file: "bookmarks/models.py", start_line: 89, body_start_line: 91 })'
+descriptor = "python method body at bookmarks/models.py:89 body 91"
+cost_tokens = 7
+cum_tokens = 9685
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 337
+key = 'Python(MethodBody { file: "bookmarks/models.py", start_line: 220, body_start_line: 221 })'
+descriptor = "python method body at bookmarks/models.py:220 body 221"
+cost_tokens = 7
+cum_tokens = 9692
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 221
+end = 221
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 338
+key = 'Python(MethodBody { file: "bookmarks/models.py", start_line: 512, body_start_line: 513 })'
+descriptor = "python method body at bookmarks/models.py:512 body 513"
+cost_tokens = 7
+cum_tokens = 9699
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 513
+end = 513
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 339
+key = 'Python(MethodBody { file: "bookmarks/models.py", start_line: 303, body_start_line: 305 })'
+descriptor = "python method body at bookmarks/models.py:303 body 305"
+cost_tokens = 13
+cum_tokens = 9712
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 305
+end = 305
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 340
+key = 'Python(MethodBody { file: "bookmarks/models.py", start_line: 307, body_start_line: 309 })'
+descriptor = "python method body at bookmarks/models.py:307 body 309"
+cost_tokens = 13
+cum_tokens = 9725
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 309
+end = 309
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 341
+key = 'Python(Method { file: "bookmarks/models.py", start_line: 105 })'
+descriptor = "python method at bookmarks/models.py:105"
+cost_tokens = 44
+cum_tokens = 9769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 105
+end = 108
 
 [batches.content.spans.render]
 kind = "full"

@@ -29,14 +29,8 @@ Score(3000)=0.873 I=0.953 C=0.800 ns_rows≤3K=21/42 (reached=15 partial=3 missi
 | walker |  | 447 | 14 | lua decl body at spec/metamethods_spec.lua:7 |  |  | 0.650 |
 | walker |  | 527 | 80 | listing of 'rockspecs' |  |  | 0.756 |
 | ns | 578 |  | 133 | README Quick Look (subclassing + instantiation) | 1.9 | 1.8 | 0.639 |
-| walker |  | 617 | 90 | lua decl names surface #1 in middleclass.lua |  |  | 0.640 |
-| walker |  | 617 | 0 | lua decl at middleclass.lua:144 |  |  | 0.640 |
-| walker |  | 617 | 0 | lua decl at middleclass.lua:151 |  |  | 0.640 |
-| walker |  | 617 | 0 | lua decl at middleclass.lua:172 |  |  | 0.640 |
-| walker |  | 617 | 0 | lua decl at middleclass.lua:178 |  |  | 0.640 |
-| walker |  | 617 | 0 | lua decl at middleclass.lua:186 |  |  | 0.640 |
-| ns | 749 |  | 171 | README Specs + Performance run commands | 1.10 |  | 0.555 |
-| walker |  | 833 | 216 | lua decl names surface in middleclass.lua |  |  | 0.563 |
+| ns | 749 |  | 171 | README Specs + Performance run commands | 1.10 |  | 0.553 |
+| walker |  | 833 | 306 | lua decl names surface in middleclass.lua |  |  | 0.563 |
 | walker |  | 833 | 0 | lua decl at middleclass.lua:31 |  |  | 0.563 |
 | walker |  | 833 | 0 | lua decl at middleclass.lua:57 |  |  | 0.563 |
 | walker |  | 833 | 0 | lua decl at middleclass.lua:68 |  |  | 0.563 |
@@ -44,6 +38,11 @@ Score(3000)=0.873 I=0.953 C=0.800 ns_rows≤3K=21/42 (reached=15 partial=3 missi
 | walker |  | 833 | 0 | lua decl at middleclass.lua:109 |  |  | 0.563 |
 | walker |  | 833 | 0 | lua decl at middleclass.lua:129 |  |  | 0.563 |
 | walker |  | 833 | 0 | lua decl at middleclass.lua:139 |  |  | 0.563 |
+| walker |  | 833 | 0 | lua decl at middleclass.lua:144 |  |  | 0.563 |
+| walker |  | 833 | 0 | lua decl at middleclass.lua:151 |  |  | 0.563 |
+| walker |  | 833 | 0 | lua decl at middleclass.lua:172 |  |  | 0.563 |
+| walker |  | 833 | 0 | lua decl at middleclass.lua:178 |  |  | 0.563 |
+| walker |  | 833 | 0 | lua decl at middleclass.lua:186 |  |  | 0.563 |
 | walker |  | 883 | 50 | lua decl body at middleclass.lua:139 |  |  | 0.564 |
 | walker |  | 933 | 50 | lua decl body at middleclass.lua:172 |  |  | 0.565 |
 | ns | 967 |  | 218 | README Documentation + Installation + License sections | 1.11 |  | 0.496 |

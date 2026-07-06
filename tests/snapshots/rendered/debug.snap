@@ -157,6 +157,47 @@ package.json
 src/
     browser.js
         …
+           3→/**
+           4→ * This is the web browser implementation of `debug()`.
+           5→ */
+           7→exports.formatArgs = formatArgs;
+           8→exports.save = save;
+           9→exports.load = load;
+          10→exports.useColors = useColors;
+          11→exports.storage = localstorage();
+          12→exports.destroy = (() => {
+          13→	let warned = false;
+          14→
+          15→	return () => {
+          16→		if (!warned) {
+          17→			warned = true;
+          18→			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+          19→		}
+          20→	};
+          21→})();
+        …
+          27→exports.colors = [
+        …
+         115→function useColors() {
+        …
+         149→function formatArgs(args) {
+        …
+         192→exports.log = console.debug || console.log || (() => {});
+        …
+         200→function save(namespaces) {
+         201→	try {
+         202→		if (namespaces) {
+         203→			exports.storage.setItem('debug', namespaces);
+         204→		} else {
+         205→			exports.storage.removeItem('debug');
+         206→		}
+         207→	} catch (error) {
+         208→		// Swallow
+         209→		// XXX (@Qix-) should we be logging these?
+         210→	}
+        …
+         219→function load() {
+        …
          258→module.exports = require('./common')(exports);
         …
     common.js
@@ -172,14 +213,6 @@ src/
           15→	createDebug.destroy = destroy;
         …
           41→	function selectColor(namespace) {
-          42→		let hash = 0;
-          43→
-          44→		for (let i = 0; i < namespace.length; i++) {
-          45→			hash = ((hash << 5) - hash) + namespace.charCodeAt(i);
-          46→			hash |= 0; // Convert to 32bit integer
-          47→		}
-          48→
-          49→		return createDebug.colors[Math.abs(hash) % createDebug.colors.length];
         …
           60→	function createDebug(namespace) {
           61→		let prevTime;
@@ -261,25 +294,6 @@ src/
            4→ */
         …
     node.js
-        …
-           5→const tty = require('tty');
-           6→const util = require('util');
-        …
-         203→function save(namespaces) {
-         204→	if (namespaces) {
-         205→		process.env.DEBUG = namespaces;
-         206→	} else {
-         207→		// If you set a process.env field to null or undefined, it gets cast to the
-         208→		// string 'null' or 'undefined'. Just delete instead.
-         209→		delete process.env.DEBUG;
-         210→	}
-        …
-         220→function load() {
-        …
-         231→function init(debug) {
-        …
-         240→module.exports = require('./common')(exports);
-        …
 test.js
     …
        3→const assert = require('assert');

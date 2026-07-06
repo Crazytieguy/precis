@@ -1,7 +1,7 @@
 fixture = "requests"
 budget = 10000
-cumulative_tokens = 9750
-batch_count = 254
+cumulative_tokens = 9429
+batch_count = 244
 
 [[batches]]
 position = 1
@@ -191,7 +191,7 @@ kind = "full"
 
 [[batches]]
 position = 8
-key = 'Python(DeclNames { file: "src/requests/__init__.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "src/requests/__init__.py" })'
 descriptor = "python decl names surface in src/requests/__init__.py"
 cost_tokens = 34
 cum_tokens = 1476
@@ -561,7 +561,7 @@ entries = ["README.md", "expired", "mtls", "valid"]
 
 [[batches]]
 position = 29
-key = 'Python(DeclNames { file: "src/requests/help.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "src/requests/help.py" })'
 descriptor = "python decl names surface in src/requests/help.py"
 cost_tokens = 36
 cum_tokens = 2700
@@ -741,7 +741,7 @@ entries = ["authors.rst", "contributing.rst"]
 
 [[batches]]
 position = 37
-key = 'Python(DeclNames { file: "src/requests/status_codes.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "src/requests/status_codes.py" })'
 descriptor = "python decl names surface in src/requests/status_codes.py"
 cost_tokens = 50
 cum_tokens = 2805
@@ -811,7 +811,7 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'Python(DeclNames { file: "src/requests/hooks.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "src/requests/hooks.py" })'
 descriptor = "python decl names surface in src/requests/hooks.py"
 cost_tokens = 57
 cum_tokens = 2888
@@ -925,7 +925,7 @@ kind = "full"
 
 [[batches]]
 position = 45
-key = 'Python(DeclNames { file: "src/requests/sessions.py", chunk_index: 0 })'
+key = 'Python(DeclNames { file: "src/requests/sessions.py" })'
 descriptor = "python decl names surface in src/requests/sessions.py"
 cost_tokens = 57
 cum_tokens = 3033
@@ -1143,10 +1143,960 @@ kind = "full"
 
 [[batches]]
 position = 54
+key = 'Python(MethodSigs { file: "src/requests/sessions.py" })'
+descriptor = "python method sigs in src/requests/sessions.py"
+cost_tokens = 474
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 132
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 309
+end = 309
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 334
+end = 334
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 370
+end = 370
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 442
+end = 442
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 505
+end = 505
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 508
+end = 508
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 511
+end = 511
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 557
+end = 557
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 655
+end = 655
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 673
+end = 673
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 684
+end = 684
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 695
+end = 695
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 714
+end = 714
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 728
+end = 728
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 742
+end = 742
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 752
+end = 752
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 831
+end = 831
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 870
+end = 870
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 883
+end = 883
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 888
+end = 888
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 899
+end = 899
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 903
+end = 903
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 310
+end = 310
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 335
+end = 335
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 371
+end = 371
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 443
+end = 443
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 506
+end = 506
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 509
+end = 509
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 512
+end = 512
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 558
+end = 558
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 656
+end = 656
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 674
+end = 674
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 685
+end = 685
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 696
+end = 696
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 715
+end = 715
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 729
+end = 729
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 743
+end = 743
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 753
+end = 753
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 832
+end = 832
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 871
+end = 871
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 884
+end = 884
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 889
+end = 889
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 900
+end = 900
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 904
+end = 904
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 132 })'
+descriptor = "python method at src/requests/sessions.py:132"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 134 })'
+descriptor = "python method at src/requests/sessions.py:134"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 154 })'
+descriptor = "python method at src/requests/sessions.py:154"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 505 })'
+descriptor = "python method at src/requests/sessions.py:505"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 505
+end = 505
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 508 })'
+descriptor = "python method at src/requests/sessions.py:508"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 508
+end = 508
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 511 })'
+descriptor = "python method at src/requests/sessions.py:511"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 511
+end = 511
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 673 })'
+descriptor = "python method at src/requests/sessions.py:673"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 673
+end = 673
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 684 })'
+descriptor = "python method at src/requests/sessions.py:684"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 684
+end = 684
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 742 })'
+descriptor = "python method at src/requests/sessions.py:742"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 742
+end = 742
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 752 })'
+descriptor = "python method at src/requests/sessions.py:752"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 752
+end = 752
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 870 })'
+descriptor = "python method at src/requests/sessions.py:870"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 870
+end = 870
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 883 })'
+descriptor = "python method at src/requests/sessions.py:883"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 883
+end = 883
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 888 })'
+descriptor = "python method at src/requests/sessions.py:888"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 888
+end = 888
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 899 })'
+descriptor = "python method at src/requests/sessions.py:899"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 899
+end = 899
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 903 })'
+descriptor = "python method at src/requests/sessions.py:903"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 903
+end = 903
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 132, body_start_line: 132 })'
+descriptor = "python method body at src/requests/sessions.py:132 body 132"
+cost_tokens = 0
+cum_tokens = 3904
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 505, body_start_line: 506 })'
+descriptor = "python method body at src/requests/sessions.py:505 body 506"
+cost_tokens = 6
+cum_tokens = 3910
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 506
+end = 506
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 508, body_start_line: 509 })'
+descriptor = "python method body at src/requests/sessions.py:508 body 509"
+cost_tokens = 6
+cum_tokens = 3916
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 509
+end = 509
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 309 })'
+descriptor = "python method at src/requests/sessions.py:309"
+cost_tokens = 26
+cum_tokens = 3942
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 309
+end = 311
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 370 })'
+descriptor = "python method at src/requests/sessions.py:370"
+cost_tokens = 26
+cum_tokens = 3968
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 370
+end = 372
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 883 })'
+descriptor = "python method doc at src/requests/sessions.py:883"
+cost_tokens = 16
+cum_tokens = 3984
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 884
+end = 884
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 154 })'
+descriptor = "python method doc at src/requests/sessions.py:154"
+cost_tokens = 18
+cum_tokens = 4002
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 134 })'
+descriptor = "python method doc at src/requests/sessions.py:134"
+cost_tokens = 20
+cum_tokens = 4022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 714 })'
+descriptor = "python method at src/requests/sessions.py:714"
+cost_tokens = 43
+cum_tokens = 4065
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 714
+end = 716
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 728 })'
+descriptor = "python method at src/requests/sessions.py:728"
+cost_tokens = 43
+cum_tokens = 4108
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 728
+end = 730
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 334 })'
+descriptor = "python method at src/requests/sessions.py:334"
+cost_tokens = 45
+cum_tokens = 4153
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 334
+end = 338
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 442 })'
+descriptor = "python method at src/requests/sessions.py:442"
+cost_tokens = 50
+cum_tokens = 4203
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 442
+end = 445
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 742, body_start_line: 750 })'
+descriptor = "python method body at src/requests/sessions.py:742 body 750"
+cost_tokens = 16
+cum_tokens = 4219
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 750
+end = 750
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 883, body_start_line: 885 })'
+descriptor = "python method body at src/requests/sessions.py:883 body 885"
+cost_tokens = 18
+cum_tokens = 4237
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 885
+end = 886
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 655 })'
+descriptor = "python method at src/requests/sessions.py:655"
+cost_tokens = 58
+cum_tokens = 4295
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 655
+end = 660
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
 key = 'Python(DeclDoc { file: "src/requests/sessions.py", start_line: 108 })'
 descriptor = "python decl doc at src/requests/sessions.py:108"
 cost_tokens = 57
-cum_tokens = 3487
+cum_tokens = 4352
 
 [batches.content]
 kind = "lines"
@@ -1160,29 +2110,65 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 55
-key = 'Python(DeclNames { file: "src/requests/cookies.py", chunk_index: 1 })'
-descriptor = "python decl names surface #1 in src/requests/cookies.py"
-cost_tokens = 25
-cum_tokens = 3512
+position = 86
+key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 752 })'
+descriptor = "python method doc at src/requests/sessions.py:752"
+cost_tokens = 34
+cum_tokens = 4386
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/requests/cookies.py"
-start = 560
-end = 560
+path = "src/requests/sessions.py"
+start = 753
+end = 756
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 56
+position = 87
+key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 714, body_start_line: 726 })'
+descriptor = "python method body at src/requests/sessions.py:714 body 726"
+cost_tokens = 19
+cum_tokens = 4405
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 726
+end = 726
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 728, body_start_line: 740 })'
+descriptor = "python method body at src/requests/sessions.py:728 body 740"
+cost_tokens = 19
+cum_tokens = 4424
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 740
+end = 740
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "README.md section #3"
 cost_tokens = 256
-cum_tokens = 3768
+cum_tokens = 4680
 
 [batches.content]
 kind = "lines"
@@ -1196,11 +2182,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 57
+position = 90
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 14
-cum_tokens = 3782
+cum_tokens = 4694
 
 [batches.content]
 kind = "fs"
@@ -1210,11 +2196,11 @@ parent = ".github/ISSUE_TEMPLATE"
 entries = ["Bug_report.md", "Custom.md", "Feature_request.md"]
 
 [[batches]]
-position = 58
+position = 91
 key = 'Python(DeclDoc { file: "src/requests/sessions.py", start_line: 76 })'
 descriptor = "python decl doc at src/requests/sessions.py:76"
 cost_tokens = 67
-cum_tokens = 3849
+cum_tokens = 4761
 
 [batches.content]
 kind = "lines"
@@ -1228,11 +2214,29 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 59
+position = 92
+key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 370 })'
+descriptor = "python method doc at src/requests/sessions.py:370"
+cost_tokens = 39
+cum_tokens = 4800
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 373
+end = 375
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 176
-cum_tokens = 4025
+cum_tokens = 4976
 
 [batches.content]
 kind = "lines"
@@ -1246,11 +2250,65 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 60
-key = 'Python(DeclNames { file: "src/requests/structures.py", chunk_index: 0 })'
+position = 94
+key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 888 })'
+descriptor = "python method doc at src/requests/sessions.py:888"
+cost_tokens = 41
+cum_tokens = 5017
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 889
+end = 892
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Python(Method { file: "src/requests/sessions.py", start_line: 695 })'
+descriptor = "python method at src/requests/sessions.py:695"
+cost_tokens = 72
+cum_tokens = 5089
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 695
+end = 701
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 695, body_start_line: 712 })'
+descriptor = "python method body at src/requests/sessions.py:695 body 712"
+cost_tokens = 22
+cum_tokens = 5111
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/sessions.py"
+start = 712
+end = 712
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Python(DeclNames { file: "src/requests/structures.py" })'
 descriptor = "python decl names surface in src/requests/structures.py"
 cost_tokens = 73
-cum_tokens = 4098
+cum_tokens = 5184
 
 [batches.content]
 kind = "lines"
@@ -1272,11 +2330,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 61
+position = 98
 key = 'Python(Decl { file: "src/requests/structures.py", start_line: 20 })'
 descriptor = "python decl at src/requests/structures.py:20"
 cost_tokens = 0
-cum_tokens = 4098
+cum_tokens = 5184
 
 [batches.content]
 kind = "lines"
@@ -1290,11 +2348,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 62
+position = 99
 key = 'Python(Decl { file: "src/requests/structures.py", start_line: 96 })'
 descriptor = "python decl at src/requests/structures.py:96"
 cost_tokens = 0
-cum_tokens = 4098
+cum_tokens = 5184
 
 [batches.content]
 kind = "lines"
@@ -1308,11 +2366,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 63
+position = 100
 key = 'Python(ClassBody { file: "src/requests/structures.py", start_line: 96 })'
 descriptor = "python class body at src/requests/structures.py:96"
 cost_tokens = 11
-cum_tokens = 4109
+cum_tokens = 5195
 
 [batches.content]
 kind = "lines"
@@ -1326,11 +2384,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 64
+position = 101
 key = 'Python(DeclDoc { file: "src/requests/structures.py", start_line: 96 })'
 descriptor = "python decl doc at src/requests/structures.py:96"
 cost_tokens = 8
-cum_tokens = 4117
+cum_tokens = 5203
 
 [batches.content]
 kind = "lines"
@@ -1344,11 +2402,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 65
+position = 102
 key = 'Python(DeclDoc { file: "src/requests/structures.py", start_line: 20 })'
 descriptor = "python decl doc at src/requests/structures.py:20"
 cost_tokens = 17
-cum_tokens = 4134
+cum_tokens = 5220
 
 [batches.content]
 kind = "lines"
@@ -1362,11 +2420,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 66
+position = 103
 key = 'Python(ClassBody { file: "src/requests/structures.py", start_line: 20 })'
 descriptor = "python class body at src/requests/structures.py:20"
 cost_tokens = 32
-cum_tokens = 4166
+cum_tokens = 5252
 
 [batches.content]
 kind = "lines"
@@ -1388,11 +2446,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 67
-key = 'Python(MethodSigs { file: "src/requests/structures.py", chunk_index: 0 })'
+position = 104
+key = 'Python(MethodSigs { file: "src/requests/structures.py" })'
 descriptor = "python method sigs in src/requests/structures.py"
 cost_tokens = 369
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1654,11 +2712,11 @@ end = 130
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 105
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 64 })'
 descriptor = "python method at src/requests/structures.py:64"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1672,11 +2730,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 69
+position = 106
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 67 })'
 descriptor = "python method at src/requests/structures.py:67"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1690,11 +2748,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 70
+position = 107
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 70 })'
 descriptor = "python method at src/requests/structures.py:70"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1708,11 +2766,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 71
+position = 108
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 73 })'
 descriptor = "python method at src/requests/structures.py:73"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1726,11 +2784,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 72
+position = 109
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 76 })'
 descriptor = "python method at src/requests/structures.py:76"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1744,11 +2802,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 73
+position = 110
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 80 })'
 descriptor = "python method at src/requests/structures.py:80"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1762,11 +2820,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 74
+position = 111
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 89 })'
 descriptor = "python method at src/requests/structures.py:89"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1780,11 +2838,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 75
+position = 112
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 92 })'
 descriptor = "python method at src/requests/structures.py:92"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1798,11 +2856,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 76
+position = 113
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 101 })'
 descriptor = "python method at src/requests/structures.py:101"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1816,11 +2874,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 77
+position = 114
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 105 })'
 descriptor = "python method at src/requests/structures.py:105"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1834,11 +2892,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 78
+position = 115
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 129 })'
 descriptor = "python method at src/requests/structures.py:129"
 cost_tokens = 0
-cum_tokens = 4535
+cum_tokens = 5621
 
 [batches.content]
 kind = "lines"
@@ -1852,11 +2910,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 79
+position = 116
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 126 })'
 descriptor = "python method at src/requests/structures.py:126"
 cost_tokens = 7
-cum_tokens = 4542
+cum_tokens = 5628
 
 [batches.content]
 kind = "lines"
@@ -1870,11 +2928,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 80
+position = 117
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 126, body_start_line: 127 })'
 descriptor = "python method body at src/requests/structures.py:126 body 127"
 cost_tokens = 0
-cum_tokens = 4542
+cum_tokens = 5628
 
 [batches.content]
 kind = "lines"
@@ -1888,11 +2946,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 81
+position = 118
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 123 })'
 descriptor = "python method at src/requests/structures.py:123"
 cost_tokens = 9
-cum_tokens = 4551
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -1906,11 +2964,11 @@ end = 124
 kind = "full"
 
 [[batches]]
-position = 82
+position = 119
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 123, body_start_line: 124 })'
 descriptor = "python method body at src/requests/structures.py:123 body 124"
 cost_tokens = 0
-cum_tokens = 4551
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -1924,11 +2982,11 @@ end = 124
 kind = "full"
 
 [[batches]]
-position = 83
+position = 120
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 118 })'
 descriptor = "python method at src/requests/structures.py:118"
 cost_tokens = 18
-cum_tokens = 4569
+cum_tokens = 5655
 
 [batches.content]
 kind = "lines"
@@ -1942,11 +3000,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 84
+position = 121
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 73, body_start_line: 74 })'
 descriptor = "python method body at src/requests/structures.py:73 body 74"
 cost_tokens = 9
-cum_tokens = 4578
+cum_tokens = 5664
 
 [batches.content]
 kind = "lines"
@@ -1960,11 +3018,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 85
+position = 122
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 92, body_start_line: 93 })'
 descriptor = "python method body at src/requests/structures.py:92 body 93"
 cost_tokens = 9
-cum_tokens = 4587
+cum_tokens = 5673
 
 [batches.content]
 kind = "lines"
@@ -1978,11 +3036,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 86
+position = 123
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 108 })'
 descriptor = "python method at src/requests/structures.py:108"
 cost_tokens = 31
-cum_tokens = 4618
+cum_tokens = 5704
 
 [batches.content]
 kind = "lines"
@@ -1996,11 +3054,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 87
+position = 124
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 59 })'
 descriptor = "python method at src/requests/structures.py:59"
 cost_tokens = 32
-cum_tokens = 4650
+cum_tokens = 5736
 
 [batches.content]
 kind = "lines"
@@ -2014,11 +3072,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 88
+position = 125
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 67, body_start_line: 68 })'
 descriptor = "python method body at src/requests/structures.py:67 body 68"
 cost_tokens = 10
-cum_tokens = 4660
+cum_tokens = 5746
 
 [batches.content]
 kind = "lines"
@@ -2032,11 +3090,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 89
+position = 126
 key = 'Python(MethodDoc { file: "src/requests/structures.py", start_line: 76 })'
 descriptor = "python method doc at src/requests/structures.py:76"
 cost_tokens = 16
-cum_tokens = 4676
+cum_tokens = 5762
 
 [batches.content]
 kind = "lines"
@@ -2050,11 +3108,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 90
+position = 127
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 64, body_start_line: 65 })'
 descriptor = "python method body at src/requests/structures.py:64 body 65"
 cost_tokens = 12
-cum_tokens = 4688
+cum_tokens = 5774
 
 [batches.content]
 kind = "lines"
@@ -2068,11 +3126,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 91
+position = 128
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 89, body_start_line: 90 })'
 descriptor = "python method body at src/requests/structures.py:89 body 90"
 cost_tokens = 12
-cum_tokens = 4700
+cum_tokens = 5786
 
 [batches.content]
 kind = "lines"
@@ -2086,11 +3144,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 92
+position = 129
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 105, body_start_line: 106 })'
 descriptor = "python method body at src/requests/structures.py:105 body 106"
 cost_tokens = 13
-cum_tokens = 4713
+cum_tokens = 5799
 
 [batches.content]
 kind = "lines"
@@ -2104,11 +3162,11 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 93
+position = 130
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 118, body_start_line: 121 })'
 descriptor = "python method body at src/requests/structures.py:118 body 121"
 cost_tokens = 13
-cum_tokens = 4726
+cum_tokens = 5812
 
 [batches.content]
 kind = "lines"
@@ -2122,11 +3180,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 94
+position = 131
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 129, body_start_line: 130 })'
 descriptor = "python method body at src/requests/structures.py:129 body 130"
 cost_tokens = 13
-cum_tokens = 4739
+cum_tokens = 5825
 
 [batches.content]
 kind = "lines"
@@ -2140,11 +3198,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 95
+position = 132
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 59, body_start_line: 62 })'
 descriptor = "python method body at src/requests/structures.py:59 body 62"
 cost_tokens = 15
-cum_tokens = 4754
+cum_tokens = 5840
 
 [batches.content]
 kind = "lines"
@@ -2158,11 +3216,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 96
+position = 133
 key = 'Python(Method { file: "src/requests/structures.py", start_line: 49 })'
 descriptor = "python method at src/requests/structures.py:49"
 cost_tokens = 54
-cum_tokens = 4808
+cum_tokens = 5894
 
 [batches.content]
 kind = "lines"
@@ -2176,11 +3234,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 97
+position = 134
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 101, body_start_line: 102 })'
 descriptor = "python method body at src/requests/structures.py:101 body 102"
 cost_tokens = 17
-cum_tokens = 4825
+cum_tokens = 5911
 
 [batches.content]
 kind = "lines"
@@ -2194,11 +3252,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 98
+position = 135
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 70, body_start_line: 71 })'
 descriptor = "python method body at src/requests/structures.py:70 body 71"
 cost_tokens = 20
-cum_tokens = 4845
+cum_tokens = 5931
 
 [batches.content]
 kind = "lines"
@@ -2212,1517 +3270,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 99
-key = 'Python(MethodSigsRoster { file: "src/requests/sessions.py" })'
-descriptor = "python method sigs roster in src/requests/sessions.py"
-cost_tokens = 474
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 132
-end = 134
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 309
-end = 309
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 334
-end = 334
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 370
-end = 370
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 442
-end = 442
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 505
-end = 505
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 508
-end = 508
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 511
-end = 511
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 557
-end = 557
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 655
-end = 655
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 673
-end = 673
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 684
-end = 684
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 695
-end = 695
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 714
-end = 714
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 728
-end = 728
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 742
-end = 742
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 752
-end = 752
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 831
-end = 831
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 870
-end = 870
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 883
-end = 883
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 888
-end = 888
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 899
-end = 899
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 903
-end = 903
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 187
-end = 187
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 310
-end = 310
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 335
-end = 335
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 371
-end = 371
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 443
-end = 443
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 506
-end = 506
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 509
-end = 509
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 512
-end = 512
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 558
-end = 558
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 656
-end = 656
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 674
-end = 674
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 685
-end = 685
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 696
-end = 696
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 715
-end = 715
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 729
-end = 729
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 743
-end = 743
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 753
-end = 753
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 832
-end = 832
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 871
-end = 871
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 884
-end = 884
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 889
-end = 889
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 900
-end = 900
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 904
-end = 904
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 100
-key = 'Python(MethodSigs { file: "src/requests/sessions.py", chunk_index: 0 })'
-descriptor = "python method sigs in src/requests/sessions.py"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 132
-end = 134
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 309
-end = 309
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 334
-end = 334
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 370
-end = 370
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 442
-end = 442
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 505
-end = 505
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 508
-end = 508
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 511
-end = 511
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 557
-end = 557
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 187
-end = 187
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 310
-end = 310
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 335
-end = 335
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 371
-end = 371
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 443
-end = 443
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 506
-end = 506
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 509
-end = 509
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 512
-end = 512
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 558
-end = 558
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 101
-key = 'Python(MethodSigs { file: "src/requests/sessions.py", chunk_index: 1 })'
-descriptor = "python method sigs #1 in src/requests/sessions.py"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 655
-end = 655
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 673
-end = 673
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 684
-end = 684
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 695
-end = 695
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 714
-end = 714
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 728
-end = 728
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 742
-end = 742
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 752
-end = 752
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 831
-end = 831
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 870
-end = 870
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 883
-end = 883
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 888
-end = 888
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 656
-end = 656
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 674
-end = 674
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 685
-end = 685
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 696
-end = 696
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 715
-end = 715
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 729
-end = 729
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 743
-end = 743
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 753
-end = 753
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 832
-end = 832
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 871
-end = 871
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 884
-end = 884
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 889
-end = 889
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'Python(MethodSigs { file: "src/requests/sessions.py", chunk_index: 2 })'
-descriptor = "python method sigs #2 in src/requests/sessions.py"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 899
-end = 899
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 903
-end = 903
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 900
-end = 900
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 904
-end = 904
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 103
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 132 })'
-descriptor = "python method at src/requests/sessions.py:132"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 134 })'
-descriptor = "python method at src/requests/sessions.py:134"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 134
-end = 134
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 154 })'
-descriptor = "python method at src/requests/sessions.py:154"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 505 })'
-descriptor = "python method at src/requests/sessions.py:505"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 505
-end = 505
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 508 })'
-descriptor = "python method at src/requests/sessions.py:508"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 508
-end = 508
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 511 })'
-descriptor = "python method at src/requests/sessions.py:511"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 511
-end = 511
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 673 })'
-descriptor = "python method at src/requests/sessions.py:673"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 673
-end = 673
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 684 })'
-descriptor = "python method at src/requests/sessions.py:684"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 684
-end = 684
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 742 })'
-descriptor = "python method at src/requests/sessions.py:742"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 742
-end = 742
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 752 })'
-descriptor = "python method at src/requests/sessions.py:752"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 752
-end = 752
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 870 })'
-descriptor = "python method at src/requests/sessions.py:870"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 870
-end = 870
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 883 })'
-descriptor = "python method at src/requests/sessions.py:883"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 883
-end = 883
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 888 })'
-descriptor = "python method at src/requests/sessions.py:888"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 888
-end = 888
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 899 })'
-descriptor = "python method at src/requests/sessions.py:899"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 899
-end = 899
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 903 })'
-descriptor = "python method at src/requests/sessions.py:903"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 903
-end = 903
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
-key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 132, body_start_line: 132 })'
-descriptor = "python method body at src/requests/sessions.py:132 body 132"
-cost_tokens = 0
-cum_tokens = 5319
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 505, body_start_line: 506 })'
-descriptor = "python method body at src/requests/sessions.py:505 body 506"
-cost_tokens = 6
-cum_tokens = 5325
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 506
-end = 506
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
-key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 508, body_start_line: 509 })'
-descriptor = "python method body at src/requests/sessions.py:508 body 509"
-cost_tokens = 6
-cum_tokens = 5331
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 509
-end = 509
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 309 })'
-descriptor = "python method at src/requests/sessions.py:309"
-cost_tokens = 26
-cum_tokens = 5357
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 309
-end = 311
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 370 })'
-descriptor = "python method at src/requests/sessions.py:370"
-cost_tokens = 26
-cum_tokens = 5383
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 370
-end = 372
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 123
-key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 883 })'
-descriptor = "python method doc at src/requests/sessions.py:883"
-cost_tokens = 16
-cum_tokens = 5399
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 884
-end = 884
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
-key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 154 })'
-descriptor = "python method doc at src/requests/sessions.py:154"
-cost_tokens = 18
-cum_tokens = 5417
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
-key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 134 })'
-descriptor = "python method doc at src/requests/sessions.py:134"
-cost_tokens = 20
-cum_tokens = 5437
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 126
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 714 })'
-descriptor = "python method at src/requests/sessions.py:714"
-cost_tokens = 43
-cum_tokens = 5480
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 714
-end = 716
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 728 })'
-descriptor = "python method at src/requests/sessions.py:728"
-cost_tokens = 43
-cum_tokens = 5523
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 728
-end = 730
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 128
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 334 })'
-descriptor = "python method at src/requests/sessions.py:334"
-cost_tokens = 45
-cum_tokens = 5568
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 334
-end = 338
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 442 })'
-descriptor = "python method at src/requests/sessions.py:442"
-cost_tokens = 50
-cum_tokens = 5618
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 442
-end = 445
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 742, body_start_line: 750 })'
-descriptor = "python method body at src/requests/sessions.py:742 body 750"
-cost_tokens = 16
-cum_tokens = 5634
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 750
-end = 750
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 131
-key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 883, body_start_line: 885 })'
-descriptor = "python method body at src/requests/sessions.py:883 body 885"
-cost_tokens = 18
-cum_tokens = 5652
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 885
-end = 886
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 132
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 655 })'
-descriptor = "python method at src/requests/sessions.py:655"
-cost_tokens = 58
-cum_tokens = 5710
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 655
-end = 660
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 133
-key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 752 })'
-descriptor = "python method doc at src/requests/sessions.py:752"
-cost_tokens = 34
-cum_tokens = 5744
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 753
-end = 756
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
-key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 714, body_start_line: 726 })'
-descriptor = "python method body at src/requests/sessions.py:714 body 726"
-cost_tokens = 19
-cum_tokens = 5763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 726
-end = 726
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 135
-key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 728, body_start_line: 740 })'
-descriptor = "python method body at src/requests/sessions.py:728 body 740"
-cost_tokens = 19
-cum_tokens = 5782
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 740
-end = 740
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 136
-key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 370 })'
-descriptor = "python method doc at src/requests/sessions.py:370"
-cost_tokens = 39
-cum_tokens = 5821
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 373
-end = 375
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 888 })'
-descriptor = "python method doc at src/requests/sessions.py:888"
-cost_tokens = 41
-cum_tokens = 5862
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 889
-end = 892
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
-key = 'Python(Method { file: "src/requests/sessions.py", start_line: 695 })'
-descriptor = "python method at src/requests/sessions.py:695"
-cost_tokens = 72
-cum_tokens = 5934
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 695
-end = 701
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 139
-key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 695, body_start_line: 712 })'
-descriptor = "python method body at src/requests/sessions.py:695 body 712"
-cost_tokens = 22
-cum_tokens = 5956
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/sessions.py"
-start = 712
-end = 712
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 140
 key = 'Python(MethodBody { file: "src/requests/sessions.py", start_line: 903, body_start_line: 904 })'
 descriptor = "python method body at src/requests/sessions.py:903 body 904"
 cost_tokens = 23
-cum_tokens = 5979
+cum_tokens = 5954
 
 [batches.content]
 kind = "lines"
@@ -3736,11 +3288,11 @@ end = 905
 kind = "full"
 
 [[batches]]
-position = 141
-key = 'Python(DeclNames { file: "src/requests/adapters.py", chunk_index: 0 })'
+position = 137
+key = 'Python(DeclNames { file: "src/requests/adapters.py" })'
 descriptor = "python decl names surface in src/requests/adapters.py"
 cost_tokens = 89
-cum_tokens = 6068
+cum_tokens = 6043
 
 [batches.content]
 kind = "lines"
@@ -3778,11 +3330,11 @@ end = 86
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 138
 key = 'Python(Decl { file: "src/requests/adapters.py", start_line: 122 })'
 descriptor = "python decl at src/requests/adapters.py:122"
 cost_tokens = 0
-cum_tokens = 6068
+cum_tokens = 6043
 
 [batches.content]
 kind = "lines"
@@ -3796,11 +3348,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 143
+position = 139
 key = 'Python(Decl { file: "src/requests/adapters.py", start_line: 158 })'
 descriptor = "python decl at src/requests/adapters.py:158"
 cost_tokens = 0
-cum_tokens = 6068
+cum_tokens = 6043
 
 [batches.content]
 kind = "lines"
@@ -3814,11 +3366,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 144
+position = 140
 key = 'Python(DeclDoc { file: "src/requests/adapters.py", start_line: 122 })'
 descriptor = "python decl doc at src/requests/adapters.py:122"
 cost_tokens = 11
-cum_tokens = 6079
+cum_tokens = 6054
 
 [batches.content]
 kind = "lines"
@@ -3832,11 +3384,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 145
+position = 141
 key = 'Python(DeclDoc { file: "src/requests/adapters.py", start_line: 158 })'
 descriptor = "python decl doc at src/requests/adapters.py:158"
 cost_tokens = 15
-cum_tokens = 6094
+cum_tokens = 6069
 
 [batches.content]
 kind = "lines"
@@ -3850,11 +3402,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 146
+position = 142
 key = 'Python(ClassBody { file: "src/requests/adapters.py", start_line: 158 })'
 descriptor = "python class body at src/requests/adapters.py:158"
 cost_tokens = 154
-cum_tokens = 6248
+cum_tokens = 6223
 
 [batches.content]
 kind = "lines"
@@ -3868,11 +3420,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 147
-key = 'Python(MethodSigs { file: "src/requests/adapters.py", chunk_index: 0 })'
+position = 143
+key = 'Python(MethodSigs { file: "src/requests/adapters.py" })'
 descriptor = "python method sigs in src/requests/adapters.py"
 cost_tokens = 285
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4166,11 +3718,11 @@ end = 635
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 144
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 125 })'
 descriptor = "python method at src/requests/adapters.py:125"
 cost_tokens = 0
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4184,11 +3736,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 149
+position = 145
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 153 })'
 descriptor = "python method at src/requests/adapters.py:153"
 cost_tokens = 0
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4202,11 +3754,11 @@ end = 153
 kind = "full"
 
 [[batches]]
-position = 150
+position = 146
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 223 })'
 descriptor = "python method at src/requests/adapters.py:223"
 cost_tokens = 0
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4220,11 +3772,11 @@ end = 223
 kind = "full"
 
 [[batches]]
-position = 151
+position = 147
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 269 })'
 descriptor = "python method at src/requests/adapters.py:269"
 cost_tokens = 0
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4238,11 +3790,11 @@ end = 269
 kind = "full"
 
 [[batches]]
-position = 152
+position = 148
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 365 })'
 descriptor = "python method at src/requests/adapters.py:365"
 cost_tokens = 0
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4256,11 +3808,11 @@ end = 365
 kind = "full"
 
 [[batches]]
-position = 153
+position = 149
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 555 })'
 descriptor = "python method at src/requests/adapters.py:555"
 cost_tokens = 0
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4274,11 +3826,11 @@ end = 555
 kind = "full"
 
 [[batches]]
-position = 154
+position = 150
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 599 })'
 descriptor = "python method at src/requests/adapters.py:599"
 cost_tokens = 0
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4292,11 +3844,11 @@ end = 599
 kind = "full"
 
 [[batches]]
-position = 155
+position = 151
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 613 })'
 descriptor = "python method at src/requests/adapters.py:613"
 cost_tokens = 0
-cum_tokens = 6533
+cum_tokens = 6508
 
 [batches.content]
 kind = "lines"
@@ -4310,11 +3862,11 @@ end = 613
 kind = "full"
 
 [[batches]]
-position = 156
+position = 152
 key = 'Python(MethodBody { file: "src/requests/adapters.py", start_line: 125, body_start_line: 126 })'
 descriptor = "python method body at src/requests/adapters.py:125 body 126"
 cost_tokens = 7
-cum_tokens = 6540
+cum_tokens = 6515
 
 [batches.content]
 kind = "lines"
@@ -4328,11 +3880,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 157
+position = 153
 key = 'Python(MethodBody { file: "src/requests/adapters.py", start_line: 599, body_start_line: 611 })'
 descriptor = "python method body at src/requests/adapters.py:599 body 611"
 cost_tokens = 7
-cum_tokens = 6547
+cum_tokens = 6522
 
 [batches.content]
 kind = "lines"
@@ -4346,11 +3898,11 @@ end = 611
 kind = "full"
 
 [[batches]]
-position = 158
+position = 154
 key = 'Python(MethodDoc { file: "src/requests/adapters.py", start_line: 153 })'
 descriptor = "python method doc at src/requests/adapters.py:153"
 cost_tokens = 13
-cum_tokens = 6560
+cum_tokens = 6535
 
 [batches.content]
 kind = "lines"
@@ -4364,11 +3916,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 159
+position = 155
 key = 'Python(MethodBody { file: "src/requests/adapters.py", start_line: 153, body_start_line: 155 })'
 descriptor = "python method body at src/requests/adapters.py:153 body 155"
 cost_tokens = 8
-cum_tokens = 6568
+cum_tokens = 6543
 
 [batches.content]
 kind = "lines"
@@ -4382,11 +3934,11 @@ end = 155
 kind = "full"
 
 [[batches]]
-position = 160
+position = 156
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 565 })'
 descriptor = "python method at src/requests/adapters.py:565"
 cost_tokens = 31
-cum_tokens = 6599
+cum_tokens = 6574
 
 [batches.content]
 kind = "lines"
@@ -4400,11 +3952,11 @@ end = 567
 kind = "full"
 
 [[batches]]
-position = 161
+position = 157
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 512 })'
 descriptor = "python method at src/requests/adapters.py:512"
 cost_tokens = 34
-cum_tokens = 6633
+cum_tokens = 6608
 
 [batches.content]
 kind = "lines"
@@ -4418,11 +3970,11 @@ end = 514
 kind = "full"
 
 [[batches]]
-position = 162
+position = 158
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 307 })'
 descriptor = "python method at src/requests/adapters.py:307"
 cost_tokens = 39
-cum_tokens = 6672
+cum_tokens = 6647
 
 [batches.content]
 kind = "lines"
@@ -4436,11 +3988,11 @@ end = 309
 kind = "full"
 
 [[batches]]
-position = 163
+position = 159
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 226 })'
 descriptor = "python method at src/requests/adapters.py:226"
 cost_tokens = 40
-cum_tokens = 6712
+cum_tokens = 6687
 
 [batches.content]
 kind = "lines"
@@ -4454,11 +4006,11 @@ end = 228
 kind = "full"
 
 [[batches]]
-position = 164
+position = 160
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 403 })'
 descriptor = "python method at src/requests/adapters.py:403"
 cost_tokens = 48
-cum_tokens = 6760
+cum_tokens = 6735
 
 [batches.content]
 kind = "lines"
@@ -4472,11 +4024,11 @@ end = 405
 kind = "full"
 
 [[batches]]
-position = 165
+position = 161
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 239 })'
 descriptor = "python method at src/requests/adapters.py:239"
 cost_tokens = 59
-cum_tokens = 6819
+cum_tokens = 6794
 
 [batches.content]
 kind = "lines"
@@ -4490,11 +4042,11 @@ end = 245
 kind = "full"
 
 [[batches]]
-position = 166
+position = 162
 key = 'Python(MethodBody { file: "src/requests/adapters.py", start_line: 403, body_start_line: 453 })'
 descriptor = "python method body at src/requests/adapters.py:403 body 453"
 cost_tokens = 21
-cum_tokens = 6840
+cum_tokens = 6815
 
 [batches.content]
 kind = "lines"
@@ -4508,11 +4060,11 @@ end = 453
 kind = "full"
 
 [[batches]]
-position = 167
+position = 163
 key = 'Python(MethodBody { file: "src/requests/adapters.py", start_line: 223, body_start_line: 224 })'
 descriptor = "python method body at src/requests/adapters.py:223 body 224"
 cost_tokens = 22
-cum_tokens = 6862
+cum_tokens = 6837
 
 [batches.content]
 kind = "lines"
@@ -4526,11 +4078,11 @@ end = 224
 kind = "full"
 
 [[batches]]
-position = 168
+position = 164
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 455 })'
 descriptor = "python method at src/requests/adapters.py:455"
 cost_tokens = 72
-cum_tokens = 6934
+cum_tokens = 6909
 
 [batches.content]
 kind = "lines"
@@ -4544,11 +4096,11 @@ end = 461
 kind = "full"
 
 [[batches]]
-position = 169
+position = 165
 key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 870 })'
 descriptor = "python method doc at src/requests/sessions.py:870"
 cost_tokens = 45
-cum_tokens = 6979
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -4562,11 +4114,11 @@ end = 875
 kind = "full"
 
 [[batches]]
-position = 170
+position = 166
 key = 'Python(Method { file: "src/requests/adapters.py", start_line: 201 })'
 descriptor = "python method at src/requests/adapters.py:201"
 cost_tokens = 76
-cum_tokens = 7055
+cum_tokens = 7030
 
 [batches.content]
 kind = "lines"
@@ -4580,11 +4132,11 @@ end = 207
 kind = "full"
 
 [[batches]]
-position = 171
-key = 'Python(DeclNames { file: "src/requests/compat.py", chunk_index: 0 })'
+position = 167
+key = 'Python(DeclNames { file: "src/requests/compat.py" })'
 descriptor = "python decl names surface in src/requests/compat.py"
 cost_tokens = 157
-cum_tokens = 7212
+cum_tokens = 7187
 
 [batches.content]
 kind = "lines"
@@ -4654,11 +4206,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 172
+position = 168
 key = 'Python(Decl { file: "src/requests/compat.py", start_line: 37 })'
 descriptor = "python decl at src/requests/compat.py:37"
 cost_tokens = 0
-cum_tokens = 7212
+cum_tokens = 7187
 
 [batches.content]
 kind = "lines"
@@ -4672,11 +4224,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 173
+position = 169
 key = 'Python(DeclDoc { file: "src/requests/compat.py", start_line: 37 })'
 descriptor = "python decl doc at src/requests/compat.py:37"
 cost_tokens = 12
-cum_tokens = 7224
+cum_tokens = 7199
 
 [batches.content]
 kind = "lines"
@@ -4690,11 +4242,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 174
+position = 170
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 590
-cum_tokens = 7814
+cum_tokens = 7789
 
 [batches.content]
 kind = "lines"
@@ -4724,11 +4276,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 175
+position = 171
 key = 'Python(Method { file: "src/requests/sessions.py", start_line: 831 })'
 descriptor = "python method at src/requests/sessions.py:831"
 cost_tokens = 81
-cum_tokens = 7895
+cum_tokens = 7870
 
 [batches.content]
 kind = "lines"
@@ -4742,11 +4294,11 @@ end = 838
 kind = "full"
 
 [[batches]]
-position = 176
+position = 172
 key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 831 })'
 descriptor = "python method doc at src/requests/sessions.py:831"
 cost_tokens = 42
-cum_tokens = 7937
+cum_tokens = 7912
 
 [batches.content]
 kind = "lines"
@@ -4760,11 +4312,11 @@ end = 843
 kind = "full"
 
 [[batches]]
-position = 177
+position = 173
 key = 'Python(MethodDoc { file: "src/requests/adapters.py", start_line: 555 })'
 descriptor = "python method doc at src/requests/adapters.py:555"
 cost_tokens = 53
-cum_tokens = 7990
+cum_tokens = 7965
 
 [batches.content]
 kind = "lines"
@@ -4778,11 +4330,11 @@ end = 560
 kind = "full"
 
 [[batches]]
-position = 178
+position = 174
 key = 'Python(MethodBody { file: "src/requests/structures.py", start_line: 76, body_start_line: 78 })'
 descriptor = "python method body at src/requests/structures.py:76 body 78"
 cost_tokens = 27
-cum_tokens = 8017
+cum_tokens = 7992
 
 [batches.content]
 kind = "lines"
@@ -4796,11 +4348,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 179
-key = 'Python(DeclSigsRoster { file: "src/requests/exceptions.py" })'
-descriptor = "python decl sigs roster in src/requests/exceptions.py"
+position = 175
+key = 'Python(DeclNames { file: "src/requests/exceptions.py" })'
+descriptor = "python decl names surface in src/requests/exceptions.py"
 cost_tokens = 353
-cum_tokens = 8370
+cum_tokens = 8345
 
 [batches.content]
 kind = "lines"
@@ -5005,93 +4557,465 @@ end = 161
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 21
-end = 21
+[[batches]]
+position = 176
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 20 })'
+descriptor = "python decl at src/requests/exceptions.py:20"
+cost_tokens = 0
+cum_tokens = 8345
 
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 43
-end = 43
+start = 20
+end = 20
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 38 })'
+descriptor = "python decl at src/requests/exceptions.py:38"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 67
-end = 67
+start = 38
+end = 38
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 42 })'
+descriptor = "python decl at src/requests/exceptions.py:42"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 71
-end = 71
+start = 42
+end = 42
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 66 })'
+descriptor = "python decl at src/requests/exceptions.py:66"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 75
-end = 75
+start = 66
+end = 66
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 70 })'
+descriptor = "python decl at src/requests/exceptions.py:70"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 79
-end = 79
+start = 70
+end = 70
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 74 })'
+descriptor = "python decl at src/requests/exceptions.py:74"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 83
-end = 83
+start = 74
+end = 74
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 78 })'
+descriptor = "python decl at src/requests/exceptions.py:78"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 92
-end = 92
+start = 78
+end = 78
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 82 })'
+descriptor = "python decl at src/requests/exceptions.py:82"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 99
-end = 99
+start = 82
+end = 82
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 91 })'
+descriptor = "python decl at src/requests/exceptions.py:91"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 103
-end = 103
+start = 91
+end = 91
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 98 })'
+descriptor = "python decl at src/requests/exceptions.py:98"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 102 })'
+descriptor = "python decl at src/requests/exceptions.py:102"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 106 })'
+descriptor = "python decl at src/requests/exceptions.py:106"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 110 })'
+descriptor = "python decl at src/requests/exceptions.py:110"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 114 })'
+descriptor = "python decl at src/requests/exceptions.py:114"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 118 })'
+descriptor = "python decl at src/requests/exceptions.py:118"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 122 })'
+descriptor = "python decl at src/requests/exceptions.py:122"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 126 })'
+descriptor = "python decl at src/requests/exceptions.py:126"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 130 })'
+descriptor = "python decl at src/requests/exceptions.py:130"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 134 })'
+descriptor = "python decl at src/requests/exceptions.py:134"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 138 })'
+descriptor = "python decl at src/requests/exceptions.py:138"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 142 })'
+descriptor = "python decl at src/requests/exceptions.py:142"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 146 })'
+descriptor = "python decl at src/requests/exceptions.py:146"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 198
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 153 })'
+descriptor = "python decl at src/requests/exceptions.py:153"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 199
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 157 })'
+descriptor = "python decl at src/requests/exceptions.py:157"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 200
+key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 161 })'
+descriptor = "python decl at src/requests/exceptions.py:161"
+cost_tokens = 0
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 201
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 106 })'
+descriptor = "python decl doc at src/requests/exceptions.py:106"
+cost_tokens = 8
+cum_tokens = 8353
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
@@ -5099,23 +5023,161 @@ start = 107
 end = 107
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 202
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 38 })'
+descriptor = "python decl doc at src/requests/exceptions.py:38"
+cost_tokens = 9
+cum_tokens = 8362
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 111
-end = 111
+start = 39
+end = 39
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 203
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 66 })'
+descriptor = "python decl doc at src/requests/exceptions.py:66"
+cost_tokens = 9
+cum_tokens = 8371
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 115
-end = 115
+start = 67
+end = 67
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 70 })'
+descriptor = "python decl doc at src/requests/exceptions.py:70"
+cost_tokens = 9
+cum_tokens = 8380
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 205
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 74 })'
+descriptor = "python decl doc at src/requests/exceptions.py:74"
+cost_tokens = 9
+cum_tokens = 8389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 78 })'
+descriptor = "python decl doc at src/requests/exceptions.py:78"
+cost_tokens = 9
+cum_tokens = 8398
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 207
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 142 })'
+descriptor = "python decl doc at src/requests/exceptions.py:142"
+cost_tokens = 9
+cum_tokens = 8407
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 153 })'
+descriptor = "python decl doc at src/requests/exceptions.py:153"
+cost_tokens = 9
+cum_tokens = 8416
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 209
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 134 })'
+descriptor = "python decl doc at src/requests/exceptions.py:134"
+cost_tokens = 10
+cum_tokens = 8426
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/exceptions.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 118 })'
+descriptor = "python decl doc at src/requests/exceptions.py:118"
+cost_tokens = 11
+cum_tokens = 8437
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
@@ -5123,15 +5185,17 @@ start = 119
 end = 119
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
 
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 123
-end = 123
+[[batches]]
+position = 211
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 126 })'
+descriptor = "python decl doc at src/requests/exceptions.py:126"
+cost_tokens = 11
+cum_tokens = 8448
 
-[batches.content.spans.render]
-kind = "ellipsis"
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
@@ -5139,937 +5203,31 @@ start = 127
 end = 127
 
 [batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 131
-end = 131
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 139
-end = 139
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 147
-end = 147
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 158
-end = 158
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 162
-end = 162
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 180
-key = 'Python(DeclNames { file: "src/requests/exceptions.py", chunk_index: 0 })'
-descriptor = "python decl names surface in src/requests/exceptions.py"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 181
-key = 'Python(DeclNames { file: "src/requests/exceptions.py", chunk_index: 1 })'
-descriptor = "python decl names surface #1 in src/requests/exceptions.py"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 110
-end = 110
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 118
-end = 118
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 122
-end = 122
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 130
-end = 130
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 134
-end = 134
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 142
-end = 142
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 146
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 153
-end = 153
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 157
-end = 157
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'Python(DeclNames { file: "src/requests/exceptions.py", chunk_index: 2 })'
-descriptor = "python decl names surface #2 in src/requests/exceptions.py"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 161
-end = 161
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 20 })'
-descriptor = "python decl at src/requests/exceptions.py:20"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 184
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 38 })'
-descriptor = "python decl at src/requests/exceptions.py:38"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 42 })'
-descriptor = "python decl at src/requests/exceptions.py:42"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 66 })'
-descriptor = "python decl at src/requests/exceptions.py:66"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 70 })'
-descriptor = "python decl at src/requests/exceptions.py:70"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 188
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 74 })'
-descriptor = "python decl at src/requests/exceptions.py:74"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 189
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 78 })'
-descriptor = "python decl at src/requests/exceptions.py:78"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 190
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 82 })'
-descriptor = "python decl at src/requests/exceptions.py:82"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 191
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 91 })'
-descriptor = "python decl at src/requests/exceptions.py:91"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 192
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 98 })'
-descriptor = "python decl at src/requests/exceptions.py:98"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 193
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 102 })'
-descriptor = "python decl at src/requests/exceptions.py:102"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 194
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 106 })'
-descriptor = "python decl at src/requests/exceptions.py:106"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 195
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 110 })'
-descriptor = "python decl at src/requests/exceptions.py:110"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 110
-end = 110
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 196
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 114 })'
-descriptor = "python decl at src/requests/exceptions.py:114"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 197
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 118 })'
-descriptor = "python decl at src/requests/exceptions.py:118"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 118
-end = 118
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 198
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 122 })'
-descriptor = "python decl at src/requests/exceptions.py:122"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 122
-end = 122
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 199
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 126 })'
-descriptor = "python decl at src/requests/exceptions.py:126"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 200
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 130 })'
-descriptor = "python decl at src/requests/exceptions.py:130"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 130
-end = 130
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 201
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 134 })'
-descriptor = "python decl at src/requests/exceptions.py:134"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 134
-end = 134
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 202
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 138 })'
-descriptor = "python decl at src/requests/exceptions.py:138"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 203
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 142 })'
-descriptor = "python decl at src/requests/exceptions.py:142"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 142
-end = 142
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 204
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 146 })'
-descriptor = "python decl at src/requests/exceptions.py:146"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 146
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 205
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 153 })'
-descriptor = "python decl at src/requests/exceptions.py:153"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 153
-end = 153
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 206
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 157 })'
-descriptor = "python decl at src/requests/exceptions.py:157"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 157
-end = 157
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 207
-key = 'Python(Decl { file: "src/requests/exceptions.py", start_line: 161 })'
-descriptor = "python decl at src/requests/exceptions.py:161"
-cost_tokens = 0
-cum_tokens = 8370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 161
-end = 161
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 208
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 106 })'
-descriptor = "python decl doc at src/requests/exceptions.py:106"
-cost_tokens = 8
-cum_tokens = 8378
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 107
-end = 107
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 209
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 38 })'
-descriptor = "python decl doc at src/requests/exceptions.py:38"
-cost_tokens = 9
-cum_tokens = 8387
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 210
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 66 })'
-descriptor = "python decl doc at src/requests/exceptions.py:66"
-cost_tokens = 9
-cum_tokens = 8396
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 211
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 70 })'
-descriptor = "python decl doc at src/requests/exceptions.py:70"
-cost_tokens = 9
-cum_tokens = 8405
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 71
-end = 71
-
-[batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 212
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 74 })'
-descriptor = "python decl doc at src/requests/exceptions.py:74"
-cost_tokens = 9
-cum_tokens = 8414
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 122 })'
+descriptor = "python decl doc at src/requests/exceptions.py:122"
+cost_tokens = 12
+cum_tokens = 8460
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 75
-end = 75
+start = 123
+end = 123
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 213
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 78 })'
-descriptor = "python decl doc at src/requests/exceptions.py:78"
-cost_tokens = 9
-cum_tokens = 8423
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 214
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 142 })'
-descriptor = "python decl doc at src/requests/exceptions.py:142"
-cost_tokens = 9
-cum_tokens = 8432
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 215
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 153 })'
-descriptor = "python decl doc at src/requests/exceptions.py:153"
-cost_tokens = 9
-cum_tokens = 8441
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 216
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 134 })'
-descriptor = "python decl doc at src/requests/exceptions.py:134"
-cost_tokens = 10
-cum_tokens = 8451
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 217
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 118 })'
-descriptor = "python decl doc at src/requests/exceptions.py:118"
-cost_tokens = 11
-cum_tokens = 8462
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 218
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 126 })'
-descriptor = "python decl doc at src/requests/exceptions.py:126"
-cost_tokens = 11
+key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 42 })'
+descriptor = "python decl doc at src/requests/exceptions.py:42"
+cost_tokens = 13
 cum_tokens = 8473
 
 [batches.content]
@@ -6077,42 +5235,6 @@ kind = "lines"
 
 [[batches.content.spans]]
 path = "src/requests/exceptions.py"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 219
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 122 })'
-descriptor = "python decl doc at src/requests/exceptions.py:122"
-cost_tokens = 12
-cum_tokens = 8485
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
-start = 123
-end = 123
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 220
-key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 42 })'
-descriptor = "python decl doc at src/requests/exceptions.py:42"
-cost_tokens = 13
-cum_tokens = 8498
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/exceptions.py"
 start = 43
 end = 43
 
@@ -6120,11 +5242,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 221
+position = 214
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 138 })'
 descriptor = "python decl doc at src/requests/exceptions.py:138"
 cost_tokens = 13
-cum_tokens = 8511
+cum_tokens = 8486
 
 [batches.content]
 kind = "lines"
@@ -6138,11 +5260,11 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 222
+position = 215
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 102 })'
 descriptor = "python decl doc at src/requests/exceptions.py:102"
 cost_tokens = 14
-cum_tokens = 8525
+cum_tokens = 8500
 
 [batches.content]
 kind = "lines"
@@ -6156,11 +5278,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 223
+position = 216
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 114 })'
 descriptor = "python decl doc at src/requests/exceptions.py:114"
 cost_tokens = 14
-cum_tokens = 8539
+cum_tokens = 8514
 
 [batches.content]
 kind = "lines"
@@ -6174,11 +5296,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 224
+position = 217
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 161 })'
 descriptor = "python decl doc at src/requests/exceptions.py:161"
 cost_tokens = 14
-cum_tokens = 8553
+cum_tokens = 8528
 
 [batches.content]
 kind = "lines"
@@ -6192,11 +5314,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 225
+position = 218
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 130 })'
 descriptor = "python decl doc at src/requests/exceptions.py:130"
 cost_tokens = 16
-cum_tokens = 8569
+cum_tokens = 8544
 
 [batches.content]
 kind = "lines"
@@ -6210,11 +5332,11 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 226
+position = 219
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 146 })'
 descriptor = "python decl doc at src/requests/exceptions.py:146"
 cost_tokens = 17
-cum_tokens = 8586
+cum_tokens = 8561
 
 [batches.content]
 kind = "lines"
@@ -6228,11 +5350,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 227
+position = 220
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 98 })'
 descriptor = "python decl doc at src/requests/exceptions.py:98"
 cost_tokens = 18
-cum_tokens = 8604
+cum_tokens = 8579
 
 [batches.content]
 kind = "lines"
@@ -6246,11 +5368,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 228
+position = 221
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 110 })'
 descriptor = "python decl doc at src/requests/exceptions.py:110"
 cost_tokens = 18
-cum_tokens = 8622
+cum_tokens = 8597
 
 [batches.content]
 kind = "lines"
@@ -6264,11 +5386,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 229
+position = 222
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 157 })'
 descriptor = "python decl doc at src/requests/exceptions.py:157"
 cost_tokens = 19
-cum_tokens = 8641
+cum_tokens = 8616
 
 [batches.content]
 kind = "lines"
@@ -6282,11 +5404,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 230
+position = 223
 key = 'Python(ClassBody { file: "src/requests/exceptions.py", start_line: 20 })'
 descriptor = "python class body at src/requests/exceptions.py:20"
 cost_tokens = 27
-cum_tokens = 8668
+cum_tokens = 8643
 
 [batches.content]
 kind = "lines"
@@ -6300,11 +5422,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 231
+position = 224
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 20 })'
 descriptor = "python decl doc at src/requests/exceptions.py:20"
 cost_tokens = 28
-cum_tokens = 8696
+cum_tokens = 8671
 
 [batches.content]
 kind = "lines"
@@ -6318,11 +5440,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 232
-key = 'Python(MethodSigs { file: "src/requests/exceptions.py", chunk_index: 0 })'
+position = 225
+key = 'Python(MethodSigs { file: "src/requests/exceptions.py" })'
 descriptor = "python method sigs in src/requests/exceptions.py"
 cost_tokens = 70
-cum_tokens = 8766
+cum_tokens = 8741
 
 [batches.content]
 kind = "lines"
@@ -6376,11 +5498,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 233
+position = 226
 key = 'Python(Method { file: "src/requests/exceptions.py", start_line: 28 })'
 descriptor = "python method at src/requests/exceptions.py:28"
 cost_tokens = 0
-cum_tokens = 8766
+cum_tokens = 8741
 
 [batches.content]
 kind = "lines"
@@ -6394,11 +5516,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 234
+position = 227
 key = 'Python(Method { file: "src/requests/exceptions.py", start_line: 45 })'
 descriptor = "python method at src/requests/exceptions.py:45"
 cost_tokens = 0
-cum_tokens = 8766
+cum_tokens = 8741
 
 [batches.content]
 kind = "lines"
@@ -6412,11 +5534,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 235
+position = 228
 key = 'Python(Method { file: "src/requests/exceptions.py", start_line: 55 })'
 descriptor = "python method at src/requests/exceptions.py:55"
 cost_tokens = 0
-cum_tokens = 8766
+cum_tokens = 8741
 
 [batches.content]
 kind = "lines"
@@ -6430,11 +5552,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 236
+position = 229
 key = 'Python(MethodDoc { file: "src/requests/exceptions.py", start_line: 28 })'
 descriptor = "python method doc at src/requests/exceptions.py:28"
 cost_tokens = 19
-cum_tokens = 8785
+cum_tokens = 8760
 
 [batches.content]
 kind = "lines"
@@ -6448,11 +5570,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 237
+position = 230
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 91 })'
 descriptor = "python decl doc at src/requests/exceptions.py:91"
 cost_tokens = 43
-cum_tokens = 8828
+cum_tokens = 8803
 
 [batches.content]
 kind = "lines"
@@ -6466,11 +5588,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 238
+position = 231
 key = 'Python(MethodBody { file: "src/requests/exceptions.py", start_line: 55, body_start_line: 63 })'
 descriptor = "python method body at src/requests/exceptions.py:55 body 63"
 cost_tokens = 15
-cum_tokens = 8843
+cum_tokens = 8818
 
 [batches.content]
 kind = "lines"
@@ -6484,11 +5606,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 239
+position = 232
 key = 'Python(DeclDoc { file: "src/requests/exceptions.py", start_line: 82 })'
 descriptor = "python decl doc at src/requests/exceptions.py:82"
 cost_tokens = 65
-cum_tokens = 8908
+cum_tokens = 8883
 
 [batches.content]
 kind = "lines"
@@ -6502,11 +5624,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 240
+position = 233
 key = 'Python(MethodDoc { file: "src/requests/sessions.py", start_line: 309 })'
 descriptor = "python method doc at src/requests/sessions.py:309"
 cost_tokens = 56
-cum_tokens = 8964
+cum_tokens = 8939
 
 [batches.content]
 kind = "lines"
@@ -6520,11 +5642,11 @@ end = 315
 kind = "full"
 
 [[batches]]
-position = 241
-key = 'Python(DeclNames { file: "src/requests/models.py", chunk_index: 0 })'
+position = 234
+key = 'Python(DeclNames { file: "src/requests/models.py" })'
 descriptor = "python decl names surface in src/requests/models.py"
 cost_tokens = 146
-cum_tokens = 9110
+cum_tokens = 9085
 
 [batches.content]
 kind = "lines"
@@ -6578,11 +5700,11 @@ end = 730
 kind = "full"
 
 [[batches]]
-position = 242
+position = 235
 key = 'Python(Decl { file: "src/requests/models.py", start_line: 109 })'
 descriptor = "python decl at src/requests/models.py:109"
 cost_tokens = 0
-cum_tokens = 9110
+cum_tokens = 9085
 
 [batches.content]
 kind = "lines"
@@ -6596,11 +5718,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 243
+position = 236
 key = 'Python(Decl { file: "src/requests/models.py", start_line: 255 })'
 descriptor = "python decl at src/requests/models.py:255"
 cost_tokens = 0
-cum_tokens = 9110
+cum_tokens = 9085
 
 [batches.content]
 kind = "lines"
@@ -6614,11 +5736,11 @@ end = 255
 kind = "full"
 
 [[batches]]
-position = 244
+position = 237
 key = 'Python(Decl { file: "src/requests/models.py", start_line: 283 })'
 descriptor = "python decl at src/requests/models.py:283"
 cost_tokens = 0
-cum_tokens = 9110
+cum_tokens = 9085
 
 [batches.content]
 kind = "lines"
@@ -6632,11 +5754,11 @@ end = 283
 kind = "full"
 
 [[batches]]
-position = 245
+position = 238
 key = 'Python(Decl { file: "src/requests/models.py", start_line: 376 })'
 descriptor = "python decl at src/requests/models.py:376"
 cost_tokens = 0
-cum_tokens = 9110
+cum_tokens = 9085
 
 [batches.content]
 kind = "lines"
@@ -6650,11 +5772,11 @@ end = 376
 kind = "full"
 
 [[batches]]
-position = 246
+position = 239
 key = 'Python(Decl { file: "src/requests/models.py", start_line: 730 })'
 descriptor = "python decl at src/requests/models.py:730"
 cost_tokens = 0
-cum_tokens = 9110
+cum_tokens = 9085
 
 [batches.content]
 kind = "lines"
@@ -6668,11 +5790,11 @@ end = 730
 kind = "full"
 
 [[batches]]
-position = 247
+position = 240
 key = 'Python(ClassBody { file: "src/requests/models.py", start_line: 109 })'
 descriptor = "python class body at src/requests/models.py:109"
 cost_tokens = 11
-cum_tokens = 9121
+cum_tokens = 9096
 
 [batches.content]
 kind = "lines"
@@ -6686,11 +5808,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 248
+position = 241
 key = 'Python(ClassBody { file: "src/requests/models.py", start_line: 255 })'
 descriptor = "python class body at src/requests/models.py:255"
 cost_tokens = 17
-cum_tokens = 9138
+cum_tokens = 9113
 
 [batches.content]
 kind = "lines"
@@ -6704,11 +5826,11 @@ end = 256
 kind = "full"
 
 [[batches]]
-position = 249
+position = 242
 key = 'Python(DeclDoc { file: "src/requests/models.py", start_line: 283 })'
 descriptor = "python decl doc at src/requests/models.py:283"
 cost_tokens = 18
-cum_tokens = 9156
+cum_tokens = 9131
 
 [batches.content]
 kind = "lines"
@@ -6722,11 +5844,11 @@ end = 284
 kind = "full"
 
 [[batches]]
-position = 250
+position = 243
 key = 'Python(DeclDoc { file: "src/requests/models.py", start_line: 730 })'
 descriptor = "python decl doc at src/requests/models.py:730"
 cost_tokens = 39
-cum_tokens = 9195
+cum_tokens = 9170
 
 [batches.content]
 kind = "lines"
@@ -6740,11 +5862,11 @@ end = 733
 kind = "full"
 
 [[batches]]
-position = 251
+position = 244
 key = 'Python(ClassBody { file: "src/requests/models.py", start_line: 730 })'
 descriptor = "python class body at src/requests/models.py:730"
 cost_tokens = 259
-cum_tokens = 9454
+cum_tokens = 9429
 
 [batches.content]
 kind = "lines"
@@ -6753,60 +5875,6 @@ kind = "lines"
 path = "src/requests/models.py"
 start = 735
 end = 761
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 252
-key = 'Python(ClassBody { file: "src/requests/models.py", start_line: 283 })'
-descriptor = "python class body at src/requests/models.py:283"
-cost_tokens = 123
-cum_tokens = 9577
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 311
-end = 319
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 253
-key = 'Python(ClassBody { file: "src/requests/models.py", start_line: 376 })'
-descriptor = "python class body at src/requests/models.py:376"
-cost_tokens = 99
-cum_tokens = 9676
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 397
-end = 403
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 254
-key = 'Python(Decl { file: "src/requests/models.py", start_line: 96 })'
-descriptor = "python decl at src/requests/models.py:96"
-cost_tokens = 74
-cum_tokens = 9750
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/models.py"
-start = 96
-end = 102
 
 [batches.content.spans.render]
 kind = "full"

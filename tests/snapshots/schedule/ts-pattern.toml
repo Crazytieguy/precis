@@ -1,7 +1,7 @@
 fixture = "ts-pattern"
 budget = 10000
-cumulative_tokens = 9894
-batch_count = 114
+cumulative_tokens = 9904
+batch_count = 129
 
 [[batches]]
 position = 1
@@ -103,7 +103,7 @@ entries = ["errors.ts", "index.ts", "internals", "is-matching.ts", "match.ts", "
 
 [[batches]]
 position = 6
-key = 'Typescript(ExportNames { file: "src/index.ts", chunk_index: 0 })'
+key = 'Typescript(ExportNames { file: "src/index.ts" })'
 descriptor = "export names surface in src/index.ts"
 cost_tokens = 16
 cum_tokens = 425
@@ -147,7 +147,7 @@ kind = "full"
 
 [[batches]]
 position = 8
-key = 'Typescript(ExportNames { file: "src/errors.ts", chunk_index: 0 })'
+key = 'Typescript(ExportNames { file: "src/errors.ts" })'
 descriptor = "export names surface in src/errors.ts"
 cost_tokens = 18
 cum_tokens = 485
@@ -199,7 +199,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'Typescript(ExportNames { file: "src/match.ts", chunk_index: 0 })'
+key = 'Typescript(ExportNames { file: "src/match.ts" })'
 descriptor = "export names surface in src/match.ts"
 cost_tokens = 20
 cum_tokens = 517
@@ -311,7 +311,7 @@ entries = ["gif-fetcher", "one-file-demo"]
 
 [[batches]]
 position = 16
-key = 'Typescript(ExportNames { file: "src/is-matching.ts", chunk_index: 0 })'
+key = 'Typescript(ExportNames { file: "src/is-matching.ts" })'
 descriptor = "export names surface in src/is-matching.ts"
 cost_tokens = 58
 cum_tokens = 703
@@ -1165,10 +1165,342 @@ entries = ["App.tsx", "constants.ts", "index.tsx", "searchGif.ts", "styles.css"]
 
 [[batches]]
 position = 55
-key = 'Typescript(ExportNames { file: "src/patterns.ts", chunk_index: 0 })'
-descriptor = "export names surface in src/patterns.ts"
+key = 'Typescript(Imports { file: "src/is-matching.ts" })'
+descriptor = "imports in src/is-matching.ts"
+cost_tokens = 62
+cum_tokens = 3116
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/is-matching.ts"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Typescript(ExportNames { file: "src/internals/symbols.ts" })'
+descriptor = "export names surface in src/internals/symbols.ts"
 cost_tokens = 167
-cum_tokens = 3221
+cum_tokens = 3283
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/internals/symbols.ts"
+start = 16
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/internals/symbols.ts"
+start = 26
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/internals/symbols.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 57
+key = 'Typescript(Export { file: "src/internals/symbols.ts", start_line: 16 })'
+descriptor = "export at src/internals/symbols.ts:16"
+cost_tokens = 0
+cum_tokens = 3283
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/internals/symbols.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Json(Whole { file: "tsconfig.json" })'
+descriptor = "json config tsconfig.json"
+cost_tokens = 154
+cum_tokens = 3437
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tsconfig.json"
+start = 1
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 298
+cum_tokens = 3735
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["bigints.test.ts", "branded-nominal-types.test.ts", "build-many.test.ts", "chainable.test.ts", "deep-exclude.test.ts", "distribute-unions.test.ts", "exhaustive-fallback.test.ts", "exhaustive-match.test.ts", "extract-precise-value.test.ts", "find-selected.test.ts", "generics.test.ts", "helpers.test.ts", "infer.test.ts", "instance-of.test.ts", "intersection-and-union.test.ts", "invert-pattern.test.ts", "is-matching.test.ts", "large-exhaustive.test.ts", "lists.test.ts", "maps.test.ts", "matcher-protocol.test.ts", "multiple-patterns.test.ts", "narrow.test.ts", "nesting.test.ts", "not.test.ts", "numbers.test.ts", "objects.test.ts", "optional-props.test.ts", "optional.test.ts", "otherwise.test.ts", "output-type.test.ts", "pattern.test.ts", "primitive-values.test.ts", "readonly.test.ts", "real-world.test.ts", "record.test.ts", "return-type.test.ts", "select.test.ts", "sets.test.ts", "strings.test.ts", "tsconfig.json", "tuples.test.ts", "type-error.test.ts", "type-is-matching.test.ts", "types-catalog", "types.test.ts", "unions.test.ts", "variadic-tuples.test.ts", "when.test.ts", "wildcards.test.ts"]
+
+[[batches]]
+position = 60
+key = 'Typescript(Imports { file: "src/match.ts" })'
+descriptor = "imports in src/match.ts"
+cost_tokens = 75
+cum_tokens = 3810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/match.ts"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #11"
+cost_tokens = 124
+cum_tokens = 3934
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 87
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #5"
+cost_tokens = 55
+cum_tokens = 3989
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Json(Dependencies { file: "package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 129
+cum_tokens = 4118
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 74
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #10"
+cost_tokens = 148
+cum_tokens = 4266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 67
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #6"
+cost_tokens = 60
+cum_tokens = 4326
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 63
+cum_tokens = 4389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Typescript(ExportDoc { file: "src/is-matching.ts", start_line: 48 })'
+descriptor = "export doc at src/is-matching.ts:48"
+cost_tokens = 151
+cum_tokens = 4540
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/is-matching.ts"
+start = 35
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Json(Whole { file: "jsr.json" })'
+descriptor = "json config jsr.json"
+cost_tokens = 93
+cum_tokens = 4633
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "jsr.json"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 6
+cum_tokens = 4639
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["generate-cts.sh"]
+
+[[batches]]
+position = 70
+key = 'Typescript(ExportDoc { file: "src/is-matching.ts", start_line: 32 })'
+descriptor = "export doc at src/is-matching.ts:32"
+cost_tokens = 176
+cum_tokens = 4815
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/is-matching.ts"
+start = 17
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #9"
+cost_tokens = 230
+cum_tokens = 5045
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 59
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Typescript(Imports { file: "src/types/Pattern.ts" })'
+descriptor = "imports in src/types/Pattern.ts"
+cost_tokens = 86
+cum_tokens = 5131
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/types/Pattern.ts"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Typescript(ExportNames { file: "src/patterns.ts" })'
+descriptor = "export names surface in src/patterns.ts"
+cost_tokens = 654
+cum_tokens = 5785
 
 [batches.content]
 kind = "lines"
@@ -1252,466 +1584,6 @@ end = 295
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 101
-end = 101
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 188
-end = 188
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 243
-end = 243
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 247
-end = 247
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 296
-end = 296
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 56
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 116 })'
-descriptor = "export at src/patterns.ts:116"
-cost_tokens = 0
-cum_tokens = 3221
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 116
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 241 })'
-descriptor = "export at src/patterns.ts:241"
-cost_tokens = 0
-cum_tokens = 3221
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 241
-end = 241
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 58
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 294 })'
-descriptor = "export at src/patterns.ts:294"
-cost_tokens = 0
-cum_tokens = 3221
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 294
-end = 294
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 131 })'
-descriptor = "export at src/patterns.ts:131"
-cost_tokens = 25
-cum_tokens = 3246
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 131
-end = 134
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 60
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 246 })'
-descriptor = "export at src/patterns.ts:246"
-cost_tokens = 28
-cum_tokens = 3274
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 246
-end = 248
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 249
-end = 249
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 61
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 81 })'
-descriptor = "export at src/patterns.ts:81"
-cost_tokens = 43
-cum_tokens = 3317
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 81
-end = 85
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 62
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 242 })'
-descriptor = "export at src/patterns.ts:242"
-cost_tokens = 43
-cum_tokens = 3360
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 242
-end = 245
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 63
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 100 })'
-descriptor = "export at src/patterns.ts:100"
-cost_tokens = 49
-cum_tokens = 3409
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 100
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 295 })'
-descriptor = "export at src/patterns.ts:295"
-cost_tokens = 45
-cum_tokens = 3454
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 295
-end = 298
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 65
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 187 })'
-descriptor = "export at src/patterns.ts:187"
-cost_tokens = 60
-cum_tokens = 3514
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 187
-end = 192
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 193
-end = 193
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 66
-key = 'Typescript(Export { file: "src/patterns.ts", start_line: 48 })'
-descriptor = "export at src/patterns.ts:48"
-cost_tokens = 150
-cum_tokens = 3664
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 48
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
-key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 187, body_start_line: 193 })'
-descriptor = "export body at src/patterns.ts:187 body 193"
-cost_tokens = 237
-cum_tokens = 3901
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 193
-end = 214
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
-key = 'Typescript(Imports { file: "src/is-matching.ts" })'
-descriptor = "imports in src/is-matching.ts"
-cost_tokens = 62
-cum_tokens = 3963
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/is-matching.ts"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 69
-key = 'Typescript(ExportNames { file: "src/internals/symbols.ts", chunk_index: 0 })'
-descriptor = "export names surface in src/internals/symbols.ts"
-cost_tokens = 167
-cum_tokens = 4130
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/internals/symbols.ts"
-start = 16
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/internals/symbols.ts"
-start = 26
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/internals/symbols.ts"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 70
-key = 'Typescript(Export { file: "src/internals/symbols.ts", start_line: 16 })'
-descriptor = "export at src/internals/symbols.ts:16"
-cost_tokens = 0
-cum_tokens = 4130
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/internals/symbols.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 71
-key = 'Json(Whole { file: "tsconfig.json" })'
-descriptor = "json config tsconfig.json"
-cost_tokens = 154
-cum_tokens = 4284
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tsconfig.json"
-start = 1
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 298
-cum_tokens = 4582
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["bigints.test.ts", "branded-nominal-types.test.ts", "build-many.test.ts", "chainable.test.ts", "deep-exclude.test.ts", "distribute-unions.test.ts", "exhaustive-fallback.test.ts", "exhaustive-match.test.ts", "extract-precise-value.test.ts", "find-selected.test.ts", "generics.test.ts", "helpers.test.ts", "infer.test.ts", "instance-of.test.ts", "intersection-and-union.test.ts", "invert-pattern.test.ts", "is-matching.test.ts", "large-exhaustive.test.ts", "lists.test.ts", "maps.test.ts", "matcher-protocol.test.ts", "multiple-patterns.test.ts", "narrow.test.ts", "nesting.test.ts", "not.test.ts", "numbers.test.ts", "objects.test.ts", "optional-props.test.ts", "optional.test.ts", "otherwise.test.ts", "output-type.test.ts", "pattern.test.ts", "primitive-values.test.ts", "readonly.test.ts", "real-world.test.ts", "record.test.ts", "return-type.test.ts", "select.test.ts", "sets.test.ts", "strings.test.ts", "tsconfig.json", "tuples.test.ts", "type-error.test.ts", "type-is-matching.test.ts", "types-catalog", "types.test.ts", "unions.test.ts", "variadic-tuples.test.ts", "when.test.ts", "wildcards.test.ts"]
-
-[[batches]]
-position = 73
-key = 'Typescript(Imports { file: "src/match.ts" })'
-descriptor = "imports in src/match.ts"
-cost_tokens = 75
-cum_tokens = 4657
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
-key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 246, body_start_line: 249 })'
-descriptor = "export body at src/patterns.ts:246 body 249"
-cost_tokens = 344
-cum_tokens = 5001
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 249
-end = 281
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
-key = 'Typescript(ExportNames { file: "src/patterns.ts", chunk_index: 1 })'
-descriptor = "export names surface #1 in src/patterns.ts"
-cost_tokens = 146
-cum_tokens = 5147
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "src/patterns.ts"
@@ -1803,6 +1675,222 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "src/patterns.ts"
+start = 646
+end = 646
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 672
+end = 673
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 686
+end = 686
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 696
+end = 696
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 782
+end = 782
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 793
+end = 793
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 805
+end = 805
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 928
+end = 928
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1075
+end = 1075
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1201
+end = 1201
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1211
+end = 1211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1221
+end = 1221
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1231
+end = 1231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1241
+end = 1241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1251
+end = 1251
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1271
+end = 1271
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1274
+end = 1274
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 243
+end = 243
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 247
+end = 247
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 296
+end = 296
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
 start = 300
 end = 300
 
@@ -1889,12 +1977,202 @@ end = 644
 [batches.content.spans.render]
 kind = "ellipsis"
 
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 647
+end = 647
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 674
+end = 674
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 687
+end = 687
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 697
+end = 697
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 783
+end = 783
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 794
+end = 794
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 806
+end = 806
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 929
+end = 929
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1076
+end = 1076
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1202
+end = 1202
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1212
+end = 1212
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1222
+end = 1222
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1232
+end = 1232
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1242
+end = 1242
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1252
+end = 1252
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1272
+end = 1272
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1275
+end = 1275
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 74
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 116 })'
+descriptor = "export at src/patterns.ts:116"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 241 })'
+descriptor = "export at src/patterns.ts:241"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 241
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
 [[batches]]
 position = 76
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 294 })'
+descriptor = "export at src/patterns.ts:294"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 356 })'
 descriptor = "export at src/patterns.ts:356"
 cost_tokens = 0
-cum_tokens = 5147
+cum_tokens = 5785
 
 [batches.content]
 kind = "lines"
@@ -1908,11 +2186,279 @@ end = 356
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 672 })'
+descriptor = "export at src/patterns.ts:672"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 672
+end = 672
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 782 })'
+descriptor = "export at src/patterns.ts:782"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 782
+end = 782
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 793 })'
+descriptor = "export at src/patterns.ts:793"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 793
+end = 793
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 805 })'
+descriptor = "export at src/patterns.ts:805"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 805
+end = 805
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 928 })'
+descriptor = "export at src/patterns.ts:928"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 928
+end = 928
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1075 })'
+descriptor = "export at src/patterns.ts:1075"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1075
+end = 1075
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1201 })'
+descriptor = "export at src/patterns.ts:1201"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1201
+end = 1201
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1211 })'
+descriptor = "export at src/patterns.ts:1211"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1211
+end = 1211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1221 })'
+descriptor = "export at src/patterns.ts:1221"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1221
+end = 1221
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1231 })'
+descriptor = "export at src/patterns.ts:1231"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1231
+end = 1231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1241 })'
+descriptor = "export at src/patterns.ts:1241"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1241
+end = 1241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1274 })'
+descriptor = "export at src/patterns.ts:1274"
+cost_tokens = 0
+cum_tokens = 5785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1274
+end = 1274
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1275
+end = 1275
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 90
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 131 })'
+descriptor = "export at src/patterns.ts:131"
+cost_tokens = 25
+cum_tokens = 5810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 131
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 246 })'
+descriptor = "export at src/patterns.ts:246"
+cost_tokens = 28
+cum_tokens = 5838
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 246
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 249
+end = 249
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 92
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 643 })'
 descriptor = "export at src/patterns.ts:643"
-cost_tokens = 31
-cum_tokens = 5178
+cost_tokens = 29
+cum_tokens = 5867
 
 [batches.content]
 kind = "lines"
@@ -1926,11 +2472,55 @@ end = 645
 kind = "full"
 
 [[batches]]
-position = 78
+position = 93
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1251 })'
+descriptor = "export at src/patterns.ts:1251"
+cost_tokens = 30
+cum_tokens = 5897
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1251
+end = 1253
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1254
+end = 1254
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 94
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1271 })'
+descriptor = "export at src/patterns.ts:1271"
+cost_tokens = 30
+cum_tokens = 5927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1271
+end = 1273
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 445 })'
 descriptor = "export at src/patterns.ts:445"
 cost_tokens = 36
-cum_tokens = 5214
+cum_tokens = 5963
 
 [batches.content]
 kind = "lines"
@@ -1952,11 +2542,29 @@ end = 448
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 96
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 81 })'
+descriptor = "export at src/patterns.ts:81"
+cost_tokens = 43
+cum_tokens = 6006
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 81
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 611 })'
 descriptor = "export at src/patterns.ts:611"
 cost_tokens = 42
-cum_tokens = 5256
+cum_tokens = 6048
 
 [batches.content]
 kind = "lines"
@@ -1978,11 +2586,91 @@ end = 615
 kind = "ellipsis"
 
 [[batches]]
-position = 80
+position = 98
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 242 })'
+descriptor = "export at src/patterns.ts:242"
+cost_tokens = 43
+cum_tokens = 6091
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 242
+end = 245
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 295 })'
+descriptor = "export at src/patterns.ts:295"
+cost_tokens = 43
+cum_tokens = 6134
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 295
+end = 298
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 100 })'
+descriptor = "export at src/patterns.ts:100"
+cost_tokens = 49
+cum_tokens = 6183
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 100
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 696 })'
+descriptor = "export at src/patterns.ts:696"
+cost_tokens = 44
+cum_tokens = 6227
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 696
+end = 698
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 699
+end = 699
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 433 })'
 descriptor = "export at src/patterns.ts:433"
 cost_tokens = 45
-cum_tokens = 5301
+cum_tokens = 6272
 
 [batches.content]
 kind = "lines"
@@ -1996,11 +2684,11 @@ end = 436
 kind = "full"
 
 [[batches]]
-position = 81
+position = 103
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 536 })'
 descriptor = "export at src/patterns.ts:536"
 cost_tokens = 45
-cum_tokens = 5346
+cum_tokens = 6317
 
 [batches.content]
 kind = "lines"
@@ -2022,11 +2710,11 @@ end = 540
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 104
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 572 })'
 descriptor = "export at src/patterns.ts:572"
 cost_tokens = 45
-cum_tokens = 5391
+cum_tokens = 6362
 
 [batches.content]
 kind = "lines"
@@ -2048,11 +2736,11 @@ end = 576
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 105
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 637 })'
 descriptor = "export at src/patterns.ts:637"
 cost_tokens = 49
-cum_tokens = 5440
+cum_tokens = 6411
 
 [batches.content]
 kind = "lines"
@@ -2066,11 +2754,11 @@ end = 642
 kind = "full"
 
 [[batches]]
-position = 84
+position = 106
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 299 })'
 descriptor = "export at src/patterns.ts:299"
 cost_tokens = 50
-cum_tokens = 5490
+cum_tokens = 6461
 
 [batches.content]
 kind = "lines"
@@ -2092,11 +2780,63 @@ end = 303
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 107
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 646 })'
+descriptor = "export at src/patterns.ts:646"
+cost_tokens = 52
+cum_tokens = 6513
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 646
+end = 651
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 652
+end = 652
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 108
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 187 })'
+descriptor = "export at src/patterns.ts:187"
+cost_tokens = 60
+cum_tokens = 6573
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 187
+end = 192
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 109
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 357 })'
 descriptor = "export at src/patterns.ts:357"
 cost_tokens = 78
-cum_tokens = 5568
+cum_tokens = 6651
 
 [batches.content]
 kind = "lines"
@@ -2110,11 +2850,11 @@ end = 361
 kind = "full"
 
 [[batches]]
-position = 86
+position = 110
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 437 })'
 descriptor = "export at src/patterns.ts:437"
 cost_tokens = 94
-cum_tokens = 5662
+cum_tokens = 6745
 
 [batches.content]
 kind = "lines"
@@ -2128,11 +2868,11 @@ end = 444
 kind = "full"
 
 [[batches]]
-position = 87
+position = 111
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 362 })'
 descriptor = "export at src/patterns.ts:362"
 cost_tokens = 95
-cum_tokens = 5757
+cum_tokens = 6840
 
 [batches.content]
 kind = "lines"
@@ -2154,11 +2894,83 @@ end = 369
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 112
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 686 })'
+descriptor = "export at src/patterns.ts:686"
+cost_tokens = 97
+cum_tokens = 6937
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 686
+end = 695
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 48 })'
+descriptor = "export at src/patterns.ts:48"
+cost_tokens = 150
+cum_tokens = 7087
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 48
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Typescript(Export { file: "src/patterns.ts", start_line: 673 })'
+descriptor = "export at src/patterns.ts:673"
+cost_tokens = 150
+cum_tokens = 7237
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 673
+end = 685
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 187, body_start_line: 193 })'
+descriptor = "export body at src/patterns.ts:187 body 193"
+cost_tokens = 237
+cum_tokens = 7474
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 193
+end = 214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
 key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 299, body_start_line: 303 })'
 descriptor = "export body at src/patterns.ts:299 body 303"
 cost_tokens = 322
-cum_tokens = 6079
+cum_tokens = 7796
 
 [batches.content]
 kind = "lines"
@@ -2172,47 +2984,29 @@ end = 333
 kind = "full"
 
 [[batches]]
-position = 89
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #11"
-cost_tokens = 124
-cum_tokens = 6203
+position = 117
+key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 246, body_start_line: 249 })'
+descriptor = "export body at src/patterns.ts:246 body 249"
+cost_tokens = 344
+cum_tokens = 8140
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 87
-end = 89
+path = "src/patterns.ts"
+start = 249
+end = 281
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 90
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #5"
-cost_tokens = 55
-cum_tokens = 6258
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 91
+position = 118
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 116 })'
 descriptor = "export doc at src/patterns.ts:116"
 cost_tokens = 121
-cum_tokens = 6379
+cum_tokens = 8261
 
 [batches.content]
 kind = "lines"
@@ -2226,29 +3020,29 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 92
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 129
-cum_tokens = 6508
+position = 119
+key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 1251 })'
+descriptor = "export doc at src/patterns.ts:1251"
+cost_tokens = 117
+cum_tokens = 8378
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "package.json"
-start = 74
-end = 82
+path = "src/patterns.ts"
+start = 1243
+end = 1250
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 93
+position = 120
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 100 })'
 descriptor = "export doc at src/patterns.ts:100"
 cost_tokens = 132
-cum_tokens = 6640
+cum_tokens = 8510
 
 [batches.content]
 kind = "lines"
@@ -2262,65 +3056,29 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 94
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #10"
-cost_tokens = 148
-cum_tokens = 6788
+position = 121
+key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 1221 })'
+descriptor = "export doc at src/patterns.ts:1221"
+cost_tokens = 107
+cum_tokens = 8617
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 67
-end = 85
+path = "src/patterns.ts"
+start = 1213
+end = 1220
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 95
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #6"
-cost_tokens = 60
-cum_tokens = 6848
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
-cost_tokens = 63
-cum_tokens = 6911
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 97
+position = 122
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 294 })'
 descriptor = "export doc at src/patterns.ts:294"
 cost_tokens = 131
-cum_tokens = 7042
+cum_tokens = 8748
 
 [batches.content]
 kind = "lines"
@@ -2334,11 +3092,47 @@ end = 293
 kind = "full"
 
 [[batches]]
-position = 98
+position = 123
+key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 782 })'
+descriptor = "export doc at src/patterns.ts:782"
+cost_tokens = 109
+cum_tokens = 8857
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 773
+end = 781
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 1211 })'
+descriptor = "export doc at src/patterns.ts:1211"
+cost_tokens = 109
+cum_tokens = 8966
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1203
+end = 1210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
 key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 362, body_start_line: 369 })'
 descriptor = "export body at src/patterns.ts:362 body 369"
 cost_tokens = 450
-cum_tokens = 7492
+cum_tokens = 9416
 
 [batches.content]
 kind = "lines"
@@ -2352,11 +3146,65 @@ end = 407
 kind = "full"
 
 [[batches]]
-position = 99
+position = 126
+key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 793 })'
+descriptor = "export doc at src/patterns.ts:793"
+cost_tokens = 110
+cum_tokens = 9526
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 784
+end = 792
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 928 })'
+descriptor = "export doc at src/patterns.ts:928"
+cost_tokens = 111
+cum_tokens = 9637
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 919
+end = 927
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 1201 })'
+descriptor = "export doc at src/patterns.ts:1201"
+cost_tokens = 114
+cum_tokens = 9751
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/patterns.ts"
+start = 1193
+end = 1200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 81 })'
 descriptor = "export doc at src/patterns.ts:81"
 cost_tokens = 153
-cum_tokens = 7645
+cum_tokens = 9904
 
 [batches.content]
 kind = "lines"
@@ -2365,272 +3213,6 @@ kind = "lines"
 path = "src/patterns.ts"
 start = 67
 end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 241 })'
-descriptor = "export doc at src/patterns.ts:241"
-cost_tokens = 142
-cum_tokens = 7787
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 231
-end = 240
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 611 })'
-descriptor = "export doc at src/patterns.ts:611"
-cost_tokens = 144
-cum_tokens = 7931
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 599
-end = 609
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 102
-key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 187 })'
-descriptor = "export doc at src/patterns.ts:187"
-cost_tokens = 146
-cum_tokens = 8077
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 177
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Typescript(ExportDoc { file: "src/is-matching.ts", start_line: 48 })'
-descriptor = "export doc at src/is-matching.ts:48"
-cost_tokens = 151
-cum_tokens = 8228
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/is-matching.ts"
-start = 35
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 637 })'
-descriptor = "export doc at src/patterns.ts:637"
-cost_tokens = 154
-cum_tokens = 8382
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 626
-end = 636
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Json(Whole { file: "jsr.json" })'
-descriptor = "json config jsr.json"
-cost_tokens = 93
-cum_tokens = 8475
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "jsr.json"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 433 })'
-descriptor = "export doc at src/patterns.ts:433"
-cost_tokens = 171
-cum_tokens = 8646
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 421
-end = 432
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 6
-cum_tokens = 8652
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["generate-cts.sh"]
-
-[[batches]]
-position = 108
-key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 356 })'
-descriptor = "export doc at src/patterns.ts:356"
-cost_tokens = 174
-cum_tokens = 8826
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 344
-end = 355
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 572 })'
-descriptor = "export doc at src/patterns.ts:572"
-cost_tokens = 175
-cum_tokens = 9001
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 559
-end = 571
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 131 })'
-descriptor = "export doc at src/patterns.ts:131"
-cost_tokens = 192
-cum_tokens = 9193
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/patterns.ts"
-start = 118
-end = 130
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Typescript(ExportDoc { file: "src/is-matching.ts", start_line: 32 })'
-descriptor = "export doc at src/is-matching.ts:32"
-cost_tokens = 176
-cum_tokens = 9369
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/is-matching.ts"
-start = 17
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #9"
-cost_tokens = 230
-cum_tokens = 9599
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 59
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Typescript(Imports { file: "src/types/Pattern.ts" })'
-descriptor = "imports in src/types/Pattern.ts"
-cost_tokens = 86
-cum_tokens = 9685
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/types/Pattern.ts"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Typescript(ExportDoc { file: "src/match.ts", start_line: 32 })'
-descriptor = "export doc at src/match.ts:32"
-cost_tokens = 209
-cum_tokens = 9894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/match.ts"
-start = 16
-end = 31
 
 [batches.content.spans.render]
 kind = "full"

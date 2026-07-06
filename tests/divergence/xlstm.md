@@ -281,104 +281,103 @@ Score(3000)=0.520 I=0.815 C=0.332 ns_rows≤3K=18/68 (reached=7 partial=0 missin
 | walker |  | 6872 | 62 | python method at xlstm/components/util.py:34 |  |  | 0.450 |
 | walker |  | 6898 | 26 | python decl names surface in experiments/data/formal_language/tasks/modular_arithmetic.py |  |  | 0.450 |
 | walker |  | 6924 | 26 | python method at xlstm/components/conv.py:98 |  |  | 0.450 |
-| walker |  | 6940 | 16 | python decl names surface #1 in xlstm/blocks/slstm/cell.py |  |  | 0.450 |
 | ns | 6948 |  | 207 | recurrent_step_stabilized_simple - (c,n,m) update rule | 5.7 | 2.7 | 0.446 |
 | ns | 7046 |  | 98 | sLSTMBlockConfig + sLSTMLayerConfig.__post_init__ - propagation rules | 6.1 | 2.8 | 0.442 |
-| walker |  | 7153 | 213 | python class body at xlstm/components/conv.py:55 |  |  | 0.442 |
+| walker |  | 7137 | 213 | python class body at xlstm/components/conv.py:55 |  |  | 0.442 |
 | ns | 7267 |  | 221 | sLSTMCellConfig - backend/function/bias_init/dtype knobs | 6.2 | 2.9 | 0.436 |
-| walker |  | 7383 | 230 | python class body at xlstm/components/linear_headwise.py:12 |  |  | 0.436 |
+| walker |  | 7367 | 230 | python class body at xlstm/components/linear_headwise.py:12 |  |  | 0.436 |
 | ns | 7435 |  | 168 | sLSTMCellBase.reset_parameters - powerlaw_blockdependent forget-gate init | 6.3 | 2.9 | 0.429 |
-| walker |  | 7462 | 79 | python method sigs in xlstm/blocks/mlstm/layer.py |  |  | 0.436 |
-| walker |  | 7462 | 0 | python method at xlstm/blocks/mlstm/layer.py:34 |  |  | 0.436 |
-| walker |  | 7462 | 0 | python method at xlstm/blocks/mlstm/layer.py:42 |  |  | 0.436 |
-| walker |  | 7462 | 0 | python method at xlstm/blocks/mlstm/layer.py:101 |  |  | 0.436 |
-| walker |  | 7472 | 10 | python method at xlstm/blocks/mlstm/layer.py:158 |  |  | 0.436 |
-| walker |  | 7492 | 20 | python method body at xlstm/components/conv.py:20 body 21 |  |  | 0.436 |
-| walker |  | 7512 | 20 | python method body at xlstm/components/util.py:65 body 67 |  |  | 0.436 |
+| walker |  | 7446 | 79 | python method sigs in xlstm/blocks/mlstm/layer.py |  |  | 0.436 |
+| walker |  | 7446 | 0 | python method at xlstm/blocks/mlstm/layer.py:34 |  |  | 0.436 |
+| walker |  | 7446 | 0 | python method at xlstm/blocks/mlstm/layer.py:42 |  |  | 0.436 |
+| walker |  | 7446 | 0 | python method at xlstm/blocks/mlstm/layer.py:101 |  |  | 0.436 |
+| walker |  | 7456 | 10 | python method at xlstm/blocks/mlstm/layer.py:158 |  |  | 0.436 |
+| walker |  | 7476 | 20 | python method body at xlstm/components/conv.py:20 body 21 |  |  | 0.436 |
+| walker |  | 7496 | 20 | python method body at xlstm/components/util.py:65 body 67 |  |  | 0.436 |
 | ns | 7519 |  | 84 | sLSTMCellBase.step/forward - dispatch to backend-specific _impl/_impl_step | 6.4 | 2.9 | 0.432 |
-| walker |  | 7552 | 40 | python decl names surface in xlstm/blocks/mlstm/backends.py |  |  | 0.435 |
-| walker |  | 7582 | 30 | python imports in xlstm/xlstm_large/components.py |  |  | 0.435 |
-| walker |  | 7623 | 41 | python decl names surface in experiments/data/formal_language/online_generate.py |  |  | 0.435 |
-| walker |  | 7623 | 0 | python decl at experiments/data/formal_language/online_generate.py:9 |  |  | 0.435 |
-| walker |  | 7623 | 0 | python decl at experiments/data/formal_language/online_generate.py:29 |  |  | 0.435 |
-| walker |  | 7623 | 0 | python decl at experiments/data/formal_language/online_generate.py:41 |  |  | 0.435 |
+| walker |  | 7536 | 40 | python decl names surface in xlstm/blocks/mlstm/backends.py |  |  | 0.435 |
+| walker |  | 7566 | 30 | python imports in xlstm/xlstm_large/components.py |  |  | 0.435 |
+| walker |  | 7607 | 41 | python decl names surface in experiments/data/formal_language/online_generate.py |  |  | 0.435 |
+| walker |  | 7607 | 0 | python decl at experiments/data/formal_language/online_generate.py:9 |  |  | 0.435 |
+| walker |  | 7607 | 0 | python decl at experiments/data/formal_language/online_generate.py:29 |  |  | 0.435 |
+| walker |  | 7607 | 0 | python decl at experiments/data/formal_language/online_generate.py:41 |  |  | 0.435 |
 | ns | 7643 |  | 124 | sLSTMCellCUDA JIT cache key + sLSTMCell.__new__ backend factory | 6.5 | 2.10 | 0.430 |
-| walker |  | 7680 | 57 | python imports in experiments/metrics.py |  |  | 0.430 |
+| walker |  | 7664 | 57 | python imports in experiments/metrics.py |  |  | 0.430 |
+| walker |  | 7714 | 50 | python decl doc at experiments/data/formal_language/online_generate.py:41 |  |  | 0.430 |
 | ns | 7729 |  | 86 | vanilla pointwise gate equations - slstm vs plain lstm variant | 6.6 |  | 0.428 |
-| walker |  | 7730 | 50 | python decl doc at experiments/data/formal_language/online_generate.py:41 |  |  | 0.428 |
 | ns | 7818 |  | 89 | cuda_init.py - load() JIT entry point + XLSTM_EXTRA_INCLUDE_PATHS env var | 6.7 |  | 0.426 |
-| walker |  | 7840 | 110 | python class body at xlstm/blocks/xlstm_block.py:16 |  |  | 0.426 |
-| walker |  | 7900 | 60 | python imports in experiments/lr_scheduler.py |  |  | 0.426 |
+| walker |  | 7824 | 110 | python class body at xlstm/blocks/xlstm_block.py:16 |  |  | 0.426 |
+| walker |  | 7884 | 60 | python imports in experiments/lr_scheduler.py |  |  | 0.426 |
 | ns | 7956 |  | 138 | sLSTM CUDA/C++ source tree listing | 6.8 |  | 0.417 |
 | ns | 8021 |  | 65 | slstm.h - ForwardPass/BackwardPass/BackwardPassCut class + Run() locations | 6.9 |  | 0.415 |
-| walker |  | 8080 | 180 | python method sigs in experiments/data/formal_language/online_generate.py |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:11 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:19 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:25 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:30 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:34 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:37 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:47 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:54 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:59 |  |  | 0.415 |
-| walker |  | 8080 | 0 | python method at experiments/data/formal_language/online_generate.py:63 |  |  | 0.415 |
-| walker |  | 8088 | 8 | python method at experiments/data/formal_language/online_generate.py:67 |  |  | 0.415 |
-| walker |  | 8096 | 8 | python method at experiments/data/formal_language/online_generate.py:71 |  |  | 0.415 |
-| walker |  | 8104 | 8 | python method body at experiments/data/formal_language/online_generate.py:25 body 26 |  |  | 0.415 |
-| walker |  | 8113 | 9 | python method body at experiments/data/formal_language/online_generate.py:37 body 38 |  |  | 0.415 |
+| walker |  | 8064 | 180 | python method sigs in experiments/data/formal_language/online_generate.py |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:11 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:19 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:25 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:30 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:34 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:37 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:47 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:54 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:59 |  |  | 0.415 |
+| walker |  | 8064 | 0 | python method at experiments/data/formal_language/online_generate.py:63 |  |  | 0.415 |
+| walker |  | 8072 | 8 | python method at experiments/data/formal_language/online_generate.py:67 |  |  | 0.415 |
+| walker |  | 8080 | 8 | python method at experiments/data/formal_language/online_generate.py:71 |  |  | 0.415 |
+| walker |  | 8088 | 8 | python method body at experiments/data/formal_language/online_generate.py:25 body 26 |  |  | 0.415 |
+| walker |  | 8097 | 9 | python method body at experiments/data/formal_language/online_generate.py:37 body 38 |  |  | 0.415 |
+| walker |  | 8106 | 9 | python method body at experiments/data/formal_language/online_generate.py:67 body 69 |  |  | 0.415 |
+| walker |  | 8116 | 10 | python method body at experiments/data/formal_language/online_generate.py:34 body 35 |  |  | 0.415 |
 | ns | 8118 |  | 97 | CausalConv1d.step - rolling-buffer single-step convolution | 7.1 | 2.11 | 0.413 |
-| walker |  | 8122 | 9 | python method body at experiments/data/formal_language/online_generate.py:67 body 69 |  |  | 0.413 |
-| walker |  | 8132 | 10 | python method body at experiments/data/formal_language/online_generate.py:34 body 35 |  |  | 0.413 |
-| walker |  | 8142 | 10 | python method body at experiments/data/formal_language/online_generate.py:71 body 73 |  |  | 0.413 |
-| walker |  | 8177 | 35 | python imports in xlstm/xlstm_large/generate.py |  |  | 0.413 |
+| walker |  | 8126 | 10 | python method body at experiments/data/formal_language/online_generate.py:71 body 73 |  |  | 0.413 |
+| walker |  | 8161 | 35 | python imports in xlstm/xlstm_large/generate.py |  |  | 0.413 |
 | ns | 8232 |  | 114 | LinearHeadwiseExpand.forward - per-head einsum projection | 7.2 | 2.11 | 0.410 |
 | ns | 8270 |  | 38 | init.py - small_init_ / wang_init_ std-dev formulas | 7.3 | 2.12 | 0.409 |
-| walker |  | 8292 | 115 | python decl at xlstm/xlstm_large/from_pretrained.py:9 |  |  | 0.409 |
-| walker |  | 8366 | 74 | python method at xlstm/components/ln.py:11 |  |  | 0.409 |
+| walker |  | 8276 | 115 | python decl at xlstm/xlstm_large/from_pretrained.py:9 |  |  | 0.409 |
+| walker |  | 8350 | 74 | python method at xlstm/components/ln.py:11 |  |  | 0.409 |
 | ns | 8415 |  | 145 | xLSTMLargeConfig - chunkwise_kernel/mode/weight_mode doc'd fields | 8.1 | 2.13 | 0.406 |
-| walker |  | 8441 | 75 | python class body at xlstm/blocks/mlstm/block.py:9 |  |  | 0.406 |
+| walker |  | 8425 | 75 | python class body at xlstm/blocks/mlstm/block.py:9 |  |  | 0.406 |
 | ns | 8532 |  | 117 | xLSTMLarge.forward + mLSTMLayer.forward - soft_cap gate/logit capping | 8.2 | 2.13 | 0.403 |
 | ns | 8568 |  | 36 | components.py - soft_cap formula | 8.3 | 2.13 | 0.402 |
 | ns | 8826 |  | 258 | from_pretrained.py - sharded safetensors loading + forced single weight_mode | 8.4 | 2.14 | 0.396 |
 | ns | 8936 |  | 110 | experiments/ + data/formal_language/{,tasks}/ directory listings | 9.1 |  | 0.418 |
-| walker |  | 8968 | 527 | plaintext config setup.cfg |  |  | 0.418 |
+| walker |  | 8952 | 527 | plaintext config setup.cfg |  |  | 0.418 |
 | ns | 9029 |  | 93 | main.py - CLI entry point + dataset registry | 9.2 |  | 0.417 |
-| walker |  | 9063 | 95 | python decl doc at xlstm/components/util.py:26 |  |  | 0.417 |
-| walker |  | 9146 | 83 | python decl names surface in xlstm/components/feedforward.py |  |  | 0.426 |
-| walker |  | 9146 | 0 | python decl at xlstm/components/feedforward.py:22 |  |  | 0.426 |
-| walker |  | 9146 | 0 | python decl at xlstm/components/feedforward.py:49 |  |  | 0.426 |
-| walker |  | 9146 | 0 | python decl at xlstm/components/feedforward.py:90 |  |  | 0.426 |
-| walker |  | 9160 | 14 | python decl at xlstm/components/feedforward.py:31 |  |  | 0.429 |
-| walker |  | 9172 | 12 | python class body at xlstm/components/feedforward.py:49 |  |  | 0.429 |
+| walker |  | 9047 | 95 | python decl doc at xlstm/components/util.py:26 |  |  | 0.417 |
+| walker |  | 9130 | 83 | python decl names surface in xlstm/components/feedforward.py |  |  | 0.426 |
+| walker |  | 9130 | 0 | python decl at xlstm/components/feedforward.py:22 |  |  | 0.426 |
+| walker |  | 9130 | 0 | python decl at xlstm/components/feedforward.py:49 |  |  | 0.426 |
+| walker |  | 9130 | 0 | python decl at xlstm/components/feedforward.py:90 |  |  | 0.426 |
+| walker |  | 9144 | 14 | python decl at xlstm/components/feedforward.py:31 |  |  | 0.429 |
+| walker |  | 9156 | 12 | python class body at xlstm/components/feedforward.py:49 |  |  | 0.429 |
 | ns | 9209 |  | 180 | lr_scheduler.py - LinearWarmupCosineAnnealing.compute_lr formula | 9.3 |  | 0.426 |
-| walker |  | 9238 | 66 | python method sigs in xlstm/components/feedforward.py |  |  | 0.433 |
-| walker |  | 9238 | 0 | python method at xlstm/components/feedforward.py:42 |  |  | 0.433 |
-| walker |  | 9238 | 0 | python method at xlstm/components/feedforward.py:52 |  |  | 0.433 |
-| walker |  | 9238 | 0 | python method at xlstm/components/feedforward.py:72 |  |  | 0.433 |
-| walker |  | 9238 | 0 | python method at xlstm/components/feedforward.py:77 |  |  | 0.433 |
+| walker |  | 9222 | 66 | python method sigs in xlstm/components/feedforward.py |  |  | 0.433 |
+| walker |  | 9222 | 0 | python method at xlstm/components/feedforward.py:42 |  |  | 0.433 |
+| walker |  | 9222 | 0 | python method at xlstm/components/feedforward.py:52 |  |  | 0.433 |
+| walker |  | 9222 | 0 | python method at xlstm/components/feedforward.py:72 |  |  | 0.433 |
+| walker |  | 9222 | 0 | python method at xlstm/components/feedforward.py:77 |  |  | 0.433 |
+| walker |  | 9328 | 106 | python class body at xlstm/components/feedforward.py:31 |  |  | 0.433 |
 | ns | 9331 |  | 122 | FormLangDataset.__getitem__ - mask-based causal LM framing | 9.4 |  | 0.430 |
-| walker |  | 9344 | 106 | python class body at xlstm/components/feedforward.py:31 |  |  | 0.430 |
+| walker |  | 9368 | 40 | python method body at experiments/metrics.py:17 body 18 |  |  | 0.430 |
 | ns | 9379 |  | 48 | tasks/{parity,cycle_navigation,even_pairs,modular_arithmetic}.py - function locations | 9.5 |  | 0.434 |
-| walker |  | 9384 | 40 | python method body at experiments/metrics.py:17 body 18 |  |  | 0.434 |
-| walker |  | 9440 | 56 | python method at xlstm/blocks/slstm/layer.py:92 |  |  | 0.443 |
-| walker |  | 9517 | 77 | python imports in xlstm/utils.py |  |  | 0.443 |
+| walker |  | 9424 | 56 | python method at xlstm/blocks/slstm/layer.py:92 |  |  | 0.443 |
+| walker |  | 9501 | 77 | python imports in xlstm/utils.py |  |  | 0.443 |
 | ns | 9553 |  | 174 | parity_xlstm{01,10,11}.yaml - the mLSTM-only / sLSTM-only / mixed variants | 9.6 |  | 0.437 |
-| walker |  | 9606 | 89 | python decl names surface in xlstm/components/init.py |  |  | 0.450 |
-| walker |  | 9606 | 0 | python decl at xlstm/components/init.py:8 |  |  | 0.450 |
-| walker |  | 9606 | 0 | python decl at xlstm/components/init.py:18 |  |  | 0.450 |
-| walker |  | 9606 | 0 | python decl at xlstm/components/init.py:28 |  |  | 0.450 |
+| walker |  | 9590 | 89 | python decl names surface in xlstm/components/init.py |  |  | 0.444 |
+| walker |  | 9590 | 0 | python decl at xlstm/components/init.py:8 |  |  | 0.444 |
+| walker |  | 9590 | 0 | python decl at xlstm/components/init.py:18 |  |  | 0.444 |
+| walker |  | 9590 | 0 | python decl at xlstm/components/init.py:28 |  |  | 0.444 |
+| walker |  | 9604 | 14 | python decl doc at xlstm/components/init.py:8 |  |  | 0.444 |
 | ns | 9606 |  | 53 | tests/ directory listing | 10.1 |  | 0.450 |
-| walker |  | 9620 | 14 | python decl doc at xlstm/components/init.py:8 |  |  | 0.450 |
-| walker |  | 9652 | 32 | python decl doc at xlstm/components/init.py:28 |  |  | 0.450 |
+| walker |  | 9636 | 32 | python decl doc at xlstm/components/init.py:28 |  |  | 0.450 |
 | ns | 9653 |  | 47 | conftest.py - CUDA-required skip-all guard | 10.2 |  | 0.448 |
 | ns | 9788 |  | 135 | Test-function locations across the pytest suite | 10.3 |  | 0.445 |
-| walker |  | 9813 | 161 | python class body at xlstm/blocks/mlstm/layer.py:18 |  |  | 0.445 |
-| ns | 9864 |  | 76 | res/ + notebooks/ directory listings | 11.1 |  | 0.451 |
-| walker |  | 9869 | 56 | listing of 'xlstm/blocks/slstm/src/cuda' |  |  | 0.455 |
+| walker |  | 9797 | 161 | python class body at xlstm/blocks/mlstm/layer.py:18 |  |  | 0.445 |
+| walker |  | 9853 | 56 | listing of 'xlstm/blocks/slstm/src/cuda' |  |  | 0.448 |
+| ns | 9864 |  | 76 | res/ + notebooks/ directory listings | 11.1 |  | 0.455 |
+| walker |  | 9865 | 12 | c decl names surface in xlstm/blocks/slstm/src/cuda/slstm.h |  |  | 0.455 |
+| walker |  | 9865 | 0 | c decl at xlstm/blocks/slstm/src/cuda/slstm.h:44 |  |  | 0.455 |
 | ns | 9872 |  | 8 | .github/workflows/ - no test/lint CI, only CLA + repo-sync | 11.2 |  | 0.456 |
-| walker |  | 9881 | 12 | c decl names surface in xlstm/blocks/slstm/src/cuda/slstm.h |  |  | 0.456 |
-| walker |  | 9881 | 0 | c decl at xlstm/blocks/slstm/src/cuda/slstm.h:44 |  |  | 0.456 |
+| walker |  | 9878 | 13 | c includes in xlstm/blocks/slstm/src/cuda/slstm.h |  |  | 0.456 |
 | ns | 9887 |  | 15 | LICENSE header | 11.3 |  | 0.456 |
-| walker |  | 9894 | 13 | c includes in xlstm/blocks/slstm/src/cuda/slstm.h |  |  | 0.456 |
 | ns | 9961 |  | 74 | pytest.ini - full | 11.4 |  | 0.454 |
 | ns | 9996 |  | 35 | README - Citation BibTeX keys | 11.5 |  | 0.453 |

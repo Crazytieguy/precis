@@ -16,10 +16,7 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, LuaKey};
-use crate::value::{
-    NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
-    names_surface_chunk_index,
-};
+use crate::value::mix_signals;
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
@@ -89,39 +86,26 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
 
-        let names_chunk_count = names_surface_chunk_count(decls.len()).max(1);
-        let names_predecessors: Vec<_> = (0..names_chunk_count)
-            .map(|chunk_index| {
-                BatchKey::Lua(LuaKey::DeclNames {
-                    file: file.clone(),
-                    chunk_index,
-                })
-            })
-            .collect();
+        // One unified names surface per file — NS authors anchor on the
+        // complete catalog as a single unit (chunking measured against
+        // unified on the post-refreeze keys: unified wins).
         let all_starts: std::collections::HashSet<usize> =
             decls.iter().map(|(_, i)| i.start_line).collect();
-        let names_lines_by_chunk: Vec<FileLines> = decls
-            .chunks(NAMES_SURFACE_CHUNK_SIZE)
-            .map(|c| collect_decl_names_from_with_global_starts(c, &all_starts))
-            .collect();
-        for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
-            let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
-            else {
-                continue;
-            };
+        let names_lines = collect_decl_names_from_with_global_starts(&decls, &all_starts);
+        let mut names_gate: Option<BatchKey> = None;
+        if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
+            let key = BatchKey::Lua(LuaKey::DeclNames { file: file.clone() });
             out.push(Batch {
-                key: names_predecessors[chunk_index].clone(),
+                key: key.clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
+                value: decl_names_value(file, ctx),
             });
+            names_gate = Some(key);
         }
 
         let src_lines: Vec<&str> = source.lines().collect();
-        for (decl_index, (node, info)) in decls.iter().enumerate() {
-            let names_chunk_index = names_surface_chunk_index(decl_index);
-            let names_predecessor = names_predecessors[names_chunk_index].clone();
-            let chunk_names_lines = &names_lines_by_chunk[names_chunk_index];
+        for (node, info) in decls.iter() {
             let decl_key = LuaKey::Decl {
                 file: file.clone(),
                 start_line: info.start_line,
@@ -130,12 +114,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             let body_lines = collect_decl_body(*node, &src_lines);
             let decl_lines = collect_decl(*node, &source, &all_starts, !body_lines.full.is_empty());
             let decl_has_descendants = !doc_lines.full.is_empty() || !body_lines.full.is_empty();
-            if (!file_lines_covered_by(&decl_lines, chunk_names_lines) || decl_has_descendants)
+            if (!file_lines_covered_by(&decl_lines, &names_lines) || decl_has_descendants)
                 && let Some(content) = single_file_lines_content(file, &source, decl_lines)
             {
                 out.push(Batch {
                     key: decl_key.clone().into(),
-                    predecessor: Some(names_predecessor.clone()),
+                    predecessor: names_gate.clone(),
                     content,
                     value: decl_value(file, ctx),
                 });
@@ -499,9 +483,8 @@ fn meta_file_whole_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.85, 0.85, 0.55, file_depth_factor(file, ctx, false))
 }
 
-fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
+fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.65, 0.70, 0.45, path_depth_factor(file, ctx))
-        * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 
 fn decl_value(file: &Path, ctx: &WalkCtx) -> f64 {

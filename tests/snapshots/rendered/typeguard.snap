@@ -111,6 +111,23 @@ src/
             …
         _checkers.py
             …
+              81→TypeCheckerCallable: TypeAlias = Callable[
+              82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
+              83→]
+              84→TypeCheckLookupCallback: TypeAlias = Callable[
+              85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
+              86→]
+              88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
+              89→generic_alias_types: tuple[type, ...] = (
+              90→    type(List),
+              91→    type(List[Any]),
+              92→    types.GenericAlias,
+              93→)
+            …
+              96→_missing = object()
+            …
+              99→BINARY_MAGIC_METHODS = {
+            …
              153→def check_callable(
              154→    value: Any,
              155→    origin_type: Any,
@@ -133,41 +150,16 @@ src/
              252→) -> None:
             …
              305→def check_list(
-             306→    value: Any,
-             307→    origin_type: Any,
-             308→    args: tuple[Any, ...],
-             309→    memo: TypeCheckMemo,
-             310→) -> None:
             …
              324→def check_sequence(
-             325→    value: Any,
-             326→    origin_type: Any,
-             327→    args: tuple[Any, ...],
-             328→    memo: TypeCheckMemo,
-             329→) -> None:
             …
              343→def check_set(
-             344→    value: Any,
-             345→    origin_type: Any,
-             346→    args: tuple[Any, ...],
-             347→    memo: TypeCheckMemo,
-             348→) -> None:
             …
              365→def check_tuple(
             …
              423→def check_union(
-             424→    value: Any,
-             425→    origin_type: Any,
-             426→    args: tuple[Any, ...],
-             427→    memo: TypeCheckMemo,
-             428→) -> None:
             …
              447→def check_uniontype(
-             448→    value: Any,
-             449→    origin_type: Any,
-             450→    args: tuple[Any, ...],
-             451→    memo: TypeCheckMemo,
-             452→) -> None:
             …
              474→def check_class(
             …
@@ -202,8 +194,16 @@ src/
              915→def check_paramspec(
             …
              924→def check_type_internal(
+             925→    value: Any,
+             926→    annotation: Any,
+             927→    memo: TypeCheckMemo,
+             928→) -> None:
+            …
+            1005→origin_type_checkers: dict[
             …
             1061→def builtin_checker_lookup(
+            1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
+            1063→) -> TypeCheckerCallable | None:
             …
             1099→def load_plugins() -> None:
             …
@@ -302,9 +302,6 @@ src/
               32→) -> Callable[P, T] | ContextManager[None]:
             …
         _transformer.py
-            …
-             100→aug_assign_functions = {
-            …
         _utils.py
         py.typed
 tests/

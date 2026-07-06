@@ -53,9 +53,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
 use crate::value::{
-    NAMES_SURFACE_CHUNK_SIZE, depth_factor, mix_signals, names_surface_chunk_count,
-    names_surface_chunk_factor, names_surface_chunk_index, reexport_import_chunk_factor,
-    roster_mass_factor_with_baseline,
+    depth_factor, mix_signals, reexport_import_chunk_factor, roster_mass_factor_with_baseline,
 };
 
 use super::import_chunks::{
@@ -198,157 +196,70 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             .collect();
         let all_name_lines = collect_all_name_lines(&decls, &flat_methods);
 
+        // One unified names surface per file — NS authors anchor on the
+        // complete catalog as a single unit, and chunking traded that
+        // for falloff-damped fragments plus signature-roster ancestors
+        // papering over the fragmentation (measured on the post-refreeze
+        // keys: unified wins axios/pluggy, the rosters were a drag or a
+        // no-op once surfaces were whole). Roster-mass pricing keeps the
+        // complete catalog competitive with tiny-roster peers.
         let roster = names_roster(&decls, &source);
-        let chunk_of_decl = decl_chunk_indices(&decls, &roster, &source);
-        let names_chunk_count = names_surface_chunk_count(roster.len());
-        let names_predecessors: Vec<_> = (0..names_chunk_count)
-            .map(|chunk_index| {
-                BatchKey::Python(PythonKey::DeclNames {
-                    file: file.clone(),
-                    chunk_index,
-                })
-            })
-            .collect();
-        let names_lines_by_chunk: Vec<_> = roster
-            .chunks(NAMES_SURFACE_CHUNK_SIZE)
-            .map(|chunk| {
-                let chunk_decls: Vec<_> = chunk.iter().map(|&i| decls[i]).collect();
-                collect_decl_names_from(&chunk_decls, &all_name_lines)
-            })
-            .collect();
-        let signature_roster: Vec<_> = roster
-            .iter()
-            .filter_map(|&i| {
-                matches!(decls[i].kind, DeclKind::Class | DeclKind::Function).then_some(decls[i])
-            })
-            .collect();
-        let decl_sigs_roster_key = (signature_roster.len() > NAMES_SURFACE_CHUNK_SIZE)
-            .then(|| BatchKey::Python(PythonKey::DeclSigsRoster { file: file.clone() }));
-        if let Some(key) = decl_sigs_roster_key.as_ref()
-            && let Some(content) = single_file_lines_content(
-                file,
-                &source,
-                collect_decl_signature_roster_from(&signature_roster, &all_name_lines),
-            )
-        {
+        let roster_decls: Vec<_> = roster.iter().map(|&i| decls[i]).collect();
+        let names_lines = collect_decl_names_from(&roster_decls, &all_name_lines);
+        let mut names_gate: Option<BatchKey> = None;
+        if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
+            let key = BatchKey::Python(PythonKey::DeclNames { file: file.clone() });
             out.push(Batch {
                 key: key.clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx, 0, 1)
-                    * python_roster_mass_factor(file, signature_roster.len()),
+                value: decl_names_value(file, ctx) * python_roster_mass_factor(file, roster.len()),
             });
-        }
-        for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
-            let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
-            else {
-                continue;
-            };
-            let chunk_entry_count = roster
-                .len()
-                .min((chunk_index + 1) * NAMES_SURFACE_CHUNK_SIZE)
-                - chunk_index * NAMES_SURFACE_CHUNK_SIZE;
-            out.push(Batch {
-                key: names_predecessors[chunk_index].clone(),
-                predecessor: decl_sigs_roster_key.clone(),
-                content,
-                value: decl_names_value(file, ctx, chunk_index, names_chunk_count)
-                    * python_roster_mass_factor(file, chunk_entry_count),
-            });
+            names_gate = Some(key);
         }
 
-        // MethodSigs chunks by method count, mirroring DeclNames: a
-        // 30-method class's catalog must not ride one 500-token batch
-        // whose `value/cost^k` rank sinks below every leaf file's.
-        // Mid-size catalogs stay whole — chunking them trades a fine
-        // batch for a falloff-damped pair and only delays the skeleton
-        // (measured: nano-vllm's 13-17-method engine classes regress
-        // chunked; pluggy's ~30-method PluginManager regresses whole).
-        let sigs_chunk_size = if flat_methods.len() > 2 * NAMES_SURFACE_CHUNK_SIZE {
-            NAMES_SURFACE_CHUNK_SIZE
-        } else {
-            flat_methods.len().max(1)
-        };
-        let sigs_chunk_count = flat_methods.len().div_ceil(sigs_chunk_size);
-        let method_sigs_roster_key = (sigs_chunk_count > 1)
-            .then(|| BatchKey::Python(PythonKey::MethodSigsRoster { file: file.clone() }));
-        if let Some(key) = method_sigs_roster_key.as_ref() {
-            let methods: Vec<_> = flat_methods.iter().map(|(_, m)| *m).collect();
-            if let Some(content) = single_file_lines_content(
-                file,
-                &source,
-                collect_method_signature_roster(&methods, &all_name_lines),
-            ) {
-                let first_class_index = flat_methods[0].0;
-                out.push(Batch {
-                    key: key.clone(),
-                    predecessor: Some(names_predecessors[chunk_of_decl[first_class_index]].clone()),
-                    content,
-                    value: method_sigs_value(file, ctx)
-                        * python_roster_mass_factor(file, methods.len()),
-                });
-            }
-        }
-        let mut sigs_chunk_of_method = HashMap::new();
-        for (chunk_index, chunk) in flat_methods.chunks(sigs_chunk_size).enumerate() {
-            let full: Vec<_> = chunk.iter().map(|(_, m)| signature_line(m)).collect();
+        // Method-signature catalog — likewise one unified batch. Gated
+        // on the names surface: the `Full+Ellipsis` pair can share the
+        // class header's following ellipsis row, so gating keeps overlap
+        // ancestry local.
+        let mut method_sigs_gate: Option<BatchKey> = None;
+        {
+            let full: Vec<_> = flat_methods
+                .iter()
+                .map(|(_, m)| signature_line(m))
+                .collect();
             let ellipses: Vec<_> = full
                 .iter()
                 .map(|line| *line + 1)
                 .filter(|line| !all_name_lines.contains(line))
                 .collect();
             let lines = FileLines::new(full).with_ellipses(ellipses);
-            let Some(content) = single_file_lines_content(file, &source, lines) else {
-                continue;
-            };
-            let key = PythonKey::MethodSigs {
-                file: file.clone(),
-                chunk_index,
-            };
-            for (_, method) in chunk {
-                sigs_chunk_of_method.insert(method.start_line, BatchKey::Python(key.clone()));
+            if let Some(content) = single_file_lines_content(file, &source, lines) {
+                let key = BatchKey::Python(PythonKey::MethodSigs { file: file.clone() });
+                out.push(Batch {
+                    key: key.clone(),
+                    predecessor: names_gate.clone(),
+                    content,
+                    value: method_sigs_value(file, ctx)
+                        * python_roster_mass_factor(file, flat_methods.len()),
+                });
+                method_sigs_gate = Some(key);
             }
-            // Chunk 0 gates on the decl-name chunk of its first class
-            // (the MethodSigs `Full+Ellipsis` pair can share the class
-            // header's following ellipsis row, so gating on the names
-            // surface keeps overlap ancestry local). Later chunks chain
-            // on their predecessor chunk — ungated tails are cheaper
-            // than heads and would deliver the catalog bottom-first.
-            let predecessor = if chunk_index == 0 {
-                method_sigs_roster_key
-                    .clone()
-                    .unwrap_or_else(|| names_predecessors[chunk_of_decl[chunk[0].0]].clone())
-            } else {
-                BatchKey::Python(PythonKey::MethodSigs {
-                    file: file.clone(),
-                    chunk_index: chunk_index - 1,
-                })
-            };
-            out.push(Batch {
-                key: key.into(),
-                predecessor: Some(predecessor),
-                content,
-                value: method_sigs_value(file, ctx)
-                    * names_surface_chunk_factor(chunk_index, sigs_chunk_count)
-                    * python_roster_mass_factor(file, chunk.len()),
-            });
         }
 
-        for (decl_index, decl) in decls.iter().enumerate() {
-            let chunk_index = chunk_of_decl[decl_index];
-            let names_predecessor = names_predecessors[chunk_index].clone();
+        for decl in decls.iter() {
             let decl_key = PythonKey::Decl {
                 file: file.clone(),
                 start_line: decl.start_line,
             };
             let decl_lines = collect_decl(decl);
             if (!matches!(decl.kind, DeclKind::Const)
-                || !file_lines_covered_by(&decl_lines, &names_lines_by_chunk[chunk_index]))
+                || !file_lines_covered_by(&decl_lines, &names_lines))
                 && let Some(content) = single_file_lines_content(file, &source, decl_lines)
             {
                 out.push(Batch {
                     key: decl_key.clone().into(),
-                    predecessor: Some(names_predecessor.clone()),
+                    predecessor: names_gate.clone(),
                     content,
                     value: decl_value(file, decl, ctx),
                 });
@@ -434,7 +345,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         &source,
                         &src_lines,
                         decl,
-                        &sigs_chunk_of_method,
+                        method_sigs_gate.as_ref(),
                         &decl_predecessor,
                     ));
                 }
@@ -508,7 +419,7 @@ fn emit_methods(
     source: &str,
     src_lines: &[&str],
     class_decl: &DeclInfo,
-    sigs_chunk_of_method: &HashMap<usize, BatchKey>,
+    method_sigs_gate: Option<&BatchKey>,
     decl_predecessor: &BatchKey,
 ) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
@@ -521,12 +432,7 @@ fn emit_methods(
         {
             out.push(Batch {
                 key: method_key.clone().into(),
-                predecessor: Some(
-                    sigs_chunk_of_method
-                        .get(&method.start_line)
-                        .unwrap_or(decl_predecessor)
-                        .clone(),
-                ),
+                predecessor: Some(method_sigs_gate.unwrap_or(decl_predecessor).clone()),
                 content,
                 value: method_value(file, &method, ctx),
             });
@@ -913,27 +819,6 @@ fn names_roster(decls: &[DeclInfo], source: &str) -> Vec<usize> {
     roster
 }
 
-/// Names-surface chunk index of every decl. Roster members map by
-/// roster position; collapsed overload stubs ride their
-/// implementation's chunk so their per-decl batches stay gated on the
-/// chunk that names the stack.
-fn decl_chunk_indices(decls: &[DeclInfo], roster: &[usize], source: &str) -> Vec<usize> {
-    let mut chunk_of = vec![usize::MAX; decls.len()];
-    for (position, &decl_index) in roster.iter().enumerate() {
-        chunk_of[decl_index] = names_surface_chunk_index(position);
-    }
-    for decl_index in 0..decls.len() {
-        if chunk_of[decl_index] != usize::MAX {
-            continue;
-        }
-        let chunk = overload_implementation(&decls[decl_index], decls, source)
-            .map(|impl_index| chunk_of[impl_index])
-            .unwrap_or(0);
-        chunk_of[decl_index] = chunk;
-    }
-    chunk_of
-}
-
 fn collapsed_overload_stub(decl: &DeclInfo, decls: &[DeclInfo], source: &str) -> bool {
     is_overload_stub(decl, source) && overload_implementation(decl, decls, source).is_some()
 }
@@ -992,19 +877,6 @@ fn collect_decl_names_from(decls: &[DeclInfo], all_name_lines: &HashSet<usize>) 
     FileLines::new(full).with_ellipses(ellipses)
 }
 
-fn collect_decl_signature_roster_from(
-    decls: &[DeclInfo],
-    all_name_lines: &HashSet<usize>,
-) -> FileLines {
-    let full: Vec<_> = decls.iter().map(|decl| decl.start_line).collect();
-    let ellipses: Vec<_> = full
-        .iter()
-        .map(|line| *line + 1)
-        .filter(|line| !all_name_lines.contains(line))
-        .collect();
-    FileLines::new(full).with_ellipses(ellipses)
-}
-
 fn collect_methods_by_class<'a>(
     decls: &[DeclInfo<'a>],
     source: &str,
@@ -1020,19 +892,6 @@ fn collect_methods_by_class<'a>(
 
 fn signature_line(info: &DeclInfo) -> usize {
     info.inner_node.start_position().row + 1
-}
-
-fn collect_method_signature_roster(
-    methods: &[DeclInfo],
-    all_name_lines: &HashSet<usize>,
-) -> FileLines {
-    let full: Vec<_> = methods.iter().map(signature_line).collect();
-    let ellipses: Vec<_> = full
-        .iter()
-        .map(|line| *line + 1)
-        .filter(|line| !all_name_lines.contains(line))
-        .collect();
-    FileLines::new(full).with_ellipses(ellipses)
 }
 
 fn collect_decl(info: &DeclInfo) -> FileLines {
@@ -1514,7 +1373,7 @@ fn top_level_package_init_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
+fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // `__init__.py` carries the package's public surface; non-init
     // modules are implementation detail and their names surface should
     // not crowd README / public-export batches in the early budget.
@@ -1526,7 +1385,6 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
         0.5
     };
     mix_signals(cat, 0.55, 0.35, python_depth_factor(file, ctx))
-        * names_surface_chunk_factor(chunk_index, chunk_count)
         * concrete_impl_sibling_factor(file)
 }
 
@@ -1855,45 +1713,7 @@ class A:
     }
 
     #[test]
-    fn python_chunked_decl_names_get_signature_roster_ancestor() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let mut src = String::new();
-        for i in 0..=NAMES_SURFACE_CHUNK_SIZE {
-            src.push_str(&format!("def check_{i}(value):\n    return value\n\n"));
-        }
-        let file = root.join("catalog.py");
-        std::fs::write(&file, src).unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
-        let report = scheduler.run_with_report();
-        let roster_key = BatchKey::Python(PythonKey::DeclSigsRoster { file: file.clone() });
-        assert!(
-            report.candidates.iter().any(|b| b.key == roster_key),
-            "expected whole decl-sigs roster; candidates: {:?}",
-            report.candidates.iter().map(|b| &b.key).collect::<Vec<_>>()
-        );
-        let decl_chunks: Vec<_> = report
-            .candidates
-            .iter()
-            .filter(|b| {
-                matches!(
-                    b.key,
-                    BatchKey::Python(PythonKey::DeclNames { ref file, .. }) if file.ends_with("catalog.py")
-                )
-            })
-            .collect();
-        assert_eq!(decl_chunks.len(), 2, "got {decl_chunks:?}");
-        assert!(
-            decl_chunks
-                .iter()
-                .all(|b| b.predecessor.as_ref() == Some(&roster_key)),
-            "decl chunks should descend from roster: {decl_chunks:?}"
-        );
-    }
-
-    #[test]
-    fn python_decl_name_chunk_ellipsis_skips_next_decl_line() {
+    fn python_decl_names_ellipsis_skips_next_decl_line() {
         let mut src = String::new();
         for i in 0..14 {
             src.push_str(&format!("def f{i:02}(): pass\n"));
@@ -1903,7 +1723,7 @@ class A:
     }
 
     #[test]
-    fn python_method_sigs_roster_ellipsis_skips_following_decl_line() {
+    fn python_method_sigs_ellipsis_skips_following_decl_line() {
         let mut src = String::new();
         for class_index in 0..12 {
             src.push_str(&format!("class C{class_index:02}:\n"));
@@ -1914,49 +1734,6 @@ class A:
         src.push_str("X = 1\n");
 
         assert_python_scheduler_overlap_free(&src);
-    }
-
-    #[test]
-    fn python_chunked_method_sigs_get_whole_roster_ancestor() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let mut src = String::from("class Catalog:\n");
-        for i in 0..=(2 * NAMES_SURFACE_CHUNK_SIZE) {
-            src.push_str(&format!("    def method_{i}(self): pass\n"));
-        }
-        let file = root.join("catalog.py");
-        std::fs::write(&file, src).unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 10_000, None);
-        let report = scheduler.run_with_report();
-        let roster_key = BatchKey::Python(PythonKey::MethodSigsRoster { file: file.clone() });
-        let chunk0_key = BatchKey::Python(PythonKey::MethodSigs {
-            file: file.clone(),
-            chunk_index: 0,
-        });
-        let chunk1_key = BatchKey::Python(PythonKey::MethodSigs {
-            file: file.clone(),
-            chunk_index: 1,
-        });
-        let chunk2_key = BatchKey::Python(PythonKey::MethodSigs {
-            file: file.clone(),
-            chunk_index: 2,
-        });
-        let pred_for = |key: &BatchKey| {
-            report
-                .candidates
-                .iter()
-                .find(|b| &b.key == key)
-                .and_then(|b| b.predecessor.as_ref())
-        };
-
-        assert!(
-            report.candidates.iter().any(|b| b.key == roster_key),
-            "expected whole method-sigs roster"
-        );
-        assert_eq!(pred_for(&chunk0_key), Some(&roster_key));
-        assert_eq!(pred_for(&chunk1_key), Some(&chunk0_key));
-        assert_eq!(pred_for(&chunk2_key), Some(&chunk1_key));
     }
 
     #[test]

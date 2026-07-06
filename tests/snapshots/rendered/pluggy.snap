@@ -162,85 +162,6 @@ src/
               38→    raise AttributeError(f"module {__name__} has no attribute {name!r}")
         _callers.py
         _hooks.py
-            …
-              28→_T = TypeVar("_T")
-            …
-              40→class HookspecOpts(TypedDict):
-              41→    """Options for a hook specification."""
-            …
-              56→class HookimplOpts(TypedDict):
-              57→    """Options for a hook implementation."""
-            …
-              77→@final
-              78→class HookspecMarker:
-            …
-              86→    __slots__ = ("project_name",)
-            …
-             164→@final
-             165→class HookimplMarker:
-            …
-             173→    __slots__ = ("project_name",)
-            …
-             281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
-            …
-             293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
-            …
-             358→@final
-             359→class HookRelay:
-             360→    """Hook holder object for performing 1:N hook calls where N is the number
-             361→    of registered plugins."""
-             363→    __slots__ = ("__dict__",)
-            …
-             368→    if TYPE_CHECKING:
-             369→
-             370→        def __getattr__(self, name: str) -> HookCaller: ...
-            …
-             382→class HookCaller:
-             383→    """A caller of all registered implementations of a hook specification."""
-             385→    __slots__ = (
-             386→        "name",
-             387→        "spec",
-             388→        "_hookexec",
-             389→        "_hookimpls",
-             390→        "_call_history",
-             391→    )
-            …
-             419→    # TODO: Document, or make private.
-            …
-             423→    # TODO: Document, or make private.
-            …
-             593→class _SubsetHookCaller(HookCaller):
-            …
-             638→@final
-             639→class HookImpl:
-             640→    """A hook implementation in a :class:`HookCaller`."""
-             642→    __slots__ = (
-             643→        "function",
-             644→        "argnames",
-             645→        "kwargnames",
-             646→        "plugin",
-             647→        "opts",
-             648→        "plugin_name",
-             649→        "wrapper",
-             650→        "hookwrapper",
-             651→        "optionalhook",
-             652→        "tryfirst",
-             653→        "trylast",
-             654→    )
-            …
-             696→@final
-             697→class HookSpec:
-             698→    __slots__ = (
-             699→        "namespace",
-             700→        "function",
-             701→        "name",
-             702→        "argnames",
-             703→        "kwargnames",
-             704→        "opts",
-             705→        "warn_on_impl",
-             706→        "warn_on_impl_args",
-             707→    )
-            …
         _manager.py
             …
               36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
@@ -255,11 +176,85 @@ src/
               55→    :param plugin: The plugin which failed validation.
               56→    :param message: Error message.
               57→    """
+              59→    def __init__(self, plugin: _Plugin, message: str) -> None:
             …
               65→class DistFacade:
               66→    """Emulate a pkg_resources Distribution"""
+              68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
+              69→        self._dist = dist
+              71→    @property
+              72→    def project_name(self) -> str:
+            …
+              76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
+            …
+              79→    def __dir__(self) -> list[str]:
             …
               83→class PluginManager:
+            …
+             100→    def __init__(self, project_name: str) -> None:
+             101→        #: The project name.
+            …
+             114→    def _hookexec(
+            …
+             125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
+            …
+             176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
+            …
+             201→    def unregister(
+             202→        self, plugin: _Plugin | None = None, name: str | None = None
+             203→    ) -> Any | None:
+            …
+             233→    def set_blocked(self, name: str) -> None:
+             234→        """Block registrations of the given name, unregister if already registered."""
+            …
+             238→    def is_blocked(self, name: str) -> bool:
+             239→        """Return whether the given plugin name is blocked."""
+            …
+             242→    def unblock(self, name: str) -> bool:
+            …
+             252→    def add_hookspecs(self, module_or_class: _Namespace) -> None:
+            …
+             278→    def parse_hookspec_opts(
+             279→        self, module_or_class: _Namespace, name: str
+             280→    ) -> HookspecOpts | None:
+            …
+             296→    def get_plugins(self) -> set[Any]:
+             297→        """Return a set of all registered plugin objects."""
+            …
+             300→    def is_registered(self, plugin: _Plugin) -> bool:
+             301→        """Return whether the plugin is already registered."""
+            …
+             304→    def get_canonical_name(self, plugin: _Plugin) -> str:
+            …
+             315→    def get_plugin(self, name: str) -> Any | None:
+             316→        """Return the plugin registered under the given name, if any."""
+             317→        return self._name2plugin.get(name)
+             319→    def has_plugin(self, name: str) -> bool:
+             320→        """Return whether a plugin with the given name is registered."""
+            …
+             323→    def get_name(self, plugin: _Plugin) -> str | None:
+            …
+             331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
+            …
+             379→    def check_pending(self) -> None:
+            …
+             395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
+            …
+             425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
+            …
+             430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
+            …
+             434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
+            …
+             450→    def add_hookcall_monitoring(
+             451→        self, before: _BeforeTrace, after: _AfterTrace
+             452→    ) -> Callable[[], None]:
+            …
+             487→    def enable_tracing(self) -> Callable[[], None]:
+            …
+             512→    def subset_hook_caller(
+             513→        self, name: str, remove_plugins: Iterable[_Plugin]
+             514→    ) -> HookCaller:
             …
              525→def _formatdef(func: Callable[..., object]) -> str:
              526→    return f"{func.__name__}{inspect.signature(func)}"

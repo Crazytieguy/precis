@@ -200,9 +200,9 @@ pub enum TsKey {
     /// Chunked `Imports` for entrypoint files that are mostly re-export
     /// walls; each chunk groups consecutive imports from the same source.
     ImportChunk { file: PathBuf, chunk_index: usize },
-    /// Surface listing of every top-level export's first line —
-    /// catastrophic-omission hedge.
-    ExportNames { file: PathBuf, chunk_index: usize },
+    /// Surface listing of every top-level export's first line — one
+    /// unified catalog per file; catastrophic-omission hedge.
+    ExportNames { file: PathBuf },
     /// Top-level export's declaration (sig with body marker for fn).
     Export { file: PathBuf, start_line: usize },
     /// JSDoc above a single export. Predecessor: matching `Export`.
@@ -216,22 +216,13 @@ pub enum TsKey {
         /// First line of the class member surface.
         member_start_line: usize,
     },
-    /// Whole member-name catalog of one oversize exported JS class.
-    /// Predecessor: the matching `Export` header.
-    ExportMemberNamesRoster {
-        file: PathBuf,
-        /// Parent export line.
-        start_line: usize,
-    },
-    /// Chunked member-name catalog of one big exported declaration
+    /// Whole member-name catalog of one big exported declaration
     /// (interface / object-type alias / class above the per-member
-    /// split range). Predecessor: the matching `Export` header for
-    /// chunk 0; later chunks chain after their predecessor chunk.
+    /// split range). Predecessor: the matching `Export` header.
     ExportMemberNames {
         file: PathBuf,
         /// Parent export line.
         start_line: usize,
-        chunk_index: usize,
     },
     /// Body slice of an export with a `statement_block` body (outer
     /// braces stripped). Predecessor: matching `Export`.
@@ -407,12 +398,9 @@ pub enum PythonKey {
     Imports { file: PathBuf },
     /// Chunked `Imports` for large `__init__.py` re-export walls.
     ImportChunk { file: PathBuf, chunk_index: usize },
-    /// Names-surface chunk for top-level class/def/non-dunder consts.
-    DeclNames { file: PathBuf, chunk_index: usize },
-    /// Whole top-level class/def signature roster for files whose
-    /// declaration surface is chunked. Predecessor of same-file
-    /// `DeclNames` chunks.
-    DeclSigsRoster { file: PathBuf },
+    /// Names surface for top-level class/def/non-dunder consts — one
+    /// unified catalog per file.
+    DeclNames { file: PathBuf },
     /// One top-level item — header + up to 2 docstring-summary rows
     /// for class/def, or assignment line(s) for const.
     Decl { file: PathBuf, start_line: usize },
@@ -437,10 +425,7 @@ pub enum PythonKey {
     /// Surface listing of every method's inner `def` line across every
     /// top-level class; decorator rows are owned by the per-method batch.
     /// Catastrophic-omission hedge.
-    MethodSigs { file: PathBuf, chunk_index: usize },
-    /// Whole method-signature roster for files whose method surface is
-    /// chunked. Predecessor of same-file `MethodSigs` chunks.
-    MethodSigsRoster { file: PathBuf },
+    MethodSigs { file: PathBuf },
     /// Method-level `Decl` analog for a method inside a top-level
     /// class. Predecessor: enclosing class's `Decl`.
     Method { file: PathBuf, start_line: usize },
@@ -477,8 +462,8 @@ pub enum LuaKey {
     /// or majority-LuaCATS-tag comment density). Gated to small files.
     MetaFileWhole { file: PathBuf },
     /// Surface listing of every top-level fn name + table-method
-    /// assignment first line.
-    DeclNames { file: PathBuf, chunk_index: usize },
+    /// assignment first line — one unified catalog per file.
+    DeclNames { file: PathBuf },
     /// One top-level fn-like declaration's signature/header. Covers
     /// `function foo()`, `local function foo()`, and `M.foo = function(...)`.
     /// Keyed by start line.
@@ -684,7 +669,7 @@ impl InnerKey for TsKey {
                 0.38
             }
             TsKey::ExportMember { .. } => 0.45,
-            TsKey::ExportMemberNamesRoster { .. } => 0.37,
+            TsKey::ExportMemberNames { .. } => 0.37,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -696,9 +681,7 @@ impl InnerKey for TsKey {
             TsKey::ImportChunk { file, chunk_index } => {
                 describe_chunked_surface("imports", file, *chunk_index, root)
             }
-            TsKey::ExportNames { file, chunk_index } => {
-                describe_chunked_surface("export names surface", file, *chunk_index, root)
-            }
+            TsKey::ExportNames { file } => describe_in("export names surface", file, root),
             TsKey::Export { file, start_line } => describe_at("export", file, *start_line, root),
             TsKey::ExportDoc { file, start_line } => {
                 describe_at("export doc", file, *start_line, root)
@@ -711,16 +694,8 @@ impl InnerKey for TsKey {
                 "export member at {}:{start_line} member {member_start_line}",
                 display_path(file, root)
             ),
-            TsKey::ExportMemberNamesRoster { file, start_line } => format!(
-                "export member names roster at {}:{start_line}",
-                display_path(file, root)
-            ),
-            TsKey::ExportMemberNames {
-                file,
-                start_line,
-                chunk_index,
-            } => format!(
-                "export member names at {}:{start_line} chunk {chunk_index}",
+            TsKey::ExportMemberNames { file, start_line } => format!(
+                "export member names at {}:{start_line}",
                 display_path(file, root)
             ),
             TsKey::ExportBody {
@@ -899,10 +874,7 @@ impl InnerKey for PythonKey {
     /// tie structurally to the class.
     fn concavity_exponent(&self) -> f64 {
         match self {
-            PythonKey::ImportChunk { .. } => 0.37,
-            PythonKey::DeclNames { .. }
-            | PythonKey::DeclSigsRoster { .. }
-            | PythonKey::MethodSigsRoster { .. } => 0.37,
+            PythonKey::ImportChunk { .. } | PythonKey::DeclNames { .. } => 0.37,
             PythonKey::Decl { .. }
             | PythonKey::DeclBody { .. }
             | PythonKey::Method { .. }
@@ -917,12 +889,7 @@ impl InnerKey for PythonKey {
             PythonKey::ImportChunk { file, chunk_index } => {
                 describe_chunked_surface("python imports", file, *chunk_index, root)
             }
-            PythonKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("python decl names surface", file, *chunk_index, root)
-            }
-            PythonKey::DeclSigsRoster { file } => {
-                describe_in("python decl sigs roster", file, root)
-            }
+            PythonKey::DeclNames { file } => describe_in("python decl names surface", file, root),
             PythonKey::Decl { file, start_line } => {
                 describe_at("python decl", file, *start_line, root)
             }
@@ -946,12 +913,7 @@ impl InnerKey for PythonKey {
             PythonKey::ClassBody { file, start_line } => {
                 describe_at("python class body", file, *start_line, root)
             }
-            PythonKey::MethodSigs { file, chunk_index } => {
-                describe_chunked_surface("python method sigs", file, *chunk_index, root)
-            }
-            PythonKey::MethodSigsRoster { file } => {
-                describe_in("python method sigs roster", file, root)
-            }
+            PythonKey::MethodSigs { file } => describe_in("python method sigs", file, root),
             PythonKey::Method { file, start_line } => {
                 describe_at("python method", file, *start_line, root)
             }
@@ -1044,9 +1006,7 @@ impl InnerKey for LuaKey {
             LuaKey::MetaFileWhole { file } => {
                 format!("lua meta-file at {}", display_path(file, root))
             }
-            LuaKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("lua decl names surface", file, *chunk_index, root)
-            }
+            LuaKey::DeclNames { file } => describe_in("lua decl names surface", file, root),
             LuaKey::Decl { file, start_line } => describe_at("lua decl", file, *start_line, root),
             LuaKey::DeclDoc { file, start_line } => {
                 describe_at("lua decl doc", file, *start_line, root)
