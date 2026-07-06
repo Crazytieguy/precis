@@ -122,7 +122,38 @@ go.mod
       17→)
       18→
       19→require (
-    …
+      20→	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
+      21→	github.com/charmbracelet/colorprofile v0.4.1 // indirect
+      22→	github.com/charmbracelet/x/ansi v0.11.6 // indirect
+      23→	github.com/charmbracelet/x/cellbuf v0.0.15 // indirect
+      24→	github.com/charmbracelet/x/term v0.2.2 // indirect
+      25→	github.com/clipperhouse/displaywidth v0.9.0 // indirect
+      26→	github.com/clipperhouse/stringish v0.1.1 // indirect
+      27→	github.com/clipperhouse/uax29/v2 v2.5.0 // indirect
+      28→	github.com/davecgh/go-spew v1.1.1 // indirect
+      29→	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
+      30→	github.com/fsnotify/fsnotify v1.9.0 // indirect
+      31→	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
+      32→	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+      33→	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
+      34→	github.com/mattn/go-isatty v0.0.20 // indirect
+      35→	github.com/mattn/go-localereader v0.0.1 // indirect
+      36→	github.com/mattn/go-runewidth v0.0.19 // indirect
+      37→	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
+      38→	github.com/muesli/cancelreader v0.2.2 // indirect
+      39→	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+      40→	github.com/pmezard/go-difflib v1.0.0 // indirect
+      41→	github.com/rivo/uniseg v0.4.7 // indirect
+      42→	github.com/sagikazarmark/locafero v0.11.0 // indirect
+      43→	github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8 // indirect
+      44→	github.com/spf13/afero v1.15.0 // indirect
+      45→	github.com/spf13/cast v1.10.0 // indirect
+      46→	github.com/stretchr/objx v0.5.2 // indirect
+      47→	github.com/subosito/gotenv v1.6.0 // indirect
+      48→	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
+      49→	go.yaml.in/yaml/v3 v3.0.4 // indirect
+      50→	golang.org/x/sys v0.39.0 // indirect
+      51→	golang.org/x/text v0.32.0 // indirect
       52→)
 go.sum
 install.sh
@@ -130,107 +161,26 @@ internal/
     adapters/
         cli/
             add.go
-                …
-                  16→type addOptions struct {
-                …
-                  26→func NewAddCmd() *cobra.Command {
-                …
-                  64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
-                …
-                 124→func resolveStartTime(startStr string, theme Theme) (string, error) {
-                …
-                 163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
-                …
             analyze.go
-                …
-                  20→func NewAnalyzeCmd() *cobra.Command {
-                …
-                  70→type AnalysisStats struct {
-                …
-                  84→func analyzeData(activities []models.Activity) AnalysisStats {
-                …
-                 206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
-                …
             calendar.go
             calendar_sidebar.go
             continue.go
-                …
-                  15→const (
-                  16→	defaultRecentActivitiesForContinuation = 10
-                  17→)
-                  19→//nolint:funlen // Include all logic in one function
-                  20→func NewContinueCmd() *cobra.Command {
-                …
             current.go
-                …
-                  19→type currentCmdActivity struct {
-                  20→	models.Activity
-                  21→}
-                  23→func (a currentCmdActivity) Duration() time.Duration {
-                …
-                  27→func (a currentCmdActivity) DurationHMS() string {
-                …
-                  35→func NewCurrentCmd() *cobra.Command {
-                …
             ical.go
             interactive.go
             last.go
-                …
-                  16→type lastOptions struct {
-                  17→	Limit      int
-                  18→	JSONOutput bool
-                  19→}
-                  21→func NewLastCmd() *cobra.Command {
-                …
-                  42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
-                …
             list_gui.go
             remove.go
-                …
-                  22→func NewRemoveCmd() *cobra.Command {
-                …
-                  95→func parseRemoveIndex(s string) (time.Time, int, error) {
-                …
-                 116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
-                …
-                 127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
-                …
             report.go
-                …
-                  20→type reportOptions struct {
-                …
-                  31→func NewReportCmd() *cobra.Command {
-                …
-                  61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
-                …
             root.go
             start.go
                 …
-                  16→//nolint:gocognit,funlen // Include all logic in one function
                   17→func NewStartCmd() *cobra.Command {
                 …
             stop.go
-                …
-                  14→func NewStopCmd() *cobra.Command {
-                …
             theme.go
             update.go
-                …
-                  17→type githubRelease struct {
-                …
-                  22→func checkUpdate() (githubRelease, error) {
-                …
-                  45→func runUpdateCheck(cmd *cobra.Command) {
-                …
             version.go
-                …
-                  10→var (
-                  11→	version = "dev"
-                  12→	commit  = "none"
-                  13→	date    = "unknown"
-                  14→)
-                  16→func NewVersionCmd() *cobra.Command {
-                …
             watch.go
         repositories/
             file/
@@ -317,11 +267,7 @@ internal/
                   11→type ActivityResolver interface {
                 …
                   22→type ActivityRepository interface {
-                  23→	Save(ctx context.Context, activity models.Activity) error
-                  24→	FindLast(ctx context.Context) (*models.Activity, error)
-                  25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
-                  26→	Remove(ctx context.Context, activity models.Activity) error
-                  27→}
+                …
                   29→type NotesRepository interface {
                   30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
                   31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)

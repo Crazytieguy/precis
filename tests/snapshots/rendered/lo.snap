@@ -114,17 +114,6 @@ README.md
      194→- [FilterMapToSlice](#FilterMapToSlice)
      195→- [FilterKeys](#FilterKeys)
      196→- [FilterValues](#FilterValues)
-     198→Supported math helpers:
-     199→
-     200→- [Range / RangeFrom / RangeWithSteps](#range--rangefrom--rangewithsteps)
-     201→- [Clamp](#clamp)
-     202→- [Sum](#sum)
-     203→- [SumBy](#sumby)
-     204→- [Product](#product)
-     205→- [ProductBy](#productby)
-     206→- [Mean](#mean)
-     207→- [MeanBy](#meanby)
-     208→- [Mode](#mode)
     …
     5036→## 🛩 Benchmark
     …
@@ -232,7 +221,12 @@ go.mod
       14→)
       15→
       16→require (
-    …
+      17→	github.com/davecgh/go-spew v1.1.1 // indirect
+      18→	github.com/kr/text v0.2.0 // indirect
+      19→	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
+      20→	github.com/pmezard/go-difflib v1.0.0 // indirect
+      21→	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
+      22→	gopkg.in/yaml.v3 v3.0.1 // indirect
       23→)
 go.sum
 internal/

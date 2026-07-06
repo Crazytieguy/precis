@@ -90,45 +90,21 @@ go.mod
        3→go 1.24.0
        4→
        5→toolchain go1.24.5
-       6→
-       7→require (
-       8→	github.com/JohannesKaufmann/html-to-markdown v1.6.0
-       9→	github.com/PuerkitoBio/goquery v1.10.3
-      10→	github.com/bytedance/sonic v1.15.0
-      11→	github.com/charmbracelet/fang v0.4.0
-      12→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
-      13→	github.com/cloudwego/eino v0.7.13
-      14→	github.com/cloudwego/eino-ext/components/model/claude v0.1.12
-      15→	github.com/cloudwego/eino-ext/components/model/ollama v0.1.8
-      16→	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250903035842-96774a3ec845
-      17→	github.com/eino-contrib/jsonschema v1.0.3
-      18→	github.com/getkin/kin-openapi v0.131.0
-      19→	github.com/mark3labs/mcp-filesystem-server v0.11.1
-      20→	github.com/mark3labs/mcp-go v0.44.0-beta.2
-      21→	github.com/spf13/cobra v1.10.1
-      22→	github.com/spf13/viper v1.20.1
-      23→	github.com/tidwall/gjson v1.18.0
-      24→	golang.org/x/term v0.37.0
-      25→	google.golang.org/genai v1.22.0
-      26→	gopkg.in/yaml.v3 v3.0.1
-      27→)
-      28→
-      29→require (
     …
-     141→)
-     142→
-     143→require (
-    …
-     145→	github.com/charmbracelet/bubbles v0.21.0
-     146→	github.com/charmbracelet/bubbletea v1.3.10
-     147→	github.com/charmbracelet/glamour v0.10.0
-    …
-     165→)
 go.sum
 internal/
     agent/
         agent.go
         factory.go
+            …
+              15→type SpinnerFunc func(message string, fn func() error) error
+            …
+              19→type AgentCreationOptions struct {
+            …
+              43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
+            …
+              76→func ParseModelName(modelString string) (provider, model string) {
+            …
         streaming.go
             …
               19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
@@ -172,6 +148,27 @@ internal/
         viper_test.go
     hooks/
         config.go
+            …
+              12→// HookConfig represents the complete hooks configuration containing event-triggered
+              13→// hooks for tool execution lifecycle events.
+              14→type HookConfig struct {
+              15→	Hooks map[HookEvent][]HookMatcher `yaml:"hooks" json:"hooks"`
+              16→}
+            …
+              21→type HookMatcher struct {
+            …
+              30→type HookEntry struct {
+              31→	Type    string `yaml:"type" json:"type"`
+              32→	Command string `yaml:"command" json:"command"`
+              33→	Timeout int    `yaml:"timeout,omitempty" json:"timeout,omitempty"`
+              34→}
+            …
+              41→func LoadHooksConfig(customPaths ...string) (*HookConfig, error) {
+            …
+              97→func getConfigDir() string {
+            …
+             113→func mergeHookConfigs(dst, src *HookConfig) {
+            …
         config_test.go
         events.go
                1→package hooks
@@ -189,6 +186,11 @@ internal/
               27→}
             …
               32→type PostToolUseInput struct {
+              33→	CommonInput
+              34→	ToolName     string          `json:"tool_name"`
+              35→	ToolInput    json.RawMessage `json:"tool_input"`
+              36→	ToolResponse json.RawMessage `json:"tool_response"`
+              37→}
             …
               42→type UserPromptSubmitInput struct {
               43→	CommonInput
@@ -229,9 +231,16 @@ internal/
         models_data.go
             …
                4→package models
-            …
+               6→// ModelInfo represents information about a specific model
                7→type ModelInfo struct {
-            …
+               8→	ID          string
+               9→	Name        string
+              10→	Attachment  bool
+              11→	Reasoning   bool
+              12→	Temperature bool
+              13→	Cost        Cost
+              14→	Limit       Limit
+              15→}
               17→// Cost represents the pricing information for a model
               18→type Cost struct {
               19→	Input      float64
@@ -294,6 +303,17 @@ main.go
       12→var version = "dev"
       13→
       14→func main() {
+      15→	for _, arg := range os.Args[1:] {
+      16→		if arg == "--version" || arg == "-v" {
+      17→			fmt.Printf("mcphost version %s\n", version)
+      18→			os.Exit(0)
+      19→		}
+      20→	}
+      21→
+      22→	rootCmd := cmd.GetRootCommand(version)
+      23→	if err := fang.Execute(context.Background(), rootCmd); err != nil {
+      24→		os.Exit(1)
+      25→	}
     …
 sdk/
     README.md

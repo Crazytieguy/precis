@@ -251,155 +251,155 @@ Score(3000)=0.573 I=0.576 C=0.571 ns_rows≤3K=16/41 (reached=6 partial=1 missin
 | walker |  | 6334 | 0 | go decl at binding/xml.go:24 |  |  | 0.469 |
 | walker |  | 6334 | 0 | go decl at binding/xml.go:28 |  |  | 0.469 |
 | walker |  | 6342 | 8 | go decl body at binding/xml.go:16 |  |  | 0.469 |
+| walker |  | 6436 | 94 | go decl names surface in binding/yaml.go |  |  | 0.469 |
+| walker |  | 6436 | 0 | go decl at binding/yaml.go:17 |  |  | 0.469 |
+| walker |  | 6436 | 0 | go decl at binding/yaml.go:21 |  |  | 0.469 |
+| walker |  | 6436 | 0 | go decl at binding/yaml.go:25 |  |  | 0.469 |
+| walker |  | 6436 | 0 | go decl at binding/yaml.go:29 |  |  | 0.469 |
+| walker |  | 6444 | 8 | go decl body at binding/yaml.go:17 |  |  | 0.469 |
+| walker |  | 6469 | 25 | go package + imports in binding/binding.go |  |  | 0.469 |
+| walker |  | 6494 | 25 | go package + imports in binding/binding_nomsgpack.go |  |  | 0.469 |
 | ns | 6498 |  | 589 | routergroup.go: Handle() (+ Use/Group/BasePath/handle/GET/POST/.../Any/Match/Static*/combineHandlers/calculateAbsolutePath/returnObj locations) | 3.2 | 3.1 | 0.452 |
-| walker |  | 6693 | 351 | go module file go.mod |  |  | 0.478 |
-| walker |  | 6787 | 94 | go decl names surface in binding/yaml.go |  |  | 0.478 |
-| walker |  | 6787 | 0 | go decl at binding/yaml.go:17 |  |  | 0.478 |
-| walker |  | 6787 | 0 | go decl at binding/yaml.go:21 |  |  | 0.478 |
-| walker |  | 6787 | 0 | go decl at binding/yaml.go:25 |  |  | 0.478 |
-| walker |  | 6787 | 0 | go decl at binding/yaml.go:29 |  |  | 0.478 |
-| walker |  | 6795 | 8 | go decl body at binding/yaml.go:17 |  |  | 0.478 |
-| walker |  | 6820 | 25 | go package + imports in binding/binding.go |  |  | 0.478 |
-| walker |  | 6845 | 25 | go package + imports in binding/binding_nomsgpack.go |  |  | 0.478 |
-| walker |  | 6870 | 25 | go package + imports in render/render.go |  |  | 0.478 |
-| ns | 6943 |  | 445 | context.go: Context struct — the full field roster | 4.1 |  | 0.461 |
-| walker |  | 6968 | 98 | go decl names surface in binding/msgpack.go |  |  | 0.461 |
-| walker |  | 6968 | 0 | go decl at binding/msgpack.go:19 |  |  | 0.461 |
-| walker |  | 6968 | 0 | go decl at binding/msgpack.go:23 |  |  | 0.461 |
-| walker |  | 6968 | 0 | go decl at binding/msgpack.go:27 |  |  | 0.461 |
-| walker |  | 6968 | 0 | go decl at binding/msgpack.go:31 |  |  | 0.461 |
-| walker |  | 6977 | 9 | go decl body at binding/msgpack.go:19 |  |  | 0.461 |
-| walker |  | 7075 | 98 | go decl names surface in binding/toml.go |  |  | 0.461 |
-| walker |  | 7075 | 0 | go decl at binding/toml.go:17 |  |  | 0.461 |
-| walker |  | 7075 | 0 | go decl at binding/toml.go:21 |  |  | 0.461 |
-| walker |  | 7075 | 0 | go decl at binding/toml.go:25 |  |  | 0.461 |
-| walker |  | 7075 | 0 | go decl at binding/toml.go:29 |  |  | 0.461 |
-| walker |  | 7084 | 9 | go decl body at binding/toml.go:17 |  |  | 0.461 |
-| walker |  | 7183 | 99 | go decl names surface in render/text.go |  |  | 0.461 |
-| walker |  | 7183 | 0 | go decl at render/text.go:23 |  |  | 0.461 |
-| walker |  | 7183 | 0 | go decl at render/text.go:28 |  |  | 0.461 |
-| walker |  | 7183 | 0 | go decl at render/text.go:33 |  |  | 0.461 |
-| walker |  | 7203 | 20 | go decl at render/text.go:15 |  |  | 0.461 |
-| walker |  | 7219 | 16 | go decl doc at render/text.go:15 |  |  | 0.461 |
-| walker |  | 7233 | 14 | go decl doc at render/text.go:23 |  |  | 0.461 |
-| walker |  | 7246 | 13 | go decl body at render/text.go:28 |  |  | 0.461 |
-| walker |  | 7262 | 16 | go decl doc at render/text.go:28 |  |  | 0.461 |
-| walker |  | 7281 | 19 | go decl doc at render/text.go:33 |  |  | 0.461 |
-| walker |  | 7296 | 15 | go decl body at render/text.go:23 |  |  | 0.461 |
-| ns | 7300 |  | 357 | context.go: Copy() (+ reset/HandlerName/HandlerNames/Handler/FullPath locations) | 4.2 | 4.1 | 0.449 |
-| walker |  | 7371 | 75 | go decl doc at fs.go:42 |  |  | 0.449 |
-| walker |  | 7585 | 214 | go decl names surface in recovery.go |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:32 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:35 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:40 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:45 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:53 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:98 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:109 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:114 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:146 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:172 |  |  | 0.449 |
-| walker |  | 7585 | 0 | go decl at recovery.go:197 |  |  | 0.449 |
-| walker |  | 7601 | 16 | go decl doc at recovery.go:32 |  |  | 0.449 |
-| walker |  | 7610 | 9 | go decl at recovery.go:26 |  |  | 0.449 |
-| walker |  | 7622 | 12 | go decl body at recovery.go:35 |  |  | 0.449 |
-| walker |  | 7636 | 14 | go decl body at recovery.go:40 |  |  | 0.449 |
-| walker |  | 7660 | 24 | go decl doc at recovery.go:35 |  |  | 0.449 |
-| walker |  | 7687 | 27 | go decl doc at recovery.go:40 |  |  | 0.449 |
-| walker |  | 7719 | 32 | go decl doc at recovery.go:45 |  |  | 0.449 |
-| walker |  | 7752 | 33 | go decl doc at recovery.go:53 |  |  | 0.449 |
-| walker |  | 7767 | 15 | go decl doc at recovery.go:197 |  |  | 0.449 |
-| walker |  | 7784 | 17 | go decl doc at recovery.go:114 |  |  | 0.449 |
-| walker |  | 7804 | 20 | go decl doc at recovery.go:172 |  |  | 0.449 |
-| walker |  | 7819 | 15 | go decl body at recovery.go:109 |  |  | 0.449 |
-| ns | 7898 |  | 598 | context.go: flow control — Next/IsAborted/Abort/AbortWithStatus*/AbortWithError | 4.3 | 4.1 | 0.432 |
-| walker |  | 8034 | 215 | go decl names surface in mode.go |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:17 |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:42 |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:45 |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:52 |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:58 |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:81 |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:87 |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:93 |  |  | 0.432 |
-| walker |  | 8034 | 0 | go decl at mode.go:98 |  |  | 0.432 |
-| walker |  | 8041 | 7 | go decl at mode.go:47 |  |  | 0.432 |
-| walker |  | 8051 | 10 | go decl body at mode.go:81 |  |  | 0.432 |
-| walker |  | 8062 | 11 | go decl doc at mode.go:98 |  |  | 0.432 |
-| walker |  | 8075 | 13 | go decl doc at mode.go:81 |  |  | 0.432 |
-| walker |  | 8087 | 12 | go decl body at mode.go:98 |  |  | 0.432 |
-| walker |  | 8102 | 15 | go decl doc at mode.go:58 |  |  | 0.432 |
-| walker |  | 8115 | 13 | go decl body at mode.go:87 |  |  | 0.432 |
-| walker |  | 8126 | 11 | go decl at mode.go:28 |  |  | 0.432 |
-| walker |  | 8141 | 15 | go decl doc at mode.go:17 |  |  | 0.432 |
-| walker |  | 8156 | 15 | go decl body at mode.go:93 |  |  | 0.432 |
-| ns | 8159 |  | 261 | context.go: Error() — attaching errors to the request | 4.4 |  | 0.424 |
-| walker |  | 8174 | 18 | go decl doc at mode.go:45 |  |  | 0.424 |
-| walker |  | 8219 | 45 | go decl at mode.go:19 |  |  | 0.424 |
-| walker |  | 8255 | 36 | go decl doc at mode.go:87 |  |  | 0.424 |
-| walker |  | 8297 | 42 | go decl doc at mode.go:93 |  |  | 0.424 |
-| walker |  | 8354 | 57 | go package + imports in routergroup.go |  |  | 0.424 |
-| walker |  | 8375 | 21 | go decl body at mode.go:52 |  |  | 0.424 |
-| walker |  | 8386 | 11 | go decl body at binding/bson.go:28 |  |  | 0.424 |
-| walker |  | 8397 | 11 | go decl body at binding/plain.go:27 |  |  | 0.424 |
-| walker |  | 8421 | 24 | go decl body at render/xml.go:20 |  |  | 0.424 |
-| walker |  | 8441 | 20 | go decl body at fs.go:33 |  |  | 0.424 |
-| walker |  | 8456 | 15 | go decl doc at render/reader.go:41 |  |  | 0.424 |
-| walker |  | 8635 | 179 | go struct field group at gin.go:92 group 106 |  |  | 0.426 |
-| ns | 8661 |  | 502 | context.go: Set/Get/MustGet/getTyped + representative GetXxx/GetXxxSlice accessors (+ ellipsis marking the rest) | 4.5 | 4.1 | 0.412 |
-| walker |  | 8862 | 227 | go decl names surface in debug.go |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:22 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:27 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:30 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:32 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:44 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:56 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:72 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:81 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:92 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:100 |  |  | 0.412 |
-| walker |  | 8862 | 0 | go decl at debug.go:110 |  |  | 0.412 |
-| walker |  | 8874 | 12 | go decl doc at debug.go:30 |  |  | 0.412 |
-| ns | 8878 |  | 217 | context.go: remaining surface (locations + ellipsis-hedged families) — Query/PostForm/ClientIP/Bind family/rendering entry points/cookies/negotiation/streaming | 4.6 | 4.1 | 0.406 |
-| walker |  | 8889 | 15 | go decl doc at debug.go:27 |  |  | 0.406 |
-| walker |  | 8906 | 17 | go decl body at debug.go:22 |  |  | 0.406 |
-| walker |  | 8941 | 35 | go decl doc at debug.go:22 |  |  | 0.406 |
-| walker |  | 8963 | 22 | go decl body at recovery.go:197 |  |  | 0.406 |
-| ns | 9061 |  | 183 | tree.go: Param/Params type (+ addRoute/getValue/findCaseInsensitivePath/insertChild locations) | 5.1 |  | 0.402 |
-| walker |  | 9074 | 111 | go decl names surface in render/msgpack.go |  |  | 0.402 |
-| walker |  | 9074 | 0 | go decl at render/msgpack.go:29 |  |  | 0.402 |
-| walker |  | 9074 | 0 | go decl at render/msgpack.go:34 |  |  | 0.402 |
-| walker |  | 9074 | 0 | go decl at render/msgpack.go:39 |  |  | 0.402 |
-| walker |  | 9084 | 10 | go decl at render/msgpack.go:22 |  |  | 0.402 |
-| walker |  | 9097 | 13 | go decl doc at render/msgpack.go:22 |  |  | 0.402 |
-| walker |  | 9106 | 9 | go decl at render/msgpack.go:17 |  |  | 0.402 |
-| walker |  | 9119 | 13 | go decl body at render/msgpack.go:34 |  |  | 0.402 |
-| walker |  | 9135 | 16 | go decl doc at render/msgpack.go:29 |  |  | 0.402 |
-| walker |  | 9149 | 14 | go decl body at render/msgpack.go:29 |  |  | 0.402 |
-| walker |  | 9170 | 21 | go decl doc at render/msgpack.go:39 |  |  | 0.402 |
-| walker |  | 9194 | 24 | go decl doc at render/msgpack.go:34 |  |  | 0.402 |
-| walker |  | 9244 | 50 | go decl body at recovery.go:45 |  |  | 0.402 |
-| walker |  | 9256 | 12 | go decl body at binding/xml.go:20 |  |  | 0.402 |
-| ns | 9300 |  | 239 | path.go: cleanPath doc (+ removeRepeatedChar location) — trailing-slash/path-cleaning semantics | 5.2 |  | 0.398 |
-| walker |  | 9321 | 65 | go package + imports in response_writer.go |  |  | 0.398 |
-| walker |  | 9369 | 48 | README.md section #15 |  |  | 0.398 |
-| walker |  | 9548 | 179 | go package + imports in gin.go |  |  | 0.398 |
-| ns | 9587 |  | 287 | render/render.go: the full Render-implementer roster (+ BSON/MsgPack, which the var block itself omits) | 6.1 |  | 0.392 |
-| walker |  | 9617 | 69 | go package + imports in errors.go |  |  | 0.392 |
-| walker |  | 9743 | 126 | go decl names surface in binding/json.go |  |  | 0.392 |
-| walker |  | 9743 | 0 | go decl at binding/json.go:19 |  |  | 0.392 |
-| walker |  | 9743 | 0 | go decl at binding/json.go:25 |  |  | 0.392 |
-| walker |  | 9743 | 0 | go decl at binding/json.go:29 |  |  | 0.392 |
-| walker |  | 9743 | 0 | go decl at binding/json.go:33 |  |  | 0.392 |
-| walker |  | 9743 | 0 | go decl at binding/json.go:40 |  |  | 0.392 |
-| walker |  | 9743 | 0 | go decl at binding/json.go:44 |  |  | 0.392 |
-| walker |  | 9751 | 8 | go decl body at binding/json.go:29 |  |  | 0.392 |
-| ns | 9801 |  | 214 | binding/binding.go: the full Binding-implementer roster | 6.2 |  | 0.388 |
-| walker |  | 9821 | 70 | go package + imports in debug.go |  |  | 0.388 |
-| walker |  | 9834 | 13 | go decl body at binding/msgpack.go:23 |  |  | 0.388 |
-| walker |  | 9847 | 13 | go decl body at binding/toml.go:21 |  |  | 0.388 |
-| walker |  | 9860 | 13 | go decl body at binding/yaml.go:21 |  |  | 0.388 |
-| ns | 9893 |  | 92 | docs/doc.md: top-level (H2) section headings | 7.1 |  | 0.386 |
-| ns | 9927 |  | 34 | Built-in middleware entry points (locations): BasicAuth, Logger, Recovery | 7.2 |  | 0.387 |
-| walker |  | 9959 | 99 | go decl doc at auth.go:48 |  |  | 0.387 |
-| ns | 9971 |  | 44 | Makefile: which packages 'make test' actually covers | 7.3 |  | 0.386 |
+| walker |  | 6519 | 25 | go package + imports in render/render.go |  |  | 0.452 |
+| walker |  | 6617 | 98 | go decl names surface in binding/msgpack.go |  |  | 0.452 |
+| walker |  | 6617 | 0 | go decl at binding/msgpack.go:19 |  |  | 0.452 |
+| walker |  | 6617 | 0 | go decl at binding/msgpack.go:23 |  |  | 0.452 |
+| walker |  | 6617 | 0 | go decl at binding/msgpack.go:27 |  |  | 0.452 |
+| walker |  | 6617 | 0 | go decl at binding/msgpack.go:31 |  |  | 0.452 |
+| walker |  | 6626 | 9 | go decl body at binding/msgpack.go:19 |  |  | 0.452 |
+| walker |  | 6724 | 98 | go decl names surface in binding/toml.go |  |  | 0.452 |
+| walker |  | 6724 | 0 | go decl at binding/toml.go:17 |  |  | 0.452 |
+| walker |  | 6724 | 0 | go decl at binding/toml.go:21 |  |  | 0.452 |
+| walker |  | 6724 | 0 | go decl at binding/toml.go:25 |  |  | 0.452 |
+| walker |  | 6724 | 0 | go decl at binding/toml.go:29 |  |  | 0.452 |
+| walker |  | 6733 | 9 | go decl body at binding/toml.go:17 |  |  | 0.452 |
+| walker |  | 6832 | 99 | go decl names surface in render/text.go |  |  | 0.452 |
+| walker |  | 6832 | 0 | go decl at render/text.go:23 |  |  | 0.452 |
+| walker |  | 6832 | 0 | go decl at render/text.go:28 |  |  | 0.452 |
+| walker |  | 6832 | 0 | go decl at render/text.go:33 |  |  | 0.452 |
+| walker |  | 6852 | 20 | go decl at render/text.go:15 |  |  | 0.452 |
+| walker |  | 6868 | 16 | go decl doc at render/text.go:15 |  |  | 0.452 |
+| walker |  | 6882 | 14 | go decl doc at render/text.go:23 |  |  | 0.452 |
+| walker |  | 6895 | 13 | go decl body at render/text.go:28 |  |  | 0.452 |
+| walker |  | 6911 | 16 | go decl doc at render/text.go:28 |  |  | 0.452 |
+| walker |  | 6930 | 19 | go decl doc at render/text.go:33 |  |  | 0.452 |
+| ns | 6943 |  | 445 | context.go: Context struct — the full field roster | 4.1 |  | 0.436 |
+| walker |  | 6945 | 15 | go decl body at render/text.go:23 |  |  | 0.436 |
+| walker |  | 7020 | 75 | go decl doc at fs.go:42 |  |  | 0.436 |
+| walker |  | 7234 | 214 | go decl names surface in recovery.go |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:32 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:35 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:40 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:45 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:53 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:98 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:109 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:114 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:146 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:172 |  |  | 0.436 |
+| walker |  | 7234 | 0 | go decl at recovery.go:197 |  |  | 0.436 |
+| walker |  | 7250 | 16 | go decl doc at recovery.go:32 |  |  | 0.436 |
+| walker |  | 7259 | 9 | go decl at recovery.go:26 |  |  | 0.436 |
+| walker |  | 7271 | 12 | go decl body at recovery.go:35 |  |  | 0.436 |
+| walker |  | 7285 | 14 | go decl body at recovery.go:40 |  |  | 0.436 |
+| ns | 7300 |  | 357 | context.go: Copy() (+ reset/HandlerName/HandlerNames/Handler/FullPath locations) | 4.2 | 4.1 | 0.425 |
+| walker |  | 7309 | 24 | go decl doc at recovery.go:35 |  |  | 0.425 |
+| walker |  | 7336 | 27 | go decl doc at recovery.go:40 |  |  | 0.425 |
+| walker |  | 7368 | 32 | go decl doc at recovery.go:45 |  |  | 0.425 |
+| walker |  | 7401 | 33 | go decl doc at recovery.go:53 |  |  | 0.425 |
+| walker |  | 7416 | 15 | go decl doc at recovery.go:197 |  |  | 0.425 |
+| walker |  | 7433 | 17 | go decl doc at recovery.go:114 |  |  | 0.425 |
+| walker |  | 7453 | 20 | go decl doc at recovery.go:172 |  |  | 0.425 |
+| walker |  | 7468 | 15 | go decl body at recovery.go:109 |  |  | 0.425 |
+| walker |  | 7683 | 215 | go decl names surface in mode.go |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:17 |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:42 |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:45 |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:52 |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:58 |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:81 |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:87 |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:93 |  |  | 0.425 |
+| walker |  | 7683 | 0 | go decl at mode.go:98 |  |  | 0.425 |
+| walker |  | 7690 | 7 | go decl at mode.go:47 |  |  | 0.425 |
+| walker |  | 7700 | 10 | go decl body at mode.go:81 |  |  | 0.425 |
+| walker |  | 7711 | 11 | go decl doc at mode.go:98 |  |  | 0.425 |
+| walker |  | 7724 | 13 | go decl doc at mode.go:81 |  |  | 0.425 |
+| walker |  | 7736 | 12 | go decl body at mode.go:98 |  |  | 0.425 |
+| walker |  | 7751 | 15 | go decl doc at mode.go:58 |  |  | 0.425 |
+| walker |  | 7764 | 13 | go decl body at mode.go:87 |  |  | 0.425 |
+| walker |  | 7775 | 11 | go decl at mode.go:28 |  |  | 0.425 |
+| walker |  | 7790 | 15 | go decl doc at mode.go:17 |  |  | 0.425 |
+| walker |  | 7805 | 15 | go decl body at mode.go:93 |  |  | 0.425 |
+| walker |  | 7823 | 18 | go decl doc at mode.go:45 |  |  | 0.425 |
+| walker |  | 7868 | 45 | go decl at mode.go:19 |  |  | 0.425 |
+| ns | 7898 |  | 598 | context.go: flow control — Next/IsAborted/Abort/AbortWithStatus*/AbortWithError | 4.3 | 4.1 | 0.408 |
+| walker |  | 7904 | 36 | go decl doc at mode.go:87 |  |  | 0.408 |
+| walker |  | 7946 | 42 | go decl doc at mode.go:93 |  |  | 0.408 |
+| walker |  | 8003 | 57 | go package + imports in routergroup.go |  |  | 0.408 |
+| walker |  | 8024 | 21 | go decl body at mode.go:52 |  |  | 0.408 |
+| walker |  | 8035 | 11 | go decl body at binding/bson.go:28 |  |  | 0.408 |
+| walker |  | 8046 | 11 | go decl body at binding/plain.go:27 |  |  | 0.408 |
+| walker |  | 8070 | 24 | go decl body at render/xml.go:20 |  |  | 0.408 |
+| walker |  | 8090 | 20 | go decl body at fs.go:33 |  |  | 0.408 |
+| walker |  | 8105 | 15 | go decl doc at render/reader.go:41 |  |  | 0.408 |
+| ns | 8159 |  | 261 | context.go: Error() — attaching errors to the request | 4.4 |  | 0.401 |
+| walker |  | 8284 | 179 | go struct field group at gin.go:92 group 106 |  |  | 0.403 |
+| walker |  | 8511 | 227 | go decl names surface in debug.go |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:22 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:27 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:30 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:32 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:44 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:56 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:72 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:81 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:92 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:100 |  |  | 0.403 |
+| walker |  | 8511 | 0 | go decl at debug.go:110 |  |  | 0.403 |
+| walker |  | 8523 | 12 | go decl doc at debug.go:30 |  |  | 0.403 |
+| walker |  | 8538 | 15 | go decl doc at debug.go:27 |  |  | 0.403 |
+| walker |  | 8555 | 17 | go decl body at debug.go:22 |  |  | 0.403 |
+| walker |  | 8590 | 35 | go decl doc at debug.go:22 |  |  | 0.403 |
+| walker |  | 8612 | 22 | go decl body at recovery.go:197 |  |  | 0.403 |
+| ns | 8661 |  | 502 | context.go: Set/Get/MustGet/getTyped + representative GetXxx/GetXxxSlice accessors (+ ellipsis marking the rest) | 4.5 | 4.1 | 0.390 |
+| walker |  | 8723 | 111 | go decl names surface in render/msgpack.go |  |  | 0.390 |
+| walker |  | 8723 | 0 | go decl at render/msgpack.go:29 |  |  | 0.390 |
+| walker |  | 8723 | 0 | go decl at render/msgpack.go:34 |  |  | 0.390 |
+| walker |  | 8723 | 0 | go decl at render/msgpack.go:39 |  |  | 0.390 |
+| walker |  | 8733 | 10 | go decl at render/msgpack.go:22 |  |  | 0.390 |
+| walker |  | 8746 | 13 | go decl doc at render/msgpack.go:22 |  |  | 0.390 |
+| walker |  | 8755 | 9 | go decl at render/msgpack.go:17 |  |  | 0.390 |
+| walker |  | 8768 | 13 | go decl body at render/msgpack.go:34 |  |  | 0.390 |
+| walker |  | 8784 | 16 | go decl doc at render/msgpack.go:29 |  |  | 0.390 |
+| walker |  | 8798 | 14 | go decl body at render/msgpack.go:29 |  |  | 0.390 |
+| walker |  | 8819 | 21 | go decl doc at render/msgpack.go:39 |  |  | 0.390 |
+| walker |  | 8843 | 24 | go decl doc at render/msgpack.go:34 |  |  | 0.390 |
+| ns | 8878 |  | 217 | context.go: remaining surface (locations + ellipsis-hedged families) — Query/PostForm/ClientIP/Bind family/rendering entry points/cookies/negotiation/streaming | 4.6 | 4.1 | 0.384 |
+| walker |  | 8893 | 50 | go decl body at recovery.go:45 |  |  | 0.384 |
+| walker |  | 8905 | 12 | go decl body at binding/xml.go:20 |  |  | 0.384 |
+| walker |  | 8970 | 65 | go package + imports in response_writer.go |  |  | 0.384 |
+| walker |  | 9018 | 48 | README.md section #15 |  |  | 0.384 |
+| ns | 9061 |  | 183 | tree.go: Param/Params type (+ addRoute/getValue/findCaseInsensitivePath/insertChild locations) | 5.1 |  | 0.380 |
+| walker |  | 9197 | 179 | go package + imports in gin.go |  |  | 0.380 |
+| walker |  | 9266 | 69 | go package + imports in errors.go |  |  | 0.380 |
+| ns | 9300 |  | 239 | path.go: cleanPath doc (+ removeRepeatedChar location) — trailing-slash/path-cleaning semantics | 5.2 |  | 0.376 |
+| walker |  | 9392 | 126 | go decl names surface in binding/json.go |  |  | 0.376 |
+| walker |  | 9392 | 0 | go decl at binding/json.go:19 |  |  | 0.376 |
+| walker |  | 9392 | 0 | go decl at binding/json.go:25 |  |  | 0.376 |
+| walker |  | 9392 | 0 | go decl at binding/json.go:29 |  |  | 0.376 |
+| walker |  | 9392 | 0 | go decl at binding/json.go:33 |  |  | 0.376 |
+| walker |  | 9392 | 0 | go decl at binding/json.go:40 |  |  | 0.376 |
+| walker |  | 9392 | 0 | go decl at binding/json.go:44 |  |  | 0.376 |
+| walker |  | 9400 | 8 | go decl body at binding/json.go:29 |  |  | 0.376 |
+| walker |  | 9470 | 70 | go package + imports in debug.go |  |  | 0.376 |
+| walker |  | 9483 | 13 | go decl body at binding/msgpack.go:23 |  |  | 0.376 |
+| walker |  | 9496 | 13 | go decl body at binding/toml.go:21 |  |  | 0.376 |
+| walker |  | 9509 | 13 | go decl body at binding/yaml.go:21 |  |  | 0.376 |
+| ns | 9587 |  | 287 | render/render.go: the full Render-implementer roster (+ BSON/MsgPack, which the var block itself omits) | 6.1 |  | 0.371 |
+| walker |  | 9608 | 99 | go decl doc at auth.go:48 |  |  | 0.371 |
+| ns | 9801 |  | 214 | binding/binding.go: the full Binding-implementer roster | 6.2 |  | 0.367 |
+| ns | 9893 |  | 92 | docs/doc.md: top-level (H2) section headings | 7.1 |  | 0.365 |
+| ns | 9927 |  | 34 | Built-in middleware entry points (locations): BasicAuth, Logger, Recovery | 7.2 |  | 0.366 |
+| ns | 9971 |  | 44 | Makefile: which packages 'make test' actually covers | 7.3 |  | 0.366 |
+| walker |  | 9981 | 373 | README.md section #0 |  |  | 0.366 |
