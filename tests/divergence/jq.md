@@ -216,8 +216,8 @@ Score(3000)=0.700 I=0.832 C=0.590 ns_rows≤3K=15/40 (reached=7 partial=2 missin
 | ns | 9559 |  | 555 | main.c — usage() flag reference (the everyday flags) | 8.1 |  | 0.552 |
 | ns | 9726 |  | 167 | main.c — JQ_* exit-status codes | 8.2 |  | 0.549 |
 | walker |  | 9783 | 280 | c whole header in src/locfile.h |  |  | 0.549 |
-| walker |  | 9816 | 33 | c decl doc at src/linker.c:409 |  |  | 0.549 |
 | ns | 9847 |  | 121 | main.c — hidden/debug-only flags not in usage() | 8.3 | 8.1 | 0.547 |
-| walker |  | 9859 | 43 | c decl body at src/jv_parse.c:729 |  |  | 0.547 |
 | ns | 9925 |  | 78 | tests/jq.test — 3-line test format + opening samples | 8.4 |  | 0.544 |
+| walker |  | 9942 | 159 | README.md section #4 |  |  | 0.544 |
+| walker |  | 9975 | 33 | c decl doc at src/linker.c:409 |  |  | 0.544 |
 | ns | 9988 |  | 63 | tests/jqtest — self-test harness invocation | 8.5 |  | 0.542 |

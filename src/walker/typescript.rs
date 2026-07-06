@@ -282,6 +282,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         };
         let src_lines: Vec<&str> = source.lines().collect();
         let exports = find_export_starts(file, &tree, &source, &src_lines);
+        let top_level_decl_start_lines = top_level_decl_start_lines(&tree);
         // The declared API contract's roster shapes (names surface,
         // member-chunked decls and their catalogs) are exempt from the
         // machinery damp: a root-level `.d.ts` the manifest's `types`
@@ -337,7 +338,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             let names_lines_by_chunk: Vec<_> = exports
                 .chunks(chunk_size)
                 .map(|chunk| {
-                    collect_export_names_from(chunk, &export_start_lines, &import_owned_lines)
+                    collect_export_names_from(
+                        chunk,
+                        &export_start_lines,
+                        &import_owned_lines,
+                        &top_level_decl_start_lines,
+                    )
                 })
                 .collect();
             for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
@@ -508,6 +514,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     });
                 }
                 if !split_js_class && !item.body_parts.is_empty() {
+                    let body_parts = disjoint_body_parts(item.body_parts.clone());
                     let mut emit_ctx = ExportBodyEmitCtx {
                         file,
                         source: &source,
@@ -520,13 +527,21 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         &mut out,
                         &mut emit_ctx,
                         item,
-                        item.body_parts.clone(),
+                        body_parts,
                         &body_parts_predecessor,
                     );
                 }
             }
         }
-        let module_items = find_module_items(&tree, &source, &src_lines, &export_start_lines);
+        let mut reexported_local_names = collect_local_value_reexports(&tree, &source);
+        reexported_local_names.extend(collect_commonjs_value_reexports(&tree, &source));
+        let module_items = find_module_items(
+            &tree,
+            &source,
+            &src_lines,
+            &export_start_lines,
+            &reexported_local_names,
+        );
         // README-cited JS files (canonical example scripts referenced from
         // the root README) emit private statements as module items even
         // though they aren't entrypoints — those statements ARE the
@@ -551,7 +566,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
             if !item.body_parts.is_empty() {
                 let item_predecessor = BatchKey::Typescript(item_key);
-                let parts = item.body_parts;
+                let parts = disjoint_body_parts(item.body_parts);
                 // Module-level class method bodies are sibling units (one
                 // per method), each independently relevant — unlike
                 // function body fragments which compete as alternatives.
@@ -638,6 +653,7 @@ fn emit_export_body_parts(
     parts: Vec<BodyPart>,
     predecessor: &BatchKey,
 ) {
+    let parts = disjoint_body_parts(parts);
     // Factory body parts are sibling anchors; skip the per-partition
     // value damping.
     let part_value_factor = if item.factory_sibling_body_parts {
@@ -681,6 +697,21 @@ fn emit_export_body_parts(
             *emit.body_segment_index += 1;
         }
     }
+}
+
+fn disjoint_body_parts(parts: Vec<BodyPart>) -> Vec<BodyPart> {
+    let mut seen = HashSet::new();
+    parts
+        .into_iter()
+        .filter_map(|part| {
+            let lines: Vec<usize> = part
+                .lines
+                .into_iter()
+                .filter(|line| seen.insert(*line))
+                .collect();
+            (!lines.is_empty()).then_some(BodyPart { lines })
+        })
+        .collect()
 }
 
 fn body_segment_value_factor(body_segment_index: usize) -> f64 {
@@ -937,6 +968,7 @@ fn find_module_items(
     source: &str,
     src_lines: &[&str],
     export_start_lines: &HashSet<usize>,
+    reexported_local_names: &HashSet<String>,
 ) -> Vec<ModuleItemInfo> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -953,6 +985,9 @@ fn find_module_items(
         }
         let start_line = child.start_position().row + 1;
         if export_start_lines.contains(&start_line) {
+            continue;
+        }
+        if synthetic_commonjs_export_kind(child, source, reexported_local_names).is_some() {
             continue;
         }
         let lines = module_item_lines(kind, child, source);
@@ -2342,6 +2377,7 @@ fn collect_export_names_from(
     items: &[ExportInfo<'_>],
     export_start_lines: &HashSet<usize>,
     import_owned_lines: &HashSet<usize>,
+    top_level_decl_start_lines: &HashSet<usize>,
 ) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
@@ -2356,11 +2392,21 @@ fn collect_export_names_from(
         // peer batches can't overlap line ownership.
         if !export_start_lines.contains(&ellipsis_line)
             && !import_owned_lines.contains(&ellipsis_line)
+            && !top_level_decl_start_lines.contains(&ellipsis_line)
         {
             ellipses.push(ellipsis_line);
         }
     }
     FileLines::new(full).with_ellipses(ellipses)
+}
+
+fn top_level_decl_start_lines(tree: &Tree) -> HashSet<usize> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    root.children(&mut cursor)
+        .filter(|child| decl_kind(*child).is_some())
+        .map(|child| child.start_position().row + 1)
+        .collect()
 }
 
 fn module_item_lines(kind: ItemKind, decl: Node, source: &str) -> FileLines {

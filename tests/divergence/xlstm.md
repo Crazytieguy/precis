@@ -62,8 +62,8 @@ Score(3000)=0.499 I=0.804 C=0.310 ns_rows≤3K=18/68 (reached=6 partial=0 missin
 | walker |  | 1527 | 9 | python method body at experiments/metrics.py:22 body 23 |  |  | 0.692 |
 | walker |  | 1577 | 50 | python class body at xlstm/xlstm_lm_model.py:14 |  |  | 0.692 |
 | ns | 1640 |  | 390 | blocks/mlstm/{block,layer,cell}.py - class/def locations | 2.6 |  | 0.598 |
-| ns | 1722 |  | 82 | blocks/mlstm/backends.py - function locations | 2.7 |  | 0.586 |
-| walker |  | 1764 | 187 | [dependencies] in pyproject.toml |  |  | 0.586 |
+| ns | 1722 |  | 82 | blocks/mlstm/backends.py - function locations | 2.7 |  | 0.585 |
+| walker |  | 1764 | 187 | [dependencies] in pyproject.toml |  |  | 0.585 |
 | walker |  | 1817 | 53 | listing of 'tests' |  |  | 0.586 |
 | walker |  | 1882 | 65 | python decl names surface in experiments/main.py |  |  | 0.586 |
 | walker |  | 1882 | 0 | python decl at experiments/main.py:32 |  |  | 0.586 |
@@ -90,27 +90,27 @@ Score(3000)=0.499 I=0.804 C=0.310 ns_rows≤3K=18/68 (reached=6 partial=0 missin
 | walker |  | 2219 | 0 | python method at xlstm/xlstm_block_stack.py:117 |  |  | 0.560 |
 | walker |  | 2233 | 14 | python method at xlstm/xlstm_block_stack.py:36 |  |  | 0.568 |
 | walker |  | 2248 | 15 | python method body at xlstm/xlstm_block_stack.py:36 body 38 |  |  | 0.568 |
-| ns | 2314 |  | 310 | blocks/slstm/cell.py - sLSTMCellConfig + sLSTMCellBase - class/def locations | 2.9 |  | 0.524 |
-| walker |  | 2347 | 99 | python method sigs in experiments/lr_scheduler.py |  |  | 0.524 |
-| walker |  | 2347 | 0 | python method at experiments/lr_scheduler.py:10 |  |  | 0.524 |
-| walker |  | 2347 | 0 | python method at experiments/lr_scheduler.py:25 |  |  | 0.524 |
-| walker |  | 2347 | 0 | python method at experiments/lr_scheduler.py:47 |  |  | 0.524 |
-| walker |  | 2362 | 15 | python method at experiments/lr_scheduler.py:13 |  |  | 0.524 |
-| walker |  | 2378 | 16 | python method at experiments/lr_scheduler.py:18 |  |  | 0.524 |
-| walker |  | 2402 | 24 | python method at experiments/lr_scheduler.py:33 |  |  | 0.524 |
-| walker |  | 2416 | 14 | python method doc at experiments/lr_scheduler.py:18 |  |  | 0.524 |
-| walker |  | 2424 | 8 | python method body at experiments/lr_scheduler.py:18 body 21 |  |  | 0.524 |
-| walker |  | 2434 | 10 | python method body at experiments/lr_scheduler.py:13 body 16 |  |  | 0.524 |
-| walker |  | 2448 | 14 | python method doc at experiments/lr_scheduler.py:13 |  |  | 0.524 |
-| walker |  | 2464 | 16 | python method doc at experiments/lr_scheduler.py:47 |  |  | 0.524 |
-| walker |  | 2476 | 12 | python method body at experiments/lr_scheduler.py:10 body 11 |  |  | 0.524 |
+| ns | 2314 |  | 310 | blocks/slstm/cell.py - sLSTMCellConfig + sLSTMCellBase - class/def locations | 2.9 |  | 0.523 |
+| walker |  | 2347 | 99 | python method sigs in experiments/lr_scheduler.py |  |  | 0.523 |
+| walker |  | 2347 | 0 | python method at experiments/lr_scheduler.py:10 |  |  | 0.523 |
+| walker |  | 2347 | 0 | python method at experiments/lr_scheduler.py:25 |  |  | 0.523 |
+| walker |  | 2347 | 0 | python method at experiments/lr_scheduler.py:47 |  |  | 0.523 |
+| walker |  | 2362 | 15 | python method at experiments/lr_scheduler.py:13 |  |  | 0.523 |
+| walker |  | 2378 | 16 | python method at experiments/lr_scheduler.py:18 |  |  | 0.523 |
+| walker |  | 2402 | 24 | python method at experiments/lr_scheduler.py:33 |  |  | 0.523 |
+| walker |  | 2416 | 14 | python method doc at experiments/lr_scheduler.py:18 |  |  | 0.523 |
+| walker |  | 2424 | 8 | python method body at experiments/lr_scheduler.py:18 body 21 |  |  | 0.523 |
+| walker |  | 2434 | 10 | python method body at experiments/lr_scheduler.py:13 body 16 |  |  | 0.523 |
+| walker |  | 2448 | 14 | python method doc at experiments/lr_scheduler.py:13 |  |  | 0.523 |
+| walker |  | 2464 | 16 | python method doc at experiments/lr_scheduler.py:47 |  |  | 0.523 |
+| walker |  | 2476 | 12 | python method body at experiments/lr_scheduler.py:10 body 11 |  |  | 0.523 |
 | ns | 2568 |  | 254 | blocks/slstm/cell.py - CUDA/vanilla backend classes - class/def locations | 2.10 |  | 0.497 |
-| walker |  | 2575 | 99 | python method sigs in xlstm/xlstm_lm_model.py |  |  | 0.513 |
-| walker |  | 2575 | 0 | python method at xlstm/xlstm_lm_model.py:25 |  |  | 0.513 |
-| walker |  | 2575 | 0 | python method at xlstm/xlstm_lm_model.py:41 |  |  | 0.513 |
-| walker |  | 2575 | 0 | python method at xlstm/xlstm_lm_model.py:49 |  |  | 0.513 |
-| walker |  | 2575 | 0 | python method at xlstm/xlstm_lm_model.py:65 |  |  | 0.513 |
-| walker |  | 2587 | 12 | python decl names surface in experiments/data/formal_language/tasks/even_pairs.py |  |  | 0.513 |
+| walker |  | 2575 | 99 | python method sigs in xlstm/xlstm_lm_model.py |  |  | 0.512 |
+| walker |  | 2575 | 0 | python method at xlstm/xlstm_lm_model.py:25 |  |  | 0.512 |
+| walker |  | 2575 | 0 | python method at xlstm/xlstm_lm_model.py:41 |  |  | 0.512 |
+| walker |  | 2575 | 0 | python method at xlstm/xlstm_lm_model.py:49 |  |  | 0.512 |
+| walker |  | 2575 | 0 | python method at xlstm/xlstm_lm_model.py:65 |  |  | 0.512 |
+| walker |  | 2587 | 12 | python decl names surface in experiments/data/formal_language/tasks/even_pairs.py |  |  | 0.512 |
 | walker |  | 2616 | 29 | python decl names surface in xlstm/components/ln.py |  |  | 0.513 |
 | walker |  | 2616 | 0 | python decl at xlstm/components/ln.py:8 |  |  | 0.513 |
 | walker |  | 2616 | 0 | python decl at xlstm/components/ln.py:51 |  |  | 0.513 |
@@ -133,15 +133,15 @@ Score(3000)=0.499 I=0.804 C=0.310 ns_rows≤3K=18/68 (reached=6 partial=0 missin
 | walker |  | 3512 | 176 | python decl at xlstm/blocks/slstm/src/vanilla/__init__.py:17 |  |  | 0.493 |
 | ns | 3653 |  | 311 | README - xLSTM Large quickstart code | 3.1 |  | 0.467 |
 | ns | 3974 |  | 321 | README - non-CUDA hardware recommendation + sLSTM CUDA build env var | 3.2 |  | 0.456 |
-| walker |  | 4028 | 516 | README.md section #0 |  |  | 0.474 |
-| walker |  | 4044 | 16 | python imports in xlstm/xlstm_large/utils.py |  |  | 0.474 |
-| walker |  | 4294 | 250 | python class body at xlstm/xlstm_block_stack.py:15 |  |  | 0.474 |
+| walker |  | 4028 | 516 | README.md section #0 |  |  | 0.473 |
+| walker |  | 4044 | 16 | python imports in xlstm/xlstm_large/utils.py |  |  | 0.473 |
+| walker |  | 4294 | 250 | python class body at xlstm/xlstm_block_stack.py:15 |  |  | 0.473 |
 | walker |  | 4332 | 38 | python decl names surface in xlstm/xlstm_large/utils.py |  |  | 0.481 |
 | walker |  | 4332 | 0 | python decl at xlstm/xlstm_large/utils.py:5 |  |  | 0.481 |
 | walker |  | 4360 | 28 | python decl at xlstm/xlstm_large/utils.py:10 |  |  | 0.481 |
 | walker |  | 4377 | 17 | python decl doc at xlstm/xlstm_large/utils.py:5 |  |  | 0.481 |
 | walker |  | 4399 | 22 | python decl body at xlstm/xlstm_large/utils.py:5 body 7 |  |  | 0.481 |
-| ns | 4420 |  | 446 | README - xLSTMBlockStack usage code (NeurIPS architecture) | 3.3 |  | 0.446 |
+| ns | 4420 |  | 446 | README - xLSTMBlockStack usage code (NeurIPS architecture) | 3.3 |  | 0.445 |
 | walker |  | 4438 | 39 | python decl names surface in xlstm/components/conv.py |  |  | 0.447 |
 | walker |  | 4438 | 0 | python decl at xlstm/components/conv.py:55 |  |  | 0.447 |
 | walker |  | 4450 | 12 | python decl at xlstm/components/conv.py:12 |  |  | 0.449 |

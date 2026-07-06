@@ -222,8 +222,6 @@ cmdk/
              991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
              993→function useLazyRef<T>(fn: () => T) {
             …
-            1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-            …
             1010→function useValue(
             1011→  id: string,
             1012→  ref: React.RefObject<HTMLElement>,

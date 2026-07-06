@@ -173,16 +173,16 @@ Score(3000)=0.503 I=0.757 C=0.335 ns_rows≤3K=17/106 (reached=5 partial=1 missi
 | walker |  | 5459 | 0 | python decl at src/chronos/chronos2/layers.py:317 |  |  | 0.553 |
 | walker |  | 5459 | 0 | python decl at src/chronos/chronos2/layers.py:343 |  |  | 0.553 |
 | walker |  | 5459 | 0 | python decl at src/chronos/chronos2/layers.py:369 |  |  | 0.553 |
-| walker |  | 5469 | 10 | python decl at src/chronos/chronos2/layers.py:142 |  |  | 0.555 |
+| walker |  | 5469 | 10 | python decl at src/chronos/chronos2/layers.py:142 |  |  | 0.554 |
 | ns | 5470 |  | 55 | Chronos2Pipeline.fit - full docstring (fine-tuning contract) | 7.2 | 2.7 | 0.551 |
 | walker |  | 5480 | 11 | python decl doc at src/chronos/chronos2/layers.py:148 |  |  | 0.551 |
 | walker |  | 5501 | 21 | python decl doc at src/chronos/chronos2/layers.py:343 |  |  | 0.551 |
-| ns | 5518 |  | 48 | Chronos2Pipeline.fit - body (LoRA setup, dataset/Trainer wiring, checkpoint save) | 7.3 |  | 0.548 |
-| walker |  | 5522 | 21 | python decl doc at src/chronos/chronos2/layers.py:369 |  |  | 0.548 |
-| walker |  | 5551 | 29 | python class body at src/chronos/chronos2/layers.py:142 |  |  | 0.548 |
+| ns | 5518 |  | 48 | Chronos2Pipeline.fit - body (LoRA setup, dataset/Trainer wiring, checkpoint save) | 7.3 |  | 0.547 |
+| walker |  | 5522 | 21 | python decl doc at src/chronos/chronos2/layers.py:369 |  |  | 0.547 |
+| walker |  | 5551 | 29 | python class body at src/chronos/chronos2/layers.py:142 |  |  | 0.547 |
 | ns | 5682 |  | 164 | Long-horizon unrolling helpers (_prepare_inputs_for_long_horizon_unrolling, _autoregressive_unroll_for_long_horizon) | 7.4 | 2.7 | 0.544 |
 | ns | 5733 |  | 51 | Chronos2Pipeline.predict - docstring (accepted input shapes, cross_learning) | 7.5 | 2.7 | 0.541 |
-| ns | 5786 |  | 53 | Chronos2Pipeline.predict - body | 7.6 |  | 0.538 |
+| ns | 5786 |  | 53 | Chronos2Pipeline.predict - body | 7.6 |  | 0.537 |
 | ns | 5827 |  | 41 | _predict_batch + _predict_step + _slide_context_and_future_covariates | 7.7 | 2.7 | 0.535 |
 | ns | 5888 |  | 61 | Chronos2Pipeline.predict_quantiles | 7.8 | 2.7 | 0.532 |
 | walker |  | 5907 | 356 | python method sigs in src/chronos/chronos2/layers.py |  |  | 0.571 |
@@ -289,7 +289,7 @@ Score(3000)=0.503 I=0.757 C=0.335 ns_rows≤3K=17/106 (reached=5 partial=1 missi
 | walker |  | 8117 | 33 | python decl doc at src/chronos/chronos_bolt.py:71 |  |  | 0.585 |
 | walker |  | 8150 | 33 | python class body at src/chronos/chronos_bolt.py:403 |  |  | 0.587 |
 | walker |  | 8213 | 63 | python class body at src/chronos/chronos_bolt.py:42 |  |  | 0.587 |
-| walker |  | 8278 | 65 | python class body at src/chronos/chronos_bolt.py:32 |  |  | 0.593 |
+| walker |  | 8278 | 65 | python class body at src/chronos/chronos_bolt.py:32 |  |  | 0.592 |
 | ns | 8367 |  | 426 | scripts/ + ci/ directory tree listing (incl. all training/eval configs and result CSVs) | 10.1 |  | 0.569 |
 | walker |  | 8595 | 317 | python method sigs in src/chronos/chronos_bolt.py |  |  | 0.593 |
 | walker |  | 8595 | 0 | python method at src/chronos/chronos_bolt.py:51 |  |  | 0.593 |

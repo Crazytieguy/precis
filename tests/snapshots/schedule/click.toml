@@ -127,7 +127,7 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 99
 cum_tokens = 294
@@ -453,14 +453,6 @@ end = 8
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "src/click/_textwrap.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
 position = 24
 key = 'Python(Decl { file: "src/click/_textwrap.py", start_line: 8 })'
@@ -575,7 +567,7 @@ kind = "full"
 
 [[batches]]
 position = 28
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 75
 cum_tokens = 1661
@@ -607,7 +599,7 @@ entries = ["README", "aliases", "colors", "completion", "complex", "imagepipe", 
 
 [[batches]]
 position = 30
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 90
 cum_tokens = 1787
@@ -653,7 +645,7 @@ entries = ["click-icon.svg", "click-logo.svg", "click-name.svg"]
 
 [[batches]]
 position = 33
-key = 'Markdown(Section { file: "docs/setuptools.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/setuptools.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/setuptools.md section #0"
 cost_tokens = 29
 cum_tokens = 2023
@@ -671,7 +663,7 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Markdown(Section { file: "docs/license.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/license.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/license.md section #0"
 cost_tokens = 53
 cum_tokens = 2076
@@ -857,7 +849,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 39
-key = 'Markdown(Section { file: "docs/design-opinions.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/design-opinions.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/design-opinions.md section #0"
 cost_tokens = 68
 cum_tokens = 2230
@@ -917,7 +909,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 41
-key = 'Markdown(Section { file: "docs/click-concepts.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/click-concepts.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/click-concepts.md section #0"
 cost_tokens = 78
 cum_tokens = 2332
@@ -935,7 +927,7 @@ kind = "full"
 
 [[batches]]
 position = 42
-key = 'Markdown(Section { file: "docs/command-line-reference.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/command-line-reference.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/command-line-reference.md section #0"
 cost_tokens = 81
 cum_tokens = 2413
@@ -1107,22 +1099,6 @@ end = 334
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 331
-end = 331
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/exceptions.py"
-start = 335
-end = 335
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
 position = 47
 key = 'Python(Decl { file: "src/click/exceptions.py", start_line: 330 })'
@@ -1273,7 +1249,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 53
-key = 'Markdown(Section { file: "docs/wincmd.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/wincmd.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/wincmd.md section #0"
 cost_tokens = 87
 cum_tokens = 2827
@@ -1333,7 +1309,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 55
-key = 'Markdown(Section { file: "docs/faqs.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/faqs.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/faqs.md section #0"
 cost_tokens = 36
 cum_tokens = 2899
@@ -1351,7 +1327,7 @@ kind = "full"
 
 [[batches]]
 position = 56
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 220
 cum_tokens = 3119
@@ -1443,7 +1419,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 58
-key = 'Markdown(Section { file: "docs/parameters.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/parameters.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/parameters.md section #0"
 cost_tokens = 47
 cum_tokens = 3205
@@ -1503,7 +1479,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 60
-key = 'Markdown(Section { file: "docs/virtualenv.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/virtualenv.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/virtualenv.md section #0"
 cost_tokens = 0
 cum_tokens = 3245
@@ -1539,7 +1515,7 @@ kind = "full"
 
 [[batches]]
 position = 62
-key = 'Markdown(Section { file: "docs/extending-click.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/extending-click.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/extending-click.md section #0"
 cost_tokens = 124
 cum_tokens = 3403
@@ -1631,7 +1607,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 64
-key = 'Markdown(Section { file: "docs/option-decorators.md", section_index: 3, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/option-decorators.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/option-decorators.md section #3"
 cost_tokens = 31
 cum_tokens = 3476
@@ -1649,7 +1625,7 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'Markdown(Section { file: "docs/option-decorators.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/option-decorators.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/option-decorators.md section #0"
 cost_tokens = 90
 cum_tokens = 3566
@@ -1741,14 +1717,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "src/click/testing.py"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/testing.py"
 start = 61
 end = 61
 
@@ -1757,48 +1725,8 @@ kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "src/click/testing.py"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 104
-end = 104
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/testing.py"
 start = 164
 end = 164
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 184
-end = 184
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/testing.py"
-start = 262
-end = 262
 
 [batches.content.spans.render]
 kind = "ellipsis"
@@ -2675,7 +2603,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 102
-key = 'Markdown(Section { file: "docs/handling-files.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/handling-files.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/handling-files.md section #0"
 cost_tokens = 77
 cum_tokens = 4396
@@ -3593,22 +3521,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "src/click/_termui_impl.py"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/_termui_impl.py"
-start = 376
-end = 376
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/_termui_impl.py"
 start = 387
 end = 387
 
@@ -3643,14 +3555,6 @@ kind = "ellipsis"
 path = "src/click/_termui_impl.py"
 start = 598
 end = 598
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/_termui_impl.py"
-start = 609
-end = 609
 
 [batches.content.spans.render]
 kind = "ellipsis"
@@ -4469,7 +4373,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 165
-key = 'Markdown(Section { file: "docs/arguments.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/arguments.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/arguments.md section #0"
 cost_tokens = 157
 cum_tokens = 6174
@@ -4597,38 +4501,6 @@ kind = "ellipsis"
 path = "src/click/parser.py"
 start = 121
 end = 121
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/parser.py"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/parser.py"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/parser.py"
-start = 217
-end = 217
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/parser.py"
-start = 225
-end = 225
 
 [batches.content.spans.render]
 kind = "ellipsis"
@@ -5417,7 +5289,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 195
-key = 'Markdown(Section { file: "docs/support-multiple-versions.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/support-multiple-versions.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/support-multiple-versions.md section #0"
 cost_tokens = 130
 cum_tokens = 7278
@@ -5683,14 +5555,6 @@ kind = "ellipsis"
 path = "src/click/formatting.py"
 start = 32
 end = 32
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/formatting.py"
-start = 105
-end = 105
 
 [batches.content.spans.render]
 kind = "ellipsis"
@@ -6715,7 +6579,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 240
-key = 'Markdown(Section { file: "docs/standalone-apps.md", section_index: 1, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/standalone-apps.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/standalone-apps.md section #1"
 cost_tokens = 42
 cum_tokens = 8665
@@ -6816,14 +6680,6 @@ end = 35
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/_utils.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 244
@@ -7033,7 +6889,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 251
-key = 'Markdown(Section { file: "docs/exceptions.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/exceptions.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/exceptions.md section #0"
 cost_tokens = 112
 cum_tokens = 9239
@@ -7193,7 +7049,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 255
-key = 'Markdown(Section { file: "docs/prompts.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "docs/prompts.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/prompts.md section #0"
 cost_tokens = 183
 cum_tokens = 9566
@@ -7351,62 +7207,6 @@ kind = "ellipsis"
 path = "src/click/core.py"
 start = 120
 end = 120
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 147
-end = 147
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 904
-end = 904
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1517
-end = 1517
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1525
-end = 1525
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1532
-end = 1532
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/click/core.py"
-start = 1982
-end = 1982
 
 [batches.content.spans.render]
 kind = "ellipsis"

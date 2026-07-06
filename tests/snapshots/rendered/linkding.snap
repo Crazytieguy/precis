@@ -93,7 +93,19 @@ README.md
       63→### Prerequisites
     …
       68→### Setup
+      70→Initialize the development environment with:
+      71→```
+      72→make init
+      73→```
     …
+      81→Run the frontend build for bundling frontend components with:
+      82→```
+      83→make frontend
+      84→```
+      86→Then start the Django development server with:
+      87→```
+      88→make serve
+      89→```
       90→The frontend is now available under http://localhost:8000
       92→### Tests
     …
@@ -103,8 +115,10 @@ README.md
     …
      114→### DevContainers
     …
-     118→Once checked out, only the following commands are required to get started:
-    …
+     128→Start the Django development server with:
+     129→```
+     130→make serve
+     131→```
      132→The frontend is now available under http://localhost:8000
 SECURITY.md
 assets/
@@ -256,15 +270,6 @@ bookmarks/
             general.html
             integrations.html
         shared/
-            dev_tool.html
-            error_list.html
-            head.html
-            layout.html
-            messages.html
-            modal_header.html
-            nav_menu.html
-            pagination.html
-            top_frame.html
         tags/
             edit.html
             form.html
@@ -310,8 +315,6 @@ bookmarks/
         bundles.py
         contexts.py
         custom_css.py
-               1→from django.http import HttpResponse
-            …
         health.py
             …
                7→def health(request):
@@ -359,19 +362,6 @@ docker-compose.yml
       10→      - .env
       11→    restart: unless-stopped
 docs/
-    .gitignore
-    README.md
-    astro.config.mjs
-    package-lock.json
-    package.json
-    public/
-    src/
-        assets/
-        components/
-        content/
-        env.d.ts
-        styles/
-    tsconfig.json
 install-linkding.sh
 manage.py
        1→#!/usr/bin/env python

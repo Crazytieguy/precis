@@ -1781,10 +1781,28 @@ kind = "full"
 
 [[batches]]
 position = 79
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #2"
+cost_tokens = 307
+cum_tokens = 3416
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 104
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
 key = 'Go(DeclBody { file: "format.go", start_line: 17 })'
 descriptor = "go decl body at format.go:17"
 cost_tokens = 142
-cum_tokens = 3251
+cum_tokens = 3558
 
 [batches.content]
 kind = "lines"
@@ -1798,11 +1816,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Go(DeclBody { file: "flatten.go", start_line: 20 })'
 descriptor = "go decl body at flatten.go:20"
 cost_tokens = 81
-cum_tokens = 3332
+cum_tokens = 3639
 
 [batches.content]
 kind = "lines"
@@ -1816,11 +1834,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Go(DeclBody { file: "prefix.go", start_line: 16 })'
 descriptor = "go decl body at prefix.go:16"
 cost_tokens = 198
-cum_tokens = 3530
+cum_tokens = 3837
 
 [batches.content]
 kind = "lines"
@@ -1829,24 +1847,6 @@ kind = "lines"
 path = "prefix.go"
 start = 17
 end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 82
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
-descriptor = "README.md section #2"
-cost_tokens = 307
-cum_tokens = 3837
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 104
-end = 127
 
 [batches.content.spans.render]
 kind = "full"
@@ -1917,7 +1917,7 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CHANGELOG.md section #0"
 cost_tokens = 0
 cum_tokens = 4239
@@ -1935,10 +1935,28 @@ kind = "full"
 
 [[batches]]
 position = 88
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #3"
+cost_tokens = 1112
+cum_tokens = 5351
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 129
+end = 231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 966
-cum_tokens = 5205
+cum_tokens = 6317
 
 [batches.content]
 kind = "lines"
@@ -1952,11 +1970,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Markdown(HeadingsOutline { file: ".github/pull_request_template.md" })'
 descriptor = "headings outline in .github/pull_request_template.md"
 cost_tokens = 34
-cum_tokens = 5239
+cum_tokens = 6351
 
 [batches.content]
 kind = "lines"
@@ -2010,11 +2028,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Go(TestNames { file: "group_test.go" })'
 descriptor = "go test names surface in group_test.go"
 cost_tokens = 17
-cum_tokens = 5256
+cum_tokens = 6368
 
 [batches.content]
 kind = "lines"
@@ -2036,11 +2054,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Yaml(Whole { file: ".github/workflows/actionlint.yml" })'
 descriptor = "YAML config at .github/workflows/actionlint.yml"
 cost_tokens = 202
-cum_tokens = 5458
+cum_tokens = 6570
 
 [batches.content]
 kind = "lines"
@@ -2054,26 +2072,8 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 92
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
-descriptor = "README.md section #3"
-cost_tokens = 1112
-cum_tokens = 6570
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 129
-end = 231
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 93
-key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = ".github/pull_request_template.md section #0"
 cost_tokens = 24
 cum_tokens = 6594
@@ -2275,7 +2275,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 98
-key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 2, reference_shaped: false })'
+key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = ".github/pull_request_template.md section #2"
 cost_tokens = 23
 cum_tokens = 6777
@@ -2399,7 +2399,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 100
-key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 1, reference_shaped: false })'
+key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = ".github/pull_request_template.md section #1"
 cost_tokens = 37
 cum_tokens = 6926

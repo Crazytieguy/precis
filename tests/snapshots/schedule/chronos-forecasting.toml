@@ -205,7 +205,7 @@ kind = "ellipsis"
 
 [[batches]]
 position = 5
-key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #12"
 cost_tokens = 20
 cum_tokens = 194
@@ -314,30 +314,6 @@ end = 44
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/base.py"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 11
@@ -833,7 +809,7 @@ kind = "full"
 
 [[batches]]
 position = 29
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 30
 cum_tokens = 1264
@@ -973,7 +949,7 @@ kind = "full"
 
 [[batches]]
 position = 37
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 468
 cum_tokens = 1988
@@ -991,7 +967,7 @@ kind = "full"
 
 [[batches]]
 position = 38
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 39
 cum_tokens = 2027
@@ -1117,22 +1093,6 @@ end = 102
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "src/chronos/chronos2/config.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/config.py"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
 position = 44
 key = 'Python(Decl { file: "src/chronos/chronos2/config.py", start_line: 12 })'
@@ -1249,7 +1209,7 @@ kind = "full"
 
 [[batches]]
 position = 49
-key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 33
 cum_tokens = 3166
@@ -1350,14 +1310,6 @@ end = 39
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/pipeline.py"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 55
@@ -1923,7 +1875,7 @@ kind = "full"
 
 [[batches]]
 position = 68
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 69
 cum_tokens = 3848
@@ -1995,7 +1947,7 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 77
 cum_tokens = 4036
@@ -2049,22 +2001,6 @@ kind = "full"
 path = "src/chronos/chronos2/trainer.py"
 start = 18
 end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/trainer.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/trainer.py"
-start = 41
-end = 41
 
 [batches.content.spans.render]
 kind = "ellipsis"
@@ -2327,7 +2263,7 @@ kind = "full"
 
 [[batches]]
 position = 86
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 94
 cum_tokens = 4470
@@ -2463,7 +2399,7 @@ entries = ["ci.yml", "eval-model.yml", "publish-to-pypi.yml"]
 
 [[batches]]
 position = 94
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false })'
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 113
 cum_tokens = 4778
@@ -2536,54 +2472,6 @@ end = 198
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/model.py"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/model.py"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/model.py"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/model.py"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/model.py"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/model.py"
-start = 199
-end = 199
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 96
@@ -3160,86 +3048,6 @@ end = 369
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 295
-end = 295
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 318
-end = 318
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 344
-end = 344
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos2/layers.py"
-start = 370
-end = 370
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 112
@@ -4336,46 +4144,6 @@ end = 355
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos.py"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos.py"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos.py"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos.py"
-start = 244
-end = 244
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos.py"
-start = 356
-end = 356
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 152
@@ -5540,62 +5308,6 @@ end = 403
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 148
-end = 148
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/chronos/chronos_bolt.py"
-start = 404
-end = 404
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 194

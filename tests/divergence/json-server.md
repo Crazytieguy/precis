@@ -48,22 +48,22 @@ Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missi
 | walker |  | 1412 | 30 | README.md section #13 |  |  | 0.722 |
 | ns | 1513 |  | 131 | Misc dev-process config (husky, gitattributes, gitignore, funding, publish CI) | 2.4 |  | 0.679 |
 | walker |  | 1564 | 152 | json config tsconfig.json |  |  | 0.684 |
-| walker |  | 1619 | 55 | export names surface in src/where-operators.ts |  |  | 0.685 |
-| walker |  | 1619 | 0 | export at src/where-operators.ts:16 |  |  | 0.685 |
-| walker |  | 1637 | 18 | export body at src/where-operators.ts:16 body 17 |  |  | 0.685 |
-| walker |  | 1650 | 13 | imports in src/random-id.ts |  |  | 0.685 |
 | ns | 1665 |  | 152 | tsconfig.json | 2.5 |  | 0.707 |
-| ns | 1696 |  | 31 | oxfmt config (.oxfmtrc.json) | 2.6 |  | 0.697 |
-| walker |  | 1795 | 145 | README.md section #7 |  |  | 0.701 |
-| ns | 1865 |  | 169 | fixtures/db.json — canonical data-file sample | 2.7 |  | 0.671 |
-| walker |  | 1912 | 117 | README.md section #19 |  |  | 0.673 |
-| walker |  | 1917 | 5 | listing of '.husky' |  |  | 0.673 |
-| walker |  | 2005 | 88 | export at src/where-operators.ts:1 |  |  | 0.675 |
-| walker |  | 2053 | 48 | README.md section #15 |  |  | 0.675 |
-| ns | 2090 |  | 225 | fixtures/db.json5 — JSON5 data-file sample | 2.8 |  | 0.623 |
-| walker |  | 2093 | 40 | README.md section #16 |  |  | 0.624 |
-| ns | 2192 |  | 102 | schema.json | 2.9 |  | 0.607 |
-| walker |  | 2256 | 163 | README.md section #8 |  |  | 0.611 |
+| walker |  | 1681 | 117 | README.md section #19 |  |  | 0.709 |
+| ns | 1696 |  | 31 | oxfmt config (.oxfmtrc.json) | 2.6 |  | 0.699 |
+| walker |  | 1844 | 163 | README.md section #8 |  |  | 0.704 |
+| ns | 1865 |  | 169 | fixtures/db.json — canonical data-file sample | 2.7 |  | 0.674 |
+| walker |  | 1899 | 55 | export names surface in src/where-operators.ts |  |  | 0.674 |
+| walker |  | 1899 | 0 | export at src/where-operators.ts:16 |  |  | 0.674 |
+| walker |  | 1917 | 18 | export body at src/where-operators.ts:16 body 17 |  |  | 0.675 |
+| walker |  | 1930 | 13 | imports in src/random-id.ts |  |  | 0.675 |
+| walker |  | 2075 | 145 | README.md section #7 |  |  | 0.678 |
+| walker |  | 2080 | 5 | listing of '.husky' |  |  | 0.678 |
+| ns | 2090 |  | 225 | fixtures/db.json5 — JSON5 data-file sample | 2.8 |  | 0.625 |
+| walker |  | 2168 | 88 | export at src/where-operators.ts:1 |  |  | 0.627 |
+| ns | 2192 |  | 102 | schema.json | 2.9 |  | 0.610 |
+| walker |  | 2216 | 48 | README.md section #15 |  |  | 0.610 |
+| walker |  | 2256 | 40 | README.md section #16 |  |  | 0.611 |
 | walker |  | 2341 | 85 | export names surface in src/service.ts |  |  | 0.611 |
 | walker |  | 2341 | 0 | export at src/service.ts:13 |  |  | 0.611 |
 | walker |  | 2364 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.611 |
@@ -94,29 +94,29 @@ Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missi
 | ns | 3689 |  | 71 | README: Complex filter with _where | 3.10 | 3.1 | 0.708 |
 | ns | 3719 |  | 30 | README: Delete dependents | 3.11 | 3.1 | 0.711 |
 | ns | 3836 |  | 117 | README: Static Files | 3.12 | 3.1 | 0.717 |
-| walker |  | 3838 | 355 | export at src/service.ts:81 |  |  | 0.719 |
-| ns | 4011 |  | 175 | README: Migration Notes (v0 -> v1) | 3.13 | 3.1 | 0.723 |
-| ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.720 |
-| ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.716 |
-| walker |  | 4225 | 387 | package dependencies in package.json |  |  | 0.777 |
-| walker |  | 4267 | 42 | imports in src/matches-where.ts |  |  | 0.777 |
-| ns | 4349 |  | 250 | service.ts: exported types + Service class member signatures | 4.3 |  | 0.768 |
-| walker |  | 4373 | 106 | README.md section #4 |  |  | 0.768 |
-| ns | 4439 |  | 90 | normalized-adapter.ts: exported items + class member signatures | 4.4 |  | 0.770 |
-| ns | 4473 |  | 34 | matches-where.ts: function signatures | 4.5 |  | 0.768 |
-| ns | 4518 |  | 45 | parse-where.ts: function signatures | 4.6 |  | 0.764 |
-| walker |  | 4532 | 159 | README.md section #5 |  |  | 0.764 |
-| ns | 4614 |  | 96 | paginate.ts: PaginationResult type + paginate signature | 4.7 |  | 0.768 |
-| walker |  | 4659 | 127 | README.md section #11 |  |  | 0.778 |
-| walker |  | 4716 | 57 | imports in src/parse-where.ts |  |  | 0.778 |
-| ns | 4783 |  | 169 | where-operators.ts (full file) | 4.8 |  | 0.780 |
-| ns | 4837 |  | 54 | random-id.ts (full file) | 4.9 |  | 0.779 |
-| walker |  | 4856 | 140 | README.md section #10 |  |  | 0.805 |
-| walker |  | 5011 | 155 | README.md section #14 |  |  | 0.831 |
-| ns | 5163 |  | 326 | observer.ts (full file) | 4.10 |  | 0.822 |
-| walker |  | 5333 | 322 | export body at src/paginate.ts:11 body 12 |  |  | 0.824 |
-| ns | 5715 |  | 552 | service.ts: #get/has/findById/find bodies | 5.1 | 4.3 | 0.780 |
-| walker |  | 6065 | 732 | README.md section #2 |  |  | 0.791 |
+| ns | 4011 |  | 175 | README: Migration Notes (v0 -> v1) | 3.13 | 3.1 | 0.722 |
+| ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.718 |
+| ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.714 |
+| walker |  | 4215 | 732 | README.md section #2 |  |  | 0.729 |
+| ns | 4349 |  | 250 | service.ts: exported types + Service class member signatures | 4.3 |  | 0.711 |
+| ns | 4439 |  | 90 | normalized-adapter.ts: exported items + class member signatures | 4.4 |  | 0.713 |
+| ns | 4473 |  | 34 | matches-where.ts: function signatures | 4.5 |  | 0.711 |
+| ns | 4518 |  | 45 | parse-where.ts: function signatures | 4.6 |  | 0.708 |
+| walker |  | 4570 | 355 | export at src/service.ts:81 |  |  | 0.721 |
+| ns | 4614 |  | 96 | paginate.ts: PaginationResult type + paginate signature | 4.7 |  | 0.725 |
+| ns | 4783 |  | 169 | where-operators.ts (full file) | 4.8 |  | 0.729 |
+| ns | 4837 |  | 54 | random-id.ts (full file) | 4.9 |  | 0.728 |
+| walker |  | 4957 | 387 | package dependencies in package.json |  |  | 0.783 |
+| walker |  | 4999 | 42 | imports in src/matches-where.ts |  |  | 0.783 |
+| walker |  | 5105 | 106 | README.md section #4 |  |  | 0.783 |
+| ns | 5163 |  | 326 | observer.ts (full file) | 4.10 |  | 0.777 |
+| walker |  | 5264 | 159 | README.md section #5 |  |  | 0.777 |
+| walker |  | 5391 | 127 | README.md section #11 |  |  | 0.785 |
+| walker |  | 5448 | 57 | imports in src/parse-where.ts |  |  | 0.785 |
+| walker |  | 5588 | 140 | README.md section #10 |  |  | 0.810 |
+| ns | 5715 |  | 552 | service.ts: #get/has/findById/find bodies | 5.1 | 4.3 | 0.767 |
+| walker |  | 5743 | 155 | README.md section #14 |  |  | 0.789 |
+| walker |  | 6065 | 322 | export body at src/paginate.ts:11 body 12 |  |  | 0.791 |
 | ns | 6175 |  | 460 | service.ts: create/update/patch/destroyById bodies | 5.2 | 4.3 | 0.761 |
 | walker |  | 6316 | 251 | export body at src/adapters/normalized-adapter.ts:11 body 15 |  |  | 0.763 |
 | walker |  | 6364 | 48 | imports in src/adapters/normalized-adapter.ts |  |  | 0.763 |

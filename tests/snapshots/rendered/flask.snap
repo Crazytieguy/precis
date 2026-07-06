@@ -263,6 +263,7 @@ src/
                  141→    mimetype. A dict or list returned from a view will be converted to a
                  142→    JSON response automatically without needing to call this.
                 …
+                 170→    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
             provider.py
             tag.py
         logging.py
@@ -293,7 +294,7 @@ src/
             …
               88→    @max_content_length.setter
               89→    def max_content_length(self, value: int | None) -> None:
-              90→        self._max_content_length = value
+            …
               92→    @property
               93→    def max_form_memory_size(self) -> int | None:
             …
@@ -305,7 +306,7 @@ src/
             …
              142→    @max_form_parts.setter
              143→    def max_form_parts(self, value: int | None) -> None:
-             144→        self._max_form_parts = value
+            …
              146→    @property
              147→    def endpoint(self) -> str | None:
             …

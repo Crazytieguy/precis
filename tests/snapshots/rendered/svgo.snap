@@ -64,7 +64,35 @@ README.md
       45→svgo --help
       46→```
       48→## Configuration
-    …
+      49→
+      50→SVGO has a plugin architecture. You can read more about all plugins in [Plugins | SVGO Documentation](https://svgo.dev/docs/plugins/), and the default plugins in [Preset Default | SVGO Documentation](https://svgo.dev/docs/preset-default/).
+      51→
+      52→SVGO reads the configuration from `svgo.config.mjs` or the `--config path/to/config.mjs` command-line option. Some other parameters can be configured though command-line options too.
+      53→
+      54→**`svgo.config.mjs`**
+      55→
+      56→```js
+      57→export default {
+      58→  multipass: false, // boolean
+      59→  datauri: 'base64', // 'base64'|'enc'|'unenc'
+      60→  js2svg: {
+      61→    indent: 4, // number
+      62→    pretty: false, // boolean
+      63→  },
+      64→  plugins: [
+      65→    'preset-default', // built-in plugins enabled by default
+      66→    'prefixIds', // enable built-in plugins by name
+      67→
+      68→    // enable built-in plugins with an object to configure plugins
+      69→    {
+      70→      name: 'prefixIds',
+      71→      params: {
+      72→        prefix: 'uwu',
+      73→      },
+      74→    },
+      75→  ],
+      76→};
+      77→```
       79→### Default preset
       81→Instead of configuring SVGO from scratch, you can tweak the default preset to suit your needs by configuring or disabling the respective plugin.
     …

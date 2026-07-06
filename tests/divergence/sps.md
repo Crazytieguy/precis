@@ -158,89 +158,88 @@ Score(3000)=0.369 I=0.655 C=0.208 ns_rows≤3K=23/81 (reached=4 partial=0 missin
 | walker |  | 5970 | 44 | pub-item doc lede at sps-core/src/install/cask/mod.rs:49 |  |  | 0.336 |
 | walker |  | 6021 | 51 | pub-item doc lede at sps-core/src/install/cask/mod.rs:686 |  |  | 0.336 |
 | ns | 6028 |  | 123 | api.rs: Homebrew API fetch surface roster | 4.4 |  | 0.333 |
-| walker |  | 6030 | 9 | pub item body at sps-core/src/install/cask/mod.rs:49 body 70 |  |  | 0.333 |
-| walker |  | 6083 | 53 | pub item at sps-common/src/cache.rs:15 |  |  | 0.337 |
+| walker |  | 6048 | 27 | pub item body at sps-core/src/install/cask/mod.rs:686 body 687 |  |  | 0.333 |
+| walker |  | 6057 | 9 | pub item body at sps-core/src/install/cask/mod.rs:49 body 70 |  |  | 0.333 |
+| walker |  | 6110 | 53 | pub item at sps-common/src/cache.rs:15 |  |  | 0.337 |
 | ns | 6122 |  | 94 | http.rs: formula-source/resource download signatures | 4.5 |  | 0.335 |
-| walker |  | 6177 | 94 | pub item at sps/src/cli/info.rs:14 |  |  | 0.335 |
 | ns | 6190 |  | 68 | oci.rs: OCI/GHCR manifest structs & blob-fetch signatures | 4.6 |  | 0.333 |
-| walker |  | 6238 | 61 | pub item at sps-common/src/formulary.rs:12 |  |  | 0.343 |
-| walker |  | 6342 | 104 | pub item at sps/src/cli/upgrade.rs:12 |  |  | 0.343 |
-| ns | 6381 |  | 191 | validation.rs: checksum & URL-scheme validation | 4.7 |  | 0.339 |
-| walker |  | 6422 | 80 | README.md section #3 |  |  | 0.339 |
-| ns | 6451 |  | 70 | sps directory map | 5.1 |  | 0.361 |
-| walker |  | 6461 | 39 | pub item at sps-common/src/model/version.rs:11 |  |  | 0.362 |
-| walker |  | 6574 | 113 | pub item at sps/src/cli/reinstall.rs:12 |  |  | 0.362 |
-| walker |  | 6586 | 12 | pub-item doc lede at sps-common/src/cache.rs:15 |  |  | 0.362 |
-| ns | 6589 |  | 138 | sps/Cargo.toml: bin target & UI dependency stack | 5.2 |  | 0.359 |
-| ns | 6718 |  | 129 | main.rs: entrypoint skeleton | 5.3 |  | 0.365 |
-| ns | 6830 |  | 112 | cli.rs: the exhaustive Command enum | 5.4 |  | 0.377 |
-| walker |  | 6847 | 261 | mod/use plumbing in sps-core/src/install/cask/mod.rs |  |  | 0.377 |
-| ns | 6911 |  | 81 | cli/install.rs: InstallArgs flags | 5.5 |  | 0.375 |
-| walker |  | 6951 | 104 | README.md section #2 |  |  | 0.385 |
-| ns | 7028 |  | 117 | cli/upgrade.rs: UpgradeArgs flags & --all resolution | 5.6 |  | 0.386 |
-| walker |  | 7085 | 134 | pub item at sps/src/cli/list.rs:16 |  |  | 0.387 |
-| walker |  | 7149 | 64 | pub item at sps-common/src/dependency/requirement.rs:7 |  |  | 0.390 |
-| ns | 7161 |  | 133 | cli/uninstall.rs: Uninstall struct & run start | 5.7 |  | 0.387 |
-| walker |  | 7175 | 26 | pub-item names surface in sps-common/src/keg.rs |  |  | 0.387 |
-| walker |  | 7197 | 22 | pub item at sps-common/src/keg.rs:21 |  |  | 0.388 |
-| walker |  | 7249 | 52 | pub item at sps-common/src/keg.rs:13 |  |  | 0.388 |
-| walker |  | 7262 | 13 | pub-item doc lede at sps-common/src/keg.rs:21 |  |  | 0.388 |
-| walker |  | 7277 | 15 | pub-item doc lede at sps-common/src/keg.rs:13 |  |  | 0.388 |
-| walker |  | 7306 | 29 | pub-item names surface in sps-common/src/config.rs |  |  | 0.388 |
-| walker |  | 7306 | 0 | pub item at sps-common/src/config.rs:199 |  |  | 0.388 |
-| walker |  | 7315 | 9 | pub item body at sps-common/src/config.rs:199 body 200 |  |  | 0.388 |
-| ns | 7324 |  | 163 | cli/reinstall.rs + cli/update.rs: ReinstallArgs & manual metadata-update | 5.8 |  | 0.387 |
-| walker |  | 7396 | 81 | README.md section #9 |  |  | 0.387 |
-| walker |  | 7424 | 28 | mod/use plumbing in sps-common/src/error.rs |  |  | 0.387 |
-| ns | 7486 |  | 162 | cli/search.rs: Search struct & run dispatch | 5.9 |  | 0.387 |
-| walker |  | 7528 | 104 | pub item at sps-common/src/config.rs:15 |  |  | 0.399 |
-| walker |  | 7561 | 33 | pub-item names surface in sps-common/src/error.rs |  |  | 0.401 |
-| walker |  | 7584 | 23 | pub item body at sps-core/src/install/cask/mod.rs:49 body 50 |  |  | 0.401 |
+| walker |  | 6204 | 94 | pub item at sps/src/cli/info.rs:14 |  |  | 0.333 |
+| walker |  | 6313 | 109 | README.md section #6 |  |  | 0.347 |
+| walker |  | 6374 | 61 | pub item at sps-common/src/formulary.rs:12 |  |  | 0.357 |
+| ns | 6381 |  | 191 | validation.rs: checksum & URL-scheme validation | 4.7 |  | 0.353 |
+| ns | 6451 |  | 70 | sps directory map | 5.1 |  | 0.374 |
+| walker |  | 6478 | 104 | pub item at sps/src/cli/upgrade.rs:12 |  |  | 0.374 |
+| walker |  | 6558 | 80 | README.md section #3 |  |  | 0.374 |
+| ns | 6589 |  | 138 | sps/Cargo.toml: bin target & UI dependency stack | 5.2 |  | 0.371 |
+| walker |  | 6597 | 39 | pub item at sps-common/src/model/version.rs:11 |  |  | 0.373 |
+| walker |  | 6709 | 112 | README.md section #7 |  |  | 0.373 |
+| ns | 6718 |  | 129 | main.rs: entrypoint skeleton | 5.3 |  | 0.379 |
+| walker |  | 6822 | 113 | pub item at sps/src/cli/reinstall.rs:12 |  |  | 0.379 |
+| ns | 6830 |  | 112 | cli.rs: the exhaustive Command enum | 5.4 |  | 0.391 |
+| walker |  | 6834 | 12 | pub-item doc lede at sps-common/src/cache.rs:15 |  |  | 0.391 |
+| ns | 6911 |  | 81 | cli/install.rs: InstallArgs flags | 5.5 |  | 0.388 |
+| ns | 7028 |  | 117 | cli/upgrade.rs: UpgradeArgs flags & --all resolution | 5.6 |  | 0.389 |
+| walker |  | 7095 | 261 | mod/use plumbing in sps-core/src/install/cask/mod.rs |  |  | 0.389 |
+| ns | 7161 |  | 133 | cli/uninstall.rs: Uninstall struct & run start | 5.7 |  | 0.386 |
+| walker |  | 7199 | 104 | README.md section #2 |  |  | 0.396 |
+| ns | 7324 |  | 163 | cli/reinstall.rs + cli/update.rs: ReinstallArgs & manual metadata-update | 5.8 |  | 0.394 |
+| walker |  | 7333 | 134 | pub item at sps/src/cli/list.rs:16 |  |  | 0.395 |
+| walker |  | 7397 | 64 | pub item at sps-common/src/dependency/requirement.rs:7 |  |  | 0.398 |
+| walker |  | 7423 | 26 | pub-item names surface in sps-common/src/keg.rs |  |  | 0.398 |
+| walker |  | 7445 | 22 | pub item at sps-common/src/keg.rs:21 |  |  | 0.399 |
+| ns | 7486 |  | 162 | cli/search.rs: Search struct & run dispatch | 5.9 |  | 0.400 |
+| walker |  | 7497 | 52 | pub item at sps-common/src/keg.rs:13 |  |  | 0.400 |
+| walker |  | 7510 | 13 | pub-item doc lede at sps-common/src/keg.rs:21 |  |  | 0.400 |
+| walker |  | 7525 | 15 | pub-item doc lede at sps-common/src/keg.rs:13 |  |  | 0.400 |
+| walker |  | 7554 | 29 | pub-item names surface in sps-common/src/config.rs |  |  | 0.400 |
+| walker |  | 7554 | 0 | pub item at sps-common/src/config.rs:199 |  |  | 0.400 |
+| walker |  | 7563 | 9 | pub item body at sps-common/src/config.rs:199 body 200 |  |  | 0.400 |
 | ns | 7591 |  | 105 | cli/list.rs: List struct & flags | 5.10 |  | 0.408 |
-| ns | 7712 |  | 121 | cli/info.rs: Info struct & formula/cask fallback | 5.11 |  | 0.407 |
-| walker |  | 7769 | 185 | pub item at sps/src/cli/uninstall.rs:17 |  |  | 0.411 |
-| walker |  | 7792 | 23 | pub-item names surface in sps-common/src/dependency/definition.rs |  |  | 0.411 |
-| walker |  | 7855 | 63 | pub item at sps-common/src/dependency/definition.rs:53 |  |  | 0.411 |
-| ns | 7866 |  | 154 | cli/init.rs: InitArgs & already-initialized check | 5.12 |  | 0.409 |
-| walker |  | 7911 | 56 | pub item at sps-common/src/dependency/definition.rs:31 |  |  | 0.409 |
-| walker |  | 7938 | 27 | pub item body at sps-core/src/install/cask/mod.rs:686 body 687 |  |  | 0.409 |
-| ns | 7987 |  | 121 | cli/status.rs: JobStatus enum & StatusDisplay state | 5.13 |  | 0.404 |
-| walker |  | 8047 | 109 | README.md section #6 |  |  | 0.416 |
-| walker |  | 8073 | 26 | pub-item names surface in sps-core/src/check/update.rs |  |  | 0.417 |
+| walker |  | 7644 | 81 | README.md section #9 |  |  | 0.408 |
+| walker |  | 7672 | 28 | mod/use plumbing in sps-common/src/error.rs |  |  | 0.408 |
+| ns | 7712 |  | 121 | cli/info.rs: Info struct & formula/cask fallback | 5.11 |  | 0.406 |
+| walker |  | 7776 | 104 | pub item at sps-common/src/config.rs:15 |  |  | 0.418 |
+| walker |  | 7809 | 33 | pub-item names surface in sps-common/src/error.rs |  |  | 0.419 |
+| walker |  | 7832 | 23 | pub item body at sps-core/src/install/cask/mod.rs:49 body 50 |  |  | 0.419 |
+| ns | 7866 |  | 154 | cli/init.rs: InitArgs & already-initialized check | 5.12 |  | 0.416 |
+| ns | 7987 |  | 121 | cli/status.rs: JobStatus enum & StatusDisplay state | 5.13 |  | 0.412 |
+| walker |  | 8017 | 185 | pub item at sps/src/cli/uninstall.rs:17 |  |  | 0.416 |
+| walker |  | 8040 | 23 | pub-item names surface in sps-common/src/dependency/definition.rs |  |  | 0.416 |
+| walker |  | 8103 | 63 | pub item at sps-common/src/dependency/definition.rs:53 |  |  | 0.416 |
 | ns | 8110 |  | 123 | pipeline/runner.rs: CommandType & PipelineFlags | 5.14 |  | 0.425 |
-| walker |  | 8119 | 46 | pub item at sps-core/src/check/update.rs:89 |  |  | 0.425 |
-| walker |  | 8191 | 72 | pub item at sps-core/src/check/update.rs:23 |  |  | 0.430 |
-| ns | 8219 |  | 109 | pipeline/planner.rs + downloader.rs: planning & download-coordinator structs | 5.15 |  | 0.427 |
-| walker |  | 8303 | 112 | README.md section #7 |  |  | 0.427 |
-| ns | 8336 |  | 117 | resolver.rs: bottle-vs-source install-strategy decision | 6.1 |  | 0.424 |
-| walker |  | 8380 | 77 | pub item at sps-core/src/upgrade/cask.rs:15 |  |  | 0.424 |
-| walker |  | 8458 | 78 | pub item at sps-core/src/uninstall/formula.rs:10 |  |  | 0.427 |
-| walker |  | 8473 | 15 | pub-item doc lede at sps-common/src/model/version.rs:11 |  |  | 0.427 |
-| walker |  | 8498 | 25 | mod/use plumbing in sps-common/src/dependency/requirement.rs |  |  | 0.427 |
-| ns | 8525 |  | 189 | resolver.rs: resolve_recursive (graph-walk body, start) | 6.2 |  | 0.422 |
-| walker |  | 8612 | 114 | [package] in sps-common/Cargo.toml |  |  | 0.435 |
-| ns | 8707 |  | 182 | resolver.rs: topological_sort (Kahn's-algorithm body) | 6.3 |  | 0.431 |
-| walker |  | 8726 | 114 | [package] in sps-core/Cargo.toml |  |  | 0.440 |
-| walker |  | 8840 | 114 | [package] in sps-net/Cargo.toml |  |  | 0.448 |
-| ns | 8866 |  | 159 | install/bottle/link.rs: link_formula_artifacts body (start) | 6.4 | 3.10 | 0.444 |
-| walker |  | 8915 | 75 | mod/use plumbing in sps/src/cli/update.rs |  |  | 0.444 |
-| walker |  | 8949 | 34 | impl method sigs in sps/src/cli.rs |  |  | 0.444 |
-| ns | 9038 |  | 172 | install/cask/artifacts/app.rs: upgrade app-bundle replacement rationale | 6.5 | 3.13 | 0.440 |
-| walker |  | 9183 | 234 | [dependencies] in sps-common/Cargo.toml |  |  | 0.440 |
+| walker |  | 8159 | 56 | pub item at sps-common/src/dependency/definition.rs:31 |  |  | 0.425 |
+| ns | 8219 |  | 109 | pipeline/planner.rs + downloader.rs: planning & download-coordinator structs | 5.15 |  | 0.422 |
+| ns | 8336 |  | 117 | resolver.rs: bottle-vs-source install-strategy decision | 6.1 |  | 0.419 |
+| walker |  | 8383 | 224 | README.md section #4 |  |  | 0.419 |
+| walker |  | 8409 | 26 | pub-item names surface in sps-core/src/check/update.rs |  |  | 0.419 |
+| walker |  | 8455 | 46 | pub item at sps-core/src/check/update.rs:89 |  |  | 0.419 |
+| ns | 8525 |  | 189 | resolver.rs: resolve_recursive (graph-walk body, start) | 6.2 |  | 0.414 |
+| walker |  | 8527 | 72 | pub item at sps-core/src/check/update.rs:23 |  |  | 0.419 |
+| walker |  | 8604 | 77 | pub item at sps-core/src/upgrade/cask.rs:15 |  |  | 0.419 |
+| walker |  | 8682 | 78 | pub item at sps-core/src/uninstall/formula.rs:10 |  |  | 0.422 |
+| walker |  | 8697 | 15 | pub-item doc lede at sps-common/src/model/version.rs:11 |  |  | 0.422 |
+| ns | 8707 |  | 182 | resolver.rs: topological_sort (Kahn's-algorithm body) | 6.3 |  | 0.418 |
+| walker |  | 8722 | 25 | mod/use plumbing in sps-common/src/dependency/requirement.rs |  |  | 0.418 |
+| walker |  | 8836 | 114 | [package] in sps-common/Cargo.toml |  |  | 0.431 |
+| ns | 8866 |  | 159 | install/bottle/link.rs: link_formula_artifacts body (start) | 6.4 | 3.10 | 0.426 |
+| walker |  | 8950 | 114 | [package] in sps-core/Cargo.toml |  |  | 0.435 |
+| ns | 9038 |  | 172 | install/cask/artifacts/app.rs: upgrade app-bundle replacement rationale | 6.5 | 3.13 | 0.432 |
+| walker |  | 9064 | 114 | [package] in sps-net/Cargo.toml |  |  | 0.440 |
+| walker |  | 9139 | 75 | mod/use plumbing in sps/src/cli/update.rs |  |  | 0.440 |
+| walker |  | 9173 | 34 | impl method sigs in sps/src/cli.rs |  |  | 0.440 |
 | ns | 9254 |  | 216 | install/extract.rs: TAR path-traversal safety checks | 6.6 |  | 0.434 |
 | ns | 9355 |  | 101 | build/compile/cargo.rs & go.rs: two build backends shown in full | 6.7 | 3.5 | 0.431 |
-| walker |  | 9417 | 234 | [dependencies] in sps-net/Cargo.toml |  |  | 0.431 |
-| walker |  | 9512 | 95 | pub item at sps-core/src/upgrade/source.rs:19 |  |  | 0.432 |
-| ns | 9572 |  | 217 | model/formula.rs: custom Deserialize — version sanitization & resource parsing | 6.8 |  | 0.428 |
-| walker |  | 9645 | 133 | README.md section #8 |  |  | 0.428 |
-| ns | 9649 |  | 77 | uninstall/cask.rs: zap_cask_artifacts body (start) | 6.9 | 3.19 | 0.426 |
-| walker |  | 9663 | 18 | pub-item doc lede at sps-core/src/upgrade/cask.rs:15 |  |  | 0.426 |
-| ns | 9726 |  | 77 | .github/workflows/rust.yml: CI toolchains & checks | 7.1 |  | 0.423 |
-| walker |  | 9751 | 88 | mod/use plumbing in sps/src/cli/reinstall.rs |  |  | 0.423 |
+| walker |  | 9407 | 234 | [dependencies] in sps-common/Cargo.toml |  |  | 0.431 |
+| ns | 9572 |  | 217 | model/formula.rs: custom Deserialize — version sanitization & resource parsing | 6.8 |  | 0.427 |
+| walker |  | 9641 | 234 | [dependencies] in sps-net/Cargo.toml |  |  | 0.427 |
+| ns | 9649 |  | 77 | uninstall/cask.rs: zap_cask_artifacts body (start) | 6.9 | 3.19 | 0.425 |
+| ns | 9726 |  | 77 | .github/workflows/rust.yml: CI toolchains & checks | 7.1 |  | 0.422 |
+| walker |  | 9736 | 95 | pub item at sps-core/src/upgrade/source.rs:19 |  |  | 0.423 |
 | ns | 9780 |  | 54 | .github/dependabot.yml | 7.2 |  | 0.422 |
-| walker |  | 9856 | 105 | pub item at sps-core/src/pipeline/engine.rs:16 |  |  | 0.426 |
-| ns | 9858 |  | 78 | CONTRIBUTING.md: quick-start & dev-environment requirements | 7.3 |  | 0.425 |
-| walker |  | 9888 | 32 | mod/use plumbing in sps-common/src/model/artifact.rs |  |  | 0.425 |
-| ns | 9934 |  | 76 | rustfmt.toml: formatting rules | 7.4 |  | 0.423 |
-| ns | 9959 |  | 25 | README: contributing pointer & license footer | 7.5 |  | 0.424 |
-| ns | 9993 |  | 34 | LICENSE.md + NOTICE.md headers | 7.6 |  | 0.423 |
+| ns | 9858 |  | 78 | CONTRIBUTING.md: quick-start & dev-environment requirements | 7.3 |  | 0.420 |
+| walker |  | 9869 | 133 | README.md section #8 |  |  | 0.420 |
+| walker |  | 9887 | 18 | pub-item doc lede at sps-core/src/upgrade/cask.rs:15 |  |  | 0.420 |
+| ns | 9934 |  | 76 | rustfmt.toml: formatting rules | 7.4 |  | 0.419 |
+| ns | 9959 |  | 25 | README: contributing pointer & license footer | 7.5 |  | 0.420 |
+| walker |  | 9975 | 88 | mod/use plumbing in sps/src/cli/reinstall.rs |  |  | 0.420 |
+| ns | 9993 |  | 34 | LICENSE.md + NOTICE.md headers | 7.6 |  | 0.418 |

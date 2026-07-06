@@ -205,16 +205,11 @@ Score(3000)=0.850 I=0.944 C=0.766 ns_rows≤3K=20/42 (reached=15 partial=1 missi
 | walker |  | 8840 | 72 | docs/API.md section #45 |  |  | 0.560 |
 | walker |  | 8855 | 15 | docs/assets/API_head.md section #12 |  |  | 0.560 |
 | walker |  | 8925 | 70 | c decl doc at neco.c:3121 |  |  | 0.560 |
-| walker |  | 8941 | 16 | docs/assets/API_head.md section #10 |  |  | 0.560 |
 | ns | 9106 |  | 448 | neco.c — neco_chan_send(_dl) / neco_chan_broadcast | 7.2 | 6.2 | 0.544 |
-| walker |  | 9394 | 453 | c decl names surface #4 in neco.h |  |  | 0.565 |
-| walker |  | 9566 | 172 | c decl at neco.h:287 |  |  | 0.584 |
-| ns | 9605 |  | 499 | neco.c — neco_chan_recv(_dl) / neco_chan_tryrecv | 7.3 | 6.2 | 0.565 |
-| walker |  | 9647 | 81 | docs/API.md section #121 |  |  | 0.565 |
-| walker |  | 9730 | 83 | docs/API.md section #135 |  |  | 0.565 |
-| ns | 9734 |  | 129 | tests/tests.h — do_test/do_test_ registration macros | 8.1 |  | 0.560 |
-| walker |  | 9833 | 103 | c decl body at neco.c:2094 |  |  | 0.560 |
-| walker |  | 9850 | 17 | docs/assets/API_head.md section #8 |  |  | 0.560 |
-| walker |  | 9865 | 15 | docs/assets/API_head.md section #9 |  |  | 0.560 |
-| walker |  | 9951 | 86 | docs/API.md section #86 |  |  | 0.560 |
+| walker |  | 9286 | 361 | README.md section #8 |  |  | 0.544 |
+| walker |  | 9302 | 16 | docs/assets/API_head.md section #10 |  |  | 0.544 |
+| ns | 9605 |  | 499 | neco.c — neco_chan_recv(_dl) / neco_chan_tryrecv | 7.3 | 6.2 | 0.527 |
+| ns | 9734 |  | 129 | tests/tests.h — do_test/do_test_ registration macros | 8.1 |  | 0.522 |
+| walker |  | 9755 | 453 | c decl names surface #4 in neco.h |  |  | 0.542 |
+| walker |  | 9927 | 172 | c decl at neco.h:287 |  |  | 0.560 |
 | ns | 9993 |  | 259 | tests/tests.h — expect() assertion macro | 8.2 |  | 0.553 |

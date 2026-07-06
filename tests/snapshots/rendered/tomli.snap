@@ -59,6 +59,14 @@ README.md
      121→A `ValueError` will be raised if `parse_float` produces illegal types.
      123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
     …
+     131→Instead of a hard Tomli dependency, use the following
+     132→[dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/)
+     133→to only require Tomli when the standard library module is not available:
+     134→
+     135→```
+     136→tomli >= 1.1.0 ; python_version < "3.11"
+     137→```
+    …
      152→## FAQ<a name="faq"></a>
      153→
      154→### Why this parser?<a name="why-this-parser"></a>
@@ -157,14 +165,11 @@ src/
              226→    # be opened using the "[table]" syntax.
              227→    EXPLICIT_NEST: Final = 1
              229→    def __init__(self) -> None:
-             230→        self._flags: dict[str, dict[Any, Any]] = {}
-             231→        self._pending_flags: set[tuple[Key, int]] = set()
+            …
              233→    def add_pending(self, key: Key, flag: int) -> None:
              234→        self._pending_flags.add((key, flag))
              236→    def finalize_pending(self) -> None:
-             237→        for key, flag in self._pending_flags:
-             238→            self.set(key, flag, recursive=False)
-             239→        self._pending_flags.clear()
+            …
              241→    def unset_all(self, key: Key) -> None:
             …
              249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003

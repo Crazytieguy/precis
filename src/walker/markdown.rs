@@ -116,6 +116,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         file: file.clone(),
                         section_index: idx,
                         reference_shaped,
+                        deferred_mass_prose: false,
                     }
                     .into(),
                     predecessor: headline_emitted.clone(),
@@ -229,6 +230,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     file: file.clone(),
                     section_index: idx,
                     reference_shaped: range.reference_shaped,
+                    deferred_mass_prose: range.deferred_mass_prose,
                 };
                 // Roster chunks deliver in source order: each chunk
                 // gates on its predecessor chunk.
@@ -1663,6 +1665,9 @@ struct SectionRange {
     /// (commands, setup/test/debug steps, env vars, or concrete repo
     /// paths). Valued above peripheral-doc prose.
     dev_workflow_section: bool,
+    /// Operationally dense prose section eligible for the late scheduler
+    /// prose tier.
+    deferred_mass_prose: bool,
     /// Non-zero for a link-index roster chunk: the count of intra-doc
     /// link entries this chunk catalogs. Valued as a names surface
     /// (cat lift + [`roster_mass_factor`]) instead of section prose.
@@ -1772,6 +1777,7 @@ fn is_dev_workflow_doc(file: &Path) -> bool {
 
 const DEV_WORKFLOW_MIN_SIGNALS: usize = 2;
 const DEV_WORKFLOW_MAX_BYTES: usize = 2200;
+const OPERATIONAL_DENSITY_MIN_SIGNALS: usize = 3;
 
 fn range_has_dev_workflow_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
     let last = end.min(src_lines.len());
@@ -1806,6 +1812,53 @@ fn range_has_dev_workflow_signal(src_lines: &[&str], start: usize, end: usize) -
         }
     }
     bytes <= DEV_WORKFLOW_MAX_BYTES && signals >= DEV_WORKFLOW_MIN_SIGNALS
+}
+
+fn range_has_operational_density_signal(src_lines: &[&str], start: usize, end: usize) -> bool {
+    let last = end.min(src_lines.len());
+    if start > last {
+        return false;
+    }
+    let mut signals = 0usize;
+    let mut in_fence = false;
+    for line in &src_lines[start - 1..last] {
+        let t = line.trim_start();
+        if t.is_empty() {
+            continue;
+        }
+        if t.starts_with("```") || t.starts_with("~~~") {
+            in_fence = !in_fence;
+            signals += 1;
+            continue;
+        }
+        if in_fence {
+            if is_dev_command_line(t) || is_repo_path_line(t) || looks_like_option_or_env_row(t) {
+                signals += 1;
+            }
+            continue;
+        }
+        if is_dev_command_line(t)
+            || is_dev_config_line(t)
+            || is_repo_path_line(t)
+            || looks_like_option_or_env_row(t)
+            || (is_numbered_step_line(t) && contains_dev_action(t))
+        {
+            signals += 1;
+        }
+    }
+    signals >= OPERATIONAL_DENSITY_MIN_SIGNALS
+}
+
+fn looks_like_option_or_env_row(t: &str) -> bool {
+    if t.starts_with('|') && (t.contains("--") || t.contains('`')) {
+        return true;
+    }
+    t.split_whitespace().any(|token| {
+        let trimmed = token.trim_matches(|c: char| {
+            matches!(c, '`' | ',' | '.' | ':' | ';' | ')' | '(' | '[' | ']')
+        });
+        trimmed.starts_with("--") || is_env_var_token(trimmed)
+    })
 }
 
 fn is_dev_command_line(t: &str) -> bool {
@@ -1936,6 +1989,7 @@ fn logical_sections(
                     is_reference_usage_section: false,
                     reference_shaped: false,
                     dev_workflow_section: false,
+                    deferred_mass_prose: false,
                     roster_entries: 0,
                     chained_to_previous: false,
                 });
@@ -2037,6 +2091,7 @@ fn logical_sections(
                             is_reference_usage_section: reference_h2,
                             reference_shaped: false,
                             dev_workflow_section: false,
+                            deferred_mass_prose: false,
                             roster_entries: 0,
                             chained_to_previous: false,
                         });
@@ -2071,6 +2126,13 @@ fn logical_sections(
             range.dev_workflow_section =
                 range_has_dev_workflow_signal(&src_lines, range.start, range.end);
             range.reference_shaped |= range.dev_workflow_section;
+        }
+    }
+    if readme || is_dev_workflow_doc(file) {
+        let src_lines: Vec<&str> = source.lines().collect();
+        for (idx, range) in out.iter_mut().enumerate() {
+            range.deferred_mass_prose = idx >= 2
+                && range_has_operational_density_signal(&src_lines, range.start, range.end);
         }
     }
     out
@@ -2190,6 +2252,7 @@ fn push_link_index_chunks(
             is_reference_usage_section: false,
             reference_shaped: true,
             dev_workflow_section: false,
+            deferred_mass_prose: false,
             roster_entries: entries,
             chained_to_previous: i > 0,
         });
@@ -2241,6 +2304,7 @@ fn push_canonical_usage_fence_split(
         is_reference_usage_section: false,
         reference_shaped: false,
         dev_workflow_section: false,
+        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2254,6 +2318,7 @@ fn push_canonical_usage_fence_split(
         is_reference_usage_section: false,
         reference_shaped: false,
         dev_workflow_section: false,
+        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2298,6 +2363,7 @@ fn push_intro<'a>(
         is_reference_usage_section: reference_h2,
         reference_shaped: false,
         dev_workflow_section: false,
+        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2337,6 +2403,7 @@ fn push_h3_child_or_body_blocks(
         is_reference_usage_section: reference_h3,
         reference_shaped: false,
         dev_workflow_section: false,
+        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     });
@@ -2361,6 +2428,7 @@ fn push_body_block_ranges(
         is_reference_usage_section: false,
         reference_shaped: false,
         dev_workflow_section: false,
+        deferred_mass_prose: false,
         roster_entries: 0,
         chained_to_previous: false,
     }));

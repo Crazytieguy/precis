@@ -399,16 +399,16 @@ Score(3000)=0.435 I=0.553 C=0.343 ns_rows≤3K=22/104 (reached=5 partial=0 missi
 | walker |  | 7472 | 18 | python decl doc at rich/_ratio.py:6 |  |  | 0.326 |
 | walker |  | 7506 | 34 | python decl at rich/_ratio.py:75 |  |  | 0.326 |
 | walker |  | 7542 | 36 | python class body at rich/_ratio.py:6 |  |  | 0.326 |
-| ns | 7579 |  | 160 | rich/markdown.py: Markdown element class roster + Markdown docstring | 7.2 | 7.1 | 0.323 |
-| walker |  | 7588 | 46 | python decl doc at rich/logging.py:24 |  |  | 0.323 |
-| walker |  | 7671 | 83 | python decl doc at rich/__init__.py:39 |  |  | 0.323 |
+| ns | 7579 |  | 160 | rich/markdown.py: Markdown element class roster + Markdown docstring | 7.2 | 7.1 | 0.322 |
+| walker |  | 7588 | 46 | python decl doc at rich/logging.py:24 |  |  | 0.322 |
+| walker |  | 7671 | 83 | python decl doc at rich/__init__.py:39 |  |  | 0.322 |
 | ns | 7760 |  | 181 | rich/syntax.py: SyntaxTheme hierarchy + Syntax class method roster | 7.3 | 7.1 | 0.320 |
 | walker |  | 7785 | 114 | python class body at rich/logging.py:24 |  |  | 0.320 |
 | walker |  | 7799 | 14 | python method body at rich/emoji.py:64 body 65 |  |  | 0.320 |
 | walker |  | 7813 | 14 | python method body at rich/status.py:96 body 97 |  |  | 0.320 |
-| ns | 7818 |  | 58 | docs/source/traceback.rst (excerpt): install() handler + suppress + max_frames | 7.4 |  | 0.319 |
-| walker |  | 7827 | 14 | python method body at rich/table.py:285 body 288 |  |  | 0.319 |
-| walker |  | 7890 | 63 | python class body at rich/table.py:131 |  |  | 0.319 |
+| ns | 7818 |  | 58 | docs/source/traceback.rst (excerpt): install() handler + suppress + max_frames | 7.4 |  | 0.318 |
+| walker |  | 7827 | 14 | python method body at rich/table.py:285 body 288 |  |  | 0.318 |
+| walker |  | 7890 | 63 | python class body at rich/table.py:131 |  |  | 0.318 |
 | ns | 7891 |  | 73 | rich/traceback.py: install() signature + Traceback class location roster | 7.5 | 7.4 | 0.317 |
 | walker |  | 7909 | 19 | python imports in rich/pager.py |  |  | 0.317 |
 | walker |  | 7928 | 19 | python imports in rich/protocol.py |  |  | 0.317 |
@@ -464,9 +464,9 @@ Score(3000)=0.435 I=0.553 C=0.343 ns_rows≤3K=22/104 (reached=5 partial=0 missi
 | walker |  | 8753 | 15 | python method at rich/progress_bar.py:60 |  |  | 0.309 |
 | walker |  | 8763 | 10 | python method doc at rich/progress_bar.py:60 |  |  | 0.309 |
 | walker |  | 8788 | 25 | python method at rich/progress_bar.py:200 |  |  | 0.309 |
-| ns | 8810 |  | 58 | rich/scope.py: render_scope() signature+doc (locals-table renderer) | 8.7 |  | 0.309 |
-| walker |  | 8814 | 26 | python method at rich/progress_bar.py:156 |  |  | 0.309 |
-| walker |  | 8826 | 12 | python method doc at rich/table.py:700 |  |  | 0.309 |
+| ns | 8810 |  | 58 | rich/scope.py: render_scope() signature+doc (locals-table renderer) | 8.7 |  | 0.308 |
+| walker |  | 8814 | 26 | python method at rich/progress_bar.py:156 |  |  | 0.308 |
+| walker |  | 8826 | 12 | python method doc at rich/table.py:700 |  |  | 0.308 |
 | ns | 8863 |  | 53 | rich/filesize.py (excerpt): decimal()/pick_unit_and_suffix() | 8.8 |  | 0.312 |
 | ns | 8904 |  | 41 | rich/styled.py (excerpt) + rich/abc.py (excerpt) | 8.9 |  | 0.312 |
 | walker |  | 8965 | 139 | python decl at rich/__init__.py:120 |  |  | 0.312 |
@@ -475,21 +475,21 @@ Score(3000)=0.435 I=0.553 C=0.343 ns_rows≤3K=22/104 (reached=5 partial=0 missi
 | ns | 9093 |  | 54 | rich/jupyter.py (excerpt): JupyterMixin + _render_segments/display | 8.12 |  | 0.309 |
 | ns | 9148 |  | 55 | rich/live_render.py: LiveRender docstring+init | 8.13 |  | 0.308 |
 | walker |  | 9157 | 192 | python class body at rich/segment.py:32 |  |  | 0.313 |
-| ns | 9213 |  | 65 | rich/pager.py (excerpt) + rich/file_proxy.py (excerpt) | 8.14 |  | 0.316 |
+| ns | 9213 |  | 65 | rich/pager.py (excerpt) + rich/file_proxy.py (excerpt) | 8.14 |  | 0.315 |
 | ns | 9269 |  | 56 | Small internal helpers: _loop, _pick, _stack (of 6 in this family) | 9.1 |  | 0.317 |
 | ns | 9335 |  | 66 | Small internal helpers: _fileno, _null_file, _extension (of 6 in this family) | 9.2 |  | 0.316 |
-| walker |  | 9408 | 251 | python method sigs in rich/live.py |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:25 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:31 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:34 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:103 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:111 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:145 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:183 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:195 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:205 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:230 |  |  | 0.321 |
-| walker |  | 9408 | 0 | python method at rich/live.py:244 |  |  | 0.321 |
+| walker |  | 9408 | 251 | python method sigs in rich/live.py |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:25 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:31 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:34 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:103 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:111 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:145 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:183 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:195 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:205 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:230 |  |  | 0.320 |
+| walker |  | 9408 | 0 | python method at rich/live.py:244 |  |  | 0.320 |
 | walker |  | 9421 | 13 | python method at rich/live.py:98 |  |  | 0.322 |
 | ns | 9429 |  | 94 | rich/_inspect.py: Inspect class + helper function location | 9.3 |  | 0.321 |
 | walker |  | 9436 | 15 | python method at rich/live.py:214 |  |  | 0.321 |
@@ -518,7 +518,7 @@ Score(3000)=0.435 I=0.553 C=0.343 ns_rows≤3K=22/104 (reached=5 partial=0 missi
 | walker |  | 9846 | 13 | python method at rich/segment.py:78 |  |  | 0.337 |
 | walker |  | 9859 | 13 | python method at rich/segment.py:101 |  |  | 0.337 |
 | walker |  | 9872 | 13 | python method at rich/segment.py:181 |  |  | 0.337 |
-| ns | 9883 |  | 41 | docs/source/appendix.rst (excerpt): appendix toctree | 11.1 | 2.6 | 0.337 |
+| ns | 9883 |  | 41 | docs/source/appendix.rst (excerpt): appendix toctree | 11.1 | 2.6 | 0.336 |
 | walker |  | 9895 | 23 | python method at rich/segment.py:246 |  |  | 0.337 |
 | walker |  | 9907 | 12 | python method doc at rich/segment.py:181 |  |  | 0.337 |
 | walker |  | 9915 | 8 | python method body at rich/segment.py:181 body 184 |  |  | 0.337 |
