@@ -201,7 +201,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         .flatten();
     let module_entrypoint_gate = module_entrypoint
         .as_ref()
-        .map(|file| import_gate_for_file(file, ctx));
+        .and_then(|file| emitted_import_gate_for_file(file, ctx));
 
     let mut out = Vec::new();
     for file in &js_like_files {
@@ -674,24 +674,24 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     out
 }
 
-fn import_gate_for_file(file: &Path, ctx: &WalkCtx) -> BatchKey {
-    if would_chunk_reexport_imports(file, ctx) {
-        BatchKey::Typescript(TsKey::ImportChunk {
+/// Key of the import-shaped batch the module entrypoint will actually
+/// emit, or `None` when it emits none (no import / re-export lines, or
+/// unparseable). Sibling batches must never be gated on a key that is
+/// never absorbed — such a predecessor leaves every dependent batch
+/// permanently ineligible, silently starving the whole directory.
+fn emitted_import_gate_for_file(file: &Path, ctx: &WalkCtx) -> Option<BatchKey> {
+    let (source, tree) = parse_ts(ctx, file)?;
+    if collect_reexport_import_chunks(file, &tree, &source).is_some() {
+        return Some(BatchKey::Typescript(TsKey::ImportChunk {
             file: file.to_path_buf(),
             chunk_index: 0,
-        })
-    } else {
-        BatchKey::Typescript(TsKey::Imports {
-            file: file.to_path_buf(),
-        })
+        }));
     }
-}
-
-fn would_chunk_reexport_imports(file: &Path, ctx: &WalkCtx) -> bool {
-    is_entrypoint_file(file)
-        && parse_ts(ctx, file)
-            .and_then(|(source, tree)| collect_reexport_import_groups(&tree, &source))
-            .is_some_and(|groups| should_chunk_import_groups(&groups))
+    let lines = collect_imports(&tree, &source);
+    single_file_lines_content(file, &source, lines)?;
+    Some(BatchKey::Typescript(TsKey::Imports {
+        file: file.to_path_buf(),
+    }))
 }
 
 struct ExportBodyEmitCtx<'a, 'b> {
@@ -3812,6 +3812,46 @@ mod tests {
         );
         assert_eq!(pred_for(&roster_key), Some(&export_key));
         assert_eq!(pred_for(&chunk0_key), Some(&roster_key));
+    }
+
+    #[test]
+    fn walker_typescript_importless_entrypoint_does_not_starve_siblings() {
+        // A nested module dir whose index.ts has no import / re-export
+        // lines used to gate every sibling batch on an `Imports` key
+        // that was never emitted, leaving the siblings permanently
+        // ineligible at any budget.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let util = root.join("src").join("util");
+        std::fs::create_dir_all(&util).unwrap();
+        std::fs::write(root.join("package.json"), "{\"name\":\"repro\"}\n").unwrap();
+        std::fs::write(
+            root.join("src").join("index.ts"),
+            "export * from \"./util\";\n",
+        )
+        .unwrap();
+        std::fs::write(util.join("index.ts"), "export const ANSWER = 42;\n").unwrap();
+        std::fs::write(
+            util.join("helper.ts"),
+            "export function helperAlpha(): number {\n  return 1;\n}\n",
+        )
+        .unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 50_000, None);
+        let report = scheduler.run_with_report();
+        let keys: std::collections::HashSet<_> =
+            report.candidates.iter().map(|b| b.key.clone()).collect();
+        for batch in &report.candidates {
+            if let Some(pred) = &batch.predecessor {
+                assert!(
+                    keys.contains(pred),
+                    "dangling predecessor {pred:?} on {:?}",
+                    batch.key
+                );
+            }
+        }
+        let rendered = report.tree.render();
+        assert!(rendered.contains("helperAlpha"), "rendered:\n{rendered}");
     }
 
     #[test]
