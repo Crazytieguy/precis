@@ -508,14 +508,37 @@ fn extract_table_name(node: Node, source: &str) -> Option<String> {
     None
 }
 
-/// Strip quotes from each dotted-key segment so `[tool."poetry".scripts]`
-/// classifies the same as `[tool.poetry.scripts]`. Quoted segments
-/// containing a literal dot are rare enough in manifests to ignore.
+/// Strip quotes from dotted-key segments so `[tool."poetry".scripts]`
+/// classifies the same as `[tool.poetry.scripts]`. Splits only on dots
+/// *outside* quotes, and a segment whose content contains a literal dot
+/// keeps its quotes — `["tool.poetry".scripts]` names a different table
+/// than `[tool.poetry.scripts]` and must not normalize into it.
 fn normalize_key_path(text: &str) -> String {
-    text.split('.')
-        .map(|segment| segment.trim().trim_matches(['"', '\'']))
-        .collect::<Vec<_>>()
-        .join(".")
+    let mut segments: Vec<String> = Vec::new();
+    let mut current = String::new();
+    let mut quote: Option<char> = None;
+    let mut push_segment = |segment: &mut String| {
+        let trimmed = segment.trim();
+        segments.push(if trimmed.contains('.') {
+            format!("\"{trimmed}\"")
+        } else {
+            trimmed.to_string()
+        });
+        segment.clear();
+    };
+    for c in text.chars() {
+        match quote {
+            Some(q) if c == q => quote = None,
+            Some(_) => current.push(c),
+            None => match c {
+                '"' | '\'' => quote = Some(c),
+                '.' => push_segment(&mut current),
+                _ => current.push(c),
+            },
+        }
+    }
+    push_segment(&mut current);
+    segments.join(".")
 }
 
 // --- workspace-member resolution ---
@@ -617,6 +640,24 @@ mod tests {
         }
         let members = collect_workspace_members(dir.path());
         (dir, members)
+    }
+
+    #[test]
+    fn walker_toml_normalize_key_path_quoted_segments() {
+        // Quoted segment without a literal dot normalizes into the
+        // dotted path; a literal-dot segment keeps its quotes so it
+        // can't be confused with the structurally-dotted table.
+        assert_eq!(
+            normalize_key_path("tool.\"poetry\".scripts"),
+            "tool.poetry.scripts"
+        );
+        assert_eq!(normalize_key_path("'tool'.poetry"), "tool.poetry");
+        assert_eq!(
+            normalize_key_path("\"tool.poetry\".scripts"),
+            "\"tool.poetry\".scripts"
+        );
+        assert_eq!(normalize_key_path("dependencies"), "dependencies");
+        assert_eq!(normalize_key_path("\"dependencies\""), "dependencies");
     }
 
     #[test]
