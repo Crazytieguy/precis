@@ -632,7 +632,13 @@ impl InnerKey for RustKey {
 
 impl InnerKey for MarkdownKey {
     fn is_orientation(&self) -> bool {
-        true
+        !matches!(
+            self,
+            MarkdownKey::Section {
+                deferred_mass_prose: true,
+                ..
+            }
+        )
     }
     fn describe(&self, root: &Path) -> String {
         match self {
@@ -1139,4 +1145,29 @@ pub struct Batch<K: WalkerKey> {
     pub predecessor: Option<K>,
     pub content: BatchContent,
     pub value: f64,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn markdown_deferred_mass_prose_is_not_orientation() {
+        let ordinary = MarkdownKey::Section {
+            file: PathBuf::from("README.md"),
+            section_index: 1,
+            reference_shaped: false,
+            deferred_mass_prose: false,
+        };
+        let deferred = MarkdownKey::Section {
+            file: PathBuf::from("README.md"),
+            section_index: 2,
+            reference_shaped: false,
+            deferred_mass_prose: true,
+        };
+
+        assert!(ordinary.is_orientation());
+        assert!(!deferred.is_orientation());
+        assert!(deferred.is_deferred_mass_prose());
+    }
 }
