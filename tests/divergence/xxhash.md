@@ -126,46 +126,47 @@ Score(3000)=0.568 I=0.838 C=0.385 ns_rows≤3K=18/48 (reached=7 partial=3 missin
 | walker |  | 3611 | 4 | listing of '.github/workflows' |  |  | 0.662 |
 | ns | 3661 |  | 258 | New / NewWithSeed / Reset / ResetWithSeed bodies | 4.3 | 1.10 | 0.671 |
 | ns | 3687 |  | 26 | Size / BlockSize doc comments | 4.4 | 1.10 | 0.675 |
-| walker |  | 3815 | 204 | go decl body at xxhash.go:190 |  |  | 0.678 |
-| walker |  | 3962 | 147 | README.md section #3 |  |  | 0.678 |
-| walker |  | 4037 | 75 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.678 |
-| ns | 4105 |  | 418 | Write method body | 4.5 | 1.10 | 0.638 |
-| ns | 4241 |  | 136 | Sum method body | 4.6 | 1.10 | 0.648 |
-| walker |  | 4421 | 384 | go decl body at xxhash.go:75 |  |  | 0.713 |
-| ns | 4730 |  | 489 | Sum64 method body (finalize) | 4.7 | 1.10 | 0.672 |
-| walker |  | 4732 | 311 | README.md section #2 |  |  | 0.673 |
-| ns | 5187 |  | 457 | MarshalBinary / UnmarshalBinary + magic const | 4.8 | 1.10 | 0.686 |
-| walker |  | 5203 | 471 | go decl body at xxhash.go:129 |  |  | 0.744 |
-| ns | 5257 |  | 70 | Marshal helpers + u64/u32 readers roster | 4.9 |  | 0.745 |
-| walker |  | 5436 | 233 | go decl body at xxhsum/xxhsum.go:11 |  |  | 0.748 |
-| ns | 5586 |  | 329 | round / mergeRound / rolN mixing primitives | 4.10 |  | 0.749 |
-| ns | 5675 |  | 89 | xxhash_test.go function roster | 5.1 |  | 0.742 |
-| walker |  | 5712 | 276 | go decl body at dynamic/plugin.go:26 |  |  | 0.742 |
-| walker |  | 5720 | 8 | plaintext config dynamic/.gitignore |  |  | 0.742 |
-| walker |  | 5754 | 34 | go test names surface in xxhash_unsafe_test.go |  |  | 0.742 |
-| walker |  | 5763 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.742 |
-| walker |  | 5780 | 17 | go test names surface in xxhashbench/xxhashbench_test.go |  |  | 0.742 |
-| walker |  | 5994 | 214 | go decl body at xxhash_other.go:64 |  |  | 0.760 |
-| walker |  | 6061 | 67 | go test names surface in bench_test.go |  |  | 0.760 |
-| walker |  | 6093 | 32 | go test names surface in dynamic/dynamic_test.go |  |  | 0.760 |
-| ns | 6341 |  | 666 | TestAll: the canonical XXH64 test-vector table | 5.2 | 5.1 | 0.723 |
-| walker |  | 6772 | 679 | go decl body at xxhash_other.go:7 |  |  | 0.755 |
-| walker |  | 6855 | 83 | go test names surface in xxhash_test.go |  |  | 0.760 |
-| ns | 6897 |  | 556 | testDigest / testSum bodies | 5.3 | 5.1 | 0.730 |
-| ns | 7072 |  | 175 | TestReset | 5.4 | 5.1 | 0.719 |
-| walker |  | 7167 | 312 | plaintext config LICENSE.txt |  |  | 0.719 |
-| ns | 7486 |  | 414 | TestBinaryMarshaling | 5.5 | 5.1 | 0.695 |
-| ns | 7842 |  | 356 | TestAllocs + testAllocs helper | 5.6 | 5.1 | 0.676 |
-| ns | 8294 |  | 452 | xxhash_unsafe_test.go: header + TestInlining | 5.7 |  | 0.652 |
-| ns | 8341 |  | 47 | bench_test.go benchmark roster | 5.8 |  | 0.653 |
-| ns | 8588 |  | 247 | BenchmarkSum64 body (representative) + benchmarks table | 5.9 | 5.8 | 0.640 |
-| ns | 8931 |  | 343 | xxhsum/xxhsum.go: main + printHash | 6.1 |  | 0.651 |
-| ns | 8948 |  | 17 | Build-artifact .gitignore entries | 6.2 |  | 0.652 |
-| ns | 9119 |  | 171 | dynamic/plugin.go: header + test-function roster | 6.3 |  | 0.653 |
-| ns | 9421 |  | 302 | dynamic/dynamic_test.go: header + TestMain + TestDynamic roster | 6.4 |  | 0.638 |
-| ns | 9514 |  | 93 | xxhashbench_test.go: TODO note + function roster | 6.5 |  | 0.636 |
-| ns | 9589 |  | 75 | xxhashbench_test.go: comparison-target names | 6.6 |  | 0.634 |
-| ns | 9753 |  | 164 | README benchmarks table | 7.1 |  | 0.636 |
-| ns | 9781 |  | 28 | LICENSE.txt (identity only) | 7.2 |  | 0.638 |
-| ns | 9865 |  | 84 | xxhash_amd64.s: macro + function entry-point locations | 8.1 |  | 0.635 |
-| ns | 9949 |  | 84 | xxhash_arm64.s: macro + function entry-point locations | 8.2 |  | 0.632 |
+| ns | 4105 |  | 418 | Write method body | 4.5 | 1.10 | 0.634 |
+| walker |  | 4235 | 624 | YAML config at .github/workflows/test.yml |  |  | 0.760 |
+| ns | 4241 |  | 136 | Sum method body | 4.6 | 1.10 | 0.765 |
+| walker |  | 4439 | 204 | go decl body at xxhash.go:190 |  |  | 0.768 |
+| walker |  | 4586 | 147 | README.md section #3 |  |  | 0.768 |
+| walker |  | 4661 | 75 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.769 |
+| ns | 4730 |  | 489 | Sum64 method body (finalize) | 4.7 | 1.10 | 0.724 |
+| walker |  | 5045 | 384 | go decl body at xxhash.go:75 |  |  | 0.782 |
+| ns | 5187 |  | 457 | MarshalBinary / UnmarshalBinary + magic const | 4.8 | 1.10 | 0.788 |
+| ns | 5257 |  | 70 | Marshal helpers + u64/u32 readers roster | 4.9 |  | 0.789 |
+| walker |  | 5356 | 311 | README.md section #2 |  |  | 0.790 |
+| ns | 5586 |  | 329 | round / mergeRound / rolN mixing primitives | 4.10 |  | 0.790 |
+| ns | 5675 |  | 89 | xxhash_test.go function roster | 5.1 |  | 0.783 |
+| walker |  | 5827 | 471 | go decl body at xxhash.go:129 |  |  | 0.835 |
+| walker |  | 6060 | 233 | go decl body at xxhsum/xxhsum.go:11 |  |  | 0.837 |
+| walker |  | 6336 | 276 | go decl body at dynamic/plugin.go:26 |  |  | 0.837 |
+| ns | 6341 |  | 666 | TestAll: the canonical XXH64 test-vector table | 5.2 | 5.1 | 0.796 |
+| walker |  | 6344 | 8 | plaintext config dynamic/.gitignore |  |  | 0.796 |
+| walker |  | 6378 | 34 | go test names surface in xxhash_unsafe_test.go |  |  | 0.796 |
+| walker |  | 6387 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.796 |
+| walker |  | 6404 | 17 | go test names surface in xxhashbench/xxhashbench_test.go |  |  | 0.796 |
+| walker |  | 6618 | 214 | go decl body at xxhash_other.go:64 |  |  | 0.812 |
+| walker |  | 6685 | 67 | go test names surface in bench_test.go |  |  | 0.813 |
+| walker |  | 6717 | 32 | go test names surface in dynamic/dynamic_test.go |  |  | 0.813 |
+| ns | 6897 |  | 556 | testDigest / testSum bodies | 5.3 | 5.1 | 0.781 |
+| ns | 7072 |  | 175 | TestReset | 5.4 | 5.1 | 0.769 |
+| walker |  | 7396 | 679 | go decl body at xxhash_other.go:7 |  |  | 0.800 |
+| walker |  | 7479 | 83 | go test names surface in xxhash_test.go |  |  | 0.803 |
+| ns | 7486 |  | 414 | TestBinaryMarshaling | 5.5 | 5.1 | 0.777 |
+| walker |  | 7791 | 312 | plaintext config LICENSE.txt |  |  | 0.777 |
+| ns | 7842 |  | 356 | TestAllocs + testAllocs helper | 5.6 | 5.1 | 0.756 |
+| ns | 8294 |  | 452 | xxhash_unsafe_test.go: header + TestInlining | 5.7 |  | 0.728 |
+| ns | 8341 |  | 47 | bench_test.go benchmark roster | 5.8 |  | 0.730 |
+| ns | 8588 |  | 247 | BenchmarkSum64 body (representative) + benchmarks table | 5.9 | 5.8 | 0.715 |
+| ns | 8931 |  | 343 | xxhsum/xxhsum.go: main + printHash | 6.1 |  | 0.723 |
+| ns | 8948 |  | 17 | Build-artifact .gitignore entries | 6.2 |  | 0.723 |
+| ns | 9119 |  | 171 | dynamic/plugin.go: header + test-function roster | 6.3 |  | 0.724 |
+| ns | 9421 |  | 302 | dynamic/dynamic_test.go: header + TestMain + TestDynamic roster | 6.4 |  | 0.707 |
+| ns | 9514 |  | 93 | xxhashbench_test.go: TODO note + function roster | 6.5 |  | 0.705 |
+| ns | 9589 |  | 75 | xxhashbench_test.go: comparison-target names | 6.6 |  | 0.702 |
+| ns | 9753 |  | 164 | README benchmarks table | 7.1 |  | 0.704 |
+| ns | 9781 |  | 28 | LICENSE.txt (identity only) | 7.2 |  | 0.705 |
+| ns | 9865 |  | 84 | xxhash_amd64.s: macro + function entry-point locations | 8.1 |  | 0.702 |
+| ns | 9949 |  | 84 | xxhash_arm64.s: macro + function entry-point locations | 8.2 |  | 0.700 |

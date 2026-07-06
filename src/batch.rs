@@ -824,7 +824,7 @@ impl InnerKey for PrismaKey {
 impl InnerKey for YamlKey {
     fn describe(&self, root: &Path) -> String {
         let YamlKey::Whole { file } = self;
-        format!("docker-compose at {}", display_path(file, root))
+        format!("YAML config at {}", display_path(file, root))
     }
 }
 

@@ -142,36 +142,27 @@ Score(3000)=0.654 I=0.817 C=0.524 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | walker |  | 6753 | 7 | listing of '.github' |  |  | 0.611 |
 | walker |  | 6761 | 8 | listing of '.github/workflows' |  |  | 0.620 |
 | ns | 6770 |  | 225 | printHosts() — certificate-creation banner | 5.4 | 2.2 | 0.609 |
-| walker |  | 7151 | 390 | go decl body at main.go:307 |  |  | 0.609 |
-| ns | 7154 |  | 384 | generateKey() + fileNames() | 5.5 | 2.2 | 0.591 |
-| walker |  | 7241 | 90 | README.md section #18 |  |  | 0.591 |
-| walker |  | 7458 | 217 | go decl body at cert.go:148 |  |  | 0.612 |
-| ns | 7548 |  | 394 | loadCA() — load existing CA or trigger creation | 5.6 | 2.2 | 0.596 |
-| walker |  | 7675 | 217 | go decl body at truststore_nss.go:131 |  |  | 0.597 |
-| walker |  | 7772 | 97 | README.md section #23 |  |  | 0.597 |
-| walker |  | 7847 | 75 | go package + imports in truststore_linux.go |  |  | 0.597 |
-| walker |  | 8103 | 256 | go decl body at truststore_nss.go:89 |  |  | 0.599 |
-| walker |  | 8237 | 134 | README.md section #2 |  |  | 0.599 |
+| walker |  | 7014 | 253 | YAML config at .github/workflows/test.yml |  |  | 0.610 |
+| ns | 7154 |  | 384 | generateKey() + fileNames() | 5.5 | 2.2 | 0.593 |
+| walker |  | 7404 | 390 | go decl body at main.go:307 |  |  | 0.593 |
+| walker |  | 7494 | 90 | README.md section #18 |  |  | 0.593 |
+| ns | 7548 |  | 394 | loadCA() — load existing CA or trigger creation | 5.6 | 2.2 | 0.578 |
+| walker |  | 7711 | 217 | go decl body at cert.go:148 |  |  | 0.598 |
+| walker |  | 7928 | 217 | go decl body at truststore_nss.go:131 |  |  | 0.599 |
+| walker |  | 8025 | 97 | README.md section #23 |  |  | 0.599 |
+| walker |  | 8100 | 75 | go package + imports in truststore_linux.go |  |  | 0.599 |
 | ns | 8280 |  | 732 | newCA() — full body: key + self-signed CA template + sign/write | 5.7 | 2.2 | 0.570 |
-| ns | 8302 |  | 22 | caUniqueName() | 5.8 | 2.2 | 0.571 |
-| walker |  | 8500 | 263 | go decl body at cert.go:176 |  |  | 0.603 |
-| ns | 8570 |  | 268 | NSS var block — DB paths and Firefox profile globs | 6.1 |  | 0.613 |
-| ns | 8955 |  | 385 | NSS init() — hasNSS/hasCertutil/certutilPath detection | 6.2 | 2.6 | 0.597 |
-| walker |  | 9063 | 563 | go decl body at main.go:267 |  |  | 0.637 |
-| walker |  | 9359 | 296 | go decl body at truststore_java.go:31 |  |  | 0.637 |
-| ns | 9365 |  | 410 | checkNSS() + installNSS() | 6.3 | 2.6 | 0.647 |
-| walker |  | 9458 | 99 | README.md section #20 |  |  | 0.647 |
-| walker |  | 9546 | 88 | go package + imports in truststore_darwin.go |  |  | 0.647 |
-| ns | 9594 |  | 229 | forEachNSSProfile() — profile enumeration | 6.4 | 2.6 | 0.653 |
-| ns | 9847 |  | 253 | test.yml — CI test entry point | 7.1 |  | 0.642 |
-| walker |  | 9916 | 370 | go decl names surface in truststore_windows.go |  |  | 0.664 |
-| walker |  | 9916 | 0 | go decl at truststore_windows.go:35 |  |  | 0.664 |
-| walker |  | 9916 | 0 | go decl at truststore_windows.go:54 |  |  | 0.664 |
-| walker |  | 9916 | 0 | go decl at truststore_windows.go:71 |  |  | 0.664 |
-| walker |  | 9916 | 0 | go decl at truststore_windows.go:83 |  |  | 0.664 |
-| walker |  | 9916 | 0 | go decl at truststore_windows.go:91 |  |  | 0.664 |
-| walker |  | 9916 | 0 | go decl at truststore_windows.go:107 |  |  | 0.664 |
-| walker |  | 9925 | 9 | go decl at truststore_windows.go:25 |  |  | 0.665 |
-| walker |  | 9934 | 9 | go decl at truststore_windows.go:19 |  |  | 0.667 |
-| ns | 9998 |  | 151 | README — Supported root stores | 8.1 | 1.6 | 0.671 |
-| walker |  | 9999 | 65 | go decl body at truststore_windows.go:83 |  |  | 0.671 |
+| ns | 8302 |  | 22 | caUniqueName() | 5.8 | 2.2 | 0.570 |
+| walker |  | 8356 | 256 | go decl body at truststore_nss.go:89 |  |  | 0.572 |
+| walker |  | 8490 | 134 | README.md section #2 |  |  | 0.572 |
+| ns | 8570 |  | 268 | NSS var block — DB paths and Firefox profile globs | 6.1 |  | 0.584 |
+| walker |  | 8753 | 263 | go decl body at cert.go:176 |  |  | 0.615 |
+| ns | 8955 |  | 385 | NSS init() — hasNSS/hasCertutil/certutilPath detection | 6.2 | 2.6 | 0.598 |
+| walker |  | 9316 | 563 | go decl body at main.go:267 |  |  | 0.639 |
+| ns | 9365 |  | 410 | checkNSS() + installNSS() | 6.3 | 2.6 | 0.648 |
+| ns | 9594 |  | 229 | forEachNSSProfile() — profile enumeration | 6.4 | 2.6 | 0.654 |
+| walker |  | 9612 | 296 | go decl body at truststore_java.go:31 |  |  | 0.654 |
+| walker |  | 9711 | 99 | README.md section #20 |  |  | 0.654 |
+| walker |  | 9799 | 88 | go package + imports in truststore_darwin.go |  |  | 0.654 |
+| ns | 9847 |  | 253 | test.yml — CI test entry point | 7.1 |  | 0.662 |
+| ns | 9998 |  | 151 | README — Supported root stores | 8.1 | 1.6 | 0.666 |

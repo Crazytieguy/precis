@@ -3,6 +3,42 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .travis.yml
+       1→language: python
+       2→sudo: false
+       3→
+       4→env:
+       5→  - LUA="lua=5.1"
+       6→  - LUA="lua=5.2"
+       7→  - LUA="lua=5.3"
+       8→  - LUA="luajit=2.0"
+       9→  - LUA="luajit=2.1"
+      10→
+      11→before_install:
+      12→  - pip install hererocks
+      13→  - hererocks lua_install -r^ --$LUA
+      14→  - export PATH=$PATH:$PWD/lua_install/bin # Add directory with all installed binaries to PATH
+      15→
+      16→install:
+      17→  - luarocks install luacheck
+      18→  - luarocks install busted
+      19→  - luarocks install luacov
+      20→  - luarocks install luacov-coveralls
+      21→
+      22→script:
+      23→  - luacheck --no-unused-args --std max+busted *.lua spec
+      24→  - busted --verbose --coverage
+      25→
+      26→after_success:
+      27→  - luacov-coveralls --exclude $TRAVIS_BUILD_DIR/lua_install
+      28→
+      29→branches:
+      30→  except:
+      31→    - gh-pages
+      32→
+      33→notifications:
+      34→  email:
+      35→    on_success: change
+      36→    on_failure: always
 CHANGELOG.md
 MIT-LICENSE.txt
 README.md

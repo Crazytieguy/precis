@@ -140,29 +140,30 @@ Score(3000)=0.290 I=0.374 C=0.225 ns_rows≤3K=26/44 (reached=6 partial=0 missin
 | walker |  | 6442 | 82 | README.md section #15 |  |  | 0.388 |
 | walker |  | 6450 | 8 | listing of '.github' |  |  | 0.388 |
 | walker |  | 6454 | 4 | listing of '.github/workflows' |  |  | 0.388 |
-| walker |  | 6546 | 92 | README.md section #32 |  |  | 0.388 |
 | ns | 6616 |  | 694 | Item component | 6.2 | 4.1 | 0.427 |
-| walker |  | 6650 | 104 | README.md section #7 |  |  | 0.427 |
-| walker |  | 6755 | 105 | README.md section #14 |  |  | 0.427 |
-| ns | 6832 |  | 216 | commandScore exported entrypoint | 7.1 |  | 0.422 |
-| walker |  | 6844 | 89 | README.md section #25 |  |  | 0.422 |
-| walker |  | 6938 | 94 | README.md section #13 |  |  | 0.422 |
-| walker |  | 7056 | 118 | README.md section #16 |  |  | 0.422 |
-| walker |  | 7182 | 126 | README.md section #6 |  |  | 0.422 |
-| walker |  | 7313 | 131 | README.md section #9 |  |  | 0.422 |
-| walker |  | 7448 | 135 | README.md section #8 |  |  | 0.422 |
-| walker |  | 7576 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.428 |
-| ns | 7577 |  | 745 | command-score weighting constants | 7.2 |  | 0.409 |
-| ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.404 |
-| walker |  | 7732 | 156 | README.md section #12 |  |  | 0.404 |
-| walker |  | 7888 | 156 | README.md section #11 |  |  | 0.404 |
-| walker |  | 7898 | 10 | export names surface in test/pages/index.tsx |  |  | 0.404 |
-| ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.397 |
-| walker |  | 8331 | 433 | README.md section #35 |  |  | 0.425 |
-| ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.415 |
-| ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.407 |
-| ns | 8937 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.399 |
-| ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.395 |
-| ns | 9452 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.386 |
-| ns | 9595 |  | 143 | Format/lint-staged tooling | 11.1 |  | 0.381 |
-| ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.376 |
+| walker |  | 6793 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.430 |
+| ns | 6832 |  | 216 | commandScore exported entrypoint | 7.1 |  | 0.424 |
+| walker |  | 6885 | 92 | README.md section #32 |  |  | 0.424 |
+| walker |  | 6989 | 104 | README.md section #7 |  |  | 0.424 |
+| walker |  | 7094 | 105 | README.md section #14 |  |  | 0.424 |
+| walker |  | 7183 | 89 | README.md section #25 |  |  | 0.424 |
+| walker |  | 7277 | 94 | README.md section #13 |  |  | 0.424 |
+| walker |  | 7395 | 118 | README.md section #16 |  |  | 0.424 |
+| walker |  | 7521 | 126 | README.md section #6 |  |  | 0.424 |
+| ns | 7577 |  | 745 | command-score weighting constants | 7.2 |  | 0.406 |
+| walker |  | 7652 | 131 | README.md section #9 |  |  | 0.406 |
+| ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.401 |
+| walker |  | 7787 | 135 | README.md section #8 |  |  | 0.401 |
+| walker |  | 7915 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.407 |
+| ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.418 |
+| walker |  | 8071 | 156 | README.md section #12 |  |  | 0.418 |
+| walker |  | 8227 | 156 | README.md section #11 |  |  | 0.418 |
+| walker |  | 8237 | 10 | export names surface in test/pages/index.tsx |  |  | 0.418 |
+| ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.409 |
+| walker |  | 8670 | 433 | README.md section #35 |  |  | 0.436 |
+| ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.427 |
+| ns | 8937 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.418 |
+| ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.415 |
+| ns | 9452 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.405 |
+| ns | 9595 |  | 143 | Format/lint-staged tooling | 11.1 |  | 0.400 |
+| ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.394 |

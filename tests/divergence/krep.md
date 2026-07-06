@@ -223,14 +223,13 @@ Score(3000)=0.340 I=0.637 C=0.181 ns_rows≤3K=20/41 (reached=4 partial=0 missin
 | walker |  | 9232 | 13 | listing of '.github' |  |  | 0.513 |
 | walker |  | 9240 | 8 | listing of '.github/workflows' |  |  | 0.526 |
 | ns | 9263 |  | 558 | krep.c: should_skip_directory / should_skip_extension | 3.6 | 1.12 | 0.507 |
-| walker |  | 9268 | 28 | c decl body at aho_corasick.c:287 |  |  | 0.508 |
-| walker |  | 9290 | 22 | c decl doc at aho_corasick.c:287 |  |  | 0.510 |
-| walker |  | 9311 | 21 | c decl doc at aho_corasick.c:293 |  |  | 0.510 |
-| walker |  | 9337 | 26 | c header banner in test/test_krep.h |  |  | 0.510 |
-| walker |  | 9426 | 89 | README.md section #48 |  |  | 0.510 |
-| ns | 9545 |  | 282 | krep.c: main()'s getopt_long option table | 3.7 | 1.13 | 0.505 |
-| walker |  | 9584 | 158 | c decl body at krep.c:4313 |  |  | 0.505 |
-| walker |  | 9676 | 92 | README.md section #45 |  |  | 0.524 |
-| walker |  | 9801 | 125 | README.md section #18 |  |  | 0.544 |
-| walker |  | 9969 | 168 | c decl body at krep.c:401 |  |  | 0.548 |
-| ns | 9997 |  | 452 | test/test_krep.c: main() suite composition/order (full body) | 3.8 | 1.14 | 0.533 |
+| walker |  | 9476 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.532 |
+| walker |  | 9504 | 28 | c decl body at aho_corasick.c:287 |  |  | 0.534 |
+| walker |  | 9526 | 22 | c decl doc at aho_corasick.c:287 |  |  | 0.535 |
+| ns | 9545 |  | 282 | krep.c: main()'s getopt_long option table | 3.7 | 1.13 | 0.530 |
+| walker |  | 9547 | 21 | c decl doc at aho_corasick.c:293 |  |  | 0.530 |
+| walker |  | 9573 | 26 | c header banner in test/test_krep.h |  |  | 0.530 |
+| walker |  | 9662 | 89 | README.md section #48 |  |  | 0.530 |
+| walker |  | 9820 | 158 | c decl body at krep.c:4313 |  |  | 0.530 |
+| walker |  | 9912 | 92 | README.md section #45 |  |  | 0.550 |
+| ns | 9997 |  | 452 | test/test_krep.c: main() suite composition/order (full body) | 3.8 | 1.14 | 0.535 |

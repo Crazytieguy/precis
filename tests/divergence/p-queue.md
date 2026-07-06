@@ -71,14 +71,15 @@ Score(3000)=0.511 I=0.797 C=0.327 ns_rows≤3K=21/42 (reached=7 partial=3 missin
 | walker |  | 4490 | 167 | readme.md section #35 |  |  | 0.620 |
 | walker |  | 4497 | 7 | listing of '.github' |  |  | 0.633 |
 | walker |  | 4501 | 4 | listing of '.github/workflows' |  |  | 0.641 |
-| walker |  | 4562 | 61 | imports in bench.ts |  |  | 0.641 |
+| walker |  | 4702 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.641 |
 | ns | 4749 |  | 304 | source/index.ts — PQueue class fields (interval/strict/rate-limit state) | 4.2 |  | 0.617 |
-| walker |  | 4872 | 310 | package dependencies in package.json |  |  | 0.617 |
-| walker |  | 4927 | 55 | export names surface in source/options.ts |  |  | 0.618 |
-| ns | 5002 |  | 253 | source/index.ts — PQueue class fields (queue/concurrency/task-tracking state) | 4.3 | 4.2 | 0.599 |
-| walker |  | 5194 | 267 | readme.md section #32 |  |  | 0.599 |
+| walker |  | 4763 | 61 | imports in bench.ts |  |  | 0.617 |
+| ns | 5002 |  | 253 | source/index.ts — PQueue class fields (queue/concurrency/task-tracking state) | 4.3 | 4.2 | 0.598 |
+| walker |  | 5073 | 310 | package dependencies in package.json |  |  | 0.598 |
+| walker |  | 5128 | 55 | export names surface in source/options.ts |  |  | 0.599 |
 | ns | 5289 |  | 287 | source/index.ts — public member roster (locations) | 4.4 |  | 0.616 |
-| walker |  | 5310 | 116 | readme.md section #18 |  |  | 0.616 |
+| walker |  | 5395 | 267 | readme.md section #32 |  |  | 0.616 |
+| walker |  | 5511 | 116 | readme.md section #18 |  |  | 0.616 |
 | ns | 5575 |  | 286 | source/index.ts — private member roster (locations) | 4.5 |  | 0.600 |
 | ns | 5742 |  | 167 | source/index.ts — constructor (defaults merge) | 4.6 | 4.4 | 0.590 |
 | ns | 6314 |  | 572 | source/index.ts — constructor (validation + field assignment) | 4.7 | 4.6 | 0.567 |

@@ -81,58 +81,59 @@ Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missi
 | walker |  | 2950 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.686 |
 | walker |  | 2958 | 8 | listing of '.github' |  |  | 0.686 |
 | walker |  | 2967 | 9 | listing of '.github/workflows' |  |  | 0.686 |
-| walker |  | 2976 | 9 | listing of 'fixtures' |  |  | 0.686 |
 | ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.705 |
-| walker |  | 3130 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.707 |
-| walker |  | 3216 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.708 |
-| ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.674 |
-| walker |  | 3287 | 71 | README.md section #17 |  |  | 0.675 |
-| ns | 3330 |  | 55 | README: Sort | 3.7 | 3.1 | 0.680 |
-| ns | 3578 |  | 248 | README: Pagination | 3.8 | 3.1 | 0.660 |
-| ns | 3618 |  | 40 | README: Embed | 3.9 | 3.1 | 0.664 |
-| walker |  | 3674 | 387 | package dependencies in package.json |  |  | 0.732 |
-| ns | 3689 |  | 71 | README: Complex filter with _where | 3.10 | 3.1 | 0.736 |
-| walker |  | 3716 | 42 | imports in src/matches-where.ts |  |  | 0.736 |
-| ns | 3719 |  | 30 | README: Delete dependents | 3.11 | 3.1 | 0.738 |
-| ns | 3836 |  | 117 | README: Static Files | 3.12 | 3.1 | 0.744 |
-| ns | 4011 |  | 175 | README: Migration Notes (v0 -> v1) | 3.13 | 3.1 | 0.748 |
-| ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.744 |
-| walker |  | 4071 | 355 | export at src/service.ts:81 |  |  | 0.746 |
-| ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.742 |
-| walker |  | 4177 | 106 | README.md section #4 |  |  | 0.742 |
-| walker |  | 4234 | 57 | imports in src/parse-where.ts |  |  | 0.742 |
-| ns | 4349 |  | 250 | service.ts: exported types + Service class member signatures | 4.3 |  | 0.735 |
-| walker |  | 4393 | 159 | README.md section #5 |  |  | 0.735 |
-| ns | 4439 |  | 90 | normalized-adapter.ts: exported items + class member signatures | 4.4 |  | 0.737 |
-| ns | 4473 |  | 34 | matches-where.ts: function signatures | 4.5 |  | 0.735 |
-| ns | 4518 |  | 45 | parse-where.ts: function signatures | 4.6 |  | 0.731 |
-| walker |  | 4520 | 127 | README.md section #11 |  |  | 0.742 |
-| ns | 4614 |  | 96 | paginate.ts: PaginationResult type + paginate signature | 4.7 |  | 0.745 |
-| walker |  | 4660 | 140 | README.md section #10 |  |  | 0.773 |
-| ns | 4783 |  | 169 | where-operators.ts (full file) | 4.8 |  | 0.776 |
-| ns | 4837 |  | 54 | random-id.ts (full file) | 4.9 |  | 0.775 |
-| walker |  | 4982 | 322 | export body at src/paginate.ts:11 body 12 |  |  | 0.777 |
-| walker |  | 5137 | 155 | README.md section #14 |  |  | 0.803 |
-| ns | 5163 |  | 326 | observer.ts (full file) | 4.10 |  | 0.796 |
-| ns | 5715 |  | 552 | service.ts: #get/has/findById/find bodies | 5.1 | 4.3 | 0.753 |
-| walker |  | 5869 | 732 | README.md section #2 |  |  | 0.764 |
-| walker |  | 6120 | 251 | export body at src/adapters/normalized-adapter.ts:11 body 15 |  |  | 0.767 |
-| walker |  | 6168 | 48 | imports in src/adapters/normalized-adapter.ts |  |  | 0.767 |
-| ns | 6175 |  | 460 | service.ts: create/update/patch/destroyById bodies | 5.2 | 4.3 | 0.738 |
-| walker |  | 6272 | 104 | imports in src/service.ts |  |  | 0.738 |
-| walker |  | 6443 | 171 | imports in src/app.ts |  |  | 0.738 |
-| ns | 6473 |  | 298 | normalized-adapter.ts: read/write bodies | 5.3 | 4.4 | 0.741 |
-| walker |  | 7438 | 995 | export body at src/service.ts:81 body 85 |  |  | 0.813 |
-| ns | 7462 |  | 989 | matches-where.ts: full matchesWhere body | 5.4 | 4.5 | 0.760 |
-| walker |  | 7764 | 326 | README.md section #3 |  |  | 0.760 |
-| ns | 8156 |  | 694 | parse-where.ts: full body (splitKey/setPathOp/coerceValue/parseWhere) | 5.5 | 4.6 | 0.726 |
-| ns | 8498 |  | 342 | paginate.ts: full paginate() body | 5.6 | 4.7 | 0.731 |
-| walker |  | 8593 | 829 | export body at src/matches-where.ts:24 body 25 |  |  | 0.774 |
-| ns | 8701 |  | 203 | Top-level test-suite roster (all *.test.ts files) | 6.1 |  | 0.767 |
-| walker |  | 9456 | 863 | export body at src/app.ts:94 body 95 |  |  | 0.767 |
-| walker |  | 9719 | 263 | imports in src/bin.ts |  |  | 0.767 |
-| walker |  | 9750 | 31 | json config .oxfmtrc.json |  |  | 0.771 |
-| ns | 9763 |  | 1062 | matches-where.test.ts (full file) | 6.2 | 6.1 | 0.740 |
-| walker |  | 9801 | 51 | plaintext config .gitignore |  |  | 0.742 |
-| ns | 9906 |  | 143 | views/index.html: resource-listing loop | 7.1 |  | 0.738 |
-| ns | 9923 |  | 17 | public/test.html (full) | 7.2 |  | 0.737 |
+| walker |  | 3163 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.751 |
+| walker |  | 3172 | 9 | listing of 'fixtures' |  |  | 0.751 |
+| ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.714 |
+| walker |  | 3326 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.715 |
+| ns | 3330 |  | 55 | README: Sort | 3.7 | 3.1 | 0.720 |
+| walker |  | 3412 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.721 |
+| walker |  | 3483 | 71 | README.md section #17 |  |  | 0.723 |
+| ns | 3578 |  | 248 | README: Pagination | 3.8 | 3.1 | 0.700 |
+| ns | 3618 |  | 40 | README: Embed | 3.9 | 3.1 | 0.704 |
+| ns | 3689 |  | 71 | README: Complex filter with _where | 3.10 | 3.1 | 0.708 |
+| ns | 3719 |  | 30 | README: Delete dependents | 3.11 | 3.1 | 0.711 |
+| ns | 3836 |  | 117 | README: Static Files | 3.12 | 3.1 | 0.717 |
+| walker |  | 3870 | 387 | package dependencies in package.json |  |  | 0.780 |
+| walker |  | 3912 | 42 | imports in src/matches-where.ts |  |  | 0.780 |
+| ns | 4011 |  | 175 | README: Migration Notes (v0 -> v1) | 3.13 | 3.1 | 0.784 |
+| ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.780 |
+| ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.775 |
+| walker |  | 4267 | 355 | export at src/service.ts:81 |  |  | 0.777 |
+| ns | 4349 |  | 250 | service.ts: exported types + Service class member signatures | 4.3 |  | 0.768 |
+| walker |  | 4373 | 106 | README.md section #4 |  |  | 0.768 |
+| walker |  | 4430 | 57 | imports in src/parse-where.ts |  |  | 0.768 |
+| ns | 4439 |  | 90 | normalized-adapter.ts: exported items + class member signatures | 4.4 |  | 0.770 |
+| ns | 4473 |  | 34 | matches-where.ts: function signatures | 4.5 |  | 0.768 |
+| ns | 4518 |  | 45 | parse-where.ts: function signatures | 4.6 |  | 0.764 |
+| walker |  | 4589 | 159 | README.md section #5 |  |  | 0.764 |
+| ns | 4614 |  | 96 | paginate.ts: PaginationResult type + paginate signature | 4.7 |  | 0.768 |
+| walker |  | 4716 | 127 | README.md section #11 |  |  | 0.778 |
+| ns | 4783 |  | 169 | where-operators.ts (full file) | 4.8 |  | 0.780 |
+| ns | 4837 |  | 54 | random-id.ts (full file) | 4.9 |  | 0.779 |
+| walker |  | 4856 | 140 | README.md section #10 |  |  | 0.805 |
+| ns | 5163 |  | 326 | observer.ts (full file) | 4.10 |  | 0.798 |
+| walker |  | 5178 | 322 | export body at src/paginate.ts:11 body 12 |  |  | 0.800 |
+| walker |  | 5333 | 155 | README.md section #14 |  |  | 0.824 |
+| ns | 5715 |  | 552 | service.ts: #get/has/findById/find bodies | 5.1 | 4.3 | 0.780 |
+| walker |  | 6065 | 732 | README.md section #2 |  |  | 0.791 |
+| ns | 6175 |  | 460 | service.ts: create/update/patch/destroyById bodies | 5.2 | 4.3 | 0.761 |
+| walker |  | 6316 | 251 | export body at src/adapters/normalized-adapter.ts:11 body 15 |  |  | 0.763 |
+| walker |  | 6364 | 48 | imports in src/adapters/normalized-adapter.ts |  |  | 0.763 |
+| walker |  | 6468 | 104 | imports in src/service.ts |  |  | 0.763 |
+| ns | 6473 |  | 298 | normalized-adapter.ts: read/write bodies | 5.3 | 4.4 | 0.766 |
+| walker |  | 6639 | 171 | imports in src/app.ts |  |  | 0.766 |
+| ns | 7462 |  | 989 | matches-where.ts: full matchesWhere body | 5.4 | 4.5 | 0.715 |
+| walker |  | 7634 | 995 | export body at src/service.ts:81 body 85 |  |  | 0.782 |
+| walker |  | 7960 | 326 | README.md section #3 |  |  | 0.782 |
+| ns | 8156 |  | 694 | parse-where.ts: full body (splitKey/setPathOp/coerceValue/parseWhere) | 5.5 | 4.6 | 0.747 |
+| ns | 8498 |  | 342 | paginate.ts: full paginate() body | 5.6 | 4.7 | 0.752 |
+| ns | 8701 |  | 203 | Top-level test-suite roster (all *.test.ts files) | 6.1 |  | 0.745 |
+| walker |  | 8789 | 829 | export body at src/matches-where.ts:24 body 25 |  |  | 0.788 |
+| walker |  | 9652 | 863 | export body at src/app.ts:94 body 95 |  |  | 0.788 |
+| ns | 9763 |  | 1062 | matches-where.test.ts (full file) | 6.2 | 6.1 | 0.756 |
+| ns | 9906 |  | 143 | views/index.html: resource-listing loop | 7.1 |  | 0.752 |
+| walker |  | 9915 | 263 | imports in src/bin.ts |  |  | 0.752 |
+| ns | 9923 |  | 17 | public/test.html (full) | 7.2 |  | 0.751 |
+| walker |  | 9946 | 31 | json config .oxfmtrc.json |  |  | 0.755 |
+| walker |  | 9997 | 51 | plaintext config .gitignore |  |  | 0.757 |

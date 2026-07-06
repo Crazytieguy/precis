@@ -5,6 +5,23 @@ expression: rendered
 .editorconfig
 .gitignore
 .travis.yml
+       1→sudo: false
+       2→
+       3→language: node_js
+       4→
+       5→node_js:
+       6→  - "6"
+       7→  - "8"
+       8→  - "10"
+       9→  - "11"
+      10→
+      11→install:
+      12→  - npm install
+      13→
+      14→script:
+      15→  - npm run lint
+      16→  - npm test
+      17→  - npm run test:coverage
 LICENSE
 README.md
        1→# debug
@@ -123,9 +140,6 @@ package.json
 src/
     browser.js
         …
-           3→/**
-           4→ * This is the web browser implementation of `debug()`.
-           5→ */
            7→exports.formatArgs = formatArgs;
            8→exports.save = save;
            9→exports.load = load;
@@ -151,16 +165,6 @@ src/
          192→exports.log = console.debug || console.log || (() => {});
         …
          200→function save(namespaces) {
-         201→	try {
-         202→		if (namespaces) {
-         203→			exports.storage.setItem('debug', namespaces);
-         204→		} else {
-         205→			exports.storage.removeItem('debug');
-         206→		}
-         207→	} catch (error) {
-         208→		// Swallow
-         209→		// XXX (@Qix-) should we be logging these?
-         210→	}
         …
          219→function load() {
         …

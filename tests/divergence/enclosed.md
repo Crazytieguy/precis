@@ -27,7 +27,7 @@ Score(3000)=0.527 I=0.785 C=0.354 ns_rows≤3K=20/40 (reached=7 partial=1 missin
 | walker |  | 732 | 23 | listing of 'packages/app-server' |  |  | 0.570 |
 | walker |  | 753 | 21 | listing of 'packages/app-server/src' |  |  | 0.570 |
 | ns | 846 |  | 140 | README Project Structure prose | 1.11 |  | 0.547 |
-| walker |  | 859 | 106 | docker-compose at docker-compose.yml |  |  | 0.647 |
+| walker |  | 859 | 106 | YAML config at docker-compose.yml |  |  | 0.647 |
 | walker |  | 884 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.648 |
 | walker |  | 910 | 26 | listing of 'packages/crypto' |  |  | 0.648 |
 | walker |  | 981 | 71 | README headline in packages/crypto/README.md |  |  | 0.649 |
