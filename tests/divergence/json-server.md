@@ -1,4 +1,4 @@
-Score(3000)=0.749 I=0.896 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missing=8)
+Score(3000)=0.750 I=0.898 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -48,47 +48,47 @@ Score(3000)=0.749 I=0.896 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missi
 | walker |  | 1473 | 0 | export at src/app.ts:94 |  |  | 0.811 |
 | walker |  | 1496 | 23 | export at src/app.ts:18 |  |  | 0.811 |
 | ns | 1513 |  | 131 | Misc dev-process config (husky, gitattributes, gitignore, funding, publish CI) | 2.4 |  | 0.763 |
-| walker |  | 1539 | 43 | export names surface in src/paginate.ts |  |  | 0.763 |
-| walker |  | 1539 | 0 | export at src/paginate.ts:11 |  |  | 0.763 |
-| walker |  | 1609 | 70 | export at src/paginate.ts:1 |  |  | 0.765 |
-| walker |  | 1639 | 30 | README.md section #13 |  |  | 0.765 |
-| ns | 1665 |  | 152 | tsconfig.json | 2.5 |  | 0.726 |
-| ns | 1696 |  | 31 | oxfmt config (.oxfmtrc.json) | 2.6 |  | 0.716 |
-| walker |  | 1791 | 152 | json config tsconfig.json |  |  | 0.773 |
+| walker |  | 1526 | 30 | README.md section #13 |  |  | 0.763 |
+| ns | 1665 |  | 152 | tsconfig.json | 2.5 |  | 0.724 |
+| walker |  | 1678 | 152 | json config tsconfig.json |  |  | 0.783 |
+| ns | 1696 |  | 31 | oxfmt config (.oxfmtrc.json) | 2.6 |  | 0.772 |
+| walker |  | 1721 | 43 | export names surface in src/paginate.ts |  |  | 0.772 |
+| walker |  | 1721 | 0 | export at src/paginate.ts:11 |  |  | 0.772 |
+| walker |  | 1791 | 70 | export at src/paginate.ts:1 |  |  | 0.773 |
 | walker |  | 1846 | 55 | export names surface in src/where-operators.ts |  |  | 0.774 |
 | walker |  | 1846 | 0 | export at src/where-operators.ts:16 |  |  | 0.774 |
 | walker |  | 1864 | 18 | export body at src/where-operators.ts:16 body 17 |  |  | 0.774 |
 | ns | 1865 |  | 169 | fixtures/db.json — canonical data-file sample | 2.7 |  | 0.741 |
-| walker |  | 1877 | 13 | imports in src/random-id.ts |  |  | 0.741 |
-| walker |  | 2022 | 145 | README.md section #7 |  |  | 0.744 |
-| ns | 2090 |  | 225 | fixtures/db.json5 — JSON5 data-file sample | 2.8 |  | 0.687 |
-| walker |  | 2139 | 117 | README.md section #19 |  |  | 0.689 |
-| ns | 2192 |  | 102 | schema.json | 2.9 |  | 0.670 |
-| walker |  | 2227 | 88 | export at src/where-operators.ts:1 |  |  | 0.672 |
-| walker |  | 2275 | 48 | README.md section #15 |  |  | 0.672 |
-| walker |  | 2315 | 40 | README.md section #16 |  |  | 0.673 |
-| ns | 2389 |  | 197 | README heading locations | 3.1 |  | 0.696 |
-| walker |  | 2478 | 163 | README.md section #8 |  |  | 0.701 |
-| walker |  | 2563 | 85 | export names surface in src/service.ts |  |  | 0.702 |
-| walker |  | 2563 | 0 | export at src/service.ts:13 |  |  | 0.702 |
-| walker |  | 2586 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.702 |
-| ns | 2608 |  | 219 | README: title, v1-beta warning, Install, Usage lede | 3.2 | 3.1 | 0.705 |
-| ns | 2664 |  | 56 | README: starting the server + --help pointer | 3.3 |  | 0.696 |
-| walker |  | 2688 | 102 | json config schema.json |  |  | 0.723 |
-| walker |  | 2749 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.723 |
-| walker |  | 2762 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.723 |
-| ns | 2809 |  | 145 | README: Query Capabilities quick reference | 3.4 | 3.1 | 0.733 |
-| walker |  | 2811 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.733 |
-| ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.748 |
-| walker |  | 2986 | 175 | README.md section #20 |  |  | 0.749 |
-| walker |  | 3041 | 55 | README.md section #12 |  |  | 0.751 |
+| walker |  | 2009 | 145 | README.md section #7 |  |  | 0.744 |
+| ns | 2090 |  | 225 | fixtures/db.json5 — JSON5 data-file sample | 2.8 |  | 0.686 |
+| walker |  | 2126 | 117 | README.md section #19 |  |  | 0.688 |
+| walker |  | 2139 | 13 | imports in src/random-id.ts |  |  | 0.689 |
+| walker |  | 2187 | 48 | README.md section #15 |  |  | 0.689 |
+| ns | 2192 |  | 102 | schema.json | 2.9 |  | 0.671 |
+| walker |  | 2227 | 40 | README.md section #16 |  |  | 0.672 |
+| ns | 2389 |  | 197 | README heading locations | 3.1 |  | 0.695 |
+| walker |  | 2390 | 163 | README.md section #8 |  |  | 0.700 |
+| walker |  | 2478 | 88 | export at src/where-operators.ts:1 |  |  | 0.701 |
+| walker |  | 2580 | 102 | json config schema.json |  |  | 0.731 |
+| ns | 2608 |  | 219 | README: title, v1-beta warning, Install, Usage lede | 3.2 | 3.1 | 0.732 |
+| ns | 2664 |  | 56 | README: starting the server + --help pointer | 3.3 |  | 0.722 |
+| walker |  | 2665 | 85 | export names surface in src/service.ts |  |  | 0.723 |
+| walker |  | 2665 | 0 | export at src/service.ts:13 |  |  | 0.723 |
+| walker |  | 2688 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.723 |
+| ns | 2809 |  | 145 | README: Query Capabilities quick reference | 3.4 | 3.1 | 0.732 |
+| walker |  | 2863 | 175 | README.md section #20 |  |  | 0.734 |
+| walker |  | 2918 | 55 | README.md section #12 |  |  | 0.735 |
+| ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.750 |
+| walker |  | 2979 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.750 |
+| walker |  | 2992 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.750 |
+| walker |  | 3041 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.751 |
 | walker |  | 3055 | 14 | imports in src/adapters/observer.ts |  |  | 0.751 |
 | walker |  | 3172 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.751 |
-| ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.714 |
-| walker |  | 3326 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.715 |
+| walker |  | 3243 | 71 | README.md section #17 |  |  | 0.752 |
+| ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.715 |
 | ns | 3330 |  | 55 | README: Sort | 3.7 | 3.1 | 0.720 |
-| walker |  | 3412 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.721 |
-| walker |  | 3483 | 71 | README.md section #17 |  |  | 0.723 |
+| walker |  | 3397 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.721 |
+| walker |  | 3483 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.723 |
 | ns | 3578 |  | 248 | README: Pagination | 3.8 | 3.1 | 0.700 |
 | ns | 3618 |  | 40 | README: Embed | 3.9 | 3.1 | 0.704 |
 | ns | 3689 |  | 71 | README: Complex filter with _where | 3.10 | 3.1 | 0.708 |
@@ -102,13 +102,13 @@ Score(3000)=0.749 I=0.896 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missi
 | ns | 4439 |  | 90 | normalized-adapter.ts: exported items + class member signatures | 4.4 |  | 0.713 |
 | ns | 4473 |  | 34 | matches-where.ts: function signatures | 4.5 |  | 0.711 |
 | ns | 4518 |  | 45 | parse-where.ts: function signatures | 4.6 |  | 0.708 |
-| walker |  | 4570 | 355 | export at src/service.ts:81 |  |  | 0.721 |
-| ns | 4614 |  | 96 | paginate.ts: PaginationResult type + paginate signature | 4.7 |  | 0.725 |
-| ns | 4783 |  | 169 | where-operators.ts (full file) | 4.8 |  | 0.729 |
-| ns | 4837 |  | 54 | random-id.ts (full file) | 4.9 |  | 0.728 |
-| walker |  | 4957 | 387 | package dependencies in package.json |  |  | 0.783 |
-| walker |  | 4999 | 42 | imports in src/matches-where.ts |  |  | 0.783 |
-| walker |  | 5105 | 106 | README.md section #4 |  |  | 0.783 |
+| walker |  | 4602 | 387 | package dependencies in package.json |  |  | 0.766 |
+| ns | 4614 |  | 96 | paginate.ts: PaginationResult type + paginate signature | 4.7 |  | 0.769 |
+| walker |  | 4708 | 106 | README.md section #4 |  |  | 0.769 |
+| ns | 4783 |  | 169 | where-operators.ts (full file) | 4.8 |  | 0.772 |
+| ns | 4837 |  | 54 | random-id.ts (full file) | 4.9 |  | 0.771 |
+| walker |  | 5063 | 355 | export at src/service.ts:81 |  |  | 0.783 |
+| walker |  | 5105 | 42 | imports in src/matches-where.ts |  |  | 0.783 |
 | ns | 5163 |  | 326 | observer.ts (full file) | 4.10 |  | 0.777 |
 | walker |  | 5264 | 159 | README.md section #5 |  |  | 0.777 |
 | walker |  | 5391 | 127 | README.md section #11 |  |  | 0.785 |
@@ -122,8 +122,8 @@ Score(3000)=0.749 I=0.896 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missi
 | walker |  | 6364 | 48 | imports in src/adapters/normalized-adapter.ts |  |  | 0.763 |
 | walker |  | 6468 | 104 | imports in src/service.ts |  |  | 0.763 |
 | ns | 6473 |  | 298 | normalized-adapter.ts: read/write bodies | 5.3 | 4.4 | 0.766 |
-| walker |  | 6639 | 171 | imports in src/app.ts |  |  | 0.766 |
-| walker |  | 6965 | 326 | README.md section #3 |  |  | 0.766 |
+| walker |  | 6794 | 326 | README.md section #3 |  |  | 0.766 |
+| walker |  | 6965 | 171 | imports in src/app.ts |  |  | 0.766 |
 | ns | 7462 |  | 989 | matches-where.ts: full matchesWhere body | 5.4 | 4.5 | 0.715 |
 | walker |  | 7960 | 995 | export body at src/service.ts:81 body 85 |  |  | 0.782 |
 | ns | 8156 |  | 694 | parse-where.ts: full body (splitKey/setPathOp/coerceValue/parseWhere) | 5.5 | 4.6 | 0.747 |

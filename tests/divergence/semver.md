@@ -44,13 +44,13 @@ Score(3000)=0.642 I=0.733 C=0.561 ns_rows≤3K=29/43 (reached=16 partial=2 missi
 | ns | 1353 |  | 55 | bin/semver.js function roster | 2.4 |  | 0.509 |
 | walker |  | 1396 | 380 | export at index.js:45 |  |  | 0.509 |
 | walker |  | 1429 | 33 | listing of 'test' |  |  | 0.545 |
-| walker |  | 1446 | 17 | listing of 'test/classes' |  |  | 0.559 |
-| walker |  | 1484 | 38 | listing of 'benchmarks' |  |  | 0.580 |
-| walker |  | 1505 | 21 | README.md section #21 |  |  | 0.580 |
-| ns | 1516 |  | 163 | internal/re.js token roster (12 most-referenced tokens) | 2.5 |  | 0.562 |
-| walker |  | 1526 | 21 | README.md section #22 |  |  | 0.562 |
-| walker |  | 1547 | 21 | README.md section #23 |  |  | 0.562 |
-| walker |  | 1568 | 21 | README.md section #24 |  |  | 0.562 |
+| walker |  | 1467 | 38 | listing of 'benchmarks' |  |  | 0.566 |
+| walker |  | 1488 | 21 | README.md section #21 |  |  | 0.566 |
+| walker |  | 1509 | 21 | README.md section #22 |  |  | 0.566 |
+| ns | 1516 |  | 163 | internal/re.js token roster (12 most-referenced tokens) | 2.5 |  | 0.549 |
+| walker |  | 1530 | 21 | README.md section #23 |  |  | 0.549 |
+| walker |  | 1551 | 21 | README.md section #24 |  |  | 0.549 |
+| walker |  | 1568 | 17 | listing of 'test/classes' |  |  | 0.562 |
 | walker |  | 1590 | 22 | README.md section #35 |  |  | 0.562 |
 | walker |  | 1612 | 22 | README.md section #52 |  |  | 0.562 |
 | walker |  | 1640 | 28 | listing of '.github' |  |  | 0.584 |
@@ -60,16 +60,16 @@ Score(3000)=0.642 I=0.733 C=0.561 ns_rows≤3K=29/43 (reached=16 partial=2 missi
 | walker |  | 1754 | 24 | README.md section #48 |  |  | 0.608 |
 | walker |  | 1783 | 29 | README.md section #14 |  |  | 0.608 |
 | walker |  | 1806 | 23 | README.md section #34 |  |  | 0.608 |
-| walker |  | 1833 | 27 | listing of 'test/internal' |  |  | 0.626 |
-| ns | 1907 |  | 391 | internal/constants.js | 2.6 |  | 0.575 |
-| walker |  | 1915 | 82 | package dependencies in package.json |  |  | 0.575 |
-| walker |  | 1944 | 29 | README.md section #26 |  |  | 0.575 |
-| walker |  | 1973 | 29 | README.md section #36 |  |  | 0.575 |
-| ns | 2213 |  | 306 | internal/identifiers.js | 2.7 |  | 0.542 |
-| walker |  | 2258 | 285 | README.md section #2 |  |  | 0.542 |
-| ns | 2351 |  | 138 | package.json scripts | 2.8 |  | 0.552 |
-| walker |  | 2364 | 106 | README.md section #4 |  |  | 0.552 |
-| walker |  | 2394 | 30 | README.md section #39 |  |  | 0.552 |
+| walker |  | 1888 | 82 | package dependencies in package.json |  |  | 0.608 |
+| ns | 1907 |  | 391 | internal/constants.js | 2.6 |  | 0.558 |
+| walker |  | 1917 | 29 | README.md section #26 |  |  | 0.558 |
+| walker |  | 1946 | 29 | README.md section #36 |  |  | 0.558 |
+| ns | 2213 |  | 306 | internal/identifiers.js | 2.7 |  | 0.526 |
+| walker |  | 2231 | 285 | README.md section #2 |  |  | 0.526 |
+| walker |  | 2337 | 106 | README.md section #4 |  |  | 0.527 |
+| ns | 2351 |  | 138 | package.json scripts | 2.8 |  | 0.537 |
+| walker |  | 2367 | 30 | README.md section #39 |  |  | 0.537 |
+| walker |  | 2394 | 27 | listing of 'test/internal' |  |  | 0.552 |
 | walker |  | 2427 | 33 | README.md section #31 |  |  | 0.552 |
 | walker |  | 2464 | 37 | README.md section #40 |  |  | 0.552 |
 | walker |  | 2500 | 36 | README.md section #41 |  |  | 0.552 |
@@ -79,36 +79,36 @@ Score(3000)=0.642 I=0.733 C=0.561 ns_rows≤3K=29/43 (reached=16 partial=2 missi
 | walker |  | 2623 | 42 | README.md section #38 |  |  | 0.570 |
 | walker |  | 2667 | 44 | README.md section #45 |  |  | 0.570 |
 | walker |  | 2712 | 45 | README.md section #53 |  |  | 0.570 |
+| walker |  | 2759 | 47 | README.md section #29 |  |  | 0.570 |
+| walker |  | 2809 | 50 | README.md section #30 |  |  | 0.570 |
 | ns | 2816 |  | 310 | README.md heading roster (all 24 sections) | 2.10 |  | 0.564 |
-| walker |  | 2817 | 105 | listing of 'test/functions' |  |  | 0.618 |
-| walker |  | 2864 | 47 | README.md section #29 |  |  | 0.618 |
-| walker |  | 2920 | 56 | listing of 'test/ranges' |  |  | 0.642 |
-| walker |  | 2970 | 50 | README.md section #30 |  |  | 0.642 |
+| walker |  | 2914 | 105 | listing of 'test/functions' |  |  | 0.618 |
+| walker |  | 2970 | 56 | listing of 'test/ranges' |  |  | 0.642 |
 | walker |  | 3025 | 55 | README.md section #25 |  |  | 0.642 |
 | walker |  | 3028 | 3 | listing of 'tap-snapshots/test' |  |  | 0.642 |
+| walker |  | 3038 | 10 | CHANGELOG.md section #0 |  |  | 0.642 |
 | ns | 3090 |  | 274 | README: Prerelease Tags rule | 3.1 | 2.10 | 0.627 |
-| walker |  | 3112 | 84 | listing of 'test/fixtures' |  |  | 0.652 |
-| walker |  | 3122 | 10 | CHANGELOG.md section #0 |  |  | 0.652 |
+| walker |  | 3122 | 84 | listing of 'test/fixtures' |  |  | 0.652 |
 | walker |  | 3192 | 70 | README.md section #32 |  |  | 0.652 |
-| walker |  | 3196 | 4 | listing of '.github/matchers' |  |  | 0.652 |
-| walker |  | 3200 | 4 | listing of 'test/integration' |  |  | 0.655 |
-| walker |  | 3271 | 71 | README.md section #28 |  |  | 0.655 |
-| walker |  | 3348 | 77 | README.md section #6 |  |  | 0.659 |
-| ns | 3406 |  | 316 | README: Range Grammar (BNF) | 3.2 | 2.10 | 0.636 |
-| walker |  | 3424 | 76 | README.md section #27 |  |  | 0.636 |
+| walker |  | 3263 | 71 | README.md section #28 |  |  | 0.652 |
+| walker |  | 3340 | 77 | README.md section #6 |  |  | 0.655 |
+| ns | 3406 |  | 316 | README: Range Grammar (BNF) | 3.2 | 2.10 | 0.633 |
+| walker |  | 3416 | 76 | README.md section #27 |  |  | 0.633 |
+| walker |  | 3420 | 4 | listing of '.github/matchers' |  |  | 0.633 |
+| walker |  | 3424 | 4 | listing of 'test/integration' |  |  | 0.636 |
 | walker |  | 3506 | 82 | README.md section #8 |  |  | 0.636 |
-| walker |  | 3511 | 5 | listing of 'test/bin' |  |  | 0.640 |
-| walker |  | 3596 | 85 | README.md section #51 |  |  | 0.640 |
-| ns | 3831 |  | 425 | README: Versions + Ranges core vocabulary | 3.3 | 2.10 | 0.618 |
-| ns | 4090 |  | 259 | ranges/ trivial bundle part A: gtr, ltr, intersects | 3.4 |  | 0.601 |
-| walker |  | 4172 | 576 | imports in index.js |  |  | 0.601 |
-| walker |  | 4186 | 14 | export names surface in preload.js |  |  | 0.601 |
-| walker |  | 4207 | 21 | export names surface in map.js |  |  | 0.601 |
-| walker |  | 4213 | 6 | imports in map.js |  |  | 0.601 |
-| walker |  | 4221 | 8 | imports in preload.js |  |  | 0.601 |
-| walker |  | 4312 | 91 | README.md section #10 |  |  | 0.601 |
-| ns | 4338 |  | 248 | ranges/ trivial bundle part B: to-comparators, valid | 3.5 |  | 0.584 |
-| walker |  | 4398 | 86 | README.md section #42 |  |  | 0.584 |
+| walker |  | 3591 | 85 | README.md section #51 |  |  | 0.636 |
+| ns | 3831 |  | 425 | README: Versions + Ranges core vocabulary | 3.3 | 2.10 | 0.615 |
+| ns | 4090 |  | 259 | ranges/ trivial bundle part A: gtr, ltr, intersects | 3.4 |  | 0.598 |
+| walker |  | 4167 | 576 | imports in index.js |  |  | 0.598 |
+| walker |  | 4181 | 14 | export names surface in preload.js |  |  | 0.598 |
+| walker |  | 4202 | 21 | export names surface in map.js |  |  | 0.598 |
+| walker |  | 4208 | 6 | imports in map.js |  |  | 0.598 |
+| walker |  | 4216 | 8 | imports in preload.js |  |  | 0.598 |
+| walker |  | 4307 | 91 | README.md section #10 |  |  | 0.598 |
+| ns | 4338 |  | 248 | ranges/ trivial bundle part B: to-comparators, valid | 3.5 |  | 0.580 |
+| walker |  | 4393 | 86 | README.md section #42 |  |  | 0.580 |
+| walker |  | 4398 | 5 | listing of 'test/bin' |  |  | 0.584 |
 | ns | 4454 |  | 116 | functions/ comparison-wrapper pattern: gt, rcompare | 3.6 |  | 0.576 |
 | walker |  | 4474 | 76 | README.md section #33 |  |  | 0.576 |
 | walker |  | 4547 | 73 | README.md section #57 |  |  | 0.576 |
@@ -124,10 +124,10 @@ Score(3000)=0.642 I=0.733 C=0.561 ns_rows≤3K=29/43 (reached=16 partial=2 missi
 | walker |  | 5329 | 185 | README.md section #7 |  |  | 0.581 |
 | ns | 5496 |  | 734 | functions/ trivial bundle: satisfies, valid, clean, prerelease, parse, inc | 3.8 |  | 0.536 |
 | walker |  | 5927 | 598 | README.md section #5 |  |  | 0.567 |
-| walker |  | 5935 | 8 | listing of 'tap-snapshots/test/bin' |  |  | 0.569 |
-| ns | 6061 |  | 565 | README: CLI options reference | 3.9 |  | 0.541 |
-| walker |  | 6285 | 350 | json config release-please-config.json |  |  | 0.541 |
-| walker |  | 6437 | 152 | README.md section #56 |  |  | 0.541 |
+| ns | 6061 |  | 565 | README: CLI options reference | 3.9 |  | 0.539 |
+| walker |  | 6277 | 350 | json config release-please-config.json |  |  | 0.539 |
+| walker |  | 6429 | 152 | README.md section #56 |  |  | 0.539 |
+| walker |  | 6437 | 8 | listing of 'tap-snapshots/test/bin' |  |  | 0.541 |
 | walker |  | 6659 | 222 | README.md section #54 |  |  | 0.541 |
 | ns | 6746 |  | 685 | ranges/subset.js: algorithm specification (header comment) | 3.10 |  | 0.524 |
 | ns | 7303 |  | 557 | ranges/max-satisfying.js + min-satisfying.js | 3.11 |  | 0.502 |

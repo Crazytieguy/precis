@@ -1763,10 +1763,28 @@ kind = "full"
 
 [[batches]]
 position = 42
+key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #7"
+cost_tokens = 218
+cum_tokens = 3487
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 126
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
 key = 'Rust(PubItem { file: "src/chain.rs", start_line: 16 })'
 descriptor = "pub item at src/chain.rs:16"
 cost_tokens = 99
-cum_tokens = 3368
+cum_tokens = 3586
 
 [batches.content]
 kind = "lines"
@@ -1780,11 +1798,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Rust(PubItem { file: "src/error.rs", start_line: 934 })'
 descriptor = "pub item at src/error.rs:934"
 cost_tokens = 83
-cum_tokens = 3451
+cum_tokens = 3669
 
 [batches.content]
 kind = "lines"
@@ -1793,24 +1811,6 @@ kind = "lines"
 path = "src/error.rs"
 start = 933
 end = 940
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 44
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #7"
-cost_tokens = 218
-cum_tokens = 3669
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 126
-end = 142
 
 [batches.content.spans.render]
 kind = "full"
@@ -2019,146 +2019,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 48
-key = 'Rust(PubItemNames { file: "src/nightly.rs" })'
-descriptor = "pub-item names surface in src/nightly.rs"
-cost_tokens = 91
-cum_tokens = 4015
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 49
-key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 41 })'
-descriptor = "pub item at src/nightly.rs:41"
-cost_tokens = 0
-cum_tokens = 4015
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 50
-key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 52 })'
-descriptor = "pub item at src/nightly.rs:52"
-cost_tokens = 0
-cum_tokens = 4015
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 51
-key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 56 })'
-descriptor = "pub item at src/nightly.rs:56"
-cost_tokens = 0
-cum_tokens = 4015
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/nightly.rs"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 52
 key = 'Rust(CrateDocBody { file: "src/lib.rs" })'
 descriptor = "crate-doc body in src/lib.rs"
 cost_tokens = 1590
-cum_tokens = 5605
+cum_tokens = 5514
 
 [batches.content]
 kind = "lines"
@@ -2274,6 +2138,142 @@ end = 207
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 49
+key = 'Rust(PubItemNames { file: "src/nightly.rs" })'
+descriptor = "pub-item names surface in src/nightly.rs"
+cost_tokens = 91
+cum_tokens = 5605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 50
+key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 41 })'
+descriptor = "pub item at src/nightly.rs:41"
+cost_tokens = 0
+cum_tokens = 5605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 51
+key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 52 })'
+descriptor = "pub item at src/nightly.rs:52"
+cost_tokens = 0
+cum_tokens = 5605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 52
+key = 'Rust(PubItem { file: "src/nightly.rs", start_line: 56 })'
+descriptor = "pub item at src/nightly.rs:56"
+cost_tokens = 0
+cum_tokens = 5605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/nightly.rs"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 53
@@ -3403,28 +3403,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 102
-key = 'Toml(Dependencies { file: "tests/crate/Cargo.toml" })'
-descriptor = "[dependencies] in tests/crate/Cargo.toml"
-cost_tokens = 26
-cum_tokens = 9370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tests/crate/Cargo.toml"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
 key = 'Plaintext(Whole { file: ".gitignore" })'
 descriptor = "plaintext config .gitignore"
 cost_tokens = 15
-cum_tokens = 9385
+cum_tokens = 9359
 
 [batches.content]
 kind = "lines"
@@ -3433,6 +3415,24 @@ kind = "lines"
 path = ".gitignore"
 start = 1
 end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Toml(Dependencies { file: "tests/crate/Cargo.toml" })'
+descriptor = "[dependencies] in tests/crate/Cargo.toml"
+cost_tokens = 26
+cum_tokens = 9385
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tests/crate/Cargo.toml"
+start = 11
+end = 12
 
 [batches.content.spans.render]
 kind = "full"

@@ -71,11 +71,7 @@ src/
                9→    fn to_key(&self) -> Key<'_>;
               10→}
             …
-              36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
               37→pub struct Key<'k> {
-              38→    // NOTE: This may become `Cow<'k, str>`
-              39→    key: &'k str,
-              40→}
             …
         mod.rs
                1→//! Structured logging.

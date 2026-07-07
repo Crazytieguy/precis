@@ -16,10 +16,10 @@ Score(3000)=0.742 I=0.902 C=0.610 ns_rows≤3K=18/48 (reached=10 partial=2 missi
 | walker |  | 275 | 14 | listing of 'dynamic' |  |  | 0.860 |
 | walker |  | 290 | 15 | listing of 'xxhashbench' |  |  | 0.948 |
 | ns | 309 |  | 104 | README heading + badges | 1.5 |  | 0.885 |
-| walker |  | 325 | 35 | go module identity in xxhashbench/go.mod |  |  | 0.885 |
-| walker |  | 360 | 35 | go decl names surface in xxhash_asm.go |  |  | 0.886 |
-| walker |  | 360 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.886 |
-| walker |  | 360 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.886 |
+| walker |  | 325 | 35 | go decl names surface in xxhash_asm.go |  |  | 0.886 |
+| walker |  | 325 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.886 |
+| walker |  | 325 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.886 |
+| walker |  | 360 | 35 | go module identity in xxhashbench/go.mod |  |  | 0.886 |
 | ns | 368 |  | 59 | README pitch | 1.6 |  | 0.872 |
 | walker |  | 403 | 43 | go decl names surface in xxhash_safe.go |  |  | 0.872 |
 | walker |  | 403 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.872 |
@@ -44,18 +44,18 @@ Score(3000)=0.742 I=0.902 C=0.610 ns_rows≤3K=18/48 (reached=10 partial=2 missi
 | walker |  | 1198 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.619 |
 | walker |  | 1248 | 50 | go package + imports in xxhash.go |  |  | 0.632 |
 | ns | 1252 |  | 316 | CI workflow: test job | 2.1 |  | 0.710 |
-| walker |  | 1294 | 46 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.710 |
-| walker |  | 1294 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.710 |
-| walker |  | 1294 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.710 |
-| walker |  | 1294 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.710 |
-| walker |  | 1328 | 34 | go decl doc at xxhash_asm.go:12 |  |  | 0.713 |
+| walker |  | 1282 | 34 | go decl doc at xxhash_asm.go:12 |  |  | 0.713 |
+| walker |  | 1328 | 46 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.713 |
+| walker |  | 1328 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.713 |
+| walker |  | 1328 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.713 |
+| walker |  | 1328 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.713 |
 | walker |  | 1445 | 117 | plaintext config testall.sh |  |  | 0.718 |
+| walker |  | 1489 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.718 |
+| walker |  | 1530 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.719 |
 | ns | 1555 |  | 303 | CI workflow: qemu cross-arch job | 2.2 |  | 0.752 |
-| walker |  | 1558 | 113 | go module file xxhashbench/go.mod |  |  | 0.752 |
-| walker |  | 1602 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.752 |
-| walker |  | 1643 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.752 |
-| ns | 1672 |  | 117 | testall.sh | 2.3 |  | 0.761 |
-| walker |  | 1677 | 34 | go package + imports in xxhash_unsafe.go |  |  | 0.762 |
+| walker |  | 1564 | 34 | go package + imports in xxhash_unsafe.go |  |  | 0.753 |
+| ns | 1672 |  | 117 | testall.sh | 2.3 |  | 0.762 |
+| walker |  | 1677 | 113 | go module file xxhashbench/go.mod |  |  | 0.762 |
 | walker |  | 1708 | 31 | go decl body at xxhash_unsafe.go:38 |  |  | 0.762 |
 | walker |  | 1788 | 80 | go decl names surface in dynamic/plugin.go |  |  | 0.763 |
 | walker |  | 1788 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.763 |
@@ -122,14 +122,14 @@ Score(3000)=0.742 I=0.902 C=0.610 ns_rows≤3K=18/48 (reached=10 partial=2 missi
 | walker |  | 3751 | 136 | README.md section #1 |  |  | 0.791 |
 | walker |  | 3771 | 20 | go decl doc at xxhash_other.go:7 |  |  | 0.792 |
 | walker |  | 3916 | 145 | go decl body at xxhash.go:176 |  |  | 0.793 |
-| walker |  | 3979 | 63 | go package + imports in xxhsum/xxhsum.go |  |  | 0.793 |
-| walker |  | 4044 | 65 | go package + imports in dynamic/plugin.go |  |  | 0.794 |
-| ns | 4105 |  | 418 | Write method body | 4.5 | 1.10 | 0.747 |
-| walker |  | 4128 | 84 | go decl body at xxhash_unsafe.go:45 |  |  | 0.760 |
+| walker |  | 4000 | 84 | go decl body at xxhash_unsafe.go:45 |  |  | 0.807 |
+| walker |  | 4063 | 63 | go package + imports in xxhsum/xxhsum.go |  |  | 0.807 |
+| ns | 4105 |  | 418 | Write method body | 4.5 | 1.10 | 0.759 |
+| walker |  | 4128 | 65 | go package + imports in dynamic/plugin.go |  |  | 0.760 |
 | walker |  | 4179 | 51 | go decl body at xxhsum/xxhsum.go:34 |  |  | 0.760 |
-| walker |  | 4235 | 56 | go decl body at dynamic/plugin.go:19 |  |  | 0.760 |
 | ns | 4241 |  | 136 | Sum method body | 4.6 | 1.10 | 0.765 |
-| walker |  | 4439 | 204 | go decl body at xxhash.go:190 |  |  | 0.768 |
+| walker |  | 4383 | 204 | go decl body at xxhash.go:190 |  |  | 0.768 |
+| walker |  | 4439 | 56 | go decl body at dynamic/plugin.go:19 |  |  | 0.768 |
 | walker |  | 4586 | 147 | README.md section #3 |  |  | 0.768 |
 | walker |  | 4661 | 75 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.769 |
 | ns | 4730 |  | 489 | Sum64 method body (finalize) | 4.7 | 1.10 | 0.724 |

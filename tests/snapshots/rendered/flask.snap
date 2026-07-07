@@ -172,12 +172,6 @@ examples/
             templates/
         pyproject.toml
         tests/
-            conftest.py
-            data.sql
-            test_auth.py
-            test_blog.py
-            test_db.py
-            test_factory.py
 pyproject.toml
        1→[project]
        2→name = "Flask"
@@ -343,6 +337,9 @@ tests/
             apps/
                 __init__.py
                 admin/
+                    __init__.py
+                    static/
+                    templates/
                 frontend/
                     __init__.py
                     templates/

@@ -161,7 +161,8 @@ readme.md
      180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
      181→- `inverse` - Invert background and foreground colors.
      182→- `hidden` - Print the text but make it invisible.
-    …
+     183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
+     184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
      186→### Colors
      187→
      188→- `black`
@@ -302,12 +303,6 @@ source/
             index.js
                 …
                  176→export function createSupportsColor(stream, options = {}) {
-                 177→	const level = _supportsColor(stream, {
-                 178→		streamIsTTY: stream && stream.isTTY,
-                 179→		...options,
-                 180→	});
-                 181→
-                 182→	return translateLevel(level);
                 …
                  190→export default supportsColor;
 test/

@@ -18,12 +18,12 @@ Score(3000)=0.618 I=0.825 C=0.463 ns_rows≤3K=16/45 (reached=7 partial=2 missin
 | walker |  | 694 | 38 | python decl names surface in src/typeguard/__init__.py |  |  | 0.485 |
 | walker |  | 694 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.485 |
 | walker |  | 735 | 41 | listing of 'docs' |  |  | 0.619 |
-| walker |  | 748 | 13 | python decl names surface in src/typeguard/_memo.py |  |  | 0.619 |
-| walker |  | 748 | 0 | python decl at src/typeguard/_memo.py:8 |  |  | 0.619 |
-| walker |  | 759 | 11 | python method sigs in src/typeguard/_memo.py |  |  | 0.619 |
 | ns | 841 |  | 198 | typeguard/__init__.py: import re-exports (checkers/config/decorators) | 3.1 |  | 0.656 |
 | ns | 1135 |  | 294 | typeguard/__init__.py: import re-exports (exceptions/functions/importhook/memo/suppression/utils) + rebinding loop | 3.2 | 3.1 | 0.647 |
-| walker |  | 1226 | 467 | README headline in README.rst |  |  | 0.694 |
+| walker |  | 1202 | 467 | README headline in README.rst |  |  | 0.694 |
+| walker |  | 1215 | 13 | python decl names surface in src/typeguard/_memo.py |  |  | 0.694 |
+| walker |  | 1215 | 0 | python decl at src/typeguard/_memo.py:8 |  |  | 0.694 |
+| walker |  | 1226 | 11 | python method sigs in src/typeguard/_memo.py |  |  | 0.694 |
 | walker |  | 1248 | 22 | python class body at src/typeguard/_memo.py:8 |  |  | 0.694 |
 | walker |  | 1271 | 23 | python decl doc at src/typeguard/_memo.py:8 |  |  | 0.694 |
 | walker |  | 1298 | 27 | listing of '.github' |  |  | 0.710 |
@@ -33,10 +33,10 @@ Score(3000)=0.618 I=0.825 C=0.463 ns_rows≤3K=16/45 (reached=7 partial=2 missin
 | ns | 1563 |  | 208 | ruff lint config (pyproject.toml) | 4.2 |  | 0.603 |
 | ns | 1661 |  | 98 | mypy + tox config (pyproject.toml) | 4.3 |  | 0.585 |
 | walker |  | 1781 | 475 | YAML config at .github/workflows/test.yml |  |  | 0.593 |
-| walker |  | 1817 | 36 | python decl names surface in src/typeguard/_pytest_plugin.py |  |  | 0.593 |
-| walker |  | 1817 | 0 | python decl at src/typeguard/_pytest_plugin.py:16 |  |  | 0.593 |
-| walker |  | 1817 | 0 | python decl at src/typeguard/_pytest_plugin.py:75 |  |  | 0.593 |
-| walker |  | 1886 | 69 | python decl body at src/typeguard/__init__.py:37 body 38 |  |  | 0.618 |
+| walker |  | 1850 | 69 | python decl body at src/typeguard/__init__.py:37 body 38 |  |  | 0.618 |
+| walker |  | 1886 | 36 | python decl names surface in src/typeguard/_pytest_plugin.py |  |  | 0.618 |
+| walker |  | 1886 | 0 | python decl at src/typeguard/_pytest_plugin.py:16 |  |  | 0.618 |
+| walker |  | 1886 | 0 | python decl at src/typeguard/_pytest_plugin.py:75 |  |  | 0.618 |
 | ns | 1896 |  | 235 | CI test workflow (.github/workflows/test.yml) | 4.4 |  | 0.650 |
 | walker |  | 1986 | 100 | listing of 'tests' |  |  | 0.722 |
 | walker |  | 2000 | 14 | listing of 'tests/mypy' |  |  | 0.739 |
@@ -254,26 +254,24 @@ Score(3000)=0.618 I=0.825 C=0.463 ns_rows≤3K=16/45 (reached=7 partial=2 missin
 | walker |  | 8710 | 45 | python imports in src/typeguard/_memo.py |  |  | 0.516 |
 | walker |  | 8766 | 56 | python method doc at src/typeguard/_transformer.py:945 |  |  | 0.516 |
 | ns | 8879 |  | 299 | _transformer.py: visit_FunctionDef (target selection + overload handling) | 15.4 | 15.1 | 0.507 |
-| walker |  | 8897 | 131 | python decl names surface in src/typeguard/_utils.py |  |  | 0.510 |
-| walker |  | 8897 | 0 | python decl at src/typeguard/_utils.py:66 |  |  | 0.510 |
-| walker |  | 8897 | 0 | python decl at src/typeguard/_utils.py:104 |  |  | 0.510 |
-| walker |  | 8897 | 0 | python decl at src/typeguard/_utils.py:127 |  |  | 0.510 |
-| walker |  | 8897 | 0 | python decl at src/typeguard/_utils.py:142 |  |  | 0.510 |
-| walker |  | 8897 | 0 | python decl at src/typeguard/_utils.py:154 |  |  | 0.510 |
-| walker |  | 8897 | 0 | python decl at src/typeguard/_utils.py:162 |  |  | 0.510 |
-| walker |  | 8905 | 8 | python decl at src/typeguard/_utils.py:172 |  |  | 0.511 |
-| walker |  | 8915 | 10 | python class body at src/typeguard/_utils.py:172 |  |  | 0.511 |
-| walker |  | 8929 | 14 | python method sigs in src/typeguard/_utils.py |  |  | 0.511 |
-| walker |  | 8929 | 0 | python method at src/typeguard/_utils.py:176 |  |  | 0.511 |
-| walker |  | 8936 | 7 | python method body at src/typeguard/_utils.py:176 body 177 |  |  | 0.511 |
-| walker |  | 9009 | 73 | python decl doc at src/typeguard/_utils.py:127 |  |  | 0.511 |
-| ns | 9031 |  | 152 | features.rst: what is checked | 16.1 |  | 0.506 |
-| walker |  | 9090 | 81 | python decl doc at src/typeguard/_utils.py:104 |  |  | 0.506 |
-| walker |  | 9150 | 60 | python method doc at src/typeguard/_transformer.py:1224 |  |  | 0.506 |
-| walker |  | 9211 | 61 | python method doc at src/typeguard/_transformer.py:1036 |  |  | 0.506 |
-| walker |  | 9254 | 43 | python method at src/typeguard/_transformer.py:516 |  |  | 0.506 |
-| ns | 9308 |  | 277 | userguide.rst: forward reference handling notes | 16.2 |  | 0.499 |
-| ns | 9458 |  | 150 | userguide.rst: debugging instrumented code | 16.3 |  | 0.496 |
-| ns | 9563 |  | 105 | versionhistory.rst: latest UNRELEASED entry | 17.1 |  | 0.494 |
-| ns | 9815 |  | 252 | tests/dummymodule.py: function/class roster | 18.1 |  | 0.489 |
-| ns | 9971 |  | 156 | tests/dummymodule_py312.py: type-alias + generic-syntax patterns | 19.1 |  | 0.484 |
+| ns | 9031 |  | 152 | features.rst: what is checked | 16.1 |  | 0.502 |
+| ns | 9308 |  | 277 | userguide.rst: forward reference handling notes | 16.2 |  | 0.495 |
+| ns | 9458 |  | 150 | userguide.rst: debugging instrumented code | 16.3 |  | 0.492 |
+| ns | 9563 |  | 105 | versionhistory.rst: latest UNRELEASED entry | 17.1 |  | 0.490 |
+| walker |  | 9620 | 854 | manifest config in pyproject.toml |  |  | 0.551 |
+| walker |  | 9751 | 131 | python decl names surface in src/typeguard/_utils.py |  |  | 0.554 |
+| walker |  | 9751 | 0 | python decl at src/typeguard/_utils.py:66 |  |  | 0.554 |
+| walker |  | 9751 | 0 | python decl at src/typeguard/_utils.py:104 |  |  | 0.554 |
+| walker |  | 9751 | 0 | python decl at src/typeguard/_utils.py:127 |  |  | 0.554 |
+| walker |  | 9751 | 0 | python decl at src/typeguard/_utils.py:142 |  |  | 0.554 |
+| walker |  | 9751 | 0 | python decl at src/typeguard/_utils.py:154 |  |  | 0.554 |
+| walker |  | 9751 | 0 | python decl at src/typeguard/_utils.py:162 |  |  | 0.554 |
+| walker |  | 9759 | 8 | python decl at src/typeguard/_utils.py:172 |  |  | 0.554 |
+| walker |  | 9769 | 10 | python class body at src/typeguard/_utils.py:172 |  |  | 0.554 |
+| walker |  | 9783 | 14 | python method sigs in src/typeguard/_utils.py |  |  | 0.554 |
+| walker |  | 9783 | 0 | python method at src/typeguard/_utils.py:176 |  |  | 0.554 |
+| walker |  | 9790 | 7 | python method body at src/typeguard/_utils.py:176 body 177 |  |  | 0.554 |
+| ns | 9815 |  | 252 | tests/dummymodule.py: function/class roster | 18.1 |  | 0.549 |
+| walker |  | 9863 | 73 | python decl doc at src/typeguard/_utils.py:127 |  |  | 0.549 |
+| walker |  | 9944 | 81 | python decl doc at src/typeguard/_utils.py:104 |  |  | 0.549 |
+| ns | 9971 |  | 156 | tests/dummymodule_py312.py: type-alias + generic-syntax patterns | 19.1 |  | 0.544 |

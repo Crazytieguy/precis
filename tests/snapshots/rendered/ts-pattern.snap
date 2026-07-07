@@ -158,21 +158,6 @@ src/
     internals/
         helpers.ts
         symbols.ts
-            …
-              16→export const matcher = Symbol.for('@ts-pattern/matcher');
-              17→export type matcher = typeof matcher;
-              18→
-              19→export const unset = Symbol.for('@ts-pattern/unset');
-              20→export type unset = typeof unset;
-              21→
-              22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
-              23→export type isVariadic = typeof isVariadic;
-            …
-              26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
-              27→export type anonymousSelectKey = typeof anonymousSelectKey;
-              28→
-              29→export const override = Symbol.for('@ts-pattern/override');
-              30→export type override = typeof override;
     is-matching.ts
            1→import { MatchedValue, Pattern, UnknownProperties } from './types/Pattern';
            2→import * as P from './patterns';
@@ -273,3 +258,17 @@ src/
                1→export * from './Pattern';
 tests/
 tsconfig.json
+       1→{
+       2→  "compilerOptions": {
+       3→    "module": "ESNext",
+       4→    "declaration": true,
+       5→    "target": "ESNext",
+       6→    "moduleResolution": "bundler",
+       7→    "strict": true,
+       8→    "outDir": "dist/",
+       9→    "skipLibCheck": true,
+      10→    "esModuleInterop": true
+      11→  },
+      12→  "include": ["src/"],
+      13→  "exclude": ["tests/", "dist/", "examples/", "node_modules/"]
+      14→}

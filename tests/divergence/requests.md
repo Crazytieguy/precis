@@ -1,4 +1,4 @@
-Score(3000)=0.651 I=0.876 C=0.484 ns_rows≤3K=17/41 (reached=9 partial=0 missing=8)
+Score(3000)=0.643 I=0.874 C=0.474 ns_rows≤3K=17/41 (reached=9 partial=0 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -56,130 +56,130 @@ Score(3000)=0.651 I=0.876 C=0.484 ns_rows≤3K=17/41 (reached=9 partial=0 missin
 | walker |  | 2769 | 18 | python decl body at src/requests/help.py:128 body 130 |  |  | 0.704 |
 | walker |  | 2819 | 50 | python decl names surface in src/requests/status_codes.py |  |  | 0.704 |
 | walker |  | 2819 | 0 | python decl at src/requests/status_codes.py:109 |  |  | 0.704 |
-| walker |  | 2845 | 26 | python imports in src/requests/packages.py |  |  | 0.704 |
 | ns | 2888 |  | 469 | status_codes.py docstring + init logic | 3.4 |  | 0.649 |
-| walker |  | 2902 | 57 | python decl names surface in src/requests/hooks.py |  |  | 0.650 |
-| walker |  | 2902 | 0 | python decl at src/requests/hooks.py:25 |  |  | 0.650 |
-| walker |  | 2919 | 17 | python decl body at src/requests/hooks.py:25 body 26 |  |  | 0.651 |
-| ns | 2940 |  | 52 | models.py class roster | 4.1 |  | 0.645 |
-| walker |  | 2972 | 53 | python decl at src/requests/hooks.py:32 |  |  | 0.649 |
-| walker |  | 2990 | 18 | python decl doc at src/requests/hooks.py:32 |  |  | 0.651 |
-| walker |  | 3047 | 57 | python decl names surface in src/requests/sessions.py |  |  | 0.652 |
-| walker |  | 3047 | 0 | python decl at src/requests/sessions.py:127 |  |  | 0.652 |
-| walker |  | 3047 | 0 | python decl at src/requests/sessions.py:395 |  |  | 0.652 |
-| walker |  | 3047 | 0 | python decl at src/requests/sessions.py:908 |  |  | 0.652 |
-| walker |  | 3055 | 8 | python decl body at src/requests/sessions.py:908 body 920 |  |  | 0.652 |
-| walker |  | 3086 | 31 | python decl at src/requests/sessions.py:76 |  |  | 0.652 |
-| ns | 3089 |  | 149 | PreparedRequest method locations | 4.2 | 4.1 | 0.638 |
-| walker |  | 3118 | 32 | python class body at src/requests/sessions.py:127 |  |  | 0.638 |
-| walker |  | 3171 | 53 | python decl at src/requests/sessions.py:108 |  |  | 0.638 |
+| ns | 2940 |  | 52 | models.py class roster | 4.1 |  | 0.643 |
+| walker |  | 3075 | 256 | README.md section #3 |  |  | 0.643 |
+| ns | 3089 |  | 149 | PreparedRequest method locations | 4.2 | 4.1 | 0.629 |
+| walker |  | 3101 | 26 | python imports in src/requests/packages.py |  |  | 0.629 |
+| walker |  | 3158 | 57 | python decl names surface in src/requests/hooks.py |  |  | 0.630 |
+| walker |  | 3158 | 0 | python decl at src/requests/hooks.py:25 |  |  | 0.630 |
+| walker |  | 3175 | 17 | python decl body at src/requests/hooks.py:25 body 26 |  |  | 0.631 |
+| walker |  | 3228 | 53 | python decl at src/requests/hooks.py:32 |  |  | 0.635 |
+| walker |  | 3246 | 18 | python decl doc at src/requests/hooks.py:32 |  |  | 0.637 |
+| walker |  | 3303 | 57 | python decl names surface in src/requests/sessions.py |  |  | 0.638 |
+| walker |  | 3303 | 0 | python decl at src/requests/sessions.py:127 |  |  | 0.638 |
+| walker |  | 3303 | 0 | python decl at src/requests/sessions.py:395 |  |  | 0.638 |
+| walker |  | 3303 | 0 | python decl at src/requests/sessions.py:908 |  |  | 0.638 |
+| walker |  | 3311 | 8 | python decl body at src/requests/sessions.py:908 body 920 |  |  | 0.638 |
+| walker |  | 3342 | 31 | python decl at src/requests/sessions.py:76 |  |  | 0.638 |
 | ns | 3345 |  | 256 | Response method/property locations | 4.3 | 4.1 | 0.615 |
+| walker |  | 3374 | 32 | python class body at src/requests/sessions.py:127 |  |  | 0.615 |
 | ns | 3399 |  | 54 | sessions.py module-level roster | 5.1 |  | 0.619 |
-| walker |  | 3444 | 273 | python class body at src/requests/sessions.py:395 |  |  | 0.619 |
+| walker |  | 3427 | 53 | python decl at src/requests/sessions.py:108 |  |  | 0.619 |
 | ns | 3477 |  | 78 | SessionRedirectMixin method locations | 5.2 | 5.1 | 0.613 |
 | ns | 3683 |  | 206 | Session method locations | 5.4 | 5.1 | 0.595 |
-| walker |  | 3918 | 474 | python method sigs in src/requests/sessions.py |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:132 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:134 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:154 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:505 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:508 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:511 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:673 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:684 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:742 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:752 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:870 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:883 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:888 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:899 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method at src/requests/sessions.py:903 |  |  | 0.645 |
-| walker |  | 3918 | 0 | python method body at src/requests/sessions.py:132 body 132 |  |  | 0.645 |
-| walker |  | 3944 | 26 | python method at src/requests/sessions.py:309 |  |  | 0.645 |
-| walker |  | 3970 | 26 | python method at src/requests/sessions.py:370 |  |  | 0.645 |
-| walker |  | 3986 | 16 | python method doc at src/requests/sessions.py:883 |  |  | 0.645 |
-| walker |  | 4004 | 18 | python method doc at src/requests/sessions.py:154 |  |  | 0.645 |
-| walker |  | 4024 | 20 | python method doc at src/requests/sessions.py:134 |  |  | 0.645 |
-| walker |  | 4067 | 43 | python method at src/requests/sessions.py:714 |  |  | 0.645 |
-| walker |  | 4110 | 43 | python method at src/requests/sessions.py:728 |  |  | 0.645 |
-| walker |  | 4155 | 45 | python method at src/requests/sessions.py:334 |  |  | 0.645 |
-| walker |  | 4205 | 50 | python method at src/requests/sessions.py:442 |  |  | 0.645 |
-| walker |  | 4263 | 58 | python method at src/requests/sessions.py:655 |  |  | 0.645 |
-| walker |  | 4320 | 57 | python decl doc at src/requests/sessions.py:108 |  |  | 0.645 |
-| walker |  | 4354 | 34 | python method doc at src/requests/sessions.py:752 |  |  | 0.645 |
+| walker |  | 3700 | 273 | python class body at src/requests/sessions.py:395 |  |  | 0.595 |
+| walker |  | 4174 | 474 | python method sigs in src/requests/sessions.py |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:132 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:134 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:154 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:505 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:508 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:511 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:673 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:684 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:742 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:752 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:870 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:883 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:888 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:899 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method at src/requests/sessions.py:903 |  |  | 0.645 |
+| walker |  | 4174 | 0 | python method body at src/requests/sessions.py:132 body 132 |  |  | 0.645 |
+| walker |  | 4200 | 26 | python method at src/requests/sessions.py:309 |  |  | 0.645 |
+| walker |  | 4226 | 26 | python method at src/requests/sessions.py:370 |  |  | 0.645 |
+| walker |  | 4242 | 16 | python method doc at src/requests/sessions.py:883 |  |  | 0.645 |
+| walker |  | 4260 | 18 | python method doc at src/requests/sessions.py:154 |  |  | 0.645 |
+| walker |  | 4280 | 20 | python method doc at src/requests/sessions.py:134 |  |  | 0.645 |
+| walker |  | 4323 | 43 | python method at src/requests/sessions.py:714 |  |  | 0.645 |
+| walker |  | 4366 | 43 | python method at src/requests/sessions.py:728 |  |  | 0.645 |
 | ns | 4408 |  | 725 | tests/conftest.py full | 6.1 |  | 0.589 |
-| walker |  | 4610 | 256 | README.md section #3 |  |  | 0.589 |
-| walker |  | 4677 | 67 | python decl doc at src/requests/sessions.py:76 |  |  | 0.589 |
-| walker |  | 4716 | 39 | python method doc at src/requests/sessions.py:370 |  |  | 0.589 |
+| walker |  | 4411 | 45 | python method at src/requests/sessions.py:334 |  |  | 0.589 |
+| walker |  | 4461 | 50 | python method at src/requests/sessions.py:442 |  |  | 0.589 |
+| walker |  | 4519 | 58 | python method at src/requests/sessions.py:655 |  |  | 0.589 |
+| walker |  | 4576 | 57 | python decl doc at src/requests/sessions.py:108 |  |  | 0.589 |
 | ns | 4725 |  | 317 | tests/utils.py + tests/__init__.py full | 6.2 |  | 0.567 |
-| walker |  | 4892 | 176 | README.md section #2 |  |  | 0.567 |
+| walker |  | 4752 | 176 | README.md section #2 |  |  | 0.567 |
+| walker |  | 4786 | 34 | python method doc at src/requests/sessions.py:752 |  |  | 0.567 |
+| walker |  | 4853 | 67 | python decl doc at src/requests/sessions.py:76 |  |  | 0.567 |
+| walker |  | 4892 | 39 | python method doc at src/requests/sessions.py:370 |  |  | 0.567 |
 | ns | 4923 |  | 198 | test_structures.py locations | 6.3 |  | 0.556 |
-| walker |  | 4933 | 41 | python method doc at src/requests/sessions.py:888 |  |  | 0.556 |
-| walker |  | 5005 | 72 | python method at src/requests/sessions.py:695 |  |  | 0.556 |
-| walker |  | 5078 | 73 | python decl names surface in src/requests/structures.py |  |  | 0.558 |
-| walker |  | 5078 | 0 | python decl at src/requests/structures.py:20 |  |  | 0.558 |
-| walker |  | 5078 | 0 | python decl at src/requests/structures.py:96 |  |  | 0.558 |
-| walker |  | 5089 | 11 | python class body at src/requests/structures.py:96 |  |  | 0.558 |
-| walker |  | 5097 | 8 | python decl doc at src/requests/structures.py:96 |  |  | 0.558 |
-| walker |  | 5114 | 17 | python decl doc at src/requests/structures.py:20 |  |  | 0.558 |
-| walker |  | 5146 | 32 | python class body at src/requests/structures.py:20 |  |  | 0.558 |
-| ns | 5152 |  | 229 | test_testserver.py + tests/testserver/server.py locations | 6.4 |  | 0.546 |
-| ns | 5361 |  | 209 | test_lowlevel.py locations | 6.5 |  | 0.538 |
-| ns | 5513 |  | 152 | test_utils.py class roster (sampled) | 6.6 |  | 0.531 |
-| walker |  | 5515 | 369 | python method sigs in src/requests/structures.py |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:64 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:67 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:70 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:73 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:76 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:80 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:89 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:92 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:101 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:105 |  |  | 0.550 |
-| walker |  | 5515 | 0 | python method at src/requests/structures.py:129 |  |  | 0.550 |
-| walker |  | 5522 | 7 | python method at src/requests/structures.py:126 |  |  | 0.550 |
-| walker |  | 5522 | 0 | python method body at src/requests/structures.py:126 body 127 |  |  | 0.550 |
-| walker |  | 5531 | 9 | python method at src/requests/structures.py:123 |  |  | 0.550 |
-| walker |  | 5531 | 0 | python method body at src/requests/structures.py:123 body 124 |  |  | 0.550 |
-| walker |  | 5549 | 18 | python method at src/requests/structures.py:118 |  |  | 0.550 |
-| walker |  | 5580 | 31 | python method at src/requests/structures.py:108 |  |  | 0.550 |
-| ns | 5608 |  | 95 | test_requests.py class roster (sampled) | 6.7 |  | 0.545 |
-| walker |  | 5612 | 32 | python method at src/requests/structures.py:59 |  |  | 0.545 |
-| ns | 5622 |  | 14 | tests/certs/ directory listing | 6.8 |  | 0.548 |
-| walker |  | 5628 | 16 | python method doc at src/requests/structures.py:76 |  |  | 0.548 |
-| walker |  | 5682 | 54 | python method at src/requests/structures.py:49 |  |  | 0.548 |
-| walker |  | 5771 | 89 | python decl names surface in src/requests/adapters.py |  |  | 0.548 |
-| walker |  | 5771 | 0 | python decl at src/requests/adapters.py:122 |  |  | 0.548 |
-| walker |  | 5771 | 0 | python decl at src/requests/adapters.py:158 |  |  | 0.548 |
-| walker |  | 5782 | 11 | python decl doc at src/requests/adapters.py:122 |  |  | 0.548 |
-| walker |  | 5797 | 15 | python decl doc at src/requests/adapters.py:158 |  |  | 0.548 |
-| walker |  | 5951 | 154 | python class body at src/requests/adapters.py:158 |  |  | 0.548 |
-| walker |  | 6236 | 285 | python method sigs in src/requests/adapters.py |  |  | 0.550 |
-| walker |  | 6236 | 0 | python method at src/requests/adapters.py:125 |  |  | 0.550 |
-| walker |  | 6236 | 0 | python method at src/requests/adapters.py:153 |  |  | 0.550 |
-| walker |  | 6236 | 0 | python method at src/requests/adapters.py:223 |  |  | 0.550 |
-| walker |  | 6236 | 0 | python method at src/requests/adapters.py:269 |  |  | 0.550 |
-| walker |  | 6236 | 0 | python method at src/requests/adapters.py:365 |  |  | 0.550 |
-| walker |  | 6236 | 0 | python method at src/requests/adapters.py:555 |  |  | 0.550 |
-| walker |  | 6236 | 0 | python method at src/requests/adapters.py:599 |  |  | 0.550 |
-| walker |  | 6236 | 0 | python method at src/requests/adapters.py:613 |  |  | 0.550 |
-| walker |  | 6249 | 13 | python method doc at src/requests/adapters.py:153 |  |  | 0.550 |
-| walker |  | 6280 | 31 | python method at src/requests/adapters.py:565 |  |  | 0.550 |
-| walker |  | 6314 | 34 | python method at src/requests/adapters.py:512 |  |  | 0.550 |
-| walker |  | 6353 | 39 | python method at src/requests/adapters.py:307 |  |  | 0.550 |
-| walker |  | 6393 | 40 | python method at src/requests/adapters.py:226 |  |  | 0.550 |
-| walker |  | 6441 | 48 | python method at src/requests/adapters.py:403 |  |  | 0.550 |
-| walker |  | 6500 | 59 | python method at src/requests/adapters.py:239 |  |  | 0.550 |
-| walker |  | 6572 | 72 | python method at src/requests/adapters.py:455 |  |  | 0.550 |
-| walker |  | 6617 | 45 | python method doc at src/requests/sessions.py:870 |  |  | 0.550 |
-| walker |  | 6693 | 76 | python method at src/requests/adapters.py:201 |  |  | 0.550 |
-| walker |  | 6850 | 157 | python decl names surface in src/requests/compat.py |  |  | 0.550 |
-| walker |  | 6850 | 0 | python decl at src/requests/compat.py:37 |  |  | 0.550 |
-| walker |  | 6862 | 12 | python decl doc at src/requests/compat.py:37 |  |  | 0.550 |
-| ns | 7120 |  | 1498 | resolve_redirects() full body | 6.9 | 5.2 | 0.491 |
-| ns | 7401 |  | 281 | adapters.py class/method locations | 7.1 |  | 0.506 |
-| walker |  | 7452 | 590 | manifest config in pyproject.toml |  |  | 0.509 |
+| ns | 5152 |  | 229 | test_testserver.py + tests/testserver/server.py locations | 6.4 |  | 0.544 |
+| ns | 5361 |  | 209 | test_lowlevel.py locations | 6.5 |  | 0.537 |
+| walker |  | 5482 | 590 | manifest config in pyproject.toml |  |  | 0.540 |
+| ns | 5513 |  | 152 | test_utils.py class roster (sampled) | 6.6 |  | 0.533 |
+| walker |  | 5523 | 41 | python method doc at src/requests/sessions.py:888 |  |  | 0.533 |
+| walker |  | 5595 | 72 | python method at src/requests/sessions.py:695 |  |  | 0.533 |
+| ns | 5608 |  | 95 | test_requests.py class roster (sampled) | 6.7 |  | 0.529 |
+| ns | 5622 |  | 14 | tests/certs/ directory listing | 6.8 |  | 0.532 |
+| walker |  | 5668 | 73 | python decl names surface in src/requests/structures.py |  |  | 0.533 |
+| walker |  | 5668 | 0 | python decl at src/requests/structures.py:20 |  |  | 0.533 |
+| walker |  | 5668 | 0 | python decl at src/requests/structures.py:96 |  |  | 0.533 |
+| walker |  | 5679 | 11 | python class body at src/requests/structures.py:96 |  |  | 0.533 |
+| walker |  | 5687 | 8 | python decl doc at src/requests/structures.py:96 |  |  | 0.533 |
+| walker |  | 5704 | 17 | python decl doc at src/requests/structures.py:20 |  |  | 0.533 |
+| walker |  | 5736 | 32 | python class body at src/requests/structures.py:20 |  |  | 0.533 |
+| walker |  | 6105 | 369 | python method sigs in src/requests/structures.py |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:64 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:67 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:70 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:73 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:76 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:80 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:89 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:92 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:101 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:105 |  |  | 0.552 |
+| walker |  | 6105 | 0 | python method at src/requests/structures.py:129 |  |  | 0.552 |
+| walker |  | 6112 | 7 | python method at src/requests/structures.py:126 |  |  | 0.552 |
+| walker |  | 6112 | 0 | python method body at src/requests/structures.py:126 body 127 |  |  | 0.552 |
+| walker |  | 6121 | 9 | python method at src/requests/structures.py:123 |  |  | 0.552 |
+| walker |  | 6121 | 0 | python method body at src/requests/structures.py:123 body 124 |  |  | 0.552 |
+| walker |  | 6139 | 18 | python method at src/requests/structures.py:118 |  |  | 0.552 |
+| walker |  | 6170 | 31 | python method at src/requests/structures.py:108 |  |  | 0.552 |
+| walker |  | 6202 | 32 | python method at src/requests/structures.py:59 |  |  | 0.552 |
+| walker |  | 6218 | 16 | python method doc at src/requests/structures.py:76 |  |  | 0.552 |
+| walker |  | 6272 | 54 | python method at src/requests/structures.py:49 |  |  | 0.552 |
+| walker |  | 6361 | 89 | python decl names surface in src/requests/adapters.py |  |  | 0.552 |
+| walker |  | 6361 | 0 | python decl at src/requests/adapters.py:122 |  |  | 0.552 |
+| walker |  | 6361 | 0 | python decl at src/requests/adapters.py:158 |  |  | 0.552 |
+| walker |  | 6372 | 11 | python decl doc at src/requests/adapters.py:122 |  |  | 0.552 |
+| walker |  | 6387 | 15 | python decl doc at src/requests/adapters.py:158 |  |  | 0.552 |
+| walker |  | 6541 | 154 | python class body at src/requests/adapters.py:158 |  |  | 0.552 |
+| walker |  | 6826 | 285 | python method sigs in src/requests/adapters.py |  |  | 0.553 |
+| walker |  | 6826 | 0 | python method at src/requests/adapters.py:125 |  |  | 0.553 |
+| walker |  | 6826 | 0 | python method at src/requests/adapters.py:153 |  |  | 0.553 |
+| walker |  | 6826 | 0 | python method at src/requests/adapters.py:223 |  |  | 0.553 |
+| walker |  | 6826 | 0 | python method at src/requests/adapters.py:269 |  |  | 0.553 |
+| walker |  | 6826 | 0 | python method at src/requests/adapters.py:365 |  |  | 0.553 |
+| walker |  | 6826 | 0 | python method at src/requests/adapters.py:555 |  |  | 0.553 |
+| walker |  | 6826 | 0 | python method at src/requests/adapters.py:599 |  |  | 0.553 |
+| walker |  | 6826 | 0 | python method at src/requests/adapters.py:613 |  |  | 0.553 |
+| walker |  | 6839 | 13 | python method doc at src/requests/adapters.py:153 |  |  | 0.553 |
+| walker |  | 6870 | 31 | python method at src/requests/adapters.py:565 |  |  | 0.553 |
+| walker |  | 6904 | 34 | python method at src/requests/adapters.py:512 |  |  | 0.553 |
+| walker |  | 6943 | 39 | python method at src/requests/adapters.py:307 |  |  | 0.553 |
+| walker |  | 6983 | 40 | python method at src/requests/adapters.py:226 |  |  | 0.553 |
+| walker |  | 7031 | 48 | python method at src/requests/adapters.py:403 |  |  | 0.553 |
+| walker |  | 7090 | 59 | python method at src/requests/adapters.py:239 |  |  | 0.553 |
+| ns | 7120 |  | 1498 | resolve_redirects() full body | 6.9 | 5.2 | 0.494 |
+| walker |  | 7162 | 72 | python method at src/requests/adapters.py:455 |  |  | 0.494 |
+| walker |  | 7207 | 45 | python method doc at src/requests/sessions.py:870 |  |  | 0.494 |
+| walker |  | 7283 | 76 | python method at src/requests/adapters.py:201 |  |  | 0.494 |
+| ns | 7401 |  | 281 | adapters.py class/method locations | 7.1 |  | 0.509 |
+| walker |  | 7440 | 157 | python decl names surface in src/requests/compat.py |  |  | 0.509 |
+| walker |  | 7440 | 0 | python decl at src/requests/compat.py:37 |  |  | 0.509 |
+| walker |  | 7452 | 12 | python decl doc at src/requests/compat.py:37 |  |  | 0.509 |
 | walker |  | 7533 | 81 | python method at src/requests/sessions.py:831 |  |  | 0.509 |
 | walker |  | 7575 | 42 | python method doc at src/requests/sessions.py:831 |  |  | 0.509 |
 | walker |  | 7628 | 53 | python method doc at src/requests/adapters.py:555 |  |  | 0.509 |

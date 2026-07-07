@@ -201,17 +201,10 @@ internal/
               10→type CommonInput struct {
             …
               23→type PreToolUseInput struct {
-              24→	CommonInput
-              25→	ToolName  string          `json:"tool_name"`
-              26→	ToolInput json.RawMessage `json:"tool_input"`
-              27→}
             …
               32→type PostToolUseInput struct {
             …
               42→type UserPromptSubmitInput struct {
-              43→	CommonInput
-              44→	Prompt string `json:"prompt"`
-              45→}
             …
               50→type StopInput struct {
             …
@@ -329,7 +322,14 @@ sdk/
          124→### Methods
         …
          136→## Environment Variables
-        …
+         137→
+         138→All CLI environment variables work with the SDK:
+         139→
+         140→- `MCPHOST_MODEL` - Override model
+         141→- `ANTHROPIC_API_KEY` - Anthropic API key
+         142→- `OPENAI_API_KEY` - OpenAI API key
+         143→- `GEMINI_API_KEY` - Google API key
+         144→- etc.
          146→## License
          147→
          148→Same as MCPHost CLI

@@ -309,24 +309,10 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Fs(DirListing { dir: "nanovllm/utils" })'
-descriptor = "listing of 'nanovllm/utils'"
-cost_tokens = 8
-cum_tokens = 297
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "nanovllm/utils"
-entries = ["context.py", "loader.py"]
-
-[[batches]]
-position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 77
-cum_tokens = 374
+cum_tokens = 366
 
 [batches.content]
 kind = "lines"
@@ -338,6 +324,20 @@ end = 17
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "nanovllm/utils" })'
+descriptor = "listing of 'nanovllm/utils'"
+cost_tokens = 8
+cum_tokens = 374
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "nanovllm/utils"
+entries = ["context.py", "loader.py"]
 
 [[batches]]
 position = 15
@@ -621,28 +621,28 @@ entries = ["block_manager.py", "llm_engine.py", "model_runner.py", "scheduler.py
 
 [[batches]]
 position = 29
-key = 'Python(DeclNames { file: "nanovllm/engine/scheduler.py" })'
-descriptor = "python decl names surface in nanovllm/engine/scheduler.py"
-cost_tokens = 11
-cum_tokens = 626
+key = 'Python(Imports { file: "nanovllm/sampling_params.py" })'
+descriptor = "python imports in nanovllm/sampling_params.py"
+cost_tokens = 9
+cum_tokens = 624
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "nanovllm/engine/scheduler.py"
-start = 8
-end = 8
+path = "nanovllm/sampling_params.py"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 30
-key = 'Python(Decl { file: "nanovllm/engine/scheduler.py", start_line: 8 })'
-descriptor = "python decl at nanovllm/engine/scheduler.py:8"
-cost_tokens = 0
-cum_tokens = 626
+key = 'Python(DeclNames { file: "nanovllm/engine/scheduler.py" })'
+descriptor = "python decl names surface in nanovllm/engine/scheduler.py"
+cost_tokens = 11
+cum_tokens = 635
 
 [batches.content]
 kind = "lines"
@@ -657,46 +657,42 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'Python(Imports { file: "nanovllm/sampling_params.py" })'
-descriptor = "python imports in nanovllm/sampling_params.py"
-cost_tokens = 9
+key = 'Python(Decl { file: "nanovllm/engine/scheduler.py", start_line: 8 })'
+descriptor = "python decl at nanovllm/engine/scheduler.py:8"
+cost_tokens = 0
 cum_tokens = 635
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "nanovllm/sampling_params.py"
-start = 1
-end = 1
+path = "nanovllm/engine/scheduler.py"
+start = 8
+end = 8
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 32
-key = 'Python(DeclNames { file: "nanovllm/engine/model_runner.py" })'
-descriptor = "python decl names surface in nanovllm/engine/model_runner.py"
-cost_tokens = 12
-cum_tokens = 647
+key = 'Fs(DirListing { dir: "nanovllm/layers" })'
+descriptor = "listing of 'nanovllm/layers'"
+cost_tokens = 31
+cum_tokens = 666
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "nanovllm/engine/model_runner.py"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "nanovllm/layers"
+entries = ["activation.py", "attention.py", "embed_head.py", "layernorm.py", "linear.py", "rotary_embedding.py", "sampler.py"]
 
 [[batches]]
 position = 33
-key = 'Python(Decl { file: "nanovllm/engine/model_runner.py", start_line: 15 })'
-descriptor = "python decl at nanovllm/engine/model_runner.py:15"
-cost_tokens = 0
-cum_tokens = 647
+key = 'Python(DeclNames { file: "nanovllm/engine/model_runner.py" })'
+descriptor = "python decl names surface in nanovllm/engine/model_runner.py"
+cost_tokens = 12
+cum_tokens = 678
 
 [batches.content]
 kind = "lines"
@@ -711,150 +707,28 @@ kind = "full"
 
 [[batches]]
 position = 34
-key = 'Fs(DirListing { dir: "nanovllm/layers" })'
-descriptor = "listing of 'nanovllm/layers'"
-cost_tokens = 31
+key = 'Python(Decl { file: "nanovllm/engine/model_runner.py", start_line: 15 })'
+descriptor = "python decl at nanovllm/engine/model_runner.py:15"
+cost_tokens = 0
 cum_tokens = 678
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "nanovllm/layers"
-entries = ["activation.py", "attention.py", "embed_head.py", "layernorm.py", "linear.py", "rotary_embedding.py", "sampler.py"]
+[[batches.content.spans]]
+path = "nanovllm/engine/model_runner.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 35
-key = 'Python(DeclNames { file: "nanovllm/engine/llm_engine.py" })'
-descriptor = "python decl names surface in nanovllm/engine/llm_engine.py"
-cost_tokens = 13
-cum_tokens = 691
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/engine/llm_engine.py"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
-key = 'Python(Decl { file: "nanovllm/engine/llm_engine.py", start_line: 15 })'
-descriptor = "python decl at nanovllm/engine/llm_engine.py:15"
-cost_tokens = 0
-cum_tokens = 691
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/engine/llm_engine.py"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'Python(DeclNames { file: "nanovllm/layers/layernorm.py" })'
-descriptor = "python decl names surface in nanovllm/layers/layernorm.py"
-cost_tokens = 14
-cum_tokens = 705
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/layernorm.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'Python(Decl { file: "nanovllm/layers/layernorm.py", start_line: 5 })'
-descriptor = "python decl at nanovllm/layers/layernorm.py:5"
-cost_tokens = 0
-cum_tokens = 705
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/layernorm.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'Python(DeclNames { file: "nanovllm/layers/sampler.py" })'
-descriptor = "python decl names surface in nanovllm/layers/sampler.py"
-cost_tokens = 14
-cum_tokens = 719
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/sampler.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Python(Decl { file: "nanovllm/layers/sampler.py", start_line: 5 })'
-descriptor = "python decl at nanovllm/layers/sampler.py:5"
-cost_tokens = 0
-cum_tokens = 719
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/sampler.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Python(ClassBody { file: "nanovllm/sampling_params.py", start_line: 4 })'
-descriptor = "python class body at nanovllm/sampling_params.py:4"
-cost_tokens = 38
-cum_tokens = 757
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/sampling_params.py"
-start = 6
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 96
-cum_tokens = 853
+cum_tokens = 774
 
 [batches.content]
 kind = "lines"
@@ -876,29 +750,155 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 43
-key = 'Python(DeclNames { file: "nanovllm/layers/activation.py" })'
-descriptor = "python decl names surface in nanovllm/layers/activation.py"
-cost_tokens = 16
-cum_tokens = 869
+position = 36
+key = 'Python(DeclNames { file: "nanovllm/engine/llm_engine.py" })'
+descriptor = "python decl names surface in nanovllm/engine/llm_engine.py"
+cost_tokens = 13
+cum_tokens = 787
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "nanovllm/layers/activation.py"
+path = "nanovllm/engine/llm_engine.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Python(Decl { file: "nanovllm/engine/llm_engine.py", start_line: 15 })'
+descriptor = "python decl at nanovllm/engine/llm_engine.py:15"
+cost_tokens = 0
+cum_tokens = 787
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/engine/llm_engine.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Python(ClassBody { file: "nanovllm/sampling_params.py", start_line: 4 })'
+descriptor = "python class body at nanovllm/sampling_params.py:4"
+cost_tokens = 38
+cum_tokens = 825
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/sampling_params.py"
 start = 6
-end = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Python(DeclNames { file: "nanovllm/layers/layernorm.py" })'
+descriptor = "python decl names surface in nanovllm/layers/layernorm.py"
+cost_tokens = 14
+cum_tokens = 839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/layernorm.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Python(Decl { file: "nanovllm/layers/layernorm.py", start_line: 5 })'
+descriptor = "python decl at nanovllm/layers/layernorm.py:5"
+cost_tokens = 0
+cum_tokens = 839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/layernorm.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Python(DeclNames { file: "nanovllm/layers/sampler.py" })'
+descriptor = "python decl names surface in nanovllm/layers/sampler.py"
+cost_tokens = 14
+cum_tokens = 853
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/sampler.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Python(Decl { file: "nanovllm/layers/sampler.py", start_line: 5 })'
+descriptor = "python decl at nanovllm/layers/sampler.py:5"
+cost_tokens = 0
+cum_tokens = 853
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/sampler.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Python(Imports { file: "example.py" })'
+descriptor = "python imports in example.py"
+cost_tokens = 31
+cum_tokens = 884
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "example.py"
+start = 1
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 44
-key = 'Python(Decl { file: "nanovllm/layers/activation.py", start_line: 6 })'
-descriptor = "python decl at nanovllm/layers/activation.py:6"
-cost_tokens = 0
-cum_tokens = 869
+key = 'Python(DeclNames { file: "nanovllm/layers/activation.py" })'
+descriptor = "python decl names surface in nanovllm/layers/activation.py"
+cost_tokens = 16
+cum_tokens = 900
 
 [batches.content]
 kind = "lines"
@@ -913,10 +913,28 @@ kind = "full"
 
 [[batches]]
 position = 45
+key = 'Python(Decl { file: "nanovllm/layers/activation.py", start_line: 6 })'
+descriptor = "python decl at nanovllm/layers/activation.py:6"
+cost_tokens = 0
+cum_tokens = 900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/activation.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
 key = 'Python(MethodSigs { file: "nanovllm/layers/activation.py" })'
 descriptor = "python method sigs in nanovllm/layers/activation.py"
 cost_tokens = 31
-cum_tokens = 900
+cum_tokens = 931
 
 [batches.content]
 kind = "lines"
@@ -954,11 +972,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Python(Method { file: "nanovllm/layers/activation.py", start_line: 8 })'
 descriptor = "python method at nanovllm/layers/activation.py:8"
 cost_tokens = 0
-cum_tokens = 900
+cum_tokens = 931
 
 [batches.content]
 kind = "lines"
@@ -972,11 +990,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Python(Method { file: "nanovllm/layers/activation.py", start_line: 11 })'
 descriptor = "python method at nanovllm/layers/activation.py:11"
 cost_tokens = 9
-cum_tokens = 909
+cum_tokens = 940
 
 [batches.content]
 kind = "lines"
@@ -990,11 +1008,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Python(MethodSigs { file: "nanovllm/layers/sampler.py" })'
 descriptor = "python method sigs in nanovllm/layers/sampler.py"
 cost_tokens = 32
-cum_tokens = 941
+cum_tokens = 972
 
 [batches.content]
 kind = "lines"
@@ -1032,11 +1050,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Python(Method { file: "nanovllm/layers/sampler.py", start_line: 7 })'
 descriptor = "python method at nanovllm/layers/sampler.py:7"
 cost_tokens = 0
-cum_tokens = 941
+cum_tokens = 972
 
 [batches.content]
 kind = "lines"
@@ -1050,11 +1068,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Python(Method { file: "nanovllm/layers/sampler.py", start_line: 10 })'
 descriptor = "python method at nanovllm/layers/sampler.py:10"
 cost_tokens = 9
-cum_tokens = 950
+cum_tokens = 981
 
 [batches.content]
 kind = "lines"
@@ -1068,11 +1086,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Python(MethodBody { file: "nanovllm/layers/activation.py", start_line: 8, body_start_line: 9 })'
 descriptor = "python method body at nanovllm/layers/activation.py:8 body 9"
 cost_tokens = 7
-cum_tokens = 957
+cum_tokens = 988
 
 [batches.content]
 kind = "lines"
@@ -1086,11 +1104,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Python(MethodBody { file: "nanovllm/layers/sampler.py", start_line: 7, body_start_line: 8 })'
 descriptor = "python method body at nanovllm/layers/sampler.py:7 body 8"
 cost_tokens = 7
-cum_tokens = 964
+cum_tokens = 995
 
 [batches.content]
 kind = "lines"
@@ -1099,24 +1117,6 @@ kind = "lines"
 path = "nanovllm/layers/sampler.py"
 start = 8
 end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 53
-key = 'Python(Imports { file: "example.py" })'
-descriptor = "python imports in example.py"
-cost_tokens = 31
-cum_tokens = 995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "example.py"
-start = 1
-end = 3
 
 [batches.content.spans.render]
 kind = "full"
@@ -1141,36 +1141,54 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'Python(DeclNames { file: "nanovllm/engine/block_manager.py" })'
-descriptor = "python decl names surface in nanovllm/engine/block_manager.py"
-cost_tokens = 21
-cum_tokens = 1032
+key = 'Python(Imports { file: "bench.py" })'
+descriptor = "python imports in bench.py"
+cost_tokens = 41
+cum_tokens = 1052
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "nanovllm/engine/block_manager.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "nanovllm/engine/block_manager.py"
-start = 26
-end = 26
+path = "bench.py"
+start = 1
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 56
+key = 'Python(DeclNames { file: "nanovllm/engine/block_manager.py" })'
+descriptor = "python decl names surface in nanovllm/engine/block_manager.py"
+cost_tokens = 21
+cum_tokens = 1073
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/engine/block_manager.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "nanovllm/engine/block_manager.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
 key = 'Python(Decl { file: "nanovllm/engine/block_manager.py", start_line: 8 })'
 descriptor = "python decl at nanovllm/engine/block_manager.py:8"
 cost_tokens = 0
-cum_tokens = 1032
+cum_tokens = 1073
 
 [batches.content]
 kind = "lines"
@@ -1184,11 +1202,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Python(Decl { file: "nanovllm/engine/block_manager.py", start_line: 26 })'
 descriptor = "python decl at nanovllm/engine/block_manager.py:26"
 cost_tokens = 0
-cum_tokens = 1032
+cum_tokens = 1073
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1220,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Python(DeclNames { file: "nanovllm/engine/sequence.py" })'
 descriptor = "python decl names surface in nanovllm/engine/sequence.py"
 cost_tokens = 22
-cum_tokens = 1054
+cum_tokens = 1095
 
 [batches.content]
 kind = "lines"
@@ -1223,34 +1241,34 @@ kind = "full"
 path = "nanovllm/engine/sequence.py"
 start = 14
 end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
-key = 'Python(Decl { file: "nanovllm/engine/sequence.py", start_line: 8 })'
-descriptor = "python decl at nanovllm/engine/sequence.py:8"
-cost_tokens = 0
-cum_tokens = 1054
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/engine/sequence.py"
-start = 8
-end = 8
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 60
+key = 'Python(Decl { file: "nanovllm/engine/sequence.py", start_line: 8 })'
+descriptor = "python decl at nanovllm/engine/sequence.py:8"
+cost_tokens = 0
+cum_tokens = 1095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/engine/sequence.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
 key = 'Python(Decl { file: "nanovllm/engine/sequence.py", start_line: 14 })'
 descriptor = "python decl at nanovllm/engine/sequence.py:14"
 cost_tokens = 0
-cum_tokens = 1054
+cum_tokens = 1095
 
 [batches.content]
 kind = "lines"
@@ -1264,11 +1282,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Python(ClassBody { file: "nanovllm/engine/sequence.py", start_line: 14 })'
 descriptor = "python class body at nanovllm/engine/sequence.py:14"
 cost_tokens = 20
-cum_tokens = 1074
+cum_tokens = 1115
 
 [batches.content]
 kind = "lines"
@@ -1282,11 +1300,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Python(ClassBody { file: "nanovllm/engine/sequence.py", start_line: 8 })'
 descriptor = "python class body at nanovllm/engine/sequence.py:8"
 cost_tokens = 28
-cum_tokens = 1102
+cum_tokens = 1143
 
 [batches.content]
 kind = "lines"
@@ -1300,11 +1318,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Python(MethodSigs { file: "nanovllm/layers/layernorm.py" })'
 descriptor = "python method sigs in nanovllm/layers/layernorm.py"
 cost_tokens = 43
-cum_tokens = 1145
+cum_tokens = 1186
 
 [batches.content]
 kind = "lines"
@@ -1374,24 +1392,6 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 64
-key = 'Python(Imports { file: "bench.py" })'
-descriptor = "python imports in bench.py"
-cost_tokens = 41
-cum_tokens = 1186
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bench.py"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 65
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
@@ -1411,126 +1411,10 @@ kind = "full"
 
 [[batches]]
 position = 66
-key = 'Python(Imports { file: "nanovllm/layers/layernorm.py" })'
-descriptor = "python imports in nanovllm/layers/layernorm.py"
-cost_tokens = 14
-cum_tokens = 1256
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/layernorm.py"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
-key = 'Python(Imports { file: "nanovllm/layers/sampler.py" })'
-descriptor = "python imports in nanovllm/layers/sampler.py"
-cost_tokens = 14
-cum_tokens = 1270
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/sampler.py"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
-key = 'Python(DeclNames { file: "nanovllm/layers/embed_head.py" })'
-descriptor = "python decl names surface in nanovllm/layers/embed_head.py"
-cost_tokens = 31
-cum_tokens = 1301
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/embed_head.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/embed_head.py"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 69
-key = 'Python(Decl { file: "nanovllm/layers/embed_head.py", start_line: 9 })'
-descriptor = "python decl at nanovllm/layers/embed_head.py:9"
-cost_tokens = 0
-cum_tokens = 1301
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/embed_head.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
-key = 'Python(Decl { file: "nanovllm/layers/embed_head.py", start_line: 45 })'
-descriptor = "python decl at nanovllm/layers/embed_head.py:45"
-cost_tokens = 0
-cum_tokens = 1301
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/embed_head.py"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 71
-key = 'Python(Method { file: "nanovllm/layers/layernorm.py", start_line: 16 })'
-descriptor = "python method at nanovllm/layers/layernorm.py:16"
-cost_tokens = 36
-cum_tokens = 1337
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/layernorm.py"
-start = 16
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
 key = 'Python(ClassBody { file: "nanovllm/config.py", start_line: 6 })'
 descriptor = "python class body at nanovllm/config.py:6"
 cost_tokens = 157
-cum_tokens = 1494
+cum_tokens = 1399
 
 [batches.content]
 kind = "lines"
@@ -1544,11 +1428,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 73
+position = 67
 key = 'Python(Imports { file: "nanovllm/config.py" })'
 descriptor = "python imports in nanovllm/config.py"
 cost_tokens = 26
-cum_tokens = 1520
+cum_tokens = 1425
 
 [batches.content]
 kind = "lines"
@@ -1562,11 +1446,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 74
+position = 68
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 92
-cum_tokens = 1612
+cum_tokens = 1517
 
 [batches.content]
 kind = "lines"
@@ -1580,11 +1464,145 @@ end = 32
 kind = "full"
 
 [[batches]]
+position = 69
+key = 'Python(Imports { file: "nanovllm/layers/layernorm.py" })'
+descriptor = "python imports in nanovllm/layers/layernorm.py"
+cost_tokens = 14
+cum_tokens = 1531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/layernorm.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Python(Imports { file: "nanovllm/layers/sampler.py" })'
+descriptor = "python imports in nanovllm/layers/sampler.py"
+cost_tokens = 14
+cum_tokens = 1545
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/sampler.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Python(DeclNames { file: "nanovllm/layers/embed_head.py" })'
+descriptor = "python decl names surface in nanovllm/layers/embed_head.py"
+cost_tokens = 31
+cum_tokens = 1576
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/embed_head.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/embed_head.py"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Python(Decl { file: "nanovllm/layers/embed_head.py", start_line: 9 })'
+descriptor = "python decl at nanovllm/layers/embed_head.py:9"
+cost_tokens = 0
+cum_tokens = 1576
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/embed_head.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Python(Decl { file: "nanovllm/layers/embed_head.py", start_line: 45 })'
+descriptor = "python decl at nanovllm/layers/embed_head.py:45"
+cost_tokens = 0
+cum_tokens = 1576
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/embed_head.py"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Python(Method { file: "nanovllm/layers/layernorm.py", start_line: 16 })'
+descriptor = "python method at nanovllm/layers/layernorm.py:16"
+cost_tokens = 36
+cum_tokens = 1612
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/layernorm.py"
+start = 16
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 75
+key = 'Python(MethodBody { file: "nanovllm/sampling_params.py", start_line: 10, body_start_line: 11 })'
+descriptor = "python method body at nanovllm/sampling_params.py:10 body 11"
+cost_tokens = 21
+cum_tokens = 1633
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/sampling_params.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
 key = 'Python(Method { file: "nanovllm/layers/layernorm.py", start_line: 7 })'
 descriptor = "python method at nanovllm/layers/layernorm.py:7"
 cost_tokens = 41
-cum_tokens = 1653
+cum_tokens = 1674
 
 [batches.content]
 kind = "lines"
@@ -1598,11 +1616,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Python(MethodSigs { file: "nanovllm/layers/embed_head.py" })'
 descriptor = "python method sigs in nanovllm/layers/embed_head.py"
 cost_tokens = 73
-cum_tokens = 1726
+cum_tokens = 1747
 
 [batches.content]
 kind = "lines"
@@ -1688,11 +1706,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Python(Method { file: "nanovllm/layers/embed_head.py", start_line: 27 })'
 descriptor = "python method at nanovllm/layers/embed_head.py:27"
 cost_tokens = 0
-cum_tokens = 1726
+cum_tokens = 1747
 
 [batches.content]
 kind = "lines"
@@ -1706,11 +1724,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Python(Method { file: "nanovllm/layers/embed_head.py", start_line: 34 })'
 descriptor = "python method at nanovllm/layers/embed_head.py:34"
 cost_tokens = 0
-cum_tokens = 1726
+cum_tokens = 1747
 
 [batches.content]
 kind = "lines"
@@ -1724,11 +1742,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Python(Method { file: "nanovllm/layers/embed_head.py", start_line: 56 })'
 descriptor = "python method at nanovllm/layers/embed_head.py:56"
 cost_tokens = 0
-cum_tokens = 1726
+cum_tokens = 1747
 
 [batches.content]
 kind = "lines"
@@ -1742,11 +1760,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Python(Method { file: "nanovllm/layers/embed_head.py", start_line: 11 })'
 descriptor = "python method at nanovllm/layers/embed_head.py:11"
 cost_tokens = 33
-cum_tokens = 1759
+cum_tokens = 1780
 
 [batches.content]
 kind = "lines"
@@ -1755,24 +1773,6 @@ kind = "lines"
 path = "nanovllm/layers/embed_head.py"
 start = 11
 end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 81
-key = 'Python(MethodBody { file: "nanovllm/sampling_params.py", start_line: 10, body_start_line: 11 })'
-descriptor = "python method body at nanovllm/sampling_params.py:10 body 11"
-cost_tokens = 21
-cum_tokens = 1780
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/sampling_params.py"
-start = 11
-end = 11
 
 [batches.content.spans.render]
 kind = "full"
@@ -4289,28 +4289,10 @@ kind = "full"
 
 [[batches]]
 position = 169
-key = 'Python(MethodBody { file: "nanovllm/layers/embed_head.py", start_line: 47, body_start_line: 53 })'
-descriptor = "python method body at nanovllm/layers/embed_head.py:47 body 53"
-cost_tokens = 22
-cum_tokens = 3690
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/layers/embed_head.py"
-start = 53
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 170
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 153
-cum_tokens = 3843
+cum_tokens = 3821
 
 [batches.content]
 kind = "lines"
@@ -4319,6 +4301,24 @@ kind = "lines"
 path = "README.md"
 start = 34
 end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Python(MethodBody { file: "nanovllm/layers/embed_head.py", start_line: 47, body_start_line: 53 })'
+descriptor = "python method body at nanovllm/layers/embed_head.py:47 body 53"
+cost_tokens = 22
+cum_tokens = 3843
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/layers/embed_head.py"
+start = 53
+end = 54
 
 [batches.content.spans.render]
 kind = "full"
@@ -6247,10 +6247,28 @@ kind = "full"
 
 [[batches]]
 position = 248
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #5"
+cost_tokens = 222
+cum_tokens = 6210
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 46
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
 key = 'Python(Imports { file: "nanovllm/layers/embed_head.py" })'
 descriptor = "python imports in nanovllm/layers/embed_head.py"
 cost_tokens = 56
-cum_tokens = 6044
+cum_tokens = 6266
 
 [batches.content]
 kind = "lines"
@@ -6264,11 +6282,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 249
+position = 250
 key = 'Python(MethodBody { file: "nanovllm/layers/layernorm.py", start_line: 7, body_start_line: 12 })'
 descriptor = "python method body at nanovllm/layers/layernorm.py:7 body 12"
 cost_tokens = 33
-cum_tokens = 6077
+cum_tokens = 6299
 
 [batches.content]
 kind = "lines"
@@ -6282,11 +6300,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 250
+position = 251
 key = 'Python(Imports { file: "nanovllm/engine/scheduler.py" })'
 descriptor = "python imports in nanovllm/engine/scheduler.py"
 cost_tokens = 58
-cum_tokens = 6135
+cum_tokens = 6357
 
 [batches.content]
 kind = "lines"
@@ -6300,11 +6318,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 251
+position = 252
 key = 'Python(MethodBody { file: "nanovllm/engine/sequence.py", start_line: 69, body_start_line: 70 })'
 descriptor = "python method body at nanovllm/engine/sequence.py:69 body 70"
 cost_tokens = 34
-cum_tokens = 6169
+cum_tokens = 6391
 
 [batches.content]
 kind = "lines"
@@ -6318,11 +6336,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 252
+position = 253
 key = 'Python(MethodBody { file: "nanovllm/layers/linear.py", start_line: 56, body_start_line: 62 })'
 descriptor = "python method body at nanovllm/layers/linear.py:56 body 62"
 cost_tokens = 35
-cum_tokens = 6204
+cum_tokens = 6426
 
 [batches.content]
 kind = "lines"
@@ -6336,11 +6354,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 253
+position = 254
 key = 'Python(MethodBody { file: "nanovllm/layers/linear.py", start_line: 133, body_start_line: 139 })'
 descriptor = "python method body at nanovllm/layers/linear.py:133 body 139"
 cost_tokens = 35
-cum_tokens = 6239
+cum_tokens = 6461
 
 [batches.content]
 kind = "lines"
@@ -6354,11 +6372,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 254
+position = 255
 key = 'Python(MethodBody { file: "nanovllm/engine/scheduler.py", start_line: 60, body_start_line: 61 })'
 descriptor = "python method body at nanovllm/engine/scheduler.py:60 body 61"
 cost_tokens = 36
-cum_tokens = 6275
+cum_tokens = 6497
 
 [batches.content]
 kind = "lines"
@@ -6372,11 +6390,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 255
+position = 256
 key = 'Python(MethodBody { file: "nanovllm/engine/sequence.py", start_line: 65, body_start_line: 66 })'
 descriptor = "python method body at nanovllm/engine/sequence.py:65 body 66"
 cost_tokens = 36
-cum_tokens = 6311
+cum_tokens = 6533
 
 [batches.content]
 kind = "lines"
@@ -6385,24 +6403,6 @@ kind = "lines"
 path = "nanovllm/engine/sequence.py"
 start = 66
 end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 256
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #5"
-cost_tokens = 222
-cum_tokens = 6533
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 46
-end = 61
 
 [batches.content.spans.render]
 kind = "full"
@@ -6661,10 +6661,28 @@ kind = "full"
 
 [[batches]]
 position = 271
+key = 'Python(MethodBody { file: "nanovllm/config.py", start_line: 20, body_start_line: 21 })'
+descriptor = "python method body at nanovllm/config.py:20 body 21"
+cost_tokens = 106
+cum_tokens = 7440
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/config.py"
+start = 21
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 272
 key = 'Python(MethodBody { file: "nanovllm/engine/block_manager.py", start_line: 35, body_start_line: 37 })'
 descriptor = "python method body at nanovllm/engine/block_manager.py:35 body 37"
 cost_tokens = 64
-cum_tokens = 7398
+cum_tokens = 7504
 
 [batches.content]
 kind = "lines"
@@ -6678,11 +6696,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 272
+position = 273
 key = 'Python(Imports { file: "nanovllm/engine/llm_engine.py" })'
 descriptor = "python imports in nanovllm/engine/llm_engine.py"
 cost_tokens = 137
-cum_tokens = 7535
+cum_tokens = 7641
 
 [batches.content]
 kind = "lines"
@@ -6691,24 +6709,6 @@ kind = "lines"
 path = "nanovllm/engine/llm_engine.py"
 start = 1
 end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 273
-key = 'Python(MethodBody { file: "nanovllm/config.py", start_line: 20, body_start_line: 21 })'
-descriptor = "python method body at nanovllm/config.py:20 body 21"
-cost_tokens = 106
-cum_tokens = 7641
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/config.py"
-start = 21
-end = 26
 
 [batches.content.spans.render]
 kind = "full"

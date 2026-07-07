@@ -73,7 +73,7 @@ README.md
     …
      175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
      177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
-    …
+     179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
      181→The core library does not include write capability, as most TOML use cases are read-only, and Tomli intends to be minimal.
      183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
     …
@@ -204,8 +204,6 @@ src/
              504→) -> tuple[Pos, list[Any]]:
             …
              528→def parse_inline_table(
-             529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
-             530→) -> tuple[Pos, dict[str, Any]]:
             …
              564→def parse_basic_str_escape(
              565→    src: str, pos: Pos, *, multiline: bool = False

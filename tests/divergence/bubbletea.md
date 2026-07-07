@@ -24,115 +24,115 @@ Score(3000)=0.499 I=0.801 C=0.311 ns_rows≤3K=16/48 (reached=5 partial=0 missin
 | walker |  | 440 | 14 | listing of 'tutorials' |  |  | 0.934 |
 | walker |  | 447 | 7 | go package + imports in focus.go |  |  | 0.934 |
 | walker |  | 454 | 7 | go package + imports in raw.go |  |  | 0.934 |
-| walker |  | 462 | 8 | listing of 'tutorials/basics' |  |  | 0.934 |
-| walker |  | 527 | 65 | README headline in tutorials/basics/README.md |  |  | 0.934 |
-| walker |  | 535 | 8 | listing of 'tutorials/commands' |  |  | 0.934 |
-| walker |  | 544 | 9 | go package + imports in clipboard.go |  |  | 0.934 |
+| walker |  | 463 | 9 | go package + imports in clipboard.go |  |  | 0.934 |
+| walker |  | 472 | 9 | go package + imports in cursor.go |  |  | 0.934 |
+| walker |  | 481 | 9 | go package + imports in paste.go |  |  | 0.934 |
+| walker |  | 490 | 9 | go package + imports in termcap.go |  |  | 0.934 |
+| walker |  | 499 | 9 | go package + imports in xterm.go |  |  | 0.934 |
+| walker |  | 507 | 8 | listing of 'tutorials/basics' |  |  | 0.934 |
+| walker |  | 515 | 8 | listing of 'tutorials/commands' |  |  | 0.934 |
 | ns | 547 |  | 192 | tea.go: Model interface | 1.6 |  | 0.826 |
-| walker |  | 553 | 9 | go package + imports in cursor.go |  |  | 0.826 |
-| walker |  | 562 | 9 | go package + imports in paste.go |  |  | 0.826 |
-| walker |  | 571 | 9 | go package + imports in termcap.go |  |  | 0.826 |
-| walker |  | 580 | 9 | go package + imports in xterm.go |  |  | 0.826 |
-| walker |  | 624 | 44 | go module identity in tutorials/go.mod |  |  | 0.826 |
+| walker |  | 559 | 44 | go module identity in tutorials/go.mod |  |  | 0.826 |
+| walker |  | 608 | 49 | go decl names surface in paste.go |  |  | 0.826 |
+| walker |  | 608 | 0 | go decl at paste.go:10 |  |  | 0.826 |
+| walker |  | 608 | 0 | go decl at paste.go:16 |  |  | 0.826 |
+| walker |  | 608 | 0 | go decl at paste.go:20 |  |  | 0.826 |
+| walker |  | 620 | 12 | go decl at paste.go:5 |  |  | 0.826 |
+| walker |  | 628 | 8 | go decl body at paste.go:10 |  |  | 0.826 |
+| walker |  | 640 | 12 | go decl doc at paste.go:10 |  |  | 0.826 |
 | ns | 655 |  | 108 | README: upgrade-guide pointer + companion libraries | 1.7 |  | 0.778 |
-| walker |  | 673 | 49 | go decl names surface in paste.go |  |  | 0.778 |
-| walker |  | 673 | 0 | go decl at paste.go:10 |  |  | 0.778 |
-| walker |  | 673 | 0 | go decl at paste.go:16 |  |  | 0.778 |
-| walker |  | 673 | 0 | go decl at paste.go:20 |  |  | 0.778 |
-| walker |  | 685 | 12 | go decl at paste.go:5 |  |  | 0.778 |
-| walker |  | 693 | 8 | go decl body at paste.go:10 |  |  | 0.778 |
-| walker |  | 705 | 12 | go decl doc at paste.go:10 |  |  | 0.778 |
-| walker |  | 755 | 50 | go decl names surface in screen.go |  |  | 0.778 |
-| walker |  | 755 | 0 | go decl at screen.go:20 |  |  | 0.778 |
-| walker |  | 755 | 0 | go decl at screen.go:26 |  |  | 0.778 |
-| walker |  | 777 | 22 | go decl at screen.go:9 |  |  | 0.778 |
-| walker |  | 786 | 9 | go decl body at screen.go:20 |  |  | 0.778 |
-| walker |  | 839 | 53 | go decl names surface in termcap.go |  |  | 0.778 |
-| walker |  | 839 | 0 | go decl at termcap.go:5 |  |  | 0.778 |
-| walker |  | 839 | 0 | go decl at termcap.go:30 |  |  | 0.778 |
-| walker |  | 839 | 0 | go decl at termcap.go:46 |  |  | 0.778 |
-| walker |  | 851 | 12 | go decl at termcap.go:41 |  |  | 0.778 |
-| walker |  | 859 | 8 | go decl body at termcap.go:46 |  |  | 0.778 |
-| walker |  | 871 | 12 | go decl doc at termcap.go:46 |  |  | 0.778 |
-| walker |  | 924 | 53 | go decl names surface in xterm.go |  |  | 0.778 |
-| walker |  | 924 | 0 | go decl at xterm.go:9 |  |  | 0.778 |
-| walker |  | 924 | 0 | go decl at xterm.go:15 |  |  | 0.778 |
-| walker |  | 924 | 0 | go decl at xterm.go:20 |  |  | 0.778 |
+| walker |  | 690 | 50 | go decl names surface in screen.go |  |  | 0.778 |
+| walker |  | 690 | 0 | go decl at screen.go:20 |  |  | 0.778 |
+| walker |  | 690 | 0 | go decl at screen.go:26 |  |  | 0.778 |
+| walker |  | 712 | 22 | go decl at screen.go:9 |  |  | 0.778 |
+| walker |  | 721 | 9 | go decl body at screen.go:20 |  |  | 0.778 |
+| walker |  | 774 | 53 | go decl names surface in termcap.go |  |  | 0.778 |
+| walker |  | 774 | 0 | go decl at termcap.go:5 |  |  | 0.778 |
+| walker |  | 774 | 0 | go decl at termcap.go:30 |  |  | 0.778 |
+| walker |  | 774 | 0 | go decl at termcap.go:46 |  |  | 0.778 |
+| walker |  | 786 | 12 | go decl at termcap.go:41 |  |  | 0.778 |
+| walker |  | 794 | 8 | go decl body at termcap.go:46 |  |  | 0.778 |
+| walker |  | 806 | 12 | go decl doc at termcap.go:46 |  |  | 0.778 |
+| walker |  | 859 | 53 | go decl names surface in xterm.go |  |  | 0.778 |
+| walker |  | 859 | 0 | go decl at xterm.go:9 |  |  | 0.778 |
+| walker |  | 859 | 0 | go decl at xterm.go:15 |  |  | 0.778 |
+| walker |  | 859 | 0 | go decl at xterm.go:20 |  |  | 0.778 |
+| walker |  | 871 | 12 | go decl at xterm.go:4 |  |  | 0.778 |
+| walker |  | 879 | 8 | go decl body at xterm.go:20 |  |  | 0.778 |
+| walker |  | 887 | 8 | go decl body at xterm.go:9 |  |  | 0.778 |
+| walker |  | 902 | 15 | go decl doc at xterm.go:4 |  |  | 0.778 |
+| walker |  | 914 | 12 | go decl doc at xterm.go:9 |  |  | 0.778 |
 | ns | 930 |  | 275 | go.mod: module path + direct dependencies | 1.8 |  | 0.702 |
-| walker |  | 936 | 12 | go decl at xterm.go:4 |  |  | 0.702 |
-| walker |  | 944 | 8 | go decl body at xterm.go:20 |  |  | 0.702 |
-| walker |  | 952 | 8 | go decl body at xterm.go:9 |  |  | 0.702 |
-| walker |  | 967 | 15 | go decl doc at xterm.go:4 |  |  | 0.702 |
-| walker |  | 979 | 12 | go decl doc at xterm.go:9 |  |  | 0.702 |
-| walker |  | 1129 | 150 | go package doc lede in tea.go |  |  | 0.702 |
+| walker |  | 1064 | 150 | go package doc lede in tea.go |  |  | 0.702 |
 | ns | 1155 |  | 225 | go.mod: indirect dependencies | 1.9 |  | 0.660 |
-| walker |  | 1242 | 113 | go decl names surface in tea.go |  |  | 0.660 |
-| walker |  | 1242 | 0 | go decl at tea.go:39 |  |  | 0.660 |
-| walker |  | 1242 | 0 | go decl at tea.go:42 |  |  | 0.660 |
-| walker |  | 1242 | 0 | go decl at tea.go:46 |  |  | 0.660 |
-| walker |  | 1242 | 0 | go decl at tea.go:50 |  |  | 0.660 |
-| walker |  | 1242 | 0 | go decl at tea.go:76 |  |  | 0.660 |
-| walker |  | 1249 | 7 | go decl at tea.go:84 |  |  | 0.660 |
-| walker |  | 1283 | 34 | go struct field group at tea.go:84 group 172 |  |  | 0.661 |
-| walker |  | 1302 | 19 | go decl doc at tea.go:42 |  |  | 0.661 |
-| walker |  | 1340 | 38 | go struct field group at tea.go:84 group 141 |  |  | 0.661 |
-| walker |  | 1374 | 34 | go decl doc at tea.go:50 |  |  | 0.661 |
-| walker |  | 1399 | 25 | go decl doc at tea.go:39 |  |  | 0.661 |
-| walker |  | 1438 | 39 | go decl doc at tea.go:84 |  |  | 0.661 |
-| ns | 1451 |  | 296 | tea.go: NewView + View struct field roster | 2.1 |  | 0.584 |
-| walker |  | 1486 | 48 | go struct field group at tea.go:84 group 137 |  |  | 0.586 |
-| walker |  | 1533 | 47 | go struct field group at tea.go:84 group 133 |  |  | 0.589 |
-| ns | 1576 |  | 125 | tea.go: Cmd type | 2.2 |  | 0.570 |
-| walker |  | 1581 | 48 | go struct field group at tea.go:84 group 145 |  |  | 0.573 |
-| ns | 1632 |  | 56 | tea.go: MouseMode enum | 2.3 |  | 0.561 |
-| walker |  | 1637 | 56 | go struct field group at tea.go:84 group 175 |  |  | 0.564 |
-| walker |  | 1694 | 57 | go struct field group at tea.go:84 group 128 |  |  | 0.567 |
-| walker |  | 1730 | 36 | go decl doc at tea.go:46 |  |  | 0.567 |
-| walker |  | 1792 | 62 | go decl names surface in environ.go |  |  | 0.567 |
-| walker |  | 1792 | 0 | go decl at environ.go:19 |  |  | 0.567 |
-| walker |  | 1792 | 0 | go decl at environ.go:24 |  |  | 0.567 |
-| walker |  | 1792 | 0 | go decl at environ.go:32 |  |  | 0.567 |
-| walker |  | 1806 | 14 | go decl body at environ.go:24 |  |  | 0.567 |
-| walker |  | 1820 | 14 | go decl body at environ.go:32 |  |  | 0.567 |
-| walker |  | 1844 | 24 | go decl doc at focus.go:5 |  |  | 0.567 |
-| walker |  | 1868 | 24 | go decl doc at focus.go:9 |  |  | 0.567 |
-| walker |  | 1918 | 50 | go decl at screen.go:62 |  |  | 0.517 |
+| walker |  | 1177 | 113 | go decl names surface in tea.go |  |  | 0.660 |
+| walker |  | 1177 | 0 | go decl at tea.go:39 |  |  | 0.660 |
+| walker |  | 1177 | 0 | go decl at tea.go:42 |  |  | 0.660 |
+| walker |  | 1177 | 0 | go decl at tea.go:46 |  |  | 0.660 |
+| walker |  | 1177 | 0 | go decl at tea.go:50 |  |  | 0.660 |
+| walker |  | 1177 | 0 | go decl at tea.go:76 |  |  | 0.660 |
+| walker |  | 1184 | 7 | go decl at tea.go:84 |  |  | 0.660 |
+| walker |  | 1218 | 34 | go struct field group at tea.go:84 group 172 |  |  | 0.661 |
+| walker |  | 1237 | 19 | go decl doc at tea.go:42 |  |  | 0.661 |
+| walker |  | 1275 | 38 | go struct field group at tea.go:84 group 141 |  |  | 0.661 |
+| walker |  | 1309 | 34 | go decl doc at tea.go:50 |  |  | 0.661 |
+| walker |  | 1334 | 25 | go decl doc at tea.go:39 |  |  | 0.661 |
+| walker |  | 1373 | 39 | go decl doc at tea.go:84 |  |  | 0.661 |
+| walker |  | 1421 | 48 | go struct field group at tea.go:84 group 137 |  |  | 0.661 |
+| ns | 1451 |  | 296 | tea.go: NewView + View struct field roster | 2.1 |  | 0.586 |
+| walker |  | 1468 | 47 | go struct field group at tea.go:84 group 133 |  |  | 0.589 |
+| walker |  | 1516 | 48 | go struct field group at tea.go:84 group 145 |  |  | 0.592 |
+| walker |  | 1572 | 56 | go struct field group at tea.go:84 group 175 |  |  | 0.595 |
+| ns | 1576 |  | 125 | tea.go: Cmd type | 2.2 |  | 0.576 |
+| walker |  | 1629 | 57 | go struct field group at tea.go:84 group 128 |  |  | 0.579 |
+| ns | 1632 |  | 56 | tea.go: MouseMode enum | 2.3 |  | 0.567 |
+| walker |  | 1665 | 36 | go decl doc at tea.go:46 |  |  | 0.567 |
+| walker |  | 1727 | 62 | go decl names surface in environ.go |  |  | 0.567 |
+| walker |  | 1727 | 0 | go decl at environ.go:19 |  |  | 0.567 |
+| walker |  | 1727 | 0 | go decl at environ.go:24 |  |  | 0.567 |
+| walker |  | 1727 | 0 | go decl at environ.go:32 |  |  | 0.567 |
+| walker |  | 1741 | 14 | go decl body at environ.go:24 |  |  | 0.567 |
+| walker |  | 1755 | 14 | go decl body at environ.go:32 |  |  | 0.567 |
+| walker |  | 1779 | 24 | go decl doc at focus.go:5 |  |  | 0.567 |
+| walker |  | 1803 | 24 | go decl doc at focus.go:9 |  |  | 0.567 |
+| walker |  | 1853 | 50 | go decl at screen.go:62 |  |  | 0.567 |
 | ns | 1918 |  | 286 | tea.go: Cursor + NewCursor | 2.4 |  | 0.517 |
-| walker |  | 1984 | 66 | go decl names surface in logging.go |  |  | 0.517 |
-| walker |  | 1984 | 0 | go decl at logging.go:23 |  |  | 0.517 |
-| walker |  | 1984 | 0 | go decl at logging.go:35 |  |  | 0.517 |
-| walker |  | 2006 | 22 | go decl at logging.go:29 |  |  | 0.517 |
-| walker |  | 2022 | 16 | go decl body at logging.go:23 |  |  | 0.517 |
-| walker |  | 2043 | 21 | go decl doc at logging.go:35 |  |  | 0.517 |
-| walker |  | 2072 | 29 | go decl doc at logging.go:29 |  |  | 0.517 |
-| walker |  | 2101 | 29 | go decl doc at paste.go:5 |  |  | 0.517 |
-| walker |  | 2130 | 29 | go decl doc at paste.go:20 |  |  | 0.517 |
-| walker |  | 2159 | 29 | go decl doc at raw.go:5 |  |  | 0.517 |
-| walker |  | 2190 | 31 | go decl doc at paste.go:16 |  |  | 0.517 |
-| walker |  | 2285 | 95 | go decl names surface in cursor.go |  |  | 0.517 |
-| walker |  | 2285 | 0 | go decl at cursor.go:4 |  |  | 0.517 |
-| walker |  | 2285 | 0 | go decl at cursor.go:12 |  |  | 0.517 |
-| walker |  | 2285 | 0 | go decl at cursor.go:22 |  |  | 0.517 |
-| walker |  | 2285 | 0 | go decl at cursor.go:26 |  |  | 0.517 |
-| walker |  | 2299 | 14 | go decl at cursor.go:7 |  |  | 0.517 |
-| walker |  | 2310 | 11 | go decl at cursor.go:15 |  |  | 0.517 |
-| walker |  | 2316 | 6 | go decl doc at cursor.go:15 |  |  | 0.517 |
-| walker |  | 2327 | 11 | go decl doc at cursor.go:4 |  |  | 0.517 |
-| walker |  | 2338 | 11 | go decl doc at cursor.go:12 |  |  | 0.517 |
+| walker |  | 1919 | 66 | go decl names surface in logging.go |  |  | 0.517 |
+| walker |  | 1919 | 0 | go decl at logging.go:23 |  |  | 0.517 |
+| walker |  | 1919 | 0 | go decl at logging.go:35 |  |  | 0.517 |
+| walker |  | 1941 | 22 | go decl at logging.go:29 |  |  | 0.517 |
+| walker |  | 1957 | 16 | go decl body at logging.go:23 |  |  | 0.517 |
+| walker |  | 1978 | 21 | go decl doc at logging.go:35 |  |  | 0.517 |
+| walker |  | 2007 | 29 | go decl doc at logging.go:29 |  |  | 0.517 |
+| walker |  | 2036 | 29 | go decl doc at paste.go:5 |  |  | 0.517 |
+| walker |  | 2065 | 29 | go decl doc at paste.go:20 |  |  | 0.517 |
+| walker |  | 2094 | 29 | go decl doc at raw.go:5 |  |  | 0.517 |
+| walker |  | 2125 | 31 | go decl doc at paste.go:16 |  |  | 0.517 |
+| walker |  | 2220 | 95 | go decl names surface in cursor.go |  |  | 0.517 |
+| walker |  | 2220 | 0 | go decl at cursor.go:4 |  |  | 0.517 |
+| walker |  | 2220 | 0 | go decl at cursor.go:12 |  |  | 0.517 |
+| walker |  | 2220 | 0 | go decl at cursor.go:22 |  |  | 0.517 |
+| walker |  | 2220 | 0 | go decl at cursor.go:26 |  |  | 0.517 |
+| walker |  | 2234 | 14 | go decl at cursor.go:7 |  |  | 0.517 |
+| walker |  | 2245 | 11 | go decl at cursor.go:15 |  |  | 0.517 |
+| walker |  | 2251 | 6 | go decl doc at cursor.go:15 |  |  | 0.517 |
+| walker |  | 2262 | 11 | go decl doc at cursor.go:4 |  |  | 0.517 |
+| walker |  | 2273 | 11 | go decl doc at cursor.go:12 |  |  | 0.517 |
+| walker |  | 2289 | 16 | go decl doc at cursor.go:7 |  |  | 0.517 |
+| walker |  | 2305 | 16 | go decl doc at cursor.go:22 |  |  | 0.517 |
 | ns | 2350 |  | 432 | tea.go: Program struct field roster (names only) | 2.5 |  | 0.463 |
-| walker |  | 2354 | 16 | go decl doc at cursor.go:7 |  |  | 0.463 |
-| walker |  | 2426 | 72 | README headline in tutorials/commands/README.md |  |  | 0.463 |
-| walker |  | 2442 | 16 | go decl doc at cursor.go:22 |  |  | 0.463 |
-| walker |  | 2464 | 22 | listing of 'testdata/TestClearMsg' |  |  | 0.463 |
-| walker |  | 2563 | 99 | go decl names surface in renderer.go |  |  | 0.463 |
-| walker |  | 2563 | 0 | go decl at renderer.go:70 |  |  | 0.463 |
-| walker |  | 2563 | 0 | go decl at renderer.go:86 |  |  | 0.463 |
-| walker |  | 2563 | 0 | go decl at renderer.go:96 |  |  | 0.463 |
-| walker |  | 2576 | 13 | go decl at renderer.go:59 |  |  | 0.463 |
-| walker |  | 2611 | 35 | go decl doc at cursor.go:26 |  |  | 0.463 |
-| walker |  | 2773 | 162 | go decl at tea.go:53 |  |  | 0.514 |
-| ns | 2778 |  | 428 | tea.go: Quit/Suspend/Resume/Interrupt messages | 2.6 |  | 0.467 |
-| walker |  | 2789 | 16 | go decl doc at tea.go:53 |  |  | 0.477 |
+| walker |  | 2404 | 99 | go decl names surface in renderer.go |  |  | 0.463 |
+| walker |  | 2404 | 0 | go decl at renderer.go:70 |  |  | 0.463 |
+| walker |  | 2404 | 0 | go decl at renderer.go:86 |  |  | 0.463 |
+| walker |  | 2404 | 0 | go decl at renderer.go:96 |  |  | 0.463 |
+| walker |  | 2417 | 13 | go decl at renderer.go:59 |  |  | 0.463 |
+| walker |  | 2482 | 65 | README headline in tutorials/basics/README.md |  |  | 0.463 |
+| walker |  | 2504 | 22 | listing of 'testdata/TestClearMsg' |  |  | 0.463 |
+| walker |  | 2539 | 35 | go decl doc at cursor.go:26 |  |  | 0.463 |
+| walker |  | 2701 | 162 | go decl at tea.go:53 |  |  | 0.514 |
+| walker |  | 2717 | 16 | go decl doc at tea.go:53 |  |  | 0.526 |
+| ns | 2778 |  | 428 | tea.go: Quit/Suspend/Resume/Interrupt messages | 2.6 |  | 0.477 |
+| walker |  | 2789 | 72 | README headline in tutorials/commands/README.md |  |  | 0.477 |
 | walker |  | 2816 | 27 | go package + imports in profile.go |  |  | 0.477 |
 | walker |  | 2914 | 98 | go decl doc at tea.go:76 |  |  | 0.499 |
 | ns | 2914 |  | 136 | tea.go: NewProgram core | 2.7 |  | 0.499 |

@@ -188,6 +188,29 @@ packages/
         eslint.config.mjs
         package.json
         src/
+            compiler.ts
+            evaluators.ts
+            extractors.ts
+            functions.ts
+            group-by.ts
+            index.ts
+                   1→/**
+                   2→ * D2QL is a SQL-like query language for D2TS.
+                   3→ * It's a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2 pipeline.
+                   4→ */
+                …
+            joins.ts
+            key-by.ts
+            order-by.ts
+            query-builder/
+                index.ts
+                query-builder.ts
+            schema.json
+            schema.ts
+            select.ts
+            store.ts
+            types.ts
+            utils.ts
         tests/
         tsconfig.json
     d2ts/
@@ -222,13 +245,6 @@ packages/
             operators/
                 base.ts
                 buffer.ts
-                    …
-                      17→export class BufferOperator<T> extends UnaryOperator<T> {
-                    …
-                      20→  run(): void {
-                    …
-                      62→export function buffer<T>(): PipedOperator<T, T> {
-                    …
                 concat.ts
                 consolidate.ts
                 count.ts
@@ -242,10 +258,6 @@ packages/
                       16→  ) {
                     …
                       32→export function count<
-                      33→  K extends T extends KeyValue<infer K, infer _V> ? K : never,
-                      34→  V extends T extends KeyValue<K, infer V> ? V : never,
-                      35→  T,
-                      36→>() {
                     …
                 debug.ts
                     …

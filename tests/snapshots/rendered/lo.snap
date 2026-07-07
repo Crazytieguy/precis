@@ -161,13 +161,6 @@ exp/
                3→This package requires **Go 1.26** with `GOEXPERIMENT=simd` and **amd64**.
                4→
                5→See [benchmarks](./BENCHMARK.md).
-               7→## CPU compatibility (avoiding SIGILL)
-            …
-              11→### Check support on Linux
-            …
-              29→### What the tests do
-            …
-              37→### Run only AVX tests
             …
         cpu_amd64.go
         cpu_amd64_test.go
@@ -194,8 +187,6 @@ exp/
         math_avx_test.go
         math_bench_test.go
         simd.go
-               1→package simd
-            …
         simd_test.go
         unsafe.go
 find.go
@@ -238,8 +229,6 @@ internal/
         constraints.go
         ordered_go118.go
             …
-               3→package constraints
-            …
                9→type Ordered interface {
               10→	Integer | Float | ~string
               11→}
@@ -258,12 +247,6 @@ internal/
                6→A dedicated package such as [jonboulle/clockwork](https://github.com/jonboulle/clockwork/) would be better, but I would rather limit dependencies for this package. `clockwork` does not support Go 1.18 anymore.
         fake.go
         noCopy.go
-               1→package xtime
-            …
-              10→type noCopy struct{}
-            …
-              13→func (*noCopy) Lock()   {}
-              14→func (*noCopy) Unlock() {}
         real.go
         time.go
 intersect.go

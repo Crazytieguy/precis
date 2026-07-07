@@ -59,9 +59,6 @@ experiments/
                 __init__.py
                 cycle_navigation.py
                 even_pairs.py
-                    …
-                       8→def even_pairs(
-                    …
                 modular_arithmetic.py
                 parity.py
                     …
@@ -213,6 +210,16 @@ xlstm/
                           17→def slstm_forward(
                         …
                           77→def slstm_forward_step(
+                          78→    x: torch.Tensor,  # [B, G*I]
+                          79→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
+                          80→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
+                          81→    b: torch.Tensor,  # [T*H]
+                          82→    pointwise_forward: Callable[
+                          83→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
+                          84→        tuple[torch.Tensor, torch.Tensor],
+                          85→    ],
+                          86→    constants: dict[str, float] = {},
+                          87→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
                         …
                     lstm.py
                     slstm.py
@@ -251,12 +258,6 @@ xlstm/
         …
           11→@dataclass
           12→class UpProjConfigMixin:
-          13→    proj_factor: float = None  # will be overridden by subclasses
-          14→    round_proj_up_dim_up: bool = True
-          15→    round_proj_up_to_multiple_of: int = 64
-          16→
-          17→    # internal
-          18→    _proj_up_dim: int = None  # will be computed from embedding_dim and proj_factor
         …
           32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
         …
@@ -315,8 +316,6 @@ xlstm/
           49→    def forward(self, idx: torch.Tensor) -> torch.Tensor:
         …
           56→    def step(
-          57→        self, idx: torch.Tensor, state: dict[str, dict[str, tuple[torch.Tensor, ...]]] = None, **kwargs
-          58→    ) -> tuple[torch.Tensor, dict[str, dict[str, tuple[torch.Tensor, ...]]]]:
         …
           65→    def _create_weight_decay_optim_groups(self, **kwargs) -> tuple[Sequence[nn.Parameter], Sequence[nn.Parameter]]:
         …

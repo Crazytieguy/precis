@@ -316,12 +316,7 @@ src/
             …
                7→pub trait Numeric:
             …
-              33→#[derive(Debug)]
               34→pub struct RangeStep<T> {
-              35→    state: T,
-              36→    end: T,
-              37→    step: T,
-              38→}
             …
         tokenize.rs
                1→pub fn tokenize(values: &str) -> Vec<String> {

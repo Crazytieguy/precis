@@ -305,6 +305,9 @@ src/
            5→export * from './structs/types.js'
            6→export * from './structs/utilities.js'
     struct.ts
+           1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+           2→import { StructError, Failure } from './error.js'
+        …
     structs/
         coercions.ts
             …
@@ -345,9 +348,6 @@ src/
               55→export function min<T extends number | Date, S extends any>(
             …
               77→export function nonempty<
-              78→  T extends string | any[] | Map<any, any> | Set<any>,
-              79→  S extends any,
-              80→>(struct: Struct<T, S>): Struct<T, S> {
             …
               93→export function pattern<T extends string, S extends any>(
               94→  struct: Struct<T, S>,

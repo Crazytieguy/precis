@@ -96,12 +96,6 @@ docs/
         requests.md
         scripting.md
         themes.md
-               1→## Overview
-            …
-               7→### Creating a theme
-            …
-              89→### X resources themes
-            …
     home-image.afdesign
     index.md
     overrides/
@@ -283,11 +277,6 @@ src/
                8→    response: Response
         posting.scss
         request_headers.py
-               1→from typing import TypedDict
-               4→class RequestHeader(TypedDict):
-            …
-              12→REQUEST_HEADERS: list[RequestHeader] = [
-            …
         save_request.py
         scripts.py
         suggesters.py
@@ -313,9 +302,6 @@ src/
                 browser.py
                 new_request_modal.py
             confirmation.py
-                …
-                  12→class ConfirmationModal(ModalScreen[bool]):
-                …
             datatable.py
             input.py
                 …
@@ -348,27 +334,14 @@ src/
             rich_log.py
             select.py
             tabbed_content.py
-                …
-                   5→class PostingTabbedContent(TabbedContent):
-                …
-                  13→    def action_next_tab(self) -> None:
-                …
-                  18→    def action_previous_tab(self) -> None:
-                …
             text_area.py
             tree.py
             variable_autocomplete.py
-                …
-                  18→class VariableAutoComplete(AutoComplete):
-                …
             variable_input.py
                 …
                   12→class VariableInput(PostingInput):
                 …
         xresources.py
         yaml.py
-            …
-              10→def str_presenter(dumper: Dumper, data: str) -> yaml.ScalarNode:
-            …
 tests/
 uv.lock

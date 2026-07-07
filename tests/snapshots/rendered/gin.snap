@@ -171,13 +171,17 @@ gin.go
       73→}
       75→// RoutesInfo defines a RouteInfo slice.
       76→type RoutesInfo []RouteInfo
-    …
+      78→// Trusted platforms
+      79→const (
+      80→	// PlatformGoogleAppEngine when running on Google App Engine. Trust X-Appengine-Remote-Addr
+      81→	// for determining the client's IP
       82→	PlatformGoogleAppEngine = "X-Appengine-Remote-Addr"
-    …
+      83→	// PlatformCloudflare when using Cloudflare's CDN. Trust CF-Connecting-IP for determining
+      84→	// the client's IP
       85→	PlatformCloudflare = "CF-Connecting-IP"
-    …
+      86→	// PlatformFlyIO when running on Fly.io. Trust Fly-Client-IP for determining the client's IP
       87→	PlatformFlyIO = "Fly-Client-IP"
-    …
+      88→)
       90→// Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
       91→// Create an instance of Engine, by using New() or Default()
       92→type Engine struct {
@@ -186,10 +190,22 @@ gin.go
       96→	// (used for routing HTTP requests) happens only once, even if called multiple times concurrently.
       97→	routeTreesUpdated sync.Once
     …
+     131→	// AppEngine was deprecated.
+     132→	// Deprecated: USE `TrustedPlatform` WITH VALUE `gin.PlatformGoogleAppEngine` INSTEAD
+     133→	// #726 #755 If enabled, it will trust some headers starting with
+     134→	// 'X-AppEngine...' for better integration with that PaaS.
+     135→	AppEngine bool
+     137→	// UseRawPath if enabled, the url.RawPath will be used to find parameters.
+     138→	// The RawPath is only a hint, EscapedPath() should be use instead. (https://pkg.go.dev/net/url@master#URL)
+     139→	// Only use RawPath if you know what you are doing.
+     140→	UseRawPath bool
      142→	// UseEscapedPath if enable, the url.EscapedPath() will be used to find parameters
      143→	// It overrides UseRawPath
      144→	UseEscapedPath bool
-    …
+     146→	// UnescapePathValues if true, the path value will be unescaped.
+     147→	// If UseRawPath and UseEscapedPath are false (by default), the UnescapePathValues effectively is true,
+     148→	// as url.Path gonna be used, which is already unescaped.
+     149→	UnescapePathValues bool
      151→	// RemoveExtraSlash a parameter can be parsed from the URL even with extra slashes.
      152→	// See the PR #1817 and issue #1644
      153→	RemoveExtraSlash bool
@@ -250,22 +266,9 @@ go.sum
 internal/
     bytesconv/
         bytesconv.go
-            …
-              13→func StringToBytes(s string) []byte {
-            …
-              19→func BytesToString(b []byte) string {
-            …
         bytesconv_test.go
     fs/
         fs.go
-            …
-               8→// FileSystem implements an [fs.FS].
-               9→type FileSystem struct {
-              10→	http.FileSystem
-              11→}
-            …
-              14→func (o FileSystem) Open(name string) (fs.File, error) {
-            …
         fs_test.go
 logger.go
 logger_test.go
@@ -288,19 +291,6 @@ recovery.go
 recovery_test.go
 render/
     bson.go
-        …
-          13→// BSON contains the given interface object.
-          14→type BSON struct {
-          15→	Data any
-          16→}
-          18→var bsonContentType = []string{"application/bson"}
-        …
-          21→func (r BSON) Render(w http.ResponseWriter) error {
-        …
-          31→// WriteContentType (BSONBuf) writes BSONBuf ContentType.
-          32→func (r BSON) WriteContentType(w http.ResponseWriter) {
-          33→	writeContentType(w, bsonContentType)
-        …
     data.go
         …
           12→// Data contains ContentType and bytes data.
@@ -318,19 +308,6 @@ render/
     json.go
     msgpack.go
     pdf.go
-        …
-           9→// PDF contains the given PDF binary data.
-          10→type PDF struct {
-          11→	Data []byte
-          12→}
-          14→var pdfContentType = []string{"application/pdf"}
-          16→// Render (PDF) writes PDF data with custom ContentType.
-          17→func (r PDF) Render(w http.ResponseWriter) error {
-        …
-          23→// WriteContentType (PDF) writes PDF ContentType for response.
-          24→func (r PDF) WriteContentType(w http.ResponseWriter) {
-          25→	writeContentType(w, pdfContentType)
-        …
     protobuf.go
     reader.go
     reader_test.go
@@ -342,7 +319,7 @@ render/
           15→	Request  *http.Request
           16→	Location string
           17→}
-          19→// Render (Redirect) redirects the http request to new location and writes redirect response.
+        …
           20→func (r Redirect) Render(w http.ResponseWriter) error {
         …
           28→// WriteContentType (Redirect) don't write any ContentType.

@@ -311,27 +311,8 @@ src/
              130→    print(json.dumps(info(), sort_keys=True, indent=2))
             …
         hooks.py
-            …
-              22→HOOKS: list[str] = ["response"]
-              23→
-              24→
-              25→def default_hooks() -> dict[str, list[_t.HookType]]:
-              26→    return {event: [] for event in HOOKS}
-            …
-              32→def dispatch_hook(
-              33→    key: str,
-              34→    hooks: _t.HooksInputType | None,
-              35→    hook_data: Response,
-              36→    **kwargs: Any,
-              37→) -> Response:
-              38→    """Dispatches a hook dictionary on a given piece of data."""
-            …
         models.py
         packages.py
-               1→import sys
-               2→
-               3→from .compat import chardet
-            …
         py.typed
         sessions.py
         status_codes.py

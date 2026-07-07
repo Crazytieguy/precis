@@ -141,6 +141,18 @@ docs/
                 sponsors.md
 eslint.config.js
 examples/
+    README.md
+    abort-controller/
+    all/
+    amd/
+    get/
+    improved-network-errors.md
+    network_enhanced.js
+    post/
+    postMultipartFormData/
+    server.js
+    transform-response/
+    upload/
 gulpfile.js
     …
       79→export { env, clear, version, packageJSON };
@@ -308,9 +320,6 @@ lib/
              119→export default formDataToStream;
         fromDataURI.js
         isAbsoluteURL.js
-            …
-              10→export default function isAbsoluteURL(url) {
-            …
         isAxiosError.js
         isURLSameOrigin.js
             …
@@ -324,9 +333,6 @@ lib/
               41→export default (rawHeaders) => {
             …
         parseProtocol.js
-            …
-               3→export default function parseProtocol(url) {
-            …
         progressEventReducer.js
         readBlob.js
             …
@@ -377,9 +383,6 @@ lib/
                   13→};
         common/
             utils.js
-                …
-                  46→export {
-                …
         index.js
             …
                4→export default {

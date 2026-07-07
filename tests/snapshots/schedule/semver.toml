@@ -627,24 +627,10 @@ entries = ["bin", "classes", "fixtures", "functions", "index.js", "integration",
 
 [[batches]]
 position = 20
-key = 'Fs(DirListing { dir: "test/classes" })'
-descriptor = "listing of 'test/classes'"
-cost_tokens = 17
-cum_tokens = 1446
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/classes"
-entries = ["comparator.js", "index.js", "range.js", "semver.js"]
-
-[[batches]]
-position = 21
 key = 'Fs(DirListing { dir: "benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 38
-cum_tokens = 1484
+cum_tokens = 1467
 
 [batches.content]
 kind = "fs"
@@ -654,11 +640,11 @@ parent = "benchmarks"
 entries = ["bench-compare.js", "bench-diff.js", "bench-parse-options.js", "bench-parse.js", "bench-satisfies.js", "bench-subset.js"]
 
 [[batches]]
-position = 22
+position = 21
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 21
-cum_tokens = 1505
+cum_tokens = 1488
 
 [batches.content]
 kind = "lines"
@@ -672,11 +658,11 @@ end = 455
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 21
-cum_tokens = 1526
+cum_tokens = 1509
 
 [batches.content]
 kind = "lines"
@@ -690,11 +676,11 @@ end = 456
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #23"
 cost_tokens = 21
-cum_tokens = 1547
+cum_tokens = 1530
 
 [batches.content]
 kind = "lines"
@@ -708,11 +694,11 @@ end = 457
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #24"
 cost_tokens = 21
-cum_tokens = 1568
+cum_tokens = 1551
 
 [batches.content]
 kind = "lines"
@@ -724,6 +710,20 @@ end = 458
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "test/classes" })'
+descriptor = "listing of 'test/classes'"
+cost_tokens = 17
+cum_tokens = 1568
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/classes"
+entries = ["comparator.js", "index.js", "range.js", "semver.js"]
 
 [[batches]]
 position = 26
@@ -881,24 +881,10 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'Fs(DirListing { dir: "test/internal" })'
-descriptor = "listing of 'test/internal'"
-cost_tokens = 27
-cum_tokens = 1833
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/internal"
-entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-options.js", "re.js"]
-
-[[batches]]
-position = 36
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 82
-cum_tokens = 1915
+cum_tokens = 1888
 
 [batches.content]
 kind = "lines"
@@ -912,11 +898,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #26"
 cost_tokens = 29
-cum_tokens = 1944
+cum_tokens = 1917
 
 [batches.content]
 kind = "lines"
@@ -930,11 +916,11 @@ end = 462
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Markdown(Section { file: "README.md", section_index: 36, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #36"
 cost_tokens = 29
-cum_tokens = 1973
+cum_tokens = 1946
 
 [batches.content]
 kind = "lines"
@@ -948,11 +934,11 @@ end = 493
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 285
-cum_tokens = 2258
+cum_tokens = 2231
 
 [batches.content]
 kind = "lines"
@@ -966,11 +952,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 106
-cum_tokens = 2364
+cum_tokens = 2337
 
 [batches.content]
 kind = "lines"
@@ -984,11 +970,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Markdown(Section { file: "README.md", section_index: 39, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #39"
 cost_tokens = 30
-cum_tokens = 2394
+cum_tokens = 2367
 
 [batches.content]
 kind = "lines"
@@ -1000,6 +986,20 @@ end = 499
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 41
+key = 'Fs(DirListing { dir: "test/internal" })'
+descriptor = "listing of 'test/internal'"
+cost_tokens = 27
+cum_tokens = 2394
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/internal"
+entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-options.js", "re.js"]
 
 [[batches]]
 position = 42
@@ -1147,24 +1147,10 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'Fs(DirListing { dir: "test/functions" })'
-descriptor = "listing of 'test/functions'"
-cost_tokens = 105
-cum_tokens = 2817
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/functions"
-entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
-
-[[batches]]
-position = 51
 key = 'Markdown(Section { file: "README.md", section_index: 29, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #29"
 cost_tokens = 47
-cum_tokens = 2864
+cum_tokens = 2759
 
 [batches.content]
 kind = "lines"
@@ -1178,25 +1164,11 @@ end = 470
 kind = "full"
 
 [[batches]]
-position = 52
-key = 'Fs(DirListing { dir: "test/ranges" })'
-descriptor = "listing of 'test/ranges'"
-cost_tokens = 56
-cum_tokens = 2920
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/ranges"
-entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
-
-[[batches]]
-position = 53
+position = 51
 key = 'Markdown(Section { file: "README.md", section_index: 30, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #30"
 cost_tokens = 50
-cum_tokens = 2970
+cum_tokens = 2809
 
 [batches.content]
 kind = "lines"
@@ -1208,6 +1180,34 @@ end = 472
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "test/functions" })'
+descriptor = "listing of 'test/functions'"
+cost_tokens = 105
+cum_tokens = 2914
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/functions"
+entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "test/ranges" })'
+descriptor = "listing of 'test/ranges'"
+cost_tokens = 56
+cum_tokens = 2970
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/ranges"
+entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
 
 [[batches]]
 position = 54
@@ -1243,24 +1243,10 @@ entries = ["bin"]
 
 [[batches]]
 position = 56
-key = 'Fs(DirListing { dir: "test/fixtures" })'
-descriptor = "listing of 'test/fixtures'"
-cost_tokens = 84
-cum_tokens = 3112
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/fixtures"
-entries = ["comparator-intersection.js", "comparisons.js", "equality.js", "increments.js", "invalid-versions.js", "range-exclude.js", "range-include.js", "range-intersection.js", "range-parse.js", "valid-versions.js", "version-gt-range.js", "version-lt-range.js", "version-not-gt-range.js", "version-not-lt-range.js"]
-
-[[batches]]
-position = 57
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CHANGELOG.md section #0"
 cost_tokens = 10
-cum_tokens = 3122
+cum_tokens = 3038
 
 [batches.content]
 kind = "lines"
@@ -1272,6 +1258,20 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "test/fixtures" })'
+descriptor = "listing of 'test/fixtures'"
+cost_tokens = 84
+cum_tokens = 3122
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/fixtures"
+entries = ["comparator-intersection.js", "comparisons.js", "equality.js", "increments.js", "invalid-versions.js", "range-exclude.js", "range-include.js", "range-intersection.js", "range-parse.js", "valid-versions.js", "version-gt-range.js", "version-lt-range.js", "version-not-gt-range.js", "version-not-lt-range.js"]
 
 [[batches]]
 position = 58
@@ -1293,38 +1293,10 @@ kind = "full"
 
 [[batches]]
 position = 59
-key = 'Fs(DirListing { dir: ".github/matchers" })'
-descriptor = "listing of '.github/matchers'"
-cost_tokens = 4
-cum_tokens = 3196
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/matchers"
-entries = ["tap.json"]
-
-[[batches]]
-position = 60
-key = 'Fs(DirListing { dir: "test/integration" })'
-descriptor = "listing of 'test/integration'"
-cost_tokens = 4
-cum_tokens = 3200
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/integration"
-entries = ["whitespace.js"]
-
-[[batches]]
-position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 28, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #28"
 cost_tokens = 71
-cum_tokens = 3271
+cum_tokens = 3263
 
 [batches.content]
 kind = "lines"
@@ -1338,11 +1310,11 @@ end = 468
 kind = "full"
 
 [[batches]]
-position = 62
+position = 60
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 77
-cum_tokens = 3348
+cum_tokens = 3340
 
 [batches.content]
 kind = "lines"
@@ -1356,11 +1328,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 63
+position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #27"
 cost_tokens = 76
-cum_tokens = 3424
+cum_tokens = 3416
 
 [batches.content]
 kind = "lines"
@@ -1372,6 +1344,34 @@ end = 466
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 62
+key = 'Fs(DirListing { dir: ".github/matchers" })'
+descriptor = "listing of '.github/matchers'"
+cost_tokens = 4
+cum_tokens = 3420
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/matchers"
+entries = ["tap.json"]
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "test/integration" })'
+descriptor = "listing of 'test/integration'"
+cost_tokens = 4
+cum_tokens = 3424
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/integration"
+entries = ["whitespace.js"]
 
 [[batches]]
 position = 64
@@ -1393,24 +1393,10 @@ kind = "full"
 
 [[batches]]
 position = 65
-key = 'Fs(DirListing { dir: "test/bin" })'
-descriptor = "listing of 'test/bin'"
-cost_tokens = 5
-cum_tokens = 3511
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/bin"
-entries = ["semver.js"]
-
-[[batches]]
-position = 66
 key = 'Markdown(Section { file: "README.md", section_index: 51, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #51"
 cost_tokens = 85
-cum_tokens = 3596
+cum_tokens = 3591
 
 [batches.content]
 kind = "lines"
@@ -1424,11 +1410,11 @@ end = 556
 kind = "full"
 
 [[batches]]
-position = 67
+position = 66
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 576
-cum_tokens = 4172
+cum_tokens = 4167
 
 [batches.content]
 kind = "lines"
@@ -1450,11 +1436,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 68
+position = 67
 key = 'Typescript(ExportNames { file: "preload.js" })'
 descriptor = "export names surface in preload.js"
 cost_tokens = 14
-cum_tokens = 4186
+cum_tokens = 4181
 
 [batches.content]
 kind = "lines"
@@ -1468,11 +1454,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 69
+position = 68
 key = 'Typescript(ExportNames { file: "map.js" })'
 descriptor = "export names surface in map.js"
 cost_tokens = 21
-cum_tokens = 4207
+cum_tokens = 4202
 
 [batches.content]
 kind = "lines"
@@ -1486,11 +1472,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 70
+position = 69
 key = 'Typescript(Imports { file: "map.js" })'
 descriptor = "imports in map.js"
 cost_tokens = 6
-cum_tokens = 4213
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -1504,11 +1490,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 71
+position = 70
 key = 'Typescript(Imports { file: "preload.js" })'
 descriptor = "imports in preload.js"
 cost_tokens = 8
-cum_tokens = 4221
+cum_tokens = 4216
 
 [batches.content]
 kind = "lines"
@@ -1522,11 +1508,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 72
+position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 91
-cum_tokens = 4312
+cum_tokens = 4307
 
 [batches.content]
 kind = "lines"
@@ -1540,11 +1526,11 @@ end = 217
 kind = "full"
 
 [[batches]]
-position = 73
+position = 72
 key = 'Markdown(Section { file: "README.md", section_index: 42, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #42"
 cost_tokens = 86
-cum_tokens = 4398
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -1556,6 +1542,20 @@ end = 507
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 73
+key = 'Fs(DirListing { dir: "test/bin" })'
+descriptor = "listing of 'test/bin'"
+cost_tokens = 5
+cum_tokens = 4398
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/bin"
+entries = ["semver.js"]
 
 [[batches]]
 position = 74
@@ -1759,24 +1759,10 @@ kind = "full"
 
 [[batches]]
 position = 86
-key = 'Fs(DirListing { dir: "tap-snapshots/test/bin" })'
-descriptor = "listing of 'tap-snapshots/test/bin'"
-cost_tokens = 8
-cum_tokens = 5935
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tap-snapshots/test/bin"
-entries = ["semver.js.test.cjs"]
-
-[[batches]]
-position = 87
 key = 'Json(Whole { file: "release-please-config.json" })'
 descriptor = "json config release-please-config.json"
 cost_tokens = 350
-cum_tokens = 6285
+cum_tokens = 6277
 
 [batches.content]
 kind = "lines"
@@ -1790,11 +1776,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Markdown(Section { file: "README.md", section_index: 56, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #56"
 cost_tokens = 152
-cum_tokens = 6437
+cum_tokens = 6429
 
 [batches.content]
 kind = "lines"
@@ -1806,6 +1792,20 @@ end = 598
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 88
+key = 'Fs(DirListing { dir: "tap-snapshots/test/bin" })'
+descriptor = "listing of 'tap-snapshots/test/bin'"
+cost_tokens = 8
+cum_tokens = 6437
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tap-snapshots/test/bin"
+entries = ["semver.js.test.cjs"]
 
 [[batches]]
 position = 89

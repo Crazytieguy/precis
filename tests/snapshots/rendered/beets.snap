@@ -112,6 +112,42 @@ beets/
         types.py
     importer/
         __init__.py
+               1→# This file is part of beets.
+               2→# Copyright 2016, Adrian Sampson.
+               3→#
+               4→# Permission is hereby granted, free of charge, to any person obtaining
+               5→# a copy of this software and associated documentation files (the
+               6→# "Software"), to deal in the Software without restriction, including
+               7→# without limitation the rights to use, copy, modify, merge, publish,
+               8→# distribute, sublicense, and/or sell copies of the Software, and to
+               9→# permit persons to whom the Software is furnished to do so, subject to
+              10→# the following conditions:
+              11→#
+              12→# The above copyright notice and this permission notice shall be
+              13→# included in all copies or substantial portions of the Software.
+              14→
+              15→"""Provides the basic, interface-agnostic workflow for importing and
+              16→autotagging music files.
+              17→"""
+              18→
+              19→from .session import ImportAbortError, ImportSession
+              20→from .tasks import (
+              21→    Action,
+              22→    ArchiveImportTask,
+              23→    ImportTask,
+              24→    SentinelImportTask,
+              25→    SingletonImportTask,
+              26→)
+            …
+              30→__all__ = [
+              31→    "Action",
+              32→    "ArchiveImportTask",
+              33→    "ImportAbortError",
+              34→    "ImportSession",
+              35→    "ImportTask",
+              36→    "SentinelImportTask",
+              37→    "SingletonImportTask",
+              38→]
         session.py
         stages.py
         state.py
@@ -144,9 +180,6 @@ beets/
               29→]
         exceptions.py
         fields.py
-            …
-               3→TYPE_BY_FIELD: dict[str, types.Type] = {
-            …
         library.py
             …
               20→class Library(dbcore.Database):
@@ -252,17 +285,12 @@ beets/
         extension.py
         functemplate.py
         hidden.py
-            …
-              25→def is_hidden(path: bytes | Path) -> bool:
-            …
         id_extractors.py
         layout.py
         lyrics.py
         m3u.py
         pipeline.py
         units.py
-               1→import re
-            …
 beetsplug/
 codecov.yml
 docs/

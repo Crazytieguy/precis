@@ -82,15 +82,7 @@ sps/
             upgrade.rs
         cli.rs
             …
-              32→#[derive(Parser, Debug)]
-            …
               35→pub struct CliArgs {
-              36→    #[arg(short, long, action = ArgAction::Count, global = true)]
-              37→    pub verbose: u8,
-              38→
-              39→    #[command(subcommand)]
-              40→    pub command: Command,
-              41→}
             …
               44→pub enum Command {
             …
@@ -191,6 +183,15 @@ sps-common/
         dependency/
             definition.rs
             mod.rs
+                   1→pub mod definition; // Renamed from 'dependency'
+                   2→pub mod requirement;
+                   3→pub mod resolver;
+                …
+                   6→pub use definition::{Dependency, DependencyExt, DependencyTag}; // Updated source module
+                   7→pub use requirement::Requirement;
+                   8→pub use resolver::{
+                   9→    DependencyResolver, ResolutionContext, ResolutionStatus, ResolvedDependency, ResolvedGraph,
+                  10→};
             requirement.rs
             resolver.rs
         error.rs

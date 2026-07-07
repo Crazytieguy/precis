@@ -113,11 +113,9 @@ docs/
           23→## Core Commands
           24→
           25→### `start`
-          27→Start a new activity.
         …
           55→---
           57→### `stop` (alias: `s`)
-          59→Stop the current activity.
         …
           84→---
           86→### `add`
@@ -190,13 +188,7 @@ internal/
                   20→	Tags    []string
                   21→}
                   23→type AddActivityRequest struct {
-                  24→	Description string
-                  25→	Project     string
-                  26→	StartTime   time.Time
-                  27→	EndTime     time.Time
-                  28→	Notes       string
-                  29→	Tags        []string
-                  30→}
+                …
                   32→type ActivityFilter struct {
                   33→	FromDate    *time.Time
                   34→	ToDate      *time.Time
@@ -216,9 +208,7 @@ internal/
                   50→}
         errors/
             errors.go
-                   1→package errors
-                   2→
-                   3→import "errors"
+                …
                    5→var (
                    6→	ErrActivityNotFound       = errors.New("activity not found")
                    7→	ErrNoActiveActivity       = errors.New("no active activity found")
@@ -227,19 +217,6 @@ internal/
                   10→)
         models/
             activity.go
-                …
-                  10→type Activity struct {
-                …
-                  19→func (a Activity) ID() string {
-                  20→	return a.StartTime.Format("150405")
-                …
-                  23→func (a Activity) Duration() time.Duration {
-                …
-                  30→// DurationString returns the duration formatted as "HH:MM:SS".
-                  31→func (a Activity) DurationString() string {
-                …
-                  41→func (a Activity) MarshalJSON() ([]byte, error) {
-                …
         ports/
             mocks/
                 mock_activityrepository.go

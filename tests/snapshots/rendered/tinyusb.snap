@@ -58,16 +58,6 @@ hw/
 lib/
     SEGGER_RTT/
         Config/
-            SEGGER_RTT_Conf.h
-                …
-                 401→void OS_SIM_EnterCriticalSection(void);
-                 402→void OS_SIM_LeaveCriticalSection(void);
-                 403→
-                 404→#define SEGGER_RTT_LOCK()       {                                                                   \
-                 405→                                  OS_SIM_EnterCriticalSection();
-                 407→#define SEGGER_RTT_UNLOCK()       OS_SIM_LeaveCriticalSection();                                    \
-                 408→                                }
-                …
         LICENSE.md
         README.md
                1→RTT

@@ -124,13 +124,13 @@ Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | walker |  | 5205 | 966 | README.md section #1 |  |  | 0.773 |
 | walker |  | 5239 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.773 |
 | walker |  | 5256 | 17 | go test names surface in group_test.go |  |  | 0.773 |
-| walker |  | 5458 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.775 |
-| ns | 5517 |  | 341 | README: migrating Group to errgroup / a manual mutex | 5.4 |  | 0.783 |
-| ns | 5655 |  | 138 | Flatten() | 6.1 | 1.5 | 0.785 |
-| ns | 5754 |  | 99 | flatten() recursive helper (unexported) | 6.2 |  | 0.786 |
-| ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.789 |
-| ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.787 |
-| walker |  | 6570 | 1112 | README.md section #3 |  |  | 0.908 |
+| ns | 5517 |  | 341 | README: migrating Group to errgroup / a manual mutex | 5.4 |  | 0.782 |
+| ns | 5655 |  | 138 | Flatten() | 6.1 | 1.5 | 0.783 |
+| ns | 5754 |  | 99 | flatten() recursive helper (unexported) | 6.2 |  | 0.784 |
+| ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.788 |
+| ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.786 |
+| walker |  | 6368 | 1112 | README.md section #3 |  |  | 0.906 |
+| walker |  | 6570 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.908 |
 | ns | 6587 |  | 364 | TestErrorUnwrap | 9.1 | 1.6 | 0.877 |
 | walker |  | 6594 | 24 | .github/pull_request_template.md section #0 |  |  | 0.877 |
 | walker |  | 6628 | 34 | go test names surface in flatten_test.go |  |  | 0.878 |
@@ -139,9 +139,9 @@ Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | walker |  | 6754 | 54 | go test names surface in prefix_test.go |  |  | 0.888 |
 | walker |  | 6777 | 23 | .github/pull_request_template.md section #2 |  |  | 0.888 |
 | walker |  | 6889 | 112 | go test names surface in append_test.go |  |  | 0.908 |
-| walker |  | 6926 | 37 | .github/pull_request_template.md section #1 |  |  | 0.908 |
 | ns | 6939 |  | 352 | TestAppend_Error | 9.2 | 1.7 | 0.881 |
-| walker |  | 7062 | 136 | go test names surface in multierror_test.go |  |  | 0.898 |
+| walker |  | 7025 | 136 | go test names surface in multierror_test.go |  |  | 0.898 |
+| walker |  | 7062 | 37 | .github/pull_request_template.md section #1 |  |  | 0.898 |
 | ns | 7396 |  | 457 | TestGroup (whole file) | 9.3 | 1.7 | 0.866 |
 | ns | 7642 |  | 246 | TestFlatten | 9.4 | 1.7 | 0.845 |
 | ns | 7934 |  | 292 | prefix_test.go (whole file) | 9.5 | 1.7 | 0.823 |

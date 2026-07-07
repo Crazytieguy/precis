@@ -52,6 +52,7 @@ README.md
      167→### Built-in components
     …
      179→### Rendering
+     181→`htmy.Renderer` is the built-in, default renderer of the library.
     …
      211→### Context
     …
@@ -60,6 +61,7 @@ README.md
      291→### Error boundary
     …
      299→### Sync or async?
+     301→In general, a component should be async if it must await some async call inside.
     …
      305→In all other cases, it's best to use sync components.
      307→## XSS prevention
@@ -208,6 +210,10 @@ htmy/
           65→    """
           66→    Base class with utilities for safe context use.
         …
+         100→    __slots__ = ()
+         101→
+         102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
+        …
          146→class SkipProperty(Exception):
          147→    """Exception raised by property formatters if the property should be skipped."""
          149→    ...
@@ -262,16 +268,6 @@ htmy/
                5→from .typing import MarkdownRenderFunction as MarkdownRenderFunction
                6→from .typing import ParsedMarkdown as ParsedMarkdown
         core.py
-            …
-              20→class MarkdownParser(ContextAware):
-            …
-              81→class MD(Snippet):
-            …
-              98→    __slots__ = (
-              99→        "_converter",
-             100→        "_renderer",
-             101→    )
-            …
         typing.py
     py.typed
     renderer/

@@ -1,4 +1,4 @@
-Score(3000)=0.530 I=0.785 C=0.359 ns_rows≤3K=16/42 (reached=6 partial=1 missing=9)
+Score(3000)=0.595 I=0.805 C=0.440 ns_rows≤3K=16/42 (reached=7 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -63,54 +63,54 @@ Score(3000)=0.530 I=0.785 C=0.359 ns_rows≤3K=16/42 (reached=6 partial=1 missin
 | walker |  | 1565 | 98 | pub item at src/config/mod.rs:118 |  |  | 0.593 |
 | walker |  | 1666 | 101 | pub item at src/config/mod.rs:62 |  |  | 0.593 |
 | walker |  | 1770 | 104 | pub item at src/config/mod.rs:106 |  |  | 0.593 |
-| walker |  | 1804 | 34 | pub-item names surface in src/debug.rs |  |  | 0.593 |
-| walker |  | 1804 | 0 | pub item at src/debug.rs:19 |  |  | 0.593 |
-| walker |  | 1804 | 0 | pub item at src/debug.rs:23 |  |  | 0.593 |
-| walker |  | 1815 | 11 | pub item body at src/debug.rs:19 body 20 |  |  | 0.593 |
 | ns | 1823 |  | 323 | main.rs: content-type resolution + data read, part 2 | 2.2 | 1.6 | 0.553 |
-| walker |  | 1915 | 100 | entry item body at src/main.rs:27 body 94 |  |  | 0.554 |
+| walker |  | 1870 | 100 | entry item body at src/main.rs:27 body 94 |  |  | 0.554 |
+| walker |  | 1904 | 34 | pub-item names surface in src/debug.rs |  |  | 0.554 |
+| walker |  | 1904 | 0 | pub item at src/debug.rs:19 |  |  | 0.554 |
+| walker |  | 1904 | 0 | pub item at src/debug.rs:23 |  |  | 0.554 |
+| walker |  | 1915 | 11 | pub item body at src/debug.rs:19 body 20 |  |  | 0.554 |
 | walker |  | 1959 | 44 | pub item at src/edit.rs:10 |  |  | 0.554 |
-| walker |  | 1982 | 23 | pub-item names surface in src/ui/header.rs |  |  | 0.554 |
-| walker |  | 2007 | 25 | pub item at src/ui/header.rs:41 |  |  | 0.554 |
-| walker |  | 2030 | 23 | pub-item names surface in src/ui/popup.rs |  |  | 0.554 |
-| walker |  | 2059 | 29 | pub item at src/ui/popup.rs:13 |  |  | 0.554 |
-| walker |  | 2095 | 36 | manifest config in Cargo.toml |  |  | 0.556 |
-| walker |  | 2121 | 26 | pub-item names surface in src/ui/footer.rs |  |  | 0.556 |
-| walker |  | 2137 | 16 | pub item at src/ui/footer.rs:16 |  |  | 0.556 |
-| walker |  | 2171 | 34 | pub item at src/ui/footer.rs:10 |  |  | 0.556 |
-| walker |  | 2219 | 48 | pub-item names surface in src/tree.rs |  |  | 0.557 |
-| walker |  | 2259 | 40 | pub item at src/tree.rs:36 |  |  | 0.557 |
+| walker |  | 1995 | 36 | manifest config in Cargo.toml |  |  | 0.556 |
+| walker |  | 2189 | 194 | pub item at src/parse/mod.rs:18 |  |  | 0.557 |
+| walker |  | 2212 | 23 | pub-item names surface in src/ui/header.rs |  |  | 0.557 |
+| walker |  | 2237 | 25 | pub item at src/ui/header.rs:41 |  |  | 0.557 |
+| walker |  | 2260 | 23 | pub-item names surface in src/ui/popup.rs |  |  | 0.557 |
+| walker |  | 2289 | 29 | pub item at src/ui/popup.rs:13 |  |  | 0.557 |
 | ns | 2305 |  | 482 | main.rs: --to conversion, size guard, Tree/App/ui::start, part 3 | 2.3 | 1.6 | 0.533 |
-| walker |  | 2316 | 57 | pub item at src/tree.rs:42 |  |  | 0.533 |
-| walker |  | 2510 | 194 | pub item at src/parse/mod.rs:18 |  |  | 0.533 |
-| walker |  | 2544 | 34 | pub item at src/parse/any.rs:9 |  |  | 0.533 |
-| walker |  | 2577 | 33 | pub-item names surface in src/config/keys.rs |  |  | 0.533 |
-| walker |  | 2615 | 38 | pub item at src/config/keys.rs:351 |  |  | 0.533 |
-| walker |  | 2649 | 34 | pub-item names surface in src/ui/app.rs |  |  | 0.534 |
-| walker |  | 2672 | 23 | pub item at src/ui/app.rs:86 |  |  | 0.534 |
-| walker |  | 2701 | 29 | pub item at src/ui/app.rs:48 |  |  | 0.534 |
-| walker |  | 2773 | 72 | pub item at src/tree.rs:25 |  |  | 0.534 |
-| ns | 2933 |  | 628 | cmd.rs: CommandArgs fields, part 1 (path/config/content-type/UI toggles) | 2.4 |  | 0.470 |
-| walker |  | 2947 | 174 | entry item body at src/main.rs:27 body 79 |  |  | 0.530 |
-| walker |  | 3136 | 189 | entry item body at src/main.rs:27 body 59 |  |  | 0.596 |
-| walker |  | 3221 | 85 | pub item at src/tree.rs:14 |  |  | 0.597 |
-| walker |  | 3268 | 47 | pub item at src/ui/popup.rs:18 |  |  | 0.597 |
-| ns | 3473 |  | 540 | cmd.rs: CommandArgs fields, part 2 (layout/size/wrap/meta flags) | 2.5 |  | 0.541 |
-| ns | 3534 |  | 61 | cmd.rs: impl CommandArgs — locations | 2.6 |  | 0.536 |
-| walker |  | 3601 | 333 | pub item at src/parse/mod.rs:36 |  |  | 0.539 |
-| walker |  | 3689 | 88 | pub item at src/live_reload.rs:16 |  |  | 0.539 |
-| ns | 3824 |  | 290 | cmd.rs: get_content_type extension mapping | 2.7 | 2.6 | 0.515 |
-| walker |  | 3915 | 226 | mod/use plumbing in src/main.rs |  |  | 0.597 |
+| walker |  | 2337 | 48 | pub-item names surface in src/tree.rs |  |  | 0.533 |
+| walker |  | 2377 | 40 | pub item at src/tree.rs:36 |  |  | 0.533 |
+| walker |  | 2434 | 57 | pub item at src/tree.rs:42 |  |  | 0.533 |
+| walker |  | 2460 | 26 | pub-item names surface in src/ui/footer.rs |  |  | 0.533 |
+| walker |  | 2476 | 16 | pub item at src/ui/footer.rs:16 |  |  | 0.533 |
+| walker |  | 2510 | 34 | pub item at src/ui/footer.rs:10 |  |  | 0.533 |
+| walker |  | 2684 | 174 | entry item body at src/main.rs:27 body 79 |  |  | 0.602 |
+| walker |  | 2718 | 34 | pub item at src/parse/any.rs:9 |  |  | 0.602 |
+| walker |  | 2907 | 189 | entry item body at src/main.rs:27 body 59 |  |  | 0.676 |
+| ns | 2933 |  | 628 | cmd.rs: CommandArgs fields, part 1 (path/config/content-type/UI toggles) | 2.4 |  | 0.595 |
+| walker |  | 2979 | 72 | pub item at src/tree.rs:25 |  |  | 0.595 |
+| walker |  | 3012 | 33 | pub-item names surface in src/config/keys.rs |  |  | 0.595 |
+| walker |  | 3050 | 38 | pub item at src/config/keys.rs:351 |  |  | 0.595 |
+| walker |  | 3084 | 34 | pub-item names surface in src/ui/app.rs |  |  | 0.596 |
+| walker |  | 3107 | 23 | pub item at src/ui/app.rs:86 |  |  | 0.596 |
+| walker |  | 3136 | 29 | pub item at src/ui/app.rs:48 |  |  | 0.596 |
+| walker |  | 3469 | 333 | pub item at src/parse/mod.rs:36 |  |  | 0.598 |
+| ns | 3473 |  | 540 | cmd.rs: CommandArgs fields, part 2 (layout/size/wrap/meta flags) | 2.5 |  | 0.542 |
+| ns | 3534 |  | 61 | cmd.rs: impl CommandArgs — locations | 2.6 |  | 0.538 |
+| walker |  | 3695 | 226 | mod/use plumbing in src/main.rs |  |  | 0.623 |
+| walker |  | 3780 | 85 | pub item at src/tree.rs:14 |  |  | 0.624 |
+| ns | 3824 |  | 290 | cmd.rs: get_content_type extension mapping | 2.7 | 2.6 | 0.597 |
+| walker |  | 3868 | 88 | pub item at src/live_reload.rs:16 |  |  | 0.597 |
+| walker |  | 3915 | 47 | pub item at src/ui/popup.rs:18 |  |  | 0.597 |
 | walker |  | 3965 | 50 | pub item at src/ui/header.rs:11 |  |  | 0.597 |
-| walker |  | 4008 | 43 | pub-item names surface in src/parse/json.rs |  |  | 0.597 |
-| walker |  | 4008 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.597 |
-| walker |  | 4053 | 45 | pub-item names surface in src/ui/filter.rs |  |  | 0.598 |
-| walker |  | 4084 | 31 | pub item at src/ui/filter.rs:20 |  |  | 0.598 |
-| walker |  | 4122 | 38 | pub item at src/ui/filter.rs:34 |  |  | 0.598 |
-| walker |  | 4157 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.598 |
-| walker |  | 4204 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.598 |
-| walker |  | 4212 | 8 | listing of '.github' |  |  | 0.598 |
-| walker |  | 4228 | 16 | listing of '.github/workflows' |  |  | 0.598 |
+| walker |  | 3973 | 8 | listing of '.github' |  |  | 0.598 |
+| walker |  | 3989 | 16 | listing of '.github/workflows' |  |  | 0.598 |
+| walker |  | 4032 | 43 | pub-item names surface in src/parse/json.rs |  |  | 0.598 |
+| walker |  | 4032 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.598 |
+| walker |  | 4077 | 45 | pub-item names surface in src/ui/filter.rs |  |  | 0.598 |
+| walker |  | 4108 | 31 | pub item at src/ui/filter.rs:20 |  |  | 0.598 |
+| walker |  | 4146 | 38 | pub item at src/ui/filter.rs:34 |  |  | 0.598 |
+| walker |  | 4181 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.598 |
+| walker |  | 4228 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.598 |
 | ns | 4283 |  | 459 | cmd.rs: update_config (CLI-flag-over-config precedence) | 2.8 | 2.6 | 0.554 |
 | ns | 4291 |  | 8 | config/ listing | 3.1 |  | 0.556 |
 | ns | 4299 |  | 8 | config/themes/ listing | 3.2 |  | 0.557 |
@@ -119,47 +119,47 @@ Score(3000)=0.530 I=0.785 C=0.359 ns_rows≤3K=16/42 (reached=6 partial=1 missin
 | walker |  | 4626 | 0 | pub item at src/parse/syntax.rs:139 |  |  | 0.557 |
 | walker |  | 4626 | 0 | pub item at src/parse/syntax.rs:201 |  |  | 0.557 |
 | walker |  | 4650 | 24 | pub item at src/parse/syntax.rs:151 |  |  | 0.557 |
-| walker |  | 4727 | 77 | pub-item names surface in src/config/colors.rs |  |  | 0.557 |
-| walker |  | 4772 | 45 | pub item at src/config/colors.rs:324 |  |  | 0.557 |
-| walker |  | 4863 | 91 | pub item at src/config/colors.rs:251 |  |  | 0.557 |
-| walker |  | 4986 | 123 | mod/use plumbing in src/parse/mod.rs |  |  | 0.558 |
-| walker |  | 5106 | 120 | pub item at src/parse/syntax.rs:11 |  |  | 0.559 |
-| walker |  | 5238 | 132 | mod/use plumbing in src/config/mod.rs |  |  | 0.559 |
-| walker |  | 5331 | 93 | macro_export body at src/debug.rs:8 |  |  | 0.559 |
-| walker |  | 5444 | 113 | pub item at src/config/colors.rs:286 |  |  | 0.559 |
+| walker |  | 4773 | 123 | mod/use plumbing in src/parse/mod.rs |  |  | 0.558 |
+| walker |  | 4905 | 132 | mod/use plumbing in src/config/mod.rs |  |  | 0.558 |
+| walker |  | 4982 | 77 | pub-item names surface in src/config/colors.rs |  |  | 0.558 |
+| walker |  | 5027 | 45 | pub item at src/config/colors.rs:324 |  |  | 0.558 |
+| walker |  | 5118 | 91 | pub item at src/config/colors.rs:251 |  |  | 0.558 |
+| walker |  | 5238 | 120 | pub item at src/parse/syntax.rs:11 |  |  | 0.559 |
+| walker |  | 5325 | 87 | README.md section #1 |  |  | 0.559 |
+| walker |  | 5418 | 93 | macro_export body at src/debug.rs:8 |  |  | 0.559 |
 | ns | 5490 |  | 1191 | config/default.toml (the actual default config) | 3.3 |  | 0.490 |
-| walker |  | 5587 | 143 | pub item at src/config/keys.rs:54 |  |  | 0.490 |
+| walker |  | 5531 | 113 | pub item at src/config/colors.rs:286 |  |  | 0.490 |
 | ns | 5608 |  | 118 | src/config/*.rs: struct declaration locations (one per default.toml top-level table) | 3.4 |  | 0.498 |
 | ns | 5621 |  | 13 | docs/ listing | 4.1 |  | 0.501 |
-| walker |  | 5707 | 120 | pub item at src/config/colors.rs:342 |  |  | 0.501 |
-| walker |  | 5794 | 87 | README.md section #1 |  |  | 0.501 |
-| walker |  | 5937 | 143 | pub item at src/ui/data_block.rs:16 |  |  | 0.501 |
-| walker |  | 6095 | 158 | pub item at src/ui/tree_overview.rs:19 |  |  | 0.501 |
-| walker |  | 6303 | 208 | mod/use plumbing in src/ui/mod.rs |  |  | 0.501 |
+| walker |  | 5674 | 143 | pub item at src/config/keys.rs:54 |  |  | 0.501 |
+| walker |  | 5794 | 120 | pub item at src/config/colors.rs:342 |  |  | 0.501 |
+| walker |  | 6002 | 208 | mod/use plumbing in src/ui/mod.rs |  |  | 0.501 |
+| walker |  | 6145 | 143 | pub item at src/ui/data_block.rs:16 |  |  | 0.501 |
+| walker |  | 6303 | 158 | pub item at src/ui/tree_overview.rs:19 |  |  | 0.501 |
 | ns | 6417 |  | 796 | docs/actions.md (every action, default keys, description) | 4.2 |  | 0.484 |
 | walker |  | 6421 | 118 | pub item body at src/debug.rs:23 body 24 |  |  | 0.484 |
-| walker |  | 6517 | 96 | impl method sigs in src/parse/json.rs |  |  | 0.484 |
-| walker |  | 6616 | 99 | impl method sigs in src/parse/xml.rs |  |  | 0.484 |
-| walker |  | 6716 | 100 | impl method sigs in src/parse/hcl.rs |  |  | 0.484 |
-| walker |  | 6816 | 100 | impl method sigs in src/parse/toml.rs |  |  | 0.484 |
+| walker |  | 6846 | 425 | impl method sigs in src/config/mod.rs |  |  | 0.484 |
 | ns | 6870 |  | 453 | tree.rs: Tree/ItemValue/HighlightKeyword/FieldType structs | 5.1 |  | 0.491 |
-| walker |  | 6917 | 101 | impl method sigs in src/parse/jsonl.rs |  |  | 0.491 |
-| walker |  | 7018 | 101 | impl method sigs in src/parse/yaml.rs |  |  | 0.491 |
-| ns | 7369 |  | 499 | tree.rs: Tree::parse / from_value | 5.2 | 5.1 | 0.473 |
-| walker |  | 7443 | 425 | impl method sigs in src/config/mod.rs |  |  | 0.473 |
+| walker |  | 6942 | 96 | impl method sigs in src/parse/json.rs |  |  | 0.491 |
+| walker |  | 7133 | 191 | impl method sigs in src/tree.rs |  |  | 0.491 |
+| walker |  | 7232 | 99 | impl method sigs in src/parse/xml.rs |  |  | 0.491 |
+| walker |  | 7332 | 100 | impl method sigs in src/parse/hcl.rs |  |  | 0.491 |
+| ns | 7369 |  | 499 | tree.rs: Tree::parse / from_value | 5.2 | 5.1 | 0.474 |
+| walker |  | 7432 | 100 | impl method sigs in src/parse/toml.rs |  |  | 0.474 |
 | ns | 7451 |  | 82 | tree.rs: build_item — one line per Value variant (locations) | 5.3 |  | 0.471 |
-| walker |  | 7634 | 191 | impl method sigs in src/tree.rs |  |  | 0.471 |
+| walker |  | 7533 | 101 | impl method sigs in src/parse/jsonl.rs |  |  | 0.471 |
+| walker |  | 7634 | 101 | impl method sigs in src/parse/yaml.rs |  |  | 0.471 |
 | ns | 7813 |  | 362 | tree.rs: build_item Object arm (recursive case) | 5.4 | 5.3 | 0.458 |
 | walker |  | 7840 | 206 | pub item at src/config/types.rs:28 |  |  | 0.460 |
 | walker |  | 8072 | 232 | pub item at src/config/colors.rs:21 |  |  | 0.460 |
-| walker |  | 8174 | 102 | pub item body at src/parse/syntax.rs:201 body 202 |  |  | 0.460 |
-| walker |  | 8318 | 144 | impl method sigs in src/ui/popup.rs |  |  | 0.460 |
-| walker |  | 8422 | 104 | README.md section #6 |  |  | 0.460 |
-| ns | 8684 |  | 871 | parse/mod.rs: ContentType + Parser trait + dispatch | 6.1 |  | 0.487 |
-| walker |  | 8701 | 279 | pub item at src/ui/app.rs:53 |  |  | 0.487 |
-| walker |  | 8722 | 21 | impl method sigs in src/config/colors.rs |  |  | 0.487 |
-| walker |  | 8762 | 40 | listing of 'examples' |  |  | 0.487 |
-| walker |  | 9086 | 324 | [dependencies] in Cargo.toml |  |  | 0.519 |
+| walker |  | 8176 | 104 | README.md section #6 |  |  | 0.460 |
+| walker |  | 8216 | 40 | listing of 'examples' |  |  | 0.461 |
+| walker |  | 8540 | 324 | [dependencies] in Cargo.toml |  |  | 0.496 |
+| walker |  | 8642 | 102 | pub item body at src/parse/syntax.rs:201 body 202 |  |  | 0.496 |
+| ns | 8684 |  | 871 | parse/mod.rs: ContentType + Parser trait + dispatch | 6.1 |  | 0.519 |
+| walker |  | 8786 | 144 | impl method sigs in src/ui/popup.rs |  |  | 0.519 |
+| walker |  | 9065 | 279 | pub item at src/ui/app.rs:53 |  |  | 0.519 |
+| walker |  | 9086 | 21 | impl method sigs in src/config/colors.rs |  |  | 0.519 |
 | ns | 9094 |  | 410 | toml.rs: section-path tracking + complex-field deferral (distinctive logic) | 6.2 |  | 0.505 |
 | walker |  | 9206 | 120 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.505 |
 | ns | 9227 |  | 133 | syntax.rs: SyntaxToken enum | 7.1 |  | 0.515 |

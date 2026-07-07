@@ -246,18 +246,6 @@ rich/
           22→SPINNERS = {
         …
     _stack.py
-           1→from typing import List, TypeVar
-           3→T = TypeVar("T")
-           4→
-           5→
-           6→class Stack(List[T]):
-           7→    """A small shim over builtin list."""
-           9→    @property
-          10→    def top(self) -> T:
-          11→        """Get top of stack."""
-        …
-          14→    def push(self, item: T) -> None:
-        …
     _timer.py
         …
           12→@contextlib.contextmanager
@@ -265,6 +253,40 @@ rich/
           14→    """print the elapsed time. (only used in debugging)"""
         …
     _unicode_data/
+        __init__.py
+               1→from __future__ import annotations
+               2→
+               3→import bisect
+               4→import os
+               5→import sys
+            …
+              12→from importlib import import_module
+              13→from typing import TYPE_CHECKING, cast
+              14→
+              15→from rich._unicode_data._versions import VERSIONS
+            …
+        _versions.py
+        unicode10-0-0.py
+        unicode11-0-0.py
+        unicode12-0-0.py
+        unicode12-1-0.py
+        unicode13-0-0.py
+        unicode14-0-0.py
+        unicode15-0-0.py
+        unicode15-1-0.py
+        unicode16-0-0.py
+        unicode17-0-0.py
+        unicode4-1-0.py
+        unicode5-0-0.py
+        unicode5-1-0.py
+        unicode5-2-0.py
+        unicode6-0-0.py
+        unicode6-1-0.py
+        unicode6-2-0.py
+        unicode6-3-0.py
+        unicode7-0-0.py
+        unicode8-0-0.py
+        unicode9-0-0.py
     _win32_console.py
     _windows.py
         …
@@ -291,7 +313,7 @@ rich/
     cells.py
     color.py
     color_triplet.py
-           1→from typing import NamedTuple, Tuple
+        …
            4→class ColorTriplet(NamedTuple):
            5→    """The red, green, and blue components of a color."""
         …
@@ -320,7 +342,6 @@ rich/
     file_proxy.py
         …
           11→class FileProxy(io.TextIOBase):
-          12→    """Wraps a file (e.g. sys.stdout) and redirects writes to a console."""
         …
     filesize.py
     highlighter.py
@@ -355,10 +376,6 @@ rich/
           12→    """Stores the minimum and maximum widths (in characters) required to render an object."""
         …
          125→def measure_renderables(
-         126→    console: "Console",
-         127→    options: "ConsoleOptions",
-         128→    renderables: Sequence["RenderableType"],
-         129→) -> "Measurement":
         …
     padding.py
     pager.py
@@ -390,10 +407,7 @@ rich/
            1→from typing import NamedTuple
            4→class Region(NamedTuple):
            5→    """Defines a rectangular region of the screen."""
-           7→    x: int
-           8→    y: int
-           9→    width: int
-          10→    height: int
+        …
     repr.py
     rule.py
         …
@@ -431,15 +445,6 @@ rich/
     terminal_theme.py
     text.py
     theme.py
-        …
-           7→class Theme:
-        …
-          15→    styles: Dict[str, Style]
-        …
-          77→class ThemeStackError(Exception):
-          78→    """Base exception for errors related to the theme stack."""
-          81→class ThemeStack:
-        …
     themes.py
         …
            5→DEFAULT = Theme(DEFAULT_STYLES)

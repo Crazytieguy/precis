@@ -155,22 +155,22 @@ Score(3000)=0.394 I=0.389 C=0.398 ns_rows≤3K=17/48 (reached=5 partial=0 missin
 | walker |  | 7021 | 14 | c decl body at Process.h:258 |  |  | 0.349 |
 | walker |  | 7035 | 14 | c decl body at Process.h:266 |  |  | 0.349 |
 | walker |  | 7049 | 14 | c decl body at Process.h:274 |  |  | 0.349 |
-| walker |  | 7100 | 51 | headings outline in docs/understanding-htop-versions.md |  |  | 0.349 |
 | ns | 7117 |  | 196 | Settings.h: ScreenSettings (per-screen persisted state) | 6.1 |  | 0.345 |
 | ns | 7404 |  | 287 | Settings.h: the Settings struct | 6.2 |  | 0.339 |
 | ns | 7620 |  | 216 | Code map: settings, process display, key bindings, loop | 6.3 |  | 0.335 |
-| walker |  | 7785 | 685 | c decl names surface #1 in Panel.h |  |  | 0.335 |
-| walker |  | 7785 | 0 | c decl at Panel.h:93 |  |  | 0.335 |
-| walker |  | 7900 | 115 | man-page NAME + DESCRIPTION in pcp-htop.5.in |  |  | 0.336 |
-| walker |  | 7952 | 52 | c decl names surface in RowField.h |  |  | 0.336 |
-| walker |  | 7952 | 0 | c decl at RowField.h:53 |  |  | 0.336 |
-| walker |  | 7962 | 10 | c decl at RowField.h:13 |  |  | 0.336 |
-| walker |  | 7978 | 16 | c decl body at Process.h:278 |  |  | 0.336 |
-| walker |  | 8023 | 45 | listing of 'solaris' |  |  | 0.339 |
-| walker |  | 8068 | 45 | listing of 'unsupported' |  |  | 0.346 |
+| walker |  | 7734 | 685 | c decl names surface #1 in Panel.h |  |  | 0.335 |
+| walker |  | 7734 | 0 | c decl at Panel.h:93 |  |  | 0.335 |
+| walker |  | 7849 | 115 | man-page NAME + DESCRIPTION in pcp-htop.5.in |  |  | 0.336 |
+| walker |  | 7901 | 52 | c decl names surface in RowField.h |  |  | 0.336 |
+| walker |  | 7901 | 0 | c decl at RowField.h:53 |  |  | 0.336 |
+| walker |  | 7911 | 10 | c decl at RowField.h:13 |  |  | 0.336 |
+| walker |  | 7927 | 16 | c decl body at Process.h:278 |  |  | 0.336 |
+| walker |  | 7972 | 45 | listing of 'solaris' |  |  | 0.339 |
+| walker |  | 8017 | 45 | listing of 'unsupported' |  |  | 0.346 |
+| walker |  | 8046 | 29 | c decl names surface in TasksMeter.h |  |  | 0.346 |
+| walker |  | 8059 | 13 | c decl names surface in Debug.h |  |  | 0.346 |
 | ns | 8090 |  | 470 | linux/Platform.h: the platform API function set | 7.1 |  | 0.336 |
-| walker |  | 8097 | 29 | c decl names surface in TasksMeter.h |  |  | 0.336 |
-| walker |  | 8110 | 13 | c decl names surface in Debug.h |  |  | 0.336 |
+| walker |  | 8110 | 51 | headings outline in docs/understanding-htop-versions.md |  |  | 0.336 |
 | walker |  | 8140 | 30 | c decl names surface in FileDescriptorMeter.h |  |  | 0.336 |
 | walker |  | 8171 | 31 | c decl names surface in HostnameMeter.h |  |  | 0.336 |
 | walker |  | 8202 | 31 | c decl names surface in MemorySwapMeter.h |  |  | 0.336 |

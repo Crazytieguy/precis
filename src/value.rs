@@ -77,7 +77,7 @@ pub fn reexport_import_chunk_factor(chunk_index: usize, chunk_count: usize) -> f
 
 /// Down-weight a batch by filesystem depth — depth 0/1 unpenalized.
 pub fn depth_factor(depth: usize) -> f64 {
-    1.0 / (1.0 + depth.saturating_sub(1) as f64 * 0.3)
+    1.0 / (1.0 + depth.saturating_sub(1) as f64 * 0.35)
 }
 
 /// Multiplier for content whose path is under a "non-essential"

@@ -224,11 +224,6 @@ packages/
             node/
                 __tests__/
                 __tests_dts__/
-                    config.ts
-                    plugin.ts
-                    tsconfig.json
-                    typeOptions.ts
-                    utils.ts
                 assetSource.ts
                 baseEnvironment.ts
                 build.ts
@@ -328,6 +323,7 @@ packages/
                       44→export { formatPostcssSourceMap, preprocessCSS } from './plugins/css'
                       45→export { transformWithEsbuild } from './plugins/esbuild'
                       46→export { transformWithOxc } from './plugins/oxc'
+                      47→export { buildErrorMessage } from './server/middlewares/error'
                     …
                       87→export const esbuildVersion = '0.25.0'
                     …

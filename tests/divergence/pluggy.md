@@ -41,27 +41,27 @@ Score(3000)=0.787 I=0.886 C=0.699 ns_rows≤3K=16/40 (reached=9 partial=2 missin
 | walker |  | 1461 | 20 | listing of 'docs/examples/eggsample/eggsample' |  |  | 0.857 |
 | ns | 1497 |  | 52 | _callers.py: every def location (signatures only) | 2.1 |  | 0.846 |
 | walker |  | 1508 | 47 | plaintext config docs/requirements.txt |  |  | 0.846 |
-| walker |  | 1589 | 81 | python decl names surface in src/pluggy/_result.py |  |  | 0.847 |
-| walker |  | 1589 | 0 | python decl at src/pluggy/_result.py:20 |  |  | 0.847 |
-| walker |  | 1600 | 11 | python decl at src/pluggy/_result.py:24 |  |  | 0.847 |
-| walker |  | 1609 | 9 | python decl doc at src/pluggy/_result.py:20 |  |  | 0.847 |
-| walker |  | 1631 | 22 | python class body at src/pluggy/_result.py:24 |  |  | 0.847 |
-| walker |  | 1663 | 32 | python decl doc at src/pluggy/_result.py:24 |  |  | 0.847 |
-| walker |  | 1790 | 127 | python method sigs in src/pluggy/_result.py |  |  | 0.849 |
-| walker |  | 1790 | 0 | python method at src/pluggy/_result.py:67 |  |  | 0.849 |
-| walker |  | 1790 | 0 | python method at src/pluggy/_result.py:80 |  |  | 0.849 |
-| walker |  | 1790 | 0 | python method at src/pluggy/_result.py:91 |  |  | 0.849 |
-| walker |  | 1798 | 8 | python method at src/pluggy/_result.py:42 |  |  | 0.850 |
-| walker |  | 1806 | 8 | python method at src/pluggy/_result.py:51 |  |  | 0.850 |
-| walker |  | 1814 | 8 | python method at src/pluggy/_result.py:56 |  |  | 0.851 |
-| ns | 1815 |  | 318 | _result.py / _tracing.py / _warnings.py: every class/def location | 2.2 |  | 0.815 |
-| walker |  | 1826 | 12 | python method doc at src/pluggy/_result.py:42 |  |  | 0.815 |
-| walker |  | 1838 | 12 | python method doc at src/pluggy/_result.py:51 |  |  | 0.815 |
-| walker |  | 1850 | 12 | python method doc at src/pluggy/_result.py:56 |  |  | 0.815 |
-| walker |  | 1890 | 40 | python method at src/pluggy/_result.py:31 |  |  | 0.815 |
-| walker |  | 1902 | 12 | python method doc at src/pluggy/_result.py:31 |  |  | 0.815 |
-| ns | 1951 |  | 136 | _hooks.py: every class/def location, part 1 (markers + helpers) | 2.3 |  | 0.789 |
-| walker |  | 1968 | 66 | python decl body at src/pluggy/__init__.py:32 body 33 |  |  | 0.820 |
+| walker |  | 1574 | 66 | python decl body at src/pluggy/__init__.py:32 body 33 |  |  | 0.881 |
+| walker |  | 1655 | 81 | python decl names surface in src/pluggy/_result.py |  |  | 0.881 |
+| walker |  | 1655 | 0 | python decl at src/pluggy/_result.py:20 |  |  | 0.881 |
+| walker |  | 1666 | 11 | python decl at src/pluggy/_result.py:24 |  |  | 0.882 |
+| walker |  | 1675 | 9 | python decl doc at src/pluggy/_result.py:20 |  |  | 0.882 |
+| walker |  | 1697 | 22 | python class body at src/pluggy/_result.py:24 |  |  | 0.882 |
+| walker |  | 1729 | 32 | python decl doc at src/pluggy/_result.py:24 |  |  | 0.882 |
+| ns | 1815 |  | 318 | _result.py / _tracing.py / _warnings.py: every class/def location | 2.2 |  | 0.819 |
+| walker |  | 1856 | 127 | python method sigs in src/pluggy/_result.py |  |  | 0.838 |
+| walker |  | 1856 | 0 | python method at src/pluggy/_result.py:67 |  |  | 0.838 |
+| walker |  | 1856 | 0 | python method at src/pluggy/_result.py:80 |  |  | 0.838 |
+| walker |  | 1856 | 0 | python method at src/pluggy/_result.py:91 |  |  | 0.838 |
+| walker |  | 1864 | 8 | python method at src/pluggy/_result.py:42 |  |  | 0.841 |
+| walker |  | 1872 | 8 | python method at src/pluggy/_result.py:51 |  |  | 0.844 |
+| walker |  | 1880 | 8 | python method at src/pluggy/_result.py:56 |  |  | 0.847 |
+| walker |  | 1892 | 12 | python method doc at src/pluggy/_result.py:42 |  |  | 0.847 |
+| walker |  | 1904 | 12 | python method doc at src/pluggy/_result.py:51 |  |  | 0.847 |
+| walker |  | 1916 | 12 | python method doc at src/pluggy/_result.py:56 |  |  | 0.847 |
+| ns | 1951 |  | 136 | _hooks.py: every class/def location, part 1 (markers + helpers) | 2.3 |  | 0.820 |
+| walker |  | 1956 | 40 | python method at src/pluggy/_result.py:31 |  |  | 0.820 |
+| walker |  | 1968 | 12 | python method doc at src/pluggy/_result.py:31 |  |  | 0.820 |
 | walker |  | 2088 | 120 | python decl names surface in src/pluggy/_manager.py |  |  | 0.820 |
 | walker |  | 2088 | 0 | python decl at src/pluggy/_manager.py:42 |  |  | 0.820 |
 | walker |  | 2088 | 0 | python decl at src/pluggy/_manager.py:52 |  |  | 0.820 |
@@ -183,13 +183,13 @@ Score(3000)=0.787 I=0.886 C=0.699 ns_rows≤3K=16/40 (reached=9 partial=2 missin
 | walker |  | 5619 | 42 | python method doc at src/pluggy/_manager.py:487 |  |  | 0.683 |
 | walker |  | 5663 | 44 | python method doc at src/pluggy/_manager.py:379 |  |  | 0.683 |
 | walker |  | 5684 | 21 | python method doc at src/pluggy/_hooks.py:577 |  |  | 0.683 |
-| walker |  | 5729 | 45 | python method doc at src/pluggy/_hooks.py:543 |  |  | 0.683 |
-| walker |  | 5808 | 79 | python decl doc at src/pluggy/_hooks.py:293 |  |  | 0.683 |
-| ns | 5840 |  | 1021 | _multicall(): full body -- the actual call loop | 3.4 | 2.1 | 0.613 |
-| walker |  | 5870 | 62 | listing of 'testing' |  |  | 0.648 |
-| walker |  | 5920 | 50 | python method doc at src/pluggy/_manager.py:512 |  |  | 0.648 |
-| walker |  | 6004 | 84 | python method at src/pluggy/_hooks.py:91 |  |  | 0.648 |
-| walker |  | 6014 | 10 | python imports in docs/examples/eggsample/eggsample/__init__.py |  |  | 0.648 |
+| walker |  | 5746 | 62 | listing of 'testing' |  |  | 0.723 |
+| walker |  | 5791 | 45 | python method doc at src/pluggy/_hooks.py:543 |  |  | 0.723 |
+| ns | 5840 |  | 1021 | _multicall(): full body -- the actual call loop | 3.4 | 2.1 | 0.648 |
+| walker |  | 5870 | 79 | python decl doc at src/pluggy/_hooks.py:293 |  |  | 0.648 |
+| walker |  | 5880 | 10 | python imports in docs/examples/eggsample/eggsample/__init__.py |  |  | 0.648 |
+| walker |  | 5930 | 50 | python method doc at src/pluggy/_manager.py:512 |  |  | 0.648 |
+| walker |  | 6014 | 84 | python method at src/pluggy/_hooks.py:91 |  |  | 0.648 |
 | walker |  | 6105 | 91 | python method at src/pluggy/_hooks.py:101 |  |  | 0.648 |
 | ns | 6113 |  | 273 | PluggyWarning / PluggyTeardownRaisedWarning: full body | 3.5 | 2.2 | 0.633 |
 | walker |  | 6166 | 61 | python method doc at src/pluggy/_result.py:80 |  |  | 0.633 |
@@ -201,34 +201,34 @@ Score(3000)=0.787 I=0.886 C=0.699 ns_rows≤3K=16/40 (reached=9 partial=2 missin
 | walker |  | 6553 | 65 | python method doc at src/pluggy/_manager.py:434 |  |  | 0.615 |
 | walker |  | 6659 | 106 | python method at src/pluggy/_hooks.py:190 |  |  | 0.615 |
 | ns | 6694 |  | 149 | Test roster: test_details.py (10 tests) | 4.2 |  | 0.609 |
-| walker |  | 6726 | 67 | python decl names surface in src/pluggy/_tracing.py |  |  | 0.612 |
-| walker |  | 6726 | 0 | python decl at src/pluggy/_tracing.py:16 |  |  | 0.612 |
-| walker |  | 6726 | 0 | python decl at src/pluggy/_tracing.py:59 |  |  | 0.612 |
-| ns | 6913 |  | 219 | Test roster: test_hookcaller.py (15 tests) | 4.3 |  | 0.604 |
-| walker |  | 6936 | 210 | python method sigs in src/pluggy/_tracing.py |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:17 |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:22 |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:25 |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:42 |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:48 |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:51 |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:60 |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:64 |  |  | 0.622 |
-| walker |  | 6936 | 0 | python method at src/pluggy/_tracing.py:67 |  |  | 0.622 |
-| walker |  | 6945 | 9 | python method body at src/pluggy/_tracing.py:48 body 49 |  |  | 0.622 |
-| walker |  | 6957 | 12 | python method body at src/pluggy/_tracing.py:22 body 23 |  |  | 0.622 |
-| walker |  | 6970 | 13 | python method body at src/pluggy/_tracing.py:64 body 65 |  |  | 0.622 |
-| walker |  | 7082 | 112 | python method at src/pluggy/_hooks.py:202 |  |  | 0.623 |
+| walker |  | 6771 | 112 | python method at src/pluggy/_hooks.py:202 |  |  | 0.610 |
+| walker |  | 6838 | 67 | python decl names surface in src/pluggy/_tracing.py |  |  | 0.613 |
+| walker |  | 6838 | 0 | python decl at src/pluggy/_tracing.py:16 |  |  | 0.613 |
+| walker |  | 6838 | 0 | python decl at src/pluggy/_tracing.py:59 |  |  | 0.613 |
+| ns | 6913 |  | 219 | Test roster: test_hookcaller.py (15 tests) | 4.3 |  | 0.605 |
+| walker |  | 7048 | 210 | python method sigs in src/pluggy/_tracing.py |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:17 |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:22 |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:25 |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:42 |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:48 |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:51 |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:60 |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:64 |  |  | 0.623 |
+| walker |  | 7048 | 0 | python method at src/pluggy/_tracing.py:67 |  |  | 0.623 |
+| walker |  | 7057 | 9 | python method body at src/pluggy/_tracing.py:48 body 49 |  |  | 0.623 |
+| walker |  | 7069 | 12 | python method body at src/pluggy/_tracing.py:22 body 23 |  |  | 0.623 |
+| walker |  | 7082 | 13 | python method body at src/pluggy/_tracing.py:64 body 65 |  |  | 0.623 |
 | ns | 7085 |  | 172 | Test roster: test_invocations.py (13 tests) | 4.4 |  | 0.616 |
 | walker |  | 7159 | 77 | python method doc at src/pluggy/_hooks.py:499 |  |  | 0.616 |
 | walker |  | 7176 | 17 | python method body at src/pluggy/_tracing.py:67 body 68 |  |  | 0.616 |
-| walker |  | 7256 | 80 | python decl names surface in src/pluggy/_callers.py |  |  | 0.621 |
-| walker |  | 7287 | 31 | python decl at src/pluggy/_callers.py:27 |  |  | 0.621 |
-| walker |  | 7318 | 31 | python decl doc at src/pluggy/_callers.py:27 |  |  | 0.621 |
-| walker |  | 7347 | 29 | python decl at src/pluggy/_callers.py:70 |  |  | 0.621 |
+| walker |  | 7263 | 87 | python method doc at src/pluggy/_manager.py:201 |  |  | 0.616 |
+| walker |  | 7343 | 80 | python decl names surface in src/pluggy/_callers.py |  |  | 0.621 |
 | ns | 7372 |  | 287 | Test roster: test_multicall.py (21 tests) | 4.5 |  | 0.610 |
-| walker |  | 7381 | 34 | python decl at src/pluggy/_callers.py:60 |  |  | 0.610 |
-| walker |  | 7468 | 87 | python method doc at src/pluggy/_manager.py:201 |  |  | 0.610 |
+| walker |  | 7374 | 31 | python decl at src/pluggy/_callers.py:27 |  |  | 0.610 |
+| walker |  | 7405 | 31 | python decl doc at src/pluggy/_callers.py:27 |  |  | 0.610 |
+| walker |  | 7434 | 29 | python decl at src/pluggy/_callers.py:70 |  |  | 0.610 |
+| walker |  | 7468 | 34 | python decl at src/pluggy/_callers.py:60 |  |  | 0.610 |
 | ns | 7620 |  | 248 | testing/conftest.py: full body (shared pm / he_pm fixtures) | 4.6 |  | 0.597 |
 | walker |  | 7657 | 189 | python decl doc at src/pluggy/_manager.py:83 |  |  | 0.597 |
 | walker |  | 7846 | 189 | python decl doc at src/pluggy/_warnings.py:10 |  |  | 0.618 |
@@ -243,17 +243,15 @@ Score(3000)=0.787 I=0.886 C=0.699 ns_rows≤3K=16/40 (reached=9 partial=2 missin
 | ns | 8496 |  | 194 | tox.ini: [tox] envlist + [testenv] | 6.2 |  | 0.588 |
 | walker |  | 8518 | 59 | python decl at src/pluggy/_callers.py:82 |  |  | 0.589 |
 | walker |  | 8536 | 18 | python method body at src/pluggy/_tracing.py:60 body 61 |  |  | 0.589 |
-| walker |  | 8592 | 56 | python decl doc at src/pluggy/_callers.py:82 |  |  | 0.589 |
-| ns | 8674 |  | 178 | tox.ini: [testenv:docs] + [pytest] | 6.3 | 6.2 | 0.583 |
-| walker |  | 8701 | 109 | python imports in src/pluggy/_result.py |  |  | 0.583 |
+| walker |  | 8645 | 109 | python imports in src/pluggy/_result.py |  |  | 0.589 |
+| ns | 8674 |  | 178 | tox.ini: [testenv:docs] + [pytest] | 6.3 | 6.2 | 0.582 |
+| walker |  | 8780 | 135 | python method doc at src/pluggy/_manager.py:176 |  |  | 0.582 |
 | ns | 8786 |  | 112 | tox.ini: [testenv:release] | 6.4 | 6.2 | 0.578 |
-| walker |  | 8836 | 135 | python method doc at src/pluggy/_manager.py:176 |  |  | 0.578 |
+| walker |  | 8836 | 56 | python decl doc at src/pluggy/_callers.py:82 |  |  | 0.578 |
 | walker |  | 8973 | 137 | python method doc at src/pluggy/_manager.py:125 |  |  | 0.578 |
 | ns | 8988 |  | 202 | .pre-commit-config.yaml: repo + hook-id roster | 6.5 |  | 0.573 |
 | ns | 9039 |  | 51 | .coveragerc: [run] section (what coverage.py tracks) | 6.6 |  | 0.570 |
 | ns | 9102 |  | 63 | MANIFEST.in: full (sdist inclusion rules) | 6.7 |  | 0.567 |
-| walker |  | 9119 | 146 | python method doc at src/pluggy/_manager.py:278 |  |  | 0.567 |
-| walker |  | 9186 | 67 | python imports in src/pluggy/_tracing.py |  |  | 0.567 |
 | ns | 9212 |  | 110 | CHANGELOG.rst: pluggy 1.6.0 -- version header + deprecations | 7.1 |  | 0.563 |
 | ns | 9443 |  | 231 | CHANGELOG.rst: pluggy 1.6.0 -- bug fixes | 7.2 | 7.1 | 0.558 |
 | ns | 9646 |  | 203 | changelog/README.rst: newsfragment type taxonomy + naming convention | 7.3 |  | 0.554 |

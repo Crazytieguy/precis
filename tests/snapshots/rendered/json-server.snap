@@ -99,7 +99,12 @@ README.md
      161→Use `field:operator=value`.
     …
      186→### Sort
-    …
+     187→
+     188→```http
+     189→GET /posts?_sort=title
+     190→GET /posts?_sort=-views
+     191→GET /posts?_sort=author.name,-views
+     192→```
      194→### Pagination
      196→```http
      197→GET /posts?_page=1&_per_page=25
@@ -221,12 +226,6 @@ src/
                8→  $schema?: string
                9→}
               11→export class NormalizedAdapter implements Adapter<Data> {
-            …
-              14→  constructor(adapter: Adapter<RawData>) {
-            …
-              18→  async read(): Promise<Data | null> {
-            …
-              44→  async write(data: Data): Promise<void> {
             …
         observer.ts
             …

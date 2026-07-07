@@ -3147,52 +3147,10 @@ kind = "full"
 
 [[batches]]
 position = 120
-key = 'Markdown(HeadingsOutline { file: "docs/understanding-htop-versions.md" })'
-descriptor = "headings outline in docs/understanding-htop-versions.md"
-cost_tokens = 51
-cum_tokens = 7100
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/understanding-htop-versions.md"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/understanding-htop-versions.md"
-start = 14
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/understanding-htop-versions.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/understanding-htop-versions.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 121
 key = 'C(DeclNames { file: "Panel.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in Panel.h"
 cost_tokens = 685
-cum_tokens = 7785
+cum_tokens = 7734
 
 [batches.content]
 kind = "lines"
@@ -3230,11 +3188,11 @@ end = 148
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 121
 key = 'C(Decl { file: "Panel.h", start_line: 93 })'
 descriptor = "c decl at Panel.h:93"
 cost_tokens = 0
-cum_tokens = 7785
+cum_tokens = 7734
 
 [batches.content]
 kind = "lines"
@@ -3248,11 +3206,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Plaintext(ManLede { file: "pcp-htop.5.in" })'
 descriptor = "man-page NAME + DESCRIPTION in pcp-htop.5.in"
 cost_tokens = 115
-cum_tokens = 7900
+cum_tokens = 7849
 
 [batches.content]
 kind = "lines"
@@ -3266,11 +3224,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 124
+position = 123
 key = 'C(DeclNames { file: "RowField.h", chunk_index: 0 })'
 descriptor = "c decl names surface in RowField.h"
 cost_tokens = 52
-cum_tokens = 7952
+cum_tokens = 7901
 
 [batches.content]
 kind = "lines"
@@ -3316,11 +3274,11 @@ end = 55
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 124
 key = 'C(Decl { file: "RowField.h", start_line: 53 })'
 descriptor = "c decl at RowField.h:53"
 cost_tokens = 0
-cum_tokens = 7952
+cum_tokens = 7901
 
 [batches.content]
 kind = "lines"
@@ -3334,11 +3292,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 126
+position = 125
 key = 'C(Decl { file: "RowField.h", start_line: 13 })'
 descriptor = "c decl at RowField.h:13"
 cost_tokens = 10
-cum_tokens = 7962
+cum_tokens = 7911
 
 [batches.content]
 kind = "lines"
@@ -3360,11 +3318,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 127
+position = 126
 key = 'C(DeclBody { file: "Process.h", start_line: 278 })'
 descriptor = "c decl body at Process.h:278"
 cost_tokens = 16
-cum_tokens = 7978
+cum_tokens = 7927
 
 [batches.content]
 kind = "lines"
@@ -3378,11 +3336,11 @@ end = 279
 kind = "full"
 
 [[batches]]
-position = 128
+position = 127
 key = 'Fs(DirListing { dir: "solaris" })'
 descriptor = "listing of 'solaris'"
 cost_tokens = 45
-cum_tokens = 8023
+cum_tokens = 7972
 
 [batches.content]
 kind = "fs"
@@ -3392,11 +3350,11 @@ parent = "solaris"
 entries = ["Platform.c", "Platform.h", "ProcessField.h", "SolarisMachine.c", "SolarisMachine.h", "SolarisProcess.c", "SolarisProcess.h", "SolarisProcessTable.c", "SolarisProcessTable.h"]
 
 [[batches]]
-position = 129
+position = 128
 key = 'Fs(DirListing { dir: "unsupported" })'
 descriptor = "listing of 'unsupported'"
 cost_tokens = 45
-cum_tokens = 8068
+cum_tokens = 8017
 
 [batches.content]
 kind = "fs"
@@ -3406,11 +3364,11 @@ parent = "unsupported"
 entries = ["Platform.c", "Platform.h", "ProcessField.h", "UnsupportedMachine.c", "UnsupportedMachine.h", "UnsupportedProcess.c", "UnsupportedProcess.h", "UnsupportedProcessTable.c", "UnsupportedProcessTable.h"]
 
 [[batches]]
-position = 130
+position = 129
 key = 'C(DeclNames { file: "TasksMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in TasksMeter.h"
 cost_tokens = 29
-cum_tokens = 8097
+cum_tokens = 8046
 
 [batches.content]
 kind = "lines"
@@ -3440,11 +3398,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 130
 key = 'C(DeclNames { file: "Debug.h", chunk_index: 0 })'
 descriptor = "c decl names surface in Debug.h"
 cost_tokens = 13
-cum_tokens = 8110
+cum_tokens = 8059
 
 [batches.content]
 kind = "lines"
@@ -3456,6 +3414,48 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 131
+key = 'Markdown(HeadingsOutline { file: "docs/understanding-htop-versions.md" })'
+descriptor = "headings outline in docs/understanding-htop-versions.md"
+cost_tokens = 51
+cum_tokens = 8110
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/understanding-htop-versions.md"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/understanding-htop-versions.md"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/understanding-htop-versions.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/understanding-htop-versions.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 132

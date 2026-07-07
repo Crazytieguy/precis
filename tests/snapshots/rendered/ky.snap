@@ -108,6 +108,7 @@ readme.md
      830→
      831→Type: `object`
      833→### ky.stop
+     835→A `Symbol` that can be returned by a `beforeRetry` hook to stop the retry. This will also short circuit the remaining `beforeRetry` hooks.
     …
      864→### ky.retry(options?)
      866→Force a retry from an `afterResponse` hook.

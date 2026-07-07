@@ -56,6 +56,19 @@ README.md
      133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
+    …
+      23→	activeHelpMarker = "_activeHelp_ "
+    …
+      26→	activeHelpEnvVarSuffix  = "ACTIVE_HELP"
+      27→	activeHelpGlobalEnvVar  = configEnvVarGlobalPrefix + "_" + activeHelpEnvVarSuffix
+      28→	activeHelpGlobalDisable = "0"
+    …
+      38→func AppendActiveHelp(compArray []Completion, activeHelpStr string) []Completion {
+    …
+      47→func GetActiveHelpConfig(cmd *Command) string {
+    …
+      58→func activeHelpEnvVar(name string) string {
+    …
 active_help_test.go
 args.go
 args_test.go
@@ -269,10 +282,5 @@ powershell_completions_test.go
 shell_completions.go
 site/
     content/
-        active_help.md
-        completions/
-        docgen/
-        projects_using_cobra.md
-        user_guide.md
 zsh_completions.go
 zsh_completions_test.go
