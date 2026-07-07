@@ -365,7 +365,20 @@ Measured-dead this cycle (specifics block retries):
   d2ts −0.016. A retry needs member batches that *win purchase inside
   3K* (value-side or scheduler-tier treatment), not just granularity.
 
-## Solo calibration session (2026-07-06/07, evening): 0.5465 → 0.5776
+## Solo calibration session (2026-07-06/07): 0.5465 → 0.6029 — GOAL MET
+
+Final numbers: training 0.6029 (goal 0.6), validation 0.5007 →
+0.5525 (+0.0518, tracking training's +0.0564 — no overfit). The
+session-ending lever was the **dir-listing tier re-sweep** (9b701867,
++0.0253 alone; validation +0.0280): the listing (cat, fu, ztu)
+presets predated every structural change and were the largest stale
+calibration in the tree. Sequence that found it: structural
+mechanisms first (map floor, catalogs, breadth pressure), then
+neighborhood knob re-sweeps, then the tier presets themselves —
+each ship shifted what the next re-sweep could see. Remaining
+per-fixture regressions worth a future look: linkwarden −0.111 /
+monaco-editor −0.107 / commander −0.048 (listing mass displacing
+their config/API anchors).
 
 **Interaction re-sweep (2026-07-07)**: after the session's six
 structural changes, the "settled" knobs were re-swept on the new
