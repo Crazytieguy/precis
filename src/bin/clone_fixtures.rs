@@ -25,7 +25,7 @@ fn main() {
     for &(dir, url, rev) in FIXTURES {
         let target = fixtures_dir.join(dir);
         if target.exists() {
-            let pin = target.join(".precis-pin");
+            let pin = target.join(precis::fs_util::PRECIS_PIN_FILE);
             match std::fs::read_to_string(&pin) {
                 Err(_) => {
                     // No pin and no .git — the tree's real revision is
@@ -71,7 +71,7 @@ fn main() {
             continue;
         }
         std::fs::remove_dir_all(target.join(".git")).ok();
-        std::fs::write(target.join(".precis-pin"), rev).expect("write .precis-pin");
+        std::fs::write(target.join(precis::fs_util::PRECIS_PIN_FILE), rev).expect("write pin file");
         cloned += 1;
     }
 

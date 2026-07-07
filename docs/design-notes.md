@@ -414,13 +414,13 @@ touching span-boundary construction in any walker.
 
 ## Walker / value open items
 
-- **Names-surface chunking can break unified-batch expectations.** Names
-  surfaces are sometimes split into `... #1 in <path>`, `#2`, etc. NS
-  authors typically expect the names surface as a single unit; the
-  walker's chunked version creates a catastrophic-omission failure mode
-  where partial delivery scores poorly. Investigate when chunking fires
-  and whether the granularity is worth the cost. Walker / value tuning
-  question, not a divergence-report one.
+- **tomli const-lump acceptance (2026-07-06).** Unifying names surfaces
+  (one catalog per file) cost tomli −0.034: `_parser.py`'s const-heavy
+  surface now buys all const name lines as one lump where chunking let
+  the scheduler defer the low-value tail. Accepted as the price of the
+  net-positive simplification (axios +0.071 / pluggy +0.059). If a
+  const-heavy-file pattern shows up more broadly, the lever is a
+  const/decl split of the names surface, not a return to chunking.
 
 ## NS-rank vs walker-rank: the 3K headline measures what the NS ranks, not what the walker delivers
 

@@ -352,7 +352,7 @@ pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path)
 /// SECURITY / NOTICE / RELEASING / migration-guide stems / etc. —
 /// anywhere in the tree (monorepo per-package copies inherit the
 /// same admin-doc semantics).
-pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
+fn is_peripheral_doc(target: &std::path::Path) -> bool {
     let Some(ext) = target.extension().and_then(|e| e.to_str()) else {
         return false;
     };
@@ -480,7 +480,7 @@ pub fn is_orientation_doc(file: &std::path::Path) -> bool {
 /// region suffix). A small blocklist in `is_locale_language` rules out
 /// non-locale suffixes sharing that shape (`README.api.md` /
 /// `README.dev.md` / `README.old.md`).
-pub fn is_localized_readme(target: &std::path::Path) -> bool {
+fn is_localized_readme(target: &std::path::Path) -> bool {
     let Some(name) = target.file_name().and_then(|n| n.to_str()) else {
         return false;
     };
@@ -583,7 +583,7 @@ pub fn prose_mass_tier_multiplier(
     }
 }
 
-pub fn prose_mass_window_tokens(token_budget: usize) -> usize {
+fn prose_mass_window_tokens(token_budget: usize) -> usize {
     ((token_budget as f64) * PROSE_MASS_WINDOW_FRACTION).round() as usize
 }
 

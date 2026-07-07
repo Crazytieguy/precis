@@ -20,7 +20,7 @@ use crate::north_star::NorthStar;
 /// pipeline was retired.
 pub fn load_ns_checked(ns_path: &Path, fixture_root: &Path) -> Result<NorthStar> {
     let ns = load_ns(ns_path)?;
-    let pin_path = fixture_root.join(".precis-pin");
+    let pin_path = fixture_root.join(crate::fs_util::PRECIS_PIN_FILE);
     let pin = std::fs::read_to_string(&pin_path)
         .with_context(|| format!("reading fixture pin {}", pin_path.display()))?;
     let pin_trimmed = pin.trim();
