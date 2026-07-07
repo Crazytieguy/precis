@@ -8,30 +8,30 @@ Score(3000)=0.787 I=0.886 C=0.699 ns_rows≤3K=16/40 (reached=9 partial=2 missin
 | ns | 114 |  | 86 | README badges line + who depends on pluggy + doc pointer | 1.2 |  | 0.000 |
 | ns | 200 |  | 86 | Directory listing: docs/ and its worked-example subtree | 1.3 |  | 0.000 |
 | walker |  | 219 | 119 | README headline in README.rst |  |  | 0.482 |
-| walker |  | 262 | 43 | listing of 'src/pluggy' |  |  | 0.493 |
-| ns | 293 |  | 93 | Directory listing: changelog, CI, downstream smoke-tests, scripts | 1.4 |  | 0.356 |
-| ns | 445 |  | 152 | pluggy/__init__.py: __all__ (the literal public export list) | 1.5 |  | 0.295 |
-| walker |  | 580 | 318 | python imports in src/pluggy/__init__.py |  |  | 0.541 |
-| walker |  | 596 | 16 | python decl names surface in src/pluggy/__init__.py |  |  | 0.542 |
-| walker |  | 596 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.542 |
-| walker |  | 615 | 19 | listing of 'changelog' |  |  | 0.549 |
-| walker |  | 619 | 4 | listing of '.claude' |  |  | 0.549 |
-| ns | 646 |  | 201 | Directory listing: repo root, src/pluggy, testing | 1.6 |  | 0.560 |
-| walker |  | 651 | 32 | listing of 'docs' |  |  | 0.594 |
-| walker |  | 654 | 3 | listing of 'docs/_static' |  |  | 0.594 |
-| walker |  | 658 | 4 | listing of 'docs/_static/img' |  |  | 0.594 |
-| walker |  | 701 | 43 | listing of 'downstream' |  |  | 0.654 |
-| walker |  | 754 | 53 | [package] in pyproject.toml |  |  | 0.654 |
-| walker |  | 778 | 24 | python decl names surface in src/pluggy/_warnings.py |  |  | 0.654 |
-| walker |  | 778 | 0 | python decl at src/pluggy/_warnings.py:4 |  |  | 0.654 |
-| walker |  | 794 | 16 | python decl at src/pluggy/_warnings.py:10 |  |  | 0.654 |
-| walker |  | 807 | 13 | python class body at src/pluggy/_warnings.py:4 |  |  | 0.654 |
-| walker |  | 820 | 13 | python class body at src/pluggy/_warnings.py:10 |  |  | 0.654 |
-| walker |  | 834 | 14 | python decl doc at src/pluggy/_warnings.py:4 |  |  | 0.654 |
-| walker |  | 841 | 7 | python imports in src/pluggy/_warnings.py |  |  | 0.654 |
-| ns | 904 |  | 258 | pluggy/__init__.py: re-export imports + dynamic __version__ | 1.7 | 1.5 | 0.632 |
-| ns | 1237 |  | 333 | README definitive example, part 1: markers + spec/impl namespaces | 1.8 |  | 0.549 |
-| walker |  | 1387 | 546 | README.rst section #0 |  |  | 0.699 |
+| ns | 293 |  | 93 | Directory listing: changelog, CI, downstream smoke-tests, scripts | 1.4 |  | 0.348 |
+| ns | 445 |  | 152 | pluggy/__init__.py: __all__ (the literal public export list) | 1.5 |  | 0.288 |
+| ns | 646 |  | 201 | Directory listing: repo root, src/pluggy, testing | 1.6 |  | 0.345 |
+| walker |  | 765 | 546 | README.rst section #0 |  |  | 0.365 |
+| walker |  | 808 | 43 | listing of 'src/pluggy' |  |  | 0.453 |
+| ns | 904 |  | 258 | pluggy/__init__.py: re-export imports + dynamic __version__ | 1.7 | 1.5 | 0.404 |
+| walker |  | 1126 | 318 | python imports in src/pluggy/__init__.py |  |  | 0.565 |
+| walker |  | 1142 | 16 | python decl names surface in src/pluggy/__init__.py |  |  | 0.573 |
+| walker |  | 1142 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.573 |
+| walker |  | 1161 | 19 | listing of 'changelog' |  |  | 0.576 |
+| walker |  | 1165 | 4 | listing of '.claude' |  |  | 0.576 |
+| walker |  | 1197 | 32 | listing of 'docs' |  |  | 0.607 |
+| walker |  | 1200 | 3 | listing of 'docs/_static' |  |  | 0.607 |
+| walker |  | 1204 | 4 | listing of 'docs/_static/img' |  |  | 0.607 |
+| ns | 1237 |  | 333 | README definitive example, part 1: markers + spec/impl namespaces | 1.8 |  | 0.656 |
+| walker |  | 1247 | 43 | listing of 'downstream' |  |  | 0.699 |
+| walker |  | 1300 | 53 | [package] in pyproject.toml |  |  | 0.699 |
+| walker |  | 1324 | 24 | python decl names surface in src/pluggy/_warnings.py |  |  | 0.699 |
+| walker |  | 1324 | 0 | python decl at src/pluggy/_warnings.py:4 |  |  | 0.699 |
+| walker |  | 1340 | 16 | python decl at src/pluggy/_warnings.py:10 |  |  | 0.699 |
+| walker |  | 1353 | 13 | python class body at src/pluggy/_warnings.py:4 |  |  | 0.699 |
+| walker |  | 1366 | 13 | python class body at src/pluggy/_warnings.py:10 |  |  | 0.699 |
+| walker |  | 1380 | 14 | python decl doc at src/pluggy/_warnings.py:4 |  |  | 0.699 |
+| walker |  | 1387 | 7 | python imports in src/pluggy/_warnings.py |  |  | 0.699 |
 | walker |  | 1400 | 13 | listing of '.github' |  |  | 0.726 |
 | walker |  | 1404 | 4 | listing of '.github/workflows' |  |  | 0.736 |
 | walker |  | 1418 | 14 | listing of 'scripts' |  |  | 0.756 |

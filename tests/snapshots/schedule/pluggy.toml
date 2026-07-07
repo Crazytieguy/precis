@@ -51,10 +51,28 @@ kind = "full"
 
 [[batches]]
 position = 4
+key = 'Markdown(Section { file: "README.rst", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.rst section #0"
+cost_tokens = 546
+cum_tokens = 765
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.rst"
+start = 11
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
 key = 'Fs(DirListing { dir: "src/pluggy" })'
 descriptor = "listing of 'src/pluggy'"
 cost_tokens = 43
-cum_tokens = 262
+cum_tokens = 808
 
 [batches.content]
 kind = "fs"
@@ -64,11 +82,11 @@ parent = "src/pluggy"
 entries = ["__init__.py", "_callers.py", "_hooks.py", "_manager.py", "_result.py", "_tracing.py", "_warnings.py", "py.typed"]
 
 [[batches]]
-position = 5
+position = 6
 key = 'Python(Imports { file: "src/pluggy/__init__.py" })'
 descriptor = "python imports in src/pluggy/__init__.py"
 cost_tokens = 318
-cum_tokens = 580
+cum_tokens = 1126
 
 [batches.content]
 kind = "lines"
@@ -82,11 +100,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 6
+position = 7
 key = 'Python(DeclNames { file: "src/pluggy/__init__.py" })'
 descriptor = "python decl names surface in src/pluggy/__init__.py"
 cost_tokens = 16
-cum_tokens = 596
+cum_tokens = 1142
 
 [batches.content]
 kind = "lines"
@@ -108,11 +126,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Python(Decl { file: "src/pluggy/__init__.py", start_line: 32 })'
 descriptor = "python decl at src/pluggy/__init__.py:32"
 cost_tokens = 0
-cum_tokens = 596
+cum_tokens = 1142
 
 [batches.content]
 kind = "lines"
@@ -126,11 +144,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Fs(DirListing { dir: "changelog" })'
 descriptor = "listing of 'changelog'"
 cost_tokens = 19
-cum_tokens = 615
+cum_tokens = 1161
 
 [batches.content]
 kind = "fs"
@@ -140,11 +158,11 @@ parent = "changelog"
 entries = ["590.trivial.rst", "README.rst", "_template.rst"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Fs(DirListing { dir: ".claude" })'
 descriptor = "listing of '.claude'"
 cost_tokens = 4
-cum_tokens = 619
+cum_tokens = 1165
 
 [batches.content]
 kind = "fs"
@@ -154,11 +172,11 @@ parent = ".claude"
 entries = ["settings.json"]
 
 [[batches]]
-position = 10
+position = 11
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 32
-cum_tokens = 651
+cum_tokens = 1197
 
 [batches.content]
 kind = "fs"
@@ -168,11 +186,11 @@ parent = "docs"
 entries = ["_static", "api_reference.rst", "changelog.rst", "conf.py", "examples", "index.rst", "requirements.txt"]
 
 [[batches]]
-position = 11
+position = 12
 key = 'Fs(DirListing { dir: "docs/_static" })'
 descriptor = "listing of 'docs/_static'"
 cost_tokens = 3
-cum_tokens = 654
+cum_tokens = 1200
 
 [batches.content]
 kind = "fs"
@@ -182,11 +200,11 @@ parent = "docs/_static"
 entries = ["img"]
 
 [[batches]]
-position = 12
+position = 13
 key = 'Fs(DirListing { dir: "docs/_static/img" })'
 descriptor = "listing of 'docs/_static/img'"
 cost_tokens = 4
-cum_tokens = 658
+cum_tokens = 1204
 
 [batches.content]
 kind = "fs"
@@ -196,11 +214,11 @@ parent = "docs/_static/img"
 entries = ["plug.png"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: "downstream" })'
 descriptor = "listing of 'downstream'"
 cost_tokens = 43
-cum_tokens = 701
+cum_tokens = 1247
 
 [batches.content]
 kind = "fs"
@@ -210,11 +228,11 @@ parent = "downstream"
 entries = [".gitignore", "README.md", "conda.sh", "datasette.sh", "devpi.sh", "hatch.sh", "pytest.sh", "python-lsp-server.sh", "tox.sh"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 53
-cum_tokens = 754
+cum_tokens = 1300
 
 [batches.content]
 kind = "lines"
@@ -244,11 +262,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Python(DeclNames { file: "src/pluggy/_warnings.py" })'
 descriptor = "python decl names surface in src/pluggy/_warnings.py"
 cost_tokens = 24
-cum_tokens = 778
+cum_tokens = 1324
 
 [batches.content]
 kind = "lines"
@@ -270,11 +288,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Python(Decl { file: "src/pluggy/_warnings.py", start_line: 4 })'
 descriptor = "python decl at src/pluggy/_warnings.py:4"
 cost_tokens = 0
-cum_tokens = 778
+cum_tokens = 1324
 
 [batches.content]
 kind = "lines"
@@ -288,11 +306,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Python(Decl { file: "src/pluggy/_warnings.py", start_line: 10 })'
 descriptor = "python decl at src/pluggy/_warnings.py:10"
 cost_tokens = 16
-cum_tokens = 794
+cum_tokens = 1340
 
 [batches.content]
 kind = "lines"
@@ -306,11 +324,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Python(ClassBody { file: "src/pluggy/_warnings.py", start_line: 4 })'
 descriptor = "python class body at src/pluggy/_warnings.py:4"
 cost_tokens = 13
-cum_tokens = 807
+cum_tokens = 1353
 
 [batches.content]
 kind = "lines"
@@ -324,11 +342,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Python(ClassBody { file: "src/pluggy/_warnings.py", start_line: 10 })'
 descriptor = "python class body at src/pluggy/_warnings.py:10"
 cost_tokens = 13
-cum_tokens = 820
+cum_tokens = 1366
 
 [batches.content]
 kind = "lines"
@@ -342,11 +360,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Python(DeclDoc { file: "src/pluggy/_warnings.py", start_line: 4 })'
 descriptor = "python decl doc at src/pluggy/_warnings.py:4"
 cost_tokens = 14
-cum_tokens = 834
+cum_tokens = 1380
 
 [batches.content]
 kind = "lines"
@@ -360,11 +378,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Python(Imports { file: "src/pluggy/_warnings.py" })'
 descriptor = "python imports in src/pluggy/_warnings.py"
 cost_tokens = 7
-cum_tokens = 841
+cum_tokens = 1387
 
 [batches.content]
 kind = "lines"
@@ -373,24 +391,6 @@ kind = "lines"
 path = "src/pluggy/_warnings.py"
 start = 1
 end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Markdown(Section { file: "README.rst", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.rst section #0"
-cost_tokens = 546
-cum_tokens = 1387
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.rst"
-start = 11
-end = 65
 
 [batches.content.spans.render]
 kind = "full"

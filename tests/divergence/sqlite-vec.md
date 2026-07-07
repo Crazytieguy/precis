@@ -1,4 +1,4 @@
-Score(3000)=0.392 I=0.686 C=0.225 ns_rows≤3K=17/52 (reached=3 partial=0 missing=14)
+Score(3000)=0.388 I=0.669 C=0.225 ns_rows≤3K=17/52 (reached=3 partial=0 missing=14)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -32,39 +32,39 @@ Score(3000)=0.392 I=0.686 C=0.225 ns_rows≤3K=17/52 (reached=3 partial=0 missin
 | ns | 1019 |  | 245 | Makefile: build + test targets | 1.7 |  | 0.419 |
 | walker |  | 1079 | 132 | python decl names surface in tmp-static.py |  |  | 0.419 |
 | walker |  | 1079 | 0 | python decl at tmp-static.py:25 |  |  | 0.419 |
-| walker |  | 1200 | 121 | ARCHITECTURE.md section #0 |  |  | 0.419 |
 | ns | 1323 |  | 304 | README sample usage (vec0 create/insert) | 1.8 |  | 0.382 |
-| ns | 1662 |  | 339 | reference.yaml: section catalog + meta functions | 2.1 |  | 0.338 |
-| walker |  | 1794 | 594 | README.md section #0 |  |  | 0.338 |
-| ns | 1837 |  | 175 | reference.yaml: full function-name roster (locations) | 2.2 |  | 0.407 |
-| walker |  | 1944 | 150 | python decl at tmp-static.py:13 |  |  | 0.407 |
-| walker |  | 2016 | 72 | listing of 'site' |  |  | 0.407 |
-| ns | 2020 |  | 183 | reference.yaml: vec_f32 constructor (worked exemplar) | 2.3 | 2.2 | 0.391 |
-| walker |  | 2040 | 24 | listing of 'benchmarks/micro' |  |  | 0.391 |
-| walker |  | 2044 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.391 |
-| walker |  | 2058 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.391 |
-| walker |  | 2097 | 39 | python decl names surface in bindings/python/extra_init.py |  |  | 0.391 |
-| walker |  | 2097 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.391 |
-| walker |  | 2097 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.391 |
-| ns | 2099 |  | 79 | reference.yaml: vec0 entry | 2.4 |  | 0.381 |
-| walker |  | 2114 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.381 |
-| walker |  | 2136 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.381 |
-| walker |  | 2160 | 24 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.381 |
-| walker |  | 2177 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.381 |
-| walker |  | 2257 | 80 | listing of 'examples' |  |  | 0.382 |
-| walker |  | 2305 | 48 | listing of 'tests/fuzz' |  |  | 0.382 |
-| ns | 2323 |  | 224 | site/features/vec0.md: 3 column-type summary table | 3.1 |  | 0.371 |
-| ns | 2546 |  | 223 | site/features/vec0.md: metadata columns (intro + example) | 3.2 |  | 0.352 |
-| walker |  | 2554 | 249 | plaintext config TODO |  |  | 0.429 |
-| walker |  | 2580 | 26 | python imports in bindings/python/extra_init.py |  |  | 0.429 |
-| ns | 2688 |  | 142 | site/features/vec0.md: partition key columns (core example) | 3.3 |  | 0.414 |
-| walker |  | 2737 | 157 | README.md section #4 |  |  | 0.414 |
-| walker |  | 2782 | 45 | listing of 'site/guides' |  |  | 0.415 |
-| ns | 2796 |  | 108 | test.sql: live vec0 constructor with partition + auxiliary columns | 3.4 |  | 0.404 |
-| ns | 2922 |  | 126 | test.sql: metadata-filter KNN query | 3.5 |  | 0.392 |
-| ns | 3015 |  | 93 | sqlite-vec.c: VectorElementType enum | 4.1 |  | 0.386 |
-| ns | 3177 |  | 162 | sqlite-vec.c: #pragma region map | 4.2 |  | 0.377 |
-| walker |  | 3305 | 523 | README.md section #2 |  |  | 0.435 |
+| walker |  | 1602 | 523 | README.md section #2 |  |  | 0.509 |
+| ns | 1662 |  | 339 | reference.yaml: section catalog + meta functions | 2.1 |  | 0.444 |
+| walker |  | 1723 | 121 | ARCHITECTURE.md section #0 |  |  | 0.444 |
+| ns | 1837 |  | 175 | reference.yaml: full function-name roster (locations) | 2.2 |  | 0.492 |
+| ns | 2020 |  | 183 | reference.yaml: vec_f32 constructor (worked exemplar) | 2.3 | 2.2 | 0.472 |
+| ns | 2099 |  | 79 | reference.yaml: vec0 entry | 2.4 |  | 0.459 |
+| walker |  | 2317 | 594 | README.md section #0 |  |  | 0.459 |
+| ns | 2323 |  | 224 | site/features/vec0.md: 3 column-type summary table | 3.1 |  | 0.446 |
+| walker |  | 2467 | 150 | python decl at tmp-static.py:13 |  |  | 0.446 |
+| walker |  | 2539 | 72 | listing of 'site' |  |  | 0.447 |
+| ns | 2546 |  | 223 | site/features/vec0.md: metadata columns (intro + example) | 3.2 |  | 0.423 |
+| walker |  | 2563 | 24 | listing of 'benchmarks/micro' |  |  | 0.423 |
+| walker |  | 2567 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.423 |
+| walker |  | 2581 | 14 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.423 |
+| walker |  | 2620 | 39 | python decl names surface in bindings/python/extra_init.py |  |  | 0.423 |
+| walker |  | 2620 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.423 |
+| walker |  | 2620 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.423 |
+| walker |  | 2637 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.423 |
+| walker |  | 2659 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.423 |
+| walker |  | 2683 | 24 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.423 |
+| ns | 2688 |  | 142 | site/features/vec0.md: partition key columns (core example) | 3.3 |  | 0.408 |
+| walker |  | 2700 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.408 |
+| walker |  | 2780 | 80 | listing of 'examples' |  |  | 0.410 |
+| ns | 2796 |  | 108 | test.sql: live vec0 constructor with partition + auxiliary columns | 3.4 |  | 0.399 |
+| walker |  | 2828 | 48 | listing of 'tests/fuzz' |  |  | 0.399 |
+| ns | 2922 |  | 126 | test.sql: metadata-filter KNN query | 3.5 |  | 0.388 |
+| ns | 3015 |  | 93 | sqlite-vec.c: VectorElementType enum | 4.1 |  | 0.382 |
+| walker |  | 3077 | 249 | plaintext config TODO |  |  | 0.446 |
+| walker |  | 3103 | 26 | python imports in bindings/python/extra_init.py |  |  | 0.446 |
+| ns | 3177 |  | 162 | sqlite-vec.c: #pragma region map | 4.2 |  | 0.435 |
+| walker |  | 3260 | 157 | README.md section #4 |  |  | 0.435 |
+| walker |  | 3305 | 45 | listing of 'site/guides' |  |  | 0.435 |
 | walker |  | 3701 | 396 | c decl names surface in sqlite-vec.c |  |  | 0.436 |
 | walker |  | 3701 | 0 | c decl at sqlite-vec.c:591 |  |  | 0.436 |
 | walker |  | 3701 | 0 | c decl at sqlite-vec.c:614 |  |  | 0.436 |

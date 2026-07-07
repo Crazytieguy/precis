@@ -234,23 +234,6 @@ packages/
                1→# Enclosed CLI
                2→
                3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-               5→## Getting Started
-            …
-               9→### Create a note
-            …
-              22→### Configure the enclosed instance to use
-            …
-              29→## Usage
-            …
-              35→### Create a note
-            …
-              58→### View a note
-            …
-              68→### Configure the enclosed instance to use
-            …
-              75→## License
-            …
-              79→## Credits and Acknowledgements
             …
         bin/
             enclosed.mjs
@@ -346,13 +329,6 @@ packages/
             resources/
                 brand-kit.md
                 i18n.md
-                    …
-                       5→# Language and i18n
-                    …
-                       9→## Supported languages
-                    …
-                      15→## Contributing to translations
-                    …
             self-hosting/
     lib/
         README.md
@@ -362,7 +338,19 @@ packages/
                5→## Installation
             …
               18→## Usage
-            …
+              19→
+              20→```javascript
+              21→import { createNote } from '@enclosed/lib';
+              22→
+              23→const { noteUrl } = await createNote({
+              24→  content: 'Hello, World!',
+              25→  password: 'password',
+              26→  ttlInSeconds: 3600,
+              27→  deleteAfterReading: true,
+              28→});
+              29→
+              30→console.log(noteUrl);
+              31→```
               33→## License
             …
               37→## Credits and Acknowledgements

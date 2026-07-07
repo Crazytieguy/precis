@@ -16,30 +16,30 @@ Score(3000)=0.557 I=0.828 C=0.374 ns_rows≤3K=21/45 (reached=9 partial=3 missin
 | ns | 391 |  | 21 | Cargo.toml — [features] header | 1.7 |  | 0.514 |
 | walker |  | 398 | 25 | listing of 'src' |  |  | 0.547 |
 | walker |  | 460 | 62 | mod/use plumbing in src/lib.rs |  |  | 0.548 |
-| walker |  | 479 | 19 | listing of 'impl' |  |  | 0.548 |
 | ns | 536 |  | 145 | Cargo.toml — std feature doc comment | 1.8 |  | 0.494 |
 | ns | 568 |  | 32 | Cargo.toml — [dependencies] | 1.9 |  | 0.487 |
 | ns | 592 |  | 24 | Cargo.toml — [workspace] | 1.10 |  | 0.497 |
-| walker |  | 645 | 166 | [features] in Cargo.toml |  |  | 0.635 |
-| ns | 671 |  | 79 | impl/Cargo.toml — package identity (name/version/authors/description/edition) | 1.11 |  | 0.604 |
-| ns | 744 |  | 73 | impl/Cargo.toml — [lib]/[dependencies] | 1.12 |  | 0.576 |
-| ns | 835 |  | 91 | impl/src/lib.rs — module list | 1.13 |  | 0.536 |
-| walker |  | 912 | 267 | crate-doc lede in src/lib.rs |  |  | 0.537 |
-| walker |  | 984 | 72 | listing of 'tests' |  |  | 0.636 |
-| walker |  | 992 | 8 | listing of '.github' |  |  | 0.643 |
-| walker |  | 996 | 4 | listing of '.github/workflows' |  |  | 0.652 |
-| walker |  | 1043 | 47 | listing of 'impl/src' |  |  | 0.793 |
-| walker |  | 1085 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.793 |
-| ns | 1087 |  | 252 | impl/src/lib.rs — #[proc_macro_derive] entry point | 1.14 |  | 0.711 |
-| walker |  | 1120 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.717 |
-| walker |  | 1151 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.725 |
-| walker |  | 1284 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.791 |
-| ns | 1323 |  | 236 | src/lib.rs — module wiring epilogue | 1.15 |  | 0.722 |
-| walker |  | 1407 | 123 | manifest config in Cargo.toml |  |  | 0.722 |
-| walker |  | 1517 | 110 | [dependencies] in Cargo.toml |  |  | 0.732 |
-| walker |  | 1570 | 53 | [dependencies] in impl/Cargo.toml |  |  | 0.747 |
-| ns | 1600 |  | 277 | Crate-doc lede + canonical example | 2.1 |  | 0.684 |
-| walker |  | 1766 | 196 | README.md section #1 |  |  | 0.684 |
+| walker |  | 656 | 196 | README.md section #1 |  |  | 0.497 |
+| ns | 671 |  | 79 | impl/Cargo.toml — package identity (name/version/authors/description/edition) | 1.11 |  | 0.473 |
+| walker |  | 675 | 19 | listing of 'impl' |  |  | 0.473 |
+| ns | 744 |  | 73 | impl/Cargo.toml — [lib]/[dependencies] | 1.12 |  | 0.451 |
+| ns | 835 |  | 91 | impl/src/lib.rs — module list | 1.13 |  | 0.420 |
+| walker |  | 942 | 267 | crate-doc lede in src/lib.rs |  |  | 0.421 |
+| ns | 1087 |  | 252 | impl/src/lib.rs — #[proc_macro_derive] entry point | 1.14 |  | 0.376 |
+| walker |  | 1108 | 166 | [features] in Cargo.toml |  |  | 0.480 |
+| walker |  | 1180 | 72 | listing of 'tests' |  |  | 0.568 |
+| walker |  | 1188 | 8 | listing of '.github' |  |  | 0.575 |
+| walker |  | 1192 | 4 | listing of '.github/workflows' |  |  | 0.583 |
+| walker |  | 1239 | 47 | listing of 'impl/src' |  |  | 0.709 |
+| walker |  | 1281 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.711 |
+| walker |  | 1316 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.717 |
+| ns | 1323 |  | 236 | src/lib.rs — module wiring epilogue | 1.15 |  | 0.656 |
+| walker |  | 1347 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.663 |
+| walker |  | 1480 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.722 |
+| ns | 1600 |  | 277 | Crate-doc lede + canonical example | 2.1 |  | 0.662 |
+| walker |  | 1603 | 123 | manifest config in Cargo.toml |  |  | 0.662 |
+| walker |  | 1713 | 110 | [dependencies] in Cargo.toml |  |  | 0.671 |
+| walker |  | 1766 | 53 | [dependencies] in impl/Cargo.toml |  |  | 0.684 |
 | walker |  | 1796 | 30 | README.md section #3 |  |  | 0.684 |
 | walker |  | 1824 | 28 | pub-item names surface in src/provide.rs |  |  | 0.684 |
 | ns | 1946 |  | 346 | Display-shorthand table + #[from] rule statement | 2.2 |  | 0.646 |

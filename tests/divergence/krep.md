@@ -13,25 +13,25 @@ Score(3000)=0.374 I=0.716 C=0.195 ns_rows≤3K=20/41 (reached=5 partial=0 missin
 | walker |  | 434 | 282 | headings outline in README.md |  |  | 0.442 |
 | walker |  | 452 | 18 | README.md section #42 |  |  | 0.443 |
 | ns | 506 |  | 164 | krep is not a grep/ripgrep replacement (design intent) | 1.6 |  | 0.418 |
-| walker |  | 567 | 115 | README.md section #0 |  |  | 0.506 |
-| walker |  | 588 | 21 | README.md section #49 |  |  | 0.506 |
-| ns | 603 |  | 97 | krep.c locations: remaining search algorithms + dispatch | 1.7 |  | 0.463 |
-| walker |  | 617 | 29 | README.md section #50 |  |  | 0.463 |
-| walker |  | 635 | 18 | README.md section #12 |  |  | 0.463 |
-| walker |  | 648 | 13 | listing of '.github' |  |  | 0.477 |
-| walker |  | 656 | 8 | listing of '.github/workflows' |  |  | 0.500 |
-| ns | 734 |  | 131 | CLI usage synopsis (README) | 1.8 |  | 0.454 |
-| walker |  | 892 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.459 |
-| walker |  | 911 | 19 | README.md section #7 |  |  | 0.459 |
-| walker |  | 932 | 21 | README.md section #6 |  |  | 0.459 |
-| ns | 945 |  | 211 | How Krep Works (README): smart algorithm selection | 1.9 |  | 0.416 |
-| walker |  | 953 | 21 | README.md section #5 |  |  | 0.416 |
-| walker |  | 975 | 22 | README.md section #9 |  |  | 0.416 |
-| walker |  | 998 | 23 | README.md section #8 |  |  | 0.416 |
-| walker |  | 1021 | 23 | README.md section #14 |  |  | 0.416 |
-| walker |  | 1044 | 23 | README.md section #15 |  |  | 0.416 |
-| ns | 1144 |  | 199 | How Krep Works (README): multithreading + memory-mapped I/O | 1.10 |  | 0.369 |
-| walker |  | 1176 | 132 | README.md section #21 |  |  | 0.457 |
+| walker |  | 584 | 132 | README.md section #21 |  |  | 0.429 |
+| ns | 603 |  | 97 | krep.c locations: remaining search algorithms + dispatch | 1.7 |  | 0.393 |
+| walker |  | 699 | 115 | README.md section #0 |  |  | 0.474 |
+| walker |  | 720 | 21 | README.md section #49 |  |  | 0.474 |
+| ns | 734 |  | 131 | CLI usage synopsis (README) | 1.8 |  | 0.538 |
+| walker |  | 749 | 29 | README.md section #50 |  |  | 0.538 |
+| walker |  | 767 | 18 | README.md section #12 |  |  | 0.538 |
+| walker |  | 780 | 13 | listing of '.github' |  |  | 0.549 |
+| walker |  | 788 | 8 | listing of '.github/workflows' |  |  | 0.569 |
+| ns | 945 |  | 211 | How Krep Works (README): smart algorithm selection | 1.9 |  | 0.510 |
+| walker |  | 1024 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.516 |
+| walker |  | 1043 | 19 | README.md section #7 |  |  | 0.516 |
+| walker |  | 1064 | 21 | README.md section #6 |  |  | 0.516 |
+| walker |  | 1085 | 21 | README.md section #5 |  |  | 0.516 |
+| walker |  | 1107 | 22 | README.md section #9 |  |  | 0.516 |
+| walker |  | 1130 | 23 | README.md section #8 |  |  | 0.516 |
+| ns | 1144 |  | 199 | How Krep Works (README): multithreading + memory-mapped I/O | 1.10 |  | 0.457 |
+| walker |  | 1153 | 23 | README.md section #14 |  |  | 0.457 |
+| walker |  | 1176 | 23 | README.md section #15 |  |  | 0.457 |
 | ns | 1226 |  | 82 | krep.c locations: search_string/search_file + thread-pool init | 1.11 |  | 0.440 |
 | walker |  | 1240 | 64 | README.md section #16 |  |  | 0.440 |
 | ns | 1365 |  | 139 | krep.c locations: directory walk + gitignore | 1.12 |  | 0.416 |

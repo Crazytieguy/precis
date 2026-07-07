@@ -1,7 +1,7 @@
 fixture = "d2ts"
 budget = 10000
-cumulative_tokens = 9896
-batch_count = 169
+cumulative_tokens = 9872
+batch_count = 168
 
 [[batches]]
 position = 1
@@ -5510,21 +5510,3 @@ end = 20
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 169
-key = 'Markdown(Section { file: "packages/d2ts/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "packages/d2ts/README.md section #2"
-cost_tokens = 24
-cum_tokens = 9896
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/README.md"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"

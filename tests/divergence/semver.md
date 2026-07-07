@@ -35,37 +35,37 @@ Score(3000)=0.642 I=0.733 C=0.561 ns_rows≤3K=29/43 (reached=16 partial=2 missi
 | ns | 843 |  | 28 | .github/ top-level listing | 1.16 |  | 0.472 |
 | ns | 884 |  | 41 | .github/workflows/ listing | 1.17 |  | 0.460 |
 | ns | 903 |  | 19 | .github/actions/ and ISSUE_TEMPLATE/ listing | 1.18 |  | 0.454 |
-| walker |  | 911 | 144 | package scripts in package.json |  |  | 0.454 |
-| ns | 911 |  | 8 | tap-snapshots/test/bin/ listing | 1.19 |  | 0.454 |
-| ns | 991 |  | 80 | classes/semver.js method roster | 2.1 |  | 0.443 |
-| walker |  | 1016 | 105 | listing of 'functions' |  |  | 0.554 |
-| ns | 1237 |  | 246 | classes/range.js method + helper roster | 2.2 |  | 0.522 |
-| ns | 1298 |  | 61 | classes/comparator.js method roster | 2.3 |  | 0.514 |
+| ns | 911 |  | 8 | tap-snapshots/test/bin/ listing | 1.19 |  | 0.452 |
+| ns | 991 |  | 80 | classes/semver.js method roster | 2.1 |  | 0.441 |
+| walker |  | 1052 | 285 | README.md section #2 |  |  | 0.441 |
+| walker |  | 1196 | 144 | package scripts in package.json |  |  | 0.443 |
+| ns | 1237 |  | 246 | classes/range.js method + helper roster | 2.2 |  | 0.418 |
+| ns | 1298 |  | 61 | classes/comparator.js method roster | 2.3 |  | 0.411 |
+| walker |  | 1301 | 105 | listing of 'functions' |  |  | 0.514 |
 | ns | 1353 |  | 55 | bin/semver.js function roster | 2.4 |  | 0.509 |
-| walker |  | 1396 | 380 | export at index.js:45 |  |  | 0.509 |
-| walker |  | 1429 | 33 | listing of 'test' |  |  | 0.545 |
-| walker |  | 1467 | 38 | listing of 'benchmarks' |  |  | 0.566 |
-| walker |  | 1488 | 21 | README.md section #21 |  |  | 0.566 |
-| walker |  | 1509 | 21 | README.md section #22 |  |  | 0.566 |
-| ns | 1516 |  | 163 | internal/re.js token roster (12 most-referenced tokens) | 2.5 |  | 0.549 |
-| walker |  | 1530 | 21 | README.md section #23 |  |  | 0.549 |
-| walker |  | 1551 | 21 | README.md section #24 |  |  | 0.549 |
-| walker |  | 1568 | 17 | listing of 'test/classes' |  |  | 0.562 |
-| walker |  | 1590 | 22 | README.md section #35 |  |  | 0.562 |
-| walker |  | 1612 | 22 | README.md section #52 |  |  | 0.562 |
-| walker |  | 1640 | 28 | listing of '.github' |  |  | 0.584 |
-| walker |  | 1681 | 41 | listing of '.github/workflows' |  |  | 0.608 |
-| walker |  | 1706 | 25 | README.md section #13 |  |  | 0.608 |
-| walker |  | 1730 | 24 | README.md section #43 |  |  | 0.608 |
-| walker |  | 1754 | 24 | README.md section #48 |  |  | 0.608 |
-| walker |  | 1783 | 29 | README.md section #14 |  |  | 0.608 |
-| walker |  | 1806 | 23 | README.md section #34 |  |  | 0.608 |
-| walker |  | 1888 | 82 | package dependencies in package.json |  |  | 0.608 |
-| ns | 1907 |  | 391 | internal/constants.js | 2.6 |  | 0.558 |
-| walker |  | 1917 | 29 | README.md section #26 |  |  | 0.558 |
-| walker |  | 1946 | 29 | README.md section #36 |  |  | 0.558 |
+| ns | 1516 |  | 163 | internal/re.js token roster (12 most-referenced tokens) | 2.5 |  | 0.493 |
+| walker |  | 1681 | 380 | export at index.js:45 |  |  | 0.493 |
+| walker |  | 1714 | 33 | listing of 'test' |  |  | 0.528 |
+| walker |  | 1752 | 38 | listing of 'benchmarks' |  |  | 0.549 |
+| walker |  | 1773 | 21 | README.md section #21 |  |  | 0.549 |
+| walker |  | 1794 | 21 | README.md section #22 |  |  | 0.549 |
+| walker |  | 1815 | 21 | README.md section #23 |  |  | 0.549 |
+| walker |  | 1836 | 21 | README.md section #24 |  |  | 0.549 |
+| walker |  | 1853 | 17 | listing of 'test/classes' |  |  | 0.562 |
+| walker |  | 1875 | 22 | README.md section #35 |  |  | 0.562 |
+| walker |  | 1897 | 22 | README.md section #52 |  |  | 0.562 |
+| ns | 1907 |  | 391 | internal/constants.js | 2.6 |  | 0.516 |
+| walker |  | 1925 | 28 | listing of '.github' |  |  | 0.536 |
+| walker |  | 1966 | 41 | listing of '.github/workflows' |  |  | 0.558 |
+| walker |  | 1991 | 25 | README.md section #13 |  |  | 0.558 |
+| walker |  | 2015 | 24 | README.md section #43 |  |  | 0.558 |
+| walker |  | 2039 | 24 | README.md section #48 |  |  | 0.558 |
+| walker |  | 2068 | 29 | README.md section #14 |  |  | 0.558 |
+| walker |  | 2091 | 23 | README.md section #34 |  |  | 0.558 |
+| walker |  | 2173 | 82 | package dependencies in package.json |  |  | 0.558 |
+| walker |  | 2202 | 29 | README.md section #26 |  |  | 0.558 |
 | ns | 2213 |  | 306 | internal/identifiers.js | 2.7 |  | 0.526 |
-| walker |  | 2231 | 285 | README.md section #2 |  |  | 0.526 |
+| walker |  | 2231 | 29 | README.md section #36 |  |  | 0.526 |
 | walker |  | 2337 | 106 | README.md section #4 |  |  | 0.527 |
 | ns | 2351 |  | 138 | package.json scripts | 2.8 |  | 0.537 |
 | walker |  | 2367 | 30 | README.md section #39 |  |  | 0.537 |

@@ -234,5 +234,4 @@ Score(3000)=0.352 I=0.664 C=0.187 ns_rows≤3K=25/65 (reached=6 partial=2 missin
 | ns | 9835 |  | 270 | d2ts + d2mini tests listing | 12.1 |  | 0.355 |
 | walker |  | 9837 | 45 | package identity in package.json |  |  | 0.355 |
 | walker |  | 9872 | 35 | export at packages/d2ql/src/compiler.ts:16 |  |  | 0.356 |
-| walker |  | 9896 | 24 | packages/d2ts/README.md section #2 |  |  | 0.356 |
 | ns | 9950 |  | 115 | d2ql tests listing | 12.2 |  | 0.352 |

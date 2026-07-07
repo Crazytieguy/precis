@@ -187,10 +187,28 @@ kind = "full"
 
 [[batches]]
 position = 8
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 196
+cum_tokens = 656
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 21
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
 key = 'Fs(DirListing { dir: "impl" })'
 descriptor = "listing of 'impl'"
 cost_tokens = 19
-cum_tokens = 479
+cum_tokens = 675
 
 [batches.content]
 kind = "fs"
@@ -200,29 +218,11 @@ parent = "impl"
 entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
 
 [[batches]]
-position = 9
-key = 'Toml(Features { file: "Cargo.toml" })'
-descriptor = "[features] in Cargo.toml"
-cost_tokens = 166
-cum_tokens = 645
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 14
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 10
 key = 'Rust(CrateDocLede { file: "src/lib.rs" })'
 descriptor = "crate-doc lede in src/lib.rs"
 cost_tokens = 267
-cum_tokens = 912
+cum_tokens = 942
 
 [batches.content]
 kind = "lines"
@@ -237,10 +237,28 @@ kind = "full"
 
 [[batches]]
 position = 11
+key = 'Toml(Features { file: "Cargo.toml" })'
+descriptor = "[features] in Cargo.toml"
+cost_tokens = 166
+cum_tokens = 1108
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 14
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 72
-cum_tokens = 984
+cum_tokens = 1180
 
 [batches.content]
 kind = "fs"
@@ -250,11 +268,11 @@ parent = "tests"
 entries = ["compiletest.rs", "no-std", "test_backtrace.rs", "test_display.rs", "test_error.rs", "test_expr.rs", "test_from.rs", "test_generics.rs", "test_lints.rs", "test_option.rs", "test_path.rs", "test_source.rs", "test_transparent.rs", "ui"]
 
 [[batches]]
-position = 12
+position = 13
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 992
+cum_tokens = 1188
 
 [batches.content]
 kind = "fs"
@@ -264,11 +282,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 996
+cum_tokens = 1192
 
 [batches.content]
 kind = "fs"
@@ -278,11 +296,11 @@ parent = ".github/workflows"
 entries = ["ci.yml"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Fs(DirListing { dir: "impl/src" })'
 descriptor = "listing of 'impl/src'"
 cost_tokens = 47
-cum_tokens = 1043
+cum_tokens = 1239
 
 [batches.content]
 kind = "fs"
@@ -292,11 +310,11 @@ parent = "impl/src"
 entries = ["ast.rs", "attr.rs", "expand.rs", "fallback.rs", "fmt.rs", "generics.rs", "lib.rs", "prop.rs", "scan_expr.rs", "unraw.rs", "valid.rs"]
 
 [[batches]]
-position = 15
+position = 16
 key = 'Rust(PubItem { file: "impl/src/lib.rs", start_line: 40 })'
 descriptor = "pub item at impl/src/lib.rs:40"
 cost_tokens = 42
-cum_tokens = 1085
+cum_tokens = 1281
 
 [batches.content]
 kind = "lines"
@@ -318,11 +336,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Rust(MethodSigs { file: "impl/src/lib.rs" })'
 descriptor = "impl method sigs in impl/src/lib.rs"
 cost_tokens = 35
-cum_tokens = 1120
+cum_tokens = 1316
 
 [batches.content]
 kind = "lines"
@@ -344,11 +362,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Rust(PubItemBody { file: "impl/src/lib.rs", start_line: 40, body_start_line: 41 })'
 descriptor = "pub item body at impl/src/lib.rs:40 body 41"
 cost_tokens = 31
-cum_tokens = 1151
+cum_tokens = 1347
 
 [batches.content]
 kind = "lines"
@@ -362,11 +380,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Rust(ModUse { file: "impl/src/lib.rs" })'
 descriptor = "mod/use plumbing in impl/src/lib.rs"
 cost_tokens = 133
-cum_tokens = 1284
+cum_tokens = 1480
 
 [batches.content]
 kind = "lines"
@@ -380,11 +398,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Toml(Config { file: "Cargo.toml" })'
 descriptor = "manifest config in Cargo.toml"
 cost_tokens = 123
-cum_tokens = 1407
+cum_tokens = 1603
 
 [batches.content]
 kind = "lines"
@@ -398,11 +416,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Toml(Dependencies { file: "Cargo.toml" })'
 descriptor = "[dependencies] in Cargo.toml"
 cost_tokens = 110
-cum_tokens = 1517
+cum_tokens = 1713
 
 [batches.content]
 kind = "lines"
@@ -416,11 +434,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Toml(Dependencies { file: "impl/Cargo.toml" })'
 descriptor = "[dependencies] in impl/Cargo.toml"
 cost_tokens = 53
-cum_tokens = 1570
+cum_tokens = 1766
 
 [batches.content]
 kind = "lines"
@@ -429,24 +447,6 @@ kind = "lines"
 path = "impl/Cargo.toml"
 start = 14
 end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
-cost_tokens = 196
-cum_tokens = 1766
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 21
-end = 42
 
 [batches.content.spans.render]
 kind = "full"

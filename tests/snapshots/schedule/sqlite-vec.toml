@@ -903,10 +903,28 @@ kind = "full"
 
 [[batches]]
 position = 24
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
+cost_tokens = 523
+cum_tokens = 1602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 61
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #0"
 cost_tokens = 121
-cum_tokens = 1200
+cum_tokens = 1723
 
 [batches.content]
 kind = "lines"
@@ -920,11 +938,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 594
-cum_tokens = 1794
+cum_tokens = 2317
 
 [batches.content]
 kind = "lines"
@@ -938,11 +956,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Python(Decl { file: "tmp-static.py", start_line: 13 })'
 descriptor = "python decl at tmp-static.py:13"
 cost_tokens = 150
-cum_tokens = 1944
+cum_tokens = 2467
 
 [batches.content]
 kind = "lines"
@@ -956,11 +974,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Fs(DirListing { dir: "site" })'
 descriptor = "listing of 'site'"
 cost_tokens = 72
-cum_tokens = 2016
+cum_tokens = 2539
 
 [batches.content]
 kind = "fs"
@@ -970,11 +988,11 @@ parent = "site"
 entries = [".gitignore", ".vitepress", "api-reference.md", "build-ref.mjs", "compiling.md", "features", "getting-started", "guides", "index.md", "package-lock.json", "package.json", "project.data.ts", "public", "sqlite.tmlanguage.json", "using", "versioning.md"]
 
 [[batches]]
-position = 28
+position = 29
 key = 'Fs(DirListing { dir: "benchmarks/micro" })'
 descriptor = "listing of 'benchmarks/micro'"
 cost_tokens = 24
-cum_tokens = 2040
+cum_tokens = 2563
 
 [batches.content]
 kind = "fs"
@@ -984,11 +1002,11 @@ parent = "benchmarks/micro"
 entries = [".gitignore", "Cargo.lock", "Cargo.toml", "benches", "build.rs", "src"]
 
 [[batches]]
-position = 29
+position = 30
 key = 'Fs(DirListing { dir: "benchmarks/micro/src" })'
 descriptor = "listing of 'benchmarks/micro/src'"
 cost_tokens = 4
-cum_tokens = 2044
+cum_tokens = 2567
 
 [batches.content]
 kind = "fs"
@@ -998,11 +1016,11 @@ parent = "benchmarks/micro/src"
 entries = ["lib.rs"]
 
 [[batches]]
-position = 30
+position = 31
 key = 'Rust(PubItem { file: "benchmarks/micro/src/lib.rs", start_line: 8 })'
 descriptor = "pub item at benchmarks/micro/src/lib.rs:8"
 cost_tokens = 14
-cum_tokens = 2058
+cum_tokens = 2581
 
 [batches.content]
 kind = "lines"
@@ -1024,11 +1042,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Python(DeclNames { file: "bindings/python/extra_init.py" })'
 descriptor = "python decl names surface in bindings/python/extra_init.py"
 cost_tokens = 39
-cum_tokens = 2097
+cum_tokens = 2620
 
 [batches.content]
 kind = "lines"
@@ -1066,11 +1084,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 6 })'
 descriptor = "python decl at bindings/python/extra_init.py:6"
 cost_tokens = 0
-cum_tokens = 2097
+cum_tokens = 2620
 
 [batches.content]
 kind = "lines"
@@ -1084,11 +1102,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 11 })'
 descriptor = "python decl at bindings/python/extra_init.py:11"
 cost_tokens = 0
-cum_tokens = 2097
+cum_tokens = 2620
 
 [batches.content]
 kind = "lines"
@@ -1102,11 +1120,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
 descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
 cost_tokens = 17
-cum_tokens = 2114
+cum_tokens = 2637
 
 [batches.content]
 kind = "lines"
@@ -1120,11 +1138,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 6 })'
 descriptor = "python decl doc at bindings/python/extra_init.py:6"
 cost_tokens = 22
-cum_tokens = 2136
+cum_tokens = 2659
 
 [batches.content]
 kind = "lines"
@@ -1138,11 +1156,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 11 })'
 descriptor = "python decl doc at bindings/python/extra_init.py:11"
 cost_tokens = 24
-cum_tokens = 2160
+cum_tokens = 2683
 
 [batches.content]
 kind = "lines"
@@ -1156,11 +1174,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
 descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
 cost_tokens = 17
-cum_tokens = 2177
+cum_tokens = 2700
 
 [batches.content]
 kind = "lines"
@@ -1174,11 +1192,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 80
-cum_tokens = 2257
+cum_tokens = 2780
 
 [batches.content]
 kind = "fs"
@@ -1188,11 +1206,11 @@ parent = "examples"
 entries = ["nbc-headlines", "python-recipes", "simple-bun", "simple-c", "simple-deno", "simple-go-cgo", "simple-go-ncruces", "simple-node", "simple-node2", "simple-python", "simple-ruby", "simple-rust", "simple-sqlite", "simple-wasm", "sqlite3-cli", "wasm"]
 
 [[batches]]
-position = 39
+position = 40
 key = 'Fs(DirListing { dir: "tests/fuzz" })'
 descriptor = "listing of 'tests/fuzz'"
 cost_tokens = 48
-cum_tokens = 2305
+cum_tokens = 2828
 
 [batches.content]
 kind = "fs"
@@ -1202,11 +1220,11 @@ parent = "tests/fuzz"
 entries = [".gitignore", "Makefile", "README.md", "corpus", "exec.c", "exec.dict", "json.c", "numpy.c", "numpy.dict", "vec0-create.c", "vec0-create.dict"]
 
 [[batches]]
-position = 40
+position = 41
 key = 'Plaintext(Whole { file: "TODO" })'
 descriptor = "plaintext config TODO"
 cost_tokens = 249
-cum_tokens = 2554
+cum_tokens = 3077
 
 [batches.content]
 kind = "lines"
@@ -1220,11 +1238,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Python(Imports { file: "bindings/python/extra_init.py" })'
 descriptor = "python imports in bindings/python/extra_init.py"
 cost_tokens = 26
-cum_tokens = 2580
+cum_tokens = 3103
 
 [batches.content]
 kind = "lines"
@@ -1238,11 +1256,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 157
-cum_tokens = 2737
+cum_tokens = 3260
 
 [batches.content]
 kind = "lines"
@@ -1256,11 +1274,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Fs(DirListing { dir: "site/guides" })'
 descriptor = "listing of 'site/guides'"
 cost_tokens = 45
-cum_tokens = 2782
+cum_tokens = 3305
 
 [batches.content]
 kind = "fs"
@@ -1268,24 +1286,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "site/guides"
 entries = ["arithmetic.md", "binary-quant.md", "classifiers.md", "hybrid-search.md", "matryoshka.md", "performance.md", "rag.md", "scalar-quant.md", "semantic-search.md"]
-
-[[batches]]
-position = 44
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #2"
-cost_tokens = 523
-cum_tokens = 3305
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 61
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 45

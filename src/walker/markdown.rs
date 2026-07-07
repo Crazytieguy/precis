@@ -312,7 +312,7 @@ fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64
 /// Boost for README H2 `Whole` sections whose title is a canonical-
 /// usage marker (see [`is_canonical_usage_h2_title`]) — the demo
 /// fence inside is the highest-value follow-up to the headline.
-const CANONICAL_USAGE_SECTION_FACTOR: f64 = 1.5;
+const CANONICAL_USAGE_SECTION_FACTOR: f64 = 2.2;
 
 /// Modest parallel boost for README reference/usage sections whose
 /// title matches the broader vocabulary (see

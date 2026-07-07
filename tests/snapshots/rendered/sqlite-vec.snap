@@ -70,37 +70,46 @@ README.md
       43→## Installing
     …
       61→## Sample usage
-    …
+      62→
+      63→```sql
+      64→.load ./vec0
+      65→
+      66→create virtual table vec_examples using vec0(
+      67→  sample_embedding float[8]
+      68→);
+      69→
+      70→-- vectors can be provided as JSON or in a compact binary format
+      71→insert into vec_examples(rowid, sample_embedding)
+      72→  values
+      73→    (1, '[-0.200, 0.250, 0.341, -0.211, 0.645, 0.935, -0.316, -0.924]'),
+      74→    (2, '[0.443, -0.501, 0.355, -0.771, 0.707, -0.708, -0.185, 0.362]'),
+      75→    (3, '[0.716, -0.927, 0.134, 0.052, -0.669, 0.793, -0.634, -0.162]'),
+      76→    (4, '[-0.710, 0.330, 0.656, 0.041, -0.990, 0.726, 0.385, -0.958]');
+      77→
+      78→
+      79→-- KNN style query
+      80→select
+      81→  rowid,
+      82→  distance
+      83→from vec_examples
+      84→where sample_embedding match '[0.890, 0.544, 0.825, 0.961, 0.358, 0.0196, 0.521, 0.175]'
+      85→order by distance
+      86→limit 2;
+      87→/*
+      88→┌───────┬──────────────────┐
+      89→│ rowid │     distance     │
+      90→├───────┼──────────────────┤
+      91→│ 2     │ 2.38687372207642 │
+      92→│ 1     │ 2.38978505134583 │
+      93→└───────┴──────────────────┘
+      94→*/
+      95→```
       97→## Sponsors
     …
      152→## See Also
-     153→
-     154→- [**`sqlite-ecosystem`**](https://github.com/asg017/sqlite-ecosystem), Maybe
-     155→  more 3rd party SQLite extensions I've developed
-     156→- [**`sqlite-rembed`**](https://github.com/asg017/sqlite-rembed), Generate text
-     157→  embeddings from remote APIs like OpenAI/Nomic/Ollama, meant for testing and
-     158→  SQL scripts
-     159→- [**`sqlite-lembed`**](https://github.com/asg017/sqlite-lembed), Generate text
-     160→  embeddings locally from embedding models in the `.gguf` format
+    …
 SECURITY.md
 TODO
-       1→- [ ] add `xyz_info` shadow table with version etc.
-       2→
-       3→- later
-       4→  - [ ] partition: UPDATE support
-       5→  - [ ] skip invalid validity entries in knn filter?
-       6→  - [ ] nulls in metadata
-       7→  - [ ] partition `x in (...)` handling
-       8→  - [ ] blobs/date/datetime
-       9→  - [ ] uuid/ulid perf
-      10→  - [ ] Aux columns: `NOT NULL` constraint
-      11→  - [ ] Metadata columns: `NOT NULL` constraint
-      12→   - [ ] Partiion key: `NOT NULL` constraint
-      13→  - [ ] dictionary encoding?
-      14→  - [ ] properly sqlite3_vtab_nochange / sqlite3_value_nochange handling
-      15→  - [ ] perf
-      16→    - [ ] aux: cache INSERT
-      17→    - [ ] aux: LEFT JOIN on `_rowids` queries to avoid N lookup queries
 VERSION
        1→0.1.7-alpha.10
 benchmarks/
@@ -128,9 +137,7 @@ bindings/
             go-sqlite3.patch
     python/
         extra_init.py
-               1→from typing import List
-               2→from struct import pack
-               3→from sqlite3 import Connection
+            …
                6→def serialize_float32(vector: List[float]) -> bytes:
                7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
                8→    return pack("%sf" % len(vector), *vector)
@@ -239,15 +246,6 @@ site/
     features/
     getting-started/
     guides/
-        arithmetic.md
-        binary-quant.md
-        classifiers.md
-        hybrid-search.md
-        matryoshka.md
-        performance.md
-        rag.md
-        scalar-quant.md
-        semantic-search.md
     index.md
     package-lock.json
     package.json
