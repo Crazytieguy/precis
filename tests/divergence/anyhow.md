@@ -66,47 +66,47 @@ Score(3000)=0.575 I=0.805 C=0.411 ns_rows≤3K=18/46 (reached=10 partial=0 missi
 | walker |  | 3669 | 83 | pub item at src/error.rs:934 |  |  | 0.644 |
 | ns | 3703 |  | 732 | Context trait doc (prose, code examples elided) | 3.1 | 2.1 | 0.575 |
 | walker |  | 3744 | 75 | pub-item names surface in src/kind.rs |  |  | 0.592 |
-| walker |  | 3826 | 82 | listing of 'tests/ui' |  |  | 0.625 |
-| walker |  | 3924 | 98 | impl method sigs in src/kind.rs |  |  | 0.634 |
-| ns | 4012 |  | 309 | macros.rs bail! doc + expansion | 3.2 |  | 0.609 |
+| walker |  | 3971 | 227 | README.md section #4 |  |  | 0.592 |
+| ns | 4012 |  | 309 | macros.rs bail! doc + expansion | 3.2 |  | 0.570 |
+| walker |  | 4053 | 82 | listing of 'tests/ui' |  |  | 0.601 |
+| walker |  | 4151 | 98 | impl method sigs in src/kind.rs |  |  | 0.609 |
 | ns | 4461 |  | 449 | macros.rs anyhow! doc + expansion | 3.3 |  | 0.578 |
 | ns | 4691 |  | 230 | macros.rs ensure! doc summary | 3.4 |  | 0.565 |
 | ns | 5275 |  | 584 | kind.rs tagged-dispatch explanation (top comment) | 3.5 | 2.3 | 0.531 |
-| walker |  | 5514 | 1590 | crate-doc body in src/lib.rs |  |  | 0.531 |
-| walker |  | 5605 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.541 |
-| walker |  | 5605 | 0 | pub item at src/nightly.rs:41 |  |  | 0.541 |
-| walker |  | 5605 | 0 | pub item at src/nightly.rs:52 |  |  | 0.541 |
-| walker |  | 5605 | 0 | pub item at src/nightly.rs:56 |  |  | 0.541 |
-| walker |  | 5609 | 4 | listing of 'tests/common' |  |  | 0.545 |
-| ns | 5624 |  | 349 | Error struct: Display/Debug output forms | 3.6 |  | 0.527 |
-| walker |  | 5650 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.527 |
-| ns | 5711 |  | 87 | Chain doc + struct def | 3.7 | 2.1 | 0.530 |
-| walker |  | 5715 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.535 |
-| walker |  | 5853 | 138 | macro_export body at src/macros.rs:58 |  |  | 0.544 |
-| ns | 5951 |  | 240 | Result alias doc | 3.8 | 2.1 | 0.532 |
-| walker |  | 6027 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.532 |
-| walker |  | 6039 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.532 |
-| walker |  | 6052 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.532 |
-| walker |  | 6274 | 222 | macro_export body at src/macros.rs:204 |  |  | 0.548 |
-| walker |  | 6288 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.548 |
-| ns | 6324 |  | 373 | error.rs unsafe construct() — the type-erasure trick | 4.1 | 2.2 | 0.531 |
-| walker |  | 6514 | 226 | pub-item doc lede at src/lib.rs:468 |  |  | 0.554 |
-| ns | 6540 |  | 216 | error.rs object_downcast — concrete unsafe cast | 4.2 |  | 0.544 |
-| ns | 6692 |  | 152 | ptr.rs Own/Ref/Mut struct shapes | 4.3 | 2.3 | 0.559 |
-| walker |  | 6798 | 284 | pub-item doc lede at src/lib.rs:650 |  |  | 0.559 |
-| walker |  | 6802 | 4 | listing of 'tests/drop' |  |  | 0.563 |
-| ns | 6816 |  | 124 | chain.rs Iterator::next impl | 4.4 | 2.3 | 0.557 |
-| walker |  | 6825 | 23 | pub-item names surface in tests/drop/mod.rs |  |  | 0.557 |
-| walker |  | 6849 | 24 | pub item at tests/drop/mod.rs:26 |  |  | 0.557 |
-| walker |  | 6874 | 25 | pub item at tests/drop/mod.rs:9 |  |  | 0.557 |
-| walker |  | 6921 | 47 | pub-item names surface in tests/common/mod.rs |  |  | 0.557 |
-| walker |  | 6921 | 0 | pub item at tests/common/mod.rs:4 |  |  | 0.557 |
-| walker |  | 6921 | 0 | pub item at tests/common/mod.rs:8 |  |  | 0.557 |
-| walker |  | 6921 | 0 | pub item at tests/common/mod.rs:12 |  |  | 0.557 |
-| walker |  | 6931 | 10 | pub item body at tests/common/mod.rs:4 body 5 |  |  | 0.557 |
-| walker |  | 6947 | 16 | pub item body at tests/common/mod.rs:8 body 9 |  |  | 0.557 |
+| ns | 5624 |  | 349 | Error struct: Display/Debug output forms | 3.6 |  | 0.513 |
+| ns | 5711 |  | 87 | Chain doc + struct def | 3.7 | 2.1 | 0.510 |
+| walker |  | 5741 | 1590 | crate-doc body in src/lib.rs |  |  | 0.510 |
+| walker |  | 5832 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.519 |
+| walker |  | 5832 | 0 | pub item at src/nightly.rs:41 |  |  | 0.519 |
+| walker |  | 5832 | 0 | pub item at src/nightly.rs:52 |  |  | 0.519 |
+| walker |  | 5832 | 0 | pub item at src/nightly.rs:56 |  |  | 0.519 |
+| walker |  | 5836 | 4 | listing of 'tests/common' |  |  | 0.523 |
+| walker |  | 5877 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.530 |
+| walker |  | 5942 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.535 |
+| ns | 5951 |  | 240 | Result alias doc | 3.8 | 2.1 | 0.524 |
+| walker |  | 6080 | 138 | macro_export body at src/macros.rs:58 |  |  | 0.532 |
+| walker |  | 6254 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.532 |
+| walker |  | 6266 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.532 |
+| walker |  | 6279 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.532 |
+| ns | 6324 |  | 373 | error.rs unsafe construct() — the type-erasure trick | 4.1 | 2.2 | 0.515 |
+| walker |  | 6501 | 222 | macro_export body at src/macros.rs:204 |  |  | 0.531 |
+| walker |  | 6515 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.531 |
+| ns | 6540 |  | 216 | error.rs object_downcast — concrete unsafe cast | 4.2 |  | 0.520 |
+| ns | 6692 |  | 152 | ptr.rs Own/Ref/Mut struct shapes | 4.3 | 2.3 | 0.538 |
+| walker |  | 6741 | 226 | pub-item doc lede at src/lib.rs:468 |  |  | 0.559 |
+| ns | 6816 |  | 124 | chain.rs Iterator::next impl | 4.4 | 2.3 | 0.553 |
+| walker |  | 7025 | 284 | pub-item doc lede at src/lib.rs:650 |  |  | 0.553 |
+| walker |  | 7029 | 4 | listing of 'tests/drop' |  |  | 0.557 |
 | ns | 7040 |  | 224 | fmt.rs ErrorImpl::debug impl | 4.5 | 2.3 | 0.546 |
-| walker |  | 7174 | 227 | README.md section #4 |  |  | 0.546 |
+| walker |  | 7052 | 23 | pub-item names surface in tests/drop/mod.rs |  |  | 0.546 |
+| walker |  | 7076 | 24 | pub item at tests/drop/mod.rs:26 |  |  | 0.546 |
+| walker |  | 7101 | 25 | pub item at tests/drop/mod.rs:9 |  |  | 0.546 |
+| walker |  | 7148 | 47 | pub-item names surface in tests/common/mod.rs |  |  | 0.546 |
+| walker |  | 7148 | 0 | pub item at tests/common/mod.rs:4 |  |  | 0.546 |
+| walker |  | 7148 | 0 | pub item at tests/common/mod.rs:8 |  |  | 0.546 |
+| walker |  | 7148 | 0 | pub item at tests/common/mod.rs:12 |  |  | 0.546 |
+| walker |  | 7158 | 10 | pub item body at tests/common/mod.rs:4 body 5 |  |  | 0.546 |
+| walker |  | 7174 | 16 | pub item body at tests/common/mod.rs:8 body 9 |  |  | 0.546 |
 | ns | 7279 |  | 239 | ensure.rs BothDebug/NotBothDebug dispatch + render() | 4.6 | 2.3 | 0.537 |
 | walker |  | 7466 | 292 | README.md section #9 |  |  | 0.558 |
 | walker |  | 7603 | 137 | README.md section #6 |  |  | 0.558 |

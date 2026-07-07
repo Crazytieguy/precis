@@ -2142,10 +2142,28 @@ kind = "full"
 
 [[batches]]
 position = 73
+key = 'Markdown(Section { file: "README.md", section_index: 37, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #37"
+cost_tokens = 141
+cum_tokens = 3480
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 462
+end = 481
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
 key = 'Json(Identity { file: "cmdk/package.json" })'
 descriptor = "package identity in cmdk/package.json"
 cost_tokens = 42
-cum_tokens = 3381
+cum_tokens = 3522
 
 [batches.content]
 kind = "lines"
@@ -2159,11 +2177,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Typescript(ExportBody { file: "cmdk/src/index.tsx", start_line: 729, body_start_line: 730 })'
 descriptor = "export body at cmdk/src/index.tsx:729 body 730"
 cost_tokens = 457
-cum_tokens = 3838
+cum_tokens = 3979
 
 [batches.content]
 kind = "lines"
@@ -2177,11 +2195,11 @@ end = 767
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 112
-cum_tokens = 3950
+cum_tokens = 4091
 
 [batches.content]
 kind = "lines"
@@ -2195,11 +2213,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #19"
 cost_tokens = 26
-cum_tokens = 3976
+cum_tokens = 4117
 
 [batches.content]
 kind = "lines"
@@ -2213,11 +2231,11 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 26
-cum_tokens = 4002
+cum_tokens = 4143
 
 [batches.content]
 kind = "lines"
@@ -2231,11 +2249,11 @@ end = 254
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Typescript(Export { file: "cmdk/tsup.config.ts", start_line: 3 })'
 descriptor = "export at cmdk/tsup.config.ts:3"
 cost_tokens = 73
-cum_tokens = 4075
+cum_tokens = 4216
 
 [batches.content]
 kind = "lines"
@@ -2249,11 +2267,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #23"
 cost_tokens = 25
-cum_tokens = 4100
+cum_tokens = 4241
 
 [batches.content]
 kind = "lines"
@@ -2262,24 +2280,6 @@ kind = "lines"
 path = "README.md"
 start = 256
 end = 258
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
-key = 'Markdown(Section { file: "README.md", section_index: 37, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #37"
-cost_tokens = 141
-cum_tokens = 4241
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 462
-end = 481
 
 [batches.content.spans.render]
 kind = "full"

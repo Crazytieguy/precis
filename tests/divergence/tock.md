@@ -258,46 +258,46 @@ Score(3000)=0.520 I=0.757 C=0.357 ns_rows≤3K=22/71 (reached=11 partial=2 missi
 | walker |  | 6814 | 22 | go decl at internal/adapters/cli/watch.go:90 |  |  | 0.452 |
 | ns | 6854 |  | 179 | cli reportModel (state for `tock calendar`) | 7.4 |  | 0.446 |
 | walker |  | 6881 | 67 | go package + imports in internal/extra/extra.go |  |  | 0.446 |
-| walker |  | 6996 | 115 | go decl names surface in internal/adapters/repositories/file/parser.go |  |  | 0.446 |
-| walker |  | 6996 | 0 | go decl at internal/adapters/repositories/file/parser.go:20 |  |  | 0.446 |
-| walker |  | 6996 | 0 | go decl at internal/adapters/repositories/file/parser.go:64 |  |  | 0.446 |
-| walker |  | 6996 | 0 | go decl at internal/adapters/repositories/file/parser.go:72 |  |  | 0.446 |
-| walker |  | 7003 | 7 | go decl at internal/adapters/repositories/file/parser.go:15 |  |  | 0.446 |
 | ns | 7041 |  | 187 | cli calendar_sidebar.go: renderSidebar (fixed-height-budget layout) | 7.5 |  | 0.439 |
 | ns | 7158 |  | 117 | cli list_gui model (state for `tock list`) | 7.6 |  | 0.434 |
-| walker |  | 7171 | 168 | go decl at internal/config/config.go:12 |  |  | 0.455 |
-| walker |  | 7214 | 43 | go package + imports in internal/core/models/activity.go |  |  | 0.468 |
-| walker |  | 7288 | 74 | go package + imports in internal/config/config.go |  |  | 0.484 |
-| ns | 7349 |  | 191 | cli.SelectActivityMetadata (interactive picker entry point) | 7.7 |  | 0.477 |
-| ns | 7462 |  | 113 | cli theme.go: Theme/Styles structs + DarkTheme | 7.8 |  | 0.485 |
-| walker |  | 7498 | 210 | go decl names surface in internal/adapters/cli/list_gui.go |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:22 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:57 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:70 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:101 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:111 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:128 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:154 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:200 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:204 |  |  | 0.485 |
-| walker |  | 7498 | 0 | go decl at internal/adapters/cli/list_gui.go:230 |  |  | 0.485 |
-| walker |  | 7505 | 7 | go decl body at internal/adapters/cli/list_gui.go:200 |  |  | 0.485 |
-| walker |  | 7555 | 50 | go package + imports in internal/core/dto/activity_dto.go |  |  | 0.500 |
-| ns | 7575 |  | 113 | file/parser.go: ParseActivity (the plaintext activity format) | 8.1 |  | 0.496 |
-| walker |  | 7700 | 145 | go decl names surface in internal/adapters/repositories/notes/repository.go |  |  | 0.496 |
-| walker |  | 7700 | 0 | go decl at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.496 |
-| walker |  | 7700 | 0 | go decl at internal/adapters/repositories/notes/repository.go:36 |  |  | 0.496 |
-| walker |  | 7700 | 0 | go decl at internal/adapters/repositories/notes/repository.go:73 |  |  | 0.496 |
-| walker |  | 7711 | 11 | go decl at internal/adapters/repositories/notes/repository.go:24 |  |  | 0.496 |
-| walker |  | 7720 | 9 | go decl at internal/adapters/repositories/notes/repository.go:18 |  |  | 0.496 |
-| walker |  | 7737 | 17 | go decl at internal/adapters/repositories/notes/repository.go:32 |  |  | 0.496 |
-| ns | 7738 |  | 163 | file/repository.go: Find | 8.2 |  | 0.490 |
-| walker |  | 7751 | 14 | go decl body at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.490 |
-| walker |  | 7805 | 54 | go package + imports in internal/adapters/cli/version.go |  |  | 0.503 |
-| ns | 7852 |  | 114 | file package test names | 8.3 |  | 0.499 |
-| ns | 8032 |  | 180 | notes/repository.go: Save (per-activity notes/tags sidecar) | 8.4 |  | 0.495 |
-| ns | 8085 |  | 53 | notes package test names | 8.5 |  | 0.493 |
-| walker |  | 8205 | 400 | README.md section #8 |  |  | 0.493 |
+| walker |  | 7281 | 400 | README.md section #8 |  |  | 0.434 |
+| ns | 7349 |  | 191 | cli.SelectActivityMetadata (interactive picker entry point) | 7.7 |  | 0.427 |
+| walker |  | 7396 | 115 | go decl names surface in internal/adapters/repositories/file/parser.go |  |  | 0.427 |
+| walker |  | 7396 | 0 | go decl at internal/adapters/repositories/file/parser.go:20 |  |  | 0.427 |
+| walker |  | 7396 | 0 | go decl at internal/adapters/repositories/file/parser.go:64 |  |  | 0.427 |
+| walker |  | 7396 | 0 | go decl at internal/adapters/repositories/file/parser.go:72 |  |  | 0.427 |
+| walker |  | 7403 | 7 | go decl at internal/adapters/repositories/file/parser.go:15 |  |  | 0.427 |
+| ns | 7462 |  | 113 | cli theme.go: Theme/Styles structs + DarkTheme | 7.8 |  | 0.437 |
+| walker |  | 7571 | 168 | go decl at internal/config/config.go:12 |  |  | 0.457 |
+| ns | 7575 |  | 113 | file/parser.go: ParseActivity (the plaintext activity format) | 8.1 |  | 0.454 |
+| walker |  | 7614 | 43 | go package + imports in internal/core/models/activity.go |  |  | 0.466 |
+| walker |  | 7688 | 74 | go package + imports in internal/config/config.go |  |  | 0.481 |
+| ns | 7738 |  | 163 | file/repository.go: Find | 8.2 |  | 0.476 |
+| ns | 7852 |  | 114 | file package test names | 8.3 |  | 0.472 |
+| walker |  | 7898 | 210 | go decl names surface in internal/adapters/cli/list_gui.go |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:22 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:57 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:70 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:101 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:111 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:128 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:154 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:200 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:204 |  |  | 0.472 |
+| walker |  | 7898 | 0 | go decl at internal/adapters/cli/list_gui.go:230 |  |  | 0.472 |
+| walker |  | 7905 | 7 | go decl body at internal/adapters/cli/list_gui.go:200 |  |  | 0.472 |
+| walker |  | 7955 | 50 | go package + imports in internal/core/dto/activity_dto.go |  |  | 0.486 |
+| ns | 8032 |  | 180 | notes/repository.go: Save (per-activity notes/tags sidecar) | 8.4 |  | 0.482 |
+| ns | 8085 |  | 53 | notes package test names | 8.5 |  | 0.480 |
+| walker |  | 8100 | 145 | go decl names surface in internal/adapters/repositories/notes/repository.go |  |  | 0.481 |
+| walker |  | 8100 | 0 | go decl at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.481 |
+| walker |  | 8100 | 0 | go decl at internal/adapters/repositories/notes/repository.go:36 |  |  | 0.481 |
+| walker |  | 8100 | 0 | go decl at internal/adapters/repositories/notes/repository.go:73 |  |  | 0.481 |
+| walker |  | 8111 | 11 | go decl at internal/adapters/repositories/notes/repository.go:24 |  |  | 0.481 |
+| walker |  | 8120 | 9 | go decl at internal/adapters/repositories/notes/repository.go:18 |  |  | 0.481 |
+| walker |  | 8137 | 17 | go decl at internal/adapters/repositories/notes/repository.go:32 |  |  | 0.481 |
+| walker |  | 8151 | 14 | go decl body at internal/adapters/repositories/notes/repository.go:28 |  |  | 0.481 |
+| walker |  | 8205 | 54 | go package + imports in internal/adapters/cli/version.go |  |  | 0.493 |
 | ns | 8217 |  | 132 | timewarrior/repository.go: Find + filter helpers | 8.6 |  | 0.490 |
 | ns | 8329 |  | 112 | timewarrior/repository.go: parseIncLine (native undo-log format) | 8.7 |  | 0.488 |
 | walker |  | 8375 | 170 | go decl names surface in internal/adapters/repositories/file/repository.go |  |  | 0.488 |

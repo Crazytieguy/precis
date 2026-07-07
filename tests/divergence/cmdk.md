@@ -101,16 +101,16 @@ Score(3000)=0.290 I=0.378 C=0.223 ns_rows≤3K=26/44 (reached=6 partial=0 missin
 | ns | 3310 |  | 323 | index.tsx component + helper location roster | 4.1 |  | 0.318 |
 | walker |  | 3320 | 32 | ARCHITECTURE.md section #4 |  |  | 0.319 |
 | walker |  | 3339 | 19 | README.md section #24 |  |  | 0.319 |
-| walker |  | 3381 | 42 | package identity in cmdk/package.json |  |  | 0.320 |
-| ns | 3592 |  | 282 | CommandProps core knobs | 4.2 |  | 0.306 |
-| walker |  | 3838 | 457 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.306 |
-| walker |  | 3950 | 112 | package dependencies in package.json |  |  | 0.306 |
-| ns | 3954 |  | 362 | ItemProps + GroupProps | 4.3 |  | 0.292 |
-| walker |  | 3976 | 26 | README.md section #19 |  |  | 0.292 |
-| walker |  | 4002 | 26 | README.md section #22 |  |  | 0.292 |
-| walker |  | 4075 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.309 |
-| walker |  | 4100 | 25 | README.md section #23 |  |  | 0.309 |
-| walker |  | 4241 | 141 | README.md section #37 |  |  | 0.351 |
+| walker |  | 3480 | 141 | README.md section #37 |  |  | 0.366 |
+| walker |  | 3522 | 42 | package identity in cmdk/package.json |  |  | 0.366 |
+| ns | 3592 |  | 282 | CommandProps core knobs | 4.2 |  | 0.350 |
+| ns | 3954 |  | 362 | ItemProps + GroupProps | 4.3 |  | 0.334 |
+| walker |  | 3979 | 457 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.334 |
+| walker |  | 4091 | 112 | package dependencies in package.json |  |  | 0.334 |
+| walker |  | 4117 | 26 | README.md section #19 |  |  | 0.334 |
+| walker |  | 4143 | 26 | README.md section #22 |  |  | 0.334 |
+| walker |  | 4216 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.351 |
+| walker |  | 4241 | 25 | README.md section #23 |  |  | 0.351 |
 | walker |  | 4295 | 54 | listing of 'website' |  |  | 0.380 |
 | walker |  | 4309 | 14 | listing of 'website/components' |  |  | 0.394 |
 | walker |  | 4326 | 17 | listing of 'website/pages' |  |  | 0.404 |

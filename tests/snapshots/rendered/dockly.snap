@@ -51,11 +51,33 @@ README.md
       31→npm install -g dockly
       32→```
       34→# Usage
-    …
+      35→
+      36→Just fire up dockly and it will automatically connect to your localhost docker daemon through the unix socket:
+      37→
+      38→```
+      39→dockly
+      40→```
+      41→
       42→## Command line options:
-    …
+      43→
+      44→It's also possible to provide command line options for dockly to customize the docker connection
+      45→
+      46→| Param | Type | Description |
+      47→| --- | --- | --- |
+      48→| -s or --socketPath | string | Docker socket to connect to |
+      49→| -H or --host | string | Remote docker daemon host to connect to |
+      50→| -P or --port | string | Remote docker port to connect to  |
+      51→| -T or --protocol | `http` \| `https` \| `ssh` | Remote docker protocol to connect to |
+      52→| --containerFilters | string | String to apply to filter shown containers |
+      53→| -h or --help | null | Display help |
+      54→| -v or --version | null | Display version information |
+      55→
       56→### `--containerFilters`
-    …
+      57→
+      58→This is a string that could be used to filter the shown containers;
+      59→its format is in the x-www-form-urlencoded style and the filters you could apply are listed here: [https://docs.docker.com/engine/api/v1.37/#operation/ContainerList](https://docs.docker.com/engine/api/v1.37/#operation/ContainerList)
+      60→
+      61→Example: `--containerFilters="name=test&status=running"` to only show *running* container which name match *test*.
       63→# Docker Support
       64→
       65→## Run from docker
@@ -81,12 +103,7 @@ README.md
      125→## Alternatives
     …
      129→# In the news
-     130→
-     131→- Admin Magazine article: [Visualizing containers with clarity
-     132→](https://www.admin-magazine.com/Articles/Visualizing-containers-with-clarity)
-     133→- [A learnk8s tweet](https://twitter.com/learnk8s/status/1075677503782563840)
-     134→- [Dockly – Manage Docker Containers From Terminal](https://ostechnix.com/dockly-manage-docker-containers-from-terminal/)
-     135→- [Clever cloud CEO, Quentin Adam, tweeting about dockly](https://twitter.com/waxzce/status/1123886351924043777)
+    …
      137→# Author
     …
 SECURITY.md
@@ -232,12 +249,6 @@ src/
            4→module.exports = (extendsClass = class {}) => {
         …
     cli.js
-           1→'use strict'
-           2→
-           3→const commandLineArgs = require('command-line-args')
-           4→const commandLineUsage = require('command-line-usage')
-           5→
-           6→const pkg = require('../package.json')
         …
           97→module.exports = new Cli()
     dockerUtil.js
@@ -325,9 +336,6 @@ src/
         base.hook.template.js
             …
                6→class myWidget extends baseWidget(EventEmitter) {
-               7→  copyItemIdToClipboard () {
-            …
-              29→  getSelectedItem () {
             …
               34→module.exports = myWidget
         help.widget.template.js
@@ -351,7 +359,6 @@ src/
              107→  refreshList () {
             …
              127→  getLabel () {
-             128→    throw new Error('method getLabel not implemented')
             …
              161→module.exports = myWidget
         logs.widget.template.js

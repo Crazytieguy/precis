@@ -97,46 +97,46 @@ Score(3000)=0.570 I=0.797 C=0.408 ns_rows≤3K=20/40 (reached=8 partial=1 missin
 | walker |  | 2988 | 100 | headings outline in packages/cli/README.md |  |  | 0.570 |
 | walker |  | 3016 | 28 | packages/cli/README.md section #2 |  |  | 0.570 |
 | ns | 3143 |  | 330 | createEnclosedCryptoApi factory | 2.3 |  | 0.537 |
-| walker |  | 3180 | 164 | export at packages/lib/src/index.ts:10 |  |  | 0.538 |
-| walker |  | 3206 | 26 | packages/crypto/README.md section #3 |  |  | 0.538 |
-| walker |  | 3231 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.539 |
-| walker |  | 3346 | 115 | headings outline in packages/app-client/README.md |  |  | 0.539 |
-| walker |  | 3346 | 0 | packages/app-client/README.md section #3 |  |  | 0.539 |
-| walker |  | 3423 | 77 | packages/app-client/README.md section #0 |  |  | 0.539 |
-| walker |  | 3449 | 26 | packages/cli/README.md section #7 |  |  | 0.539 |
-| walker |  | 3482 | 33 | packages/crypto/README.md section #2 |  |  | 0.539 |
-| walker |  | 3509 | 27 | listing of 'packages/lib/src/notes' |  |  | 0.540 |
-| walker |  | 3538 | 29 | listing of '.github' |  |  | 0.566 |
-| walker |  | 3619 | 81 | listing of '.github/workflows' |  |  | 0.614 |
-| walker |  | 3649 | 30 | packages/app-client/README.md section #2 |  |  | 0.614 |
-| ns | 3657 |  | 514 | Node key-derivation + buffer usecases | 2.4 |  | 0.565 |
-| walker |  | 3685 | 36 | README.md section #1 |  |  | 0.572 |
-| walker |  | 3714 | 29 | listing of 'packages/app-client/src/modules' |  |  | 0.572 |
-| walker |  | 3719 | 5 | listing of 'packages/app-client/src/modules/theme' |  |  | 0.572 |
-| walker |  | 3725 | 6 | listing of 'packages/app-client/src/modules/ui' |  |  | 0.572 |
-| walker |  | 3731 | 6 | listing of 'packages/app-client/src/modules/ui/layouts' |  |  | 0.572 |
-| walker |  | 3742 | 11 | listing of 'packages/app-client/src/modules/docs' |  |  | 0.572 |
-| walker |  | 3753 | 11 | listing of 'packages/app-client/src/modules/files' |  |  | 0.572 |
-| walker |  | 3768 | 15 | listing of 'packages/app-client/src/modules/shared' |  |  | 0.573 |
-| walker |  | 3772 | 4 | listing of 'packages/app-client/src/modules/shared/hooks' |  |  | 0.573 |
-| walker |  | 3776 | 4 | listing of 'packages/app-client/src/modules/shared/style' |  |  | 0.573 |
-| walker |  | 3781 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.573 |
-| walker |  | 3789 | 8 | listing of 'packages/app-client/src/modules/shared/files' |  |  | 0.573 |
-| walker |  | 3805 | 16 | listing of 'packages/app-client/src/modules/config' |  |  | 0.573 |
-| walker |  | 3823 | 18 | listing of 'packages/app-client/src/modules/auth' |  |  | 0.573 |
-| walker |  | 3829 | 6 | listing of 'packages/app-client/src/modules/auth/pages' |  |  | 0.573 |
-| walker |  | 3855 | 26 | packages/lib/README.md section #4 |  |  | 0.573 |
-| walker |  | 3886 | 31 | listing of 'packages/docs/src/self-hosting' |  |  | 0.574 |
-| walker |  | 3916 | 30 | headings outline in packages/docs/src/self-hosting/troubleshooting.md |  |  | 0.574 |
-| walker |  | 3916 | 0 | packages/docs/src/self-hosting/troubleshooting.md section #0 |  |  | 0.574 |
-| walker |  | 3967 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.574 |
-| walker |  | 4000 | 33 | packages/cli/README.md section #6 |  |  | 0.574 |
-| walker |  | 4022 | 22 | listing of 'packages/app-server/src/modules/app' |  |  | 0.574 |
-| walker |  | 4027 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.575 |
-| walker |  | 4049 | 22 | listing of 'packages/app-server/src/modules/tasks' |  |  | 0.575 |
-| walker |  | 4064 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.575 |
-| ns | 4208 |  | 551 | Node AES-256-GCM implementation | 2.5 |  | 0.535 |
-| walker |  | 4227 | 163 | README.md section #23 |  |  | 0.552 |
+| walker |  | 3179 | 163 | README.md section #23 |  |  | 0.558 |
+| walker |  | 3343 | 164 | export at packages/lib/src/index.ts:10 |  |  | 0.559 |
+| walker |  | 3369 | 26 | packages/crypto/README.md section #3 |  |  | 0.559 |
+| walker |  | 3394 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.560 |
+| walker |  | 3509 | 115 | headings outline in packages/app-client/README.md |  |  | 0.560 |
+| walker |  | 3509 | 0 | packages/app-client/README.md section #3 |  |  | 0.560 |
+| walker |  | 3586 | 77 | packages/app-client/README.md section #0 |  |  | 0.560 |
+| walker |  | 3612 | 26 | packages/cli/README.md section #7 |  |  | 0.560 |
+| walker |  | 3645 | 33 | packages/crypto/README.md section #2 |  |  | 0.560 |
+| ns | 3657 |  | 514 | Node key-derivation + buffer usecases | 2.4 |  | 0.515 |
+| walker |  | 3672 | 27 | listing of 'packages/lib/src/notes' |  |  | 0.515 |
+| walker |  | 3701 | 29 | listing of '.github' |  |  | 0.539 |
+| walker |  | 3782 | 81 | listing of '.github/workflows' |  |  | 0.583 |
+| walker |  | 3812 | 30 | packages/app-client/README.md section #2 |  |  | 0.583 |
+| walker |  | 3848 | 36 | README.md section #1 |  |  | 0.590 |
+| walker |  | 3877 | 29 | listing of 'packages/app-client/src/modules' |  |  | 0.590 |
+| walker |  | 3882 | 5 | listing of 'packages/app-client/src/modules/theme' |  |  | 0.590 |
+| walker |  | 3888 | 6 | listing of 'packages/app-client/src/modules/ui' |  |  | 0.590 |
+| walker |  | 3894 | 6 | listing of 'packages/app-client/src/modules/ui/layouts' |  |  | 0.590 |
+| walker |  | 3905 | 11 | listing of 'packages/app-client/src/modules/docs' |  |  | 0.590 |
+| walker |  | 3916 | 11 | listing of 'packages/app-client/src/modules/files' |  |  | 0.590 |
+| walker |  | 3931 | 15 | listing of 'packages/app-client/src/modules/shared' |  |  | 0.591 |
+| walker |  | 3935 | 4 | listing of 'packages/app-client/src/modules/shared/hooks' |  |  | 0.591 |
+| walker |  | 3939 | 4 | listing of 'packages/app-client/src/modules/shared/style' |  |  | 0.591 |
+| walker |  | 3944 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.591 |
+| walker |  | 3952 | 8 | listing of 'packages/app-client/src/modules/shared/files' |  |  | 0.591 |
+| walker |  | 3968 | 16 | listing of 'packages/app-client/src/modules/config' |  |  | 0.591 |
+| walker |  | 3986 | 18 | listing of 'packages/app-client/src/modules/auth' |  |  | 0.592 |
+| walker |  | 3992 | 6 | listing of 'packages/app-client/src/modules/auth/pages' |  |  | 0.592 |
+| walker |  | 4018 | 26 | packages/lib/README.md section #4 |  |  | 0.592 |
+| walker |  | 4049 | 31 | listing of 'packages/docs/src/self-hosting' |  |  | 0.592 |
+| walker |  | 4079 | 30 | headings outline in packages/docs/src/self-hosting/troubleshooting.md |  |  | 0.592 |
+| walker |  | 4079 | 0 | packages/docs/src/self-hosting/troubleshooting.md section #0 |  |  | 0.592 |
+| walker |  | 4130 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.592 |
+| walker |  | 4163 | 33 | packages/cli/README.md section #6 |  |  | 0.592 |
+| walker |  | 4185 | 22 | listing of 'packages/app-server/src/modules/app' |  |  | 0.593 |
+| walker |  | 4190 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.593 |
+| ns | 4208 |  | 551 | Node AES-256-GCM implementation | 2.5 |  | 0.551 |
+| walker |  | 4212 | 22 | listing of 'packages/app-server/src/modules/tasks' |  |  | 0.551 |
+| walker |  | 4227 | 15 | listing of 'packages/app-server/src/modules/shared/logger' |  |  | 0.552 |
 | walker |  | 4285 | 58 | headings outline in packages/docs/src/self-hosting/configuration.md |  |  | 0.552 |
 | walker |  | 4318 | 33 | packages/lib/README.md section #3 |  |  | 0.552 |
 | walker |  | 4341 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.552 |

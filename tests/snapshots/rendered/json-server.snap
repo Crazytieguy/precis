@@ -99,12 +99,7 @@ README.md
      161→Use `field:operator=value`.
     …
      186→### Sort
-     187→
-     188→```http
-     189→GET /posts?_sort=title
-     190→GET /posts?_sort=-views
-     191→GET /posts?_sort=author.name,-views
-     192→```
+    …
      194→### Pagination
      196→```http
      197→GET /posts?_page=1&_per_page=25
@@ -220,13 +215,6 @@ src/
     adapters/
         normalized-adapter.test.ts
         normalized-adapter.ts
-            …
-               6→export const DEFAULT_SCHEMA_PATH = './node_modules/json-server/schema.json'
-               7→export type RawData = Record<string, Item[] | Item | string | undefined> & {
-               8→  $schema?: string
-               9→}
-              11→export class NormalizedAdapter implements Adapter<Data> {
-            …
         observer.ts
             …
                4→export class Observer<T> {

@@ -1,4 +1,4 @@
-Score(3000)=0.750 I=0.898 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missing=8)
+Score(3000)=0.748 I=0.894 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -77,27 +77,27 @@ Score(3000)=0.750 I=0.898 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missi
 | walker |  | 2688 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.723 |
 | ns | 2809 |  | 145 | README: Query Capabilities quick reference | 3.4 | 3.1 | 0.732 |
 | walker |  | 2863 | 175 | README.md section #20 |  |  | 0.734 |
-| walker |  | 2918 | 55 | README.md section #12 |  |  | 0.735 |
-| ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.750 |
-| walker |  | 2979 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.750 |
-| walker |  | 2992 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.750 |
-| walker |  | 3041 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.751 |
-| walker |  | 3055 | 14 | imports in src/adapters/observer.ts |  |  | 0.751 |
-| walker |  | 3172 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.751 |
-| walker |  | 3243 | 71 | README.md section #17 |  |  | 0.752 |
-| ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.715 |
-| ns | 3330 |  | 55 | README: Sort | 3.7 | 3.1 | 0.720 |
-| walker |  | 3397 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.721 |
-| walker |  | 3483 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.723 |
-| ns | 3578 |  | 248 | README: Pagination | 3.8 | 3.1 | 0.700 |
-| ns | 3618 |  | 40 | README: Embed | 3.9 | 3.1 | 0.704 |
-| ns | 3689 |  | 71 | README: Complex filter with _where | 3.10 | 3.1 | 0.708 |
-| ns | 3719 |  | 30 | README: Delete dependents | 3.11 | 3.1 | 0.711 |
-| ns | 3836 |  | 117 | README: Static Files | 3.12 | 3.1 | 0.717 |
-| ns | 4011 |  | 175 | README: Migration Notes (v0 -> v1) | 3.13 | 3.1 | 0.722 |
-| ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.718 |
-| ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.714 |
-| walker |  | 4215 | 732 | README.md section #2 |  |  | 0.729 |
+| ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.748 |
+| ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.712 |
+| ns | 3330 |  | 55 | README: Sort | 3.7 | 3.1 | 0.704 |
+| ns | 3578 |  | 248 | README: Pagination | 3.8 | 3.1 | 0.682 |
+| walker |  | 3595 | 732 | README.md section #2 |  |  | 0.700 |
+| ns | 3618 |  | 40 | README: Embed | 3.9 | 3.1 | 0.703 |
+| walker |  | 3650 | 55 | README.md section #12 |  |  | 0.716 |
+| ns | 3689 |  | 71 | README: Complex filter with _where | 3.10 | 3.1 | 0.709 |
+| walker |  | 3711 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.709 |
+| ns | 3719 |  | 30 | README: Delete dependents | 3.11 | 3.1 | 0.712 |
+| walker |  | 3724 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.712 |
+| walker |  | 3773 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.712 |
+| walker |  | 3787 | 14 | imports in src/adapters/observer.ts |  |  | 0.712 |
+| ns | 3836 |  | 117 | README: Static Files | 3.12 | 3.1 | 0.719 |
+| walker |  | 3904 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.719 |
+| walker |  | 3975 | 71 | README.md section #17 |  |  | 0.730 |
+| ns | 4011 |  | 175 | README: Migration Notes (v0 -> v1) | 3.13 | 3.1 | 0.734 |
+| ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.730 |
+| ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.726 |
+| walker |  | 4129 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.728 |
+| walker |  | 4215 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.729 |
 | ns | 4349 |  | 250 | service.ts: exported types + Service class member signatures | 4.3 |  | 0.711 |
 | ns | 4439 |  | 90 | normalized-adapter.ts: exported items + class member signatures | 4.4 |  | 0.713 |
 | ns | 4473 |  | 34 | matches-where.ts: function signatures | 4.5 |  | 0.711 |

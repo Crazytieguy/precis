@@ -95,7 +95,24 @@ README.md
       40→## Supported Features & Best–Practices
     …
       58→## Cloning the repository
-    …
+      59→
+      60→When cloning the Requests repository, you may need to add the `-c
+      61→fetch.fsck.badTimezone=ignore` flag to avoid an error about a bad commit timestamp (see
+      62→[this issue](https://github.com/psf/requests/issues/2690) for more background):
+      63→
+      64→```shell
+      65→git clone -c fetch.fsck.badTimezone=ignore https://github.com/psf/requests.git
+      66→```
+      67→
+      68→You can also apply this setting to your global Git config:
+      69→
+      70→```shell
+      71→git config --global fetch.fsck.badTimezone ignore
+      72→```
+      73→
+      74→---
+      75→
+      76→[![Kenneth Reitz](https://raw.githubusercontent.com/psf/requests/main/ext/kr.png)](https://kennethreitz.org) [![Python Software Foundation](https://raw.githubusercontent.com/psf/requests/main/ext/psf.png)](https://www.python.org/psf)
 docs/
     .nojekyll
     Makefile
@@ -307,8 +324,6 @@ src/
               70→    """Generate information for a bug report."""
             …
              128→def main():
-             129→    """Pretty-print the bug information as JSON."""
-             130→    print(json.dumps(info(), sort_keys=True, indent=2))
             …
         hooks.py
         models.py
@@ -316,14 +331,6 @@ src/
         py.typed
         sessions.py
         status_codes.py
-            …
-              23→_codes = {
-            …
-             106→codes: LookupDict[int] = LookupDict(name="status_codes")
-             107→
-             108→
-             109→def _init():
-            …
         structures.py
         utils.py
 tests/

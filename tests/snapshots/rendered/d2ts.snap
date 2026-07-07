@@ -99,7 +99,15 @@ README.md
     …
      183→There is a complete example in the [./examples/electric](./examples/electric) directory.
      185→## Examples
-    …
+     186→
+     187→There are a number of examples in the [./examples](./examples) directory, covering:
+     188→
+     189→- [Basic usage](./examples/basic.ts) (map and filter)
+     190→- ["Fruit processed"](./examples/fruit-processed.ts) (reduce and consolidate)
+     191→- [Joins between two streams](./examples/join.ts)
+     192→- [Iterative computations](./examples/iterate.ts)
+     193→- [Modeling "includes" using joins](./examples/includes.ts)
+     194→- [ElectricSQL example](./examples/electric/) (using D2TS with ElectricSQL)
      196→## API
      197→
      198→### D2 graph construction
@@ -188,29 +196,6 @@ packages/
         eslint.config.mjs
         package.json
         src/
-            compiler.ts
-            evaluators.ts
-            extractors.ts
-            functions.ts
-            group-by.ts
-            index.ts
-                   1→/**
-                   2→ * D2QL is a SQL-like query language for D2TS.
-                   3→ * It's a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2 pipeline.
-                   4→ */
-                …
-            joins.ts
-            key-by.ts
-            order-by.ts
-            query-builder/
-                index.ts
-                query-builder.ts
-            schema.json
-            schema.ts
-            select.ts
-            store.ts
-            types.ts
-            utils.ts
         tests/
         tsconfig.json
     d2ts/

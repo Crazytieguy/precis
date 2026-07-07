@@ -1,7 +1,7 @@
 fixture = "swarm"
 budget = 10000
-cumulative_tokens = 8942
-batch_count = 140
+cumulative_tokens = 8689
+batch_count = 132
 
 [[batches]]
 position = 1
@@ -2923,130 +2923,6 @@ kind = "lines"
 path = "examples/support_bot/requirements.txt"
 start = 1
 end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 133
-key = 'Python(DeclNames { file: "examples/airline/main.py" })'
-descriptor = "python decl names surface in examples/airline/main.py"
-cost_tokens = 12
-cum_tokens = 8701
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/airline/main.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
-key = 'Fs(DirListing { dir: "examples/airline/evals" })'
-descriptor = "listing of 'examples/airline/evals'"
-cost_tokens = 19
-cum_tokens = 8720
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/airline/evals"
-entries = ["eval_cases", "eval_results", "eval_utils.py", "function_evals.py"]
-
-[[batches]]
-position = 135
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools/query_docs" })'
-descriptor = "listing of 'examples/customer_service_streaming/configs/tools/query_docs'"
-cost_tokens = 8
-cum_tokens = 8728
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming/configs/tools/query_docs"
-entries = ["handler.py", "tool.json"]
-
-[[batches]]
-position = 136
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools/send_email" })'
-descriptor = "listing of 'examples/customer_service_streaming/configs/tools/send_email'"
-cost_tokens = 8
-cum_tokens = 8736
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming/configs/tools/send_email"
-entries = ["handler.py", "tool.json"]
-
-[[batches]]
-position = 137
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools/submit_ticket" })'
-descriptor = "listing of 'examples/customer_service_streaming/configs/tools/submit_ticket'"
-cost_tokens = 8
-cum_tokens = 8744
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming/configs/tools/submit_ticket"
-entries = ["handler.py", "tool.json"]
-
-[[batches]]
-position = 138
-key = 'Python(DeclBody { file: "swarm/util.py", start_line: 31, body_start_line: 60 })'
-descriptor = "python decl body at swarm/util.py:31 body 60"
-cost_tokens = 10
-cum_tokens = 8754
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/util.py"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 139
-key = 'Fs(DirListing { dir: "examples/airline/evals/eval_cases" })'
-descriptor = "listing of 'examples/airline/evals/eval_cases'"
-cost_tokens = 13
-cum_tokens = 8767
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/airline/evals/eval_cases"
-entries = ["flight_modification_cases.json", "triage_cases.json"]
-
-[[batches]]
-position = 140
-key = 'Python(MethodBody { file: "swarm/core.py", start_line: 71, body_start_line: 72 })'
-descriptor = "python method body at swarm/core.py:71 body 72"
-cost_tokens = 175
-cum_tokens = 8942
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "swarm/core.py"
-start = 72
-end = 87
 
 [batches.content.spans.render]
 kind = "full"

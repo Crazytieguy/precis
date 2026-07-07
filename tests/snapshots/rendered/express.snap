@@ -86,7 +86,34 @@ Readme.md
       79→## Docs & Community
     …
       87→## Quick Start
-    …
+      88→
+      89→  The quickest way to get started with express is to utilize the executable [`express(1)`](https://github.com/expressjs/generator) to generate an application as shown below:
+      90→
+      91→  Install the executable. The executable's major version will match Express's:
+      92→
+      93→```bash
+      94→npm install -g express-generator@4
+      95→```
+      96→
+      97→  Create the app:
+      98→
+      99→```bash
+     100→express /tmp/foo && cd /tmp/foo
+     101→```
+     102→
+     103→  Install dependencies:
+     104→
+     105→```bash
+     106→npm install
+     107→```
+     108→
+     109→  Start the server:
+     110→
+     111→```bash
+     112→npm start
+     113→```
+     114→
+     115→  View the website at: http://localhost:3000
      117→## Philosophy
     …
      127→## Examples
@@ -118,13 +145,9 @@ Readme.md
     …
      205→### Triagers
     …
-     208→* [bjohansebas](https://github.com/bjohansebas) - **Sebastian Beltran**
      209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
      210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
     …
-     213→* [Phillip9587](https://github.com/Phillip9587) - **Phillip Barta**
-     214→* [efekrskl](https://github.com/efekrskl) - **Efe Karasakal**
-     215→* [rxmarbles](https://github.com/rxmarbles) - **Rick Markins** (he/him)
      216→* [krzysdz](https://github.com/krzysdz)
     …
      219→<details>
@@ -277,12 +300,6 @@ lib/
          269→req.is = function is(types) {
         …
     response.js
-        …
-           8→'use strict';
-        …
-          15→var contentDisposition = require('content-disposition');
-          16→var createError = require('http-errors')
-        …
     utils.js
     view.js
 package.json

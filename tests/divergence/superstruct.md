@@ -81,49 +81,49 @@ Score(3000)=0.589 I=0.859 C=0.404 ns_rows≤3K=14/40 (reached=6 partial=0 missin
 | walker |  | 3323 | 29 | export doc at src/structs/refinements.ts:77 |  |  | 0.589 |
 | walker |  | 3353 | 30 | docs/reference/utilities.md section #0 |  |  | 0.589 |
 | ns | 3416 |  | 818 | top-level assert/create/mask/is/validate | 2.5 | 2.1 | 0.491 |
-| walker |  | 3584 | 231 | export names surface in src/struct.ts |  |  | 0.506 |
-| walker |  | 3584 | 0 | export at src/struct.ts:175 |  |  | 0.506 |
-| walker |  | 3584 | 0 | export at src/struct.ts:231 |  |  | 0.506 |
-| walker |  | 3584 | 0 | export at src/struct.ts:237 |  |  | 0.506 |
-| walker |  | 3584 | 0 | export at src/struct.ts:253 |  |  | 0.506 |
-| walker |  | 3584 | 0 | export at src/struct.ts:259 |  |  | 0.506 |
-| walker |  | 3584 | 0 | export at src/struct.ts:266 |  |  | 0.506 |
-| walker |  | 3618 | 34 | export at src/struct.ts:221 |  |  | 0.506 |
-| walker |  | 3659 | 41 | export at src/struct.ts:243 |  |  | 0.507 |
-| walker |  | 3696 | 37 | export at src/struct.ts:139 |  |  | 0.509 |
-| walker |  | 3733 | 37 | export at src/struct.ts:157 |  |  | 0.512 |
-| walker |  | 3773 | 40 | export at src/struct.ts:123 |  |  | 0.515 |
-| ns | 3853 |  | 437 | struct.ts supporting types (Context/Infer/Describe/Result/Coercer/Validator/Refiner) | 2.6 |  | 0.501 |
-| walker |  | 3856 | 83 | export at src/struct.ts:185 |  |  | 0.510 |
-| walker |  | 3880 | 24 | export body at src/struct.ts:175 body 176 |  |  | 0.514 |
-| walker |  | 3903 | 23 | export doc at src/struct.ts:243 |  |  | 0.520 |
-| walker |  | 3928 | 25 | export doc at src/struct.ts:259 |  |  | 0.527 |
-| walker |  | 3951 | 23 | export doc at src/struct.ts:175 |  |  | 0.531 |
-| walker |  | 3978 | 27 | export doc at src/struct.ts:231 |  |  | 0.539 |
-| walker |  | 4005 | 27 | export doc at src/struct.ts:237 |  |  | 0.549 |
-| walker |  | 4033 | 28 | export doc at src/struct.ts:253 |  |  | 0.559 |
-| walker |  | 4061 | 28 | export doc at src/struct.ts:123 |  |  | 0.565 |
-| walker |  | 4090 | 29 | export doc at src/struct.ts:139 |  |  | 0.570 |
-| walker |  | 4120 | 30 | export doc at src/struct.ts:157 |  |  | 0.577 |
-| walker |  | 4159 | 39 | export doc at src/struct.ts:266 |  |  | 0.592 |
-| walker |  | 4205 | 46 | export doc at src/struct.ts:185 |  |  | 0.602 |
-| ns | 4391 |  | 538 | error.ts full (Failure type + StructError class) | 3.1 |  | 0.600 |
-| walker |  | 4586 | 381 | export at src/struct.ts:10 |  |  | 0.645 |
-| walker |  | 4653 | 67 | export doc at src/struct.ts:10 |  |  | 0.645 |
-| walker |  | 4681 | 28 | imports in src/structs/refinements.ts |  |  | 0.645 |
-| walker |  | 4706 | 25 | listing of 'test/api' |  |  | 0.645 |
-| ns | 4712 |  | 321 | types.ts factory locations (all 25) | 4.1 |  | 0.625 |
-| walker |  | 4743 | 37 | docs/guides/02-validating-data.md section #0 |  |  | 0.625 |
-| walker |  | 4781 | 38 | docs/reference/errors.md section #0 |  |  | 0.625 |
-| walker |  | 4892 | 111 | Readme.md section #7 |  |  | 0.625 |
-| walker |  | 5199 | 307 | package identity metadata in package.json |  |  | 0.632 |
-| walker |  | 5273 | 74 | package entrypoints in package.json |  |  | 0.649 |
-| walker |  | 5305 | 32 | package runtime metadata in package.json |  |  | 0.659 |
-| ns | 5497 |  | 785 | array + object factory bodies | 4.2 | 4.1 | 0.604 |
+| walker |  | 3559 | 206 | Readme.md section #8 |  |  | 0.491 |
+| walker |  | 3790 | 231 | export names surface in src/struct.ts |  |  | 0.506 |
+| walker |  | 3790 | 0 | export at src/struct.ts:175 |  |  | 0.506 |
+| walker |  | 3790 | 0 | export at src/struct.ts:231 |  |  | 0.506 |
+| walker |  | 3790 | 0 | export at src/struct.ts:237 |  |  | 0.506 |
+| walker |  | 3790 | 0 | export at src/struct.ts:253 |  |  | 0.506 |
+| walker |  | 3790 | 0 | export at src/struct.ts:259 |  |  | 0.506 |
+| walker |  | 3790 | 0 | export at src/struct.ts:266 |  |  | 0.506 |
+| walker |  | 3824 | 34 | export at src/struct.ts:221 |  |  | 0.506 |
+| ns | 3853 |  | 437 | struct.ts supporting types (Context/Infer/Describe/Result/Coercer/Validator/Refiner) | 2.6 |  | 0.485 |
+| walker |  | 3865 | 41 | export at src/struct.ts:243 |  |  | 0.493 |
+| walker |  | 3902 | 37 | export at src/struct.ts:139 |  |  | 0.495 |
+| walker |  | 3939 | 37 | export at src/struct.ts:157 |  |  | 0.497 |
+| walker |  | 3979 | 40 | export at src/struct.ts:123 |  |  | 0.501 |
+| walker |  | 4062 | 83 | export at src/struct.ts:185 |  |  | 0.510 |
+| walker |  | 4086 | 24 | export body at src/struct.ts:175 body 176 |  |  | 0.514 |
+| walker |  | 4109 | 23 | export doc at src/struct.ts:243 |  |  | 0.520 |
+| walker |  | 4134 | 25 | export doc at src/struct.ts:259 |  |  | 0.527 |
+| walker |  | 4157 | 23 | export doc at src/struct.ts:175 |  |  | 0.531 |
+| walker |  | 4184 | 27 | export doc at src/struct.ts:231 |  |  | 0.539 |
+| walker |  | 4211 | 27 | export doc at src/struct.ts:237 |  |  | 0.549 |
+| walker |  | 4239 | 28 | export doc at src/struct.ts:253 |  |  | 0.559 |
+| walker |  | 4267 | 28 | export doc at src/struct.ts:123 |  |  | 0.565 |
+| walker |  | 4296 | 29 | export doc at src/struct.ts:139 |  |  | 0.570 |
+| walker |  | 4326 | 30 | export doc at src/struct.ts:157 |  |  | 0.577 |
+| walker |  | 4365 | 39 | export doc at src/struct.ts:266 |  |  | 0.592 |
+| ns | 4391 |  | 538 | error.ts full (Failure type + StructError class) | 3.1 |  | 0.592 |
+| walker |  | 4411 | 46 | export doc at src/struct.ts:185 |  |  | 0.600 |
+| ns | 4712 |  | 321 | types.ts factory locations (all 25) | 4.1 |  | 0.582 |
+| walker |  | 4792 | 381 | export at src/struct.ts:10 |  |  | 0.625 |
+| walker |  | 4859 | 67 | export doc at src/struct.ts:10 |  |  | 0.625 |
+| walker |  | 4887 | 28 | imports in src/structs/refinements.ts |  |  | 0.625 |
+| walker |  | 4912 | 25 | listing of 'test/api' |  |  | 0.625 |
+| walker |  | 4949 | 37 | docs/guides/02-validating-data.md section #0 |  |  | 0.625 |
+| walker |  | 4987 | 38 | docs/reference/errors.md section #0 |  |  | 0.625 |
+| walker |  | 5098 | 111 | Readme.md section #7 |  |  | 0.625 |
+| walker |  | 5405 | 307 | package identity metadata in package.json |  |  | 0.632 |
+| walker |  | 5479 | 74 | package entrypoints in package.json |  |  | 0.649 |
+| ns | 5497 |  | 785 | array + object factory bodies | 4.2 | 4.1 | 0.595 |
+| walker |  | 5511 | 32 | package runtime metadata in package.json |  |  | 0.604 |
 | ns | 5543 |  | 46 | coercions.ts symbol locations | 5.1 |  | 0.606 |
-| walker |  | 5629 | 324 | package scripts in package.json |  |  | 0.607 |
-| walker |  | 5653 | 24 | module-doc lede in test/index.ts |  |  | 0.607 |
-| walker |  | 5859 | 206 | Readme.md section #8 |  |  | 0.607 |
+| walker |  | 5835 | 324 | package scripts in package.json |  |  | 0.607 |
+| walker |  | 5859 | 24 | module-doc lede in test/index.ts |  |  | 0.607 |
 | ns | 5928 |  | 385 | defaulted() body | 5.2 | 5.1 | 0.584 |
 | walker |  | 5956 | 97 | export doc at src/struct.ts:221 |  |  | 0.584 |
 | ns | 6056 |  | 128 | refinements.ts symbol locations | 6.1 |  | 0.586 |
@@ -172,18 +172,14 @@ Score(3000)=0.589 I=0.859 C=0.404 ns_rows≤3K=14/40 (reached=6 partial=0 missin
 | walker |  | 8942 | 57 | export doc at src/structs/utilities.ts:221 |  |  | 0.551 |
 | ns | 8971 |  | 326 | package.json scripts | 12.1 |  | 0.559 |
 | walker |  | 9005 | 63 | export doc at src/structs/utilities.ts:197 |  |  | 0.559 |
-| walker |  | 9073 | 68 | export doc at src/structs/utilities.ts:17 |  |  | 0.559 |
 | ns | 9156 |  | 185 | tsconfig.json | 12.2 |  | 0.566 |
-| walker |  | 9256 | 183 | listing of 'test/typings' |  |  | 0.604 |
-| ns | 9331 |  | 175 | .github/workflows/ci.yml | 12.3 |  | 0.610 |
-| walker |  | 9333 | 77 | export doc at src/structs/coercions.ts:79 |  |  | 0.610 |
-| ns | 9441 |  | 110 | jsr.json | 12.4 |  | 0.607 |
-| walker |  | 9604 | 271 | headings outline in docs/reference/types.md |  |  | 0.607 |
-| ns | 9628 |  | 187 | rollup.config.js | 12.5 |  | 0.599 |
-| walker |  | 9646 | 42 | docs/reference/types.md section #0 |  |  | 0.599 |
-| walker |  | 9727 | 81 | export doc at src/structs/utilities.ts:106 |  |  | 0.599 |
-| ns | 9765 |  | 137 | editor/format config (.editorconfig, .prettierrc) | 12.6 |  | 0.594 |
-| walker |  | 9809 | 82 | export doc at src/structs/coercions.ts:38 |  |  | 0.598 |
-| ns | 9831 |  | 66 | editor + gitbook publish config (.vscode/settings.json, .gitbook.yaml) | 12.7 |  | 0.595 |
-| walker |  | 9900 | 91 | export doc at src/structs/refinements.ts:146 |  |  | 0.600 |
-| ns | 9979 |  | 148 | Changelog.md — 2.0.0 breaking changes | 13.1 |  | 0.598 |
+| ns | 9331 |  | 175 | .github/workflows/ci.yml | 12.3 |  | 0.573 |
+| ns | 9441 |  | 110 | jsr.json | 12.4 |  | 0.570 |
+| walker |  | 9521 | 516 | Readme.md section #1 |  |  | 0.570 |
+| walker |  | 9589 | 68 | export doc at src/structs/utilities.ts:17 |  |  | 0.570 |
+| ns | 9628 |  | 187 | rollup.config.js | 12.5 |  | 0.563 |
+| ns | 9765 |  | 137 | editor/format config (.editorconfig, .prettierrc) | 12.6 |  | 0.558 |
+| walker |  | 9772 | 183 | listing of 'test/typings' |  |  | 0.594 |
+| ns | 9831 |  | 66 | editor + gitbook publish config (.vscode/settings.json, .gitbook.yaml) | 12.7 |  | 0.592 |
+| walker |  | 9849 | 77 | export doc at src/structs/coercions.ts:79 |  |  | 0.592 |
+| ns | 9979 |  | 148 | Changelog.md — 2.0.0 breaking changes | 13.1 |  | 0.589 |

@@ -1,4 +1,4 @@
-Score(3000)=0.643 I=0.874 C=0.474 ns_rows≤3K=17/41 (reached=9 partial=0 missing=8)
+Score(3000)=0.643 I=0.874 C=0.473 ns_rows≤3K=17/41 (reached=9 partial=0 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -47,18 +47,18 @@ Score(3000)=0.643 I=0.874 C=0.474 ns_rows≤3K=17/41 (reached=9 partial=0 missin
 | walker |  | 2664 | 77 | listing of 'tests' |  |  | 0.704 |
 | walker |  | 2674 | 10 | listing of 'tests/testserver' |  |  | 0.704 |
 | walker |  | 2688 | 14 | listing of 'tests/certs' |  |  | 0.704 |
-| walker |  | 2724 | 36 | python decl names surface in src/requests/help.py |  |  | 0.704 |
-| walker |  | 2724 | 0 | python decl at src/requests/help.py:37 |  |  | 0.704 |
-| walker |  | 2724 | 0 | python decl at src/requests/help.py:69 |  |  | 0.704 |
-| walker |  | 2724 | 0 | python decl at src/requests/help.py:128 |  |  | 0.704 |
-| walker |  | 2737 | 13 | python decl doc at src/requests/help.py:69 |  |  | 0.704 |
-| walker |  | 2751 | 14 | python decl doc at src/requests/help.py:128 |  |  | 0.704 |
-| walker |  | 2769 | 18 | python decl body at src/requests/help.py:128 body 130 |  |  | 0.704 |
-| walker |  | 2819 | 50 | python decl names surface in src/requests/status_codes.py |  |  | 0.704 |
-| walker |  | 2819 | 0 | python decl at src/requests/status_codes.py:109 |  |  | 0.704 |
 | ns | 2888 |  | 469 | status_codes.py docstring + init logic | 3.4 |  | 0.649 |
 | ns | 2940 |  | 52 | models.py class roster | 4.1 |  | 0.643 |
-| walker |  | 3075 | 256 | README.md section #3 |  |  | 0.643 |
+| walker |  | 2944 | 256 | README.md section #3 |  |  | 0.643 |
+| walker |  | 2980 | 36 | python decl names surface in src/requests/help.py |  |  | 0.643 |
+| walker |  | 2980 | 0 | python decl at src/requests/help.py:37 |  |  | 0.643 |
+| walker |  | 2980 | 0 | python decl at src/requests/help.py:69 |  |  | 0.643 |
+| walker |  | 2980 | 0 | python decl at src/requests/help.py:128 |  |  | 0.643 |
+| walker |  | 2993 | 13 | python decl doc at src/requests/help.py:69 |  |  | 0.643 |
+| walker |  | 3007 | 14 | python decl doc at src/requests/help.py:128 |  |  | 0.643 |
+| walker |  | 3025 | 18 | python decl body at src/requests/help.py:128 body 130 |  |  | 0.643 |
+| walker |  | 3075 | 50 | python decl names surface in src/requests/status_codes.py |  |  | 0.643 |
+| walker |  | 3075 | 0 | python decl at src/requests/status_codes.py:109 |  |  | 0.643 |
 | ns | 3089 |  | 149 | PreparedRequest method locations | 4.2 | 4.1 | 0.629 |
 | walker |  | 3101 | 26 | python imports in src/requests/packages.py |  |  | 0.629 |
 | walker |  | 3158 | 57 | python decl names surface in src/requests/hooks.py |  |  | 0.630 |

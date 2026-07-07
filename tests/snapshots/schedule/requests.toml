@@ -589,10 +589,28 @@ entries = ["README.md", "expired", "mtls", "valid"]
 
 [[batches]]
 position = 31
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #3"
+cost_tokens = 256
+cum_tokens = 2944
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 58
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
 key = 'Python(DeclNames { file: "src/requests/help.py" })'
 descriptor = "python decl names surface in src/requests/help.py"
 cost_tokens = 36
-cum_tokens = 2724
+cum_tokens = 2980
 
 [batches.content]
 kind = "lines"
@@ -646,11 +664,11 @@ end = 129
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Python(Decl { file: "src/requests/help.py", start_line: 37 })'
 descriptor = "python decl at src/requests/help.py:37"
 cost_tokens = 0
-cum_tokens = 2724
+cum_tokens = 2980
 
 [batches.content]
 kind = "lines"
@@ -664,11 +682,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Python(Decl { file: "src/requests/help.py", start_line: 69 })'
 descriptor = "python decl at src/requests/help.py:69"
 cost_tokens = 0
-cum_tokens = 2724
+cum_tokens = 2980
 
 [batches.content]
 kind = "lines"
@@ -682,11 +700,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Python(Decl { file: "src/requests/help.py", start_line: 128 })'
 descriptor = "python decl at src/requests/help.py:128"
 cost_tokens = 0
-cum_tokens = 2724
+cum_tokens = 2980
 
 [batches.content]
 kind = "lines"
@@ -700,11 +718,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Python(DeclDoc { file: "src/requests/help.py", start_line: 69 })'
 descriptor = "python decl doc at src/requests/help.py:69"
 cost_tokens = 13
-cum_tokens = 2737
+cum_tokens = 2993
 
 [batches.content]
 kind = "lines"
@@ -718,11 +736,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Python(DeclDoc { file: "src/requests/help.py", start_line: 128 })'
 descriptor = "python decl doc at src/requests/help.py:128"
 cost_tokens = 14
-cum_tokens = 2751
+cum_tokens = 3007
 
 [batches.content]
 kind = "lines"
@@ -736,11 +754,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Python(DeclBody { file: "src/requests/help.py", start_line: 128, body_start_line: 130 })'
 descriptor = "python decl body at src/requests/help.py:128 body 130"
 cost_tokens = 18
-cum_tokens = 2769
+cum_tokens = 3025
 
 [batches.content]
 kind = "lines"
@@ -754,11 +772,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Python(DeclNames { file: "src/requests/status_codes.py" })'
 descriptor = "python decl names surface in src/requests/status_codes.py"
 cost_tokens = 50
-cum_tokens = 2819
+cum_tokens = 3075
 
 [batches.content]
 kind = "lines"
@@ -788,11 +806,11 @@ end = 110
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Python(Decl { file: "src/requests/status_codes.py", start_line: 109 })'
 descriptor = "python decl at src/requests/status_codes.py:109"
 cost_tokens = 0
-cum_tokens = 2819
+cum_tokens = 3075
 
 [batches.content]
 kind = "lines"
@@ -801,24 +819,6 @@ kind = "lines"
 path = "src/requests/status_codes.py"
 start = 109
 end = 109
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #3"
-cost_tokens = 256
-cum_tokens = 3075
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 58
-end = 76
 
 [batches.content.spans.render]
 kind = "full"

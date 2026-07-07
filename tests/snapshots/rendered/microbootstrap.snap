@@ -31,7 +31,32 @@ README.md
       71→  - [Application configuration](#application-configuration)
       72→- [Advanced](#advanced)
       74→## Installation
-    …
+      75→
+      76→Also, you can specify extras during installation for concrete framework:
+      77→
+      78→- `fastapi`
+      79→- `litestar`
+      80→- `faststream` (ASGI app)
+      81→
+      82→Also we have `granian` extra that is requires for `create_granian_server`.
+      83→
+      84→For uv:
+      85→
+      86→```bash
+      87→uv add "microbootstrap[fastapi]"
+      88→```
+      89→
+      90→For poetry:
+      91→
+      92→```bash
+      93→poetry add microbootstrap -E fastapi
+      94→```
+      95→
+      96→For pip:
+      97→
+      98→```bash
+      99→pip install "microbootstrap[fastapi]"
+     100→```
      102→## Quickstart
     …
      141→### FastAPI
@@ -129,35 +154,6 @@ microbootstrap/
     bootstrappers/
         __init__.py
         base.py
-            …
-              17→class DataclassInstance(typing.Protocol):
-              18→    __dataclass_fields__: typing.ClassVar[dict[str, typing.Any]]
-              21→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
-              22→DataclassT = typing.TypeVar("DataclassT", bound=DataclassInstance)
-              23→
-              24→
-              25→class ApplicationBootstrapper(abc.ABC, typing.Generic[SettingsT, ApplicationT, DataclassT]):
-            …
-              31→    def __init__(self, settings: SettingsT) -> None:
-            …
-              39→    def configure_application(
-            …
-              46→    def configure_instrument(
-            …
-              53→    def configure_instruments(
-            …
-              62→    def use_instrument(
-            …
-              72→    def bootstrap(self) -> ApplicationT:
-            …
-              99→    def bootstrap_before(self) -> dict[str, typing.Any]:
-            …
-             103→    def bootstrap_before_instruments_after_app_created(self, application: ApplicationT) -> ApplicationT:
-            …
-             107→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
-            …
-             111→    def teardown(self) -> None:
-            …
         fastapi.py
         faststream.py
         litestar.py

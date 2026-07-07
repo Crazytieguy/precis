@@ -176,21 +176,13 @@ Score(3000)=0.664 I=0.870 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missin
 | walker |  | 8680 | 11 | python decl names surface in examples/customer_service_streaming/main.py |  |  | 0.481 |
 | walker |  | 8680 | 0 | python decl at examples/customer_service_streaming/main.py:10 |  |  | 0.481 |
 | walker |  | 8689 | 9 | plaintext config examples/support_bot/requirements.txt |  |  | 0.482 |
-| walker |  | 8701 | 12 | python decl names surface in examples/airline/main.py |  |  | 0.482 |
 | ns | 8715 |  | 78 | customer_service_streaming/src/ tree listing | 9.2 |  | 0.493 |
-| walker |  | 8720 | 19 | listing of 'examples/airline/evals' |  |  | 0.493 |
-| walker |  | 8728 | 8 | listing of 'examples/customer_service_streaming/configs/tools/query_docs' |  |  | 0.494 |
-| walker |  | 8736 | 8 | listing of 'examples/customer_service_streaming/configs/tools/send_email' |  |  | 0.494 |
-| walker |  | 8744 | 8 | listing of 'examples/customer_service_streaming/configs/tools/submit_ticket' |  |  | 0.494 |
-| walker |  | 8754 | 10 | python decl body at swarm/util.py:31 body 60 |  |  | 0.495 |
-| walker |  | 8767 | 13 | listing of 'examples/airline/evals/eval_cases' |  |  | 0.495 |
-| ns | 8784 |  | 69 | customer_service_streaming/configs/ tree listing | 9.3 |  | 0.505 |
-| walker |  | 8942 | 175 | python method body at swarm/core.py:71 body 72 |  |  | 0.505 |
-| ns | 9038 |  | 254 | customer_service_streaming/src/arg_parser.py | 9.4 |  | 0.500 |
-| ns | 9284 |  | 246 | customer_service_streaming/configs/general.py | 9.5 |  | 0.493 |
-| ns | 9439 |  | 155 | customer_service_streaming/configs/swarm_tasks.json | 9.6 |  | 0.489 |
-| ns | 9572 |  | 133 | customer_service_streaming assistant.json sample | 9.7 |  | 0.486 |
-| ns | 9765 |  | 193 | local_engine.py — LocalEngine method locations | 9.8 |  | 0.481 |
-| ns | 9870 |  | 105 | customer_service/ + customer_service_lite/ listings | 10.1 |  | 0.478 |
-| ns | 9881 |  | 11 | tests/test_runs/ listing | 10.2 |  | 0.479 |
-| ns | 9995 |  | 114 | Sample session log content | 10.3 |  | 0.479 |
+| ns | 8784 |  | 69 | customer_service_streaming/configs/ tree listing | 9.3 |  | 0.495 |
+| ns | 9038 |  | 254 | customer_service_streaming/src/arg_parser.py | 9.4 |  | 0.490 |
+| ns | 9284 |  | 246 | customer_service_streaming/configs/general.py | 9.5 |  | 0.483 |
+| ns | 9439 |  | 155 | customer_service_streaming/configs/swarm_tasks.json | 9.6 |  | 0.479 |
+| ns | 9572 |  | 133 | customer_service_streaming assistant.json sample | 9.7 |  | 0.476 |
+| ns | 9765 |  | 193 | local_engine.py — LocalEngine method locations | 9.8 |  | 0.471 |
+| ns | 9870 |  | 105 | customer_service/ + customer_service_lite/ listings | 10.1 |  | 0.468 |
+| ns | 9881 |  | 11 | tests/test_runs/ listing | 10.2 |  | 0.469 |
+| ns | 9995 |  | 114 | Sample session log content | 10.3 |  | 0.470 |

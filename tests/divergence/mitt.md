@@ -48,13 +48,13 @@ Score(3000)=0.842 I=0.944 C=0.751 ns_rows≤3K=19/47 (reached=14 partial=2 missi
 | ns | 2795 |  | 61 | index_test.ts: properties block | 4.3 |  | 0.616 |
 | walker |  | 2838 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.842 |
 | walker |  | 2983 | 145 | README.md section #5 |  |  | 0.842 |
-| walker |  | 3013 | 30 | README.md section #12 |  |  | 0.842 |
 | ns | 3096 |  | 301 | index_test.ts: on() - registration and append semantics | 4.4 |  | 0.791 |
-| walker |  | 3162 | 149 | json config tsconfig.json |  |  | 0.793 |
-| walker |  | 3195 | 33 | README.md section #10 |  |  | 0.793 |
-| walker |  | 3306 | 111 | README.md section #4 |  |  | 0.793 |
-| ns | 3460 |  | 364 | index_test.ts: on() - case sensitivity, symbols, duplicates | 4.5 |  | 0.748 |
-| walker |  | 3586 | 280 | README.md section #2 |  |  | 0.750 |
+| walker |  | 3263 | 280 | README.md section #2 |  |  | 0.793 |
+| walker |  | 3293 | 30 | README.md section #12 |  |  | 0.793 |
+| walker |  | 3442 | 149 | json config tsconfig.json |  |  | 0.795 |
+| ns | 3460 |  | 364 | index_test.ts: on() - case sensitivity, symbols, duplicates | 4.5 |  | 0.750 |
+| walker |  | 3475 | 33 | README.md section #10 |  |  | 0.750 |
+| walker |  | 3586 | 111 | README.md section #4 |  |  | 0.750 |
 | walker |  | 3621 | 35 | README.md section #6 |  |  | 0.750 |
 | walker |  | 3676 | 55 | README.md section #16 |  |  | 0.750 |
 | ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.710 |

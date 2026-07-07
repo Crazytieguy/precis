@@ -513,7 +513,7 @@ pub const ORIENTATION_TIER_BOOST: f64 = 1.4;
 /// too much prose past the 3K scoring prefix in 10K schedule snapshots;
 /// 0.25 keeps the corpus mean stable while still scaling with budget.
 pub const PROSE_MASS_WINDOW_FRACTION: f64 = 0.25;
-pub const PROSE_MASS_BOOST: f64 = 1.3;
+pub const PROSE_MASS_BOOST: f64 = 1.5;
 
 /// Ratio multiplier for the early-budget orientation tier. `1.0` once the
 /// window is past or for non-orientation batches.

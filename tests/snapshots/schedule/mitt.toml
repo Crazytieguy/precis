@@ -815,10 +815,28 @@ kind = "full"
 
 [[batches]]
 position = 28
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #2"
+cost_tokens = 280
+cum_tokens = 3263
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 30
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #12"
 cost_tokens = 30
-cum_tokens = 3013
+cum_tokens = 3293
 
 [batches.content]
 kind = "lines"
@@ -832,11 +850,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 149
-cum_tokens = 3162
+cum_tokens = 3442
 
 [batches.content]
 kind = "lines"
@@ -850,11 +868,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 33
-cum_tokens = 3195
+cum_tokens = 3475
 
 [batches.content]
 kind = "lines"
@@ -868,11 +886,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 111
-cum_tokens = 3306
+cum_tokens = 3586
 
 [batches.content]
 kind = "lines"
@@ -881,24 +899,6 @@ kind = "lines"
 path = "README.md"
 start = 113
 end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #2"
-cost_tokens = 280
-cum_tokens = 3586
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 30
-end = 54
 
 [batches.content.spans.render]
 kind = "full"

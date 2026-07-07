@@ -199,5 +199,4 @@ Score(3000)=0.673 I=0.888 C=0.510 ns_rows≤3K=18/40 (reached=12 partial=1 missi
 | ns | 9703 |  | 180 | tests/: help.* test files | 7.3 |  | 0.539 |
 | walker |  | 9875 | 249 | docs/terminology.md section #0 |  |  | 0.556 |
 | ns | 9883 |  | 180 | tests/: option.*/options.* test files | 7.4 |  | 0.568 |
-| walker |  | 9906 | 31 | module item at examples/options-negatable.js:19 |  |  | 0.568 |
 | ns | 9948 |  | 65 | tests/: remaining root-level test files + fixtures/, fixtures-extensions/ | 7.5 |  | 0.572 |

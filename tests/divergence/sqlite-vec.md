@@ -90,37 +90,37 @@ Score(3000)=0.392 I=0.686 C=0.225 ns_rows≤3K=17/52 (reached=3 partial=0 missin
 | walker |  | 4412 | 41 | ARCHITECTURE.md section #8 |  |  | 0.437 |
 | ns | 4442 |  | 176 | sqlite-vec.c: vec0_user_column_kind enum | 5.3 |  | 0.428 |
 | walker |  | 4623 | 211 | python decl body at tmp-static.py:25 body 26 |  |  | 0.428 |
-| walker |  | 4676 | 53 | ARCHITECTURE.md section #2 |  |  | 0.448 |
-| ns | 4701 |  | 259 | sqlite-vec.c: per-column-kind definition structs | 5.4 |  | 0.431 |
-| walker |  | 4729 | 53 | ARCHITECTURE.md section #1 |  |  | 0.455 |
-| walker |  | 4770 | 41 | [package] in tests/Cargo.toml |  |  | 0.455 |
-| ns | 4914 |  | 213 | sqlite-vec.c: idxStr kind enum | 5.5 |  | 0.448 |
-| ns | 5196 |  | 282 | sqlite-vec.c: vec0 virtual-table method roster (locations) | 5.6 |  | 0.435 |
-| walker |  | 5270 | 500 | c decl names surface #1 in sqlite-vec.c |  |  | 0.435 |
-| walker |  | 5270 | 0 | c decl at sqlite-vec.c:1317 |  |  | 0.435 |
-| walker |  | 5270 | 0 | c decl at sqlite-vec.c:1812 |  |  | 0.435 |
-| walker |  | 5270 | 0 | c decl at sqlite-vec.c:1816 |  |  | 0.435 |
-| walker |  | 5270 | 0 | c decl at sqlite-vec.c:1824 |  |  | 0.435 |
-| walker |  | 5270 | 0 | c decl at sqlite-vec.c:1892 |  |  | 0.435 |
-| walker |  | 5281 | 11 | c decl at sqlite-vec.c:1886 |  |  | 0.435 |
-| walker |  | 5306 | 25 | c decl at sqlite-vec.c:1050 |  |  | 0.435 |
-| walker |  | 5340 | 34 | c decl at sqlite-vec.c:1880 |  |  | 0.435 |
-| walker |  | 5370 | 30 | c decl at sqlite-vec.c:964 |  |  | 0.435 |
-| walker |  | 5408 | 38 | c decl at sqlite-vec.c:1806 |  |  | 0.435 |
-| walker |  | 5443 | 35 | c decl at sqlite-vec.c:1900 |  |  | 0.435 |
-| ns | 5462 |  | 266 | sqlite-vec.c: KNN merge_sorted_lists (core algorithm) | 5.7 |  | 0.426 |
-| walker |  | 5481 | 38 | c decl at sqlite-vec.c:1956 |  |  | 0.426 |
-| walker |  | 5519 | 38 | c decl at sqlite-vec.c:2033 |  |  | 0.426 |
-| walker |  | 5561 | 42 | c decl at sqlite-vec.c:2111 |  |  | 0.426 |
-| walker |  | 5615 | 54 | c decl at sqlite-vec.c:998 |  |  | 0.426 |
+| ns | 4701 |  | 259 | sqlite-vec.c: per-column-kind definition structs | 5.4 |  | 0.412 |
+| ns | 4914 |  | 213 | sqlite-vec.c: idxStr kind enum | 5.5 |  | 0.405 |
+| ns | 5196 |  | 282 | sqlite-vec.c: vec0 virtual-table method roster (locations) | 5.6 |  | 0.393 |
+| walker |  | 5440 | 817 | README.md section #3 |  |  | 0.393 |
+| ns | 5462 |  | 266 | sqlite-vec.c: KNN merge_sorted_lists (core algorithm) | 5.7 |  | 0.386 |
+| walker |  | 5493 | 53 | ARCHITECTURE.md section #2 |  |  | 0.404 |
+| walker |  | 5546 | 53 | ARCHITECTURE.md section #1 |  |  | 0.426 |
+| walker |  | 5587 | 41 | [package] in tests/Cargo.toml |  |  | 0.426 |
 | ns | 5683 |  | 221 | sqlite-vec.c: scalar SQL function roster (locations) | 6.1 | 4.2 | 0.417 |
-| walker |  | 5684 | 69 | c decl at sqlite-vec.c:1798 |  |  | 0.417 |
-| walker |  | 5767 | 83 | c decl at sqlite-vec.c:2091 |  |  | 0.417 |
-| walker |  | 5806 | 39 | pub item body at benchmarks/micro/src/lib.rs:8 body 9 |  |  | 0.417 |
 | ns | 5915 |  | 232 | sqlite-vec.c: vec_f32 body | 6.2 | 6.1 | 0.407 |
+| walker |  | 6087 | 500 | c decl names surface #1 in sqlite-vec.c |  |  | 0.407 |
+| walker |  | 6087 | 0 | c decl at sqlite-vec.c:1317 |  |  | 0.407 |
+| walker |  | 6087 | 0 | c decl at sqlite-vec.c:1812 |  |  | 0.407 |
+| walker |  | 6087 | 0 | c decl at sqlite-vec.c:1816 |  |  | 0.407 |
+| walker |  | 6087 | 0 | c decl at sqlite-vec.c:1824 |  |  | 0.407 |
+| walker |  | 6087 | 0 | c decl at sqlite-vec.c:1892 |  |  | 0.407 |
+| walker |  | 6098 | 11 | c decl at sqlite-vec.c:1886 |  |  | 0.407 |
+| walker |  | 6123 | 25 | c decl at sqlite-vec.c:1050 |  |  | 0.407 |
+| walker |  | 6157 | 34 | c decl at sqlite-vec.c:1880 |  |  | 0.407 |
 | ns | 6158 |  | 243 | sqlite-vec.c: vec_slice signature + bounds validation | 6.3 | 6.1 | 0.397 |
+| walker |  | 6187 | 30 | c decl at sqlite-vec.c:964 |  |  | 0.397 |
+| walker |  | 6225 | 38 | c decl at sqlite-vec.c:1806 |  |  | 0.397 |
+| walker |  | 6260 | 35 | c decl at sqlite-vec.c:1900 |  |  | 0.397 |
+| walker |  | 6298 | 38 | c decl at sqlite-vec.c:1956 |  |  | 0.397 |
+| walker |  | 6336 | 38 | c decl at sqlite-vec.c:2033 |  |  | 0.397 |
+| walker |  | 6378 | 42 | c decl at sqlite-vec.c:2111 |  |  | 0.397 |
+| walker |  | 6432 | 54 | c decl at sqlite-vec.c:998 |  |  | 0.397 |
 | ns | 6457 |  | 299 | sqlite-vec.c: vec_quantize_binary signature + core loop | 6.4 | 6.1 | 0.387 |
-| walker |  | 6623 | 817 | README.md section #3 |  |  | 0.387 |
+| walker |  | 6501 | 69 | c decl at sqlite-vec.c:1798 |  |  | 0.387 |
+| walker |  | 6584 | 83 | c decl at sqlite-vec.c:2091 |  |  | 0.387 |
+| walker |  | 6623 | 39 | pub item body at benchmarks/micro/src/lib.rs:8 body 9 |  |  | 0.387 |
 | walker |  | 6691 | 68 | ARCHITECTURE.md section #11 |  |  | 0.387 |
 | ns | 6739 |  | 282 | sqlite-vec.c: vec_each table function (struct + full method roster) | 6.5 | 4.2 | 0.377 |
 | walker |  | 6758 | 67 | ARCHITECTURE.md section #12 |  |  | 0.377 |

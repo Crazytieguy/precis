@@ -92,25 +92,25 @@ Score(3000)=0.405 I=0.743 C=0.220 ns_rows≤3K=21/48 (reached=5 partial=1 missin
 | walker |  | 3431 | 67 | c decl names surface in src/crafting.c |  |  | 0.397 |
 | walker |  | 3431 | 0 | c decl at src/crafting.c:9 |  |  | 0.397 |
 | walker |  | 3431 | 0 | c decl at src/crafting.c:352 |  |  | 0.397 |
-| walker |  | 3447 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.397 |
-| walker |  | 3566 | 119 | README.md section #1 |  |  | 0.416 |
-| walker |  | 3580 | 14 | c decl doc at include/globals.h:35 |  |  | 0.425 |
-| walker |  | 3608 | 28 | c decl at src/crafting.c:349 |  |  | 0.425 |
-| ns | 3877 |  | 510 | globals.h: storage/network tuning (#define) | 3.3 |  | 0.394 |
-| walker |  | 3966 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.396 |
-| walker |  | 3991 | 25 | README.md section #5 |  |  | 0.398 |
-| ns | 4324 |  | 447 | globals.h: gameplay feature toggles, part 1 (#define) | 3.4 |  | 0.376 |
-| walker |  | 4360 | 369 | c decl names surface #1 in include/globals.h |  |  | 0.470 |
-| walker |  | 4360 | 0 | c decl at include/globals.h:103 |  |  | 0.470 |
-| walker |  | 4360 | 0 | c decl at include/globals.h:106 |  |  | 0.470 |
-| walker |  | 4381 | 21 | c decl at include/globals.h:255 |  |  | 0.472 |
-| walker |  | 4425 | 44 | c decl at include/globals.h:191 |  |  | 0.490 |
-| walker |  | 4482 | 57 | c decl at include/globals.h:260 |  |  | 0.500 |
-| walker |  | 4495 | 13 | c decl doc at include/globals.h:106 |  |  | 0.501 |
-| walker |  | 4636 | 141 | c decl at include/globals.h:240 |  |  | 0.552 |
-| ns | 4687 |  | 363 | globals.h: gameplay feature toggles, part 2 + dev logging (#define) | 3.5 |  | 0.525 |
-| ns | 4832 |  | 145 | globals.h: platform bootstrap (#define/#ifdef) | 3.6 |  | 0.524 |
-| walker |  | 4965 | 329 | README.md section #3 |  |  | 0.551 |
+| walker |  | 3760 | 329 | README.md section #3 |  |  | 0.438 |
+| walker |  | 3776 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.438 |
+| ns | 3877 |  | 510 | globals.h: storage/network tuning (#define) | 3.3 |  | 0.406 |
+| walker |  | 3895 | 119 | README.md section #1 |  |  | 0.423 |
+| walker |  | 3909 | 14 | c decl doc at include/globals.h:35 |  |  | 0.430 |
+| walker |  | 3937 | 28 | c decl at src/crafting.c:349 |  |  | 0.430 |
+| walker |  | 4295 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.432 |
+| walker |  | 4320 | 25 | README.md section #5 |  |  | 0.434 |
+| ns | 4324 |  | 447 | globals.h: gameplay feature toggles, part 1 (#define) | 3.4 |  | 0.410 |
+| ns | 4687 |  | 363 | globals.h: gameplay feature toggles, part 2 + dev logging (#define) | 3.5 |  | 0.390 |
+| walker |  | 4689 | 369 | c decl names surface #1 in include/globals.h |  |  | 0.477 |
+| walker |  | 4689 | 0 | c decl at include/globals.h:103 |  |  | 0.477 |
+| walker |  | 4689 | 0 | c decl at include/globals.h:106 |  |  | 0.477 |
+| walker |  | 4710 | 21 | c decl at include/globals.h:255 |  |  | 0.479 |
+| walker |  | 4754 | 44 | c decl at include/globals.h:191 |  |  | 0.496 |
+| walker |  | 4811 | 57 | c decl at include/globals.h:260 |  |  | 0.505 |
+| walker |  | 4824 | 13 | c decl doc at include/globals.h:106 |  |  | 0.506 |
+| ns | 4832 |  | 145 | globals.h: platform bootstrap (#define/#ifdef) | 3.6 |  | 0.506 |
+| walker |  | 4965 | 141 | c decl at include/globals.h:240 |  |  | 0.551 |
 | ns | 5405 |  | 573 | packets.h: every C->S / S->C packet function name | 4.1 |  | 0.524 |
 | walker |  | 5494 | 529 | plaintext config build.sh |  |  | 0.525 |
 | walker |  | 5508 | 14 | c decl doc at src/structures.c:16 |  |  | 0.525 |

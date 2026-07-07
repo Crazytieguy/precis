@@ -1395,10 +1395,28 @@ kind = "full"
 
 [[batches]]
 position = 54
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #2"
+cost_tokens = 732
+cum_tokens = 3595
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 17
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #12"
 cost_tokens = 55
-cum_tokens = 2918
+cum_tokens = 3650
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1430,11 @@ end = 192
 kind = "full"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Typescript(ExportNames { file: "src/adapters/normalized-adapter.ts" })'
 descriptor = "export names surface in src/adapters/normalized-adapter.ts"
 cost_tokens = 61
-cum_tokens = 2979
+cum_tokens = 3711
 
 [batches.content]
 kind = "lines"
@@ -1454,11 +1472,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Typescript(Export { file: "src/adapters/normalized-adapter.ts", start_line: 7 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:7"
 cost_tokens = 13
-cum_tokens = 2992
+cum_tokens = 3724
 
 [batches.content]
 kind = "lines"
@@ -1472,11 +1490,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Typescript(Export { file: "src/adapters/normalized-adapter.ts", start_line: 11 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:11"
 cost_tokens = 49
-cum_tokens = 3041
+cum_tokens = 3773
 
 [batches.content]
 kind = "lines"
@@ -1538,11 +1556,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Typescript(Imports { file: "src/adapters/observer.ts" })'
 descriptor = "imports in src/adapters/observer.ts"
 cost_tokens = 14
-cum_tokens = 3055
+cum_tokens = 3787
 
 [batches.content]
 kind = "lines"
@@ -1556,11 +1574,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Typescript(ExportBody { file: "src/parse-where.ts", start_line: 58, body_start_line: 59 })'
 descriptor = "export body at src/parse-where.ts:58 body 59"
 cost_tokens = 117
-cum_tokens = 3172
+cum_tokens = 3904
 
 [batches.content]
 kind = "lines"
@@ -1574,11 +1592,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #17"
 cost_tokens = 71
-cum_tokens = 3243
+cum_tokens = 3975
 
 [batches.content]
 kind = "lines"
@@ -1592,11 +1610,11 @@ end = 233
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Typescript(Export { file: "src/adapters/observer.ts", start_line: 4 })'
 descriptor = "export at src/adapters/observer.ts:4"
 cost_tokens = 154
-cum_tokens = 3397
+cum_tokens = 4129
 
 [batches.content]
 kind = "lines"
@@ -1658,11 +1676,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Typescript(ExportBody { file: "src/adapters/observer.ts", start_line: 4, body_start_line: 21 })'
 descriptor = "export body at src/adapters/observer.ts:4 body 21"
 cost_tokens = 86
-cum_tokens = 3483
+cum_tokens = 4215
 
 [batches.content]
 kind = "lines"
@@ -1687,24 +1705,6 @@ kind = "full"
 path = "src/adapters/observer.ts"
 start = 32
 end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 63
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #2"
-cost_tokens = 732
-cum_tokens = 4215
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 17
-end = 89
 
 [batches.content.spans.render]
 kind = "full"

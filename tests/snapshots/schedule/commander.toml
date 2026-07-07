@@ -1,7 +1,7 @@
 fixture = "commander"
 budget = 10000
-cumulative_tokens = 9906
-batch_count = 159
+cumulative_tokens = 9875
+batch_count = 158
 
 [[batches]]
 position = 1
@@ -4833,24 +4833,6 @@ kind = "lines"
 path = "docs/terminology.md"
 start = 1
 end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 159
-key = 'Typescript(ModuleItem { file: "examples/options-negatable.js", start_line: 19 })'
-descriptor = "module item at examples/options-negatable.js:19"
-cost_tokens = 31
-cum_tokens = 9906
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "examples/options-negatable.js"
-start = 19
-end = 20
 
 [batches.content.spans.render]
 kind = "full"
