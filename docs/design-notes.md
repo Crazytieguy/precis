@@ -365,7 +365,21 @@ Measured-dead this cycle (specifics block retries):
   d2ts −0.016. A retry needs member batches that *win purchase inside
   3K* (value-side or scheduler-tier treatment), not just granularity.
 
-## Solo calibration session (2026-07-06, evening): 0.5465 → 0.5741
+## Solo calibration session (2026-07-06/07, evening): 0.5465 → 0.5776
+
+**Interaction re-sweep (2026-07-07)**: after the session's six
+structural changes, the "settled" knobs were re-swept on the new
+state — four moved, four+ confirmed: ORIENTATION_TIER_WINDOW
+300→500 (+0.0004, tinyusb +0.028), depth_factor slope 0.3→0.35
+(+0.0012, never previously swept), PROSE_MASS_BOOST 1.3→1.5
+(+0.0010, dockly +0.077), CANONICAL_USAGE_SECTION_FACTOR 1.5→2.2
+(+0.0009, tinyusb +0.063). Confirmed at optimum on the new state:
+concavity 0.35 (sharp), ORIENTATION_TIER_BOOST 1.4, roster cap 2.2,
+PROSE_MASS_WINDOW_FRACTION 0.25, TRAIN_PRESSURE_K 0.15,
+BODY_BLOCK/README_SUB scales, GO_ENTRY_FACTOR 1.4, go unexported
+0.6, REFERENCE_USAGE 1.3, python init factor 3.0. Lesson: every
+structural ship moves nearby knob optima — re-sweep the neighborhood
+after each mechanism lands, not once per re-freeze.
 
 Final state after the breadth-pressure mechanism (see its entry
 below): training 0.5741, validation 0.5284 — the two moved in
