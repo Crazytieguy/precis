@@ -44,19 +44,23 @@ README.md
      144→### all
     …
      148→### on
+     150→Register an event handler for the given type.
     …
      157→### off
     …
      167→### emit
     …
      179→## Contribute
-    …
+     180→
+     181→First off, thanks for taking the time to contribute!
+     182→Now, take a moment to be sure your contributions make sense to everyone else.
      184→### Reporting Issues
     …
      189→### Submitting pull requests
     …
      203→## License
-    …
+     204→
+     205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 package.json
     …
        2→  "name": "mitt",
@@ -85,22 +89,6 @@ src/
           20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
           21→>;
           23→export interface Emitter<Events extends Record<EventType, unknown>> {
-          24→	all: EventHandlerMap<Events>;
-          25→
-          26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
-          27→	on(type: '*', handler: WildcardHandler<Events>): void;
-          28→
-          29→	off<Key extends keyof Events>(
-          30→		type: Key,
-          31→		handler?: Handler<Events[Key]>
-          32→	): void;
-          33→	off(type: '*', handler: WildcardHandler<Events>): void;
-          34→
-          35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
-          36→	emit<Key extends keyof Events>(
-          37→		type: undefined extends Events[Key] ? Key : never
-          38→	): void;
-          39→}
         …
           46→export default function mitt<Events extends Record<EventType, unknown>>(
           47→	all?: EventHandlerMap<Events>
