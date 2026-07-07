@@ -196,12 +196,16 @@ crates/
         README.md
         src/
             lib.rs
+                   1→//! Summary parser for mdBook.
+                   2→//!
+                   3→//! This is used to parse the
+                   4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
+                   5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
                 …
                   59→pub fn parse_summary(summary: &str) -> Result<Summary> {
                   60→    let parser = SummaryParser::new(summary);
                   61→    parser.parse()
                 …
-                  64→/// The parsed `SUMMARY.md`, specifying how the book should be laid out.
                   65→#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
                   66→#[non_exhaustive]
                   67→pub struct Summary {

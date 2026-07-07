@@ -205,25 +205,20 @@ command.go
      260→}
     …
      269→func (c *Command) Context() context.Context {
-     270→	return c.ctx
     …
      273→// SetContext sets context for the command. This context will be overwritten by
      274→// Command.ExecuteContext or Command.ExecuteContextC.
      275→func (c *Command) SetContext(ctx context.Context) {
-     276→	c.ctx = ctx
     …
      279→// SetArgs sets arguments for the command. It is set to os.Args[1:] by default, if desired, can be overridden
      280→// particularly useful when testing.
      281→func (c *Command) SetArgs(a []string) {
-     282→	c.args = a
     …
      285→// SetOutput sets the destination for usage and error messages.
      286→// If output is nil, os.Stderr is used.
      287→//
      288→// Deprecated: Use SetOut and/or SetErr instead
      289→func (c *Command) SetOutput(output io.Writer) {
-     290→	c.outWriter = output
-     291→	c.errWriter = output
     …
 command_notwin.go
     …

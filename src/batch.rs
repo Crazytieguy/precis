@@ -78,6 +78,9 @@ macro_rules! impl_batchkey {
             fn is_deferred_mass_prose(&self) -> bool {
                 match self { $(BatchKey::$variant(k) => InnerKey::is_deferred_mass_prose(k),)* }
             }
+            fn is_depth_follow_up(&self) -> bool {
+                match self { $(BatchKey::$variant(k) => InnerKey::is_depth_follow_up(k),)* }
+            }
         }
     };
 }
@@ -110,6 +113,13 @@ trait InnerKey {
         false
     }
     fn is_deferred_mass_prose(&self) -> bool {
+        false
+    }
+    /// True for depth follow-up batches — doc/body/member refinements
+    /// of an already-delivered surface. Drives the scheduler's
+    /// breadth-pressure penalty; surfaces and orientation never
+    /// qualify.
+    fn is_depth_follow_up(&self) -> bool {
         false
     }
 }
@@ -542,6 +552,13 @@ pub trait WalkerKey:
     fn is_deferred_mass_prose(&self) -> bool {
         false
     }
+
+    /// True for depth follow-up batches — doc/body/member refinements
+    /// of an already-delivered surface. Drives the scheduler's
+    /// breadth-pressure penalty.
+    fn is_depth_follow_up(&self) -> bool {
+        false
+    }
 }
 
 impl InnerKey for FsKey {
@@ -557,6 +574,20 @@ impl InnerKey for FsKey {
 }
 
 impl InnerKey for RustKey {
+    fn is_depth_follow_up(&self) -> bool {
+        // `EntryItemBody` is deliberately absent: entrypoint internals
+        // are the "how does this app work" spine, and NS authors rank
+        // that dive as wanted depth (otree main.rs args->config parts:
+        // -0.131 with it pressured).
+        matches!(
+            self,
+            RustKey::PubItemBody { .. }
+                | RustKey::PubItemDocLede { .. }
+                | RustKey::PubItemDocBody { .. }
+                | RustKey::MacroBody { .. }
+        )
+    }
+
     /// `PubItemDocBody` steepens to `0.45` — rustdoc prose past the
     /// first heading grows in cost without proportional structural value.
     /// `CrateDocBody` stays at the default (its bullets carry credit).
@@ -662,6 +693,13 @@ impl InnerKey for MarkdownKey {
 }
 
 impl InnerKey for TsKey {
+    fn is_depth_follow_up(&self) -> bool {
+        matches!(
+            self,
+            TsKey::ExportBody { .. } | TsKey::ExportMember { .. } | TsKey::ModuleItemBody { .. }
+        )
+    }
+
     /// `ExportNames` / `ImportChunk` for TS/TSX impl files use a mild
     /// `0.38` (flatter than per-decl, steeper than coherent anchors).
     /// Declaration files and JS runtime exports keep the default —
@@ -840,6 +878,14 @@ impl InnerKey for YamlKey {
 }
 
 impl InnerKey for GoKey {
+    fn is_depth_follow_up(&self) -> bool {
+        // `DeclDoc` is deliberately absent: godoc comments are the API
+        // documentation in Go convention, and NS authors rank a
+        // primary file's doc train as wanted depth (bubbletea tea.go:
+        // -0.048 with it pressured).
+        matches!(self, GoKey::DeclBody { .. })
+    }
+
     /// Per-decl batches steepen to `0.45` (matches the C walker) —
     /// short decls plus dozens per file would otherwise dominate the
     /// rank against larger anchors at the default 0.35.
@@ -881,6 +927,15 @@ impl InnerKey for GoKey {
 }
 
 impl InnerKey for PythonKey {
+    fn is_depth_follow_up(&self) -> bool {
+        matches!(
+            self,
+            PythonKey::DeclDocRest { .. }
+                | PythonKey::DeclBody { .. }
+                | PythonKey::MethodBody { .. }
+        )
+    }
+
     /// `DeclNames` + `ImportChunk` use a mild `0.37` (broad
     /// catalog-shaped surfaces). Per-decl / per-method batches use
     /// `0.45` (matches C / Go) for the same reason — short decls
@@ -954,6 +1009,10 @@ impl InnerKey for PythonKey {
 }
 
 impl InnerKey for CKey {
+    fn is_depth_follow_up(&self) -> bool {
+        matches!(self, CKey::DeclDoc { .. } | CKey::DeclBody { .. })
+    }
+
     /// Per-decl batches steepen to `0.45` — typedef / prototype lines
     /// are short and headers emit dozens; the default 0.35 lets the
     /// stack dominate larger anchor batches. `DeclDoc` joins them: a

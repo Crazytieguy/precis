@@ -45,6 +45,11 @@ examples/
         package.json
         public/
         src/
+            App.tsx
+            constants.ts
+            index.tsx
+            searchGif.ts
+            styles.css
         tsconfig.json
     one-file-demo/
 jest.config.cjs
@@ -86,7 +91,20 @@ package.json
       33→  "main": "dist/index.cjs",
       34→  "module": "dist/index.js",
       35→  "unpkg": "dist/index.umd.js",
-    …
+      36→  "scripts": {
+      37→    "build": "rimraf dist && microbundle --format modern,cjs,umd && sh ./scripts/generate-cts.sh",
+      38→    "dev": "microbundle watch",
+      39→    "prepublishOnly": "npm run test && npm run build",
+      40→    "publish:jsr": "npm run prepublishOnly && npx jsr publish",
+      41→    "release": "npm run prepublishOnly && npm publish && npx jsr publish",
+      42→    "test": "jest",
+      43→    "clear-test": "jest --clearCache",
+      44→    "fmt": "prettier ./src/** ./tests/** -w",
+      45→    "check": "tsc --strict --noEmit --extendedDiagnostics",
+      46→    "perf": "tsc --project tests/tsconfig.json --noEmit --extendedDiagnostics",
+      47→    "trace": "tsc --project tests/tsconfig.json --generateTrace trace --incremental false  --noEmit",
+      48→    "analyzeTrace": "npx @typescript/analyze-trace trace"
+      49→  },
       50→  "files": [
       51→    "dist/**/*",
       52→    "package.json"
@@ -140,7 +158,26 @@ src/
     internals/
         helpers.ts
         symbols.ts
+            …
+              16→export const matcher = Symbol.for('@ts-pattern/matcher');
+              17→export type matcher = typeof matcher;
+              18→
+              19→export const unset = Symbol.for('@ts-pattern/unset');
+              20→export type unset = typeof unset;
+              21→
+              22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
+              23→export type isVariadic = typeof isVariadic;
+            …
+              26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
+              27→export type anonymousSelectKey = typeof anonymousSelectKey;
+              28→
+              29→export const override = Symbol.for('@ts-pattern/override');
+              30→export type override = typeof override;
     is-matching.ts
+           1→import { MatchedValue, Pattern, UnknownProperties } from './types/Pattern';
+           2→import * as P from './patterns';
+           3→import { matchPattern } from './internals/helpers';
+           4→import { WithDefault } from './types/helpers';
         …
           32→export function isMatching<const p extends Pattern<unknown>>(
           33→  pattern: p
@@ -192,49 +229,16 @@ src/
           54→      args[args.length - 1];
           56→    const patterns: Pattern<input>[] = [args[0]];
           57→    let predicate: ((value: input) => unknown) | undefined = undefined;
-          59→    if (args.length === 3 && typeof args[1] === 'function') {
-          60→      // case with guard as second argument
-          61→      predicate = args[1];
-          62→    } else if (args.length > 2) {
-          63→      // case with several patterns
-          64→      patterns.push(...args.slice(1, args.length - 1));
-          65→    }
+        …
           67→    let hasSelections = false;
           68→    let selected: Record<string, unknown> = {};
-          69→    const select = (key: string, value: unknown) => {
-          70→      hasSelections = true;
-          71→      selected[key] = value;
-          72→    };
-          74→    const matched =
-          75→      patterns.some((pattern) => matchPattern(pattern, this.input, select)) &&
-          76→      (predicate ? Boolean(predicate(this.input)) : true);
-          78→    const selections = hasSelections
-          79→      ? symbols.anonymousSelectKey in selected
-          80→        ? selected[symbols.anonymousSelectKey]
-          81→        : selected
-          82→      : this.input;
-          84→    const state = matched
-          85→      ? {
-          86→          matched: true as const,
-          87→          value: handler(selections, this.input),
-          88→        }
-          89→      : unmatched;
+        …
           91→    return new MatchExpression(this.input, state);
         …
           94→  when(
           95→    predicate: (value: input) => unknown,
           96→    handler: (selection: input, value: input) => output
           97→  ): MatchExpression<input, output> {
-          98→    if (this.state.matched) return this;
-          99→
-         100→    const matched = Boolean(predicate(this.input));
-         101→
-         102→    return new MatchExpression<input, output>(
-         103→      this.input,
-         104→      matched
-         105→        ? { matched: true, value: handler(this.input, this.input) }
-         106→        : unmatched
-         107→    );
         …
          110→  otherwise(handler: (value: input) => output): output {
          111→    if (this.state.matched) return this.state.value;

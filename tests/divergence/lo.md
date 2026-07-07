@@ -205,67 +205,70 @@ Score(3000)=0.350 I=0.528 C=0.232 ns_rows≤3K=15/49 (reached=5 partial=0 missin
 | walker |  | 8378 | 47 | go decl doc at func.go:35 |  |  | 0.265 |
 | ns | 8414 |  | 232 | condition.go body: Ternary + TernaryF | 2.34 | 2.25 | 0.261 |
 | walker |  | 8427 | 49 | go decl doc at func.go:43 |  |  | 0.261 |
-| walker |  | 8459 | 32 | go decl body at func.go:5 |  |  | 0.266 |
-| walker |  | 8499 | 40 | go decl body at func.go:19 |  |  | 0.266 |
-| walker |  | 8547 | 48 | go decl body at func.go:27 |  |  | 0.266 |
-| ns | 8570 |  | 156 | types.go body: Entry + Tuple2 + Unpack | 2.35 | 2.23 | 0.262 |
-| walker |  | 8603 | 56 | go decl body at find.go:13 |  |  | 0.262 |
-| walker |  | 8659 | 56 | go decl body at func.go:35 |  |  | 0.262 |
-| walker |  | 8683 | 24 | README.md section #16 |  |  | 0.262 |
-| walker |  | 8707 | 24 | README.md section #20 |  |  | 0.262 |
-| ns | 8728 |  | 158 | it/, mutable/, parallel/ directory listings | 3.1 |  | 0.295 |
-| walker |  | 8731 | 24 | README.md section #22 |  |  | 0.295 |
-| walker |  | 8755 | 24 | README.md section #50 |  |  | 0.295 |
-| walker |  | 8779 | 24 | README.md section #53 |  |  | 0.295 |
-| ns | 8792 |  | 64 | internal/ directory listings | 3.2 |  | 0.307 |
-| walker |  | 8803 | 24 | README.md section #64 |  |  | 0.307 |
-| walker |  | 8827 | 24 | README.md section #69 |  |  | 0.307 |
-| walker |  | 8851 | 24 | README.md section #77 |  |  | 0.307 |
-| walker |  | 8875 | 24 | README.md section #81 |  |  | 0.307 |
-| walker |  | 8899 | 24 | README.md section #115 |  |  | 0.307 |
-| walker |  | 8923 | 24 | README.md section #126 |  |  | 0.307 |
-| walker |  | 8947 | 24 | README.md section #140 |  |  | 0.307 |
-| walker |  | 8971 | 24 | README.md section #151 |  |  | 0.307 |
-| walker |  | 8995 | 24 | README.md section #175 |  |  | 0.307 |
-| walker |  | 9019 | 24 | README.md section #178 |  |  | 0.307 |
-| walker |  | 9043 | 24 | README.md section #221 |  |  | 0.307 |
-| walker |  | 9067 | 24 | README.md section #242 |  |  | 0.307 |
-| ns | 9069 |  | 277 | exp/simd/ and benchmark/ directory listings | 3.3 |  | 0.310 |
-| walker |  | 9091 | 24 | README.md section #268 |  |  | 0.310 |
-| walker |  | 9115 | 24 | README.md section #288 |  |  | 0.310 |
-| walker |  | 9139 | 24 | README.md section #302 |  |  | 0.310 |
-| walker |  | 9163 | 24 | README.md section #316 |  |  | 0.310 |
-| walker |  | 9187 | 24 | README.md section #353 |  |  | 0.310 |
-| walker |  | 9211 | 24 | README.md section #406 |  |  | 0.310 |
-| walker |  | 9235 | 24 | README.md section #409 |  |  | 0.310 |
-| walker |  | 9259 | 24 | README.md section #411 |  |  | 0.310 |
-| walker |  | 9283 | 24 | README.md section #416 |  |  | 0.310 |
-| ns | 9320 |  | 251 | mutable/slice.go body: Filter | 3.4 |  | 0.307 |
-| walker |  | 9387 | 104 | go decl doc at find.go:88 |  |  | 0.307 |
-| walker |  | 9545 | 158 | go decl names surface in mutable/slice.go |  |  | 0.307 |
-| walker |  | 9545 | 0 | go decl at mutable/slice.go:11 |  |  | 0.307 |
-| walker |  | 9545 | 0 | go decl at mutable/slice.go:27 |  |  | 0.307 |
-| walker |  | 9545 | 0 | go decl at mutable/slice.go:41 |  |  | 0.307 |
-| walker |  | 9545 | 0 | go decl at mutable/slice.go:49 |  |  | 0.307 |
-| walker |  | 9545 | 0 | go decl at mutable/slice.go:57 |  |  | 0.307 |
-| walker |  | 9545 | 0 | go decl at mutable/slice.go:65 |  |  | 0.307 |
-| ns | 9573 |  | 253 | parallel/slice.go body: Map | 3.5 |  | 0.303 |
-| walker |  | 9588 | 43 | go decl doc at mutable/slice.go:57 |  |  | 0.303 |
-| walker |  | 9618 | 30 | go decl body at mutable/slice.go:41 |  |  | 0.303 |
-| walker |  | 9650 | 32 | go decl body at mutable/slice.go:49 |  |  | 0.303 |
-| walker |  | 9675 | 25 | README.md section #38 |  |  | 0.303 |
-| walker |  | 9700 | 25 | README.md section #86 |  |  | 0.303 |
-| walker |  | 9724 | 24 | README.md section #85 |  |  | 0.303 |
-| ns | 9748 |  | 175 | it/seq.go body: FilterI | 3.6 |  | 0.301 |
-| walker |  | 9749 | 25 | README.md section #101 |  |  | 0.301 |
-| walker |  | 9774 | 25 | README.md section #111 |  |  | 0.301 |
-| walker |  | 9799 | 25 | README.md section #156 |  |  | 0.301 |
-| walker |  | 9824 | 25 | README.md section #160 |  |  | 0.301 |
-| walker |  | 9849 | 25 | README.md section #166 |  |  | 0.301 |
-| walker |  | 9874 | 25 | README.md section #184 |  |  | 0.301 |
-| walker |  | 9899 | 25 | README.md section #187 |  |  | 0.301 |
-| walker |  | 9924 | 25 | README.md section #192 |  |  | 0.301 |
-| walker |  | 9949 | 25 | README.md section #226 |  |  | 0.301 |
-| walker |  | 9974 | 25 | README.md section #238 |  |  | 0.301 |
-| ns | 9998 |  | 250 | docs/data/core-filter.md: per-helper doc-metadata schema | 3.7 |  | 0.297 |
-| walker |  | 9999 | 25 | README.md section #286 |  |  | 0.297 |
+| walker |  | 8451 | 24 | README.md section #16 |  |  | 0.261 |
+| walker |  | 8475 | 24 | README.md section #20 |  |  | 0.261 |
+| walker |  | 8499 | 24 | README.md section #22 |  |  | 0.261 |
+| walker |  | 8523 | 24 | README.md section #50 |  |  | 0.261 |
+| walker |  | 8547 | 24 | README.md section #53 |  |  | 0.261 |
+| ns | 8570 |  | 156 | types.go body: Entry + Tuple2 + Unpack | 2.35 | 2.23 | 0.257 |
+| walker |  | 8571 | 24 | README.md section #64 |  |  | 0.257 |
+| walker |  | 8595 | 24 | README.md section #69 |  |  | 0.257 |
+| walker |  | 8619 | 24 | README.md section #77 |  |  | 0.257 |
+| walker |  | 8643 | 24 | README.md section #81 |  |  | 0.257 |
+| walker |  | 8667 | 24 | README.md section #115 |  |  | 0.257 |
+| walker |  | 8691 | 24 | README.md section #126 |  |  | 0.257 |
+| walker |  | 8715 | 24 | README.md section #140 |  |  | 0.257 |
+| ns | 8728 |  | 158 | it/, mutable/, parallel/ directory listings | 3.1 |  | 0.291 |
+| walker |  | 8739 | 24 | README.md section #151 |  |  | 0.291 |
+| walker |  | 8763 | 24 | README.md section #175 |  |  | 0.291 |
+| walker |  | 8787 | 24 | README.md section #178 |  |  | 0.291 |
+| ns | 8792 |  | 64 | internal/ directory listings | 3.2 |  | 0.304 |
+| walker |  | 8811 | 24 | README.md section #221 |  |  | 0.304 |
+| walker |  | 8835 | 24 | README.md section #242 |  |  | 0.304 |
+| walker |  | 8859 | 24 | README.md section #268 |  |  | 0.304 |
+| walker |  | 8883 | 24 | README.md section #288 |  |  | 0.304 |
+| walker |  | 8907 | 24 | README.md section #302 |  |  | 0.304 |
+| walker |  | 8931 | 24 | README.md section #316 |  |  | 0.304 |
+| walker |  | 8955 | 24 | README.md section #353 |  |  | 0.304 |
+| walker |  | 8979 | 24 | README.md section #406 |  |  | 0.304 |
+| walker |  | 9003 | 24 | README.md section #409 |  |  | 0.304 |
+| walker |  | 9027 | 24 | README.md section #411 |  |  | 0.304 |
+| walker |  | 9051 | 24 | README.md section #416 |  |  | 0.304 |
+| ns | 9069 |  | 277 | exp/simd/ and benchmark/ directory listings | 3.3 |  | 0.307 |
+| walker |  | 9155 | 104 | go decl doc at find.go:88 |  |  | 0.307 |
+| walker |  | 9313 | 158 | go decl names surface in mutable/slice.go |  |  | 0.307 |
+| walker |  | 9313 | 0 | go decl at mutable/slice.go:11 |  |  | 0.307 |
+| walker |  | 9313 | 0 | go decl at mutable/slice.go:27 |  |  | 0.307 |
+| walker |  | 9313 | 0 | go decl at mutable/slice.go:41 |  |  | 0.307 |
+| walker |  | 9313 | 0 | go decl at mutable/slice.go:49 |  |  | 0.307 |
+| walker |  | 9313 | 0 | go decl at mutable/slice.go:57 |  |  | 0.307 |
+| walker |  | 9313 | 0 | go decl at mutable/slice.go:65 |  |  | 0.307 |
+| ns | 9320 |  | 251 | mutable/slice.go body: Filter | 3.4 |  | 0.304 |
+| walker |  | 9356 | 43 | go decl doc at mutable/slice.go:57 |  |  | 0.304 |
+| walker |  | 9386 | 30 | go decl body at mutable/slice.go:41 |  |  | 0.304 |
+| walker |  | 9418 | 32 | go decl body at mutable/slice.go:49 |  |  | 0.304 |
+| walker |  | 9443 | 25 | README.md section #38 |  |  | 0.304 |
+| walker |  | 9468 | 25 | README.md section #86 |  |  | 0.304 |
+| walker |  | 9492 | 24 | README.md section #85 |  |  | 0.304 |
+| walker |  | 9517 | 25 | README.md section #101 |  |  | 0.304 |
+| walker |  | 9542 | 25 | README.md section #111 |  |  | 0.304 |
+| walker |  | 9567 | 25 | README.md section #156 |  |  | 0.304 |
+| ns | 9573 |  | 253 | parallel/slice.go body: Map | 3.5 |  | 0.300 |
+| walker |  | 9592 | 25 | README.md section #160 |  |  | 0.300 |
+| walker |  | 9617 | 25 | README.md section #166 |  |  | 0.300 |
+| walker |  | 9642 | 25 | README.md section #184 |  |  | 0.300 |
+| walker |  | 9667 | 25 | README.md section #187 |  |  | 0.300 |
+| walker |  | 9692 | 25 | README.md section #192 |  |  | 0.300 |
+| walker |  | 9717 | 25 | README.md section #226 |  |  | 0.300 |
+| walker |  | 9742 | 25 | README.md section #238 |  |  | 0.300 |
+| ns | 9748 |  | 175 | it/seq.go body: FilterI | 3.6 |  | 0.297 |
+| walker |  | 9767 | 25 | README.md section #286 |  |  | 0.297 |
+| walker |  | 9792 | 25 | README.md section #290 |  |  | 0.297 |
+| walker |  | 9817 | 25 | README.md section #324 |  |  | 0.297 |
+| walker |  | 9842 | 25 | README.md section #345 |  |  | 0.297 |
+| walker |  | 9867 | 25 | README.md section #349 |  |  | 0.297 |
+| walker |  | 9892 | 25 | README.md section #388 |  |  | 0.297 |
+| walker |  | 9917 | 25 | README.md section #394 |  |  | 0.297 |
+| walker |  | 9942 | 25 | README.md section #428 |  |  | 0.297 |
+| walker |  | 9967 | 25 | README.md section #431 |  |  | 0.297 |
+| ns | 9998 |  | 250 | docs/data/core-filter.md: per-helper doc-metadata schema | 3.7 |  | 0.293 |

@@ -1,4 +1,4 @@
-Score(3000)=0.636 I=0.818 C=0.495 ns_rows≤3K=19/40 (reached=10 partial=1 missing=8)
+Score(3000)=0.674 I=0.849 C=0.534 ns_rows≤3K=19/40 (reached=12 partial=1 missing=6)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -44,92 +44,92 @@ Score(3000)=0.636 I=0.818 C=0.495 ns_rows≤3K=19/40 (reached=10 partial=1 missi
 | ns | 1236 |  | 173 | cert.go declaration census | 2.2 |  | 0.656 |
 | ns | 1344 |  | 108 | truststore_darwin.go declaration census | 2.3 |  | 0.633 |
 | walker |  | 1388 | 174 | go decl at main.go:155 |  |  | 0.637 |
-| walker |  | 1443 | 55 | go decl body at main.go:336 |  |  | 0.637 |
 | ns | 1522 |  | 178 | truststore_linux.go declaration census | 2.4 |  | 0.600 |
-| walker |  | 1594 | 151 | go decl names surface in truststore_java.go |  |  | 0.605 |
-| walker |  | 1594 | 0 | go decl at truststore_java.go:31 |  |  | 0.605 |
-| walker |  | 1594 | 0 | go decl at truststore_java.go:57 |  |  | 0.605 |
-| walker |  | 1594 | 0 | go decl at truststore_java.go:81 |  |  | 0.605 |
-| walker |  | 1594 | 0 | go decl at truststore_java.go:94 |  |  | 0.605 |
-| walker |  | 1594 | 0 | go decl at truststore_java.go:110 |  |  | 0.605 |
-| walker |  | 1603 | 9 | go decl at truststore_java.go:21 |  |  | 0.606 |
-| walker |  | 1644 | 41 | go decl doc at truststore_java.go:110 |  |  | 0.606 |
-| walker |  | 1664 | 20 | README.md section #11 |  |  | 0.606 |
-| ns | 1815 |  | 293 | truststore_windows.go declaration census | 2.5 |  | 0.556 |
-| walker |  | 1839 | 175 | go decl names surface in truststore_nss.go |  |  | 0.558 |
-| walker |  | 1839 | 0 | go decl at truststore_nss.go:39 |  |  | 0.558 |
-| walker |  | 1839 | 0 | go decl at truststore_nss.go:73 |  |  | 0.558 |
-| walker |  | 1839 | 0 | go decl at truststore_nss.go:89 |  |  | 0.558 |
-| walker |  | 1839 | 0 | go decl at truststore_nss.go:106 |  |  | 0.558 |
-| walker |  | 1839 | 0 | go decl at truststore_nss.go:120 |  |  | 0.558 |
-| walker |  | 1839 | 0 | go decl at truststore_nss.go:131 |  |  | 0.558 |
-| walker |  | 1880 | 41 | go decl doc at truststore_nss.go:120 |  |  | 0.558 |
+| walker |  | 1539 | 151 | go decl names surface in truststore_java.go |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:31 |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:57 |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:81 |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:94 |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:110 |  |  | 0.605 |
+| walker |  | 1548 | 9 | go decl at truststore_java.go:21 |  |  | 0.606 |
+| walker |  | 1589 | 41 | go decl doc at truststore_java.go:110 |  |  | 0.606 |
+| walker |  | 1609 | 20 | README.md section #11 |  |  | 0.606 |
+| walker |  | 1784 | 175 | go decl names surface in truststore_nss.go |  |  | 0.608 |
+| walker |  | 1784 | 0 | go decl at truststore_nss.go:39 |  |  | 0.608 |
+| walker |  | 1784 | 0 | go decl at truststore_nss.go:73 |  |  | 0.608 |
+| walker |  | 1784 | 0 | go decl at truststore_nss.go:89 |  |  | 0.608 |
+| walker |  | 1784 | 0 | go decl at truststore_nss.go:106 |  |  | 0.608 |
+| walker |  | 1784 | 0 | go decl at truststore_nss.go:120 |  |  | 0.608 |
+| walker |  | 1784 | 0 | go decl at truststore_nss.go:131 |  |  | 0.608 |
+| ns | 1815 |  | 293 | truststore_windows.go declaration census | 2.5 |  | 0.558 |
+| walker |  | 1825 | 41 | go decl doc at truststore_nss.go:120 |  |  | 0.558 |
 | ns | 1913 |  | 98 | truststore_nss.go declaration census | 2.6 |  | 0.573 |
-| ns | 2063 |  | 150 | truststore_java.go declaration census | 2.7 |  | 0.601 |
-| walker |  | 2096 | 216 | go decl names surface in cert.go |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:37 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:50 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:148 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:166 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:176 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:202 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:209 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:282 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:310 |  |  | 0.648 |
-| walker |  | 2096 | 0 | go decl at cert.go:366 |  |  | 0.648 |
-| walker |  | 2113 | 17 | go decl doc at cert.go:282 |  |  | 0.648 |
-| walker |  | 2132 | 19 | go decl body at cert.go:366 |  |  | 0.649 |
+| walker |  | 2041 | 216 | go decl names surface in cert.go |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:37 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:50 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:148 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:166 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:176 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:202 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:209 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:282 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:310 |  |  | 0.626 |
+| walker |  | 2041 | 0 | go decl at cert.go:366 |  |  | 0.626 |
+| walker |  | 2058 | 17 | go decl doc at cert.go:282 |  |  | 0.626 |
+| ns | 2063 |  | 150 | truststore_java.go declaration census | 2.7 |  | 0.648 |
+| walker |  | 2077 | 19 | go decl body at cert.go:366 |  |  | 0.649 |
 | ns | 2261 |  | 198 | shortUsage const body | 3.1 | 2.1 | 0.613 |
-| walker |  | 2330 | 198 | go decl at main.go:30 |  |  | 0.678 |
-| walker |  | 2423 | 93 | go decl body at main.go:345 |  |  | 0.678 |
-| walker |  | 2598 | 175 | go package + imports in main.go |  |  | 0.739 |
+| walker |  | 2275 | 198 | go decl at main.go:30 |  |  | 0.678 |
+| walker |  | 2450 | 175 | go package + imports in main.go |  |  | 0.739 |
+| walker |  | 2473 | 23 | README.md section #14 |  |  | 0.739 |
 | ns | 2615 |  | 354 | advancedUsage const body | 3.2 | 2.1 | 0.676 |
-| walker |  | 2621 | 23 | README.md section #14 |  |  | 0.676 |
-| ns | 2962 |  | 347 | main() — flag vars + flag.Usage/Parse | 3.3 | 2.1 | 0.636 |
-| walker |  | 3043 | 422 | README.md section #0 |  |  | 0.674 |
-| walker |  | 3122 | 79 | go package + imports in truststore_nss.go |  |  | 0.674 |
-| walker |  | 3161 | 39 | README.md section #10 |  |  | 0.674 |
+| walker |  | 2895 | 422 | README.md section #0 |  |  | 0.716 |
+| ns | 2962 |  | 347 | main() — flag vars + flag.Usage/Parse | 3.3 | 2.1 | 0.674 |
+| walker |  | 2974 | 79 | go package + imports in truststore_nss.go |  |  | 0.674 |
+| walker |  | 3013 | 39 | README.md section #10 |  |  | 0.674 |
+| walker |  | 3081 | 68 | go decl body at cert.go:202 |  |  | 0.674 |
+| walker |  | 3126 | 45 | README.md section #9 |  |  | 0.674 |
+| walker |  | 3170 | 44 | README.md section #8 |  |  | 0.674 |
 | ns | 3201 |  | 239 | main() — -help/-version/-CAROOT handling | 3.4 | 3.3 | 0.639 |
-| walker |  | 3229 | 68 | go decl body at cert.go:202 |  |  | 0.639 |
-| walker |  | 3274 | 45 | README.md section #9 |  |  | 0.639 |
-| walker |  | 3318 | 44 | README.md section #8 |  |  | 0.639 |
 | ns | 3467 |  | 266 | main() — mutual-exclusion guards + mkcert construction | 3.5 |  | 0.619 |
-| ns | 3646 |  | 179 | mkcert struct fields | 4.1 | 2.1 | 0.637 |
-| walker |  | 3670 | 352 | go decl at main.go:49 |  |  | 0.711 |
-| walker |  | 3836 | 166 | go decl body at main.go:382 |  |  | 0.711 |
-| walker |  | 3955 | 119 | go package + imports in truststore_java.go |  |  | 0.711 |
-| walker |  | 4037 | 82 | go decl body at cert.go:166 |  |  | 0.711 |
-| walker |  | 4092 | 55 | README.md section #4 |  |  | 0.711 |
-| walker |  | 4132 | 40 | README.md section #22 |  |  | 0.711 |
-| ns | 4136 |  | 490 | Run() — full body: CAROOT setup, install/uninstall/warning dispatch, -csr branch, handoff to makeCert | 4.2 | 2.1 | 0.661 |
-| walker |  | 4175 | 43 | README.md section #17 |  |  | 0.661 |
-| walker |  | 4219 | 44 | README.md section #15 |  |  | 0.666 |
-| walker |  | 4264 | 45 | README.md section #24 |  |  | 0.666 |
-| ns | 4395 |  | 259 | getCAROOT() — CA storage location resolution | 4.3 | 2.1 | 0.639 |
-| walker |  | 4472 | 208 | go decl at truststore_nss.go:17 |  |  | 0.641 |
-| walker |  | 4519 | 47 | README.md section #19 |  |  | 0.641 |
+| walker |  | 3522 | 352 | go decl at main.go:49 |  |  | 0.699 |
+| walker |  | 3641 | 119 | go package + imports in truststore_java.go |  |  | 0.699 |
+| ns | 3646 |  | 179 | mkcert struct fields | 4.1 | 2.1 | 0.711 |
+| walker |  | 3723 | 82 | go decl body at cert.go:166 |  |  | 0.711 |
+| walker |  | 3778 | 55 | README.md section #4 |  |  | 0.711 |
+| walker |  | 3818 | 40 | README.md section #22 |  |  | 0.711 |
+| walker |  | 3873 | 55 | go decl body at main.go:336 |  |  | 0.711 |
+| walker |  | 3916 | 43 | README.md section #17 |  |  | 0.711 |
+| walker |  | 3960 | 44 | README.md section #15 |  |  | 0.717 |
+| walker |  | 4005 | 45 | README.md section #24 |  |  | 0.717 |
+| ns | 4136 |  | 490 | Run() — full body: CAROOT setup, install/uninstall/warning dispatch, -csr branch, handoff to makeCert | 4.2 | 2.1 | 0.666 |
+| walker |  | 4213 | 208 | go decl at truststore_nss.go:17 |  |  | 0.668 |
+| walker |  | 4260 | 47 | README.md section #19 |  |  | 0.668 |
+| walker |  | 4307 | 47 | README.md section #21 |  |  | 0.668 |
+| walker |  | 4375 | 68 | README.md section #7 |  |  | 0.668 |
+| ns | 4395 |  | 259 | getCAROOT() — CA storage location resolution | 4.3 | 2.1 | 0.641 |
+| walker |  | 4491 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.641 |
 | ns | 4526 |  | 131 | install() — system-store install | 4.4 | 2.1 | 0.630 |
-| walker |  | 4566 | 47 | README.md section #21 |  |  | 0.630 |
-| walker |  | 4634 | 68 | README.md section #7 |  |  | 0.630 |
-| walker |  | 4750 | 116 | go decl body at truststore_nss.go:120 |  |  | 0.630 |
-| walker |  | 4867 | 117 | go decl body at cert.go:37 |  |  | 0.632 |
-| ns | 4961 |  | 435 | install() — NSS + Java install | 4.5 |  | 0.607 |
-| ns | 5086 |  | 125 | init() — userAndHostname | 5.1 | 2.2 | 0.616 |
-| walker |  | 5123 | 256 | go decl body at main.go:240 |  |  | 0.658 |
-| walker |  | 5199 | 76 | README.md section #5 |  |  | 0.658 |
-| walker |  | 5339 | 140 | go decl names surface in truststore_darwin.go |  |  | 0.669 |
-| walker |  | 5339 | 0 | go decl at truststore_darwin.go:25 |  |  | 0.669 |
-| walker |  | 5339 | 0 | go decl at truststore_darwin.go:52 |  |  | 0.669 |
-| walker |  | 5339 | 0 | go decl at truststore_darwin.go:105 |  |  | 0.669 |
-| walker |  | 5350 | 11 | go decl at truststore_darwin.go:18 |  |  | 0.672 |
-| walker |  | 5372 | 22 | go decl doc at truststore_darwin.go:25 |  |  | 0.672 |
-| walker |  | 5579 | 207 | README.md section #12 |  |  | 0.673 |
-| walker |  | 5728 | 149 | go decl names surface in truststore_linux.go |  |  | 0.690 |
-| walker |  | 5728 | 0 | go decl at truststore_linux.go:27 |  |  | 0.690 |
-| walker |  | 5728 | 0 | go decl at truststore_linux.go:51 |  |  | 0.690 |
-| walker |  | 5728 | 0 | go decl at truststore_linux.go:55 |  |  | 0.690 |
-| walker |  | 5728 | 0 | go decl at truststore_linux.go:77 |  |  | 0.690 |
-| walker |  | 5757 | 29 | go decl at truststore_linux.go:17 |  |  | 0.698 |
+| walker |  | 4567 | 76 | README.md section #5 |  |  | 0.630 |
+| walker |  | 4707 | 140 | go decl names surface in truststore_darwin.go |  |  | 0.643 |
+| walker |  | 4707 | 0 | go decl at truststore_darwin.go:25 |  |  | 0.643 |
+| walker |  | 4707 | 0 | go decl at truststore_darwin.go:52 |  |  | 0.643 |
+| walker |  | 4707 | 0 | go decl at truststore_darwin.go:105 |  |  | 0.643 |
+| walker |  | 4718 | 11 | go decl at truststore_darwin.go:18 |  |  | 0.646 |
+| walker |  | 4740 | 22 | go decl doc at truststore_darwin.go:25 |  |  | 0.646 |
+| walker |  | 4947 | 207 | README.md section #12 |  |  | 0.647 |
+| ns | 4961 |  | 435 | install() — NSS + Java install | 4.5 |  | 0.621 |
+| ns | 5086 |  | 125 | init() — userAndHostname | 5.1 | 2.2 | 0.610 |
+| walker |  | 5096 | 149 | go decl names surface in truststore_linux.go |  |  | 0.628 |
+| walker |  | 5096 | 0 | go decl at truststore_linux.go:27 |  |  | 0.628 |
+| walker |  | 5096 | 0 | go decl at truststore_linux.go:51 |  |  | 0.628 |
+| walker |  | 5096 | 0 | go decl at truststore_linux.go:55 |  |  | 0.628 |
+| walker |  | 5096 | 0 | go decl at truststore_linux.go:77 |  |  | 0.628 |
+| walker |  | 5189 | 93 | go decl body at main.go:345 |  |  | 0.628 |
+| walker |  | 5218 | 29 | go decl at truststore_linux.go:17 |  |  | 0.636 |
+| walker |  | 5384 | 166 | go decl body at main.go:382 |  |  | 0.636 |
+| walker |  | 5501 | 117 | go decl body at cert.go:37 |  |  | 0.657 |
+| walker |  | 5757 | 256 | go decl body at main.go:240 |  |  | 0.698 |
 | walker |  | 5782 | 25 | go decl body at truststore_linux.go:51 |  |  | 0.698 |
 | ns | 5899 |  | 813 | makeCert() — template construction (SANs, KeyUsage, ExtKeyUsage) | 5.2 | 2.2 | 0.650 |
 | walker |  | 6035 | 253 | go package + imports in cert.go |  |  | 0.650 |

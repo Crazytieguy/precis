@@ -93,6 +93,7 @@ README.md
      134→## Command Line Options
      136→- `-i, --ignore-case` Case-insensitive search
      137→- `-c, --count` Count matching lines only
+     138→- `-o, --only-matching` Print only the matched parts of lines
     …
      144→- `-r, --recursive` Recursively search directories
      145→- `--gitignore` Respect `.gitignore` files during recursive search
@@ -147,14 +148,12 @@ krep.h
       14→#include <pthread.h>   // For mutex types (though no longer used for counting)
       15→#include <stdatomic.h> // For atomic types used in structs
       16→#include <ctype.h>     // For isalnum function
-      18→// --- Global Variables (declared extern) ---
+    …
       19→extern unsigned char lower_table[256];
       21→// Forward declaration for Aho-Corasick trie structure
       22→struct ac_trie;
       23→typedef struct ac_trie ac_trie_t;
     …
-      32→/* --- ANSI Color Codes --- */
-      33→// Define colors consistently
       34→#define KREP_COLOR_RESET "\033[0m"
       35→#define KREP_COLOR_FILENAME "\033[1;38;5;81m"   // Bright cyan
       36→#define KREP_COLOR_SEPARATOR "\033[38;5;244m"   // Muted gray
@@ -166,8 +165,7 @@ krep.h
       43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
       44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
       45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
-      47→/* --- Match tracking structure --- */
-      48→// Define match_position_t BEFORE match_result_t
+    …
       49→typedef struct
       50→{
       51→   size_t start_offset; // Starting position of the match
@@ -182,15 +180,30 @@ krep.h
     …
       65→typedef struct search_params
     …
-      96→/* --- Function Pointer Type for Search Algorithms --- */
-      97→// Returns count (lines or matches depending on mode). result can be NULL unless track_positions is true.
       98→typedef uint64_t (*search_func_t)(const search_params_t *params,
       99→                                  const char *text_start,
      100→                                  size_t text_len,
      101→                                  match_result_t *result);
-    …
+     103→// Data passed to each search thread
      104→typedef struct
-    …
+     105→{
+     106→   int thread_id;
+     107→   const search_params_t *params; // Pointer to shared search parameters
+     108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
+     109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
+     110→   search_func_t search_algo;     // Pre-selected search algorithm for this chunk
+     111→
+     112→   // Thread-specific results
+     113→   match_result_t *local_result; // For position tracking (default/-o)
+     114→   uint64_t count_result;        // For line counting (-c) or match counting (-co)
+     115→
+     116→   // Status flags
+     117→   bool error_flag; // Flag to indicate an error occurred in the thread
+     118→
+     119→   // Padding to prevent false sharing (ensure struct size is multiple of 64 bytes)
+     120→   // Current size approx 56 bytes. Adding sufficient padding.
+     121→   char padding[64]; 
+     122→} thread_data_t;
      124→/* --- Thread Pool Implementation --- */
      125→typedef struct task
      126→{

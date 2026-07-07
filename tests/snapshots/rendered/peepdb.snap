@@ -291,17 +291,17 @@ peepdb/
               19→        pass
               21→    @abstractmethod
               22→    def disconnect(self) -> None:
-              23→        pass
+            …
               25→    @abstractmethod
               26→    def fetch_tables(self) -> List[str]:
-              27→        pass
+            …
               29→    @abstractmethod
               30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-              31→        pass
+            …
               33→    def __enter__(self):
             …
               37→    def __exit__(self, exc_type, exc_val, exc_tb):
-              38→        self.disconnect()
+            …
         firebase.py
         mariadb.py
             …

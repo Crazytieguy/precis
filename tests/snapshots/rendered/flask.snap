@@ -284,19 +284,12 @@ src/
                   47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
                   48→    """Serialize data as JSON and write to a file.
                 …
-                  70→    if current_app:
-                  71→        current_app.json.dump(obj, fp, **kwargs)
-                  72→    else:
-                  73→        kwargs.setdefault("default", _default)
-                  74→        _json.dump(obj, fp, **kwargs)
                   77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
                   78→    """Deserialize data as JSON.
                 …
-                 105→    return _json.loads(s, **kwargs)
                  108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
                  109→    """Deserialize data as JSON read from a file.
                 …
-                 135→    return _json.load(fp, **kwargs)
                  138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
                  139→    """Serialize the given arguments as JSON, and return a
                  140→    :class:`~flask.Response` object with the ``application/json``
@@ -343,6 +336,21 @@ tests/
     templates/
     test_appctx.py
     test_apps/
+        .env
+        .flaskenv
+        blueprintapp/
+            __init__.py
+            apps/
+                __init__.py
+                admin/
+                frontend/
+                    __init__.py
+                    templates/
+        cliapp/
+        helloworld/
+        subdomaintestmodule/
+            __init__.py
+            static/
     test_async.py
     test_basic.py
     test_blueprints.py
@@ -365,4 +373,7 @@ tests/
     test_user_error_handler.py
     test_views.py
     type_check/
+        typing_app_decorators.py
+        typing_error_handler.py
+        typing_route.py
 uv.lock

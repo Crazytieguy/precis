@@ -263,24 +263,22 @@ Score(3000)=0.636 I=0.843 C=0.479 ns_rows≤3K=21/40 (reached=12 partial=2 missi
 | walker |  | 7872 | 12 | module item body at lib/adapters/http.js:137 body 139 |  |  | 0.504 |
 | walker |  | 7887 | 15 | module item body at lib/adapters/http.js:137 body 197 |  |  | 0.504 |
 | walker |  | 7900 | 13 | module item body at lib/adapters/http.js:137 body 199 |  |  | 0.504 |
-| walker |  | 7915 | 15 | module item body at lib/adapters/http.js:137 body 228 |  |  | 0.504 |
-| walker |  | 7928 | 13 | module item body at lib/adapters/http.js:137 body 230 |  |  | 0.504 |
-| walker |  | 7944 | 16 | module item body at lib/adapters/http.js:137 body 150 |  |  | 0.504 |
-| walker |  | 7960 | 16 | module item body at lib/adapters/http.js:137 body 167 |  |  | 0.504 |
+| walker |  | 7927 | 27 | ECOSYSTEM.md section #16 |  |  | 0.504 |
+| walker |  | 7950 | 23 | export names surface in lib/env/classes/FormData.js |  |  | 0.504 |
 | ns | 7983 |  | 203 | lib/helpers/* — one-line-per-file export locations, part 1 (serialization + parsing + config) | 5.3 |  | 0.503 |
-| walker |  | 7987 | 27 | ECOSYSTEM.md section #16 |  |  | 0.503 |
-| walker |  | 8010 | 23 | export names surface in lib/env/classes/FormData.js |  |  | 0.503 |
 | ns | 8329 |  | 346 | lib/helpers/* — one-line-per-file export locations, part 2 (streaming + proxy/origin + data URIs + small utilities) | 5.4 |  | 0.499 |
-| walker |  | 8495 | 485 | package identity metadata in package.json |  |  | 0.499 |
+| walker |  | 8435 | 485 | package identity metadata in package.json |  |  | 0.499 |
 | ns | 8838 |  | 509 | README.md — Error Types table (per-code descriptions) | 6.1 |  | 0.495 |
-| walker |  | 9288 | 793 | package entrypoints in package.json |  |  | 0.506 |
+| walker |  | 9228 | 793 | package entrypoints in package.json |  |  | 0.506 |
 | ns | 9323 |  | 485 | CHANGELOG.md — v1.16.0 Notable Changes | 6.2 |  | 0.501 |
-| walker |  | 9750 | 462 | package scripts in package.json |  |  | 0.501 |
-| walker |  | 9779 | 29 | ECOSYSTEM.md section #28 |  |  | 0.501 |
-| walker |  | 9819 | 40 | export body at lib/helpers/parseProtocol.js:3 body 4 |  |  | 0.501 |
-| walker |  | 9825 | 6 | imports in lib/cancel/isCancel.js |  |  | 0.501 |
-| walker |  | 9831 | 6 | imports in lib/helpers/parseProtocol.js |  |  | 0.501 |
+| walker |  | 9690 | 462 | package scripts in package.json |  |  | 0.501 |
+| walker |  | 9719 | 29 | ECOSYSTEM.md section #28 |  |  | 0.501 |
+| walker |  | 9759 | 40 | export body at lib/helpers/parseProtocol.js:3 body 4 |  |  | 0.501 |
+| walker |  | 9765 | 6 | imports in lib/cancel/isCancel.js |  |  | 0.501 |
+| walker |  | 9771 | 6 | imports in lib/helpers/parseProtocol.js |  |  | 0.501 |
 | ns | 9858 |  | 535 | lib/utils.js — full export roster | 6.3 |  | 0.484 |
+| walker |  | 9913 | 142 | export at index.d.ts:664 |  |  | 0.484 |
 | ns | 9929 |  | 71 | lib/defaults/transitional.js — full | 6.4 |  | 0.482 |
-| walker |  | 9973 | 142 | export at index.d.ts:664 |  |  | 0.482 |
+| walker |  | 9944 | 31 | ECOSYSTEM.md section #17 |  |  | 0.482 |
+| walker |  | 9959 | 15 | module item body at lib/adapters/http.js:137 body 228 |  |  | 0.482 |
 | ns | 9988 |  | 59 | lib/platform/index.js — full | 6.5 |  | 0.485 |

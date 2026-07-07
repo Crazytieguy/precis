@@ -253,28 +253,24 @@ Score(3000)=0.487 I=0.727 C=0.327 ns_rows≤3K=24/49 (reached=7 partial=0 missin
 | walker |  | 7505 | 74 | export at packages/vite/src/node/optimizer/index.ts:49 |  |  | 0.344 |
 | walker |  | 7608 | 103 | export at packages/vite/src/node/optimizer/index.ts:205 |  |  | 0.344 |
 | ns | 7616 |  | 309 | CommonServerOptions: proxy config example | 6.1 |  | 0.338 |
-| walker |  | 7665 | 57 | export body at packages/vite/src/node/optimizer/index.ts:195 body 198 |  |  | 0.338 |
 | ns | 7722 |  | 106 | ServerOptions: hmr toggle | 6.2 |  | 0.335 |
-| walker |  | 7841 | 176 | export at packages/vite/src/node/optimizer/index.ts:57 |  |  | 0.335 |
-| walker |  | 8039 | 198 | export at packages/vite/src/node/optimizer/index.ts:216 |  |  | 0.335 |
+| walker |  | 7784 | 176 | export at packages/vite/src/node/optimizer/index.ts:57 |  |  | 0.335 |
+| walker |  | 7982 | 198 | export at packages/vite/src/node/optimizer/index.ts:216 |  |  | 0.335 |
 | ns | 8047 |  | 325 | ViteDevServer: field + method roster | 6.3 |  | 0.328 |
 | ns | 8160 |  | 113 | createServer() / _createServer() signatures | 6.4 | 6.3 | 0.326 |
-| walker |  | 8272 | 233 | export at packages/vite/src/node/optimizer/index.ts:176 |  |  | 0.326 |
-| walker |  | 8383 | 111 | export body at packages/vite/src/node/optimizer/index.ts:349 body 353 |  |  | 0.326 |
+| walker |  | 8215 | 233 | export at packages/vite/src/node/optimizer/index.ts:176 |  |  | 0.326 |
 | ns | 8429 |  | 269 | server/index.ts: middleware registration order | 6.5 |  | 0.322 |
+| walker |  | 8626 | 411 | export at packages/vite/src/node/optimizer/index.ts:236 |  |  | 0.322 |
 | ns | 8640 |  | 211 | EnvironmentModuleNode: field roster | 6.6 |  | 0.319 |
-| walker |  | 8794 | 411 | export at packages/vite/src/node/optimizer/index.ts:236 |  |  | 0.319 |
-| walker |  | 8839 | 45 | export doc at packages/vite/src/node/optimizer/index.ts:382 |  |  | 0.319 |
+| walker |  | 8671 | 45 | export doc at packages/vite/src/node/optimizer/index.ts:382 |  |  | 0.319 |
+| walker |  | 8720 | 49 | export doc at packages/vite/src/node/optimizer/index.ts:451 |  |  | 0.319 |
+| walker |  | 8781 | 61 | export doc at packages/vite/src/node/optimizer/index.ts:511 |  |  | 0.319 |
+| walker |  | 8843 | 62 | export doc at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.319 |
 | ns | 8956 |  | 316 | EnvironmentModuleGraph: fields + method roster | 6.7 |  | 0.314 |
-| walker |  | 9029 | 190 | export body at packages/vite/src/node/optimizer/index.ts:324 body 327 |  |  | 0.314 |
-| walker |  | 9078 | 49 | export doc at packages/vite/src/node/optimizer/index.ts:451 |  |  | 0.314 |
 | ns | 9127 |  | 171 | hmr.ts: primary export roster | 6.10 |  | 0.311 |
-| walker |  | 9139 | 61 | export doc at packages/vite/src/node/optimizer/index.ts:511 |  |  | 0.311 |
 | ns | 9182 |  | 55 | packages/vite/src/shared directory listing | 9.1 |  | 0.309 |
-| walker |  | 9201 | 62 | export doc at packages/vite/src/node/optimizer/index.ts:283 |  |  | 0.309 |
 | ns | 9212 |  | 30 | packages/plugin-legacy directory listing | 10.1 |  | 0.316 |
 | ns | 9335 |  | 123 | packages/create-vite directory + template listing | 10.2 |  | 0.340 |
-| walker |  | 9544 | 343 | export body at packages/vite/src/node/optimizer/index.ts:283 body 288 |  |  | 0.340 |
 | ns | 9741 |  | 406 | playground/ directory listing | 11.1 |  | 0.400 |
 | ns | 9925 |  | 184 | docs/guide + docs/config directory listings | 12.1 |  | 0.392 |
 | ns | 9962 |  | 37 | netlify.toml: build config | 13.1 |  | 0.391 |

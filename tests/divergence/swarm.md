@@ -152,55 +152,50 @@ Score(3000)=0.664 I=0.870 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missin
 | walker |  | 7851 | 5 | listing of 'examples/customer_service_streaming/src/evals' |  |  | 0.496 |
 | walker |  | 7902 | 51 | README headline in examples/weather_agent/README.md |  |  | 0.496 |
 | walker |  | 7919 | 17 | headings outline in examples/weather_agent/README.md |  |  | 0.496 |
-| walker |  | 8094 | 175 | python method body at swarm/core.py:71 body 72 |  |  | 0.496 |
-| walker |  | 8098 | 4 | listing of 'examples/airline/data/routines/baggage' |  |  | 0.496 |
-| walker |  | 8102 | 4 | listing of 'examples/airline/data/routines/flight_modification' |  |  | 0.496 |
-| walker |  | 8106 | 4 | listing of 'examples/customer_service_streaming/configs/assistants/user_interface' |  |  | 0.496 |
+| walker |  | 7923 | 4 | listing of 'examples/airline/data/routines/baggage' |  |  | 0.496 |
+| walker |  | 7927 | 4 | listing of 'examples/airline/data/routines/flight_modification' |  |  | 0.496 |
+| walker |  | 7931 | 4 | listing of 'examples/customer_service_streaming/configs/assistants/user_interface' |  |  | 0.496 |
+| walker |  | 7992 | 61 | README headline in examples/triage_agent/README.md |  |  | 0.496 |
+| walker |  | 8009 | 17 | headings outline in examples/triage_agent/README.md |  |  | 0.496 |
 | ns | 8114 |  | 373 | support_bot/README.md | 8.2 |  | 0.481 |
-| walker |  | 8115 | 9 | python method body at swarm/core.py:89 body 137 |  |  | 0.481 |
-| walker |  | 8176 | 61 | README headline in examples/triage_agent/README.md |  |  | 0.481 |
-| ns | 8182 |  | 68 | support_bot Makefile + requirements.txt | 8.3 |  | 0.479 |
-| walker |  | 8193 | 17 | headings outline in examples/triage_agent/README.md |  |  | 0.479 |
-| ns | 8419 |  | 237 | support_bot/main.py — agent definitions | 8.4 |  | 0.472 |
-| walker |  | 8447 | 254 | python decl body at swarm/repl/repl.py:37 body 38 |  |  | 0.472 |
-| walker |  | 8458 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.472 |
-| walker |  | 8463 | 5 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.472 |
-| walker |  | 8530 | 67 | README headline in examples/support_bot/README.md |  |  | 0.473 |
-| walker |  | 8546 | 16 | headings outline in examples/support_bot/README.md |  |  | 0.475 |
-| ns | 8603 |  | 184 | support_bot/customer_service.py — imports + TODO | 8.5 |  | 0.468 |
-| walker |  | 8619 | 73 | README headline in examples/basic/README.md |  |  | 0.468 |
-| walker |  | 8637 | 18 | headings outline in examples/basic/README.md |  |  | 0.474 |
-| ns | 8637 |  | 34 | customer_service_streaming/ top-level listing | 9.1 |  | 0.474 |
-| ns | 8715 |  | 78 | customer_service_streaming/src/ tree listing | 9.2 |  | 0.486 |
-| walker |  | 8724 | 87 | README headline in examples/airline/README.md |  |  | 0.488 |
-| walker |  | 8750 | 26 | headings outline in examples/airline/README.md |  |  | 0.490 |
-| ns | 8784 |  | 69 | customer_service_streaming/configs/ tree listing | 9.3 |  | 0.491 |
-| walker |  | 8837 | 87 | README headline in examples/personal_shopper/README.md |  |  | 0.493 |
-| walker |  | 8853 | 16 | headings outline in examples/personal_shopper/README.md |  |  | 0.495 |
-| walker |  | 8864 | 11 | python decl names surface in examples/customer_service_streaming/main.py |  |  | 0.495 |
-| walker |  | 8864 | 0 | python decl at examples/customer_service_streaming/main.py:10 |  |  | 0.495 |
-| walker |  | 8873 | 9 | plaintext config examples/support_bot/requirements.txt |  |  | 0.495 |
-| walker |  | 8883 | 10 | python decl body at swarm/util.py:31 body 60 |  |  | 0.496 |
-| walker |  | 8895 | 12 | python decl names surface in examples/airline/main.py |  |  | 0.496 |
-| walker |  | 8905 | 10 | python decl body at swarm/repl/repl.py:60 body 63 |  |  | 0.496 |
-| walker |  | 8915 | 10 | python decl body at swarm/repl/repl.py:60 body 66 |  |  | 0.496 |
-| walker |  | 8925 | 10 | python decl body at swarm/repl/repl.py:60 body 67 |  |  | 0.496 |
-| walker |  | 8944 | 19 | listing of 'examples/airline/evals' |  |  | 0.496 |
-| walker |  | 8952 | 8 | listing of 'examples/customer_service_streaming/configs/tools/query_docs' |  |  | 0.498 |
-| walker |  | 8960 | 8 | listing of 'examples/customer_service_streaming/configs/tools/send_email' |  |  | 0.501 |
-| walker |  | 8968 | 8 | listing of 'examples/customer_service_streaming/configs/tools/submit_ticket' |  |  | 0.505 |
-| walker |  | 8981 | 13 | listing of 'examples/airline/evals/eval_cases' |  |  | 0.505 |
-| walker |  | 8994 | 13 | python decl body at swarm/repl/repl.py:60 body 64 |  |  | 0.505 |
-| walker |  | 9009 | 15 | listing of 'examples/airline/evals/eval_results' |  |  | 0.505 |
-| walker |  | 9028 | 19 | python method body at swarm/core.py:89 body 96 |  |  | 0.505 |
-| ns | 9038 |  | 254 | customer_service_streaming/src/arg_parser.py | 9.4 |  | 0.501 |
-| walker |  | 9040 | 12 | python decl names surface in examples/customer_service_streaming/src/arg_parser.py |  |  | 0.501 |
-| walker |  | 9040 | 0 | python decl at examples/customer_service_streaming/src/arg_parser.py:3 |  |  | 0.501 |
-| walker |  | 9045 | 5 | python imports in examples/customer_service_streaming/src/arg_parser.py |  |  | 0.501 |
-| ns | 9284 |  | 246 | customer_service_streaming/configs/general.py | 9.5 |  | 0.494 |
-| ns | 9439 |  | 155 | customer_service_streaming/configs/swarm_tasks.json | 9.6 |  | 0.490 |
+| ns | 8182 |  | 68 | support_bot Makefile + requirements.txt | 8.3 |  | 0.478 |
+| walker |  | 8263 | 254 | python decl body at swarm/repl/repl.py:37 body 38 |  |  | 0.478 |
+| walker |  | 8274 | 11 | listing of 'examples/customer_service_streaming/tests' |  |  | 0.478 |
+| walker |  | 8279 | 5 | listing of 'examples/customer_service_streaming/tests/test_runs' |  |  | 0.478 |
+| walker |  | 8346 | 67 | README headline in examples/support_bot/README.md |  |  | 0.480 |
+| walker |  | 8362 | 16 | headings outline in examples/support_bot/README.md |  |  | 0.481 |
+| ns | 8419 |  | 237 | support_bot/main.py — agent definitions | 8.4 |  | 0.475 |
+| walker |  | 8435 | 73 | README headline in examples/basic/README.md |  |  | 0.475 |
+| walker |  | 8453 | 18 | headings outline in examples/basic/README.md |  |  | 0.475 |
+| walker |  | 8540 | 87 | README headline in examples/airline/README.md |  |  | 0.477 |
+| walker |  | 8566 | 26 | headings outline in examples/airline/README.md |  |  | 0.479 |
+| ns | 8603 |  | 184 | support_bot/customer_service.py — imports + TODO | 8.5 |  | 0.472 |
+| ns | 8637 |  | 34 | customer_service_streaming/ top-level listing | 9.1 |  | 0.478 |
+| walker |  | 8653 | 87 | README headline in examples/personal_shopper/README.md |  |  | 0.480 |
+| walker |  | 8669 | 16 | headings outline in examples/personal_shopper/README.md |  |  | 0.481 |
+| walker |  | 8680 | 11 | python decl names surface in examples/customer_service_streaming/main.py |  |  | 0.481 |
+| walker |  | 8680 | 0 | python decl at examples/customer_service_streaming/main.py:10 |  |  | 0.481 |
+| walker |  | 8689 | 9 | plaintext config examples/support_bot/requirements.txt |  |  | 0.482 |
+| walker |  | 8701 | 12 | python decl names surface in examples/airline/main.py |  |  | 0.482 |
+| ns | 8715 |  | 78 | customer_service_streaming/src/ tree listing | 9.2 |  | 0.493 |
+| walker |  | 8720 | 19 | listing of 'examples/airline/evals' |  |  | 0.493 |
+| walker |  | 8728 | 8 | listing of 'examples/customer_service_streaming/configs/tools/query_docs' |  |  | 0.494 |
+| walker |  | 8736 | 8 | listing of 'examples/customer_service_streaming/configs/tools/send_email' |  |  | 0.494 |
+| walker |  | 8744 | 8 | listing of 'examples/customer_service_streaming/configs/tools/submit_ticket' |  |  | 0.494 |
+| walker |  | 8757 | 13 | listing of 'examples/airline/evals/eval_cases' |  |  | 0.494 |
+| walker |  | 8767 | 10 | python decl body at swarm/util.py:31 body 60 |  |  | 0.495 |
+| walker |  | 8782 | 15 | listing of 'examples/airline/evals/eval_results' |  |  | 0.495 |
+| ns | 8784 |  | 69 | customer_service_streaming/configs/ tree listing | 9.3 |  | 0.505 |
+| walker |  | 8957 | 175 | python method body at swarm/core.py:71 body 72 |  |  | 0.505 |
+| walker |  | 8967 | 10 | python decl body at swarm/repl/repl.py:60 body 63 |  |  | 0.505 |
+| walker |  | 8979 | 12 | python decl names surface in examples/customer_service_streaming/src/arg_parser.py |  |  | 0.505 |
+| walker |  | 8979 | 0 | python decl at examples/customer_service_streaming/src/arg_parser.py:3 |  |  | 0.505 |
+| walker |  | 8984 | 5 | python imports in examples/customer_service_streaming/src/arg_parser.py |  |  | 0.505 |
+| ns | 9038 |  | 254 | customer_service_streaming/src/arg_parser.py | 9.4 |  | 0.500 |
+| ns | 9284 |  | 246 | customer_service_streaming/configs/general.py | 9.5 |  | 0.493 |
+| ns | 9439 |  | 155 | customer_service_streaming/configs/swarm_tasks.json | 9.6 |  | 0.489 |
 | ns | 9572 |  | 133 | customer_service_streaming assistant.json sample | 9.7 |  | 0.486 |
-| ns | 9765 |  | 193 | local_engine.py — LocalEngine method locations | 9.8 |  | 0.482 |
-| ns | 9870 |  | 105 | customer_service/ + customer_service_lite/ listings | 10.1 |  | 0.479 |
+| ns | 9765 |  | 193 | local_engine.py — LocalEngine method locations | 9.8 |  | 0.481 |
+| ns | 9870 |  | 105 | customer_service/ + customer_service_lite/ listings | 10.1 |  | 0.478 |
 | ns | 9881 |  | 11 | tests/test_runs/ listing | 10.2 |  | 0.479 |
-| ns | 9995 |  | 114 | Sample session log content | 10.3 |  | 0.480 |
+| ns | 9995 |  | 114 | Sample session log content | 10.3 |  | 0.479 |

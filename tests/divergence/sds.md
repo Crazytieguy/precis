@@ -33,76 +33,76 @@ Score(3000)=0.541 I=0.847 C=0.346 ns_rows≤3K=16/40 (reached=10 partial=0 missi
 | walker |  | 1487 | 65 | c decl at sds.h:69 |  |  | 0.674 |
 | walker |  | 1517 | 30 | c includes in sds.h |  |  | 0.720 |
 | walker |  | 1537 | 20 | c decl doc at sds.h:180 |  |  | 0.720 |
-| walker |  | 1578 | 41 | c decl doc at sds.h:47 |  |  | 0.755 |
-| ns | 1806 |  | 458 | sdslen() / sdsavail() inline accessors | 1.12 |  | 0.621 |
-| ns | 1969 |  | 163 | sdssetlen() inline mutator (TYPE_16/32/64 cases elided) | 1.13 |  | 0.588 |
-| walker |  | 2029 | 451 | c decl names surface #1 in sds.h |  |  | 0.592 |
-| walker |  | 2047 | 18 | c decl at sds.h:232 |  |  | 0.592 |
-| ns | 2149 |  | 180 | sdsinclen() inline mutator (TYPE_16/32/64 cases elided) | 1.14 |  | 0.561 |
-| walker |  | 2327 | 280 | c decl names surface #2 in sds.h |  |  | 0.566 |
-| walker |  | 2327 | 0 | c decl at sds.h:256 |  |  | 0.566 |
-| walker |  | 2327 | 0 | c decl at sds.h:266 |  |  | 0.566 |
-| walker |  | 2339 | 12 | c decl doc at sds.h:256 |  |  | 0.567 |
-| ns | 2570 |  | 421 | README: disadvantages of the single-allocation design | 1.15 | 1.2 | 0.521 |
-| ns | 2687 |  | 117 | Makefile | 2.1 |  | 0.539 |
-| walker |  | 2832 | 493 | c header banner in sds.h |  |  | 0.539 |
-| walker |  | 2891 | 59 | c decl at testhelp.h:44 |  |  | 0.539 |
-| walker |  | 2957 | 66 | c decl doc at sds.h:266 |  |  | 0.541 |
-| walker |  | 3122 | 165 | c decl body at sds.h:87 |  |  | 0.570 |
-| walker |  | 3287 | 165 | c decl body at sds.h:180 |  |  | 0.570 |
-| ns | 3370 |  | 683 | sds.h public function declarations, part 1 (creation through low-level MakeRoomFor/IncrLen) | 2.2 |  | 0.619 |
-| walker |  | 3386 | 99 | c decl at testhelp.h:48 |  |  | 0.619 |
-| ns | 3566 |  | 196 | sds.h public function declarations, part 2 (RemoveFreeSpace/AllocSize/allocator wrappers/sdsTest) | 2.3 |  | 0.630 |
-| ns | 3690 |  | 124 | sdsalloc.h allocator macros | 2.4 |  | 0.618 |
-| ns | 3819 |  | 129 | Changelog | 2.5 |  | 0.603 |
-| walker |  | 3862 | 476 | c decl names surface in sds.c |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:89 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:149 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:154 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:160 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:165 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:184 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:193 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:204 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:256 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:300 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:307 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:334 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:380 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:398 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:413 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:421 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:427 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:440 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:450 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:451 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:494 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:526 |  |  | 0.605 |
-| walker |  | 3862 | 0 | c decl at sds.c:534 |  |  | 0.605 |
-| walker |  | 3875 | 13 | c decl body at sds.c:149 |  |  | 0.605 |
-| walker |  | 3887 | 12 | c decl doc at sds.c:160 |  |  | 0.605 |
-| walker |  | 3904 | 17 | c decl body at sds.c:160 |  |  | 0.605 |
-| walker |  | 3921 | 17 | c decl body at sds.c:413 |  |  | 0.605 |
-| walker |  | 3938 | 17 | c decl body at sds.c:440 |  |  | 0.605 |
-| walker |  | 3957 | 19 | c decl body at sds.c:307 |  |  | 0.605 |
-| walker |  | 3976 | 19 | c decl body at sds.c:421 |  |  | 0.605 |
-| walker |  | 3996 | 20 | c decl doc at sds.c:154 |  |  | 0.605 |
-| walker |  | 4023 | 27 | c decl body at sds.c:184 |  |  | 0.605 |
-| walker |  | 4050 | 27 | c decl body at sds.c:193 |  |  | 0.605 |
-| walker |  | 4071 | 21 | c decl doc at sds.c:494 |  |  | 0.605 |
-| walker |  | 4093 | 22 | c decl doc at sds.c:534 |  |  | 0.605 |
-| walker |  | 4116 | 23 | c decl doc at sds.c:165 |  |  | 0.605 |
-| walker |  | 4148 | 32 | c decl body at sds.c:165 |  |  | 0.605 |
-| walker |  | 4180 | 32 | c decl body at sds.c:300 |  |  | 0.605 |
-| walker |  | 4217 | 37 | c decl body at sds.c:154 |  |  | 0.605 |
-| walker |  | 4251 | 34 | c decl doc at sds.c:307 |  |  | 0.605 |
-| walker |  | 4287 | 36 | c decl doc at sds.c:149 |  |  | 0.605 |
-| walker |  | 4334 | 47 | c decl body at sds.c:526 |  |  | 0.605 |
+| ns | 1806 |  | 458 | sdslen() / sdsavail() inline accessors | 1.12 |  | 0.592 |
+| ns | 1969 |  | 163 | sdssetlen() inline mutator (TYPE_16/32/64 cases elided) | 1.13 |  | 0.560 |
+| walker |  | 1988 | 451 | c decl names surface #1 in sds.h |  |  | 0.565 |
+| walker |  | 2006 | 18 | c decl at sds.h:232 |  |  | 0.565 |
+| ns | 2149 |  | 180 | sdsinclen() inline mutator (TYPE_16/32/64 cases elided) | 1.14 |  | 0.535 |
+| walker |  | 2286 | 280 | c decl names surface #2 in sds.h |  |  | 0.540 |
+| walker |  | 2286 | 0 | c decl at sds.h:256 |  |  | 0.540 |
+| walker |  | 2286 | 0 | c decl at sds.h:266 |  |  | 0.540 |
+| walker |  | 2298 | 12 | c decl doc at sds.h:256 |  |  | 0.541 |
+| ns | 2570 |  | 421 | README: disadvantages of the single-allocation design | 1.15 | 1.2 | 0.497 |
+| ns | 2687 |  | 117 | Makefile | 2.1 |  | 0.516 |
+| walker |  | 2791 | 493 | c header banner in sds.h |  |  | 0.516 |
+| walker |  | 2850 | 59 | c decl at testhelp.h:44 |  |  | 0.516 |
+| walker |  | 2916 | 66 | c decl doc at sds.h:266 |  |  | 0.518 |
+| walker |  | 2957 | 41 | c decl doc at sds.h:47 |  |  | 0.541 |
+| walker |  | 3056 | 99 | c decl at testhelp.h:48 |  |  | 0.541 |
+| ns | 3370 |  | 683 | sds.h public function declarations, part 1 (creation through low-level MakeRoomFor/IncrLen) | 2.2 |  | 0.595 |
+| walker |  | 3532 | 476 | c decl names surface in sds.c |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:89 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:149 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:154 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:160 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:165 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:184 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:193 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:204 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:256 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:300 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:307 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:334 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:380 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:398 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:413 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:421 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:427 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:440 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:450 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:451 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:494 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:526 |  |  | 0.597 |
+| walker |  | 3532 | 0 | c decl at sds.c:534 |  |  | 0.597 |
+| walker |  | 3545 | 13 | c decl body at sds.c:149 |  |  | 0.597 |
+| walker |  | 3557 | 12 | c decl doc at sds.c:160 |  |  | 0.597 |
+| ns | 3566 |  | 196 | sds.h public function declarations, part 2 (RemoveFreeSpace/AllocSize/allocator wrappers/sdsTest) | 2.3 |  | 0.610 |
+| walker |  | 3574 | 17 | c decl body at sds.c:160 |  |  | 0.610 |
+| walker |  | 3591 | 17 | c decl body at sds.c:413 |  |  | 0.610 |
+| walker |  | 3608 | 17 | c decl body at sds.c:440 |  |  | 0.610 |
+| walker |  | 3627 | 19 | c decl body at sds.c:307 |  |  | 0.610 |
+| walker |  | 3646 | 19 | c decl body at sds.c:421 |  |  | 0.610 |
+| walker |  | 3666 | 20 | c decl doc at sds.c:154 |  |  | 0.610 |
+| ns | 3690 |  | 124 | sdsalloc.h allocator macros | 2.4 |  | 0.599 |
+| walker |  | 3693 | 27 | c decl body at sds.c:184 |  |  | 0.599 |
+| walker |  | 3720 | 27 | c decl body at sds.c:193 |  |  | 0.599 |
+| walker |  | 3741 | 21 | c decl doc at sds.c:494 |  |  | 0.599 |
+| walker |  | 3763 | 22 | c decl doc at sds.c:534 |  |  | 0.599 |
+| walker |  | 3786 | 23 | c decl doc at sds.c:165 |  |  | 0.599 |
+| walker |  | 3818 | 32 | c decl body at sds.c:165 |  |  | 0.599 |
+| ns | 3819 |  | 129 | Changelog | 2.5 |  | 0.584 |
+| walker |  | 3850 | 32 | c decl body at sds.c:300 |  |  | 0.584 |
+| walker |  | 3887 | 37 | c decl body at sds.c:154 |  |  | 0.584 |
+| walker |  | 3921 | 34 | c decl doc at sds.c:307 |  |  | 0.584 |
+| walker |  | 3957 | 36 | c decl doc at sds.c:149 |  |  | 0.584 |
+| walker |  | 4004 | 47 | c decl body at sds.c:526 |  |  | 0.584 |
+| walker |  | 4087 | 83 | c includes in sds.c |  |  | 0.584 |
+| walker |  | 4128 | 41 | c decl doc at sds.c:440 |  |  | 0.584 |
+| walker |  | 4170 | 42 | c decl doc at sds.c:427 |  |  | 0.584 |
+| walker |  | 4335 | 165 | c decl body at sds.h:87 |  |  | 0.605 |
 | ns | 4389 |  | 570 | sds.c function-definition location catalog | 2.6 |  | 0.579 |
-| walker |  | 4417 | 83 | c includes in sds.c |  |  | 0.579 |
-| walker |  | 4458 | 41 | c decl doc at sds.c:440 |  |  | 0.579 |
 | ns | 4493 |  | 104 | README heading map, part 2 (Destroying strings through String joining) | 3.1 |  | 0.589 |
-| walker |  | 4500 | 42 | c decl doc at sds.c:427 |  |  | 0.589 |
+| walker |  | 4500 | 165 | c decl body at sds.h:180 |  |  | 0.589 |
 | walker |  | 4551 | 51 | c decl doc at sds.c:526 |  |  | 0.589 |
 | ns | 4608 |  | 115 | README heading map, part 3 (Error handling through Credits and license) | 3.2 |  | 0.598 |
 | ns | 4711 |  | 103 | README: error handling convention | 3.3 | 3.2 | 0.590 |

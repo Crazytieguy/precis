@@ -80,9 +80,37 @@ README.md
      178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
      179→for the complete list.
      181→## Formatters
-    …
+     182→
+     183→Debug uses [printf-style](https://wikipedia.org/wiki/Printf_format_string) formatting.
+     184→Below are the officially supported formatters:
+     185→
+     186→| Formatter | Representation |
+     187→|-----------|----------------|
+     188→| `%O`      | Pretty-print an Object on multiple lines. |
+     189→| `%o`      | Pretty-print an Object all on a single line. |
+     190→| `%s`      | String. |
+     191→| `%d`      | Number (both integer and float). |
+     192→| `%j`      | JSON. Replaced with the string '[Circular]' if the argument contains circular references. |
+     193→| `%%`      | Single percent sign ('%'). This does not consume an argument. |
+     194→
+     195→
      196→### Custom formatters
-    …
+     197→
+     198→You can add custom formatters by extending the `debug.formatters` object.
+     199→For example, if you wanted to add support for rendering a Buffer as hex with
+     200→`%h`, you could do something like:
+     201→
+     202→```js
+     203→const createDebug = require('debug')
+     204→createDebug.formatters.h = (v) => {
+     205→  return v.toString('hex')
+     206→}
+     207→
+     208→// …elsewhere
+     209→const debug = createDebug('foo')
+     210→debug('this is hex: %h', new Buffer('hello world'))
+     211→//   foo this is hex: 68656c6c6f20776f726c6421 +0ms
+     212→```
      215→## Browser Support
     …
      248→## Output streams
@@ -196,6 +224,28 @@ package.json
     …
 src/
     browser.js
+        …
+           7→exports.formatArgs = formatArgs;
+           8→exports.save = save;
+           9→exports.load = load;
+          10→exports.useColors = useColors;
+          11→exports.storage = localstorage();
+          12→exports.destroy = (() => {
+        …
+          27→exports.colors = [
+        …
+         115→function useColors() {
+        …
+         149→function formatArgs(args) {
+        …
+         192→exports.log = console.debug || console.log || (() => {});
+        …
+         200→function save(namespaces) {
+        …
+         219→function load() {
+        …
+         258→module.exports = require('./common')(exports);
+        …
     common.js
         …
            7→function setup(env) {
@@ -206,55 +256,15 @@ src/
           64→		let enabledCache;
         …
          116→		debug.namespace = namespace;
-         117→		debug.useColors = createDebug.useColors();
-         118→		debug.color = createDebug.selectColor(namespace);
+        …
          119→		debug.extend = extend;
-         120→		debug.destroy = createDebug.destroy; // XXX Temporary. Will be removed in the next major release.
         …
-         141→		// Env-specific initialization logic for debug instances
-         142→		if (typeof createDebug.init === 'function') {
-         143→			createDebug.init(debug);
-         144→		}
          146→		return debug;
-        …
-         150→		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
-         151→		newDebug.log = this.log;
-         152→		return newDebug;
         …
          163→		createDebug.save(namespaces);
          164→		createDebug.namespaces = namespaces;
          166→		createDebug.names = [];
          167→		createDebug.skips = [];
-         169→		const split = (typeof namespaces === 'string' ? namespaces : '')
-         170→			.trim()
-         171→			.replace(/\s+/g, ',')
-         172→			.split(',')
-         173→			.filter(Boolean);
-        …
-         193→		let searchIndex = 0;
-         194→		let templateIndex = 0;
-         195→		let starIndex = -1;
-         196→		let matchIndex = 0;
-        …
-         219→		// Handle trailing '*' in template
-         220→		while (templateIndex < template.length && template[templateIndex] === '*') {
-         221→			templateIndex++;
-         222→		}
-         224→		return templateIndex === template.length;
-        …
-         234→		const namespaces = [
-         235→			...createDebug.names,
-         236→			...createDebug.skips.map(namespace => '-' + namespace)
-         237→		].join(',');
-         238→		createDebug.enable('');
-         239→		return namespaces;
-        …
-         273→		if (val instanceof Error) {
-         274→			return val.stack || val.message;
-         275→		}
-         276→		return val;
-        …
-         284→		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
         …
          292→module.exports = setup;
     index.js

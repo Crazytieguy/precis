@@ -127,24 +127,24 @@ nanovllm/
               18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
             …
               31→    def __len__(self):
-              32→        return self.num_tokens
+            …
               34→    def __getitem__(self, key):
-              35→        return self.token_ids[key]
+            …
               37→    @property
               38→    def is_finished(self):
-              39→        return self.status == SequenceStatus.FINISHED
+            …
               41→    @property
               42→    def num_completion_tokens(self):
-              43→        return self.num_tokens - self.num_prompt_tokens
+            …
               45→    @property
               46→    def prompt_token_ids(self):
-              47→        return self.token_ids[:self.num_prompt_tokens]
+            …
               49→    @property
               50→    def completion_token_ids(self):
-              51→        return self.token_ids[self.num_prompt_tokens:]
+            …
               53→    @property
               54→    def num_cached_blocks(self):
-              55→        return self.num_cached_tokens // self.block_size
+            …
               57→    @property
               58→    def num_blocks(self):
             …

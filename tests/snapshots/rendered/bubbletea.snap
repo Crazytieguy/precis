@@ -46,7 +46,6 @@ cursor.go
       24→// RequestCursorPosition is a command that requests the cursor position.
       25→// The cursor position will be sent as a [CursorPositionMsg] message.
       26→func RequestCursorPosition() Msg {
-      27→	return requestCursorPosMsg{}
     …
 environ.go
     …
@@ -220,9 +219,6 @@ tea.go
       74→//	v := tea.NewView("Hello, World!")
       75→//	```
       76→func NewView(s string) View {
-      77→	var view View
-      78→	view.SetContent(s)
-      79→	return view
     …
       82→// View represents a terminal view that can be composed of multiple layers.
       83→// It can also contain a cursor that will be rendered on top of the layers.

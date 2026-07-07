@@ -209,7 +209,7 @@ rich/
           33→    def __rich_measure__(
           34→        self, console: "Console", options: ConsoleOptions
           35→    ) -> Measurement:
-          36→        return Measurement(1, options.max_width)
+        …
           39→def make_test_card() -> Table:
           40→    """Get a renderable that demonstrates a number of features."""
         …
@@ -255,7 +255,7 @@ rich/
            9→    @property
           10→    def top(self) -> T:
           11→        """Get top of stack."""
-          12→        return self[-1]
+        …
           14→    def push(self, item: T) -> None:
         …
     _timer.py

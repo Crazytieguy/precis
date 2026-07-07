@@ -169,173 +169,160 @@ Score(3000)=0.495 I=0.801 C=0.306 ns_rows≤3K=20/51 (reached=12 partial=0 missi
 | walker |  | 5913 | 0 | python method at beets/library/exceptions.py:30 |  |  | 0.429 |
 | walker |  | 5913 | 0 | python method at beets/library/exceptions.py:37 |  |  | 0.429 |
 | walker |  | 5925 | 12 | python method body at beets/library/exceptions.py:30 body 31 |  |  | 0.429 |
-| walker |  | 5937 | 12 | python method body at beets/library/exceptions.py:37 body 38 |  |  | 0.429 |
+| walker |  | 5935 | 10 | python imports #16 in beets/util/__init__.py |  |  | 0.429 |
 | ns | 5939 |  | 461 | ui/commands/*.py function signature roster | 2.3 |  | 0.417 |
-| walker |  | 5947 | 10 | python imports #16 in beets/util/__init__.py |  |  | 0.417 |
-| walker |  | 5956 | 9 | python imports #17 in beets/util/__init__.py |  |  | 0.417 |
-| walker |  | 6091 | 135 | python decl names surface in beets/util/deprecation.py |  |  | 0.417 |
-| walker |  | 6091 | 0 | python decl at beets/util/deprecation.py:30 |  |  | 0.417 |
-| walker |  | 6105 | 14 | python decl at beets/util/deprecation.py:16 |  |  | 0.417 |
-| walker |  | 6133 | 28 | python decl at beets/util/deprecation.py:78 |  |  | 0.417 |
-| walker |  | 6162 | 29 | python decl at beets/util/deprecation.py:39 |  |  | 0.417 |
-| walker |  | 6174 | 12 | python decl body at beets/util/deprecation.py:39 body 42 |  |  | 0.417 |
-| walker |  | 6206 | 32 | python decl at beets/util/deprecation.py:59 |  |  | 0.417 |
-| walker |  | 6239 | 33 | python decl at beets/util/deprecation.py:45 |  |  | 0.417 |
-| walker |  | 6308 | 69 | python decl at beets/util/deprecation.py:19 |  |  | 0.417 |
-| walker |  | 6348 | 40 | python decl body at beets/util/deprecation.py:45 body 54 |  |  | 0.417 |
+| walker |  | 5944 | 9 | python imports #17 in beets/util/__init__.py |  |  | 0.417 |
+| walker |  | 6079 | 135 | python decl names surface in beets/util/deprecation.py |  |  | 0.417 |
+| walker |  | 6079 | 0 | python decl at beets/util/deprecation.py:30 |  |  | 0.417 |
+| walker |  | 6093 | 14 | python decl at beets/util/deprecation.py:16 |  |  | 0.417 |
+| walker |  | 6121 | 28 | python decl at beets/util/deprecation.py:78 |  |  | 0.417 |
+| walker |  | 6150 | 29 | python decl at beets/util/deprecation.py:39 |  |  | 0.417 |
+| walker |  | 6162 | 12 | python decl body at beets/util/deprecation.py:39 body 42 |  |  | 0.417 |
+| walker |  | 6194 | 32 | python decl at beets/util/deprecation.py:59 |  |  | 0.417 |
+| walker |  | 6227 | 33 | python decl at beets/util/deprecation.py:45 |  |  | 0.417 |
+| walker |  | 6296 | 69 | python decl at beets/util/deprecation.py:19 |  |  | 0.417 |
 | ns | 6471 |  | 532 | Global CLI flags (`beet -l/-d/-v/-c/-p/-P/-h/--version`) | 2.4 |  | 0.401 |
-| walker |  | 6656 | 308 | python decl names surface in beets/metadata_plugins.py |  |  | 0.401 |
-| walker |  | 6656 | 0 | python decl at beets/metadata_plugins.py:136 |  |  | 0.401 |
-| walker |  | 6656 | 0 | python decl at beets/metadata_plugins.py:147 |  |  | 0.401 |
-| walker |  | 6656 | 0 | python decl at beets/metadata_plugins.py:171 |  |  | 0.401 |
-| walker |  | 6656 | 0 | python decl at beets/metadata_plugins.py:332 |  |  | 0.401 |
-| walker |  | 6656 | 0 | python decl at beets/metadata_plugins.py:338 |  |  | 0.401 |
-| walker |  | 6665 | 9 | python class body at beets/metadata_plugins.py:332 |  |  | 0.401 |
-| walker |  | 6682 | 17 | python decl at beets/metadata_plugins.py:45 |  |  | 0.401 |
-| walker |  | 6700 | 18 | python decl at beets/metadata_plugins.py:158 |  |  | 0.401 |
-| walker |  | 6719 | 19 | python decl at beets/metadata_plugins.py:53 |  |  | 0.401 |
+| walker |  | 6604 | 308 | python decl names surface in beets/metadata_plugins.py |  |  | 0.401 |
+| walker |  | 6604 | 0 | python decl at beets/metadata_plugins.py:136 |  |  | 0.401 |
+| walker |  | 6604 | 0 | python decl at beets/metadata_plugins.py:147 |  |  | 0.401 |
+| walker |  | 6604 | 0 | python decl at beets/metadata_plugins.py:171 |  |  | 0.401 |
+| walker |  | 6604 | 0 | python decl at beets/metadata_plugins.py:332 |  |  | 0.401 |
+| walker |  | 6604 | 0 | python decl at beets/metadata_plugins.py:338 |  |  | 0.401 |
+| walker |  | 6613 | 9 | python class body at beets/metadata_plugins.py:332 |  |  | 0.401 |
+| walker |  | 6630 | 17 | python decl at beets/metadata_plugins.py:45 |  |  | 0.401 |
+| walker |  | 6648 | 18 | python decl at beets/metadata_plugins.py:158 |  |  | 0.401 |
+| walker |  | 6667 | 19 | python decl at beets/metadata_plugins.py:53 |  |  | 0.401 |
+| walker |  | 6687 | 20 | python decl at beets/metadata_plugins.py:61 |  |  | 0.401 |
+| walker |  | 6712 | 25 | python decl at beets/metadata_plugins.py:354 |  |  | 0.401 |
+| walker |  | 6724 | 12 | python decl doc at beets/metadata_plugins.py:332 |  |  | 0.401 |
 | ns | 6728 |  | 257 | Subcommand class constructor | 2.5 | 2.1 | 0.396 |
-| walker |  | 6739 | 20 | python decl at beets/metadata_plugins.py:61 |  |  | 0.396 |
-| walker |  | 6764 | 25 | python decl at beets/metadata_plugins.py:354 |  |  | 0.396 |
-| walker |  | 6776 | 12 | python decl doc at beets/metadata_plugins.py:332 |  |  | 0.396 |
-| walker |  | 6804 | 28 | python decl at beets/metadata_plugins.py:112 |  |  | 0.396 |
-| walker |  | 6810 | 6 | python decl body at beets/metadata_plugins.py:112 body 115 |  |  | 0.396 |
-| walker |  | 6839 | 29 | python decl at beets/metadata_plugins.py:118 |  |  | 0.396 |
-| walker |  | 6845 | 6 | python decl body at beets/metadata_plugins.py:118 body 121 |  |  | 0.396 |
-| walker |  | 6858 | 13 | python decl doc at beets/metadata_plugins.py:53 |  |  | 0.396 |
-| walker |  | 6888 | 30 | python decl at beets/metadata_plugins.py:124 |  |  | 0.396 |
-| walker |  | 6894 | 6 | python decl body at beets/metadata_plugins.py:124 body 127 |  |  | 0.396 |
-| walker |  | 6924 | 30 | python decl at beets/metadata_plugins.py:130 |  |  | 0.396 |
-| walker |  | 6930 | 6 | python decl body at beets/metadata_plugins.py:130 body 133 |  |  | 0.396 |
-| walker |  | 6946 | 16 | python decl doc at beets/metadata_plugins.py:45 |  |  | 0.396 |
-| walker |  | 6962 | 16 | python decl doc at beets/metadata_plugins.py:158 |  |  | 0.396 |
-| walker |  | 6980 | 18 | python decl doc at beets/metadata_plugins.py:61 |  |  | 0.396 |
-| walker |  | 6998 | 18 | python decl doc at beets/metadata_plugins.py:136 |  |  | 0.389 |
+| walker |  | 6752 | 28 | python decl at beets/metadata_plugins.py:112 |  |  | 0.396 |
+| walker |  | 6781 | 29 | python decl at beets/metadata_plugins.py:118 |  |  | 0.396 |
+| walker |  | 6794 | 13 | python decl doc at beets/metadata_plugins.py:53 |  |  | 0.396 |
+| walker |  | 6824 | 30 | python decl at beets/metadata_plugins.py:124 |  |  | 0.396 |
+| walker |  | 6854 | 30 | python decl at beets/metadata_plugins.py:130 |  |  | 0.396 |
+| walker |  | 6870 | 16 | python decl doc at beets/metadata_plugins.py:45 |  |  | 0.396 |
+| walker |  | 6886 | 16 | python decl doc at beets/metadata_plugins.py:158 |  |  | 0.396 |
+| walker |  | 6904 | 18 | python decl doc at beets/metadata_plugins.py:61 |  |  | 0.396 |
+| walker |  | 6922 | 18 | python decl doc at beets/metadata_plugins.py:136 |  |  | 0.396 |
+| walker |  | 6940 | 18 | python decl doc at beets/metadata_plugins.py:147 |  |  | 0.396 |
+| walker |  | 6977 | 37 | python class body at beets/metadata_plugins.py:171 |  |  | 0.396 |
 | ns | 6998 |  | 270 | `beet import` full flag surface, part 1 | 2.6 | 2.2 | 0.389 |
-| walker |  | 7016 | 18 | python decl doc at beets/metadata_plugins.py:147 |  |  | 0.389 |
-| walker |  | 7053 | 37 | python class body at beets/metadata_plugins.py:171 |  |  | 0.389 |
+| walker |  | 7018 | 41 | python class body at beets/metadata_plugins.py:338 |  |  | 0.389 |
+| walker |  | 7043 | 25 | python decl at beets/metadata_plugins.py:76 |  |  | 0.389 |
 | ns | 7066 |  | 68 | `beet import` full flag surface, part 2 (most-used flags) | 2.7 | 2.6 | 0.387 |
-| walker |  | 7094 | 41 | python class body at beets/metadata_plugins.py:338 |  |  | 0.387 |
-| walker |  | 7119 | 25 | python decl at beets/metadata_plugins.py:76 |  |  | 0.387 |
-| walker |  | 7179 | 60 | python decl doc at beets/metadata_plugins.py:338 |  |  | 0.387 |
+| walker |  | 7103 | 60 | python decl doc at beets/metadata_plugins.py:338 |  |  | 0.387 |
+| walker |  | 7416 | 313 | python method sigs in beets/metadata_plugins.py |  |  | 0.387 |
+| walker |  | 7416 | 0 | python method at beets/metadata_plugins.py:196 |  |  | 0.387 |
+| walker |  | 7416 | 0 | python method at beets/metadata_plugins.py:253 |  |  | 0.387 |
+| walker |  | 7416 | 0 | python method at beets/metadata_plugins.py:264 |  |  | 0.387 |
+| walker |  | 7416 | 0 | python method at beets/metadata_plugins.py:275 |  |  | 0.387 |
+| walker |  | 7416 | 0 | python method at beets/metadata_plugins.py:366 |  |  | 0.387 |
+| walker |  | 7424 | 8 | python method at beets/metadata_plugins.py:181 |  |  | 0.387 |
+| walker |  | 7433 | 9 | python method at beets/metadata_plugins.py:189 |  |  | 0.387 |
+| walker |  | 7443 | 10 | python method at beets/metadata_plugins.py:205 |  |  | 0.387 |
 | ns | 7447 |  | 381 | `beet import` remaining flag names (roster) | 2.8 | 2.7 | 0.378 |
-| walker |  | 7492 | 313 | python method sigs in beets/metadata_plugins.py |  |  | 0.378 |
-| walker |  | 7492 | 0 | python method at beets/metadata_plugins.py:196 |  |  | 0.378 |
-| walker |  | 7492 | 0 | python method at beets/metadata_plugins.py:253 |  |  | 0.378 |
-| walker |  | 7492 | 0 | python method at beets/metadata_plugins.py:264 |  |  | 0.378 |
-| walker |  | 7492 | 0 | python method at beets/metadata_plugins.py:275 |  |  | 0.378 |
-| walker |  | 7492 | 0 | python method at beets/metadata_plugins.py:366 |  |  | 0.378 |
-| walker |  | 7500 | 8 | python method at beets/metadata_plugins.py:181 |  |  | 0.378 |
-| walker |  | 7509 | 9 | python method at beets/metadata_plugins.py:189 |  |  | 0.378 |
-| walker |  | 7519 | 10 | python method at beets/metadata_plugins.py:205 |  |  | 0.378 |
-| walker |  | 7529 | 10 | python method at beets/metadata_plugins.py:211 |  |  | 0.378 |
-| walker |  | 7539 | 10 | python method at beets/metadata_plugins.py:397 |  |  | 0.378 |
-| walker |  | 7570 | 31 | python method at beets/metadata_plugins.py:459 |  |  | 0.378 |
-| walker |  | 7580 | 10 | python method body at beets/metadata_plugins.py:205 body 209 |  |  | 0.378 |
-| walker |  | 7590 | 10 | python method body at beets/metadata_plugins.py:211 body 216 |  |  | 0.378 |
-| walker |  | 7600 | 10 | python method body at beets/metadata_plugins.py:397 body 408 |  |  | 0.378 |
-| walker |  | 7641 | 41 | python method at beets/metadata_plugins.py:239 |  |  | 0.378 |
-| walker |  | 7651 | 10 | python method body at beets/metadata_plugins.py:239 body 251 |  |  | 0.378 |
-| walker |  | 7680 | 29 | python method doc at beets/metadata_plugins.py:205 |  |  | 0.378 |
-| walker |  | 7698 | 18 | python method body at beets/metadata_plugins.py:253 body 262 |  |  | 0.378 |
+| walker |  | 7453 | 10 | python method at beets/metadata_plugins.py:211 |  |  | 0.378 |
+| walker |  | 7463 | 10 | python method at beets/metadata_plugins.py:397 |  |  | 0.378 |
+| walker |  | 7494 | 31 | python method at beets/metadata_plugins.py:459 |  |  | 0.378 |
+| walker |  | 7535 | 41 | python method at beets/metadata_plugins.py:239 |  |  | 0.378 |
+| walker |  | 7566 | 31 | python method doc at beets/metadata_plugins.py:205 |  |  | 0.378 |
+| walker |  | 7626 | 60 | python method at beets/metadata_plugins.py:449 |  |  | 0.378 |
+| walker |  | 7664 | 38 | python method doc at beets/metadata_plugins.py:181 |  |  | 0.378 |
+| walker |  | 7702 | 38 | python method doc at beets/metadata_plugins.py:211 |  |  | 0.378 |
 | ns | 7707 |  | 260 | beets/plugins.py extension-point signature roster | 3.1 |  | 0.373 |
-| walker |  | 7716 | 18 | python method body at beets/metadata_plugins.py:264 body 273 |  |  | 0.373 |
-| walker |  | 7776 | 60 | python method at beets/metadata_plugins.py:449 |  |  | 0.373 |
-| walker |  | 7784 | 8 | python decl body at beets/metadata_plugins.py:136 body 144 |  |  | 0.373 |
-| walker |  | 7792 | 8 | python decl body at beets/metadata_plugins.py:147 body 155 |  |  | 0.373 |
-| walker |  | 7828 | 36 | python method doc at beets/metadata_plugins.py:211 |  |  | 0.373 |
-| walker |  | 7866 | 38 | python method doc at beets/metadata_plugins.py:181 |  |  | 0.373 |
-| walker |  | 7887 | 21 | python method body at beets/metadata_plugins.py:181 body 187 |  |  | 0.373 |
-| walker |  | 7955 | 68 | python method at beets/metadata_plugins.py:220 |  |  | 0.373 |
-| walker |  | 7965 | 10 | python method body at beets/metadata_plugins.py:220 body 237 |  |  | 0.373 |
-| walker |  | 8046 | 81 | python decl doc at beets/metadata_plugins.py:171 |  |  | 0.373 |
+| walker |  | 7770 | 68 | python method at beets/metadata_plugins.py:220 |  |  | 0.373 |
+| walker |  | 7851 | 81 | python decl doc at beets/metadata_plugins.py:171 |  |  | 0.373 |
+| walker |  | 7880 | 29 | python method at beets/metadata_plugins.py:439 |  |  | 0.373 |
+| walker |  | 7896 | 16 | python method doc at beets/metadata_plugins.py:439 |  |  | 0.373 |
+| walker |  | 7974 | 78 | python decl body at beets/ui/commands/__init__.py:36 body 38 |  |  | 0.373 |
+| walker |  | 7983 | 9 | python imports #18 in beets/util/__init__.py |  |  | 0.373 |
 | ns | 8047 |  | 340 | EventType hook-name literal in full | 3.2 | 3.1 | 0.365 |
-| walker |  | 8075 | 29 | python method at beets/metadata_plugins.py:439 |  |  | 0.365 |
-| walker |  | 8091 | 16 | python method doc at beets/metadata_plugins.py:439 |  |  | 0.365 |
 | ns | 8112 |  | 65 | Distance / MetadataSourcePlugin / Item / Album / ImportTask locations | 3.3 |  | 0.364 |
-| walker |  | 8169 | 78 | python decl body at beets/ui/commands/__init__.py:36 body 38 |  |  | 0.364 |
-| walker |  | 8178 | 9 | python imports #18 in beets/util/__init__.py |  |  | 0.364 |
+| walker |  | 8381 | 398 | python decl names surface in extra/release.py |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:37 |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:78 |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:97 |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:151 |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:157 |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:220 |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:230 |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:242 |  |  | 0.364 |
+| walker |  | 8381 | 0 | python decl at extra/release.py:249 |  |  | 0.364 |
+| walker |  | 8388 | 7 | python decl at extra/release.py:261 |  |  | 0.364 |
+| walker |  | 8396 | 8 | python decl at extra/release.py:273 |  |  | 0.364 |
+| walker |  | 8401 | 5 | python decl body at extra/release.py:261 body 263 |  |  | 0.364 |
 | ns | 8414 |  | 302 | dbcore/query.py: Query & Sort operator class roster | 4.1 |  | 0.359 |
+| walker |  | 8428 | 27 | python decl at extra/release.py:206 |  |  | 0.359 |
+| walker |  | 8442 | 14 | python decl doc at extra/release.py:220 |  |  | 0.359 |
+| walker |  | 8475 | 33 | python decl at extra/release.py:266 |  |  | 0.359 |
+| walker |  | 8489 | 14 | python decl doc at extra/release.py:266 |  |  | 0.359 |
 | ns | 8496 |  | 82 | beets/library/queries.py: query-string prefix → Query-class mapping | 4.2 |  | 0.357 |
-| walker |  | 8576 | 398 | python decl names surface in extra/release.py |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:37 |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:78 |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:97 |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:151 |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:157 |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:220 |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:230 |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:242 |  |  | 0.357 |
-| walker |  | 8576 | 0 | python decl at extra/release.py:249 |  |  | 0.357 |
-| walker |  | 8583 | 7 | python decl at extra/release.py:261 |  |  | 0.357 |
-| walker |  | 8591 | 8 | python decl at extra/release.py:273 |  |  | 0.357 |
-| walker |  | 8596 | 5 | python decl body at extra/release.py:261 body 263 |  |  | 0.357 |
-| walker |  | 8623 | 27 | python decl at extra/release.py:206 |  |  | 0.357 |
-| walker |  | 8637 | 14 | python decl doc at extra/release.py:220 |  |  | 0.357 |
-| walker |  | 8670 | 33 | python decl at extra/release.py:266 |  |  | 0.357 |
+| walker |  | 8505 | 16 | python decl doc at extra/release.py:206 |  |  | 0.357 |
+| walker |  | 8524 | 19 | python decl doc at extra/release.py:37 |  |  | 0.357 |
+| walker |  | 8541 | 17 | python decl doc at extra/release.py:97 |  |  | 0.357 |
+| walker |  | 8558 | 17 | python decl doc at extra/release.py:249 |  |  | 0.357 |
+| walker |  | 8575 | 17 | python decl doc at extra/release.py:273 |  |  | 0.357 |
+| walker |  | 8593 | 18 | python decl doc at extra/release.py:78 |  |  | 0.357 |
+| walker |  | 8611 | 18 | python decl doc at extra/release.py:230 |  |  | 0.357 |
+| walker |  | 8642 | 31 | python class body at extra/release.py:37 |  |  | 0.357 |
+| walker |  | 8676 | 34 | python decl at extra/release.py:30 |  |  | 0.357 |
 | ns | 8677 |  | 181 | Album/Item schema: field-name sets (hedged) | 4.3 |  | 0.354 |
-| walker |  | 8679 | 9 | python decl body at extra/release.py:266 body 270 |  |  | 0.354 |
-| walker |  | 8691 | 12 | python decl doc at extra/release.py:266 |  |  | 0.354 |
-| walker |  | 8707 | 16 | python decl doc at extra/release.py:206 |  |  | 0.354 |
-| walker |  | 8726 | 19 | python decl doc at extra/release.py:37 |  |  | 0.354 |
-| walker |  | 8743 | 17 | python decl doc at extra/release.py:97 |  |  | 0.354 |
-| walker |  | 8760 | 17 | python decl doc at extra/release.py:249 |  |  | 0.354 |
-| walker |  | 8777 | 17 | python decl doc at extra/release.py:273 |  |  | 0.354 |
-| walker |  | 8795 | 18 | python decl doc at extra/release.py:78 |  |  | 0.354 |
+| walker |  | 8723 | 47 | python method sigs in extra/release.py |  |  | 0.354 |
+| walker |  | 8729 | 6 | python method at extra/release.py:44 |  |  | 0.354 |
+| walker |  | 8737 | 8 | python method at extra/release.py:67 |  |  | 0.354 |
+| walker |  | 8745 | 8 | python method at extra/release.py:72 |  |  | 0.354 |
+| walker |  | 8755 | 10 | python method doc at extra/release.py:67 |  |  | 0.354 |
+| walker |  | 8772 | 17 | python method doc at extra/release.py:72 |  |  | 0.354 |
 | ns | 8802 |  | 125 | beets/library/library.py: Library class method roster | 4.4 |  | 0.352 |
-| walker |  | 8813 | 18 | python decl doc at extra/release.py:230 |  |  | 0.352 |
-| walker |  | 8844 | 31 | python class body at extra/release.py:37 |  |  | 0.352 |
-| walker |  | 8878 | 34 | python decl at extra/release.py:30 |  |  | 0.352 |
-| walker |  | 8925 | 47 | python method sigs in extra/release.py |  |  | 0.352 |
-| walker |  | 8931 | 6 | python method at extra/release.py:44 |  |  | 0.352 |
-| walker |  | 8939 | 8 | python method at extra/release.py:67 |  |  | 0.352 |
+| walker |  | 8839 | 67 | python decl at extra/release.py:145 |  |  | 0.352 |
+| walker |  | 8929 | 90 | README.rst section #0 |  |  | 0.352 |
 | ns | 8941 |  | 139 | importer/stages.py: pipeline stage function roster | 5.1 |  | 0.349 |
-| walker |  | 8947 | 8 | python method at extra/release.py:72 |  |  | 0.349 |
-| walker |  | 8957 | 10 | python method doc at extra/release.py:67 |  |  | 0.349 |
-| walker |  | 8974 | 17 | python method doc at extra/release.py:72 |  |  | 0.349 |
-| walker |  | 8984 | 10 | python method body at extra/release.py:72 body 75 |  |  | 0.349 |
-| walker |  | 8996 | 12 | python method body at extra/release.py:67 body 70 |  |  | 0.349 |
-| walker |  | 9063 | 67 | python decl at extra/release.py:145 |  |  | 0.349 |
 | ns | 9101 |  | 160 | importer/tasks.py: Action enum (import-task decision states) in full | 5.2 |  | 0.347 |
-| walker |  | 9106 | 43 | python decl body at extra/release.py:242 body 243 |  |  | 0.347 |
 | ns | 9165 |  | 64 | importer/tasks.py: ImportTask family class roster | 5.3 | 3.3 | 0.346 |
-| walker |  | 9196 | 90 | README.rst section #0 |  |  | 0.346 |
 | ns | 9243 |  | 78 | importer/session.py + state.py: ImportSession/ImportState roster | 5.4 |  | 0.345 |
-| walker |  | 9276 | 80 | python decl doc at beets/util/deprecation.py:45 |  |  | 0.345 |
 | ns | 9303 |  | 60 | autotag/hooks.py: candidate-data class roster | 6.1 |  | 0.343 |
 | ns | 9417 |  | 114 | autotag/match.py: Recommendation enum + tag_album/tag_item entry points | 6.2 |  | 0.342 |
-| ns | 9471 |  | 54 | autotag/distance.py: Distance class method depth | 6.3 |  | 0.341 |
-| ns | 9527 |  | 56 | metadata_plugins.py: MetadataSourcePlugin extension-point roster | 6.4 | 3.3 | 0.345 |
-| ns | 9662 |  | 135 | docs/reference/cli.rst: section + subcommand heading roster | 7.1 |  | 0.343 |
-| ns | 9787 |  | 125 | docs/reference/query.rst: query-syntax section heading roster | 7.3 |  | 0.340 |
-| walker |  | 9789 | 513 | python decl names surface in beets/plugins.py |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:108 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:116 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:127 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:147 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:153 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:401 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:442 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:485 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:500 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:507 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:515 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:525 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:542 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:576 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:586 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:594 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:624 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:634 |  |  | 0.363 |
-| walker |  | 9789 | 0 | python decl at beets/plugins.py:645 |  |  | 0.363 |
-| walker |  | 9798 | 9 | python decl body at beets/plugins.py:500 body 501 |  |  | 0.363 |
-| walker |  | 9811 | 13 | python decl doc at beets/plugins.py:634 |  |  | 0.363 |
-| walker |  | 9842 | 31 | python decl at beets/plugins.py:661 |  |  | 0.363 |
-| walker |  | 9875 | 33 | python decl at beets/plugins.py:679 |  |  | 0.363 |
-| walker |  | 9909 | 34 | python decl at beets/plugins.py:552 |  |  | 0.363 |
-| walker |  | 9926 | 17 | python decl doc at beets/plugins.py:594 |  |  | 0.363 |
-| walker |  | 9944 | 18 | python decl doc at beets/plugins.py:507 |  |  | 0.363 |
-| walker |  | 9962 | 18 | python decl doc at beets/plugins.py:542 |  |  | 0.363 |
-| walker |  | 9980 | 18 | python decl doc at beets/plugins.py:586 |  |  | 0.363 |
-| walker |  | 9999 | 19 | python decl doc at beets/plugins.py:525 |  |  | 0.361 |
+| walker |  | 9442 | 513 | python decl names surface in beets/plugins.py |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:108 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:116 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:127 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:147 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:153 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:401 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:442 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:485 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:500 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:507 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:515 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:525 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:542 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:576 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:586 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:594 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:624 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:634 |  |  | 0.365 |
+| walker |  | 9442 | 0 | python decl at beets/plugins.py:645 |  |  | 0.365 |
+| walker |  | 9451 | 9 | python decl body at beets/plugins.py:500 body 501 |  |  | 0.365 |
+| walker |  | 9464 | 13 | python decl doc at beets/plugins.py:634 |  |  | 0.365 |
+| ns | 9471 |  | 54 | autotag/distance.py: Distance class method depth | 6.3 |  | 0.364 |
+| walker |  | 9495 | 31 | python decl at beets/plugins.py:661 |  |  | 0.364 |
+| ns | 9527 |  | 56 | metadata_plugins.py: MetadataSourcePlugin extension-point roster | 6.4 | 3.3 | 0.368 |
+| walker |  | 9528 | 33 | python decl at beets/plugins.py:679 |  |  | 0.368 |
+| walker |  | 9562 | 34 | python decl at beets/plugins.py:552 |  |  | 0.368 |
+| walker |  | 9579 | 17 | python decl doc at beets/plugins.py:594 |  |  | 0.368 |
+| walker |  | 9597 | 18 | python decl doc at beets/plugins.py:507 |  |  | 0.368 |
+| walker |  | 9615 | 18 | python decl doc at beets/plugins.py:542 |  |  | 0.368 |
+| walker |  | 9633 | 18 | python decl doc at beets/plugins.py:586 |  |  | 0.368 |
+| walker |  | 9652 | 19 | python decl doc at beets/plugins.py:525 |  |  | 0.368 |
+| ns | 9662 |  | 135 | docs/reference/cli.rst: section + subcommand heading roster | 7.1 |  | 0.365 |
+| walker |  | 9683 | 31 | python decl doc at beets/plugins.py:127 |  |  | 0.365 |
+| walker |  | 9713 | 30 | python decl doc at beets/plugins.py:576 |  |  | 0.365 |
+| walker |  | 9744 | 31 | python decl doc at beets/plugins.py:515 |  |  | 0.365 |
+| ns | 9787 |  | 125 | docs/reference/query.rst: query-syntax section heading roster | 7.3 |  | 0.363 |
+| walker |  | 9796 | 52 | python class body at beets/plugins.py:147 |  |  | 0.363 |
+| walker |  | 9830 | 34 | python decl doc at beets/plugins.py:624 |  |  | 0.363 |
+| walker |  | 9882 | 52 | python decl doc at beets/plugins.py:153 |  |  | 0.363 |
+| walker |  | 9935 | 53 | python decl doc at beets/plugins.py:108 |  |  | 0.363 |
+| walker |  | 9991 | 56 | python decl doc at beets/plugins.py:116 |  |  | 0.363 |
 | ns | 9999 |  | 212 | docs/reference/pathformat.rst: built-in template-function roster | 7.4 |  | 0.361 |

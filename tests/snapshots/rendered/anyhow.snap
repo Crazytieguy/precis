@@ -66,7 +66,15 @@ README.md
      126→## No-std support
     …
      144→## Comparison to failure
-    …
+     145→
+     146→The `anyhow::Error` type works something like `failure::Error`, but unlike
+     147→failure ours is built around the standard library's `std::error::Error` trait
+     148→rather than a separate trait `failure::Fail`. The standard library has adopted
+     149→the necessary improvements for this to be possible as part of [RFC 2504].
+     150→
+     151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
+     152→
+     153→<br>
      155→## Comparison to thiserror
     …
 build.rs
@@ -80,6 +88,10 @@ src/
           13→}
         …
           16→pub(crate) enum ChainState<'a> {
+        …
+          26→impl<'a> Chain<'a> {
+        …
+          28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
         …
     context.rs
         …
@@ -140,7 +152,11 @@ src/
         …
          934→pub(crate) struct ErrorImpl<E = ()> {
         …
+         951→#[repr(C)]
          952→pub(crate) struct ContextError<C, E> {
+         953→    pub context: C,
+         954→    pub error: E,
+         955→}
         …
     fmt.rs
     kind.rs
@@ -183,28 +199,11 @@ src/
          276→use core::error::Error as StdError;
         …
          286→pub use anyhow as format_err;
-         288→/// The `Error` type, a wrapper around a dynamic error type.
-         289→///
-         290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
-         291→/// differences:
-         292→///
-         293→/// - `Error` requires that the error is `Send`, `Sync`, and `'static`.
-         294→/// - `Error` guarantees that a backtrace is available, even if the underlying
-         295→///   error type does not provide one.
-         296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
-         297→///   size instead of two.
-         298→///
-         299→/// <br>
-         300→///
         …
          389→#[repr(transparent)]
          390→pub struct Error {
          391→    inner: Own<ErrorImpl>,
          392→}
-         394→/// Iterator of a chain of source errors.
-         395→///
-         396→/// This type is the iterator returned by [`Error::chain`].
-         397→///
         …
          414→#[derive(Clone)]
          415→pub struct Chain<'a> {
@@ -212,13 +211,6 @@ src/
          417→}
         …
          468→pub type Result<T, E = Error> = core::result::Result<T, E>;
-         470→/// Provides the `context` method for `Result`.
-         471→///
-         472→/// This trait is sealed and cannot be implemented for types outside of
-         473→/// `anyhow`.
-         474→///
-         475→/// <br>
-         476→///
         …
          616→pub trait Context<T, E>: context::private::Sealed {
          617→    /// Wrap the error value with additional context.
@@ -244,42 +236,53 @@ src/
     macros.rs
         …
           58→macro_rules! bail {
-          59→    ($msg:literal $(,)?) => {
-          60→        return $crate::__private::Err($crate::__anyhow!($msg))
-          61→    };
-          62→    ($err:expr $(,)?) => {
-          63→        return $crate::__private::Err($crate::__anyhow!($err))
-          64→    };
-          65→    ($fmt:expr, $($arg:tt)*) => {
-          66→        return $crate::__private::Err($crate::__anyhow!($fmt, $($arg)*))
-          67→    };
-          68→}
         …
          204→macro_rules! anyhow {
-         205→    ($msg:literal $(,)?) => {
-         206→        $crate::__private::must_use({
-         207→            let error = $crate::__private::format_err($crate::__private::format_args!($msg));
-         208→            error
-         209→        })
-         210→    };
-         211→    ($err:expr $(,)?) => {
-         212→        $crate::__private::must_use({
-         213→            use $crate::__private::kind::*;
-         214→            let error = match $err {
-         215→                error => (&error).anyhow_kind().new(error),
-         216→            };
-         217→            error
-         218→        })
-         219→    };
-         220→    ($fmt:expr, $($arg:tt)*) => {
-         221→        $crate::Error::msg($crate::__private::format!($fmt, $($arg)*))
-         222→    };
-         223→}
         …
          230→macro_rules! __anyhow {
         …
     nightly.rs
     ptr.rs
+        …
+          28→impl<T> Own<T>
+        …
+          32→    pub fn new(ptr: Box<T>) -> Self {
+        …
+          38→    pub fn cast<U: CastTo>(self) -> Own<U::Target> {
+        …
+          44→    pub unsafe fn boxed(self) -> Box<T> {
+        …
+          48→    pub fn by_ref(&self) -> Ref<T> {
+        …
+          55→    pub fn by_mut(&mut self) -> Mut<T> {
+        …
+          83→impl<'a, T> Ref<'a, T>
+        …
+          87→    pub fn new(ptr: &'a T) -> Self {
+        …
+          94→    pub fn from_raw(ptr: NonNull<T>) -> Self {
+        …
+         101→    pub fn cast<U: CastTo>(self) -> Ref<'a, U::Target> {
+        …
+         108→    pub fn by_mut(self) -> Mut<'a, T> {
+        …
+         115→    pub fn as_ptr(self) -> *const T {
+        …
+         119→    pub unsafe fn deref(self) -> &'a T {
+        …
+         144→impl<'a, T> Mut<'a, T>
+        …
+         148→    pub fn cast<U: CastTo>(self) -> Mut<'a, U::Target> {
+        …
+         155→    pub fn by_ref(self) -> Ref<'a, T> {
+        …
+         162→    pub fn extend<'b>(self) -> Mut<'b, T> {
+        …
+         169→    pub unsafe fn deref_mut(self) -> &'a mut T {
+        …
+         174→impl<'a, T> Mut<'a, T> {
+         175→    pub unsafe fn read(self) -> T {
+        …
     wrapper.rs
 tests/
     common/

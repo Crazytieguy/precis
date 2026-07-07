@@ -160,9 +160,15 @@ samples/
           26→## Other examples & techniques
         …
           34→## License
-        …
+          35→
+          36→MIT
     browser-esm-esbuild/
     browser-esm-parcel/
+        .gitignore
+        index.html
+        package-lock.json
+        package.json
+        src/
     browser-esm-vite/
     browser-esm-vite-react/
     browser-esm-webpack/
@@ -460,7 +466,7 @@ webpack-plugin/
              162→	constructor(options: MonacoEditorWebpackPlugin.IMonacoEditorWebpackPluginOpts = {}) {
             …
              177→	apply(compiler: webpack.Compiler): void {
-             178→		const { languages, features, filename, monacoEditorPath, publicPath, globalAPI } = this.options;
+            …
              179→		const compilationPublicPath = getCompilationPublicPath(compiler);
              180→		const modules = [EDITOR_MODULE].concat(languages).concat(features);
              181→		const workers: ILabeledWorkerDefinition[] = [];

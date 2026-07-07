@@ -1,7 +1,7 @@
 fixture = "mdbook"
 budget = 10000
-cumulative_tokens = 9997
-batch_count = 208
+cumulative_tokens = 9906
+batch_count = 212
 
 [[batches]]
 position = 1
@@ -1993,28 +1993,10 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'Rust(PubItemDocLede { file: "crates/mdbook-summary/src/lib.rs", start_line: 67 })'
-descriptor = "pub-item doc lede at crates/mdbook-summary/src/lib.rs:67"
-cost_tokens = 20
-cum_tokens = 2939
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-summary/src/lib.rs"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
 key = 'Rust(CrateDocLede { file: "crates/mdbook-summary/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-summary/src/lib.rs"
 cost_tokens = 74
-cum_tokens = 3013
+cum_tokens = 2993
 
 [batches.content]
 kind = "lines"
@@ -2028,11 +2010,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Rust(PubItem { file: "crates/mdbook-preprocessor/src/lib.rs", start_line: 51 })'
 descriptor = "pub item at crates/mdbook-preprocessor/src/lib.rs:51"
 cost_tokens = 218
-cum_tokens = 3231
+cum_tokens = 3211
 
 [batches.content]
 kind = "lines"
@@ -2046,29 +2028,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 94
-key = 'Rust(PubItemDocLede { file: "crates/mdbook-preprocessor/src/lib.rs", start_line: 51 })'
-descriptor = "pub-item doc lede at crates/mdbook-preprocessor/src/lib.rs:51"
-cost_tokens = 27
-cum_tokens = 3258
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-preprocessor/src/lib.rs"
-start = 47
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 95
+position = 93
 key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-compare/README.md" })'
 descriptor = "README headline in crates/mdbook-compare/README.md"
 cost_tokens = 51
-cum_tokens = 3309
+cum_tokens = 3262
 
 [batches.content]
 kind = "lines"
@@ -2082,11 +2046,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 96
+position = 94
 key = 'Fs(DirListing { dir: "crates/mdbook-html" })'
 descriptor = "listing of 'crates/mdbook-html'"
 cost_tokens = 16
-cum_tokens = 3325
+cum_tokens = 3278
 
 [batches.content]
 kind = "fs"
@@ -2096,11 +2060,11 @@ parent = "crates/mdbook-html"
 entries = ["Cargo.toml", "README.md", "front-end", "src"]
 
 [[batches]]
-position = 97
+position = 95
 key = 'Toml(Features { file: "crates/mdbook-html/Cargo.toml" })'
 descriptor = "[features] in crates/mdbook-html/Cargo.toml"
 cost_tokens = 24
-cum_tokens = 3349
+cum_tokens = 3302
 
 [batches.content]
 kind = "lines"
@@ -2114,11 +2078,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 98
+position = 96
 key = 'Rust(CrateDocLede { file: "crates/mdbook-renderer/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-renderer/src/lib.rs"
 cost_tokens = 98
-cum_tokens = 3447
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -2132,11 +2096,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 99
+position = 97
 key = 'Rust(CrateDocLede { file: "crates/mdbook-markdown/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-markdown/src/lib.rs"
 cost_tokens = 101
-cum_tokens = 3548
+cum_tokens = 3501
 
 [batches.content]
 kind = "lines"
@@ -2150,11 +2114,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 100
+position = 98
 key = 'Rust(CrateDocLede { file: "crates/mdbook-preprocessor/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-preprocessor/src/lib.rs"
 cost_tokens = 101
-cum_tokens = 3649
+cum_tokens = 3602
 
 [batches.content]
 kind = "lines"
@@ -2168,11 +2132,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 101
+position = 99
 key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-renderer/README.md" })'
 descriptor = "README headline in crates/mdbook-renderer/README.md"
 cost_tokens = 61
-cum_tokens = 3710
+cum_tokens = 3663
 
 [batches.content]
 kind = "lines"
@@ -2194,11 +2158,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 102
+position = 100
 key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-summary/README.md" })'
 descriptor = "README headline in crates/mdbook-summary/README.md"
 cost_tokens = 61
-cum_tokens = 3771
+cum_tokens = 3724
 
 [batches.content]
 kind = "lines"
@@ -2220,11 +2184,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 103
+position = 101
 key = 'Rust(MethodSigs { file: "crates/mdbook-renderer/src/lib.rs" })'
 descriptor = "impl method sigs in crates/mdbook-renderer/src/lib.rs"
 cost_tokens = 123
-cum_tokens = 3894
+cum_tokens = 3847
 
 [batches.content]
 kind = "lines"
@@ -2286,11 +2250,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 102
 key = 'Toml(Dependencies { file: "crates/mdbook-compare/Cargo.toml" })'
 descriptor = "[dependencies] in crates/mdbook-compare/Cargo.toml"
 cost_tokens = 11
-cum_tokens = 3905
+cum_tokens = 3858
 
 [batches.content]
 kind = "lines"
@@ -2304,11 +2268,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 105
+position = 103
 key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-markdown/README.md" })'
 descriptor = "README headline in crates/mdbook-markdown/README.md"
 cost_tokens = 62
-cum_tokens = 3967
+cum_tokens = 3920
 
 [batches.content]
 kind = "lines"
@@ -2323,6 +2287,58 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "crates/mdbook-markdown/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-preprocessor/README.md" })'
+descriptor = "README headline in crates/mdbook-preprocessor/README.md"
+cost_tokens = 62
+cum_tokens = 3982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-preprocessor/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/mdbook-preprocessor/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-core/README.md" })'
+descriptor = "README headline in crates/mdbook-core/README.md"
+cost_tokens = 63
+cum_tokens = 4045
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-core/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/mdbook-core/README.md"
 start = 7
 end = 7
 
@@ -2331,62 +2347,10 @@ kind = "full"
 
 [[batches]]
 position = 106
-key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-preprocessor/README.md" })'
-descriptor = "README headline in crates/mdbook-preprocessor/README.md"
-cost_tokens = 62
-cum_tokens = 4029
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-preprocessor/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/mdbook-preprocessor/README.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-core/README.md" })'
-descriptor = "README headline in crates/mdbook-core/README.md"
-cost_tokens = 63
-cum_tokens = 4092
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-core/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "crates/mdbook-core/README.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
 key = 'Fs(DirListing { dir: "crates/mdbook-core/src" })'
 descriptor = "listing of 'crates/mdbook-core/src'"
 cost_tokens = 18
-cum_tokens = 4110
+cum_tokens = 4063
 
 [batches.content]
 kind = "fs"
@@ -2396,11 +2360,11 @@ parent = "crates/mdbook-core/src"
 entries = ["book", "book.rs", "config.rs", "lib.rs", "utils"]
 
 [[batches]]
-position = 109
+position = 107
 key = 'Fs(DirListing { dir: "crates/mdbook-core/src/book" })'
 descriptor = "listing of 'crates/mdbook-core/src/book'"
 cost_tokens = 4
-cum_tokens = 4114
+cum_tokens = 4067
 
 [batches.content]
 kind = "fs"
@@ -2410,11 +2374,11 @@ parent = "crates/mdbook-core/src/book"
 entries = ["tests.rs"]
 
 [[batches]]
-position = 110
+position = 108
 key = 'Rust(PubItem { file: "crates/mdbook-core/src/lib.rs", start_line: 7 })'
 descriptor = "pub item at crates/mdbook-core/src/lib.rs:7"
 cost_tokens = 25
-cum_tokens = 4139
+cum_tokens = 4092
 
 [batches.content]
 kind = "lines"
@@ -2428,11 +2392,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 111
+position = 109
 key = 'Fs(DirListing { dir: "crates/mdbook-core/src/utils" })'
 descriptor = "listing of 'crates/mdbook-core/src/utils'"
 cost_tokens = 18
-cum_tokens = 4157
+cum_tokens = 4110
 
 [batches.content]
 kind = "fs"
@@ -2442,11 +2406,11 @@ parent = "crates/mdbook-core/src/utils"
 entries = ["fs.rs", "html.rs", "mod.rs", "toml_ext.rs"]
 
 [[batches]]
-position = 112
+position = 110
 key = 'Rust(PubItem { file: "crates/mdbook-core/src/utils/mod.rs", start_line: 29 })'
 descriptor = "pub item at crates/mdbook-core/src/utils/mod.rs:29"
 cost_tokens = 19
-cum_tokens = 4176
+cum_tokens = 4129
 
 [batches.content]
 kind = "lines"
@@ -2468,11 +2432,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 113
+position = 111
 key = 'Rust(CrateDocLede { file: "crates/mdbook-core/src/utils/mod.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-core/src/utils/mod.rs"
 cost_tokens = 10
-cum_tokens = 4186
+cum_tokens = 4139
 
 [batches.content]
 kind = "lines"
@@ -2486,11 +2450,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 114
+position = 112
 key = 'Rust(CrateDocLede { file: "crates/mdbook-core/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-core/src/lib.rs"
 cost_tokens = 19
-cum_tokens = 4205
+cum_tokens = 4158
 
 [batches.content]
 kind = "lines"
@@ -2504,11 +2468,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 115
+position = 113
 key = 'Rust(ModUse { file: "crates/mdbook-core/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-core/src/lib.rs"
 cost_tokens = 34
-cum_tokens = 4239
+cum_tokens = 4192
 
 [batches.content]
 kind = "lines"
@@ -2538,11 +2502,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 116
+position = 114
 key = 'Rust(PubItemDocLede { file: "crates/mdbook-core/src/utils/mod.rs", start_line: 29 })'
 descriptor = "pub-item doc lede at crates/mdbook-core/src/utils/mod.rs:29"
 cost_tokens = 16
-cum_tokens = 4255
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -2556,11 +2520,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 117
+position = 115
 key = 'Rust(MacroNames { src_dir: "crates/mdbook-core/src/utils" })'
 descriptor = "macro_export names across crates/mdbook-core/src/utils"
 cost_tokens = 12
-cum_tokens = 4267
+cum_tokens = 4220
 
 [batches.content]
 kind = "lines"
@@ -2582,29 +2546,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 118
-key = 'Rust(PubItemBody { file: "crates/mdbook-core/src/utils/mod.rs", start_line: 29, body_start_line: 30 })'
-descriptor = "pub item body at crates/mdbook-core/src/utils/mod.rs:29 body 30"
-cost_tokens = 76
-cum_tokens = 4343
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-core/src/utils/mod.rs"
-start = 30
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
+position = 116
 key = 'Rust(PubItem { file: "crates/mdbook-renderer/src/lib.rs", start_line: 40 })'
 descriptor = "pub item at crates/mdbook-renderer/src/lib.rs:40"
 cost_tokens = 317
-cum_tokens = 4660
+cum_tokens = 4537
 
 [batches.content]
 kind = "lines"
@@ -2618,11 +2564,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 120
+position = 117
 key = 'Rust(PubItemDocLede { file: "crates/mdbook-renderer/src/lib.rs", start_line: 40 })'
 descriptor = "pub-item doc lede at crates/mdbook-renderer/src/lib.rs:40"
 cost_tokens = 11
-cum_tokens = 4671
+cum_tokens = 4548
 
 [batches.content]
 kind = "lines"
@@ -2636,11 +2582,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 121
+position = 118
 key = 'Fs(DirListing { dir: "crates/mdbook-html/src" })'
 descriptor = "listing of 'crates/mdbook-html/src'"
 cost_tokens = 19
-cum_tokens = 4690
+cum_tokens = 4567
 
 [batches.content]
 kind = "fs"
@@ -2650,11 +2596,11 @@ parent = "crates/mdbook-html/src"
 entries = ["html", "html_handlebars", "lib.rs", "theme", "utils.rs"]
 
 [[batches]]
-position = 122
+position = 119
 key = 'Rust(CrateDocLede { file: "crates/mdbook-html/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-html/src/lib.rs"
 cost_tokens = 12
-cum_tokens = 4702
+cum_tokens = 4579
 
 [batches.content]
 kind = "lines"
@@ -2668,11 +2614,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 123
+position = 120
 key = 'Fs(DirListing { dir: "crates/mdbook-html/src/theme" })'
 descriptor = "listing of 'crates/mdbook-html/src/theme'"
 cost_tokens = 18
-cum_tokens = 4720
+cum_tokens = 4597
 
 [batches.content]
 kind = "fs"
@@ -2682,11 +2628,11 @@ parent = "crates/mdbook-html/src/theme"
 entries = ["fonts.rs", "mod.rs", "playground_editor.rs", "searcher.rs"]
 
 [[batches]]
-position = 124
+position = 121
 key = 'Rust(CrateDocLede { file: "crates/mdbook-html/src/theme/mod.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-html/src/theme/mod.rs"
 cost_tokens = 12
-cum_tokens = 4732
+cum_tokens = 4609
 
 [batches.content]
 kind = "lines"
@@ -2700,11 +2646,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 125
+position = 122
 key = 'Fs(DirListing { dir: "crates/mdbook-html/src/html_handlebars" })'
 descriptor = "listing of 'crates/mdbook-html/src/html_handlebars'"
 cost_tokens = 22
-cum_tokens = 4754
+cum_tokens = 4631
 
 [batches.content]
 kind = "fs"
@@ -2714,11 +2660,11 @@ parent = "crates/mdbook-html/src/html_handlebars"
 entries = ["hbs_renderer.rs", "helpers", "mod.rs", "search.rs", "static_files.rs"]
 
 [[batches]]
-position = 126
+position = 123
 key = 'Rust(ModUse { file: "crates/mdbook-html/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-html/src/lib.rs"
 cost_tokens = 51
-cum_tokens = 4805
+cum_tokens = 4682
 
 [batches.content]
 kind = "lines"
@@ -2732,11 +2678,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 127
+position = 124
 key = 'Fs(DirListing { dir: "crates/mdbook-html/src/html" })'
 descriptor = "listing of 'crates/mdbook-html/src/html'"
 cost_tokens = 34
-cum_tokens = 4839
+cum_tokens = 4716
 
 [batches.content]
 kind = "fs"
@@ -2746,11 +2692,11 @@ parent = "crates/mdbook-html/src/html"
 entries = ["admonitions.rs", "hide_lines.rs", "mod.rs", "print.rs", "serialize.rs", "tests.rs", "tokenizer.rs", "tree.rs"]
 
 [[batches]]
-position = 128
+position = 125
 key = 'Rust(MethodSigs { file: "crates/mdbook-html/src/html/mod.rs" })'
 descriptor = "impl method sigs in crates/mdbook-html/src/html/mod.rs"
 cost_tokens = 81
-cum_tokens = 4920
+cum_tokens = 4797
 
 [batches.content]
 kind = "lines"
@@ -2780,11 +2726,11 @@ end = 52
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 126
 key = 'Rust(MethodSigs { file: "crates/mdbook-html/src/theme/mod.rs" })'
 descriptor = "impl method sigs in crates/mdbook-html/src/theme/mod.rs"
 cost_tokens = 82
-cum_tokens = 5002
+cum_tokens = 4879
 
 [batches.content]
 kind = "lines"
@@ -2846,11 +2792,11 @@ end = 202
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 127
 key = 'Rust(ModUse { file: "crates/mdbook-html/src/html_handlebars/mod.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-html/src/html_handlebars/mod.rs"
 cost_tokens = 54
-cum_tokens = 5056
+cum_tokens = 4933
 
 [batches.content]
 kind = "lines"
@@ -2872,11 +2818,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 131
+position = 128
 key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-html/README.md" })'
 descriptor = "README headline in crates/mdbook-html/README.md"
 cost_tokens = 72
-cum_tokens = 5128
+cum_tokens = 5005
 
 [batches.content]
 kind = "lines"
@@ -2898,11 +2844,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 132
+position = 129
 key = 'Rust(PubItemNames { file: "crates/mdbook-html/src/html/mod.rs" })'
 descriptor = "pub-item names surface in crates/mdbook-html/src/html/mod.rs"
 cost_tokens = 79
-cum_tokens = 5207
+cum_tokens = 5084
 
 [batches.content]
 kind = "lines"
@@ -2972,11 +2918,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 130
 key = 'Rust(PubItem { file: "crates/mdbook-html/src/html/mod.rs", start_line: 66 })'
 descriptor = "pub item at crates/mdbook-html/src/html/mod.rs:66"
 cost_tokens = 0
-cum_tokens = 5207
+cum_tokens = 5084
 
 [batches.content]
 kind = "lines"
@@ -2998,11 +2944,11 @@ end = 67
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 131
 key = 'Fs(DirListing { dir: "guide/src" })'
 descriptor = "listing of 'guide/src'"
 cost_tokens = 37
-cum_tokens = 5244
+cum_tokens = 5121
 
 [batches.content]
 kind = "fs"
@@ -3012,11 +2958,11 @@ parent = "guide/src"
 entries = ["404.md", "README.md", "SUMMARY.md", "cli", "continuous-integration.md", "for_developers", "format", "guide", "misc"]
 
 [[batches]]
-position = 135
+position = 132
 key = 'Fs(DirListing { dir: "guide/src/misc" })'
 descriptor = "listing of 'guide/src/misc'"
 cost_tokens = 4
-cum_tokens = 5248
+cum_tokens = 5125
 
 [batches.content]
 kind = "fs"
@@ -3026,11 +2972,11 @@ parent = "guide/src/misc"
 entries = ["contributors.md"]
 
 [[batches]]
-position = 136
+position = 133
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 11
-cum_tokens = 5259
+cum_tokens = 5136
 
 [batches.content]
 kind = "fs"
@@ -3040,29 +2986,11 @@ parent = "examples"
 entries = ["nop-preprocessor.rs", "remove-emphasis"]
 
 [[batches]]
-position = 137
-key = 'Rust(PubItemDocLede { file: "crates/mdbook-summary/src/lib.rs", start_line: 59 })'
-descriptor = "pub-item doc lede at crates/mdbook-summary/src/lib.rs:59"
-cost_tokens = 45
-cum_tokens = 5304
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-summary/src/lib.rs"
-start = 17
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
+position = 134
 key = 'Rust(ModUse { file: "src/main.rs" })'
 descriptor = "mod/use plumbing in src/main.rs"
 cost_tokens = 103
-cum_tokens = 5407
+cum_tokens = 5239
 
 [batches.content]
 kind = "lines"
@@ -3076,29 +3004,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 139
-key = 'Rust(PubItemDocLede { file: "crates/mdbook-summary/src/lib.rs", start_line: 84 })'
-descriptor = "pub-item doc lede at crates/mdbook-summary/src/lib.rs:84"
-cost_tokens = 52
-cum_tokens = 5459
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-summary/src/lib.rs"
-start = 78
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 140
+position = 135
 key = 'Fs(DirListing { dir: "guide/src/guide" })'
 descriptor = "listing of 'guide/src/guide'"
 cost_tokens = 16
-cum_tokens = 5475
+cum_tokens = 5255
 
 [batches.content]
 kind = "fs"
@@ -3108,29 +3018,29 @@ parent = "guide/src/guide"
 entries = ["README.md", "creating.md", "installation.md", "reading.md"]
 
 [[batches]]
-position = 141
-key = 'Rust(MacroBody { file: "crates/mdbook-core/src/utils/mod.rs", start_line: 17 })'
-descriptor = "macro_export body at crates/mdbook-core/src/utils/mod.rs:17"
-cost_tokens = 145
-cum_tokens = 5620
+position = 136
+key = 'Rust(PubItemBody { file: "crates/mdbook-core/src/utils/mod.rs", start_line: 29, body_start_line: 30 })'
+descriptor = "pub item body at crates/mdbook-core/src/utils/mod.rs:29 body 30"
+cost_tokens = 76
+cum_tokens = 5331
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "crates/mdbook-core/src/utils/mod.rs"
-start = 17
-end = 26
+start = 30
+end = 36
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 142
+position = 137
 key = 'Rust(PubItemDocLede { file: "crates/mdbook-core/src/lib.rs", start_line: 7 })'
 descriptor = "pub-item doc lede at crates/mdbook-core/src/lib.rs:7"
 cost_tokens = 45
-cum_tokens = 5665
+cum_tokens = 5376
 
 [batches.content]
 kind = "lines"
@@ -3144,11 +3054,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 143
+position = 138
 key = 'Rust(PubItem { file: "crates/mdbook-html/src/theme/mod.rs", start_line: 40 })'
 descriptor = "pub item at crates/mdbook-html/src/theme/mod.rs:40"
 cost_tokens = 327
-cum_tokens = 5992
+cum_tokens = 5703
 
 [batches.content]
 kind = "lines"
@@ -3162,11 +3072,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 144
+position = 139
 key = 'Markdown(ReadmeHeadline { file: "crates/mdbook-driver/README.md" })'
 descriptor = "README headline in crates/mdbook-driver/README.md"
 cost_tokens = 102
-cum_tokens = 6094
+cum_tokens = 5805
 
 [batches.content]
 kind = "lines"
@@ -3188,11 +3098,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 145
+position = 140
 key = 'Rust(PubItemNames { file: "src/cmd/watch.rs" })'
 descriptor = "pub-item names surface in src/cmd/watch.rs"
 cost_tokens = 60
-cum_tokens = 6154
+cum_tokens = 5865
 
 [batches.content]
 kind = "lines"
@@ -3262,11 +3172,11 @@ end = 63
 kind = "ellipsis"
 
 [[batches]]
-position = 146
+position = 141
 key = 'Rust(PubItem { file: "src/cmd/watch.rs", start_line: 12 })'
 descriptor = "pub item at src/cmd/watch.rs:12"
 cost_tokens = 0
-cum_tokens = 6154
+cum_tokens = 5865
 
 [batches.content]
 kind = "lines"
@@ -3288,11 +3198,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 142
 key = 'Rust(PubItem { file: "src/cmd/watch.rs", start_line: 37 })'
 descriptor = "pub item at src/cmd/watch.rs:37"
 cost_tokens = 0
-cum_tokens = 6154
+cum_tokens = 5865
 
 [batches.content]
 kind = "lines"
@@ -3314,11 +3224,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 143
 key = 'Rust(PubItem { file: "src/cmd/watch.rs", start_line: 21 })'
 descriptor = "pub item at src/cmd/watch.rs:21"
 cost_tokens = 19
-cum_tokens = 6173
+cum_tokens = 5884
 
 [batches.content]
 kind = "lines"
@@ -3332,11 +3242,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 149
+position = 144
 key = 'Rust(PubItem { file: "src/cmd/watch.rs", start_line: 62 })'
 descriptor = "pub item at src/cmd/watch.rs:62"
 cost_tokens = 56
-cum_tokens = 6229
+cum_tokens = 5940
 
 [batches.content]
 kind = "lines"
@@ -3358,11 +3268,101 @@ end = 68
 kind = "ellipsis"
 
 [[batches]]
+position = 145
+key = 'Markdown(Section { file: "crates/mdbook-driver/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "crates/mdbook-driver/README.md section #0"
+cost_tokens = 48
+cum_tokens = 5988
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-driver/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Markdown(Section { file: "crates/mdbook-markdown/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "crates/mdbook-markdown/README.md section #0"
+cost_tokens = 48
+cum_tokens = 6036
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-markdown/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Markdown(Section { file: "crates/mdbook-preprocessor/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "crates/mdbook-preprocessor/README.md section #0"
+cost_tokens = 48
+cum_tokens = 6084
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-preprocessor/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Markdown(Section { file: "crates/mdbook-renderer/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "crates/mdbook-renderer/README.md section #0"
+cost_tokens = 48
+cum_tokens = 6132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-renderer/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'Markdown(Section { file: "crates/mdbook-summary/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "crates/mdbook-summary/README.md section #0"
+cost_tokens = 48
+cum_tokens = 6180
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-summary/README.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 150
 key = 'Rust(ModUse { file: "crates/mdbook-summary/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-summary/src/lib.rs"
-cost_tokens = 135
-cum_tokens = 6364
+cost_tokens = 137
+cum_tokens = 6317
 
 [batches.content]
 kind = "lines"
@@ -3393,100 +3393,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 151
-key = 'Markdown(Section { file: "crates/mdbook-driver/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "crates/mdbook-driver/README.md section #0"
-cost_tokens = 48
-cum_tokens = 6412
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-driver/README.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 152
-key = 'Markdown(Section { file: "crates/mdbook-markdown/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "crates/mdbook-markdown/README.md section #0"
-cost_tokens = 48
-cum_tokens = 6460
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-markdown/README.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 153
-key = 'Markdown(Section { file: "crates/mdbook-preprocessor/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "crates/mdbook-preprocessor/README.md section #0"
-cost_tokens = 48
-cum_tokens = 6508
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-preprocessor/README.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'Markdown(Section { file: "crates/mdbook-renderer/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "crates/mdbook-renderer/README.md section #0"
-cost_tokens = 48
-cum_tokens = 6556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-renderer/README.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Markdown(Section { file: "crates/mdbook-summary/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "crates/mdbook-summary/README.md section #0"
-cost_tokens = 48
-cum_tokens = 6604
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-summary/README.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
 key = 'Markdown(Section { file: "crates/mdbook-core/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "crates/mdbook-core/README.md section #0"
 cost_tokens = 50
-cum_tokens = 6654
+cum_tokens = 6367
 
 [batches.content]
 kind = "lines"
@@ -3500,11 +3410,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 157
+position = 152
 key = 'Markdown(Section { file: "crates/mdbook-html/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "crates/mdbook-html/README.md section #0"
 cost_tokens = 50
-cum_tokens = 6704
+cum_tokens = 6417
 
 [batches.content]
 kind = "lines"
@@ -3518,11 +3428,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 158
+position = 153
 key = 'Fs(DirListing { dir: "crates/mdbook-driver/src" })'
 descriptor = "listing of 'crates/mdbook-driver/src'"
 cost_tokens = 31
-cum_tokens = 6735
+cum_tokens = 6448
 
 [batches.content]
 kind = "fs"
@@ -3532,11 +3442,11 @@ parent = "crates/mdbook-driver/src"
 entries = ["builtin_preprocessors", "builtin_renderers", "init.rs", "lib.rs", "load.rs", "mdbook", "mdbook.rs"]
 
 [[batches]]
-position = 159
+position = 154
 key = 'Fs(DirListing { dir: "crates/mdbook-driver/src/mdbook" })'
 descriptor = "listing of 'crates/mdbook-driver/src/mdbook'"
 cost_tokens = 4
-cum_tokens = 6739
+cum_tokens = 6452
 
 [batches.content]
 kind = "fs"
@@ -3546,11 +3456,11 @@ parent = "crates/mdbook-driver/src/mdbook"
 entries = ["tests.rs"]
 
 [[batches]]
-position = 160
+position = 155
 key = 'Fs(DirListing { dir: "crates/mdbook-driver/src/builtin_renderers" })'
 descriptor = "listing of 'crates/mdbook-driver/src/builtin_renderers'"
 cost_tokens = 9
-cum_tokens = 6748
+cum_tokens = 6461
 
 [batches.content]
 kind = "fs"
@@ -3560,11 +3470,11 @@ parent = "crates/mdbook-driver/src/builtin_renderers"
 entries = ["markdown_renderer.rs", "mod.rs"]
 
 [[batches]]
-position = 161
+position = 156
 key = 'Fs(DirListing { dir: "crates/mdbook-driver/src/builtin_preprocessors" })'
 descriptor = "listing of 'crates/mdbook-driver/src/builtin_preprocessors'"
 cost_tokens = 19
-cum_tokens = 6767
+cum_tokens = 6480
 
 [batches.content]
 kind = "fs"
@@ -3574,11 +3484,11 @@ parent = "crates/mdbook-driver/src/builtin_preprocessors"
 entries = ["cmd.rs", "index.rs", "links", "links.rs", "mod.rs"]
 
 [[batches]]
-position = 162
+position = 157
 key = 'Fs(DirListing { dir: "crates/mdbook-driver/src/builtin_preprocessors/links" })'
 descriptor = "listing of 'crates/mdbook-driver/src/builtin_preprocessors/links'"
 cost_tokens = 5
-cum_tokens = 6772
+cum_tokens = 6485
 
 [batches.content]
 kind = "fs"
@@ -3588,11 +3498,11 @@ parent = "crates/mdbook-driver/src/builtin_preprocessors/links"
 entries = ["take_lines.rs"]
 
 [[batches]]
-position = 163
+position = 158
 key = 'Rust(CrateDocLede { file: "crates/mdbook-driver/src/builtin_preprocessors/mod.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-driver/src/builtin_preprocessors/mod.rs"
 cost_tokens = 12
-cum_tokens = 6784
+cum_tokens = 6497
 
 [batches.content]
 kind = "lines"
@@ -3606,11 +3516,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 164
+position = 159
 key = 'Rust(PubItem { file: "crates/mdbook-driver/src/builtin_renderers/mod.rs", start_line: 20 })'
 descriptor = "pub item at crates/mdbook-driver/src/builtin_renderers/mod.rs:20"
 cost_tokens = 49
-cum_tokens = 6833
+cum_tokens = 6546
 
 [batches.content]
 kind = "lines"
@@ -3624,11 +3534,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 165
+position = 160
 key = 'Rust(CrateDocLede { file: "crates/mdbook-driver/src/builtin_renderers/mod.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-driver/src/builtin_renderers/mod.rs"
 cost_tokens = 36
-cum_tokens = 6869
+cum_tokens = 6582
 
 [batches.content]
 kind = "lines"
@@ -3642,11 +3552,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 166
+position = 161
 key = 'Rust(ModUse { file: "crates/mdbook-driver/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-driver/src/lib.rs"
 cost_tokens = 140
-cum_tokens = 7009
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -3660,11 +3570,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 167
+position = 162
 key = 'Rust(MethodSigs { file: "crates/mdbook-driver/src/builtin_renderers/mod.rs" })'
 descriptor = "impl method sigs in crates/mdbook-driver/src/builtin_renderers/mod.rs"
 cost_tokens = 78
-cum_tokens = 7087
+cum_tokens = 6800
 
 [batches.content]
 kind = "lines"
@@ -3726,11 +3636,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 168
+position = 163
 key = 'Rust(ModUse { file: "crates/mdbook-driver/src/builtin_preprocessors/mod.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-driver/src/builtin_preprocessors/mod.rs"
 cost_tokens = 66
-cum_tokens = 7153
+cum_tokens = 6866
 
 [batches.content]
 kind = "lines"
@@ -3744,11 +3654,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 169
+position = 164
 key = 'Rust(CrateDocLede { file: "crates/mdbook-driver/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-driver/src/lib.rs"
 cost_tokens = 147
-cum_tokens = 7300
+cum_tokens = 7013
 
 [batches.content]
 kind = "lines"
@@ -3762,11 +3672,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 170
+position = 165
 key = 'Rust(ModUse { file: "crates/mdbook-driver/src/builtin_renderers/mod.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-driver/src/builtin_renderers/mod.rs"
 cost_tokens = 99
-cum_tokens = 7399
+cum_tokens = 7112
 
 [batches.content]
 kind = "lines"
@@ -3780,47 +3690,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 171
-key = 'Rust(PubItemDocLede { file: "crates/mdbook-renderer/src/lib.rs", start_line: 28 })'
-descriptor = "pub-item doc lede at crates/mdbook-renderer/src/lib.rs:28"
-cost_tokens = 92
-cum_tokens = 7491
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-renderer/src/lib.rs"
-start = 22
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
-key = 'Rust(PubItemDocLede { file: "crates/mdbook-driver/src/builtin_renderers/mod.rs", start_line: 20 })'
-descriptor = "pub-item doc lede at crates/mdbook-driver/src/builtin_renderers/mod.rs:20"
-cost_tokens = 57
-cum_tokens = 7548
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-driver/src/builtin_renderers/mod.rs"
-start = 15
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 173
+position = 166
 key = 'Rust(EntryItemBody { file: "src/main.rs", start_line: 18, body_start_line: 24 })'
 descriptor = "entry item body at src/main.rs:18 body 24"
 cost_tokens = 333
-cum_tokens = 7881
+cum_tokens = 7445
 
 [batches.content]
 kind = "lines"
@@ -3834,29 +3708,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 174
-key = 'Rust(ModUse { file: "crates/mdbook-renderer/src/lib.rs" })'
-descriptor = "mod/use plumbing in crates/mdbook-renderer/src/lib.rs"
-cost_tokens = 147
-cum_tokens = 8028
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-renderer/src/lib.rs"
-start = 8
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 175
+position = 167
 key = 'Markdown(ReadmeHeadline { file: "guide/src/guide/README.md" })'
 descriptor = "README headline in guide/src/guide/README.md"
 cost_tokens = 72
-cum_tokens = 8100
+cum_tokens = 7517
 
 [batches.content]
 kind = "lines"
@@ -3870,11 +3726,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 176
+position = 168
 key = 'Rust(ModUse { file: "crates/mdbook-core/src/utils/mod.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-core/src/utils/mod.rs"
 cost_tokens = 103
-cum_tokens = 8203
+cum_tokens = 7620
 
 [batches.content]
 kind = "lines"
@@ -3888,11 +3744,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 177
+position = 169
 key = 'Fs(DirListing { dir: "guide/src/for_developers" })'
 descriptor = "listing of 'guide/src/for_developers'"
 cost_tokens = 20
-cum_tokens = 8223
+cum_tokens = 7640
 
 [batches.content]
 kind = "fs"
@@ -3902,11 +3758,11 @@ parent = "guide/src/for_developers"
 entries = ["README.md", "backends.md", "mdbook-wordcount", "preprocessors.md"]
 
 [[batches]]
-position = 178
+position = 170
 key = 'Fs(DirListing { dir: "guide/src/for_developers/mdbook-wordcount" })'
 descriptor = "listing of 'guide/src/for_developers/mdbook-wordcount'"
 cost_tokens = 8
-cum_tokens = 8231
+cum_tokens = 7648
 
 [batches.content]
 kind = "fs"
@@ -3916,11 +3772,11 @@ parent = "guide/src/for_developers/mdbook-wordcount"
 entries = ["Cargo.toml", "src"]
 
 [[batches]]
-position = 179
+position = 171
 key = 'Fs(DirListing { dir: "guide/src/for_developers/mdbook-wordcount/src" })'
 descriptor = "listing of 'guide/src/for_developers/mdbook-wordcount/src'"
 cost_tokens = 4
-cum_tokens = 8235
+cum_tokens = 7652
 
 [batches.content]
 kind = "fs"
@@ -3930,11 +3786,11 @@ parent = "guide/src/for_developers/mdbook-wordcount/src"
 entries = ["main.rs"]
 
 [[batches]]
-position = 180
+position = 172
 key = 'Rust(EntryItem { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs", start_line: 12 })'
 descriptor = "entry item at guide/src/for_developers/mdbook-wordcount/src/main.rs:12"
 cost_tokens = 12
-cum_tokens = 8247
+cum_tokens = 7664
 
 [batches.content]
 kind = "lines"
@@ -3956,11 +3812,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 181
+position = 173
 key = 'Rust(EntryItemBody { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs", start_line: 12, body_start_line: 13 })'
 descriptor = "entry item body at guide/src/for_developers/mdbook-wordcount/src/main.rs:12 body 13"
 cost_tokens = 13
-cum_tokens = 8260
+cum_tokens = 7677
 
 [batches.content]
 kind = "lines"
@@ -3974,11 +3830,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 182
+position = 174
 key = 'Rust(EntryItemBody { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs", start_line: 12, body_start_line: 14 })'
 descriptor = "entry item body at guide/src/for_developers/mdbook-wordcount/src/main.rs:12 body 14"
 cost_tokens = 19
-cum_tokens = 8279
+cum_tokens = 7696
 
 [batches.content]
 kind = "lines"
@@ -3992,11 +3848,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 183
+position = 175
 key = 'Rust(EntryItemBody { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs", start_line: 12, body_start_line: 19 })'
 descriptor = "entry item body at guide/src/for_developers/mdbook-wordcount/src/main.rs:12 body 19"
 cost_tokens = 19
-cum_tokens = 8298
+cum_tokens = 7715
 
 [batches.content]
 kind = "lines"
@@ -4010,11 +3866,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 184
+position = 176
 key = 'Rust(EntryItemBody { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs", start_line: 12, body_start_line: 20 })'
 descriptor = "entry item body at guide/src/for_developers/mdbook-wordcount/src/main.rs:12 body 20"
 cost_tokens = 22
-cum_tokens = 8320
+cum_tokens = 7737
 
 [batches.content]
 kind = "lines"
@@ -4028,11 +3884,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 185
+position = 177
 key = 'Rust(PubItem { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs", start_line: 46 })'
 descriptor = "pub item at guide/src/for_developers/mdbook-wordcount/src/main.rs:46"
 cost_tokens = 54
-cum_tokens = 8374
+cum_tokens = 7791
 
 [batches.content]
 kind = "lines"
@@ -4054,11 +3910,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 186
+position = 178
 key = 'Rust(EntryItemBody { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs", start_line: 12, body_start_line: 15 })'
 descriptor = "entry item body at guide/src/for_developers/mdbook-wordcount/src/main.rs:12 body 15"
 cost_tokens = 37
-cum_tokens = 8411
+cum_tokens = 7828
 
 [batches.content]
 kind = "lines"
@@ -4072,11 +3928,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 187
+position = 179
 key = 'Rust(ModUse { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs" })'
 descriptor = "mod/use plumbing in guide/src/for_developers/mdbook-wordcount/src/main.rs"
 cost_tokens = 63
-cum_tokens = 8474
+cum_tokens = 7891
 
 [batches.content]
 kind = "lines"
@@ -4090,11 +3946,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 188
+position = 180
 key = 'Rust(EntryItemBody { file: "guide/src/for_developers/mdbook-wordcount/src/main.rs", start_line: 12, body_start_line: 22 })'
 descriptor = "entry item body at guide/src/for_developers/mdbook-wordcount/src/main.rs:12 body 22"
 cost_tokens = 189
-cum_tokens = 8663
+cum_tokens = 8080
 
 [batches.content]
 kind = "lines"
@@ -4108,11 +3964,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 189
+position = 181
 key = 'Toml(Identity { file: "guide/src/for_developers/mdbook-wordcount/Cargo.toml" })'
 descriptor = "[package] in guide/src/for_developers/mdbook-wordcount/Cargo.toml"
 cost_tokens = 54
-cum_tokens = 8717
+cum_tokens = 8134
 
 [batches.content]
 kind = "lines"
@@ -4126,11 +3982,29 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 190
+position = 182
+key = 'Rust(ModUse { file: "crates/mdbook-renderer/src/lib.rs" })'
+descriptor = "mod/use plumbing in crates/mdbook-renderer/src/lib.rs"
+cost_tokens = 149
+cum_tokens = 8283
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-renderer/src/lib.rs"
+start = 8
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
 key = 'Rust(CrateDocLede { file: "crates/mdbook-html/src/html/mod.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-html/src/html/mod.rs"
 cost_tokens = 178
-cum_tokens = 8895
+cum_tokens = 8461
 
 [batches.content]
 kind = "lines"
@@ -4144,11 +4018,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 191
+position = 184
 key = 'Rust(ModUse { file: "crates/mdbook-html/src/theme/mod.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-html/src/theme/mod.rs"
 cost_tokens = 109
-cum_tokens = 9004
+cum_tokens = 8570
 
 [batches.content]
 kind = "lines"
@@ -4186,11 +4060,11 @@ end = 243
 kind = "ellipsis"
 
 [[batches]]
-position = 192
+position = 185
 key = 'Rust(PubItemNames { file: "src/cmd/clean.rs" })'
 descriptor = "pub-item names surface in src/cmd/clean.rs"
 cost_tokens = 73
-cum_tokens = 9077
+cum_tokens = 8643
 
 [batches.content]
 kind = "lines"
@@ -4260,11 +4134,11 @@ end = 47
 kind = "ellipsis"
 
 [[batches]]
-position = 193
+position = 186
 key = 'Rust(PubItem { file: "src/cmd/clean.rs", start_line: 11 })'
 descriptor = "pub item at src/cmd/clean.rs:11"
 cost_tokens = 0
-cum_tokens = 9077
+cum_tokens = 8643
 
 [batches.content]
 kind = "lines"
@@ -4286,11 +4160,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 194
+position = 187
 key = 'Rust(PubItem { file: "src/cmd/clean.rs", start_line: 19 })'
 descriptor = "pub item at src/cmd/clean.rs:19"
 cost_tokens = 0
-cum_tokens = 9077
+cum_tokens = 8643
 
 [batches.content]
 kind = "lines"
@@ -4312,11 +4186,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 195
+position = 188
 key = 'Rust(PubItem { file: "src/cmd/clean.rs", start_line: 38 })'
 descriptor = "pub item at src/cmd/clean.rs:38"
 cost_tokens = 0
-cum_tokens = 9077
+cum_tokens = 8643
 
 [batches.content]
 kind = "lines"
@@ -4338,11 +4212,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 196
+position = 189
 key = 'Rust(PubItem { file: "src/cmd/clean.rs", start_line: 46 })'
 descriptor = "pub item at src/cmd/clean.rs:46"
 cost_tokens = 49
-cum_tokens = 9126
+cum_tokens = 8692
 
 [batches.content]
 kind = "lines"
@@ -4356,11 +4230,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 197
+position = 190
 key = 'Rust(ModUse { file: "crates/mdbook-preprocessor/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs"
 cost_tokens = 161
-cum_tokens = 9287
+cum_tokens = 8853
 
 [batches.content]
 kind = "lines"
@@ -4374,11 +4248,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 198
+position = 191
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 12
-cum_tokens = 9299
+cum_tokens = 8865
 
 [batches.content]
 kind = "fs"
@@ -4388,11 +4262,11 @@ parent = ".github"
 entries = ["ISSUE_TEMPLATE", "renovate.json5", "workflows"]
 
 [[batches]]
-position = 199
+position = 192
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 14
-cum_tokens = 9313
+cum_tokens = 8879
 
 [batches.content]
 kind = "fs"
@@ -4402,11 +4276,11 @@ parent = ".github/workflows"
 entries = ["deploy.yml", "main.yml", "update-dependencies.yml"]
 
 [[batches]]
-position = 200
+position = 193
 key = 'Fs(DirListing { dir: "crates/mdbook-html/front-end" })'
 descriptor = "listing of 'crates/mdbook-html/front-end'"
 cost_tokens = 23
-cum_tokens = 9336
+cum_tokens = 8902
 
 [batches.content]
 kind = "fs"
@@ -4416,11 +4290,11 @@ parent = "crates/mdbook-html/front-end"
 entries = ["css", "fonts", "images", "js", "playground_editor", "searcher", "templates"]
 
 [[batches]]
-position = 201
+position = 194
 key = 'Fs(DirListing { dir: "crates/mdbook-html/front-end/images" })'
 descriptor = "listing of 'crates/mdbook-html/front-end/images'"
 cost_tokens = 8
-cum_tokens = 9344
+cum_tokens = 8910
 
 [batches.content]
 kind = "fs"
@@ -4430,11 +4304,11 @@ parent = "crates/mdbook-html/front-end/images"
 entries = ["favicon.png", "favicon.svg"]
 
 [[batches]]
-position = 202
+position = 195
 key = 'Fs(DirListing { dir: "crates/mdbook-html/front-end/js" })'
 descriptor = "listing of 'crates/mdbook-html/front-end/js'"
 cost_tokens = 13
-cum_tokens = 9357
+cum_tokens = 8923
 
 [batches.content]
 kind = "fs"
@@ -4444,11 +4318,11 @@ parent = "crates/mdbook-html/front-end/js"
 entries = ["book.js", "clipboard.min.js", "highlight.js"]
 
 [[batches]]
-position = 203
+position = 196
 key = 'Rust(EntryItem { file: "examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs", start_line: 10 })'
 descriptor = "entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:10"
 cost_tokens = 188
-cum_tokens = 9545
+cum_tokens = 9111
 
 [batches.content]
 kind = "lines"
@@ -4462,29 +4336,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 204
-key = 'Rust(PubItemDocLede { file: "crates/mdbook-preprocessor/src/lib.rs", start_line: 30 })'
-descriptor = "pub-item doc lede at crates/mdbook-preprocessor/src/lib.rs:30"
-cost_tokens = 113
-cum_tokens = 9658
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-preprocessor/src/lib.rs"
-start = 23
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 205
+position = 197
 key = 'Rust(EntryItem { file: "examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs", start_line: 49 })'
 descriptor = "entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:49"
 cost_tokens = 204
-cum_tokens = 9862
+cum_tokens = 9315
 
 [batches.content]
 kind = "lines"
@@ -4498,11 +4354,29 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 206
+position = 198
+key = 'Rust(PubItemDocLede { file: "crates/mdbook-summary/src/lib.rs", start_line: 67 })'
+descriptor = "pub-item doc lede at crates/mdbook-summary/src/lib.rs:67"
+cost_tokens = 20
+cum_tokens = 9335
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-summary/src/lib.rs"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 199
 key = 'Rust(PubItem { file: "src/cmd/watch/native.rs", start_line: 11 })'
 descriptor = "pub item at src/cmd/watch/native.rs:11"
 cost_tokens = 59
-cum_tokens = 9921
+cum_tokens = 9394
 
 [batches.content]
 kind = "lines"
@@ -4524,11 +4398,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 207
+position = 200
 key = 'Rust(PubItem { file: "src/cmd/watch/poller.rs", start_line: 18 })'
 descriptor = "pub item at src/cmd/watch/poller.rs:18"
 cost_tokens = 59
-cum_tokens = 9980
+cum_tokens = 9453
 
 [batches.content]
 kind = "lines"
@@ -4550,11 +4424,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 208
+position = 201
 key = 'Fs(DirListing { dir: "crates/mdbook-html/front-end/searcher" })'
 descriptor = "listing of 'crates/mdbook-html/front-end/searcher'"
 cost_tokens = 17
-cum_tokens = 9997
+cum_tokens = 9470
 
 [batches.content]
 kind = "fs"
@@ -4562,3 +4436,201 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "crates/mdbook-html/front-end/searcher"
 entries = ["elasticlunr.min.js", "mark.min.js", "searcher.js"]
+
+[[batches]]
+position = 202
+key = 'Rust(PubItemDocLede { file: "crates/mdbook-driver/src/builtin_renderers/mod.rs", start_line: 20 })'
+descriptor = "pub-item doc lede at crates/mdbook-driver/src/builtin_renderers/mod.rs:20"
+cost_tokens = 57
+cum_tokens = 9527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-driver/src/builtin_renderers/mod.rs"
+start = 15
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
+key = 'Fs(DirListing { dir: "crates/xtask" })'
+descriptor = "listing of 'crates/xtask'"
+cost_tokens = 12
+cum_tokens = 9539
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/xtask"
+entries = ["Cargo.toml", "README.md", "src"]
+
+[[batches]]
+position = 204
+key = 'Fs(DirListing { dir: "crates/xtask/src" })'
+descriptor = "listing of 'crates/xtask/src'"
+cost_tokens = 9
+cum_tokens = 9548
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "crates/xtask/src"
+entries = ["changelog.rs", "main.rs"]
+
+[[batches]]
+position = 205
+key = 'Rust(EntryItem { file: "crates/xtask/src/main.rs", start_line: 13 })'
+descriptor = "entry item at crates/xtask/src/main.rs:13"
+cost_tokens = 15
+cum_tokens = 9563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 206
+key = 'Rust(EntryItemBody { file: "crates/xtask/src/main.rs", start_line: 13, body_start_line: 56 })'
+descriptor = "entry item body at crates/xtask/src/main.rs:13 body 56"
+cost_tokens = 9
+cum_tokens = 9572
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 207
+key = 'Rust(EntryItemBody { file: "crates/xtask/src/main.rs", start_line: 13, body_start_line: 55 })'
+descriptor = "entry item body at crates/xtask/src/main.rs:13 body 55"
+cost_tokens = 9
+cum_tokens = 9581
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
+key = 'Rust(EntryItemBody { file: "crates/xtask/src/main.rs", start_line: 13, body_start_line: 34 })'
+descriptor = "entry item body at crates/xtask/src/main.rs:13 body 34"
+cost_tokens = 24
+cum_tokens = 9605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 209
+key = 'Rust(EntryItemBody { file: "crates/xtask/src/main.rs", start_line: 13, body_start_line: 33 })'
+descriptor = "entry item body at crates/xtask/src/main.rs:13 body 33"
+cost_tokens = 23
+cum_tokens = 9628
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'Rust(EntryItemBody { file: "crates/xtask/src/main.rs", start_line: 13, body_start_line: 35 })'
+descriptor = "entry item body at crates/xtask/src/main.rs:13 body 35"
+cost_tokens = 49
+cum_tokens = 9677
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 35
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'Rust(EntryItemBody { file: "crates/xtask/src/main.rs", start_line: 13, body_start_line: 14 })'
+descriptor = "entry item body at crates/xtask/src/main.rs:13 body 14"
+cost_tokens = 65
+cum_tokens = 9742
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 14
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 212
+key = 'Rust(EntryItemBody { file: "crates/xtask/src/main.rs", start_line: 13, body_start_line: 20 })'
+descriptor = "entry item body at crates/xtask/src/main.rs:13 body 20"
+cost_tokens = 164
+cum_tokens = 9906
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/xtask/src/main.rs"
+start = 20
+end = 32
+
+[batches.content.spans.render]
+kind = "full"

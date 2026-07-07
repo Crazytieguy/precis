@@ -146,68 +146,71 @@ Score(3000)=0.526 I=0.753 C=0.367 ns_rows≤3K=13/44 (reached=4 partial=3 missin
 | walker |  | 7872 | 21 | c decl at src/sprite_submit.h:21 |  |  | 0.575 |
 | walker |  | 7893 | 21 | c decl at src/sprite_submit.h:76 |  |  | 0.575 |
 | walker |  | 7915 | 22 | c decl at src/sprite_submit.h:81 |  |  | 0.575 |
-| walker |  | 7928 | 13 | c decl body at src/sprite_submit.h:71 |  |  | 0.575 |
-| walker |  | 7982 | 54 | c decl at src/ime_state.h:7 |  |  | 0.575 |
-| walker |  | 8037 | 55 | c decl at src/ime_char_filter.h:8 |  |  | 0.575 |
-| walker |  | 8163 | 126 | c decl names surface in src/transform.h |  |  | 0.575 |
-| walker |  | 8176 | 13 | c decl at src/transform.h:16 |  |  | 0.575 |
-| walker |  | 8184 | 8 | c includes in src/transform.h |  |  | 0.575 |
-| walker |  | 8201 | 17 | c decl body at src/sprite_submit.h:66 |  |  | 0.575 |
-| walker |  | 8219 | 18 | c includes in src/spritemgr.h |  |  | 0.575 |
+| walker |  | 7969 | 54 | c decl at src/ime_state.h:7 |  |  | 0.575 |
+| walker |  | 8024 | 55 | c decl at src/ime_char_filter.h:8 |  |  | 0.575 |
+| walker |  | 8150 | 126 | c decl names surface in src/transform.h |  |  | 0.575 |
+| walker |  | 8163 | 13 | c decl at src/transform.h:16 |  |  | 0.575 |
+| walker |  | 8171 | 8 | c includes in src/transform.h |  |  | 0.575 |
+| walker |  | 8189 | 18 | c includes in src/spritemgr.h |  |  | 0.575 |
+| walker |  | 8207 | 18 | c includes in src/srbuffer.h |  |  | 0.575 |
 | ns | 8223 |  | 401 | test/intersect.lua: batch:point + material.quad hit-testing | 6.5 |  | 0.561 |
-| walker |  | 8237 | 18 | c includes in src/srbuffer.h |  |  | 0.561 |
-| walker |  | 8255 | 18 | c decl body at src/sprite_submit.h:9 |  |  | 0.561 |
+| walker |  | 8270 | 63 | c decl at src/loginfo.h:6 |  |  | 0.561 |
+| walker |  | 8290 | 20 | c includes in src/ime_state.h |  |  | 0.561 |
 | ns | 8304 |  | 81 | test/ime.lua: complete callback-handler locations (396-line file) | 6.6 |  | 0.559 |
-| walker |  | 8318 | 63 | c decl at src/loginfo.h:6 |  |  | 0.559 |
-| walker |  | 8338 | 20 | c includes in src/ime_state.h |  |  | 0.559 |
-| walker |  | 8358 | 20 | c includes in src/tmpbuffer.h |  |  | 0.559 |
-| walker |  | 8425 | 67 | c decl at src/batch.h:6 |  |  | 0.559 |
+| walker |  | 8310 | 20 | c includes in src/tmpbuffer.h |  |  | 0.559 |
+| walker |  | 8377 | 67 | c decl at src/batch.h:6 |  |  | 0.559 |
 | ns | 8465 |  | 161 | src/data/settingdefault.dl: concrete default config | 7.1 |  | 0.554 |
+| walker |  | 8551 | 174 | c decl names surface in src/font_define.h |  |  | 0.554 |
 | ns | 8560 |  | 95 | src/service/render.lua: public message-handler locations (462-line file) | 8.1 |  | 0.551 |
+| walker |  | 8561 | 10 | c decl at src/font_define.h:31 |  |  | 0.551 |
+| walker |  | 8576 | 15 | c decl at src/font_define.h:26 |  |  | 0.551 |
+| walker |  | 8584 | 8 | c includes in src/font_define.h |  |  | 0.551 |
 | ns | 8593 |  | 33 | src/lualib/spritebundle.lua: public M.load/M.loadimage signatures | 9.1 |  | 0.550 |
-| walker |  | 8599 | 174 | c decl names surface in src/font_define.h |  |  | 0.550 |
-| walker |  | 8609 | 10 | c decl at src/font_define.h:31 |  |  | 0.550 |
-| walker |  | 8624 | 15 | c decl at src/font_define.h:26 |  |  | 0.550 |
-| walker |  | 8632 | 8 | c includes in src/font_define.h |  |  | 0.550 |
-| walker |  | 8650 | 18 | c decl body at src/font_define.h:31 |  |  | 0.550 |
-| walker |  | 8669 | 19 | c decl body at src/font_define.h:26 |  |  | 0.550 |
-| walker |  | 8691 | 22 | c decl body at src/sprite_submit.h:76 |  |  | 0.550 |
-| walker |  | 8712 | 21 | c decl names surface in src/material_blit.c |  |  | 0.550 |
+| walker |  | 8602 | 18 | c decl body at src/font_define.h:31 |  |  | 0.550 |
+| walker |  | 8623 | 21 | c decl names surface in src/material_blit.c |  |  | 0.550 |
+| walker |  | 8702 | 79 | c decl at src/font_define.h:11 |  |  | 0.550 |
 | ns | 8786 |  | 193 | src/lualib/util.lua: func_chain helper | 9.2 |  | 0.542 |
-| walker |  | 8791 | 79 | c decl at src/font_define.h:11 |  |  | 0.542 |
-| walker |  | 8880 | 89 | c decl names surface in src/appevent.h |  |  | 0.542 |
-| walker |  | 8899 | 19 | c decl at src/appevent.h:11 |  |  | 0.542 |
-| walker |  | 8918 | 19 | c decl at src/appevent.h:33 |  |  | 0.542 |
-| walker |  | 8937 | 19 | c decl at src/appevent.h:58 |  |  | 0.542 |
-| walker |  | 8956 | 19 | c decl at src/appevent.h:84 |  |  | 0.542 |
-| walker |  | 8975 | 19 | c decl at src/appevent.h:99 |  |  | 0.542 |
-| walker |  | 8995 | 20 | c decl at src/appevent.h:115 |  |  | 0.542 |
+| walker |  | 8791 | 89 | c decl names surface in src/appevent.h |  |  | 0.542 |
+| walker |  | 8810 | 19 | c decl at src/appevent.h:11 |  |  | 0.542 |
+| walker |  | 8829 | 19 | c decl at src/appevent.h:33 |  |  | 0.542 |
+| walker |  | 8848 | 19 | c decl at src/appevent.h:58 |  |  | 0.542 |
+| walker |  | 8867 | 19 | c decl at src/appevent.h:84 |  |  | 0.542 |
+| walker |  | 8886 | 19 | c decl at src/appevent.h:99 |  |  | 0.542 |
+| walker |  | 8906 | 20 | c decl at src/appevent.h:115 |  |  | 0.542 |
+| walker |  | 8943 | 37 | c decl at src/appevent.h:4 |  |  | 0.542 |
 | ns | 9013 |  | 227 | soluna.spritemgr + soluna.drawmgr export tables | 10.1 |  | 0.535 |
-| walker |  | 9032 | 37 | c decl at src/appevent.h:4 |  |  | 0.535 |
-| walker |  | 9113 | 81 | c decl at src/spritemgr.h:9 |  |  | 0.535 |
-| walker |  | 9194 | 81 | c decl at src/transform.h:6 |  |  | 0.535 |
-| walker |  | 9219 | 25 | c decl body at src/ime_char_filter.h:47 |  |  | 0.535 |
+| walker |  | 9024 | 81 | c decl at src/spritemgr.h:9 |  |  | 0.535 |
+| walker |  | 9105 | 81 | c decl at src/transform.h:6 |  |  | 0.535 |
+| walker |  | 9189 | 84 | c decl at src/srbuffer.h:11 |  |  | 0.535 |
 | ns | 9265 |  | 252 | soluna.render export table: low-level GPU primitives | 10.2 |  | 0.529 |
-| walker |  | 9303 | 84 | c decl at src/srbuffer.h:11 |  |  | 0.529 |
-| walker |  | 9329 | 26 | c decl body at src/ime_char_filter.h:41 |  |  | 0.529 |
 | ns | 9389 |  | 124 | soluna.zip export table | 10.3 |  | 0.525 |
+| walker |  | 9414 | 225 | c decl names surface in src/material_util.h |  |  | 0.525 |
 | ns | 9487 |  | 98 | soluna.url export table | 10.4 |  | 0.522 |
-| walker |  | 9554 | 225 | c decl names surface in src/material_util.h |  |  | 0.522 |
 | ns | 9625 |  | 138 | nightly.yml: CI build triggers | 11.1 |  | 0.517 |
+| walker |  | 9639 | 225 | c decl names surface in src/truetype.h |  |  | 0.517 |
+| walker |  | 9651 | 12 | c decl at src/truetype.h:147 |  |  | 0.517 |
+| walker |  | 9665 | 14 | c decl at src/truetype.h:23 |  |  | 0.517 |
+| walker |  | 9679 | 14 | c decl at src/truetype.h:34 |  |  | 0.517 |
+| walker |  | 9693 | 14 | c decl at src/truetype.h:83 |  |  | 0.517 |
+| walker |  | 9707 | 14 | c decl at src/truetype.h:111 |  |  | 0.517 |
+| walker |  | 9722 | 15 | c decl at src/truetype.h:44 |  |  | 0.517 |
 | ns | 9729 |  | 104 | pages.yml: CI docs/demo-site deploy trigger | 11.2 |  | 0.513 |
-| walker |  | 9779 | 225 | c decl names surface in src/truetype.h |  |  | 0.513 |
-| walker |  | 9791 | 12 | c decl at src/truetype.h:147 |  |  | 0.513 |
-| walker |  | 9805 | 14 | c decl at src/truetype.h:23 |  |  | 0.513 |
-| walker |  | 9819 | 14 | c decl at src/truetype.h:34 |  |  | 0.513 |
-| walker |  | 9833 | 14 | c decl at src/truetype.h:83 |  |  | 0.513 |
+| walker |  | 9740 | 18 | c decl at src/truetype.h:94 |  |  | 0.513 |
+| walker |  | 9762 | 22 | c decl at src/truetype.h:160 |  |  | 0.513 |
+| walker |  | 9785 | 23 | c decl at src/truetype.h:123 |  |  | 0.513 |
+| walker |  | 9814 | 29 | c decl at src/truetype.h:17 |  |  | 0.513 |
 | ns | 9834 |  | 105 | .editorconfig: Lua formatting conventions | 12.1 |  | 0.510 |
-| walker |  | 9847 | 14 | c decl at src/truetype.h:111 |  |  | 0.510 |
-| walker |  | 9862 | 15 | c decl at src/truetype.h:44 |  |  | 0.510 |
-| walker |  | 9880 | 18 | c decl at src/truetype.h:94 |  |  | 0.510 |
-| walker |  | 9902 | 22 | c decl at src/truetype.h:160 |  |  | 0.510 |
-| walker |  | 9925 | 23 | c decl at src/truetype.h:123 |  |  | 0.510 |
-| walker |  | 9954 | 29 | c decl at src/truetype.h:17 |  |  | 0.510 |
-| ns | 9975 |  | 141 | .gitignore + README license line | 12.2 |  | 0.506 |
-| walker |  | 9979 | 25 | c decl at src/truetype.h:52 |  |  | 0.506 |
-| walker |  | 9989 | 10 | c decl doc at src/truetype.h:23 |  |  | 0.506 |
-| walker |  | 10000 | 11 | c decl doc at src/truetype.h:52 |  |  | 0.506 |
+| walker |  | 9839 | 25 | c decl at src/truetype.h:52 |  |  | 0.510 |
+| walker |  | 9869 | 30 | c includes in src/ime_char_filter.h |  |  | 0.510 |
+| walker |  | 9899 | 30 | c includes in src/luabuffer.h |  |  | 0.510 |
+| walker |  | 9924 | 25 | listing of 'src/service' |  |  | 0.513 |
+| walker |  | 9947 | 23 | lua decl names surface in src/service/log.lua |  |  | 0.513 |
+| walker |  | 9947 | 0 | lua decl at src/service/log.lua:12 |  |  | 0.513 |
+| walker |  | 9947 | 0 | lua decl at src/service/log.lua:38 |  |  | 0.513 |
+| walker |  | 9970 | 23 | lua decl names surface in src/service/settings.lua |  |  | 0.513 |
+| walker |  | 9970 | 0 | lua decl at src/service/settings.lua:9 |  |  | 0.513 |
+| walker |  | 9970 | 0 | lua decl at src/service/settings.lua:14 |  |  | 0.513 |
+| ns | 9975 |  | 141 | .gitignore + README license line | 12.2 |  | 0.510 |
+| walker |  | 9995 | 25 | lua decl names surface in src/service/gamepad.lua |  |  | 0.510 |
+| walker |  | 9995 | 0 | lua decl at src/service/gamepad.lua:10 |  |  | 0.510 |
+| walker |  | 9995 | 0 | lua decl at src/service/gamepad.lua:15 |  |  | 0.510 |

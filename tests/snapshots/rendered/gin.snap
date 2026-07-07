@@ -161,10 +161,6 @@ gin.go
       57→type HandlersChain []HandlerFunc
       59→// Last returns the last handler in the chain. i.e. the last handler is the main one.
       60→func (c HandlersChain) Last() HandlerFunc {
-      61→	if length := len(c); length > 0 {
-      62→		return c[length-1]
-      63→	}
-      64→	return nil
     …
       67→// RouteInfo represents a request route's specification which contains method and path and its handler.
       68→type RouteInfo struct {
@@ -186,6 +182,9 @@ gin.go
       91→// Create an instance of Engine, by using New() or Default()
       92→type Engine struct {
       93→	RouterGroup
+      95→	// routeTreesUpdated ensures that the initialization or update of the route trees
+      96→	// (used for routing HTTP requests) happens only once, even if called multiple times concurrently.
+      97→	routeTreesUpdated sync.Once
     …
      142→	// UseEscapedPath if enable, the url.EscapedPath() will be used to find parameters
      143→	// It overrides UseRawPath

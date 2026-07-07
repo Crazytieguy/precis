@@ -80,11 +80,47 @@ pub struct Scheduler<W: Walker> {
     /// touching that file, so their cached costs are dropped when one
     /// of them is scheduled.
     batches_by_path: HashMap<PathBuf, Vec<BatchId>>,
+    /// Memoized transitive predecessor root per batch (the head of its
+    /// gated train). Resolved at ranking time, when eligibility
+    /// guarantees the chain is fully materialized.
+    train_root_memo: HashMap<BatchId, BatchId>,
+    /// Non-zero-cost batches scheduled per train root — drives the
+    /// breadth-pressure ratio penalty.
+    scheduled_per_root: HashMap<BatchId, usize>,
+    /// Pool members per train root, counted at absorb time (predecessor
+    /// chains materialize in emission order, so absorb-time resolution
+    /// is complete for all but pathological cross-expansion chains).
+    train_member_counts: HashMap<BatchId, usize>,
+    /// Rounds gate: unopened substantial trains remaining as of the
+    /// current ranking round — breadth pressure is pointless (and
+    /// measured harmful: mitt/go-multierror) when there is nothing to
+    /// redirect the budget to.
+    breadth_remaining: usize,
     /// Debug-only owner map for FS render cells — overlapping sibling
     /// FS atoms are a walker-contract violation.
     #[cfg(debug_assertions)]
     fs_atom_owners: BTreeMap<(PathBuf, String), W::Key>,
 }
+
+/// Breadth-pressure coefficient: past the free allowance, a candidate
+/// whose train root already has `n` scheduled non-zero-cost batches
+/// ranks at `1/(1 + K*(n - FREE))` of its raw ratio. NS authors
+/// schedule breadth-first — every file's surface before any file's
+/// depth — while cheap follow-up batches (bodies, docs, members)
+/// otherwise out-ratio unopened siblings' surfaces and drive long
+/// same-train dives. Orientation-rooted trains (README headline ->
+/// outline -> sections) are exempt: NS authors sequence those deep by
+/// design (the blanket variant measured -0.004/-0.006).
+const TRAIN_PRESSURE_K: f64 = 0.15;
+/// Scheduled batches a train may accumulate before pressure applies —
+/// normal decl -> doc -> body depth is wanted; 20-batch dives are not.
+const TRAIN_PRESSURE_FREE: usize = 4;
+/// Pool members for a train to count as substantial breadth.
+const TRAIN_SUBSTANTIAL_MEMBERS: usize = 3;
+/// Minimum unopened substantial trains for pressure to apply at all —
+/// in a small repo whose primary train IS the content, demoting its
+/// follow-ups just buys worse batches.
+const BREADTH_MIN_TRAINS: usize = 2;
 
 impl<W: Walker> Scheduler<W> {
     pub fn new(root: PathBuf, walker: W, token_budget: usize, byte_budget: Option<usize>) -> Self {
@@ -113,6 +149,10 @@ impl<W: Walker> Scheduler<W> {
             cost_cache: HashMap::new(),
             approx_cost_cache: HashMap::new(),
             batches_by_path: HashMap::new(),
+            train_root_memo: HashMap::new(),
+            scheduled_per_root: HashMap::new(),
+            train_member_counts: HashMap::new(),
+            breadth_remaining: 0,
             #[cfg(debug_assertions)]
             fs_atom_owners: BTreeMap::new(),
         }
@@ -216,6 +256,24 @@ impl<W: Walker> Scheduler<W> {
             }
         }
 
+        // Non-memoized root walk for the member count (the ranking-time
+        // memo must only be written once chains are guaranteed complete).
+        let mut root = id;
+        let mut cur = self.entries.len(); // guard against cycles
+        let mut probe = &batch.predecessor;
+        while let Some(pred_key) = probe {
+            let Some(&pred_id) = self.key_to_id.get(pred_key) else {
+                break;
+            };
+            root = pred_id;
+            probe = &self.entries[pred_id.index()].predecessor;
+            cur -= 1;
+            if cur == 0 {
+                break;
+            }
+        }
+        *self.train_member_counts.entry(root).or_insert(0) += 1;
+
         self.entries.push(batch);
     }
 
@@ -274,6 +332,16 @@ impl<W: Walker> Scheduler<W> {
             return None;
         }
 
+        self.breadth_remaining = self
+            .train_member_counts
+            .iter()
+            .filter(|(root, members)| {
+                **members >= TRAIN_SUBSTANTIAL_MEMBERS
+                    && !self.scheduled_per_root.contains_key(root)
+                    && !self.entries[root.index()].key.is_orientation()
+            })
+            .count();
+
         let pool = self.select_contender_pool(&eligible);
 
         crate::time_counter!(best_exact_rank_pass);
@@ -284,6 +352,7 @@ impl<W: Walker> Scheduler<W> {
                 let c = self.tree.marginal_cost(content);
                 self.cost_cache.insert(id, c);
             }
+            let pressure = self.train_pressure(id);
             let exact_cost = self.cost_cache[&id];
             let entry = &self.entries[id.index()];
             let ratio = score_ratio(
@@ -297,7 +366,7 @@ impl<W: Walker> Scheduler<W> {
                 self.consumed.tokens,
                 self.token_budget,
                 entry.key.is_deferred_mass_prose(),
-            );
+            ) * pressure;
             let better = best.as_ref().is_none_or(|(br, b_id, _)| {
                 ratio > *br
                     || (ratio == *br
@@ -331,6 +400,7 @@ impl<W: Walker> Scheduler<W> {
 
         let mut candidates: Vec<(f64, BatchId)> = Vec::with_capacity(eligible.len());
         for &id in eligible {
+            let pressure = self.train_pressure(id);
             let approx_tokens = self.approx_cost_cache[&id];
             let entry = &self.entries[id.index()];
             let ratio = score_ratio(entry.value, approx_tokens, entry.key.concavity_exponent())
@@ -342,7 +412,8 @@ impl<W: Walker> Scheduler<W> {
                     self.consumed.tokens,
                     self.token_budget,
                     entry.key.is_deferred_mass_prose(),
-                );
+                )
+                * pressure;
             candidates.push((ratio, id));
         }
 
@@ -408,6 +479,12 @@ impl<W: Walker> Scheduler<W> {
         self.scheduled_log.push((id, cost));
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
+        // Zero-cost batches (already line-covered by an ancestor) don't
+        // consume budget, so they don't count toward train pressure.
+        if cost.tokens > 0 {
+            let root = self.train_root(id);
+            *self.scheduled_per_root.entry(root).or_insert(0) += 1;
+        }
 
         // Drop the scheduled batch's cached cost, plus every cached
         // cost for batches touching the same files — the apply may
@@ -453,6 +530,45 @@ impl<W: Walker> Scheduler<W> {
     }
 
     /// Walk the predecessor chain. Cycles are a walker bug (debug-assert).
+    /// Transitive predecessor root of `id` — the head of its gated
+    /// train. Memoized; safe to resolve at ranking time because an
+    /// eligible batch's chain is fully materialized.
+    fn train_root(&mut self, id: BatchId) -> BatchId {
+        if let Some(&root) = self.train_root_memo.get(&id) {
+            return root;
+        }
+        let pred_id = self.entries[id.index()]
+            .predecessor
+            .as_ref()
+            .and_then(|pred_key| self.key_to_id.get(pred_key).copied());
+        let root = match pred_id {
+            Some(pred_id) => self.train_root(pred_id),
+            None => id,
+        };
+        self.train_root_memo.insert(id, root);
+        root
+    }
+
+    /// Breadth-pressure multiplier for `id`'s ratio. Applies only to
+    /// depth follow-up batches (doc/body/member refinements) — surface
+    /// batches always rank at their raw ratio, and orientation-rooted
+    /// trains (README headline -> sections) are exempt wholesale.
+    fn train_pressure(&mut self, id: BatchId) -> f64 {
+        if self.breadth_remaining < BREADTH_MIN_TRAINS {
+            return 1.0;
+        }
+        if !self.entries[id.index()].key.is_depth_follow_up() {
+            return 1.0;
+        }
+        let root = self.train_root(id);
+        if self.entries[root.index()].key.is_orientation() {
+            return 1.0;
+        }
+        let n = self.scheduled_per_root.get(&root).copied().unwrap_or(0);
+        let over = n.saturating_sub(TRAIN_PRESSURE_FREE);
+        1.0 / (1.0 + TRAIN_PRESSURE_K * over as f64)
+    }
+
     fn ancestors_of(&self, id: BatchId) -> HashSet<BatchId> {
         let mut set = HashSet::new();
         let mut cur = self.entries[id.index()].predecessor.as_ref();

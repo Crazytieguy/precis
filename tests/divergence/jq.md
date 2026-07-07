@@ -142,84 +142,81 @@ Score(3000)=0.728 I=0.873 C=0.607 ns_rows≤3K=15/40 (reached=8 partial=2 missin
 | walker |  | 6420 | 0 | c decl at src/inject_errors.c:93 |  |  | 0.701 |
 | walker |  | 6420 | 0 | c decl at src/inject_errors.c:103 |  |  | 0.701 |
 | walker |  | 6476 | 56 | c decl at src/inject_errors.c:32 |  |  | 0.701 |
-| walker |  | 6505 | 29 | c decl body at src/jv_alloc.c:162 |  |  | 0.701 |
 | ns | 6543 |  | 818 | opcode_list.h (full) — complete bytecode opcode roster | 5.1 |  | 0.663 |
-| walker |  | 6686 | 181 | c whole header in src/jv_alloc.h |  |  | 0.683 |
-| walker |  | 6732 | 46 | c includes in src/jv_unicode.c |  |  | 0.683 |
+| walker |  | 6657 | 181 | c whole header in src/jv_alloc.h |  |  | 0.683 |
+| walker |  | 6703 | 46 | c includes in src/jv_unicode.c |  |  | 0.683 |
 | ns | 6855 |  | 312 | bytecode.h — struct bytecode (compiled-function representation) | 5.2 |  | 0.662 |
-| walker |  | 6920 | 188 | c whole header in src/jv_unicode.h |  |  | 0.662 |
-| walker |  | 6969 | 49 | c includes in src/jv_alloc.c |  |  | 0.662 |
+| walker |  | 6891 | 188 | c whole header in src/jv_unicode.h |  |  | 0.662 |
+| walker |  | 6940 | 49 | c includes in src/jv_alloc.c |  |  | 0.662 |
 | ns | 7165 |  | 310 | execute.c — struct jq_state (VM runtime state) | 5.3 |  | 0.641 |
-| walker |  | 7225 | 256 | c decl names surface in src/jv_aux.c |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:80 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:146 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:230 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:372 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:431 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:504 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:554 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:566 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:600 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:711 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:726 |  |  | 0.641 |
-| walker |  | 7225 | 0 | c decl at src/jv_aux.c:754 |  |  | 0.641 |
-| walker |  | 7256 | 31 | c decl at src/jv_aux.c:675 |  |  | 0.641 |
-| walker |  | 7439 | 183 | c decl names surface in src/bytecode.h |  |  | 0.646 |
-| walker |  | 7476 | 37 | c decl at src/bytecode.h:59 |  |  | 0.646 |
-| walker |  | 7543 | 67 | c decl at src/jv_print.c:31 |  |  | 0.646 |
-| walker |  | 7620 | 77 | c decl at src/bytecode.h:32 |  |  | 0.646 |
+| walker |  | 7196 | 256 | c decl names surface in src/jv_aux.c |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:80 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:146 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:230 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:372 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:431 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:504 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:554 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:566 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:600 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:711 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:726 |  |  | 0.641 |
+| walker |  | 7196 | 0 | c decl at src/jv_aux.c:754 |  |  | 0.641 |
+| walker |  | 7227 | 31 | c decl at src/jv_aux.c:675 |  |  | 0.641 |
+| walker |  | 7410 | 183 | c decl names surface in src/bytecode.h |  |  | 0.646 |
+| walker |  | 7447 | 37 | c decl at src/bytecode.h:59 |  |  | 0.646 |
+| walker |  | 7514 | 67 | c decl at src/jv_print.c:31 |  |  | 0.646 |
+| walker |  | 7591 | 77 | c decl at src/bytecode.h:32 |  |  | 0.646 |
 | ns | 7674 |  | 509 | compile.c — struct inst (compiler's IR node) | 5.4 |  | 0.621 |
-| walker |  | 7787 | 167 | listing of 'vendor/decNumber' |  |  | 0.621 |
-| walker |  | 7828 | 41 | c decl at src/exec_stack.h:40 |  |  | 0.621 |
-| walker |  | 7890 | 62 | c includes in src/inject_errors.c |  |  | 0.621 |
+| walker |  | 7758 | 167 | listing of 'vendor/decNumber' |  |  | 0.621 |
+| walker |  | 7799 | 41 | c decl at src/exec_stack.h:40 |  |  | 0.621 |
+| walker |  | 7861 | 62 | c includes in src/inject_errors.c |  |  | 0.621 |
 | ns | 7988 |  | 314 | compile.h — sampler of the block/gen_* IR-construction API | 5.5 | 5.4 | 0.610 |
-| walker |  | 8104 | 214 | c decl names surface #5 in src/jv.h |  |  | 0.610 |
+| walker |  | 8075 | 214 | c decl names surface #5 in src/jv.h |  |  | 0.610 |
 | ns | 8177 |  | 189 | parser.y — operator precedence/associativity table | 6.1 |  | 0.602 |
+| walker |  | 8394 | 319 | c decl names surface in src/bytecode.c |  |  | 0.602 |
+| walker |  | 8394 | 0 | c decl at src/bytecode.c:9 |  |  | 0.602 |
+| walker |  | 8394 | 0 | c decl at src/bytecode.c:31 |  |  | 0.602 |
+| walker |  | 8394 | 0 | c decl at src/bytecode.c:40 |  |  | 0.602 |
+| walker |  | 8394 | 0 | c decl at src/bytecode.c:64 |  |  | 0.602 |
+| walker |  | 8394 | 0 | c decl at src/bytecode.c:95 |  |  | 0.602 |
+| walker |  | 8394 | 0 | c decl at src/bytecode.c:149 |  |  | 0.602 |
+| walker |  | 8411 | 17 | c decl at src/bytecode.c:19 |  |  | 0.602 |
 | ns | 8414 |  | 237 | lexer.l — reserved-keyword token table | 6.2 |  | 0.593 |
-| walker |  | 8423 | 319 | c decl names surface in src/bytecode.c |  |  | 0.593 |
-| walker |  | 8423 | 0 | c decl at src/bytecode.c:9 |  |  | 0.593 |
-| walker |  | 8423 | 0 | c decl at src/bytecode.c:31 |  |  | 0.593 |
-| walker |  | 8423 | 0 | c decl at src/bytecode.c:40 |  |  | 0.593 |
-| walker |  | 8423 | 0 | c decl at src/bytecode.c:64 |  |  | 0.593 |
-| walker |  | 8423 | 0 | c decl at src/bytecode.c:95 |  |  | 0.593 |
-| walker |  | 8423 | 0 | c decl at src/bytecode.c:149 |  |  | 0.593 |
-| walker |  | 8440 | 17 | c decl at src/bytecode.c:19 |  |  | 0.593 |
-| walker |  | 8449 | 9 | c decl doc at src/bytecode.c:9 |  |  | 0.593 |
-| walker |  | 8505 | 56 | c includes in src/bytecode.c |  |  | 0.593 |
-| walker |  | 8587 | 82 | c decl at src/inject_errors.c:22 |  |  | 0.593 |
+| walker |  | 8420 | 9 | c decl doc at src/bytecode.c:9 |  |  | 0.593 |
+| walker |  | 8476 | 56 | c includes in src/bytecode.c |  |  | 0.593 |
+| walker |  | 8558 | 82 | c decl at src/inject_errors.c:22 |  |  | 0.593 |
 | ns | 8718 |  | 304 | builtin.c — CFUNC function_list table, first ~16 of ~68 entries (C builtin name -> arity) | 7.1 |  | 0.584 |
 | ns | 8862 |  | 144 | jv.c — refcounting primitives | 7.2 |  | 0.578 |
-| walker |  | 8920 | 333 | c decl names surface in src/jv_parse.c |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:715 |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:722 |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:729 |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:735 |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:772 |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:869 |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:909 |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:913 |  |  | 0.578 |
-| walker |  | 8920 | 0 | c decl at src/jv_parse.c:917 |  |  | 0.578 |
-| walker |  | 8927 | 7 | c decl at src/jv_parse.c:34 |  |  | 0.581 |
+| walker |  | 8891 | 333 | c decl names surface in src/jv_parse.c |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:715 |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:722 |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:729 |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:735 |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:772 |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:869 |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:909 |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:913 |  |  | 0.578 |
+| walker |  | 8891 | 0 | c decl at src/jv_parse.c:917 |  |  | 0.578 |
+| walker |  | 8898 | 7 | c decl at src/jv_parse.c:34 |  |  | 0.578 |
+| walker |  | 8908 | 10 | c aggregate member group at src/jv_parse.c:34 group 42 |  |  | 0.578 |
+| walker |  | 8920 | 12 | c aggregate member group at src/jv_parse.c:34 group 56 |  |  | 0.578 |
 | ns | 8927 |  | 65 | jv_aux.c — path-expression function locations | 7.3 |  | 0.581 |
-| walker |  | 8937 | 10 | c aggregate member group at src/jv_parse.c:34 group 42 |  |  | 0.581 |
-| walker |  | 8949 | 12 | c aggregate member group at src/jv_parse.c:34 group 56 |  |  | 0.581 |
-| walker |  | 8961 | 12 | c aggregate member group at src/jv_parse.c:34 group 58 |  |  | 0.581 |
-| walker |  | 8992 | 31 | c decl at src/jv_parse.c:640 |  |  | 0.581 |
+| walker |  | 8932 | 12 | c aggregate member group at src/jv_parse.c:34 group 58 |  |  | 0.581 |
+| walker |  | 8963 | 31 | c decl at src/jv_parse.c:640 |  |  | 0.581 |
+| walker |  | 8994 | 31 | c decl at src/jv_parse.c:646 |  |  | 0.581 |
 | ns | 9004 |  | 77 | linker.c — lib_entry/lib_loading_state structs (module system) | 7.4 |  | 0.586 |
-| walker |  | 9023 | 31 | c decl at src/jv_parse.c:646 |  |  | 0.586 |
-| walker |  | 9055 | 32 | c decl at src/jv_parse.c:643 |  |  | 0.586 |
-| walker |  | 9071 | 16 | c decl body at src/jv_parse.c:913 |  |  | 0.586 |
-| walker |  | 9104 | 33 | c decl at src/jv_parse.c:637 |  |  | 0.586 |
-| walker |  | 9152 | 48 | c decl at src/jv_parse.c:556 |  |  | 0.586 |
-| walker |  | 9172 | 20 | c decl body at src/jv_parse.c:722 |  |  | 0.586 |
-| walker |  | 9192 | 20 | c decl body at src/jv_parse.c:909 |  |  | 0.586 |
-| walker |  | 9212 | 20 | c decl body at src/jv_parse.c:917 |  |  | 0.586 |
-| walker |  | 9240 | 28 | c aggregate member group at src/jv_parse.c:34 group 52 |  |  | 0.586 |
-| walker |  | 9315 | 75 | c decl at src/jv_parse.c:25 |  |  | 0.586 |
+| walker |  | 9026 | 32 | c decl at src/jv_parse.c:643 |  |  | 0.586 |
+| walker |  | 9059 | 33 | c decl at src/jv_parse.c:637 |  |  | 0.586 |
+| walker |  | 9107 | 48 | c decl at src/jv_parse.c:556 |  |  | 0.586 |
+| walker |  | 9135 | 28 | c aggregate member group at src/jv_parse.c:34 group 52 |  |  | 0.586 |
+| walker |  | 9210 | 75 | c decl at src/jv_parse.c:25 |  |  | 0.586 |
+| walker |  | 9482 | 272 | c whole header in src/builtin.h |  |  | 0.586 |
 | ns | 9559 |  | 555 | main.c — usage() flag reference (the everyday flags) | 8.1 |  | 0.574 |
-| walker |  | 9587 | 272 | c whole header in src/builtin.h |  |  | 0.574 |
 | ns | 9726 |  | 167 | main.c — JQ_* exit-status codes | 8.2 |  | 0.570 |
+| walker |  | 9762 | 280 | c whole header in src/locfile.h |  |  | 0.570 |
 | ns | 9847 |  | 121 | main.c — hidden/debug-only flags not in usage() | 8.3 | 8.1 | 0.569 |
-| walker |  | 9867 | 280 | c whole header in src/locfile.h |  |  | 0.569 |
+| walker |  | 9921 | 159 | README.md section #4 |  |  | 0.569 |
 | ns | 9925 |  | 78 | tests/jq.test — 3-line test format + opening samples | 8.4 |  | 0.566 |
+| walker |  | 9954 | 33 | c decl doc at src/linker.c:409 |  |  | 0.566 |
 | ns | 9988 |  | 63 | tests/jqtest — self-test harness invocation | 8.5 |  | 0.564 |

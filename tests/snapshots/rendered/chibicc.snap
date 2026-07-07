@@ -107,7 +107,6 @@ chibicc.h
      118→void undef_macro(char *name);
      119→Token *preprocess(Token *tok);
     …
-     125→// Variable or function
      126→typedef struct Obj Obj;
      127→struct Obj {
      128→  Obj *next;
@@ -140,9 +139,7 @@ chibicc.h
      160→  bool is_root;
      161→  StringArray refs;
      162→};
-     164→// Global variable can be initialized either by a constant expression
-     165→// or a pointer to another global variable. This struct represents the
-     166→// latter.
+    …
      167→typedef struct Relocation Relocation;
      168→struct Relocation {
      169→  Relocation *next;
@@ -150,11 +147,11 @@ chibicc.h
      171→  char **label;
      172→  long addend;
      173→};
-     175→// AST node
+    …
      176→typedef enum {
     …
      225→} NodeKind;
-     227→// AST node type
+    …
      228→struct Node {
      229→  NodeKind kind; // Node kind
      230→  Node *next;    // Next node
@@ -254,7 +251,7 @@ chibicc.h
      357→  bool is_variadic;
      358→  Type *next;
      359→};
-     361→// Struct member
+    …
      362→struct Member {
      363→  Member *next;
      364→  Type *ty;

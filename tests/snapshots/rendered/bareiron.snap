@@ -63,22 +63,21 @@ include/
           26→#define MAX_MOBS (MAX_PLAYERS)
           28→// Manhattan distance at which mobs despawn
           29→#define MOB_DESPAWN_DISTANCE 256
-          31→// Server game mode: 0 - survival; 1 - creative; 2 - adventure; 3 - spectator
+        …
           32→#define GAMEMODE 0
-          34→// Max render distance, determines how many chunks to send
+        …
           35→#define VIEW_DISTANCE 2
-          37→// Time between server ticks in microseconds (default = 1s)
+        …
           38→#define TIME_BETWEEN_TICKS 1000000
           40→// Calculated from TIME_BETWEEN_TICKS
           41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
-          43→// Initial world generation seed, will be hashed on startup
-          44→// Used in generating terrain and biomes
+        …
           45→#define INITIAL_WORLD_SEED 0xA103DE6C
         …
           49→#define INITIAL_RNG_SEED 0xE2B9419
         …
           53→#define CHUNK_SIZE 8
-          55→// Terrain low point - should start a bit below sea level for rivers/lakes
+        …
           56→#define TERRAIN_BASE_HEIGHT 60
           58→// Cave generation Y level
           59→#define CAVE_BASE_DEPTH 24
@@ -88,14 +87,14 @@ include/
           66→#define BIOME_RADIUS (BIOME_SIZE / 2)
         …
           71→#define VISITED_HISTORY 4
-          73→// How many player-made block changes to allow
-          74→// Determines the fixed amount of memory allocated to blocks
+        …
           75→#define MAX_BLOCK_CHANGES 20000
         …
           93→#define DISK_SYNC_INTERVAL 15000000
         …
     packets.h
         …
+           4→// Serverbound packets
            5→int cs_handshake (int client_fd);
            6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
            7→int cs_clientInformation (int client_fd);
@@ -244,6 +243,13 @@ include/
 src/
     CMakeLists.txt
     crafting.c
+        …
+           9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
+        …
+         349→#define registerSmeltingRecipe(a, b) \
+        …
+         352→void getSmeltingOutput (PlayerData *player) {
+        …
     globals.c
     main.c
         …

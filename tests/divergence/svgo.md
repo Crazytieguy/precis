@@ -153,7 +153,6 @@ Score(3000)=0.435 I=0.742 C=0.256 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | walker |  | 7052 | 63 | export doc at lib/style.js:253 |  |  | 0.564 |
 | walker |  | 7060 | 8 | listing of '.yarn/plugins/@yarnpkg' |  |  | 0.564 |
 | ns | 7230 |  | 370 | plugins/preset-default.js — the default pipeline, in order | 4.4 |  | 0.543 |
-| walker |  | 7271 | 211 | export body at lib/style.js:253 body 254 |  |  | 0.543 |
 | ns | 7464 |  | 234 | plugins/_collections.js — export location roster | 4.5 |  | 0.536 |
 | ns | 7682 |  | 218 | plugins/convertPathData.js — function location roster | 4.6 |  | 0.527 |
 | ns | 8191 |  | 509 | plugins/removeComments.js — full plugin, as a worked example | 4.7 | 4.2 | 0.505 |

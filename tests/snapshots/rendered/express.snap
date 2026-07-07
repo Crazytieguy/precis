@@ -254,24 +254,6 @@ lib/
         …
           63→req.get =
           64→req.header = function header(name) {
-          65→  if (!name) {
-          66→    throw new TypeError('name argument is required to req.get');
-          67→  }
-          68→
-          69→  if (typeof name !== 'string') {
-          70→    throw new TypeError('name must be a string to req.get');
-          71→  }
-          72→
-          73→  var lc = name.toLowerCase();
-          74→
-          75→  switch (lc) {
-          76→    case 'referer':
-          77→    case 'referrer':
-          78→      return this.headers.referrer
-          79→        || this.headers.referer;
-          80→    default:
-          81→      return this.headers[lc];
-          82→  }
         …
          127→req.accepts = function(){
          128→  var accept = accepts(this);

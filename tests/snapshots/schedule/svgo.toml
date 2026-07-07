@@ -1,7 +1,7 @@
 fixture = "svgo"
 budget = 10000
-cumulative_tokens = 7271
-batch_count = 126
+cumulative_tokens = 7060
+batch_count = 125
 
 [[batches]]
 position = 1
@@ -3057,21 +3057,3 @@ kind = "fs"
 [[batches.content.groups]]
 parent = ".yarn/plugins/@yarnpkg"
 entries = ["plugin-interactive-tools.cjs"]
-
-[[batches]]
-position = 126
-key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 253, body_start_line: 254 })'
-descriptor = "export body at lib/style.js:253 body 254"
-cost_tokens = 211
-cum_tokens = 7271
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/style.js"
-start = 254
-end = 270
-
-[batches.content.spans.render]
-kind = "full"
