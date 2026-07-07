@@ -446,6 +446,19 @@ Measured-dead this session (don't re-test without new evidence):
   1 flat, adding ClassBody/StructFieldGroup −0.0022 (field rosters are
   surface-like). root.go entry treatment retried on the new frontier:
   still inert.
+- **Ops-config class boost (oracle-gap driven)**: the NS-aware oracle
+  buys more config/manifest batches ≤3K than the walker (382 vs 282;
+  the only class where oracle > walker — from classifying
+  `--oracle-schedules` output against walker rows). A 1.3× class
+  boost measured −0.0013 blanket, +0.0005 with appendix-class guards
+  (TomlKey::Config, Json IdentityMeta/Entry/Runtime excluded),
+  +0.0003 value-side root-gated. Irreducible bimodality: chibicc
+  +0.086 / linkwarden +0.070 / peepdb +0.054 want root config ≤3K;
+  audiobookshelf −0.102 / chronos −0.079 / tock −0.050 want source
+  there instead, and both sides include self-hosted apps — no
+  walk-time discriminator found. The oracle-vs-walker class
+  aggregation method itself is sound and cheap; reuse it after the
+  next mechanism shifts the frontier.
 - **Post-3K recall extensions all price below the frontier**: TOML
   `Whole` for non-manifest configs (~flat, 1000-budget −0.0013),
   Makefile >100-line head-sample + dotenv tail to 120 (sqlite-vec
