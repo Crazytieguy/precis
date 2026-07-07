@@ -135,39 +135,6 @@ microbootstrap/
               23→
               24→
               25→class ApplicationBootstrapper(abc.ABC, typing.Generic[SettingsT, ApplicationT, DataclassT]):
-              26→    application_type: type[ApplicationT]
-              27→    application_config: DataclassT
-              28→    console_writer: ConsoleWriter
-              29→    instrument_box: InstrumentBox
-              31→    def __init__(self, settings: SettingsT) -> None:
-            …
-              39→    def configure_application(
-              40→        self,
-              41→        application_config: DataclassT,
-              42→    ) -> typing_extensions.Self:
-            …
-              46→    def configure_instrument(
-              47→        self,
-              48→        instrument_config: InstrumentConfigT,
-              49→    ) -> typing_extensions.Self:
-            …
-              53→    def configure_instruments(
-              54→        self,
-              55→        *instrument_configs: InstrumentConfigT,
-              56→    ) -> typing_extensions.Self:
-            …
-              62→    def use_instrument(
-            …
-              72→    def bootstrap(self) -> ApplicationT:
-            …
-              99→    def bootstrap_before(self) -> dict[str, typing.Any]:
-            …
-             101→        return {}
-             103→    def bootstrap_before_instruments_after_app_created(self, application: ApplicationT) -> ApplicationT:
-            …
-             107→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
-            …
-             111→    def teardown(self) -> None:
             …
         fastapi.py
         faststream.py
@@ -264,14 +231,47 @@ microbootstrap/
               61→        """Add some framework-related parameters to final bootstrap result after application creation."""
               62→        return application
         cors_instrument.py
+            …
+               8→class CorsConfig(BaseInstrumentConfig):
+            …
+              18→class CorsInstrument(Instrument[CorsConfig]):
+            …
+              22→    def is_ready(self) -> bool:
+            …
+              27→    @classmethod
+              28→    def get_config_type(cls) -> type[CorsConfig]:
+              29→        return CorsConfig
         health_checks_instrument.py
         instrument_box.py
+            …
+               9→@dataclasses.dataclass
+              10→class InstrumentBox:
+            …
+              14→    def initialize(self, settings: SettingsT) -> None:
+            …
+              21→    def configure_instrument(
+            …
+              34→    def extend_instruments(
+            …
+              48→    @property
+              49→    def instruments(self) -> list[Instrument[typing.Any]]:
+              50→        return self.__initialized_instruments__
         logging_instrument.py
         opentelemetry_instrument.py
         prometheus_instrument.py
         pyroscope_instrument.py
         sentry_instrument.py
         swagger_instrument.py
+            …
+              10→class SwaggerConfig(BaseInstrumentConfig):
+            …
+              21→class SwaggerInstrument(Instrument[SwaggerConfig]):
+            …
+              25→    def is_ready(self) -> bool:
+            …
+              28→    @classmethod
+              29→    def get_config_type(cls) -> type[SwaggerConfig]:
+              30→        return SwaggerConfig
     instruments_setupper.py
         …
           19→class InstrumentsSetupper:

@@ -1385,10 +1385,19 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
         0.5
     };
     mix_signals(cat, 0.55, 0.35, python_depth_factor(file, ctx))
-        * concrete_impl_sibling_factor(file)
+        * concrete_impl_sibling_factor(file).max(1.0)
 }
 
 /// 1.5× boost for `base.py`, 0.6× damp on its concrete siblings.
+///
+/// Role split (chronos NS order is the canonical evidence): NS authors
+/// schedule breadth-first — base's surface, then every sibling's
+/// surface, then base's bodies. So surface roles (names, method sigs)
+/// take the boost but never the damp (`.max(1.0)` — a core file's
+/// location roster is the anti-omission hedge regardless of siblings),
+/// while depth roles (class body, method) take the damp but never the
+/// boost (`.min(1.0)` — a boosted body outranks sibling surfaces and
+/// funds a deep dive the NS ranks last).
 fn concrete_impl_sibling_factor(file: &Path) -> f64 {
     let Some(parent) = file.parent() else {
         return 1.0;
@@ -1411,7 +1420,7 @@ fn concrete_impl_sibling_factor(file: &Path) -> f64 {
 
 fn method_sigs_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.55, 0.50, 0.30, python_depth_factor(file, ctx))
-        * concrete_impl_sibling_factor(file)
+        * concrete_impl_sibling_factor(file).max(1.0)
 }
 
 fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
@@ -1439,14 +1448,16 @@ fn class_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let v = info.visibility_factor();
     let cat = (0.35 * v).min(1.0);
     let fu = (0.70 * v).min(1.0);
-    mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx)) * concrete_impl_sibling_factor(file)
+    mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx))
+        * concrete_impl_sibling_factor(file).min(1.0)
 }
 
 fn method_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let v = info.visibility_factor();
     let cat = (0.55 * v).min(1.0);
     let fu = (0.75 * v).min(1.0);
-    mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx)) * concrete_impl_sibling_factor(file)
+    mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx))
+        * concrete_impl_sibling_factor(file).min(1.0)
 }
 
 fn method_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
