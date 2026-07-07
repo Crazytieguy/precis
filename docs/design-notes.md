@@ -422,6 +422,22 @@ Measured-dead this session (don't re-test without new evidence):
 - **Workspace-member manifest ne-exemption (JSON)**: inert — member
   manifest values rise but stay below the 3K frontier (vite −0.022
   the only mover). cmdk's tier-2 manifests remain unbought.
+- **Scheduler breadth pressure (train penalty)**: dynamic ratio
+  divisor `1/(1 + K·n)` per predecessor-train root (n = scheduled
+  non-zero-cost batches under the root), applied in both ranking
+  passes. K=0.08 → −0.0043, K=0.03 → −0.0063 (non-monotone). Blanket
+  same-train demotion fails the same bimodality guard as ci_value:
+  single-file libraries and sequenced README sections are trains the
+  NS *wants* deep. A retry must discriminate wanted trains from dives
+  (e.g. only penalize trains whose root is a non-orientation source
+  file while unopened sibling surfaces remain), not rescale globally.
+- **Post-3K recall extensions all price below the frontier**: TOML
+  `Whole` for non-manifest configs (~flat, 1000-budget −0.0013),
+  Makefile >100-line head-sample + dotenv tail to 120 (sqlite-vec
+  −0.001 only), TS primary-member depth re-rooting (vite −0.040,
+  d2ts −0.012, cmdk +0.022), README index-decay floor 0.7 → 0.55
+  (exactly flat everywhere). The 3K frontier is the binding
+  constraint; absent-bucket recall only pays at B ≥ 4327.
 
 ## Extreme-budget contract sweep (2026-07-06): corpus clean
 
