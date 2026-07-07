@@ -28,18 +28,18 @@ Score(3000)=0.290 I=0.378 C=0.223 ns_rows≤3K=26/44 (reached=6 partial=0 missin
 | walker |  | 484 | 202 | package scripts in package.json |  |  | 0.242 |
 | walker |  | 494 | 10 | export names surface in playwright.config.ts |  |  | 0.242 |
 | walker |  | 499 | 5 | listing of '.husky' |  |  | 0.242 |
-| walker |  | 507 | 8 | listing of '.github' |  |  | 0.242 |
-| walker |  | 511 | 4 | listing of '.github/workflows' |  |  | 0.242 |
 | ns | 573 |  | 103 | cmdk/tsup.config.ts | 2.14 |  | 0.226 |
-| ns | 795 |  | 222 | test/package.json | 2.15 |  | 0.206 |
-| walker |  | 850 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.209 |
-| walker |  | 863 | 13 | export names surface in cmdk/tsup.config.ts |  |  | 0.210 |
-| walker |  | 897 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.285 |
-| ns | 996 |  | 201 | website/package.json dependencies | 2.16 |  | 0.268 |
-| walker |  | 1185 | 288 | headings outline in README.md |  |  | 0.276 |
-| walker |  | 1199 | 14 | README.md section #28 |  |  | 0.276 |
-| walker |  | 1225 | 26 | README.md section #1 |  |  | 0.276 |
-| walker |  | 1269 | 44 | README.md section #3 |  |  | 0.276 |
+| walker |  | 787 | 288 | headings outline in README.md |  |  | 0.236 |
+| ns | 795 |  | 222 | test/package.json | 2.15 |  | 0.215 |
+| walker |  | 801 | 14 | README.md section #28 |  |  | 0.215 |
+| walker |  | 827 | 26 | README.md section #1 |  |  | 0.215 |
+| walker |  | 835 | 8 | listing of '.github' |  |  | 0.215 |
+| walker |  | 839 | 4 | listing of '.github/workflows' |  |  | 0.215 |
+| ns | 996 |  | 201 | website/package.json dependencies | 2.16 |  | 0.202 |
+| walker |  | 1178 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.205 |
+| walker |  | 1191 | 13 | export names surface in cmdk/tsup.config.ts |  |  | 0.206 |
+| walker |  | 1235 | 44 | README.md section #3 |  |  | 0.206 |
+| walker |  | 1269 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.276 |
 | ns | 1337 |  | 341 | cmdk/package.json identity + exports + deps | 2.17 |  | 0.249 |
 | ns | 1549 |  | 212 | README lede | 2.18 |  | 0.245 |
 | walker |  | 1643 | 374 | export names surface in cmdk/src/index.tsx |  |  | 0.246 |

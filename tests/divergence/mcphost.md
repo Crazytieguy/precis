@@ -18,32 +18,32 @@ Score(3000)=0.588 I=0.844 C=0.410 ns_rows≤3K=18/46 (reached=7 partial=1 missin
 | walker |  | 277 | 14 | README.md section #1 |  |  | 0.574 |
 | walker |  | 289 | 12 | README.md section #2 |  |  | 0.574 |
 | walker |  | 301 | 12 | README.md section #3 |  |  | 0.574 |
-| walker |  | 304 | 3 | listing of '.github' |  |  | 0.574 |
-| walker |  | 312 | 8 | listing of '.github/workflows' |  |  | 0.585 |
-| ns | 377 |  | 153 | internal/{agent,auth,builtin,config,hooks} file listings | 2.2 |  | 0.427 |
-| walker |  | 466 | 154 | YAML config at .github/workflows/ci.yml |  |  | 0.427 |
+| walker |  | 315 | 14 | README.md section #5 |  |  | 0.574 |
+| walker |  | 328 | 13 | README.md section #4 |  |  | 0.574 |
+| walker |  | 342 | 14 | README.md section #12 |  |  | 0.574 |
+| walker |  | 356 | 14 | README.md section #11 |  |  | 0.574 |
+| walker |  | 371 | 15 | README.md section #6 |  |  | 0.574 |
+| walker |  | 374 | 3 | listing of '.github' |  |  | 0.574 |
+| ns | 377 |  | 153 | internal/{agent,auth,builtin,config,hooks} file listings | 2.2 |  | 0.420 |
+| walker |  | 382 | 8 | listing of '.github/workflows' |  |  | 0.427 |
 | ns | 474 |  | 97 | internal/{models,session,tokens,tools} + models subpackage listings | 2.3 |  | 0.374 |
-| walker |  | 490 | 24 | listing of 'sdk' |  |  | 0.402 |
-| walker |  | 530 | 40 | README headline in sdk/README.md |  |  | 0.402 |
-| walker |  | 536 | 6 | listing of 'examples' |  |  | 0.417 |
-| ns | 565 |  | 91 | internal/ui/{.,progress} file listing | 2.4 |  | 0.378 |
-| walker |  | 566 | 30 | listing of 'internal' |  |  | 0.478 |
-| walker |  | 574 | 8 | listing of 'internal/session' |  |  | 0.479 |
-| walker |  | 586 | 12 | listing of 'internal/agent' |  |  | 0.481 |
-| walker |  | 599 | 13 | listing of 'internal/tokens' |  |  | 0.488 |
-| walker |  | 615 | 16 | go decl names surface in internal/tokens/counter.go |  |  | 0.488 |
-| walker |  | 615 | 0 | go decl at internal/tokens/counter.go:21 |  |  | 0.488 |
-| walker |  | 632 | 17 | listing of 'internal/auth' |  |  | 0.497 |
-| ns | 641 |  | 76 | sdk/examples, examples/{hooks,scripts}, contribute/conf, hooks testdata listings | 2.5 |  | 0.466 |
-| walker |  | 668 | 36 | listing of 'cmd' |  |  | 0.560 |
-| walker |  | 682 | 14 | README.md section #5 |  |  | 0.560 |
-| walker |  | 695 | 13 | README.md section #4 |  |  | 0.560 |
-| walker |  | 709 | 14 | README.md section #12 |  |  | 0.560 |
-| walker |  | 723 | 14 | README.md section #11 |  |  | 0.560 |
-| walker |  | 751 | 28 | go decl names surface in internal/tokens/init.go |  |  | 0.560 |
-| walker |  | 751 | 0 | go decl at internal/tokens/init.go:21 |  |  | 0.560 |
-| walker |  | 751 | 0 | go decl at internal/tokens/init.go:50 |  |  | 0.560 |
-| walker |  | 766 | 15 | README.md section #6 |  |  | 0.560 |
+| walker |  | 536 | 154 | YAML config at .github/workflows/ci.yml |  |  | 0.374 |
+| walker |  | 560 | 24 | listing of 'sdk' |  |  | 0.402 |
+| ns | 565 |  | 91 | internal/ui/{.,progress} file listing | 2.4 |  | 0.364 |
+| walker |  | 600 | 40 | README headline in sdk/README.md |  |  | 0.364 |
+| walker |  | 606 | 6 | listing of 'examples' |  |  | 0.378 |
+| walker |  | 636 | 30 | listing of 'internal' |  |  | 0.478 |
+| ns | 641 |  | 76 | sdk/examples, examples/{hooks,scripts}, contribute/conf, hooks testdata listings | 2.5 |  | 0.448 |
+| walker |  | 644 | 8 | listing of 'internal/session' |  |  | 0.450 |
+| walker |  | 656 | 12 | listing of 'internal/agent' |  |  | 0.451 |
+| walker |  | 669 | 13 | listing of 'internal/tokens' |  |  | 0.458 |
+| walker |  | 685 | 16 | go decl names surface in internal/tokens/counter.go |  |  | 0.458 |
+| walker |  | 685 | 0 | go decl at internal/tokens/counter.go:21 |  |  | 0.458 |
+| walker |  | 702 | 17 | listing of 'internal/auth' |  |  | 0.466 |
+| walker |  | 738 | 36 | listing of 'cmd' |  |  | 0.560 |
+| walker |  | 766 | 28 | go decl names surface in internal/tokens/init.go |  |  | 0.560 |
+| walker |  | 766 | 0 | go decl at internal/tokens/init.go:21 |  |  | 0.560 |
+| walker |  | 766 | 0 | go decl at internal/tokens/init.go:50 |  |  | 0.560 |
 | walker |  | 796 | 30 | go decl names surface in internal/auth/browser.go |  |  | 0.560 |
 | walker |  | 796 | 0 | go decl at internal/auth/browser.go:14 |  |  | 0.560 |
 | walker |  | 796 | 0 | go decl at internal/auth/browser.go:34 |  |  | 0.560 |

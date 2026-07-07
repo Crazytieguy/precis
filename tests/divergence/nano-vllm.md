@@ -25,39 +25,39 @@ Score(3000)=0.652 I=0.849 C=0.501 ns_rows≤3K=25/50 (reached=16 partial=2 missi
 | walker |  | 297 | 8 | listing of 'nanovllm/utils' |  |  | 0.661 |
 | ns | 304 |  | 48 | README: installation | 1.9 |  | 0.621 |
 | walker |  | 374 | 77 | README.md section #1 |  |  | 0.730 |
-| walker |  | 386 | 12 | python decl names surface in nanovllm/config.py |  |  | 0.730 |
-| walker |  | 393 | 7 | python decl at nanovllm/config.py:6 |  |  | 0.730 |
-| walker |  | 407 | 14 | python method sigs in nanovllm/config.py |  |  | 0.730 |
-| walker |  | 407 | 0 | python method at nanovllm/config.py:20 |  |  | 0.730 |
-| walker |  | 419 | 12 | python decl names surface in nanovllm/sampling_params.py |  |  | 0.730 |
-| walker |  | 427 | 8 | python decl at nanovllm/sampling_params.py:4 |  |  | 0.730 |
-| walker |  | 441 | 14 | python method sigs in nanovllm/sampling_params.py |  |  | 0.730 |
-| walker |  | 441 | 0 | python method at nanovllm/sampling_params.py:10 |  |  | 0.730 |
-| walker |  | 457 | 16 | python decl names surface in nanovllm/llm.py |  |  | 0.731 |
-| walker |  | 457 | 0 | python decl at nanovllm/llm.py:4 |  |  | 0.731 |
-| walker |  | 462 | 5 | python class body at nanovllm/llm.py:4 |  |  | 0.731 |
-| ns | 469 |  | 165 | README: quick start usage snippet | 1.10 |  | 0.642 |
-| walker |  | 486 | 24 | listing of 'nanovllm/engine' |  |  | 0.720 |
-| walker |  | 525 | 39 | README.md section #2 |  |  | 0.778 |
-| walker |  | 536 | 11 | python decl names surface in nanovllm/engine/scheduler.py |  |  | 0.779 |
-| walker |  | 536 | 0 | python decl at nanovllm/engine/scheduler.py:8 |  |  | 0.779 |
-| walker |  | 545 | 9 | python imports in nanovllm/sampling_params.py |  |  | 0.779 |
-| walker |  | 557 | 12 | python decl names surface in nanovllm/engine/model_runner.py |  |  | 0.779 |
-| walker |  | 557 | 0 | python decl at nanovllm/engine/model_runner.py:15 |  |  | 0.779 |
-| ns | 569 |  | 100 | README: model download command | 1.11 |  | 0.721 |
-| walker |  | 588 | 31 | listing of 'nanovllm/layers' |  |  | 0.810 |
-| walker |  | 601 | 13 | python decl names surface in nanovllm/engine/llm_engine.py |  |  | 0.810 |
-| walker |  | 601 | 0 | python decl at nanovllm/engine/llm_engine.py:15 |  |  | 0.810 |
-| walker |  | 615 | 14 | python decl names surface in nanovllm/layers/layernorm.py |  |  | 0.810 |
-| walker |  | 615 | 0 | python decl at nanovllm/layers/layernorm.py:5 |  |  | 0.810 |
-| walker |  | 629 | 14 | python decl names surface in nanovllm/layers/sampler.py |  |  | 0.810 |
-| walker |  | 629 | 0 | python decl at nanovllm/layers/sampler.py:5 |  |  | 0.810 |
-| walker |  | 667 | 38 | python class body at nanovllm/sampling_params.py:4 |  |  | 0.813 |
-| ns | 682 |  | 113 | README: benchmark results table | 1.12 |  | 0.771 |
-| walker |  | 765 | 98 | manifest config in pyproject.toml |  |  | 0.774 |
-| ns | 812 |  | 130 | pyproject.toml: project identity, python version, dependencies | 1.13 |  | 0.742 |
-| ns | 844 |  | 32 | pyproject.toml: build backend | 1.14 |  | 0.748 |
-| walker |  | 853 | 88 | [package] in pyproject.toml |  |  | 0.803 |
+| walker |  | 413 | 39 | README.md section #2 |  |  | 0.798 |
+| walker |  | 425 | 12 | python decl names surface in nanovllm/config.py |  |  | 0.798 |
+| walker |  | 432 | 7 | python decl at nanovllm/config.py:6 |  |  | 0.798 |
+| walker |  | 446 | 14 | python method sigs in nanovllm/config.py |  |  | 0.798 |
+| walker |  | 446 | 0 | python method at nanovllm/config.py:20 |  |  | 0.798 |
+| walker |  | 458 | 12 | python decl names surface in nanovllm/sampling_params.py |  |  | 0.798 |
+| walker |  | 466 | 8 | python decl at nanovllm/sampling_params.py:4 |  |  | 0.798 |
+| ns | 469 |  | 165 | README: quick start usage snippet | 1.10 |  | 0.701 |
+| walker |  | 480 | 14 | python method sigs in nanovllm/sampling_params.py |  |  | 0.702 |
+| walker |  | 480 | 0 | python method at nanovllm/sampling_params.py:10 |  |  | 0.702 |
+| ns | 569 |  | 100 | README: model download command | 1.11 |  | 0.650 |
+| walker |  | 570 | 90 | [package] in pyproject.toml |  |  | 0.657 |
+| walker |  | 586 | 16 | python decl names surface in nanovllm/llm.py |  |  | 0.657 |
+| walker |  | 586 | 0 | python decl at nanovllm/llm.py:4 |  |  | 0.657 |
+| walker |  | 591 | 5 | python class body at nanovllm/llm.py:4 |  |  | 0.658 |
+| walker |  | 615 | 24 | listing of 'nanovllm/engine' |  |  | 0.728 |
+| walker |  | 626 | 11 | python decl names surface in nanovllm/engine/scheduler.py |  |  | 0.728 |
+| walker |  | 626 | 0 | python decl at nanovllm/engine/scheduler.py:8 |  |  | 0.728 |
+| walker |  | 635 | 9 | python imports in nanovllm/sampling_params.py |  |  | 0.729 |
+| walker |  | 647 | 12 | python decl names surface in nanovllm/engine/model_runner.py |  |  | 0.729 |
+| walker |  | 647 | 0 | python decl at nanovllm/engine/model_runner.py:15 |  |  | 0.729 |
+| walker |  | 678 | 31 | listing of 'nanovllm/layers' |  |  | 0.818 |
+| ns | 682 |  | 113 | README: benchmark results table | 1.12 |  | 0.776 |
+| walker |  | 691 | 13 | python decl names surface in nanovllm/engine/llm_engine.py |  |  | 0.776 |
+| walker |  | 691 | 0 | python decl at nanovllm/engine/llm_engine.py:15 |  |  | 0.776 |
+| walker |  | 705 | 14 | python decl names surface in nanovllm/layers/layernorm.py |  |  | 0.776 |
+| walker |  | 705 | 0 | python decl at nanovllm/layers/layernorm.py:5 |  |  | 0.776 |
+| walker |  | 719 | 14 | python decl names surface in nanovllm/layers/sampler.py |  |  | 0.776 |
+| walker |  | 719 | 0 | python decl at nanovllm/layers/sampler.py:5 |  |  | 0.776 |
+| walker |  | 757 | 38 | python class body at nanovllm/sampling_params.py:4 |  |  | 0.779 |
+| ns | 812 |  | 130 | pyproject.toml: project identity, python version, dependencies | 1.13 |  | 0.796 |
+| ns | 844 |  | 32 | pyproject.toml: build backend | 1.14 |  | 0.779 |
+| walker |  | 853 | 96 | manifest config in pyproject.toml |  |  | 0.803 |
 | walker |  | 869 | 16 | python decl names surface in nanovllm/layers/activation.py |  |  | 0.803 |
 | walker |  | 869 | 0 | python decl at nanovllm/layers/activation.py:6 |  |  | 0.803 |
 | ns | 873 |  | 29 | LICENSE identification | 1.15 |  | 0.787 |

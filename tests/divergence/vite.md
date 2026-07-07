@@ -8,19 +8,19 @@ Score(3000)=0.487 I=0.727 C=0.327 ns_rows≤3K=24/49 (reached=7 partial=0 missin
 | walker |  | 276 | 185 | README headline in README.md |  |  | 1.000 |
 | walker |  | 312 | 36 | headings outline in README.md |  |  | 1.000 |
 | ns | 320 |  | 144 | Root package.json: key scripts | 1.3 |  | 0.890 |
-| walker |  | 325 | 13 | listing of 'packages' |  |  | 0.899 |
-| ns | 333 |  | 13 | packages/ directory listing | 1.4 |  | 0.897 |
-| walker |  | 337 | 12 | README.md section #3 |  |  | 0.897 |
-| walker |  | 356 | 19 | README.md section #2 |  |  | 0.897 |
-| walker |  | 389 | 33 | listing of 'patches' |  |  | 0.897 |
-| walker |  | 402 | 13 | export names surface in vitest.config.e2e.ts |  |  | 0.897 |
-| walker |  | 415 | 13 | export names surface in vitest.config.ts |  |  | 0.897 |
-| walker |  | 445 | 30 | listing of 'packages/plugin-legacy' |  |  | 0.898 |
-| ns | 504 |  | 171 | pnpm-workspace.yaml: layout + patched/overridden deps | 1.5 |  | 0.759 |
-| walker |  | 529 | 84 | README headline in packages/plugin-legacy/README.md |  |  | 0.759 |
-| walker |  | 552 | 23 | listing of 'packages/plugin-legacy/src' |  |  | 0.759 |
+| walker |  | 324 | 12 | README.md section #3 |  |  | 0.890 |
+| ns | 333 |  | 13 | packages/ directory listing | 1.4 |  | 0.846 |
+| walker |  | 343 | 19 | README.md section #2 |  |  | 0.846 |
+| walker |  | 356 | 13 | listing of 'packages' |  |  | 0.897 |
+| ns | 504 |  | 171 | pnpm-workspace.yaml: layout + patched/overridden deps | 1.5 |  | 0.758 |
+| walker |  | 546 | 190 | README.md section #0 |  |  | 0.758 |
+| walker |  | 579 | 33 | listing of 'patches' |  |  | 0.758 |
+| walker |  | 592 | 13 | export names surface in vitest.config.e2e.ts |  |  | 0.758 |
+| walker |  | 605 | 13 | export names surface in vitest.config.ts |  |  | 0.758 |
 | ns | 616 |  | 112 | CONTRIBUTING.md section headings | 1.6 |  | 0.679 |
-| walker |  | 742 | 190 | README.md section #0 |  |  | 0.679 |
+| walker |  | 635 | 30 | listing of 'packages/plugin-legacy' |  |  | 0.679 |
+| walker |  | 719 | 84 | README headline in packages/plugin-legacy/README.md |  |  | 0.679 |
+| walker |  | 742 | 23 | listing of 'packages/plugin-legacy/src' |  |  | 0.679 |
 | walker |  | 758 | 16 | listing of 'packages/plugin-legacy/src/__tests__' |  |  | 0.679 |
 | walker |  | 788 | 30 | listing of 'scripts' |  |  | 0.679 |
 | ns | 864 |  | 248 | CONTRIBUTING.md: Repo Setup | 1.7 | 1.6 | 0.604 |

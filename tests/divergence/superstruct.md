@@ -13,10 +13,10 @@ Score(3000)=0.589 I=0.859 C=0.404 ns_rows≤3K=14/40 (reached=6 partial=0 missin
 | ns | 325 |  | 140 | docs/ listing (all levels) | 1.5 |  | 0.559 |
 | walker |  | 381 | 197 | README headline in Readme.md |  |  | 0.559 |
 | ns | 420 |  | 95 | package.json identity (name/desc/version) | 1.6 |  | 0.559 |
-| walker |  | 460 | 79 | imports in src/index.ts |  |  | 0.559 |
-| walker |  | 481 | 21 | listing of 'docs' |  |  | 0.573 |
-| walker |  | 489 | 8 | listing of 'docs/resources' |  |  | 0.584 |
-| walker |  | 543 | 54 | headings outline in Readme.md |  |  | 0.584 |
+| walker |  | 435 | 54 | headings outline in Readme.md |  |  | 0.559 |
+| walker |  | 514 | 79 | imports in src/index.ts |  |  | 0.559 |
+| walker |  | 535 | 21 | listing of 'docs' |  |  | 0.573 |
+| walker |  | 543 | 8 | listing of 'docs/resources' |  |  | 0.584 |
 | walker |  | 570 | 27 | export names surface in src/error.ts |  |  | 0.584 |
 | ns | 572 |  | 152 | package.json entry points, files, engines | 1.7 | 1.6 | 0.530 |
 | walker |  | 588 | 18 | headings outline in docs/resources/links.md |  |  | 0.530 |

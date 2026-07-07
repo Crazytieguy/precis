@@ -18,47 +18,47 @@ Score(3000)=0.665 I=0.879 C=0.503 ns_rows≤3K=21/40 (reached=13 partial=0 missi
 | walker |  | 254 | 41 | README.md section #2 |  |  | 0.464 |
 | ns | 284 |  | 56 | docs/guide/ listing | 1.8 |  | 0.408 |
 | walker |  | 327 | 73 | [package] in pyproject.toml |  |  | 0.408 |
-| walker |  | 367 | 40 | listing of 'docs' |  |  | 0.540 |
-| walker |  | 371 | 4 | listing of 'docs/overrides' |  |  | 0.540 |
-| walker |  | 375 | 4 | listing of 'docs/stylesheets' |  |  | 0.541 |
-| ns | 383 |  | 99 | tests/ listing | 1.9 |  | 0.473 |
-| walker |  | 430 | 55 | headings outline in docs/roadmap.md |  |  | 0.473 |
-| ns | 470 |  | 87 | src/posting/widgets/ listing | 1.10 |  | 0.422 |
-| walker |  | 586 | 156 | listing of 'src/posting' |  |  | 0.438 |
-| ns | 626 |  | 156 | src/posting/ package listing | 1.11 |  | 0.562 |
-| ns | 728 |  | 102 | tests/ fixture sub-listing (sample-* dirs) | 1.12 |  | 0.524 |
-| walker |  | 853 | 267 | python imports in src/posting/__init__.py |  |  | 0.524 |
-| walker |  | 867 | 14 | listing of 'src/posting/importing' |  |  | 0.548 |
-| walker |  | 882 | 15 | python decl names surface in src/posting/_start_time.py |  |  | 0.548 |
-| walker |  | 969 | 87 | listing of 'src/posting/widgets' |  |  | 0.636 |
-| walker |  | 999 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.674 |
-| ns | 1000 |  | 272 | mkdocs.yml nav (guide table of contents) | 1.13 |  | 0.630 |
-| ns | 1014 |  | 14 | tests/sample-collections/jsonplaceholder/ + scripts/ listing | 1.14 |  | 0.621 |
-| ns | 1022 |  | 8 | docs/overrides/ + docs/stylesheets/ listing | 1.15 |  | 0.624 |
-| walker |  | 1065 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.688 |
-| walker |  | 1070 | 5 | python imports in src/posting/_start_time.py |  |  | 0.688 |
-| walker |  | 1080 | 10 | python decl names surface in src/posting/exit_codes.py |  |  | 0.688 |
-| walker |  | 1088 | 8 | listing of '.github' |  |  | 0.693 |
-| walker |  | 1100 | 12 | listing of '.github/workflows' |  |  | 0.720 |
-| walker |  | 1110 | 10 | listing of 'src/posting/widgets/collection' |  |  | 0.734 |
-| walker |  | 1122 | 12 | python decl names surface in src/posting/help_data.py |  |  | 0.734 |
-| walker |  | 1130 | 8 | python decl at src/posting/help_data.py:4 |  |  | 0.734 |
-| ns | 1134 |  | 112 | sample config.yaml (concrete example) | 2.1 |  | 0.706 |
-| walker |  | 1142 | 12 | python decl names surface in src/posting/messages.py |  |  | 0.706 |
-| walker |  | 1152 | 10 | python decl at src/posting/messages.py:6 |  |  | 0.706 |
-| walker |  | 1159 | 7 | python class body at src/posting/messages.py:6 |  |  | 0.706 |
-| walker |  | 1171 | 12 | python decl names surface in src/posting/version.py |  |  | 0.706 |
-| ns | 1193 |  | 59 | __main__.py — every CLI command signature (location catalog) | 2.2 |  | 0.693 |
-| walker |  | 1390 | 219 | plaintext config Makefile |  |  | 0.697 |
-| walker |  | 1407 | 17 | python decl names surface in src/posting/suggesters.py |  |  | 0.697 |
-| walker |  | 1424 | 17 | python decl names surface in src/posting/user_host.py |  |  | 0.697 |
-| walker |  | 1424 | 0 | python decl at src/posting/user_host.py:9 |  |  | 0.697 |
-| walker |  | 1443 | 19 | python decl doc at src/posting/help_data.py:4 |  |  | 0.697 |
-| walker |  | 1493 | 50 | README.md section #3 |  |  | 0.698 |
-| walker |  | 1511 | 18 | python decl names surface in src/posting/auth.py |  |  | 0.698 |
-| walker |  | 1511 | 0 | python decl at src/posting/auth.py:6 |  |  | 0.698 |
-| ns | 1551 |  | 358 | locations.py — full (XDG paths) | 2.3 |  | 0.634 |
-| walker |  | 1768 | 257 | README.md section #0 |  |  | 0.638 |
+| walker |  | 377 | 50 | README.md section #3 |  |  | 0.408 |
+| ns | 383 |  | 99 | tests/ listing | 1.9 |  | 0.357 |
+| ns | 470 |  | 87 | src/posting/widgets/ listing | 1.10 |  | 0.318 |
+| ns | 626 |  | 156 | src/posting/ package listing | 1.11 |  | 0.269 |
+| walker |  | 634 | 257 | README.md section #0 |  |  | 0.271 |
+| walker |  | 674 | 40 | listing of 'docs' |  |  | 0.359 |
+| walker |  | 678 | 4 | listing of 'docs/overrides' |  |  | 0.359 |
+| walker |  | 682 | 4 | listing of 'docs/stylesheets' |  |  | 0.359 |
+| ns | 728 |  | 102 | tests/ fixture sub-listing (sample-* dirs) | 1.12 |  | 0.335 |
+| walker |  | 737 | 55 | headings outline in docs/roadmap.md |  |  | 0.335 |
+| walker |  | 893 | 156 | listing of 'src/posting' |  |  | 0.529 |
+| ns | 1000 |  | 272 | mkdocs.yml nav (guide table of contents) | 1.13 |  | 0.494 |
+| ns | 1014 |  | 14 | tests/sample-collections/jsonplaceholder/ + scripts/ listing | 1.14 |  | 0.487 |
+| ns | 1022 |  | 8 | docs/overrides/ + docs/stylesheets/ listing | 1.15 |  | 0.492 |
+| ns | 1134 |  | 112 | sample config.yaml (concrete example) | 2.1 |  | 0.474 |
+| walker |  | 1160 | 267 | python imports in src/posting/__init__.py |  |  | 0.474 |
+| walker |  | 1174 | 14 | listing of 'src/posting/importing' |  |  | 0.495 |
+| walker |  | 1189 | 15 | python decl names surface in src/posting/_start_time.py |  |  | 0.495 |
+| ns | 1193 |  | 59 | __main__.py — every CLI command signature (location catalog) | 2.2 |  | 0.486 |
+| walker |  | 1276 | 87 | listing of 'src/posting/widgets' |  |  | 0.561 |
+| walker |  | 1306 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.595 |
+| walker |  | 1372 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.655 |
+| walker |  | 1377 | 5 | python imports in src/posting/_start_time.py |  |  | 0.655 |
+| walker |  | 1387 | 10 | python decl names surface in src/posting/exit_codes.py |  |  | 0.655 |
+| walker |  | 1395 | 8 | listing of '.github' |  |  | 0.660 |
+| walker |  | 1407 | 12 | listing of '.github/workflows' |  |  | 0.685 |
+| walker |  | 1417 | 10 | listing of 'src/posting/widgets/collection' |  |  | 0.698 |
+| walker |  | 1429 | 12 | python decl names surface in src/posting/help_data.py |  |  | 0.698 |
+| walker |  | 1437 | 8 | python decl at src/posting/help_data.py:4 |  |  | 0.698 |
+| walker |  | 1449 | 12 | python decl names surface in src/posting/messages.py |  |  | 0.698 |
+| walker |  | 1459 | 10 | python decl at src/posting/messages.py:6 |  |  | 0.698 |
+| walker |  | 1466 | 7 | python class body at src/posting/messages.py:6 |  |  | 0.698 |
+| walker |  | 1478 | 12 | python decl names surface in src/posting/version.py |  |  | 0.698 |
+| ns | 1551 |  | 358 | locations.py — full (XDG paths) | 2.3 |  | 0.635 |
+| walker |  | 1697 | 219 | plaintext config Makefile |  |  | 0.638 |
+| walker |  | 1714 | 17 | python decl names surface in src/posting/suggesters.py |  |  | 0.638 |
+| walker |  | 1731 | 17 | python decl names surface in src/posting/user_host.py |  |  | 0.638 |
+| walker |  | 1731 | 0 | python decl at src/posting/user_host.py:9 |  |  | 0.638 |
+| walker |  | 1750 | 19 | python decl doc at src/posting/help_data.py:4 |  |  | 0.638 |
+| walker |  | 1768 | 18 | python decl names surface in src/posting/auth.py |  |  | 0.638 |
+| walker |  | 1768 | 0 | python decl at src/posting/auth.py:6 |  |  | 0.638 |
 | walker |  | 1780 | 12 | python decl names surface in src/posting/importing/curl.py |  |  | 0.638 |
 | walker |  | 1780 | 0 | python decl at src/posting/importing/curl.py:22 |  |  | 0.638 |
 | ns | 1800 |  | 249 | __main__.py: make_posting() app construction | 2.4 | 2.2 | 0.606 |

@@ -12,22 +12,22 @@ Score(3000)=0.435 I=0.742 C=0.256 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | walker |  | 223 | 8 | listing of 'test-d/lib' |  |  | 0.966 |
 | ns | 304 |  | 134 | README title + tagline | 1.3 |  | 0.915 |
 | walker |  | 329 | 106 | headings outline in README.md |  |  | 0.916 |
-| walker |  | 354 | 25 | listing of 'logo' |  |  | 0.916 |
-| walker |  | 370 | 16 | README.md section #10 |  |  | 0.917 |
-| walker |  | 375 | 5 | listing of 'scripts' |  |  | 0.917 |
-| walker |  | 418 | 43 | listing of 'docs' |  |  | 0.918 |
-| walker |  | 437 | 19 | listing of 'docs/02-usage' |  |  | 0.918 |
-| walker |  | 443 | 6 | listing of '.yarn' |  |  | 0.918 |
-| walker |  | 455 | 12 | listing of '.github' |  |  | 0.918 |
-| ns | 467 |  | 163 | package.json — bin/types/exports | 1.4 |  | 0.748 |
-| walker |  | 477 | 22 | listing of '.github/workflows' |  |  | 0.749 |
-| walker |  | 567 | 90 | listing of 'lib' |  |  | 0.759 |
-| walker |  | 586 | 19 | listing of 'lib/svgo' |  |  | 0.759 |
-| ns | 594 |  | 127 | package.json — key scripts | 1.5 |  | 0.722 |
-| walker |  | 599 | 13 | listing of 'lib/util' |  |  | 0.722 |
-| walker |  | 606 | 7 | export names surface in lib/types.js |  |  | 0.722 |
-| walker |  | 617 | 11 | README.md section #8 |  |  | 0.722 |
-| walker |  | 672 | 55 | README.md section #1 |  |  | 0.726 |
+| walker |  | 345 | 16 | README.md section #10 |  |  | 0.917 |
+| walker |  | 356 | 11 | README.md section #8 |  |  | 0.917 |
+| walker |  | 381 | 25 | listing of 'logo' |  |  | 0.917 |
+| walker |  | 436 | 55 | README.md section #1 |  |  | 0.922 |
+| walker |  | 441 | 5 | listing of 'scripts' |  |  | 0.922 |
+| ns | 467 |  | 163 | package.json — bin/types/exports | 1.4 |  | 0.752 |
+| walker |  | 484 | 43 | listing of 'docs' |  |  | 0.752 |
+| walker |  | 503 | 19 | listing of 'docs/02-usage' |  |  | 0.752 |
+| walker |  | 509 | 6 | listing of '.yarn' |  |  | 0.752 |
+| walker |  | 521 | 12 | listing of '.github' |  |  | 0.753 |
+| walker |  | 543 | 22 | listing of '.github/workflows' |  |  | 0.753 |
+| ns | 594 |  | 127 | package.json — key scripts | 1.5 |  | 0.716 |
+| walker |  | 633 | 90 | listing of 'lib' |  |  | 0.726 |
+| walker |  | 652 | 19 | listing of 'lib/svgo' |  |  | 0.726 |
+| walker |  | 665 | 13 | listing of 'lib/util' |  |  | 0.726 |
+| walker |  | 672 | 7 | export names surface in lib/types.js |  |  | 0.726 |
 | walker |  | 706 | 34 | listing of 'docs/06-migrations' |  |  | 0.726 |
 | walker |  | 722 | 16 | export names surface in lib/builtin.js |  |  | 0.726 |
 | ns | 725 |  | 131 | package.json — runtime dependencies | 1.6 |  | 0.656 |

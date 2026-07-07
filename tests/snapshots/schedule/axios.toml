@@ -315,10 +315,28 @@ kind = "full"
 
 [[batches]]
 position = 16
+key = 'Markdown(ReadmeHeadline { file: "lib/env/README.md" })'
+descriptor = "README headline in lib/env/README.md"
+cost_tokens = 41
+cum_tokens = 470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/env/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
 key = 'Fs(DirListing { dir: "lib/adapters" })'
 descriptor = "listing of 'lib/adapters'"
 cost_tokens = 20
-cum_tokens = 449
+cum_tokens = 490
 
 [batches.content]
 kind = "fs"
@@ -328,11 +346,29 @@ parent = "lib/adapters"
 entries = ["README.md", "adapters.js", "fetch.js", "http.js", "xhr.js"]
 
 [[batches]]
-position = 17
+position = 18
+key = 'Markdown(ReadmeHeadline { file: "lib/adapters/README.md" })'
+descriptor = "README headline in lib/adapters/README.md"
+cost_tokens = 49
+cum_tokens = 539
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/adapters/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
 key = 'Fs(DirListing { dir: "lib/platform/common" })'
 descriptor = "listing of 'lib/platform/common'"
 cost_tokens = 4
-cum_tokens = 453
+cum_tokens = 543
 
 [batches.content]
 kind = "fs"
@@ -342,11 +378,11 @@ parent = "lib/platform/common"
 entries = ["utils.js"]
 
 [[batches]]
-position = 18
+position = 20
 key = 'Typescript(ExportNames { file: "lib/defaults/index.js" })'
 descriptor = "export names surface in lib/defaults/index.js"
 cost_tokens = 10
-cum_tokens = 463
+cum_tokens = 553
 
 [batches.content]
 kind = "lines"
@@ -360,11 +396,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 19
+position = 21
 key = 'Fs(DirListing { dir: "lib/env/classes" })'
 descriptor = "listing of 'lib/env/classes'"
 cost_tokens = 5
-cum_tokens = 468
+cum_tokens = 558
 
 [batches.content]
 kind = "fs"
@@ -374,11 +410,11 @@ parent = "lib/env/classes"
 entries = ["FormData.js"]
 
 [[batches]]
-position = 20
+position = 22
 key = 'Typescript(ExportNames { file: "lib/platform/index.js" })'
 descriptor = "export names surface in lib/platform/index.js"
 cost_tokens = 11
-cum_tokens = 479
+cum_tokens = 569
 
 [batches.content]
 kind = "lines"
@@ -400,11 +436,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 23
 key = 'Typescript(Export { file: "lib/platform/index.js", start_line: 4 })'
 descriptor = "export at lib/platform/index.js:4"
 cost_tokens = 19
-cum_tokens = 498
+cum_tokens = 588
 
 [batches.content]
 kind = "lines"
@@ -418,11 +454,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 13
-cum_tokens = 511
+cum_tokens = 601
 
 [batches.content]
 kind = "lines"
@@ -436,29 +472,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 23
-key = 'Markdown(ReadmeHeadline { file: "lib/env/README.md" })'
-descriptor = "README headline in lib/env/README.md"
-cost_tokens = 41
-cum_tokens = 552
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/env/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
+position = 25
 key = 'Fs(DirListing { dir: ".husky" })'
 descriptor = "listing of '.husky'"
 cost_tokens = 4
-cum_tokens = 556
+cum_tokens = 605
 
 [batches.content]
 kind = "fs"
@@ -468,11 +486,11 @@ parent = ".husky"
 entries = ["commit-msg"]
 
 [[batches]]
-position = 25
+position = 26
 key = 'Fs(DirListing { dir: "lib/core" })'
 descriptor = "listing of 'lib/core'"
 cost_tokens = 49
-cum_tokens = 605
+cum_tokens = 654
 
 [batches.content]
 kind = "fs"
@@ -480,24 +498,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "lib/core"
 entries = ["Axios.js", "AxiosError.js", "AxiosHeaders.js", "InterceptorManager.js", "README.md", "buildFullPath.js", "dispatchRequest.js", "mergeConfig.js", "settle.js", "transformData.js"]
-
-[[batches]]
-position = 26
-key = 'Markdown(ReadmeHeadline { file: "lib/adapters/README.md" })'
-descriptor = "README headline in lib/adapters/README.md"
-cost_tokens = 49
-cum_tokens = 654
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/adapters/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 27

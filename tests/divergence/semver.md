@@ -20,12 +20,12 @@ Score(3000)=0.642 I=0.733 C=0.561 ns_rows≤3K=29/43 (reached=16 partial=2 missi
 | ns | 446 |  | 5 | bin/ listing | 1.8 |  | 0.478 |
 | walker |  | 469 | 180 | headings outline in README.md |  |  | 0.496 |
 | ns | 484 |  | 38 | benchmarks/ listing | 1.9 |  | 0.476 |
-| walker |  | 496 | 27 | listing of 'internal' |  |  | 0.520 |
-| ns | 517 |  | 33 | test/ top-level listing | 1.10 |  | 0.489 |
-| walker |  | 521 | 25 | README.md section #1 |  |  | 0.519 |
-| ns | 534 |  | 17 | test/classes/ listing | 1.11 |  | 0.507 |
-| walker |  | 577 | 56 | listing of 'ranges' |  |  | 0.576 |
-| walker |  | 604 | 27 | README.md section #55 |  |  | 0.576 |
+| walker |  | 494 | 25 | README.md section #1 |  |  | 0.509 |
+| ns | 517 |  | 33 | test/ top-level listing | 1.10 |  | 0.479 |
+| walker |  | 521 | 27 | README.md section #55 |  |  | 0.479 |
+| ns | 534 |  | 17 | test/classes/ listing | 1.11 |  | 0.468 |
+| walker |  | 548 | 27 | listing of 'internal' |  |  | 0.507 |
+| walker |  | 604 | 56 | listing of 'ranges' |  |  | 0.576 |
 | ns | 639 |  | 105 | test/functions/ listing | 1.12 |  | 0.511 |
 | ns | 695 |  | 56 | test/ranges/ listing | 1.13 |  | 0.487 |
 | ns | 722 |  | 27 | test/internal/ listing | 1.14 |  | 0.476 |

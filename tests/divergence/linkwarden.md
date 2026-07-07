@@ -13,20 +13,20 @@ Score(3000)=0.451 I=0.776 C=0.262 ns_rows≤3K=13/41 (reached=5 partial=0 missin
 | ns | 295 |  | 134 | .env.sample: NextAuth + database settings | 1.4 |  | 0.536 |
 | walker |  | 374 | 198 | README headline in README.md |  |  | 0.716 |
 | walker |  | 389 | 15 | listing of 'packages' |  |  | 0.834 |
-| walker |  | 402 | 13 | listing of 'packages/types' |  |  | 0.834 |
-| walker |  | 406 | 4 | listing of '.vscode' |  |  | 0.834 |
 | ns | 423 |  | 128 | vitest.config.mts | 1.5 |  | 0.709 |
-| walker |  | 439 | 33 | listing of 'assets' |  |  | 0.709 |
-| walker |  | 444 | 5 | listing of '.devcontainer' |  |  | 0.709 |
-| walker |  | 467 | 23 | listing of 'packages/prisma' |  |  | 0.711 |
-| walker |  | 479 | 12 | export names surface in packages/prisma/index.ts |  |  | 0.711 |
-| walker |  | 488 | 9 | listing of 'packages/prisma/client' |  |  | 0.711 |
-| walker |  | 625 | 137 | headings outline in README.md |  |  | 0.711 |
-| ns | 631 |  | 208 | next-i18next.config.js (supported locales) | 1.6 |  | 0.578 |
-| walker |  | 651 | 26 | README.md section #26 |  |  | 0.578 |
-| walker |  | 662 | 11 | README.md section #18 |  |  | 0.578 |
-| walker |  | 672 | 10 | README.md section #17 |  |  | 0.578 |
-| walker |  | 682 | 10 | README.md section #19 |  |  | 0.578 |
+| walker |  | 526 | 137 | headings outline in README.md |  |  | 0.709 |
+| walker |  | 539 | 13 | listing of 'packages/types' |  |  | 0.709 |
+| walker |  | 543 | 4 | listing of '.vscode' |  |  | 0.709 |
+| walker |  | 576 | 33 | listing of 'assets' |  |  | 0.709 |
+| walker |  | 581 | 5 | listing of '.devcontainer' |  |  | 0.709 |
+| walker |  | 607 | 26 | README.md section #26 |  |  | 0.709 |
+| walker |  | 618 | 11 | README.md section #18 |  |  | 0.709 |
+| walker |  | 628 | 10 | README.md section #17 |  |  | 0.709 |
+| ns | 631 |  | 208 | next-i18next.config.js (supported locales) | 1.6 |  | 0.576 |
+| walker |  | 638 | 10 | README.md section #19 |  |  | 0.576 |
+| walker |  | 661 | 23 | listing of 'packages/prisma' |  |  | 0.578 |
+| walker |  | 673 | 12 | export names surface in packages/prisma/index.ts |  |  | 0.578 |
+| walker |  | 682 | 9 | listing of 'packages/prisma/client' |  |  | 0.578 |
 | walker |  | 708 | 26 | listing of 'apps/worker' |  |  | 0.578 |
 | walker |  | 713 | 5 | listing of 'apps/worker/templates' |  |  | 0.578 |
 | walker |  | 726 | 13 | README.md section #23 |  |  | 0.578 |

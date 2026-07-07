@@ -107,56 +107,10 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'Typescript(Imports { file: "src/index.ts" })'
-descriptor = "imports in src/index.ts"
-cost_tokens = 79
-cum_tokens = 460
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/index.ts"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 21
-cum_tokens = 481
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "docs/resources" })'
-descriptor = "listing of 'docs/resources'"
-cost_tokens = 8
-cum_tokens = 489
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/resources"
-entries = ["faq.md", "links.md"]
-
-[[batches]]
-position = 9
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 54
-cum_tokens = 543
+cum_tokens = 435
 
 [batches.content]
 kind = "lines"
@@ -256,6 +210,52 @@ end = 232
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'Typescript(Imports { file: "src/index.ts" })'
+descriptor = "imports in src/index.ts"
+cost_tokens = 79
+cum_tokens = 514
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 21
+cum_tokens = 535
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "docs/resources" })'
+descriptor = "listing of 'docs/resources'"
+cost_tokens = 8
+cum_tokens = 543
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/resources"
+entries = ["faq.md", "links.md"]
 
 [[batches]]
 position = 10

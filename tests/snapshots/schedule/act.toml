@@ -252,322 +252,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'Fs(DirListing { dir: "cmd" })'
-descriptor = "listing of 'cmd'"
-cost_tokens = 46
-cum_tokens = 364
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "cmd"
-entries = ["dir.go", "execute_test.go", "graph.go", "input.go", "list.go", "notices.go", "platforms.go", "root.go", "root_test.go", "secrets.go", "testdata"]
-
-[[batches]]
-position = 11
-key = 'Go(DeclNames { file: "cmd/graph.go", chunk_index: 0 })'
-descriptor = "go decl names surface in cmd/graph.go"
-cost_tokens = 18
-cum_tokens = 382
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/graph.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "cmd/graph.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 12
-key = 'Go(Decl { file: "cmd/graph.go", start_line: 10 })'
-descriptor = "go decl at cmd/graph.go:10"
-cost_tokens = 0
-cum_tokens = 382
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/graph.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Go(DeclNames { file: "cmd/list.go", chunk_index: 0 })'
-descriptor = "go decl names surface in cmd/list.go"
-cost_tokens = 18
-cum_tokens = 400
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/list.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "cmd/list.go"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Go(Decl { file: "cmd/list.go", start_line: 11 })'
-descriptor = "go decl at cmd/list.go:11"
-cost_tokens = 0
-cum_tokens = 400
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/list.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Go(DeclNames { file: "cmd/platforms.go", chunk_index: 0 })'
-descriptor = "go decl names surface in cmd/platforms.go"
-cost_tokens = 21
-cum_tokens = 421
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/platforms.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "cmd/platforms.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 16
-key = 'Go(Decl { file: "cmd/platforms.go", start_line: 7 })'
-descriptor = "go decl at cmd/platforms.go:7"
-cost_tokens = 0
-cum_tokens = 421
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "cmd/platforms.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "pkg" })'
-descriptor = "listing of 'pkg'"
-cost_tokens = 41
-cum_tokens = 462
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg"
-entries = ["artifactcache", "artifacts", "common", "container", "exprparser", "filecollector", "gh", "lookpath", "model", "runner", "schema", "workflowpattern"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "pkg/workflowpattern" })'
-descriptor = "listing of 'pkg/workflowpattern'"
-cost_tokens = 16
-cum_tokens = 478
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/workflowpattern"
-entries = ["trace_writer.go", "workflow_pattern.go", "workflow_pattern_test.go"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "pkg/lookpath" })'
-descriptor = "listing of 'pkg/lookpath'"
-cost_tokens = 33
-cum_tokens = 511
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/lookpath"
-entries = ["LICENSE", "env.go", "error.go", "lp_js.go", "lp_plan9.go", "lp_unix.go", "lp_windows.go"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "pkg/exprparser" })'
-descriptor = "listing of 'pkg/exprparser'"
-cost_tokens = 22
-cum_tokens = 533
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/exprparser"
-entries = ["functions.go", "functions_test.go", "interpreter.go", "interpreter_test.go", "testdata"]
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: "pkg/artifacts" })'
-descriptor = "listing of 'pkg/artifacts'"
-cost_tokens = 24
-cum_tokens = 557
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/artifacts"
-entries = ["artifact.pb.go", "artifacts_v4.go", "server.go", "server_test.go", "testdata"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "pkg/artifactcache" })'
-descriptor = "listing of 'pkg/artifactcache'"
-cost_tokens = 25
-cum_tokens = 582
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/artifactcache"
-entries = ["doc.go", "handler.go", "handler_test.go", "model.go", "storage.go", "testdata"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata" })'
-descriptor = "listing of 'pkg/artifactcache/testdata'"
-cost_tokens = 3
-cum_tokens = 585
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/artifactcache/testdata"
-entries = ["example"]
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "pkg/gh" })'
-descriptor = "listing of 'pkg/gh'"
-cost_tokens = 9
-cum_tokens = 594
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/gh"
-entries = ["gh.go", "gh_test.go"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "pkg/model" })'
-descriptor = "listing of 'pkg/model'"
-cost_tokens = 56
-cum_tokens = 650
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/model"
-entries = ["action.go", "anchors.go", "anchors_test.go", "github_context.go", "github_context_test.go", "job_context.go", "planner.go", "planner_test.go", "step_result.go", "testdata", "workflow.go", "workflow_test.go"]
-
-[[batches]]
-position = 26
-key = 'Go(DeclNames { file: "pkg/model/job_context.go", chunk_index: 0 })'
-descriptor = "go decl names surface in pkg/model/job_context.go"
-cost_tokens = 13
-cum_tokens = 663
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pkg/model/job_context.go"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pkg/model/job_context.go"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata/example" })'
-descriptor = "listing of 'pkg/artifactcache/testdata/example'"
-cost_tokens = 4
-cum_tokens = 667
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "pkg/artifactcache/testdata/example"
-entries = ["example.yaml"]
-
-[[batches]]
-position = 28
 key = 'Markdown(HeadingsOutline { file: "IMAGES.md" })'
 descriptor = "headings outline in IMAGES.md"
 cost_tokens = 65
-cum_tokens = 732
+cum_tokens = 383
 
 [batches.content]
 kind = "lines"
@@ -621,11 +309,359 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "cmd" })'
+descriptor = "listing of 'cmd'"
+cost_tokens = 46
+cum_tokens = 429
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "cmd"
+entries = ["dir.go", "execute_test.go", "graph.go", "input.go", "list.go", "notices.go", "platforms.go", "root.go", "root_test.go", "secrets.go", "testdata"]
+
+[[batches]]
+position = 12
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
+cost_tokens = 28
+cum_tokens = 457
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 24
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Go(DeclNames { file: "cmd/graph.go", chunk_index: 0 })'
+descriptor = "go decl names surface in cmd/graph.go"
+cost_tokens = 18
+cum_tokens = 475
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/graph.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "cmd/graph.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Go(Decl { file: "cmd/graph.go", start_line: 10 })'
+descriptor = "go decl at cmd/graph.go:10"
+cost_tokens = 0
+cum_tokens = 475
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/graph.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Go(DeclNames { file: "cmd/list.go", chunk_index: 0 })'
+descriptor = "go decl names surface in cmd/list.go"
+cost_tokens = 18
+cum_tokens = 493
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/list.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "cmd/list.go"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 16
+key = 'Go(Decl { file: "cmd/list.go", start_line: 11 })'
+descriptor = "go decl at cmd/list.go:11"
+cost_tokens = 0
+cum_tokens = 493
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/list.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #3"
+cost_tokens = 28
+cum_tokens = 521
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 28
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Go(DeclNames { file: "cmd/platforms.go", chunk_index: 0 })'
+descriptor = "go decl names surface in cmd/platforms.go"
+cost_tokens = 21
+cum_tokens = 542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/platforms.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "cmd/platforms.go"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 19
+key = 'Go(Decl { file: "cmd/platforms.go", start_line: 7 })'
+descriptor = "go decl at cmd/platforms.go:7"
+cost_tokens = 0
+cum_tokens = 542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "cmd/platforms.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: "pkg" })'
+descriptor = "listing of 'pkg'"
+cost_tokens = 41
+cum_tokens = 583
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg"
+entries = ["artifactcache", "artifacts", "common", "container", "exprparser", "filecollector", "gh", "lookpath", "model", "runner", "schema", "workflowpattern"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "pkg/workflowpattern" })'
+descriptor = "listing of 'pkg/workflowpattern'"
+cost_tokens = 16
+cum_tokens = 599
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/workflowpattern"
+entries = ["trace_writer.go", "workflow_pattern.go", "workflow_pattern_test.go"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "pkg/lookpath" })'
+descriptor = "listing of 'pkg/lookpath'"
+cost_tokens = 33
+cum_tokens = 632
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/lookpath"
+entries = ["LICENSE", "env.go", "error.go", "lp_js.go", "lp_plan9.go", "lp_unix.go", "lp_windows.go"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "pkg/exprparser" })'
+descriptor = "listing of 'pkg/exprparser'"
+cost_tokens = 22
+cum_tokens = 654
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/exprparser"
+entries = ["functions.go", "functions_test.go", "interpreter.go", "interpreter_test.go", "testdata"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "pkg/artifacts" })'
+descriptor = "listing of 'pkg/artifacts'"
+cost_tokens = 24
+cum_tokens = 678
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/artifacts"
+entries = ["artifact.pb.go", "artifacts_v4.go", "server.go", "server_test.go", "testdata"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "pkg/artifactcache" })'
+descriptor = "listing of 'pkg/artifactcache'"
+cost_tokens = 25
+cum_tokens = 703
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/artifactcache"
+entries = ["doc.go", "handler.go", "handler_test.go", "model.go", "storage.go", "testdata"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata" })'
+descriptor = "listing of 'pkg/artifactcache/testdata'"
+cost_tokens = 3
+cum_tokens = 706
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/artifactcache/testdata"
+entries = ["example"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "pkg/gh" })'
+descriptor = "listing of 'pkg/gh'"
+cost_tokens = 9
+cum_tokens = 715
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/gh"
+entries = ["gh.go", "gh_test.go"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "pkg/model" })'
+descriptor = "listing of 'pkg/model'"
+cost_tokens = 56
+cum_tokens = 771
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/model"
+entries = ["action.go", "anchors.go", "anchors_test.go", "github_context.go", "github_context_test.go", "job_context.go", "planner.go", "planner_test.go", "step_result.go", "testdata", "workflow.go", "workflow_test.go"]
+
+[[batches]]
 position = 29
+key = 'Go(DeclNames { file: "pkg/model/job_context.go", chunk_index: 0 })'
+descriptor = "go decl names surface in pkg/model/job_context.go"
+cost_tokens = 13
+cum_tokens = 784
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pkg/model/job_context.go"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pkg/model/job_context.go"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "pkg/artifactcache/testdata/example" })'
+descriptor = "listing of 'pkg/artifactcache/testdata/example'"
+cost_tokens = 4
+cum_tokens = 788
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "pkg/artifactcache/testdata/example"
+entries = ["example.yaml"]
+
+[[batches]]
+position = 31
 key = 'Fs(DirListing { dir: "pkg/filecollector" })'
 descriptor = "listing of 'pkg/filecollector'"
 cost_tokens = 13
-cum_tokens = 745
+cum_tokens = 801
 
 [batches.content]
 kind = "fs"
@@ -635,11 +671,11 @@ parent = "pkg/filecollector"
 entries = ["file_collector.go", "file_collector_test.go"]
 
 [[batches]]
-position = 30
+position = 32
 key = 'Fs(DirListing { dir: "pkg/common" })'
 descriptor = "listing of 'pkg/common'"
 cost_tokens = 79
-cum_tokens = 824
+cum_tokens = 880
 
 [batches.content]
 kind = "fs"
@@ -649,11 +685,11 @@ parent = "pkg/common"
 entries = ["auth.go", "auth_test.go", "cartesian.go", "cartesian_test.go", "context.go", "context_test.go", "draw.go", "dryrun.go", "executor.go", "executor_test.go", "file.go", "git", "job_error.go", "line_writer.go", "line_writer_test.go", "logger.go", "outbound_ip.go"]
 
 [[batches]]
-position = 31
+position = 33
 key = 'Go(DeclNames { file: "pkg/common/outbound_ip.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/common/outbound_ip.go"
 cost_tokens = 16
-cum_tokens = 840
+cum_tokens = 896
 
 [batches.content]
 kind = "lines"
@@ -675,11 +711,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 34
 key = 'Go(Decl { file: "pkg/common/outbound_ip.go", start_line: 13 })'
 descriptor = "go decl at pkg/common/outbound_ip.go:13"
 cost_tokens = 0
-cum_tokens = 840
+cum_tokens = 896
 
 [batches.content]
 kind = "lines"
@@ -693,11 +729,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 33
+position = 35
 key = 'Go(DeclNames { file: "cmd/dir.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cmd/dir.go"
 cost_tokens = 34
-cum_tokens = 874
+cum_tokens = 930
 
 [batches.content]
 kind = "lines"
@@ -735,11 +771,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 36
 key = 'Go(Decl { file: "cmd/dir.go", start_line: 15 })'
 descriptor = "go decl at cmd/dir.go:15"
 cost_tokens = 0
-cum_tokens = 874
+cum_tokens = 930
 
 [batches.content]
 kind = "lines"
@@ -753,11 +789,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 35
+position = 37
 key = 'Go(Decl { file: "cmd/dir.go", start_line: 10 })'
 descriptor = "go decl at cmd/dir.go:10"
 cost_tokens = 9
-cum_tokens = 883
+cum_tokens = 939
 
 [batches.content]
 kind = "lines"
@@ -771,11 +807,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 36
+position = 38
 key = 'Fs(DirListing { dir: "pkg/common/git" })'
 descriptor = "listing of 'pkg/common/git'"
 cost_tokens = 9
-cum_tokens = 892
+cum_tokens = 948
 
 [batches.content]
 kind = "fs"
@@ -785,11 +821,11 @@ parent = "pkg/common/git"
 entries = ["git.go", "git_test.go"]
 
 [[batches]]
-position = 37
+position = 39
 key = 'Go(PackageImports { file: "pkg/model/job_context.go" })'
 descriptor = "go package + imports in pkg/model/job_context.go"
 cost_tokens = 5
-cum_tokens = 897
+cum_tokens = 953
 
 [batches.content]
 kind = "lines"
@@ -803,11 +839,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 38
+position = 40
 key = 'Fs(DirListing { dir: "cmd/testdata" })'
 descriptor = "listing of 'cmd/testdata'"
 cost_tokens = 19
-cum_tokens = 916
+cum_tokens = 972
 
 [batches.content]
 kind = "fs"
@@ -817,11 +853,11 @@ parent = "cmd/testdata"
 entries = ["env.actrc", "secrets.yml", "simple.actrc", "split.actrc"]
 
 [[batches]]
-position = 39
+position = 41
 key = 'Fs(DirListing { dir: "pkg/schema" })'
 descriptor = "listing of 'pkg/schema'"
 cost_tokens = 19
-cum_tokens = 935
+cum_tokens = 991
 
 [batches.content]
 kind = "fs"
@@ -831,29 +867,11 @@ parent = "pkg/schema"
 entries = ["action_schema.json", "schema.go", "schema_test.go", "workflow_schema.json"]
 
 [[batches]]
-position = 40
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #2"
-cost_tokens = 28
-cum_tokens = 963
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 24
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
+position = 42
 key = 'Go(DeclNames { file: "pkg/gh/gh.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/gh/gh.go"
 cost_tokens = 25
-cum_tokens = 988
+cum_tokens = 1016
 
 [batches.content]
 kind = "lines"
@@ -875,11 +893,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Go(Decl { file: "pkg/gh/gh.go", start_line: 10 })'
 descriptor = "go decl at pkg/gh/gh.go:10"
 cost_tokens = 0
-cum_tokens = 988
+cum_tokens = 1016
 
 [batches.content]
 kind = "lines"
@@ -893,11 +911,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Go(DeclBody { file: "main.go", start_line: 13 })'
 descriptor = "go decl body at main.go:13"
 cost_tokens = 48
-cum_tokens = 1036
+cum_tokens = 1064
 
 [batches.content]
 kind = "lines"
@@ -906,24 +924,6 @@ kind = "lines"
 path = "main.go"
 start = 14
 end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 44
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #3"
-cost_tokens = 28
-cum_tokens = 1064
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 28
-end = 30
 
 [batches.content.spans.render]
 kind = "full"

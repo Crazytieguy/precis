@@ -292,24 +292,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 8
-key = 'Fs(DirListing { dir: "logo" })'
-descriptor = "listing of 'logo'"
-cost_tokens = 25
-cum_tokens = 354
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "logo"
-entries = ["isotype-white.svg", "isotype.svg", "logo-web.svg", "logo-white.svg", "logo.svg"]
-
-[[batches]]
-position = 9
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 16
-cum_tokens = 370
+cum_tokens = 345
 
 [batches.content]
 kind = "lines"
@@ -323,155 +309,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 5
-cum_tokens = 375
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["sync-version.js"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 43
-cum_tokens = 418
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["01-index.mdx", "02-usage", "03-preset-default.mdx", "04-plugins", "05-plugins-api.mdx", "06-migrations"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "docs/02-usage" })'
-descriptor = "listing of 'docs/02-usage'"
-cost_tokens = 19
-cum_tokens = 437
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/02-usage"
-entries = ["01-node.mdx", "02-browser.mdx", "index.mdx"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: ".yarn" })'
-descriptor = "listing of '.yarn'"
-cost_tokens = 6
-cum_tokens = 443
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".yarn"
-entries = ["patches", "plugins"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 12
-cum_tokens = 455
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 22
-cum_tokens = 477
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml", "codeql.yml", "publish.yml", "regression.yml", "test-report.yml"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "lib" })'
-descriptor = "listing of 'lib'"
-cost_tokens = 90
-cum_tokens = 567
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib"
-entries = ["builtin.js", "parser.js", "parser.test.js", "path.js", "path.test.js", "stringifier.js", "style.js", "style.test.js", "svgo", "svgo-node.js", "svgo-node.test.js", "svgo.js", "svgo.test.js", "types.js", "types.ts", "util", "version.js", "xast.js", "xast.test.js"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "lib/svgo" })'
-descriptor = "listing of 'lib/svgo'"
-cost_tokens = 19
-cum_tokens = 586
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/svgo"
-entries = ["coa.js", "css-select-adapter.js", "plugins.js", "tools.js"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "lib/util" })'
-descriptor = "listing of 'lib/util'"
-cost_tokens = 13
-cum_tokens = 599
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/util"
-entries = ["map-nodes-to-parents.js", "visit.js"]
-
-[[batches]]
-position = 19
-key = 'Typescript(ExportNames { file: "lib/types.js" })'
-descriptor = "export names surface in lib/types.js"
-cost_tokens = 7
-cum_tokens = 606
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/types.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
+position = 9
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 11
-cum_tokens = 617
+cum_tokens = 356
 
 [batches.content]
 kind = "lines"
@@ -485,11 +327,25 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 21
+position = 10
+key = 'Fs(DirListing { dir: "logo" })'
+descriptor = "listing of 'logo'"
+cost_tokens = 25
+cum_tokens = 381
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "logo"
+entries = ["isotype-white.svg", "isotype.svg", "logo-web.svg", "logo-white.svg", "logo.svg"]
+
+[[batches]]
+position = 11
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 55
-cum_tokens = 672
+cum_tokens = 436
 
 [batches.content]
 kind = "lines"
@@ -498,6 +354,150 @@ kind = "lines"
 path = "README.md"
 start = 9
 end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 5
+cum_tokens = 441
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["sync-version.js"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 43
+cum_tokens = 484
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["01-index.mdx", "02-usage", "03-preset-default.mdx", "04-plugins", "05-plugins-api.mdx", "06-migrations"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "docs/02-usage" })'
+descriptor = "listing of 'docs/02-usage'"
+cost_tokens = 19
+cum_tokens = 503
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/02-usage"
+entries = ["01-node.mdx", "02-browser.mdx", "index.mdx"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: ".yarn" })'
+descriptor = "listing of '.yarn'"
+cost_tokens = 6
+cum_tokens = 509
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".yarn"
+entries = ["patches", "plugins"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 12
+cum_tokens = 521
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 22
+cum_tokens = 543
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml", "codeql.yml", "publish.yml", "regression.yml", "test-report.yml"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 90
+cum_tokens = 633
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib"
+entries = ["builtin.js", "parser.js", "parser.test.js", "path.js", "path.test.js", "stringifier.js", "style.js", "style.test.js", "svgo", "svgo-node.js", "svgo-node.test.js", "svgo.js", "svgo.test.js", "types.js", "types.ts", "util", "version.js", "xast.js", "xast.test.js"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "lib/svgo" })'
+descriptor = "listing of 'lib/svgo'"
+cost_tokens = 19
+cum_tokens = 652
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/svgo"
+entries = ["coa.js", "css-select-adapter.js", "plugins.js", "tools.js"]
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: "lib/util" })'
+descriptor = "listing of 'lib/util'"
+cost_tokens = 13
+cum_tokens = 665
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/util"
+entries = ["map-nodes-to-parents.js", "visit.js"]
+
+[[batches]]
+position = 21
+key = 'Typescript(ExportNames { file: "lib/types.js" })'
+descriptor = "export names surface in lib/types.js"
+cost_tokens = 7
+cum_tokens = 672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/types.js"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"

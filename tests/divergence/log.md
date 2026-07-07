@@ -12,13 +12,13 @@ Score(3000)=0.538 I=0.771 C=0.375 ns_rows≤3K=17/47 (reached=5 partial=2 missin
 | ns | 159 |  | 37 | triagebot.toml + .gitignore + .precis-pin | 1.5 |  | 0.534 |
 | ns | 293 |  | 134 | Cargo.toml package identity (name/version/license/repo) | 1.6 |  | 0.445 |
 | walker |  | 345 | 191 | [package] in Cargo.toml |  |  | 0.650 |
-| walker |  | 366 | 21 | listing of 'src' |  |  | 0.743 |
-| walker |  | 386 | 20 | listing of 'src/kv' |  |  | 0.827 |
-| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.735 |
-| walker |  | 477 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.736 |
-| walker |  | 480 | 3 | listing of '.github' |  |  | 0.736 |
-| walker |  | 484 | 4 | listing of '.github/workflows' |  |  | 0.738 |
-| walker |  | 548 | 64 | README.md section #0 |  |  | 0.738 |
+| walker |  | 409 | 64 | README.md section #0 |  |  | 0.650 |
+| walker |  | 430 | 21 | listing of 'src' |  |  | 0.743 |
+| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.661 |
+| walker |  | 450 | 20 | listing of 'src/kv' |  |  | 0.736 |
+| walker |  | 541 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.736 |
+| walker |  | 544 | 3 | listing of '.github' |  |  | 0.736 |
+| walker |  | 548 | 4 | listing of '.github/workflows' |  |  | 0.738 |
 | ns | 551 |  | 103 | Cargo.toml package identity (MSRV, edition, docs.rs features) | 1.8 |  | 0.703 |
 | walker |  | 552 | 4 | listing of 'benches' |  |  | 0.709 |
 | walker |  | 588 | 36 | manifest config in Cargo.toml |  |  | 0.750 |

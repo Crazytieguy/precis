@@ -303,10 +303,28 @@ kind = "ellipsis"
 
 [[batches]]
 position = 8
+key = 'Markdown(Section { file: "readme.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "readme.md section #5"
+cost_tokens = 10
+cum_tokens = 397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
 key = 'Typescript(ExportNames { file: "source/priority-queue.ts" })'
 descriptor = "export names surface in source/priority-queue.ts"
 cost_tokens = 37
-cum_tokens = 424
+cum_tokens = 434
 
 [batches.content]
 kind = "lines"
@@ -344,11 +362,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 7 })'
 descriptor = "export at source/priority-queue.ts:7"
 cost_tokens = 17
-cum_tokens = 441
+cum_tokens = 451
 
 [batches.content]
 kind = "lines"
@@ -362,11 +380,29 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
+key = 'Markdown(Section { file: "readme.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "readme.md section #24"
+cost_tokens = 15
+cum_tokens = 466
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 440
+end = 440
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 11 })'
 descriptor = "export at source/priority-queue.ts:11"
 cost_tokens = 129
-cum_tokens = 570
+cum_tokens = 595
 
 [batches.content]
 kind = "lines"
@@ -476,29 +512,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 11
-key = 'Markdown(Section { file: "readme.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #5"
-cost_tokens = 10
-cum_tokens = 580
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
+position = 13
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
-cum_tokens = 587
+cum_tokens = 602
 
 [batches.content]
 kind = "fs"
@@ -508,11 +526,11 @@ parent = ".github"
 entries = ["security.md", "workflows"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 591
+cum_tokens = 606
 
 [batches.content]
 kind = "fs"
@@ -522,11 +540,11 @@ parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 201
-cum_tokens = 792
+cum_tokens = 807
 
 [batches.content]
 kind = "lines"
@@ -540,11 +558,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Typescript(Export { file: "source/index.ts", start_line: 16 })'
 descriptor = "export at source/index.ts:16"
 cost_tokens = 540
-cum_tokens = 1332
+cum_tokens = 1347
 
 [batches.content]
 kind = "lines"
@@ -926,11 +944,11 @@ end = 958
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Typescript(ExportDoc { file: "source/index.ts", start_line: 16 })'
 descriptor = "export doc at source/index.ts:16"
 cost_tokens = 20
-cum_tokens = 1352
+cum_tokens = 1367
 
 [batches.content]
 kind = "lines"
@@ -939,24 +957,6 @@ kind = "lines"
 path = "source/index.ts"
 start = 13
 end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Markdown(Section { file: "readme.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #24"
-cost_tokens = 15
-cum_tokens = 1367
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 440
-end = 440
 
 [batches.content.spans.render]
 kind = "full"

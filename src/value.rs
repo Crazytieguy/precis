@@ -501,7 +501,7 @@ pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 /// over-surfaces. The window stays short so the boost only breaks early
 /// ties; wider windows start displacing later structural wins (post-
 /// refreeze sweep: 300 > 500 > 0 > 900 on training).
-pub const ORIENTATION_TIER_WINDOW: usize = 300;
+pub const ORIENTATION_TIER_WINDOW: usize = 500;
 pub const ORIENTATION_TIER_BOOST: f64 = 1.4;
 
 /// Late-budget tier for operationally dense prose sections. These

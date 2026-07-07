@@ -22,30 +22,30 @@ Score(3000)=0.528 I=0.692 C=0.403 ns_rows≤3K=14/42 (reached=5 partial=2 missin
 | walker |  | 361 | 0 | go decl at cli/version.go:4 |  |  | 0.358 |
 | walker |  | 433 | 72 | go package doc lede in migrate.go |  |  | 0.598 |
 | walker |  | 440 | 7 | go package + imports in log.go |  |  | 0.598 |
-| walker |  | 449 | 9 | listing of 'internal/url' |  |  | 0.598 |
 | ns | 450 |  | 125 | Root directory listing | 1.5 |  | 0.780 |
-| walker |  | 453 | 4 | listing of '.circleci' |  |  | 0.780 |
-| walker |  | 460 | 7 | go package + imports in cli/version.go |  |  | 0.780 |
-| walker |  | 475 | 15 | listing of 'cmd/migrate' |  |  | 0.780 |
-| walker |  | 485 | 10 | README headline in cmd/migrate/README.md |  |  | 0.780 |
-| walker |  | 497 | 12 | go decl names surface in cmd/migrate/main.go |  |  | 0.780 |
-| walker |  | 497 | 0 | go decl at cmd/migrate/main.go:5 |  |  | 0.780 |
-| walker |  | 509 | 12 | go decl names surface in cmd/migrate/version.go |  |  | 0.780 |
-| walker |  | 509 | 0 | go decl at cmd/migrate/version.go:4 |  |  | 0.780 |
-| walker |  | 519 | 10 | go decl body at cli/main.go:6 |  |  | 0.780 |
-| walker |  | 601 | 82 | go decl names surface in util.go |  |  | 0.780 |
-| walker |  | 601 | 0 | go decl at util.go:21 |  |  | 0.780 |
-| walker |  | 601 | 0 | go decl at util.go:32 |  |  | 0.780 |
-| walker |  | 601 | 0 | go decl at util.go:45 |  |  | 0.780 |
-| walker |  | 601 | 0 | go decl at util.go:53 |  |  | 0.780 |
-| walker |  | 615 | 14 | go decl at util.go:13 |  |  | 0.780 |
-| walker |  | 633 | 18 | go decl doc at util.go:53 |  |  | 0.703 |
-| ns | 633 |  | 183 | README lede: what migrate is | 1.6 |  | 0.703 |
-| walker |  | 652 | 19 | go decl doc at util.go:32 |  |  | 0.703 |
-| walker |  | 665 | 13 | go decl doc at cli/main.go:6 |  |  | 0.703 |
-| ns | 905 |  | 272 | CONTRIBUTING.md (dev workflow) | 1.7 |  | 0.635 |
-| ns | 1181 |  | 276 | Migrate struct fields | 2.1 |  | 0.534 |
-| walker |  | 1186 | 521 | CONTRIBUTING.md section #0 |  |  | 0.618 |
+| ns | 633 |  | 183 | README lede: what migrate is | 1.6 |  | 0.702 |
+| ns | 905 |  | 272 | CONTRIBUTING.md (dev workflow) | 1.7 |  | 0.634 |
+| walker |  | 961 | 521 | CONTRIBUTING.md section #0 |  |  | 0.735 |
+| walker |  | 970 | 9 | listing of 'internal/url' |  |  | 0.735 |
+| walker |  | 974 | 4 | listing of '.circleci' |  |  | 0.735 |
+| walker |  | 981 | 7 | go package + imports in cli/version.go |  |  | 0.735 |
+| walker |  | 996 | 15 | listing of 'cmd/migrate' |  |  | 0.735 |
+| walker |  | 1006 | 10 | README headline in cmd/migrate/README.md |  |  | 0.735 |
+| walker |  | 1018 | 12 | go decl names surface in cmd/migrate/main.go |  |  | 0.735 |
+| walker |  | 1018 | 0 | go decl at cmd/migrate/main.go:5 |  |  | 0.735 |
+| walker |  | 1030 | 12 | go decl names surface in cmd/migrate/version.go |  |  | 0.735 |
+| walker |  | 1030 | 0 | go decl at cmd/migrate/version.go:4 |  |  | 0.735 |
+| walker |  | 1040 | 10 | go decl body at cli/main.go:6 |  |  | 0.735 |
+| walker |  | 1122 | 82 | go decl names surface in util.go |  |  | 0.735 |
+| walker |  | 1122 | 0 | go decl at util.go:21 |  |  | 0.735 |
+| walker |  | 1122 | 0 | go decl at util.go:32 |  |  | 0.735 |
+| walker |  | 1122 | 0 | go decl at util.go:45 |  |  | 0.735 |
+| walker |  | 1122 | 0 | go decl at util.go:53 |  |  | 0.735 |
+| walker |  | 1136 | 14 | go decl at util.go:13 |  |  | 0.735 |
+| walker |  | 1154 | 18 | go decl doc at util.go:53 |  |  | 0.736 |
+| walker |  | 1173 | 19 | go decl doc at util.go:32 |  |  | 0.736 |
+| ns | 1181 |  | 276 | Migrate struct fields | 2.1 |  | 0.618 |
+| walker |  | 1186 | 13 | go decl doc at cli/main.go:6 |  |  | 0.618 |
 | walker |  | 1252 | 66 | go decl at log.go:5 |  |  | 0.620 |
 | walker |  | 1275 | 23 | go decl doc at log.go:5 |  |  | 0.622 |
 | ns | 1458 |  | 277 | Package-level errors and error types | 2.2 |  | 0.544 |

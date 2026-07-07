@@ -34,29 +34,29 @@ Score(3000)=0.559 I=0.768 C=0.407 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 376 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.844 |
 | walker |  | 385 | 9 | listing of 'internal/adapters/repositories/notes' |  |  | 0.844 |
 | walker |  | 394 | 9 | listing of 'internal/adapters/repositories/timewarrior' |  |  | 0.844 |
-| walker |  | 432 | 38 | go decl names surface in internal/extra/extra.go |  |  | 0.713 |
-| walker |  | 432 | 0 | go decl at internal/extra/extra.go:11 |  |  | 0.713 |
 | ns | 432 |  | 165 | README Project Structure | 1.5 |  | 0.713 |
-| walker |  | 446 | 14 | listing of '.github' |  |  | 0.714 |
-| ns | 451 |  | 19 | internal/ directory listing | 2.1 |  | 0.744 |
-| walker |  | 454 | 8 | listing of '.github/workflows' |  |  | 0.747 |
-| ns | 461 |  | 10 | cmd/tock/ + internal/adapters/ listings | 2.2 |  | 0.758 |
-| ns | 540 |  | 79 | internal/adapters/cli/ listing | 2.3 |  | 0.617 |
-| ns | 587 |  | 47 | internal/adapters/repositories/ + backend subdirs | 2.4 |  | 0.604 |
-| ns | 638 |  | 51 | internal/core/ + subpackage listings | 2.5 |  | 0.607 |
+| ns | 451 |  | 19 | internal/ directory listing | 2.1 |  | 0.743 |
+| ns | 461 |  | 10 | cmd/tock/ + internal/adapters/ listings | 2.2 |  | 0.753 |
+| ns | 540 |  | 79 | internal/adapters/cli/ listing | 2.3 |  | 0.613 |
+| walker |  | 582 | 188 | headings outline in docs/commands.md |  |  | 0.613 |
+| ns | 587 |  | 47 | internal/adapters/repositories/ + backend subdirs | 2.4 |  | 0.600 |
+| walker |  | 620 | 38 | go decl names surface in internal/extra/extra.go |  |  | 0.600 |
+| walker |  | 620 | 0 | go decl at internal/extra/extra.go:11 |  |  | 0.600 |
+| walker |  | 634 | 14 | listing of '.github' |  |  | 0.602 |
+| ns | 638 |  | 51 | internal/core/ + subpackage listings | 2.5 |  | 0.605 |
+| walker |  | 642 | 8 | listing of '.github/workflows' |  |  | 0.607 |
 | ns | 658 |  | 20 | internal/services/ + subpackage listings | 2.6 |  | 0.623 |
 | ns | 687 |  | 29 | internal/config/, timeutil/, extra/ listings | 2.7 |  | 0.639 |
 | ns | 709 |  | 22 | .github/ + workflows/ listings | 2.8 |  | 0.650 |
 | ns | 734 |  | 25 | assets/ + demo/ listings | 2.9 |  | 0.660 |
-| walker |  | 798 | 344 | YAML config at .github/workflows/ci.yml |  |  | 0.661 |
-| walker |  | 833 | 35 | go decl names surface in internal/core/ports/ports.go |  |  | 0.661 |
+| walker |  | 986 | 344 | YAML config at .github/workflows/ci.yml |  |  | 0.661 |
 | ns | 1012 |  | 278 | docs/commands.md table of contents | 2.10 |  | 0.596 |
-| ns | 1080 |  | 68 | cmd/tock/main.go | 3.1 |  | 0.575 |
-| walker |  | 1166 | 333 | plaintext config Makefile |  |  | 0.605 |
-| walker |  | 1184 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.641 |
-| walker |  | 1202 | 18 | listing of 'internal/core/ports/mocks' |  |  | 0.668 |
-| ns | 1252 |  | 172 | models.Activity (the one domain entity) | 3.2 |  | 0.622 |
-| walker |  | 1390 | 188 | headings outline in docs/commands.md |  |  | 0.623 |
+| walker |  | 1021 | 35 | go decl names surface in internal/core/ports/ports.go |  |  | 0.596 |
+| ns | 1080 |  | 68 | cmd/tock/main.go | 3.1 |  | 0.576 |
+| ns | 1252 |  | 172 | models.Activity (the one domain entity) | 3.2 |  | 0.536 |
+| walker |  | 1354 | 333 | plaintext config Makefile |  |  | 0.563 |
+| walker |  | 1372 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.597 |
+| walker |  | 1390 | 18 | listing of 'internal/core/ports/mocks' |  |  | 0.623 |
 | walker |  | 1395 | 5 | docs/commands.md section #5 |  |  | 0.623 |
 | walker |  | 1400 | 5 | docs/commands.md section #10 |  |  | 0.623 |
 | walker |  | 1405 | 5 | docs/commands.md section #15 |  |  | 0.623 |

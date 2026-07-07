@@ -109,24 +109,10 @@ kind = "full"
 
 [[batches]]
 position = 7
-key = 'Fs(DirListing { dir: "doc" })'
-descriptor = "listing of 'doc'"
-cost_tokens = 59
-cum_tokens = 432
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "doc"
-entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.go", "md_docs.go", "md_docs_test.go", "rest_docs.go", "rest_docs_test.go", "util.go", "yaml_docs.go", "yaml_docs_test.go"]
-
-[[batches]]
-position = 8
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 63
-cum_tokens = 495
+cum_tokens = 436
 
 [batches.content]
 kind = "lines"
@@ -244,11 +230,11 @@ end = 132
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 8
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 12
-cum_tokens = 507
+cum_tokens = 448
 
 [batches.content]
 kind = "lines"
@@ -262,177 +248,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 10
-key = 'Go(GoMod { file: "go.mod" })'
-descriptor = "go module file go.mod"
-cost_tokens = 99
-cum_tokens = 606
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Go(DeclNames { file: "fish_completions.go", chunk_index: 0 })'
-descriptor = "go decl names surface in fish_completions.go"
-cost_tokens = 75
-cum_tokens = 681
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 276
-end = 276
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 277
-end = 277
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 285
-end = 285
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 12
-key = 'Go(Decl { file: "fish_completions.go", start_line: 25 })'
-descriptor = "go decl at fish_completions.go:25"
-cost_tokens = 0
-cum_tokens = 681
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Go(Decl { file: "fish_completions.go", start_line: 276 })'
-descriptor = "go decl at fish_completions.go:276"
-cost_tokens = 0
-cum_tokens = 681
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 276
-end = 276
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Go(Decl { file: "fish_completions.go", start_line: 284 })'
-descriptor = "go decl at fish_completions.go:284"
-cost_tokens = 0
-cum_tokens = 681
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 284 })'
-descriptor = "go decl doc at fish_completions.go:284"
-cost_tokens = 14
-cum_tokens = 695
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 283
-end = 283
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 276 })'
-descriptor = "go decl doc at fish_completions.go:276"
-cost_tokens = 19
-cum_tokens = 714
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 275
-end = 275
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
+position = 9
 key = 'Markdown(HeadingsOutline { file: "CONDUCT.md" })'
 descriptor = "headings outline in CONDUCT.md"
 cost_tokens = 94
-cum_tokens = 808
+cum_tokens = 542
 
 [batches.content]
 kind = "lines"
@@ -564,6 +384,186 @@ end = 36
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "doc" })'
+descriptor = "listing of 'doc'"
+cost_tokens = 59
+cum_tokens = 601
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "doc"
+entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.go", "md_docs.go", "md_docs_test.go", "rest_docs.go", "rest_docs_test.go", "util.go", "yaml_docs.go", "yaml_docs_test.go"]
+
+[[batches]]
+position = 11
+key = 'Go(GoMod { file: "go.mod" })'
+descriptor = "go module file go.mod"
+cost_tokens = 99
+cum_tokens = 700
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Go(DeclNames { file: "fish_completions.go", chunk_index: 0 })'
+descriptor = "go decl names surface in fish_completions.go"
+cost_tokens = 75
+cum_tokens = 775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 277
+end = 277
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 285
+end = 285
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'Go(Decl { file: "fish_completions.go", start_line: 25 })'
+descriptor = "go decl at fish_completions.go:25"
+cost_tokens = 0
+cum_tokens = 775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Go(Decl { file: "fish_completions.go", start_line: 276 })'
+descriptor = "go decl at fish_completions.go:276"
+cost_tokens = 0
+cum_tokens = 775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Go(Decl { file: "fish_completions.go", start_line: 284 })'
+descriptor = "go decl at fish_completions.go:284"
+cost_tokens = 0
+cum_tokens = 775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 284 })'
+descriptor = "go decl doc at fish_completions.go:284"
+cost_tokens = 14
+cum_tokens = 789
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 283
+end = 283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 276 })'
+descriptor = "go decl doc at fish_completions.go:276"
+cost_tokens = 19
+cum_tokens = 808
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 275
+end = 275
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 18

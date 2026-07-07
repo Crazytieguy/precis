@@ -22,19 +22,19 @@ Score(3000)=0.412 I=0.672 C=0.253 ns_rows≤3K=31/50 (reached=7 partial=1 missin
 | walker |  | 371 | 17 | go decl doc at beszel.go:15 |  |  | 0.478 |
 | ns | 385 |  | 29 | internal/site/src/ directory listing | 1.8 |  | 0.444 |
 | walker |  | 396 | 25 | go package + imports in beszel.go |  |  | 0.447 |
-| walker |  | 422 | 26 | listing of 'supplemental' |  |  | 0.551 |
-| walker |  | 427 | 5 | listing of 'supplemental/guides' |  |  | 0.551 |
-| walker |  | 433 | 6 | listing of 'supplemental/kubernetes' |  |  | 0.551 |
-| walker |  | 436 | 3 | listing of 'supplemental/kubernetes/beszel-hub' |  |  | 0.551 |
-| ns | 437 |  | 52 | internal/site/src/lib/ directory listing | 1.9 |  | 0.499 |
-| walker |  | 446 | 10 | listing of 'supplemental/docker' |  |  | 0.499 |
-| walker |  | 451 | 5 | listing of 'supplemental/docker/agent' |  |  | 0.499 |
-| walker |  | 456 | 5 | listing of 'supplemental/docker/hub' |  |  | 0.499 |
-| walker |  | 461 | 5 | listing of 'supplemental/docker/same-system' |  |  | 0.499 |
-| walker |  | 471 | 10 | listing of 'supplemental/licenses' |  |  | 0.499 |
-| walker |  | 474 | 3 | listing of 'supplemental/licenses/LibreHardwareMonitor' |  |  | 0.499 |
-| walker |  | 477 | 3 | listing of 'supplemental/licenses/smartmontools' |  |  | 0.499 |
-| walker |  | 505 | 28 | readme.md section #23 |  |  | 0.499 |
+| walker |  | 424 | 28 | readme.md section #23 |  |  | 0.447 |
+| ns | 437 |  | 52 | internal/site/src/lib/ directory listing | 1.9 |  | 0.405 |
+| walker |  | 450 | 26 | listing of 'supplemental' |  |  | 0.499 |
+| walker |  | 455 | 5 | listing of 'supplemental/guides' |  |  | 0.499 |
+| walker |  | 461 | 6 | listing of 'supplemental/kubernetes' |  |  | 0.499 |
+| walker |  | 464 | 3 | listing of 'supplemental/kubernetes/beszel-hub' |  |  | 0.499 |
+| walker |  | 474 | 10 | listing of 'supplemental/docker' |  |  | 0.499 |
+| walker |  | 479 | 5 | listing of 'supplemental/docker/agent' |  |  | 0.499 |
+| walker |  | 484 | 5 | listing of 'supplemental/docker/hub' |  |  | 0.499 |
+| walker |  | 489 | 5 | listing of 'supplemental/docker/same-system' |  |  | 0.499 |
+| walker |  | 499 | 10 | listing of 'supplemental/licenses' |  |  | 0.499 |
+| walker |  | 502 | 3 | listing of 'supplemental/licenses/LibreHardwareMonitor' |  |  | 0.499 |
+| walker |  | 505 | 3 | listing of 'supplemental/licenses/smartmontools' |  |  | 0.499 |
 | walker |  | 571 | 66 | listing of 'internal' |  |  | 0.507 |
 | walker |  | 575 | 4 | listing of 'internal/users' |  |  | 0.507 |
 | walker |  | 581 | 6 | listing of 'internal/cmd' |  |  | 0.507 |

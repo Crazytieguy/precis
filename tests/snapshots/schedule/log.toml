@@ -137,10 +137,28 @@ kind = "full"
 
 [[batches]]
 position = 5
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #0"
+cost_tokens = 64
+cum_tokens = 409
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 13
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 21
-cum_tokens = 366
+cum_tokens = 430
 
 [batches.content]
 kind = "fs"
@@ -150,11 +168,11 @@ parent = "src"
 entries = ["__private_api.rs", "kv", "lib.rs", "macros.rs", "serde.rs"]
 
 [[batches]]
-position = 6
+position = 7
 key = 'Fs(DirListing { dir: "src/kv" })'
 descriptor = "listing of 'src/kv'"
 cost_tokens = 20
-cum_tokens = 386
+cum_tokens = 450
 
 [batches.content]
 kind = "fs"
@@ -164,11 +182,11 @@ parent = "src/kv"
 entries = ["error.rs", "key.rs", "mod.rs", "source.rs", "value.rs"]
 
 [[batches]]
-position = 7
+position = 8
 key = 'Rust(CrateDocLede { file: "src/kv/mod.rs" })'
 descriptor = "crate-doc lede in src/kv/mod.rs"
 cost_tokens = 91
-cum_tokens = 477
+cum_tokens = 541
 
 [batches.content]
 kind = "lines"
@@ -182,11 +200,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 480
+cum_tokens = 544
 
 [batches.content]
 kind = "fs"
@@ -196,11 +214,11 @@ parent = ".github"
 entries = ["workflows"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 484
+cum_tokens = 548
 
 [batches.content]
 kind = "fs"
@@ -208,24 +226,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = ".github/workflows"
 entries = ["main.yml"]
-
-[[batches]]
-position = 10
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #0"
-cost_tokens = 64
-cum_tokens = 548
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 13
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 11

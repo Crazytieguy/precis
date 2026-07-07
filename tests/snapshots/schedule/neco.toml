@@ -69,56 +69,10 @@ kind = "full"
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "docs/assets" })'
-descriptor = "listing of 'docs/assets'"
-cost_tokens = 21
-cum_tokens = 512
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/assets"
-entries = ["API_foot.md", "API_head.md", "logo-dark.png", "logo-light.png"]
-
-[[batches]]
-position = 6
-key = 'C(HeaderBanner { file: "neco.h" })'
-descriptor = "c header banner in neco.h"
-cost_tokens = 89
-cum_tokens = 601
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "neco.h"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 126
-cum_tokens = 727
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["README.md", "bench.c", "fail_counters.h", "panic.h", "priv_funcs.h", "run.sh", "signals.h", "test_basic.c", "test_cancel.c", "test_chan.c", "test_errors.c", "test_gen.c", "test_join.c", "test_misc.c", "test_net.c", "test_panic.c", "test_pipe.c", "test_rand.c", "test_signal.c", "test_sleep.c", "test_stream.c", "test_suspend.c", "test_sync.c", "test_wait.c", "test_work.c", "tests.h"]
-
-[[batches]]
-position = 8
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 233
-cum_tokens = 960
+cum_tokens = 724
 
 [batches.content]
 kind = "lines"
@@ -412,11 +366,11 @@ end = 580
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 6
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: true, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 44
-cum_tokens = 1004
+cum_tokens = 768
 
 [batches.content]
 kind = "lines"
@@ -430,11 +384,25 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 10
+position = 7
+key = 'Fs(DirListing { dir: "docs/assets" })'
+descriptor = "listing of 'docs/assets'"
+cost_tokens = 21
+cum_tokens = 789
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/assets"
+entries = ["API_foot.md", "API_head.md", "logo-dark.png", "logo-light.png"]
+
+[[batches]]
+position = 8
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 19
-cum_tokens = 1023
+cum_tokens = 808
 
 [batches.content]
 kind = "lines"
@@ -446,6 +414,38 @@ end = 581
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 9
+key = 'C(HeaderBanner { file: "neco.h" })'
+descriptor = "c header banner in neco.h"
+cost_tokens = 89
+cum_tokens = 897
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "neco.h"
+start = 1
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 126
+cum_tokens = 1023
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["README.md", "bench.c", "fail_counters.h", "panic.h", "priv_funcs.h", "run.sh", "signals.h", "test_basic.c", "test_cancel.c", "test_chan.c", "test_errors.c", "test_gen.c", "test_join.c", "test_misc.c", "test_net.c", "test_panic.c", "test_pipe.c", "test_rand.c", "test_signal.c", "test_sleep.c", "test_stream.c", "test_suspend.c", "test_sync.c", "test_wait.c", "test_work.c", "tests.h"]
 
 [[batches]]
 position = 11

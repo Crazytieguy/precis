@@ -16,39 +16,39 @@ Score(3000)=0.526 I=0.753 C=0.367 ns_rows≤3K=13/44 (reached=4 partial=3 missin
 | ns | 299 |  | 87 | src/ Lua subdirs listing: lualib, service, data | 1.5 |  | 0.521 |
 | walker |  | 340 | 114 | README.md section #0 |  |  | 0.526 |
 | walker |  | 357 | 17 | listing of 'web' |  |  | 0.526 |
-| walker |  | 378 | 21 | listing of 'clibs' |  |  | 0.526 |
-| walker |  | 382 | 4 | listing of 'clibs/datalist' |  |  | 0.528 |
-| walker |  | 386 | 4 | listing of 'clibs/ltask' |  |  | 0.532 |
-| ns | 387 |  | 88 | test/ directory listing (runnable examples) | 1.6 |  | 0.451 |
-| walker |  | 390 | 4 | listing of 'clibs/lua' |  |  | 0.457 |
-| walker |  | 394 | 4 | listing of 'clibs/yoga' |  |  | 0.465 |
-| walker |  | 398 | 4 | listing of 'clibs/zip' |  |  | 0.475 |
-| walker |  | 408 | 10 | listing of 'web/static' |  |  | 0.475 |
-| walker |  | 431 | 23 | listing of 'script' |  |  | 0.476 |
-| walker |  | 442 | 11 | lua decl names surface in script/hashversion.lua |  |  | 0.476 |
-| walker |  | 442 | 0 | lua decl at script/hashversion.lua:1 |  |  | 0.476 |
-| walker |  | 456 | 14 | lua decl names surface in script/datalist2c.lua |  |  | 0.476 |
-| walker |  | 456 | 0 | lua decl at script/datalist2c.lua:14 |  |  | 0.476 |
-| walker |  | 470 | 14 | lua decl names surface in script/lua2c.lua |  |  | 0.476 |
-| walker |  | 470 | 0 | lua decl at script/lua2c.lua:13 |  |  | 0.476 |
-| ns | 478 |  | 91 | docs/ directory listing (Lua API reference stubs) | 1.7 |  | 0.421 |
-| walker |  | 486 | 16 | listing of 'web/content' |  |  | 0.422 |
-| walker |  | 491 | 5 | listing of 'web/content/docs' |  |  | 0.422 |
-| walker |  | 510 | 19 | listing of 'web/assets' |  |  | 0.423 |
-| walker |  | 516 | 6 | listing of '.github' |  |  | 0.424 |
-| walker |  | 524 | 8 | listing of '.github/workflows' |  |  | 0.424 |
-| walker |  | 537 | 13 | listing of 'web/static/fonts' |  |  | 0.425 |
-| walker |  | 563 | 26 | README.md section #5 |  |  | 0.425 |
-| walker |  | 608 | 45 | README.md section #1 |  |  | 0.426 |
-| walker |  | 634 | 26 | listing of 'clibs/soluna' |  |  | 0.499 |
-| walker |  | 654 | 20 | lua decl names surface in clibs/soluna/compile_lua.lua |  |  | 0.499 |
-| walker |  | 654 | 0 | lua decl at clibs/soluna/compile_lua.lua:4 |  |  | 0.499 |
-| walker |  | 680 | 26 | listing of 'web/layouts' |  |  | 0.501 |
-| walker |  | 684 | 4 | listing of 'web/layouts/docs' |  |  | 0.502 |
-| walker |  | 688 | 4 | listing of 'web/layouts/playframe' |  |  | 0.502 |
-| ns | 695 |  | 217 | README lede: what Soluna is | 1.8 |  | 0.527 |
-| walker |  | 696 | 8 | listing of 'web/layouts/partials' |  |  | 0.528 |
-| walker |  | 727 | 31 | README.md section #4 |  |  | 0.528 |
+| walker |  | 383 | 26 | README.md section #5 |  |  | 0.526 |
+| ns | 387 |  | 88 | test/ directory listing (runnable examples) | 1.6 |  | 0.447 |
+| walker |  | 428 | 45 | README.md section #1 |  |  | 0.448 |
+| walker |  | 449 | 21 | listing of 'clibs' |  |  | 0.448 |
+| walker |  | 453 | 4 | listing of 'clibs/datalist' |  |  | 0.449 |
+| walker |  | 457 | 4 | listing of 'clibs/ltask' |  |  | 0.452 |
+| walker |  | 461 | 4 | listing of 'clibs/lua' |  |  | 0.458 |
+| walker |  | 465 | 4 | listing of 'clibs/yoga' |  |  | 0.466 |
+| walker |  | 469 | 4 | listing of 'clibs/zip' |  |  | 0.476 |
+| ns | 478 |  | 91 | docs/ directory listing (Lua API reference stubs) | 1.7 |  | 0.422 |
+| walker |  | 479 | 10 | listing of 'web/static' |  |  | 0.422 |
+| walker |  | 510 | 31 | README.md section #4 |  |  | 0.422 |
+| walker |  | 533 | 23 | listing of 'script' |  |  | 0.422 |
+| walker |  | 544 | 11 | lua decl names surface in script/hashversion.lua |  |  | 0.422 |
+| walker |  | 544 | 0 | lua decl at script/hashversion.lua:1 |  |  | 0.422 |
+| walker |  | 558 | 14 | lua decl names surface in script/datalist2c.lua |  |  | 0.422 |
+| walker |  | 558 | 0 | lua decl at script/datalist2c.lua:14 |  |  | 0.422 |
+| walker |  | 572 | 14 | lua decl names surface in script/lua2c.lua |  |  | 0.422 |
+| walker |  | 572 | 0 | lua decl at script/lua2c.lua:13 |  |  | 0.422 |
+| walker |  | 588 | 16 | listing of 'web/content' |  |  | 0.423 |
+| walker |  | 593 | 5 | listing of 'web/content/docs' |  |  | 0.423 |
+| walker |  | 612 | 19 | listing of 'web/assets' |  |  | 0.424 |
+| walker |  | 618 | 6 | listing of '.github' |  |  | 0.425 |
+| walker |  | 626 | 8 | listing of '.github/workflows' |  |  | 0.425 |
+| walker |  | 639 | 13 | listing of 'web/static/fonts' |  |  | 0.426 |
+| walker |  | 665 | 26 | listing of 'clibs/soluna' |  |  | 0.499 |
+| walker |  | 685 | 20 | lua decl names surface in clibs/soluna/compile_lua.lua |  |  | 0.499 |
+| walker |  | 685 | 0 | lua decl at clibs/soluna/compile_lua.lua:4 |  |  | 0.499 |
+| ns | 695 |  | 217 | README lede: what Soluna is | 1.8 |  | 0.523 |
+| walker |  | 711 | 26 | listing of 'web/layouts' |  |  | 0.526 |
+| walker |  | 715 | 4 | listing of 'web/layouts/docs' |  |  | 0.527 |
+| walker |  | 719 | 4 | listing of 'web/layouts/playframe' |  |  | 0.527 |
+| walker |  | 727 | 8 | listing of 'web/layouts/partials' |  |  | 0.528 |
 | walker |  | 767 | 40 | README.md section #2 |  |  | 0.530 |
 | walker |  | 809 | 42 | lua decl names surface in clibs/soluna/compile_shader.lua |  |  | 0.530 |
 | walker |  | 809 | 0 | lua decl at clibs/soluna/compile_shader.lua:5 |  |  | 0.530 |

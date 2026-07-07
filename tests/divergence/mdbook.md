@@ -19,30 +19,30 @@ Score(3000)=0.577 I=0.836 C=0.398 ns_rows≤3K=21/46 (reached=9 partial=0 missin
 | walker |  | 259 | 24 | README.md section #0 |  |  | 0.584 |
 | ns | 272 |  | 43 | rustfmt/cargo-alias config | 1.6 |  | 0.565 |
 | walker |  | 311 | 52 | entry item body at src/main.rs:18 body 50 |  |  | 0.565 |
-| walker |  | 323 | 12 | listing of 'guide' |  |  | 0.591 |
-| ns | 332 |  | 60 | Workspace Cargo.toml: [workspace].members | 1.7 |  | 0.556 |
-| walker |  | 361 | 38 | listing of 'src/cmd' |  |  | 0.692 |
-| walker |  | 379 | 18 | crate-doc lede in src/cmd/mod.rs |  |  | 0.692 |
-| walker |  | 388 | 9 | listing of 'src/cmd/watch' |  |  | 0.692 |
-| ns | 436 |  | 104 | package.json (JS lint tooling) | 1.8 |  | 0.633 |
-| walker |  | 492 | 104 | [features] in Cargo.toml |  |  | 0.636 |
-| walker |  | 499 | 7 | listing of 'tests' |  |  | 0.670 |
-| walker |  | 504 | 5 | listing of '.cargo' |  |  | 0.670 |
-| walker |  | 540 | 36 | pub-item names surface in src/cmd/build.rs |  |  | 0.670 |
-| walker |  | 540 | 0 | pub item at src/cmd/build.rs:8 |  |  | 0.670 |
-| walker |  | 540 | 0 | pub item at src/cmd/build.rs:17 |  |  | 0.670 |
-| walker |  | 576 | 36 | pub-item names surface in src/cmd/serve.rs |  |  | 0.670 |
-| walker |  | 576 | 0 | pub item at src/cmd/serve.rs:23 |  |  | 0.670 |
-| walker |  | 576 | 0 | pub item at src/cmd/serve.rs:51 |  |  | 0.670 |
-| ns | 582 |  | 146 | Root README, part 1: pitch + guide/contributing links | 1.9 |  | 0.654 |
-| walker |  | 612 | 36 | pub-item names surface in src/cmd/test.rs |  |  | 0.654 |
-| walker |  | 612 | 0 | pub item at src/cmd/test.rs:9 |  |  | 0.654 |
-| walker |  | 612 | 0 | pub item at src/cmd/test.rs:35 |  |  | 0.654 |
-| walker |  | 649 | 37 | pub-item names surface in src/cmd/init.rs |  |  | 0.654 |
-| walker |  | 649 | 0 | pub item at src/cmd/init.rs:12 |  |  | 0.654 |
-| walker |  | 649 | 0 | pub item at src/cmd/init.rs:32 |  |  | 0.654 |
-| ns | 760 |  | 178 | Workspace Cargo.toml: main package metadata | 1.10 |  | 0.590 |
-| walker |  | 1002 | 353 | [package] in Cargo.toml |  |  | 0.747 |
+| ns | 332 |  | 60 | Workspace Cargo.toml: [workspace].members | 1.7 |  | 0.532 |
+| walker |  | 415 | 104 | [features] in Cargo.toml |  |  | 0.535 |
+| walker |  | 427 | 12 | listing of 'guide' |  |  | 0.559 |
+| ns | 436 |  | 104 | package.json (JS lint tooling) | 1.8 |  | 0.511 |
+| walker |  | 465 | 38 | listing of 'src/cmd' |  |  | 0.636 |
+| walker |  | 483 | 18 | crate-doc lede in src/cmd/mod.rs |  |  | 0.636 |
+| walker |  | 492 | 9 | listing of 'src/cmd/watch' |  |  | 0.636 |
+| ns | 582 |  | 146 | Root README, part 1: pitch + guide/contributing links | 1.9 |  | 0.624 |
+| ns | 760 |  | 178 | Workspace Cargo.toml: main package metadata | 1.10 |  | 0.563 |
+| walker |  | 845 | 353 | [package] in Cargo.toml |  |  | 0.723 |
+| walker |  | 852 | 7 | listing of 'tests' |  |  | 0.747 |
+| walker |  | 857 | 5 | listing of '.cargo' |  |  | 0.747 |
+| walker |  | 893 | 36 | pub-item names surface in src/cmd/build.rs |  |  | 0.747 |
+| walker |  | 893 | 0 | pub item at src/cmd/build.rs:8 |  |  | 0.747 |
+| walker |  | 893 | 0 | pub item at src/cmd/build.rs:17 |  |  | 0.747 |
+| walker |  | 929 | 36 | pub-item names surface in src/cmd/serve.rs |  |  | 0.747 |
+| walker |  | 929 | 0 | pub item at src/cmd/serve.rs:23 |  |  | 0.747 |
+| walker |  | 929 | 0 | pub item at src/cmd/serve.rs:51 |  |  | 0.747 |
+| walker |  | 965 | 36 | pub-item names surface in src/cmd/test.rs |  |  | 0.747 |
+| walker |  | 965 | 0 | pub item at src/cmd/test.rs:9 |  |  | 0.747 |
+| walker |  | 965 | 0 | pub item at src/cmd/test.rs:35 |  |  | 0.747 |
+| walker |  | 1002 | 37 | pub-item names surface in src/cmd/init.rs |  |  | 0.747 |
+| walker |  | 1002 | 0 | pub item at src/cmd/init.rs:12 |  |  | 0.747 |
+| walker |  | 1002 | 0 | pub item at src/cmd/init.rs:32 |  |  | 0.747 |
 | walker |  | 1063 | 61 | mod/use plumbing in src/cmd/mod.rs |  |  | 0.748 |
 | ns | 1066 |  | 306 | CONTRIBUTING.md: test commands | 1.11 |  | 0.700 |
 | walker |  | 1103 | 40 | pub-item names surface in src/cmd/command_prelude.rs |  |  | 0.700 |

@@ -14,46 +14,46 @@ Score(3000)=0.674 I=0.849 C=0.534 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | walker |  | 275 | 135 | headings outline in README.md |  |  | 0.684 |
 | walker |  | 316 | 41 | README.md section #1 |  |  | 0.684 |
 | ns | 334 |  | 141 | README section-heading census | 1.6 |  | 0.722 |
+| walker |  | 336 | 20 | README.md section #11 |  |  | 0.722 |
 | ns | 447 |  | 113 | README lede — pitch + install transcript | 1.7 | 1.6 | 0.657 |
-| walker |  | 466 | 150 | go module file go.mod |  |  | 0.788 |
-| walker |  | 473 | 7 | listing of '.github' |  |  | 0.799 |
-| walker |  | 481 | 8 | listing of '.github/workflows' |  |  | 0.832 |
+| walker |  | 486 | 150 | go module file go.mod |  |  | 0.788 |
+| walker |  | 493 | 7 | listing of '.github' |  |  | 0.799 |
+| walker |  | 501 | 8 | listing of '.github/workflows' |  |  | 0.832 |
 | ns | 571 |  | 124 | README lede — why a local CA | 1.8 |  | 0.804 |
-| walker |  | 734 | 253 | YAML config at .github/workflows/test.yml |  |  | 0.807 |
+| walker |  | 754 | 253 | YAML config at .github/workflows/test.yml |  |  | 0.807 |
 | ns | 824 |  | 253 | main.go package header + imports | 1.9 |  | 0.633 |
-| walker |  | 1029 | 295 | go decl names surface in main.go |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:85 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:87 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:171 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:240 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:267 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:307 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:336 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:345 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:358 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:364 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:370 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:375 |  |  | 0.649 |
-| walker |  | 1029 | 0 | go decl at main.go:382 |  |  | 0.649 |
-| walker |  | 1050 | 21 | go decl body at main.go:370 |  |  | 0.649 |
+| walker |  | 1049 | 295 | go decl names surface in main.go |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:85 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:87 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:171 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:240 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:267 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:307 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:336 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:345 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:358 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:364 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:370 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:375 |  |  | 0.649 |
+| walker |  | 1049 | 0 | go decl at main.go:382 |  |  | 0.649 |
 | ns | 1063 |  | 239 | main.go declaration census | 2.1 | 1.9 | 0.697 |
-| walker |  | 1072 | 22 | go decl body at main.go:375 |  |  | 0.697 |
-| walker |  | 1107 | 35 | go decl body at main.go:358 |  |  | 0.697 |
-| walker |  | 1151 | 44 | go decl body at main.go:364 |  |  | 0.697 |
-| walker |  | 1214 | 63 | go decl doc at main.go:85 |  |  | 0.697 |
+| walker |  | 1070 | 21 | go decl body at main.go:370 |  |  | 0.697 |
+| walker |  | 1092 | 22 | go decl body at main.go:375 |  |  | 0.697 |
+| walker |  | 1127 | 35 | go decl body at main.go:358 |  |  | 0.697 |
+| walker |  | 1171 | 44 | go decl body at main.go:364 |  |  | 0.697 |
+| walker |  | 1234 | 63 | go decl doc at main.go:85 |  |  | 0.697 |
 | ns | 1236 |  | 173 | cert.go declaration census | 2.2 |  | 0.656 |
 | ns | 1344 |  | 108 | truststore_darwin.go declaration census | 2.3 |  | 0.633 |
-| walker |  | 1388 | 174 | go decl at main.go:155 |  |  | 0.637 |
+| walker |  | 1408 | 174 | go decl at main.go:155 |  |  | 0.637 |
 | ns | 1522 |  | 178 | truststore_linux.go declaration census | 2.4 |  | 0.600 |
-| walker |  | 1539 | 151 | go decl names surface in truststore_java.go |  |  | 0.605 |
-| walker |  | 1539 | 0 | go decl at truststore_java.go:31 |  |  | 0.605 |
-| walker |  | 1539 | 0 | go decl at truststore_java.go:57 |  |  | 0.605 |
-| walker |  | 1539 | 0 | go decl at truststore_java.go:81 |  |  | 0.605 |
-| walker |  | 1539 | 0 | go decl at truststore_java.go:94 |  |  | 0.605 |
-| walker |  | 1539 | 0 | go decl at truststore_java.go:110 |  |  | 0.605 |
-| walker |  | 1548 | 9 | go decl at truststore_java.go:21 |  |  | 0.606 |
-| walker |  | 1589 | 41 | go decl doc at truststore_java.go:110 |  |  | 0.606 |
-| walker |  | 1609 | 20 | README.md section #11 |  |  | 0.606 |
+| walker |  | 1559 | 151 | go decl names surface in truststore_java.go |  |  | 0.605 |
+| walker |  | 1559 | 0 | go decl at truststore_java.go:31 |  |  | 0.605 |
+| walker |  | 1559 | 0 | go decl at truststore_java.go:57 |  |  | 0.605 |
+| walker |  | 1559 | 0 | go decl at truststore_java.go:81 |  |  | 0.605 |
+| walker |  | 1559 | 0 | go decl at truststore_java.go:94 |  |  | 0.605 |
+| walker |  | 1559 | 0 | go decl at truststore_java.go:110 |  |  | 0.605 |
+| walker |  | 1568 | 9 | go decl at truststore_java.go:21 |  |  | 0.606 |
+| walker |  | 1609 | 41 | go decl doc at truststore_java.go:110 |  |  | 0.606 |
 | walker |  | 1784 | 175 | go decl names surface in truststore_nss.go |  |  | 0.608 |
 | walker |  | 1784 | 0 | go decl at truststore_nss.go:39 |  |  | 0.608 |
 | walker |  | 1784 | 0 | go decl at truststore_nss.go:73 |  |  | 0.608 |

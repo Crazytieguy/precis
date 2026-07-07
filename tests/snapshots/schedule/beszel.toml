@@ -369,164 +369,10 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Fs(DirListing { dir: "supplemental" })'
-descriptor = "listing of 'supplemental'"
-cost_tokens = 26
-cum_tokens = 422
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental"
-entries = ["CHANGELOG.md", "debian", "docker", "guides", "kubernetes", "licenses", "scripts"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "supplemental/guides" })'
-descriptor = "listing of 'supplemental/guides'"
-cost_tokens = 5
-cum_tokens = 427
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/guides"
-entries = ["systemd.md"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "supplemental/kubernetes" })'
-descriptor = "listing of 'supplemental/kubernetes'"
-cost_tokens = 6
-cum_tokens = 433
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/kubernetes"
-entries = ["beszel-hub"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "supplemental/kubernetes/beszel-hub" })'
-descriptor = "listing of 'supplemental/kubernetes/beszel-hub'"
-cost_tokens = 3
-cum_tokens = 436
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/kubernetes/beszel-hub"
-entries = ["charts"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "supplemental/docker" })'
-descriptor = "listing of 'supplemental/docker'"
-cost_tokens = 10
-cum_tokens = 446
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/docker"
-entries = ["agent", "hub", "same-system"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "supplemental/docker/agent" })'
-descriptor = "listing of 'supplemental/docker/agent'"
-cost_tokens = 5
-cum_tokens = 451
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/docker/agent"
-entries = ["docker-compose.yml"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "supplemental/docker/hub" })'
-descriptor = "listing of 'supplemental/docker/hub'"
-cost_tokens = 5
-cum_tokens = 456
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/docker/hub"
-entries = ["docker-compose.yml"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "supplemental/docker/same-system" })'
-descriptor = "listing of 'supplemental/docker/same-system'"
-cost_tokens = 5
-cum_tokens = 461
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/docker/same-system"
-entries = ["docker-compose.yml"]
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: "supplemental/licenses" })'
-descriptor = "listing of 'supplemental/licenses'"
-cost_tokens = 10
-cum_tokens = 471
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/licenses"
-entries = ["LibreHardwareMonitor", "smartmontools"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "supplemental/licenses/LibreHardwareMonitor" })'
-descriptor = "listing of 'supplemental/licenses/LibreHardwareMonitor'"
-cost_tokens = 3
-cum_tokens = 474
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/licenses/LibreHardwareMonitor"
-entries = ["LICENSE"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "supplemental/licenses/smartmontools" })'
-descriptor = "listing of 'supplemental/licenses/smartmontools'"
-cost_tokens = 3
-cum_tokens = 477
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "supplemental/licenses/smartmontools"
-entries = ["LICENSE"]
-
-[[batches]]
-position = 24
 key = 'Markdown(Section { file: "readme.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #23"
 cost_tokens = 28
-cum_tokens = 505
+cum_tokens = 424
 
 [batches.content]
 kind = "lines"
@@ -538,6 +384,160 @@ end = 70
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "supplemental" })'
+descriptor = "listing of 'supplemental'"
+cost_tokens = 26
+cum_tokens = 450
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental"
+entries = ["CHANGELOG.md", "debian", "docker", "guides", "kubernetes", "licenses", "scripts"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "supplemental/guides" })'
+descriptor = "listing of 'supplemental/guides'"
+cost_tokens = 5
+cum_tokens = 455
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/guides"
+entries = ["systemd.md"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "supplemental/kubernetes" })'
+descriptor = "listing of 'supplemental/kubernetes'"
+cost_tokens = 6
+cum_tokens = 461
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/kubernetes"
+entries = ["beszel-hub"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "supplemental/kubernetes/beszel-hub" })'
+descriptor = "listing of 'supplemental/kubernetes/beszel-hub'"
+cost_tokens = 3
+cum_tokens = 464
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/kubernetes/beszel-hub"
+entries = ["charts"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "supplemental/docker" })'
+descriptor = "listing of 'supplemental/docker'"
+cost_tokens = 10
+cum_tokens = 474
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/docker"
+entries = ["agent", "hub", "same-system"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "supplemental/docker/agent" })'
+descriptor = "listing of 'supplemental/docker/agent'"
+cost_tokens = 5
+cum_tokens = 479
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/docker/agent"
+entries = ["docker-compose.yml"]
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: "supplemental/docker/hub" })'
+descriptor = "listing of 'supplemental/docker/hub'"
+cost_tokens = 5
+cum_tokens = 484
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/docker/hub"
+entries = ["docker-compose.yml"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "supplemental/docker/same-system" })'
+descriptor = "listing of 'supplemental/docker/same-system'"
+cost_tokens = 5
+cum_tokens = 489
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/docker/same-system"
+entries = ["docker-compose.yml"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "supplemental/licenses" })'
+descriptor = "listing of 'supplemental/licenses'"
+cost_tokens = 10
+cum_tokens = 499
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/licenses"
+entries = ["LibreHardwareMonitor", "smartmontools"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "supplemental/licenses/LibreHardwareMonitor" })'
+descriptor = "listing of 'supplemental/licenses/LibreHardwareMonitor'"
+cost_tokens = 3
+cum_tokens = 502
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/licenses/LibreHardwareMonitor"
+entries = ["LICENSE"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "supplemental/licenses/smartmontools" })'
+descriptor = "listing of 'supplemental/licenses/smartmontools'"
+cost_tokens = 3
+cum_tokens = 505
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "supplemental/licenses/smartmontools"
+entries = ["LICENSE"]
 
 [[batches]]
 position = 25

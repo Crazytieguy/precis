@@ -233,10 +233,28 @@ kind = "ellipsis"
 
 [[batches]]
 position = 7
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 97
+cum_tokens = 414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 9
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
 key = 'Fs(DirListing { dir: "htmy" })'
 descriptor = "listing of 'htmy'"
 cost_tokens = 65
-cum_tokens = 382
+cum_tokens = 479
 
 [batches.content]
 kind = "fs"
@@ -246,11 +264,11 @@ parent = "htmy"
 entries = ["__init__.py", "core.py", "error_boundary.py", "etree.py", "function_component.py", "html.py", "i18n.py", "io.py", "md", "py.typed", "renderer", "snippet.py", "tag.py", "typing.py", "utils.py"]
 
 [[batches]]
-position = 8
+position = 9
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 0 })'
 descriptor = "python imports in htmy/__init__.py"
 cost_tokens = 17
-cum_tokens = 399
+cum_tokens = 496
 
 [batches.content]
 kind = "lines"
@@ -264,11 +282,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 2 })'
 descriptor = "python imports #2 in htmy/__init__.py"
 cost_tokens = 17
-cum_tokens = 416
+cum_tokens = 513
 
 [batches.content]
 kind = "lines"
@@ -282,11 +300,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 3 })'
 descriptor = "python imports #3 in htmy/__init__.py"
 cost_tokens = 13
-cum_tokens = 429
+cum_tokens = 526
 
 [batches.content]
 kind = "lines"
@@ -300,11 +318,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 5 })'
 descriptor = "python imports #5 in htmy/__init__.py"
 cost_tokens = 18
-cum_tokens = 447
+cum_tokens = 544
 
 [batches.content]
 kind = "lines"
@@ -318,11 +336,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 4 })'
 descriptor = "python imports #4 in htmy/__init__.py"
 cost_tokens = 24
-cum_tokens = 471
+cum_tokens = 568
 
 [batches.content]
 kind = "lines"
@@ -336,11 +354,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 1 })'
 descriptor = "python imports #1 in htmy/__init__.py"
 cost_tokens = 120
-cum_tokens = 591
+cum_tokens = 688
 
 [batches.content]
 kind = "lines"
@@ -354,11 +372,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 6 })'
 descriptor = "python imports #6 in htmy/__init__.py"
 cost_tokens = 26
-cum_tokens = 617
+cum_tokens = 714
 
 [batches.content]
 kind = "lines"
@@ -372,11 +390,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Fs(DirListing { dir: "htmy/md" })'
 descriptor = "listing of 'htmy/md'"
 cost_tokens = 14
-cum_tokens = 631
+cum_tokens = 728
 
 [batches.content]
 kind = "fs"
@@ -386,11 +404,11 @@ parent = "htmy/md"
 entries = ["__init__.py", "core.py", "typing.py"]
 
 [[batches]]
-position = 16
+position = 17
 key = 'Fs(DirListing { dir: "htmy/renderer" })'
 descriptor = "listing of 'htmy/renderer'"
 cost_tokens = 22
-cum_tokens = 653
+cum_tokens = 750
 
 [batches.content]
 kind = "fs"
@@ -400,11 +418,11 @@ parent = "htmy/renderer"
 entries = ["__init__.py", "baseline.py", "context.py", "default.py", "typing.py"]
 
 [[batches]]
-position = 17
+position = 18
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 7 })'
 descriptor = "python imports #7 in htmy/__init__.py"
 cost_tokens = 42
-cum_tokens = 695
+cum_tokens = 792
 
 [batches.content]
 kind = "lines"
@@ -418,11 +436,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Python(DeclNames { file: "htmy/__init__.py" })'
 descriptor = "python decl names surface in htmy/__init__.py"
 cost_tokens = 25
-cum_tokens = 720
+cum_tokens = 817
 
 [batches.content]
 kind = "lines"
@@ -436,11 +454,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Python(Imports { file: "htmy/renderer/__init__.py" })'
 descriptor = "python imports in htmy/renderer/__init__.py"
 cost_tokens = 62
-cum_tokens = 782
+cum_tokens = 879
 
 [batches.content]
 kind = "lines"
@@ -454,11 +472,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Python(DeclNames { file: "htmy/renderer/__init__.py" })'
 descriptor = "python decl names surface in htmy/renderer/__init__.py"
 cost_tokens = 36
-cum_tokens = 818
+cum_tokens = 915
 
 [batches.content]
 kind = "lines"
@@ -488,29 +506,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Python(DeclNames { file: "htmy/error_boundary.py" })'
 descriptor = "python decl names surface in htmy/error_boundary.py"
 cost_tokens = 12
-cum_tokens = 830
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/error_boundary.py"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Python(Decl { file: "htmy/error_boundary.py", start_line: 15 })'
-descriptor = "python decl at htmy/error_boundary.py:15"
-cost_tokens = 0
-cum_tokens = 830
+cum_tokens = 927
 
 [batches.content]
 kind = "lines"
@@ -525,28 +525,28 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'Python(DeclNames { file: "htmy/etree.py" })'
-descriptor = "python decl names surface in htmy/etree.py"
-cost_tokens = 13
-cum_tokens = 843
+key = 'Python(Decl { file: "htmy/error_boundary.py", start_line: 15 })'
+descriptor = "python decl at htmy/error_boundary.py:15"
+cost_tokens = 0
+cum_tokens = 927
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "htmy/etree.py"
-start = 23
-end = 23
+path = "htmy/error_boundary.py"
+start = 15
+end = 15
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 24
-key = 'Python(Decl { file: "htmy/etree.py", start_line: 23 })'
-descriptor = "python decl at htmy/etree.py:23"
-cost_tokens = 0
-cum_tokens = 843
+key = 'Python(DeclNames { file: "htmy/etree.py" })'
+descriptor = "python decl names surface in htmy/etree.py"
+cost_tokens = 13
+cum_tokens = 940
 
 [batches.content]
 kind = "lines"
@@ -561,10 +561,28 @@ kind = "full"
 
 [[batches]]
 position = 25
+key = 'Python(Decl { file: "htmy/etree.py", start_line: 23 })'
+descriptor = "python decl at htmy/etree.py:23"
+cost_tokens = 0
+cum_tokens = 940
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/etree.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
 key = 'Python(Imports { file: "htmy/md/__init__.py" })'
 descriptor = "python imports in htmy/md/__init__.py"
 cost_tokens = 88
-cum_tokens = 931
+cum_tokens = 1028
 
 [batches.content]
 kind = "lines"
@@ -578,11 +596,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 9 })'
 descriptor = "python imports #9 in htmy/__init__.py"
 cost_tokens = 108
-cum_tokens = 1039
+cum_tokens = 1136
 
 [batches.content]
 kind = "lines"
@@ -596,11 +614,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Python(DeclNames { file: "htmy/snippet.py" })'
 descriptor = "python decl names surface in htmy/snippet.py"
 cost_tokens = 21
-cum_tokens = 1060
+cum_tokens = 1157
 
 [batches.content]
 kind = "lines"
@@ -617,34 +635,34 @@ kind = "full"
 path = "htmy/snippet.py"
 start = 158
 end = 158
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Python(Decl { file: "htmy/snippet.py", start_line: 27 })'
-descriptor = "python decl at htmy/snippet.py:27"
-cost_tokens = 0
-cum_tokens = 1060
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "htmy/snippet.py"
-start = 27
-end = 27
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 29
+key = 'Python(Decl { file: "htmy/snippet.py", start_line: 27 })'
+descriptor = "python decl at htmy/snippet.py:27"
+cost_tokens = 0
+cum_tokens = 1157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
 key = 'Python(Decl { file: "htmy/snippet.py", start_line: 158 })'
 descriptor = "python decl at htmy/snippet.py:158"
 cost_tokens = 0
-cum_tokens = 1060
+cum_tokens = 1157
 
 [batches.content]
 kind = "lines"
@@ -658,11 +676,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Python(ClassBody { file: "htmy/error_boundary.py", start_line: 15 })'
 descriptor = "python class body at htmy/error_boundary.py:15"
 cost_tokens = 21
-cum_tokens = 1081
+cum_tokens = 1178
 
 [batches.content]
 kind = "lines"
@@ -676,11 +694,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Python(DeclNames { file: "htmy/io.py" })'
 descriptor = "python decl names surface in htmy/io.py"
 cost_tokens = 22
-cum_tokens = 1103
+cum_tokens = 1200
 
 [batches.content]
 kind = "lines"
@@ -702,11 +720,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Python(Decl { file: "htmy/io.py", start_line: 11 })'
 descriptor = "python decl at htmy/io.py:11"
 cost_tokens = 0
-cum_tokens = 1103
+cum_tokens = 1200
 
 [batches.content]
 kind = "lines"
@@ -720,11 +738,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Python(DeclDoc { file: "htmy/io.py", start_line: 11 })'
 descriptor = "python decl doc at htmy/io.py:11"
 cost_tokens = 15
-cum_tokens = 1118
+cum_tokens = 1215
 
 [batches.content]
 kind = "lines"
@@ -738,11 +756,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
-cum_tokens = 1125
+cum_tokens = 1222
 
 [batches.content]
 kind = "fs"
@@ -752,11 +770,11 @@ parent = ".github"
 entries = ["funding.yml", "workflows"]
 
 [[batches]]
-position = 35
+position = 36
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 19
-cum_tokens = 1144
+cum_tokens = 1241
 
 [batches.content]
 kind = "fs"
@@ -766,11 +784,11 @@ parent = ".github/workflows"
 entries = ["build-docs.yml", "linters.yml", "publish.yml", "tests.yml"]
 
 [[batches]]
-position = 36
+position = 37
 key = 'Python(ClassBody { file: "htmy/snippet.py", start_line: 158 })'
 descriptor = "python class body at htmy/snippet.py:158"
 cost_tokens = 26
-cum_tokens = 1170
+cum_tokens = 1267
 
 [batches.content]
 kind = "lines"
@@ -779,24 +797,6 @@ kind = "lines"
 path = "htmy/snippet.py"
 start = 216
 end = 216
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 97
-cum_tokens = 1267
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 9
-end = 16
 
 [batches.content.spans.render]
 kind = "full"

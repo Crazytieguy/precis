@@ -131,120 +131,10 @@ entries = ["filesystem", "lib", "prisma", "router", "types"]
 
 [[batches]]
 position = 8
-key = 'Fs(DirListing { dir: "packages/types" })'
-descriptor = "listing of 'packages/types'"
-cost_tokens = 13
-cum_tokens = 402
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/types"
-entries = ["global.ts", "inputSelect.ts", "package.json"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: ".vscode" })'
-descriptor = "listing of '.vscode'"
-cost_tokens = 4
-cum_tokens = 406
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".vscode"
-entries = ["settings.json"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "assets" })'
-descriptor = "listing of 'assets'"
-cost_tokens = 33
-cum_tokens = 439
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "assets"
-entries = ["app_store.png", "google_play.png", "home.png", "logo.png", "logo_small.png", "mobile_apps.png", "star_repo.gif"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: ".devcontainer" })'
-descriptor = "listing of '.devcontainer'"
-cost_tokens = 5
-cum_tokens = 444
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".devcontainer"
-entries = ["devcontainer.json"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "packages/prisma" })'
-descriptor = "listing of 'packages/prisma'"
-cost_tokens = 23
-cum_tokens = 467
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/prisma"
-entries = ["client", "index.ts", "migrations", "package.json", "schema.prisma", "seed.js"]
-
-[[batches]]
-position = 13
-key = 'Typescript(ExportNames { file: "packages/prisma/index.ts" })'
-descriptor = "export names surface in packages/prisma/index.ts"
-cost_tokens = 12
-cum_tokens = 479
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/prisma/index.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/prisma/index.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "packages/prisma/client" })'
-descriptor = "listing of 'packages/prisma/client'"
-cost_tokens = 9
-cum_tokens = 488
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/prisma/client"
-entries = ["index.d.ts", "index.js"]
-
-[[batches]]
-position = 15
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 137
-cum_tokens = 625
+cum_tokens = 526
 
 [batches.content]
 kind = "lines"
@@ -442,11 +332,67 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 9
+key = 'Fs(DirListing { dir: "packages/types" })'
+descriptor = "listing of 'packages/types'"
+cost_tokens = 13
+cum_tokens = 539
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/types"
+entries = ["global.ts", "inputSelect.ts", "package.json"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: ".vscode" })'
+descriptor = "listing of '.vscode'"
+cost_tokens = 4
+cum_tokens = 543
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".vscode"
+entries = ["settings.json"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "assets" })'
+descriptor = "listing of 'assets'"
+cost_tokens = 33
+cum_tokens = 576
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "assets"
+entries = ["app_store.png", "google_play.png", "home.png", "logo.png", "logo_small.png", "mobile_apps.png", "star_repo.gif"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: ".devcontainer" })'
+descriptor = "listing of '.devcontainer'"
+cost_tokens = 5
+cum_tokens = 581
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".devcontainer"
+entries = ["devcontainer.json"]
+
+[[batches]]
+position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #26"
 cost_tokens = 26
-cum_tokens = 651
+cum_tokens = 607
 
 [batches.content]
 kind = "lines"
@@ -460,11 +406,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 17
+position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #18"
 cost_tokens = 11
-cum_tokens = 662
+cum_tokens = 618
 
 [batches.content]
 kind = "lines"
@@ -478,11 +424,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 18
+position = 15
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #17"
 cost_tokens = 10
-cum_tokens = 672
+cum_tokens = 628
 
 [batches.content]
 kind = "lines"
@@ -496,11 +442,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 19
+position = 16
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #19"
 cost_tokens = 10
-cum_tokens = 682
+cum_tokens = 638
 
 [batches.content]
 kind = "lines"
@@ -512,6 +458,60 @@ end = 61
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "packages/prisma" })'
+descriptor = "listing of 'packages/prisma'"
+cost_tokens = 23
+cum_tokens = 661
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/prisma"
+entries = ["client", "index.ts", "migrations", "package.json", "schema.prisma", "seed.js"]
+
+[[batches]]
+position = 18
+key = 'Typescript(ExportNames { file: "packages/prisma/index.ts" })'
+descriptor = "export names surface in packages/prisma/index.ts"
+cost_tokens = 12
+cum_tokens = 673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/prisma/index.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/prisma/index.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "packages/prisma/client" })'
+descriptor = "listing of 'packages/prisma/client'"
+cost_tokens = 9
+cum_tokens = 682
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/prisma/client"
+entries = ["index.d.ts", "index.js"]
 
 [[batches]]
 position = 20

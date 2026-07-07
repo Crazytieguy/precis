@@ -13,16 +13,16 @@ Score(3000)=0.552 I=0.797 C=0.382 ns_rows≤3K=20/40 (reached=7 partial=1 missin
 | ns | 303 |  | 29 | .github/ directory listing | 1.5 |  | 0.804 |
 | ns | 402 |  | 99 | docker-compose.yml | 1.6 |  | 0.695 |
 | walker |  | 454 | 198 | headings outline in README.md |  |  | 0.695 |
-| walker |  | 480 | 26 | listing of 'packages/lib' |  |  | 0.696 |
-| ns | 483 |  | 81 | .github/workflows listing | 1.7 |  | 0.608 |
-| walker |  | 496 | 16 | listing of 'packages/lib/src' |  |  | 0.608 |
-| ns | 497 |  | 14 | .github/ISSUE_TEMPLATE listing | 1.8 |  | 0.592 |
-| walker |  | 506 | 10 | export names surface in packages/lib/src/index.ts |  |  | 0.592 |
-| walker |  | 511 | 5 | listing of 'packages/lib/src/files' |  |  | 0.592 |
-| walker |  | 528 | 17 | listing of 'packages/docs' |  |  | 0.592 |
-| walker |  | 587 | 59 | README headline in packages/lib/README.md |  |  | 0.592 |
-| ns | 646 |  | 149 | pnpm workspace + node version | 1.9 |  | 0.537 |
-| walker |  | 693 | 106 | README.md section #0 |  |  | 0.595 |
+| ns | 483 |  | 81 | .github/workflows listing | 1.7 |  | 0.607 |
+| ns | 497 |  | 14 | .github/ISSUE_TEMPLATE listing | 1.8 |  | 0.591 |
+| walker |  | 560 | 106 | README.md section #0 |  |  | 0.655 |
+| walker |  | 586 | 26 | listing of 'packages/lib' |  |  | 0.655 |
+| walker |  | 602 | 16 | listing of 'packages/lib/src' |  |  | 0.656 |
+| walker |  | 612 | 10 | export names surface in packages/lib/src/index.ts |  |  | 0.656 |
+| walker |  | 617 | 5 | listing of 'packages/lib/src/files' |  |  | 0.656 |
+| walker |  | 634 | 17 | listing of 'packages/docs' |  |  | 0.656 |
+| ns | 646 |  | 149 | pnpm workspace + node version | 1.9 |  | 0.595 |
+| walker |  | 693 | 59 | README headline in packages/lib/README.md |  |  | 0.595 |
 | ns | 706 |  | 60 | Repo hygiene: renovate config | 1.10 |  | 0.570 |
 | walker |  | 799 | 106 | YAML config at docker-compose.yml |  |  | 0.674 |
 | walker |  | 822 | 23 | listing of 'packages/app-server' |  |  | 0.674 |

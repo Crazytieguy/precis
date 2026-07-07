@@ -169,166 +169,10 @@ kind = "full"
 
 [[batches]]
 position = 9
-key = 'Go(DeclNames { file: "flatten.go", chunk_index: 0 })'
-descriptor = "go decl names surface in flatten.go"
-cost_tokens = 32
-cum_tokens = 335
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "flatten.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "flatten.go"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "flatten.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "flatten.go"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 10
-key = 'Go(Decl { file: "flatten.go", start_line: 8 })'
-descriptor = "go decl at flatten.go:8"
-cost_tokens = 0
-cum_tokens = 335
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "flatten.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Go(Decl { file: "flatten.go", start_line: 20 })'
-descriptor = "go decl at flatten.go:20"
-cost_tokens = 0
-cum_tokens = 335
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "flatten.go"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Go(DeclNames { file: "format.go", chunk_index: 0 })'
-descriptor = "go decl names surface in format.go"
-cost_tokens = 34
-cum_tokens = 369
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "format.go"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "format.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "format.go"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "format.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 13
-key = 'Go(Decl { file: "format.go", start_line: 13 })'
-descriptor = "go decl at format.go:13"
-cost_tokens = 0
-cum_tokens = 369
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "format.go"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Go(Decl { file: "format.go", start_line: 17 })'
-descriptor = "go decl at format.go:17"
-cost_tokens = 0
-cum_tokens = 369
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "format.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 49
-cum_tokens = 418
+cum_tokens = 352
 
 [batches.content]
 kind = "lines"
@@ -396,6 +240,162 @@ end = 130
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Go(DeclNames { file: "flatten.go", chunk_index: 0 })'
+descriptor = "go decl names surface in flatten.go"
+cost_tokens = 32
+cum_tokens = 384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "flatten.go"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "flatten.go"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "flatten.go"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "flatten.go"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
+key = 'Go(Decl { file: "flatten.go", start_line: 8 })'
+descriptor = "go decl at flatten.go:8"
+cost_tokens = 0
+cum_tokens = 384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "flatten.go"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Go(Decl { file: "flatten.go", start_line: 20 })'
+descriptor = "go decl at flatten.go:20"
+cost_tokens = 0
+cum_tokens = 384
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "flatten.go"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Go(DeclNames { file: "format.go", chunk_index: 0 })'
+descriptor = "go decl names surface in format.go"
+cost_tokens = 34
+cum_tokens = 418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Go(Decl { file: "format.go", start_line: 13 })'
+descriptor = "go decl at format.go:13"
+cost_tokens = 0
+cum_tokens = 418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Go(Decl { file: "format.go", start_line: 17 })'
+descriptor = "go decl at format.go:17"
+cost_tokens = 0
+cum_tokens = 418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "format.go"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 16

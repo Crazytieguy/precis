@@ -20,40 +20,40 @@ Score(3000)=0.664 I=0.870 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missin
 | walker |  | 394 | 193 | headings outline in README.md |  |  | 0.680 |
 | ns | 399 |  | 46 | examples/ directory listing | 1.6 |  | 0.601 |
 | walker |  | 419 | 25 | listing of 'tests' |  |  | 0.602 |
-| walker |  | 465 | 46 | listing of 'examples' |  |  | 0.738 |
-| walker |  | 483 | 18 | listing of 'examples/personal_shopper' |  |  | 0.739 |
-| walker |  | 501 | 18 | python imports in swarm/util.py |  |  | 0.739 |
-| ns | 506 |  | 107 | README section-heading locations (full H1/H2 roster) | 1.7 |  | 0.763 |
-| walker |  | 581 | 80 | python method sigs in swarm/core.py |  |  | 0.767 |
-| walker |  | 581 | 0 | python method at swarm/core.py:27 |  |  | 0.767 |
-| walker |  | 581 | 0 | python method at swarm/core.py:71 |  |  | 0.767 |
-| walker |  | 605 | 24 | listing of 'examples/airline' |  |  | 0.768 |
-| walker |  | 608 | 3 | listing of 'examples/airline/data' |  |  | 0.768 |
-| walker |  | 622 | 14 | listing of 'examples/airline/configs' |  |  | 0.768 |
-| walker |  | 634 | 12 | listing of 'examples/airline/data/routines' |  |  | 0.768 |
-| ns | 646 |  | 140 | README overview | 1.8 |  | 0.723 |
-| walker |  | 697 | 63 | python decl names surface in swarm/types.py |  |  | 0.724 |
-| walker |  | 697 | 0 | python decl at swarm/types.py:14 |  |  | 0.724 |
-| walker |  | 697 | 0 | python decl at swarm/types.py:23 |  |  | 0.724 |
-| walker |  | 697 | 0 | python decl at swarm/types.py:29 |  |  | 0.724 |
-| walker |  | 730 | 33 | python class body at swarm/types.py:23 |  |  | 0.724 |
-| walker |  | 765 | 35 | python class body at swarm/types.py:29 |  |  | 0.725 |
-| walker |  | 833 | 68 | python decl names surface in swarm/util.py |  |  | 0.725 |
-| walker |  | 833 | 0 | python decl at swarm/util.py:5 |  |  | 0.725 |
-| walker |  | 833 | 0 | python decl at swarm/util.py:13 |  |  | 0.725 |
-| walker |  | 833 | 0 | python decl at swarm/util.py:21 |  |  | 0.725 |
-| walker |  | 833 | 0 | python decl at swarm/util.py:31 |  |  | 0.725 |
-| walker |  | 850 | 17 | listing of 'examples/weather_agent' |  |  | 0.726 |
-| ns | 914 |  | 268 | setup.cfg — package metadata + autopep8 config | 1.9 |  | 0.594 |
-| walker |  | 938 | 88 | python class body at swarm/types.py:14 |  |  | 0.597 |
-| walker |  | 1013 | 75 | README.md section #4 |  |  | 0.597 |
-| ns | 1032 |  | 118 | pyproject.toml + pre-commit config | 1.10 |  | 0.568 |
-| walker |  | 1076 | 63 | python method at swarm/core.py:89 |  |  | 0.568 |
-| walker |  | 1116 | 40 | listing of 'examples/support_bot' |  |  | 0.569 |
-| walker |  | 1139 | 23 | listing of 'examples/triage_agent' |  |  | 0.570 |
-| ns | 1243 |  | 211 | README Examples section | 1.11 |  | 0.542 |
-| ns | 1379 |  | 136 | SECURITY.md | 1.12 |  | 0.529 |
-| walker |  | 1736 | 597 | README.md section #0 |  |  | 0.664 |
+| walker |  | 494 | 75 | README.md section #4 |  |  | 0.602 |
+| ns | 506 |  | 107 | README section-heading locations (full H1/H2 roster) | 1.7 |  | 0.655 |
+| ns | 646 |  | 140 | README overview | 1.8 |  | 0.616 |
+| ns | 914 |  | 268 | setup.cfg — package metadata + autopep8 config | 1.9 |  | 0.504 |
+| ns | 1032 |  | 118 | pyproject.toml + pre-commit config | 1.10 |  | 0.482 |
+| walker |  | 1091 | 597 | README.md section #0 |  |  | 0.631 |
+| walker |  | 1137 | 46 | listing of 'examples' |  |  | 0.703 |
+| walker |  | 1155 | 18 | listing of 'examples/personal_shopper' |  |  | 0.703 |
+| walker |  | 1173 | 18 | python imports in swarm/util.py |  |  | 0.703 |
+| ns | 1243 |  | 211 | README Examples section | 1.11 |  | 0.669 |
+| walker |  | 1253 | 80 | python method sigs in swarm/core.py |  |  | 0.672 |
+| walker |  | 1253 | 0 | python method at swarm/core.py:27 |  |  | 0.672 |
+| walker |  | 1253 | 0 | python method at swarm/core.py:71 |  |  | 0.672 |
+| walker |  | 1277 | 24 | listing of 'examples/airline' |  |  | 0.673 |
+| walker |  | 1280 | 3 | listing of 'examples/airline/data' |  |  | 0.673 |
+| walker |  | 1294 | 14 | listing of 'examples/airline/configs' |  |  | 0.673 |
+| walker |  | 1306 | 12 | listing of 'examples/airline/data/routines' |  |  | 0.673 |
+| walker |  | 1369 | 63 | python decl names surface in swarm/types.py |  |  | 0.673 |
+| walker |  | 1369 | 0 | python decl at swarm/types.py:14 |  |  | 0.673 |
+| walker |  | 1369 | 0 | python decl at swarm/types.py:23 |  |  | 0.673 |
+| walker |  | 1369 | 0 | python decl at swarm/types.py:29 |  |  | 0.673 |
+| ns | 1379 |  | 136 | SECURITY.md | 1.12 |  | 0.658 |
+| walker |  | 1402 | 33 | python class body at swarm/types.py:23 |  |  | 0.658 |
+| walker |  | 1437 | 35 | python class body at swarm/types.py:29 |  |  | 0.659 |
+| walker |  | 1505 | 68 | python decl names surface in swarm/util.py |  |  | 0.659 |
+| walker |  | 1505 | 0 | python decl at swarm/util.py:5 |  |  | 0.659 |
+| walker |  | 1505 | 0 | python decl at swarm/util.py:13 |  |  | 0.659 |
+| walker |  | 1505 | 0 | python decl at swarm/util.py:21 |  |  | 0.659 |
+| walker |  | 1505 | 0 | python decl at swarm/util.py:31 |  |  | 0.659 |
+| walker |  | 1522 | 17 | listing of 'examples/weather_agent' |  |  | 0.659 |
+| walker |  | 1610 | 88 | python class body at swarm/types.py:14 |  |  | 0.662 |
+| walker |  | 1673 | 63 | python method at swarm/core.py:89 |  |  | 0.662 |
+| walker |  | 1713 | 40 | listing of 'examples/support_bot' |  |  | 0.663 |
+| walker |  | 1736 | 23 | listing of 'examples/triage_agent' |  |  | 0.664 |
 | ns | 1807 |  | 428 | swarm/types.py — Agent/Response/Result models | 2.1 |  | 0.601 |
 | ns | 1887 |  | 80 | core.py — Swarm class method locations | 2.2 |  | 0.615 |
 | ns | 1923 |  | 36 | core.py — Swarm.__init__ | 2.3 | 2.2 | 0.606 |

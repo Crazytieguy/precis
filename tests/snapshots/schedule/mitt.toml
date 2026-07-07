@@ -327,10 +327,64 @@ kind = "ellipsis"
 
 [[batches]]
 position = 6
+key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #18"
+cost_tokens = 31
+cum_tokens = 459
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 203
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #15"
+cost_tokens = 38
+cum_tokens = 497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 179
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #8"
+cost_tokens = 13
+cum_tokens = 510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
 key = 'Typescript(ExportNames { file: "src/index.ts" })'
 descriptor = "export names surface in src/index.ts"
 cost_tokens = 160
-cum_tokens = 588
+cum_tokens = 670
 
 [batches.content]
 kind = "lines"
@@ -432,11 +486,11 @@ end = 47
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 10
 key = 'Typescript(Export { file: "src/index.ts", start_line: 13 })'
 descriptor = "export at src/index.ts:13"
 cost_tokens = 14
-cum_tokens = 602
+cum_tokens = 684
 
 [batches.content]
 kind = "lines"
@@ -450,11 +504,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 8
+position = 11
 key = 'Typescript(Export { file: "src/index.ts", start_line: 46 })'
 descriptor = "export at src/index.ts:46"
 cost_tokens = 23
-cum_tokens = 625
+cum_tokens = 707
 
 [batches.content]
 kind = "lines"
@@ -476,11 +530,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 12
 key = 'Typescript(Export { file: "src/index.ts", start_line: 6 })'
 descriptor = "export at src/index.ts:6"
 cost_tokens = 28
-cum_tokens = 653
+cum_tokens = 735
 
 [batches.content]
 kind = "lines"
@@ -494,11 +548,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 10
+position = 13
 key = 'Typescript(Export { file: "src/index.ts", start_line: 18 })'
 descriptor = "export at src/index.ts:18"
 cost_tokens = 35
-cum_tokens = 688
+cum_tokens = 770
 
 [batches.content]
 kind = "lines"
@@ -512,11 +566,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 11
+position = 14
 key = 'Typescript(Export { file: "src/index.ts", start_line: 23 })'
 descriptor = "export at src/index.ts:23"
 cost_tokens = 197
-cum_tokens = 885
+cum_tokens = 967
 
 [batches.content]
 kind = "lines"
@@ -530,11 +584,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 12
+position = 15
 key = 'Typescript(ExportDoc { file: "src/index.ts", start_line: 46 })'
 descriptor = "export doc at src/index.ts:46"
 cost_tokens = 46
-cum_tokens = 931
+cum_tokens = 1013
 
 [batches.content]
 kind = "lines"
@@ -548,29 +602,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 13
-key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #18"
-cost_tokens = 31
-cum_tokens = 962
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 203
-end = 205
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
+position = 16
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 10
-cum_tokens = 972
+cum_tokens = 1023
 
 [batches.content]
 kind = "fs"
@@ -580,11 +616,11 @@ parent = ".github"
 entries = ["PULL_REQUEST_TEMPLATE.md", "workflows"]
 
 [[batches]]
-position = 15
+position = 17
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 981
+cum_tokens = 1032
 
 [batches.content]
 kind = "fs"
@@ -594,11 +630,11 @@ parent = ".github/workflows"
 entries = ["compressed-size.yml", "main.yml"]
 
 [[batches]]
-position = 16
+position = 18
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 217
-cum_tokens = 1198
+cum_tokens = 1249
 
 [batches.content]
 kind = "lines"
@@ -612,11 +648,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 12
-cum_tokens = 1210
+cum_tokens = 1261
 
 [batches.content]
 kind = "fs"
@@ -624,42 +660,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "test"
 entries = ["index_test.ts", "test-types-compilation.ts"]
-
-[[batches]]
-position = 18
-key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #15"
-cost_tokens = 38
-cum_tokens = 1248
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 179
-end = 182
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #8"
-cost_tokens = 13
-cum_tokens = 1261
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 20

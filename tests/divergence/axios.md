@@ -25,18 +25,18 @@ Score(3000)=0.636 I=0.843 C=0.479 ns_rows≤3K=21/40 (reached=12 partial=2 missi
 | walker |  | 419 | 16 | listing of 'lib/cancel' |  |  | 0.802 |
 | walker |  | 429 | 10 | export names surface in lib/axios.js |  |  | 0.802 |
 | ns | 447 |  | 99 | lib/helpers listing, part 1 (A-N) | 1.8 |  | 0.720 |
-| walker |  | 449 | 20 | listing of 'lib/adapters' |  |  | 0.746 |
-| walker |  | 453 | 4 | listing of 'lib/platform/common' |  |  | 0.757 |
-| walker |  | 463 | 10 | export names surface in lib/defaults/index.js |  |  | 0.757 |
-| walker |  | 468 | 5 | listing of 'lib/env/classes' |  |  | 0.770 |
-| walker |  | 479 | 11 | export names surface in lib/platform/index.js |  |  | 0.770 |
-| walker |  | 498 | 19 | export at lib/platform/index.js:4 |  |  | 0.770 |
-| walker |  | 511 | 13 | imports in index.js |  |  | 0.770 |
-| ns | 538 |  | 91 | lib/helpers listing, part 2 (N-Z) | 1.9 |  | 0.703 |
-| walker |  | 552 | 41 | README headline in lib/env/README.md |  |  | 0.703 |
-| walker |  | 556 | 4 | listing of '.husky' |  |  | 0.703 |
-| walker |  | 605 | 49 | listing of 'lib/core' |  |  | 0.795 |
-| walker |  | 654 | 49 | README headline in lib/adapters/README.md |  |  | 0.795 |
+| walker |  | 470 | 41 | README headline in lib/env/README.md |  |  | 0.720 |
+| walker |  | 490 | 20 | listing of 'lib/adapters' |  |  | 0.746 |
+| ns | 538 |  | 91 | lib/helpers listing, part 2 (N-Z) | 1.9 |  | 0.681 |
+| walker |  | 539 | 49 | README headline in lib/adapters/README.md |  |  | 0.681 |
+| walker |  | 543 | 4 | listing of 'lib/platform/common' |  |  | 0.691 |
+| walker |  | 553 | 10 | export names surface in lib/defaults/index.js |  |  | 0.691 |
+| walker |  | 558 | 5 | listing of 'lib/env/classes' |  |  | 0.703 |
+| walker |  | 569 | 11 | export names surface in lib/platform/index.js |  |  | 0.703 |
+| walker |  | 588 | 19 | export at lib/platform/index.js:4 |  |  | 0.703 |
+| walker |  | 601 | 13 | imports in index.js |  |  | 0.703 |
+| walker |  | 605 | 4 | listing of '.husky' |  |  | 0.703 |
+| walker |  | 654 | 49 | listing of 'lib/core' |  |  | 0.795 |
 | walker |  | 665 | 11 | export names surface in lib/platform/browser/index.js |  |  | 0.795 |
 | walker |  | 676 | 11 | export names surface in lib/platform/node/index.js |  |  | 0.795 |
 | ns | 743 |  | 205 | tests/ top-level + unit top-level + unit/adapters,core,cancel listings | 1.10 |  | 0.668 |

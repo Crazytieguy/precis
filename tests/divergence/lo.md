@@ -16,18 +16,18 @@ Score(3000)=0.350 I=0.528 C=0.232 ns_rows≤3K=15/49 (reached=5 partial=0 missin
 | walker |  | 376 | 9 | listing of 'parallel' |  |  | 0.301 |
 | walker |  | 387 | 11 | listing of 'internal' |  |  | 0.301 |
 | walker |  | 394 | 7 | go package + imports in constraints.go |  |  | 0.301 |
-| walker |  | 409 | 15 | listing of 'mutable' |  |  | 0.301 |
-| walker |  | 418 | 9 | go package + imports in condition.go |  |  | 0.301 |
-| walker |  | 427 | 9 | go package + imports in func.go |  |  | 0.301 |
-| walker |  | 436 | 9 | go package + imports in intersect.go |  |  | 0.301 |
-| walker |  | 445 | 9 | go package + imports in map.go |  |  | 0.301 |
-| walker |  | 454 | 9 | go package + imports in tuples.go |  |  | 0.301 |
 | ns | 458 |  | 175 | Root directory listing | 1.6 |  | 0.610 |
-| walker |  | 463 | 9 | go package + imports in types.go |  |  | 0.610 |
-| walker |  | 480 | 17 | go decl doc at constraints.go:4 |  |  | 0.611 |
-| walker |  | 492 | 12 | listing of 'internal/xrand' |  |  | 0.611 |
-| ns | 541 |  | 83 | go.mod: direct dependencies | 1.7 |  | 0.588 |
-| walker |  | 589 | 97 | headings outline in README.md |  |  | 0.588 |
+| walker |  | 491 | 97 | headings outline in README.md |  |  | 0.610 |
+| walker |  | 506 | 15 | listing of 'mutable' |  |  | 0.610 |
+| walker |  | 515 | 9 | go package + imports in condition.go |  |  | 0.610 |
+| walker |  | 524 | 9 | go package + imports in func.go |  |  | 0.610 |
+| walker |  | 533 | 9 | go package + imports in intersect.go |  |  | 0.610 |
+| ns | 541 |  | 83 | go.mod: direct dependencies | 1.7 |  | 0.587 |
+| walker |  | 542 | 9 | go package + imports in map.go |  |  | 0.587 |
+| walker |  | 551 | 9 | go package + imports in tuples.go |  |  | 0.587 |
+| walker |  | 560 | 9 | go package + imports in types.go |  |  | 0.587 |
+| walker |  | 577 | 17 | go decl doc at constraints.go:4 |  |  | 0.588 |
+| walker |  | 589 | 12 | listing of 'internal/xrand' |  |  | 0.588 |
 | walker |  | 609 | 20 | listing of 'internal/constraints' |  |  | 0.589 |
 | walker |  | 640 | 31 | README headline in internal/constraints/README.md |  |  | 0.589 |
 | walker |  | 652 | 12 | go decl names surface in internal/constraints/ordered_go118.go |  |  | 0.589 |

@@ -73,24 +73,10 @@ kind = "full"
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "doc" })'
-descriptor = "listing of 'doc'"
-cost_tokens = 25
-cum_tokens = 393
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "doc"
-entries = ["execution-order.png", "execution-order.svg", "histogram.png", "hyperfine.1", "whisker.png"]
-
-[[batches]]
-position = 6
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: true, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 151
-cum_tokens = 544
+cum_tokens = 519
 
 [batches.content]
 kind = "lines"
@@ -102,6 +88,20 @@ end = 23
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "doc" })'
+descriptor = "listing of 'doc'"
+cost_tokens = 25
+cum_tokens = 544
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "doc"
+entries = ["execution-order.png", "execution-order.svg", "histogram.png", "hyperfine.1", "whisker.png"]
 
 [[batches]]
 position = 7

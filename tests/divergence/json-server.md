@@ -15,11 +15,11 @@ Score(3000)=0.749 I=0.896 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missi
 | ns | 333 |  | 28 | package.json: license + author | 1.6 |  | 0.508 |
 | walker |  | 337 | 201 | headings outline in README.md |  |  | 0.515 |
 | walker |  | 362 | 25 | README.md section #1 |  |  | 0.515 |
-| walker |  | 367 | 5 | listing of '.husky' |  |  | 0.515 |
-| walker |  | 438 | 71 | listing of 'src' |  |  | 0.745 |
-| walker |  | 455 | 17 | listing of 'src/adapters' |  |  | 0.788 |
-| ns | 461 |  | 128 | package.json: repository/bin/files/type | 1.7 |  | 0.691 |
-| walker |  | 606 | 151 | README.md section #0 |  |  | 0.695 |
+| ns | 461 |  | 128 | package.json: repository/bin/files/type | 1.7 |  | 0.452 |
+| walker |  | 513 | 151 | README.md section #0 |  |  | 0.455 |
+| walker |  | 518 | 5 | listing of '.husky' |  |  | 0.455 |
+| walker |  | 589 | 71 | listing of 'src' |  |  | 0.657 |
+| walker |  | 606 | 17 | listing of 'src/adapters' |  |  | 0.695 |
 | walker |  | 614 | 8 | listing of '.github' |  |  | 0.695 |
 | walker |  | 623 | 9 | listing of '.github/workflows' |  |  | 0.695 |
 | ns | 625 |  | 164 | package.json: scripts | 1.8 |  | 0.633 |

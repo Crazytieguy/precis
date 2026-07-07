@@ -12,29 +12,29 @@ Score(3000)=0.651 I=0.876 C=0.484 ns_rows≤3K=17/41 (reached=9 partial=0 missin
 | ns | 295 |  | 54 | docs/ directory listing | 1.4 |  | 0.492 |
 | walker |  | 350 | 58 | [package] in pyproject.toml |  |  | 0.492 |
 | ns | 379 |  | 84 | .github/ and workflows/ listing | 1.5 |  | 0.431 |
-| walker |  | 440 | 90 | listing of 'src/requests' |  |  | 0.652 |
-| ns | 554 |  | 175 | README lede + usage example | 1.6 |  | 0.696 |
-| ns | 754 |  | 200 | pyproject.toml identity | 1.7 |  | 0.643 |
-| ns | 839 |  | 85 | pyproject.toml Python-version support + dependencies | 1.8 | 1.7 | 0.623 |
-| ns | 1027 |  | 188 | Makefile build/test targets | 1.9 | 1.7 | 0.583 |
-| ns | 1257 |  | 230 | __version__.py package metadata | 1.10 |  | 0.551 |
-| ns | 1331 |  | 74 | api.py function locations | 2.1 |  | 0.535 |
-| walker |  | 1442 | 1002 | python imports in src/requests/__init__.py |  |  | 0.544 |
-| walker |  | 1476 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.544 |
-| walker |  | 1492 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.544 |
-| walker |  | 1526 | 34 | listing of 'ext' |  |  | 0.544 |
-| ns | 1561 |  | 230 | __init__.py public export tuple | 2.2 |  | 0.601 |
-| walker |  | 1573 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.601 |
-| walker |  | 1627 | 54 | listing of 'docs' |  |  | 0.659 |
-| walker |  | 1631 | 4 | listing of 'docs/_templates' |  |  | 0.659 |
-| walker |  | 1640 | 9 | listing of 'docs/_static' |  |  | 0.659 |
-| walker |  | 1650 | 10 | listing of 'docs/dev' |  |  | 0.659 |
-| walker |  | 1664 | 14 | listing of 'docs/_themes' |  |  | 0.659 |
-| walker |  | 1685 | 21 | listing of 'docs/user' |  |  | 0.659 |
-| ns | 1828 |  | 267 | exceptions.py class hierarchy locations | 3.1 |  | 0.613 |
-| walker |  | 1832 | 147 | README.md section #0 |  |  | 0.613 |
-| walker |  | 1852 | 20 | python imports in setup.py |  |  | 0.613 |
-| walker |  | 1993 | 141 | [dependencies] in pyproject.toml |  |  | 0.637 |
+| walker |  | 497 | 147 | README.md section #0 |  |  | 0.431 |
+| ns | 554 |  | 175 | README lede + usage example | 1.6 |  | 0.521 |
+| walker |  | 638 | 141 | [dependencies] in pyproject.toml |  |  | 0.524 |
+| walker |  | 728 | 90 | listing of 'src/requests' |  |  | 0.701 |
+| ns | 754 |  | 200 | pyproject.toml identity | 1.7 |  | 0.647 |
+| ns | 839 |  | 85 | pyproject.toml Python-version support + dependencies | 1.8 | 1.7 | 0.662 |
+| ns | 1027 |  | 188 | Makefile build/test targets | 1.9 | 1.7 | 0.619 |
+| ns | 1257 |  | 230 | __version__.py package metadata | 1.10 |  | 0.586 |
+| ns | 1331 |  | 74 | api.py function locations | 2.1 |  | 0.569 |
+| ns | 1561 |  | 230 | __init__.py public export tuple | 2.2 |  | 0.520 |
+| walker |  | 1730 | 1002 | python imports in src/requests/__init__.py |  |  | 0.628 |
+| walker |  | 1764 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.628 |
+| walker |  | 1780 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.628 |
+| walker |  | 1814 | 34 | listing of 'ext' |  |  | 0.628 |
+| ns | 1828 |  | 267 | exceptions.py class hierarchy locations | 3.1 |  | 0.584 |
+| walker |  | 1861 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.584 |
+| walker |  | 1915 | 54 | listing of 'docs' |  |  | 0.637 |
+| walker |  | 1919 | 4 | listing of 'docs/_templates' |  |  | 0.637 |
+| walker |  | 1928 | 9 | listing of 'docs/_static' |  |  | 0.637 |
+| walker |  | 1938 | 10 | listing of 'docs/dev' |  |  | 0.637 |
+| walker |  | 1952 | 14 | listing of 'docs/_themes' |  |  | 0.637 |
+| walker |  | 1973 | 21 | listing of 'docs/user' |  |  | 0.637 |
+| walker |  | 1993 | 20 | python imports in setup.py |  |  | 0.637 |
 | walker |  | 2056 | 63 | README.md section #1 |  |  | 0.637 |
 | walker |  | 2094 | 38 | listing of 'docs/community' |  |  | 0.637 |
 | ns | 2310 |  | 482 | hooks.py full (event hook dispatch) | 3.2 |  | 0.566 |
