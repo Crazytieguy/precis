@@ -1427,7 +1427,8 @@ fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.70 * kv).min(1.0);
     let fu = (0.85 * kv).min(1.0);
-    mix_signals(cat, fu, 0.65, python_depth_factor(file, ctx)) * concrete_impl_sibling_factor(file)
+    mix_signals(cat, fu, 0.65, python_depth_factor(file, ctx))
+        * concrete_impl_sibling_factor(file).max(1.0)
 }
 
 fn decl_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {

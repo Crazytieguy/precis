@@ -153,202 +153,202 @@ Score(3000)=0.590 I=0.779 C=0.447 ns_rows≤3K=17/106 (reached=6 partial=1 missi
 | ns | 4496 |  | 88 | RoPE + Chronos2LayerNorm + MLP + FeedForward | 6.3 | 2.11 | 0.600 |
 | walker |  | 4513 | 50 | python decl names surface in src/chronos/utils.py |  |  | 0.607 |
 | walker |  | 4513 | 0 | python decl at src/chronos/utils.py:11 |  |  | 0.607 |
-| walker |  | 4540 | 27 | python method body at src/chronos/chronos.py:256 body 257 |  |  | 0.607 |
-| walker |  | 4567 | 27 | python method body at src/chronos/chronos_bolt.py:407 body 408 |  |  | 0.607 |
+| walker |  | 4560 | 47 | python decl at src/chronos/utils.py:135 |  |  | 0.607 |
 | ns | 4591 |  | 95 | MHA._eager_attention - deliberately unscaled attention scores | 6.4 | 2.11 | 0.603 |
-| walker |  | 4605 | 38 | python class body at src/chronos/chronos.py:355 |  |  | 0.603 |
-| ns | 4634 |  | 43 | MHA.forward - dispatch + shape/unshape | 6.5 | 2.11 | 0.598 |
-| walker |  | 4666 | 61 | python method doc at src/chronos/base.py:48 |  |  | 0.598 |
-| ns | 4717 |  | 83 | TimeSelfAttention / TimeCrossAttention / GroupSelfAttention + ResidualBlock | 6.6 | 2.11 | 0.594 |
-| walker |  | 4728 | 62 | python method doc at src/chronos/chronos.py:535 |  |  | 0.594 |
+| walker |  | 4614 | 54 | python decl at src/chronos/utils.py:22 |  |  | 0.603 |
+| ns | 4634 |  | 43 | MHA.forward - dispatch + shape/unshape | 6.5 | 2.11 | 0.599 |
+| walker |  | 4641 | 27 | python method body at src/chronos/chronos.py:256 body 257 |  |  | 0.599 |
+| walker |  | 4668 | 27 | python method body at src/chronos/chronos_bolt.py:407 body 408 |  |  | 0.599 |
+| walker |  | 4706 | 38 | python class body at src/chronos/chronos.py:355 |  |  | 0.599 |
+| ns | 4717 |  | 83 | TimeSelfAttention / TimeCrossAttention / GroupSelfAttention + ResidualBlock | 6.6 | 2.11 | 0.595 |
+| walker |  | 4767 | 61 | python method doc at src/chronos/base.py:48 |  |  | 0.595 |
 | ns | 4776 |  | 59 | Chronos2EncoderBlock + Chronos2Encoder construction | 6.7 | 2.6 | 0.590 |
-| walker |  | 4790 | 62 | python method doc at src/chronos/chronos_bolt.py:609 |  |  | 0.590 |
+| walker |  | 4829 | 62 | python method doc at src/chronos/chronos.py:535 |  |  | 0.590 |
 | ns | 4883 |  | 107 | Chronos2Encoder - attention-mask construction + forward | 6.8 | 2.6 | 0.586 |
-| walker |  | 4921 | 131 | python decl doc at src/chronos/chronos.py:355 |  |  | 0.594 |
-| walker |  | 4931 | 10 | README headline in scripts/README.md |  |  | 0.594 |
-| ns | 4947 |  | 64 | Chronos2Output + Chronos2Model.__init__ + _init_weights | 6.9 | 2.6 | 0.590 |
-| walker |  | 4962 | 31 | python method body at src/chronos/chronos_bolt.py:51 body 52 |  |  | 0.590 |
-| ns | 4990 |  | 43 | Chronos2Model._validate_input - required tensor shapes | 6.10 | 2.6 | 0.586 |
-| walker |  | 5026 | 64 | python method doc at src/chronos/base.py:336 |  |  | 0.586 |
-| ns | 5055 |  | 65 | _prepare_patched_context + _prepare_patched_future | 6.11 | 2.6 | 0.582 |
-| walker |  | 5066 | 40 | python decl names surface in src/chronos/chronos2/pipeline.py |  |  | 0.582 |
-| walker |  | 5066 | 0 | python decl at src/chronos/chronos2/pipeline.py:39 |  |  | 0.582 |
-| walker |  | 5099 | 33 | python class body at src/chronos/chronos2/pipeline.py:39 |  |  | 0.578 |
-| ns | 5099 |  | 44 | Chronos2Model._compute_loss | 6.12 | 2.6 | 0.578 |
-| walker |  | 5168 | 69 | README.md section #3 |  |  | 0.578 |
-| walker |  | 5201 | 33 | python method body at src/chronos/chronos.py:54 body 55 |  |  | 0.578 |
-| walker |  | 5234 | 33 | python method body at src/chronos/chronos.py:375 body 376 |  |  | 0.578 |
+| walker |  | 4891 | 62 | python method doc at src/chronos/chronos_bolt.py:609 |  |  | 0.586 |
+| ns | 4947 |  | 64 | Chronos2Output + Chronos2Model.__init__ + _init_weights | 6.9 | 2.6 | 0.582 |
+| ns | 4990 |  | 43 | Chronos2Model._validate_input - required tensor shapes | 6.10 | 2.6 | 0.578 |
+| walker |  | 5022 | 131 | python decl doc at src/chronos/chronos.py:355 |  |  | 0.587 |
+| walker |  | 5032 | 10 | README headline in scripts/README.md |  |  | 0.587 |
+| ns | 5055 |  | 65 | _prepare_patched_context + _prepare_patched_future | 6.11 | 2.6 | 0.583 |
+| walker |  | 5063 | 31 | python method body at src/chronos/chronos_bolt.py:51 body 52 |  |  | 0.583 |
+| ns | 5099 |  | 44 | Chronos2Model._compute_loss | 6.12 | 2.6 | 0.579 |
+| walker |  | 5127 | 64 | python method doc at src/chronos/base.py:336 |  |  | 0.579 |
+| walker |  | 5167 | 40 | python decl names surface in src/chronos/chronos2/pipeline.py |  |  | 0.579 |
+| walker |  | 5167 | 0 | python decl at src/chronos/chronos2/pipeline.py:39 |  |  | 0.579 |
+| walker |  | 5200 | 33 | python class body at src/chronos/chronos2/pipeline.py:39 |  |  | 0.579 |
 | ns | 5239 |  | 140 | Chronos2Model.encode + forward - signature and the group_ids/covariate contract docstring | 6.13 | 2.6 | 0.575 |
-| walker |  | 5269 | 35 | python method at src/chronos/chronos.py:265 |  |  | 0.575 |
-| walker |  | 5303 | 34 | python method body at src/chronos/chronos_bolt.py:76 body 77 |  |  | 0.575 |
-| ns | 5322 |  | 83 | Chronos2Model.forward - body | 6.14 |  | 0.571 |
-| walker |  | 5385 | 82 | python class body at src/chronos/chronos2/config.py:12 |  |  | 0.571 |
-| ns | 5415 |  | 93 | Chronos2Pipeline.model_prediction_length + _get_prob_mass_per_quantile_level docstring | 7.1 | 2.7 | 0.566 |
-| walker |  | 5462 | 77 | README.md section #1 |  |  | 0.566 |
-| ns | 5470 |  | 55 | Chronos2Pipeline.fit - full docstring (fine-tuning contract) | 7.2 | 2.7 | 0.562 |
-| walker |  | 5509 | 47 | python decl names surface in src/chronos/chronos2/trainer.py |  |  | 0.572 |
-| walker |  | 5509 | 0 | python decl at src/chronos/chronos2/trainer.py:17 |  |  | 0.572 |
-| walker |  | 5509 | 0 | python decl at src/chronos/chronos2/trainer.py:30 |  |  | 0.572 |
-| walker |  | 5509 | 0 | python decl at src/chronos/chronos2/trainer.py:40 |  |  | 0.572 |
-| ns | 5518 |  | 48 | Chronos2Pipeline.fit - body (LoRA setup, dataset/Trainer wiring, checkpoint save) | 7.3 |  | 0.568 |
-| walker |  | 5527 | 18 | python decl doc at src/chronos/chronos2/trainer.py:30 |  |  | 0.568 |
-| walker |  | 5594 | 67 | python method sigs in src/chronos/chronos2/trainer.py |  |  | 0.582 |
-| walker |  | 5594 | 0 | python method at src/chronos/chronos2/trainer.py:33 |  |  | 0.582 |
-| walker |  | 5594 | 0 | python method at src/chronos/chronos2/trainer.py:46 |  |  | 0.582 |
-| walker |  | 5594 | 0 | python method at src/chronos/chronos2/trainer.py:77 |  |  | 0.582 |
-| ns | 5682 |  | 164 | Long-horizon unrolling helpers (_prepare_inputs_for_long_horizon_unrolling, _autoregressive_unroll_for_long_horizon) | 7.4 | 2.7 | 0.579 |
-| walker |  | 5704 | 110 | python class body at src/chronos/chronos2/config.py:102 |  |  | 0.592 |
-| ns | 5733 |  | 51 | Chronos2Pipeline.predict - docstring (accepted input shapes, cross_learning) | 7.5 | 2.7 | 0.588 |
-| walker |  | 5760 | 56 | python decl doc at src/chronos/chronos2/trainer.py:40 |  |  | 0.588 |
-| walker |  | 5776 | 16 | python method body at src/chronos/chronos2/config.py:114 body 119 |  |  | 0.592 |
-| ns | 5786 |  | 53 | Chronos2Pipeline.predict - body | 7.6 |  | 0.589 |
-| walker |  | 5802 | 26 | python method doc at src/chronos/chronos2/config.py:114 |  |  | 0.589 |
-| ns | 5827 |  | 41 | _predict_batch + _predict_step + _slide_context_and_future_covariates | 7.7 | 2.7 | 0.585 |
-| ns | 5888 |  | 61 | Chronos2Pipeline.predict_quantiles | 7.8 | 2.7 | 0.582 |
-| walker |  | 5922 | 120 | python method at src/chronos/base.py:100 |  |  | 0.582 |
-| walker |  | 5932 | 10 | python method body at src/chronos/base.py:100 body 133 |  |  | 0.582 |
-| ns | 5939 |  | 51 | Chronos2Pipeline.predict_df - docstring + signature (overrides base) | 7.9 | 2.7 | 0.578 |
-| ns | 5999 |  | 60 | Chronos2Pipeline.predict_df - body | 7.10 |  | 0.575 |
-| ns | 6043 |  | 44 | predict_fev + _predict_fev_window - fev benchmark integration | 7.11 | 2.7 | 0.572 |
+| walker |  | 5302 | 102 | python decl at src/chronos/df_utils.py:59 |  |  | 0.576 |
+| walker |  | 5320 | 18 | python decl doc at src/chronos/df_utils.py:59 |  |  | 0.576 |
+| ns | 5322 |  | 83 | Chronos2Model.forward - body | 6.14 |  | 0.572 |
+| walker |  | 5389 | 69 | README.md section #3 |  |  | 0.572 |
+| ns | 5415 |  | 93 | Chronos2Pipeline.model_prediction_length + _get_prob_mass_per_quantile_level docstring | 7.1 | 2.7 | 0.567 |
+| walker |  | 5422 | 33 | python method body at src/chronos/chronos.py:54 body 55 |  |  | 0.567 |
+| walker |  | 5455 | 33 | python method body at src/chronos/chronos.py:375 body 376 |  |  | 0.567 |
+| ns | 5470 |  | 55 | Chronos2Pipeline.fit - full docstring (fine-tuning contract) | 7.2 | 2.7 | 0.563 |
+| walker |  | 5490 | 35 | python method at src/chronos/chronos.py:265 |  |  | 0.563 |
+| ns | 5518 |  | 48 | Chronos2Pipeline.fit - body (LoRA setup, dataset/Trainer wiring, checkpoint save) | 7.3 |  | 0.560 |
+| walker |  | 5524 | 34 | python method body at src/chronos/chronos_bolt.py:76 body 77 |  |  | 0.560 |
+| walker |  | 5606 | 82 | python class body at src/chronos/chronos2/config.py:12 |  |  | 0.560 |
+| ns | 5682 |  | 164 | Long-horizon unrolling helpers (_prepare_inputs_for_long_horizon_unrolling, _autoregressive_unroll_for_long_horizon) | 7.4 | 2.7 | 0.556 |
+| walker |  | 5683 | 77 | README.md section #1 |  |  | 0.556 |
+| walker |  | 5730 | 47 | python decl names surface in src/chronos/chronos2/trainer.py |  |  | 0.566 |
+| walker |  | 5730 | 0 | python decl at src/chronos/chronos2/trainer.py:17 |  |  | 0.566 |
+| walker |  | 5730 | 0 | python decl at src/chronos/chronos2/trainer.py:30 |  |  | 0.566 |
+| walker |  | 5730 | 0 | python decl at src/chronos/chronos2/trainer.py:40 |  |  | 0.566 |
+| ns | 5733 |  | 51 | Chronos2Pipeline.predict - docstring (accepted input shapes, cross_learning) | 7.5 | 2.7 | 0.562 |
+| walker |  | 5748 | 18 | python decl doc at src/chronos/chronos2/trainer.py:30 |  |  | 0.562 |
+| ns | 5786 |  | 53 | Chronos2Pipeline.predict - body | 7.6 |  | 0.559 |
+| walker |  | 5815 | 67 | python method sigs in src/chronos/chronos2/trainer.py |  |  | 0.573 |
+| walker |  | 5815 | 0 | python method at src/chronos/chronos2/trainer.py:33 |  |  | 0.573 |
+| walker |  | 5815 | 0 | python method at src/chronos/chronos2/trainer.py:46 |  |  | 0.573 |
+| walker |  | 5815 | 0 | python method at src/chronos/chronos2/trainer.py:77 |  |  | 0.573 |
+| ns | 5827 |  | 41 | _predict_batch + _predict_step + _slide_context_and_future_covariates | 7.7 | 2.7 | 0.569 |
+| ns | 5888 |  | 61 | Chronos2Pipeline.predict_quantiles | 7.8 | 2.7 | 0.566 |
+| walker |  | 5925 | 110 | python class body at src/chronos/chronos2/config.py:102 |  |  | 0.578 |
+| ns | 5939 |  | 51 | Chronos2Pipeline.predict_df - docstring + signature (overrides base) | 7.9 | 2.7 | 0.575 |
+| walker |  | 5981 | 56 | python decl doc at src/chronos/chronos2/trainer.py:40 |  |  | 0.575 |
+| walker |  | 5997 | 16 | python method body at src/chronos/chronos2/config.py:114 body 119 |  |  | 0.579 |
+| ns | 5999 |  | 60 | Chronos2Pipeline.predict_df - body | 7.10 |  | 0.576 |
+| walker |  | 6023 | 26 | python method doc at src/chronos/chronos2/config.py:114 |  |  | 0.576 |
+| ns | 6043 |  | 44 | predict_fev + _predict_fev_window - fev benchmark integration | 7.11 | 2.7 | 0.573 |
 | ns | 6123 |  | 80 | Chronos2Pipeline.embed + from_pretrained + save_pretrained | 7.12 | 2.7 | 0.569 |
-| ns | 6197 |  | 74 | dataset.py - PreparedInput schema + validate_and_prepare_single_dict_input | 7.13 | 2.5 | 0.565 |
-| ns | 6253 |  | 56 | prepare_inputs + validate_prepared_schema | 7.14 | 2.5 | 0.562 |
-| walker |  | 6280 | 348 | python method sigs in src/chronos/chronos2/pipeline.py |  |  | 0.603 |
-| walker |  | 6280 | 0 | python method at src/chronos/chronos2/pipeline.py:43 |  |  | 0.603 |
-| walker |  | 6280 | 0 | python method at src/chronos/chronos2/pipeline.py:1224 |  |  | 0.603 |
-| walker |  | 6288 | 8 | python method at src/chronos/chronos2/pipeline.py:76 |  |  | 0.603 |
-| walker |  | 6296 | 8 | python method at src/chronos/chronos2/pipeline.py:80 |  |  | 0.603 |
-| walker |  | 6304 | 8 | python method at src/chronos/chronos2/pipeline.py:84 |  |  | 0.603 |
-| ns | 6309 |  | 56 | Input-format converters (tensor/list-of-tensors) + fev-window converter | 7.15 | 2.5 | 0.600 |
-| walker |  | 6312 | 8 | python method at src/chronos/chronos2/pipeline.py:88 |  |  | 0.600 |
-| walker |  | 6320 | 8 | python method at src/chronos/chronos2/pipeline.py:92 |  |  | 0.600 |
-| walker |  | 6329 | 9 | python method at src/chronos/chronos2/pipeline.py:1185 |  |  | 0.600 |
-| walker |  | 6337 | 8 | python method at src/chronos/chronos2/pipeline.py:47 |  |  | 0.600 |
-| ns | 6346 |  | 37 | DatasetMode enum + Chronos2Dataset construction | 7.16 | 2.5 | 0.596 |
-| walker |  | 6350 | 13 | python method body at src/chronos/chronos2/pipeline.py:76 body 78 |  |  | 0.596 |
-| walker |  | 6363 | 13 | python method body at src/chronos/chronos2/pipeline.py:88 body 90 |  |  | 0.596 |
-| walker |  | 6377 | 14 | python method body at src/chronos/chronos2/pipeline.py:80 body 82 |  |  | 0.596 |
-| walker |  | 6392 | 15 | python method body at src/chronos/chronos2/pipeline.py:92 body 94 |  |  | 0.596 |
-| ns | 6442 |  | 96 | Chronos2Dataset._construct_slice + _build_batch + iteration | 7.17 | 2.5 | 0.593 |
-| walker |  | 6455 | 63 | python class body at src/chronos/chronos_bolt.py:42 |  |  | 0.593 |
-| ns | 6477 |  | 35 | trainer.py - Chronos2Trainer + seed_worker + EvaluateAndSaveFinalStepCallback | 7.18 | 2.1 | 0.591 |
-| ns | 6529 |  | 52 | df_utils._validate_df_types_and_cast | 8.1 | 2.2 | 0.588 |
-| walker |  | 6549 | 94 | README.md section #4 |  |  | 0.588 |
-| ns | 6577 |  | 48 | df_utils.validate_df_inputs - column/frequency validation | 8.2 | 2.2 | 0.585 |
-| walker |  | 6614 | 65 | python class body at src/chronos/chronos_bolt.py:32 |  |  | 0.591 |
-| ns | 6641 |  | 64 | df_utils.validate_df_inputs - frequency inference + sorting | 8.3 |  | 0.588 |
-| ns | 6689 |  | 48 | df_utils.convert_df_input_to_list_of_dicts_input - docstring + signature | 8.4 | 2.2 | 0.585 |
-| ns | 6734 |  | 45 | df_utils.convert_df_input_to_list_of_dicts_input - body | 8.5 |  | 0.582 |
-| walker |  | 6767 | 153 | python class body at src/chronos/chronos.py:27 |  |  | 0.582 |
-| ns | 6792 |  | 58 | utils.left_pad_and_stack_1D | 8.6 | 2.2 | 0.580 |
-| walker |  | 6802 | 35 | python method doc at src/chronos/chronos2/pipeline.py:1224 |  |  | 0.580 |
-| walker |  | 6820 | 18 | python method body at src/chronos/chronos2/pipeline.py:1224 body 1228 |  |  | 0.580 |
-| ns | 6846 |  | 54 | utils.interpolate_quantiles | 8.7 | 2.2 | 0.577 |
-| walker |  | 6867 | 47 | python method at src/chronos/chronos_bolt.py:423 |  |  | 0.577 |
-| walker |  | 6914 | 47 | python decl at src/chronos/utils.py:135 |  |  | 0.577 |
-| ns | 6945 |  | 99 | utils.weighted_quantile | 8.8 | 2.2 | 0.574 |
-| walker |  | 6962 | 48 | python method at src/chronos/chronos_bolt.py:81 |  |  | 0.574 |
-| ns | 7009 |  | 64 | boto_utils - CloudFront + S3 model download | 8.9 | 2.2 | 0.571 |
-| walker |  | 7010 | 48 | python method at src/chronos/chronos_bolt.py:240 |  |  | 0.574 |
-| ns | 7054 |  | 45 | boto_utils.cache_model_from_s3 | 8.10 | 2.2 | 0.571 |
-| walker |  | 7058 | 48 | python method at src/chronos/chronos_bolt.py:364 |  |  | 0.571 |
-| walker |  | 7079 | 21 | python method body at src/chronos/chronos2/pipeline.py:43 body 44 |  |  | 0.571 |
-| walker |  | 7152 | 73 | python method at src/chronos/chronos2/pipeline.py:1105 |  |  | 0.576 |
-| ns | 7179 |  | 125 | test/ directory listing, incl. the four dummy-model fixture dirs | 9.1 |  | 0.572 |
-| walker |  | 7206 | 54 | python decl at src/chronos/utils.py:22 |  |  | 0.578 |
-| ns | 7224 |  | 45 | test/util.py - shared test helpers | 9.2 |  | 0.575 |
-| walker |  | 7319 | 113 | README.md section #2 |  |  | 0.576 |
-| walker |  | 7373 | 54 | python method body at src/chronos/chronos.py:49 body 50 |  |  | 0.576 |
-| walker |  | 7451 | 78 | python decl names surface in src/chronos/chronos2/model.py |  |  | 0.576 |
-| walker |  | 7451 | 0 | python decl at src/chronos/chronos2/model.py:38 |  |  | 0.576 |
-| walker |  | 7451 | 0 | python decl at src/chronos/chronos2/model.py:89 |  |  | 0.576 |
-| walker |  | 7451 | 0 | python decl at src/chronos/chronos2/model.py:198 |  |  | 0.576 |
-| walker |  | 7463 | 12 | python decl at src/chronos/chronos2/model.py:190 |  |  | 0.577 |
-| walker |  | 7476 | 13 | python decl at src/chronos/chronos2/model.py:82 |  |  | 0.578 |
-| walker |  | 7490 | 14 | python decl at src/chronos/chronos2/model.py:31 |  |  | 0.580 |
-| walker |  | 7539 | 49 | python class body at src/chronos/chronos2/model.py:31 |  |  | 0.585 |
-| ns | 7543 |  | 319 | Test-function locations across all 5 test modules | 9.3 |  | 0.575 |
-| walker |  | 7601 | 62 | python class body at src/chronos/chronos2/model.py:82 |  |  | 0.575 |
-| ns | 7718 |  | 175 | test_chronos2.py - predict() input-shape parametrization (tensor + ragged-list cases) | 9.4 | 9.3 | 0.570 |
-| ns | 7792 |  | 74 | test_chronos_bolt.py - InstanceNorm standardization unit test | 9.5 | 9.3 | 0.568 |
-| walker |  | 7801 | 200 | python method sigs in src/chronos/chronos2/model.py |  |  | 0.596 |
-| walker |  | 7801 | 0 | python method at src/chronos/chronos2/model.py:39 |  |  | 0.596 |
-| walker |  | 7801 | 0 | python method at src/chronos/chronos2/model.py:90 |  |  | 0.596 |
-| walker |  | 7801 | 0 | python method at src/chronos/chronos2/model.py:204 |  |  | 0.596 |
-| walker |  | 7801 | 0 | python method at src/chronos/chronos2/model.py:266 |  |  | 0.596 |
-| walker |  | 7865 | 64 | python class body at src/chronos/chronos2/model.py:198 |  |  | 0.596 |
-| walker |  | 7941 | 76 | python class body at src/chronos/chronos2/model.py:190 |  |  | 0.594 |
-| ns | 7941 |  | 149 | Dummy model config.json / adapter_config.json quartet | 9.6 |  | 0.594 |
-| walker |  | 8068 | 127 | python decl names surface in src/chronos/chronos2/layers.py |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:18 |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:86 |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:110 |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:126 |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:148 |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:294 |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:317 |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:343 |  |  | 0.597 |
-| walker |  | 8068 | 0 | python decl at src/chronos/chronos2/layers.py:369 |  |  | 0.597 |
-| walker |  | 8078 | 10 | python decl at src/chronos/chronos2/layers.py:142 |  |  | 0.598 |
-| walker |  | 8089 | 11 | python decl doc at src/chronos/chronos2/layers.py:148 |  |  | 0.598 |
-| walker |  | 8110 | 21 | python decl doc at src/chronos/chronos2/layers.py:343 |  |  | 0.598 |
-| walker |  | 8131 | 21 | python decl doc at src/chronos/chronos2/layers.py:369 |  |  | 0.598 |
-| walker |  | 8160 | 29 | python class body at src/chronos/chronos2/layers.py:142 |  |  | 0.598 |
-| ns | 8367 |  | 426 | scripts/ + ci/ directory tree listing (incl. all training/eval configs and result CSVs) | 10.1 |  | 0.574 |
-| walker |  | 8541 | 381 | python method sigs in src/chronos/chronos2/layers.py |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:25 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:87 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:95 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:111 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:118 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:127 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:135 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:151 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:295 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:318 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:346 |  |  | 0.609 |
-| walker |  | 8541 | 0 | python method at src/chronos/chronos2/layers.py:393 |  |  | 0.609 |
-| walker |  | 8549 | 8 | python method at src/chronos/chronos2/layers.py:51 |  |  | 0.609 |
-| walker |  | 8580 | 31 | python method at src/chronos/chronos2/layers.py:34 |  |  | 0.609 |
-| walker |  | 8596 | 16 | python method doc at src/chronos/chronos2/layers.py:51 |  |  | 0.609 |
-| ns | 8629 |  | 262 | Training/eval script locations (kernel-synth.py, train.py, evaluate.py) | 10.2 |  | 0.599 |
-| walker |  | 8652 | 56 | python method at src/chronos/chronos2/layers.py:353 |  |  | 0.599 |
-| ns | 8701 |  | 72 | scripts/README.md - KernelSynth + pretraining walkthrough | 10.3 |  | 0.596 |
-| walker |  | 8709 | 57 | python method at src/chronos/chronos2/layers.py:58 |  |  | 0.596 |
-| ns | 8768 |  | 67 | scripts/README.md - evaluation walkthrough | 10.4 |  | 0.594 |
-| walker |  | 8772 | 63 | python method at src/chronos/chronos2/layers.py:301 |  |  | 0.594 |
-| ns | 8821 |  | 53 | kernel-synth.py - header + KERNEL_BANK | 10.5 |  | 0.592 |
-| walker |  | 8835 | 63 | python method at src/chronos/chronos2/layers.py:324 |  |  | 0.592 |
-| ns | 8862 |  | 41 | kernel-synth.py - generate_time_series + CLI entry point | 10.6 | 10.2 | 0.589 |
-| walker |  | 8871 | 36 | python method doc at src/chronos/chronos2/layers.py:87 |  |  | 0.589 |
-| ns | 8907 |  | 45 | train.py - pretraining CLI flag surface (main() signature) | 10.7 | 10.2 | 0.587 |
-| ns | 8959 |  | 52 | train.py - main() body (dataset filtering, ChronosConfig, Trainer) | 10.8 |  | 0.585 |
-| walker |  | 8961 | 90 | python decl doc at src/chronos/chronos2/layers.py:18 |  |  | 0.590 |
-| walker |  | 8973 | 12 | python method body at src/chronos/base.py:48 body 56 |  |  | 0.590 |
-| ns | 9006 |  | 47 | train.py - load_model (vocab-resize + special-token wiring) | 10.9 | 10.2 | 0.588 |
-| ns | 9064 |  | 58 | scripts/training/configs/chronos-t5-small.yaml - concrete training-config sample | 10.10 |  | 0.586 |
-| ns | 9136 |  | 72 | evaluate.py - helper functions (gluonts conversion, forecast generation, metrics) | 10.11 | 10.2 | 0.584 |
-| walker |  | 9156 | 183 | python method at src/chronos/base.py:135 |  |  | 0.597 |
-| walker |  | 9181 | 25 | python method body at src/chronos/chronos2/pipeline.py:84 body 86 |  |  | 0.598 |
-| ns | 9183 |  | 47 | evaluate.py - chronos / chronos_bolt / chronos_2 CLI subcommands | 10.12 | 10.2 | 0.596 |
-| ns | 9325 |  | 142 | Evaluation config samples (in-domain.yaml, zero-shot.yaml, ci/evaluate/backtest_config.yaml) | 10.13 |  | 0.592 |
-| walker |  | 9335 | 154 | python decl names surface in src/chronos/boto_utils.py |  |  | 0.602 |
-| ns | 9368 |  | 43 | scripts/evaluation/agg-relative-score.py | 10.14 |  | 0.599 |
-| walker |  | 9380 | 45 | python decl at src/chronos/boto_utils.py:98 |  |  | 0.604 |
-| ns | 9428 |  | 60 | .github/ + notebooks/ directory listings | 11.1 |  | 0.605 |
-| walker |  | 9439 | 59 | python decl at src/chronos/boto_utils.py:25 |  |  | 0.605 |
-| ns | 9453 |  | 25 | ci.yml - build/test entry point | 11.2 |  | 0.604 |
-| ns | 9513 |  | 60 | eval-model.yml + publish-to-pypi.yml | 11.3 |  | 0.602 |
-| walker |  | 9520 | 81 | python method at src/chronos/chronos2/layers.py:227 |  |  | 0.606 |
-| walker |  | 9581 | 61 | python method at src/chronos/chronos_bolt.py:463 |  |  | 0.606 |
-| ns | 9582 |  | 69 | pyproject.toml - optional-dependency groups, urls, mypy/ruff config | 11.4 |  | 0.608 |
-| walker |  | 9616 | 35 | python method at src/chronos/chronos2/model.py:98 |  |  | 0.608 |
+| walker |  | 6143 | 120 | python method at src/chronos/base.py:100 |  |  | 0.569 |
+| walker |  | 6153 | 10 | python method body at src/chronos/base.py:100 body 133 |  |  | 0.569 |
+| ns | 6197 |  | 74 | dataset.py - PreparedInput schema + validate_and_prepare_single_dict_input | 7.13 | 2.5 | 0.566 |
+| ns | 6253 |  | 56 | prepare_inputs + validate_prepared_schema | 7.14 | 2.5 | 0.563 |
+| ns | 6309 |  | 56 | Input-format converters (tensor/list-of-tensors) + fev-window converter | 7.15 | 2.5 | 0.560 |
+| ns | 6346 |  | 37 | DatasetMode enum + Chronos2Dataset construction | 7.16 | 2.5 | 0.557 |
+| ns | 6442 |  | 96 | Chronos2Dataset._construct_slice + _build_batch + iteration | 7.17 | 2.5 | 0.554 |
+| ns | 6477 |  | 35 | trainer.py - Chronos2Trainer + seed_worker + EvaluateAndSaveFinalStepCallback | 7.18 | 2.1 | 0.552 |
+| walker |  | 6501 | 348 | python method sigs in src/chronos/chronos2/pipeline.py |  |  | 0.591 |
+| walker |  | 6501 | 0 | python method at src/chronos/chronos2/pipeline.py:43 |  |  | 0.591 |
+| walker |  | 6501 | 0 | python method at src/chronos/chronos2/pipeline.py:1224 |  |  | 0.591 |
+| walker |  | 6509 | 8 | python method at src/chronos/chronos2/pipeline.py:76 |  |  | 0.591 |
+| walker |  | 6517 | 8 | python method at src/chronos/chronos2/pipeline.py:80 |  |  | 0.591 |
+| walker |  | 6525 | 8 | python method at src/chronos/chronos2/pipeline.py:84 |  |  | 0.591 |
+| ns | 6529 |  | 52 | df_utils._validate_df_types_and_cast | 8.1 | 2.2 | 0.589 |
+| walker |  | 6533 | 8 | python method at src/chronos/chronos2/pipeline.py:88 |  |  | 0.589 |
+| walker |  | 6541 | 8 | python method at src/chronos/chronos2/pipeline.py:92 |  |  | 0.589 |
+| walker |  | 6550 | 9 | python method at src/chronos/chronos2/pipeline.py:1185 |  |  | 0.589 |
+| walker |  | 6558 | 8 | python method at src/chronos/chronos2/pipeline.py:47 |  |  | 0.589 |
+| walker |  | 6571 | 13 | python method body at src/chronos/chronos2/pipeline.py:76 body 78 |  |  | 0.589 |
+| ns | 6577 |  | 48 | df_utils.validate_df_inputs - column/frequency validation | 8.2 | 2.2 | 0.592 |
+| walker |  | 6584 | 13 | python method body at src/chronos/chronos2/pipeline.py:88 body 90 |  |  | 0.592 |
+| walker |  | 6598 | 14 | python method body at src/chronos/chronos2/pipeline.py:80 body 82 |  |  | 0.592 |
+| walker |  | 6613 | 15 | python method body at src/chronos/chronos2/pipeline.py:92 body 94 |  |  | 0.592 |
+| ns | 6641 |  | 64 | df_utils.validate_df_inputs - frequency inference + sorting | 8.3 |  | 0.589 |
+| ns | 6689 |  | 48 | df_utils.convert_df_input_to_list_of_dicts_input - docstring + signature | 8.4 | 2.2 | 0.586 |
+| ns | 6734 |  | 45 | df_utils.convert_df_input_to_list_of_dicts_input - body | 8.5 |  | 0.583 |
+| walker |  | 6748 | 135 | python decl at src/chronos/df_utils.py:199 |  |  | 0.589 |
+| walker |  | 6772 | 24 | python decl doc at src/chronos/df_utils.py:199 |  |  | 0.589 |
+| ns | 6792 |  | 58 | utils.left_pad_and_stack_1D | 8.6 | 2.2 | 0.587 |
+| walker |  | 6835 | 63 | python class body at src/chronos/chronos_bolt.py:42 |  |  | 0.587 |
+| ns | 6846 |  | 54 | utils.interpolate_quantiles | 8.7 | 2.2 | 0.590 |
+| walker |  | 6929 | 94 | README.md section #4 |  |  | 0.590 |
+| ns | 6945 |  | 99 | utils.weighted_quantile | 8.8 | 2.2 | 0.587 |
+| walker |  | 6994 | 65 | python class body at src/chronos/chronos_bolt.py:32 |  |  | 0.593 |
+| ns | 7009 |  | 64 | boto_utils - CloudFront + S3 model download | 8.9 | 2.2 | 0.590 |
+| ns | 7054 |  | 45 | boto_utils.cache_model_from_s3 | 8.10 | 2.2 | 0.587 |
+| walker |  | 7147 | 153 | python class body at src/chronos/chronos.py:27 |  |  | 0.587 |
+| ns | 7179 |  | 125 | test/ directory listing, incl. the four dummy-model fixture dirs | 9.1 |  | 0.583 |
+| walker |  | 7182 | 35 | python method doc at src/chronos/chronos2/pipeline.py:1224 |  |  | 0.583 |
+| walker |  | 7200 | 18 | python method body at src/chronos/chronos2/pipeline.py:1224 body 1228 |  |  | 0.583 |
+| ns | 7224 |  | 45 | test/util.py - shared test helpers | 9.2 |  | 0.580 |
+| walker |  | 7247 | 47 | python method at src/chronos/chronos_bolt.py:423 |  |  | 0.580 |
+| walker |  | 7295 | 48 | python method at src/chronos/chronos_bolt.py:81 |  |  | 0.580 |
+| walker |  | 7343 | 48 | python method at src/chronos/chronos_bolt.py:240 |  |  | 0.582 |
+| walker |  | 7391 | 48 | python method at src/chronos/chronos_bolt.py:364 |  |  | 0.582 |
+| walker |  | 7412 | 21 | python method body at src/chronos/chronos2/pipeline.py:43 body 44 |  |  | 0.582 |
+| walker |  | 7485 | 73 | python method at src/chronos/chronos2/pipeline.py:1105 |  |  | 0.587 |
+| ns | 7543 |  | 319 | Test-function locations across all 5 test modules | 9.3 |  | 0.577 |
+| walker |  | 7598 | 113 | README.md section #2 |  |  | 0.577 |
+| walker |  | 7652 | 54 | python method body at src/chronos/chronos.py:49 body 50 |  |  | 0.577 |
+| ns | 7718 |  | 175 | test_chronos2.py - predict() input-shape parametrization (tensor + ragged-list cases) | 9.4 | 9.3 | 0.572 |
+| walker |  | 7730 | 78 | python decl names surface in src/chronos/chronos2/model.py |  |  | 0.573 |
+| walker |  | 7730 | 0 | python decl at src/chronos/chronos2/model.py:38 |  |  | 0.573 |
+| walker |  | 7730 | 0 | python decl at src/chronos/chronos2/model.py:89 |  |  | 0.573 |
+| walker |  | 7730 | 0 | python decl at src/chronos/chronos2/model.py:198 |  |  | 0.573 |
+| walker |  | 7742 | 12 | python decl at src/chronos/chronos2/model.py:190 |  |  | 0.574 |
+| walker |  | 7755 | 13 | python decl at src/chronos/chronos2/model.py:82 |  |  | 0.574 |
+| walker |  | 7769 | 14 | python decl at src/chronos/chronos2/model.py:31 |  |  | 0.576 |
+| ns | 7792 |  | 74 | test_chronos_bolt.py - InstanceNorm standardization unit test | 9.5 | 9.3 | 0.573 |
+| walker |  | 7818 | 49 | python class body at src/chronos/chronos2/model.py:31 |  |  | 0.579 |
+| walker |  | 7880 | 62 | python class body at src/chronos/chronos2/model.py:82 |  |  | 0.579 |
+| ns | 7941 |  | 149 | Dummy model config.json / adapter_config.json quartet | 9.6 |  | 0.571 |
+| walker |  | 8080 | 200 | python method sigs in src/chronos/chronos2/model.py |  |  | 0.599 |
+| walker |  | 8080 | 0 | python method at src/chronos/chronos2/model.py:39 |  |  | 0.599 |
+| walker |  | 8080 | 0 | python method at src/chronos/chronos2/model.py:90 |  |  | 0.599 |
+| walker |  | 8080 | 0 | python method at src/chronos/chronos2/model.py:204 |  |  | 0.599 |
+| walker |  | 8080 | 0 | python method at src/chronos/chronos2/model.py:266 |  |  | 0.599 |
+| walker |  | 8144 | 64 | python class body at src/chronos/chronos2/model.py:198 |  |  | 0.599 |
+| walker |  | 8220 | 76 | python class body at src/chronos/chronos2/model.py:190 |  |  | 0.604 |
+| walker |  | 8347 | 127 | python decl names surface in src/chronos/chronos2/layers.py |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:18 |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:86 |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:110 |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:126 |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:148 |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:294 |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:317 |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:343 |  |  | 0.608 |
+| walker |  | 8347 | 0 | python decl at src/chronos/chronos2/layers.py:369 |  |  | 0.608 |
+| walker |  | 8357 | 10 | python decl at src/chronos/chronos2/layers.py:142 |  |  | 0.608 |
+| ns | 8367 |  | 426 | scripts/ + ci/ directory tree listing (incl. all training/eval configs and result CSVs) | 10.1 |  | 0.585 |
+| walker |  | 8368 | 11 | python decl doc at src/chronos/chronos2/layers.py:148 |  |  | 0.585 |
+| walker |  | 8389 | 21 | python decl doc at src/chronos/chronos2/layers.py:343 |  |  | 0.585 |
+| walker |  | 8410 | 21 | python decl doc at src/chronos/chronos2/layers.py:369 |  |  | 0.585 |
+| walker |  | 8439 | 29 | python class body at src/chronos/chronos2/layers.py:142 |  |  | 0.585 |
+| ns | 8629 |  | 262 | Training/eval script locations (kernel-synth.py, train.py, evaluate.py) | 10.2 |  | 0.575 |
+| ns | 8701 |  | 72 | scripts/README.md - KernelSynth + pretraining walkthrough | 10.3 |  | 0.572 |
+| ns | 8768 |  | 67 | scripts/README.md - evaluation walkthrough | 10.4 |  | 0.570 |
+| walker |  | 8820 | 381 | python method sigs in src/chronos/chronos2/layers.py |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:25 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:87 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:95 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:111 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:118 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:127 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:135 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:151 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:295 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:318 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:346 |  |  | 0.604 |
+| walker |  | 8820 | 0 | python method at src/chronos/chronos2/layers.py:393 |  |  | 0.604 |
+| ns | 8821 |  | 53 | kernel-synth.py - header + KERNEL_BANK | 10.5 |  | 0.601 |
+| walker |  | 8828 | 8 | python method at src/chronos/chronos2/layers.py:51 |  |  | 0.601 |
+| walker |  | 8859 | 31 | python method at src/chronos/chronos2/layers.py:34 |  |  | 0.601 |
+| ns | 8862 |  | 41 | kernel-synth.py - generate_time_series + CLI entry point | 10.6 | 10.2 | 0.599 |
+| walker |  | 8875 | 16 | python method doc at src/chronos/chronos2/layers.py:51 |  |  | 0.599 |
+| ns | 8907 |  | 45 | train.py - pretraining CLI flag surface (main() signature) | 10.7 | 10.2 | 0.597 |
+| walker |  | 8931 | 56 | python method at src/chronos/chronos2/layers.py:353 |  |  | 0.597 |
+| ns | 8959 |  | 52 | train.py - main() body (dataset filtering, ChronosConfig, Trainer) | 10.8 |  | 0.595 |
+| walker |  | 8988 | 57 | python method at src/chronos/chronos2/layers.py:58 |  |  | 0.595 |
+| ns | 9006 |  | 47 | train.py - load_model (vocab-resize + special-token wiring) | 10.9 | 10.2 | 0.593 |
+| walker |  | 9051 | 63 | python method at src/chronos/chronos2/layers.py:301 |  |  | 0.593 |
+| ns | 9064 |  | 58 | scripts/training/configs/chronos-t5-small.yaml - concrete training-config sample | 10.10 |  | 0.590 |
+| walker |  | 9114 | 63 | python method at src/chronos/chronos2/layers.py:324 |  |  | 0.590 |
+| ns | 9136 |  | 72 | evaluate.py - helper functions (gluonts conversion, forecast generation, metrics) | 10.11 | 10.2 | 0.588 |
+| walker |  | 9150 | 36 | python method doc at src/chronos/chronos2/layers.py:87 |  |  | 0.588 |
+| ns | 9183 |  | 47 | evaluate.py - chronos / chronos_bolt / chronos_2 CLI subcommands | 10.12 | 10.2 | 0.586 |
+| walker |  | 9240 | 90 | python decl doc at src/chronos/chronos2/layers.py:18 |  |  | 0.591 |
+| walker |  | 9252 | 12 | python method body at src/chronos/base.py:48 body 56 |  |  | 0.591 |
+| ns | 9325 |  | 142 | Evaluation config samples (in-domain.yaml, zero-shot.yaml, ci/evaluate/backtest_config.yaml) | 10.13 |  | 0.587 |
+| ns | 9368 |  | 43 | scripts/evaluation/agg-relative-score.py | 10.14 |  | 0.585 |
+| ns | 9428 |  | 60 | .github/ + notebooks/ directory listings | 11.1 |  | 0.586 |
+| walker |  | 9435 | 183 | python method at src/chronos/base.py:135 |  |  | 0.599 |
+| ns | 9453 |  | 25 | ci.yml - build/test entry point | 11.2 |  | 0.598 |
+| walker |  | 9460 | 25 | python method body at src/chronos/chronos2/pipeline.py:84 body 86 |  |  | 0.599 |
+| ns | 9513 |  | 60 | eval-model.yml + publish-to-pypi.yml | 11.3 |  | 0.596 |
+| ns | 9582 |  | 69 | pyproject.toml - optional-dependency groups, urls, mypy/ruff config | 11.4 |  | 0.598 |
+| walker |  | 9614 | 154 | python decl names surface in src/chronos/boto_utils.py |  |  | 0.608 |
 | ns | 9639 |  | 57 | README - Available Models table header + first row + continuation marker | 11.5 |  | 0.607 |
-| ns | 9691 |  | 52 | README - Forecasting usage example (predict_df + visualization) | 11.6 |  | 0.605 |
-| walker |  | 9701 | 85 | python method at src/chronos/chronos2/layers.py:372 |  |  | 0.605 |
-| walker |  | 9766 | 65 | python decl at src/chronos/boto_utils.py:53 |  |  | 0.605 |
-| walker |  | 9839 | 73 | python imports in src/chronos/utils.py |  |  | 0.605 |
-| ns | 9894 |  | 203 | README - News (release order) | 11.7 |  | 0.606 |
-| walker |  | 9943 | 104 | python class body at src/chronos/chronos_bolt.py:147 |  |  | 0.611 |
-| walker |  | 9957 | 14 | python method body at src/chronos/base.py:48 body 55 |  |  | 0.611 |
-| ns | 9961 |  | 67 | CONTRIBUTING.md - security issue reporting | 11.8 |  | 0.610 |
+| walker |  | 9659 | 45 | python decl at src/chronos/boto_utils.py:98 |  |  | 0.611 |
+| ns | 9691 |  | 52 | README - Forecasting usage example (predict_df + visualization) | 11.6 |  | 0.609 |
+| walker |  | 9718 | 59 | python decl at src/chronos/boto_utils.py:25 |  |  | 0.609 |
+| walker |  | 9783 | 65 | python decl at src/chronos/boto_utils.py:53 |  |  | 0.609 |
+| walker |  | 9864 | 81 | python method at src/chronos/chronos2/layers.py:227 |  |  | 0.614 |
+| ns | 9894 |  | 203 | README - News (release order) | 11.7 |  | 0.615 |
+| walker |  | 9925 | 61 | python method at src/chronos/chronos_bolt.py:463 |  |  | 0.615 |
+| walker |  | 9960 | 35 | python method at src/chronos/chronos2/model.py:98 |  |  | 0.615 |
+| ns | 9961 |  | 67 | CONTRIBUTING.md - security issue reporting | 11.8 |  | 0.614 |
