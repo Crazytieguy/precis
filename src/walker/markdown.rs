@@ -220,7 +220,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
 
-        let total_h2_count = section_h2_count(&ranges);
         let mut prev_section_key: Option<BatchKey> = None;
         for (idx, range) in ranges.iter().enumerate() {
             if let Some(content) =
@@ -246,7 +245,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: key.into(),
                     predecessor,
                     content,
-                    value: section_value(&file, range, ctx, total_h2_count),
+                    value: section_value(&file, range, ctx),
                 });
             }
         }
@@ -304,14 +303,9 @@ fn dense_md_sibling_factor(file: &Path, sibling_md_count: usize) -> f64 {
     ((DENSE_THRESHOLD as f64) / (sibling_md_count as f64)).sqrt()
 }
 
-fn readme_section_value(
-    file: &Path,
-    range: &SectionRange,
-    ctx: &WalkCtx,
-    total_h2_count: usize,
-) -> f64 {
+fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
-        * readme_index_decay(range, total_h2_count)
+        * readme_index_decay(range)
         * canonical_usage_section_factor(range)
 }
 
@@ -349,30 +343,16 @@ fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
     canonical.max(reference)
 }
 
-/// Index decay for README sections — long READMEs (≥18 H2s) get a
-/// steeper falloff to keep tail sections off the early budget.
-fn readme_index_decay(range: &SectionRange, total_h2_count: usize) -> f64 {
+/// Index decay for README sections. (An adaptive steeper falloff for
+/// long READMEs (≥18 H2s) was tuned on the pre-refreeze keys and
+/// measured obsolete on the frozen ones — un-shipped 2026-07-06.)
+fn readme_index_decay(range: &SectionRange) -> f64 {
     let h2_idx = if range.synthetic_intro_present {
         range.parent_index.saturating_sub(1)
     } else {
         range.parent_index
     };
-    if total_h2_count >= 18 {
-        index_decay(h2_idx, 0.35, 0.4)
-    } else {
-        index_decay(h2_idx, 0.15, 0.7)
-    }
-}
-
-/// Count of real H2 sections (excluding the synthetic intro at idx 0).
-fn section_h2_count(ranges: &[SectionRange]) -> usize {
-    let synthetic_intro_present = ranges.first().is_some_and(|r| r.synthetic_intro_present);
-    let max_parent = ranges.iter().map(|r| r.parent_index).max();
-    match max_parent {
-        Some(max) if synthetic_intro_present => max,
-        Some(max) => max + 1,
-        None => 0,
-    }
+    index_decay(h2_idx, 0.15, 0.7)
 }
 
 /// `(idx + 1)^-exp`, floored at `floor` — shared decay shape.
@@ -415,20 +395,20 @@ fn dev_workflow_section_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -
 
 /// Per-section value. Child ranges scale the parent's value so they
 /// don't over-rank once cost drops. `Intro` keeps full weight.
-fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_count: usize) -> f64 {
+fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     // Link-index roster chunks are API rosters, not prose — the NS
     // calls lo's helper index "the highest does-X-exist yield per
     // token in the repo". Names-surface tier cat with the roster-mass
     // ratio neutralizer, under the same README index decay.
     if range.roster_entries > 0 {
         return mix_signals(0.65, 0.8, 0.7, path_depth_factor(file, ctx))
-            * readme_index_decay(range, total_h2_count)
+            * readme_index_decay(range)
             * roster_mass_factor(range.roster_entries);
     }
     let parent = if range.dev_workflow_section {
         dev_workflow_section_value(file, range.parent_index, ctx)
     } else if is_readme(file) {
-        readme_section_value(file, range, ctx, total_h2_count)
+        readme_section_value(file, range, ctx)
     } else {
         heading_slab_value(file, range.parent_index, ctx)
     };
@@ -4168,14 +4148,14 @@ mod tests {
         assert_eq!(install.parent_index, 1);
         assert!(install.synthetic_intro_present);
         assert_eq!(
-            readme_index_decay(install, 2),
+            readme_index_decay(install),
             1.0,
             "first real H2 must be unscaled (readme h2_idx = 0)"
         );
 
         let use_ = &ranges[2];
         assert_eq!(use_.parent_index, 2);
-        let f = readme_index_decay(use_, 2);
+        let f = readme_index_decay(use_);
         assert!(
             (0.7..1.0).contains(&f),
             "second real H2 should decay; got {f}"
@@ -4190,7 +4170,7 @@ mod tests {
         let ranges = sections("README.md", src);
         assert_eq!(ranges.len(), 2);
         assert!(!ranges[0].synthetic_intro_present);
-        assert_eq!(readme_index_decay(&ranges[0], 2), 1.0);
+        assert_eq!(readme_index_decay(&ranges[0]), 1.0);
     }
 
     /// AGENTS.md / CLAUDE.md / skill bodies are already loaded into

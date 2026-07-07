@@ -38,12 +38,28 @@ README.md
      110→## Namespace Colors
     …
      134→## Millisecond diff
-    …
+     135→
+     136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
+     137→
+     138→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
+     139→
+     140→When stdout is not a TTY, `Date#toISOString()` is used, making it more useful for logging the debug information as shown below:
+     141→
+     142→<img width="647" src="https://user-images.githubusercontent.com/71256/29091956-6bd78372-7c39-11e7-8c55-c948396d6edd.png">
      145→## Conventions
      146→
      147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
      149→## Wildcards
-    …
+     150→
+     151→The `*` character may be used as a wildcard. Suppose for example your library has
+     152→debuggers named "connect:bodyParser", "connect:compress", "connect:session",
+     153→instead of listing all three with
+     154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
+     155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
+     156→
+     157→You can also exclude specific debuggers by prefixing them with a "-" character.
+     158→For example, `DEBUG=*,-connect:*` would include all debuggers except those
+     159→starting with "connect:".
      161→## Environment Variables
      162→
      163→When running through Node.js, you can set a few environment variables that will
@@ -72,11 +88,35 @@ README.md
      248→## Output streams
     …
      274→## Extend
-    …
+     275→You can simply extend debugger 
+     276→```js
+     277→const log = require('debug')('auth');
+     278→
+     279→//creates new debug instance with extended namespace
+     280→const logSign = log.extend('sign');
+     281→const logLogin = log.extend('login');
+     282→
+     283→log('hello'); // auth hello
+     284→logSign('hello'); //auth:sign hello
+     285→logLogin('hello'); //auth:login hello
+     286→```
      288→## Set dynamically
     …
      341→## Checking whether a debug target is enabled
-    …
+     342→
+     343→After you've created a debug instance, you can determine whether or not it is
+     344→enabled by checking the `enabled` property:
+     345→
+     346→```javascript
+     347→const debug = require('debug')('http');
+     348→
+     349→if (debug.enabled) {
+     350→  // do stuff...
+     351→}
+     352→```
+     353→
+     354→You can also manually toggle this property to force the debug instance to be
+     355→enabled or disabled.
      357→## Usage in child processes
     …
      379→## Authors
@@ -156,65 +196,10 @@ package.json
     …
 src/
     browser.js
-        …
-           3→/**
-           4→ * This is the web browser implementation of `debug()`.
-           5→ */
-           7→exports.formatArgs = formatArgs;
-           8→exports.save = save;
-           9→exports.load = load;
-          10→exports.useColors = useColors;
-          11→exports.storage = localstorage();
-          12→exports.destroy = (() => {
-          13→	let warned = false;
-          14→
-          15→	return () => {
-          16→		if (!warned) {
-          17→			warned = true;
-          18→			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
-          19→		}
-          20→	};
-          21→})();
-        …
-          27→exports.colors = [
-        …
-         115→function useColors() {
-        …
-         149→function formatArgs(args) {
-        …
-         192→exports.log = console.debug || console.log || (() => {});
-        …
-         200→function save(namespaces) {
-         201→	try {
-         202→		if (namespaces) {
-         203→			exports.storage.setItem('debug', namespaces);
-         204→		} else {
-         205→			exports.storage.removeItem('debug');
-         206→		}
-         207→	} catch (error) {
-         208→		// Swallow
-         209→		// XXX (@Qix-) should we be logging these?
-         210→	}
-        …
-         219→function load() {
-        …
-         258→module.exports = require('./common')(exports);
-        …
     common.js
         …
            7→function setup(env) {
-           8→	createDebug.debug = createDebug;
-           9→	createDebug.default = createDebug;
-          10→	createDebug.coerce = coerce;
-          11→	createDebug.disable = disable;
-          12→	createDebug.enable = enable;
-          13→	createDebug.enabled = enabled;
-          14→	createDebug.humanize = require('ms');
-          15→	createDebug.destroy = destroy;
         …
-          41→	function selectColor(namespace) {
-        …
-          60→	function createDebug(namespace) {
           61→		let prevTime;
           62→		let enableOverride = null;
           63→		let namespacesCache;
@@ -232,12 +217,10 @@ src/
          144→		}
          146→		return debug;
         …
-         149→	function extend(namespace, delimiter) {
          150→		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
          151→		newDebug.log = this.log;
          152→		return newDebug;
         …
-         162→	function enable(namespaces) {
          163→		createDebug.save(namespaces);
          164→		createDebug.namespaces = namespaces;
          166→		createDebug.names = [];
@@ -247,15 +230,7 @@ src/
          171→			.replace(/\s+/g, ',')
          172→			.split(',')
          173→			.filter(Boolean);
-         175→		for (const ns of split) {
-         176→			if (ns[0] === '-') {
-         177→				createDebug.skips.push(ns.slice(1));
-         178→			} else {
-         179→				createDebug.names.push(ns);
-         180→			}
-         181→		}
         …
-         192→	function matchesTemplate(search, template) {
          193→		let searchIndex = 0;
          194→		let templateIndex = 0;
          195→		let starIndex = -1;
@@ -267,7 +242,6 @@ src/
          222→		}
          224→		return templateIndex === template.length;
         …
-         233→	function disable() {
          234→		const namespaces = [
          235→			...createDebug.names,
          236→			...createDebug.skips.map(namespace => '-' + namespace)
@@ -275,15 +249,11 @@ src/
          238→		createDebug.enable('');
          239→		return namespaces;
         …
-         249→	function enabled(name) {
-        …
-         272→	function coerce(val) {
          273→		if (val instanceof Error) {
          274→			return val.stack || val.message;
          275→		}
          276→		return val;
         …
-         283→	function destroy() {
          284→		console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
         …
          292→module.exports = setup;
@@ -300,9 +270,3 @@ test.js
        4→const debug = require('./src');
     …
 test.node.js
-    …
-       3→const assert = require('assert');
-       4→const util = require('util');
-       5→const sinon = require('sinon');
-       6→const debug = require('./src/node');
-    …
