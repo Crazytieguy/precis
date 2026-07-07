@@ -365,6 +365,64 @@ Measured-dead this cycle (specifics block retries):
   d2ts −0.016. A retry needs member batches that *win purchase inside
   3K* (value-side or scheduler-tier treatment), not just granularity.
 
+## Solo calibration session (2026-07-06, evening): 0.5465 → 0.5684
+
+Six commits (`7a9a85a7..11ace1c0`), all training-measured; codex review
+clean. The three biggest wins share one theme: **the walker's
+tiny-batch bias vs the NS convention of complete maps and
+breadth-first surfaces.**
+
+- **Depth-1 listing-map floor** (+0.0134): floor the non-essential
+  component of a top-level dir listing's prior at 0.5 — the map entry
+  is orientation even when the contents are discounted. Extending the
+  floor to all depths measured inert (+0.001 sqlite-vec only): floored
+  deep listings still sit below the frontier.
+- **Un-ship `small_listing_decay`** (+0.0046): pre-refreeze damp on
+  tiny deep listings; on frozen keys the map keeps its tiny entries.
+  Known collateral: an early `cmdk/src` listing unlocks per-file
+  walkers sooner (see module-item catalog below, which repaid it).
+- **TS module-item first-line catalog** (+0.0020, cmdk +0.067 /
+  audiobookshelf +0.070): private-emitting entrypoints shipped ~40
+  per-item ~15-token batches that ate the early budget; unified
+  roster + gated 0-cost items, mirroring every other decl class.
+- **Python `concrete_impl_sibling_factor` role split** (+0.0012,
+  chronos +0.086): surface roles keep the base.py boost but never the
+  sibling damp; depth roles keep the damp but never the boost.
+  Uniform application inverted the NS's breadth-first order.
+- **Dotenv-sample recall + 100-line build-entrypoint cap** (+0.0003
+  at 3K but positive at all 7 budgets; oracle 0.848 → 0.851). Dotenv
+  samples ship as a 12-line mandatory-head batch + gated tail — the
+  earlier flat "config-template extraction" attempt failed because a
+  60-line lump can't win purchase; the head-split is what landed it.
+- **Un-ship adaptive long-README decay** (+0.0004, debug +0.031).
+
+Measured-dead this session (don't re-test without new evidence):
+- Un-ships that LOST on frozen keys: names-surface chunk falloff
+  (−0.0073), TEST_INDEX_LISTING_BOOST (−0.0023), catalog-child
+  suppression (−0.0014), python depth≥3 names demotion (−0.0039),
+  docs-site subtree damp (−0.0018), dense_md_sibling_factor
+  (−0.0008), TS secondary-subpackage damp (−0.0022),
+  WORKSPACE_MEMBER_IDENTITY_FACTOR (−0.0004).
+- **ci_value de-saturation** (3.2→1.0 cat: −0.0053; xxhash −0.164,
+  middleclass −0.100, debug −0.057): NS placement of CI bodies is
+  bimodal — several NSes want the ~340-token workflow body ≤3K, and
+  they outweigh the p-queue/cmdk-class fixtures where the early body
+  displaces tier-2 content. The depth-1 floor made workflow dirs
+  reachable early everywhere, so this trade is now live in ~15
+  fixtures; a future lever must discriminate, not rescale.
+- **README section-mass factor** (boost / two-sided / demote-only:
+  −0.0089 / −0.0002 / +0.0025): NSes are split on tiny sections
+  (htmy/svgo anchor them; commander/superstruct treat them as
+  confetti). Demote-only was net-positive but too small to pay for
+  the code.
+- **`cmd/root.go` entry treatment (Go)**: principled (visibility
+  waiver + entry factor) but metric-inert — root.go batches still sit
+  below mcphost's 10K frontier. mcphost cmd/root.go remains the
+  single biggest one-file loss (0.313, all unscheduled).
+- **Workspace-member manifest ne-exemption (JSON)**: inert — member
+  manifest values rise but stay below the 3K frontier (vite −0.022
+  the only mover). cmdk's tier-2 manifests remain unbought.
+
 ## Extreme-budget contract sweep (2026-07-06): corpus clean
 
 `for f in tests/fixtures/*/; do cargo run -q -- --budget 1000000 $f;
