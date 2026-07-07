@@ -4,6 +4,11 @@ expression: rendered
 ---
 .gitattributes
 .github/
+    ISSUE_TEMPLATE/
+    workflows/
+        ci.yml
+        eval-model.yml
+        publish-to-pypi.yml
 .gitignore
 CITATION.cff
 CODE_OF_CONDUCT.md
@@ -45,6 +50,7 @@ README.md
      158→
      159→This project is licensed under the Apache-2.0 License.
 ci/
+    evaluate/
 notebooks/
     chronos-2-quickstart.ipynb
     deploy-chronos-to-amazon-sagemaker.ipynb

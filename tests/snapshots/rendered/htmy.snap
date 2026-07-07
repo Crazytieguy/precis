@@ -4,6 +4,12 @@ expression: rendered
 ---
 .coderabbit.yaml
 .github/
+    funding.yml
+    workflows/
+        build-docs.yml
+        linters.yml
+        publish.yml
+        tests.yml
 .gitignore
 LICENSE
 README.md
@@ -202,10 +208,6 @@ htmy/
           65→    """
           66→    Base class with utilities for safe context use.
         …
-         100→    __slots__ = ()
-         101→
-         102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
-        …
          146→class SkipProperty(Exception):
          147→    """Exception raised by property formatters if the property should be skipped."""
          149→    ...
@@ -223,7 +225,6 @@ htmy/
         …
          196→def xml_format_string(value: str) -> str:
         …
-         198→    return value if isinstance(value, SafeStr) else xml_escape(value)
          201→class Formatter(ContextAware):
         …
          220→    __slots__ = ("_default_formatter", "_name_formatter", "_value_formatters")

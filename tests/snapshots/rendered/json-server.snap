@@ -7,6 +7,24 @@ expression: rendered
     FUNDING.yml
     workflows/
         node.js.yml
+               1→name: Node.js CI
+               2→on: [push]
+               3→jobs:
+               4→  build:
+               5→    runs-on: ubuntu-latest
+               6→    steps:
+               7→      - uses: actions/checkout@v6
+               8→      - uses: pnpm/action-setup@v4
+               9→        with:
+              10→          version: 10
+              11→      - uses: actions/setup-node@v6
+              12→        with:
+              13→          node-version: "22.x"
+              14→          cache: "pnpm"
+              15→      - run: pnpm install
+              16→      - run: pnpm run lint
+              17→      - run: pnpm run typecheck
+              18→      - run: pnpm test
         publish.yml
 .gitignore
 .husky/
@@ -81,12 +99,7 @@ README.md
      161→Use `field:operator=value`.
     …
      186→### Sort
-     187→
-     188→```http
-     189→GET /posts?_sort=title
-     190→GET /posts?_sort=-views
-     191→GET /posts?_sort=author.name,-views
-     192→```
+    …
      194→### Pagination
      196→```http
      197→GET /posts?_page=1&_per_page=25
@@ -131,6 +144,8 @@ README.md
      262→
      263→> **New to json-server?** These notes are for users migrating from v0. If this is your first time using json-server, you can ignore this section.
 fixtures/
+    db.json
+    db.json5
 package.json
     …
        2→  "name": "json-server",

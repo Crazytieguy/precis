@@ -3,8 +3,11 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .circleci/
+    config.yml
 .dockerignore
 .github/
+    ISSUE_TEMPLATE/
+    workflows/
 .gitignore
 .golangci.yml
 .goreleaser.yml

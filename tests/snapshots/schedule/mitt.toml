@@ -567,10 +567,38 @@ kind = "full"
 
 [[batches]]
 position = 14
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 10
+cum_tokens = 972
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["PULL_REQUEST_TEMPLATE.md", "workflows"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 12
+cum_tokens = 984
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["index_test.ts", "test-types-compilation.ts"]
+
+[[batches]]
+position = 16
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #15"
 cost_tokens = 38
-cum_tokens = 1000
+cum_tokens = 1022
 
 [batches.content]
 kind = "lines"
@@ -584,11 +612,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 15
+position = 17
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 13
-cum_tokens = 1013
+cum_tokens = 1035
 
 [batches.content]
 kind = "lines"
@@ -602,11 +630,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 16
+position = 18
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 83
-cum_tokens = 1096
+cum_tokens = 1118
 
 [batches.content]
 kind = "lines"
@@ -620,11 +648,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 115
-cum_tokens = 1211
+cum_tokens = 1233
 
 [batches.content]
 kind = "lines"
@@ -638,11 +666,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 18
+position = 20
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 212
-cum_tokens = 1423
+cum_tokens = 1445
 
 [batches.content]
 kind = "lines"
@@ -664,11 +692,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 19
+position = 21
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #13"
 cost_tokens = 19
-cum_tokens = 1442
+cum_tokens = 1464
 
 [batches.content]
 kind = "lines"
@@ -682,11 +710,11 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 20
+position = 22
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 233
-cum_tokens = 1675
+cum_tokens = 1697
 
 [batches.content]
 kind = "lines"
@@ -700,11 +728,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 21
+position = 23
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 17
-cum_tokens = 1692
+cum_tokens = 1714
 
 [batches.content]
 kind = "lines"
@@ -718,11 +746,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Typescript(ExportBody { file: "src/index.ts", start_line: 46, body_start_line: 49 })'
 descriptor = "export body at src/index.ts:46 body 49"
 cost_tokens = 898
-cum_tokens = 2590
+cum_tokens = 2612
 
 [batches.content]
 kind = "lines"
@@ -736,169 +764,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 23
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #5"
-cost_tokens = 145
-cum_tokens = 2735
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 123
-end = 136
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #12"
-cost_tokens = 30
-cum_tokens = 2765
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 169
-end = 170
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 25
-key = 'Json(Whole { file: "tsconfig.json" })'
-descriptor = "json config tsconfig.json"
-cost_tokens = 149
-cum_tokens = 2914
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "tsconfig.json"
-start = 1
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #10"
-cost_tokens = 33
-cum_tokens = 2947
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 159
-end = 160
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #4"
-cost_tokens = 111
-cum_tokens = 3058
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 113
-end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #2"
-cost_tokens = 280
-cum_tokens = 3338
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 30
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #6"
-cost_tokens = 35
-cum_tokens = 3373
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 138
-end = 142
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #16"
-cost_tokens = 55
-cum_tokens = 3428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 184
-end = 187
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 10
-cum_tokens = 3438
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["PULL_REQUEST_TEMPLATE.md", "workflows"]
-
-[[batches]]
-position = 32
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 3447
+cum_tokens = 2621
 
 [batches.content]
 kind = "fs"
@@ -908,11 +778,11 @@ parent = ".github/workflows"
 entries = ["compressed-size.yml", "main.yml"]
 
 [[batches]]
-position = 33
+position = 26
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 217
-cum_tokens = 3664
+cum_tokens = 2838
 
 [batches.content]
 kind = "lines"
@@ -926,11 +796,155 @@ end = 25
 kind = "full"
 
 [[batches]]
+position = 27
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #5"
+cost_tokens = 145
+cum_tokens = 2983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 123
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #12"
+cost_tokens = 30
+cum_tokens = 3013
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 169
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Json(Whole { file: "tsconfig.json" })'
+descriptor = "json config tsconfig.json"
+cost_tokens = 149
+cum_tokens = 3162
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "tsconfig.json"
+start = 1
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #10"
+cost_tokens = 33
+cum_tokens = 3195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 159
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #4"
+cost_tokens = 111
+cum_tokens = 3306
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 113
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #2"
+cost_tokens = 280
+cum_tokens = 3586
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 30
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #6"
+cost_tokens = 35
+cum_tokens = 3621
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 138
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 34
+key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #16"
+cost_tokens = 55
+cum_tokens = 3676
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 184
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 368
-cum_tokens = 4032
+cum_tokens = 4044
 
 [batches.content]
 kind = "lines"
@@ -942,20 +956,6 @@ end = 84
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 35
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 12
-cum_tokens = 4044
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["index_test.ts", "test-types-compilation.ts"]
 
 [[batches]]
 position = 36

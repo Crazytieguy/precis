@@ -1,7 +1,7 @@
 fixture = "htop"
 budget = 10000
-cumulative_tokens = 9987
-batch_count = 160
+cumulative_tokens = 9995
+batch_count = 161
 
 [[batches]]
 position = 1
@@ -4131,10 +4131,24 @@ entries = ["DragonFlyBSDMachine.c", "DragonFlyBSDMachine.h", "DragonFlyBSDProces
 
 [[batches]]
 position = 152
+key = 'Fs(DirListing { dir: "m4" })'
+descriptor = "listing of 'm4'"
+cost_tokens = 8
+cum_tokens = 9239
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "m4"
+entries = ["ax_check_compile_flag.m4"]
+
+[[batches]]
+position = 153
 key = 'C(Decl { file: "Process.h", start_line: 203 })'
 descriptor = "c decl at Process.h:203"
 cost_tokens = 281
-cum_tokens = 9512
+cum_tokens = 9520
 
 [batches.content]
 kind = "lines"
@@ -4148,11 +4162,11 @@ end = 227
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'C(DeclNames { file: "SwapMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in SwapMeter.h"
 cost_tokens = 38
-cum_tokens = 9550
+cum_tokens = 9558
 
 [batches.content]
 kind = "lines"
@@ -4198,11 +4212,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 32
-cum_tokens = 9582
+cum_tokens = 9590
 
 [batches.content]
 kind = "lines"
@@ -4216,11 +4230,11 @@ end = 200
 kind = "full"
 
 [[batches]]
-position = 155
+position = 156
 key = 'C(DeclNames { file: "Process.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in Process.h"
 cost_tokens = 323
-cum_tokens = 9905
+cum_tokens = 9913
 
 [batches.content]
 kind = "lines"
@@ -4274,11 +4288,11 @@ end = 339
 kind = "ellipsis"
 
 [[batches]]
-position = 156
+position = 157
 key = 'C(Decl { file: "Process.h", start_line: 320 })'
 descriptor = "c decl at Process.h:320"
 cost_tokens = 0
-cum_tokens = 9905
+cum_tokens = 9913
 
 [batches.content]
 kind = "lines"
@@ -4300,11 +4314,11 @@ end = 321
 kind = "ellipsis"
 
 [[batches]]
-position = 157
+position = 158
 key = 'C(Decl { file: "Process.h", start_line: 334 })'
 descriptor = "c decl at Process.h:334"
 cost_tokens = 0
-cum_tokens = 9905
+cum_tokens = 9913
 
 [batches.content]
 kind = "lines"
@@ -4318,11 +4332,11 @@ end = 334
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'C(DeclBody { file: "Process.h", start_line: 320 })'
 descriptor = "c decl body at Process.h:320"
 cost_tokens = 16
-cum_tokens = 9921
+cum_tokens = 9929
 
 [batches.content]
 kind = "lines"
@@ -4336,11 +4350,11 @@ end = 321
 kind = "full"
 
 [[batches]]
-position = 159
+position = 160
 key = 'C(Decl { file: "NetworkIOMeter.h", start_line: 15 })'
 descriptor = "c decl at NetworkIOMeter.h:15"
 cost_tokens = 53
-cum_tokens = 9974
+cum_tokens = 9982
 
 [batches.content]
 kind = "lines"
@@ -4354,11 +4368,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'C(DeclBody { file: "htop.c", start_line: 16 })'
 descriptor = "c decl body at htop.c:16"
 cost_tokens = 13
-cum_tokens = 9987
+cum_tokens = 9995
 
 [batches.content]
 kind = "lines"

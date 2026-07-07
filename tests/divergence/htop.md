@@ -195,18 +195,19 @@ Score(3000)=0.394 I=0.389 C=0.398 ns_rows≤3K=17/48 (reached=5 partial=0 missin
 | walker |  | 9116 | 32 | headings outline in netbsd/README.md |  |  | 0.356 |
 | walker |  | 9174 | 58 | c decl names surface in MeterMode.h |  |  | 0.357 |
 | walker |  | 9231 | 57 | listing of 'dragonflybsd' |  |  | 0.369 |
+| walker |  | 9239 | 8 | listing of 'm4' |  |  | 0.369 |
 | ns | 9259 |  | 317 | Dynamic provider structs | 8.1 |  | 0.364 |
 | ns | 9387 |  | 128 | CI smoke runs (sanitizer job) | 9.1 |  | 0.362 |
-| ns | 9499 |  | 112 | Makefile.am developer targets | 9.2 |  | 0.360 |
-| walker |  | 9512 | 281 | c decl at Process.h:203 |  |  | 0.369 |
-| walker |  | 9550 | 38 | c decl names surface in SwapMeter.h |  |  | 0.369 |
-| walker |  | 9582 | 32 | README.md section #21 |  |  | 0.369 |
+| ns | 9499 |  | 112 | Makefile.am developer targets | 9.2 |  | 0.361 |
+| walker |  | 9520 | 281 | c decl at Process.h:203 |  |  | 0.369 |
+| walker |  | 9558 | 38 | c decl names surface in SwapMeter.h |  |  | 0.369 |
+| walker |  | 9590 | 32 | README.md section #21 |  |  | 0.369 |
 | ns | 9685 |  | 186 | test_spec.lua: the interactive test list | 9.3 |  | 0.366 |
-| ns | 9806 |  | 121 | ChangeLog: 3.5.1 release notes | 9.4 | 1.1 | 0.364 |
-| walker |  | 9905 | 323 | c decl names surface #2 in Process.h |  |  | 0.364 |
-| walker |  | 9905 | 0 | c decl at Process.h:320 |  |  | 0.364 |
-| walker |  | 9905 | 0 | c decl at Process.h:334 |  |  | 0.364 |
-| walker |  | 9921 | 16 | c decl body at Process.h:320 |  |  | 0.364 |
-| walker |  | 9974 | 53 | c decl at NetworkIOMeter.h:15 |  |  | 0.364 |
-| walker |  | 9987 | 13 | c decl body at htop.c:16 |  |  | 0.364 |
+| ns | 9806 |  | 121 | ChangeLog: 3.5.1 release notes | 9.4 | 1.1 | 0.365 |
+| walker |  | 9913 | 323 | c decl names surface #2 in Process.h |  |  | 0.365 |
+| walker |  | 9913 | 0 | c decl at Process.h:320 |  |  | 0.365 |
+| walker |  | 9913 | 0 | c decl at Process.h:334 |  |  | 0.365 |
+| walker |  | 9929 | 16 | c decl body at Process.h:320 |  |  | 0.365 |
+| walker |  | 9982 | 53 | c decl at NetworkIOMeter.h:15 |  |  | 0.365 |
+| walker |  | 9995 | 13 | c decl body at htop.c:16 |  |  | 0.365 |
 | ns | 10000 |  | 194 | configure.ac: feature flags beyond AGENTS.md's six | 9.5 |  | 0.362 |

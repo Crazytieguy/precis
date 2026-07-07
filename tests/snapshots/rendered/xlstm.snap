@@ -3,6 +3,9 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    workflows/
+        cla.yaml
+        sync.yaml
 .gitignore
 AUTHORS
 LICENSE
@@ -205,16 +208,6 @@ xlstm/
                           17→def slstm_forward(
                         …
                           77→def slstm_forward_step(
-                          78→    x: torch.Tensor,  # [B, G*I]
-                          79→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
-                          80→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
-                          81→    b: torch.Tensor,  # [T*H]
-                          82→    pointwise_forward: Callable[
-                          83→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
-                          84→        tuple[torch.Tensor, torch.Tensor],
-                          85→    ],
-                          86→    constants: dict[str, float] = {},
-                          87→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
                         …
                     lstm.py
                     slstm.py

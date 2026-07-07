@@ -3,6 +3,8 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .devcontainer/
+    devcontainer.json
+    on-create-command.sh
 .editorconfig
 .github/
     ISSUE_TEMPLATE/
@@ -336,12 +338,6 @@ tests/
     templates/
     test_appctx.py
     test_apps/
-        .env
-        .flaskenv
-        blueprintapp/
-        cliapp/
-        helloworld/
-        subdomaintestmodule/
     test_async.py
     test_basic.py
     test_blueprints.py

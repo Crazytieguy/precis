@@ -4,9 +4,12 @@ expression: rendered
 ---
 .eslintrc.js
 .github/
+    workflows/
+        playwright.yml
 .gitignore
 .prettierrc.js
 .vscode/
+    settings.json
 FUNDING.yml
 LICENSE.md
 README.md
@@ -16,22 +19,7 @@ package.json
        3→  "version": "1.1.2",
        4→  "description": "Drawer component for React.",
     …
-      31→  "keywords": [
-      32→    "react",
-      33→    "drawer",
-      34→    "dialog",
-      35→    "modal"
-      36→  ],
-      37→  "author": "Emil Kowalski <e@emilkowal.ski>",
       38→  "license": "MIT",
-      39→  "homepage": "https://vaul.emilkowal.ski/",
-      40→  "repository": {
-      41→    "type": "git",
-      42→    "url": "https://github.com/emilkowalski/vaul.git"
-      43→  },
-      44→  "bugs": {
-      45→    "url": "https://github.com/emilkowalski/vaul/issues"
-      46→  },
     …
 playwright.config.ts
     …

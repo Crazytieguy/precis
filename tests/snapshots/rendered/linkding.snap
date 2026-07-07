@@ -4,10 +4,15 @@ expression: rendered
 ---
 .coveragerc
 .devcontainer/
+    devcontainer.json
 .dockerignore
 .env.sample
 .gitattributes
 .github/
+    workflows/
+        build-test.yaml
+        build.yaml
+        main.yaml
 .gitignore
 CHANGELOG.md
 LICENSE.txt
@@ -310,8 +315,6 @@ bookmarks/
         bundles.py
         contexts.py
         custom_css.py
-               1→from django.http import HttpResponse
-            …
         health.py
             …
                7→def health(request):
@@ -366,11 +369,6 @@ docs/
     package.json
     public/
     src/
-        assets/
-        components/
-        content/
-        env.d.ts
-        styles/
     tsconfig.json
 install-linkding.sh
 manage.py

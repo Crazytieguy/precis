@@ -1,4 +1,4 @@
-Score(3000)=0.422 I=0.770 C=0.231 ns_rows≤3K=17/45 (reached=5 partial=1 missing=11)
+Score(3000)=0.440 I=0.784 C=0.247 ns_rows≤3K=17/45 (reached=5 partial=2 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -24,155 +24,156 @@ Score(3000)=0.422 I=0.770 C=0.231 ns_rows≤3K=17/45 (reached=5 partial=1 missin
 | walker |  | 579 | 26 | listing of 'docs' |  |  | 0.515 |
 | walker |  | 635 | 56 | listing of 'src/types' |  |  | 0.616 |
 | ns | 637 |  | 154 | Config bundle A2: tsconfig.json | 1.8 |  | 0.560 |
-| walker |  | 645 | 10 | listing of 'examples' |  |  | 0.563 |
-| ns | 655 |  | 18 | Config bundle B: .prettierrc | 1.9 |  | 0.556 |
-| walker |  | 703 | 58 | export names surface in src/is-matching.ts |  |  | 0.556 |
-| ns | 729 |  | 74 | package.json: name/version/description | 1.10 |  | 0.560 |
-| walker |  | 730 | 27 | export at src/is-matching.ts:32 |  |  | 0.560 |
-| walker |  | 763 | 33 | export at src/is-matching.ts:53 |  |  | 0.561 |
-| walker |  | 802 | 39 | export at src/is-matching.ts:48 |  |  | 0.561 |
-| walker |  | 877 | 75 | export body at src/errors.ts:5 body 7 |  |  | 0.562 |
-| walker |  | 887 | 10 | imports in src/types/index.ts |  |  | 0.562 |
-| walker |  | 913 | 26 | listing of 'benchmarks' |  |  | 0.596 |
-| walker |  | 953 | 40 | export doc at src/errors.ts:5 |  |  | 0.598 |
-| walker |  | 975 | 22 | README.md section #2 |  |  | 0.598 |
-| walker |  | 990 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.614 |
-| ns | 1002 |  | 273 | package.json: scripts | 1.11 |  | 0.570 |
-| walker |  | 1017 | 27 | README.md section #7 |  |  | 0.570 |
-| walker |  | 1045 | 28 | README.md section #8 |  |  | 0.570 |
-| walker |  | 1053 | 8 | listing of 'src/internals' |  |  | 0.599 |
-| ns | 1220 |  | 218 | package.json: author/license/devDependencies | 1.12 |  | 0.556 |
-| walker |  | 1221 | 168 | export body at src/is-matching.ts:53 body 56 |  |  | 0.557 |
-| walker |  | 1253 | 32 | README.md section #4 |  |  | 0.558 |
-| walker |  | 1285 | 32 | README.md section #3 |  |  | 0.558 |
-| ns | 1526 |  | 306 | tests/ and tests/types-catalog/ listings | 1.13 |  | 0.460 |
-| walker |  | 1583 | 298 | module item at src/match.ts:47 |  |  | 0.461 |
-| walker |  | 1591 | 8 | module item body at src/match.ts:47 body 125 |  |  | 0.461 |
-| walker |  | 1599 | 8 | module item body at src/match.ts:47 body 129 |  |  | 0.461 |
-| ns | 1606 |  | 80 | README title + tagline | 2.1 |  | 0.479 |
-| walker |  | 1610 | 11 | module item body at src/match.ts:47 body 121 |  |  | 0.479 |
-| walker |  | 1623 | 13 | module item body at src/match.ts:47 body 67 |  |  | 0.479 |
-| walker |  | 1638 | 15 | module item body at src/match.ts:47 body 51 |  |  | 0.479 |
-| walker |  | 1653 | 15 | module item body at src/match.ts:47 body 68 |  |  | 0.479 |
-| walker |  | 1669 | 16 | module item body at src/match.ts:47 body 91 |  |  | 0.480 |
-| walker |  | 1688 | 19 | module item body at src/match.ts:47 body 56 |  |  | 0.480 |
-| walker |  | 1709 | 21 | module item body at src/match.ts:47 body 57 |  |  | 0.480 |
-| walker |  | 1736 | 27 | module item body at src/match.ts:47 body 111 |  |  | 0.480 |
-| walker |  | 1765 | 29 | module item body at src/match.ts:47 body 116 |  |  | 0.481 |
-| walker |  | 1796 | 31 | module item body at src/match.ts:47 body 53 |  |  | 0.481 |
-| walker |  | 1842 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.482 |
-| walker |  | 1887 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.482 |
-| ns | 1942 |  | 336 | README Features list | 2.2 |  | 0.476 |
-| walker |  | 1943 | 56 | module item body at src/match.ts:47 body 84 |  |  | 0.477 |
-| walker |  | 1998 | 55 | module item body at src/match.ts:47 body 78 |  |  | 0.479 |
-| walker |  | 2095 | 97 | module item body at src/match.ts:47 body 59 |  |  | 0.481 |
-| walker |  | 2196 | 101 | module item body at src/match.ts:47 body 98 |  |  | 0.483 |
-| walker |  | 2402 | 206 | package identity metadata in package.json |  |  | 0.495 |
-| ns | 2406 |  | 464 | README section map: every H2 + every Patterns-catalog item | 2.3 |  | 0.449 |
-| walker |  | 2762 | 360 | package entrypoints in package.json |  |  | 0.456 |
-| ns | 2842 |  | 436 | match.ts: MatchState type + match() entry function | 3.1 |  | 0.422 |
-| walker |  | 3031 | 269 | package scripts in package.json |  |  | 0.472 |
-| walker |  | 3054 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.494 |
-| walker |  | 3116 | 62 | imports in src/is-matching.ts |  |  | 0.494 |
-| walker |  | 3283 | 167 | export names surface in src/internals/symbols.ts |  |  | 0.495 |
-| walker |  | 3283 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.495 |
-| walker |  | 3437 | 154 | json config tsconfig.json |  |  | 0.543 |
-| ns | 3486 |  | 644 | match.ts: MatchExpression class + .with() | 3.2 |  | 0.593 |
-| ns | 3703 |  | 217 | match.ts: .when() + .otherwise() | 3.3 |  | 0.605 |
-| walker |  | 3735 | 298 | listing of 'tests' |  |  | 0.710 |
-| walker |  | 3810 | 75 | imports in src/match.ts |  |  | 0.716 |
-| ns | 3882 |  | 179 | match.ts: .exhaustive()/.run()/.returnType()/.narrow() + defaultCatcher | 3.4 |  | 0.703 |
-| walker |  | 3934 | 124 | README.md section #11 |  |  | 0.703 |
-| walker |  | 3989 | 55 | README.md section #5 |  |  | 0.705 |
-| ns | 4036 |  | 154 | src/errors.ts full (NonExhaustiveError) | 3.5 |  | 0.710 |
-| walker |  | 4118 | 129 | package dependencies in package.json |  |  | 0.734 |
-| ns | 4223 |  | 187 | src/internals/symbols.ts: all 5 well-known symbol + type declarations | 3.6 |  | 0.737 |
-| walker |  | 4266 | 148 | README.md section #10 |  |  | 0.737 |
-| walker |  | 4326 | 60 | README.md section #6 |  |  | 0.740 |
-| walker |  | 4389 | 63 | README.md section #1 |  |  | 0.744 |
-| walker |  | 4540 | 151 | export doc at src/is-matching.ts:48 |  |  | 0.744 |
-| ns | 4619 |  | 396 | internals/helpers.ts: isObject/isMatcher/isOptionalPattern + matchPattern's matcher-protocol dispatch | 3.7 |  | 0.711 |
-| walker |  | 4633 | 93 | json config jsr.json |  |  | 0.724 |
-| walker |  | 4639 | 6 | listing of 'scripts' |  |  | 0.727 |
-| walker |  | 4815 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.727 |
-| ns | 4962 |  | 343 | internals/helpers.ts: matchPattern's object/primitive fallback + getSelectionKeys/flatMap | 3.8 |  | 0.699 |
-| walker |  | 5045 | 230 | README.md section #9 |  |  | 0.699 |
-| walker |  | 5131 | 86 | imports in src/types/Pattern.ts |  |  | 0.699 |
-| ns | 5185 |  | 223 | src/is-matching.ts: implementation | 3.9 |  | 0.705 |
-| ns | 5659 |  | 474 | README Getting Started: motivating State/Event types | 4.1 | 2.3 | 0.678 |
-| walker |  | 5785 | 654 | export names surface in src/patterns.ts |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:116 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:241 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:294 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:356 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:672 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:782 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:793 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:805 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:928 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:1075 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:1201 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:1211 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:1221 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:1231 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:1241 |  |  | 0.681 |
-| walker |  | 5785 | 0 | export at src/patterns.ts:1274 |  |  | 0.681 |
-| walker |  | 5810 | 25 | export at src/patterns.ts:131 |  |  | 0.681 |
-| walker |  | 5838 | 28 | export at src/patterns.ts:246 |  |  | 0.681 |
-| walker |  | 5867 | 29 | export at src/patterns.ts:643 |  |  | 0.681 |
-| walker |  | 5897 | 30 | export at src/patterns.ts:1251 |  |  | 0.681 |
-| walker |  | 5927 | 30 | export at src/patterns.ts:1271 |  |  | 0.681 |
-| walker |  | 5963 | 36 | export at src/patterns.ts:445 |  |  | 0.681 |
-| walker |  | 6006 | 43 | export at src/patterns.ts:81 |  |  | 0.681 |
-| walker |  | 6048 | 42 | export at src/patterns.ts:611 |  |  | 0.681 |
-| ns | 6056 |  | 397 | README Getting Started: full reducer example | 4.2 | 4.1 | 0.656 |
-| walker |  | 6091 | 43 | export at src/patterns.ts:242 |  |  | 0.656 |
-| walker |  | 6134 | 43 | export at src/patterns.ts:295 |  |  | 0.656 |
-| walker |  | 6183 | 49 | export at src/patterns.ts:100 |  |  | 0.656 |
-| walker |  | 6227 | 44 | export at src/patterns.ts:696 |  |  | 0.656 |
-| walker |  | 6272 | 45 | export at src/patterns.ts:433 |  |  | 0.656 |
-| walker |  | 6317 | 45 | export at src/patterns.ts:536 |  |  | 0.656 |
-| walker |  | 6362 | 45 | export at src/patterns.ts:572 |  |  | 0.656 |
-| walker |  | 6411 | 49 | export at src/patterns.ts:637 |  |  | 0.656 |
-| walker |  | 6461 | 50 | export at src/patterns.ts:299 |  |  | 0.656 |
-| ns | 6473 |  | 417 | patterns.ts: location roster of every exported P.* member | 5.1 |  | 0.666 |
-| walker |  | 6513 | 52 | export at src/patterns.ts:646 |  |  | 0.666 |
-| walker |  | 6573 | 60 | export at src/patterns.ts:187 |  |  | 0.666 |
-| ns | 6635 |  | 162 | patterns.ts: P.select() doc + first overload signature | 5.2 | 5.1 | 0.658 |
-| walker |  | 6651 | 78 | export at src/patterns.ts:357 |  |  | 0.658 |
-| walker |  | 6745 | 94 | export at src/patterns.ts:437 |  |  | 0.658 |
-| walker |  | 6840 | 95 | export at src/patterns.ts:362 |  |  | 0.658 |
-| walker |  | 6937 | 97 | export at src/patterns.ts:686 |  |  | 0.658 |
-| ns | 7035 |  | 400 | patterns.ts: P.select() implementation | 5.3 | 5.2 | 0.636 |
-| walker |  | 7087 | 150 | export at src/patterns.ts:48 |  |  | 0.639 |
-| walker |  | 7237 | 150 | export at src/patterns.ts:673 |  |  | 0.639 |
-| walker |  | 7474 | 237 | export body at src/patterns.ts:187 body 193 |  |  | 0.641 |
-| ns | 7483 |  | 448 | patterns.ts: P.optional() full body | 5.4 | 5.1 | 0.638 |
-| walker |  | 7796 | 322 | export body at src/patterns.ts:299 body 303 |  |  | 0.638 |
-| ns | 7914 |  | 431 | README Patterns: P.select (anonymous + named selection) | 6.1 | 2.3 | 0.621 |
-| walker |  | 8140 | 344 | export body at src/patterns.ts:246 body 249 |  |  | 0.621 |
-| ns | 8224 |  | 310 | types/Pattern.ts: Matcher<> interface + MatcherType | 7.1 |  | 0.605 |
-| walker |  | 8261 | 121 | export doc at src/patterns.ts:116 |  |  | 0.605 |
-| walker |  | 8378 | 117 | export doc at src/patterns.ts:1251 |  |  | 0.605 |
-| ns | 8430 |  | 206 | types/Pattern.ts: Pattern<a> core definition | 7.2 |  | 0.598 |
-| walker |  | 8510 | 132 | export doc at src/patterns.ts:100 |  |  | 0.598 |
-| ns | 8517 |  | 87 | types/Match.ts: Match<> interface opening | 7.3 |  | 0.593 |
-| ns | 8602 |  | 85 | types/FindSelected.ts: selection-record tags | 7.4 |  | 0.589 |
-| walker |  | 8617 | 107 | export doc at src/patterns.ts:1221 |  |  | 0.589 |
-| ns | 8707 |  | 105 | types/InvertPattern.ts: InvertPattern<p,input> entry | 7.5 |  | 0.586 |
-| walker |  | 8748 | 131 | export doc at src/patterns.ts:294 |  |  | 0.586 |
-| walker |  | 8857 | 109 | export doc at src/patterns.ts:782 |  |  | 0.586 |
-| walker |  | 8966 | 109 | export doc at src/patterns.ts:1211 |  |  | 0.586 |
-| ns | 9047 |  | 340 | types/DistributeUnions.ts: exhaustiveness algorithm doc comment | 7.6 |  | 0.577 |
-| ns | 9074 |  | 27 | types/ExtractPreciseValue.ts: entry declaration | 7.7 |  | 0.577 |
-| ns | 9125 |  | 51 | types/DeepExclude.ts full | 7.8 |  | 0.576 |
-| ns | 9153 |  | 28 | types/IsMatching.ts: entry declaration | 7.9 |  | 0.575 |
-| ns | 9238 |  | 85 | types/helpers.ts: Equal<> + Expect<> declarations | 7.10 |  | 0.573 |
-| ns | 9282 |  | 44 | types/BuildMany.ts: BuildMany<> entry declaration | 7.11 |  | 0.572 |
-| walker |  | 9416 | 450 | export body at src/patterns.ts:362 body 369 |  |  | 0.572 |
-| walker |  | 9526 | 110 | export doc at src/patterns.ts:793 |  |  | 0.572 |
-| ns | 9596 |  | 314 | tests/matcher-protocol.test.ts: Some<T> class implementing the Matcher Protocol | 8.1 |  | 0.560 |
-| walker |  | 9637 | 111 | export doc at src/patterns.ts:928 |  |  | 0.560 |
-| ns | 9732 |  | 136 | tests/matcher-protocol.test.ts: None class + Option<T> union | 8.2 |  | 0.554 |
-| walker |  | 9751 | 114 | export doc at src/patterns.ts:1201 |  |  | 0.554 |
-| walker |  | 9904 | 153 | export doc at src/patterns.ts:81 |  |  | 0.554 |
+| walker |  | 641 | 6 | listing of 'scripts' |  |  | 0.565 |
+| walker |  | 651 | 10 | listing of 'examples' |  |  | 0.567 |
+| ns | 655 |  | 18 | Config bundle B: .prettierrc | 1.9 |  | 0.560 |
+| walker |  | 709 | 58 | export names surface in src/is-matching.ts |  |  | 0.560 |
+| ns | 729 |  | 74 | package.json: name/version/description | 1.10 |  | 0.565 |
+| walker |  | 736 | 27 | export at src/is-matching.ts:32 |  |  | 0.565 |
+| walker |  | 769 | 33 | export at src/is-matching.ts:53 |  |  | 0.565 |
+| walker |  | 808 | 39 | export at src/is-matching.ts:48 |  |  | 0.565 |
+| walker |  | 883 | 75 | export body at src/errors.ts:5 body 7 |  |  | 0.566 |
+| walker |  | 892 | 9 | listing of '.github' |  |  | 0.579 |
+| walker |  | 902 | 10 | imports in src/types/index.ts |  |  | 0.579 |
+| walker |  | 928 | 26 | listing of 'benchmarks' |  |  | 0.631 |
+| walker |  | 968 | 40 | export doc at src/errors.ts:5 |  |  | 0.633 |
+| walker |  | 990 | 22 | README.md section #2 |  |  | 0.633 |
+| ns | 1002 |  | 273 | package.json: scripts | 1.11 |  | 0.587 |
+| walker |  | 1005 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.602 |
+| walker |  | 1032 | 27 | README.md section #7 |  |  | 0.602 |
+| walker |  | 1060 | 28 | README.md section #8 |  |  | 0.602 |
+| walker |  | 1068 | 8 | listing of 'src/internals' |  |  | 0.630 |
+| ns | 1220 |  | 218 | package.json: author/license/devDependencies | 1.12 |  | 0.585 |
+| walker |  | 1236 | 168 | export body at src/is-matching.ts:53 body 56 |  |  | 0.587 |
+| walker |  | 1268 | 32 | README.md section #4 |  |  | 0.587 |
+| walker |  | 1300 | 32 | README.md section #3 |  |  | 0.587 |
+| ns | 1526 |  | 306 | tests/ and tests/types-catalog/ listings | 1.13 |  | 0.484 |
+| walker |  | 1598 | 298 | module item at src/match.ts:47 |  |  | 0.485 |
+| walker |  | 1606 | 8 | module item body at src/match.ts:47 body 125 |  |  | 0.502 |
+| ns | 1606 |  | 80 | README title + tagline | 2.1 |  | 0.502 |
+| walker |  | 1614 | 8 | module item body at src/match.ts:47 body 129 |  |  | 0.502 |
+| walker |  | 1625 | 11 | module item body at src/match.ts:47 body 121 |  |  | 0.502 |
+| walker |  | 1638 | 13 | module item body at src/match.ts:47 body 67 |  |  | 0.502 |
+| walker |  | 1653 | 15 | module item body at src/match.ts:47 body 51 |  |  | 0.502 |
+| walker |  | 1668 | 15 | module item body at src/match.ts:47 body 68 |  |  | 0.502 |
+| walker |  | 1684 | 16 | module item body at src/match.ts:47 body 91 |  |  | 0.503 |
+| walker |  | 1703 | 19 | module item body at src/match.ts:47 body 56 |  |  | 0.503 |
+| walker |  | 1724 | 21 | module item body at src/match.ts:47 body 57 |  |  | 0.503 |
+| walker |  | 1751 | 27 | module item body at src/match.ts:47 body 111 |  |  | 0.503 |
+| walker |  | 1780 | 29 | module item body at src/match.ts:47 body 116 |  |  | 0.504 |
+| walker |  | 1811 | 31 | module item body at src/match.ts:47 body 53 |  |  | 0.504 |
+| walker |  | 1857 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.505 |
+| walker |  | 1902 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.506 |
+| ns | 1942 |  | 336 | README Features list | 2.2 |  | 0.498 |
+| walker |  | 1958 | 56 | module item body at src/match.ts:47 body 84 |  |  | 0.500 |
+| walker |  | 2013 | 55 | module item body at src/match.ts:47 body 78 |  |  | 0.501 |
+| walker |  | 2110 | 97 | module item body at src/match.ts:47 body 59 |  |  | 0.503 |
+| walker |  | 2211 | 101 | module item body at src/match.ts:47 body 98 |  |  | 0.505 |
+| ns | 2406 |  | 464 | README section map: every H2 + every Patterns-catalog item | 2.3 |  | 0.458 |
+| walker |  | 2417 | 206 | package identity metadata in package.json |  |  | 0.469 |
+| walker |  | 2777 | 360 | package entrypoints in package.json |  |  | 0.476 |
+| ns | 2842 |  | 436 | match.ts: MatchState type + match() entry function | 3.1 |  | 0.440 |
+| walker |  | 3046 | 269 | package scripts in package.json |  |  | 0.490 |
+| walker |  | 3069 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.511 |
+| walker |  | 3131 | 62 | imports in src/is-matching.ts |  |  | 0.511 |
+| walker |  | 3298 | 167 | export names surface in src/internals/symbols.ts |  |  | 0.512 |
+| walker |  | 3298 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.512 |
+| walker |  | 3452 | 154 | json config tsconfig.json |  |  | 0.560 |
+| ns | 3486 |  | 644 | match.ts: MatchExpression class + .with() | 3.2 |  | 0.607 |
+| ns | 3703 |  | 217 | match.ts: .when() + .otherwise() | 3.3 |  | 0.619 |
+| walker |  | 3750 | 298 | listing of 'tests' |  |  | 0.724 |
+| walker |  | 3825 | 75 | imports in src/match.ts |  |  | 0.729 |
+| ns | 3882 |  | 179 | match.ts: .exhaustive()/.run()/.returnType()/.narrow() + defaultCatcher | 3.4 |  | 0.715 |
+| walker |  | 3949 | 124 | README.md section #11 |  |  | 0.715 |
+| walker |  | 4004 | 55 | README.md section #5 |  |  | 0.718 |
+| ns | 4036 |  | 154 | src/errors.ts full (NonExhaustiveError) | 3.5 |  | 0.722 |
+| walker |  | 4133 | 129 | package dependencies in package.json |  |  | 0.747 |
+| ns | 4223 |  | 187 | src/internals/symbols.ts: all 5 well-known symbol + type declarations | 3.6 |  | 0.749 |
+| walker |  | 4281 | 148 | README.md section #10 |  |  | 0.749 |
+| walker |  | 4341 | 60 | README.md section #6 |  |  | 0.752 |
+| walker |  | 4404 | 63 | README.md section #1 |  |  | 0.756 |
+| walker |  | 4555 | 151 | export doc at src/is-matching.ts:48 |  |  | 0.756 |
+| ns | 4619 |  | 396 | internals/helpers.ts: isObject/isMatcher/isOptionalPattern + matchPattern's matcher-protocol dispatch | 3.7 |  | 0.723 |
+| walker |  | 4648 | 93 | json config jsr.json |  |  | 0.735 |
+| walker |  | 4824 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.735 |
+| ns | 4962 |  | 343 | internals/helpers.ts: matchPattern's object/primitive fallback + getSelectionKeys/flatMap | 3.8 |  | 0.707 |
+| walker |  | 5054 | 230 | README.md section #9 |  |  | 0.707 |
+| walker |  | 5140 | 86 | imports in src/types/Pattern.ts |  |  | 0.707 |
+| ns | 5185 |  | 223 | src/is-matching.ts: implementation | 3.9 |  | 0.713 |
+| ns | 5659 |  | 474 | README Getting Started: motivating State/Event types | 4.1 | 2.3 | 0.685 |
+| walker |  | 5794 | 654 | export names surface in src/patterns.ts |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:116 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:241 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:294 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:356 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:672 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:782 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:793 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:805 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:928 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:1075 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:1201 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:1211 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:1221 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:1231 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:1241 |  |  | 0.688 |
+| walker |  | 5794 | 0 | export at src/patterns.ts:1274 |  |  | 0.688 |
+| walker |  | 5819 | 25 | export at src/patterns.ts:131 |  |  | 0.688 |
+| walker |  | 5847 | 28 | export at src/patterns.ts:246 |  |  | 0.688 |
+| walker |  | 5876 | 29 | export at src/patterns.ts:643 |  |  | 0.688 |
+| walker |  | 5906 | 30 | export at src/patterns.ts:1251 |  |  | 0.688 |
+| walker |  | 5936 | 30 | export at src/patterns.ts:1271 |  |  | 0.688 |
+| walker |  | 5972 | 36 | export at src/patterns.ts:445 |  |  | 0.688 |
+| walker |  | 6015 | 43 | export at src/patterns.ts:81 |  |  | 0.688 |
+| ns | 6056 |  | 397 | README Getting Started: full reducer example | 4.2 | 4.1 | 0.663 |
+| walker |  | 6057 | 42 | export at src/patterns.ts:611 |  |  | 0.663 |
+| walker |  | 6100 | 43 | export at src/patterns.ts:242 |  |  | 0.663 |
+| walker |  | 6143 | 43 | export at src/patterns.ts:295 |  |  | 0.663 |
+| walker |  | 6192 | 49 | export at src/patterns.ts:100 |  |  | 0.663 |
+| walker |  | 6236 | 44 | export at src/patterns.ts:696 |  |  | 0.663 |
+| walker |  | 6281 | 45 | export at src/patterns.ts:433 |  |  | 0.663 |
+| walker |  | 6326 | 45 | export at src/patterns.ts:536 |  |  | 0.663 |
+| walker |  | 6371 | 45 | export at src/patterns.ts:572 |  |  | 0.663 |
+| walker |  | 6420 | 49 | export at src/patterns.ts:637 |  |  | 0.663 |
+| walker |  | 6470 | 50 | export at src/patterns.ts:299 |  |  | 0.663 |
+| ns | 6473 |  | 417 | patterns.ts: location roster of every exported P.* member | 5.1 |  | 0.673 |
+| walker |  | 6522 | 52 | export at src/patterns.ts:646 |  |  | 0.673 |
+| walker |  | 6582 | 60 | export at src/patterns.ts:187 |  |  | 0.673 |
+| ns | 6635 |  | 162 | patterns.ts: P.select() doc + first overload signature | 5.2 | 5.1 | 0.665 |
+| walker |  | 6660 | 78 | export at src/patterns.ts:357 |  |  | 0.665 |
+| walker |  | 6754 | 94 | export at src/patterns.ts:437 |  |  | 0.665 |
+| walker |  | 6849 | 95 | export at src/patterns.ts:362 |  |  | 0.665 |
+| walker |  | 6946 | 97 | export at src/patterns.ts:686 |  |  | 0.665 |
+| ns | 7035 |  | 400 | patterns.ts: P.select() implementation | 5.3 | 5.2 | 0.643 |
+| walker |  | 7096 | 150 | export at src/patterns.ts:48 |  |  | 0.646 |
+| walker |  | 7246 | 150 | export at src/patterns.ts:673 |  |  | 0.646 |
+| walker |  | 7483 | 237 | export body at src/patterns.ts:187 body 193 |  |  | 0.644 |
+| ns | 7483 |  | 448 | patterns.ts: P.optional() full body | 5.4 | 5.1 | 0.644 |
+| walker |  | 7805 | 322 | export body at src/patterns.ts:299 body 303 |  |  | 0.644 |
+| ns | 7914 |  | 431 | README Patterns: P.select (anonymous + named selection) | 6.1 | 2.3 | 0.627 |
+| walker |  | 8149 | 344 | export body at src/patterns.ts:246 body 249 |  |  | 0.627 |
+| ns | 8224 |  | 310 | types/Pattern.ts: Matcher<> interface + MatcherType | 7.1 |  | 0.611 |
+| walker |  | 8270 | 121 | export doc at src/patterns.ts:116 |  |  | 0.611 |
+| walker |  | 8387 | 117 | export doc at src/patterns.ts:1251 |  |  | 0.611 |
+| ns | 8430 |  | 206 | types/Pattern.ts: Pattern<a> core definition | 7.2 |  | 0.604 |
+| ns | 8517 |  | 87 | types/Match.ts: Match<> interface opening | 7.3 |  | 0.599 |
+| walker |  | 8519 | 132 | export doc at src/patterns.ts:100 |  |  | 0.599 |
+| ns | 8602 |  | 85 | types/FindSelected.ts: selection-record tags | 7.4 |  | 0.595 |
+| walker |  | 8626 | 107 | export doc at src/patterns.ts:1221 |  |  | 0.595 |
+| ns | 8707 |  | 105 | types/InvertPattern.ts: InvertPattern<p,input> entry | 7.5 |  | 0.592 |
+| walker |  | 8757 | 131 | export doc at src/patterns.ts:294 |  |  | 0.592 |
+| walker |  | 8866 | 109 | export doc at src/patterns.ts:782 |  |  | 0.592 |
+| walker |  | 8975 | 109 | export doc at src/patterns.ts:1211 |  |  | 0.592 |
+| ns | 9047 |  | 340 | types/DistributeUnions.ts: exhaustiveness algorithm doc comment | 7.6 |  | 0.583 |
+| ns | 9074 |  | 27 | types/ExtractPreciseValue.ts: entry declaration | 7.7 |  | 0.583 |
+| ns | 9125 |  | 51 | types/DeepExclude.ts full | 7.8 |  | 0.582 |
+| ns | 9153 |  | 28 | types/IsMatching.ts: entry declaration | 7.9 |  | 0.581 |
+| ns | 9238 |  | 85 | types/helpers.ts: Equal<> + Expect<> declarations | 7.10 |  | 0.579 |
+| ns | 9282 |  | 44 | types/BuildMany.ts: BuildMany<> entry declaration | 7.11 |  | 0.577 |
+| walker |  | 9425 | 450 | export body at src/patterns.ts:362 body 369 |  |  | 0.577 |
+| walker |  | 9535 | 110 | export doc at src/patterns.ts:793 |  |  | 0.577 |
+| ns | 9596 |  | 314 | tests/matcher-protocol.test.ts: Some<T> class implementing the Matcher Protocol | 8.1 |  | 0.565 |
+| walker |  | 9646 | 111 | export doc at src/patterns.ts:928 |  |  | 0.565 |
+| ns | 9732 |  | 136 | tests/matcher-protocol.test.ts: None class + Option<T> union | 8.2 |  | 0.560 |
+| walker |  | 9760 | 114 | export doc at src/patterns.ts:1201 |  |  | 0.560 |
+| walker |  | 9913 | 153 | export doc at src/patterns.ts:81 |  |  | 0.560 |

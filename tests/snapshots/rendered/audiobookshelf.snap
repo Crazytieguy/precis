@@ -3,13 +3,35 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .devcontainer/
+    Dockerfile
+    dev.js
+    devcontainer.json
+    post-create.sh
 .dockerignore
 .editorconfig
 .gitattributes
 .github/
+    ISSUE_TEMPLATE/
+    pull_request_template.md
+    workflows/
+        apply_comments.yaml
+        close-issues-on-release.yml
+        close_blank_issues.yaml
+        codeql.yml
+        component-tests.yml
+        docker-build.yml
+        i18n-integration.yml
+        integration-test.yml
+        lint-openapi.yml
+        notify-abs-windows.yml
+        unit-tests.yml
 .gitignore
 .prettierrc
 .vscode/
+    extensions.json
+    launch.json
+    settings.json
+    tasks.json
 Dockerfile
 LICENSE
 build/
@@ -48,9 +70,6 @@ client/
             PreviewCover.vue
         modals/
         player/
-            PlayerPlaybackControls.vue
-            PlayerTrackBar.vue
-            PlayerUi.vue
         prompt/
         readers/
             ComicReader.vue
@@ -59,13 +78,6 @@ client/
             PdfReader.vue
             Reader.vue
         stats/
-            DailyListeningChart.vue
-            Heatmap.vue
-            PreviewIcons.vue
-            YearInReview.vue
-            YearInReviewBanner.vue
-            YearInReviewServer.vue
-            YearInReviewShort.vue
         tables/
         ui/
         widgets/
@@ -151,10 +163,6 @@ client/
         fonts/
             MaterialSymbolsRounded.woff2
             Source_Sans_Pro/
-                OFL.txt
-                SourceSansPro-Light.ttf
-                SourceSansPro-Regular.ttf
-                SourceSansPro-SemiBold.ttf
             Ubuntu_Mono/
             absicons/
                 absicons.eot
@@ -217,9 +225,6 @@ docs/
             PodcastEpisode.yaml
             Series.yaml
         files/
-            AudioFile.yaml
-            AudioTrack.yaml
-            EBookFile.yaml
         mediaTypes/
             Book.yaml
             Podcast.yaml
@@ -342,7 +347,6 @@ readme.md
      258→### Example Caddyfile - [Caddy Reverse Proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
     …
      267→### HAProxy
-     269→Below is a generic HAProxy config, using `audiobookshelf.YOUR_DOMAIN.COM`.
     …
      310→### pfSense and HAProxy
      312→For pfSense the inputs are graphical, and `Health checking` is enabled.

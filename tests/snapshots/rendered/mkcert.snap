@@ -3,6 +3,10 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    ISSUE_TEMPLATE/
+    workflows/
+        release.yml
+        test.yml
 AUTHORS
 LICENSE
 README.md
@@ -42,7 +46,6 @@ README.md
     …
       92→### Windows
     …
-     107→or build from source (requires Go 1.10+), or use [the pre-built binaries](https://github.com/FiloSottile/mkcert/releases).
      109→If you're running into permission problems try running `mkcert` as an Administrator.
      111→## Supported root stores
     …
@@ -77,10 +80,6 @@ cert.go
      176→func (m *mkcert) fileNames(hosts []string) (certFile, keyFile, p12File string) {
     …
      202→func randomSerialNumber() *big.Int {
-     203→	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
-     204→	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
-     205→	fatalIfErr(err, "failed to generate serial number")
-     206→	return serialNumber
     …
      209→func (m *mkcert) makeCertFromCSR() {
     …

@@ -5,6 +5,40 @@ expression: rendered
 .editorconfig
 .gitattributes
 .github/
+    funding.yml
+    security.md
+    workflows/
+        main.yml
+               1→name: CI
+               2→on:
+               3→  - push
+               4→  - pull_request
+               5→jobs:
+               6→  test:
+               7→    name: Node.js ${{ matrix.node-version }}
+               8→    runs-on: macos-latest
+               9→    strategy:
+              10→      fail-fast: false
+              11→      matrix:
+              12→        node-version:
+              13→          - latest
+              14→          - 24
+              15→          - 22
+              16→          - 20
+              17→    steps:
+              18→      - uses: actions/checkout@v5
+              19→      - uses: actions/setup-node@v5
+              20→        with:
+              21→          node-version: ${{ matrix.node-version }}
+              22→      - run: npm install
+              23→      - name: Install Playwright Browsers
+              24→        run: npx playwright install --with-deps
+              25→      - run: npm test
+              26→      # TODO: Enable again when https://github.com/istanbuljs/nyc/issues/1287 is fixed.
+              27→      # - uses: codecov/codecov-action@v1
+              28→      #   if: matrix.node-version == 24
+              29→      #   with:
+              30→      #     fail_ci_if_error: true
 .gitignore
 .npmrc
 license
@@ -121,11 +155,6 @@ source/
         Ky.ts
             …
               33→export class Ky {
-              34→	static create(input: Input, options: Options): ResponsePromise {
-            …
-             189→	public request: Request;
-            …
-             200→	constructor(input: Input, options: Options = {}) {
             …
         constants.ts
     errors/
@@ -143,20 +172,6 @@ source/
               12→	customRequest: Request | undefined;
               13→
               14→	constructor(options?: ForceRetryOptions) {
-              15→		// Runtime protection: wrap non-Error causes in NonError
-              16→		// TypeScript type is Error for guidance, but JS users can pass anything
-              17→		const cause = options?.cause
-              18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
-              19→			: undefined;
-              20→
-              21→		super(
-              22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
-              23→			cause ? {cause} : undefined,
-              24→		);
-              25→
-              26→		this.customDelay = options?.delay;
-              27→		this.code = options?.code;
-              28→		this.customRequest = options?.request;
             …
         HTTPError.ts
             …
@@ -246,33 +261,11 @@ source/
     utils/
         body.ts
         delay.ts
-            …
-               5→export type DelayOptions = {
-               6→	signal?: InternalOptions['signal'];
-               7→};
-               9→export default async function delay(
-              10→	ms: number,
-              11→	{signal}: DelayOptions,
-              12→): Promise<void> {
-            …
         is.ts
         merge.ts
         normalize.ts
         options.ts
         timeout.ts
-            …
-               3→export type TimeoutOptions = {
-               4→	timeout: number;
-               5→	fetch: typeof fetch;
-               6→};
-            …
-               9→export default async function timeout(
-              10→	request: Request,
-              11→	init: RequestInit,
-              12→	abortController: AbortController | undefined,
-              13→	options: TimeoutOptions,
-              14→): Promise<Response> {
-            …
         type-guards.ts
             …
               27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
@@ -296,12 +289,6 @@ test/
     formdata-searchparams.ts
     headers.ts
     helpers/
-        create-http-test-server.ts
-        create-large-file.ts
-        index.ts
-        parse-body.ts
-        with-page.ts
-        with-performance.ts
     hooks.ts
     http-error.ts
     main.ts

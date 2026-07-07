@@ -13,86 +13,86 @@ Score(3000)=0.435 I=0.742 C=0.256 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | walker |  | 321 | 106 | headings outline in README.md |  |  | 0.916 |
 | walker |  | 346 | 25 | listing of 'logo' |  |  | 0.916 |
 | walker |  | 362 | 16 | README.md section #10 |  |  | 0.917 |
-| walker |  | 405 | 43 | listing of 'docs' |  |  | 0.918 |
-| walker |  | 417 | 12 | listing of '.github' |  |  | 0.918 |
-| walker |  | 439 | 22 | listing of '.github/workflows' |  |  | 0.919 |
+| walker |  | 367 | 5 | listing of 'scripts' |  |  | 0.917 |
+| walker |  | 410 | 43 | listing of 'docs' |  |  | 0.918 |
+| walker |  | 416 | 6 | listing of '.yarn' |  |  | 0.918 |
+| walker |  | 428 | 12 | listing of '.github' |  |  | 0.918 |
+| walker |  | 450 | 22 | listing of '.github/workflows' |  |  | 0.919 |
 | ns | 467 |  | 163 | package.json — bin/types/exports | 1.4 |  | 0.749 |
-| walker |  | 529 | 90 | listing of 'lib' |  |  | 0.759 |
-| walker |  | 548 | 19 | listing of 'lib/svgo' |  |  | 0.759 |
-| walker |  | 555 | 7 | export names surface in lib/types.js |  |  | 0.759 |
-| walker |  | 566 | 11 | README.md section #8 |  |  | 0.759 |
+| walker |  | 540 | 90 | listing of 'lib' |  |  | 0.759 |
+| walker |  | 559 | 19 | listing of 'lib/svgo' |  |  | 0.759 |
+| walker |  | 566 | 7 | export names surface in lib/types.js |  |  | 0.759 |
+| walker |  | 577 | 11 | README.md section #8 |  |  | 0.759 |
 | ns | 594 |  | 127 | package.json — key scripts | 1.5 |  | 0.722 |
-| walker |  | 621 | 55 | README.md section #1 |  |  | 0.726 |
-| walker |  | 629 | 8 | listing of 'test-d/lib' |  |  | 0.726 |
-| walker |  | 648 | 19 | listing of 'docs/02-usage' |  |  | 0.726 |
-| walker |  | 664 | 16 | export names surface in lib/builtin.js |  |  | 0.726 |
-| walker |  | 681 | 17 | export names surface in lib/version.js |  |  | 0.726 |
-| walker |  | 681 | 0 | export at lib/version.js:7 |  |  | 0.726 |
-| walker |  | 715 | 34 | listing of 'test' |  |  | 0.727 |
-| ns | 725 |  | 131 | package.json — runtime dependencies | 1.6 |  | 0.657 |
-| walker |  | 772 | 57 | README.md section #14 |  |  | 0.657 |
+| walker |  | 632 | 55 | README.md section #1 |  |  | 0.726 |
+| walker |  | 640 | 8 | listing of 'test-d/lib' |  |  | 0.726 |
+| walker |  | 659 | 19 | listing of 'docs/02-usage' |  |  | 0.726 |
+| walker |  | 675 | 16 | export names surface in lib/builtin.js |  |  | 0.726 |
+| walker |  | 692 | 17 | export names surface in lib/version.js |  |  | 0.726 |
+| walker |  | 692 | 0 | export at lib/version.js:7 |  |  | 0.726 |
+| ns | 725 |  | 131 | package.json — runtime dependencies | 1.6 |  | 0.656 |
+| walker |  | 726 | 34 | listing of 'test' |  |  | 0.657 |
+| walker |  | 783 | 57 | README.md section #14 |  |  | 0.657 |
 | ns | 789 |  | 64 | README — rationale ('Why?') | 1.7 |  | 0.670 |
-| walker |  | 794 | 22 | export names surface in lib/stringifier.js |  |  | 0.670 |
-| walker |  | 794 | 0 | export at lib/stringifier.js:66 |  |  | 0.670 |
-| walker |  | 813 | 19 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.670 |
-| walker |  | 840 | 27 | export names surface in lib/svgo.js |  |  | 0.670 |
-| walker |  | 840 | 0 | export at lib/svgo.js:81 |  |  | 0.670 |
-| walker |  | 874 | 34 | listing of 'docs/06-migrations' |  |  | 0.670 |
-| walker |  | 906 | 32 | export names surface in lib/path.js |  |  | 0.670 |
-| walker |  | 906 | 0 | export at lib/path.js:141 |  |  | 0.670 |
-| walker |  | 936 | 30 | README.md section #5 |  |  | 0.670 |
-| walker |  | 954 | 18 | export names surface in lib/svgo/css-select-adapter.js |  |  | 0.671 |
-| walker |  | 954 | 0 | export at lib/svgo/css-select-adapter.js:78 |  |  | 0.671 |
+| walker |  | 805 | 22 | export names surface in lib/stringifier.js |  |  | 0.670 |
+| walker |  | 805 | 0 | export at lib/stringifier.js:66 |  |  | 0.670 |
+| walker |  | 824 | 19 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.670 |
+| walker |  | 851 | 27 | export names surface in lib/svgo.js |  |  | 0.670 |
+| walker |  | 851 | 0 | export at lib/svgo.js:81 |  |  | 0.670 |
+| walker |  | 885 | 34 | listing of 'docs/06-migrations' |  |  | 0.670 |
+| walker |  | 917 | 32 | export names surface in lib/path.js |  |  | 0.670 |
+| walker |  | 917 | 0 | export at lib/path.js:141 |  |  | 0.670 |
+| walker |  | 947 | 30 | README.md section #5 |  |  | 0.670 |
+| walker |  | 965 | 18 | export names surface in lib/svgo/css-select-adapter.js |  |  | 0.671 |
+| walker |  | 965 | 0 | export at lib/svgo/css-select-adapter.js:78 |  |  | 0.671 |
 | ns | 967 |  | 178 | README — CLI usage | 2.1 |  | 0.572 |
-| walker |  | 989 | 35 | export names surface in lib/parser.js |  |  | 0.572 |
-| walker |  | 989 | 0 | export at lib/parser.js:80 |  |  | 0.572 |
-| walker |  | 1019 | 30 | export at lib/parser.js:4 |  |  | 0.572 |
-| walker |  | 1148 | 129 | README.md section #2 |  |  | 0.572 |
-| walker |  | 1161 | 13 | listing of 'lib/util' |  |  | 0.572 |
-| walker |  | 1178 | 17 | export names surface in lib/util/map-nodes-to-parents.js |  |  | 0.572 |
-| walker |  | 1178 | 0 | export at lib/util/map-nodes-to-parents.js:9 |  |  | 0.572 |
+| walker |  | 1000 | 35 | export names surface in lib/parser.js |  |  | 0.572 |
+| walker |  | 1000 | 0 | export at lib/parser.js:80 |  |  | 0.572 |
+| walker |  | 1030 | 30 | export at lib/parser.js:4 |  |  | 0.572 |
+| walker |  | 1159 | 129 | README.md section #2 |  |  | 0.572 |
+| walker |  | 1172 | 13 | listing of 'lib/util' |  |  | 0.572 |
+| walker |  | 1189 | 17 | export names surface in lib/util/map-nodes-to-parents.js |  |  | 0.572 |
+| walker |  | 1189 | 0 | export at lib/util/map-nodes-to-parents.js:9 |  |  | 0.572 |
 | ns | 1208 |  | 241 | README — svgo.config.mjs shape (plugins array + custom params) | 2.2 |  | 0.490 |
-| walker |  | 1210 | 32 | export at lib/path.js:302 |  |  | 0.490 |
-| walker |  | 1252 | 42 | export names surface in lib/svgo-node.js |  |  | 0.490 |
-| walker |  | 1252 | 0 | export at lib/svgo-node.js:44 |  |  | 0.490 |
-| walker |  | 1252 | 0 | export at lib/svgo-node.js:83 |  |  | 0.490 |
-| walker |  | 1287 | 35 | listing of 'test/regression' |  |  | 0.490 |
-| walker |  | 1309 | 22 | json config docs/06-migrations/_category_.json |  |  | 0.490 |
-| walker |  | 1349 | 40 | README.md section #7 |  |  | 0.490 |
+| walker |  | 1221 | 32 | export at lib/path.js:302 |  |  | 0.490 |
+| walker |  | 1263 | 42 | export names surface in lib/svgo-node.js |  |  | 0.490 |
+| walker |  | 1263 | 0 | export at lib/svgo-node.js:44 |  |  | 0.490 |
+| walker |  | 1263 | 0 | export at lib/svgo-node.js:83 |  |  | 0.490 |
+| walker |  | 1298 | 35 | listing of 'test/regression' |  |  | 0.490 |
+| walker |  | 1320 | 22 | json config docs/06-migrations/_category_.json |  |  | 0.490 |
+| walker |  | 1360 | 40 | README.md section #7 |  |  | 0.490 |
 | ns | 1373 |  | 165 | README — optimize() API usage | 2.3 |  | 0.453 |
 | ns | 1530 |  | 157 | lib/svgo/coa.js — function location roster | 2.4 |  | 0.425 |
-| walker |  | 1705 | 356 | listing of 'plugins' |  |  | 0.432 |
-| walker |  | 1758 | 53 | export at lib/svgo.js:136 |  |  | 0.433 |
-| walker |  | 1762 | 4 | listing of 'test/fixtures' |  |  | 0.433 |
+| walker |  | 1716 | 356 | listing of 'plugins' |  |  | 0.432 |
+| walker |  | 1769 | 53 | export at lib/svgo.js:136 |  |  | 0.433 |
+| walker |  | 1773 | 4 | listing of 'test/fixtures' |  |  | 0.433 |
 | ns | 1833 |  | 303 | lib/svgo/coa.js — flag definitions (makeProgram) | 2.5 | 2.4 | 0.393 |
-| walker |  | 1880 | 118 | README.md section #13 |  |  | 0.393 |
-| walker |  | 1911 | 31 | export names surface in lib/svgo/coa.js |  |  | 0.395 |
-| walker |  | 1911 | 0 | export at lib/svgo/coa.js:19 |  |  | 0.395 |
-| walker |  | 1911 | 0 | export at lib/svgo/coa.js:30 |  |  | 0.395 |
+| walker |  | 1891 | 118 | README.md section #13 |  |  | 0.393 |
+| walker |  | 1922 | 31 | export names surface in lib/svgo/coa.js |  |  | 0.395 |
+| walker |  | 1922 | 0 | export at lib/svgo/coa.js:19 |  |  | 0.395 |
+| walker |  | 1922 | 0 | export at lib/svgo/coa.js:30 |  |  | 0.395 |
 | ns | 1923 |  | 90 | lib/ directory listing | 3.1 |  | 0.464 |
-| walker |  | 1943 | 32 | export names surface in lib/svgo/plugins.js |  |  | 0.465 |
-| walker |  | 1943 | 0 | export at lib/svgo/plugins.js:40 |  |  | 0.465 |
-| walker |  | 2108 | 165 | README.md section #3 |  |  | 0.558 |
-| walker |  | 2141 | 33 | export names surface in lib/util/visit.js |  |  | 0.558 |
-| walker |  | 2141 | 0 | export at lib/util/visit.js:8 |  |  | 0.558 |
-| walker |  | 2190 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.558 |
+| walker |  | 1954 | 32 | export names surface in lib/svgo/plugins.js |  |  | 0.465 |
+| walker |  | 1954 | 0 | export at lib/svgo/plugins.js:40 |  |  | 0.465 |
+| walker |  | 2119 | 165 | README.md section #3 |  |  | 0.558 |
+| walker |  | 2152 | 33 | export names surface in lib/util/visit.js |  |  | 0.558 |
+| walker |  | 2152 | 0 | export at lib/util/visit.js:8 |  |  | 0.558 |
+| walker |  | 2201 | 49 | listing of 'test/fixtures/config-loader' |  |  | 0.558 |
 | ns | 2307 |  | 384 | lib/svgo.js — resolvePluginConfig() | 3.2 |  | 0.502 |
-| walker |  | 2413 | 223 | json config tsconfig.json |  |  | 0.502 |
-| walker |  | 2418 | 5 | listing of 'scripts' |  |  | 0.502 |
-| walker |  | 2487 | 69 | export names surface in lib/style.js |  |  | 0.503 |
-| walker |  | 2487 | 0 | export at lib/style.js:195 |  |  | 0.503 |
-| walker |  | 2487 | 0 | export at lib/style.js:211 |  |  | 0.503 |
-| walker |  | 2487 | 0 | export at lib/style.js:253 |  |  | 0.503 |
-| walker |  | 2527 | 40 | export at lib/style.js:286 |  |  | 0.503 |
+| walker |  | 2424 | 223 | json config tsconfig.json |  |  | 0.502 |
+| walker |  | 2493 | 69 | export names surface in lib/style.js |  |  | 0.503 |
+| walker |  | 2493 | 0 | export at lib/style.js:195 |  |  | 0.503 |
+| walker |  | 2493 | 0 | export at lib/style.js:211 |  |  | 0.503 |
+| walker |  | 2493 | 0 | export at lib/style.js:253 |  |  | 0.503 |
+| walker |  | 2533 | 40 | export at lib/style.js:286 |  |  | 0.503 |
 | ns | 3000 |  | 693 | lib/svgo.js — optimize() core loop | 3.3 |  | 0.435 |
-| walker |  | 3031 | 504 | package identity metadata in package.json |  |  | 0.443 |
+| walker |  | 3037 | 504 | package identity metadata in package.json |  |  | 0.443 |
 | ns | 3059 |  | 59 | lib/svgo.js — public re-exports | 3.4 |  | 0.460 |
-| walker |  | 3258 | 227 | package entrypoints in package.json |  |  | 0.512 |
-| walker |  | 3305 | 47 | package runtime metadata in package.json |  |  | 0.512 |
+| walker |  | 3264 | 227 | package entrypoints in package.json |  |  | 0.512 |
+| walker |  | 3311 | 47 | package runtime metadata in package.json |  |  | 0.512 |
 | ns | 3463 |  | 404 | lib/ — remaining core-file function location roster | 3.5 |  | 0.508 |
-| walker |  | 3686 | 381 | package scripts in package.json |  |  | 0.522 |
-| ns | 3690 |  | 227 | lib/types.ts — XastElement + XastChild/Root/Parent/Node unions | 3.6 |  | 0.501 |
-| walker |  | 3692 | 6 | listing of '.yarn' |  |  | 0.501 |
+| ns | 3690 |  | 227 | lib/types.ts — XastElement + XastChild/Root/Parent/Node unions | 3.6 |  | 0.488 |
+| walker |  | 3692 | 381 | package scripts in package.json |  |  | 0.501 |
 | walker |  | 3775 | 83 | export names surface in lib/xast.js |  |  | 0.513 |
 | walker |  | 3775 | 0 | export at lib/xast.js:22 |  |  | 0.513 |
 | walker |  | 3775 | 0 | export at lib/xast.js:32 |  |  | 0.513 |

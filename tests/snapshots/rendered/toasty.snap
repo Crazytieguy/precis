@@ -3,6 +3,7 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    workflows/
 .gitignore
 CLAUDE.md
 Cargo.toml
@@ -65,6 +66,8 @@ README.md
      117→### Contribution
     …
 benches/
+    Cargo.toml
+    association.rs
 compose.yaml
 crates/
     std-util/
@@ -298,19 +301,6 @@ crates/
                    8→pub use stmt::Statement;
             migration.rs
             serializer/
-                column.rs
-                column_def.rs
-                cte.rs
-                delim.rs
-                expr.rs
-                flavor.rs
-                fmt.rs
-                ident.rs
-                name.rs
-                params.rs
-                statement.rs
-                ty.rs
-                value.rs
             serializer.rs
             stmt/
             stmt.rs
@@ -373,6 +363,8 @@ examples/
     user-has-one-profile/
 rust-toolchain.toml
 scripts/
+    benchmark-comparison.sh
+    gen-examples
 test.db
 tests/
     Cargo.toml

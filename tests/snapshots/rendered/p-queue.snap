@@ -5,6 +5,30 @@ expression: rendered
 .editorconfig
 .gitattributes
 .github/
+    security.md
+    workflows/
+        main.yml
+               1→name: CI
+               2→on:
+               3→  - push
+               4→  - pull_request
+               5→jobs:
+               6→  test:
+               7→    name: Node.js ${{ matrix.node-version }}
+               8→    runs-on: ubuntu-latest
+               9→    strategy:
+              10→      fail-fast: false
+              11→      matrix:
+              12→        node-version:
+              13→          - 24
+              14→          - 20
+              15→    steps:
+              16→      - uses: actions/checkout@v5
+              17→      - uses: actions/setup-node@v5
+              18→        with:
+              19→          node-version: ${{ matrix.node-version }}
+              20→      - run: npm install
+              21→      - run: npm test
 .gitignore
 .npmrc
 bench.ts
@@ -104,25 +128,7 @@ readme.md
       44→
       45→**Warning:** This package is native [ESM](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) and no longer provides a CommonJS export. If your project uses CommonJS, you'll have to [convert to ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c). Please don't open issues for questions regarding CommonJS / ESM.
       47→## Usage
-      48→
-      49→Here we run only one promise at a time. For example, set `concurrency` to 4 to run four promises at the same time.
-      50→
-      51→```js
-      52→import PQueue from 'p-queue';
-      53→import got from 'got';
-      54→
-      55→const queue = new PQueue({concurrency: 1});
-      56→
-      57→(async () => {
-      58→	await queue.add(() => got('https://sindresorhus.com'));
-      59→	console.log('Done: sindresorhus.com');
-      60→})();
-      61→
-      62→(async () => {
-      63→	await queue.add(() => got('https://avajs.dev'));
-      64→	console.log('Done: avajs.dev');
-      65→})();
-      66→```
+    …
       68→## API
       69→
       70→### PQueue(options?)
@@ -150,9 +156,6 @@ readme.md
      442→#### .isPaused
      443→
      444→Whether the queue is currently paused.
-     446→#### .isRateLimited
-     447→
-     448→Whether the queue is currently rate-limited due to `intervalCap`. Returns `true` when the number of tasks executed in the current interval has reached the `intervalCap` and there are still tasks waiting to be processed.
     …
      512→## Events
     …
@@ -276,10 +279,6 @@ source/
          115→	get size(): number {
         …
     queue.ts
-           1→export type RunFunction = () => Promise<unknown>;
-           2→
-           3→export type Queue<Element, Options> = {
-        …
 test/
     advanced.ts
     basic.ts

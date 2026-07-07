@@ -6,10 +6,30 @@ expression: rendered
 .eslintrc
 .gitbook.yaml
 .github/
+    dependabot.yml
+    workflows/
+        ci.yml
+               1→name: actions
+               2→on: [push, pull_request]
+               3→jobs:
+               4→  ci:
+               5→    runs-on: ubuntu-latest
+               6→    strategy:
+               7→      matrix:
+               8→        node-version: [16.x, 18.x, 20.x, 22.x]
+               9→    steps:
+              10→      - uses: actions/checkout@v4
+              11→      - uses: actions/setup-node@v4
+              12→        with:
+              13→          node-version: ${{ matrix.node-version }}
+              14→      - run: npm install && npm test && npm run lint
+              15→        env:
+              16→          CI: true
 .gitignore
 .prettierignore
 .prettierrc
 .vscode/
+    settings.json
 Changelog.md
 License.md
 Readme.md
@@ -321,20 +341,8 @@ src/
               11→>(struct: Struct<T, S>): Struct<T, S> {
             …
               33→export function max<T extends number | Date, S extends any>(
-              34→  struct: Struct<T, S>,
-              35→  threshold: T,
-              36→  options: {
-              37→    exclusive?: boolean
-              38→  } = {}
-              39→): Struct<T, S> {
             …
               55→export function min<T extends number | Date, S extends any>(
-              56→  struct: Struct<T, S>,
-              57→  threshold: T,
-              58→  options: {
-              59→    exclusive?: boolean
-              60→  } = {}
-              61→): Struct<T, S> {
             …
               77→export function nonempty<
               78→  T extends string | any[] | Map<any, any> | Set<any>,
@@ -347,9 +355,6 @@ src/
               96→): Struct<T, S> {
             …
              109→export function size<
-             110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
-             111→  S extends any,
-             112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
             …
              146→export function refine<T, S>(
              147→  struct: Struct<T, S>,

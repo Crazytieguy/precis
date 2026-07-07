@@ -3,6 +3,7 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .devcontainer/
+    devcontainer.json
 .dockerignore
 .env.sample
 .eslintrc.json
@@ -21,6 +22,7 @@ expression: rendered
 .prettierignore
 .prettierrc.json
 .vscode/
+    settings.json
 .yarnrc.yml
 Dockerfile
 LICENSE.md
@@ -114,9 +116,6 @@ apps/
         package.json
         plugins/
         store/
-            auth.ts
-            data.ts
-            tmp.ts
         styles/
         tailwind.config.js
         tsconfig.json

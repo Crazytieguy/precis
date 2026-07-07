@@ -3,8 +3,13 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .claude/
+    settings.json
 .coveragerc
 .github/
+    FUNDING.yml
+    dependabot.yml
+    workflows/
+        main.yml
 .gitignore
 .pre-commit-config.yaml
 .readthedocs.yml
@@ -121,6 +126,8 @@ pyproject.toml
       35→requires-python = ">=3.10"
     …
 scripts/
+    release.py
+    towncrier-draft-to-file.py
 src/
     pluggy/
         __init__.py
@@ -205,7 +212,6 @@ src/
              203→    ) -> Any | None:
             …
              233→    def set_blocked(self, name: str) -> None:
-             234→        """Block registrations of the given name, unregister if already registered."""
             …
              238→    def is_blocked(self, name: str) -> bool:
              239→        """Return whether the given plugin name is blocked."""
@@ -227,8 +233,7 @@ src/
              304→    def get_canonical_name(self, plugin: _Plugin) -> str:
             …
              315→    def get_plugin(self, name: str) -> Any | None:
-             316→        """Return the plugin registered under the given name, if any."""
-             317→        return self._name2plugin.get(name)
+            …
              319→    def has_plugin(self, name: str) -> bool:
              320→        """Return whether a plugin with the given name is registered."""
             …

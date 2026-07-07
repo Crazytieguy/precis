@@ -1,7 +1,7 @@
 fixture = "ts-pattern"
 budget = 10000
-cumulative_tokens = 9904
-batch_count = 129
+cumulative_tokens = 9913
+batch_count = 130
 
 [[batches]]
 position = 1
@@ -297,10 +297,24 @@ entries = ["BuildMany.ts", "DeepExclude.ts", "DistributeUnions.ts", "ExtractPrec
 
 [[batches]]
 position = 15
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 6
+cum_tokens = 641
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["generate-cts.sh"]
+
+[[batches]]
+position = 16
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 10
-cum_tokens = 645
+cum_tokens = 651
 
 [batches.content]
 kind = "fs"
@@ -310,11 +324,11 @@ parent = "examples"
 entries = ["gif-fetcher", "one-file-demo"]
 
 [[batches]]
-position = 16
+position = 17
 key = 'Typescript(ExportNames { file: "src/is-matching.ts" })'
 descriptor = "export names surface in src/is-matching.ts"
 cost_tokens = 58
-cum_tokens = 703
+cum_tokens = 709
 
 [batches.content]
 kind = "lines"
@@ -368,11 +382,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Typescript(Export { file: "src/is-matching.ts", start_line: 32 })'
 descriptor = "export at src/is-matching.ts:32"
 cost_tokens = 27
-cum_tokens = 730
+cum_tokens = 736
 
 [batches.content]
 kind = "lines"
@@ -386,11 +400,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Typescript(Export { file: "src/is-matching.ts", start_line: 53 })'
 descriptor = "export at src/is-matching.ts:53"
 cost_tokens = 33
-cum_tokens = 763
+cum_tokens = 769
 
 [batches.content]
 kind = "lines"
@@ -412,11 +426,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Typescript(Export { file: "src/is-matching.ts", start_line: 48 })'
 descriptor = "export at src/is-matching.ts:48"
 cost_tokens = 39
-cum_tokens = 802
+cum_tokens = 808
 
 [batches.content]
 kind = "lines"
@@ -430,11 +444,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Typescript(ExportBody { file: "src/errors.ts", start_line: 5, body_start_line: 7 })'
 descriptor = "export body at src/errors.ts:5 body 7"
 cost_tokens = 75
-cum_tokens = 877
+cum_tokens = 883
 
 [batches.content]
 kind = "lines"
@@ -448,11 +462,25 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 9
+cum_tokens = 892
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["FUNDING.yml", "ISSUE_TEMPLATE"]
+
+[[batches]]
+position = 23
 key = 'Typescript(Imports { file: "src/types/index.ts" })'
 descriptor = "imports in src/types/index.ts"
 cost_tokens = 10
-cum_tokens = 887
+cum_tokens = 902
 
 [batches.content]
 kind = "lines"
@@ -466,11 +494,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Fs(DirListing { dir: "benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 26
-cum_tokens = 913
+cum_tokens = 928
 
 [batches.content]
 kind = "fs"
@@ -480,11 +508,11 @@ parent = "benchmarks"
 entries = ["always-last-digit.ts", "nested-objects.ts", "package-lock.json", "package.json", "random-digit.ts"]
 
 [[batches]]
-position = 23
+position = 25
 key = 'Typescript(ExportDoc { file: "src/errors.ts", start_line: 5 })'
 descriptor = "export doc at src/errors.ts:5"
 cost_tokens = 40
-cum_tokens = 953
+cum_tokens = 968
 
 [batches.content]
 kind = "lines"
@@ -498,11 +526,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 24
+position = 26
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 22
-cum_tokens = 975
+cum_tokens = 990
 
 [batches.content]
 kind = "lines"
@@ -516,11 +544,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 25
+position = 27
 key = 'Fs(DirListing { dir: "examples/gif-fetcher" })'
 descriptor = "listing of 'examples/gif-fetcher'"
 cost_tokens = 15
-cum_tokens = 990
+cum_tokens = 1005
 
 [batches.content]
 kind = "fs"
@@ -530,11 +558,11 @@ parent = "examples/gif-fetcher"
 entries = ["package.json", "public", "src", "tsconfig.json"]
 
 [[batches]]
-position = 26
+position = 28
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 27
-cum_tokens = 1017
+cum_tokens = 1032
 
 [batches.content]
 kind = "lines"
@@ -548,11 +576,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 27
+position = 29
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 28
-cum_tokens = 1045
+cum_tokens = 1060
 
 [batches.content]
 kind = "lines"
@@ -566,11 +594,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 28
+position = 30
 key = 'Fs(DirListing { dir: "src/internals" })'
 descriptor = "listing of 'src/internals'"
 cost_tokens = 8
-cum_tokens = 1053
+cum_tokens = 1068
 
 [batches.content]
 kind = "fs"
@@ -580,11 +608,11 @@ parent = "src/internals"
 entries = ["helpers.ts", "symbols.ts"]
 
 [[batches]]
-position = 29
+position = 31
 key = 'Typescript(ExportBody { file: "src/is-matching.ts", start_line: 53, body_start_line: 56 })'
 descriptor = "export body at src/is-matching.ts:53 body 56"
 cost_tokens = 168
-cum_tokens = 1221
+cum_tokens = 1236
 
 [batches.content]
 kind = "lines"
@@ -598,11 +626,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 30
+position = 32
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 32
-cum_tokens = 1253
+cum_tokens = 1268
 
 [batches.content]
 kind = "lines"
@@ -616,11 +644,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 31
+position = 33
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 32
-cum_tokens = 1285
+cum_tokens = 1300
 
 [batches.content]
 kind = "lines"
@@ -634,11 +662,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 32
+position = 34
 key = 'Typescript(ModuleItem { file: "src/match.ts", start_line: 47 })'
 descriptor = "module item at src/match.ts:47"
 cost_tokens = 298
-cum_tokens = 1583
+cum_tokens = 1598
 
 [batches.content]
 kind = "lines"
@@ -756,11 +784,11 @@ end = 129
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 35
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 125 })'
 descriptor = "module item body at src/match.ts:47 body 125"
 cost_tokens = 8
-cum_tokens = 1591
+cum_tokens = 1606
 
 [batches.content]
 kind = "lines"
@@ -774,11 +802,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 34
+position = 36
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 129 })'
 descriptor = "module item body at src/match.ts:47 body 129"
 cost_tokens = 8
-cum_tokens = 1599
+cum_tokens = 1614
 
 [batches.content]
 kind = "lines"
@@ -792,11 +820,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 35
+position = 37
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 121 })'
 descriptor = "module item body at src/match.ts:47 body 121"
 cost_tokens = 11
-cum_tokens = 1610
+cum_tokens = 1625
 
 [batches.content]
 kind = "lines"
@@ -810,11 +838,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 36
+position = 38
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 67 })'
 descriptor = "module item body at src/match.ts:47 body 67"
 cost_tokens = 13
-cum_tokens = 1623
+cum_tokens = 1638
 
 [batches.content]
 kind = "lines"
@@ -828,11 +856,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 37
+position = 39
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 51 })'
 descriptor = "module item body at src/match.ts:47 body 51"
 cost_tokens = 15
-cum_tokens = 1638
+cum_tokens = 1653
 
 [batches.content]
 kind = "lines"
@@ -846,11 +874,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 38
+position = 40
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 68 })'
 descriptor = "module item body at src/match.ts:47 body 68"
 cost_tokens = 15
-cum_tokens = 1653
+cum_tokens = 1668
 
 [batches.content]
 kind = "lines"
@@ -864,11 +892,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 39
+position = 41
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 91 })'
 descriptor = "module item body at src/match.ts:47 body 91"
 cost_tokens = 16
-cum_tokens = 1669
+cum_tokens = 1684
 
 [batches.content]
 kind = "lines"
@@ -882,11 +910,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 40
+position = 42
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 56 })'
 descriptor = "module item body at src/match.ts:47 body 56"
 cost_tokens = 19
-cum_tokens = 1688
+cum_tokens = 1703
 
 [batches.content]
 kind = "lines"
@@ -900,11 +928,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 41
+position = 43
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 57 })'
 descriptor = "module item body at src/match.ts:47 body 57"
 cost_tokens = 21
-cum_tokens = 1709
+cum_tokens = 1724
 
 [batches.content]
 kind = "lines"
@@ -918,11 +946,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 42
+position = 44
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 111 })'
 descriptor = "module item body at src/match.ts:47 body 111"
 cost_tokens = 27
-cum_tokens = 1736
+cum_tokens = 1751
 
 [batches.content]
 kind = "lines"
@@ -936,11 +964,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 43
+position = 45
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 116 })'
 descriptor = "module item body at src/match.ts:47 body 116"
 cost_tokens = 29
-cum_tokens = 1765
+cum_tokens = 1780
 
 [batches.content]
 kind = "lines"
@@ -954,11 +982,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 44
+position = 46
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 53 })'
 descriptor = "module item body at src/match.ts:47 body 53"
 cost_tokens = 31
-cum_tokens = 1796
+cum_tokens = 1811
 
 [batches.content]
 kind = "lines"
@@ -972,11 +1000,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 45
+position = 47
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 69 })'
 descriptor = "module item body at src/match.ts:47 body 69"
 cost_tokens = 46
-cum_tokens = 1842
+cum_tokens = 1857
 
 [batches.content]
 kind = "lines"
@@ -990,11 +1018,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 46
+position = 48
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 74 })'
 descriptor = "module item body at src/match.ts:47 body 74"
 cost_tokens = 45
-cum_tokens = 1887
+cum_tokens = 1902
 
 [batches.content]
 kind = "lines"
@@ -1008,11 +1036,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 47
+position = 49
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 84 })'
 descriptor = "module item body at src/match.ts:47 body 84"
 cost_tokens = 56
-cum_tokens = 1943
+cum_tokens = 1958
 
 [batches.content]
 kind = "lines"
@@ -1026,11 +1054,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 48
+position = 50
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 78 })'
 descriptor = "module item body at src/match.ts:47 body 78"
 cost_tokens = 55
-cum_tokens = 1998
+cum_tokens = 2013
 
 [batches.content]
 kind = "lines"
@@ -1044,11 +1072,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 49
+position = 51
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 59 })'
 descriptor = "module item body at src/match.ts:47 body 59"
 cost_tokens = 97
-cum_tokens = 2095
+cum_tokens = 2110
 
 [batches.content]
 kind = "lines"
@@ -1062,11 +1090,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 50
+position = 52
 key = 'Typescript(ModuleItemBody { file: "src/match.ts", start_line: 47, body_start_line: 98 })'
 descriptor = "module item body at src/match.ts:47 body 98"
 cost_tokens = 101
-cum_tokens = 2196
+cum_tokens = 2211
 
 [batches.content]
 kind = "lines"
@@ -1080,11 +1108,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 51
+position = 53
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 206
-cum_tokens = 2402
+cum_tokens = 2417
 
 [batches.content]
 kind = "lines"
@@ -1106,11 +1134,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 52
+position = 54
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 360
-cum_tokens = 2762
+cum_tokens = 2777
 
 [batches.content]
 kind = "lines"
@@ -1132,11 +1160,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 53
+position = 55
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 269
-cum_tokens = 3031
+cum_tokens = 3046
 
 [batches.content]
 kind = "lines"
@@ -1150,11 +1178,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 54
+position = 56
 key = 'Fs(DirListing { dir: "examples/gif-fetcher/src" })'
 descriptor = "listing of 'examples/gif-fetcher/src'"
 cost_tokens = 23
-cum_tokens = 3054
+cum_tokens = 3069
 
 [batches.content]
 kind = "fs"
@@ -1164,11 +1192,11 @@ parent = "examples/gif-fetcher/src"
 entries = ["App.tsx", "constants.ts", "index.tsx", "searchGif.ts", "styles.css"]
 
 [[batches]]
-position = 55
+position = 57
 key = 'Typescript(Imports { file: "src/is-matching.ts" })'
 descriptor = "imports in src/is-matching.ts"
 cost_tokens = 62
-cum_tokens = 3116
+cum_tokens = 3131
 
 [batches.content]
 kind = "lines"
@@ -1182,11 +1210,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 56
+position = 58
 key = 'Typescript(ExportNames { file: "src/internals/symbols.ts" })'
 descriptor = "export names surface in src/internals/symbols.ts"
 cost_tokens = 167
-cum_tokens = 3283
+cum_tokens = 3298
 
 [batches.content]
 kind = "lines"
@@ -1216,11 +1244,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 59
 key = 'Typescript(Export { file: "src/internals/symbols.ts", start_line: 16 })'
 descriptor = "export at src/internals/symbols.ts:16"
 cost_tokens = 0
-cum_tokens = 3283
+cum_tokens = 3298
 
 [batches.content]
 kind = "lines"
@@ -1234,11 +1262,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 58
+position = 60
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 154
-cum_tokens = 3437
+cum_tokens = 3452
 
 [batches.content]
 kind = "lines"
@@ -1252,11 +1280,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 59
+position = 61
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 298
-cum_tokens = 3735
+cum_tokens = 3750
 
 [batches.content]
 kind = "fs"
@@ -1266,11 +1294,11 @@ parent = "tests"
 entries = ["bigints.test.ts", "branded-nominal-types.test.ts", "build-many.test.ts", "chainable.test.ts", "deep-exclude.test.ts", "distribute-unions.test.ts", "exhaustive-fallback.test.ts", "exhaustive-match.test.ts", "extract-precise-value.test.ts", "find-selected.test.ts", "generics.test.ts", "helpers.test.ts", "infer.test.ts", "instance-of.test.ts", "intersection-and-union.test.ts", "invert-pattern.test.ts", "is-matching.test.ts", "large-exhaustive.test.ts", "lists.test.ts", "maps.test.ts", "matcher-protocol.test.ts", "multiple-patterns.test.ts", "narrow.test.ts", "nesting.test.ts", "not.test.ts", "numbers.test.ts", "objects.test.ts", "optional-props.test.ts", "optional.test.ts", "otherwise.test.ts", "output-type.test.ts", "pattern.test.ts", "primitive-values.test.ts", "readonly.test.ts", "real-world.test.ts", "record.test.ts", "return-type.test.ts", "select.test.ts", "sets.test.ts", "strings.test.ts", "tsconfig.json", "tuples.test.ts", "type-error.test.ts", "type-is-matching.test.ts", "types-catalog", "types.test.ts", "unions.test.ts", "variadic-tuples.test.ts", "when.test.ts", "wildcards.test.ts"]
 
 [[batches]]
-position = 60
+position = 62
 key = 'Typescript(Imports { file: "src/match.ts" })'
 descriptor = "imports in src/match.ts"
 cost_tokens = 75
-cum_tokens = 3810
+cum_tokens = 3825
 
 [batches.content]
 kind = "lines"
@@ -1284,11 +1312,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 61
+position = 63
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 124
-cum_tokens = 3934
+cum_tokens = 3949
 
 [batches.content]
 kind = "lines"
@@ -1302,11 +1330,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 62
+position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 55
-cum_tokens = 3989
+cum_tokens = 4004
 
 [batches.content]
 kind = "lines"
@@ -1320,11 +1348,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 63
+position = 65
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 129
-cum_tokens = 4118
+cum_tokens = 4133
 
 [batches.content]
 kind = "lines"
@@ -1338,11 +1366,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 64
+position = 66
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 148
-cum_tokens = 4266
+cum_tokens = 4281
 
 [batches.content]
 kind = "lines"
@@ -1356,11 +1384,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 65
+position = 67
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 60
-cum_tokens = 4326
+cum_tokens = 4341
 
 [batches.content]
 kind = "lines"
@@ -1374,11 +1402,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 66
+position = 68
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 63
-cum_tokens = 4389
+cum_tokens = 4404
 
 [batches.content]
 kind = "lines"
@@ -1392,11 +1420,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 67
+position = 69
 key = 'Typescript(ExportDoc { file: "src/is-matching.ts", start_line: 48 })'
 descriptor = "export doc at src/is-matching.ts:48"
 cost_tokens = 151
-cum_tokens = 4540
+cum_tokens = 4555
 
 [batches.content]
 kind = "lines"
@@ -1410,11 +1438,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 68
+position = 70
 key = 'Json(Whole { file: "jsr.json" })'
 descriptor = "json config jsr.json"
 cost_tokens = 93
-cum_tokens = 4633
+cum_tokens = 4648
 
 [batches.content]
 kind = "lines"
@@ -1428,25 +1456,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 6
-cum_tokens = 4639
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["generate-cts.sh"]
-
-[[batches]]
-position = 70
+position = 71
 key = 'Typescript(ExportDoc { file: "src/is-matching.ts", start_line: 32 })'
 descriptor = "export doc at src/is-matching.ts:32"
 cost_tokens = 176
-cum_tokens = 4815
+cum_tokens = 4824
 
 [batches.content]
 kind = "lines"
@@ -1460,11 +1474,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 230
-cum_tokens = 5045
+cum_tokens = 5054
 
 [batches.content]
 kind = "lines"
@@ -1478,11 +1492,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Typescript(Imports { file: "src/types/Pattern.ts" })'
 descriptor = "imports in src/types/Pattern.ts"
 cost_tokens = 86
-cum_tokens = 5131
+cum_tokens = 5140
 
 [batches.content]
 kind = "lines"
@@ -1496,11 +1510,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Typescript(ExportNames { file: "src/patterns.ts" })'
 descriptor = "export names surface in src/patterns.ts"
 cost_tokens = 654
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2114,11 +2128,11 @@ end = 1275
 kind = "ellipsis"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 116 })'
 descriptor = "export at src/patterns.ts:116"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2132,11 +2146,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 241 })'
 descriptor = "export at src/patterns.ts:241"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2150,11 +2164,11 @@ end = 241
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 294 })'
 descriptor = "export at src/patterns.ts:294"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2168,11 +2182,11 @@ end = 294
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 356 })'
 descriptor = "export at src/patterns.ts:356"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2186,11 +2200,11 @@ end = 356
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 672 })'
 descriptor = "export at src/patterns.ts:672"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2204,11 +2218,11 @@ end = 672
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 782 })'
 descriptor = "export at src/patterns.ts:782"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2222,11 +2236,11 @@ end = 782
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 793 })'
 descriptor = "export at src/patterns.ts:793"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2240,11 +2254,11 @@ end = 793
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 805 })'
 descriptor = "export at src/patterns.ts:805"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2258,11 +2272,11 @@ end = 805
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 928 })'
 descriptor = "export at src/patterns.ts:928"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2276,11 +2290,11 @@ end = 928
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1075 })'
 descriptor = "export at src/patterns.ts:1075"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2294,11 +2308,11 @@ end = 1075
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1201 })'
 descriptor = "export at src/patterns.ts:1201"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2312,11 +2326,11 @@ end = 1201
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1211 })'
 descriptor = "export at src/patterns.ts:1211"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2330,11 +2344,11 @@ end = 1211
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1221 })'
 descriptor = "export at src/patterns.ts:1221"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2348,11 +2362,11 @@ end = 1221
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1231 })'
 descriptor = "export at src/patterns.ts:1231"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2366,11 +2380,11 @@ end = 1231
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1241 })'
 descriptor = "export at src/patterns.ts:1241"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2384,11 +2398,11 @@ end = 1241
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1274 })'
 descriptor = "export at src/patterns.ts:1274"
 cost_tokens = 0
-cum_tokens = 5785
+cum_tokens = 5794
 
 [batches.content]
 kind = "lines"
@@ -2410,11 +2424,11 @@ end = 1275
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 131 })'
 descriptor = "export at src/patterns.ts:131"
 cost_tokens = 25
-cum_tokens = 5810
+cum_tokens = 5819
 
 [batches.content]
 kind = "lines"
@@ -2428,11 +2442,11 @@ end = 134
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 246 })'
 descriptor = "export at src/patterns.ts:246"
 cost_tokens = 28
-cum_tokens = 5838
+cum_tokens = 5847
 
 [batches.content]
 kind = "lines"
@@ -2454,11 +2468,11 @@ end = 249
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 643 })'
 descriptor = "export at src/patterns.ts:643"
 cost_tokens = 29
-cum_tokens = 5867
+cum_tokens = 5876
 
 [batches.content]
 kind = "lines"
@@ -2472,11 +2486,11 @@ end = 645
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1251 })'
 descriptor = "export at src/patterns.ts:1251"
 cost_tokens = 30
-cum_tokens = 5897
+cum_tokens = 5906
 
 [batches.content]
 kind = "lines"
@@ -2498,11 +2512,11 @@ end = 1254
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 1271 })'
 descriptor = "export at src/patterns.ts:1271"
 cost_tokens = 30
-cum_tokens = 5927
+cum_tokens = 5936
 
 [batches.content]
 kind = "lines"
@@ -2516,11 +2530,11 @@ end = 1273
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 445 })'
 descriptor = "export at src/patterns.ts:445"
 cost_tokens = 36
-cum_tokens = 5963
+cum_tokens = 5972
 
 [batches.content]
 kind = "lines"
@@ -2542,11 +2556,11 @@ end = 448
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 81 })'
 descriptor = "export at src/patterns.ts:81"
 cost_tokens = 43
-cum_tokens = 6006
+cum_tokens = 6015
 
 [batches.content]
 kind = "lines"
@@ -2560,11 +2574,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 611 })'
 descriptor = "export at src/patterns.ts:611"
 cost_tokens = 42
-cum_tokens = 6048
+cum_tokens = 6057
 
 [batches.content]
 kind = "lines"
@@ -2586,11 +2600,11 @@ end = 615
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 242 })'
 descriptor = "export at src/patterns.ts:242"
 cost_tokens = 43
-cum_tokens = 6091
+cum_tokens = 6100
 
 [batches.content]
 kind = "lines"
@@ -2604,11 +2618,11 @@ end = 245
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 295 })'
 descriptor = "export at src/patterns.ts:295"
 cost_tokens = 43
-cum_tokens = 6134
+cum_tokens = 6143
 
 [batches.content]
 kind = "lines"
@@ -2622,11 +2636,11 @@ end = 298
 kind = "full"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 100 })'
 descriptor = "export at src/patterns.ts:100"
 cost_tokens = 49
-cum_tokens = 6183
+cum_tokens = 6192
 
 [batches.content]
 kind = "lines"
@@ -2640,11 +2654,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 696 })'
 descriptor = "export at src/patterns.ts:696"
 cost_tokens = 44
-cum_tokens = 6227
+cum_tokens = 6236
 
 [batches.content]
 kind = "lines"
@@ -2666,11 +2680,11 @@ end = 699
 kind = "ellipsis"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 433 })'
 descriptor = "export at src/patterns.ts:433"
 cost_tokens = 45
-cum_tokens = 6272
+cum_tokens = 6281
 
 [batches.content]
 kind = "lines"
@@ -2684,11 +2698,11 @@ end = 436
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 536 })'
 descriptor = "export at src/patterns.ts:536"
 cost_tokens = 45
-cum_tokens = 6317
+cum_tokens = 6326
 
 [batches.content]
 kind = "lines"
@@ -2710,11 +2724,11 @@ end = 540
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 572 })'
 descriptor = "export at src/patterns.ts:572"
 cost_tokens = 45
-cum_tokens = 6362
+cum_tokens = 6371
 
 [batches.content]
 kind = "lines"
@@ -2736,11 +2750,11 @@ end = 576
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 637 })'
 descriptor = "export at src/patterns.ts:637"
 cost_tokens = 49
-cum_tokens = 6411
+cum_tokens = 6420
 
 [batches.content]
 kind = "lines"
@@ -2754,11 +2768,11 @@ end = 642
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 299 })'
 descriptor = "export at src/patterns.ts:299"
 cost_tokens = 50
-cum_tokens = 6461
+cum_tokens = 6470
 
 [batches.content]
 kind = "lines"
@@ -2780,11 +2794,11 @@ end = 303
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 646 })'
 descriptor = "export at src/patterns.ts:646"
 cost_tokens = 52
-cum_tokens = 6513
+cum_tokens = 6522
 
 [batches.content]
 kind = "lines"
@@ -2806,11 +2820,11 @@ end = 652
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 187 })'
 descriptor = "export at src/patterns.ts:187"
 cost_tokens = 60
-cum_tokens = 6573
+cum_tokens = 6582
 
 [batches.content]
 kind = "lines"
@@ -2832,11 +2846,11 @@ end = 193
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 357 })'
 descriptor = "export at src/patterns.ts:357"
 cost_tokens = 78
-cum_tokens = 6651
+cum_tokens = 6660
 
 [batches.content]
 kind = "lines"
@@ -2850,11 +2864,11 @@ end = 361
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 437 })'
 descriptor = "export at src/patterns.ts:437"
 cost_tokens = 94
-cum_tokens = 6745
+cum_tokens = 6754
 
 [batches.content]
 kind = "lines"
@@ -2868,11 +2882,11 @@ end = 444
 kind = "full"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 362 })'
 descriptor = "export at src/patterns.ts:362"
 cost_tokens = 95
-cum_tokens = 6840
+cum_tokens = 6849
 
 [batches.content]
 kind = "lines"
@@ -2894,11 +2908,11 @@ end = 369
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 686 })'
 descriptor = "export at src/patterns.ts:686"
 cost_tokens = 97
-cum_tokens = 6937
+cum_tokens = 6946
 
 [batches.content]
 kind = "lines"
@@ -2912,11 +2926,11 @@ end = 695
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 48 })'
 descriptor = "export at src/patterns.ts:48"
 cost_tokens = 150
-cum_tokens = 7087
+cum_tokens = 7096
 
 [batches.content]
 kind = "lines"
@@ -2930,11 +2944,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Typescript(Export { file: "src/patterns.ts", start_line: 673 })'
 descriptor = "export at src/patterns.ts:673"
 cost_tokens = 150
-cum_tokens = 7237
+cum_tokens = 7246
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2962,11 @@ end = 685
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 187, body_start_line: 193 })'
 descriptor = "export body at src/patterns.ts:187 body 193"
 cost_tokens = 237
-cum_tokens = 7474
+cum_tokens = 7483
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +2980,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 299, body_start_line: 303 })'
 descriptor = "export body at src/patterns.ts:299 body 303"
 cost_tokens = 322
-cum_tokens = 7796
+cum_tokens = 7805
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +2998,11 @@ end = 333
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 246, body_start_line: 249 })'
 descriptor = "export body at src/patterns.ts:246 body 249"
 cost_tokens = 344
-cum_tokens = 8140
+cum_tokens = 8149
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +3016,11 @@ end = 281
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 116 })'
 descriptor = "export doc at src/patterns.ts:116"
 cost_tokens = 121
-cum_tokens = 8261
+cum_tokens = 8270
 
 [batches.content]
 kind = "lines"
@@ -3020,11 +3034,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 1251 })'
 descriptor = "export doc at src/patterns.ts:1251"
 cost_tokens = 117
-cum_tokens = 8378
+cum_tokens = 8387
 
 [batches.content]
 kind = "lines"
@@ -3038,11 +3052,11 @@ end = 1250
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 100 })'
 descriptor = "export doc at src/patterns.ts:100"
 cost_tokens = 132
-cum_tokens = 8510
+cum_tokens = 8519
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +3070,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 1221 })'
 descriptor = "export doc at src/patterns.ts:1221"
 cost_tokens = 107
-cum_tokens = 8617
+cum_tokens = 8626
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +3088,11 @@ end = 1220
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 294 })'
 descriptor = "export doc at src/patterns.ts:294"
 cost_tokens = 131
-cum_tokens = 8748
+cum_tokens = 8757
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +3106,11 @@ end = 293
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 782 })'
 descriptor = "export doc at src/patterns.ts:782"
 cost_tokens = 109
-cum_tokens = 8857
+cum_tokens = 8866
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +3124,11 @@ end = 781
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 1211 })'
 descriptor = "export doc at src/patterns.ts:1211"
 cost_tokens = 109
-cum_tokens = 8966
+cum_tokens = 8975
 
 [batches.content]
 kind = "lines"
@@ -3128,11 +3142,11 @@ end = 1210
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Typescript(ExportBody { file: "src/patterns.ts", start_line: 362, body_start_line: 369 })'
 descriptor = "export body at src/patterns.ts:362 body 369"
 cost_tokens = 450
-cum_tokens = 9416
+cum_tokens = 9425
 
 [batches.content]
 kind = "lines"
@@ -3146,11 +3160,11 @@ end = 407
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 793 })'
 descriptor = "export doc at src/patterns.ts:793"
 cost_tokens = 110
-cum_tokens = 9526
+cum_tokens = 9535
 
 [batches.content]
 kind = "lines"
@@ -3164,11 +3178,11 @@ end = 792
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 928 })'
 descriptor = "export doc at src/patterns.ts:928"
 cost_tokens = 111
-cum_tokens = 9637
+cum_tokens = 9646
 
 [batches.content]
 kind = "lines"
@@ -3182,11 +3196,11 @@ end = 927
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 1201 })'
 descriptor = "export doc at src/patterns.ts:1201"
 cost_tokens = 114
-cum_tokens = 9751
+cum_tokens = 9760
 
 [batches.content]
 kind = "lines"
@@ -3200,11 +3214,11 @@ end = 1200
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Typescript(ExportDoc { file: "src/patterns.ts", start_line: 81 })'
 descriptor = "export doc at src/patterns.ts:81"
 cost_tokens = 153
-cum_tokens = 9904
+cum_tokens = 9913
 
 [batches.content]
 kind = "lines"

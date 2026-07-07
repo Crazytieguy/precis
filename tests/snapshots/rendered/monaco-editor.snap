@@ -3,16 +3,23 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .azure-pipelines/
+    publish-nightly.yml
+    publish-stable.yml
 .devcontainer/
+    devcontainer.json
 .gitattributes
 .github/
 .gitignore
 .husky/
+    pre-commit
 .mocharc.json
 .nvmrc
 .prettierignore
 .prettierrc
 .vscode/
+    launch.json
+    settings.json
+    tasks.json
 CHANGELOG.md
 CONTRIBUTING.md
 LICENSE.txt
@@ -156,15 +163,6 @@ samples/
           35→
           36→MIT
     browser-esm-esbuild/
-        .gitignore
-        build.js
-        dist/
-        index.html
-        index.js
-        package.json
-            …
-               2→	"name": "helloworld",
-            …
     browser-esm-parcel/
         .gitignore
         index.html

@@ -4,6 +4,16 @@ expression: rendered
 ---
 .gitattributes
 .github/
+    ISSUE_TEMPLATE/
+    dependabot.yml
+    workflows/
+        ci.yml
+        decnum.yml
+        manpage.yml
+        oniguruma.yml
+        scanbuild.yml
+        valgrind.yml
+        website.yml
 .gitignore
 .gitmodules
 AUTHORS
@@ -70,11 +80,7 @@ README.md
       70→- Chat & Community: [Join us on Discord](https://discord.gg/yg6yjNmgAC)
       71→- Wiki & Advanced Topics: [Explore the Wiki](https://github.com/jqlang/jq/wiki)
       73→## License
-      74→
-      75→`jq` is released under the [MIT License](COPYING). `jq`'s documentation is
-      76→licensed under the [Creative Commons CC BY 3.0](COPYING).
-      77→`jq` uses parts of the open source C library "decNumber", which is distributed
-      78→under [ICU License](COPYING)
+    …
 SECURITY.md
 build/
 compile-ios.sh
@@ -138,7 +144,13 @@ jq.1.prebuilt
 jq.spec
 libjq.pc.in
 m4/
+    ax_compare_version.m4
+    ax_prog_bison_version.m4
+    ax_pthread.m4
 scripts/
+    crosscompile
+    gen_utf8_tables.py
+    version
 sig/
 src/
     builtin.c

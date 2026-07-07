@@ -5,6 +5,35 @@ expression: rendered
 .editorconfig
 .eslintrc
 .github/
+    PULL_REQUEST_TEMPLATE.md
+    workflows/
+        compressed-size.yml
+        main.yml
+               1→name: CI
+               2→
+               3→on:
+               4→  pull_request:
+               5→    branches:
+               6→      - "**"
+               7→  push:
+               8→    branches:
+               9→      - main
+              10→
+              11→jobs:
+              12→  build:
+              13→    runs-on: ubuntu-latest
+              14→    steps:
+              15→      - uses: actions/checkout@v2
+              16→      - uses: actions/setup-node@v2
+              17→        with:
+              18→          node-version: 14
+              19→      - name: npm install, build, and test
+              20→        run: |
+              21→          npm install
+              22→          npm run build --if-present
+              23→          npm test
+              24→        env:
+              25→          CI: true
 .gitignore
 LICENSE
 README.md
@@ -59,12 +88,9 @@ README.md
      150→Register an event handler for the given type.
     …
      157→### off
-     159→Remove an event handler for the given type.
-     160→If `handler` is omitted, all handlers of the given type are removed.
     …
      167→### emit
-     169→Invoke all handlers for the given type.
-     170→If present, `'*'` handlers are invoked after type-matched handlers.
+    …
      172→Note: Manually firing '\*' handlers is not supported.
     …
      179→## Contribute
@@ -245,19 +271,6 @@ src/
          122→	};
         …
 test/
+    index_test.ts
+    test-types-compilation.ts
 tsconfig.json
-       1→{
-       2→	"compileOnSave": false,
-       3→	"compilerOptions": {
-       4→		"strict": true,
-       5→		"noEmit": true,
-       6→		"declaration": true,
-       7→		"moduleResolution": "node",
-       8→		"skipLibCheck": true,
-       9→		"esModuleInterop": true,
-      10→	},
-      11→	"include": [
-      12→		"src/*.ts",
-      13→		"test/*.ts"
-      14→	]
-      15→}

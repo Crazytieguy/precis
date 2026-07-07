@@ -185,6 +185,19 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         path_depth_factor(dir, ctx)
     };
+    // Depth-1 repo-map floor: the one-line-per-entry listing of a
+    // top-level directory is part of the shallow repo map NS authors
+    // rank as tier-1 orientation, regardless of the dir's
+    // classification — the non-essential discount belongs to the
+    // dir's *contents*, not to knowing what's in it. Floor the
+    // location prior for the listing batch only (at depth 1 the
+    // prior is exactly the non-essential factor, so this floors the
+    // discount at 0.5).
+    let depth = if ctx.depth_from_root(dir) == 1 {
+        depth.max(0.5)
+    } else {
+        depth
+    };
     let small_listing_factor = if module_source_dir || src_of_sibling_modules {
         // Module-source directories (htmy/renderer/, sps-core/src/install/)
         // anchor on their own listings — keep them at full weight.

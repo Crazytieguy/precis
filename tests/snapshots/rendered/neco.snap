@@ -3,6 +3,27 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    CONTRIBUTING.md
+    PULL_REQUEST_TEMPLATE.md
+    workflows/
+        main.yml
+               1→name: Vanilla C CI
+               2→
+               3→on:
+               4→  push:
+               5→    branches: [ "main" ]
+               6→  pull_request:
+               7→    branches: [ "main" ]
+               8→
+               9→jobs:
+              10→  build:
+              11→
+              12→    runs-on: ubuntu-latest
+              13→
+              14→    steps:
+              15→    - uses: actions/checkout@v3
+              16→    - name: test
+              17→      run: tests/run.sh
 .gitignore
 .package
 LICENSE
@@ -126,9 +147,6 @@ docs/
         logo-dark.png
         logo-light.png
     tools/
-        README.md
-        build-api.sh
-        doxygen-md/
 examples/
     README.md
     channel-buffering.c
@@ -161,11 +179,6 @@ neco.h
       19→#include <sys/socket.h>
       20→#endif
     …
-      30→/// @defgroup BasicOperations Basic operations
-      31→/// Neco provides standard operations for starting a coroutine, sleeping, 
-      32→/// suspending, resuming, yielding to another coroutine, joining/waiting for
-      33→/// child coroutines, and exiting a running coroutine.
-      34→/// @{
       35→int neco_start(void(*coroutine)(int argc, void *argv[]), int argc, ...);
       36→int neco_startv(void(*coroutine)(int argc, void *argv[]), int argc, void *argv[]);
       37→int neco_yield(void);

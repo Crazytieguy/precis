@@ -87,8 +87,17 @@ README.md
      230→### Pure Python<a name="pure-python"></a>
     …
 benchmark/
+    LICENSE
+    README.md
+    data.toml
+    requirements.txt
+    run.py
 fuzzer/
+    fuzz.py
+    requirements.txt
 profiler/
+    profiler_script.py
+    requirements.txt
 pyproject.toml
     …
        5→[project]
@@ -102,6 +111,9 @@ pyproject.toml
       15→readme = "README.md"
     …
 scripts/
+    mypyc_tox
+    requirements.txt
+    use_setuptools.py
 setup.py
        1→import os
        2→
@@ -145,8 +157,7 @@ src/
               57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
             …
               71→class DEPRECATED_DEFAULT:
-              72→    """Sentinel to be used as default arg during deprecation
-              73→    period of TOMLDecodeError's free-form arguments."""
+            …
               76→class TOMLDecodeError(ValueError):
             …
              137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
@@ -187,8 +198,7 @@ src/
              481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
             …
              497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
-             498→    pos += 1
-             499→    return parse_basic_str(src, pos, multiline=False)
+            …
              502→def parse_array(
              503→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
              504→) -> tuple[Pos, list[Any]]:

@@ -108,67 +108,70 @@ Score(3000)=0.530 I=0.784 C=0.359 ns_rows≤3K=16/42 (reached=6 partial=1 missin
 | walker |  | 4114 | 38 | pub item at src/ui/filter.rs:34 |  |  | 0.597 |
 | walker |  | 4149 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.597 |
 | walker |  | 4196 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.597 |
-| ns | 4283 |  | 459 | cmd.rs: update_config (CLI-flag-over-config precedence) | 2.8 | 2.6 | 0.553 |
-| ns | 4291 |  | 8 | config/ listing | 3.1 |  | 0.555 |
+| walker |  | 4204 | 8 | listing of '.github' |  |  | 0.597 |
+| ns | 4283 |  | 459 | cmd.rs: update_config (CLI-flag-over-config precedence) | 2.8 | 2.6 | 0.554 |
+| ns | 4291 |  | 8 | config/ listing | 3.1 |  | 0.556 |
 | ns | 4299 |  | 8 | config/themes/ listing | 3.2 |  | 0.555 |
-| walker |  | 4532 | 336 | pub item at src/config/mod.rs:17 |  |  | 0.555 |
-| walker |  | 4594 | 62 | pub-item names surface in src/parse/syntax.rs |  |  | 0.555 |
-| walker |  | 4594 | 0 | pub item at src/parse/syntax.rs:139 |  |  | 0.555 |
-| walker |  | 4594 | 0 | pub item at src/parse/syntax.rs:201 |  |  | 0.555 |
-| walker |  | 4618 | 24 | pub item at src/parse/syntax.rs:151 |  |  | 0.555 |
-| walker |  | 4695 | 77 | pub-item names surface in src/config/colors.rs |  |  | 0.555 |
-| walker |  | 4740 | 45 | pub item at src/config/colors.rs:324 |  |  | 0.555 |
-| walker |  | 4831 | 91 | pub item at src/config/colors.rs:251 |  |  | 0.555 |
-| walker |  | 4954 | 123 | mod/use plumbing in src/parse/mod.rs |  |  | 0.556 |
-| walker |  | 5074 | 120 | pub item at src/parse/syntax.rs:11 |  |  | 0.557 |
-| walker |  | 5206 | 132 | mod/use plumbing in src/config/mod.rs |  |  | 0.557 |
-| walker |  | 5299 | 93 | macro_export body at src/debug.rs:8 |  |  | 0.557 |
-| walker |  | 5412 | 113 | pub item at src/config/colors.rs:286 |  |  | 0.557 |
+| walker |  | 4540 | 336 | pub item at src/config/mod.rs:17 |  |  | 0.555 |
+| walker |  | 4602 | 62 | pub-item names surface in src/parse/syntax.rs |  |  | 0.555 |
+| walker |  | 4602 | 0 | pub item at src/parse/syntax.rs:139 |  |  | 0.555 |
+| walker |  | 4602 | 0 | pub item at src/parse/syntax.rs:201 |  |  | 0.555 |
+| walker |  | 4626 | 24 | pub item at src/parse/syntax.rs:151 |  |  | 0.555 |
+| walker |  | 4703 | 77 | pub-item names surface in src/config/colors.rs |  |  | 0.555 |
+| walker |  | 4748 | 45 | pub item at src/config/colors.rs:324 |  |  | 0.555 |
+| walker |  | 4839 | 91 | pub item at src/config/colors.rs:251 |  |  | 0.555 |
+| walker |  | 4962 | 123 | mod/use plumbing in src/parse/mod.rs |  |  | 0.556 |
+| walker |  | 5082 | 120 | pub item at src/parse/syntax.rs:11 |  |  | 0.557 |
+| walker |  | 5098 | 16 | listing of '.github/workflows' |  |  | 0.557 |
+| walker |  | 5230 | 132 | mod/use plumbing in src/config/mod.rs |  |  | 0.557 |
+| walker |  | 5323 | 93 | macro_export body at src/debug.rs:8 |  |  | 0.557 |
+| walker |  | 5436 | 113 | pub item at src/config/colors.rs:286 |  |  | 0.557 |
 | ns | 5490 |  | 1191 | config/default.toml (the actual default config) | 3.3 |  | 0.488 |
-| walker |  | 5555 | 143 | pub item at src/config/keys.rs:54 |  |  | 0.488 |
+| walker |  | 5579 | 143 | pub item at src/config/keys.rs:54 |  |  | 0.488 |
 | ns | 5608 |  | 118 | src/config/*.rs: struct declaration locations (one per default.toml top-level table) | 3.4 |  | 0.496 |
 | ns | 5621 |  | 13 | docs/ listing | 4.1 |  | 0.499 |
-| walker |  | 5675 | 120 | pub item at src/config/colors.rs:342 |  |  | 0.499 |
-| walker |  | 5762 | 87 | README.md section #1 |  |  | 0.499 |
-| walker |  | 5905 | 143 | pub item at src/ui/data_block.rs:16 |  |  | 0.499 |
-| walker |  | 6063 | 158 | pub item at src/ui/tree_overview.rs:19 |  |  | 0.499 |
-| walker |  | 6271 | 208 | mod/use plumbing in src/ui/mod.rs |  |  | 0.499 |
-| walker |  | 6279 | 8 | listing of 'config/themes' |  |  | 0.501 |
-| walker |  | 6397 | 118 | pub item body at src/debug.rs:23 body 24 |  |  | 0.501 |
+| walker |  | 5699 | 120 | pub item at src/config/colors.rs:342 |  |  | 0.499 |
+| walker |  | 5786 | 87 | README.md section #1 |  |  | 0.499 |
+| walker |  | 5929 | 143 | pub item at src/ui/data_block.rs:16 |  |  | 0.499 |
+| walker |  | 6087 | 158 | pub item at src/ui/tree_overview.rs:19 |  |  | 0.499 |
+| walker |  | 6295 | 208 | mod/use plumbing in src/ui/mod.rs |  |  | 0.499 |
+| walker |  | 6303 | 8 | listing of 'config/themes' |  |  | 0.501 |
 | ns | 6417 |  | 796 | docs/actions.md (every action, default keys, description) | 4.2 |  | 0.484 |
-| walker |  | 6493 | 96 | impl method sigs in src/parse/json.rs |  |  | 0.484 |
-| walker |  | 6592 | 99 | impl method sigs in src/parse/xml.rs |  |  | 0.484 |
-| walker |  | 6692 | 100 | impl method sigs in src/parse/hcl.rs |  |  | 0.484 |
-| walker |  | 6792 | 100 | impl method sigs in src/parse/toml.rs |  |  | 0.484 |
+| walker |  | 6421 | 118 | pub item body at src/debug.rs:23 body 24 |  |  | 0.484 |
+| walker |  | 6517 | 96 | impl method sigs in src/parse/json.rs |  |  | 0.484 |
+| walker |  | 6616 | 99 | impl method sigs in src/parse/xml.rs |  |  | 0.484 |
+| walker |  | 6716 | 100 | impl method sigs in src/parse/hcl.rs |  |  | 0.484 |
+| walker |  | 6816 | 100 | impl method sigs in src/parse/toml.rs |  |  | 0.484 |
 | ns | 6870 |  | 453 | tree.rs: Tree/ItemValue/HighlightKeyword/FieldType structs | 5.1 |  | 0.491 |
-| walker |  | 6893 | 101 | impl method sigs in src/parse/jsonl.rs |  |  | 0.491 |
-| walker |  | 6994 | 101 | impl method sigs in src/parse/yaml.rs |  |  | 0.491 |
+| walker |  | 6917 | 101 | impl method sigs in src/parse/jsonl.rs |  |  | 0.491 |
+| walker |  | 7018 | 101 | impl method sigs in src/parse/yaml.rs |  |  | 0.491 |
 | ns | 7369 |  | 499 | tree.rs: Tree::parse / from_value | 5.2 | 5.1 | 0.473 |
-| walker |  | 7419 | 425 | impl method sigs in src/config/mod.rs |  |  | 0.473 |
-| ns | 7451 |  | 82 | tree.rs: build_item — one line per Value variant (locations) | 5.3 |  | 0.470 |
-| walker |  | 7610 | 191 | impl method sigs in src/tree.rs |  |  | 0.471 |
+| walker |  | 7443 | 425 | impl method sigs in src/config/mod.rs |  |  | 0.473 |
+| ns | 7451 |  | 82 | tree.rs: build_item — one line per Value variant (locations) | 5.3 |  | 0.471 |
+| walker |  | 7634 | 191 | impl method sigs in src/tree.rs |  |  | 0.471 |
 | ns | 7813 |  | 362 | tree.rs: build_item Object arm (recursive case) | 5.4 | 5.3 | 0.458 |
-| walker |  | 7816 | 206 | pub item at src/config/types.rs:28 |  |  | 0.460 |
-| walker |  | 8048 | 232 | pub item at src/config/colors.rs:21 |  |  | 0.460 |
-| walker |  | 8150 | 102 | pub item body at src/parse/syntax.rs:201 body 202 |  |  | 0.460 |
-| walker |  | 8294 | 144 | impl method sigs in src/ui/popup.rs |  |  | 0.460 |
-| walker |  | 8398 | 104 | README.md section #6 |  |  | 0.460 |
-| walker |  | 8677 | 279 | pub item at src/ui/app.rs:53 |  |  | 0.460 |
+| walker |  | 7840 | 206 | pub item at src/config/types.rs:28 |  |  | 0.460 |
+| walker |  | 8072 | 232 | pub item at src/config/colors.rs:21 |  |  | 0.460 |
+| walker |  | 8174 | 102 | pub item body at src/parse/syntax.rs:201 body 202 |  |  | 0.460 |
+| walker |  | 8318 | 144 | impl method sigs in src/ui/popup.rs |  |  | 0.460 |
+| walker |  | 8422 | 104 | README.md section #6 |  |  | 0.460 |
 | ns | 8684 |  | 871 | parse/mod.rs: ContentType + Parser trait + dispatch | 6.1 |  | 0.487 |
-| walker |  | 8698 | 21 | impl method sigs in src/config/colors.rs |  |  | 0.487 |
-| walker |  | 9022 | 324 | [dependencies] in Cargo.toml |  |  | 0.518 |
+| walker |  | 8701 | 279 | pub item at src/ui/app.rs:53 |  |  | 0.487 |
+| walker |  | 8722 | 21 | impl method sigs in src/config/colors.rs |  |  | 0.487 |
+| walker |  | 8762 | 40 | listing of 'examples' |  |  | 0.487 |
+| walker |  | 9086 | 324 | [dependencies] in Cargo.toml |  |  | 0.519 |
 | ns | 9094 |  | 410 | toml.rs: section-path tracking + complex-field deferral (distinctive logic) | 6.2 |  | 0.505 |
-| walker |  | 9142 | 120 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.505 |
-| ns | 9227 |  | 133 | syntax.rs: SyntaxToken enum | 7.1 |  | 0.514 |
-| ns | 9313 |  | 86 | ui/*: one struct-declaration line per widget (locations) | 8.1 |  | 0.518 |
-| walker |  | 9462 | 320 | pub item at src/config/colors.rs:78 |  |  | 0.518 |
-| ns | 9573 |  | 260 | app.rs: App::on_key action dispatch (the keybinding-to-widget hub) | 8.2 | 8.1 | 0.512 |
-| walker |  | 9630 | 168 | impl method sigs in src/ui/filter.rs |  |  | 0.512 |
+| walker |  | 9206 | 120 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.505 |
+| ns | 9227 |  | 133 | syntax.rs: SyntaxToken enum | 7.1 |  | 0.515 |
+| ns | 9313 |  | 86 | ui/*: one struct-declaration line per widget (locations) | 8.1 |  | 0.519 |
+| walker |  | 9526 | 320 | pub item at src/config/colors.rs:78 |  |  | 0.519 |
+| ns | 9573 |  | 260 | app.rs: App::on_key action dispatch (the keybinding-to-widget hub) | 8.2 | 8.1 | 0.513 |
 | ns | 9649 |  | 76 | clipboard/debug/edit/live_reload: entry-point locations | 9.1 |  | 0.511 |
-| ns | 9657 |  | 8 | .github/ listing | 10.1 |  | 0.510 |
-| ns | 9673 |  | 16 | .github/workflows/ listing | 10.2 |  | 0.509 |
-| walker |  | 9800 | 170 | impl method sigs in src/parse/any.rs |  |  | 0.509 |
-| ns | 9881 |  | 208 | cargo-check.yml: the CI test command | 10.3 |  | 0.501 |
-| ns | 9921 |  | 40 | examples/ listing | 11.1 |  | 0.498 |
-| ns | 9942 |  | 21 | src/parse/test_cases/ listing | 11.2 |  | 0.497 |
-| ns | 9946 |  | 4 | assets/ listing | 11.3 |  | 0.497 |
+| ns | 9657 |  | 8 | .github/ listing | 10.1 |  | 0.512 |
+| ns | 9673 |  | 16 | .github/workflows/ listing | 10.2 |  | 0.514 |
+| walker |  | 9694 | 168 | impl method sigs in src/ui/filter.rs |  |  | 0.514 |
+| walker |  | 9864 | 170 | impl method sigs in src/parse/any.rs |  |  | 0.514 |
+| ns | 9881 |  | 208 | cargo-check.yml: the CI test command | 10.3 |  | 0.506 |
+| ns | 9921 |  | 40 | examples/ listing | 11.1 |  | 0.511 |
+| ns | 9942 |  | 21 | src/parse/test_cases/ listing | 11.2 |  | 0.509 |
+| ns | 9946 |  | 4 | assets/ listing | 11.3 |  | 0.509 |

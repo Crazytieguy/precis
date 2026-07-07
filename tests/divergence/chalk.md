@@ -1,4 +1,4 @@
-Score(3000)=0.434 I=0.757 C=0.248 ns_rows≤3K=21/50 (reached=6 partial=2 missing=13)
+Score(3000)=0.555 I=0.825 C=0.373 ns_rows≤3K=21/50 (reached=9 partial=1 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -42,117 +42,117 @@ Score(3000)=0.434 I=0.757 C=0.248 ns_rows≤3K=21/50 (reached=6 partial=2 missin
 | walker |  | 708 | 9 | listing of 'source/vendor' |  |  | 0.430 |
 | walker |  | 726 | 18 | listing of 'source/vendor/supports-color' |  |  | 0.496 |
 | walker |  | 775 | 49 | module item at source/index.js:15 |  |  | 0.497 |
-| walker |  | 835 | 60 | module item body at source/index.js:41 body 42 |  |  | 0.498 |
-| walker |  | 863 | 28 | export names surface in source/vendor/supports-color/index.js |  |  | 0.498 |
-| walker |  | 863 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.498 |
-| ns | 927 |  | 225 | readme.md lede + badges + screenshot | 1.10 |  | 0.451 |
-| ns | 1015 |  | 88 | readme.md Info section | 1.11 |  | 0.472 |
-| walker |  | 1123 | 260 | headings outline in readme.md |  |  | 0.474 |
-| walker |  | 1147 | 24 | readme.md section #30 |  |  | 0.474 |
-| walker |  | 1159 | 12 | readme.md section #6 |  |  | 0.474 |
-| walker |  | 1171 | 12 | readme.md section #7 |  |  | 0.474 |
-| ns | 1204 |  | 189 | package.json devDependencies | 2.2 |  | 0.445 |
-| walker |  | 1208 | 37 | readme.md section #31 |  |  | 0.445 |
-| walker |  | 1222 | 14 | readme.md section #17 |  |  | 0.445 |
-| walker |  | 1236 | 14 | readme.md section #18 |  |  | 0.445 |
-| walker |  | 1248 | 12 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.445 |
-| walker |  | 1260 | 12 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.445 |
-| walker |  | 1287 | 27 | listing of 'test' |  |  | 0.484 |
-| walker |  | 1303 | 16 | readme.md section #19 |  |  | 0.484 |
-| walker |  | 1370 | 67 | imports in source/index.js |  |  | 0.486 |
-| walker |  | 1412 | 42 | readme.md section #40 |  |  | 0.445 |
-| ns | 1412 |  | 208 | package.json xo lint rules + c8 coverage config | 2.3 |  | 0.445 |
-| walker |  | 1423 | 11 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.445 |
-| walker |  | 1434 | 11 | module item at source/vendor/supports-color/index.js:14 |  |  | 0.445 |
-| walker |  | 1453 | 19 | readme.md section #4 |  |  | 0.445 |
-| walker |  | 1471 | 18 | readme.md section #23 |  |  | 0.445 |
-| walker |  | 1488 | 17 | readme.md section #24 |  |  | 0.445 |
-| walker |  | 1603 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.446 |
-| walker |  | 1623 | 20 | readme.md section #20 |  |  | 0.446 |
-| walker |  | 1646 | 23 | readme.md section #21 |  |  | 0.446 |
-| walker |  | 1668 | 22 | readme.md section #22 |  |  | 0.446 |
-| ns | 1672 |  | 260 | CI workflow (.github/workflows/main.yml) | 2.4 |  | 0.404 |
-| walker |  | 1759 | 91 | readme.md section #2 |  |  | 0.443 |
-| walker |  | 1780 | 21 | readme.md section #37 |  |  | 0.443 |
-| ns | 1996 |  | 324 | index.d.ts imports + Options interface + Chalk const | 3.1 |  | 0.407 |
-| walker |  | 2011 | 231 | package identity metadata in package.json |  |  | 0.424 |
-| ns | 2153 |  | 157 | ChalkInstance call signature + level property | 3.2 |  | 0.405 |
-| walker |  | 2188 | 177 | package entrypoints in package.json |  |  | 0.488 |
-| walker |  | 2232 | 44 | package runtime metadata in package.json |  |  | 0.494 |
-| ns | 2258 |  | 105 | ChalkInstance.rgb method (full doc example) | 3.3 |  | 0.479 |
-| walker |  | 2279 | 47 | package scripts in package.json |  |  | 0.505 |
-| ns | 2310 |  | 52 | ChalkInstance remaining model-setter signatures (locations) | 3.4 | 3.3 | 0.498 |
-| ns | 2414 |  | 104 | ChalkInstance modifier roster (locations) | 3.5 |  | 0.485 |
-| walker |  | 2429 | 150 | readme.md section #27 |  |  | 0.485 |
-| walker |  | 2456 | 27 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.485 |
-| walker |  | 2484 | 28 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.485 |
-| walker |  | 2541 | 57 | export body at source/vendor/supports-color/index.js:176 body 177 |  |  | 0.486 |
-| walker |  | 2571 | 30 | readme.md section #25 |  |  | 0.486 |
-| ns | 2597 |  | 183 | ChalkInstance color + background-color roster (locations, +ellipsis for bright variants) | 3.6 |  | 0.461 |
-| walker |  | 2601 | 30 | readme.md section #26 |  |  | 0.461 |
-| walker |  | 2771 | 170 | readme.md section #28 |  |  | 0.461 |
-| ns | 2890 |  | 293 | index.d.ts module-level exports (chalk, supportsColor, chalkStderr, re-exports) | 3.7 |  | 0.434 |
-| walker |  | 2911 | 140 | readme.md section #1 |  |  | 0.434 |
-| walker |  | 2945 | 34 | readme.md section #11 |  |  | 0.434 |
-| walker |  | 2979 | 34 | readme.md section #13 |  |  | 0.434 |
-| ns | 3013 |  | 123 | index.d.ts deprecated aliases + default export (locations) | 3.8 |  | 0.426 |
-| walker |  | 3025 | 46 | export names surface in source/utilities.js |  |  | 0.426 |
-| walker |  | 3025 | 0 | export at source/utilities.js:2 |  |  | 0.426 |
-| walker |  | 3025 | 0 | export at source/utilities.js:21 |  |  | 0.426 |
-| walker |  | 3034 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.444 |
-| walker |  | 3048 | 14 | module item at source/vendor/ansi-styles/index.js:1 |  |  | 0.444 |
-| walker |  | 3061 | 13 | module item at source/vendor/ansi-styles/index.js:221 |  |  | 0.444 |
-| ns | 3093 |  | 80 | index.js top-level function map (locations) | 4.0 |  | 0.459 |
-| walker |  | 3135 | 74 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.459 |
-| walker |  | 3135 | 0 | export at source/vendor/ansi-styles/index.js:223 |  |  | 0.459 |
-| walker |  | 3144 | 9 | export at source/vendor/ansi-styles/index.js:73 |  |  | 0.459 |
-| walker |  | 3175 | 31 | module item at source/vendor/ansi-styles/index.js:3 |  |  | 0.459 |
-| walker |  | 3211 | 36 | module item at source/vendor/ansi-styles/index.js:5 |  |  | 0.459 |
-| walker |  | 3260 | 49 | module item at source/vendor/ansi-styles/index.js:7 |  |  | 0.459 |
-| walker |  | 3297 | 37 | readme.md section #15 |  |  | 0.459 |
-| walker |  | 3312 | 15 | imports in benchmark.js |  |  | 0.459 |
-| ns | 3321 |  | 228 | index.js imports + module setup | 4.1 |  | 0.480 |
-| walker |  | 3354 | 42 | readme.md section #8 |  |  | 0.480 |
-| walker |  | 3446 | 92 | code-of-conduct.md section #6 |  |  | 0.480 |
-| ns | 3448 |  | 127 | applyOptions: level validation + auto-detection | 4.2 | 4.0 | 0.491 |
-| walker |  | 3500 | 54 | readme.md section #5 |  |  | 0.491 |
-| walker |  | 3546 | 46 | readme.md section #36 |  |  | 0.491 |
-| ns | 3612 |  | 164 | Chalk class + chalkFactory/createChalk + prototype wiring | 4.3 | 4.0 | 0.498 |
-| walker |  | 3733 | 187 | package dependencies in package.json |  |  | 0.529 |
-| ns | 3766 |  | 154 | createStyler: open/close code chain accumulation | 4.4 | 4.0 | 0.514 |
-| walker |  | 3834 | 101 | code-of-conduct.md section #1 |  |  | 0.514 |
-| walker |  | 3945 | 111 | code-of-conduct.md section #4 |  |  | 0.514 |
-| ns | 3969 |  | 203 | createBuilder: the callable-function-per-style-chain shape | 4.5 | 4.0 | 0.502 |
-| walker |  | 4003 | 58 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.503 |
-| walker |  | 4057 | 54 | readme.md section #14 |  |  | 0.503 |
-| walker |  | 4093 | 36 | imports in source/vendor/supports-color/index.js |  |  | 0.503 |
-| walker |  | 4104 | 11 | export names surface in source/vendor/supports-color/browser.js |  |  | 0.503 |
-| walker |  | 4160 | 56 | readme.md section #32 |  |  | 0.503 |
-| walker |  | 4238 | 78 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.503 |
-| walker |  | 4246 | 8 | listing of 'examples' |  |  | 0.515 |
-| ns | 4387 |  | 418 | applyStyle: nesting, re-open, and CRLF-bleed fix | 4.6 | 4.0 | 0.491 |
-| ns | 4579 |  | 192 | Per-style property getters (ansiStyles loop + visible) | 4.7 |  | 0.480 |
-| ns | 4791 |  | 212 | getModelAnsi: rgb/hex/ansi256 → ANSI code dispatch | 4.8 | 4.0 | 0.469 |
-| ns | 5102 |  | 311 | rgb/hex/ansi256 (+bg variants) property getters | 4.9 |  | 0.455 |
-| ns | 5209 |  | 107 | Shared prototype + level get/set accessor | 4.10 |  | 0.449 |
-| ns | 5438 |  | 229 | Instance wiring + module exports | 4.11 |  | 0.442 |
-| ns | 5652 |  | 214 | stringReplaceAll | 5.1 |  | 0.433 |
-| ns | 5832 |  | 180 | stringEncaseCRLFWithFirstIndex | 5.2 |  | 0.427 |
-| walker |  | 5954 | 1708 | export body at source/vendor/ansi-styles/index.js:73 body 74 |  |  | 0.428 |
-| walker |  | 6027 | 73 | readme.md section #9 |  |  | 0.428 |
-| walker |  | 6114 | 87 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.428 |
-| ns | 6533 |  | 701 | test/chalk.js — base call, casting, chaining, nesting | 6.1 |  | 0.410 |
-| ns | 6772 |  | 239 | test/chalk.js — reset + line-break re-opening (LF and CRLF) | 6.2 |  | 0.407 |
-| walker |  | 6900 | 786 | module item at source/vendor/ansi-styles/index.js:9 |  |  | 0.409 |
-| walker |  | 6981 | 81 | readme.md section #10 |  |  | 0.409 |
-| walker |  | 7124 | 143 | code-of-conduct.md section #3 |  |  | 0.409 |
-| walker |  | 7191 | 67 | readme.md section #34 |  |  | 0.409 |
-| walker |  | 7256 | 65 | readme.md section #35 |  |  | 0.409 |
-| walker |  | 7324 | 68 | readme.md section #33 |  |  | 0.409 |
-| walker |  | 7335 | 11 | listing of '.github' |  |  | 0.419 |
-| walker |  | 7339 | 4 | listing of '.github/workflows' |  |  | 0.423 |
-| ns | 7341 |  | 569 | test/chalk.js — RGB/hex downsampling per level + chalkStderr | 6.3 |  | 0.411 |
-| walker |  | 7599 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.455 |
+| walker |  | 783 | 8 | listing of 'examples' |  |  | 0.502 |
+| walker |  | 843 | 60 | module item body at source/index.js:41 body 42 |  |  | 0.503 |
+| walker |  | 854 | 11 | listing of '.github' |  |  | 0.543 |
+| walker |  | 882 | 28 | export names surface in source/vendor/supports-color/index.js |  |  | 0.543 |
+| walker |  | 882 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.543 |
+| walker |  | 886 | 4 | listing of '.github/workflows' |  |  | 0.562 |
+| ns | 927 |  | 225 | readme.md lede + badges + screenshot | 1.10 |  | 0.509 |
+| ns | 1015 |  | 88 | readme.md Info section | 1.11 |  | 0.526 |
+| walker |  | 1146 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.537 |
+| ns | 1204 |  | 189 | package.json devDependencies | 2.2 |  | 0.504 |
+| walker |  | 1406 | 260 | headings outline in readme.md |  |  | 0.506 |
+| ns | 1412 |  | 208 | package.json xo lint rules + c8 coverage config | 2.3 |  | 0.464 |
+| walker |  | 1430 | 24 | readme.md section #30 |  |  | 0.464 |
+| walker |  | 1442 | 12 | readme.md section #6 |  |  | 0.464 |
+| walker |  | 1454 | 12 | readme.md section #7 |  |  | 0.464 |
+| walker |  | 1491 | 37 | readme.md section #31 |  |  | 0.464 |
+| walker |  | 1505 | 14 | readme.md section #17 |  |  | 0.464 |
+| walker |  | 1519 | 14 | readme.md section #18 |  |  | 0.464 |
+| walker |  | 1531 | 12 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.464 |
+| walker |  | 1543 | 12 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.464 |
+| walker |  | 1570 | 27 | listing of 'test' |  |  | 0.521 |
+| walker |  | 1586 | 16 | readme.md section #19 |  |  | 0.521 |
+| walker |  | 1653 | 67 | imports in source/index.js |  |  | 0.523 |
+| ns | 1672 |  | 260 | CI workflow (.github/workflows/main.yml) | 2.4 |  | 0.591 |
+| walker |  | 1695 | 42 | readme.md section #40 |  |  | 0.591 |
+| walker |  | 1706 | 11 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.591 |
+| walker |  | 1717 | 11 | module item at source/vendor/supports-color/index.js:14 |  |  | 0.591 |
+| walker |  | 1736 | 19 | readme.md section #4 |  |  | 0.591 |
+| walker |  | 1754 | 18 | readme.md section #23 |  |  | 0.591 |
+| walker |  | 1771 | 17 | readme.md section #24 |  |  | 0.591 |
+| walker |  | 1886 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.593 |
+| walker |  | 1906 | 20 | readme.md section #20 |  |  | 0.593 |
+| walker |  | 1929 | 23 | readme.md section #21 |  |  | 0.593 |
+| walker |  | 1951 | 22 | readme.md section #22 |  |  | 0.593 |
+| ns | 1996 |  | 324 | index.d.ts imports + Options interface + Chalk const | 3.1 |  | 0.544 |
+| walker |  | 2042 | 91 | readme.md section #2 |  |  | 0.574 |
+| walker |  | 2063 | 21 | readme.md section #37 |  |  | 0.574 |
+| ns | 2153 |  | 157 | ChalkInstance call signature + level property | 3.2 |  | 0.549 |
+| ns | 2258 |  | 105 | ChalkInstance.rgb method (full doc example) | 3.3 |  | 0.532 |
+| walker |  | 2294 | 231 | package identity metadata in package.json |  |  | 0.546 |
+| ns | 2310 |  | 52 | ChalkInstance remaining model-setter signatures (locations) | 3.4 | 3.3 | 0.539 |
+| ns | 2414 |  | 104 | ChalkInstance modifier roster (locations) | 3.5 |  | 0.525 |
+| walker |  | 2471 | 177 | package entrypoints in package.json |  |  | 0.594 |
+| walker |  | 2515 | 44 | package runtime metadata in package.json |  |  | 0.599 |
+| walker |  | 2562 | 47 | package scripts in package.json |  |  | 0.621 |
+| ns | 2597 |  | 183 | ChalkInstance color + background-color roster (locations, +ellipsis for bright variants) | 3.6 |  | 0.589 |
+| walker |  | 2712 | 150 | readme.md section #27 |  |  | 0.589 |
+| walker |  | 2739 | 27 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.589 |
+| walker |  | 2767 | 28 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.589 |
+| walker |  | 2824 | 57 | export body at source/vendor/supports-color/index.js:176 body 177 |  |  | 0.589 |
+| walker |  | 2854 | 30 | readme.md section #25 |  |  | 0.589 |
+| walker |  | 2884 | 30 | readme.md section #26 |  |  | 0.589 |
+| ns | 2890 |  | 293 | index.d.ts module-level exports (chalk, supportsColor, chalkStderr, re-exports) | 3.7 |  | 0.555 |
+| ns | 3013 |  | 123 | index.d.ts deprecated aliases + default export (locations) | 3.8 |  | 0.545 |
+| walker |  | 3054 | 170 | readme.md section #28 |  |  | 0.545 |
+| ns | 3093 |  | 80 | index.js top-level function map (locations) | 4.0 |  | 0.555 |
+| walker |  | 3194 | 140 | readme.md section #1 |  |  | 0.555 |
+| walker |  | 3228 | 34 | readme.md section #11 |  |  | 0.555 |
+| walker |  | 3262 | 34 | readme.md section #13 |  |  | 0.555 |
+| walker |  | 3308 | 46 | export names surface in source/utilities.js |  |  | 0.555 |
+| walker |  | 3308 | 0 | export at source/utilities.js:2 |  |  | 0.555 |
+| walker |  | 3308 | 0 | export at source/utilities.js:21 |  |  | 0.555 |
+| walker |  | 3317 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.573 |
+| ns | 3321 |  | 228 | index.js imports + module setup | 4.1 |  | 0.584 |
+| walker |  | 3331 | 14 | module item at source/vendor/ansi-styles/index.js:1 |  |  | 0.584 |
+| walker |  | 3344 | 13 | module item at source/vendor/ansi-styles/index.js:221 |  |  | 0.584 |
+| walker |  | 3418 | 74 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.584 |
+| walker |  | 3418 | 0 | export at source/vendor/ansi-styles/index.js:223 |  |  | 0.584 |
+| walker |  | 3427 | 9 | export at source/vendor/ansi-styles/index.js:73 |  |  | 0.584 |
+| ns | 3448 |  | 127 | applyOptions: level validation + auto-detection | 4.2 | 4.0 | 0.592 |
+| walker |  | 3458 | 31 | module item at source/vendor/ansi-styles/index.js:3 |  |  | 0.592 |
+| walker |  | 3494 | 36 | module item at source/vendor/ansi-styles/index.js:5 |  |  | 0.592 |
+| walker |  | 3543 | 49 | module item at source/vendor/ansi-styles/index.js:7 |  |  | 0.592 |
+| walker |  | 3580 | 37 | readme.md section #15 |  |  | 0.592 |
+| walker |  | 3595 | 15 | imports in benchmark.js |  |  | 0.592 |
+| ns | 3612 |  | 164 | Chalk class + chalkFactory/createChalk + prototype wiring | 4.3 | 4.0 | 0.593 |
+| walker |  | 3637 | 42 | readme.md section #8 |  |  | 0.593 |
+| walker |  | 3729 | 92 | code-of-conduct.md section #6 |  |  | 0.593 |
+| ns | 3766 |  | 154 | createStyler: open/close code chain accumulation | 4.4 | 4.0 | 0.576 |
+| walker |  | 3783 | 54 | readme.md section #5 |  |  | 0.576 |
+| walker |  | 3829 | 46 | readme.md section #36 |  |  | 0.576 |
+| ns | 3969 |  | 203 | createBuilder: the callable-function-per-style-chain shape | 4.5 | 4.0 | 0.563 |
+| walker |  | 4016 | 187 | package dependencies in package.json |  |  | 0.591 |
+| walker |  | 4117 | 101 | code-of-conduct.md section #1 |  |  | 0.591 |
+| walker |  | 4228 | 111 | code-of-conduct.md section #4 |  |  | 0.591 |
+| walker |  | 4286 | 58 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.592 |
+| walker |  | 4340 | 54 | readme.md section #14 |  |  | 0.592 |
+| walker |  | 4376 | 36 | imports in source/vendor/supports-color/index.js |  |  | 0.592 |
+| walker |  | 4387 | 11 | export names surface in source/vendor/supports-color/browser.js |  |  | 0.564 |
+| ns | 4387 |  | 418 | applyStyle: nesting, re-open, and CRLF-bleed fix | 4.6 | 4.0 | 0.564 |
+| walker |  | 4443 | 56 | readme.md section #32 |  |  | 0.564 |
+| walker |  | 4521 | 78 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.565 |
+| ns | 4579 |  | 192 | Per-style property getters (ansiStyles loop + visible) | 4.7 |  | 0.552 |
+| ns | 4791 |  | 212 | getModelAnsi: rgb/hex/ansi256 → ANSI code dispatch | 4.8 | 4.0 | 0.539 |
+| ns | 5102 |  | 311 | rgb/hex/ansi256 (+bg variants) property getters | 4.9 |  | 0.523 |
+| ns | 5209 |  | 107 | Shared prototype + level get/set accessor | 4.10 |  | 0.516 |
+| ns | 5438 |  | 229 | Instance wiring + module exports | 4.11 |  | 0.506 |
+| ns | 5652 |  | 214 | stringReplaceAll | 5.1 |  | 0.496 |
+| ns | 5832 |  | 180 | stringEncaseCRLFWithFirstIndex | 5.2 |  | 0.490 |
+| walker |  | 6229 | 1708 | export body at source/vendor/ansi-styles/index.js:73 body 74 |  |  | 0.490 |
+| walker |  | 6302 | 73 | readme.md section #9 |  |  | 0.490 |
+| walker |  | 6389 | 87 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.491 |
+| ns | 6533 |  | 701 | test/chalk.js — base call, casting, chaining, nesting | 6.1 |  | 0.470 |
+| ns | 6772 |  | 239 | test/chalk.js — reset + line-break re-opening (LF and CRLF) | 6.2 |  | 0.466 |
+| walker |  | 7175 | 786 | module item at source/vendor/ansi-styles/index.js:9 |  |  | 0.468 |
+| walker |  | 7256 | 81 | readme.md section #10 |  |  | 0.468 |
+| ns | 7341 |  | 569 | test/chalk.js — RGB/hex downsampling per level + chalkStderr | 6.3 |  | 0.455 |
+| walker |  | 7399 | 143 | code-of-conduct.md section #3 |  |  | 0.455 |
+| walker |  | 7466 | 67 | readme.md section #34 |  |  | 0.455 |
+| walker |  | 7531 | 65 | readme.md section #35 |  |  | 0.455 |
+| walker |  | 7599 | 68 | readme.md section #33 |  |  | 0.455 |
 | ns | 7659 |  | 318 | test/instance.js — isolated per-instance level | 6.4 |  | 0.446 |
 | walker |  | 7762 | 163 | code-of-conduct.md section #5 |  |  | 0.446 |
 | walker |  | 7775 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.446 |

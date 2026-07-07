@@ -1,4 +1,4 @@
-Score(3000)=0.548 I=0.820 C=0.366 ns_rows≤3K=21/45 (reached=9 partial=2 missing=10)
+Score(3000)=0.557 I=0.828 C=0.374 ns_rows≤3K=21/45 (reached=9 partial=3 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,58 +26,58 @@ Score(3000)=0.548 I=0.820 C=0.366 ns_rows≤3K=21/45 (reached=9 partial=2 missin
 | ns | 835 |  | 91 | impl/src/lib.rs — module list | 1.13 |  | 0.421 |
 | walker |  | 912 | 166 | [features] in Cargo.toml |  |  | 0.537 |
 | walker |  | 984 | 72 | listing of 'tests' |  |  | 0.636 |
-| walker |  | 1031 | 47 | listing of 'impl/src' |  |  | 0.777 |
-| walker |  | 1073 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.777 |
-| ns | 1087 |  | 252 | impl/src/lib.rs — #[proc_macro_derive] entry point | 1.14 |  | 0.697 |
-| walker |  | 1108 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.702 |
-| walker |  | 1139 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.711 |
-| walker |  | 1272 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.777 |
-| ns | 1323 |  | 236 | src/lib.rs — module wiring epilogue | 1.15 |  | 0.710 |
-| walker |  | 1395 | 123 | manifest config in Cargo.toml |  |  | 0.710 |
-| walker |  | 1505 | 110 | [dependencies] in Cargo.toml |  |  | 0.720 |
-| walker |  | 1558 | 53 | [dependencies] in impl/Cargo.toml |  |  | 0.734 |
-| ns | 1600 |  | 277 | Crate-doc lede + canonical example | 2.1 |  | 0.672 |
-| walker |  | 1754 | 196 | README.md section #1 |  |  | 0.672 |
-| walker |  | 1784 | 30 | README.md section #3 |  |  | 0.672 |
-| walker |  | 1812 | 28 | pub-item names surface in src/provide.rs |  |  | 0.672 |
-| walker |  | 1840 | 28 | pub-item names surface in impl/src/unraw.rs |  |  | 0.672 |
-| walker |  | 1857 | 17 | pub item at impl/src/unraw.rs:12 |  |  | 0.672 |
-| walker |  | 1890 | 33 | pub item at impl/src/unraw.rs:82 |  |  | 0.672 |
-| ns | 1946 |  | 346 | Display-shorthand table + #[from] rule statement | 2.2 |  | 0.635 |
-| walker |  | 2034 | 144 | manifest config in impl/Cargo.toml |  |  | 0.635 |
-| walker |  | 2063 | 29 | pub-item names surface in src/display.rs |  |  | 0.635 |
-| walker |  | 2092 | 29 | pub-item names surface in impl/src/generics.rs |  |  | 0.635 |
-| walker |  | 2110 | 18 | pub item at impl/src/generics.rs:8 |  |  | 0.635 |
-| walker |  | 2151 | 41 | pub item at impl/src/generics.rs:48 |  |  | 0.635 |
-| ns | 2173 |  | 227 | #[from] example + #[source] rule statement | 2.3 |  | 0.610 |
-| walker |  | 2181 | 30 | pub-item names surface in src/aserror.rs |  |  | 0.610 |
-| walker |  | 2225 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.610 |
-| walker |  | 2225 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.610 |
-| walker |  | 2225 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.610 |
-| ns | 2267 |  | 94 | provide()/backtrace rule statement | 2.4 |  | 0.602 |
-| walker |  | 2310 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.602 |
-| walker |  | 2432 | 122 | [package] in impl/Cargo.toml |  |  | 0.629 |
-| ns | 2451 |  | 184 | #[error(transparent)] rule + 'anything else' variant example | 2.5 |  | 0.605 |
-| walker |  | 2491 | 59 | README.md section #11 |  |  | 0.605 |
-| walker |  | 2542 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.605 |
-| walker |  | 2595 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.605 |
-| walker |  | 2651 | 56 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.605 |
-| walker |  | 2723 | 72 | README.md section #2 |  |  | 0.605 |
-| walker |  | 2853 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.605 |
-| ns | 2912 |  | 461 | src/aserror.rs — AsDynError trait + impls | 3.1 |  | 0.548 |
-| walker |  | 2931 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.548 |
-| walker |  | 2957 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.548 |
-| walker |  | 3020 | 63 | pub item at impl/src/ast.rs:45 |  |  | 0.549 |
-| walker |  | 3073 | 53 | pub item at impl/src/ast.rs:15 |  |  | 0.549 |
-| ns | 3079 |  | 167 | src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated) | 3.2 |  | 0.531 |
-| walker |  | 3126 | 53 | pub item at impl/src/ast.rs:29 |  |  | 0.532 |
-| walker |  | 3180 | 54 | pub item at impl/src/ast.rs:22 |  |  | 0.533 |
-| walker |  | 3245 | 65 | pub item at impl/src/ast.rs:36 |  |  | 0.534 |
-| walker |  | 3342 | 97 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.535 |
-| ns | 3354 |  | 275 | src/private.rs (re-export surface) + src/var.rs (Var pointer wrapper) | 3.3 |  | 0.512 |
-| walker |  | 3419 | 77 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.512 |
-| walker |  | 3427 | 8 | listing of '.github' |  |  | 0.515 |
-| walker |  | 3431 | 4 | listing of '.github/workflows' |  |  | 0.520 |
+| walker |  | 992 | 8 | listing of '.github' |  |  | 0.643 |
+| walker |  | 1039 | 47 | listing of 'impl/src' |  |  | 0.784 |
+| walker |  | 1081 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.784 |
+| ns | 1087 |  | 252 | impl/src/lib.rs — #[proc_macro_derive] entry point | 1.14 |  | 0.703 |
+| walker |  | 1116 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.709 |
+| walker |  | 1147 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.717 |
+| walker |  | 1280 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.783 |
+| walker |  | 1284 | 4 | listing of '.github/workflows' |  |  | 0.791 |
+| ns | 1323 |  | 236 | src/lib.rs — module wiring epilogue | 1.15 |  | 0.722 |
+| walker |  | 1407 | 123 | manifest config in Cargo.toml |  |  | 0.722 |
+| walker |  | 1517 | 110 | [dependencies] in Cargo.toml |  |  | 0.732 |
+| walker |  | 1570 | 53 | [dependencies] in impl/Cargo.toml |  |  | 0.747 |
+| ns | 1600 |  | 277 | Crate-doc lede + canonical example | 2.1 |  | 0.684 |
+| walker |  | 1766 | 196 | README.md section #1 |  |  | 0.684 |
+| walker |  | 1796 | 30 | README.md section #3 |  |  | 0.684 |
+| walker |  | 1824 | 28 | pub-item names surface in src/provide.rs |  |  | 0.684 |
+| walker |  | 1852 | 28 | pub-item names surface in impl/src/unraw.rs |  |  | 0.684 |
+| walker |  | 1869 | 17 | pub item at impl/src/unraw.rs:12 |  |  | 0.684 |
+| walker |  | 1902 | 33 | pub item at impl/src/unraw.rs:82 |  |  | 0.684 |
+| ns | 1946 |  | 346 | Display-shorthand table + #[from] rule statement | 2.2 |  | 0.646 |
+| walker |  | 2046 | 144 | manifest config in impl/Cargo.toml |  |  | 0.646 |
+| walker |  | 2075 | 29 | pub-item names surface in src/display.rs |  |  | 0.646 |
+| walker |  | 2104 | 29 | pub-item names surface in impl/src/generics.rs |  |  | 0.646 |
+| walker |  | 2122 | 18 | pub item at impl/src/generics.rs:8 |  |  | 0.646 |
+| walker |  | 2163 | 41 | pub item at impl/src/generics.rs:48 |  |  | 0.646 |
+| ns | 2173 |  | 227 | #[from] example + #[source] rule statement | 2.3 |  | 0.620 |
+| walker |  | 2193 | 30 | pub-item names surface in src/aserror.rs |  |  | 0.620 |
+| walker |  | 2237 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.620 |
+| walker |  | 2237 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.620 |
+| walker |  | 2237 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.620 |
+| ns | 2267 |  | 94 | provide()/backtrace rule statement | 2.4 |  | 0.612 |
+| walker |  | 2322 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.612 |
+| walker |  | 2444 | 122 | [package] in impl/Cargo.toml |  |  | 0.639 |
+| ns | 2451 |  | 184 | #[error(transparent)] rule + 'anything else' variant example | 2.5 |  | 0.615 |
+| walker |  | 2503 | 59 | README.md section #11 |  |  | 0.615 |
+| walker |  | 2554 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.615 |
+| walker |  | 2607 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.615 |
+| walker |  | 2663 | 56 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.615 |
+| walker |  | 2735 | 72 | README.md section #2 |  |  | 0.615 |
+| walker |  | 2865 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.615 |
+| ns | 2912 |  | 461 | src/aserror.rs — AsDynError trait + impls | 3.1 |  | 0.556 |
+| walker |  | 2943 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.556 |
+| walker |  | 2969 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.557 |
+| walker |  | 3032 | 63 | pub item at impl/src/ast.rs:45 |  |  | 0.557 |
+| ns | 3079 |  | 167 | src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated) | 3.2 |  | 0.538 |
+| walker |  | 3085 | 53 | pub item at impl/src/ast.rs:15 |  |  | 0.539 |
+| walker |  | 3138 | 53 | pub item at impl/src/ast.rs:29 |  |  | 0.540 |
+| walker |  | 3192 | 54 | pub item at impl/src/ast.rs:22 |  |  | 0.541 |
+| walker |  | 3257 | 65 | pub item at impl/src/ast.rs:36 |  |  | 0.543 |
+| walker |  | 3354 | 97 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.520 |
+| ns | 3354 |  | 275 | src/private.rs (re-export surface) + src/var.rs (Var pointer wrapper) | 3.3 |  | 0.520 |
+| walker |  | 3431 | 77 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.520 |
 | ns | 3644 |  | 290 | src/display.rs — AsDisplay trait + Path Display impl | 3.4 |  | 0.495 |
 | walker |  | 3959 | 528 | listing of 'tests/ui' |  |  | 0.498 |
 | walker |  | 3980 | 21 | pub item at impl/src/scan_expr.rs:192 |  |  | 0.499 |

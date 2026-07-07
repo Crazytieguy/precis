@@ -3,6 +3,56 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    FUNDING.yml
+    ISSUE_TEMPLATE/
+    SECURITY.md
+    dependabot.yml
+    pull_request_template.md
+    workflows/
+        publish.yml
+        test.yml
+               1→name: test suite
+               2→
+               3→on:
+               4→  push:
+               5→    branches: [master]
+               6→  pull_request:
+               7→
+               8→jobs:
+               9→  test:
+              10→    strategy:
+              11→      fail-fast: false
+              12→      matrix:
+              13→        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14", pypy-3.11]
+              14→    runs-on: ubuntu-latest
+              15→    steps:
+              16→    - uses: actions/checkout@v6
+              17→    - name: Set up Python ${{ matrix.python-version }}
+              18→      uses: actions/setup-python@v6
+              19→      with:
+              20→        python-version: ${{ matrix.python-version }}
+              21→        allow-prereleases: true
+              22→        cache: pip
+              23→        cache-dependency-path: pyproject.toml
+              24→    - name: Ensure pip >= v25.1
+              25→      run: python -m pip install "pip >= 25.1"
+              26→    - name: Install the project and its dependencies
+              27→      run: pip install --group test -e .
+              28→    - name: Test with pytest
+              29→      run: coverage run -m pytest
+              30→    - name: Upload Coverage
+              31→      uses: coverallsapp/github-action@v2
+              32→      with:
+              33→        parallel: true
+              34→
+              35→  coveralls:
+              36→    name: Finish Coveralls
+              37→    needs: test
+              38→    runs-on: ubuntu-latest
+              39→    steps:
+              40→    - uses: coverallsapp/github-action@v2
+              41→      with:
+              42→        parallel-finished: true
 .gitignore
 .pre-commit-config.yaml
 .readthedocs.yml
@@ -110,103 +160,6 @@ src/
               43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
             …
         _checkers.py
-            …
-              81→TypeCheckerCallable: TypeAlias = Callable[
-              82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
-              83→]
-              84→TypeCheckLookupCallback: TypeAlias = Callable[
-              85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
-              86→]
-              88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
-              89→generic_alias_types: tuple[type, ...] = (
-              90→    type(List),
-              91→    type(List[Any]),
-              92→    types.GenericAlias,
-              93→)
-            …
-              96→_missing = object()
-            …
-              99→BINARY_MAGIC_METHODS = {
-            …
-             153→def check_callable(
-             154→    value: Any,
-             155→    origin_type: Any,
-             156→    args: tuple[Any, ...],
-             157→    memo: TypeCheckMemo,
-             158→) -> None:
-            …
-             212→def check_mapping(
-             213→    value: Any,
-             214→    origin_type: Any,
-             215→    args: tuple[Any, ...],
-             216→    memo: TypeCheckMemo,
-             217→) -> None:
-            …
-             247→def check_typed_dict(
-             248→    value: Any,
-             249→    origin_type: Any,
-             250→    args: tuple[Any, ...],
-             251→    memo: TypeCheckMemo,
-             252→) -> None:
-            …
-             305→def check_list(
-            …
-             324→def check_sequence(
-            …
-             343→def check_set(
-            …
-             365→def check_tuple(
-            …
-             423→def check_union(
-            …
-             447→def check_uniontype(
-            …
-             474→def check_class(
-            …
-             536→def check_newtype(
-            …
-             545→def check_instance(
-            …
-             555→def check_typevar(
-            …
-             586→def _is_literal_type(typ: object) -> bool:
-            …
-             590→def check_literal(
-            …
-             623→def check_literal_string(
-            …
-             632→def check_typeguard(
-            …
-             641→def check_none(
-            …
-             651→def check_number(
-            …
-             663→def check_io(
-            …
-             679→def check_signature_compatible(subject: type, protocol: type, attrname: str) -> None:
-            …
-             834→def check_protocol(
-            …
-             885→def check_byteslike(
-            …
-             895→def check_self(
-            …
-             915→def check_paramspec(
-            …
-             924→def check_type_internal(
-             925→    value: Any,
-             926→    annotation: Any,
-             927→    memo: TypeCheckMemo,
-             928→) -> None:
-            …
-            1005→origin_type_checkers: dict[
-            …
-            1061→def builtin_checker_lookup(
-            1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
-            1063→) -> TypeCheckerCallable | None:
-            …
-            1099→def load_plugins() -> None:
-            …
         _config.py
             …
               11→T = TypeVar("T")

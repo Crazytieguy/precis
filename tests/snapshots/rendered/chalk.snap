@@ -5,6 +5,36 @@ expression: rendered
 .editorconfig
 .gitattributes
 .github/
+    funding.yml
+    security.md
+    workflows/
+        main.yml
+               1→name: CI
+               2→on:
+               3→  - push
+               4→  - pull_request
+               5→jobs:
+               6→  test:
+               7→    name: Node.js ${{ matrix.node-version }}
+               8→    runs-on: ubuntu-latest
+               9→    strategy:
+              10→      fail-fast: false
+              11→      matrix:
+              12→        node-version:
+              13→          - 18
+              14→          - 16
+              15→          - 14
+              16→    steps:
+              17→      - uses: actions/checkout@v4
+              18→      - uses: actions/setup-node@v4
+              19→        with:
+              20→          node-version: ${{ matrix.node-version }}
+              21→      - run: npm install
+              22→      - run: npm test
+              23→      - uses: codecov/codecov-action@v2
+              24→        if: matrix.node-version == 16
+              25→        with:
+              26→          fail_ci_if_error: true
 .gitignore
 .npmrc
 benchmark.js
@@ -25,6 +55,8 @@ code-of-conduct.md
     …
 contributing.md
 examples/
+    rainbow.js
+    screenshot.js
 license
 media/
     logo.png
@@ -93,17 +125,7 @@ readme.md
       20→- [Why not switch to a smaller coloring package?](https://github.com/chalk/chalk?tab=readme-ov-file#why-not-switch-to-a-smaller-coloring-package)
       21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
       23→## Highlights
-      24→
-      25→- Expressive API
-      26→- Highly performant
-      27→- No dependencies
-      28→- Ability to nest styles
-      29→- [256/Truecolor color support](#256-and-truecolor-color-support)
-      30→- Auto-detects color support
-      31→- Doesn't extend `String.prototype`
-      32→- Clean and focused
-      33→- Actively maintained
-      34→- [Used by ~115,000 packages](https://www.npmjs.com/browse/depended/chalk) as of July 4, 2024
+    …
       36→## Install
       37→
       38→```sh
@@ -123,9 +145,7 @@ readme.md
      124→Specifies the level of color support.
     …
      143→### supportsColor
-     145→Detect whether the terminal [supports color](https://github.com/chalk/supports-color). Used internally and handled for you, but exposed for convenience.
     …
-     149→Explicit 256/Truecolor mode can be enabled using the `--color=256` and `--color=16m` flags, respectively.
      151→### chalkStderr and supportsColorStderr
     …
      155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
@@ -162,23 +182,7 @@ readme.md
      202→- `cyanBright`
      203→- `whiteBright`
      205→### Background colors
-     206→
-     207→- `bgBlack`
-     208→- `bgRed`
-     209→- `bgGreen`
-     210→- `bgYellow`
-     211→- `bgBlue`
-     212→- `bgMagenta`
-     213→- `bgCyan`
-     214→- `bgWhite`
-     215→- `bgBlackBright` (alias: `bgGray`, `bgGrey`)
-     216→- `bgRedBright`
-     217→- `bgGreenBright`
-     218→- `bgYellowBright`
-     219→- `bgBlueBright`
-     220→- `bgMagentaBright`
-     221→- `bgCyanBright`
-     222→- `bgWhiteBright`
+    …
      224→## 256 and Truecolor color support
     …
      246→## Browser support

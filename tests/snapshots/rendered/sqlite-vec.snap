@@ -3,6 +3,11 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    logos/
+    workflows/
+        release.yaml
+        site.yaml
+        test.yaml
 .gitignore
 ARCHITECTURE.md
        1→# `sqlite-vec` Architecture
@@ -222,6 +227,9 @@ reference.yaml
      329→  vec0:
     …
 scripts/
+    progress.ts
+    publish-release.sh
+    vendor.sh
 site/
     .gitignore
     .vitepress/

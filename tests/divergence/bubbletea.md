@@ -315,78 +315,79 @@ Score(3000)=0.512 I=0.807 C=0.325 ns_rows≤3K=16/48 (reached=5 partial=1 missin
 | walker |  | 7604 | 0 | go decl at termios_bsd.go:11 |  |  | 0.474 |
 | walker |  | 7629 | 25 | go decl names surface in termios_unix.go |  |  | 0.476 |
 | walker |  | 7629 | 0 | go decl at termios_unix.go:11 |  |  | 0.476 |
-| walker |  | 7659 | 30 | go decl doc at termcap.go:5 |  |  | 0.476 |
+| walker |  | 7641 | 12 | listing of '.github' |  |  | 0.476 |
+| walker |  | 7672 | 31 | listing of '.github/workflows' |  |  | 0.476 |
+| walker |  | 7702 | 30 | go decl doc at termcap.go:5 |  |  | 0.476 |
 | ns | 7792 |  | 195 | tea_test.go: TestTeaModel | 6.3 | 6.2 | 0.467 |
-| walker |  | 7805 | 146 | go struct field group at tea.go:84 group 179 |  |  | 0.471 |
-| walker |  | 7874 | 69 | go decl doc at screen.go:9 |  |  | 0.471 |
-| walker |  | 7901 | 27 | go decl doc at renderer.go:96 |  |  | 0.471 |
-| walker |  | 7962 | 61 | go decl doc at clipboard.go:54 |  |  | 0.471 |
-| walker |  | 8023 | 61 | go decl doc at clipboard.go:68 |  |  | 0.471 |
+| walker |  | 7848 | 146 | go struct field group at tea.go:84 group 179 |  |  | 0.471 |
+| walker |  | 7917 | 69 | go decl doc at screen.go:9 |  |  | 0.471 |
+| walker |  | 7944 | 27 | go decl doc at renderer.go:96 |  |  | 0.471 |
+| walker |  | 8005 | 61 | go decl doc at clipboard.go:54 |  |  | 0.471 |
 | ns | 8042 |  | 250 | examples/: full directory listing | 7.1 |  | 0.447 |
-| walker |  | 8221 | 198 | go decl names surface in exec.go |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:22 |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:50 |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:56 |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:69 |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:75 |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:78 |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:86 |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:94 |  |  | 0.448 |
-| walker |  | 8221 | 0 | go decl at exec.go:102 |  |  | 0.448 |
-| walker |  | 8264 | 43 | go decl at exec.go:60 |  |  | 0.448 |
-| walker |  | 8278 | 14 | go decl body at exec.go:50 |  |  | 0.448 |
-| walker |  | 8304 | 26 | go decl doc at exec.go:60 |  |  | 0.448 |
-| walker |  | 8326 | 22 | go decl at exec.go:10 |  |  | 0.448 |
+| walker |  | 8066 | 61 | go decl doc at clipboard.go:68 |  |  | 0.447 |
+| walker |  | 8264 | 198 | go decl names surface in exec.go |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:22 |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:50 |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:56 |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:69 |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:75 |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:78 |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:86 |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:94 |  |  | 0.448 |
+| walker |  | 8264 | 0 | go decl at exec.go:102 |  |  | 0.448 |
+| walker |  | 8307 | 43 | go decl at exec.go:60 |  |  | 0.448 |
+| walker |  | 8321 | 14 | go decl body at exec.go:50 |  |  | 0.448 |
 | ns | 8341 |  | 299 | examples/README.md: curated catalog excerpt | 7.2 |  | 0.439 |
+| walker |  | 8347 | 26 | go decl doc at exec.go:60 |  |  | 0.439 |
 | ns | 8355 |  | 14 | tutorials/: directory listing | 7.3 |  | 0.442 |
-| walker |  | 8363 | 37 | go decl doc at exec.go:56 |  |  | 0.442 |
-| walker |  | 8382 | 19 | go decl doc at exec.go:10 |  |  | 0.442 |
-| walker |  | 8400 | 18 | go decl doc at exec.go:78 |  |  | 0.442 |
-| walker |  | 8414 | 14 | go decl body at exec.go:69 |  |  | 0.442 |
-| walker |  | 8434 | 20 | go decl doc at exec.go:86 |  |  | 0.442 |
-| walker |  | 8455 | 21 | go decl doc at exec.go:94 |  |  | 0.442 |
-| walker |  | 8476 | 21 | go decl doc at exec.go:102 |  |  | 0.442 |
-| walker |  | 8508 | 32 | go decl body at exec.go:22 |  |  | 0.444 |
-| walker |  | 8536 | 28 | go decl doc at exec.go:75 |  |  | 0.444 |
-| walker |  | 8580 | 44 | go package + imports in exec.go |  |  | 0.444 |
+| walker |  | 8369 | 22 | go decl at exec.go:10 |  |  | 0.442 |
+| walker |  | 8406 | 37 | go decl doc at exec.go:56 |  |  | 0.442 |
+| walker |  | 8425 | 19 | go decl doc at exec.go:10 |  |  | 0.442 |
+| walker |  | 8443 | 18 | go decl doc at exec.go:78 |  |  | 0.442 |
+| walker |  | 8457 | 14 | go decl body at exec.go:69 |  |  | 0.442 |
+| walker |  | 8477 | 20 | go decl doc at exec.go:86 |  |  | 0.442 |
+| walker |  | 8498 | 21 | go decl doc at exec.go:94 |  |  | 0.442 |
+| walker |  | 8519 | 21 | go decl doc at exec.go:102 |  |  | 0.442 |
+| walker |  | 8551 | 32 | go decl body at exec.go:22 |  |  | 0.444 |
+| walker |  | 8579 | 28 | go decl doc at exec.go:75 |  |  | 0.444 |
+| walker |  | 8623 | 44 | go package + imports in exec.go |  |  | 0.444 |
 | ns | 8633 |  | 278 | examples/simple/main.go: main() | 7.4 |  | 0.435 |
-| walker |  | 8735 | 155 | go struct field group at tea.go:84 group 149 |  |  | 0.437 |
+| walker |  | 8778 | 155 | go struct field group at tea.go:84 group 149 |  |  | 0.437 |
 | ns | 8911 |  | 278 | UPGRADE_GUIDE_V2.md: intro + migration checklist | 8.1 |  | 0.432 |
-| walker |  | 8981 | 246 | headings outline in README.md |  |  | 0.432 |
-| walker |  | 8995 | 14 | README.md section #3 |  |  | 0.432 |
+| walker |  | 9024 | 246 | headings outline in README.md |  |  | 0.432 |
+| walker |  | 9038 | 14 | README.md section #3 |  |  | 0.432 |
 | ns | 9191 |  | 280 | UPGRADE_GUIDE_V2.md: View field table | 8.2 |  | 0.428 |
-| walker |  | 9246 | 251 | README.md section #0 |  |  | 0.444 |
-| walker |  | 9452 | 206 | go decl names surface in options.go |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:17 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:22 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:30 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:40 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:58 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:66 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:76 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:84 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:98 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:133 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:142 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:153 |  |  | 0.458 |
-| walker |  | 9452 | 0 | go decl at options.go:163 |  |  | 0.458 |
-| walker |  | 9476 | 24 | go decl doc at options.go:84 |  |  | 0.458 |
-| walker |  | 9510 | 34 | go decl doc at options.go:30 |  |  | 0.458 |
-| walker |  | 9547 | 37 | go decl doc at options.go:66 |  |  | 0.458 |
-| ns | 9561 |  | 370 | UPGRADE_GUIDE_V2.md: Key + Mouse field-rename tables | 8.3 |  | 0.451 |
-| walker |  | 9574 | 27 | go decl body at options.go:30 |  |  | 0.451 |
-| walker |  | 9601 | 27 | go decl body at options.go:58 |  |  | 0.451 |
-| walker |  | 9628 | 27 | go decl body at options.go:133 |  |  | 0.451 |
-| walker |  | 9656 | 28 | go decl body at options.go:22 |  |  | 0.451 |
-| walker |  | 9684 | 28 | go decl body at options.go:98 |  |  | 0.451 |
-| walker |  | 9712 | 28 | go decl body at options.go:142 |  |  | 0.451 |
-| walker |  | 9740 | 28 | go decl body at options.go:153 |  |  | 0.451 |
-| walker |  | 9769 | 29 | go decl body at options.go:66 |  |  | 0.451 |
-| walker |  | 9799 | 30 | go decl body at options.go:76 |  |  | 0.451 |
-| walker |  | 9834 | 35 | go decl body at options.go:84 |  |  | 0.451 |
-| walker |  | 9891 | 57 | go decl doc at options.go:22 |  |  | 0.451 |
-| walker |  | 9928 | 37 | go decl body at options.go:163 |  |  | 0.451 |
+| walker |  | 9289 | 251 | README.md section #0 |  |  | 0.444 |
+| walker |  | 9495 | 206 | go decl names surface in options.go |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:17 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:22 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:30 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:40 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:58 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:66 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:76 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:84 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:98 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:133 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:142 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:153 |  |  | 0.458 |
+| walker |  | 9495 | 0 | go decl at options.go:163 |  |  | 0.458 |
+| walker |  | 9519 | 24 | go decl doc at options.go:84 |  |  | 0.458 |
+| walker |  | 9553 | 34 | go decl doc at options.go:30 |  |  | 0.458 |
+| ns | 9561 |  | 370 | UPGRADE_GUIDE_V2.md: Key + Mouse field-rename tables | 8.3 |  | 0.452 |
+| walker |  | 9590 | 37 | go decl doc at options.go:66 |  |  | 0.452 |
+| walker |  | 9617 | 27 | go decl body at options.go:30 |  |  | 0.452 |
+| walker |  | 9644 | 27 | go decl body at options.go:58 |  |  | 0.452 |
+| walker |  | 9671 | 27 | go decl body at options.go:133 |  |  | 0.452 |
+| walker |  | 9699 | 28 | go decl body at options.go:22 |  |  | 0.452 |
+| walker |  | 9727 | 28 | go decl body at options.go:98 |  |  | 0.452 |
+| walker |  | 9755 | 28 | go decl body at options.go:142 |  |  | 0.452 |
+| walker |  | 9783 | 28 | go decl body at options.go:153 |  |  | 0.452 |
+| walker |  | 9812 | 29 | go decl body at options.go:66 |  |  | 0.452 |
+| walker |  | 9842 | 30 | go decl body at options.go:76 |  |  | 0.452 |
+| walker |  | 9877 | 35 | go decl body at options.go:84 |  |  | 0.452 |
+| walker |  | 9934 | 57 | go decl doc at options.go:22 |  |  | 0.452 |
 | ns | 9936 |  | 375 | Taskfile.yaml + .golangci.yml | 9.1 |  | 0.440 |
-| ns | 9985 |  | 49 | .github/ subdirectory listings | 9.3 |  | 0.437 |
-| walker |  | 9989 | 61 | go decl doc at options.go:40 |  |  | 0.437 |
-| ns | 9994 |  | 9 | LICENSE: license identification | 9.4 |  | 0.436 |
+| walker |  | 9971 | 37 | go decl body at options.go:163 |  |  | 0.440 |
+| ns | 9985 |  | 49 | .github/ subdirectory listings | 9.3 |  | 0.441 |
+| ns | 9994 |  | 9 | LICENSE: license identification | 9.4 |  | 0.441 |

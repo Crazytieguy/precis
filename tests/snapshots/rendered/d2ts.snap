@@ -3,7 +3,72 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .changeset/
+    README.md
+    config.json
 .github/
+    workflows/
+        ci.yml
+               1→name: CI & Release
+               2→
+               3→on:
+               4→  pull_request:
+               5→    branches: [ main ]
+               6→  push:
+               7→    branches: [ main ]
+               8→
+               9→concurrency:
+              10→  group: ${{ github.workflow }}-${{ github.ref }}
+              11→  cancel-in-progress: true
+              12→
+              13→jobs:
+              14→  build-test-release:
+              15→    name: Build, Test & Release
+              16→    runs-on: ubuntu-latest
+              17→    permissions:
+              18→      contents: write # to create release (changesets/action)
+              19→      pull-requests: write # to create pull request (changesets/action)
+              20→    steps:
+              21→      - name: Checkout Repo
+              22→        uses: actions/checkout@v4
+              23→        with:
+              24→          fetch-depth: 0
+              25→
+              26→      - name: Setup Node.js
+              27→        uses: actions/setup-node@v4
+              28→        with:
+              29→          node-version: 20
+              30→
+              31→      - name: Setup pnpm
+              32→        uses: pnpm/action-setup@v3
+              33→        with:
+              34→          version: 8
+              35→          run_install: false
+              36→
+              37→      - name: Get pnpm store directory
+              38→        shell: bash
+              39→        run: |
+              40→          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+              41→
+              42→      - name: Setup pnpm cache
+              43→        uses: actions/cache@v4
+              44→        with:
+              45→          path: ${{ env.STORE_PATH }}
+              46→          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+              47→          restore-keys: |
+              48→            ${{ runner.os }}-pnpm-store-
+              49→
+              50→      - name: Configure npm
+              51→        run: |
+              52→          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+              53→          echo "@electric-sql:registry=https://registry.npmjs.org/" >> ~/.npmrc
+              54→        env:
+              55→          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              56→
+              57→      - name: Install dependencies
+              58→        run: pnpm install
+              59→        
+              60→      - name: Build packages
+            …
 .gitignore
 .prettierrc.cjs
 LICENSE
@@ -123,29 +188,6 @@ packages/
         eslint.config.mjs
         package.json
         src/
-            compiler.ts
-            evaluators.ts
-            extractors.ts
-            functions.ts
-            group-by.ts
-            index.ts
-                   1→/**
-                   2→ * D2QL is a SQL-like query language for D2TS.
-                   3→ * It's a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2 pipeline.
-                   4→ */
-                …
-            joins.ts
-            key-by.ts
-            order-by.ts
-            query-builder/
-                index.ts
-                query-builder.ts
-            schema.json
-            schema.ts
-            select.ts
-            store.ts
-            types.ts
-            utils.ts
         tests/
         tsconfig.json
     d2ts/
@@ -160,24 +202,6 @@ packages/
         package.json
         src/
             d2.ts
-                …
-                  11→export type D2Options = {
-                  12→  initialFrontier: Antichain | Version | number | number[]
-                  13→}
-                  15→export class D2 implements ID2 {
-                …
-                  93→export class StreamBuilder<T> implements IStreamBuilder<T> {
-                …
-                 166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
-                 167→  sendData(
-                 168→    version: Version | number | number[],
-                 169→    collection: MultiSet<T> | MultiSetArray<T>,
-                 170→  ): void {
-                 171→    this.writer.sendData(version, collection)
-                …
-                 174→  sendFrontier(frontier: Antichain | Version | number | number[]): void {
-                 175→    this.writer.sendFrontier(frontier)
-                …
             electric/
                 index.ts
             graph.ts
@@ -206,22 +230,7 @@ packages/
                       62→export function buffer<T>(): PipedOperator<T, T> {
                     …
                 concat.ts
-                    …
-                      11→export class ConcatOperator<T, T2> extends BinaryOperator<T | T2> {
-                      12→  run(): void {
-                    …
-                      54→export function concat<T, T2>(
-                      55→  other: IStreamBuilder<T2>,
-                      56→): PipedOperator<T, T | T2> {
-                    …
                 consolidate.ts
-                    …
-                      16→export class ConsolidateOperator<T> extends UnaryOperator<T> {
-                    …
-                      19→  run(): void {
-                    …
-                      61→export function consolidate<T>(): PipedOperator<T, T> {
-                    …
                 count.ts
                     …
                       10→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
@@ -258,10 +267,6 @@ packages/
                       16→  ) {
                     …
                       37→export function distinct<
-                      38→  K extends T extends KeyValue<infer K, infer _V> ? K : never,
-                      39→  V extends T extends KeyValue<K, infer V> ? V : never,
-                      40→  T,
-                      41→>() {
                     …
                 filter.ts
                 filterBy.ts
@@ -295,22 +300,10 @@ packages/
                 keying.ts
                 map.ts
                 negate.ts
-                    …
-                      10→export class NegateOperator<T> extends LinearUnaryOperator<T, T> {
-                      11→  inner(collection: MultiSet<T>): MultiSet<T> {
-                      12→    return collection.negate()
-                    …
-                      19→export function negate<T>(): PipedOperator<T, T> {
-                    …
                 orderBy.ts
                 output.ts
                 pipe.ts
                 reduce.ts
-                    …
-                      15→export class ReduceOperator<K, V1, V2> extends UnaryOperator<[K, V1 | V2]> {
-                    …
-                     127→export function reduce<
-                    …
                 topK.ts
                     …
                       22→export function topK<
@@ -318,13 +311,7 @@ packages/
                       60→export function topKWithIndex<
                     …
                 topKWithFractionalIndex.ts
-                    …
-                      29→export class TopKWithFractionalIndexOperator<K, V1> extends UnaryOperator<
-                    …
-                     372→export function topKWithFractionalIndex<
-                    …
             order.ts
-                   1→import { WeakRefMap } from './utils.js'
                 …
                   10→export function v(version: number | number[]): Version {
                 …

@@ -3,8 +3,14 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .codex/
+    environments/
 .coverage
 .github/
+    FUNDING.yml
+    workflows/
+        coverage.yml
+        docs.yml
+        test.yml
 .gitignore
 .python-version
 CONTRIBUTING.md
@@ -279,11 +285,7 @@ src/
         request_headers.py
                1→from typing import TypedDict
                4→class RequestHeader(TypedDict):
-               5→    section: str
-               6→    name: str
-               7→    description: str
-               8→    experimental: bool
-               9→    url: str
+            …
               12→REQUEST_HEADERS: list[RequestHeader] = [
             …
         save_request.py
@@ -313,9 +315,6 @@ src/
                   12→class ConfirmationModal(ModalScreen[bool]):
                 …
             datatable.py
-                …
-                  27→class PostingDataTable(DataTable[str | Text]):
-                …
             input.py
                 …
                    9→class PostingInput(Input):

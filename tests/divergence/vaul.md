@@ -6,64 +6,64 @@ Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=17/42 (reached=9 partial=0 missin
 | ns | 62 |  | 62 | Fixture root listing | 1.1 |  | 1.000 |
 | ns | 107 |  | 45 | package.json — name/version/description | 1.2 |  | 0.896 |
 | walker |  | 120 | 58 | package identity in package.json |  |  | 1.000 |
-| walker |  | 133 | 13 | export names surface in playwright.config.ts |  |  | 1.000 |
+| walker |  | 123 | 3 | listing of '.github' |  |  | 1.000 |
+| walker |  | 127 | 4 | listing of '.vscode' |  |  | 1.000 |
+| walker |  | 140 | 13 | export names surface in playwright.config.ts |  |  | 1.000 |
 | ns | 175 |  | 68 | README.md (full) | 1.3 |  | 0.911 |
-| walker |  | 204 | 71 | listing of 'src' |  |  | 0.929 |
-| walker |  | 221 | 17 | module item at src/index.tsx:993 |  |  | 0.929 |
-| walker |  | 234 | 13 | module item at src/index.tsx:994 |  |  | 0.929 |
+| walker |  | 211 | 71 | listing of 'src' |  |  | 0.929 |
+| walker |  | 228 | 17 | module item at src/index.tsx:993 |  |  | 0.929 |
+| walker |  | 241 | 13 | module item at src/index.tsx:994 |  |  | 0.929 |
 | ns | 246 |  | 71 | src/ directory listing | 1.4 |  | 0.940 |
-| walker |  | 257 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.940 |
+| walker |  | 264 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.940 |
 | ns | 383 |  | 137 | package.json — scripts | 1.5 |  | 0.816 |
 | ns | 435 |  | 52 | test/ workspace top-level listing | 1.6 |  | 0.712 |
-| walker |  | 481 | 224 | export names surface in src/index.tsx |  |  | 0.720 |
-| walker |  | 481 | 0 | export at src/index.tsx:1098 |  |  | 0.720 |
-| walker |  | 481 | 0 | export at src/index.tsx:1130 |  |  | 0.720 |
-| walker |  | 494 | 13 | export at src/index.tsx:989 |  |  | 0.720 |
-| walker |  | 507 | 13 | export at src/index.tsx:803 |  |  | 0.720 |
+| walker |  | 488 | 224 | export names surface in src/index.tsx |  |  | 0.720 |
+| walker |  | 488 | 0 | export at src/index.tsx:1098 |  |  | 0.720 |
+| walker |  | 488 | 0 | export at src/index.tsx:1130 |  |  | 0.720 |
+| walker |  | 501 | 13 | export at src/index.tsx:989 |  |  | 0.720 |
+| walker |  | 514 | 13 | export at src/index.tsx:803 |  |  | 0.720 |
 | ns | 534 |  | 99 | test/src/app/ demo route listing | 1.7 |  | 0.602 |
-| walker |  | 536 | 29 | export at src/index.tsx:996 |  |  | 0.602 |
-| walker |  | 570 | 34 | export at src/index.tsx:833 |  |  | 0.602 |
+| walker |  | 543 | 29 | export at src/index.tsx:996 |  |  | 0.602 |
+| walker |  | 577 | 34 | export at src/index.tsx:833 |  |  | 0.602 |
 | ns | 600 |  | 66 | test/tests/ Playwright spec listing | 1.8 |  | 0.554 |
-| walker |  | 690 | 120 | export at src/index.tsx:40 |  |  | 0.556 |
+| walker |  | 697 | 120 | export at src/index.tsx:40 |  |  | 0.556 |
 | ns | 772 |  | 172 | package.json — entry points + files | 1.9 |  | 0.499 |
-| walker |  | 851 | 161 | export at src/index.tsx:27 |  |  | 0.505 |
-| walker |  | 952 | 101 | export at src/index.tsx:1137 |  |  | 0.510 |
+| walker |  | 858 | 161 | export at src/index.tsx:27 |  |  | 0.505 |
+| walker |  | 959 | 101 | export at src/index.tsx:1137 |  |  | 0.510 |
 | ns | 983 |  | 211 | package.json — devDependencies | 1.10 |  | 0.473 |
 | ns | 1134 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.452 |
 | ns | 1249 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.502 |
-| walker |  | 1270 | 318 | export at src/index.tsx:139 |  |  | 0.509 |
-| walker |  | 1284 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.509 |
-| walker |  | 1298 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.509 |
-| walker |  | 1313 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.509 |
-| walker |  | 1313 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.509 |
-| walker |  | 1329 | 16 | export names surface in src/use-composed-refs.ts |  |  | 0.509 |
+| walker |  | 1277 | 318 | export at src/index.tsx:139 |  |  | 0.509 |
+| walker |  | 1291 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.509 |
+| walker |  | 1305 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.509 |
+| walker |  | 1309 | 4 | listing of '.github/workflows' |  |  | 0.509 |
+| walker |  | 1324 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.509 |
+| walker |  | 1324 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.509 |
+| walker |  | 1340 | 16 | export names surface in src/use-composed-refs.ts |  |  | 0.509 |
 | ns | 1415 |  | 166 | index.tsx top-level export locations | 2.2 |  | 0.539 |
-| walker |  | 1646 | 317 | export body at src/index.tsx:803 body 805 |  |  | 0.544 |
+| walker |  | 1657 | 317 | export body at src/index.tsx:803 body 805 |  |  | 0.544 |
 | ns | 1701 |  | 286 | WithFadeFromProps / WithoutFadeFromProps (full) | 2.3 | 2.2 | 0.590 |
 | ns | 2243 |  | 542 | DialogProps — core open/behavior props (open .. dismissible) | 2.4 | 2.2 | 0.519 |
 | ns | 2441 |  | 198 | DialogProps — drag/modal/direction props (onDrag .. direction) | 2.5 | 2.2 | 0.500 |
-| walker |  | 2816 | 1170 | export at src/index.tsx:50 |  |  | 0.689 |
+| walker |  | 2827 | 1170 | export at src/index.tsx:50 |  |  | 0.689 |
 | ns | 2871 |  | 430 | DialogProps — snap/animation/misc props (defaultOpen .. autoFocus) | 2.6 | 2.2 | 0.712 |
-| walker |  | 2994 | 178 | package identity metadata in package.json |  |  | 0.712 |
-| walker |  | 3168 | 174 | package entrypoints in package.json |  |  | 0.761 |
-| walker |  | 3189 | 21 | package runtime metadata in package.json |  |  | 0.772 |
+| walker |  | 3005 | 178 | package identity metadata in package.json |  |  | 0.712 |
+| walker |  | 3179 | 174 | package entrypoints in package.json |  |  | 0.761 |
 | ns | 3189 |  | 318 | Root() destructured props + defaults | 2.7 | 2.2 | 0.772 |
-| walker |  | 3322 | 133 | package scripts in package.json |  |  | 0.806 |
-| walker |  | 3433 | 111 | json config tsconfig.json |  |  | 0.806 |
-| walker |  | 3469 | 36 | export names surface in src/context.ts |  |  | 0.806 |
-| walker |  | 3469 | 0 | export at src/context.ts:69 |  |  | 0.806 |
-| walker |  | 3506 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.806 |
-| walker |  | 3506 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.806 |
-| walker |  | 3558 | 52 | listing of 'test' |  |  | 0.837 |
-| ns | 3558 |  | 369 | Overlay component (full) | 2.8 | 2.2 | 0.837 |
-| walker |  | 3575 | 17 | imports in playwright.config.ts |  |  | 0.837 |
-| walker |  | 3578 | 3 | listing of 'test/src' |  |  | 0.837 |
-| walker |  | 3581 | 3 | listing of '.github' |  |  | 0.837 |
-| walker |  | 3585 | 4 | listing of '.github/workflows' |  |  | 0.837 |
-| walker |  | 3899 | 314 | imports in src/index.tsx |  |  | 0.837 |
+| walker |  | 3200 | 21 | package runtime metadata in package.json |  |  | 0.772 |
+| walker |  | 3333 | 133 | package scripts in package.json |  |  | 0.806 |
+| walker |  | 3444 | 111 | json config tsconfig.json |  |  | 0.806 |
+| walker |  | 3480 | 36 | export names surface in src/context.ts |  |  | 0.806 |
+| walker |  | 3480 | 0 | export at src/context.ts:69 |  |  | 0.806 |
+| walker |  | 3517 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.806 |
+| walker |  | 3517 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.806 |
+| ns | 3558 |  | 369 | Overlay component (full) | 2.8 | 2.2 | 0.802 |
+| walker |  | 3569 | 52 | listing of 'test' |  |  | 0.837 |
+| walker |  | 3586 | 17 | imports in playwright.config.ts |  |  | 0.837 |
+| walker |  | 3589 | 3 | listing of 'test/src' |  |  | 0.837 |
 | ns | 3902 |  | 344 | ContentProps type + Content()'s destructured context fields | 2.9 | 2.2 | 0.796 |
-| walker |  | 3911 | 12 | imports in src/use-controllable-state.ts |  |  | 0.796 |
-| walker |  | 3915 | 4 | listing of '.vscode' |  |  | 0.796 |
+| walker |  | 3903 | 314 | imports in src/index.tsx |  |  | 0.796 |
+| walker |  | 3915 | 12 | imports in src/use-controllable-state.ts |  |  | 0.796 |
 | ns | 4147 |  | 245 | HandleProps type + Handle()'s destructured context fields | 2.10 | 2.2 | 0.770 |
 | ns | 4466 |  | 319 | NestedRoot() (full) | 2.11 | 2.2 | 0.738 |
 | ns | 4547 |  | 81 | Portal component (full) | 2.12 | 2.2 | 0.729 |

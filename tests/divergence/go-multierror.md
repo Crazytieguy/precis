@@ -1,4 +1,4 @@
-Score(3000)=0.645 I=0.807 C=0.515 ns_rows≤3K=17/54 (reached=8 partial=1 missing=8)
+Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missing=7)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -82,32 +82,32 @@ Score(3000)=0.645 I=0.807 C=0.515 ns_rows≤3K=17/54 (reached=8 partial=1 missin
 | ns | 1648 |  | 57 | Error.Error() — default string formatting | 2.2 | 1.4 | 0.605 |
 | walker |  | 1693 | 50 | go decl doc at group.go:20 |  |  | 0.606 |
 | walker |  | 1729 | 36 | go decl body at group.go:36 |  |  | 0.606 |
-| walker |  | 1767 | 38 | go decl body at sort.go:7 |  |  | 0.607 |
-| walker |  | 1807 | 40 | go decl body at multierror.go:108 |  |  | 0.608 |
-| ns | 1904 |  | 256 | README: Usage intro + accessing the error list | 2.3 |  | 0.558 |
-| walker |  | 1982 | 175 | go decl doc at multierror.go:71 |  |  | 0.561 |
-| ns | 2041 |  | 137 | Error.ErrorOrNil() | 2.4 | 1.4 | 0.589 |
-| ns | 2198 |  | 157 | README: returning a multierror only if there are errors | 2.5 |  | 0.562 |
-| walker |  | 2370 | 388 | plaintext config Makefile |  |  | 0.564 |
-| walker |  | 2456 | 86 | go decl doc at prefix.go:16 |  |  | 0.565 |
-| ns | 2534 |  | 336 | Error.Unwrap() | 2.6 | 1.4 | 0.549 |
-| walker |  | 2578 | 122 | go decl doc at append.go:14 |  |  | 0.550 |
-| walker |  | 2755 | 177 | go decl doc at multierror.go:99 |  |  | 0.555 |
-| walker |  | 2909 | 154 | go decl body at multierror.go:71 |  |  | 0.620 |
-| ns | 2971 |  | 437 | chain type (unexported Unwrap/Is/As helper) | 2.7 |  | 0.645 |
-| walker |  | 3008 | 99 | go decl body at flatten.go:8 |  |  | 0.646 |
-| walker |  | 3109 | 101 | go decl body at group.go:20 |  |  | 0.648 |
-| ns | 3144 |  | 173 | README: extracting an error via errors.As | 2.8 |  | 0.626 |
-| walker |  | 3251 | 142 | go decl body at format.go:17 |  |  | 0.629 |
-| ns | 3308 |  | 164 | README: checking for an exact error value via errors.Is | 2.9 |  | 0.611 |
-| walker |  | 3332 | 81 | go decl body at flatten.go:20 |  |  | 0.612 |
-| ns | 3463 |  | 155 | Error.WrappedErrors() | 2.10 | 1.4 | 0.624 |
-| ns | 3483 |  | 20 | Error.GoString() | 2.11 | 1.4 | 0.624 |
-| walker |  | 3530 | 198 | go decl body at prefix.go:16 |  |  | 0.627 |
-| ns | 3834 |  | 351 | Append() doc + *Error branch | 3.1 | 1.5 | 0.601 |
-| walker |  | 3837 | 307 | README.md section #2 |  |  | 0.661 |
-| walker |  | 3851 | 14 | listing of '.github' |  |  | 0.670 |
-| walker |  | 3863 | 12 | listing of '.github/workflows' |  |  | 0.683 |
+| walker |  | 1743 | 14 | listing of '.github' |  |  | 0.620 |
+| walker |  | 1781 | 38 | go decl body at sort.go:7 |  |  | 0.621 |
+| walker |  | 1821 | 40 | go decl body at multierror.go:108 |  |  | 0.622 |
+| ns | 1904 |  | 256 | README: Usage intro + accessing the error list | 2.3 |  | 0.571 |
+| walker |  | 1996 | 175 | go decl doc at multierror.go:71 |  |  | 0.574 |
+| ns | 2041 |  | 137 | Error.ErrorOrNil() | 2.4 | 1.4 | 0.601 |
+| ns | 2198 |  | 157 | README: returning a multierror only if there are errors | 2.5 |  | 0.573 |
+| walker |  | 2384 | 388 | plaintext config Makefile |  |  | 0.576 |
+| walker |  | 2470 | 86 | go decl doc at prefix.go:16 |  |  | 0.576 |
+| ns | 2534 |  | 336 | Error.Unwrap() | 2.6 | 1.4 | 0.560 |
+| walker |  | 2592 | 122 | go decl doc at append.go:14 |  |  | 0.560 |
+| walker |  | 2769 | 177 | go decl doc at multierror.go:99 |  |  | 0.566 |
+| walker |  | 2923 | 154 | go decl body at multierror.go:71 |  |  | 0.631 |
+| walker |  | 2935 | 12 | listing of '.github/workflows' |  |  | 0.648 |
+| ns | 2971 |  | 437 | chain type (unexported Unwrap/Is/As helper) | 2.7 |  | 0.670 |
+| walker |  | 3034 | 99 | go decl body at flatten.go:8 |  |  | 0.672 |
+| walker |  | 3135 | 101 | go decl body at group.go:20 |  |  | 0.673 |
+| ns | 3144 |  | 173 | README: extracting an error via errors.As | 2.8 |  | 0.651 |
+| walker |  | 3277 | 142 | go decl body at format.go:17 |  |  | 0.653 |
+| ns | 3308 |  | 164 | README: checking for an exact error value via errors.Is | 2.9 |  | 0.635 |
+| walker |  | 3358 | 81 | go decl body at flatten.go:20 |  |  | 0.636 |
+| ns | 3463 |  | 155 | Error.WrappedErrors() | 2.10 | 1.4 | 0.647 |
+| ns | 3483 |  | 20 | Error.GoString() | 2.11 | 1.4 | 0.647 |
+| walker |  | 3556 | 198 | go decl body at prefix.go:16 |  |  | 0.650 |
+| ns | 3834 |  | 351 | Append() doc + *Error branch | 3.1 | 1.5 | 0.623 |
+| walker |  | 3863 | 307 | README.md section #2 |  |  | 0.683 |
 | ns | 3939 |  | 105 | Append() default branch | 3.2 | 3.1 | 0.671 |
 | ns | 4140 |  | 201 | README: building a list of errors (Append usage) | 3.3 |  | 0.650 |
 | walker |  | 4183 | 320 | go decl body at append.go:14 |  |  | 0.720 |

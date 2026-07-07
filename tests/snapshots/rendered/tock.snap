@@ -3,6 +3,45 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    dependabot.yml
+    pull_request_template.md
+    workflows/
+        ci.yml
+               1→name: CI
+               2→
+               3→on:
+               4→  push:
+               5→    branches: [ master, main ]
+               6→  pull_request:
+               7→    branches: [ master, main ]
+               8→
+               9→jobs:
+              10→  lint:
+              11→    name: Linter
+              12→    runs-on: ubuntu-latest
+              13→    steps:
+              14→      - uses: actions/checkout@v6
+              15→      - name: Set up Go
+              16→        uses: actions/setup-go@v6
+              17→        with:
+              18→          go-version-file: "go.mod"
+              19→      - name: Run linter
+              20→        uses: golangci/golangci-lint-action@v9
+              21→        with:
+              22→          version: v2.6.2
+              23→
+              24→  test:
+              25→    name: Test
+              26→    runs-on: ubuntu-latest
+              27→    steps:
+              28→      - uses: actions/checkout@v6
+              29→      - name: Set up Go
+              30→        uses: actions/setup-go@v6
+              31→        with:
+              32→          go-version-file: "go.mod"
+              33→      - name: Run tests
+              34→        run: go test -v ./...
+        release.yml
 .gitignore
 .golangci.yaml
 .goreleaser.yaml
@@ -66,6 +105,7 @@ cmd/
                8→	cli.Execute()
             …
 demo/
+    demo_script.sh
 docs/
     commands.md
            1→# Commands Reference

@@ -1,4 +1,4 @@
-Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missing=9)
+Score(3000)=0.749 I=0.896 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -15,75 +15,75 @@ Score(3000)=0.705 I=0.877 C=0.567 ns_rows≤3K=23/51 (reached=12 partial=2 missi
 | ns | 333 |  | 28 | package.json: license + author | 1.6 |  | 0.508 |
 | walker |  | 337 | 201 | headings outline in README.md |  |  | 0.515 |
 | walker |  | 362 | 25 | README.md section #1 |  |  | 0.515 |
-| walker |  | 433 | 71 | listing of 'src' |  |  | 0.745 |
-| walker |  | 450 | 17 | listing of 'src/adapters' |  |  | 0.788 |
+| walker |  | 367 | 5 | listing of '.husky' |  |  | 0.515 |
+| walker |  | 438 | 71 | listing of 'src' |  |  | 0.745 |
+| walker |  | 455 | 17 | listing of 'src/adapters' |  |  | 0.788 |
 | ns | 461 |  | 128 | package.json: repository/bin/files/type | 1.7 |  | 0.691 |
-| walker |  | 601 | 151 | README.md section #0 |  |  | 0.695 |
+| walker |  | 606 | 151 | README.md section #0 |  |  | 0.695 |
+| walker |  | 614 | 8 | listing of '.github' |  |  | 0.695 |
+| walker |  | 623 | 9 | listing of 'fixtures' |  |  | 0.695 |
 | ns | 625 |  | 164 | package.json: scripts | 1.8 |  | 0.633 |
-| walker |  | 631 | 30 | README.md section #18 |  |  | 0.634 |
-| walker |  | 642 | 11 | README.md section #9 |  |  | 0.634 |
-| walker |  | 657 | 15 | export names surface in src/random-id.ts |  |  | 0.634 |
-| walker |  | 657 | 0 | export at src/random-id.ts:3 |  |  | 0.634 |
-| walker |  | 676 | 19 | export names surface in src/parse-where.ts |  |  | 0.634 |
-| walker |  | 676 | 0 | export at src/parse-where.ts:58 |  |  | 0.634 |
-| walker |  | 694 | 18 | export body at src/random-id.ts:3 body 4 |  |  | 0.634 |
-| walker |  | 718 | 24 | export names surface in src/matches-where.ts |  |  | 0.634 |
-| walker |  | 718 | 0 | export at src/matches-where.ts:24 |  |  | 0.634 |
-| walker |  | 732 | 14 | export names surface in src/adapters/observer.ts |  |  | 0.634 |
-| walker |  | 759 | 27 | README.md section #6 |  |  | 0.634 |
+| walker |  | 653 | 30 | README.md section #18 |  |  | 0.634 |
+| walker |  | 664 | 11 | README.md section #9 |  |  | 0.634 |
+| walker |  | 679 | 15 | export names surface in src/random-id.ts |  |  | 0.634 |
+| walker |  | 679 | 0 | export at src/random-id.ts:3 |  |  | 0.634 |
+| walker |  | 698 | 19 | export names surface in src/parse-where.ts |  |  | 0.634 |
+| walker |  | 698 | 0 | export at src/parse-where.ts:58 |  |  | 0.634 |
+| walker |  | 716 | 18 | export body at src/random-id.ts:3 body 4 |  |  | 0.634 |
+| walker |  | 740 | 24 | export names surface in src/matches-where.ts |  |  | 0.634 |
+| walker |  | 740 | 0 | export at src/matches-where.ts:24 |  |  | 0.634 |
+| walker |  | 754 | 14 | export names surface in src/adapters/observer.ts |  |  | 0.634 |
+| walker |  | 781 | 27 | README.md section #6 |  |  | 0.634 |
+| walker |  | 790 | 9 | listing of '.github/workflows' |  |  | 0.634 |
 | ns | 854 |  | 229 | package.json: dependencies | 1.9 |  | 0.570 |
-| walker |  | 945 | 186 | package identity metadata in package.json |  |  | 0.743 |
-| walker |  | 1012 | 67 | package entrypoints in package.json |  |  | 0.824 |
-| walker |  | 1046 | 34 | package runtime metadata in package.json |  |  | 0.825 |
-| ns | 1049 |  | 195 | package.json: devDependencies + engines | 1.10 |  | 0.756 |
-| ns | 1186 |  | 137 | CLI --help text (bin.ts) | 2.1 |  | 0.713 |
-| walker |  | 1210 | 164 | package scripts in package.json |  |  | 0.783 |
-| walker |  | 1246 | 36 | export names surface in src/app.ts |  |  | 0.783 |
-| walker |  | 1246 | 0 | export at src/app.ts:94 |  |  | 0.783 |
-| walker |  | 1269 | 23 | export at src/app.ts:18 |  |  | 0.783 |
-| walker |  | 1312 | 43 | export names surface in src/paginate.ts |  |  | 0.783 |
-| walker |  | 1312 | 0 | export at src/paginate.ts:11 |  |  | 0.783 |
-| walker |  | 1382 | 70 | export at src/paginate.ts:1 |  |  | 0.722 |
-| ns | 1382 |  | 196 | CI workflow: node.js.yml | 2.2 |  | 0.722 |
-| walker |  | 1412 | 30 | README.md section #13 |  |  | 0.722 |
-| ns | 1513 |  | 131 | Misc dev-process config (husky, gitattributes, gitignore, funding, publish CI) | 2.4 |  | 0.679 |
-| walker |  | 1564 | 152 | json config tsconfig.json |  |  | 0.684 |
-| walker |  | 1619 | 55 | export names surface in src/where-operators.ts |  |  | 0.685 |
-| walker |  | 1619 | 0 | export at src/where-operators.ts:16 |  |  | 0.685 |
-| walker |  | 1637 | 18 | export body at src/where-operators.ts:16 body 17 |  |  | 0.685 |
-| walker |  | 1650 | 13 | imports in src/random-id.ts |  |  | 0.685 |
-| ns | 1665 |  | 152 | tsconfig.json | 2.5 |  | 0.707 |
-| ns | 1696 |  | 31 | oxfmt config (.oxfmtrc.json) | 2.6 |  | 0.697 |
-| walker |  | 1795 | 145 | README.md section #7 |  |  | 0.701 |
-| ns | 1865 |  | 169 | fixtures/db.json — canonical data-file sample | 2.7 |  | 0.671 |
-| walker |  | 1912 | 117 | README.md section #19 |  |  | 0.673 |
-| walker |  | 1917 | 5 | listing of '.husky' |  |  | 0.673 |
-| walker |  | 2005 | 88 | export at src/where-operators.ts:1 |  |  | 0.675 |
-| walker |  | 2053 | 48 | README.md section #15 |  |  | 0.675 |
-| ns | 2090 |  | 225 | fixtures/db.json5 — JSON5 data-file sample | 2.8 |  | 0.623 |
-| walker |  | 2093 | 40 | README.md section #16 |  |  | 0.624 |
-| ns | 2192 |  | 102 | schema.json | 2.9 |  | 0.607 |
-| walker |  | 2256 | 163 | README.md section #8 |  |  | 0.611 |
-| walker |  | 2341 | 85 | export names surface in src/service.ts |  |  | 0.611 |
-| walker |  | 2341 | 0 | export at src/service.ts:13 |  |  | 0.611 |
-| walker |  | 2364 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.611 |
-| ns | 2389 |  | 197 | README heading locations | 3.1 |  | 0.642 |
-| walker |  | 2466 | 102 | json config schema.json |  |  | 0.674 |
-| walker |  | 2527 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.674 |
-| walker |  | 2540 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.674 |
-| walker |  | 2589 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.674 |
-| ns | 2608 |  | 219 | README: title, v1-beta warning, Install, Usage lede | 3.2 | 3.1 | 0.680 |
-| ns | 2664 |  | 56 | README: starting the server + --help pointer | 3.3 |  | 0.671 |
-| walker |  | 2764 | 175 | README.md section #20 |  |  | 0.672 |
-| ns | 2809 |  | 145 | README: Query Capabilities quick reference | 3.4 | 3.1 | 0.685 |
-| walker |  | 2819 | 55 | README.md section #12 |  |  | 0.686 |
-| walker |  | 2827 | 8 | listing of '.github' |  |  | 0.686 |
-| walker |  | 2836 | 9 | listing of '.github/workflows' |  |  | 0.686 |
-| ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.705 |
-| walker |  | 3032 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.751 |
-| walker |  | 3046 | 14 | imports in src/adapters/observer.ts |  |  | 0.751 |
-| walker |  | 3163 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.751 |
-| walker |  | 3172 | 9 | listing of 'fixtures' |  |  | 0.751 |
+| walker |  | 986 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.579 |
+| ns | 1049 |  | 195 | package.json: devDependencies + engines | 1.10 |  | 0.530 |
+| walker |  | 1172 | 186 | package identity metadata in package.json |  |  | 0.689 |
+| ns | 1186 |  | 137 | CLI --help text (bin.ts) | 2.1 |  | 0.650 |
+| walker |  | 1239 | 67 | package entrypoints in package.json |  |  | 0.721 |
+| walker |  | 1273 | 34 | package runtime metadata in package.json |  |  | 0.724 |
+| ns | 1382 |  | 196 | CI workflow: node.js.yml | 2.2 |  | 0.751 |
+| walker |  | 1437 | 164 | package scripts in package.json |  |  | 0.811 |
+| walker |  | 1473 | 36 | export names surface in src/app.ts |  |  | 0.811 |
+| walker |  | 1473 | 0 | export at src/app.ts:94 |  |  | 0.811 |
+| walker |  | 1496 | 23 | export at src/app.ts:18 |  |  | 0.811 |
+| ns | 1513 |  | 131 | Misc dev-process config (husky, gitattributes, gitignore, funding, publish CI) | 2.4 |  | 0.763 |
+| walker |  | 1539 | 43 | export names surface in src/paginate.ts |  |  | 0.763 |
+| walker |  | 1539 | 0 | export at src/paginate.ts:11 |  |  | 0.763 |
+| walker |  | 1609 | 70 | export at src/paginate.ts:1 |  |  | 0.765 |
+| walker |  | 1639 | 30 | README.md section #13 |  |  | 0.765 |
+| ns | 1665 |  | 152 | tsconfig.json | 2.5 |  | 0.726 |
+| ns | 1696 |  | 31 | oxfmt config (.oxfmtrc.json) | 2.6 |  | 0.716 |
+| walker |  | 1791 | 152 | json config tsconfig.json |  |  | 0.773 |
+| walker |  | 1846 | 55 | export names surface in src/where-operators.ts |  |  | 0.774 |
+| walker |  | 1846 | 0 | export at src/where-operators.ts:16 |  |  | 0.774 |
+| walker |  | 1864 | 18 | export body at src/where-operators.ts:16 body 17 |  |  | 0.774 |
+| ns | 1865 |  | 169 | fixtures/db.json — canonical data-file sample | 2.7 |  | 0.741 |
+| walker |  | 1877 | 13 | imports in src/random-id.ts |  |  | 0.741 |
+| walker |  | 2022 | 145 | README.md section #7 |  |  | 0.744 |
+| ns | 2090 |  | 225 | fixtures/db.json5 — JSON5 data-file sample | 2.8 |  | 0.687 |
+| walker |  | 2139 | 117 | README.md section #19 |  |  | 0.689 |
+| ns | 2192 |  | 102 | schema.json | 2.9 |  | 0.670 |
+| walker |  | 2227 | 88 | export at src/where-operators.ts:1 |  |  | 0.672 |
+| walker |  | 2275 | 48 | README.md section #15 |  |  | 0.672 |
+| walker |  | 2315 | 40 | README.md section #16 |  |  | 0.673 |
+| ns | 2389 |  | 197 | README heading locations | 3.1 |  | 0.696 |
+| walker |  | 2478 | 163 | README.md section #8 |  |  | 0.701 |
+| walker |  | 2563 | 85 | export names surface in src/service.ts |  |  | 0.702 |
+| walker |  | 2563 | 0 | export at src/service.ts:13 |  |  | 0.702 |
+| walker |  | 2586 | 23 | export body at src/service.ts:13 body 14 |  |  | 0.702 |
+| ns | 2608 |  | 219 | README: title, v1-beta warning, Install, Usage lede | 3.2 | 3.1 | 0.705 |
+| ns | 2664 |  | 56 | README: starting the server + --help pointer | 3.3 |  | 0.696 |
+| walker |  | 2688 | 102 | json config schema.json |  |  | 0.723 |
+| walker |  | 2749 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.723 |
+| walker |  | 2762 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.723 |
+| ns | 2809 |  | 145 | README: Query Capabilities quick reference | 3.4 | 3.1 | 0.733 |
+| walker |  | 2811 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.733 |
+| ns | 2977 |  | 168 | README: Routes (array vs object resources) | 3.5 | 3.1 | 0.748 |
+| walker |  | 2986 | 175 | README.md section #20 |  |  | 0.749 |
+| walker |  | 3041 | 55 | README.md section #12 |  |  | 0.751 |
+| walker |  | 3055 | 14 | imports in src/adapters/observer.ts |  |  | 0.751 |
+| walker |  | 3172 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.751 |
 | ns | 3275 |  | 298 | README: Query params — Conditions (operators) | 3.6 | 3.1 | 0.714 |
 | walker |  | 3326 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.715 |
 | ns | 3330 |  | 55 | README: Sort | 3.7 | 3.1 | 0.720 |

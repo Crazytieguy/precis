@@ -1,4 +1,4 @@
-Score(3000)=0.788 I=0.860 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missing=4)
+Score(3000)=0.842 I=0.944 C=0.751 ns_rows≤3K=19/47 (reached=14 partial=2 missing=3)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -25,40 +25,40 @@ Score(3000)=0.788 I=0.860 C=0.722 ns_rows≤3K=19/47 (reached=13 partial=2 missi
 | ns | 902 |  | 78 | mitt() factory: JSDoc + signature | 2.5 | 2.1 | 0.723 |
 | walker |  | 931 | 46 | export doc at src/index.ts:46 |  |  | 0.769 |
 | walker |  | 962 | 31 | README.md section #18 |  |  | 0.769 |
-| ns | 996 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.721 |
-| walker |  | 1000 | 38 | README.md section #15 |  |  | 0.721 |
-| walker |  | 1013 | 13 | README.md section #8 |  |  | 0.721 |
-| walker |  | 1096 | 83 | README.md section #1 |  |  | 0.787 |
-| ns | 1197 |  | 201 | on() implementation | 2.7 | 2.6 | 0.726 |
-| walker |  | 1211 | 115 | package identity metadata in package.json |  |  | 0.728 |
-| walker |  | 1423 | 212 | package entrypoints in package.json |  |  | 0.737 |
-| ns | 1437 |  | 240 | off() implementation | 2.8 | 2.6 | 0.677 |
-| walker |  | 1442 | 19 | README.md section #13 |  |  | 0.677 |
-| walker |  | 1675 | 233 | package scripts in package.json |  |  | 0.682 |
-| walker |  | 1692 | 17 | README.md section #7 |  |  | 0.682 |
-| ns | 1788 |  | 351 | emit() implementation | 2.9 | 2.6 | 0.600 |
-| ns | 2021 |  | 233 | package.json: identity + entry points | 3.1 |  | 0.626 |
-| ns | 2256 |  | 235 | package.json: scripts | 3.2 |  | 0.642 |
-| ns | 2535 |  | 279 | index_test.ts: imports + top-level mitt() factory tests | 4.1 |  | 0.600 |
-| walker |  | 2590 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.837 |
-| ns | 2734 |  | 199 | index_test.ts: shared Events type + beforeEach instance setup | 4.2 |  | 0.796 |
-| walker |  | 2735 | 145 | README.md section #5 |  |  | 0.796 |
-| walker |  | 2765 | 30 | README.md section #12 |  |  | 0.796 |
-| ns | 2795 |  | 61 | index_test.ts: properties block | 4.3 |  | 0.786 |
-| walker |  | 2914 | 149 | json config tsconfig.json |  |  | 0.788 |
-| walker |  | 2947 | 33 | README.md section #10 |  |  | 0.788 |
-| walker |  | 3058 | 111 | README.md section #4 |  |  | 0.789 |
-| ns | 3096 |  | 301 | index_test.ts: on() - registration and append semantics | 4.4 |  | 0.740 |
-| walker |  | 3338 | 280 | README.md section #2 |  |  | 0.743 |
-| walker |  | 3373 | 35 | README.md section #6 |  |  | 0.743 |
-| walker |  | 3428 | 55 | README.md section #16 |  |  | 0.743 |
-| walker |  | 3438 | 10 | listing of '.github' |  |  | 0.752 |
-| walker |  | 3447 | 9 | listing of '.github/workflows' |  |  | 0.767 |
-| ns | 3460 |  | 364 | index_test.ts: on() - case sensitivity, symbols, duplicates | 4.5 |  | 0.724 |
-| walker |  | 3664 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.726 |
-| ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.687 |
-| walker |  | 4032 | 368 | package dependencies in package.json |  |  | 0.690 |
-| walker |  | 4044 | 12 | listing of 'test' |  |  | 0.713 |
+| walker |  | 972 | 10 | listing of '.github' |  |  | 0.784 |
+| walker |  | 984 | 12 | listing of 'test' |  |  | 0.815 |
+| ns | 996 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.763 |
+| walker |  | 1022 | 38 | README.md section #15 |  |  | 0.764 |
+| walker |  | 1035 | 13 | README.md section #8 |  |  | 0.764 |
+| walker |  | 1118 | 83 | README.md section #1 |  |  | 0.830 |
+| ns | 1197 |  | 201 | on() implementation | 2.7 | 2.6 | 0.766 |
+| walker |  | 1233 | 115 | package identity metadata in package.json |  |  | 0.768 |
+| ns | 1437 |  | 240 | off() implementation | 2.8 | 2.6 | 0.706 |
+| walker |  | 1445 | 212 | package entrypoints in package.json |  |  | 0.713 |
+| walker |  | 1464 | 19 | README.md section #13 |  |  | 0.713 |
+| walker |  | 1697 | 233 | package scripts in package.json |  |  | 0.718 |
+| walker |  | 1714 | 17 | README.md section #7 |  |  | 0.718 |
+| ns | 1788 |  | 351 | emit() implementation | 2.9 | 2.6 | 0.632 |
+| ns | 2021 |  | 233 | package.json: identity + entry points | 3.1 |  | 0.656 |
+| ns | 2256 |  | 235 | package.json: scripts | 3.2 |  | 0.672 |
+| ns | 2535 |  | 279 | index_test.ts: imports + top-level mitt() factory tests | 4.1 |  | 0.628 |
+| walker |  | 2612 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.867 |
+| walker |  | 2621 | 9 | listing of '.github/workflows' |  |  | 0.894 |
+| ns | 2734 |  | 199 | index_test.ts: shared Events type + beforeEach instance setup | 4.2 |  | 0.850 |
+| ns | 2795 |  | 61 | index_test.ts: properties block | 4.3 |  | 0.839 |
+| walker |  | 2838 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.842 |
+| walker |  | 2983 | 145 | README.md section #5 |  |  | 0.842 |
+| walker |  | 3013 | 30 | README.md section #12 |  |  | 0.842 |
+| ns | 3096 |  | 301 | index_test.ts: on() - registration and append semantics | 4.4 |  | 0.791 |
+| walker |  | 3162 | 149 | json config tsconfig.json |  |  | 0.793 |
+| walker |  | 3195 | 33 | README.md section #10 |  |  | 0.793 |
+| walker |  | 3306 | 111 | README.md section #4 |  |  | 0.793 |
+| ns | 3460 |  | 364 | index_test.ts: on() - case sensitivity, symbols, duplicates | 4.5 |  | 0.748 |
+| walker |  | 3586 | 280 | README.md section #2 |  |  | 0.750 |
+| walker |  | 3621 | 35 | README.md section #6 |  |  | 0.750 |
+| walker |  | 3676 | 55 | README.md section #16 |  |  | 0.750 |
+| ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.710 |
+| walker |  | 4044 | 368 | package dependencies in package.json |  |  | 0.713 |
 | ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.687 |
 | walker |  | 4143 | 99 | README.md section #14 |  |  | 0.687 |
 | walker |  | 4259 | 116 | README.md section #11 |  |  | 0.687 |
