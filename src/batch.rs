@@ -669,6 +669,9 @@ impl InnerKey for TsKey {
                 0.38
             }
             TsKey::ExportMember { .. } => 0.45,
+            // Roster tier for the unified member catalog — measured:
+            // dropping it to the default leaves axios flat and costs
+            // commander -0.212 (2026-07-06).
             TsKey::ExportMemberNames { .. } => 0.37,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
