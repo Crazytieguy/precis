@@ -365,7 +365,18 @@ Measured-dead this cycle (specifics block retries):
   d2ts −0.016. A retry needs member batches that *win purchase inside
   3K* (value-side or scheduler-tier treatment), not just granularity.
 
-## Solo calibration session (2026-07-06, evening): 0.5465 → 0.5684
+## Solo calibration session (2026-07-06, evening): 0.5465 → 0.5741
+
+Final state after the breadth-pressure mechanism (see its entry
+below): training 0.5741, validation 0.5284 — the two moved in
+lockstep all session (+0.0276 / +0.0277), no overfit signature.
+Remaining gap to the 0.6 goal: 0.0259. The measured-dead lists in
+this section and the shipped-guards pattern on the breadth mechanism
+are the starting point for the next session; the highest-leverage
+open direction is discriminating guards for the two known bimodal
+classes (CI bodies, README tail confetti at +0.0001) and the
+below-frontier structural buys (member manifests, cmd/root.go —
+retried once post-frontier-shift, still inert).
 
 Six commits (`7a9a85a7..11ace1c0`), all training-measured; codex review
 clean. The three biggest wins share one theme: **the walker's
