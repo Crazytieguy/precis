@@ -422,15 +422,19 @@ Measured-dead this session (don't re-test without new evidence):
 - **Workspace-member manifest ne-exemption (JSON)**: inert — member
   manifest values rise but stay below the 3K frontier (vite −0.022
   the only mover). cmdk's tier-2 manifests remain unbought.
-- **Scheduler breadth pressure (train penalty)**: dynamic ratio
-  divisor `1/(1 + K·n)` per predecessor-train root (n = scheduled
-  non-zero-cost batches under the root), applied in both ranking
-  passes. K=0.08 → −0.0043, K=0.03 → −0.0063 (non-monotone). Blanket
-  same-train demotion fails the same bimodality guard as ci_value:
-  single-file libraries and sequenced README sections are trains the
-  NS *wants* deep. A retry must discriminate wanted trains from dives
-  (e.g. only penalize trains whose root is a non-orientation source
-  file while unopened sibling surfaces remain), not rescale globally.
+- **Scheduler breadth pressure — blanket variant**: dynamic ratio
+  divisor `1/(1 + K·n)` per predecessor-train root on ALL batches:
+  K=0.08 → −0.0043, K=0.03 → −0.0063. Superseded: the discriminated
+  form SHIPPED at +0.0058 (see c35e8ca8) with three measured guards —
+  follow-up classes only (`is_depth_follow_up`), doc-lede and
+  entrypoint-body exemptions, and the unopened-substantial-trains
+  breadth gate. Guard evidence: no gate → mitt −0.223 /
+  go-multierror −0.135; EntryItemBody pressured → otree −0.131;
+  Go DeclDoc pressured → bubbletea −0.048. Post-ship knob probes all
+  flat or negative: K plateau [0.15, 0.25], FREE 3/6 worse, BREADTH_MIN
+  1 flat, adding ClassBody/StructFieldGroup −0.0022 (field rosters are
+  surface-like). root.go entry treatment retried on the new frontier:
+  still inert.
 - **Post-3K recall extensions all price below the frontier**: TOML
   `Whole` for non-manifest configs (~flat, 1000-budget −0.0013),
   Makefile >100-line head-sample + dotenv tail to 120 (sqlite-vec
