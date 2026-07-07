@@ -384,13 +384,8 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     let is_guide = is_changelog_class(file);
     let is_orientation = is_orientation_doc(file);
     // Root-level (depth 1) orientation already wins; only nested
-    // orientation gets the cat bump. A README-promoted current-major
-    // upgrade guide takes the same bump: it competes from the plain-
-    // doc tier (cat 0.3), where its sections never schedule, while
-    // the NS ranks the current version's migration checklist as
-    // primary orientation (bubbletea 2.7/2.8 inside 3K).
-    let is_nested_orientation = (is_orientation && ctx.depth_from_root(file) > 1)
-        || crate::value::is_readme_promoted_upgrade_guide(file, ctx.root());
+    // orientation gets the cat bump.
+    let is_nested_orientation = is_orientation && ctx.depth_from_root(file) > 1;
     // Changelog index decay (newest-first) — floor lets deep sections
     // still fire when budget permits.
     let scale = if is_guide {

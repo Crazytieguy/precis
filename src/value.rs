@@ -144,15 +144,10 @@ pub(crate) fn non_essential_factor_inner(
     // Peripheral admin / release / translation markdown (anywhere in
     // the tree). NS authors universally treat these as "appendix"
     // content; the walker should not let CHANGELOG, CONTRIBUTING, etc.
-    // crowd the primary-source schedule. Exception: a root-level
-    // upgrade/migration guide the root README pushes in its opening
-    // lines is the *current* version's primary documentation, not an
-    // appendix (bubbletea's `UPGRADE_GUIDE_V2.md`, linked at README
-    // line 29, was NS-ranked inside 3K while the walker zeroed the
-    // whole file).
-    if (is_peripheral_doc(target) || is_localized_readme(target))
-        && !is_readme_promoted_upgrade_guide(target, root)
-    {
+    // crowd the primary-source schedule. (A README-promotion exemption
+    // for root-level upgrade guides was measured dead on the
+    // post-refreeze keys and removed 2026-07-06.)
+    if is_peripheral_doc(target) || is_localized_readme(target) {
         return 0.2;
     }
     if !skip_dir_classifier {
@@ -399,58 +394,6 @@ fn is_peripheral_doc(target: &std::path::Path) -> bool {
     }
     false
 }
-
-/// A root-level upgrade/migration guide the root README pushes in its
-/// opening lines — the *current* version's primary documentation
-/// rather than a historical appendix. Exempted from the
-/// [`is_peripheral_doc`] demotion and treated as orientation-class by
-/// the markdown walker. `path` may be absolute; `root` is the run root.
-pub(crate) fn is_readme_promoted_upgrade_guide(
-    path: &std::path::Path,
-    root: &std::path::Path,
-) -> bool {
-    let target = path.strip_prefix(root).unwrap_or(path);
-    is_upgrade_guide_doc(target) && readme_promotes_doc(target, root)
-}
-
-/// Root-level upgrade / migration guide — the only
-/// [`is_peripheral_doc`] tier eligible for the README-promotion
-/// exemption. Scoped narrowly: version-bump guides are the class
-/// where "current version's guide" vs "historical appendix" depends
-/// on repo state; CHANGELOG / CONTRIBUTING / FAQ stay demoted
-/// unconditionally.
-fn is_upgrade_guide_doc(target: &std::path::Path) -> bool {
-    if target.components().count() != 1 {
-        return false;
-    }
-    let Some(stem) = target.file_stem().and_then(|s| s.to_str()) else {
-        return false;
-    };
-    let lower = stem.to_ascii_lowercase();
-    lower.contains("migration") || lower.contains("migrate") || lower.contains("upgrade")
-}
-
-/// True when the repo's root README names `target`'s file in its
-/// first [`README_PROMOTION_WINDOW_LINES`] lines — the README pushing
-/// a doc that early marks it load-bearing for orientation.
-fn readme_promotes_doc(target: &std::path::Path, root: &std::path::Path) -> bool {
-    let Some(doc_name) = target.file_name().and_then(|n| n.to_str()) else {
-        return false;
-    };
-    let doc_lower = doc_name.to_ascii_lowercase();
-    for readme in ["README.md", "README.rst", "readme.md", "Readme.md"] {
-        let Ok(source) = std::fs::read_to_string(root.join(readme)) else {
-            continue;
-        };
-        return source
-            .lines()
-            .take(README_PROMOTION_WINDOW_LINES)
-            .any(|line| line.to_ascii_lowercase().contains(&doc_lower));
-    }
-    false
-}
-
-const README_PROMOTION_WINDOW_LINES: usize = 30;
 
 /// Project-orientation markdown files — the matklad-style
 /// `ARCHITECTURE.md` convention plus the related `OVERVIEW.md` /

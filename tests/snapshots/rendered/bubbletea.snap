@@ -17,13 +17,6 @@ README.md
     …
 Taskfile.yaml
 UPGRADE_GUIDE_V2.md
-       1→# Bubble Tea v2 Upgrade Guide
-       2→
-       3→This guide covers everything you need to change when upgrading from Bubble Tea v1 to v2. For a tour of all the exciting new features, check out the [What's New](https://github.com/charmbracelet/bubbletea/releases/tag/v2.0.0) doc.
-       4→
-       5→> [!NOTE]
-       6→> We don't take API changes lightly and strive to make the upgrade process as simple as possible. If something feels way off, let us know.
-    …
 clipboard.go
        1→package tea
     …
@@ -88,6 +81,25 @@ input.go
     …
 key.go
 keyboard.go
+    …
+       9→type KeyboardEnhancementsMsg struct {
+    …
+      33→func (k KeyboardEnhancementsMsg) SupportsKeyDisambiguation() bool {
+      34→	return k.Flags > 0
+    …
+      39→func (k KeyboardEnhancementsMsg) SupportsEventTypes() bool {
+      40→	return k.Flags&ansi.KittyReportEventTypes != 0
+    …
+      43→// SupportsAlternateKeys returns whether the terminal supports reporting
+      44→// alternate key codes.
+      45→func (k KeyboardEnhancementsMsg) SupportsAlternateKeys() bool {
+      46→	return k.Flags&ansi.KittyReportAlternateKeys != 0
+    …
+      51→func (k KeyboardEnhancementsMsg) SupportsAllKeysAsEscapeCodes() bool {
+    …
+      57→func (k KeyboardEnhancementsMsg) SupportsAssociatedText() bool {
+      58→	return k.Flags&ansi.KittyReportAssociatedKeys != 0
+    …
 logging.go
     …
       23→func LogToFile(path string, prefix string) (*os.File, error) {
