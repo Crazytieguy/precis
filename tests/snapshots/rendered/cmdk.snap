@@ -64,6 +64,54 @@ README.md
     …
        5→# ⌘K…
        7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
+       9→## Install
+      10→
+      11→```bash
+      12→pnpm install cmdk
+      13→```
+      15→## Use
+    …
+      82→## Parts and styling
+      83→
+      84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
+      86→### Command `[cmdk-root]`
+    …
+     153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
+    …
+     180→### Input `[cmdk-input]`
+    …
+     190→### List `[cmdk-list]`
+    …
+     212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
+    …
+     242→### Group `[cmdk-group]` `[hidden?]`
+    …
+     256→### Separator `[cmdk-separator]`
+    …
+     260→### Empty `[cmdk-empty]`
+    …
+     264→### Loading `[cmdk-loading]`
+    …
+     274→### `useCommandState(state => state.selectedField)`
+    …
+     285→## Examples
+     286→
+     287→Code snippets for common use cases.
+     289→### Nested items
+    …
+     338→### Show sub-items when searching
+    …
+     361→### Asynchronous results
+    …
+     397→### Use inside Popover
+    …
+     426→### Drop in stylesheets
+    …
+     430→## FAQ
+    …
+     456→## History
+    …
+     462→## Testing
     …
 cmdk/
     package.json
@@ -76,19 +124,7 @@ cmdk/
               79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
             …
              123→type Context = {
-             124→  value: (id: string, value: string, keywords?: string[]) => void
-             125→  item: (id: string, groupId: string) => () => void
-             126→  group: (id: string) => () => void
-             127→  filter: () => boolean
-             128→  label: string
-             129→  getDisablePointerSelection: () => boolean
-             130→  // Ids
-             131→  listId: string
-             132→  labelId: string
-             133→  inputId: string
-             134→  // Refs
-             135→  listInnerRef: React.RefObject<HTMLDivElement | null>
-             136→}
+            …
              137→type State = {
              138→  search: string
              139→  value: string
@@ -113,6 +149,7 @@ cmdk/
              159→const SELECT_EVENT = `cmdk-item-select`
              160→const VALUE_ATTR = `data-value`
              161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
+             162→
              163→const CommandContext = React.createContext<Context>(undefined)
              164→const useCommand = () => React.useContext(CommandContext)
              165→const StoreContext = React.createContext<Store>(undefined)
@@ -203,6 +240,7 @@ cmdk/
              981→function useAsRef<T>(data: T) {
             …
              991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
+             992→
              993→function useLazyRef<T>(fn: () => T) {
             …
             1010→function useValue(
@@ -222,16 +260,7 @@ cmdk/
             1074→) {
             …
             1081→const srOnlyStyles = {
-            1082→  position: 'absolute',
-            1083→  width: '1px',
-            1084→  height: '1px',
-            1085→  padding: '0',
-            1086→  margin: '-1px',
-            1087→  overflow: 'hidden',
-            1088→  clip: 'rect(0, 0, 0, 0)',
-            1089→  whiteSpace: 'nowrap',
-            1090→  borderWidth: '0',
-            1091→} as const
+            …
     tsup.config.ts
         …
            3→export default defineConfig({

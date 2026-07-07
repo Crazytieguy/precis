@@ -213,6 +213,7 @@ source/
            5→	stringEncaseCRLFWithFirstIndex,
            6→} from './utilities.js';
            8→const {stdout: stdoutColor, stderr: stderrColor} = supportsColor;
+           9→
           10→const GENERATOR = Symbol('GENERATOR');
           11→const STYLER = Symbol('STYLER');
           12→const IS_EMPTY = Symbol('IS_EMPTY');
@@ -224,6 +225,7 @@ source/
           19→	'ansi16m',
           20→];
           22→const styles = Object.create(null);
+          23→
           24→const applyOptions = (object, options = {}) => {
           25→	if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
           26→		throw new Error('The `level` option should be an integer from 0 to 3');
@@ -276,9 +278,14 @@ source/
             index.d.ts
             index.js
                    1→const ANSI_BACKGROUND_OFFSET = 10;
+                   2→
                    3→const wrapAnsi16 = (offset = 0) => code => `\u001B[${code + offset}m`;
+                   4→
                    5→const wrapAnsi256 = (offset = 0) => code => `\u001B[${38 + offset};5;${code}m`;
+                   6→
                    7→const wrapAnsi16m = (offset = 0) => (red, green, blue) => `\u001B[${38 + offset};2;${red};${green};${blue}m`;
+                   8→
+                   9→const styles = {
                 …
                   68→export const modifierNames = Object.keys(styles.modifier);
                   69→export const foregroundColorNames = Object.keys(styles.color);
@@ -294,16 +301,13 @@ source/
             index.d.ts
             index.js
                 …
-                  14→const {env} = process;
-                  16→let flagForceColor;
-                …
-                  33→function envForceColor() {
-                …
-                  47→function translateLevel(level) {
-                …
-                  60→function _supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
-                …
                  176→export function createSupportsColor(stream, options = {}) {
+                 177→	const level = _supportsColor(stream, {
+                 178→		streamIsTTY: stream && stream.isTTY,
+                 179→		...options,
+                 180→	});
+                 181→
+                 182→	return translateLevel(level);
                 …
                  190→export default supportsColor;
 test/

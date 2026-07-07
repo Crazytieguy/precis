@@ -232,6 +232,10 @@ pub enum TsKey {
         /// Disambiguates sibling body slices.
         body_start_line: usize,
     },
+    /// Unified first-line catalog of a private-emitting entrypoint's
+    /// module items — one roster instead of a per-item train.
+    /// Predecessor of each `ModuleItem`.
+    ModuleItemNames { file: PathBuf },
     /// Top-level non-exported decl — module-private classes, helpers.
     ModuleItem { file: PathBuf, start_line: usize },
     /// Body slice of a non-exported decl. Predecessor: matching
@@ -675,7 +679,7 @@ impl InnerKey for TsKey {
             // Roster tier for the unified member catalog — measured:
             // dropping it to the default leaves axios flat and costs
             // commander -0.212 (2026-07-06).
-            TsKey::ExportMemberNames { .. } => 0.37,
+            TsKey::ExportMemberNames { .. } | TsKey::ModuleItemNames { .. } => 0.37,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -709,6 +713,7 @@ impl InnerKey for TsKey {
                 start_line,
                 body_start_line,
             } => describe_at_body("export body", file, *start_line, *body_start_line, root),
+            TsKey::ModuleItemNames { file } => describe_in("module item names surface", file, root),
             TsKey::ModuleItem { file, start_line } => {
                 describe_at("module item", file, *start_line, root)
             }

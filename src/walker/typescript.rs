@@ -521,7 +521,33 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // example's content the NS author anchored on.
         let emit_private_nonclass = (is_entrypoint_file(file) || ctx.is_readme_cited(file))
             && (is_tsx_file(file) || is_js_file(file));
-        for item in module_items {
+        let emitted_items: Vec<&ModuleItemInfo> = module_items
+            .iter()
+            .filter(|item| emit_private_nonclass || matches!(item.kind, ItemKind::Class))
+            .collect();
+        // A wide private surface ships as one first-line catalog with
+        // the per-item batches gated (and line-covered) behind it —
+        // NS authors anchor on the roster as a unit, and without it
+        // the items schedule as a ~15-token-apiece train that eats the
+        // early budget ahead of orientation content (cmdk index.tsx:
+        // ~40 items, ~1.5K tokens before the workspace manifests).
+        let mut module_items_gate: Option<BatchKey> = None;
+        if emitted_items.len() >= MODULE_ITEM_CATALOG_MIN {
+            let names_lines =
+                FileLines::new(emitted_items.iter().map(|item| item.start_line).collect());
+            if let Some(content) = single_file_lines_content(file, &source, names_lines) {
+                let key = BatchKey::Typescript(TsKey::ModuleItemNames { file: file.clone() });
+                out.push(Batch {
+                    key: key.clone(),
+                    predecessor: module_predecessor.clone(),
+                    content,
+                    value: module_item_names_value(file, ctx, js_factor, emitted_items.len())
+                        * per_export_factor,
+                });
+                module_items_gate = Some(key);
+            }
+        }
+        for item in module_items.iter() {
             if !emit_private_nonclass && !matches!(item.kind, ItemKind::Class) {
                 continue;
             }
@@ -529,17 +555,19 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 file: file.clone(),
                 start_line: item.start_line,
             };
-            if let Some(content) = single_file_lines_content(file, &source, item.lines) {
+            if let Some(content) = single_file_lines_content(file, &source, item.lines.clone()) {
                 out.push(Batch {
                     key: item_key.clone().into(),
-                    predecessor: module_predecessor.clone(),
+                    predecessor: module_items_gate
+                        .clone()
+                        .or_else(|| module_predecessor.clone()),
                     content,
                     value: module_item_value(file, item.kind, ctx, js_factor) * per_export_factor,
                 });
             }
             if !item.body_parts.is_empty() {
                 let item_predecessor = BatchKey::Typescript(item_key);
-                let parts = disjoint_body_parts(item.body_parts);
+                let parts = disjoint_body_parts(item.body_parts.clone());
                 // Module-level class method bodies are sibling units (one
                 // per method), each independently relevant — unlike
                 // function body fragments which compete as alternatives.
@@ -2129,6 +2157,19 @@ fn module_item_class_boost(kind: ItemKind) -> f64 {
     } else {
         1.0
     }
+}
+
+/// Minimum emitted module items for the unified first-line catalog —
+/// below this the per-item batches are not a flood worth a roster.
+const MODULE_ITEM_CATALOG_MIN: usize = 6;
+
+/// Names-surface tier for the module-item catalog, roster-mass
+/// neutralized like the other unified catalogs.
+fn module_item_names_value(file: &Path, ctx: &WalkCtx, js_factor: f64, item_count: usize) -> f64 {
+    let cat = (0.5 * entrypoint_boost(file, ctx)).min(1.0);
+    mix_signals(cat, 0.55, 0.35, ts_depth_factor(file, ctx))
+        * js_factor
+        * roster_mass_factor(item_count)
 }
 
 fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
