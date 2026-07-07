@@ -198,13 +198,6 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         depth
     };
-    let small_listing_factor = if module_source_dir || src_of_sibling_modules {
-        // Module-source directories (htmy/renderer/, sps-core/src/install/)
-        // anchor on their own listings — keep them at full weight.
-        1.0
-    } else {
-        small_listing_decay(children.len(), ctx.depth_from_root(dir))
-    };
     // Source-inventory catalogs keep size-neutral ranking: a flat
     // partition's complete listing is the API map NS authors anchor on,
     // and without the factor an N-entry listing's ratio falls as N^-k
@@ -243,11 +236,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         1.0
     };
-    mix_signals(cat, fu, ztu, depth)
-        * small_listing_factor
-        * fanout
-        * catalog_child_factor
-        * test_index_boost
+    mix_signals(cat, fu, ztu, depth) * fanout * catalog_child_factor * test_index_boost
 }
 
 /// Min child-directory count for a parent to count as a "catalog" whose
@@ -288,19 +277,6 @@ fn child_dir_count_uncached(dir: &Path) -> usize {
         .values()
         .filter(|kind| matches!(kind, EntryKind::Directory))
         .count()
-}
-
-/// Damp deeply-nested tiny directory listings — they're redundant
-/// with the parent listing at depth ≥ 2.
-fn small_listing_decay(child_count: usize, depth: usize) -> f64 {
-    if depth < 2 {
-        return 1.0;
-    }
-    match child_count {
-        0..=2 => 0.45,
-        3 => 0.7,
-        _ => 1.0,
-    }
 }
 
 pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[

@@ -1,4 +1,4 @@
-Score(3000)=0.606 I=0.826 C=0.445 ns_rows≤3K=18/40 (reached=9 partial=1 missing=8)
+Score(3000)=0.626 I=0.868 C=0.452 ns_rows≤3K=18/40 (reached=10 partial=1 missing=7)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -66,49 +66,49 @@ Score(3000)=0.606 I=0.826 C=0.445 ns_rows≤3K=18/40 (reached=9 partial=1 missin
 | walker |  | 1249 | 53 | export names surface in lib/error.js |  |  | 0.521 |
 | walker |  | 1260 | 11 | export at lib/error.js:25 |  |  | 0.522 |
 | walker |  | 1276 | 16 | export at lib/error.js:4 |  |  | 0.522 |
-| walker |  | 1319 | 43 | export body at lib/option.js:3 body 204 |  |  | 0.522 |
-| walker |  | 1388 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.522 |
-| walker |  | 1435 | 47 | export body at lib/option.js:3 body 218 |  |  | 0.522 |
+| walker |  | 1301 | 25 | listing of 'docs/zh-CN' |  |  | 0.522 |
+| walker |  | 1344 | 43 | export body at lib/option.js:3 body 204 |  |  | 0.522 |
+| walker |  | 1413 | 69 | headings outline in docs/options-in-depth.md |  |  | 0.522 |
+| walker |  | 1460 | 47 | export body at lib/option.js:3 body 218 |  |  | 0.522 |
 | ns | 1514 |  | 285 | command.js: public-method roster, part 1 of 3 (constructor..action) | 2.1 |  | 0.486 |
-| walker |  | 1531 | 96 | export at lib/argument.js:3 |  |  | 0.486 |
-| walker |  | 1588 | 57 | export body at lib/error.js:25 body 31 |  |  | 0.486 |
-| walker |  | 1645 | 57 | export body at lib/option.js:3 body 166 |  |  | 0.486 |
-| walker |  | 1662 | 17 | export doc at lib/error.js:4 |  |  | 0.486 |
-| walker |  | 1714 | 52 | export body at lib/help.js:740 body 741 |  |  | 0.486 |
-| walker |  | 1769 | 55 | export body at lib/argument.js:143 body 144 |  |  | 0.486 |
-| walker |  | 1789 | 20 | export doc at lib/error.js:25 |  |  | 0.486 |
-| walker |  | 1803 | 14 | imports in lib/argument.js |  |  | 0.486 |
-| walker |  | 1817 | 14 | imports in lib/option.js |  |  | 0.486 |
+| walker |  | 1556 | 96 | export at lib/argument.js:3 |  |  | 0.486 |
+| walker |  | 1613 | 57 | export body at lib/error.js:25 body 31 |  |  | 0.486 |
+| walker |  | 1670 | 57 | export body at lib/option.js:3 body 166 |  |  | 0.486 |
+| walker |  | 1687 | 17 | export doc at lib/error.js:4 |  |  | 0.486 |
+| walker |  | 1739 | 52 | export body at lib/help.js:740 body 741 |  |  | 0.486 |
+| walker |  | 1794 | 55 | export body at lib/argument.js:143 body 144 |  |  | 0.486 |
+| walker |  | 1814 | 20 | export doc at lib/error.js:25 |  |  | 0.486 |
+| walker |  | 1828 | 14 | imports in lib/argument.js |  |  | 0.486 |
+| walker |  | 1842 | 14 | imports in lib/option.js |  |  | 0.486 |
 | ns | 1859 |  | 345 | command.js: public-method roster, part 2 of 3 (addOption..error) | 2.2 |  | 0.454 |
-| walker |  | 1899 | 82 | export body at lib/error.js:4 body 12 |  |  | 0.455 |
-| walker |  | 1916 | 17 | imports in lib/help.js |  |  | 0.455 |
-| walker |  | 2021 | 105 | export body at lib/option.js:3 body 101 |  |  | 0.455 |
-| walker |  | 2041 | 20 | listing of '.github' |  |  | 0.492 |
-| ns | 2106 |  | 247 | command.js: public-method roster, part 3 of 3 (version..addHelpText) | 2.3 |  | 0.467 |
-| walker |  | 2278 | 237 | listing of 'examples' |  |  | 0.643 |
-| walker |  | 2303 | 25 | listing of 'docs/zh-CN' |  |  | 0.643 |
-| walker |  | 2384 | 81 | imports in index.js |  |  | 0.679 |
-| walker |  | 2395 | 11 | export names surface in esm.mjs |  |  | 0.679 |
-| walker |  | 2406 | 11 | imports in esm.mjs |  |  | 0.680 |
-| ns | 2460 |  | 354 | Readme.md: Quick Start, part 1 (boolean+value options example) | 3.1 |  | 0.626 |
-| walker |  | 2503 | 97 | export at esm.mjs:4 |  |  | 0.667 |
-| walker |  | 2652 | 149 | package identity metadata in package.json |  |  | 0.667 |
-| ns | 2993 |  | 533 | Readme.md: Quick Start, part 2 (subcommand-with-action example) | 3.2 |  | 0.606 |
-| walker |  | 3088 | 436 | export member names at lib/help.js:12 |  |  | 0.608 |
-| walker |  | 3372 | 284 | package entrypoints in package.json |  |  | 0.608 |
-| walker |  | 3400 | 28 | package runtime metadata in package.json |  |  | 0.617 |
-| walker |  | 3657 | 257 | package scripts in package.json |  |  | 0.655 |
-| ns | 3789 |  | 796 | command.js: .addOption() body | 3.3 | 2.2 | 0.585 |
-| ns | 4358 |  | 569 | Readme.md: Common option types, boolean and value | 3.4 |  | 0.549 |
-| walker |  | 4360 | 703 | export member names at lib/command.js:13 |  |  | 0.578 |
-| walker |  | 4394 | 34 | export doc at lib/command.js:2752 |  |  | 0.578 |
-| walker |  | 4521 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.578 |
-| walker |  | 4549 | 28 | export names surface in lib/suggestSimilar.js |  |  | 0.578 |
-| walker |  | 4549 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.578 |
-| walker |  | 4575 | 26 | module item at examples/custom-command-class.js:6 |  |  | 0.578 |
-| ns | 4584 |  | 226 | Readme.md: Required option | 3.5 |  | 0.562 |
-| walker |  | 4585 | 10 | listing of '.github/workflows' |  |  | 0.580 |
-| walker |  | 4920 | 335 | YAML config at .github/workflows/tests.yml |  |  | 0.580 |
+| walker |  | 1924 | 82 | export body at lib/error.js:4 body 12 |  |  | 0.455 |
+| walker |  | 1941 | 17 | imports in lib/help.js |  |  | 0.455 |
+| walker |  | 2046 | 105 | export body at lib/option.js:3 body 101 |  |  | 0.455 |
+| walker |  | 2066 | 20 | listing of '.github' |  |  | 0.492 |
+| walker |  | 2076 | 10 | listing of '.github/workflows' |  |  | 0.514 |
+| ns | 2106 |  | 247 | command.js: public-method roster, part 3 of 3 (version..addHelpText) | 2.3 |  | 0.489 |
+| walker |  | 2411 | 335 | YAML config at .github/workflows/tests.yml |  |  | 0.489 |
+| ns | 2460 |  | 354 | Readme.md: Quick Start, part 1 (boolean+value options example) | 3.1 |  | 0.450 |
+| walker |  | 2648 | 237 | listing of 'examples' |  |  | 0.613 |
+| walker |  | 2729 | 81 | imports in index.js |  |  | 0.647 |
+| walker |  | 2740 | 11 | export names surface in esm.mjs |  |  | 0.647 |
+| walker |  | 2751 | 11 | imports in esm.mjs |  |  | 0.648 |
+| walker |  | 2848 | 97 | export at esm.mjs:4 |  |  | 0.690 |
+| ns | 2993 |  | 533 | Readme.md: Quick Start, part 2 (subcommand-with-action example) | 3.2 |  | 0.626 |
+| walker |  | 2997 | 149 | package identity metadata in package.json |  |  | 0.626 |
+| walker |  | 3433 | 436 | export member names at lib/help.js:12 |  |  | 0.628 |
+| walker |  | 3717 | 284 | package entrypoints in package.json |  |  | 0.628 |
+| walker |  | 3745 | 28 | package runtime metadata in package.json |  |  | 0.637 |
+| ns | 3789 |  | 796 | command.js: .addOption() body | 3.3 | 2.2 | 0.569 |
+| walker |  | 4002 | 257 | package scripts in package.json |  |  | 0.603 |
+| ns | 4358 |  | 569 | Readme.md: Common option types, boolean and value | 3.4 |  | 0.566 |
+| ns | 4584 |  | 226 | Readme.md: Required option | 3.5 |  | 0.551 |
+| walker |  | 4705 | 703 | export member names at lib/command.js:13 |  |  | 0.580 |
+| walker |  | 4739 | 34 | export doc at lib/command.js:2752 |  |  | 0.580 |
+| walker |  | 4866 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.580 |
+| walker |  | 4894 | 28 | export names surface in lib/suggestSimilar.js |  |  | 0.580 |
+| walker |  | 4894 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.580 |
+| walker |  | 4920 | 26 | module item at examples/custom-command-class.js:6 |  |  | 0.580 |
 | ns | 5046 |  | 462 | Readme.md: Commands intro | 3.6 |  | 0.555 |
 | walker |  | 5083 | 163 | headings outline in docs/zh-CN/不再推荐使用的功能.md |  |  | 0.555 |
 | walker |  | 5095 | 12 | module item at examples/custom-command-class.js:15 |  |  | 0.555 |

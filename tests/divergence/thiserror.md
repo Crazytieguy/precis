@@ -27,13 +27,13 @@ Score(3000)=0.557 I=0.828 C=0.374 ns_rows≤3K=21/45 (reached=9 partial=3 missin
 | walker |  | 912 | 166 | [features] in Cargo.toml |  |  | 0.537 |
 | walker |  | 984 | 72 | listing of 'tests' |  |  | 0.636 |
 | walker |  | 992 | 8 | listing of '.github' |  |  | 0.643 |
-| walker |  | 1039 | 47 | listing of 'impl/src' |  |  | 0.784 |
-| walker |  | 1081 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.784 |
-| ns | 1087 |  | 252 | impl/src/lib.rs — #[proc_macro_derive] entry point | 1.14 |  | 0.703 |
-| walker |  | 1116 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.709 |
-| walker |  | 1147 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.717 |
-| walker |  | 1280 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.783 |
-| walker |  | 1284 | 4 | listing of '.github/workflows' |  |  | 0.791 |
+| walker |  | 996 | 4 | listing of '.github/workflows' |  |  | 0.652 |
+| walker |  | 1043 | 47 | listing of 'impl/src' |  |  | 0.793 |
+| walker |  | 1085 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.793 |
+| ns | 1087 |  | 252 | impl/src/lib.rs — #[proc_macro_derive] entry point | 1.14 |  | 0.711 |
+| walker |  | 1120 | 35 | impl method sigs in impl/src/lib.rs |  |  | 0.717 |
+| walker |  | 1151 | 31 | pub item body at impl/src/lib.rs:40 body 41 |  |  | 0.725 |
+| walker |  | 1284 | 133 | mod/use plumbing in impl/src/lib.rs |  |  | 0.791 |
 | ns | 1323 |  | 236 | src/lib.rs — module wiring epilogue | 1.15 |  | 0.722 |
 | walker |  | 1407 | 123 | manifest config in Cargo.toml |  |  | 0.722 |
 | walker |  | 1517 | 110 | [dependencies] in Cargo.toml |  |  | 0.732 |
@@ -122,41 +122,42 @@ Score(3000)=0.557 I=0.828 C=0.374 ns_rows≤3K=21/45 (reached=9 partial=3 missin
 | walker |  | 8294 | 10 | pub item body at impl/src/attr.rs:69 body 121 |  |  | 0.547 |
 | walker |  | 8327 | 33 | pub item at tests/test_backtrace.rs:13 |  |  | 0.547 |
 | walker |  | 8352 | 25 | pub item at src/aserror.rs:5 |  |  | 0.547 |
-| ns | 8481 |  | 194 | build.rs — rerun-if-changed / rustc-check-cfg declarations + OUT_DIR/private.rs generation | 10.1 |  | 0.542 |
-| walker |  | 8544 | 192 | mod/use plumbing in impl/src/fmt.rs |  |  | 0.542 |
-| ns | 8683 |  | 202 | ci.yml — header + every job key (roster) | 11.1 |  | 0.533 |
-| walker |  | 8716 | 172 | README.md section #7 |  |  | 0.533 |
-| walker |  | 8754 | 38 | pub item at tests/test_path.rs:29 |  |  | 0.533 |
-| walker |  | 8936 | 182 | README.md section #5 |  |  | 0.533 |
-| ns | 8947 |  | 264 | ci.yml — primary `test` job detail | 11.2 |  | 0.525 |
-| walker |  | 8966 | 30 | pub item at src/provide.rs:4 |  |  | 0.526 |
-| ns | 8990 |  | 43 | rust-toolchain.toml + .gitignore + FUNDING.yml | 11.3 |  | 0.524 |
-| walker |  | 9003 | 37 | pub-item names surface in tests/test_source.rs |  |  | 0.524 |
-| walker |  | 9031 | 28 | pub item at tests/test_source.rs:7 |  |  | 0.524 |
-| walker |  | 9074 | 43 | pub item at tests/test_source.rs:13 |  |  | 0.524 |
-| walker |  | 9115 | 41 | pub item at tests/test_source.rs:21 |  |  | 0.524 |
-| walker |  | 9139 | 24 | pub item at tests/ui/display-underscore.rs:5 |  |  | 0.524 |
-| walker |  | 9163 | 24 | pub item at tests/ui/unconditional-recursion.rs:5 |  |  | 0.524 |
-| ns | 9180 |  | 190 | tests/test_error.rs — canonical error shapes | 12.1 |  | 0.516 |
-| walker |  | 9187 | 24 | pub item at tests/ui/unexpected-struct-source.rs:5 |  |  | 0.516 |
-| ns | 9384 |  | 204 | tests/test_from.rs — #[from] shapes (struct/tuple, plain and Option<T>) | 12.2 |  | 0.508 |
-| walker |  | 9388 | 201 | README.md section #8 |  |  | 0.508 |
-| walker |  | 9413 | 25 | pub item at tests/ui/expression-fallback.rs:5 |  |  | 0.508 |
-| walker |  | 9438 | 25 | pub item at tests/ui/fallback-impl-with-display.rs:6 |  |  | 0.508 |
-| walker |  | 9463 | 25 | pub item at tests/ui/invalid-input-impl-anyway.rs:5 |  |  | 0.508 |
-| walker |  | 9488 | 25 | pub item at tests/ui/transparent-struct-unnamed-field-not-error.rs:5 |  |  | 0.508 |
-| walker |  | 9514 | 26 | pub item at tests/ui/numbered-positional-tuple.rs:5 |  |  | 0.508 |
-| walker |  | 9540 | 26 | pub item at tests/ui/struct-with-fmt.rs:5 |  |  | 0.508 |
-| walker |  | 9568 | 28 | pub item at tests/ui/duplicate-transparent.rs:6 |  |  | 0.508 |
-| walker |  | 9596 | 28 | pub item at tests/ui/transparent-display.rs:6 |  |  | 0.508 |
-| walker |  | 9620 | 24 | pub-item names surface in tests/ui/no-display.rs |  |  | 0.508 |
-| walker |  | 9647 | 27 | pub item at tests/ui/no-display.rs:8 |  |  | 0.508 |
-| walker |  | 9672 | 25 | pub item at tests/ui/no-display.rs:14 |  |  | 0.508 |
-| walker |  | 9696 | 24 | pub-item names surface in tests/ui/source-enum-not-error.rs |  |  | 0.508 |
-| walker |  | 9704 | 8 | pub item at tests/ui/source-enum-not-error.rs:4 |  |  | 0.508 |
-| walker |  | 9731 | 27 | pub item at tests/ui/source-enum-not-error.rs:8 |  |  | 0.508 |
-| walker |  | 9755 | 24 | pub-item names surface in tests/ui/source-enum-unnamed-field-not-error.rs |  |  | 0.508 |
-| walker |  | 9763 | 8 | pub item at tests/ui/source-enum-unnamed-field-not-error.rs:4 |  |  | 0.508 |
-| walker |  | 9791 | 28 | pub item at tests/ui/source-enum-unnamed-field-not-error.rs:8 |  |  | 0.508 |
-| walker |  | 9858 | 67 | pub item at tests/test_path.rs:35 |  |  | 0.508 |
-| ns | 9912 |  | 528 | tests/ui/ directory listing (all 37 compile-fail cases + their .stderr) | 13.1 |  | 0.546 |
+| walker |  | 8361 | 9 | listing of 'tests/no-std' |  |  | 0.555 |
+| ns | 8481 |  | 194 | build.rs — rerun-if-changed / rustc-check-cfg declarations + OUT_DIR/private.rs generation | 10.1 |  | 0.550 |
+| walker |  | 8553 | 192 | mod/use plumbing in impl/src/fmt.rs |  |  | 0.550 |
+| ns | 8683 |  | 202 | ci.yml — header + every job key (roster) | 11.1 |  | 0.541 |
+| walker |  | 8725 | 172 | README.md section #7 |  |  | 0.541 |
+| walker |  | 8763 | 38 | pub item at tests/test_path.rs:29 |  |  | 0.541 |
+| walker |  | 8945 | 182 | README.md section #5 |  |  | 0.541 |
+| ns | 8947 |  | 264 | ci.yml — primary `test` job detail | 11.2 |  | 0.533 |
+| walker |  | 8975 | 30 | pub item at src/provide.rs:4 |  |  | 0.534 |
+| ns | 8990 |  | 43 | rust-toolchain.toml + .gitignore + FUNDING.yml | 11.3 |  | 0.532 |
+| walker |  | 9012 | 37 | pub-item names surface in tests/test_source.rs |  |  | 0.532 |
+| walker |  | 9040 | 28 | pub item at tests/test_source.rs:7 |  |  | 0.532 |
+| walker |  | 9083 | 43 | pub item at tests/test_source.rs:13 |  |  | 0.532 |
+| walker |  | 9124 | 41 | pub item at tests/test_source.rs:21 |  |  | 0.532 |
+| walker |  | 9148 | 24 | pub item at tests/ui/display-underscore.rs:5 |  |  | 0.532 |
+| walker |  | 9172 | 24 | pub item at tests/ui/unconditional-recursion.rs:5 |  |  | 0.532 |
+| ns | 9180 |  | 190 | tests/test_error.rs — canonical error shapes | 12.1 |  | 0.524 |
+| walker |  | 9196 | 24 | pub item at tests/ui/unexpected-struct-source.rs:5 |  |  | 0.524 |
+| ns | 9384 |  | 204 | tests/test_from.rs — #[from] shapes (struct/tuple, plain and Option<T>) | 12.2 |  | 0.516 |
+| walker |  | 9397 | 201 | README.md section #8 |  |  | 0.516 |
+| walker |  | 9422 | 25 | pub item at tests/ui/expression-fallback.rs:5 |  |  | 0.516 |
+| walker |  | 9447 | 25 | pub item at tests/ui/fallback-impl-with-display.rs:6 |  |  | 0.516 |
+| walker |  | 9472 | 25 | pub item at tests/ui/invalid-input-impl-anyway.rs:5 |  |  | 0.516 |
+| walker |  | 9497 | 25 | pub item at tests/ui/transparent-struct-unnamed-field-not-error.rs:5 |  |  | 0.516 |
+| walker |  | 9523 | 26 | pub item at tests/ui/numbered-positional-tuple.rs:5 |  |  | 0.516 |
+| walker |  | 9549 | 26 | pub item at tests/ui/struct-with-fmt.rs:5 |  |  | 0.516 |
+| walker |  | 9577 | 28 | pub item at tests/ui/duplicate-transparent.rs:6 |  |  | 0.516 |
+| walker |  | 9605 | 28 | pub item at tests/ui/transparent-display.rs:6 |  |  | 0.516 |
+| walker |  | 9629 | 24 | pub-item names surface in tests/ui/no-display.rs |  |  | 0.516 |
+| walker |  | 9656 | 27 | pub item at tests/ui/no-display.rs:8 |  |  | 0.516 |
+| walker |  | 9681 | 25 | pub item at tests/ui/no-display.rs:14 |  |  | 0.516 |
+| walker |  | 9705 | 24 | pub-item names surface in tests/ui/source-enum-not-error.rs |  |  | 0.516 |
+| walker |  | 9713 | 8 | pub item at tests/ui/source-enum-not-error.rs:4 |  |  | 0.516 |
+| walker |  | 9740 | 27 | pub item at tests/ui/source-enum-not-error.rs:8 |  |  | 0.516 |
+| walker |  | 9764 | 24 | pub-item names surface in tests/ui/source-enum-unnamed-field-not-error.rs |  |  | 0.516 |
+| walker |  | 9772 | 8 | pub item at tests/ui/source-enum-unnamed-field-not-error.rs:4 |  |  | 0.516 |
+| walker |  | 9800 | 28 | pub item at tests/ui/source-enum-unnamed-field-not-error.rs:8 |  |  | 0.516 |
+| walker |  | 9867 | 67 | pub item at tests/test_path.rs:35 |  |  | 0.516 |
+| ns | 9912 |  | 528 | tests/ui/ directory listing (all 37 compile-fail cases + their .stderr) | 13.1 |  | 0.553 |

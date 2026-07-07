@@ -1,4 +1,4 @@
-Score(3000)=0.365 I=0.663 C=0.201 ns_rows≤3K=31/50 (reached=6 partial=1 missing=24)
+Score(3000)=0.412 I=0.672 C=0.253 ns_rows≤3K=31/50 (reached=7 partial=1 missing=23)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -23,472 +23,478 @@ Score(3000)=0.365 I=0.663 C=0.201 ns_rows≤3K=31/50 (reached=6 partial=1 missin
 | ns | 385 |  | 29 | internal/site/src/ directory listing | 1.8 |  | 0.444 |
 | walker |  | 396 | 25 | go package + imports in beszel.go |  |  | 0.447 |
 | walker |  | 422 | 26 | listing of 'supplemental' |  |  | 0.551 |
-| walker |  | 432 | 10 | listing of 'supplemental/docker' |  |  | 0.551 |
+| walker |  | 427 | 5 | listing of 'supplemental/guides' |  |  | 0.551 |
+| walker |  | 433 | 6 | listing of 'supplemental/kubernetes' |  |  | 0.551 |
+| walker |  | 436 | 3 | listing of 'supplemental/kubernetes/beszel-hub' |  |  | 0.551 |
 | ns | 437 |  | 52 | internal/site/src/lib/ directory listing | 1.9 |  | 0.499 |
-| walker |  | 460 | 28 | readme.md section #23 |  |  | 0.499 |
-| walker |  | 526 | 66 | listing of 'internal' |  |  | 0.506 |
-| walker |  | 539 | 13 | listing of 'internal/entities' |  |  | 0.564 |
-| walker |  | 569 | 30 | listing of 'internal/ghupdate' |  |  | 0.564 |
-| walker |  | 605 | 36 | go decl names surface in internal/ghupdate/selinux.go |  |  | 0.564 |
-| walker |  | 605 | 0 | go decl at internal/ghupdate/selinux.go:10 |  |  | 0.564 |
-| walker |  | 605 | 0 | go decl at internal/ghupdate/selinux.go:41 |  |  | 0.564 |
-| walker |  | 624 | 19 | readme.md section #1 |  |  | 0.564 |
-| walker |  | 641 | 17 | readme.md section #2 |  |  | 0.564 |
+| walker |  | 446 | 10 | listing of 'supplemental/docker' |  |  | 0.499 |
+| walker |  | 451 | 5 | listing of 'supplemental/docker/agent' |  |  | 0.499 |
+| walker |  | 456 | 5 | listing of 'supplemental/docker/hub' |  |  | 0.499 |
+| walker |  | 461 | 5 | listing of 'supplemental/docker/same-system' |  |  | 0.499 |
+| walker |  | 471 | 10 | listing of 'supplemental/licenses' |  |  | 0.499 |
+| walker |  | 474 | 3 | listing of 'supplemental/licenses/LibreHardwareMonitor' |  |  | 0.499 |
+| walker |  | 477 | 3 | listing of 'supplemental/licenses/smartmontools' |  |  | 0.499 |
+| walker |  | 505 | 28 | readme.md section #23 |  |  | 0.499 |
+| walker |  | 571 | 66 | listing of 'internal' |  |  | 0.507 |
+| walker |  | 575 | 4 | listing of 'internal/users' |  |  | 0.507 |
+| walker |  | 581 | 6 | listing of 'internal/cmd' |  |  | 0.507 |
+| walker |  | 585 | 4 | listing of 'internal/cmd/hub' |  |  | 0.507 |
+| walker |  | 597 | 12 | listing of 'internal/common' |  |  | 0.507 |
+| walker |  | 610 | 13 | listing of 'internal/entities' |  |  | 0.564 |
+| walker |  | 614 | 4 | listing of 'internal/entities/container' |  |  | 0.564 |
+| walker |  | 618 | 4 | listing of 'internal/entities/system' |  |  | 0.564 |
+| walker |  | 627 | 9 | listing of 'internal/cmd/agent' |  |  | 0.564 |
+| walker |  | 636 | 9 | listing of 'internal/entities/smart' |  |  | 0.564 |
+| walker |  | 647 | 11 | listing of 'internal/entities/systemd' |  |  | 0.564 |
 | ns | 652 |  | 215 | beszel.go — version/AppName constants | 1.10 |  | 0.622 |
-| walker |  | 677 | 36 | listing of 'internal/records' |  |  | 0.625 |
-| ns | 707 |  | 55 | internal/hub/ws/, transport/, expirymap/ directory listings | 1.11 |  | 0.583 |
-| walker |  | 714 | 37 | listing of 'supplemental/debian' |  |  | 0.584 |
-| walker |  | 718 | 4 | listing of 'internal/users' |  |  | 0.584 |
-| ns | 764 |  | 57 | internal/hub/systems/ directory listing | 1.12 |  | 0.552 |
-| walker |  | 768 | 50 | go decl names surface in internal/ghupdate/release.go |  |  | 0.552 |
-| walker |  | 768 | 0 | go decl at internal/ghupdate/release.go:26 |  |  | 0.552 |
-| walker |  | 791 | 23 | readme.md section #3 |  |  | 0.552 |
-| walker |  | 815 | 24 | readme.md section #7 |  |  | 0.552 |
+| walker |  | 677 | 30 | listing of 'internal/ghupdate' |  |  | 0.622 |
+| ns | 707 |  | 55 | internal/hub/ws/, transport/, expirymap/ directory listings | 1.11 |  | 0.581 |
+| walker |  | 713 | 36 | go decl names surface in internal/ghupdate/selinux.go |  |  | 0.581 |
+| walker |  | 713 | 0 | go decl at internal/ghupdate/selinux.go:10 |  |  | 0.581 |
+| walker |  | 713 | 0 | go decl at internal/ghupdate/selinux.go:41 |  |  | 0.581 |
+| walker |  | 722 | 9 | go package + imports in internal/common/common-ssh.go |  |  | 0.581 |
+| walker |  | 741 | 19 | readme.md section #1 |  |  | 0.581 |
+| walker |  | 758 | 17 | readme.md section #2 |  |  | 0.581 |
+| ns | 764 |  | 57 | internal/hub/systems/ directory listing | 1.12 |  | 0.549 |
+| walker |  | 794 | 36 | listing of 'internal/records' |  |  | 0.552 |
 | ns | 822 |  | 58 | internal/records/ + internal/migrations/ directory listings | 1.13 |  | 0.557 |
-| walker |  | 839 | 24 | readme.md section #6 |  |  | 0.557 |
-| walker |  | 863 | 24 | readme.md section #5 |  |  | 0.557 |
-| walker |  | 868 | 5 | listing of 'supplemental/guides' |  |  | 0.557 |
-| walker |  | 923 | 55 | readme.md section #9 |  |  | 0.557 |
-| walker |  | 938 | 15 | readme.md section #16 |  |  | 0.557 |
-| walker |  | 951 | 13 | readme.md section #17 |  |  | 0.557 |
-| walker |  | 966 | 15 | readme.md section #15 |  |  | 0.557 |
-| walker |  | 1027 | 61 | go decl names surface in internal/records/records_test_helpers.go |  |  | 0.557 |
-| walker |  | 1027 | 0 | go decl at internal/records/records_test_helpers.go:10 |  |  | 0.557 |
-| walker |  | 1027 | 0 | go decl at internal/records/records_test_helpers.go:15 |  |  | 0.557 |
-| walker |  | 1027 | 0 | go decl at internal/records/records_test_helpers.go:20 |  |  | 0.557 |
-| ns | 1030 |  | 208 | README lede (head) | 1.14 |  | 0.539 |
-| walker |  | 1036 | 9 | go decl body at internal/records/records_test_helpers.go:20 |  |  | 0.539 |
-| walker |  | 1047 | 11 | go decl body at internal/records/records_test_helpers.go:10 |  |  | 0.539 |
-| walker |  | 1060 | 13 | go decl doc at internal/records/records_test_helpers.go:20 |  |  | 0.539 |
-| walker |  | 1077 | 17 | go decl doc at internal/records/records_test_helpers.go:10 |  |  | 0.539 |
-| walker |  | 1094 | 17 | go decl doc at internal/records/records_test_helpers.go:15 |  |  | 0.539 |
-| ns | 1096 |  | 66 | internal/ directory listing | 1.15 |  | 0.580 |
-| ns | 1100 |  | 4 | internal/site/src/locales/en/ directory listing | 1.16 |  | 0.578 |
-| ns | 1108 |  | 8 | internal/tests/ directory listing | 1.17 |  | 0.573 |
-| walker |  | 1121 | 27 | readme.md section #4 |  |  | 0.573 |
-| walker |  | 1197 | 76 | headings outline in supplemental/guides/systemd.md |  |  | 0.573 |
-| ns | 1210 |  | 102 | README architecture (hub/agent split) | 1.18 |  | 0.560 |
-| walker |  | 1213 | 16 | readme.md section #19 |  |  | 0.560 |
-| ns | 1285 |  | 75 | internal/site/ top-level listing | 1.19 |  | 0.528 |
-| ns | 1372 |  | 87 | internal/hub/ directory listing | 1.20 |  | 0.494 |
-| ns | 1467 |  | 95 | README supported metrics list (head) | 1.21 |  | 0.485 |
-| walker |  | 1520 | 307 | readme.md section #0 |  |  | 0.511 |
-| walker |  | 1541 | 21 | go decl doc at internal/ghupdate/selinux.go:10 |  |  | 0.511 |
-| ns | 1565 |  | 98 | internal/alerts/ directory listing | 1.22 |  | 0.487 |
-| walker |  | 1597 | 56 | readme.md section #10 |  |  | 0.487 |
-| walker |  | 1603 | 6 | listing of 'internal/cmd' |  |  | 0.487 |
-| walker |  | 1609 | 6 | listing of 'supplemental/kubernetes' |  |  | 0.487 |
-| walker |  | 1612 | 3 | listing of 'supplemental/kubernetes/beszel-hub' |  |  | 0.487 |
-| walker |  | 1628 | 16 | listing of 'supplemental/kubernetes/beszel-hub/charts' |  |  | 0.487 |
-| ns | 1711 |  | 146 | internal/hub/utils/utils.go — full | 1.23 |  | 0.472 |
-| ns | 1811 |  | 100 | internal/site/src/locales/ directory listing — all 32 supported languages | 1.24 |  | 0.437 |
-| ns | 1927 |  | 116 | internal/site/src/components/ directory listing | 1.25 |  | 0.416 |
-| walker |  | 1996 | 368 | listing of 'agent' |  |  | 0.423 |
-| walker |  | 2014 | 18 | go decl names surface in agent/sensors_default.go |  |  | 0.423 |
-| walker |  | 2034 | 20 | go decl names surface in agent/smart_nonwindows.go |  |  | 0.423 |
-| walker |  | 2034 | 0 | go decl at agent/smart_nonwindows.go:7 |  |  | 0.423 |
-| walker |  | 2056 | 22 | go decl names surface in agent/agent_test_helpers.go |  |  | 0.423 |
-| walker |  | 2056 | 0 | go decl at agent/agent_test_helpers.go:6 |  |  | 0.423 |
-| walker |  | 2081 | 25 | go decl names surface in agent/response.go |  |  | 0.423 |
-| walker |  | 2081 | 0 | go decl at agent/response.go:13 |  |  | 0.423 |
-| walker |  | 2090 | 9 | go decl body at agent/agent_test_helpers.go:6 |  |  | 0.423 |
-| ns | 2104 |  | 177 | supplemental/CHANGELOG.md — most recent release-note entries (head) | 1.26 |  | 0.412 |
-| walker |  | 2129 | 39 | go decl names surface in agent/gpu_darwin_unsupported.go |  |  | 0.412 |
-| walker |  | 2129 | 0 | go decl at agent/gpu_darwin_unsupported.go:6 |  |  | 0.412 |
-| walker |  | 2129 | 0 | go decl at agent/gpu_darwin_unsupported.go:9 |  |  | 0.412 |
-| walker |  | 2138 | 9 | go package + imports in agent/agent_test_helpers.go |  |  | 0.412 |
-| walker |  | 2147 | 9 | go package + imports in agent/gpu_darwin_unsupported.go |  |  | 0.412 |
-| walker |  | 2190 | 43 | go decl names surface in agent/gpu_amd_unsupported.go |  |  | 0.412 |
-| walker |  | 2190 | 0 | go decl at agent/gpu_amd_unsupported.go:9 |  |  | 0.412 |
-| walker |  | 2190 | 0 | go decl at agent/gpu_amd_unsupported.go:13 |  |  | 0.412 |
-| walker |  | 2237 | 47 | go decl names surface in agent/emmc_stub.go |  |  | 0.412 |
-| walker |  | 2237 | 0 | go decl at agent/emmc_stub.go:7 |  |  | 0.412 |
-| walker |  | 2237 | 0 | go decl at agent/emmc_stub.go:11 |  |  | 0.412 |
-| walker |  | 2246 | 9 | go package + imports in agent/emmc_stub.go |  |  | 0.412 |
-| ns | 2254 |  | 150 | internal/site/src/components/ui/ directory listing | 1.27 |  | 0.390 |
-| walker |  | 2293 | 47 | go decl names surface in agent/gpu_nvml_unsupported.go |  |  | 0.390 |
-| walker |  | 2293 | 0 | go decl at agent/gpu_nvml_unsupported.go:11 |  |  | 0.390 |
-| walker |  | 2306 | 13 | go decl at agent/gpu_nvml_unsupported.go:7 |  |  | 0.390 |
-| walker |  | 2353 | 47 | go decl names surface in agent/mdraid_stub.go |  |  | 0.390 |
-| walker |  | 2353 | 0 | go decl at agent/mdraid_stub.go:5 |  |  | 0.390 |
-| walker |  | 2353 | 0 | go decl at agent/mdraid_stub.go:9 |  |  | 0.390 |
-| walker |  | 2360 | 7 | go package + imports in agent/mdraid_stub.go |  |  | 0.390 |
-| walker |  | 2367 | 7 | go decl body at agent/emmc_stub.go:7 |  |  | 0.390 |
-| walker |  | 2374 | 7 | go decl body at agent/mdraid_stub.go:5 |  |  | 0.390 |
-| ns | 2395 |  | 141 | supplemental/ subdirectory breadth | 1.28 |  | 0.383 |
-| walker |  | 2402 | 28 | listing of 'agent/test-data' |  |  | 0.383 |
-| walker |  | 2409 | 7 | go decl body at agent/gpu_amd_unsupported.go:9 |  |  | 0.383 |
-| walker |  | 2441 | 32 | listing of 'agent/battery' |  |  | 0.383 |
-| walker |  | 2477 | 36 | go decl names surface in agent/battery/battery_stub.go |  |  | 0.383 |
-| walker |  | 2477 | 0 | go decl at agent/battery/battery_stub.go:7 |  |  | 0.383 |
-| walker |  | 2477 | 0 | go decl at agent/battery/battery_stub.go:11 |  |  | 0.383 |
-| walker |  | 2484 | 7 | go decl body at agent/battery/battery_stub.go:7 |  |  | 0.383 |
-| walker |  | 2506 | 22 | go decl doc at agent/agent_test_helpers.go:6 |  |  | 0.383 |
-| walker |  | 2517 | 11 | go package + imports in agent/battery/battery.go |  |  | 0.383 |
-| walker |  | 2537 | 20 | go package + imports in agent/gpu_nvml_unsupported.go |  |  | 0.383 |
-| walker |  | 2557 | 20 | go package + imports in agent/smart_nonwindows.go |  |  | 0.383 |
-| walker |  | 2566 | 9 | go decl body at agent/emmc_stub.go:11 |  |  | 0.383 |
-| walker |  | 2575 | 9 | go decl body at agent/gpu_amd_unsupported.go:13 |  |  | 0.383 |
-| walker |  | 2584 | 9 | go decl body at agent/mdraid_stub.go:9 |  |  | 0.383 |
-| ns | 2596 |  | 201 | PocketBase collection roster — all 14 collection names | 1.29 |  | 0.375 |
-| walker |  | 2634 | 50 | go decl names surface in agent/battery/battery.go |  |  | 0.375 |
-| walker |  | 2641 | 7 | go decl at agent/battery/battery.go:4 |  |  | 0.375 |
-| walker |  | 2651 | 10 | go decl body at agent/smart_nonwindows.go:7 |  |  | 0.375 |
-| walker |  | 2677 | 26 | listing of 'agent/test-data/smart' |  |  | 0.375 |
-| ns | 2752 |  | 156 | agent/ subpackage breadth (battery, deltatracker, health, lhm, test-data, tools, utils, zfs) | 1.30 |  | 0.382 |
-| walker |  | 2782 | 105 | go decl names surface in agent/agent_cache.go |  |  | 0.382 |
-| walker |  | 2782 | 0 | go decl at agent/agent_cache.go:21 |  |  | 0.382 |
-| walker |  | 2782 | 0 | go decl at agent/agent_cache.go:28 |  |  | 0.382 |
-| walker |  | 2782 | 0 | go decl at agent/agent_cache.go:44 |  |  | 0.382 |
-| walker |  | 2802 | 20 | go decl doc at agent/agent_cache.go:21 |  |  | 0.382 |
-| walker |  | 2826 | 24 | go decl at agent/agent_cache.go:15 |  |  | 0.382 |
-| walker |  | 2852 | 26 | go decl at agent/agent_cache.go:10 |  |  | 0.382 |
-| ns | 2941 |  | 189 | components/routes/ (+ system/, settings/) directory listings | 1.31 |  | 0.365 |
-| walker |  | 2958 | 106 | go decl names surface in agent/data_dir.go |  |  | 0.365 |
-| walker |  | 2958 | 0 | go decl at agent/data_dir.go:16 |  |  | 0.365 |
-| walker |  | 2958 | 0 | go decl at agent/data_dir.go:40 |  |  | 0.365 |
-| walker |  | 2958 | 0 | go decl at agent/data_dir.go:70 |  |  | 0.365 |
-| walker |  | 2958 | 0 | go decl at agent/data_dir.go:94 |  |  | 0.365 |
-| walker |  | 2958 | 0 | go decl at agent/data_dir.go:110 |  |  | 0.365 |
-| walker |  | 2971 | 13 | go decl doc at agent/data_dir.go:94 |  |  | 0.365 |
-| walker |  | 2986 | 15 | go decl body at agent/battery/battery_stub.go:11 |  |  | 0.365 |
-| walker |  | 3006 | 20 | listing of 'agent/zfs' |  |  | 0.374 |
-| walker |  | 3025 | 19 | go decl names surface in agent/zfs/zfs_unsupported.go |  |  | 0.374 |
-| walker |  | 3025 | 0 | go decl at agent/zfs/zfs_unsupported.go:7 |  |  | 0.374 |
-| walker |  | 3037 | 12 | go decl body at agent/zfs/zfs_unsupported.go:7 |  |  | 0.374 |
-| walker |  | 3158 | 121 | go decl names surface in agent/agent.go |  |  | 0.374 |
-| walker |  | 3158 | 0 | go decl at agent/agent.go:55 |  |  | 0.374 |
-| walker |  | 3158 | 0 | go decl at agent/agent.go:154 |  |  | 0.374 |
-| walker |  | 3158 | 0 | go decl at agent/agent.go:218 |  |  | 0.374 |
-| walker |  | 3158 | 0 | go decl at agent/agent.go:223 |  |  | 0.374 |
-| walker |  | 3175 | 17 | go decl doc at agent/agent.go:218 |  |  | 0.374 |
-| walker |  | 3198 | 23 | go decl body at agent/agent.go:218 |  |  | 0.374 |
-| ns | 3297 |  | 356 | docker-compose samples (hub, agent) | 1.32 |  | 0.361 |
-| walker |  | 3321 | 123 | go decl names surface in agent/emmc_common.go |  |  | 0.361 |
-| walker |  | 3321 | 0 | go decl at agent/emmc_common.go:9 |  |  | 0.361 |
-| walker |  | 3321 | 0 | go decl at agent/emmc_common.go:25 |  |  | 0.361 |
-| walker |  | 3321 | 0 | go decl at agent/emmc_common.go:42 |  |  | 0.361 |
-| walker |  | 3321 | 0 | go decl at agent/emmc_common.go:55 |  |  | 0.361 |
-| walker |  | 3321 | 0 | go decl at agent/emmc_common.go:68 |  |  | 0.361 |
-| walker |  | 3321 | 0 | go decl at agent/emmc_common.go:81 |  |  | 0.361 |
-| walker |  | 3446 | 125 | go decl names surface in agent/system.go |  |  | 0.361 |
-| walker |  | 3446 | 0 | go decl at agent/system.go:26 |  |  | 0.361 |
-| walker |  | 3446 | 0 | go decl at agent/system.go:111 |  |  | 0.361 |
-| walker |  | 3446 | 0 | go decl at agent/system.go:125 |  |  | 0.361 |
-| walker |  | 3446 | 0 | go decl at agent/system.go:131 |  |  | 0.361 |
-| walker |  | 3446 | 0 | go decl at agent/system.go:267 |  |  | 0.361 |
-| walker |  | 3461 | 15 | go decl doc at agent/system.go:131 |  |  | 0.361 |
-| walker |  | 3477 | 16 | go decl doc at agent/system.go:26 |  |  | 0.361 |
-| walker |  | 3494 | 17 | go decl doc at agent/agent_cache.go:44 |  |  | 0.361 |
-| walker |  | 3622 | 128 | go decl names surface in agent/gpu_nvtop.go |  |  | 0.361 |
-| walker |  | 3622 | 0 | go decl at agent/gpu_nvtop.go:26 |  |  | 0.361 |
-| walker |  | 3622 | 0 | go decl at agent/gpu_nvtop.go:36 |  |  | 0.361 |
-| walker |  | 3622 | 0 | go decl at agent/gpu_nvtop.go:45 |  |  | 0.361 |
-| walker |  | 3622 | 0 | go decl at agent/gpu_nvtop.go:103 |  |  | 0.361 |
-| walker |  | 3622 | 0 | go decl at agent/gpu_nvtop.go:140 |  |  | 0.361 |
-| walker |  | 3652 | 30 | go package + imports in agent/gpu_amd_unsupported.go |  |  | 0.361 |
-| ns | 3665 |  | 368 | agent/ directory listing | 1.33 |  | 0.443 |
-| walker |  | 3670 | 18 | readme.md section #18 |  |  | 0.443 |
-| walker |  | 3803 | 133 | go decl names surface in agent/systemd_nonlinux.go |  |  | 0.443 |
-| walker |  | 3803 | 0 | go decl at agent/systemd_nonlinux.go:17 |  |  | 0.443 |
-| walker |  | 3803 | 0 | go decl at agent/systemd_nonlinux.go:22 |  |  | 0.443 |
-| walker |  | 3803 | 0 | go decl at agent/systemd_nonlinux.go:27 |  |  | 0.443 |
-| walker |  | 3803 | 0 | go decl at agent/systemd_nonlinux.go:32 |  |  | 0.443 |
-| walker |  | 3803 | 0 | go decl at agent/systemd_nonlinux.go:36 |  |  | 0.443 |
-| walker |  | 3817 | 14 | go decl at agent/systemd_nonlinux.go:12 |  |  | 0.443 |
-| walker |  | 3824 | 7 | go decl body at agent/systemd_nonlinux.go:22 |  |  | 0.443 |
-| walker |  | 3832 | 8 | go decl body at agent/systemd_nonlinux.go:27 |  |  | 0.443 |
-| walker |  | 3840 | 8 | go decl body at agent/systemd_nonlinux.go:32 |  |  | 0.443 |
-| walker |  | 3854 | 14 | go decl doc at agent/systemd_nonlinux.go:17 |  |  | 0.443 |
-| walker |  | 3871 | 17 | go decl doc at agent/systemd_nonlinux.go:12 |  |  | 0.443 |
-| walker |  | 3886 | 15 | go decl doc at agent/systemd_nonlinux.go:22 |  |  | 0.443 |
-| ns | 3890 |  | 225 | internal/entities/systemd/systemd.go — Service struct | 1.34 |  | 0.437 |
-| walker |  | 3898 | 12 | go decl body at agent/systemd_nonlinux.go:17 |  |  | 0.437 |
-| walker |  | 3915 | 17 | go decl doc at agent/systemd_nonlinux.go:27 |  |  | 0.437 |
-| walker |  | 3932 | 17 | go decl doc at agent/systemd_nonlinux.go:32 |  |  | 0.437 |
-| walker |  | 3950 | 18 | go decl doc at agent/agent_cache.go:28 |  |  | 0.437 |
-| walker |  | 3968 | 18 | go decl doc at agent/gpu_nvtop.go:36 |  |  | 0.437 |
-| walker |  | 3986 | 18 | go decl doc at agent/system.go:111 |  |  | 0.437 |
-| walker |  | 4029 | 43 | go decl doc at agent/agent.go:55 |  |  | 0.437 |
-| walker |  | 4165 | 136 | go decl names surface in agent/fingerprint.go |  |  | 0.437 |
-| walker |  | 4165 | 0 | go decl at agent/fingerprint.go:18 |  |  | 0.437 |
-| walker |  | 4165 | 0 | go decl at agent/fingerprint.go:27 |  |  | 0.437 |
-| walker |  | 4165 | 0 | go decl at agent/fingerprint.go:43 |  |  | 0.437 |
-| walker |  | 4165 | 0 | go decl at agent/fingerprint.go:62 |  |  | 0.437 |
-| walker |  | 4165 | 0 | go decl at agent/fingerprint.go:75 |  |  | 0.437 |
-| walker |  | 4165 | 0 | go decl at agent/fingerprint.go:81 |  |  | 0.437 |
-| walker |  | 4180 | 15 | go decl doc at agent/fingerprint.go:75 |  |  | 0.437 |
-| walker |  | 4215 | 35 | go decl doc at agent/fingerprint.go:81 |  |  | 0.437 |
-| walker |  | 4231 | 16 | go decl doc at agent/fingerprint.go:62 |  |  | 0.437 |
-| walker |  | 4258 | 27 | go decl body at agent/fingerprint.go:75 |  |  | 0.437 |
-| ns | 4305 |  | 415 | internal/entities/container/container.go — Stats struct | 1.35 |  | 0.428 |
-| walker |  | 4334 | 76 | go decl names surface in internal/ghupdate/extract.go |  |  | 0.428 |
-| walker |  | 4334 | 0 | go decl at internal/ghupdate/extract.go:16 |  |  | 0.428 |
-| walker |  | 4334 | 0 | go decl at internal/ghupdate/extract.go:25 |  |  | 0.428 |
-| walker |  | 4334 | 0 | go decl at internal/ghupdate/extract.go:80 |  |  | 0.428 |
-| walker |  | 4334 | 0 | go decl at internal/ghupdate/extract.go:102 |  |  | 0.428 |
-| walker |  | 4353 | 19 | readme.md section #11 |  |  | 0.430 |
-| walker |  | 4374 | 21 | go decl doc at agent/gpu_nvtop.go:26 |  |  | 0.430 |
-| walker |  | 4393 | 19 | go decl body at internal/records/records_test_helpers.go:15 |  |  | 0.430 |
-| walker |  | 4397 | 4 | listing of 'internal/cmd/hub' |  |  | 0.430 |
-| walker |  | 4401 | 4 | listing of 'internal/entities/container' |  |  | 0.430 |
-| walker |  | 4405 | 4 | listing of 'internal/entities/system' |  |  | 0.430 |
-| walker |  | 4425 | 20 | go decl doc at agent/gpu_nvtop.go:140 |  |  | 0.430 |
-| walker |  | 4445 | 20 | readme.md section #14 |  |  | 0.432 |
-| walker |  | 4464 | 19 | readme.md section #13 |  |  | 0.435 |
-| walker |  | 4484 | 20 | readme.md section #12 |  |  | 0.439 |
-| walker |  | 4506 | 22 | go decl doc at agent/data_dir.go:110 |  |  | 0.439 |
-| walker |  | 4527 | 21 | go decl doc at agent/gpu_nvtop.go:45 |  |  | 0.439 |
-| walker |  | 4548 | 21 | go decl doc at agent/gpu_nvtop.go:103 |  |  | 0.439 |
-| walker |  | 4568 | 20 | go package + imports in agent/battery/battery_stub.go |  |  | 0.439 |
-| walker |  | 4643 | 75 | listing of 'internal/site' |  |  | 0.465 |
-| walker |  | 4693 | 50 | package identity in internal/site/package.json |  |  | 0.465 |
-| walker |  | 4727 | 34 | go decl names surface in internal/site/embed.go |  |  | 0.465 |
-| walker |  | 4727 | 0 | go decl at internal/site/embed.go:10 |  |  | 0.465 |
-| walker |  | 4727 | 0 | go decl at internal/site/embed.go:13 |  |  | 0.465 |
-| walker |  | 4756 | 29 | listing of 'internal/site/src' |  |  | 0.480 |
-| walker |  | 4770 | 14 | module item at internal/site/src/main.tsx:87 |  |  | 0.480 |
-| walker |  | 4783 | 13 | module item at internal/site/src/main.tsx:36 |  |  | 0.480 |
-| walker |  | 4798 | 15 | module item at internal/site/src/main.tsx:122 |  |  | 0.480 |
-| walker |  | 4819 | 21 | module item at internal/site/src/main.tsx:30 |  |  | 0.480 |
-| walker |  | 4839 | 20 | module item at internal/site/src/main.tsx:29 |  |  | 0.480 |
-| ns | 4848 |  | 543 | agent.Agent struct definition | 1.36 |  | 0.467 |
-| walker |  | 4859 | 20 | module item at internal/site/src/main.tsx:31 |  |  | 0.467 |
-| walker |  | 4879 | 20 | module item at internal/site/src/main.tsx:32 |  |  | 0.467 |
-| walker |  | 4899 | 20 | module item at internal/site/src/main.tsx:33 |  |  | 0.467 |
-| walker |  | 4902 | 3 | listing of 'internal/site/public' |  |  | 0.467 |
-| walker |  | 4921 | 19 | listing of 'internal/site/public/static' |  |  | 0.467 |
-| walker |  | 4944 | 23 | module item at internal/site/src/main.tsx:34 |  |  | 0.467 |
-| walker |  | 4964 | 20 | go decl doc at internal/site/embed.go:13 |  |  | 0.467 |
-| walker |  | 4996 | 32 | go decl body at agent/agent_cache.go:21 |  |  | 0.467 |
-| walker |  | 5017 | 21 | readme.md section #20 |  |  | 0.467 |
-| walker |  | 5038 | 21 | go package + imports in agent/zfs/zfs_unsupported.go |  |  | 0.467 |
-| walker |  | 5129 | 91 | readme.md section #8 |  |  | 0.476 |
-| walker |  | 5150 | 21 | go decl doc at agent/fingerprint.go:18 |  |  | 0.476 |
-| ns | 5176 |  | 328 | hub.Hub struct + NewHub | 1.37 |  | 0.463 |
-| walker |  | 5204 | 54 | go decl doc at agent/data_dir.go:16 |  |  | 0.463 |
-| walker |  | 5219 | 15 | go decl body at agent/systemd_nonlinux.go:36 |  |  | 0.463 |
-| walker |  | 5244 | 25 | go decl doc at agent/system.go:267 |  |  | 0.463 |
-| walker |  | 5285 | 41 | go package + imports in agent/sensors_default.go |  |  | 0.463 |
-| walker |  | 5464 | 179 | go decl names surface in agent/cpu.go |  |  | 0.463 |
-| walker |  | 5464 | 0 | go decl at agent/cpu.go:16 |  |  | 0.463 |
-| walker |  | 5464 | 0 | go decl at agent/cpu.go:37 |  |  | 0.463 |
-| walker |  | 5464 | 0 | go decl at agent/cpu.go:72 |  |  | 0.463 |
-| walker |  | 5464 | 0 | go decl at agent/cpu.go:78 |  |  | 0.463 |
-| walker |  | 5464 | 0 | go decl at agent/cpu.go:108 |  |  | 0.463 |
-| walker |  | 5464 | 0 | go decl at agent/cpu.go:121 |  |  | 0.463 |
-| walker |  | 5527 | 63 | go decl at agent/cpu.go:26 |  |  | 0.463 |
-| walker |  | 5540 | 13 | go decl doc at agent/cpu.go:26 |  |  | 0.463 |
-| ns | 5545 |  | 369 | internal/common/common-ws.go — WebSocketAction enum + HubRequest (part 1) | 1.38 |  | 0.449 |
-| walker |  | 5558 | 18 | go decl doc at agent/cpu.go:72 |  |  | 0.449 |
-| walker |  | 5619 | 61 | go decl names surface in internal/cmd/hub/hub.go |  |  | 0.449 |
-| walker |  | 5619 | 0 | go decl at internal/cmd/hub/hub.go:19 |  |  | 0.449 |
-| walker |  | 5619 | 0 | go decl at internal/cmd/hub/hub.go:38 |  |  | 0.449 |
-| walker |  | 5619 | 0 | go decl at internal/cmd/hub/hub.go:68 |  |  | 0.449 |
-| walker |  | 5619 | 0 | go decl at internal/cmd/hub/hub.go:87 |  |  | 0.449 |
-| walker |  | 5633 | 14 | go decl doc at internal/cmd/hub/hub.go:87 |  |  | 0.449 |
-| walker |  | 5652 | 19 | go decl doc at internal/cmd/hub/hub.go:38 |  |  | 0.449 |
-| walker |  | 5681 | 29 | supplemental/guides/systemd.md section #0 |  |  | 0.449 |
-| walker |  | 5723 | 42 | go package + imports in agent/emmc_common.go |  |  | 0.449 |
-| walker |  | 5810 | 87 | listing of 'internal/hub' |  |  | 0.478 |
-| walker |  | 5835 | 25 | go decl names surface in internal/hub/server_production.go |  |  | 0.478 |
-| walker |  | 5835 | 0 | go decl at internal/hub/server_production.go:18 |  |  | 0.478 |
-| ns | 5836 |  | 291 | internal/common/common-ws.go — AgentResponse struct (part 2) | 1.39 |  | 0.472 |
-| walker |  | 5866 | 31 | go decl names surface in internal/hub/update.go |  |  | 0.472 |
-| walker |  | 5866 | 0 | go decl at internal/hub/update.go:14 |  |  | 0.472 |
-| walker |  | 5866 | 0 | go decl at internal/hub/update.go:58 |  |  | 0.472 |
-| walker |  | 5880 | 14 | go decl doc at internal/hub/update.go:14 |  |  | 0.472 |
-| walker |  | 5935 | 55 | go decl names surface in internal/hub/collections.go |  |  | 0.472 |
-| walker |  | 5935 | 0 | go decl at internal/hub/collections.go:17 |  |  | 0.472 |
-| walker |  | 5935 | 0 | go decl at internal/hub/collections.go:115 |  |  | 0.472 |
-| walker |  | 5990 | 55 | go decl names surface in internal/hub/server.go |  |  | 0.472 |
-| walker |  | 5990 | 0 | go decl at internal/hub/server.go:21 |  |  | 0.472 |
-| walker |  | 5990 | 0 | go decl at internal/hub/server.go:31 |  |  | 0.472 |
-| walker |  | 6053 | 63 | go decl names surface in internal/hub/server_development.go |  |  | 0.472 |
-| walker |  | 6053 | 0 | go decl at internal/hub/server_development.go:23 |  |  | 0.472 |
-| walker |  | 6053 | 0 | go decl at internal/hub/server_development.go:48 |  |  | 0.472 |
-| walker |  | 6083 | 30 | listing of 'internal/hub/ws' |  |  | 0.478 |
-| ns | 6095 |  | 259 | internal/entities/system/system.go — Stats struct (part 1: CPU/mem fields) | 1.40 |  | 0.473 |
-| walker |  | 6104 | 21 | go decl names surface in internal/hub/ws/ws_test_helpers.go |  |  | 0.473 |
-| walker |  | 6104 | 0 | go decl at internal/hub/ws/ws_test_helpers.go:6 |  |  | 0.473 |
-| walker |  | 6113 | 9 | go package + imports in internal/hub/ws/ws_test_helpers.go |  |  | 0.473 |
-| walker |  | 6125 | 12 | listing of 'internal/hub/transport' |  |  | 0.480 |
-| walker |  | 6180 | 55 | go decl at internal/hub/server.go:13 |  |  | 0.480 |
-| walker |  | 6204 | 24 | go decl doc at internal/hub/server.go:13 |  |  | 0.480 |
-| walker |  | 6284 | 80 | go decl names surface in internal/hub/hub_test_helpers.go |  |  | 0.480 |
-| walker |  | 6284 | 0 | go decl at internal/hub/hub_test_helpers.go:10 |  |  | 0.480 |
-| walker |  | 6284 | 0 | go decl at internal/hub/hub_test_helpers.go:15 |  |  | 0.480 |
-| walker |  | 6284 | 0 | go decl at internal/hub/hub_test_helpers.go:20 |  |  | 0.480 |
-| walker |  | 6284 | 0 | go decl at internal/hub/hub_test_helpers.go:24 |  |  | 0.480 |
-| walker |  | 6292 | 8 | go decl body at internal/hub/hub_test_helpers.go:10 |  |  | 0.480 |
-| walker |  | 6301 | 9 | go decl body at internal/hub/hub_test_helpers.go:15 |  |  | 0.480 |
-| walker |  | 6312 | 11 | go decl body at internal/hub/hub_test_helpers.go:20 |  |  | 0.480 |
-| walker |  | 6323 | 11 | go decl body at internal/hub/hub_test_helpers.go:24 |  |  | 0.480 |
-| walker |  | 6340 | 17 | go decl doc at internal/hub/hub_test_helpers.go:10 |  |  | 0.480 |
-| ns | 6344 |  | 249 | internal/entities/system/system.go — Stats struct (part 2: disk/net fields) | 1.41 |  | 0.475 |
-| walker |  | 6357 | 17 | go decl doc at internal/hub/hub_test_helpers.go:15 |  |  | 0.475 |
-| walker |  | 6374 | 17 | go decl doc at internal/hub/hub_test_helpers.go:20 |  |  | 0.475 |
-| walker |  | 6398 | 24 | go decl at internal/hub/server_development.go:18 |  |  | 0.475 |
-| walker |  | 6402 | 4 | listing of 'internal/hub/utils' |  |  | 0.475 |
-| walker |  | 6424 | 22 | go decl names surface in internal/hub/utils/utils.go |  |  | 0.476 |
-| walker |  | 6424 | 0 | go decl at internal/hub/utils/utils.go:7 |  |  | 0.476 |
-| walker |  | 6440 | 16 | go decl doc at internal/hub/ws/ws_test_helpers.go:6 |  |  | 0.476 |
-| walker |  | 6457 | 17 | go decl body at agent/cpu.go:72 |  |  | 0.476 |
-| walker |  | 6466 | 9 | listing of 'agent/health' |  |  | 0.479 |
-| walker |  | 6549 | 83 | go decl names surface in agent/health/health.go |  |  | 0.479 |
-| walker |  | 6549 | 0 | go decl at agent/health/health.go:17 |  |  | 0.479 |
-| walker |  | 6549 | 0 | go decl at agent/health/health.go:19 |  |  | 0.479 |
-| walker |  | 6549 | 0 | go decl at agent/health/health.go:30 |  |  | 0.479 |
-| walker |  | 6549 | 0 | go decl at agent/health/health.go:39 |  |  | 0.479 |
-| walker |  | 6549 | 0 | go decl at agent/health/health.go:52 |  |  | 0.479 |
-| walker |  | 6549 | 0 | go decl at agent/health/health.go:57 |  |  | 0.479 |
-| walker |  | 6561 | 12 | go decl doc at agent/health/health.go:57 |  |  | 0.479 |
-| walker |  | 6572 | 11 | go decl body at agent/health/health.go:57 |  |  | 0.479 |
-| walker |  | 6584 | 12 | go decl body at agent/health/health.go:52 |  |  | 0.479 |
-| walker |  | 6599 | 15 | go decl doc at agent/health/health.go:52 |  |  | 0.479 |
-| ns | 6614 |  | 270 | internal/entities/system/system.go — Info struct (head) | 1.42 |  | 0.474 |
-| walker |  | 6621 | 22 | go decl doc at agent/health/health.go:39 |  |  | 0.474 |
-| walker |  | 6630 | 9 | listing of 'agent/utils' |  |  | 0.478 |
-| walker |  | 6646 | 16 | go decl body at agent/gpu_nvml_unsupported.go:11 |  |  | 0.478 |
-| walker |  | 6651 | 5 | listing of 'supplemental/docker/agent' |  |  | 0.479 |
-| walker |  | 6656 | 5 | listing of 'supplemental/docker/hub' |  |  | 0.480 |
-| walker |  | 6661 | 5 | listing of 'supplemental/docker/same-system' |  |  | 0.481 |
-| walker |  | 6764 | 103 | go decl names surface in internal/users/users.go |  |  | 0.481 |
-| walker |  | 6764 | 0 | go decl at internal/users/users.go:18 |  |  | 0.481 |
-| walker |  | 6764 | 0 | go decl at internal/users/users.go:25 |  |  | 0.481 |
-| walker |  | 6764 | 0 | go decl at internal/users/users.go:33 |  |  | 0.481 |
-| walker |  | 6764 | 0 | go decl at internal/users/users.go:61 |  |  | 0.481 |
-| walker |  | 6775 | 11 | go decl at internal/users/users.go:14 |  |  | 0.481 |
-| walker |  | 6787 | 12 | go decl doc at internal/users/users.go:25 |  |  | 0.481 |
-| walker |  | 6801 | 14 | go decl doc at internal/users/users.go:33 |  |  | 0.481 |
-| walker |  | 6813 | 12 | go decl doc at internal/site/embed.go:10 |  |  | 0.481 |
-| walker |  | 6952 | 139 | go decl names surface in agent/smart.go |  |  | 0.481 |
-| walker |  | 6952 | 0 | go decl at agent/smart.go:69 |  |  | 0.481 |
-| walker |  | 6952 | 0 | go decl at agent/smart.go:95 |  |  | 0.481 |
-| walker |  | 6952 | 0 | go decl at agent/smart.go:113 |  |  | 0.481 |
-| walker |  | 6964 | 12 | go decl doc at agent/smart.go:69 |  |  | 0.481 |
-| walker |  | 6983 | 19 | go decl at agent/smart.go:61 |  |  | 0.481 |
-| ns | 7003 |  | 389 | internal/entities/system/system.go — Details + CombinedData structs | 1.43 |  | 0.472 |
-| walker |  | 7005 | 22 | go decl doc at agent/smart.go:61 |  |  | 0.472 |
-| walker |  | 7023 | 18 | go decl doc at agent/smart.go:113 |  |  | 0.472 |
-| walker |  | 7038 | 15 | go decl doc at internal/hub/update.go:58 |  |  | 0.472 |
-| walker |  | 7230 | 192 | go decl names surface in agent/gpu_intel.go |  |  | 0.472 |
-| walker |  | 7230 | 0 | go decl at agent/gpu_intel.go:26 |  |  | 0.472 |
-| walker |  | 7230 | 0 | go decl at agent/gpu_intel.go:53 |  |  | 0.472 |
-| walker |  | 7230 | 0 | go decl at agent/gpu_intel.go:132 |  |  | 0.472 |
-| walker |  | 7230 | 0 | go decl at agent/gpu_intel.go:174 |  |  | 0.472 |
-| walker |  | 7239 | 9 | go decl at agent/gpu_intel.go:14 |  |  | 0.472 |
-| walker |  | 7278 | 39 | go decl at agent/gpu_intel.go:19 |  |  | 0.472 |
-| walker |  | 7297 | 19 | go decl doc at agent/gpu_intel.go:26 |  |  | 0.472 |
-| walker |  | 7320 | 23 | go decl doc at agent/gpu_intel.go:53 |  |  | 0.472 |
-| walker |  | 7385 | 65 | go decl names surface in internal/hub/transport/transport.go |  |  | 0.472 |
-| walker |  | 7385 | 0 | go decl at internal/hub/transport/transport.go:32 |  |  | 0.472 |
-| walker |  | 7385 | 0 | go decl at internal/hub/transport/transport.go:48 |  |  | 0.472 |
-| walker |  | 7412 | 27 | listing of '.github' |  |  | 0.486 |
-| walker |  | 7431 | 19 | listing of '.github/workflows' |  |  | 0.498 |
-| ns | 7435 |  | 432 | agent/connection_manager.go — ConnectionManager struct + state/event constants | 1.44 |  | 0.484 |
-| walker |  | 7628 | 197 | go decl names surface in agent/update.go |  |  | 0.484 |
-| walker |  | 7628 | 0 | go decl at agent/update.go:19 |  |  | 0.484 |
-| walker |  | 7628 | 0 | go decl at agent/update.go:30 |  |  | 0.484 |
-| walker |  | 7628 | 0 | go decl at agent/update.go:40 |  |  | 0.484 |
-| walker |  | 7628 | 0 | go decl at agent/update.go:51 |  |  | 0.484 |
-| walker |  | 7628 | 0 | go decl at agent/update.go:59 |  |  | 0.484 |
-| walker |  | 7628 | 0 | go decl at agent/update.go:79 |  |  | 0.484 |
-| walker |  | 7640 | 12 | go decl at agent/update.go:13 |  |  | 0.484 |
-| walker |  | 7657 | 17 | go decl doc at agent/update.go:13 |  |  | 0.484 |
-| walker |  | 7696 | 39 | go decl doc at agent/update.go:79 |  |  | 0.484 |
-| walker |  | 7720 | 24 | go decl body at internal/users/users.go:18 |  |  | 0.484 |
-| walker |  | 7738 | 18 | go decl doc at internal/hub/server_development.go:18 |  |  | 0.484 |
-| walker |  | 7790 | 52 | listing of 'internal/site/src/lib' |  |  | 0.503 |
-| walker |  | 7819 | 29 | go decl doc at agent/cpu.go:16 |  |  | 0.503 |
-| walker |  | 7829 | 10 | listing of 'supplemental/licenses' |  |  | 0.503 |
-| walker |  | 7832 | 3 | listing of 'supplemental/licenses/LibreHardwareMonitor' |  |  | 0.504 |
-| walker |  | 7835 | 3 | listing of 'supplemental/licenses/smartmontools' |  |  | 0.505 |
-| walker |  | 7933 | 98 | listing of 'internal/alerts' |  |  | 0.526 |
-| walker |  | 8003 | 70 | go decl names surface in internal/alerts/alerts_system.go |  |  | 0.526 |
-| walker |  | 8003 | 0 | go decl at internal/alerts/alerts_system.go:16 |  |  | 0.526 |
-| walker |  | 8003 | 0 | go decl at internal/alerts/alerts_system.go:300 |  |  | 0.526 |
-| walker |  | 8003 | 0 | go decl at internal/alerts/alerts_system.go:357 |  |  | 0.526 |
-| walker |  | 8013 | 10 | go decl body at internal/alerts/alerts_system.go:357 |  |  | 0.526 |
-| walker |  | 8106 | 93 | go decl names surface in internal/alerts/alerts_smart.go |  |  | 0.526 |
-| walker |  | 8106 | 0 | go decl at internal/alerts/alerts_smart.go:12 |  |  | 0.526 |
-| walker |  | 8106 | 0 | go decl at internal/alerts/alerts_smart.go:69 |  |  | 0.526 |
-| walker |  | 8106 | 0 | go decl at internal/alerts/alerts_smart.go:78 |  |  | 0.526 |
-| walker |  | 8106 | 0 | go decl at internal/alerts/alerts_smart.go:91 |  |  | 0.526 |
-| walker |  | 8106 | 0 | go decl at internal/alerts/alerts_smart.go:100 |  |  | 0.526 |
-| ns | 8121 |  | 686 | internal/hub/agent_connect.go — agentConnect (handshake HTTP entry point) | 1.45 |  | 0.507 |
-| walker |  | 8203 | 97 | go decl names surface in internal/alerts/alerts_history.go |  |  | 0.507 |
-| walker |  | 8203 | 0 | go decl at internal/alerts/alerts_history.go:11 |  |  | 0.507 |
-| walker |  | 8203 | 0 | go decl at internal/alerts/alerts_history.go:20 |  |  | 0.507 |
-| walker |  | 8203 | 0 | go decl at internal/alerts/alerts_history.go:44 |  |  | 0.507 |
-| walker |  | 8203 | 0 | go decl at internal/alerts/alerts_history.go:58 |  |  | 0.507 |
-| walker |  | 8302 | 99 | go decl names surface in internal/alerts/alerts_api.go |  |  | 0.507 |
-| walker |  | 8302 | 0 | go decl at internal/alerts/alerts_api.go:18 |  |  | 0.507 |
-| walker |  | 8302 | 0 | go decl at internal/alerts/alerts_api.go:81 |  |  | 0.507 |
-| walker |  | 8302 | 0 | go decl at internal/alerts/alerts_api.go:126 |  |  | 0.507 |
-| walker |  | 8302 | 0 | go decl at internal/alerts/alerts_api.go:152 |  |  | 0.507 |
-| walker |  | 8302 | 0 | go decl at internal/alerts/alerts_api.go:190 |  |  | 0.507 |
-| walker |  | 8327 | 25 | go decl doc at internal/alerts/alerts_api.go:126 |  |  | 0.507 |
-| walker |  | 8342 | 15 | go decl doc at internal/alerts/alerts_history.go:20 |  |  | 0.507 |
-| walker |  | 8358 | 16 | go decl doc at internal/alerts/alerts_history.go:58 |  |  | 0.507 |
-| walker |  | 8474 | 116 | go decl names surface in internal/records/records_deletion.go |  |  | 0.507 |
-| walker |  | 8474 | 0 | go decl at internal/records/records_deletion.go:14 |  |  | 0.507 |
-| walker |  | 8474 | 0 | go decl at internal/records/records_deletion.go:41 |  |  | 0.507 |
-| walker |  | 8474 | 0 | go decl at internal/records/records_deletion.go:60 |  |  | 0.507 |
-| walker |  | 8474 | 0 | go decl at internal/records/records_deletion.go:102 |  |  | 0.507 |
-| walker |  | 8474 | 0 | go decl at internal/records/records_deletion.go:116 |  |  | 0.507 |
-| walker |  | 8474 | 0 | go decl at internal/records/records_deletion.go:130 |  |  | 0.507 |
-| walker |  | 8483 | 9 | go decl doc at internal/records/records_deletion.go:14 |  |  | 0.507 |
-| walker |  | 8494 | 11 | go decl doc at internal/records/records_deletion.go:41 |  |  | 0.507 |
-| walker |  | 8510 | 16 | go decl doc at internal/records/records_deletion.go:130 |  |  | 0.507 |
-| walker |  | 8547 | 37 | go decl doc at internal/alerts/alerts_api.go:81 |  |  | 0.507 |
-| walker |  | 8564 | 17 | go decl doc at internal/hub/collections.go:17 |  |  | 0.507 |
-| walker |  | 8580 | 16 | go decl doc at internal/hub/server_development.go:48 |  |  | 0.507 |
-| walker |  | 8596 | 16 | go decl doc at internal/hub/server_production.go:18 |  |  | 0.507 |
-| walker |  | 8625 | 29 | go decl doc at agent/gpu_darwin_unsupported.go:9 |  |  | 0.507 |
-| walker |  | 8682 | 57 | listing of 'internal/hub/systems' |  |  | 0.520 |
-| walker |  | 8699 | 17 | go decl names surface in internal/hub/systems/systems_production.go |  |  | 0.520 |
-| walker |  | 8699 | 0 | go decl at internal/hub/systems/systems_production.go:9 |  |  | 0.520 |
-| walker |  | 8708 | 9 | go package + imports in internal/hub/systems/systems_production.go |  |  | 0.520 |
-| walker |  | 8738 | 30 | go decl doc at agent/gpu_darwin_unsupported.go:6 |  |  | 0.520 |
-| walker |  | 8756 | 18 | go decl doc at internal/alerts/alerts_history.go:44 |  |  | 0.520 |
-| walker |  | 8774 | 18 | go decl doc at internal/hub/server.go:21 |  |  | 0.520 |
-| walker |  | 8792 | 18 | go decl doc at internal/records/records_deletion.go:60 |  |  | 0.520 |
-| walker |  | 8832 | 40 | go decl doc at internal/alerts/alerts_api.go:18 |  |  | 0.520 |
-| walker |  | 8847 | 15 | go decl doc at agent/health/health.go:17 |  |  | 0.520 |
-| walker |  | 8901 | 54 | go package + imports in agent/systemd_nonlinux.go |  |  | 0.520 |
-| ns | 8905 |  | 784 | internal/hub/api.go — full /api/beszel/* route table | 1.46 |  | 0.502 |
-| walker |  | 9094 | 193 | package scripts in internal/site/package.json |  |  | 0.502 |
-| ns | 9157 |  | 252 | internal/entities/smart/smart.go — common smartctl JSON types (head) | 1.47 |  | 0.493 |
-| walker |  | 9231 | 137 | go decl at agent/smart.go:48 |  |  | 0.493 |
-| walker |  | 9250 | 19 | go decl doc at internal/alerts/alerts_history.go:11 |  |  | 0.493 |
-| walker |  | 9269 | 19 | go decl doc at internal/ghupdate/extract.go:25 |  |  | 0.493 |
-| walker |  | 9288 | 19 | go decl doc at internal/records/records_deletion.go:116 |  |  | 0.493 |
-| walker |  | 9300 | 12 | listing of 'internal/common' |  |  | 0.493 |
-| walker |  | 9309 | 9 | go package + imports in internal/common/common-ssh.go |  |  | 0.493 |
-| walker |  | 9381 | 72 | go decl names surface in internal/common/common-ssh.go |  |  | 0.499 |
-| walker |  | 9417 | 36 | go decl at internal/common/common-ssh.go:3 |  |  | 0.509 |
-| walker |  | 9436 | 19 | go decl names surface in agent/zfs/zfs_freebsd.go |  |  | 0.509 |
-| walker |  | 9436 | 0 | go decl at agent/zfs/zfs_freebsd.go:9 |  |  | 0.509 |
-| ns | 9443 |  | 286 | Makefile — build-agent / build-hub / build targets | 1.48 |  | 0.505 |
-| walker |  | 9455 | 19 | go decl names surface in agent/zfs/zfs_linux.go |  |  | 0.505 |
-| walker |  | 9455 | 0 | go decl at agent/zfs/zfs_linux.go:14 |  |  | 0.505 |
-| ns | 9538 |  | 95 | Makefile — lint/test/tidy/clean targets | 1.49 |  | 0.501 |
-| walker |  | 9706 | 251 | go decl names surface in agent/sensors.go |  |  | 0.501 |
-| walker |  | 9706 | 0 | go decl at agent/sensors.go:25 |  |  | 0.501 |
-| walker |  | 9706 | 0 | go decl at agent/sensors.go:38 |  |  | 0.501 |
-| walker |  | 9706 | 0 | go decl at agent/sensors.go:50 |  |  | 0.501 |
-| walker |  | 9706 | 0 | go decl at agent/sensors.go:97 |  |  | 0.501 |
-| walker |  | 9706 | 0 | go decl at agent/sensors.go:164 |  |  | 0.501 |
-| walker |  | 9706 | 0 | go decl at agent/sensors.go:175 |  |  | 0.501 |
-| walker |  | 9706 | 0 | go decl at agent/sensors.go:204 |  |  | 0.501 |
-| walker |  | 9706 | 0 | go decl at agent/sensors.go:234 |  |  | 0.501 |
-| walker |  | 9723 | 17 | go decl doc at agent/sensors.go:234 |  |  | 0.501 |
-| walker |  | 9803 | 80 | go decl at agent/sensors.go:27 |  |  | 0.501 |
-| walker |  | 9820 | 17 | go decl doc at agent/sensors.go:97 |  |  | 0.501 |
-| walker |  | 9844 | 24 | go decl doc at agent/sensors.go:25 |  |  | 0.501 |
-| walker |  | 9868 | 24 | go decl doc at agent/sensors.go:204 |  |  | 0.501 |
-| walker |  | 9900 | 32 | go decl doc at agent/sensors.go:164 |  |  | 0.501 |
-| ns | 9943 |  | 405 | internal/users/users.go — role/settings defaults (head) | 1.50 |  | 0.491 |
-| walker |  | 9958 | 58 | go package + imports in agent/agent_cache.go |  |  | 0.491 |
-| walker |  | 9977 | 19 | go decl doc at internal/ghupdate/release.go:26 |  |  | 0.491 |
+| walker |  | 831 | 37 | listing of 'supplemental/debian' |  |  | 0.558 |
+| walker |  | 881 | 50 | go decl names surface in internal/ghupdate/release.go |  |  | 0.558 |
+| walker |  | 881 | 0 | go decl at internal/ghupdate/release.go:26 |  |  | 0.558 |
+| walker |  | 904 | 23 | readme.md section #3 |  |  | 0.558 |
+| walker |  | 928 | 24 | readme.md section #7 |  |  | 0.558 |
+| walker |  | 952 | 24 | readme.md section #6 |  |  | 0.558 |
+| walker |  | 976 | 24 | readme.md section #5 |  |  | 0.558 |
+| walker |  | 992 | 16 | listing of 'supplemental/kubernetes/beszel-hub/charts' |  |  | 0.558 |
+| ns | 1030 |  | 208 | README lede (head) | 1.14 |  | 0.541 |
+| walker |  | 1047 | 55 | readme.md section #9 |  |  | 0.541 |
+| walker |  | 1062 | 15 | readme.md section #16 |  |  | 0.541 |
+| walker |  | 1075 | 13 | readme.md section #17 |  |  | 0.541 |
+| walker |  | 1090 | 15 | readme.md section #15 |  |  | 0.541 |
+| ns | 1096 |  | 66 | internal/ directory listing | 1.15 |  | 0.582 |
+| ns | 1100 |  | 4 | internal/site/src/locales/en/ directory listing | 1.16 |  | 0.580 |
+| ns | 1108 |  | 8 | internal/tests/ directory listing | 1.17 |  | 0.575 |
+| walker |  | 1151 | 61 | go decl names surface in internal/records/records_test_helpers.go |  |  | 0.575 |
+| walker |  | 1151 | 0 | go decl at internal/records/records_test_helpers.go:10 |  |  | 0.575 |
+| walker |  | 1151 | 0 | go decl at internal/records/records_test_helpers.go:15 |  |  | 0.575 |
+| walker |  | 1151 | 0 | go decl at internal/records/records_test_helpers.go:20 |  |  | 0.575 |
+| walker |  | 1160 | 9 | go decl body at internal/records/records_test_helpers.go:20 |  |  | 0.575 |
+| walker |  | 1171 | 11 | go decl body at internal/records/records_test_helpers.go:10 |  |  | 0.575 |
+| walker |  | 1184 | 13 | go decl doc at internal/records/records_test_helpers.go:20 |  |  | 0.575 |
+| walker |  | 1201 | 17 | go decl doc at internal/records/records_test_helpers.go:10 |  |  | 0.575 |
+| ns | 1210 |  | 102 | README architecture (hub/agent split) | 1.18 |  | 0.562 |
+| walker |  | 1218 | 17 | go decl doc at internal/records/records_test_helpers.go:15 |  |  | 0.562 |
+| walker |  | 1245 | 27 | readme.md section #4 |  |  | 0.562 |
+| ns | 1285 |  | 75 | internal/site/ top-level listing | 1.19 |  | 0.530 |
+| walker |  | 1321 | 76 | headings outline in supplemental/guides/systemd.md |  |  | 0.530 |
+| walker |  | 1337 | 16 | readme.md section #19 |  |  | 0.530 |
+| ns | 1372 |  | 87 | internal/hub/ directory listing | 1.20 |  | 0.496 |
+| ns | 1467 |  | 95 | README supported metrics list (head) | 1.21 |  | 0.486 |
+| ns | 1565 |  | 98 | internal/alerts/ directory listing | 1.22 |  | 0.463 |
+| walker |  | 1644 | 307 | readme.md section #0 |  |  | 0.488 |
+| walker |  | 1665 | 21 | go decl doc at internal/ghupdate/selinux.go:10 |  |  | 0.488 |
+| ns | 1711 |  | 146 | internal/hub/utils/utils.go — full | 1.23 |  | 0.473 |
+| walker |  | 1721 | 56 | readme.md section #10 |  |  | 0.473 |
+| ns | 1811 |  | 100 | internal/site/src/locales/ directory listing — all 32 supported languages | 1.24 |  | 0.438 |
+| ns | 1927 |  | 116 | internal/site/src/components/ directory listing | 1.25 |  | 0.417 |
+| walker |  | 2089 | 368 | listing of 'agent' |  |  | 0.424 |
+| ns | 2104 |  | 177 | supplemental/CHANGELOG.md — most recent release-note entries (head) | 1.26 |  | 0.413 |
+| walker |  | 2107 | 18 | go decl names surface in agent/sensors_default.go |  |  | 0.413 |
+| walker |  | 2116 | 9 | listing of 'agent/health' |  |  | 0.413 |
+| walker |  | 2125 | 9 | listing of 'agent/utils' |  |  | 0.413 |
+| walker |  | 2145 | 20 | go decl names surface in agent/smart_nonwindows.go |  |  | 0.413 |
+| walker |  | 2145 | 0 | go decl at agent/smart_nonwindows.go:7 |  |  | 0.413 |
+| walker |  | 2167 | 22 | go decl names surface in agent/agent_test_helpers.go |  |  | 0.413 |
+| walker |  | 2167 | 0 | go decl at agent/agent_test_helpers.go:6 |  |  | 0.413 |
+| walker |  | 2192 | 25 | go decl names surface in agent/response.go |  |  | 0.413 |
+| walker |  | 2192 | 0 | go decl at agent/response.go:13 |  |  | 0.413 |
+| walker |  | 2205 | 13 | listing of 'agent/deltatracker' |  |  | 0.413 |
+| walker |  | 2220 | 15 | listing of 'agent/lhm' |  |  | 0.413 |
+| walker |  | 2229 | 9 | go decl body at agent/agent_test_helpers.go:6 |  |  | 0.413 |
+| ns | 2254 |  | 150 | internal/site/src/components/ui/ directory listing | 1.27 |  | 0.391 |
+| walker |  | 2268 | 39 | go decl names surface in agent/gpu_darwin_unsupported.go |  |  | 0.391 |
+| walker |  | 2268 | 0 | go decl at agent/gpu_darwin_unsupported.go:6 |  |  | 0.391 |
+| walker |  | 2268 | 0 | go decl at agent/gpu_darwin_unsupported.go:9 |  |  | 0.391 |
+| walker |  | 2277 | 9 | go package + imports in agent/agent_test_helpers.go |  |  | 0.391 |
+| walker |  | 2286 | 9 | go package + imports in agent/gpu_darwin_unsupported.go |  |  | 0.391 |
+| walker |  | 2306 | 20 | listing of 'agent/zfs' |  |  | 0.391 |
+| walker |  | 2325 | 19 | go decl names surface in agent/zfs/zfs_unsupported.go |  |  | 0.391 |
+| walker |  | 2325 | 0 | go decl at agent/zfs/zfs_unsupported.go:7 |  |  | 0.391 |
+| walker |  | 2368 | 43 | go decl names surface in agent/gpu_amd_unsupported.go |  |  | 0.391 |
+| walker |  | 2368 | 0 | go decl at agent/gpu_amd_unsupported.go:9 |  |  | 0.391 |
+| walker |  | 2368 | 0 | go decl at agent/gpu_amd_unsupported.go:13 |  |  | 0.391 |
+| ns | 2395 |  | 141 | supplemental/ subdirectory breadth | 1.28 |  | 0.396 |
+| walker |  | 2415 | 47 | go decl names surface in agent/emmc_stub.go |  |  | 0.396 |
+| walker |  | 2415 | 0 | go decl at agent/emmc_stub.go:7 |  |  | 0.396 |
+| walker |  | 2415 | 0 | go decl at agent/emmc_stub.go:11 |  |  | 0.396 |
+| walker |  | 2424 | 9 | go package + imports in agent/emmc_stub.go |  |  | 0.396 |
+| walker |  | 2471 | 47 | go decl names surface in agent/gpu_nvml_unsupported.go |  |  | 0.396 |
+| walker |  | 2471 | 0 | go decl at agent/gpu_nvml_unsupported.go:11 |  |  | 0.396 |
+| walker |  | 2484 | 13 | go decl at agent/gpu_nvml_unsupported.go:7 |  |  | 0.396 |
+| walker |  | 2531 | 47 | go decl names surface in agent/mdraid_stub.go |  |  | 0.396 |
+| walker |  | 2531 | 0 | go decl at agent/mdraid_stub.go:5 |  |  | 0.396 |
+| walker |  | 2531 | 0 | go decl at agent/mdraid_stub.go:9 |  |  | 0.396 |
+| walker |  | 2538 | 7 | go package + imports in agent/mdraid_stub.go |  |  | 0.396 |
+| walker |  | 2545 | 7 | go decl body at agent/emmc_stub.go:7 |  |  | 0.396 |
+| walker |  | 2552 | 7 | go decl body at agent/mdraid_stub.go:5 |  |  | 0.396 |
+| walker |  | 2580 | 28 | listing of 'agent/test-data' |  |  | 0.397 |
+| walker |  | 2587 | 7 | go decl body at agent/gpu_amd_unsupported.go:9 |  |  | 0.397 |
+| ns | 2596 |  | 201 | PocketBase collection roster — all 14 collection names | 1.29 |  | 0.388 |
+| walker |  | 2619 | 32 | listing of 'agent/battery' |  |  | 0.389 |
+| walker |  | 2655 | 36 | go decl names surface in agent/battery/battery_stub.go |  |  | 0.389 |
+| walker |  | 2655 | 0 | go decl at agent/battery/battery_stub.go:7 |  |  | 0.389 |
+| walker |  | 2655 | 0 | go decl at agent/battery/battery_stub.go:11 |  |  | 0.389 |
+| walker |  | 2662 | 7 | go decl body at agent/battery/battery_stub.go:7 |  |  | 0.389 |
+| walker |  | 2684 | 22 | go decl doc at agent/agent_test_helpers.go:6 |  |  | 0.389 |
+| walker |  | 2696 | 12 | go decl body at agent/zfs/zfs_unsupported.go:7 |  |  | 0.389 |
+| walker |  | 2707 | 11 | go package + imports in agent/battery/battery.go |  |  | 0.389 |
+| walker |  | 2727 | 20 | go package + imports in agent/gpu_nvml_unsupported.go |  |  | 0.389 |
+| walker |  | 2747 | 20 | go package + imports in agent/smart_nonwindows.go |  |  | 0.389 |
+| ns | 2752 |  | 156 | agent/ subpackage breadth (battery, deltatracker, health, lhm, test-data, tools, utils, zfs) | 1.30 |  | 0.412 |
+| walker |  | 2756 | 9 | go decl body at agent/emmc_stub.go:11 |  |  | 0.412 |
+| walker |  | 2765 | 9 | go decl body at agent/gpu_amd_unsupported.go:13 |  |  | 0.412 |
+| walker |  | 2774 | 9 | go decl body at agent/mdraid_stub.go:9 |  |  | 0.412 |
+| walker |  | 2824 | 50 | go decl names surface in agent/battery/battery.go |  |  | 0.412 |
+| walker |  | 2831 | 7 | go decl at agent/battery/battery.go:4 |  |  | 0.412 |
+| walker |  | 2841 | 10 | go decl body at agent/smart_nonwindows.go:7 |  |  | 0.412 |
+| walker |  | 2867 | 26 | listing of 'agent/test-data/smart' |  |  | 0.431 |
+| ns | 2941 |  | 189 | components/routes/ (+ system/, settings/) directory listings | 1.31 |  | 0.412 |
+| walker |  | 2972 | 105 | go decl names surface in agent/agent_cache.go |  |  | 0.412 |
+| walker |  | 2972 | 0 | go decl at agent/agent_cache.go:21 |  |  | 0.412 |
+| walker |  | 2972 | 0 | go decl at agent/agent_cache.go:28 |  |  | 0.412 |
+| walker |  | 2972 | 0 | go decl at agent/agent_cache.go:44 |  |  | 0.412 |
+| walker |  | 2992 | 20 | go decl doc at agent/agent_cache.go:21 |  |  | 0.412 |
+| walker |  | 3016 | 24 | go decl at agent/agent_cache.go:15 |  |  | 0.412 |
+| walker |  | 3042 | 26 | go decl at agent/agent_cache.go:10 |  |  | 0.412 |
+| walker |  | 3148 | 106 | go decl names surface in agent/data_dir.go |  |  | 0.412 |
+| walker |  | 3148 | 0 | go decl at agent/data_dir.go:16 |  |  | 0.412 |
+| walker |  | 3148 | 0 | go decl at agent/data_dir.go:40 |  |  | 0.412 |
+| walker |  | 3148 | 0 | go decl at agent/data_dir.go:70 |  |  | 0.412 |
+| walker |  | 3148 | 0 | go decl at agent/data_dir.go:94 |  |  | 0.412 |
+| walker |  | 3148 | 0 | go decl at agent/data_dir.go:110 |  |  | 0.412 |
+| walker |  | 3161 | 13 | go decl doc at agent/data_dir.go:94 |  |  | 0.412 |
+| walker |  | 3176 | 15 | go decl body at agent/battery/battery_stub.go:11 |  |  | 0.412 |
+| walker |  | 3297 | 121 | go decl names surface in agent/agent.go |  |  | 0.398 |
+| walker |  | 3297 | 0 | go decl at agent/agent.go:55 |  |  | 0.398 |
+| walker |  | 3297 | 0 | go decl at agent/agent.go:154 |  |  | 0.398 |
+| walker |  | 3297 | 0 | go decl at agent/agent.go:218 |  |  | 0.398 |
+| walker |  | 3297 | 0 | go decl at agent/agent.go:223 |  |  | 0.398 |
+| ns | 3297 |  | 356 | docker-compose samples (hub, agent) | 1.32 |  | 0.398 |
+| walker |  | 3314 | 17 | go decl doc at agent/agent.go:218 |  |  | 0.398 |
+| walker |  | 3337 | 23 | go decl body at agent/agent.go:218 |  |  | 0.398 |
+| walker |  | 3460 | 123 | go decl names surface in agent/emmc_common.go |  |  | 0.398 |
+| walker |  | 3460 | 0 | go decl at agent/emmc_common.go:9 |  |  | 0.398 |
+| walker |  | 3460 | 0 | go decl at agent/emmc_common.go:25 |  |  | 0.398 |
+| walker |  | 3460 | 0 | go decl at agent/emmc_common.go:42 |  |  | 0.398 |
+| walker |  | 3460 | 0 | go decl at agent/emmc_common.go:55 |  |  | 0.398 |
+| walker |  | 3460 | 0 | go decl at agent/emmc_common.go:68 |  |  | 0.398 |
+| walker |  | 3460 | 0 | go decl at agent/emmc_common.go:81 |  |  | 0.398 |
+| walker |  | 3585 | 125 | go decl names surface in agent/system.go |  |  | 0.398 |
+| walker |  | 3585 | 0 | go decl at agent/system.go:26 |  |  | 0.398 |
+| walker |  | 3585 | 0 | go decl at agent/system.go:111 |  |  | 0.398 |
+| walker |  | 3585 | 0 | go decl at agent/system.go:125 |  |  | 0.398 |
+| walker |  | 3585 | 0 | go decl at agent/system.go:131 |  |  | 0.398 |
+| walker |  | 3585 | 0 | go decl at agent/system.go:267 |  |  | 0.398 |
+| walker |  | 3600 | 15 | go decl doc at agent/system.go:131 |  |  | 0.398 |
+| walker |  | 3616 | 16 | go decl doc at agent/system.go:26 |  |  | 0.398 |
+| walker |  | 3633 | 17 | go decl doc at agent/agent_cache.go:44 |  |  | 0.398 |
+| ns | 3665 |  | 368 | agent/ directory listing | 1.33 |  | 0.470 |
+| walker |  | 3761 | 128 | go decl names surface in agent/gpu_nvtop.go |  |  | 0.470 |
+| walker |  | 3761 | 0 | go decl at agent/gpu_nvtop.go:26 |  |  | 0.470 |
+| walker |  | 3761 | 0 | go decl at agent/gpu_nvtop.go:36 |  |  | 0.470 |
+| walker |  | 3761 | 0 | go decl at agent/gpu_nvtop.go:45 |  |  | 0.470 |
+| walker |  | 3761 | 0 | go decl at agent/gpu_nvtop.go:103 |  |  | 0.470 |
+| walker |  | 3761 | 0 | go decl at agent/gpu_nvtop.go:140 |  |  | 0.470 |
+| walker |  | 3791 | 30 | go package + imports in agent/gpu_amd_unsupported.go |  |  | 0.470 |
+| walker |  | 3863 | 72 | go decl names surface in internal/common/common-ssh.go |  |  | 0.478 |
+| walker |  | 3881 | 18 | readme.md section #18 |  |  | 0.478 |
+| ns | 3890 |  | 225 | internal/entities/systemd/systemd.go — Service struct | 1.34 |  | 0.472 |
+| walker |  | 4014 | 133 | go decl names surface in agent/systemd_nonlinux.go |  |  | 0.472 |
+| walker |  | 4014 | 0 | go decl at agent/systemd_nonlinux.go:17 |  |  | 0.472 |
+| walker |  | 4014 | 0 | go decl at agent/systemd_nonlinux.go:22 |  |  | 0.472 |
+| walker |  | 4014 | 0 | go decl at agent/systemd_nonlinux.go:27 |  |  | 0.472 |
+| walker |  | 4014 | 0 | go decl at agent/systemd_nonlinux.go:32 |  |  | 0.472 |
+| walker |  | 4014 | 0 | go decl at agent/systemd_nonlinux.go:36 |  |  | 0.472 |
+| walker |  | 4028 | 14 | go decl at agent/systemd_nonlinux.go:12 |  |  | 0.472 |
+| walker |  | 4035 | 7 | go decl body at agent/systemd_nonlinux.go:22 |  |  | 0.472 |
+| walker |  | 4043 | 8 | go decl body at agent/systemd_nonlinux.go:27 |  |  | 0.472 |
+| walker |  | 4051 | 8 | go decl body at agent/systemd_nonlinux.go:32 |  |  | 0.472 |
+| walker |  | 4065 | 14 | go decl doc at agent/systemd_nonlinux.go:17 |  |  | 0.472 |
+| walker |  | 4082 | 17 | go decl doc at agent/systemd_nonlinux.go:12 |  |  | 0.472 |
+| walker |  | 4097 | 15 | go decl doc at agent/systemd_nonlinux.go:22 |  |  | 0.472 |
+| walker |  | 4109 | 12 | go decl body at agent/systemd_nonlinux.go:17 |  |  | 0.472 |
+| walker |  | 4126 | 17 | go decl doc at agent/systemd_nonlinux.go:27 |  |  | 0.472 |
+| walker |  | 4143 | 17 | go decl doc at agent/systemd_nonlinux.go:32 |  |  | 0.472 |
+| walker |  | 4161 | 18 | go decl doc at agent/agent_cache.go:28 |  |  | 0.472 |
+| walker |  | 4179 | 18 | go decl doc at agent/gpu_nvtop.go:36 |  |  | 0.472 |
+| walker |  | 4197 | 18 | go decl doc at agent/system.go:111 |  |  | 0.472 |
+| walker |  | 4240 | 43 | go decl doc at agent/agent.go:55 |  |  | 0.472 |
+| ns | 4305 |  | 415 | internal/entities/container/container.go — Stats struct | 1.35 |  | 0.463 |
+| walker |  | 4376 | 136 | go decl names surface in agent/fingerprint.go |  |  | 0.463 |
+| walker |  | 4376 | 0 | go decl at agent/fingerprint.go:18 |  |  | 0.463 |
+| walker |  | 4376 | 0 | go decl at agent/fingerprint.go:27 |  |  | 0.463 |
+| walker |  | 4376 | 0 | go decl at agent/fingerprint.go:43 |  |  | 0.463 |
+| walker |  | 4376 | 0 | go decl at agent/fingerprint.go:62 |  |  | 0.463 |
+| walker |  | 4376 | 0 | go decl at agent/fingerprint.go:75 |  |  | 0.463 |
+| walker |  | 4376 | 0 | go decl at agent/fingerprint.go:81 |  |  | 0.463 |
+| walker |  | 4391 | 15 | go decl doc at agent/fingerprint.go:75 |  |  | 0.463 |
+| walker |  | 4426 | 35 | go decl doc at agent/fingerprint.go:81 |  |  | 0.463 |
+| walker |  | 4442 | 16 | go decl doc at agent/fingerprint.go:62 |  |  | 0.463 |
+| walker |  | 4469 | 27 | go decl body at agent/fingerprint.go:75 |  |  | 0.463 |
+| walker |  | 4545 | 76 | go decl names surface in internal/ghupdate/extract.go |  |  | 0.463 |
+| walker |  | 4545 | 0 | go decl at internal/ghupdate/extract.go:16 |  |  | 0.463 |
+| walker |  | 4545 | 0 | go decl at internal/ghupdate/extract.go:25 |  |  | 0.463 |
+| walker |  | 4545 | 0 | go decl at internal/ghupdate/extract.go:80 |  |  | 0.463 |
+| walker |  | 4545 | 0 | go decl at internal/ghupdate/extract.go:102 |  |  | 0.463 |
+| walker |  | 4581 | 36 | go decl at internal/common/common-ssh.go:3 |  |  | 0.475 |
+| walker |  | 4600 | 19 | readme.md section #11 |  |  | 0.477 |
+| walker |  | 4621 | 21 | go decl doc at agent/gpu_nvtop.go:26 |  |  | 0.477 |
+| walker |  | 4640 | 19 | go decl body at internal/records/records_test_helpers.go:15 |  |  | 0.477 |
+| walker |  | 4660 | 20 | go decl doc at agent/gpu_nvtop.go:140 |  |  | 0.477 |
+| walker |  | 4743 | 83 | go decl names surface in agent/health/health.go |  |  | 0.477 |
+| walker |  | 4743 | 0 | go decl at agent/health/health.go:17 |  |  | 0.477 |
+| walker |  | 4743 | 0 | go decl at agent/health/health.go:19 |  |  | 0.477 |
+| walker |  | 4743 | 0 | go decl at agent/health/health.go:30 |  |  | 0.477 |
+| walker |  | 4743 | 0 | go decl at agent/health/health.go:39 |  |  | 0.477 |
+| walker |  | 4743 | 0 | go decl at agent/health/health.go:52 |  |  | 0.477 |
+| walker |  | 4743 | 0 | go decl at agent/health/health.go:57 |  |  | 0.477 |
+| walker |  | 4755 | 12 | go decl doc at agent/health/health.go:57 |  |  | 0.477 |
+| walker |  | 4766 | 11 | go decl body at agent/health/health.go:57 |  |  | 0.477 |
+| walker |  | 4778 | 12 | go decl body at agent/health/health.go:52 |  |  | 0.477 |
+| walker |  | 4793 | 15 | go decl doc at agent/health/health.go:52 |  |  | 0.477 |
+| walker |  | 4815 | 22 | go decl doc at agent/health/health.go:39 |  |  | 0.477 |
+| walker |  | 4835 | 20 | readme.md section #14 |  |  | 0.479 |
+| ns | 4848 |  | 543 | agent.Agent struct definition | 1.36 |  | 0.465 |
+| walker |  | 4854 | 19 | readme.md section #13 |  |  | 0.468 |
+| walker |  | 4874 | 20 | readme.md section #12 |  |  | 0.472 |
+| walker |  | 4896 | 22 | go decl doc at agent/data_dir.go:110 |  |  | 0.472 |
+| walker |  | 4917 | 21 | go decl doc at agent/gpu_nvtop.go:45 |  |  | 0.472 |
+| walker |  | 4938 | 21 | go decl doc at agent/gpu_nvtop.go:103 |  |  | 0.472 |
+| walker |  | 4958 | 20 | go package + imports in agent/battery/battery_stub.go |  |  | 0.472 |
+| walker |  | 5033 | 75 | listing of 'internal/site' |  |  | 0.497 |
+| walker |  | 5036 | 3 | listing of 'internal/site/public' |  |  | 0.497 |
+| walker |  | 5086 | 50 | package identity in internal/site/package.json |  |  | 0.497 |
+| walker |  | 5120 | 34 | go decl names surface in internal/site/embed.go |  |  | 0.497 |
+| walker |  | 5120 | 0 | go decl at internal/site/embed.go:10 |  |  | 0.497 |
+| walker |  | 5120 | 0 | go decl at internal/site/embed.go:13 |  |  | 0.497 |
+| walker |  | 5149 | 29 | listing of 'internal/site/src' |  |  | 0.511 |
+| walker |  | 5163 | 14 | module item at internal/site/src/main.tsx:87 |  |  | 0.511 |
+| walker |  | 5176 | 13 | module item at internal/site/src/main.tsx:36 |  |  | 0.498 |
+| ns | 5176 |  | 328 | hub.Hub struct + NewHub | 1.37 |  | 0.498 |
+| walker |  | 5191 | 15 | module item at internal/site/src/main.tsx:122 |  |  | 0.498 |
+| walker |  | 5212 | 21 | module item at internal/site/src/main.tsx:30 |  |  | 0.498 |
+| walker |  | 5232 | 20 | module item at internal/site/src/main.tsx:29 |  |  | 0.498 |
+| walker |  | 5252 | 20 | module item at internal/site/src/main.tsx:31 |  |  | 0.498 |
+| walker |  | 5272 | 20 | module item at internal/site/src/main.tsx:32 |  |  | 0.498 |
+| walker |  | 5292 | 20 | module item at internal/site/src/main.tsx:33 |  |  | 0.498 |
+| walker |  | 5311 | 19 | listing of 'internal/site/public/static' |  |  | 0.498 |
+| walker |  | 5334 | 23 | module item at internal/site/src/main.tsx:34 |  |  | 0.498 |
+| walker |  | 5354 | 20 | go decl doc at internal/site/embed.go:13 |  |  | 0.498 |
+| walker |  | 5386 | 32 | go decl body at agent/agent_cache.go:21 |  |  | 0.498 |
+| walker |  | 5407 | 21 | readme.md section #20 |  |  | 0.498 |
+| walker |  | 5428 | 21 | go package + imports in agent/zfs/zfs_unsupported.go |  |  | 0.498 |
+| walker |  | 5519 | 91 | readme.md section #8 |  |  | 0.506 |
+| walker |  | 5540 | 21 | go decl doc at agent/fingerprint.go:18 |  |  | 0.506 |
+| ns | 5545 |  | 369 | internal/common/common-ws.go — WebSocketAction enum + HubRequest (part 1) | 1.38 |  | 0.491 |
+| walker |  | 5594 | 54 | go decl doc at agent/data_dir.go:16 |  |  | 0.491 |
+| walker |  | 5609 | 15 | go decl body at agent/systemd_nonlinux.go:36 |  |  | 0.491 |
+| walker |  | 5634 | 25 | go decl doc at agent/system.go:267 |  |  | 0.491 |
+| walker |  | 5675 | 41 | go package + imports in agent/sensors_default.go |  |  | 0.491 |
+| ns | 5836 |  | 291 | internal/common/common-ws.go — AgentResponse struct (part 2) | 1.39 |  | 0.486 |
+| walker |  | 5854 | 179 | go decl names surface in agent/cpu.go |  |  | 0.486 |
+| walker |  | 5854 | 0 | go decl at agent/cpu.go:16 |  |  | 0.486 |
+| walker |  | 5854 | 0 | go decl at agent/cpu.go:37 |  |  | 0.486 |
+| walker |  | 5854 | 0 | go decl at agent/cpu.go:72 |  |  | 0.486 |
+| walker |  | 5854 | 0 | go decl at agent/cpu.go:78 |  |  | 0.486 |
+| walker |  | 5854 | 0 | go decl at agent/cpu.go:108 |  |  | 0.486 |
+| walker |  | 5854 | 0 | go decl at agent/cpu.go:121 |  |  | 0.486 |
+| walker |  | 5917 | 63 | go decl at agent/cpu.go:26 |  |  | 0.486 |
+| walker |  | 5930 | 13 | go decl doc at agent/cpu.go:26 |  |  | 0.486 |
+| walker |  | 5948 | 18 | go decl doc at agent/cpu.go:72 |  |  | 0.486 |
+| walker |  | 6009 | 61 | go decl names surface in internal/cmd/hub/hub.go |  |  | 0.486 |
+| walker |  | 6009 | 0 | go decl at internal/cmd/hub/hub.go:19 |  |  | 0.486 |
+| walker |  | 6009 | 0 | go decl at internal/cmd/hub/hub.go:38 |  |  | 0.486 |
+| walker |  | 6009 | 0 | go decl at internal/cmd/hub/hub.go:68 |  |  | 0.486 |
+| walker |  | 6009 | 0 | go decl at internal/cmd/hub/hub.go:87 |  |  | 0.486 |
+| walker |  | 6023 | 14 | go decl doc at internal/cmd/hub/hub.go:87 |  |  | 0.486 |
+| walker |  | 6042 | 19 | go decl doc at internal/cmd/hub/hub.go:38 |  |  | 0.486 |
+| walker |  | 6071 | 29 | supplemental/guides/systemd.md section #0 |  |  | 0.486 |
+| ns | 6095 |  | 259 | internal/entities/system/system.go — Stats struct (part 1: CPU/mem fields) | 1.40 |  | 0.481 |
+| walker |  | 6113 | 42 | go package + imports in agent/emmc_common.go |  |  | 0.481 |
+| walker |  | 6200 | 87 | listing of 'internal/hub' |  |  | 0.508 |
+| walker |  | 6204 | 4 | listing of 'internal/hub/utils' |  |  | 0.508 |
+| walker |  | 6213 | 9 | listing of 'internal/hub/config' |  |  | 0.508 |
+| walker |  | 6222 | 9 | listing of 'internal/hub/heartbeat' |  |  | 0.508 |
+| walker |  | 6247 | 25 | go decl names surface in internal/hub/server_production.go |  |  | 0.508 |
+| walker |  | 6247 | 0 | go decl at internal/hub/server_production.go:18 |  |  | 0.508 |
+| walker |  | 6259 | 12 | listing of 'internal/hub/transport' |  |  | 0.509 |
+| walker |  | 6272 | 13 | listing of 'internal/hub/expirymap' |  |  | 0.512 |
+| walker |  | 6303 | 31 | go decl names surface in internal/hub/update.go |  |  | 0.512 |
+| walker |  | 6303 | 0 | go decl at internal/hub/update.go:14 |  |  | 0.512 |
+| walker |  | 6303 | 0 | go decl at internal/hub/update.go:58 |  |  | 0.512 |
+| walker |  | 6325 | 22 | go decl names surface in internal/hub/utils/utils.go |  |  | 0.512 |
+| walker |  | 6325 | 0 | go decl at internal/hub/utils/utils.go:7 |  |  | 0.512 |
+| walker |  | 6339 | 14 | go decl doc at internal/hub/update.go:14 |  |  | 0.512 |
+| ns | 6344 |  | 249 | internal/entities/system/system.go — Stats struct (part 2: disk/net fields) | 1.41 |  | 0.508 |
+| walker |  | 6394 | 55 | go decl names surface in internal/hub/collections.go |  |  | 0.508 |
+| walker |  | 6394 | 0 | go decl at internal/hub/collections.go:17 |  |  | 0.508 |
+| walker |  | 6394 | 0 | go decl at internal/hub/collections.go:115 |  |  | 0.508 |
+| walker |  | 6449 | 55 | go decl names surface in internal/hub/server.go |  |  | 0.508 |
+| walker |  | 6449 | 0 | go decl at internal/hub/server.go:21 |  |  | 0.508 |
+| walker |  | 6449 | 0 | go decl at internal/hub/server.go:31 |  |  | 0.508 |
+| walker |  | 6512 | 63 | go decl names surface in internal/hub/server_development.go |  |  | 0.508 |
+| walker |  | 6512 | 0 | go decl at internal/hub/server_development.go:23 |  |  | 0.508 |
+| walker |  | 6512 | 0 | go decl at internal/hub/server_development.go:48 |  |  | 0.508 |
+| walker |  | 6542 | 30 | listing of 'internal/hub/ws' |  |  | 0.521 |
+| walker |  | 6563 | 21 | go decl names surface in internal/hub/ws/ws_test_helpers.go |  |  | 0.521 |
+| walker |  | 6563 | 0 | go decl at internal/hub/ws/ws_test_helpers.go:6 |  |  | 0.521 |
+| walker |  | 6572 | 9 | go package + imports in internal/hub/ws/ws_test_helpers.go |  |  | 0.521 |
+| ns | 6614 |  | 270 | internal/entities/system/system.go — Info struct (head) | 1.42 |  | 0.516 |
+| walker |  | 6627 | 55 | go decl at internal/hub/server.go:13 |  |  | 0.516 |
+| walker |  | 6651 | 24 | go decl doc at internal/hub/server.go:13 |  |  | 0.516 |
+| walker |  | 6731 | 80 | go decl names surface in internal/hub/hub_test_helpers.go |  |  | 0.516 |
+| walker |  | 6731 | 0 | go decl at internal/hub/hub_test_helpers.go:10 |  |  | 0.516 |
+| walker |  | 6731 | 0 | go decl at internal/hub/hub_test_helpers.go:15 |  |  | 0.516 |
+| walker |  | 6731 | 0 | go decl at internal/hub/hub_test_helpers.go:20 |  |  | 0.516 |
+| walker |  | 6731 | 0 | go decl at internal/hub/hub_test_helpers.go:24 |  |  | 0.516 |
+| walker |  | 6739 | 8 | go decl body at internal/hub/hub_test_helpers.go:10 |  |  | 0.516 |
+| walker |  | 6748 | 9 | go decl body at internal/hub/hub_test_helpers.go:15 |  |  | 0.516 |
+| walker |  | 6759 | 11 | go decl body at internal/hub/hub_test_helpers.go:20 |  |  | 0.516 |
+| walker |  | 6770 | 11 | go decl body at internal/hub/hub_test_helpers.go:24 |  |  | 0.516 |
+| walker |  | 6787 | 17 | go decl doc at internal/hub/hub_test_helpers.go:10 |  |  | 0.516 |
+| walker |  | 6804 | 17 | go decl doc at internal/hub/hub_test_helpers.go:15 |  |  | 0.516 |
+| walker |  | 6821 | 17 | go decl doc at internal/hub/hub_test_helpers.go:20 |  |  | 0.516 |
+| walker |  | 6845 | 24 | go decl at internal/hub/server_development.go:18 |  |  | 0.516 |
+| walker |  | 6861 | 16 | go decl doc at internal/hub/ws/ws_test_helpers.go:6 |  |  | 0.516 |
+| walker |  | 6878 | 17 | go decl body at agent/cpu.go:72 |  |  | 0.516 |
+| walker |  | 6894 | 16 | go decl body at agent/gpu_nvml_unsupported.go:11 |  |  | 0.516 |
+| walker |  | 6997 | 103 | go decl names surface in internal/users/users.go |  |  | 0.516 |
+| walker |  | 6997 | 0 | go decl at internal/users/users.go:18 |  |  | 0.516 |
+| walker |  | 6997 | 0 | go decl at internal/users/users.go:25 |  |  | 0.516 |
+| walker |  | 6997 | 0 | go decl at internal/users/users.go:33 |  |  | 0.516 |
+| walker |  | 6997 | 0 | go decl at internal/users/users.go:61 |  |  | 0.516 |
+| ns | 7003 |  | 389 | internal/entities/system/system.go — Details + CombinedData structs | 1.43 |  | 0.506 |
+| walker |  | 7008 | 11 | go decl at internal/users/users.go:14 |  |  | 0.506 |
+| walker |  | 7020 | 12 | go decl doc at internal/users/users.go:25 |  |  | 0.506 |
+| walker |  | 7034 | 14 | go decl doc at internal/users/users.go:33 |  |  | 0.506 |
+| walker |  | 7046 | 12 | go decl doc at internal/site/embed.go:10 |  |  | 0.506 |
+| walker |  | 7185 | 139 | go decl names surface in agent/smart.go |  |  | 0.506 |
+| walker |  | 7185 | 0 | go decl at agent/smart.go:69 |  |  | 0.506 |
+| walker |  | 7185 | 0 | go decl at agent/smart.go:95 |  |  | 0.506 |
+| walker |  | 7185 | 0 | go decl at agent/smart.go:113 |  |  | 0.506 |
+| walker |  | 7197 | 12 | go decl doc at agent/smart.go:69 |  |  | 0.506 |
+| walker |  | 7216 | 19 | go decl at agent/smart.go:61 |  |  | 0.506 |
+| walker |  | 7238 | 22 | go decl doc at agent/smart.go:61 |  |  | 0.506 |
+| walker |  | 7256 | 18 | go decl doc at agent/smart.go:113 |  |  | 0.506 |
+| walker |  | 7271 | 15 | go decl doc at internal/hub/update.go:58 |  |  | 0.506 |
+| ns | 7435 |  | 432 | agent/connection_manager.go — ConnectionManager struct + state/event constants | 1.44 |  | 0.492 |
+| walker |  | 7463 | 192 | go decl names surface in agent/gpu_intel.go |  |  | 0.492 |
+| walker |  | 7463 | 0 | go decl at agent/gpu_intel.go:26 |  |  | 0.492 |
+| walker |  | 7463 | 0 | go decl at agent/gpu_intel.go:53 |  |  | 0.492 |
+| walker |  | 7463 | 0 | go decl at agent/gpu_intel.go:132 |  |  | 0.492 |
+| walker |  | 7463 | 0 | go decl at agent/gpu_intel.go:174 |  |  | 0.492 |
+| walker |  | 7472 | 9 | go decl at agent/gpu_intel.go:14 |  |  | 0.492 |
+| walker |  | 7511 | 39 | go decl at agent/gpu_intel.go:19 |  |  | 0.492 |
+| walker |  | 7530 | 19 | go decl doc at agent/gpu_intel.go:26 |  |  | 0.492 |
+| walker |  | 7553 | 23 | go decl doc at agent/gpu_intel.go:53 |  |  | 0.492 |
+| walker |  | 7618 | 65 | go decl names surface in internal/hub/transport/transport.go |  |  | 0.492 |
+| walker |  | 7618 | 0 | go decl at internal/hub/transport/transport.go:32 |  |  | 0.492 |
+| walker |  | 7618 | 0 | go decl at internal/hub/transport/transport.go:48 |  |  | 0.492 |
+| walker |  | 7645 | 27 | listing of '.github' |  |  | 0.505 |
+| walker |  | 7664 | 19 | listing of '.github/workflows' |  |  | 0.518 |
+| walker |  | 7861 | 197 | go decl names surface in agent/update.go |  |  | 0.518 |
+| walker |  | 7861 | 0 | go decl at agent/update.go:19 |  |  | 0.518 |
+| walker |  | 7861 | 0 | go decl at agent/update.go:30 |  |  | 0.518 |
+| walker |  | 7861 | 0 | go decl at agent/update.go:40 |  |  | 0.518 |
+| walker |  | 7861 | 0 | go decl at agent/update.go:51 |  |  | 0.518 |
+| walker |  | 7861 | 0 | go decl at agent/update.go:59 |  |  | 0.518 |
+| walker |  | 7861 | 0 | go decl at agent/update.go:79 |  |  | 0.518 |
+| walker |  | 7873 | 12 | go decl at agent/update.go:13 |  |  | 0.518 |
+| walker |  | 7890 | 17 | go decl doc at agent/update.go:13 |  |  | 0.518 |
+| walker |  | 7929 | 39 | go decl doc at agent/update.go:79 |  |  | 0.518 |
+| walker |  | 7953 | 24 | go decl body at internal/users/users.go:18 |  |  | 0.518 |
+| walker |  | 7971 | 18 | go decl doc at internal/hub/server_development.go:18 |  |  | 0.518 |
+| walker |  | 8023 | 52 | listing of 'internal/site/src/lib' |  |  | 0.536 |
+| walker |  | 8052 | 29 | go decl doc at agent/cpu.go:16 |  |  | 0.536 |
+| ns | 8121 |  | 686 | internal/hub/agent_connect.go — agentConnect (handshake HTTP entry point) | 1.45 |  | 0.516 |
+| walker |  | 8150 | 98 | listing of 'internal/alerts' |  |  | 0.536 |
+| walker |  | 8220 | 70 | go decl names surface in internal/alerts/alerts_system.go |  |  | 0.536 |
+| walker |  | 8220 | 0 | go decl at internal/alerts/alerts_system.go:16 |  |  | 0.536 |
+| walker |  | 8220 | 0 | go decl at internal/alerts/alerts_system.go:300 |  |  | 0.536 |
+| walker |  | 8220 | 0 | go decl at internal/alerts/alerts_system.go:357 |  |  | 0.536 |
+| walker |  | 8230 | 10 | go decl body at internal/alerts/alerts_system.go:357 |  |  | 0.536 |
+| walker |  | 8323 | 93 | go decl names surface in internal/alerts/alerts_smart.go |  |  | 0.536 |
+| walker |  | 8323 | 0 | go decl at internal/alerts/alerts_smart.go:12 |  |  | 0.536 |
+| walker |  | 8323 | 0 | go decl at internal/alerts/alerts_smart.go:69 |  |  | 0.536 |
+| walker |  | 8323 | 0 | go decl at internal/alerts/alerts_smart.go:78 |  |  | 0.536 |
+| walker |  | 8323 | 0 | go decl at internal/alerts/alerts_smart.go:91 |  |  | 0.536 |
+| walker |  | 8323 | 0 | go decl at internal/alerts/alerts_smart.go:100 |  |  | 0.536 |
+| walker |  | 8420 | 97 | go decl names surface in internal/alerts/alerts_history.go |  |  | 0.536 |
+| walker |  | 8420 | 0 | go decl at internal/alerts/alerts_history.go:11 |  |  | 0.536 |
+| walker |  | 8420 | 0 | go decl at internal/alerts/alerts_history.go:20 |  |  | 0.536 |
+| walker |  | 8420 | 0 | go decl at internal/alerts/alerts_history.go:44 |  |  | 0.536 |
+| walker |  | 8420 | 0 | go decl at internal/alerts/alerts_history.go:58 |  |  | 0.536 |
+| walker |  | 8519 | 99 | go decl names surface in internal/alerts/alerts_api.go |  |  | 0.536 |
+| walker |  | 8519 | 0 | go decl at internal/alerts/alerts_api.go:18 |  |  | 0.536 |
+| walker |  | 8519 | 0 | go decl at internal/alerts/alerts_api.go:81 |  |  | 0.536 |
+| walker |  | 8519 | 0 | go decl at internal/alerts/alerts_api.go:126 |  |  | 0.536 |
+| walker |  | 8519 | 0 | go decl at internal/alerts/alerts_api.go:152 |  |  | 0.536 |
+| walker |  | 8519 | 0 | go decl at internal/alerts/alerts_api.go:190 |  |  | 0.536 |
+| walker |  | 8544 | 25 | go decl doc at internal/alerts/alerts_api.go:126 |  |  | 0.536 |
+| walker |  | 8559 | 15 | go decl doc at internal/alerts/alerts_history.go:20 |  |  | 0.536 |
+| walker |  | 8575 | 16 | go decl doc at internal/alerts/alerts_history.go:58 |  |  | 0.536 |
+| walker |  | 8691 | 116 | go decl names surface in internal/records/records_deletion.go |  |  | 0.536 |
+| walker |  | 8691 | 0 | go decl at internal/records/records_deletion.go:14 |  |  | 0.536 |
+| walker |  | 8691 | 0 | go decl at internal/records/records_deletion.go:41 |  |  | 0.536 |
+| walker |  | 8691 | 0 | go decl at internal/records/records_deletion.go:60 |  |  | 0.536 |
+| walker |  | 8691 | 0 | go decl at internal/records/records_deletion.go:102 |  |  | 0.536 |
+| walker |  | 8691 | 0 | go decl at internal/records/records_deletion.go:116 |  |  | 0.536 |
+| walker |  | 8691 | 0 | go decl at internal/records/records_deletion.go:130 |  |  | 0.536 |
+| walker |  | 8700 | 9 | go decl doc at internal/records/records_deletion.go:14 |  |  | 0.536 |
+| walker |  | 8711 | 11 | go decl doc at internal/records/records_deletion.go:41 |  |  | 0.536 |
+| walker |  | 8727 | 16 | go decl doc at internal/records/records_deletion.go:130 |  |  | 0.536 |
+| walker |  | 8764 | 37 | go decl doc at internal/alerts/alerts_api.go:81 |  |  | 0.536 |
+| walker |  | 8781 | 17 | go decl doc at internal/hub/collections.go:17 |  |  | 0.536 |
+| walker |  | 8797 | 16 | go decl doc at internal/hub/server_development.go:48 |  |  | 0.536 |
+| walker |  | 8813 | 16 | go decl doc at internal/hub/server_production.go:18 |  |  | 0.536 |
+| walker |  | 8842 | 29 | go decl doc at agent/gpu_darwin_unsupported.go:9 |  |  | 0.536 |
+| walker |  | 8899 | 57 | listing of 'internal/hub/systems' |  |  | 0.550 |
+| ns | 8905 |  | 784 | internal/hub/api.go — full /api/beszel/* route table | 1.46 |  | 0.530 |
+| walker |  | 8916 | 17 | go decl names surface in internal/hub/systems/systems_production.go |  |  | 0.530 |
+| walker |  | 8916 | 0 | go decl at internal/hub/systems/systems_production.go:9 |  |  | 0.530 |
+| walker |  | 8925 | 9 | go package + imports in internal/hub/systems/systems_production.go |  |  | 0.530 |
+| walker |  | 8955 | 30 | go decl doc at agent/gpu_darwin_unsupported.go:6 |  |  | 0.530 |
+| walker |  | 8973 | 18 | go decl doc at internal/alerts/alerts_history.go:44 |  |  | 0.530 |
+| walker |  | 8991 | 18 | go decl doc at internal/hub/server.go:21 |  |  | 0.530 |
+| walker |  | 9009 | 18 | go decl doc at internal/records/records_deletion.go:60 |  |  | 0.530 |
+| walker |  | 9049 | 40 | go decl doc at internal/alerts/alerts_api.go:18 |  |  | 0.530 |
+| walker |  | 9064 | 15 | go decl doc at agent/health/health.go:17 |  |  | 0.530 |
+| walker |  | 9118 | 54 | go package + imports in agent/systemd_nonlinux.go |  |  | 0.530 |
+| ns | 9157 |  | 252 | internal/entities/smart/smart.go — common smartctl JSON types (head) | 1.47 |  | 0.521 |
+| walker |  | 9311 | 193 | package scripts in internal/site/package.json |  |  | 0.521 |
+| ns | 9443 |  | 286 | Makefile — build-agent / build-hub / build targets | 1.48 |  | 0.517 |
+| walker |  | 9448 | 137 | go decl at agent/smart.go:48 |  |  | 0.517 |
+| walker |  | 9467 | 19 | go decl doc at internal/alerts/alerts_history.go:11 |  |  | 0.517 |
+| walker |  | 9486 | 19 | go decl doc at internal/ghupdate/extract.go:25 |  |  | 0.517 |
+| walker |  | 9505 | 19 | go decl doc at internal/records/records_deletion.go:116 |  |  | 0.517 |
+| walker |  | 9524 | 19 | go decl names surface in agent/zfs/zfs_freebsd.go |  |  | 0.517 |
+| walker |  | 9524 | 0 | go decl at agent/zfs/zfs_freebsd.go:9 |  |  | 0.517 |
+| ns | 9538 |  | 95 | Makefile — lint/test/tidy/clean targets | 1.49 |  | 0.513 |
+| walker |  | 9543 | 19 | go decl names surface in agent/zfs/zfs_linux.go |  |  | 0.513 |
+| walker |  | 9543 | 0 | go decl at agent/zfs/zfs_linux.go:14 |  |  | 0.513 |
+| walker |  | 9794 | 251 | go decl names surface in agent/sensors.go |  |  | 0.513 |
+| walker |  | 9794 | 0 | go decl at agent/sensors.go:25 |  |  | 0.513 |
+| walker |  | 9794 | 0 | go decl at agent/sensors.go:38 |  |  | 0.513 |
+| walker |  | 9794 | 0 | go decl at agent/sensors.go:50 |  |  | 0.513 |
+| walker |  | 9794 | 0 | go decl at agent/sensors.go:97 |  |  | 0.513 |
+| walker |  | 9794 | 0 | go decl at agent/sensors.go:164 |  |  | 0.513 |
+| walker |  | 9794 | 0 | go decl at agent/sensors.go:175 |  |  | 0.513 |
+| walker |  | 9794 | 0 | go decl at agent/sensors.go:204 |  |  | 0.513 |
+| walker |  | 9794 | 0 | go decl at agent/sensors.go:234 |  |  | 0.513 |
+| walker |  | 9811 | 17 | go decl doc at agent/sensors.go:234 |  |  | 0.513 |
+| walker |  | 9891 | 80 | go decl at agent/sensors.go:27 |  |  | 0.513 |
+| walker |  | 9908 | 17 | go decl doc at agent/sensors.go:97 |  |  | 0.513 |
+| walker |  | 9932 | 24 | go decl doc at agent/sensors.go:25 |  |  | 0.513 |
+| ns | 9943 |  | 405 | internal/users/users.go — role/settings defaults (head) | 1.50 |  | 0.503 |
+| walker |  | 9956 | 24 | go decl doc at agent/sensors.go:204 |  |  | 0.503 |
+| walker |  | 9988 | 32 | go decl doc at agent/sensors.go:164 |  |  | 0.503 |

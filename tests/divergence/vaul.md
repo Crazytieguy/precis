@@ -7,36 +7,36 @@ Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=17/42 (reached=9 partial=0 missin
 | ns | 107 |  | 45 | package.json — name/version/description | 1.2 |  | 0.896 |
 | walker |  | 120 | 58 | package identity in package.json |  |  | 1.000 |
 | walker |  | 123 | 3 | listing of '.github' |  |  | 1.000 |
-| walker |  | 127 | 4 | listing of '.vscode' |  |  | 1.000 |
-| walker |  | 140 | 13 | export names surface in playwright.config.ts |  |  | 1.000 |
+| walker |  | 127 | 4 | listing of '.github/workflows' |  |  | 1.000 |
+| walker |  | 131 | 4 | listing of '.vscode' |  |  | 1.000 |
+| walker |  | 144 | 13 | export names surface in playwright.config.ts |  |  | 1.000 |
 | ns | 175 |  | 68 | README.md (full) | 1.3 |  | 0.911 |
-| walker |  | 211 | 71 | listing of 'src' |  |  | 0.929 |
-| walker |  | 228 | 17 | module item at src/index.tsx:993 |  |  | 0.929 |
-| walker |  | 241 | 13 | module item at src/index.tsx:994 |  |  | 0.929 |
+| walker |  | 215 | 71 | listing of 'src' |  |  | 0.929 |
+| walker |  | 232 | 17 | module item at src/index.tsx:993 |  |  | 0.929 |
+| walker |  | 245 | 13 | module item at src/index.tsx:994 |  |  | 0.929 |
 | ns | 246 |  | 71 | src/ directory listing | 1.4 |  | 0.940 |
-| walker |  | 264 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.940 |
+| walker |  | 268 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.940 |
 | ns | 383 |  | 137 | package.json — scripts | 1.5 |  | 0.816 |
 | ns | 435 |  | 52 | test/ workspace top-level listing | 1.6 |  | 0.712 |
-| walker |  | 488 | 224 | export names surface in src/index.tsx |  |  | 0.720 |
-| walker |  | 488 | 0 | export at src/index.tsx:1098 |  |  | 0.720 |
-| walker |  | 488 | 0 | export at src/index.tsx:1130 |  |  | 0.720 |
-| walker |  | 501 | 13 | export at src/index.tsx:989 |  |  | 0.720 |
-| walker |  | 514 | 13 | export at src/index.tsx:803 |  |  | 0.720 |
+| walker |  | 492 | 224 | export names surface in src/index.tsx |  |  | 0.720 |
+| walker |  | 492 | 0 | export at src/index.tsx:1098 |  |  | 0.720 |
+| walker |  | 492 | 0 | export at src/index.tsx:1130 |  |  | 0.720 |
+| walker |  | 505 | 13 | export at src/index.tsx:989 |  |  | 0.720 |
+| walker |  | 518 | 13 | export at src/index.tsx:803 |  |  | 0.720 |
 | ns | 534 |  | 99 | test/src/app/ demo route listing | 1.7 |  | 0.602 |
-| walker |  | 543 | 29 | export at src/index.tsx:996 |  |  | 0.602 |
-| walker |  | 577 | 34 | export at src/index.tsx:833 |  |  | 0.602 |
+| walker |  | 547 | 29 | export at src/index.tsx:996 |  |  | 0.602 |
+| walker |  | 581 | 34 | export at src/index.tsx:833 |  |  | 0.602 |
 | ns | 600 |  | 66 | test/tests/ Playwright spec listing | 1.8 |  | 0.554 |
-| walker |  | 697 | 120 | export at src/index.tsx:40 |  |  | 0.556 |
+| walker |  | 701 | 120 | export at src/index.tsx:40 |  |  | 0.556 |
 | ns | 772 |  | 172 | package.json — entry points + files | 1.9 |  | 0.499 |
-| walker |  | 858 | 161 | export at src/index.tsx:27 |  |  | 0.505 |
-| walker |  | 959 | 101 | export at src/index.tsx:1137 |  |  | 0.510 |
+| walker |  | 862 | 161 | export at src/index.tsx:27 |  |  | 0.505 |
+| walker |  | 963 | 101 | export at src/index.tsx:1137 |  |  | 0.510 |
 | ns | 983 |  | 211 | package.json — devDependencies | 1.10 |  | 0.473 |
 | ns | 1134 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.452 |
 | ns | 1249 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.502 |
-| walker |  | 1277 | 318 | export at src/index.tsx:139 |  |  | 0.509 |
-| walker |  | 1291 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.509 |
-| walker |  | 1305 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.509 |
-| walker |  | 1309 | 4 | listing of '.github/workflows' |  |  | 0.509 |
+| walker |  | 1281 | 318 | export at src/index.tsx:139 |  |  | 0.509 |
+| walker |  | 1295 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.509 |
+| walker |  | 1309 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.509 |
 | walker |  | 1324 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.509 |
 | walker |  | 1324 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.509 |
 | walker |  | 1340 | 16 | export names surface in src/use-composed-refs.ts |  |  | 0.509 |
@@ -59,8 +59,8 @@ Score(3000)=0.712 I=0.802 C=0.632 ns_rows≤3K=17/42 (reached=9 partial=0 missin
 | walker |  | 3517 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.806 |
 | ns | 3558 |  | 369 | Overlay component (full) | 2.8 | 2.2 | 0.802 |
 | walker |  | 3569 | 52 | listing of 'test' |  |  | 0.837 |
-| walker |  | 3586 | 17 | imports in playwright.config.ts |  |  | 0.837 |
-| walker |  | 3589 | 3 | listing of 'test/src' |  |  | 0.837 |
+| walker |  | 3572 | 3 | listing of 'test/src' |  |  | 0.837 |
+| walker |  | 3589 | 17 | imports in playwright.config.ts |  |  | 0.837 |
 | ns | 3902 |  | 344 | ContentProps type + Content()'s destructured context fields | 2.9 | 2.2 | 0.796 |
 | walker |  | 3903 | 314 | imports in src/index.tsx |  |  | 0.796 |
 | walker |  | 3915 | 12 | imports in src/use-controllable-state.ts |  |  | 0.796 |

@@ -139,10 +139,24 @@ entries = ["guides", "images", "readme.md", "reference", "resources", "summary.m
 
 [[batches]]
 position = 8
+key = 'Fs(DirListing { dir: "docs/resources" })'
+descriptor = "listing of 'docs/resources'"
+cost_tokens = 8
+cum_tokens = 489
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/resources"
+entries = ["faq.md", "links.md"]
+
+[[batches]]
+position = 9
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 54
-cum_tokens = 535
+cum_tokens = 543
 
 [batches.content]
 kind = "lines"
@@ -244,11 +258,11 @@ end = 232
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Typescript(ExportNames { file: "src/error.ts" })'
 descriptor = "export names surface in src/error.ts"
 cost_tokens = 27
-cum_tokens = 562
+cum_tokens = 570
 
 [batches.content]
 kind = "lines"
@@ -286,11 +300,53 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 11
+key = 'Markdown(HeadingsOutline { file: "docs/resources/links.md" })'
+descriptor = "headings outline in docs/resources/links.md"
+cost_tokens = 18
+cum_tokens = 588
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/resources/links.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/resources/links.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/resources/links.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/resources/links.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 12
 key = 'Fs(DirListing { dir: ".vscode" })'
 descriptor = "listing of '.vscode'"
 cost_tokens = 4
-cum_tokens = 566
+cum_tokens = 592
 
 [batches.content]
 kind = "fs"
@@ -300,11 +356,11 @@ parent = ".vscode"
 entries = ["settings.json"]
 
 [[batches]]
-position = 11
+position = 13
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 55
-cum_tokens = 621
+cum_tokens = 647
 
 [batches.content]
 kind = "fs"
@@ -314,11 +370,11 @@ parent = "examples"
 entries = ["README.md", "basic-validation.js", "composing-structs.js", "custom-errors.js", "custom-types.js", "default-values.js", "optional-values.js", "package.json", "returning-errors.js", "testing-values.js", "throwing-errors.js"]
 
 [[batches]]
-position = 12
+position = 14
 key = 'Markdown(Section { file: "Readme.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #10"
 cost_tokens = 19
-cum_tokens = 640
+cum_tokens = 666
 
 [batches.content]
 kind = "lines"
@@ -332,11 +388,11 @@ end = 233
 kind = "full"
 
 [[batches]]
-position = 13
+position = 15
 key = 'Typescript(Export { file: "src/error.ts", start_line: 5 })'
 descriptor = "export at src/error.ts:5"
 cost_tokens = 81
-cum_tokens = 721
+cum_tokens = 747
 
 [batches.content]
 kind = "lines"
@@ -350,11 +406,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 14
+position = 16
 key = 'Typescript(Export { file: "src/error.ts", start_line: 25 })'
 descriptor = "export at src/error.ts:25"
 cost_tokens = 93
-cum_tokens = 814
+cum_tokens = 840
 
 [batches.content]
 kind = "lines"
@@ -384,11 +440,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 17
 key = 'Markdown(ReadmeHeadline { file: "docs/readme.md" })'
 descriptor = "README headline in docs/readme.md"
 cost_tokens = 131
-cum_tokens = 945
+cum_tokens = 971
 
 [batches.content]
 kind = "lines"
@@ -410,11 +466,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 16
+position = 18
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 953
+cum_tokens = 979
 
 [batches.content]
 kind = "fs"
@@ -424,11 +480,43 @@ parent = ".github"
 entries = ["dependabot.yml", "workflows"]
 
 [[batches]]
-position = 17
+position = 19
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 983
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml"]
+
+[[batches]]
+position = 20
+key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
+descriptor = "YAML config at .github/workflows/ci.yml"
+cost_tokens = 175
+cum_tokens = 1158
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/ci.yml"
+start = 1
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
 key = 'Fs(DirListing { dir: "docs/images" })'
 descriptor = "listing of 'docs/images'"
 cost_tokens = 29
-cum_tokens = 982
+cum_tokens = 1187
 
 [batches.content]
 kind = "fs"
@@ -438,11 +526,11 @@ parent = "docs/images"
 entries = ["banner.png", "demo-screenshot.png", "docs-screenshot.png", "icon.png", "logo.png", "logo.sketch"]
 
 [[batches]]
-position = 18
+position = 22
 key = 'Fs(DirListing { dir: "docs/reference" })'
 descriptor = "listing of 'docs/reference'"
 cost_tokens = 31
-cum_tokens = 1013
+cum_tokens = 1218
 
 [batches.content]
 kind = "fs"
@@ -452,11 +540,11 @@ parent = "docs/reference"
 entries = ["coercions.md", "core.md", "errors.md", "refinements.md", "types.md", "typescript.md", "utilities.md"]
 
 [[batches]]
-position = 19
+position = 23
 key = 'Markdown(HeadingsOutline { file: "docs/reference/errors.md" })'
 descriptor = "headings outline in docs/reference/errors.md"
 cost_tokens = 40
-cum_tokens = 1053
+cum_tokens = 1258
 
 [batches.content]
 kind = "lines"
@@ -526,11 +614,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 24
 key = 'Markdown(HeadingsOutline { file: "docs/reference/typescript.md" })'
 descriptor = "headings outline in docs/reference/typescript.md"
 cost_tokens = 42
-cum_tokens = 1095
+cum_tokens = 1300
 
 [batches.content]
 kind = "lines"
@@ -584,11 +672,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 25
 key = 'Typescript(ExportDoc { file: "src/error.ts", start_line: 5 })'
 descriptor = "export doc at src/error.ts:5"
 cost_tokens = 26
-cum_tokens = 1121
+cum_tokens = 1326
 
 [batches.content]
 kind = "lines"
@@ -602,43 +690,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 22
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 1125
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml"]
-
-[[batches]]
-position = 23
-key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
-descriptor = "YAML config at .github/workflows/ci.yml"
-cost_tokens = 175
-cum_tokens = 1300
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 1
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
+position = 26
 key = 'Markdown(HeadingsOutline { file: "docs/reference/coercions.md" })'
 descriptor = "headings outline in docs/reference/coercions.md"
 cost_tokens = 45
-cum_tokens = 1345
+cum_tokens = 1371
 
 [batches.content]
 kind = "lines"
@@ -708,11 +764,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 27
 key = 'Typescript(ExportNames { file: "src/structs/coercions.ts" })'
 descriptor = "export names surface in src/structs/coercions.ts"
 cost_tokens = 58
-cum_tokens = 1403
+cum_tokens = 1429
 
 [batches.content]
 kind = "lines"
@@ -766,11 +822,11 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 28
 key = 'Typescript(Export { file: "src/structs/coercions.ts", start_line: 79 })'
 descriptor = "export at src/structs/coercions.ts:79"
 cost_tokens = 0
-cum_tokens = 1403
+cum_tokens = 1429
 
 [batches.content]
 kind = "lines"
@@ -792,11 +848,11 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 29
 key = 'Typescript(ExportBody { file: "src/structs/coercions.ts", start_line: 79, body_start_line: 80 })'
 descriptor = "export body at src/structs/coercions.ts:79 body 80"
 cost_tokens = 19
-cum_tokens = 1422
+cum_tokens = 1448
 
 [batches.content]
 kind = "lines"
@@ -810,11 +866,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 28
+position = 30
 key = 'Typescript(Export { file: "src/structs/coercions.ts", start_line: 16 })'
 descriptor = "export at src/structs/coercions.ts:16"
 cost_tokens = 47
-cum_tokens = 1469
+cum_tokens = 1495
 
 [batches.content]
 kind = "lines"
@@ -836,11 +892,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 31
 key = 'Typescript(Export { file: "src/structs/coercions.ts", start_line: 38 })'
 descriptor = "export at src/structs/coercions.ts:38"
 cost_tokens = 57
-cum_tokens = 1526
+cum_tokens = 1552
 
 [batches.content]
 kind = "lines"
@@ -862,11 +918,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 32
 key = 'Markdown(SummaryWhole { file: "docs/summary.md" })'
 descriptor = "mdBook SUMMARY at docs/summary.md"
 cost_tokens = 317
-cum_tokens = 1843
+cum_tokens = 1869
 
 [batches.content]
 kind = "lines"
@@ -880,11 +936,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 31
+position = 33
 key = 'Fs(DirListing { dir: "docs/guides" })'
 descriptor = "listing of 'docs/guides'"
 cost_tokens = 51
-cum_tokens = 1894
+cum_tokens = 1920
 
 [batches.content]
 kind = "fs"
@@ -894,11 +950,11 @@ parent = "docs/guides"
 entries = ["01-getting-started.md", "02-validating-data.md", "03-coercing-data.md", "04-refining-validation.md", "05-handling-errors.md", "06-using-typescript.md"]
 
 [[batches]]
-position = 32
+position = 34
 key = 'Markdown(HeadingsOutline { file: "docs/guides/05-handling-errors.md" })'
 descriptor = "headings outline in docs/guides/05-handling-errors.md"
 cost_tokens = 32
-cum_tokens = 1926
+cum_tokens = 1952
 
 [batches.content]
 kind = "lines"
@@ -952,11 +1008,11 @@ end = 103
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 35
 key = 'Markdown(HeadingsOutline { file: "docs/guides/03-coercing-data.md" })'
 descriptor = "headings outline in docs/guides/03-coercing-data.md"
 cost_tokens = 34
-cum_tokens = 1960
+cum_tokens = 1986
 
 [batches.content]
 kind = "lines"
@@ -1010,11 +1066,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 36
 key = 'Markdown(HeadingsOutline { file: "docs/guides/04-refining-validation.md" })'
 descriptor = "headings outline in docs/guides/04-refining-validation.md"
 cost_tokens = 34
-cum_tokens = 1994
+cum_tokens = 2020
 
 [batches.content]
 kind = "lines"
@@ -1068,11 +1124,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 37
 key = 'Markdown(HeadingsOutline { file: "docs/guides/01-getting-started.md" })'
 descriptor = "headings outline in docs/guides/01-getting-started.md"
 cost_tokens = 36
-cum_tokens = 2030
+cum_tokens = 2056
 
 [batches.content]
 kind = "lines"
@@ -1110,11 +1166,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 38
 key = 'Markdown(Section { file: "docs/guides/01-getting-started.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/guides/01-getting-started.md section #0"
 cost_tokens = 0
-cum_tokens = 2030
+cum_tokens = 2056
 
 [batches.content]
 kind = "lines"
@@ -1128,11 +1184,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 37
+position = 39
 key = 'Markdown(HeadingsOutline { file: "docs/guides/06-using-typescript.md" })'
 descriptor = "headings outline in docs/guides/06-using-typescript.md"
 cost_tokens = 44
-cum_tokens = 2074
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1258,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 40
 key = 'Markdown(HeadingsOutline { file: "docs/guides/02-validating-data.md" })'
 descriptor = "headings outline in docs/guides/02-validating-data.md"
 cost_tokens = 52
-cum_tokens = 2126
+cum_tokens = 2152
 
 [batches.content]
 kind = "lines"
@@ -1292,11 +1348,11 @@ end = 158
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 41
 key = 'Markdown(HeadingsOutline { file: "docs/reference/core.md" })'
 descriptor = "headings outline in docs/reference/core.md"
 cost_tokens = 62
-cum_tokens = 2188
+cum_tokens = 2214
 
 [batches.content]
 kind = "lines"
@@ -1382,11 +1438,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 42
 key = 'Markdown(Section { file: "docs/reference/core.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/reference/core.md section #0"
 cost_tokens = 0
-cum_tokens = 2188
+cum_tokens = 2214
 
 [batches.content]
 kind = "lines"
@@ -1400,11 +1456,29 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 41
+position = 43
+key = 'Markdown(Section { file: "docs/resources/links.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/resources/links.md section #0"
+cost_tokens = 19
+cum_tokens = 2233
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/resources/links.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 28
-cum_tokens = 2216
+cum_tokens = 2261
 
 [batches.content]
 kind = "fs"
@@ -1414,11 +1488,11 @@ parent = "test"
 entries = ["api", "deprecated.test.ts", "index.test.ts", "index.ts", "tsconfig.json", "typings", "validation"]
 
 [[batches]]
-position = 42
+position = 45
 key = 'Typescript(ExportBody { file: "src/error.ts", start_line: 25, body_start_line: 36 })'
 descriptor = "export body at src/error.ts:25 body 36"
 cost_tokens = 165
-cum_tokens = 2381
+cum_tokens = 2426
 
 [batches.content]
 kind = "lines"
@@ -1432,11 +1506,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 43
+position = 46
 key = 'Markdown(HeadingsOutline { file: "docs/reference/utilities.md" })'
 descriptor = "headings outline in docs/reference/utilities.md"
 cost_tokens = 79
-cum_tokens = 2460
+cum_tokens = 2505
 
 [batches.content]
 kind = "lines"
@@ -1570,11 +1644,11 @@ end = 98
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 47
 key = 'Markdown(HeadingsOutline { file: "docs/reference/refinements.md" })'
 descriptor = "headings outline in docs/reference/refinements.md"
 cost_tokens = 82
-cum_tokens = 2542
+cum_tokens = 2587
 
 [batches.content]
 kind = "lines"
@@ -1708,11 +1782,11 @@ end = 89
 kind = "ellipsis"
 
 [[batches]]
-position = 45
+position = 48
 key = 'Typescript(ExportBody { file: "src/structs/coercions.ts", start_line: 16, body_start_line: 21 })'
 descriptor = "export body at src/structs/coercions.ts:16 body 21"
 cost_tokens = 85
-cum_tokens = 2627
+cum_tokens = 2672
 
 [batches.content]
 kind = "lines"
@@ -1721,80 +1795,6 @@ kind = "lines"
 path = "src/structs/coercions.ts"
 start = 21
 end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Fs(DirListing { dir: "docs/resources" })'
-descriptor = "listing of 'docs/resources'"
-cost_tokens = 8
-cum_tokens = 2635
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/resources"
-entries = ["faq.md", "links.md"]
-
-[[batches]]
-position = 47
-key = 'Markdown(HeadingsOutline { file: "docs/resources/links.md" })'
-descriptor = "headings outline in docs/resources/links.md"
-cost_tokens = 18
-cum_tokens = 2653
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/resources/links.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/resources/links.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/resources/links.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/resources/links.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 48
-key = 'Markdown(Section { file: "docs/resources/links.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/resources/links.md section #0"
-cost_tokens = 19
-cum_tokens = 2672
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/resources/links.md"
-start = 1
-end = 3
 
 [batches.content.spans.render]
 kind = "full"

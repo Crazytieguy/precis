@@ -1,7 +1,7 @@
 fixture = "axios"
 budget = 10000
-cumulative_tokens = 9951
-batch_count = 226
+cumulative_tokens = 9973
+batch_count = 242
 
 [[batches]]
 position = 1
@@ -227,10 +227,80 @@ entries = ["browser", "common", "index.js", "node"]
 
 [[batches]]
 position = 10
+key = 'Fs(DirListing { dir: "lib/platform/browser" })'
+descriptor = "listing of 'lib/platform/browser'"
+cost_tokens = 7
+cum_tokens = 370
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform/browser"
+entries = ["classes", "index.js"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "lib/platform/node" })'
+descriptor = "listing of 'lib/platform/node'"
+cost_tokens = 7
+cum_tokens = 377
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform/node"
+entries = ["classes", "index.js"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "lib/env" })'
+descriptor = "listing of 'lib/env'"
+cost_tokens = 11
+cum_tokens = 388
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/env"
+entries = ["README.md", "classes", "data.js"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "lib/platform/browser/classes" })'
+descriptor = "listing of 'lib/platform/browser/classes'"
+cost_tokens = 15
+cum_tokens = 403
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform/browser/classes"
+entries = ["Blob.js", "FormData.js", "URLSearchParams.js"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "lib/cancel" })'
+descriptor = "listing of 'lib/cancel'"
+cost_tokens = 16
+cum_tokens = 419
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/cancel"
+entries = ["CancelToken.js", "CanceledError.js", "isCancel.js"]
+
+[[batches]]
+position = 15
 key = 'Typescript(ExportNames { file: "lib/axios.js" })'
 descriptor = "export names surface in lib/axios.js"
 cost_tokens = 10
-cum_tokens = 373
+cum_tokens = 429
 
 [batches.content]
 kind = "lines"
@@ -244,11 +314,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 11
+position = 16
 key = 'Fs(DirListing { dir: "lib/adapters" })'
 descriptor = "listing of 'lib/adapters'"
 cost_tokens = 20
-cum_tokens = 393
+cum_tokens = 449
 
 [batches.content]
 kind = "fs"
@@ -258,11 +328,25 @@ parent = "lib/adapters"
 entries = ["README.md", "adapters.js", "fetch.js", "http.js", "xhr.js"]
 
 [[batches]]
-position = 12
+position = 17
+key = 'Fs(DirListing { dir: "lib/platform/common" })'
+descriptor = "listing of 'lib/platform/common'"
+cost_tokens = 4
+cum_tokens = 453
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform/common"
+entries = ["utils.js"]
+
+[[batches]]
+position = 18
 key = 'Typescript(ExportNames { file: "lib/defaults/index.js" })'
 descriptor = "export names surface in lib/defaults/index.js"
 cost_tokens = 10
-cum_tokens = 403
+cum_tokens = 463
 
 [batches.content]
 kind = "lines"
@@ -276,25 +360,25 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "lib/env" })'
-descriptor = "listing of 'lib/env'"
-cost_tokens = 11
-cum_tokens = 414
+position = 19
+key = 'Fs(DirListing { dir: "lib/env/classes" })'
+descriptor = "listing of 'lib/env/classes'"
+cost_tokens = 5
+cum_tokens = 468
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "lib/env"
-entries = ["README.md", "classes", "data.js"]
+parent = "lib/env/classes"
+entries = ["FormData.js"]
 
 [[batches]]
-position = 14
+position = 20
 key = 'Typescript(ExportNames { file: "lib/platform/index.js" })'
 descriptor = "export names surface in lib/platform/index.js"
 cost_tokens = 11
-cum_tokens = 425
+cum_tokens = 479
 
 [batches.content]
 kind = "lines"
@@ -316,11 +400,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 21
 key = 'Typescript(Export { file: "lib/platform/index.js", start_line: 4 })'
 descriptor = "export at lib/platform/index.js:4"
 cost_tokens = 19
-cum_tokens = 444
+cum_tokens = 498
 
 [batches.content]
 kind = "lines"
@@ -334,11 +418,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 16
+position = 22
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 13
-cum_tokens = 457
+cum_tokens = 511
 
 [batches.content]
 kind = "lines"
@@ -352,11 +436,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 17
+position = 23
 key = 'Markdown(ReadmeHeadline { file: "lib/env/README.md" })'
 descriptor = "README headline in lib/env/README.md"
 cost_tokens = 41
-cum_tokens = 498
+cum_tokens = 552
 
 [batches.content]
 kind = "lines"
@@ -370,25 +454,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "lib/cancel" })'
-descriptor = "listing of 'lib/cancel'"
-cost_tokens = 16
-cum_tokens = 514
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/cancel"
-entries = ["CancelToken.js", "CanceledError.js", "isCancel.js"]
-
-[[batches]]
-position = 19
+position = 24
 key = 'Fs(DirListing { dir: ".husky" })'
 descriptor = "listing of '.husky'"
 cost_tokens = 4
-cum_tokens = 518
+cum_tokens = 556
 
 [batches.content]
 kind = "fs"
@@ -398,11 +468,11 @@ parent = ".husky"
 entries = ["commit-msg"]
 
 [[batches]]
-position = 20
+position = 25
 key = 'Fs(DirListing { dir: "lib/core" })'
 descriptor = "listing of 'lib/core'"
 cost_tokens = 49
-cum_tokens = 567
+cum_tokens = 605
 
 [batches.content]
 kind = "fs"
@@ -412,11 +482,11 @@ parent = "lib/core"
 entries = ["Axios.js", "AxiosError.js", "AxiosHeaders.js", "InterceptorManager.js", "README.md", "buildFullPath.js", "dispatchRequest.js", "mergeConfig.js", "settle.js", "transformData.js"]
 
 [[batches]]
-position = 21
+position = 26
 key = 'Markdown(ReadmeHeadline { file: "lib/adapters/README.md" })'
 descriptor = "README headline in lib/adapters/README.md"
 cost_tokens = 49
-cum_tokens = 616
+cum_tokens = 654
 
 [batches.content]
 kind = "lines"
@@ -430,71 +500,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 22
-key = 'Typescript(Export { file: "index.js", start_line: 26 })'
-descriptor = "export at index.js:26"
-cost_tokens = 147
-cum_tokens = 763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 26
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "lib/helpers" })'
-descriptor = "listing of 'lib/helpers'"
-cost_tokens = 190
-cum_tokens = 953
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/helpers"
-entries = ["AxiosTransformStream.js", "AxiosURLSearchParams.js", "HttpStatusCode.js", "README.md", "ZlibHeaderTransformStream.js", "bind.js", "buildURL.js", "callbackify.js", "combineURLs.js", "composeSignals.js", "cookies.js", "deprecatedMethod.js", "estimateDataURLDecodedBytes.js", "formDataToJSON.js", "formDataToStream.js", "fromDataURI.js", "isAbsoluteURL.js", "isAxiosError.js", "isURLSameOrigin.js", "null.js", "parseHeaders.js", "parseProtocol.js", "progressEventReducer.js", "readBlob.js", "resolveConfig.js", "sanitizeHeaderValue.js", "shouldBypassProxy.js", "speedometer.js", "spread.js", "throttle.js", "toFormData.js", "toURLEncodedForm.js", "trackStream.js", "validator.js"]
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "lib/platform/browser" })'
-descriptor = "listing of 'lib/platform/browser'"
-cost_tokens = 7
-cum_tokens = 960
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/platform/browser"
-entries = ["classes", "index.js"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "lib/platform/browser/classes" })'
-descriptor = "listing of 'lib/platform/browser/classes'"
-cost_tokens = 15
-cum_tokens = 975
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/platform/browser/classes"
-entries = ["Blob.js", "FormData.js", "URLSearchParams.js"]
-
-[[batches]]
-position = 26
+position = 27
 key = 'Typescript(ExportNames { file: "lib/platform/browser/index.js" })'
 descriptor = "export names surface in lib/platform/browser/index.js"
 cost_tokens = 11
-cum_tokens = 986
+cum_tokens = 665
 
 [batches.content]
 kind = "lines"
@@ -516,25 +526,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "lib/platform/node" })'
-descriptor = "listing of 'lib/platform/node'"
-cost_tokens = 7
-cum_tokens = 993
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/platform/node"
-entries = ["classes", "index.js"]
-
-[[batches]]
 position = 28
 key = 'Typescript(ExportNames { file: "lib/platform/node/index.js" })'
 descriptor = "export names surface in lib/platform/node/index.js"
 cost_tokens = 11
-cum_tokens = 1004
+cum_tokens = 676
 
 [batches.content]
 kind = "lines"
@@ -557,10 +553,42 @@ kind = "ellipsis"
 
 [[batches]]
 position = 29
+key = 'Typescript(Export { file: "index.js", start_line: 26 })'
+descriptor = "export at index.js:26"
+cost_tokens = 147
+cum_tokens = 823
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 26
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "lib/helpers" })'
+descriptor = "listing of 'lib/helpers'"
+cost_tokens = 190
+cum_tokens = 1013
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/helpers"
+entries = ["AxiosTransformStream.js", "AxiosURLSearchParams.js", "HttpStatusCode.js", "README.md", "ZlibHeaderTransformStream.js", "bind.js", "buildURL.js", "callbackify.js", "combineURLs.js", "composeSignals.js", "cookies.js", "deprecatedMethod.js", "estimateDataURLDecodedBytes.js", "formDataToJSON.js", "formDataToStream.js", "fromDataURI.js", "isAbsoluteURL.js", "isAxiosError.js", "isURLSameOrigin.js", "null.js", "parseHeaders.js", "parseProtocol.js", "progressEventReducer.js", "readBlob.js", "resolveConfig.js", "sanitizeHeaderValue.js", "shouldBypassProxy.js", "speedometer.js", "spread.js", "throttle.js", "toFormData.js", "toURLEncodedForm.js", "trackStream.js", "validator.js"]
+
+[[batches]]
+position = 31
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 6
-cum_tokens = 1010
+cum_tokens = 1019
 
 [batches.content]
 kind = "fs"
@@ -570,11 +598,11 @@ parent = "scripts"
 entries = ["axios-build-instance.js"]
 
 [[batches]]
-position = 30
+position = 32
 key = 'Markdown(ReadmeHeadline { file: "lib/core/README.md" })'
 descriptor = "README headline in lib/core/README.md"
 cost_tokens = 72
-cum_tokens = 1082
+cum_tokens = 1091
 
 [batches.content]
 kind = "lines"
@@ -588,11 +616,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 31
+position = 33
 key = 'Markdown(ReadmeHeadline { file: "lib/helpers/README.md" })'
 descriptor = "README headline in lib/helpers/README.md"
 cost_tokens = 73
-cum_tokens = 1155
+cum_tokens = 1164
 
 [batches.content]
 kind = "lines"
@@ -606,11 +634,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 32
+position = 34
 key = 'Markdown(Section { file: "lib/helpers/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "lib/helpers/README.md section #0"
 cost_tokens = 24
-cum_tokens = 1179
+cum_tokens = 1188
 
 [batches.content]
 kind = "lines"
@@ -624,11 +652,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 33
+position = 35
 key = 'Typescript(ExportNames { file: "gulpfile.js" })'
 descriptor = "export names surface in gulpfile.js"
 cost_tokens = 17
-cum_tokens = 1196
+cum_tokens = 1205
 
 [batches.content]
 kind = "lines"
@@ -642,11 +670,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 34
+position = 36
 key = 'Markdown(Section { file: "lib/core/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "lib/core/README.md section #0"
 cost_tokens = 47
-cum_tokens = 1243
+cum_tokens = 1252
 
 [batches.content]
 kind = "lines"
@@ -660,11 +688,25 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 35
+position = 37
+key = 'Fs(DirListing { dir: "lib/platform/node/classes" })'
+descriptor = "listing of 'lib/platform/node/classes'"
+cost_tokens = 11
+cum_tokens = 1263
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib/platform/node/classes"
+entries = ["FormData.js", "URLSearchParams.js"]
+
+[[batches]]
+position = 38
 key = 'Markdown(Section { file: "CONTRIBUTORS.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CONTRIBUTORS.md section #2"
 cost_tokens = 19
-cum_tokens = 1262
+cum_tokens = 1282
 
 [batches.content]
 kind = "lines"
@@ -678,11 +720,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 36
+position = 39
 key = 'Markdown(HeadingsOutline { file: "ECOSYSTEM.md" })'
 descriptor = "headings outline in ECOSYSTEM.md"
 cost_tokens = 73
-cum_tokens = 1335
+cum_tokens = 1355
 
 [batches.content]
 kind = "lines"
@@ -784,11 +826,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 40
 key = 'Markdown(Section { file: "ECOSYSTEM.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ECOSYSTEM.md section #0"
 cost_tokens = 36
-cum_tokens = 1371
+cum_tokens = 1391
 
 [batches.content]
 kind = "lines"
@@ -802,11 +844,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 38
+position = 41
 key = 'Typescript(ExportNames { file: "lib/utils.js" })'
 descriptor = "export names surface in lib/utils.js"
 cost_tokens = 11
-cum_tokens = 1382
+cum_tokens = 1402
 
 [batches.content]
 kind = "lines"
@@ -828,11 +870,11 @@ end = 873
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 42
 key = 'Markdown(HeadingsOutline { file: "COLLABORATOR_GUIDE.md" })'
 descriptor = "headings outline in COLLABORATOR_GUIDE.md"
 cost_tokens = 79
-cum_tokens = 1461
+cum_tokens = 1481
 
 [batches.content]
 kind = "lines"
@@ -950,11 +992,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 43
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 19
-cum_tokens = 1480
+cum_tokens = 1500
 
 [batches.content]
 kind = "fs"
@@ -964,11 +1006,25 @@ parent = "tests"
 entries = ["README.md", "browser", "module", "setup", "smoke", "unit"]
 
 [[batches]]
-position = 41
+position = 44
+key = 'Fs(DirListing { dir: "tests/module" })'
+descriptor = "listing of 'tests/module'"
+cost_tokens = 7
+cum_tokens = 1507
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/module"
+entries = ["cjs", "esm"]
+
+[[batches]]
+position = 45
 key = 'Typescript(ModuleItem { file: "lib/defaults/index.js", start_line: 23 })'
 descriptor = "module item at lib/defaults/index.js:23"
 cost_tokens = 18
-cum_tokens = 1498
+cum_tokens = 1525
 
 [batches.content]
 kind = "lines"
@@ -990,11 +1046,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 46
 key = 'Markdown(Section { file: "COLLABORATOR_GUIDE.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "COLLABORATOR_GUIDE.md section #0"
 cost_tokens = 69
-cum_tokens = 1567
+cum_tokens = 1594
 
 [batches.content]
 kind = "lines"
@@ -1008,11 +1064,25 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 43
+position = 47
+key = 'Fs(DirListing { dir: "tests/module/cjs" })'
+descriptor = "listing of 'tests/module/cjs'"
+cost_tokens = 12
+cum_tokens = 1606
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/module/cjs"
+entries = ["package-lock.json", "package.json", "tests"]
+
+[[batches]]
+position = 48
 key = 'Typescript(Export { file: "lib/platform/browser/index.js", start_line: 5 })'
 descriptor = "export at lib/platform/browser/index.js:5"
 cost_tokens = 76
-cum_tokens = 1643
+cum_tokens = 1682
 
 [batches.content]
 kind = "lines"
@@ -1026,11 +1096,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 44
+position = 49
 key = 'Typescript(ExportNames { file: "lib/core/Axios.js" })'
 descriptor = "export names surface in lib/core/Axios.js"
 cost_tokens = 10
-cum_tokens = 1653
+cum_tokens = 1692
 
 [batches.content]
 kind = "lines"
@@ -1044,11 +1114,11 @@ end = 281
 kind = "full"
 
 [[batches]]
-position = 45
+position = 50
 key = 'Typescript(ExportNames { file: "lib/helpers/null.js" })'
 descriptor = "export names surface in lib/helpers/null.js"
 cost_tokens = 10
-cum_tokens = 1663
+cum_tokens = 1702
 
 [batches.content]
 kind = "lines"
@@ -1062,11 +1132,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 46
+position = 51
 key = 'Typescript(ExportNames { file: "lib/helpers/throttle.js" })'
 descriptor = "export names surface in lib/helpers/throttle.js"
 cost_tokens = 10
-cum_tokens = 1673
+cum_tokens = 1712
 
 [batches.content]
 kind = "lines"
@@ -1080,11 +1150,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 47
+position = 52
 key = 'Fs(DirListing { dir: "tests/smoke" })'
 descriptor = "listing of 'tests/smoke'"
 cost_tokens = 14
-cum_tokens = 1687
+cum_tokens = 1726
 
 [batches.content]
 kind = "fs"
@@ -1094,11 +1164,53 @@ parent = "tests/smoke"
 entries = ["bun", "cjs", "deno", "esm"]
 
 [[batches]]
-position = 48
+position = 53
+key = 'Fs(DirListing { dir: "tests/smoke/bun" })'
+descriptor = "listing of 'tests/smoke/bun'"
+cost_tokens = 11
+cum_tokens = 1737
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/smoke/bun"
+entries = ["bun.lock", "package.json", "tests"]
+
+[[batches]]
+position = 54
+key = 'Fs(DirListing { dir: "tests/smoke/cjs" })'
+descriptor = "listing of 'tests/smoke/cjs'"
+cost_tokens = 12
+cum_tokens = 1749
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/smoke/cjs"
+entries = ["package-lock.json", "package.json", "tests"]
+
+[[batches]]
+position = 55
+key = 'Fs(DirListing { dir: "tests/smoke/deno" })'
+descriptor = "listing of 'tests/smoke/deno'"
+cost_tokens = 13
+cum_tokens = 1762
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/smoke/deno"
+entries = ["deno.json", "deno.lock", "tests"]
+
+[[batches]]
+position = 56
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 84
-cum_tokens = 1771
+cum_tokens = 1846
 
 [batches.content]
 kind = "lines"
@@ -1112,11 +1224,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 49
+position = 57
 key = 'Typescript(ExportNames { file: "lib/adapters/adapters.js" })'
 descriptor = "export names surface in lib/adapters/adapters.js"
 cost_tokens = 11
-cum_tokens = 1782
+cum_tokens = 1857
 
 [batches.content]
 kind = "lines"
@@ -1138,11 +1250,11 @@ end = 121
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 58
 key = 'Typescript(ExportNames { file: "lib/cancel/CancelToken.js" })'
 descriptor = "export names surface in lib/cancel/CancelToken.js"
 cost_tokens = 11
-cum_tokens = 1793
+cum_tokens = 1868
 
 [batches.content]
 kind = "lines"
@@ -1156,11 +1268,11 @@ end = 135
 kind = "full"
 
 [[batches]]
-position = 51
+position = 59
 key = 'Typescript(ExportNames { file: "lib/core/AxiosError.js" })'
 descriptor = "export names surface in lib/core/AxiosError.js"
 cost_tokens = 11
-cum_tokens = 1804
+cum_tokens = 1879
 
 [batches.content]
 kind = "lines"
@@ -1174,11 +1286,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 52
+position = 60
 key = 'Typescript(ExportNames { file: "lib/core/AxiosHeaders.js" })'
 descriptor = "export names surface in lib/core/AxiosHeaders.js"
 cost_tokens = 11
-cum_tokens = 1815
+cum_tokens = 1890
 
 [batches.content]
 kind = "lines"
@@ -1192,11 +1304,11 @@ end = 348
 kind = "full"
 
 [[batches]]
-position = 53
+position = 61
 key = 'Typescript(ExportNames { file: "lib/helpers/callbackify.js" })'
 descriptor = "export names surface in lib/helpers/callbackify.js"
 cost_tokens = 11
-cum_tokens = 1826
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -1210,11 +1322,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 54
+position = 62
 key = 'Typescript(ExportNames { file: "lib/helpers/composeSignals.js" })'
 descriptor = "export names surface in lib/helpers/composeSignals.js"
 cost_tokens = 11
-cum_tokens = 1837
+cum_tokens = 1912
 
 [batches.content]
 kind = "lines"
@@ -1228,11 +1340,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 55
+position = 63
 key = 'Typescript(ExportNames { file: "lib/helpers/readBlob.js" })'
 descriptor = "export names surface in lib/helpers/readBlob.js"
 cost_tokens = 11
-cum_tokens = 1848
+cum_tokens = 1923
 
 [batches.content]
 kind = "lines"
@@ -1246,11 +1358,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 56
+position = 64
 key = 'Typescript(ExportNames { file: "lib/helpers/speedometer.js" })'
 descriptor = "export names surface in lib/helpers/speedometer.js"
 cost_tokens = 11
-cum_tokens = 1859
+cum_tokens = 1934
 
 [batches.content]
 kind = "lines"
@@ -1264,11 +1376,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 57
+position = 65
 key = 'Typescript(ExportNames { file: "lib/helpers/validator.js" })'
 descriptor = "export names surface in lib/helpers/validator.js"
 cost_tokens = 11
-cum_tokens = 1870
+cum_tokens = 1945
 
 [batches.content]
 kind = "lines"
@@ -1290,11 +1402,11 @@ end = 110
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 66
 key = 'Typescript(Export { file: "lib/helpers/validator.js", start_line: 109 })'
 descriptor = "export at lib/helpers/validator.js:109"
 cost_tokens = 18
-cum_tokens = 1888
+cum_tokens = 1963
 
 [batches.content]
 kind = "lines"
@@ -1308,25 +1420,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "lib/platform/common" })'
-descriptor = "listing of 'lib/platform/common'"
-cost_tokens = 4
-cum_tokens = 1892
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/platform/common"
-entries = ["utils.js"]
-
-[[batches]]
-position = 60
+position = 67
 key = 'Typescript(ExportNames { file: "lib/cancel/CanceledError.js" })'
 descriptor = "export names surface in lib/cancel/CanceledError.js"
 cost_tokens = 12
-cum_tokens = 1904
+cum_tokens = 1975
 
 [batches.content]
 kind = "lines"
@@ -1340,11 +1438,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 61
+position = 68
 key = 'Typescript(ExportNames { file: "lib/core/InterceptorManager.js" })'
 descriptor = "export names surface in lib/core/InterceptorManager.js"
 cost_tokens = 12
-cum_tokens = 1916
+cum_tokens = 1987
 
 [batches.content]
 kind = "lines"
@@ -1358,11 +1456,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 62
+position = 69
 key = 'Typescript(ExportNames { file: "lib/helpers/AxiosTransformStream.js" })'
 descriptor = "export names surface in lib/helpers/AxiosTransformStream.js"
 cost_tokens = 12
-cum_tokens = 1928
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -1376,11 +1474,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 63
+position = 70
 key = 'Typescript(ExportNames { file: "lib/helpers/HttpStatusCode.js" })'
 descriptor = "export names surface in lib/helpers/HttpStatusCode.js"
 cost_tokens = 12
-cum_tokens = 1940
+cum_tokens = 2011
 
 [batches.content]
 kind = "lines"
@@ -1394,11 +1492,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 64
+position = 71
 key = 'Typescript(ExportNames { file: "lib/helpers/toFormData.js" })'
 descriptor = "export names surface in lib/helpers/toFormData.js"
 cost_tokens = 12
-cum_tokens = 1952
+cum_tokens = 2023
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1510,11 @@ end = 249
 kind = "full"
 
 [[batches]]
-position = 65
+position = 72
 key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 5 })'
 descriptor = "module item at lib/platform/node/index.js:5"
 cost_tokens = 13
-cum_tokens = 1965
+cum_tokens = 2036
 
 [batches.content]
 kind = "lines"
@@ -1430,11 +1528,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 66
+position = 73
 key = 'Typescript(Export { file: "lib/platform/node/index.js", start_line: 27 })'
 descriptor = "export at lib/platform/node/index.js:27"
 cost_tokens = 100
-cum_tokens = 2065
+cum_tokens = 2136
 
 [batches.content]
 kind = "lines"
@@ -1448,11 +1546,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 67
+position = 74
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 37
-cum_tokens = 2102
+cum_tokens = 2173
 
 [batches.content]
 kind = "fs"
@@ -1462,11 +1560,11 @@ parent = ".github"
 entries = ["CODEOWNERS", "FUNDING.yml", "ISSUE_TEMPLATE.md", "PULL_REQUEST_TEMPLATE.md", "copilot-instructions.md", "dependabot.yml", "workflows"]
 
 [[batches]]
-position = 68
+position = 75
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 40
-cum_tokens = 2142
+cum_tokens = 2213
 
 [batches.content]
 kind = "fs"
@@ -1476,11 +1574,11 @@ parent = ".github/workflows"
 entries = ["lockfile-lint.yml", "moderator.yml", "publish.yml", "release-branch.yml", "run-ci.yml", "verify-build-reproducibility.yml", "zizmor.yml"]
 
 [[batches]]
-position = 69
+position = 76
 key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 7 })'
 descriptor = "module item at lib/platform/node/index.js:7"
 cost_tokens = 14
-cum_tokens = 2156
+cum_tokens = 2227
 
 [batches.content]
 kind = "lines"
@@ -1494,11 +1592,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 70
+position = 77
 key = 'Typescript(ExportNames { file: "lib/helpers/AxiosURLSearchParams.js" })'
 descriptor = "export names surface in lib/helpers/AxiosURLSearchParams.js"
 cost_tokens = 13
-cum_tokens = 2169
+cum_tokens = 2240
 
 [batches.content]
 kind = "lines"
@@ -1512,11 +1610,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 71
+position = 78
 key = 'Typescript(ExportNames { file: "lib/helpers/formDataToJSON.js" })'
 descriptor = "export names surface in lib/helpers/formDataToJSON.js"
 cost_tokens = 13
-cum_tokens = 2182
+cum_tokens = 2253
 
 [batches.content]
 kind = "lines"
@@ -1530,11 +1628,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 72
+position = 79
 key = 'Typescript(ExportNames { file: "lib/helpers/formDataToStream.js" })'
 descriptor = "export names surface in lib/helpers/formDataToStream.js"
 cost_tokens = 13
-cum_tokens = 2195
+cum_tokens = 2266
 
 [batches.content]
 kind = "lines"
@@ -1548,11 +1646,25 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 73
+position = 80
+key = 'Fs(DirListing { dir: "tests/module/esm" })'
+descriptor = "listing of 'tests/module/esm'"
+cost_tokens = 18
+cum_tokens = 2284
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/module/esm"
+entries = ["package-lock.json", "package.json", "tests", "vitest.config.js"]
+
+[[batches]]
+position = 81
 key = 'Fs(DirListing { dir: "tests/smoke/esm" })'
 descriptor = "listing of 'tests/smoke/esm'"
 cost_tokens = 18
-cum_tokens = 2213
+cum_tokens = 2302
 
 [batches.content]
 kind = "fs"
@@ -1562,11 +1674,11 @@ parent = "tests/smoke/esm"
 entries = ["package-lock.json", "package.json", "tests", "vitest.config.js"]
 
 [[batches]]
-position = 74
+position = 82
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 6 })'
 descriptor = "module item at index.js:6"
 cost_tokens = 149
-cum_tokens = 2362
+cum_tokens = 2451
 
 [batches.content]
 kind = "lines"
@@ -1580,11 +1692,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 75
+position = 83
 key = 'Typescript(ExportNames { file: "lib/helpers/ZlibHeaderTransformStream.js" })'
 descriptor = "export names surface in lib/helpers/ZlibHeaderTransformStream.js"
 cost_tokens = 14
-cum_tokens = 2376
+cum_tokens = 2465
 
 [batches.content]
 kind = "lines"
@@ -1598,25 +1710,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "lib/env/classes" })'
-descriptor = "listing of 'lib/env/classes'"
-cost_tokens = 5
-cum_tokens = 2381
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib/env/classes"
-entries = ["FormData.js"]
-
-[[batches]]
-position = 77
+position = 84
 key = 'Markdown(Section { file: "COLLABORATOR_GUIDE.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "COLLABORATOR_GUIDE.md section #1"
 cost_tokens = 40
-cum_tokens = 2421
+cum_tokens = 2505
 
 [batches.content]
 kind = "lines"
@@ -1630,11 +1728,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 78
+position = 85
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 51
-cum_tokens = 2472
+cum_tokens = 2556
 
 [batches.content]
 kind = "fs"
@@ -1644,11 +1742,221 @@ parent = "docs"
 entries = [".vitepress", "data", "es", "favicon.ico", "fr", "index.md", "package-lock.json", "package.json", "pages", "patches", "public", "scripts", "site.webmanifest", "zh"]
 
 [[batches]]
-position = 79
+position = 86
+key = 'Fs(DirListing { dir: "docs/es" })'
+descriptor = "listing of 'docs/es'"
+cost_tokens = 7
+cum_tokens = 2563
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/es"
+entries = ["index.md", "pages"]
+
+[[batches]]
+position = 87
+key = 'Fs(DirListing { dir: "docs/fr" })'
+descriptor = "listing of 'docs/fr'"
+cost_tokens = 7
+cum_tokens = 2570
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/fr"
+entries = ["index.md", "pages"]
+
+[[batches]]
+position = 88
+key = 'Fs(DirListing { dir: "docs/zh" })'
+descriptor = "listing of 'docs/zh'"
+cost_tokens = 7
+cum_tokens = 2577
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/zh"
+entries = ["index.md", "pages"]
+
+[[batches]]
+position = 89
+key = 'Fs(DirListing { dir: "docs/es/pages" })'
+descriptor = "listing of 'docs/es/pages'"
+cost_tokens = 11
+cum_tokens = 2588
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/es/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 90
+key = 'Fs(DirListing { dir: "docs/fr/pages" })'
+descriptor = "listing of 'docs/fr/pages'"
+cost_tokens = 11
+cum_tokens = 2599
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/fr/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 91
+key = 'Fs(DirListing { dir: "docs/pages" })'
+descriptor = "listing of 'docs/pages'"
+cost_tokens = 11
+cum_tokens = 2610
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 92
+key = 'Fs(DirListing { dir: "docs/zh/pages" })'
+descriptor = "listing of 'docs/zh/pages'"
+cost_tokens = 11
+cum_tokens = 2621
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/zh/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 93
+key = 'Fs(DirListing { dir: "docs/es/pages/misc" })'
+descriptor = "listing of 'docs/es/pages/misc'"
+cost_tokens = 13
+cum_tokens = 2634
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/es/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 94
+key = 'Fs(DirListing { dir: "docs/fr/pages/misc" })'
+descriptor = "listing of 'docs/fr/pages/misc'"
+cost_tokens = 13
+cum_tokens = 2647
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/fr/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 95
+key = 'Fs(DirListing { dir: "docs/pages/misc" })'
+descriptor = "listing of 'docs/pages/misc'"
+cost_tokens = 13
+cum_tokens = 2660
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 96
+key = 'Fs(DirListing { dir: "docs/zh/pages/misc" })'
+descriptor = "listing of 'docs/zh/pages/misc'"
+cost_tokens = 13
+cum_tokens = 2673
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/zh/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 97
+key = 'Fs(DirListing { dir: "docs/es/pages/getting-started" })'
+descriptor = "listing of 'docs/es/pages/getting-started'"
+cost_tokens = 18
+cum_tokens = 2691
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/es/pages/getting-started"
+entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
+
+[[batches]]
+position = 98
+key = 'Fs(DirListing { dir: "docs/fr/pages/getting-started" })'
+descriptor = "listing of 'docs/fr/pages/getting-started'"
+cost_tokens = 18
+cum_tokens = 2709
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/fr/pages/getting-started"
+entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
+
+[[batches]]
+position = 99
+key = 'Fs(DirListing { dir: "docs/pages/getting-started" })'
+descriptor = "listing of 'docs/pages/getting-started'"
+cost_tokens = 18
+cum_tokens = 2727
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/pages/getting-started"
+entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
+
+[[batches]]
+position = 100
+key = 'Fs(DirListing { dir: "docs/zh/pages/getting-started" })'
+descriptor = "listing of 'docs/zh/pages/getting-started'"
+cost_tokens = 18
+cum_tokens = 2745
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/zh/pages/getting-started"
+entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
+
+[[batches]]
+position = 101
 key = 'Typescript(ExportNames { file: "lib/adapters/xhr.js" })'
 descriptor = "export names surface in lib/adapters/xhr.js"
 cost_tokens = 15
-cum_tokens = 2487
+cum_tokens = 2760
 
 [batches.content]
 kind = "lines"
@@ -1670,11 +1978,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 80
+position = 102
 key = 'Typescript(ExportNames { file: "lib/env/data.js" })'
 descriptor = "export names surface in lib/env/data.js"
 cost_tokens = 15
-cum_tokens = 2502
+cum_tokens = 2775
 
 [batches.content]
 kind = "lines"
@@ -1688,11 +1996,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 81
+position = 103
 key = 'Typescript(ExportNames { file: "lib/helpers/resolveConfig.js" })'
 descriptor = "export names surface in lib/helpers/resolveConfig.js"
 cost_tokens = 15
-cum_tokens = 2517
+cum_tokens = 2790
 
 [batches.content]
 kind = "lines"
@@ -1714,11 +2022,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 104
 key = 'Typescript(Export { file: "lib/helpers/resolveConfig.js", start_line: 38 })'
 descriptor = "export at lib/helpers/resolveConfig.js:38"
 cost_tokens = 0
-cum_tokens = 2517
+cum_tokens = 2790
 
 [batches.content]
 kind = "lines"
@@ -1740,11 +2048,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 105
 key = 'Typescript(ExportNames { file: "lib/helpers/spread.js" })'
 descriptor = "export names surface in lib/helpers/spread.js"
 cost_tokens = 15
-cum_tokens = 2532
+cum_tokens = 2805
 
 [batches.content]
 kind = "lines"
@@ -1766,11 +2074,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 106
 key = 'Typescript(Export { file: "lib/helpers/spread.js", start_line: 24 })'
 descriptor = "export at lib/helpers/spread.js:24"
 cost_tokens = 0
-cum_tokens = 2532
+cum_tokens = 2805
 
 [batches.content]
 kind = "lines"
@@ -1792,11 +2100,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 107
 key = 'Typescript(ExportNames { file: "lib/cancel/isCancel.js" })'
 descriptor = "export names surface in lib/cancel/isCancel.js"
 cost_tokens = 16
-cum_tokens = 2548
+cum_tokens = 2821
 
 [batches.content]
 kind = "lines"
@@ -1818,11 +2126,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 108
 key = 'Typescript(Export { file: "lib/cancel/isCancel.js", start_line: 3 })'
 descriptor = "export at lib/cancel/isCancel.js:3"
 cost_tokens = 0
-cum_tokens = 2548
+cum_tokens = 2821
 
 [batches.content]
 kind = "lines"
@@ -1844,11 +2152,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 109
 key = 'Typescript(ExportBody { file: "lib/cancel/isCancel.js", start_line: 3, body_start_line: 4 })'
 descriptor = "export body at lib/cancel/isCancel.js:3 body 4"
 cost_tokens = 15
-cum_tokens = 2563
+cum_tokens = 2836
 
 [batches.content]
 kind = "lines"
@@ -1862,11 +2170,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 88
+position = 110
 key = 'Typescript(ExportNames { file: "lib/core/dispatchRequest.js" })'
 descriptor = "export names surface in lib/core/dispatchRequest.js"
 cost_tokens = 16
-cum_tokens = 2579
+cum_tokens = 2852
 
 [batches.content]
 kind = "lines"
@@ -1888,11 +2196,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 111
 key = 'Typescript(Export { file: "lib/core/dispatchRequest.js", start_line: 34 })'
 descriptor = "export at lib/core/dispatchRequest.js:34"
 cost_tokens = 0
-cum_tokens = 2579
+cum_tokens = 2852
 
 [batches.content]
 kind = "lines"
@@ -1914,11 +2222,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 112
 key = 'Typescript(ExportNames { file: "lib/helpers/cookies.js" })'
 descriptor = "export names surface in lib/helpers/cookies.js"
 cost_tokens = 16
-cum_tokens = 2595
+cum_tokens = 2868
 
 [batches.content]
 kind = "lines"
@@ -1940,11 +2248,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 113
 key = 'Typescript(ExportNames { file: "lib/helpers/isURLSameOrigin.js" })'
 descriptor = "export names surface in lib/helpers/isURLSameOrigin.js"
 cost_tokens = 16
-cum_tokens = 2611
+cum_tokens = 2884
 
 [batches.content]
 kind = "lines"
@@ -1966,11 +2274,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 114
 key = 'Typescript(ExportNames { file: "lib/helpers/parseHeaders.js" })'
 descriptor = "export names surface in lib/helpers/parseHeaders.js"
 cost_tokens = 16
-cum_tokens = 2627
+cum_tokens = 2900
 
 [batches.content]
 kind = "lines"
@@ -1992,11 +2300,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 93
+position = 115
 key = 'Typescript(Export { file: "lib/helpers/parseHeaders.js", start_line: 41 })'
 descriptor = "export at lib/helpers/parseHeaders.js:41"
 cost_tokens = 0
-cum_tokens = 2627
+cum_tokens = 2900
 
 [batches.content]
 kind = "lines"
@@ -2018,11 +2326,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 116
 key = 'Typescript(ExportNames { file: "lib/helpers/parseProtocol.js" })'
 descriptor = "export names surface in lib/helpers/parseProtocol.js"
 cost_tokens = 16
-cum_tokens = 2643
+cum_tokens = 2916
 
 [batches.content]
 kind = "lines"
@@ -2044,11 +2352,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 117
 key = 'Typescript(Export { file: "lib/helpers/parseProtocol.js", start_line: 3 })'
 descriptor = "export at lib/helpers/parseProtocol.js:3"
 cost_tokens = 0
-cum_tokens = 2643
+cum_tokens = 2916
 
 [batches.content]
 kind = "lines"
@@ -2070,11 +2378,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 118
 key = 'Typescript(ExportNames { file: "lib/platform/common/utils.js" })'
 descriptor = "export names surface in lib/platform/common/utils.js"
 cost_tokens = 10
-cum_tokens = 2653
+cum_tokens = 2926
 
 [batches.content]
 kind = "lines"
@@ -2096,11 +2404,39 @@ end = 47
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 119
+key = 'Fs(DirListing { dir: "tests/module/esm/tests" })'
+descriptor = "listing of 'tests/module/esm/tests'"
+cost_tokens = 23
+cum_tokens = 2949
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/module/esm/tests"
+entries = ["fixture-cleanup.module.test.js", "helpers", "ts.module.test.js", "typings.module.test.js"]
+
+[[batches]]
+position = 120
+key = 'Fs(DirListing { dir: "tests/module/esm/tests/helpers" })'
+descriptor = "listing of 'tests/module/esm/tests/helpers'"
+cost_tokens = 19
+cum_tokens = 2968
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/module/esm/tests/helpers"
+entries = ["esm-functions.ts", "esm-index.ts", "fixture.js", "run-command.js"]
+
+[[batches]]
+position = 121
 key = 'Typescript(ExportNames { file: "lib/helpers/isAbsoluteURL.js" })'
 descriptor = "export names surface in lib/helpers/isAbsoluteURL.js"
 cost_tokens = 17
-cum_tokens = 2670
+cum_tokens = 2985
 
 [batches.content]
 kind = "lines"
@@ -2122,11 +2458,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 122
 key = 'Typescript(Export { file: "lib/helpers/isAbsoluteURL.js", start_line: 10 })'
 descriptor = "export at lib/helpers/isAbsoluteURL.js:10"
 cost_tokens = 0
-cum_tokens = 2670
+cum_tokens = 2985
 
 [batches.content]
 kind = "lines"
@@ -2148,11 +2484,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 123
 key = 'Typescript(ExportNames { file: "lib/helpers/isAxiosError.js" })'
 descriptor = "export names surface in lib/helpers/isAxiosError.js"
 cost_tokens = 17
-cum_tokens = 2687
+cum_tokens = 3002
 
 [batches.content]
 kind = "lines"
@@ -2174,11 +2510,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 124
 key = 'Typescript(Export { file: "lib/helpers/isAxiosError.js", start_line: 12 })'
 descriptor = "export at lib/helpers/isAxiosError.js:12"
 cost_tokens = 0
-cum_tokens = 2687
+cum_tokens = 3002
 
 [batches.content]
 kind = "lines"
@@ -2200,11 +2536,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 101
+position = 125
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 50
-cum_tokens = 2737
+cum_tokens = 3052
 
 [batches.content]
 kind = "fs"
@@ -2214,11 +2550,11 @@ parent = "examples"
 entries = ["README.md", "abort-controller", "all", "amd", "get", "improved-network-errors.md", "network_enhanced.js", "post", "postMultipartFormData", "server.js", "transform-response", "upload"]
 
 [[batches]]
-position = 102
+position = 126
 key = 'Typescript(ExportNames { file: "lib/helpers/bind.js" })'
 descriptor = "export names surface in lib/helpers/bind.js"
 cost_tokens = 18
-cum_tokens = 2755
+cum_tokens = 3070
 
 [batches.content]
 kind = "lines"
@@ -2240,11 +2576,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 127
 key = 'Typescript(Export { file: "lib/helpers/bind.js", start_line: 10 })'
 descriptor = "export at lib/helpers/bind.js:10"
 cost_tokens = 0
-cum_tokens = 2755
+cum_tokens = 3070
 
 [batches.content]
 kind = "lines"
@@ -2266,11 +2602,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 128
 key = 'Typescript(ExportNames { file: "lib/helpers/shouldBypassProxy.js" })'
 descriptor = "export names surface in lib/helpers/shouldBypassProxy.js"
 cost_tokens = 18
-cum_tokens = 2773
+cum_tokens = 3088
 
 [batches.content]
 kind = "lines"
@@ -2292,11 +2628,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 129
 key = 'Typescript(Export { file: "lib/helpers/shouldBypassProxy.js", start_line: 127 })'
 descriptor = "export at lib/helpers/shouldBypassProxy.js:127"
 cost_tokens = 0
-cum_tokens = 2773
+cum_tokens = 3088
 
 [batches.content]
 kind = "lines"
@@ -2318,11 +2654,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 130
 key = 'Typescript(ExportNames { file: "lib/core/settle.js" })'
 descriptor = "export names surface in lib/core/settle.js"
 cost_tokens = 19
-cum_tokens = 2792
+cum_tokens = 3107
 
 [batches.content]
 kind = "lines"
@@ -2344,11 +2680,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 131
 key = 'Typescript(Export { file: "lib/core/settle.js", start_line: 14 })'
 descriptor = "export at lib/core/settle.js:14"
 cost_tokens = 0
-cum_tokens = 2792
+cum_tokens = 3107
 
 [batches.content]
 kind = "lines"
@@ -2370,11 +2706,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 132
 key = 'Typescript(ExportNames { file: "lib/core/transformData.js" })'
 descriptor = "export names surface in lib/core/transformData.js"
 cost_tokens = 19
-cum_tokens = 2811
+cum_tokens = 3126
 
 [batches.content]
 kind = "lines"
@@ -2396,11 +2732,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 133
 key = 'Typescript(Export { file: "lib/core/transformData.js", start_line: 15 })'
 descriptor = "export at lib/core/transformData.js:15"
 cost_tokens = 0
-cum_tokens = 2811
+cum_tokens = 3126
 
 [batches.content]
 kind = "lines"
@@ -2422,11 +2758,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 134
 key = 'Typescript(ExportNames { file: "lib/helpers/estimateDataURLDecodedBytes.js" })'
 descriptor = "export names surface in lib/helpers/estimateDataURLDecodedBytes.js"
 cost_tokens = 19
-cum_tokens = 2830
+cum_tokens = 3145
 
 [batches.content]
 kind = "lines"
@@ -2448,11 +2784,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 135
 key = 'Typescript(Export { file: "lib/helpers/estimateDataURLDecodedBytes.js", start_line: 10 })'
 descriptor = "export at lib/helpers/estimateDataURLDecodedBytes.js:10"
 cost_tokens = 0
-cum_tokens = 2830
+cum_tokens = 3145
 
 [batches.content]
 kind = "lines"
@@ -2474,11 +2810,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 136
 key = 'Typescript(ExportBody { file: "lib/helpers/isAxiosError.js", start_line: 12, body_start_line: 13 })'
 descriptor = "export body at lib/helpers/isAxiosError.js:12 body 13"
 cost_tokens = 19
-cum_tokens = 2849
+cum_tokens = 3164
 
 [batches.content]
 kind = "lines"
@@ -2492,11 +2828,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 113
+position = 137
 key = 'Typescript(ModuleItem { file: "lib/defaults/index.js", start_line: 11 })'
 descriptor = "module item at lib/defaults/index.js:11"
 cost_tokens = 35
-cum_tokens = 2884
+cum_tokens = 3199
 
 [batches.content]
 kind = "lines"
@@ -2510,11 +2846,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 114
+position = 138
 key = 'Typescript(ExportNames { file: "lib/core/mergeConfig.js" })'
 descriptor = "export names surface in lib/core/mergeConfig.js"
 cost_tokens = 20
-cum_tokens = 2904
+cum_tokens = 3219
 
 [batches.content]
 kind = "lines"
@@ -2536,11 +2872,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 115
+position = 139
 key = 'Typescript(Export { file: "lib/core/mergeConfig.js", start_line: 17 })'
 descriptor = "export at lib/core/mergeConfig.js:17"
 cost_tokens = 0
-cum_tokens = 2904
+cum_tokens = 3219
 
 [batches.content]
 kind = "lines"
@@ -2562,11 +2898,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 116
+position = 140
 key = 'Typescript(ExportNames { file: "lib/helpers/combineURLs.js" })'
 descriptor = "export names surface in lib/helpers/combineURLs.js"
 cost_tokens = 20
-cum_tokens = 2924
+cum_tokens = 3239
 
 [batches.content]
 kind = "lines"
@@ -2588,11 +2924,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 117
+position = 141
 key = 'Typescript(Export { file: "lib/helpers/combineURLs.js", start_line: 11 })'
 descriptor = "export at lib/helpers/combineURLs.js:11"
 cost_tokens = 0
-cum_tokens = 2924
+cum_tokens = 3239
 
 [batches.content]
 kind = "lines"
@@ -2614,11 +2950,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 142
 key = 'Typescript(ExportNames { file: "lib/helpers/deprecatedMethod.js" })'
 descriptor = "export names surface in lib/helpers/deprecatedMethod.js"
 cost_tokens = 20
-cum_tokens = 2944
+cum_tokens = 3259
 
 [batches.content]
 kind = "lines"
@@ -2640,11 +2976,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 143
 key = 'Typescript(Export { file: "lib/helpers/deprecatedMethod.js", start_line: 15 })'
 descriptor = "export at lib/helpers/deprecatedMethod.js:15"
 cost_tokens = 0
-cum_tokens = 2944
+cum_tokens = 3259
 
 [batches.content]
 kind = "lines"
@@ -2666,11 +3002,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 144
 key = 'Markdown(HeadingsOutline { file: "THREATMODEL.md" })'
 descriptor = "headings outline in THREATMODEL.md"
 cost_tokens = 253
-cum_tokens = 3197
+cum_tokens = 3512
 
 [batches.content]
 kind = "lines"
@@ -2932,11 +3268,11 @@ end = 466
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 145
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #24"
 cost_tokens = 5
-cum_tokens = 3202
+cum_tokens = 3517
 
 [batches.content]
 kind = "lines"
@@ -2950,11 +3286,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 122
+position = 146
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 33, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #33"
 cost_tokens = 5
-cum_tokens = 3207
+cum_tokens = 3522
 
 [batches.content]
 kind = "lines"
@@ -2968,11 +3304,11 @@ end = 316
 kind = "full"
 
 [[batches]]
-position = 123
+position = 147
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 44, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #44"
 cost_tokens = 5
-cum_tokens = 3212
+cum_tokens = 3527
 
 [batches.content]
 kind = "lines"
@@ -2986,11 +3322,11 @@ end = 463
 kind = "full"
 
 [[batches]]
-position = 124
+position = 148
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #10"
 cost_tokens = 7
-cum_tokens = 3219
+cum_tokens = 3534
 
 [batches.content]
 kind = "lines"
@@ -3004,11 +3340,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 125
+position = 149
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 53, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #53"
 cost_tokens = 7
-cum_tokens = 3226
+cum_tokens = 3541
 
 [batches.content]
 kind = "lines"
@@ -3022,11 +3358,11 @@ end = 509
 kind = "full"
 
 [[batches]]
-position = 126
+position = 150
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #0"
 cost_tokens = 111
-cum_tokens = 3337
+cum_tokens = 3652
 
 [batches.content]
 kind = "lines"
@@ -3040,11 +3376,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 127
+position = 151
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 25, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #25"
 cost_tokens = 52
-cum_tokens = 3389
+cum_tokens = 3704
 
 [batches.content]
 kind = "lines"
@@ -3058,11 +3394,11 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 128
+position = 152
 key = 'Typescript(ExportNames { file: "lib/helpers/toURLEncodedForm.js" })'
 descriptor = "export names surface in lib/helpers/toURLEncodedForm.js"
 cost_tokens = 21
-cum_tokens = 3410
+cum_tokens = 3725
 
 [batches.content]
 kind = "lines"
@@ -3084,11 +3420,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 153
 key = 'Typescript(Export { file: "lib/helpers/toURLEncodedForm.js", start_line: 7 })'
 descriptor = "export at lib/helpers/toURLEncodedForm.js:7"
 cost_tokens = 0
-cum_tokens = 3410
+cum_tokens = 3725
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +3446,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 154
 key = 'Markdown(Section { file: "COLLABORATOR_GUIDE.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "COLLABORATOR_GUIDE.md section #3"
 cost_tokens = 54
-cum_tokens = 3464
+cum_tokens = 3779
 
 [batches.content]
 kind = "lines"
@@ -3128,11 +3464,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 131
+position = 155
 key = 'Typescript(ExportNames { file: "lib/helpers/fromDataURI.js" })'
 descriptor = "export names surface in lib/helpers/fromDataURI.js"
 cost_tokens = 22
-cum_tokens = 3486
+cum_tokens = 3801
 
 [batches.content]
 kind = "lines"
@@ -3154,11 +3490,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 156
 key = 'Typescript(Export { file: "lib/helpers/fromDataURI.js", start_line: 21 })'
 descriptor = "export at lib/helpers/fromDataURI.js:21"
 cost_tokens = 0
-cum_tokens = 3486
+cum_tokens = 3801
 
 [batches.content]
 kind = "lines"
@@ -3180,53 +3516,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 133
-key = 'Fs(DirListing { dir: "docs/pages" })'
-descriptor = "listing of 'docs/pages'"
-cost_tokens = 11
-cum_tokens = 3497
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/pages"
-entries = ["advanced", "getting-started", "misc"]
-
-[[batches]]
-position = 134
-key = 'Fs(DirListing { dir: "docs/pages/getting-started" })'
-descriptor = "listing of 'docs/pages/getting-started'"
-cost_tokens = 18
-cum_tokens = 3515
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/pages/getting-started"
-entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
-
-[[batches]]
-position = 135
-key = 'Fs(DirListing { dir: "tests/smoke/bun" })'
-descriptor = "listing of 'tests/smoke/bun'"
-cost_tokens = 11
-cum_tokens = 3526
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/smoke/bun"
-entries = ["bun.lock", "package.json", "tests"]
-
-[[batches]]
-position = 136
+position = 157
 key = 'Typescript(Imports { file: "lib/platform/index.js" })'
 descriptor = "imports in lib/platform/index.js"
 cost_tokens = 24
-cum_tokens = 3550
+cum_tokens = 3825
 
 [batches.content]
 kind = "lines"
@@ -3240,11 +3534,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 137
+position = 158
 key = 'Typescript(ExportNames { file: "index.d.ts" })'
 descriptor = "export names surface in index.d.ts"
 cost_tokens = 1028
-cum_tokens = 4578
+cum_tokens = 4853
 
 [batches.content]
 kind = "lines"
@@ -3994,11 +4288,11 @@ end = 714
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 159
 key = 'Typescript(Export { file: "index.d.ts", start_line: 366 })'
 descriptor = "export at index.d.ts:366"
 cost_tokens = 0
-cum_tokens = 4578
+cum_tokens = 4853
 
 [batches.content]
 kind = "lines"
@@ -4020,11 +4314,11 @@ end = 367
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 160
 key = 'Typescript(Export { file: "index.d.ts", start_line: 461 })'
 descriptor = "export at index.d.ts:461"
 cost_tokens = 0
-cum_tokens = 4578
+cum_tokens = 4853
 
 [batches.content]
 kind = "lines"
@@ -4046,11 +4340,11 @@ end = 462
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 161
 key = 'Typescript(Export { file: "index.d.ts", start_line: 713 })'
 descriptor = "export at index.d.ts:713"
 cost_tokens = 0
-cum_tokens = 4578
+cum_tokens = 4853
 
 [batches.content]
 kind = "lines"
@@ -4072,11 +4366,11 @@ end = 714
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 162
 key = 'Typescript(ExportMemberNames { file: "index.d.ts", start_line: 461 })'
 descriptor = "export member names at index.d.ts:461"
 cost_tokens = 144
-cum_tokens = 4722
+cum_tokens = 4997
 
 [batches.content]
 kind = "lines"
@@ -4090,11 +4384,11 @@ end = 473
 kind = "full"
 
 [[batches]]
-position = 142
+position = 163
 key = 'Typescript(ExportMemberNames { file: "index.d.ts", start_line: 713 })'
 descriptor = "export member names at index.d.ts:713"
 cost_tokens = 192
-cum_tokens = 4914
+cum_tokens = 5189
 
 [batches.content]
 kind = "lines"
@@ -4108,11 +4402,11 @@ end = 729
 kind = "full"
 
 [[batches]]
-position = 143
+position = 164
 key = 'Typescript(Export { file: "index.d.ts", start_line: 476 })'
 descriptor = "export at index.d.ts:476"
 cost_tokens = 13
-cum_tokens = 4927
+cum_tokens = 5202
 
 [batches.content]
 kind = "lines"
@@ -4126,11 +4420,11 @@ end = 478
 kind = "full"
 
 [[batches]]
-position = 144
+position = 165
 key = 'Typescript(Export { file: "index.d.ts", start_line: 535 })'
 descriptor = "export at index.d.ts:535"
 cost_tokens = 12
-cum_tokens = 4939
+cum_tokens = 5214
 
 [batches.content]
 kind = "lines"
@@ -4144,11 +4438,11 @@ end = 536
 kind = "full"
 
 [[batches]]
-position = 145
+position = 166
 key = 'Typescript(Export { file: "index.d.ts", start_line: 457 })'
 descriptor = "export at index.d.ts:457"
 cost_tokens = 14
-cum_tokens = 4953
+cum_tokens = 5228
 
 [batches.content]
 kind = "lines"
@@ -4162,11 +4456,11 @@ end = 459
 kind = "full"
 
 [[batches]]
-position = 146
+position = 167
 key = 'Typescript(Export { file: "index.d.ts", start_line: 545 })'
 descriptor = "export at index.d.ts:545"
 cost_tokens = 14
-cum_tokens = 4967
+cum_tokens = 5242
 
 [batches.content]
 kind = "lines"
@@ -4180,11 +4474,11 @@ end = 547
 kind = "full"
 
 [[batches]]
-position = 147
+position = 168
 key = 'Typescript(ExportMemberNames { file: "index.d.ts", start_line: 366 })'
 descriptor = "export member names at index.d.ts:366"
 cost_tokens = 679
-cum_tokens = 5646
+cum_tokens = 5921
 
 [batches.content]
 kind = "lines"
@@ -4262,11 +4556,11 @@ end = 448
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 169
 key = 'Typescript(Export { file: "index.d.ts", start_line: 541 })'
 descriptor = "export at index.d.ts:541"
 cost_tokens = 16
-cum_tokens = 5662
+cum_tokens = 5937
 
 [batches.content]
 kind = "lines"
@@ -4280,11 +4574,11 @@ end = 543
 kind = "full"
 
 [[batches]]
-position = 149
+position = 170
 key = 'Typescript(Export { file: "index.d.ts", start_line: 6 })'
 descriptor = "export at index.d.ts:6"
 cost_tokens = 19
-cum_tokens = 5681
+cum_tokens = 5956
 
 [batches.content]
 kind = "lines"
@@ -4298,11 +4592,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 150
+position = 171
 key = 'Typescript(Export { file: "index.d.ts", start_line: 154 })'
 descriptor = "export at index.d.ts:154"
 cost_tokens = 19
-cum_tokens = 5700
+cum_tokens = 5975
 
 [batches.content]
 kind = "lines"
@@ -4316,11 +4610,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 151
+position = 172
 key = 'Typescript(Export { file: "index.d.ts", start_line: 158 })'
 descriptor = "export at index.d.ts:158"
 cost_tokens = 21
-cum_tokens = 5721
+cum_tokens = 5996
 
 [batches.content]
 kind = "lines"
@@ -4334,11 +4628,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 152
+position = 173
 key = 'Typescript(Export { file: "index.d.ts", start_line: 359 })'
 descriptor = "export at index.d.ts:359"
 cost_tokens = 22
-cum_tokens = 5743
+cum_tokens = 6018
 
 [batches.content]
 kind = "lines"
@@ -4352,11 +4646,11 @@ end = 362
 kind = "full"
 
 [[batches]]
-position = 153
+position = 174
 key = 'Typescript(Export { file: "index.d.ts", start_line: 480 })'
 descriptor = "export at index.d.ts:480"
 cost_tokens = 23
-cum_tokens = 5766
+cum_tokens = 6041
 
 [batches.content]
 kind = "lines"
@@ -4370,11 +4664,11 @@ end = 482
 kind = "full"
 
 [[batches]]
-position = 154
+position = 175
 key = 'Typescript(Export { file: "index.d.ts", start_line: 564 })'
 descriptor = "export at index.d.ts:564"
 cost_tokens = 23
-cum_tokens = 5789
+cum_tokens = 6064
 
 [batches.content]
 kind = "lines"
@@ -4388,11 +4682,11 @@ end = 567
 kind = "full"
 
 [[batches]]
-position = 155
+position = 176
 key = 'Typescript(Export { file: "index.d.ts", start_line: 676 })'
 descriptor = "export at index.d.ts:676"
 cost_tokens = 23
-cum_tokens = 5812
+cum_tokens = 6087
 
 [batches.content]
 kind = "lines"
@@ -4406,11 +4700,11 @@ end = 678
 kind = "full"
 
 [[batches]]
-position = 156
+position = 177
 key = 'Typescript(Export { file: "index.d.ts", start_line: 323 })'
 descriptor = "export at index.d.ts:323"
 cost_tokens = 24
-cum_tokens = 5836
+cum_tokens = 6111
 
 [batches.content]
 kind = "lines"
@@ -4424,11 +4718,11 @@ end = 325
 kind = "full"
 
 [[batches]]
-position = 157
+position = 178
 key = 'Typescript(Export { file: "index.d.ts", start_line: 549 })'
 descriptor = "export at index.d.ts:549"
 cost_tokens = 25
-cum_tokens = 5861
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -4442,11 +4736,11 @@ end = 551
 kind = "full"
 
 [[batches]]
-position = 158
+position = 179
 key = 'Typescript(Export { file: "index.d.ts", start_line: 319 })'
 descriptor = "export at index.d.ts:319"
 cost_tokens = 26
-cum_tokens = 5887
+cum_tokens = 6162
 
 [batches.content]
 kind = "lines"
@@ -4460,11 +4754,11 @@ end = 321
 kind = "full"
 
 [[batches]]
-position = 159
+position = 180
 key = 'Typescript(Export { file: "index.d.ts", start_line: 327 })'
 descriptor = "export at index.d.ts:327"
 cost_tokens = 26
-cum_tokens = 5913
+cum_tokens = 6188
 
 [batches.content]
 kind = "lines"
@@ -4478,11 +4772,11 @@ end = 330
 kind = "full"
 
 [[batches]]
-position = 160
+position = 181
 key = 'Typescript(Export { file: "index.d.ts", start_line: 141 })'
 descriptor = "export at index.d.ts:141"
 cost_tokens = 28
-cum_tokens = 5941
+cum_tokens = 6216
 
 [batches.content]
 kind = "lines"
@@ -4496,11 +4790,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 161
+position = 182
 key = 'Typescript(Export { file: "index.d.ts", start_line: 680 })'
 descriptor = "export at index.d.ts:680"
 cost_tokens = 30
-cum_tokens = 5971
+cum_tokens = 6246
 
 [batches.content]
 kind = "lines"
@@ -4514,11 +4808,11 @@ end = 684
 kind = "full"
 
 [[batches]]
-position = 162
+position = 183
 key = 'Typescript(Export { file: "index.d.ts", start_line: 686 })'
 descriptor = "export at index.d.ts:686"
 cost_tokens = 24
-cum_tokens = 5995
+cum_tokens = 6270
 
 [batches.content]
 kind = "lines"
@@ -4532,11 +4826,11 @@ end = 688
 kind = "full"
 
 [[batches]]
-position = 163
+position = 184
 key = 'Typescript(Export { file: "index.d.ts", start_line: 558 })'
 descriptor = "export at index.d.ts:558"
 cost_tokens = 34
-cum_tokens = 6029
+cum_tokens = 6304
 
 [batches.content]
 kind = "lines"
@@ -4550,11 +4844,11 @@ end = 562
 kind = "full"
 
 [[batches]]
-position = 164
+position = 185
 key = 'Typescript(Export { file: "index.d.ts", start_line: 553 })'
 descriptor = "export at index.d.ts:553"
 cost_tokens = 35
-cum_tokens = 6064
+cum_tokens = 6339
 
 [batches.content]
 kind = "lines"
@@ -4568,11 +4862,11 @@ end = 556
 kind = "full"
 
 [[batches]]
-position = 165
+position = 186
 key = 'Typescript(Export { file: "index.d.ts", start_line: 569 })'
 descriptor = "export at index.d.ts:569"
 cost_tokens = 36
-cum_tokens = 6100
+cum_tokens = 6375
 
 [batches.content]
 kind = "lines"
@@ -4586,11 +4880,11 @@ end = 572
 kind = "full"
 
 [[batches]]
-position = 166
+position = 187
 key = 'Typescript(Export { file: "index.d.ts", start_line: 274 })'
 descriptor = "export at index.d.ts:274"
 cost_tokens = 30
-cum_tokens = 6130
+cum_tokens = 6405
 
 [batches.content]
 kind = "lines"
@@ -4604,11 +4898,11 @@ end = 277
 kind = "full"
 
 [[batches]]
-position = 167
+position = 188
 key = 'Typescript(Export { file: "index.d.ts", start_line: 163 })'
 descriptor = "export at index.d.ts:163"
 cost_tokens = 41
-cum_tokens = 6171
+cum_tokens = 6446
 
 [batches.content]
 kind = "lines"
@@ -4622,11 +4916,11 @@ end = 168
 kind = "full"
 
 [[batches]]
-position = 168
+position = 189
 key = 'Typescript(Export { file: "index.d.ts", start_line: 309 })'
 descriptor = "export at index.d.ts:309"
 cost_tokens = 45
-cum_tokens = 6216
+cum_tokens = 6491
 
 [batches.content]
 kind = "lines"
@@ -4640,11 +4934,11 @@ end = 314
 kind = "full"
 
 [[batches]]
-position = 169
+position = 190
 key = 'Typescript(Export { file: "index.d.ts", start_line: 293 })'
 descriptor = "export at index.d.ts:293"
 cost_tokens = 47
-cum_tokens = 6263
+cum_tokens = 6538
 
 [batches.content]
 kind = "lines"
@@ -4658,11 +4952,11 @@ end = 297
 kind = "full"
 
 [[batches]]
-position = 170
+position = 191
 key = 'Typescript(Export { file: "index.d.ts", start_line: 706 })'
 descriptor = "export at index.d.ts:706"
 cost_tokens = 34
-cum_tokens = 6297
+cum_tokens = 6572
 
 [batches.content]
 kind = "lines"
@@ -4676,11 +4970,11 @@ end = 709
 kind = "full"
 
 [[batches]]
-position = 171
+position = 192
 key = 'Typescript(Export { file: "index.d.ts", start_line: 279 })'
 descriptor = "export at index.d.ts:279"
 cost_tokens = 49
-cum_tokens = 6346
+cum_tokens = 6621
 
 [batches.content]
 kind = "lines"
@@ -4694,11 +4988,11 @@ end = 284
 kind = "full"
 
 [[batches]]
-position = 172
+position = 193
 key = 'Typescript(Export { file: "index.d.ts", start_line: 145 })'
 descriptor = "export at index.d.ts:145"
 cost_tokens = 58
-cum_tokens = 6404
+cum_tokens = 6679
 
 [batches.content]
 kind = "lines"
@@ -4712,11 +5006,11 @@ end = 152
 kind = "full"
 
 [[batches]]
-position = 173
+position = 194
 key = 'Typescript(Export { file: "index.d.ts", start_line: 690 })'
 descriptor = "export at index.d.ts:690"
 cost_tokens = 41
-cum_tokens = 6445
+cum_tokens = 6720
 
 [batches.content]
 kind = "lines"
@@ -4730,11 +5024,11 @@ end = 694
 kind = "full"
 
 [[batches]]
-position = 174
+position = 195
 key = 'Typescript(Export { file: "index.d.ts", start_line: 595 })'
 descriptor = "export at index.d.ts:595"
 cost_tokens = 63
-cum_tokens = 6508
+cum_tokens = 6783
 
 [batches.content]
 kind = "lines"
@@ -4748,11 +5042,11 @@ end = 600
 kind = "full"
 
 [[batches]]
-position = 175
+position = 196
 key = 'Typescript(Export { file: "index.d.ts", start_line: 286 })'
 descriptor = "export at index.d.ts:286"
 cost_tokens = 67
-cum_tokens = 6575
+cum_tokens = 6850
 
 [batches.content]
 kind = "lines"
@@ -4766,11 +5060,11 @@ end = 291
 kind = "full"
 
 [[batches]]
-position = 176
+position = 197
 key = 'Typescript(Export { file: "index.d.ts", start_line: 112 })'
 descriptor = "export at index.d.ts:112"
 cost_tokens = 56
-cum_tokens = 6631
+cum_tokens = 6906
 
 [batches.content]
 kind = "lines"
@@ -4784,11 +5078,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 177
+position = 198
 key = 'Typescript(Export { file: "index.d.ts", start_line: 484 })'
 descriptor = "export at index.d.ts:484"
 cost_tokens = 73
-cum_tokens = 6704
+cum_tokens = 6979
 
 [batches.content]
 kind = "lines"
@@ -4802,11 +5096,11 @@ end = 491
 kind = "full"
 
 [[batches]]
-position = 178
+position = 199
 key = 'Typescript(Export { file: "index.d.ts", start_line: 299 })'
 descriptor = "export at index.d.ts:299"
 cost_tokens = 74
-cum_tokens = 6778
+cum_tokens = 7053
 
 [batches.content]
 kind = "lines"
@@ -4820,11 +5114,11 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 179
+position = 200
 key = 'Markdown(Section { file: "COLLABORATOR_GUIDE.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "COLLABORATOR_GUIDE.md section #5"
 cost_tokens = 59
-cum_tokens = 6837
+cum_tokens = 7112
 
 [batches.content]
 kind = "lines"
@@ -4838,25 +5132,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 180
-key = 'Fs(DirListing { dir: "tests/smoke/cjs" })'
-descriptor = "listing of 'tests/smoke/cjs'"
-cost_tokens = 12
-cum_tokens = 6849
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/smoke/cjs"
-entries = ["package-lock.json", "package.json", "tests"]
-
-[[batches]]
-position = 181
+position = 201
 key = 'Typescript(ExportNames { file: "lib/core/buildFullPath.js" })'
 descriptor = "export names surface in lib/core/buildFullPath.js"
 cost_tokens = 25
-cum_tokens = 6874
+cum_tokens = 7137
 
 [batches.content]
 kind = "lines"
@@ -4878,11 +5158,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 182
+position = 202
 key = 'Typescript(Export { file: "lib/core/buildFullPath.js", start_line: 16 })'
 descriptor = "export at lib/core/buildFullPath.js:16"
 cost_tokens = 0
-cum_tokens = 6874
+cum_tokens = 7137
 
 [batches.content]
 kind = "lines"
@@ -4904,11 +5184,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 183
+position = 203
 key = 'Typescript(Export { file: "index.d.ts", start_line: 251 })'
 descriptor = "export at index.d.ts:251"
 cost_tokens = 65
-cum_tokens = 6939
+cum_tokens = 7202
 
 [batches.content]
 kind = "lines"
@@ -4922,11 +5202,25 @@ end = 258
 kind = "full"
 
 [[batches]]
-position = 184
+position = 204
+key = 'Fs(DirListing { dir: "tests/smoke/deno/tests" })'
+descriptor = "listing of 'tests/smoke/deno/tests'"
+cost_tokens = 35
+cum_tokens = 7237
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/smoke/deno/tests"
+entries = ["cancel.smoke.test.ts", "error.smoke.test.ts", "fetch.smoke.test.ts", "headers.smoke.test.ts", "import.smoke.test.ts"]
+
+[[batches]]
+position = 205
 key = 'Typescript(ExportNames { file: "lib/adapters/fetch.js" })'
 descriptor = "export names surface in lib/adapters/fetch.js"
 cost_tokens = 26
-cum_tokens = 6965
+cum_tokens = 7263
 
 [batches.content]
 kind = "lines"
@@ -4956,11 +5250,11 @@ end = 449
 kind = "ellipsis"
 
 [[batches]]
-position = 185
+position = 206
 key = 'Typescript(Export { file: "lib/adapters/fetch.js", start_line: 448 })'
 descriptor = "export at lib/adapters/fetch.js:448"
 cost_tokens = 0
-cum_tokens = 6965
+cum_tokens = 7263
 
 [batches.content]
 kind = "lines"
@@ -4982,53 +5276,11 @@ end = 449
 kind = "ellipsis"
 
 [[batches]]
-position = 186
-key = 'Fs(DirListing { dir: "docs/pages/misc" })'
-descriptor = "listing of 'docs/pages/misc'"
-cost_tokens = 13
-cum_tokens = 6978
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 187
-key = 'Fs(DirListing { dir: "tests/smoke/deno" })'
-descriptor = "listing of 'tests/smoke/deno'"
-cost_tokens = 13
-cum_tokens = 6991
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/smoke/deno"
-entries = ["deno.json", "deno.lock", "tests"]
-
-[[batches]]
-position = 188
-key = 'Fs(DirListing { dir: "tests/smoke/deno/tests" })'
-descriptor = "listing of 'tests/smoke/deno/tests'"
-cost_tokens = 35
-cum_tokens = 7026
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/smoke/deno/tests"
-entries = ["cancel.smoke.test.ts", "error.smoke.test.ts", "fetch.smoke.test.ts", "headers.smoke.test.ts", "import.smoke.test.ts"]
-
-[[batches]]
-position = 189
+position = 207
 key = 'Typescript(ModuleItem { file: "lib/platform/node/index.js", start_line: 15 })'
 descriptor = "module item at lib/platform/node/index.js:15"
 cost_tokens = 29
-cum_tokens = 7055
+cum_tokens = 7292
 
 [batches.content]
 kind = "lines"
@@ -5050,11 +5302,57 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 208
+key = 'Typescript(ExportNames { file: "lib/platform/node/classes/FormData.js" })'
+descriptor = "export names surface in lib/platform/node/classes/FormData.js"
+cost_tokens = 11
+cum_tokens = 7303
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/node/classes/FormData.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 209
+key = 'Fs(DirListing { dir: "tests/module/cjs/tests" })'
+descriptor = "listing of 'tests/module/cjs/tests'"
+cost_tokens = 38
+cum_tokens = 7341
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/module/cjs/tests"
+entries = ["fixture-cleanup.module.test.cjs", "helpers", "ts-require-default.module.test.cjs", "ts-require.module.test.cjs", "typings.module.test.cjs"]
+
+[[batches]]
+position = 210
+key = 'Fs(DirListing { dir: "tests/module/cjs/tests/helpers" })'
+descriptor = "listing of 'tests/module/cjs/tests/helpers'"
+cost_tokens = 31
+cum_tokens = 7372
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/module/cjs/tests/helpers"
+entries = ["cjs-typing.ts", "fixture.cjs", "run-command.cjs", "ts-require-default.ts", "ts-require.ts"]
+
+[[batches]]
+position = 211
 key = 'Typescript(ExportNames { file: "lib/adapters/http.js" })'
 descriptor = "export names surface in lib/adapters/http.js"
 cost_tokens = 29
-cum_tokens = 7084
+cum_tokens = 7401
 
 [batches.content]
 kind = "lines"
@@ -5084,11 +5382,11 @@ end = 518
 kind = "ellipsis"
 
 [[batches]]
-position = 191
+position = 212
 key = 'Markdown(Section { file: "CONTRIBUTORS.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CONTRIBUTORS.md section #3"
 cost_tokens = 71
-cum_tokens = 7155
+cum_tokens = 7472
 
 [batches.content]
 kind = "lines"
@@ -5102,11 +5400,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 192
+position = 213
 key = 'Typescript(ExportBody { file: "lib/helpers/bind.js", start_line: 10, body_start_line: 11 })'
 descriptor = "export body at lib/helpers/bind.js:10 body 11"
 cost_tokens = 29
-cum_tokens = 7184
+cum_tokens = 7501
 
 [batches.content]
 kind = "lines"
@@ -5120,11 +5418,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 193
+position = 214
 key = 'Typescript(ExportBody { file: "lib/helpers/spread.js", start_line: 24, body_start_line: 25 })'
 descriptor = "export body at lib/helpers/spread.js:24 body 25"
 cost_tokens = 29
-cum_tokens = 7213
+cum_tokens = 7530
 
 [batches.content]
 kind = "lines"
@@ -5138,11 +5436,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 194
+position = 215
 key = 'Typescript(Export { file: "index.d.ts", start_line: 338 })'
 descriptor = "export at index.d.ts:338"
 cost_tokens = 99
-cum_tokens = 7312
+cum_tokens = 7629
 
 [batches.content]
 kind = "lines"
@@ -5156,11 +5454,11 @@ end = 349
 kind = "full"
 
 [[batches]]
-position = 195
+position = 216
 key = 'Typescript(ModuleItem { file: "lib/cancel/CanceledError.js", start_line: 5 })'
 descriptor = "module item at lib/cancel/CanceledError.js:5"
 cost_tokens = 29
-cum_tokens = 7341
+cum_tokens = 7658
 
 [batches.content]
 kind = "lines"
@@ -5190,11 +5488,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 196
+position = 217
 key = 'Typescript(ExportNames { file: "lib/helpers/buildURL.js" })'
 descriptor = "export names surface in lib/helpers/buildURL.js"
 cost_tokens = 32
-cum_tokens = 7373
+cum_tokens = 7690
 
 [batches.content]
 kind = "lines"
@@ -5232,11 +5530,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 197
+position = 218
 key = 'Typescript(Export { file: "lib/helpers/buildURL.js", start_line: 14 })'
 descriptor = "export at lib/helpers/buildURL.js:14"
 cost_tokens = 0
-cum_tokens = 7373
+cum_tokens = 7690
 
 [batches.content]
 kind = "lines"
@@ -5258,11 +5556,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 198
+position = 219
 key = 'Typescript(Export { file: "lib/helpers/buildURL.js", start_line: 31 })'
 descriptor = "export at lib/helpers/buildURL.js:31"
 cost_tokens = 0
-cum_tokens = 7373
+cum_tokens = 7690
 
 [batches.content]
 kind = "lines"
@@ -5284,11 +5582,29 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 199
+position = 220
+key = 'Typescript(ExportNames { file: "lib/platform/node/classes/URLSearchParams.js" })'
+descriptor = "export names surface in lib/platform/node/classes/URLSearchParams.js"
+cost_tokens = 13
+cum_tokens = 7703
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/platform/node/classes/URLSearchParams.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 221
 key = 'Markdown(Section { file: "CONTRIBUTORS.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CONTRIBUTORS.md section #1"
 cost_tokens = 77
-cum_tokens = 7450
+cum_tokens = 7780
 
 [batches.content]
 kind = "lines"
@@ -5302,11 +5618,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 200
+position = 222
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 52, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #52"
 cost_tokens = 26
-cum_tokens = 7476
+cum_tokens = 7806
 
 [batches.content]
 kind = "lines"
@@ -5320,11 +5636,11 @@ end = 507
 kind = "full"
 
 [[batches]]
-position = 201
+position = 223
 key = 'Typescript(ModuleItem { file: "lib/adapters/http.js", start_line: 137 })'
 descriptor = "module item at lib/adapters/http.js:137"
 cost_tokens = 34
-cum_tokens = 7510
+cum_tokens = 7840
 
 [batches.content]
 kind = "lines"
@@ -5362,11 +5678,11 @@ end = 143
 kind = "ellipsis"
 
 [[batches]]
-position = 202
+position = 224
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 169 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 169"
 cost_tokens = 10
-cum_tokens = 7520
+cum_tokens = 7850
 
 [batches.content]
 kind = "lines"
@@ -5380,11 +5696,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 203
+position = 225
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 236 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 236"
 cost_tokens = 10
-cum_tokens = 7530
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -5398,11 +5714,11 @@ end = 236
 kind = "full"
 
 [[batches]]
-position = 204
+position = 226
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 139 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 139"
 cost_tokens = 12
-cum_tokens = 7542
+cum_tokens = 7872
 
 [batches.content]
 kind = "lines"
@@ -5416,11 +5732,11 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 205
+position = 227
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 197 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 197"
 cost_tokens = 15
-cum_tokens = 7557
+cum_tokens = 7887
 
 [batches.content]
 kind = "lines"
@@ -5434,11 +5750,11 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 206
+position = 228
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 199 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 199"
 cost_tokens = 13
-cum_tokens = 7570
+cum_tokens = 7900
 
 [batches.content]
 kind = "lines"
@@ -5452,11 +5768,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 207
+position = 229
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 228 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 228"
 cost_tokens = 15
-cum_tokens = 7585
+cum_tokens = 7915
 
 [batches.content]
 kind = "lines"
@@ -5470,11 +5786,11 @@ end = 228
 kind = "full"
 
 [[batches]]
-position = 208
+position = 230
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 230 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 230"
 cost_tokens = 13
-cum_tokens = 7598
+cum_tokens = 7928
 
 [batches.content]
 kind = "lines"
@@ -5488,11 +5804,11 @@ end = 230
 kind = "full"
 
 [[batches]]
-position = 209
+position = 231
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 150 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 150"
 cost_tokens = 16
-cum_tokens = 7614
+cum_tokens = 7944
 
 [batches.content]
 kind = "lines"
@@ -5506,11 +5822,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 210
+position = 232
 key = 'Typescript(ModuleItemBody { file: "lib/adapters/http.js", start_line: 137, body_start_line: 167 })'
 descriptor = "module item body at lib/adapters/http.js:137 body 167"
 cost_tokens = 16
-cum_tokens = 7630
+cum_tokens = 7960
 
 [batches.content]
 kind = "lines"
@@ -5524,11 +5840,11 @@ end = 167
 kind = "full"
 
 [[batches]]
-position = 211
+position = 233
 key = 'Markdown(Section { file: "ECOSYSTEM.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ECOSYSTEM.md section #16"
 cost_tokens = 27
-cum_tokens = 7657
+cum_tokens = 7987
 
 [batches.content]
 kind = "lines"
@@ -5542,11 +5858,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 212
+position = 234
 key = 'Typescript(ExportNames { file: "lib/env/classes/FormData.js" })'
 descriptor = "export names surface in lib/env/classes/FormData.js"
 cost_tokens = 23
-cum_tokens = 7680
+cum_tokens = 8010
 
 [batches.content]
 kind = "lines"
@@ -5560,11 +5876,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 213
+position = 235
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 485
-cum_tokens = 8165
+cum_tokens = 8495
 
 [batches.content]
 kind = "lines"
@@ -5586,11 +5902,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 214
+position = 236
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 793
-cum_tokens = 8958
+cum_tokens = 9288
 
 [batches.content]
 kind = "lines"
@@ -5620,11 +5936,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 215
+position = 237
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 462
-cum_tokens = 9420
+cum_tokens = 9750
 
 [batches.content]
 kind = "lines"
@@ -5638,11 +5954,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 216
+position = 238
 key = 'Markdown(Section { file: "ECOSYSTEM.md", section_index: 28, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ECOSYSTEM.md section #28"
 cost_tokens = 29
-cum_tokens = 9449
+cum_tokens = 9779
 
 [batches.content]
 kind = "lines"
@@ -5656,11 +5972,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 217
+position = 239
 key = 'Typescript(ExportBody { file: "lib/helpers/parseProtocol.js", start_line: 3, body_start_line: 4 })'
 descriptor = "export body at lib/helpers/parseProtocol.js:3 body 4"
 cost_tokens = 40
-cum_tokens = 9489
+cum_tokens = 9819
 
 [batches.content]
 kind = "lines"
@@ -5674,11 +5990,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 218
+position = 240
 key = 'Typescript(Imports { file: "lib/cancel/isCancel.js" })'
 descriptor = "imports in lib/cancel/isCancel.js"
 cost_tokens = 6
-cum_tokens = 9495
+cum_tokens = 9825
 
 [batches.content]
 kind = "lines"
@@ -5692,11 +6008,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 219
+position = 241
 key = 'Typescript(Imports { file: "lib/helpers/parseProtocol.js" })'
 descriptor = "imports in lib/helpers/parseProtocol.js"
 cost_tokens = 6
-cum_tokens = 9501
+cum_tokens = 9831
 
 [batches.content]
 kind = "lines"
@@ -5710,11 +6026,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 220
+position = 242
 key = 'Typescript(Export { file: "index.d.ts", start_line: 664 })'
 descriptor = "export at index.d.ts:664"
 cost_tokens = 142
-cum_tokens = 9643
+cum_tokens = 9973
 
 [batches.content]
 kind = "lines"
@@ -5726,95 +6042,3 @@ end = 674
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 221
-key = 'Markdown(Section { file: "ECOSYSTEM.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "ECOSYSTEM.md section #17"
-cost_tokens = 31
-cum_tokens = 9674
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ECOSYSTEM.md"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 222
-key = 'Typescript(ExportBody { file: "lib/helpers/combineURLs.js", start_line: 11, body_start_line: 12 })'
-descriptor = "export body at lib/helpers/combineURLs.js:11 body 12"
-cost_tokens = 44
-cum_tokens = 9718
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/helpers/combineURLs.js"
-start = 12
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 223
-key = 'Fs(DirListing { dir: "tests/unit" })'
-descriptor = "listing of 'tests/unit'"
-cost_tokens = 105
-cum_tokens = 9823
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit"
-entries = ["adapters", "api.test.js", "axios.test.js", "axiosHeaders.test.js", "cancel", "composeSignals.test.js", "core", "estimateDataURLDecodedBytes.test.js", "fromDataURI.test.js", "helpers", "parseProtocol.test.js", "platform.test.js", "prototypePollution.test.js", "query.test.js", "regression.test.js", "syntaxCompat.test.js", "toFormData.test.js", "transformResponse.test.js", "utils", "utils.test.js"]
-
-[[batches]]
-position = 224
-key = 'Fs(DirListing { dir: "tests/unit/adapters" })'
-descriptor = "listing of 'tests/unit/adapters'"
-cost_tokens = 33
-cum_tokens = 9856
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit/adapters"
-entries = ["adapters.test.js", "axios.png", "cert.pem", "errorDetails.test.js", "fetch.test.js", "http.test.js", "key.pem"]
-
-[[batches]]
-position = 225
-key = 'Fs(DirListing { dir: "tests/unit/core" })'
-descriptor = "listing of 'tests/unit/core'"
-cost_tokens = 36
-cum_tokens = 9892
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit/core"
-entries = ["AxiosError.test.js", "buildFullPath.test.js", "dispatchRequest.test.js", "mergeConfig.test.js", "settle.test.js", "transformData.test.js"]
-
-[[batches]]
-position = 226
-key = 'Fs(DirListing { dir: "tests/unit/utils" })'
-descriptor = "listing of 'tests/unit/utils'"
-cost_tokens = 59
-cum_tokens = 9951
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit/utils"
-entries = ["endsWith.test.js", "extend.test.js", "forEach.test.js", "isX.test.js", "kindOf.test.js", "kindOfTest.test.js", "merge.test.js", "toArray.test.js", "toFlatObject.test.js", "trim.test.js"]

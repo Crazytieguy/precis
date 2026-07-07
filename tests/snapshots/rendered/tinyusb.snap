@@ -30,18 +30,6 @@ README.rst
       32→(no dynamic allocation) and thread safety (all interrupts deferred to non-ISR task functions). The stack emphasizes portability,
       33→small footprint, and real-time performance across 50+ MCU families.
     …
-     102→Host Stack
-     103→----------
-     104→
-     105→- Communication Device Class: CDC-ACM
-     106→- Vendor serial over USB: FTDI, CP210x, CH34x, PL2303
-     107→- Human Interface Device (HID): Keyboard, Mouse, Generic
-     108→- Mass Storage Class (MSC)
-     109→- Musical Instrument Digital Interface (MIDI)
-     110→- Hub with multiple-level support
-     111→
-     112→Similar to the Device Stack, if you have a special requirement, ``usbh_app_driver_get_cb()`` can be used to write your own class driver without modifying the stack.
-    …
 SConscript
 docs/
 examples/
@@ -49,12 +37,27 @@ hw/
     bsp/
     mcu/
         bridgetek/
+            ft9xx/
         dialog/
+            README.md
+            da1469x/
         nordic/
+            nrf5x/
         sony/
+            cxd56/
 lib/
     SEGGER_RTT/
         Config/
+            SEGGER_RTT_Conf.h
+                …
+                 401→void OS_SIM_EnterCriticalSection(void);
+                 402→void OS_SIM_LeaveCriticalSection(void);
+                 403→
+                 404→#define SEGGER_RTT_LOCK()       {                                                                   \
+                 405→                                  OS_SIM_EnterCriticalSection();
+                 407→#define SEGGER_RTT_UNLOCK()       OS_SIM_LeaveCriticalSection();                                    \
+                 408→                                }
+                …
         LICENSE.md
         README.md
         RTT/
@@ -63,6 +66,7 @@ lib/
             SEGGER_RTT_ASM_ARMv7M.S
             SEGGER_RTT_printf.c
     embedded-cli/
+        embedded_cli.h
     networking/
         dhserver.c
         dhserver.h
@@ -92,6 +96,7 @@ lib/
     rt-thread/
         SConscript
         port/
+            msc_device_port.c
         tusb_config.h
         tusb_rt_thread_port.c
 library.json
@@ -116,6 +121,37 @@ src/
         video/
     common/
         tusb_common.h
+            …
+              37→#define TU_ARRAY_SIZE(_arr)           ( sizeof(_arr) / sizeof(_arr[0]) )
+              38→#define TU_FIELD_SIZE(_type, _field)  (sizeof(((_type *)0)->_field))
+              39→#define TU_MIN(_x, _y)                ( ( (_x) < (_y) ) ? (_x) : (_y) )
+              40→#define TU_MAX(_x, _y)                ( ( (_x) > (_y) ) ? (_x) : (_y) )
+              41→#define TU_DIV_CEIL(n, d)             (((n) + (d) - 1) / (d))
+              42→#define TU_DIV_ROUND_NEAREST(v, d)    (((v) + (d)/2) / (d) ) // round to nearest integer
+              43→
+              44→#define TU_U16(_high, _low)           ((uint16_t) ((((uint16_t) (_high)) << 8) | ((uint16_t) (_low))))
+              45→#define TU_U16_HIGH(_u16)             ((uint8_t) (((uint16_t) (_u16) >> 8) & 0x00ffu))
+              46→#define TU_U16_LOW(_u16)              ((uint8_t) ((uint16_t) (_u16) & 0x00ffu))
+              47→#define U16_TO_U8S_BE(_u16)           TU_U16_HIGH(_u16), TU_U16_LOW(_u16)
+              48→#define U16_TO_U8S_LE(_u16)           TU_U16_LOW(_u16), TU_U16_HIGH(_u16)
+              49→
+              50→#define TU_U24(_high, _mid, _low)     ((uint32_t) ((((uint32_t) (_high)) << 16) | (((uint32_t) (_mid)) << 8) | ((uint32_t) (_low))))
+              51→#define TU_U24_HIGH(_u24)             ((uint8_t) (((uint32_t) (_u24) >> 16) & 0x0000ffu))
+              52→#define TU_U24_MID(_u24)              ((uint8_t) (((uint32_t) (_u24) >>  8) & 0x0000ffu))
+              53→#define TU_U24_LOW(_u24)              ((uint8_t) ((uint32_t) (_u24) & 0x0000ffu))
+              54→#define U24_TO_U8S_BE(_u24)           TU_U24_HIGH(_u24), TU_U24_MID(_u24), TU_U24_LOW(_u24)
+              55→#define U24_TO_U8S_LE(_u24)           TU_U24_LOW(_u24), TU_U24_MID(_u24), TU_U24_HIGH(_u24)
+              56→
+              57→#define TU_U32_BYTE3(_u32)            ((uint8_t) ((((uint32_t) _u32) >> 24) & 0x000000ff)) // MSB
+              58→#define TU_U32_BYTE2(_u32)            ((uint8_t) ((((uint32_t) _u32) >> 16) & 0x000000ff))
+              59→#define TU_U32_BYTE1(_u32)            ((uint8_t) ((((uint32_t) _u32) >>  8) & 0x000000ff))
+              60→#define TU_U32_BYTE0(_u32)            ((uint8_t) (((uint32_t)  _u32)        & 0x000000ff)) // LSB
+              61→
+              62→#define U32_TO_U8S_BE(_u32)           TU_U32_BYTE3(_u32), TU_U32_BYTE2(_u32), TU_U32_BYTE1(_u32), TU_U32_BYTE0(_u32)
+              63→#define U32_TO_U8S_LE(_u32)           TU_U32_BYTE0(_u32), TU_U32_BYTE1(_u32), TU_U32_BYTE2(_u32), TU_U32_BYTE3(_u32)
+              64→
+              65→#define TU_BIT(n)                     (1UL << (n))
+            …
         tusb_compiler.h
         tusb_debug.h
             …

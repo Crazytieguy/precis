@@ -15,13 +15,9 @@ agent/
     agent_cache.go
         …
           10→type systemDataCache struct {
-          11→	sync.RWMutex
-          12→	cache map[uint16]*cacheNode
-          13→}
+        …
           15→type cacheNode struct {
-          16→	data       *system.CombinedData
-          17→	lastUpdate time.Time
-          18→}
+        …
           20→// NewSystemDataCache creates a cache keyed by the polling interval in milliseconds.
           21→func NewSystemDataCache() *systemDataCache {
         …
@@ -58,7 +54,6 @@ agent/
                8→	return false
             …
               11→func GetBatteryStats() (uint8, uint8, error) {
-              12→	return 0, 0, errors.ErrUnsupported
             …
         battery_windows.go
     client.go
@@ -67,20 +62,10 @@ agent/
     connection_manager_test.go
     cpu.go
     data_dir.go
-        …
-          16→func GetDataDir(dataDirs ...string) (string, error) {
-        …
-          40→func testDataDirs(paths []string) (string, error) {
-        …
-          70→func isValidDataDir(path string, createIfNotExists bool) (bool, error) {
-        …
-          93→// directoryExists checks if a directory exists
-          94→func directoryExists(path string) (bool, error) {
-        …
-         110→func directoryIsWritable(path string) (bool, error) {
-        …
     data_dir_test.go
     deltatracker/
+        deltatracker.go
+        deltatracker_test.go
     disk.go
     disk_test.go
     docker.go
@@ -141,7 +126,11 @@ agent/
     handlers.go
     handlers_test.go
     health/
+        health.go
+        health_test.go
     lhm/
+        beszel_lhm.cs
+        beszel_lhm.csproj
     mdraid_linux.go
     mdraid_linux_test.go
     mdraid_stub.go
@@ -199,7 +188,16 @@ agent/
     tools/
     update.go
     utils/
+        utils.go
+        utils_test.go
     zfs/
+        zfs_freebsd.go
+        zfs_linux.go
+        zfs_unsupported.go
+            …
+               7→func ARCSize() (uint64, error) {
+               8→	return 0, errors.ErrUnsupported
+            …
 beszel.go
        1→// Package beszel provides core application constants and version information
        2→// which are used throughout the application.
@@ -227,8 +225,15 @@ internal/
     alerts/
     cmd/
         agent/
+            agent.go
+            agent_test.go
         hub/
+            hub.go
     common/
+        common-ssh.go
+               1→package common
+            …
+        common-ws.go
     dockerfile_agent
     dockerfile_agent_alpine
     dockerfile_agent_intel
@@ -236,9 +241,15 @@ internal/
     dockerfile_hub
     entities/
         container/
+            container.go
         smart/
+            smart.go
+            smart_test.go
         system/
+            system.go
         systemd/
+            systemd.go
+            systemd_test.go
     ghupdate/
         extract.go
         ghupdate.go
@@ -341,8 +352,11 @@ supplemental/
         templates
     docker/
         agent/
+            docker-compose.yml
         hub/
+            docker-compose.yml
         same-system/
+            docker-compose.yml
     guides/
         systemd.md
                1→# Installing as a Linux systemd service
@@ -367,4 +381,8 @@ supplemental/
                 templates/
                 values.yaml
     licenses/
+        LibreHardwareMonitor/
+            LICENSE
+        smartmontools/
+            LICENSE
     scripts/

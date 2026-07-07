@@ -126,6 +126,7 @@ apps/
             protectPageRequests.ts
         package.json
         templates/
+            trialEnded.html
         tsconfig.json
         worker.ts
         workers/
@@ -219,6 +220,8 @@ packages/
         verifyCapacity.ts
     prisma/
         client/
+            index.d.ts
+            index.js
         index.ts
                1→import { PrismaClient } from "@prisma/client";
             …
@@ -301,11 +304,7 @@ packages/
              275→model DashboardSection {
             …
              289→enum DashboardSectionType {
-             290→  STATS
-             291→  RECENT_LINKS
-             292→  PINNED_LINKS
-             293→  COLLECTION
-             294→}
+            …
              296→model AppMigration {
             …
              304→enum AppMigrationStatus {

@@ -83,19 +83,19 @@ Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | walker |  | 1693 | 50 | go decl doc at group.go:20 |  |  | 0.606 |
 | walker |  | 1729 | 36 | go decl body at group.go:36 |  |  | 0.606 |
 | walker |  | 1743 | 14 | listing of '.github' |  |  | 0.620 |
-| walker |  | 1781 | 38 | go decl body at sort.go:7 |  |  | 0.621 |
-| walker |  | 1821 | 40 | go decl body at multierror.go:108 |  |  | 0.622 |
-| ns | 1904 |  | 256 | README: Usage intro + accessing the error list | 2.3 |  | 0.571 |
-| walker |  | 1996 | 175 | go decl doc at multierror.go:71 |  |  | 0.574 |
-| ns | 2041 |  | 137 | Error.ErrorOrNil() | 2.4 | 1.4 | 0.601 |
-| ns | 2198 |  | 157 | README: returning a multierror only if there are errors | 2.5 |  | 0.573 |
-| walker |  | 2384 | 388 | plaintext config Makefile |  |  | 0.576 |
-| walker |  | 2470 | 86 | go decl doc at prefix.go:16 |  |  | 0.576 |
-| ns | 2534 |  | 336 | Error.Unwrap() | 2.6 | 1.4 | 0.560 |
-| walker |  | 2592 | 122 | go decl doc at append.go:14 |  |  | 0.560 |
-| walker |  | 2769 | 177 | go decl doc at multierror.go:99 |  |  | 0.566 |
-| walker |  | 2923 | 154 | go decl body at multierror.go:71 |  |  | 0.631 |
-| walker |  | 2935 | 12 | listing of '.github/workflows' |  |  | 0.648 |
+| walker |  | 1755 | 12 | listing of '.github/workflows' |  |  | 0.644 |
+| walker |  | 1793 | 38 | go decl body at sort.go:7 |  |  | 0.645 |
+| walker |  | 1833 | 40 | go decl body at multierror.go:108 |  |  | 0.646 |
+| ns | 1904 |  | 256 | README: Usage intro + accessing the error list | 2.3 |  | 0.593 |
+| walker |  | 2008 | 175 | go decl doc at multierror.go:71 |  |  | 0.596 |
+| ns | 2041 |  | 137 | Error.ErrorOrNil() | 2.4 | 1.4 | 0.621 |
+| ns | 2198 |  | 157 | README: returning a multierror only if there are errors | 2.5 |  | 0.593 |
+| walker |  | 2396 | 388 | plaintext config Makefile |  |  | 0.595 |
+| walker |  | 2482 | 86 | go decl doc at prefix.go:16 |  |  | 0.596 |
+| ns | 2534 |  | 336 | Error.Unwrap() | 2.6 | 1.4 | 0.577 |
+| walker |  | 2604 | 122 | go decl doc at append.go:14 |  |  | 0.578 |
+| walker |  | 2781 | 177 | go decl doc at multierror.go:99 |  |  | 0.584 |
+| walker |  | 2935 | 154 | go decl body at multierror.go:71 |  |  | 0.648 |
 | ns | 2971 |  | 437 | chain type (unexported Unwrap/Is/As helper) | 2.7 |  | 0.670 |
 | walker |  | 3034 | 99 | go decl body at flatten.go:8 |  |  | 0.672 |
 | walker |  | 3135 | 101 | go decl body at group.go:20 |  |  | 0.673 |

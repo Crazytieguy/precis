@@ -161,8 +161,7 @@ readme.md
      180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
      181→- `inverse` - Invert background and foreground colors.
      182→- `hidden` - Print the text but make it invisible.
-     183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
-     184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
+    …
      186→### Colors
      187→
      188→- `black`
@@ -274,13 +273,26 @@ source/
     utilities.js
     vendor/
         ansi-styles/
+            index.d.ts
+            index.js
+                   1→const ANSI_BACKGROUND_OFFSET = 10;
+                   3→const wrapAnsi16 = (offset = 0) => code => `\u001B[${code + offset}m`;
+                   5→const wrapAnsi256 = (offset = 0) => code => `\u001B[${38 + offset};5;${code}m`;
+                   7→const wrapAnsi16m = (offset = 0) => (red, green, blue) => `\u001B[${38 + offset};2;${red};${green};${blue}m`;
+                …
+                  68→export const modifierNames = Object.keys(styles.modifier);
+                  69→export const foregroundColorNames = Object.keys(styles.color);
+                  70→export const backgroundColorNames = Object.keys(styles.bgColor);
+                  71→export const colorNames = [...foregroundColorNames, ...backgroundColorNames];
+                  73→function assembleStyles() {
+                …
+                 221→const ansiStyles = assembleStyles();
+                 223→export default ansiStyles;
         supports-color/
             browser.d.ts
             browser.js
             index.d.ts
             index.js
-                …
-                   7→function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : process.argv) {
                 …
                   14→const {env} = process;
                   16→let flagForceColor;
@@ -292,12 +304,6 @@ source/
                   60→function _supportsColor(haveStream, {streamIsTTY, sniffFlags = true} = {}) {
                 …
                  176→export function createSupportsColor(stream, options = {}) {
-                 177→	const level = _supportsColor(stream, {
-                 178→		streamIsTTY: stream && stream.isTTY,
-                 179→		...options,
-                 180→	});
-                 181→
-                 182→	return translateLevel(level);
                 …
                  190→export default supportsColor;
 test/

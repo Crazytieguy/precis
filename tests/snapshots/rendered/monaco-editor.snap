@@ -160,37 +160,22 @@ samples/
           26→## Other examples & techniques
         …
           34→## License
-          35→
-          36→MIT
+        …
     browser-esm-esbuild/
     browser-esm-parcel/
-        .gitignore
-        index.html
-        package-lock.json
-        package.json
-            …
-               2→	"name": "helloworld",
-            …
-        src/
     browser-esm-vite/
     browser-esm-vite-react/
     browser-esm-webpack/
     browser-esm-webpack-monaco-plugin/
     browser-esm-webpack-small/
     browser-esm-webpack-typescript/
-        .gitignore
-        package.json
-            …
-               2→	"name": "monaco-esm-webpack-typescript",
-            …
-        src/
-        tsconfig.json
-        webpack.config.js
     browser-esm-webpack-typescript-react/
     electron-esm-webpack/
     legacy/
     nwjs-amd/
+        index.html
     nwjs-amd-v2/
+        index.html
     package-lock.json
     package.json
         …
@@ -208,15 +193,27 @@ samples/
 scripts/
     ci/
     lib/
+        index.ts
 src/
     deprecated/
         basic-languages/
+            monaco.contribution.ts
         editor/
+            editor.main.ts
+            editor.worker.ts
         language/
             css/
+                css.worker.ts
+                monaco.contribution.ts
             html/
+                html.worker.ts
+                monaco.contribution.ts
             json/
+                json.worker.ts
+                monaco.contribution.ts
             typescript/
+                monaco.contribution.ts
+                ts.worker.ts
     editor.ts
            1→export * from 'monaco-editor-core/esm/vs/editor/editor.api';
     features/
@@ -296,6 +293,8 @@ src/
            9→export { css, html, json, typescript, lsp };
     internal/
         common/
+            initialize.ts
+            workers.ts
     languages/
         definitions/
             _.contribution.ts
@@ -384,6 +383,7 @@ src/
             yaml/
         features/
             common/
+                lspLanguageFeatures.ts
             css/
                 css.worker.ts
                 cssMode.ts
@@ -471,7 +471,9 @@ webpack-plugin/
             …
         loader-utils.d.ts
         loaders/
+            include.ts
         plugins/
+            AddWorkerEntryPointPlugin.ts
         types.ts
     tsconfig.json
 website/

@@ -665,10 +665,24 @@ kind = "full"
 
 [[batches]]
 position = 19
+key = 'Fs(DirListing { dir: "docs/tools" })'
+descriptor = "listing of 'docs/tools'"
+cost_tokens = 14
+cum_tokens = 1752
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/tools"
+entries = ["README.md", "build-api.sh", "doxygen-md"]
+
+[[batches]]
+position = 20
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #16"
 cost_tokens = 15
-cum_tokens = 1753
+cum_tokens = 1767
 
 [batches.content]
 kind = "lines"
@@ -682,11 +696,11 @@ end = 513
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'C(Includes { file: "neco.h" })'
 descriptor = "c includes in neco.h"
 cost_tokens = 114
-cum_tokens = 1867
+cum_tokens = 1881
 
 [batches.content]
 kind = "lines"
@@ -708,11 +722,11 @@ end = 425
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Fs(DirListing { dir: "deps" })'
 descriptor = "listing of 'deps'"
 cost_tokens = 42
-cum_tokens = 1909
+cum_tokens = 1923
 
 [batches.content]
 kind = "fs"
@@ -722,11 +736,11 @@ parent = "deps"
 entries = [".gitignore", ".package", "aat.h", "embed.sh", "sco.c", "sco.h", "stack.c", "stack.h", "worker.c", "worker.h"]
 
 [[batches]]
-position = 22
+position = 23
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #14"
 cost_tokens = 65
-cum_tokens = 1974
+cum_tokens = 1988
 
 [batches.content]
 kind = "lines"
@@ -740,11 +754,11 @@ end = 502
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 51
-cum_tokens = 2025
+cum_tokens = 2039
 
 [batches.content]
 kind = "fs"
@@ -754,11 +768,11 @@ parent = "examples"
 entries = ["README.md", "channel-buffering.c", "channels.c", "channels2.c", "coroutines.c", "echo-client.c", "echo-server.c", "generators.c", "portscan.c", "select.c", "signals.c"]
 
 [[batches]]
-position = 24
+position = 25
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 130
-cum_tokens = 2155
+cum_tokens = 2169
 
 [batches.content]
 kind = "lines"
@@ -772,11 +786,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'C(DeclNames { file: "neco.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in neco.h"
 cost_tokens = 498
-cum_tokens = 2653
+cum_tokens = 2667
 
 [batches.content]
 kind = "lines"
@@ -806,11 +820,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'C(Decl { file: "neco.h", start_line: 90 })'
 descriptor = "c decl at neco.h:90"
 cost_tokens = 0
-cum_tokens = 2653
+cum_tokens = 2667
 
 [batches.content]
 kind = "lines"
@@ -824,11 +838,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'C(Decl { file: "neco.h", start_line: 113 })'
 descriptor = "c decl at neco.h:113"
 cost_tokens = 0
-cum_tokens = 2653
+cum_tokens = 2667
 
 [batches.content]
 kind = "lines"
@@ -842,11 +856,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'C(DeclDoc { file: "neco.h", start_line: 90 })'
 descriptor = "c decl doc at neco.h:90"
 cost_tokens = 51
-cum_tokens = 2704
+cum_tokens = 2718
 
 [batches.content]
 kind = "lines"
@@ -860,11 +874,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'C(DeclDoc { file: "neco.h", start_line: 61 })'
 descriptor = "c decl doc at neco.h:61"
 cost_tokens = 78
-cum_tokens = 2782
+cum_tokens = 2796
 
 [batches.content]
 kind = "lines"
@@ -878,11 +892,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'C(DeclDoc { file: "neco.h", start_line: 113 })'
 descriptor = "c decl doc at neco.h:113"
 cost_tokens = 86
-cum_tokens = 2868
+cum_tokens = 2882
 
 [batches.content]
 kind = "lines"
@@ -896,11 +910,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Markdown(Section { file: "docs/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/README.md section #1"
 cost_tokens = 111
-cum_tokens = 2979
+cum_tokens = 2993
 
 [batches.content]
 kind = "lines"
@@ -914,11 +928,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'C(DeclDoc { file: "neco.h", start_line: 35 })'
 descriptor = "c decl doc at neco.h:35"
 cost_tokens = 74
-cum_tokens = 3053
+cum_tokens = 3067
 
 [batches.content]
 kind = "lines"
@@ -930,20 +944,6 @@ end = 34
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "docs/tools" })'
-descriptor = "listing of 'docs/tools'"
-cost_tokens = 14
-cum_tokens = 3067
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/tools"
-entries = ["README.md", "build-api.sh", "doxygen-md"]
 
 [[batches]]
 position = 34

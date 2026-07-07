@@ -14,21 +14,21 @@ Score(3000)=0.438 I=0.753 C=0.255 ns_rows≤3K=21/48 (reached=5 partial=2 missin
 | walker |  | 289 | 48 | listing of 'src' |  |  | 0.690 |
 | walker |  | 296 | 7 | listing of '.github' |  |  | 0.690 |
 | ns | 297 |  | 98 | README: priorities + protocol/MC version | 1.6 |  | 0.691 |
+| walker |  | 300 | 4 | listing of '.github/workflows' |  |  | 0.691 |
 | ns | 331 |  | 34 | README: client-support warning | 1.7 |  | 0.698 |
-| walker |  | 334 | 38 | listing of 'include' |  |  | 0.880 |
-| walker |  | 391 | 57 | c whole header in include/structures.h |  |  | 0.880 |
+| walker |  | 338 | 38 | listing of 'include' |  |  | 0.880 |
+| walker |  | 395 | 57 | c whole header in include/structures.h |  |  | 0.880 |
 | ns | 460 |  | 129 | README: Quick start | 1.8 |  | 0.835 |
-| walker |  | 487 | 96 | c whole header in include/crafting.h |  |  | 0.835 |
+| walker |  | 491 | 96 | c whole header in include/crafting.h |  |  | 0.835 |
 | ns | 558 |  | 98 | README: Configuration intro | 1.9 |  | 0.796 |
-| walker |  | 637 | 150 | c whole header in include/varnum.h |  |  | 0.797 |
+| walker |  | 641 | 150 | c whole header in include/varnum.h |  |  | 0.797 |
 | ns | 760 |  | 202 | README: Compilation intro + Linux build command | 1.10 |  | 0.762 |
-| walker |  | 881 | 244 | c whole header in include/serialize.h |  |  | 0.765 |
-| walker |  | 908 | 27 | c decl names surface in src/main.c |  |  | 0.765 |
-| walker |  | 908 | 0 | c decl at src/main.c:68 |  |  | 0.765 |
+| walker |  | 885 | 244 | c whole header in include/serialize.h |  |  | 0.765 |
+| walker |  | 912 | 27 | c decl names surface in src/main.c |  |  | 0.765 |
+| walker |  | 912 | 0 | c decl at src/main.c:68 |  |  | 0.765 |
 | ns | 922 |  | 162 | README: Non-volatile storage intro | 1.11 |  | 0.734 |
 | ns | 1050 |  | 128 | README: Contribution guidelines | 1.12 |  | 0.693 |
-| walker |  | 1244 | 336 | c whole header in include/worldgen.h |  |  | 0.696 |
-| walker |  | 1248 | 4 | listing of '.github/workflows' |  |  | 0.696 |
+| walker |  | 1248 | 336 | c whole header in include/worldgen.h |  |  | 0.696 |
 | ns | 1285 |  | 235 | README: Configuration knob summary | 1.13 |  | 0.666 |
 | ns | 1379 |  | 94 | README: Compilation, Windows/ESP options | 1.14 |  | 0.635 |
 | ns | 1501 |  | 122 | README: Non-volatile storage, remaining options | 1.15 |  | 0.620 |
@@ -100,34 +100,34 @@ Score(3000)=0.438 I=0.753 C=0.255 ns_rows≤3K=21/48 (reached=5 partial=2 missin
 | walker |  | 3568 | 468 | c decl names surface in include/procedures.h |  |  | 0.455 |
 | walker |  | 3593 | 25 | c includes in include/procedures.h |  |  | 0.455 |
 | walker |  | 3626 | 33 | c decl doc at include/globals.h:63 |  |  | 0.469 |
-| walker |  | 3663 | 37 | c decl doc at include/globals.h:53 |  |  | 0.484 |
-| walker |  | 3691 | 28 | c decl at src/crafting.c:349 |  |  | 0.484 |
-| walker |  | 3729 | 38 | c decl doc at include/globals.h:23 |  |  | 0.506 |
-| walker |  | 3848 | 119 | README.md section #1 |  |  | 0.523 |
+| walker |  | 3642 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.469 |
+| walker |  | 3679 | 37 | c decl doc at include/globals.h:53 |  |  | 0.484 |
+| walker |  | 3707 | 28 | c decl at src/crafting.c:349 |  |  | 0.484 |
+| walker |  | 3745 | 38 | c decl doc at include/globals.h:23 |  |  | 0.506 |
+| walker |  | 3864 | 119 | README.md section #1 |  |  | 0.523 |
 | ns | 3877 |  | 510 | globals.h: storage/network tuning (#define) | 3.3 |  | 0.486 |
-| walker |  | 4206 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.489 |
-| walker |  | 4231 | 25 | README.md section #5 |  |  | 0.490 |
+| walker |  | 4222 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.489 |
+| walker |  | 4247 | 25 | README.md section #5 |  |  | 0.490 |
 | ns | 4324 |  | 447 | globals.h: gameplay feature toggles, part 1 (#define) | 3.4 |  | 0.463 |
-| walker |  | 4600 | 369 | c decl names surface #1 in include/globals.h |  |  | 0.548 |
-| walker |  | 4600 | 0 | c decl at include/globals.h:103 |  |  | 0.548 |
-| walker |  | 4600 | 0 | c decl at include/globals.h:106 |  |  | 0.548 |
-| walker |  | 4621 | 21 | c decl at include/globals.h:255 |  |  | 0.550 |
-| walker |  | 4665 | 44 | c decl at include/globals.h:191 |  |  | 0.567 |
+| walker |  | 4616 | 369 | c decl names surface #1 in include/globals.h |  |  | 0.548 |
+| walker |  | 4616 | 0 | c decl at include/globals.h:103 |  |  | 0.548 |
+| walker |  | 4616 | 0 | c decl at include/globals.h:106 |  |  | 0.548 |
+| walker |  | 4637 | 21 | c decl at include/globals.h:255 |  |  | 0.550 |
+| walker |  | 4681 | 44 | c decl at include/globals.h:191 |  |  | 0.567 |
 | ns | 4687 |  | 363 | globals.h: gameplay feature toggles, part 2 + dev logging (#define) | 3.5 |  | 0.539 |
-| walker |  | 4722 | 57 | c decl at include/globals.h:260 |  |  | 0.548 |
-| walker |  | 4735 | 13 | c decl doc at include/globals.h:106 |  |  | 0.549 |
+| walker |  | 4738 | 57 | c decl at include/globals.h:260 |  |  | 0.548 |
+| walker |  | 4751 | 13 | c decl doc at include/globals.h:106 |  |  | 0.549 |
 | ns | 4832 |  | 145 | globals.h: platform bootstrap (#define/#ifdef) | 3.6 |  | 0.547 |
-| walker |  | 4876 | 141 | c decl at include/globals.h:240 |  |  | 0.590 |
-| walker |  | 5205 | 329 | README.md section #3 |  |  | 0.616 |
-| walker |  | 5219 | 14 | c decl doc at src/structures.c:16 |  |  | 0.616 |
-| walker |  | 5271 | 52 | c decl doc at include/globals.h:103 |  |  | 0.620 |
+| walker |  | 4892 | 141 | c decl at include/globals.h:240 |  |  | 0.590 |
+| walker |  | 5221 | 329 | README.md section #3 |  |  | 0.616 |
+| walker |  | 5235 | 14 | c decl doc at src/structures.c:16 |  |  | 0.616 |
+| walker |  | 5287 | 52 | c decl doc at include/globals.h:103 |  |  | 0.620 |
 | ns | 5405 |  | 573 | packets.h: every C->S / S->C packet function name | 4.1 |  | 0.585 |
-| walker |  | 5800 | 529 | plaintext config build.sh |  |  | 0.586 |
-| ns | 5804 |  | 399 | procedures.h: every core game-logic function name | 4.2 |  | 0.616 |
-| walker |  | 5854 | 54 | c decl doc at include/globals.h:71 |  |  | 0.630 |
-| walker |  | 5894 | 40 | README.md section #6 |  |  | 0.630 |
-| walker |  | 5935 | 41 | README.md section #7 |  |  | 0.631 |
-| walker |  | 5951 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.631 |
+| ns | 5804 |  | 399 | procedures.h: every core game-logic function name | 4.2 |  | 0.615 |
+| walker |  | 5816 | 529 | plaintext config build.sh |  |  | 0.616 |
+| walker |  | 5870 | 54 | c decl doc at include/globals.h:71 |  |  | 0.630 |
+| walker |  | 5910 | 40 | README.md section #6 |  |  | 0.630 |
+| walker |  | 5951 | 41 | README.md section #7 |  |  | 0.631 |
 | ns | 6196 |  | 392 | tools.h: byte/network primitives + inline helpers | 4.3 |  | 0.640 |
 | ns | 6296 |  | 100 | varnum.h: VarInt protocol primitives | 4.4 |  | 0.644 |
 | ns | 6504 |  | 208 | worldgen.h: chunk types + terrain-query API | 4.5 |  | 0.653 |

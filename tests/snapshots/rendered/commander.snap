@@ -9,6 +9,39 @@ expression: rendered
     PULL_REQUEST_TEMPLATE.md
     dependabot.yml
     workflows/
+        codeql-analysis.yml
+        tests.yml
+               1→name: build
+               2→
+               3→on: [push, pull_request]
+               4→
+               5→permissions:
+               6→  contents: read
+               7→
+               8→jobs:
+               9→  test:
+              10→    name: Test on node ${{ matrix.node-version }} and ${{ matrix.os }}
+              11→    runs-on: ${{ matrix.os }}
+              12→    strategy:
+              13→      fail-fast: false
+              14→      matrix:
+              15→        node-version: [20.x, 22.x, 24.x]
+              16→        os: [ubuntu-latest, windows-latest, macos-latest]
+              17→
+              18→    steps:
+              19→    - uses: actions/checkout@v6
+              20→    - name: Use Node.js ${{ matrix.node-version }}
+              21→      uses: actions/setup-node@v6
+              22→      with:
+              23→        cache: 'npm'
+              24→        node-version: ${{ matrix.node-version }}
+              25→    # Use separate run commands so command status handled correctly on Windows
+              26→    - name: npm install
+              27→      run: npm ci
+              28→    - name: npm test
+              29→      run: npm test
+              30→    - name: npm run check
+              31→      run: npm run check
 .gitignore
 .prettierignore
 .prettierrc.js

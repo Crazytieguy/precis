@@ -100,6 +100,15 @@ docs/
     changelog.rst
     conf.py
     examples/
+        eggsample/
+            eggsample/
+                __init__.py
+                hookspecs.py
+                host.py
+                lib.py
+            setup.py
+        eggsample-spam/
+        toy-example.py
     index.rst
     requirements.txt
            1→# Higher bound for safety, can bump it if builds fine with new major versions.
@@ -208,8 +217,6 @@ src/
              176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
             …
              201→    def unregister(
-             202→        self, plugin: _Plugin | None = None, name: str | None = None
-             203→    ) -> Any | None:
             …
              233→    def set_blocked(self, name: str) -> None:
             …
@@ -235,7 +242,6 @@ src/
              315→    def get_plugin(self, name: str) -> Any | None:
             …
              319→    def has_plugin(self, name: str) -> bool:
-             320→        """Return whether a plugin with the given name is registered."""
             …
              323→    def get_name(self, plugin: _Plugin) -> str | None:
             …

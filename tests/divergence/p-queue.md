@@ -22,14 +22,14 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | walker |  | 570 | 129 | export at source/priority-queue.ts:11 |  |  | 0.598 |
 | walker |  | 580 | 10 | readme.md section #5 |  |  | 0.598 |
 | walker |  | 587 | 7 | listing of '.github' |  |  | 0.609 |
-| ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.651 |
-| ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.559 |
-| ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.541 |
-| ns | 1080 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.507 |
-| walker |  | 1127 | 540 | export at source/index.ts:16 |  |  | 0.510 |
-| walker |  | 1147 | 20 | export doc at source/index.ts:16 |  |  | 0.510 |
-| walker |  | 1151 | 4 | listing of '.github/workflows' |  |  | 0.516 |
-| walker |  | 1352 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.455 |
+| walker |  | 591 | 4 | listing of '.github/workflows' |  |  | 0.618 |
+| ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.659 |
+| walker |  | 792 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.659 |
+| ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.566 |
+| ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.547 |
+| ns | 1080 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.513 |
+| walker |  | 1332 | 540 | export at source/index.ts:16 |  |  | 0.516 |
+| walker |  | 1352 | 20 | export doc at source/index.ts:16 |  |  | 0.455 |
 | ns | 1352 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.455 |
 | walker |  | 1367 | 15 | readme.md section #24 |  |  | 0.455 |
 | walker |  | 1387 | 20 | imports in source/options.ts |  |  | 0.455 |

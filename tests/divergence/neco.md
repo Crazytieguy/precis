@@ -1,4 +1,4 @@
-Score(3000)=0.823 I=0.933 C=0.727 ns_rows≤3K=20/42 (reached=15 partial=1 missing=4)
+Score(3000)=0.836 I=0.943 C=0.741 ns_rows≤3K=20/42 (reached=16 partial=1 missing=3)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -38,23 +38,23 @@ Score(3000)=0.823 I=0.933 C=0.727 ns_rows≤3K=20/42 (reached=15 partial=1 missi
 | walker |  | 1675 | 0 | c decl at neco.h:61 |  |  | 0.626 |
 | walker |  | 1738 | 63 | README.md section #2 |  |  | 0.669 |
 | ns | 1748 |  | 281 | neco.h — Generators group | 3.4 |  | 0.630 |
-| walker |  | 1753 | 15 | README.md section #16 |  |  | 0.630 |
-| walker |  | 1867 | 114 | c includes in neco.h |  |  | 0.630 |
-| walker |  | 1909 | 42 | listing of 'deps' |  |  | 0.675 |
-| walker |  | 1974 | 65 | README.md section #14 |  |  | 0.675 |
-| walker |  | 2025 | 51 | listing of 'examples' |  |  | 0.727 |
-| ns | 2030 |  | 282 | neco.h — Mutexes group | 3.5 |  | 0.683 |
-| walker |  | 2155 | 130 | README.md section #1 |  |  | 0.742 |
-| ns | 2513 |  | 483 | neco.h — WaitGroups + Condition variables groups | 3.6 |  | 0.679 |
-| walker |  | 2653 | 498 | c decl names surface #1 in neco.h |  |  | 0.749 |
-| walker |  | 2653 | 0 | c decl at neco.h:90 |  |  | 0.749 |
-| walker |  | 2653 | 0 | c decl at neco.h:113 |  |  | 0.749 |
-| walker |  | 2704 | 51 | c decl doc at neco.h:90 |  |  | 0.770 |
-| walker |  | 2782 | 78 | c decl doc at neco.h:61 |  |  | 0.800 |
-| walker |  | 2868 | 86 | c decl doc at neco.h:113 |  |  | 0.823 |
-| walker |  | 2979 | 111 | docs/README.md section #1 |  |  | 0.823 |
-| walker |  | 3053 | 74 | c decl doc at neco.h:35 |  |  | 0.854 |
-| walker |  | 3067 | 14 | listing of 'docs/tools' |  |  | 0.867 |
+| walker |  | 1752 | 14 | listing of 'docs/tools' |  |  | 0.646 |
+| walker |  | 1767 | 15 | README.md section #16 |  |  | 0.646 |
+| walker |  | 1881 | 114 | c includes in neco.h |  |  | 0.646 |
+| walker |  | 1923 | 42 | listing of 'deps' |  |  | 0.690 |
+| walker |  | 1988 | 65 | README.md section #14 |  |  | 0.690 |
+| ns | 2030 |  | 282 | neco.h — Mutexes group | 3.5 |  | 0.648 |
+| walker |  | 2039 | 51 | listing of 'examples' |  |  | 0.697 |
+| walker |  | 2169 | 130 | README.md section #1 |  |  | 0.756 |
+| ns | 2513 |  | 483 | neco.h — WaitGroups + Condition variables groups | 3.6 |  | 0.691 |
+| walker |  | 2667 | 498 | c decl names surface #1 in neco.h |  |  | 0.762 |
+| walker |  | 2667 | 0 | c decl at neco.h:90 |  |  | 0.762 |
+| walker |  | 2667 | 0 | c decl at neco.h:113 |  |  | 0.762 |
+| walker |  | 2718 | 51 | c decl doc at neco.h:90 |  |  | 0.782 |
+| walker |  | 2796 | 78 | c decl doc at neco.h:61 |  |  | 0.813 |
+| walker |  | 2882 | 86 | c decl doc at neco.h:113 |  |  | 0.836 |
+| walker |  | 2993 | 111 | docs/README.md section #1 |  |  | 0.836 |
+| walker |  | 3067 | 74 | c decl doc at neco.h:35 |  |  | 0.867 |
 | ns | 3311 |  | 798 | neco.h — Time + Error handling groups | 3.7 |  | 0.765 |
 | walker |  | 3361 | 294 | c decl names surface in neco.c |  |  | 0.765 |
 | walker |  | 3361 | 0 | c decl at neco.c:1312 |  |  | 0.765 |

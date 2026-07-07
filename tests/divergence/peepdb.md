@@ -1,4 +1,4 @@
-Score(3000)=0.489 I=0.782 C=0.306 ns_rows≤3K=19/53 (reached=9 partial=0 missing=10)
+Score(3000)=0.549 I=0.788 C=0.383 ns_rows≤3K=19/53 (reached=8 partial=1 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -18,108 +18,108 @@ Score(3000)=0.489 I=0.782 C=0.306 ns_rows≤3K=19/53 (reached=9 partial=0 missin
 | walker |  | 254 | 0 | python decl at peepdb/exceptions.py:1 |  |  | 0.709 |
 | walker |  | 259 | 5 | python class body at peepdb/exceptions.py:1 |  |  | 0.709 |
 | walker |  | 262 | 3 | listing of '.github' |  |  | 0.709 |
-| walker |  | 276 | 14 | python decl names surface in peepdb/db/base.py |  |  | 0.709 |
-| walker |  | 276 | 0 | python decl at peepdb/db/base.py:5 |  |  | 0.709 |
-| walker |  | 304 | 28 | listing of 'images' |  |  | 0.762 |
-| walker |  | 316 | 12 | python imports in peepdb/__main__.py |  |  | 0.763 |
-| ns | 333 |  | 97 | README title + one-line description | 1.8 |  | 0.769 |
-| walker |  | 357 | 41 | listing of 'docs' |  |  | 0.892 |
-| walker |  | 453 | 96 | README headline in docs/README.md |  |  | 0.892 |
-| walker |  | 507 | 54 | headings outline in docs/installation.md |  |  | 0.892 |
-| ns | 512 |  | 179 | README feature list | 1.9 |  | 0.815 |
-| walker |  | 521 | 14 | python imports in setup.py |  |  | 0.815 |
-| walker |  | 577 | 56 | headings outline in docs/index.md |  |  | 0.815 |
-| ns | 693 |  | 181 | MANIFEST.in + .gitignore | 2.1 |  | 0.670 |
-| walker |  | 792 | 215 | python imports in peepdb/db/__init__.py |  |  | 0.672 |
-| walker |  | 806 | 14 | python decl names surface in peepdb/db/oracle.py |  |  | 0.672 |
-| walker |  | 806 | 0 | python decl at peepdb/db/oracle.py:7 |  |  | 0.672 |
-| walker |  | 820 | 14 | python decl names surface in peepdb/db/sqlite.py |  |  | 0.672 |
-| walker |  | 820 | 0 | python decl at peepdb/db/sqlite.py:6 |  |  | 0.672 |
-| ns | 978 |  | 285 | Installation: pip install + system deps + verification | 2.2 |  | 0.577 |
-| walker |  | 1013 | 193 | headings outline in README.md |  |  | 0.580 |
-| walker |  | 1048 | 35 | README.md section #8 |  |  | 0.580 |
-| walker |  | 1078 | 30 | README.md section #11 |  |  | 0.580 |
-| walker |  | 1106 | 28 | README.md section #30 |  |  | 0.580 |
-| walker |  | 1125 | 19 | README.md section #5 |  |  | 0.582 |
-| ns | 1150 |  | 172 | project.toml — build system + project identity | 2.3 |  | 0.544 |
-| walker |  | 1155 | 30 | README.md section #29 |  |  | 0.544 |
-| walker |  | 1170 | 15 | python decl names surface in peepdb/db/mariadb.py |  |  | 0.544 |
-| walker |  | 1170 | 0 | python decl at peepdb/db/mariadb.py:5 |  |  | 0.544 |
-| walker |  | 1185 | 15 | python decl names surface in peepdb/db/mongodb.py |  |  | 0.544 |
-| walker |  | 1185 | 0 | python decl at peepdb/db/mongodb.py:8 |  |  | 0.544 |
-| walker |  | 1200 | 15 | python decl names surface in peepdb/db/mssql.py |  |  | 0.544 |
-| walker |  | 1200 | 0 | python decl at peepdb/db/mssql.py:6 |  |  | 0.544 |
-| walker |  | 1215 | 15 | python decl names surface in peepdb/db/mysql.py |  |  | 0.544 |
-| walker |  | 1215 | 0 | python decl at peepdb/db/mysql.py:5 |  |  | 0.544 |
-| walker |  | 1230 | 15 | python decl names surface in peepdb/db/postgresql.py |  |  | 0.544 |
-| walker |  | 1230 | 0 | python decl at peepdb/db/postgresql.py:6 |  |  | 0.544 |
-| walker |  | 1327 | 97 | headings outline in docs/usage.md |  |  | 0.544 |
-| walker |  | 1348 | 21 | README.md section #7 |  |  | 0.549 |
-| walker |  | 1368 | 20 | README.md section #6 |  |  | 0.555 |
-| walker |  | 1403 | 35 | README.md section #28 |  |  | 0.555 |
-| walker |  | 1426 | 23 | README.md section #3 |  |  | 0.562 |
-| walker |  | 1448 | 22 | README.md section #4 |  |  | 0.573 |
-| walker |  | 1471 | 23 | README.md section #2 |  |  | 0.585 |
-| ns | 1476 |  | 326 | project.toml — dependencies, entry point, packaging | 2.4 |  | 0.523 |
-| walker |  | 1517 | 46 | README.md section #10 |  |  | 0.532 |
-| walker |  | 1648 | 131 | manifest config in project.toml |  |  | 0.556 |
-| ns | 1663 |  | 187 | setup.py — where it diverges from project.toml | 2.5 |  | 0.531 |
-| walker |  | 1704 | 56 | README.md section #9 |  |  | 0.531 |
-| walker |  | 1736 | 32 | docs/usage.md section #0 |  |  | 0.531 |
-| ns | 1738 |  | 75 | requirements.txt (pinned freeze, sampled) | 2.6 |  | 0.524 |
-| walker |  | 1888 | 152 | python method sigs in peepdb/db/base.py |  |  | 0.524 |
-| walker |  | 1888 | 0 | python method at peepdb/db/base.py:6 |  |  | 0.524 |
-| walker |  | 1888 | 0 | python method at peepdb/db/base.py:33 |  |  | 0.524 |
-| walker |  | 1888 | 0 | python method at peepdb/db/base.py:37 |  |  | 0.524 |
-| walker |  | 1897 | 9 | python method at peepdb/db/base.py:17 |  |  | 0.524 |
-| walker |  | 1906 | 9 | python method at peepdb/db/base.py:21 |  |  | 0.524 |
-| walker |  | 1915 | 9 | python method at peepdb/db/base.py:25 |  |  | 0.524 |
-| walker |  | 1924 | 9 | python method at peepdb/db/base.py:29 |  |  | 0.524 |
-| walker |  | 1929 | 5 | python method body at peepdb/db/base.py:17 body 19 |  |  | 0.524 |
-| walker |  | 1934 | 5 | python method body at peepdb/db/base.py:21 body 23 |  |  | 0.524 |
-| walker |  | 1939 | 5 | python method body at peepdb/db/base.py:25 body 27 |  |  | 0.524 |
-| walker |  | 1944 | 5 | python method body at peepdb/db/base.py:29 body 31 |  |  | 0.525 |
-| walker |  | 1950 | 6 | python method body at peepdb/db/base.py:37 body 38 |  |  | 0.525 |
-| ns | 2089 |  | 351 | CI test job + publish-job trigger gating (test.yml) | 2.7 |  | 0.470 |
-| walker |  | 2104 | 154 | headings outline in docs/README.md |  |  | 0.470 |
-| walker |  | 2124 | 20 | docs/README.md section #2 |  |  | 0.470 |
-| ns | 2137 |  | 48 | cli.py: all 5 command names | 3.1 |  | 0.464 |
-| walker |  | 2142 | 18 | docs/README.md section #8 |  |  | 0.464 |
-| walker |  | 2226 | 84 | python decl names surface in peepdb/cli.py |  |  | 0.464 |
-| walker |  | 2226 | 0 | python decl at peepdb/cli.py:16 |  |  | 0.464 |
-| walker |  | 2226 | 0 | python decl at peepdb/cli.py:181 |  |  | 0.464 |
-| walker |  | 2233 | 7 | python decl at peepdb/cli.py:86 |  |  | 0.465 |
-| walker |  | 2244 | 11 | python method sigs in peepdb/cli.py |  |  | 0.465 |
-| walker |  | 2244 | 0 | python method at peepdb/cli.py:17 |  |  | 0.465 |
-| walker |  | 2260 | 16 | python decl at peepdb/cli.py:25 |  |  | 0.465 |
-| walker |  | 2267 | 7 | python decl body at peepdb/cli.py:25 body 50 |  |  | 0.465 |
-| walker |  | 2274 | 7 | python decl body at peepdb/cli.py:181 body 182 |  |  | 0.465 |
-| walker |  | 2282 | 8 | python decl body at peepdb/cli.py:86 body 94 |  |  | 0.465 |
-| walker |  | 2313 | 31 | python decl at peepdb/cli.py:113 |  |  | 0.469 |
-| ns | 2337 |  | 200 | cli.py: imports + CustomEncoder | 3.2 |  | 0.444 |
-| walker |  | 2355 | 42 | python decl at peepdb/cli.py:97 |  |  | 0.448 |
-| walker |  | 2396 | 41 | python decl doc at peepdb/cli.py:86 |  |  | 0.450 |
-| walker |  | 2441 | 45 | python decl doc at peepdb/cli.py:113 |  |  | 0.450 |
-| walker |  | 2499 | 58 | docs/README.md section #1 |  |  | 0.450 |
-| walker |  | 2546 | 47 | python decl doc at peepdb/cli.py:97 |  |  | 0.451 |
-| walker |  | 2599 | 53 | python method sigs in peepdb/db/oracle.py |  |  | 0.451 |
-| walker |  | 2599 | 0 | python method at peepdb/db/oracle.py:8 |  |  | 0.451 |
-| walker |  | 2599 | 0 | python method at peepdb/db/oracle.py:25 |  |  | 0.451 |
-| walker |  | 2599 | 0 | python method at peepdb/db/oracle.py:32 |  |  | 0.451 |
-| ns | 2647 |  | 310 | cli.py: `cli` group docstring | 3.3 |  | 0.426 |
-| walker |  | 2653 | 54 | python method sigs in peepdb/db/mongodb.py |  |  | 0.426 |
-| walker |  | 2653 | 0 | python method at peepdb/db/mongodb.py:9 |  |  | 0.426 |
-| walker |  | 2653 | 0 | python method at peepdb/db/mongodb.py:32 |  |  | 0.426 |
-| walker |  | 2653 | 0 | python method at peepdb/db/mongodb.py:39 |  |  | 0.426 |
-| walker |  | 2663 | 10 | python method body at peepdb/db/mongodb.py:39 body 40 |  |  | 0.426 |
-| walker |  | 2698 | 35 | README.md section #1 |  |  | 0.436 |
-| walker |  | 2883 | 185 | python setup manifest at setup.py:16 |  |  | 0.481 |
-| walker |  | 2891 | 8 | listing of '.github/workflows' |  |  | 0.489 |
-| ns | 3114 |  | 467 | cli.py: `save` command | 3.4 | 3.1 | 0.459 |
-| ns | 3171 |  | 57 | cli.py: `list` command | 3.5 | 3.1 | 0.475 |
-| ns | 3312 |  | 141 | cli.py: `remove` command | 3.6 | 3.1 | 0.477 |
-| ns | 3415 |  | 103 | cli.py: `remove-all` command | 3.7 | 3.1 | 0.483 |
-| walker |  | 3484 | 593 | YAML config at .github/workflows/test.yml |  |  | 0.572 |
+| walker |  | 270 | 8 | listing of '.github/workflows' |  |  | 0.736 |
+| ns | 333 |  | 97 | README title + one-line description | 1.8 |  | 0.745 |
+| ns | 512 |  | 179 | README feature list | 1.9 |  | 0.680 |
+| ns | 693 |  | 181 | MANIFEST.in + .gitignore | 2.1 |  | 0.560 |
+| walker |  | 863 | 593 | YAML config at .github/workflows/test.yml |  |  | 0.572 |
+| walker |  | 877 | 14 | python decl names surface in peepdb/db/base.py |  |  | 0.572 |
+| walker |  | 877 | 0 | python decl at peepdb/db/base.py:5 |  |  | 0.572 |
+| walker |  | 905 | 28 | listing of 'images' |  |  | 0.609 |
+| walker |  | 917 | 12 | python imports in peepdb/__main__.py |  |  | 0.610 |
+| walker |  | 958 | 41 | listing of 'docs' |  |  | 0.701 |
+| ns | 978 |  | 285 | Installation: pip install + system deps + verification | 2.2 |  | 0.600 |
+| walker |  | 1054 | 96 | README headline in docs/README.md |  |  | 0.600 |
+| walker |  | 1108 | 54 | headings outline in docs/installation.md |  |  | 0.602 |
+| walker |  | 1122 | 14 | python imports in setup.py |  |  | 0.602 |
+| ns | 1150 |  | 172 | project.toml — build system + project identity | 2.3 |  | 0.563 |
+| walker |  | 1178 | 56 | headings outline in docs/index.md |  |  | 0.563 |
+| walker |  | 1393 | 215 | python imports in peepdb/db/__init__.py |  |  | 0.565 |
+| walker |  | 1407 | 14 | python decl names surface in peepdb/db/oracle.py |  |  | 0.565 |
+| walker |  | 1407 | 0 | python decl at peepdb/db/oracle.py:7 |  |  | 0.565 |
+| walker |  | 1421 | 14 | python decl names surface in peepdb/db/sqlite.py |  |  | 0.565 |
+| walker |  | 1421 | 0 | python decl at peepdb/db/sqlite.py:6 |  |  | 0.565 |
+| ns | 1476 |  | 326 | project.toml — dependencies, entry point, packaging | 2.4 |  | 0.505 |
+| walker |  | 1614 | 193 | headings outline in README.md |  |  | 0.507 |
+| walker |  | 1649 | 35 | README.md section #8 |  |  | 0.507 |
+| ns | 1663 |  | 187 | setup.py — where it diverges from project.toml | 2.5 |  | 0.484 |
+| walker |  | 1679 | 30 | README.md section #11 |  |  | 0.484 |
+| walker |  | 1707 | 28 | README.md section #30 |  |  | 0.484 |
+| walker |  | 1726 | 19 | README.md section #5 |  |  | 0.486 |
+| ns | 1738 |  | 75 | requirements.txt (pinned freeze, sampled) | 2.6 |  | 0.480 |
+| walker |  | 1756 | 30 | README.md section #29 |  |  | 0.480 |
+| walker |  | 1771 | 15 | python decl names surface in peepdb/db/mariadb.py |  |  | 0.480 |
+| walker |  | 1771 | 0 | python decl at peepdb/db/mariadb.py:5 |  |  | 0.480 |
+| walker |  | 1786 | 15 | python decl names surface in peepdb/db/mongodb.py |  |  | 0.480 |
+| walker |  | 1786 | 0 | python decl at peepdb/db/mongodb.py:8 |  |  | 0.480 |
+| walker |  | 1801 | 15 | python decl names surface in peepdb/db/mssql.py |  |  | 0.480 |
+| walker |  | 1801 | 0 | python decl at peepdb/db/mssql.py:6 |  |  | 0.480 |
+| walker |  | 1816 | 15 | python decl names surface in peepdb/db/mysql.py |  |  | 0.480 |
+| walker |  | 1816 | 0 | python decl at peepdb/db/mysql.py:5 |  |  | 0.480 |
+| walker |  | 1831 | 15 | python decl names surface in peepdb/db/postgresql.py |  |  | 0.480 |
+| walker |  | 1831 | 0 | python decl at peepdb/db/postgresql.py:6 |  |  | 0.480 |
+| walker |  | 1928 | 97 | headings outline in docs/usage.md |  |  | 0.480 |
+| walker |  | 1949 | 21 | README.md section #7 |  |  | 0.483 |
+| walker |  | 1969 | 20 | README.md section #6 |  |  | 0.488 |
+| walker |  | 2004 | 35 | README.md section #28 |  |  | 0.488 |
+| walker |  | 2027 | 23 | README.md section #3 |  |  | 0.494 |
+| walker |  | 2049 | 22 | README.md section #4 |  |  | 0.504 |
+| walker |  | 2072 | 23 | README.md section #2 |  |  | 0.514 |
+| ns | 2089 |  | 351 | CI test job + publish-job trigger gating (test.yml) | 2.7 |  | 0.590 |
+| walker |  | 2118 | 46 | README.md section #10 |  |  | 0.596 |
+| ns | 2137 |  | 48 | cli.py: all 5 command names | 3.1 |  | 0.588 |
+| walker |  | 2249 | 131 | manifest config in project.toml |  |  | 0.605 |
+| walker |  | 2305 | 56 | README.md section #9 |  |  | 0.605 |
+| walker |  | 2337 | 32 | docs/usage.md section #0 |  |  | 0.572 |
+| ns | 2337 |  | 200 | cli.py: imports + CustomEncoder | 3.2 |  | 0.572 |
+| walker |  | 2489 | 152 | python method sigs in peepdb/db/base.py |  |  | 0.572 |
+| walker |  | 2489 | 0 | python method at peepdb/db/base.py:6 |  |  | 0.572 |
+| walker |  | 2489 | 0 | python method at peepdb/db/base.py:33 |  |  | 0.572 |
+| walker |  | 2489 | 0 | python method at peepdb/db/base.py:37 |  |  | 0.572 |
+| walker |  | 2498 | 9 | python method at peepdb/db/base.py:17 |  |  | 0.572 |
+| walker |  | 2507 | 9 | python method at peepdb/db/base.py:21 |  |  | 0.572 |
+| walker |  | 2516 | 9 | python method at peepdb/db/base.py:25 |  |  | 0.572 |
+| walker |  | 2525 | 9 | python method at peepdb/db/base.py:29 |  |  | 0.572 |
+| walker |  | 2530 | 5 | python method body at peepdb/db/base.py:17 body 19 |  |  | 0.573 |
+| walker |  | 2535 | 5 | python method body at peepdb/db/base.py:21 body 23 |  |  | 0.573 |
+| walker |  | 2540 | 5 | python method body at peepdb/db/base.py:25 body 27 |  |  | 0.573 |
+| walker |  | 2545 | 5 | python method body at peepdb/db/base.py:29 body 31 |  |  | 0.573 |
+| walker |  | 2551 | 6 | python method body at peepdb/db/base.py:37 body 38 |  |  | 0.573 |
+| ns | 2647 |  | 310 | cli.py: `cli` group docstring | 3.3 |  | 0.539 |
+| walker |  | 2705 | 154 | headings outline in docs/README.md |  |  | 0.539 |
+| walker |  | 2725 | 20 | docs/README.md section #2 |  |  | 0.539 |
+| walker |  | 2743 | 18 | docs/README.md section #8 |  |  | 0.539 |
+| walker |  | 2827 | 84 | python decl names surface in peepdb/cli.py |  |  | 0.540 |
+| walker |  | 2827 | 0 | python decl at peepdb/cli.py:16 |  |  | 0.540 |
+| walker |  | 2827 | 0 | python decl at peepdb/cli.py:181 |  |  | 0.540 |
+| walker |  | 2834 | 7 | python decl at peepdb/cli.py:86 |  |  | 0.540 |
+| walker |  | 2845 | 11 | python method sigs in peepdb/cli.py |  |  | 0.541 |
+| walker |  | 2845 | 0 | python method at peepdb/cli.py:17 |  |  | 0.541 |
+| walker |  | 2861 | 16 | python decl at peepdb/cli.py:25 |  |  | 0.541 |
+| walker |  | 2868 | 7 | python decl body at peepdb/cli.py:25 body 50 |  |  | 0.542 |
+| walker |  | 2875 | 7 | python decl body at peepdb/cli.py:181 body 182 |  |  | 0.542 |
+| walker |  | 2883 | 8 | python decl body at peepdb/cli.py:86 body 94 |  |  | 0.542 |
+| walker |  | 2914 | 31 | python decl at peepdb/cli.py:113 |  |  | 0.545 |
+| walker |  | 2956 | 42 | python decl at peepdb/cli.py:97 |  |  | 0.548 |
+| walker |  | 2997 | 41 | python decl doc at peepdb/cli.py:86 |  |  | 0.549 |
+| walker |  | 3042 | 45 | python decl doc at peepdb/cli.py:113 |  |  | 0.550 |
+| walker |  | 3100 | 58 | docs/README.md section #1 |  |  | 0.550 |
+| ns | 3114 |  | 467 | cli.py: `save` command | 3.4 | 3.1 | 0.516 |
+| walker |  | 3147 | 47 | python decl doc at peepdb/cli.py:97 |  |  | 0.517 |
+| ns | 3171 |  | 57 | cli.py: `list` command | 3.5 | 3.1 | 0.530 |
+| walker |  | 3200 | 53 | python method sigs in peepdb/db/oracle.py |  |  | 0.530 |
+| walker |  | 3200 | 0 | python method at peepdb/db/oracle.py:8 |  |  | 0.530 |
+| walker |  | 3200 | 0 | python method at peepdb/db/oracle.py:25 |  |  | 0.530 |
+| walker |  | 3200 | 0 | python method at peepdb/db/oracle.py:32 |  |  | 0.530 |
+| walker |  | 3254 | 54 | python method sigs in peepdb/db/mongodb.py |  |  | 0.530 |
+| walker |  | 3254 | 0 | python method at peepdb/db/mongodb.py:9 |  |  | 0.530 |
+| walker |  | 3254 | 0 | python method at peepdb/db/mongodb.py:32 |  |  | 0.530 |
+| walker |  | 3254 | 0 | python method at peepdb/db/mongodb.py:39 |  |  | 0.530 |
+| walker |  | 3264 | 10 | python method body at peepdb/db/mongodb.py:39 body 40 |  |  | 0.530 |
+| walker |  | 3299 | 35 | README.md section #1 |  |  | 0.538 |
+| ns | 3312 |  | 141 | cli.py: `remove` command | 3.6 | 3.1 | 0.537 |
+| ns | 3415 |  | 103 | cli.py: `remove-all` command | 3.7 | 3.1 | 0.540 |
+| walker |  | 3484 | 185 | python setup manifest at setup.py:16 |  |  | 0.572 |
 | walker |  | 3515 | 31 | python decl names surface in peepdb/db/firebase.py |  |  | 0.572 |
 | walker |  | 3515 | 0 | python decl at peepdb/db/firebase.py:9 |  |  | 0.572 |
 | walker |  | 3730 | 215 | docs/README.md section #0 |  |  | 0.572 |

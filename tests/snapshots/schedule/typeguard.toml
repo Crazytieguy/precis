@@ -447,10 +447,24 @@ entries = ["__init__.py", "conftest.py", "deferredannos.py", "dummymodule.py", "
 
 [[batches]]
 position = 24
+key = 'Fs(DirListing { dir: "tests/mypy" })'
+descriptor = "listing of 'tests/mypy'"
+cost_tokens = 14
+cum_tokens = 2000
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/mypy"
+entries = ["negative.py", "positive.py", "test_type_annotations.py"]
+
+[[batches]]
+position = 25
 key = 'Python(Imports { file: "src/typeguard/_exceptions.py" })'
 descriptor = "python imports in src/typeguard/_exceptions.py"
 cost_tokens = 21
-cum_tokens = 2007
+cum_tokens = 2021
 
 [batches.content]
 kind = "lines"
@@ -464,11 +478,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Python(DeclNames { file: "src/typeguard/_exceptions.py" })'
 descriptor = "python decl names surface in src/typeguard/_exceptions.py"
 cost_tokens = 49
-cum_tokens = 2056
+cum_tokens = 2070
 
 [batches.content]
 kind = "lines"
@@ -501,34 +515,34 @@ kind = "full"
 path = "src/typeguard/_exceptions.py"
 start = 26
 end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 5 })'
-descriptor = "python decl at src/typeguard/_exceptions.py:5"
-cost_tokens = 0
-cum_tokens = 2056
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 5
-end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 27
+key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 5 })'
+descriptor = "python decl at src/typeguard/_exceptions.py:5"
+cost_tokens = 0
+cum_tokens = 2070
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
 key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 12 })'
 descriptor = "python decl at src/typeguard/_exceptions.py:12"
 cost_tokens = 0
-cum_tokens = 2056
+cum_tokens = 2070
 
 [batches.content]
 kind = "lines"
@@ -542,11 +556,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 19 })'
 descriptor = "python decl at src/typeguard/_exceptions.py:19"
 cost_tokens = 0
-cum_tokens = 2056
+cum_tokens = 2070
 
 [batches.content]
 kind = "lines"
@@ -560,11 +574,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 26 })'
 descriptor = "python decl at src/typeguard/_exceptions.py:26"
 cost_tokens = 0
-cum_tokens = 2056
+cum_tokens = 2070
 
 [batches.content]
 kind = "lines"
@@ -578,11 +592,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 19 })'
 descriptor = "python decl doc at src/typeguard/_exceptions.py:19"
 cost_tokens = 21
-cum_tokens = 2077
+cum_tokens = 2091
 
 [batches.content]
 kind = "lines"
@@ -596,11 +610,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 12 })'
 descriptor = "python decl doc at src/typeguard/_exceptions.py:12"
 cost_tokens = 22
-cum_tokens = 2099
+cum_tokens = 2113
 
 [batches.content]
 kind = "lines"
@@ -614,11 +628,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 26 })'
 descriptor = "python decl doc at src/typeguard/_exceptions.py:26"
 cost_tokens = 32
-cum_tokens = 2131
+cum_tokens = 2145
 
 [batches.content]
 kind = "lines"
@@ -632,11 +646,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 5 })'
 descriptor = "python decl doc at src/typeguard/_exceptions.py:5"
 cost_tokens = 42
-cum_tokens = 2173
+cum_tokens = 2187
 
 [batches.content]
 kind = "lines"
@@ -650,11 +664,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Python(MethodSigs { file: "src/typeguard/_exceptions.py" })'
 descriptor = "python method sigs in src/typeguard/_exceptions.py"
 cost_tokens = 81
-cum_tokens = 2254
+cum_tokens = 2268
 
 [batches.content]
 kind = "lines"
@@ -740,11 +754,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 15 })'
 descriptor = "python method at src/typeguard/_exceptions.py:15"
 cost_tokens = 0
-cum_tokens = 2254
+cum_tokens = 2268
 
 [batches.content]
 kind = "lines"
@@ -758,11 +772,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 22 })'
 descriptor = "python method at src/typeguard/_exceptions.py:22"
 cost_tokens = 0
-cum_tokens = 2254
+cum_tokens = 2268
 
 [batches.content]
 kind = "lines"
@@ -776,11 +790,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 31 })'
 descriptor = "python method at src/typeguard/_exceptions.py:31"
 cost_tokens = 0
-cum_tokens = 2254
+cum_tokens = 2268
 
 [batches.content]
 kind = "lines"
@@ -794,11 +808,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 35 })'
 descriptor = "python method at src/typeguard/_exceptions.py:35"
 cost_tokens = 0
-cum_tokens = 2254
+cum_tokens = 2268
 
 [batches.content]
 kind = "lines"
@@ -812,11 +826,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 38 })'
 descriptor = "python method at src/typeguard/_exceptions.py:38"
 cost_tokens = 0
-cum_tokens = 2254
+cum_tokens = 2268
 
 [batches.content]
 kind = "lines"
@@ -830,11 +844,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Python(MethodBody { file: "src/typeguard/_exceptions.py", start_line: 15, body_start_line: 16 })'
 descriptor = "python method body at src/typeguard/_exceptions.py:15 body 16"
 cost_tokens = 9
-cum_tokens = 2263
+cum_tokens = 2277
 
 [batches.content]
 kind = "lines"
@@ -848,11 +862,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Python(MethodBody { file: "src/typeguard/_exceptions.py", start_line: 22, body_start_line: 23 })'
 descriptor = "python method body at src/typeguard/_exceptions.py:22 body 23"
 cost_tokens = 9
-cum_tokens = 2272
+cum_tokens = 2286
 
 [batches.content]
 kind = "lines"
@@ -866,11 +880,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Python(MethodBody { file: "src/typeguard/_exceptions.py", start_line: 35, body_start_line: 36 })'
 descriptor = "python method body at src/typeguard/_exceptions.py:35 body 36"
 cost_tokens = 9
-cum_tokens = 2281
+cum_tokens = 2295
 
 [batches.content]
 kind = "lines"
@@ -882,20 +896,6 @@ end = 36
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 43
-key = 'Fs(DirListing { dir: "tests/mypy" })'
-descriptor = "listing of 'tests/mypy'"
-cost_tokens = 14
-cum_tokens = 2295
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/mypy"
-entries = ["negative.py", "positive.py", "test_type_annotations.py"]
 
 [[batches]]
 position = 44

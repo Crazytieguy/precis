@@ -581,10 +581,42 @@ entries = ["PULL_REQUEST_TEMPLATE.md", "workflows"]
 
 [[batches]]
 position = 15
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 9
+cum_tokens = 981
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["compressed-size.yml", "main.yml"]
+
+[[batches]]
+position = 16
+key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
+descriptor = "YAML config at .github/workflows/main.yml"
+cost_tokens = 217
+cum_tokens = 1198
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/main.yml"
+start = 1
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 12
-cum_tokens = 984
+cum_tokens = 1210
 
 [batches.content]
 kind = "fs"
@@ -594,11 +626,11 @@ parent = "test"
 entries = ["index_test.ts", "test-types-compilation.ts"]
 
 [[batches]]
-position = 16
+position = 18
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #15"
 cost_tokens = 38
-cum_tokens = 1022
+cum_tokens = 1248
 
 [batches.content]
 kind = "lines"
@@ -612,11 +644,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 13
-cum_tokens = 1035
+cum_tokens = 1261
 
 [batches.content]
 kind = "lines"
@@ -630,11 +662,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 18
+position = 20
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 83
-cum_tokens = 1118
+cum_tokens = 1344
 
 [batches.content]
 kind = "lines"
@@ -648,11 +680,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 19
+position = 21
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 115
-cum_tokens = 1233
+cum_tokens = 1459
 
 [batches.content]
 kind = "lines"
@@ -666,11 +698,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 20
+position = 22
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 212
-cum_tokens = 1445
+cum_tokens = 1671
 
 [batches.content]
 kind = "lines"
@@ -692,11 +724,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 21
+position = 23
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #13"
 cost_tokens = 19
-cum_tokens = 1464
+cum_tokens = 1690
 
 [batches.content]
 kind = "lines"
@@ -710,11 +742,11 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 233
-cum_tokens = 1697
+cum_tokens = 1923
 
 [batches.content]
 kind = "lines"
@@ -728,11 +760,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 23
+position = 25
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 17
-cum_tokens = 1714
+cum_tokens = 1940
 
 [batches.content]
 kind = "lines"
@@ -746,11 +778,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 24
+position = 26
 key = 'Typescript(ExportBody { file: "src/index.ts", start_line: 46, body_start_line: 49 })'
 descriptor = "export body at src/index.ts:46 body 49"
 cost_tokens = 898
-cum_tokens = 2612
+cum_tokens = 2838
 
 [batches.content]
 kind = "lines"
@@ -759,38 +791,6 @@ kind = "lines"
 path = "src/index.ts"
 start = 49
 end = 122
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 9
-cum_tokens = 2621
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["compressed-size.yml", "main.yml"]
-
-[[batches]]
-position = 26
-key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
-descriptor = "YAML config at .github/workflows/main.yml"
-cost_tokens = 217
-cum_tokens = 2838
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/main.yml"
-start = 1
-end = 25
 
 [batches.content.spans.render]
 kind = "full"

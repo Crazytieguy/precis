@@ -53,6 +53,7 @@ client/
         app/
         cards/
         content/
+            LibraryItemDetails.vue
         controls/
             FilterSelect.vue
             GlobalSearch.vue
@@ -70,7 +71,12 @@ client/
             PreviewCover.vue
         modals/
         player/
+            PlayerPlaybackControls.vue
+            PlayerTrackBar.vue
+            PlayerUi.vue
         prompt/
+            Confirm.vue
+            Dialog.vue
         readers/
             ComicReader.vue
             EpubReader.vue
@@ -88,6 +94,9 @@ client/
             component-index.html
             component.js
         tests/
+            components/
+                cards/
+            utils/
     cypress.config.js
     layouts/
         blank.vue
@@ -116,28 +125,29 @@ client/
         account.vue
         audiobook/
             _id/
+                chapters.vue
+                edit.vue
+                manage.vue
         author/
+            _id.vue
         batch/
             index.vue
         collection/
+            _id.vue
         config/
         config.vue
         index.vue
         item/
             _id/
+                index.vue
         library/
             _library/
-                bookshelf/
-                index.vue
-                narrators.vue
-                podcast/
-                search.vue
-                series/
-                stats.vue
         login.vue
         oops.vue
         playlist/
+            _id.vue
         share/
+            _slug.vue
         upload/
             index.vue
     players/
@@ -164,6 +174,8 @@ client/
             MaterialSymbolsRounded.woff2
             Source_Sans_Pro/
             Ubuntu_Mono/
+                UFL.txt
+                UbuntuMono-Regular.ttf
             absicons/
                 absicons.eot
                 absicons.svg
@@ -175,10 +187,17 @@ client/
         icon64.png
         ios_icon.png
         libarchive/
+            wasm-gen/
+                libarchive.js
+                libarchive.wasm
+            worker-bundle.js
         libs/
             marked/
+                LICENSE
+                index.js
         robots.txt
         textures/
+            wood_default.jpg
     store/
         globals.js
         index.js
@@ -204,8 +223,7 @@ docs/
           15→### Linting the spec
         …
           21→### Generating documentation
-          22→
-          23→Redocly allows for creating a static HTML page to document the API. This is done by using `redocly build-docs [file]` and supports exploded specs.
+        …
           25→### Putting it all together
         …
     controllers/
@@ -225,6 +243,9 @@ docs/
             PodcastEpisode.yaml
             Series.yaml
         files/
+            AudioFile.yaml
+            AudioTrack.yaml
+            EBookFile.yaml
         mediaTypes/
             Book.yaml
             Podcast.yaml
@@ -235,6 +256,7 @@ docs/
             FileMetadata.yaml
             PodcastMetadata.yaml
         settings/
+            EmailSettings.yaml
     openapi.json
     root.yaml
     schemas.yaml
@@ -290,7 +312,7 @@ readme.md
       16→
       17→Audiobookshelf is a self-hosted audiobook and podcast server.
       19→### Features
-      21→- Fully **open-source**, including the [android & iOS app](https://github.com/advplyr/audiobookshelf-app) _(in beta)_
+    …
       22→- Stream all audio formats on the fly
       23→- Search and add podcasts to download episodes w/ auto-download
       24→- Multi-user support w/ custom permissions
@@ -404,6 +426,8 @@ server/
             EBookFile.js
             LibraryFile.js
         metadata/
+            AudioMetaTags.js
+            FileMetadata.js
         settings/
             EmailSettings.js
             NotificationSettings.js
@@ -423,19 +447,6 @@ server/
         HlsRouter.js
         PublicRouter.js
     scanner/
-        AbsMetadataFileScanner.js
-        AudioFileScanner.js
-        BookScanner.js
-        LibraryItemScanData.js
-        LibraryItemScanner.js
-        LibraryScan.js
-        LibraryScanner.js
-        MediaProbeData.js
-        NfoFileScanner.js
-        OpfFileScanner.js
-        PodcastScanner.js
-        ScanLogger.js
-        Scanner.js
     utils/
 tailwind.config.js
 test/

@@ -1615,10 +1615,24 @@ entries = ["dependabot.yml", "pull_request_template.md", "workflows"]
 
 [[batches]]
 position = 70
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 12
+cum_tokens = 1755
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["actionlint.yml", "go-multierror.yml"]
+
+[[batches]]
+position = 71
 key = 'Go(DeclBody { file: "sort.go", start_line: 7 })'
 descriptor = "go decl body at sort.go:7"
 cost_tokens = 38
-cum_tokens = 1781
+cum_tokens = 1793
 
 [batches.content]
 kind = "lines"
@@ -1632,11 +1646,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Go(DeclBody { file: "multierror.go", start_line: 108 })'
 descriptor = "go decl body at multierror.go:108"
 cost_tokens = 40
-cum_tokens = 1821
+cum_tokens = 1833
 
 [batches.content]
 kind = "lines"
@@ -1650,11 +1664,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 71 })'
 descriptor = "go decl doc at multierror.go:71"
 cost_tokens = 175
-cum_tokens = 1996
+cum_tokens = 2008
 
 [batches.content]
 kind = "lines"
@@ -1668,11 +1682,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 388
-cum_tokens = 2384
+cum_tokens = 2396
 
 [batches.content]
 kind = "lines"
@@ -1686,11 +1700,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Go(DeclDoc { file: "prefix.go", start_line: 16 })'
 descriptor = "go decl doc at prefix.go:16"
 cost_tokens = 86
-cum_tokens = 2470
+cum_tokens = 2482
 
 [batches.content]
 kind = "lines"
@@ -1704,11 +1718,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Go(DeclDoc { file: "append.go", start_line: 14 })'
 descriptor = "go decl doc at append.go:14"
 cost_tokens = 122
-cum_tokens = 2592
+cum_tokens = 2604
 
 [batches.content]
 kind = "lines"
@@ -1722,11 +1736,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 99 })'
 descriptor = "go decl doc at multierror.go:99"
 cost_tokens = 177
-cum_tokens = 2769
+cum_tokens = 2781
 
 [batches.content]
 kind = "lines"
@@ -1740,11 +1754,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Go(DeclBody { file: "multierror.go", start_line: 71 })'
 descriptor = "go decl body at multierror.go:71"
 cost_tokens = 154
-cum_tokens = 2923
+cum_tokens = 2935
 
 [batches.content]
 kind = "lines"
@@ -1756,20 +1770,6 @@ end = 85
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 78
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 12
-cum_tokens = 2935
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["actionlint.yml", "go-multierror.yml"]
 
 [[batches]]
 position = 79

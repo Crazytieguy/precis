@@ -82,31 +82,65 @@ docs/
     .vitepress/
     data/
     es/
+        index.md
+        pages/
+            advanced/
+            getting-started/
+                examples/
+                features.md
+                first-steps.md
+                upgrade-guide.md
+            misc/
+                security.md
+                semver.md
+                sponsors.md
     favicon.ico
     fr/
+        index.md
+        pages/
+            advanced/
+            getting-started/
+                examples/
+                features.md
+                first-steps.md
+                upgrade-guide.md
+            misc/
+                security.md
+                semver.md
+                sponsors.md
     index.md
     package-lock.json
     package.json
     pages/
+        advanced/
+        getting-started/
+            examples/
+            features.md
+            first-steps.md
+            upgrade-guide.md
+        misc/
+            security.md
+            semver.md
+            sponsors.md
     patches/
     public/
     scripts/
     site.webmanifest
     zh/
+        index.md
+        pages/
+            advanced/
+            getting-started/
+                examples/
+                features.md
+                first-steps.md
+                upgrade-guide.md
+            misc/
+                security.md
+                semver.md
+                sponsors.md
 eslint.config.js
 examples/
-    README.md
-    abort-controller/
-    all/
-    amd/
-    get/
-    improved-network-errors.md
-    network_enhanced.js
-    post/
-    postMultipartFormData/
-    server.js
-    transform-response/
-    upload/
 gulpfile.js
     …
       79→export { env, clear, version, packageJSON };
@@ -213,21 +247,10 @@ lib/
               34→export default function dispatchRequest(config) {
             …
         mergeConfig.js
-            …
-              17→export default function mergeConfig(config1, config2) {
-            …
         settle.js
-            …
-              14→export default function settle(resolve, reject, response) {
-            …
         transformData.js
-            …
-              15→export default function transformData(fns, response) {
-            …
     defaults/
         index.js
-            …
-              11→const own = (obj, key) => (obj != null && utils.hasOwnProp(obj, key) ? obj[key] : undefined);
             …
               23→function stringifySafely(rawValue, parser, encoder) {
             …
@@ -263,17 +286,11 @@ lib/
             …
               29→export default ZlibHeaderTransformStream;
         bind.js
-            …
-              10→export default function bind(fn, thisArg) {
-            …
         buildURL.js
         callbackify.js
             …
               18→export default callbackify;
         combineURLs.js
-            …
-              11→export default function combineURLs(baseURL, relativeURL) {
-            …
         composeSignals.js
             …
               57→export default composeSignals;
@@ -282,13 +299,7 @@ lib/
                4→export default platform.hasStandardBrowserEnv
             …
         deprecatedMethod.js
-            …
-              15→export default function deprecatedMethod(method, instead, docs) {
-            …
         estimateDataURLDecodedBytes.js
-            …
-              10→export default function estimateDataURLDecodedBytes(url) {
-            …
         formDataToJSON.js
             …
               97→export default formDataToJSON;
@@ -301,10 +312,6 @@ lib/
               10→export default function isAbsoluteURL(url) {
             …
         isAxiosError.js
-            …
-              12→export default function isAxiosError(payload) {
-              13→  return utils.isObject(payload) && payload.isAxiosError === true;
-            …
         isURLSameOrigin.js
             …
                3→export default platform.hasStandardBrowserEnv
@@ -330,9 +337,6 @@ lib/
             …
         sanitizeHeaderValue.js
         shouldBypassProxy.js
-            …
-             127→export default function shouldBypassProxy(location) {
-            …
         speedometer.js
             …
               55→export default speedometer;
@@ -384,6 +388,8 @@ lib/
                7→};
         node/
             classes/
+                FormData.js
+                URLSearchParams.js
             index.js
                 …
                    5→const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
@@ -426,11 +432,37 @@ tests/
     README.md
     browser/
     module/
+        cjs/
+            package-lock.json
+            package.json
+            tests/
+        esm/
+            package-lock.json
+            package.json
+            tests/
+                fixture-cleanup.module.test.js
+                helpers/
+                    esm-functions.ts
+                    esm-index.ts
+                    fixture.js
+                    run-command.js
+                ts.module.test.js
+                typings.module.test.js
+            vitest.config.js
     setup/
     smoke/
         bun/
+            bun.lock
+            package.json
+            tests/
         cjs/
+            package-lock.json
+            package.json
+            tests/
         deno/
+            deno.json
+            deno.lock
+            tests/
         esm/
             package-lock.json
             package.json

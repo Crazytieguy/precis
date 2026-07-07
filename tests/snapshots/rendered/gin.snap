@@ -186,17 +186,11 @@ gin.go
       91→// Create an instance of Engine, by using New() or Default()
       92→type Engine struct {
       93→	RouterGroup
-      95→	// routeTreesUpdated ensures that the initialization or update of the route trees
-      96→	// (used for routing HTTP requests) happens only once, even if called multiple times concurrently.
-      97→	routeTreesUpdated sync.Once
     …
      142→	// UseEscapedPath if enable, the url.EscapedPath() will be used to find parameters
      143→	// It overrides UseRawPath
      144→	UseEscapedPath bool
-     146→	// UnescapePathValues if true, the path value will be unescaped.
-     147→	// If UseRawPath and UseEscapedPath are false (by default), the UnescapePathValues effectively is true,
-     148→	// as url.Path gonna be used, which is already unescaped.
-     149→	UnescapePathValues bool
+    …
      151→	// RemoveExtraSlash a parameter can be parsed from the URL even with extra slashes.
      152→	// See the PR #1817 and issue #1644
      153→	RemoveExtraSlash bool
@@ -219,10 +213,6 @@ gin.go
     …
      235→// Default returns an Engine instance with the Logger and Recovery middleware already attached.
      236→func Default(opts ...OptionFunc) *Engine {
-     237→	debugPrintWARNINGDefault()
-     238→	engine := New()
-     239→	engine.Use(Logger(), Recovery())
-     240→	return engine.With(opts...)
     …
      243→func (engine *Engine) Handler() http.Handler {
     …
@@ -260,7 +250,24 @@ go.mod
 go.sum
 internal/
     bytesconv/
+        bytesconv.go
+            …
+              13→func StringToBytes(s string) []byte {
+            …
+              19→func BytesToString(b []byte) string {
+            …
+        bytesconv_test.go
     fs/
+        fs.go
+            …
+               8→// FileSystem implements an [fs.FS].
+               9→type FileSystem struct {
+              10→	http.FileSystem
+              11→}
+            …
+              14→func (o FileSystem) Open(name string) (fs.File, error) {
+            …
+        fs_test.go
 logger.go
 logger_test.go
 middleware_test.go
@@ -356,8 +363,14 @@ routes_test.go
 test_helpers.go
 testdata/
     certificate/
+        cert.pem
+        key.pem
     protoexample/
+        test.pb.go
+        test.proto
     template/
+        hello.tmpl
+        raw.tmpl
     test_file.txt
 tree.go
 tree_test.go

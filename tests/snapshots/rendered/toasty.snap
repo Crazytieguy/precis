@@ -4,6 +4,8 @@ expression: rendered
 ---
 .github/
     workflows/
+        ci.yml
+        claude.yml
 .gitignore
 CLAUDE.md
 Cargo.toml
@@ -71,6 +73,8 @@ benches/
 compose.yaml
 crates/
     std-util/
+        Cargo.toml
+        src/
     toasty/
         CONTEXT.md
         Cargo.toml
@@ -175,136 +179,118 @@ crates/
             stmt.rs
         tests/
     toasty-cli/
+        Cargo.toml
+        src/
     toasty-codegen/
+        CONTEXT.md
+        Cargo.toml
+        src/
+            expand/
+                create.rs
+                fields.rs
+                filters.rs
+                model.rs
+                query.rs
+                relation.rs
+                schema.rs
+                update.rs
+                util.rs
+            expand.rs
+            lib.rs
+                   1→mod expand;
+                   2→mod schema;
+                   3→
+                   4→use proc_macro2::TokenStream;
+                   6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
+                   7→    let item: syn::ItemStruct = syn::parse2(input)?;
+                   8→    let model = schema::Model::from_ast(&item, false)?;
+                   9→
+                  10→    Ok(expand::root_model(&model))
+                …
+                  13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
+                  14→    let item: syn::ItemStruct = syn::parse2(input)?;
+                  15→    let model = schema::Model::from_ast(&item, true)?;
+                  16→
+                  17→    Ok(expand::embedded_model(&model))
+                …
+            schema/
+                auto.rs
+                belongs_to.rs
+                column.rs
+                error.rs
+                field.rs
+                fk.rs
+                has_many.rs
+                has_one.rs
+                index.rs
+                key_attr.rs
+                model.rs
+                model_attr.rs
+                name.rs
+                pk.rs
+            schema.rs
     toasty-core/
         CONTEXT.md
         Cargo.toml
         src/
             driver/
-                capability.rs
-                operation/
-                    delete_by_key.rs
-                    find_pk_by_index.rs
-                    get_by_key.rs
-                    insert.rs
-                    query_pk.rs
-                    query_sql.rs
-                    transaction.rs
-                    update_by_key.rs
-                operation.rs
-                response.rs
             driver.rs
             error/
-                adhoc.rs
-                condition_failed.rs
-                connection_pool.rs
-                driver_operation_failed.rs
-                expression_evaluation_failed.rs
-                invalid_connection_url.rs
-                invalid_driver_configuration.rs
-                invalid_record_count.rs
-                invalid_result.rs
-                invalid_schema.rs
-                invalid_statement.rs
-                invalid_type_conversion.rs
-                record_not_found.rs
-                unsupported_feature.rs
-                validation.rs
             error.rs
             lib.rs
-                …
-                   2→mod macros;
-                   3→
-                   4→pub mod driver;
-                   5→pub use driver::Connection;
-                   6→
-                   7→mod error;
-                   8→pub use error::Error;
-                   9→
-                  10→pub mod schema;
-                  11→pub use schema::Schema;
-                  12→
-                  13→pub mod stmt;
-                  15→/// A Result type alias that uses Toasty's [`Error`] type.
-                  16→pub type Result<T, E = Error> = core::result::Result<T, E>;
-                  18→pub use async_trait::async_trait;
             macros.rs
-                …
-                   2→macro_rules! path {
-                …
             schema/
-                app/
-                    arg.rs
-                    auto.rs
-                    constraint/
-                        length.rs
-                    constraint.rs
-                    embedded.rs
-                    field/
-                        primitive.rs
-                    field.rs
-                    fk.rs
-                    index.rs
-                    model.rs
-                    pk.rs
-                    relation/
-                        belongs_to.rs
-                        has_many.rs
-                        has_one.rs
-                    relation.rs
-                    schema.rs
-                app.rs
-                builder/
-                    table.rs
-                builder.rs
-                db/
-                    column.rs
-                    diff.rs
-                    index.rs
-                    migration.rs
-                    pk.rs
-                    schema.rs
-                    table.rs
-                    ty.rs
-                db.rs
-                mapping/
-                    field.rs
-                    model.rs
-                mapping.rs
-                name.rs
-                verify/
-                    relations_are_indexed.rs
-                verify.rs
             schema.rs
             stmt/
             stmt.rs
         tests/
     toasty-driver-dynamodb/
+        Cargo.toml
+        src/
     toasty-driver-integration-suite/
+        Cargo.toml
+        src/
     toasty-driver-integration-suite-macros/
     toasty-driver-mysql/
+        Cargo.toml
+        src/
+            lib.rs
+                …
+                  21→#[derive(Debug)]
+                  22→pub struct MySQL {
+                  23→    url: String,
+                  24→    pool: Pool,
+                  25→}
+                …
+                 132→#[derive(Debug)]
+                 133→pub struct Connection {
+                 134→    conn: Conn,
+                 135→}
+                …
+            value.rs
     toasty-driver-postgresql/
+        Cargo.toml
+        src/
     toasty-driver-sqlite/
-    toasty-macros/
-    toasty-sql/
         CONTEXT.md
         Cargo.toml
         src/
             lib.rs
-                   1→pub mod migration;
-                   2→pub use migration::*;
-                   3→
-                   4→pub mod serializer;
-                   5→pub use serializer::{Params, Serializer, TypedValue};
-                   6→
-                   7→pub mod stmt;
-                   8→pub use stmt::Statement;
-            migration.rs
-            serializer/
-            serializer.rs
-            stmt/
-            stmt.rs
-        tests/
+                …
+                  22→#[derive(Debug)]
+                  23→pub enum Sqlite {
+                  24→    File(PathBuf),
+                  25→    InMemory,
+                  26→}
+                …
+                 122→#[derive(Debug)]
+                 123→pub struct Connection {
+                 124→    connection: RusqliteConnection,
+                 125→}
+                …
+            value.rs
+    toasty-macros/
+    toasty-sql/
 docs/
     ARCHITECTURE.md
            1→# Toasty Architecture Overview
@@ -343,8 +329,14 @@ docs/
           28→## Document Structure
         …
     architecture/
+        query-engine.md
+        type-system.md
     design/
+        enums-and-embedded-structs.md
+        pagination.md
     guide/
+        jiff.md
+        pagination.md
     roadmap/
         README.md
                1→# Toasty ORM - Development Roadmap
@@ -359,6 +351,42 @@ docs/
 examples/
     composite-key/
     hello-toasty/
+        Cargo.toml
+        src/
+            main.rs
+                   1→#[derive(Debug, toasty::Model)]
+                   2→struct User {
+                   3→    #[key]
+                   4→    #[auto]
+                   5→    id: uuid::Uuid,
+                   6→
+                   7→    name: String,
+                   8→
+                   9→    #[unique]
+                  10→    email: String,
+                  11→
+                  12→    #[has_many]
+                  13→    todos: toasty::HasMany<Todo>,
+                  14→
+                  15→    moto: Option<String>,
+                  16→}
+                  18→#[derive(Debug, toasty::Model)]
+                  19→struct Todo {
+                  20→    #[key]
+                  21→    #[auto]
+                  22→    id: uuid::Uuid,
+                  23→
+                  24→    #[index]
+                  25→    user_id: uuid::Uuid,
+                  26→
+                  27→    #[belongs_to(key = user_id, references = id)]
+                  28→    user: toasty::BelongsTo<User>,
+                  29→
+                  30→    title: String,
+                  31→}
+                …
+                  34→async fn main() -> toasty::Result<()> {
+                …
     todo-with-cli/
     user-has-one-profile/
 rust-toolchain.toml

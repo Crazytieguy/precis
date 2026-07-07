@@ -26,27 +26,27 @@ Score(3000)=0.842 I=0.944 C=0.751 ns_rows≤3K=19/47 (reached=14 partial=2 missi
 | walker |  | 931 | 46 | export doc at src/index.ts:46 |  |  | 0.769 |
 | walker |  | 962 | 31 | README.md section #18 |  |  | 0.769 |
 | walker |  | 972 | 10 | listing of '.github' |  |  | 0.784 |
-| walker |  | 984 | 12 | listing of 'test' |  |  | 0.815 |
-| ns | 996 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.763 |
-| walker |  | 1022 | 38 | README.md section #15 |  |  | 0.764 |
-| walker |  | 1035 | 13 | README.md section #8 |  |  | 0.764 |
-| walker |  | 1118 | 83 | README.md section #1 |  |  | 0.830 |
-| ns | 1197 |  | 201 | on() implementation | 2.7 | 2.6 | 0.766 |
-| walker |  | 1233 | 115 | package identity metadata in package.json |  |  | 0.768 |
-| ns | 1437 |  | 240 | off() implementation | 2.8 | 2.6 | 0.706 |
-| walker |  | 1445 | 212 | package entrypoints in package.json |  |  | 0.713 |
-| walker |  | 1464 | 19 | README.md section #13 |  |  | 0.713 |
-| walker |  | 1697 | 233 | package scripts in package.json |  |  | 0.718 |
-| walker |  | 1714 | 17 | README.md section #7 |  |  | 0.718 |
-| ns | 1788 |  | 351 | emit() implementation | 2.9 | 2.6 | 0.632 |
-| ns | 2021 |  | 233 | package.json: identity + entry points | 3.1 |  | 0.656 |
-| ns | 2256 |  | 235 | package.json: scripts | 3.2 |  | 0.672 |
-| ns | 2535 |  | 279 | index_test.ts: imports + top-level mitt() factory tests | 4.1 |  | 0.628 |
-| walker |  | 2612 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.867 |
-| walker |  | 2621 | 9 | listing of '.github/workflows' |  |  | 0.894 |
-| ns | 2734 |  | 199 | index_test.ts: shared Events type + beforeEach instance setup | 4.2 |  | 0.850 |
-| ns | 2795 |  | 61 | index_test.ts: properties block | 4.3 |  | 0.839 |
-| walker |  | 2838 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.842 |
+| walker |  | 981 | 9 | listing of '.github/workflows' |  |  | 0.812 |
+| ns | 996 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.761 |
+| ns | 1197 |  | 201 | on() implementation | 2.7 | 2.6 | 0.702 |
+| walker |  | 1198 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.706 |
+| walker |  | 1210 | 12 | listing of 'test' |  |  | 0.745 |
+| walker |  | 1248 | 38 | README.md section #15 |  |  | 0.745 |
+| walker |  | 1261 | 13 | README.md section #8 |  |  | 0.745 |
+| walker |  | 1344 | 83 | README.md section #1 |  |  | 0.806 |
+| ns | 1437 |  | 240 | off() implementation | 2.8 | 2.6 | 0.741 |
+| walker |  | 1459 | 115 | package identity metadata in package.json |  |  | 0.742 |
+| walker |  | 1671 | 212 | package entrypoints in package.json |  |  | 0.750 |
+| walker |  | 1690 | 19 | README.md section #13 |  |  | 0.750 |
+| ns | 1788 |  | 351 | emit() implementation | 2.9 | 2.6 | 0.660 |
+| walker |  | 1923 | 233 | package scripts in package.json |  |  | 0.664 |
+| walker |  | 1940 | 17 | README.md section #7 |  |  | 0.664 |
+| ns | 2021 |  | 233 | package.json: identity + entry points | 3.1 |  | 0.687 |
+| ns | 2256 |  | 235 | package.json: scripts | 3.2 |  | 0.702 |
+| ns | 2535 |  | 279 | index_test.ts: imports + top-level mitt() factory tests | 4.1 |  | 0.656 |
+| ns | 2734 |  | 199 | index_test.ts: shared Events type + beforeEach instance setup | 4.2 |  | 0.624 |
+| ns | 2795 |  | 61 | index_test.ts: properties block | 4.3 |  | 0.616 |
+| walker |  | 2838 | 898 | export body at src/index.ts:46 body 49 |  |  | 0.842 |
 | walker |  | 2983 | 145 | README.md section #5 |  |  | 0.842 |
 | walker |  | 3013 | 30 | README.md section #12 |  |  | 0.842 |
 | ns | 3096 |  | 301 | index_test.ts: on() - registration and append semantics | 4.4 |  | 0.791 |

@@ -97,117 +97,118 @@ Score(3000)=0.394 I=0.389 C=0.398 ns_rows≤3K=17/48 (reached=5 partial=0 missin
 | walker |  | 4437 | 120 | c decl at Panel.h:23 |  |  | 0.367 |
 | walker |  | 4567 | 130 | c decl at Process.h:41 |  |  | 0.367 |
 | walker |  | 4591 | 24 | listing of 'docs' |  |  | 0.368 |
-| walker |  | 4632 | 41 | c decl names surface in MemoryMeter.h |  |  | 0.368 |
-| walker |  | 4674 | 42 | c decl names surface in BatteryMeter.h |  |  | 0.368 |
+| walker |  | 4595 | 4 | listing of 'docs/images' |  |  | 0.368 |
+| walker |  | 4636 | 41 | c decl names surface in MemoryMeter.h |  |  | 0.368 |
+| walker |  | 4678 | 42 | c decl names surface in BatteryMeter.h |  |  | 0.360 |
 | ns | 4678 |  | 303 | Process.h: Process struct head and tail | 4.4 |  | 0.360 |
-| walker |  | 4720 | 46 | c decl names surface in NetworkIOMeter.h |  |  | 0.360 |
-| walker |  | 4730 | 10 | c decl doc at Process.h:233 |  |  | 0.360 |
-| walker |  | 4852 | 122 | c decl at Meter.h:34 |  |  | 0.360 |
-| walker |  | 4886 | 34 | c decl names surface in htop.c |  |  | 0.360 |
-| walker |  | 4886 | 0 | c decl at htop.c:16 |  |  | 0.360 |
-| walker |  | 4906 | 20 | c includes in Hashtable.h |  |  | 0.360 |
-| ns | 4929 |  | 251 | Process.h: ProcessFieldData and the platform contract | 4.5 |  | 0.359 |
-| walker |  | 4961 | 55 | c decl names surface in CommandLine.h |  |  | 0.359 |
-| walker |  | 5050 | 89 | man-page NAME + DESCRIPTION in htop.1.in |  |  | 0.360 |
-| walker |  | 5133 | 83 | c aggregate member group at Machine.h:38 group 41 |  |  | 0.361 |
-| walker |  | 5170 | 37 | listing of 'zfs' |  |  | 0.363 |
-| walker |  | 5200 | 30 | c decl names surface in zfs/ZfsArcStats.h |  |  | 0.363 |
-| walker |  | 5261 | 61 | c decl names surface in zfs/ZfsArcMeter.h |  |  | 0.363 |
+| walker |  | 4724 | 46 | c decl names surface in NetworkIOMeter.h |  |  | 0.360 |
+| walker |  | 4734 | 10 | c decl doc at Process.h:233 |  |  | 0.361 |
+| walker |  | 4856 | 122 | c decl at Meter.h:34 |  |  | 0.361 |
+| walker |  | 4890 | 34 | c decl names surface in htop.c |  |  | 0.361 |
+| walker |  | 4890 | 0 | c decl at htop.c:16 |  |  | 0.361 |
+| walker |  | 4910 | 20 | c includes in Hashtable.h |  |  | 0.361 |
+| ns | 4929 |  | 251 | Process.h: ProcessFieldData and the platform contract | 4.5 |  | 0.360 |
+| walker |  | 4965 | 55 | c decl names surface in CommandLine.h |  |  | 0.360 |
+| walker |  | 5054 | 89 | man-page NAME + DESCRIPTION in htop.1.in |  |  | 0.360 |
+| walker |  | 5137 | 83 | c aggregate member group at Machine.h:38 group 41 |  |  | 0.361 |
+| walker |  | 5174 | 37 | listing of 'zfs' |  |  | 0.363 |
+| walker |  | 5204 | 30 | c decl names surface in zfs/ZfsArcStats.h |  |  | 0.363 |
+| walker |  | 5265 | 61 | c decl names surface in zfs/ZfsArcMeter.h |  |  | 0.363 |
 | ns | 5267 |  | 338 | Machine.h: the quasi-global host state struct | 4.6 |  | 0.372 |
-| walker |  | 5325 | 64 | c decl names surface in zfs/ZfsCompressedArcMeter.h |  |  | 0.372 |
-| walker |  | 5465 | 140 | c decl at zfs/ZfsArcStats.h:10 |  |  | 0.372 |
-| walker |  | 5504 | 39 | c decl names surface in XUtils.h |  |  | 0.372 |
-| walker |  | 5504 | 0 | c decl at XUtils.h:162 |  |  | 0.372 |
-| walker |  | 5504 | 0 | c decl at XUtils.h:172 |  |  | 0.372 |
-| walker |  | 5537 | 33 | c decl at BatteryMeter.h:15 |  |  | 0.372 |
-| walker |  | 5570 | 33 | c decl at CommandLine.h:11 |  |  | 0.372 |
-| ns | 5586 |  | 319 | Table.h: Table struct and scan vtable | 4.7 |  | 0.364 |
-| ns | 5775 |  | 189 | ProcessTable.h: process container and platform seam | 4.8 |  | 0.359 |
+| walker |  | 5329 | 64 | c decl names surface in zfs/ZfsCompressedArcMeter.h |  |  | 0.372 |
+| walker |  | 5469 | 140 | c decl at zfs/ZfsArcStats.h:10 |  |  | 0.372 |
+| walker |  | 5508 | 39 | c decl names surface in XUtils.h |  |  | 0.372 |
+| walker |  | 5508 | 0 | c decl at XUtils.h:162 |  |  | 0.372 |
+| walker |  | 5508 | 0 | c decl at XUtils.h:172 |  |  | 0.372 |
+| walker |  | 5541 | 33 | c decl at BatteryMeter.h:15 |  |  | 0.372 |
+| walker |  | 5574 | 33 | c decl at CommandLine.h:11 |  |  | 0.372 |
+| ns | 5586 |  | 319 | Table.h: Table struct and scan vtable | 4.7 |  | 0.365 |
+| ns | 5775 |  | 189 | ProcessTable.h: process container and platform seam | 4.8 |  | 0.360 |
 | ns | 6029 |  | 254 | Panel.h: HandlerResult flags and PanelClass | 5.1 |  | 0.368 |
-| walker |  | 6042 | 472 | c decl names surface #1 in Meter.h |  |  | 0.368 |
-| walker |  | 6042 | 0 | c decl at Meter.h:144 |  |  | 0.368 |
-| walker |  | 6077 | 35 | c decl at Meter.h:106 |  |  | 0.368 |
-| walker |  | 6123 | 46 | c decl at Meter.h:131 |  |  | 0.368 |
-| walker |  | 6287 | 164 | c decl at Meter.h:112 |  |  | 0.368 |
-| ns | 6342 |  | 313 | Meter.h: the MeterClass contract | 5.2 |  | 0.361 |
-| walker |  | 6352 | 65 | c decl names surface in SignalsPanel.h |  |  | 0.361 |
-| walker |  | 6376 | 24 | c decl at SignalsPanel.h:17 |  |  | 0.361 |
+| walker |  | 6046 | 472 | c decl names surface #1 in Meter.h |  |  | 0.368 |
+| walker |  | 6046 | 0 | c decl at Meter.h:144 |  |  | 0.368 |
+| walker |  | 6081 | 35 | c decl at Meter.h:106 |  |  | 0.368 |
+| walker |  | 6127 | 46 | c decl at Meter.h:131 |  |  | 0.368 |
+| walker |  | 6291 | 164 | c decl at Meter.h:112 |  |  | 0.368 |
+| ns | 6342 |  | 313 | Meter.h: the MeterClass contract | 5.2 |  | 0.362 |
+| walker |  | 6356 | 65 | c decl names surface in SignalsPanel.h |  |  | 0.362 |
+| walker |  | 6380 | 24 | c decl at SignalsPanel.h:17 |  |  | 0.362 |
 | ns | 6443 |  | 101 | MeterMode.h: meter mode ids | 5.3 |  | 0.359 |
-| ns | 6790 |  | 347 | Action.h: Htop_Reaction flags and State | 5.4 |  | 0.352 |
-| walker |  | 6921 | 545 | c decl names surface #1 in Process.h |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:254 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:258 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:262 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:266 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:270 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:274 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:278 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:282 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:286 |  |  | 0.349 |
-| walker |  | 6921 | 0 | c decl at Process.h:290 |  |  | 0.349 |
-| ns | 6921 |  | 131 | CRT.h: the eight color schemes | 5.5 |  | 0.349 |
-| walker |  | 6952 | 31 | c decl at Process.h:244 |  |  | 0.349 |
-| walker |  | 6964 | 12 | c decl body at Process.h:254 |  |  | 0.349 |
-| walker |  | 6976 | 12 | c decl body at Process.h:262 |  |  | 0.349 |
-| walker |  | 6988 | 12 | c decl body at Process.h:270 |  |  | 0.349 |
-| walker |  | 7000 | 12 | c decl body at Process.h:282 |  |  | 0.349 |
-| walker |  | 7013 | 13 | c decl body at Process.h:286 |  |  | 0.349 |
-| walker |  | 7027 | 14 | c decl body at Process.h:258 |  |  | 0.349 |
-| walker |  | 7041 | 14 | c decl body at Process.h:266 |  |  | 0.349 |
-| walker |  | 7055 | 14 | c decl body at Process.h:274 |  |  | 0.349 |
-| walker |  | 7071 | 16 | c decl body at Process.h:278 |  |  | 0.349 |
-| walker |  | 7091 | 20 | c decl body at Process.h:290 |  |  | 0.349 |
+| ns | 6790 |  | 347 | Action.h: Htop_Reaction flags and State | 5.4 |  | 0.353 |
+| ns | 6921 |  | 131 | CRT.h: the eight color schemes | 5.5 |  | 0.350 |
+| walker |  | 6925 | 545 | c decl names surface #1 in Process.h |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:254 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:258 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:262 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:266 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:270 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:274 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:278 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:282 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:286 |  |  | 0.350 |
+| walker |  | 6925 | 0 | c decl at Process.h:290 |  |  | 0.350 |
+| walker |  | 6956 | 31 | c decl at Process.h:244 |  |  | 0.350 |
+| walker |  | 6968 | 12 | c decl body at Process.h:254 |  |  | 0.350 |
+| walker |  | 6980 | 12 | c decl body at Process.h:262 |  |  | 0.350 |
+| walker |  | 6992 | 12 | c decl body at Process.h:270 |  |  | 0.350 |
+| walker |  | 7004 | 12 | c decl body at Process.h:282 |  |  | 0.350 |
+| walker |  | 7017 | 13 | c decl body at Process.h:286 |  |  | 0.350 |
+| walker |  | 7031 | 14 | c decl body at Process.h:258 |  |  | 0.350 |
+| walker |  | 7045 | 14 | c decl body at Process.h:266 |  |  | 0.350 |
+| walker |  | 7059 | 14 | c decl body at Process.h:274 |  |  | 0.350 |
+| walker |  | 7075 | 16 | c decl body at Process.h:278 |  |  | 0.350 |
+| walker |  | 7095 | 20 | c decl body at Process.h:290 |  |  | 0.350 |
 | ns | 7117 |  | 196 | Settings.h: ScreenSettings (per-screen persisted state) | 6.1 |  | 0.346 |
-| walker |  | 7142 | 51 | headings outline in docs/understanding-htop-versions.md |  |  | 0.346 |
-| ns | 7404 |  | 287 | Settings.h: the Settings struct | 6.2 |  | 0.339 |
+| walker |  | 7146 | 51 | headings outline in docs/understanding-htop-versions.md |  |  | 0.346 |
+| ns | 7404 |  | 287 | Settings.h: the Settings struct | 6.2 |  | 0.340 |
 | ns | 7620 |  | 216 | Code map: settings, process display, key bindings, loop | 6.3 |  | 0.336 |
-| walker |  | 7827 | 685 | c decl names surface #1 in Panel.h |  |  | 0.336 |
-| walker |  | 7827 | 0 | c decl at Panel.h:93 |  |  | 0.336 |
-| walker |  | 7942 | 115 | man-page NAME + DESCRIPTION in pcp-htop.5.in |  |  | 0.337 |
-| walker |  | 7994 | 52 | c decl names surface in RowField.h |  |  | 0.337 |
-| walker |  | 7994 | 0 | c decl at RowField.h:53 |  |  | 0.337 |
-| walker |  | 8004 | 10 | c decl at RowField.h:13 |  |  | 0.337 |
-| walker |  | 8049 | 45 | listing of 'solaris' |  |  | 0.339 |
+| walker |  | 7831 | 685 | c decl names surface #1 in Panel.h |  |  | 0.336 |
+| walker |  | 7831 | 0 | c decl at Panel.h:93 |  |  | 0.336 |
+| walker |  | 7946 | 115 | man-page NAME + DESCRIPTION in pcp-htop.5.in |  |  | 0.337 |
+| walker |  | 7998 | 52 | c decl names surface in RowField.h |  |  | 0.337 |
+| walker |  | 7998 | 0 | c decl at RowField.h:53 |  |  | 0.337 |
+| walker |  | 8008 | 10 | c decl at RowField.h:13 |  |  | 0.337 |
+| walker |  | 8053 | 45 | listing of 'solaris' |  |  | 0.340 |
 | ns | 8090 |  | 470 | linux/Platform.h: the platform API function set | 7.1 |  | 0.330 |
-| walker |  | 8094 | 45 | listing of 'unsupported' |  |  | 0.337 |
-| walker |  | 8123 | 29 | c decl names surface in TasksMeter.h |  |  | 0.337 |
-| walker |  | 8136 | 13 | c decl names surface in Debug.h |  |  | 0.337 |
-| walker |  | 8166 | 30 | c decl names surface in FileDescriptorMeter.h |  |  | 0.337 |
-| walker |  | 8197 | 31 | c decl names surface in HostnameMeter.h |  |  | 0.337 |
-| walker |  | 8228 | 31 | c decl names surface in MemorySwapMeter.h |  |  | 0.337 |
-| walker |  | 8259 | 31 | c decl names surface in SysArchMeter.h |  |  | 0.337 |
-| walker |  | 8289 | 30 | c includes in zfs/ZfsArcMeter.h |  |  | 0.337 |
-| walker |  | 8319 | 30 | c includes in zfs/ZfsCompressedArcMeter.h |  |  | 0.337 |
+| walker |  | 8098 | 45 | listing of 'unsupported' |  |  | 0.337 |
+| walker |  | 8127 | 29 | c decl names surface in TasksMeter.h |  |  | 0.337 |
+| walker |  | 8140 | 13 | c decl names surface in Debug.h |  |  | 0.337 |
+| walker |  | 8170 | 30 | c decl names surface in FileDescriptorMeter.h |  |  | 0.337 |
+| walker |  | 8201 | 31 | c decl names surface in HostnameMeter.h |  |  | 0.337 |
+| walker |  | 8232 | 31 | c decl names surface in MemorySwapMeter.h |  |  | 0.337 |
+| walker |  | 8263 | 31 | c decl names surface in SysArchMeter.h |  |  | 0.337 |
+| walker |  | 8293 | 30 | c includes in zfs/ZfsArcMeter.h |  |  | 0.337 |
+| walker |  | 8323 | 30 | c includes in zfs/ZfsCompressedArcMeter.h |  |  | 0.337 |
 | ns | 8518 |  | 428 | RowField.h: the reserved cross-platform column ids | 7.2 |  | 0.329 |
-| walker |  | 8558 | 239 | c decl at Panel.h:64 |  |  | 0.329 |
-| ns | 8613 |  | 95 | linux/ProcessField.h: Linux column id block (head) | 7.3 |  | 0.327 |
-| walker |  | 8642 | 84 | c decl names surface in DiskIOMeter.h |  |  | 0.327 |
-| walker |  | 8693 | 51 | listing of 'freebsd' |  |  | 0.329 |
-| walker |  | 8744 | 51 | listing of 'openbsd' |  |  | 0.335 |
-| walker |  | 8759 | 15 | c decl doc at Process.h:29 |  |  | 0.335 |
+| walker |  | 8562 | 239 | c decl at Panel.h:64 |  |  | 0.329 |
+| ns | 8613 |  | 95 | linux/ProcessField.h: Linux column id block (head) | 7.3 |  | 0.328 |
+| walker |  | 8646 | 84 | c decl names surface in DiskIOMeter.h |  |  | 0.328 |
+| walker |  | 8697 | 51 | listing of 'freebsd' |  |  | 0.330 |
+| walker |  | 8748 | 51 | listing of 'openbsd' |  |  | 0.335 |
+| walker |  | 8763 | 15 | c decl doc at Process.h:29 |  |  | 0.335 |
 | ns | 8847 |  | 234 | CPUMeter.c: a canonical MeterClass instance | 7.4 |  | 0.331 |
-| walker |  | 8892 | 133 | headings outline in README.md |  |  | 0.333 |
-| walker |  | 8907 | 15 | c decl names surface in ProvideTerm.h |  |  | 0.333 |
-| ns | 8942 |  | 95 | linux/LinuxProcess.c: Process_fields table head | 7.5 |  | 0.332 |
-| walker |  | 8962 | 55 | listing of 'darwin' |  |  | 0.346 |
-| walker |  | 9017 | 55 | listing of 'netbsd' |  |  | 0.356 |
-| walker |  | 9084 | 67 | README headline in netbsd/README.md |  |  | 0.356 |
-| walker |  | 9116 | 32 | headings outline in netbsd/README.md |  |  | 0.356 |
-| walker |  | 9174 | 58 | c decl names surface in MeterMode.h |  |  | 0.357 |
-| walker |  | 9231 | 57 | listing of 'dragonflybsd' |  |  | 0.369 |
-| walker |  | 9239 | 8 | listing of 'm4' |  |  | 0.369 |
-| ns | 9259 |  | 317 | Dynamic provider structs | 8.1 |  | 0.364 |
-| ns | 9387 |  | 128 | CI smoke runs (sanitizer job) | 9.1 |  | 0.362 |
+| walker |  | 8896 | 133 | headings outline in README.md |  |  | 0.334 |
+| walker |  | 8911 | 15 | c decl names surface in ProvideTerm.h |  |  | 0.334 |
+| ns | 8942 |  | 95 | linux/LinuxProcess.c: Process_fields table head | 7.5 |  | 0.333 |
+| walker |  | 8966 | 55 | listing of 'darwin' |  |  | 0.347 |
+| walker |  | 9021 | 55 | listing of 'netbsd' |  |  | 0.357 |
+| walker |  | 9088 | 67 | README headline in netbsd/README.md |  |  | 0.357 |
+| walker |  | 9120 | 32 | headings outline in netbsd/README.md |  |  | 0.357 |
+| walker |  | 9178 | 58 | c decl names surface in MeterMode.h |  |  | 0.357 |
+| walker |  | 9235 | 57 | listing of 'dragonflybsd' |  |  | 0.369 |
+| walker |  | 9243 | 8 | listing of 'm4' |  |  | 0.370 |
+| ns | 9259 |  | 317 | Dynamic provider structs | 8.1 |  | 0.365 |
+| ns | 9387 |  | 128 | CI smoke runs (sanitizer job) | 9.1 |  | 0.363 |
 | ns | 9499 |  | 112 | Makefile.am developer targets | 9.2 |  | 0.361 |
-| walker |  | 9520 | 281 | c decl at Process.h:203 |  |  | 0.369 |
-| walker |  | 9558 | 38 | c decl names surface in SwapMeter.h |  |  | 0.369 |
-| walker |  | 9590 | 32 | README.md section #21 |  |  | 0.369 |
+| walker |  | 9524 | 281 | c decl at Process.h:203 |  |  | 0.369 |
+| walker |  | 9562 | 38 | c decl names surface in SwapMeter.h |  |  | 0.369 |
+| walker |  | 9594 | 32 | README.md section #21 |  |  | 0.369 |
 | ns | 9685 |  | 186 | test_spec.lua: the interactive test list | 9.3 |  | 0.366 |
 | ns | 9806 |  | 121 | ChangeLog: 3.5.1 release notes | 9.4 | 1.1 | 0.365 |
-| walker |  | 9913 | 323 | c decl names surface #2 in Process.h |  |  | 0.365 |
-| walker |  | 9913 | 0 | c decl at Process.h:320 |  |  | 0.365 |
-| walker |  | 9913 | 0 | c decl at Process.h:334 |  |  | 0.365 |
-| walker |  | 9929 | 16 | c decl body at Process.h:320 |  |  | 0.365 |
-| walker |  | 9982 | 53 | c decl at NetworkIOMeter.h:15 |  |  | 0.365 |
-| walker |  | 9995 | 13 | c decl body at htop.c:16 |  |  | 0.365 |
-| ns | 10000 |  | 194 | configure.ac: feature flags beyond AGENTS.md's six | 9.5 |  | 0.362 |
+| walker |  | 9917 | 323 | c decl names surface #2 in Process.h |  |  | 0.365 |
+| walker |  | 9917 | 0 | c decl at Process.h:320 |  |  | 0.365 |
+| walker |  | 9917 | 0 | c decl at Process.h:334 |  |  | 0.365 |
+| walker |  | 9933 | 16 | c decl body at Process.h:320 |  |  | 0.365 |
+| walker |  | 9986 | 53 | c decl at NetworkIOMeter.h:15 |  |  | 0.365 |
+| walker |  | 9999 | 13 | c decl body at htop.c:16 |  |  | 0.365 |
+| ns | 10000 |  | 194 | configure.ac: feature flags beyond AGENTS.md's six | 9.5 |  | 0.363 |

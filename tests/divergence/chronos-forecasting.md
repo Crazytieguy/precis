@@ -26,25 +26,25 @@ Score(3000)=0.590 I=0.779 C=0.447 ns_rows≤3K=17/106 (reached=6 partial=1 missi
 | walker |  | 693 | 17 | python class body at src/chronos/base.py:32 |  |  | 0.638 |
 | walker |  | 715 | 22 | python class body at src/chronos/base.py:27 |  |  | 0.639 |
 | walker |  | 722 | 7 | listing of '.github' |  |  | 0.639 |
+| walker |  | 739 | 17 | listing of '.github/workflows' |  |  | 0.639 |
 | ns | 778 |  | 170 | src/chronos/chronos2/__init__.py - Chronos-2 subpackage API | 2.4 |  | 0.584 |
-| walker |  | 892 | 170 | python imports in src/chronos/chronos2/__init__.py |  |  | 0.689 |
+| walker |  | 909 | 170 | python imports in src/chronos/chronos2/__init__.py |  |  | 0.690 |
 | ns | 1005 |  | 227 | chronos2/dataset.py - class/def locations | 2.5 |  | 0.614 |
-| walker |  | 1070 | 178 | python method sigs in src/chronos/base.py |  |  | 0.712 |
-| walker |  | 1070 | 0 | python method at src/chronos/base.py:35 |  |  | 0.712 |
-| walker |  | 1070 | 0 | python method at src/chronos/base.py:48 |  |  | 0.712 |
-| walker |  | 1070 | 0 | python method at src/chronos/base.py:66 |  |  | 0.712 |
-| walker |  | 1070 | 0 | python method at src/chronos/base.py:76 |  |  | 0.712 |
-| walker |  | 1078 | 8 | python method at src/chronos/base.py:58 |  |  | 0.712 |
-| walker |  | 1086 | 8 | python method at src/chronos/base.py:62 |  |  | 0.712 |
-| walker |  | 1154 | 68 | [package] in pyproject.toml |  |  | 0.724 |
-| walker |  | 1162 | 8 | python method body at src/chronos/base.py:58 body 60 |  |  | 0.724 |
-| walker |  | 1170 | 8 | python method body at src/chronos/base.py:62 body 64 |  |  | 0.724 |
-| walker |  | 1200 | 30 | README.md section #11 |  |  | 0.724 |
-| walker |  | 1235 | 35 | python class body at src/chronos/base.py:44 |  |  | 0.724 |
-| walker |  | 1251 | 16 | listing of 'scripts' |  |  | 0.724 |
+| walker |  | 1087 | 178 | python method sigs in src/chronos/base.py |  |  | 0.713 |
+| walker |  | 1087 | 0 | python method at src/chronos/base.py:35 |  |  | 0.713 |
+| walker |  | 1087 | 0 | python method at src/chronos/base.py:48 |  |  | 0.713 |
+| walker |  | 1087 | 0 | python method at src/chronos/base.py:66 |  |  | 0.713 |
+| walker |  | 1087 | 0 | python method at src/chronos/base.py:76 |  |  | 0.713 |
+| walker |  | 1095 | 8 | python method at src/chronos/base.py:58 |  |  | 0.713 |
+| walker |  | 1103 | 8 | python method at src/chronos/base.py:62 |  |  | 0.713 |
+| walker |  | 1171 | 68 | [package] in pyproject.toml |  |  | 0.724 |
+| walker |  | 1179 | 8 | python method body at src/chronos/base.py:58 body 60 |  |  | 0.724 |
+| walker |  | 1187 | 8 | python method body at src/chronos/base.py:62 body 64 |  |  | 0.724 |
+| walker |  | 1217 | 30 | README.md section #11 |  |  | 0.724 |
+| walker |  | 1252 | 35 | python class body at src/chronos/base.py:44 |  |  | 0.724 |
 | ns | 1253 |  | 248 | chronos2/model.py - class/def locations | 2.6 |  | 0.647 |
-| walker |  | 1261 | 10 | python method body at src/chronos/base.py:76 body 98 |  |  | 0.647 |
-| walker |  | 1278 | 17 | listing of '.github/workflows' |  |  | 0.647 |
+| walker |  | 1268 | 16 | listing of 'scripts' |  |  | 0.647 |
+| walker |  | 1278 | 10 | python method body at src/chronos/base.py:76 body 98 |  |  | 0.647 |
 | walker |  | 1296 | 18 | python method doc at src/chronos/base.py:35 |  |  | 0.647 |
 | walker |  | 1311 | 15 | python imports in src/chronos/__about__.py |  |  | 0.647 |
 | walker |  | 1352 | 41 | python method at src/chronos/base.py:252 |  |  | 0.647 |

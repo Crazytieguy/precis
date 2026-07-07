@@ -1137,10 +1137,24 @@ entries = ["dependabot.yml", "workflows"]
 
 [[batches]]
 position = 55
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 2130
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["rust.yml"]
+
+[[batches]]
+position = 56
 key = 'Rust(ModUse { file: "sps-net/src/lib.rs" })'
 descriptor = "mod/use plumbing in sps-net/src/lib.rs"
 cost_tokens = 284
-cum_tokens = 2410
+cum_tokens = 2414
 
 [batches.content]
 kind = "lines"
@@ -1162,11 +1176,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 167 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 167"
 cost_tokens = 270
-cum_tokens = 2680
+cum_tokens = 2684
 
 [batches.content]
 kind = "lines"
@@ -1180,11 +1194,11 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Rust(ModUse { file: "sps-core/src/install/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/install/mod.rs"
 cost_tokens = 83
-cum_tokens = 2763
+cum_tokens = 2767
 
 [batches.content]
 kind = "lines"
@@ -1206,11 +1220,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Rust(ModUse { file: "sps-common/src/model/mod.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/model/mod.rs"
 cost_tokens = 92
-cum_tokens = 2855
+cum_tokens = 2859
 
 [batches.content]
 kind = "lines"
@@ -1232,11 +1246,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Rust(PubItem { file: "sps/src/cli.rs", start_line: 35 })'
 descriptor = "pub item at sps/src/cli.rs:35"
 cost_tokens = 75
-cum_tokens = 2930
+cum_tokens = 2934
 
 [batches.content]
 kind = "lines"
@@ -1258,11 +1272,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Rust(ModUse { file: "sps-common/src/dependency/mod.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/dependency/mod.rs"
 cost_tokens = 99
-cum_tokens = 3029
+cum_tokens = 3033
 
 [batches.content]
 kind = "lines"
@@ -1284,11 +1298,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Rust(PubItem { file: "sps/src/cli.rs", start_line: 44 })'
 descriptor = "pub item at sps/src/cli.rs:44"
 cost_tokens = 98
-cum_tokens = 3127
+cum_tokens = 3131
 
 [batches.content]
 kind = "lines"
@@ -1300,20 +1314,6 @@ end = 54
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 62
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 3131
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["rust.yml"]
 
 [[batches]]
 position = 63

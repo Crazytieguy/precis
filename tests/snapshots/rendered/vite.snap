@@ -81,6 +81,9 @@ docs/
             live/
             styles.css
     _data/
+        acknowledgements.data.ts
+        blog.data.ts
+        team.js
     acknowledgements.md
     blog/
     blog.md
@@ -111,6 +114,9 @@ packages/
         package.json
         src/
             __tests__/
+                index.spec.ts
+                readme.spec.ts
+                snippets.spec.ts
             index.ts
                 …
                  128→export const modulePreloadLinkRE: RegExp =
@@ -159,6 +165,8 @@ packages/
               12→Vite (French word for "quick", pronounced [`/viːt/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
             …
         bin/
+            openChrome.js
+            vite.js
         client.d.ts
         misc/
             false.d.ts
@@ -182,11 +190,6 @@ packages/
         rollupLicensePlugin.ts
             …
                7→export default function licensePlugin(
-               8→  licenseFilePath: string,
-               9→  licenseTitle: string,
-              10→  packageName: string,
-              11→  additionalSection?: string,
-              12→): Plugin {
             …
         scripts/
         src/
@@ -197,6 +200,8 @@ packages/
                 tsconfig.json
             module-runner/
                 __tests_dts__/
+                    importMeta.ts
+                    tsconfig.json
                 constants.ts
                 createImportMeta.ts
                 esmEvaluator.ts
@@ -207,6 +212,12 @@ packages/
                 index.ts
                 runner.ts
                 sourcemap/
+                    decoder.ts
+                    index.ts
+                        …
+                           4→export function enableSourceMapSupport(runner: ModuleRunner): () => void {
+                        …
+                    interceptor.ts
                 tsconfig.json
                 types.ts
                 utils.ts
@@ -349,11 +360,6 @@ packages/
             importGlob.d.ts
             importMeta.d.ts
             internal/
-                cssPreprocessorOptions.d.ts
-                esbuildOptions.d.ts
-                lightningcssOptions.d.ts
-                rollupTypeCompat.d.ts
-                terserOptions.d.ts
             metadata.d.ts
 patches/
     chokidar@3.6.0.patch

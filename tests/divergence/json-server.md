@@ -21,22 +21,22 @@ Score(3000)=0.749 I=0.896 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missi
 | ns | 461 |  | 128 | package.json: repository/bin/files/type | 1.7 |  | 0.691 |
 | walker |  | 606 | 151 | README.md section #0 |  |  | 0.695 |
 | walker |  | 614 | 8 | listing of '.github' |  |  | 0.695 |
-| walker |  | 623 | 9 | listing of 'fixtures' |  |  | 0.695 |
+| walker |  | 623 | 9 | listing of '.github/workflows' |  |  | 0.695 |
 | ns | 625 |  | 164 | package.json: scripts | 1.8 |  | 0.633 |
-| walker |  | 653 | 30 | README.md section #18 |  |  | 0.634 |
-| walker |  | 664 | 11 | README.md section #9 |  |  | 0.634 |
-| walker |  | 679 | 15 | export names surface in src/random-id.ts |  |  | 0.634 |
-| walker |  | 679 | 0 | export at src/random-id.ts:3 |  |  | 0.634 |
-| walker |  | 698 | 19 | export names surface in src/parse-where.ts |  |  | 0.634 |
-| walker |  | 698 | 0 | export at src/parse-where.ts:58 |  |  | 0.634 |
-| walker |  | 716 | 18 | export body at src/random-id.ts:3 body 4 |  |  | 0.634 |
-| walker |  | 740 | 24 | export names surface in src/matches-where.ts |  |  | 0.634 |
-| walker |  | 740 | 0 | export at src/matches-where.ts:24 |  |  | 0.634 |
-| walker |  | 754 | 14 | export names surface in src/adapters/observer.ts |  |  | 0.634 |
-| walker |  | 781 | 27 | README.md section #6 |  |  | 0.634 |
-| walker |  | 790 | 9 | listing of '.github/workflows' |  |  | 0.634 |
-| ns | 854 |  | 229 | package.json: dependencies | 1.9 |  | 0.570 |
-| walker |  | 986 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.579 |
+| walker |  | 819 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.643 |
+| walker |  | 828 | 9 | listing of 'fixtures' |  |  | 0.643 |
+| ns | 854 |  | 229 | package.json: dependencies | 1.9 |  | 0.578 |
+| walker |  | 858 | 30 | README.md section #18 |  |  | 0.579 |
+| walker |  | 869 | 11 | README.md section #9 |  |  | 0.579 |
+| walker |  | 884 | 15 | export names surface in src/random-id.ts |  |  | 0.579 |
+| walker |  | 884 | 0 | export at src/random-id.ts:3 |  |  | 0.579 |
+| walker |  | 903 | 19 | export names surface in src/parse-where.ts |  |  | 0.579 |
+| walker |  | 903 | 0 | export at src/parse-where.ts:58 |  |  | 0.579 |
+| walker |  | 921 | 18 | export body at src/random-id.ts:3 body 4 |  |  | 0.579 |
+| walker |  | 945 | 24 | export names surface in src/matches-where.ts |  |  | 0.579 |
+| walker |  | 945 | 0 | export at src/matches-where.ts:24 |  |  | 0.579 |
+| walker |  | 959 | 14 | export names surface in src/adapters/observer.ts |  |  | 0.579 |
+| walker |  | 986 | 27 | README.md section #6 |  |  | 0.579 |
 | ns | 1049 |  | 195 | package.json: devDependencies + engines | 1.10 |  | 0.530 |
 | walker |  | 1172 | 186 | package identity metadata in package.json |  |  | 0.689 |
 | ns | 1186 |  | 137 | CLI --help text (bin.ts) | 2.1 |  | 0.650 |

@@ -21,28 +21,28 @@ Score(3000)=0.440 I=0.784 C=0.247 ns_rows≤3K=17/45 (reached=5 partial=2 missin
 | walker |  | 517 | 20 | export names surface in src/match.ts |  |  | 0.507 |
 | walker |  | 537 | 20 | export at src/match.ts:32 |  |  | 0.507 |
 | walker |  | 553 | 16 | export body at src/match.ts:32 body 35 |  |  | 0.507 |
-| walker |  | 579 | 26 | listing of 'docs' |  |  | 0.515 |
-| walker |  | 635 | 56 | listing of 'src/types' |  |  | 0.616 |
-| ns | 637 |  | 154 | Config bundle A2: tsconfig.json | 1.8 |  | 0.560 |
-| walker |  | 641 | 6 | listing of 'scripts' |  |  | 0.565 |
-| walker |  | 651 | 10 | listing of 'examples' |  |  | 0.567 |
-| ns | 655 |  | 18 | Config bundle B: .prettierrc | 1.9 |  | 0.560 |
-| walker |  | 709 | 58 | export names surface in src/is-matching.ts |  |  | 0.560 |
-| ns | 729 |  | 74 | package.json: name/version/description | 1.10 |  | 0.565 |
-| walker |  | 736 | 27 | export at src/is-matching.ts:32 |  |  | 0.565 |
-| walker |  | 769 | 33 | export at src/is-matching.ts:53 |  |  | 0.565 |
-| walker |  | 808 | 39 | export at src/is-matching.ts:48 |  |  | 0.565 |
-| walker |  | 883 | 75 | export body at src/errors.ts:5 body 7 |  |  | 0.566 |
-| walker |  | 892 | 9 | listing of '.github' |  |  | 0.579 |
-| walker |  | 902 | 10 | imports in src/types/index.ts |  |  | 0.579 |
-| walker |  | 928 | 26 | listing of 'benchmarks' |  |  | 0.631 |
-| walker |  | 968 | 40 | export doc at src/errors.ts:5 |  |  | 0.633 |
-| walker |  | 990 | 22 | README.md section #2 |  |  | 0.633 |
-| ns | 1002 |  | 273 | package.json: scripts | 1.11 |  | 0.587 |
-| walker |  | 1005 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.602 |
-| walker |  | 1032 | 27 | README.md section #7 |  |  | 0.602 |
-| walker |  | 1060 | 28 | README.md section #8 |  |  | 0.602 |
-| walker |  | 1068 | 8 | listing of 'src/internals' |  |  | 0.630 |
+| walker |  | 561 | 8 | listing of 'src/internals' |  |  | 0.511 |
+| walker |  | 587 | 26 | listing of 'docs' |  |  | 0.518 |
+| ns | 637 |  | 154 | Config bundle A2: tsconfig.json | 1.8 |  | 0.472 |
+| walker |  | 643 | 56 | listing of 'src/types' |  |  | 0.594 |
+| walker |  | 649 | 6 | listing of 'scripts' |  |  | 0.599 |
+| ns | 655 |  | 18 | Config bundle B: .prettierrc | 1.9 |  | 0.592 |
+| walker |  | 659 | 10 | listing of 'examples' |  |  | 0.594 |
+| walker |  | 717 | 58 | export names surface in src/is-matching.ts |  |  | 0.594 |
+| ns | 729 |  | 74 | package.json: name/version/description | 1.10 |  | 0.597 |
+| walker |  | 744 | 27 | export at src/is-matching.ts:32 |  |  | 0.597 |
+| walker |  | 777 | 33 | export at src/is-matching.ts:53 |  |  | 0.597 |
+| walker |  | 816 | 39 | export at src/is-matching.ts:48 |  |  | 0.597 |
+| walker |  | 891 | 75 | export body at src/errors.ts:5 body 7 |  |  | 0.598 |
+| walker |  | 900 | 9 | listing of '.github' |  |  | 0.610 |
+| walker |  | 910 | 10 | imports in src/types/index.ts |  |  | 0.610 |
+| walker |  | 936 | 26 | listing of 'benchmarks' |  |  | 0.662 |
+| walker |  | 976 | 40 | export doc at src/errors.ts:5 |  |  | 0.663 |
+| walker |  | 998 | 22 | README.md section #2 |  |  | 0.663 |
+| ns | 1002 |  | 273 | package.json: scripts | 1.11 |  | 0.615 |
+| walker |  | 1013 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.630 |
+| walker |  | 1040 | 27 | README.md section #7 |  |  | 0.630 |
+| walker |  | 1068 | 28 | README.md section #8 |  |  | 0.630 |
 | ns | 1220 |  | 218 | package.json: author/license/devDependencies | 1.12 |  | 0.585 |
 | walker |  | 1236 | 168 | export body at src/is-matching.ts:53 body 56 |  |  | 0.587 |
 | walker |  | 1268 | 32 | README.md section #4 |  |  | 0.587 |

@@ -74,20 +74,20 @@ Score(3000)=0.369 I=0.655 C=0.208 ns_rows≤3K=23/81 (reached=4 partial=0 missin
 | walker |  | 2041 | 75 | mod/use plumbing in sps-core/src/upgrade/mod.rs |  |  | 0.438 |
 | walker |  | 2118 | 77 | mod/use plumbing in sps-core/src/uninstall/mod.rs |  |  | 0.438 |
 | walker |  | 2126 | 8 | listing of '.github' |  |  | 0.438 |
+| walker |  | 2130 | 4 | listing of '.github/workflows' |  |  | 0.438 |
 | ns | 2147 |  | 135 | keg.rs: KegRegistry (struct + fn roster) | 2.13 |  | 0.425 |
 | ns | 2266 |  | 119 | cache.rs + formulary.rs: disk cache & in-memory formula.json cache | 2.14 |  | 0.414 |
-| walker |  | 2410 | 284 | mod/use plumbing in sps-net/src/lib.rs |  |  | 0.415 |
+| walker |  | 2414 | 284 | mod/use plumbing in sps-net/src/lib.rs |  |  | 0.415 |
 | ns | 2472 |  | 206 | pipeline.rs (common): JobAction & PlannedOperations vocabulary | 2.15 |  | 0.396 |
-| walker |  | 2680 | 270 | entry item body at sps/src/main.rs:57 body 167 |  |  | 0.396 |
-| walker |  | 2763 | 83 | mod/use plumbing in sps-core/src/install/mod.rs |  |  | 0.396 |
+| walker |  | 2684 | 270 | entry item body at sps/src/main.rs:57 body 167 |  |  | 0.396 |
+| walker |  | 2767 | 83 | mod/use plumbing in sps-core/src/install/mod.rs |  |  | 0.396 |
 | ns | 2780 |  | 308 | sps-core subsystem directory map | 3.1 |  | 0.375 |
-| walker |  | 2855 | 92 | mod/use plumbing in sps-common/src/model/mod.rs |  |  | 0.375 |
+| walker |  | 2859 | 92 | mod/use plumbing in sps-common/src/model/mod.rs |  |  | 0.375 |
 | ns | 2894 |  | 114 | sps-core/Cargo.toml: package header & internal deps | 3.2 |  | 0.369 |
-| walker |  | 2930 | 75 | pub item at sps/src/cli.rs:35 |  |  | 0.369 |
-| walker |  | 3029 | 99 | mod/use plumbing in sps-common/src/dependency/mod.rs |  |  | 0.369 |
+| walker |  | 2934 | 75 | pub item at sps/src/cli.rs:35 |  |  | 0.369 |
+| walker |  | 3033 | 99 | mod/use plumbing in sps-common/src/dependency/mod.rs |  |  | 0.369 |
 | ns | 3102 |  | 208 | sps-core lib.rs: module map | 3.3 |  | 0.363 |
-| walker |  | 3127 | 98 | pub item at sps/src/cli.rs:44 |  |  | 0.364 |
-| walker |  | 3131 | 4 | listing of '.github/workflows' |  |  | 0.364 |
+| walker |  | 3131 | 98 | pub item at sps/src/cli.rs:44 |  |  | 0.364 |
 | walker |  | 3155 | 24 | mod/use plumbing in sps/src/pipeline.rs |  |  | 0.364 |
 | walker |  | 3170 | 15 | listing of 'sps-core/src/install/cask' |  |  | 0.374 |
 | walker |  | 3186 | 16 | listing of 'sps-core/src/install/bottle' |  |  | 0.385 |

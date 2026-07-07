@@ -81,25 +81,6 @@ input.go
     …
 key.go
 keyboard.go
-    …
-       9→type KeyboardEnhancementsMsg struct {
-    …
-      33→func (k KeyboardEnhancementsMsg) SupportsKeyDisambiguation() bool {
-      34→	return k.Flags > 0
-    …
-      39→func (k KeyboardEnhancementsMsg) SupportsEventTypes() bool {
-      40→	return k.Flags&ansi.KittyReportEventTypes != 0
-    …
-      43→// SupportsAlternateKeys returns whether the terminal supports reporting
-      44→// alternate key codes.
-      45→func (k KeyboardEnhancementsMsg) SupportsAlternateKeys() bool {
-      46→	return k.Flags&ansi.KittyReportAlternateKeys != 0
-    …
-      51→func (k KeyboardEnhancementsMsg) SupportsAllKeysAsEscapeCodes() bool {
-    …
-      57→func (k KeyboardEnhancementsMsg) SupportsAssociatedText() bool {
-      58→	return k.Flags&ansi.KittyReportAssociatedKeys != 0
-    …
 logging.go
     …
       23→func LogToFile(path string, prefix string) (*os.File, error) {
@@ -295,13 +276,32 @@ termios_unix.go
 termios_windows.go
 testdata/
     TestClearMsg/
+        bg_fg_cur_color.golden
+        clear_screen.golden
+        read_set_clipboard.golden
     TestViewModel/
 tty.go
 tty_unix.go
 tty_windows.go
 tutorials/
     basics/
+        README.md
+               1→# Bubble Tea Basics
+               2→
+               3→Bubble Tea is based on the functional design paradigms of [The Elm
+               4→Architecture][elm], which happens to work nicely with Go. It’s a delightful way
+               5→to build applications.
+            …
+        main.go
     commands/
+        README.md
+               1→# Commands in Bubble Tea
+               2→
+               3→This is the second tutorial for Bubble Tea covering commands, which deal with
+               4→I/O. The tutorial assumes you have a working knowledge of Go and a decent
+               5→understanding of [the first tutorial][basics].
+            …
+        main.go
     go.mod
            1→module tutorial
            2→

@@ -8,49 +8,6 @@ expression: rendered
 .nvmrc
 CONTRIBUTING.md
 Dockerfile
-       1→# Base image is node:22-slim, we cannot use node:22-alpine because of
-       2→# a known issue for arm/v7 architecture (hangs on dependency installation)
-       3→# see https://github.com/nodejs/docker-node/issues/2077
-       4→FROM node:22-slim AS builder
-       5→
-       6→# Set the working directory for the app
-       7→WORKDIR /app
-       8→
-       9→# Copy package.json and pnpm-lock.yaml to install dependencies
-      10→COPY pnpm-lock.yaml ./
-      11→COPY pnpm-workspace.yaml ./
-      12→COPY packages/crypto/package.json packages/crypto/package.json
-      13→COPY packages/lib/package.json packages/lib/package.json
-      14→COPY packages/app-client/package.json packages/app-client/package.json
-      15→COPY packages/app-server/package.json packages/app-server/package.json
-      16→
-      17→# Install pnpm
-      18→RUN npm install -g pnpm --ignore-scripts && pnpm install --frozen-lockfile --ignore-scripts
-      19→
-      20→# Copy the entire app
-      21→COPY . .
-      22→
-      23→# Build the apps
-      24→RUN pnpm --filter @enclosed/crypto run build && \
-      25→    pnpm --filter @enclosed/lib run build && \
-      26→    pnpm --filter @enclosed/app-client run build && \
-      27→    pnpm --filter @enclosed/app-server run build:node
-      28→
-      29→# Production image 
-      30→FROM node:22-alpine
-      31→
-      32→WORKDIR /app
-      33→
-      34→# Copy the built apps
-      35→COPY --from=builder /app/packages/app-client/dist ./public
-      36→COPY --from=builder /app/packages/app-server/dist-node/index.cjs ./index.cjs
-      37→
-      38→# Create the .data directory 
-      39→RUN mkdir -p /app/.data 
-      40→
-      41→EXPOSE 8787
-      42→
-      43→CMD ["node", "index.cjs"]
 Dockerfile.rootless
 LICENSE
 README.md
@@ -181,19 +138,9 @@ packages/
                2→
                3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
             …
-              11→### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
-              12→
-              13→## Available Scripts
-            …
-              17→### `npm run dev` or `npm start`
-            …
-              24→### `npm run build`
-            …
-              32→## Deployment
-            …
-              36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
         components.json
         e2e-tests/
+            create-and-view-note.e2e.test.ts
         eslint.config.js
         index.html
         package.json
@@ -202,6 +149,7 @@ packages/
         src/
             app.css
             assets/
+                favicon.ico
             index.tsx
             locales/
             modules/
@@ -221,10 +169,18 @@ packages/
                 notes/
                 shared/
                     errors/
+                        errors.test.ts
+                        errors.ts
                     logger/
                     utils/
+                        random.ts
                     validation/
+                        validation.test.ts
+                        validation.ts
                 storage/
+                    factories/
+                    storage.models.ts
+                    storage.types.ts
                 tasks/
             reset.d.ts
             scripts/
@@ -257,6 +213,7 @@ packages/
               79→## Credits and Acknowledgements
             …
         bin/
+            enclosed.mjs
         build.config.ts
         eslint.config.js
         package.json
@@ -268,9 +225,18 @@ packages/
                 config.models.ts
                 config.usecases.ts
             create-note/
+                create-note.command.ts
+                create-note.usecases.test.ts
+                create-note.usecases.ts
             files/
+                files.services.test.ts
+                files.services.ts
             shared/
+                cli.models.ts
+                http.models.ts
             view-note/
+                view-note.command.ts
+                view-note.models.ts
         tsconfig.json
     crypto/
         README.md
@@ -294,7 +260,13 @@ packages/
             index.test.ts
             index.web.ts
             node/
+                crypto.node.usecases.test.ts
+                crypto.node.usecases.ts
+                encryption-algorithms/
             web/
+                crypto.web.usecases.test.ts
+                crypto.web.usecases.ts
+                encryption-algorithms/
         tsconfig.json
     deploy-cloudflare/
         .nvmrc
@@ -304,11 +276,18 @@ packages/
         wrangler.toml
     docs/
         .vitepress/
+            config.ts
+            plausible.ts
+            theme/
         eslint.config.js
         package.json
         src/
             components/
+                credential-inputs.vue
+                toggle.vue
             data/
+                configuration.data.ts
+                i18n.data.ts
             how-it-works.md
             index.md
                 …
@@ -321,8 +300,20 @@ packages/
                   33→## Get Started
                 …
             integrations/
+                cli.md
+                npm-package.md
+                versioning.md
             public/
             resources/
+                brand-kit.md
+                i18n.md
+                    …
+                       5→# Language and i18n
+                    …
+                       9→## Supported languages
+                    …
+                      15→## Contributing to translations
+                    …
             self-hosting/
     lib/
         README.md
@@ -353,6 +344,7 @@ packages/
                 encryption-algorithms/
                 serialization/
             files/
+                files.models.ts
             index.ts
                 …
                   10→export {

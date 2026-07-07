@@ -18,16 +18,16 @@ Score(3000)=0.428 I=0.712 C=0.257 ns_rows≤3K=29/43 (reached=10 partial=1 missi
 | ns | 269 |  | 8 | MANIFEST.in (full, 1 line) | 1.10 |  | 0.269 |
 | walker |  | 280 | 130 | python imports in src/tomli/__init__.py |  |  | 0.282 |
 | walker |  | 283 | 3 | listing of '.github' |  |  | 0.282 |
+| walker |  | 287 | 4 | listing of '.github/workflows' |  |  | 0.282 |
 | ns | 323 |  | 54 | _parser.py roster: entry points + error class | 1.11 |  | 0.269 |
 | ns | 401 |  | 78 | CI workflow job roster | 1.12 |  | 0.254 |
 | ns | 448 |  | 47 | _re.py function roster | 1.13 |  | 0.246 |
 | ns | 566 |  | 118 | pyproject.toml tox environment roster | 1.14 |  | 0.232 |
-| walker |  | 676 | 393 | README headline in README.md |  |  | 0.232 |
-| walker |  | 684 | 8 | listing of 'fuzzer' |  |  | 0.385 |
-| walker |  | 693 | 9 | listing of 'profiler' |  |  | 0.444 |
-| ns | 696 |  | 130 | tomli/__init__.py (full public API) | 2.1 |  | 0.478 |
-| walker |  | 723 | 30 | listing of 'tests' |  |  | 0.540 |
-| walker |  | 727 | 4 | listing of '.github/workflows' |  |  | 0.540 |
+| walker |  | 680 | 393 | README headline in README.md |  |  | 0.232 |
+| walker |  | 688 | 8 | listing of 'fuzzer' |  |  | 0.385 |
+| ns | 696 |  | 130 | tomli/__init__.py (full public API) | 2.1 |  | 0.418 |
+| walker |  | 697 | 9 | listing of 'profiler' |  |  | 0.478 |
+| walker |  | 727 | 30 | listing of 'tests' |  |  | 0.540 |
 | ns | 818 |  | 122 | _parser.py roster: table/array/key rules | 2.2 |  | 0.506 |
 | walker |  | 832 | 105 | [package] in pyproject.toml |  |  | 0.507 |
 | walker |  | 864 | 32 | python imports in setup.py |  |  | 0.507 |
@@ -167,22 +167,23 @@ Score(3000)=0.428 I=0.712 C=0.257 ns_rows≤3K=29/43 (reached=10 partial=1 missi
 | walker |  | 6648 | 148 | python decl body at src/tomli/_parser.py:599 body 600 |  |  | 0.413 |
 | walker |  | 6764 | 116 | README.md section #12 |  |  | 0.413 |
 | walker |  | 6920 | 156 | python decl body at src/tomli/_parser.py:327 body 335 |  |  | 0.413 |
-| walker |  | 7023 | 103 | python imports in src/tomli/_re.py |  |  | 0.414 |
-| walker |  | 7037 | 14 | python decl body at src/tomli/_parser.py:137 body 146 |  |  | 0.414 |
+| walker |  | 6926 | 6 | listing of 'tests/data' |  |  | 0.413 |
+| walker |  | 7029 | 103 | python imports in src/tomli/_re.py |  |  | 0.414 |
+| walker |  | 7043 | 14 | python decl body at src/tomli/_parser.py:137 body 146 |  |  | 0.414 |
 | ns | 7226 |  | 734 | _re.py regex definitions (RE_NUMBER/RE_LOCALTIME/RE_DATETIME) | 5.3 |  | 0.409 |
 | ns | 8144 |  | 918 | parse_value() type dispatch | 5.4 | 2.4 | 0.385 |
-| walker |  | 8849 | 1812 | manifest config in pyproject.toml |  |  | 0.421 |
-| walker |  | 8966 | 117 | README.md section #6 |  |  | 0.421 |
+| walker |  | 8855 | 1812 | manifest config in pyproject.toml |  |  | 0.421 |
+| walker |  | 8972 | 117 | README.md section #6 |  |  | 0.421 |
 | ns | 9105 |  | 961 | loads()/load() entry point + parse loop | 5.5 | 1.11 | 0.398 |
-| walker |  | 9203 | 237 | python decl at src/tomli/_re.py:26 |  |  | 0.420 |
-| walker |  | 9307 | 104 | python decl at src/tomli/_re.py:17 |  |  | 0.434 |
-| walker |  | 9416 | 109 | python method body at src/tomli/_parser.py:300 body 301 |  |  | 0.434 |
-| walker |  | 9492 | 76 | tomllib.md section #4 |  |  | 0.434 |
-| walker |  | 9502 | 10 | python decl body at src/tomli/_parser.py:652 body 659 |  |  | 0.434 |
-| walker |  | 9512 | 10 | python decl body at src/tomli/_parser.py:652 body 660 |  |  | 0.434 |
-| walker |  | 9522 | 10 | python decl body at src/tomli/_parser.py:764 body 782 |  |  | 0.434 |
-| walker |  | 9605 | 83 | tomllib.md section #5 |  |  | 0.434 |
-| walker |  | 9727 | 122 | python method body at src/tomli/_parser.py:283 body 289 |  |  | 0.434 |
-| walker |  | 9804 | 77 | python imports in tests/__init__.py |  |  | 0.439 |
-| walker |  | 9976 | 172 | README.md section #3 |  |  | 0.461 |
+| walker |  | 9209 | 237 | python decl at src/tomli/_re.py:26 |  |  | 0.420 |
+| walker |  | 9313 | 104 | python decl at src/tomli/_re.py:17 |  |  | 0.434 |
+| walker |  | 9422 | 109 | python method body at src/tomli/_parser.py:300 body 301 |  |  | 0.434 |
+| walker |  | 9498 | 76 | tomllib.md section #4 |  |  | 0.434 |
+| walker |  | 9508 | 10 | python decl body at src/tomli/_parser.py:652 body 659 |  |  | 0.434 |
+| walker |  | 9518 | 10 | python decl body at src/tomli/_parser.py:652 body 660 |  |  | 0.434 |
+| walker |  | 9528 | 10 | python decl body at src/tomli/_parser.py:764 body 782 |  |  | 0.434 |
+| walker |  | 9611 | 83 | tomllib.md section #5 |  |  | 0.434 |
+| walker |  | 9733 | 122 | python method body at src/tomli/_parser.py:283 body 289 |  |  | 0.434 |
+| walker |  | 9810 | 77 | python imports in tests/__init__.py |  |  | 0.439 |
+| walker |  | 9982 | 172 | README.md section #3 |  |  | 0.461 |
 | ns | 9987 |  | 882 | key_value_rule / parse_key_value_pair / parse_key (full bodies) | 5.6 | 2.2 | 0.445 |

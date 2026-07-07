@@ -240,6 +240,7 @@ bookmarks/
     tasks.py
     templates/
         admin/
+            background_tasks.html
         bookmarks/
         bundles/
             edit.html
@@ -249,6 +250,9 @@ bookmarks/
             preview.html
         opensearch.xml
         registration/
+            login.html
+            password_change_done.html
+            password_change_form.html
         settings/
             bookmarklet.js
             bookmarklet_clientside.js
@@ -360,12 +364,7 @@ package-lock.json
 package.json
 postcss.config.js
 pyproject.toml
-       1→[project]
-       2→name = "linkding"
-       3→version = "1.45.0"
-       4→description = "Self-hosted bookmark manager that is designed be to be minimal, fast, and easy to set up using Docker."
-       5→readme = "README.md"
-       6→requires-python = ">=3.13"
+    …
        7→dependencies = [
        8→    "beautifulsoup4>=4.14.3",
        9→    "bleach>=6.3.0",

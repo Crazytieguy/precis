@@ -15,57 +15,57 @@ Score(3000)=0.682 I=0.817 C=0.570 ns_rows≤3K=17/43 (reached=7 partial=2 missin
 | walker |  | 355 | 12 | listing of 'media' |  |  | 0.715 |
 | ns | 366 |  | 116 | source/ tree breadth | 1.4 |  | 0.475 |
 | walker |  | 376 | 21 | listing of 'source/errors' |  |  | 0.507 |
-| walker |  | 409 | 33 | listing of 'source/types' |  |  | 0.618 |
-| walker |  | 424 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.618 |
-| walker |  | 449 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.618 |
-| walker |  | 465 | 16 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.618 |
-| ns | 492 |  | 126 | README benefits list | 1.5 |  | 0.659 |
-| walker |  | 503 | 38 | listing of 'source/utils' |  |  | 0.808 |
-| walker |  | 522 | 19 | export names surface in source/errors/HTTPError.ts |  |  | 0.808 |
-| walker |  | 588 | 66 | listing of 'test' |  |  | 0.822 |
-| ns | 590 |  | 98 | test/ tree breadth | 2.1 |  | 0.767 |
-| walker |  | 645 | 57 | export at source/errors/HTTPError.ts:5 |  |  | 0.767 |
-| ns | 690 |  | 100 | README top-level (H2) section map | 2.2 |  | 0.720 |
-| walker |  | 709 | 64 | export at source/errors/ForceRetryError.ts:8 |  |  | 0.720 |
-| walker |  | 750 | 41 | export body at source/errors/TimeoutError.ts:3 body 7 |  |  | 0.720 |
-| walker |  | 761 | 11 | listing of '.github' |  |  | 0.720 |
-| walker |  | 765 | 4 | listing of '.github/workflows' |  |  | 0.720 |
-| ns | 835 |  | 145 | README H3 section map (API + Tips headers) | 2.3 |  | 0.668 |
-| ns | 922 |  | 87 | README usage example | 2.4 |  | 0.637 |
-| walker |  | 1100 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.652 |
-| walker |  | 1114 | 14 | imports in source/errors/TimeoutError.ts |  |  | 0.653 |
-| ns | 1220 |  | 298 | CI workflow | 3.1 |  | 0.695 |
-| ns | 1309 |  | 89 | package.json — ava config | 3.2 |  | 0.671 |
-| ns | 1391 |  | 82 | tsconfig.json | 3.3 |  | 0.649 |
-| walker |  | 1417 | 303 | export body at source/index.ts:10 body 11 |  |  | 0.655 |
-| ns | 1452 |  | 61 | GitHub community files | 3.4 |  | 0.650 |
-| walker |  | 1517 | 100 | imports in source/index.ts |  |  | 0.655 |
-| walker |  | 1857 | 340 | headings outline in readme.md |  |  | 0.754 |
-| walker |  | 1873 | 16 | readme.md section #48 |  |  | 0.754 |
-| walker |  | 1893 | 20 | readme.md section #47 |  |  | 0.754 |
-| walker |  | 1908 | 15 | readme.md section #22 |  |  | 0.754 |
-| walker |  | 1926 | 18 | readme.md section #7 |  |  | 0.754 |
-| ns | 1932 |  | 480 | index.ts — createInstance implementation | 4.1 |  | 0.750 |
-| walker |  | 1945 | 19 | readme.md section #11 |  |  | 0.750 |
-| walker |  | 1962 | 17 | imports in source/types/retry.ts |  |  | 0.750 |
-| walker |  | 2044 | 82 | json config tsconfig.json |  |  | 0.779 |
-| walker |  | 2065 | 21 | readme.md section #13 |  |  | 0.779 |
-| walker |  | 2085 | 20 | readme.md section #12 |  |  | 0.779 |
-| walker |  | 2104 | 19 | imports in source/types/ResponsePromise.ts |  |  | 0.779 |
-| walker |  | 2119 | 15 | export names surface in source/errors/NonError.ts |  |  | 0.779 |
-| walker |  | 2141 | 22 | readme.md section #18 |  |  | 0.779 |
-| walker |  | 2238 | 97 | export names surface in source/utils/type-guards.ts |  |  | 0.779 |
-| walker |  | 2238 | 0 | export at source/utils/type-guards.ts:27 |  |  | 0.779 |
-| walker |  | 2238 | 0 | export at source/utils/type-guards.ts:49 |  |  | 0.779 |
-| walker |  | 2238 | 0 | export at source/utils/type-guards.ts:71 |  |  | 0.779 |
-| walker |  | 2238 | 0 | export at source/utils/type-guards.ts:98 |  |  | 0.779 |
-| walker |  | 2259 | 21 | export body at source/utils/type-guards.ts:49 body 50 |  |  | 0.779 |
-| walker |  | 2280 | 21 | export body at source/utils/type-guards.ts:71 body 72 |  |  | 0.779 |
-| walker |  | 2303 | 23 | export body at source/utils/type-guards.ts:27 body 28 |  |  | 0.779 |
-| walker |  | 2326 | 23 | export body at source/utils/type-guards.ts:98 body 99 |  |  | 0.779 |
-| walker |  | 2334 | 8 | listing of 'source/core' |  |  | 0.798 |
+| walker |  | 384 | 8 | listing of 'source/core' |  |  | 0.530 |
+| walker |  | 417 | 33 | listing of 'source/types' |  |  | 0.655 |
+| walker |  | 432 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.655 |
+| walker |  | 457 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.655 |
+| walker |  | 473 | 16 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.655 |
+| ns | 492 |  | 126 | README benefits list | 1.5 |  | 0.689 |
+| walker |  | 511 | 38 | listing of 'source/utils' |  |  | 0.850 |
+| walker |  | 530 | 19 | export names surface in source/errors/HTTPError.ts |  |  | 0.850 |
+| ns | 590 |  | 98 | test/ tree breadth | 2.1 |  | 0.718 |
+| walker |  | 596 | 66 | listing of 'test' |  |  | 0.801 |
+| walker |  | 653 | 57 | export at source/errors/HTTPError.ts:5 |  |  | 0.801 |
+| ns | 690 |  | 100 | README top-level (H2) section map | 2.2 |  | 0.751 |
+| walker |  | 717 | 64 | export at source/errors/ForceRetryError.ts:8 |  |  | 0.752 |
+| walker |  | 758 | 41 | export body at source/errors/TimeoutError.ts:3 body 7 |  |  | 0.752 |
+| walker |  | 769 | 11 | listing of '.github' |  |  | 0.752 |
+| walker |  | 773 | 4 | listing of '.github/workflows' |  |  | 0.752 |
+| ns | 835 |  | 145 | README H3 section map (API + Tips headers) | 2.3 |  | 0.697 |
+| ns | 922 |  | 87 | README usage example | 2.4 |  | 0.665 |
+| walker |  | 1108 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.681 |
+| walker |  | 1122 | 14 | imports in source/errors/TimeoutError.ts |  |  | 0.681 |
+| ns | 1220 |  | 298 | CI workflow | 3.1 |  | 0.719 |
+| ns | 1309 |  | 89 | package.json — ava config | 3.2 |  | 0.693 |
+| ns | 1391 |  | 82 | tsconfig.json | 3.3 |  | 0.671 |
+| walker |  | 1425 | 303 | export body at source/index.ts:10 body 11 |  |  | 0.677 |
+| ns | 1452 |  | 61 | GitHub community files | 3.4 |  | 0.672 |
+| walker |  | 1525 | 100 | imports in source/index.ts |  |  | 0.677 |
+| walker |  | 1537 | 12 | export names surface in source/core/Ky.ts |  |  | 0.677 |
+| walker |  | 1877 | 340 | headings outline in readme.md |  |  | 0.775 |
+| walker |  | 1893 | 16 | readme.md section #48 |  |  | 0.775 |
+| walker |  | 1913 | 20 | readme.md section #47 |  |  | 0.775 |
+| walker |  | 1928 | 15 | readme.md section #22 |  |  | 0.775 |
+| ns | 1932 |  | 480 | index.ts — createInstance implementation | 4.1 |  | 0.769 |
+| walker |  | 1946 | 18 | readme.md section #7 |  |  | 0.769 |
+| walker |  | 1965 | 19 | readme.md section #11 |  |  | 0.769 |
+| walker |  | 1982 | 17 | imports in source/types/retry.ts |  |  | 0.769 |
+| walker |  | 2064 | 82 | json config tsconfig.json |  |  | 0.798 |
+| walker |  | 2085 | 21 | readme.md section #13 |  |  | 0.798 |
+| walker |  | 2105 | 20 | readme.md section #12 |  |  | 0.798 |
+| walker |  | 2124 | 19 | imports in source/types/ResponsePromise.ts |  |  | 0.798 |
+| walker |  | 2139 | 15 | export names surface in source/errors/NonError.ts |  |  | 0.798 |
+| walker |  | 2161 | 22 | readme.md section #18 |  |  | 0.798 |
+| walker |  | 2258 | 97 | export names surface in source/utils/type-guards.ts |  |  | 0.798 |
+| walker |  | 2258 | 0 | export at source/utils/type-guards.ts:27 |  |  | 0.798 |
+| walker |  | 2258 | 0 | export at source/utils/type-guards.ts:49 |  |  | 0.798 |
+| walker |  | 2258 | 0 | export at source/utils/type-guards.ts:71 |  |  | 0.798 |
+| walker |  | 2258 | 0 | export at source/utils/type-guards.ts:98 |  |  | 0.798 |
+| walker |  | 2279 | 21 | export body at source/utils/type-guards.ts:49 body 50 |  |  | 0.798 |
+| walker |  | 2300 | 21 | export body at source/utils/type-guards.ts:71 body 72 |  |  | 0.798 |
+| walker |  | 2323 | 23 | export body at source/utils/type-guards.ts:27 body 28 |  |  | 0.798 |
 | ns | 2342 |  | 410 | index.ts — public export roster | 4.2 |  | 0.719 |
-| walker |  | 2346 | 12 | export names surface in source/core/Ky.ts |  |  | 0.719 |
+| walker |  | 2346 | 23 | export body at source/utils/type-guards.ts:98 body 99 |  |  | 0.719 |
 | walker |  | 2368 | 22 | readme.md section #45 |  |  | 0.719 |
 | walker |  | 2462 | 94 | readme.md section #1 |  |  | 0.719 |
 | ns | 2469 |  | 127 | types/ky.ts — KyInstance member roster | 5.1 |  | 0.701 |

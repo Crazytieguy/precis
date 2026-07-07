@@ -29,38 +29,38 @@ Score(3000)=0.742 I=0.902 C=0.610 ns_rows≤3K=18/48 (reached=10 partial=2 missi
 | walker |  | 434 | 10 | go package + imports in xxhash_safe.go |  |  | 0.873 |
 | walker |  | 445 | 11 | go decl body at xxhash_safe.go:14 |  |  | 0.873 |
 | walker |  | 448 | 3 | listing of '.github' |  |  | 0.873 |
-| walker |  | 455 | 7 | go decl doc at xxhash_asm.go:15 |  |  | 0.874 |
-| walker |  | 509 | 54 | go decl names surface in xxhash_unsafe.go |  |  | 0.874 |
-| walker |  | 509 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.874 |
-| walker |  | 509 | 0 | go decl at xxhash_unsafe.go:45 |  |  | 0.874 |
-| walker |  | 528 | 19 | go decl at xxhash_unsafe.go:55 |  |  | 0.874 |
-| ns | 534 |  | 166 | README API surface snippet | 1.7 |  | 0.718 |
-| walker |  | 549 | 21 | go decl doc at xxhash_safe.go:9 |  |  | 0.718 |
-| walker |  | 570 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.719 |
-| ns | 615 |  | 81 | README build-tag mention + xxHash link | 1.8 |  | 0.677 |
-| walker |  | 620 | 50 | go package + imports in xxhash.go |  |  | 0.693 |
-| walker |  | 666 | 46 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.693 |
-| walker |  | 666 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.693 |
-| walker |  | 666 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.693 |
-| walker |  | 666 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.693 |
-| walker |  | 700 | 34 | go decl doc at xxhash_asm.go:12 |  |  | 0.695 |
-| ns | 760 |  | 145 | README compatibility section | 1.9 |  | 0.633 |
-| walker |  | 817 | 117 | plaintext config testall.sh |  |  | 0.638 |
-| walker |  | 930 | 113 | go module file xxhashbench/go.mod |  |  | 0.638 |
+| walker |  | 452 | 4 | listing of '.github/workflows' |  |  | 0.907 |
+| ns | 534 |  | 166 | README API surface snippet | 1.7 |  | 0.745 |
+| ns | 615 |  | 81 | README build-tag mention + xxHash link | 1.8 |  | 0.702 |
+| ns | 760 |  | 145 | README compatibility section | 1.9 |  | 0.639 |
 | ns | 936 |  | 176 | Digest type + exported method signature roster | 1.10 |  | 0.584 |
-| walker |  | 974 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.584 |
-| walker |  | 1015 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.584 |
-| walker |  | 1049 | 34 | go package + imports in xxhash_unsafe.go |  |  | 0.585 |
-| walker |  | 1080 | 31 | go decl body at xxhash_unsafe.go:38 |  |  | 0.585 |
-| walker |  | 1160 | 80 | go decl names surface in dynamic/plugin.go |  |  | 0.586 |
-| walker |  | 1160 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.586 |
-| walker |  | 1160 | 0 | go decl at dynamic/plugin.go:26 |  |  | 0.586 |
-| walker |  | 1169 | 9 | go decl at dynamic/plugin.go:14 |  |  | 0.586 |
-| walker |  | 1173 | 4 | listing of '.github/workflows' |  |  | 0.607 |
-| ns | 1252 |  | 316 | CI workflow: test job | 2.1 |  | 0.512 |
-| ns | 1555 |  | 303 | CI workflow: qemu cross-arch job | 2.2 |  | 0.454 |
-| ns | 1672 |  | 117 | testall.sh | 2.3 |  | 0.491 |
-| walker |  | 1797 | 624 | YAML config at .github/workflows/test.yml |  |  | 0.763 |
+| walker |  | 1076 | 624 | YAML config at .github/workflows/test.yml |  |  | 0.617 |
+| walker |  | 1083 | 7 | go decl doc at xxhash_asm.go:15 |  |  | 0.618 |
+| walker |  | 1137 | 54 | go decl names surface in xxhash_unsafe.go |  |  | 0.618 |
+| walker |  | 1137 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.618 |
+| walker |  | 1137 | 0 | go decl at xxhash_unsafe.go:45 |  |  | 0.618 |
+| walker |  | 1156 | 19 | go decl at xxhash_unsafe.go:55 |  |  | 0.618 |
+| walker |  | 1177 | 21 | go decl doc at xxhash_safe.go:9 |  |  | 0.618 |
+| walker |  | 1198 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.619 |
+| walker |  | 1248 | 50 | go package + imports in xxhash.go |  |  | 0.632 |
+| ns | 1252 |  | 316 | CI workflow: test job | 2.1 |  | 0.710 |
+| walker |  | 1294 | 46 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.710 |
+| walker |  | 1294 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.710 |
+| walker |  | 1294 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.710 |
+| walker |  | 1294 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.710 |
+| walker |  | 1328 | 34 | go decl doc at xxhash_asm.go:12 |  |  | 0.713 |
+| walker |  | 1445 | 117 | plaintext config testall.sh |  |  | 0.718 |
+| ns | 1555 |  | 303 | CI workflow: qemu cross-arch job | 2.2 |  | 0.752 |
+| walker |  | 1558 | 113 | go module file xxhashbench/go.mod |  |  | 0.752 |
+| walker |  | 1602 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.752 |
+| walker |  | 1643 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.752 |
+| ns | 1672 |  | 117 | testall.sh | 2.3 |  | 0.761 |
+| walker |  | 1677 | 34 | go package + imports in xxhash_unsafe.go |  |  | 0.762 |
+| walker |  | 1708 | 31 | go decl body at xxhash_unsafe.go:38 |  |  | 0.762 |
+| walker |  | 1788 | 80 | go decl names surface in dynamic/plugin.go |  |  | 0.763 |
+| walker |  | 1788 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.763 |
+| walker |  | 1788 | 0 | go decl at dynamic/plugin.go:26 |  |  | 0.763 |
+| walker |  | 1797 | 9 | go decl at dynamic/plugin.go:14 |  |  | 0.763 |
 | ns | 1839 |  | 167 | Build-tag map across the four platform-variant files | 3.1 |  | 0.732 |
 | ns | 1936 |  | 97 | xxhash_asm.go body | 3.2 |  | 0.734 |
 | walker |  | 2042 | 245 | README.md section #0 |  |  | 0.837 |

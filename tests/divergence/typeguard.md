@@ -39,27 +39,27 @@ Score(3000)=0.618 I=0.826 C=0.463 ns_rows≤3K=16/45 (reached=7 partial=2 missin
 | walker |  | 1886 | 69 | python decl body at src/typeguard/__init__.py:37 body 38 |  |  | 0.618 |
 | ns | 1896 |  | 235 | CI test workflow (.github/workflows/test.yml) | 4.4 |  | 0.650 |
 | walker |  | 1986 | 100 | listing of 'tests' |  |  | 0.722 |
-| walker |  | 2007 | 21 | python imports in src/typeguard/_exceptions.py |  |  | 0.722 |
-| walker |  | 2056 | 49 | python decl names surface in src/typeguard/_exceptions.py |  |  | 0.722 |
-| walker |  | 2056 | 0 | python decl at src/typeguard/_exceptions.py:5 |  |  | 0.722 |
-| walker |  | 2056 | 0 | python decl at src/typeguard/_exceptions.py:12 |  |  | 0.722 |
-| walker |  | 2056 | 0 | python decl at src/typeguard/_exceptions.py:19 |  |  | 0.722 |
-| walker |  | 2056 | 0 | python decl at src/typeguard/_exceptions.py:26 |  |  | 0.722 |
-| walker |  | 2077 | 21 | python decl doc at src/typeguard/_exceptions.py:19 |  |  | 0.722 |
-| walker |  | 2099 | 22 | python decl doc at src/typeguard/_exceptions.py:12 |  |  | 0.722 |
-| walker |  | 2131 | 32 | python decl doc at src/typeguard/_exceptions.py:26 |  |  | 0.723 |
-| walker |  | 2173 | 42 | python decl doc at src/typeguard/_exceptions.py:5 |  |  | 0.723 |
-| ns | 2201 |  | 305 | _checkers.py: every check_* function's signature | 5.1 |  | 0.667 |
-| walker |  | 2254 | 81 | python method sigs in src/typeguard/_exceptions.py |  |  | 0.669 |
-| walker |  | 2254 | 0 | python method at src/typeguard/_exceptions.py:15 |  |  | 0.669 |
-| walker |  | 2254 | 0 | python method at src/typeguard/_exceptions.py:22 |  |  | 0.669 |
-| walker |  | 2254 | 0 | python method at src/typeguard/_exceptions.py:31 |  |  | 0.669 |
-| walker |  | 2254 | 0 | python method at src/typeguard/_exceptions.py:35 |  |  | 0.669 |
-| walker |  | 2254 | 0 | python method at src/typeguard/_exceptions.py:38 |  |  | 0.669 |
-| walker |  | 2263 | 9 | python method body at src/typeguard/_exceptions.py:15 body 16 |  |  | 0.669 |
-| walker |  | 2272 | 9 | python method body at src/typeguard/_exceptions.py:22 body 23 |  |  | 0.669 |
-| walker |  | 2281 | 9 | python method body at src/typeguard/_exceptions.py:35 body 36 |  |  | 0.669 |
-| walker |  | 2295 | 14 | listing of 'tests/mypy' |  |  | 0.685 |
+| walker |  | 2000 | 14 | listing of 'tests/mypy' |  |  | 0.739 |
+| walker |  | 2021 | 21 | python imports in src/typeguard/_exceptions.py |  |  | 0.739 |
+| walker |  | 2070 | 49 | python decl names surface in src/typeguard/_exceptions.py |  |  | 0.739 |
+| walker |  | 2070 | 0 | python decl at src/typeguard/_exceptions.py:5 |  |  | 0.739 |
+| walker |  | 2070 | 0 | python decl at src/typeguard/_exceptions.py:12 |  |  | 0.739 |
+| walker |  | 2070 | 0 | python decl at src/typeguard/_exceptions.py:19 |  |  | 0.739 |
+| walker |  | 2070 | 0 | python decl at src/typeguard/_exceptions.py:26 |  |  | 0.739 |
+| walker |  | 2091 | 21 | python decl doc at src/typeguard/_exceptions.py:19 |  |  | 0.739 |
+| walker |  | 2113 | 22 | python decl doc at src/typeguard/_exceptions.py:12 |  |  | 0.739 |
+| walker |  | 2145 | 32 | python decl doc at src/typeguard/_exceptions.py:26 |  |  | 0.740 |
+| walker |  | 2187 | 42 | python decl doc at src/typeguard/_exceptions.py:5 |  |  | 0.740 |
+| ns | 2201 |  | 305 | _checkers.py: every check_* function's signature | 5.1 |  | 0.683 |
+| walker |  | 2268 | 81 | python method sigs in src/typeguard/_exceptions.py |  |  | 0.684 |
+| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:15 |  |  | 0.684 |
+| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:22 |  |  | 0.684 |
+| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:31 |  |  | 0.684 |
+| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:35 |  |  | 0.684 |
+| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:38 |  |  | 0.684 |
+| walker |  | 2277 | 9 | python method body at src/typeguard/_exceptions.py:15 body 16 |  |  | 0.685 |
+| walker |  | 2286 | 9 | python method body at src/typeguard/_exceptions.py:22 body 23 |  |  | 0.685 |
+| walker |  | 2295 | 9 | python method body at src/typeguard/_exceptions.py:35 body 36 |  |  | 0.685 |
 | walker |  | 2362 | 67 | python decl names surface in src/typeguard/_suppression.py |  |  | 0.685 |
 | walker |  | 2370 | 8 | python decl at src/typeguard/_suppression.py:22 |  |  | 0.685 |
 | walker |  | 2380 | 10 | python decl at src/typeguard/_suppression.py:26 |  |  | 0.685 |

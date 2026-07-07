@@ -19,56 +19,56 @@ Score(3000)=0.369 I=0.709 C=0.192 ns_rows≤3K=20/41 (reached=5 partial=0 missin
 | walker |  | 617 | 29 | README.md section #50 |  |  | 0.463 |
 | walker |  | 635 | 18 | README.md section #12 |  |  | 0.463 |
 | walker |  | 648 | 13 | listing of '.github' |  |  | 0.477 |
-| walker |  | 667 | 19 | README.md section #7 |  |  | 0.477 |
-| walker |  | 688 | 21 | README.md section #6 |  |  | 0.477 |
-| walker |  | 709 | 21 | README.md section #5 |  |  | 0.477 |
-| walker |  | 731 | 22 | README.md section #9 |  |  | 0.477 |
-| ns | 734 |  | 131 | CLI usage synopsis (README) | 1.8 |  | 0.432 |
-| walker |  | 754 | 23 | README.md section #8 |  |  | 0.432 |
-| walker |  | 777 | 23 | README.md section #14 |  |  | 0.432 |
-| walker |  | 800 | 23 | README.md section #15 |  |  | 0.432 |
-| walker |  | 932 | 132 | README.md section #21 |  |  | 0.549 |
-| ns | 945 |  | 211 | How Krep Works (README): smart algorithm selection | 1.9 |  | 0.494 |
-| walker |  | 996 | 64 | README.md section #16 |  |  | 0.494 |
-| ns | 1144 |  | 199 | How Krep Works (README): multithreading + memory-mapped I/O | 1.10 |  | 0.437 |
-| ns | 1226 |  | 82 | krep.c locations: search_string/search_file + thread-pool init | 1.11 |  | 0.421 |
-| ns | 1365 |  | 139 | krep.c locations: directory walk + gitignore | 1.12 |  | 0.398 |
-| walker |  | 1438 | 442 | c decl names surface in krep.h |  |  | 0.398 |
-| walker |  | 1438 | 0 | c decl at krep.h:19 |  |  | 0.398 |
-| walker |  | 1438 | 0 | c decl at krep.h:22 |  |  | 0.398 |
-| walker |  | 1438 | 0 | c decl at krep.h:34 |  |  | 0.398 |
-| walker |  | 1438 | 0 | c decl at krep.h:42 |  |  | 0.398 |
-| walker |  | 1438 | 0 | c decl at krep.h:146 |  |  | 0.398 |
-| walker |  | 1470 | 32 | c decl at krep.h:98 |  |  | 0.398 |
-| walker |  | 1519 | 49 | c decl at krep.h:49 |  |  | 0.377 |
-| ns | 1519 |  | 154 | krep.c locations: main + memchr/SIMD family + thread-pool ops | 1.13 |  | 0.377 |
-| walker |  | 1528 | 9 | c decl doc at krep.h:42 |  |  | 0.377 |
-| walker |  | 1587 | 59 | c decl at krep.h:125 |  |  | 0.377 |
-| walker |  | 1598 | 11 | c decl doc at krep.h:125 |  |  | 0.377 |
-| walker |  | 1609 | 11 | c decl doc at krep.h:146 |  |  | 0.377 |
-| walker |  | 1623 | 14 | c decl doc at krep.h:22 |  |  | 0.377 |
-| walker |  | 1704 | 81 | c decl at krep.h:55 |  |  | 0.378 |
-| walker |  | 1718 | 14 | c decl doc at krep.h:19 |  |  | 0.378 |
-| walker |  | 1741 | 23 | c decl doc at krep.h:49 |  |  | 0.379 |
-| walker |  | 1761 | 20 | c decl doc at krep.h:34 |  |  | 0.379 |
-| ns | 1777 |  | 258 | Test-suite locations: test_krep.c | 1.14 |  | 0.346 |
-| walker |  | 1931 | 170 | c decl at krep.h:132 |  |  | 0.348 |
-| walker |  | 1970 | 39 | c decl doc at krep.h:98 |  |  | 0.348 |
-| walker |  | 1986 | 16 | README.md section #40 |  |  | 0.348 |
-| walker |  | 2002 | 16 | README.md section #39 |  |  | 0.326 |
-| ns | 2002 |  | 225 | Test-suite locations: test_regex.c, test_multiple_patterns.c | 1.15 |  | 0.326 |
-| walker |  | 2046 | 44 | README.md section #51 |  |  | 0.326 |
-| walker |  | 2063 | 17 | README.md section #38 |  |  | 0.326 |
-| walker |  | 2089 | 26 | README.md section #10 |  |  | 0.326 |
-| ns | 2113 |  | 111 | Test-suite locations: test_directory.c | 1.16 |  | 0.315 |
-| walker |  | 2114 | 25 | README.md section #11 |  |  | 0.315 |
-| walker |  | 2141 | 27 | README.md section #3 |  |  | 0.315 |
-| walker |  | 2159 | 18 | README.md section #23 |  |  | 0.315 |
-| walker |  | 2176 | 17 | README.md section #24 |  |  | 0.315 |
-| walker |  | 2195 | 19 | README.md section #31 |  |  | 0.316 |
-| walker |  | 2203 | 8 | listing of '.github/workflows' |  |  | 0.326 |
+| walker |  | 656 | 8 | listing of '.github/workflows' |  |  | 0.500 |
+| ns | 734 |  | 131 | CLI usage synopsis (README) | 1.8 |  | 0.454 |
+| walker |  | 892 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.459 |
+| walker |  | 911 | 19 | README.md section #7 |  |  | 0.459 |
+| walker |  | 932 | 21 | README.md section #6 |  |  | 0.459 |
+| ns | 945 |  | 211 | How Krep Works (README): smart algorithm selection | 1.9 |  | 0.416 |
+| walker |  | 953 | 21 | README.md section #5 |  |  | 0.416 |
+| walker |  | 975 | 22 | README.md section #9 |  |  | 0.416 |
+| walker |  | 998 | 23 | README.md section #8 |  |  | 0.416 |
+| walker |  | 1021 | 23 | README.md section #14 |  |  | 0.416 |
+| walker |  | 1044 | 23 | README.md section #15 |  |  | 0.416 |
+| ns | 1144 |  | 199 | How Krep Works (README): multithreading + memory-mapped I/O | 1.10 |  | 0.369 |
+| walker |  | 1176 | 132 | README.md section #21 |  |  | 0.457 |
+| ns | 1226 |  | 82 | krep.c locations: search_string/search_file + thread-pool init | 1.11 |  | 0.440 |
+| walker |  | 1240 | 64 | README.md section #16 |  |  | 0.440 |
+| ns | 1365 |  | 139 | krep.c locations: directory walk + gitignore | 1.12 |  | 0.416 |
+| ns | 1519 |  | 154 | krep.c locations: main + memchr/SIMD family + thread-pool ops | 1.13 |  | 0.393 |
+| walker |  | 1682 | 442 | c decl names surface in krep.h |  |  | 0.393 |
+| walker |  | 1682 | 0 | c decl at krep.h:19 |  |  | 0.393 |
+| walker |  | 1682 | 0 | c decl at krep.h:22 |  |  | 0.393 |
+| walker |  | 1682 | 0 | c decl at krep.h:34 |  |  | 0.393 |
+| walker |  | 1682 | 0 | c decl at krep.h:42 |  |  | 0.393 |
+| walker |  | 1682 | 0 | c decl at krep.h:146 |  |  | 0.393 |
+| walker |  | 1714 | 32 | c decl at krep.h:98 |  |  | 0.393 |
+| walker |  | 1763 | 49 | c decl at krep.h:49 |  |  | 0.394 |
+| walker |  | 1772 | 9 | c decl doc at krep.h:42 |  |  | 0.394 |
+| ns | 1777 |  | 258 | Test-suite locations: test_krep.c | 1.14 |  | 0.359 |
+| walker |  | 1831 | 59 | c decl at krep.h:125 |  |  | 0.360 |
+| walker |  | 1842 | 11 | c decl doc at krep.h:125 |  |  | 0.360 |
+| walker |  | 1853 | 11 | c decl doc at krep.h:146 |  |  | 0.360 |
+| walker |  | 1867 | 14 | c decl doc at krep.h:22 |  |  | 0.360 |
+| walker |  | 1948 | 81 | c decl at krep.h:55 |  |  | 0.361 |
+| walker |  | 1962 | 14 | c decl doc at krep.h:19 |  |  | 0.361 |
+| walker |  | 1985 | 23 | c decl doc at krep.h:49 |  |  | 0.362 |
+| ns | 2002 |  | 225 | Test-suite locations: test_regex.c, test_multiple_patterns.c | 1.15 |  | 0.338 |
+| walker |  | 2005 | 20 | c decl doc at krep.h:34 |  |  | 0.338 |
+| ns | 2113 |  | 111 | Test-suite locations: test_directory.c | 1.16 |  | 0.327 |
+| walker |  | 2175 | 170 | c decl at krep.h:132 |  |  | 0.329 |
+| walker |  | 2214 | 39 | c decl doc at krep.h:98 |  |  | 0.329 |
+| walker |  | 2230 | 16 | README.md section #40 |  |  | 0.329 |
+| walker |  | 2246 | 16 | README.md section #39 |  |  | 0.329 |
+| walker |  | 2290 | 44 | README.md section #51 |  |  | 0.329 |
+| walker |  | 2307 | 17 | README.md section #38 |  |  | 0.330 |
+| walker |  | 2333 | 26 | README.md section #10 |  |  | 0.330 |
 | ns | 2343 |  | 230 | CLI options table (README), part 1: search/scope flags | 1.17 |  | 0.318 |
-| walker |  | 2439 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.322 |
+| walker |  | 2358 | 25 | README.md section #11 |  |  | 0.318 |
+| walker |  | 2385 | 27 | README.md section #3 |  |  | 0.318 |
+| walker |  | 2403 | 18 | README.md section #23 |  |  | 0.319 |
+| walker |  | 2420 | 17 | README.md section #24 |  |  | 0.320 |
+| walker |  | 2439 | 19 | README.md section #31 |  |  | 0.322 |
 | walker |  | 2469 | 30 | README.md section #4 |  |  | 0.322 |
 | walker |  | 2489 | 20 | README.md section #32 |  |  | 0.325 |
 | ns | 2527 |  | 184 | CLI options table (README), part 2: perf/output flags | 1.18 |  | 0.321 |

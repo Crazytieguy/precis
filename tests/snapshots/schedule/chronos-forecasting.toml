@@ -435,10 +435,24 @@ entries = ["ISSUE_TEMPLATE", "workflows"]
 
 [[batches]]
 position = 18
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 17
+cum_tokens = 739
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml", "eval-model.yml", "publish-to-pypi.yml"]
+
+[[batches]]
+position = 19
 key = 'Python(Imports { file: "src/chronos/chronos2/__init__.py" })'
 descriptor = "python imports in src/chronos/chronos2/__init__.py"
 cost_tokens = 170
-cum_tokens = 892
+cum_tokens = 909
 
 [batches.content]
 kind = "lines"
@@ -452,11 +466,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Python(MethodSigs { file: "src/chronos/base.py" })'
 descriptor = "python method sigs in src/chronos/base.py"
 cost_tokens = 178
-cum_tokens = 1070
+cum_tokens = 1087
 
 [batches.content]
 kind = "lines"
@@ -622,11 +636,11 @@ end = 338
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 35 })'
 descriptor = "python method at src/chronos/base.py:35"
 cost_tokens = 0
-cum_tokens = 1070
+cum_tokens = 1087
 
 [batches.content]
 kind = "lines"
@@ -640,11 +654,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 48 })'
 descriptor = "python method at src/chronos/base.py:48"
 cost_tokens = 0
-cum_tokens = 1070
+cum_tokens = 1087
 
 [batches.content]
 kind = "lines"
@@ -658,11 +672,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 66 })'
 descriptor = "python method at src/chronos/base.py:66"
 cost_tokens = 0
-cum_tokens = 1070
+cum_tokens = 1087
 
 [batches.content]
 kind = "lines"
@@ -676,11 +690,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 76 })'
 descriptor = "python method at src/chronos/base.py:76"
 cost_tokens = 0
-cum_tokens = 1070
+cum_tokens = 1087
 
 [batches.content]
 kind = "lines"
@@ -694,11 +708,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 58 })'
 descriptor = "python method at src/chronos/base.py:58"
 cost_tokens = 8
-cum_tokens = 1078
+cum_tokens = 1095
 
 [batches.content]
 kind = "lines"
@@ -712,11 +726,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Python(Method { file: "src/chronos/base.py", start_line: 62 })'
 descriptor = "python method at src/chronos/base.py:62"
 cost_tokens = 8
-cum_tokens = 1086
+cum_tokens = 1103
 
 [batches.content]
 kind = "lines"
@@ -730,11 +744,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 68
-cum_tokens = 1154
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -764,11 +778,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 58, body_start_line: 60 })'
 descriptor = "python method body at src/chronos/base.py:58 body 60"
 cost_tokens = 8
-cum_tokens = 1162
+cum_tokens = 1179
 
 [batches.content]
 kind = "lines"
@@ -782,11 +796,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 62, body_start_line: 64 })'
 descriptor = "python method body at src/chronos/base.py:62 body 64"
 cost_tokens = 8
-cum_tokens = 1170
+cum_tokens = 1187
 
 [batches.content]
 kind = "lines"
@@ -800,11 +814,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 30
-cum_tokens = 1200
+cum_tokens = 1217
 
 [batches.content]
 kind = "lines"
@@ -818,11 +832,11 @@ end = 155
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Python(ClassBody { file: "src/chronos/base.py", start_line: 44 })'
 descriptor = "python class body at src/chronos/base.py:44"
 cost_tokens = 35
-cum_tokens = 1235
+cum_tokens = 1252
 
 [batches.content]
 kind = "lines"
@@ -836,11 +850,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 16
-cum_tokens = 1251
+cum_tokens = 1268
 
 [batches.content]
 kind = "fs"
@@ -850,11 +864,11 @@ parent = "scripts"
 entries = ["README.md", "evaluation", "kernel-synth.py", "training"]
 
 [[batches]]
-position = 32
+position = 33
 key = 'Python(MethodBody { file: "src/chronos/base.py", start_line: 76, body_start_line: 98 })'
 descriptor = "python method body at src/chronos/base.py:76 body 98"
 cost_tokens = 10
-cum_tokens = 1261
+cum_tokens = 1278
 
 [batches.content]
 kind = "lines"
@@ -866,20 +880,6 @@ end = 98
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 17
-cum_tokens = 1278
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml", "eval-model.yml", "publish-to-pypi.yml"]
 
 [[batches]]
 position = 34

@@ -1,7 +1,7 @@
 fixture = "swarm"
 budget = 10000
-cumulative_tokens = 8932
-batch_count = 134
+cumulative_tokens = 9045
+batch_count = 150
 
 [[batches]]
 position = 1
@@ -699,10 +699,24 @@ entries = ["README.md", "__init__.py", "configs", "data", "evals", "main.py"]
 
 [[batches]]
 position = 20
+key = 'Fs(DirListing { dir: "examples/airline/data" })'
+descriptor = "listing of 'examples/airline/data'"
+cost_tokens = 3
+cum_tokens = 608
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/airline/data"
+entries = ["routines"]
+
+[[batches]]
+position = 21
 key = 'Fs(DirListing { dir: "examples/airline/configs" })'
 descriptor = "listing of 'examples/airline/configs'"
 cost_tokens = 14
-cum_tokens = 619
+cum_tokens = 622
 
 [batches.content]
 kind = "fs"
@@ -712,11 +726,25 @@ parent = "examples/airline/configs"
 entries = ["__init__.py", "agents.py", "tools.py"]
 
 [[batches]]
-position = 21
+position = 22
+key = 'Fs(DirListing { dir: "examples/airline/data/routines" })'
+descriptor = "listing of 'examples/airline/data/routines'"
+cost_tokens = 12
+cum_tokens = 634
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/airline/data/routines"
+entries = ["baggage", "flight_modification", "prompts.py"]
+
+[[batches]]
+position = 23
 key = 'Python(DeclNames { file: "swarm/types.py" })'
 descriptor = "python decl names surface in swarm/types.py"
 cost_tokens = 63
-cum_tokens = 682
+cum_tokens = 697
 
 [batches.content]
 kind = "lines"
@@ -746,11 +774,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Python(Decl { file: "swarm/types.py", start_line: 14 })'
 descriptor = "python decl at swarm/types.py:14"
 cost_tokens = 0
-cum_tokens = 682
+cum_tokens = 697
 
 [batches.content]
 kind = "lines"
@@ -764,11 +792,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 23
+position = 25
 key = 'Python(Decl { file: "swarm/types.py", start_line: 23 })'
 descriptor = "python decl at swarm/types.py:23"
 cost_tokens = 0
-cum_tokens = 682
+cum_tokens = 697
 
 [batches.content]
 kind = "lines"
@@ -782,11 +810,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 24
+position = 26
 key = 'Python(Decl { file: "swarm/types.py", start_line: 29 })'
 descriptor = "python decl at swarm/types.py:29"
 cost_tokens = 0
-cum_tokens = 682
+cum_tokens = 697
 
 [batches.content]
 kind = "lines"
@@ -800,11 +828,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 25
+position = 27
 key = 'Python(ClassBody { file: "swarm/types.py", start_line: 23 })'
 descriptor = "python class body at swarm/types.py:23"
 cost_tokens = 33
-cum_tokens = 715
+cum_tokens = 730
 
 [batches.content]
 kind = "lines"
@@ -818,11 +846,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 26
+position = 28
 key = 'Python(ClassBody { file: "swarm/types.py", start_line: 29 })'
 descriptor = "python class body at swarm/types.py:29"
 cost_tokens = 35
-cum_tokens = 750
+cum_tokens = 765
 
 [batches.content]
 kind = "lines"
@@ -836,11 +864,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 27
+position = 29
 key = 'Python(DeclNames { file: "swarm/util.py" })'
 descriptor = "python decl names surface in swarm/util.py"
 cost_tokens = 68
-cum_tokens = 818
+cum_tokens = 833
 
 [batches.content]
 kind = "lines"
@@ -910,11 +938,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 30
 key = 'Python(Decl { file: "swarm/util.py", start_line: 5 })'
 descriptor = "python decl at swarm/util.py:5"
 cost_tokens = 0
-cum_tokens = 818
+cum_tokens = 833
 
 [batches.content]
 kind = "lines"
@@ -928,11 +956,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 29
+position = 31
 key = 'Python(Decl { file: "swarm/util.py", start_line: 13 })'
 descriptor = "python decl at swarm/util.py:13"
 cost_tokens = 0
-cum_tokens = 818
+cum_tokens = 833
 
 [batches.content]
 kind = "lines"
@@ -946,11 +974,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 30
+position = 32
 key = 'Python(Decl { file: "swarm/util.py", start_line: 21 })'
 descriptor = "python decl at swarm/util.py:21"
 cost_tokens = 0
-cum_tokens = 818
+cum_tokens = 833
 
 [batches.content]
 kind = "lines"
@@ -964,11 +992,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 31
+position = 33
 key = 'Python(Decl { file: "swarm/util.py", start_line: 31 })'
 descriptor = "python decl at swarm/util.py:31"
 cost_tokens = 0
-cum_tokens = 818
+cum_tokens = 833
 
 [batches.content]
 kind = "lines"
@@ -982,11 +1010,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 32
+position = 34
 key = 'Fs(DirListing { dir: "examples/weather_agent" })'
 descriptor = "listing of 'examples/weather_agent'"
 cost_tokens = 17
-cum_tokens = 835
+cum_tokens = 850
 
 [batches.content]
 kind = "fs"
@@ -996,11 +1024,11 @@ parent = "examples/weather_agent"
 entries = ["README.md", "agents.py", "evals.py", "run.py"]
 
 [[batches]]
-position = 33
+position = 35
 key = 'Python(ClassBody { file: "swarm/types.py", start_line: 14 })'
 descriptor = "python class body at swarm/types.py:14"
 cost_tokens = 88
-cum_tokens = 923
+cum_tokens = 938
 
 [batches.content]
 kind = "lines"
@@ -1014,11 +1042,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 34
+position = 36
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 75
-cum_tokens = 998
+cum_tokens = 1013
 
 [batches.content]
 kind = "lines"
@@ -1032,11 +1060,11 @@ end = 338
 kind = "full"
 
 [[batches]]
-position = 35
+position = 37
 key = 'Python(Method { file: "swarm/core.py", start_line: 89 })'
 descriptor = "python method at swarm/core.py:89"
 cost_tokens = 63
-cum_tokens = 1061
+cum_tokens = 1076
 
 [batches.content]
 kind = "lines"
@@ -1050,11 +1078,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 36
+position = 38
 key = 'Fs(DirListing { dir: "examples/support_bot" })'
 descriptor = "listing of 'examples/support_bot'"
 cost_tokens = 40
-cum_tokens = 1101
+cum_tokens = 1116
 
 [batches.content]
 kind = "fs"
@@ -1064,11 +1092,11 @@ parent = "examples/support_bot"
 entries = ["Makefile", "README.md", "__init__.py", "customer_service.py", "data", "docker-compose.yaml", "main.py", "prep_data.py", "requirements.txt"]
 
 [[batches]]
-position = 37
+position = 39
 key = 'Fs(DirListing { dir: "examples/triage_agent" })'
 descriptor = "listing of 'examples/triage_agent'"
 cost_tokens = 23
-cum_tokens = 1124
+cum_tokens = 1139
 
 [batches.content]
 kind = "fs"
@@ -1078,11 +1106,11 @@ parent = "examples/triage_agent"
 entries = ["README.md", "agents.py", "evals.py", "evals_util.py", "run.py"]
 
 [[batches]]
-position = 38
+position = 40
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 597
-cum_tokens = 1721
+cum_tokens = 1736
 
 [batches.content]
 kind = "lines"
@@ -1096,11 +1124,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 39
+position = 41
 key = 'Plaintext(Whole { file: "setup.cfg" })'
 descriptor = "plaintext config setup.cfg"
 cost_tokens = 268
-cum_tokens = 1989
+cum_tokens = 2004
 
 [batches.content]
 kind = "lines"
@@ -1114,11 +1142,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 40
+position = 42
 key = 'Python(DeclDoc { file: "swarm/types.py", start_line: 29 })'
 descriptor = "python decl doc at swarm/types.py:29"
 cost_tokens = 87
-cum_tokens = 2076
+cum_tokens = 2091
 
 [batches.content]
 kind = "lines"
@@ -1132,11 +1160,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 41
+position = 43
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 82
-cum_tokens = 2158
+cum_tokens = 2173
 
 [batches.content]
 kind = "lines"
@@ -1150,11 +1178,11 @@ end = 348
 kind = "full"
 
 [[batches]]
-position = 42
+position = 44
 key = 'Python(Method { file: "swarm/core.py", start_line: 32 })'
 descriptor = "python method at swarm/core.py:32"
 cost_tokens = 74
-cum_tokens = 2232
+cum_tokens = 2247
 
 [batches.content]
 kind = "lines"
@@ -1168,11 +1196,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 43
+position = 45
 key = 'Python(DeclNames { file: "swarm/repl/repl.py" })'
 descriptor = "python decl names surface in swarm/repl/repl.py"
 cost_tokens = 43
-cum_tokens = 2275
+cum_tokens = 2290
 
 [batches.content]
 kind = "lines"
@@ -1226,11 +1254,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 46
 key = 'Python(Decl { file: "swarm/repl/repl.py", start_line: 6 })'
 descriptor = "python decl at swarm/repl/repl.py:6"
 cost_tokens = 0
-cum_tokens = 2275
+cum_tokens = 2290
 
 [batches.content]
 kind = "lines"
@@ -1244,11 +1272,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 45
+position = 47
 key = 'Python(Decl { file: "swarm/repl/repl.py", start_line: 37 })'
 descriptor = "python decl at swarm/repl/repl.py:37"
 cost_tokens = 0
-cum_tokens = 2275
+cum_tokens = 2290
 
 [batches.content]
 kind = "lines"
@@ -1262,11 +1290,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 46
+position = 48
 key = 'Python(Decl { file: "swarm/repl/repl.py", start_line: 60 })'
 descriptor = "python decl at swarm/repl/repl.py:60"
 cost_tokens = 26
-cum_tokens = 2301
+cum_tokens = 2316
 
 [batches.content]
 kind = "lines"
@@ -1280,11 +1308,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 47
+position = 49
 key = 'Python(Imports { file: "swarm/repl/repl.py" })'
 descriptor = "python imports in swarm/repl/repl.py"
 cost_tokens = 20
-cum_tokens = 2321
+cum_tokens = 2336
 
 [batches.content]
 kind = "lines"
@@ -1298,25 +1326,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 48
-key = 'Fs(DirListing { dir: "examples/airline/data" })'
-descriptor = "listing of 'examples/airline/data'"
-cost_tokens = 3
-cum_tokens = 2324
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/airline/data"
-entries = ["routines"]
-
-[[batches]]
-position = 49
+position = 50
 key = 'Python(MethodBody { file: "swarm/core.py", start_line: 27, body_start_line: 28 })'
 descriptor = "python method body at swarm/core.py:27 body 28"
 cost_tokens = 27
-cum_tokens = 2351
+cum_tokens = 2363
 
 [batches.content]
 kind = "lines"
@@ -1328,20 +1342,6 @@ end = 30
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 50
-key = 'Fs(DirListing { dir: "examples/airline/data/routines" })'
-descriptor = "listing of 'examples/airline/data/routines'"
-cost_tokens = 12
-cum_tokens = 2363
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/airline/data/routines"
-entries = ["baggage", "flight_modification", "prompts.py"]
 
 [[batches]]
 position = 51
@@ -1405,38 +1405,10 @@ entries = ["__init__.py", "assistants", "general.py", "prompts.py", "swarm_tasks
 
 [[batches]]
 position = 55
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src" })'
-descriptor = "listing of 'examples/customer_service_streaming/src'"
-cost_tokens = 32
-cum_tokens = 2580
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming/src"
-entries = ["__init__.py", "arg_parser.py", "evals", "runs", "swarm", "tasks", "utils.py", "validator.py"]
-
-[[batches]]
-position = 56
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src/swarm" })'
-descriptor = "listing of 'examples/customer_service_streaming/src/swarm'"
-cost_tokens = 19
-cum_tokens = 2599
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming/src/swarm"
-entries = ["assistants.py", "conversation.py", "engines", "swarm.py", "tool.py"]
-
-[[batches]]
-position = 57
 key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools" })'
 descriptor = "listing of 'examples/customer_service_streaming/configs/tools'"
 cost_tokens = 12
-cum_tokens = 2611
+cum_tokens = 2560
 
 [batches.content]
 kind = "fs"
@@ -1446,11 +1418,53 @@ parent = "examples/customer_service_streaming/configs/tools"
 entries = ["query_docs", "send_email", "submit_ticket"]
 
 [[batches]]
+position = 56
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src" })'
+descriptor = "listing of 'examples/customer_service_streaming/src'"
+cost_tokens = 32
+cum_tokens = 2592
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/src"
+entries = ["__init__.py", "arg_parser.py", "evals", "runs", "swarm", "tasks", "utils.py", "validator.py"]
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src/swarm" })'
+descriptor = "listing of 'examples/customer_service_streaming/src/swarm'"
+cost_tokens = 19
+cum_tokens = 2611
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/src/swarm"
+entries = ["assistants.py", "conversation.py", "engines", "swarm.py", "tool.py"]
+
+[[batches]]
 position = 58
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src/swarm/engines" })'
+descriptor = "listing of 'examples/customer_service_streaming/src/swarm/engines'"
+cost_tokens = 14
+cum_tokens = 2625
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/src/swarm/engines"
+entries = ["assistants_engine.py", "engine.py", "local_engine.py"]
+
+[[batches]]
+position = 59
 key = 'Fs(DirListing { dir: "logs" })'
 descriptor = "listing of 'logs'"
 cost_tokens = 341
-cum_tokens = 2952
+cum_tokens = 2966
 
 [batches.content]
 kind = "fs"
@@ -1460,11 +1474,11 @@ parent = "logs"
 entries = ["session_20240402-112114.json", "session_20240402-112443.json", "session_20240402-112456.json", "session_20240402-112501.json", "session_20240402-113222.json", "session_20240402-113415.json", "session_20240425-135655.json", "session_20240425-135657.json", "session_20240425-135728.json", "session_20240425-140427.json", "session_20240425-140502.json", "session_20240425-140516.json", "session_20240425-140553.json", "session_20240425-141416.json", "session_20240425-141509.json", "session_20240425-141709.json", "session_20240425-145129.json", "session_20240425-145324.json", "session_20240425-145907.json", "session_20240425-145930.json", "session_20240425-150004.json", "session_20240425-150040.json", "session_20240425-155814.json", "session_20240425-172809.json", "session_20240425-211732.json", "session_20240425-211813.json", "session_20240425-211942.json", "session_20240425-212341.json", "session_20240425-212431.json", "session_20240425-212748.json", "session_20240425-213023.json"]
 
 [[batches]]
-position = 59
+position = 60
 key = 'Python(DeclDoc { file: "swarm/util.py", start_line: 31 })'
 descriptor = "python decl doc at swarm/util.py:31"
 cost_tokens = 108
-cum_tokens = 3060
+cum_tokens = 3074
 
 [batches.content]
 kind = "lines"
@@ -1478,11 +1492,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Python(DeclBody { file: "swarm/util.py", start_line: 13, body_start_line: 14 })'
 descriptor = "python decl body at swarm/util.py:13 body 14"
 cost_tokens = 61
-cum_tokens = 3121
+cum_tokens = 3135
 
 [batches.content]
 kind = "lines"
@@ -1494,20 +1508,6 @@ end = 18
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 61
-key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src/swarm/engines" })'
-descriptor = "listing of 'examples/customer_service_streaming/src/swarm/engines'"
-cost_tokens = 14
-cum_tokens = 3135
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_streaming/src/swarm/engines"
-entries = ["assistants_engine.py", "engine.py", "local_engine.py"]
 
 [[batches]]
 position = 62
@@ -1627,10 +1627,38 @@ kind = "full"
 
 [[batches]]
 position = 68
+key = 'Fs(DirListing { dir: "examples/customer_service" })'
+descriptor = "listing of 'examples/customer_service'"
+cost_tokens = 3
+cum_tokens = 3854
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service"
+entries = ["logs"]
+
+[[batches]]
+position = 69
+key = 'Fs(DirListing { dir: "examples/customer_service_lite" })'
+descriptor = "listing of 'examples/customer_service_lite'"
+cost_tokens = 3
+cum_tokens = 3857
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_lite"
+entries = ["logs"]
+
+[[batches]]
+position = 70
 key = 'Python(DeclBody { file: "swarm/util.py", start_line: 21, body_start_line: 22 })'
 descriptor = "python decl body at swarm/util.py:21 body 22"
 cost_tokens = 94
-cum_tokens = 3945
+cum_tokens = 3951
 
 [batches.content]
 kind = "lines"
@@ -1644,11 +1672,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 69
+position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 335
-cum_tokens = 4280
+cum_tokens = 4286
 
 [batches.content]
 kind = "lines"
@@ -1662,11 +1690,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 70
+position = 72
 key = 'Python(DeclBody { file: "swarm/repl/repl.py", start_line: 6, body_start_line: 7 })'
 descriptor = "python decl body at swarm/repl/repl.py:6 body 7"
 cost_tokens = 8
-cum_tokens = 4288
+cum_tokens = 4294
 
 [batches.content]
 kind = "lines"
@@ -1680,11 +1708,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 71
+position = 73
 key = 'Python(Imports { file: "swarm/core.py" })'
 descriptor = "python imports in swarm/core.py"
 cost_tokens = 166
-cum_tokens = 4454
+cum_tokens = 4460
 
 [batches.content]
 kind = "lines"
@@ -1714,11 +1742,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 72
+position = 74
 key = 'Json(Whole { file: "logs/session_20240425-135655.json" })'
 descriptor = "json config logs/session_20240425-135655.json"
 cost_tokens = 95
-cum_tokens = 4549
+cum_tokens = 4555
 
 [batches.content]
 kind = "lines"
@@ -1732,11 +1760,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 73
+position = 75
 key = 'Json(Whole { file: "logs/session_20240402-112456.json" })'
 descriptor = "json config logs/session_20240402-112456.json"
 cost_tokens = 97
-cum_tokens = 4646
+cum_tokens = 4652
 
 [batches.content]
 kind = "lines"
@@ -1750,11 +1778,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 74
+position = 76
 key = 'Json(Whole { file: "logs/session_20240425-135657.json" })'
 descriptor = "json config logs/session_20240425-135657.json"
 cost_tokens = 97
-cum_tokens = 4743
+cum_tokens = 4749
 
 [batches.content]
 kind = "lines"
@@ -1768,11 +1796,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 75
+position = 77
 key = 'Json(Whole { file: "logs/session_20240425-140516.json" })'
 descriptor = "json config logs/session_20240425-140516.json"
 cost_tokens = 99
-cum_tokens = 4842
+cum_tokens = 4848
 
 [batches.content]
 kind = "lines"
@@ -1786,11 +1814,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 76
+position = 78
 key = 'Json(Whole { file: "logs/session_20240425-145907.json" })'
 descriptor = "json config logs/session_20240425-145907.json"
 cost_tokens = 99
-cum_tokens = 4941
+cum_tokens = 4947
 
 [batches.content]
 kind = "lines"
@@ -1804,11 +1832,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 77
+position = 79
 key = 'Json(Whole { file: "logs/session_20240425-211732.json" })'
 descriptor = "json config logs/session_20240425-211732.json"
 cost_tokens = 99
-cum_tokens = 5040
+cum_tokens = 5046
 
 [batches.content]
 kind = "lines"
@@ -1822,11 +1850,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 78
+position = 80
 key = 'Python(DeclBody { file: "swarm/repl/repl.py", start_line: 6, body_start_line: 8 })'
 descriptor = "python decl body at swarm/repl/repl.py:6 body 8"
 cost_tokens = 9
-cum_tokens = 5049
+cum_tokens = 5055
 
 [batches.content]
 kind = "lines"
@@ -1840,11 +1868,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 79
+position = 81
 key = 'Json(Whole { file: "logs/session_20240402-112443.json" })'
 descriptor = "json config logs/session_20240402-112443.json"
 cost_tokens = 101
-cum_tokens = 5150
+cum_tokens = 5156
 
 [batches.content]
 kind = "lines"
@@ -1858,11 +1886,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 80
+position = 82
 key = 'Json(Whole { file: "logs/session_20240402-112501.json" })'
 descriptor = "json config logs/session_20240402-112501.json"
 cost_tokens = 101
-cum_tokens = 5251
+cum_tokens = 5257
 
 [batches.content]
 kind = "lines"
@@ -1876,11 +1904,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 81
+position = 83
 key = 'Json(Whole { file: "logs/session_20240425-140502.json" })'
 descriptor = "json config logs/session_20240425-140502.json"
 cost_tokens = 101
-cum_tokens = 5352
+cum_tokens = 5358
 
 [batches.content]
 kind = "lines"
@@ -1894,11 +1922,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 82
+position = 84
 key = 'Json(Whole { file: "logs/session_20240425-141509.json" })'
 descriptor = "json config logs/session_20240425-141509.json"
 cost_tokens = 101
-cum_tokens = 5453
+cum_tokens = 5459
 
 [batches.content]
 kind = "lines"
@@ -1912,11 +1940,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 83
+position = 85
 key = 'Json(Whole { file: "logs/session_20240425-211942.json" })'
 descriptor = "json config logs/session_20240425-211942.json"
 cost_tokens = 101
-cum_tokens = 5554
+cum_tokens = 5560
 
 [batches.content]
 kind = "lines"
@@ -1930,11 +1958,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 84
+position = 86
 key = 'Json(Whole { file: "logs/session_20240402-113222.json" })'
 descriptor = "json config logs/session_20240402-113222.json"
 cost_tokens = 102
-cum_tokens = 5656
+cum_tokens = 5662
 
 [batches.content]
 kind = "lines"
@@ -1948,11 +1976,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 85
+position = 87
 key = 'Json(Whole { file: "logs/session_20240425-135728.json" })'
 descriptor = "json config logs/session_20240425-135728.json"
 cost_tokens = 103
-cum_tokens = 5759
+cum_tokens = 5765
 
 [batches.content]
 kind = "lines"
@@ -1966,11 +1994,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 86
+position = 88
 key = 'Json(Whole { file: "logs/session_20240425-141709.json" })'
 descriptor = "json config logs/session_20240425-141709.json"
 cost_tokens = 103
-cum_tokens = 5862
+cum_tokens = 5868
 
 [batches.content]
 kind = "lines"
@@ -1984,11 +2012,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 87
+position = 89
 key = 'Json(Whole { file: "logs/session_20240425-145129.json" })'
 descriptor = "json config logs/session_20240425-145129.json"
 cost_tokens = 103
-cum_tokens = 5965
+cum_tokens = 5971
 
 [batches.content]
 kind = "lines"
@@ -2002,11 +2030,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 88
+position = 90
 key = 'Json(Whole { file: "logs/session_20240425-145930.json" })'
 descriptor = "json config logs/session_20240425-145930.json"
 cost_tokens = 103
-cum_tokens = 6068
+cum_tokens = 6074
 
 [batches.content]
 kind = "lines"
@@ -2020,11 +2048,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 89
+position = 91
 key = 'Json(Whole { file: "logs/session_20240425-212431.json" })'
 descriptor = "json config logs/session_20240425-212431.json"
 cost_tokens = 103
-cum_tokens = 6171
+cum_tokens = 6177
 
 [batches.content]
 kind = "lines"
@@ -2038,11 +2066,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 90
+position = 92
 key = 'Json(Whole { file: "logs/session_20240425-212748.json" })'
 descriptor = "json config logs/session_20240425-212748.json"
 cost_tokens = 105
-cum_tokens = 6276
+cum_tokens = 6282
 
 [batches.content]
 kind = "lines"
@@ -2056,11 +2084,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 91
+position = 93
 key = 'Json(Whole { file: "logs/session_20240425-213023.json" })'
 descriptor = "json config logs/session_20240425-213023.json"
 cost_tokens = 105
-cum_tokens = 6381
+cum_tokens = 6387
 
 [batches.content]
 kind = "lines"
@@ -2074,11 +2102,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 92
+position = 94
 key = 'Json(Whole { file: "logs/session_20240425-145324.json" })'
 descriptor = "json config logs/session_20240425-145324.json"
 cost_tokens = 107
-cum_tokens = 6488
+cum_tokens = 6494
 
 [batches.content]
 kind = "lines"
@@ -2092,11 +2120,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 93
+position = 95
 key = 'Json(Whole { file: "logs/session_20240425-212341.json" })'
 descriptor = "json config logs/session_20240425-212341.json"
 cost_tokens = 107
-cum_tokens = 6595
+cum_tokens = 6601
 
 [batches.content]
 kind = "lines"
@@ -2110,11 +2138,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 94
+position = 96
 key = 'Json(Whole { file: "logs/session_20240425-140427.json" })'
 descriptor = "json config logs/session_20240425-140427.json"
 cost_tokens = 111
-cum_tokens = 6706
+cum_tokens = 6712
 
 [batches.content]
 kind = "lines"
@@ -2128,11 +2156,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 95
+position = 97
 key = 'Json(Whole { file: "logs/session_20240425-155814.json" })'
 descriptor = "json config logs/session_20240425-155814.json"
 cost_tokens = 112
-cum_tokens = 6818
+cum_tokens = 6824
 
 [batches.content]
 kind = "lines"
@@ -2146,11 +2174,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 96
+position = 98
 key = 'Json(Whole { file: "logs/session_20240402-112114.json" })'
 descriptor = "json config logs/session_20240402-112114.json"
 cost_tokens = 114
-cum_tokens = 6932
+cum_tokens = 6938
 
 [batches.content]
 kind = "lines"
@@ -2164,11 +2192,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 97
+position = 99
 key = 'Json(Whole { file: "logs/session_20240425-150004.json" })'
 descriptor = "json config logs/session_20240425-150004.json"
 cost_tokens = 115
-cum_tokens = 7047
+cum_tokens = 7053
 
 [batches.content]
 kind = "lines"
@@ -2182,11 +2210,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 98
+position = 100
 key = 'Json(Whole { file: "logs/session_20240425-211813.json" })'
 descriptor = "json config logs/session_20240425-211813.json"
 cost_tokens = 117
-cum_tokens = 7164
+cum_tokens = 7170
 
 [batches.content]
 kind = "lines"
@@ -2200,11 +2228,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 99
+position = 101
 key = 'Json(Whole { file: "logs/session_20240425-140553.json" })'
 descriptor = "json config logs/session_20240425-140553.json"
 cost_tokens = 118
-cum_tokens = 7282
+cum_tokens = 7288
 
 [batches.content]
 kind = "lines"
@@ -2218,11 +2246,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 100
+position = 102
 key = 'Json(Whole { file: "logs/session_20240425-172809.json" })'
 descriptor = "json config logs/session_20240425-172809.json"
 cost_tokens = 118
-cum_tokens = 7400
+cum_tokens = 7406
 
 [batches.content]
 kind = "lines"
@@ -2236,11 +2264,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 101
+position = 103
 key = 'Json(Whole { file: "logs/session_20240425-141416.json" })'
 descriptor = "json config logs/session_20240425-141416.json"
 cost_tokens = 120
-cum_tokens = 7520
+cum_tokens = 7526
 
 [batches.content]
 kind = "lines"
@@ -2254,11 +2282,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 102
+position = 104
 key = 'Json(Whole { file: "logs/session_20240425-150040.json" })'
 descriptor = "json config logs/session_20240425-150040.json"
 cost_tokens = 121
-cum_tokens = 7641
+cum_tokens = 7647
 
 [batches.content]
 kind = "lines"
@@ -2272,11 +2300,81 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 103
+position = 105
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/logs" })'
+descriptor = "listing of 'examples/customer_service_streaming/logs'"
+cost_tokens = 5
+cum_tokens = 7652
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/logs"
+entries = [".gitkeep"]
+
+[[batches]]
+position = 106
+key = 'Fs(DirListing { dir: "tests/test_runs" })'
+descriptor = "listing of 'tests/test_runs'"
+cost_tokens = 11
+cum_tokens = 7663
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/test_runs"
+entries = ["test_20240402-113647.json"]
+
+[[batches]]
+position = 107
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/assistants" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs/assistants'"
+cost_tokens = 4
+cum_tokens = 7667
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/configs/assistants"
+entries = ["user_interface"]
+
+[[batches]]
+position = 108
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src/runs" })'
+descriptor = "listing of 'examples/customer_service_streaming/src/runs'"
+cost_tokens = 4
+cum_tokens = 7671
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/src/runs"
+entries = ["run.py"]
+
+[[batches]]
+position = 109
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src/tasks" })'
+descriptor = "listing of 'examples/customer_service_streaming/src/tasks'"
+cost_tokens = 4
+cum_tokens = 7675
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/src/tasks"
+entries = ["task.py"]
+
+[[batches]]
+position = 110
 key = 'Json(Whole { file: "logs/session_20240402-113415.json" })'
 descriptor = "json config logs/session_20240402-113415.json"
 cost_tokens = 171
-cum_tokens = 7812
+cum_tokens = 7846
 
 [batches.content]
 kind = "lines"
@@ -2290,11 +2388,25 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 104
+position = 111
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/src/evals" })'
+descriptor = "listing of 'examples/customer_service_streaming/src/evals'"
+cost_tokens = 5
+cum_tokens = 7851
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/src/evals"
+entries = ["eval_function.py"]
+
+[[batches]]
+position = 112
 key = 'Markdown(ReadmeHeadline { file: "examples/weather_agent/README.md" })'
 descriptor = "README headline in examples/weather_agent/README.md"
 cost_tokens = 51
-cum_tokens = 7863
+cum_tokens = 7902
 
 [batches.content]
 kind = "lines"
@@ -2308,11 +2420,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 105
+position = 113
 key = 'Markdown(HeadingsOutline { file: "examples/weather_agent/README.md" })'
 descriptor = "headings outline in examples/weather_agent/README.md"
 cost_tokens = 17
-cum_tokens = 7880
+cum_tokens = 7919
 
 [batches.content]
 kind = "lines"
@@ -2350,11 +2462,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 114
 key = 'Python(MethodBody { file: "swarm/core.py", start_line: 71, body_start_line: 72 })'
 descriptor = "python method body at swarm/core.py:71 body 72"
 cost_tokens = 175
-cum_tokens = 8055
+cum_tokens = 8094
 
 [batches.content]
 kind = "lines"
@@ -2368,11 +2480,53 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 107
+position = 115
+key = 'Fs(DirListing { dir: "examples/airline/data/routines/baggage" })'
+descriptor = "listing of 'examples/airline/data/routines/baggage'"
+cost_tokens = 4
+cum_tokens = 8098
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/airline/data/routines/baggage"
+entries = ["policies.py"]
+
+[[batches]]
+position = 116
+key = 'Fs(DirListing { dir: "examples/airline/data/routines/flight_modification" })'
+descriptor = "listing of 'examples/airline/data/routines/flight_modification'"
+cost_tokens = 4
+cum_tokens = 8102
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/airline/data/routines/flight_modification"
+entries = ["policies.py"]
+
+[[batches]]
+position = 117
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/assistants/user_interface" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs/assistants/user_interface'"
+cost_tokens = 4
+cum_tokens = 8106
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/configs/assistants/user_interface"
+entries = ["assistant.json"]
+
+[[batches]]
+position = 118
 key = 'Python(MethodBody { file: "swarm/core.py", start_line: 89, body_start_line: 137 })'
 descriptor = "python method body at swarm/core.py:89 body 137"
 cost_tokens = 9
-cum_tokens = 8064
+cum_tokens = 8115
 
 [batches.content]
 kind = "lines"
@@ -2386,11 +2540,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 108
+position = 119
 key = 'Markdown(ReadmeHeadline { file: "examples/triage_agent/README.md" })'
 descriptor = "README headline in examples/triage_agent/README.md"
 cost_tokens = 61
-cum_tokens = 8125
+cum_tokens = 8176
 
 [batches.content]
 kind = "lines"
@@ -2404,11 +2558,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 109
+position = 120
 key = 'Markdown(HeadingsOutline { file: "examples/triage_agent/README.md" })'
 descriptor = "headings outline in examples/triage_agent/README.md"
 cost_tokens = 17
-cum_tokens = 8142
+cum_tokens = 8193
 
 [batches.content]
 kind = "lines"
@@ -2446,11 +2600,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 121
 key = 'Python(DeclBody { file: "swarm/repl/repl.py", start_line: 37, body_start_line: 38 })'
 descriptor = "python decl body at swarm/repl/repl.py:37 body 38"
 cost_tokens = 254
-cum_tokens = 8396
+cum_tokens = 8447
 
 [batches.content]
 kind = "lines"
@@ -2464,11 +2618,39 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 111
+position = 122
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/tests" })'
+descriptor = "listing of 'examples/customer_service_streaming/tests'"
+cost_tokens = 11
+cum_tokens = 8458
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/tests"
+entries = ["test_prompts.jsonl", "test_runs"]
+
+[[batches]]
+position = 123
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/tests/test_runs" })'
+descriptor = "listing of 'examples/customer_service_streaming/tests/test_runs'"
+cost_tokens = 5
+cum_tokens = 8463
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/tests/test_runs"
+entries = [".gitkeep"]
+
+[[batches]]
+position = 124
 key = 'Markdown(ReadmeHeadline { file: "examples/support_bot/README.md" })'
 descriptor = "README headline in examples/support_bot/README.md"
 cost_tokens = 67
-cum_tokens = 8463
+cum_tokens = 8530
 
 [batches.content]
 kind = "lines"
@@ -2482,11 +2664,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 112
+position = 125
 key = 'Markdown(HeadingsOutline { file: "examples/support_bot/README.md" })'
 descriptor = "headings outline in examples/support_bot/README.md"
 cost_tokens = 16
-cum_tokens = 8479
+cum_tokens = 8546
 
 [batches.content]
 kind = "lines"
@@ -2524,11 +2706,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 113
+position = 126
 key = 'Markdown(ReadmeHeadline { file: "examples/basic/README.md" })'
 descriptor = "README headline in examples/basic/README.md"
 cost_tokens = 73
-cum_tokens = 8552
+cum_tokens = 8619
 
 [batches.content]
 kind = "lines"
@@ -2542,11 +2724,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 114
+position = 127
 key = 'Markdown(HeadingsOutline { file: "examples/basic/README.md" })'
 descriptor = "headings outline in examples/basic/README.md"
 cost_tokens = 18
-cum_tokens = 8570
+cum_tokens = 8637
 
 [batches.content]
 kind = "lines"
@@ -2584,11 +2766,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 115
+position = 128
 key = 'Markdown(ReadmeHeadline { file: "examples/airline/README.md" })'
 descriptor = "README headline in examples/airline/README.md"
 cost_tokens = 87
-cum_tokens = 8657
+cum_tokens = 8724
 
 [batches.content]
 kind = "lines"
@@ -2602,11 +2784,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 116
+position = 129
 key = 'Markdown(HeadingsOutline { file: "examples/airline/README.md" })'
 descriptor = "headings outline in examples/airline/README.md"
 cost_tokens = 26
-cum_tokens = 8683
+cum_tokens = 8750
 
 [batches.content]
 kind = "lines"
@@ -2660,11 +2842,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 117
+position = 130
 key = 'Markdown(ReadmeHeadline { file: "examples/personal_shopper/README.md" })'
 descriptor = "README headline in examples/personal_shopper/README.md"
 cost_tokens = 87
-cum_tokens = 8770
+cum_tokens = 8837
 
 [batches.content]
 kind = "lines"
@@ -2678,11 +2860,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 118
+position = 131
 key = 'Markdown(HeadingsOutline { file: "examples/personal_shopper/README.md" })'
 descriptor = "headings outline in examples/personal_shopper/README.md"
 cost_tokens = 16
-cum_tokens = 8786
+cum_tokens = 8853
 
 [batches.content]
 kind = "lines"
@@ -2720,11 +2902,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 132
 key = 'Python(DeclNames { file: "examples/customer_service_streaming/main.py" })'
 descriptor = "python decl names surface in examples/customer_service_streaming/main.py"
 cost_tokens = 11
-cum_tokens = 8797
+cum_tokens = 8864
 
 [batches.content]
 kind = "lines"
@@ -2746,11 +2928,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 133
 key = 'Python(Decl { file: "examples/customer_service_streaming/main.py", start_line: 10 })'
 descriptor = "python decl at examples/customer_service_streaming/main.py:10"
 cost_tokens = 0
-cum_tokens = 8797
+cum_tokens = 8864
 
 [batches.content]
 kind = "lines"
@@ -2764,11 +2946,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 121
+position = 134
 key = 'Plaintext(Whole { file: "examples/support_bot/requirements.txt" })'
 descriptor = "plaintext config examples/support_bot/requirements.txt"
 cost_tokens = 9
-cum_tokens = 8806
+cum_tokens = 8873
 
 [batches.content]
 kind = "lines"
@@ -2782,11 +2964,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 122
+position = 135
 key = 'Python(DeclBody { file: "swarm/util.py", start_line: 31, body_start_line: 60 })'
 descriptor = "python decl body at swarm/util.py:31 body 60"
 cost_tokens = 10
-cum_tokens = 8816
+cum_tokens = 8883
 
 [batches.content]
 kind = "lines"
@@ -2800,39 +2982,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 123
-key = 'Fs(DirListing { dir: "examples/customer_service" })'
-descriptor = "listing of 'examples/customer_service'"
-cost_tokens = 3
-cum_tokens = 8819
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service"
-entries = ["logs"]
-
-[[batches]]
-position = 124
-key = 'Fs(DirListing { dir: "examples/customer_service_lite" })'
-descriptor = "listing of 'examples/customer_service_lite'"
-cost_tokens = 3
-cum_tokens = 8822
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/customer_service_lite"
-entries = ["logs"]
-
-[[batches]]
-position = 125
+position = 136
 key = 'Python(DeclNames { file: "examples/airline/main.py" })'
 descriptor = "python decl names surface in examples/airline/main.py"
 cost_tokens = 12
-cum_tokens = 8834
+cum_tokens = 8895
 
 [batches.content]
 kind = "lines"
@@ -2846,11 +3000,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 126
+position = 137
 key = 'Python(DeclBody { file: "swarm/repl/repl.py", start_line: 60, body_start_line: 63 })'
 descriptor = "python decl body at swarm/repl/repl.py:60 body 63"
 cost_tokens = 10
-cum_tokens = 8844
+cum_tokens = 8905
 
 [batches.content]
 kind = "lines"
@@ -2864,11 +3018,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 127
+position = 138
 key = 'Python(DeclBody { file: "swarm/repl/repl.py", start_line: 60, body_start_line: 66 })'
 descriptor = "python decl body at swarm/repl/repl.py:60 body 66"
 cost_tokens = 10
-cum_tokens = 8854
+cum_tokens = 8915
 
 [batches.content]
 kind = "lines"
@@ -2882,11 +3036,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 128
+position = 139
 key = 'Python(DeclBody { file: "swarm/repl/repl.py", start_line: 60, body_start_line: 67 })'
 descriptor = "python decl body at swarm/repl/repl.py:60 body 67"
 cost_tokens = 10
-cum_tokens = 8864
+cum_tokens = 8925
 
 [batches.content]
 kind = "lines"
@@ -2900,11 +3054,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 129
+position = 140
 key = 'Fs(DirListing { dir: "examples/airline/evals" })'
 descriptor = "listing of 'examples/airline/evals'"
 cost_tokens = 19
-cum_tokens = 8883
+cum_tokens = 8944
 
 [batches.content]
 kind = "fs"
@@ -2914,11 +3068,67 @@ parent = "examples/airline/evals"
 entries = ["eval_cases", "eval_results", "eval_utils.py", "function_evals.py"]
 
 [[batches]]
-position = 130
+position = 141
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools/query_docs" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs/tools/query_docs'"
+cost_tokens = 8
+cum_tokens = 8952
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/configs/tools/query_docs"
+entries = ["handler.py", "tool.json"]
+
+[[batches]]
+position = 142
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools/send_email" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs/tools/send_email'"
+cost_tokens = 8
+cum_tokens = 8960
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/configs/tools/send_email"
+entries = ["handler.py", "tool.json"]
+
+[[batches]]
+position = 143
+key = 'Fs(DirListing { dir: "examples/customer_service_streaming/configs/tools/submit_ticket" })'
+descriptor = "listing of 'examples/customer_service_streaming/configs/tools/submit_ticket'"
+cost_tokens = 8
+cum_tokens = 8968
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/customer_service_streaming/configs/tools/submit_ticket"
+entries = ["handler.py", "tool.json"]
+
+[[batches]]
+position = 144
+key = 'Fs(DirListing { dir: "examples/airline/evals/eval_cases" })'
+descriptor = "listing of 'examples/airline/evals/eval_cases'"
+cost_tokens = 13
+cum_tokens = 8981
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/airline/evals/eval_cases"
+entries = ["flight_modification_cases.json", "triage_cases.json"]
+
+[[batches]]
+position = 145
 key = 'Python(DeclBody { file: "swarm/repl/repl.py", start_line: 60, body_start_line: 64 })'
 descriptor = "python decl body at swarm/repl/repl.py:60 body 64"
 cost_tokens = 13
-cum_tokens = 8896
+cum_tokens = 8994
 
 [batches.content]
 kind = "lines"
@@ -2932,11 +3142,25 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 131
+position = 146
+key = 'Fs(DirListing { dir: "examples/airline/evals/eval_results" })'
+descriptor = "listing of 'examples/airline/evals/eval_results'"
+cost_tokens = 15
+cum_tokens = 9009
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/airline/evals/eval_results"
+entries = ["flight_modification_evals.json", "triage_evals.json"]
+
+[[batches]]
+position = 147
 key = 'Python(MethodBody { file: "swarm/core.py", start_line: 89, body_start_line: 96 })'
 descriptor = "python method body at swarm/core.py:89 body 96"
 cost_tokens = 19
-cum_tokens = 8915
+cum_tokens = 9028
 
 [batches.content]
 kind = "lines"
@@ -2950,11 +3174,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 132
+position = 148
 key = 'Python(DeclNames { file: "examples/customer_service_streaming/src/arg_parser.py" })'
 descriptor = "python decl names surface in examples/customer_service_streaming/src/arg_parser.py"
 cost_tokens = 12
-cum_tokens = 8927
+cum_tokens = 9040
 
 [batches.content]
 kind = "lines"
@@ -2976,11 +3200,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 149
 key = 'Python(Decl { file: "examples/customer_service_streaming/src/arg_parser.py", start_line: 3 })'
 descriptor = "python decl at examples/customer_service_streaming/src/arg_parser.py:3"
 cost_tokens = 0
-cum_tokens = 8927
+cum_tokens = 9040
 
 [batches.content]
 kind = "lines"
@@ -2994,11 +3218,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 134
+position = 150
 key = 'Python(Imports { file: "examples/customer_service_streaming/src/arg_parser.py" })'
 descriptor = "python imports in examples/customer_service_streaming/src/arg_parser.py"
 cost_tokens = 5
-cum_tokens = 8932
+cum_tokens = 9045
 
 [batches.content]
 kind = "lines"

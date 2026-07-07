@@ -79,20 +79,20 @@ Score(3000)=0.676 I=0.884 C=0.518 ns_rows≤3K=20/54 (reached=13 partial=0 missi
 | walker |  | 2055 | 21 | README.md section #12 |  |  | 0.753 |
 | walker |  | 2077 | 22 | README.md section #5 |  |  | 0.758 |
 | walker |  | 2119 | 42 | listing of 'docs/api' |  |  | 0.758 |
-| walker |  | 2146 | 27 | headings outline in docs/api/md.md |  |  | 0.758 |
-| walker |  | 2169 | 23 | README.md section #1 |  |  | 0.768 |
-| walker |  | 2190 | 21 | README.md section #2 |  |  | 0.786 |
-| walker |  | 2223 | 33 | README.md section #51 |  |  | 0.786 |
-| walker |  | 2247 | 24 | README.md section #11 |  |  | 0.796 |
-| walker |  | 2269 | 22 | listing of 'examples' |  |  | 0.796 |
-| walker |  | 2282 | 13 | listing of 'examples/internationalization' |  |  | 0.796 |
-| walker |  | 2296 | 14 | listing of 'examples/markdown_customization' |  |  | 0.796 |
-| walker |  | 2310 | 14 | listing of 'examples/markdown_essentials' |  |  | 0.797 |
-| walker |  | 2335 | 25 | README.md section #6 |  |  | 0.809 |
+| walker |  | 2131 | 12 | listing of 'docs/api/renderer' |  |  | 0.758 |
+| walker |  | 2158 | 27 | headings outline in docs/api/md.md |  |  | 0.758 |
+| walker |  | 2181 | 23 | README.md section #1 |  |  | 0.768 |
+| walker |  | 2202 | 21 | README.md section #2 |  |  | 0.786 |
+| walker |  | 2235 | 33 | README.md section #51 |  |  | 0.786 |
+| walker |  | 2259 | 24 | README.md section #11 |  |  | 0.796 |
+| walker |  | 2281 | 22 | listing of 'examples' |  |  | 0.796 |
+| walker |  | 2294 | 13 | listing of 'examples/internationalization' |  |  | 0.796 |
+| walker |  | 2308 | 14 | listing of 'examples/markdown_customization' |  |  | 0.796 |
+| walker |  | 2322 | 14 | listing of 'examples/markdown_essentials' |  |  | 0.797 |
+| walker |  | 2347 | 25 | README.md section #6 |  |  | 0.735 |
 | ns | 2347 |  | 364 | htmy/typing.py -- Component protocols | 2.2 | 2.1 | 0.735 |
-| walker |  | 2351 | 16 | README.md section #41 |  |  | 0.735 |
-| walker |  | 2377 | 26 | python decl body at htmy/io.py:11 body 13 |  |  | 0.735 |
-| walker |  | 2389 | 12 | listing of 'docs/api/renderer' |  |  | 0.735 |
+| walker |  | 2363 | 16 | README.md section #41 |  |  | 0.735 |
+| walker |  | 2389 | 26 | python decl body at htmy/io.py:11 body 13 |  |  | 0.735 |
 | walker |  | 2410 | 21 | docs/api/md.md section #0 |  |  | 0.735 |
 | walker |  | 2441 | 31 | README.md section #10 |  |  | 0.745 |
 | walker |  | 2487 | 46 | README.md section #46 |  |  | 0.745 |

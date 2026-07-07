@@ -132,28 +132,33 @@ pkg/
         model.go
                1→package artifactcache
                3→type Request struct {
-               4→	Key     string `json:"key" `
-               5→	Version string `json:"version"`
-               6→	Size    int64  `json:"cacheSize"`
-               7→}
+            …
                9→func (c *Request) ToCache() *Cache {
             …
               26→type Cache struct {
             …
         storage.go
         testdata/
+            example/
+                example.yaml
     artifacts/
         artifact.pb.go
         artifacts_v4.go
         server.go
         server_test.go
         testdata/
+            GHSL-2023-004/
+                artifacts.yml
+            upload-and-download/
+                artifacts.yml
+            v4/
+                artifacts.yml
     common/
         auth.go
         auth_test.go
         cartesian.go
                1→package common
-               3→// CartesianProduct takes map of lists and returns list of unique tuples
+            …
                4→func CartesianProduct(mapOfLists map[string][]interface{}) []map[string]interface{} {
             …
               25→func cartN(a ...[]interface{}) [][]interface{} {
@@ -179,6 +184,8 @@ pkg/
               37→func CopyDir(source string, dest string) (err error) {
             …
         git/
+            git.go
+            git_test.go
         job_error.go
         line_writer.go
         line_writer_test.go
@@ -191,17 +198,7 @@ pkg/
         DOCKER_LICENSE
         container_types.go
         docker_auth.go
-            …
-              15→func LoadDockerAuthConfig(ctx context.Context, image string) (registry.AuthConfig, error) {
-            …
-              42→func LoadDockerAuthConfigs(ctx context.Context) map[string]registry.AuthConfig {
-            …
         docker_build.go
-            …
-              23→func NewDockerBuildExecutor(input NewDockerBuildExecutorInput) common.Executor {
-            …
-              78→func createBuildContext(ctx context.Context, contextDir string, relDockerfile string) (io.ReadCloser, error) {
-            …
         docker_cli.go
         docker_cli_test.go
         docker_images.go
@@ -259,8 +256,21 @@ pkg/
         interpreter.go
         interpreter_test.go
         testdata/
+            for-hashing-1.txt
+            for-hashing-2.txt
+            for-hashing-3/
+                data.txt
+                nested/
+                    nested-data.txt
     filecollector/
+        file_collector.go
+        file_collector_test.go
     gh/
+        gh.go
+            …
+              10→func GetToken(ctx context.Context, workingDirectory string) (string, error) {
+            …
+        gh_test.go
     lookpath/
         LICENSE
         env.go
@@ -297,10 +307,16 @@ pkg/
         step_result.go
         testdata/
             container-volumes/
+                push.yml
             empty-workflow/
+                push.yml
             invalid-job-name/
             nested/
+                success.yml
+                workflows/
+                    fail.yml
             strategy/
+                push.yml
         workflow.go
         workflow_test.go
     runner/
@@ -316,11 +332,13 @@ pkg/
         expression.go
         expression_test.go
         hashfiles/
+            index.js
         job_executor.go
         job_executor_test.go
         local_repository_cache.go
         logger.go
         res/
+            trampoline.js
         reusable_workflow.go
         run_context.go
         run_context_test.go

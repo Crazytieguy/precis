@@ -6,6 +6,8 @@ expression: rendered
 .github/
     actions/
     workflows/
+        nightly.yml
+        pages.yml
 .gitignore
 .gitmodules
 3rd/
@@ -336,6 +338,7 @@ web/
     content/
         _index.md
         docs/
+            _index.md
         examples/
         playframe.md
     layouts/
@@ -349,6 +352,8 @@ web/
         examples/
         index.html
         partials/
+            footer.html
+            nav.html
         playframe/
             single.html
         shortcodes/
@@ -361,3 +366,7 @@ web/
             section.html
             small.html
     static/
+        coi-serviceworker.min.js
+        fonts/
+            SourceHanSansSC-Regular.ttf
+            arial.ttf

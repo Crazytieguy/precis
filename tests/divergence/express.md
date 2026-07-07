@@ -1,4 +1,4 @@
-Score(3000)=0.612 I=0.815 C=0.459 ns_rows≤3K=15/40 (reached=5 partial=0 missing=10)
+Score(3000)=0.627 I=0.826 C=0.475 ns_rows≤3K=15/40 (reached=6 partial=0 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -35,90 +35,90 @@ Score(3000)=0.612 I=0.815 C=0.459 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | walker |  | 1337 | 24 | export body at lib/request.js:171 body 172 |  |  | 0.439 |
 | walker |  | 1362 | 25 | export body at lib/request.js:127 body 128 |  |  | 0.439 |
 | walker |  | 1388 | 26 | export body at lib/request.js:140 body 141 |  |  | 0.439 |
-| walker |  | 1521 | 133 | export names surface in lib/express.js |  |  | 0.439 |
-| walker |  | 1521 | 0 | export at lib/express.js:27 |  |  | 0.439 |
-| walker |  | 1521 | 0 | export at lib/express.js:36 |  |  | 0.439 |
-| walker |  | 1521 | 0 | export at lib/express.js:62 |  |  | 0.439 |
-| walker |  | 1521 | 0 | export at lib/express.js:70 |  |  | 0.439 |
-| walker |  | 1521 | 0 | export at lib/express.js:77 |  |  | 0.439 |
-| walker |  | 1538 | 17 | export doc at lib/express.js:70 |  |  | 0.439 |
-| walker |  | 1555 | 17 | export doc at lib/express.js:77 |  |  | 0.440 |
-| ns | 1558 |  | 376 | test/ directory listing | 1.11 |  | 0.599 |
-| walker |  | 1575 | 20 | export doc at lib/express.js:62 |  |  | 0.599 |
-| walker |  | 1597 | 22 | export doc at lib/express.js:27 |  |  | 0.599 |
-| walker |  | 1621 | 24 | imports in lib/request.js |  |  | 0.599 |
-| walker |  | 1647 | 26 | export doc at lib/request.js:37 |  |  | 0.599 |
-| walker |  | 1672 | 25 | imports in lib/express.js |  |  | 0.599 |
-| walker |  | 1699 | 27 | imports in lib/application.js |  |  | 0.599 |
-| walker |  | 1800 | 101 | listing of 'examples' |  |  | 0.728 |
-| ns | 1832 |  | 274 | package.json devDependencies | 1.12 |  | 0.695 |
-| walker |  | 1842 | 42 | export doc at lib/express.js:36 |  |  | 0.696 |
-| ns | 2065 |  | 233 | package.json dependencies (accepts..http-errors) | 1.13 |  | 0.670 |
-| walker |  | 2078 | 236 | export names surface in lib/application.js |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:59 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:90 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:152 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:190 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:256 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:294 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:322 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:351 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:399 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:420 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:439 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:451 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:463 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:494 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:522 |  |  | 0.672 |
-| walker |  | 2078 | 0 | export at lib/application.js:598 |  |  | 0.672 |
-| walker |  | 2105 | 27 | export doc at lib/application.js:90 |  |  | 0.672 |
-| walker |  | 2128 | 23 | Readme.md section #19 |  |  | 0.672 |
-| walker |  | 2151 | 23 | Readme.md section #30 |  |  | 0.672 |
-| walker |  | 2175 | 24 | Readme.md section #12 |  |  | 0.672 |
-| walker |  | 2199 | 24 | Readme.md section #32 |  |  | 0.672 |
-| walker |  | 2224 | 25 | Readme.md section #18 |  |  | 0.672 |
-| ns | 2290 |  | 225 | package.json dependencies (merge-descriptors..vary) | 1.14 | 1.13 | 0.650 |
-| walker |  | 2306 | 82 | Readme.md section #7 |  |  | 0.650 |
-| walker |  | 2332 | 26 | Readme.md section #23 |  |  | 0.650 |
-| walker |  | 2357 | 25 | Readme.md section #24 |  |  | 0.650 |
-| walker |  | 2398 | 41 | imports in lib/response.js |  |  | 0.650 |
-| walker |  | 2576 | 178 | export body at lib/request.js:63 body 65 |  |  | 0.650 |
-| ns | 2809 |  | 519 | examples/README.md full | 1.15 |  | 0.612 |
-| walker |  | 2818 | 242 | Readme.md section #1 |  |  | 0.612 |
-| walker |  | 2845 | 27 | Readme.md section #13 |  |  | 0.612 |
-| walker |  | 2871 | 26 | Readme.md section #14 |  |  | 0.612 |
-| walker |  | 2898 | 27 | Readme.md section #15 |  |  | 0.612 |
-| walker |  | 2924 | 26 | Readme.md section #16 |  |  | 0.612 |
-| walker |  | 2949 | 25 | Readme.md section #17 |  |  | 0.612 |
-| walker |  | 2977 | 28 | Readme.md section #22 |  |  | 0.612 |
-| ns | 3136 |  | 327 | History.md: Unreleased changes | 1.16 |  | 0.592 |
-| walker |  | 3287 | 310 | export names surface in lib/response.js |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:49 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:64 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:97 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:125 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:232 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:260 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:321 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:371 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:433 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:569 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:604 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:629 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:696 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:709 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:742 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:794 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:812 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:875 |  |  | 0.594 |
-| walker |  | 3287 | 0 | export at lib/response.js:894 |  |  | 0.594 |
-| walker |  | 3300 | 13 | export at lib/response.js:503 |  |  | 0.594 |
-| walker |  | 3314 | 14 | export at lib/response.js:664 |  |  | 0.594 |
-| walker |  | 3340 | 26 | export doc at lib/response.js:49 |  |  | 0.594 |
-| walker |  | 3485 | 145 | export body at lib/response.js:232 body 233 |  |  | 0.594 |
-| walker |  | 3649 | 164 | export body at lib/response.js:64 body 65 |  |  | 0.594 |
-| walker |  | 3820 | 171 | export body at lib/response.js:97 body 98 |  |  | 0.594 |
-| walker |  | 3832 | 12 | listing of 'test/support' |  |  | 0.608 |
+| walker |  | 1400 | 12 | listing of 'test/support' |  |  | 0.470 |
+| walker |  | 1533 | 133 | export names surface in lib/express.js |  |  | 0.471 |
+| walker |  | 1533 | 0 | export at lib/express.js:27 |  |  | 0.471 |
+| walker |  | 1533 | 0 | export at lib/express.js:36 |  |  | 0.471 |
+| walker |  | 1533 | 0 | export at lib/express.js:62 |  |  | 0.471 |
+| walker |  | 1533 | 0 | export at lib/express.js:70 |  |  | 0.471 |
+| walker |  | 1533 | 0 | export at lib/express.js:77 |  |  | 0.471 |
+| walker |  | 1550 | 17 | export doc at lib/express.js:70 |  |  | 0.471 |
+| ns | 1558 |  | 376 | test/ directory listing | 1.11 |  | 0.616 |
+| walker |  | 1567 | 17 | export doc at lib/express.js:77 |  |  | 0.616 |
+| walker |  | 1587 | 20 | export doc at lib/express.js:62 |  |  | 0.617 |
+| walker |  | 1609 | 22 | export doc at lib/express.js:27 |  |  | 0.617 |
+| walker |  | 1633 | 24 | imports in lib/request.js |  |  | 0.617 |
+| walker |  | 1659 | 26 | export doc at lib/request.js:37 |  |  | 0.617 |
+| walker |  | 1684 | 25 | imports in lib/express.js |  |  | 0.617 |
+| walker |  | 1711 | 27 | imports in lib/application.js |  |  | 0.617 |
+| walker |  | 1812 | 101 | listing of 'examples' |  |  | 0.746 |
+| ns | 1832 |  | 274 | package.json devDependencies | 1.12 |  | 0.712 |
+| walker |  | 1854 | 42 | export doc at lib/express.js:36 |  |  | 0.713 |
+| ns | 2065 |  | 233 | package.json dependencies (accepts..http-errors) | 1.13 |  | 0.686 |
+| walker |  | 2090 | 236 | export names surface in lib/application.js |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:59 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:90 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:152 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:190 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:256 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:294 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:322 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:351 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:399 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:420 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:439 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:451 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:463 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:494 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:522 |  |  | 0.688 |
+| walker |  | 2090 | 0 | export at lib/application.js:598 |  |  | 0.688 |
+| walker |  | 2117 | 27 | export doc at lib/application.js:90 |  |  | 0.688 |
+| walker |  | 2140 | 23 | Readme.md section #19 |  |  | 0.688 |
+| walker |  | 2163 | 23 | Readme.md section #30 |  |  | 0.688 |
+| walker |  | 2187 | 24 | Readme.md section #12 |  |  | 0.688 |
+| walker |  | 2211 | 24 | Readme.md section #32 |  |  | 0.688 |
+| walker |  | 2236 | 25 | Readme.md section #18 |  |  | 0.688 |
+| ns | 2290 |  | 225 | package.json dependencies (merge-descriptors..vary) | 1.14 | 1.13 | 0.665 |
+| walker |  | 2318 | 82 | Readme.md section #7 |  |  | 0.665 |
+| walker |  | 2344 | 26 | Readme.md section #23 |  |  | 0.665 |
+| walker |  | 2369 | 25 | Readme.md section #24 |  |  | 0.665 |
+| walker |  | 2410 | 41 | imports in lib/response.js |  |  | 0.665 |
+| walker |  | 2588 | 178 | export body at lib/request.js:63 body 65 |  |  | 0.665 |
+| ns | 2809 |  | 519 | examples/README.md full | 1.15 |  | 0.627 |
+| walker |  | 2830 | 242 | Readme.md section #1 |  |  | 0.627 |
+| walker |  | 2857 | 27 | Readme.md section #13 |  |  | 0.627 |
+| walker |  | 2883 | 26 | Readme.md section #14 |  |  | 0.627 |
+| walker |  | 2910 | 27 | Readme.md section #15 |  |  | 0.627 |
+| walker |  | 2936 | 26 | Readme.md section #16 |  |  | 0.627 |
+| walker |  | 2961 | 25 | Readme.md section #17 |  |  | 0.627 |
+| walker |  | 2989 | 28 | Readme.md section #22 |  |  | 0.627 |
+| ns | 3136 |  | 327 | History.md: Unreleased changes | 1.16 |  | 0.607 |
+| walker |  | 3299 | 310 | export names surface in lib/response.js |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:49 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:64 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:97 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:125 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:232 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:260 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:321 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:371 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:433 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:569 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:604 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:629 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:696 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:709 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:742 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:794 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:812 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:875 |  |  | 0.608 |
+| walker |  | 3299 | 0 | export at lib/response.js:894 |  |  | 0.608 |
+| walker |  | 3312 | 13 | export at lib/response.js:503 |  |  | 0.608 |
+| walker |  | 3326 | 14 | export at lib/response.js:664 |  |  | 0.608 |
+| walker |  | 3352 | 26 | export doc at lib/response.js:49 |  |  | 0.608 |
+| walker |  | 3497 | 145 | export body at lib/response.js:232 body 233 |  |  | 0.608 |
+| walker |  | 3661 | 164 | export body at lib/response.js:64 body 65 |  |  | 0.608 |
+| walker |  | 3832 | 171 | export body at lib/response.js:97 body 98 |  |  | 0.608 |
 | ns | 3865 |  | 729 | lib/express.js full | 2.1 |  | 0.558 |
 | walker |  | 3889 | 57 | export doc at lib/application.js:451 |  |  | 0.558 |
 | walker |  | 3946 | 57 | export doc at lib/application.js:463 |  |  | 0.558 |

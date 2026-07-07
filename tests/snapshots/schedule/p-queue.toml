@@ -509,10 +509,42 @@ entries = ["security.md", "workflows"]
 
 [[batches]]
 position = 13
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 591
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["main.yml"]
+
+[[batches]]
+position = 14
+key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
+descriptor = "YAML config at .github/workflows/main.yml"
+cost_tokens = 201
+cum_tokens = 792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/main.yml"
+start = 1
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
 key = 'Typescript(Export { file: "source/index.ts", start_line: 16 })'
 descriptor = "export at source/index.ts:16"
 cost_tokens = 540
-cum_tokens = 1127
+cum_tokens = 1332
 
 [batches.content]
 kind = "lines"
@@ -894,11 +926,11 @@ end = 958
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 16
 key = 'Typescript(ExportDoc { file: "source/index.ts", start_line: 16 })'
 descriptor = "export doc at source/index.ts:16"
 cost_tokens = 20
-cum_tokens = 1147
+cum_tokens = 1352
 
 [batches.content]
 kind = "lines"
@@ -907,38 +939,6 @@ kind = "lines"
 path = "source/index.ts"
 start = 13
 end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 1151
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["main.yml"]
-
-[[batches]]
-position = 16
-key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
-descriptor = "YAML config at .github/workflows/main.yml"
-cost_tokens = 201
-cum_tokens = 1352
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/main.yml"
-start = 1
-end = 21
 
 [batches.content.spans.render]
 kind = "full"

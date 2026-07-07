@@ -8,6 +8,7 @@ expression: rendered
 .github/
     ISSUE_TEMPLATE/
     workflows/
+        ci.yaml
 .gitignore
 .golangci.yml
 .goreleaser.yml
@@ -156,6 +157,8 @@ go.sum
 internal/
     cli/
     url/
+        url.go
+        url_test.go
 log.go
        1→package migrate
        3→// Logger is an interface so you can pass in your own
@@ -213,7 +216,6 @@ migration.go
     …
      106→// String implements string.Stringer and is used in tests.
      107→func (m *Migration) String() string {
-     108→	return fmt.Sprintf("%v [%v=>%v]", m.Identifier, m.Version, m.TargetVersion)
     …
      111→// LogString returns a string describing this migration to humans.
      112→func (m *Migration) LogString() string {
@@ -290,6 +292,7 @@ source/
         go-bindata.go
         go-bindata_test.go
         testdata/
+            bindata.go
     godoc_vfs/
         vfs.go
         vfs_example_test.go
@@ -312,6 +315,10 @@ source/
         partial_driver.go
         partial_driver_test.go
         testdata/
+            duplicates/
+            no-migrations/
+                some-file
+            sql/
     iofs/
         README.md
                1→# iofs
@@ -321,11 +328,11 @@ source/
                1→/*
                2→Package iofs provides the Go 1.16+ io/fs#FS driver.
             …
-              10→package iofs
         example_test.go
         iofs.go
         iofs_test.go
         testdata/
+            migrations/
     migration.go
     migration_test.go
     parse.go
@@ -335,11 +342,10 @@ source/
         pkger.go
         pkger_test.go
     stub/
+        stub.go
+        stub_test.go
     testing/
 testing/
-    docker.go
-    testing.go
-    testing_test.go
 util.go
     …
       13→type MultiError struct {

@@ -15,55 +15,55 @@ Score(3000)=0.589 I=0.859 C=0.404 ns_rows≤3K=14/40 (reached=6 partial=0 missin
 | ns | 420 |  | 95 | package.json identity (name/desc/version) | 1.6 |  | 0.559 |
 | walker |  | 460 | 79 | imports in src/index.ts |  |  | 0.559 |
 | walker |  | 481 | 21 | listing of 'docs' |  |  | 0.573 |
-| walker |  | 535 | 54 | headings outline in Readme.md |  |  | 0.573 |
-| walker |  | 562 | 27 | export names surface in src/error.ts |  |  | 0.573 |
-| walker |  | 566 | 4 | listing of '.vscode' |  |  | 0.573 |
-| ns | 572 |  | 152 | package.json entry points, files, engines | 1.7 | 1.6 | 0.520 |
-| walker |  | 621 | 55 | listing of 'examples' |  |  | 0.623 |
-| walker |  | 640 | 19 | Readme.md section #10 |  |  | 0.623 |
-| walker |  | 721 | 81 | export at src/error.ts:5 |  |  | 0.623 |
-| ns | 743 |  | 171 | Readme concept lede | 1.8 |  | 0.615 |
-| walker |  | 814 | 93 | export at src/error.ts:25 |  |  | 0.616 |
-| walker |  | 945 | 131 | README headline in docs/readme.md |  |  | 0.616 |
-| walker |  | 953 | 8 | listing of '.github' |  |  | 0.616 |
-| walker |  | 982 | 29 | listing of 'docs/images' |  |  | 0.648 |
-| walker |  | 1013 | 31 | listing of 'docs/reference' |  |  | 0.711 |
-| walker |  | 1053 | 40 | headings outline in docs/reference/errors.md |  |  | 0.711 |
-| ns | 1060 |  | 317 | docs/summary.md (site nav) | 1.9 |  | 0.620 |
-| walker |  | 1095 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.620 |
-| walker |  | 1121 | 26 | export doc at src/error.ts:5 |  |  | 0.620 |
-| walker |  | 1125 | 4 | listing of '.github/workflows' |  |  | 0.620 |
-| walker |  | 1300 | 175 | YAML config at .github/workflows/ci.yml |  |  | 0.622 |
-| walker |  | 1345 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.622 |
-| ns | 1391 |  | 331 | Readme design principles | 1.10 |  | 0.590 |
-| walker |  | 1403 | 58 | export names surface in src/structs/coercions.ts |  |  | 0.591 |
-| walker |  | 1403 | 0 | export at src/structs/coercions.ts:79 |  |  | 0.591 |
-| walker |  | 1422 | 19 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.591 |
-| walker |  | 1469 | 47 | export at src/structs/coercions.ts:16 |  |  | 0.591 |
-| walker |  | 1526 | 57 | export at src/structs/coercions.ts:38 |  |  | 0.591 |
-| ns | 1531 |  | 140 | struct.ts symbol locations | 2.1 |  | 0.561 |
-| ns | 1675 |  | 144 | Struct class fields | 2.2 | 2.1 | 0.536 |
-| walker |  | 1843 | 317 | mdBook SUMMARY at docs/summary.md |  |  | 0.661 |
-| walker |  | 1894 | 51 | listing of 'docs/guides' |  |  | 0.712 |
-| walker |  | 1926 | 32 | headings outline in docs/guides/05-handling-errors.md |  |  | 0.712 |
-| walker |  | 1960 | 34 | headings outline in docs/guides/03-coercing-data.md |  |  | 0.712 |
-| walker |  | 1994 | 34 | headings outline in docs/guides/04-refining-validation.md |  |  | 0.712 |
-| walker |  | 2030 | 36 | headings outline in docs/guides/01-getting-started.md |  |  | 0.712 |
-| walker |  | 2030 | 0 | docs/guides/01-getting-started.md section #0 |  |  | 0.712 |
-| ns | 2058 |  | 383 | Struct constructor body | 2.3 | 2.1 | 0.623 |
-| walker |  | 2074 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.623 |
-| walker |  | 2126 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.623 |
-| walker |  | 2188 | 62 | headings outline in docs/reference/core.md |  |  | 0.623 |
-| walker |  | 2188 | 0 | docs/reference/core.md section #0 |  |  | 0.623 |
-| walker |  | 2216 | 28 | listing of 'test' |  |  | 0.661 |
-| walker |  | 2381 | 165 | export body at src/error.ts:25 body 36 |  |  | 0.663 |
-| walker |  | 2460 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.663 |
-| walker |  | 2542 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.663 |
-| ns | 2598 |  | 540 | Struct instance methods (assert/create/is/mask/validate) | 2.4 | 2.1 | 0.574 |
-| walker |  | 2627 | 85 | export body at src/structs/coercions.ts:16 body 21 |  |  | 0.574 |
-| walker |  | 2635 | 8 | listing of 'docs/resources' |  |  | 0.589 |
-| walker |  | 2653 | 18 | headings outline in docs/resources/links.md |  |  | 0.589 |
-| walker |  | 2672 | 19 | docs/resources/links.md section #0 |  |  | 0.589 |
+| walker |  | 489 | 8 | listing of 'docs/resources' |  |  | 0.584 |
+| walker |  | 543 | 54 | headings outline in Readme.md |  |  | 0.584 |
+| walker |  | 570 | 27 | export names surface in src/error.ts |  |  | 0.584 |
+| ns | 572 |  | 152 | package.json entry points, files, engines | 1.7 | 1.6 | 0.530 |
+| walker |  | 588 | 18 | headings outline in docs/resources/links.md |  |  | 0.530 |
+| walker |  | 592 | 4 | listing of '.vscode' |  |  | 0.530 |
+| walker |  | 647 | 55 | listing of 'examples' |  |  | 0.631 |
+| walker |  | 666 | 19 | Readme.md section #10 |  |  | 0.631 |
+| ns | 743 |  | 171 | Readme concept lede | 1.8 |  | 0.623 |
+| walker |  | 747 | 81 | export at src/error.ts:5 |  |  | 0.624 |
+| walker |  | 840 | 93 | export at src/error.ts:25 |  |  | 0.625 |
+| walker |  | 971 | 131 | README headline in docs/readme.md |  |  | 0.625 |
+| walker |  | 979 | 8 | listing of '.github' |  |  | 0.625 |
+| walker |  | 983 | 4 | listing of '.github/workflows' |  |  | 0.625 |
+| ns | 1060 |  | 317 | docs/summary.md (site nav) | 1.9 |  | 0.544 |
+| walker |  | 1158 | 175 | YAML config at .github/workflows/ci.yml |  |  | 0.545 |
+| walker |  | 1187 | 29 | listing of 'docs/images' |  |  | 0.579 |
+| walker |  | 1218 | 31 | listing of 'docs/reference' |  |  | 0.641 |
+| walker |  | 1258 | 40 | headings outline in docs/reference/errors.md |  |  | 0.641 |
+| walker |  | 1300 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.641 |
+| walker |  | 1326 | 26 | export doc at src/error.ts:5 |  |  | 0.641 |
+| walker |  | 1371 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.641 |
+| ns | 1391 |  | 331 | Readme design principles | 1.10 |  | 0.609 |
+| walker |  | 1429 | 58 | export names surface in src/structs/coercions.ts |  |  | 0.609 |
+| walker |  | 1429 | 0 | export at src/structs/coercions.ts:79 |  |  | 0.609 |
+| walker |  | 1448 | 19 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.609 |
+| walker |  | 1495 | 47 | export at src/structs/coercions.ts:16 |  |  | 0.609 |
+| ns | 1531 |  | 140 | struct.ts symbol locations | 2.1 |  | 0.579 |
+| walker |  | 1552 | 57 | export at src/structs/coercions.ts:38 |  |  | 0.579 |
+| ns | 1675 |  | 144 | Struct class fields | 2.2 | 2.1 | 0.552 |
+| walker |  | 1869 | 317 | mdBook SUMMARY at docs/summary.md |  |  | 0.676 |
+| walker |  | 1920 | 51 | listing of 'docs/guides' |  |  | 0.731 |
+| walker |  | 1952 | 32 | headings outline in docs/guides/05-handling-errors.md |  |  | 0.731 |
+| walker |  | 1986 | 34 | headings outline in docs/guides/03-coercing-data.md |  |  | 0.731 |
+| walker |  | 2020 | 34 | headings outline in docs/guides/04-refining-validation.md |  |  | 0.731 |
+| walker |  | 2056 | 36 | headings outline in docs/guides/01-getting-started.md |  |  | 0.731 |
+| walker |  | 2056 | 0 | docs/guides/01-getting-started.md section #0 |  |  | 0.731 |
+| ns | 2058 |  | 383 | Struct constructor body | 2.3 | 2.1 | 0.640 |
+| walker |  | 2100 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.640 |
+| walker |  | 2152 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.640 |
+| walker |  | 2214 | 62 | headings outline in docs/reference/core.md |  |  | 0.640 |
+| walker |  | 2214 | 0 | docs/reference/core.md section #0 |  |  | 0.640 |
+| walker |  | 2233 | 19 | docs/resources/links.md section #0 |  |  | 0.640 |
+| walker |  | 2261 | 28 | listing of 'test' |  |  | 0.678 |
+| walker |  | 2426 | 165 | export body at src/error.ts:25 body 36 |  |  | 0.680 |
+| walker |  | 2505 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.680 |
+| walker |  | 2587 | 82 | headings outline in docs/reference/refinements.md |  |  | 0.680 |
+| ns | 2598 |  | 540 | Struct instance methods (assert/create/is/mask/validate) | 2.4 | 2.1 | 0.589 |
+| walker |  | 2672 | 85 | export body at src/structs/coercions.ts:16 body 21 |  |  | 0.589 |
 | walker |  | 2699 | 27 | docs/reference/typescript.md section #0 |  |  | 0.589 |
 | walker |  | 2800 | 101 | export names surface in src/structs/refinements.ts |  |  | 0.589 |
 | walker |  | 2833 | 33 | export at src/structs/refinements.ts:93 |  |  | 0.589 |
