@@ -277,6 +277,9 @@ pub enum PlaintextKey {
     /// Whole-file render. Skipped when line count or rendered token
     /// cost exceeds the walker's caps.
     Whole { file: PathBuf },
+    /// Continuation rows past a head-shaped `Whole` batch (dotenv
+    /// samples: the optional-settings roster after the mandatory head).
+    Tail { file: PathBuf },
     /// `NAME` + `DESCRIPTION`-lede slice of a troff man page — the
     /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
     /// (or autotools `*.1.in`) manual.
@@ -781,6 +784,9 @@ impl InnerKey for PlaintextKey {
         match self {
             PlaintextKey::Whole { file } => {
                 format!("plaintext config {}", display_path(file, root))
+            }
+            PlaintextKey::Tail { file } => {
+                format!("plaintext config tail of {}", display_path(file, root))
             }
             PlaintextKey::ManLede { file } => {
                 format!(

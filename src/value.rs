@@ -111,7 +111,10 @@ pub(crate) fn non_essential_factor_inner(
             if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
                 return 0.2;
             }
-        } else if first.starts_with('.') && first != "." {
+        } else if first.starts_with('.') && first != "." && !is_dotenv_sample_filename(first) {
+            // Dotenv samples are user-facing config documentation,
+            // not tooling plumbing — exempt from the dot-prefix damp
+            // (cf. the `.github/workflows` exception above).
             return 0.2;
         } else if is_root_level_vendor_dir_name(first)
             || is_root_level_build_tooling_dir_name(first)
@@ -136,7 +139,7 @@ pub(crate) fn non_essential_factor_inner(
         if component
             .as_os_str()
             .to_str()
-            .is_some_and(|s| s.starts_with('.') && s != ".")
+            .is_some_and(|s| s.starts_with('.') && s != "." && !is_dotenv_sample_filename(s))
         {
             return 0.2;
         }
@@ -218,6 +221,17 @@ pub(crate) fn non_essential_factor_inner(
         }
     }
     1.0
+}
+
+/// Checked-in dotenv sample/template filenames. These are config-key
+/// documentation with placeholder values — the deploy-facing "what can
+/// I configure" surface — distinct from real credential-bearing `.env`
+/// files, which stay excluded from every walker.
+pub(crate) fn is_dotenv_sample_filename(name: &str) -> bool {
+    matches!(
+        name,
+        ".env.sample" | ".env.example" | ".env.template" | ".env.dist"
+    )
 }
 
 /// Filename carrying the co-located unit-test convention (`foo.test.js`,

@@ -6,6 +6,18 @@ expression: rendered
     devcontainer.json
 .dockerignore
 .env.sample
+       1→# Full list of environment variables with descriptions can be found in the documentation: https://docs.linkwarden.app/self-hosting/environment-variables
+       2→
+       3→NEXTAUTH_URL=http://localhost:3000/api/v1/auth
+       4→NEXTAUTH_SECRET=
+       5→
+       6→# Manual installation database settings
+       7→# Example: DATABASE_URL=postgresql://user:password@localhost:5432/linkwarden
+       8→DATABASE_URL=
+       9→
+      10→# Docker installation database settings
+      11→POSTGRES_PASSWORD=
+    …
 .eslintrc.json
 .github/
     CODE_OF_CONDUCT.md
@@ -48,7 +60,7 @@ README.md
       41→## Features
       43→- 📸 Auto capture a screenshot, PDF, and single html file of each webpage
       44→- 📖 Reader view of the webpage, with the ability to highlight and annotate text
-      45→- 🏛️ Send your webpage to Wayback Machine ([archive.org](https://archive.org)) for a snapshot (optional)
+    …
       46→- ✨ Local AI Tagging to automatically tag your links based on their content (optional)
       47→- 📂 Organize links by collection, sub-collection, name, description and multiple tags
       48→- 👥 Collaborate on gathering links in a collection
@@ -96,30 +108,6 @@ README.md
     …
 apps/
     mobile/
-        .easignore
-        .env.sample
-        .gitignore
-        app/
-        app.json
-        assets/
-        babel.config.js
-        components/
-        eas.json
-        lib/
-            cache.ts
-            colors.ts
-            queryClient.ts
-            queryPersister.ts
-            theme.ts
-        metro.config.js
-        nativewind-env.d.ts
-        package.json
-        plugins/
-        store/
-        styles/
-        tailwind.config.js
-        tsconfig.json
-        types/
     web/
     worker/
         index.ts

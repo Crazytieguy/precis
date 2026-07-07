@@ -173,17 +173,14 @@ package.json
 packages/
     app-client/
         .env.example
+               1→VITE_BASE_API_URL=http://localhost:8787
+               2→VITE_FALLBACK_DOCUMENTATION_URL=http://localhost:3001
         .gitignore
         README.md
                1→## Usage
                2→
                3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
-               5→This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
-               6→
-               7→```bash
-               8→$ npm install # or pnpm install or yarn install
-               9→```
-              10→
+            …
               11→### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
               12→
               13→## Available Scripts

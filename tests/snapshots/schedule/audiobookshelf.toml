@@ -1,7 +1,7 @@
 fixture = "audiobookshelf"
 budget = 10000
-cumulative_tokens = 9954
-batch_count = 309
+cumulative_tokens = 9951
+batch_count = 276
 
 [[batches]]
 position = 1
@@ -2563,10 +2563,28 @@ kind = "full"
 
 [[batches]]
 position = 134
+key = 'Plaintext(Whole { file: "Dockerfile" })'
+descriptor = "plaintext config Dockerfile"
+cost_tokens = 845
+cum_tokens = 6162
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Dockerfile"
+start = 1
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
 key = 'Markdown(Section { file: "readme.md", section_index: 59, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #59"
 cost_tokens = 30
-cum_tokens = 5347
+cum_tokens = 6192
 
 [batches.content]
 kind = "lines"
@@ -2580,11 +2598,11 @@ end = 395
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Fs(DirListing { dir: "server/utils/parsers" })'
 descriptor = "listing of 'server/utils/parsers'"
 cost_tokens = 73
-cum_tokens = 5420
+cum_tokens = 6265
 
 [batches.content]
 kind = "fs"
@@ -2594,11 +2612,11 @@ parent = "server/utils/parsers"
 entries = ["parseComicInfoMetadata.js", "parseComicMetadata.js", "parseEbookMetadata.js", "parseEpubMetadata.js", "parseFullName.js", "parseNameString.js", "parseNfoMetadata.js", "parseOPML.js", "parseOpfMetadata.js", "parseOverdriveMediaMarkers.js", "parseSeriesString.js"]
 
 [[batches]]
-position = 136
+position = 137
 key = 'Fs(DirListing { dir: "client/components/prompt" })'
 descriptor = "listing of 'client/components/prompt'"
 cost_tokens = 8
-cum_tokens = 5428
+cum_tokens = 6273
 
 [batches.content]
 kind = "fs"
@@ -2608,11 +2626,11 @@ parent = "client/components/prompt"
 entries = ["Confirm.vue", "Dialog.vue"]
 
 [[batches]]
-position = 137
+position = 138
 key = 'Fs(DirListing { dir: "server/libs" })'
 descriptor = "listing of 'server/libs'"
 cost_tokens = 144
-cum_tokens = 5572
+cum_tokens = 6417
 
 [batches.content]
 kind = "fs"
@@ -2622,11 +2640,11 @@ parent = "server/libs"
 entries = ["archiver", "async", "bcryptjs", "busboy", "commandLineArgs", "dateAndTime", "expressFileupload", "fastSort", "fluentFfmpeg", "fsExtra", "fusejs", "imageType", "isexe", "jsonwebtoken", "jwa", "jws", "libarchive", "lodash.once", "memorystore", "nodeCron", "nodeFfprobe", "nodeStreamZip", "passportLocal", "readChunk", "recursiveReaddirAsync", "requestIp", "rss", "sanitizeHtml", "streamsearch", "uaParser", "umzug", "universalify", "watcher", "which", "xml"]
 
 [[batches]]
-position = 138
+position = 139
 key = 'Fs(DirListing { dir: "server/libs/busboy" })'
 descriptor = "listing of 'server/libs/busboy'"
 cost_tokens = 14
-cum_tokens = 5586
+cum_tokens = 6431
 
 [batches.content]
 kind = "fs"
@@ -2636,11 +2654,11 @@ parent = "server/libs/busboy"
 entries = ["LICENSE", "index.js", "types", "utils.js"]
 
 [[batches]]
-position = 139
+position = 140
 key = 'Fs(DirListing { dir: "server/libs/isexe" })'
 descriptor = "listing of 'server/libs/isexe'"
 cost_tokens = 15
-cum_tokens = 5601
+cum_tokens = 6446
 
 [batches.content]
 kind = "fs"
@@ -2650,11 +2668,11 @@ parent = "server/libs/isexe"
 entries = ["LICENSE", "index.js", "mode.js", "windows.js"]
 
 [[batches]]
-position = 140
+position = 141
 key = 'Fs(DirListing { dir: "server/libs/readChunk" })'
 descriptor = "listing of 'server/libs/readChunk'"
 cost_tokens = 18
-cum_tokens = 5619
+cum_tokens = 6464
 
 [batches.content]
 kind = "fs"
@@ -2664,11 +2682,11 @@ parent = "server/libs/readChunk"
 entries = ["LICENSE", "index.js", "pify.js", "withOpenFile.js"]
 
 [[batches]]
-position = 141
+position = 142
 key = 'Fs(DirListing { dir: "server/libs/jsonwebtoken" })'
 descriptor = "listing of 'server/libs/jsonwebtoken'"
 cost_tokens = 22
-cum_tokens = 5641
+cum_tokens = 6486
 
 [batches.content]
 kind = "fs"
@@ -2678,11 +2696,11 @@ parent = "server/libs/jsonwebtoken"
 entries = ["LICENSE", "decode.js", "index.js", "lib", "sign.js", "verify.js"]
 
 [[batches]]
-position = 142
+position = 143
 key = 'Fs(DirListing { dir: "server/libs/umzug" })'
 descriptor = "listing of 'server/libs/umzug'"
 cost_tokens = 23
-cum_tokens = 5664
+cum_tokens = 6509
 
 [batches.content]
 kind = "fs"
@@ -2692,11 +2710,11 @@ parent = "server/libs/umzug"
 entries = ["LICENSE", "index.js", "storage", "templates.js", "types.js", "umzug.js"]
 
 [[batches]]
-position = 143
+position = 144
 key = 'Fs(DirListing { dir: "server/libs/jwa" })'
 descriptor = "listing of 'server/libs/jwa'"
 cost_tokens = 24
-cum_tokens = 5688
+cum_tokens = 6533
 
 [batches.content]
 kind = "fs"
@@ -2706,11 +2724,11 @@ parent = "server/libs/jwa"
 entries = ["LICENSE", "buffer-equal-constant-time", "ecdsa-sig-formatter", "index.js"]
 
 [[batches]]
-position = 144
+position = 145
 key = 'Fs(DirListing { dir: "server/libs/libarchive" })'
 descriptor = "listing of 'server/libs/libarchive'"
 cost_tokens = 24
-cum_tokens = 5712
+cum_tokens = 6557
 
 [batches.content]
 kind = "fs"
@@ -2720,11 +2738,11 @@ parent = "server/libs/libarchive"
 entries = ["LICENSE", "archive.js", "libarchiveWorker.js", "wasm-libarchive.js", "wasm-module.js"]
 
 [[batches]]
-position = 145
+position = 146
 key = 'Fs(DirListing { dir: "server/libs/jsonwebtoken/lib" })'
 descriptor = "listing of 'server/libs/jsonwebtoken/lib'"
 cost_tokens = 24
-cum_tokens = 5736
+cum_tokens = 6581
 
 [batches.content]
 kind = "fs"
@@ -2734,11 +2752,11 @@ parent = "server/libs/jsonwebtoken/lib"
 entries = ["JsonWebTokenError.js", "NotBeforeError.js", "TokenExpiredError.js", "timespan.js"]
 
 [[batches]]
-position = 146
+position = 147
 key = 'Fs(DirListing { dir: "server/libs/jws" })'
 descriptor = "listing of 'server/libs/jws'"
 cost_tokens = 10
-cum_tokens = 5746
+cum_tokens = 6591
 
 [batches.content]
 kind = "fs"
@@ -2748,11 +2766,11 @@ parent = "server/libs/jws"
 entries = ["LICENSE", "index.js", "lib"]
 
 [[batches]]
-position = 147
+position = 148
 key = 'Fs(DirListing { dir: "server/libs/jws/lib" })'
 descriptor = "listing of 'server/libs/jws/lib'"
 cost_tokens = 19
-cum_tokens = 5765
+cum_tokens = 6610
 
 [batches.content]
 kind = "fs"
@@ -2762,11 +2780,11 @@ parent = "server/libs/jws/lib"
 entries = ["data-stream.js", "sign-stream.js", "tostring.js", "verify-stream.js"]
 
 [[batches]]
-position = 148
+position = 149
 key = 'Fs(DirListing { dir: "server/libs/passportLocal" })'
 descriptor = "listing of 'server/libs/passportLocal'"
 cost_tokens = 11
-cum_tokens = 5776
+cum_tokens = 6621
 
 [batches.content]
 kind = "fs"
@@ -2776,11 +2794,11 @@ parent = "server/libs/passportLocal"
 entries = ["LICENSE", "index.js", "strategy.js"]
 
 [[batches]]
-position = 149
+position = 150
 key = 'Fs(DirListing { dir: "server/libs/imageType" })'
 descriptor = "listing of 'server/libs/imageType'"
 cost_tokens = 12
-cum_tokens = 5788
+cum_tokens = 6633
 
 [batches.content]
 kind = "fs"
@@ -2790,11 +2808,11 @@ parent = "server/libs/imageType"
 entries = ["LICENSE", "fileType.js", "index.js"]
 
 [[batches]]
-position = 150
+position = 151
 key = 'Fs(DirListing { dir: "server/libs/requestIp" })'
 descriptor = "listing of 'server/libs/requestIp'"
 cost_tokens = 12
-cum_tokens = 5800
+cum_tokens = 6645
 
 [batches.content]
 kind = "fs"
@@ -2804,11 +2822,11 @@ parent = "server/libs/requestIp"
 entries = ["LICENSE", "index.js", "isJs.js"]
 
 [[batches]]
-position = 151
+position = 152
 key = 'Fs(DirListing { dir: "server/libs/xml" })'
 descriptor = "listing of 'server/libs/xml'"
 cost_tokens = 13
-cum_tokens = 5813
+cum_tokens = 6658
 
 [batches.content]
 kind = "fs"
@@ -2818,11 +2836,11 @@ parent = "server/libs/xml"
 entries = ["LICENSE", "escapeForXML.js", "index.js"]
 
 [[batches]]
-position = 152
+position = 153
 key = 'Fs(DirListing { dir: "server/libs/fsExtra" })'
 descriptor = "listing of 'server/libs/fsExtra'"
 cost_tokens = 37
-cum_tokens = 5850
+cum_tokens = 6695
 
 [batches.content]
 kind = "fs"
@@ -2832,11 +2850,11 @@ parent = "server/libs/fsExtra"
 entries = ["LICENSE", "copy", "empty", "ensure", "fs", "index.js", "mkdirs", "move", "path-exists", "remove", "util"]
 
 [[batches]]
-position = 153
+position = 154
 key = 'Fs(DirListing { dir: "server/libs/fluentFfmpeg" })'
 descriptor = "listing of 'server/libs/fluentFfmpeg'"
 cost_tokens = 39
-cum_tokens = 5889
+cum_tokens = 6734
 
 [batches.content]
 kind = "fs"
@@ -2846,11 +2864,11 @@ parent = "server/libs/fluentFfmpeg"
 entries = ["LICENSE", "capabilities.js", "ffprobe.js", "index.d.ts", "index.js", "options", "presets", "processor.js", "recipes.js", "utils.js"]
 
 [[batches]]
-position = 154
+position = 155
 key = 'Fs(DirListing { dir: "server/libs/commandLineArgs" })'
 descriptor = "listing of 'server/libs/commandLineArgs'"
 cost_tokens = 4
-cum_tokens = 5893
+cum_tokens = 6738
 
 [batches.content]
 kind = "fs"
@@ -2860,11 +2878,11 @@ parent = "server/libs/commandLineArgs"
 entries = ["index.js"]
 
 [[batches]]
-position = 155
+position = 156
 key = 'Fs(DirListing { dir: "server/libs/fusejs" })'
 descriptor = "listing of 'server/libs/fusejs'"
 cost_tokens = 4
-cum_tokens = 5897
+cum_tokens = 6742
 
 [batches.content]
 kind = "fs"
@@ -2874,11 +2892,11 @@ parent = "server/libs/fusejs"
 entries = ["index.js"]
 
 [[batches]]
-position = 156
+position = 157
 key = 'Fs(DirListing { dir: "server/libs/umzug/storage" })'
 descriptor = "listing of 'server/libs/umzug/storage'"
 cost_tokens = 24
-cum_tokens = 5921
+cum_tokens = 6766
 
 [batches.content]
 kind = "fs"
@@ -2888,11 +2906,11 @@ parent = "server/libs/umzug/storage"
 entries = ["contract.js", "index.js", "json.js", "memory.js", "mongodb.js", "sequelize.js"]
 
 [[batches]]
-position = 157
+position = 158
 key = 'Fs(DirListing { dir: "server/libs/nodeCron" })'
 descriptor = "listing of 'server/libs/nodeCron'"
 cost_tokens = 45
-cum_tokens = 5966
+cum_tokens = 6811
 
 [batches.content]
 kind = "fs"
@@ -2902,11 +2920,11 @@ parent = "server/libs/nodeCron"
 entries = ["LICENSE", "background-scheduled-task", "convert-expression", "index.js", "pattern-validation.js", "scheduled-task.js", "scheduler.js", "storage.js", "task.js", "time-matcher.js"]
 
 [[batches]]
-position = 158
+position = 159
 key = 'Fs(DirListing { dir: "server/libs/fluentFfmpeg/options" })'
 descriptor = "listing of 'server/libs/fluentFfmpeg/options'"
 cost_tokens = 29
-cum_tokens = 5995
+cum_tokens = 6840
 
 [batches.content]
 kind = "fs"
@@ -2916,11 +2934,11 @@ parent = "server/libs/fluentFfmpeg/options"
 entries = ["audio.js", "custom.js", "inputs.js", "misc.js", "output.js", "video.js", "videosize.js"]
 
 [[batches]]
-position = 159
+position = 160
 key = 'Fs(DirListing { dir: "server/libs/expressFileupload" })'
 descriptor = "listing of 'server/libs/expressFileupload'"
 cost_tokens = 48
-cum_tokens = 6043
+cum_tokens = 6888
 
 [batches.content]
 kind = "fs"
@@ -2930,11 +2948,11 @@ parent = "server/libs/expressFileupload"
 entries = ["LICENSE", "fileFactory.js", "index.js", "isEligibleRequest.js", "memHandler.js", "processMultipart.js", "processNested.js", "tempFileHandler.js", "uploadtimer.js", "utilities.js"]
 
 [[batches]]
-position = 160
+position = 161
 key = 'Fs(DirListing { dir: "server/libs/archiver" })'
 descriptor = "listing of 'server/libs/archiver'"
 cost_tokens = 49
-cum_tokens = 6092
+cum_tokens = 6937
 
 [batches.content]
 kind = "fs"
@@ -2944,11 +2962,11 @@ parent = "server/libs/archiver"
 entries = ["LICENSE", "archiverUtils", "buffer-crc32", "compress-commons", "crc32", "crc32-stream", "index.js", "lib", "normalize-path", "readdir-glob", "zip-stream"]
 
 [[batches]]
-position = 161
+position = 162
 key = 'Fs(DirListing { dir: "server/libs/archiver/compress-commons" })'
 descriptor = "listing of 'server/libs/archiver/compress-commons'"
 cost_tokens = 14
-cum_tokens = 6106
+cum_tokens = 6951
 
 [batches.content]
 kind = "fs"
@@ -2958,11 +2976,11 @@ parent = "server/libs/archiver/compress-commons"
 entries = ["LICENSE", "archivers", "index.js", "util"]
 
 [[batches]]
-position = 162
+position = 163
 key = 'Fs(DirListing { dir: "server/libs/archiver/lib" })'
 descriptor = "listing of 'server/libs/archiver/lib'"
 cost_tokens = 11
-cum_tokens = 6117
+cum_tokens = 6962
 
 [batches.content]
 kind = "fs"
@@ -2972,11 +2990,11 @@ parent = "server/libs/archiver/lib"
 entries = ["core.js", "error.js", "plugins"]
 
 [[batches]]
-position = 163
+position = 164
 key = 'Typescript(ExportNames { file: "server/libs/archiver/lib/error.js" })'
 descriptor = "export names surface in server/libs/archiver/lib/error.js"
 cost_tokens = 30
-cum_tokens = 6147
+cum_tokens = 6992
 
 [batches.content]
 kind = "lines"
@@ -3006,11 +3024,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 164
+position = 165
 key = 'Typescript(Export { file: "server/libs/archiver/lib/error.js", start_line: 30 })'
 descriptor = "export at server/libs/archiver/lib/error.js:30"
 cost_tokens = 0
-cum_tokens = 6147
+cum_tokens = 6992
 
 [batches.content]
 kind = "lines"
@@ -3032,11 +3050,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 166
 key = 'Fs(DirListing { dir: "server/libs/archiver/crc32-stream" })'
 descriptor = "listing of 'server/libs/archiver/crc32-stream'"
 cost_tokens = 22
-cum_tokens = 6169
+cum_tokens = 7014
 
 [batches.content]
 kind = "fs"
@@ -3046,11 +3064,11 @@ parent = "server/libs/archiver/crc32-stream"
 entries = ["LICENSE", "crc32-stream.js", "deflate-crc32-stream.js", "index.js"]
 
 [[batches]]
-position = 166
+position = 167
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/ensure" })'
 descriptor = "listing of 'server/libs/fsExtra/ensure'"
 cost_tokens = 30
-cum_tokens = 6199
+cum_tokens = 7044
 
 [batches.content]
 kind = "fs"
@@ -3060,11 +3078,11 @@ parent = "server/libs/fsExtra/ensure"
 entries = ["file.js", "index.js", "link.js", "symlink-paths.js", "symlink-type.js", "symlink.js"]
 
 [[batches]]
-position = 167
+position = 168
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/copy" })'
 descriptor = "listing of 'server/libs/fsExtra/copy'"
 cost_tokens = 13
-cum_tokens = 6212
+cum_tokens = 7057
 
 [batches.content]
 kind = "fs"
@@ -3074,11 +3092,11 @@ parent = "server/libs/fsExtra/copy"
 entries = ["copy-sync.js", "copy.js", "index.js"]
 
 [[batches]]
-position = 168
+position = 169
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/mkdirs" })'
 descriptor = "listing of 'server/libs/fsExtra/mkdirs'"
 cost_tokens = 13
-cum_tokens = 6225
+cum_tokens = 7070
 
 [batches.content]
 kind = "fs"
@@ -3088,11 +3106,11 @@ parent = "server/libs/fsExtra/mkdirs"
 entries = ["index.js", "make-dir.js", "utils.js"]
 
 [[batches]]
-position = 169
+position = 170
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/move" })'
 descriptor = "listing of 'server/libs/fsExtra/move'"
 cost_tokens = 13
-cum_tokens = 6238
+cum_tokens = 7083
 
 [batches.content]
 kind = "fs"
@@ -3102,11 +3120,11 @@ parent = "server/libs/fsExtra/move"
 entries = ["index.js", "move-sync.js", "move.js"]
 
 [[batches]]
-position = 170
+position = 171
 key = 'Fs(DirListing { dir: "server/libs/fluentFfmpeg/presets" })'
 descriptor = "listing of 'server/libs/fluentFfmpeg/presets'"
 cost_tokens = 14
-cum_tokens = 6252
+cum_tokens = 7097
 
 [batches.content]
 kind = "fs"
@@ -3116,11 +3134,11 @@ parent = "server/libs/fluentFfmpeg/presets"
 entries = ["divx.js", "flashvideo.js", "podcast.js"]
 
 [[batches]]
-position = 171
+position = 172
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/empty" })'
 descriptor = "listing of 'server/libs/fsExtra/empty'"
 cost_tokens = 4
-cum_tokens = 6256
+cum_tokens = 7101
 
 [batches.content]
 kind = "fs"
@@ -3130,11 +3148,11 @@ parent = "server/libs/fsExtra/empty"
 entries = ["index.js"]
 
 [[batches]]
-position = 172
+position = 173
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/fs" })'
 descriptor = "listing of 'server/libs/fsExtra/fs'"
 cost_tokens = 4
-cum_tokens = 6260
+cum_tokens = 7105
 
 [batches.content]
 kind = "fs"
@@ -3144,11 +3162,11 @@ parent = "server/libs/fsExtra/fs"
 entries = ["index.js"]
 
 [[batches]]
-position = 173
+position = 174
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/path-exists" })'
 descriptor = "listing of 'server/libs/fsExtra/path-exists'"
 cost_tokens = 4
-cum_tokens = 6264
+cum_tokens = 7109
 
 [batches.content]
 kind = "fs"
@@ -3158,11 +3176,11 @@ parent = "server/libs/fsExtra/path-exists"
 entries = ["index.js"]
 
 [[batches]]
-position = 174
+position = 175
 key = 'Fs(DirListing { dir: "server/libs/async" })'
 descriptor = "listing of 'server/libs/async'"
 cost_tokens = 7
-cum_tokens = 6271
+cum_tokens = 7116
 
 [batches.content]
 kind = "fs"
@@ -3172,11 +3190,11 @@ parent = "server/libs/async"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 175
+position = 176
 key = 'Fs(DirListing { dir: "server/libs/bcryptjs" })'
 descriptor = "listing of 'server/libs/bcryptjs'"
 cost_tokens = 7
-cum_tokens = 6278
+cum_tokens = 7123
 
 [batches.content]
 kind = "fs"
@@ -3186,11 +3204,11 @@ parent = "server/libs/bcryptjs"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 176
+position = 177
 key = 'Fs(DirListing { dir: "server/libs/dateAndTime" })'
 descriptor = "listing of 'server/libs/dateAndTime'"
 cost_tokens = 7
-cum_tokens = 6285
+cum_tokens = 7130
 
 [batches.content]
 kind = "fs"
@@ -3200,11 +3218,11 @@ parent = "server/libs/dateAndTime"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 177
+position = 178
 key = 'Fs(DirListing { dir: "server/libs/fastSort" })'
 descriptor = "listing of 'server/libs/fastSort'"
 cost_tokens = 7
-cum_tokens = 6292
+cum_tokens = 7137
 
 [batches.content]
 kind = "fs"
@@ -3214,11 +3232,11 @@ parent = "server/libs/fastSort"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 178
+position = 179
 key = 'Fs(DirListing { dir: "server/libs/lodash.once" })'
 descriptor = "listing of 'server/libs/lodash.once'"
 cost_tokens = 7
-cum_tokens = 6299
+cum_tokens = 7144
 
 [batches.content]
 kind = "fs"
@@ -3228,11 +3246,11 @@ parent = "server/libs/lodash.once"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 179
+position = 180
 key = 'Fs(DirListing { dir: "server/libs/memorystore" })'
 descriptor = "listing of 'server/libs/memorystore'"
 cost_tokens = 7
-cum_tokens = 6306
+cum_tokens = 7151
 
 [batches.content]
 kind = "fs"
@@ -3242,11 +3260,11 @@ parent = "server/libs/memorystore"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 180
+position = 181
 key = 'Fs(DirListing { dir: "server/libs/nodeFfprobe" })'
 descriptor = "listing of 'server/libs/nodeFfprobe'"
 cost_tokens = 7
-cum_tokens = 6313
+cum_tokens = 7158
 
 [batches.content]
 kind = "fs"
@@ -3256,11 +3274,11 @@ parent = "server/libs/nodeFfprobe"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 181
+position = 182
 key = 'Fs(DirListing { dir: "server/libs/nodeStreamZip" })'
 descriptor = "listing of 'server/libs/nodeStreamZip'"
 cost_tokens = 7
-cum_tokens = 6320
+cum_tokens = 7165
 
 [batches.content]
 kind = "fs"
@@ -3270,11 +3288,11 @@ parent = "server/libs/nodeStreamZip"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 182
+position = 183
 key = 'Fs(DirListing { dir: "server/libs/recursiveReaddirAsync" })'
 descriptor = "listing of 'server/libs/recursiveReaddirAsync'"
 cost_tokens = 7
-cum_tokens = 6327
+cum_tokens = 7172
 
 [batches.content]
 kind = "fs"
@@ -3284,11 +3302,11 @@ parent = "server/libs/recursiveReaddirAsync"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 183
+position = 184
 key = 'Fs(DirListing { dir: "server/libs/rss" })'
 descriptor = "listing of 'server/libs/rss'"
 cost_tokens = 7
-cum_tokens = 6334
+cum_tokens = 7179
 
 [batches.content]
 kind = "fs"
@@ -3298,11 +3316,11 @@ parent = "server/libs/rss"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 184
+position = 185
 key = 'Fs(DirListing { dir: "server/libs/sanitizeHtml" })'
 descriptor = "listing of 'server/libs/sanitizeHtml'"
 cost_tokens = 7
-cum_tokens = 6341
+cum_tokens = 7186
 
 [batches.content]
 kind = "fs"
@@ -3312,11 +3330,11 @@ parent = "server/libs/sanitizeHtml"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 185
+position = 186
 key = 'Fs(DirListing { dir: "server/libs/streamsearch" })'
 descriptor = "listing of 'server/libs/streamsearch'"
 cost_tokens = 7
-cum_tokens = 6348
+cum_tokens = 7193
 
 [batches.content]
 kind = "fs"
@@ -3326,11 +3344,11 @@ parent = "server/libs/streamsearch"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 186
+position = 187
 key = 'Fs(DirListing { dir: "server/libs/uaParser" })'
 descriptor = "listing of 'server/libs/uaParser'"
 cost_tokens = 7
-cum_tokens = 6355
+cum_tokens = 7200
 
 [batches.content]
 kind = "fs"
@@ -3340,11 +3358,11 @@ parent = "server/libs/uaParser"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 187
+position = 188
 key = 'Fs(DirListing { dir: "server/libs/universalify" })'
 descriptor = "listing of 'server/libs/universalify'"
 cost_tokens = 7
-cum_tokens = 6362
+cum_tokens = 7207
 
 [batches.content]
 kind = "fs"
@@ -3354,11 +3372,11 @@ parent = "server/libs/universalify"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 188
+position = 189
 key = 'Fs(DirListing { dir: "server/libs/which" })'
 descriptor = "listing of 'server/libs/which'"
 cost_tokens = 7
-cum_tokens = 6369
+cum_tokens = 7214
 
 [batches.content]
 kind = "fs"
@@ -3368,11 +3386,11 @@ parent = "server/libs/which"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 189
+position = 190
 key = 'Fs(DirListing { dir: "server/libs/nodeCron/convert-expression" })'
 descriptor = "listing of 'server/libs/nodeCron/convert-expression'"
 cost_tokens = 43
-cum_tokens = 6412
+cum_tokens = 7257
 
 [batches.content]
 kind = "fs"
@@ -3382,11 +3400,11 @@ parent = "server/libs/nodeCron/convert-expression"
 entries = ["asterisk-to-range-conversion.js", "index.js", "month-names-conversion.js", "range-conversion.js", "step-values-conversion.js", "week-day-names-conversion.js"]
 
 [[batches]]
-position = 190
+position = 191
 key = 'Fs(DirListing { dir: "server/libs/jwa/ecdsa-sig-formatter" })'
 descriptor = "listing of 'server/libs/jwa/ecdsa-sig-formatter'"
 cost_tokens = 16
-cum_tokens = 6428
+cum_tokens = 7273
 
 [batches.content]
 kind = "fs"
@@ -3396,11 +3414,11 @@ parent = "server/libs/jwa/ecdsa-sig-formatter"
 entries = ["LICENSE", "index.js", "param-bytes-for-alg.js"]
 
 [[batches]]
-position = 191
+position = 192
 key = 'Fs(DirListing { dir: "test/server/utils" })'
 descriptor = "listing of 'test/server/utils'"
 cost_tokens = 33
-cum_tokens = 6461
+cum_tokens = 7306
 
 [batches.content]
 kind = "fs"
@@ -3410,11 +3428,11 @@ parent = "test/server/utils"
 entries = ["ffmpegHelpers.test.js", "fileUtils.test.js", "parsers", "scandir.test.js", "stringifySequeslizeQuery.test.js"]
 
 [[batches]]
-position = 192
+position = 193
 key = 'Markdown(Section { file: "readme.md", section_index: 40, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #40"
 cost_tokens = 38
-cum_tokens = 6499
+cum_tokens = 7344
 
 [batches.content]
 kind = "lines"
@@ -3428,11 +3446,11 @@ end = 248
 kind = "full"
 
 [[batches]]
-position = 193
+position = 194
 key = 'Markdown(Section { file: "readme.md", section_index: 67, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #67"
 cost_tokens = 35
-cum_tokens = 6534
+cum_tokens = 7379
 
 [batches.content]
 kind = "lines"
@@ -3446,11 +3464,11 @@ end = 438
 kind = "full"
 
 [[batches]]
-position = 194
+position = 195
 key = 'Markdown(Section { file: "readme.md", section_index: 61, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #61"
 cost_tokens = 36
-cum_tokens = 6570
+cum_tokens = 7415
 
 [batches.content]
 kind = "lines"
@@ -3464,11 +3482,11 @@ end = 410
 kind = "full"
 
 [[batches]]
-position = 195
+position = 196
 key = 'Fs(DirListing { dir: "client/strings" })'
 descriptor = "listing of 'client/strings'"
 cost_tokens = 167
-cum_tokens = 6737
+cum_tokens = 7582
 
 [batches.content]
 kind = "fs"
@@ -3478,11 +3496,11 @@ parent = "client/strings"
 entries = ["ar.json", "be.json", "bg.json", "bn.json", "ca.json", "cs.json", "da.json", "de.json", "el.json", "en-us.json", "es.json", "et.json", "eu.json", "fa.json", "fi.json", "fr.json", "gu.json", "he.json", "hi.json", "hr.json", "hu.json", "is.json", "it.json", "ja.json", "ko.json", "lt.json", "nl.json", "no.json", "pl.json", "pt-br.json", "ro.json", "ru.json", "sk.json", "sl.json", "sv.json", "tr.json", "uk.json", "vi-vn.json", "zh-cn.json", "zh-tw.json"]
 
 [[batches]]
-position = 196
+position = 197
 key = 'Json(Whole { file: "client/strings/eu.json" })'
 descriptor = "json config client/strings/eu.json"
 cost_tokens = 5
-cum_tokens = 6742
+cum_tokens = 7587
 
 [batches.content]
 kind = "lines"
@@ -3496,11 +3514,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 197
+position = 198
 key = 'Json(Whole { file: "client/strings/is.json" })'
 descriptor = "json config client/strings/is.json"
 cost_tokens = 5
-cum_tokens = 6747
+cum_tokens = 7592
 
 [batches.content]
 kind = "lines"
@@ -3514,11 +3532,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 198
+position = 199
 key = 'Fs(DirListing { dir: "client/pages/library/_library/podcast" })'
 descriptor = "listing of 'client/pages/library/_library/podcast'"
 cost_tokens = 14
-cum_tokens = 6761
+cum_tokens = 7606
 
 [batches.content]
 kind = "fs"
@@ -3528,11 +3546,11 @@ parent = "client/pages/library/_library/podcast"
 entries = ["download-queue.vue", "latest.vue", "search.vue"]
 
 [[batches]]
-position = 199
+position = 200
 key = 'Fs(DirListing { dir: "server/libs/archiver/compress-commons/archivers" })'
 descriptor = "listing of 'server/libs/archiver/compress-commons/archivers'"
 cost_tokens = 14
-cum_tokens = 6775
+cum_tokens = 7620
 
 [batches.content]
 kind = "fs"
@@ -3542,11 +3560,11 @@ parent = "server/libs/archiver/compress-commons/archivers"
 entries = ["archive-entry.js", "archive-output-stream.js", "zip"]
 
 [[batches]]
-position = 200
+position = 201
 key = 'Fs(DirListing { dir: "client/components/tables" })'
 descriptor = "listing of 'client/components/tables'"
 cost_tokens = 97
-cum_tokens = 6872
+cum_tokens = 7717
 
 [batches.content]
 kind = "fs"
@@ -3556,11 +3574,11 @@ parent = "client/components/tables"
 entries = ["ApiKeysTable.vue", "AudioTracksTableRow.vue", "BackupsTable.vue", "ChaptersTable.vue", "CollectionBooksTable.vue", "CustomMetadataProviderTable.vue", "EbookFilesTable.vue", "EbookFilesTableRow.vue", "LibraryFilesTable.vue", "LibraryFilesTableRow.vue", "PlaylistItemsTable.vue", "TracksTable.vue", "UploadedFilesTable.vue", "UsersTable.vue", "collection", "library", "playlist", "podcast"]
 
 [[batches]]
-position = 201
+position = 202
 key = 'Fs(DirListing { dir: "client/components/tables/podcast" })'
 descriptor = "listing of 'client/components/tables/podcast'"
 cost_tokens = 18
-cum_tokens = 6890
+cum_tokens = 7735
 
 [batches.content]
 kind = "fs"
@@ -3570,11 +3588,11 @@ parent = "client/components/tables/podcast"
 entries = ["DownloadQueueTable.vue", "LazyEpisodeRow.vue", "LazyEpisodesTable.vue"]
 
 [[batches]]
-position = 202
+position = 203
 key = 'Fs(DirListing { dir: "client/components/tables/collection" })'
 descriptor = "listing of 'client/components/tables/collection'"
 cost_tokens = 6
-cum_tokens = 6896
+cum_tokens = 7741
 
 [batches.content]
 kind = "fs"
@@ -3584,11 +3602,11 @@ parent = "client/components/tables/collection"
 entries = ["BookTableRow.vue"]
 
 [[batches]]
-position = 203
+position = 204
 key = 'Fs(DirListing { dir: "client/components/tables/playlist" })'
 descriptor = "listing of 'client/components/tables/playlist'"
 cost_tokens = 6
-cum_tokens = 6902
+cum_tokens = 7747
 
 [batches.content]
 kind = "fs"
@@ -3598,11 +3616,11 @@ parent = "client/components/tables/playlist"
 entries = ["ItemTableRow.vue"]
 
 [[batches]]
-position = 204
+position = 205
 key = 'Fs(DirListing { dir: "server/libs/archiver/compress-commons/util" })'
 descriptor = "listing of 'server/libs/archiver/compress-commons/util'"
 cost_tokens = 4
-cum_tokens = 6906
+cum_tokens = 7751
 
 [batches.content]
 kind = "fs"
@@ -3612,11 +3630,11 @@ parent = "server/libs/archiver/compress-commons/util"
 entries = ["index.js"]
 
 [[batches]]
-position = 205
+position = 206
 key = 'Fs(DirListing { dir: "client/static/libarchive" })'
 descriptor = "listing of 'client/static/libarchive'"
 cost_tokens = 10
-cum_tokens = 6916
+cum_tokens = 7761
 
 [batches.content]
 kind = "fs"
@@ -3626,11 +3644,11 @@ parent = "client/static/libarchive"
 entries = ["wasm-gen", "worker-bundle.js"]
 
 [[batches]]
-position = 206
+position = 207
 key = 'Fs(DirListing { dir: "client/components/widgets" })'
 descriptor = "listing of 'client/components/widgets'"
 cost_tokens = 98
-cum_tokens = 7014
+cum_tokens = 7859
 
 [batches.content]
 kind = "fs"
@@ -3640,11 +3658,11 @@ parent = "client/components/widgets"
 entries = ["AbridgedIndicator.vue", "Alert.vue", "AlreadyInLibraryIndicator.vue", "BookDetailsEdit.vue", "CoverSizeWidget.vue", "CronExpressionBuilder.vue", "EncoderOptionsCard.vue", "ExplicitIndicator.vue", "ItemSlider.vue", "LoadingSpinner.vue", "MoreMenu.vue", "NotificationWidget.vue", "OnlineIndicator.vue", "PodcastDetailsEdit.vue", "PodcastTypeIndicator.vue", "RssFeedMetadataBuilder.vue", "SeriesInputWidget.vue"]
 
 [[batches]]
-position = 207
+position = 208
 key = 'Markdown(Section { file: "readme.md", section_index: 54, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #54"
 cost_tokens = 39
-cum_tokens = 7053
+cum_tokens = 7898
 
 [batches.content]
 kind = "lines"
@@ -3658,11 +3676,11 @@ end = 369
 kind = "full"
 
 [[batches]]
-position = 208
+position = 209
 key = 'Fs(DirListing { dir: "server/libs/watcher" })'
 descriptor = "listing of 'server/libs/watcher'"
 cost_tokens = 103
-cum_tokens = 7156
+cum_tokens = 8001
 
 [batches.content]
 kind = "fs"
@@ -3672,11 +3690,11 @@ parent = "server/libs/watcher"
 entries = ["LICENSE", "aborter", "are-shallow-equal.js", "atomically", "constants.js", "debounce.js", "enums.js", "is-primitive.js", "promise-concurrency-limiter.js", "ripstat", "string-indexes.js", "tiny-readdir.js", "types.js", "utils.js", "watcher.js", "watcher_handler.js", "watcher_locker.js", "watcher_locks_resolver.js", "watcher_poller.js", "watcher_stats.js"]
 
 [[batches]]
-position = 209
+position = 210
 key = 'Fs(DirListing { dir: "server/libs/watcher/atomically" })'
 descriptor = "listing of 'server/libs/watcher/atomically'"
 cost_tokens = 12
-cum_tokens = 7168
+cum_tokens = 8013
 
 [batches.content]
 kind = "fs"
@@ -3686,11 +3704,11 @@ parent = "server/libs/watcher/atomically"
 entries = ["consts.js", "index.js", "utils"]
 
 [[batches]]
-position = 210
+position = 211
 key = 'Fs(DirListing { dir: "server/libs/watcher/ripstat" })'
 descriptor = "listing of 'server/libs/watcher/ripstat'"
 cost_tokens = 13
-cum_tokens = 7181
+cum_tokens = 8026
 
 [batches.content]
 kind = "fs"
@@ -3700,11 +3718,11 @@ parent = "server/libs/watcher/ripstat"
 entries = ["consts.js", "index.js", "stats.js"]
 
 [[batches]]
-position = 211
+position = 212
 key = 'Fs(DirListing { dir: "server/libs/watcher/atomically/utils" })'
 descriptor = "listing of 'server/libs/watcher/atomically/utils'"
 cost_tokens = 37
-cum_tokens = 7218
+cum_tokens = 8063
 
 [batches.content]
 kind = "fs"
@@ -3714,11 +3732,11 @@ parent = "server/libs/watcher/atomically/utils"
 entries = ["attemptify.js", "fs.js", "fs_handlers.js", "lang.js", "retryify.js", "retryify_queue.js", "scheduler.js", "temp.js"]
 
 [[batches]]
-position = 212
+position = 213
 key = 'Typescript(Imports { file: "server/libs/archiver/lib/error.js" })'
 descriptor = "imports in server/libs/archiver/lib/error.js"
 cost_tokens = 13
-cum_tokens = 7231
+cum_tokens = 8076
 
 [batches.content]
 kind = "lines"
@@ -3732,11 +3750,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 213
+position = 214
 key = 'Markdown(Section { file: "readme.md", section_index: 33, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #33"
 cost_tokens = 38
-cum_tokens = 7269
+cum_tokens = 8114
 
 [batches.content]
 kind = "lines"
@@ -3750,11 +3768,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 214
+position = 215
 key = 'Fs(DirListing { dir: "server/objects/metadata" })'
 descriptor = "listing of 'server/objects/metadata'"
 cost_tokens = 11
-cum_tokens = 7280
+cum_tokens = 8125
 
 [batches.content]
 kind = "fs"
@@ -3764,11 +3782,11 @@ parent = "server/objects/metadata"
 entries = ["AudioMetaTags.js", "FileMetadata.js"]
 
 [[batches]]
-position = 215
+position = 216
 key = 'Fs(DirListing { dir: "test/server/managers/migrations" })'
 descriptor = "listing of 'test/server/managers/migrations'"
 cost_tokens = 44
-cum_tokens = 7324
+cum_tokens = 8169
 
 [batches.content]
 kind = "fs"
@@ -3778,11 +3796,11 @@ parent = "test/server/managers/migrations"
 entries = ["v1.0.0-migration.js", "v1.1.0-migration.js", "v1.10.0-migration.js", "v1.2.0-migration.js"]
 
 [[batches]]
-position = 216
+position = 217
 key = 'Fs(DirListing { dir: "client/static/libs/marked" })'
 descriptor = "listing of 'client/static/libs/marked'"
 cost_tokens = 7
-cum_tokens = 7331
+cum_tokens = 8176
 
 [batches.content]
 kind = "fs"
@@ -3792,11 +3810,11 @@ parent = "client/static/libs/marked"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 217
+position = 218
 key = 'Fs(DirListing { dir: "server/libs/archiver/buffer-crc32" })'
 descriptor = "listing of 'server/libs/archiver/buffer-crc32'"
 cost_tokens = 7
-cum_tokens = 7338
+cum_tokens = 8183
 
 [batches.content]
 kind = "fs"
@@ -3806,11 +3824,11 @@ parent = "server/libs/archiver/buffer-crc32"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 218
+position = 219
 key = 'Fs(DirListing { dir: "server/libs/archiver/crc32" })'
 descriptor = "listing of 'server/libs/archiver/crc32'"
 cost_tokens = 7
-cum_tokens = 7345
+cum_tokens = 8190
 
 [batches.content]
 kind = "fs"
@@ -3820,11 +3838,11 @@ parent = "server/libs/archiver/crc32"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 219
+position = 220
 key = 'Fs(DirListing { dir: "server/libs/archiver/normalize-path" })'
 descriptor = "listing of 'server/libs/archiver/normalize-path'"
 cost_tokens = 7
-cum_tokens = 7352
+cum_tokens = 8197
 
 [batches.content]
 kind = "fs"
@@ -3834,11 +3852,11 @@ parent = "server/libs/archiver/normalize-path"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 220
+position = 221
 key = 'Fs(DirListing { dir: "server/libs/archiver/readdir-glob" })'
 descriptor = "listing of 'server/libs/archiver/readdir-glob'"
 cost_tokens = 7
-cum_tokens = 7359
+cum_tokens = 8204
 
 [batches.content]
 kind = "fs"
@@ -3848,11 +3866,11 @@ parent = "server/libs/archiver/readdir-glob"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 221
+position = 222
 key = 'Fs(DirListing { dir: "server/libs/archiver/zip-stream" })'
 descriptor = "listing of 'server/libs/archiver/zip-stream'"
 cost_tokens = 7
-cum_tokens = 7366
+cum_tokens = 8211
 
 [batches.content]
 kind = "fs"
@@ -3862,11 +3880,11 @@ parent = "server/libs/archiver/zip-stream"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 222
+position = 223
 key = 'Fs(DirListing { dir: "server/libs/jwa/buffer-equal-constant-time" })'
 descriptor = "listing of 'server/libs/jwa/buffer-equal-constant-time'"
 cost_tokens = 7
-cum_tokens = 7373
+cum_tokens = 8218
 
 [batches.content]
 kind = "fs"
@@ -3876,11 +3894,11 @@ parent = "server/libs/jwa/buffer-equal-constant-time"
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 223
+position = 224
 key = 'Fs(DirListing { dir: "client/components/cards" })'
 descriptor = "listing of 'client/components/cards'"
 cost_tokens = 114
-cum_tokens = 7487
+cum_tokens = 8332
 
 [batches.content]
 kind = "fs"
@@ -3890,11 +3908,11 @@ parent = "client/components/cards"
 entries = ["AuthorCard.vue", "AuthorSearchCard.vue", "BookMatchCard.vue", "EpisodeSearchCard.vue", "GenreSearchCard.vue", "GroupCard.vue", "ItemSearchCard.vue", "ItemTaskRunningCard.vue", "ItemUploadCard.vue", "LazyBookCard.vue", "LazyCollectionCard.vue", "LazyPlaylistCard.vue", "LazySeriesCard.vue", "NarratorCard.vue", "NarratorSearchCard.vue", "NotificationCard.vue", "PodcastFeedSummaryCard.vue", "SeriesSearchCard.vue", "TagSearchCard.vue"]
 
 [[batches]]
-position = 224
+position = 225
 key = 'Fs(DirListing { dir: "server/utils/migrations" })'
 descriptor = "listing of 'server/utils/migrations'"
 cost_tokens = 17
-cum_tokens = 7504
+cum_tokens = 8349
 
 [batches.content]
 kind = "fs"
@@ -3904,11 +3922,11 @@ parent = "server/utils/migrations"
 entries = ["absMetadataMigration.js", "dbMigration.js", "oldDbFiles.js"]
 
 [[batches]]
-position = 225
+position = 226
 key = 'Markdown(Section { file: "readme.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #19"
 cost_tokens = 65
-cum_tokens = 7569
+cum_tokens = 8414
 
 [batches.content]
 kind = "lines"
@@ -3922,11 +3940,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 226
+position = 227
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils'"
 cost_tokens = 72
-cum_tokens = 7641
+cum_tokens = 8486
 
 [batches.content]
 kind = "fs"
@@ -3936,11 +3954,11 @@ parent = "server/libs/archiver/archiverUtils"
 entries = ["balancedMatch", "braceExpansion", "file.js", "fsRealpath", "glob", "index.js", "inflight", "lazystream", "lodash.difference", "lodash.flatten", "lodash.isplainobject", "lodash.union", "minimatch", "readableStream", "safeBuffer", "stringDecoder", "wrappy"]
 
 [[batches]]
-position = 227
+position = 228
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/glob" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/glob'"
 cost_tokens = 15
-cum_tokens = 7656
+cum_tokens = 8501
 
 [batches.content]
 kind = "fs"
@@ -3950,11 +3968,11 @@ parent = "server/libs/archiver/archiverUtils/glob"
 entries = ["LICENSE", "common.js", "index.js", "sync.js"]
 
 [[batches]]
-position = 228
+position = 229
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/fsRealpath" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/fsRealpath'"
 cost_tokens = 11
-cum_tokens = 7667
+cum_tokens = 8512
 
 [batches.content]
 kind = "fs"
@@ -3964,11 +3982,11 @@ parent = "server/libs/archiver/archiverUtils/fsRealpath"
 entries = ["LICENSE", "index.js", "old.js"]
 
 [[batches]]
-position = 229
+position = 230
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream'"
 cost_tokens = 11
-cum_tokens = 7678
+cum_tokens = 8523
 
 [batches.content]
 kind = "fs"
@@ -3978,11 +3996,11 @@ parent = "server/libs/archiver/archiverUtils/lazystream"
 entries = ["LICENSE", "index.js", "readable-stream"]
 
 [[batches]]
-position = 230
+position = 231
 key = 'Typescript(ExportBody { file: "server/libs/archiver/lib/error.js", start_line: 30, body_start_line: 31 })'
 descriptor = "export body at server/libs/archiver/lib/error.js:30 body 31"
 cost_tokens = 63
-cum_tokens = 7741
+cum_tokens = 8586
 
 [batches.content]
 kind = "lines"
@@ -3996,11 +4014,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 231
+position = 232
 key = 'Fs(DirListing { dir: "client/pages/library/_library/bookshelf" })'
 descriptor = "listing of 'client/pages/library/_library/bookshelf'"
 cost_tokens = 5
-cum_tokens = 7746
+cum_tokens = 8591
 
 [batches.content]
 kind = "fs"
@@ -4010,11 +4028,11 @@ parent = "client/pages/library/_library/bookshelf"
 entries = ["_id.vue"]
 
 [[batches]]
-position = 232
+position = 233
 key = 'Fs(DirListing { dir: "client/pages/library/_library/series" })'
 descriptor = "listing of 'client/pages/library/_library/series'"
 cost_tokens = 5
-cum_tokens = 7751
+cum_tokens = 8596
 
 [batches.content]
 kind = "fs"
@@ -4024,11 +4042,11 @@ parent = "client/pages/library/_library/series"
 entries = ["_id.vue"]
 
 [[batches]]
-position = 233
+position = 234
 key = 'Fs(DirListing { dir: "server/libs/archiver/compress-commons/archivers/zip" })'
 descriptor = "listing of 'server/libs/archiver/compress-commons/archivers/zip'"
 cost_tokens = 34
-cum_tokens = 7785
+cum_tokens = 8630
 
 [batches.content]
 kind = "fs"
@@ -4038,11 +4056,11 @@ parent = "server/libs/archiver/compress-commons/archivers/zip"
 entries = ["constants.js", "general-purpose-bit.js", "unix-stat.js", "util.js", "zip-archive-entry.js", "zip-archive-output-stream.js"]
 
 [[batches]]
-position = 234
+position = 235
 key = 'Markdown(Section { file: "readme.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #21"
 cost_tokens = 67
-cum_tokens = 7852
+cum_tokens = 8697
 
 [batches.content]
 kind = "lines"
@@ -4056,11 +4074,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 235
+position = 236
 key = 'Markdown(Section { file: "docs/README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/README.md section #4"
 cost_tokens = 89
-cum_tokens = 7941
+cum_tokens = 8786
 
 [batches.content]
 kind = "lines"
@@ -4074,11 +4092,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 236
+position = 237
 key = 'Markdown(Section { file: "readme.md", section_index: 52, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #52"
 cost_tokens = 45
-cum_tokens = 7986
+cum_tokens = 8831
 
 [batches.content]
 kind = "lines"
@@ -4092,11 +4110,11 @@ end = 362
 kind = "full"
 
 [[batches]]
-position = 237
+position = 238
 key = 'Fs(DirListing { dir: "client/pages/config/users" })'
 descriptor = "listing of 'client/pages/config/users'"
 cost_tokens = 8
-cum_tokens = 7994
+cum_tokens = 8839
 
 [batches.content]
 kind = "fs"
@@ -4106,11 +4124,11 @@ parent = "client/pages/config/users"
 entries = ["_id", "index.vue"]
 
 [[batches]]
-position = 238
+position = 239
 key = 'Fs(DirListing { dir: "server/libs/nodeCron/background-scheduled-task" })'
 descriptor = "listing of 'server/libs/nodeCron/background-scheduled-task'"
 cost_tokens = 8
-cum_tokens = 8002
+cum_tokens = 8847
 
 [batches.content]
 kind = "fs"
@@ -4120,11 +4138,11 @@ parent = "server/libs/nodeCron/background-scheduled-task"
 entries = ["daemon.js", "index.js"]
 
 [[batches]]
-position = 239
+position = 240
 key = 'Fs(DirListing { dir: "server/libs/watcher/aborter" })'
 descriptor = "listing of 'server/libs/watcher/aborter'"
 cost_tokens = 8
-cum_tokens = 8010
+cum_tokens = 8855
 
 [batches.content]
 kind = "fs"
@@ -4134,11 +4152,11 @@ parent = "server/libs/watcher/aborter"
 entries = ["controller.js", "signal.js"]
 
 [[batches]]
-position = 240
+position = 241
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream/readable-stream" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream'"
 cost_tokens = 13
-cum_tokens = 8023
+cum_tokens = 8868
 
 [batches.content]
 kind = "fs"
@@ -4148,11 +4166,11 @@ parent = "server/libs/archiver/archiverUtils/lazystream/readable-stream"
 entries = ["lib", "passthrough.js", "readable.js"]
 
 [[batches]]
-position = 241
+position = 242
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib'"
 cost_tokens = 38
-cum_tokens = 8061
+cum_tokens = 8906
 
 [batches.content]
 kind = "fs"
@@ -4162,11 +4180,11 @@ parent = "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib"
 entries = ["_stream_duplex.js", "_stream_passthrough.js", "_stream_readable.js", "_stream_transform.js", "_stream_writable.js", "internal"]
 
 [[batches]]
-position = 242
+position = 243
 key = 'Markdown(Section { file: "readme.md", section_index: 53, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #53"
 cost_tokens = 47
-cum_tokens = 8108
+cum_tokens = 8953
 
 [batches.content]
 kind = "lines"
@@ -4180,11 +4198,11 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 243
+position = 244
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/readableStream" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/readableStream'"
 cost_tokens = 55
-cum_tokens = 8163
+cum_tokens = 9008
 
 [batches.content]
 kind = "fs"
@@ -4194,11 +4212,11 @@ parent = "server/libs/archiver/archiverUtils/readableStream"
 entries = ["LICENSE", "_stream_duplex.js", "_stream_passthrough.js", "_stream_readable.js", "_stream_transform.js", "_stream_writable.js", "index.js", "internal", "ours", "stream", "stream.js"]
 
 [[batches]]
-position = 244
+position = 245
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/readableStream/ours" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/readableStream/ours'"
 cost_tokens = 18
-cum_tokens = 8181
+cum_tokens = 9026
 
 [batches.content]
 kind = "fs"
@@ -4208,11 +4226,11 @@ parent = "server/libs/archiver/archiverUtils/readableStream/ours"
 entries = ["browser.js", "errors.js", "primordials.js", "util.js"]
 
 [[batches]]
-position = 245
+position = 246
 key = 'Markdown(Section { file: "readme.md", section_index: 57, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #57"
 cost_tokens = 49
-cum_tokens = 8230
+cum_tokens = 9075
 
 [batches.content]
 kind = "lines"
@@ -4226,11 +4244,11 @@ end = 381
 kind = "full"
 
 [[batches]]
-position = 246
+position = 247
 key = 'Markdown(Section { file: "readme.md", section_index: 58, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #58"
 cost_tokens = 49
-cum_tokens = 8279
+cum_tokens = 9124
 
 [batches.content]
 kind = "lines"
@@ -4244,11 +4262,11 @@ end = 389
 kind = "full"
 
 [[batches]]
-position = 247
+position = 248
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/readableStream/stream" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/readableStream/stream'"
 cost_tokens = 4
-cum_tokens = 8283
+cum_tokens = 9128
 
 [batches.content]
 kind = "fs"
@@ -4258,11 +4276,11 @@ parent = "server/libs/archiver/archiverUtils/readableStream/stream"
 entries = ["promises.js"]
 
 [[batches]]
-position = 248
+position = 249
 key = 'Fs(DirListing { dir: "server/libs/busboy/types" })'
 descriptor = "listing of 'server/libs/busboy/types'"
 cost_tokens = 9
-cum_tokens = 8292
+cum_tokens = 9137
 
 [batches.content]
 kind = "fs"
@@ -4272,11 +4290,11 @@ parent = "server/libs/busboy/types"
 entries = ["multipart.js", "urlencoded.js"]
 
 [[batches]]
-position = 249
+position = 250
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/remove" })'
 descriptor = "listing of 'server/libs/fsExtra/remove'"
 cost_tokens = 9
-cum_tokens = 8301
+cum_tokens = 9146
 
 [batches.content]
 kind = "fs"
@@ -4286,11 +4304,11 @@ parent = "server/libs/fsExtra/remove"
 entries = ["index.js", "rimraf.js"]
 
 [[batches]]
-position = 250
+position = 251
 key = 'Fs(DirListing { dir: "server/libs/fsExtra/util" })'
 descriptor = "listing of 'server/libs/fsExtra/util'"
 cost_tokens = 9
-cum_tokens = 8310
+cum_tokens = 9155
 
 [batches.content]
 kind = "fs"
@@ -4300,11 +4318,11 @@ parent = "server/libs/fsExtra/util"
 entries = ["stat.js", "utimes.js"]
 
 [[batches]]
-position = 251
+position = 252
 key = 'Markdown(Section { file: "readme.md", section_index: 65, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #65"
 cost_tokens = 51
-cum_tokens = 8361
+cum_tokens = 9206
 
 [batches.content]
 kind = "lines"
@@ -4318,37 +4336,11 @@ end = 424
 kind = "full"
 
 [[batches]]
-position = 252
+position = 253
 key = 'Typescript(ExportNames { file: "server/libs/jws/lib/tostring.js" })'
 descriptor = "export names surface in server/libs/jws/lib/tostring.js"
 cost_tokens = 17
-cum_tokens = 8378
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/tostring.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/tostring.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 253
-key = 'Typescript(Export { file: "server/libs/jws/lib/tostring.js", start_line: 4 })'
-descriptor = "export at server/libs/jws/lib/tostring.js:4"
-cost_tokens = 0
-cum_tokens = 8378
+cum_tokens = 9223
 
 [batches.content]
 kind = "lines"
@@ -4371,10 +4363,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 254
+key = 'Typescript(Export { file: "server/libs/jws/lib/tostring.js", start_line: 4 })'
+descriptor = "export at server/libs/jws/lib/tostring.js:4"
+cost_tokens = 0
+cum_tokens = 9223
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "server/libs/jws/lib/tostring.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "server/libs/jws/lib/tostring.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 255
 key = 'Fs(DirListing { dir: "client/cypress/tests" })'
 descriptor = "listing of 'client/cypress/tests'"
 cost_tokens = 6
-cum_tokens = 8384
+cum_tokens = 9229
 
 [batches.content]
 kind = "fs"
@@ -4384,11 +4402,11 @@ parent = "client/cypress/tests"
 entries = ["components", "utils"]
 
 [[batches]]
-position = 255
+position = 256
 key = 'Fs(DirListing { dir: "client/cypress/tests/components" })'
 descriptor = "listing of 'client/cypress/tests/components'"
 cost_tokens = 3
-cum_tokens = 8387
+cum_tokens = 9232
 
 [batches.content]
 kind = "fs"
@@ -4398,11 +4416,11 @@ parent = "client/cypress/tests/components"
 entries = ["cards"]
 
 [[batches]]
-position = 256
+position = 257
 key = 'Fs(DirListing { dir: "client/cypress/tests/components/cards" })'
 descriptor = "listing of 'client/cypress/tests/components/cards'"
 cost_tokens = 33
-cum_tokens = 8420
+cum_tokens = 9265
 
 [batches.content]
 kind = "fs"
@@ -4412,11 +4430,11 @@ parent = "client/cypress/tests/components/cards"
 entries = ["AuthorCard.cy.js", "ItemSlider.cy.js", "LazyBookCard.cy.js", "LazySeriesCard.cy.js", "NarratorCard.cy.js"]
 
 [[batches]]
-position = 257
+position = 258
 key = 'Fs(DirListing { dir: "client/components/modals" })'
 descriptor = "listing of 'client/components/modals'"
 cost_tokens = 147
-cum_tokens = 8567
+cum_tokens = 9412
 
 [batches.content]
 kind = "fs"
@@ -4426,11 +4444,11 @@ parent = "client/components/modals"
 entries = ["AccountModal.vue", "AddCustomMetadataProviderModal.vue", "ApiKeyCreatedModal.vue", "ApiKeyModal.vue", "AudioFileDataModal.vue", "BackupScheduleModal.vue", "BatchQuickMatchModel.vue", "BookmarksModal.vue", "ChaptersModal.vue", "Dialog.vue", "EditSeriesInputInnerModal.vue", "ListeningSessionModal.vue", "Modal.vue", "PlayerSettingsModal.vue", "RawCoverPreviewModal.vue", "ShareModal.vue", "SleepTimerModal.vue", "UploadImageModal.vue", "authors", "bookmarks", "changelog", "collections", "emails", "item", "libraries", "notification", "player", "playlists", "podcast", "rssfeed"]
 
 [[batches]]
-position = 258
+position = 259
 key = 'Fs(DirListing { dir: "client/components/modals/podcast" })'
 descriptor = "listing of 'client/components/modals/podcast'"
 cost_tokens = 35
-cum_tokens = 8602
+cum_tokens = 9447
 
 [batches.content]
 kind = "fs"
@@ -4440,11 +4458,11 @@ parent = "client/components/modals/podcast"
 entries = ["EditEpisode.vue", "EpisodeFeed.vue", "NewModal.vue", "OpmlFeedsModal.vue", "RemoveEpisode.vue", "ViewEpisode.vue", "tabs"]
 
 [[batches]]
-position = 259
+position = 260
 key = 'Fs(DirListing { dir: "client/components/modals/libraries" })'
 descriptor = "listing of 'client/components/modals/libraries'"
 cost_tokens = 37
-cum_tokens = 8639
+cum_tokens = 9484
 
 [batches.content]
 kind = "fs"
@@ -4454,11 +4472,11 @@ parent = "client/components/modals/libraries"
 entries = ["EditLibrary.vue", "EditModal.vue", "LazyFolderChooser.vue", "LibraryScannerSettings.vue", "LibrarySettings.vue", "LibraryTools.vue", "ScheduleScan.vue"]
 
 [[batches]]
-position = 260
+position = 261
 key = 'Fs(DirListing { dir: "client/components/modals/collections" })'
 descriptor = "listing of 'client/components/modals/collections'"
 cost_tokens = 16
-cum_tokens = 8655
+cum_tokens = 9500
 
 [batches.content]
 kind = "fs"
@@ -4468,11 +4486,11 @@ parent = "client/components/modals/collections"
 entries = ["AddCreateModal.vue", "CollectionItem.vue", "EditModal.vue"]
 
 [[batches]]
-position = 261
+position = 262
 key = 'Fs(DirListing { dir: "client/components/modals/playlists" })'
 descriptor = "listing of 'client/components/modals/playlists'"
 cost_tokens = 17
-cum_tokens = 8672
+cum_tokens = 9517
 
 [batches.content]
 kind = "fs"
@@ -4482,11 +4500,11 @@ parent = "client/components/modals/playlists"
 entries = ["AddCreateModal.vue", "EditModal.vue", "UserPlaylistItem.vue"]
 
 [[batches]]
-position = 262
+position = 263
 key = 'Fs(DirListing { dir: "client/components/modals/authors" })'
 descriptor = "listing of 'client/components/modals/authors'"
 cost_tokens = 5
-cum_tokens = 8677
+cum_tokens = 9522
 
 [batches.content]
 kind = "fs"
@@ -4496,11 +4514,11 @@ parent = "client/components/modals/authors"
 entries = ["EditModal.vue"]
 
 [[batches]]
-position = 263
+position = 264
 key = 'Fs(DirListing { dir: "client/components/modals/bookmarks" })'
 descriptor = "listing of 'client/components/modals/bookmarks'"
 cost_tokens = 5
-cum_tokens = 8682
+cum_tokens = 9527
 
 [batches.content]
 kind = "fs"
@@ -4510,11 +4528,11 @@ parent = "client/components/modals/bookmarks"
 entries = ["BookmarkItem.vue"]
 
 [[batches]]
-position = 264
+position = 265
 key = 'Fs(DirListing { dir: "client/components/modals/changelog" })'
 descriptor = "listing of 'client/components/modals/changelog'"
 cost_tokens = 5
-cum_tokens = 8687
+cum_tokens = 9532
 
 [batches.content]
 kind = "fs"
@@ -4524,11 +4542,11 @@ parent = "client/components/modals/changelog"
 entries = ["ViewModal.vue"]
 
 [[batches]]
-position = 265
+position = 266
 key = 'Fs(DirListing { dir: "client/components/modals/notification" })'
 descriptor = "listing of 'client/components/modals/notification'"
 cost_tokens = 6
-cum_tokens = 8693
+cum_tokens = 9538
 
 [batches.content]
 kind = "fs"
@@ -4538,11 +4556,11 @@ parent = "client/components/modals/notification"
 entries = ["NotificationEditModal.vue"]
 
 [[batches]]
-position = 266
+position = 267
 key = 'Fs(DirListing { dir: "client/components/modals/item" })'
 descriptor = "listing of 'client/components/modals/item'"
 cost_tokens = 8
-cum_tokens = 8701
+cum_tokens = 9546
 
 [batches.content]
 kind = "fs"
@@ -4552,11 +4570,11 @@ parent = "client/components/modals/item"
 entries = ["EditModal.vue", "tabs"]
 
 [[batches]]
-position = 267
+position = 268
 key = 'Fs(DirListing { dir: "client/components/modals/item/tabs" })'
 descriptor = "listing of 'client/components/modals/item/tabs'"
 cost_tokens = 32
-cum_tokens = 8733
+cum_tokens = 9578
 
 [batches.content]
 kind = "fs"
@@ -4566,11 +4584,11 @@ parent = "client/components/modals/item/tabs"
 entries = ["Chapters.vue", "Cover.vue", "Details.vue", "Episodes.vue", "Files.vue", "Match.vue", "Schedule.vue", "Tools.vue"]
 
 [[batches]]
-position = 268
+position = 269
 key = 'Markdown(Section { file: "readme.md", section_index: 41, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #41"
 cost_tokens = 60
-cum_tokens = 8793
+cum_tokens = 9638
 
 [batches.content]
 kind = "lines"
@@ -4584,11 +4602,11 @@ end = 254
 kind = "full"
 
 [[batches]]
-position = 269
+position = 270
 key = 'Markdown(Section { file: "readme.md", section_index: 64, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #64"
 cost_tokens = 53
-cum_tokens = 8846
+cum_tokens = 9691
 
 [batches.content]
 kind = "lines"
@@ -4602,11 +4620,11 @@ end = 422
 kind = "full"
 
 [[batches]]
-position = 270
+position = 271
 key = 'Fs(DirListing { dir: "client/components/ui" })'
 descriptor = "listing of 'client/components/ui'"
 cost_tokens = 154
-cum_tokens = 9000
+cum_tokens = 9845
 
 [batches.content]
 kind = "fs"
@@ -4616,11 +4634,11 @@ parent = "client/components/ui"
 entries = ["Btn.vue", "Checkbox.vue", "ContextMenuDropdown.vue", "Dropdown.vue", "EditableText.vue", "FileInput.vue", "IconBtn.vue", "InputDropdown.vue", "LibrariesDropdown.vue", "LibraryIcon.vue", "LoadingIndicator.vue", "MediaIconPicker.vue", "MultiSelect.vue", "MultiSelectDropdown.vue", "MultiSelectQueryInput.vue", "QueryInput.vue", "RangeInput.vue", "ReadIconBtn.vue", "RichTextEditor.vue", "SelectInput.vue", "TextInput.vue", "TextInputWithLabel.vue", "TextareaInput.vue", "TextareaWithLabel.vue", "TimePicker.vue", "ToggleBtns.vue", "ToggleSwitch.vue", "Tooltip.vue", "VueTrix.vue"]
 
 [[batches]]
-position = 271
+position = 272
 key = 'Markdown(Section { file: "readme.md", section_index: 60, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #60"
 cost_tokens = 54
-cum_tokens = 9054
+cum_tokens = 9899
 
 [batches.content]
 kind = "lines"
@@ -4634,11 +4652,11 @@ end = 403
 kind = "full"
 
 [[batches]]
-position = 272
+position = 273
 key = 'Fs(DirListing { dir: "test/server/utils/parsers" })'
 descriptor = "listing of 'test/server/utils/parsers'"
 cost_tokens = 23
-cum_tokens = 9077
+cum_tokens = 9922
 
 [batches.content]
 kind = "fs"
@@ -4648,11 +4666,11 @@ parent = "test/server/utils/parsers"
 entries = ["parseNameString.test.js", "parseNfoMetadata.test.js", "parseOpfMetadata.test.js"]
 
 [[batches]]
-position = 273
+position = 274
 key = 'Fs(DirListing { dir: "client/components/tables/library" })'
 descriptor = "listing of 'client/components/tables/library'"
 cost_tokens = 10
-cum_tokens = 9087
+cum_tokens = 9932
 
 [batches.content]
 kind = "fs"
@@ -4662,37 +4680,11 @@ parent = "client/components/tables/library"
 entries = ["LibrariesTable.vue", "LibraryItem.vue"]
 
 [[batches]]
-position = 274
+position = 275
 key = 'Typescript(ExportNames { file: "server/libs/jsonwebtoken/lib/timespan.js" })'
 descriptor = "export names surface in server/libs/jsonwebtoken/lib/timespan.js"
 cost_tokens = 19
-cum_tokens = 9106
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "server/libs/jsonwebtoken/lib/timespan.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jsonwebtoken/lib/timespan.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 275
-key = 'Typescript(Export { file: "server/libs/jsonwebtoken/lib/timespan.js", start_line: 3 })'
-descriptor = "export at server/libs/jsonwebtoken/lib/timespan.js:3"
-cost_tokens = 0
-cum_tokens = 9106
+cum_tokens = 9951
 
 [batches.content]
 kind = "lines"
@@ -4715,608 +4707,26 @@ kind = "ellipsis"
 
 [[batches]]
 position = 276
-key = 'Markdown(Section { file: "readme.md", section_index: 43, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #43"
-cost_tokens = 53
-cum_tokens = 9159
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 258
-end = 265
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 277
-key = 'Markdown(Section { file: "readme.md", section_index: 55, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #55"
-cost_tokens = 57
-cum_tokens = 9216
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 371
-end = 373
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 278
-key = 'Markdown(Section { file: "readme.md", section_index: 56, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #56"
-cost_tokens = 57
-cum_tokens = 9273
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 375
-end = 376
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 279
-key = 'Markdown(Section { file: "readme.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #22"
-cost_tokens = 86
-cum_tokens = 9359
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 60
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 280
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/balancedMatch" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/balancedMatch'"
-cost_tokens = 7
-cum_tokens = 9366
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/balancedMatch"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 281
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/braceExpansion" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/braceExpansion'"
-cost_tokens = 7
-cum_tokens = 9373
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/braceExpansion"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 282
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/inflight" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/inflight'"
-cost_tokens = 7
-cum_tokens = 9380
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/inflight"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 283
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lodash.difference" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/lodash.difference'"
-cost_tokens = 7
-cum_tokens = 9387
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/lodash.difference"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 284
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lodash.flatten" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/lodash.flatten'"
-cost_tokens = 7
-cum_tokens = 9394
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/lodash.flatten"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 285
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lodash.isplainobject" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject'"
-cost_tokens = 7
-cum_tokens = 9401
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/lodash.isplainobject"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 286
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lodash.union" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/lodash.union'"
-cost_tokens = 7
-cum_tokens = 9408
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/lodash.union"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 287
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/minimatch" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/minimatch'"
-cost_tokens = 7
-cum_tokens = 9415
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/minimatch"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 288
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/safeBuffer" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/safeBuffer'"
-cost_tokens = 7
-cum_tokens = 9422
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/safeBuffer"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 289
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/stringDecoder" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/stringDecoder'"
-cost_tokens = 7
-cum_tokens = 9429
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/stringDecoder"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 290
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/wrappy" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/wrappy'"
-cost_tokens = 7
-cum_tokens = 9436
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/wrappy"
-entries = ["LICENSE", "index.js"]
-
-[[batches]]
-position = 291
-key = 'Fs(DirListing { dir: "client/static/fonts/Ubuntu_Mono" })'
-descriptor = "listing of 'client/static/fonts/Ubuntu_Mono'"
-cost_tokens = 11
-cum_tokens = 9447
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "client/static/fonts/Ubuntu_Mono"
-entries = ["UFL.txt", "UbuntuMono-Regular.ttf"]
-
-[[batches]]
-position = 292
-key = 'Fs(DirListing { dir: "client/static/libarchive/wasm-gen" })'
-descriptor = "listing of 'client/static/libarchive/wasm-gen'"
-cost_tokens = 11
-cum_tokens = 9458
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "client/static/libarchive/wasm-gen"
-entries = ["libarchive.js", "libarchive.wasm"]
-
-[[batches]]
-position = 293
-key = 'Fs(DirListing { dir: "client/components/modals/player" })'
-descriptor = "listing of 'client/components/modals/player'"
-cost_tokens = 12
-cum_tokens = 9470
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "client/components/modals/player"
-entries = ["QueueItemRow.vue", "QueueItemsModal.vue"]
-
-[[batches]]
-position = 294
-key = 'Fs(DirListing { dir: "client/components/modals/rssfeed" })'
-descriptor = "listing of 'client/components/modals/rssfeed'"
-cost_tokens = 12
-cum_tokens = 9482
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "client/components/modals/rssfeed"
-entries = ["OpenCloseModal.vue", "ViewFeedModal.vue"]
-
-[[batches]]
-position = 295
-key = 'Markdown(Section { file: "readme.md", section_index: 35, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #35"
-cost_tokens = 73
-cum_tokens = 9555
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 206
-end = 212
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 296
-key = 'Markdown(Section { file: "readme.md", section_index: 66, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #66"
-cost_tokens = 64
-cum_tokens = 9619
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 426
-end = 434
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 297
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal'"
-cost_tokens = 3
-cum_tokens = 9622
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal"
-entries = ["streams"]
-
-[[batches]]
-position = 298
-key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams" })'
-descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams'"
-cost_tokens = 18
-cum_tokens = 9640
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams"
-entries = ["BufferList.js", "destroy.js", "stream-browser.js", "stream.js"]
-
-[[batches]]
-position = 299
-key = 'Fs(DirListing { dir: "client/pages/config/users/_id" })'
-descriptor = "listing of 'client/pages/config/users/_id'"
-cost_tokens = 8
-cum_tokens = 9648
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "client/pages/config/users/_id"
-entries = ["index.vue", "sessions.vue"]
-
-[[batches]]
-position = 300
-key = 'Fs(DirListing { dir: "server/libs/archiver/lib/plugins" })'
-descriptor = "listing of 'server/libs/archiver/lib/plugins'"
-cost_tokens = 8
-cum_tokens = 9656
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "server/libs/archiver/lib/plugins"
-entries = ["json.js", "zip.js"]
-
-[[batches]]
-position = 301
-key = 'Typescript(ExportNames { file: "server/libs/jws/lib/data-stream.js" })'
-descriptor = "export names surface in server/libs/jws/lib/data-stream.js"
-cost_tokens = 24
-cum_tokens = 9680
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/data-stream.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/data-stream.js"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/data-stream.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 302
-key = 'Typescript(Export { file: "server/libs/jws/lib/data-stream.js", start_line: 6 })'
-descriptor = "export at server/libs/jws/lib/data-stream.js:6"
+key = 'Typescript(Export { file: "server/libs/jsonwebtoken/lib/timespan.js", start_line: 3 })'
+descriptor = "export at server/libs/jsonwebtoken/lib/timespan.js:3"
 cost_tokens = 0
-cum_tokens = 9680
+cum_tokens = 9951
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "server/libs/jws/lib/data-stream.js"
-start = 6
-end = 6
+path = "server/libs/jsonwebtoken/lib/timespan.js"
+start = 3
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "server/libs/jws/lib/data-stream.js"
-start = 7
-end = 7
+path = "server/libs/jsonwebtoken/lib/timespan.js"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 303
-key = 'Typescript(ExportNames { file: "server/libs/jws/lib/sign-stream.js" })'
-descriptor = "export names surface in server/libs/jws/lib/sign-stream.js"
-cost_tokens = 24
-cum_tokens = 9704
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/sign-stream.js"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/sign-stream.js"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/sign-stream.js"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 304
-key = 'Typescript(Export { file: "server/libs/jws/lib/sign-stream.js", start_line: 36 })'
-descriptor = "export at server/libs/jws/lib/sign-stream.js:36"
-cost_tokens = 0
-cum_tokens = 9704
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/sign-stream.js"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/sign-stream.js"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 305
-key = 'Typescript(ExportNames { file: "server/libs/jws/lib/verify-stream.js" })'
-descriptor = "export names surface in server/libs/jws/lib/verify-stream.js"
-cost_tokens = 24
-cum_tokens = 9728
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/verify-stream.js"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/verify-stream.js"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/verify-stream.js"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 306
-key = 'Typescript(Export { file: "server/libs/jws/lib/verify-stream.js", start_line: 80 })'
-descriptor = "export at server/libs/jws/lib/verify-stream.js:80"
-cost_tokens = 0
-cum_tokens = 9728
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/verify-stream.js"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "server/libs/jws/lib/verify-stream.js"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 307
-key = 'Markdown(Section { file: "readme.md", section_index: 42, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #42"
-cost_tokens = 77
-cum_tokens = 9805
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 256
-end = 256
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 308
-key = 'Markdown(Section { file: "readme.md", section_index: 37, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #37"
-cost_tokens = 78
-cum_tokens = 9883
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 225
-end = 231
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 309
-key = 'Markdown(Section { file: "readme.md", section_index: 69, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #69"
-cost_tokens = 71
-cum_tokens = 9954
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 442
-end = 442
-
-[batches.content.spans.render]
-kind = "full"

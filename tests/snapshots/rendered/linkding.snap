@@ -7,6 +7,19 @@ expression: rendered
     devcontainer.json
 .dockerignore
 .env.sample
+       1→# Docker container name
+       2→LD_CONTAINER_NAME=linkding
+       3→# Port on the host system that the application should be published on
+       4→LD_HOST_PORT=9090
+       5→# Directory on the host system that should be mounted as data dir into the Docker container
+       6→LD_HOST_DATA_DIR=./data
+       7→
+       8→# Can be used to run linkding under a context path, for example: linkding/
+       9→# Must end with a slash `/`
+      10→LD_CONTEXT_PATH=
+      11→# Username of the initial superuser to create, leave empty to not create one
+      12→LD_SUPERUSER_NAME=
+    …
 .gitattributes
 .github/
     workflows/
@@ -107,8 +120,6 @@ README.md
      107→### Formatting
     …
      114→### DevContainers
-    …
-     118→Once checked out, only the following commands are required to get started:
     …
      132→The frontend is now available under http://localhost:8000
 SECURITY.md
@@ -226,22 +237,6 @@ bookmarks/
         …
     static/
     styles/
-        auth.css
-        bookmark-details.css
-        bookmark-form.css
-        bookmark-page.css
-        bundles.css
-        components.css
-        crud.css
-        layout.css
-        markdown.css
-        reader-mode.css
-        responsive.css
-        settings.css
-        tags.css
-        theme/
-        theme-dark.css
-        theme-light.css
     tasks.py
     templates/
         admin/
@@ -261,15 +256,6 @@ bookmarks/
             general.html
             integrations.html
         shared/
-            dev_tool.html
-            error_list.html
-            head.html
-            layout.html
-            messages.html
-            modal_header.html
-            nav_menu.html
-            pagination.html
-            top_frame.html
         tags/
             edit.html
             form.html
@@ -362,14 +348,6 @@ docker-compose.yml
       10→      - .env
       11→    restart: unless-stopped
 docs/
-    .gitignore
-    README.md
-    astro.config.mjs
-    package-lock.json
-    package.json
-    public/
-    src/
-    tsconfig.json
 install-linkding.sh
 manage.py
        1→#!/usr/bin/env python

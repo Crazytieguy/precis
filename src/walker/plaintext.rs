@@ -10,7 +10,10 @@
 //! Files with format-specific siblings (`.eslintrc.json`,
 //! `.prettierrc.js`, `LICENSE.md`) stay with the owning walker, and
 //! credential-bearing dotfiles (`.npmrc`, `.netrc`, `.env`, `.pypirc`)
-//! are NOT in the whitelist. Shell scripts are only admitted from
+//! are NOT in the whitelist. Checked-in dotenv *samples*
+//! (`.env.sample` / `.env.example`) ARE admitted — they carry
+//! placeholder values by convention and are the deploy-facing
+//! config-key documentation. Shell scripts are only admitted from
 //! build-script locations, and exact env/secret/credential stems
 //! (`env`, `.env`, `secret`, `secrets`, `credential`, `credentials`,
 //! `creds`) are denied before `.sh` classification because they
@@ -40,6 +43,26 @@ const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 /// Head rows retained from long `requirements.txt` files.
 const REQUIREMENTS_HEAD_LINE_CAP: usize = 8;
 
+/// Line cap on `Makefile` / `Dockerfile` whole batches.
+const BUILD_ENTRYPOINT_LINE_CAP: usize = 100;
+
+/// Rows in the dotenv head batch — samples lead with the
+/// mandatory-settings block by convention (linkwarden's first 11 rows
+/// are NextAuth + database; linkding's are container/host/superuser).
+const DOTENV_MANDATORY_HEAD_LINES: usize = 12;
+
+/// Total rows retained from long dotenv samples (head + tail batch) —
+/// enough to carry the leading config-key roster.
+const DOTENV_HEAD_LINE_CAP: usize = 60;
+
+/// Tail-batch value factor relative to the head — the optional-settings
+/// roster is a follow-up, not the anchor.
+const DOTENV_TAIL_FACTOR: f64 = 0.6;
+
+/// Pre-flight byte gate for dotenv samples — generous (they're
+/// head-sampled, not rendered whole) but bounded.
+const DOTENV_BYTE_GATE: usize = 64 * 1024;
+
 /// Plaintext file class — drives the (filename → signal preset) table.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub(crate) enum Class {
@@ -59,6 +82,9 @@ pub(crate) enum Class {
     PackageConfig,
     /// Python requirements freeze/list files, sampled when long.
     Requirements,
+    /// Checked-in dotenv sample/template (`.env.sample`) — the
+    /// deploy-facing config-key documentation, head-sampled when long.
+    DotenvSample,
     /// One-line version stamp.
     Version,
     /// Plain-text backlog.
@@ -96,6 +122,9 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         "setup.cfg" => return Some(Class::PackageConfig),
         "requirements.txt" => return Some(Class::Requirements),
         _ => {}
+    }
+    if crate::value::is_dotenv_sample_filename(name) {
+        return Some(Class::DotenvSample);
     }
     if let Some(stem) = lower.strip_suffix(".sh") {
         if matches!(
@@ -144,8 +173,24 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if matches!(class, Class::BuildScript) && !is_build_script_location(&file, dir, ctx) {
             continue;
         }
+        if matches!(class, Class::DotenvSample) {
+            push_dotenv_batches(&file, class, ctx, &mut out);
+            continue;
+        }
         let content = match class {
-            Class::Requirements => requirements_content(&file, ctx),
+            Class::Requirements => {
+                head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, REQUIREMENTS_HEAD_LINE_CAP)
+            }
+            // Build entrypoints get headroom over the generic cap:
+            // real app Dockerfiles / Makefiles routinely run 60–100
+            // lines and are exactly the ops surface NS authors anchor
+            // on (audiobookshelf 73, linkwarden 70).
+            Class::BuildEntrypoint => gated_whole_file_content(
+                &file,
+                ctx,
+                BUILD_ENTRYPOINT_LINE_CAP * 80,
+                BUILD_ENTRYPOINT_LINE_CAP,
+            ),
             _ => gated_whole_file_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
         };
         let Some(content) = content else {
@@ -176,6 +221,10 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::BuildScript => (0.60, 0.50, 0.55),
         Class::PackageConfig => (0.45, 0.55, 0.45),
         Class::Requirements => (0.35, 0.45, 0.35),
+        // Dotenv sample: the deploy-facing config-key roster of a
+        // self-hosted app — NS authors rank it alongside Dockerfile /
+        // compose as tier-1 ops orientation (linkwarden, linkding).
+        Class::DotenvSample => (0.60, 0.50, 0.55),
         // Version stamp: a single short line answers "what version is
         // this?" — high orientation value relative to the trivial cost.
         Class::Version => (0.55, 0.40, 0.45),
@@ -201,11 +250,75 @@ fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
                 .is_some_and(|name| name == "scripts"))
 }
 
-fn requirements_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+/// Dotenv samples ship as a cheap mandatory-settings head plus a
+/// gated tail batch — a single head-sampled lump prices the mandatory
+/// block out of the early budget NS authors rank it in.
+fn push_dotenv_batches(file: &Path, class: Class, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
     let byte_len = std::fs::metadata(file)
         .map(|m| m.len() as usize)
         .unwrap_or(usize::MAX);
-    if byte_len > PLAINTEXT_BYTE_GATE {
+    if byte_len > DOTENV_BYTE_GATE {
+        return;
+    }
+    let Some(source) = ctx.read_source(file) else {
+        return;
+    };
+    let line_count = source.lines().count();
+    if line_count == 0 {
+        return;
+    }
+    let head_end = DOTENV_MANDATORY_HEAD_LINES.min(line_count);
+    let mut head = FileLines::new((1..=head_end).collect());
+    if head_end < line_count {
+        head = head.with_ellipses(vec![head_end + 1]);
+    }
+    let head_key = PlaintextKey::Whole {
+        file: file.to_path_buf(),
+    };
+    let head_value = class_value(class, file, ctx);
+    if let Some(content) = single_file_lines_content(file, &source, head) {
+        out.push(Batch {
+            key: head_key.clone().into(),
+            predecessor: None,
+            content,
+            value: head_value,
+        });
+    }
+    let tail_end = DOTENV_HEAD_LINE_CAP.min(line_count);
+    if tail_end <= head_end {
+        return;
+    }
+    let mut tail = FileLines::new((head_end + 1..=tail_end).collect());
+    if tail_end < line_count {
+        tail = tail.with_ellipses(vec![tail_end + 1]);
+    }
+    if let Some(content) = single_file_lines_content(file, &source, tail) {
+        out.push(Batch {
+            key: PlaintextKey::Tail {
+                file: file.to_path_buf(),
+            }
+            .into(),
+            predecessor: Some(BatchKey::Plaintext(head_key)),
+            content,
+            value: head_value * DOTENV_TAIL_FACTOR,
+        });
+    }
+}
+
+/// Whole file when it fits `head_line_cap`, else the head rows with a
+/// trailing ellipsis. Shared by the requirements and dotenv-sample
+/// classes, whose long-file tails are low-value but whose heads carry
+/// the roster the file exists for.
+fn head_sampled_content(
+    file: &Path,
+    ctx: &WalkCtx,
+    byte_gate: usize,
+    head_line_cap: usize,
+) -> Option<crate::content::BatchContent> {
+    let byte_len = std::fs::metadata(file)
+        .map(|m| m.len() as usize)
+        .unwrap_or(usize::MAX);
+    if byte_len > byte_gate {
         return None;
     }
     let source = ctx.read_source(file)?;
@@ -213,18 +326,18 @@ fn requirements_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::Ba
     if line_count == 0 {
         return None;
     }
-    if line_count <= REQUIREMENTS_HEAD_LINE_CAP {
+    if line_count <= head_line_cap {
         return single_file_lines_content(
             file,
             &source,
             FileLines::new((1..=line_count).collect()),
         );
     }
-    single_file_lines_content(file, &source, sampled_requirements_lines(line_count))
+    single_file_lines_content(file, &source, head_lines(line_count, head_line_cap))
 }
 
-fn sampled_requirements_lines(line_count: usize) -> FileLines {
-    let full: Vec<usize> = (1..=REQUIREMENTS_HEAD_LINE_CAP.min(line_count)).collect();
+fn head_lines(line_count: usize, head_line_cap: usize) -> FileLines {
+    let full: Vec<usize> = (1..=head_line_cap.min(line_count)).collect();
     let mut ellipses = Vec::new();
     let mut boundaries = full.clone();
     boundaries.push(line_count + 1);
@@ -502,7 +615,7 @@ mod tests {
 
     #[test]
     fn plaintext_requirements_samples_head_not_url_lines() {
-        let lines = sampled_requirements_lines(12);
+        let lines = head_lines(12, REQUIREMENTS_HEAD_LINE_CAP);
         assert_eq!(lines.full, vec![1, 2, 3, 4, 5, 6, 7, 8]);
         assert_eq!(lines.ellipses, vec![9]);
     }
