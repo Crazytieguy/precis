@@ -186,6 +186,7 @@ src/
             …
         mod.rs
             …
+              26→/// The desired form of exporter to use for a given file.
               27→#[derive(Clone)]
               28→pub enum ExportType {
               29→    /// Asciidoc Table

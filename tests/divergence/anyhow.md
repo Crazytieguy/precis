@@ -78,78 +78,76 @@ Score(3000)=0.575 I=0.805 C=0.411 ns_rows≤3K=18/46 (reached=10 partial=0 missi
 | ns | 5275 |  | 584 | kind.rs tagged-dispatch explanation (top comment) | 3.5 | 2.3 | 0.541 |
 | walker |  | 5605 | 1590 | crate-doc body in src/lib.rs |  |  | 0.541 |
 | walker |  | 5609 | 4 | listing of 'tests/common' |  |  | 0.545 |
-| walker |  | 5613 | 4 | listing of 'tests/drop' |  |  | 0.550 |
-| ns | 5624 |  | 349 | Error struct: Display/Debug output forms | 3.6 |  | 0.531 |
-| walker |  | 5636 | 23 | pub-item names surface in tests/drop/mod.rs |  |  | 0.531 |
-| walker |  | 5660 | 24 | pub item at tests/drop/mod.rs:26 |  |  | 0.531 |
-| walker |  | 5685 | 25 | pub item at tests/drop/mod.rs:9 |  |  | 0.531 |
-| ns | 5711 |  | 87 | Chain doc + struct def | 3.7 | 2.1 | 0.528 |
-| walker |  | 5732 | 47 | pub-item names surface in tests/common/mod.rs |  |  | 0.528 |
-| walker |  | 5732 | 0 | pub item at tests/common/mod.rs:4 |  |  | 0.528 |
-| walker |  | 5732 | 0 | pub item at tests/common/mod.rs:8 |  |  | 0.528 |
-| walker |  | 5732 | 0 | pub item at tests/common/mod.rs:12 |  |  | 0.528 |
-| walker |  | 5742 | 10 | pub item body at tests/common/mod.rs:4 body 5 |  |  | 0.528 |
-| walker |  | 5758 | 16 | pub item body at tests/common/mod.rs:8 body 9 |  |  | 0.528 |
-| ns | 5951 |  | 240 | Result alias doc | 3.8 | 2.1 | 0.516 |
-| walker |  | 5985 | 227 | README.md section #4 |  |  | 0.516 |
-| walker |  | 6277 | 292 | README.md section #9 |  |  | 0.542 |
-| ns | 6324 |  | 373 | error.rs unsafe construct() — the type-erasure trick | 4.1 | 2.2 | 0.525 |
-| walker |  | 6414 | 137 | README.md section #6 |  |  | 0.525 |
-| walker |  | 6438 | 24 | pub item body at tests/common/mod.rs:12 body 13 |  |  | 0.525 |
-| ns | 6540 |  | 216 | error.rs object_downcast — concrete unsafe cast | 4.2 |  | 0.515 |
-| walker |  | 6581 | 143 | README.md section #3 |  |  | 0.515 |
-| walker |  | 6600 | 19 | mod/use plumbing in tests/common/mod.rs |  |  | 0.515 |
-| walker |  | 6626 | 26 | pub item at src/ensure.rs:10 |  |  | 0.515 |
-| walker |  | 6652 | 26 | pub item at src/ensure.rs:25 |  |  | 0.515 |
-| ns | 6692 |  | 152 | ptr.rs Own/Ref/Mut struct shapes | 4.3 | 2.3 | 0.533 |
-| ns | 6816 |  | 124 | chain.rs Iterator::next impl | 4.4 | 2.3 | 0.527 |
-| walker |  | 6865 | 213 | README.md section #5 |  |  | 0.527 |
-| ns | 7040 |  | 224 | fmt.rs ErrorImpl::debug impl | 4.5 | 2.3 | 0.516 |
-| walker |  | 7084 | 219 | README.md section #1 |  |  | 0.516 |
-| ns | 7279 |  | 239 | ensure.rs BothDebug/NotBothDebug dispatch + render() | 4.6 | 2.3 | 0.508 |
-| walker |  | 7348 | 264 | README.md section #2 |  |  | 0.508 |
-| walker |  | 7388 | 40 | pub item at src/kind.rs:80 |  |  | 0.508 |
-| walker |  | 7402 | 14 | listing of 'tests/crate' |  |  | 0.521 |
-| walker |  | 7444 | 42 | pub item at src/kind.rs:58 |  |  | 0.521 |
-| walker |  | 7486 | 42 | pub item at src/kind.rs:104 |  |  | 0.521 |
-| walker |  | 7555 | 69 | [package] in tests/crate/Cargo.toml |  |  | 0.521 |
-| walker |  | 7609 | 54 | mod/use plumbing in tests/drop/mod.rs |  |  | 0.521 |
-| walker |  | 7680 | 71 | pub-item names surface in tests/test_ffi.rs |  |  | 0.521 |
-| walker |  | 7680 | 0 | pub item at tests/test_ffi.rs:7 |  |  | 0.521 |
-| walker |  | 7680 | 0 | pub item at tests/test_ffi.rs:12 |  |  | 0.521 |
-| walker |  | 7680 | 0 | pub item at tests/test_ffi.rs:17 |  |  | 0.521 |
-| walker |  | 7691 | 11 | pub item body at tests/test_ffi.rs:7 body 8 |  |  | 0.521 |
-| walker |  | 7703 | 12 | pub item body at tests/test_ffi.rs:17 body 18 |  |  | 0.521 |
-| ns | 7708 |  | 429 | build.rs cfg flags emitted | 5.1 |  | 0.508 |
-| walker |  | 7718 | 15 | pub item body at tests/test_ffi.rs:12 body 13 |  |  | 0.509 |
-| walker |  | 7758 | 40 | [features] in tests/crate/Cargo.toml |  |  | 0.509 |
-| ns | 7784 |  | 76 | CI job roster | 5.2 |  | 0.505 |
-| walker |  | 7878 | 120 | impl method sigs in tests/drop/mod.rs |  |  | 0.505 |
-| walker |  | 7919 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.510 |
-| walker |  | 7945 | 26 | [dependencies] in tests/crate/Cargo.toml |  |  | 0.510 |
-| walker |  | 7960 | 15 | plaintext config .gitignore |  |  | 0.511 |
-| walker |  | 8025 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.515 |
-| ns | 8115 |  | 331 | CI test job: rust matrix + commands | 5.3 | 5.2 | 0.506 |
-| walker |  | 8163 | 138 | macro_export body at src/macros.rs:58 |  |  | 0.512 |
-| walker |  | 8178 | 15 | plaintext config tests/crate/.gitignore |  |  | 0.512 |
-| ns | 8236 |  | 121 | test_fmt.rs expected Debug strings (2- and 3-level context) | 6.1 |  | 0.506 |
-| ns | 8338 |  | 102 | test_repr.rs size/niche assertions | 6.2 |  | 0.503 |
-| walker |  | 8352 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.503 |
-| walker |  | 8364 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.503 |
-| ns | 8517 |  | 179 | test_downcast.rs test_downcast | 6.3 |  | 0.495 |
-| walker |  | 8674 | 310 | plaintext config LICENSE-MIT |  |  | 0.495 |
-| walker |  | 8687 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.495 |
-| ns | 8792 |  | 275 | test_context.rs test_downcast_ref (3-level chain) | 6.4 |  | 0.486 |
-| walker |  | 8909 | 222 | macro_export body at src/macros.rs:204 |  |  | 0.498 |
-| walker |  | 8923 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.498 |
-| ns | 8981 |  | 189 | test_chain.rs test_iter | 6.5 |  | 0.492 |
-| ns | 9143 |  | 162 | test_source.rs io/anyhow-from-anyhow source tests | 6.6 |  | 0.487 |
-| walker |  | 9149 | 226 | pub-item doc lede at src/lib.rs:468 |  |  | 0.505 |
+| ns | 5624 |  | 349 | Error struct: Display/Debug output forms | 3.6 |  | 0.527 |
+| walker |  | 5650 | 41 | pub-item doc lede at src/lib.rs:415 |  |  | 0.527 |
+| ns | 5711 |  | 87 | Chain doc + struct def | 3.7 | 2.1 | 0.530 |
+| walker |  | 5715 | 65 | pub-item doc lede at src/lib.rs:616 |  |  | 0.535 |
+| walker |  | 5853 | 138 | macro_export body at src/macros.rs:58 |  |  | 0.544 |
+| ns | 5951 |  | 240 | Result alias doc | 3.8 | 2.1 | 0.532 |
+| walker |  | 6027 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.532 |
+| walker |  | 6039 | 12 | pub item body at src/nightly.rs:56 body 57 |  |  | 0.532 |
+| walker |  | 6052 | 13 | pub item body at src/nightly.rs:41 body 42 |  |  | 0.532 |
+| walker |  | 6274 | 222 | macro_export body at src/macros.rs:204 |  |  | 0.548 |
+| walker |  | 6288 | 14 | pub item body at src/nightly.rs:52 body 53 |  |  | 0.548 |
+| ns | 6324 |  | 373 | error.rs unsafe construct() — the type-erasure trick | 4.1 | 2.2 | 0.531 |
+| walker |  | 6514 | 226 | pub-item doc lede at src/lib.rs:468 |  |  | 0.554 |
+| ns | 6540 |  | 216 | error.rs object_downcast — concrete unsafe cast | 4.2 |  | 0.544 |
+| ns | 6692 |  | 152 | ptr.rs Own/Ref/Mut struct shapes | 4.3 | 2.3 | 0.559 |
+| walker |  | 6798 | 284 | pub-item doc lede at src/lib.rs:650 |  |  | 0.559 |
+| walker |  | 6802 | 4 | listing of 'tests/drop' |  |  | 0.563 |
+| ns | 6816 |  | 124 | chain.rs Iterator::next impl | 4.4 | 2.3 | 0.557 |
+| walker |  | 6825 | 23 | pub-item names surface in tests/drop/mod.rs |  |  | 0.557 |
+| walker |  | 6849 | 24 | pub item at tests/drop/mod.rs:26 |  |  | 0.557 |
+| walker |  | 6874 | 25 | pub item at tests/drop/mod.rs:9 |  |  | 0.557 |
+| walker |  | 6921 | 47 | pub-item names surface in tests/common/mod.rs |  |  | 0.557 |
+| walker |  | 6921 | 0 | pub item at tests/common/mod.rs:4 |  |  | 0.557 |
+| walker |  | 6921 | 0 | pub item at tests/common/mod.rs:8 |  |  | 0.557 |
+| walker |  | 6921 | 0 | pub item at tests/common/mod.rs:12 |  |  | 0.557 |
+| walker |  | 6931 | 10 | pub item body at tests/common/mod.rs:4 body 5 |  |  | 0.557 |
+| walker |  | 6947 | 16 | pub item body at tests/common/mod.rs:8 body 9 |  |  | 0.557 |
+| ns | 7040 |  | 224 | fmt.rs ErrorImpl::debug impl | 4.5 | 2.3 | 0.546 |
+| walker |  | 7174 | 227 | README.md section #4 |  |  | 0.546 |
+| ns | 7279 |  | 239 | ensure.rs BothDebug/NotBothDebug dispatch + render() | 4.6 | 2.3 | 0.537 |
+| walker |  | 7466 | 292 | README.md section #9 |  |  | 0.558 |
+| walker |  | 7603 | 137 | README.md section #6 |  |  | 0.558 |
+| walker |  | 7627 | 24 | pub item body at tests/common/mod.rs:12 body 13 |  |  | 0.558 |
+| ns | 7708 |  | 429 | build.rs cfg flags emitted | 5.1 |  | 0.545 |
+| walker |  | 7770 | 143 | README.md section #3 |  |  | 0.545 |
+| ns | 7784 |  | 76 | CI job roster | 5.2 |  | 0.541 |
+| walker |  | 7789 | 19 | mod/use plumbing in tests/common/mod.rs |  |  | 0.541 |
+| walker |  | 7815 | 26 | pub item at src/ensure.rs:10 |  |  | 0.541 |
+| walker |  | 7841 | 26 | pub item at src/ensure.rs:25 |  |  | 0.541 |
+| walker |  | 7992 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.542 |
+| ns | 8115 |  | 331 | CI test job: rust matrix + commands | 5.3 | 5.2 | 0.532 |
+| walker |  | 8205 | 213 | README.md section #5 |  |  | 0.532 |
+| ns | 8236 |  | 121 | test_fmt.rs expected Debug strings (2- and 3-level context) | 6.1 |  | 0.526 |
+| ns | 8338 |  | 102 | test_repr.rs size/niche assertions | 6.2 |  | 0.522 |
+| walker |  | 8424 | 219 | README.md section #1 |  |  | 0.522 |
+| ns | 8517 |  | 179 | test_downcast.rs test_downcast | 6.3 |  | 0.514 |
+| walker |  | 8550 | 126 | pub-item doc body at src/lib.rs:468 |  |  | 0.514 |
+| ns | 8792 |  | 275 | test_context.rs test_downcast_ref (3-level chain) | 6.4 |  | 0.505 |
+| walker |  | 8814 | 264 | README.md section #2 |  |  | 0.505 |
+| walker |  | 8854 | 40 | pub item at src/kind.rs:80 |  |  | 0.505 |
+| walker |  | 8868 | 14 | listing of 'tests/crate' |  |  | 0.516 |
+| walker |  | 8910 | 42 | pub item at src/kind.rs:58 |  |  | 0.516 |
+| walker |  | 8952 | 42 | pub item at src/kind.rs:104 |  |  | 0.516 |
+| ns | 8981 |  | 189 | test_chain.rs test_iter | 6.5 |  | 0.510 |
+| walker |  | 9021 | 69 | [package] in tests/crate/Cargo.toml |  |  | 0.510 |
+| walker |  | 9075 | 54 | mod/use plumbing in tests/drop/mod.rs |  |  | 0.510 |
+| ns | 9143 |  | 162 | test_source.rs io/anyhow-from-anyhow source tests | 6.6 |  | 0.505 |
+| walker |  | 9146 | 71 | pub-item names surface in tests/test_ffi.rs |  |  | 0.505 |
+| walker |  | 9146 | 0 | pub item at tests/test_ffi.rs:7 |  |  | 0.505 |
+| walker |  | 9146 | 0 | pub item at tests/test_ffi.rs:12 |  |  | 0.505 |
+| walker |  | 9146 | 0 | pub item at tests/test_ffi.rs:17 |  |  | 0.505 |
+| walker |  | 9157 | 11 | pub item body at tests/test_ffi.rs:7 body 8 |  |  | 0.505 |
+| walker |  | 9169 | 12 | pub item body at tests/test_ffi.rs:17 body 18 |  |  | 0.505 |
+| walker |  | 9184 | 15 | pub item body at tests/test_ffi.rs:12 body 13 |  |  | 0.505 |
+| walker |  | 9224 | 40 | [features] in tests/crate/Cargo.toml |  |  | 0.505 |
 | ns | 9240 |  | 97 | test_autotrait.rs Send/Sync assertions | 6.7 |  | 0.501 |
+| walker |  | 9344 | 120 | impl method sigs in tests/drop/mod.rs |  |  | 0.501 |
+| walker |  | 9370 | 26 | [dependencies] in tests/crate/Cargo.toml |  |  | 0.501 |
 | ns | 9380 |  | 140 | tests/common/mod.rs shared bail! helpers | 6.8 |  | 0.504 |
-| walker |  | 9433 | 284 | pub-item doc lede at src/lib.rs:650 |  |  | 0.504 |
-| walker |  | 9584 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.505 |
+| walker |  | 9385 | 15 | plaintext config .gitignore |  |  | 0.505 |
 | ns | 9586 |  | 206 | test_ffi.rs extern "C" compatibility | 6.9 |  | 0.502 |
 | ns | 9695 |  | 109 | ui/wrong-interpolation.rs + expected stderr | 7.1 |  | 0.498 |
-| walker |  | 9710 | 126 | pub-item doc body at src/lib.rs:468 |  |  | 0.498 |
 | ns | 9977 |  | 282 | ui/must-use.rs + expected stderr | 7.2 |  | 0.489 |

@@ -91,11 +91,19 @@ pub struct Scheduler<W: Walker> {
     /// chains materialize in emission order, so absorb-time resolution
     /// is complete for all but pathological cross-expansion chains).
     train_member_counts: HashMap<BatchId, usize>,
-    /// Rounds gate: unopened substantial trains remaining as of the
-    /// current ranking round — breadth pressure is pointless (and
-    /// measured harmful: mitt/go-multierror) when there is nothing to
-    /// redirect the budget to.
-    breadth_remaining: usize,
+    /// Unopened substantial trains (>= TRAIN_SUBSTANTIAL_MEMBERS pool
+    /// members, no non-zero-cost schedule yet, non-orientation root) —
+    /// breadth pressure is pointless (and measured harmful:
+    /// mitt/go-multierror) when there is nothing to redirect the
+    /// budget to. Maintained incrementally: absorb adds a root when
+    /// its member count crosses the threshold; the first non-zero-cost
+    /// schedule under a root removes it.
+    substantial_unopened: HashSet<BatchId>,
+    /// Dependents absorbed before their predecessor key materialized —
+    /// their subtree counts sit under a pseudo-root until the missing
+    /// key arrives, then merge (predecessor keys are symbolic, so
+    /// emission order is not guaranteed).
+    pending_reparent: HashMap<W::Key, Vec<BatchId>>,
     /// Debug-only owner map for FS render cells — overlapping sibling
     /// FS atoms are a walker-contract violation.
     #[cfg(debug_assertions)]
@@ -152,7 +160,8 @@ impl<W: Walker> Scheduler<W> {
             train_root_memo: HashMap::new(),
             scheduled_per_root: HashMap::new(),
             train_member_counts: HashMap::new(),
-            breadth_remaining: 0,
+            substantial_unopened: HashSet::new(),
+            pending_reparent: HashMap::new(),
             #[cfg(debug_assertions)]
             fs_atom_owners: BTreeMap::new(),
         }
@@ -257,12 +266,19 @@ impl<W: Walker> Scheduler<W> {
         }
 
         // Non-memoized root walk for the member count (the ranking-time
-        // memo must only be written once chains are guaranteed complete).
+        // memo must only be written once chains are guaranteed
+        // complete). A missing predecessor key parks the count under
+        // the last resolved id as a pseudo-root and registers it for
+        // reparenting when the key materializes.
         let mut root = id;
         let mut cur = self.entries.len(); // guard against cycles
         let mut probe = &batch.predecessor;
         while let Some(pred_key) = probe {
             let Some(&pred_id) = self.key_to_id.get(pred_key) else {
+                self.pending_reparent
+                    .entry(pred_key.clone())
+                    .or_default()
+                    .push(root);
                 break;
             };
             root = pred_id;
@@ -272,9 +288,46 @@ impl<W: Walker> Scheduler<W> {
                 break;
             }
         }
-        *self.train_member_counts.entry(root).or_insert(0) += 1;
+        self.bump_train_members(root, 1);
 
         self.entries.push(batch);
+
+        // The new key may be the missing predecessor of earlier
+        // pseudo-roots: merge their parked subtree counts into this
+        // batch's own (possibly still pseudo) root.
+        let new_key = self.entries[id.index()].key.clone();
+        if let Some(orphans) = self.pending_reparent.remove(&new_key) {
+            for pseudo in orphans {
+                if pseudo == root {
+                    continue;
+                }
+                let parked = self.train_member_counts.remove(&pseudo).unwrap_or(0);
+                self.substantial_unopened.remove(&pseudo);
+                if let Some(opened) = self.scheduled_per_root.remove(&pseudo) {
+                    *self.scheduled_per_root.entry(root).or_insert(0) += opened;
+                    self.substantial_unopened.remove(&root);
+                }
+                self.bump_train_members(root, parked);
+            }
+        }
+    }
+
+    /// Add `n` members to `root`'s train, promoting it into the
+    /// substantial-unopened set when it crosses the threshold.
+    fn bump_train_members(&mut self, root: BatchId, n: usize) {
+        if n == 0 {
+            return;
+        }
+        let members = self.train_member_counts.entry(root).or_insert(0);
+        let before = *members;
+        *members += n;
+        if before < TRAIN_SUBSTANTIAL_MEMBERS
+            && *members >= TRAIN_SUBSTANTIAL_MEMBERS
+            && !self.scheduled_per_root.contains_key(&root)
+            && !self.entries[root.index()].key.is_orientation()
+        {
+            self.substantial_unopened.insert(root);
+        }
     }
 
     #[cfg(debug_assertions)]
@@ -331,16 +384,6 @@ impl<W: Walker> Scheduler<W> {
         if eligible.is_empty() {
             return None;
         }
-
-        self.breadth_remaining = self
-            .train_member_counts
-            .iter()
-            .filter(|(root, members)| {
-                **members >= TRAIN_SUBSTANTIAL_MEMBERS
-                    && !self.scheduled_per_root.contains_key(root)
-                    && !self.entries[root.index()].key.is_orientation()
-            })
-            .count();
 
         let pool = self.select_contender_pool(&eligible);
 
@@ -484,6 +527,7 @@ impl<W: Walker> Scheduler<W> {
         if cost.tokens > 0 {
             let root = self.train_root(id);
             *self.scheduled_per_root.entry(root).or_insert(0) += 1;
+            self.substantial_unopened.remove(&root);
         }
 
         // Drop the scheduled batch's cached cost, plus every cached
@@ -554,7 +598,7 @@ impl<W: Walker> Scheduler<W> {
     /// batches always rank at their raw ratio, and orientation-rooted
     /// trains (README headline -> sections) are exempt wholesale.
     fn train_pressure(&mut self, id: BatchId) -> f64 {
-        if self.breadth_remaining < BREADTH_MIN_TRAINS {
+        if self.substantial_unopened.len() < BREADTH_MIN_TRAINS {
             return 1.0;
         }
         if !self.entries[id.index()].key.is_depth_follow_up() {
