@@ -458,7 +458,10 @@ Measured-dead this session (don't re-test without new evidence):
   there instead, and both sides include self-hosted apps — no
   walk-time discriminator found. The oracle-vs-walker class
   aggregation method itself is sound and cheap; reuse it after the
-  next mechanism shifts the frontier.
+  next mechanism shifts the frontier. A README-emphasis router
+  (boost only config files name-mentioned in the root README text,
+  depth ≤ 1) also measured exactly flat — the mention signal doesn't
+  separate the modes either.
 - **Post-3K recall extensions all price below the frontier**: TOML
   `Whole` for non-manifest configs (~flat, 1000-budget −0.0013),
   Makefile >100-line head-sample + dotenv tail to 120 (sqlite-vec
