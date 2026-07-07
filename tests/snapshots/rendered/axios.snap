@@ -228,10 +228,6 @@ lib/
             …
               22→export default CanceledError;
         isCancel.js
-            …
-               3→export default function isCancel(value) {
-               4→  return !!(value && value.__CANCEL__);
-            …
     core/
         Axios.js
             …
@@ -255,9 +251,6 @@ lib/
                8→- Handling config
         buildFullPath.js
         dispatchRequest.js
-            …
-              34→export default function dispatchRequest(config) {
-            …
         mergeConfig.js
         settle.js
         transformData.js
@@ -307,9 +300,6 @@ lib/
             …
               57→export default composeSignals;
         cookies.js
-            …
-               4→export default platform.hasStandardBrowserEnv
-            …
         deprecatedMethod.js
         estimateDataURLDecodedBytes.js
         formDataToJSON.js
@@ -322,16 +312,10 @@ lib/
         isAbsoluteURL.js
         isAxiosError.js
         isURLSameOrigin.js
-            …
-               3→export default platform.hasStandardBrowserEnv
-            …
         null.js
             …
                2→export default null;
         parseHeaders.js
-            …
-              41→export default (rawHeaders) => {
-            …
         parseProtocol.js
         progressEventReducer.js
         readBlob.js
@@ -347,9 +331,6 @@ lib/
             …
               55→export default speedometer;
         spread.js
-            …
-              24→export default function spread(callback) {
-            …
         throttle.js
             …
               44→export default throttle;
@@ -439,6 +420,16 @@ tests/
             package-lock.json
             package.json
             tests/
+                fixture-cleanup.module.test.cjs
+                helpers/
+                    cjs-typing.ts
+                    fixture.cjs
+                    run-command.cjs
+                    ts-require-default.ts
+                    ts-require.ts
+                ts-require-default.module.test.cjs
+                ts-require.module.test.cjs
+                typings.module.test.cjs
         esm/
             package-lock.json
             package.json
@@ -466,6 +457,11 @@ tests/
             deno.json
             deno.lock
             tests/
+                cancel.smoke.test.ts
+                error.smoke.test.ts
+                fetch.smoke.test.ts
+                headers.smoke.test.ts
+                import.smoke.test.ts
         esm/
             package-lock.json
             package.json

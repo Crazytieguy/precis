@@ -94,22 +94,6 @@ crates/
                     as_expr.rs
                 eval.rs
                 exec/
-                    action.rs
-                    delete_by_key.rs
-                    eval.rs
-                    exec_statement.rs
-                    filter.rs
-                    find_pk_by_index.rs
-                    get_by_key.rs
-                    nested_merge.rs
-                    output.rs
-                    plan.rs
-                    project.rs
-                    query_pk.rs
-                    rmw.rs
-                    set_var.rs
-                    update_by_key.rs
-                    var.rs
                 exec.rs
                 hir.rs
                 index/
@@ -124,22 +108,6 @@ crates/
                     returning.rs
                 lower.rs
                 mir/
-                    const.rs
-                    delete_by_key.rs
-                    eval.rs
-                    exec_statement.rs
-                    filter.rs
-                    find_pk_by_index.rs
-                    get_by_key.rs
-                    logical_plan.rs
-                    nested_merge.rs
-                    node.rs
-                    operation.rs
-                    project.rs
-                    query_pk.rs
-                    read_modify_write.rs
-                    store.rs
-                    update_by_key.rs
                 mir.rs
                 plan/
                     execution.rs
@@ -181,6 +149,35 @@ crates/
     toasty-cli/
         Cargo.toml
         src/
+            config.rs
+            lib.rs
+                   1→mod config;
+                   2→mod migration;
+                   3→mod theme;
+                   4→
+                   5→pub use config::*;
+                   6→pub use migration::*;
+                   7→
+                   8→use anyhow::Result;
+                   9→use clap::Parser;
+                  10→use toasty::Db;
+                  12→/// Toasty CLI library for building custom command-line tools
+                  13→pub struct ToastyCli {
+                  14→    db: Db,
+                  15→    config: Config,
+                  16→}
+                …
+            migration/
+                apply.rs
+                config.rs
+                drop.rs
+                generate.rs
+                history_file.rs
+                reset.rs
+                snapshot.rs
+                snapshot_file.rs
+            migration.rs
+            theme.rs
     toasty-codegen/
         CONTEXT.md
         Cargo.toml
@@ -230,9 +227,120 @@ crates/
                 pk.rs
             schema.rs
     toasty-core/
+        CONTEXT.md
+        Cargo.toml
+        src/
+            driver/
+                capability.rs
+                operation/
+                    delete_by_key.rs
+                    find_pk_by_index.rs
+                    get_by_key.rs
+                    insert.rs
+                    query_pk.rs
+                    query_sql.rs
+                    transaction.rs
+                    update_by_key.rs
+                operation.rs
+                response.rs
+            driver.rs
+            error/
+            error.rs
+            lib.rs
+                …
+                   2→mod macros;
+                   3→
+                   4→pub mod driver;
+                   5→pub use driver::Connection;
+                   6→
+                   7→mod error;
+                   8→pub use error::Error;
+                   9→
+                  10→pub mod schema;
+                  11→pub use schema::Schema;
+                  12→
+                  13→pub mod stmt;
+                  15→/// A Result type alias that uses Toasty's [`Error`] type.
+                  16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+                  18→pub use async_trait::async_trait;
+            macros.rs
+                …
+                   2→macro_rules! path {
+                …
+            schema/
+                app/
+                    arg.rs
+                    auto.rs
+                    constraint/
+                        length.rs
+                    constraint.rs
+                    embedded.rs
+                    field/
+                        primitive.rs
+                    field.rs
+                    fk.rs
+                    index.rs
+                    model.rs
+                    pk.rs
+                    relation/
+                        belongs_to.rs
+                        has_many.rs
+                        has_one.rs
+                    relation.rs
+                    schema.rs
+                app.rs
+                builder/
+                    table.rs
+                builder.rs
+                db/
+                    column.rs
+                    diff.rs
+                    index.rs
+                    migration.rs
+                    pk.rs
+                    schema.rs
+                    table.rs
+                    ty.rs
+                db.rs
+                mapping/
+                    field.rs
+                    model.rs
+                mapping.rs
+                name.rs
+                verify/
+                    relations_are_indexed.rs
+                verify.rs
+            schema.rs
+            stmt/
+            stmt.rs
+        tests/
     toasty-driver-dynamodb/
         Cargo.toml
         src/
+            lib.rs
+                …
+                  29→#[derive(Debug)]
+                  30→pub struct DynamoDb {
+                  31→    url: String,
+                  32→}
+                …
+                  95→#[derive(Debug)]
+                  96→pub struct Connection {
+                  97→    /// Handle to the AWS SDK client
+                  98→    client: Client,
+                  99→}
+                …
+            op/
+                create_table.rs
+                delete_by_key.rs
+                find_pk_by_index.rs
+                get_by_key.rs
+                insert.rs
+                query_pk.rs
+                update_by_key.rs
+            op.rs
+            type.rs
+            value.rs
     toasty-driver-integration-suite/
         Cargo.toml
         src/
@@ -257,6 +365,23 @@ crates/
     toasty-driver-postgresql/
         Cargo.toml
         src/
+            lib.rs
+                …
+                  23→#[derive(Debug)]
+                  24→pub struct PostgreSQL {
+                  25→    url: String,
+                  26→    config: Config,
+                  27→}
+                …
+                 177→#[derive(Debug)]
+                 178→pub struct Connection {
+                 179→    client: Client,
+                 180→    statement_cache: StatementCache,
+                 181→}
+                …
+            statement_cache.rs
+            type.rs
+            value.rs
     toasty-driver-sqlite/
         CONTEXT.md
         Cargo.toml
@@ -277,37 +402,43 @@ crates/
             value.rs
     toasty-macros/
     toasty-sql/
+        CONTEXT.md
+        Cargo.toml
+        src/
+            lib.rs
+                   1→pub mod migration;
+                   2→pub use migration::*;
+                   3→
+                   4→pub mod serializer;
+                   5→pub use serializer::{Params, Serializer, TypedValue};
+                   6→
+                   7→pub mod stmt;
+                   8→pub use stmt::Statement;
+            migration.rs
+            serializer/
+                column.rs
+                column_def.rs
+                cte.rs
+                delim.rs
+                expr.rs
+                flavor.rs
+                fmt.rs
+                ident.rs
+                name.rs
+                params.rs
+                statement.rs
+                ty.rs
+                value.rs
+            serializer.rs
+            stmt/
+            stmt.rs
+        tests/
 docs/
     ARCHITECTURE.md
-           1→# Toasty Architecture Overview
-           2→
-           3→## Project Structure
-           4→
-           5→Toasty is an ORM for Rust that supports SQL and NoSQL databases. The codebase is a Cargo workspace with separate crates for each layer.
-           7→## Crates
-           8→
-           9→### 1. toasty
-          10→User-facing crate with query engine and runtime.
-        …
-          26→### 2. toasty-core
-        …
-          39→### 3. toasty-codegen
-          40→Generates Rust code from the `#[derive(Model)]` macro.
-        …
-          54→### 4. toasty-driver-*
-        …
-          63→### 5. toasty-sql
-          64→Converts statement AST to SQL strings. Used by SQL-based drivers.
-        …
-          74→## Further Reading
-          75→
-          76→- [Query Engine Architecture](architecture/query-engine.md) - Query compilation and execution pipeline
-          77→- [Type System](architecture/type-system.md) - Type system design and conversions
     CHANGE_GUIDE.md
     CONTEXT.md
            1→# Documentation Context
-           2→
-           3→Load this file when editing anything in the `docs/` directory.
+        …
            5→## Writing Style
         …
           18→### Examples
@@ -330,8 +461,6 @@ docs/
                3→This roadmap outlines potential enhancements and missing features for the Toasty ORM.
             …
         composite-keys.md
-               1→# Composite Key Support
-            …
         order_limit_pagination.md
         query-constraints.md
 examples/
@@ -340,36 +469,6 @@ examples/
         Cargo.toml
         src/
             main.rs
-                   1→#[derive(Debug, toasty::Model)]
-                   2→struct User {
-                   3→    #[key]
-                   4→    #[auto]
-                   5→    id: uuid::Uuid,
-                   6→
-                   7→    name: String,
-                   8→
-                   9→    #[unique]
-                  10→    email: String,
-                  11→
-                  12→    #[has_many]
-                  13→    todos: toasty::HasMany<Todo>,
-                  14→
-                  15→    moto: Option<String>,
-                  16→}
-                  18→#[derive(Debug, toasty::Model)]
-                  19→struct Todo {
-                  20→    #[key]
-                  21→    #[auto]
-                  22→    id: uuid::Uuid,
-                  23→
-                  24→    #[index]
-                  25→    user_id: uuid::Uuid,
-                  26→
-                  27→    #[belongs_to(key = user_id, references = id)]
-                  28→    user: toasty::BelongsTo<User>,
-                  29→
-                  30→    title: String,
-                  31→}
                 …
                   34→async fn main() -> toasty::Result<()> {
                 …

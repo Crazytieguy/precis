@@ -38,22 +38,7 @@ README.md
       17→[Werkzeug]: https://werkzeug.palletsprojects.com/
       18→[Jinja]: https://jinja.palletsprojects.com/
       20→## A Simple Example
-      21→
-      22→```python
-      23→# save this as app.py
-      24→from flask import Flask
-      25→
-      26→app = Flask(__name__)
-      27→
-      28→@app.route("/")
-      29→def hello():
-      30→    return "Hello, World!"
-      31→```
-      32→
-      33→```
-      34→$ flask run
-      35→  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-      36→```
+    …
       38→## Donate
       39→
       40→The Pallets organization develops and supports Flask and the libraries
@@ -111,6 +96,31 @@ docs/
     logging.rst
     make.bat
     patterns/
+        appdispatch.rst
+        appfactories.rst
+        caching.rst
+        celery.rst
+        deferredcallbacks.rst
+        favicon.rst
+        fileuploads.rst
+        flashing.rst
+        index.rst
+        javascript.rst
+        jquery.rst
+        lazyloading.rst
+        methodoverrides.rst
+        mongoengine.rst
+        packages.rst
+        requestchecksum.rst
+        singlepageapplications.rst
+        sqlalchemy.rst
+        sqlite3.rst
+        streaming.rst
+        subclassing.rst
+        templateinheritance.rst
+        urlprocessors.rst
+        viewdecorators.rst
+        wtforms.rst
     quickstart.rst
     reqcontext.rst
     server.rst
@@ -172,6 +182,12 @@ examples/
             templates/
         pyproject.toml
         tests/
+            conftest.py
+            data.sql
+            test_auth.py
+            test_blog.py
+            test_db.py
+            test_factory.py
 pyproject.toml
        1→[project]
        2→name = "Flask"
@@ -246,15 +262,6 @@ src/
         blueprints.py
             …
               18→class Blueprint(SansioBlueprint):
-              19→    def __init__(
-            …
-              55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
-            …
-              82→    def send_static_file(self, filename: str) -> Response:
-            …
-             104→    def open_resource(
-             105→        self, resource: str, mode: str = "rb", encoding: str | None = "utf-8"
-             106→    ) -> t.IO[t.AnyStr]:
             …
         cli.py
         config.py
@@ -318,12 +325,6 @@ src/
             …
              222→class Response(ResponseBase):
             …
-             240→    default_mimetype: str | None = "text/html"
-             241→
-             242→    json_module = json
-             243→
-             244→    autocorrect_location_header = False
-            …
 tests/
     conftest.py
     static/
@@ -344,6 +345,17 @@ tests/
                     __init__.py
                     templates/
         cliapp/
+            __init__.py
+            app.py
+            factory.py
+            importerrorapp.py
+            inner1/
+                __init__.py
+                inner2/
+                    __init__.py
+                    flask.py
+            message.txt
+            multiapp.py
         helloworld/
         subdomaintestmodule/
             __init__.py

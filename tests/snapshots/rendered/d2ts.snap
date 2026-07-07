@@ -134,7 +134,22 @@ eslint.base.mjs
 examples/
     basic.ts
     d2ql/
+        README.md
+        basic_select.ts
+        functions.ts
+        group_by.ts
+        joins.ts
+        kitchen_sink.ts
+        where_conditions.ts
     electric/
+        CHANGELOG.md
+        README.md
+        db/
+        docker-compose.yml
+        package.json
+        src/
+            index.ts
+            types.ts
     fruit-processed.ts
     includes.ts
     iterate.ts
@@ -183,6 +198,12 @@ packages/
             types.ts
             utils.ts
         tests/
+            graph.test.ts
+            indexes.test.ts
+            multiset.test.ts
+            operators/
+            test-utils.ts
+            utils.test.ts
         tsconfig.json
     d2ql/
         README.md
@@ -196,6 +217,29 @@ packages/
         eslint.config.mjs
         package.json
         src/
+            compiler.ts
+            evaluators.ts
+            extractors.ts
+            functions.ts
+            group-by.ts
+            index.ts
+                   1→/**
+                   2→ * D2QL is a SQL-like query language for D2TS.
+                   3→ * It's a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2 pipeline.
+                   4→ */
+                …
+            joins.ts
+            key-by.ts
+            order-by.ts
+            query-builder/
+                index.ts
+                query-builder.ts
+            schema.json
+            schema.ts
+            select.ts
+            store.ts
+            types.ts
+            utils.ts
         tests/
         tsconfig.json
     d2ts/
@@ -221,12 +265,6 @@ packages/
                    5→export * from './operators/index.js'
                    6→export * from './types.js'
             multiset.ts
-                …
-                   3→export type MultiSetArray<T> = [T, number][]
-                   4→export type KeyedData<T> = [key: string, value: T]
-                …
-                   9→export class MultiSet<T> {
-                …
             operators/
                 base.ts
                 buffer.ts
@@ -235,12 +273,6 @@ packages/
                 count.ts
                     …
                       10→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
-                      11→  constructor(
-                      12→    id: number,
-                      13→    inputA: DifferenceStreamReader<[K, V]>,
-                      14→    output: DifferenceStreamWriter<[K, number]>,
-                      15→    initialFrontier: Antichain,
-                      16→  ) {
                     …
                       32→export function count<
                     …
@@ -254,17 +286,6 @@ packages/
                       77→): PipedOperator<T, T> {
                     …
                 distinct.ts
-                    …
-                      10→export class DistinctOperator<K, V> extends ReduceOperator<K, V, V> {
-                      11→  constructor(
-                      12→    id: number,
-                      13→    inputA: DifferenceStreamReader<[K, V]>,
-                      14→    output: DifferenceStreamWriter<[K, V]>,
-                      15→    initialFrontier: Antichain,
-                      16→  ) {
-                    …
-                      37→export function distinct<
-                    …
                 filter.ts
                 filterBy.ts
                     …

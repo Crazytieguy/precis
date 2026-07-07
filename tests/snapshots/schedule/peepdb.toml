@@ -55,38 +55,10 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "peepdb" })'
-descriptor = "listing of 'peepdb'"
-cost_tokens = 34
-cum_tokens = 198
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "peepdb"
-entries = ["__init__.py", "__main__.py", "cli.py", "config.py", "core.py", "db", "exceptions.py", "tests"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "peepdb/db" })'
-descriptor = "listing of 'peepdb/db'"
-cost_tokens = 45
-cum_tokens = 243
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "peepdb/db"
-entries = ["__init__.py", "base.py", "firebase.py", "mariadb.py", "mongodb.py", "mssql.py", "mysql.py", "oracle.py", "postgresql.py", "sqlite.py"]
-
-[[batches]]
-position = 6
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 246
+cum_tokens = 167
 
 [batches.content]
 kind = "fs"
@@ -96,11 +68,11 @@ parent = ".github"
 entries = ["workflows"]
 
 [[batches]]
-position = 7
+position = 5
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 254
+cum_tokens = 175
 
 [batches.content]
 kind = "fs"
@@ -110,11 +82,85 @@ parent = ".github/workflows"
 entries = ["pages.yml", "test.yml"]
 
 [[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "images" })'
+descriptor = "listing of 'images'"
+cost_tokens = 28
+cum_tokens = 203
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "images"
+entries = ["demo.gif", "peepdb_example1.png", "peepdb_example2.png", "peepdb_screenshot.png"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "peepdb" })'
+descriptor = "listing of 'peepdb'"
+cost_tokens = 34
+cum_tokens = 237
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "peepdb"
+entries = ["__init__.py", "__main__.py", "cli.py", "config.py", "core.py", "db", "exceptions.py", "tests"]
+
+[[batches]]
 position = 8
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 41
+cum_tokens = 278
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["CNAME", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "_config.yml", "contributing.md", "index.md", "installation.md", "usage.md"]
+
+[[batches]]
+position = 9
+key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
+descriptor = "README headline in docs/README.md"
+cost_tokens = 96
+cum_tokens = 374
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 1
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "peepdb/db" })'
+descriptor = "listing of 'peepdb/db'"
+cost_tokens = 45
+cum_tokens = 419
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "peepdb/db"
+entries = ["__init__.py", "base.py", "firebase.py", "mariadb.py", "mongodb.py", "mssql.py", "mysql.py", "oracle.py", "postgresql.py", "sqlite.py"]
+
+[[batches]]
+position = 11
 key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
 descriptor = "YAML config at .github/workflows/test.yml"
 cost_tokens = 593
-cum_tokens = 847
+cum_tokens = 1012
 
 [batches.content]
 kind = "lines"
@@ -136,11 +182,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 12
 key = 'Python(DeclNames { file: "peepdb/exceptions.py" })'
 descriptor = "python decl names surface in peepdb/exceptions.py"
 cost_tokens = 11
-cum_tokens = 858
+cum_tokens = 1023
 
 [batches.content]
 kind = "lines"
@@ -154,11 +200,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 10
+position = 13
 key = 'Python(Decl { file: "peepdb/exceptions.py", start_line: 1 })'
 descriptor = "python decl at peepdb/exceptions.py:1"
 cost_tokens = 0
-cum_tokens = 858
+cum_tokens = 1023
 
 [batches.content]
 kind = "lines"
@@ -172,11 +218,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 11
+position = 14
 key = 'Python(ClassBody { file: "peepdb/exceptions.py", start_line: 1 })'
 descriptor = "python class body at peepdb/exceptions.py:1"
 cost_tokens = 5
-cum_tokens = 863
+cum_tokens = 1028
 
 [batches.content]
 kind = "lines"
@@ -190,11 +236,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 12
+position = 15
 key = 'Python(DeclNames { file: "peepdb/db/base.py" })'
 descriptor = "python decl names surface in peepdb/db/base.py"
 cost_tokens = 14
-cum_tokens = 877
+cum_tokens = 1042
 
 [batches.content]
 kind = "lines"
@@ -208,11 +254,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 13
+position = 16
 key = 'Python(Decl { file: "peepdb/db/base.py", start_line: 5 })'
 descriptor = "python decl at peepdb/db/base.py:5"
 cost_tokens = 0
-cum_tokens = 877
+cum_tokens = 1042
 
 [batches.content]
 kind = "lines"
@@ -226,25 +272,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "images" })'
-descriptor = "listing of 'images'"
-cost_tokens = 28
-cum_tokens = 905
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "images"
-entries = ["demo.gif", "peepdb_example1.png", "peepdb_example2.png", "peepdb_screenshot.png"]
-
-[[batches]]
-position = 15
+position = 17
 key = 'Python(Imports { file: "peepdb/__main__.py" })'
 descriptor = "python imports in peepdb/__main__.py"
 cost_tokens = 12
-cum_tokens = 917
+cum_tokens = 1054
 
 [batches.content]
 kind = "lines"
@@ -253,38 +285,6 @@ kind = "lines"
 path = "peepdb/__main__.py"
 start = 1
 end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 41
-cum_tokens = 958
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["CNAME", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "_config.yml", "contributing.md", "index.md", "installation.md", "usage.md"]
-
-[[batches]]
-position = 17
-key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
-descriptor = "README headline in docs/README.md"
-cost_tokens = 96
-cum_tokens = 1054
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 1
-end = 7
 
 [batches.content.spans.render]
 kind = "full"

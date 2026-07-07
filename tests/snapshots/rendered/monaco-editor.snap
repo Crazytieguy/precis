@@ -9,6 +9,12 @@ expression: rendered
     devcontainer.json
 .gitattributes
 .github/
+    ISSUE_TEMPLATE/
+    commands.json
+    publish-failure-issue-template.md
+    workflows/
+        ci.yml
+        website.yml
 .gitignore
 .husky/
     pre-commit
@@ -42,8 +48,7 @@ README.md
       31→## Localization
     …
       40→## Concepts
-      41→
-      42→Monaco editor is best known for being the text editor that powers VS Code. However, it's a bit more nuanced. Some basic understanding about the underlying concepts is needed to use Monaco editor effectively.
+    …
       44→### Models
     …
       48→### URIs
@@ -57,8 +62,7 @@ README.md
       66→## Documentation
     …
       76→## Issues
-      77→
-      78→Create [issues](https://github.com/microsoft/monaco-editor/issues) in this repository for anything related to the Monaco Editor. Please search for existing issues to avoid duplicates.
+    …
       80→## FAQ
     …
      112→## Contributing / Local Development
@@ -66,8 +70,7 @@ README.md
      117→## Code of Conduct
     …
      121→## License
-     122→
-     123→Licensed under the [MIT](https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt) License.
+    …
 SECURITY.md
 ThirdPartyNotices.txt
 build/
@@ -76,18 +79,6 @@ docs/
     debugging-core.gif
     debugging-languages.gif
     integrate-esm.md
-           1→## Integrating the ESM version of the Monaco Editor
-        …
-           9→### Using webpack
-        …
-          17→### Option 1: Using the Monaco Editor WebPack Plugin
-        …
-          62→### Option 2: Using plain webpack
-        …
-         135→### Using parcel
-        …
-         189→### Using Vite
-        …
     launch config.png
     out-folders.dio.svg
 editor.code-workspace
@@ -114,6 +105,12 @@ monaco-lsp-client/
     rolldown.config.mjs
     src/
         adapters/
+            ITextModelBridge.ts
+            LspCapabilitiesRegistry.ts
+            LspClient.ts
+            LspConnection.ts
+            TextDocumentSynchronizer.ts
+            languageFeatures/
         index.ts
             …
                5→export { MonacoLspClient, WebSocketTransport, createTransportToWorker, createTransportToIFrame };
@@ -127,26 +124,8 @@ package.json
     …
        5→	"private": true,
        6→	"description": "A browser based code editor",
-       7→	"homepage": "https://github.com/microsoft/monaco-editor",
-       8→	"author": "Microsoft Corporation",
-       9→	"license": "MIT",
     …
-      37→	"typings": "./esm/vs/editor/editor.main.d.ts",
-      38→	"main": "./min/vs/editor/editor.main.js",
-      39→	"module": "./esm/vs/editor/editor.main.js",
-      40→	"exports": {
-      41→		".": {
-      42→			"types": "./esm/vs/index.d.ts",
-      43→			"import": "./esm/vs/index.js",
-      44→			"require": "./min/vs/index.js"
-      45→		},
-      46→		"./*.js": "./esm/vs/*.js",
-      47→		"./*": "./esm/vs/*.js"
-      48→	},
-      49→	"repository": {
-      50→		"type": "git",
-      51→		"url": "https://github.com/microsoft/monaco-editor"
-      52→	},
+       9→	"license": "MIT",
     …
 samples/
     README.md
@@ -163,21 +142,152 @@ samples/
           35→
           36→MIT
     browser-esm-esbuild/
+        .gitignore
+        build.js
+        dist/
+        index.html
+        index.js
+        package.json
+            …
+               2→	"name": "helloworld",
+            …
     browser-esm-parcel/
         .gitignore
         index.html
         package-lock.json
         package.json
+            …
+               2→	"name": "helloworld",
+            …
         src/
+            index.html
+            index.js
     browser-esm-vite/
+        .gitignore
+        index.html
+        main.ts
+        package-lock.json
+        package.json
+            …
+               2→	"name": "browser-esm-vite",
+            …
+        style.css
+        tsconfig.json
+        vite.config.ts
     browser-esm-vite-react/
+        .gitignore
+        index.html
+        package-lock.json
+        package.json
+            …
+               2→	"name": "browser-esm-vite-react",
+            …
+        src/
+            components/
+                Editor.module.css
+                Editor.tsx
+            main.tsx
+            userWorker.ts
+            vite-env.d.ts
+        tsconfig.json
+        vite.config.ts
     browser-esm-webpack/
+        .gitignore
+        dist/
+        index.html
+        index.js
+        package.json
+            …
+               2→	"name": "browser-esm-webpack",
+            …
+        webpack.config.js
     browser-esm-webpack-monaco-plugin/
+        .gitignore
+        dist/
+        index.html
+        index.js
+        package.json
+            …
+               2→	"name": "browser-esm-webpack-monaco-plugin",
+            …
+        webpack.config.js
     browser-esm-webpack-small/
+        .gitignore
+        dist/
+        generate-imports.js
+        index.html
+        index.js
+        package.json
+            …
+               2→	"name": "browser-esm-webpack-small",
+            …
+        webpack.config.js
     browser-esm-webpack-typescript/
+        .gitignore
+        package.json
+            …
+               2→	"name": "monaco-esm-webpack-typescript",
+            …
+        src/
+            index.css
+            index.ts
+        tsconfig.json
+        webpack.config.js
     browser-esm-webpack-typescript-react/
+        .gitignore
+        package-lock.json
+        package.json
+            …
+               2→	"name": "monaco-esm-webpack-typescript",
+            …
+        src/
+            components/
+                Editor.tsx
+            index.css
+            index.html
+            index.tsx
+        tsconfig.json
+        webpack.config.js
     electron-esm-webpack/
+        .gitignore
+        dist/
+        index.js
+        main.js
+        package.json
+            …
+               2→	"name": "electron-esm-webpack",
+               3→	"main": "./main",
+            …
+        webpack.config.js
     legacy/
+        README.md
+        browser-amd-diff-editor/
+            index.html
+            modified.txt
+            original.txt
+        browser-amd-editor/
+            index.html
+        browser-amd-iframe/
+            index.html
+            inner.html
+        browser-amd-localized/
+            index.html
+        browser-amd-monarch/
+            index.html
+        browser-amd-requirejs/
+            index.html
+        browser-amd-shadow-dom/
+            index.html
+        browser-amd-shared-model/
+            index.html
+        browser-amd-trusted-types/
+            index.html
+        electron-amd/
+            electron-index.html
+            index.html
+            main.js
+            package.json
+        electron-amd-nodeIntegration/
     nwjs-amd/
         index.html
     nwjs-amd-v2/
@@ -221,7 +331,6 @@ src/
                 monaco.contribution.ts
                 ts.worker.ts
     editor.ts
-           1→export * from 'monaco-editor-core/esm/vs/editor/editor.api';
     features/
         anchorSelect/
         bracketMatching/
@@ -289,13 +398,7 @@ src/
         wordOperations/
         wordPartOperations/
     index.ts
-           1→import * as lsp from '@vscode/monaco-lsp-client';
-           2→import { css, html, json, typescript } from './languages/register.all';
-           3→import './features/register.all';
         …
-           6→import 'monaco-editor-core';
-           7→
-           8→export * from './editor';
            9→export { css, html, json, typescript, lsp };
     internal/
         common/
@@ -459,22 +562,6 @@ webpack-plugin/
         …
     src/
         index.ts
-            …
-             159→class MonacoEditorWebpackPlugin implements webpack.WebpackPluginInstance {
-             160→	private readonly options: IInternalMonacoEditorWebpackPluginOpts;
-             161→
-             162→	constructor(options: MonacoEditorWebpackPlugin.IMonacoEditorWebpackPluginOpts = {}) {
-            …
-             177→	apply(compiler: webpack.Compiler): void {
-            …
-             179→		const compilationPublicPath = getCompilationPublicPath(compiler);
-             180→		const modules = [EDITOR_MODULE].concat(languages).concat(features);
-             181→		const workers: ILabeledWorkerDefinition[] = [];
-            …
-             201→		const plugins = createPlugins(compiler, workers, filename, monacoEditorPath);
-             202→		addCompilerRules(compiler, rules);
-             203→		addCompilerPlugins(compiler, plugins);
-            …
         loader-utils.d.ts
         loaders/
             include.ts

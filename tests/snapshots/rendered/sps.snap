@@ -56,11 +56,6 @@ README.md
 rustfmt.toml
 sps/
     Cargo.toml
-        …
-          13→[[bin]]
-          14→name = "sps"
-          15→path = "src/main.rs"
-        …
     src/
         cli/
             info.rs
@@ -70,9 +65,6 @@ sps/
             reinstall.rs
             search.rs
             status.rs
-                …
-                 399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
-                …
             uninstall.rs
             update.rs
                 …
@@ -183,15 +175,6 @@ sps-common/
         dependency/
             definition.rs
             mod.rs
-                   1→pub mod definition; // Renamed from 'dependency'
-                   2→pub mod requirement;
-                   3→pub mod resolver;
-                …
-                   6→pub use definition::{Dependency, DependencyExt, DependencyTag}; // Updated source module
-                   7→pub use requirement::Requirement;
-                   8→pub use resolver::{
-                   9→    DependencyResolver, ResolutionContext, ResolutionStatus, ResolvedDependency, ResolvedGraph,
-                  10→};
             requirement.rs
             resolver.rs
         error.rs
@@ -219,17 +202,6 @@ sps-common/
             formula.rs
             mod.rs
                 …
-                   3→use std::sync::Arc;
-                   4→
-                   5→pub mod artifact;
-                   6→pub mod cask;
-                   7→pub mod formula;
-                   8→pub mod tap;
-                   9→pub mod version;
-                …
-                  12→pub use artifact::InstalledArtifact;
-                  13→pub use cask::Cask;
-                  14→pub use formula::Formula;
                   16→#[derive(Debug, Clone)]
                   17→pub enum InstallTargetIdentifier {
                   18→    Formula(Arc<Formula>),
@@ -253,20 +225,47 @@ sps-core/
             update.rs
         install/
             bottle/
+                exec.rs
+                link.rs
+                macho.rs
+                mod.rs
+                    …
+                      17→/// Download formula resources from the internet asynchronously.
+                      18→pub async fn download_formula(
+                      19→    formula: &Formula,
+                      20→    config: &Config,
+                      21→    client: &reqwest::Client,
+                      22→) -> Result<PathBuf> {
+                      23→    if has_bottle_for_current_platform(formula) {
+                      24→        exec::download_bottle(formula, config, client).await
+                      25→    } else {
+                      26→        Err(SpsError::Generic(format!(
+                      27→            "No bottle available for {} on this platform",
+                      28→            formula.name()
+                      29→        )))
+                      30→    }
+                    …
+                      33→/// Checks if a suitable bottle exists for the current platform, considering fallbacks.
+                      34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
+                    …
+                     159→pub fn get_formula_cellar_path(formula: &Formula, config: &Config) -> PathBuf {
+                     160→    // Use Config method
+                     161→    config.formula_cellar_dir(formula.name())
+                    …
+                     165→pub fn write_receipt(
+                     166→    formula: &Formula,
+                     167→    install_dir: &Path,
+                     168→    installation_type: &str, // "bottle" or "source"
+                     169→) -> Result<()> {
+                    …
             cask/
+                artifacts/
+                dmg.rs
+                helpers.rs
+                mod.rs
             devtools.rs
             extract.rs
             mod.rs
-                …
-                   5→use std::path::PathBuf;
-                   6→
-                   7→use sps_common::config::Config;
-                   8→use sps_common::model::formula::Formula;
-                …
-                  11→pub mod bottle;
-                  12→pub mod cask;
-                  13→pub mod devtools;
-                  14→pub mod extract;
                 …
                   17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
                   18→    // Use new Config method

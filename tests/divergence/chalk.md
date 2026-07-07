@@ -6,48 +6,48 @@ Score(3000)=0.574 I=0.852 C=0.386 ns_rows≤3K=21/50 (reached=10 partial=0 missi
 | ns | 46 |  | 46 | Root file listing | 1.1 |  | 1.000 |
 | ns | 104 |  | 58 | source/ + vendor/ directory listings | 1.2 |  | 0.673 |
 | walker |  | 112 | 66 | package identity in package.json |  |  | 0.677 |
-| ns | 139 |  | 35 | test/ + examples/ directory listings | 1.3 |  | 0.579 |
-| ns | 166 |  | 27 | .github/ + media/ directory listings | 1.4 |  | 0.519 |
-| ns | 207 |  | 41 | package.json files whitelist | 1.5 |  | 0.492 |
-| walker |  | 217 | 105 | README headline in readme.md |  |  | 0.495 |
-| walker |  | 291 | 74 | headings outline in code-of-conduct.md |  |  | 0.495 |
-| walker |  | 291 | 0 | code-of-conduct.md section #0 |  |  | 0.495 |
-| walker |  | 303 | 12 | listing of 'media' |  |  | 0.518 |
-| walker |  | 325 | 22 | listing of 'source' |  |  | 0.556 |
-| walker |  | 334 | 9 | listing of 'source/vendor' |  |  | 0.555 |
-| ns | 334 |  | 127 | package.json identity + module shape | 1.6 |  | 0.555 |
-| walker |  | 352 | 18 | listing of 'source/vendor/supports-color' |  |  | 0.640 |
-| walker |  | 408 | 56 | export names surface in source/index.js |  |  | 0.640 |
-| walker |  | 408 | 0 | export at source/index.js:225 |  |  | 0.640 |
-| walker |  | 416 | 8 | export at source/index.js:34 |  |  | 0.640 |
-| walker |  | 429 | 13 | export at source/index.js:50 |  |  | 0.641 |
-| walker |  | 438 | 9 | export body at source/index.js:50 body 51 |  |  | 0.641 |
-| ns | 448 |  | 114 | package.json subpath imports + types + sideEffects | 1.7 |  | 0.586 |
-| walker |  | 465 | 27 | export at source/index.js:220 |  |  | 0.586 |
-| walker |  | 491 | 26 | export body at source/index.js:34 body 36 |  |  | 0.587 |
-| ns | 539 |  | 91 | package.json engines + scripts | 1.8 |  | 0.552 |
-| ns | 702 |  | 163 | readme.md install + minimal usage | 1.9 |  | 0.494 |
-| walker |  | 751 | 260 | headings outline in readme.md |  |  | 0.496 |
-| walker |  | 760 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.539 |
-| walker |  | 838 | 78 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.539 |
-| walker |  | 838 | 0 | export at source/vendor/ansi-styles/index.js:223 |  |  | 0.539 |
-| walker |  | 847 | 9 | export at source/vendor/ansi-styles/index.js:73 |  |  | 0.539 |
-| walker |  | 871 | 24 | readme.md section #30 |  |  | 0.539 |
-| walker |  | 879 | 8 | listing of 'examples' |  |  | 0.544 |
-| walker |  | 891 | 12 | readme.md section #6 |  |  | 0.544 |
-| walker |  | 903 | 12 | readme.md section #7 |  |  | 0.544 |
-| walker |  | 914 | 11 | listing of '.github' |  |  | 0.583 |
-| walker |  | 918 | 4 | listing of '.github/workflows' |  |  | 0.601 |
-| ns | 927 |  | 225 | readme.md lede + badges + screenshot | 1.10 |  | 0.544 |
-| ns | 1015 |  | 88 | readme.md Info section | 1.11 |  | 0.559 |
-| walker |  | 1178 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.571 |
-| ns | 1204 |  | 189 | package.json devDependencies | 2.2 |  | 0.536 |
-| walker |  | 1215 | 37 | readme.md section #31 |  |  | 0.536 |
-| walker |  | 1243 | 28 | export names surface in source/vendor/supports-color/index.js |  |  | 0.536 |
-| walker |  | 1243 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.536 |
-| walker |  | 1257 | 14 | readme.md section #17 |  |  | 0.536 |
-| walker |  | 1271 | 14 | readme.md section #18 |  |  | 0.536 |
-| walker |  | 1298 | 27 | listing of 'test' |  |  | 0.597 |
+| walker |  | 124 | 12 | listing of 'media' |  |  | 0.680 |
+| ns | 139 |  | 35 | test/ + examples/ directory listings | 1.3 |  | 0.582 |
+| walker |  | 146 | 22 | listing of 'source' |  |  | 0.628 |
+| walker |  | 155 | 9 | listing of 'source/vendor' |  |  | 0.670 |
+| ns | 166 |  | 27 | .github/ + media/ directory listings | 1.4 |  | 0.621 |
+| walker |  | 173 | 18 | listing of 'source/vendor/supports-color' |  |  | 0.725 |
+| ns | 207 |  | 41 | package.json files whitelist | 1.5 |  | 0.686 |
+| walker |  | 278 | 105 | README headline in readme.md |  |  | 0.690 |
+| ns | 334 |  | 127 | package.json identity + module shape | 1.6 |  | 0.640 |
+| walker |  | 352 | 74 | headings outline in code-of-conduct.md |  |  | 0.640 |
+| walker |  | 352 | 0 | code-of-conduct.md section #0 |  |  | 0.640 |
+| walker |  | 361 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.696 |
+| walker |  | 417 | 56 | export names surface in source/index.js |  |  | 0.696 |
+| walker |  | 417 | 0 | export at source/index.js:225 |  |  | 0.696 |
+| walker |  | 425 | 8 | export at source/index.js:34 |  |  | 0.696 |
+| walker |  | 438 | 13 | export at source/index.js:50 |  |  | 0.696 |
+| walker |  | 447 | 9 | export body at source/index.js:50 body 51 |  |  | 0.696 |
+| ns | 448 |  | 114 | package.json subpath imports + types + sideEffects | 1.7 |  | 0.637 |
+| walker |  | 474 | 27 | export at source/index.js:220 |  |  | 0.637 |
+| walker |  | 500 | 26 | export body at source/index.js:34 body 36 |  |  | 0.638 |
+| walker |  | 508 | 8 | listing of 'examples' |  |  | 0.644 |
+| ns | 539 |  | 91 | package.json engines + scripts | 1.8 |  | 0.606 |
+| walker |  | 586 | 78 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.606 |
+| walker |  | 586 | 0 | export at source/vendor/ansi-styles/index.js:223 |  |  | 0.606 |
+| walker |  | 595 | 9 | export at source/vendor/ansi-styles/index.js:73 |  |  | 0.606 |
+| walker |  | 606 | 11 | listing of '.github' |  |  | 0.649 |
+| walker |  | 610 | 4 | listing of '.github/workflows' |  |  | 0.670 |
+| ns | 702 |  | 163 | readme.md install + minimal usage | 1.9 |  | 0.599 |
+| walker |  | 870 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.611 |
+| walker |  | 897 | 27 | listing of 'test' |  |  | 0.686 |
+| ns | 927 |  | 225 | readme.md lede + badges + screenshot | 1.10 |  | 0.621 |
+| ns | 1015 |  | 88 | readme.md Info section | 1.11 |  | 0.634 |
+| walker |  | 1157 | 260 | headings outline in readme.md |  |  | 0.636 |
+| walker |  | 1181 | 24 | readme.md section #30 |  |  | 0.636 |
+| walker |  | 1193 | 12 | readme.md section #6 |  |  | 0.636 |
+| ns | 1204 |  | 189 | package.json devDependencies | 2.2 |  | 0.597 |
+| walker |  | 1205 | 12 | readme.md section #7 |  |  | 0.597 |
+| walker |  | 1242 | 37 | readme.md section #31 |  |  | 0.597 |
+| walker |  | 1270 | 28 | export names surface in source/vendor/supports-color/index.js |  |  | 0.597 |
+| walker |  | 1270 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.597 |
+| walker |  | 1284 | 14 | readme.md section #17 |  |  | 0.597 |
+| walker |  | 1298 | 14 | readme.md section #18 |  |  | 0.597 |
 | walker |  | 1314 | 16 | readme.md section #19 |  |  | 0.597 |
 | walker |  | 1383 | 69 | imports in source/index.js |  |  | 0.598 |
 | ns | 1412 |  | 208 | package.json xo lint rules + c8 coverage config | 2.3 |  | 0.548 |

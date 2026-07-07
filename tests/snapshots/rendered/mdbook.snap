@@ -13,36 +13,6 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
-       1→[workspace]
-       2→members = [
-       3→    ".",
-       4→    "crates/*",
-       5→    "examples/remove-emphasis/mdbook-remove-emphasis", "guide/guide-helper",
-       6→]
-    …
-      21→[workspace.package]
-      22→edition = "2024"
-      23→license = "MPL-2.0"
-      24→repository = "https://github.com/rust-lang/mdBook"
-      25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
-    …
-      72→[package]
-      73→name = "mdbook"
-      74→version = "0.5.2"
-      75→authors = [
-      76→    "Mathieu David <mathieudavid@mathieudavid.org>",
-      77→    "Michael-F-Bryan <michaelfbryan@gmail.com>",
-      78→    "Matt Ickstadt <mattico8@gmail.com>"
-      79→]
-      80→documentation = "https://rust-lang.github.io/mdBook/index.html"
-      81→edition.workspace = true
-      82→exclude = ["/guide/*"]
-      83→keywords = ["book", "gitbook", "rustbook", "markdown"]
-      84→license.workspace = true
-      85→readme = "README.md"
-      86→repository.workspace = true
-      87→description = "Creates a book from markdown files"
-      88→rust-version.workspace = true
     …
      129→[features]
      130→default = ["watch", "serve", "search"]
@@ -99,6 +69,30 @@ crates/
         Cargo.toml
         README.md
         src/
+            book/
+                tests.rs
+            book.rs
+            config.rs
+            lib.rs
+                   1→//! The base support library for mdbook, intended for internal use only.
+                …
+                   7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
+                   9→pub mod book;
+                  10→pub mod config;
+                  11→pub mod utils;
+                …
+                  14→pub mod errors {
+                …
+            utils/
+                fs.rs
+                html.rs
+                mod.rs
+                       1→//! Various helpers and utilities.
+                    …
+                      28→/// Prints a "backtrace" of some `Error`.
+                      29→pub fn log_backtrace(e: &Error) {
+                    …
+                toml_ext.rs
     mdbook-driver/
         Cargo.toml
             …
@@ -107,6 +101,41 @@ crates/
         README.md
         src/
     mdbook-html/
+        Cargo.toml
+        README.md
+        front-end/
+        src/
+            html/
+                admonitions.rs
+                hide_lines.rs
+                mod.rs
+                print.rs
+                serialize.rs
+                tests.rs
+                tokenizer.rs
+                tree.rs
+            html_handlebars/
+                hbs_renderer.rs
+                helpers/
+                mod.rs
+                search.rs
+                static_files.rs
+            lib.rs
+                   1→//! mdBook HTML renderer.
+                   3→mod html;
+                   4→mod html_handlebars;
+                   5→pub mod theme;
+                   6→pub(crate) mod utils;
+                   7→
+                   8→pub use html_handlebars::HtmlHandlebars;
+            theme/
+                fonts.rs
+                mod.rs
+                       1→//! Support for theme files.
+                    …
+                playground_editor.rs
+                searcher.rs
+            utils.rs
     mdbook-markdown/
         Cargo.toml
         README.md
@@ -248,10 +277,26 @@ crates/
     xtask/
 eslint.config.mjs
 examples/
+    nop-preprocessor.rs
+    remove-emphasis/
 guide/
     book.toml
     guide-helper/
     src/
+        404.md
+        README.md
+        SUMMARY.md
+        cli/
+        continuous-integration.md
+        for_developers/
+        format/
+        guide/
+            README.md
+            creating.md
+            installation.md
+            reading.md
+        misc/
+            contributors.md
 package.json
 rustfmt.toml
 src/
@@ -262,15 +307,7 @@ src/
         init.rs
         mod.rs
                1→//! Subcommand modules for the `mdbook` binary.
-               3→pub mod build;
-               4→pub mod clean;
-               5→pub mod command_prelude;
-               6→pub mod init;
             …
-               8→pub mod serve;
-               9→pub mod test;
-            …
-              11→pub mod watch;
         serve.rs
         test.rs
         watch/

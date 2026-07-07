@@ -19,10 +19,24 @@ entries = [".github", "LICENSE.txt", "README.md", "bench_test.go", "dynamic", "g
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "xxhsum" })'
+descriptor = "listing of 'xxhsum'"
+cost_tokens = 11
+cum_tokens = 94
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "xxhsum"
+entries = [".gitignore", "xxhsum.go"]
+
+[[batches]]
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 66
-cum_tokens = 149
+cum_tokens = 160
 
 [batches.content]
 kind = "lines"
@@ -44,11 +58,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 3
+position = 4
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 31
-cum_tokens = 180
+cum_tokens = 191
 
 [batches.content]
 kind = "lines"
@@ -102,47 +116,75 @@ end = 67
 kind = "ellipsis"
 
 [[batches]]
-position = 4
-key = 'Go(GoModIdentity { file: "go.mod" })'
-descriptor = "go module identity in go.mod"
-cost_tokens = 31
-cum_tokens = 211
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 5
-key = 'Go(GoMod { file: "go.mod" })'
-descriptor = "go module file go.mod"
-cost_tokens = 0
-cum_tokens = 211
+key = 'Fs(DirListing { dir: "dynamic" })'
+descriptor = "listing of 'dynamic'"
+cost_tokens = 14
+cum_tokens = 205
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "dynamic"
+entries = [".gitignore", "dynamic_test.go", "plugin.go"]
 
 [[batches]]
 position = 6
+key = 'Fs(DirListing { dir: "xxhashbench" })'
+descriptor = "listing of 'xxhashbench'"
+cost_tokens = 15
+cum_tokens = 220
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "xxhashbench"
+entries = ["go.mod", "go.sum", "xxhashbench_test.go"]
+
+[[batches]]
+position = 7
+key = 'Go(GoModIdentity { file: "go.mod" })'
+descriptor = "go module identity in go.mod"
+cost_tokens = 31
+cum_tokens = 251
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Go(GoMod { file: "go.mod" })'
+descriptor = "go module file go.mod"
+cost_tokens = 0
+cum_tokens = 251
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
 key = 'Go(PackageDocLede { file: "xxhash.go" })'
 descriptor = "go package doc lede in xxhash.go"
 cost_tokens = 39
-cum_tokens = 250
+cum_tokens = 290
 
 [batches.content]
 kind = "lines"
@@ -156,53 +198,39 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "xxhsum" })'
-descriptor = "listing of 'xxhsum'"
-cost_tokens = 11
-cum_tokens = 261
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "xxhsum"
-entries = [".gitignore", "xxhsum.go"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "dynamic" })'
-descriptor = "listing of 'dynamic'"
-cost_tokens = 14
-cum_tokens = 275
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "dynamic"
-entries = [".gitignore", "dynamic_test.go", "plugin.go"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "xxhashbench" })'
-descriptor = "listing of 'xxhashbench'"
-cost_tokens = 15
-cum_tokens = 290
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "xxhashbench"
-entries = ["go.mod", "go.sum", "xxhashbench_test.go"]
-
-[[batches]]
 position = 10
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 3
+cum_tokens = 293
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["workflows"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 297
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["test.yml"]
+
+[[batches]]
+position = 12
 key = 'Go(DeclNames { file: "xxhash_asm.go", chunk_index: 0 })'
 descriptor = "go decl names surface in xxhash_asm.go"
 cost_tokens = 35
-cum_tokens = 325
+cum_tokens = 332
 
 [batches.content]
 kind = "lines"
@@ -232,11 +260,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 13
 key = 'Go(Decl { file: "xxhash_asm.go", start_line: 12 })'
 descriptor = "go decl at xxhash_asm.go:12"
 cost_tokens = 0
-cum_tokens = 325
+cum_tokens = 332
 
 [batches.content]
 kind = "lines"
@@ -250,11 +278,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 12
+position = 14
 key = 'Go(Decl { file: "xxhash_asm.go", start_line: 15 })'
 descriptor = "go decl at xxhash_asm.go:15"
 cost_tokens = 0
-cum_tokens = 325
+cum_tokens = 332
 
 [batches.content]
 kind = "lines"
@@ -268,11 +296,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 13
+position = 15
 key = 'Go(GoModIdentity { file: "xxhashbench/go.mod" })'
 descriptor = "go module identity in xxhashbench/go.mod"
 cost_tokens = 35
-cum_tokens = 360
+cum_tokens = 367
 
 [batches.content]
 kind = "lines"
@@ -286,11 +314,29 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 14
+position = 16
+key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
+descriptor = "YAML config at .github/workflows/test.yml"
+cost_tokens = 624
+cum_tokens = 991
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 1
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
 key = 'Go(DeclNames { file: "xxhash_safe.go", chunk_index: 0 })'
 descriptor = "go decl names surface in xxhash_safe.go"
 cost_tokens = 43
-cum_tokens = 403
+cum_tokens = 1034
 
 [batches.content]
 kind = "lines"
@@ -328,11 +374,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 18
 key = 'Go(Decl { file: "xxhash_safe.go", start_line: 9 })'
 descriptor = "go decl at xxhash_safe.go:9"
 cost_tokens = 0
-cum_tokens = 403
+cum_tokens = 1034
 
 [batches.content]
 kind = "lines"
@@ -346,11 +392,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 16
+position = 19
 key = 'Go(Decl { file: "xxhash_safe.go", start_line: 14 })'
 descriptor = "go decl at xxhash_safe.go:14"
 cost_tokens = 0
-cum_tokens = 403
+cum_tokens = 1034
 
 [batches.content]
 kind = "lines"
@@ -364,11 +410,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 17
+position = 20
 key = 'Go(DeclBody { file: "xxhash_safe.go", start_line: 9 })'
 descriptor = "go decl body at xxhash_safe.go:9"
 cost_tokens = 11
-cum_tokens = 414
+cum_tokens = 1045
 
 [batches.content]
 kind = "lines"
@@ -382,11 +428,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 18
+position = 21
 key = 'Go(PackageImports { file: "xxhash_asm.go" })'
 descriptor = "go package + imports in xxhash_asm.go"
 cost_tokens = 10
-cum_tokens = 424
+cum_tokens = 1055
 
 [batches.content]
 kind = "lines"
@@ -400,11 +446,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 19
+position = 22
 key = 'Go(PackageImports { file: "xxhash_safe.go" })'
 descriptor = "go package + imports in xxhash_safe.go"
 cost_tokens = 10
-cum_tokens = 434
+cum_tokens = 1065
 
 [batches.content]
 kind = "lines"
@@ -418,11 +464,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 20
+position = 23
 key = 'Go(DeclBody { file: "xxhash_safe.go", start_line: 14 })'
 descriptor = "go decl body at xxhash_safe.go:14"
 cost_tokens = 11
-cum_tokens = 445
+cum_tokens = 1076
 
 [batches.content]
 kind = "lines"
@@ -431,52 +477,6 @@ kind = "lines"
 path = "xxhash_safe.go"
 start = 15
 end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 3
-cum_tokens = 448
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["workflows"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 452
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["test.yml"]
-
-[[batches]]
-position = 23
-key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
-descriptor = "YAML config at .github/workflows/test.yml"
-cost_tokens = 624
-cum_tokens = 1076
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 1
-end = 56
 
 [batches.content.spans.render]
 kind = "full"

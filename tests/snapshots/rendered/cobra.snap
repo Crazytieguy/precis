@@ -3,6 +3,72 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    dependabot.yml
+    labeler.yml
+    workflows/
+        labeler.yml
+        test.yml
+               1→name: Test
+               2→
+               3→on:
+               4→  push:
+               5→  pull_request:
+               6→  workflow_dispatch:
+               7→
+               8→env:
+               9→  GO111MODULE: on
+              10→
+              11→permissions:
+              12→  contents: read
+              13→
+              14→jobs:
+              15→
+              16→
+              17→  lic-headers:
+              18→    runs-on: ubuntu-latest
+              19→    steps:
+              20→
+              21→      - uses: actions/checkout@v4
+              22→
+              23→      - run: >-
+              24→          docker run
+              25→          -v $(pwd):/wrk -w /wrk
+              26→          ghcr.io/google/addlicense
+              27→          -c 'The Cobra Authors'
+              28→          -y '2013-2023'
+              29→          -l apache
+              30→          -ignore '.github/**'
+              31→          -check
+              32→          .
+              33→
+              34→
+              35→  golangci-lint:
+              36→    permissions:
+              37→      contents: read  # for actions/checkout to fetch code
+              38→      pull-requests: read  # for golangci/golangci-lint-action to fetch pull requests
+              39→    runs-on: ubuntu-latest
+              40→    steps:
+              41→
+              42→      - uses: actions/checkout@v4
+              43→
+              44→      - uses: actions/setup-go@v6
+              45→        with:
+              46→          go-version: '^1.22'
+              47→          check-latest: true
+              48→          cache: true
+              49→
+              50→      - uses: golangci/golangci-lint-action@v8.0.0
+              51→        with:
+              52→          version: latest
+              53→          args: --verbose
+              54→
+              55→
+              56→  test-unix:
+              57→    strategy:
+              58→      fail-fast: false
+              59→      matrix:
+              60→        platform:
+            …
 .gitignore
 .golangci.yml
 .mailmap
@@ -52,23 +118,9 @@ README.md
      116→# Usage
     …
      131→# License
-     132→
-     133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
+    …
 SECURITY.md
 active_help.go
-    …
-      23→	activeHelpMarker = "_activeHelp_ "
-    …
-      26→	activeHelpEnvVarSuffix  = "ACTIVE_HELP"
-      27→	activeHelpGlobalEnvVar  = configEnvVarGlobalPrefix + "_" + activeHelpEnvVarSuffix
-      28→	activeHelpGlobalDisable = "0"
-    …
-      38→func AppendActiveHelp(compArray []Completion, activeHelpStr string) []Completion {
-    …
-      47→func GetActiveHelpConfig(cmd *Command) string {
-    …
-      58→func activeHelpEnvVar(name string) string {
-    …
 active_help_test.go
 args.go
 args_test.go
@@ -76,19 +128,6 @@ assets/
     CobraMain.png
 bash_completions.go
 bash_completionsV2.go
-    …
-      24→func (c *Command) genBashCompletion(w io.Writer, includeDesc bool) error {
-    …
-      31→func genBashComp(buf io.StringWriter, name string, includeDesc bool) {
-    …
-     469→// GenBashCompletionFileV2 generates Bash completion version 2.
-     470→func (c *Command) GenBashCompletionFileV2(filename string, includeDesc bool) error {
-    …
-     480→// GenBashCompletionV2 generates Bash completion file version 2
-     481→// and writes it to the passed writer.
-     482→func (c *Command) GenBashCompletionV2(w io.Writer, includeDesc bool) error {
-     483→	return c.genBashCompletion(w, includeDesc)
-    …
 bash_completionsV2_test.go
 bash_completions_test.go
 cobra.go
@@ -131,12 +170,7 @@ command.go
       80→	Long string
       82→	// Example is examples of how to use the command.
       83→	Example string
-      85→	// ValidArgs is list of all valid non-flag arguments that are accepted in shell completions
-      86→	ValidArgs []Completion
-      87→	// ValidArgsFunction is an optional function that provides valid non-flag arguments for shell completion.
-      88→	// It is a dynamic version of using ValidArgs.
-      89→	// Only one of ValidArgs and ValidArgsFunction can be used for a command.
-      90→	ValidArgsFunction CompletionFunc
+    …
       92→	// Expected arguments
       93→	Args PositionalArgs
       95→	// ArgAliases is List of aliases for ValidArgs.
@@ -151,11 +185,6 @@ command.go
      107→	// Annotations are key/value pairs that can be used by applications to identify or
      108→	// group commands or set special options.
      109→	Annotations map[string]string
-     111→	// Version defines the version for this command. If this value is non-empty and the command does not
-     112→	// define a "version" flag, a "version" boolean flag will be added to the command and, if specified,
-     113→	// will print content of the "Version" variable. A shorthand "v" flag will also be added if the
-     114→	// command does not define one.
-     115→	Version string
     …
      148→	// groups for subcommands
      149→	commandgroups []*Group
@@ -184,14 +213,7 @@ command.go
      215→		called bool
      216→	}
      218→	ctx context.Context
-     220→	// commands is the list of commands supported by this program.
-     221→	commands []*Command
-     222→	// parent is a parent command for this command.
-     223→	parent *Command
-     224→	// Max lengths of commands' string lengths for use in padding.
-     225→	commandsMaxUseLen         int
-     226→	commandsMaxCommandPathLen int
-     227→	commandsMaxNameLen        int
+    …
      229→	// TraverseChildren parses flags on all parents before executing child command.
      230→	TraverseChildren bool
      232→	// Hidden defines, if this command is hidden and should NOT show up in the list of available commands.
@@ -234,8 +256,6 @@ command.go
      289→func (c *Command) SetOutput(output io.Writer) {
     …
 command_notwin.go
-    …
-      20→var preExecHookFn func(*Command)
 command_test.go
 command_win.go
 completions.go
@@ -282,5 +302,20 @@ powershell_completions_test.go
 shell_completions.go
 site/
     content/
+        active_help.md
+        completions/
+            _index.md
+            bash.md
+            fish.md
+            powershell.md
+            zsh.md
+        docgen/
+            _index.md
+            man.md
+            md.md
+            rest.md
+            yaml.md
+        projects_using_cobra.md
+        user_guide.md
 zsh_completions.go
 zsh_completions_test.go

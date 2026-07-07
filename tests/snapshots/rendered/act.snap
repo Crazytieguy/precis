@@ -6,6 +6,17 @@ expression: rendered
 .codespellrc
 .editorconfig
 .github/
+    FUNDING.yml
+    ISSUE_TEMPLATE/
+    actions/
+    dependabot.yml
+    workflows/
+        .gitignore
+        checks.yml
+        codespell.yml
+        promote.yml
+        release.yml
+        stale.yml
 .gitignore
 .gitleaks.toml
 .gitleaksignore
@@ -236,18 +247,18 @@ pkg/
               14→func parseEnvFile(e Container, srcPath string, env *map[string]string) common.Executor {
             …
         testdata/
+            Dockerfile
+            docker-pull-options/
+                config.json
+            scratch/
+                test.txt
+            utf16.env
+            utf16be.env
+            utf8.env
+            valid.env
+            valid.label
         util.go
-            …
-              12→func getSysProcAttr(_ string, tty bool) *syscall.SysProcAttr {
-            …
-              24→func openPty() (*os.File, *os.File, error) {
-            …
         util_openbsd_mips64.go
-            …
-               9→func getSysProcAttr(cmdLine string, tty bool) *syscall.SysProcAttr {
-            …
-              15→func openPty() (*os.File, *os.File, error) {
-            …
         util_plan9.go
         util_windows.go
     exprparser/
@@ -311,6 +322,10 @@ pkg/
             empty-workflow/
                 push.yml
             invalid-job-name/
+                invalid-1.yml
+                invalid-2.yml
+                valid-1.yml
+                valid-2.yml
             nested/
                 success.yml
                 workflows/

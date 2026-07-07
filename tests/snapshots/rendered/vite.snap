@@ -62,12 +62,7 @@ README.md
       58→
       59→[MIT](LICENSE).
       61→## Sponsors
-      62→
-      63→<p align="center">
-      64→  <a target="_blank" href="https://github.com/sponsors/vite">
-      65→    <img alt="sponsors" src="https://sponsors.vite.dev/sponsors.svg">
-      66→  </a>
-      67→</p>
+    …
 docs/
     .vitepress/
         buildEnd.config.ts
@@ -104,6 +99,262 @@ netlify.toml
 package.json
 packages/
     create-vite/
+        CHANGELOG.md
+        LICENSE
+        README.md
+               1→# create-vite <a href="https://npmjs.com/package/create-vite"><img src="https://img.shields.io/npm/v/create-vite" alt="npm package"></a>
+               3→## Scaffolding Your First Vite Project
+            …
+              82→## Community Templates
+            …
+        __tests__/
+            cli.spec.ts
+        index.js
+        package.json
+        src/
+            index.ts
+        template-lit/
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                assets/
+                    hero.png
+                    lit.svg
+                    vite.svg
+                index.css
+                my-element.js
+        template-lit-ts/
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                assets/
+                    hero.png
+                    lit.svg
+                    vite.svg
+                index.css
+                my-element.ts
+            tsconfig.json
+        template-preact/
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                app.css
+                app.jsx
+                assets/
+                    hero.png
+                    preact.svg
+                    vite.svg
+                index.css
+                main.jsx
+            vite.config.js
+        template-preact-ts/
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                app.css
+                app.tsx
+                assets/
+                    hero.png
+                    preact.svg
+                    vite.svg
+                index.css
+                main.tsx
+            tsconfig.app.json
+            tsconfig.json
+            tsconfig.node.json
+            vite.config.ts
+        template-qwik/
+            README.md
+                   1→# Qwik + Vite
+                …
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                app.css
+                app.jsx
+                assets/
+                    hero.png
+                    qwik.svg
+                    vite.svg
+                index.css
+                main.jsx
+            vite.config.js
+        template-qwik-ts/
+            README.md
+                   1→# Qwik + Vite
+                …
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                app.css
+                app.tsx
+                assets/
+                index.css
+                main.tsx
+            tsconfig.app.json
+            tsconfig.json
+            tsconfig.node.json
+            vite.config.ts
+        template-react/
+            README.md
+                   1→# React + Vite
+                   2→
+                   3→This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+                …
+                  10→## React Compiler
+                …
+                  14→## Expanding the ESLint configuration
+                …
+            _gitignore
+            eslint.config.js
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                App.css
+                App.jsx
+                assets/
+                    hero.png
+                    react.svg
+                    vite.svg
+                index.css
+                main.jsx
+            vite.config.js
+        template-react-ts/
+        template-solid/
+            README.md
+                   1→## Usage
+                   2→
+                   3→```bash
+                   4→$ npm install # or pnpm install or yarn install
+                   5→```
+                …
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                App.css
+                App.jsx
+                assets/
+                    hero.png
+                    solid.svg
+                    vite.svg
+                index.css
+                index.jsx
+            vite.config.js
+        template-solid-ts/
+        template-svelte/
+            .vscode/
+            README.md
+                   1→# Svelte + Vite
+                   2→
+                   3→This template should help get you started developing with Svelte in Vite.
+                …
+            _gitignore
+            index.html
+            jsconfig.json
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                App.svelte
+                app.css
+                assets/
+                    hero.png
+                    svelte.svg
+                    vite.svg
+                lib/
+                    Counter.svelte
+                main.js
+                    …
+                       9→export default app
+            svelte.config.js
+            vite.config.js
+        template-svelte-ts/
+        template-vanilla/
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                assets/
+                    hero.png
+                    javascript.svg
+                    vite.svg
+                counter.js
+                main.js
+                style.css
+        template-vanilla-ts/
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                assets/
+                    hero.png
+                    typescript.svg
+                    vite.svg
+                counter.ts
+                main.ts
+                style.css
+            tsconfig.json
+        template-vue/
+            .vscode/
+            README.md
+            _gitignore
+            index.html
+            package.json
+            public/
+                favicon.svg
+                icons.svg
+            src/
+                App.vue
+                assets/
+                    hero.png
+                    vite.svg
+                    vue.svg
+                components/
+                    HelloWorld.vue
+                main.js
+                style.css
+            vite.config.js
+        template-vue-ts/
+        tsconfig.json
+        tsdown.config.ts
     plugin-legacy/
         CHANGELOG.md
         LICENSE
@@ -118,30 +369,6 @@ packages/
                 readme.spec.ts
                 snippets.spec.ts
             index.ts
-                …
-                 128→export const modulePreloadLinkRE: RegExp =
-                 129→  /<link(?![\w-])[^>]*?\srel=(['"])modulepreload\1[^>]*>/g
-                …
-                 149→function viteLegacyPlugin(options: Options = {}): Plugin[] {
-                …
-                 794→export async function detectPolyfills(
-                 795→  code: string,
-                 796→  targets: any,
-                 797→  assumptions: Record<string, boolean>,
-                 798→  list: Set<string>,
-                 799→): Promise<void> {
-                …
-                1057→export const cspHashes: string[] = [
-                1058→  safari10NoModuleFix,
-                1059→  systemJSInlineCode,
-                1060→  detectModernBrowserCode,
-                1061→  dynamicFallbackInlineCode,
-                1062→].map((i) => crypto.hash('sha256', i, 'base64'))
-                1064→export type { Options }
-                1065→
-                1066→export default viteLegacyPlugin
-                …
-                1078→export { viteLegacyPluginCjs as 'module.exports' }
             shims.d.ts
             snippets.ts
             types.ts
@@ -151,19 +378,6 @@ packages/
         CHANGELOG.md
         LICENSE.md
         README.md
-               1→# Vite ⚡
-               2→
-               3→> Next Generation Frontend Tooling
-               4→
-               5→- 💡 Instant Server Start
-               6→- ⚡️ Lightning Fast HMR
-               7→- 🛠️ Rich Features
-               8→- 📦 Optimized Build
-               9→- 🔩 Universal Plugin Interface
-              10→- 🔑 Fully Typed APIs
-              11→
-              12→Vite (French word for "quick", pronounced [`/viːt/`](https://cdn.jsdelivr.net/gh/vitejs/vite@main/docs/public/vite.mp3), like "veet") is a build tool that aims to provide a faster and leaner development experience for modern web projects. It consists of two major parts:
-            …
         bin/
             openChrome.js
             vite.js
@@ -175,22 +389,8 @@ packages/
             true.js
         package.json
         rolldown.config.ts
-            …
-             161→export default defineConfig([
-             162→  envConfig,
-             163→  clientConfig,
-             164→  nodeConfig,
-             165→  moduleRunnerConfig,
-             166→])
-            …
         rolldown.dts.config.ts
-            …
-              35→export default defineConfig({
-            …
         rollupLicensePlugin.ts
-            …
-               7→export default function licensePlugin(
-            …
         scripts/
         src/
             client/
@@ -214,9 +414,6 @@ packages/
                 sourcemap/
                     decoder.ts
                     index.ts
-                        …
-                           4→export function enableSourceMapSupport(runner: ModuleRunner): () => void {
-                        …
                     interceptor.ts
                 tsconfig.json
                 types.ts
@@ -224,6 +421,11 @@ packages/
             node/
                 __tests__/
                 __tests_dts__/
+                    config.ts
+                    plugin.ts
+                    tsconfig.json
+                    typeOptions.ts
+                    utils.ts
                 assetSource.ts
                 baseEnvironment.ts
                 build.ts
@@ -232,77 +434,17 @@ packages/
                 constants.ts
                 deprecations.ts
                 env.ts
-                    …
-                      12→export function getEnvFilesForMode(
-                      13→  mode: string,
-                      14→  envDir: string | false,
-                      15→): string[] {
-                    …
-                      28→export function loadEnv(
-                      29→  mode: string,
-                      30→  envDir: string | false,
-                      31→  prefixes: string | string[] = 'VITE_',
-                      32→): Record<string, string> {
-                    …
-                      98→export function resolveEnvPrefix({
-                      99→  envPrefix = 'VITE_',
-                     100→}: UserConfig): string[] {
-                    …
                 environment.ts
-                    …
-                       7→export type Environment =
-                       8→  | DevEnvironment
-                       9→  | BuildEnvironment
-                      10→  | /** @internal */ ScanEnvironment
-                      11→  | UnknownEnvironment
-                    …
-                      20→export function perEnvironmentState<State>(
-                      21→  initial: (environment: Environment) => State,
-                      22→): (context: PluginContext) => State {
-                    …
                 external.ts
                 http.ts
                 idResolver.ts
-                    …
-                      11→export type ResolveIdFn = (
-                      12→  environment: PartialEnvironment,
-                      13→  id: string,
-                      14→  importer?: string,
-                      15→  aliasOnly?: boolean,
-                      16→) => Promise<string | undefined>
-                    …
-                      23→export function createBackCompatIdResolver(
-                      24→  config: ResolvedConfig,
-                      25→  options?: Partial<InternalResolveOptions>,
-                      26→): ResolveIdFn {
-                    …
-                      42→export function createIdResolver(
-                      43→  config: ResolvedConfig,
-                      44→  options?: Partial<InternalResolveOptions>,
-                      45→): ResolveIdFn {
-                    …
                 index.ts
                        1→import type * as Rolldown from 'rolldown'
-                       2→import {
-                       3→  parseAst as _parseAst,
-                       4→  parseAstAsync as _parseAstAsync,
-                       5→} from 'rolldown/parseAst'
+                    …
                        6→import type * as Rollup from '#types/internal/rollupTypeCompat'
                        8→export type { Rollup, Rolldown }
                        9→export { esmExternalRequirePlugin } from 'rolldown/plugins'
-                      10→export {
-                      11→  parse,
-                      12→  parseSync,
-                      13→  type ParserOptions,
-                      14→  type ParseResult,
-                      15→  minify,
-                      16→  minifySync,
-                      17→  type MinifyOptions,
-                      18→  type MinifyResult,
-                      19→  Visitor,
-                      20→  type VisitorObject,
-                      21→  type ESTree,
-                      22→} from 'rolldown/utils'
+                    …
                       24→/** @deprecated - use `parse` instead */
                       25→export const parseAst: typeof _parseAst = _parseAst
                       26→/** @deprecated - use `parseAsync` instead */
@@ -319,11 +461,6 @@ packages/
                       38→export { preview } from './preview'
                       39→export { build, createBuilder } from './build'
                       41→export { optimizeDeps } from './optimizer'
-                      42→export { createIdResolver } from './idResolver'
-                      44→export { formatPostcssSourceMap, preprocessCSS } from './plugins/css'
-                      45→export { transformWithEsbuild } from './plugins/esbuild'
-                      46→export { transformWithOxc } from './plugins/oxc'
-                      47→export { buildErrorMessage } from './server/middlewares/error'
                     …
                       87→export const esbuildVersion = '0.25.0'
                     …
@@ -356,6 +493,11 @@ packages/
             importGlob.d.ts
             importMeta.d.ts
             internal/
+                cssPreprocessorOptions.d.ts
+                esbuildOptions.d.ts
+                lightningcssOptions.d.ts
+                rollupTypeCompat.d.ts
+                terserOptions.d.ts
             metadata.d.ts
 patches/
     chokidar@3.6.0.patch

@@ -5,26 +5,26 @@ Score(3000)=0.748 I=0.894 C=0.627 ns_rows≤3K=23/51 (reached=13 partial=2 missi
 | walker |  | 48 | 48 | listing of '.' |  |  | 1.000 |
 | ns | 48 |  | 48 | Root directory listing | 1.1 |  | 1.000 |
 | walker |  | 59 | 11 | README headline in README.md |  |  | 1.000 |
+| walker |  | 63 | 4 | listing of 'public' |  |  | 1.000 |
+| walker |  | 67 | 4 | listing of 'views' |  |  | 1.000 |
 | ns | 119 |  | 71 | src/ directory listing | 1.2 |  | 0.658 |
-| walker |  | 128 | 69 | package identity in package.json |  |  | 0.667 |
-| walker |  | 132 | 4 | listing of 'public' |  |  | 0.667 |
-| walker |  | 136 | 4 | listing of 'views' |  |  | 0.628 |
+| walker |  | 136 | 69 | package identity in package.json |  |  | 0.628 |
 | ns | 136 |  | 17 | src/adapters/ directory listing | 1.3 |  | 0.628 |
+| walker |  | 141 | 5 | listing of '.husky' |  |  | 0.628 |
 | ns | 182 |  | 46 | package.json: name/version/description | 1.4 |  | 0.638 |
-| ns | 305 |  | 123 | package.json: keywords | 1.5 |  | 0.516 |
-| ns | 333 |  | 28 | package.json: license + author | 1.6 |  | 0.508 |
-| walker |  | 337 | 201 | headings outline in README.md |  |  | 0.515 |
-| walker |  | 362 | 25 | README.md section #1 |  |  | 0.515 |
-| ns | 461 |  | 128 | package.json: repository/bin/files/type | 1.7 |  | 0.452 |
-| walker |  | 513 | 151 | README.md section #0 |  |  | 0.455 |
-| walker |  | 518 | 5 | listing of '.husky' |  |  | 0.455 |
-| walker |  | 589 | 71 | listing of 'src' |  |  | 0.657 |
-| walker |  | 606 | 17 | listing of 'src/adapters' |  |  | 0.695 |
-| walker |  | 614 | 8 | listing of '.github' |  |  | 0.695 |
-| walker |  | 623 | 9 | listing of '.github/workflows' |  |  | 0.695 |
-| ns | 625 |  | 164 | package.json: scripts | 1.8 |  | 0.633 |
-| walker |  | 819 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.643 |
-| walker |  | 828 | 9 | listing of 'fixtures' |  |  | 0.643 |
+| walker |  | 212 | 71 | listing of 'src' |  |  | 0.928 |
+| walker |  | 229 | 17 | listing of 'src/adapters' |  |  | 0.983 |
+| walker |  | 237 | 8 | listing of '.github' |  |  | 0.983 |
+| walker |  | 246 | 9 | listing of '.github/workflows' |  |  | 0.983 |
+| ns | 305 |  | 123 | package.json: keywords | 1.5 |  | 0.793 |
+| ns | 333 |  | 28 | package.json: license + author | 1.6 |  | 0.778 |
+| walker |  | 442 | 196 | YAML config at .github/workflows/node.js.yml |  |  | 0.792 |
+| walker |  | 451 | 9 | listing of 'fixtures' |  |  | 0.792 |
+| ns | 461 |  | 128 | package.json: repository/bin/files/type | 1.7 |  | 0.694 |
+| ns | 625 |  | 164 | package.json: scripts | 1.8 |  | 0.632 |
+| walker |  | 652 | 201 | headings outline in README.md |  |  | 0.639 |
+| walker |  | 677 | 25 | README.md section #1 |  |  | 0.640 |
+| walker |  | 828 | 151 | README.md section #0 |  |  | 0.643 |
 | ns | 854 |  | 229 | package.json: dependencies | 1.9 |  | 0.578 |
 | walker |  | 858 | 30 | README.md section #18 |  |  | 0.579 |
 | walker |  | 869 | 11 | README.md section #9 |  |  | 0.579 |

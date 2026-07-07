@@ -210,15 +210,7 @@ cmdk/
              909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
             …
              930→const pkg = Object.assign(Command, {
-             931→  List,
-             932→  Item,
-             933→  Input,
-             934→  Group,
-             935→  Separator,
-             936→  Dialog,
-             937→  Empty,
-             938→  Loading,
-             939→})
+            …
              941→export { useCmdk as useCommandState }
              942→export { pkg as Command }
              943→export { defaultFilter }
@@ -292,5 +284,40 @@ pnpm-workspace.yaml
        3→  - 'test'
        4→  - 'cmdk'
 test/
+    basic.test.ts
+    dialog.test.ts
+    group.test.ts
+    item.test.ts
+    keybind.test.ts
+    next-env.d.ts
+    numeric.test.ts
+    package.json
+    pages/
+    props.test.ts
+    style.css
+    tsconfig.json
 tsconfig.json
 website/
+    .eslintrc.json
+    .gitignore
+    README.md
+    components/
+        cmdk/
+            framer.tsx
+            linear.tsx
+            raycast.tsx
+            vercel.tsx
+        code/
+        icons/
+        index.ts
+    next-env.d.ts
+    next.config.js
+    package.json
+    pages/
+        _app.tsx
+        _document.tsx
+        index.tsx
+    public/
+    styles/
+    tsconfig.json
+    vercel.json

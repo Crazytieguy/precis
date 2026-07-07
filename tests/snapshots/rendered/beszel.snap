@@ -5,6 +5,16 @@ expression: rendered
 .dockerignore
 .gitattributes
 .github/
+    CODEOWNERS
+    DISCUSSION_TEMPLATE/
+    ISSUE_TEMPLATE/
+    funding.yml
+    pull_request_template.md
+    workflows/
+        docker-images.yml
+        inactivity-actions.yml
+        release.yml
+        vulncheck.yml
 .gitignore
 .goreleaser.yml
 LICENSE
@@ -13,53 +23,18 @@ SECURITY.md
 agent/
     agent.go
     agent_cache.go
-        …
-          10→type systemDataCache struct {
-          11→	sync.RWMutex
-          12→	cache map[uint16]*cacheNode
-          13→}
-          15→type cacheNode struct {
-          16→	data       *system.CombinedData
-          17→	lastUpdate time.Time
-          18→}
-          20→// NewSystemDataCache creates a cache keyed by the polling interval in milliseconds.
-          21→func NewSystemDataCache() *systemDataCache {
-        …
-          28→func (c *systemDataCache) Get(cacheTimeMs uint16) (stats *system.CombinedData, isCached bool) {
-        …
-          44→func (c *systemDataCache) Set(data *system.CombinedData, cacheTimeMs uint16) {
-        …
     agent_cache_test.go
     agent_test_helpers.go
         …
-           3→package agent
-           5→// TESTING ONLY: GetConnectionManager is a helper function to get the connection manager for testing.
            6→func (a *Agent) GetConnectionManager() *ConnectionManager {
            7→	return a.connectionManager
         …
     battery/
         battery.go
-            …
-               2→package battery
-               4→const (
-               5→	stateUnknown uint8 = iota
-               6→	stateEmpty
-               7→	stateFull
-               8→	stateCharging
-               9→	stateDischarging
-              10→	stateIdle
-              11→)
         battery_darwin.go
         battery_linux.go
         battery_linux_test.go
         battery_stub.go
-            …
-               7→func HasReadableBattery() bool {
-               8→	return false
-            …
-              11→func GetBatteryStats() (uint8, uint8, error) {
-              12→	return 0, 0, errors.ErrUnsupported
-            …
         battery_windows.go
     client.go
     client_test.go
@@ -67,18 +42,6 @@ agent/
     connection_manager_test.go
     cpu.go
     data_dir.go
-        …
-          16→func GetDataDir(dataDirs ...string) (string, error) {
-        …
-          40→func testDataDirs(paths []string) (string, error) {
-        …
-          70→func isValidDataDir(path string, createIfNotExists bool) (bool, error) {
-        …
-          93→// directoryExists checks if a directory exists
-          94→func directoryExists(path string) (bool, error) {
-        …
-         110→func directoryIsWritable(path string) (bool, error) {
-        …
     data_dir_test.go
     deltatracker/
         deltatracker.go
@@ -92,51 +55,19 @@ agent/
     emmc_linux.go
     emmc_linux_test.go
     emmc_stub.go
-        …
-           3→package agent
-        …
-           7→func scanEmmcDevices() []*DeviceInfo {
-           8→	return nil
-        …
-          11→func (sm *SmartManager) collectEmmcHealth(deviceInfo *DeviceInfo) (bool, error) {
-          12→	return false, nil
-        …
     fingerprint.go
     fingerprint_test.go
     gpu.go
     gpu_amd_linux.go
     gpu_amd_linux_test.go
     gpu_amd_unsupported.go
-        …
-           9→func (gm *GPUManager) hasAmdSysfs() bool {
-          10→	return false
-        …
-          13→func (gm *GPUManager) collectAmdStats() error {
-          14→	return errors.ErrUnsupported
-        …
     gpu_darwin.go
     gpu_darwin_test.go
     gpu_darwin_unsupported.go
-        …
-           3→package agent
-        …
-           6→func (gm *GPUManager) startPowermetricsCollector() {}
-        …
-           9→func (gm *GPUManager) startMacmonCollector() {}
     gpu_intel.go
     gpu_nvml.go
     gpu_nvml_linux.go
     gpu_nvml_unsupported.go
-        …
-           3→package agent
-           4→
-           5→import "fmt"
-           7→type nvmlCollector struct {
-           8→	gm *GPUManager
-           9→}
-          11→func (c *nvmlCollector) init() error {
-        …
-          15→func (c *nvmlCollector) start() {}
     gpu_nvml_windows.go
     gpu_nvtop.go
     gpu_test.go
@@ -151,14 +82,6 @@ agent/
     mdraid_linux.go
     mdraid_linux_test.go
     mdraid_stub.go
-        …
-           3→package agent
-           5→func scanMdraidDevices() []*DeviceInfo {
-           6→	return nil
-        …
-           9→func (sm *SmartManager) collectMdraidHealth(deviceInfo *DeviceInfo) (bool, error) {
-          10→	return false, nil
-        …
     network.go
     network_test.go
     response.go
@@ -176,11 +99,7 @@ agent/
     smart.go
     smart_nonwindows.go
         …
-           3→package agent
-           4→
-           5→import "errors"
            7→func ensureEmbeddedSmartctl() (string, error) {
-           8→	return "", errors.ErrUnsupported
         …
     smart_test.go
     smart_windows.go
@@ -213,7 +132,6 @@ agent/
         zfs_unsupported.go
             …
                7→func ARCSize() (uint64, error) {
-               8→	return 0, errors.ErrUnsupported
             …
 beszel.go
        1→// Package beszel provides core application constants and version information
@@ -240,6 +158,23 @@ go.sum
 i18n.yml
 internal/
     alerts/
+        alerts.go
+        alerts_api.go
+        alerts_api_test.go
+        alerts_battery_test.go
+        alerts_cache.go
+        alerts_cache_test.go
+        alerts_disk_test.go
+        alerts_history.go
+        alerts_quiet_hours_test.go
+        alerts_smart.go
+        alerts_smart_test.go
+        alerts_status.go
+        alerts_status_test.go
+        alerts_system.go
+        alerts_system_test.go
+        alerts_test.go
+        alerts_test_helpers.go
     cmd/
         agent/
             agent.go
@@ -287,6 +222,83 @@ internal/
             …
         selinux_test.go
     hub/
+        agent_connect.go
+        agent_connect_test.go
+        api.go
+        api_test.go
+        collections.go
+            …
+               8→type collectionRules struct {
+            …
+              17→func setCollectionAuthSettings(app core.App) error {
+            …
+             115→func applyCollectionRules(app core.App, collectionNames []string, rules collectionRules) error {
+            …
+        collections_test.go
+        config/
+            config.go
+            config_test.go
+        expirymap/
+            expirymap.go
+            expirymap_test.go
+        heartbeat/
+            heartbeat.go
+            heartbeat_test.go
+        hub.go
+        hub_test.go
+        hub_test_helpers.go
+        server.go
+            …
+              13→type PublicAppInfo struct {
+            …
+              21→func modifyIndexHTML(hub *Hub, html []byte) string {
+            …
+              31→func getPublicAppInfo(hub *Hub) PublicAppInfo {
+            …
+        server_development.go
+        server_production.go
+            …
+              18→func (h *Hub) startServer(se *core.ServeEvent) error {
+            …
+        systems/
+            system.go
+            system_manager.go
+            system_realtime.go
+            system_smart.go
+            system_smart_test.go
+            system_systemd_test.go
+            system_test.go
+            systems_production.go
+                …
+                   9→func backgroundSmartFetchEnabled() bool { return true }
+            systems_test.go
+            systems_test_helpers.go
+        transport/
+            ssh.go
+            transport.go
+            websocket.go
+        update.go
+            …
+              13→// Update updates beszel to the latest version
+              14→func Update(cmd *cobra.Command, _ []string) {
+            …
+              58→func restartService() {
+            …
+        utils/
+            utils.go
+                …
+                   7→func GetEnv(key string) (value string, exists bool) {
+                …
+        ws/
+            handlers.go
+            request_manager.go
+            request_manager_test.go
+            ws.go
+            ws_test.go
+            ws_test_helpers.go
+                …
+                   6→func (rm *RequestManager) GetPendingCount() int {
+                …
     migrations/
     records/
         records.go
@@ -296,6 +308,55 @@ internal/
         records_test.go
         records_test_helpers.go
     site/
+        .gitignore
+        .prettierrc
+        biome.json
+        bun.lock
+        components.json
+        embed.go
+            …
+              10→var distDir embed.FS
+            …
+              13→var DistDirFS, _ = fs.Sub(distDir, "dist")
+        index.html
+        lingui.config.ts
+        package-lock.json
+        package.json
+            …
+               2→	"name": "beszel",
+               3→	"private": true,
+               4→	"version": "0.18.7",
+               5→	"type": "module",
+            …
+        public/
+            static/
+                InterVariable.woff2
+                icon.png
+                icon.svg
+                manifest.json
+        src/
+            components/
+            index.css
+            lib/
+                alerts.ts
+                api.ts
+                enums.ts
+                i18n.ts
+                languages.ts
+                shiki.ts
+                stores.ts
+                systemsManager.ts
+                time.ts
+                use-intersection-observer.ts
+                utils.ts
+            locales/
+            main.tsx
+            types.d.ts
+            vite-env.d.ts
+        tsconfig.app.json
+        tsconfig.json
+        tsconfig.node.json
+        vite.config.ts
     tests/
     users/
         users.go

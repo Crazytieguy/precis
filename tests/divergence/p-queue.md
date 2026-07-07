@@ -4,40 +4,40 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 39 | 39 | listing of '.' |  |  | 1.000 |
 | ns | 39 |  | 39 | Repo root listing | 1.1 |  | 1.000 |
+| walker |  | 45 | 6 | listing of 'test-d' |  |  | 1.000 |
 | ns | 62 |  | 23 | source/ listing | 1.2 |  | 0.811 |
-| walker |  | 107 | 68 | package identity in package.json |  |  | 0.823 |
-| ns | 110 |  | 48 | test/, test-d/, .github/ listings | 1.3 |  | 0.609 |
-| ns | 137 |  | 27 | readme.md title + tagline | 2.1 |  | 0.573 |
-| walker |  | 174 | 67 | README headline in readme.md |  |  | 0.646 |
-| walker |  | 180 | 6 | listing of 'test-d' |  |  | 0.648 |
+| ns | 110 |  | 48 | test/, test-d/, .github/ listings | 1.3 |  | 0.602 |
+| walker |  | 113 | 68 | package identity in package.json |  |  | 0.612 |
+| ns | 137 |  | 27 | readme.md title + tagline | 2.1 |  | 0.575 |
+| walker |  | 180 | 67 | README headline in readme.md |  |  | 0.648 |
 | walker |  | 203 | 23 | listing of 'source' |  |  | 0.776 |
 | ns | 256 |  | 119 | readme.md — maintenance-mode notice | 2.2 | 2.1 | 0.714 |
 | walker |  | 266 | 63 | export names surface in source/index.ts |  |  | 0.714 |
 | ns | 315 |  | 59 | package.json — name, version, description, license | 2.3 |  | 0.719 |
 | walker |  | 387 | 121 | headings outline in readme.md |  |  | 0.734 |
-| walker |  | 397 | 10 | readme.md section #5 |  |  | 0.734 |
-| walker |  | 412 | 15 | readme.md section #24 |  |  | 0.734 |
-| ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.638 |
-| walker |  | 449 | 37 | export names surface in source/priority-queue.ts |  |  | 0.638 |
-| walker |  | 466 | 17 | export at source/priority-queue.ts:7 |  |  | 0.638 |
-| ns | 554 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.598 |
-| walker |  | 595 | 129 | export at source/priority-queue.ts:11 |  |  | 0.598 |
-| walker |  | 602 | 7 | listing of '.github' |  |  | 0.609 |
-| walker |  | 606 | 4 | listing of '.github/workflows' |  |  | 0.618 |
-| ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.659 |
-| walker |  | 807 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.659 |
-| ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.566 |
-| ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.547 |
-| ns | 1080 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.513 |
-| walker |  | 1347 | 540 | export at source/index.ts:16 |  |  | 0.516 |
-| ns | 1352 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.455 |
-| walker |  | 1367 | 20 | export doc at source/index.ts:16 |  |  | 0.455 |
-| walker |  | 1387 | 20 | imports in source/options.ts |  |  | 0.455 |
-| walker |  | 1471 | 84 | imports in source/index.ts |  |  | 0.456 |
-| walker |  | 1552 | 81 | json config tsconfig.json |  |  | 0.456 |
-| ns | 1587 |  | 235 | source/options.ts — Options (concurrency, autoStart, queueClass) | 3.3 | 3.2 | 0.417 |
-| walker |  | 1599 | 47 | readme.md section #34 |  |  | 0.417 |
-| walker |  | 1630 | 31 | listing of 'test' |  |  | 0.492 |
+| walker |  | 394 | 7 | listing of '.github' |  |  | 0.747 |
+| walker |  | 398 | 4 | listing of '.github/workflows' |  |  | 0.759 |
+| ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.659 |
+| ns | 554 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.617 |
+| walker |  | 599 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.617 |
+| walker |  | 636 | 37 | export names surface in source/priority-queue.ts |  |  | 0.617 |
+| ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.658 |
+| walker |  | 653 | 17 | export at source/priority-queue.ts:7 |  |  | 0.658 |
+| walker |  | 782 | 129 | export at source/priority-queue.ts:11 |  |  | 0.659 |
+| walker |  | 792 | 10 | readme.md section #5 |  |  | 0.659 |
+| walker |  | 823 | 31 | listing of 'test' |  |  | 0.777 |
+| ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.667 |
+| ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.646 |
+| ns | 1080 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.605 |
+| ns | 1352 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.533 |
+| walker |  | 1363 | 540 | export at source/index.ts:16 |  |  | 0.536 |
+| walker |  | 1383 | 20 | export doc at source/index.ts:16 |  |  | 0.536 |
+| walker |  | 1398 | 15 | readme.md section #24 |  |  | 0.536 |
+| walker |  | 1418 | 20 | imports in source/options.ts |  |  | 0.537 |
+| walker |  | 1502 | 84 | imports in source/index.ts |  |  | 0.537 |
+| walker |  | 1583 | 81 | json config tsconfig.json |  |  | 0.537 |
+| ns | 1587 |  | 235 | source/options.ts — Options (concurrency, autoStart, queueClass) | 3.3 | 3.2 | 0.492 |
+| walker |  | 1630 | 47 | readme.md section #34 |  |  | 0.492 |
 | ns | 1732 |  | 145 | source/options.ts — Options (intervalCap, interval) | 3.4 | 3.3 | 0.462 |
 | ns | 1847 |  | 115 | source/options.ts — Options (carryoverIntervalCount) | 3.5 | 3.4 | 0.444 |
 | walker |  | 2014 | 384 | readme.md section #0 |  |  | 0.466 |

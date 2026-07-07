@@ -23,6 +23,10 @@ expression: rendered
     CODE_OF_CONDUCT.md
     FUNDING.yml
     ISSUE_TEMPLATE/
+        ask-a-question.md
+        bug-report.md
+        feature-request.md
+        installation-problem.yml
     SECURITY.md
     pull_request_template.md
     workflows/
@@ -60,17 +64,13 @@ README.md
       41→## Features
       43→- 📸 Auto capture a screenshot, PDF, and single html file of each webpage
       44→- 📖 Reader view of the webpage, with the ability to highlight and annotate text
-      45→- 🏛️ Send your webpage to Wayback Machine ([archive.org](https://archive.org)) for a snapshot (optional)
-      46→- ✨ Local AI Tagging to automatically tag your links based on their content (optional)
-      47→- 📂 Organize links by collection, sub-collection, name, description and multiple tags
+    …
       48→- 👥 Collaborate on gathering links in a collection
       49→- 🎛️ Customize the permissions of each member
       50→- 🌐 Share your collected links and preserved formats with the world
       51→- 📱 Native iOS and android mobile apps
       52→- 🔍 Full text search, filter and sort for easy retrieval
       53→- 🌓 Dark/Light mode support
-      54→- 🧩 Browser extension (star it [here](https://github.com/linkwarden/browser-extension)!)
-      55→- 🔄 Browser Synchronization (using [Floccus](https://floccus.org)!)
     …
       57→- 🔐 SSO integration (Enterprise and Self-hosted users only)
       58→- 🍎 iOS Shortcut to save links to Linkwarden
@@ -108,11 +108,164 @@ README.md
     …
 apps/
     mobile/
+        .easignore
+        .env.sample
+               1→LINKWARDEN_URL=
+               2→EXPO_PUBLIC_SHOW_LOGS=
+        .gitignore
+        app/
+            (tabs)/
+                _layout.tsx
+                collections/
+                    [id].tsx
+                    _layout.tsx
+                    index.tsx
+                dashboard/
+                    [section].tsx
+                    _layout.tsx
+                    index.tsx
+                links/
+                    _layout.tsx
+                    index.tsx
+                settings/
+                    _layout.tsx
+                    index.tsx
+                    preferredCollection.tsx
+                tags/
+                    [id].tsx
+                    _layout.tsx
+                    index.tsx
+            +not-found.tsx
+            _layout.tsx
+            incoming.tsx
+            index.tsx
+                …
+                  12→export default function HomeScreen() {
+                …
+            links/
+                [id].tsx
+            login.tsx
+        app.json
+        assets/
+            fonts/
+                SpaceMono-Regular.ttf
+            images/
+                favicon.png
+                icon.png
+                linkwarden.png
+                maskable_logo.png
+                splash-icon.png
+        babel.config.js
+        components/
+            ActionSheets/
+                AddLinkSheet.tsx
+                EditLinkSheet.tsx
+                NewCollectionSheet.tsx
+                Sheets.tsx
+                SupportSheet.tsx
+            CollectionListing.tsx
+            DashboardItem.tsx
+            DashboardSection.tsx
+            ElementNotSupported.tsx
+            Formats/
+                ImageFormat.tsx
+                PdfFormat.tsx
+                ReadableFormat.tsx
+                WebpageFormat.tsx
+            HapticTab.tsx
+            LinkListing.tsx
+            Links.tsx
+            TagListing.tsx
+            ui/
+        eas.json
+        lib/
+            cache.ts
+            colors.ts
+            queryClient.ts
+            queryPersister.ts
+            theme.ts
+        metro.config.js
+        nativewind-env.d.ts
+        package.json
+        plugins/
+            with-daynight-transparent-nav.js
+        store/
+            auth.ts
+            data.ts
+            tmp.ts
+        styles/
+            global.css
+        tailwind.config.js
+        tsconfig.json
+        types/
+            global.ts
+            nativewind-env.d.ts
     web/
+        components/
+        components.json
+        e2e/
+            .env.example
+            data/
+            fixtures/
+                base/
+                    dashboard-page.ts
+                    modal.ts
+                    page.ts
+                index.ts
+                login-page.ts
+                registration-page.ts
+            index.ts
+            tests/
+                global/
+                public/
+        hooks/
+            useArchivalTags.ts
+            useCollectivePermissions.ts
+            useDetectPageBottom.tsx
+            useInitialData.tsx
+            useMediaQuery.tsx
+            useOnScreen.tsx
+            usePermissions.tsx
+            useSort.tsx
+            useWindowDimensions.tsx
+        layouts/
+            AdminLayout.tsx
+            AuthRedirect.tsx
+            MainLayout.tsx
+            SettingsLayout.tsx
+        lib/
+            api/
+            client/
+            shared/
+                fetchTitleAndHeaders.ts
+                getSuffixFromFormat.ts
+                isValidUrl.ts
+            utils.ts
+        next-i18next.config.js
+        next.config.js
+        package.json
+        pages/
+        playwright.config.ts
+        postcss.config.js
+        public/
+        scripts/
+        store/
+            links.ts
+            localSettings.ts
+        styles/
+            globals.css
+        tailwind.config.js
+        templates/
+            acceptInvitation.html
+            passwordReset.html
+            verifyEmail.html
+            verifyEmailChange.html
+        tsconfig.json
+        types/
+            himalaya.d.ts
+            next-auth.d.ts
     worker/
         index.ts
-               1→import { spawn } from "node:child_process";
-            …
         lib/
             archiveHandler.ts
             autoTagLink.ts
@@ -122,6 +275,13 @@ apps/
             getLinkBatch.ts
             getLinkBatchFairly.ts
             preservationScheme/
+                handleArchivePreview.ts
+                handleMonolith.ts
+                handleReadability.ts
+                handleScreenshotAndPdf.ts
+                imageHandler.ts
+                pdfHandler.ts
+                sendToWayback.ts
             prompts.ts
             protectPageRequests.ts
         package.json
@@ -146,34 +306,6 @@ assets/
     star_repo.gif
 crowdin.yml
 docker-compose.yml
-       1→services:
-       2→  postgres:
-       3→    image: postgres:16-alpine
-       4→    env_file: .env
-       5→    restart: always
-       6→    volumes:
-       7→      - ./pgdata:/var/lib/postgresql/data
-       8→  linkwarden:
-       9→    env_file: .env
-      10→    environment:
-      11→      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres
-      12→    restart: always
-      13→    # build: . # uncomment to build from source
-      14→    image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
-      15→    ports:
-      16→      - 3000:3000
-      17→    volumes:
-      18→      - ./data:/data/data
-      19→    depends_on:
-      20→      - postgres
-      21→      - meilisearch
-      22→  meilisearch:
-      23→    image: getmeili/meilisearch:v1.12.8
-      24→    restart: always
-      25→    env_file:
-      26→      - .env
-      27→    volumes:
-      28→      - ./meili_data:/meili_data
 package.json
     …
        2→  "name": "linkwarden",
@@ -223,7 +355,6 @@ packages/
             index.d.ts
             index.js
         index.ts
-               1→import { PrismaClient } from "@prisma/client";
             …
                5→export const prisma =
                6→  globalForPrisma.prisma ||
@@ -237,81 +368,6 @@ packages/
         migrations/
         package.json
         schema.prisma
-               1→generator client {
-            …
-               5→datasource db {
-            …
-              10→model Account {
-            …
-              28→model User {
-            …
-              77→enum Theme {
-              78→  dark
-              79→  light
-              80→  auto
-              81→}
-              83→enum AiTaggingMethod {
-              84→  DISABLED
-              85→  GENERATE
-              86→  EXISTING
-              87→  PREDEFINED
-              88→}
-              90→enum LinksRouteTo {
-              91→  ORIGINAL
-              92→  PDF
-              93→  READABLE
-              94→  MONOLITH
-              95→  SCREENSHOT
-              96→  DETAILS
-              97→}
-              99→model WhitelistedUser {
-            …
-             108→model VerificationToken {
-            …
-             118→model PasswordResetToken {
-            …
-             126→model Collection {
-            …
-             151→model UsersAndCollections {
-            …
-             166→model Link {
-             167→  id              Int         @id @default(autoincrement())
-             168→  name            String      @default("")
-             169→  type            String      @default("url")
-             170→  description     String      @default("")
-             171→  highlight       Highlight[]
-             172→  pinnedBy        User[]      @relation("PinnedLinks")
-             173→  createdBy       User?       @relation("CreatedLinks", fields: [createdById], references: [id], onDelete: Cascade)
-             174→  createdById     Int?
-             175→  collection      Collection  @relation(fields: [collectionId], references: [id], onDelete: Cascade)
-             176→  collectionId    Int
-             177→  tags            Tag[]
-             178→  icon            String?
-             179→  iconWeight      String?
-             180→  color           String?
-             181→  url             String?
-            …
-             200→model Tag {
-            …
-             220→model Subscription {
-            …
-             234→model AccessToken {
-            …
-             248→model RssSubscription {
-            …
-             260→model Highlight {
-            …
-             275→model DashboardSection {
-            …
-             289→enum DashboardSectionType {
-            …
-             296→model AppMigration {
-            …
-             304→enum AppMigrationStatus {
-             305→  APPLIED
-             306→  PENDING
-             307→  FAILED
-             308→}
         seed.js
     router/
         collections.tsx

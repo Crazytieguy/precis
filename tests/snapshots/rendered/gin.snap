@@ -3,6 +3,14 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    ISSUE_TEMPLATE/
+    PULL_REQUEST_TEMPLATE.md
+    dependabot.yml
+    workflows/
+        codeql.yml
+        gin.yml
+        goreleaser.yml
+        trivy-scan.yml
 .gitignore
 .golangci.yml
 .goreleaser.yaml
@@ -171,17 +179,13 @@ gin.go
       73→}
       75→// RoutesInfo defines a RouteInfo slice.
       76→type RoutesInfo []RouteInfo
-      78→// Trusted platforms
-      79→const (
-      80→	// PlatformGoogleAppEngine when running on Google App Engine. Trust X-Appengine-Remote-Addr
-      81→	// for determining the client's IP
+    …
       82→	PlatformGoogleAppEngine = "X-Appengine-Remote-Addr"
-      83→	// PlatformCloudflare when using Cloudflare's CDN. Trust CF-Connecting-IP for determining
-      84→	// the client's IP
+    …
       85→	PlatformCloudflare = "CF-Connecting-IP"
-      86→	// PlatformFlyIO when running on Fly.io. Trust Fly-Client-IP for determining the client's IP
+    …
       87→	PlatformFlyIO = "Fly-Client-IP"
-      88→)
+    …
       90→// Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
       91→// Create an instance of Engine, by using New() or Default()
       92→type Engine struct {

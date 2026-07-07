@@ -7,32 +7,32 @@ Score(3000)=0.618 I=0.825 C=0.463 ns_rows≤3K=16/45 (reached=7 partial=2 missin
 | walker |  | 38 | 4 | listing of 'src' |  |  | 1.000 |
 | walker |  | 93 | 55 | [dependencies] in pyproject.toml |  |  | 1.000 |
 | ns | 130 |  | 96 | README lede opening | 1.2 |  | 0.815 |
-| walker |  | 163 | 70 | [package] in pyproject.toml |  |  | 0.845 |
-| walker |  | 235 | 72 | listing of 'src/typeguard' |  |  | 0.845 |
-| ns | 241 |  | 111 | Package identity: name, Python support, deps | 1.3 |  | 0.844 |
-| ns | 367 |  | 126 | Project URLs + pytest entry point | 1.4 |  | 0.700 |
-| ns | 480 |  | 113 | Source + docs file rosters | 2.1 |  | 0.616 |
-| ns | 580 |  | 100 | Tests directory roster | 2.2 |  | 0.524 |
-| ns | 643 |  | 63 | CI, community-health, and mypy-fixture file rosters | 2.3 |  | 0.468 |
-| walker |  | 656 | 421 | python imports in src/typeguard/__init__.py |  |  | 0.484 |
-| walker |  | 694 | 38 | python decl names surface in src/typeguard/__init__.py |  |  | 0.485 |
-| walker |  | 694 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.485 |
-| walker |  | 735 | 41 | listing of 'docs' |  |  | 0.619 |
-| ns | 841 |  | 198 | typeguard/__init__.py: import re-exports (checkers/config/decorators) | 3.1 |  | 0.656 |
-| ns | 1135 |  | 294 | typeguard/__init__.py: import re-exports (exceptions/functions/importhook/memo/suppression/utils) + rebinding loop | 3.2 | 3.1 | 0.647 |
-| walker |  | 1202 | 467 | README headline in README.rst |  |  | 0.694 |
-| walker |  | 1215 | 13 | python decl names surface in src/typeguard/_memo.py |  |  | 0.694 |
-| walker |  | 1215 | 0 | python decl at src/typeguard/_memo.py:8 |  |  | 0.694 |
-| walker |  | 1226 | 11 | python method sigs in src/typeguard/_memo.py |  |  | 0.694 |
-| walker |  | 1248 | 22 | python class body at src/typeguard/_memo.py:8 |  |  | 0.694 |
-| walker |  | 1271 | 23 | python decl doc at src/typeguard/_memo.py:8 |  |  | 0.694 |
-| walker |  | 1298 | 27 | listing of '.github' |  |  | 0.710 |
-| ns | 1299 |  | 164 | typeguard/__init__.py: config attr + plugin autoload | 3.3 | 3.2 | 0.657 |
-| walker |  | 1306 | 8 | listing of '.github/workflows' |  |  | 0.668 |
-| ns | 1355 |  | 56 | pytest config (pyproject.toml) | 4.1 |  | 0.654 |
-| ns | 1563 |  | 208 | ruff lint config (pyproject.toml) | 4.2 |  | 0.603 |
-| ns | 1661 |  | 98 | mypy + tox config (pyproject.toml) | 4.3 |  | 0.585 |
-| walker |  | 1781 | 475 | YAML config at .github/workflows/test.yml |  |  | 0.593 |
+| walker |  | 134 | 41 | listing of 'docs' |  |  | 0.823 |
+| walker |  | 204 | 70 | [package] in pyproject.toml |  |  | 0.845 |
+| ns | 241 |  | 111 | Package identity: name, Python support, deps | 1.3 |  | 0.826 |
+| walker |  | 276 | 72 | listing of 'src/typeguard' |  |  | 0.867 |
+| ns | 367 |  | 126 | Project URLs + pytest entry point | 1.4 |  | 0.729 |
+| ns | 480 |  | 113 | Source + docs file rosters | 2.1 |  | 0.789 |
+| ns | 580 |  | 100 | Tests directory roster | 2.2 |  | 0.671 |
+| ns | 643 |  | 63 | CI, community-health, and mypy-fixture file rosters | 2.3 |  | 0.599 |
+| walker |  | 697 | 421 | python imports in src/typeguard/__init__.py |  |  | 0.618 |
+| walker |  | 735 | 38 | python decl names surface in src/typeguard/__init__.py |  |  | 0.619 |
+| walker |  | 735 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.619 |
+| walker |  | 762 | 27 | listing of '.github' |  |  | 0.642 |
+| walker |  | 770 | 8 | listing of '.github/workflows' |  |  | 0.659 |
+| ns | 841 |  | 198 | typeguard/__init__.py: import re-exports (checkers/config/decorators) | 3.1 |  | 0.689 |
+| ns | 1135 |  | 294 | typeguard/__init__.py: import re-exports (exceptions/functions/importhook/memo/suppression/utils) + rebinding loop | 3.2 | 3.1 | 0.676 |
+| walker |  | 1245 | 475 | YAML config at .github/workflows/test.yml |  |  | 0.686 |
+| ns | 1299 |  | 164 | typeguard/__init__.py: config attr + plugin autoload | 3.3 | 3.2 | 0.634 |
+| ns | 1355 |  | 56 | pytest config (pyproject.toml) | 4.1 |  | 0.620 |
+| ns | 1563 |  | 208 | ruff lint config (pyproject.toml) | 4.2 |  | 0.572 |
+| ns | 1661 |  | 98 | mypy + tox config (pyproject.toml) | 4.3 |  | 0.555 |
+| walker |  | 1712 | 467 | README headline in README.rst |  |  | 0.593 |
+| walker |  | 1725 | 13 | python decl names surface in src/typeguard/_memo.py |  |  | 0.593 |
+| walker |  | 1725 | 0 | python decl at src/typeguard/_memo.py:8 |  |  | 0.593 |
+| walker |  | 1736 | 11 | python method sigs in src/typeguard/_memo.py |  |  | 0.593 |
+| walker |  | 1758 | 22 | python class body at src/typeguard/_memo.py:8 |  |  | 0.593 |
+| walker |  | 1781 | 23 | python decl doc at src/typeguard/_memo.py:8 |  |  | 0.593 |
 | walker |  | 1850 | 69 | python decl body at src/typeguard/__init__.py:37 body 38 |  |  | 0.618 |
 | walker |  | 1886 | 36 | python decl names surface in src/typeguard/_pytest_plugin.py |  |  | 0.618 |
 | walker |  | 1886 | 0 | python decl at src/typeguard/_pytest_plugin.py:16 |  |  | 0.618 |

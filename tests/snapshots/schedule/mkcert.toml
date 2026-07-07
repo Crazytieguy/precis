@@ -1,7 +1,7 @@
 fixture = "mkcert"
 budget = 10000
-cumulative_tokens = 9891
-batch_count = 132
+cumulative_tokens = 9900
+batch_count = 133
 
 [[batches]]
 position = 1
@@ -73,10 +73,56 @@ kind = "full"
 
 [[batches]]
 position = 5
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 7
+cum_tokens = 147
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "workflows"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 8
+cum_tokens = 155
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["release.yml", "test.yml"]
+
+[[batches]]
+position = 7
+key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
+descriptor = "YAML config at .github/workflows/test.yml"
+cost_tokens = 253
+cum_tokens = 408
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 1
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 135
-cum_tokens = 275
+cum_tokens = 543
 
 [batches.content]
 kind = "lines"
@@ -258,47 +304,11 @@ end = 189
 kind = "ellipsis"
 
 [[batches]]
-position = 6
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
-cost_tokens = 41
-cum_tokens = 316
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 30
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #11"
-cost_tokens = 20
-cum_tokens = 336
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 109
-end = 109
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
+position = 9
 key = 'Go(GoMod { file: "go.mod" })'
 descriptor = "go module file go.mod"
 cost_tokens = 150
-cum_tokens = 486
+cum_tokens = 693
 
 [batches.content]
 kind = "lines"
@@ -312,57 +322,29 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 9
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 7
-cum_tokens = 493
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "workflows"]
-
-[[batches]]
 position = 10
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 8
-cum_tokens = 501
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["release.yml", "test.yml"]
-
-[[batches]]
-position = 11
-key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
-descriptor = "YAML config at .github/workflows/test.yml"
-cost_tokens = 253
-cum_tokens = 754
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 41
+cum_tokens = 734
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 1
-end = 23
+path = "README.md"
+start = 30
+end = 32
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 12
+position = 11
 key = 'Go(DeclNames { file: "main.go", chunk_index: 0 })'
 descriptor = "go decl names surface in main.go"
 cost_tokens = 295
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -608,11 +590,11 @@ end = 383
 kind = "ellipsis"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Go(Decl { file: "main.go", start_line: 85 })'
 descriptor = "go decl at main.go:85"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -626,11 +608,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Go(Decl { file: "main.go", start_line: 87 })'
 descriptor = "go decl at main.go:87"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -644,11 +626,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Go(Decl { file: "main.go", start_line: 171 })'
 descriptor = "go decl at main.go:171"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -662,11 +644,11 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Go(Decl { file: "main.go", start_line: 240 })'
 descriptor = "go decl at main.go:240"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -680,11 +662,11 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Go(Decl { file: "main.go", start_line: 267 })'
 descriptor = "go decl at main.go:267"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -698,11 +680,11 @@ end = 267
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Go(Decl { file: "main.go", start_line: 307 })'
 descriptor = "go decl at main.go:307"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -716,11 +698,11 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Go(Decl { file: "main.go", start_line: 336 })'
 descriptor = "go decl at main.go:336"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -734,11 +716,11 @@ end = 336
 kind = "full"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Go(Decl { file: "main.go", start_line: 345 })'
 descriptor = "go decl at main.go:345"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -752,11 +734,11 @@ end = 345
 kind = "full"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Go(Decl { file: "main.go", start_line: 358 })'
 descriptor = "go decl at main.go:358"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -770,11 +752,11 @@ end = 358
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Go(Decl { file: "main.go", start_line: 364 })'
 descriptor = "go decl at main.go:364"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -788,11 +770,11 @@ end = 364
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Go(Decl { file: "main.go", start_line: 370 })'
 descriptor = "go decl at main.go:370"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -806,11 +788,11 @@ end = 370
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Go(Decl { file: "main.go", start_line: 375 })'
 descriptor = "go decl at main.go:375"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -824,11 +806,11 @@ end = 375
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Go(Decl { file: "main.go", start_line: 382 })'
 descriptor = "go decl at main.go:382"
 cost_tokens = 0
-cum_tokens = 1049
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -842,11 +824,11 @@ end = 382
 kind = "full"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Go(DeclBody { file: "main.go", start_line: 370 })'
 descriptor = "go decl body at main.go:370"
 cost_tokens = 21
-cum_tokens = 1070
+cum_tokens = 1050
 
 [batches.content]
 kind = "lines"
@@ -860,11 +842,11 @@ end = 372
 kind = "full"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Go(DeclBody { file: "main.go", start_line: 375 })'
 descriptor = "go decl body at main.go:375"
 cost_tokens = 22
-cum_tokens = 1092
+cum_tokens = 1072
 
 [batches.content]
 kind = "lines"
@@ -878,11 +860,11 @@ end = 377
 kind = "full"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Go(DeclBody { file: "main.go", start_line: 358 })'
 descriptor = "go decl body at main.go:358"
 cost_tokens = 35
-cum_tokens = 1127
+cum_tokens = 1107
 
 [batches.content]
 kind = "lines"
@@ -896,11 +878,11 @@ end = 361
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Go(DeclBody { file: "main.go", start_line: 364 })'
 descriptor = "go decl body at main.go:364"
 cost_tokens = 44
-cum_tokens = 1171
+cum_tokens = 1151
 
 [batches.content]
 kind = "lines"
@@ -914,11 +896,11 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Go(DeclDoc { file: "main.go", start_line: 85 })'
 descriptor = "go decl doc at main.go:85"
 cost_tokens = 63
-cum_tokens = 1234
+cum_tokens = 1214
 
 [batches.content]
 kind = "lines"
@@ -932,11 +914,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Go(Decl { file: "main.go", start_line: 155 })'
 descriptor = "go decl at main.go:155"
 cost_tokens = 174
-cum_tokens = 1408
+cum_tokens = 1388
 
 [batches.content]
 kind = "lines"
@@ -950,11 +932,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Go(DeclNames { file: "truststore_java.go", chunk_index: 0 })'
 descriptor = "go decl names surface in truststore_java.go"
 cost_tokens = 151
-cum_tokens = 1559
+cum_tokens = 1539
 
 [batches.content]
 kind = "lines"
@@ -1056,11 +1038,11 @@ end = 111
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Go(Decl { file: "truststore_java.go", start_line: 31 })'
 descriptor = "go decl at truststore_java.go:31"
 cost_tokens = 0
-cum_tokens = 1559
+cum_tokens = 1539
 
 [batches.content]
 kind = "lines"
@@ -1074,11 +1056,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Go(Decl { file: "truststore_java.go", start_line: 57 })'
 descriptor = "go decl at truststore_java.go:57"
 cost_tokens = 0
-cum_tokens = 1559
+cum_tokens = 1539
 
 [batches.content]
 kind = "lines"
@@ -1092,11 +1074,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Go(Decl { file: "truststore_java.go", start_line: 81 })'
 descriptor = "go decl at truststore_java.go:81"
 cost_tokens = 0
-cum_tokens = 1559
+cum_tokens = 1539
 
 [batches.content]
 kind = "lines"
@@ -1110,11 +1092,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Go(Decl { file: "truststore_java.go", start_line: 94 })'
 descriptor = "go decl at truststore_java.go:94"
 cost_tokens = 0
-cum_tokens = 1559
+cum_tokens = 1539
 
 [batches.content]
 kind = "lines"
@@ -1128,11 +1110,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Go(Decl { file: "truststore_java.go", start_line: 110 })'
 descriptor = "go decl at truststore_java.go:110"
 cost_tokens = 0
-cum_tokens = 1559
+cum_tokens = 1539
 
 [batches.content]
 kind = "lines"
@@ -1146,11 +1128,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Go(Decl { file: "truststore_java.go", start_line: 21 })'
 descriptor = "go decl at truststore_java.go:21"
 cost_tokens = 9
-cum_tokens = 1568
+cum_tokens = 1548
 
 [batches.content]
 kind = "lines"
@@ -1164,11 +1146,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Go(DeclDoc { file: "truststore_java.go", start_line: 110 })'
 descriptor = "go decl doc at truststore_java.go:110"
 cost_tokens = 41
-cum_tokens = 1609
+cum_tokens = 1589
 
 [batches.content]
 kind = "lines"
@@ -1176,6 +1158,24 @@ kind = "lines"
 [[batches.content.spans]]
 path = "truststore_java.go"
 start = 108
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #11"
+cost_tokens = 20
+cum_tokens = 1609
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 109
 end = 109
 
 [batches.content.spans.render]
@@ -2913,10 +2913,24 @@ kind = "full"
 
 [[batches]]
 position = 113
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+cost_tokens = 9
+cum_tokens = 7122
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/ISSUE_TEMPLATE"
+entries = ["bug-report.md", "config.yml"]
+
+[[batches]]
+position = 114
 key = 'Go(DeclBody { file: "main.go", start_line: 307 })'
 descriptor = "go decl body at main.go:307"
 cost_tokens = 390
-cum_tokens = 7503
+cum_tokens = 7512
 
 [batches.content]
 kind = "lines"
@@ -2930,11 +2944,11 @@ end = 333
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #18"
 cost_tokens = 90
-cum_tokens = 7593
+cum_tokens = 7602
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2962,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #23"
 cost_tokens = 97
-cum_tokens = 7690
+cum_tokens = 7699
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +2980,11 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Go(DeclBody { file: "cert.go", start_line: 148 })'
 descriptor = "go decl body at cert.go:148"
 cost_tokens = 217
-cum_tokens = 7907
+cum_tokens = 7916
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +2998,11 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 131 })'
 descriptor = "go decl body at truststore_nss.go:131"
 cost_tokens = 217
-cum_tokens = 8124
+cum_tokens = 8133
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +3016,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Go(PackageImports { file: "truststore_linux.go" })'
 descriptor = "go package + imports in truststore_linux.go"
 cost_tokens = 75
-cum_tokens = 8199
+cum_tokens = 8208
 
 [batches.content]
 kind = "lines"
@@ -3020,11 +3034,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 134
-cum_tokens = 8333
+cum_tokens = 8342
 
 [batches.content]
 kind = "lines"
@@ -3038,11 +3052,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Go(DeclBody { file: "truststore_nss.go", start_line: 89 })'
 descriptor = "go decl body at truststore_nss.go:89"
 cost_tokens = 256
-cum_tokens = 8589
+cum_tokens = 8598
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +3070,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Go(DeclBody { file: "cert.go", start_line: 176 })'
 descriptor = "go decl body at cert.go:176"
 cost_tokens = 263
-cum_tokens = 8852
+cum_tokens = 8861
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +3088,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Go(DeclNames { file: "truststore_windows.go", chunk_index: 0 })'
 descriptor = "go decl names surface in truststore_windows.go"
 cost_tokens = 370
-cum_tokens = 9222
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -3212,11 +3226,11 @@ end = 108
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 35 })'
 descriptor = "go decl at truststore_windows.go:35"
 cost_tokens = 0
-cum_tokens = 9222
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -3230,11 +3244,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 54 })'
 descriptor = "go decl at truststore_windows.go:54"
 cost_tokens = 0
-cum_tokens = 9222
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -3248,11 +3262,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 71 })'
 descriptor = "go decl at truststore_windows.go:71"
 cost_tokens = 0
-cum_tokens = 9222
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -3266,11 +3280,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 83 })'
 descriptor = "go decl at truststore_windows.go:83"
 cost_tokens = 0
-cum_tokens = 9222
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -3284,11 +3298,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 91 })'
 descriptor = "go decl at truststore_windows.go:91"
 cost_tokens = 0
-cum_tokens = 9222
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -3302,11 +3316,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 107 })'
 descriptor = "go decl at truststore_windows.go:107"
 cost_tokens = 0
-cum_tokens = 9222
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -3320,11 +3334,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 25 })'
 descriptor = "go decl at truststore_windows.go:25"
 cost_tokens = 9
-cum_tokens = 9231
+cum_tokens = 9240
 
 [batches.content]
 kind = "lines"
@@ -3338,11 +3352,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Go(Decl { file: "truststore_windows.go", start_line: 19 })'
 descriptor = "go decl at truststore_windows.go:19"
 cost_tokens = 9
-cum_tokens = 9240
+cum_tokens = 9249
 
 [batches.content]
 kind = "lines"
@@ -3356,11 +3370,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Go(DeclBody { file: "main.go", start_line: 267 })'
 descriptor = "go decl body at main.go:267"
 cost_tokens = 563
-cum_tokens = 9803
+cum_tokens = 9812
 
 [batches.content]
 kind = "lines"
@@ -3374,11 +3388,11 @@ end = 304
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Go(PackageImports { file: "truststore_darwin.go" })'
 descriptor = "go package + imports in truststore_darwin.go"
 cost_tokens = 88
-cum_tokens = 9891
+cum_tokens = 9900
 
 [batches.content]
 kind = "lines"

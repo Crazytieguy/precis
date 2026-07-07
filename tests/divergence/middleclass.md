@@ -4,30 +4,30 @@ Score(3000)=0.873 I=0.953 C=0.800 ns_rows≤3K=21/42 (reached=15 partial=3 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 33 | 33 | listing of '.' |  |  | 1.000 |
 | ns | 33 |  | 33 | Repo root listing | 1.1 |  | 1.000 |
-| ns | 48 |  | 15 | README title | 1.2 |  | 0.875 |
-| walker |  | 80 | 47 | README headline in README.md |  |  | 1.000 |
-| ns | 140 |  | 92 | README badges | 1.3 |  | 0.907 |
-| walker |  | 145 | 65 | lua module identity in middleclass.lua |  |  | 0.911 |
-| ns | 170 |  | 30 | README tagline | 1.4 |  | 0.907 |
-| walker |  | 191 | 46 | headings outline in UPDATING.md |  |  | 0.907 |
-| walker |  | 199 | 8 | listing of 'performance' |  |  | 0.916 |
+| walker |  | 41 | 8 | listing of 'performance' |  |  | 1.000 |
+| ns | 48 |  | 15 | README title | 1.2 |  | 0.886 |
+| walker |  | 88 | 47 | README headline in README.md |  |  | 1.000 |
+| ns | 140 |  | 92 | README badges | 1.3 |  | 0.917 |
+| walker |  | 153 | 65 | lua module identity in middleclass.lua |  |  | 0.920 |
+| ns | 170 |  | 30 | README tagline | 1.4 |  | 0.916 |
+| walker |  | 199 | 46 | headings outline in UPDATING.md |  |  | 0.916 |
 | ns | 228 |  | 58 | spec/ directory listing | 1.5 |  | 0.686 |
 | walker |  | 280 | 81 | headings outline in README.md |  |  | 0.689 |
-| walker |  | 305 | 25 | lua decl names surface in performance/run.lua |  |  | 0.689 |
-| walker |  | 305 | 0 | lua decl at performance/run.lua:19 |  |  | 0.689 |
-| walker |  | 305 | 0 | lua decl at performance/run.lua:37 |  |  | 0.689 |
 | ns | 308 |  | 80 | rockspecs/ directory listing | 1.6 |  | 0.592 |
-| walker |  | 314 | 9 | lua decl body at performance/run.lua:19 |  |  | 0.592 |
 | ns | 316 |  | 8 | performance/ directory listing | 1.7 |  | 0.613 |
-| walker |  | 323 | 9 | lua decl body at performance/run.lua:37 |  |  | 0.613 |
-| walker |  | 381 | 58 | listing of 'spec' |  |  | 0.819 |
-| walker |  | 419 | 38 | lua decl names surface in spec/metamethods_spec.lua |  |  | 0.819 |
-| walker |  | 419 | 0 | lua decl at spec/metamethods_spec.lua:3 |  |  | 0.819 |
-| walker |  | 419 | 0 | lua decl at spec/metamethods_spec.lua:7 |  |  | 0.819 |
-| walker |  | 433 | 14 | lua decl body at spec/metamethods_spec.lua:3 |  |  | 0.819 |
-| ns | 445 |  | 129 | README Quick Look (class + initialize + static var) | 1.8 |  | 0.650 |
-| walker |  | 447 | 14 | lua decl body at spec/metamethods_spec.lua:7 |  |  | 0.650 |
-| walker |  | 527 | 80 | listing of 'rockspecs' |  |  | 0.756 |
+| walker |  | 338 | 58 | listing of 'spec' |  |  | 0.819 |
+| walker |  | 363 | 25 | lua decl names surface in performance/run.lua |  |  | 0.819 |
+| walker |  | 363 | 0 | lua decl at performance/run.lua:19 |  |  | 0.819 |
+| walker |  | 363 | 0 | lua decl at performance/run.lua:37 |  |  | 0.819 |
+| walker |  | 443 | 80 | listing of 'rockspecs' |  |  | 0.954 |
+| ns | 445 |  | 129 | README Quick Look (class + initialize + static var) | 1.8 |  | 0.756 |
+| walker |  | 481 | 38 | lua decl names surface in spec/metamethods_spec.lua |  |  | 0.756 |
+| walker |  | 481 | 0 | lua decl at spec/metamethods_spec.lua:3 |  |  | 0.756 |
+| walker |  | 481 | 0 | lua decl at spec/metamethods_spec.lua:7 |  |  | 0.756 |
+| walker |  | 490 | 9 | lua decl body at performance/run.lua:19 |  |  | 0.756 |
+| walker |  | 499 | 9 | lua decl body at performance/run.lua:37 |  |  | 0.756 |
+| walker |  | 513 | 14 | lua decl body at spec/metamethods_spec.lua:3 |  |  | 0.756 |
+| walker |  | 527 | 14 | lua decl body at spec/metamethods_spec.lua:7 |  |  | 0.756 |
 | ns | 578 |  | 133 | README Quick Look (subclassing + instantiation) | 1.9 | 1.8 | 0.639 |
 | ns | 749 |  | 171 | README Specs + Performance run commands | 1.10 |  | 0.553 |
 | walker |  | 833 | 306 | lua decl names surface in middleclass.lua |  |  | 0.563 |

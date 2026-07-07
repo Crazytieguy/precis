@@ -3,7 +3,10 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .PVS-Studio/
+    .pvsconfig
 .circleci/
+    config.yml
+    config2.yml
 .clang-format
 .claude/
     commands/
@@ -75,20 +78,63 @@ README.rst
     …
 SConscript
 docs/
+    _static/
+        custom.css
+    assets/
+        adafruit_logo.svg
+        logo.svg
+        stack.svg
+    conf.py
+    faq.rst
+    getting_started.rst
+    index.rst
+    info/
+        changelog.rst
+        code_of_conduct.rst
+        contributors.rst
+        index.rst
+    integration.rst
+    porting.rst
+    reference/
+        architecture.rst
+        boards.rst
+        concurrency.rst
+        dependencies.rst
+        glossary.rst
+        index.rst
+        usb_concepts.rst
+    requirements.txt
+    troubleshooting.rst
 examples/
 hw/
     bsp/
     mcu/
         bridgetek/
             ft9xx/
+                Readme.md
+                scripts/
         dialog/
+            README.md
+            da1469x/
         nordic/
             nrf5x/
         sony/
             cxd56/
+                mkspk/
+                tools/
 lib/
     SEGGER_RTT/
         Config/
+            SEGGER_RTT_Conf.h
+                …
+                 401→void OS_SIM_EnterCriticalSection(void);
+                 402→void OS_SIM_LeaveCriticalSection(void);
+                 403→
+                 404→#define SEGGER_RTT_LOCK()       {                                                                   \
+                 405→                                  OS_SIM_EnterCriticalSection();
+                 407→#define SEGGER_RTT_UNLOCK()       OS_SIM_LeaveCriticalSection();                                    \
+                 408→                                }
+                …
         LICENSE.md
         README.md
         RTT/
@@ -180,6 +226,24 @@ src/
         usbh.h
         usbh_pvt.h
     osal/
+        osal.h
+            …
+              34→#include "common/tusb_common.h"
+              36→typedef void (*osal_task_func_t)(void* param);
+              38→// Timeout
+              39→#define OSAL_TIMEOUT_NOTIMEOUT     (0)          // Return immediately
+              40→#define OSAL_TIMEOUT_NORMAL        (10)         // Default timeout
+              41→#define OSAL_TIMEOUT_WAIT_FOREVER  (UINT32_MAX) // Wait forever
+              42→#define OSAL_TIMEOUT_CONTROL_XFER  OSAL_TIMEOUT_WAIT_FOREVER
+            …
+        osal_freertos.h
+        osal_mynewt.h
+        osal_none.h
+        osal_pico.h
+        osal_rtthread.h
+        osal_rtx4.h
+        osal_threadx.h
+        osal_zephyr.h
     portable/
         analog/
         bridgetek/
@@ -206,24 +270,6 @@ src/
     tinyusb.mk
     tusb.c
     tusb.h
-        …
-         147→bool tusb_rhport_init(uint8_t rhport, const tusb_rhport_init_t* rh_init);
-        …
-         159→#define _tusb_init_arg1(_rhport)             _tusb_init_arg0()
-         160→#define _tusb_init_arg2(_rhport, _rh_init)   tusb_rhport_init(_rhport, _rh_init)
-         161→#define tusb_init(...)                       TU_FUNC_OPTIONAL_ARG(_tusb_init, __VA_ARGS__)
-         163→// Check if stack is initialized
-         164→bool tusb_inited(void);
-        …
-         167→void tusb_int_handler(uint8_t rhport, bool in_isr);
-        …
-         170→bool tusb_deinit(uint8_t rhport);
-        …
-         174→#define tusb_init(...)  (false)
-         175→#define tusb_int_handler(...)  do {}while(0)
-         176→#define tusb_inited()  (false)
-         177→#define tusb_deinit(...) (false)
-        …
     tusb_option.h
     typec/
         pd_types.h
@@ -306,5 +352,8 @@ src/
               84→bool tuc_msg_request(uint8_t rhport, void const* rdo);
             …
 test/
+    fuzz/
+    hil/
+    unit-test/
 tools/
 version.yml

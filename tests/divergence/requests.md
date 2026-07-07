@@ -10,40 +10,40 @@ Score(3000)=0.643 I=0.874 C=0.473 ns_rows≤3K=17/41 (reached=9 partial=0 missin
 | walker |  | 252 | 175 | README headline in README.md |  |  | 0.558 |
 | walker |  | 292 | 40 | headings outline in README.md |  |  | 0.558 |
 | ns | 295 |  | 54 | docs/ directory listing | 1.4 |  | 0.492 |
-| walker |  | 350 | 58 | [package] in pyproject.toml |  |  | 0.492 |
+| walker |  | 326 | 34 | listing of 'ext' |  |  | 0.492 |
 | ns | 379 |  | 84 | .github/ and workflows/ listing | 1.5 |  | 0.431 |
-| walker |  | 497 | 147 | README.md section #0 |  |  | 0.431 |
-| ns | 554 |  | 175 | README lede + usage example | 1.6 |  | 0.521 |
-| walker |  | 638 | 141 | [dependencies] in pyproject.toml |  |  | 0.524 |
-| walker |  | 728 | 90 | listing of 'src/requests' |  |  | 0.701 |
-| ns | 754 |  | 200 | pyproject.toml identity | 1.7 |  | 0.647 |
-| ns | 839 |  | 85 | pyproject.toml Python-version support + dependencies | 1.8 | 1.7 | 0.662 |
-| ns | 1027 |  | 188 | Makefile build/test targets | 1.9 | 1.7 | 0.619 |
-| ns | 1257 |  | 230 | __version__.py package metadata | 1.10 |  | 0.586 |
-| ns | 1331 |  | 74 | api.py function locations | 2.1 |  | 0.569 |
-| ns | 1561 |  | 230 | __init__.py public export tuple | 2.2 |  | 0.520 |
-| walker |  | 1730 | 1002 | python imports in src/requests/__init__.py |  |  | 0.628 |
-| walker |  | 1764 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.628 |
-| walker |  | 1780 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.628 |
-| walker |  | 1814 | 34 | listing of 'ext' |  |  | 0.628 |
-| ns | 1828 |  | 267 | exceptions.py class hierarchy locations | 3.1 |  | 0.584 |
-| walker |  | 1861 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.584 |
-| walker |  | 1915 | 54 | listing of 'docs' |  |  | 0.637 |
-| walker |  | 1919 | 4 | listing of 'docs/_templates' |  |  | 0.637 |
-| walker |  | 1928 | 9 | listing of 'docs/_static' |  |  | 0.637 |
-| walker |  | 1938 | 10 | listing of 'docs/dev' |  |  | 0.637 |
-| walker |  | 1952 | 14 | listing of 'docs/_themes' |  |  | 0.637 |
-| walker |  | 1973 | 21 | listing of 'docs/user' |  |  | 0.637 |
-| walker |  | 1993 | 20 | python imports in setup.py |  |  | 0.637 |
-| walker |  | 2056 | 63 | README.md section #1 |  |  | 0.637 |
-| walker |  | 2094 | 38 | listing of 'docs/community' |  |  | 0.637 |
-| ns | 2310 |  | 482 | hooks.py full (event hook dispatch) | 3.2 |  | 0.566 |
-| ns | 2419 |  | 109 | structures.py class/method locations | 3.3 |  | 0.551 |
-| walker |  | 2450 | 356 | plaintext config Makefile |  |  | 0.595 |
-| walker |  | 2489 | 39 | plaintext config docs/requirements.txt |  |  | 0.595 |
-| walker |  | 2532 | 43 | listing of '.github' |  |  | 0.611 |
-| walker |  | 2573 | 41 | listing of '.github/workflows' |  |  | 0.649 |
-| walker |  | 2587 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.649 |
+| walker |  | 380 | 54 | listing of 'docs' |  |  | 0.563 |
+| walker |  | 384 | 4 | listing of 'docs/_templates' |  |  | 0.563 |
+| walker |  | 393 | 9 | listing of 'docs/_static' |  |  | 0.563 |
+| walker |  | 403 | 10 | listing of 'docs/dev' |  |  | 0.563 |
+| walker |  | 417 | 14 | listing of 'docs/_themes' |  |  | 0.563 |
+| walker |  | 438 | 21 | listing of 'docs/user' |  |  | 0.563 |
+| walker |  | 496 | 58 | [package] in pyproject.toml |  |  | 0.563 |
+| ns | 554 |  | 175 | README lede + usage example | 1.6 |  | 0.619 |
+| walker |  | 643 | 147 | README.md section #0 |  |  | 0.619 |
+| walker |  | 733 | 90 | listing of 'src/requests' |  |  | 0.788 |
+| ns | 754 |  | 200 | pyproject.toml identity | 1.7 |  | 0.727 |
+| ns | 839 |  | 85 | pyproject.toml Python-version support + dependencies | 1.8 | 1.7 | 0.704 |
+| ns | 1027 |  | 188 | Makefile build/test targets | 1.9 | 1.7 | 0.659 |
+| ns | 1257 |  | 230 | __version__.py package metadata | 1.10 |  | 0.623 |
+| ns | 1331 |  | 74 | api.py function locations | 2.1 |  | 0.605 |
+| ns | 1561 |  | 230 | __init__.py public export tuple | 2.2 |  | 0.553 |
+| walker |  | 1735 | 1002 | python imports in src/requests/__init__.py |  |  | 0.659 |
+| walker |  | 1769 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.659 |
+| walker |  | 1785 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.659 |
+| walker |  | 1823 | 38 | listing of 'docs/community' |  |  | 0.659 |
+| ns | 1828 |  | 267 | exceptions.py class hierarchy locations | 3.1 |  | 0.613 |
+| walker |  | 1870 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.613 |
+| walker |  | 1890 | 20 | python imports in setup.py |  |  | 0.613 |
+| walker |  | 2031 | 141 | [dependencies] in pyproject.toml |  |  | 0.637 |
+| walker |  | 2094 | 63 | README.md section #1 |  |  | 0.637 |
+| walker |  | 2137 | 43 | listing of '.github' |  |  | 0.655 |
+| walker |  | 2178 | 41 | listing of '.github/workflows' |  |  | 0.701 |
+| walker |  | 2192 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.701 |
+| ns | 2310 |  | 482 | hooks.py full (event hook dispatch) | 3.2 |  | 0.624 |
+| ns | 2419 |  | 109 | structures.py class/method locations | 3.3 |  | 0.607 |
+| walker |  | 2548 | 356 | plaintext config Makefile |  |  | 0.649 |
+| walker |  | 2587 | 39 | plaintext config docs/requirements.txt |  |  | 0.649 |
 | walker |  | 2664 | 77 | listing of 'tests' |  |  | 0.704 |
 | walker |  | 2674 | 10 | listing of 'tests/testserver' |  |  | 0.704 |
 | walker |  | 2688 | 14 | listing of 'tests/certs' |  |  | 0.704 |

@@ -1,4 +1,4 @@
-Score(3000)=0.538 I=0.770 C=0.375 ns_rows≤3K=17/47 (reached=5 partial=2 missing=10)
+Score(3000)=0.572 I=0.810 C=0.404 ns_rows≤3K=17/47 (reached=6 partial=2 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -7,78 +7,78 @@ Score(3000)=0.538 I=0.770 C=0.375 ns_rows≤3K=17/47 (reached=5 partial=2 missin
 | ns | 67 |  | 21 | src/ directory listing | 1.2 |  | 0.811 |
 | ns | 87 |  | 20 | src/kv/ directory listing | 1.3 |  | 0.694 |
 | walker |  | 98 | 52 | README headline in README.md |  |  | 0.694 |
-| ns | 122 |  | 35 | Secondary directory listings (tests/, benches/, CI, test_max_level_features/, rfcs/) | 1.4 |  | 0.587 |
-| walker |  | 154 | 56 | headings outline in README.md |  |  | 0.587 |
-| ns | 159 |  | 37 | triagebot.toml + .gitignore + .precis-pin | 1.5 |  | 0.534 |
-| ns | 293 |  | 134 | Cargo.toml package identity (name/version/license/repo) | 1.6 |  | 0.445 |
-| walker |  | 345 | 191 | [package] in Cargo.toml |  |  | 0.650 |
-| walker |  | 409 | 64 | README.md section #0 |  |  | 0.650 |
-| walker |  | 430 | 21 | listing of 'src' |  |  | 0.743 |
-| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.661 |
-| walker |  | 450 | 20 | listing of 'src/kv' |  |  | 0.736 |
-| walker |  | 541 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.736 |
-| walker |  | 544 | 3 | listing of '.github' |  |  | 0.736 |
-| walker |  | 548 | 4 | listing of '.github/workflows' |  |  | 0.738 |
-| ns | 551 |  | 103 | Cargo.toml package identity (MSRV, edition, docs.rs features) | 1.8 |  | 0.703 |
-| walker |  | 552 | 4 | listing of 'benches' |  |  | 0.709 |
-| walker |  | 588 | 36 | manifest config in Cargo.toml |  |  | 0.750 |
-| ns | 688 |  | 137 | Cargo.toml [features]: max_level_*/release_max_level_* | 1.9 |  | 0.663 |
-| walker |  | 733 | 145 | mod/use plumbing in src/lib.rs |  |  | 0.663 |
-| ns | 963 |  | 275 | Cargo.toml [features]: std/kv/kv_std/kv_sval/kv_serde | 1.10 |  | 0.588 |
-| walker |  | 979 | 246 | crate-doc lede in src/lib.rs |  |  | 0.668 |
-| walker |  | 1005 | 26 | pub-item names surface in src/kv/key.rs |  |  | 0.668 |
-| walker |  | 1036 | 31 | pub item at src/kv/key.rs:7 |  |  | 0.668 |
-| walker |  | 1063 | 27 | pub-item names surface in src/kv/source.rs |  |  | 0.669 |
-| ns | 1080 |  | 117 | Cargo.toml [dependencies] | 1.11 |  | 0.649 |
-| walker |  | 1097 | 34 | pub item at src/kv/error.rs:5 |  |  | 0.649 |
-| walker |  | 1145 | 48 | pub item at src/kv/source.rs:235 |  |  | 0.650 |
-| walker |  | 1214 | 69 | macro_export names across src/kv |  |  | 0.650 |
-| walker |  | 1252 | 38 | pub-item names surface in src/kv/value.rs |  |  | 0.650 |
-| walker |  | 1283 | 31 | pub item at src/kv/value.rs:11 |  |  | 0.650 |
-| walker |  | 1309 | 26 | pub item at src/kv/value.rs:119 |  |  | 0.650 |
-| ns | 1493 |  | 413 | Level enum | 2.1 |  | 0.552 |
-| walker |  | 1609 | 300 | pub-item names surface in src/lib.rs |  |  | 0.552 |
-| walker |  | 1609 | 0 | pub item at src/lib.rs:1351 |  |  | 0.552 |
-| walker |  | 1609 | 0 | pub item at src/lib.rs:1375 |  |  | 0.552 |
-| walker |  | 1609 | 0 | pub item at src/lib.rs:1396 |  |  | 0.552 |
-| walker |  | 1609 | 0 | pub item at src/lib.rs:1420 |  |  | 0.552 |
-| walker |  | 1609 | 0 | pub item at src/lib.rs:1478 |  |  | 0.552 |
-| walker |  | 1609 | 0 | pub item at src/lib.rs:1529 |  |  | 0.552 |
-| walker |  | 1609 | 0 | pub item at src/lib.rs:1581 |  |  | 0.552 |
-| walker |  | 1632 | 23 | pub item at src/lib.rs:1549 |  |  | 0.552 |
-| walker |  | 1659 | 27 | pub item at src/lib.rs:1003 |  |  | 0.552 |
-| walker |  | 1687 | 28 | pub item at src/lib.rs:1566 |  |  | 0.552 |
-| walker |  | 1699 | 12 | pub item body at src/lib.rs:1478 body 1479 |  |  | 0.552 |
-| walker |  | 1739 | 40 | pub item at src/lib.rs:1200 |  |  | 0.552 |
-| walker |  | 1755 | 16 | pub item body at src/lib.rs:1420 body 1421 |  |  | 0.553 |
-| ns | 1800 |  | 307 | LevelFilter enum | 2.2 |  | 0.503 |
-| walker |  | 1806 | 51 | pub item at src/lib.rs:1158 |  |  | 0.503 |
-| walker |  | 1826 | 20 | pub item body at src/lib.rs:1351 body 1352 |  |  | 0.503 |
-| walker |  | 1932 | 106 | pub item at src/lib.rs:842 |  |  | 0.504 |
-| ns | 1945 |  | 145 | Level & LevelFilter public method roster | 2.3 |  | 0.483 |
-| walker |  | 1952 | 20 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.483 |
-| ns | 2092 |  | 147 | FromStr for Level | 2.4 |  | 0.464 |
-| walker |  | 2126 | 174 | pub item at src/lib.rs:636 |  |  | 0.504 |
-| walker |  | 2147 | 21 | pub-item doc lede at src/lib.rs:842 |  |  | 0.504 |
-| walker |  | 2239 | 92 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.504 |
-| ns | 2419 |  | 327 | Record struct + KeyValues wrapper | 2.5 |  | 0.479 |
-| walker |  | 2542 | 303 | pub item at src/lib.rs:475 |  |  | 0.555 |
-| ns | 2557 |  | 138 | Record accessor method roster | 2.6 |  | 0.538 |
-| walker |  | 2582 | 40 | pub-item doc lede at src/lib.rs:1581 |  |  | 0.538 |
-| walker |  | 2628 | 46 | pub-item doc lede at src/lib.rs:1549 |  |  | 0.538 |
-| ns | 3004 |  | 447 | Log trait | 2.7 |  | 0.496 |
-| walker |  | 3043 | 415 | pub item at src/lib.rs:1249 |  |  | 0.587 |
-| walker |  | 3060 | 17 | pub-item doc lede at src/lib.rs:1249 |  |  | 0.594 |
-| ns | 3280 |  | 276 | NopLogger + blanket impl for &T | 2.8 |  | 0.560 |
-| walker |  | 3338 | 278 | pub item at src/lib.rs:1611 |  |  | 0.560 |
-| walker |  | 3346 | 8 | listing of 'tests' |  |  | 0.568 |
-| walker |  | 3495 | 149 | pub item body at src/lib.rs:1529 body 1530 |  |  | 0.568 |
-| walker |  | 3551 | 56 | pub item at src/kv/key.rs:37 |  |  | 0.568 |
-| ns | 3615 |  | 335 | set_max_level + max_level | 2.9 |  | 0.547 |
-| walker |  | 3716 | 165 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.563 |
-| walker |  | 3725 | 9 | listing of 'test_max_level_features' |  |  | 0.575 |
-| walker |  | 3788 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.575 |
-| walker |  | 3798 | 10 | listing of 'rfcs' |  |  | 0.583 |
+| walker |  | 119 | 21 | listing of 'src' |  |  | 0.856 |
+| ns | 122 |  | 35 | Secondary directory listings (tests/, benches/, CI, test_max_level_features/, rfcs/) | 1.4 |  | 0.725 |
+| walker |  | 139 | 20 | listing of 'src/kv' |  |  | 0.847 |
+| walker |  | 142 | 3 | listing of '.github' |  |  | 0.847 |
+| walker |  | 146 | 4 | listing of '.github/workflows' |  |  | 0.850 |
+| ns | 159 |  | 37 | triagebot.toml + .gitignore + .precis-pin | 1.5 |  | 0.772 |
+| walker |  | 202 | 56 | headings outline in README.md |  |  | 0.772 |
+| ns | 293 |  | 134 | Cargo.toml package identity (name/version/license/repo) | 1.6 |  | 0.644 |
+| walker |  | 393 | 191 | [package] in Cargo.toml |  |  | 0.829 |
+| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.737 |
+| walker |  | 457 | 64 | README.md section #0 |  |  | 0.738 |
+| walker |  | 461 | 4 | listing of 'benches' |  |  | 0.744 |
+| ns | 551 |  | 103 | Cargo.toml package identity (MSRV, edition, docs.rs features) | 1.8 |  | 0.708 |
+| walker |  | 552 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.709 |
+| walker |  | 560 | 8 | listing of 'tests' |  |  | 0.730 |
+| walker |  | 569 | 9 | listing of 'test_max_level_features' |  |  | 0.765 |
+| walker |  | 579 | 10 | listing of 'rfcs' |  |  | 0.787 |
+| walker |  | 615 | 36 | manifest config in Cargo.toml |  |  | 0.827 |
+| ns | 688 |  | 137 | Cargo.toml [features]: max_level_*/release_max_level_* | 1.9 |  | 0.731 |
+| walker |  | 760 | 145 | mod/use plumbing in src/lib.rs |  |  | 0.731 |
+| ns | 963 |  | 275 | Cargo.toml [features]: std/kv/kv_std/kv_sval/kv_serde | 1.10 |  | 0.649 |
+| walker |  | 1006 | 246 | crate-doc lede in src/lib.rs |  |  | 0.727 |
+| walker |  | 1032 | 26 | pub-item names surface in src/kv/key.rs |  |  | 0.727 |
+| walker |  | 1063 | 31 | pub item at src/kv/key.rs:7 |  |  | 0.727 |
+| ns | 1080 |  | 117 | Cargo.toml [dependencies] | 1.11 |  | 0.706 |
+| walker |  | 1090 | 27 | pub-item names surface in src/kv/source.rs |  |  | 0.706 |
+| walker |  | 1124 | 34 | pub item at src/kv/error.rs:5 |  |  | 0.706 |
+| walker |  | 1172 | 48 | pub item at src/kv/source.rs:235 |  |  | 0.707 |
+| walker |  | 1241 | 69 | macro_export names across src/kv |  |  | 0.707 |
+| walker |  | 1279 | 38 | pub-item names surface in src/kv/value.rs |  |  | 0.707 |
+| walker |  | 1310 | 31 | pub item at src/kv/value.rs:11 |  |  | 0.707 |
+| walker |  | 1336 | 26 | pub item at src/kv/value.rs:119 |  |  | 0.707 |
+| ns | 1493 |  | 413 | Level enum | 2.1 |  | 0.601 |
+| walker |  | 1636 | 300 | pub-item names surface in src/lib.rs |  |  | 0.601 |
+| walker |  | 1636 | 0 | pub item at src/lib.rs:1351 |  |  | 0.601 |
+| walker |  | 1636 | 0 | pub item at src/lib.rs:1375 |  |  | 0.601 |
+| walker |  | 1636 | 0 | pub item at src/lib.rs:1396 |  |  | 0.601 |
+| walker |  | 1636 | 0 | pub item at src/lib.rs:1420 |  |  | 0.601 |
+| walker |  | 1636 | 0 | pub item at src/lib.rs:1478 |  |  | 0.601 |
+| walker |  | 1636 | 0 | pub item at src/lib.rs:1529 |  |  | 0.601 |
+| walker |  | 1636 | 0 | pub item at src/lib.rs:1581 |  |  | 0.601 |
+| walker |  | 1659 | 23 | pub item at src/lib.rs:1549 |  |  | 0.601 |
+| walker |  | 1686 | 27 | pub item at src/lib.rs:1003 |  |  | 0.601 |
+| walker |  | 1714 | 28 | pub item at src/lib.rs:1566 |  |  | 0.601 |
+| walker |  | 1726 | 12 | pub item body at src/lib.rs:1478 body 1479 |  |  | 0.601 |
+| walker |  | 1766 | 40 | pub item at src/lib.rs:1200 |  |  | 0.601 |
+| walker |  | 1782 | 16 | pub item body at src/lib.rs:1420 body 1421 |  |  | 0.601 |
+| ns | 1800 |  | 307 | LevelFilter enum | 2.2 |  | 0.547 |
+| walker |  | 1833 | 51 | pub item at src/lib.rs:1158 |  |  | 0.547 |
+| walker |  | 1853 | 20 | pub item body at src/lib.rs:1351 body 1352 |  |  | 0.547 |
+| ns | 1945 |  | 145 | Level & LevelFilter public method roster | 2.3 |  | 0.524 |
+| walker |  | 1959 | 106 | pub item at src/lib.rs:842 |  |  | 0.525 |
+| walker |  | 1979 | 20 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.525 |
+| ns | 2092 |  | 147 | FromStr for Level | 2.4 |  | 0.505 |
+| walker |  | 2153 | 174 | pub item at src/lib.rs:636 |  |  | 0.544 |
+| walker |  | 2174 | 21 | pub-item doc lede at src/lib.rs:842 |  |  | 0.544 |
+| walker |  | 2266 | 92 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.544 |
+| ns | 2419 |  | 327 | Record struct + KeyValues wrapper | 2.5 |  | 0.515 |
+| ns | 2557 |  | 138 | Record accessor method roster | 2.6 |  | 0.499 |
+| walker |  | 2569 | 303 | pub item at src/lib.rs:475 |  |  | 0.572 |
+| walker |  | 2609 | 40 | pub-item doc lede at src/lib.rs:1581 |  |  | 0.572 |
+| walker |  | 2655 | 46 | pub-item doc lede at src/lib.rs:1549 |  |  | 0.572 |
+| ns | 3004 |  | 447 | Log trait | 2.7 |  | 0.528 |
+| walker |  | 3070 | 415 | pub item at src/lib.rs:1249 |  |  | 0.618 |
+| walker |  | 3087 | 17 | pub-item doc lede at src/lib.rs:1249 |  |  | 0.626 |
+| ns | 3280 |  | 276 | NopLogger + blanket impl for &T | 2.8 |  | 0.589 |
+| walker |  | 3365 | 278 | pub item at src/lib.rs:1611 |  |  | 0.589 |
+| walker |  | 3514 | 149 | pub item body at src/lib.rs:1529 body 1530 |  |  | 0.589 |
+| walker |  | 3570 | 56 | pub item at src/kv/key.rs:37 |  |  | 0.589 |
+| ns | 3615 |  | 335 | set_max_level + max_level | 2.9 |  | 0.568 |
+| walker |  | 3735 | 165 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.583 |
+| walker |  | 3798 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.583 |
 | ns | 3906 |  | 291 | set_boxed_logger + set_logger | 2.10 |  | 0.564 |
 | walker |  | 4056 | 258 | macro_export names across src |  |  | 0.567 |
 | walker |  | 4131 | 75 | pub-item doc lede at src/lib.rs:1351 |  |  | 0.584 |

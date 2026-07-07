@@ -7,44 +7,44 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 53 | 25 | listing of 'docs' |  |  | 1.000 |
 | walker |  | 64 | 11 | README headline in docs/README.md |  |  | 1.000 |
 | ns | 75 |  | 47 | README lede — what Neco is | 1.2 |  | 0.874 |
-| ns | 197 |  | 122 | README Features — core bullets | 1.3 |  | 0.674 |
-| ns | 338 |  | 141 | README Goals / non-goals | 1.4 |  | 0.528 |
-| ns | 410 |  | 72 | README 'Using' — how to build it in | 1.5 |  | 0.465 |
-| ns | 435 |  | 25 | docs/ listing | 2.1 |  | 0.529 |
-| ns | 456 |  | 21 | docs/assets/ listing | 2.2 |  | 0.501 |
-| ns | 470 |  | 14 | docs/tools/ listing | 2.3 |  | 0.483 |
-| ns | 486 |  | 16 | docs/tools/doxygen-md/ listing | 2.4 |  | 0.461 |
-| walker |  | 491 | 427 | README headline in README.md |  |  | 0.636 |
-| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.570 |
-| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.467 |
-| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.439 |
-| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.431 |
-| walker |  | 724 | 233 | headings outline in README.md |  |  | 0.431 |
-| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.431 |
-| walker |  | 768 | 44 | README.md section #0 |  |  | 0.431 |
-| walker |  | 787 | 19 | README.md section #21 |  |  | 0.431 |
-| walker |  | 876 | 89 | c header banner in neco.h |  |  | 0.431 |
-| walker |  | 1002 | 126 | listing of 'tests' |  |  | 0.628 |
-| walker |  | 1023 | 21 | listing of 'docs/assets' |  |  | 0.594 |
-| ns | 1023 |  | 299 | neco.h — Basic operations group | 3.1 |  | 0.594 |
-| walker |  | 1038 | 15 | listing of '.github' |  |  | 0.612 |
-| walker |  | 1042 | 4 | listing of '.github/workflows' |  |  | 0.617 |
-| walker |  | 1185 | 143 | YAML config at .github/workflows/main.yml |  |  | 0.620 |
-| ns | 1240 |  | 217 | neco.h — Channels group (make/retain/release/send/broadcast) | 3.2 |  | 0.583 |
-| ns | 1467 |  | 227 | neco.h — Channels group (recv/tryrecv/close/select/case) | 3.3 |  | 0.555 |
-| walker |  | 1604 | 419 | c decl names surface in neco.h |  |  | 0.626 |
-| walker |  | 1604 | 0 | c decl at neco.h:35 |  |  | 0.626 |
-| walker |  | 1604 | 0 | c decl at neco.h:61 |  |  | 0.626 |
-| walker |  | 1667 | 63 | README.md section #2 |  |  | 0.669 |
-| walker |  | 1738 | 71 | headings outline in docs/assets/API_head.md |  |  | 0.669 |
-| ns | 1748 |  | 281 | neco.h — Generators group | 3.4 |  | 0.630 |
-| walker |  | 1753 | 15 | README.md section #16 |  |  | 0.630 |
-| walker |  | 1767 | 14 | listing of 'docs/tools' |  |  | 0.646 |
-| walker |  | 1881 | 114 | c includes in neco.h |  |  | 0.646 |
-| walker |  | 1923 | 42 | listing of 'deps' |  |  | 0.690 |
-| walker |  | 1988 | 65 | README.md section #14 |  |  | 0.690 |
-| ns | 2030 |  | 282 | neco.h — Mutexes group | 3.5 |  | 0.648 |
-| walker |  | 2039 | 51 | listing of 'examples' |  |  | 0.697 |
+| walker |  | 85 | 21 | listing of 'docs/assets' |  |  | 0.886 |
+| ns | 197 |  | 122 | README Features — core bullets | 1.3 |  | 0.683 |
+| walker |  | 211 | 126 | listing of 'tests' |  |  | 0.717 |
+| ns | 338 |  | 141 | README Goals / non-goals | 1.4 |  | 0.562 |
+| ns | 410 |  | 72 | README 'Using' — how to build it in | 1.5 |  | 0.495 |
+| ns | 435 |  | 25 | docs/ listing | 2.1 |  | 0.562 |
+| ns | 456 |  | 21 | docs/assets/ listing | 2.2 |  | 0.593 |
+| ns | 470 |  | 14 | docs/tools/ listing | 2.3 |  | 0.571 |
+| ns | 486 |  | 16 | docs/tools/doxygen-md/ listing | 2.4 |  | 0.546 |
+| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.489 |
+| walker |  | 638 | 427 | README headline in README.md |  |  | 0.643 |
+| walker |  | 653 | 15 | listing of '.github' |  |  | 0.645 |
+| walker |  | 657 | 4 | listing of '.github/workflows' |  |  | 0.646 |
+| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.718 |
+| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.675 |
+| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.681 |
+| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.682 |
+| walker |  | 800 | 143 | YAML config at .github/workflows/main.yml |  |  | 0.686 |
+| walker |  | 889 | 89 | c header banner in neco.h |  |  | 0.686 |
+| walker |  | 903 | 14 | listing of 'docs/tools' |  |  | 0.707 |
+| walker |  | 945 | 42 | listing of 'deps' |  |  | 0.770 |
+| ns | 1023 |  | 299 | neco.h — Basic operations group | 3.1 |  | 0.695 |
+| walker |  | 1178 | 233 | headings outline in README.md |  |  | 0.696 |
+| walker |  | 1222 | 44 | README.md section #0 |  |  | 0.696 |
+| ns | 1240 |  | 217 | neco.h — Channels group (make/retain/release/send/broadcast) | 3.2 |  | 0.654 |
+| walker |  | 1241 | 19 | README.md section #21 |  |  | 0.654 |
+| walker |  | 1292 | 51 | listing of 'examples' |  |  | 0.715 |
+| ns | 1467 |  | 227 | neco.h — Channels group (recv/tryrecv/close/select/case) | 3.3 |  | 0.681 |
+| walker |  | 1711 | 419 | c decl names surface in neco.h |  |  | 0.746 |
+| walker |  | 1711 | 0 | c decl at neco.h:35 |  |  | 0.746 |
+| walker |  | 1711 | 0 | c decl at neco.h:61 |  |  | 0.746 |
+| ns | 1748 |  | 281 | neco.h — Generators group | 3.4 |  | 0.704 |
+| walker |  | 1774 | 63 | README.md section #2 |  |  | 0.742 |
+| walker |  | 1845 | 71 | headings outline in docs/assets/API_head.md |  |  | 0.742 |
+| walker |  | 1860 | 15 | README.md section #16 |  |  | 0.742 |
+| walker |  | 1974 | 114 | c includes in neco.h |  |  | 0.742 |
+| ns | 2030 |  | 282 | neco.h — Mutexes group | 3.5 |  | 0.697 |
+| walker |  | 2039 | 65 | README.md section #14 |  |  | 0.697 |
 | walker |  | 2169 | 130 | README.md section #1 |  |  | 0.756 |
 | ns | 2513 |  | 483 | neco.h — WaitGroups + Condition variables groups | 3.6 |  | 0.691 |
 | walker |  | 2667 | 498 | c decl names surface #1 in neco.h |  |  | 0.762 |

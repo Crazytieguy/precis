@@ -12,6 +12,35 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 .editorconfig
 .eslintrc
 .github/
+    PULL_REQUEST_TEMPLATE.md
+    workflows/
+        compressed-size.yml
+        main.yml
+               1→name: CI
+               2→
+               3→on:
+               4→  pull_request:
+               5→    branches:
+               6→      - "**"
+               7→  push:
+               8→    branches:
+               9→      - main
+              10→
+              11→jobs:
+              12→  build:
+              13→    runs-on: ubuntu-latest
+              14→    steps:
+              15→      - uses: actions/checkout@v2
+              16→      - uses: actions/setup-node@v2
+              17→        with:
+              18→          node-version: 14
+              19→      - name: npm install, build, and test
+              20→        run: |
+              21→          npm install
+              22→          npm run build --if-present
+              23→          npm test
+              24→        env:
+              25→          CI: true
 .gitignore
 LICENSE
 README.md
@@ -44,23 +73,19 @@ README.md
      144→### all
     …
      148→### on
-     150→Register an event handler for the given type.
     …
      157→### off
     …
      167→### emit
     …
      179→## Contribute
-     180→
-     181→First off, thanks for taking the time to contribute!
-     182→Now, take a moment to be sure your contributions make sense to everyone else.
+    …
      184→### Reporting Issues
     …
      189→### Submitting pull requests
     …
      203→## License
-     204→
-     205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
+    …
 package.json
     …
        2→  "name": "mitt",
@@ -75,9 +100,6 @@ src/
         …
            5→export type Handler<T = unknown> = (event: T) => void;
            6→export type WildcardHandler<T = Record<string, unknown>> = (
-           7→	type: keyof T,
-           8→	event: T[keyof T]
-           9→) => void;
         …
           12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
           13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
@@ -85,9 +107,7 @@ src/
           15→>;
         …
           18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
-          19→	keyof Events | '*',
-          20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
-          21→>;
+        …
           23→export interface Emitter<Events extends Record<EventType, unknown>> {
         …
           46→export default function mitt<Events extends Record<EventType, unknown>>(
@@ -95,6 +115,8 @@ src/
           48→): Emitter<Events> {
         …
 test/
+    index_test.ts
+    test-types-compilation.ts
 tsconfig.json
 ```
 

@@ -110,7 +110,74 @@ docs/
     make.bat
     requirements.txt
     source/
+        appendix/
+            box.rst
+            colors.rst
+        appendix.rst
+        columns.rst
+        conf.py
+        console.rst
+        group.rst
+        highlighting.rst
+        index.rst
+        introduction.rst
+        layout.rst
+        live.rst
+        logging.rst
+        markdown.rst
+        markup.rst
+        padding.rst
+        panel.rst
+        pretty.rst
+        progress.rst
+        prompt.rst
+        protocol.rst
+        reference/
+        reference.rst
+        style.rst
+        syntax.rst
+        tables.rst
+        text.rst
+        traceback.rst
+        tree.rst
 examples/
+    README.md
+    attrs.py
+    bars.py
+    columns.py
+    cp_progress.py
+    downloader.py
+    dynamic_progress.py
+    exception.py
+    export.py
+    file_progress.py
+    fullscreen.py
+    group.py
+    group2.py
+    highlighter.py
+    jobs.py
+    justify.py
+    justify2.py
+    layout.py
+    link.py
+    listdir.py
+    live_progress.py
+    log.py
+    overflow.py
+    padding.py
+    print_calendar.py
+    rainbow.py
+    recursive_error.py
+    repr.py
+    save_table_svg.py
+    screen.py
+    spinners.py
+    status.py
+    suppress.py
+    table.py
+    table_movie.py
+    top_lite_simulator.py
+    tree.py
 faq.yml
 imgs/
     columns.png
@@ -253,40 +320,6 @@ rich/
           14→    """print the elapsed time. (only used in debugging)"""
         …
     _unicode_data/
-        __init__.py
-               1→from __future__ import annotations
-               2→
-               3→import bisect
-               4→import os
-               5→import sys
-            …
-              12→from importlib import import_module
-              13→from typing import TYPE_CHECKING, cast
-              14→
-              15→from rich._unicode_data._versions import VERSIONS
-            …
-        _versions.py
-        unicode10-0-0.py
-        unicode11-0-0.py
-        unicode12-0-0.py
-        unicode12-1-0.py
-        unicode13-0-0.py
-        unicode14-0-0.py
-        unicode15-0-0.py
-        unicode15-1-0.py
-        unicode16-0-0.py
-        unicode17-0-0.py
-        unicode4-1-0.py
-        unicode5-0-0.py
-        unicode5-1-0.py
-        unicode5-2-0.py
-        unicode6-0-0.py
-        unicode6-1-0.py
-        unicode6-2-0.py
-        unicode6-3-0.py
-        unicode7-0-0.py
-        unicode8-0-0.py
-        unicode9-0-0.py
     _win32_console.py
     _windows.py
         …
@@ -349,20 +382,9 @@ rich/
         …
            9→class JSON:
         …
-          25→    def __init__(
-        …
-          54→    def from_data(
-        …
-         101→    def __rich__(self) -> Text:
-        …
     jupyter.py
     layout.py
     live.py
-        …
-          22→class _RefreshThread(Thread):
-        …
-          41→class Live(JupyterMixin, RenderHook):
-        …
     live_render.py
     logging.py
         …
@@ -453,4 +475,12 @@ rich/
 setup.py
 tests/
 tools/
+    README.md
+    cats.json
+    make_emoji.py
+    make_width_tables.py
+    movies.md
+    profile_divide.py
+    profile_pretty.py
+    stress_test_pretty.py
 tox.ini

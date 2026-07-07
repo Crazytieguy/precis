@@ -4,37 +4,37 @@ Score(3000)=0.742 I=0.902 C=0.610 ns_rows≤3K=18/48 (reached=10 partial=2 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 83 | 83 | listing of '.' |  |  | 1.000 |
 | ns | 83 |  | 83 | Root directory listing | 1.1 |  | 1.000 |
-| ns | 127 |  | 44 | Subdirectory listings | 1.2 |  | 0.783 |
-| walker |  | 149 | 66 | README headline in README.md |  |  | 0.791 |
-| ns | 158 |  | 31 | go.mod (module identity) | 1.3 |  | 0.743 |
-| walker |  | 180 | 31 | headings outline in README.md |  |  | 0.743 |
-| ns | 205 |  | 47 | Package doc comment | 1.4 |  | 0.701 |
-| walker |  | 211 | 31 | go module identity in go.mod |  |  | 0.765 |
-| walker |  | 211 | 0 | go module file go.mod |  |  | 0.765 |
-| walker |  | 250 | 39 | go package doc lede in xxhash.go |  |  | 0.801 |
-| walker |  | 261 | 11 | listing of 'xxhsum' |  |  | 0.810 |
-| walker |  | 275 | 14 | listing of 'dynamic' |  |  | 0.860 |
-| walker |  | 290 | 15 | listing of 'xxhashbench' |  |  | 0.948 |
-| ns | 309 |  | 104 | README heading + badges | 1.5 |  | 0.885 |
-| walker |  | 325 | 35 | go decl names surface in xxhash_asm.go |  |  | 0.886 |
-| walker |  | 325 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.886 |
-| walker |  | 325 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.886 |
-| walker |  | 360 | 35 | go module identity in xxhashbench/go.mod |  |  | 0.886 |
-| ns | 368 |  | 59 | README pitch | 1.6 |  | 0.872 |
-| walker |  | 403 | 43 | go decl names surface in xxhash_safe.go |  |  | 0.872 |
-| walker |  | 403 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.872 |
-| walker |  | 403 | 0 | go decl at xxhash_safe.go:14 |  |  | 0.872 |
-| walker |  | 414 | 11 | go decl body at xxhash_safe.go:9 |  |  | 0.872 |
-| walker |  | 424 | 10 | go package + imports in xxhash_asm.go |  |  | 0.873 |
-| walker |  | 434 | 10 | go package + imports in xxhash_safe.go |  |  | 0.873 |
-| walker |  | 445 | 11 | go decl body at xxhash_safe.go:14 |  |  | 0.873 |
-| walker |  | 448 | 3 | listing of '.github' |  |  | 0.873 |
-| walker |  | 452 | 4 | listing of '.github/workflows' |  |  | 0.907 |
-| ns | 534 |  | 166 | README API surface snippet | 1.7 |  | 0.745 |
-| ns | 615 |  | 81 | README build-tag mention + xxHash link | 1.8 |  | 0.702 |
-| ns | 760 |  | 145 | README compatibility section | 1.9 |  | 0.639 |
-| ns | 936 |  | 176 | Digest type + exported method signature roster | 1.10 |  | 0.584 |
-| walker |  | 1076 | 624 | YAML config at .github/workflows/test.yml |  |  | 0.617 |
+| walker |  | 94 | 11 | listing of 'xxhsum' |  |  | 1.000 |
+| ns | 127 |  | 44 | Subdirectory listings | 1.2 |  | 0.794 |
+| ns | 158 |  | 31 | go.mod (module identity) | 1.3 |  | 0.745 |
+| walker |  | 160 | 66 | README headline in README.md |  |  | 0.753 |
+| walker |  | 191 | 31 | headings outline in README.md |  |  | 0.753 |
+| walker |  | 205 | 14 | listing of 'dynamic' |  |  | 0.763 |
+| ns | 205 |  | 47 | Package doc comment | 1.4 |  | 0.763 |
+| walker |  | 220 | 15 | listing of 'xxhashbench' |  |  | 0.855 |
+| walker |  | 251 | 31 | go module identity in go.mod |  |  | 0.914 |
+| walker |  | 251 | 0 | go module file go.mod |  |  | 0.914 |
+| walker |  | 290 | 39 | go package doc lede in xxhash.go |  |  | 0.948 |
+| walker |  | 293 | 3 | listing of '.github' |  |  | 0.948 |
+| walker |  | 297 | 4 | listing of '.github/workflows' |  |  | 0.982 |
+| ns | 309 |  | 104 | README heading + badges | 1.5 |  | 0.921 |
+| walker |  | 332 | 35 | go decl names surface in xxhash_asm.go |  |  | 0.922 |
+| walker |  | 332 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.922 |
+| walker |  | 332 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.922 |
+| walker |  | 367 | 35 | go module identity in xxhashbench/go.mod |  |  | 0.922 |
+| ns | 368 |  | 59 | README pitch | 1.6 |  | 0.906 |
+| ns | 534 |  | 166 | README API surface snippet | 1.7 |  | 0.744 |
+| ns | 615 |  | 81 | README build-tag mention + xxHash link | 1.8 |  | 0.701 |
+| ns | 760 |  | 145 | README compatibility section | 1.9 |  | 0.638 |
+| ns | 936 |  | 176 | Digest type + exported method signature roster | 1.10 |  | 0.583 |
+| walker |  | 991 | 624 | YAML config at .github/workflows/test.yml |  |  | 0.617 |
+| walker |  | 1034 | 43 | go decl names surface in xxhash_safe.go |  |  | 0.617 |
+| walker |  | 1034 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.617 |
+| walker |  | 1034 | 0 | go decl at xxhash_safe.go:14 |  |  | 0.617 |
+| walker |  | 1045 | 11 | go decl body at xxhash_safe.go:9 |  |  | 0.617 |
+| walker |  | 1055 | 10 | go package + imports in xxhash_asm.go |  |  | 0.617 |
+| walker |  | 1065 | 10 | go package + imports in xxhash_safe.go |  |  | 0.617 |
+| walker |  | 1076 | 11 | go decl body at xxhash_safe.go:14 |  |  | 0.617 |
 | walker |  | 1083 | 7 | go decl doc at xxhash_asm.go:15 |  |  | 0.618 |
 | walker |  | 1137 | 54 | go decl names surface in xxhash_unsafe.go |  |  | 0.618 |
 | walker |  | 1137 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.618 |

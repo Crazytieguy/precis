@@ -226,14 +226,9 @@ internal/
               27→	Context int
               28→	Output  int
               29→}
-              31→// ProviderInfo represents information about a model provider
+            …
               32→type ProviderInfo struct {
-              33→	ID     string
-              34→	Env    []string
-              35→	NPM    string
-              36→	Name   string
-              37→	Models map[string]ModelInfo
-              38→}
+            …
               40→// GetModelsData returns the static models data from models.dev
               41→func GetModelsData() map[string]ProviderInfo {
             …
@@ -264,7 +259,44 @@ internal/
               51→	// Future provider-specific counters can be registered here
             …
     tools/
+        buffered_logger.go
+        connection_pool.go
+        debug_logger.go
+        mcp.go
+        mcp_test.go
     ui/
+        block_renderer.go
+        callbacks.go
+            …
+              17→func (c *CLI) CreateCallbackHandler() callbacks.Handler {
+            …
+        cli.go
+        commands.go
+               1→package ui
+            …
+               6→type SlashCommand struct {
+            …
+              16→var SlashCommands = []SlashCommand{
+            …
+              65→func GetCommandByName(name string) *SlashCommand {
+            …
+              83→func GetAllCommandNames() []string {
+            …
+        compact_renderer.go
+        debug_logger.go
+        enhanced_styles.go
+        factory.go
+        fuzzy.go
+        messages.go
+        progress/
+            ollama.go
+        slash_command_input.go
+        spinner.go
+        styles.go
+        tool_approval_input.go
+        usage_tracker.go
+        usage_tracker_render_test.go
+        usage_tracker_test.go
 main.go
        1→package main
        2→
@@ -309,14 +341,7 @@ sdk/
          124→### Methods
         …
          136→## Environment Variables
-         137→
-         138→All CLI environment variables work with the SDK:
-         139→
-         140→- `MCPHOST_MODEL` - Override model
-         141→- `ANTHROPIC_API_KEY` - Anthropic API key
-         142→- `OPENAI_API_KEY` - OpenAI API key
-         143→- `GEMINI_API_KEY` - Google API key
-         144→- etc.
+        …
          146→## License
          147→
          148→Same as MCPHost CLI

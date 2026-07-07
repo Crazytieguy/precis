@@ -3,6 +3,11 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    dependabot.yml
+    workflows/
+        cargo-check.yml
+        release-binary.yml
+        spell-check.yml
 .gitignore
 Cargo.lock
 Cargo.toml
@@ -275,14 +280,7 @@ src/
           14→pub struct Tree {
         …
           25→pub struct ItemValue {
-          26→    pub name: String,
-          27→    pub value: Value,
-          28→
-          29→    pub field_type: FieldType,
-          30→    pub description: Cow<'static, str>,
-          31→
-          32→    pub tokens: Vec<SyntaxToken>,
-          33→}
+        …
           35→#[derive(Debug, Clone, Copy)]
           36→pub struct HighlightKeyword<'a> {
           37→    pub text: &'a str,

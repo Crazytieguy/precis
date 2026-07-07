@@ -4,53 +4,29 @@ expression: rendered
 ---
 .dockerignore
 .github/
+    FUNDING.yml
+    ISSUE_TEMPLATE/
+    enclosed-mockup.png
+    icon-dark.png
+    icon-light.png
+    workflows/
+        cd-app-prod.yaml
+        cd-docker-release.yaml
+        cd-preview-build.yaml
+        cd-preview-deploy.yaml
+        ci-app-client.yaml
+        ci-app-server.yaml
+        ci-cli.yaml
+        ci-crypto.yaml
+        ci-deploy-cloudflare.yaml
+        ci-docs.yaml
+        ci-lib.yaml
+        ci-test-e2e.yml
+        stale-action.yaml
 .gitignore
 .nvmrc
 CONTRIBUTING.md
 Dockerfile
-       1→# Base image is node:22-slim, we cannot use node:22-alpine because of
-       2→# a known issue for arm/v7 architecture (hangs on dependency installation)
-       3→# see https://github.com/nodejs/docker-node/issues/2077
-       4→FROM node:22-slim AS builder
-       5→
-       6→# Set the working directory for the app
-       7→WORKDIR /app
-       8→
-       9→# Copy package.json and pnpm-lock.yaml to install dependencies
-      10→COPY pnpm-lock.yaml ./
-      11→COPY pnpm-workspace.yaml ./
-      12→COPY packages/crypto/package.json packages/crypto/package.json
-      13→COPY packages/lib/package.json packages/lib/package.json
-      14→COPY packages/app-client/package.json packages/app-client/package.json
-      15→COPY packages/app-server/package.json packages/app-server/package.json
-      16→
-      17→# Install pnpm
-      18→RUN npm install -g pnpm --ignore-scripts && pnpm install --frozen-lockfile --ignore-scripts
-      19→
-      20→# Copy the entire app
-      21→COPY . .
-      22→
-      23→# Build the apps
-      24→RUN pnpm --filter @enclosed/crypto run build && \
-      25→    pnpm --filter @enclosed/lib run build && \
-      26→    pnpm --filter @enclosed/app-client run build && \
-      27→    pnpm --filter @enclosed/app-server run build:node
-      28→
-      29→# Production image 
-      30→FROM node:22-alpine
-      31→
-      32→WORKDIR /app
-      33→
-      34→# Copy the built apps
-      35→COPY --from=builder /app/packages/app-client/dist ./public
-      36→COPY --from=builder /app/packages/app-server/dist-node/index.cjs ./index.cjs
-      37→
-      38→# Create the .data directory 
-      39→RUN mkdir -p /app/.data 
-      40→
-      41→EXPOSE 8787
-      42→
-      43→CMD ["node", "index.cjs"]
 Dockerfile.rootless
 LICENSE
 README.md
@@ -74,7 +50,7 @@ README.md
     …
       39→- **File Attachments**: Share files securely with your notes.
       40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
-      41→- **Configurable Security Options**: Set a password, expiration time, and choose self-destruction after the note is read.
+    …
       42→- **Minimalistic UI**: Simple and intuitive user interface for quick note sharing.
       43→- **i18n Support**: Available in multiple languages.
       44→- **Authentication**: Optional email/password authentication to create notes.
@@ -141,34 +117,8 @@ package.json
        2→  "name": "@enclosed/root",
        3→  "version": "1.16.0",
        4→  "description": "Send private and secure note",
-       5→  "packageManager": "pnpm@9.15.0",
+    …
        6→  "license": "Apache-2.0",
-       7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-       8→  "repository": {
-       9→    "type": "git",
-      10→    "url": "https://github.com/CorentinTh/enclosed"
-      11→  },
-      12→  "engines": {
-      13→    "node": ">=22.0.0"
-      14→  },
-      15→  "scripts": {
-      16→    "release": "bumpp --commit --tag --push --recursive",
-      17→    "docker:build": "docker build -t enclosed .",
-      18→    "docker:run": "docker run -d -p 8788:8787 enclosed"
-      19→  },
-      20→  "keywords": [
-      21→    "note",
-      22→    "secure",
-      23→    "private",
-      24→    "end-to-end",
-      25→    "encryption",
-      26→    "password",
-      27→    "manager",
-      28→    "expiration"
-      29→  ],
-      30→  "devDependencies": {
-      31→    "bumpp": "^9.5.2"
-      32→  }
     …
 packages/
     app-client/
@@ -189,6 +139,16 @@ packages/
         package.json
         playwright.config.ts
         public/
+            android-chrome-192x192.png
+            android-chrome-512x512.png
+            apple-touch-icon.png
+            favicon-16x16.png
+            favicon-32x32.png
+            favicon.ico
+            humans.txt
+            og-image.png
+            robots.txt
+            site.webmanifest
         src/
             app.css
             assets/
@@ -196,6 +156,48 @@ packages/
             index.tsx
             locales/
             modules/
+                auth/
+                    auth.models.ts
+                    auth.services.ts
+                    auth.store.ts
+                    pages/
+                        login.page.tsx
+                config/
+                    config.constants.ts
+                    config.provider.tsx
+                    config.types.ts
+                docs/
+                    docs.models.test.ts
+                    docs.models.ts
+                files/
+                    files.models.test.ts
+                    files.models.ts
+                i18n/
+                    i18n.models.test.ts
+                    i18n.models.ts
+                    i18n.provider.tsx
+                notes/
+                shared/
+                    files/
+                        convert.ts
+                        download.ts
+                    hooks/
+                        hooks.ts
+                    http/
+                        http-client.models.test.ts
+                        http-client.models.ts
+                        http-client.ts
+                        http-errors.ts
+                    style/
+                        cn.ts
+                    utils/
+                        copy.tsx
+                theme/
+                    theme.store.ts
+                ui/
+                    components/
+                    layouts/
+                        app.layout.tsx
             routes.tsx
             scripts/
         tsconfig.json
@@ -209,12 +211,27 @@ packages/
             index.node.ts
             modules/
                 app/
+                    auth/
+                    config/
+                        config.models.ts
+                        config.routes.ts
+                        config.test-utils.ts
+                        config.ts
+                        config.types.ts
+                    middlewares/
+                    server.ts
+                    server.types.ts
+                    users/
+                        users.repository.ts
                 notes/
                 shared/
                     errors/
                         errors.test.ts
                         errors.ts
                     logger/
+                        logger.test-utils.ts
+                        logger.ts
+                        logger.types.ts
                     utils/
                         random.ts
                     validation/
@@ -225,6 +242,10 @@ packages/
                     storage.models.ts
                     storage.types.ts
                 tasks/
+                    task-scheduler.ts
+                    tasks.models.test.ts
+                    tasks.models.ts
+                    tasks.types.ts
             reset.d.ts
             scripts/
         tsconfig.json
@@ -278,6 +299,12 @@ packages/
         src/
             api-definition.ts
             encryption-algorithms/
+                encryption-algorithms.constants.ts
+                encryption-algorithms.models.ts
+                encryption-algorithms.registry.test.ts
+                encryption-algorithms.registry.ts
+                encryption-algorithms.test-utils.ts
+                encryption-algorithms.types.ts
             index.node.ts
             index.test.ts
             index.web.ts
@@ -285,10 +312,14 @@ packages/
                 crypto.node.usecases.test.ts
                 crypto.node.usecases.ts
                 encryption-algorithms/
+                    crypto.node.aes-256-gcm.test.ts
+                    crypto.node.aes-256-gcm.ts
             web/
                 crypto.web.usecases.test.ts
                 crypto.web.usecases.ts
                 encryption-algorithms/
+                    crypto.node.aes-256-gcm.test.ts
+                    crypto.web.aes-256-gcm.ts
         tsconfig.json
     deploy-cloudflare/
         .nvmrc
@@ -326,10 +357,30 @@ packages/
                 npm-package.md
                 versioning.md
             public/
+                apple-touch-icon.png
+                favicon-16x16.png
+                favicon-32x32.png
+                favicon.ico
+                humans.txt
+                logo-dark.svg
+                logo-light.svg
+                logos/
+                og-image.png
+                robots.txt
             resources/
                 brand-kit.md
                 i18n.md
             self-hosting/
+                configuration.md
+                docker-compose.md
+                docker.md
+                other-platforms.md
+                troubleshooting.md
+                       1→# Troubleshooting
+                       2→
+                       3→## Why do I see a warning about insecure connection?
+                    …
+                users-authentication-key-generator.md
     lib/
         README.md
                1→### Enclosed lib
@@ -365,6 +416,21 @@ packages/
                 api.models.test.ts
                 api.models.ts
             crypto/
+                crypto.constants.ts
+                crypto.types.ts
+                crypto.usecases.ts
+                encryption-algorithms/
+                    encryption-algorithms.models.ts
+                    encryption-algorithms.registry.ts
+                    encryption-algorithms.types.ts
+                serialization/
+                    cbor-array/
+                        cbor-array.serialization.test.ts
+                        cbor-array.serialization.ts
+                    serialization.models.ts
+                    serialization.registry.ts
+                    serialization.test-utils.ts
+                    serialization.types.ts
             files/
                 files.models.ts
             index.ts
@@ -372,6 +438,11 @@ packages/
                   10→export {
                 …
             notes/
+                notes.models.test.ts
+                notes.models.ts
+                notes.services.ts
+                notes.types.ts
+                notes.usecases.ts
         tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml

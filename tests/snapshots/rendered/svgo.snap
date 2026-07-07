@@ -22,6 +22,7 @@ expression: rendered
 .yarn/
     patches/
     plugins/
+        @yarnpkg/
 .yarnrc.yml
 CONTRIBUTING.md
 LICENSE
@@ -102,6 +103,60 @@ docs/
         index.mdx
     03-preset-default.mdx
     04-plugins/
+        addAttributesToSVGElement.mdx
+        addClassesToSVGElement.mdx
+        cleanupAttrs.mdx
+        cleanupEnableBackground.mdx
+        cleanupIds.mdx
+        cleanupListOfValues.mdx
+        cleanupNumericValues.mdx
+        collapseGroups.mdx
+        convertColors.mdx
+        convertEllipseToCircle.mdx
+        convertOneStopGradients.mdx
+        convertPathData.mdx
+        convertShapeToPath.mdx
+        convertStyleToAttrs.mdx
+        convertTransform.mdx
+        index.mdx
+        inlineStyles.mdx
+        mergePaths.mdx
+        mergeStyles.mdx
+        minifyStyles.mdx
+        moveElemsAttrsToGroup.mdx
+        moveGroupAttrsToElems.mdx
+        prefixIds.mdx
+        removeAttributesBySelector.mdx
+        removeAttrs.mdx
+        removeComments.mdx
+        removeDeprecatedAttrs.mdx
+        removeDesc.mdx
+        removeDimensions.mdx
+        removeDoctype.mdx
+        removeEditorsNSData.mdx
+        removeElementsByAttr.mdx
+        removeEmptyAttrs.mdx
+        removeEmptyContainers.mdx
+        removeEmptyText.mdx
+        removeHiddenElems.mdx
+        removeMetadata.mdx
+        removeNonInheritableGroupAttrs.mdx
+        removeOffCanvasPaths.mdx
+        removeRasterImages.mdx
+        removeScripts.mdx
+        removeStyleElement.mdx
+        removeTitle.mdx
+        removeUnknownsAndDefaults.mdx
+        removeUnusedNS.mdx
+        removeUselessDefs.mdx
+        removeUselessStrokeAndFill.mdx
+        removeViewBox.mdx
+        removeXMLNS.mdx
+        removeXMLProcInst.mdx
+        removeXlink.mdx
+        reusePaths.mdx
+        sortAttrs.mdx
+        sortDefsChildren.mdx
     05-plugins-api.mdx
     06-migrations/
         01-migration-from-v3-to-v4.mdx
@@ -213,51 +268,6 @@ package.json
        5→  "description": "SVGO is a Node.js library and command-line application for optimizing vector images.",
        6→  "license": "MIT",
        7→  "type": "module",
-       8→  "keywords": [
-       9→    "svgo",
-      10→    "svg",
-      11→    "optimize",
-      12→    "minify"
-      13→  ],
-      14→  "homepage": "https://svgo.dev",
-      15→  "bugs": {
-      16→    "url": "https://github.com/svg/svgo/issues"
-      17→  },
-      18→  "author": {
-      19→    "name": "Kir Belevich",
-      20→    "email": "kir@belevi.ch",
-      21→    "url": "https://github.com/deepsweet"
-      22→  },
-      23→  "contributors": [
-      24→    {
-      25→      "name": "Sergey Belov",
-      26→      "email": "peimei@ya.ru",
-      27→      "url": "https://github.com/arikon"
-      28→    },
-      29→    {
-      30→      "name": "Lev Solntsev",
-      31→      "email": "lev.sun@ya.ru",
-      32→      "url": "https://github.com/GreLI"
-      33→    },
-      34→    {
-      35→      "name": "Bogdan Chadkin",
-      36→      "email": "trysound@yandex.ru",
-      37→      "url": "https://github.com/TrySound"
-      38→    },
-      39→    {
-      40→      "name": "Seth Falco",
-      41→      "email": "seth@falco.fun",
-      42→      "url": "https://falco.fun/"
-      43→    }
-      44→  ],
-      45→  "repository": {
-      46→    "type": "git",
-      47→    "url": "git://github.com/svg/svgo.git"
-      48→  },
-      49→  "funding": {
-      50→    "type": "opencollective",
-      51→    "url": "https://opencollective.com/svgo"
-      52→  },
     …
 plugins/
     _collections.js

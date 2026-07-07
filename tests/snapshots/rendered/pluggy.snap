@@ -217,13 +217,10 @@ src/
              176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
             …
              201→    def unregister(
-             202→        self, plugin: _Plugin | None = None, name: str | None = None
-             203→    ) -> Any | None:
             …
              233→    def set_blocked(self, name: str) -> None:
             …
              238→    def is_blocked(self, name: str) -> bool:
-             239→        """Return whether the given plugin name is blocked."""
             …
              242→    def unblock(self, name: str) -> bool:
             …
@@ -234,7 +231,6 @@ src/
              280→    ) -> HookspecOpts | None:
             …
              296→    def get_plugins(self) -> set[Any]:
-             297→        """Return a set of all registered plugin objects."""
             …
              300→    def is_registered(self, plugin: _Plugin) -> bool:
              301→        """Return whether the plugin is already registered."""
@@ -322,5 +318,16 @@ src/
               27→    __module__ = "pluggy"
         py.typed
 testing/
+    benchmark.py
+    conftest.py
+    test_details.py
+    test_helpers.py
+    test_hookcaller.py
+    test_invocations.py
+    test_multicall.py
+    test_pluginmanager.py
+    test_result.py
+    test_tracer.py
+    test_warnings.py
 tox.ini
 uv.lock

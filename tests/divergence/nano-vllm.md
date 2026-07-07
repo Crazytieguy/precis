@@ -4,9 +4,9 @@ Score(3000)=0.652 I=0.849 C=0.501 ns_rows≤3K=25/50 (reached=16 partial=2 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 26 | 26 | listing of '.' |  |  | 1.000 |
 | ns | 26 |  | 26 | Root file tree | 1.1 |  | 1.000 |
-| ns | 58 |  | 32 | nanovllm/ package listing | 1.2 |  | 0.634 |
-| walker |  | 59 | 33 | README headline in README.md |  |  | 0.636 |
-| walker |  | 63 | 4 | listing of 'assets' |  |  | 0.640 |
+| walker |  | 30 | 4 | listing of 'assets' |  |  | 1.000 |
+| ns | 58 |  | 32 | nanovllm/ package listing | 1.2 |  | 0.638 |
+| walker |  | 63 | 33 | README headline in README.md |  |  | 0.640 |
 | ns | 82 |  | 24 | nanovllm/engine/ listing | 1.3 |  | 0.538 |
 | ns | 113 |  | 31 | nanovllm/layers/ listing | 1.4 |  | 0.449 |
 | walker |  | 119 | 56 | headings outline in README.md |  |  | 0.441 |
@@ -20,35 +20,35 @@ Score(3000)=0.652 I=0.849 C=0.501 ns_rows≤3K=25/50 (reached=16 partial=2 missi
 | walker |  | 173 | 32 | listing of 'nanovllm' |  |  | 0.673 |
 | walker |  | 204 | 31 | python imports in nanovllm/__init__.py |  |  | 0.675 |
 | walker |  | 210 | 6 | listing of 'nanovllm/models' |  |  | 0.698 |
-| ns | 256 |  | 125 | README: title, description, key features | 1.8 |  | 0.619 |
-| walker |  | 289 | 79 | [dependencies] in pyproject.toml |  |  | 0.623 |
-| ns | 304 |  | 48 | README: installation | 1.9 |  | 0.586 |
-| walker |  | 366 | 77 | README.md section #1 |  |  | 0.697 |
-| walker |  | 374 | 8 | listing of 'nanovllm/utils' |  |  | 0.730 |
-| walker |  | 413 | 39 | README.md section #2 |  |  | 0.798 |
-| walker |  | 425 | 12 | python decl names surface in nanovllm/config.py |  |  | 0.798 |
-| walker |  | 432 | 7 | python decl at nanovllm/config.py:6 |  |  | 0.798 |
-| walker |  | 446 | 14 | python method sigs in nanovllm/config.py |  |  | 0.798 |
-| walker |  | 446 | 0 | python method at nanovllm/config.py:20 |  |  | 0.798 |
-| walker |  | 458 | 12 | python decl names surface in nanovllm/sampling_params.py |  |  | 0.798 |
-| walker |  | 466 | 8 | python decl at nanovllm/sampling_params.py:4 |  |  | 0.798 |
-| ns | 469 |  | 165 | README: quick start usage snippet | 1.10 |  | 0.701 |
-| walker |  | 480 | 14 | python method sigs in nanovllm/sampling_params.py |  |  | 0.702 |
-| walker |  | 480 | 0 | python method at nanovllm/sampling_params.py:10 |  |  | 0.702 |
-| ns | 569 |  | 100 | README: model download command | 1.11 |  | 0.650 |
-| walker |  | 570 | 90 | [package] in pyproject.toml |  |  | 0.657 |
-| walker |  | 586 | 16 | python decl names surface in nanovllm/llm.py |  |  | 0.657 |
-| walker |  | 586 | 0 | python decl at nanovllm/llm.py:4 |  |  | 0.657 |
-| walker |  | 591 | 5 | python class body at nanovllm/llm.py:4 |  |  | 0.658 |
-| walker |  | 615 | 24 | listing of 'nanovllm/engine' |  |  | 0.728 |
-| walker |  | 624 | 9 | python imports in nanovllm/sampling_params.py |  |  | 0.729 |
-| walker |  | 635 | 11 | python decl names surface in nanovllm/engine/scheduler.py |  |  | 0.729 |
-| walker |  | 635 | 0 | python decl at nanovllm/engine/scheduler.py:8 |  |  | 0.729 |
-| walker |  | 666 | 31 | listing of 'nanovllm/layers' |  |  | 0.818 |
-| walker |  | 678 | 12 | python decl names surface in nanovllm/engine/model_runner.py |  |  | 0.818 |
-| walker |  | 678 | 0 | python decl at nanovllm/engine/model_runner.py:15 |  |  | 0.818 |
-| ns | 682 |  | 113 | README: benchmark results table | 1.12 |  | 0.776 |
-| walker |  | 774 | 96 | manifest config in pyproject.toml |  |  | 0.779 |
+| walker |  | 218 | 8 | listing of 'nanovllm/utils' |  |  | 0.743 |
+| ns | 256 |  | 125 | README: title, description, key features | 1.8 |  | 0.656 |
+| walker |  | 297 | 79 | [dependencies] in pyproject.toml |  |  | 0.661 |
+| ns | 304 |  | 48 | README: installation | 1.9 |  | 0.621 |
+| walker |  | 374 | 77 | README.md section #1 |  |  | 0.730 |
+| walker |  | 398 | 24 | listing of 'nanovllm/engine' |  |  | 0.818 |
+| walker |  | 437 | 39 | README.md section #2 |  |  | 0.885 |
+| walker |  | 449 | 12 | python decl names surface in nanovllm/config.py |  |  | 0.885 |
+| walker |  | 456 | 7 | python decl at nanovllm/config.py:6 |  |  | 0.885 |
+| ns | 469 |  | 165 | README: quick start usage snippet | 1.10 |  | 0.777 |
+| walker |  | 470 | 14 | python method sigs in nanovllm/config.py |  |  | 0.777 |
+| walker |  | 470 | 0 | python method at nanovllm/config.py:20 |  |  | 0.777 |
+| walker |  | 482 | 12 | python decl names surface in nanovllm/sampling_params.py |  |  | 0.777 |
+| walker |  | 490 | 8 | python decl at nanovllm/sampling_params.py:4 |  |  | 0.777 |
+| walker |  | 504 | 14 | python method sigs in nanovllm/sampling_params.py |  |  | 0.778 |
+| walker |  | 504 | 0 | python method at nanovllm/sampling_params.py:10 |  |  | 0.778 |
+| walker |  | 535 | 31 | listing of 'nanovllm/layers' |  |  | 0.874 |
+| walker |  | 551 | 16 | python decl names surface in nanovllm/llm.py |  |  | 0.875 |
+| walker |  | 551 | 0 | python decl at nanovllm/llm.py:4 |  |  | 0.875 |
+| walker |  | 556 | 5 | python class body at nanovllm/llm.py:4 |  |  | 0.875 |
+| walker |  | 565 | 9 | python imports in nanovllm/sampling_params.py |  |  | 0.876 |
+| ns | 569 |  | 100 | README: model download command | 1.11 |  | 0.810 |
+| walker |  | 576 | 11 | python decl names surface in nanovllm/engine/scheduler.py |  |  | 0.810 |
+| walker |  | 576 | 0 | python decl at nanovllm/engine/scheduler.py:8 |  |  | 0.810 |
+| walker |  | 588 | 12 | python decl names surface in nanovllm/engine/model_runner.py |  |  | 0.810 |
+| walker |  | 588 | 0 | python decl at nanovllm/engine/model_runner.py:15 |  |  | 0.810 |
+| ns | 682 |  | 113 | README: benchmark results table | 1.12 |  | 0.768 |
+| walker |  | 686 | 98 | manifest config in pyproject.toml |  |  | 0.771 |
+| walker |  | 774 | 88 | [package] in pyproject.toml |  |  | 0.779 |
 | walker |  | 787 | 13 | python decl names surface in nanovllm/engine/llm_engine.py |  |  | 0.779 |
 | walker |  | 787 | 0 | python decl at nanovllm/engine/llm_engine.py:15 |  |  | 0.779 |
 | ns | 812 |  | 130 | pyproject.toml: project identity, python version, dependencies | 1.13 |  | 0.797 |

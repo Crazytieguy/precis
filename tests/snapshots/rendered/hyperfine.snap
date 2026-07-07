@@ -3,6 +3,9 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    dependabot.yml
+    workflows/
+        CICD.yml
 .gitignore
 CHANGELOG.md
 CITATION.cff
@@ -374,3 +377,7 @@ src/
             …
         units.rs
 tests/
+    common.rs
+    example_input_file.txt
+    execution_order_tests.rs
+    integration_tests.rs

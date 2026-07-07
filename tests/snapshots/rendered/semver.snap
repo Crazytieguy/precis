@@ -11,6 +11,7 @@ expression: rendered
     actions/
     dependabot.yml
     matchers/
+        tap.json
     settings.yml
     workflows/
         audit.yml
@@ -84,10 +85,6 @@ README.md
     …
      462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
     …
-     469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
-     470→  in descending order when passed to `Array.sort()`.
-     471→* `compareBuild(v1, v2)`: The same as `compare` but considers `build` when two versions
-     472→  are equal.  Sorts in ascending order if passed to `Array.sort()`.
      473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
     …
      478→### Sorting
@@ -296,14 +293,30 @@ ranges/
 release-please-config.json
 tap-snapshots/
     test/
+        bin/
 test/
     bin/
+        semver.js
     classes/
         comparator.js
         index.js
         range.js
         semver.js
     fixtures/
+        comparator-intersection.js
+        comparisons.js
+        equality.js
+        increments.js
+        invalid-versions.js
+        range-exclude.js
+        range-include.js
+        range-intersection.js
+        range-parse.js
+        valid-versions.js
+        version-gt-range.js
+        version-lt-range.js
+        version-not-gt-range.js
+        version-not-lt-range.js
     functions/
         clean.js
         cmp.js
@@ -331,6 +344,7 @@ test/
         valid.js
     index.js
     integration/
+        whitespace.js
     internal/
         constants.js
         debug.js

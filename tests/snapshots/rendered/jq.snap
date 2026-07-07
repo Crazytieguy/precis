@@ -337,26 +337,9 @@ src/
          435→int load_program(jq_state *jq, struct locfile* src, block *out_block) {
         …
     linker.h
-           1→#ifndef LINKER_H
-           2→#define LINKER_H
-           3→
-           4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
-           5→jv load_module_meta(jq_state *jq, jv modname);
-           6→
-           7→#endif
     locfile.c
     locfile.h
     main.c
-        …
-          43→int jq_testsuite(jv lib_dirs, int verbose, int argc, char* argv[]);
-        …
-         145→enum {
-        …
-         164→enum {
-        …
-         172→#define jq_exit_with_status(r)  exit(abs(r))
-         173→#define jq_exit(r)              exit( r > 0 ? r : 0 )
-        …
     opcode_list.h
     parser.c
     parser.h
@@ -364,6 +347,37 @@ src/
     util.c
     util.h
 tests/
+    base64.test
+    base64test
+    jq-f-test.sh
+    jq.test
+    jq_fuzz_compile.c
+    jq_fuzz_execute.cpp
+    jq_fuzz_fixed.cpp
+    jq_fuzz_load_file.c
+    jq_fuzz_parse.c
+    jq_fuzz_parse_extended.c
+    jq_fuzz_parse_stream.c
+    jqtest
+    local.supp
+    man.test
+    manonig.test
+    manonigtest
+    mantest
+    modules/
+    no-main-program.jq
+    onig.supp
+    onig.test
+    onigtest
+    optional.test
+    optionaltest
+    setup
+    shtest
+    torture/
+    uri.test
+    uritest
+    utf8test
+    yes-main-program.jq
 vendor/
     decNumber/
     oniguruma/

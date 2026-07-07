@@ -9,51 +9,51 @@ Score(3000)=0.674 I=0.849 C=0.534 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | ns | 103 |  | 29 | go.mod — module path + Go version | 1.3 |  | 0.716 |
 | walker |  | 111 | 23 | go package doc lede in main.go |  |  | 0.717 |
 | walker |  | 140 | 29 | go module identity in go.mod |  |  | 0.812 |
-| ns | 163 |  | 60 | go.mod — direct dependencies | 1.4 |  | 0.714 |
-| ns | 193 |  | 30 | go.mod — indirect dependencies | 1.5 |  | 0.655 |
-| walker |  | 275 | 135 | headings outline in README.md |  |  | 0.684 |
-| walker |  | 316 | 41 | README.md section #1 |  |  | 0.684 |
-| ns | 334 |  | 141 | README section-heading census | 1.6 |  | 0.722 |
-| walker |  | 336 | 20 | README.md section #11 |  |  | 0.722 |
-| ns | 447 |  | 113 | README lede — pitch + install transcript | 1.7 | 1.6 | 0.657 |
-| walker |  | 486 | 150 | go module file go.mod |  |  | 0.788 |
-| walker |  | 493 | 7 | listing of '.github' |  |  | 0.799 |
-| walker |  | 501 | 8 | listing of '.github/workflows' |  |  | 0.832 |
-| ns | 571 |  | 124 | README lede — why a local CA | 1.8 |  | 0.804 |
-| walker |  | 754 | 253 | YAML config at .github/workflows/test.yml |  |  | 0.807 |
+| walker |  | 147 | 7 | listing of '.github' |  |  | 0.835 |
+| walker |  | 155 | 8 | listing of '.github/workflows' |  |  | 0.899 |
+| ns | 163 |  | 60 | go.mod — direct dependencies | 1.4 |  | 0.790 |
+| ns | 193 |  | 30 | go.mod — indirect dependencies | 1.5 |  | 0.725 |
+| ns | 334 |  | 141 | README section-heading census | 1.6 |  | 0.584 |
+| walker |  | 408 | 253 | YAML config at .github/workflows/test.yml |  |  | 0.586 |
+| ns | 447 |  | 113 | README lede — pitch + install transcript | 1.7 | 1.6 | 0.538 |
+| walker |  | 543 | 135 | headings outline in README.md |  |  | 0.705 |
+| ns | 571 |  | 124 | README lede — why a local CA | 1.8 |  | 0.682 |
+| walker |  | 693 | 150 | go module file go.mod |  |  | 0.807 |
+| walker |  | 734 | 41 | README.md section #1 |  |  | 0.807 |
 | ns | 824 |  | 253 | main.go package header + imports | 1.9 |  | 0.633 |
-| walker |  | 1049 | 295 | go decl names surface in main.go |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:85 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:87 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:171 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:240 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:267 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:307 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:336 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:345 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:358 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:364 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:370 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:375 |  |  | 0.649 |
-| walker |  | 1049 | 0 | go decl at main.go:382 |  |  | 0.649 |
+| walker |  | 1029 | 295 | go decl names surface in main.go |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:85 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:87 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:171 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:240 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:267 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:307 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:336 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:345 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:358 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:364 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:370 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:375 |  |  | 0.649 |
+| walker |  | 1029 | 0 | go decl at main.go:382 |  |  | 0.649 |
+| walker |  | 1050 | 21 | go decl body at main.go:370 |  |  | 0.649 |
 | ns | 1063 |  | 239 | main.go declaration census | 2.1 | 1.9 | 0.697 |
-| walker |  | 1070 | 21 | go decl body at main.go:370 |  |  | 0.697 |
-| walker |  | 1092 | 22 | go decl body at main.go:375 |  |  | 0.697 |
-| walker |  | 1127 | 35 | go decl body at main.go:358 |  |  | 0.697 |
-| walker |  | 1171 | 44 | go decl body at main.go:364 |  |  | 0.697 |
-| walker |  | 1234 | 63 | go decl doc at main.go:85 |  |  | 0.697 |
+| walker |  | 1072 | 22 | go decl body at main.go:375 |  |  | 0.697 |
+| walker |  | 1107 | 35 | go decl body at main.go:358 |  |  | 0.697 |
+| walker |  | 1151 | 44 | go decl body at main.go:364 |  |  | 0.697 |
+| walker |  | 1214 | 63 | go decl doc at main.go:85 |  |  | 0.697 |
 | ns | 1236 |  | 173 | cert.go declaration census | 2.2 |  | 0.656 |
 | ns | 1344 |  | 108 | truststore_darwin.go declaration census | 2.3 |  | 0.633 |
-| walker |  | 1408 | 174 | go decl at main.go:155 |  |  | 0.637 |
+| walker |  | 1388 | 174 | go decl at main.go:155 |  |  | 0.637 |
 | ns | 1522 |  | 178 | truststore_linux.go declaration census | 2.4 |  | 0.600 |
-| walker |  | 1559 | 151 | go decl names surface in truststore_java.go |  |  | 0.605 |
-| walker |  | 1559 | 0 | go decl at truststore_java.go:31 |  |  | 0.605 |
-| walker |  | 1559 | 0 | go decl at truststore_java.go:57 |  |  | 0.605 |
-| walker |  | 1559 | 0 | go decl at truststore_java.go:81 |  |  | 0.605 |
-| walker |  | 1559 | 0 | go decl at truststore_java.go:94 |  |  | 0.605 |
-| walker |  | 1559 | 0 | go decl at truststore_java.go:110 |  |  | 0.605 |
-| walker |  | 1568 | 9 | go decl at truststore_java.go:21 |  |  | 0.606 |
-| walker |  | 1609 | 41 | go decl doc at truststore_java.go:110 |  |  | 0.606 |
+| walker |  | 1539 | 151 | go decl names surface in truststore_java.go |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:31 |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:57 |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:81 |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:94 |  |  | 0.605 |
+| walker |  | 1539 | 0 | go decl at truststore_java.go:110 |  |  | 0.605 |
+| walker |  | 1548 | 9 | go decl at truststore_java.go:21 |  |  | 0.606 |
+| walker |  | 1589 | 41 | go decl doc at truststore_java.go:110 |  |  | 0.606 |
+| walker |  | 1609 | 20 | README.md section #11 |  |  | 0.606 |
 | walker |  | 1784 | 175 | go decl names surface in truststore_nss.go |  |  | 0.608 |
 | walker |  | 1784 | 0 | go decl at truststore_nss.go:39 |  |  | 0.608 |
 | walker |  | 1784 | 0 | go decl at truststore_nss.go:73 |  |  | 0.608 |
@@ -144,33 +144,34 @@ Score(3000)=0.674 I=0.849 C=0.534 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | walker |  | 6903 | 149 | go decl body at truststore_nss.go:106 |  |  | 0.610 |
 | walker |  | 7006 | 103 | README.md section #3 |  |  | 0.610 |
 | walker |  | 7113 | 107 | README.md section #6 |  |  | 0.610 |
-| ns | 7154 |  | 384 | generateKey() + fileNames() | 5.5 | 2.2 | 0.593 |
-| walker |  | 7503 | 390 | go decl body at main.go:307 |  |  | 0.593 |
-| ns | 7548 |  | 394 | loadCA() — load existing CA or trigger creation | 5.6 | 2.2 | 0.578 |
-| walker |  | 7593 | 90 | README.md section #18 |  |  | 0.578 |
-| walker |  | 7690 | 97 | README.md section #23 |  |  | 0.578 |
-| walker |  | 7907 | 217 | go decl body at cert.go:148 |  |  | 0.598 |
-| walker |  | 8124 | 217 | go decl body at truststore_nss.go:131 |  |  | 0.599 |
-| walker |  | 8199 | 75 | go package + imports in truststore_linux.go |  |  | 0.599 |
-| ns | 8280 |  | 732 | newCA() — full body: key + self-signed CA template + sign/write | 5.7 | 2.2 | 0.570 |
-| ns | 8302 |  | 22 | caUniqueName() | 5.8 | 2.2 | 0.570 |
-| walker |  | 8333 | 134 | README.md section #2 |  |  | 0.570 |
-| ns | 8570 |  | 268 | NSS var block — DB paths and Firefox profile globs | 6.1 |  | 0.582 |
-| walker |  | 8589 | 256 | go decl body at truststore_nss.go:89 |  |  | 0.584 |
-| walker |  | 8852 | 263 | go decl body at cert.go:176 |  |  | 0.615 |
-| ns | 8955 |  | 385 | NSS init() — hasNSS/hasCertutil/certutilPath detection | 6.2 | 2.6 | 0.598 |
-| walker |  | 9222 | 370 | go decl names surface in truststore_windows.go |  |  | 0.623 |
-| walker |  | 9222 | 0 | go decl at truststore_windows.go:35 |  |  | 0.623 |
-| walker |  | 9222 | 0 | go decl at truststore_windows.go:54 |  |  | 0.623 |
-| walker |  | 9222 | 0 | go decl at truststore_windows.go:71 |  |  | 0.623 |
-| walker |  | 9222 | 0 | go decl at truststore_windows.go:83 |  |  | 0.623 |
-| walker |  | 9222 | 0 | go decl at truststore_windows.go:91 |  |  | 0.623 |
-| walker |  | 9222 | 0 | go decl at truststore_windows.go:107 |  |  | 0.623 |
-| walker |  | 9231 | 9 | go decl at truststore_windows.go:25 |  |  | 0.624 |
-| walker |  | 9240 | 9 | go decl at truststore_windows.go:19 |  |  | 0.626 |
-| ns | 9365 |  | 410 | checkNSS() + installNSS() | 6.3 | 2.6 | 0.636 |
-| ns | 9594 |  | 229 | forEachNSSProfile() — profile enumeration | 6.4 | 2.6 | 0.643 |
-| walker |  | 9803 | 563 | go decl body at main.go:267 |  |  | 0.680 |
-| ns | 9847 |  | 253 | test.yml — CI test entry point | 7.1 |  | 0.686 |
-| walker |  | 9891 | 88 | go package + imports in truststore_darwin.go |  |  | 0.686 |
-| ns | 9998 |  | 151 | README — Supported root stores | 8.1 | 1.6 | 0.690 |
+| walker |  | 7122 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.625 |
+| ns | 7154 |  | 384 | generateKey() + fileNames() | 5.5 | 2.2 | 0.608 |
+| walker |  | 7512 | 390 | go decl body at main.go:307 |  |  | 0.608 |
+| ns | 7548 |  | 394 | loadCA() — load existing CA or trigger creation | 5.6 | 2.2 | 0.592 |
+| walker |  | 7602 | 90 | README.md section #18 |  |  | 0.592 |
+| walker |  | 7699 | 97 | README.md section #23 |  |  | 0.592 |
+| walker |  | 7916 | 217 | go decl body at cert.go:148 |  |  | 0.612 |
+| walker |  | 8133 | 217 | go decl body at truststore_nss.go:131 |  |  | 0.613 |
+| walker |  | 8208 | 75 | go package + imports in truststore_linux.go |  |  | 0.613 |
+| ns | 8280 |  | 732 | newCA() — full body: key + self-signed CA template + sign/write | 5.7 | 2.2 | 0.583 |
+| ns | 8302 |  | 22 | caUniqueName() | 5.8 | 2.2 | 0.584 |
+| walker |  | 8342 | 134 | README.md section #2 |  |  | 0.584 |
+| ns | 8570 |  | 268 | NSS var block — DB paths and Firefox profile globs | 6.1 |  | 0.596 |
+| walker |  | 8598 | 256 | go decl body at truststore_nss.go:89 |  |  | 0.597 |
+| walker |  | 8861 | 263 | go decl body at cert.go:176 |  |  | 0.629 |
+| ns | 8955 |  | 385 | NSS init() — hasNSS/hasCertutil/certutilPath detection | 6.2 | 2.6 | 0.612 |
+| walker |  | 9231 | 370 | go decl names surface in truststore_windows.go |  |  | 0.637 |
+| walker |  | 9231 | 0 | go decl at truststore_windows.go:35 |  |  | 0.637 |
+| walker |  | 9231 | 0 | go decl at truststore_windows.go:54 |  |  | 0.637 |
+| walker |  | 9231 | 0 | go decl at truststore_windows.go:71 |  |  | 0.637 |
+| walker |  | 9231 | 0 | go decl at truststore_windows.go:83 |  |  | 0.637 |
+| walker |  | 9231 | 0 | go decl at truststore_windows.go:91 |  |  | 0.637 |
+| walker |  | 9231 | 0 | go decl at truststore_windows.go:107 |  |  | 0.637 |
+| walker |  | 9240 | 9 | go decl at truststore_windows.go:25 |  |  | 0.638 |
+| walker |  | 9249 | 9 | go decl at truststore_windows.go:19 |  |  | 0.640 |
+| ns | 9365 |  | 410 | checkNSS() + installNSS() | 6.3 | 2.6 | 0.650 |
+| ns | 9594 |  | 229 | forEachNSSProfile() — profile enumeration | 6.4 | 2.6 | 0.657 |
+| walker |  | 9812 | 563 | go decl body at main.go:267 |  |  | 0.694 |
+| ns | 9847 |  | 253 | test.yml — CI test entry point | 7.1 |  | 0.700 |
+| walker |  | 9900 | 88 | go package + imports in truststore_darwin.go |  |  | 0.700 |
+| ns | 9998 |  | 151 | README — Supported root stores | 8.1 | 1.6 | 0.704 |

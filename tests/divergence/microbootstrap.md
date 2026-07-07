@@ -4,38 +4,38 @@ Score(3000)=0.541 I=0.776 C=0.377 ns_rows≤3K=15/45 (reached=7 partial=0 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 33 | 33 | listing of '.' |  |  | 1.000 |
 | ns | 33 |  | 33 | Fixture root listing | 1.1 |  | 1.000 |
+| walker |  | 36 | 3 | listing of '.github' |  |  | 1.000 |
+| walker |  | 45 | 9 | listing of '.github/workflows' |  |  | 1.000 |
 | ns | 88 |  | 55 | microbootstrap/ package listing | 1.2 |  | 0.622 |
 | ns | 134 |  | 46 | microbootstrap/{bootstrappers,config}/ listings | 1.3 |  | 0.506 |
 | ns | 220 |  | 86 | microbootstrap/{instruments,middlewares}/ listings | 1.4 |  | 0.404 |
-| walker |  | 292 | 259 | README headline in README.md |  |  | 0.405 |
-| walker |  | 347 | 55 | listing of 'microbootstrap' |  |  | 0.650 |
+| walker |  | 304 | 259 | README headline in README.md |  |  | 0.405 |
+| walker |  | 359 | 55 | listing of 'microbootstrap' |  |  | 0.650 |
 | ns | 363 |  | 143 | tests/ tree listing | 1.5 |  | 0.508 |
-| walker |  | 366 | 19 | python imports #1 in microbootstrap/__init__.py |  |  | 0.508 |
-| walker |  | 384 | 18 | python imports #2 in microbootstrap/__init__.py |  |  | 0.509 |
-| walker |  | 400 | 16 | python imports #3 in microbootstrap/__init__.py |  |  | 0.509 |
-| walker |  | 420 | 20 | python imports #6 in microbootstrap/__init__.py |  |  | 0.509 |
-| walker |  | 438 | 18 | python imports #7 in microbootstrap/__init__.py |  |  | 0.509 |
+| walker |  | 378 | 19 | python imports #1 in microbootstrap/__init__.py |  |  | 0.508 |
+| walker |  | 396 | 18 | python imports #2 in microbootstrap/__init__.py |  |  | 0.509 |
+| walker |  | 412 | 16 | python imports #3 in microbootstrap/__init__.py |  |  | 0.509 |
+| walker |  | 432 | 20 | python imports #6 in microbootstrap/__init__.py |  |  | 0.509 |
+| walker |  | 450 | 18 | python imports #7 in microbootstrap/__init__.py |  |  | 0.509 |
 | ns | 554 |  | 191 | README: supported instruments + frameworks catalog | 1.7 |  | 0.443 |
-| walker |  | 638 | 200 | python imports in microbootstrap/__init__.py |  |  | 0.448 |
-| walker |  | 654 | 16 | python imports #8 in microbootstrap/__init__.py |  |  | 0.449 |
-| walker |  | 711 | 57 | python imports #4 in microbootstrap/__init__.py |  |  | 0.450 |
-| walker |  | 727 | 16 | listing of 'microbootstrap/middlewares' |  |  | 0.457 |
-| walker |  | 748 | 21 | listing of 'microbootstrap/config' |  |  | 0.478 |
+| walker |  | 650 | 200 | python imports in microbootstrap/__init__.py |  |  | 0.448 |
+| walker |  | 666 | 16 | python imports #8 in microbootstrap/__init__.py |  |  | 0.449 |
+| walker |  | 723 | 57 | python imports #4 in microbootstrap/__init__.py |  |  | 0.450 |
+| walker |  | 739 | 16 | listing of 'microbootstrap/middlewares' |  |  | 0.457 |
+| walker |  | 760 | 21 | listing of 'microbootstrap/config' |  |  | 0.478 |
 | ns | 770 |  | 216 | README lede + minimal usage sketch | 1.8 |  | 0.417 |
 | ns | 806 |  | 36 | pyproject.toml: project identity | 1.9 |  | 0.410 |
-| walker |  | 811 | 63 | python imports #5 in microbootstrap/__init__.py |  |  | 0.412 |
-| walker |  | 836 | 25 | listing of 'microbootstrap/bootstrappers' |  |  | 0.482 |
-| walker |  | 886 | 50 | python imports #9 in microbootstrap/__init__.py |  |  | 0.485 |
-| walker |  | 889 | 3 | listing of '.github' |  |  | 0.485 |
-| walker |  | 898 | 9 | listing of '.github/workflows' |  |  | 0.485 |
+| walker |  | 823 | 63 | python imports #5 in microbootstrap/__init__.py |  |  | 0.412 |
+| walker |  | 848 | 25 | listing of 'microbootstrap/bootstrappers' |  |  | 0.482 |
+| walker |  | 898 | 50 | python imports #9 in microbootstrap/__init__.py |  |  | 0.485 |
 | walker |  | 968 | 70 | listing of 'microbootstrap/instruments' |  |  | 0.597 |
 | walker |  | 981 | 13 | python decl names surface in microbootstrap/instruments_setupper.py |  |  | 0.597 |
 | walker |  | 981 | 0 | python decl at microbootstrap/instruments_setupper.py:19 |  |  | 0.597 |
 | walker |  | 995 | 14 | python decl names surface in microbootstrap/console_writer.py |  |  | 0.597 |
 | walker |  | 1003 | 8 | python decl at microbootstrap/console_writer.py:10 |  |  | 0.598 |
-| walker |  | 1025 | 22 | python class body at microbootstrap/instruments_setupper.py:19 |  |  | 0.598 |
-| walker |  | 1054 | 29 | python decl names surface in microbootstrap/granian_server.py |  |  | 0.598 |
-| walker |  | 1072 | 18 | listing of 'examples' |  |  | 0.598 |
+| walker |  | 1021 | 18 | listing of 'examples' |  |  | 0.598 |
+| walker |  | 1043 | 22 | python class body at microbootstrap/instruments_setupper.py:19 |  |  | 0.598 |
+| walker |  | 1072 | 29 | python decl names surface in microbootstrap/granian_server.py |  |  | 0.598 |
 | walker |  | 1119 | 47 | python method sigs in microbootstrap/console_writer.py |  |  | 0.598 |
 | walker |  | 1119 | 0 | python method at microbootstrap/console_writer.py:16 |  |  | 0.598 |
 | walker |  | 1119 | 0 | python method at microbootstrap/console_writer.py:31 |  |  | 0.598 |

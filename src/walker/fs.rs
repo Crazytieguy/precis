@@ -166,9 +166,9 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         // surface; treat them on par with source-inventory dirs so the
         // listing schedules early enough for per-file batches inside it
         // to compete in the early budget.
-        (0.6, 0.5, 0.3)
+        (0.9, 0.5, 0.3)
     } else {
-        (0.5, 0.45, 0.25)
+        (0.8, 0.45, 0.25)
     };
     let depth = if source_inventory_dir && under_root_source_ancestor {
         // A flat partition under a root-adjacent `lib/`/`src/` is the

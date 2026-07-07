@@ -339,9 +339,6 @@ src/
         refinements.ts
             …
                8→export function empty<
-               9→  T extends string | any[] | Map<any, any> | Set<any>,
-              10→  S extends any,
-              11→>(struct: Struct<T, S>): Struct<T, S> {
             …
               33→export function max<T extends number | Date, S extends any>(
             …
@@ -350,27 +347,66 @@ src/
               77→export function nonempty<
             …
               93→export function pattern<T extends string, S extends any>(
-              94→  struct: Struct<T, S>,
-              95→  regexp: RegExp
-              96→): Struct<T, S> {
             …
              109→export function size<
             …
              146→export function refine<T, S>(
-             147→  struct: Struct<T, S>,
-             148→  name: string,
-             149→  refiner: Refiner<T>
-             150→): Struct<T, S> {
             …
         types.ts
         utilities.ts
     utils.ts
 test/
     api/
+        assert.test.ts
+        create.test.ts
+        is.test.ts
+        mask.test.ts
+        validate.test.ts
     deprecated.test.ts
     index.test.ts
     index.ts
     tsconfig.json
     typings/
     validation/
+        any/
+        array/
+        assign/
+        bigint/
+        boolean/
+        coerce/
+        date/
+        defaulted/
+        deprecated/
+        dynamic/
+        empty/
+        enums/
+        function/
+        instance/
+        integer/
+        intersection/
+        lazy/
+        literal/
+        map/
+        max/
+        min/
+        never/
+        nullable/
+        number/
+        object/
+        omit/
+        optional/
+        partial/
+        pattern/
+        pick/
+        record/
+        refine/
+        regexp/
+        set/
+        size/
+        string/
+        trimmed/
+        tuple/
+        type/
+        union/
+        unknown/
 tsconfig.json

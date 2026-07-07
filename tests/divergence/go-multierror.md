@@ -61,29 +61,29 @@ Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | ns | 962 |  | 285 | README lede + stdlib-errors.Join deprecation note | 1.8 |  | 0.690 |
 | walker |  | 991 | 38 | go package + imports in multierror.go |  |  | 0.690 |
 | walker |  | 1022 | 31 | go decl body at multierror.go:53 |  |  | 0.690 |
-| walker |  | 1051 | 29 | go decl doc at group.go:10 |  |  | 0.691 |
-| walker |  | 1069 | 18 | go decl body at sort.go:21 |  |  | 0.691 |
-| walker |  | 1102 | 33 | go decl doc at format.go:13 |  |  | 0.692 |
-| walker |  | 1130 | 28 | go decl doc at flatten.go:8 |  |  | 0.692 |
-| walker |  | 1151 | 21 | go package + imports in group.go |  |  | 0.692 |
-| ns | 1195 |  | 233 | README: package description + stdlib errors compat | 1.9 |  | 0.635 |
-| walker |  | 1223 | 72 | go decl doc at multierror.go:31 |  |  | 0.637 |
-| walker |  | 1257 | 34 | go decl doc at multierror.go:108 |  |  | 0.637 |
-| walker |  | 1278 | 21 | go decl body at sort.go:16 |  |  | 0.638 |
-| walker |  | 1308 | 30 | go decl doc at group.go:36 |  |  | 0.638 |
-| walker |  | 1342 | 34 | go decl doc at format.go:17 |  |  | 0.638 |
-| walker |  | 1392 | 50 | go decl body at multierror.go:18 |  |  | 0.642 |
-| walker |  | 1425 | 33 | go package + imports in prefix.go |  |  | 0.642 |
-| ns | 1530 |  | 335 | README: install, go-version floor, compile-error symptom | 1.10 |  | 0.565 |
-| walker |  | 1543 | 118 | go decl doc at multierror.go:53 |  |  | 0.567 |
-| ns | 1591 |  | 61 | Error struct fields | 2.1 | 1.4 | 0.586 |
-| walker |  | 1605 | 62 | go decl body at multierror.go:31 |  |  | 0.589 |
-| walker |  | 1643 | 38 | go package + imports in format.go |  |  | 0.589 |
-| ns | 1648 |  | 57 | Error.Error() — default string formatting | 2.2 | 1.4 | 0.605 |
-| walker |  | 1693 | 50 | go decl doc at group.go:20 |  |  | 0.606 |
-| walker |  | 1729 | 36 | go decl body at group.go:36 |  |  | 0.606 |
-| walker |  | 1743 | 14 | listing of '.github' |  |  | 0.620 |
-| walker |  | 1755 | 12 | listing of '.github/workflows' |  |  | 0.644 |
+| walker |  | 1036 | 14 | listing of '.github' |  |  | 0.709 |
+| walker |  | 1048 | 12 | listing of '.github/workflows' |  |  | 0.743 |
+| walker |  | 1077 | 29 | go decl doc at group.go:10 |  |  | 0.744 |
+| walker |  | 1095 | 18 | go decl body at sort.go:21 |  |  | 0.744 |
+| walker |  | 1128 | 33 | go decl doc at format.go:13 |  |  | 0.744 |
+| walker |  | 1156 | 28 | go decl doc at flatten.go:8 |  |  | 0.745 |
+| walker |  | 1177 | 21 | go package + imports in group.go |  |  | 0.745 |
+| ns | 1195 |  | 233 | README: package description + stdlib errors compat | 1.9 |  | 0.683 |
+| walker |  | 1249 | 72 | go decl doc at multierror.go:31 |  |  | 0.685 |
+| walker |  | 1283 | 34 | go decl doc at multierror.go:108 |  |  | 0.686 |
+| walker |  | 1304 | 21 | go decl body at sort.go:16 |  |  | 0.686 |
+| walker |  | 1334 | 30 | go decl doc at group.go:36 |  |  | 0.686 |
+| walker |  | 1368 | 34 | go decl doc at format.go:17 |  |  | 0.687 |
+| walker |  | 1418 | 50 | go decl body at multierror.go:18 |  |  | 0.690 |
+| walker |  | 1451 | 33 | go package + imports in prefix.go |  |  | 0.690 |
+| ns | 1530 |  | 335 | README: install, go-version floor, compile-error symptom | 1.10 |  | 0.607 |
+| walker |  | 1569 | 118 | go decl doc at multierror.go:53 |  |  | 0.610 |
+| ns | 1591 |  | 61 | Error struct fields | 2.1 | 1.4 | 0.626 |
+| walker |  | 1631 | 62 | go decl body at multierror.go:31 |  |  | 0.630 |
+| ns | 1648 |  | 57 | Error.Error() — default string formatting | 2.2 | 1.4 | 0.643 |
+| walker |  | 1669 | 38 | go package + imports in format.go |  |  | 0.643 |
+| walker |  | 1719 | 50 | go decl doc at group.go:20 |  |  | 0.644 |
+| walker |  | 1755 | 36 | go decl body at group.go:36 |  |  | 0.644 |
 | walker |  | 1793 | 38 | go decl body at sort.go:7 |  |  | 0.645 |
 | walker |  | 1833 | 40 | go decl body at multierror.go:108 |  |  | 0.646 |
 | ns | 1904 |  | 256 | README: Usage intro + accessing the error list | 2.3 |  | 0.593 |

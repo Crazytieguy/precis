@@ -1,4 +1,4 @@
-Score(3000)=0.520 I=0.757 C=0.357 ns_rows≤3K=22/71 (reached=11 partial=2 missing=9)
+Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -6,11 +6,11 @@ Score(3000)=0.520 I=0.757 C=0.357 ns_rows≤3K=22/71 (reached=11 partial=2 missi
 | ns | 52 |  | 52 | Root fixture listing | 1.1 |  | 1.000 |
 | walker |  | 56 | 4 | listing of 'cmd' |  |  | 1.000 |
 | walker |  | 60 | 4 | listing of 'docs' |  |  | 1.000 |
-| ns | 105 |  | 53 | README one-line pitch | 1.2 |  | 0.901 |
-| ns | 138 |  | 33 | go.mod identity (module + Go version) | 1.3 |  | 0.803 |
-| walker |  | 151 | 91 | README headline in README.md |  |  | 0.803 |
-| walker |  | 184 | 33 | go module identity in go.mod |  |  | 0.886 |
-| walker |  | 188 | 4 | listing of 'cmd/tock' |  |  | 0.887 |
+| walker |  | 64 | 4 | listing of 'cmd/tock' |  |  | 1.000 |
+| ns | 105 |  | 53 | README one-line pitch | 1.2 |  | 0.902 |
+| ns | 138 |  | 33 | go.mod identity (module + Go version) | 1.3 |  | 0.804 |
+| walker |  | 155 | 91 | README headline in README.md |  |  | 0.804 |
+| walker |  | 188 | 33 | go module identity in go.mod |  |  | 0.887 |
 | walker |  | 207 | 19 | listing of 'internal' |  |  | 0.905 |
 | walker |  | 213 | 6 | listing of 'internal/adapters' |  |  | 0.911 |
 | walker |  | 220 | 7 | listing of 'internal/services' |  |  | 0.911 |
@@ -19,129 +19,129 @@ Score(3000)=0.520 I=0.757 C=0.357 ns_rows≤3K=22/71 (reached=11 partial=2 missi
 | walker |  | 253 | 9 | listing of 'internal/config' |  |  | 0.911 |
 | walker |  | 262 | 9 | listing of 'internal/extra' |  |  | 0.911 |
 | ns | 267 |  | 129 | Makefile target names + commands (lint + test) | 1.4 |  | 0.836 |
-| walker |  | 287 | 25 | README.md section #11 |  |  | 0.836 |
-| walker |  | 298 | 11 | listing of 'internal/timeutil' |  |  | 0.840 |
-| walker |  | 310 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.840 |
-| walker |  | 310 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.840 |
-| walker |  | 322 | 12 | listing of 'internal/core' |  |  | 0.842 |
-| walker |  | 326 | 4 | listing of 'internal/core/errors' |  |  | 0.843 |
-| walker |  | 330 | 4 | listing of 'internal/core/models' |  |  | 0.844 |
-| walker |  | 336 | 6 | listing of 'internal/core/dto' |  |  | 0.844 |
-| walker |  | 343 | 7 | listing of 'internal/core/ports' |  |  | 0.844 |
-| walker |  | 348 | 5 | listing of 'demo' |  |  | 0.844 |
-| walker |  | 357 | 9 | listing of 'internal/services/activity' |  |  | 0.844 |
-| walker |  | 368 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.844 |
-| walker |  | 376 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.844 |
-| ns | 432 |  | 165 | README Project Structure | 1.5 |  | 0.708 |
-| ns | 451 |  | 19 | internal/ directory listing | 2.1 |  | 0.738 |
-| ns | 461 |  | 10 | cmd/tock/ + internal/adapters/ listings | 2.2 |  | 0.749 |
-| ns | 540 |  | 79 | internal/adapters/cli/ listing | 2.3 |  | 0.609 |
-| walker |  | 564 | 188 | headings outline in docs/commands.md |  |  | 0.609 |
-| walker |  | 573 | 9 | listing of 'internal/adapters/repositories/notes' |  |  | 0.611 |
-| walker |  | 582 | 9 | listing of 'internal/adapters/repositories/timewarrior' |  |  | 0.613 |
-| ns | 587 |  | 47 | internal/adapters/repositories/ + backend subdirs | 2.4 |  | 0.600 |
-| walker |  | 620 | 38 | go decl names surface in internal/extra/extra.go |  |  | 0.600 |
-| walker |  | 620 | 0 | go decl at internal/extra/extra.go:11 |  |  | 0.600 |
-| walker |  | 634 | 14 | listing of '.github' |  |  | 0.602 |
-| ns | 638 |  | 51 | internal/core/ + subpackage listings | 2.5 |  | 0.605 |
-| walker |  | 642 | 8 | listing of '.github/workflows' |  |  | 0.607 |
+| walker |  | 273 | 11 | listing of 'internal/timeutil' |  |  | 0.840 |
+| walker |  | 285 | 12 | listing of 'internal/core' |  |  | 0.842 |
+| walker |  | 289 | 4 | listing of 'internal/core/errors' |  |  | 0.843 |
+| walker |  | 293 | 4 | listing of 'internal/core/models' |  |  | 0.844 |
+| walker |  | 299 | 6 | listing of 'internal/core/dto' |  |  | 0.844 |
+| walker |  | 306 | 7 | listing of 'internal/core/ports' |  |  | 0.844 |
+| walker |  | 311 | 5 | listing of 'demo' |  |  | 0.844 |
+| walker |  | 320 | 9 | listing of 'internal/services/activity' |  |  | 0.844 |
+| walker |  | 331 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.844 |
+| walker |  | 356 | 25 | README.md section #11 |  |  | 0.844 |
+| walker |  | 365 | 9 | listing of 'internal/adapters/repositories/notes' |  |  | 0.844 |
+| walker |  | 374 | 9 | listing of 'internal/adapters/repositories/timewarrior' |  |  | 0.844 |
+| walker |  | 386 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.844 |
+| walker |  | 386 | 0 | go decl at cmd/tock/main.go:7 |  |  | 0.844 |
+| walker |  | 400 | 14 | listing of '.github' |  |  | 0.844 |
+| walker |  | 408 | 8 | listing of '.github/workflows' |  |  | 0.844 |
+| ns | 432 |  | 165 | README Project Structure | 1.5 |  | 0.717 |
+| ns | 451 |  | 19 | internal/ directory listing | 2.1 |  | 0.747 |
+| ns | 461 |  | 10 | cmd/tock/ + internal/adapters/ listings | 2.2 |  | 0.758 |
+| ns | 540 |  | 79 | internal/adapters/cli/ listing | 2.3 |  | 0.616 |
+| ns | 587 |  | 47 | internal/adapters/repositories/ + backend subdirs | 2.4 |  | 0.603 |
+| ns | 638 |  | 51 | internal/core/ + subpackage listings | 2.5 |  | 0.607 |
 | ns | 658 |  | 20 | internal/services/ + subpackage listings | 2.6 |  | 0.623 |
 | ns | 687 |  | 29 | internal/config/, timeutil/, extra/ listings | 2.7 |  | 0.639 |
 | ns | 709 |  | 22 | .github/ + workflows/ listings | 2.8 |  | 0.650 |
 | ns | 734 |  | 25 | assets/ + demo/ listings | 2.9 |  | 0.660 |
-| walker |  | 986 | 344 | YAML config at .github/workflows/ci.yml |  |  | 0.661 |
-| ns | 1012 |  | 278 | docs/commands.md table of contents | 2.10 |  | 0.596 |
-| ns | 1080 |  | 68 | cmd/tock/main.go | 3.1 |  | 0.576 |
-| ns | 1252 |  | 172 | models.Activity (the one domain entity) | 3.2 |  | 0.536 |
-| walker |  | 1319 | 333 | plaintext config Makefile |  |  | 0.563 |
-| walker |  | 1354 | 35 | go decl names surface in internal/core/ports/ports.go |  |  | 0.563 |
-| walker |  | 1359 | 5 | docs/commands.md section #5 |  |  | 0.563 |
-| walker |  | 1364 | 5 | docs/commands.md section #10 |  |  | 0.563 |
-| walker |  | 1369 | 5 | docs/commands.md section #15 |  |  | 0.563 |
-| walker |  | 1374 | 5 | docs/commands.md section #20 |  |  | 0.563 |
-| walker |  | 1379 | 5 | docs/commands.md section #30 |  |  | 0.563 |
-| walker |  | 1384 | 5 | docs/commands.md section #35 |  |  | 0.563 |
-| walker |  | 1389 | 5 | docs/commands.md section #40 |  |  | 0.563 |
-| walker |  | 1407 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.597 |
-| walker |  | 1425 | 18 | listing of 'internal/core/ports/mocks' |  |  | 0.623 |
-| ns | 1664 |  | 412 | core/ports (the three storage/business interfaces) | 3.3 |  | 0.560 |
-| walker |  | 1687 | 262 | README.md section #1 |  |  | 0.580 |
-| walker |  | 1695 | 8 | docs/commands.md section #16 |  |  | 0.580 |
-| walker |  | 1763 | 68 | go decl names surface in internal/services/ics/generator.go |  |  | 0.580 |
-| walker |  | 1763 | 0 | go decl at internal/services/ics/generator.go:12 |  |  | 0.580 |
-| walker |  | 1763 | 0 | go decl at internal/services/ics/generator.go:18 |  |  | 0.580 |
-| walker |  | 1763 | 0 | go decl at internal/services/ics/generator.go:29 |  |  | 0.580 |
-| walker |  | 1763 | 0 | go decl at internal/services/ics/generator.go:71 |  |  | 0.580 |
-| walker |  | 1780 | 17 | go decl doc at internal/services/ics/generator.go:12 |  |  | 0.580 |
-| walker |  | 1797 | 17 | go decl doc at internal/services/ics/generator.go:29 |  |  | 0.580 |
-| walker |  | 1817 | 20 | go decl doc at internal/services/ics/generator.go:18 |  |  | 0.581 |
-| walker |  | 1886 | 69 | go decl names surface in internal/core/errors/errors.go |  |  | 0.582 |
-| walker |  | 1895 | 9 | go decl at internal/core/errors/errors.go:5 |  |  | 0.582 |
-| walker |  | 1965 | 70 | go decl names surface in internal/core/dto/activity_dto.go |  |  | 0.582 |
-| ns | 1977 |  | 313 | core/dto request/filter shapes | 3.4 |  | 0.526 |
-| walker |  | 1996 | 31 | go decl at internal/core/dto/activity_dto.go:17 |  |  | 0.532 |
-| walker |  | 2029 | 33 | go decl at internal/core/dto/activity_dto.go:46 |  |  | 0.532 |
-| walker |  | 2067 | 38 | go decl at internal/core/dto/activity_dto.go:40 |  |  | 0.532 |
-| ns | 2078 |  | 101 | core/errors sentinels | 3.5 |  | 0.535 |
-| walker |  | 2115 | 48 | go decl at internal/core/dto/activity_dto.go:9 |  |  | 0.549 |
-| walker |  | 2206 | 91 | README.md section #6 |  |  | 0.549 |
-| ns | 2225 |  | 147 | tock.yaml.example (concrete config sample) | 4.1 |  | 0.533 |
-| walker |  | 2261 | 55 | go decl at internal/core/dto/activity_dto.go:32 |  |  | 0.553 |
-| walker |  | 2316 | 55 | go decl at internal/core/ports/ports.go:29 |  |  | 0.556 |
-| ns | 2592 |  | 367 | config.Config struct + sub-structs | 4.2 |  | 0.520 |
-| ns | 3036 |  | 444 | config.go: option funcs + defaults + every TOCK_* BindEnv call | 4.3 |  | 0.494 |
-| ns | 3085 |  | 49 | config_test.go test names | 4.4 |  | 0.490 |
-| walker |  | 3351 | 1035 | go module file go.mod |  |  | 0.495 |
-| walker |  | 3360 | 9 | docs/commands.md section #1 |  |  | 0.495 |
-| walker |  | 3369 | 9 | docs/commands.md section #6 |  |  | 0.495 |
-| walker |  | 3387 | 18 | go package + imports in internal/core/errors/errors.go |  |  | 0.505 |
-| walker |  | 3445 | 58 | go decl at internal/core/dto/activity_dto.go:23 |  |  | 0.532 |
-| ns | 3480 |  | 395 | activity.service: Start | 5.1 |  | 0.500 |
-| walker |  | 3524 | 79 | go decl names surface in internal/core/models/activity.go |  |  | 0.500 |
-| walker |  | 3524 | 0 | go decl at internal/core/models/activity.go:19 |  |  | 0.500 |
-| walker |  | 3524 | 0 | go decl at internal/core/models/activity.go:23 |  |  | 0.500 |
-| walker |  | 3524 | 0 | go decl at internal/core/models/activity.go:31 |  |  | 0.500 |
-| walker |  | 3524 | 0 | go decl at internal/core/models/activity.go:41 |  |  | 0.500 |
-| walker |  | 3537 | 13 | go decl body at internal/core/models/activity.go:19 |  |  | 0.500 |
-| walker |  | 3556 | 19 | go decl doc at internal/core/models/activity.go:31 |  |  | 0.500 |
-| walker |  | 3566 | 10 | docs/commands.md section #11 |  |  | 0.500 |
-| walker |  | 3576 | 10 | docs/commands.md section #31 |  |  | 0.500 |
-| walker |  | 3666 | 90 | README.md section #10 |  |  | 0.500 |
-| ns | 3702 |  | 222 | activity.service: Stop | 5.2 |  | 0.484 |
-| walker |  | 3745 | 79 | listing of 'internal/adapters/cli' |  |  | 0.541 |
-| ns | 3758 |  | 56 | activity.service: Add/List/GetReport/GetRecent/GetLast/Remove signatures + enrichActivities | 5.3 |  | 0.535 |
-| walker |  | 3762 | 17 | go decl names surface in internal/adapters/cli/start.go |  |  | 0.535 |
-| walker |  | 3762 | 0 | go decl at internal/adapters/cli/start.go:17 |  |  | 0.535 |
-| walker |  | 3779 | 17 | go decl names surface in internal/adapters/cli/stop.go |  |  | 0.535 |
-| walker |  | 3779 | 0 | go decl at internal/adapters/cli/stop.go:14 |  |  | 0.535 |
-| walker |  | 3811 | 32 | go decl names surface in internal/adapters/cli/continue.go |  |  | 0.535 |
-| walker |  | 3811 | 0 | go decl at internal/adapters/cli/continue.go:20 |  |  | 0.535 |
-| walker |  | 3822 | 11 | go decl at internal/adapters/cli/continue.go:15 |  |  | 0.535 |
-| walker |  | 3868 | 46 | go decl names surface in internal/adapters/cli/update.go |  |  | 0.535 |
-| walker |  | 3868 | 0 | go decl at internal/adapters/cli/update.go:22 |  |  | 0.535 |
-| walker |  | 3868 | 0 | go decl at internal/adapters/cli/update.go:45 |  |  | 0.535 |
-| walker |  | 3917 | 49 | go decl names surface in internal/adapters/cli/version.go |  |  | 0.525 |
-| walker |  | 3917 | 0 | go decl at internal/adapters/cli/version.go:16 |  |  | 0.525 |
-| ns | 3917 |  | 159 | services/ics: iCal generation | 5.4 |  | 0.525 |
-| walker |  | 3926 | 9 | go decl at internal/adapters/cli/version.go:10 |  |  | 0.525 |
-| walker |  | 3976 | 50 | go decl names surface in internal/adapters/cli/last.go |  |  | 0.525 |
-| walker |  | 3976 | 0 | go decl at internal/adapters/cli/last.go:21 |  |  | 0.525 |
-| walker |  | 3976 | 0 | go decl at internal/adapters/cli/last.go:42 |  |  | 0.525 |
-| walker |  | 4026 | 50 | go decl names surface in internal/adapters/cli/report.go |  |  | 0.525 |
-| walker |  | 4026 | 0 | go decl at internal/adapters/cli/report.go:31 |  |  | 0.525 |
-| walker |  | 4026 | 0 | go decl at internal/adapters/cli/report.go:61 |  |  | 0.525 |
-| walker |  | 4042 | 16 | go decl doc at internal/adapters/cli/continue.go:20 |  |  | 0.525 |
-| walker |  | 4108 | 66 | go decl names surface in internal/adapters/cli/current.go |  |  | 0.525 |
-| walker |  | 4108 | 0 | go decl at internal/adapters/cli/current.go:23 |  |  | 0.525 |
-| walker |  | 4108 | 0 | go decl at internal/adapters/cli/current.go:27 |  |  | 0.525 |
-| walker |  | 4108 | 0 | go decl at internal/adapters/cli/current.go:35 |  |  | 0.525 |
-| walker |  | 4119 | 11 | go decl at internal/adapters/cli/current.go:19 |  |  | 0.525 |
-| walker |  | 4140 | 21 | go decl at internal/adapters/cli/last.go:16 |  |  | 0.525 |
-| walker |  | 4162 | 22 | go decl doc at internal/adapters/cli/start.go:17 |  |  | 0.525 |
-| walker |  | 4234 | 72 | go decl names surface in internal/adapters/cli/analyze.go |  |  | 0.525 |
-| walker |  | 4234 | 0 | go decl at internal/adapters/cli/analyze.go:20 |  |  | 0.525 |
-| walker |  | 4234 | 0 | go decl at internal/adapters/cli/analyze.go:84 |  |  | 0.525 |
-| walker |  | 4234 | 0 | go decl at internal/adapters/cli/analyze.go:206 |  |  | 0.525 |
+| walker |  | 752 | 344 | YAML config at .github/workflows/ci.yml |  |  | 0.661 |
+| walker |  | 770 | 18 | listing of 'internal/adapters/repositories/file' |  |  | 0.703 |
+| walker |  | 788 | 18 | listing of 'internal/core/ports/mocks' |  |  | 0.735 |
+| walker |  | 796 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.735 |
+| walker |  | 834 | 38 | go decl names surface in internal/extra/extra.go |  |  | 0.735 |
+| walker |  | 834 | 0 | go decl at internal/extra/extra.go:11 |  |  | 0.735 |
+| ns | 1012 |  | 278 | docs/commands.md table of contents | 2.10 |  | 0.663 |
+| ns | 1080 |  | 68 | cmd/tock/main.go | 3.1 |  | 0.639 |
+| walker |  | 1167 | 333 | plaintext config Makefile |  |  | 0.668 |
+| walker |  | 1202 | 35 | go decl names surface in internal/core/ports/ports.go |  |  | 0.668 |
+| ns | 1252 |  | 172 | models.Activity (the one domain entity) | 3.2 |  | 0.622 |
+| walker |  | 1281 | 79 | listing of 'internal/adapters/cli' |  |  | 0.720 |
+| walker |  | 1298 | 17 | go decl names surface in internal/adapters/cli/start.go |  |  | 0.720 |
+| walker |  | 1298 | 0 | go decl at internal/adapters/cli/start.go:17 |  |  | 0.720 |
+| walker |  | 1315 | 17 | go decl names surface in internal/adapters/cli/stop.go |  |  | 0.720 |
+| walker |  | 1315 | 0 | go decl at internal/adapters/cli/stop.go:14 |  |  | 0.720 |
+| walker |  | 1347 | 32 | go decl names surface in internal/adapters/cli/continue.go |  |  | 0.720 |
+| walker |  | 1347 | 0 | go decl at internal/adapters/cli/continue.go:20 |  |  | 0.720 |
+| walker |  | 1358 | 11 | go decl at internal/adapters/cli/continue.go:15 |  |  | 0.720 |
+| walker |  | 1404 | 46 | go decl names surface in internal/adapters/cli/update.go |  |  | 0.720 |
+| walker |  | 1404 | 0 | go decl at internal/adapters/cli/update.go:22 |  |  | 0.720 |
+| walker |  | 1404 | 0 | go decl at internal/adapters/cli/update.go:45 |  |  | 0.720 |
+| walker |  | 1592 | 188 | headings outline in docs/commands.md |  |  | 0.720 |
+| walker |  | 1597 | 5 | docs/commands.md section #5 |  |  | 0.720 |
+| walker |  | 1602 | 5 | docs/commands.md section #10 |  |  | 0.720 |
+| walker |  | 1607 | 5 | docs/commands.md section #15 |  |  | 0.720 |
+| walker |  | 1612 | 5 | docs/commands.md section #20 |  |  | 0.720 |
+| walker |  | 1617 | 5 | docs/commands.md section #30 |  |  | 0.720 |
+| walker |  | 1622 | 5 | docs/commands.md section #35 |  |  | 0.720 |
+| walker |  | 1627 | 5 | docs/commands.md section #40 |  |  | 0.720 |
+| ns | 1664 |  | 412 | core/ports (the three storage/business interfaces) | 3.3 |  | 0.647 |
+| walker |  | 1676 | 49 | go decl names surface in internal/adapters/cli/version.go |  |  | 0.648 |
+| walker |  | 1676 | 0 | go decl at internal/adapters/cli/version.go:16 |  |  | 0.648 |
+| walker |  | 1685 | 9 | go decl at internal/adapters/cli/version.go:10 |  |  | 0.648 |
+| walker |  | 1735 | 50 | go decl names surface in internal/adapters/cli/last.go |  |  | 0.648 |
+| walker |  | 1735 | 0 | go decl at internal/adapters/cli/last.go:21 |  |  | 0.648 |
+| walker |  | 1735 | 0 | go decl at internal/adapters/cli/last.go:42 |  |  | 0.648 |
+| walker |  | 1785 | 50 | go decl names surface in internal/adapters/cli/report.go |  |  | 0.648 |
+| walker |  | 1785 | 0 | go decl at internal/adapters/cli/report.go:31 |  |  | 0.648 |
+| walker |  | 1785 | 0 | go decl at internal/adapters/cli/report.go:61 |  |  | 0.648 |
+| walker |  | 1801 | 16 | go decl doc at internal/adapters/cli/continue.go:20 |  |  | 0.648 |
+| ns | 1977 |  | 313 | core/dto request/filter shapes | 3.4 |  | 0.581 |
+| walker |  | 2063 | 262 | README.md section #1 |  |  | 0.599 |
+| walker |  | 2071 | 8 | docs/commands.md section #16 |  |  | 0.599 |
+| ns | 2078 |  | 101 | core/errors sentinels | 3.5 |  | 0.585 |
+| walker |  | 2137 | 66 | go decl names surface in internal/adapters/cli/current.go |  |  | 0.585 |
+| walker |  | 2137 | 0 | go decl at internal/adapters/cli/current.go:23 |  |  | 0.585 |
+| walker |  | 2137 | 0 | go decl at internal/adapters/cli/current.go:27 |  |  | 0.585 |
+| walker |  | 2137 | 0 | go decl at internal/adapters/cli/current.go:35 |  |  | 0.585 |
+| walker |  | 2148 | 11 | go decl at internal/adapters/cli/current.go:19 |  |  | 0.585 |
+| walker |  | 2216 | 68 | go decl names surface in internal/services/ics/generator.go |  |  | 0.585 |
+| walker |  | 2216 | 0 | go decl at internal/services/ics/generator.go:12 |  |  | 0.585 |
+| walker |  | 2216 | 0 | go decl at internal/services/ics/generator.go:18 |  |  | 0.585 |
+| walker |  | 2216 | 0 | go decl at internal/services/ics/generator.go:29 |  |  | 0.585 |
+| walker |  | 2216 | 0 | go decl at internal/services/ics/generator.go:71 |  |  | 0.585 |
+| ns | 2225 |  | 147 | tock.yaml.example (concrete config sample) | 4.1 |  | 0.567 |
+| walker |  | 2233 | 17 | go decl doc at internal/services/ics/generator.go:12 |  |  | 0.567 |
+| walker |  | 2250 | 17 | go decl doc at internal/services/ics/generator.go:29 |  |  | 0.567 |
+| walker |  | 2270 | 20 | go decl doc at internal/services/ics/generator.go:18 |  |  | 0.567 |
+| walker |  | 2291 | 21 | go decl at internal/adapters/cli/last.go:16 |  |  | 0.567 |
+| walker |  | 2360 | 69 | go decl names surface in internal/core/errors/errors.go |  |  | 0.581 |
+| walker |  | 2369 | 9 | go decl at internal/core/errors/errors.go:5 |  |  | 0.584 |
+| walker |  | 2391 | 22 | go decl doc at internal/adapters/cli/start.go:17 |  |  | 0.584 |
+| walker |  | 2461 | 70 | go decl names surface in internal/core/dto/activity_dto.go |  |  | 0.587 |
+| walker |  | 2492 | 31 | go decl at internal/core/dto/activity_dto.go:17 |  |  | 0.592 |
+| walker |  | 2525 | 33 | go decl at internal/core/dto/activity_dto.go:46 |  |  | 0.592 |
+| walker |  | 2563 | 38 | go decl at internal/core/dto/activity_dto.go:40 |  |  | 0.592 |
+| ns | 2592 |  | 367 | config.Config struct + sub-structs | 4.2 |  | 0.554 |
+| walker |  | 2611 | 48 | go decl at internal/core/dto/activity_dto.go:9 |  |  | 0.566 |
+| walker |  | 2683 | 72 | go decl names surface in internal/adapters/cli/analyze.go |  |  | 0.566 |
+| walker |  | 2683 | 0 | go decl at internal/adapters/cli/analyze.go:20 |  |  | 0.566 |
+| walker |  | 2683 | 0 | go decl at internal/adapters/cli/analyze.go:84 |  |  | 0.566 |
+| walker |  | 2683 | 0 | go decl at internal/adapters/cli/analyze.go:206 |  |  | 0.566 |
+| walker |  | 2774 | 91 | README.md section #6 |  |  | 0.566 |
+| walker |  | 2829 | 55 | go decl at internal/core/dto/activity_dto.go:32 |  |  | 0.584 |
+| walker |  | 2884 | 55 | go decl at internal/core/ports/ports.go:29 |  |  | 0.587 |
+| ns | 3036 |  | 444 | config.go: option funcs + defaults + every TOCK_* BindEnv call | 4.3 |  | 0.558 |
+| ns | 3085 |  | 49 | config_test.go test names | 4.4 |  | 0.554 |
+| ns | 3480 |  | 395 | activity.service: Start | 5.1 |  | 0.521 |
+| ns | 3702 |  | 222 | activity.service: Stop | 5.2 |  | 0.504 |
+| ns | 3758 |  | 56 | activity.service: Add/List/GetReport/GetRecent/GetLast/Remove signatures + enrichActivities | 5.3 |  | 0.499 |
+| ns | 3917 |  | 159 | services/ics: iCal generation | 5.4 |  | 0.490 |
+| walker |  | 3919 | 1035 | go module file go.mod |  |  | 0.494 |
+| walker |  | 3928 | 9 | docs/commands.md section #1 |  |  | 0.494 |
+| walker |  | 3937 | 9 | docs/commands.md section #6 |  |  | 0.494 |
+| walker |  | 3955 | 18 | go package + imports in internal/core/errors/errors.go |  |  | 0.502 |
+| walker |  | 4013 | 58 | go decl at internal/core/dto/activity_dto.go:23 |  |  | 0.525 |
+| walker |  | 4092 | 79 | go decl names surface in internal/core/models/activity.go |  |  | 0.525 |
+| walker |  | 4092 | 0 | go decl at internal/core/models/activity.go:19 |  |  | 0.525 |
+| walker |  | 4092 | 0 | go decl at internal/core/models/activity.go:23 |  |  | 0.525 |
+| walker |  | 4092 | 0 | go decl at internal/core/models/activity.go:31 |  |  | 0.525 |
+| walker |  | 4092 | 0 | go decl at internal/core/models/activity.go:41 |  |  | 0.525 |
+| walker |  | 4105 | 13 | go decl body at internal/core/models/activity.go:19 |  |  | 0.525 |
+| walker |  | 4124 | 19 | go decl doc at internal/core/models/activity.go:31 |  |  | 0.525 |
+| walker |  | 4134 | 10 | docs/commands.md section #11 |  |  | 0.525 |
+| walker |  | 4144 | 10 | docs/commands.md section #31 |  |  | 0.525 |
+| walker |  | 4234 | 90 | README.md section #10 |  |  | 0.525 |
 | ns | 4328 |  | 411 | cli.NewRootCmd (composition root, wiring) | 6.1 |  | 0.499 |
 | walker |  | 4329 | 95 | go decl names surface in internal/adapters/cli/remove.go |  |  | 0.499 |
 | walker |  | 4329 | 0 | go decl at internal/adapters/cli/remove.go:22 |  |  | 0.499 |

@@ -51,10 +51,24 @@ kind = "full"
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 41
+cum_tokens = 134
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["api.rst", "conf.py", "contributing.rst", "extending.rst", "features.rst", "index.rst", "userguide.rst", "versionhistory.rst"]
+
+[[batches]]
+position = 5
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 70
-cum_tokens = 163
+cum_tokens = 204
 
 [batches.content]
 kind = "lines"
@@ -84,11 +98,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 5
+position = 6
 key = 'Fs(DirListing { dir: "src/typeguard" })'
 descriptor = "listing of 'src/typeguard'"
 cost_tokens = 72
-cum_tokens = 235
+cum_tokens = 276
 
 [batches.content]
 kind = "fs"
@@ -98,11 +112,11 @@ parent = "src/typeguard"
 entries = ["__init__.py", "_checkers.py", "_config.py", "_decorators.py", "_exceptions.py", "_functions.py", "_importhook.py", "_memo.py", "_pytest_plugin.py", "_suppression.py", "_transformer.py", "_utils.py", "py.typed"]
 
 [[batches]]
-position = 6
+position = 7
 key = 'Python(Imports { file: "src/typeguard/__init__.py" })'
 descriptor = "python imports in src/typeguard/__init__.py"
 cost_tokens = 421
-cum_tokens = 656
+cum_tokens = 697
 
 [batches.content]
 kind = "lines"
@@ -116,11 +130,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Python(DeclNames { file: "src/typeguard/__init__.py" })'
 descriptor = "python decl names surface in src/typeguard/__init__.py"
 cost_tokens = 38
-cum_tokens = 694
+cum_tokens = 735
 
 [batches.content]
 kind = "lines"
@@ -142,11 +156,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Python(Decl { file: "src/typeguard/__init__.py", start_line: 37 })'
 descriptor = "python decl at src/typeguard/__init__.py:37"
 cost_tokens = 0
-cum_tokens = 694
+cum_tokens = 735
 
 [batches.content]
 kind = "lines"
@@ -160,25 +174,57 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 41
-cum_tokens = 735
+position = 10
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 27
+cum_tokens = 762
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "docs"
-entries = ["api.rst", "conf.py", "contributing.rst", "extending.rst", "features.rst", "index.rst", "userguide.rst", "versionhistory.rst"]
+parent = ".github"
+entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "SECURITY.md", "dependabot.yml", "pull_request_template.md", "workflows"]
 
 [[batches]]
-position = 10
+position = 11
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 8
+cum_tokens = 770
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["publish.yml", "test.yml"]
+
+[[batches]]
+position = 12
+key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
+descriptor = "YAML config at .github/workflows/test.yml"
+cost_tokens = 475
+cum_tokens = 1245
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 1
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
 key = 'Markdown(ReadmeHeadline { file: "README.rst" })'
 descriptor = "README headline in README.rst"
 cost_tokens = 467
-cum_tokens = 1202
+cum_tokens = 1712
 
 [batches.content]
 kind = "lines"
@@ -192,11 +238,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 11
+position = 14
 key = 'Python(DeclNames { file: "src/typeguard/_memo.py" })'
 descriptor = "python decl names surface in src/typeguard/_memo.py"
 cost_tokens = 13
-cum_tokens = 1215
+cum_tokens = 1725
 
 [batches.content]
 kind = "lines"
@@ -210,11 +256,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 12
+position = 15
 key = 'Python(Decl { file: "src/typeguard/_memo.py", start_line: 8 })'
 descriptor = "python decl at src/typeguard/_memo.py:8"
 cost_tokens = 0
-cum_tokens = 1215
+cum_tokens = 1725
 
 [batches.content]
 kind = "lines"
@@ -228,11 +274,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 13
+position = 16
 key = 'Python(MethodSigs { file: "src/typeguard/_memo.py" })'
 descriptor = "python method sigs in src/typeguard/_memo.py"
 cost_tokens = 11
-cum_tokens = 1226
+cum_tokens = 1736
 
 [batches.content]
 kind = "lines"
@@ -254,11 +300,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 17
 key = 'Python(ClassBody { file: "src/typeguard/_memo.py", start_line: 8 })'
 descriptor = "python class body at src/typeguard/_memo.py:8"
 cost_tokens = 22
-cum_tokens = 1248
+cum_tokens = 1758
 
 [batches.content]
 kind = "lines"
@@ -272,11 +318,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 15
+position = 18
 key = 'Python(DeclDoc { file: "src/typeguard/_memo.py", start_line: 8 })'
 descriptor = "python decl doc at src/typeguard/_memo.py:8"
 cost_tokens = 23
-cum_tokens = 1271
+cum_tokens = 1781
 
 [batches.content]
 kind = "lines"
@@ -285,52 +331,6 @@ kind = "lines"
 path = "src/typeguard/_memo.py"
 start = 9
 end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 27
-cum_tokens = 1298
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "SECURITY.md", "dependabot.yml", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 8
-cum_tokens = 1306
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["publish.yml", "test.yml"]
-
-[[batches]]
-position = 18
-key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
-descriptor = "YAML config at .github/workflows/test.yml"
-cost_tokens = 475
-cum_tokens = 1781
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 1
-end = 42
 
 [batches.content.spans.render]
 kind = "full"

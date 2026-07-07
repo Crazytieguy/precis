@@ -51,6 +51,15 @@ client/
         trix.css
     components/
         app/
+            Appbar.vue
+            BookShelfCategorized.vue
+            BookShelfRow.vue
+            BookShelfToolbar.vue
+            ConfigSideNav.vue
+            LazyBookshelf.vue
+            MediaPlayerContainer.vue
+            SettingsContent.vue
+            SideRail.vue
         cards/
         content/
             LibraryItemDetails.vue
@@ -84,6 +93,13 @@ client/
             PdfReader.vue
             Reader.vue
         stats/
+            DailyListeningChart.vue
+            Heatmap.vue
+            PreviewIcons.vue
+            YearInReview.vue
+            YearInReviewBanner.vue
+            YearInReviewServer.vue
+            YearInReviewShort.vue
         tables/
         ui/
         widgets/
@@ -135,6 +151,28 @@ client/
         collection/
             _id.vue
         config/
+            api-keys/
+                index.vue
+            authentication.vue
+            backups.vue
+            email.vue
+            index.vue
+            item-metadata-utils/
+                custom-metadata-providers.vue
+                genres.vue
+                index.vue
+                tags.vue
+            libraries.vue
+            log.vue
+            notifications.vue
+            rss-feeds.vue
+            sessions.vue
+            stats.vue
+            users/
+                _id/
+                    index.vue
+                    sessions.vue
+                index.vue
         config.vue
         index.vue
         item/
@@ -142,6 +180,18 @@ client/
                 index.vue
         library/
             _library/
+                bookshelf/
+                    _id.vue
+                index.vue
+                narrators.vue
+                podcast/
+                    download-queue.vue
+                    latest.vue
+                    search.vue
+                search.vue
+                series/
+                    _id.vue
+                stats.vue
         login.vue
         oops.vue
         playlist/
@@ -173,6 +223,10 @@ client/
         fonts/
             MaterialSymbolsRounded.woff2
             Source_Sans_Pro/
+                OFL.txt
+                SourceSansPro-Light.ttf
+                SourceSansPro-Regular.ttf
+                SourceSansPro-SemiBold.ttf
             Ubuntu_Mono/
                 UFL.txt
                 UbuntuMono-Regular.ttf
@@ -223,8 +277,7 @@ docs/
           15→### Linting the spec
         …
           21→### Generating documentation
-          22→
-          23→Redocly allows for creating a static HTML page to document the API. This is done by using `redocly build-docs [file]` and supports exploded specs.
+        …
           25→### Putting it all together
         …
     controllers/
@@ -296,86 +349,7 @@ readme.md
       15→# About
       16→
       17→Audiobookshelf is a self-hosted audiobook and podcast server.
-      19→### Features
-      21→- Fully **open-source**, including the [android & iOS app](https://github.com/advplyr/audiobookshelf-app) _(in beta)_
-      22→- Stream all audio formats on the fly
-      23→- Search and add podcasts to download episodes w/ auto-download
-      24→- Multi-user support w/ custom permissions
-      25→- Keeps progress per user and syncs across devices
-      26→- Auto-detects library updates, no need to re-scan
-      27→- Upload books and podcasts w/ bulk upload drag and drop folders
-      28→- Backup your metadata + automated daily backups
-      29→- Progressive Web App (PWA)
-      30→- Chromecast support on the web app and android app
-      31→- Fetch metadata and cover art from several sources
-      32→- Chapter editor and chapter lookup (using [Audnexus API](https://audnex.us/))
-      33→- Merge your audio files into a single m4b
-      34→- Embed metadata and cover image into your audio files
     …
-      38→- Open RSS feeds for podcasts and audiobooks
-      40→Is there a feature you are looking for? [Suggest it](https://github.com/advplyr/audiobookshelf/issues/new/choose)
-      42→Join us on [Discord](https://discord.gg/HQgCbd6E75)
-      44→### Demo
-    …
-      50→### Android App (beta)
-    …
-      54→### iOS App (beta)
-    …
-      60→### Build your own tools & clients
-    …
-      70→# Organizing your audiobooks
-      71→
-      72→#### Directory structure and folder names are important to Audiobookshelf!
-      73→
-      74→See [documentation](https://audiobookshelf.org/docs#book-directory-structure) for supported directory structure, folder naming conventions, and audio file metadata usage.
-      75→
-      76→<br />
-      78→# Installation
-      79→
-      80→See [install docs](https://www.audiobookshelf.org/docs)
-      81→
-      82→<br />
-      84→# Reverse Proxy Set Up
-    …
-      90→### NGINX Proxy Manager
-    …
-      96→### NGINX Reverse Proxy
-    …
-     131→### Apache Reverse Proxy
-    …
-     196→### SWAG Reverse Proxy
-    …
-     200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
-    …
-     243→6. **Advanced Settings Tab**
-     244→   - Leave as is.
-     246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)
-    …
-     258→### Example Caddyfile - [Caddy Reverse Proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
-    …
-     267→### HAProxy
-     269→Below is a generic HAProxy config, using `audiobookshelf.YOUR_DOMAIN.COM`.
-    …
-     310→### pfSense and HAProxy
-     312→For pfSense the inputs are graphical, and `Health checking` is enabled.
-    …
-     350→# Run from source
-     351→
-     352→# Contributing
-     353→
-     354→This application is built using [NodeJs](https://nodejs.org/).
-     356→### Localization
-    …
-     360→### Dev Container Setup
-    …
-     418→You are now ready to start development!
-     420→### Manual Environment Setup
-    …
-     436→### Development Commands
-    …
-     450→# How to Support
-     451→
-     452→[See the incomplete "How to Support" page](https://www.audiobookshelf.org/support)
 server/
     Auth.js
     Database.js
@@ -388,14 +362,80 @@ server/
         OidcAuthStrategy.js
         TokenManager.js
     controllers/
+        ApiKeyController.js
+        AuthorController.js
+        BackupController.js
+        CacheController.js
+        CollectionController.js
+        CustomMetadataProviderController.js
+        EmailController.js
+        FileSystemController.js
+        LibraryController.js
+        LibraryItemController.js
+        MeController.js
+        MiscController.js
+        NotificationController.js
+        PlaylistController.js
+        PodcastController.js
+        RSSFeedController.js
+        SearchController.js
+        SeriesController.js
+        SessionController.js
+        ShareController.js
+        StatsController.js
+        ToolsController.js
+        UserController.js
     finders/
         AuthorFinder.js
         BookFinder.js
         PodcastFinder.js
     libs/
     managers/
+        AbMergeManager.js
+        ApiCacheManager.js
+        AudioMetadataManager.js
+        BackupManager.js
+        BinaryManager.js
+        CacheManager.js
+        CoverManager.js
+        CoverSearchManager.js
+        CronManager.js
+        EmailManager.js
+        LogManager.js
+        MigrationManager.js
+        NotificationManager.js
+        PlaybackSessionManager.js
+        PodcastManager.js
+        RssFeedManager.js
+        ShareManager.js
+        TaskManager.js
     migrations/
     models/
+        ApiKey.js
+        Author.js
+        Book.js
+        BookAuthor.js
+        BookSeries.js
+        Collection.js
+        CollectionBook.js
+        CustomMetadataProvider.js
+        Device.js
+        Feed.js
+        FeedEpisode.js
+        Library.js
+        LibraryFolder.js
+        LibraryItem.js
+        MediaItemShare.js
+        MediaProgress.js
+        PlaybackSession.js
+        Playlist.js
+        PlaylistMediaItem.js
+        Podcast.js
+        PodcastEpisode.js
+        Series.js
+        Session.js
+        Setting.js
+        User.js
     objects/
         Backup.js
         DailyLog.js
@@ -447,6 +487,66 @@ server/
         ScanLogger.js
         Scanner.js
     utils/
+        areEquivalent.js
+        comicBookExtractors.js
+        constants.js
+        ffmpegHelpers.js
+        fileUtils.js
+        generators/
+            abmetadataGenerator.js
+            hlsPlaylistGenerator.js
+            opmlGenerator.js
+        globals.js
+        htmlEntities.js
+        htmlSanitizer.js
+        index.js
+        libraryHelpers.js
+        longTimeout.js
+        migrations/
+            absMetadataMigration.js
+            dbMigration.js
+            oldDbFiles.js
+        notifications.js
+        parsers/
+            parseComicInfoMetadata.js
+            parseComicMetadata.js
+            parseEbookMetadata.js
+            parseEpubMetadata.js
+            parseFullName.js
+            parseNameString.js
+            parseNfoMetadata.js
+            parseOPML.js
+            parseOpfMetadata.js
+            parseOverdriveMediaMarkers.js
+            parseSeriesString.js
+        podcastUtils.js
+        prober.js
+        profiler.js
+        queries/
+            adminStats.js
+            authorFilters.js
+            libraryFilters.js
+            libraryItemFilters.js
+            libraryItemsBookFilters.js
+            libraryItemsPodcastFilters.js
+            seriesFilters.js
+            userStats.js
+        rateLimiterFactory.js
+        scandir.js
+        stringifySequelizeQuery.js
+        zipHelpers.js
 tailwind.config.js
 test/
     server/
+        Logger.test.js
+        controllers/
+        finders/
+        managers/
+            ApiCacheManager.test.js
+            BinaryManager.test.js
+            MigrationManager.test.js
+            migrations/
+        migrations/
+        objects/
+        providers/
+        utils/

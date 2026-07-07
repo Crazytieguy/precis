@@ -61,39 +61,6 @@ README.md
       10→# migrate
       11→
       12→__Database migrations written in Go. Use as [CLI](#cli-usage) or import as [library](#use-in-your-go-project).__
-      14→* Migrate reads migrations from [sources](#migration-sources)
-      15→   and applies them in correct order to a [database](#databases).
-      16→* Drivers are "dumb", migrate glues everything together and makes sure the logic is bulletproof.
-      17→   (Keeps the drivers lightweight, too.)
-      18→* Database drivers don't assume things or try to correct user input. When in doubt, fail.
-      19→
-      20→Forked from [mattes/migrate](https://github.com/mattes/migrate)
-      22→## Databases
-    …
-      48→### Database URLs
-    …
-      69→## Migration Sources
-    …
-      84→## CLI usage
-    …
-      92→### Basic usage
-    …
-      98→### Docker usage
-    …
-     105→## Use in your Go project
-    …
-     152→## Getting started
-     153→
-     154→Go to [getting started](GETTING_STARTED.md)
-     156→## Tutorials
-    …
-     163→## Migration files
-    …
-     174→## Coming from another db migration tool?
-    …
-     179→## Versions
-    …
-     187→## Development and Contributing
     …
 SECURITY.md
 cli/
@@ -109,7 +76,7 @@ cli/
         …
     version.go
            1→package main
-           3→// Version is set in Makefile with build flags
+        …
            4→var Version = "dev"
 cmd/
     migrate/
@@ -125,28 +92,146 @@ cmd/
             …
                4→var Version = "dev"
 database/
+    cassandra/
+        README.md
+        cassandra.go
+        cassandra_test.go
+        examples/
+    clickhouse/
+        README.md
+               1→# ClickHouse
+               2→
+               3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
+            …
+        clickhouse.go
+        clickhouse_test.go
+        examples/
+    cockroachdb/
+        README.md
+               1→# cockroachdb
+               2→
+               3→`cockroachdb://user:password@host:port/dbname?query` (`cockroach://`, and `crdb-postgres://` work, too)
+            …
+        TUTORIAL.md
+        cockroachdb.go
+        cockroachdb_test.go
+        examples/
+    crate/
+        README.md
+    driver.go
+    driver_test.go
+    error.go
+        …
+           8→type Error struct {
+        …
+          22→func (e Error) Error() string {
+        …
+    firebird/
+        README.md
+               1→# firebird
+               2→
+               3→`firebirdsql://user:password@servername[:port_number]/database_name_or_file[?params1=value1[&param2=value2]...]`
+            …
+        examples/
+        firebird.go
+        firebird_test.go
+    mongodb/
+        README.md
+        examples/
+        mongodb.go
+        mongodb_test.go
+    multistmt/
+        parse.go
+        parse_test.go
+    mysql/
+        README.md
+        examples/
+        mysql.go
+        mysql_test.go
+    neo4j/
+        README.md
+        TUTORIAL.md
+        examples/
+        neo4j.go
+        neo4j_test.go
+    parse_test.go
+    pgx/
+        README.md
+        examples/
+        pgx.go
+        pgx_test.go
+        v5/
+            README.md
+            pgx.go
+            pgx_test.go
+    postgres/
+        README.md
+        TUTORIAL.md
+        examples/
+        postgres.go
+        postgres_test.go
+    ql/
+        README.md
+        examples/
+        ql.go
+        ql_test.go
+    redshift/
+        README.md
+        examples/
+        redshift.go
+        redshift_test.go
+    rqlite/
+        README.md
+        examples/
+        rqlite.go
+        rqlite_test.go
+    shell/
+        README.md
+    snowflake/
+        README.md
+        snowflake.go
+    spanner/
+        README.md
+               1→# Google Cloud Spanner
+            …
+        examples/
+        spanner.go
+        spanner_test.go
+    sqlcipher/
+        README.md
+        examples/
+        sqlcipher.go
+        sqlcipher_test.go
+    sqlite/
+        README.md
+        examples/
+        sqlite.go
+        sqlite_test.go
+    sqlite3/
+        README.md
+        examples/
+        sqlite3.go
+        sqlite3_test.go
+    sqlserver/
+        README.md
+        examples/
+        sqlserver.go
+        sqlserver_test.go
+    stub/
+        stub.go
+        stub_test.go
+    testing/
+    util.go
+    util_test.go
+    yugabytedb/
+        README.md
+        examples/
+        yugabytedb.go
+        yugabytedb_test.go
 dktesting/
     dktesting.go
-        …
-          13→// ContainerSpec holds Docker testing setup specifications
-          14→type ContainerSpec struct {
-          15→	ImageName string
-          16→	Options   dktest.Options
-          17→}
-        …
-          20→func (s *ContainerSpec) Cleanup() (retErr error) {
-        …
-          43→// ParallelTest runs Docker tests in parallel
-          44→func ParallelTest(t *testing.T, specs []ContainerSpec,
-          45→	testFunc func(*testing.T, dktest.ContainerInfo)) {
-        …
     example_test.go
 docker-deploy.sh
-       1→#!/bin/bash
-       2→
-       3→echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin && \
-       4→docker build --build-arg VERSION="$TRAVIS_TAG" . -t migrate/migrate -t migrate/migrate:"$TRAVIS_TAG" && \
-       5→docker push migrate/migrate:"$TRAVIS_TAG" && docker push migrate/migrate
 go.mod
        1→module github.com/golang-migrate/migrate/v4
        2→
@@ -204,24 +289,6 @@ migrate.go
     …
 migrate_test.go
 migration.go
-    …
-      13→var DefaultBufferSize = uint(100000)
-    …
-      18→type Migration struct {
-    …
-      77→func NewMigration(body io.ReadCloser, identifier string,
-      78→	version uint, targetVersion int) (*Migration, error) {
-    …
-     106→// String implements string.Stringer and is used in tests.
-     107→func (m *Migration) String() string {
-    …
-     111→// LogString returns a string describing this migration to humans.
-     112→func (m *Migration) LogString() string {
-    …
-     120→// Buffer buffers Body up to BufferSize.
-     121→// Calling this function blocks. Call with goroutine.
-     122→func (m *Migration) Buffer() (berr error) {
-    …
 migration_test.go
 source/
     aws_s3/
@@ -323,9 +390,6 @@ source/
                2→
                3→https://pkg.go.dev/github.com/golang-migrate/migrate/v4/source/iofs
         doc.go
-               1→/*
-               2→Package iofs provides the Go 1.16+ io/fs#FS driver.
-            …
         example_test.go
         iofs.go
         iofs_test.go

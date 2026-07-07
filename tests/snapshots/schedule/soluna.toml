@@ -1,7 +1,7 @@
 fixture = "soluna"
 budget = 10000
-cumulative_tokens = 9998
-batch_count = 202
+cumulative_tokens = 9827
+batch_count = 287
 
 [[batches]]
 position = 1
@@ -19,10 +19,24 @@ entries = [".editorconfig", ".github", ".gitignore", ".gitmodules", "3rd", "LICE
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "bin" })'
+descriptor = "listing of 'bin'"
+cost_tokens = 11
+cum_tokens = 61
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bin"
+entries = ["readme.txt", "sokol-tools-bin"]
+
+[[batches]]
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 68
-cum_tokens = 118
+cum_tokens = 129
 
 [batches.content]
 kind = "lines"
@@ -44,63 +58,255 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 3
-key = 'Lua(DeclNames { file: "make.lua" })'
-descriptor = "lua decl names surface in make.lua"
-cost_tokens = 14
-cum_tokens = 132
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "make.lua"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "make.lua"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 4
-key = 'Lua(Decl { file: "make.lua", start_line: 4 })'
-descriptor = "lua decl at make.lua:4"
-cost_tokens = 0
-cum_tokens = 132
+key = 'Fs(DirListing { dir: "asset" })'
+descriptor = "listing of 'asset'"
+cost_tokens = 14
+cum_tokens = 143
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "make.lua"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "make.lua"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
+[[batches.content.groups]]
+parent = "asset"
+entries = ["avatar.png", "lua-logo.png", "sprites.dl"]
 
 [[batches]]
 position = 5
+key = 'Lua(DeclNames { file: "make.lua" })'
+descriptor = "lua decl names surface in make.lua"
+cost_tokens = 14
+cum_tokens = 157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "make.lua"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "make.lua"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 6
+key = 'Lua(Decl { file: "make.lua", start_line: 4 })'
+descriptor = "lua decl at make.lua:4"
+cost_tokens = 0
+cum_tokens = 157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "make.lua"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "make.lua"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "web" })'
+descriptor = "listing of 'web'"
+cost_tokens = 17
+cum_tokens = 174
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web"
+entries = ["assets", "config.toml", "content", "layouts", "static"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "clibs" })'
+descriptor = "listing of 'clibs'"
+cost_tokens = 21
+cum_tokens = 195
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "clibs"
+entries = ["datalist", "ltask", "lua", "soluna", "yoga", "zip"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "clibs/datalist" })'
+descriptor = "listing of 'clibs/datalist'"
+cost_tokens = 4
+cum_tokens = 199
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "clibs/datalist"
+entries = ["make.lua"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "clibs/ltask" })'
+descriptor = "listing of 'clibs/ltask'"
+cost_tokens = 4
+cum_tokens = 203
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "clibs/ltask"
+entries = ["make.lua"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "clibs/lua" })'
+descriptor = "listing of 'clibs/lua'"
+cost_tokens = 4
+cum_tokens = 207
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "clibs/lua"
+entries = ["make.lua"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "clibs/yoga" })'
+descriptor = "listing of 'clibs/yoga'"
+cost_tokens = 4
+cum_tokens = 211
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "clibs/yoga"
+entries = ["make.lua"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "clibs/zip" })'
+descriptor = "listing of 'clibs/zip'"
+cost_tokens = 4
+cum_tokens = 215
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "clibs/zip"
+entries = ["make.lua"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "script" })'
+descriptor = "listing of 'script'"
+cost_tokens = 23
+cum_tokens = 238
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "script"
+entries = ["build_web.lua", "datalist2c.lua", "hashversion.lua", "lua2c.lua"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "web/static" })'
+descriptor = "listing of 'web/static'"
+cost_tokens = 10
+cum_tokens = 248
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/static"
+entries = ["coi-serviceworker.min.js", "fonts"]
+
+[[batches]]
+position = 16
+key = 'Lua(DeclNames { file: "script/hashversion.lua" })'
+descriptor = "lua decl names surface in script/hashversion.lua"
+cost_tokens = 11
+cum_tokens = 259
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/hashversion.lua"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/hashversion.lua"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Lua(Decl { file: "script/hashversion.lua", start_line: 1 })'
+descriptor = "lua decl at script/hashversion.lua:1"
+cost_tokens = 0
+cum_tokens = 259
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/hashversion.lua"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/hashversion.lua"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 18
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 69
-cum_tokens = 201
+cum_tokens = 328
 
 [batches.content]
 kind = "lines"
@@ -202,39 +408,185 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "bin" })'
-descriptor = "listing of 'bin'"
-cost_tokens = 11
-cum_tokens = 212
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bin"
-entries = ["readme.txt", "sokol-tools-bin"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "asset" })'
-descriptor = "listing of 'asset'"
+position = 19
+key = 'Lua(DeclNames { file: "script/datalist2c.lua" })'
+descriptor = "lua decl names surface in script/datalist2c.lua"
 cost_tokens = 14
-cum_tokens = 226
+cum_tokens = 342
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/datalist2c.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/datalist2c.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Lua(Decl { file: "script/datalist2c.lua", start_line: 14 })'
+descriptor = "lua decl at script/datalist2c.lua:14"
+cost_tokens = 0
+cum_tokens = 342
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/datalist2c.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/datalist2c.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 21
+key = 'Lua(DeclNames { file: "script/lua2c.lua" })'
+descriptor = "lua decl names surface in script/lua2c.lua"
+cost_tokens = 14
+cum_tokens = 356
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/lua2c.lua"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/lua2c.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 22
+key = 'Lua(Decl { file: "script/lua2c.lua", start_line: 13 })'
+descriptor = "lua decl at script/lua2c.lua:13"
+cost_tokens = 0
+cum_tokens = 356
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/lua2c.lua"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/lua2c.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "web/content" })'
+descriptor = "listing of 'web/content'"
+cost_tokens = 16
+cum_tokens = 372
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "asset"
-entries = ["avatar.png", "lua-logo.png", "sprites.dl"]
+parent = "web/content"
+entries = ["_index.md", "docs", "examples", "playframe.md"]
 
 [[batches]]
-position = 8
+position = 24
+key = 'Fs(DirListing { dir: "web/content/docs" })'
+descriptor = "listing of 'web/content/docs'"
+cost_tokens = 5
+cum_tokens = 377
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/content/docs"
+entries = ["_index.md"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 6
+cum_tokens = 383
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["actions", "workflows"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 8
+cum_tokens = 391
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["nightly.yml", "pages.yml"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "web/assets" })'
+descriptor = "listing of 'web/assets'"
+cost_tokens = 19
+cum_tokens = 410
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/assets"
+entries = ["htmx.js", "play.js", "playframe.js", "site.css"]
+
+[[batches]]
+position = 28
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 114
-cum_tokens = 340
+cum_tokens = 524
 
 [batches.content]
 kind = "lines"
@@ -248,435 +600,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "web" })'
-descriptor = "listing of 'web'"
-cost_tokens = 17
-cum_tokens = 357
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web"
-entries = ["assets", "config.toml", "content", "layouts", "static"]
-
-[[batches]]
-position = 10
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #5"
-cost_tokens = 26
-cum_tokens = 383
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 57
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
-cost_tokens = 45
-cum_tokens = 428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "clibs" })'
-descriptor = "listing of 'clibs'"
-cost_tokens = 21
-cum_tokens = 449
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "clibs"
-entries = ["datalist", "ltask", "lua", "soluna", "yoga", "zip"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "clibs/datalist" })'
-descriptor = "listing of 'clibs/datalist'"
-cost_tokens = 4
-cum_tokens = 453
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "clibs/datalist"
-entries = ["make.lua"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "clibs/ltask" })'
-descriptor = "listing of 'clibs/ltask'"
-cost_tokens = 4
-cum_tokens = 457
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "clibs/ltask"
-entries = ["make.lua"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "clibs/lua" })'
-descriptor = "listing of 'clibs/lua'"
-cost_tokens = 4
-cum_tokens = 461
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "clibs/lua"
-entries = ["make.lua"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "clibs/yoga" })'
-descriptor = "listing of 'clibs/yoga'"
-cost_tokens = 4
-cum_tokens = 465
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "clibs/yoga"
-entries = ["make.lua"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "clibs/zip" })'
-descriptor = "listing of 'clibs/zip'"
-cost_tokens = 4
-cum_tokens = 469
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "clibs/zip"
-entries = ["make.lua"]
-
-[[batches]]
-position = 18
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #4"
-cost_tokens = 31
-cum_tokens = 500
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 53
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "script" })'
-descriptor = "listing of 'script'"
-cost_tokens = 23
-cum_tokens = 523
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "script"
-entries = ["build_web.lua", "datalist2c.lua", "hashversion.lua", "lua2c.lua"]
-
-[[batches]]
-position = 20
-key = 'Lua(DeclNames { file: "script/hashversion.lua" })'
-descriptor = "lua decl names surface in script/hashversion.lua"
-cost_tokens = 11
-cum_tokens = 534
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/hashversion.lua"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/hashversion.lua"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 21
-key = 'Lua(Decl { file: "script/hashversion.lua", start_line: 1 })'
-descriptor = "lua decl at script/hashversion.lua:1"
-cost_tokens = 0
-cum_tokens = 534
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/hashversion.lua"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/hashversion.lua"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 22
-key = 'Lua(DeclNames { file: "script/datalist2c.lua" })'
-descriptor = "lua decl names surface in script/datalist2c.lua"
-cost_tokens = 14
-cum_tokens = 548
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/datalist2c.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/datalist2c.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 23
-key = 'Lua(Decl { file: "script/datalist2c.lua", start_line: 14 })'
-descriptor = "lua decl at script/datalist2c.lua:14"
-cost_tokens = 0
-cum_tokens = 548
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/datalist2c.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/datalist2c.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 24
-key = 'Lua(DeclNames { file: "script/lua2c.lua" })'
-descriptor = "lua decl names surface in script/lua2c.lua"
-cost_tokens = 14
-cum_tokens = 562
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/lua2c.lua"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/lua2c.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 25
-key = 'Lua(Decl { file: "script/lua2c.lua", start_line: 13 })'
-descriptor = "lua decl at script/lua2c.lua:13"
-cost_tokens = 0
-cum_tokens = 562
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/lua2c.lua"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/lua2c.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "web/static" })'
-descriptor = "listing of 'web/static'"
-cost_tokens = 10
-cum_tokens = 572
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/static"
-entries = ["coi-serviceworker.min.js", "fonts"]
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "web/content" })'
-descriptor = "listing of 'web/content'"
-cost_tokens = 16
-cum_tokens = 588
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/content"
-entries = ["_index.md", "docs", "examples", "playframe.md"]
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "web/content/docs" })'
-descriptor = "listing of 'web/content/docs'"
-cost_tokens = 5
-cum_tokens = 593
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/content/docs"
-entries = ["_index.md"]
-
-[[batches]]
 position = 29
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 6
-cum_tokens = 599
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["actions", "workflows"]
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 8
-cum_tokens = 607
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["nightly.yml", "pages.yml"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "web/assets" })'
-descriptor = "listing of 'web/assets'"
-cost_tokens = 19
-cum_tokens = 626
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/assets"
-entries = ["htmx.js", "play.js", "playframe.js", "site.css"]
-
-[[batches]]
-position = 32
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #2"
-cost_tokens = 40
-cum_tokens = 666
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 25
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
 key = 'Fs(DirListing { dir: "web/static/fonts" })'
 descriptor = "listing of 'web/static/fonts'"
 cost_tokens = 13
-cum_tokens = 679
+cum_tokens = 537
 
 [batches.content]
 kind = "fs"
@@ -686,11 +614,11 @@ parent = "web/static/fonts"
 entries = ["SourceHanSansSC-Regular.ttf", "arial.ttf"]
 
 [[batches]]
-position = 34
+position = 30
 key = 'Fs(DirListing { dir: "clibs/soluna" })'
 descriptor = "listing of 'clibs/soluna'"
 cost_tokens = 26
-cum_tokens = 705
+cum_tokens = 563
 
 [batches.content]
 kind = "fs"
@@ -700,63 +628,11 @@ parent = "clibs/soluna"
 entries = ["compile_lua.lua", "compile_shader.lua", "make.lua", "runlua.lua", "shader2c.lua"]
 
 [[batches]]
-position = 35
-key = 'Lua(DeclNames { file: "clibs/soluna/compile_lua.lua" })'
-descriptor = "lua decl names surface in clibs/soluna/compile_lua.lua"
-cost_tokens = 20
-cum_tokens = 725
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_lua.lua"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_lua.lua"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 36
-key = 'Lua(Decl { file: "clibs/soluna/compile_lua.lua", start_line: 4 })'
-descriptor = "lua decl at clibs/soluna/compile_lua.lua:4"
-cost_tokens = 0
-cum_tokens = 725
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_lua.lua"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_lua.lua"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 37
+position = 31
 key = 'Fs(DirListing { dir: "web/layouts" })'
 descriptor = "listing of 'web/layouts'"
 cost_tokens = 26
-cum_tokens = 751
+cum_tokens = 589
 
 [batches.content]
 kind = "fs"
@@ -766,11 +642,11 @@ parent = "web/layouts"
 entries = ["_default", "docs", "examples", "index.html", "partials", "playframe", "shortcodes"]
 
 [[batches]]
-position = 38
+position = 32
 key = 'Fs(DirListing { dir: "web/layouts/docs" })'
 descriptor = "listing of 'web/layouts/docs'"
 cost_tokens = 4
-cum_tokens = 755
+cum_tokens = 593
 
 [batches.content]
 kind = "fs"
@@ -780,11 +656,11 @@ parent = "web/layouts/docs"
 entries = ["list.html"]
 
 [[batches]]
-position = 39
+position = 33
 key = 'Fs(DirListing { dir: "web/layouts/playframe" })'
 descriptor = "listing of 'web/layouts/playframe'"
 cost_tokens = 4
-cum_tokens = 759
+cum_tokens = 597
 
 [batches.content]
 kind = "fs"
@@ -794,11 +670,11 @@ parent = "web/layouts/playframe"
 entries = ["single.html"]
 
 [[batches]]
-position = 40
+position = 34
 key = 'Fs(DirListing { dir: "web/layouts/partials" })'
 descriptor = "listing of 'web/layouts/partials'"
 cost_tokens = 8
-cum_tokens = 767
+cum_tokens = 605
 
 [batches.content]
 kind = "fs"
@@ -808,147 +684,11 @@ parent = "web/layouts/partials"
 entries = ["footer.html", "nav.html"]
 
 [[batches]]
-position = 41
-key = 'Lua(DeclNames { file: "clibs/soluna/compile_shader.lua" })'
-descriptor = "lua decl names surface in clibs/soluna/compile_shader.lua"
-cost_tokens = 42
-cum_tokens = 809
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 42
-key = 'Lua(Decl { file: "clibs/soluna/compile_shader.lua", start_line: 5 })'
-descriptor = "lua decl at clibs/soluna/compile_shader.lua:5"
-cost_tokens = 0
-cum_tokens = 809
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 43
-key = 'Lua(Decl { file: "clibs/soluna/compile_shader.lua", start_line: 27 })'
-descriptor = "lua decl at clibs/soluna/compile_shader.lua:27"
-cost_tokens = 0
-cum_tokens = 809
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 44
-key = 'Lua(Decl { file: "clibs/soluna/compile_shader.lua", start_line: 44 })'
-descriptor = "lua decl at clibs/soluna/compile_shader.lua:44"
-cost_tokens = 0
-cum_tokens = 809
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "clibs/soluna/compile_shader.lua"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 45
+position = 35
 key = 'Fs(DirListing { dir: "web/layouts/_default" })'
 descriptor = "listing of 'web/layouts/_default'"
 cost_tokens = 17
-cum_tokens = 826
+cum_tokens = 622
 
 [batches.content]
 kind = "fs"
@@ -958,11 +698,11 @@ parent = "web/layouts/_default"
 entries = ["baseof.html", "single.html", "term.html", "terms.html"]
 
 [[batches]]
-position = 46
+position = 36
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 91
-cum_tokens = 917
+cum_tokens = 713
 
 [batches.content]
 kind = "fs"
@@ -972,11 +712,63 @@ parent = "docs"
 entries = ["app.lua", "args.lua", "callback.lua", "coroutine.lua", "crypt.lua", "datalist.lua", "file.lua", "font.lua", "font_system.lua", "image.lua", "layout.lua", "lfs.lua", "material_mask.lua", "material_perspective_quad.lua", "material_quad.lua", "material_text.lua", "soluna.lua", "text.lua", "url.lua", "zip.lua"]
 
 [[batches]]
-position = 47
+position = 37
+key = 'Lua(DeclNames { file: "clibs/soluna/compile_lua.lua" })'
+descriptor = "lua decl names surface in clibs/soluna/compile_lua.lua"
+cost_tokens = 20
+cum_tokens = 733
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "clibs/soluna/compile_lua.lua"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "clibs/soluna/compile_lua.lua"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
+key = 'Lua(Decl { file: "clibs/soluna/compile_lua.lua", start_line: 4 })'
+descriptor = "lua decl at clibs/soluna/compile_lua.lua:4"
+cost_tokens = 0
+cum_tokens = 733
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "clibs/soluna/compile_lua.lua"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "clibs/soluna/compile_lua.lua"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 39
 key = 'Lua(DeclNames { file: "docs/args.lua" })'
 descriptor = "lua decl names surface in docs/args.lua"
 cost_tokens = 39
-cum_tokens = 956
+cum_tokens = 772
 
 [batches.content]
 kind = "lines"
@@ -1014,11 +806,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 40
 key = 'Lua(Decl { file: "docs/args.lua", start_line: 18 })'
 descriptor = "lua decl at docs/args.lua:18"
 cost_tokens = 0
-cum_tokens = 956
+cum_tokens = 772
 
 [batches.content]
 kind = "lines"
@@ -1032,11 +824,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 49
+position = 41
 key = 'Lua(Decl { file: "docs/args.lua", start_line: 41 })'
 descriptor = "lua decl at docs/args.lua:41"
 cost_tokens = 0
-cum_tokens = 956
+cum_tokens = 772
 
 [batches.content]
 kind = "lines"
@@ -1050,11 +842,47 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 50
+position = 42
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #5"
+cost_tokens = 26
+cum_tokens = 798
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 57
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 45
+cum_tokens = 843
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
 key = 'Lua(MetaFileWhole { file: "docs/url.lua" })'
 descriptor = "lua meta-file at docs/url.lua"
 cost_tokens = 125
-cum_tokens = 1081
+cum_tokens = 968
 
 [batches.content]
 kind = "lines"
@@ -1068,11 +896,75 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 51
+position = 45
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #4"
+cost_tokens = 31
+cum_tokens = 999
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 53
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Fs(DirListing { dir: "web/layouts/shortcodes" })'
+descriptor = "listing of 'web/layouts/shortcodes'"
+cost_tokens = 35
+cum_tokens = 1034
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/layouts/shortcodes"
+entries = ["heading.html", "hero.html", "menubar.html", "plain_list.html", "pre.html", "relurl.html", "section.html", "small.html"]
+
+[[batches]]
+position = 47
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
+cost_tokens = 40
+cum_tokens = 1074
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 25
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Fs(DirListing { dir: "3rd" })'
+descriptor = "listing of '3rd'"
+cost_tokens = 25
+cum_tokens = 1099
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "3rd"
+entries = ["datalist", "ltask", "lua", "sokol", "stb", "yoga", "zlib"]
+
+[[batches]]
+position = 49
 key = 'Lua(MetaFileWhole { file: "docs/font_system.lua" })'
 descriptor = "lua meta-file at docs/font_system.lua"
 cost_tokens = 154
-cum_tokens = 1235
+cum_tokens = 1253
 
 [batches.content]
 kind = "lines"
@@ -1086,273 +978,147 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 52
-key = 'Lua(MetaFileWhole { file: "docs/lfs.lua" })'
-descriptor = "lua meta-file at docs/lfs.lua"
-cost_tokens = 196
-cum_tokens = 1431
+position = 50
+key = 'Lua(DeclNames { file: "clibs/soluna/compile_shader.lua" })'
+descriptor = "lua decl names surface in clibs/soluna/compile_shader.lua"
+cost_tokens = 42
+cum_tokens = 1295
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/lfs.lua"
-start = 1
-end = 24
+path = "clibs/soluna/compile_shader.lua"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 53
-key = 'Lua(MetaFileWhole { file: "docs/datalist.lua" })'
-descriptor = "lua meta-file at docs/datalist.lua"
-cost_tokens = 202
-cum_tokens = 1633
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
-path = "docs/datalist.lua"
-start = 1
-end = 24
+path = "clibs/soluna/compile_shader.lua"
+start = 27
+end = 27
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 54
-key = 'Lua(MetaFileWhole { file: "docs/zip.lua" })'
-descriptor = "lua meta-file at docs/zip.lua"
-cost_tokens = 216
-cum_tokens = 1849
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
-path = "docs/zip.lua"
-start = 1
-end = 21
+path = "clibs/soluna/compile_shader.lua"
+start = 44
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 55
-key = 'Lua(MetaFileWhole { file: "docs/font.lua" })'
-descriptor = "lua meta-file at docs/font.lua"
-cost_tokens = 248
-cum_tokens = 2097
-
-[batches.content]
-kind = "lines"
-
 [[batches.content.spans]]
-path = "docs/font.lua"
-start = 1
-end = 29
+path = "clibs/soluna/compile_shader.lua"
+start = 6
+end = 6
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 56
-key = 'Lua(MetaFileWhole { file: "docs/material_mask.lua" })'
-descriptor = "lua meta-file at docs/material_mask.lua"
-cost_tokens = 252
-cum_tokens = 2349
-
-[batches.content]
-kind = "lines"
+kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "docs/material_mask.lua"
-start = 1
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Lua(MetaFileWhole { file: "docs/material_quad.lua" })'
-descriptor = "lua meta-file at docs/material_quad.lua"
-cost_tokens = 252
-cum_tokens = 2601
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/material_quad.lua"
-start = 1
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 58
-key = 'Lua(MetaFileWhole { file: "docs/crypt.lua" })'
-descriptor = "lua meta-file at docs/crypt.lua"
-cost_tokens = 256
-cum_tokens = 2857
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/crypt.lua"
-start = 1
+path = "clibs/soluna/compile_shader.lua"
+start = 28
 end = 28
 
 [batches.content.spans.render]
-kind = "full"
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "clibs/soluna/compile_shader.lua"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "web/layouts/shortcodes" })'
-descriptor = "listing of 'web/layouts/shortcodes'"
-cost_tokens = 35
-cum_tokens = 2892
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/layouts/shortcodes"
-entries = ["heading.html", "hero.html", "menubar.html", "plain_list.html", "pre.html", "relurl.html", "section.html", "small.html"]
-
-[[batches]]
-position = 60
-key = 'Lua(MetaFileWhole { file: "docs/layout.lua" })'
-descriptor = "lua meta-file at docs/layout.lua"
-cost_tokens = 373
-cum_tokens = 3265
+position = 51
+key = 'Lua(Decl { file: "clibs/soluna/compile_shader.lua", start_line: 5 })'
+descriptor = "lua decl at clibs/soluna/compile_shader.lua:5"
+cost_tokens = 0
+cum_tokens = 1295
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/layout.lua"
-start = 1
-end = 34
+path = "clibs/soluna/compile_shader.lua"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "clibs/soluna/compile_shader.lua"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 61
-key = 'Lua(MetaFileWhole { file: "docs/app.lua" })'
-descriptor = "lua meta-file at docs/app.lua"
-cost_tokens = 378
-cum_tokens = 3643
+position = 52
+key = 'Lua(Decl { file: "clibs/soluna/compile_shader.lua", start_line: 27 })'
+descriptor = "lua decl at clibs/soluna/compile_shader.lua:27"
+cost_tokens = 0
+cum_tokens = 1295
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/app.lua"
-start = 1
-end = 37
+path = "clibs/soluna/compile_shader.lua"
+start = 27
+end = 27
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "clibs/soluna/compile_shader.lua"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 62
-key = 'Lua(MetaFileWhole { file: "docs/coroutine.lua" })'
-descriptor = "lua meta-file at docs/coroutine.lua"
-cost_tokens = 401
-cum_tokens = 4044
+position = 53
+key = 'Lua(Decl { file: "clibs/soluna/compile_shader.lua", start_line: 44 })'
+descriptor = "lua decl at clibs/soluna/compile_shader.lua:44"
+cost_tokens = 0
+cum_tokens = 1295
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/coroutine.lua"
-start = 1
-end = 42
+path = "clibs/soluna/compile_shader.lua"
+start = 44
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 63
-key = 'Fs(DirListing { dir: "3rd" })'
-descriptor = "listing of '3rd'"
-cost_tokens = 25
-cum_tokens = 4069
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "3rd"
-entries = ["datalist", "ltask", "lua", "sokol", "stb", "yoga", "zlib"]
-
-[[batches]]
-position = 64
-key = 'Lua(MetaFileWhole { file: "docs/image.lua" })'
-descriptor = "lua meta-file at docs/image.lua"
-cost_tokens = 420
-cum_tokens = 4489
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
-path = "docs/image.lua"
-start = 1
-end = 35
+path = "clibs/soluna/compile_shader.lua"
+start = 45
+end = 45
 
 [batches.content.spans.render]
-kind = "full"
+kind = "ellipsis"
 
 [[batches]]
-position = 65
-key = 'Lua(MetaFileWhole { file: "docs/text.lua" })'
-descriptor = "lua meta-file at docs/text.lua"
-cost_tokens = 429
-cum_tokens = 4918
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/text.lua"
-start = 1
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Lua(MetaFileWhole { file: "docs/material_perspective_quad.lua" })'
-descriptor = "lua meta-file at docs/material_perspective_quad.lua"
-cost_tokens = 432
-cum_tokens = 5350
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/material_perspective_quad.lua"
-start = 1
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
+position = 54
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 322
-cum_tokens = 5672
+cum_tokens = 1617
 
 [batches.content]
 kind = "fs"
@@ -1362,11 +1128,11 @@ parent = "src"
 entries = ["appevent.h", "batch.c", "batch.h", "blit.glsl", "colorquad.glsl", "data", "drawmgr.c", "embedlua.c", "entry.c", "file.c", "font.c", "font_define.h", "font_manager.c", "font_manager.h", "font_system.c", "gamepad.c", "image.c", "ime_char_filter.h", "ime_state.h", "lcrypt.c", "lfs.c", "loginfo.h", "lsha1.c", "luabuffer.h", "lualib", "luamods.c", "luayoga.c", "luazip.c", "maskquad.glsl", "material_blit.c", "material_default.c", "material_mask.c", "material_perspective_quad.c", "material_quad.c", "material_text.c", "material_util.c", "material_util.h", "mutex.h", "openlibs.c", "openurl.c", "perspective_quad.glsl", "platform", "render.c", "render_bindings.c", "render_bindings.h", "render_uniform.c", "sdfimage.c", "sdftext.glsl", "service", "sprite_submit.h", "spritemgr.c", "spritemgr.h", "srbuffer.c", "srbuffer.h", "texquad.glsl", "tmpbuffer.h", "transform.c", "transform.h", "truetype.c", "truetype.h", "version.h", "winfile.c", "writelog.c", "yogaone.cpp"]
 
 [[batches]]
-position = 68
+position = 55
 key = 'C(DeclNames { file: "src/mutex.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/mutex.h"
 cost_tokens = 15
-cum_tokens = 5687
+cum_tokens = 1632
 
 [batches.content]
 kind = "lines"
@@ -1388,11 +1154,39 @@ end = 3
 kind = "ellipsis"
 
 [[batches]]
-position = 69
+position = 56
+key = 'Fs(DirListing { dir: "src/platform" })'
+descriptor = "listing of 'src/platform'"
+cost_tokens = 13
+cum_tokens = 1645
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/platform"
+entries = ["linux", "macos", "wasm", "windows"]
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "src/data" })'
+descriptor = "listing of 'src/data'"
+cost_tokens = 6
+cum_tokens = 1651
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/data"
+entries = ["settingdefault.dl"]
+
+[[batches]]
+position = 58
 key = 'C(DeclNames { file: "src/loginfo.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/loginfo.h"
 cost_tokens = 26
-cum_tokens = 5713
+cum_tokens = 1677
 
 [batches.content]
 kind = "lines"
@@ -1430,11 +1224,25 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 59
+key = 'Fs(DirListing { dir: "src/platform/wasm" })'
+descriptor = "listing of 'src/platform/wasm'"
+cost_tokens = 23
+cum_tokens = 1700
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/platform/wasm"
+entries = ["soluna_ime.js", "soluna_openurl.js", "soluna_wasm_ime.h"]
+
+[[batches]]
+position = 60
 key = 'C(DeclNames { file: "src/luabuffer.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/luabuffer.h"
 cost_tokens = 30
-cum_tokens = 5743
+cum_tokens = 1730
 
 [batches.content]
 kind = "lines"
@@ -1472,25 +1280,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 71
-key = 'Fs(DirListing { dir: "src/platform" })'
-descriptor = "listing of 'src/platform'"
-cost_tokens = 13
-cum_tokens = 5756
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/platform"
-entries = ["linux", "macos", "wasm", "windows"]
-
-[[batches]]
-position = 72
+position = 61
 key = 'C(DeclNames { file: "src/ime_state.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/ime_state.h"
 cost_tokens = 37
-cum_tokens = 5793
+cum_tokens = 1767
 
 [batches.content]
 kind = "lines"
@@ -1528,11 +1322,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 73
+position = 62
 key = 'C(Decl { file: "src/luabuffer.h", start_line: 8 })'
 descriptor = "c decl at src/luabuffer.h:8"
 cost_tokens = 19
-cum_tokens = 5812
+cum_tokens = 1786
 
 [batches.content]
 kind = "lines"
@@ -1554,11 +1348,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 74
+position = 63
 key = 'C(DeclNames { file: "src/spritemgr.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/spritemgr.h"
 cost_tokens = 56
-cum_tokens = 5868
+cum_tokens = 1842
 
 [batches.content]
 kind = "lines"
@@ -1612,11 +1406,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 64
 key = 'C(DeclNames { file: "src/render_bindings.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/render_bindings.h"
 cost_tokens = 57
-cum_tokens = 5925
+cum_tokens = 1899
 
 [batches.content]
 kind = "lines"
@@ -1670,11 +1464,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 76
+position = 65
 key = 'C(Decl { file: "src/render_bindings.h", start_line: 6 })'
 descriptor = "c decl at src/render_bindings.h:6"
 cost_tokens = 20
-cum_tokens = 5945
+cum_tokens = 1919
 
 [batches.content]
 kind = "lines"
@@ -1688,11 +1482,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 77
+position = 66
 key = 'C(Includes { file: "src/loginfo.h" })'
 descriptor = "c includes in src/loginfo.h"
 cost_tokens = 8
-cum_tokens = 5953
+cum_tokens = 1927
 
 [batches.content]
 kind = "lines"
@@ -1706,39 +1500,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 78
-key = 'Fs(DirListing { dir: "src/data" })'
-descriptor = "listing of 'src/data'"
-cost_tokens = 6
-cum_tokens = 5959
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/data"
-entries = ["settingdefault.dl"]
-
-[[batches]]
-position = 79
-key = 'Fs(DirListing { dir: "src/platform/wasm" })'
-descriptor = "listing of 'src/platform/wasm'"
-cost_tokens = 23
-cum_tokens = 5982
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/platform/wasm"
-entries = ["soluna_ime.js", "soluna_openurl.js", "soluna_wasm_ime.h"]
-
-[[batches]]
-position = 80
+position = 67
 key = 'C(DeclNames { file: "src/ime_char_filter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/ime_char_filter.h"
 cost_tokens = 67
-cum_tokens = 6049
+cum_tokens = 1994
 
 [batches.content]
 kind = "lines"
@@ -1840,11 +1606,11 @@ end = 53
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 68
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 41 })'
 descriptor = "c decl at src/ime_char_filter.h:41"
 cost_tokens = 22
-cum_tokens = 6071
+cum_tokens = 2016
 
 [batches.content]
 kind = "lines"
@@ -1866,11 +1632,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 69
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 27 })'
 descriptor = "c decl at src/ime_char_filter.h:27"
 cost_tokens = 28
-cum_tokens = 6099
+cum_tokens = 2044
 
 [batches.content]
 kind = "lines"
@@ -1892,11 +1658,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 70
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 47 })'
 descriptor = "c decl at src/ime_char_filter.h:47"
 cost_tokens = 28
-cum_tokens = 6127
+cum_tokens = 2072
 
 [batches.content]
 kind = "lines"
@@ -1918,11 +1684,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 71
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 52 })'
 descriptor = "c decl at src/ime_char_filter.h:52"
 cost_tokens = 28
-cum_tokens = 6155
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -1944,11 +1710,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 72
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 16 })'
 descriptor = "c decl at src/ime_char_filter.h:16"
 cost_tokens = 30
-cum_tokens = 6185
+cum_tokens = 2130
 
 [batches.content]
 kind = "lines"
@@ -1970,11 +1736,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 73
 key = 'C(DeclNames { file: "src/version.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/version.h"
 cost_tokens = 33
-cum_tokens = 6218
+cum_tokens = 2163
 
 [batches.content]
 kind = "lines"
@@ -1996,11 +1762,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 74
 key = 'C(DeclNames { file: "src/tmpbuffer.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/tmpbuffer.h"
 cost_tokens = 83
-cum_tokens = 6301
+cum_tokens = 2246
 
 [batches.content]
 kind = "lines"
@@ -2054,11 +1820,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 75
 key = 'C(Decl { file: "src/tmpbuffer.h", start_line: 7 })'
 descriptor = "c decl at src/tmpbuffer.h:7"
 cost_tokens = 19
-cum_tokens = 6320
+cum_tokens = 2265
 
 [batches.content]
 kind = "lines"
@@ -2072,11 +1838,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 89
+position = 76
 key = 'C(Decl { file: "src/tmpbuffer.h", start_line: 15 })'
 descriptor = "c decl at src/tmpbuffer.h:15"
 cost_tokens = 28
-cum_tokens = 6348
+cum_tokens = 2293
 
 [batches.content]
 kind = "lines"
@@ -2098,11 +1864,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 77
 key = 'C(DeclNames { file: "src/batch.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/batch.h"
 cost_tokens = 96
-cum_tokens = 6444
+cum_tokens = 2389
 
 [batches.content]
 kind = "lines"
@@ -2172,11 +1938,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 78
 key = 'C(Decl { file: "src/batch.h", start_line: 13 })'
 descriptor = "c decl at src/batch.h:13"
 cost_tokens = 10
-cum_tokens = 6454
+cum_tokens = 2399
 
 [batches.content]
 kind = "lines"
@@ -2190,11 +1956,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 92
+position = 79
 key = 'C(Includes { file: "src/batch.h" })'
 descriptor = "c includes in src/batch.h"
 cost_tokens = 8
-cum_tokens = 6462
+cum_tokens = 2407
 
 [batches.content]
 kind = "lines"
@@ -2208,11 +1974,25 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 93
+position = 80
+key = 'Fs(DirListing { dir: "src/service" })'
+descriptor = "listing of 'src/service'"
+cost_tokens = 25
+cum_tokens = 2432
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/service"
+entries = ["gamepad.lua", "loader.lua", "log.lua", "render.lua", "settings.lua", "start.lua"]
+
+[[batches]]
+position = 81
 key = 'C(Includes { file: "src/render_bindings.h" })'
 descriptor = "c includes in src/render_bindings.h"
 cost_tokens = 13
-cum_tokens = 6475
+cum_tokens = 2445
 
 [batches.content]
 kind = "lines"
@@ -2226,11 +2006,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 94
+position = 82
 key = 'C(Decl { file: "src/spritemgr.h", start_line: 16 })'
 descriptor = "c decl at src/spritemgr.h:16"
 cost_tokens = 46
-cum_tokens = 6521
+cum_tokens = 2491
 
 [batches.content]
 kind = "lines"
@@ -2244,11 +2024,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 95
+position = 83
 key = 'C(DeclNames { file: "src/font_system.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/font_system.c"
 cost_tokens = 10
-cum_tokens = 6531
+cum_tokens = 2501
 
 [batches.content]
 kind = "lines"
@@ -2270,11 +2050,11 @@ end = 288
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 84
 key = 'C(DeclNames { file: "src/lfs.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/lfs.c"
 cost_tokens = 10
-cum_tokens = 6541
+cum_tokens = 2511
 
 [batches.content]
 kind = "lines"
@@ -2296,11 +2076,11 @@ end = 826
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 85
 key = 'C(DeclNames { file: "src/openurl.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/openurl.c"
 cost_tokens = 10
-cum_tokens = 6551
+cum_tokens = 2521
 
 [batches.content]
 kind = "lines"
@@ -2322,11 +2102,11 @@ end = 89
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 86
 key = 'C(DeclNames { file: "src/truetype.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/truetype.c"
 cost_tokens = 10
-cum_tokens = 6561
+cum_tokens = 2531
 
 [batches.content]
 kind = "lines"
@@ -2348,11 +2128,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 87
 key = 'C(DeclNames { file: "src/writelog.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/writelog.c"
 cost_tokens = 10
-cum_tokens = 6571
+cum_tokens = 2541
 
 [batches.content]
 kind = "lines"
@@ -2374,11 +2154,11 @@ end = 77
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 88
 key = 'C(DeclNames { file: "src/srbuffer.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/srbuffer.h"
 cost_tokens = 105
-cum_tokens = 6676
+cum_tokens = 2646
 
 [batches.content]
 kind = "lines"
@@ -2448,11 +2228,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 101
+position = 89
 key = 'C(Decl { file: "src/srbuffer.h", start_line: 7 })'
 descriptor = "c decl at src/srbuffer.h:7"
 cost_tokens = 12
-cum_tokens = 6688
+cum_tokens = 2658
 
 [batches.content]
 kind = "lines"
@@ -2466,11 +2246,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 102
+position = 90
 key = 'C(DeclNames { file: "src/sprite_submit.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/sprite_submit.h"
 cost_tokens = 120
-cum_tokens = 6808
+cum_tokens = 2778
 
 [batches.content]
 kind = "lines"
@@ -2652,11 +2432,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 91
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 27 })'
 descriptor = "c decl at src/sprite_submit.h:27"
 cost_tokens = 11
-cum_tokens = 6819
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -2678,11 +2458,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 92
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 56 })'
 descriptor = "c decl at src/sprite_submit.h:56"
 cost_tokens = 11
-cum_tokens = 6830
+cum_tokens = 2800
 
 [batches.content]
 kind = "lines"
@@ -2704,11 +2484,11 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 93
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 9 })'
 descriptor = "c decl at src/sprite_submit.h:9"
 cost_tokens = 12
-cum_tokens = 6842
+cum_tokens = 2812
 
 [batches.content]
 kind = "lines"
@@ -2730,11 +2510,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 94
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 43 })'
 descriptor = "c decl at src/sprite_submit.h:43"
 cost_tokens = 15
-cum_tokens = 6857
+cum_tokens = 2827
 
 [batches.content]
 kind = "lines"
@@ -2756,11 +2536,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 95
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 66 })'
 descriptor = "c decl at src/sprite_submit.h:66"
 cost_tokens = 18
-cum_tokens = 6875
+cum_tokens = 2845
 
 [batches.content]
 kind = "lines"
@@ -2782,11 +2562,11 @@ end = 68
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 96
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 71 })'
 descriptor = "c decl at src/sprite_submit.h:71"
 cost_tokens = 18
-cum_tokens = 6893
+cum_tokens = 2863
 
 [batches.content]
 kind = "lines"
@@ -2808,11 +2588,11 @@ end = 73
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 97
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 15 })'
 descriptor = "c decl at src/sprite_submit.h:15"
 cost_tokens = 21
-cum_tokens = 6914
+cum_tokens = 2884
 
 [batches.content]
 kind = "lines"
@@ -2834,11 +2614,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 98
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 21 })'
 descriptor = "c decl at src/sprite_submit.h:21"
 cost_tokens = 21
-cum_tokens = 6935
+cum_tokens = 2905
 
 [batches.content]
 kind = "lines"
@@ -2860,11 +2640,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 99
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 76 })'
 descriptor = "c decl at src/sprite_submit.h:76"
 cost_tokens = 21
-cum_tokens = 6956
+cum_tokens = 2926
 
 [batches.content]
 kind = "lines"
@@ -2886,11 +2666,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 100
 key = 'C(Decl { file: "src/sprite_submit.h", start_line: 81 })'
 descriptor = "c decl at src/sprite_submit.h:81"
 cost_tokens = 22
-cum_tokens = 6978
+cum_tokens = 2948
 
 [batches.content]
 kind = "lines"
@@ -2912,11 +2692,109 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 113
+position = 101
+key = 'Fs(DirListing { dir: "src/platform/linux" })'
+descriptor = "listing of 'src/platform/linux'"
+cost_tokens = 16
+cum_tokens = 2964
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/platform/linux"
+entries = ["soluna_linux_ime.c", "soluna_linux_ime.h"]
+
+[[batches]]
+position = 102
+key = 'C(DeclNames { file: "src/platform/linux/soluna_linux_ime.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/platform/linux/soluna_linux_ime.h"
+cost_tokens = 115
+cum_tokens = 3079
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/platform/linux/soluna_linux_ime.h"
+start = 6
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/platform/linux/soluna_linux_ime.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 103
+key = 'C(Includes { file: "src/platform/linux/soluna_linux_ime.h" })'
+descriptor = "c includes in src/platform/linux/soluna_linux_ime.h"
+cost_tokens = 10
+cum_tokens = 3089
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/platform/linux/soluna_linux_ime.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Fs(DirListing { dir: "src/platform/windows" })'
+descriptor = "listing of 'src/platform/windows'"
+cost_tokens = 16
+cum_tokens = 3105
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/platform/windows"
+entries = ["soluna_windows_ime.c", "soluna_windows_ime.h"]
+
+[[batches]]
+position = 105
+key = 'C(DeclNames { file: "src/platform/windows/soluna_windows_ime.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/platform/windows/soluna_windows_ime.h"
+cost_tokens = 72
+cum_tokens = 3177
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/platform/windows/soluna_windows_ime.h"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/platform/windows/soluna_windows_ime.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 106
 key = 'C(Decl { file: "src/ime_state.h", start_line: 7 })'
 descriptor = "c decl at src/ime_state.h:7"
 cost_tokens = 54
-cum_tokens = 7032
+cum_tokens = 3231
 
 [batches.content]
 kind = "lines"
@@ -2930,11 +2808,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 114
+position = 107
 key = 'C(Decl { file: "src/ime_char_filter.h", start_line: 8 })'
 descriptor = "c decl at src/ime_char_filter.h:8"
 cost_tokens = 55
-cum_tokens = 7087
+cum_tokens = 3286
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2826,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 115
+position = 108
 key = 'C(DeclNames { file: "src/transform.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/transform.h"
 cost_tokens = 126
-cum_tokens = 7213
+cum_tokens = 3412
 
 [batches.content]
 kind = "lines"
@@ -3014,11 +2892,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 116
+position = 109
 key = 'C(Decl { file: "src/transform.h", start_line: 16 })'
 descriptor = "c decl at src/transform.h:16"
 cost_tokens = 13
-cum_tokens = 7226
+cum_tokens = 3425
 
 [batches.content]
 kind = "lines"
@@ -3040,11 +2918,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 117
+position = 110
 key = 'C(Includes { file: "src/transform.h" })'
 descriptor = "c includes in src/transform.h"
 cost_tokens = 8
-cum_tokens = 7234
+cum_tokens = 3433
 
 [batches.content]
 kind = "lines"
@@ -3058,11 +2936,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 118
+position = 111
 key = 'C(Includes { file: "src/spritemgr.h" })'
 descriptor = "c includes in src/spritemgr.h"
 cost_tokens = 18
-cum_tokens = 7252
+cum_tokens = 3451
 
 [batches.content]
 kind = "lines"
@@ -3076,11 +2954,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 119
+position = 112
 key = 'C(Includes { file: "src/srbuffer.h" })'
 descriptor = "c includes in src/srbuffer.h"
 cost_tokens = 18
-cum_tokens = 7270
+cum_tokens = 3469
 
 [batches.content]
 kind = "lines"
@@ -3094,11 +2972,25 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 120
+position = 113
+key = 'Fs(DirListing { dir: "src/platform/macos" })'
+descriptor = "listing of 'src/platform/macos'"
+cost_tokens = 18
+cum_tokens = 3487
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/platform/macos"
+entries = ["soluna_macos_ime.h", "soluna_macos_ime.m"]
+
+[[batches]]
+position = 114
 key = 'C(Decl { file: "src/loginfo.h", start_line: 6 })'
 descriptor = "c decl at src/loginfo.h:6"
 cost_tokens = 63
-cum_tokens = 7333
+cum_tokens = 3550
 
 [batches.content]
 kind = "lines"
@@ -3112,11 +3004,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 121
+position = 115
 key = 'C(Includes { file: "src/ime_state.h" })'
 descriptor = "c includes in src/ime_state.h"
 cost_tokens = 20
-cum_tokens = 7353
+cum_tokens = 3570
 
 [batches.content]
 kind = "lines"
@@ -3130,11 +3022,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 122
+position = 116
 key = 'C(Includes { file: "src/tmpbuffer.h" })'
 descriptor = "c includes in src/tmpbuffer.h"
 cost_tokens = 20
-cum_tokens = 7373
+cum_tokens = 3590
 
 [batches.content]
 kind = "lines"
@@ -3148,11 +3040,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 123
+position = 117
 key = 'C(Decl { file: "src/batch.h", start_line: 6 })'
 descriptor = "c decl at src/batch.h:6"
 cost_tokens = 67
-cum_tokens = 7440
+cum_tokens = 3657
 
 [batches.content]
 kind = "lines"
@@ -3166,11 +3058,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 124
+position = 118
 key = 'C(DeclNames { file: "src/font_define.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/font_define.h"
 cost_tokens = 174
-cum_tokens = 7614
+cum_tokens = 3831
 
 [batches.content]
 kind = "lines"
@@ -3240,11 +3132,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 119
 key = 'C(Decl { file: "src/font_define.h", start_line: 31 })'
 descriptor = "c decl at src/font_define.h:31"
 cost_tokens = 10
-cum_tokens = 7624
+cum_tokens = 3841
 
 [batches.content]
 kind = "lines"
@@ -3266,11 +3158,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 120
 key = 'C(Decl { file: "src/font_define.h", start_line: 26 })'
 descriptor = "c decl at src/font_define.h:26"
 cost_tokens = 15
-cum_tokens = 7639
+cum_tokens = 3856
 
 [batches.content]
 kind = "lines"
@@ -3292,11 +3184,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 121
 key = 'C(Includes { file: "src/font_define.h" })'
 descriptor = "c includes in src/font_define.h"
 cost_tokens = 8
-cum_tokens = 7647
+cum_tokens = 3864
 
 [batches.content]
 kind = "lines"
@@ -3310,11 +3202,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 128
+position = 122
 key = 'C(DeclBody { file: "src/font_define.h", start_line: 31 })'
 descriptor = "c decl body at src/font_define.h:31"
 cost_tokens = 18
-cum_tokens = 7665
+cum_tokens = 3882
 
 [batches.content]
 kind = "lines"
@@ -3328,11 +3220,243 @@ end = 33
 kind = "full"
 
 [[batches]]
+position = 123
+key = 'Lua(DeclNames { file: "src/service/log.lua" })'
+descriptor = "lua decl names surface in src/service/log.lua"
+cost_tokens = 23
+cum_tokens = 3905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/log.lua"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/log.lua"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/log.lua"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/log.lua"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 124
+key = 'Lua(Decl { file: "src/service/log.lua", start_line: 12 })'
+descriptor = "lua decl at src/service/log.lua:12"
+cost_tokens = 0
+cum_tokens = 3905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/log.lua"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/log.lua"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 125
+key = 'Lua(Decl { file: "src/service/log.lua", start_line: 38 })'
+descriptor = "lua decl at src/service/log.lua:38"
+cost_tokens = 0
+cum_tokens = 3905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/log.lua"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/log.lua"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 126
+key = 'Lua(DeclNames { file: "src/service/settings.lua" })'
+descriptor = "lua decl names surface in src/service/settings.lua"
+cost_tokens = 23
+cum_tokens = 3928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/settings.lua"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/settings.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/settings.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/settings.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'Lua(Decl { file: "src/service/settings.lua", start_line: 9 })'
+descriptor = "lua decl at src/service/settings.lua:9"
+cost_tokens = 0
+cum_tokens = 3928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/settings.lua"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/settings.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 128
+key = 'Lua(Decl { file: "src/service/settings.lua", start_line: 14 })'
+descriptor = "lua decl at src/service/settings.lua:14"
+cost_tokens = 0
+cum_tokens = 3928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/settings.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/settings.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 129
+key = 'C(DeclNames { file: "src/platform/macos/soluna_macos_ime.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/platform/macos/soluna_macos_ime.h"
+cost_tokens = 86
+cum_tokens = 4014
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/platform/macos/soluna_macos_ime.h"
+start = 6
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/platform/macos/soluna_macos_ime.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 130
+key = 'C(Includes { file: "src/platform/macos/soluna_macos_ime.h" })'
+descriptor = "c includes in src/platform/macos/soluna_macos_ime.h"
+cost_tokens = 10
+cum_tokens = 4024
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/platform/macos/soluna_macos_ime.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
 key = 'C(Decl { file: "src/font_define.h", start_line: 11 })'
 descriptor = "c decl at src/font_define.h:11"
 cost_tokens = 79
-cum_tokens = 7744
+cum_tokens = 4103
 
 [batches.content]
 kind = "lines"
@@ -3346,11 +3470,105 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 130
+position = 132
+key = 'Lua(DeclNames { file: "src/service/gamepad.lua" })'
+descriptor = "lua decl names surface in src/service/gamepad.lua"
+cost_tokens = 25
+cum_tokens = 4128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/gamepad.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/gamepad.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/gamepad.lua"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/gamepad.lua"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'Lua(Decl { file: "src/service/gamepad.lua", start_line: 10 })'
+descriptor = "lua decl at src/service/gamepad.lua:10"
+cost_tokens = 0
+cum_tokens = 4128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/gamepad.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/gamepad.lua"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 134
+key = 'Lua(Decl { file: "src/service/gamepad.lua", start_line: 15 })'
+descriptor = "lua decl at src/service/gamepad.lua:15"
+cost_tokens = 0
+cum_tokens = 4128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/gamepad.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/gamepad.lua"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 135
 key = 'C(DeclNames { file: "src/appevent.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/appevent.h"
 cost_tokens = 89
-cum_tokens = 7833
+cum_tokens = 4217
 
 [batches.content]
 kind = "lines"
@@ -3468,11 +3686,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 136
 key = 'C(Decl { file: "src/appevent.h", start_line: 11 })'
 descriptor = "c decl at src/appevent.h:11"
 cost_tokens = 19
-cum_tokens = 7852
+cum_tokens = 4236
 
 [batches.content]
 kind = "lines"
@@ -3494,11 +3712,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 137
 key = 'C(Decl { file: "src/appevent.h", start_line: 33 })'
 descriptor = "c decl at src/appevent.h:33"
 cost_tokens = 19
-cum_tokens = 7871
+cum_tokens = 4255
 
 [batches.content]
 kind = "lines"
@@ -3520,11 +3738,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 138
 key = 'C(Decl { file: "src/appevent.h", start_line: 58 })'
 descriptor = "c decl at src/appevent.h:58"
 cost_tokens = 19
-cum_tokens = 7890
+cum_tokens = 4274
 
 [batches.content]
 kind = "lines"
@@ -3546,11 +3764,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 139
 key = 'C(Decl { file: "src/appevent.h", start_line: 84 })'
 descriptor = "c decl at src/appevent.h:84"
 cost_tokens = 19
-cum_tokens = 7909
+cum_tokens = 4293
 
 [batches.content]
 kind = "lines"
@@ -3572,11 +3790,11 @@ end = 86
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 140
 key = 'C(Decl { file: "src/appevent.h", start_line: 99 })'
 descriptor = "c decl at src/appevent.h:99"
 cost_tokens = 19
-cum_tokens = 7928
+cum_tokens = 4312
 
 [batches.content]
 kind = "lines"
@@ -3598,11 +3816,11 @@ end = 101
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 141
 key = 'C(Decl { file: "src/appevent.h", start_line: 115 })'
 descriptor = "c decl at src/appevent.h:115"
 cost_tokens = 20
-cum_tokens = 7948
+cum_tokens = 4332
 
 [batches.content]
 kind = "lines"
@@ -3624,11 +3842,11 @@ end = 117
 kind = "ellipsis"
 
 [[batches]]
-position = 137
+position = 142
 key = 'C(Decl { file: "src/appevent.h", start_line: 4 })'
 descriptor = "c decl at src/appevent.h:4"
 cost_tokens = 37
-cum_tokens = 7985
+cum_tokens = 4369
 
 [batches.content]
 kind = "lines"
@@ -3642,11 +3860,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 138
+position = 143
 key = 'C(Decl { file: "src/spritemgr.h", start_line: 9 })'
 descriptor = "c decl at src/spritemgr.h:9"
 cost_tokens = 81
-cum_tokens = 8066
+cum_tokens = 4450
 
 [batches.content]
 kind = "lines"
@@ -3660,11 +3878,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 139
+position = 144
 key = 'C(Decl { file: "src/transform.h", start_line: 6 })'
 descriptor = "c decl at src/transform.h:6"
 cost_tokens = 81
-cum_tokens = 8147
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
@@ -3678,11 +3896,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 140
+position = 145
 key = 'C(Decl { file: "src/srbuffer.h", start_line: 11 })'
 descriptor = "c decl at src/srbuffer.h:11"
 cost_tokens = 84
-cum_tokens = 8231
+cum_tokens = 4615
 
 [batches.content]
 kind = "lines"
@@ -3696,11 +3914,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 141
+position = 146
 key = 'C(DeclNames { file: "src/material_blit.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/material_blit.c"
 cost_tokens = 21
-cum_tokens = 8252
+cum_tokens = 4636
 
 [batches.content]
 kind = "lines"
@@ -3738,11 +3956,119 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 147
+key = 'Fs(DirListing { dir: "src/lualib" })'
+descriptor = "listing of 'src/lualib'"
+cost_tokens = 56
+cum_tokens = 4692
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/lualib"
+entries = ["coroutine.lua", "fontmgr.lua", "icon.lua", "initsetting.lua", "layout.lua", "main.lua", "packageloader.lua", "print_r.lua", "soluna.lua", "spritebundle.lua", "text.lua", "util.lua"]
+
+[[batches]]
+position = 148
+key = 'Lua(DeclNames { file: "src/lualib/icon.lua" })'
+descriptor = "lua decl names surface in src/lualib/icon.lua"
+cost_tokens = 28
+cum_tokens = 4720
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/icon.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/icon.lua"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/icon.lua"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/icon.lua"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 149
+key = 'Lua(Decl { file: "src/lualib/icon.lua", start_line: 10 })'
+descriptor = "lua decl at src/lualib/icon.lua:10"
+cost_tokens = 0
+cum_tokens = 4720
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/icon.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/icon.lua"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 150
+key = 'Lua(Decl { file: "src/lualib/icon.lua", start_line: 27 })'
+descriptor = "lua decl at src/lualib/icon.lua:27"
+cost_tokens = 0
+cum_tokens = 4720
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/icon.lua"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/icon.lua"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 151
 key = 'C(DeclNames { file: "src/material_util.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/material_util.h"
 cost_tokens = 225
-cum_tokens = 8477
+cum_tokens = 4945
 
 [batches.content]
 kind = "lines"
@@ -3780,11 +4106,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 152
 key = 'C(DeclNames { file: "src/truetype.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/truetype.h"
 cost_tokens = 225
-cum_tokens = 8702
+cum_tokens = 5170
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +4308,11 @@ end = 161
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 153
 key = 'C(Decl { file: "src/truetype.h", start_line: 147 })'
 descriptor = "c decl at src/truetype.h:147"
 cost_tokens = 12
-cum_tokens = 8714
+cum_tokens = 5182
 
 [batches.content]
 kind = "lines"
@@ -4008,11 +4334,11 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 145
+position = 154
 key = 'C(Decl { file: "src/truetype.h", start_line: 23 })'
 descriptor = "c decl at src/truetype.h:23"
 cost_tokens = 14
-cum_tokens = 8728
+cum_tokens = 5196
 
 [batches.content]
 kind = "lines"
@@ -4034,11 +4360,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 146
+position = 155
 key = 'C(Decl { file: "src/truetype.h", start_line: 34 })'
 descriptor = "c decl at src/truetype.h:34"
 cost_tokens = 14
-cum_tokens = 8742
+cum_tokens = 5210
 
 [batches.content]
 kind = "lines"
@@ -4060,11 +4386,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 156
 key = 'C(Decl { file: "src/truetype.h", start_line: 83 })'
 descriptor = "c decl at src/truetype.h:83"
 cost_tokens = 14
-cum_tokens = 8756
+cum_tokens = 5224
 
 [batches.content]
 kind = "lines"
@@ -4086,11 +4412,11 @@ end = 85
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 157
 key = 'C(Decl { file: "src/truetype.h", start_line: 111 })'
 descriptor = "c decl at src/truetype.h:111"
 cost_tokens = 14
-cum_tokens = 8770
+cum_tokens = 5238
 
 [batches.content]
 kind = "lines"
@@ -4112,11 +4438,11 @@ end = 113
 kind = "ellipsis"
 
 [[batches]]
-position = 149
+position = 158
 key = 'C(Decl { file: "src/truetype.h", start_line: 44 })'
 descriptor = "c decl at src/truetype.h:44"
 cost_tokens = 15
-cum_tokens = 8785
+cum_tokens = 5253
 
 [batches.content]
 kind = "lines"
@@ -4138,11 +4464,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 150
+position = 159
 key = 'C(Decl { file: "src/truetype.h", start_line: 94 })'
 descriptor = "c decl at src/truetype.h:94"
 cost_tokens = 18
-cum_tokens = 8803
+cum_tokens = 5271
 
 [batches.content]
 kind = "lines"
@@ -4164,11 +4490,11 @@ end = 96
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 160
 key = 'C(Decl { file: "src/truetype.h", start_line: 160 })'
 descriptor = "c decl at src/truetype.h:160"
 cost_tokens = 22
-cum_tokens = 8825
+cum_tokens = 5293
 
 [batches.content]
 kind = "lines"
@@ -4190,11 +4516,11 @@ end = 162
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 161
 key = 'C(Decl { file: "src/truetype.h", start_line: 123 })'
 descriptor = "c decl at src/truetype.h:123"
 cost_tokens = 23
-cum_tokens = 8848
+cum_tokens = 5316
 
 [batches.content]
 kind = "lines"
@@ -4216,11 +4542,11 @@ end = 125
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 162
 key = 'C(Decl { file: "src/truetype.h", start_line: 17 })'
 descriptor = "c decl at src/truetype.h:17"
 cost_tokens = 29
-cum_tokens = 8877
+cum_tokens = 5345
 
 [batches.content]
 kind = "lines"
@@ -4234,11 +4560,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 154
+position = 163
 key = 'C(Decl { file: "src/truetype.h", start_line: 52 })'
 descriptor = "c decl at src/truetype.h:52"
 cost_tokens = 25
-cum_tokens = 8902
+cum_tokens = 5370
 
 [batches.content]
 kind = "lines"
@@ -4260,11 +4586,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 155
+position = 164
 key = 'C(Includes { file: "src/ime_char_filter.h" })'
 descriptor = "c includes in src/ime_char_filter.h"
 cost_tokens = 30
-cum_tokens = 8932
+cum_tokens = 5400
 
 [batches.content]
 kind = "lines"
@@ -4278,11 +4604,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 156
+position = 165
 key = 'C(Includes { file: "src/luabuffer.h" })'
 descriptor = "c includes in src/luabuffer.h"
 cost_tokens = 30
-cum_tokens = 8962
+cum_tokens = 5430
 
 [batches.content]
 kind = "lines"
@@ -4296,11 +4622,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 157
+position = 166
 key = 'C(Includes { file: "src/material_util.h" })'
 descriptor = "c includes in src/material_util.h"
 cost_tokens = 33
-cum_tokens = 8995
+cum_tokens = 5463
 
 [batches.content]
 kind = "lines"
@@ -4314,307 +4640,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 158
-key = 'Fs(DirListing { dir: "src/service" })'
-descriptor = "listing of 'src/service'"
-cost_tokens = 25
-cum_tokens = 9020
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/service"
-entries = ["gamepad.lua", "loader.lua", "log.lua", "render.lua", "settings.lua", "start.lua"]
-
-[[batches]]
-position = 159
-key = 'Lua(DeclNames { file: "src/service/log.lua" })'
-descriptor = "lua decl names surface in src/service/log.lua"
-cost_tokens = 23
-cum_tokens = 9043
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/log.lua"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/log.lua"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/log.lua"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/service/log.lua"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 160
-key = 'Lua(Decl { file: "src/service/log.lua", start_line: 12 })'
-descriptor = "lua decl at src/service/log.lua:12"
-cost_tokens = 0
-cum_tokens = 9043
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/log.lua"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/log.lua"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 161
-key = 'Lua(Decl { file: "src/service/log.lua", start_line: 38 })'
-descriptor = "lua decl at src/service/log.lua:38"
-cost_tokens = 0
-cum_tokens = 9043
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/log.lua"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/log.lua"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 162
-key = 'Lua(DeclNames { file: "src/service/settings.lua" })'
-descriptor = "lua decl names surface in src/service/settings.lua"
-cost_tokens = 23
-cum_tokens = 9066
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/settings.lua"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/settings.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/settings.lua"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/service/settings.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 163
-key = 'Lua(Decl { file: "src/service/settings.lua", start_line: 9 })'
-descriptor = "lua decl at src/service/settings.lua:9"
-cost_tokens = 0
-cum_tokens = 9066
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/settings.lua"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/settings.lua"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 164
-key = 'Lua(Decl { file: "src/service/settings.lua", start_line: 14 })'
-descriptor = "lua decl at src/service/settings.lua:14"
-cost_tokens = 0
-cum_tokens = 9066
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/settings.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/settings.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 165
-key = 'Lua(DeclNames { file: "src/service/gamepad.lua" })'
-descriptor = "lua decl names surface in src/service/gamepad.lua"
-cost_tokens = 25
-cum_tokens = 9091
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/gamepad.lua"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/gamepad.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/gamepad.lua"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/service/gamepad.lua"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 166
-key = 'Lua(Decl { file: "src/service/gamepad.lua", start_line: 10 })'
-descriptor = "lua decl at src/service/gamepad.lua:10"
-cost_tokens = 0
-cum_tokens = 9091
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/gamepad.lua"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/gamepad.lua"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 167
-key = 'Lua(Decl { file: "src/service/gamepad.lua", start_line: 15 })'
-descriptor = "lua decl at src/service/gamepad.lua:15"
-cost_tokens = 0
-cum_tokens = 9091
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/service/gamepad.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/service/gamepad.lua"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 168
 key = 'C(DeclNames { file: "src/material_util.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/material_util.c"
 cost_tokens = 27
-cum_tokens = 9118
+cum_tokens = 5490
 
 [batches.content]
 kind = "lines"
@@ -4668,11 +4698,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 169
+position = 168
 key = 'C(Decl { file: "src/openurl.c", start_line: 88 })'
 descriptor = "c decl at src/openurl.c:88"
 cost_tokens = 13
-cum_tokens = 9131
+cum_tokens = 5503
 
 [batches.content]
 kind = "lines"
@@ -4694,11 +4724,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 170
+position = 169
 key = 'Lua(DeclBody { file: "src/service/settings.lua", start_line: 14 })'
 descriptor = "lua decl body at src/service/settings.lua:14"
 cost_tokens = 7
-cum_tokens = 9138
+cum_tokens = 5510
 
 [batches.content]
 kind = "lines"
@@ -4712,11 +4742,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 171
+position = 170
 key = 'C(Includes { file: "src/sprite_submit.h" })'
 descriptor = "c includes in src/sprite_submit.h"
 cost_tokens = 38
-cum_tokens = 9176
+cum_tokens = 5548
 
 [batches.content]
 kind = "lines"
@@ -4730,11 +4760,147 @@ end = 7
 kind = "full"
 
 [[batches]]
+position = 171
+key = 'Lua(DeclNames { file: "src/lualib/util.lua" })'
+descriptor = "lua decl names surface in src/lualib/util.lua"
+cost_tokens = 38
+cum_tokens = 5586
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 172
+key = 'Lua(Decl { file: "src/lualib/util.lua", start_line: 9 })'
+descriptor = "lua decl at src/lualib/util.lua:9"
+cost_tokens = 0
+cum_tokens = 5586
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 173
+key = 'Lua(Decl { file: "src/lualib/util.lua", start_line: 13 })'
+descriptor = "lua decl at src/lualib/util.lua:13"
+cost_tokens = 0
+cum_tokens = 5586
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 174
+key = 'Lua(Decl { file: "src/lualib/util.lua", start_line: 20 })'
+descriptor = "lua decl at src/lualib/util.lua:20"
+cost_tokens = 0
+cum_tokens = 5586
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 175
 key = 'C(DeclNames { file: "src/drawmgr.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/drawmgr.c"
 cost_tokens = 30
-cum_tokens = 9206
+cum_tokens = 5616
 
 [batches.content]
 kind = "lines"
@@ -4788,11 +4954,11 @@ end = 172
 kind = "ellipsis"
 
 [[batches]]
-position = 173
+position = 176
 key = 'C(DeclNames { file: "src/material_default.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/material_default.c"
 cost_tokens = 30
-cum_tokens = 9236
+cum_tokens = 5646
 
 [batches.content]
 kind = "lines"
@@ -4846,11 +5012,11 @@ end = 151
 kind = "ellipsis"
 
 [[batches]]
-position = 174
+position = 177
 key = 'C(Decl { file: "src/drawmgr.c", start_line: 171 })'
 descriptor = "c decl at src/drawmgr.c:171"
 cost_tokens = 14
-cum_tokens = 9250
+cum_tokens = 5660
 
 [batches.content]
 kind = "lines"
@@ -4872,11 +5038,11 @@ end = 173
 kind = "ellipsis"
 
 [[batches]]
-position = 175
+position = 178
 key = 'C(Decl { file: "src/font_system.c", start_line: 287 })'
 descriptor = "c decl at src/font_system.c:287"
 cost_tokens = 14
-cum_tokens = 9264
+cum_tokens = 5674
 
 [batches.content]
 kind = "lines"
@@ -4898,11 +5064,11 @@ end = 289
 kind = "ellipsis"
 
 [[batches]]
-position = 176
+position = 179
 key = 'C(Decl { file: "src/lfs.c", start_line: 825 })'
 descriptor = "c decl at src/lfs.c:825"
 cost_tokens = 14
-cum_tokens = 9278
+cum_tokens = 5688
 
 [batches.content]
 kind = "lines"
@@ -4924,11 +5090,11 @@ end = 827
 kind = "ellipsis"
 
 [[batches]]
-position = 177
+position = 180
 key = 'C(Decl { file: "src/material_default.c", start_line: 150 })'
 descriptor = "c decl at src/material_default.c:150"
 cost_tokens = 14
-cum_tokens = 9292
+cum_tokens = 5702
 
 [batches.content]
 kind = "lines"
@@ -4950,11 +5116,11 @@ end = 152
 kind = "ellipsis"
 
 [[batches]]
-position = 178
+position = 181
 key = 'C(DeclBody { file: "src/font_define.h", start_line: 26 })'
 descriptor = "c decl body at src/font_define.h:26"
 cost_tokens = 19
-cum_tokens = 9311
+cum_tokens = 5721
 
 [batches.content]
 kind = "lines"
@@ -4968,11 +5134,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 179
+position = 182
 key = 'C(DeclNames { file: "src/file.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/file.c"
 cost_tokens = 31
-cum_tokens = 9342
+cum_tokens = 5752
 
 [batches.content]
 kind = "lines"
@@ -5010,109 +5176,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 180
-key = 'Fs(DirListing { dir: "src/platform/linux" })'
-descriptor = "listing of 'src/platform/linux'"
-cost_tokens = 16
-cum_tokens = 9358
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/platform/linux"
-entries = ["soluna_linux_ime.c", "soluna_linux_ime.h"]
-
-[[batches]]
-position = 181
-key = 'C(DeclNames { file: "src/platform/linux/soluna_linux_ime.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/platform/linux/soluna_linux_ime.h"
-cost_tokens = 115
-cum_tokens = 9473
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/platform/linux/soluna_linux_ime.h"
-start = 6
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/platform/linux/soluna_linux_ime.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 182
-key = 'C(Includes { file: "src/platform/linux/soluna_linux_ime.h" })'
-descriptor = "c includes in src/platform/linux/soluna_linux_ime.h"
-cost_tokens = 10
-cum_tokens = 9483
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/platform/linux/soluna_linux_ime.h"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 183
-key = 'Fs(DirListing { dir: "src/platform/windows" })'
-descriptor = "listing of 'src/platform/windows'"
-cost_tokens = 16
-cum_tokens = 9499
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/platform/windows"
-entries = ["soluna_windows_ime.c", "soluna_windows_ime.h"]
-
-[[batches]]
-position = 184
-key = 'C(DeclNames { file: "src/platform/windows/soluna_windows_ime.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/platform/windows/soluna_windows_ime.h"
-cost_tokens = 72
-cum_tokens = 9571
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/platform/windows/soluna_windows_ime.h"
-start = 4
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/platform/windows/soluna_windows_ime.h"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 185
 key = 'Lua(DeclBody { file: "src/service/log.lua", start_line: 38 })'
 descriptor = "lua decl body at src/service/log.lua:38"
 cost_tokens = 8
-cum_tokens = 9579
+cum_tokens = 5760
 
 [batches.content]
 kind = "lines"
@@ -5126,37 +5194,173 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 186
-key = 'C(Decl { file: "src/file.c", start_line: 53 })'
-descriptor = "c decl at src/file.c:53"
-cost_tokens = 15
-cum_tokens = 9594
+position = 184
+key = 'Lua(DeclNames { file: "src/lualib/packageloader.lua" })'
+descriptor = "lua decl names surface in src/lualib/packageloader.lua"
+cost_tokens = 42
+cum_tokens = 5802
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/file.c"
-start = 53
-end = 54
+path = "src/lualib/packageloader.lua"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/file.c"
-start = 55
-end = 55
+path = "src/lualib/packageloader.lua"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 185
+key = 'Lua(Decl { file: "src/lualib/packageloader.lua", start_line: 14 })'
+descriptor = "lua decl at src/lualib/packageloader.lua:14"
+cost_tokens = 0
+cum_tokens = 5802
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 186
+key = 'Lua(Decl { file: "src/lualib/packageloader.lua", start_line: 163 })'
+descriptor = "lua decl at src/lualib/packageloader.lua:163"
+cost_tokens = 0
+cum_tokens = 5802
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 164
+end = 164
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 187
+key = 'Lua(Decl { file: "src/lualib/packageloader.lua", start_line: 169 })'
+descriptor = "lua decl at src/lualib/packageloader.lua:169"
+cost_tokens = 0
+cum_tokens = 5802
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/packageloader.lua"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 188
+key = 'C(Decl { file: "src/file.c", start_line: 53 })'
+descriptor = "c decl at src/file.c:53"
+cost_tokens = 15
+cum_tokens = 5817
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/file.c"
+start = 53
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/file.c"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 189
 key = 'C(Decl { file: "src/material_blit.c", start_line: 53 })'
 descriptor = "c decl at src/material_blit.c:53"
 cost_tokens = 15
-cum_tokens = 9609
+cum_tokens = 5832
 
 [batches.content]
 kind = "lines"
@@ -5178,11 +5382,11 @@ end = 55
 kind = "ellipsis"
 
 [[batches]]
-position = 188
+position = 190
 key = 'C(Decl { file: "src/writelog.c", start_line: 76 })'
 descriptor = "c decl at src/writelog.c:76"
 cost_tokens = 15
-cum_tokens = 9624
+cum_tokens = 5847
 
 [batches.content]
 kind = "lines"
@@ -5204,11 +5408,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 189
+position = 191
 key = 'C(DeclNames { file: "src/transform.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/transform.c"
 cost_tokens = 34
-cum_tokens = 9658
+cum_tokens = 5881
 
 [batches.content]
 kind = "lines"
@@ -5278,11 +5482,11 @@ end = 77
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 192
 key = 'C(Decl { file: "src/transform.c", start_line: 9 })'
 descriptor = "c decl at src/transform.c:9"
 cost_tokens = 9
-cum_tokens = 9667
+cum_tokens = 5890
 
 [batches.content]
 kind = "lines"
@@ -5304,11 +5508,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 191
+position = 193
 key = 'C(DeclNames { file: "src/srbuffer.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/srbuffer.c"
 cost_tokens = 35
-cum_tokens = 9702
+cum_tokens = 5925
 
 [batches.content]
 kind = "lines"
@@ -5378,11 +5582,11 @@ end = 123
 kind = "ellipsis"
 
 [[batches]]
-position = 192
+position = 194
 key = 'C(Decl { file: "src/srbuffer.c", start_line: 14 })'
 descriptor = "c decl at src/srbuffer.c:14"
 cost_tokens = 11
-cum_tokens = 9713
+cum_tokens = 5936
 
 [batches.content]
 kind = "lines"
@@ -5404,11 +5608,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 193
+position = 195
 key = 'C(Decl { file: "src/truetype.c", start_line: 127 })'
 descriptor = "c decl at src/truetype.c:127"
 cost_tokens = 16
-cum_tokens = 9729
+cum_tokens = 5952
 
 [batches.content]
 kind = "lines"
@@ -5430,39 +5634,83 @@ end = 129
 kind = "ellipsis"
 
 [[batches]]
-position = 194
-key = 'Fs(DirListing { dir: "src/platform/macos" })'
-descriptor = "listing of 'src/platform/macos'"
-cost_tokens = 18
-cum_tokens = 9747
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/platform/macos"
-entries = ["soluna_macos_ime.h", "soluna_macos_ime.m"]
-
-[[batches]]
-position = 195
-key = 'C(DeclNames { file: "src/platform/macos/soluna_macos_ime.h", chunk_index: 0 })'
-descriptor = "c decl names surface in src/platform/macos/soluna_macos_ime.h"
-cost_tokens = 86
-cum_tokens = 9833
+position = 196
+key = 'Lua(DeclNames { file: "src/lualib/initsetting.lua" })'
+descriptor = "lua decl names surface in src/lualib/initsetting.lua"
+cost_tokens = 46
+cum_tokens = 5998
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/platform/macos/soluna_macos_ime.h"
-start = 6
+path = "src/lualib/initsetting.lua"
+start = 10
 end = 10
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/platform/macos/soluna_macos_ime.h"
+path = "src/lualib/initsetting.lua"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 197
+key = 'Lua(Decl { file: "src/lualib/initsetting.lua", start_line: 10 })'
+descriptor = "lua decl at src/lualib/initsetting.lua:10"
+cost_tokens = 0
+cum_tokens = 5998
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
 start = 11
 end = 11
 
@@ -5470,29 +5718,241 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 196
-key = 'C(Includes { file: "src/platform/macos/soluna_macos_ime.h" })'
-descriptor = "c includes in src/platform/macos/soluna_macos_ime.h"
-cost_tokens = 10
-cum_tokens = 9843
+position = 198
+key = 'Lua(Decl { file: "src/lualib/initsetting.lua", start_line: 44 })'
+descriptor = "lua decl at src/lualib/initsetting.lua:44"
+cost_tokens = 0
+cum_tokens = 5998
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/platform/macos/soluna_macos_ime.h"
-start = 4
-end = 4
+path = "src/lualib/initsetting.lua"
+start = 44
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 197
+position = 199
+key = 'Lua(Decl { file: "src/lualib/initsetting.lua", start_line: 62 })'
+descriptor = "lua decl at src/lualib/initsetting.lua:62"
+cost_tokens = 0
+cum_tokens = 5998
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/initsetting.lua"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 200
+key = 'Lua(DeclNames { file: "src/lualib/main.lua" })'
+descriptor = "lua decl names surface in src/lualib/main.lua"
+cost_tokens = 47
+cum_tokens = 6045
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 201
+key = 'Lua(Decl { file: "src/lualib/main.lua", start_line: 19 })'
+descriptor = "lua decl at src/lualib/main.lua:19"
+cost_tokens = 0
+cum_tokens = 6045
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 202
+key = 'Lua(Decl { file: "src/lualib/main.lua", start_line: 50 })'
+descriptor = "lua decl at src/lualib/main.lua:50"
+cost_tokens = 0
+cum_tokens = 6045
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 203
+key = 'Lua(Decl { file: "src/lualib/main.lua", start_line: 159 })'
+descriptor = "lua decl at src/lualib/main.lua:159"
+cost_tokens = 0
+cum_tokens = 6045
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 204
+key = 'Lua(Decl { file: "src/lualib/main.lua", start_line: 183 })'
+descriptor = "lua decl at src/lualib/main.lua:183"
+cost_tokens = 10
+cum_tokens = 6055
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 183
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/main.lua"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 205
 key = 'C(DeclNames { file: "src/embedlua.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/embedlua.c"
 cost_tokens = 38
-cum_tokens = 9881
+cum_tokens = 6093
 
 [batches.content]
 kind = "lines"
@@ -5546,11 +6006,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 198
+position = 206
 key = 'C(Decl { file: "src/embedlua.c", start_line: 55 })'
 descriptor = "c decl at src/embedlua.c:55"
 cost_tokens = 14
-cum_tokens = 9895
+cum_tokens = 6107
 
 [batches.content]
 kind = "lines"
@@ -5572,11 +6032,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 199
+position = 207
 key = 'C(DeclNames { file: "src/openlibs.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/openlibs.c"
 cost_tokens = 38
-cum_tokens = 9933
+cum_tokens = 6145
 
 [batches.content]
 kind = "lines"
@@ -5614,11 +6074,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 200
+position = 208
 key = 'C(Decl { file: "src/openlibs.c", start_line: 11 })'
 descriptor = "c decl at src/openlibs.c:11"
 cost_tokens = 14
-cum_tokens = 9947
+cum_tokens = 6159
 
 [batches.content]
 kind = "lines"
@@ -5640,11 +6100,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 201
+position = 209
 key = 'C(DeclNames { file: "src/render_uniform.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/render_uniform.c"
 cost_tokens = 38
-cum_tokens = 9985
+cum_tokens = 6197
 
 [batches.content]
 kind = "lines"
@@ -5682,11 +6142,11 @@ end = 185
 kind = "ellipsis"
 
 [[batches]]
-position = 202
+position = 210
 key = 'C(Decl { file: "src/render_uniform.c", start_line: 184 })'
 descriptor = "c decl at src/render_uniform.c:184"
 cost_tokens = 13
-cum_tokens = 9998
+cum_tokens = 6210
 
 [batches.content]
 kind = "lines"
@@ -5706,3 +6166,2461 @@ end = 186
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 211
+key = 'C(Decl { file: "src/srbuffer.c", start_line: 25 })'
+descriptor = "c decl at src/srbuffer.c:25"
+cost_tokens = 17
+cum_tokens = 6227
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/srbuffer.c"
+start = 25
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/srbuffer.c"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 212
+key = 'C(DeclNames { file: "src/font_manager.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/font_manager.h"
+cost_tokens = 399
+cum_tokens = 6626
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 9
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 22
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 213
+key = 'C(Decl { file: "src/font_manager.h", start_line: 22 })'
+descriptor = "c decl at src/font_manager.h:22"
+cost_tokens = 0
+cum_tokens = 6626
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 214
+key = 'C(Decl { file: "src/font_manager.h", start_line: 31 })'
+descriptor = "c decl at src/font_manager.h:31"
+cost_tokens = 0
+cum_tokens = 6626
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 215
+key = 'C(DeclDoc { file: "src/font_manager.h", start_line: 31 })'
+descriptor = "c decl doc at src/font_manager.h:31"
+cost_tokens = 6
+cum_tokens = 6632
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 216
+key = 'C(Includes { file: "src/font_manager.h" })'
+descriptor = "c includes in src/font_manager.h"
+cost_tokens = 45
+cum_tokens = 6677
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/font_manager.h"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 217
+key = 'Lua(MetaFileWhole { file: "docs/lfs.lua" })'
+descriptor = "lua meta-file at docs/lfs.lua"
+cost_tokens = 196
+cum_tokens = 6873
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/lfs.lua"
+start = 1
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 218
+key = 'Lua(MetaFileWhole { file: "docs/datalist.lua" })'
+descriptor = "lua meta-file at docs/datalist.lua"
+cost_tokens = 202
+cum_tokens = 7075
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/datalist.lua"
+start = 1
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 219
+key = 'Lua(DeclNames { file: "src/lualib/text.lua" })'
+descriptor = "lua decl names surface in src/lualib/text.lua"
+cost_tokens = 52
+cum_tokens = 7127
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 220
+key = 'Lua(Decl { file: "src/lualib/text.lua", start_line: 9 })'
+descriptor = "lua decl at src/lualib/text.lua:9"
+cost_tokens = 0
+cum_tokens = 7127
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 221
+key = 'Lua(Decl { file: "src/lualib/text.lua", start_line: 27 })'
+descriptor = "lua decl at src/lualib/text.lua:27"
+cost_tokens = 0
+cum_tokens = 7127
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 222
+key = 'Lua(Decl { file: "src/lualib/text.lua", start_line: 41 })'
+descriptor = "lua decl at src/lualib/text.lua:41"
+cost_tokens = 0
+cum_tokens = 7127
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 223
+key = 'Lua(Decl { file: "src/lualib/text.lua", start_line: 53 })'
+descriptor = "lua decl at src/lualib/text.lua:53"
+cost_tokens = 0
+cum_tokens = 7127
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/text.lua"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 224
+key = 'C(Decl { file: "src/srbuffer.c", start_line: 122 })'
+descriptor = "c decl at src/srbuffer.c:122"
+cost_tokens = 18
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/srbuffer.c"
+start = 122
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/srbuffer.c"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 225
+key = 'Lua(MetaFileWhole { file: "docs/zip.lua" })'
+descriptor = "lua meta-file at docs/zip.lua"
+cost_tokens = 216
+cum_tokens = 7361
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/zip.lua"
+start = 1
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'Lua(DeclBody { file: "src/lualib/util.lua", start_line: 9 })'
+descriptor = "lua decl body at src/lualib/util.lua:9"
+cost_tokens = 10
+cum_tokens = 7371
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'C(Decl { file: "src/srbuffer.c", start_line: 50 })'
+descriptor = "c decl at src/srbuffer.c:50"
+cost_tokens = 19
+cum_tokens = 7390
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/srbuffer.c"
+start = 50
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/srbuffer.c"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 228
+key = 'C(Includes { file: "src/truetype.h" })'
+descriptor = "c includes in src/truetype.h"
+cost_tokens = 61
+cum_tokens = 7451
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/truetype.h"
+start = 4
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 229
+key = 'C(DeclBody { file: "src/transform.h", start_line: 16 })'
+descriptor = "c decl body at src/transform.h:16"
+cost_tokens = 47
+cum_tokens = 7498
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/transform.h"
+start = 18
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 230
+key = 'C(Decl { file: "src/transform.c", start_line: 31 })'
+descriptor = "c decl at src/transform.c:31"
+cost_tokens = 20
+cum_tokens = 7518
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/transform.c"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/transform.c"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 231
+key = 'C(DeclNames { file: "src/font.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/font.c"
+cost_tokens = 48
+cum_tokens = 7566
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 248
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 249
+end = 249
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 232
+key = 'C(Decl { file: "src/font.c", start_line: 159 })'
+descriptor = "c decl at src/font.c:159"
+cost_tokens = 13
+cum_tokens = 7579
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 159
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 233
+key = 'C(Decl { file: "src/font.c", start_line: 248 })'
+descriptor = "c decl at src/font.c:248"
+cost_tokens = 14
+cum_tokens = 7593
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 248
+end = 249
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/font.c"
+start = 250
+end = 250
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 234
+key = 'Lua(MetaFileWhole { file: "docs/font.lua" })'
+descriptor = "lua meta-file at docs/font.lua"
+cost_tokens = 248
+cum_tokens = 7841
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/font.lua"
+start = 1
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'Lua(MetaFileWhole { file: "docs/material_mask.lua" })'
+descriptor = "lua meta-file at docs/material_mask.lua"
+cost_tokens = 252
+cum_tokens = 8093
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/material_mask.lua"
+start = 1
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Lua(MetaFileWhole { file: "docs/material_quad.lua" })'
+descriptor = "lua meta-file at docs/material_quad.lua"
+cost_tokens = 252
+cum_tokens = 8345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/material_quad.lua"
+start = 1
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Lua(MetaFileWhole { file: "docs/crypt.lua" })'
+descriptor = "lua meta-file at docs/crypt.lua"
+cost_tokens = 256
+cum_tokens = 8601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/crypt.lua"
+start = 1
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'C(Decl { file: "src/transform.c", start_line: 76 })'
+descriptor = "c decl at src/transform.c:76"
+cost_tokens = 22
+cum_tokens = 8623
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/transform.c"
+start = 76
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/transform.c"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 239
+key = 'Lua(DeclBody { file: "src/lualib/util.lua", start_line: 20 })'
+descriptor = "lua decl body at src/lualib/util.lua:20"
+cost_tokens = 12
+cum_tokens = 8635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/util.lua"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'C(Decl { file: "src/material_blit.c", start_line: 9 })'
+descriptor = "c decl at src/material_blit.c:9"
+cost_tokens = 27
+cum_tokens = 8662
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_blit.c"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'C(DeclNames { file: "src/batch.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/batch.c"
+cost_tokens = 58
+cum_tokens = 8720
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 242
+key = 'C(Decl { file: "src/batch.c", start_line: 13 })'
+descriptor = "c decl at src/batch.c:13"
+cost_tokens = 10
+cum_tokens = 8730
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 13
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 243
+key = 'C(Decl { file: "src/batch.c", start_line: 29 })'
+descriptor = "c decl at src/batch.c:29"
+cost_tokens = 13
+cum_tokens = 8743
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 29
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 244
+key = 'C(Decl { file: "src/batch.c", start_line: 37 })'
+descriptor = "c decl at src/batch.c:37"
+cost_tokens = 17
+cum_tokens = 8760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 37
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 245
+key = 'C(Decl { file: "src/batch.c", start_line: 8 })'
+descriptor = "c decl at src/batch.c:8"
+cost_tokens = 21
+cum_tokens = 8781
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/batch.c"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
+key = 'Lua(DeclNames { file: "src/lualib/print_r.lua" })'
+descriptor = "lua decl names surface in src/lualib/print_r.lua"
+cost_tokens = 75
+cum_tokens = 8856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 140
+end = 140
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 247
+key = 'Lua(Decl { file: "src/lualib/print_r.lua", start_line: 8 })'
+descriptor = "lua decl at src/lualib/print_r.lua:8"
+cost_tokens = 0
+cum_tokens = 8856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 248
+key = 'Lua(Decl { file: "src/lualib/print_r.lua", start_line: 31 })'
+descriptor = "lua decl at src/lualib/print_r.lua:31"
+cost_tokens = 0
+cum_tokens = 8856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 249
+key = 'Lua(Decl { file: "src/lualib/print_r.lua", start_line: 71 })'
+descriptor = "lua decl at src/lualib/print_r.lua:71"
+cost_tokens = 0
+cum_tokens = 8856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 250
+key = 'Lua(Decl { file: "src/lualib/print_r.lua", start_line: 100 })'
+descriptor = "lua decl at src/lualib/print_r.lua:100"
+cost_tokens = 0
+cum_tokens = 8856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 251
+key = 'Lua(Decl { file: "src/lualib/print_r.lua", start_line: 140 })'
+descriptor = "lua decl at src/lualib/print_r.lua:140"
+cost_tokens = 0
+cum_tokens = 8856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 140
+end = 140
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 252
+key = 'Lua(Decl { file: "src/lualib/print_r.lua", start_line: 144 })'
+descriptor = "lua decl at src/lualib/print_r.lua:144"
+cost_tokens = 0
+cum_tokens = 8856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/print_r.lua"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 253
+key = 'C(Includes { file: "src/winfile.c" })'
+descriptor = "c includes in src/winfile.c"
+cost_tokens = 12
+cum_tokens = 8868
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/winfile.c"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 254
+key = 'C(DeclNames { file: "src/material_mask.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/material_mask.c"
+cost_tokens = 59
+cum_tokens = 8927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 255
+key = 'C(Decl { file: "src/material_mask.c", start_line: 15 })'
+descriptor = "c decl at src/material_mask.c:15"
+cost_tokens = 13
+cum_tokens = 8940
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 15
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 256
+key = 'C(Decl { file: "src/material_mask.c", start_line: 193 })'
+descriptor = "c decl at src/material_mask.c:193"
+cost_tokens = 14
+cum_tokens = 8954
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 193
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 257
+key = 'C(Decl { file: "src/material_mask.c", start_line: 28 })'
+descriptor = "c decl at src/material_mask.c:28"
+cost_tokens = 22
+cum_tokens = 8976
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_mask.c"
+start = 28
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 258
+key = 'C(DeclNames { file: "src/material_quad.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/material_quad.c"
+cost_tokens = 59
+cum_tokens = 9035
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 259
+key = 'C(Decl { file: "src/material_quad.c", start_line: 15 })'
+descriptor = "c decl at src/material_quad.c:15"
+cost_tokens = 13
+cum_tokens = 9048
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 15
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 260
+key = 'C(Decl { file: "src/material_quad.c", start_line: 182 })'
+descriptor = "c decl at src/material_quad.c:182"
+cost_tokens = 14
+cum_tokens = 9062
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 182
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_quad.c"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 261
+key = 'Lua(DeclNames { file: "src/service/start.lua" })'
+descriptor = "lua decl names surface in src/service/start.lua"
+cost_tokens = 79
+cum_tokens = 9141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 262
+key = 'Lua(Decl { file: "src/service/start.lua", start_line: 22 })'
+descriptor = "lua decl at src/service/start.lua:22"
+cost_tokens = 0
+cum_tokens = 9141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 263
+key = 'Lua(Decl { file: "src/service/start.lua", start_line: 26 })'
+descriptor = "lua decl at src/service/start.lua:26"
+cost_tokens = 0
+cum_tokens = 9141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 264
+key = 'Lua(Decl { file: "src/service/start.lua", start_line: 31 })'
+descriptor = "lua decl at src/service/start.lua:31"
+cost_tokens = 0
+cum_tokens = 9141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 265
+key = 'Lua(Decl { file: "src/service/start.lua", start_line: 48 })'
+descriptor = "lua decl at src/service/start.lua:48"
+cost_tokens = 0
+cum_tokens = 9141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 266
+key = 'Lua(Decl { file: "src/service/start.lua", start_line: 59 })'
+descriptor = "lua decl at src/service/start.lua:59"
+cost_tokens = 0
+cum_tokens = 9141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 267
+key = 'Lua(Decl { file: "src/service/start.lua", start_line: 78 })'
+descriptor = "lua decl at src/service/start.lua:78"
+cost_tokens = 0
+cum_tokens = 9141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 268
+key = 'Lua(Decl { file: "src/service/start.lua", start_line: 176 })'
+descriptor = "lua decl at src/service/start.lua:176"
+cost_tokens = 0
+cum_tokens = 9141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 269
+key = 'Lua(DeclDoc { file: "src/service/start.lua", start_line: 59 })'
+descriptor = "lua decl doc at src/service/start.lua:59"
+cost_tokens = 12
+cum_tokens = 9153
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 270
+key = 'Lua(DeclBody { file: "src/service/start.lua", start_line: 176 })'
+descriptor = "lua decl body at src/service/start.lua:176"
+cost_tokens = 7
+cum_tokens = 9160
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 271
+key = 'C(Decl { file: "src/transform.c", start_line: 66 })'
+descriptor = "c decl at src/transform.c:66"
+cost_tokens = 25
+cum_tokens = 9185
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/transform.c"
+start = 66
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/transform.c"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 272
+key = 'C(Decl { file: "src/material_util.c", start_line: 24 })'
+descriptor = "c decl at src/material_util.c:24"
+cost_tokens = 26
+cum_tokens = 9211
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/material_util.c"
+start = 24
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/material_util.c"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 273
+key = 'Lua(DeclBody { file: "src/service/start.lua", start_line: 26 })'
+descriptor = "lua decl body at src/service/start.lua:26"
+cost_tokens = 14
+cum_tokens = 9225
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/service/start.lua"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 274
+key = 'Lua(MetaFileWhole { file: "docs/layout.lua" })'
+descriptor = "lua meta-file at docs/layout.lua"
+cost_tokens = 373
+cum_tokens = 9598
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/layout.lua"
+start = 1
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 275
+key = 'Lua(DeclNames { file: "src/lualib/fontmgr.lua" })'
+descriptor = "lua decl names surface in src/lualib/fontmgr.lua"
+cost_tokens = 96
+cum_tokens = 9694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 214
+end = 214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 252
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 258
+end = 258
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 264
+end = 264
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 290
+end = 290
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 253
+end = 253
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 259
+end = 259
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 265
+end = 265
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 298
+end = 298
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 276
+key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 15 })'
+descriptor = "lua decl at src/lualib/fontmgr.lua:15"
+cost_tokens = 0
+cum_tokens = 9694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 277
+key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 214 })'
+descriptor = "lua decl at src/lualib/fontmgr.lua:214"
+cost_tokens = 0
+cum_tokens = 9694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 214
+end = 214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 278
+key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 252 })'
+descriptor = "lua decl at src/lualib/fontmgr.lua:252"
+cost_tokens = 0
+cum_tokens = 9694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 252
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 253
+end = 253
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 279
+key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 258 })'
+descriptor = "lua decl at src/lualib/fontmgr.lua:258"
+cost_tokens = 0
+cum_tokens = 9694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 258
+end = 258
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 259
+end = 259
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 280
+key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 264 })'
+descriptor = "lua decl at src/lualib/fontmgr.lua:264"
+cost_tokens = 0
+cum_tokens = 9694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 264
+end = 264
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 265
+end = 265
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 281
+key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 290 })'
+descriptor = "lua decl at src/lualib/fontmgr.lua:290"
+cost_tokens = 0
+cum_tokens = 9694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 290
+end = 290
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 282
+key = 'Lua(Decl { file: "src/lualib/fontmgr.lua", start_line: 297 })'
+descriptor = "lua decl at src/lualib/fontmgr.lua:297"
+cost_tokens = 0
+cum_tokens = 9694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lualib/fontmgr.lua"
+start = 298
+end = 298
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 283
+key = 'C(DeclNames { file: "src/luazip.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/luazip.c"
+cost_tokens = 75
+cum_tokens = 9769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 684
+end = 684
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 285
+end = 285
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 685
+end = 685
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 284
+key = 'C(Decl { file: "src/luazip.c", start_line: 151 })'
+descriptor = "c decl at src/luazip.c:151"
+cost_tokens = 12
+cum_tokens = 9781
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 151
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 285
+key = 'C(Decl { file: "src/luazip.c", start_line: 284 })'
+descriptor = "c decl at src/luazip.c:284"
+cost_tokens = 14
+cum_tokens = 9795
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 284
+end = 286
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 286
+key = 'C(Decl { file: "src/luazip.c", start_line: 684 })'
+descriptor = "c decl at src/luazip.c:684"
+cost_tokens = 13
+cum_tokens = 9808
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 684
+end = 685
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 686
+end = 686
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 287
+key = 'C(Decl { file: "src/luazip.c", start_line: 155 })'
+descriptor = "c decl at src/luazip.c:155"
+cost_tokens = 19
+cum_tokens = 9827
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/luazip.c"
+start = 155
+end = 158
+
+[batches.content.spans.render]
+kind = "full"
