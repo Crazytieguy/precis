@@ -1,7 +1,7 @@
 //! TOML walker. Uses `tree-sitter-toml-ng` to identify top-level `[table]`
 //! headers and their line ranges. Emits one batch per ontology-recognized
 //! section group (identity / scripts / features / ordinary dependencies /
-//! development dependencies / config).
+//! development dependencies / per-tool config / other config).
 //!
 //! Keys:
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
@@ -13,10 +13,12 @@
 //!   621 dependency arrays under `[project]`
 //! - `DevelopmentDependencies { file }` — Cargo `[dev-dependencies]`,
 //!   `[build-dependencies]`, and target-conditional dependency tables
-//! - `Config { file }` — manifest-level build-system, package metadata,
-//!   task-runner/tool config, Cargo profiles/targets, and packaging config
+//! - `ToolConfig { file, tool }` — one Python-manifest `tool.<name>` family,
+//!   with adjacent small tables packed into compact families
+//! - `Config { file }` — other manifest-level build-system, package metadata,
+//!   Cargo profiles/targets, and packaging config
 
-use std::collections::HashSet;
+use std::collections::{BTreeMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -38,6 +40,13 @@ const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
 const PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR: f64 = 0.4;
 const PYPROJECT_NON_LEDE_IDENTITY_FACTOR: f64 = 0.1;
+
+/// Per-tool tables below this source-token size are packed with adjacent
+/// small tables. This avoids turning a large config roster into a swarm of
+/// 10--40 token scheduler trinkets while keeping useful config slices near
+/// the 100--250 token target once line labels and gap markers are rendered.
+const TOOL_CONFIG_FAMILY_MIN_TOKENS: usize = 120;
+const TOOL_CONFIG_FAMILY_MAX_TOKENS: usize = 240;
 
 type Section = (String, usize, usize);
 
@@ -125,6 +134,20 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: development_dependencies_value(&file, ctx),
             });
         }
+        for (tool, content) in
+            build_tool_config_contents(&file, &source, &sections, python_project_manifest)
+        {
+            out.push(Batch {
+                key: TomlKey::ToolConfig {
+                    file: file.clone(),
+                    tool,
+                }
+                .into(),
+                predecessor: None,
+                content,
+                value: config_value(&file, ctx),
+            });
+        }
         if let Some(content) =
             build_config_content(&file, &source, &sections, python_project_manifest)
         {
@@ -195,6 +218,109 @@ fn build_development_dependencies_content(
     single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
+fn build_tool_config_contents(
+    file: &Path,
+    source: &str,
+    sections: &[Section],
+    python_project_manifest: bool,
+) -> Vec<(String, crate::content::BatchContent)> {
+    if !should_partition_tool_config(file, source, sections, python_project_manifest) {
+        return Vec::new();
+    }
+    pack_small_tool_config_families(source, collect_tool_config_lines(file, sections))
+        .into_iter()
+        .filter_map(|(tool, lines)| {
+            single_file_lines_content(file, source, FileLines::new(dedup_sorted(lines)))
+                .map(|content| (tool, content))
+        })
+        .collect()
+}
+
+fn pack_small_tool_config_families(
+    source: &str,
+    families: BTreeMap<String, Vec<usize>>,
+) -> Vec<(String, Vec<usize>)> {
+    let source_lines: Vec<&str> = source.lines().collect();
+    let mut ordered: Vec<_> = families.into_iter().collect();
+    ordered.sort_by_key(|(_, lines)| lines.first().copied().unwrap_or(usize::MAX));
+
+    let mut packed = Vec::new();
+    let mut small_family: Option<(Vec<String>, Vec<usize>, usize)> = None;
+    for (tool, lines) in ordered {
+        let tokens = tool_config_source_tokens(&source_lines, &lines);
+        if tokens >= TOOL_CONFIG_FAMILY_MIN_TOKENS {
+            flush_small_tool_family(&mut packed, &mut small_family);
+            packed.push((tool, lines));
+            continue;
+        }
+
+        if small_family
+            .as_ref()
+            .is_some_and(|(_, _, total)| total + tokens > TOOL_CONFIG_FAMILY_MAX_TOKENS)
+        {
+            flush_small_tool_family(&mut packed, &mut small_family);
+        }
+        let (tools, packed_lines, total) =
+            small_family.get_or_insert_with(|| (Vec::new(), Vec::new(), 0));
+        tools.push(tool);
+        packed_lines.extend(lines);
+        *total += tokens;
+    }
+    flush_small_tool_family(&mut packed, &mut small_family);
+    packed
+}
+
+fn should_partition_tool_config(
+    file: &Path,
+    source: &str,
+    sections: &[Section],
+    python_project_manifest: bool,
+) -> bool {
+    if !python_project_manifest {
+        return false;
+    }
+    let source_lines: Vec<&str> = source.lines().collect();
+    let tool_tokens: usize = collect_tool_config_lines(file, sections)
+        .values()
+        .map(|lines| tool_config_source_tokens(&source_lines, lines))
+        .sum();
+    tool_tokens > TOOL_CONFIG_FAMILY_MAX_TOKENS
+}
+
+fn tool_config_source_tokens(source_lines: &[&str], lines: &[usize]) -> usize {
+    let mut text = String::new();
+    for line_number in lines {
+        if let Some(line) = source_lines.get(line_number.saturating_sub(1)) {
+            text.push_str(line);
+            text.push('\n');
+        }
+    }
+    crate::tokenizer::count(&text)
+}
+
+fn flush_small_tool_family(
+    packed: &mut Vec<(String, Vec<usize>)>,
+    small_family: &mut Option<(Vec<String>, Vec<usize>, usize)>,
+) {
+    if let Some((tools, lines, _)) = small_family.take() {
+        packed.push((tools.join("+"), lines));
+    }
+}
+
+fn collect_tool_config_lines(file: &Path, sections: &[Section]) -> BTreeMap<String, Vec<usize>> {
+    let mut families: BTreeMap<String, Vec<usize>> = BTreeMap::new();
+    for (name, start, end) in sections {
+        if !is_config_section(file, name) {
+            continue;
+        }
+        let Some(tool) = top_level_tool_name(name) else {
+            continue;
+        };
+        families.entry(tool).or_default().extend(*start..=*end);
+    }
+    families
+}
+
 fn build_config_content(
     file: &Path,
     source: &str,
@@ -204,9 +330,13 @@ fn build_config_content(
     if !is_manifest_toml(file, python_project_manifest) {
         return None;
     }
+    let partition_tool_config =
+        should_partition_tool_config(file, source, sections, python_project_manifest);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start, end) in sections {
-        if is_config_section(file, name) {
+        if is_config_section(file, name)
+            && (!partition_tool_config || top_level_tool_name(name).is_none())
+        {
             line_numbers.extend(*start..=*end);
         }
     }
@@ -389,6 +519,27 @@ fn is_cargo_development_dependency_section(name: &str) -> bool {
 
 fn is_scripts_section(name: &str) -> bool {
     matches!(name, "project.scripts" | "tool.poetry.scripts")
+}
+
+/// The first dotted segment after `tool.`, preserving quotes around a segment
+/// that itself contains a literal dot. Input has already passed through
+/// [`normalize_key_path`].
+fn top_level_tool_name(name: &str) -> Option<String> {
+    let rest = name.strip_prefix("tool.")?;
+    if rest.is_empty() {
+        return None;
+    }
+    let mut quote = None;
+    for (index, ch) in rest.char_indices() {
+        match quote {
+            Some(q) if ch == q => quote = None,
+            Some(_) => {}
+            None if matches!(ch, '\'' | '"') => quote = Some(ch),
+            None if ch == '.' => return Some(rest[..index].to_string()),
+            None => {}
+        }
+    }
+    Some(rest.to_string())
 }
 
 fn is_config_section(file: &Path, name: &str) -> bool {
@@ -874,6 +1025,91 @@ readme = "README.md"
         assert!(is_config_section(&file, "tool.ruff"));
         assert!(!is_config_section(&file, "test"));
         assert!(is_config_section(&PathBuf::from("Cargo.toml"), "test"));
+    }
+
+    #[test]
+    fn walker_toml_tool_config_partitions_by_top_level_family() {
+        assert_eq!(top_level_tool_name("tool.ruff.lint"), Some("ruff".into()));
+        assert_eq!(
+            top_level_tool_name("tool.pytest.ini_options"),
+            Some("pytest".into())
+        );
+        assert_eq!(
+            top_level_tool_name("tool.\"vendor.tool\".lint"),
+            Some("\"vendor.tool\"".into())
+        );
+        assert_eq!(top_level_tool_name("project.urls"), None);
+
+        let source = r#"[build-system]
+requires = ["setuptools"]
+
+[tool.pytest.ini_options]
+xfail_strict = true
+
+[tool.ruff]
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E"]
+
+[tool.mypy]
+strict = true
+
+[tool.poetry]
+name = "demo"
+
+[tool.poetry.dependencies]
+python = ">=3.11"
+
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+"#;
+        let mut parser = tree_sitter::Parser::new();
+        parser
+            .set_language(&tree_sitter_toml_ng::LANGUAGE.into())
+            .unwrap();
+        let tree = parser.parse(source, None).unwrap();
+        let sections = collect_sections(&tree, source);
+        let families = collect_tool_config_lines(&PathBuf::from("pyproject.toml"), &sections);
+
+        assert!(!should_partition_tool_config(
+            &PathBuf::from("pyproject.toml"),
+            source,
+            &sections,
+            true
+        ));
+
+        assert_eq!(
+            families.keys().cloned().collect::<Vec<_>>(),
+            ["mypy", "poetry", "pytest", "ruff"]
+        );
+        assert!(families["ruff"].contains(&7));
+        assert!(families["ruff"].contains(&10));
+        assert_eq!(families["poetry"], vec![22, 23]);
+
+        let packed = pack_small_tool_config_families(source, families);
+        assert_eq!(
+            packed
+                .iter()
+                .map(|(tools, _)| tools.as_str())
+                .collect::<Vec<_>>(),
+            ["pytest+ruff+mypy+poetry"]
+        );
+
+        let oversized = format!(
+            "[tool.ruff]\nselect = [{}]\n",
+            std::iter::repeat_n("\"RULE\"", 300)
+                .collect::<Vec<_>>()
+                .join(", ")
+        );
+        let oversized_tree = parser.parse(&oversized, None).unwrap();
+        let oversized_sections = collect_sections(&oversized_tree, &oversized);
+        assert!(should_partition_tool_config(
+            &PathBuf::from("pyproject.toml"),
+            &oversized,
+            &oversized_sections,
+            true
+        ));
     }
 
     #[test]

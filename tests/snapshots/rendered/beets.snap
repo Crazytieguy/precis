@@ -348,6 +348,20 @@ pyproject.toml
     …
      184→[tool.poetry.scripts]
      185→beet = "beets.ui:main"
+     187→[build-system]
+     188→requires = ["poetry-core>=1.0.0"]
+     189→build-backend = "poetry.core.masonry.api"
+     191→[tool.pipx-install]
+     192→poethepoet = ">=0.26"
+     193→poetry = ">=1.8,<2"
+    …
+     296→[tool.docstrfmt]
+     297→line-length = 80
+     298→extend-exclude = [
+     299→    "docs/_templates/**/*",
+     300→    "docs/api/**/*",
+     301→    "README_kr.rst",
+     302→]
     …
 setup.cfg
 test/

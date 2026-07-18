@@ -511,8 +511,11 @@ pub enum TomlKey {
     /// Cargo `[dev-dependencies]`, `[build-dependencies]`, and target-
     /// conditional dependency tables.
     DevelopmentDependencies { file: PathBuf },
-    /// Manifest-level operational config: build systems, tool/task tables,
-    /// package metadata, targets, and profiles.
+    /// One top-level Python-manifest `tool.<name>` family, including its
+    /// descendants, or a compact family of adjacent small tool tables.
+    ToolConfig { file: PathBuf, tool: String },
+    /// Manifest-level operational config outside Python `tool.*` families:
+    /// build systems, package metadata, Cargo targets, and profiles.
     Config { file: PathBuf },
 }
 
@@ -779,7 +782,7 @@ impl InnerKey for TsKey {
 
 impl InnerKey for TomlKey {
     fn is_orientation(&self) -> bool {
-        !matches!(self, TomlKey::Config { .. })
+        !matches!(self, TomlKey::ToolConfig { .. } | TomlKey::Config { .. })
     }
 
     fn describe(&self, root: &Path) -> String {
@@ -790,6 +793,9 @@ impl InnerKey for TomlKey {
             TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
             TomlKey::DevelopmentDependencies { file } => {
                 describe_in("dev/build/target dependencies", file, root)
+            }
+            TomlKey::ToolConfig { file, tool } => {
+                describe_in(&format!("tool.{tool} config"), file, root)
             }
             TomlKey::Config { file } => describe_in("manifest config", file, root),
         }

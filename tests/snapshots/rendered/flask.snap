@@ -40,13 +40,7 @@ README.md
       20→## A Simple Example
     …
       38→## Donate
-      39→
-      40→The Pallets organization develops and supports Flask and the libraries
-      41→it uses. In order to grow the community of contributors and users, and
-      42→allow the maintainers to devote more time to the projects, [please
-      43→donate today].
-      44→
-      45→[please donate today]: https://palletsprojects.com/donate
+    …
       47→## Contributing
       48→
       49→See our [detailed contributing documentation][contrib] for many ways to
@@ -173,13 +167,6 @@ examples/
         LICENSE.txt
         README.rst
         flaskr/
-            __init__.py
-            auth.py
-            blog.py
-            db.py
-            schema.sql
-            static/
-            templates/
         pyproject.toml
         tests/
             conftest.py
@@ -210,8 +197,20 @@ pyproject.toml
       33→async = ["asgiref>=3.2"]
       34→dotenv = ["python-dotenv"]
     …
+      74→[project.urls]
+      75→Donate = "https://palletsprojects.com/donate"
+      76→Documentation = "https://flask.palletsprojects.com/"
+      77→Changes = "https://flask.palletsprojects.com/page/changes/"
+      78→Source = "https://github.com/pallets/flask/"
+      79→Chat = "https://discord.gg/pallets"
       81→[project.scripts]
       82→flask = "flask.cli:main"
+      84→[build-system]
+      85→requires = ["flit_core>=3.11,<4"]
+      86→build-backend = "flit_core.buildapi"
+    …
+     167→[tool.codespell]
+     168→ignore-words-list = "te"
     …
 src/
     flask/
@@ -345,17 +344,6 @@ tests/
                     __init__.py
                     templates/
         cliapp/
-            __init__.py
-            app.py
-            factory.py
-            importerrorapp.py
-            inner1/
-                __init__.py
-                inner2/
-                    __init__.py
-                    flask.py
-            message.txt
-            multiapp.py
         helloworld/
         subdomaintestmodule/
             __init__.py

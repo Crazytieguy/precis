@@ -95,24 +95,7 @@ README.md
       40→## Supported Features & Best–Practices
     …
       58→## Cloning the repository
-      59→
-      60→When cloning the Requests repository, you may need to add the `-c
-      61→fetch.fsck.badTimezone=ignore` flag to avoid an error about a bad commit timestamp (see
-      62→[this issue](https://github.com/psf/requests/issues/2690) for more background):
-      63→
-      64→```shell
-      65→git clone -c fetch.fsck.badTimezone=ignore https://github.com/psf/requests.git
-      66→```
-      67→
-      68→You can also apply this setting to your global Git config:
-      69→
-      70→```shell
-      71→git config --global fetch.fsck.badTimezone ignore
-      72→```
-      73→
-      74→---
-      75→
-      76→[![Kenneth Reitz](https://raw.githubusercontent.com/psf/requests/main/ext/kr.png)](https://kennethreitz.org) [![Python Software Foundation](https://raw.githubusercontent.com/psf/requests/main/ext/psf.png)](https://www.python.org/psf)
+    …
 docs/
     .nojekyll
     Makefile
@@ -158,7 +141,9 @@ ext/
     requests-logo.png
     requests-logo.svg
 pyproject.toml
-    …
+       1→[build-system]
+       2→requires = ["setuptools>=61.0"]
+       3→build-backend = "setuptools.build_meta"
        5→[project]
        6→name = "requests"
        7→description = "Python HTTP for Humans."
@@ -172,11 +157,33 @@ pyproject.toml
       22→    "certifi>=2023.5.7"
       23→]
     …
+      49→[project.urls]
+      50→Documentation = "https://requests.readthedocs.io"
+      51→Source = "https://github.com/psf/requests"
       53→[project.optional-dependencies]
       54→security = []
       55→socks = ["PySocks>=1.5.6, !=1.5.7"]
       56→use_chardet_on_py3 = ["chardet>=3.0.2,<8"]
     …
+      74→[tool.setuptools]
+      75→license-files = ["LICENSE", "NOTICE"]
+      76→
+      77→[tool.setuptools.dynamic]
+      78→version = {attr = "requests.__version__.__version__"}
+      79→
+      80→[tool.setuptools.packages.find]
+      81→where = ["src"]
+    …
+     108→[tool.pytest.ini_options]
+     109→addopts = "--doctest-modules"
+     110→doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+     111→minversion = "6.2"
+     112→testpaths = ["tests"]
+     113→
+     114→
+     115→[tool.pyright]
+     116→include = ["src/requests"]
+     117→typeCheckingMode = "strict"
 requirements-dev.txt
 setup.py
        1→import sys
@@ -317,14 +324,6 @@ src/
         cookies.py
         exceptions.py
         help.py
-            …
-              37→def _implementation():
-            …
-              69→def info() -> dict[str, Any]:
-              70→    """Generate information for a bug report."""
-            …
-             128→def main():
-            …
         hooks.py
         models.py
         packages.py
