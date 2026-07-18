@@ -314,6 +314,36 @@ Measured-dead this cycle (specifics block retries):
   d2ts −0.016. A retry needs member batches that *win purchase inside
   3K* (value-side or scheduler-tier treatment), not just granularity.
 
+## Orchestrated batch-shape session (2026-07-18): 0.6029 → 0.6266
+
+Training +0.0237 / validation +0.0116 (0.5525 → 0.5640; positive but
+~half the training rate — this batch leans more training-specific
+than the near-1:1 2026-07-07 session; watch the next re-freeze).
+~15 shipped mechanisms, all on one unifying diagnosis: **NS keys buy
+mid-grained 100–450-token slices (the growth-envelope size); walker
+batch classes far above lose the purchase race wholesale, far below
+queue-jump as crumbs or divide value away.** Mechanism families that
+paid: oversize head/tail splits (markdown sections, Rust crate docs,
+TS catalogs/class slabs, Python rosters, Dockerfile/compose/dotenv
+ops files — all value-CONSERVED after the adversarial review caught
+1.6–1.8× replication in the first two splitters), crumb coalescing
+(C struct groups, Rust nested-entry fragments; Go wanted comment
+elision instead), manifest de-chaining + dependency-class splits,
+structural role recognition (primary workspace member by name-match
+— WRONG signal for Rust workspaces, sps/toasty need dependency
+centrality; config-surface headers; operational README sections;
+manifest-entry public-surface seeding), and two knob re-sweeps
+(listing tiers stalest again; concavity 0.35 razor-sharp both
+passes). Durable process lessons: (a) re-measure every lane's win on
+the COMBINED tree — two clean lanes interacted −0.067 on superstruct
+via a boost tuned pre-manifest-landscape; (b) adversarial review
+keeps paying (value replication, tail-deletes-head rows, config-
+floor amplification, manifest path traversal); (c) per-fixture
+regen means compose almost perfectly additively when mechanisms are
+file-disjoint. Dead-lever specifics are in the measured-dead
+sections above; next-session queue: ignore/next-session-queue-
+2026-07-18.md.
+
 ## Solo calibration session (2026-07-06/07): 0.5465 → 0.6029 — GOAL MET
 
 Final numbers: training 0.6029 (goal 0.6), validation 0.5007 →
