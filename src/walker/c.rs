@@ -728,7 +728,7 @@ fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
 }
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, collect_blank_line_groups,
+    FileLines, WalkCtx, budget_chunk_ranges, build_per_file_content, collect_blank_line_groups,
     collect_doc_comments_above_filtered, comment_only_rows, dedup_sorted, extend_nonblank_rows,
     extend_span, file_depth_factor, file_lines_covered_by, node_end_row_trimmed, push_rows,
     signature_end_row, single_file_lines_content, trim_end_before_next_decl,
@@ -740,25 +740,14 @@ use super::{
 /// chunk — a tiny tail chunk is so cheap that its ratio jumps the
 /// queue, dragging its gated per-decl train with it.
 fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
-    if decl_count == 0 {
-        return Vec::new();
-    }
-    let chunk_size = C_DECL_NAMES_CHUNK_SIZE;
-    let mut ranges = Vec::new();
-    let mut i = 0;
-    while i < decl_count {
-        let end = (i + chunk_size).min(decl_count);
-        ranges.push(i..end);
-        i = end;
-    }
-    if let [.., prev, last] = ranges.as_slice()
-        && last.len() < chunk_size / 2
-    {
-        let merged = prev.start..last.end;
-        ranges.pop();
-        *ranges.last_mut().expect("two ranges matched") = merged;
-    }
-    ranges
+    budget_chunk_ranges(
+        decl_count,
+        |range| range.len(),
+        C_DECL_NAMES_CHUNK_SIZE,
+        C_DECL_NAMES_CHUNK_SIZE / 2,
+        |_| true,
+        |_| true,
+    )
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -1632,23 +1621,27 @@ fn coalesce_crumb_groups_with_min(
     groups: Vec<AggregateMemberGroup>,
     min_rows: usize,
 ) -> Vec<AggregateMemberGroup> {
-    let mut merged: Vec<AggregateMemberGroup> = Vec::new();
-    for group in groups {
-        match merged.last_mut() {
-            Some(prev) if prev.rows.len() < min_rows => {
-                prev.rows.extend(group.rows);
-            }
-            _ => merged.push(group),
+    budget_chunk_ranges(
+        groups.len(),
+        |range| groups[range].iter().map(|group| group.rows.len()).sum(),
+        min_rows,
+        min_rows,
+        |_| true,
+        |_| true,
+    )
+    .into_iter()
+    .map(|range| {
+        let group_start_line = groups[range.start].group_start_line;
+        let rows = groups[range]
+            .iter()
+            .flat_map(|group| group.rows.iter().copied())
+            .collect();
+        AggregateMemberGroup {
+            group_start_line,
+            rows,
         }
-    }
-    if let [.., prev, last] = merged.as_mut_slice()
-        && last.rows.len() < min_rows
-    {
-        let tail = std::mem::take(&mut last.rows);
-        prev.rows.extend(tail);
-        merged.pop();
-    }
-    merged
+    })
+    .collect()
 }
 
 /// Fixed-size enumerator chunks. Continuation rows of multi-line

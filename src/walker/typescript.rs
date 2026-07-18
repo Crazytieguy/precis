@@ -58,9 +58,9 @@ use super::import_chunks::{
     groups_to_file_lines, node_line_count, push_import_group, should_chunk_import_groups,
 };
 use super::{
-    BodyPart, FileLines, WalkCtx, body_part_value_factor, build_per_file_content, dedup_sorted,
-    disjoint_body_parts, extend_nonblank_rows, extend_span, file_depth_factor,
-    file_lines_covered_by,
+    BodyPart, FileLines, WalkCtx, body_part_value_factor, budget_chunk_ranges,
+    build_per_file_content, dedup_sorted, disjoint_body_parts, extend_nonblank_rows, extend_span,
+    file_depth_factor, file_lines_covered_by,
     fs::{JS_MODULE_ENTRYPOINT_FILES, files_with_any_extension, is_source_dir},
     name_of, node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
     statement_block_parts,
@@ -2860,29 +2860,30 @@ fn oversized_export_class_chunks(
         head.full.extend(member_lines.full);
         head.ellipses.extend(member_lines.ellipses);
     }
-    let mut chunks = vec![head];
-    let mut current = FileLines::default();
-    for (tail_member_index, member) in members.iter().enumerate().skip(head_last_index + 1) {
-        let member_lines = member_header_lines(*member).0;
-        current.full.extend(member_lines.full);
-        current.ellipses.extend(member_lines.ellipses);
-        let members_remain = tail_member_index + 1 < members.len();
-        if members_remain && cost(&current) >= OVERSIZE_EXPORT_CHUNK_TARGET_TOKENS {
-            chunks.push(std::mem::take(&mut current));
+    let tail_members = &members[head_last_index + 1..];
+    let lines_for = |range: std::ops::Range<usize>| {
+        let mut lines = FileLines::default();
+        for member in &tail_members[range] {
+            let member_lines = member_header_lines(*member).0;
+            lines.full.extend(member_lines.full);
+            lines.ellipses.extend(member_lines.ellipses);
         }
-    }
-    if !current.full.is_empty() {
-        chunks.push(current);
-    }
-    if chunks.len() > 1
-        && chunks
-            .last()
-            .is_some_and(|tail| cost(tail) < OVERSIZE_EXPORT_CHUNK_MIN_TAIL_TOKENS)
-    {
-        let tail = chunks.pop().expect("tail checked above");
-        let previous = chunks.last_mut().expect("multiple chunks checked above");
-        previous.full.extend(tail.full);
-        previous.ellipses.extend(tail.ellipses);
+        lines
+    };
+    let tail_ranges = budget_chunk_ranges(
+        tail_members.len(),
+        |range| cost(&lines_for(range)),
+        OVERSIZE_EXPORT_CHUNK_TARGET_TOKENS,
+        OVERSIZE_EXPORT_CHUNK_MIN_TAIL_TOKENS,
+        |_| true,
+        |_| true,
+    );
+    let mut chunks = vec![head];
+    chunks.extend(tail_ranges.into_iter().map(lines_for));
+    if chunks.len() == 2 && cost(&chunks[1]) < OVERSIZE_EXPORT_CHUNK_MIN_TAIL_TOKENS {
+        let tail = chunks.pop().expect("two chunks checked above");
+        chunks[0].full.extend(tail.full);
+        chunks[0].ellipses.extend(tail.ellipses);
     }
     (chunks.len() > 1).then_some(chunks)
 }
@@ -3069,37 +3070,28 @@ fn member_names_catalog_chunks(
         return vec![catalog.lines.clone()];
     }
 
-    let mut chunks = Vec::new();
-    let mut current = FileLines::default();
-    for (member_index, &line) in catalog.lines.full.iter().enumerate() {
-        current.full.push(line);
-        current.ellipses.extend(
-            catalog
-                .lines
-                .ellipses
-                .iter()
-                .copied()
-                .filter(|e| *e == line + 1),
-        );
-        let members_remain = member_index + 1 < catalog.lines.full.len();
-        if members_remain && cost(&current) >= MEMBER_CATALOG_CHUNK_TARGET_TOKENS {
-            chunks.push(std::mem::take(&mut current));
-        }
-    }
-    if !current.full.is_empty() {
-        chunks.push(current);
-    }
-    if chunks.len() > 1
-        && chunks
-            .last()
-            .is_some_and(|tail| cost(tail) < MEMBER_CATALOG_CHUNK_MIN_TAIL_TOKENS)
-    {
-        let tail = chunks.pop().expect("tail checked above");
-        let previous = chunks.last_mut().expect("multiple chunks checked above");
-        previous.full.extend(tail.full);
-        previous.ellipses.extend(tail.ellipses);
-    }
-    chunks
+    let lines_for = |range: std::ops::Range<usize>| {
+        let full = catalog.lines.full[range].to_vec();
+        let ellipses = catalog
+            .lines
+            .ellipses
+            .iter()
+            .copied()
+            .filter(|ellipsis| full.iter().any(|line| *ellipsis == line + 1))
+            .collect();
+        FileLines::new(full).with_ellipses(ellipses)
+    };
+    budget_chunk_ranges(
+        catalog.lines.full.len(),
+        |range| cost(&lines_for(range)),
+        MEMBER_CATALOG_CHUNK_TARGET_TOKENS,
+        MEMBER_CATALOG_CHUNK_MIN_TAIL_TOKENS,
+        |_| true,
+        |_| true,
+    )
+    .into_iter()
+    .map(lines_for)
+    .collect()
 }
 
 fn class_member_infos(class_decl: Node, src_lines: &[&str]) -> Vec<ClassMemberInfo> {
