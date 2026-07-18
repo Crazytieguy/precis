@@ -22,7 +22,6 @@ expression: rendered
 .yarn/
     patches/
     plugins/
-        @yarnpkg/
 .yarnrc.yml
 CONTRIBUTING.md
 LICENSE
@@ -54,7 +53,6 @@ README.md
       79→### Default preset
       81→Instead of configuring SVGO from scratch, you can tweak the default preset to suit your needs by configuring or disabling the respective plugin.
     …
-     106→You can find a list of the default plugins in the order they run in [Preset Default | SVGO Documentation](https://svgo.dev/docs/preset-default/#plugins-list).
      108→### Custom plugins
      110→You can also specify custom plugins:
     …
@@ -66,10 +64,7 @@ README.md
      153→### loadConfig
     …
      169→## Donors
-     170→
-     171→| [<img src="https://sheetjs.com/sketch128.png" width="80">](https://sheetjs.com/) | [<img src="https://raw.githubusercontent.com/fontello/fontello/8.0.0/fontello-image.svg" width="80">](https://fontello.com/) |
-     172→| :------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
-     173→|                       [SheetJS LLC](https://sheetjs.com/)                        |                                              [Fontello](https://fontello.com/)                                               |
+    …
      175→## License and Copyright
      176→
      177→This software is released under the terms of the [MIT license](https://github.com/svg/svgo/blob/main/LICENSE).
@@ -145,9 +140,6 @@ docs/
         01-migration-from-v3-to-v4.mdx
         02-migration-from-v2-to-v3.mdx
         _category_.json
-               1→{
-               2→  "label": "Migrations"
-               3→}
 eslint.config.mjs
 lib/
     builtin.js
@@ -170,10 +162,6 @@ lib/
          141→export const parsePathData = (string) => {
         …
          302→export const stringifyPathData = ({
-         303→  pathData,
-         304→  precision,
-         305→  disableSpaceAfterFlags,
-         306→}) => {
         …
     path.test.js
     stringifier.js
@@ -215,6 +203,7 @@ lib/
     types.ts
     util/
         map-nodes-to-parents.js
+               1→import { visit } from './visit.js';
             …
                9→export function mapNodesToParents(node) {
             …
@@ -223,6 +212,20 @@ lib/
         …
            7→export const VERSION = '4.0.1';
     xast.js
+        …
+          22→export const querySelectorAll = (node, selector, parents) => {
+          23→  return selectAll(selector, node, createCssSelectOptions(node, parents));
+        …
+          32→export const querySelector = (node, selector, parents) => {
+          33→  return selectOne(selector, node, createCssSelectOptions(node, parents));
+        …
+          42→export const matches = (node, selector, parents) => {
+          43→  return is(node, selector, createCssSelectOptions(node, parents));
+        …
+          50→export const detachNodeFromParent = (node, parentNode) => {
+          51→  // avoid splice to not break for loops
+          52→  parentNode.children = parentNode.children.filter((child) => child !== node);
+        …
     xast.test.js
 logo/
     isotype-white.svg

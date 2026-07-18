@@ -2222,6 +2222,24 @@ fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
         .entry(pkg_dir.clone())
         .or_insert_with(|| super::json::package_entry_targets(&pkg_dir))
         .clone();
+    declared_package_entry_sources_from_targets(&pkg_dir, targets)
+        .any(|candidate| candidate.canonicalize().ok().as_ref() == Some(&canonical_file))
+}
+
+fn declared_package_entry_sources(pkg_dir: &Path) -> Vec<PathBuf> {
+    declared_package_entry_sources_from_targets(
+        pkg_dir,
+        super::json::package_entry_targets(pkg_dir),
+    )
+    .filter(|candidate| candidate.is_file())
+    .collect()
+}
+
+fn declared_package_entry_sources_from_targets(
+    pkg_dir: &Path,
+    targets: Vec<String>,
+) -> impl Iterator<Item = PathBuf> {
+    let mut candidates = Vec::new();
     for target in targets {
         let rel = target.trim_start_matches("./");
         if rel.is_empty() {
@@ -2250,16 +2268,12 @@ fn is_declared_package_entry_source(file: &Path, ctx: &WalkCtx) -> bool {
                     // `append_extension`, not `with_extension`: a dotted
                     // stem like `foo.config` would have its `.config`
                     // treated as an extension and replaced (→ `foo.ts`).
-                    if append_extension(&base, ext).canonicalize().ok().as_ref()
-                        == Some(&canonical_file)
-                    {
-                        return true;
-                    }
+                    candidates.push(append_extension(&base, ext));
                 }
             }
         }
     }
-    false
+    candidates.into_iter()
 }
 
 fn export_names_value(
@@ -3558,6 +3572,7 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
     let mut out = Vec::new();
     walk(root, &mut out);
     out.sort();
+    out.dedup();
     out
 }
 
@@ -3565,6 +3580,7 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
 /// from an entrypoint via re-export chains. Canonicalized.
 fn compute_public_surface(ctx: &WalkCtx) -> PublicSurface {
     let mut entrypoints = find_all_entrypoints(ctx.root());
+    entrypoints.extend(declared_package_entry_sources(ctx.root()));
     // The declared API contract is entrypoint-named-adjacent (`types`
     // field) but its `.d.ts` extension escapes the stem match above.
     entrypoints.extend(
@@ -4011,6 +4027,39 @@ mod tests {
         // Sanity: helper-precomputed parts match actual emit non-emptiness.
         assert_eq!(!item.body_parts.is_empty(), !full.is_empty());
         full
+    }
+
+    #[test]
+    fn walker_typescript_manifest_entry_seeds_nested_public_surface() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let lib = root.join("lib");
+        std::fs::create_dir(&lib).unwrap();
+        std::fs::write(
+            root.join("package.json"),
+            r#"{"exports":{".":{"import":"./lib/package-node.js"}}}"#,
+        )
+        .unwrap();
+        let entry = lib.join("package-node.js");
+        let core = lib.join("core.js");
+        std::fs::write(&entry, "export * from './core.js';\n").unwrap();
+        std::fs::write(&core, "export const run = () => {};\n").unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let surface = compute_public_surface(&ctx);
+        for file in [&entry, &core] {
+            let canonical = file.canonicalize().unwrap();
+            assert!(
+                surface.files.contains(&canonical),
+                "manifest entry and its re-export target must be public: {}",
+                file.display()
+            );
+        }
+        assert!(
+            surface
+                .reexport_targets
+                .contains(&core.canonicalize().unwrap())
+        );
     }
 
     #[test]
