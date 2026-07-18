@@ -85,10 +85,11 @@ fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<Batc
     })
 }
 
-/// Emit the six `package.json` batches chained as Identity ← IdentityMeta
-/// ← Entry ← Runtime ← Scripts ← Dependencies. The chain lets a compact
-/// one-line manifest render via predecessor-override without tripping
-/// non-ancestor overlap.
+/// Emit independently purchasable `package.json` surfaces. On ordinary
+/// multi-line manifests every section hangs directly off Identity, so appendix
+/// metadata cannot gate entrypoints, scripts, or runtime dependencies. Compact
+/// manifests whose sections share a physical line retain a local chain because
+/// the scheduler only permits line overlap along predecessor ancestry.
 fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
     let Some((source, tree)) = parse_json(ctx, file) else {
         return;
@@ -105,51 +106,73 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     };
     let manifest_role = package_json_role(&pairs);
     let scripts_deps_factor = manifest_role.scripts_deps_factor();
-    let mut prev: Option<BatchKey> = None;
-    let mut push = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
+    let mut sections = Vec::new();
+    let mut collect = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
         let Some(content) = section_content(file, &source, &pairs, name_match) else {
             return;
         };
-        let emitted = BatchKey::Json(key.clone());
-        out.push(Batch {
-            key: key.into(),
-            predecessor: prev.clone(),
-            content,
-            value: value * shell_factor,
-        });
-        prev = Some(emitted);
+        sections.push((key, content, value * shell_factor));
     };
     let f = file.to_path_buf();
-    push(
+    collect(
         JsonKey::Identity { file: f.clone() },
         identity_value(file, ctx),
         is_identity_key,
     );
-    push(
-        JsonKey::IdentityMeta { file: f.clone() },
-        identity_meta_value(file, ctx),
-        is_identity_meta_key,
-    );
-    push(
+    collect(
         JsonKey::Entry { file: f.clone() },
         entry_value(file, ctx),
         is_entry_key,
     );
-    push(
+    collect(
         JsonKey::Runtime { file: f.clone() },
         runtime_value(file, ctx),
         is_runtime_key,
     );
-    push(
+    collect(
         JsonKey::Scripts { file: f.clone() },
         scripts_value(file, ctx) * scripts_deps_factor,
         is_scripts_key,
     );
-    push(
-        JsonKey::Dependencies { file: f },
+    collect(
+        JsonKey::Dependencies { file: f.clone() },
         dependencies_value(file, ctx) * scripts_deps_factor,
-        is_dependencies_key,
+        is_runtime_dependencies_key,
     );
+    collect(
+        JsonKey::IdentityMeta { file: f.clone() },
+        identity_meta_value(file, ctx),
+        is_identity_meta_key,
+    );
+    collect(
+        JsonKey::DevDependencies { file: f },
+        dev_dependencies_value(file, ctx) * scripts_deps_factor,
+        is_dev_dependencies_key,
+    );
+
+    let overlap_chain = package_sections_share_lines(&pairs);
+    let identity = sections
+        .iter()
+        .find_map(|(key, _, _)| matches!(key, JsonKey::Identity { .. }).then(|| key.clone()))
+        .map(BatchKey::Json);
+    let mut previous = None;
+    for (key, content, value) in sections {
+        let emitted = BatchKey::Json(key.clone());
+        let predecessor = if matches!(key, JsonKey::Identity { .. }) {
+            None
+        } else if overlap_chain {
+            previous.clone()
+        } else {
+            identity.clone()
+        };
+        out.push(Batch {
+            key: emitted.clone(),
+            predecessor,
+            content,
+            value,
+        });
+        previous = Some(emitted);
+    }
 }
 
 /// Boost factor for `scripts` / `dependencies` on operational
@@ -307,19 +330,48 @@ fn is_scripts_key(k: &str) -> bool {
     matches!(k, "scripts" | "bin-scripts")
 }
 
-fn is_dependencies_key(k: &str) -> bool {
+fn is_runtime_dependencies_key(k: &str) -> bool {
     matches!(
         k,
         "dependencies"
-            | "devDependencies"
-            | "peerDependencies"
-            | "peerDependenciesMeta"
             | "optionalDependencies"
             | "bundledDependencies"
             | "bundleDependencies"
             | "overrides"
             | "resolutions"
     )
+}
+
+fn is_dev_dependencies_key(k: &str) -> bool {
+    matches!(
+        k,
+        "devDependencies" | "peerDependencies" | "peerDependenciesMeta"
+    )
+}
+
+fn is_package_section_key(k: &str) -> bool {
+    is_identity_key(k)
+        || is_identity_meta_key(k)
+        || is_entry_key(k)
+        || is_runtime_key(k)
+        || is_scripts_key(k)
+        || is_runtime_dependencies_key(k)
+        || is_dev_dependencies_key(k)
+}
+
+/// Whether two emitted section classes claim the same physical source line.
+/// This is common for one-line JSON, where independent sibling batches would
+/// violate the scheduler's ownership contract.
+fn package_sections_share_lines(pairs: &[(String, usize, usize, bool)]) -> bool {
+    let emitted: Vec<_> = pairs
+        .iter()
+        .filter(|(name, _, _, _)| is_package_section_key(name))
+        .collect();
+    emitted.iter().enumerate().any(|(i, (_, start, end, _))| {
+        emitted[i + 1..]
+            .iter()
+            .any(|(_, other_start, other_end, _)| start <= other_end && other_start <= end)
+    })
 }
 
 // --- value ---
@@ -410,6 +462,11 @@ fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.25, 0.5, 0.25, path_depth_factor(file, ctx)) * secondary_package_json_factor(file)
+}
+
+fn dev_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.24, 0.48, 0.24, path_depth_factor(file, ctx))
+        * secondary_package_json_factor(file)
 }
 
 fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
@@ -773,6 +830,51 @@ mod tests {
         let tree = parser.parse(source.as_bytes(), None).unwrap();
         let pairs = top_level_pairs(&tree, source);
         package_json_role(&pairs)
+    }
+
+    fn pairs_for_manifest(source: &str) -> Vec<(String, usize, usize, bool)> {
+        let mut parser = tree_sitter::Parser::new();
+        parser
+            .set_language(&tree_sitter_json::LANGUAGE.into())
+            .unwrap();
+        let tree = parser.parse(source.as_bytes(), None).unwrap();
+        top_level_pairs(&tree, source)
+    }
+
+    #[test]
+    fn walker_json_dependency_classes_are_disjoint() {
+        for key in [
+            "dependencies",
+            "optionalDependencies",
+            "bundledDependencies",
+            "bundleDependencies",
+            "overrides",
+            "resolutions",
+        ] {
+            assert!(is_runtime_dependencies_key(key), "runtime key: {key}");
+            assert!(!is_dev_dependencies_key(key), "not a dev key: {key}");
+        }
+        for key in [
+            "devDependencies",
+            "peerDependencies",
+            "peerDependenciesMeta",
+        ] {
+            assert!(is_dev_dependencies_key(key), "dev/peer key: {key}");
+            assert!(!is_runtime_dependencies_key(key), "not runtime: {key}");
+        }
+    }
+
+    #[test]
+    fn walker_json_only_compact_sections_require_overlap_chain() {
+        let multiline = pairs_for_manifest(
+            "{\n  \"name\": \"demo\",\n  \"scripts\": {\"test\": \"vitest\"},\n  \"dependencies\": {\"react\": \"19\"}\n}\n",
+        );
+        assert!(!package_sections_share_lines(&multiline));
+
+        let compact = pairs_for_manifest(
+            r#"{"name":"demo","scripts":{"test":"vitest"},"dependencies":{"react":"19"}}"#,
+        );
+        assert!(package_sections_share_lines(&compact));
     }
 
     #[test]

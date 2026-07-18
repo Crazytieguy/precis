@@ -41,8 +41,7 @@ README.md
       33→## Testimonials
     …
       47→## Support
-      48→
-      49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
+    …
       51→## Installation
     …
       63→## Concepts
@@ -52,7 +51,6 @@ README.md
      167→### Built-in components
     …
      179→### Rendering
-     181→`htmy.Renderer` is the built-in, default renderer of the library.
     …
      211→### Context
     …
@@ -61,7 +59,6 @@ README.md
      291→### Error boundary
     …
      299→### Sync or async?
-     301→In general, a component should be async if it must await some async call inside.
     …
      305→In all other cases, it's best to use sync components.
      307→## XSS prevention
@@ -95,9 +92,7 @@ docs/
         i18n.md
         md.md
                1→# ::: htmy.md.core
-               2→
-               3→    options:
-               4→        show_root_heading: true
+            …
                6→# ::: htmy.md.typing
             …
         renderer/
@@ -200,40 +195,6 @@ htmy/
           48→HTMY = Renderer
         …
     core.py
-        …
-          19→class Fragment:
-          20→    """Fragment utility component that simply wraps some children components."""
-          22→    __slots__ = ("_children",)
-        …
-          38→class WithContext(Fragment):
-        …
-          43→    __slots__ = ("_context",)
-        …
-          64→class ContextAware:
-          65→    """
-          66→    Base class with utilities for safe context use.
-        …
-         146→class SkipProperty(Exception):
-         147→    """Exception raised by property formatters if the property should be skipped."""
-         149→    ...
-        …
-         157→class Text(str):
-         158→    """Marker class for differentiating text content from other strings."""
-         160→    ...
-         163→class SafeStr(Text):
-        …
-         172→    ...
-         175→class XBool(enum.Enum):
-        …
-         183→    true = True
-         184→    false = False
-        …
-         196→def xml_format_string(value: str) -> str:
-        …
-         201→class Formatter(ContextAware):
-        …
-         220→    __slots__ = ("_default_formatter", "_name_formatter", "_value_formatters")
-        …
     error_boundary.py
         …
           15→class ErrorBoundary:
@@ -328,6 +289,42 @@ pyproject.toml
       15→[project.optional-dependencies]
       16→lxml = ["lxml>=6.0.0"]
     …
+      35→[build-system]
+      36→requires = ["pdm-backend"]
+      37→build-backend = "pdm.backend"
+      39→[tool.mypy]
+      40→strict = true
+      41→show_error_codes = true
+      42→
+      43→[tool.pdm.build]
+      44→excludes = ["tests/", "examples/"]
+      45→
+      46→[tool.pdm.version]
+      47→source = "file"
+      48→path = "htmy/__init__.py"
+      49→
+      50→[tool.pyright]
+      51→venvPath = "."
+      52→venv = ".venv"
+      53→
+      54→[tool.pytest.ini_options]
+      55→addopts = "--random-order"
+    …
+      81→[tool.poe.tasks]
+      82→format = "ruff format --check ."
+      83→format-fix = "ruff format ."
+      84→
+      85→lint = "ruff check ."
+      86→lint-fix = "ruff . --fix"
+      87→
+      88→mypy = "mypy ."
+      89→
+      90→check.sequence = ["format", "lint", "mypy"]
+      91→check.ignore_fail = "return_non_zero"
+      92→
+      93→test = "python -m pytest tests"
+      94→
+      95→serve-docs = "zensical serve"
 tests/
     __init__.py
     conftest.py

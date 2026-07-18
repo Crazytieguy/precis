@@ -13,36 +13,36 @@ Score(3000)=0.674 I=0.749 C=0.607 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 227 | 17 | listing of 'classes' |  |  | 0.798 |
 | ns | 236 |  | 70 | README title + install | 1.3 |  | 0.700 |
 | ns | 253 |  | 17 | classes/ listing | 1.4 |  | 0.703 |
-| walker |  | 254 | 27 | listing of 'internal' |  |  | 0.712 |
-| walker |  | 310 | 56 | listing of 'ranges' |  |  | 0.730 |
+| walker |  | 257 | 30 | package runtime metadata in package.json |  |  | 0.703 |
+| walker |  | 284 | 27 | listing of 'internal' |  |  | 0.712 |
+| walker |  | 340 | 56 | listing of 'ranges' |  |  | 0.730 |
 | ns | 358 |  | 105 | functions/ listing | 1.5 |  | 0.563 |
-| walker |  | 372 | 62 | package identity metadata in package.json |  |  | 0.563 |
+| walker |  | 400 | 60 | package identity metadata in package.json |  |  | 0.563 |
 | ns | 414 |  | 56 | ranges/ listing | 1.6 |  | 0.591 |
-| ns | 441 |  | 27 | internal/ listing | 1.7 |  | 0.601 |
+| ns | 441 |  | 27 | internal/ listing | 1.7 |  | 0.602 |
 | ns | 446 |  | 5 | bin/ listing | 1.8 |  | 0.603 |
 | ns | 484 |  | 38 | benchmarks/ listing | 1.9 |  | 0.580 |
 | ns | 517 |  | 33 | test/ top-level listing | 1.10 |  | 0.545 |
 | ns | 534 |  | 17 | test/classes/ listing | 1.11 |  | 0.533 |
-| walker |  | 552 | 180 | headings outline in README.md |  |  | 0.548 |
-| walker |  | 577 | 25 | README.md section #1 |  |  | 0.576 |
+| walker |  | 580 | 180 | headings outline in README.md |  |  | 0.548 |
+| walker |  | 605 | 25 | README.md section #1 |  |  | 0.577 |
 | ns | 639 |  | 105 | test/functions/ listing | 1.12 |  | 0.511 |
-| walker |  | 682 | 105 | listing of 'functions' |  |  | 0.646 |
-| ns | 695 |  | 56 | test/ranges/ listing | 1.13 |  | 0.616 |
-| walker |  | 709 | 27 | README.md section #55 |  |  | 0.616 |
+| ns | 695 |  | 56 | test/ranges/ listing | 1.13 |  | 0.488 |
+| walker |  | 710 | 105 | listing of 'functions' |  |  | 0.616 |
 | ns | 722 |  | 27 | test/internal/ listing | 1.14 |  | 0.601 |
-| walker |  | 742 | 33 | listing of 'test' |  |  | 0.646 |
-| walker |  | 780 | 38 | listing of 'benchmarks' |  |  | 0.672 |
-| walker |  | 808 | 28 | listing of '.github' |  |  | 0.676 |
-| ns | 815 |  | 93 | test leaf directories: fixtures/, bin/, integration/ | 1.15 |  | 0.636 |
+| walker |  | 737 | 27 | README.md section #55 |  |  | 0.601 |
+| walker |  | 770 | 33 | listing of 'test' |  |  | 0.646 |
+| walker |  | 808 | 38 | listing of 'benchmarks' |  |  | 0.672 |
+| ns | 815 |  | 93 | test leaf directories: fixtures/, bin/, integration/ | 1.15 |  | 0.633 |
+| walker |  | 836 | 28 | listing of '.github' |  |  | 0.636 |
 | ns | 843 |  | 28 | .github/ top-level listing | 1.16 |  | 0.643 |
-| walker |  | 849 | 41 | listing of '.github/workflows' |  |  | 0.646 |
-| walker |  | 866 | 17 | listing of 'test/classes' |  |  | 0.662 |
-| ns | 884 |  | 41 | .github/workflows/ listing | 1.17 |  | 0.667 |
+| walker |  | 877 | 41 | listing of '.github/workflows' |  |  | 0.647 |
+| ns | 884 |  | 41 | .github/workflows/ listing | 1.17 |  | 0.653 |
+| walker |  | 894 | 17 | listing of 'test/classes' |  |  | 0.668 |
 | ns | 903 |  | 19 | .github/actions/ and ISSUE_TEMPLATE/ listing | 1.18 |  | 0.659 |
 | ns | 911 |  | 8 | tap-snapshots/test/bin/ listing | 1.19 |  | 0.657 |
-| ns | 991 |  | 80 | classes/semver.js method roster | 2.1 |  | 0.640 |
-| walker |  | 1001 | 135 | package entrypoints in package.json |  |  | 0.679 |
-| walker |  | 1029 | 28 | package runtime metadata in package.json |  |  | 0.680 |
+| ns | 991 |  | 80 | classes/semver.js method roster | 2.1 |  | 0.641 |
+| walker |  | 1029 | 135 | package entrypoints in package.json |  |  | 0.680 |
 | ns | 1237 |  | 246 | classes/range.js method + helper roster | 2.2 |  | 0.642 |
 | ns | 1298 |  | 61 | classes/comparator.js method roster | 2.3 |  | 0.631 |
 | walker |  | 1314 | 285 | README.md section #2 |  |  | 0.631 |
@@ -67,13 +67,13 @@ Score(3000)=0.674 I=0.749 C=0.607 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 2256 | 29 | README.md section #14 |  |  | 0.632 |
 | walker |  | 2259 | 3 | listing of 'tap-snapshots/test' |  |  | 0.632 |
 | walker |  | 2282 | 23 | README.md section #34 |  |  | 0.632 |
+| walker |  | 2311 | 29 | README.md section #26 |  |  | 0.632 |
+| walker |  | 2340 | 29 | README.md section #36 |  |  | 0.632 |
 | ns | 2351 |  | 138 | package.json scripts | 2.8 |  | 0.639 |
-| walker |  | 2364 | 82 | package dependencies in package.json |  |  | 0.639 |
-| walker |  | 2393 | 29 | README.md section #26 |  |  | 0.639 |
-| walker |  | 2422 | 29 | README.md section #36 |  |  | 0.639 |
-| ns | 2506 |  | 155 | package.json: bin, files, engines | 2.9 |  | 0.651 |
-| walker |  | 2528 | 106 | README.md section #4 |  |  | 0.652 |
-| walker |  | 2558 | 30 | README.md section #39 |  |  | 0.652 |
+| walker |  | 2446 | 106 | README.md section #4 |  |  | 0.639 |
+| walker |  | 2476 | 30 | README.md section #39 |  |  | 0.639 |
+| ns | 2506 |  | 155 | package.json: bin, files, engines | 2.9 |  | 0.649 |
+| walker |  | 2558 | 82 | package dev/peer dependencies in package.json |  |  | 0.652 |
 | walker |  | 2642 | 84 | listing of 'test/fixtures' |  |  | 0.678 |
 | walker |  | 2675 | 33 | README.md section #31 |  |  | 0.678 |
 | walker |  | 2679 | 4 | listing of '.github/matchers' |  |  | 0.678 |

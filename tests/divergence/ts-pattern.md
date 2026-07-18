@@ -46,16 +46,16 @@ Score(3000)=0.645 I=0.843 C=0.493 ns_rows≤3K=17/45 (reached=7 partial=3 missin
 | walker |  | 1334 | 298 | listing of 'tests' |  |  | 0.640 |
 | walker |  | 1361 | 27 | README.md section #7 |  |  | 0.640 |
 | walker |  | 1389 | 28 | README.md section #8 |  |  | 0.640 |
-| walker |  | 1421 | 32 | README.md section #4 |  |  | 0.640 |
-| walker |  | 1453 | 32 | README.md section #3 |  |  | 0.641 |
 | ns | 1526 |  | 306 | tests/ and tests/types-catalog/ listings | 1.13 |  | 0.707 |
 | ns | 1606 |  | 80 | README title + tagline | 2.1 |  | 0.713 |
-| walker |  | 1621 | 168 | export body at src/is-matching.ts:53 body 56 |  |  | 0.715 |
-| walker |  | 1827 | 206 | package identity metadata in package.json |  |  | 0.726 |
-| ns | 1942 |  | 336 | README Features list | 2.2 |  | 0.709 |
-| walker |  | 2187 | 360 | package entrypoints in package.json |  |  | 0.715 |
-| ns | 2406 |  | 464 | README section map: every H2 + every Patterns-catalog item | 2.3 |  | 0.648 |
-| walker |  | 2456 | 269 | package scripts in package.json |  |  | 0.693 |
+| walker |  | 1662 | 273 | package scripts in package.json |  |  | 0.764 |
+| walker |  | 1694 | 32 | README.md section #4 |  |  | 0.765 |
+| walker |  | 1726 | 32 | README.md section #3 |  |  | 0.765 |
+| walker |  | 1894 | 168 | export body at src/is-matching.ts:53 body 56 |  |  | 0.767 |
+| ns | 1942 |  | 336 | README Features list | 2.2 |  | 0.749 |
+| walker |  | 2252 | 358 | package entrypoints in package.json |  |  | 0.755 |
+| ns | 2406 |  | 464 | README section map: every H2 + every Patterns-catalog item | 2.3 |  | 0.685 |
+| walker |  | 2456 | 204 | package identity metadata in package.json |  |  | 0.693 |
 | walker |  | 2754 | 298 | module item at src/match.ts:47 |  |  | 0.695 |
 | walker |  | 2762 | 8 | module item body at src/match.ts:47 body 125 |  |  | 0.695 |
 | walker |  | 2770 | 8 | module item body at src/match.ts:47 body 129 |  |  | 0.695 |
@@ -79,11 +79,11 @@ Score(3000)=0.645 I=0.843 C=0.493 ns_rows≤3K=17/45 (reached=7 partial=3 missin
 | walker |  | 3549 | 124 | README.md section #11 |  |  | 0.648 |
 | walker |  | 3604 | 55 | README.md section #5 |  |  | 0.651 |
 | ns | 3703 |  | 217 | match.ts: .when() + .otherwise() | 3.3 |  | 0.636 |
-| walker |  | 3733 | 129 | package dependencies in package.json |  |  | 0.665 |
-| walker |  | 3881 | 148 | README.md section #10 |  |  | 0.665 |
-| ns | 3882 |  | 179 | match.ts: .exhaustive()/.run()/.returnType()/.narrow() + defaultCatcher | 3.4 |  | 0.654 |
-| walker |  | 3941 | 60 | README.md section #6 |  |  | 0.658 |
-| walker |  | 4004 | 63 | README.md section #1 |  |  | 0.663 |
+| walker |  | 3752 | 148 | README.md section #10 |  |  | 0.637 |
+| walker |  | 3812 | 60 | README.md section #6 |  |  | 0.641 |
+| walker |  | 3875 | 63 | README.md section #1 |  |  | 0.646 |
+| ns | 3882 |  | 179 | match.ts: .exhaustive()/.run()/.returnType()/.narrow() + defaultCatcher | 3.4 |  | 0.636 |
+| walker |  | 4004 | 129 | package dev/peer dependencies in package.json |  |  | 0.663 |
 | ns | 4036 |  | 154 | src/errors.ts full (NonExhaustiveError) | 3.5 |  | 0.670 |
 | walker |  | 4050 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.676 |
 | walker |  | 4143 | 93 | json config jsr.json |  |  | 0.690 |

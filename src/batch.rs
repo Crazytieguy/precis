@@ -276,8 +276,12 @@ pub enum JsonKey {
     Runtime { file: PathBuf },
     /// `package.json` `scripts` block.
     Scripts { file: PathBuf },
-    /// `package.json` dependency blocks (`dependencies`/`dev`/`peer`/...).
+    /// Runtime `package.json` dependency blocks (`dependencies`, optional /
+    /// bundled dependencies, overrides, and resolutions).
     Dependencies { file: PathBuf },
+    /// Development and consumer-contract dependency blocks
+    /// (`devDependencies`, `peerDependencies`, `peerDependenciesMeta`).
+    DevDependencies { file: PathBuf },
     /// Whole-file render of a small JSON config. Skipped for
     /// `package.json` and for large/generated files.
     Whole { file: PathBuf },
@@ -505,11 +509,17 @@ pub enum TomlKey {
     Scripts { file: PathBuf },
     /// `[features]` table.
     Features { file: PathBuf },
-    /// `[dependencies]` / `[dev-dependencies]` / `[build-dependencies]` /
-    /// `[workspace.dependencies]`.
+    /// Ordinary `[dependencies]` / `[workspace.dependencies]` tables,
+    /// plus Python-manifest dependency sections.
     Dependencies { file: PathBuf },
-    /// Manifest-level operational config: build systems, tool/task tables,
-    /// package metadata, targets, and profiles.
+    /// Cargo `[dev-dependencies]`, `[build-dependencies]`, and target-
+    /// conditional dependency tables.
+    DevelopmentDependencies { file: PathBuf },
+    /// One top-level Python-manifest `tool.<name>` family, including its
+    /// descendants, or a compact family of adjacent small tool tables.
+    ToolConfig { file: PathBuf, tool: String },
+    /// Manifest-level operational config outside Python `tool.*` families:
+    /// build systems, package metadata, Cargo targets, and profiles.
     Config { file: PathBuf },
 }
 
@@ -776,7 +786,7 @@ impl InnerKey for TsKey {
 
 impl InnerKey for TomlKey {
     fn is_orientation(&self) -> bool {
-        !matches!(self, TomlKey::Config { .. })
+        !matches!(self, TomlKey::ToolConfig { .. } | TomlKey::Config { .. })
     }
 
     fn describe(&self, root: &Path) -> String {
@@ -785,6 +795,12 @@ impl InnerKey for TomlKey {
             TomlKey::Scripts { file } => describe_in("entry-point scripts", file, root),
             TomlKey::Features { file } => describe_in("[features]", file, root),
             TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
+            TomlKey::DevelopmentDependencies { file } => {
+                describe_in("dev/build/target dependencies", file, root)
+            }
+            TomlKey::ToolConfig { file, tool } => {
+                describe_in(&format!("tool.{tool} config"), file, root)
+            }
             TomlKey::Config { file } => describe_in("manifest config", file, root),
         }
     }
@@ -815,7 +831,12 @@ impl InnerKey for JsonKey {
             JsonKey::Entry { file } => describe_in("package entrypoints", file, root),
             JsonKey::Runtime { file } => describe_in("package runtime metadata", file, root),
             JsonKey::Scripts { file } => describe_in("package scripts", file, root),
-            JsonKey::Dependencies { file } => describe_in("package dependencies", file, root),
+            JsonKey::Dependencies { file } => {
+                describe_in("package runtime dependencies", file, root)
+            }
+            JsonKey::DevDependencies { file } => {
+                describe_in("package dev/peer dependencies", file, root)
+            }
             JsonKey::Whole { file } => format!("json config {}", display_path(file, root)),
         }
     }

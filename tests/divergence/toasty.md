@@ -224,14 +224,15 @@ Score(3000)=0.644 I=0.855 C=0.484 ns_rows≤3K=34/54 (reached=20 partial=2 missi
 | walker |  | 8551 | 18 | mod/use plumbing in crates/toasty/src/batch.rs |  |  | 0.545 |
 | walker |  | 8565 | 14 | entry item body at examples/hello-toasty/src/main.rs:34 body 65 |  |  | 0.545 |
 | walker |  | 8590 | 25 | pub item at crates/toasty-driver-postgresql/src/value.rs:8 |  |  | 0.545 |
-| walker |  | 8636 | 46 | pub item at crates/toasty/src/stmt/update.rs:6 |  |  | 0.545 |
+| walker |  | 8608 | 18 | dev/build/target dependencies in crates/toasty-core/Cargo.toml |  |  | 0.545 |
+| walker |  | 8654 | 46 | pub item at crates/toasty/src/stmt/update.rs:6 |  |  | 0.545 |
 | ns | 8861 |  | 475 | toasty/src/page.rs — Page<M> cursor-pagination struct | 7.2 |  | 0.531 |
-| walker |  | 9119 | 483 | impl method sigs in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.531 |
 | ns | 9128 |  | 267 | hello-toasty example — model definitions | 8.1 |  | 0.544 |
+| walker |  | 9137 | 483 | impl method sigs in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.544 |
 | ns | 9395 |  | 267 | composite-key example — partition/local key model | 8.2 |  | 0.556 |
 | ns | 9441 |  | 46 | todo-with-cli example — Toasty.toml migration config | 8.3 |  | 0.554 |
-| walker |  | 9528 | 409 | listing of 'crates/toasty-core/src/stmt' |  |  | 0.621 |
-| ns | 9533 |  | 92 | CI workflow — job matrix | 9.1 |  | 0.618 |
+| ns | 9533 |  | 92 | CI workflow — job matrix | 9.1 |  | 0.552 |
+| walker |  | 9546 | 409 | listing of 'crates/toasty-core/src/stmt' |  |  | 0.618 |
 | ns | 9775 |  | 242 | docs/CHANGE_GUIDE.md — 'Where Changes Go' quick reference | 10.1 |  | 0.613 |
-| walker |  | 9843 | 315 | entry item at examples/user-has-one-profile/src/main.rs:27 |  |  | 0.613 |
+| walker |  | 9861 | 315 | entry item at examples/user-has-one-profile/src/main.rs:27 |  |  | 0.613 |
 | ns | 9944 |  | 169 | toasty-codegen CONTEXT.md — field + relationship attribute roster | 11.1 |  | 0.610 |

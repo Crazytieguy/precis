@@ -1,7 +1,7 @@
 fixture = "toasty"
 budget = 10000
-cumulative_tokens = 9843
-batch_count = 179
+cumulative_tokens = 9861
+batch_count = 180
 
 [[batches]]
 position = 1
@@ -4171,10 +4171,28 @@ kind = "full"
 
 [[batches]]
 position = 176
+key = 'Toml(DevelopmentDependencies { file: "crates/toasty-core/Cargo.toml" })'
+descriptor = "dev/build/target dependencies in crates/toasty-core/Cargo.toml"
+cost_tokens = 18
+cum_tokens = 8608
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/toasty-core/Cargo.toml"
+start = 28
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
 key = 'Rust(PubItem { file: "crates/toasty/src/stmt/update.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/stmt/update.rs:6"
 cost_tokens = 46
-cum_tokens = 8636
+cum_tokens = 8654
 
 [batches.content]
 kind = "lines"
@@ -4188,11 +4206,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 177
+position = 178
 key = 'Rust(MethodSigs { file: "crates/toasty-driver-postgresql/src/lib.rs" })'
 descriptor = "impl method sigs in crates/toasty-driver-postgresql/src/lib.rs"
 cost_tokens = 483
-cum_tokens = 9119
+cum_tokens = 9137
 
 [batches.content]
 kind = "lines"
@@ -4438,11 +4456,11 @@ end = 396
 kind = "ellipsis"
 
 [[batches]]
-position = 178
+position = 179
 key = 'Fs(DirListing { dir: "crates/toasty-core/src/stmt" })'
 descriptor = "listing of 'crates/toasty-core/src/stmt'"
 cost_tokens = 409
-cum_tokens = 9528
+cum_tokens = 9546
 
 [batches.content]
 kind = "fs"
@@ -4452,11 +4470,11 @@ parent = "crates/toasty-core/src/stmt"
 entries = ["assignments.rs", "association.rs", "condition.rs", "cte.rs", "cx.rs", "delete.rs", "direction.rs", "entry.rs", "entry_mut.rs", "entry_path.rs", "eval.rs", "expr.rs", "expr_and.rs", "expr_any.rs", "expr_arg.rs", "expr_begins_with.rs", "expr_binary_op.rs", "expr_cast.rs", "expr_concat.rs", "expr_concat_str.rs", "expr_exists.rs", "expr_func.rs", "expr_in_list.rs", "expr_in_subquery.rs", "expr_is_null.rs", "expr_key.rs", "expr_like.rs", "expr_list.rs", "expr_map.rs", "expr_not.rs", "expr_or.rs", "expr_pattern.rs", "expr_project.rs", "expr_record.rs", "expr_reference.rs", "expr_set.rs", "expr_set_op.rs", "expr_stmt.rs", "expr_ty.rs", "filter.rs", "func_count.rs", "func_last_insert_id.rs", "input.rs", "insert.rs", "insert_table.rs", "insert_target.rs", "join.rs", "like.rs", "limit.rs", "node.rs", "num.rs", "offset.rs", "op_binary.rs", "op_set.rs", "order_by.rs", "order_by_expr.rs", "path.rs", "path_field_set.rs", "projection.rs", "query.rs", "returning.rs", "select.rs", "source.rs", "source_table.rs", "source_table_id.rs", "sparse_record.rs", "substitute.rs", "table_derived.rs", "table_factor.rs", "table_ref.rs", "table_with_joins.rs", "ty.rs", "ty_jiff.rs", "update.rs", "value.rs", "value_cmp.rs", "value_jiff.rs", "value_list.rs", "value_record.rs", "value_stream.rs", "values.rs", "visit.rs", "visit_mut.rs", "with.rs"]
 
 [[batches]]
-position = 179
+position = 180
 key = 'Rust(EntryItem { file: "examples/user-has-one-profile/src/main.rs", start_line: 27 })'
 descriptor = "entry item at examples/user-has-one-profile/src/main.rs:27"
 cost_tokens = 315
-cum_tokens = 9843
+cum_tokens = 9861
 
 [batches.content]
 kind = "lines"

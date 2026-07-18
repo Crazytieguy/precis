@@ -126,7 +126,12 @@ downstream/
     python-lsp-server.sh
     tox.sh
 pyproject.toml
-    …
+       1→[build-system]
+       2→requires = [
+       3→  "setuptools>=65.0",
+       4→  "setuptools-scm[toml]>=8.0",
+       5→]
+       6→build-backend = "setuptools.build_meta"
        8→[project]
        9→name = "pluggy"
     …
@@ -134,6 +139,55 @@ pyproject.toml
     …
       35→requires-python = ">=3.10"
     …
+      43→[tool.setuptools]
+      44→packages = ["pluggy"]
+      45→package-dir =  {""="src"}
+      46→package-data = {"pluggy" = ["py.typed"]}
+      49→[tool.ruff.lint]
+      50→extend-select = [
+      51→  "I",  # isort
+      52→  "F","E", "W",
+      53→  "UP", "ANN",
+      54→]
+      55→extend-ignore = ["ANN401"]
+      56→
+      57→[tool.ruff.lint.extend-per-file-ignores]
+      58→"testing/*.py" = ["ANN001", "ANN002", "ANN003",  "ANN201", "ANN202","ANN204" ,]
+      59→"docs/*.py" = ["ANN001", "ANN002", "ANN003",  "ANN201", "ANN202","ANN204" ,]
+      60→
+      61→[tool.ruff.lint.isort]
+      62→force-single-line = true
+      63→combine-as-imports = true
+      64→force-sort-within-sections = true
+      65→order-by-type = false
+      66→known-local-folder = ["pluggy"]
+      67→lines-after-imports = 2
+      69→[tool.setuptools_scm]
+      70→
+      71→[tool.uv]
+      72→default-groups = ["dev", "testing"]
+    …
+     112→[tool.mypy]
+     113→mypy_path = "src"
+     114→check_untyped_defs = true
+     115→# Hopefully we can set this someday!
+     116→# disallow_any_expr = true
+     117→disallow_any_generics = true
+     118→disallow_any_unimported = true
+     119→disallow_subclassing_any = true
+     120→disallow_untyped_calls = true
+     121→disallow_untyped_decorators = true
+     122→ignore_missing_imports = true
+     123→implicit_reexport = false
+     124→no_implicit_optional = true
+     125→show_error_codes = true
+     126→strict_equality = true
+     127→strict_optional = true
+     128→warn_redundant_casts = true
+     129→warn_return_any = true
+     130→warn_unreachable = true
+     131→warn_unused_configs = true
+     132→warn_unused_ignores = true
 scripts/
     release.py
     towncrier-draft-to-file.py
@@ -192,78 +246,11 @@ src/
               55→    :param plugin: The plugin which failed validation.
               56→    :param message: Error message.
               57→    """
-              59→    def __init__(self, plugin: _Plugin, message: str) -> None:
             …
               65→class DistFacade:
               66→    """Emulate a pkg_resources Distribution"""
-              68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
-            …
-              71→    @property
-              72→    def project_name(self) -> str:
-            …
-              76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
-            …
-              79→    def __dir__(self) -> list[str]:
             …
               83→class PluginManager:
-            …
-             100→    def __init__(self, project_name: str) -> None:
-             101→        #: The project name.
-            …
-             114→    def _hookexec(
-            …
-             125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
-            …
-             176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
-            …
-             201→    def unregister(
-            …
-             233→    def set_blocked(self, name: str) -> None:
-            …
-             238→    def is_blocked(self, name: str) -> bool:
-            …
-             242→    def unblock(self, name: str) -> bool:
-            …
-             252→    def add_hookspecs(self, module_or_class: _Namespace) -> None:
-            …
-             278→    def parse_hookspec_opts(
-             279→        self, module_or_class: _Namespace, name: str
-             280→    ) -> HookspecOpts | None:
-            …
-             296→    def get_plugins(self) -> set[Any]:
-            …
-             300→    def is_registered(self, plugin: _Plugin) -> bool:
-             301→        """Return whether the plugin is already registered."""
-            …
-             304→    def get_canonical_name(self, plugin: _Plugin) -> str:
-            …
-             315→    def get_plugin(self, name: str) -> Any | None:
-            …
-             319→    def has_plugin(self, name: str) -> bool:
-            …
-             323→    def get_name(self, plugin: _Plugin) -> str | None:
-            …
-             331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
-            …
-             379→    def check_pending(self) -> None:
-            …
-             395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
-            …
-             425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
-            …
-             430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
-            …
-             434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
-            …
-             450→    def add_hookcall_monitoring(
-             451→        self, before: _BeforeTrace, after: _AfterTrace
-             452→    ) -> Callable[[], None]:
-            …
-             487→    def enable_tracing(self) -> Callable[[], None]:
-            …
-             512→    def subset_hook_caller(
-             513→        self, name: str, remove_plugins: Iterable[_Plugin]
-             514→    ) -> HookCaller:
             …
              525→def _formatdef(func: Callable[..., object]) -> str:
              526→    return f"{func.__name__}{inspect.signature(func)}"

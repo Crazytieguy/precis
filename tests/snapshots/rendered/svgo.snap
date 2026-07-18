@@ -22,7 +22,6 @@ expression: rendered
 .yarn/
     patches/
     plugins/
-        @yarnpkg/
 .yarnrc.yml
 CONTRIBUTING.md
 LICENSE
@@ -48,24 +47,7 @@ README.md
       25→pnpm add -g svgo
       26→```
       28→## Command-line usage
-      29→
-      30→Process single files:
-      31→
-      32→```sh
-      33→svgo one.svg two.svg -o one.min.svg two.min.svg
-      34→```
-      35→
-      36→Process a directory of files recursively with `-r`/`--recursive` and `-f`/`--folder`:
-      37→
-      38→```sh
-      39→svgo -rf path/to/directory_with_svgs -o path/to/output_directory
-      40→```
-      41→
-      42→Help for advanced usage:
-      43→
-      44→```sh
-      45→svgo --help
-      46→```
+    …
       48→## Configuration
     …
       79→### Default preset
@@ -201,21 +183,11 @@ lib/
     style.test.js
     svgo/
         coa.js
-            …
-              19→export function checkIsDir(filePath) {
-            …
-              30→export default function makeProgram(program) {
-            …
         css-select-adapter.js
             …
               78→export function createAdapter(relativeNode, parents) {
             …
         plugins.js
-            …
-              14→export const invokePlugins = (
-            …
-              40→export const createPreset = ({ name, plugins }) => {
-            …
         tools.js
     svgo-node.js
         …
@@ -246,10 +218,6 @@ lib/
                9→export function mapNodesToParents(node) {
             …
         visit.js
-               1→export const visitSkip = Symbol();
-            …
-               8→export const visit = (node, visitor, parentNode) => {
-            …
     version.js
         …
            7→export const VERSION = '4.0.1';
@@ -263,11 +231,54 @@ logo/
     logo.svg
 package.json
     …
+       2→  "packageManager": "yarn@3.8.7",
        3→  "name": "svgo",
        4→  "version": "4.0.1",
        5→  "description": "SVGO is a Node.js library and command-line application for optimizing vector images.",
        6→  "license": "MIT",
        7→  "type": "module",
+    …
+      53→  "bin": "./bin/svgo.js",
+      54→  "types": "./types/lib/svgo-node.d.ts",
+      55→  "exports": {
+      56→    ".": {
+      57→      "import": "./lib/svgo-node.js",
+      58→      "require": "./dist/svgo-node.cjs",
+      59→      "types": "./types/lib/svgo-node.d.ts"
+      60→    },
+      61→    "./browser": {
+      62→      "import": "./dist/svgo.browser.js",
+      63→      "types": "./types/lib/svgo.d.ts"
+      64→    }
+      65→  },
+      66→  "files": [
+      67→    "bin",
+      68→    "dist",
+      69→    "lib",
+      70→    "plugins",
+      71→    "types",
+      72→    "!**/*.test.js"
+      73→  ],
+      74→  "engines": {
+      75→    "node": ">=16"
+      76→  },
+      77→  "scripts": {
+      78→    "build": "node scripts/sync-version.js && yarn build:bundles && yarn build:types",
+      79→    "build:bundles": "yarn clean:build && rollup -c",
+      80→    "build:types": "yarn clean:types && tsc && tsc -p tsconfig.build.json",
+      81→    "lint": "eslint . && prettier --check .",
+      82→    "lint:fix": "eslint --fix . && prettier --write .",
+      83→    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --maxWorkers=4 --coverage",
+      84→    "test:bundles": "yarn build:bundles && node ./test/svgo.cjs && node ./test/browser.js",
+      85→    "test:types": "yarn build:types && tsc && tsd",
+      86→    "test:regression": "node ./test/regression/extract.js && node ./test/regression/optimize.js && cross-env NO_DIFF=1 node ./test/regression/compare.js",
+      87→    "qa": "yarn lint && yarn test:types && yarn test && yarn test:bundles && yarn test:regression",
+      88→    "clean": "yarn clean:build && yarn clean:types",
+      89→    "clean:build": "rimraf dist",
+      90→    "clean:types": "rimraf types",
+      91→    "spellcheck": "cspell -u .",
+      92→    "prepublishOnly": "yarn clean && yarn build"
+      93→  },
     …
 plugins/
     _collections.js
@@ -365,27 +376,4 @@ test-d/
         svgo-node.test-d.ts
 tsconfig.build.json
 tsconfig.json
-       1→{
-       2→  "compilerOptions": {
-       3→    "noEmit": true,
-       4→    "module": "node16",
-       5→    "target": "es2021",
-       6→    "lib": ["es2021"],
-       7→    "allowJs": true,
-       8→    "checkJs": true,
-       9→    "strict": true,
-      10→    "resolveJsonModule": true,
-      11→    "skipLibCheck": true
-      12→  },
-      13→  "exclude": [
-      14→    ".yarn/",
-      15→    "coverage/",
-      16→    "dist/",
-      17→    "node_modules/",
-      18→    "rollup.config.js",
-      19→    "test-d/",
-      20→    "test/browser.js",
-      21→    "test/svgo.cjs"
-      22→  ]
-      23→}
 yarn.lock

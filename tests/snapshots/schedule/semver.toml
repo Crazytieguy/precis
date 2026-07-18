@@ -131,10 +131,28 @@ entries = ["comparator.js", "index.js", "range.js", "semver.js"]
 
 [[batches]]
 position = 8
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 30
+cum_tokens = 257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 49
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
 key = 'Fs(DirListing { dir: "internal" })'
 descriptor = "listing of 'internal'"
 cost_tokens = 27
-cum_tokens = 254
+cum_tokens = 284
 
 [batches.content]
 kind = "fs"
@@ -144,11 +162,11 @@ parent = "internal"
 entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-options.js", "re.js"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Fs(DirListing { dir: "ranges" })'
 descriptor = "listing of 'ranges'"
 cost_tokens = 56
-cum_tokens = 310
+cum_tokens = 340
 
 [batches.content]
 kind = "fs"
@@ -158,11 +176,11 @@ parent = "ranges"
 entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
 
 [[batches]]
-position = 10
+position = 11
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
-cost_tokens = 62
-cum_tokens = 372
+cost_tokens = 60
+cum_tokens = 400
 
 [batches.content]
 kind = "lines"
@@ -184,11 +202,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 180
-cum_tokens = 552
+cum_tokens = 580
 
 [batches.content]
 kind = "lines"
@@ -482,11 +500,11 @@ end = 611
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 25
-cum_tokens = 577
+cum_tokens = 605
 
 [batches.content]
 kind = "lines"
@@ -500,11 +518,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: "functions" })'
 descriptor = "listing of 'functions'"
 cost_tokens = 105
-cum_tokens = 682
+cum_tokens = 710
 
 [batches.content]
 kind = "fs"
@@ -514,11 +532,11 @@ parent = "functions"
 entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Markdown(Section { file: "README.md", section_index: 55, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #55"
 cost_tokens = 27
-cum_tokens = 709
+cum_tokens = 737
 
 [batches.content]
 kind = "lines"
@@ -532,11 +550,11 @@ end = 578
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 33
-cum_tokens = 742
+cum_tokens = 770
 
 [batches.content]
 kind = "fs"
@@ -546,11 +564,11 @@ parent = "test"
 entries = ["bin", "classes", "fixtures", "functions", "index.js", "integration", "internal", "map.js", "preload.js", "ranges"]
 
 [[batches]]
-position = 16
+position = 17
 key = 'Fs(DirListing { dir: "benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 38
-cum_tokens = 780
+cum_tokens = 808
 
 [batches.content]
 kind = "fs"
@@ -560,11 +578,11 @@ parent = "benchmarks"
 entries = ["bench-compare.js", "bench-diff.js", "bench-parse-options.js", "bench-parse.js", "bench-satisfies.js", "bench-subset.js"]
 
 [[batches]]
-position = 17
+position = 18
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 28
-cum_tokens = 808
+cum_tokens = 836
 
 [batches.content]
 kind = "fs"
@@ -574,11 +592,11 @@ parent = ".github"
 entries = ["CODEOWNERS", "ISSUE_TEMPLATE", "actions", "dependabot.yml", "matchers", "settings.yml", "workflows"]
 
 [[batches]]
-position = 18
+position = 19
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 41
-cum_tokens = 849
+cum_tokens = 877
 
 [batches.content]
 kind = "fs"
@@ -588,11 +606,11 @@ parent = ".github/workflows"
 entries = ["audit.yml", "ci-release.yml", "ci.yml", "codeql-analysis.yml", "post-dependabot.yml", "pull-request.yml", "release-integration.yml", "release.yml"]
 
 [[batches]]
-position = 19
+position = 20
 key = 'Fs(DirListing { dir: "test/classes" })'
 descriptor = "listing of 'test/classes'"
 cost_tokens = 17
-cum_tokens = 866
+cum_tokens = 894
 
 [batches.content]
 kind = "fs"
@@ -602,11 +620,11 @@ parent = "test/classes"
 entries = ["comparator.js", "index.js", "range.js", "semver.js"]
 
 [[batches]]
-position = 20
+position = 21
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 135
-cum_tokens = 1001
+cum_tokens = 1029
 
 [batches.content]
 kind = "lines"
@@ -623,24 +641,6 @@ kind = "full"
 path = "package.json"
 start = 27
 end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 28
-cum_tokens = 1029
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 49
-end = 51
 
 [batches.content.spans.render]
 kind = "full"
@@ -955,28 +955,10 @@ kind = "full"
 
 [[batches]]
 position = 40
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 82
-cum_tokens = 2364
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 16
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #26"
 cost_tokens = 29
-cum_tokens = 2393
+cum_tokens = 2311
 
 [batches.content]
 kind = "lines"
@@ -990,11 +972,11 @@ end = 462
 kind = "full"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Markdown(Section { file: "README.md", section_index: 36, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #36"
 cost_tokens = 29
-cum_tokens = 2422
+cum_tokens = 2340
 
 [batches.content]
 kind = "lines"
@@ -1008,11 +990,11 @@ end = 493
 kind = "full"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 106
-cum_tokens = 2528
+cum_tokens = 2446
 
 [batches.content]
 kind = "lines"
@@ -1026,11 +1008,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Markdown(Section { file: "README.md", section_index: 39, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #39"
 cost_tokens = 30
-cum_tokens = 2558
+cum_tokens = 2476
 
 [batches.content]
 kind = "lines"
@@ -1039,6 +1021,24 @@ kind = "lines"
 path = "README.md"
 start = 498
 end = 499
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Json(DevDependencies { file: "package.json" })'
+descriptor = "package dev/peer dependencies in package.json"
+cost_tokens = 82
+cum_tokens = 2558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 16
+end = 21
 
 [batches.content.spans.render]
 kind = "full"

@@ -86,34 +86,7 @@ Readme.md
       79→## Docs & Community
     …
       87→## Quick Start
-      88→
-      89→  The quickest way to get started with express is to utilize the executable [`express(1)`](https://github.com/expressjs/generator) to generate an application as shown below:
-      90→
-      91→  Install the executable. The executable's major version will match Express's:
-      92→
-      93→```bash
-      94→npm install -g express-generator@4
-      95→```
-      96→
-      97→  Create the app:
-      98→
-      99→```bash
-     100→express /tmp/foo && cd /tmp/foo
-     101→```
-     102→
-     103→  Install dependencies:
-     104→
-     105→```bash
-     106→npm install
-     107→```
-     108→
-     109→  Start the server:
-     110→
-     111→```bash
-     112→npm start
-     113→```
-     114→
-     115→  View the website at: http://localhost:3000
+    …
      117→## Philosophy
     …
      127→## Examples
@@ -134,8 +107,6 @@ Readme.md
      181→### TC (Technical Committee)
     …
      184→* [jonchurch](https://github.com/jonchurch) - **Jon Church**
-     185→* [wesleytodd](https://github.com/wesleytodd) - **Wes Todd**
-     186→* [LinusU](https://github.com/LinusU) - **Linus Unnebäck**
     …
      190→* [ctcpip](https://github.com/ctcpip) - **Chris de Almeida**
      192→<details>
@@ -307,6 +278,24 @@ package.json
        4→  "version": "5.2.1",
     …
       15→  "license": "MIT",
+    …
+      82→  "engines": {
+      83→    "node": ">= 18"
+      84→  },
+      85→  "files": [
+      86→    "LICENSE",
+      87→    "Readme.md",
+      88→    "index.js",
+      89→    "lib/"
+      90→  ],
+      91→  "scripts": {
+      92→    "lint": "eslint .",
+      93→    "lint:fix": "eslint . --fix",
+      94→    "test": "mocha --require test/support/env --reporter spec --check-leaks test/ test/acceptance/",
+      95→    "test-ci": "nyc --exclude examples --exclude test --exclude benchmarks --reporter=lcovonly --reporter=text npm test",
+      96→    "test-cov": "nyc --exclude examples --exclude test --exclude benchmarks --reporter=html --reporter=text npm test",
+      97→    "test-tap": "mocha --require test/support/env --reporter tap --check-leaks test/ test/acceptance/"
+      98→  }
     …
 test/
     Route.js

@@ -57,10 +57,10 @@ Score(3000)=0.842 I=0.944 C=0.751 ns_rows≤3K=19/47 (reached=14 partial=2 missi
 | walker |  | 3586 | 111 | README.md section #4 |  |  | 0.750 |
 | walker |  | 3621 | 35 | README.md section #6 |  |  | 0.750 |
 | walker |  | 3676 | 55 | README.md section #16 |  |  | 0.750 |
+| walker |  | 3775 | 99 | README.md section #14 |  |  | 0.750 |
 | ns | 3805 |  | 345 | index_test.ts: off() - single-handler removal, case sensitivity | 4.6 |  | 0.710 |
-| walker |  | 4044 | 368 | package dependencies in package.json |  |  | 0.713 |
-| ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.687 |
-| walker |  | 4143 | 99 | README.md section #14 |  |  | 0.687 |
+| ns | 4068 |  | 263 | index_test.ts: off() - first-match-only and type-wide removal | 4.7 |  | 0.684 |
+| walker |  | 4143 | 368 | package dev/peer dependencies in package.json |  |  | 0.687 |
 | walker |  | 4259 | 116 | README.md section #11 |  |  | 0.687 |
 | walker |  | 4379 | 120 | README.md section #9 |  |  | 0.687 |
 | ns | 4406 |  | 338 | index_test.ts: emit() - dispatch and case sensitivity | 4.8 |  | 0.656 |

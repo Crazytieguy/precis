@@ -1,4 +1,4 @@
-Score(3000)=0.397 I=0.737 C=0.214 ns_rows≤3K=13/41 (reached=4 partial=1 missing=8)
+Score(3000)=0.340 I=0.725 C=0.160 ns_rows≤3K=13/41 (reached=4 partial=0 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -87,234 +87,211 @@ Score(3000)=0.397 I=0.737 C=0.214 ns_rows≤3K=13/41 (reached=4 partial=1 missin
 | walker |  | 2086 | 16 | README.md section #8 |  |  | 0.417 |
 | walker |  | 2102 | 16 | README.md section #10 |  |  | 0.417 |
 | walker |  | 2119 | 17 | README.md section #16 |  |  | 0.417 |
+| walker |  | 2141 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.417 |
+| walker |  | 2160 | 19 | README.md section #15 |  |  | 0.417 |
 | ns | 2173 |  | 347 | .env.sample: additional optional settings roster | 1.11 |  | 0.377 |
-| walker |  | 2396 | 277 | plaintext config Dockerfile |  |  | 0.441 |
-| walker |  | 2418 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.441 |
-| walker |  | 2437 | 19 | README.md section #15 |  |  | 0.441 |
-| walker |  | 2496 | 59 | listing of 'apps/mobile/components' |  |  | 0.442 |
-| walker |  | 2522 | 26 | listing of 'apps/mobile/components/Formats' |  |  | 0.442 |
-| walker |  | 2554 | 32 | listing of 'apps/mobile/components/ActionSheets' |  |  | 0.442 |
-| walker |  | 2616 | 62 | listing of 'apps/web/hooks' |  |  | 0.442 |
-| ns | 2630 |  | 457 | Root package.json (workspace scripts) | 1.12 |  | 0.417 |
-| walker |  | 2692 | 76 | export at packages/prisma/index.ts:5 |  |  | 0.417 |
-| ns | 2897 |  | 267 | apps/mobile/package.json (identity + scripts) | 1.13 |  | 0.397 |
-| walker |  | 2987 | 295 | README.md section #0 |  |  | 0.397 |
-| walker |  | 3009 | 22 | README.md section #1 |  |  | 0.397 |
-| walker |  | 3031 | 22 | README.md section #2 |  |  | 0.397 |
-| walker |  | 3073 | 42 | listing of 'apps/worker/lib/preservationScheme' |  |  | 0.398 |
-| ns | 3140 |  | 243 | apps/web/package.json (identity + scripts) | 1.14 |  | 0.384 |
-| walker |  | 3293 | 220 | Prisma schema TOC in packages/prisma/schema.prisma |  |  | 0.387 |
-| walker |  | 3308 | 15 | imports in packages/prisma/index.ts |  |  | 0.387 |
-| walker |  | 3387 | 79 | listing of 'apps/web/public' |  |  | 0.387 |
-| walker |  | 3397 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.387 |
-| walker |  | 3421 | 24 | README.md section #5 |  |  | 0.387 |
-| walker |  | 3444 | 23 | README.md section #4 |  |  | 0.387 |
-| walker |  | 3493 | 49 | listing of 'apps/web/public/locales' |  |  | 0.387 |
-| walker |  | 3497 | 4 | listing of 'apps/web/public/locales/de' |  |  | 0.387 |
-| walker |  | 3501 | 4 | listing of 'apps/web/public/locales/en' |  |  | 0.387 |
-| walker |  | 3505 | 4 | listing of 'apps/web/public/locales/es' |  |  | 0.387 |
-| walker |  | 3509 | 4 | listing of 'apps/web/public/locales/fr' |  |  | 0.387 |
-| walker |  | 3513 | 4 | listing of 'apps/web/public/locales/it' |  |  | 0.387 |
-| walker |  | 3517 | 4 | listing of 'apps/web/public/locales/ja' |  |  | 0.387 |
-| walker |  | 3521 | 4 | listing of 'apps/web/public/locales/nl' |  |  | 0.387 |
-| walker |  | 3525 | 4 | listing of 'apps/web/public/locales/pl' |  |  | 0.387 |
-| walker |  | 3529 | 4 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.387 |
-| walker |  | 3533 | 4 | listing of 'apps/web/public/locales/ro' |  |  | 0.387 |
-| walker |  | 3537 | 4 | listing of 'apps/web/public/locales/ru' |  |  | 0.387 |
-| walker |  | 3541 | 4 | listing of 'apps/web/public/locales/tr' |  |  | 0.387 |
-| walker |  | 3545 | 4 | listing of 'apps/web/public/locales/uk' |  |  | 0.387 |
-| walker |  | 3549 | 4 | listing of 'apps/web/public/locales/zh' |  |  | 0.387 |
-| walker |  | 3553 | 4 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.387 |
-| walker |  | 3578 | 25 | README.md section #13 |  |  | 0.387 |
-| walker |  | 3602 | 24 | README.md section #12 |  |  | 0.387 |
-| walker |  | 3652 | 50 | listing of 'apps/mobile/components/ui' |  |  | 0.387 |
-| ns | 3665 |  | 525 | apps/worker/package.json (scripts + dependencies) | 1.15 |  | 0.361 |
-| walker |  | 3738 | 86 | listing of 'apps/web/pages' |  |  | 0.362 |
-| walker |  | 3744 | 6 | listing of 'apps/web/pages/preserved' |  |  | 0.362 |
-| walker |  | 3752 | 8 | listing of 'apps/web/pages/api' |  |  | 0.362 |
-| walker |  | 3755 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.362 |
-| walker |  | 3769 | 14 | export names surface in apps/web/pages/index.tsx |  |  | 0.362 |
-| walker |  | 3769 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.362 |
-| walker |  | 3778 | 9 | listing of 'apps/web/pages/public' |  |  | 0.362 |
-| walker |  | 3783 | 5 | listing of 'apps/web/pages/public/collections' |  |  | 0.362 |
-| walker |  | 3787 | 4 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.362 |
-| walker |  | 3793 | 6 | listing of 'apps/web/pages/public/links' |  |  | 0.362 |
-| walker |  | 3799 | 6 | listing of 'apps/web/pages/public/preserved' |  |  | 0.362 |
-| walker |  | 3810 | 11 | listing of 'apps/web/pages/collections' |  |  | 0.362 |
-| walker |  | 3821 | 11 | listing of 'apps/web/pages/tags' |  |  | 0.362 |
-| walker |  | 3833 | 12 | listing of 'apps/web/pages/auth' |  |  | 0.362 |
-| walker |  | 3849 | 16 | listing of 'apps/web/pages/links' |  |  | 0.362 |
-| walker |  | 3868 | 19 | listing of 'apps/web/pages/admin' |  |  | 0.362 |
-| walker |  | 3911 | 43 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.362 |
-| walker |  | 3921 | 10 | listing of 'apps/web/pages/public/collections/[id]' |  |  | 0.362 |
-| ns | 4020 |  | 355 | .env.sample: SSO provider roster (first 35 of 58, alphabetical) | 1.16 |  | 0.341 |
-| ns | 4043 |  | 23 | packages/prisma directory listing | 2.1 |  | 0.355 |
-| walker |  | 4231 | 310 | YAML config at docker-compose.yml |  |  | 0.435 |
-| ns | 4246 |  | 203 | schema.prisma: every model/enum name (roster) | 2.2 |  | 0.465 |
-| walker |  | 4248 | 17 | imports in apps/worker/index.ts |  |  | 0.465 |
-| walker |  | 4304 | 56 | listing of 'apps/web/pages/settings' |  |  | 0.465 |
-| ns | 4311 |  | 65 | schema.prisma: generator + datasource | 2.3 |  | 0.461 |
-| walker |  | 4328 | 24 | Prisma decl at packages/prisma/schema.prisma:77 |  |  | 0.461 |
-| walker |  | 4377 | 49 | Prisma decl at packages/prisma/schema.prisma:90 |  |  | 0.462 |
-| walker |  | 4406 | 29 | README.md section #3 |  |  | 0.462 |
-| walker |  | 4432 | 26 | Prisma decl at packages/prisma/schema.prisma:304 |  |  | 0.462 |
-| walker |  | 4467 | 35 | Prisma decl at packages/prisma/schema.prisma:83 |  |  | 0.463 |
-| walker |  | 4677 | 210 | Prisma decl at packages/prisma/schema.prisma:166 |  |  | 0.464 |
-| walker |  | 4708 | 31 | README.md section #14 |  |  | 0.464 |
-| walker |  | 4747 | 39 | Prisma decl at packages/prisma/schema.prisma:289 |  |  | 0.464 |
-| walker |  | 4772 | 25 | imports in apps/web/pages/index.tsx |  |  | 0.464 |
-| walker |  | 4851 | 79 | listing of 'apps/web/lib/client' |  |  | 0.464 |
-| ns | 4969 |  | 658 | schema.prisma: User model (full fields) | 2.4 | 2.2 | 0.434 |
-| ns | 5087 |  | 118 | schema.prisma: Theme / AiTaggingMethod / LinksRouteTo enums | 2.5 | 2.2 | 0.457 |
-| walker |  | 5136 | 285 | Prisma decl at packages/prisma/schema.prisma:28 |  |  | 0.475 |
-| walker |  | 5513 | 377 | package scripts in package.json |  |  | 0.519 |
-| walker |  | 5540 | 27 | Prisma decl at packages/prisma/schema.prisma:5 |  |  | 0.525 |
-| ns | 5581 |  | 494 | schema.prisma: Collection + UsersAndCollections (sharing/permissions) | 2.6 | 2.2 | 0.501 |
-| walker |  | 5637 | 97 | listing of 'apps/web/lib/api' |  |  | 0.502 |
-| walker |  | 5650 | 13 | listing of 'apps/web/lib/api/archives' |  |  | 0.502 |
-| walker |  | 5667 | 17 | listing of 'apps/web/lib/api/preserved' |  |  | 0.502 |
-| walker |  | 5700 | 33 | listing of 'apps/web/lib/api/stripe' |  |  | 0.502 |
-| walker |  | 5736 | 36 | listing of 'apps/web/lib/api/controllers' |  |  | 0.503 |
-| walker |  | 5741 | 5 | listing of 'apps/web/lib/api/controllers/search' |  |  | 0.503 |
-| walker |  | 5746 | 5 | listing of 'apps/web/lib/api/controllers/session' |  |  | 0.503 |
-| walker |  | 5752 | 6 | listing of 'apps/web/lib/api/controllers/worker' |  |  | 0.503 |
-| walker |  | 5761 | 9 | listing of 'apps/web/lib/api/controllers/public' |  |  | 0.503 |
-| walker |  | 5765 | 4 | listing of 'apps/web/lib/api/controllers/public/links' |  |  | 0.503 |
-| walker |  | 5771 | 6 | listing of 'apps/web/lib/api/controllers/public/collections' |  |  | 0.503 |
-| walker |  | 5777 | 6 | listing of 'apps/web/lib/api/controllers/public/users' |  |  | 0.503 |
-| walker |  | 5784 | 7 | listing of 'apps/web/lib/api/controllers/public/links/linkId' |  |  | 0.503 |
-| walker |  | 5798 | 14 | listing of 'apps/web/lib/api/controllers/collections' |  |  | 0.503 |
-| walker |  | 5812 | 14 | listing of 'apps/web/lib/api/controllers/highlights' |  |  | 0.503 |
-| walker |  | 5826 | 14 | listing of 'apps/web/lib/api/controllers/tokens' |  |  | 0.503 |
-| walker |  | 5833 | 7 | listing of 'apps/web/lib/api/controllers/tokens/tokenId' |  |  | 0.503 |
-| walker |  | 5847 | 14 | listing of 'apps/web/lib/api/controllers/users' |  |  | 0.503 |
-| walker |  | 5864 | 17 | listing of 'apps/web/lib/api/controllers/links' |  |  | 0.503 |
-| walker |  | 5876 | 12 | listing of 'apps/web/lib/api/controllers/links/bulk' |  |  | 0.503 |
-| walker |  | 5896 | 20 | listing of 'apps/web/lib/api/controllers/dashboard' |  |  | 0.503 |
-| walker |  | 5923 | 27 | listing of 'apps/web/lib/api/controllers/tags' |  |  | 0.503 |
-| walker |  | 5944 | 21 | listing of 'apps/web/lib/api/controllers/collections/collectionId' |  |  | 0.503 |
-| walker |  | 5965 | 21 | listing of 'apps/web/lib/api/controllers/tags/tagId' |  |  | 0.503 |
-| ns | 5970 |  | 389 | schema.prisma: Link model (full fields) | 2.7 | 2.2 | 0.499 |
-| walker |  | 5989 | 24 | listing of 'apps/web/lib/api/controllers/links/linkId' |  |  | 0.499 |
-| walker |  | 5995 | 6 | listing of 'apps/web/lib/api/controllers/links/linkId/highlight' |  |  | 0.499 |
-| walker |  | 6022 | 27 | listing of 'apps/web/lib/api/controllers/users/userId' |  |  | 0.499 |
-| ns | 6188 |  | 218 | schema.prisma: Tag model (full fields) | 2.8 | 2.2 | 0.489 |
-| ns | 6373 |  | 185 | packages/prisma/index.ts (client singleton) + latest migration.sql | 2.9 |  | 0.487 |
-| ns | 6445 |  | 72 | apps/web/pages/api/v1 + v2 directory listings | 3.1 |  | 0.476 |
-| ns | 6481 |  | 36 | apps/web/lib/api/controllers directory listing | 3.2 |  | 0.486 |
-| walker |  | 6544 | 522 | plaintext config tail of Dockerfile |  |  | 0.503 |
-| ns | 6578 |  | 97 | apps/web/lib/api directory listing (non-controller helpers) | 3.3 |  | 0.515 |
-| walker |  | 6864 | 320 | Prisma decl at packages/prisma/schema.prisma:126 |  |  | 0.538 |
-| walker |  | 6933 | 69 | listing of 'apps/web/pages/api/v1' |  |  | 0.565 |
-| walker |  | 6937 | 4 | listing of 'apps/web/pages/api/v1/dashboard' |  |  | 0.565 |
-| walker |  | 6941 | 4 | listing of 'apps/web/pages/api/v1/getFavicon' |  |  | 0.565 |
-| walker |  | 6945 | 4 | listing of 'apps/web/pages/api/v1/logins' |  |  | 0.565 |
-| walker |  | 6949 | 4 | listing of 'apps/web/pages/api/v1/migration' |  |  | 0.565 |
-| walker |  | 6953 | 4 | listing of 'apps/web/pages/api/v1/payment' |  |  | 0.565 |
-| walker |  | 6957 | 4 | listing of 'apps/web/pages/api/v1/search' |  |  | 0.565 |
-| walker |  | 6961 | 4 | listing of 'apps/web/pages/api/v1/session' |  |  | 0.565 |
-| walker |  | 6965 | 4 | listing of 'apps/web/pages/api/v1/webhook' |  |  | 0.565 |
-| walker |  | 6971 | 6 | listing of 'apps/web/pages/api/v1/avatar' |  |  | 0.565 |
-| walker |  | 6980 | 9 | listing of 'apps/web/pages/api/v1/config' |  |  | 0.565 |
-| walker |  | 6989 | 9 | listing of 'apps/web/pages/api/v1/public' |  |  | 0.565 |
-| walker |  | 6995 | 6 | listing of 'apps/web/pages/api/v1/public/links' |  |  | 0.565 |
-| walker |  | 7001 | 6 | listing of 'apps/web/pages/api/v1/public/users' |  |  | 0.565 |
-| walker |  | 7010 | 9 | listing of 'apps/web/pages/api/v1/worker' |  |  | 0.565 |
-| walker |  | 7020 | 10 | listing of 'apps/web/pages/api/v1/collections' |  |  | 0.565 |
-| walker |  | 7030 | 10 | listing of 'apps/web/pages/api/v1/highlights' |  |  | 0.565 |
-| walker |  | 7040 | 10 | listing of 'apps/web/pages/api/v1/rss' |  |  | 0.565 |
-| walker |  | 7050 | 10 | listing of 'apps/web/pages/api/v1/tokens' |  |  | 0.565 |
-| walker |  | 7062 | 12 | listing of 'apps/web/pages/api/v1/links' |  |  | 0.565 |
-| walker |  | 7066 | 4 | listing of 'apps/web/pages/api/v1/links/archive' |  |  | 0.565 |
-| walker |  | 7079 | 13 | listing of 'apps/web/pages/api/v1/users' |  |  | 0.565 |
-| walker |  | 7088 | 9 | listing of 'apps/web/pages/api/v1/users/[id]' |  |  | 0.565 |
-| walker |  | 7102 | 14 | listing of 'apps/web/pages/api/v1/tags' |  |  | 0.565 |
-| walker |  | 7112 | 10 | listing of 'apps/web/pages/api/v1/links/[id]' |  |  | 0.565 |
-| walker |  | 7116 | 4 | listing of 'apps/web/pages/api/v1/links/[id]/archive' |  |  | 0.565 |
-| walker |  | 7120 | 4 | listing of 'apps/web/pages/api/v1/links/[id]/highlights' |  |  | 0.565 |
-| walker |  | 7132 | 12 | listing of 'apps/web/pages/api/v1/public/collections' |  |  | 0.565 |
-| walker |  | 7136 | 4 | listing of 'apps/web/pages/api/v1/public/collections/links' |  |  | 0.565 |
-| walker |  | 7140 | 4 | listing of 'apps/web/pages/api/v1/public/collections/tags' |  |  | 0.565 |
-| walker |  | 7158 | 18 | listing of 'apps/web/pages/api/v1/preserved' |  |  | 0.565 |
-| walker |  | 7177 | 19 | listing of 'apps/web/pages/api/v1/archives' |  |  | 0.565 |
-| walker |  | 7199 | 22 | listing of 'apps/web/pages/api/v1/auth' |  |  | 0.565 |
-| walker |  | 7287 | 88 | README.md section #31 |  |  | 0.565 |
-| walker |  | 7335 | 48 | listing of 'apps/web/lib/api/controllers/migration' |  |  | 0.565 |
-| walker |  | 7351 | 16 | Prisma decl at packages/prisma/schema.prisma:1 |  |  | 0.569 |
-| ns | 7384 |  | 806 | verifyUser.ts + verifyToken.ts (auth gate) | 3.4 |  | 0.529 |
-| walker |  | 7455 | 104 | README.md section #28 |  |  | 0.529 |
-| walker |  | 7497 | 42 | package identity in packages/lib/package.json |  |  | 0.529 |
-| walker |  | 7509 | 12 | package entrypoints in packages/lib/package.json |  |  | 0.529 |
-| walker |  | 7551 | 42 | package identity in packages/router/package.json |  |  | 0.529 |
-| walker |  | 7563 | 12 | package entrypoints in packages/router/package.json |  |  | 0.529 |
-| walker |  | 7605 | 42 | package identity in packages/types/package.json |  |  | 0.529 |
-| walker |  | 7617 | 12 | package entrypoints in packages/types/package.json |  |  | 0.529 |
-| walker |  | 7660 | 43 | package dependencies in packages/types/package.json |  |  | 0.529 |
-| walker |  | 7703 | 43 | package identity in apps/worker/package.json |  |  | 0.530 |
-| walker |  | 7715 | 12 | package entrypoints in apps/worker/package.json |  |  | 0.530 |
-| walker |  | 7773 | 58 | package scripts in apps/worker/package.json |  |  | 0.532 |
-| walker |  | 7816 | 43 | package identity in packages/filesystem/package.json |  |  | 0.532 |
-| walker |  | 7828 | 12 | package entrypoints in packages/filesystem/package.json |  |  | 0.532 |
-| walker |  | 7862 | 34 | package dependencies in packages/filesystem/package.json |  |  | 0.532 |
-| walker |  | 7905 | 43 | package identity in packages/prisma/package.json |  |  | 0.532 |
-| walker |  | 7932 | 27 | package entrypoints in packages/prisma/package.json |  |  | 0.532 |
-| walker |  | 8003 | 71 | package scripts in packages/prisma/package.json |  |  | 0.532 |
-| walker |  | 8049 | 46 | package identity in apps/mobile/package.json |  |  | 0.532 |
-| walker |  | 8061 | 12 | package entrypoints in apps/mobile/package.json |  |  | 0.532 |
-| ns | 8118 |  | 734 | getPermission.ts + setCollection.ts (collection access, trimmed) | 3.5 |  | 0.502 |
-| walker |  | 8156 | 95 | package scripts in apps/mobile/package.json |  |  | 0.507 |
-| walker |  | 8170 | 14 | export names surface in apps/web/pages/settings/index.tsx |  |  | 0.507 |
-| walker |  | 8170 | 0 | export at apps/web/pages/settings/index.tsx:4 |  |  | 0.507 |
-| ns | 8227 |  | 109 | packages/lib directory listing | 4.1 |  | 0.517 |
-| walker |  | 8231 | 61 | package identity in apps/web/package.json |  |  | 0.518 |
-| walker |  | 8234 | 3 | listing of 'apps/web/scripts' |  |  | 0.518 |
-| ns | 8366 |  | 139 | packages/filesystem + packages/types + packages/router directory listings | 4.2 |  | 0.532 |
-| ns | 8441 |  | 75 | ssrf.ts: blocked-hostname policy data | 4.3 |  | 0.529 |
-| walker |  | 8551 | 317 | listing of 'apps/web/components' |  |  | 0.533 |
-| walker |  | 8560 | 9 | listing of 'apps/web/components/LinkViews' |  |  | 0.533 |
-| walker |  | 8576 | 16 | listing of 'apps/web/components/InputSelect' |  |  | 0.533 |
-| walker |  | 8602 | 26 | listing of 'apps/web/components/Preservation' |  |  | 0.533 |
-| walker |  | 8643 | 41 | listing of 'apps/web/components/ui' |  |  | 0.533 |
-| ns | 8681 |  | 240 | ssrf.ts: assertUrlIsSafeForServerSideFetch (main entry point) | 4.4 |  | 0.524 |
-| walker |  | 8705 | 62 | listing of 'apps/web/components/LinkViews/LinkComponents' |  |  | 0.524 |
-| ns | 8816 |  | 135 | apps/worker directory listing (workers/ + lib/) | 5.1 |  | 0.534 |
-| walker |  | 8873 | 168 | listing of 'apps/web/components/ModalContent' |  |  | 0.534 |
-| walker |  | 9054 | 181 | package dependencies in package.json |  |  | 0.534 |
-| ns | 9085 |  | 269 | worker.ts (process entry point) | 5.2 |  | 0.527 |
-| walker |  | 9233 | 179 | Prisma decl tail at packages/prisma/schema.prisma:166 body 182 |  |  | 0.547 |
-| ns | 9379 |  | 294 | archiveHandler.ts: format dispatch cascade | 5.3 |  | 0.537 |
-| walker |  | 9435 | 202 | README.md section #27 |  |  | 0.537 |
-| walker |  | 9450 | 15 | export names surface in apps/mobile/app/(tabs)/collections/index.tsx |  |  | 0.537 |
-| walker |  | 9450 | 0 | export at apps/mobile/app/(tabs)/collections/index.tsx:19 |  |  | 0.537 |
-| walker |  | 9465 | 15 | export names surface in apps/mobile/app/(tabs)/dashboard/index.tsx |  |  | 0.537 |
-| walker |  | 9465 | 0 | export at apps/mobile/app/(tabs)/dashboard/index.tsx:24 |  |  | 0.537 |
-| walker |  | 9480 | 15 | export names surface in apps/mobile/app/(tabs)/links/index.tsx |  |  | 0.537 |
-| walker |  | 9480 | 0 | export at apps/mobile/app/(tabs)/links/index.tsx:8 |  |  | 0.537 |
-| walker |  | 9495 | 15 | export names surface in apps/mobile/app/(tabs)/settings/index.tsx |  |  | 0.537 |
-| walker |  | 9495 | 0 | export at apps/mobile/app/(tabs)/settings/index.tsx:32 |  |  | 0.537 |
-| walker |  | 9510 | 15 | export names surface in apps/mobile/app/(tabs)/tags/index.tsx |  |  | 0.537 |
-| walker |  | 9510 | 0 | export at apps/mobile/app/(tabs)/tags/index.tsx:32 |  |  | 0.537 |
-| walker |  | 9618 | 108 | package dependencies in packages/prisma/package.json |  |  | 0.537 |
-| walker |  | 9718 | 100 | imports in packages/filesystem/index.ts |  |  | 0.537 |
-| walker |  | 9730 | 12 | export names surface in packages/filesystem/s3Client.ts |  |  | 0.537 |
-| walker |  | 9744 | 14 | export names surface in packages/filesystem/createFile.ts |  |  | 0.537 |
-| walker |  | 9763 | 19 | export names surface in packages/filesystem/readFile.ts |  |  | 0.537 |
-| walker |  | 9763 | 0 | export at packages/filesystem/readFile.ts:19 |  |  | 0.537 |
-| ns | 9782 |  | 403 | apps/web UI directory listing (pages/, components/) | 6.1 |  | 0.564 |
-| walker |  | 9785 | 22 | export names surface in packages/filesystem/fileExists.ts |  |  | 0.564 |
-| walker |  | 9785 | 0 | export at packages/filesystem/fileExists.ts:6 |  |  | 0.564 |
-| walker |  | 9807 | 22 | export names surface in packages/filesystem/moveFile.ts |  |  | 0.564 |
-| walker |  | 9807 | 0 | export at packages/filesystem/moveFile.ts:6 |  |  | 0.564 |
-| walker |  | 9830 | 23 | export names surface in packages/filesystem/createFolder.ts |  |  | 0.564 |
-| walker |  | 9830 | 0 | export at packages/filesystem/createFolder.ts:5 |  |  | 0.564 |
-| walker |  | 9854 | 24 | export names surface in packages/filesystem/removeFile.ts |  |  | 0.564 |
-| walker |  | 9854 | 0 | export at packages/filesystem/removeFile.ts:6 |  |  | 0.564 |
-| walker |  | 9878 | 24 | export names surface in packages/filesystem/removeFolder.ts |  |  | 0.564 |
-| walker |  | 9878 | 0 | export at packages/filesystem/removeFolder.ts:40 |  |  | 0.564 |
-| ns | 9912 |  | 130 | apps/mobile UI directory listing (app/, components/, store/, lib/) | 7.1 |  | 0.572 |
-| ns | 9933 |  | 21 | .github/workflows directory listing | 8.1 |  | 0.573 |
-| walker |  | 9952 | 74 | export at packages/filesystem/createFile.ts:6 |  |  | 0.573 |
-| walker |  | 9978 | 26 | export names surface in apps/web/pages/collections/index.tsx |  |  | 0.573 |
-| walker |  | 9978 | 0 | export at apps/web/pages/collections/index.tsx:157 |  |  | 0.573 |
-| ns | 9979 |  | 46 | crowdin.yml | 9.1 |  | 0.572 |
-| walker |  | 9995 | 17 | export at apps/web/pages/collections/index.tsx:21 |  |  | 0.572 |
+| walker |  | 2219 | 59 | listing of 'apps/mobile/components' |  |  | 0.377 |
+| walker |  | 2245 | 26 | listing of 'apps/mobile/components/Formats' |  |  | 0.377 |
+| walker |  | 2277 | 32 | listing of 'apps/mobile/components/ActionSheets' |  |  | 0.377 |
+| walker |  | 2339 | 62 | listing of 'apps/web/hooks' |  |  | 0.377 |
+| walker |  | 2415 | 76 | export at packages/prisma/index.ts:5 |  |  | 0.378 |
+| ns | 2630 |  | 457 | Root package.json (workspace scripts) | 1.12 |  | 0.357 |
+| walker |  | 2710 | 295 | README.md section #0 |  |  | 0.357 |
+| walker |  | 2732 | 22 | README.md section #1 |  |  | 0.357 |
+| walker |  | 2754 | 22 | README.md section #2 |  |  | 0.357 |
+| walker |  | 2796 | 42 | listing of 'apps/worker/lib/preservationScheme' |  |  | 0.357 |
+| ns | 2897 |  | 267 | apps/mobile/package.json (identity + scripts) | 1.13 |  | 0.340 |
+| walker |  | 3016 | 220 | Prisma schema TOC in packages/prisma/schema.prisma |  |  | 0.343 |
+| walker |  | 3031 | 15 | imports in packages/prisma/index.ts |  |  | 0.343 |
+| walker |  | 3110 | 79 | listing of 'apps/web/public' |  |  | 0.343 |
+| walker |  | 3120 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.343 |
+| ns | 3140 |  | 243 | apps/web/package.json (identity + scripts) | 1.14 |  | 0.331 |
+| walker |  | 3144 | 24 | README.md section #5 |  |  | 0.331 |
+| walker |  | 3167 | 23 | README.md section #4 |  |  | 0.331 |
+| walker |  | 3216 | 49 | listing of 'apps/web/public/locales' |  |  | 0.331 |
+| walker |  | 3220 | 4 | listing of 'apps/web/public/locales/de' |  |  | 0.331 |
+| walker |  | 3224 | 4 | listing of 'apps/web/public/locales/en' |  |  | 0.331 |
+| walker |  | 3228 | 4 | listing of 'apps/web/public/locales/es' |  |  | 0.331 |
+| walker |  | 3232 | 4 | listing of 'apps/web/public/locales/fr' |  |  | 0.331 |
+| walker |  | 3236 | 4 | listing of 'apps/web/public/locales/it' |  |  | 0.331 |
+| walker |  | 3240 | 4 | listing of 'apps/web/public/locales/ja' |  |  | 0.331 |
+| walker |  | 3244 | 4 | listing of 'apps/web/public/locales/nl' |  |  | 0.331 |
+| walker |  | 3248 | 4 | listing of 'apps/web/public/locales/pl' |  |  | 0.331 |
+| walker |  | 3252 | 4 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.331 |
+| walker |  | 3256 | 4 | listing of 'apps/web/public/locales/ro' |  |  | 0.331 |
+| walker |  | 3260 | 4 | listing of 'apps/web/public/locales/ru' |  |  | 0.331 |
+| walker |  | 3264 | 4 | listing of 'apps/web/public/locales/tr' |  |  | 0.331 |
+| walker |  | 3268 | 4 | listing of 'apps/web/public/locales/uk' |  |  | 0.331 |
+| walker |  | 3272 | 4 | listing of 'apps/web/public/locales/zh' |  |  | 0.331 |
+| walker |  | 3276 | 4 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.331 |
+| walker |  | 3301 | 25 | README.md section #13 |  |  | 0.331 |
+| walker |  | 3325 | 24 | README.md section #12 |  |  | 0.331 |
+| walker |  | 3375 | 50 | listing of 'apps/mobile/components/ui' |  |  | 0.331 |
+| walker |  | 3461 | 86 | listing of 'apps/web/pages' |  |  | 0.331 |
+| walker |  | 3467 | 6 | listing of 'apps/web/pages/preserved' |  |  | 0.331 |
+| walker |  | 3475 | 8 | listing of 'apps/web/pages/api' |  |  | 0.331 |
+| walker |  | 3478 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.331 |
+| walker |  | 3492 | 14 | export names surface in apps/web/pages/index.tsx |  |  | 0.331 |
+| walker |  | 3492 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.331 |
+| walker |  | 3501 | 9 | listing of 'apps/web/pages/public' |  |  | 0.331 |
+| walker |  | 3506 | 5 | listing of 'apps/web/pages/public/collections' |  |  | 0.331 |
+| walker |  | 3510 | 4 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.331 |
+| walker |  | 3516 | 6 | listing of 'apps/web/pages/public/links' |  |  | 0.331 |
+| walker |  | 3522 | 6 | listing of 'apps/web/pages/public/preserved' |  |  | 0.331 |
+| walker |  | 3533 | 11 | listing of 'apps/web/pages/collections' |  |  | 0.331 |
+| walker |  | 3544 | 11 | listing of 'apps/web/pages/tags' |  |  | 0.331 |
+| walker |  | 3556 | 12 | listing of 'apps/web/pages/auth' |  |  | 0.331 |
+| walker |  | 3572 | 16 | listing of 'apps/web/pages/links' |  |  | 0.331 |
+| walker |  | 3591 | 19 | listing of 'apps/web/pages/admin' |  |  | 0.331 |
+| walker |  | 3634 | 43 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.331 |
+| walker |  | 3644 | 10 | listing of 'apps/web/pages/public/collections/[id]' |  |  | 0.331 |
+| ns | 3665 |  | 525 | apps/worker/package.json (scripts + dependencies) | 1.15 |  | 0.309 |
+| walker |  | 3954 | 310 | YAML config at docker-compose.yml |  |  | 0.406 |
+| walker |  | 3971 | 17 | imports in apps/worker/index.ts |  |  | 0.406 |
+| ns | 4020 |  | 355 | .env.sample: SSO provider roster (first 35 of 58, alphabetical) | 1.16 |  | 0.383 |
+| walker |  | 4027 | 56 | listing of 'apps/web/pages/settings' |  |  | 0.383 |
+| ns | 4043 |  | 23 | packages/prisma directory listing | 2.1 |  | 0.395 |
+| walker |  | 4051 | 24 | Prisma decl at packages/prisma/schema.prisma:77 |  |  | 0.395 |
+| walker |  | 4100 | 49 | Prisma decl at packages/prisma/schema.prisma:90 |  |  | 0.396 |
+| walker |  | 4129 | 29 | README.md section #3 |  |  | 0.396 |
+| walker |  | 4155 | 26 | Prisma decl at packages/prisma/schema.prisma:304 |  |  | 0.396 |
+| walker |  | 4190 | 35 | Prisma decl at packages/prisma/schema.prisma:83 |  |  | 0.397 |
+| ns | 4246 |  | 203 | schema.prisma: every model/enum name (roster) | 2.2 |  | 0.432 |
+| ns | 4311 |  | 65 | schema.prisma: generator + datasource | 2.3 |  | 0.428 |
+| walker |  | 4400 | 210 | Prisma decl at packages/prisma/schema.prisma:166 |  |  | 0.428 |
+| walker |  | 4450 | 50 | package dev/peer dependencies in package.json |  |  | 0.428 |
+| walker |  | 4481 | 31 | README.md section #14 |  |  | 0.428 |
+| walker |  | 4520 | 39 | Prisma decl at packages/prisma/schema.prisma:289 |  |  | 0.428 |
+| walker |  | 4545 | 25 | imports in apps/web/pages/index.tsx |  |  | 0.428 |
+| walker |  | 4624 | 79 | listing of 'apps/web/lib/client' |  |  | 0.428 |
+| walker |  | 4909 | 285 | Prisma decl at packages/prisma/schema.prisma:28 |  |  | 0.430 |
+| ns | 4969 |  | 658 | schema.prisma: User model (full fields) | 2.4 | 2.2 | 0.422 |
+| ns | 5087 |  | 118 | schema.prisma: Theme / AiTaggingMethod / LinksRouteTo enums | 2.5 | 2.2 | 0.446 |
+| walker |  | 5284 | 375 | package scripts in package.json |  |  | 0.491 |
+| ns | 5581 |  | 494 | schema.prisma: Collection + UsersAndCollections (sharing/permissions) | 2.6 | 2.2 | 0.469 |
+| ns | 5970 |  | 389 | schema.prisma: Link model (full fields) | 2.7 | 2.2 | 0.466 |
+| walker |  | 6103 | 819 | plaintext config Dockerfile |  |  | 0.513 |
+| walker |  | 6130 | 27 | Prisma decl at packages/prisma/schema.prisma:5 |  |  | 0.518 |
+| ns | 6188 |  | 218 | schema.prisma: Tag model (full fields) | 2.8 | 2.2 | 0.508 |
+| walker |  | 6227 | 97 | listing of 'apps/web/lib/api' |  |  | 0.509 |
+| walker |  | 6240 | 13 | listing of 'apps/web/lib/api/archives' |  |  | 0.509 |
+| walker |  | 6257 | 17 | listing of 'apps/web/lib/api/preserved' |  |  | 0.509 |
+| walker |  | 6290 | 33 | listing of 'apps/web/lib/api/stripe' |  |  | 0.509 |
+| walker |  | 6326 | 36 | listing of 'apps/web/lib/api/controllers' |  |  | 0.510 |
+| walker |  | 6331 | 5 | listing of 'apps/web/lib/api/controllers/search' |  |  | 0.510 |
+| walker |  | 6336 | 5 | listing of 'apps/web/lib/api/controllers/session' |  |  | 0.510 |
+| walker |  | 6342 | 6 | listing of 'apps/web/lib/api/controllers/worker' |  |  | 0.510 |
+| walker |  | 6351 | 9 | listing of 'apps/web/lib/api/controllers/public' |  |  | 0.510 |
+| walker |  | 6355 | 4 | listing of 'apps/web/lib/api/controllers/public/links' |  |  | 0.510 |
+| walker |  | 6361 | 6 | listing of 'apps/web/lib/api/controllers/public/collections' |  |  | 0.510 |
+| walker |  | 6367 | 6 | listing of 'apps/web/lib/api/controllers/public/users' |  |  | 0.510 |
+| ns | 6373 |  | 185 | packages/prisma/index.ts (client singleton) + latest migration.sql | 2.9 |  | 0.508 |
+| walker |  | 6374 | 7 | listing of 'apps/web/lib/api/controllers/public/links/linkId' |  |  | 0.508 |
+| walker |  | 6388 | 14 | listing of 'apps/web/lib/api/controllers/collections' |  |  | 0.508 |
+| walker |  | 6402 | 14 | listing of 'apps/web/lib/api/controllers/highlights' |  |  | 0.508 |
+| walker |  | 6416 | 14 | listing of 'apps/web/lib/api/controllers/tokens' |  |  | 0.508 |
+| walker |  | 6423 | 7 | listing of 'apps/web/lib/api/controllers/tokens/tokenId' |  |  | 0.508 |
+| walker |  | 6437 | 14 | listing of 'apps/web/lib/api/controllers/users' |  |  | 0.508 |
+| ns | 6445 |  | 72 | apps/web/pages/api/v1 + v2 directory listings | 3.1 |  | 0.497 |
+| walker |  | 6454 | 17 | listing of 'apps/web/lib/api/controllers/links' |  |  | 0.497 |
+| walker |  | 6466 | 12 | listing of 'apps/web/lib/api/controllers/links/bulk' |  |  | 0.497 |
+| ns | 6481 |  | 36 | apps/web/lib/api/controllers directory listing | 3.2 |  | 0.506 |
+| walker |  | 6486 | 20 | listing of 'apps/web/lib/api/controllers/dashboard' |  |  | 0.506 |
+| walker |  | 6513 | 27 | listing of 'apps/web/lib/api/controllers/tags' |  |  | 0.506 |
+| walker |  | 6534 | 21 | listing of 'apps/web/lib/api/controllers/collections/collectionId' |  |  | 0.506 |
+| walker |  | 6555 | 21 | listing of 'apps/web/lib/api/controllers/tags/tagId' |  |  | 0.506 |
+| ns | 6578 |  | 97 | apps/web/lib/api directory listing (non-controller helpers) | 3.3 |  | 0.518 |
+| walker |  | 6579 | 24 | listing of 'apps/web/lib/api/controllers/links/linkId' |  |  | 0.518 |
+| walker |  | 6585 | 6 | listing of 'apps/web/lib/api/controllers/links/linkId/highlight' |  |  | 0.518 |
+| walker |  | 6612 | 27 | listing of 'apps/web/lib/api/controllers/users/userId' |  |  | 0.518 |
+| walker |  | 6932 | 320 | Prisma decl at packages/prisma/schema.prisma:126 |  |  | 0.541 |
+| walker |  | 7001 | 69 | listing of 'apps/web/pages/api/v1' |  |  | 0.567 |
+| walker |  | 7005 | 4 | listing of 'apps/web/pages/api/v1/dashboard' |  |  | 0.567 |
+| walker |  | 7009 | 4 | listing of 'apps/web/pages/api/v1/getFavicon' |  |  | 0.567 |
+| walker |  | 7013 | 4 | listing of 'apps/web/pages/api/v1/logins' |  |  | 0.567 |
+| walker |  | 7017 | 4 | listing of 'apps/web/pages/api/v1/migration' |  |  | 0.567 |
+| walker |  | 7021 | 4 | listing of 'apps/web/pages/api/v1/payment' |  |  | 0.567 |
+| walker |  | 7025 | 4 | listing of 'apps/web/pages/api/v1/search' |  |  | 0.567 |
+| walker |  | 7029 | 4 | listing of 'apps/web/pages/api/v1/session' |  |  | 0.567 |
+| walker |  | 7033 | 4 | listing of 'apps/web/pages/api/v1/webhook' |  |  | 0.567 |
+| walker |  | 7039 | 6 | listing of 'apps/web/pages/api/v1/avatar' |  |  | 0.567 |
+| walker |  | 7048 | 9 | listing of 'apps/web/pages/api/v1/config' |  |  | 0.567 |
+| walker |  | 7057 | 9 | listing of 'apps/web/pages/api/v1/public' |  |  | 0.567 |
+| walker |  | 7063 | 6 | listing of 'apps/web/pages/api/v1/public/links' |  |  | 0.567 |
+| walker |  | 7069 | 6 | listing of 'apps/web/pages/api/v1/public/users' |  |  | 0.567 |
+| walker |  | 7078 | 9 | listing of 'apps/web/pages/api/v1/worker' |  |  | 0.567 |
+| walker |  | 7088 | 10 | listing of 'apps/web/pages/api/v1/collections' |  |  | 0.567 |
+| walker |  | 7098 | 10 | listing of 'apps/web/pages/api/v1/highlights' |  |  | 0.567 |
+| walker |  | 7108 | 10 | listing of 'apps/web/pages/api/v1/rss' |  |  | 0.567 |
+| walker |  | 7118 | 10 | listing of 'apps/web/pages/api/v1/tokens' |  |  | 0.567 |
+| walker |  | 7130 | 12 | listing of 'apps/web/pages/api/v1/links' |  |  | 0.567 |
+| walker |  | 7134 | 4 | listing of 'apps/web/pages/api/v1/links/archive' |  |  | 0.567 |
+| walker |  | 7147 | 13 | listing of 'apps/web/pages/api/v1/users' |  |  | 0.567 |
+| walker |  | 7156 | 9 | listing of 'apps/web/pages/api/v1/users/[id]' |  |  | 0.567 |
+| walker |  | 7170 | 14 | listing of 'apps/web/pages/api/v1/tags' |  |  | 0.567 |
+| walker |  | 7180 | 10 | listing of 'apps/web/pages/api/v1/links/[id]' |  |  | 0.567 |
+| walker |  | 7184 | 4 | listing of 'apps/web/pages/api/v1/links/[id]/archive' |  |  | 0.567 |
+| walker |  | 7188 | 4 | listing of 'apps/web/pages/api/v1/links/[id]/highlights' |  |  | 0.567 |
+| walker |  | 7200 | 12 | listing of 'apps/web/pages/api/v1/public/collections' |  |  | 0.567 |
+| walker |  | 7204 | 4 | listing of 'apps/web/pages/api/v1/public/collections/links' |  |  | 0.567 |
+| walker |  | 7208 | 4 | listing of 'apps/web/pages/api/v1/public/collections/tags' |  |  | 0.567 |
+| walker |  | 7226 | 18 | listing of 'apps/web/pages/api/v1/preserved' |  |  | 0.567 |
+| walker |  | 7245 | 19 | listing of 'apps/web/pages/api/v1/archives' |  |  | 0.567 |
+| walker |  | 7267 | 22 | listing of 'apps/web/pages/api/v1/auth' |  |  | 0.567 |
+| walker |  | 7355 | 88 | README.md section #31 |  |  | 0.567 |
+| ns | 7384 |  | 806 | verifyUser.ts + verifyToken.ts (auth gate) | 3.4 |  | 0.528 |
+| walker |  | 7403 | 48 | listing of 'apps/web/lib/api/controllers/migration' |  |  | 0.528 |
+| walker |  | 7419 | 16 | Prisma decl at packages/prisma/schema.prisma:1 |  |  | 0.532 |
+| walker |  | 7523 | 104 | README.md section #28 |  |  | 0.532 |
+| walker |  | 7565 | 42 | package identity in packages/lib/package.json |  |  | 0.532 |
+| walker |  | 7577 | 12 | package entrypoints in packages/lib/package.json |  |  | 0.532 |
+| walker |  | 7613 | 36 | package dev/peer dependencies in packages/lib/package.json |  |  | 0.532 |
+| walker |  | 7655 | 42 | package identity in packages/router/package.json |  |  | 0.532 |
+| walker |  | 7667 | 12 | package entrypoints in packages/router/package.json |  |  | 0.532 |
+| walker |  | 7709 | 42 | package identity in packages/types/package.json |  |  | 0.532 |
+| walker |  | 7721 | 12 | package entrypoints in packages/types/package.json |  |  | 0.532 |
+| walker |  | 7764 | 43 | package runtime dependencies in packages/types/package.json |  |  | 0.532 |
+| walker |  | 7807 | 43 | package identity in apps/worker/package.json |  |  | 0.532 |
+| walker |  | 7819 | 12 | package entrypoints in apps/worker/package.json |  |  | 0.533 |
+| walker |  | 7877 | 58 | package scripts in apps/worker/package.json |  |  | 0.534 |
+| walker |  | 7920 | 43 | package identity in packages/filesystem/package.json |  |  | 0.534 |
+| walker |  | 7932 | 12 | package entrypoints in packages/filesystem/package.json |  |  | 0.534 |
+| walker |  | 7966 | 34 | package runtime dependencies in packages/filesystem/package.json |  |  | 0.534 |
+| walker |  | 8009 | 43 | package identity in packages/prisma/package.json |  |  | 0.534 |
+| walker |  | 8036 | 27 | package entrypoints in packages/prisma/package.json |  |  | 0.534 |
+| walker |  | 8107 | 71 | package scripts in packages/prisma/package.json |  |  | 0.534 |
+| ns | 8118 |  | 734 | getPermission.ts + setCollection.ts (collection access, trimmed) | 3.5 |  | 0.504 |
+| walker |  | 8153 | 46 | package runtime dependencies in packages/prisma/package.json |  |  | 0.504 |
+| walker |  | 8199 | 46 | package identity in apps/mobile/package.json |  |  | 0.504 |
+| walker |  | 8211 | 12 | package entrypoints in apps/mobile/package.json |  |  | 0.504 |
+| ns | 8227 |  | 109 | packages/lib directory listing | 4.1 |  | 0.514 |
+| walker |  | 8306 | 95 | package scripts in apps/mobile/package.json |  |  | 0.520 |
+| ns | 8366 |  | 139 | packages/filesystem + packages/types + packages/router directory listings | 4.2 |  | 0.533 |
+| walker |  | 8439 | 133 | package runtime dependencies in package.json |  |  | 0.533 |
+| ns | 8441 |  | 75 | ssrf.ts: blocked-hostname policy data | 4.3 |  | 0.531 |
+| walker |  | 8453 | 14 | export names surface in apps/web/pages/settings/index.tsx |  |  | 0.531 |
+| walker |  | 8453 | 0 | export at apps/web/pages/settings/index.tsx:4 |  |  | 0.531 |
+| walker |  | 8514 | 61 | package identity in apps/web/package.json |  |  | 0.531 |
+| walker |  | 8526 | 12 | package entrypoints in apps/web/package.json |  |  | 0.532 |
+| walker |  | 8654 | 128 | package scripts in apps/web/package.json |  |  | 0.541 |
+| ns | 8681 |  | 240 | ssrf.ts: assertUrlIsSafeForServerSideFetch (main entry point) | 4.4 |  | 0.533 |
+| walker |  | 8716 | 62 | package dev/peer dependencies in packages/prisma/package.json |  |  | 0.533 |
+| walker |  | 8719 | 3 | listing of 'apps/web/scripts' |  |  | 0.533 |
+| ns | 8816 |  | 135 | apps/worker directory listing (workers/ + lib/) | 5.1 |  | 0.543 |
+| walker |  | 9036 | 317 | listing of 'apps/web/components' |  |  | 0.546 |
+| walker |  | 9045 | 9 | listing of 'apps/web/components/LinkViews' |  |  | 0.546 |
+| walker |  | 9061 | 16 | listing of 'apps/web/components/InputSelect' |  |  | 0.546 |
+| ns | 9085 |  | 269 | worker.ts (process entry point) | 5.2 |  | 0.539 |
+| walker |  | 9087 | 26 | listing of 'apps/web/components/Preservation' |  |  | 0.539 |
+| walker |  | 9128 | 41 | listing of 'apps/web/components/ui' |  |  | 0.539 |
+| walker |  | 9190 | 62 | listing of 'apps/web/components/LinkViews/LinkComponents' |  |  | 0.539 |
+| walker |  | 9358 | 168 | listing of 'apps/web/components/ModalContent' |  |  | 0.539 |
+| ns | 9379 |  | 294 | archiveHandler.ts: format dispatch cascade | 5.3 |  | 0.529 |
+| walker |  | 9440 | 82 | package dev/peer dependencies in apps/worker/package.json |  |  | 0.529 |
+| walker |  | 9619 | 179 | Prisma decl tail at packages/prisma/schema.prisma:166 body 182 |  |  | 0.548 |
+| walker |  | 9706 | 87 | package dev/peer dependencies in packages/router/package.json |  |  | 0.548 |
+| ns | 9782 |  | 403 | apps/web UI directory listing (pages/, components/) | 6.1 |  | 0.574 |
+| walker |  | 9806 | 100 | package runtime dependencies in packages/router/package.json |  |  | 0.574 |
+| ns | 9912 |  | 130 | apps/mobile UI directory listing (app/, components/, store/, lib/) | 7.1 |  | 0.581 |
+| ns | 9933 |  | 21 | .github/workflows directory listing | 8.1 |  | 0.583 |
+| ns | 9979 |  | 46 | crowdin.yml | 9.1 |  | 0.582 |
