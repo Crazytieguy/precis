@@ -2036,7 +2036,7 @@ fn is_known_c_stdlib_stem(stem: &str) -> bool {
 /// neutral-depth declaration-names tier (`mix_signals(0.80, 0.60, 0.35, 1)`).
 /// This deliberately overrides generic directory-depth damping: `include/`
 /// placement does not make an application's user-tuned settings secondary.
-const CONFIGURATION_SURFACE_VALUE_FLOOR: f64 = 1073.0;
+const CONFIGURATION_SURFACE_VALUE_FLOOR: f64 = 1250.0;
 
 fn configuration_surface_value_floor(value: f64, configuration_surface: bool) -> f64 {
     if configuration_surface {

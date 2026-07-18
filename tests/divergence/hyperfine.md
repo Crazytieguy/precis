@@ -90,9 +90,9 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | ns | 2419 |  | 439 | cli.rs — every flag's Arg::new(...) anchor line | 2.1 |  | 0.597 |
 | walker |  | 2477 | 180 | mod/use plumbing in src/main.rs |  |  | 0.657 |
 | walker |  | 2498 | 21 | listing of 'tests' |  |  | 0.669 |
-| walker |  | 2531 | 33 | pub item at src/output/progress_bar.rs:13 |  |  | 0.669 |
 | ns | 2865 |  | 446 | cli.rs — build_command() header + positional `command` arg | 2.2 | 2.1 | 0.620 |
-| walker |  | 2983 | 452 | registration roster at src/cli.rs:18 |  |  | 0.696 |
+| walker |  | 2950 | 452 | registration roster at src/cli.rs:18 |  |  | 0.696 |
+| walker |  | 2983 | 33 | pub item at src/output/progress_bar.rs:13 |  |  | 0.696 |
 | walker |  | 3051 | 68 | pub item at src/cli.rs:8 |  |  | 0.698 |
 | walker |  | 3073 | 22 | pub item body at src/cli.rs:8 body 13 |  |  | 0.700 |
 | walker |  | 3113 | 40 | pub item at src/parameter/range_step.rs:34 |  |  | 0.700 |

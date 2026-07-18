@@ -35,19 +35,19 @@ Score(3000)=0.448 I=0.814 C=0.246 ns_rows≤3K=18/53 (reached=4 partial=0 missin
 | ns | 674 |  | 206 | README: Concepts (Models, URIs) | 1.7 |  | 0.769 |
 | walker |  | 682 | 38 | listing of 'docs' |  |  | 0.769 |
 | walker |  | 692 | 10 | listing of 'src/deprecated/editor' |  |  | 0.769 |
+| walker |  | 698 | 6 | listing of 'scripts' |  |  | 0.769 |
+| walker |  | 718 | 20 | listing of 'webpack-plugin/src' |  |  | 0.769 |
+| walker |  | 722 | 4 | listing of 'webpack-plugin/src/loaders' |  |  | 0.769 |
+| walker |  | 730 | 8 | listing of 'webpack-plugin/src/plugins' |  |  | 0.769 |
+| walker |  | 737 | 7 | listing of 'src/languages/features/common' |  |  | 0.769 |
+| walker |  | 785 | 48 | package identity in monaco-lsp-client/package.json |  |  | 0.769 |
+| walker |  | 789 | 4 | listing of 'scripts/lib' |  |  | 0.769 |
 | ns | 947 |  | 273 | README: Concepts (Editors, Providers, Disposables) | 1.8 |  | 0.682 |
-| walker |  | 996 | 304 | listing of 'src/languages/definitions' |  |  | 0.695 |
-| walker |  | 1002 | 6 | listing of 'scripts' |  |  | 0.695 |
-| walker |  | 1022 | 20 | listing of 'webpack-plugin/src' |  |  | 0.695 |
-| walker |  | 1026 | 4 | listing of 'webpack-plugin/src/loaders' |  |  | 0.695 |
-| walker |  | 1034 | 8 | listing of 'webpack-plugin/src/plugins' |  |  | 0.695 |
-| ns | 1225 |  | 278 | package.json: setup/packaging scripts | 1.9 |  | 0.634 |
-| walker |  | 1306 | 272 | listing of 'src/features' |  |  | 0.650 |
-| walker |  | 1313 | 7 | listing of 'src/languages/features/common' |  |  | 0.650 |
-| walker |  | 1361 | 48 | package identity in monaco-lsp-client/package.json |  |  | 0.650 |
-| walker |  | 1365 | 4 | listing of 'scripts/lib' |  |  | 0.650 |
-| ns | 1391 |  | 166 | README FAQ: VS Code / vscode-extension relationship | 1.10 |  | 0.600 |
-| walker |  | 1427 | 62 | package identity in webpack-plugin/package.json |  |  | 0.600 |
+| walker |  | 1061 | 272 | listing of 'src/features' |  |  | 0.701 |
+| walker |  | 1123 | 62 | package identity in webpack-plugin/package.json |  |  | 0.701 |
+| ns | 1225 |  | 278 | package.json: setup/packaging scripts | 1.9 |  | 0.639 |
+| ns | 1391 |  | 166 | README FAQ: VS Code / vscode-extension relationship | 1.10 |  | 0.590 |
+| walker |  | 1427 | 304 | listing of 'src/languages/definitions' |  |  | 0.600 |
 | walker |  | 1439 | 12 | listing of '.azure-pipelines' |  |  | 0.600 |
 | walker |  | 1451 | 12 | listing of '.vscode' |  |  | 0.600 |
 | walker |  | 1506 | 55 | README headline in monaco-lsp-client/README.md |  |  | 0.600 |
@@ -137,20 +137,20 @@ Score(3000)=0.448 I=0.814 C=0.246 ns_rows≤3K=18/53 (reached=4 partial=0 missin
 | walker |  | 3322 | 78 | package identity metadata in package.json |  |  | 0.403 |
 | walker |  | 3399 | 77 | imports in src/index.ts |  |  | 0.424 |
 | walker |  | 3429 | 30 | package scripts in samples/browser-esm-esbuild/package.json |  |  | 0.424 |
-| walker |  | 3475 | 46 | README.md section #4 |  |  | 0.424 |
-| walker |  | 3506 | 31 | package scripts in samples/browser-esm-parcel/package.json |  |  | 0.424 |
-| walker |  | 3526 | 20 | imports in src/editor.ts |  |  | 0.428 |
-| ns | 3577 |  | 272 | src/features/ directory listing (all 64 feature dirs) | 3.1 |  | 0.550 |
-| walker |  | 3692 | 166 | package entrypoints in package.json |  |  | 0.582 |
-| walker |  | 3715 | 23 | listing of 'scripts/ci' |  |  | 0.582 |
-| walker |  | 3794 | 79 | module item at webpack-plugin/src/index.ts:159 |  |  | 0.582 |
-| walker |  | 3809 | 15 | module item body at webpack-plugin/src/index.ts:159 body 202 |  |  | 0.582 |
-| walker |  | 3822 | 13 | module item body at webpack-plugin/src/index.ts:159 body 203 |  |  | 0.582 |
-| walker |  | 3839 | 17 | module item body at webpack-plugin/src/index.ts:159 body 181 |  |  | 0.582 |
-| walker |  | 3858 | 19 | module item body at webpack-plugin/src/index.ts:159 body 179 |  |  | 0.582 |
-| walker |  | 3875 | 17 | module item body at webpack-plugin/src/index.ts:159 body 180 |  |  | 0.582 |
-| walker |  | 3897 | 22 | module item body at webpack-plugin/src/index.ts:159 body 201 |  |  | 0.582 |
-| walker |  | 3957 | 60 | listing of 'website' |  |  | 0.583 |
+| walker |  | 3489 | 60 | listing of 'website' |  |  | 0.425 |
+| walker |  | 3535 | 46 | README.md section #4 |  |  | 0.425 |
+| walker |  | 3566 | 31 | package scripts in samples/browser-esm-parcel/package.json |  |  | 0.425 |
+| ns | 3577 |  | 272 | src/features/ directory listing (all 64 feature dirs) | 3.1 |  | 0.548 |
+| walker |  | 3586 | 20 | imports in src/editor.ts |  |  | 0.550 |
+| walker |  | 3752 | 166 | package entrypoints in package.json |  |  | 0.583 |
+| walker |  | 3775 | 23 | listing of 'scripts/ci' |  |  | 0.583 |
+| walker |  | 3854 | 79 | module item at webpack-plugin/src/index.ts:159 |  |  | 0.583 |
+| walker |  | 3869 | 15 | module item body at webpack-plugin/src/index.ts:159 body 202 |  |  | 0.583 |
+| walker |  | 3882 | 13 | module item body at webpack-plugin/src/index.ts:159 body 203 |  |  | 0.583 |
+| walker |  | 3899 | 17 | module item body at webpack-plugin/src/index.ts:159 body 181 |  |  | 0.583 |
+| walker |  | 3918 | 19 | module item body at webpack-plugin/src/index.ts:159 body 179 |  |  | 0.583 |
+| walker |  | 3935 | 17 | module item body at webpack-plugin/src/index.ts:159 body 180 |  |  | 0.583 |
+| walker |  | 3957 | 22 | module item body at webpack-plugin/src/index.ts:159 body 201 |  |  | 0.583 |
 | walker |  | 4000 | 43 | README.md section #17 |  |  | 0.583 |
 | walker |  | 4080 | 80 | README.md section #1 |  |  | 0.583 |
 | walker |  | 4115 | 35 | listing of 'src/languages/features/typescript/lib' |  |  | 0.583 |
@@ -190,32 +190,32 @@ Score(3000)=0.448 I=0.814 C=0.246 ns_rows≤3K=18/53 (reached=4 partial=0 missin
 | walker |  | 5281 | 10 | export names surface in src/deprecated/editor/editor.worker.ts |  |  | 0.497 |
 | ns | 5298 |  | 259 | find/register.js: FindWidget tab-index accessibility patch | 3.5 | 3.4 | 0.482 |
 | walker |  | 5347 | 66 | package scripts in samples/browser-esm-webpack-typescript-react/package.json |  |  | 0.482 |
+| walker |  | 5398 | 51 | listing of 'test/smoke' |  |  | 0.482 |
 | ns | 5724 |  | 426 | Feature -> vscode-core module map (insertFinalNewLine..readOnlyMessage) | 3.6 | 3.2 | 0.472 |
-| walker |  | 5994 | 647 | package scripts in package.json |  |  | 0.531 |
-| walker |  | 6019 | 25 | imports in samples/browser-esm-vite/main.ts |  |  | 0.531 |
-| walker |  | 6065 | 46 | listing of 'website/src/website' |  |  | 0.531 |
-| walker |  | 6080 | 15 | listing of 'website/src/website/data' |  |  | 0.531 |
-| walker |  | 6107 | 27 | listing of 'website/src/website/pages' |  |  | 0.531 |
-| walker |  | 6141 | 34 | listing of 'website/src/website/data/playground-samples' |  |  | 0.531 |
+| walker |  | 6045 | 647 | package scripts in package.json |  |  | 0.531 |
+| walker |  | 6070 | 25 | imports in samples/browser-esm-vite/main.ts |  |  | 0.531 |
+| walker |  | 6116 | 46 | listing of 'website/src/website' |  |  | 0.531 |
+| walker |  | 6131 | 15 | listing of 'website/src/website/data' |  |  | 0.531 |
 | ns | 6143 |  | 419 | Feature -> vscode-core module map (referenceSearch..wordPartOperations) | 3.7 | 3.2 | 0.520 |
 | ns | 6154 |  | 11 | src/languages/ directory listing | 4.1 |  | 0.523 |
-| walker |  | 6160 | 19 | listing of 'website/src/website/data/playground-samples/customizing-the-appearence' |  |  | 0.523 |
-| walker |  | 6181 | 21 | listing of 'website/src/website/data/playground-samples/creating-the-diffeditor' |  |  | 0.523 |
-| walker |  | 6212 | 31 | listing of 'website/src/website/data/playground-samples/creating-the-editor' |  |  | 0.523 |
-| walker |  | 6252 | 40 | listing of 'website/src/website/components' |  |  | 0.523 |
-| walker |  | 6294 | 42 | listing of 'website/src/website/utils' |  |  | 0.523 |
-| walker |  | 6320 | 26 | imports in samples/browser-esm-webpack-typescript/src/index.ts |  |  | 0.523 |
-| walker |  | 6371 | 51 | listing of 'test/smoke' |  |  | 0.523 |
+| walker |  | 6158 | 27 | listing of 'website/src/website/pages' |  |  | 0.523 |
+| walker |  | 6192 | 34 | listing of 'website/src/website/data/playground-samples' |  |  | 0.523 |
+| walker |  | 6211 | 19 | listing of 'website/src/website/data/playground-samples/customizing-the-appearence' |  |  | 0.523 |
+| walker |  | 6232 | 21 | listing of 'website/src/website/data/playground-samples/creating-the-diffeditor' |  |  | 0.523 |
+| walker |  | 6263 | 31 | listing of 'website/src/website/data/playground-samples/creating-the-editor' |  |  | 0.523 |
+| walker |  | 6303 | 40 | listing of 'website/src/website/components' |  |  | 0.523 |
+| walker |  | 6345 | 42 | listing of 'website/src/website/utils' |  |  | 0.523 |
+| walker |  | 6371 | 26 | imports in samples/browser-esm-webpack-typescript/src/index.ts |  |  | 0.523 |
 | walker |  | 6395 | 24 | imports in src/languages/register.all.ts |  |  | 0.523 |
 | ns | 6458 |  | 304 | src/languages/definitions/ directory listing (all 84 entries) | 4.2 |  | 0.586 |
-| walker |  | 6543 | 148 | samples/README.md section #2 |  |  | 0.586 |
-| walker |  | 6647 | 104 | README.md section #3 |  |  | 0.586 |
-| walker |  | 6727 | 80 | listing of 'test/manual' |  |  | 0.586 |
+| walker |  | 6475 | 80 | listing of 'test/manual' |  |  | 0.586 |
+| walker |  | 6623 | 148 | samples/README.md section #2 |  |  | 0.586 |
+| walker |  | 6727 | 104 | README.md section #3 |  |  | 0.586 |
 | walker |  | 6803 | 76 | README.md section #20 |  |  | 0.586 |
 | walker |  | 6854 | 51 | MAINTAINING.md section #2 |  |  | 0.586 |
 | walker |  | 6888 | 34 | package runtime dependencies in webpack-plugin/package.json |  |  | 0.586 |
-| walker |  | 6975 | 87 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.586 |
-| walker |  | 7042 | 67 | listing of 'website/src/website/pages/playground' |  |  | 0.586 |
+| walker |  | 6955 | 67 | listing of 'website/src/website/pages/playground' |  |  | 0.586 |
+| walker |  | 7042 | 87 | package scripts in samples/browser-esm-vite-react/package.json |  |  | 0.586 |
 | walker |  | 7117 | 75 | listing of 'website/src/website/data/playground-samples/extending-language-services' |  |  | 0.586 |
 | ns | 7299 |  | 841 | src/languages/definitions/register.all.ts (81-language load order) | 4.3 |  | 0.539 |
 | walker |  | 7360 | 243 | module item at monaco-lsp-client/generator/index.ts:259 |  |  | 0.539 |

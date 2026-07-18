@@ -1,7 +1,7 @@
 fixture = "audiobookshelf"
 budget = 10000
 cumulative_tokens = 9984
-batch_count = 296
+batch_count = 295
 
 [[batches]]
 position = 1
@@ -4209,42 +4209,26 @@ kind = "full"
 position = 250
 key = 'Yaml(Whole { file: "docker-compose.yml" })'
 descriptor = "YAML config at docker-compose.yml"
-cost_tokens = 101
-cum_tokens = 6820
+cost_tokens = 402
+cum_tokens = 7121
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "docker-compose.yml"
-start = 2
-end = 8
+start = 1
+end = 27
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "docker-compose.yml"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docker-compose.yml"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 251
 key = 'Markdown(Section { file: "readme.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #20"
 cost_tokens = 33
-cum_tokens = 6853
+cum_tokens = 7154
 
 [batches.content]
 kind = "lines"
@@ -4262,7 +4246,7 @@ position = 252
 key = 'Fs(DirListing { dir: "test/server/managers/migrations" })'
 descriptor = "listing of 'test/server/managers/migrations'"
 cost_tokens = 44
-cum_tokens = 6897
+cum_tokens = 7198
 
 [batches.content]
 kind = "fs"
@@ -4276,7 +4260,7 @@ position = 253
 key = 'Markdown(Section { file: "readme.md", section_index: 25, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #25"
 cost_tokens = 80
-cum_tokens = 6977
+cum_tokens = 7278
 
 [batches.content]
 kind = "lines"
@@ -4291,28 +4275,10 @@ kind = "full"
 
 [[batches]]
 position = 254
-key = 'Markdown(Section { file: "readme.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #15"
-cost_tokens = 43
-cum_tokens = 7020
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 35
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 255
 key = 'Typescript(ModuleItemNames { file: "index.js" })'
 descriptor = "module item names surface in index.js"
 cost_tokens = 245
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4358,11 +4324,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 256
+position = 255
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 13 })'
 descriptor = "module item at index.js:13"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4376,11 +4342,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 257
+position = 256
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 21 })'
 descriptor = "module item at index.js:21"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4394,11 +4360,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 258
+position = 257
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 38 })'
 descriptor = "module item at index.js:38"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4412,11 +4378,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 259
+position = 258
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 39 })'
 descriptor = "module item at index.js:39"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4430,11 +4396,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 260
+position = 259
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 41 })'
 descriptor = "module item at index.js:41"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4448,11 +4414,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 261
+position = 260
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 42 })'
 descriptor = "module item at index.js:42"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4466,11 +4432,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 262
+position = 261
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 43 })'
 descriptor = "module item at index.js:43"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4484,11 +4450,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 263
+position = 262
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 44 })'
 descriptor = "module item at index.js:44"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4502,11 +4468,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 264
+position = 263
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 45 })'
 descriptor = "module item at index.js:45"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4520,11 +4486,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 265
+position = 264
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 47 })'
 descriptor = "module item at index.js:47"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4538,11 +4504,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 266
+position = 265
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 52 })'
 descriptor = "module item at index.js:52"
 cost_tokens = 0
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4556,11 +4522,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 267
+position = 266
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 1 })'
 descriptor = "module item at index.js:1"
 cost_tokens = 164
-cum_tokens = 7429
+cum_tokens = 7687
 
 [batches.content]
 kind = "lines"
@@ -4574,33 +4540,25 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 268
-key = 'Yaml(Tail { file: "docker-compose.yml" })'
-descriptor = "YAML config tail at docker-compose.yml"
-cost_tokens = 301
+position = 267
+key = 'Markdown(Section { file: "readme.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "readme.md section #15"
+cost_tokens = 43
 cum_tokens = 7730
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "docker-compose.yml"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docker-compose.yml"
-start = 9
-end = 27
+path = "readme.md"
+start = 35
+end = 37
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 269
+position = 268
 key = 'Markdown(Section { file: "readme.md", section_index: 34, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #34"
 cost_tokens = 30
@@ -4618,7 +4576,7 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 270
+position = 269
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 351
@@ -4636,7 +4594,7 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 271
+position = 270
 key = 'Markdown(Section { file: "docs/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/README.md section #1"
 cost_tokens = 78
@@ -4654,7 +4612,7 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 272
+position = 271
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib'"
 cost_tokens = 38
@@ -4668,7 +4626,7 @@ parent = "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib"
 entries = ["_stream_duplex.js", "_stream_passthrough.js", "_stream_readable.js", "_stream_transform.js", "_stream_writable.js", "internal"]
 
 [[batches]]
-position = 273
+position = 272
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal'"
 cost_tokens = 3
@@ -4682,7 +4640,7 @@ parent = "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/inte
 entries = ["streams"]
 
 [[batches]]
-position = 274
+position = 273
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams'"
 cost_tokens = 18
@@ -4696,7 +4654,7 @@ parent = "server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/inte
 entries = ["BufferList.js", "destroy.js", "stream-browser.js", "stream.js"]
 
 [[batches]]
-position = 275
+position = 274
 key = 'Markdown(Section { file: "readme.md", section_index: 28, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #28"
 cost_tokens = 33
@@ -4714,7 +4672,7 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 276
+position = 275
 key = 'Markdown(Section { file: "docs/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/README.md section #2"
 cost_tokens = 68
@@ -4732,7 +4690,7 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 277
+position = 276
 key = 'Markdown(Section { file: "readme.md", section_index: 59, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #59"
 cost_tokens = 30
@@ -4750,7 +4708,7 @@ end = 395
 kind = "full"
 
 [[batches]]
-position = 278
+position = 277
 key = 'Json(Scripts { file: "client/package.json" })'
 descriptor = "package scripts in client/package.json"
 cost_tokens = 175
@@ -4768,7 +4726,7 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 279
+position = 278
 key = 'Markdown(Section { file: "readme.md", section_index: 40, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #40"
 cost_tokens = 38
@@ -4786,7 +4744,7 @@ end = 248
 kind = "full"
 
 [[batches]]
-position = 280
+position = 279
 key = 'Fs(DirListing { dir: "client/cypress/fixtures" })'
 descriptor = "listing of 'client/cypress/fixtures'"
 cost_tokens = 3
@@ -4800,7 +4758,7 @@ parent = "client/cypress/fixtures"
 entries = ["images"]
 
 [[batches]]
-position = 281
+position = 280
 key = 'Plaintext(Tail { file: "Dockerfile" })'
 descriptor = "plaintext config tail of Dockerfile"
 cost_tokens = 632
@@ -4842,7 +4800,7 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 282
+position = 281
 key = 'Markdown(Section { file: "readme.md", section_index: 67, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #67"
 cost_tokens = 35
@@ -4860,7 +4818,7 @@ end = 438
 kind = "full"
 
 [[batches]]
-position = 283
+position = 282
 key = 'Json(DevDependencies { file: "package.json" })'
 descriptor = "package dev/peer dependencies in package.json"
 cost_tokens = 97
@@ -4878,7 +4836,7 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 284
+position = 283
 key = 'Markdown(Section { file: "readme.md", section_index: 61, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #61"
 cost_tokens = 36
@@ -4896,7 +4854,7 @@ end = 410
 kind = "full"
 
 [[batches]]
-position = 285
+position = 284
 key = 'Markdown(Section { file: "readme.md", section_index: 54, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #54"
 cost_tokens = 39
@@ -4914,7 +4872,7 @@ end = 369
 kind = "full"
 
 [[batches]]
-position = 286
+position = 285
 key = 'Markdown(Section { file: "readme.md", section_index: 33, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #33"
 cost_tokens = 38
@@ -4932,7 +4890,7 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 287
+position = 286
 key = 'Markdown(Section { file: "readme.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #19"
 cost_tokens = 65
@@ -4950,7 +4908,7 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 288
+position = 287
 key = 'Markdown(Section { file: "readme.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #21"
 cost_tokens = 67
@@ -4968,7 +4926,7 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 289
+position = 288
 key = 'Markdown(Section { file: "readme.md", section_index: 52, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #52"
 cost_tokens = 45
@@ -4986,7 +4944,7 @@ end = 362
 kind = "full"
 
 [[batches]]
-position = 290
+position = 289
 key = 'Markdown(Section { file: "readme.md", section_index: 53, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #53"
 cost_tokens = 47
@@ -5004,7 +4962,7 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 291
+position = 290
 key = 'Fs(DirListing { dir: "server/libs/archiver/archiverUtils/readableStream/internal/streams" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/readableStream/internal/streams'"
 cost_tokens = 83
@@ -5018,7 +4976,7 @@ parent = "server/libs/archiver/archiverUtils/readableStream/internal/streams"
 entries = ["add-abort-signal.js", "buffer_list.js", "compose.js", "destroy.js", "duplex.js", "duplexify.js", "end-of-stream.js", "from.js", "lazy_transform.js", "legacy.js", "operators.js", "passthrough.js", "pipeline.js", "readable.js", "state.js", "transform.js", "utils.js", "writable.js"]
 
 [[batches]]
-position = 292
+position = 291
 key = 'Markdown(Section { file: "docs/README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/README.md section #4"
 cost_tokens = 89
@@ -5036,7 +4994,7 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 293
+position = 292
 key = 'Typescript(Imports { file: "server/libs/archiver/lib/error.js" })'
 descriptor = "imports in server/libs/archiver/lib/error.js"
 cost_tokens = 13
@@ -5054,7 +5012,7 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 294
+position = 293
 key = 'Markdown(Section { file: "readme.md", section_index: 57, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #57"
 cost_tokens = 49
@@ -5072,7 +5030,7 @@ end = 381
 kind = "full"
 
 [[batches]]
-position = 295
+position = 294
 key = 'Markdown(Section { file: "readme.md", section_index: 58, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #58"
 cost_tokens = 49
@@ -5090,7 +5048,7 @@ end = 389
 kind = "full"
 
 [[batches]]
-position = 296
+position = 295
 key = 'Fs(DirListing { dir: "test/server/providers" })'
 descriptor = "listing of 'test/server/providers'"
 cost_tokens = 5

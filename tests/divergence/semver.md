@@ -62,9 +62,9 @@ Score(3000)=0.676 I=0.750 C=0.610 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 2021 | 25 | README.md section #13 |  |  | 0.575 |
 | walker |  | 2045 | 24 | README.md section #43 |  |  | 0.575 |
 | walker |  | 2069 | 24 | README.md section #48 |  |  | 0.575 |
-| walker |  | 2073 | 4 | listing of '.github/matchers' |  |  | 0.575 |
-| walker |  | 2077 | 4 | listing of 'test/integration' |  |  | 0.575 |
-| walker |  | 2182 | 105 | listing of 'test/functions' |  |  | 0.642 |
+| walker |  | 2174 | 105 | listing of 'test/functions' |  |  | 0.642 |
+| walker |  | 2178 | 4 | listing of '.github/matchers' |  |  | 0.642 |
+| walker |  | 2182 | 4 | listing of 'test/integration' |  |  | 0.642 |
 | ns | 2213 |  | 306 | internal/identifiers.js | 2.7 |  | 0.605 |
 | walker |  | 2238 | 56 | listing of 'test/ranges' |  |  | 0.632 |
 | walker |  | 2267 | 29 | README.md section #14 |  |  | 0.632 |
@@ -76,8 +76,8 @@ Score(3000)=0.676 I=0.750 C=0.610 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 2484 | 30 | README.md section #39 |  |  | 0.639 |
 | walker |  | 2489 | 5 | listing of 'test/bin' |  |  | 0.640 |
 | ns | 2506 |  | 155 | package.json: bin, files, engines | 2.9 |  | 0.650 |
-| walker |  | 2571 | 82 | package dev/peer dependencies in package.json |  |  | 0.652 |
-| walker |  | 2655 | 84 | listing of 'test/fixtures' |  |  | 0.686 |
+| walker |  | 2573 | 84 | listing of 'test/fixtures' |  |  | 0.684 |
+| walker |  | 2655 | 82 | package dev/peer dependencies in package.json |  |  | 0.686 |
 | walker |  | 2688 | 33 | README.md section #31 |  |  | 0.686 |
 | walker |  | 2725 | 37 | README.md section #40 |  |  | 0.686 |
 | walker |  | 2761 | 36 | README.md section #41 |  |  | 0.686 |

@@ -103,6 +103,15 @@ build/
 build.rs
 impl/
     Cargo.toml
+           1→[package]
+           2→name = "thiserror-impl"
+           3→version = "2.0.18"
+           4→authors = ["David Tolnay <dtolnay@gmail.com>"]
+           5→description = "Implementation detail of the `thiserror` crate"
+           6→edition = "2021"
+           7→license = "MIT OR Apache-2.0"
+           8→repository = "https://github.com/dtolnay/thiserror"
+           9→rust-version = "1.71"
         …
           14→[dependencies]
           15→proc-macro2 = "1.0.74"
@@ -124,6 +133,11 @@ impl/
         ast.rs
         attr.rs
         expand.rs
+            …
+              12→pub fn derive(input: &DeriveInput) -> TokenStream {
+            …
+             505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
+            …
         fallback.rs
         fmt.rs
         generics.rs

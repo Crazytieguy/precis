@@ -159,38 +159,10 @@ kind = "full"
 
 [[batches]]
 position = 10
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 376
-cum_tokens = 636
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["Route.js", "Router.js", "acceptance", "app.all.js", "app.engine.js", "app.head.js", "app.js", "app.listen.js", "app.locals.js", "app.options.js", "app.param.js", "app.render.js", "app.request.js", "app.response.js", "app.route.js", "app.router.js", "app.routes.error.js", "app.use.js", "config.js", "exports.js", "express.json.js", "express.raw.js", "express.static.js", "express.text.js", "express.urlencoded.js", "fixtures", "middleware.basic.js", "regression.js", "req.accepts.js", "req.acceptsCharsets.js", "req.acceptsEncodings.js", "req.acceptsLanguages.js", "req.baseUrl.js", "req.fresh.js", "req.get.js", "req.host.js", "req.hostname.js", "req.ip.js", "req.ips.js", "req.is.js", "req.path.js", "req.protocol.js", "req.query.js", "req.range.js", "req.route.js", "req.secure.js", "req.signedCookies.js", "req.stale.js", "req.subdomains.js", "req.xhr.js", "res.append.js", "res.attachment.js", "res.clearCookie.js", "res.cookie.js", "res.download.js", "res.format.js", "res.get.js", "res.json.js", "res.jsonp.js", "res.links.js", "res.locals.js", "res.location.js", "res.redirect.js", "res.render.js", "res.send.js", "res.sendFile.js", "res.sendStatus.js", "res.set.js", "res.status.js", "res.type.js", "res.vary.js", "support", "utils.js"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "test/support" })'
-descriptor = "listing of 'test/support'"
-cost_tokens = 12
-cum_tokens = 648
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/support"
-entries = ["env.js", "tmpl.js", "utils.js"]
-
-[[batches]]
-position = 12
 key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 420
-cum_tokens = 1068
+cum_tokens = 680
 
 [batches.content]
 kind = "lines"
@@ -212,11 +184,25 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 13
+position = 11
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 376
+cum_tokens = 1056
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["Route.js", "Router.js", "acceptance", "app.all.js", "app.engine.js", "app.head.js", "app.js", "app.listen.js", "app.locals.js", "app.options.js", "app.param.js", "app.render.js", "app.request.js", "app.response.js", "app.route.js", "app.router.js", "app.routes.error.js", "app.use.js", "config.js", "exports.js", "express.json.js", "express.raw.js", "express.static.js", "express.text.js", "express.urlencoded.js", "fixtures", "middleware.basic.js", "regression.js", "req.accepts.js", "req.acceptsCharsets.js", "req.acceptsEncodings.js", "req.acceptsLanguages.js", "req.baseUrl.js", "req.fresh.js", "req.get.js", "req.host.js", "req.hostname.js", "req.ip.js", "req.ips.js", "req.is.js", "req.path.js", "req.protocol.js", "req.query.js", "req.range.js", "req.route.js", "req.secure.js", "req.signedCookies.js", "req.stale.js", "req.subdomains.js", "req.xhr.js", "res.append.js", "res.attachment.js", "res.clearCookie.js", "res.cookie.js", "res.download.js", "res.format.js", "res.get.js", "res.json.js", "res.jsonp.js", "res.links.js", "res.locals.js", "res.location.js", "res.redirect.js", "res.render.js", "res.send.js", "res.sendFile.js", "res.sendStatus.js", "res.set.js", "res.status.js", "res.type.js", "res.vary.js", "support", "utils.js"]
+
+[[batches]]
+position = 12
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 128
-cum_tokens = 1196
+cum_tokens = 1184
 
 [batches.content]
 kind = "lines"
@@ -428,6 +414,20 @@ end = 264
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "test/support" })'
+descriptor = "listing of 'test/support'"
+cost_tokens = 12
+cum_tokens = 1196
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/support"
+entries = ["env.js", "tmpl.js", "utils.js"]
 
 [[batches]]
 position = 14
@@ -1221,10 +1221,24 @@ kind = "full"
 
 [[batches]]
 position = 43
+key = 'Fs(DirListing { dir: "test/acceptance" })'
+descriptor = "listing of 'test/acceptance'"
+cost_tokens = 86
+cum_tokens = 2155
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/acceptance"
+entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
+
+[[batches]]
+position = 44
 key = 'Markdown(Section { file: "Readme.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #19"
 cost_tokens = 23
-cum_tokens = 2092
+cum_tokens = 2178
 
 [batches.content]
 kind = "lines"
@@ -1238,11 +1252,11 @@ end = 193
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Markdown(Section { file: "Readme.md", section_index: 30, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #30"
 cost_tokens = 23
-cum_tokens = 2115
+cum_tokens = 2201
 
 [batches.content]
 kind = "lines"
@@ -1256,11 +1270,11 @@ end = 216
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Markdown(Section { file: "Readme.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #12"
 cost_tokens = 24
-cum_tokens = 2139
+cum_tokens = 2225
 
 [batches.content]
 kind = "lines"
@@ -1274,11 +1288,11 @@ end = 184
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Markdown(Section { file: "Readme.md", section_index: 32, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #32"
 cost_tokens = 24
-cum_tokens = 2163
+cum_tokens = 2249
 
 [batches.content]
 kind = "lines"
@@ -1290,20 +1304,6 @@ end = 220
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 47
-key = 'Fs(DirListing { dir: "test/acceptance" })'
-descriptor = "listing of 'test/acceptance'"
-cost_tokens = 86
-cum_tokens = 2249
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/acceptance"
-entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
 
 [[batches]]
 position = 48

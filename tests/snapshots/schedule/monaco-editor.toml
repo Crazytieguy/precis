@@ -441,24 +441,10 @@ entries = ["editor.main.ts", "editor.worker.ts"]
 
 [[batches]]
 position = 27
-key = 'Fs(DirListing { dir: "src/languages/definitions" })'
-descriptor = "listing of 'src/languages/definitions'"
-cost_tokens = 304
-cum_tokens = 996
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/definitions"
-entries = ["_.contribution.ts", "abap", "apex", "azcli", "bat", "bicep", "cameligo", "clojure", "coffee", "cpp", "csharp", "csp", "css", "cypher", "dart", "dockerfile", "ecl", "elixir", "flow9", "freemarker2", "fsharp", "go", "graphql", "handlebars", "hcl", "html", "ini", "java", "javascript", "julia", "kotlin", "less", "lexon", "liquid", "lua", "m3", "markdown", "mdx", "mips", "msdax", "mysql", "objective-c", "pascal", "pascaligo", "perl", "pgsql", "php", "pla", "postiats", "powerquery", "powershell", "protobuf", "pug", "python", "qsharp", "r", "razor", "redis", "redshift", "register.all.ts", "restructuredtext", "ruby", "rust", "sb", "scala", "scheme", "scss", "shell", "solidity", "sophia", "sparql", "sql", "st", "swift", "systemverilog", "tcl", "test", "twig", "typescript", "typespec", "vb", "wgsl", "xml", "yaml"]
-
-[[batches]]
-position = 28
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 6
-cum_tokens = 1002
+cum_tokens = 698
 
 [batches.content]
 kind = "fs"
@@ -468,11 +454,11 @@ parent = "scripts"
 entries = ["ci", "lib"]
 
 [[batches]]
-position = 29
+position = 28
 key = 'Fs(DirListing { dir: "webpack-plugin/src" })'
 descriptor = "listing of 'webpack-plugin/src'"
 cost_tokens = 20
-cum_tokens = 1022
+cum_tokens = 718
 
 [batches.content]
 kind = "fs"
@@ -482,11 +468,11 @@ parent = "webpack-plugin/src"
 entries = ["index.ts", "loader-utils.d.ts", "loaders", "plugins", "types.ts"]
 
 [[batches]]
-position = 30
+position = 29
 key = 'Fs(DirListing { dir: "webpack-plugin/src/loaders" })'
 descriptor = "listing of 'webpack-plugin/src/loaders'"
 cost_tokens = 4
-cum_tokens = 1026
+cum_tokens = 722
 
 [batches.content]
 kind = "fs"
@@ -496,11 +482,11 @@ parent = "webpack-plugin/src/loaders"
 entries = ["include.ts"]
 
 [[batches]]
-position = 31
+position = 30
 key = 'Fs(DirListing { dir: "webpack-plugin/src/plugins" })'
 descriptor = "listing of 'webpack-plugin/src/plugins'"
 cost_tokens = 8
-cum_tokens = 1034
+cum_tokens = 730
 
 [batches.content]
 kind = "fs"
@@ -510,25 +496,11 @@ parent = "webpack-plugin/src/plugins"
 entries = ["AddWorkerEntryPointPlugin.ts"]
 
 [[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "src/features" })'
-descriptor = "listing of 'src/features'"
-cost_tokens = 272
-cum_tokens = 1306
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/features"
-entries = ["anchorSelect", "bracketMatching", "caretOperations", "clipboard", "codeAction", "codeEditor", "codelens", "codicon", "colorPicker", "comment", "contextmenu", "cursorUndo", "diffEditor", "diffEditorBreadcrumbs", "dnd", "documentSymbols", "dropOrPasteInto", "find", "floatingMenu", "folding", "fontZoom", "format", "gotoError", "gotoLine", "gotoSymbol", "gpu", "hover", "iPadShowKeyboard", "inPlaceReplace", "indentation", "inlayHints", "inlineCompletions", "inlineProgress", "insertFinalNewLine", "inspectTokens", "lineSelection", "linesOperations", "linkedEditing", "links", "longLinesHelper", "middleScroll", "multicursor", "parameterHints", "placeholderText", "quickCommand", "quickHelp", "quickOutline", "readOnlyMessage", "referenceSearch", "register.all.ts", "rename", "sectionHeaders", "semanticTokens", "smartSelect", "snippet", "stickyScroll", "suggest", "toggleHighContrast", "toggleTabFocusMode", "tokenization", "unicodeHighlighter", "unusualLineTerminators", "wordHighlighter", "wordOperations", "wordPartOperations"]
-
-[[batches]]
-position = 33
+position = 31
 key = 'Fs(DirListing { dir: "src/languages/features/common" })'
 descriptor = "listing of 'src/languages/features/common'"
 cost_tokens = 7
-cum_tokens = 1313
+cum_tokens = 737
 
 [batches.content]
 kind = "fs"
@@ -538,11 +510,11 @@ parent = "src/languages/features/common"
 entries = ["lspLanguageFeatures.ts"]
 
 [[batches]]
-position = 34
+position = 32
 key = 'Json(Identity { file: "monaco-lsp-client/package.json" })'
 descriptor = "package identity in monaco-lsp-client/package.json"
 cost_tokens = 48
-cum_tokens = 1361
+cum_tokens = 785
 
 [batches.content]
 kind = "lines"
@@ -564,11 +536,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 35
+position = 33
 key = 'Fs(DirListing { dir: "scripts/lib" })'
 descriptor = "listing of 'scripts/lib'"
 cost_tokens = 4
-cum_tokens = 1365
+cum_tokens = 789
 
 [batches.content]
 kind = "fs"
@@ -578,11 +550,25 @@ parent = "scripts/lib"
 entries = ["index.ts"]
 
 [[batches]]
-position = 36
+position = 34
+key = 'Fs(DirListing { dir: "src/features" })'
+descriptor = "listing of 'src/features'"
+cost_tokens = 272
+cum_tokens = 1061
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/features"
+entries = ["anchorSelect", "bracketMatching", "caretOperations", "clipboard", "codeAction", "codeEditor", "codelens", "codicon", "colorPicker", "comment", "contextmenu", "cursorUndo", "diffEditor", "diffEditorBreadcrumbs", "dnd", "documentSymbols", "dropOrPasteInto", "find", "floatingMenu", "folding", "fontZoom", "format", "gotoError", "gotoLine", "gotoSymbol", "gpu", "hover", "iPadShowKeyboard", "inPlaceReplace", "indentation", "inlayHints", "inlineCompletions", "inlineProgress", "insertFinalNewLine", "inspectTokens", "lineSelection", "linesOperations", "linkedEditing", "links", "longLinesHelper", "middleScroll", "multicursor", "parameterHints", "placeholderText", "quickCommand", "quickHelp", "quickOutline", "readOnlyMessage", "referenceSearch", "register.all.ts", "rename", "sectionHeaders", "semanticTokens", "smartSelect", "snippet", "stickyScroll", "suggest", "toggleHighContrast", "toggleTabFocusMode", "tokenization", "unicodeHighlighter", "unusualLineTerminators", "wordHighlighter", "wordOperations", "wordPartOperations"]
+
+[[batches]]
+position = 35
 key = 'Json(Identity { file: "webpack-plugin/package.json" })'
 descriptor = "package identity in webpack-plugin/package.json"
 cost_tokens = 62
-cum_tokens = 1427
+cum_tokens = 1123
 
 [batches.content]
 kind = "lines"
@@ -602,6 +588,20 @@ end = 23
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 36
+key = 'Fs(DirListing { dir: "src/languages/definitions" })'
+descriptor = "listing of 'src/languages/definitions'"
+cost_tokens = 304
+cum_tokens = 1427
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/definitions"
+entries = ["_.contribution.ts", "abap", "apex", "azcli", "bat", "bicep", "cameligo", "clojure", "coffee", "cpp", "csharp", "csp", "css", "cypher", "dart", "dockerfile", "ecl", "elixir", "flow9", "freemarker2", "fsharp", "go", "graphql", "handlebars", "hcl", "html", "ini", "java", "javascript", "julia", "kotlin", "less", "lexon", "liquid", "lua", "m3", "markdown", "mdx", "mips", "msdax", "mysql", "objective-c", "pascal", "pascaligo", "perl", "pgsql", "php", "pla", "postiats", "powerquery", "powershell", "protobuf", "pug", "python", "qsharp", "r", "razor", "redis", "redshift", "register.all.ts", "restructuredtext", "ruby", "rust", "sb", "scala", "scheme", "scss", "shell", "solidity", "sophia", "sparql", "sql", "st", "swift", "systemverilog", "tcl", "test", "twig", "typescript", "typespec", "vb", "wgsl", "xml", "yaml"]
 
 [[batches]]
 position = 37
@@ -2335,10 +2335,24 @@ kind = "full"
 
 [[batches]]
 position = 116
+key = 'Fs(DirListing { dir: "website" })'
+descriptor = "listing of 'website'"
+cost_tokens = 60
+cum_tokens = 3489
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website"
+entries = [".gitignore", ".prettierrc.json", "index", "package-lock.json", "package.json", "scripts", "src", "static", "tsconfig.json", "tslint.json", "typedoc", "vscode-web-editors.tgz", "webpack.config.ts"]
+
+[[batches]]
+position = 117
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 46
-cum_tokens = 3475
+cum_tokens = 3535
 
 [batches.content]
 kind = "lines"
@@ -2352,11 +2366,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Json(Scripts { file: "samples/browser-esm-parcel/package.json" })'
 descriptor = "package scripts in samples/browser-esm-parcel/package.json"
 cost_tokens = 31
-cum_tokens = 3506
+cum_tokens = 3566
 
 [batches.content]
 kind = "lines"
@@ -2370,11 +2384,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Typescript(Imports { file: "src/editor.ts" })'
 descriptor = "imports in src/editor.ts"
 cost_tokens = 20
-cum_tokens = 3526
+cum_tokens = 3586
 
 [batches.content]
 kind = "lines"
@@ -2388,11 +2402,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 166
-cum_tokens = 3692
+cum_tokens = 3752
 
 [batches.content]
 kind = "lines"
@@ -2406,11 +2420,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Fs(DirListing { dir: "scripts/ci" })'
 descriptor = "listing of 'scripts/ci'"
 cost_tokens = 23
-cum_tokens = 3715
+cum_tokens = 3775
 
 [batches.content]
 kind = "fs"
@@ -2420,11 +2434,11 @@ parent = "scripts/ci"
 entries = ["build-monaco-editor-core-pkg.ts", "build-monaco-editor-pkg.ts", "env.ts"]
 
 [[batches]]
-position = 121
+position = 122
 key = 'Typescript(ModuleItem { file: "webpack-plugin/src/index.ts", start_line: 159 })'
 descriptor = "module item at webpack-plugin/src/index.ts:159"
 cost_tokens = 79
-cum_tokens = 3794
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -2462,11 +2476,11 @@ end = 178
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 202 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 202"
 cost_tokens = 15
-cum_tokens = 3809
+cum_tokens = 3869
 
 [batches.content]
 kind = "lines"
@@ -2480,11 +2494,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 203 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 203"
 cost_tokens = 13
-cum_tokens = 3822
+cum_tokens = 3882
 
 [batches.content]
 kind = "lines"
@@ -2498,11 +2512,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 181 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 181"
 cost_tokens = 17
-cum_tokens = 3839
+cum_tokens = 3899
 
 [batches.content]
 kind = "lines"
@@ -2516,11 +2530,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 179 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 179"
 cost_tokens = 19
-cum_tokens = 3858
+cum_tokens = 3918
 
 [batches.content]
 kind = "lines"
@@ -2534,11 +2548,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 180 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 180"
 cost_tokens = 17
-cum_tokens = 3875
+cum_tokens = 3935
 
 [batches.content]
 kind = "lines"
@@ -2552,11 +2566,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 201 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 201"
 cost_tokens = 22
-cum_tokens = 3897
+cum_tokens = 3957
 
 [batches.content]
 kind = "lines"
@@ -2568,20 +2582,6 @@ end = 201
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 128
-key = 'Fs(DirListing { dir: "website" })'
-descriptor = "listing of 'website'"
-cost_tokens = 60
-cum_tokens = 3957
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website"
-entries = [".gitignore", ".prettierrc.json", "index", "package-lock.json", "package.json", "scripts", "src", "static", "tsconfig.json", "tslint.json", "typedoc", "vscode-web-editors.tgz", "webpack.config.ts"]
 
 [[batches]]
 position = 129
@@ -3295,10 +3295,24 @@ kind = "full"
 
 [[batches]]
 position = 164
+key = 'Fs(DirListing { dir: "test/smoke" })'
+descriptor = "listing of 'test/smoke'"
+cost_tokens = 51
+cum_tokens = 5398
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/smoke"
+entries = ["amd", "common.js", "esbuild", "package-esbuild.ts", "package-vite.ts", "package-webpack.ts", "parcel", "playwright.config.ts", "server.js", "smoke.test.ts", "vite", "webpack"]
+
+[[batches]]
+position = 165
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 647
-cum_tokens = 5994
+cum_tokens = 6045
 
 [batches.content]
 kind = "lines"
@@ -3312,11 +3326,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 165
+position = 166
 key = 'Typescript(Imports { file: "samples/browser-esm-vite/main.ts" })'
 descriptor = "imports in samples/browser-esm-vite/main.ts"
 cost_tokens = 25
-cum_tokens = 6019
+cum_tokens = 6070
 
 [batches.content]
 kind = "lines"
@@ -3330,11 +3344,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 166
+position = 167
 key = 'Fs(DirListing { dir: "website/src/website" })'
 descriptor = "listing of 'website/src/website'"
 cost_tokens = 46
-cum_tokens = 6065
+cum_tokens = 6116
 
 [batches.content]
 kind = "fs"
@@ -3344,11 +3358,11 @@ parent = "website/src/website"
 entries = ["bootstrap.scss", "code-oss.svg", "components", "data", "index.tsx", "monaco-loader-chunk.ts", "monacoEditorVersion.ts", "pages", "style.scss", "utils"]
 
 [[batches]]
-position = 167
+position = 168
 key = 'Fs(DirListing { dir: "website/src/website/data" })'
 descriptor = "listing of 'website/src/website/data'"
 cost_tokens = 15
-cum_tokens = 6080
+cum_tokens = 6131
 
 [batches.content]
 kind = "fs"
@@ -3358,11 +3372,11 @@ parent = "website/src/website/data"
 entries = ["diff-sample", "home-samples", "playground-samples"]
 
 [[batches]]
-position = 168
+position = 169
 key = 'Fs(DirListing { dir: "website/src/website/pages" })'
 descriptor = "listing of 'website/src/website/pages'"
 cost_tokens = 27
-cum_tokens = 6107
+cum_tokens = 6158
 
 [batches.content]
 kind = "fs"
@@ -3372,11 +3386,11 @@ parent = "website/src/website/pages"
 entries = ["App.tsx", "DocsPage.tsx", "MonarchPage.tsx", "home", "playground", "routes.ts"]
 
 [[batches]]
-position = 169
+position = 170
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples" })'
 descriptor = "listing of 'website/src/website/data/playground-samples'"
 cost_tokens = 34
-cum_tokens = 6141
+cum_tokens = 6192
 
 [batches.content]
 kind = "fs"
@@ -3386,11 +3400,11 @@ parent = "website/src/website/data/playground-samples"
 entries = ["all.js", "creating-the-diffeditor", "creating-the-editor", "customizing-the-appearence", "extending-language-services", "interacting-with-the-editor"]
 
 [[batches]]
-position = 170
+position = 171
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples/customizing-the-appearence" })'
 descriptor = "listing of 'website/src/website/data/playground-samples/customizing-the-appearence'"
 cost_tokens = 19
-cum_tokens = 6160
+cum_tokens = 6211
 
 [batches.content]
 kind = "fs"
@@ -3400,11 +3414,11 @@ parent = "website/src/website/data/playground-samples/customizing-the-appearence
 entries = ["chapter.json", "exposed-colors", "scrollbars", "tokens-and-colors"]
 
 [[batches]]
-position = 171
+position = 172
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples/creating-the-diffeditor" })'
 descriptor = "listing of 'website/src/website/data/playground-samples/creating-the-diffeditor'"
 cost_tokens = 21
-cum_tokens = 6181
+cum_tokens = 6232
 
 [batches.content]
 kind = "fs"
@@ -3414,11 +3428,11 @@ parent = "website/src/website/data/playground-samples/creating-the-diffeditor"
 entries = ["chapter.json", "hello-diff-world", "inline-diff-example", "multi-line-example"]
 
 [[batches]]
-position = 172
+position = 173
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples/creating-the-editor" })'
 descriptor = "listing of 'website/src/website/data/playground-samples/creating-the-editor'"
 cost_tokens = 31
-cum_tokens = 6212
+cum_tokens = 6263
 
 [batches.content]
 kind = "fs"
@@ -3428,11 +3442,11 @@ parent = "website/src/website/data/playground-samples/creating-the-editor"
 entries = ["chapter.json", "editor-basic-options", "hard-wrapping", "hello-world", "syntax-highlighting-for-html-elements", "web-component"]
 
 [[batches]]
-position = 173
+position = 174
 key = 'Fs(DirListing { dir: "website/src/website/components" })'
 descriptor = "listing of 'website/src/website/components'"
 cost_tokens = 40
-cum_tokens = 6252
+cum_tokens = 6303
 
 [batches.content]
 kind = "fs"
@@ -3442,11 +3456,11 @@ parent = "website/src/website/components"
 entries = ["Loader.tsx", "Nav.tsx", "Page.tsx", "Radio.tsx", "Select.tsx", "TextBox.tsx", "bootstrap.tsx", "monaco"]
 
 [[batches]]
-position = 174
+position = 175
 key = 'Fs(DirListing { dir: "website/src/website/utils" })'
 descriptor = "listing of 'website/src/website/utils'"
 cost_tokens = 42
-cum_tokens = 6294
+cum_tokens = 6345
 
 [batches.content]
 kind = "fs"
@@ -3456,11 +3470,11 @@ parent = "website/src/website/utils"
 entries = ["Debouncer.ts", "ObservableHistory.ts", "ObservablePromise.ts", "hotComponent.tsx", "lzmaCompressor.ts", "ref.ts", "types.d.ts", "utils.ts"]
 
 [[batches]]
-position = 175
+position = 176
 key = 'Typescript(Imports { file: "samples/browser-esm-webpack-typescript/src/index.ts" })'
 descriptor = "imports in samples/browser-esm-webpack-typescript/src/index.ts"
 cost_tokens = 26
-cum_tokens = 6320
+cum_tokens = 6371
 
 [batches.content]
 kind = "lines"
@@ -3472,20 +3486,6 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 176
-key = 'Fs(DirListing { dir: "test/smoke" })'
-descriptor = "listing of 'test/smoke'"
-cost_tokens = 51
-cum_tokens = 6371
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/smoke"
-entries = ["amd", "common.js", "esbuild", "package-esbuild.ts", "package-vite.ts", "package-webpack.ts", "parcel", "playwright.config.ts", "server.js", "smoke.test.ts", "vite", "webpack"]
 
 [[batches]]
 position = 177
@@ -3507,10 +3507,24 @@ kind = "full"
 
 [[batches]]
 position = 178
+key = 'Fs(DirListing { dir: "test/manual" })'
+descriptor = "listing of 'test/manual'"
+cost_tokens = 80
+cum_tokens = 6475
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/manual"
+entries = ["cross-origin.html", "dev-setup.js", "diff.html", "diff.js", "iframe-inner.html", "iframe.html", "index.css", "index.js", "index2.html", "mouse-fixed.html", "mouse-scrollable-body.html", "mouse-scrollable-element.html", "samples", "samples.js", "shadow-dom.html", "transform.html", "typescript"]
+
+[[batches]]
+position = 179
 key = 'Markdown(Section { file: "samples/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "samples/README.md section #2"
 cost_tokens = 148
-cum_tokens = 6543
+cum_tokens = 6623
 
 [batches.content]
 kind = "lines"
@@ -3524,11 +3538,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 179
+position = 180
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 104
-cum_tokens = 6647
+cum_tokens = 6727
 
 [batches.content]
 kind = "lines"
@@ -3540,20 +3554,6 @@ end = 38
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 180
-key = 'Fs(DirListing { dir: "test/manual" })'
-descriptor = "listing of 'test/manual'"
-cost_tokens = 80
-cum_tokens = 6727
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/manual"
-entries = ["cross-origin.html", "dev-setup.js", "diff.html", "diff.js", "iframe-inner.html", "iframe.html", "index.css", "index.js", "index2.html", "mouse-fixed.html", "mouse-scrollable-body.html", "mouse-scrollable-element.html", "samples", "samples.js", "shadow-dom.html", "transform.html", "typescript"]
 
 [[batches]]
 position = 181
@@ -3611,10 +3611,24 @@ kind = "full"
 
 [[batches]]
 position = 184
+key = 'Fs(DirListing { dir: "website/src/website/pages/playground" })'
+descriptor = "listing of 'website/src/website/pages/playground'"
+cost_tokens = 67
+cum_tokens = 6955
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "website/src/website/pages/playground"
+entries = ["BisectModel.ts", "LocationModel.ts", "PlaygroundModel.ts", "PlaygroundPage.tsx", "PlaygroundPageContent.tsx", "Preview.tsx", "SettingsDialog.tsx", "SettingsModel.ts", "Source.ts", "getNpmVersionsSync.ts", "playgroundExamples.tsx", "utils.ts"]
+
+[[batches]]
+position = 185
 key = 'Json(Scripts { file: "samples/browser-esm-vite-react/package.json" })'
 descriptor = "package scripts in samples/browser-esm-vite-react/package.json"
 cost_tokens = 87
-cum_tokens = 6975
+cum_tokens = 7042
 
 [batches.content]
 kind = "lines"
@@ -3626,20 +3640,6 @@ end = 8
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 185
-key = 'Fs(DirListing { dir: "website/src/website/pages/playground" })'
-descriptor = "listing of 'website/src/website/pages/playground'"
-cost_tokens = 67
-cum_tokens = 7042
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/src/website/pages/playground"
-entries = ["BisectModel.ts", "LocationModel.ts", "PlaygroundModel.ts", "PlaygroundPage.tsx", "PlaygroundPageContent.tsx", "Preview.tsx", "SettingsDialog.tsx", "SettingsModel.ts", "Source.ts", "getNpmVersionsSync.ts", "playgroundExamples.tsx", "utils.ts"]
 
 [[batches]]
 position = 186

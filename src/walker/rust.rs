@@ -1432,7 +1432,7 @@ const CRATE_DOC_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 /// same content ~7K), and at 0.85 the tail train buys deep into the
 /// ≤3K window on doc-late crates, displacing their method-sig /
 /// listing anchors (measured: anyhow −0.027 at 0.85).
-const CRATE_DOC_TAIL_FACTOR: f64 = 0.75;
+const CRATE_DOC_TAIL_FACTOR: f64 = 0.65;
 /// Head chunk of a *split* body sits slightly below an unsplit body so
 /// small unchunked crate docs win comparable rank races (same shape as
 /// `CHUNKED_NAMES_FIRST_CHUNK_FACTOR`).

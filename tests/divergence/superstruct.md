@@ -89,8 +89,8 @@ Score(3000)=0.638 I=0.892 C=0.456 ns_rows≤3K=14/40 (reached=6 partial=1 missin
 | walker |  | 3412 | 39 | export doc at src/struct.ts:266 |  |  | 0.686 |
 | ns | 3416 |  | 818 | top-level assert/create/mask/is/validate | 2.5 | 2.1 | 0.614 |
 | walker |  | 3431 | 19 | docs/resources/links.md section #0 |  |  | 0.614 |
-| walker |  | 3596 | 165 | export body at src/error.ts:25 body 36 |  |  | 0.616 |
-| walker |  | 3721 | 125 | listing of 'test/validation' |  |  | 0.619 |
+| walker |  | 3556 | 125 | listing of 'test/validation' |  |  | 0.617 |
+| walker |  | 3721 | 165 | export body at src/error.ts:25 body 36 |  |  | 0.619 |
 | walker |  | 3800 | 79 | headings outline in docs/reference/utilities.md |  |  | 0.619 |
 | walker |  | 3846 | 46 | export doc at src/struct.ts:185 |  |  | 0.631 |
 | ns | 3853 |  | 437 | struct.ts supporting types (Context/Infer/Describe/Result/Coercer/Validator/Refiner) | 2.6 |  | 0.655 |

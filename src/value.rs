@@ -22,9 +22,9 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
 
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
-pub const ROSTER_MASS_BASELINE: f64 = 12.0;
+pub const ROSTER_MASS_BASELINE: f64 = 11.0;
 /// Cap on the roster-mass boost (reached around ~110 entries).
-pub const ROSTER_MASS_FACTOR_CAP: f64 = 2.2;
+pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 
 /// Ratio-neutralizing factor for "roster" batches — complete catalogs of
 /// N peer entries (directory listings, names surfaces, member catalogs)

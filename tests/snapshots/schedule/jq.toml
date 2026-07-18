@@ -821,10 +821,24 @@ kind = "full"
 
 [[batches]]
 position = 41
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 165
+cum_tokens = 1733
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["base64.test", "base64test", "jq-f-test.sh", "jq.test", "jq_fuzz_compile.c", "jq_fuzz_execute.cpp", "jq_fuzz_fixed.cpp", "jq_fuzz_load_file.c", "jq_fuzz_parse.c", "jq_fuzz_parse_extended.c", "jq_fuzz_parse_stream.c", "jqtest", "local.supp", "man.test", "manonig.test", "manonigtest", "mantest", "modules", "no-main-program.jq", "onig.supp", "onig.test", "onigtest", "optional.test", "optionaltest", "setup", "shtest", "torture", "uri.test", "uritest", "utf8test", "yes-main-program.jq"]
+
+[[batches]]
+position = 42
 key = 'Plaintext(Whole { file: "Dockerfile" })'
 descriptor = "plaintext config Dockerfile"
 cost_tokens = 346
-cum_tokens = 1914
+cum_tokens = 2079
 
 [batches.content]
 kind = "lines"
@@ -838,11 +852,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'C(DeclNames { file: "src/jq.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/jq.h"
 cost_tokens = 396
-cum_tokens = 2310
+cum_tokens = 2475
 
 [batches.content]
 kind = "lines"
@@ -872,11 +886,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 43
+position = 44
 key = 'C(Decl { file: "src/jq.h", start_line: 11 })'
 descriptor = "c decl at src/jq.h:11"
 cost_tokens = 52
-cum_tokens = 2362
+cum_tokens = 2527
 
 [batches.content]
 kind = "lines"
@@ -890,11 +904,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'C(Includes { file: "src/jq.h" })'
 descriptor = "c includes in src/jq.h"
 cost_tokens = 23
-cum_tokens = 2385
+cum_tokens = 2550
 
 [batches.content]
 kind = "lines"
@@ -906,20 +920,6 @@ end = 5
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 45
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 165
-cum_tokens = 2550
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["base64.test", "base64test", "jq-f-test.sh", "jq.test", "jq_fuzz_compile.c", "jq_fuzz_execute.cpp", "jq_fuzz_fixed.cpp", "jq_fuzz_load_file.c", "jq_fuzz_parse.c", "jq_fuzz_parse_extended.c", "jq_fuzz_parse_stream.c", "jqtest", "local.supp", "man.test", "manonig.test", "manonigtest", "mantest", "modules", "no-main-program.jq", "onig.supp", "onig.test", "onigtest", "optional.test", "optionaltest", "setup", "shtest", "torture", "uri.test", "uritest", "utf8test", "yes-main-program.jq"]
 
 [[batches]]
 position = 46
@@ -1631,10 +1631,24 @@ kind = "full"
 
 [[batches]]
 position = 70
+key = 'Fs(DirListing { dir: "vendor/decNumber" })'
+descriptor = "listing of 'vendor/decNumber'"
+cost_tokens = 167
+cum_tokens = 4120
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "vendor/decNumber"
+entries = ["ICU-license.html", "decBasic.c", "decCommon.c", "decContext.c", "decContext.h", "decDPD.h", "decDouble.c", "decDouble.h", "decNumber.c", "decNumber.h", "decNumberLocal.h", "decPacked.c", "decPacked.h", "decQuad.c", "decQuad.h", "decSingle.c", "decSingle.h", "decimal128.c", "decimal128.h", "decimal32.c", "decimal32.h", "decimal64.c", "decimal64.h", "decnumber.pdf", "example1.c", "example2.c", "example3.c", "example4.c", "example5.c", "example6.c", "example7.c", "example8.c", "readme.txt"]
+
+[[batches]]
+position = 71
 key = 'C(DeclNames { file: "src/util.h", chunk_index: 0 })'
 descriptor = "c decl names surface in src/util.h"
 cost_tokens = 86
-cum_tokens = 4039
+cum_tokens = 4206
 
 [batches.content]
 kind = "lines"
@@ -1688,11 +1702,11 @@ end = 64
 kind = "ellipsis"
 
 [[batches]]
-position = 71
+position = 72
 key = 'C(Decl { file: "src/util.h", start_line: 44 })'
 descriptor = "c decl at src/util.h:44"
 cost_tokens = 15
-cum_tokens = 4054
+cum_tokens = 4221
 
 [batches.content]
 kind = "lines"
@@ -1704,20 +1718,6 @@ end = 45
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 72
-key = 'Fs(DirListing { dir: "vendor/decNumber" })'
-descriptor = "listing of 'vendor/decNumber'"
-cost_tokens = 167
-cum_tokens = 4221
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "vendor/decNumber"
-entries = ["ICU-license.html", "decBasic.c", "decCommon.c", "decContext.c", "decContext.h", "decDPD.h", "decDouble.c", "decDouble.h", "decNumber.c", "decNumber.h", "decNumberLocal.h", "decPacked.c", "decPacked.h", "decQuad.c", "decQuad.h", "decSingle.c", "decSingle.h", "decimal128.c", "decimal128.h", "decimal32.c", "decimal32.h", "decimal64.c", "decimal64.h", "decnumber.pdf", "example1.c", "example2.c", "example3.c", "example4.c", "example5.c", "example6.c", "example7.c", "example8.c", "readme.txt"]
 
 [[batches]]
 position = 73

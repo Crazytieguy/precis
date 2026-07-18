@@ -829,10 +829,178 @@ kind = "full"
 
 [[batches]]
 position = 47
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 51
+cum_tokens = 1451
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = [".vitepress", "data", "es", "favicon.ico", "fr", "index.md", "package-lock.json", "package.json", "pages", "patches", "public", "scripts", "site.webmanifest", "zh"]
+
+[[batches]]
+position = 48
+key = 'Fs(DirListing { dir: "docs/es" })'
+descriptor = "listing of 'docs/es'"
+cost_tokens = 7
+cum_tokens = 1458
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/es"
+entries = ["index.md", "pages"]
+
+[[batches]]
+position = 49
+key = 'Fs(DirListing { dir: "docs/fr" })'
+descriptor = "listing of 'docs/fr'"
+cost_tokens = 7
+cum_tokens = 1465
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/fr"
+entries = ["index.md", "pages"]
+
+[[batches]]
+position = 50
+key = 'Fs(DirListing { dir: "docs/zh" })'
+descriptor = "listing of 'docs/zh'"
+cost_tokens = 7
+cum_tokens = 1472
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/zh"
+entries = ["index.md", "pages"]
+
+[[batches]]
+position = 51
+key = 'Fs(DirListing { dir: "docs/es/pages" })'
+descriptor = "listing of 'docs/es/pages'"
+cost_tokens = 11
+cum_tokens = 1483
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/es/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "docs/fr/pages" })'
+descriptor = "listing of 'docs/fr/pages'"
+cost_tokens = 11
+cum_tokens = 1494
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/fr/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "docs/pages" })'
+descriptor = "listing of 'docs/pages'"
+cost_tokens = 11
+cum_tokens = 1505
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 54
+key = 'Fs(DirListing { dir: "docs/zh/pages" })'
+descriptor = "listing of 'docs/zh/pages'"
+cost_tokens = 11
+cum_tokens = 1516
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/zh/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 55
+key = 'Fs(DirListing { dir: "docs/es/pages/misc" })'
+descriptor = "listing of 'docs/es/pages/misc'"
+cost_tokens = 13
+cum_tokens = 1529
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/es/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 56
+key = 'Fs(DirListing { dir: "docs/fr/pages/misc" })'
+descriptor = "listing of 'docs/fr/pages/misc'"
+cost_tokens = 13
+cum_tokens = 1542
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/fr/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "docs/pages/misc" })'
+descriptor = "listing of 'docs/pages/misc'"
+cost_tokens = 13
+cum_tokens = 1555
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 58
+key = 'Fs(DirListing { dir: "docs/zh/pages/misc" })'
+descriptor = "listing of 'docs/zh/pages/misc'"
+cost_tokens = 13
+cum_tokens = 1568
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/zh/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 59
 key = 'Markdown(HeadingsOutline { file: "ECOSYSTEM.md" })'
 descriptor = "headings outline in ECOSYSTEM.md"
 cost_tokens = 73
-cum_tokens = 1473
+cum_tokens = 1641
 
 [batches.content]
 kind = "lines"
@@ -934,11 +1102,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 60
 key = 'Markdown(Section { file: "ECOSYSTEM.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ECOSYSTEM.md section #0"
 cost_tokens = 36
-cum_tokens = 1509
+cum_tokens = 1677
 
 [batches.content]
 kind = "lines"
@@ -952,207 +1120,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 49
-key = 'Fs(DirListing { dir: "tests/module/esm" })'
-descriptor = "listing of 'tests/module/esm'"
-cost_tokens = 18
-cum_tokens = 1527
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/module/esm"
-entries = ["package-lock.json", "package.json", "tests", "vitest.config.js"]
-
-[[batches]]
-position = 50
-key = 'Fs(DirListing { dir: "tests/smoke/esm" })'
-descriptor = "listing of 'tests/smoke/esm'"
-cost_tokens = 18
-cum_tokens = 1545
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/smoke/esm"
-entries = ["package-lock.json", "package.json", "tests", "vitest.config.js"]
-
-[[batches]]
-position = 51
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 51
-cum_tokens = 1596
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = [".vitepress", "data", "es", "favicon.ico", "fr", "index.md", "package-lock.json", "package.json", "pages", "patches", "public", "scripts", "site.webmanifest", "zh"]
-
-[[batches]]
-position = 52
-key = 'Fs(DirListing { dir: "docs/es" })'
-descriptor = "listing of 'docs/es'"
-cost_tokens = 7
-cum_tokens = 1603
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/es"
-entries = ["index.md", "pages"]
-
-[[batches]]
-position = 53
-key = 'Fs(DirListing { dir: "docs/fr" })'
-descriptor = "listing of 'docs/fr'"
-cost_tokens = 7
-cum_tokens = 1610
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/fr"
-entries = ["index.md", "pages"]
-
-[[batches]]
-position = 54
-key = 'Fs(DirListing { dir: "docs/zh" })'
-descriptor = "listing of 'docs/zh'"
-cost_tokens = 7
-cum_tokens = 1617
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh"
-entries = ["index.md", "pages"]
-
-[[batches]]
-position = 55
-key = 'Fs(DirListing { dir: "docs/es/pages" })'
-descriptor = "listing of 'docs/es/pages'"
-cost_tokens = 11
-cum_tokens = 1628
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/es/pages"
-entries = ["advanced", "getting-started", "misc"]
-
-[[batches]]
-position = 56
-key = 'Fs(DirListing { dir: "docs/fr/pages" })'
-descriptor = "listing of 'docs/fr/pages'"
-cost_tokens = 11
-cum_tokens = 1639
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/fr/pages"
-entries = ["advanced", "getting-started", "misc"]
-
-[[batches]]
-position = 57
-key = 'Fs(DirListing { dir: "docs/pages" })'
-descriptor = "listing of 'docs/pages'"
-cost_tokens = 11
-cum_tokens = 1650
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/pages"
-entries = ["advanced", "getting-started", "misc"]
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "docs/zh/pages" })'
-descriptor = "listing of 'docs/zh/pages'"
-cost_tokens = 11
-cum_tokens = 1661
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh/pages"
-entries = ["advanced", "getting-started", "misc"]
-
-[[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "docs/es/pages/misc" })'
-descriptor = "listing of 'docs/es/pages/misc'"
-cost_tokens = 13
-cum_tokens = 1674
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/es/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 60
-key = 'Fs(DirListing { dir: "docs/fr/pages/misc" })'
-descriptor = "listing of 'docs/fr/pages/misc'"
-cost_tokens = 13
-cum_tokens = 1687
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/fr/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
 position = 61
-key = 'Fs(DirListing { dir: "docs/pages/misc" })'
-descriptor = "listing of 'docs/pages/misc'"
-cost_tokens = 13
-cum_tokens = 1700
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 62
-key = 'Fs(DirListing { dir: "docs/zh/pages/misc" })'
-descriptor = "listing of 'docs/zh/pages/misc'"
-cost_tokens = 13
-cum_tokens = 1713
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 63
 key = 'Fs(DirListing { dir: "docs/es/pages/getting-started" })'
 descriptor = "listing of 'docs/es/pages/getting-started'"
 cost_tokens = 18
-cum_tokens = 1731
+cum_tokens = 1695
 
 [batches.content]
 kind = "fs"
@@ -1162,11 +1134,11 @@ parent = "docs/es/pages/getting-started"
 entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
 
 [[batches]]
-position = 64
+position = 62
 key = 'Fs(DirListing { dir: "docs/fr/pages/getting-started" })'
 descriptor = "listing of 'docs/fr/pages/getting-started'"
 cost_tokens = 18
-cum_tokens = 1749
+cum_tokens = 1713
 
 [batches.content]
 kind = "fs"
@@ -1176,11 +1148,11 @@ parent = "docs/fr/pages/getting-started"
 entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
 
 [[batches]]
-position = 65
+position = 63
 key = 'Fs(DirListing { dir: "docs/pages/getting-started" })'
 descriptor = "listing of 'docs/pages/getting-started'"
 cost_tokens = 18
-cum_tokens = 1767
+cum_tokens = 1731
 
 [batches.content]
 kind = "fs"
@@ -1190,11 +1162,11 @@ parent = "docs/pages/getting-started"
 entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
 
 [[batches]]
-position = 66
+position = 64
 key = 'Fs(DirListing { dir: "docs/zh/pages/getting-started" })'
 descriptor = "listing of 'docs/zh/pages/getting-started'"
 cost_tokens = 18
-cum_tokens = 1785
+cum_tokens = 1749
 
 [batches.content]
 kind = "fs"
@@ -1202,6 +1174,34 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "docs/zh/pages/getting-started"
 entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
+
+[[batches]]
+position = 65
+key = 'Fs(DirListing { dir: "tests/module/esm" })'
+descriptor = "listing of 'tests/module/esm'"
+cost_tokens = 18
+cum_tokens = 1767
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/module/esm"
+entries = ["package-lock.json", "package.json", "tests", "vitest.config.js"]
+
+[[batches]]
+position = 66
+key = 'Fs(DirListing { dir: "tests/smoke/esm" })'
+descriptor = "listing of 'tests/smoke/esm'"
+cost_tokens = 18
+cum_tokens = 1785
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/smoke/esm"
+entries = ["package-lock.json", "package.json", "tests", "vitest.config.js"]
 
 [[batches]]
 position = 67
@@ -1345,10 +1345,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 69
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 50
+cum_tokens = 1961
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["README.md", "abort-controller", "all", "amd", "get", "improved-network-errors.md", "network_enhanced.js", "post", "postMultipartFormData", "server.js", "transform-response", "upload"]
+
+[[batches]]
+position = 70
 key = 'Typescript(ExportNames { file: "lib/utils.js" })'
 descriptor = "export names surface in lib/utils.js"
 cost_tokens = 11
-cum_tokens = 1922
+cum_tokens = 1972
 
 [batches.content]
 kind = "lines"
@@ -1368,20 +1382,6 @@ end = 873
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 70
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 50
-cum_tokens = 1972
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["README.md", "abort-controller", "all", "amd", "get", "improved-network-errors.md", "network_enhanced.js", "post", "postMultipartFormData", "server.js", "transform-response", "upload"]
 
 [[batches]]
 position = 71
@@ -2519,36 +2519,122 @@ kind = "ellipsis"
 
 [[batches]]
 position = 128
-key = 'Typescript(ExportNames { file: "lib/helpers/isAbsoluteURL.js" })'
-descriptor = "export names surface in lib/helpers/isAbsoluteURL.js"
-cost_tokens = 17
-cum_tokens = 3145
+key = 'Fs(DirListing { dir: "tests/unit" })'
+descriptor = "listing of 'tests/unit'"
+cost_tokens = 105
+cum_tokens = 3233
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "lib/helpers/isAbsoluteURL.js"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/helpers/isAbsoluteURL.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
+[[batches.content.groups]]
+parent = "tests/unit"
+entries = ["adapters", "api.test.js", "axios.test.js", "axiosHeaders.test.js", "cancel", "composeSignals.test.js", "core", "estimateDataURLDecodedBytes.test.js", "fromDataURI.test.js", "helpers", "parseProtocol.test.js", "platform.test.js", "prototypePollution.test.js", "query.test.js", "regression.test.js", "syntaxCompat.test.js", "toFormData.test.js", "transformResponse.test.js", "utils", "utils.test.js"]
 
 [[batches]]
 position = 129
-key = 'Typescript(Export { file: "lib/helpers/isAbsoluteURL.js", start_line: 10 })'
-descriptor = "export at lib/helpers/isAbsoluteURL.js:10"
-cost_tokens = 0
-cum_tokens = 3145
+key = 'Fs(DirListing { dir: "tests/unit/adapters" })'
+descriptor = "listing of 'tests/unit/adapters'"
+cost_tokens = 33
+cum_tokens = 3266
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/unit/adapters"
+entries = ["adapters.test.js", "axios.png", "cert.pem", "errorDetails.test.js", "fetch.test.js", "http.test.js", "key.pem"]
+
+[[batches]]
+position = 130
+key = 'Fs(DirListing { dir: "tests/unit/core" })'
+descriptor = "listing of 'tests/unit/core'"
+cost_tokens = 36
+cum_tokens = 3302
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/unit/core"
+entries = ["AxiosError.test.js", "buildFullPath.test.js", "dispatchRequest.test.js", "mergeConfig.test.js", "settle.test.js", "transformData.test.js"]
+
+[[batches]]
+position = 131
+key = 'Fs(DirListing { dir: "tests/unit/utils" })'
+descriptor = "listing of 'tests/unit/utils'"
+cost_tokens = 59
+cum_tokens = 3361
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/unit/utils"
+entries = ["endsWith.test.js", "extend.test.js", "forEach.test.js", "isX.test.js", "kindOf.test.js", "kindOfTest.test.js", "merge.test.js", "toArray.test.js", "toFlatObject.test.js", "trim.test.js"]
+
+[[batches]]
+position = 132
+key = 'Fs(DirListing { dir: "docs/es/pages/advanced" })'
+descriptor = "listing of 'docs/es/pages/advanced'"
+cost_tokens = 137
+cum_tokens = 3498
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/es/pages/advanced"
+entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
+
+[[batches]]
+position = 133
+key = 'Fs(DirListing { dir: "docs/fr/pages/advanced" })'
+descriptor = "listing of 'docs/fr/pages/advanced'"
+cost_tokens = 137
+cum_tokens = 3635
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/fr/pages/advanced"
+entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
+
+[[batches]]
+position = 134
+key = 'Fs(DirListing { dir: "docs/pages/advanced" })'
+descriptor = "listing of 'docs/pages/advanced'"
+cost_tokens = 137
+cum_tokens = 3772
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/pages/advanced"
+entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
+
+[[batches]]
+position = 135
+key = 'Fs(DirListing { dir: "docs/zh/pages/advanced" })'
+descriptor = "listing of 'docs/zh/pages/advanced'"
+cost_tokens = 137
+cum_tokens = 3909
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/zh/pages/advanced"
+entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
+
+[[batches]]
+position = 136
+key = 'Typescript(ExportNames { file: "lib/helpers/isAbsoluteURL.js" })'
+descriptor = "export names surface in lib/helpers/isAbsoluteURL.js"
+cost_tokens = 17
+cum_tokens = 3926
 
 [batches.content]
 kind = "lines"
@@ -2570,11 +2656,37 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 137
+key = 'Typescript(Export { file: "lib/helpers/isAbsoluteURL.js", start_line: 10 })'
+descriptor = "export at lib/helpers/isAbsoluteURL.js:10"
+cost_tokens = 0
+cum_tokens = 3926
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/helpers/isAbsoluteURL.js"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/helpers/isAbsoluteURL.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 138
 key = 'Typescript(ExportNames { file: "lib/helpers/isAxiosError.js" })'
 descriptor = "export names surface in lib/helpers/isAxiosError.js"
 cost_tokens = 17
-cum_tokens = 3162
+cum_tokens = 3943
 
 [batches.content]
 kind = "lines"
@@ -2596,11 +2708,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 139
 key = 'Typescript(Export { file: "lib/helpers/isAxiosError.js", start_line: 12 })'
 descriptor = "export at lib/helpers/isAxiosError.js:12"
 cost_tokens = 0
-cum_tokens = 3162
+cum_tokens = 3943
 
 [batches.content]
 kind = "lines"
@@ -2622,11 +2734,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 140
 key = 'Typescript(ExportNames { file: "lib/platform/common/utils.js" })'
 descriptor = "export names surface in lib/platform/common/utils.js"
 cost_tokens = 10
-cum_tokens = 3172
+cum_tokens = 3953
 
 [batches.content]
 kind = "lines"
@@ -2648,11 +2760,11 @@ end = 47
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 141
 key = 'Markdown(HeadingsOutline { file: "THREATMODEL.md" })'
 descriptor = "headings outline in THREATMODEL.md"
 cost_tokens = 253
-cum_tokens = 3425
+cum_tokens = 4206
 
 [batches.content]
 kind = "lines"
@@ -2914,11 +3026,11 @@ end = 466
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 142
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #24"
 cost_tokens = 5
-cum_tokens = 3430
+cum_tokens = 4211
 
 [batches.content]
 kind = "lines"
@@ -2932,11 +3044,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 135
+position = 143
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 33, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #33"
 cost_tokens = 5
-cum_tokens = 3435
+cum_tokens = 4216
 
 [batches.content]
 kind = "lines"
@@ -2950,11 +3062,11 @@ end = 316
 kind = "full"
 
 [[batches]]
-position = 136
+position = 144
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 44, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #44"
 cost_tokens = 5
-cum_tokens = 3440
+cum_tokens = 4221
 
 [batches.content]
 kind = "lines"
@@ -2968,11 +3080,11 @@ end = 463
 kind = "full"
 
 [[batches]]
-position = 137
+position = 145
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #10"
 cost_tokens = 7
-cum_tokens = 3447
+cum_tokens = 4228
 
 [batches.content]
 kind = "lines"
@@ -2986,11 +3098,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 138
+position = 146
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 53, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #53"
 cost_tokens = 7
-cum_tokens = 3454
+cum_tokens = 4235
 
 [batches.content]
 kind = "lines"
@@ -3004,11 +3116,11 @@ end = 509
 kind = "full"
 
 [[batches]]
-position = 139
+position = 147
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #0"
 cost_tokens = 111
-cum_tokens = 3565
+cum_tokens = 4346
 
 [batches.content]
 kind = "lines"
@@ -3022,11 +3134,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 140
+position = 148
 key = 'Markdown(Section { file: "THREATMODEL.md", section_index: 25, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "THREATMODEL.md section #25"
 cost_tokens = 52
-cum_tokens = 3617
+cum_tokens = 4398
 
 [batches.content]
 kind = "lines"
@@ -3040,67 +3152,11 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 141
-key = 'Fs(DirListing { dir: "tests/unit" })'
-descriptor = "listing of 'tests/unit'"
-cost_tokens = 105
-cum_tokens = 3722
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit"
-entries = ["adapters", "api.test.js", "axios.test.js", "axiosHeaders.test.js", "cancel", "composeSignals.test.js", "core", "estimateDataURLDecodedBytes.test.js", "fromDataURI.test.js", "helpers", "parseProtocol.test.js", "platform.test.js", "prototypePollution.test.js", "query.test.js", "regression.test.js", "syntaxCompat.test.js", "toFormData.test.js", "transformResponse.test.js", "utils", "utils.test.js"]
-
-[[batches]]
-position = 142
-key = 'Fs(DirListing { dir: "tests/unit/adapters" })'
-descriptor = "listing of 'tests/unit/adapters'"
-cost_tokens = 33
-cum_tokens = 3755
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit/adapters"
-entries = ["adapters.test.js", "axios.png", "cert.pem", "errorDetails.test.js", "fetch.test.js", "http.test.js", "key.pem"]
-
-[[batches]]
-position = 143
-key = 'Fs(DirListing { dir: "tests/unit/core" })'
-descriptor = "listing of 'tests/unit/core'"
-cost_tokens = 36
-cum_tokens = 3791
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit/core"
-entries = ["AxiosError.test.js", "buildFullPath.test.js", "dispatchRequest.test.js", "mergeConfig.test.js", "settle.test.js", "transformData.test.js"]
-
-[[batches]]
-position = 144
-key = 'Fs(DirListing { dir: "tests/unit/utils" })'
-descriptor = "listing of 'tests/unit/utils'"
-cost_tokens = 59
-cum_tokens = 3850
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit/utils"
-entries = ["endsWith.test.js", "extend.test.js", "forEach.test.js", "isX.test.js", "kindOf.test.js", "kindOfTest.test.js", "merge.test.js", "toArray.test.js", "toFlatObject.test.js", "trim.test.js"]
-
-[[batches]]
-position = 145
+position = 149
 key = 'Markdown(Section { file: "COLLABORATOR_GUIDE.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "COLLABORATOR_GUIDE.md section #3"
 cost_tokens = 54
-cum_tokens = 3904
+cum_tokens = 4452
 
 [batches.content]
 kind = "lines"
@@ -3114,11 +3170,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 146
+position = 150
 key = 'Json(Dependencies { file: "package.json" })'
 descriptor = "package runtime dependencies in package.json"
 cost_tokens = 86
-cum_tokens = 3990
+cum_tokens = 4538
 
 [batches.content]
 kind = "lines"
@@ -3132,11 +3188,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 147
+position = 151
 key = 'Typescript(ExportNames { file: "lib/helpers/bind.js" })'
 descriptor = "export names surface in lib/helpers/bind.js"
 cost_tokens = 18
-cum_tokens = 4008
+cum_tokens = 4556
 
 [batches.content]
 kind = "lines"
@@ -3158,11 +3214,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 152
 key = 'Typescript(Export { file: "lib/helpers/bind.js", start_line: 10 })'
 descriptor = "export at lib/helpers/bind.js:10"
 cost_tokens = 0
-cum_tokens = 4008
+cum_tokens = 4556
 
 [batches.content]
 kind = "lines"
@@ -3184,11 +3240,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 149
+position = 153
 key = 'Typescript(ExportNames { file: "lib/helpers/shouldBypassProxy.js" })'
 descriptor = "export names surface in lib/helpers/shouldBypassProxy.js"
 cost_tokens = 18
-cum_tokens = 4026
+cum_tokens = 4574
 
 [batches.content]
 kind = "lines"
@@ -3210,11 +3266,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 150
+position = 154
 key = 'Typescript(Export { file: "lib/helpers/shouldBypassProxy.js", start_line: 127 })'
 descriptor = "export at lib/helpers/shouldBypassProxy.js:127"
 cost_tokens = 0
-cum_tokens = 4026
+cum_tokens = 4574
 
 [batches.content]
 kind = "lines"
@@ -3236,11 +3292,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 155
 key = 'Markdown(Section { file: "lib/adapters/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "lib/adapters/README.md section #1"
 cost_tokens = 303
-cum_tokens = 4329
+cum_tokens = 4877
 
 [batches.content]
 kind = "lines"
@@ -3252,62 +3308,6 @@ end = 36
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 152
-key = 'Fs(DirListing { dir: "docs/es/pages/advanced" })'
-descriptor = "listing of 'docs/es/pages/advanced'"
-cost_tokens = 137
-cum_tokens = 4466
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/es/pages/advanced"
-entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
-
-[[batches]]
-position = 153
-key = 'Fs(DirListing { dir: "docs/fr/pages/advanced" })'
-descriptor = "listing of 'docs/fr/pages/advanced'"
-cost_tokens = 137
-cum_tokens = 4603
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/fr/pages/advanced"
-entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
-
-[[batches]]
-position = 154
-key = 'Fs(DirListing { dir: "docs/pages/advanced" })'
-descriptor = "listing of 'docs/pages/advanced'"
-cost_tokens = 137
-cum_tokens = 4740
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/pages/advanced"
-entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
-
-[[batches]]
-position = 155
-key = 'Fs(DirListing { dir: "docs/zh/pages/advanced" })'
-descriptor = "listing of 'docs/zh/pages/advanced'"
-cost_tokens = 137
-cum_tokens = 4877
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh/pages/advanced"
-entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
 
 [[batches]]
 position = 156
@@ -5185,10 +5185,38 @@ kind = "ellipsis"
 
 [[batches]]
 position = 213
+key = 'Fs(DirListing { dir: "tests/unit/helpers" })'
+descriptor = "listing of 'tests/unit/helpers'"
+cost_tokens = 78
+cum_tokens = 7994
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/unit/helpers"
+entries = ["bind.test.js", "buildURL.test.js", "combineURLs.test.js", "formDataToJSON.test.js", "formDataToStream.test.js", "isAbsoluteURL.test.js", "isAxiosError.test.js", "parseHeaders.test.js", "progressEventReducer.test.js", "shouldBypassProxy.test.js", "spread.test.js", "validator.test.js"]
+
+[[batches]]
+position = 214
+key = 'Fs(DirListing { dir: "tests/browser" })'
+descriptor = "listing of 'tests/browser'"
+cost_tokens = 124
+cum_tokens = 8118
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/browser"
+entries = ["adapter.browser.test.js", "basicAuth.browser.test.js", "cancel.browser.test.js", "cancelToken.browser.test.js", "cookies.browser.test.js", "defaults.browser.test.js", "formdata.browser.test.js", "headers.browser.test.js", "instance.browser.test.js", "interceptors.browser.test.js", "isURLSameOrigin.browser.test.js", "options.browser.test.js", "progress.browser.test.js", "promise.browser.test.js", "requests.browser.test.js", "settle.browser.test.js", "toFormData.browser.test.js", "transform.browser.test.js", "xsrf.browser.test.js"]
+
+[[batches]]
+position = 215
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 462
-cum_tokens = 8378
+cum_tokens = 8580
 
 [batches.content]
 kind = "lines"
@@ -5202,11 +5230,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 214
+position = 216
 key = 'Fs(DirListing { dir: "tests/smoke/bun/tests" })'
 descriptor = "listing of 'tests/smoke/bun/tests'"
 cost_tokens = 72
-cum_tokens = 8450
+cum_tokens = 8652
 
 [batches.content]
 kind = "fs"
@@ -5216,11 +5244,11 @@ parent = "tests/smoke/bun/tests"
 entries = ["cancel.smoke.test.ts", "error.smoke.test.ts", "fetch.smoke.test.ts", "formData.smoke.test.ts", "headers.smoke.test.ts", "http.smoke.test.ts", "import.smoke.test.ts", "interceptors.smoke.test.ts", "progress.smoke.test.ts", "timeout.smoke.test.ts"]
 
 [[batches]]
-position = 215
+position = 217
 key = 'Typescript(ExportNames { file: "lib/helpers/toURLEncodedForm.js" })'
 descriptor = "export names surface in lib/helpers/toURLEncodedForm.js"
 cost_tokens = 21
-cum_tokens = 8471
+cum_tokens = 8673
 
 [batches.content]
 kind = "lines"
@@ -5242,11 +5270,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 216
+position = 218
 key = 'Typescript(Export { file: "lib/helpers/toURLEncodedForm.js", start_line: 7 })'
 descriptor = "export at lib/helpers/toURLEncodedForm.js:7"
 cost_tokens = 0
-cum_tokens = 8471
+cum_tokens = 8673
 
 [batches.content]
 kind = "lines"
@@ -5268,11 +5296,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 217
+position = 219
 key = 'Typescript(Export { file: "index.d.ts", start_line: 251 })'
 descriptor = "export at index.d.ts:251"
 cost_tokens = 65
-cum_tokens = 8536
+cum_tokens = 8738
 
 [batches.content]
 kind = "lines"
@@ -5284,34 +5312,6 @@ end = 258
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 218
-key = 'Fs(DirListing { dir: "tests/unit/helpers" })'
-descriptor = "listing of 'tests/unit/helpers'"
-cost_tokens = 78
-cum_tokens = 8614
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/unit/helpers"
-entries = ["bind.test.js", "buildURL.test.js", "combineURLs.test.js", "formDataToJSON.test.js", "formDataToStream.test.js", "isAbsoluteURL.test.js", "isAxiosError.test.js", "parseHeaders.test.js", "progressEventReducer.test.js", "shouldBypassProxy.test.js", "spread.test.js", "validator.test.js"]
-
-[[batches]]
-position = 219
-key = 'Fs(DirListing { dir: "tests/browser" })'
-descriptor = "listing of 'tests/browser'"
-cost_tokens = 124
-cum_tokens = 8738
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/browser"
-entries = ["adapter.browser.test.js", "basicAuth.browser.test.js", "cancel.browser.test.js", "cancelToken.browser.test.js", "cookies.browser.test.js", "defaults.browser.test.js", "formdata.browser.test.js", "headers.browser.test.js", "instance.browser.test.js", "interceptors.browser.test.js", "isURLSameOrigin.browser.test.js", "options.browser.test.js", "progress.browser.test.js", "promise.browser.test.js", "requests.browser.test.js", "settle.browser.test.js", "toFormData.browser.test.js", "transform.browser.test.js", "xsrf.browser.test.js"]
 
 [[batches]]
 position = 220
@@ -5367,10 +5367,24 @@ kind = "ellipsis"
 
 [[batches]]
 position = 222
+key = 'Fs(DirListing { dir: "tests/smoke/esm/tests" })'
+descriptor = "listing of 'tests/smoke/esm/tests'"
+cost_tokens = 116
+cum_tokens = 8876
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/smoke/esm/tests"
+entries = ["auth.smoke.test.js", "basic.smoke.test.js", "cancel.smoke.test.js", "error.smoke.test.js", "fetch.smoke.test.js", "files.smoke.test.js", "formData.smoke.test.js", "headers.smoke.test.js", "http2.smoke.test.js", "import.smoke.test.js", "instance.smoke.test.js", "interceptors.smoke.test.js", "progress.smoke.test.js", "rateLimit.smoke.test.js", "timeout.smoke.test.js", "urlencode.smoke.test.js"]
+
+[[batches]]
+position = 223
 key = 'Typescript(Imports { file: "lib/platform/index.js" })'
 descriptor = "imports in lib/platform/index.js"
 cost_tokens = 24
-cum_tokens = 8784
+cum_tokens = 8900
 
 [batches.content]
 kind = "lines"
@@ -5382,20 +5396,6 @@ end = 2
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 223
-key = 'Fs(DirListing { dir: "tests/smoke/esm/tests" })'
-descriptor = "listing of 'tests/smoke/esm/tests'"
-cost_tokens = 116
-cum_tokens = 8900
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/smoke/esm/tests"
-entries = ["auth.smoke.test.js", "basic.smoke.test.js", "cancel.smoke.test.js", "error.smoke.test.js", "fetch.smoke.test.js", "files.smoke.test.js", "formData.smoke.test.js", "headers.smoke.test.js", "http2.smoke.test.js", "import.smoke.test.js", "instance.smoke.test.js", "interceptors.smoke.test.js", "progress.smoke.test.js", "rateLimit.smoke.test.js", "timeout.smoke.test.js", "urlencode.smoke.test.js"]
 
 [[batches]]
 position = 224
@@ -5469,10 +5469,24 @@ kind = "full"
 
 [[batches]]
 position = 227
+key = 'Fs(DirListing { dir: "tests/smoke/cjs/tests" })'
+descriptor = "listing of 'tests/smoke/cjs/tests'"
+cost_tokens = 132
+cum_tokens = 9128
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/smoke/cjs/tests"
+entries = ["auth.smoke.test.cjs", "basic.smoke.test.cjs", "cancel.smoke.test.cjs", "error.smoke.test.cjs", "fetch.smoke.test.cjs", "files.smoke.test.cjs", "formData.smoke.test.cjs", "headers.smoke.test.cjs", "http2.smoke.test.cjs", "import.smoke.test.cjs", "instance.smoke.test.cjs", "interceptors.smoke.test.cjs", "progress.smoke.test.cjs", "rateLimit.smoke.test.cjs", "timeout.smoke.test.cjs", "urlencode.smoke.test.cjs"]
+
+[[batches]]
+position = 228
 key = 'Typescript(Export { file: "index.d.ts", start_line: 338 })'
 descriptor = "export at index.d.ts:338"
 cost_tokens = 99
-cum_tokens = 9095
+cum_tokens = 9227
 
 [batches.content]
 kind = "lines"
@@ -5486,11 +5500,11 @@ end = 349
 kind = "full"
 
 [[batches]]
-position = 228
+position = 229
 key = 'Typescript(ExportNames { file: "lib/adapters/fetch.js" })'
 descriptor = "export names surface in lib/adapters/fetch.js"
 cost_tokens = 26
-cum_tokens = 9121
+cum_tokens = 9253
 
 [batches.content]
 kind = "lines"
@@ -5520,11 +5534,11 @@ end = 449
 kind = "ellipsis"
 
 [[batches]]
-position = 229
+position = 230
 key = 'Typescript(Export { file: "lib/adapters/fetch.js", start_line: 448 })'
 descriptor = "export at lib/adapters/fetch.js:448"
 cost_tokens = 0
-cum_tokens = 9121
+cum_tokens = 9253
 
 [batches.content]
 kind = "lines"
@@ -5544,20 +5558,6 @@ end = 449
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 230
-key = 'Fs(DirListing { dir: "tests/smoke/cjs/tests" })'
-descriptor = "listing of 'tests/smoke/cjs/tests'"
-cost_tokens = 132
-cum_tokens = 9253
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/smoke/cjs/tests"
-entries = ["auth.smoke.test.cjs", "basic.smoke.test.cjs", "cancel.smoke.test.cjs", "error.smoke.test.cjs", "fetch.smoke.test.cjs", "files.smoke.test.cjs", "formData.smoke.test.cjs", "headers.smoke.test.cjs", "http2.smoke.test.cjs", "import.smoke.test.cjs", "instance.smoke.test.cjs", "interceptors.smoke.test.cjs", "progress.smoke.test.cjs", "rateLimit.smoke.test.cjs", "timeout.smoke.test.cjs", "urlencode.smoke.test.cjs"]
 
 [[batches]]
 position = 231

@@ -891,10 +891,24 @@ kind = "full"
 
 [[batches]]
 position = 36
+key = 'Fs(DirListing { dir: "test/functions" })'
+descriptor = "listing of 'test/functions'"
+cost_tokens = 105
+cum_tokens = 2174
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/functions"
+entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
+
+[[batches]]
+position = 37
 key = 'Fs(DirListing { dir: ".github/matchers" })'
 descriptor = "listing of '.github/matchers'"
 cost_tokens = 4
-cum_tokens = 2073
+cum_tokens = 2178
 
 [batches.content]
 kind = "fs"
@@ -904,11 +918,11 @@ parent = ".github/matchers"
 entries = ["tap.json"]
 
 [[batches]]
-position = 37
+position = 38
 key = 'Fs(DirListing { dir: "test/integration" })'
 descriptor = "listing of 'test/integration'"
 cost_tokens = 4
-cum_tokens = 2077
+cum_tokens = 2182
 
 [batches.content]
 kind = "fs"
@@ -916,20 +930,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "test/integration"
 entries = ["whitespace.js"]
-
-[[batches]]
-position = 38
-key = 'Fs(DirListing { dir: "test/functions" })'
-descriptor = "listing of 'test/functions'"
-cost_tokens = 105
-cum_tokens = 2182
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/functions"
-entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
 
 [[batches]]
 position = 39
@@ -1069,10 +1069,24 @@ entries = ["semver.js"]
 
 [[batches]]
 position = 47
+key = 'Fs(DirListing { dir: "test/fixtures" })'
+descriptor = "listing of 'test/fixtures'"
+cost_tokens = 84
+cum_tokens = 2573
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/fixtures"
+entries = ["comparator-intersection.js", "comparisons.js", "equality.js", "increments.js", "invalid-versions.js", "range-exclude.js", "range-include.js", "range-intersection.js", "range-parse.js", "valid-versions.js", "version-gt-range.js", "version-lt-range.js", "version-not-gt-range.js", "version-not-lt-range.js"]
+
+[[batches]]
+position = 48
 key = 'Json(DevDependencies { file: "package.json" })'
 descriptor = "package dev/peer dependencies in package.json"
 cost_tokens = 82
-cum_tokens = 2571
+cum_tokens = 2655
 
 [batches.content]
 kind = "lines"
@@ -1084,20 +1098,6 @@ end = 21
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 48
-key = 'Fs(DirListing { dir: "test/fixtures" })'
-descriptor = "listing of 'test/fixtures'"
-cost_tokens = 84
-cum_tokens = 2655
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/fixtures"
-entries = ["comparator-intersection.js", "comparisons.js", "equality.js", "increments.js", "invalid-versions.js", "range-exclude.js", "range-include.js", "range-intersection.js", "range-parse.js", "valid-versions.js", "version-gt-range.js", "version-lt-range.js", "version-not-gt-range.js", "version-not-lt-range.js"]
 
 [[batches]]
 position = 49

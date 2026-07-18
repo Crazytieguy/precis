@@ -54,13 +54,13 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | ns | 1536 |  | 346 | Dockerfile (full) | 2.2 |  | 0.642 |
 | walker |  | 1541 | 33 | c includes in src/jv.h |  |  | 0.642 |
 | walker |  | 1568 | 27 | c decl doc at src/jv.h:34 |  |  | 0.643 |
-| walker |  | 1914 | 346 | plaintext config Dockerfile |  |  | 0.753 |
-| ns | 1968 |  | 432 | jq.h — core embedding lifecycle API | 3.1 |  | 0.690 |
-| ns | 2214 |  | 246 | jq.h — callback registration and attrs/origin accessors | 3.2 | 3.1 | 0.667 |
-| walker |  | 2310 | 396 | c decl names surface in src/jq.h |  |  | 0.715 |
-| walker |  | 2362 | 52 | c decl at src/jq.h:11 |  |  | 0.731 |
-| walker |  | 2385 | 23 | c includes in src/jq.h |  |  | 0.738 |
-| walker |  | 2550 | 165 | listing of 'tests' |  |  | 0.808 |
+| walker |  | 1733 | 165 | listing of 'tests' |  |  | 0.732 |
+| ns | 1968 |  | 432 | jq.h — core embedding lifecycle API | 3.1 |  | 0.671 |
+| walker |  | 2079 | 346 | plaintext config Dockerfile |  |  | 0.766 |
+| ns | 2214 |  | 246 | jq.h — callback registration and attrs/origin accessors | 3.2 | 3.1 | 0.741 |
+| walker |  | 2475 | 396 | c decl names surface in src/jq.h |  |  | 0.787 |
+| walker |  | 2527 | 52 | c decl at src/jq.h:11 |  |  | 0.802 |
+| walker |  | 2550 | 23 | c includes in src/jq.h |  |  | 0.808 |
 | walker |  | 2602 | 52 | c whole header in src/jv_dtoa_tsd.h |  |  | 0.808 |
 | walker |  | 2662 | 60 | c decl names surface in src/jv_dtoa_tsd.c |  |  | 0.808 |
 | walker |  | 2662 | 0 | c decl at src/jv_dtoa_tsd.c:22 |  |  | 0.808 |
@@ -91,10 +91,10 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | walker |  | 3856 | 0 | c decl at src/jv_print.c:40 |  |  | 0.748 |
 | ns | 3874 |  | 157 | builtin.jq — sampler of jq-coded (not C) builtin definitions | 4.2 |  | 0.738 |
 | walker |  | 3953 | 97 | c whole header in src/jq_parser.h |  |  | 0.738 |
-| walker |  | 4039 | 86 | c decl names surface in src/util.h |  |  | 0.738 |
-| walker |  | 4054 | 15 | c decl at src/util.h:44 |  |  | 0.738 |
+| walker |  | 4120 | 167 | listing of 'vendor/decNumber' |  |  | 0.738 |
+| walker |  | 4206 | 86 | c decl names surface in src/util.h |  |  | 0.718 |
 | ns | 4206 |  | 332 | manual.yml — Assignment section: no-references / deep-copy mental model | 4.3 | 4.1 | 0.718 |
-| walker |  | 4221 | 167 | listing of 'vendor/decNumber' |  |  | 0.718 |
+| walker |  | 4221 | 15 | c decl at src/util.h:44 |  |  | 0.718 |
 | ns | 4292 |  | 86 | manual.yml — Assignment section: why `$var.foo = 1` doesn't work | 4.4 | 4.3 | 0.714 |
 | walker |  | 4342 | 121 | c decl names surface in src/locfile.c |  |  | 0.714 |
 | walker |  | 4342 | 0 | c decl at src/locfile.c:12 |  |  | 0.714 |

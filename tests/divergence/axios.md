@@ -61,34 +61,34 @@ Score(3000)=0.670 I=0.854 C=0.526 ns_rows≤3K=21/40 (reached=13 partial=1 missi
 | walker |  | 1381 | 40 | listing of '.github/workflows' |  |  | 0.666 |
 | walker |  | 1400 | 19 | CONTRIBUTORS.md section #2 |  |  | 0.666 |
 | ns | 1436 |  | 131 | tests/smoke listings, part 2 (bun, deno) | 1.13 |  | 0.640 |
-| walker |  | 1473 | 73 | headings outline in ECOSYSTEM.md |  |  | 0.640 |
-| walker |  | 1509 | 36 | ECOSYSTEM.md section #0 |  |  | 0.640 |
-| walker |  | 1527 | 18 | listing of 'tests/module/esm' |  |  | 0.640 |
-| ns | 1534 |  | 98 | tests/module listings (cjs, esm) | 1.14 |  | 0.628 |
-| walker |  | 1545 | 18 | listing of 'tests/smoke/esm' |  |  | 0.632 |
-| walker |  | 1596 | 51 | listing of 'docs' |  |  | 0.640 |
-| ns | 1596 |  | 62 | docs/ top-level + docs/pages listing | 1.15 |  | 0.640 |
-| walker |  | 1603 | 7 | listing of 'docs/es' |  |  | 0.640 |
-| walker |  | 1610 | 7 | listing of 'docs/fr' |  |  | 0.640 |
-| walker |  | 1617 | 7 | listing of 'docs/zh' |  |  | 0.640 |
-| walker |  | 1628 | 11 | listing of 'docs/es/pages' |  |  | 0.640 |
-| walker |  | 1639 | 11 | listing of 'docs/fr/pages' |  |  | 0.640 |
-| walker |  | 1650 | 11 | listing of 'docs/pages' |  |  | 0.654 |
-| walker |  | 1661 | 11 | listing of 'docs/zh/pages' |  |  | 0.654 |
-| walker |  | 1674 | 13 | listing of 'docs/es/pages/misc' |  |  | 0.654 |
-| walker |  | 1687 | 13 | listing of 'docs/fr/pages/misc' |  |  | 0.654 |
-| walker |  | 1700 | 13 | listing of 'docs/pages/misc' |  |  | 0.654 |
-| walker |  | 1713 | 13 | listing of 'docs/zh/pages/misc' |  |  | 0.654 |
-| walker |  | 1731 | 18 | listing of 'docs/es/pages/getting-started' |  |  | 0.654 |
-| walker |  | 1749 | 18 | listing of 'docs/fr/pages/getting-started' |  |  | 0.654 |
-| walker |  | 1767 | 18 | listing of 'docs/pages/getting-started' |  |  | 0.654 |
-| ns | 1774 |  | 178 | docs/pages/advanced, getting-started, misc listings | 1.16 |  | 0.618 |
-| walker |  | 1785 | 18 | listing of 'docs/zh/pages/getting-started' |  |  | 0.618 |
+| walker |  | 1451 | 51 | listing of 'docs' |  |  | 0.642 |
+| walker |  | 1458 | 7 | listing of 'docs/es' |  |  | 0.642 |
+| walker |  | 1465 | 7 | listing of 'docs/fr' |  |  | 0.642 |
+| walker |  | 1472 | 7 | listing of 'docs/zh' |  |  | 0.642 |
+| walker |  | 1483 | 11 | listing of 'docs/es/pages' |  |  | 0.642 |
+| walker |  | 1494 | 11 | listing of 'docs/fr/pages' |  |  | 0.642 |
+| walker |  | 1505 | 11 | listing of 'docs/pages' |  |  | 0.643 |
+| walker |  | 1516 | 11 | listing of 'docs/zh/pages' |  |  | 0.643 |
+| walker |  | 1529 | 13 | listing of 'docs/es/pages/misc' |  |  | 0.643 |
+| ns | 1534 |  | 98 | tests/module listings (cjs, esm) | 1.14 |  | 0.623 |
+| walker |  | 1542 | 13 | listing of 'docs/fr/pages/misc' |  |  | 0.623 |
+| walker |  | 1555 | 13 | listing of 'docs/pages/misc' |  |  | 0.623 |
+| walker |  | 1568 | 13 | listing of 'docs/zh/pages/misc' |  |  | 0.623 |
+| ns | 1596 |  | 62 | docs/ top-level + docs/pages listing | 1.15 |  | 0.642 |
+| walker |  | 1641 | 73 | headings outline in ECOSYSTEM.md |  |  | 0.642 |
+| walker |  | 1677 | 36 | ECOSYSTEM.md section #0 |  |  | 0.642 |
+| walker |  | 1695 | 18 | listing of 'docs/es/pages/getting-started' |  |  | 0.642 |
+| walker |  | 1713 | 18 | listing of 'docs/fr/pages/getting-started' |  |  | 0.642 |
+| walker |  | 1731 | 18 | listing of 'docs/pages/getting-started' |  |  | 0.642 |
+| walker |  | 1749 | 18 | listing of 'docs/zh/pages/getting-started' |  |  | 0.642 |
+| walker |  | 1767 | 18 | listing of 'tests/module/esm' |  |  | 0.650 |
+| ns | 1774 |  | 178 | docs/pages/advanced, getting-started, misc listings | 1.16 |  | 0.614 |
+| walker |  | 1785 | 18 | listing of 'tests/smoke/esm' |  |  | 0.618 |
 | walker |  | 1832 | 47 | lib/core/README.md section #0 |  |  | 0.619 |
 | ns | 1876 |  | 102 | examples/ listings (all subdirectories) | 1.17 |  | 0.594 |
 | walker |  | 1911 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.594 |
-| walker |  | 1922 | 11 | export names surface in lib/utils.js |  |  | 0.594 |
-| walker |  | 1972 | 50 | listing of 'examples' |  |  | 0.606 |
+| walker |  | 1961 | 50 | listing of 'examples' |  |  | 0.606 |
+| walker |  | 1972 | 11 | export names surface in lib/utils.js |  |  | 0.606 |
 | ns | 1975 |  | 99 | sandbox/, scripts/, .github/, .husky/ listings | 1.18 |  | 0.624 |
 | walker |  | 1995 | 23 | listing of 'tests/module/esm/tests' |  |  | 0.634 |
 | walker |  | 2014 | 19 | listing of 'tests/module/esm/tests/helpers' |  |  | 0.634 |
@@ -150,38 +150,38 @@ Score(3000)=0.670 I=0.854 C=0.526 ns_rows≤3K=21/40 (reached=13 partial=1 missi
 | walker |  | 3112 | 0 | export at lib/helpers/parseHeaders.js:41 |  |  | 0.670 |
 | walker |  | 3128 | 16 | export names surface in lib/helpers/parseProtocol.js |  |  | 0.670 |
 | walker |  | 3128 | 0 | export at lib/helpers/parseProtocol.js:3 |  |  | 0.670 |
-| walker |  | 3145 | 17 | export names surface in lib/helpers/isAbsoluteURL.js |  |  | 0.670 |
-| walker |  | 3145 | 0 | export at lib/helpers/isAbsoluteURL.js:10 |  |  | 0.670 |
-| walker |  | 3162 | 17 | export names surface in lib/helpers/isAxiosError.js |  |  | 0.670 |
-| walker |  | 3162 | 0 | export at lib/helpers/isAxiosError.js:12 |  |  | 0.670 |
-| walker |  | 3172 | 10 | export names surface in lib/platform/common/utils.js |  |  | 0.670 |
-| ns | 3308 |  | 450 | index.d.ts — AxiosRequestConfig interface, part 1 (url..maxRate) | 2.4 |  | 0.642 |
-| walker |  | 3425 | 253 | headings outline in THREATMODEL.md |  |  | 0.642 |
-| walker |  | 3430 | 5 | THREATMODEL.md section #24 |  |  | 0.642 |
-| walker |  | 3435 | 5 | THREATMODEL.md section #33 |  |  | 0.642 |
-| walker |  | 3440 | 5 | THREATMODEL.md section #44 |  |  | 0.642 |
-| walker |  | 3447 | 7 | THREATMODEL.md section #10 |  |  | 0.642 |
-| walker |  | 3454 | 7 | THREATMODEL.md section #53 |  |  | 0.642 |
-| walker |  | 3565 | 111 | THREATMODEL.md section #0 |  |  | 0.642 |
-| walker |  | 3617 | 52 | THREATMODEL.md section #25 |  |  | 0.642 |
-| walker |  | 3722 | 105 | listing of 'tests/unit' |  |  | 0.669 |
-| walker |  | 3755 | 33 | listing of 'tests/unit/adapters' |  |  | 0.686 |
-| walker |  | 3791 | 36 | listing of 'tests/unit/core' |  |  | 0.704 |
-| walker |  | 3850 | 59 | listing of 'tests/unit/utils' |  |  | 0.708 |
-| walker |  | 3904 | 54 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.708 |
-| walker |  | 3990 | 86 | package runtime dependencies in package.json |  |  | 0.708 |
-| walker |  | 4008 | 18 | export names surface in lib/helpers/bind.js |  |  | 0.708 |
-| walker |  | 4008 | 0 | export at lib/helpers/bind.js:10 |  |  | 0.708 |
-| walker |  | 4026 | 18 | export names surface in lib/helpers/shouldBypassProxy.js |  |  | 0.708 |
-| walker |  | 4026 | 0 | export at lib/helpers/shouldBypassProxy.js:127 |  |  | 0.708 |
-| ns | 4035 |  | 727 | index.d.ts — AxiosRequestConfig interface, part 2 (beforeRedirect..redact) | 2.5 |  | 0.663 |
-| ns | 4234 |  | 199 | lib/core/InterceptorManager.js — constructor, use(), forEach() (docblocks elided) | 3.1 |  | 0.648 |
-| walker |  | 4329 | 303 | lib/adapters/README.md section #1 |  |  | 0.650 |
-| walker |  | 4466 | 137 | listing of 'docs/es/pages/advanced' |  |  | 0.650 |
-| walker |  | 4603 | 137 | listing of 'docs/fr/pages/advanced' |  |  | 0.650 |
-| ns | 4729 |  | 495 | lib/core/dispatchRequest.js — part 1 (cancellation check, request transform, adapter call) | 3.2 |  | 0.622 |
-| walker |  | 4740 | 137 | listing of 'docs/pages/advanced' |  |  | 0.658 |
-| walker |  | 4877 | 137 | listing of 'docs/zh/pages/advanced' |  |  | 0.658 |
+| walker |  | 3233 | 105 | listing of 'tests/unit' |  |  | 0.699 |
+| walker |  | 3266 | 33 | listing of 'tests/unit/adapters' |  |  | 0.717 |
+| walker |  | 3302 | 36 | listing of 'tests/unit/core' |  |  | 0.735 |
+| ns | 3308 |  | 450 | index.d.ts — AxiosRequestConfig interface, part 1 (url..maxRate) | 2.4 |  | 0.704 |
+| walker |  | 3361 | 59 | listing of 'tests/unit/utils' |  |  | 0.708 |
+| walker |  | 3498 | 137 | listing of 'docs/es/pages/advanced' |  |  | 0.708 |
+| walker |  | 3635 | 137 | listing of 'docs/fr/pages/advanced' |  |  | 0.708 |
+| walker |  | 3772 | 137 | listing of 'docs/pages/advanced' |  |  | 0.749 |
+| walker |  | 3909 | 137 | listing of 'docs/zh/pages/advanced' |  |  | 0.749 |
+| walker |  | 3926 | 17 | export names surface in lib/helpers/isAbsoluteURL.js |  |  | 0.749 |
+| walker |  | 3926 | 0 | export at lib/helpers/isAbsoluteURL.js:10 |  |  | 0.749 |
+| walker |  | 3943 | 17 | export names surface in lib/helpers/isAxiosError.js |  |  | 0.749 |
+| walker |  | 3943 | 0 | export at lib/helpers/isAxiosError.js:12 |  |  | 0.749 |
+| walker |  | 3953 | 10 | export names surface in lib/platform/common/utils.js |  |  | 0.749 |
+| ns | 4035 |  | 727 | index.d.ts — AxiosRequestConfig interface, part 2 (beforeRedirect..redact) | 2.5 |  | 0.701 |
+| walker |  | 4206 | 253 | headings outline in THREATMODEL.md |  |  | 0.701 |
+| walker |  | 4211 | 5 | THREATMODEL.md section #24 |  |  | 0.701 |
+| walker |  | 4216 | 5 | THREATMODEL.md section #33 |  |  | 0.701 |
+| walker |  | 4221 | 5 | THREATMODEL.md section #44 |  |  | 0.701 |
+| walker |  | 4228 | 7 | THREATMODEL.md section #10 |  |  | 0.701 |
+| ns | 4234 |  | 199 | lib/core/InterceptorManager.js — constructor, use(), forEach() (docblocks elided) | 3.1 |  | 0.686 |
+| walker |  | 4235 | 7 | THREATMODEL.md section #53 |  |  | 0.686 |
+| walker |  | 4346 | 111 | THREATMODEL.md section #0 |  |  | 0.686 |
+| walker |  | 4398 | 52 | THREATMODEL.md section #25 |  |  | 0.686 |
+| walker |  | 4452 | 54 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.686 |
+| walker |  | 4538 | 86 | package runtime dependencies in package.json |  |  | 0.686 |
+| walker |  | 4556 | 18 | export names surface in lib/helpers/bind.js |  |  | 0.686 |
+| walker |  | 4556 | 0 | export at lib/helpers/bind.js:10 |  |  | 0.686 |
+| walker |  | 4574 | 18 | export names surface in lib/helpers/shouldBypassProxy.js |  |  | 0.686 |
+| walker |  | 4574 | 0 | export at lib/helpers/shouldBypassProxy.js:127 |  |  | 0.686 |
+| ns | 4729 |  | 495 | lib/core/dispatchRequest.js — part 1 (cancellation check, request transform, adapter call) | 3.2 |  | 0.656 |
+| walker |  | 4877 | 303 | lib/adapters/README.md section #1 |  |  | 0.658 |
 | walker |  | 4896 | 19 | export names surface in lib/core/settle.js |  |  | 0.658 |
 | walker |  | 4896 | 0 | export at lib/core/settle.js:14 |  |  | 0.658 |
 | walker |  | 4915 | 19 | export names surface in lib/core/transformData.js |  |  | 0.658 |
@@ -248,26 +248,26 @@ Score(3000)=0.670 I=0.854 C=0.526 ns_rows≤3K=21/40 (reached=13 partial=1 missi
 | walker |  | 7916 | 20 | export names surface in lib/helpers/deprecatedMethod.js |  |  | 0.558 |
 | walker |  | 7916 | 0 | export at lib/helpers/deprecatedMethod.js:15 |  |  | 0.558 |
 | ns | 7983 |  | 203 | lib/helpers/* — one-line-per-file export locations, part 1 (serialization + parsing + config) | 5.3 |  | 0.555 |
-| ns | 8329 |  | 346 | lib/helpers/* — one-line-per-file export locations, part 2 (streaming + proxy/origin + data URIs + small utilities) | 5.4 |  | 0.549 |
-| walker |  | 8378 | 462 | package scripts in package.json |  |  | 0.549 |
-| walker |  | 8450 | 72 | listing of 'tests/smoke/bun/tests' |  |  | 0.564 |
-| walker |  | 8471 | 21 | export names surface in lib/helpers/toURLEncodedForm.js |  |  | 0.565 |
-| walker |  | 8471 | 0 | export at lib/helpers/toURLEncodedForm.js:7 |  |  | 0.565 |
-| walker |  | 8536 | 65 | export at index.d.ts:251 |  |  | 0.565 |
-| walker |  | 8614 | 78 | listing of 'tests/unit/helpers' |  |  | 0.574 |
-| walker |  | 8738 | 124 | listing of 'tests/browser' |  |  | 0.603 |
+| walker |  | 7994 | 78 | listing of 'tests/unit/helpers' |  |  | 0.565 |
+| walker |  | 8118 | 124 | listing of 'tests/browser' |  |  | 0.594 |
+| ns | 8329 |  | 346 | lib/helpers/* — one-line-per-file export locations, part 2 (streaming + proxy/origin + data URIs + small utilities) | 5.4 |  | 0.587 |
+| walker |  | 8580 | 462 | package scripts in package.json |  |  | 0.587 |
+| walker |  | 8652 | 72 | listing of 'tests/smoke/bun/tests' |  |  | 0.602 |
+| walker |  | 8673 | 21 | export names surface in lib/helpers/toURLEncodedForm.js |  |  | 0.603 |
+| walker |  | 8673 | 0 | export at lib/helpers/toURLEncodedForm.js:7 |  |  | 0.603 |
+| walker |  | 8738 | 65 | export at index.d.ts:251 |  |  | 0.603 |
 | walker |  | 8760 | 22 | export names surface in lib/helpers/fromDataURI.js |  |  | 0.603 |
 | walker |  | 8760 | 0 | export at lib/helpers/fromDataURI.js:21 |  |  | 0.603 |
-| walker |  | 8784 | 24 | imports in lib/platform/index.js |  |  | 0.603 |
 | ns | 8838 |  | 509 | README.md — Error Types table (per-code descriptions) | 6.1 |  | 0.598 |
-| walker |  | 8900 | 116 | listing of 'tests/smoke/esm/tests' |  |  | 0.612 |
+| walker |  | 8876 | 116 | listing of 'tests/smoke/esm/tests' |  |  | 0.612 |
+| walker |  | 8900 | 24 | imports in lib/platform/index.js |  |  | 0.612 |
 | walker |  | 8925 | 25 | export names surface in lib/core/buildFullPath.js |  |  | 0.612 |
 | walker |  | 8925 | 0 | export at lib/core/buildFullPath.js:16 |  |  | 0.612 |
 | walker |  | 8996 | 71 | CONTRIBUTORS.md section #3 |  |  | 0.612 |
-| walker |  | 9095 | 99 | export at index.d.ts:338 |  |  | 0.612 |
-| walker |  | 9121 | 26 | export names surface in lib/adapters/fetch.js |  |  | 0.613 |
-| walker |  | 9121 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.613 |
-| walker |  | 9253 | 132 | listing of 'tests/smoke/cjs/tests' |  |  | 0.637 |
+| walker |  | 9128 | 132 | listing of 'tests/smoke/cjs/tests' |  |  | 0.637 |
+| walker |  | 9227 | 99 | export at index.d.ts:338 |  |  | 0.637 |
+| walker |  | 9253 | 26 | export names surface in lib/adapters/fetch.js |  |  | 0.637 |
+| walker |  | 9253 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.637 |
 | ns | 9323 |  | 485 | CHANGELOG.md — v1.16.0 Notable Changes | 6.2 |  | 0.631 |
 | walker |  | 9330 | 77 | CONTRIBUTORS.md section #1 |  |  | 0.631 |
 | walker |  | 9359 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.631 |

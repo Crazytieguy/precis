@@ -352,8 +352,35 @@ package.json
       19→    "url": "git+https://github.com/tj/commander.js.git"
       20→  },
     …
+      35→  "files": [
+      36→    "index.js",
+      37→    "lib/*.js",
+      38→    "esm.mjs",
+      39→    "typings/index.d.ts",
+      40→    "typings/esm.d.mts",
+      41→    "package-support.json"
+      42→  ],
       43→  "type": "commonjs",
+      44→  "main": "./index.js",
+      45→  "exports": {
+      46→    ".": {
+      47→      "require": {
+      48→        "types": "./typings/index.d.ts",
+      49→        "default": "./index.js"
+      50→      },
+      51→      "import": {
+      52→        "types": "./typings/esm.d.mts",
+      53→        "default": "./esm.mjs"
+      54→      },
+      55→      "default": "./index.js"
+      56→    },
+      57→    "./esm.mjs": {
+      58→      "types": "./typings/esm.d.mts",
+      59→      "import": "./esm.mjs"
+      60→    }
+      61→  },
     …
+      77→  "types": "typings/index.d.ts",
       78→  "engines": {
       79→    "node": ">=20"
       80→  },

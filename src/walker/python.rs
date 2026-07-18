@@ -86,7 +86,7 @@ const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
 /// catalogs are split near the target, with a small tail folded back into
 /// its predecessor so it cannot queue-jump as a crumb.
 const DECL_NAMES_SPLIT_THRESHOLD_TOKENS: usize = 400;
-const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 250;
+const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 450;
 const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;
 
 /// `__init__.py` rosters are excluded: the entrypoint depth pin already

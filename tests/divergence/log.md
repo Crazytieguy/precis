@@ -107,15 +107,15 @@ Score(3000)=0.591 I=0.818 C=0.426 ns_rows≤3K=17/47 (reached=7 partial=2 missin
 | walker |  | 5708 | 410 | [features] in Cargo.toml |  |  | 0.665 |
 | walker |  | 5819 | 111 | pub-item doc lede at src/lib.rs:1420 |  |  | 0.677 |
 | ns | 5890 |  | 335 | log_enabled! macro | 3.4 | 3.1 | 0.660 |
+| walker |  | 5946 | 127 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.660 |
+| walker |  | 6029 | 83 | README.md section #1 |  |  | 0.660 |
 | ns | 6413 |  | 523 | __log_value! kv capture-modifier dispatch | 3.5 | 3.1 | 0.625 |
 | ns | 6838 |  | 425 | GlobalLogger + log/enabled/loc public fns | 4.1 |  | 0.597 |
 | ns | 7119 |  | 281 | kv/mod.rs doc lede | 5.1 |  | 0.586 |
 | ns | 7244 |  | 125 | kv/mod.rs capturing-modifier list | 5.2 |  | 0.580 |
 | ns | 7449 |  | 205 | kv/mod.rs module decls + re-exports | 5.3 |  | 0.578 |
 | ns | 7822 |  | 373 | kv/key.rs: ToKey trait + Key struct | 5.4 |  | 0.563 |
-| walker |  | 7835 | 2016 | impl method sigs in src/lib.rs |  |  | 0.610 |
-| walker |  | 7962 | 127 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.610 |
-| walker |  | 8045 | 83 | README.md section #1 |  |  | 0.610 |
+| walker |  | 8045 | 2016 | impl method sigs in src/lib.rs |  |  | 0.610 |
 | ns | 8055 |  | 233 | kv/error.rs: Error struct, Inner enum, msg() constructor | 5.5 |  | 0.598 |
 | ns | 8101 |  | 46 | kv/source.rs: Source trait method roster | 5.6 |  | 0.596 |
 | walker |  | 8169 | 124 | pub-item doc lede at src/lib.rs:1611 |  |  | 0.596 |

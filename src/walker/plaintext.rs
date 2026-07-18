@@ -65,7 +65,7 @@ const DOCKERFILE_TAIL_FACTOR: f64 = 0.85;
 /// are already their own skeleton and NSes rank them whole; only past
 /// this size does the whole-file lump price the stage/contract
 /// skeleton out of the early budget.
-const DOCKERFILE_SPLIT_MIN_LINES: usize = 40;
+const DOCKERFILE_SPLIT_MIN_LINES: usize = 50;
 
 /// Rows in the dotenv head batch — samples lead with the
 /// mandatory-settings block by convention (linkwarden's first 11 rows
@@ -1154,7 +1154,7 @@ CMD [\"node\", \"index.js\"]\n";
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         let mut src = String::from("# Stage: builder\nFROM rust:1.86 AS builder\n");
-        for i in 0..40 {
+        for i in 0..DOCKERFILE_SPLIT_MIN_LINES {
             src.push_str(&format!("RUN echo step-{i:02}\n"));
         }
         src.push_str("# Stage: app\nFROM alpine AS app\nEXPOSE 3000\nENTRYPOINT [\"app\"]\n");

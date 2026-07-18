@@ -1569,36 +1569,10 @@ entries = ["common.rs", "example_input_file.txt", "execution_order_tests.rs", "i
 
 [[batches]]
 position = 75
-key = 'Rust(PubItem { file: "src/output/progress_bar.rs", start_line: 13 })'
-descriptor = "pub item at src/output/progress_bar.rs:13"
-cost_tokens = 33
-cum_tokens = 2531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/output/progress_bar.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/output/progress_bar.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 76
 key = 'Rust(RegistrationRoster { file: "src/cli.rs", start_line: 18 })'
 descriptor = "registration roster at src/cli.rs:18"
 cost_tokens = 452
-cum_tokens = 2983
+cum_tokens = 2950
 
 [batches.content]
 kind = "lines"
@@ -2103,6 +2077,32 @@ kind = "ellipsis"
 path = "src/cli.rs"
 start = 395
 end = 395
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 76
+key = 'Rust(PubItem { file: "src/output/progress_bar.rs", start_line: 13 })'
+descriptor = "pub item at src/output/progress_bar.rs:13"
+cost_tokens = 33
+cum_tokens = 2983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/output/progress_bar.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/output/progress_bar.rs"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "ellipsis"
