@@ -459,10 +459,7 @@ fn collect_ancestors(
 ) -> HashSet<BatchId> {
     let mut out = HashSet::new();
     let mut current = ns_id.to_string();
-    loop {
-        let Some(batch) = all_batches.iter().find(|b| b.id == current) else {
-            break;
-        };
+    while let Some(batch) = all_batches.iter().find(|b| b.id == current) {
         let Some(pred_id) = &batch.predecessor else {
             break;
         };

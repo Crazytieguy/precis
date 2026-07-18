@@ -115,7 +115,7 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         .enumerate()
         .map(|(i, b)| ScheduledBatch {
             position: i + 1,
-            key: format!("{:?}", &b.key),
+            key: format!("{:?}", b.key),
             descriptor: WalkerKey::describe(&b.key, &root),
             cost_tokens: b.cost.tokens,
             cum_tokens: b.cum_tokens,
@@ -126,7 +126,7 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         .candidates
         .into_iter()
         .map(|b| CandidateBatch {
-            key: format!("{:?}", &b.key),
+            key: format!("{:?}", b.key),
             predecessor: b.predecessor.as_ref().map(|p| format!("{p:?}")),
             descriptor: WalkerKey::describe(&b.key, &root),
             content: b.content,
