@@ -126,7 +126,7 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | walker |  | 3926 | 81 | man-page NAME + DESCRIPTION in doc/hyperfine.1 |  |  | 0.642 |
 | ns | 3965 |  | 358 | options.rs — --runs/--min-runs/--max-runs resolution | 3.2 |  | 0.615 |
 | walker |  | 4174 | 248 | [dependencies] in Cargo.toml |  |  | 0.647 |
-| walker |  | 4213 | 39 | README.md section #4 |  |  | 0.647 |
+| walker |  | 4213 | 39 | README.md section #13 |  |  | 0.647 |
 | walker |  | 4282 | 69 | pub item at src/benchmark/scheduler.rs:13 |  |  | 0.647 |
 | ns | 4298 |  | 333 | options.rs — output style auto-detection | 3.3 |  | 0.623 |
 | walker |  | 4381 | 99 | pub item at src/parameter/range_step.rs:7 |  |  | 0.623 |
@@ -173,7 +173,7 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | walker |  | 6245 | 40 | pub item at src/benchmark/relative_speed.rs:98 |  |  | 0.545 |
 | walker |  | 6299 | 54 | pub item at src/benchmark/relative_speed.rs:86 |  |  | 0.545 |
 | walker |  | 6382 | 83 | pub item at src/benchmark/relative_speed.rs:7 |  |  | 0.545 |
-| walker |  | 6436 | 54 | README.md section #7 |  |  | 0.545 |
+| walker |  | 6436 | 54 | README.md section #16 |  |  | 0.545 |
 | ns | 6456 |  | 252 | benchmark/executor.rs — ShellExecutor shell-spawn-time calibration | 5.4 | 5.3 | 0.531 |
 | walker |  | 6576 | 140 | pub item at src/benchmark/timing_result.rs:5 |  |  | 0.531 |
 | walker |  | 6802 | 226 | mod/use plumbing in src/export/mod.rs |  |  | 0.531 |
@@ -188,8 +188,8 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | walker |  | 7855 | 186 | impl method sigs in src/options.rs |  |  | 0.487 |
 | ns | 8061 |  | 261 | export/mod.rs — ExportType enum + Exporter trait | 7.1 |  | 0.487 |
 | walker |  | 8124 | 269 | pub item at src/benchmark/executor.rs:35 |  |  | 0.513 |
-| walker |  | 8198 | 74 | README.md section #8 |  |  | 0.513 |
-| walker |  | 8280 | 82 | README.md section #6 |  |  | 0.513 |
+| walker |  | 8198 | 74 | README.md section #17 |  |  | 0.513 |
+| walker |  | 8280 | 82 | README.md section #15 |  |  | 0.513 |
 | ns | 8372 |  | 311 | export/json.rs — full file | 7.2 |  | 0.501 |
 | walker |  | 8610 | 330 | mod/use plumbing in src/benchmark/mod.rs |  |  | 0.501 |
 | walker |  | 8743 | 133 | impl method sigs in src/export/asciidoc.rs |  |  | 0.501 |

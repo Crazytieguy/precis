@@ -88,7 +88,7 @@ Score(3000)=0.693 I=0.899 C=0.535 ns_rows≤3K=20/54 (reached=14 partial=0 missi
 | walker |  | 2256 | 20 | python class body at htmy/renderer/baseline.py:18 |  |  | 0.759 |
 | walker |  | 2279 | 23 | README.md section #1 |  |  | 0.769 |
 | walker |  | 2300 | 21 | README.md section #2 |  |  | 0.787 |
-| walker |  | 2333 | 33 | README.md section #51 |  |  | 0.787 |
+| walker |  | 2333 | 33 | README.md section #52 |  |  | 0.787 |
 | ns | 2347 |  | 364 | htmy/typing.py -- Component protocols | 2.2 | 2.1 | 0.715 |
 | walker |  | 2357 | 24 | README.md section #11 |  |  | 0.724 |
 | walker |  | 2382 | 25 | README.md section #6 |  |  | 0.735 |
@@ -162,7 +162,7 @@ Score(3000)=0.693 I=0.899 C=0.535 ns_rows≤3K=20/54 (reached=14 partial=0 missi
 | walker |  | 4031 | 0 | python method at htmy/snippet.py:265 |  |  | 0.627 |
 | walker |  | 4042 | 11 | python method doc at htmy/snippet.py:241 |  |  | 0.627 |
 | walker |  | 4060 | 18 | python method at htmy/snippet.py:272 |  |  | 0.627 |
-| walker |  | 4117 | 57 | README.md section #49 |  |  | 0.627 |
+| walker |  | 4117 | 57 | README.md section #50 |  |  | 0.627 |
 | walker |  | 4132 | 15 | python method doc at htmy/snippet.py:272 |  |  | 0.627 |
 | ns | 4208 |  | 383 | htmy/tag.py -- Tag / TagWithProps / wildcard_tag (public surface) | 3.2 | 3.1 | 0.606 |
 | walker |  | 4349 | 217 | headings outline in docs/index.md |  |  | 0.606 |
@@ -235,7 +235,7 @@ Score(3000)=0.693 I=0.899 C=0.535 ns_rows≤3K=20/54 (reached=14 partial=0 missi
 | walker |  | 6466 | 33 | docs/api/html.md section #0 |  |  | 0.538 |
 | walker |  | 6499 | 33 | docs/api/utils.md section #0 |  |  | 0.538 |
 | walker |  | 6539 | 40 | python method doc at htmy/core.py:108 |  |  | 0.538 |
-| walker |  | 6609 | 70 | README.md section #48 |  |  | 0.538 |
+| walker |  | 6609 | 70 | README.md section #49 |  |  | 0.538 |
 | walker |  | 6643 | 34 | docs/api/etree.md section #0 |  |  | 0.538 |
 | walker |  | 6677 | 34 | docs/api/function_component.md section #0 |  |  | 0.538 |
 | ns | 6706 |  | 251 | htmy/renderer/typing.py -- RendererType / StreamingRendererType | 5.1 |  | 0.530 |

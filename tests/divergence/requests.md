@@ -20,53 +20,53 @@ Score(3000)=0.648 I=0.877 C=0.479 ns_rows≤3K=17/41 (reached=9 partial=0 missin
 | walker |  | 438 | 21 | listing of 'docs/user' |  |  | 0.563 |
 | walker |  | 496 | 58 | [package] in pyproject.toml |  |  | 0.563 |
 | ns | 554 |  | 175 | README lede + usage example | 1.6 |  | 0.619 |
-| walker |  | 643 | 147 | README.md section #0 |  |  | 0.619 |
-| walker |  | 733 | 90 | listing of 'src/requests' |  |  | 0.788 |
-| ns | 754 |  | 200 | pyproject.toml identity | 1.7 |  | 0.727 |
-| ns | 839 |  | 85 | pyproject.toml Python-version support + dependencies | 1.8 | 1.7 | 0.704 |
-| ns | 1027 |  | 188 | Makefile build/test targets | 1.9 | 1.7 | 0.659 |
-| ns | 1257 |  | 230 | __version__.py package metadata | 1.10 |  | 0.623 |
-| ns | 1331 |  | 74 | api.py function locations | 2.1 |  | 0.605 |
-| ns | 1561 |  | 230 | __init__.py public export tuple | 2.2 |  | 0.553 |
-| walker |  | 1735 | 1002 | python imports in src/requests/__init__.py |  |  | 0.659 |
-| walker |  | 1769 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.659 |
-| walker |  | 1785 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.659 |
-| walker |  | 1823 | 38 | listing of 'docs/community' |  |  | 0.659 |
-| ns | 1828 |  | 267 | exceptions.py class hierarchy locations | 3.1 |  | 0.613 |
-| walker |  | 1870 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.613 |
-| walker |  | 1947 | 77 | manifest config in pyproject.toml |  |  | 0.620 |
-| walker |  | 1967 | 20 | python imports in setup.py |  |  | 0.620 |
-| walker |  | 2049 | 82 | tool.setuptools config in pyproject.toml |  |  | 0.620 |
-| walker |  | 2188 | 139 | [dependencies] in pyproject.toml |  |  | 0.644 |
-| walker |  | 2251 | 63 | README.md section #1 |  |  | 0.644 |
-| walker |  | 2294 | 43 | listing of '.github' |  |  | 0.663 |
-| ns | 2310 |  | 482 | hooks.py full (event hook dispatch) | 3.2 |  | 0.589 |
-| walker |  | 2335 | 41 | listing of '.github/workflows' |  |  | 0.630 |
-| walker |  | 2349 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.630 |
+| walker |  | 637 | 141 | [dependencies] in pyproject.toml |  |  | 0.624 |
+| walker |  | 727 | 90 | listing of 'src/requests' |  |  | 0.793 |
+| ns | 754 |  | 200 | pyproject.toml identity | 1.7 |  | 0.731 |
+| ns | 839 |  | 85 | pyproject.toml Python-version support + dependencies | 1.8 | 1.7 | 0.741 |
+| ns | 1027 |  | 188 | Makefile build/test targets | 1.9 | 1.7 | 0.693 |
+| ns | 1257 |  | 230 | __version__.py package metadata | 1.10 |  | 0.656 |
+| ns | 1331 |  | 74 | api.py function locations | 2.1 |  | 0.636 |
+| ns | 1561 |  | 230 | __init__.py public export tuple | 2.2 |  | 0.582 |
+| walker |  | 1729 | 1002 | python imports in src/requests/__init__.py |  |  | 0.685 |
+| walker |  | 1763 | 34 | python decl names surface in src/requests/__init__.py |  |  | 0.685 |
+| walker |  | 1779 | 16 | python decl at src/requests/__init__.py:99 |  |  | 0.685 |
+| walker |  | 1817 | 38 | listing of 'docs/community' |  |  | 0.685 |
+| ns | 1828 |  | 267 | exceptions.py class hierarchy locations | 3.1 |  | 0.637 |
+| walker |  | 1864 | 47 | python decl at src/requests/__init__.py:60 |  |  | 0.637 |
+| walker |  | 1939 | 75 | manifest config in pyproject.toml |  |  | 0.644 |
+| walker |  | 1959 | 20 | python imports in setup.py |  |  | 0.644 |
+| walker |  | 2041 | 82 | tool.setuptools config in pyproject.toml |  |  | 0.644 |
+| walker |  | 2104 | 63 | README.md section #2 |  |  | 0.644 |
+| walker |  | 2147 | 43 | listing of '.github' |  |  | 0.663 |
+| walker |  | 2188 | 41 | listing of '.github/workflows' |  |  | 0.708 |
+| walker |  | 2202 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.708 |
+| ns | 2310 |  | 482 | hooks.py full (event hook dispatch) | 3.2 |  | 0.630 |
+| walker |  | 2311 | 109 | tool.pytest+pyright config in pyproject.toml |  |  | 0.630 |
 | ns | 2419 |  | 109 | structures.py class/method locations | 3.3 |  | 0.613 |
-| walker |  | 2458 | 109 | tool.pytest+pyright config in pyproject.toml |  |  | 0.613 |
-| walker |  | 2814 | 356 | plaintext config Makefile |  |  | 0.655 |
-| walker |  | 2853 | 39 | plaintext config docs/requirements.txt |  |  | 0.655 |
-| ns | 2888 |  | 469 | status_codes.py docstring + init logic | 3.4 |  | 0.604 |
-| walker |  | 2930 | 77 | listing of 'tests' |  |  | 0.654 |
-| walker |  | 2940 | 10 | listing of 'tests/testserver' |  |  | 0.648 |
+| walker |  | 2667 | 356 | plaintext config Makefile |  |  | 0.655 |
+| walker |  | 2706 | 39 | plaintext config docs/requirements.txt |  |  | 0.655 |
+| walker |  | 2783 | 77 | listing of 'tests' |  |  | 0.710 |
+| walker |  | 2793 | 10 | listing of 'tests/testserver' |  |  | 0.710 |
+| walker |  | 2807 | 14 | listing of 'tests/certs' |  |  | 0.710 |
+| ns | 2888 |  | 469 | status_codes.py docstring + init logic | 3.4 |  | 0.654 |
 | ns | 2940 |  | 52 | models.py class roster | 4.1 |  | 0.648 |
-| walker |  | 2954 | 14 | listing of 'tests/certs' |  |  | 0.648 |
+| walker |  | 3063 | 256 | README.md section #4 |  |  | 0.648 |
 | ns | 3089 |  | 149 | PreparedRequest method locations | 4.2 | 4.1 | 0.634 |
-| walker |  | 3210 | 256 | README.md section #3 |  |  | 0.634 |
-| walker |  | 3246 | 36 | python decl names surface in src/requests/help.py |  |  | 0.634 |
-| walker |  | 3246 | 0 | python decl at src/requests/help.py:37 |  |  | 0.634 |
-| walker |  | 3246 | 0 | python decl at src/requests/help.py:69 |  |  | 0.634 |
-| walker |  | 3246 | 0 | python decl at src/requests/help.py:128 |  |  | 0.634 |
-| walker |  | 3259 | 13 | python decl doc at src/requests/help.py:69 |  |  | 0.634 |
-| walker |  | 3273 | 14 | python decl doc at src/requests/help.py:128 |  |  | 0.634 |
-| walker |  | 3291 | 18 | python decl body at src/requests/help.py:128 body 130 |  |  | 0.634 |
+| walker |  | 3099 | 36 | python decl names surface in src/requests/help.py |  |  | 0.634 |
+| walker |  | 3099 | 0 | python decl at src/requests/help.py:37 |  |  | 0.634 |
+| walker |  | 3099 | 0 | python decl at src/requests/help.py:69 |  |  | 0.634 |
+| walker |  | 3099 | 0 | python decl at src/requests/help.py:128 |  |  | 0.634 |
+| walker |  | 3112 | 13 | python decl doc at src/requests/help.py:69 |  |  | 0.634 |
+| walker |  | 3126 | 14 | python decl doc at src/requests/help.py:128 |  |  | 0.634 |
+| walker |  | 3144 | 18 | python decl body at src/requests/help.py:128 body 130 |  |  | 0.634 |
 | ns | 3345 |  | 256 | Response method/property locations | 4.3 | 4.1 | 0.611 |
 | ns | 3399 |  | 54 | sessions.py module-level roster | 5.1 |  | 0.606 |
+| walker |  | 3458 | 314 | tool.ruff config in pyproject.toml |  |  | 0.606 |
 | ns | 3477 |  | 78 | SessionRedirectMixin method locations | 5.2 | 5.1 | 0.599 |
-| walker |  | 3605 | 314 | tool.ruff config in pyproject.toml |  |  | 0.599 |
-| walker |  | 3655 | 50 | python decl names surface in src/requests/status_codes.py |  |  | 0.600 |
-| walker |  | 3655 | 0 | python decl at src/requests/status_codes.py:109 |  |  | 0.600 |
+| walker |  | 3508 | 50 | python decl names surface in src/requests/status_codes.py |  |  | 0.600 |
+| walker |  | 3508 | 0 | python decl at src/requests/status_codes.py:109 |  |  | 0.600 |
+| walker |  | 3655 | 147 | README.md section #1 |  |  | 0.600 |
 | walker |  | 3681 | 26 | python imports in src/requests/packages.py |  |  | 0.600 |
 | ns | 3683 |  | 206 | Session method locations | 5.4 | 5.1 | 0.583 |
 | walker |  | 3738 | 57 | python decl names surface in src/requests/hooks.py |  |  | 0.584 |
@@ -115,7 +115,7 @@ Score(3000)=0.648 I=0.877 C=0.479 ns_rows≤3K=17/41 (reached=9 partial=0 missin
 | walker |  | 5099 | 58 | python method at src/requests/sessions.py:655 |  |  | 0.560 |
 | ns | 5152 |  | 229 | test_testserver.py + tests/testserver/server.py locations | 6.4 |  | 0.548 |
 | walker |  | 5156 | 57 | python decl doc at src/requests/sessions.py:108 |  |  | 0.548 |
-| walker |  | 5332 | 176 | README.md section #2 |  |  | 0.548 |
+| walker |  | 5332 | 176 | README.md section #3 |  |  | 0.548 |
 | ns | 5361 |  | 209 | test_lowlevel.py locations | 6.5 |  | 0.540 |
 | walker |  | 5366 | 34 | python method doc at src/requests/sessions.py:752 |  |  | 0.540 |
 | walker |  | 5433 | 67 | python decl doc at src/requests/sessions.py:76 |  |  | 0.540 |

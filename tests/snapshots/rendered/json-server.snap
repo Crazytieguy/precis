@@ -204,16 +204,6 @@ pnpm-lock.yaml
 public/
     test.html
 schema.json
-       1→{
-       2→  "$schema": "https://json-schema.org/draft/2020-12/schema",
-       3→  "type": "object",
-       4→  "additionalProperties": {
-       5→    "oneOf": [
-       6→      { "type": "array" },
-       7→      { "type": "object" }
-       8→    ]
-       9→  }
-      10→}
 src/
     adapters/
         normalized-adapter.test.ts

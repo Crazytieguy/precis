@@ -42,7 +42,7 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | ns | 1732 |  | 145 | source/options.ts — Options (intervalCap, interval) | 3.4 | 3.3 | 0.528 |
 | walker |  | 1810 | 81 | json config tsconfig.json |  |  | 0.528 |
 | ns | 1847 |  | 115 | source/options.ts — Options (carryoverIntervalCount) | 3.5 | 3.4 | 0.507 |
-| walker |  | 1857 | 47 | readme.md section #34 |  |  | 0.507 |
+| walker |  | 1857 | 47 | readme.md section #44 |  |  | 0.507 |
 | ns | 2165 |  | 318 | source/options.ts — Options (strict) | 3.6 | 3.5 | 0.481 |
 | walker |  | 2241 | 384 | readme.md section #0 |  |  | 0.502 |
 | walker |  | 2266 | 25 | readme.md section #9 |  |  | 0.502 |
@@ -66,7 +66,7 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | walker |  | 3286 | 73 | readme.md section #10 |  |  | 0.534 |
 | ns | 3314 |  | 382 | source/priority-queue.ts — enqueue (binary insertion) | 3.11 | 3.10 | 0.500 |
 | walker |  | 3321 | 35 | export names surface in source/queue.ts |  |  | 0.502 |
-| walker |  | 3488 | 167 | readme.md section #35 |  |  | 0.502 |
+| walker |  | 3488 | 167 | readme.md section #45 |  |  | 0.502 |
 | ns | 3717 |  | 403 | source/priority-queue.ts — setPriority + remove | 3.12 | 3.11 | 0.476 |
 | ns | 3951 |  | 234 | source/priority-queue.ts — dequeue | 3.13 | 3.10 | 0.461 |
 | ns | 4225 |  | 274 | source/priority-queue.ts — filter/size/#compact | 3.14 | 3.13 | 0.442 |
@@ -79,7 +79,7 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | walker |  | 5073 | 258 | package dev/peer dependencies in package.json |  |  | 0.598 |
 | walker |  | 5128 | 55 | export names surface in source/options.ts |  |  | 0.599 |
 | ns | 5289 |  | 287 | source/index.ts — public member roster (locations) | 4.4 |  | 0.616 |
-| walker |  | 5395 | 267 | readme.md section #32 |  |  | 0.616 |
+| walker |  | 5395 | 267 | readme.md section #36 |  |  | 0.616 |
 | ns | 5575 |  | 286 | source/index.ts — private member roster (locations) | 4.5 |  | 0.600 |
 | ns | 5742 |  | 167 | source/index.ts — constructor (defaults merge) | 4.6 | 4.4 | 0.590 |
 | ns | 6314 |  | 572 | source/index.ts — constructor (validation + field assignment) | 4.7 | 4.6 | 0.567 |
