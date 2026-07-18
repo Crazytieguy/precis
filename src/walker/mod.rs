@@ -442,23 +442,29 @@ pub(crate) fn whole_file_lines_content(file: &Path, source: &str) -> Option<Batc
     single_file_lines_content(file, source, FileLines::new(lines))
 }
 
-/// Whole-file content behind a size gate: FS-metadata byte pre-flight
-/// (skips the read when the size hint alone disqualifies), then a line
-/// cap on the read source. Bytes-per-line multipliers are per-format —
-/// callers keep their own gate constants.
-pub(crate) fn gated_whole_file_content(
-    file: &Path,
-    ctx: &WalkCtx,
-    byte_gate: usize,
-    line_cap: usize,
-) -> Option<BatchContent> {
+/// Cached read behind an FS-metadata byte pre-flight — skips the read
+/// (and returns `None`) when the size hint alone disqualifies the
+/// file. Bytes-per-line multipliers are per-format — callers keep
+/// their own gate constants.
+pub(crate) fn gated_read_source(file: &Path, ctx: &WalkCtx, byte_gate: usize) -> Option<Arc<str>> {
     let byte_len = std::fs::metadata(file)
         .map(|m| m.len() as usize)
         .unwrap_or(usize::MAX);
     if byte_len > byte_gate {
         return None;
     }
-    let source = ctx.read_source(file)?;
+    ctx.read_source(file)
+}
+
+/// Whole-file content behind a size gate: [`gated_read_source`] byte
+/// pre-flight, then a line cap on the read source.
+pub(crate) fn gated_whole_file_content(
+    file: &Path,
+    ctx: &WalkCtx,
+    byte_gate: usize,
+    line_cap: usize,
+) -> Option<BatchContent> {
+    let source = gated_read_source(file, ctx, byte_gate)?;
     let line_count = source.lines().count();
     if line_count == 0 || line_count > line_cap {
         return None;
