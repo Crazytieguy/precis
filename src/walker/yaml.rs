@@ -579,9 +579,8 @@ fn is_root_file(file: &Path, ctx: &WalkCtx) -> bool {
     file.parent().is_some_and(|p| p == ctx.root())
 }
 
-/// True iff `name` matches `docker-compose*.{yml,yaml}` or
-/// `compose*.{yml,yaml}`, case-insensitively. Canonical files and
-/// environment-specific overlays share the same service-topology shape.
+/// True iff `name` has the exact `docker-compose` / `compose` stem, or adds
+/// an environment variant separated by `.` / `-`, case-insensitively.
 fn is_docker_compose_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
     let Some(stem) = lower
@@ -590,7 +589,17 @@ fn is_docker_compose_name(name: &str) -> bool {
     else {
         return false;
     };
-    stem.starts_with("docker-compose") || stem.starts_with("compose")
+    ["docker-compose", "compose"].into_iter().any(|base| {
+        stem == base
+            || stem
+                .strip_prefix(base)
+                .and_then(|suffix| {
+                    suffix
+                        .strip_prefix('.')
+                        .or_else(|| suffix.strip_prefix('-'))
+                })
+                .is_some_and(|variant| !variant.is_empty())
+    })
 }
 
 fn compose_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -664,7 +673,9 @@ mod tests {
             "compose.yaml",
             "Docker-Compose.YML",
             "docker-compose.prod.yml",
+            "docker-compose-prod.yml",
             "compose.override.yaml",
+            "compose-dev.yaml",
         ] {
             assert!(is_docker_compose_name(name), "{name} should match");
         }
@@ -673,6 +684,11 @@ mod tests {
             "ci.yml",
             "pnpm-workspace.yaml",
             "config.yaml",
+            "composer.yml",
+            "composefile.yml",
+            "composed.yaml",
+            "compose-.yml",
+            "docker-compose..yaml",
         ] {
             assert!(!is_docker_compose_name(name), "{name} should not match");
         }

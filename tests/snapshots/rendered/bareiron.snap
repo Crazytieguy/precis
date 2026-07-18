@@ -60,19 +60,20 @@ include/
           16→#define false 0
           18→// TCP port, Minecraft's default is 25565
           19→#define PORT 25565
-        …
+          21→// How many players to keep in memory, NOT the amount of concurrent players
+          22→// Even when offline, players who have logged on before take up a slot
           23→#define MAX_PLAYERS 16
           25→// How many mobs to allocate memory for
           26→#define MAX_MOBS (MAX_PLAYERS)
           28→// Manhattan distance at which mobs despawn
           29→#define MOB_DESPAWN_DISTANCE 256
-          31→// Server game mode: 0 - survival; 1 - creative; 2 - adventure; 3 - spectator
+        …
           32→#define GAMEMODE 0
-          34→// Max render distance, determines how many chunks to send
+        …
           35→#define VIEW_DISTANCE 2
-          37→// Time between server ticks in microseconds (default = 1s)
+        …
           38→#define TIME_BETWEEN_TICKS 1000000
-          40→// Calculated from TIME_BETWEEN_TICKS
+        …
           41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
         …
           45→#define INITIAL_WORLD_SEED 0xA103DE6C
@@ -80,7 +81,7 @@ include/
           49→#define INITIAL_RNG_SEED 0xE2B9419
         …
           53→#define CHUNK_SIZE 8
-          55→// Terrain low point - should start a bit below sea level for rivers/lakes
+        …
           56→#define TERRAIN_BASE_HEIGHT 60
           58→// Cave generation Y level
           59→#define CAVE_BASE_DEPTH 24
@@ -95,9 +96,6 @@ include/
         …
           93→#define DISK_SYNC_INTERVAL 15000000
         …
-         100→// Time in microseconds to spend waiting for data transmission before
-         101→// timing out. Default is 15s, which leaves 5s to prevent starving other
-         102→// clients from Keep Alive packets.
          103→#define NETWORK_TIMEOUT_TIME 15000000
          105→// Size of the receive buffer for incoming string data
          106→#define MAX_RECV_BUF_LEN 256
@@ -201,9 +199,14 @@ include/
            6→#endif
     tools.h
         …
+           4→#include <unistd.h>
+           5→
+           6→#include "globals.h"
            8→static inline int mod_abs (int a, int b) {
+           9→  return ((a % b) + b) % b;
         …
           11→static inline int div_floor (int a, int b) {
+          12→  return a % b < 0 ? (a - b) / b : a / b;
         …
           15→extern uint64_t total_bytes_received;
           16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);

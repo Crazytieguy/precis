@@ -885,7 +885,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     chunk_index,
                     names_chunk_count,
                     chunk_ranges[chunk_index].len(),
-                    configuration_surface,
+                    configuration_surface && configuration_surface_names_chunk_floored(chunk_index),
                 ),
             });
         }
@@ -893,6 +893,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             &mut out,
             names_chunk0_emitted.then(|| names_predecessors[0].clone()),
         );
+        let mut configuration_surface_doc_index = 0;
+        let mut configuration_surface_aggregate_group_index = 0;
         for (decl_index, (node, info)) in decls.iter().enumerate() {
             let names_chunk_index = decl_to_chunk[decl_index];
             let names_predecessor = names_predecessors[names_chunk_index].clone();
@@ -919,11 +921,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: decl_key.clone().into(),
                     predecessor: Some(names_predecessor.clone()),
                     content,
-                    value: decl_value(file, info.kind, ctx, configuration_surface),
+                    value: decl_value(file, info.kind, ctx),
                 });
             }
             let decl_predecessor = BatchKey::C(decl_key);
             if let Some(content) = single_file_lines_content(file, &source, doc_lines) {
+                let eligible_configuration_surface_doc =
+                    configuration_surface && is_configuration_surface_decl_kind(info.kind);
+                let configuration_surface_doc = eligible_configuration_surface_doc
+                    && configuration_surface_doc_floored(configuration_surface_doc_index);
+                if eligible_configuration_surface_doc {
+                    configuration_surface_doc_index += 1;
+                }
                 out.push(Batch {
                     key: CKey::DeclDoc {
                         file: file.clone(),
@@ -932,7 +941,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     .into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
-                    value: decl_doc_value(file, info.kind, ctx, configuration_surface),
+                    value: decl_doc_value(file, info.kind, ctx, configuration_surface_doc),
                 });
             }
             if info.has_body
@@ -956,6 +965,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             for group in &info.member_groups {
                 let lines = FileLines::new(group.rows.clone());
                 if let Some(content) = single_file_lines_content(file, &source, lines) {
+                    let configuration_surface_aggregate_group = configuration_surface
+                        && configuration_surface_aggregate_group_floored(
+                            configuration_surface_aggregate_group_index,
+                        );
+                    if configuration_surface {
+                        configuration_surface_aggregate_group_index += 1;
+                    }
                     out.push(Batch {
                         key: CKey::AggregateMemberGroup {
                             file: file.clone(),
@@ -969,7 +985,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             file,
                             info.kind,
                             ctx,
-                            configuration_surface,
+                            configuration_surface_aggregate_group,
                         ),
                     });
                 }
@@ -2038,12 +2054,41 @@ fn is_known_c_stdlib_stem(stem: &str) -> bool {
 /// placement does not make an application's user-tuned settings secondary.
 const CONFIGURATION_SURFACE_VALUE_FLOOR: f64 = 1250.0;
 
+/// A configuration header may be arbitrarily large, so its role cannot grant
+/// the floor independently to every declaration and descendant batch. Reserve
+/// it for at most the first two names-surface chunks, four leading declaration
+/// docs, and two aggregate member groups: together they expose the header-wide
+/// setting/type roster, a small annotation sample, and bounded structural
+/// detail while keeping the promoted batch count constant as the header grows.
+const CONFIGURATION_SURFACE_FLOORED_NAMES_CHUNKS: usize = 2;
+const CONFIGURATION_SURFACE_FLOORED_DOCS: usize = 4;
+const CONFIGURATION_SURFACE_FLOORED_AGGREGATE_GROUPS: usize = 2;
+
+fn configuration_surface_names_chunk_floored(chunk_index: usize) -> bool {
+    chunk_index < CONFIGURATION_SURFACE_FLOORED_NAMES_CHUNKS
+}
+
+fn configuration_surface_doc_floored(doc_index: usize) -> bool {
+    doc_index < CONFIGURATION_SURFACE_FLOORED_DOCS
+}
+
+fn configuration_surface_aggregate_group_floored(group_index: usize) -> bool {
+    group_index < CONFIGURATION_SURFACE_FLOORED_AGGREGATE_GROUPS
+}
+
 fn configuration_surface_value_floor(value: f64, configuration_surface: bool) -> f64 {
     if configuration_surface {
         value.max(CONFIGURATION_SURFACE_VALUE_FLOOR)
     } else {
         value
     }
+}
+
+fn decl_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
+    let k = kind.kind_weight();
+    let cat = (0.70 * k * header_cat_factor(file)).min(1.0);
+    let fu = (0.85 * k * body_fu_factor(file)).min(1.0);
+    mix_signals(cat, fu, 0.65, c_depth_factor(file, ctx)) * include_centrality_factor(file, ctx)
 }
 
 fn is_configuration_surface_decl_kind(kind: DeclKind) -> bool {
@@ -2053,26 +2098,18 @@ fn is_configuration_surface_decl_kind(kind: DeclKind) -> bool {
     )
 }
 
-fn decl_value(file: &Path, kind: DeclKind, ctx: &WalkCtx, configuration_surface: bool) -> f64 {
-    let k = kind.kind_weight();
-    let cat = (0.70 * k * header_cat_factor(file)).min(1.0);
-    let fu = (0.85 * k * body_fu_factor(file)).min(1.0);
-    let value = mix_signals(cat, fu, 0.65, c_depth_factor(file, ctx))
-        * include_centrality_factor(file, ctx);
-    configuration_surface_value_floor(
-        value,
-        configuration_surface && is_configuration_surface_decl_kind(kind),
-    )
-}
-
-fn decl_doc_value(file: &Path, kind: DeclKind, ctx: &WalkCtx, configuration_surface: bool) -> f64 {
+fn decl_doc_value(
+    file: &Path,
+    kind: DeclKind,
+    ctx: &WalkCtx,
+    configuration_surface_doc: bool,
+) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.20 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.6 * k * body_fu_factor(file)).min(1.0);
-    let value = mix_signals(cat, fu, 0.8, c_depth_factor(file, ctx));
     configuration_surface_value_floor(
-        value,
-        configuration_surface && is_configuration_surface_decl_kind(kind),
+        mix_signals(cat, fu, 0.8, c_depth_factor(file, ctx)),
+        configuration_surface_doc,
     )
 }
 
@@ -2092,14 +2129,16 @@ fn aggregate_member_group_value(
     file: &Path,
     kind: DeclKind,
     ctx: &WalkCtx,
-    configuration_surface: bool,
+    configuration_surface_group: bool,
 ) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.45 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.75 * k * body_fu_factor(file)).min(1.0);
-    let value = mix_signals(cat, fu, 0.45, c_depth_factor(file, ctx))
-        * include_centrality_factor(file, ctx);
-    configuration_surface_value_floor(value, configuration_surface)
+    configuration_surface_value_floor(
+        mix_signals(cat, fu, 0.45, c_depth_factor(file, ctx))
+            * include_centrality_factor(file, ctx),
+        configuration_surface_group,
+    )
 }
 
 // --- parser -------------------------------------------------------------
@@ -2410,6 +2449,22 @@ mod tests {
             macro_minority.push_str(&format!("extern int runtime_state_{i};\n"));
         }
         assert!(!configuration_surface_role("state_api.h", &macro_minority));
+    }
+
+    #[test]
+    fn c_configuration_surface_floor_has_a_fixed_batch_bound() {
+        assert!(configuration_surface_names_chunk_floored(0));
+        assert!(configuration_surface_names_chunk_floored(1));
+        assert!(!configuration_surface_names_chunk_floored(2));
+        assert!(!configuration_surface_names_chunk_floored(usize::MAX));
+        assert!(configuration_surface_doc_floored(0));
+        assert!(configuration_surface_doc_floored(3));
+        assert!(!configuration_surface_doc_floored(4));
+        assert!(!configuration_surface_doc_floored(usize::MAX));
+        assert!(configuration_surface_aggregate_group_floored(0));
+        assert!(configuration_surface_aggregate_group_floored(1));
+        assert!(!configuration_surface_aggregate_group_floored(2));
+        assert!(!configuration_surface_aggregate_group_floored(usize::MAX));
     }
 
     #[test]
