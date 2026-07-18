@@ -506,9 +506,10 @@ fn parse_include_headers(root: &Path) -> Option<HashSet<PathBuf>> {
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, collect_blank_line_groups,
-    collect_doc_comments_above_filtered, dedup_sorted, extend_nonblank_rows, extend_span,
-    file_depth_factor, file_lines_covered_by, node_end_row_trimmed, push_rows, signature_end_row,
-    single_file_lines_content, trim_end_before_next_decl, whole_file_lines_content,
+    collect_doc_comments_above_filtered, comment_only_rows, dedup_sorted, extend_nonblank_rows,
+    extend_span, file_depth_factor, file_lines_covered_by, node_end_row_trimmed, push_rows,
+    signature_end_row, single_file_lines_content, trim_end_before_next_decl,
+    whole_file_lines_content,
 };
 
 /// Fixed-size source-order chunks of `C_DECL_NAMES_CHUNK_SIZE` decls.
@@ -1215,29 +1216,6 @@ fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMe
             })
         })
         .collect()
-}
-
-/// 0-based rows inside `body` whose only content is comment text: rows
-/// touched by a `comment` node and by no non-comment token.
-fn comment_only_rows(body: Node) -> HashSet<usize> {
-    let mut comment_rows = HashSet::new();
-    let mut code_rows = HashSet::new();
-    fn walk(node: Node, comment_rows: &mut HashSet<usize>, code_rows: &mut HashSet<usize>) {
-        if node.kind() == "comment" {
-            comment_rows.extend(node.start_position().row..=node.end_position().row);
-            return;
-        }
-        if node.child_count() == 0 {
-            code_rows.extend(node.start_position().row..=node.end_position().row);
-            return;
-        }
-        let mut cursor = node.walk();
-        for child in node.children(&mut cursor) {
-            walk(child, comment_rows, code_rows);
-        }
-    }
-    walk(body, &mut comment_rows, &mut code_rows);
-    &comment_rows - &code_rows
 }
 
 /// Fixed-size enumerator chunks. Continuation rows of multi-line

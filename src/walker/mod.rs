@@ -835,6 +835,29 @@ pub(crate) fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {
     v
 }
 
+/// 0-based rows inside `body` whose only content is comment text: rows
+/// touched by a `comment` node and by no non-comment token.
+pub(crate) fn comment_only_rows(body: Node) -> HashSet<usize> {
+    let mut comment_rows = HashSet::new();
+    let mut code_rows = HashSet::new();
+    fn walk(node: Node, comment_rows: &mut HashSet<usize>, code_rows: &mut HashSet<usize>) {
+        if node.kind() == "comment" {
+            comment_rows.extend(node.start_position().row..=node.end_position().row);
+            return;
+        }
+        if node.child_count() == 0 {
+            code_rows.extend(node.start_position().row..=node.end_position().row);
+            return;
+        }
+        let mut cursor = node.walk();
+        for child in node.children(&mut cursor) {
+            walk(child, comment_rows, code_rows);
+        }
+    }
+    walk(body, &mut comment_rows, &mut code_rows);
+    &comment_rows - &code_rows
+}
+
 /// Walk the rows strictly between a struct/union body's `{` and `}`,
 /// accumulating non-blank 1-based row numbers into groups separated by
 /// blank source lines. Each returned `(group_start_line, rows)` tuple
