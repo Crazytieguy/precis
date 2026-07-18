@@ -119,25 +119,7 @@ Machine.h
       36→#define MEMORY_MAX ULLONG_MAX
       37→
       38→typedef struct Machine_ {
-      39→   struct Settings_* settings;
     …
-      46→   int64_t iterationsRemaining;
-      48→   #ifdef HAVE_LIBHWLOC
-      49→   hwloc_topology_t topology;
-      50→   bool topologyOk;
-      51→   #endif
-      53→   memory_t totalMem;
-      55→   memory_t totalSwap;
-      56→   memory_t usedSwap;
-      57→   memory_t cachedSwap;
-      59→   unsigned int activeCPUs;
-      60→   unsigned int existingCPUs;
-    …
-      67→   pid_t maxProcessId; /* largest PID seen at runtime */
-      69→   size_t tableCount;
-      70→   Table **tables;
-      71→   Table *activeTable;
-      72→   Table *processTable;
       73→} Machine;
       76→Machine* Machine_new(UsersTable* usersTable, uid_t userId);
       77→
@@ -238,6 +220,10 @@ Process.h
       29→#define PROCESS_NICE_UNKNOWN (-INT_MAX)
       30→
       31→typedef enum Tristate_ {
+      32→   TRI_INITIAL = 0,
+      33→   TRI_OFF = -1,
+      34→   TRI_ON = 1,
+      35→} Tristate;
     …
       41→typedef enum ProcessState_ {
     …
@@ -245,66 +231,20 @@ Process.h
       59→struct Settings_; // IWYU pragma: keep
     …
       63→typedef struct ProcessCmdlineHighlight_ {
+      64→   size_t offset; /* first character to highlight */
+      65→   size_t length; /* How many characters to highlight, zero if unused */
+      66→   int attr;      /* The attributes used to highlight */
+      67→   int flags;     /* Special flags used for selective highlighting, zero for always */
+      68→} ProcessCmdlineHighlight;
     …
       74→typedef struct ProcessMergedCommand_ {
-    …
+      75→   uint64_t lastUpdate;                        /* Marker based on settings->lastUpdate to track when the rendering needs refreshing */
+      76→   char* str;                                  /* merged Command string */
+      77→   size_t highlightCount;                      /* how many portions of cmdline to highlight */
+      78→   ProcessCmdlineHighlight highlights[8];      /* which portions of cmdline to highlight */
+      79→} ProcessMergedCommand;
       81→typedef struct Process_ {
     …
-      83→   Row super;
-    …
-      86→   int pgrp;
-    …
-      89→   int session;
-    …
-      92→   int tpgid;
-    …
-      95→   bool isKernelThread;
-    …
-      98→   bool isUserlandThread;
-    …
-     104→   unsigned long int tty_nr;
-    …
-     107→   char* tty_name;
-    …
-     110→   uid_t st_uid;
-    …
-     113→   const char* user;
-    …
-     120→   Tristate elevated_priv;
-    …
-     123→   unsigned long long int time;
-    …
-     129→   char* cmdline;
-    …
-     138→   char* procComm;
-    …
-     141→   char* procExe;
-    …
-     150→   bool procExeDeleted;
-    …
-     153→   bool usesDeletedLib;
-    …
-     156→   int processor;
-    …
-     159→   float percent_cpu;
-    …
-     162→   float percent_mem;
-    …
-     165→   long int priority;
-    …
-     168→   int nice;
-    …
-     171→   long int nlwp;
-    …
-     180→   long m_virt;
-    …
-     183→   long m_resident;
-    …
-     192→   ProcessState state;
-    …
-     195→   int scheduling_policy;
-    …
-     200→   ProcessMergedCommand mergedCommand;
      201→} Process;
      203→typedef struct ProcessFieldData_ {
     …
@@ -388,6 +328,15 @@ docs/
     understanding-htop-versions.md
 dragonflybsd/
 freebsd/
+    FreeBSDMachine.c
+    FreeBSDMachine.h
+    FreeBSDProcess.c
+    FreeBSDProcess.h
+    FreeBSDProcessTable.c
+    FreeBSDProcessTable.h
+    Platform.c
+    Platform.h
+    ProcessField.h
 generic/
 htop-logo.png
 htop.1.in
@@ -400,13 +349,40 @@ linux/
 m4/
 netbsd/
 openbsd/
+    OpenBSDMachine.c
+    OpenBSDMachine.h
+    OpenBSDProcess.c
+    OpenBSDProcess.h
+    OpenBSDProcessTable.c
+    OpenBSDProcessTable.h
+    Platform.c
+    Platform.h
+    ProcessField.h
 pcp/
 pcp-htop.5.in
 pcp-htop.c
 scripts/
 solaris/
+    Platform.c
+    Platform.h
+    ProcessField.h
+    SolarisMachine.c
+    SolarisMachine.h
+    SolarisProcess.c
+    SolarisProcess.h
+    SolarisProcessTable.c
+    SolarisProcessTable.h
 test_spec.lua
 unsupported/
+    Platform.c
+    Platform.h
+    ProcessField.h
+    UnsupportedMachine.c
+    UnsupportedMachine.h
+    UnsupportedProcess.c
+    UnsupportedProcess.h
+    UnsupportedProcessTable.c
+    UnsupportedProcessTable.h
 zfs/
     ZfsArcMeter.c
     ZfsArcMeter.h

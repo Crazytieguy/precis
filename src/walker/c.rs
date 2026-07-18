@@ -1134,6 +1134,13 @@ const AGGREGATE_STRUCT_MIN_LINES: usize = 30;
 /// Minimum field-groups required for struct/union chunking.
 const AGGREGATE_STRUCT_MIN_GROUPS: usize = 3;
 
+/// Minimum content rows per struct field group. Blank-line-separated
+/// crumbs below this are coalesced with their neighbor: 1-2-line
+/// groups are near-free, so their value/cost ratio queue-jumps and
+/// early budget drains into struct-field confetti that no NS row
+/// wants at that granularity.
+const AGGREGATE_STRUCT_GROUP_MIN_ROWS: usize = 5;
+
 /// Minimum enumerators for enum chunking. Below this, the whole enum
 /// fits in budget as one `Decl` and splitting adds churn.
 const AGGREGATE_ENUM_CHUNK_MIN: usize = 32;
@@ -1201,7 +1208,7 @@ fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMem
 /// dividers) are dropped.
 fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
     let comment_rows = comment_only_rows(body);
-    collect_blank_line_groups(body, source)
+    let groups = collect_blank_line_groups(body, source)
         .into_iter()
         .filter_map(|(_, rows)| {
             let rows: Vec<usize> = rows
@@ -1214,7 +1221,37 @@ fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMe
                 rows,
             })
         })
-        .collect()
+        .collect();
+    coalesce_crumb_groups(groups)
+}
+
+/// Merge adjacent groups so none carries fewer than
+/// [`AGGREGATE_STRUCT_GROUP_MIN_ROWS`] content rows: a still-small
+/// group absorbs the next one until it clears the minimum, and a
+/// trailing crumb folds into its predecessor.
+fn coalesce_crumb_groups(groups: Vec<AggregateMemberGroup>) -> Vec<AggregateMemberGroup> {
+    let mut merged: Vec<AggregateMemberGroup> = Vec::new();
+    for group in groups {
+        match merged.last_mut() {
+            Some(prev) if prev.rows.len() < AGGREGATE_STRUCT_GROUP_MIN_ROWS => {
+                prev.rows.extend(group.rows);
+            }
+            _ => merged.push(group),
+        }
+    }
+    if merged.len() >= 2
+        && merged
+            .last()
+            .is_some_and(|g| g.rows.len() < AGGREGATE_STRUCT_GROUP_MIN_ROWS)
+    {
+        let tail = merged.pop().expect("len checked above");
+        merged
+            .last_mut()
+            .expect("len checked above")
+            .rows
+            .extend(tail.rows);
+    }
+    merged
 }
 
 /// 0-based rows inside `body` whose only content is comment text: rows
@@ -2326,6 +2363,15 @@ typedef int x;
         }
         three_groups.push_str("};\n");
 
+        let mut crumb_groups = String::from("struct Crumbs {\n");
+        for g in 0..15 {
+            for i in 0..2 {
+                crumb_groups.push_str(&format!("  int crumb_{g}_{i};\n"));
+            }
+            crumb_groups.push('\n');
+        }
+        crumb_groups.push_str("};\n");
+
         let mut two_groups = String::from("struct Pair {\n");
         for i in 0..20 {
             two_groups.push_str(&format!("  int a_{i};\n"));
@@ -2357,6 +2403,14 @@ typedef int x;
                 "obj.h",
                 three_groups,
                 3,
+            ),
+            (
+                // htop-style crumb confetti: 15 two-line groups coalesce
+                // (2 -> 4 -> 6 rows, three source groups per batch) into 5
+                // groups of AGGREGATE_STRUCT_GROUP_MIN_ROWS+ rows each.
+                "crumbs.h",
+                crumb_groups,
+                5,
             ),
             (
                 // Two-group struct: below the chunking threshold (3 groups),
