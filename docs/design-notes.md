@@ -610,6 +610,29 @@ evidence):
   Loses the rank-order-miss vs partial-delivery distinction. Revisit
   if iteration shows the single column loses signal.
 
+## Measured-dead, 2026-07-18 codex lanes (specifics block retries)
+
+- **Python body-statement coalescing** (swarm run / nano-vllm
+  generate+step targets): five variants — value-share-conserving
+  merge at 200–350 tok, equal split over fewer units, general
+  coalesced-body keys (−0.0002, swarm −0.011), blank-line boundaries
+  with 700-tok ceiling, coalesced pricing only ≥200-tok units
+  (nano-vllm −0.019) — best exactly neutral. Coalesced bodies still
+  price below the ≤10K frontier: the blocker is the predecessor/value
+  model (1/n-valued body parts under a surface gate), not
+  granularity. A retry needs a value/tier mechanism that lets a
+  known-NS-anchored body win purchase, not another batch shape.
+- **JS/TS private non-class statement recall via reference gate**
+  (svgo resolvePluginConfig target): JS+TS gate −0.001 mean with
+  json-server −0.069; JS-only retune +0.00001 with svgo flat and
+  mixed high-budget regressions. The referenced-private recall class
+  doesn't pay at current pricing; svgo's helper stays absent.
+- **TS full-declaration ≥450 split (all exported decls)**: p-queue
+  −0.058, mean −0.0008 — only the class-surface variant with the
+  export-roster boost survives (shipped). Interface/JSDoc-slice
+  granularity for p-queue remains an open recall gap, not a split
+  problem.
+
 ## Walker / value open items
 
 - **Split-batch invariant: a descendant must not emit Ellipsis records

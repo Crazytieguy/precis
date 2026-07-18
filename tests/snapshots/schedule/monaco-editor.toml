@@ -1,7 +1,7 @@
 fixture = "monaco-editor"
 budget = 10000
-cumulative_tokens = 9987
-batch_count = 260
+cumulative_tokens = 9939
+batch_count = 261
 
 [[batches]]
 position = 1
@@ -975,276 +975,10 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Fs(DirListing { dir: "samples/browser-esm-webpack" })'
-descriptor = "listing of 'samples/browser-esm-webpack'"
-cost_tokens = 25
-cum_tokens = 1969
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-webpack"
-entries = [".gitignore", "dist", "index.html", "index.js", "package.json", "webpack.config.js"]
-
-[[batches]]
-position = 61
-key = 'Json(Identity { file: "samples/browser-esm-webpack/package.json" })'
-descriptor = "package identity in samples/browser-esm-webpack/package.json"
-cost_tokens = 17
-cum_tokens = 1986
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-webpack/package.json"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 62
-key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-monaco-plugin" })'
-descriptor = "listing of 'samples/browser-esm-webpack-monaco-plugin'"
-cost_tokens = 25
-cum_tokens = 2011
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-webpack-monaco-plugin"
-entries = [".gitignore", "dist", "index.html", "index.js", "package.json", "webpack.config.js"]
-
-[[batches]]
-position = 63
-key = 'Json(Identity { file: "samples/browser-esm-webpack-monaco-plugin/package.json" })'
-descriptor = "package identity in samples/browser-esm-webpack-monaco-plugin/package.json"
-cost_tokens = 20
-cum_tokens = 2031
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-webpack-monaco-plugin/package.json"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'Fs(DirListing { dir: "samples/electron-esm-webpack" })'
-descriptor = "listing of 'samples/electron-esm-webpack'"
-cost_tokens = 25
-cum_tokens = 2056
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/electron-esm-webpack"
-entries = [".gitignore", "dist", "index.js", "main.js", "package.json", "webpack.config.js"]
-
-[[batches]]
-position = 65
-key = 'Json(Identity { file: "samples/electron-esm-webpack/package.json" })'
-descriptor = "package identity in samples/electron-esm-webpack/package.json"
-cost_tokens = 17
-cum_tokens = 2073
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/electron-esm-webpack/package.json"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript-react" })'
-descriptor = "listing of 'samples/browser-esm-webpack-typescript-react'"
-cost_tokens = 27
-cum_tokens = 2100
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-webpack-typescript-react"
-entries = [".gitignore", "package-lock.json", "package.json", "src", "tsconfig.json", "webpack.config.js"]
-
-[[batches]]
-position = 67
-key = 'Json(Identity { file: "samples/browser-esm-webpack-typescript-react/package.json" })'
-descriptor = "package identity in samples/browser-esm-webpack-typescript-react/package.json"
-cost_tokens = 20
-cum_tokens = 2120
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-webpack-typescript-react/package.json"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
-key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript-react/src" })'
-descriptor = "listing of 'samples/browser-esm-webpack-typescript-react/src'"
-cost_tokens = 16
-cum_tokens = 2136
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-webpack-typescript-react/src"
-entries = ["components", "index.css", "index.html", "index.tsx"]
-
-[[batches]]
-position = 69
-key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript-react/src/components" })'
-descriptor = "listing of 'samples/browser-esm-webpack-typescript-react/src/components'"
-cost_tokens = 5
-cum_tokens = 2141
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-webpack-typescript-react/src/components"
-entries = ["Editor.tsx"]
-
-[[batches]]
-position = 70
-key = 'Fs(DirListing { dir: "samples/browser-esm-vite-react" })'
-descriptor = "listing of 'samples/browser-esm-vite-react'"
-cost_tokens = 31
-cum_tokens = 2172
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-vite-react"
-entries = [".gitignore", "index.html", "package-lock.json", "package.json", "src", "tsconfig.json", "vite.config.ts"]
-
-[[batches]]
-position = 71
-key = 'Json(Identity { file: "samples/browser-esm-vite-react/package.json" })'
-descriptor = "package identity in samples/browser-esm-vite-react/package.json"
-cost_tokens = 19
-cum_tokens = 2191
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-vite-react/package.json"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'Fs(DirListing { dir: "samples/browser-esm-vite-react/src" })'
-descriptor = "listing of 'samples/browser-esm-vite-react/src'"
-cost_tokens = 19
-cum_tokens = 2210
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-vite-react/src"
-entries = ["components", "main.tsx", "userWorker.ts", "vite-env.d.ts"]
-
-[[batches]]
-position = 73
-key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-small" })'
-descriptor = "listing of 'samples/browser-esm-webpack-small'"
-cost_tokens = 31
-cum_tokens = 2241
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-webpack-small"
-entries = [".gitignore", "dist", "generate-imports.js", "index.html", "index.js", "package.json", "webpack.config.js"]
-
-[[batches]]
-position = 74
-key = 'Json(Identity { file: "samples/browser-esm-webpack-small/package.json" })'
-descriptor = "package identity in samples/browser-esm-webpack-small/package.json"
-cost_tokens = 18
-cum_tokens = 2259
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-webpack-small/package.json"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
-key = 'Fs(DirListing { dir: "samples/browser-esm-vite-react/src/components" })'
-descriptor = "listing of 'samples/browser-esm-vite-react/src/components'"
-cost_tokens = 10
-cum_tokens = 2269
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "samples/browser-esm-vite-react/src/components"
-entries = ["Editor.module.css", "Editor.tsx"]
-
-[[batches]]
-position = 76
-key = 'Json(IdentityMeta { file: "samples/package.json" })'
-descriptor = "package identity metadata in samples/package.json"
-cost_tokens = 12
-cum_tokens = 2281
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/package.json"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
 key = 'Json(Entry { file: "samples/package.json" })'
 descriptor = "package entrypoints in samples/package.json"
 cost_tokens = 12
-cum_tokens = 2293
+cum_tokens = 1956
 
 [batches.content]
 kind = "lines"
@@ -1258,11 +992,259 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 78
+position = 61
+key = 'Fs(DirListing { dir: "samples/browser-esm-webpack" })'
+descriptor = "listing of 'samples/browser-esm-webpack'"
+cost_tokens = 25
+cum_tokens = 1981
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-webpack"
+entries = [".gitignore", "dist", "index.html", "index.js", "package.json", "webpack.config.js"]
+
+[[batches]]
+position = 62
+key = 'Json(Identity { file: "samples/browser-esm-webpack/package.json" })'
+descriptor = "package identity in samples/browser-esm-webpack/package.json"
+cost_tokens = 17
+cum_tokens = 1998
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-webpack/package.json"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-monaco-plugin" })'
+descriptor = "listing of 'samples/browser-esm-webpack-monaco-plugin'"
+cost_tokens = 25
+cum_tokens = 2023
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-webpack-monaco-plugin"
+entries = [".gitignore", "dist", "index.html", "index.js", "package.json", "webpack.config.js"]
+
+[[batches]]
+position = 64
+key = 'Json(Identity { file: "samples/browser-esm-webpack-monaco-plugin/package.json" })'
+descriptor = "package identity in samples/browser-esm-webpack-monaco-plugin/package.json"
+cost_tokens = 20
+cum_tokens = 2043
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-webpack-monaco-plugin/package.json"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Fs(DirListing { dir: "samples/electron-esm-webpack" })'
+descriptor = "listing of 'samples/electron-esm-webpack'"
+cost_tokens = 25
+cum_tokens = 2068
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/electron-esm-webpack"
+entries = [".gitignore", "dist", "index.js", "main.js", "package.json", "webpack.config.js"]
+
+[[batches]]
+position = 66
+key = 'Json(Identity { file: "samples/electron-esm-webpack/package.json" })'
+descriptor = "package identity in samples/electron-esm-webpack/package.json"
+cost_tokens = 17
+cum_tokens = 2085
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/electron-esm-webpack/package.json"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript-react" })'
+descriptor = "listing of 'samples/browser-esm-webpack-typescript-react'"
+cost_tokens = 27
+cum_tokens = 2112
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-webpack-typescript-react"
+entries = [".gitignore", "package-lock.json", "package.json", "src", "tsconfig.json", "webpack.config.js"]
+
+[[batches]]
+position = 68
+key = 'Json(Identity { file: "samples/browser-esm-webpack-typescript-react/package.json" })'
+descriptor = "package identity in samples/browser-esm-webpack-typescript-react/package.json"
+cost_tokens = 20
+cum_tokens = 2132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-webpack-typescript-react/package.json"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript-react/src" })'
+descriptor = "listing of 'samples/browser-esm-webpack-typescript-react/src'"
+cost_tokens = 16
+cum_tokens = 2148
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-webpack-typescript-react/src"
+entries = ["components", "index.css", "index.html", "index.tsx"]
+
+[[batches]]
+position = 70
+key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-typescript-react/src/components" })'
+descriptor = "listing of 'samples/browser-esm-webpack-typescript-react/src/components'"
+cost_tokens = 5
+cum_tokens = 2153
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-webpack-typescript-react/src/components"
+entries = ["Editor.tsx"]
+
+[[batches]]
+position = 71
+key = 'Fs(DirListing { dir: "samples/browser-esm-vite-react" })'
+descriptor = "listing of 'samples/browser-esm-vite-react'"
+cost_tokens = 31
+cum_tokens = 2184
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-vite-react"
+entries = [".gitignore", "index.html", "package-lock.json", "package.json", "src", "tsconfig.json", "vite.config.ts"]
+
+[[batches]]
+position = 72
+key = 'Json(Identity { file: "samples/browser-esm-vite-react/package.json" })'
+descriptor = "package identity in samples/browser-esm-vite-react/package.json"
+cost_tokens = 19
+cum_tokens = 2203
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-vite-react/package.json"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Fs(DirListing { dir: "samples/browser-esm-vite-react/src" })'
+descriptor = "listing of 'samples/browser-esm-vite-react/src'"
+cost_tokens = 19
+cum_tokens = 2222
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-vite-react/src"
+entries = ["components", "main.tsx", "userWorker.ts", "vite-env.d.ts"]
+
+[[batches]]
+position = 74
+key = 'Fs(DirListing { dir: "samples/browser-esm-webpack-small" })'
+descriptor = "listing of 'samples/browser-esm-webpack-small'"
+cost_tokens = 31
+cum_tokens = 2253
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-webpack-small"
+entries = [".gitignore", "dist", "generate-imports.js", "index.html", "index.js", "package.json", "webpack.config.js"]
+
+[[batches]]
+position = 75
+key = 'Json(Identity { file: "samples/browser-esm-webpack-small/package.json" })'
+descriptor = "package identity in samples/browser-esm-webpack-small/package.json"
+cost_tokens = 18
+cum_tokens = 2271
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-webpack-small/package.json"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Fs(DirListing { dir: "samples/browser-esm-vite-react/src/components" })'
+descriptor = "listing of 'samples/browser-esm-vite-react/src/components'"
+cost_tokens = 10
+cum_tokens = 2281
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "samples/browser-esm-vite-react/src/components"
+entries = ["Editor.module.css", "Editor.tsx"]
+
+[[batches]]
+position = 77
 key = 'Json(Scripts { file: "samples/package.json" })'
 descriptor = "package scripts in samples/package.json"
-cost_tokens = 37
-cum_tokens = 2330
+cost_tokens = 39
+cum_tokens = 2320
 
 [batches.content]
 kind = "lines"
@@ -1271,6 +1253,24 @@ kind = "lines"
 path = "samples/package.json"
 start = 7
 end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Json(IdentityMeta { file: "samples/package.json" })'
+descriptor = "package identity metadata in samples/package.json"
+cost_tokens = 10
+cum_tokens = 2330
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/package.json"
+start = 10
+end = 10
 
 [batches.content.spans.render]
 kind = "full"
@@ -1437,10 +1437,28 @@ kind = "full"
 
 [[batches]]
 position = 85
+key = 'Json(Entry { file: "webpack-plugin/package.json" })'
+descriptor = "package entrypoints in webpack-plugin/package.json"
+cost_tokens = 28
+cum_tokens = 2497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/package.json"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
 key = 'Markdown(HeadingsOutline { file: "webpack-plugin/README.md" })'
 descriptor = "headings outline in webpack-plugin/README.md"
 cost_tokens = 45
-cum_tokens = 2514
+cum_tokens = 2542
 
 [batches.content]
 kind = "lines"
@@ -1526,11 +1544,11 @@ end = 105
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Typescript(ExportNames { file: "monaco-lsp-client/src/index.ts" })'
 descriptor = "export names surface in monaco-lsp-client/src/index.ts"
 cost_tokens = 28
-cum_tokens = 2542
+cum_tokens = 2570
 
 [batches.content]
 kind = "lines"
@@ -1544,11 +1562,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Typescript(ExportNames { file: "src/languages/features/register.all.ts" })'
 descriptor = "export names surface in src/languages/features/register.all.ts"
 cost_tokens = 17
-cum_tokens = 2559
+cum_tokens = 2587
 
 [batches.content]
 kind = "lines"
@@ -1562,11 +1580,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 20
-cum_tokens = 2579
+cum_tokens = 2607
 
 [batches.content]
 kind = "fs"
@@ -1576,11 +1594,11 @@ parent = ".github"
 entries = ["ISSUE_TEMPLATE", "commands.json", "publish-failure-issue-template.md", "workflows"]
 
 [[batches]]
-position = 89
+position = 90
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 2587
+cum_tokens = 2615
 
 [batches.content]
 kind = "fs"
@@ -1590,11 +1608,11 @@ parent = ".github/workflows"
 entries = ["ci.yml", "website.yml"]
 
 [[batches]]
-position = 90
+position = 91
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 146
-cum_tokens = 2733
+cum_tokens = 2761
 
 [batches.content]
 kind = "lines"
@@ -1840,11 +1858,11 @@ end = 122
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 44
-cum_tokens = 2777
+cum_tokens = 2805
 
 [batches.content]
 kind = "lines"
@@ -1858,11 +1876,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Fs(DirListing { dir: "monaco-lsp-client/src/adapters" })'
 descriptor = "listing of 'monaco-lsp-client/src/adapters'"
 cost_tokens = 37
-cum_tokens = 2814
+cum_tokens = 2842
 
 [batches.content]
 kind = "fs"
@@ -1872,11 +1890,11 @@ parent = "monaco-lsp-client/src/adapters"
 entries = ["ITextModelBridge.ts", "LspCapabilitiesRegistry.ts", "LspClient.ts", "LspConnection.ts", "TextDocumentSynchronizer.ts", "languageFeatures"]
 
 [[batches]]
-position = 93
+position = 94
 key = 'Markdown(Section { file: "webpack-plugin/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "webpack-plugin/README.md section #1"
 cost_tokens = 28
-cum_tokens = 2842
+cum_tokens = 2870
 
 [batches.content]
 kind = "lines"
@@ -1890,11 +1908,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Fs(DirListing { dir: "samples/legacy" })'
 descriptor = "listing of 'samples/legacy'"
 cost_tokens = 82
-cum_tokens = 2924
+cum_tokens = 2952
 
 [batches.content]
 kind = "fs"
@@ -1904,11 +1922,11 @@ parent = "samples/legacy"
 entries = ["README.md", "browser-amd-diff-editor", "browser-amd-editor", "browser-amd-iframe", "browser-amd-localized", "browser-amd-monarch", "browser-amd-requirejs", "browser-amd-shadow-dom", "browser-amd-shared-model", "browser-amd-trusted-types", "electron-amd", "electron-amd-nodeIntegration"]
 
 [[batches]]
-position = 95
+position = 96
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-editor" })'
 descriptor = "listing of 'samples/legacy/browser-amd-editor'"
 cost_tokens = 4
-cum_tokens = 2928
+cum_tokens = 2956
 
 [batches.content]
 kind = "fs"
@@ -1918,11 +1936,11 @@ parent = "samples/legacy/browser-amd-editor"
 entries = ["index.html"]
 
 [[batches]]
-position = 96
+position = 97
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-localized" })'
 descriptor = "listing of 'samples/legacy/browser-amd-localized'"
 cost_tokens = 4
-cum_tokens = 2932
+cum_tokens = 2960
 
 [batches.content]
 kind = "fs"
@@ -1932,11 +1950,11 @@ parent = "samples/legacy/browser-amd-localized"
 entries = ["index.html"]
 
 [[batches]]
-position = 97
+position = 98
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-monarch" })'
 descriptor = "listing of 'samples/legacy/browser-amd-monarch'"
 cost_tokens = 4
-cum_tokens = 2936
+cum_tokens = 2964
 
 [batches.content]
 kind = "fs"
@@ -1946,11 +1964,11 @@ parent = "samples/legacy/browser-amd-monarch"
 entries = ["index.html"]
 
 [[batches]]
-position = 98
+position = 99
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-requirejs" })'
 descriptor = "listing of 'samples/legacy/browser-amd-requirejs'"
 cost_tokens = 4
-cum_tokens = 2940
+cum_tokens = 2968
 
 [batches.content]
 kind = "fs"
@@ -1960,11 +1978,11 @@ parent = "samples/legacy/browser-amd-requirejs"
 entries = ["index.html"]
 
 [[batches]]
-position = 99
+position = 100
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-shadow-dom" })'
 descriptor = "listing of 'samples/legacy/browser-amd-shadow-dom'"
 cost_tokens = 4
-cum_tokens = 2944
+cum_tokens = 2972
 
 [batches.content]
 kind = "fs"
@@ -1974,11 +1992,11 @@ parent = "samples/legacy/browser-amd-shadow-dom"
 entries = ["index.html"]
 
 [[batches]]
-position = 100
+position = 101
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-shared-model" })'
 descriptor = "listing of 'samples/legacy/browser-amd-shared-model'"
 cost_tokens = 4
-cum_tokens = 2948
+cum_tokens = 2976
 
 [batches.content]
 kind = "fs"
@@ -1988,11 +2006,11 @@ parent = "samples/legacy/browser-amd-shared-model"
 entries = ["index.html"]
 
 [[batches]]
-position = 101
+position = 102
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-trusted-types" })'
 descriptor = "listing of 'samples/legacy/browser-amd-trusted-types'"
 cost_tokens = 4
-cum_tokens = 2952
+cum_tokens = 2980
 
 [batches.content]
 kind = "fs"
@@ -2002,11 +2020,11 @@ parent = "samples/legacy/browser-amd-trusted-types"
 entries = ["index.html"]
 
 [[batches]]
-position = 102
+position = 103
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-iframe" })'
 descriptor = "listing of 'samples/legacy/browser-amd-iframe'"
 cost_tokens = 8
-cum_tokens = 2960
+cum_tokens = 2988
 
 [batches.content]
 kind = "fs"
@@ -2016,11 +2034,11 @@ parent = "samples/legacy/browser-amd-iframe"
 entries = ["index.html", "inner.html"]
 
 [[batches]]
-position = 103
+position = 104
 key = 'Fs(DirListing { dir: "samples/legacy/browser-amd-diff-editor" })'
 descriptor = "listing of 'samples/legacy/browser-amd-diff-editor'"
 cost_tokens = 12
-cum_tokens = 2972
+cum_tokens = 3000
 
 [batches.content]
 kind = "fs"
@@ -2030,11 +2048,11 @@ parent = "samples/legacy/browser-amd-diff-editor"
 entries = ["index.html", "modified.txt", "original.txt"]
 
 [[batches]]
-position = 104
+position = 105
 key = 'Fs(DirListing { dir: "samples/legacy/electron-amd" })'
 descriptor = "listing of 'samples/legacy/electron-amd'"
 cost_tokens = 17
-cum_tokens = 2989
+cum_tokens = 3017
 
 [batches.content]
 kind = "fs"
@@ -2044,11 +2062,11 @@ parent = "samples/legacy/electron-amd"
 entries = ["electron-index.html", "index.html", "main.js", "package.json"]
 
 [[batches]]
-position = 105
+position = 106
 key = 'Json(Identity { file: "samples/legacy/electron-amd/package.json" })'
 descriptor = "package identity in samples/legacy/electron-amd/package.json"
 cost_tokens = 16
-cum_tokens = 3005
+cum_tokens = 3033
 
 [batches.content]
 kind = "lines"
@@ -2062,11 +2080,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Fs(DirListing { dir: "samples/legacy/electron-amd-nodeIntegration" })'
 descriptor = "listing of 'samples/legacy/electron-amd-nodeIntegration'"
 cost_tokens = 17
-cum_tokens = 3022
+cum_tokens = 3050
 
 [batches.content]
 kind = "fs"
@@ -2076,11 +2094,11 @@ parent = "samples/legacy/electron-amd-nodeIntegration"
 entries = ["electron-index.html", "index.html", "main.js", "package.json"]
 
 [[batches]]
-position = 107
+position = 108
 key = 'Json(Identity { file: "samples/legacy/electron-amd-nodeIntegration/package.json" })'
 descriptor = "package identity in samples/legacy/electron-amd-nodeIntegration/package.json"
 cost_tokens = 19
-cum_tokens = 3041
+cum_tokens = 3069
 
 [batches.content]
 kind = "lines"
@@ -2094,11 +2112,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Json(Entry { file: "samples/legacy/electron-amd/package.json" })'
 descriptor = "package entrypoints in samples/legacy/electron-amd/package.json"
 cost_tokens = 13
-cum_tokens = 3054
+cum_tokens = 3082
 
 [batches.content]
 kind = "lines"
@@ -2112,11 +2130,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Json(Entry { file: "samples/legacy/electron-amd-nodeIntegration/package.json" })'
 descriptor = "package entrypoints in samples/legacy/electron-amd-nodeIntegration/package.json"
 cost_tokens = 13
-cum_tokens = 3067
+cum_tokens = 3095
 
 [batches.content]
 kind = "lines"
@@ -2130,11 +2148,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Markdown(HeadingsOutline { file: "docs/integrate-esm.md" })'
 descriptor = "headings outline in docs/integrate-esm.md"
 cost_tokens = 83
-cum_tokens = 3150
+cum_tokens = 3178
 
 [batches.content]
 kind = "lines"
@@ -2236,11 +2254,11 @@ end = 190
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 30
-cum_tokens = 3180
+cum_tokens = 3208
 
 [batches.content]
 kind = "lines"
@@ -2254,11 +2272,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 78
-cum_tokens = 3258
+cum_tokens = 3286
 
 [batches.content]
 kind = "lines"
@@ -2280,11 +2298,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Typescript(Imports { file: "src/index.ts" })'
 descriptor = "imports in src/index.ts"
 cost_tokens = 77
-cum_tokens = 3335
+cum_tokens = 3363
 
 [batches.content]
 kind = "lines"
@@ -2306,11 +2324,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Json(Scripts { file: "samples/browser-esm-esbuild/package.json" })'
 descriptor = "package scripts in samples/browser-esm-esbuild/package.json"
 cost_tokens = 30
-cum_tokens = 3365
+cum_tokens = 3393
 
 [batches.content]
 kind = "lines"
@@ -2324,11 +2342,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 46
-cum_tokens = 3411
+cum_tokens = 3439
 
 [batches.content]
 kind = "lines"
@@ -2342,11 +2360,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Json(Scripts { file: "samples/browser-esm-parcel/package.json" })'
 descriptor = "package scripts in samples/browser-esm-parcel/package.json"
 cost_tokens = 31
-cum_tokens = 3442
+cum_tokens = 3470
 
 [batches.content]
 kind = "lines"
@@ -2360,11 +2378,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Typescript(Imports { file: "src/editor.ts" })'
 descriptor = "imports in src/editor.ts"
 cost_tokens = 20
-cum_tokens = 3462
+cum_tokens = 3490
 
 [batches.content]
 kind = "lines"
@@ -2378,11 +2396,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 166
-cum_tokens = 3628
+cum_tokens = 3656
 
 [batches.content]
 kind = "lines"
@@ -2396,11 +2414,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Fs(DirListing { dir: "scripts/ci" })'
 descriptor = "listing of 'scripts/ci'"
 cost_tokens = 23
-cum_tokens = 3651
+cum_tokens = 3679
 
 [batches.content]
 kind = "fs"
@@ -2410,11 +2428,11 @@ parent = "scripts/ci"
 entries = ["build-monaco-editor-core-pkg.ts", "build-monaco-editor-pkg.ts", "env.ts"]
 
 [[batches]]
-position = 120
+position = 121
 key = 'Typescript(ModuleItem { file: "webpack-plugin/src/index.ts", start_line: 159 })'
 descriptor = "module item at webpack-plugin/src/index.ts:159"
 cost_tokens = 79
-cum_tokens = 3730
+cum_tokens = 3758
 
 [batches.content]
 kind = "lines"
@@ -2452,11 +2470,11 @@ end = 178
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 202 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 202"
 cost_tokens = 15
-cum_tokens = 3745
+cum_tokens = 3773
 
 [batches.content]
 kind = "lines"
@@ -2470,11 +2488,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 203 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 203"
 cost_tokens = 13
-cum_tokens = 3758
+cum_tokens = 3786
 
 [batches.content]
 kind = "lines"
@@ -2488,11 +2506,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 181 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 181"
 cost_tokens = 17
-cum_tokens = 3775
+cum_tokens = 3803
 
 [batches.content]
 kind = "lines"
@@ -2506,11 +2524,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 179 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 179"
 cost_tokens = 19
-cum_tokens = 3794
+cum_tokens = 3822
 
 [batches.content]
 kind = "lines"
@@ -2524,11 +2542,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 180 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 180"
 cost_tokens = 17
-cum_tokens = 3811
+cum_tokens = 3839
 
 [batches.content]
 kind = "lines"
@@ -2542,11 +2560,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 201 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 201"
 cost_tokens = 22
-cum_tokens = 3833
+cum_tokens = 3861
 
 [batches.content]
 kind = "lines"
@@ -2560,11 +2578,11 @@ end = 201
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Fs(DirListing { dir: "website" })'
 descriptor = "listing of 'website'"
 cost_tokens = 60
-cum_tokens = 3893
+cum_tokens = 3921
 
 [batches.content]
 kind = "fs"
@@ -2574,11 +2592,11 @@ parent = "website"
 entries = [".gitignore", ".prettierrc.json", "index", "package-lock.json", "package.json", "scripts", "src", "static", "tsconfig.json", "tslint.json", "typedoc", "vscode-web-editors.tgz", "webpack.config.ts"]
 
 [[batches]]
-position = 128
+position = 129
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #17"
 cost_tokens = 43
-cum_tokens = 3936
+cum_tokens = 3964
 
 [batches.content]
 kind = "lines"
@@ -2592,11 +2610,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 80
-cum_tokens = 4016
+cum_tokens = 4044
 
 [batches.content]
 kind = "lines"
@@ -2610,11 +2628,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Fs(DirListing { dir: "src/languages/features/typescript/lib" })'
 descriptor = "listing of 'src/languages/features/typescript/lib'"
 cost_tokens = 35
-cum_tokens = 4051
+cum_tokens = 4079
 
 [batches.content]
 kind = "fs"
@@ -2624,11 +2642,29 @@ parent = "src/languages/features/typescript/lib"
 entries = ["editor.worker.d.ts", "lib.index.ts", "lib.ts", "typescriptServices.d.ts", "typescriptServices.js", "typescriptServicesMetadata.ts"]
 
 [[batches]]
-position = 131
+position = 132
+key = 'Json(Scripts { file: "webpack-plugin/package.json" })'
+descriptor = "package scripts in webpack-plugin/package.json"
+cost_tokens = 69
+cum_tokens = 4148
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/package.json"
+start = 7
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
 key = 'Fs(DirListing { dir: "website/src" })'
 descriptor = "listing of 'website/src'"
 cost_tokens = 26
-cum_tokens = 4077
+cum_tokens = 4174
 
 [batches.content]
 kind = "fs"
@@ -2638,11 +2674,11 @@ parent = "website/src"
 entries = ["monaco-loader.ts", "runner", "shared.ts", "tsconfig.json", "types.d.ts", "website"]
 
 [[batches]]
-position = 132
+position = 134
 key = 'Fs(DirListing { dir: "website/src/runner" })'
 descriptor = "listing of 'website/src/runner'"
 cost_tokens = 12
-cum_tokens = 4089
+cum_tokens = 4186
 
 [batches.content]
 kind = "fs"
@@ -2652,11 +2688,11 @@ parent = "website/src/runner"
 entries = ["debug.ts", "index.ts", "style.scss"]
 
 [[batches]]
-position = 133
+position = 135
 key = 'Json(Scripts { file: "samples/browser-esm-webpack/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack/package.json"
 cost_tokens = 38
-cum_tokens = 4127
+cum_tokens = 4224
 
 [batches.content]
 kind = "lines"
@@ -2670,11 +2706,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 134
+position = 136
 key = 'Json(Scripts { file: "samples/browser-esm-webpack-monaco-plugin/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack-monaco-plugin/package.json"
 cost_tokens = 38
-cum_tokens = 4165
+cum_tokens = 4262
 
 [batches.content]
 kind = "lines"
@@ -2688,11 +2724,29 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 135
+position = 137
+key = 'Json(Dependencies { file: "samples/package.json" })'
+descriptor = "package runtime dependencies in samples/package.json"
+cost_tokens = 36
+cum_tokens = 4298
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/package.json"
+start = 29
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
 key = 'Json(Scripts { file: "monaco-lsp-client/package.json" })'
 descriptor = "package scripts in monaco-lsp-client/package.json"
 cost_tokens = 82
-cum_tokens = 4247
+cum_tokens = 4380
 
 [batches.content]
 kind = "lines"
@@ -2706,11 +2760,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 136
+position = 139
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/integrate-esm.md section #6"
 cost_tokens = 5
-cum_tokens = 4252
+cum_tokens = 4385
 
 [batches.content]
 kind = "lines"
@@ -2724,11 +2778,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 137
+position = 140
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/integrate-esm.md section #11"
 cost_tokens = 5
-cum_tokens = 4257
+cum_tokens = 4390
 
 [batches.content]
 kind = "lines"
@@ -2742,11 +2796,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 138
+position = 141
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/integrate-esm.md section #19"
 cost_tokens = 5
-cum_tokens = 4262
+cum_tokens = 4395
 
 [batches.content]
 kind = "lines"
@@ -2760,11 +2814,11 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 139
+position = 142
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 178 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 178"
 cost_tokens = 26
-cum_tokens = 4288
+cum_tokens = 4421
 
 [batches.content]
 kind = "lines"
@@ -2778,11 +2832,65 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 140
+position = 143
+key = 'Json(Dependencies { file: "samples/browser-esm-vite/package.json" })'
+descriptor = "package runtime dependencies in samples/browser-esm-vite/package.json"
+cost_tokens = 11
+cum_tokens = 4432
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-vite/package.json"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Json(Dependencies { file: "samples/browser-esm-vite-react/package.json" })'
+descriptor = "package runtime dependencies in samples/browser-esm-vite-react/package.json"
+cost_tokens = 11
+cum_tokens = 4443
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-vite-react/package.json"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Json(Dependencies { file: "samples/browser-esm-webpack-typescript-react/package.json" })'
+descriptor = "package runtime dependencies in samples/browser-esm-webpack-typescript-react/package.json"
+cost_tokens = 11
+cum_tokens = 4454
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-webpack-typescript-react/package.json"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
 key = 'Json(Scripts { file: "samples/browser-esm-vite/package.json" })'
 descriptor = "package scripts in samples/browser-esm-vite/package.json"
-cost_tokens = 56
-cum_tokens = 4344
+cost_tokens = 54
+cum_tokens = 4508
 
 [batches.content]
 kind = "lines"
@@ -2796,11 +2904,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 141
+position = 147
 key = 'Json(Scripts { file: "samples/browser-esm-webpack-small/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack-small/package.json"
 cost_tokens = 56
-cum_tokens = 4400
+cum_tokens = 4564
 
 [batches.content]
 kind = "lines"
@@ -2814,11 +2922,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 142
+position = 148
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #19"
 cost_tokens = 59
-cum_tokens = 4459
+cum_tokens = 4623
 
 [batches.content]
 kind = "lines"
@@ -2832,11 +2940,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 143
+position = 149
 key = 'Json(Scripts { file: "samples/legacy/electron-amd/package.json" })'
 descriptor = "package scripts in samples/legacy/electron-amd/package.json"
 cost_tokens = 34
-cum_tokens = 4493
+cum_tokens = 4657
 
 [batches.content]
 kind = "lines"
@@ -2850,11 +2958,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 144
+position = 150
 key = 'Json(Scripts { file: "samples/legacy/electron-amd-nodeIntegration/package.json" })'
 descriptor = "package scripts in samples/legacy/electron-amd-nodeIntegration/package.json"
 cost_tokens = 34
-cum_tokens = 4527
+cum_tokens = 4691
 
 [batches.content]
 kind = "lines"
@@ -2868,11 +2976,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 145
+position = 151
 key = 'Markdown(Section { file: "MAINTAINING.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "MAINTAINING.md section #0"
 cost_tokens = 110
-cum_tokens = 4637
+cum_tokens = 4801
 
 [batches.content]
 kind = "lines"
@@ -2886,11 +2994,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 146
+position = 152
 key = 'Json(Scripts { file: "samples/electron-esm-webpack/package.json" })'
 descriptor = "package scripts in samples/electron-esm-webpack/package.json"
 cost_tokens = 59
-cum_tokens = 4696
+cum_tokens = 4860
 
 [batches.content]
 kind = "lines"
@@ -2904,11 +3012,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 147
+position = 153
 key = 'Typescript(ModuleItem { file: "monaco-lsp-client/generator/index.ts", start_line: 7 })'
 descriptor = "module item at monaco-lsp-client/generator/index.ts:7"
 cost_tokens = 151
-cum_tokens = 4847
+cum_tokens = 5011
 
 [batches.content]
 kind = "lines"
@@ -3018,11 +3126,11 @@ end = 65
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 154
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 42 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 42"
 cost_tokens = 10
-cum_tokens = 4857
+cum_tokens = 5021
 
 [batches.content]
 kind = "lines"
@@ -3036,11 +3144,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 149
+position = 155
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 58 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 58"
 cost_tokens = 12
-cum_tokens = 4869
+cum_tokens = 5033
 
 [batches.content]
 kind = "lines"
@@ -3054,11 +3162,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 150
+position = 156
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 65 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 65"
 cost_tokens = 22
-cum_tokens = 4891
+cum_tokens = 5055
 
 [batches.content]
 kind = "lines"
@@ -3072,11 +3180,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 151
+position = 157
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 49 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 49"
 cost_tokens = 33
-cum_tokens = 4924
+cum_tokens = 5088
 
 [batches.content]
 kind = "lines"
@@ -3090,11 +3198,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 152
+position = 158
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 16 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 16"
 cost_tokens = 59
-cum_tokens = 4983
+cum_tokens = 5147
 
 [batches.content]
 kind = "lines"
@@ -3108,11 +3216,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 153
+position = 159
 key = 'Typescript(Imports { file: "monaco-lsp-client/generator/index.ts" })'
 descriptor = "imports in monaco-lsp-client/generator/index.ts"
 cost_tokens = 22
-cum_tokens = 5005
+cum_tokens = 5169
 
 [batches.content]
 kind = "lines"
@@ -3126,11 +3234,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 154
+position = 160
 key = 'Json(Scripts { file: "samples/browser-esm-webpack-typescript/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack-typescript/package.json"
 cost_tokens = 63
-cum_tokens = 5068
+cum_tokens = 5232
 
 [batches.content]
 kind = "lines"
@@ -3144,11 +3252,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 155
+position = 161
 key = 'Typescript(ExportNames { file: "src/deprecated/editor/editor.worker.ts" })'
 descriptor = "export names surface in src/deprecated/editor/editor.worker.ts"
 cost_tokens = 10
-cum_tokens = 5078
+cum_tokens = 5242
 
 [batches.content]
 kind = "lines"
@@ -3162,29 +3270,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 156
-key = 'Json(Scripts { file: "package.json" })'
-descriptor = "package scripts in package.json"
-cost_tokens = 647
-cum_tokens = 5725
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 10
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
+position = 162
 key = 'Json(Scripts { file: "samples/browser-esm-webpack-typescript-react/package.json" })'
 descriptor = "package scripts in samples/browser-esm-webpack-typescript-react/package.json"
-cost_tokens = 68
-cum_tokens = 5793
+cost_tokens = 66
+cum_tokens = 5308
 
 [batches.content]
 kind = "lines"
@@ -3198,11 +3288,29 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 158
+position = 163
+key = 'Json(Scripts { file: "package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 647
+cum_tokens = 5955
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 10
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
 key = 'Typescript(Imports { file: "samples/browser-esm-vite/main.ts" })'
 descriptor = "imports in samples/browser-esm-vite/main.ts"
 cost_tokens = 25
-cum_tokens = 5818
+cum_tokens = 5980
 
 [batches.content]
 kind = "lines"
@@ -3216,11 +3324,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 159
+position = 165
 key = 'Typescript(Imports { file: "samples/browser-esm-webpack-typescript/src/index.ts" })'
 descriptor = "imports in samples/browser-esm-webpack-typescript/src/index.ts"
 cost_tokens = 26
-cum_tokens = 5844
+cum_tokens = 6006
 
 [batches.content]
 kind = "lines"
@@ -3234,11 +3342,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 160
+position = 166
 key = 'Fs(DirListing { dir: "test/smoke" })'
 descriptor = "listing of 'test/smoke'"
 cost_tokens = 51
-cum_tokens = 5895
+cum_tokens = 6057
 
 [batches.content]
 kind = "fs"
@@ -3248,11 +3356,11 @@ parent = "test/smoke"
 entries = ["amd", "common.js", "esbuild", "package-esbuild.ts", "package-vite.ts", "package-webpack.ts", "parcel", "playwright.config.ts", "server.js", "smoke.test.ts", "vite", "webpack"]
 
 [[batches]]
-position = 161
+position = 167
 key = 'Typescript(Imports { file: "src/languages/register.all.ts" })'
 descriptor = "imports in src/languages/register.all.ts"
 cost_tokens = 24
-cum_tokens = 5919
+cum_tokens = 6081
 
 [batches.content]
 kind = "lines"
@@ -3266,11 +3374,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 162
+position = 168
 key = 'Markdown(Section { file: "samples/README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "samples/README.md section #2"
 cost_tokens = 148
-cum_tokens = 6067
+cum_tokens = 6229
 
 [batches.content]
 kind = "lines"
@@ -3284,11 +3392,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 163
+position = 169
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 104
-cum_tokens = 6171
+cum_tokens = 6333
 
 [batches.content]
 kind = "lines"
@@ -3302,11 +3410,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 164
+position = 170
 key = 'Fs(DirListing { dir: "test/manual" })'
 descriptor = "listing of 'test/manual'"
 cost_tokens = 80
-cum_tokens = 6251
+cum_tokens = 6413
 
 [batches.content]
 kind = "fs"
@@ -3316,11 +3424,11 @@ parent = "test/manual"
 entries = ["cross-origin.html", "dev-setup.js", "diff.html", "diff.js", "iframe-inner.html", "iframe.html", "index.css", "index.js", "index2.html", "mouse-fixed.html", "mouse-scrollable-body.html", "mouse-scrollable-element.html", "samples", "samples.js", "shadow-dom.html", "transform.html", "typescript"]
 
 [[batches]]
-position = 165
+position = 171
 key = 'Fs(DirListing { dir: "website/index" })'
 descriptor = "listing of 'website/index'"
 cost_tokens = 3
-cum_tokens = 6254
+cum_tokens = 6416
 
 [batches.content]
 kind = "fs"
@@ -3330,11 +3438,11 @@ parent = "website/index"
 entries = ["samples"]
 
 [[batches]]
-position = 166
+position = 172
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #20"
 cost_tokens = 76
-cum_tokens = 6330
+cum_tokens = 6492
 
 [batches.content]
 kind = "lines"
@@ -3348,11 +3456,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 167
+position = 173
 key = 'Markdown(Section { file: "MAINTAINING.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "MAINTAINING.md section #2"
 cost_tokens = 51
-cum_tokens = 6381
+cum_tokens = 6543
 
 [batches.content]
 kind = "lines"
@@ -3366,11 +3474,29 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 168
+position = 174
+key = 'Json(Dependencies { file: "webpack-plugin/package.json" })'
+descriptor = "package runtime dependencies in webpack-plugin/package.json"
+cost_tokens = 34
+cum_tokens = 6577
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "webpack-plugin/package.json"
+start = 42
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
 key = 'Json(Scripts { file: "samples/browser-esm-vite-react/package.json" })'
 descriptor = "package scripts in samples/browser-esm-vite-react/package.json"
-cost_tokens = 89
-cum_tokens = 6470
+cost_tokens = 87
+cum_tokens = 6664
 
 [batches.content]
 kind = "lines"
@@ -3384,11 +3510,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 169
+position = 176
 key = 'Fs(DirListing { dir: "website/src/website" })'
 descriptor = "listing of 'website/src/website'"
 cost_tokens = 46
-cum_tokens = 6516
+cum_tokens = 6710
 
 [batches.content]
 kind = "fs"
@@ -3398,11 +3524,11 @@ parent = "website/src/website"
 entries = ["bootstrap.scss", "code-oss.svg", "components", "data", "index.tsx", "monaco-loader-chunk.ts", "monacoEditorVersion.ts", "pages", "style.scss", "utils"]
 
 [[batches]]
-position = 170
+position = 177
 key = 'Fs(DirListing { dir: "website/src/website/data" })'
 descriptor = "listing of 'website/src/website/data'"
 cost_tokens = 15
-cum_tokens = 6531
+cum_tokens = 6725
 
 [batches.content]
 kind = "fs"
@@ -3412,11 +3538,11 @@ parent = "website/src/website/data"
 entries = ["diff-sample", "home-samples", "playground-samples"]
 
 [[batches]]
-position = 171
+position = 178
 key = 'Fs(DirListing { dir: "website/src/website/pages" })'
 descriptor = "listing of 'website/src/website/pages'"
 cost_tokens = 27
-cum_tokens = 6558
+cum_tokens = 6752
 
 [batches.content]
 kind = "fs"
@@ -3426,11 +3552,11 @@ parent = "website/src/website/pages"
 entries = ["App.tsx", "DocsPage.tsx", "MonarchPage.tsx", "home", "playground", "routes.ts"]
 
 [[batches]]
-position = 172
+position = 179
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples" })'
 descriptor = "listing of 'website/src/website/data/playground-samples'"
 cost_tokens = 34
-cum_tokens = 6592
+cum_tokens = 6786
 
 [batches.content]
 kind = "fs"
@@ -3440,11 +3566,11 @@ parent = "website/src/website/data/playground-samples"
 entries = ["all.js", "creating-the-diffeditor", "creating-the-editor", "customizing-the-appearence", "extending-language-services", "interacting-with-the-editor"]
 
 [[batches]]
-position = 173
+position = 180
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples/customizing-the-appearence" })'
 descriptor = "listing of 'website/src/website/data/playground-samples/customizing-the-appearence'"
 cost_tokens = 19
-cum_tokens = 6611
+cum_tokens = 6805
 
 [batches.content]
 kind = "fs"
@@ -3454,11 +3580,11 @@ parent = "website/src/website/data/playground-samples/customizing-the-appearence
 entries = ["chapter.json", "exposed-colors", "scrollbars", "tokens-and-colors"]
 
 [[batches]]
-position = 174
+position = 181
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples/creating-the-diffeditor" })'
 descriptor = "listing of 'website/src/website/data/playground-samples/creating-the-diffeditor'"
 cost_tokens = 21
-cum_tokens = 6632
+cum_tokens = 6826
 
 [batches.content]
 kind = "fs"
@@ -3468,11 +3594,11 @@ parent = "website/src/website/data/playground-samples/creating-the-diffeditor"
 entries = ["chapter.json", "hello-diff-world", "inline-diff-example", "multi-line-example"]
 
 [[batches]]
-position = 175
+position = 182
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples/creating-the-editor" })'
 descriptor = "listing of 'website/src/website/data/playground-samples/creating-the-editor'"
 cost_tokens = 31
-cum_tokens = 6663
+cum_tokens = 6857
 
 [batches.content]
 kind = "fs"
@@ -3482,11 +3608,11 @@ parent = "website/src/website/data/playground-samples/creating-the-editor"
 entries = ["chapter.json", "editor-basic-options", "hard-wrapping", "hello-world", "syntax-highlighting-for-html-elements", "web-component"]
 
 [[batches]]
-position = 176
+position = 183
 key = 'Fs(DirListing { dir: "website/src/website/components" })'
 descriptor = "listing of 'website/src/website/components'"
 cost_tokens = 40
-cum_tokens = 6703
+cum_tokens = 6897
 
 [batches.content]
 kind = "fs"
@@ -3496,11 +3622,11 @@ parent = "website/src/website/components"
 entries = ["Loader.tsx", "Nav.tsx", "Page.tsx", "Radio.tsx", "Select.tsx", "TextBox.tsx", "bootstrap.tsx", "monaco"]
 
 [[batches]]
-position = 177
+position = 184
 key = 'Fs(DirListing { dir: "website/src/website/utils" })'
 descriptor = "listing of 'website/src/website/utils'"
 cost_tokens = 42
-cum_tokens = 6745
+cum_tokens = 6939
 
 [batches.content]
 kind = "fs"
@@ -3510,11 +3636,11 @@ parent = "website/src/website/utils"
 entries = ["Debouncer.ts", "ObservableHistory.ts", "ObservablePromise.ts", "hotComponent.tsx", "lzmaCompressor.ts", "ref.ts", "types.d.ts", "utils.ts"]
 
 [[batches]]
-position = 178
+position = 185
 key = 'Fs(DirListing { dir: "website/src/website/pages/playground" })'
 descriptor = "listing of 'website/src/website/pages/playground'"
 cost_tokens = 67
-cum_tokens = 6812
+cum_tokens = 7006
 
 [batches.content]
 kind = "fs"
@@ -3524,11 +3650,11 @@ parent = "website/src/website/pages/playground"
 entries = ["BisectModel.ts", "LocationModel.ts", "PlaygroundModel.ts", "PlaygroundPage.tsx", "PlaygroundPageContent.tsx", "Preview.tsx", "SettingsDialog.tsx", "SettingsModel.ts", "Source.ts", "getNpmVersionsSync.ts", "playgroundExamples.tsx", "utils.ts"]
 
 [[batches]]
-position = 179
+position = 186
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples/extending-language-services" })'
 descriptor = "listing of 'website/src/website/data/playground-samples/extending-language-services'"
 cost_tokens = 75
-cum_tokens = 6887
+cum_tokens = 7081
 
 [batches.content]
 kind = "fs"
@@ -3538,11 +3664,11 @@ parent = "website/src/website/data/playground-samples/extending-language-service
 entries = ["chapter.json", "codelens-provider-example", "color-provider-example", "completion-provider-example", "configure-javascript-defaults", "configure-json-defaults", "custom-languages", "folding-provider-example", "hover-provider-example", "inlay-hints-provider-example", "model-markers-example", "semantic-tokens-provider-example", "symbols-provider-example"]
 
 [[batches]]
-position = 180
+position = 187
 key = 'Typescript(ModuleItem { file: "monaco-lsp-client/generator/index.ts", start_line: 259 })'
 descriptor = "module item at monaco-lsp-client/generator/index.ts:259"
 cost_tokens = 243
-cum_tokens = 7130
+cum_tokens = 7324
 
 [batches.content]
 kind = "lines"
@@ -3748,11 +3874,11 @@ end = 629
 kind = "ellipsis"
 
 [[batches]]
-position = 181
+position = 188
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 631 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 631"
 cost_tokens = 11
-cum_tokens = 7141
+cum_tokens = 7335
 
 [batches.content]
 kind = "lines"
@@ -3766,11 +3892,11 @@ end = 631
 kind = "full"
 
 [[batches]]
-position = 182
+position = 189
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 357 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 357"
 cost_tokens = 12
-cum_tokens = 7153
+cum_tokens = 7347
 
 [batches.content]
 kind = "lines"
@@ -3784,11 +3910,11 @@ end = 357
 kind = "full"
 
 [[batches]]
-position = 183
+position = 190
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 359 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 359"
 cost_tokens = 10
-cum_tokens = 7163
+cum_tokens = 7357
 
 [batches.content]
 kind = "lines"
@@ -3802,11 +3928,11 @@ end = 359
 kind = "full"
 
 [[batches]]
-position = 184
+position = 191
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 372 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 372"
 cost_tokens = 12
-cum_tokens = 7175
+cum_tokens = 7369
 
 [batches.content]
 kind = "lines"
@@ -3820,11 +3946,11 @@ end = 372
 kind = "full"
 
 [[batches]]
-position = 185
+position = 192
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 373 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 373"
 cost_tokens = 11
-cum_tokens = 7186
+cum_tokens = 7380
 
 [batches.content]
 kind = "lines"
@@ -3838,11 +3964,11 @@ end = 373
 kind = "full"
 
 [[batches]]
-position = 186
+position = 193
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 374 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 374"
 cost_tokens = 10
-cum_tokens = 7196
+cum_tokens = 7390
 
 [batches.content]
 kind = "lines"
@@ -3856,11 +3982,11 @@ end = 374
 kind = "full"
 
 [[batches]]
-position = 187
+position = 194
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 388 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 388"
 cost_tokens = 12
-cum_tokens = 7208
+cum_tokens = 7402
 
 [batches.content]
 kind = "lines"
@@ -3874,11 +4000,11 @@ end = 388
 kind = "full"
 
 [[batches]]
-position = 188
+position = 195
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 406 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 406"
 cost_tokens = 12
-cum_tokens = 7220
+cum_tokens = 7414
 
 [batches.content]
 kind = "lines"
@@ -3892,11 +4018,11 @@ end = 406
 kind = "full"
 
 [[batches]]
-position = 189
+position = 196
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 407 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 407"
 cost_tokens = 11
-cum_tokens = 7231
+cum_tokens = 7425
 
 [batches.content]
 kind = "lines"
@@ -3910,11 +4036,11 @@ end = 407
 kind = "full"
 
 [[batches]]
-position = 190
+position = 197
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 408 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 408"
 cost_tokens = 10
-cum_tokens = 7241
+cum_tokens = 7435
 
 [batches.content]
 kind = "lines"
@@ -3928,11 +4054,11 @@ end = 408
 kind = "full"
 
 [[batches]]
-position = 191
+position = 198
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 448 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 448"
 cost_tokens = 12
-cum_tokens = 7253
+cum_tokens = 7447
 
 [batches.content]
 kind = "lines"
@@ -3946,11 +4072,11 @@ end = 448
 kind = "full"
 
 [[batches]]
-position = 192
+position = 199
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 452 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 452"
 cost_tokens = 12
-cum_tokens = 7265
+cum_tokens = 7459
 
 [batches.content]
 kind = "lines"
@@ -3964,11 +4090,11 @@ end = 452
 kind = "full"
 
 [[batches]]
-position = 193
+position = 200
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 487 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 487"
 cost_tokens = 12
-cum_tokens = 7277
+cum_tokens = 7471
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +4108,11 @@ end = 487
 kind = "full"
 
 [[batches]]
-position = 194
+position = 201
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 488 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 488"
 cost_tokens = 12
-cum_tokens = 7289
+cum_tokens = 7483
 
 [batches.content]
 kind = "lines"
@@ -4000,11 +4126,11 @@ end = 488
 kind = "full"
 
 [[batches]]
-position = 195
+position = 202
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 489 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 489"
 cost_tokens = 10
-cum_tokens = 7299
+cum_tokens = 7493
 
 [batches.content]
 kind = "lines"
@@ -4018,11 +4144,11 @@ end = 489
 kind = "full"
 
 [[batches]]
-position = 196
+position = 203
 key = 'Typescript(ExportNames { file: "monaco-lsp-client/src/adapters/LspClient.ts" })'
 descriptor = "export names surface in monaco-lsp-client/src/adapters/LspClient.ts"
 cost_tokens = 15
-cum_tokens = 7314
+cum_tokens = 7508
 
 [batches.content]
 kind = "lines"
@@ -4044,11 +4170,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 197
+position = 204
 key = 'Typescript(Export { file: "monaco-lsp-client/src/adapters/LspClient.ts", start_line: 30 })'
 descriptor = "export at monaco-lsp-client/src/adapters/LspClient.ts:30"
 cost_tokens = 15
-cum_tokens = 7329
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4078,11 +4204,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 198
+position = 205
 key = 'Fs(DirListing { dir: "website/src/website/data/playground-samples/interacting-with-the-editor" })'
 descriptor = "listing of 'website/src/website/data/playground-samples/interacting-with-the-editor'"
 cost_tokens = 74
-cum_tokens = 7403
+cum_tokens = 7597
 
 [batches.content]
 kind = "fs"
@@ -4092,11 +4218,11 @@ parent = "website/src/website/data/playground-samples/interacting-with-the-edito
 entries = ["adding-a-command-to-an-editor-instance", "adding-a-keybinding-to-an-existing-command", "adding-an-action-to-an-editor-instance", "chapter.json", "customizing-the-line-numbers", "line-and-inline-decorations", "listening-to-key-events", "listening-to-mouse-events", "rendering-glyphs-in-the-margin", "revealing-a-position"]
 
 [[batches]]
-position = 199
+position = 206
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 152
-cum_tokens = 7555
+cum_tokens = 7749
 
 [batches.content]
 kind = "lines"
@@ -4110,11 +4236,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 200
+position = 207
 key = 'Markdown(Section { file: "samples/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "samples/README.md section #1"
 cost_tokens = 100
-cum_tokens = 7655
+cum_tokens = 7849
 
 [batches.content]
 kind = "lines"
@@ -4128,11 +4254,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 201
+position = 208
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #15"
 cost_tokens = 37
-cum_tokens = 7692
+cum_tokens = 7886
 
 [batches.content]
 kind = "lines"
@@ -4146,11 +4272,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 202
+position = 209
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #16"
 cost_tokens = 37
-cum_tokens = 7729
+cum_tokens = 7923
 
 [batches.content]
 kind = "lines"
@@ -4164,11 +4290,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 203
+position = 210
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/integrate-esm.md section #0"
 cost_tokens = 99
-cum_tokens = 7828
+cum_tokens = 8022
 
 [batches.content]
 kind = "lines"
@@ -4182,11 +4308,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 204
+position = 211
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #12"
 cost_tokens = 41
-cum_tokens = 7869
+cum_tokens = 8063
 
 [batches.content]
 kind = "lines"
@@ -4200,11 +4326,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 205
+position = 212
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #14"
 cost_tokens = 41
-cum_tokens = 7910
+cum_tokens = 8104
 
 [batches.content]
 kind = "lines"
@@ -4218,11 +4344,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 206
+position = 213
 key = 'Typescript(Imports { file: "samples/browser-esm-vite-react/src/main.tsx" })'
 descriptor = "imports in samples/browser-esm-vite-react/src/main.tsx"
 cost_tokens = 47
-cum_tokens = 7957
+cum_tokens = 8151
 
 [batches.content]
 kind = "lines"
@@ -4236,11 +4362,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 207
+position = 214
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 42
-cum_tokens = 7999
+cum_tokens = 8193
 
 [batches.content]
 kind = "lines"
@@ -4254,11 +4380,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 208
+position = 215
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/integrate-esm.md section #4"
 cost_tokens = 12
-cum_tokens = 8011
+cum_tokens = 8205
 
 [batches.content]
 kind = "lines"
@@ -4272,11 +4398,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 209
+position = 216
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/integrate-esm.md section #15"
 cost_tokens = 12
-cum_tokens = 8023
+cum_tokens = 8217
 
 [batches.content]
 kind = "lines"
@@ -4290,11 +4416,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 210
+position = 217
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 515 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 515"
 cost_tokens = 12
-cum_tokens = 8035
+cum_tokens = 8229
 
 [batches.content]
 kind = "lines"
@@ -4308,11 +4434,11 @@ end = 515
 kind = "full"
 
 [[batches]]
-position = 211
+position = 218
 key = 'Json(IdentityMeta { file: "webpack-plugin/package.json" })'
 descriptor = "package identity metadata in webpack-plugin/package.json"
-cost_tokens = 172
-cum_tokens = 8207
+cost_tokens = 170
+cum_tokens = 8399
 
 [batches.content]
 kind = "lines"
@@ -4334,47 +4460,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 212
-key = 'Json(Entry { file: "webpack-plugin/package.json" })'
-descriptor = "package entrypoints in webpack-plugin/package.json"
-cost_tokens = 28
-cum_tokens = 8235
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/package.json"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 213
-key = 'Json(Scripts { file: "webpack-plugin/package.json" })'
-descriptor = "package scripts in webpack-plugin/package.json"
-cost_tokens = 67
-cum_tokens = 8302
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/package.json"
-start = 7
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 214
+position = 219
 key = 'Typescript(ExportNames { file: "src/languages/features/css/workerManager.ts" })'
 descriptor = "export names surface in src/languages/features/css/workerManager.ts"
 cost_tokens = 13
-cum_tokens = 8315
+cum_tokens = 8412
 
 [batches.content]
 kind = "lines"
@@ -4396,11 +4486,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 215
+position = 220
 key = 'Typescript(ExportNames { file: "src/languages/features/html/workerManager.ts" })'
 descriptor = "export names surface in src/languages/features/html/workerManager.ts"
 cost_tokens = 13
-cum_tokens = 8328
+cum_tokens = 8425
 
 [batches.content]
 kind = "lines"
@@ -4422,11 +4512,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 216
+position = 221
 key = 'Typescript(ExportNames { file: "src/languages/features/json/workerManager.ts" })'
 descriptor = "export names surface in src/languages/features/json/workerManager.ts"
 cost_tokens = 13
-cum_tokens = 8341
+cum_tokens = 8438
 
 [batches.content]
 kind = "lines"
@@ -4448,11 +4538,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 217
+position = 222
 key = 'Typescript(ExportNames { file: "src/languages/features/typescript/workerManager.ts" })'
 descriptor = "export names surface in src/languages/features/typescript/workerManager.ts"
 cost_tokens = 13
-cum_tokens = 8354
+cum_tokens = 8451
 
 [batches.content]
 kind = "lines"
@@ -4474,11 +4564,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 218
+position = 223
 key = 'Typescript(Imports { file: "samples/browser-esm-webpack-typescript-react/src/index.tsx" })'
 descriptor = "imports in samples/browser-esm-webpack-typescript-react/src/index.tsx"
 cost_tokens = 52
-cum_tokens = 8406
+cum_tokens = 8503
 
 [batches.content]
 kind = "lines"
@@ -4492,11 +4582,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 219
+position = 224
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 7, body_start_line: 27 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:7 body 27"
 cost_tokens = 115
-cum_tokens = 8521
+cum_tokens = 8618
 
 [batches.content]
 kind = "lines"
@@ -4510,11 +4600,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 220
+position = 225
 key = 'Markdown(Section { file: "docs/integrate-esm.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/integrate-esm.md section #9"
 cost_tokens = 13
-cum_tokens = 8534
+cum_tokens = 8631
 
 [batches.content]
 kind = "lines"
@@ -4528,11 +4618,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 221
+position = 226
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 50
-cum_tokens = 8584
+cum_tokens = 8681
 
 [batches.content]
 kind = "lines"
@@ -4546,11 +4636,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 222
+position = 227
 key = 'Json(Whole { file: "webpack-plugin/tsconfig.json" })'
 descriptor = "json config webpack-plugin/tsconfig.json"
 cost_tokens = 111
-cum_tokens = 8695
+cum_tokens = 8792
 
 [batches.content]
 kind = "lines"
@@ -4564,11 +4654,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 223
+position = 228
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 52
-cum_tokens = 8747
+cum_tokens = 8844
 
 [batches.content]
 kind = "lines"
@@ -4582,11 +4672,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 224
+position = 229
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 520 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 520"
 cost_tokens = 12
-cum_tokens = 8759
+cum_tokens = 8856
 
 [batches.content]
 kind = "lines"
@@ -4600,11 +4690,11 @@ end = 520
 kind = "full"
 
 [[batches]]
-position = 225
+position = 230
 key = 'Fs(DirListing { dir: "monaco-lsp-client/src/adapters/languageFeatures" })'
 descriptor = "listing of 'monaco-lsp-client/src/adapters/languageFeatures'"
 cost_tokens = 174
-cum_tokens = 8933
+cum_tokens = 9030
 
 [batches.content]
 kind = "fs"
@@ -4614,11 +4704,11 @@ parent = "monaco-lsp-client/src/adapters/languageFeatures"
 entries = ["LspCodeActionFeature.ts", "LspCodeLensFeature.ts", "LspCompletionFeature.ts", "LspDeclarationFeature.ts", "LspDefinitionFeature.ts", "LspDiagnosticsFeature.ts", "LspDocumentHighlightFeature.ts", "LspDocumentLinkFeature.ts", "LspDocumentSymbolFeature.ts", "LspFoldingRangeFeature.ts", "LspFormattingFeature.ts", "LspHoverFeature.ts", "LspImplementationFeature.ts", "LspInlayHintsFeature.ts", "LspOnTypeFormattingFeature.ts", "LspRangeFormattingFeature.ts", "LspReferencesFeature.ts", "LspRenameFeature.ts", "LspSelectionRangeFeature.ts", "LspSemanticTokensFeature.ts", "LspSignatureHelpFeature.ts", "LspTypeDefinitionFeature.ts", "common.ts"]
 
 [[batches]]
-position = 226
+position = 231
 key = 'Typescript(Imports { file: "monaco-lsp-client/src/index.ts" })'
 descriptor = "imports in monaco-lsp-client/src/index.ts"
 cost_tokens = 63
-cum_tokens = 8996
+cum_tokens = 9093
 
 [batches.content]
 kind = "lines"
@@ -4632,11 +4722,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 227
+position = 232
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 557 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 557"
 cost_tokens = 12
-cum_tokens = 9008
+cum_tokens = 9105
 
 [batches.content]
 kind = "lines"
@@ -4650,11 +4740,11 @@ end = 557
 kind = "full"
 
 [[batches]]
-position = 228
+position = 233
 key = 'Markdown(Section { file: "samples/README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "samples/README.md section #3"
 cost_tokens = 107
-cum_tokens = 9115
+cum_tokens = 9212
 
 [batches.content]
 kind = "lines"
@@ -4668,11 +4758,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 229
+position = 234
 key = 'Typescript(ExportNames { file: "src/languages/features/css/cssWorker.ts" })'
 descriptor = "export names surface in src/languages/features/css/cssWorker.ts"
 cost_tokens = 51
-cum_tokens = 9166
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -4726,11 +4816,11 @@ end = 238
 kind = "ellipsis"
 
 [[batches]]
-position = 230
+position = 235
 key = 'Typescript(Export { file: "src/languages/features/css/cssWorker.ts", start_line: 237 })'
 descriptor = "export at src/languages/features/css/cssWorker.ts:237"
 cost_tokens = 0
-cum_tokens = 9166
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -4752,11 +4842,11 @@ end = 238
 kind = "ellipsis"
 
 [[batches]]
-position = 231
+position = 236
 key = 'Typescript(Export { file: "src/languages/features/css/cssWorker.ts", start_line: 232 })'
 descriptor = "export at src/languages/features/css/cssWorker.ts:232"
 cost_tokens = 21
-cum_tokens = 9187
+cum_tokens = 9284
 
 [batches.content]
 kind = "lines"
@@ -4770,11 +4860,11 @@ end = 235
 kind = "full"
 
 [[batches]]
-position = 232
+position = 237
 key = 'Typescript(Export { file: "src/languages/features/css/cssWorker.ts", start_line: 10 })'
 descriptor = "export at src/languages/features/css/cssWorker.ts:10"
 cost_tokens = 22
-cum_tokens = 9209
+cum_tokens = 9306
 
 [batches.content]
 kind = "lines"
@@ -4804,11 +4894,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 233
+position = 238
 key = 'Typescript(ExportBody { file: "src/languages/features/css/cssWorker.ts", start_line: 237, body_start_line: 238 })'
 descriptor = "export body at src/languages/features/css/cssWorker.ts:237 body 238"
 cost_tokens = 13
-cum_tokens = 9222
+cum_tokens = 9319
 
 [batches.content]
 kind = "lines"
@@ -4822,11 +4912,11 @@ end = 238
 kind = "full"
 
 [[batches]]
-position = 234
+position = 239
 key = 'Typescript(ExportNames { file: "src/languages/features/html/htmlWorker.ts" })'
 descriptor = "export names surface in src/languages/features/html/htmlWorker.ts"
 cost_tokens = 51
-cum_tokens = 9273
+cum_tokens = 9370
 
 [batches.content]
 kind = "lines"
@@ -4880,11 +4970,11 @@ end = 163
 kind = "ellipsis"
 
 [[batches]]
-position = 235
+position = 240
 key = 'Typescript(Export { file: "src/languages/features/html/htmlWorker.ts", start_line: 162 })'
 descriptor = "export at src/languages/features/html/htmlWorker.ts:162"
 cost_tokens = 0
-cum_tokens = 9273
+cum_tokens = 9370
 
 [batches.content]
 kind = "lines"
@@ -4906,11 +4996,11 @@ end = 163
 kind = "ellipsis"
 
 [[batches]]
-position = 236
+position = 241
 key = 'Typescript(Export { file: "src/languages/features/html/htmlWorker.ts", start_line: 157 })'
 descriptor = "export at src/languages/features/html/htmlWorker.ts:157"
 cost_tokens = 23
-cum_tokens = 9296
+cum_tokens = 9393
 
 [batches.content]
 kind = "lines"
@@ -4924,11 +5014,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 237
+position = 242
 key = 'Typescript(Export { file: "src/languages/features/html/htmlWorker.ts", start_line: 11 })'
 descriptor = "export at src/languages/features/html/htmlWorker.ts:11"
 cost_tokens = 22
-cum_tokens = 9318
+cum_tokens = 9415
 
 [batches.content]
 kind = "lines"
@@ -4958,11 +5048,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 238
+position = 243
 key = 'Typescript(ExportBody { file: "src/languages/features/html/htmlWorker.ts", start_line: 162, body_start_line: 163 })'
 descriptor = "export body at src/languages/features/html/htmlWorker.ts:162 body 163"
 cost_tokens = 13
-cum_tokens = 9331
+cum_tokens = 9428
 
 [batches.content]
 kind = "lines"
@@ -4976,11 +5066,11 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 239
+position = 244
 key = 'Typescript(ExportNames { file: "src/languages/features/json/jsonWorker.ts" })'
 descriptor = "export names surface in src/languages/features/json/jsonWorker.ts"
 cost_tokens = 51
-cum_tokens = 9382
+cum_tokens = 9479
 
 [batches.content]
 kind = "lines"
@@ -5034,11 +5124,11 @@ end = 234
 kind = "ellipsis"
 
 [[batches]]
-position = 240
+position = 245
 key = 'Typescript(Export { file: "src/languages/features/json/jsonWorker.ts", start_line: 233 })'
 descriptor = "export at src/languages/features/json/jsonWorker.ts:233"
 cost_tokens = 0
-cum_tokens = 9382
+cum_tokens = 9479
 
 [batches.content]
 kind = "lines"
@@ -5060,11 +5150,11 @@ end = 234
 kind = "ellipsis"
 
 [[batches]]
-position = 241
+position = 246
 key = 'Typescript(Export { file: "src/languages/features/json/jsonWorker.ts", start_line: 18 })'
 descriptor = "export at src/languages/features/json/jsonWorker.ts:18"
 cost_tokens = 22
-cum_tokens = 9404
+cum_tokens = 9501
 
 [batches.content]
 kind = "lines"
@@ -5094,11 +5184,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 242
+position = 247
 key = 'Typescript(ExportBody { file: "src/languages/features/json/jsonWorker.ts", start_line: 233, body_start_line: 234 })'
 descriptor = "export body at src/languages/features/json/jsonWorker.ts:233 body 234"
 cost_tokens = 13
-cum_tokens = 9417
+cum_tokens = 9514
 
 [batches.content]
 kind = "lines"
@@ -5112,11 +5202,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 243
+position = 248
 key = 'Typescript(ExportNames { file: "samples/browser-esm-vite-react/src/components/Editor.tsx" })'
 descriptor = "export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx"
 cost_tokens = 18
-cum_tokens = 9435
+cum_tokens = 9532
 
 [batches.content]
 kind = "lines"
@@ -5138,11 +5228,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 244
+position = 249
 key = 'Typescript(Export { file: "samples/browser-esm-vite-react/src/components/Editor.tsx", start_line: 5 })'
 descriptor = "export at samples/browser-esm-vite-react/src/components/Editor.tsx:5"
 cost_tokens = 0
-cum_tokens = 9435
+cum_tokens = 9532
 
 [batches.content]
 kind = "lines"
@@ -5164,11 +5254,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 245
+position = 250
 key = 'Typescript(ExportNames { file: "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx" })'
 descriptor = "export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx"
 cost_tokens = 18
-cum_tokens = 9453
+cum_tokens = 9550
 
 [batches.content]
 kind = "lines"
@@ -5190,11 +5280,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 246
+position = 251
 key = 'Typescript(Export { file: "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx", start_line: 23 })'
 descriptor = "export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23"
 cost_tokens = 0
-cum_tokens = 9453
+cum_tokens = 9550
 
 [batches.content]
 kind = "lines"
@@ -5216,11 +5306,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 247
+position = 252
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 182 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 182"
 cost_tokens = 87
-cum_tokens = 9540
+cum_tokens = 9637
 
 [batches.content]
 kind = "lines"
@@ -5234,11 +5324,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 248
+position = 253
 key = 'Typescript(Export { file: "src/languages/features/json/jsonWorker.ts", start_line: 227 })'
 descriptor = "export at src/languages/features/json/jsonWorker.ts:227"
 cost_tokens = 34
-cum_tokens = 9574
+cum_tokens = 9671
 
 [batches.content]
 kind = "lines"
@@ -5252,11 +5342,11 @@ end = 231
 kind = "full"
 
 [[batches]]
-position = 249
+position = 254
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 52
-cum_tokens = 9626
+cum_tokens = 9723
 
 [batches.content]
 kind = "lines"
@@ -5270,11 +5360,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 250
+position = 255
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #13"
 cost_tokens = 59
-cum_tokens = 9685
+cum_tokens = 9782
 
 [batches.content]
 kind = "lines"
@@ -5288,11 +5378,29 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 251
+position = 256
+key = 'Json(Dependencies { file: "monaco-lsp-client/package.json" })'
+descriptor = "package runtime dependencies in monaco-lsp-client/package.json"
+cost_tokens = 81
+cum_tokens = 9863
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "monaco-lsp-client/package.json"
+start = 8
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 257
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 559 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 559"
 cost_tokens = 12
-cum_tokens = 9697
+cum_tokens = 9875
 
 [batches.content]
 kind = "lines"
@@ -5306,11 +5414,11 @@ end = 559
 kind = "full"
 
 [[batches]]
-position = 252
+position = 258
 key = 'Typescript(ExportNames { file: "src/internal/common/workers.ts" })'
 descriptor = "export names surface in src/internal/common/workers.ts"
 cost_tokens = 29
-cum_tokens = 9726
+cum_tokens = 9904
 
 [batches.content]
 kind = "lines"
@@ -5348,11 +5456,11 @@ end = 114
 kind = "ellipsis"
 
 [[batches]]
-position = 253
+position = 259
 key = 'Typescript(Export { file: "src/internal/common/workers.ts", start_line: 92 })'
 descriptor = "export at src/internal/common/workers.ts:92"
 cost_tokens = 23
-cum_tokens = 9749
+cum_tokens = 9927
 
 [batches.content]
 kind = "lines"
@@ -5374,11 +5482,11 @@ end = 95
 kind = "ellipsis"
 
 [[batches]]
-position = 254
+position = 260
 key = 'Fs(DirListing { dir: "test/smoke/amd" })'
 descriptor = "listing of 'test/smoke/amd'"
 cost_tokens = 4
-cum_tokens = 9753
+cum_tokens = 9931
 
 [batches.content]
 kind = "fs"
@@ -5388,11 +5496,11 @@ parent = "test/smoke/amd"
 entries = ["index.html"]
 
 [[batches]]
-position = 255
+position = 261
 key = 'Fs(DirListing { dir: "website/static" })'
 descriptor = "listing of 'website/static'"
 cost_tokens = 8
-cum_tokens = 9761
+cum_tokens = 9939
 
 [batches.content]
 kind = "fs"
@@ -5400,197 +5508,3 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "website/static"
 entries = ["monarch", "monarch-static.html"]
-
-[[batches]]
-position = 256
-key = 'Typescript(ModuleItem { file: "src/languages/features/html/register.ts", start_line: 115 })'
-descriptor = "module item at src/languages/features/html/register.ts:115"
-cost_tokens = 181
-cum_tokens = 9942
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 115
-end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 131
-end = 131
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 135
-end = 135
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 139
-end = 139
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 148
-end = 148
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 122
-end = 122
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 136
-end = 136
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 140
-end = 140
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 144
-end = 144
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 257
-key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 136 })'
-descriptor = "module item body at src/languages/features/html/register.ts:115 body 136"
-cost_tokens = 10
-cum_tokens = 9952
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 136
-end = 136
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 258
-key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 132 })'
-descriptor = "module item body at src/languages/features/html/register.ts:115 body 132"
-cost_tokens = 11
-cum_tokens = 9963
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 132
-end = 132
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 259
-key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 140 })'
-descriptor = "module item body at src/languages/features/html/register.ts:115 body 140"
-cost_tokens = 11
-cum_tokens = 9974
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 140
-end = 140
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 260
-key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 128 })'
-descriptor = "module item body at src/languages/features/html/register.ts:115 body 128"
-cost_tokens = 13
-cum_tokens = 9987
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "full"
