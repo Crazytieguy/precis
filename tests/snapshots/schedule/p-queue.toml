@@ -1,7 +1,7 @@
 fixture = "p-queue"
 budget = 10000
 cumulative_tokens = 5395
-batch_count = 48
+batch_count = 49
 
 [[batches]]
 position = 1
@@ -91,10 +91,28 @@ entries = ["index.ts", "lower-bound.ts", "options.ts", "priority-queue.ts", "que
 
 [[batches]]
 position = 6
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 31
+cum_tokens = 234
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
 key = 'Typescript(ExportNames { file: "source/index.ts" })'
 descriptor = "export names surface in source/index.ts"
 cost_tokens = 63
-cum_tokens = 266
+cum_tokens = 297
 
 [batches.content]
 kind = "lines"
@@ -116,11 +134,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Markdown(HeadingsOutline { file: "readme.md" })'
 descriptor = "headings outline in readme.md"
 cost_tokens = 121
-cum_tokens = 387
+cum_tokens = 418
 
 [batches.content]
 kind = "lines"
@@ -302,11 +320,11 @@ end = 1072
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
-cum_tokens = 394
+cum_tokens = 425
 
 [batches.content]
 kind = "fs"
@@ -316,11 +334,11 @@ parent = ".github"
 entries = ["security.md", "workflows"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 398
+cum_tokens = 429
 
 [batches.content]
 kind = "fs"
@@ -330,11 +348,11 @@ parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 10
+position = 11
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 201
-cum_tokens = 599
+cum_tokens = 630
 
 [batches.content]
 kind = "lines"
@@ -348,11 +366,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Typescript(ExportNames { file: "source/priority-queue.ts" })'
 descriptor = "export names surface in source/priority-queue.ts"
 cost_tokens = 37
-cum_tokens = 636
+cum_tokens = 667
 
 [batches.content]
 kind = "lines"
@@ -390,11 +408,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 7 })'
 descriptor = "export at source/priority-queue.ts:7"
 cost_tokens = 17
-cum_tokens = 653
+cum_tokens = 684
 
 [batches.content]
 kind = "lines"
@@ -408,11 +426,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 11 })'
 descriptor = "export at source/priority-queue.ts:11"
 cost_tokens = 129
-cum_tokens = 782
+cum_tokens = 813
 
 [batches.content]
 kind = "lines"
@@ -522,11 +540,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Markdown(Section { file: "readme.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #5"
 cost_tokens = 10
-cum_tokens = 792
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -540,11 +558,37 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
+key = 'Json(Entry { file: "package.json" })'
+descriptor = "package entrypoints in package.json"
+cost_tokens = 92
+cum_tokens = 915
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 9
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 23
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 31
-cum_tokens = 823
+cum_tokens = 946
 
 [batches.content]
 kind = "fs"
@@ -554,11 +598,11 @@ parent = "test"
 entries = ["advanced.ts", "basic.ts", "debug.ts", "priority-queue.ts", "rate-limit.ts", "strict.ts", "validation.ts"]
 
 [[batches]]
-position = 16
+position = 18
 key = 'Typescript(Export { file: "source/index.ts", start_line: 16 })'
 descriptor = "export at source/index.ts:16"
 cost_tokens = 540
-cum_tokens = 1363
+cum_tokens = 1486
 
 [batches.content]
 kind = "lines"
@@ -940,11 +984,11 @@ end = 958
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Typescript(ExportDoc { file: "source/index.ts", start_line: 16 })'
 descriptor = "export doc at source/index.ts:16"
 cost_tokens = 20
-cum_tokens = 1383
+cum_tokens = 1506
 
 [batches.content]
 kind = "lines"
@@ -958,11 +1002,29 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 18
+position = 20
+key = 'Json(Scripts { file: "package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 104
+cum_tokens = 1610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 17
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
 key = 'Markdown(Section { file: "readme.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #24"
 cost_tokens = 15
-cum_tokens = 1398
+cum_tokens = 1625
 
 [batches.content]
 kind = "lines"
@@ -976,11 +1038,11 @@ end = 440
 kind = "full"
 
 [[batches]]
-position = 19
+position = 22
 key = 'Typescript(Imports { file: "source/options.ts" })'
 descriptor = "imports in source/options.ts"
 cost_tokens = 20
-cum_tokens = 1418
+cum_tokens = 1645
 
 [batches.content]
 kind = "lines"
@@ -994,11 +1056,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 20
+position = 23
 key = 'Typescript(Imports { file: "source/index.ts" })'
 descriptor = "imports in source/index.ts"
 cost_tokens = 84
-cum_tokens = 1502
+cum_tokens = 1729
 
 [batches.content]
 kind = "lines"
@@ -1012,11 +1074,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 21
+position = 24
 key = 'Json(Whole { file: "tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 81
-cum_tokens = 1583
+cum_tokens = 1810
 
 [batches.content]
 kind = "lines"
@@ -1030,11 +1092,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 22
+position = 25
 key = 'Markdown(Section { file: "readme.md", section_index: 34, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #34"
 cost_tokens = 47
-cum_tokens = 1630
+cum_tokens = 1857
 
 [batches.content]
 kind = "lines"
@@ -1048,11 +1110,11 @@ end = 1069
 kind = "full"
 
 [[batches]]
-position = 23
+position = 26
 key = 'Markdown(Section { file: "readme.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #0"
 cost_tokens = 384
-cum_tokens = 2014
+cum_tokens = 2241
 
 [batches.content]
 kind = "lines"
@@ -1066,11 +1128,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 24
+position = 27
 key = 'Markdown(Section { file: "readme.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #9"
 cost_tokens = 25
-cum_tokens = 2039
+cum_tokens = 2266
 
 [batches.content]
 kind = "lines"
@@ -1084,11 +1146,11 @@ end = 242
 kind = "full"
 
 [[batches]]
-position = 25
+position = 28
 key = 'Markdown(Section { file: "readme.md", section_index: 25, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #25"
 cost_tokens = 25
-cum_tokens = 2064
+cum_tokens = 2291
 
 [batches.content]
 kind = "lines"
@@ -1102,11 +1164,29 @@ end = 444
 kind = "full"
 
 [[batches]]
-position = 26
+position = 29
+key = 'Json(Dependencies { file: "package.json" })'
+descriptor = "package runtime dependencies in package.json"
+cost_tokens = 54
+cum_tokens = 2345
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 49
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
 key = 'Markdown(Section { file: "readme.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #1"
 cost_tokens = 129
-cum_tokens = 2193
+cum_tokens = 2474
 
 [batches.content]
 kind = "lines"
@@ -1120,11 +1200,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 27
+position = 31
 key = 'Markdown(Section { file: "readme.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #22"
 cost_tokens = 30
-cum_tokens = 2223
+cum_tokens = 2504
 
 [batches.content]
 kind = "lines"
@@ -1138,11 +1218,11 @@ end = 421
 kind = "full"
 
 [[batches]]
-position = 28
+position = 32
 key = 'Typescript(Imports { file: "source/priority-queue.ts" })'
 descriptor = "imports in source/priority-queue.ts"
 cost_tokens = 47
-cum_tokens = 2270
+cum_tokens = 2551
 
 [batches.content]
 kind = "lines"
@@ -1156,11 +1236,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 29
+position = 33
 key = 'Markdown(Section { file: "readme.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #19"
 cost_tokens = 33
-cum_tokens = 2303
+cum_tokens = 2584
 
 [batches.content]
 kind = "lines"
@@ -1174,11 +1254,11 @@ end = 357
 kind = "full"
 
 [[batches]]
-position = 30
+position = 34
 key = 'Markdown(Section { file: "readme.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #3"
 cost_tokens = 34
-cum_tokens = 2337
+cum_tokens = 2618
 
 [batches.content]
 kind = "lines"
@@ -1192,11 +1272,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 31
+position = 35
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
-cost_tokens = 243
-cum_tokens = 2580
+cost_tokens = 239
+cum_tokens = 2857
 
 [batches.content]
 kind = "lines"
@@ -1218,99 +1298,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 32
-key = 'Json(Entry { file: "package.json" })'
-descriptor = "package entrypoints in package.json"
-cost_tokens = 92
-cum_tokens = 2672
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 9
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 23
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 29
-cum_tokens = 2701
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 14
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Json(Scripts { file: "package.json" })'
-descriptor = "package scripts in package.json"
-cost_tokens = 104
-cum_tokens = 2805
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 17
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
+position = 36
 key = 'Typescript(ExportNames { file: "source/lower-bound.ts" })'
 descriptor = "export names surface in source/lower-bound.ts"
 cost_tokens = 40
-cum_tokens = 2845
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/lower-bound.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/lower-bound.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 36
-key = 'Typescript(Export { file: "source/lower-bound.ts", start_line: 3 })'
-descriptor = "export at source/lower-bound.ts:3"
-cost_tokens = 0
-cum_tokens = 2845
+cum_tokens = 2897
 
 [batches.content]
 kind = "lines"
@@ -1333,10 +1325,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
+key = 'Typescript(Export { file: "source/lower-bound.ts", start_line: 3 })'
+descriptor = "export at source/lower-bound.ts:3"
+cost_tokens = 0
+cum_tokens = 2897
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/lower-bound.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/lower-bound.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
 key = 'Markdown(Section { file: "readme.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #8"
 cost_tokens = 49
-cum_tokens = 2894
+cum_tokens = 2946
 
 [batches.content]
 kind = "lines"
@@ -1350,11 +1368,11 @@ end = 238
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Markdown(Section { file: "readme.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #2"
 cost_tokens = 203
-cum_tokens = 3097
+cum_tokens = 3149
 
 [batches.content]
 kind = "lines"
@@ -1368,11 +1386,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Markdown(Section { file: "readme.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #26"
 cost_tokens = 64
-cum_tokens = 3161
+cum_tokens = 3213
 
 [batches.content]
 kind = "lines"
@@ -1386,11 +1404,11 @@ end = 448
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Markdown(Section { file: "readme.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #10"
 cost_tokens = 73
-cum_tokens = 3234
+cum_tokens = 3286
 
 [batches.content]
 kind = "lines"
@@ -1404,11 +1422,11 @@ end = 248
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Typescript(ExportNames { file: "source/queue.ts" })'
 descriptor = "export names surface in source/queue.ts"
 cost_tokens = 35
-cum_tokens = 3269
+cum_tokens = 3321
 
 [batches.content]
 kind = "lines"
@@ -1430,11 +1448,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Markdown(Section { file: "readme.md", section_index: 35, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #35"
 cost_tokens = 167
-cum_tokens = 3436
+cum_tokens = 3488
 
 [batches.content]
 kind = "lines"
@@ -1448,11 +1466,11 @@ end = 1077
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Typescript(ExportBody { file: "source/priority-queue.ts", start_line: 11, body_start_line: 18 })'
 descriptor = "export body at source/priority-queue.ts:11 body 18"
 cost_tokens = 1111
-cum_tokens = 4547
+cum_tokens = 4599
 
 [batches.content]
 kind = "lines"
@@ -1514,11 +1532,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Typescript(ExportBody { file: "source/lower-bound.ts", start_line: 3, body_start_line: 4 })'
 descriptor = "export body at source/lower-bound.ts:3 body 4"
 cost_tokens = 155
-cum_tokens = 4702
+cum_tokens = 4754
 
 [batches.content]
 kind = "lines"
@@ -1532,11 +1550,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Typescript(Imports { file: "bench.ts" })'
 descriptor = "imports in bench.ts"
 cost_tokens = 61
-cum_tokens = 4763
+cum_tokens = 4815
 
 [batches.content]
 kind = "lines"
@@ -1550,10 +1568,10 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 46
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 310
+position = 47
+key = 'Json(DevDependencies { file: "package.json" })'
+descriptor = "package dev/peer dependencies in package.json"
+cost_tokens = 258
 cum_tokens = 5073
 
 [batches.content]
@@ -1561,14 +1579,14 @@ kind = "lines"
 
 [[batches.content.spans]]
 path = "package.json"
-start = 49
+start = 53
 end = 68
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Typescript(ExportNames { file: "source/options.ts" })'
 descriptor = "export names surface in source/options.ts"
 cost_tokens = 55
@@ -1626,7 +1644,7 @@ end = 112
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Markdown(Section { file: "readme.md", section_index: 32, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #32"
 cost_tokens = 267

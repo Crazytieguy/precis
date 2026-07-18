@@ -14,87 +14,87 @@ Score(3000)=0.574 I=0.852 C=0.386 ns_rows≤3K=21/50 (reached=10 partial=0 missi
 | walker |  | 173 | 18 | listing of 'source/vendor/supports-color' |  |  | 0.725 |
 | ns | 207 |  | 41 | package.json files whitelist | 1.5 |  | 0.686 |
 | walker |  | 278 | 105 | README headline in readme.md |  |  | 0.690 |
-| ns | 334 |  | 127 | package.json identity + module shape | 1.6 |  | 0.640 |
-| walker |  | 352 | 74 | headings outline in code-of-conduct.md |  |  | 0.640 |
-| walker |  | 352 | 0 | code-of-conduct.md section #0 |  |  | 0.640 |
-| walker |  | 361 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.696 |
-| walker |  | 417 | 56 | export names surface in source/index.js |  |  | 0.696 |
-| walker |  | 417 | 0 | export at source/index.js:225 |  |  | 0.696 |
-| walker |  | 425 | 8 | export at source/index.js:34 |  |  | 0.696 |
-| walker |  | 438 | 13 | export at source/index.js:50 |  |  | 0.696 |
-| walker |  | 447 | 9 | export body at source/index.js:50 body 51 |  |  | 0.696 |
-| ns | 448 |  | 114 | package.json subpath imports + types + sideEffects | 1.7 |  | 0.637 |
-| walker |  | 474 | 27 | export at source/index.js:220 |  |  | 0.637 |
-| walker |  | 500 | 26 | export body at source/index.js:34 body 36 |  |  | 0.638 |
-| walker |  | 508 | 8 | listing of 'examples' |  |  | 0.644 |
-| ns | 539 |  | 91 | package.json engines + scripts | 1.8 |  | 0.606 |
-| walker |  | 586 | 78 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.606 |
-| walker |  | 586 | 0 | export at source/vendor/ansi-styles/index.js:223 |  |  | 0.606 |
-| walker |  | 595 | 9 | export at source/vendor/ansi-styles/index.js:73 |  |  | 0.606 |
-| walker |  | 606 | 11 | listing of '.github' |  |  | 0.649 |
-| walker |  | 610 | 4 | listing of '.github/workflows' |  |  | 0.670 |
-| ns | 702 |  | 163 | readme.md install + minimal usage | 1.9 |  | 0.599 |
-| walker |  | 870 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.611 |
-| walker |  | 897 | 27 | listing of 'test' |  |  | 0.686 |
-| ns | 927 |  | 225 | readme.md lede + badges + screenshot | 1.10 |  | 0.621 |
-| ns | 1015 |  | 88 | readme.md Info section | 1.11 |  | 0.634 |
-| walker |  | 1157 | 260 | headings outline in readme.md |  |  | 0.636 |
-| walker |  | 1181 | 24 | readme.md section #30 |  |  | 0.636 |
-| walker |  | 1193 | 12 | readme.md section #6 |  |  | 0.636 |
-| ns | 1204 |  | 189 | package.json devDependencies | 2.2 |  | 0.597 |
-| walker |  | 1205 | 12 | readme.md section #7 |  |  | 0.597 |
-| walker |  | 1242 | 37 | readme.md section #31 |  |  | 0.597 |
-| walker |  | 1270 | 28 | export names surface in source/vendor/supports-color/index.js |  |  | 0.597 |
-| walker |  | 1270 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.597 |
-| walker |  | 1284 | 14 | readme.md section #17 |  |  | 0.597 |
-| walker |  | 1298 | 14 | readme.md section #18 |  |  | 0.597 |
-| walker |  | 1314 | 16 | readme.md section #19 |  |  | 0.597 |
-| walker |  | 1383 | 69 | imports in source/index.js |  |  | 0.598 |
-| ns | 1412 |  | 208 | package.json xo lint rules + c8 coverage config | 2.3 |  | 0.548 |
-| walker |  | 1425 | 42 | readme.md section #40 |  |  | 0.548 |
-| walker |  | 1444 | 19 | readme.md section #4 |  |  | 0.548 |
-| walker |  | 1462 | 18 | readme.md section #23 |  |  | 0.548 |
-| walker |  | 1479 | 17 | readme.md section #24 |  |  | 0.548 |
-| walker |  | 1646 | 167 | module item names surface in source/vendor/ansi-styles/index.js |  |  | 0.548 |
-| walker |  | 1646 | 0 | module item at source/vendor/ansi-styles/index.js:1 |  |  | 0.548 |
-| walker |  | 1646 | 0 | module item at source/vendor/ansi-styles/index.js:3 |  |  | 0.548 |
-| walker |  | 1646 | 0 | module item at source/vendor/ansi-styles/index.js:5 |  |  | 0.548 |
-| walker |  | 1646 | 0 | module item at source/vendor/ansi-styles/index.js:7 |  |  | 0.548 |
-| walker |  | 1646 | 0 | module item at source/vendor/ansi-styles/index.js:221 |  |  | 0.548 |
-| walker |  | 1666 | 20 | readme.md section #20 |  |  | 0.548 |
-| ns | 1672 |  | 260 | CI workflow (.github/workflows/main.yml) | 2.4 |  | 0.612 |
-| walker |  | 1920 | 254 | module item names surface in source/index.js |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:8 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:10 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:11 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:12 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:22 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:24 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:41 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:74 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:94 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:119 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:132 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:152 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:168 |  |  | 0.615 |
-| walker |  | 1920 | 0 | module item at source/index.js:204 |  |  | 0.615 |
-| walker |  | 1958 | 38 | module item at source/index.js:15 |  |  | 0.616 |
-| ns | 1996 |  | 324 | index.d.ts imports + Options interface + Chalk const | 3.1 |  | 0.566 |
-| walker |  | 2018 | 60 | module item body at source/index.js:41 body 42 |  |  | 0.567 |
-| walker |  | 2133 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.568 |
-| ns | 2153 |  | 157 | ChalkInstance call signature + level property | 3.2 |  | 0.544 |
-| walker |  | 2156 | 23 | readme.md section #21 |  |  | 0.544 |
-| walker |  | 2178 | 22 | readme.md section #22 |  |  | 0.544 |
-| ns | 2258 |  | 105 | ChalkInstance.rgb method (full doc example) | 3.3 |  | 0.528 |
-| walker |  | 2269 | 91 | readme.md section #2 |  |  | 0.555 |
-| walker |  | 2290 | 21 | readme.md section #37 |  |  | 0.555 |
-| ns | 2310 |  | 52 | ChalkInstance remaining model-setter signatures (locations) | 3.4 | 3.3 | 0.548 |
-| ns | 2414 |  | 104 | ChalkInstance modifier roster (locations) | 3.5 |  | 0.534 |
-| walker |  | 2521 | 231 | package identity metadata in package.json |  |  | 0.547 |
-| ns | 2597 |  | 183 | ChalkInstance color + background-color roster (locations, +ellipsis for bright variants) | 3.6 |  | 0.519 |
-| walker |  | 2698 | 177 | package entrypoints in package.json |  |  | 0.584 |
-| walker |  | 2742 | 44 | package runtime metadata in package.json |  |  | 0.589 |
-| walker |  | 2789 | 47 | package scripts in package.json |  |  | 0.610 |
+| walker |  | 324 | 46 | package runtime metadata in package.json |  |  | 0.691 |
+| ns | 334 |  | 127 | package.json identity + module shape | 1.6 |  | 0.642 |
+| walker |  | 398 | 74 | headings outline in code-of-conduct.md |  |  | 0.642 |
+| walker |  | 398 | 0 | code-of-conduct.md section #0 |  |  | 0.642 |
+| walker |  | 447 | 49 | package scripts in package.json |  |  | 0.648 |
+| ns | 448 |  | 114 | package.json subpath imports + types + sideEffects | 1.7 |  | 0.593 |
+| walker |  | 456 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.644 |
+| walker |  | 512 | 56 | export names surface in source/index.js |  |  | 0.645 |
+| walker |  | 512 | 0 | export at source/index.js:225 |  |  | 0.645 |
+| walker |  | 520 | 8 | export at source/index.js:34 |  |  | 0.645 |
+| walker |  | 533 | 13 | export at source/index.js:50 |  |  | 0.645 |
+| ns | 539 |  | 91 | package.json engines + scripts | 1.8 |  | 0.671 |
+| walker |  | 542 | 9 | export body at source/index.js:50 body 51 |  |  | 0.671 |
+| walker |  | 569 | 27 | export at source/index.js:220 |  |  | 0.671 |
+| walker |  | 595 | 26 | export body at source/index.js:34 body 36 |  |  | 0.671 |
+| walker |  | 603 | 8 | listing of 'examples' |  |  | 0.677 |
+| walker |  | 681 | 78 | export names surface in source/vendor/ansi-styles/index.js |  |  | 0.677 |
+| walker |  | 681 | 0 | export at source/vendor/ansi-styles/index.js:223 |  |  | 0.677 |
+| walker |  | 690 | 9 | export at source/vendor/ansi-styles/index.js:73 |  |  | 0.677 |
+| walker |  | 701 | 11 | listing of '.github' |  |  | 0.718 |
+| ns | 702 |  | 163 | readme.md install + minimal usage | 1.9 |  | 0.642 |
+| walker |  | 705 | 4 | listing of '.github/workflows' |  |  | 0.659 |
+| ns | 927 |  | 225 | readme.md lede + badges + screenshot | 1.10 |  | 0.597 |
+| walker |  | 965 | 260 | YAML config at .github/workflows/main.yml |  |  | 0.609 |
+| walker |  | 992 | 27 | listing of 'test' |  |  | 0.675 |
+| ns | 1015 |  | 88 | readme.md Info section | 1.11 |  | 0.684 |
+| ns | 1204 |  | 189 | package.json devDependencies | 2.2 |  | 0.643 |
+| walker |  | 1252 | 260 | headings outline in readme.md |  |  | 0.645 |
+| walker |  | 1276 | 24 | readme.md section #30 |  |  | 0.645 |
+| walker |  | 1288 | 12 | readme.md section #6 |  |  | 0.645 |
+| walker |  | 1300 | 12 | readme.md section #7 |  |  | 0.645 |
+| walker |  | 1337 | 37 | readme.md section #31 |  |  | 0.645 |
+| walker |  | 1365 | 28 | export names surface in source/vendor/supports-color/index.js |  |  | 0.645 |
+| walker |  | 1365 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.645 |
+| ns | 1412 |  | 208 | package.json xo lint rules + c8 coverage config | 2.3 |  | 0.591 |
+| walker |  | 1540 | 175 | package entrypoints in package.json |  |  | 0.686 |
+| walker |  | 1554 | 14 | readme.md section #17 |  |  | 0.686 |
+| walker |  | 1568 | 14 | readme.md section #18 |  |  | 0.686 |
+| walker |  | 1584 | 16 | readme.md section #19 |  |  | 0.686 |
+| walker |  | 1653 | 69 | imports in source/index.js |  |  | 0.687 |
+| ns | 1672 |  | 260 | CI workflow (.github/workflows/main.yml) | 2.4 |  | 0.724 |
+| walker |  | 1695 | 42 | readme.md section #40 |  |  | 0.724 |
+| walker |  | 1714 | 19 | readme.md section #4 |  |  | 0.724 |
+| walker |  | 1732 | 18 | readme.md section #23 |  |  | 0.724 |
+| walker |  | 1749 | 17 | readme.md section #24 |  |  | 0.724 |
+| walker |  | 1916 | 167 | module item names surface in source/vendor/ansi-styles/index.js |  |  | 0.725 |
+| walker |  | 1916 | 0 | module item at source/vendor/ansi-styles/index.js:1 |  |  | 0.725 |
+| walker |  | 1916 | 0 | module item at source/vendor/ansi-styles/index.js:3 |  |  | 0.725 |
+| walker |  | 1916 | 0 | module item at source/vendor/ansi-styles/index.js:5 |  |  | 0.725 |
+| walker |  | 1916 | 0 | module item at source/vendor/ansi-styles/index.js:7 |  |  | 0.725 |
+| walker |  | 1916 | 0 | module item at source/vendor/ansi-styles/index.js:221 |  |  | 0.725 |
+| walker |  | 1936 | 20 | readme.md section #20 |  |  | 0.725 |
+| ns | 1996 |  | 324 | index.d.ts imports + Options interface + Chalk const | 3.1 |  | 0.665 |
+| ns | 2153 |  | 157 | ChalkInstance call signature + level property | 3.2 |  | 0.636 |
+| walker |  | 2190 | 254 | module item names surface in source/index.js |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:8 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:10 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:11 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:12 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:22 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:24 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:41 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:74 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:94 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:119 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:132 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:152 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:168 |  |  | 0.640 |
+| walker |  | 2190 | 0 | module item at source/index.js:204 |  |  | 0.640 |
+| walker |  | 2228 | 38 | module item at source/index.js:15 |  |  | 0.641 |
+| ns | 2258 |  | 105 | ChalkInstance.rgb method (full doc example) | 3.3 |  | 0.622 |
+| walker |  | 2288 | 60 | module item body at source/index.js:41 body 42 |  |  | 0.623 |
+| ns | 2310 |  | 52 | ChalkInstance remaining model-setter signatures (locations) | 3.4 | 3.3 | 0.615 |
+| walker |  | 2403 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.616 |
+| ns | 2414 |  | 104 | ChalkInstance modifier roster (locations) | 3.5 |  | 0.601 |
+| walker |  | 2426 | 23 | readme.md section #21 |  |  | 0.601 |
+| walker |  | 2448 | 22 | readme.md section #22 |  |  | 0.601 |
+| walker |  | 2539 | 91 | readme.md section #2 |  |  | 0.626 |
+| walker |  | 2560 | 21 | readme.md section #37 |  |  | 0.626 |
+| ns | 2597 |  | 183 | ChalkInstance color + background-color roster (locations, +ellipsis for bright variants) | 3.6 |  | 0.593 |
+| walker |  | 2789 | 229 | package identity metadata in package.json |  |  | 0.610 |
 | ns | 2890 |  | 293 | index.d.ts module-level exports (chalk, supportsColor, chalkStderr, re-exports) | 3.7 |  | 0.574 |
 | walker |  | 2939 | 150 | readme.md section #27 |  |  | 0.574 |
 | walker |  | 2969 | 30 | readme.md section #25 |  |  | 0.574 |
@@ -119,9 +119,9 @@ Score(3000)=0.574 I=0.852 C=0.386 ns_rows≤3K=21/50 (reached=10 partial=0 missi
 | walker |  | 3720 | 54 | readme.md section #5 |  |  | 0.596 |
 | walker |  | 3766 | 46 | readme.md section #36 |  |  | 0.578 |
 | ns | 3766 |  | 154 | createStyler: open/close code chain accumulation | 4.4 | 4.0 | 0.578 |
-| walker |  | 3953 | 187 | package dependencies in package.json |  |  | 0.607 |
-| ns | 3969 |  | 203 | createBuilder: the callable-function-per-style-chain shape | 4.5 | 4.0 | 0.593 |
-| walker |  | 4054 | 101 | code-of-conduct.md section #1 |  |  | 0.593 |
+| walker |  | 3867 | 101 | code-of-conduct.md section #1 |  |  | 0.578 |
+| ns | 3969 |  | 203 | createBuilder: the callable-function-per-style-chain shape | 4.5 | 4.0 | 0.565 |
+| walker |  | 4054 | 187 | package dev/peer dependencies in package.json |  |  | 0.593 |
 | walker |  | 4165 | 111 | code-of-conduct.md section #4 |  |  | 0.593 |
 | walker |  | 4219 | 54 | readme.md section #14 |  |  | 0.593 |
 | walker |  | 4275 | 56 | readme.md section #32 |  |  | 0.593 |

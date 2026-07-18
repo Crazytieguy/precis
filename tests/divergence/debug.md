@@ -8,53 +8,54 @@ Score(3000)=0.692 I=0.816 C=0.587 ns_rows≤3K=22/60 (reached=13 partial=1 missi
 | ns | 99 |  | 52 | package.json name/version/description | 1.2 |  | 0.517 |
 | walker |  | 141 | 65 | package identity in package.json |  |  | 0.642 |
 | walker |  | 157 | 16 | listing of 'src' |  |  | 1.000 |
-| walker |  | 200 | 43 | module-doc lede in src/index.js |  |  | 1.000 |
-| ns | 212 |  | 113 | src/index.js — node/browser dispatch | 1.3 |  | 0.793 |
+| walker |  | 189 | 32 | package runtime metadata in package.json |  |  | 1.000 |
+| ns | 212 |  | 113 | src/index.js — node/browser dispatch | 1.3 |  | 0.757 |
+| walker |  | 232 | 43 | module-doc lede in src/index.js |  |  | 0.793 |
 | ns | 240 |  | 28 | package.json main/browser fields | 1.4 |  | 0.758 |
 | ns | 285 |  | 45 | README lede | 1.5 |  | 0.769 |
-| walker |  | 391 | 191 | headings outline in README.md |  |  | 0.804 |
-| ns | 395 |  | 110 | README section-heading roster (part 1, all levels) | 1.6 |  | 0.712 |
-| walker |  | 416 | 25 | README.md section #1 |  |  | 0.712 |
-| walker |  | 430 | 14 | export names surface in karma.conf.js |  |  | 0.712 |
-| walker |  | 430 | 0 | export at karma.conf.js:1 |  |  | 0.712 |
-| walker |  | 473 | 43 | README.md section #15 |  |  | 0.712 |
-| ns | 529 |  | 134 | README section-heading roster (part 2, all levels) | 1.7 |  | 0.752 |
-| ns | 639 |  | 110 | package.json scripts block | 2.1 |  | 0.700 |
-| walker |  | 656 | 183 | package identity metadata in package.json |  |  | 0.708 |
-| walker |  | 722 | 66 | package entrypoints in package.json |  |  | 0.737 |
-| walker |  | 752 | 30 | package runtime metadata in package.json |  |  | 0.739 |
-| ns | 771 |  | 132 | .travis.yml — CI matrix + script sequence | 2.2 |  | 0.640 |
-| walker |  | 860 | 108 | package scripts in package.json |  |  | 0.705 |
-| ns | 975 |  | 204 | karma.conf.js — browser test runner config (structure, comments elided) | 2.3 |  | 0.621 |
-| walker |  | 992 | 132 | YAML config at .travis.yml |  |  | 0.747 |
-| walker |  | 1014 | 22 | export names surface in src/common.js |  |  | 0.747 |
-| walker |  | 1014 | 0 | export at src/common.js:7 |  |  | 0.747 |
-| walker |  | 1024 | 10 | export body at src/common.js:7 body 146 |  |  | 0.747 |
-| walker |  | 1035 | 11 | export body at src/common.js:7 body 61 |  |  | 0.747 |
-| walker |  | 1046 | 11 | export body at src/common.js:7 body 62 |  |  | 0.747 |
-| ns | 1048 |  | 73 | package.json dependencies + optional peer dep | 2.4 |  | 0.713 |
-| walker |  | 1055 | 9 | export body at src/common.js:7 body 63 |  |  | 0.713 |
-| walker |  | 1064 | 9 | export body at src/common.js:7 body 64 |  |  | 0.713 |
-| walker |  | 1076 | 12 | export body at src/common.js:7 body 116 |  |  | 0.713 |
-| walker |  | 1203 | 127 | README.md section #5 |  |  | 0.713 |
-| walker |  | 1215 | 12 | export body at src/common.js:7 body 119 |  |  | 0.713 |
-| ns | 1245 |  | 197 | package.json devDependencies | 2.5 |  | 0.666 |
-| walker |  | 1341 | 126 | README.md section #11 |  |  | 0.666 |
-| ns | 1549 |  | 304 | package.json remaining metadata (repo/keywords/files/authorship/engines/xo rules) | 2.6 |  | 0.677 |
-| walker |  | 1602 | 261 | README.md section #7 |  |  | 0.681 |
-| walker |  | 1731 | 129 | README.md section #13 |  |  | 0.642 |
-| ns | 1731 |  | 182 | .editorconfig (JS-relevant rules) | 2.7 |  | 0.642 |
-| ns | 1796 |  | 65 | Usage: what debug() does | 3.1 |  | 0.639 |
-| walker |  | 1898 | 167 | README.md section #6 |  |  | 0.643 |
-| walker |  | 1910 | 12 | export body at src/common.js:7 body 166 |  |  | 0.643 |
-| walker |  | 1936 | 26 | imports in test.js |  |  | 0.643 |
-| ns | 1992 |  | 196 | Usage: canonical app.js example | 3.2 |  | 0.598 |
-| ns | 2024 |  | 32 | README: DEBUG env var activation (space/comma-delimited) | 3.3 |  | 0.594 |
-| walker |  | 2153 | 217 | README.md section #4 |  |  | 0.595 |
-| walker |  | 2164 | 11 | export body at src/common.js:7 body 167 |  |  | 0.595 |
-| ns | 2191 |  | 167 | README: Wildcards | 3.4 | 1.6 | 0.612 |
-| ns | 2418 |  | 227 | README: Namespace Colors | 3.6 | 1.6 | 0.584 |
-| walker |  | 2434 | 270 | package dependencies in package.json |  |  | 0.658 |
+| walker |  | 300 | 68 | package entrypoints in package.json |  |  | 0.814 |
+| ns | 395 |  | 110 | README section-heading roster (part 1, all levels) | 1.6 |  | 0.678 |
+| walker |  | 408 | 108 | package scripts in package.json |  |  | 0.689 |
+| ns | 529 |  | 134 | README section-heading roster (part 2, all levels) | 1.7 |  | 0.586 |
+| walker |  | 599 | 191 | headings outline in README.md |  |  | 0.791 |
+| walker |  | 624 | 25 | README.md section #1 |  |  | 0.791 |
+| walker |  | 638 | 14 | export names surface in karma.conf.js |  |  | 0.791 |
+| walker |  | 638 | 0 | export at karma.conf.js:1 |  |  | 0.791 |
+| ns | 639 |  | 110 | package.json scripts block | 2.1 |  | 0.800 |
+| walker |  | 770 | 132 | YAML config at .travis.yml |  |  | 0.823 |
+| ns | 771 |  | 132 | .travis.yml — CI matrix + script sequence | 2.2 |  | 0.834 |
+| walker |  | 800 | 30 | package runtime dependencies in package.json |  |  | 0.835 |
+| walker |  | 843 | 43 | README.md section #15 |  |  | 0.835 |
+| walker |  | 865 | 22 | export names surface in src/common.js |  |  | 0.835 |
+| walker |  | 865 | 0 | export at src/common.js:7 |  |  | 0.835 |
+| walker |  | 875 | 10 | export body at src/common.js:7 body 146 |  |  | 0.835 |
+| walker |  | 886 | 11 | export body at src/common.js:7 body 61 |  |  | 0.835 |
+| walker |  | 897 | 11 | export body at src/common.js:7 body 62 |  |  | 0.835 |
+| walker |  | 906 | 9 | export body at src/common.js:7 body 63 |  |  | 0.835 |
+| walker |  | 915 | 9 | export body at src/common.js:7 body 64 |  |  | 0.835 |
+| ns | 975 |  | 204 | karma.conf.js — browser test runner config (structure, comments elided) | 2.3 |  | 0.735 |
+| ns | 1048 |  | 73 | package.json dependencies + optional peer dep | 2.4 |  | 0.708 |
+| walker |  | 1094 | 179 | package identity metadata in package.json |  |  | 0.720 |
+| walker |  | 1106 | 12 | export body at src/common.js:7 body 116 |  |  | 0.720 |
+| walker |  | 1233 | 127 | README.md section #5 |  |  | 0.720 |
+| walker |  | 1245 | 12 | export body at src/common.js:7 body 119 |  |  | 0.672 |
+| ns | 1245 |  | 197 | package.json devDependencies | 2.5 |  | 0.672 |
+| walker |  | 1371 | 126 | README.md section #11 |  |  | 0.672 |
+| ns | 1549 |  | 304 | package.json remaining metadata (repo/keywords/files/authorship/engines/xo rules) | 2.6 |  | 0.682 |
+| walker |  | 1632 | 261 | README.md section #7 |  |  | 0.686 |
+| ns | 1731 |  | 182 | .editorconfig (JS-relevant rules) | 2.7 |  | 0.646 |
+| walker |  | 1761 | 129 | README.md section #13 |  |  | 0.646 |
+| ns | 1796 |  | 65 | Usage: what debug() does | 3.1 |  | 0.644 |
+| walker |  | 1928 | 167 | README.md section #6 |  |  | 0.648 |
+| walker |  | 1940 | 12 | export body at src/common.js:7 body 166 |  |  | 0.648 |
+| walker |  | 1966 | 26 | imports in test.js |  |  | 0.648 |
+| ns | 1992 |  | 196 | Usage: canonical app.js example | 3.2 |  | 0.602 |
+| ns | 2024 |  | 32 | README: DEBUG env var activation (space/comma-delimited) | 3.3 |  | 0.598 |
+| walker |  | 2183 | 217 | README.md section #4 |  |  | 0.599 |
+| ns | 2191 |  | 167 | README: Wildcards | 3.4 | 1.6 | 0.616 |
+| walker |  | 2194 | 11 | export body at src/common.js:7 body 167 |  |  | 0.616 |
+| ns | 2418 |  | 227 | README: Namespace Colors | 3.6 | 1.6 | 0.588 |
+| walker |  | 2434 | 240 | package dev/peer dependencies in package.json |  |  | 0.658 |
 | ns | 2518 |  | 100 | README: Millisecond diff | 3.7 | 1.6 | 0.661 |
 | ns | 2681 |  | 163 | README: Environment Variables table | 3.8 | 1.7 | 0.673 |
 | walker |  | 2823 | 389 | README.md section #8 |  |  | 0.681 |

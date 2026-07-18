@@ -941,28 +941,10 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 368
-cum_tokens = 4044
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 62
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #14"
 cost_tokens = 99
-cum_tokens = 4143
+cum_tokens = 3775
 
 [batches.content]
 kind = "lines"
@@ -971,6 +953,24 @@ kind = "lines"
 path = "README.md"
 start = 174
 end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Json(DevDependencies { file: "package.json" })'
+descriptor = "package dev/peer dependencies in package.json"
+cost_tokens = 368
+cum_tokens = 4143
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 62
+end = 84
 
 [batches.content.spans.render]
 kind = "full"

@@ -1,6 +1,6 @@
 fixture = "audiobookshelf"
 budget = 10000
-cumulative_tokens = 9950
+cumulative_tokens = 9987
 batch_count = 293
 
 [[batches]]
@@ -409,10 +409,28 @@ kind = "full"
 
 [[batches]]
 position = 21
+key = 'Json(Entry { file: "client/package.json" })'
+descriptor = "package entrypoints in client/package.json"
+cost_tokens = 12
+cum_tokens = 830
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "client/package.json"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
 key = 'Fs(DirListing { dir: "client/cypress/support" })'
 descriptor = "listing of 'client/cypress/support'"
 cost_tokens = 13
-cum_tokens = 831
+cum_tokens = 843
 
 [batches.content]
 kind = "fs"
@@ -422,11 +440,11 @@ parent = "client/cypress/support"
 entries = ["commands.js", "component-index.html", "component.js"]
 
 [[batches]]
-position = 22
+position = 23
 key = 'Fs(DirListing { dir: "client/players" })'
 descriptor = "listing of 'client/players'"
 cost_tokens = 26
-cum_tokens = 857
+cum_tokens = 869
 
 [batches.content]
 kind = "fs"
@@ -436,11 +454,11 @@ parent = "client/players"
 entries = ["AudioTrack.js", "CastPlayer.js", "LocalAudioPlayer.js", "PlayerHandler.js", "castUtils.js"]
 
 [[batches]]
-position = 23
+position = 24
 key = 'Fs(DirListing { dir: "client/store" })'
 descriptor = "listing of 'client/store'"
 cost_tokens = 28
-cum_tokens = 885
+cum_tokens = 897
 
 [batches.content]
 kind = "fs"
@@ -450,11 +468,11 @@ parent = "client/store"
 entries = ["globals.js", "index.js", "libraries.js", "scanners.js", "tasks.js", "user.js", "users.js"]
 
 [[batches]]
-position = 24
+position = 25
 key = 'Fs(DirListing { dir: "docs/controllers" })'
 descriptor = "listing of 'docs/controllers'"
 cost_tokens = 30
-cum_tokens = 915
+cum_tokens = 927
 
 [batches.content]
 kind = "fs"
@@ -464,11 +482,11 @@ parent = "docs/controllers"
 entries = ["AuthorController.yaml", "EmailController.yaml", "LibraryController.yaml", "NotificationController.yaml", "PodcastController.yaml", "SeriesController.yaml"]
 
 [[batches]]
-position = 25
+position = 26
 key = 'Fs(DirListing { dir: "client/cypress/tests" })'
 descriptor = "listing of 'client/cypress/tests'"
 cost_tokens = 6
-cum_tokens = 921
+cum_tokens = 933
 
 [batches.content]
 kind = "fs"
@@ -478,11 +496,11 @@ parent = "client/cypress/tests"
 entries = ["components", "utils"]
 
 [[batches]]
-position = 26
+position = 27
 key = 'Fs(DirListing { dir: "client/cypress/tests/components" })'
 descriptor = "listing of 'client/cypress/tests/components'"
 cost_tokens = 3
-cum_tokens = 924
+cum_tokens = 936
 
 [batches.content]
 kind = "fs"
@@ -492,11 +510,11 @@ parent = "client/cypress/tests/components"
 entries = ["cards"]
 
 [[batches]]
-position = 27
+position = 28
 key = 'Fs(DirListing { dir: "docs/objects" })'
 descriptor = "listing of 'docs/objects'"
 cost_tokens = 33
-cum_tokens = 957
+cum_tokens = 969
 
 [batches.content]
 kind = "fs"
@@ -506,11 +524,11 @@ parent = "docs/objects"
 entries = ["Folder.yaml", "Library.yaml", "LibraryItem.yaml", "Notification.yaml", "entities", "files", "mediaTypes", "metadata", "settings"]
 
 [[batches]]
-position = 28
+position = 29
 key = 'Fs(DirListing { dir: "docs/objects/settings" })'
 descriptor = "listing of 'docs/objects/settings'"
 cost_tokens = 5
-cum_tokens = 962
+cum_tokens = 974
 
 [batches.content]
 kind = "fs"
@@ -520,11 +538,11 @@ parent = "docs/objects/settings"
 entries = ["EmailSettings.yaml"]
 
 [[batches]]
-position = 29
+position = 30
 key = 'Fs(DirListing { dir: "docs/objects/mediaTypes" })'
 descriptor = "listing of 'docs/objects/mediaTypes'"
 cost_tokens = 12
-cum_tokens = 974
+cum_tokens = 986
 
 [batches.content]
 kind = "fs"
@@ -534,11 +552,11 @@ parent = "docs/objects/mediaTypes"
 entries = ["Book.yaml", "Podcast.yaml", "media.yaml"]
 
 [[batches]]
-position = 30
+position = 31
 key = 'Fs(DirListing { dir: "docs/objects/entities" })'
 descriptor = "listing of 'docs/objects/entities'"
 cost_tokens = 13
-cum_tokens = 987
+cum_tokens = 999
 
 [batches.content]
 kind = "fs"
@@ -548,11 +566,11 @@ parent = "docs/objects/entities"
 entries = ["Author.yaml", "PodcastEpisode.yaml", "Series.yaml"]
 
 [[batches]]
-position = 31
+position = 32
 key = 'Fs(DirListing { dir: "docs/objects/files" })'
 descriptor = "listing of 'docs/objects/files'"
 cost_tokens = 16
-cum_tokens = 1003
+cum_tokens = 1015
 
 [batches.content]
 kind = "fs"
@@ -562,11 +580,11 @@ parent = "docs/objects/files"
 entries = ["AudioFile.yaml", "AudioTrack.yaml", "EBookFile.yaml"]
 
 [[batches]]
-position = 32
+position = 33
 key = 'Fs(DirListing { dir: "client/plugins" })'
 descriptor = "listing of 'client/plugins'"
 cost_tokens = 36
-cum_tokens = 1039
+cum_tokens = 1051
 
 [batches.content]
 kind = "fs"
@@ -576,11 +594,11 @@ parent = "client/plugins"
 entries = ["axios.js", "chromecast.js", "constants.js", "i18n.js", "init.client.js", "toast.js", "utils.js", "version.js"]
 
 [[batches]]
-position = 33
+position = 34
 key = 'Json(IdentityMeta { file: "client/package.json" })'
 descriptor = "package identity metadata in client/package.json"
 cost_tokens = 13
-cum_tokens = 1052
+cum_tokens = 1064
 
 [batches.content]
 kind = "lines"
@@ -589,24 +607,6 @@ kind = "lines"
 path = "client/package.json"
 start = 17
 end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Json(Entry { file: "client/package.json" })'
-descriptor = "package entrypoints in client/package.json"
-cost_tokens = 12
-cum_tokens = 1064
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "client/package.json"
-start = 6
-end = 6
 
 [batches.content.spans.render]
 kind = "full"
@@ -4699,10 +4699,28 @@ kind = "full"
 
 [[batches]]
 position = 280
+key = 'Json(DevDependencies { file: "package.json" })'
+descriptor = "package dev/peer dependencies in package.json"
+cost_tokens = 97
+cum_tokens = 9396
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 62
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 281
 key = 'Markdown(Section { file: "readme.md", section_index: 61, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #61"
 cost_tokens = 36
-cum_tokens = 9335
+cum_tokens = 9432
 
 [batches.content]
 kind = "lines"
@@ -4716,11 +4734,11 @@ end = 410
 kind = "full"
 
 [[batches]]
-position = 281
+position = 282
 key = 'Markdown(Section { file: "readme.md", section_index: 54, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #54"
 cost_tokens = 39
-cum_tokens = 9374
+cum_tokens = 9471
 
 [batches.content]
 kind = "lines"
@@ -4734,11 +4752,11 @@ end = 369
 kind = "full"
 
 [[batches]]
-position = 282
+position = 283
 key = 'Markdown(Section { file: "readme.md", section_index: 33, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #33"
 cost_tokens = 38
-cum_tokens = 9412
+cum_tokens = 9509
 
 [batches.content]
 kind = "lines"
@@ -4752,11 +4770,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 283
+position = 284
 key = 'Markdown(Section { file: "readme.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #19"
 cost_tokens = 65
-cum_tokens = 9477
+cum_tokens = 9574
 
 [batches.content]
 kind = "lines"
@@ -4770,11 +4788,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 284
+position = 285
 key = 'Markdown(Section { file: "readme.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #21"
 cost_tokens = 67
-cum_tokens = 9544
+cum_tokens = 9641
 
 [batches.content]
 kind = "lines"
@@ -4788,11 +4806,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 285
+position = 286
 key = 'Markdown(Section { file: "readme.md", section_index: 52, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #52"
 cost_tokens = 45
-cum_tokens = 9589
+cum_tokens = 9686
 
 [batches.content]
 kind = "lines"
@@ -4806,11 +4824,11 @@ end = 362
 kind = "full"
 
 [[batches]]
-position = 286
+position = 287
 key = 'Fs(DirListing { dir: "client/cypress/fixtures" })'
 descriptor = "listing of 'client/cypress/fixtures'"
 cost_tokens = 3
-cum_tokens = 9592
+cum_tokens = 9689
 
 [batches.content]
 kind = "fs"
@@ -4820,11 +4838,11 @@ parent = "client/cypress/fixtures"
 entries = ["images"]
 
 [[batches]]
-position = 287
+position = 288
 key = 'Markdown(Section { file: "readme.md", section_index: 53, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #53"
 cost_tokens = 47
-cum_tokens = 9639
+cum_tokens = 9736
 
 [batches.content]
 kind = "lines"
@@ -4838,11 +4856,11 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 288
+position = 289
 key = 'Markdown(Section { file: "docs/README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "docs/README.md section #4"
 cost_tokens = 89
-cum_tokens = 9728
+cum_tokens = 9825
 
 [batches.content]
 kind = "lines"
@@ -4856,11 +4874,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 289
+position = 290
 key = 'Typescript(Imports { file: "server/libs/archiver/lib/error.js" })'
 descriptor = "imports in server/libs/archiver/lib/error.js"
 cost_tokens = 13
-cum_tokens = 9741
+cum_tokens = 9838
 
 [batches.content]
 kind = "lines"
@@ -4874,11 +4892,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 290
+position = 291
 key = 'Markdown(Section { file: "readme.md", section_index: 57, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #57"
 cost_tokens = 49
-cum_tokens = 9790
+cum_tokens = 9887
 
 [batches.content]
 kind = "lines"
@@ -4892,11 +4910,11 @@ end = 381
 kind = "full"
 
 [[batches]]
-position = 291
+position = 292
 key = 'Markdown(Section { file: "readme.md", section_index: 58, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #58"
 cost_tokens = 49
-cum_tokens = 9839
+cum_tokens = 9936
 
 [batches.content]
 kind = "lines"
@@ -4910,11 +4928,11 @@ end = 389
 kind = "full"
 
 [[batches]]
-position = 292
+position = 293
 key = 'Markdown(Section { file: "readme.md", section_index: 65, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #65"
 cost_tokens = 51
-cum_tokens = 9890
+cum_tokens = 9987
 
 [batches.content]
 kind = "lines"
@@ -4923,24 +4941,6 @@ kind = "lines"
 path = "readme.md"
 start = 424
 end = 424
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 293
-key = 'Markdown(Section { file: "readme.md", section_index: 41, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #41"
-cost_tokens = 60
-cum_tokens = 9950
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 250
-end = 254
 
 [batches.content.spans.render]
 kind = "full"

@@ -127,10 +127,28 @@ kind = "full"
 
 [[batches]]
 position = 8
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 46
+cum_tokens = 324
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 20
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
 key = 'Markdown(HeadingsOutline { file: "code-of-conduct.md" })'
 descriptor = "headings outline in code-of-conduct.md"
 cost_tokens = 74
-cum_tokens = 352
+cum_tokens = 398
 
 [batches.content]
 kind = "lines"
@@ -232,11 +250,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Markdown(Section { file: "code-of-conduct.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "code-of-conduct.md section #0"
 cost_tokens = 0
-cum_tokens = 352
+cum_tokens = 398
 
 [batches.content]
 kind = "lines"
@@ -250,11 +268,29 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
+key = 'Json(Scripts { file: "package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 49
+cum_tokens = 447
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 23
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
 key = 'Fs(DirListing { dir: "source/vendor/ansi-styles" })'
 descriptor = "listing of 'source/vendor/ansi-styles'"
 cost_tokens = 9
-cum_tokens = 361
+cum_tokens = 456
 
 [batches.content]
 kind = "fs"
@@ -264,11 +300,11 @@ parent = "source/vendor/ansi-styles"
 entries = ["index.d.ts", "index.js"]
 
 [[batches]]
-position = 11
+position = 13
 key = 'Typescript(ExportNames { file: "source/index.js" })'
 descriptor = "export names surface in source/index.js"
 cost_tokens = 56
-cum_tokens = 417
+cum_tokens = 512
 
 [batches.content]
 kind = "lines"
@@ -330,11 +366,11 @@ end = 221
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 14
 key = 'Typescript(Export { file: "source/index.js", start_line: 225 })'
 descriptor = "export at source/index.js:225"
 cost_tokens = 0
-cum_tokens = 417
+cum_tokens = 512
 
 [batches.content]
 kind = "lines"
@@ -348,11 +384,11 @@ end = 225
 kind = "full"
 
 [[batches]]
-position = 13
+position = 15
 key = 'Typescript(Export { file: "source/index.js", start_line: 34 })'
 descriptor = "export at source/index.js:34"
 cost_tokens = 8
-cum_tokens = 425
+cum_tokens = 520
 
 [batches.content]
 kind = "lines"
@@ -374,11 +410,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 16
 key = 'Typescript(Export { file: "source/index.js", start_line: 50 })'
 descriptor = "export at source/index.js:50"
 cost_tokens = 13
-cum_tokens = 438
+cum_tokens = 533
 
 [batches.content]
 kind = "lines"
@@ -400,11 +436,11 @@ end = 51
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 17
 key = 'Typescript(ExportBody { file: "source/index.js", start_line: 50, body_start_line: 51 })'
 descriptor = "export body at source/index.js:50 body 51"
 cost_tokens = 9
-cum_tokens = 447
+cum_tokens = 542
 
 [batches.content]
 kind = "lines"
@@ -418,11 +454,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 16
+position = 18
 key = 'Typescript(Export { file: "source/index.js", start_line: 220 })'
 descriptor = "export at source/index.js:220"
 cost_tokens = 27
-cum_tokens = 474
+cum_tokens = 569
 
 [batches.content]
 kind = "lines"
@@ -436,11 +472,11 @@ end = 223
 kind = "full"
 
 [[batches]]
-position = 17
+position = 19
 key = 'Typescript(ExportBody { file: "source/index.js", start_line: 34, body_start_line: 36 })'
 descriptor = "export body at source/index.js:34 body 36"
 cost_tokens = 26
-cum_tokens = 500
+cum_tokens = 595
 
 [batches.content]
 kind = "lines"
@@ -454,11 +490,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 18
+position = 20
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 8
-cum_tokens = 508
+cum_tokens = 603
 
 [batches.content]
 kind = "fs"
@@ -468,11 +504,11 @@ parent = "examples"
 entries = ["rainbow.js", "screenshot.js"]
 
 [[batches]]
-position = 19
+position = 21
 key = 'Typescript(ExportNames { file: "source/vendor/ansi-styles/index.js" })'
 descriptor = "export names surface in source/vendor/ansi-styles/index.js"
 cost_tokens = 78
-cum_tokens = 586
+cum_tokens = 681
 
 [batches.content]
 kind = "lines"
@@ -502,11 +538,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 22
 key = 'Typescript(Export { file: "source/vendor/ansi-styles/index.js", start_line: 223 })'
 descriptor = "export at source/vendor/ansi-styles/index.js:223"
 cost_tokens = 0
-cum_tokens = 586
+cum_tokens = 681
 
 [batches.content]
 kind = "lines"
@@ -520,11 +556,11 @@ end = 223
 kind = "full"
 
 [[batches]]
-position = 21
+position = 23
 key = 'Typescript(Export { file: "source/vendor/ansi-styles/index.js", start_line: 73 })'
 descriptor = "export at source/vendor/ansi-styles/index.js:73"
 cost_tokens = 9
-cum_tokens = 595
+cum_tokens = 690
 
 [batches.content]
 kind = "lines"
@@ -546,11 +582,11 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 11
-cum_tokens = 606
+cum_tokens = 701
 
 [batches.content]
 kind = "fs"
@@ -560,11 +596,11 @@ parent = ".github"
 entries = ["funding.yml", "security.md", "workflows"]
 
 [[batches]]
-position = 23
+position = 25
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 610
+cum_tokens = 705
 
 [batches.content]
 kind = "fs"
@@ -574,11 +610,11 @@ parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 24
+position = 26
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 260
-cum_tokens = 870
+cum_tokens = 965
 
 [batches.content]
 kind = "lines"
@@ -592,11 +628,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 25
+position = 27
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 27
-cum_tokens = 897
+cum_tokens = 992
 
 [batches.content]
 kind = "fs"
@@ -606,11 +642,11 @@ parent = "test"
 entries = ["_fixture.js", "chalk.js", "instance.js", "level.js", "no-color-support.js", "visible.js"]
 
 [[batches]]
-position = 26
+position = 28
 key = 'Markdown(HeadingsOutline { file: "readme.md" })'
 descriptor = "headings outline in readme.md"
 cost_tokens = 260
-cum_tokens = 1157
+cum_tokens = 1252
 
 [batches.content]
 kind = "lines"
@@ -904,11 +940,11 @@ end = 295
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 29
 key = 'Markdown(Section { file: "readme.md", section_index: 30, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #30"
 cost_tokens = 24
-cum_tokens = 1181
+cum_tokens = 1276
 
 [batches.content]
 kind = "lines"
@@ -922,11 +958,11 @@ end = 248
 kind = "full"
 
 [[batches]]
-position = 28
+position = 30
 key = 'Markdown(Section { file: "readme.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #6"
 cost_tokens = 12
-cum_tokens = 1193
+cum_tokens = 1288
 
 [batches.content]
 kind = "lines"
@@ -940,11 +976,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 29
+position = 31
 key = 'Markdown(Section { file: "readme.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #7"
 cost_tokens = 12
-cum_tokens = 1205
+cum_tokens = 1300
 
 [batches.content]
 kind = "lines"
@@ -958,11 +994,11 @@ end = 124
 kind = "full"
 
 [[batches]]
-position = 30
+position = 32
 key = 'Markdown(Section { file: "readme.md", section_index: 31, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #31"
 cost_tokens = 37
-cum_tokens = 1242
+cum_tokens = 1337
 
 [batches.content]
 kind = "lines"
@@ -976,11 +1012,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 31
+position = 33
 key = 'Typescript(ExportNames { file: "source/vendor/supports-color/index.js" })'
 descriptor = "export names surface in source/vendor/supports-color/index.js"
 cost_tokens = 28
-cum_tokens = 1270
+cum_tokens = 1365
 
 [batches.content]
 kind = "lines"
@@ -1010,11 +1046,11 @@ end = 177
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 34
 key = 'Typescript(Export { file: "source/vendor/supports-color/index.js", start_line: 176 })'
 descriptor = "export at source/vendor/supports-color/index.js:176"
 cost_tokens = 0
-cum_tokens = 1270
+cum_tokens = 1365
 
 [batches.content]
 kind = "lines"
@@ -1036,11 +1072,37 @@ end = 177
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 35
+key = 'Json(Entry { file: "package.json" })'
+descriptor = "package entrypoints in package.json"
+cost_tokens = 175
+cum_tokens = 1540
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 9
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 27
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
 key = 'Markdown(Section { file: "readme.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #17"
 cost_tokens = 14
-cum_tokens = 1284
+cum_tokens = 1554
 
 [batches.content]
 kind = "lines"
@@ -1054,11 +1116,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 34
+position = 37
 key = 'Markdown(Section { file: "readme.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #18"
 cost_tokens = 14
-cum_tokens = 1298
+cum_tokens = 1568
 
 [batches.content]
 kind = "lines"
@@ -1072,11 +1134,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 35
+position = 38
 key = 'Markdown(Section { file: "readme.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #19"
 cost_tokens = 16
-cum_tokens = 1314
+cum_tokens = 1584
 
 [batches.content]
 kind = "lines"
@@ -1090,11 +1152,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 36
+position = 39
 key = 'Typescript(Imports { file: "source/index.js" })'
 descriptor = "imports in source/index.js"
 cost_tokens = 69
-cum_tokens = 1383
+cum_tokens = 1653
 
 [batches.content]
 kind = "lines"
@@ -1108,11 +1170,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 37
+position = 40
 key = 'Markdown(Section { file: "readme.md", section_index: 40, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #40"
 cost_tokens = 42
-cum_tokens = 1425
+cum_tokens = 1695
 
 [batches.content]
 kind = "lines"
@@ -1126,11 +1188,11 @@ end = 297
 kind = "full"
 
 [[batches]]
-position = 38
+position = 41
 key = 'Markdown(Section { file: "readme.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #4"
 cost_tokens = 19
-cum_tokens = 1444
+cum_tokens = 1714
 
 [batches.content]
 kind = "lines"
@@ -1144,11 +1206,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 39
+position = 42
 key = 'Markdown(Section { file: "readme.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #23"
 cost_tokens = 18
-cum_tokens = 1462
+cum_tokens = 1732
 
 [batches.content]
 kind = "lines"
@@ -1162,11 +1224,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 40
+position = 43
 key = 'Markdown(Section { file: "readme.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #24"
 cost_tokens = 17
-cum_tokens = 1479
+cum_tokens = 1749
 
 [batches.content]
 kind = "lines"
@@ -1180,11 +1242,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 41
+position = 44
 key = 'Typescript(ModuleItemNames { file: "source/vendor/ansi-styles/index.js" })'
 descriptor = "module item names surface in source/vendor/ansi-styles/index.js"
 cost_tokens = 167
-cum_tokens = 1646
+cum_tokens = 1916
 
 [batches.content]
 kind = "lines"
@@ -1206,11 +1268,11 @@ end = 221
 kind = "full"
 
 [[batches]]
-position = 42
+position = 45
 key = 'Typescript(ModuleItem { file: "source/vendor/ansi-styles/index.js", start_line: 1 })'
 descriptor = "module item at source/vendor/ansi-styles/index.js:1"
 cost_tokens = 0
-cum_tokens = 1646
+cum_tokens = 1916
 
 [batches.content]
 kind = "lines"
@@ -1224,11 +1286,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 43
+position = 46
 key = 'Typescript(ModuleItem { file: "source/vendor/ansi-styles/index.js", start_line: 3 })'
 descriptor = "module item at source/vendor/ansi-styles/index.js:3"
 cost_tokens = 0
-cum_tokens = 1646
+cum_tokens = 1916
 
 [batches.content]
 kind = "lines"
@@ -1242,11 +1304,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 44
+position = 47
 key = 'Typescript(ModuleItem { file: "source/vendor/ansi-styles/index.js", start_line: 5 })'
 descriptor = "module item at source/vendor/ansi-styles/index.js:5"
 cost_tokens = 0
-cum_tokens = 1646
+cum_tokens = 1916
 
 [batches.content]
 kind = "lines"
@@ -1260,11 +1322,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 45
+position = 48
 key = 'Typescript(ModuleItem { file: "source/vendor/ansi-styles/index.js", start_line: 7 })'
 descriptor = "module item at source/vendor/ansi-styles/index.js:7"
 cost_tokens = 0
-cum_tokens = 1646
+cum_tokens = 1916
 
 [batches.content]
 kind = "lines"
@@ -1278,11 +1340,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 46
+position = 49
 key = 'Typescript(ModuleItem { file: "source/vendor/ansi-styles/index.js", start_line: 221 })'
 descriptor = "module item at source/vendor/ansi-styles/index.js:221"
 cost_tokens = 0
-cum_tokens = 1646
+cum_tokens = 1916
 
 [batches.content]
 kind = "lines"
@@ -1296,11 +1358,11 @@ end = 221
 kind = "full"
 
 [[batches]]
-position = 47
+position = 50
 key = 'Markdown(Section { file: "readme.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #20"
 cost_tokens = 20
-cum_tokens = 1666
+cum_tokens = 1936
 
 [batches.content]
 kind = "lines"
@@ -1314,11 +1376,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 48
+position = 51
 key = 'Typescript(ModuleItemNames { file: "source/index.js" })'
 descriptor = "module item names surface in source/index.js"
 cost_tokens = 254
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1474,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 49
+position = 52
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 8 })'
 descriptor = "module item at source/index.js:8"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1430,11 +1492,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 50
+position = 53
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 10 })'
 descriptor = "module item at source/index.js:10"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1448,11 +1510,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 51
+position = 54
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 11 })'
 descriptor = "module item at source/index.js:11"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1466,11 +1528,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 52
+position = 55
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 12 })'
 descriptor = "module item at source/index.js:12"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1484,11 +1546,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 53
+position = 56
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 22 })'
 descriptor = "module item at source/index.js:22"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1502,11 +1564,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 54
+position = 57
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 24 })'
 descriptor = "module item at source/index.js:24"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1528,11 +1590,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 58
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 41 })'
 descriptor = "module item at source/index.js:41"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1554,11 +1616,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 59
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 74 })'
 descriptor = "module item at source/index.js:74"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1580,11 +1642,11 @@ end = 75
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 60
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 94 })'
 descriptor = "module item at source/index.js:94"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1598,11 +1660,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 58
+position = 61
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 119 })'
 descriptor = "module item at source/index.js:119"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1616,11 +1678,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 59
+position = 62
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 132 })'
 descriptor = "module item at source/index.js:132"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1642,11 +1704,11 @@ end = 133
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 63
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 152 })'
 descriptor = "module item at source/index.js:152"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1668,11 +1730,11 @@ end = 153
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 64
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 168 })'
 descriptor = "module item at source/index.js:168"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1694,11 +1756,11 @@ end = 169
 kind = "ellipsis"
 
 [[batches]]
-position = 62
+position = 65
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 204 })'
 descriptor = "module item at source/index.js:204"
 cost_tokens = 0
-cum_tokens = 1920
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1712,11 +1774,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 63
+position = 66
 key = 'Typescript(ModuleItem { file: "source/index.js", start_line: 15 })'
 descriptor = "module item at source/index.js:15"
 cost_tokens = 38
-cum_tokens = 1958
+cum_tokens = 2228
 
 [batches.content]
 kind = "lines"
@@ -1730,11 +1792,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 64
+position = 67
 key = 'Typescript(ModuleItemBody { file: "source/index.js", start_line: 41, body_start_line: 42 })'
 descriptor = "module item body at source/index.js:41 body 42"
 cost_tokens = 60
-cum_tokens = 2018
+cum_tokens = 2288
 
 [batches.content]
 kind = "lines"
@@ -1748,11 +1810,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 65
+position = 68
 key = 'Typescript(ModuleItemBody { file: "source/index.js", start_line: 24, body_start_line: 25 })'
 descriptor = "module item body at source/index.js:24 body 25"
 cost_tokens = 115
-cum_tokens = 2133
+cum_tokens = 2403
 
 [batches.content]
 kind = "lines"
@@ -1766,11 +1828,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 66
+position = 69
 key = 'Markdown(Section { file: "readme.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #21"
 cost_tokens = 23
-cum_tokens = 2156
+cum_tokens = 2426
 
 [batches.content]
 kind = "lines"
@@ -1784,11 +1846,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 67
+position = 70
 key = 'Markdown(Section { file: "readme.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #22"
 cost_tokens = 22
-cum_tokens = 2178
+cum_tokens = 2448
 
 [batches.content]
 kind = "lines"
@@ -1802,11 +1864,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 68
+position = 71
 key = 'Markdown(Section { file: "readme.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #2"
 cost_tokens = 91
-cum_tokens = 2269
+cum_tokens = 2539
 
 [batches.content]
 kind = "lines"
@@ -1820,11 +1882,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 69
+position = 72
 key = 'Markdown(Section { file: "readme.md", section_index: 37, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #37"
 cost_tokens = 21
-cum_tokens = 2290
+cum_tokens = 2560
 
 [batches.content]
 kind = "lines"
@@ -1838,11 +1900,11 @@ end = 268
 kind = "full"
 
 [[batches]]
-position = 70
+position = 73
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
-cost_tokens = 231
-cum_tokens = 2521
+cost_tokens = 229
+cum_tokens = 2789
 
 [batches.content]
 kind = "lines"
@@ -1859,68 +1921,6 @@ kind = "full"
 path = "package.json"
 start = 31
 end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 71
-key = 'Json(Entry { file: "package.json" })'
-descriptor = "package entrypoints in package.json"
-cost_tokens = 177
-cum_tokens = 2698
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 9
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 27
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 44
-cum_tokens = 2742
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 20
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
-key = 'Json(Scripts { file: "package.json" })'
-descriptor = "package scripts in package.json"
-cost_tokens = 47
-cum_tokens = 2789
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 23
-end = 26
 
 [batches.content.spans.render]
 kind = "full"
@@ -2273,28 +2273,10 @@ kind = "full"
 
 [[batches]]
 position = 91
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 187
-cum_tokens = 3953
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 53
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
 key = 'Markdown(Section { file: "code-of-conduct.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "code-of-conduct.md section #1"
 cost_tokens = 101
-cum_tokens = 4054
+cum_tokens = 3867
 
 [batches.content]
 kind = "lines"
@@ -2303,6 +2285,24 @@ kind = "lines"
 path = "code-of-conduct.md"
 start = 3
 end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Json(DevDependencies { file: "package.json" })'
+descriptor = "package dev/peer dependencies in package.json"
+cost_tokens = 187
+cum_tokens = 4054
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 53
+end = 64
 
 [batches.content.spans.render]
 kind = "full"

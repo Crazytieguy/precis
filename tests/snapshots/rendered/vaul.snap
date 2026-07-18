@@ -35,25 +35,22 @@ package.json
       19→      "default": "./dist/index.js"
       20→    }
       21→  },
+      22→  "scripts": {
+      23→    "type-check": "tsc --noEmit",
+      24→    "build": "pnpm type-check && bunchee && pnpm copy-assets",
+      25→    "copy-assets": "cp -r ./src/style.css ./style.css",
+      26→    "dev": "bunchee --watch",
+      27→    "dev:test": "turbo run dev --filter=test...",
+      28→    "format": "prettier --write .",
+      29→    "test": "playwright test"
+      30→  },
     …
-      31→  "keywords": [
-      32→    "react",
-      33→    "drawer",
-      34→    "dialog",
-      35→    "modal"
-      36→  ],
-      37→  "author": "Emil Kowalski <e@emilkowal.ski>",
       38→  "license": "MIT",
-      39→  "homepage": "https://vaul.emilkowal.ski/",
-      40→  "repository": {
-      41→    "type": "git",
-      42→    "url": "https://github.com/emilkowalski/vaul.git"
-      43→  },
-      44→  "bugs": {
-      45→    "url": "https://github.com/emilkowalski/vaul/issues"
-      46→  },
     …
       65→  "packageManager": "pnpm@8.8.0",
+      66→  "dependencies": {
+      67→    "@radix-ui/react-dialog": "^1.1.1"
+      68→  }
     …
 playwright.config.ts
     …

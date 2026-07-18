@@ -54,6 +54,26 @@ package.json
        5→	"license": "MIT",
     …
       13→	"type": "module",
+      14→	"exports": {
+      15→		"types": "./distribution/index.d.ts",
+      16→		"default": "./distribution/index.js"
+      17→	},
+      18→	"main": "./distribution/index.js",
+      19→	"types": "./distribution/index.d.ts",
+      20→	"sideEffects": false,
+      21→	"engines": {
+      22→		"node": ">=18"
+      23→	},
+      24→	"scripts": {
+      25→		"test": "xo && npm run build && ava",
+      26→		"debug": "PWDEBUG=1 ava --timeout=2m",
+      27→		"release": "np",
+      28→		"build": "del-cli distribution && tsc --project tsconfig.dist.json",
+      29→		"prepare": "npm run build"
+      30→	},
+      31→	"files": [
+      32→		"distribution"
+      33→	],
     …
 readme.md
     …
@@ -95,7 +115,6 @@ readme.md
      126→### ky.head(input, options?)
      127→### ky.delete(input, options?)
      129→Sets `options.method` to the method name and makes a request.
-     131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
     …
      745→### ky.extend(defaultOptions)
      747→Create a new `ky` instance with some defaults overridden with your own.
@@ -108,7 +127,6 @@ readme.md
      830→
      831→Type: `object`
      833→### ky.stop
-     835→A `Symbol` that can be returned by a `beforeRetry` hook to stop the retry. This will also short circuit the remaining `beforeRetry` hooks.
     …
      864→### ky.retry(options?)
      866→Force a retry from an `afterResponse` hook.
@@ -160,12 +178,7 @@ source/
         constants.ts
     errors/
         ForceRetryError.ts
-               1→import type {ForceRetryOptions} from '../core/constants.js';
-               2→import {NonError} from './NonError.js';
-               4→/**
-               5→Internal error used to signal a forced retry from afterResponse hooks.
-               6→This is thrown when a user returns ky.retry() from an afterResponse hook.
-               7→*/
+            …
                8→export class ForceRetryError extends Error {
                9→	override name = 'ForceRetryError' as const;
               10→	customDelay: number | undefined;
@@ -182,25 +195,10 @@ source/
                8→	public options: NormalizedOptions;
                9→
               10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
-              11→		const code = (response.status || response.status === 0) ? response.status : '';
-              12→		const title = response.statusText ?? '';
-              13→		const status = `${code} ${title}`.trim();
-              14→		const reason = status ? `status code ${status}` : 'an unknown error';
-              15→
-              16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
-              17→
-              18→		this.name = 'HTTPError';
-              19→		this.response = response;
-              20→		this.request = request;
-              21→		this.options = options;
             …
         NonError.ts
             …
                6→export class NonError extends Error {
-               7→	override name = 'NonError';
-               8→	readonly value: unknown;
-               9→
-              10→	constructor(value: unknown) {
             …
         TimeoutError.ts
                1→import type {KyRequest} from '../types/request.js';

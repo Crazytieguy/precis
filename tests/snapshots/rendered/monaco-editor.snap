@@ -283,10 +283,6 @@ samples/
         browser-amd-trusted-types/
             index.html
         electron-amd/
-            electron-index.html
-            index.html
-            main.js
-            package.json
         electron-amd-nodeIntegration/
     nwjs-amd/
         index.html
@@ -557,6 +553,8 @@ webpack-plugin/
            2→	"name": "monaco-editor-webpack-plugin",
            3→	"version": "7.1.1",
            4→	"description": "A webpack plugin for the Monaco Editor",
+           5→	"main": "out/index.js",
+           6→	"typings": "./out/index.d.ts",
         …
           23→	"license": "MIT",
         …

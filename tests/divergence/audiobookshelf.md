@@ -30,21 +30,21 @@ Score(3000)=0.793 I=0.933 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 752 | 17 | listing of 'client/mixins' |  |  | 0.598 |
 | ns | 788 |  | 92 | .github/ full listing | 1.8 |  | 0.563 |
 | walker |  | 818 | 66 | package identity in client/package.json |  |  | 0.563 |
-| walker |  | 831 | 13 | listing of 'client/cypress/support' |  |  | 0.570 |
-| walker |  | 857 | 26 | listing of 'client/players' |  |  | 0.586 |
-| ns | 860 |  | 72 | build/, .devcontainer/, .vscode/, images/ listings | 1.9 |  | 0.557 |
-| walker |  | 885 | 28 | listing of 'client/store' |  |  | 0.591 |
-| walker |  | 915 | 30 | listing of 'docs/controllers' |  |  | 0.591 |
-| walker |  | 921 | 6 | listing of 'client/cypress/tests' |  |  | 0.597 |
-| walker |  | 924 | 3 | listing of 'client/cypress/tests/components' |  |  | 0.601 |
-| walker |  | 957 | 33 | listing of 'docs/objects' |  |  | 0.602 |
-| walker |  | 962 | 5 | listing of 'docs/objects/settings' |  |  | 0.602 |
-| walker |  | 974 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.602 |
-| walker |  | 987 | 13 | listing of 'docs/objects/entities' |  |  | 0.602 |
-| walker |  | 1003 | 16 | listing of 'docs/objects/files' |  |  | 0.602 |
-| walker |  | 1039 | 36 | listing of 'client/plugins' |  |  | 0.657 |
-| walker |  | 1052 | 13 | package identity metadata in client/package.json |  |  | 0.657 |
-| walker |  | 1064 | 12 | package entrypoints in client/package.json |  |  | 0.657 |
+| walker |  | 830 | 12 | package entrypoints in client/package.json |  |  | 0.563 |
+| walker |  | 843 | 13 | listing of 'client/cypress/support' |  |  | 0.570 |
+| ns | 860 |  | 72 | build/, .devcontainer/, .vscode/, images/ listings | 1.9 |  | 0.542 |
+| walker |  | 869 | 26 | listing of 'client/players' |  |  | 0.557 |
+| walker |  | 897 | 28 | listing of 'client/store' |  |  | 0.591 |
+| walker |  | 927 | 30 | listing of 'docs/controllers' |  |  | 0.591 |
+| walker |  | 933 | 6 | listing of 'client/cypress/tests' |  |  | 0.597 |
+| walker |  | 936 | 3 | listing of 'client/cypress/tests/components' |  |  | 0.601 |
+| walker |  | 969 | 33 | listing of 'docs/objects' |  |  | 0.602 |
+| walker |  | 974 | 5 | listing of 'docs/objects/settings' |  |  | 0.602 |
+| walker |  | 986 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.602 |
+| walker |  | 999 | 13 | listing of 'docs/objects/entities' |  |  | 0.602 |
+| walker |  | 1015 | 16 | listing of 'docs/objects/files' |  |  | 0.602 |
+| walker |  | 1051 | 36 | listing of 'client/plugins' |  |  | 0.657 |
+| walker |  | 1064 | 13 | package identity metadata in client/package.json |  |  | 0.657 |
 | walker |  | 1103 | 39 | listing of 'client/assets' |  |  | 0.658 |
 | walker |  | 1116 | 13 | listing of 'client/assets/ebooks' |  |  | 0.658 |
 | walker |  | 1129 | 13 | listing of '.github' |  |  | 0.660 |
@@ -322,20 +322,20 @@ Score(3000)=0.793 I=0.933 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 9264 | 38 | readme.md section #40 |  |  | 0.800 |
 | walker |  | 9299 | 35 | readme.md section #67 |  |  | 0.800 |
 | ns | 9312 |  | 132 | LibraryItem + Book model method sample | 5.1 |  | 0.796 |
-| walker |  | 9335 | 36 | readme.md section #61 |  |  | 0.796 |
-| walker |  | 9374 | 39 | readme.md section #54 |  |  | 0.796 |
-| walker |  | 9412 | 38 | readme.md section #33 |  |  | 0.796 |
+| walker |  | 9396 | 97 | package dev/peer dependencies in package.json |  |  | 0.796 |
+| walker |  | 9432 | 36 | readme.md section #61 |  |  | 0.796 |
 | ns | 9445 |  | 133 | LibraryItemController + LibraryController method sample | 5.2 |  | 0.792 |
-| walker |  | 9477 | 65 | readme.md section #19 |  |  | 0.792 |
+| walker |  | 9471 | 39 | readme.md section #54 |  |  | 0.792 |
+| walker |  | 9509 | 38 | readme.md section #33 |  |  | 0.792 |
 | ns | 9536 |  | 91 | CronManager + BackupManager method sample | 5.3 |  | 0.789 |
-| walker |  | 9544 | 67 | readme.md section #21 |  |  | 0.789 |
-| walker |  | 9589 | 45 | readme.md section #52 |  |  | 0.789 |
-| walker |  | 9592 | 3 | listing of 'client/cypress/fixtures' |  |  | 0.790 |
-| walker |  | 9639 | 47 | readme.md section #53 |  |  | 0.790 |
-| walker |  | 9728 | 89 | docs/README.md section #4 |  |  | 0.790 |
-| walker |  | 9741 | 13 | imports in server/libs/archiver/lib/error.js |  |  | 0.790 |
-| walker |  | 9790 | 49 | readme.md section #57 |  |  | 0.790 |
-| walker |  | 9839 | 49 | readme.md section #58 |  |  | 0.790 |
-| walker |  | 9890 | 51 | readme.md section #65 |  |  | 0.790 |
-| walker |  | 9950 | 60 | readme.md section #41 |  |  | 0.790 |
+| walker |  | 9574 | 65 | readme.md section #19 |  |  | 0.789 |
+| walker |  | 9641 | 67 | readme.md section #21 |  |  | 0.789 |
+| walker |  | 9686 | 45 | readme.md section #52 |  |  | 0.789 |
+| walker |  | 9689 | 3 | listing of 'client/cypress/fixtures' |  |  | 0.790 |
+| walker |  | 9736 | 47 | readme.md section #53 |  |  | 0.790 |
+| walker |  | 9825 | 89 | docs/README.md section #4 |  |  | 0.790 |
+| walker |  | 9838 | 13 | imports in server/libs/archiver/lib/error.js |  |  | 0.790 |
+| walker |  | 9887 | 49 | readme.md section #57 |  |  | 0.790 |
+| walker |  | 9936 | 49 | readme.md section #58 |  |  | 0.790 |
+| walker |  | 9987 | 51 | readme.md section #65 |  |  | 0.790 |
 | ns | 9991 |  | 455 | test/server/Logger.test.js: mocha/chai/sinon convention example | 5.4 |  | 0.777 |

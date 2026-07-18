@@ -6,7 +6,6 @@ expression: rendered
     devcontainer.json
 .github/
     ISSUE_TEMPLATE/
-        bug_report.yaml
     PULL_REQUEST_TEMPLATE.md
     mergify.yml
     workflows/
@@ -82,23 +81,9 @@ README.md
       63→# Docker Support
       64→
       65→## Run from docker
-      66→
-      67→You can run dockly using docker:
-      68→
-      69→```
-      70→docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock lirantal/dockly
-      71→```
-      72→
-      73→
+    …
       74→## Build
-      75→
-      76→If you wish to build dockly as a docker image yourself, you can run the following:
-      77→
-      78→```
-      79→$ docker build -t dockly .
-      80→
-      81→$ docker run -it --rm --name dockly -v /var/run/docker.sock:/var/run/docker.sock dockly
-      82→```
+    …
       84→# FAQ
     …
      125→## Alternatives
@@ -231,8 +216,34 @@ package.json
        2→  "name": "dockly",
        3→  "version": "0.0.0-development",
        4→  "description": "Immersive terminal interface for managing docker containers and services",
+       5→  "main": "index.js",
+       6→  "scripts": {
+       7→    "test": "npm run lint",
+       8→    "lint": "standard && npm run lint:lockfile",
+       9→    "lint:fix": "standard --fix",
+      10→    "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
+      11→    "debug": "node --inspect=0.0.0.0:9222 ./index.js "
+      12→  },
+      13→  "files": [
+      14→    "hooks",
+      15→    "lib",
+      16→    "src",
+      17→    "widgets",
+      18→    "index.js",
+      19→    "dockerRunScript.sh"
+      20→  ],
+      21→  "engines": {
+      22→    "node": ">=7.6.0"
+      23→  },
+      24→  "bin": {
+      25→    "dockly": "./index.js"
+      26→  },
     …
       63→  "license": "MIT",
+    …
+      81→  "devDependencies": {
+      82→    "standard": "^12.0.1"
+      83→  },
     …
 src/
     assetsLoader.js
@@ -281,8 +292,6 @@ src/
         …
          160→  getService (serviceId, cb) {
         …
-         165→  getImage (imageId, cb) {
-        …
          233→module.exports = Util
     enum.js
            1→module.exports = {
@@ -307,8 +316,6 @@ src/
          114→  setWidgetsRepo () {
         …
          120→  setWidgetsUtils () {
-        …
-         126→  setWidgetsInit () {
         …
          132→  renderWidgets () {
         …
@@ -335,20 +342,8 @@ src/
             …
     widgetsTemplates/
         base.hook.template.js
-            …
-               6→class myWidget extends baseWidget(EventEmitter) {
-            …
-              34→module.exports = myWidget
         help.widget.template.js
-            …
-               5→class myWidget extends baseWidget() {
-            …
-             144→module.exports = myWidget
         info.widget.template.js
-            …
-               6→class myWidget extends baseWidget() {
-            …
-             121→module.exports = myWidget
         list.widget.template.js
             …
                8→class myWidget extends baseWidget(EventEmitter) {
@@ -363,10 +358,6 @@ src/
             …
              161→module.exports = myWidget
         logs.widget.template.js
-            …
-               7→class myWidget extends baseWidget() {
-            …
-              89→module.exports = myWidget
 widgets/
     actionStatus.widget.js
     actionsMenu.widget.js

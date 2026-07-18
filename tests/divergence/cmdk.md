@@ -109,74 +109,73 @@ Score(3000)=0.410 I=0.471 C=0.358 ns_rows≤3K=26/44 (reached=11 partial=0 missi
 | ns | 3592 |  | 282 | CommandProps core knobs | 4.2 |  | 0.412 |
 | walker |  | 3646 | 141 | README.md section #37 |  |  | 0.454 |
 | walker |  | 3688 | 42 | package identity in cmdk/package.json |  |  | 0.454 |
-| walker |  | 3800 | 112 | package dependencies in package.json |  |  | 0.454 |
-| walker |  | 3826 | 26 | README.md section #19 |  |  | 0.454 |
-| walker |  | 3852 | 26 | README.md section #22 |  |  | 0.454 |
-| walker |  | 3925 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.471 |
-| walker |  | 3950 | 25 | README.md section #23 |  |  | 0.471 |
-| ns | 3954 |  | 362 | ItemProps + GroupProps | 4.3 |  | 0.450 |
-| walker |  | 3985 | 35 | README.md section #21 |  |  | 0.450 |
-| walker |  | 4045 | 60 | listing of 'test/pages' |  |  | 0.480 |
-| walker |  | 4064 | 19 | imports in playwright.config.ts |  |  | 0.480 |
-| walker |  | 4090 | 26 | export names surface in cmdk/src/command-score.ts |  |  | 0.480 |
-| walker |  | 4090 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.480 |
-| walker |  | 4158 | 68 | ARCHITECTURE.md section #3 |  |  | 0.480 |
-| walker |  | 4210 | 52 | README.md section #4 |  |  | 0.480 |
-| walker |  | 4262 | 52 | README.md section #5 |  |  | 0.480 |
-| walker |  | 4274 | 12 | imports in cmdk/tsup.config.ts |  |  | 0.487 |
-| walker |  | 4314 | 40 | README.md section #34 |  |  | 0.487 |
-| walker |  | 4465 | 151 | README.md section #36 |  |  | 0.487 |
-| walker |  | 4528 | 63 | README.md section #10 |  |  | 0.487 |
-| ns | 4584 |  | 630 | Command keyboard-navigation switch | 5.1 |  | 0.442 |
-| walker |  | 4591 | 63 | README.md section #17 |  |  | 0.442 |
-| walker |  | 4833 | 242 | json config tsconfig.json |  |  | 0.442 |
-| walker |  | 4899 | 66 | README.md section #26 |  |  | 0.442 |
-| walker |  | 4970 | 71 | README.md section #20 |  |  | 0.442 |
-| walker |  | 5043 | 73 | README.md section #27 |  |  | 0.442 |
-| walker |  | 5120 | 77 | README.md section #18 |  |  | 0.442 |
-| walker |  | 5559 | 439 | ARCHITECTURE.md section #0 |  |  | 0.442 |
-| walker |  | 5641 | 82 | README.md section #15 |  |  | 0.442 |
-| walker |  | 5733 | 92 | README.md section #32 |  |  | 0.442 |
-| walker |  | 5837 | 104 | README.md section #7 |  |  | 0.442 |
-| ns | 5845 |  | 1261 | Command filter/sort/select algorithm | 5.2 |  | 0.383 |
-| ns | 5922 |  | 77 | Empty component | 6.1 | 4.1 | 0.381 |
-| walker |  | 5942 | 105 | README.md section #14 |  |  | 0.381 |
-| walker |  | 6399 | 457 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.381 |
-| walker |  | 6488 | 89 | README.md section #25 |  |  | 0.381 |
-| walker |  | 6501 | 13 | listing of 'website/styles' |  |  | 0.388 |
-| walker |  | 6595 | 94 | README.md section #13 |  |  | 0.388 |
-| ns | 6616 |  | 694 | Item component | 6.2 | 4.1 | 0.364 |
-| walker |  | 6713 | 118 | README.md section #16 |  |  | 0.364 |
-| ns | 6832 |  | 216 | commandScore exported entrypoint | 7.1 |  | 0.360 |
-| walker |  | 6839 | 126 | README.md section #6 |  |  | 0.360 |
-| walker |  | 6970 | 131 | README.md section #9 |  |  | 0.360 |
-| walker |  | 7105 | 135 | README.md section #8 |  |  | 0.360 |
-| walker |  | 7115 | 10 | export names surface in test/pages/index.tsx |  |  | 0.360 |
-| walker |  | 7115 | 0 | export at test/pages/index.tsx:28 |  |  | 0.360 |
-| walker |  | 7125 | 10 | listing of 'website/components/code' |  |  | 0.366 |
-| walker |  | 7135 | 10 | listing of 'website/components/icons' |  |  | 0.373 |
-| walker |  | 7291 | 156 | README.md section #12 |  |  | 0.373 |
-| walker |  | 7447 | 156 | README.md section #11 |  |  | 0.373 |
-| walker |  | 7459 | 12 | export at test/pages/index.tsx:3 |  |  | 0.373 |
-| ns | 7577 |  | 745 | command-score weighting constants | 7.2 |  | 0.356 |
-| ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.352 |
-| walker |  | 7892 | 433 | README.md section #35 |  |  | 0.385 |
-| ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.399 |
-| ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.390 |
-| walker |  | 8575 | 683 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.449 |
-| ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.439 |
-| walker |  | 8703 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.444 |
-| ns | 8937 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.435 |
-| ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.432 |
-| walker |  | 9344 | 641 | README.md section #2 |  |  | 0.432 |
-| walker |  | 9358 | 14 | export names surface in website/pages/index.tsx |  |  | 0.432 |
-| walker |  | 9358 | 0 | export at website/pages/index.tsx:29 |  |  | 0.432 |
-| ns | 9452 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.421 |
-| walker |  | 9537 | 179 | README.md section #33 |  |  | 0.421 |
-| ns | 9595 |  | 143 | Format/lint-staged tooling | 11.1 |  | 0.416 |
-| ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.410 |
-| walker |  | 9837 | 300 | ARCHITECTURE.md section #2 |  |  | 0.410 |
-| walker |  | 9913 | 76 | README headline in website/README.md |  |  | 0.410 |
-| walker |  | 9936 | 23 | headings outline in website/README.md |  |  | 0.410 |
-| walker |  | 9955 | 19 | listing of 'website/styles/cmdk' |  |  | 0.421 |
-| walker |  | 9999 | 44 | listing of 'website/public' |  |  | 0.436 |
+| walker |  | 3768 | 80 | package scripts in cmdk/package.json |  |  | 0.460 |
+| walker |  | 3794 | 26 | README.md section #19 |  |  | 0.460 |
+| walker |  | 3820 | 26 | README.md section #22 |  |  | 0.460 |
+| walker |  | 3932 | 112 | package dev/peer dependencies in package.json |  |  | 0.460 |
+| ns | 3954 |  | 362 | ItemProps + GroupProps | 4.3 |  | 0.439 |
+| walker |  | 4077 | 145 | package entrypoints in cmdk/package.json |  |  | 0.451 |
+| walker |  | 4150 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.467 |
+| walker |  | 4175 | 25 | README.md section #23 |  |  | 0.467 |
+| walker |  | 4210 | 35 | README.md section #21 |  |  | 0.467 |
+| walker |  | 4270 | 60 | listing of 'test/pages' |  |  | 0.497 |
+| walker |  | 4289 | 19 | imports in playwright.config.ts |  |  | 0.497 |
+| walker |  | 4315 | 26 | export names surface in cmdk/src/command-score.ts |  |  | 0.497 |
+| walker |  | 4315 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.497 |
+| walker |  | 4383 | 68 | ARCHITECTURE.md section #3 |  |  | 0.497 |
+| walker |  | 4435 | 52 | README.md section #4 |  |  | 0.497 |
+| walker |  | 4487 | 52 | README.md section #5 |  |  | 0.497 |
+| walker |  | 4499 | 12 | imports in cmdk/tsup.config.ts |  |  | 0.504 |
+| walker |  | 4539 | 40 | README.md section #34 |  |  | 0.504 |
+| ns | 4584 |  | 630 | Command keyboard-navigation switch | 5.1 |  | 0.457 |
+| walker |  | 4690 | 151 | README.md section #36 |  |  | 0.457 |
+| walker |  | 4753 | 63 | README.md section #10 |  |  | 0.457 |
+| walker |  | 4816 | 63 | README.md section #17 |  |  | 0.457 |
+| walker |  | 5058 | 242 | json config tsconfig.json |  |  | 0.457 |
+| walker |  | 5124 | 66 | README.md section #26 |  |  | 0.457 |
+| walker |  | 5195 | 71 | README.md section #20 |  |  | 0.457 |
+| walker |  | 5268 | 73 | README.md section #27 |  |  | 0.457 |
+| walker |  | 5345 | 77 | README.md section #18 |  |  | 0.457 |
+| walker |  | 5784 | 439 | ARCHITECTURE.md section #0 |  |  | 0.457 |
+| ns | 5845 |  | 1261 | Command filter/sort/select algorithm | 5.2 |  | 0.396 |
+| walker |  | 5880 | 96 | package runtime dependencies in cmdk/package.json |  |  | 0.411 |
+| ns | 5922 |  | 77 | Empty component | 6.1 | 4.1 | 0.409 |
+| walker |  | 5962 | 82 | README.md section #15 |  |  | 0.409 |
+| walker |  | 6053 | 91 | package dev/peer dependencies in cmdk/package.json |  |  | 0.421 |
+| walker |  | 6145 | 92 | README.md section #32 |  |  | 0.421 |
+| walker |  | 6249 | 104 | README.md section #7 |  |  | 0.421 |
+| walker |  | 6354 | 105 | README.md section #14 |  |  | 0.421 |
+| ns | 6616 |  | 694 | Item component | 6.2 | 4.1 | 0.395 |
+| walker |  | 6811 | 457 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.395 |
+| ns | 6832 |  | 216 | commandScore exported entrypoint | 7.1 |  | 0.390 |
+| walker |  | 6900 | 89 | README.md section #25 |  |  | 0.390 |
+| walker |  | 6913 | 13 | listing of 'website/styles' |  |  | 0.397 |
+| walker |  | 7007 | 94 | README.md section #13 |  |  | 0.397 |
+| walker |  | 7125 | 118 | README.md section #16 |  |  | 0.397 |
+| walker |  | 7251 | 126 | README.md section #6 |  |  | 0.397 |
+| walker |  | 7382 | 131 | README.md section #9 |  |  | 0.397 |
+| walker |  | 7517 | 135 | README.md section #8 |  |  | 0.397 |
+| walker |  | 7527 | 10 | export names surface in test/pages/index.tsx |  |  | 0.397 |
+| walker |  | 7527 | 0 | export at test/pages/index.tsx:28 |  |  | 0.397 |
+| walker |  | 7537 | 10 | listing of 'website/components/code' |  |  | 0.404 |
+| walker |  | 7547 | 10 | listing of 'website/components/icons' |  |  | 0.410 |
+| ns | 7577 |  | 745 | command-score weighting constants | 7.2 |  | 0.392 |
+| walker |  | 7703 | 156 | README.md section #12 |  |  | 0.392 |
+| ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.388 |
+| walker |  | 7859 | 156 | README.md section #11 |  |  | 0.388 |
+| walker |  | 7871 | 12 | export at test/pages/index.tsx:3 |  |  | 0.388 |
+| ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.402 |
+| walker |  | 8304 | 433 | README.md section #35 |  |  | 0.432 |
+| ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.422 |
+| ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.413 |
+| ns | 8937 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.405 |
+| walker |  | 8987 | 683 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.460 |
+| ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.456 |
+| walker |  | 9115 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.461 |
+| ns | 9452 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.450 |
+| ns | 9595 |  | 143 | Format/lint-staged tooling | 11.1 |  | 0.445 |
+| walker |  | 9756 | 641 | README.md section #2 |  |  | 0.445 |
+| walker |  | 9770 | 14 | export names surface in website/pages/index.tsx |  |  | 0.445 |
+| walker |  | 9770 | 0 | export at website/pages/index.tsx:29 |  |  | 0.445 |
+| ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.438 |
+| walker |  | 9949 | 179 | README.md section #33 |  |  | 0.438 |

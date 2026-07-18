@@ -117,8 +117,21 @@ package.json
        2→  "name": "@enclosed/root",
        3→  "version": "1.16.0",
        4→  "description": "Send private and secure note",
-    …
+       5→  "packageManager": "pnpm@9.15.0",
        6→  "license": "Apache-2.0",
+    …
+      12→  "engines": {
+      13→    "node": ">=22.0.0"
+      14→  },
+      15→  "scripts": {
+      16→    "release": "bumpp --commit --tag --push --recursive",
+      17→    "docker:build": "docker build -t enclosed .",
+      18→    "docker:run": "docker run -d -p 8788:8787 enclosed"
+      19→  },
+    …
+      30→  "devDependencies": {
+      31→    "bumpp": "^9.5.2"
+      32→  }
     …
 packages/
     app-client/
@@ -184,10 +197,6 @@ packages/
                     hooks/
                         hooks.ts
                     http/
-                        http-client.models.test.ts
-                        http-client.models.ts
-                        http-client.ts
-                        http-errors.ts
                     style/
                         cn.ts
                     utils/
@@ -213,11 +222,6 @@ packages/
                 app/
                     auth/
                     config/
-                        config.models.ts
-                        config.routes.ts
-                        config.test-utils.ts
-                        config.ts
-                        config.types.ts
                     middlewares/
                     server.ts
                     server.types.ts
