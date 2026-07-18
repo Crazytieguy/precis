@@ -31,8 +31,9 @@ pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for (name, kind) in children {
         if matches!(kind, EntryKind::Directory)
-            && !should_skip_dir(&name)
-            && let Some(batch) = dir_listing_batch(dir.join(&name), ctx)
+            && let child = dir.join(&name)
+            && should_recurse_dir(&child, ctx.root())
+            && let Some(batch) = dir_listing_batch(child, ctx)
         {
             out.push(batch);
         }
@@ -72,21 +73,20 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str]) -> Vec<PathBuf> {
 /// Recursively walk `dir` for files with `ext` (case-insensitive).
 pub fn files_with_extension_recursive(dir: &Path, ext: &str) -> Vec<PathBuf> {
     let mut out = Vec::new();
-    walk_files_recursive(dir, ext, &mut out);
+    walk_files_recursive(dir, dir, ext, &mut out);
     out.sort();
     out
 }
 
-fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
+fn walk_files_recursive(dir: &Path, traversal_root: &Path, ext: &str, out: &mut Vec<PathBuf>) {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return;
     };
     for entry in read_dir.flatten() {
         let path = entry.path();
         if path.is_dir() {
-            let name = entry.file_name().to_string_lossy().into_owned();
-            if !should_skip_dir(&name) {
-                walk_files_recursive(&path, ext, out);
+            if should_recurse_dir(&path, traversal_root) {
+                walk_files_recursive(&path, traversal_root, ext, out);
             }
         } else if path
             .extension()
@@ -562,10 +562,118 @@ pub(crate) fn should_skip_dir(name: &str) -> bool {
     )
 }
 
+/// Path-aware exception to the name-only heavy-directory policy. A checked-in
+/// Rust module may legitimately be named `build/`; generated build output does
+/// not gain traversal merely by containing arbitrary artifacts.
+fn should_recurse_dir(dir: &Path, traversal_root: &Path) -> bool {
+    let Some(name) = dir.file_name().and_then(|name| name.to_str()) else {
+        return false;
+    };
+    if name != "build" {
+        return !should_skip_dir(name);
+    }
+    is_owned_rust_build_dir(dir, traversal_root)
+}
+
+/// A `build/` directory is plausibly project-owned Rust source when it has an
+/// immediate Rust file and either lives below a conventional source tree or is
+/// explicitly paired with the package's `build.rs` script.
+fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
+    if files_with_extension(dir, "rs").is_empty() {
+        return false;
+    }
+    let Some(parent) = dir.parent() else {
+        return false;
+    };
+    if parent.join("build.rs").is_file() {
+        return true;
+    }
+    dir.ancestors()
+        .skip(1)
+        .take_while(|ancestor| ancestor.starts_with(traversal_root))
+        .any(is_source_dir)
+}
+
 /// A `test`/`tests`/`spec`/`specs` directory name, case-insensitive.
 pub(crate) fn is_test_dir_name(name: &str) -> bool {
     matches!(
         name.to_ascii_lowercase().as_str(),
         "test" | "tests" | "spec" | "specs"
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    struct TempDir(PathBuf);
+
+    impl TempDir {
+        fn new() -> Self {
+            let nonce = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_nanos();
+            let dir = std::env::temp_dir().join(format!(
+                "precis-fs-build-dir-{}-{nonce}",
+                std::process::id()
+            ));
+            std::fs::create_dir_all(&dir).unwrap();
+            Self(dir)
+        }
+
+        fn path(&self) -> &Path {
+            &self.0
+        }
+    }
+
+    impl Drop for TempDir {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
+    }
+
+    #[test]
+    fn owned_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
+        let temp = TempDir::new();
+        let root = temp.path();
+        let source_build = root.join("src/build");
+        let source_build_child = source_build.join("compile");
+        let root_build = root.join("build");
+        let target_build = root.join("target/debug/build/generated/src/build");
+        std::fs::create_dir_all(&source_build_child).unwrap();
+        std::fs::create_dir_all(&root_build).unwrap();
+        std::fs::create_dir_all(&target_build).unwrap();
+        std::fs::write(source_build.join("mod.rs"), "pub mod compile;\n").unwrap();
+        std::fs::write(
+            source_build_child.join("compile.rs"),
+            "pub fn compile() {}\n",
+        )
+        .unwrap();
+        std::fs::write(root_build.join("probe.rs"), "pub fn probe() {}\n").unwrap();
+        std::fs::write(target_build.join("mod.rs"), "pub fn generated() {}\n").unwrap();
+
+        let before_build_script = files_with_extension_recursive(root, "rs");
+        assert!(before_build_script.contains(&source_build.join("mod.rs")));
+        assert!(before_build_script.contains(&source_build_child.join("compile.rs")));
+        assert!(!before_build_script.contains(&root_build.join("probe.rs")));
+        assert!(!before_build_script.contains(&target_build.join("mod.rs")));
+
+        std::fs::write(root.join("build.rs"), "fn main() {}\n").unwrap();
+        let after_build_script = files_with_extension_recursive(root, "rs");
+        assert!(after_build_script.contains(&root_build.join("probe.rs")));
+        assert!(!after_build_script.contains(&target_build.join("mod.rs")));
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let root_children = expand_subdirs(root, &ctx);
+        assert!(root_children.iter().any(|batch| matches!(
+            &batch.key,
+            BatchKey::Fs(FsKey::DirListing { dir }) if dir == &root_build
+        )));
+        assert!(!root_children.iter().any(|batch| matches!(
+            &batch.key,
+            BatchKey::Fs(FsKey::DirListing { dir }) if dir.starts_with(root.join("target"))
+        )));
+    }
 }
