@@ -104,12 +104,7 @@ docs/
     userguide.rst
     versionhistory.rst
 pyproject.toml
-       1→[build-system]
-       2→requires = [
-       3→    "setuptools >= 77",
-       4→    "setuptools_scm[toml] >= 6.4"
-       5→]
-       6→build-backend = "setuptools.build_meta"
+    …
        8→[project]
        9→name = "typeguard"
       10→description = "Run-time type checker for Python"
@@ -123,76 +118,6 @@ pyproject.toml
       29→    "typing_extensions >= 4.14.0",
       30→]
     …
-      33→[project.urls]
-      34→Documentation = "https://typeguard.readthedocs.io/en/latest/"
-      35→"Change log" = "https://typeguard.readthedocs.io/en/latest/versionhistory.html"
-      36→"Source code" = "https://github.com/agronholm/typeguard"
-      37→"Issue tracker" = "https://github.com/agronholm/typeguard/issues"
-      38→
-      39→[project.entry-points]
-      40→pytest11 = {typeguard = "typeguard._pytest_plugin"}
-    …
-      55→[tool.setuptools.package-data]
-      56→typeguard = ["py.typed"]
-      57→
-      58→[tool.setuptools_scm]
-      59→version_scheme = "post-release"
-      60→local_scheme = "dirty-tag"
-      61→
-      62→[tool.pytest.ini_options]
-      63→addopts = "--tb=short"
-      64→testpaths = "tests"
-      65→xfail_strict = true
-      66→filterwarnings = ["error"]
-      67→
-      68→[tool.coverage.run]
-      69→source = ["typeguard"]
-      70→
-      71→[tool.coverage.report]
-      72→show_missing = true
-      73→exclude_lines = [
-      74→    "pragma: no cover",
-      75→    "if TYPE_CHECKING:"
-      76→]
-      78→[tool.ruff]
-      79→src = ["src"]
-      80→
-      81→[tool.ruff.per-file-target-version]
-      82→"tests/dummymodule_py312.py" = "py312"
-      83→
-      84→[tool.ruff.lint]
-      85→extend-select = [
-      86→    "B0",           # flake8-bugbear
-      87→    "I",            # isort
-      88→    "PGH",          # pygrep-hooks
-      89→    "UP",           # pyupgrade
-      90→    "W",            # pycodestyle warnings
-      91→]
-      92→ignore = [
-      93→    "S307",
-      94→    "B008",
-      95→    "UP006",
-      96→    "UP035",
-      97→]
-      99→[tool.mypy]
-     100→python_version = "3.11"
-     101→strict = true
-     102→pretty = true
-     103→files = ["src"]
-     105→[tool.tox]
-     106→env_list = ["py39", "py310", "py311", "py312", "py313", "py314"]
-     107→skip_missing_interpreters = true
-     108→requires = ["tox >= 4.22"]
-     109→
-     110→[tool.tox.env_run_base]
-     111→commands = [["coverage", "run", "-m", "pytest", { replace = "posargs", extend = true }]]
-     112→package = "editable"
-     113→dependency_groups = ["test"]
-     114→
-     115→[tool.tox.env.docs]
-     116→depends = []
-     117→dependency_groups = ["doc"]
-     118→commands = [["sphinx-build", "-W", "-n", "docs", "build/sphinx"]]
 src/
     typeguard/
         __init__.py
@@ -235,23 +160,125 @@ src/
               43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
             …
         _checkers.py
+            …
+              81→TypeCheckerCallable: TypeAlias = Callable[
+              82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
+              83→]
+              84→TypeCheckLookupCallback: TypeAlias = Callable[
+              85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
+              86→]
+              88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
+              89→generic_alias_types: tuple[type, ...] = (
+              90→    type(List),
+              91→    type(List[Any]),
+              92→    types.GenericAlias,
+              93→)
+            …
+              96→_missing = object()
+            …
+              99→BINARY_MAGIC_METHODS = {
+            …
+             153→def check_callable(
+             154→    value: Any,
+             155→    origin_type: Any,
+             156→    args: tuple[Any, ...],
+             157→    memo: TypeCheckMemo,
+             158→) -> None:
+            …
+             212→def check_mapping(
+             213→    value: Any,
+             214→    origin_type: Any,
+             215→    args: tuple[Any, ...],
+             216→    memo: TypeCheckMemo,
+             217→) -> None:
+            …
+             247→def check_typed_dict(
+            …
+             305→def check_list(
+            …
+             324→def check_sequence(
+            …
+             343→def check_set(
+            …
+             365→def check_tuple(
+            …
+             423→def check_union(
+            …
+             447→def check_uniontype(
+            …
+             474→def check_class(
+            …
+             536→def check_newtype(
+            …
+             545→def check_instance(
+            …
+             555→def check_typevar(
+            …
+             586→def _is_literal_type(typ: object) -> bool:
+            …
+             590→def check_literal(
+            …
+             623→def check_literal_string(
+            …
+             632→def check_typeguard(
+            …
+             641→def check_none(
+            …
+             651→def check_number(
+            …
+             663→def check_io(
+            …
+             679→def check_signature_compatible(subject: type, protocol: type, attrname: str) -> None:
+            …
+             834→def check_protocol(
+            …
+             885→def check_byteslike(
+            …
+             895→def check_self(
+            …
+             915→def check_paramspec(
+            …
+             924→def check_type_internal(
+             925→    value: Any,
+             926→    annotation: Any,
+             927→    memo: TypeCheckMemo,
+             928→) -> None:
+            …
+            1005→origin_type_checkers: dict[
+            …
+            1061→def builtin_checker_lookup(
+            1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
+            1063→) -> TypeCheckerCallable | None:
+            …
+            1099→def load_plugins() -> None:
+            …
         _config.py
         _decorators.py
         _exceptions.py
                1→from collections import deque
                2→from typing import Deque
                5→class TypeHintWarning(UserWarning):
-            …
+               6→    """
+               7→    A warning that is emitted when a type hint in string form could not be resolved to
+               8→    an actual type.
+               9→    """
               12→class TypeCheckWarning(UserWarning):
               13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
-            …
+              15→    def __init__(self, message: str):
+              16→        super().__init__(message)
               19→class InstrumentationWarning(UserWarning):
               20→    """Emitted when there's a problem with instrumenting a function for type checks."""
+              22→    def __init__(self, message: str):
             …
               26→class TypeCheckError(Exception):
               27→    """
               28→    Raised by typeguard's type checkers when a type mismatch is detected.
               29→    """
+              31→    def __init__(self, message: str):
+            …
+              35→    def append_path_element(self, element: str) -> None:
+            …
+              38→    def __str__(self) -> str:
             …
         _functions.py
         _importhook.py

@@ -247,254 +247,232 @@ Score(3000)=0.538 I=0.585 C=0.494 ns_rows≤3K=22/104 (reached=7 partial=0 missi
 | walker |  | 5182 | 0 | python method at rich/pager.py:23 |  |  | 0.443 |
 | walker |  | 5189 | 7 | python method at rich/pager.py:8 |  |  | 0.443 |
 | walker |  | 5205 | 16 | python method doc at rich/pager.py:23 |  |  | 0.443 |
-| walker |  | 5221 | 16 | python decl doc at rich/live.py:22 |  |  | 0.443 |
 | ns | 5227 |  | 67 | rich/box.py: excerpt of the box-style constant name list | 4.9 | 4.8 | 0.440 |
-| walker |  | 5268 | 47 | python decl names surface in rich/table.py |  |  | 0.440 |
-| walker |  | 5268 | 0 | python decl at rich/table.py:142 |  |  | 0.440 |
-| walker |  | 5268 | 0 | python decl at rich/table.py:153 |  |  | 0.440 |
-| walker |  | 5275 | 7 | python decl at rich/table.py:38 |  |  | 0.440 |
-| walker |  | 5282 | 7 | python decl at rich/table.py:131 |  |  | 0.440 |
-| walker |  | 5293 | 11 | python decl doc at rich/table.py:131 |  |  | 0.440 |
-| walker |  | 5307 | 14 | python decl doc at rich/table.py:38 |  |  | 0.437 |
 | ns | 5307 |  | 80 | docs/source/appendix/box.rst (excerpt): how to select a box style | 4.10 | 4.9 | 0.437 |
-| walker |  | 5322 | 15 | python decl doc at rich/table.py:153 |  |  | 0.437 |
-| walker |  | 5346 | 24 | python class body at rich/table.py:153 |  |  | 0.437 |
-| walker |  | 5359 | 13 | python decl doc at rich/table.py:142 |  |  | 0.437 |
 | ns | 5395 |  | 88 | docs/source/markup.rst (excerpt): console markup (bbcode-like) syntax | 4.11 |  | 0.434 |
-| walker |  | 5424 | 65 | python method sigs in rich/spinner.py |  |  | 0.434 |
-| walker |  | 5424 | 0 | python method at rich/spinner.py:61 |  |  | 0.434 |
-| walker |  | 5451 | 27 | python method at rich/spinner.py:55 |  |  | 0.434 |
-| ns | 5467 |  | 72 | rich/markup.py: Tag NamedTuple + escape() + render() signatures | 4.12 | 4.11 | 0.431 |
-| walker |  | 5480 | 29 | python method at rich/spinner.py:50 |  |  | 0.431 |
-| walker |  | 5490 | 10 | python method body at rich/spinner.py:50 body 53 |  |  | 0.431 |
-| walker |  | 5539 | 49 | python decl names surface in rich/emoji.py |  |  | 0.431 |
-| walker |  | 5539 | 0 | python decl at rich/emoji.py:16 |  |  | 0.431 |
-| walker |  | 5539 | 0 | python decl at rich/emoji.py:20 |  |  | 0.431 |
+| walker |  | 5456 | 251 | python decl names surface in rich/console.py |  |  | 0.435 |
+| ns | 5467 |  | 72 | rich/markup.py: Tag NamedTuple + escape() + render() signatures | 4.12 | 4.11 | 0.432 |
+| walker |  | 5472 | 16 | python decl doc at rich/live.py:22 |  |  | 0.432 |
+| walker |  | 5519 | 47 | python decl names surface in rich/table.py |  |  | 0.432 |
+| walker |  | 5519 | 0 | python decl at rich/table.py:142 |  |  | 0.432 |
+| walker |  | 5519 | 0 | python decl at rich/table.py:153 |  |  | 0.432 |
+| walker |  | 5526 | 7 | python decl at rich/table.py:38 |  |  | 0.432 |
+| walker |  | 5533 | 7 | python decl at rich/table.py:131 |  |  | 0.432 |
+| walker |  | 5544 | 11 | python decl doc at rich/table.py:131 |  |  | 0.432 |
 | ns | 5547 |  | 80 | docs/source/highlighting.rst (excerpt): automatic + custom highlighters | 4.13 |  | 0.429 |
-| walker |  | 5549 | 10 | python decl doc at rich/emoji.py:16 |  |  | 0.429 |
-| walker |  | 5600 | 51 | python class body at rich/emoji.py:20 |  |  | 0.429 |
-| walker |  | 5612 | 12 | python method body at rich/columns.py:54 body 60 |  |  | 0.429 |
-| walker |  | 5663 | 51 | python decl names surface in rich/padding.py |  |  | 0.429 |
-| walker |  | 5663 | 0 | python decl at rich/padding.py:19 |  |  | 0.429 |
-| walker |  | 5679 | 16 | python imports in rich/_loop.py |  |  | 0.429 |
-| walker |  | 5695 | 16 | python imports in rich/_windows.py |  |  | 0.429 |
-| ns | 5702 |  | 155 | rich/highlighter.py: Highlighter/RegexHighlighter/ReprHighlighter/JSONHighlighter/ISO8601Highlighter | 4.14 | 4.13 | 0.424 |
-| ns | 5736 |  | 34 | docs/source/text.rst (excerpt): the Text class narrative | 5.1 |  | 0.422 |
-| walker |  | 5766 | 71 | python method sigs in rich/emoji.py |  |  | 0.422 |
-| walker |  | 5766 | 0 | python method at rich/emoji.py:64 |  |  | 0.422 |
-| walker |  | 5766 | 0 | python method at rich/emoji.py:67 |  |  | 0.422 |
-| walker |  | 5774 | 8 | python method at rich/emoji.py:52 |  |  | 0.422 |
-| ns | 5793 |  | 57 | rich/text.py: Span NamedTuple + Text class docstring + __init__ | 5.2 | 5.1 | 0.420 |
-| walker |  | 5803 | 29 | python method at rich/emoji.py:70 |  |  | 0.420 |
-| walker |  | 5886 | 83 | python decl doc at rich/__init__.py:39 |  |  | 0.420 |
-| walker |  | 5939 | 53 | python decl names surface in rich/filesize.py |  |  | 0.420 |
-| walker |  | 5939 | 0 | python decl at rich/filesize.py:43 |  |  | 0.420 |
-| walker |  | 5955 | 16 | python decl doc at rich/filesize.py:43 |  |  | 0.420 |
-| walker |  | 6005 | 50 | python decl at rich/filesize.py:52 |  |  | 0.421 |
-| ns | 6011 |  | 218 | rich/text.py: Text method location roster (~60 methods) | 5.3 | 5.2 | 0.415 |
-| walker |  | 6028 | 23 | python decl doc at rich/filesize.py:52 |  |  | 0.415 |
-| walker |  | 6070 | 42 | python decl doc at rich/theme.py:81 |  |  | 0.415 |
-| walker |  | 6125 | 55 | python decl names surface in rich/segment.py |  |  | 0.416 |
-| walker |  | 6125 | 0 | python decl at rich/segment.py:32 |  |  | 0.416 |
-| walker |  | 6125 | 0 | python decl at rich/segment.py:699 |  |  | 0.416 |
-| walker |  | 6125 | 0 | python decl at rich/segment.py:724 |  |  | 0.416 |
-| walker |  | 6135 | 10 | python decl at rich/segment.py:60 |  |  | 0.416 |
-| walker |  | 6153 | 18 | python decl doc at rich/segment.py:32 |  |  | 0.417 |
-| ns | 6168 |  | 157 | rich/cells.py: cell-width function location roster | 5.4 |  | 0.415 |
-| ns | 6181 |  | 13 | rich/ansi.py: AnsiDecoder (converts raw ANSI text to Text/Segments) | 5.5 |  | 0.414 |
-| walker |  | 6195 | 42 | python class body at rich/segment.py:60 |  |  | 0.414 |
-| ns | 6234 |  | 53 | docs/source/tables.rst (excerpt): Table usage, options, grids | 6.1 |  | 0.412 |
-| walker |  | 6237 | 42 | python decl at rich/segment.py:53 |  |  | 0.412 |
-| walker |  | 6258 | 21 | python method doc at rich/_stack.py:14 |  |  | 0.412 |
+| walker |  | 5558 | 14 | python decl doc at rich/table.py:38 |  |  | 0.429 |
+| walker |  | 5573 | 15 | python decl doc at rich/table.py:153 |  |  | 0.429 |
+| walker |  | 5597 | 24 | python class body at rich/table.py:153 |  |  | 0.429 |
+| walker |  | 5610 | 13 | python decl doc at rich/table.py:142 |  |  | 0.429 |
+| walker |  | 5675 | 65 | python method sigs in rich/spinner.py |  |  | 0.429 |
+| walker |  | 5675 | 0 | python method at rich/spinner.py:61 |  |  | 0.429 |
+| walker |  | 5702 | 27 | python method at rich/spinner.py:55 |  |  | 0.425 |
+| ns | 5702 |  | 155 | rich/highlighter.py: Highlighter/RegexHighlighter/ReprHighlighter/JSONHighlighter/ISO8601Highlighter | 4.14 | 4.13 | 0.425 |
+| walker |  | 5731 | 29 | python method at rich/spinner.py:50 |  |  | 0.425 |
+| ns | 5736 |  | 34 | docs/source/text.rst (excerpt): the Text class narrative | 5.1 |  | 0.423 |
+| walker |  | 5741 | 10 | python method body at rich/spinner.py:50 body 53 |  |  | 0.423 |
+| walker |  | 5790 | 49 | python decl names surface in rich/emoji.py |  |  | 0.423 |
+| walker |  | 5790 | 0 | python decl at rich/emoji.py:16 |  |  | 0.423 |
+| walker |  | 5790 | 0 | python decl at rich/emoji.py:20 |  |  | 0.423 |
+| ns | 5793 |  | 57 | rich/text.py: Span NamedTuple + Text class docstring + __init__ | 5.2 | 5.1 | 0.421 |
+| walker |  | 5800 | 10 | python decl doc at rich/emoji.py:16 |  |  | 0.421 |
+| walker |  | 5851 | 51 | python class body at rich/emoji.py:20 |  |  | 0.421 |
+| walker |  | 5863 | 12 | python method body at rich/columns.py:54 body 60 |  |  | 0.421 |
+| walker |  | 5914 | 51 | python decl names surface in rich/padding.py |  |  | 0.421 |
+| walker |  | 5914 | 0 | python decl at rich/padding.py:19 |  |  | 0.421 |
+| walker |  | 5930 | 16 | python imports in rich/_loop.py |  |  | 0.421 |
+| walker |  | 5946 | 16 | python imports in rich/_windows.py |  |  | 0.421 |
+| ns | 6011 |  | 218 | rich/text.py: Text method location roster (~60 methods) | 5.3 | 5.2 | 0.416 |
+| walker |  | 6017 | 71 | python method sigs in rich/emoji.py |  |  | 0.416 |
+| walker |  | 6017 | 0 | python method at rich/emoji.py:64 |  |  | 0.416 |
+| walker |  | 6017 | 0 | python method at rich/emoji.py:67 |  |  | 0.416 |
+| walker |  | 6025 | 8 | python method at rich/emoji.py:52 |  |  | 0.416 |
+| walker |  | 6054 | 29 | python method at rich/emoji.py:70 |  |  | 0.416 |
+| walker |  | 6137 | 83 | python decl doc at rich/__init__.py:39 |  |  | 0.416 |
+| ns | 6168 |  | 157 | rich/cells.py: cell-width function location roster | 5.4 |  | 0.413 |
+| ns | 6181 |  | 13 | rich/ansi.py: AnsiDecoder (converts raw ANSI text to Text/Segments) | 5.5 |  | 0.413 |
+| walker |  | 6190 | 53 | python decl names surface in rich/filesize.py |  |  | 0.413 |
+| walker |  | 6190 | 0 | python decl at rich/filesize.py:43 |  |  | 0.413 |
+| walker |  | 6206 | 16 | python decl doc at rich/filesize.py:43 |  |  | 0.413 |
+| ns | 6234 |  | 53 | docs/source/tables.rst (excerpt): Table usage, options, grids | 6.1 |  | 0.411 |
+| walker |  | 6256 | 50 | python decl at rich/filesize.py:52 |  |  | 0.412 |
+| walker |  | 6279 | 23 | python decl doc at rich/filesize.py:52 |  |  | 0.412 |
 | ns | 6295 |  | 61 | rich/table.py: Column dataclass + Table docstring + __init__ | 6.2 | 6.1 | 0.411 |
-| walker |  | 6334 | 76 | python method sigs in rich/rule.py |  |  | 0.411 |
-| walker |  | 6334 | 0 | python method at rich/rule.py:46 |  |  | 0.411 |
-| walker |  | 6334 | 0 | python method at rich/rule.py:105 |  |  | 0.411 |
-| walker |  | 6359 | 25 | python method at rich/rule.py:111 |  |  | 0.411 |
-| walker |  | 6385 | 26 | python method at rich/rule.py:49 |  |  | 0.411 |
-| walker |  | 6398 | 13 | python method body at rich/rule.py:111 body 114 |  |  | 0.411 |
-| ns | 6414 |  | 119 | rich/table.py: Table method location roster | 6.3 | 6.2 | 0.408 |
-| walker |  | 6454 | 56 | python decl names surface in rich/_export_format.py |  |  | 0.408 |
-| ns | 6459 |  | 45 | docs/source/panel.rst + rich/panel.py Panel docstring+init | 6.4 |  | 0.407 |
+| walker |  | 6321 | 42 | python decl doc at rich/theme.py:81 |  |  | 0.411 |
+| walker |  | 6376 | 55 | python decl names surface in rich/segment.py |  |  | 0.411 |
+| walker |  | 6376 | 0 | python decl at rich/segment.py:32 |  |  | 0.411 |
+| walker |  | 6376 | 0 | python decl at rich/segment.py:699 |  |  | 0.411 |
+| walker |  | 6376 | 0 | python decl at rich/segment.py:724 |  |  | 0.411 |
+| walker |  | 6386 | 10 | python decl at rich/segment.py:60 |  |  | 0.411 |
+| walker |  | 6404 | 18 | python decl doc at rich/segment.py:32 |  |  | 0.412 |
+| ns | 6414 |  | 119 | rich/table.py: Table method location roster | 6.3 | 6.2 | 0.409 |
+| walker |  | 6446 | 42 | python class body at rich/segment.py:60 |  |  | 0.409 |
+| ns | 6459 |  | 45 | docs/source/panel.rst + rich/panel.py Panel docstring+init | 6.4 |  | 0.408 |
+| walker |  | 6488 | 42 | python decl at rich/segment.py:53 |  |  | 0.408 |
 | ns | 6492 |  | 33 | docs/source/progress.rst (partial): track() and Progress context-manager usage | 6.5 |  | 0.406 |
-| walker |  | 6533 | 79 | python method sigs in rich/panel.py |  |  | 0.406 |
-| walker |  | 6541 | 8 | python method at rich/panel.py:109 |  |  | 0.406 |
-| walker |  | 6549 | 8 | python method at rich/panel.py:125 |  |  | 0.406 |
-| ns | 6553 |  | 61 | rich/progress.py: track() function (excerpt) | 6.6 | 6.5 | 0.404 |
-| walker |  | 6577 | 28 | python method at rich/panel.py:277 |  |  | 0.404 |
-| walker |  | 6606 | 29 | python method at rich/panel.py:141 |  |  | 0.404 |
-| walker |  | 6664 | 58 | python decl names surface in rich/_ratio.py |  |  | 0.404 |
-| walker |  | 6664 | 0 | python decl at rich/_ratio.py:6 |  |  | 0.404 |
-| walker |  | 6664 | 0 | python decl at rich/_ratio.py:14 |  |  | 0.404 |
-| ns | 6690 |  | 137 | rich/progress.py: ProgressColumn subclass roster | 6.7 |  | 0.401 |
-| walker |  | 6697 | 33 | python decl at rich/_ratio.py:107 |  |  | 0.401 |
-| walker |  | 6715 | 18 | python decl doc at rich/_ratio.py:6 |  |  | 0.401 |
+| walker |  | 6509 | 21 | python method doc at rich/_stack.py:14 |  |  | 0.406 |
+| ns | 6553 |  | 61 | rich/progress.py: track() function (excerpt) | 6.6 | 6.5 | 0.405 |
+| walker |  | 6585 | 76 | python method sigs in rich/rule.py |  |  | 0.405 |
+| walker |  | 6585 | 0 | python method at rich/rule.py:46 |  |  | 0.405 |
+| walker |  | 6585 | 0 | python method at rich/rule.py:105 |  |  | 0.405 |
+| walker |  | 6610 | 25 | python method at rich/rule.py:111 |  |  | 0.405 |
+| walker |  | 6636 | 26 | python method at rich/rule.py:49 |  |  | 0.405 |
+| walker |  | 6649 | 13 | python method body at rich/rule.py:111 body 114 |  |  | 0.405 |
+| ns | 6690 |  | 137 | rich/progress.py: ProgressColumn subclass roster | 6.7 |  | 0.402 |
+| walker |  | 6705 | 56 | python decl names surface in rich/_export_format.py |  |  | 0.402 |
 | ns | 6741 |  | 51 | rich/progress.py: Task fields + Progress class docstring+init | 6.8 | 6.6 | 0.400 |
-| walker |  | 6749 | 34 | python decl at rich/_ratio.py:75 |  |  | 0.400 |
-| walker |  | 6785 | 36 | python class body at rich/_ratio.py:6 |  |  | 0.400 |
-| walker |  | 6831 | 46 | python decl doc at rich/logging.py:24 |  |  | 0.400 |
 | ns | 6916 |  | 175 | rich/progress.py: Progress.add_task + Task-management method roster | 6.9 | 6.8 | 0.396 |
-| walker |  | 6945 | 114 | python class body at rich/logging.py:24 |  |  | 0.396 |
 | ns | 6957 |  | 41 | docs/source/tree.rst + rich/tree.py Tree docstring+init | 6.10 |  | 0.395 |
-| walker |  | 7008 | 63 | python class body at rich/table.py:131 |  |  | 0.395 |
-| ns | 7009 |  | 52 | docs/source/live.rst + rich/live.py Live docstring+init | 6.11 |  | 0.394 |
-| walker |  | 7027 | 19 | python imports in rich/pager.py |  |  | 0.394 |
-| walker |  | 7046 | 19 | python imports in rich/protocol.py |  |  | 0.394 |
-| ns | 7126 |  | 117 | rich/live.py: Live method location roster | 6.12 | 6.11 | 0.392 |
-| walker |  | 7185 | 139 | python decl at rich/__init__.py:120 |  |  | 0.392 |
+| walker |  | 6961 | 256 | python decl names surface in rich/_win32_console.py |  |  | 0.395 |
+| ns | 7009 |  | 52 | docs/source/live.rst + rich/live.py Live docstring+init | 6.11 |  | 0.395 |
+| walker |  | 7040 | 79 | python method sigs in rich/panel.py |  |  | 0.395 |
+| walker |  | 7048 | 8 | python method at rich/panel.py:109 |  |  | 0.395 |
+| walker |  | 7056 | 8 | python method at rich/panel.py:125 |  |  | 0.395 |
+| walker |  | 7084 | 28 | python method at rich/panel.py:277 |  |  | 0.395 |
+| walker |  | 7113 | 29 | python method at rich/panel.py:141 |  |  | 0.395 |
+| ns | 7126 |  | 117 | rich/live.py: Live method location roster | 6.12 | 6.11 | 0.393 |
+| walker |  | 7171 | 58 | python decl names surface in rich/_ratio.py |  |  | 0.393 |
+| walker |  | 7171 | 0 | python decl at rich/_ratio.py:6 |  |  | 0.393 |
+| walker |  | 7171 | 0 | python decl at rich/_ratio.py:14 |  |  | 0.393 |
+| walker |  | 7204 | 33 | python decl at rich/_ratio.py:107 |  |  | 0.393 |
 | ns | 7210 |  | 84 | docs/source/layout.rst (partial): Layout split_column/split_row | 6.13 |  | 0.391 |
+| walker |  | 7222 | 18 | python decl doc at rich/_ratio.py:6 |  |  | 0.391 |
+| walker |  | 7256 | 34 | python decl at rich/_ratio.py:75 |  |  | 0.391 |
 | ns | 7282 |  | 72 | rich/layout.py: Layout/Splitter class location roster | 6.14 | 6.13 | 0.389 |
+| walker |  | 7292 | 36 | python class body at rich/_ratio.py:6 |  |  | 0.389 |
 | ns | 7308 |  | 26 | docs/source/columns.rst + docs/source/padding.rst (excerpt) | 6.15 |  | 0.388 |
-| walker |  | 7310 | 125 | python method sigs in rich/status.py |  |  | 0.388 |
-| walker |  | 7310 | 0 | python method at rich/status.py:85 |  |  | 0.388 |
-| walker |  | 7310 | 0 | python method at rich/status.py:89 |  |  | 0.388 |
-| walker |  | 7310 | 0 | python method at rich/status.py:93 |  |  | 0.388 |
-| walker |  | 7310 | 0 | python method at rich/status.py:96 |  |  | 0.388 |
-| walker |  | 7318 | 8 | python method at rich/status.py:44 |  |  | 0.388 |
-| walker |  | 7326 | 8 | python method at rich/status.py:48 |  |  | 0.388 |
-| walker |  | 7337 | 11 | python method doc at rich/status.py:85 |  |  | 0.388 |
-| walker |  | 7348 | 11 | python method doc at rich/status.py:89 |  |  | 0.388 |
-| walker |  | 7363 | 15 | python method doc at rich/status.py:48 |  |  | 0.388 |
+| walker |  | 7338 | 46 | python decl doc at rich/logging.py:24 |  |  | 0.388 |
 | ns | 7363 |  | 55 | rich/columns.py Columns + rich/padding.py Padding + rich/align.py Align/VerticalCenter docstrings+init | 6.16 | 6.15 | 0.388 |
 | ns | 7391 |  | 28 | rich/rule.py Rule + rich/status.py Status class location | 6.17 |  | 0.389 |
 | ns | 7419 |  | 28 | docs/source/markdown.rst + docs/source/syntax.rst (excerpt) | 7.1 |  | 0.388 |
-| walker |  | 7447 | 84 | python method sigs in rich/logging.py |  |  | 0.388 |
-| walker |  | 7447 | 0 | python method at rich/logging.py:123 |  |  | 0.388 |
-| walker |  | 7447 | 0 | python method at rich/logging.py:138 |  |  | 0.388 |
-| walker |  | 7447 | 0 | python method at rich/logging.py:190 |  |  | 0.388 |
-| walker |  | 7458 | 11 | python method doc at rich/logging.py:138 |  |  | 0.388 |
-| walker |  | 7466 | 8 | python method body at rich/emoji.py:67 body 68 |  |  | 0.388 |
-| walker |  | 7551 | 85 | python method sigs in rich/palette.py |  |  | 0.388 |
-| walker |  | 7551 | 0 | python method at rich/palette.py:14 |  |  | 0.388 |
-| walker |  | 7551 | 0 | python method at rich/palette.py:17 |  |  | 0.388 |
-| walker |  | 7551 | 0 | python method at rich/palette.py:20 |  |  | 0.388 |
-| walker |  | 7564 | 13 | python method at rich/palette.py:44 |  |  | 0.388 |
-| walker |  | 7573 | 9 | python method body at rich/palette.py:14 body 15 |  |  | 0.388 |
-| ns | 7579 |  | 160 | rich/markdown.py: Markdown element class roster + Markdown docstring | 7.2 | 7.1 | 0.384 |
-| walker |  | 7675 | 102 | python method sigs in rich/theme.py |  |  | 0.384 |
-| walker |  | 7675 | 0 | python method at rich/theme.py:88 |  |  | 0.384 |
-| walker |  | 7675 | 0 | python method at rich/theme.py:92 |  |  | 0.384 |
-| walker |  | 7675 | 0 | python method at rich/theme.py:106 |  |  | 0.384 |
-| walker |  | 7683 | 8 | python method at rich/theme.py:29 |  |  | 0.384 |
-| walker |  | 7715 | 32 | python method at rich/theme.py:17 |  |  | 0.384 |
-| walker |  | 7731 | 16 | python method doc at rich/theme.py:29 |  |  | 0.384 |
-| walker |  | 7747 | 16 | python method doc at rich/theme.py:106 |  |  | 0.384 |
-| ns | 7760 |  | 181 | rich/syntax.py: SyntaxTheme hierarchy + Syntax class method roster | 7.3 | 7.1 | 0.380 |
-| walker |  | 7790 | 43 | python method at rich/theme.py:59 |  |  | 0.380 |
-| ns | 7818 |  | 58 | docs/source/traceback.rst (excerpt): install() handler + suppress + max_frames | 7.4 |  | 0.379 |
-| walker |  | 7835 | 45 | python method at rich/theme.py:37 |  |  | 0.379 |
-| ns | 7891 |  | 73 | rich/traceback.py: install() signature + Traceback class location roster | 7.5 | 7.4 | 0.377 |
-| ns | 7948 |  | 57 | docs/source/pretty.rst (excerpt): pprint/Pretty and the Rich Repr protocol | 7.6 |  | 0.376 |
+| walker |  | 7452 | 114 | python class body at rich/logging.py:24 |  |  | 0.388 |
+| walker |  | 7515 | 63 | python class body at rich/table.py:131 |  |  | 0.388 |
+| walker |  | 7534 | 19 | python imports in rich/pager.py |  |  | 0.388 |
+| walker |  | 7553 | 19 | python imports in rich/protocol.py |  |  | 0.388 |
+| ns | 7579 |  | 160 | rich/markdown.py: Markdown element class roster + Markdown docstring | 7.2 | 7.1 | 0.385 |
+| walker |  | 7692 | 139 | python decl at rich/__init__.py:120 |  |  | 0.385 |
+| ns | 7760 |  | 181 | rich/syntax.py: SyntaxTheme hierarchy + Syntax class method roster | 7.3 | 7.1 | 0.381 |
+| walker |  | 7817 | 125 | python method sigs in rich/status.py |  |  | 0.381 |
+| walker |  | 7817 | 0 | python method at rich/status.py:85 |  |  | 0.381 |
+| walker |  | 7817 | 0 | python method at rich/status.py:89 |  |  | 0.381 |
+| walker |  | 7817 | 0 | python method at rich/status.py:93 |  |  | 0.381 |
+| walker |  | 7817 | 0 | python method at rich/status.py:96 |  |  | 0.381 |
+| ns | 7818 |  | 58 | docs/source/traceback.rst (excerpt): install() handler + suppress + max_frames | 7.4 |  | 0.380 |
+| walker |  | 7825 | 8 | python method at rich/status.py:44 |  |  | 0.380 |
+| walker |  | 7833 | 8 | python method at rich/status.py:48 |  |  | 0.380 |
+| walker |  | 7844 | 11 | python method doc at rich/status.py:85 |  |  | 0.380 |
+| walker |  | 7855 | 11 | python method doc at rich/status.py:89 |  |  | 0.380 |
+| walker |  | 7870 | 15 | python method doc at rich/status.py:48 |  |  | 0.380 |
+| ns | 7891 |  | 73 | rich/traceback.py: install() signature + Traceback class location roster | 7.5 | 7.4 | 0.378 |
+| ns | 7948 |  | 57 | docs/source/pretty.rst (excerpt): pprint/Pretty and the Rich Repr protocol | 7.6 |  | 0.377 |
+| walker |  | 7954 | 84 | python method sigs in rich/logging.py |  |  | 0.377 |
+| walker |  | 7954 | 0 | python method at rich/logging.py:123 |  |  | 0.377 |
+| walker |  | 7954 | 0 | python method at rich/logging.py:138 |  |  | 0.377 |
+| walker |  | 7954 | 0 | python method at rich/logging.py:190 |  |  | 0.377 |
+| walker |  | 7965 | 11 | python method doc at rich/logging.py:138 |  |  | 0.377 |
+| walker |  | 7973 | 8 | python method body at rich/emoji.py:67 body 68 |  |  | 0.377 |
 | ns | 7999 |  | 51 | rich/pretty.py: install()/pprint()/pretty_repr() signatures + Pretty/Node location | 7.7 | 7.6 | 0.375 |
-| ns | 8100 |  | 101 | rich/repr.py: rich_repr/auto decorator signatures + Result type | 7.8 | 7.6 | 0.373 |
-| ns | 8129 |  | 29 | docs/source/prompt.rst + docs/source/logging.rst (excerpt) | 7.9 |  | 0.372 |
-| walker |  | 8175 | 340 | python method sigs in rich/table.py |  |  | 0.380 |
-| walker |  | 8175 | 0 | python method at rich/table.py:116 |  |  | 0.380 |
-| walker |  | 8175 | 0 | python method at rich/table.py:310 |  |  | 0.380 |
-| walker |  | 8175 | 0 | python method at rich/table.py:469 |  |  | 0.380 |
-| walker |  | 8175 | 0 | python method at rich/table.py:700 |  |  | 0.380 |
-| walker |  | 8183 | 8 | python method at rich/table.py:120 |  |  | 0.380 |
-| walker |  | 8191 | 8 | python method at rich/table.py:125 |  |  | 0.380 |
-| walker |  | 8199 | 8 | python method at rich/table.py:285 |  |  | 0.380 |
-| walker |  | 8207 | 8 | python method at rich/table.py:305 |  |  | 0.380 |
-| walker |  | 8215 | 8 | python method at rich/table.py:353 |  |  | 0.380 |
-| walker |  | 8224 | 9 | python method at rich/table.py:290 |  |  | 0.380 |
-| ns | 8225 |  | 96 | rich/prompt.py: PromptBase/Prompt/IntPrompt/FloatPrompt/Confirm location | 7.10 | 7.9 | 0.378 |
-| walker |  | 8233 | 9 | python method at rich/table.py:358 |  |  | 0.378 |
-| ns | 8239 |  | 14 | rich/logging.py: RichHandler docstring + __init__ | 7.11 | 7.9 | 0.379 |
-| walker |  | 8241 | 8 | python method at rich/table.py:295 |  |  | 0.379 |
-| walker |  | 8250 | 9 | python method doc at rich/table.py:290 |  |  | 0.379 |
-| ns | 8250 |  | 11 | rich/json.py: JSON class docstring+init | 7.12 |  | 0.379 |
-| walker |  | 8260 | 10 | python method doc at rich/table.py:353 |  |  | 0.379 |
-| walker |  | 8270 | 10 | python method doc at rich/table.py:358 |  |  | 0.379 |
-| walker |  | 8297 | 27 | python method at rich/table.py:320 |  |  | 0.379 |
-| ns | 8306 |  | 56 | rich/emoji.py Emoji + rich/spinner.py Spinner class docstrings+init | 7.13 |  | 0.380 |
-| walker |  | 8309 | 12 | python method doc at rich/table.py:310 |  |  | 0.380 |
-| walker |  | 8322 | 13 | python method doc at rich/table.py:116 |  |  | 0.380 |
-| walker |  | 8335 | 13 | python method doc at rich/table.py:125 |  |  | 0.380 |
-| walker |  | 8348 | 13 | python method doc at rich/table.py:305 |  |  | 0.380 |
-| ns | 8367 |  | 61 | rich/bar.py Bar + rich/progress_bar.py ProgressBar class docstrings+init | 7.14 |  | 0.379 |
-| walker |  | 8377 | 29 | python method at rich/table.py:475 |  |  | 0.379 |
-| walker |  | 8393 | 16 | python method doc at rich/table.py:285 |  |  | 0.379 |
-| walker |  | 8410 | 17 | python method doc at rich/table.py:120 |  |  | 0.379 |
-| walker |  | 8429 | 19 | python method doc at rich/table.py:469 |  |  | 0.379 |
-| ns | 8463 |  | 96 | docs/source/console.rst (partial): Console attributes, color systems, printing | 8.1 |  | 0.378 |
-| ns | 8527 |  | 64 | docs/source/introduction.rst (excerpt): requirements, install, quick start, Rich Inspect | 8.2 |  | 0.377 |
-| ns | 8569 |  | 42 | rich/errors.py (excerpt): exception hierarchy | 8.3 |  | 0.375 |
-| walker |  | 8576 | 147 | python decl at rich/__init__.py:77 |  |  | 0.375 |
-| walker |  | 8588 | 12 | python method doc at rich/table.py:700 |  |  | 0.375 |
-| ns | 8632 |  | 63 | rich/containers.py (excerpt): Renderables + Lines | 8.4 |  | 0.375 |
-| walker |  | 8679 | 91 | python method sigs in rich/measure.py |  |  | 0.375 |
-| walker |  | 8679 | 0 | python method at rich/measure.py:24 |  |  | 0.375 |
-| walker |  | 8679 | 0 | python method at rich/measure.py:34 |  |  | 0.375 |
-| walker |  | 8679 | 0 | python method at rich/measure.py:46 |  |  | 0.375 |
-| walker |  | 8685 | 6 | python method at rich/measure.py:19 |  |  | 0.375 |
-| walker |  | 8698 | 13 | python method doc at rich/measure.py:19 |  |  | 0.375 |
+| walker |  | 8058 | 85 | python method sigs in rich/palette.py |  |  | 0.375 |
+| walker |  | 8058 | 0 | python method at rich/palette.py:14 |  |  | 0.375 |
+| walker |  | 8058 | 0 | python method at rich/palette.py:17 |  |  | 0.375 |
+| walker |  | 8058 | 0 | python method at rich/palette.py:20 |  |  | 0.375 |
+| walker |  | 8071 | 13 | python method at rich/palette.py:44 |  |  | 0.375 |
+| walker |  | 8080 | 9 | python method body at rich/palette.py:14 body 15 |  |  | 0.375 |
+| ns | 8100 |  | 101 | rich/repr.py: rich_repr/auto decorator signatures + Result type | 7.8 | 7.6 | 0.374 |
+| ns | 8129 |  | 29 | docs/source/prompt.rst + docs/source/logging.rst (excerpt) | 7.9 |  | 0.373 |
+| walker |  | 8182 | 102 | python method sigs in rich/theme.py |  |  | 0.373 |
+| walker |  | 8182 | 0 | python method at rich/theme.py:88 |  |  | 0.373 |
+| walker |  | 8182 | 0 | python method at rich/theme.py:92 |  |  | 0.373 |
+| walker |  | 8182 | 0 | python method at rich/theme.py:106 |  |  | 0.373 |
+| walker |  | 8190 | 8 | python method at rich/theme.py:29 |  |  | 0.373 |
+| walker |  | 8222 | 32 | python method at rich/theme.py:17 |  |  | 0.373 |
+| ns | 8225 |  | 96 | rich/prompt.py: PromptBase/Prompt/IntPrompt/FloatPrompt/Confirm location | 7.10 | 7.9 | 0.371 |
+| walker |  | 8238 | 16 | python method doc at rich/theme.py:29 |  |  | 0.371 |
+| ns | 8239 |  | 14 | rich/logging.py: RichHandler docstring + __init__ | 7.11 | 7.9 | 0.372 |
+| ns | 8250 |  | 11 | rich/json.py: JSON class docstring+init | 7.12 |  | 0.372 |
+| walker |  | 8254 | 16 | python method doc at rich/theme.py:106 |  |  | 0.372 |
+| walker |  | 8297 | 43 | python method at rich/theme.py:59 |  |  | 0.372 |
+| ns | 8306 |  | 56 | rich/emoji.py Emoji + rich/spinner.py Spinner class docstrings+init | 7.13 |  | 0.373 |
+| walker |  | 8342 | 45 | python method at rich/theme.py:37 |  |  | 0.373 |
+| ns | 8367 |  | 61 | rich/bar.py Bar + rich/progress_bar.py ProgressBar class docstrings+init | 7.14 |  | 0.372 |
+| ns | 8463 |  | 96 | docs/source/console.rst (partial): Console attributes, color systems, printing | 8.1 |  | 0.371 |
+| ns | 8527 |  | 64 | docs/source/introduction.rst (excerpt): requirements, install, quick start, Rich Inspect | 8.2 |  | 0.370 |
+| ns | 8569 |  | 42 | rich/errors.py (excerpt): exception hierarchy | 8.3 |  | 0.369 |
+| ns | 8632 |  | 63 | rich/containers.py (excerpt): Renderables + Lines | 8.4 |  | 0.368 |
+| walker |  | 8682 | 340 | python method sigs in rich/table.py |  |  | 0.375 |
+| walker |  | 8682 | 0 | python method at rich/table.py:116 |  |  | 0.375 |
+| walker |  | 8682 | 0 | python method at rich/table.py:310 |  |  | 0.375 |
+| walker |  | 8682 | 0 | python method at rich/table.py:469 |  |  | 0.375 |
+| walker |  | 8682 | 0 | python method at rich/table.py:700 |  |  | 0.375 |
+| walker |  | 8690 | 8 | python method at rich/table.py:120 |  |  | 0.375 |
+| walker |  | 8698 | 8 | python method at rich/table.py:125 |  |  | 0.375 |
+| walker |  | 8706 | 8 | python method at rich/table.py:285 |  |  | 0.374 |
 | ns | 8706 |  | 74 | rich/control.py: Control class + ControlType-to-ANSI code table | 8.5 |  | 0.374 |
-| walker |  | 8733 | 35 | python method at rich/measure.py:59 |  |  | 0.374 |
-| ns | 8752 |  | 46 | rich/region.py (excerpt) + rich/screen.py Screen docstring+init | 8.6 |  | 0.373 |
-| walker |  | 8776 | 43 | python method at rich/measure.py:78 |  |  | 0.373 |
-| ns | 8810 |  | 58 | rich/scope.py: render_scope() signature+doc (locals-table renderer) | 8.7 |  | 0.372 |
-| ns | 8863 |  | 53 | rich/filesize.py (excerpt): decimal()/pick_unit_and_suffix() | 8.8 |  | 0.375 |
-| walker |  | 8898 | 122 | python method sigs in rich/progress_bar.py |  |  | 0.375 |
-| walker |  | 8898 | 0 | python method at rich/progress_bar.py:57 |  |  | 0.375 |
-| walker |  | 8898 | 0 | python method at rich/progress_bar.py:116 |  |  | 0.375 |
+| walker |  | 8714 | 8 | python method at rich/table.py:305 |  |  | 0.374 |
+| walker |  | 8722 | 8 | python method at rich/table.py:353 |  |  | 0.374 |
+| walker |  | 8731 | 9 | python method at rich/table.py:290 |  |  | 0.374 |
+| walker |  | 8740 | 9 | python method at rich/table.py:358 |  |  | 0.374 |
+| walker |  | 8748 | 8 | python method at rich/table.py:295 |  |  | 0.374 |
+| ns | 8752 |  | 46 | rich/region.py (excerpt) + rich/screen.py Screen docstring+init | 8.6 |  | 0.374 |
+| walker |  | 8757 | 9 | python method doc at rich/table.py:290 |  |  | 0.374 |
+| walker |  | 8767 | 10 | python method doc at rich/table.py:353 |  |  | 0.374 |
+| walker |  | 8777 | 10 | python method doc at rich/table.py:358 |  |  | 0.374 |
+| walker |  | 8804 | 27 | python method at rich/table.py:320 |  |  | 0.374 |
+| ns | 8810 |  | 58 | rich/scope.py: render_scope() signature+doc (locals-table renderer) | 8.7 |  | 0.373 |
+| walker |  | 8816 | 12 | python method doc at rich/table.py:310 |  |  | 0.373 |
+| walker |  | 8829 | 13 | python method doc at rich/table.py:116 |  |  | 0.373 |
+| walker |  | 8842 | 13 | python method doc at rich/table.py:125 |  |  | 0.373 |
+| walker |  | 8855 | 13 | python method doc at rich/table.py:305 |  |  | 0.373 |
+| ns | 8863 |  | 53 | rich/filesize.py (excerpt): decimal()/pick_unit_and_suffix() | 8.8 |  | 0.376 |
+| walker |  | 8884 | 29 | python method at rich/table.py:475 |  |  | 0.376 |
+| walker |  | 8900 | 16 | python method doc at rich/table.py:285 |  |  | 0.376 |
 | ns | 8904 |  | 41 | rich/styled.py (excerpt) + rich/abc.py (excerpt) | 8.9 |  | 0.375 |
-| walker |  | 8906 | 8 | python method at rich/progress_bar.py:60 |  |  | 0.375 |
-| walker |  | 8916 | 10 | python method doc at rich/progress_bar.py:60 |  |  | 0.375 |
-| walker |  | 8941 | 25 | python method at rich/progress_bar.py:200 |  |  | 0.375 |
-| walker |  | 8967 | 26 | python method at rich/progress_bar.py:156 |  |  | 0.375 |
+| walker |  | 8917 | 17 | python method doc at rich/table.py:120 |  |  | 0.375 |
+| walker |  | 8936 | 19 | python method doc at rich/table.py:469 |  |  | 0.375 |
 | ns | 8982 |  | 78 | rich/theme.py: Theme class docstring+init + config property | 8.10 | 4.4 | 0.374 |
 | ns | 9039 |  | 57 | rich/terminal_theme.py: TerminalTheme docstring+init | 8.11 |  | 0.373 |
-| walker |  | 9059 | 92 | python method sigs in rich/live_render.py |  |  | 0.373 |
-| walker |  | 9059 | 0 | python method at rich/live_render.py:43 |  |  | 0.373 |
-| walker |  | 9059 | 0 | python method at rich/live_render.py:51 |  |  | 0.373 |
-| walker |  | 9059 | 0 | python method at rich/live_render.py:72 |  |  | 0.373 |
-| walker |  | 9067 | 8 | python method at rich/live_render.py:32 |  |  | 0.373 |
-| walker |  | 9093 | 26 | python method at rich/live_render.py:86 |  |  | 0.371 |
-| ns | 9093 |  | 54 | rich/jupyter.py (excerpt): JupyterMixin + _render_segments/display | 8.12 |  | 0.371 |
-| walker |  | 9105 | 12 | python method body at rich/live_render.py:43 body 49 |  |  | 0.371 |
-| ns | 9148 |  | 55 | rich/live_render.py: LiveRender docstring+init | 8.13 |  | 0.370 |
+| walker |  | 9083 | 147 | python decl at rich/__init__.py:77 |  |  | 0.373 |
+| ns | 9093 |  | 54 | rich/jupyter.py (excerpt): JupyterMixin + _render_segments/display | 8.12 |  | 0.372 |
+| walker |  | 9095 | 12 | python method doc at rich/table.py:700 |  |  | 0.372 |
+| ns | 9148 |  | 55 | rich/live_render.py: LiveRender docstring+init | 8.13 |  | 0.371 |
+| walker |  | 9186 | 91 | python method sigs in rich/measure.py |  |  | 0.371 |
+| walker |  | 9186 | 0 | python method at rich/measure.py:24 |  |  | 0.371 |
+| walker |  | 9186 | 0 | python method at rich/measure.py:34 |  |  | 0.371 |
+| walker |  | 9186 | 0 | python method at rich/measure.py:46 |  |  | 0.371 |
+| walker |  | 9192 | 6 | python method at rich/measure.py:19 |  |  | 0.371 |
+| walker |  | 9205 | 13 | python method doc at rich/measure.py:19 |  |  | 0.371 |
 | ns | 9213 |  | 65 | rich/pager.py (excerpt) + rich/file_proxy.py (excerpt) | 8.14 |  | 0.373 |
-| ns | 9269 |  | 56 | Small internal helpers: _loop, _pick, _stack (of 6 in this family) | 9.1 |  | 0.373 |
-| walker |  | 9297 | 192 | python class body at rich/segment.py:32 |  |  | 0.377 |
-| ns | 9335 |  | 66 | Small internal helpers: _fileno, _null_file, _extension (of 6 in this family) | 9.2 |  | 0.376 |
-| walker |  | 9370 | 73 | python class body at rich/color_triplet.py:4 |  |  | 0.378 |
-| walker |  | 9392 | 22 | python imports in rich/_emoji_replace.py |  |  | 0.378 |
-| walker |  | 9414 | 22 | python imports in rich/default_styles.py |  |  | 0.378 |
-| ns | 9429 |  | 94 | rich/_inspect.py: Inspect class + helper function location | 9.3 |  | 0.377 |
-| walker |  | 9436 | 22 | python imports in rich/themes.py |  |  | 0.377 |
-| walker |  | 9443 | 7 | python method body at rich/_stack.py:14 body 16 |  |  | 0.377 |
-| walker |  | 9459 | 16 | python method body at rich/styled.py:31 body 34 |  |  | 0.377 |
-| ns | 9482 |  | 53 | Windows console support: _win32_console.py, _windows.py, _windows_renderer.py | 9.4 |  | 0.378 |
-| walker |  | 9512 | 53 | python imports in setup.py |  |  | 0.378 |
-| ns | 9682 |  | 200 | Static data modules: _palettes, _spinners, _emoji_codes, _unicode_data/ | 9.5 |  | 0.389 |
-| ns | 9745 |  | 63 | rich/__main__.py: `python -m rich` demo card generator | 9.6 |  | 0.390 |
-| ns | 9766 |  | 21 | rich/diagnose.py: report() signature | 9.7 |  | 0.390 |
-| walker |  | 9775 | 263 | python method sigs in rich/live.py |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:25 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:31 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:34 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:103 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:111 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:145 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:183 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:195 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:205 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:230 |  |  | 0.395 |
-| walker |  | 9775 | 0 | python method at rich/live.py:244 |  |  | 0.395 |
-| walker |  | 9783 | 8 | python method at rich/live.py:98 |  |  | 0.395 |
-| walker |  | 9791 | 8 | python method at rich/live.py:214 |  |  | 0.395 |
-| walker |  | 9802 | 11 | python method doc at rich/live.py:145 |  |  | 0.394 |
-| ns | 9802 |  | 36 | tests/conftest.py (excerpt) + tests/pytest.ini (excerpt) | 10.1 | 2.3 | 0.394 |
-| walker |  | 9829 | 27 | python method at rich/live.py:278 |  |  | 0.394 |
-| ns | 9842 |  | 40 | tests/render.py (excerpt): shared test-rendering helper | 10.2 |  | 0.393 |
-| walker |  | 9843 | 14 | python method doc at rich/live.py:98 |  |  | 0.393 |
-| walker |  | 9857 | 14 | python method doc at rich/live.py:244 |  |  | 0.393 |
-| walker |  | 9873 | 16 | python method doc at rich/live.py:278 |  |  | 0.393 |
-| ns | 9883 |  | 41 | docs/source/appendix.rst (excerpt): appendix toctree | 11.1 | 2.6 | 0.392 |
-| walker |  | 9945 | 72 | python decl names surface in rich/align.py |  |  | 0.394 |
-| walker |  | 9945 | 0 | python decl at rich/align.py:17 |  |  | 0.394 |
-| walker |  | 9945 | 0 | python decl at rich/align.py:242 |  |  | 0.394 |
-| ns | 9950 |  | 67 | CHANGELOG.md: most recent entries (15.0.0 back through 14.3.0) | 12.1 |  | 0.393 |
-| walker |  | 9961 | 16 | python decl doc at rich/align.py:17 |  |  | 0.393 |
+| walker |  | 9240 | 35 | python method at rich/measure.py:59 |  |  | 0.373 |
+| ns | 9269 |  | 56 | Small internal helpers: _loop, _pick, _stack (of 6 in this family) | 9.1 |  | 0.374 |
+| walker |  | 9283 | 43 | python method at rich/measure.py:78 |  |  | 0.374 |
+| ns | 9335 |  | 66 | Small internal helpers: _fileno, _null_file, _extension (of 6 in this family) | 9.2 |  | 0.373 |
+| walker |  | 9405 | 122 | python method sigs in rich/progress_bar.py |  |  | 0.373 |
+| walker |  | 9405 | 0 | python method at rich/progress_bar.py:57 |  |  | 0.373 |
+| walker |  | 9405 | 0 | python method at rich/progress_bar.py:116 |  |  | 0.373 |
+| walker |  | 9413 | 8 | python method at rich/progress_bar.py:60 |  |  | 0.373 |
+| walker |  | 9423 | 10 | python method doc at rich/progress_bar.py:60 |  |  | 0.373 |
+| ns | 9429 |  | 94 | rich/_inspect.py: Inspect class + helper function location | 9.3 |  | 0.372 |
+| walker |  | 9448 | 25 | python method at rich/progress_bar.py:200 |  |  | 0.372 |
+| walker |  | 9474 | 26 | python method at rich/progress_bar.py:156 |  |  | 0.372 |
+| ns | 9482 |  | 53 | Windows console support: _win32_console.py, _windows.py, _windows_renderer.py | 9.4 |  | 0.373 |
+| walker |  | 9566 | 92 | python method sigs in rich/live_render.py |  |  | 0.373 |
+| walker |  | 9566 | 0 | python method at rich/live_render.py:43 |  |  | 0.373 |
+| walker |  | 9566 | 0 | python method at rich/live_render.py:51 |  |  | 0.373 |
+| walker |  | 9566 | 0 | python method at rich/live_render.py:72 |  |  | 0.373 |
+| walker |  | 9574 | 8 | python method at rich/live_render.py:32 |  |  | 0.373 |
+| walker |  | 9600 | 26 | python method at rich/live_render.py:86 |  |  | 0.373 |
+| walker |  | 9612 | 12 | python method body at rich/live_render.py:43 body 49 |  |  | 0.373 |
+| ns | 9682 |  | 200 | Static data modules: _palettes, _spinners, _emoji_codes, _unicode_data/ | 9.5 |  | 0.385 |
+| ns | 9745 |  | 63 | rich/__main__.py: `python -m rich` demo card generator | 9.6 |  | 0.386 |
+| ns | 9766 |  | 21 | rich/diagnose.py: report() signature | 9.7 |  | 0.386 |
+| ns | 9802 |  | 36 | tests/conftest.py (excerpt) + tests/pytest.ini (excerpt) | 10.1 | 2.3 | 0.385 |
+| walker |  | 9804 | 192 | python class body at rich/segment.py:32 |  |  | 0.389 |
+| ns | 9842 |  | 40 | tests/render.py (excerpt): shared test-rendering helper | 10.2 |  | 0.388 |
+| walker |  | 9877 | 73 | python class body at rich/color_triplet.py:4 |  |  | 0.389 |
+| ns | 9883 |  | 41 | docs/source/appendix.rst (excerpt): appendix toctree | 11.1 | 2.6 | 0.388 |
+| walker |  | 9899 | 22 | python imports in rich/_emoji_replace.py |  |  | 0.388 |
+| walker |  | 9921 | 22 | python imports in rich/default_styles.py |  |  | 0.388 |
+| walker |  | 9943 | 22 | python imports in rich/themes.py |  |  | 0.388 |
+| walker |  | 9950 | 7 | python method body at rich/_stack.py:14 body 16 |  |  | 0.387 |
+| ns | 9950 |  | 67 | CHANGELOG.md: most recent entries (15.0.0 back through 14.3.0) | 12.1 |  | 0.387 |
+| walker |  | 9966 | 16 | python method body at rich/styled.py:31 body 34 |  |  | 0.387 |

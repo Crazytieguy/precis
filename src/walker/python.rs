@@ -46,12 +46,14 @@
 
 use std::cell::RefCell;
 use std::collections::{HashMap, HashSet};
+use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
+use crate::render::RenderedTree;
 use crate::value::{
     depth_factor, mix_signals, reexport_import_chunk_factor, roster_mass_factor_with_baseline,
 };
@@ -78,6 +80,14 @@ const VISIBILITY_UNDERSCORE: f64 = 0.6;
 /// lifts nearly every multi-decl file and floods orientation content
 /// (README sections, re-export walls) out of the early budget.
 const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
+
+/// Preserve the historically winning unified names surface until it is
+/// too large to remain purchasable in the early budget window. Oversize
+/// catalogs are split near the target, with a small tail folded back into
+/// its predecessor so it cannot queue-jump as a crumb.
+const DECL_NAMES_SPLIT_THRESHOLD_TOKENS: usize = 400;
+const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 250;
+const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;
 
 /// `__init__.py` rosters are excluded: the entrypoint depth pin already
 /// privileges them, and boosting on top floods nested-package
@@ -196,27 +206,43 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             .collect();
         let all_name_lines = collect_all_name_lines(&decls, &flat_methods);
 
-        // One unified names surface per file — NS authors anchor on the
-        // complete catalog as a single unit, and chunking traded that
-        // for falloff-damped fragments plus signature-roster ancestors
-        // papering over the fragmentation (measured on the post-refreeze
-        // keys: unified wins axios/pluggy, the rosters were a drag or a
-        // no-op once surfaces were whole). Roster-mass pricing keeps the
-        // complete catalog competitive with tiny-roster peers.
+        // Keep the historically winning unified names surface unless its
+        // rendered cost exceeds the early-budget purchase ceiling. Only
+        // then split near 250 tokens; continuations are chained so they do
+        // not become independently schedulable crumbs. Roster-mass pricing
+        // remains based on the complete catalog.
         let roster = names_roster(&decls, &source);
         let roster_decls: Vec<_> = roster.iter().map(|&i| decls[i]).collect();
         let names_lines = collect_decl_names_from(&roster_decls, &all_name_lines);
-        let mut names_gate: Option<BatchKey> = None;
-        if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
-            let key = BatchKey::Python(PythonKey::DeclNames { file: file.clone() });
+        let names_chunk_ranges =
+            decl_names_chunk_ranges(file, ctx, &source, &roster_decls, &all_name_lines);
+        let names_base_value =
+            decl_names_value(file, ctx) * python_roster_mass_factor(file, roster.len());
+        let mut names_keys = Vec::with_capacity(names_chunk_ranges.len());
+        for (chunk_index, range) in names_chunk_ranges.iter().enumerate() {
+            let chunk_decls = &roster_decls[range.clone()];
+            let chunk_lines = collect_decl_names_from(chunk_decls, &all_name_lines);
+            let Some(content) = single_file_lines_content(file, &source, chunk_lines) else {
+                continue;
+            };
+            let key = BatchKey::Python(if chunk_index == 0 {
+                PythonKey::DeclNames { file: file.clone() }
+            } else {
+                PythonKey::DeclNamesChunk {
+                    file: file.clone(),
+                    chunk_index,
+                }
+            });
+            let predecessor = names_keys.last().cloned();
             out.push(Batch {
                 key: key.clone(),
-                predecessor: None,
+                predecessor,
                 content,
-                value: decl_names_value(file, ctx) * python_roster_mass_factor(file, roster.len()),
+                value: names_base_value * decl_names_chunk_factor(chunk_index),
             });
-            names_gate = Some(key);
+            names_keys.push(key);
         }
+        let names_gate = names_keys.last().cloned();
 
         // Method-signature catalog — likewise one unified batch. Gated
         // on the names surface: the `Full+Ellipsis` pair can share the
@@ -877,6 +903,63 @@ fn collect_decl_names_from(decls: &[DeclInfo], all_name_lines: &HashSet<usize>) 
     FileLines::new(full).with_ellipses(ellipses)
 }
 
+/// Source-roster-order ranges for a Python names surface. Below the
+/// rendered-cost threshold the established unified surface is untouched.
+/// Oversize surfaces are greedily cut once they reach the target; a tail
+/// below half-target folds into the preceding range.
+fn decl_names_chunk_ranges(
+    file: &Path,
+    ctx: &WalkCtx,
+    source: &str,
+    decls: &[DeclInfo],
+    all_name_lines: &HashSet<usize>,
+) -> Vec<Range<usize>> {
+    if decls.is_empty() {
+        return Vec::new();
+    }
+
+    let tree = RenderedTree::new(ctx.root().to_path_buf(), ctx.source_cache().clone());
+    let range_cost = |range: Range<usize>| {
+        let lines = collect_decl_names_from(&decls[range], all_name_lines);
+        single_file_lines_content(file, source, lines)
+            .map(|content| tree.marginal_cost(&content).tokens)
+            .unwrap_or(0)
+    };
+
+    if range_cost(0..decls.len()) <= DECL_NAMES_SPLIT_THRESHOLD_TOKENS {
+        return std::iter::once(0..decls.len()).collect();
+    }
+
+    let mut ranges = Vec::new();
+    let mut start = 0;
+    for end in 1..=decls.len() {
+        if range_cost(start..end) >= DECL_NAMES_CHUNK_TARGET_TOKENS {
+            ranges.push(start..end);
+            start = end;
+        }
+    }
+    if start < decls.len() {
+        let tail = start..decls.len();
+        if range_cost(tail.clone()) < DECL_NAMES_TINY_TAIL_TOKENS
+            && let Some(previous) = ranges.last()
+            && range_cost(previous.start..tail.end) <= DECL_NAMES_SPLIT_THRESHOLD_TOKENS
+        {
+            let previous = ranges.pop().expect("last range was just observed");
+            ranges.push(previous.start..tail.end);
+        } else {
+            ranges.push(tail);
+        }
+    }
+    ranges
+}
+
+/// The first oversize chunk keeps the unified roster's value. Later
+/// chained chunks decay mildly, matching the established names-surface
+/// falloff without discounting the first purchasable slice.
+fn decl_names_chunk_factor(chunk_index: usize) -> f64 {
+    1.0 / (1.0 + chunk_index as f64 * 0.25)
+}
+
 fn collect_methods_by_class<'a>(
     decls: &[DeclInfo<'a>],
     source: &str,
@@ -1494,6 +1577,7 @@ fn parse_python(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::content::BatchContent;
     use crate::scheduler::Scheduler;
     use crate::walker::FsWalker;
 
@@ -1531,6 +1615,76 @@ mod tests {
 
         let scheduler = Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None);
         let _ = scheduler.run_with_report();
+    }
+
+    fn decl_name_batches(batches: &[Batch<BatchKey>]) -> Vec<&Batch<BatchKey>> {
+        batches
+            .iter()
+            .filter(|batch| {
+                matches!(
+                    batch.key,
+                    BatchKey::Python(
+                        PythonKey::DeclNames { .. } | PythonKey::DeclNamesChunk { .. }
+                    )
+                )
+            })
+            .collect()
+    }
+
+    #[test]
+    fn python_decl_names_only_splits_oversize_surfaces() {
+        let dir = tempfile::tempdir().unwrap();
+        let small_file = dir.path().join("small.py");
+        std::fs::write(&small_file, "def one(): pass\ndef two(): pass\n").unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let small = expand_source_files(std::slice::from_ref(&small_file), &ctx);
+        let small_names = decl_name_batches(&small);
+        assert_eq!(small_names.len(), 1);
+        assert!(matches!(
+            small_names[0].key,
+            BatchKey::Python(PythonKey::DeclNames { .. })
+        ));
+
+        let large_file = dir.path().join("large.py");
+        let mut source = String::new();
+        for i in 0..48 {
+            source.push_str(&format!(
+                "def public_function_{i:02}(first_argument: SomeLongProtocol, second_argument: AnotherLongProtocol) -> ReturnProtocol:\n    return first_argument\n\n"
+            ));
+        }
+        std::fs::write(&large_file, source).unwrap();
+        let large = expand_source_files(std::slice::from_ref(&large_file), &ctx);
+        let large_names = decl_name_batches(&large);
+        assert!(large_names.len() > 1, "expected an oversize split");
+        assert!(matches!(
+            large_names[0].key,
+            BatchKey::Python(PythonKey::DeclNames { .. })
+        ));
+        for (chunk_index, pair) in large_names.windows(2).enumerate() {
+            assert_eq!(pair[1].predecessor.as_ref(), Some(&pair[0].key));
+            assert!(matches!(
+                pair[1].key,
+                BatchKey::Python(PythonKey::DeclNamesChunk {
+                    chunk_index: actual,
+                    ..
+                }) if actual == chunk_index + 1
+            ));
+            assert!(pair[1].value < pair[0].value);
+        }
+
+        let mut covered = HashSet::new();
+        for batch in large_names {
+            let BatchContent::Lines { spans } = &batch.content else {
+                panic!("decl names must emit line spans");
+            };
+            for (path, line, _) in crate::content::explode_spans(spans) {
+                assert!(
+                    covered.insert((path, line)),
+                    "names chunks must be disjoint"
+                );
+            }
+        }
+        assert_eq!(covered.len(), 96, "48 signatures plus 48 ellipses");
     }
 
     /// A small docstring-led method body splits via `block_child_parts`;
