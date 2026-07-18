@@ -643,6 +643,24 @@ evidence):
   the target rosters stay at ~8K regardless. The floor can't beat
   the 0.2 non-essential damp's distance from the frontier.
 
+- **Python roster-chunk decl gating** (post-conservation): head-chunk
+  gate violates ancestor-only overlap (panics — later chunks overlap
+  the decl subtree); declaration-owning-chunk gate is headline-flat
+  and tomli-curve-negative (−0.03..−0.04 at 3.6K/5.1K/10K). Gating
+  behind the LAST chunk is the measured optimum.
+- **Primary-member subtree depth re-root (JS/TS), post-gate retry**:
+  dead at full/50%/10% strength (full: d2ts 0.405 → 0.330, mean
+  −0.0008) — promoted subtree rosters displace already-reached
+  anchors without scheduling the wanted class bodies. Confirms the
+  pre-refreeze dead result under the new frontier; d2ts's residual
+  loss is body-purchase, not rank.
+- **Oversized public Rust struct/enum head-split**: at a 400-token
+  gate nothing in the corpus crosses (the cited mdbook 562-token row
+  is two decls of 218+317); at 200 log −0.045; at 320 all targets
+  flat — chained field/variant tails never schedule. The Rust
+  whole-decl atomicity loss (sps Formula/Cask class) needs a value
+  mechanism, not granularity.
+
 ## Walker / value open items
 
 - **Config-surface header role (bareiron/tinyusb class, diagnosed
