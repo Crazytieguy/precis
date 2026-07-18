@@ -779,7 +779,7 @@ impl InnerKey for TsKey {
             // commander -0.212 (2026-07-06).
             TsKey::ExportMemberNames { .. }
             | TsKey::ExportMemberNamesChunk { .. }
-            | TsKey::ModuleItemNames { .. } => 0.37,
+            | TsKey::ModuleItemNames { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -1036,7 +1036,7 @@ impl InnerKey for PythonKey {
         match self {
             PythonKey::ImportChunk { .. }
             | PythonKey::DeclNames { .. }
-            | PythonKey::DeclNamesChunk { .. } => 0.37,
+            | PythonKey::DeclNamesChunk { .. } => crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
             PythonKey::Decl { .. }
             | PythonKey::DeclBody { .. }
             | PythonKey::Method { .. }

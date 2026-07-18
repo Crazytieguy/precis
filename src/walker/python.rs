@@ -53,9 +53,9 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
-use crate::render::RenderedTree;
 use crate::value::{
-    depth_factor, mix_signals, reexport_import_chunk_factor, roster_mass_factor_with_baseline,
+    CATALOG_ROSTER_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, depth_factor, mix_signals,
+    reexport_import_chunk_factor, roster_mass_factor_with_baseline,
 };
 
 use super::import_chunks::{
@@ -210,7 +210,8 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // rendered cost exceeds the early-budget purchase ceiling. Only
         // then split near 250 tokens; continuations are chained so they do
         // not become independently schedulable crumbs. Roster-mass pricing
-        // remains based on the complete catalog.
+        // remains based on the complete catalog, and the catalog's value
+        // is a conserved total allocated across the chunks.
         let roster = names_roster(&decls, &source);
         let roster_decls: Vec<_> = roster.iter().map(|&i| decls[i]).collect();
         let names_lines = collect_decl_names_from(&roster_decls, &all_name_lines);
@@ -218,13 +219,26 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             decl_names_chunk_ranges(file, ctx, &source, &roster_decls, &all_name_lines);
         let names_base_value =
             decl_names_value(file, ctx) * python_roster_mass_factor(file, roster.len());
-        let mut names_keys = Vec::with_capacity(names_chunk_ranges.len());
+        let mut chunk_contents = Vec::with_capacity(names_chunk_ranges.len());
         for (chunk_index, range) in names_chunk_ranges.iter().enumerate() {
             let chunk_decls = &roster_decls[range.clone()];
             let chunk_lines = collect_decl_names_from(chunk_decls, &all_name_lines);
-            let Some(content) = single_file_lines_content(file, &source, chunk_lines) else {
-                continue;
-            };
+            if let Some(content) = single_file_lines_content(file, &source, chunk_lines) {
+                chunk_contents.push((chunk_index, content));
+            }
+        }
+        let chunk_factors = if chunk_contents.len() > 1 {
+            let costs: Vec<usize> = chunk_contents
+                .iter()
+                .map(|(_, content)| ctx.marginal_tokens(content))
+                .collect();
+            conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT)
+        } else {
+            vec![1.0; chunk_contents.len()]
+        };
+        let mut names_keys = Vec::with_capacity(chunk_contents.len());
+        for ((chunk_index, content), chunk_factor) in chunk_contents.into_iter().zip(chunk_factors)
+        {
             let key = BatchKey::Python(if chunk_index == 0 {
                 PythonKey::DeclNames { file: file.clone() }
             } else {
@@ -238,7 +252,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 key: key.clone(),
                 predecessor,
                 content,
-                value: names_base_value * decl_names_chunk_factor(chunk_index),
+                value: names_base_value * chunk_factor,
             });
             names_keys.push(key);
         }
@@ -918,15 +932,15 @@ fn decl_names_chunk_ranges(
         return Vec::new();
     }
 
-    let tree = RenderedTree::new(ctx.root().to_path_buf(), ctx.source_cache().clone());
     let range_cost = |range: Range<usize>| {
         let lines = collect_decl_names_from(&decls[range], all_name_lines);
         single_file_lines_content(file, source, lines)
-            .map(|content| tree.marginal_cost(&content).tokens)
+            .map(|content| ctx.marginal_tokens(&content))
             .unwrap_or(0)
     };
 
     if range_cost(0..decls.len()) <= DECL_NAMES_SPLIT_THRESHOLD_TOKENS {
+        // `vec![range]` trips clippy's `single_range_in_vec_init`.
         return std::iter::once(0..decls.len()).collect();
     }
 
@@ -951,13 +965,6 @@ fn decl_names_chunk_ranges(
         }
     }
     ranges
-}
-
-/// The first oversize chunk keeps the unified roster's value. Later
-/// chained chunks decay mildly, matching the established names-surface
-/// falloff without discounting the first purchasable slice.
-fn decl_names_chunk_factor(chunk_index: usize) -> f64 {
-    1.0 / (1.0 + chunk_index as f64 * 0.25)
 }
 
 fn collect_methods_by_class<'a>(
@@ -1669,8 +1676,21 @@ mod tests {
                     ..
                 }) if actual == chunk_index + 1
             ));
-            assert!(pair[1].value < pair[0].value);
+            // Value density decreases along the chain (the conserved
+            // allocation tilts head-ward); absolute chunk values track
+            // chunk cost, so they need not decrease monotonically.
+            let density = |batch: &Batch<BatchKey>| {
+                batch.value / ctx.marginal_tokens(&batch.content).max(1) as f64
+            };
+            assert!(density(pair[1]) < density(pair[0]));
         }
+        let total: f64 = large_names.iter().map(|batch| batch.value).sum();
+        let unsplit =
+            decl_names_value(&large_file, &ctx) * python_roster_mass_factor(&large_file, 48);
+        assert!(
+            (total - unsplit).abs() < 1e-9,
+            "split catalog must conserve the unsplit value: {total} vs {unsplit}"
+        );
 
         let mut covered = HashSet::new();
         for batch in large_names {

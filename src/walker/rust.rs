@@ -953,8 +953,8 @@ const CRATE_ATTRS_MIN_TOKENS: usize = 150;
 /// class at all (anyhow's NS ranks it ≤2K and the walker had nothing
 /// to deliver).
 fn crate_attrs_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let cat = (0.42 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.65, 0.38, rust_depth_factor(file, ctx))
+    let catastrophic = (0.42 * entrypoint_boost(file)).min(1.0);
+    mix_signals(catastrophic, 0.65, 0.38, rust_depth_factor(file, ctx))
 }
 
 fn mod_use_value(file: &Path, ctx: &WalkCtx, mod_decl_count: usize) -> f64 {

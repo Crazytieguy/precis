@@ -366,12 +366,15 @@ const REFERENCE_USAGE_SECTION_FACTOR: f64 = 1.3;
 /// reference/usage title boost (any matching `Whole` / `Intro` /
 /// `H3Child` with non-trivial body). The two never stack.
 fn canonical_usage_section_factor(range: &SectionRange) -> f64 {
-    let canonical =
-        if range.parent_is_canonical_usage_h2 && matches!(range.kind, SectionKind::Whole) {
-            CANONICAL_USAGE_SECTION_FACTOR
-        } else {
-            1.0
-        };
+    // `OversizeTail` is the continuation of a boosted `Whole` head —
+    // it inherits the boost so the tail prices at head * tail factor.
+    let canonical = if range.parent_is_canonical_usage_h2
+        && matches!(range.kind, SectionKind::Whole | SectionKind::OversizeTail)
+    {
+        CANONICAL_USAGE_SECTION_FACTOR
+    } else {
+        1.0
+    };
     let reference = if range.is_reference_usage_section {
         REFERENCE_USAGE_SECTION_FACTOR
     } else {
@@ -2547,7 +2550,10 @@ fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> boo
 /// shrink `head` to the first chunk (keeping its kind and value flags;
 /// the head includes the section heading, so no outline is required
 /// to preserve it) and follow it with predecessor-chained
-/// `OversizeTail` chunks that carry only the positional fields.
+/// `OversizeTail` chunks. Tails carry the head's boost flags so a
+/// boosted section's continuation is priced off the same base the head
+/// won its rank with ([`OVERSIZE_TAIL_FACTOR`]'s rationale); the other
+/// fields stay positional.
 fn push_whole_or_head_split(
     out: &mut Vec<SectionRange>,
     src_lines: &[&str],
@@ -2555,18 +2561,19 @@ fn push_whole_or_head_split(
     split_eligible: bool,
 ) {
     let (start, end) = (head.start, head.end);
-    let tokens: usize = if split_eligible {
-        (start..=end).map(|r| row_tokens(src_lines, r)).sum()
-    } else {
-        0
-    };
-    let bounds = if split_eligible && tokens >= OVERSIZE_SECTION_SPLIT_TOKENS {
-        oversize_chunk_bounds(src_lines, start, end, tokens)
-    } else {
+    if !split_eligible {
         out.push(head);
         return;
-    };
-    for (i, (chunk_start, chunk_end)) in bounds.into_iter().enumerate() {
+    }
+    let tokens: usize = (start..=end).map(|r| row_tokens(src_lines, r)).sum();
+    if tokens < OVERSIZE_SECTION_SPLIT_TOKENS {
+        out.push(head);
+        return;
+    }
+    for (i, (chunk_start, chunk_end)) in oversize_chunk_bounds(src_lines, start, end, tokens)
+        .into_iter()
+        .enumerate()
+    {
         if i == 0 {
             out.push(SectionRange {
                 start: chunk_start,
@@ -2580,8 +2587,8 @@ fn push_whole_or_head_split(
                 kind: SectionKind::OversizeTail,
                 parent_index: head.parent_index,
                 synthetic_intro_present: head.synthetic_intro_present,
-                parent_is_canonical_usage_h2: false,
-                is_reference_usage_section: false,
+                parent_is_canonical_usage_h2: head.parent_is_canonical_usage_h2,
+                is_reference_usage_section: head.is_reference_usage_section,
                 reference_shaped: false,
                 dev_workflow_section: false,
                 deferred_mass_prose: false,

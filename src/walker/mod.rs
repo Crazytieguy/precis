@@ -131,6 +131,14 @@ impl WalkCtx {
         &self.source_cache
     }
 
+    /// Rendered token cost of `content` against an otherwise-empty
+    /// tree — the walkers' shared cost probe for split/chunk sizing.
+    pub(crate) fn marginal_tokens(&self, content: &crate::content::BatchContent) -> usize {
+        crate::render::RenderedTree::new(self.root.clone(), self.source_cache.clone())
+            .marginal_cost(content)
+            .tokens
+    }
+
     /// Depth of `path` relative to the seed root (root itself = 0).
     /// **Fails open**: a path outside the root also reads as depth 0 —
     /// the same as the root itself — which un-damps every depth-priced

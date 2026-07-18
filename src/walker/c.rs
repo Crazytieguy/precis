@@ -488,9 +488,10 @@ fn find_dominant_c_file(root: &Path) -> Option<PathBuf> {
                 && name.to_ascii_lowercase().ends_with(".c")
                 && !is_test_c_file_name(&name)
             {
-                let Some(scan) = scan_c_source(&path, remaining_bytes) else {
-                    continue;
-                };
+                // Fail closed like the byte-budget and multi-main gates:
+                // an unreadable source file makes the dominance share
+                // unknowable, so no file gets promoted.
+                let scan = scan_c_source(&path, remaining_bytes)?;
                 if scan.bytes > remaining_bytes {
                     return None;
                 }
@@ -1649,12 +1650,12 @@ fn explicit_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 /// Catastrophic-axis multiplier: headers carry the public API, `.c`
 /// content is implementation detail.
 fn header_cat_factor(file: &Path) -> f64 {
-    cat_tier(is_header_file(file))
+    catastrophic_tier(is_header_file(file))
 }
 
 /// The two category tiers behind [`header_cat_factor`] and
-/// [`names_surface_cat_factor`], defined once so a retune moves both.
-fn cat_tier(header_tier: bool) -> f64 {
+/// [`names_surface_catastrophic_factor`], defined once so a retune moves both.
+fn catastrophic_tier(header_tier: bool) -> f64 {
     if header_tier { 1.15 } else { 0.55 }
 }
 
@@ -1668,8 +1669,8 @@ fn cat_tier(header_tier: bool) -> f64 {
 /// the roster alone carries the NS-wanted location map. Structurally
 /// gated on [`find_dominant_c_file`]; everything else keeps the flat
 /// `.h`/`.c` split.
-fn names_surface_cat_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    cat_tier(is_header_file(file) || ctx.c_state().is_dominant_c_file(file, ctx.root()))
+fn names_surface_catastrophic_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    catastrophic_tier(is_header_file(file) || ctx.c_state().is_dominant_c_file(file, ctx.root()))
 }
 
 /// Follow-up axis: headers stay neutral, `.c` content stays demoted.
@@ -1775,7 +1776,7 @@ fn decl_names_value(
     chunk_count: usize,
     chunk_decl_count: usize,
 ) -> f64 {
-    let cat = (0.80 * names_surface_cat_factor(file, ctx)).min(1.0);
+    let cat = (0.80 * names_surface_catastrophic_factor(file, ctx)).min(1.0);
     let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
     // Roster mass only for top include hubs: their catalog chunks lose
     // the breadth race to tiny-roster siblings (htop's per-meter

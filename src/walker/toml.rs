@@ -175,7 +175,13 @@ fn build_dependencies_content(
     for (name, start, end) in sections {
         if (python_project_manifest && is_dependency_section(name))
             || (cargo_manifest && is_ordinary_dependency_section(name))
-            || (!python_project_manifest && !cargo_manifest && is_dependency_section(name))
+            // Non-manifest TOMLs keep the pre-split exclusion of
+            // pyproject-shaped sections: a poetry/PEP-621 dep table in a
+            // template or sample file is not a manifest roster.
+            || (!python_project_manifest
+                && !cargo_manifest
+                && is_dependency_section(name)
+                && !(name.starts_with("project.") || name.starts_with("tool.poetry.")))
         {
             line_numbers.extend(*start..=*end);
         }
@@ -248,6 +254,12 @@ fn pack_small_tool_config_families(
     for (tool, lines) in ordered {
         let tokens = tool_config_source_tokens(&source_lines, &lines);
         if tokens >= TOOL_CONFIG_FAMILY_MIN_TOKENS {
+            // Flushing the small accumulator on a large family can
+            // strand a lone sub-minimum pack (an interleaved layout's
+            // leading small family stays solo). Measured better than
+            // merging across large families: the small solo pack is a
+            // cheap early buy, the merged pack schedules later
+            // (htmy/tomli, 2026-07-18).
             flush_small_tool_family(&mut packed, &mut small_family);
             packed.push((tool, lines));
             continue;
@@ -654,21 +666,31 @@ fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn cargo_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let (cat, fu, ztu) = if file.parent() == Some(ctx.root()) {
+    let (catastrophic, follow_up, zero_tool_call) = if file.parent() == Some(ctx.root()) {
         (0.75, 0.6, 0.5)
     } else {
         (0.4, 0.7, 0.4)
     };
-    mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
+    mix_signals(
+        catastrophic,
+        follow_up,
+        zero_tool_call,
+        path_depth_factor(file, ctx),
+    )
 }
 
 fn development_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let (cat, fu, ztu) = if file.parent() == Some(ctx.root()) {
+    let (catastrophic, follow_up, zero_tool_call) = if file.parent() == Some(ctx.root()) {
         (0.4, 0.7, 0.4)
     } else {
         (0.32, 0.58, 0.32)
     };
-    mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
+    mix_signals(
+        catastrophic,
+        follow_up,
+        zero_tool_call,
+        path_depth_factor(file, ctx),
+    )
 }
 
 fn config_value(file: &Path, ctx: &WalkCtx) -> f64 {

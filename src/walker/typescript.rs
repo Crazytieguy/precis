@@ -48,9 +48,9 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TsKey};
 use crate::content::{BatchContent, Render, Span};
-use crate::render::RenderedTree;
 use crate::value::{
-    mix_signals, names_surface_chunk_factor, reexport_import_chunk_factor, roster_mass_factor,
+    CATALOG_ROSTER_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, mix_signals,
+    reexport_import_chunk_factor, roster_mass_factor,
 };
 
 use super::import_chunks::{
@@ -335,13 +335,44 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
         let mut body_segment_index = 0usize;
         if !exports.is_empty() {
-            let has_split_js_class_export = exports
+            // One pass over the exports: the catalog/chunk computations
+            // are token-cost probes, too expensive to redo for the
+            // ExportNames flags and again per item.
+            let export_split_plans: Vec<ExportSplitPlan> = exports
                 .iter()
-                .any(|item| should_split_js_class_export(file, item));
-            let has_oversized_ts_class_export = exports.iter().any(|item| {
-                member_names_catalog_lines(item.kind, item.decl, &source).is_none()
-                    && oversized_export_class_chunks(file, item, &source, ctx).is_some()
-            });
+                .map(|item| {
+                    let split_js_class = should_split_js_class_export(file, item);
+                    let member_names_catalog = if split_js_class {
+                        None
+                    } else {
+                        member_names_catalog_lines(item.kind, item.decl, &source)
+                    };
+                    let member_catalog_chunks = member_names_catalog
+                        .as_ref()
+                        .map(|catalog| member_names_catalog_chunks(file, &source, catalog, ctx));
+                    let oversized_export_chunks =
+                        if split_js_class || member_names_catalog.is_some() {
+                            None
+                        } else {
+                            oversized_export_class_chunks(file, item, &source, ctx)
+                        };
+                    ExportSplitPlan {
+                        split_js_class,
+                        member_names_catalog,
+                        member_catalog_chunks,
+                        oversized_export_chunks,
+                    }
+                })
+                .collect();
+            let has_split_js_class_export =
+                export_split_plans.iter().any(|plan| plan.split_js_class);
+            // `should_split_js_class_export` (js-only) and
+            // `oversized_export_class_chunks` (ts/tsx-only) are
+            // file-type disjoint, so the gated per-item chunks match
+            // the ungated any-export probe this flag used to run.
+            let has_oversized_ts_class_export = export_split_plans
+                .iter()
+                .any(|plan| plan.oversized_export_chunks.is_some());
             // One unified names surface per file — NS authors anchor on
             // the complete catalog as a single unit (chunking measured
             // against unified on the post-refreeze keys: unified wins).
@@ -372,7 +403,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 .iter()
                 .filter_map(|item| item.predecessor_start_line)
                 .collect();
-            for item in exports.iter() {
+            for (item, plan) in exports.iter().zip(export_split_plans) {
                 let export_key = TsKey::Export {
                     file: file.clone(),
                     start_line: item.start_line,
@@ -386,20 +417,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         })
                     })
                     .or_else(|| names_gate.clone());
-                let split_js_class = should_split_js_class_export(file, item);
-                let member_names_catalog = if split_js_class {
-                    None
-                } else {
-                    member_names_catalog_lines(item.kind, item.decl, &source)
-                };
-                let member_catalog_chunks = member_names_catalog
-                    .as_ref()
-                    .map(|catalog| member_names_catalog_chunks(file, &source, catalog, ctx));
-                let oversized_export_chunks = if split_js_class || member_names_catalog.is_some() {
-                    None
-                } else {
-                    oversized_export_class_chunks(file, item, &source, ctx)
-                };
+                let ExportSplitPlan {
+                    split_js_class,
+                    member_names_catalog,
+                    member_catalog_chunks,
+                    oversized_export_chunks,
+                } = plan;
                 let partitioned_member_catalog = member_catalog_chunks
                     .as_ref()
                     .is_some_and(|chunks| chunks.len() > 1);
@@ -506,8 +529,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                                     ctx,
                                     js_factor,
                                     member_count,
-                                    0,
-                                    1,
+                                    1.0,
                                 ) * contract_roster_factor(true),
                             });
                             body_parts_predecessor = BatchKey::Typescript(key);
@@ -516,15 +538,30 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         let chunk_predecessor = names_gate
                             .clone()
                             .unwrap_or_else(|| export_predecessor.clone());
-                        for (chunk_index, lines) in member_catalog_chunks.iter().enumerate() {
-                            let Some(content) = member_names_catalog_content(
-                                file,
-                                &source,
-                                lines,
-                                member_catalog.truncate_to_name,
-                            ) else {
-                                continue;
-                            };
+                        let chunk_contents: Vec<(usize, BatchContent)> = member_catalog_chunks
+                            .iter()
+                            .enumerate()
+                            .filter_map(|(chunk_index, lines)| {
+                                member_names_catalog_content(
+                                    file,
+                                    &source,
+                                    lines,
+                                    member_catalog.truncate_to_name,
+                                )
+                                .map(|content| (chunk_index, content))
+                            })
+                            .collect();
+                        let costs: Vec<usize> = chunk_contents
+                            .iter()
+                            .map(|(_, content)| ctx.marginal_tokens(content))
+                            .collect();
+                        let chunk_factors = conserved_catalog_chunk_factors(
+                            &costs,
+                            CATALOG_ROSTER_CONCAVITY_EXPONENT,
+                        );
+                        for ((chunk_index, content), chunk_factor) in
+                            chunk_contents.into_iter().zip(chunk_factors)
+                        {
                             let key = TsKey::ExportMemberNamesChunk {
                                 file: file.clone(),
                                 start_line: item.start_line,
@@ -540,8 +577,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                                     ctx,
                                     js_factor,
                                     member_count,
-                                    chunk_index,
-                                    member_catalog_chunks.len(),
+                                    chunk_factor,
                                 ) * contract_roster_factor(true),
                             });
                         }
@@ -869,6 +905,16 @@ fn should_split_js_class_export(file: &Path, item: &ExportInfo<'_>) -> bool {
         && is_class_node(item.decl)
         && (JS_CLASS_MEMBER_SPLIT_MIN..=JS_CLASS_MEMBER_SPLIT_MAX)
             .contains(&item.class_members.len())
+}
+
+/// Per-export split decisions, computed once per file pass: the
+/// catalog / chunk probes are token-cost renders shared by the
+/// `ExportNames` flags and the per-item emission.
+struct ExportSplitPlan {
+    split_js_class: bool,
+    member_names_catalog: Option<MemberNamesCatalog>,
+    member_catalog_chunks: Option<Vec<FileLines>>,
+    oversized_export_chunks: Option<Vec<FileLines>>,
 }
 
 #[derive(Debug, Clone)]
@@ -2256,21 +2302,22 @@ fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f6
 }
 
 /// One chunk of a big declaration's member-name catalog — the
-/// per-member surface priced as a roster slice: names-surface falloff
-/// across chunks, roster-mass boost for the catalog's total size so
-/// complete catalogs stay ratio-competitive with tiny exports.
+/// per-member surface with a roster-mass boost for the catalog's total
+/// size so complete catalogs stay ratio-competitive with tiny exports.
+/// `chunk_factor` is the chunk's share of the catalog's conserved
+/// total (1.0 for an unpartitioned catalog); see
+/// [`conserved_catalog_chunk_factors`].
 fn export_member_names_value(
     file: &Path,
     kind: ItemKind,
     ctx: &WalkCtx,
     js_factor: f64,
     member_count: usize,
-    chunk_index: usize,
-    chunk_count: usize,
+    chunk_factor: f64,
 ) -> f64 {
     export_member_value(file, kind, ctx, js_factor)
         * roster_mass_factor(member_count)
-        * names_surface_chunk_factor(chunk_index, chunk_count)
+        * chunk_factor
 }
 
 /// Module-private classes carry per-method query value (constructors,
@@ -2768,11 +2815,7 @@ fn oversized_export_class_chunks(
     let surface = decl_surface_lines(item.kind, item.anchor, item.decl, source, true);
     let cost = |lines: &FileLines| {
         single_file_lines_content(file, source, lines.clone())
-            .map(|content| {
-                RenderedTree::new(ctx.root().to_path_buf(), ctx.source_cache().clone())
-                    .marginal_cost(&content)
-                    .tokens
-            })
+            .map(|content| ctx.marginal_tokens(&content))
             .unwrap_or(0)
     };
     if cost(&surface) < OVERSIZE_EXPORT_SPLIT_TOKENS {
@@ -3017,13 +3060,12 @@ fn member_names_catalog_chunks(
     else {
         return Vec::new();
     };
-    let fresh_tree = || RenderedTree::new(ctx.root().to_path_buf(), ctx.source_cache().clone());
     let cost = |lines: &FileLines| {
         member_names_catalog_content(file, source, lines, catalog.truncate_to_name)
-            .map(|content| fresh_tree().marginal_cost(&content).tokens)
+            .map(|content| ctx.marginal_tokens(&content))
             .unwrap_or(0)
     };
-    if fresh_tree().marginal_cost(&whole).tokens <= MEMBER_CATALOG_SPLIT_TOKENS {
+    if ctx.marginal_tokens(&whole) <= MEMBER_CATALOG_SPLIT_TOKENS {
         return vec![catalog.lines.clone()];
     }
 
@@ -4050,6 +4092,36 @@ mod tests {
             batch.key,
             BatchKey::Typescript(TsKey::ExportMemberNames { .. })
         )));
+
+        // Value conservation: each chunk's value is base * factor with the
+        // factors summing to 1, so the partitioned catalog carries exactly
+        // the unsplit catalog's aggregate value.
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let costs: Vec<usize> = chunks
+            .iter()
+            .map(|chunk| ctx.marginal_tokens(&chunk.content))
+            .collect();
+        let factors = crate::value::conserved_catalog_chunk_factors(
+            &costs,
+            crate::value::CATALOG_ROSTER_CONCAVITY_EXPONENT,
+        );
+        let bases: Vec<f64> = chunks
+            .iter()
+            .zip(&factors)
+            .map(|(chunk, factor)| chunk.value / factor)
+            .collect();
+        let total: f64 = chunks.iter().map(|chunk| chunk.value).sum();
+        for base in &bases {
+            assert!(
+                (base - bases[0]).abs() < 1e-9,
+                "chunk values must share one conserved base: {bases:?}"
+            );
+        }
+        assert!(
+            (total - bases[0]).abs() < 1e-9,
+            "aggregate chunk value must equal the unsplit base: {total} vs {}",
+            bases[0]
+        );
 
         let mut covered = HashSet::new();
         for chunk in chunks {

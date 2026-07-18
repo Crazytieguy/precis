@@ -358,12 +358,27 @@ fn dockerfile_escape_char(lines: &[&str]) -> char {
 }
 
 /// Append the delimiters of any heredocs opened on `line` (`<<EOF`,
-/// `<<-EOF`, quoted variants). Delimiters must start with a letter or
-/// underscore, which keeps shell arithmetic like `1<<2` out.
-fn collect_heredoc_openers(line: &str, out: &mut VecDeque<String>) {
+/// `<<-EOF`, quoted variants), each with whether `<<-` permits an
+/// indented closing delimiter. `<<` must sit at the start of a shell
+/// word (start of line or after whitespace), which keeps operators
+/// embedded in program text like `cout<<msg` out; delimiters must
+/// start with a letter or underscore, which keeps shell arithmetic
+/// like `1<<2` out.
+fn collect_heredoc_openers(line: &str, out: &mut VecDeque<(String, bool)>) {
     let mut rest = line;
+    let mut offset = 0;
     while let Some(pos) = rest.find("<<") {
+        let at_word_start = offset + pos == 0
+            || rest[..pos]
+                .chars()
+                .next_back()
+                .is_some_and(|c| c.is_whitespace());
+        offset += pos + 2;
         rest = &rest[pos + 2..];
+        if !at_word_start {
+            continue;
+        }
+        let allow_indented_close = rest.starts_with('-');
         let mut s = rest.strip_prefix('-').unwrap_or(rest);
         if let Some(unquoted) = s.strip_prefix(['"', '\'']) {
             s = unquoted;
@@ -375,7 +390,7 @@ fn collect_heredoc_openers(line: &str, out: &mut VecDeque<String>) {
             .chars()
             .take_while(|c| c.is_ascii_alphanumeric() || *c == '_')
             .collect();
-        out.push_back(delimiter);
+        out.push_back((delimiter, allow_indented_close));
     }
 }
 
@@ -394,7 +409,7 @@ fn dockerfile_contract_lines(source: &str) -> Vec<usize> {
     let mut continuation: Option<bool> = None;
     // Delimiters of heredocs whose bodies are still pending; body
     // lines inherit the opening instruction's selection state.
-    let mut heredocs: VecDeque<String> = VecDeque::new();
+    let mut heredocs: VecDeque<(String, bool)> = VecDeque::new();
     let mut heredoc_selected = false;
     let mut seen_from = false;
     for (i, raw) in lines.iter().enumerate() {
@@ -413,11 +428,18 @@ fn dockerfile_contract_lines(source: &str) -> Vec<usize> {
             }
             continue;
         }
-        if let Some(delimiter) = heredocs.front() {
+        if let Some((delimiter, allow_indented_close)) = heredocs.front() {
             if heredoc_selected {
                 selected.push(i + 1);
             }
-            if line == delimiter {
+            // Plain `<<` closes only on an unindented delimiter line;
+            // `<<-` also accepts an indented one.
+            let closes = if *allow_indented_close {
+                line == delimiter
+            } else {
+                raw.trim_end() == delimiter
+            };
+            if closes {
                 heredocs.pop_front();
             }
             continue;

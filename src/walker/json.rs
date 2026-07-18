@@ -7,8 +7,8 @@
 //! generated JSONs are skipped. The full key→batch mapping lives in the
 //! `is_*_key` predicates below.
 
-use std::cell::OnceCell;
-use std::collections::HashSet;
+use std::cell::{OnceCell, RefCell};
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -42,6 +42,10 @@ const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 pub struct JsonState {
     membership: WorkspaceMembership,
     primary_member: OnceCell<Option<PathBuf>>,
+    /// Per-file answers for [`Self::is_primary_workspace_member`] — the
+    /// question is asked once per priced section and each miss costs a
+    /// `canonicalize` syscall chain.
+    primary_member_files: RefCell<HashMap<PathBuf, bool>>,
 }
 
 impl JsonState {
@@ -63,7 +67,14 @@ impl JsonState {
         let Some(primary) = primary else {
             return false;
         };
-        file.canonicalize().is_ok_and(|file| file == *primary)
+        if let Some(&cached) = self.primary_member_files.borrow().get(file) {
+            return cached;
+        }
+        let is_primary = file.canonicalize().is_ok_and(|file| file == *primary);
+        self.primary_member_files
+            .borrow_mut()
+            .insert(file.to_path_buf(), is_primary);
+        is_primary
     }
 }
 
@@ -178,10 +189,13 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     );
 
     let overlap_chain = package_sections_share_lines(&pairs);
+    // The collect() calls above push Identity first, so it can only be
+    // the head of `sections` — the emission/chain order below relies
+    // on that ordering.
     let identity = sections
-        .iter()
-        .find_map(|(key, _, _)| matches!(key, JsonKey::Identity { .. }).then(|| key.clone()))
-        .map(BatchKey::Json);
+        .first()
+        .filter(|(key, _, _)| matches!(key, JsonKey::Identity { .. }))
+        .map(|(key, _, _)| BatchKey::Json(key.clone()));
     let mut previous = None;
     for (key, content, value) in sections {
         let emitted = BatchKey::Json(key.clone());

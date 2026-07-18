@@ -130,7 +130,8 @@ bookmarks/
            9→        # noinspection PyUnusedImports
         …
     context_processors.py
-        …
+           1→from bookmarks import utils
+           2→from bookmarks.models import Toast
            5→def toasts(request):
         …
           20→def app_version(request):
@@ -204,35 +205,6 @@ bookmarks/
                2→# ruff: noqa
             …
         base.py
-            …
-              18→BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            …
-              25→SECRET_KEY = "kgq$h3@!!vbb6*nzfz(dbze=*)zsroqa8gvc0#1gx$3cd8z99^"
-            …
-              28→DEBUG = False
-              29→
-              30→ALLOWED_HOSTS = ["*"]
-              31→
-              32→USE_X_FORWARDED_HOST = os.getenv("LD_USE_X_FORWARDED_HOST", False) in (
-            …
-              41→INSTALLED_APPS = [
-            …
-              55→MIDDLEWARE = [
-            …
-              67→ROOT_URLCONF = "bookmarks.urls"
-              68→
-              69→TEMPLATES = [
-            …
-              87→DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-              88→
-              89→WSGI_APPLICATION = "bookmarks.wsgi.application"
-            …
-              94→AUTH_PASSWORD_VALIDATORS = [
-            …
-             110→LD_CONTEXT_PATH = os.getenv("LD_CONTEXT_PATH", "")
-             111→
-             112→LOGIN_URL = "/" + LD_CONTEXT_PATH + "login"
-            …
         custom.py
         dev.py
         prod.py
@@ -464,6 +436,15 @@ pyproject.toml
 pytest.ini
 rollup.config.mjs
 scripts/
+    build-docker.sh
+    coverage.sh
+    generate-changelog.py
+    release.sh
+    run-docker.sh
+    run-postgres.sh
+    setup-ublock.sh
+    test-environments/
+    test-postgres.sh
 supervisord-all.conf
 supervisord-tasks.conf
 uv.lock

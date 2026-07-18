@@ -33,7 +33,7 @@ README.md
       24→- **Markdown** support with tools for customization.
       25→- Async, JSON based **internationalization**.
       26→- Built-in, easy to use `ErrorBoundary` component for graceful error handling.
-    …
+      27→- **Unopinionated**: use the backend, CSS, and JS frameworks of your choice, the way you want to use them.
       28→- Everything is **easily customizable**, from the rendering engine to components, formatting and context management.
       29→- Automatic and customizable **property-name conversion** from snake case to kebab case.
       30→- **Compatible** with any other templating library through wrappers.
@@ -70,7 +70,8 @@ README.md
      330→## Framework integrations
     …
      337→## External examples
-    …
+     338→
+     339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
      341→## Why
     …
      353→## Dependencies
@@ -111,6 +112,11 @@ docs/
          184→## When to use components, when to use component factories?
         …
     examples/
+        fastapi-htmx-tailwind-daisyui.md
+        index.md
+        internationalization.md
+        markdown.md
+        snippet-slots-fastapi.md
     function-components.md
            1→# Function components
         …
@@ -206,49 +212,13 @@ htmy/
         …
     function_component.py
     html.py
-        …
-          13→class DOCTYPE:
-        …
-          20→html = Tag("html")
-        …
-          27→head = Tag("head")
-        …
-          34→body = Tag("body")
-        …
-          41→base = TagWithProps("base")
-        …
-          48→title = Tag("title", child_separator=None)  # TODO: allow only a single str child.
-        …
-          55→link = TagWithProps("link")
-        …
-          63→class Link:
-        …
-          71→meta = TagWithProps("meta")
-        …
-          79→class Meta:
-        …
-         103→script = Tag("script")  # TODO: allow only a single str child.
-        …
-         113→style = Tag("style")  # TODO: only allow a single str child, automatically convert plain str to SafeStr.
-        …
-         123→dialog = Tag("dialog")
-        …
-         130→address = Tag("address")
-        …
-         137→article = Tag("article")
-        …
-         144→aside = Tag("aside")
-        …
-         151→blockquote = Tag("blockquote")
-        …
-         831→class entity:
-        …
     i18n.py
     io.py
         …
           11→async def load_text_file(path: str | Path) -> str:
           12→    """Loads the text content from the given path."""
-        …
+          13→    async with await open_file(path, "r") as f:
+          14→        return await f.read()
     md/
         __init__.py
                1→from .core import MD as MD
@@ -356,3 +326,18 @@ pyproject.toml
       94→
       95→serve-docs = "zensical serve"
 tests/
+    __init__.py
+    conftest.py
+    data/
+    renderer/
+        test_default_renderer.py
+        test_renderer_comparison.py
+        test_renderer_in_context.py
+        test_streaming_renderers.py
+    test_formatter.py
+    test_function_component.py
+    test_i18n.py
+    test_main_components.py
+    test_md.py
+    test_snippet.py
+    utils.py

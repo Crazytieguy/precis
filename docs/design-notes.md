@@ -713,3 +713,36 @@ touching the render tree. The right interface is open: line count
 alone misses predecessor-overlap savings; full marginal cost is too
 expensive. Benign on current fixture sizes (~140 batches), real with
 deep predecessor chains or wide frontiers.
+
+## Batch code-review pass (2026-07-18): conserved catalog-chunk allocation
+
+Codex adversarial review flagged that both new catalog splitters
+replicated value across chunks (python `DeclNamesChunk` factors
+`1.0/0.8/0.67`, TS `ExportMemberNamesChunk` `0.9/0.72/0.6` — a 2-chunk
+split carried 1.6–1.8× the unsplit catalog's aggregate value).
+Shipped `conserved_catalog_chunk_factors` (value.rs): factors sum to
+exactly 1; head = `share^k × 1.4` capped at `0.9` (`k` =
+`CATALOG_ROSTER_CONCAVITY_EXPONENT = 0.37`, now shared with the
+batch-key exponents); tails split the remainder cost-proportionally
+with the names-surface falloff.
+
+Measured frontier (training corpus): mean 0.6151 → 0.6147.
+- Pure cost-share conservation: 0.6139 (tomli −0.064: `_parser.py`
+  roster head slipped 1224 → 2726 cum, out of its NS window).
+- Head ratio-parity (`share^k`, no premium): 0.6143.
+- Premium 1.4/cap 0.9 (shipped): head back at 1256; commander fully
+  recovered; htmy +0.008; tomli −0.038 residual.
+
+The tomli residual is the direct cost of removing replication: its old
+chunk #1 bought at 2256 cum with inflated value and earned mid-budget
+roster credit; conserved tails price at ~0.05–0.2 of base and buy at
+~9.5K. Its high-budget rows improved (5.3–5.6 up +0.01–0.03), as did
+commander's late curve. Recovering tomli's mid-budget tail credit
+requires giving tails meaningful mass again, i.e. re-approaching
+replication — tension accepted and reported, not tuned away.
+
+Also measured this pass: merging small tool-config families **across**
+large families (instead of flushing on each large family) is worse —
+the old occasional solo sub-minimum pack is a cheap early buy, the
+merged pack schedules later (htmy/tomli). The flush-on-large behavior
+is deliberate now; see the comment in `pack_small_tool_config_families`.

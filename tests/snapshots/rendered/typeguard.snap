@@ -240,6 +240,18 @@ src/
         _exceptions.py
                1→from collections import deque
                2→from typing import Deque
+               5→class TypeHintWarning(UserWarning):
+            …
+              12→class TypeCheckWarning(UserWarning):
+              13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
+            …
+              19→class InstrumentationWarning(UserWarning):
+              20→    """Emitted when there's a problem with instrumenting a function for type checks."""
+            …
+              26→class TypeCheckError(Exception):
+              27→    """
+              28→    Raised by typeguard's type checkers when a type mismatch is detected.
+              29→    """
             …
         _functions.py
         _importhook.py

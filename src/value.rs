@@ -54,15 +54,85 @@ const CHUNKED_NAMES_FIRST_CHUNK_FACTOR: f64 = 0.9;
 /// Falloff per later chunk — 0.25 puts chunk 4 at ~half chunk 1.
 const CHUNKED_NAMES_FALLOFF: f64 = 0.25;
 
-/// Per-chunk multiplier for a chunked names-surface batch. Only the C
-/// and Go walkers still chunk, behind their own size gates; the other
-/// walkers emit one unified names surface per file.
+/// Per-chunk multiplier for a chunked names-surface batch, used by the
+/// C and Go walkers behind their own size gates. The Python and
+/// TypeScript catalog splitters allocate a conserved total instead via
+/// [`conserved_catalog_chunk_factors`].
 pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
     if chunk_count <= 1 {
         1.0
     } else {
         CHUNKED_NAMES_FIRST_CHUNK_FACTOR / (1.0 + chunk_index as f64 * CHUNKED_NAMES_FALLOFF)
     }
+}
+
+/// Concavity exponent shared by the catalog-roster batch keys (Python
+/// `DeclNames`/`DeclNamesChunk`, TS `ExportMemberNames*` /
+/// `ModuleItemNames`) and the head-parity allocation in
+/// [`conserved_catalog_chunk_factors`] — the allocation is only
+/// ratio-neutral if it uses the exponent the scheduler ranks with.
+pub const CATALOG_ROSTER_CONCAVITY_EXPONENT: f64 = 0.37;
+
+/// Head premium over ratio parity (`share_0^k`) inside the conserved
+/// total. Pure parity prices the head like the unsplit catalog — which
+/// was too big to buy inside the NS windows that motivated splitting
+/// (tomli's `_parser.py` roster slipped 1224 → 2726 cum, −0.038).
+/// Tuned on the combined tree with the cap below; the aggregate stays
+/// exactly 1 — the premium is paid by the tails, not by replication.
+const CATALOG_HEAD_PREMIUM: f64 = 1.4;
+
+/// Cap on the head's conserved share — the established first-chunk
+/// factor ([`CHUNKED_NAMES_FIRST_CHUNK_FACTOR`]), so a premium-boosted
+/// head never prices above the old unconserved head tier.
+const CATALOG_HEAD_FACTOR_CAP: f64 = CHUNKED_NAMES_FIRST_CHUNK_FACTOR;
+
+/// Value-conserving per-chunk factors for a partitioned catalog. The
+/// unsplit catalog's value is a fixed total: factors sum to exactly 1,
+/// so splitting redistributes the catalog's value, it never multiplies
+/// it, and a split file cannot out-purchase its unsplit self at any
+/// budget. Within that total the head chunk takes `share_0^k` (`k` =
+/// `cost_exponent` — the allocation at which its `value/cost^k`
+/// scheduling ratio matches the unsplit catalog's) times a bounded
+/// premium ([`CATALOG_HEAD_PREMIUM`], capped at
+/// [`CATALOG_HEAD_FACTOR_CAP`]). Tails split the remainder
+/// proportional to token cost tilted by [`CHUNKED_NAMES_FALLOFF`].
+pub fn conserved_catalog_chunk_factors(chunk_costs: &[usize], cost_exponent: f64) -> Vec<f64> {
+    if chunk_costs.len() <= 1 {
+        return vec![1.0; chunk_costs.len()];
+    }
+    let total: usize = chunk_costs.iter().sum();
+    if total == 0 {
+        // Degenerate: no chunk produced measurable content. Equal shares
+        // keep the sum-to-1 invariant without dividing by zero.
+        return vec![1.0 / chunk_costs.len() as f64; chunk_costs.len()];
+    }
+    let head_share = chunk_costs[0] as f64 / total as f64;
+    let head_factor =
+        (head_share.powf(cost_exponent) * CATALOG_HEAD_PREMIUM).min(CATALOG_HEAD_FACTOR_CAP);
+    let tail_weights: Vec<f64> = chunk_costs[1..]
+        .iter()
+        .enumerate()
+        .map(|(tail_index, &cost)| {
+            cost as f64 / (1.0 + (tail_index + 1) as f64 * CHUNKED_NAMES_FALLOFF)
+        })
+        .collect();
+    let tail_total: f64 = tail_weights.iter().sum();
+    let remainder = 1.0 - head_factor;
+    let mut factors = Vec::with_capacity(chunk_costs.len());
+    factors.push(head_factor);
+    if tail_total <= 0.0 {
+        factors.extend(std::iter::repeat_n(
+            remainder / (chunk_costs.len() - 1) as f64,
+            chunk_costs.len() - 1,
+        ));
+    } else {
+        factors.extend(
+            tail_weights
+                .into_iter()
+                .map(|weight| remainder * weight / tail_total),
+        );
+    }
+    factors
 }
 
 /// Per-chunk multiplier for re-export-wall chunks. First chunk keeps
@@ -576,6 +646,53 @@ mod tests {
             PROSE_MASS_BOOST
         );
         assert_eq!(prose_mass_tier_multiplier(5_000, 20_000, false), 1.0);
+    }
+
+    #[test]
+    fn conserved_catalog_chunk_factors_sum_to_one() {
+        for costs in [
+            vec![120, 130],
+            vec![200, 180, 90],
+            vec![250, 40, 300, 90, 120],
+            vec![100; 8],
+        ] {
+            let factors =
+                conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT);
+            assert_eq!(factors.len(), costs.len());
+            let total: f64 = factors.iter().sum();
+            assert!(
+                (total - 1.0).abs() < 1e-9,
+                "aggregate must be conserved for {costs:?}, got {total}"
+            );
+            assert!(factors.iter().all(|f| *f > 0.0 && *f < 1.0));
+        }
+    }
+
+    #[test]
+    fn conserved_catalog_chunk_factors_head_premium_is_bounded() {
+        let k = CATALOG_ROSTER_CONCAVITY_EXPONENT;
+        let head_share: f64 = 1.0 / 3.0;
+        let factors = conserved_catalog_chunk_factors(&[100, 100, 100], k);
+        // Head = share^k (ratio parity with the unsplit catalog) times
+        // the bounded premium, capped at the first-chunk tier.
+        let expected = (head_share.powf(k) * CATALOG_HEAD_PREMIUM).min(CATALOG_HEAD_FACTOR_CAP);
+        assert!((factors[0] - expected).abs() < 1e-9);
+        assert!(factors[0] >= head_share.powf(k));
+        assert!(factors[0] <= CATALOG_HEAD_FACTOR_CAP);
+        // Tails decay in train order at equal cost.
+        assert!(factors[0] > factors[1] && factors[1] > factors[2]);
+    }
+
+    #[test]
+    fn conserved_catalog_chunk_factors_degenerate_cases() {
+        let k = CATALOG_ROSTER_CONCAVITY_EXPONENT;
+        assert_eq!(conserved_catalog_chunk_factors(&[], k), Vec::<f64>::new());
+        assert_eq!(conserved_catalog_chunk_factors(&[500], k), vec![1.0]);
+        assert_eq!(conserved_catalog_chunk_factors(&[0, 0], k), vec![0.5, 0.5]);
+        // A zero-cost tail set leaves the whole remainder split evenly.
+        let head_only = conserved_catalog_chunk_factors(&[200, 0, 0], k);
+        assert!((head_only.iter().sum::<f64>() - 1.0).abs() < 1e-9);
+        assert!((head_only[1] - head_only[2]).abs() < 1e-9);
     }
 
     /// Single table-driven driver. Each row is `(expected, paths)`
