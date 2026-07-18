@@ -28,7 +28,7 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 311 | 5 | listing of 'demo' |  |  | 0.844 |
 | walker |  | 320 | 9 | listing of 'internal/services/activity' |  |  | 0.844 |
 | walker |  | 331 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.844 |
-| walker |  | 356 | 25 | README.md section #11 |  |  | 0.844 |
+| walker |  | 356 | 25 | README.md section #27 |  |  | 0.844 |
 | walker |  | 365 | 9 | listing of 'internal/adapters/repositories/notes' |  |  | 0.844 |
 | walker |  | 374 | 9 | listing of 'internal/adapters/repositories/timewarrior' |  |  | 0.844 |
 | walker |  | 386 | 12 | go decl names surface in cmd/tock/main.go |  |  | 0.844 |
@@ -118,7 +118,7 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 2683 | 0 | go decl at internal/adapters/cli/analyze.go:20 |  |  | 0.566 |
 | walker |  | 2683 | 0 | go decl at internal/adapters/cli/analyze.go:84 |  |  | 0.566 |
 | walker |  | 2683 | 0 | go decl at internal/adapters/cli/analyze.go:206 |  |  | 0.566 |
-| walker |  | 2774 | 91 | README.md section #6 |  |  | 0.566 |
+| walker |  | 2774 | 91 | README.md section #21 |  |  | 0.566 |
 | walker |  | 2829 | 55 | go decl at internal/core/dto/activity_dto.go:32 |  |  | 0.584 |
 | walker |  | 2884 | 55 | go decl at internal/core/ports/ports.go:29 |  |  | 0.587 |
 | ns | 3036 |  | 444 | config.go: option funcs + defaults + every TOCK_* BindEnv call | 4.3 |  | 0.558 |
@@ -141,7 +141,7 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 4124 | 19 | go decl doc at internal/core/models/activity.go:31 |  |  | 0.525 |
 | walker |  | 4134 | 10 | docs/commands.md section #11 |  |  | 0.525 |
 | walker |  | 4144 | 10 | docs/commands.md section #31 |  |  | 0.525 |
-| walker |  | 4234 | 90 | README.md section #10 |  |  | 0.525 |
+| walker |  | 4234 | 90 | README.md section #26 |  |  | 0.525 |
 | ns | 4328 |  | 411 | cli.NewRootCmd (composition root, wiring) | 6.1 |  | 0.499 |
 | walker |  | 4329 | 95 | go decl names surface in internal/adapters/cli/remove.go |  |  | 0.499 |
 | walker |  | 4329 | 0 | go decl at internal/adapters/cli/remove.go:22 |  |  | 0.499 |
@@ -201,7 +201,7 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 5540 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:211 |  |  | 0.477 |
 | walker |  | 5571 | 31 | go decl at internal/adapters/cli/update.go:17 |  |  | 0.477 |
 | ns | 5618 |  | 175 | cli.NewCurrentCmd (definition + flags) | 6.7 |  | 0.471 |
-| walker |  | 5696 | 125 | README.md section #7 |  |  | 0.472 |
+| walker |  | 5696 | 125 | README.md section #22 |  |  | 0.472 |
 | walker |  | 5713 | 17 | go decl doc at internal/adapters/cli/analyze.go:84 |  |  | 0.472 |
 | ns | 5779 |  | 161 | cli.NewLastCmd | 6.8 |  | 0.464 |
 | walker |  | 5834 | 121 | go decl names surface in internal/adapters/cli/theme.go |  |  | 0.464 |
@@ -260,7 +260,7 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 6881 | 67 | go package + imports in internal/extra/extra.go |  |  | 0.446 |
 | ns | 7041 |  | 187 | cli calendar_sidebar.go: renderSidebar (fixed-height-budget layout) | 7.5 |  | 0.439 |
 | ns | 7158 |  | 117 | cli list_gui model (state for `tock list`) | 7.6 |  | 0.434 |
-| walker |  | 7281 | 400 | README.md section #8 |  |  | 0.434 |
+| walker |  | 7281 | 400 | README.md section #23 |  |  | 0.434 |
 | ns | 7349 |  | 191 | cli.SelectActivityMetadata (interactive picker entry point) | 7.7 |  | 0.427 |
 | walker |  | 7396 | 115 | go decl names surface in internal/adapters/repositories/file/parser.go |  |  | 0.427 |
 | walker |  | 7396 | 0 | go decl at internal/adapters/repositories/file/parser.go:20 |  |  | 0.427 |
@@ -337,24 +337,20 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | ns | 9370 |  | 102 | .golangci.yaml: version/issues/formatters | 10.5 |  | 0.542 |
 | ns | 9486 |  | 116 | install.sh (OS/arch detection + fetch-and-install) | 10.6 |  | 0.539 |
 | ns | 9560 |  | 74 | README Quick Start / Installation options | 11.1 |  | 0.536 |
-| walker |  | 9613 | 292 | go decl names surface in internal/services/activity/service.go |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:20 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:24 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:68 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:118 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:141 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:149 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:186 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:210 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:214 |  |  | 0.544 |
-| walker |  | 9613 | 0 | go decl at internal/services/activity/service.go:218 |  |  | 0.544 |
-| walker |  | 9631 | 18 | go decl body at internal/services/activity/service.go:20 |  |  | 0.544 |
-| walker |  | 9657 | 26 | go decl at internal/services/activity/service.go:15 |  |  | 0.544 |
-| walker |  | 9668 | 11 | go decl body at internal/services/activity/service.go:210 |  |  | 0.544 |
-| ns | 9669 |  | 109 | README Configuration: priority order + env var list | 11.2 |  | 0.540 |
-| walker |  | 9680 | 12 | go decl body at internal/services/activity/service.go:214 |  |  | 0.540 |
-| ns | 9720 |  | 51 | README Theming section | 11.3 |  | 0.538 |
-| walker |  | 9745 | 65 | go decl at internal/adapters/cli/add.go:16 |  |  | 0.538 |
+| ns | 9669 |  | 109 | README Configuration: priority order + env var list | 11.2 |  | 0.533 |
+| walker |  | 9704 | 383 | README.md section #2 |  |  | 0.539 |
+| ns | 9720 |  | 51 | README Theming section | 11.3 |  | 0.537 |
 | ns | 9852 |  | 132 | README File Format spec | 11.4 |  | 0.542 |
-| ns | 9929 |  | 77 | docs/commands.md: `start` section lede + usage | 11.6 |  | 0.540 |
-| ns | 9971 |  | 42 | core/ports/mocks: the three mock type declarations | 12.1 |  | 0.539 |
+| ns | 9929 |  | 77 | docs/commands.md: `start` section lede + usage | 11.6 |  | 0.539 |
+| ns | 9971 |  | 42 | core/ports/mocks: the three mock type declarations | 12.1 |  | 0.538 |
+| walker |  | 9996 | 292 | go decl names surface in internal/services/activity/service.go |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:20 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:24 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:68 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:118 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:141 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:149 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:186 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:210 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:214 |  |  | 0.545 |
+| walker |  | 9996 | 0 | go decl at internal/services/activity/service.go:218 |  |  | 0.545 |

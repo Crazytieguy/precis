@@ -446,6 +446,34 @@ Measured-dead this session (don't re-test without new evidence):
   (exactly flat everywhere). The 3K frontier is the binding
   constraint; absent-bucket recall only pays at B ≥ 4327.
 
+## Markdown oversize head-split (2026-07-18): 0.6029 → 0.6047
+
+Root-README sections ≥ 400 tokens that no structural split catches
+now emit head (kind `Whole`, keeps flags) + chained `OversizeTail`
+chunks (0.85× parent), cut at blank lines outside fences, ~200-token
+target. Movers: sqlite-vec +0.065, chibicc +0.039, sds +0.033;
+worst −0.004. Calibration knowledge from the tuning loop:
+
+- **Token-gate, not byte-gate.** go-multierror's 966-token Migrating
+  section is only 2.3 KB — a byte threshold sized for prose misses
+  fence-heavy sections entirely.
+- **Scope = root README only, measured.** Splitting UPDATING.md
+  (middleclass) handed a cheap full-value head to NS-late content:
+  the head displaced 370 tokens of source inside 3K (−0.11 on the
+  fixture). Adding UPDATING to changelog-class was worse (−0.196):
+  the guide cat 0.5 > peripheral 0.3 pulled the whole lump ≤3K.
+  Peripheral-doc lumps are correctly priced by their size.
+- **Tail factor 0.85, not BodyBlock's 0.60.** At 0.60 the tails
+  strand past the window their head opened (middleclass README tail
+  at 3618 vs the old whole-lump at 1634); 0.85 restores near-lump
+  train completion while the head still buys early. Tails are also
+  exempt from the `deferred_mass_prose` pass — deferring a mid-train
+  tail strands everything gated behind it.
+- **README-late fixtures with content past ~4K stayed flat at 3K**
+  (go-multierror, debug, cmdk, commander): the split re-orders their
+  README delivery but the chunks still price past the 3K frontier.
+  Their gains show up at 5–7K rows.
+
 ## Extreme-budget contract sweep (2026-07-06): corpus clean
 
 `for f in tests/fixtures/*/; do cargo run -q -- --budget 1000000 $f;

@@ -80,9 +80,7 @@ README.md
       22→>>> r.json()
       23→{'authenticated': True, ...}
       24→```
-      26→Requests allows you to send HTTP/1.1 requests extremely easily. There’s no need to manually add query strings to your URLs, or to form-encode your `PUT` & `POST` data — but nowadays, just use the `json` method!
-      27→
-      28→Requests is one of the most downloaded Python packages today, pulling in around `300M downloads / week` — according to GitHub, Requests is currently [depended upon](https://github.com/psf/requests/network/dependents?package_id=UGFja2FnZS01NzA4OTExNg%3D%3D) by `4,000,000+` repositories.
+    …
       30→## Installing Requests and Supported Versions
       31→
       32→Requests is available on PyPI:
@@ -324,6 +322,8 @@ src/
               70→    """Generate information for a bug report."""
             …
              128→def main():
+             129→    """Pretty-print the bug information as JSON."""
+             130→    print(json.dumps(info(), sort_keys=True, indent=2))
             …
         hooks.py
         models.py
@@ -331,6 +331,14 @@ src/
         py.typed
         sessions.py
         status_codes.py
+            …
+              23→_codes = {
+            …
+             106→codes: LookupDict[int] = LookupDict(name="status_codes")
+             107→
+             108→
+             109→def _init():
+            …
         structures.py
         utils.py
 tests/

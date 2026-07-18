@@ -147,7 +147,7 @@ Score(3000)=0.494 I=0.674 C=0.362 ns_rows≤3K=14/42 (reached=4 partial=2 missin
 | walker |  | 3374 | 64 | README headline in database/sqlserver/README.md |  |  | 0.471 |
 | walker |  | 3392 | 18 | listing of 'source/httpfs/testdata/duplicates' |  |  | 0.471 |
 | walker |  | 3529 | 137 | headings outline in README.md |  |  | 0.471 |
-| walker |  | 3547 | 18 | README.md section #5 |  |  | 0.471 |
+| walker |  | 3547 | 18 | README.md section #7 |  |  | 0.471 |
 | ns | 3568 |  | 513 | database.Driver interface | 3.1 |  | 0.433 |
 | walker |  | 3672 | 125 | README.md section #0 |  |  | 0.466 |
 | walker |  | 3700 | 28 | go package doc lede in source/iofs/doc.go |  |  | 0.466 |
@@ -256,7 +256,7 @@ Score(3000)=0.494 I=0.674 C=0.362 ns_rows≤3K=14/42 (reached=4 partial=2 missin
 | walker |  | 7323 | 13 | go decl at source/httpfs/driver.go:13 |  |  | 0.416 |
 | walker |  | 7348 | 25 | go decl body at migration.go:107 |  |  | 0.416 |
 | ns | 7358 |  | 397 | commands.go: nextSeqVersion | 5.3 |  | 0.402 |
-| walker |  | 7395 | 47 | README.md section #8 |  |  | 0.402 |
+| walker |  | 7395 | 47 | README.md section #10 |  |  | 0.402 |
 | walker |  | 7470 | 75 | go package doc body in source/iofs/doc.go |  |  | 0.402 |
 | ns | 7544 |  | 186 | commands.go: versionCmd + *Cmd roster | 5.4 |  | 0.395 |
 | walker |  | 7641 | 171 | go decl names surface #2 in migrate.go |  |  | 0.409 |
@@ -291,7 +291,7 @@ Score(3000)=0.494 I=0.674 C=0.362 ns_rows≤3K=14/42 (reached=4 partial=2 missin
 | ns | 8384 |  | 89 | source/ directory listing | 6.2 |  | 0.433 |
 | ns | 8399 |  | 15 | database/snowflake/README.md (undocumented driver) | 6.3 |  | 0.434 |
 | walker |  | 8422 | 43 | go decl doc at util.go:45 |  |  | 0.437 |
-| walker |  | 8478 | 56 | README.md section #6 |  |  | 0.437 |
+| walker |  | 8478 | 56 | README.md section #8 |  |  | 0.437 |
 | walker |  | 8508 | 30 | go package + imports in cli/main.go |  |  | 0.441 |
 | walker |  | 8538 | 30 | go package + imports in database/error.go |  |  | 0.442 |
 | walker |  | 8570 | 32 | database/rqlite/README.md section #1 |  |  | 0.442 |

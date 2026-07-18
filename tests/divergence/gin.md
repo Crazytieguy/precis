@@ -237,7 +237,7 @@ Score(3000)=0.751 I=0.889 C=0.634 ns_rows≤3K=16/41 (reached=9 partial=1 missin
 | walker |  | 5737 | 14 | go decl body at render/toml.go:34 |  |  | 0.585 |
 | walker |  | 5758 | 21 | go decl doc at render/toml.go:34 |  |  | 0.585 |
 | walker |  | 5781 | 23 | go decl doc at render/toml.go:21 |  |  | 0.585 |
-| walker |  | 5799 | 18 | README.md section #7 |  |  | 0.585 |
+| walker |  | 5799 | 18 | README.md section #8 |  |  | 0.585 |
 | walker |  | 5841 | 42 | go decl names surface in codec/json/api.go |  |  | 0.585 |
 | walker |  | 5841 | 0 | go decl at codec/json/api.go:10 |  |  | 0.585 |
 | ns | 5909 |  | 421 | routergroup.go: IRouter/IRoutes interfaces + RouterGroup struct | 3.1 |  | 0.564 |
@@ -374,7 +374,7 @@ Score(3000)=0.751 I=0.889 C=0.634 ns_rows≤3K=16/41 (reached=9 partial=1 missin
 | walker |  | 8678 | 21 | go decl doc at render/msgpack.go:39 |  |  | 0.502 |
 | walker |  | 8702 | 24 | go decl doc at render/msgpack.go:34 |  |  | 0.502 |
 | walker |  | 8717 | 15 | go decl doc at render/reader.go:41 |  |  | 0.502 |
-| walker |  | 8765 | 48 | README.md section #15 |  |  | 0.502 |
+| walker |  | 8765 | 48 | README.md section #16 |  |  | 0.502 |
 | walker |  | 8776 | 11 | go decl body at binding/bson.go:28 |  |  | 0.502 |
 | walker |  | 8787 | 11 | go decl body at binding/plain.go:27 |  |  | 0.502 |
 | walker |  | 8800 | 13 | go decl body at render/text.go:28 |  |  | 0.502 |

@@ -48,7 +48,7 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | walker |  | 1087 | 26 | listing of '.github/workflows' |  |  | 0.647 |
 | ns | 1113 |  | 304 | Makefile: lint/audit/doc targets | 1.11 |  | 0.587 |
 | walker |  | 1159 | 72 | README headline in exp/simd/README.md |  |  | 0.587 |
-| walker |  | 1186 | 27 | README.md section #435 |  |  | 0.587 |
+| walker |  | 1186 | 27 | README.md section #438 |  |  | 0.587 |
 | walker |  | 1218 | 32 | go package + imports in time.go |  |  | 0.587 |
 | walker |  | 1306 | 88 | README headline in internal/xtime/README.md |  |  | 0.587 |
 | walker |  | 1345 | 39 | headings outline in exp/simd/BENCHMARK.md |  |  | 0.587 |
@@ -58,32 +58,32 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | walker |  | 1695 | 64 | go module file exp/simd/go.mod |  |  | 0.556 |
 | ns | 2016 |  | 472 | .github/workflows/test.yml: CI test matrix | 1.13 |  | 0.480 |
 | ns | 2435 |  | 419 | Makefile: build/test/bench/coverage targets | 1.14 |  | 0.455 |
-| walker |  | 2562 | 867 | README.md section #3 |  |  | 0.455 |
-| walker |  | 2917 | 355 | README.md section #4 |  |  | 0.455 |
+| walker |  | 2562 | 867 | README.md section #5 |  |  | 0.455 |
+| walker |  | 2917 | 355 | README.md section #6 |  |  | 0.455 |
 | ns | 2990 |  | 555 | docs site: package-variant guide (core + it) | 1.15 |  | 0.411 |
 | ns | 3048 |  | 58 | constraints.go: Clonable constraint (full file) | 2.9 |  | 0.420 |
-| walker |  | 3051 | 134 | README.md section #5 |  |  | 0.420 |
-| walker |  | 3207 | 156 | README.md section #6 |  |  | 0.420 |
+| walker |  | 3051 | 134 | README.md section #7 |  |  | 0.420 |
+| walker |  | 3207 | 156 | README.md section #8 |  |  | 0.420 |
 | walker |  | 3245 | 38 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.420 |
 | walker |  | 3245 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.420 |
 | walker |  | 3245 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.420 |
 | walker |  | 3253 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.420 |
 | walker |  | 3262 | 9 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.420 |
-| walker |  | 3277 | 15 | README.md section #138 |  |  | 0.420 |
-| walker |  | 3292 | 15 | README.md section #143 |  |  | 0.420 |
+| walker |  | 3277 | 15 | README.md section #140 |  |  | 0.420 |
+| walker |  | 3292 | 15 | README.md section #145 |  |  | 0.420 |
 | walker |  | 3342 | 50 | headings outline in exp/simd/README.md |  |  | 0.420 |
-| walker |  | 3540 | 198 | README.md section #7 |  |  | 0.420 |
-| walker |  | 3733 | 193 | README.md section #8 |  |  | 0.420 |
+| walker |  | 3540 | 198 | README.md section #9 |  |  | 0.420 |
+| walker |  | 3733 | 193 | README.md section #10 |  |  | 0.420 |
 | ns | 3876 |  | 828 | slice.go: exported-function roster | 2.10 |  | 0.366 |
-| walker |  | 3968 | 235 | README.md section #9 |  |  | 0.366 |
+| walker |  | 3968 | 235 | README.md section #11 |  |  | 0.366 |
 | ns | 4249 |  | 373 | map.go: exported-function roster | 2.11 |  | 0.348 |
-| walker |  | 4503 | 535 | README.md section #10 |  |  | 0.348 |
+| walker |  | 4503 | 535 | README.md section #12 |  |  | 0.348 |
 | ns | 4742 |  | 493 | find.go: exported-function roster | 2.12 |  | 0.328 |
-| walker |  | 4921 | 418 | README.md section #11 |  |  | 0.328 |
+| walker |  | 4921 | 418 | README.md section #13 |  |  | 0.328 |
 | ns | 4930 |  | 188 | intersect.go: exported-function roster | 2.13 |  | 0.320 |
 | ns | 5070 |  | 140 | math.go: exported-function roster | 2.14 |  | 0.315 |
 | ns | 5182 |  | 112 | string.go: exported-function roster | 2.15 |  | 0.311 |
-| walker |  | 5202 | 281 | README.md section #12 |  |  | 0.311 |
+| walker |  | 5202 | 281 | README.md section #14 |  |  | 0.311 |
 | walker |  | 5261 | 59 | listing of 'docs' |  |  | 0.359 |
 | walker |  | 5265 | 4 | listing of 'docs/plugins' |  |  | 0.359 |
 | walker |  | 5272 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.359 |
@@ -91,7 +91,7 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | walker |  | 5303 | 10 | go package + imports in exp/simd/simd.go |  |  | 0.359 |
 | walker |  | 5349 | 46 | go package + imports in concurrency.go |  |  | 0.359 |
 | ns | 5413 |  | 231 | type_manipulation.go: exported-function roster | 2.16 |  | 0.351 |
-| walker |  | 5557 | 208 | README.md section #13 |  |  | 0.351 |
+| walker |  | 5557 | 208 | README.md section #15 |  |  | 0.351 |
 | walker |  | 5604 | 47 | go package + imports in errors.go |  |  | 0.351 |
 | walker |  | 5696 | 92 | go decl names surface in it/channel.go |  |  | 0.351 |
 | walker |  | 5696 | 0 | go decl at it/channel.go:13 |  |  | 0.351 |
@@ -123,13 +123,13 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | walker |  | 6068 | 18 | go decl at internal/constraints/constraints.go:33 |  |  | 0.331 |
 | walker |  | 6097 | 29 | go decl at internal/constraints/constraints.go:12 |  |  | 0.331 |
 | walker |  | 6129 | 32 | go decl at internal/constraints/constraints.go:19 |  |  | 0.331 |
-| walker |  | 6148 | 19 | README.md section #407 |  |  | 0.331 |
+| walker |  | 6148 | 19 | README.md section #409 |  |  | 0.331 |
 | walker |  | 6168 | 20 | listing of 'docs/src/pages' |  |  | 0.331 |
 | ns | 6172 |  | 128 | concurrency.go: exported-function roster | 2.20 |  | 0.327 |
-| walker |  | 6188 | 20 | README.md section #301 |  |  | 0.327 |
-| walker |  | 6208 | 20 | README.md section #315 |  |  | 0.327 |
+| walker |  | 6188 | 20 | README.md section #303 |  |  | 0.327 |
+| walker |  | 6208 | 20 | README.md section #317 |  |  | 0.327 |
 | walker |  | 6268 | 60 | go package + imports in retry.go |  |  | 0.327 |
-| walker |  | 6289 | 21 | README.md section #27 |  |  | 0.327 |
+| walker |  | 6289 | 21 | README.md section #29 |  |  | 0.327 |
 | ns | 6293 |  | 121 | time.go: exported-function roster | 2.21 |  | 0.323 |
 | walker |  | 6327 | 38 | go decl doc at it/channel.go:13 |  |  | 0.323 |
 | ns | 6425 |  | 132 | tuples.go: arity-2 roster per family + more-exist markers | 2.22 |  | 0.319 |
@@ -156,35 +156,35 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | walker |  | 7010 | 31 | listing of 'docs/plugins/helpers-pages/components' |  |  | 0.311 |
 | walker |  | 7076 | 66 | go package + imports in channel.go |  |  | 0.311 |
 | ns | 7119 |  | 155 | slice.go body: Filter | 2.26 | 2.10 | 0.308 |
-| walker |  | 7125 | 49 | README.md section #437 |  |  | 0.308 |
+| walker |  | 7125 | 49 | README.md section #440 |  |  | 0.308 |
 | walker |  | 7192 | 67 | go package + imports in slice.go |  |  | 0.308 |
-| walker |  | 7214 | 22 | README.md section #205 |  |  | 0.308 |
-| walker |  | 7234 | 20 | README.md section #206 |  |  | 0.308 |
+| walker |  | 7214 | 22 | README.md section #207 |  |  | 0.308 |
+| walker |  | 7234 | 20 | README.md section #208 |  |  | 0.308 |
 | ns | 7251 |  | 132 | slice.go body: GroupBy | 2.27 | 2.10 | 0.305 |
-| walker |  | 7256 | 22 | README.md section #310 |  |  | 0.305 |
-| walker |  | 7278 | 22 | README.md section #326 |  |  | 0.305 |
-| walker |  | 7300 | 22 | README.md section #397 |  |  | 0.305 |
+| walker |  | 7256 | 22 | README.md section #312 |  |  | 0.305 |
+| walker |  | 7278 | 22 | README.md section #328 |  |  | 0.305 |
+| walker |  | 7300 | 22 | README.md section #399 |  |  | 0.305 |
 | walker |  | 7321 | 21 | go decl doc at internal/xrand/ordered_go118.go:8 |  |  | 0.305 |
 | walker |  | 7342 | 21 | go decl doc at internal/xrand/ordered_go122.go:8 |  |  | 0.305 |
 | walker |  | 7383 | 41 | go decl doc at it/channel.go:29 |  |  | 0.305 |
 | walker |  | 7413 | 30 | go package + imports in mutable/slice.go |  |  | 0.305 |
 | ns | 7424 |  | 173 | map.go body: Assign | 2.28 | 2.11 | 0.301 |
-| walker |  | 7436 | 23 | README.md section #26 |  |  | 0.301 |
-| walker |  | 7459 | 23 | README.md section #29 |  |  | 0.301 |
-| walker |  | 7482 | 23 | README.md section #32 |  |  | 0.301 |
-| walker |  | 7505 | 23 | README.md section #35 |  |  | 0.301 |
-| walker |  | 7528 | 23 | README.md section #40 |  |  | 0.301 |
-| walker |  | 7551 | 23 | README.md section #43 |  |  | 0.301 |
+| walker |  | 7436 | 23 | README.md section #28 |  |  | 0.301 |
+| walker |  | 7459 | 23 | README.md section #31 |  |  | 0.301 |
+| walker |  | 7482 | 23 | README.md section #34 |  |  | 0.301 |
+| walker |  | 7505 | 23 | README.md section #37 |  |  | 0.301 |
+| walker |  | 7528 | 23 | README.md section #42 |  |  | 0.301 |
+| walker |  | 7551 | 23 | README.md section #45 |  |  | 0.301 |
 | ns | 7564 |  | 140 | find.go body: Find | 2.29 | 2.12 | 0.301 |
-| walker |  | 7574 | 23 | README.md section #57 |  |  | 0.301 |
-| walker |  | 7597 | 23 | README.md section #59 |  |  | 0.301 |
-| walker |  | 7620 | 23 | README.md section #73 |  |  | 0.301 |
-| walker |  | 7643 | 23 | README.md section #199 |  |  | 0.301 |
-| walker |  | 7666 | 23 | README.md section #212 |  |  | 0.301 |
+| walker |  | 7574 | 23 | README.md section #59 |  |  | 0.301 |
+| walker |  | 7597 | 23 | README.md section #61 |  |  | 0.301 |
+| walker |  | 7620 | 23 | README.md section #75 |  |  | 0.301 |
+| walker |  | 7643 | 23 | README.md section #201 |  |  | 0.301 |
+| walker |  | 7666 | 23 | README.md section #214 |  |  | 0.301 |
 | ns | 7676 |  | 112 | intersect.go body: Contains | 2.30 | 2.13 | 0.298 |
-| walker |  | 7689 | 23 | README.md section #271 |  |  | 0.298 |
-| walker |  | 7712 | 23 | README.md section #278 |  |  | 0.298 |
-| walker |  | 7734 | 22 | README.md section #277 |  |  | 0.298 |
+| walker |  | 7689 | 23 | README.md section #273 |  |  | 0.298 |
+| walker |  | 7712 | 23 | README.md section #280 |  |  | 0.298 |
+| walker |  | 7734 | 22 | README.md section #279 |  |  | 0.298 |
 | walker |  | 7777 | 43 | go decl doc at it/channel.go:45 |  |  | 0.298 |
 | ns | 7828 |  | 152 | math.go body: Range | 2.31 | 2.14 | 0.296 |
 | ns | 8066 |  | 238 | errors.go body: Must/Must0/Must1 | 2.32 | 2.17 | 0.291 |
@@ -204,61 +204,61 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | walker |  | 8346 | 47 | go decl doc at func.go:35 |  |  | 0.302 |
 | walker |  | 8395 | 49 | go decl doc at func.go:43 |  |  | 0.302 |
 | ns | 8414 |  | 232 | condition.go body: Ternary + TernaryF | 2.34 | 2.25 | 0.298 |
-| walker |  | 8419 | 24 | README.md section #16 |  |  | 0.298 |
-| walker |  | 8443 | 24 | README.md section #20 |  |  | 0.298 |
-| walker |  | 8467 | 24 | README.md section #22 |  |  | 0.298 |
-| walker |  | 8491 | 24 | README.md section #50 |  |  | 0.298 |
-| walker |  | 8515 | 24 | README.md section #53 |  |  | 0.298 |
-| walker |  | 8539 | 24 | README.md section #64 |  |  | 0.298 |
-| walker |  | 8563 | 24 | README.md section #69 |  |  | 0.298 |
+| walker |  | 8419 | 24 | README.md section #18 |  |  | 0.298 |
+| walker |  | 8443 | 24 | README.md section #22 |  |  | 0.298 |
+| walker |  | 8467 | 24 | README.md section #24 |  |  | 0.298 |
+| walker |  | 8491 | 24 | README.md section #52 |  |  | 0.298 |
+| walker |  | 8515 | 24 | README.md section #55 |  |  | 0.298 |
+| walker |  | 8539 | 24 | README.md section #66 |  |  | 0.298 |
+| walker |  | 8563 | 24 | README.md section #71 |  |  | 0.298 |
 | ns | 8570 |  | 156 | types.go body: Entry + Tuple2 + Unpack | 2.35 | 2.23 | 0.294 |
-| walker |  | 8587 | 24 | README.md section #77 |  |  | 0.294 |
-| walker |  | 8611 | 24 | README.md section #81 |  |  | 0.294 |
-| walker |  | 8635 | 24 | README.md section #115 |  |  | 0.294 |
-| walker |  | 8659 | 24 | README.md section #126 |  |  | 0.294 |
-| walker |  | 8683 | 24 | README.md section #140 |  |  | 0.294 |
-| walker |  | 8707 | 24 | README.md section #151 |  |  | 0.294 |
+| walker |  | 8587 | 24 | README.md section #79 |  |  | 0.294 |
+| walker |  | 8611 | 24 | README.md section #83 |  |  | 0.294 |
+| walker |  | 8635 | 24 | README.md section #117 |  |  | 0.294 |
+| walker |  | 8659 | 24 | README.md section #128 |  |  | 0.294 |
+| walker |  | 8683 | 24 | README.md section #142 |  |  | 0.294 |
+| walker |  | 8707 | 24 | README.md section #153 |  |  | 0.294 |
 | ns | 8728 |  | 158 | it/, mutable/, parallel/ directory listings | 3.1 |  | 0.327 |
-| walker |  | 8731 | 24 | README.md section #175 |  |  | 0.327 |
-| walker |  | 8755 | 24 | README.md section #178 |  |  | 0.327 |
-| walker |  | 8779 | 24 | README.md section #221 |  |  | 0.327 |
+| walker |  | 8731 | 24 | README.md section #177 |  |  | 0.327 |
+| walker |  | 8755 | 24 | README.md section #180 |  |  | 0.327 |
+| walker |  | 8779 | 24 | README.md section #223 |  |  | 0.327 |
 | ns | 8792 |  | 64 | internal/ directory listings | 3.2 |  | 0.340 |
-| walker |  | 8803 | 24 | README.md section #242 |  |  | 0.340 |
-| walker |  | 8827 | 24 | README.md section #268 |  |  | 0.340 |
-| walker |  | 8851 | 24 | README.md section #288 |  |  | 0.340 |
-| walker |  | 8875 | 24 | README.md section #302 |  |  | 0.340 |
-| walker |  | 8899 | 24 | README.md section #316 |  |  | 0.340 |
-| walker |  | 8923 | 24 | README.md section #353 |  |  | 0.340 |
-| walker |  | 8947 | 24 | README.md section #406 |  |  | 0.340 |
-| walker |  | 8971 | 24 | README.md section #409 |  |  | 0.340 |
-| walker |  | 8995 | 24 | README.md section #411 |  |  | 0.340 |
-| walker |  | 9019 | 24 | README.md section #416 |  |  | 0.340 |
+| walker |  | 8803 | 24 | README.md section #244 |  |  | 0.340 |
+| walker |  | 8827 | 24 | README.md section #270 |  |  | 0.340 |
+| walker |  | 8851 | 24 | README.md section #290 |  |  | 0.340 |
+| walker |  | 8875 | 24 | README.md section #304 |  |  | 0.340 |
+| walker |  | 8899 | 24 | README.md section #318 |  |  | 0.340 |
+| walker |  | 8923 | 24 | README.md section #355 |  |  | 0.340 |
+| walker |  | 8947 | 24 | README.md section #408 |  |  | 0.340 |
+| walker |  | 8971 | 24 | README.md section #411 |  |  | 0.340 |
+| walker |  | 8995 | 24 | README.md section #413 |  |  | 0.340 |
+| walker |  | 9019 | 24 | README.md section #418 |  |  | 0.340 |
 | ns | 9069 |  | 277 | exp/simd/ and benchmark/ directory listings | 3.3 |  | 0.342 |
 | walker |  | 9123 | 104 | go decl doc at find.go:88 |  |  | 0.342 |
-| walker |  | 9148 | 25 | README.md section #38 |  |  | 0.342 |
-| walker |  | 9173 | 25 | README.md section #86 |  |  | 0.342 |
-| walker |  | 9197 | 24 | README.md section #85 |  |  | 0.342 |
-| walker |  | 9222 | 25 | README.md section #101 |  |  | 0.342 |
-| walker |  | 9247 | 25 | README.md section #111 |  |  | 0.342 |
-| walker |  | 9272 | 25 | README.md section #156 |  |  | 0.342 |
-| walker |  | 9297 | 25 | README.md section #160 |  |  | 0.342 |
+| walker |  | 9148 | 25 | README.md section #40 |  |  | 0.342 |
+| walker |  | 9173 | 25 | README.md section #88 |  |  | 0.342 |
+| walker |  | 9197 | 24 | README.md section #87 |  |  | 0.342 |
+| walker |  | 9222 | 25 | README.md section #103 |  |  | 0.342 |
+| walker |  | 9247 | 25 | README.md section #113 |  |  | 0.342 |
+| walker |  | 9272 | 25 | README.md section #158 |  |  | 0.342 |
+| walker |  | 9297 | 25 | README.md section #162 |  |  | 0.342 |
 | ns | 9320 |  | 251 | mutable/slice.go body: Filter | 3.4 |  | 0.338 |
-| walker |  | 9322 | 25 | README.md section #166 |  |  | 0.338 |
-| walker |  | 9347 | 25 | README.md section #184 |  |  | 0.338 |
-| walker |  | 9372 | 25 | README.md section #187 |  |  | 0.338 |
-| walker |  | 9397 | 25 | README.md section #192 |  |  | 0.338 |
-| walker |  | 9422 | 25 | README.md section #226 |  |  | 0.338 |
-| walker |  | 9447 | 25 | README.md section #238 |  |  | 0.338 |
-| walker |  | 9472 | 25 | README.md section #286 |  |  | 0.338 |
-| walker |  | 9497 | 25 | README.md section #290 |  |  | 0.338 |
-| walker |  | 9522 | 25 | README.md section #324 |  |  | 0.338 |
-| walker |  | 9547 | 25 | README.md section #345 |  |  | 0.338 |
-| walker |  | 9572 | 25 | README.md section #349 |  |  | 0.338 |
+| walker |  | 9322 | 25 | README.md section #168 |  |  | 0.338 |
+| walker |  | 9347 | 25 | README.md section #186 |  |  | 0.338 |
+| walker |  | 9372 | 25 | README.md section #189 |  |  | 0.338 |
+| walker |  | 9397 | 25 | README.md section #194 |  |  | 0.338 |
+| walker |  | 9422 | 25 | README.md section #228 |  |  | 0.338 |
+| walker |  | 9447 | 25 | README.md section #240 |  |  | 0.338 |
+| walker |  | 9472 | 25 | README.md section #288 |  |  | 0.338 |
+| walker |  | 9497 | 25 | README.md section #292 |  |  | 0.338 |
+| walker |  | 9522 | 25 | README.md section #326 |  |  | 0.338 |
+| walker |  | 9547 | 25 | README.md section #347 |  |  | 0.338 |
+| walker |  | 9572 | 25 | README.md section #351 |  |  | 0.338 |
 | ns | 9573 |  | 253 | parallel/slice.go body: Map | 3.5 |  | 0.334 |
-| walker |  | 9597 | 25 | README.md section #388 |  |  | 0.334 |
-| walker |  | 9622 | 25 | README.md section #394 |  |  | 0.334 |
-| walker |  | 9647 | 25 | README.md section #428 |  |  | 0.334 |
-| walker |  | 9672 | 25 | README.md section #431 |  |  | 0.334 |
+| walker |  | 9597 | 25 | README.md section #390 |  |  | 0.334 |
+| walker |  | 9622 | 25 | README.md section #396 |  |  | 0.334 |
+| walker |  | 9647 | 25 | README.md section #430 |  |  | 0.334 |
+| walker |  | 9672 | 25 | README.md section #433 |  |  | 0.334 |
 | ns | 9748 |  | 175 | it/seq.go body: FilterI | 3.6 |  | 0.331 |
 | walker |  | 9823 | 151 | go decl names surface in parallel/slice.go |  |  | 0.331 |
 | walker |  | 9823 | 0 | go decl at parallel/slice.go:8 |  |  | 0.331 |
@@ -267,9 +267,9 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | walker |  | 9823 | 0 | go decl at parallel/slice.go:75 |  |  | 0.331 |
 | walker |  | 9823 | 0 | go decl at parallel/slice.go:95 |  |  | 0.331 |
 | walker |  | 9862 | 39 | listing of 'docs/docs' |  |  | 0.331 |
-| walker |  | 9888 | 26 | README.md section #45 |  |  | 0.331 |
-| walker |  | 9914 | 26 | README.md section #84 |  |  | 0.331 |
-| walker |  | 9940 | 26 | README.md section #109 |  |  | 0.331 |
-| walker |  | 9966 | 26 | README.md section #117 |  |  | 0.331 |
-| walker |  | 9992 | 26 | README.md section #119 |  |  | 0.331 |
+| walker |  | 9888 | 26 | README.md section #47 |  |  | 0.331 |
+| walker |  | 9914 | 26 | README.md section #86 |  |  | 0.331 |
+| walker |  | 9940 | 26 | README.md section #111 |  |  | 0.331 |
+| walker |  | 9966 | 26 | README.md section #119 |  |  | 0.331 |
+| walker |  | 9992 | 26 | README.md section #121 |  |  | 0.331 |
 | ns | 9998 |  | 250 | docs/data/core-filter.md: per-helper doc-metadata schema | 3.7 |  | 0.327 |

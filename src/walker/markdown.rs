@@ -25,8 +25,14 @@
 //!   All per-child kinds carry a global signal scale
 //!   (`SUB_SECTION_SIGNAL_SCALE` / `BODY_BLOCK_SIGNAL_SCALE`) to keep
 //!   them from over-ranking once the marginal cost drops to
-//!   per-sub-section size. Changelog-class files (CHANGELOG /
-//!   CONTRIBUTING / CHANGES) are gated out of splitting. H3/prose
+//!   per-sub-section size. Root-README sections neither rule catches
+//!   that still exceed `OVERSIZE_SECTION_SPLIT_TOKENS` get the
+//!   *oversize head-split*: a head chunk (kind `Whole`, keeps the
+//!   section's value flags, includes the heading) plus
+//!   predecessor-chained `OversizeTail` chunks (valued at
+//!   `OVERSIZE_TAIL_FACTOR`), cut at blank-line boundaries outside
+//!   code fences. Changelog-class files (CHANGELOG
+//!   / CONTRIBUTING / CHANGES) are gated out of splitting. H3/prose
 //!   body-block splitting also requires `HeadingsOutline` so heading
 //!   context is preserved; list-only H2 splits are allowed without an
 //!   outline because each item is self-contained.
@@ -76,6 +82,37 @@ const BODY_BLOCK_SIGNAL_SCALE: f64 = 0.60;
 /// Minimum source bytes before a section is split into body blocks.
 /// Lower than `H2_SPLIT_BYTES` since it can apply after H2 splitting.
 const BODY_BLOCK_SPLIT_BYTES: usize = 350;
+
+/// Token threshold above which an otherwise-unsplit section is
+/// emitted as a head chunk plus predecessor-chained tail chunks.
+/// NSes are authored to a growth envelope
+/// (`cost ≤ 100 + 0.3·cumulative`, see `src/ns_simulate.rs`), so an
+/// early-rankable batch is ~100–400 tokens; a prose lump beyond that
+/// structurally cannot win the early purchase race no matter its
+/// value. The head can; the tails follow through the existing
+/// predecessor/train machinery. Measured in tokens (not bytes) —
+/// code-heavy sections tokenize markedly denser per byte than prose,
+/// so a byte gate mis-sizes exactly the fence-rich sections this
+/// split targets.
+const OVERSIZE_SECTION_SPLIT_TOKENS: usize = 400;
+
+/// Greedy per-chunk token target for the oversize head-split — inside
+/// the NS early-batch envelope, low enough that a fence-heavy chunk
+/// pair doesn't overshoot it before the first cut candidate.
+const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 200;
+
+/// Tail-chunk value factor relative to the parent section. Above the
+/// generic `BODY_BLOCK_SIGNAL_SCALE`: a tail is the direct
+/// continuation of content whose head just won purchase, and the NS
+/// ranks the continuation right behind it — pricing tails as fan-out
+/// noise strands them past the window their head opened. (Tails still
+/// take the steeper index-≥1 `Section` concavity, and as orientation
+/// batches they are exempt from train breadth pressure.)
+const OVERSIZE_TAIL_FACTOR: f64 = 0.85;
+
+/// Minimum tokens that must remain after a cut — a smaller remainder
+/// folds into the current chunk instead of spawning a micro-tail.
+const OVERSIZE_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md");
@@ -428,6 +465,7 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
         SectionKind::Whole | SectionKind::Intro => parent,
         SectionKind::H3Child => parent * sub_scale,
         SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
+        SectionKind::OversizeTail => parent * OVERSIZE_TAIL_FACTOR,
     }
 }
 
@@ -1664,6 +1702,8 @@ enum SectionKind {
     H3Child,
     /// One direct block inside a long split section.
     BodyBlock,
+    /// Predecessor-chained tail chunk of an oversize head-split.
+    OversizeTail,
 }
 
 /// Minimum fraction of a range's non-blank out-of-fence rows that must
@@ -2028,6 +2068,14 @@ fn logical_sections(
 ) -> Vec<SectionRange> {
     let entries = top_level_entries(tree.root_node(), source);
     let split_eligible_file = !is_changelog_class(file);
+    // Oversize head-split scope: the root README only. Its early
+    // content is what NSes rank inside the early-budget envelope, so
+    // unlocking early purchase there is recall; peripheral docs
+    // (upgrade guides, nested docs) are NS-ranked late, where lump
+    // size is not a purchase barrier — splitting them only hands a
+    // cheap full-value head to content the schedule shouldn't buy
+    // early.
+    let oversize_split_eligible = split_eligible_file && root_readme;
     let synthetic_intro_present =
         matches!(entries.first(), Some(TopLevelEntry::SyntheticIntro { .. }));
 
@@ -2037,20 +2085,25 @@ fn logical_sections(
     for (parent_idx, entry) in entries.iter().enumerate() {
         match entry {
             TopLevelEntry::SyntheticIntro { start, end } => {
-                out.push(SectionRange {
-                    start: *start,
-                    end: *end,
-                    kind: SectionKind::Whole,
-                    parent_index: parent_idx,
-                    synthetic_intro_present,
-                    parent_is_canonical_usage_h2: false,
-                    is_reference_usage_section: false,
-                    reference_shaped: false,
-                    dev_workflow_section: false,
-                    deferred_mass_prose: false,
-                    roster_entries: 0,
-                    chained_to_previous: false,
-                });
+                push_whole_or_head_split(
+                    &mut out,
+                    &src_lines,
+                    SectionRange {
+                        start: *start,
+                        end: *end,
+                        kind: SectionKind::Whole,
+                        parent_index: parent_idx,
+                        synthetic_intro_present,
+                        parent_is_canonical_usage_h2: false,
+                        is_reference_usage_section: false,
+                        reference_shaped: false,
+                        dev_workflow_section: false,
+                        deferred_mass_prose: false,
+                        roster_entries: 0,
+                        chained_to_previous: false,
+                    },
+                    oversize_split_eligible,
+                );
             }
             TopLevelEntry::H2Section { node, start, end } => {
                 let bytes = node.end_byte() - node.start_byte();
@@ -2139,20 +2192,25 @@ fn logical_sections(
                             source,
                         );
                     if !did_body_split && !did_fence_split {
-                        out.push(SectionRange {
-                            start: *start,
-                            end: *end,
-                            kind: SectionKind::Whole,
-                            parent_index: parent_idx,
-                            synthetic_intro_present,
-                            parent_is_canonical_usage_h2: usage_h2,
-                            is_reference_usage_section: reference_h2,
-                            reference_shaped: false,
-                            dev_workflow_section: false,
-                            deferred_mass_prose: false,
-                            roster_entries: 0,
-                            chained_to_previous: false,
-                        });
+                        push_whole_or_head_split(
+                            &mut out,
+                            &src_lines,
+                            SectionRange {
+                                start: *start,
+                                end: *end,
+                                kind: SectionKind::Whole,
+                                parent_index: parent_idx,
+                                synthetic_intro_present,
+                                parent_is_canonical_usage_h2: usage_h2,
+                                is_reference_usage_section: reference_h2,
+                                reference_shaped: false,
+                                dev_workflow_section: false,
+                                deferred_mass_prose: false,
+                                roster_entries: 0,
+                                chained_to_previous: false,
+                            },
+                            oversize_split_eligible,
+                        );
                     }
                 }
             }
@@ -2186,7 +2244,12 @@ fn logical_sections(
     }
     if readme || is_dev_workflow_doc(file) {
         for range in &mut out {
+            // Oversize tails are exempt: they are predecessor-gated
+            // continuations, and deferring a mid-train tail would
+            // strand every chunk gated behind it past the window the
+            // head opened.
             range.deferred_mass_prose = range.roster_entries == 0
+                && range.kind != SectionKind::OversizeTail
                 && !range.reference_shaped
                 && !is_initial_orientation_range(range)
                 && range_has_operational_density_signal(&src_lines, range.start, range.end);
@@ -2388,6 +2451,143 @@ fn push_canonical_usage_fence_split(
         chained_to_previous: false,
     });
     true
+}
+
+/// Contiguous chunk bounds for the oversize head-split: cover
+/// `[start, end]` exactly, cutting at blank rows outside code fences
+/// once the running chunk reaches [`OVERSIZE_CHUNK_TARGET_TOKENS`]. A
+/// cut is skipped when the next non-blank row opens a fence (the
+/// fence binds to the paragraph introducing it) or when the remainder
+/// would fall below [`OVERSIZE_CHUNK_MIN_TAIL_TOKENS`].
+fn oversize_chunk_bounds(
+    src_lines: &[&str],
+    start: usize,
+    end: usize,
+    total_tokens: usize,
+) -> Vec<(usize, usize)> {
+    let mut bounds = Vec::new();
+    let mut chunk_start = start;
+    let mut chunk_tokens = 0usize;
+    let mut remaining = total_tokens;
+    let mut open_fence: Option<(char, usize)> = None;
+    for row in start..=end {
+        let tokens = row_tokens(src_lines, row);
+        chunk_tokens += tokens;
+        remaining -= tokens.min(remaining);
+        let t = src_lines.get(row - 1).copied().unwrap_or("").trim_start();
+        // Marker-matched fence state: only a delimiter of the same
+        // char with at least the opening run length closes the fence,
+        // so a ``` line inside a ~~~ fence or a ````-fenced markdown
+        // example can't desync the state and permit a cut mid-fence.
+        if let Some((open_char, open_run)) = open_fence {
+            if fence_marker(t).is_some_and(|(c, run)| c == open_char && run >= open_run) {
+                open_fence = None;
+            }
+            continue;
+        }
+        if let Some(marker) = fence_marker(t) {
+            open_fence = Some(marker);
+            continue;
+        }
+        if !t.is_empty() {
+            continue;
+        }
+        // Blank row outside a fence: candidate cut after this row.
+        if chunk_tokens < OVERSIZE_CHUNK_TARGET_TOKENS
+            || remaining < OVERSIZE_CHUNK_MIN_TAIL_TOKENS
+            || next_nonblank_opens_fence(src_lines, row + 1, end)
+        {
+            continue;
+        }
+        bounds.push((chunk_start, row));
+        chunk_start = row + 1;
+        chunk_tokens = 0;
+    }
+    if chunk_start <= end {
+        bounds.push((chunk_start, end));
+    }
+    bounds
+}
+
+/// Per-row token count (row is 1-based; includes the newline). Rides
+/// the tokenizer's per-line memoization, so repeated sweeps are cheap.
+fn row_tokens(src_lines: &[&str], row: usize) -> usize {
+    src_lines
+        .get(row - 1)
+        .map(|l| tokenizer::count(&format!("{l}\n")))
+        .unwrap_or(0)
+}
+
+/// The fence delimiter at the start of an already-trimmed line — its
+/// marker char and run length (≥ 3) — if any.
+fn fence_marker(trimmed: &str) -> Option<(char, usize)> {
+    let c = trimmed.chars().next()?;
+    if c != '`' && c != '~' {
+        return None;
+    }
+    let run = trimmed.chars().take_while(|&x| x == c).count();
+    (run >= 3).then_some((c, run))
+}
+
+fn next_nonblank_opens_fence(src_lines: &[&str], from: usize, end: usize) -> bool {
+    for row in from..=end {
+        let t = src_lines.get(row - 1).copied().unwrap_or("").trim_start();
+        if t.is_empty() {
+            continue;
+        }
+        return fence_marker(t).is_some();
+    }
+    false
+}
+
+/// Emit `head` as-is, or — when its row range exceeds
+/// [`OVERSIZE_SECTION_SPLIT_TOKENS`] and splits at natural boundaries —
+/// shrink `head` to the first chunk (keeping its kind and value flags;
+/// the head includes the section heading, so no outline is required
+/// to preserve it) and follow it with predecessor-chained
+/// `OversizeTail` chunks that carry only the positional fields.
+fn push_whole_or_head_split(
+    out: &mut Vec<SectionRange>,
+    src_lines: &[&str],
+    head: SectionRange,
+    split_eligible: bool,
+) {
+    let (start, end) = (head.start, head.end);
+    let tokens: usize = if split_eligible {
+        (start..=end).map(|r| row_tokens(src_lines, r)).sum()
+    } else {
+        0
+    };
+    let bounds = if split_eligible && tokens >= OVERSIZE_SECTION_SPLIT_TOKENS {
+        oversize_chunk_bounds(src_lines, start, end, tokens)
+    } else {
+        out.push(head);
+        return;
+    };
+    for (i, (chunk_start, chunk_end)) in bounds.into_iter().enumerate() {
+        if i == 0 {
+            out.push(SectionRange {
+                start: chunk_start,
+                end: chunk_end,
+                ..head
+            });
+        } else {
+            out.push(SectionRange {
+                start: chunk_start,
+                end: chunk_end,
+                kind: SectionKind::OversizeTail,
+                parent_index: head.parent_index,
+                synthetic_intro_present: head.synthetic_intro_present,
+                parent_is_canonical_usage_h2: false,
+                is_reference_usage_section: false,
+                reference_shaped: false,
+                dev_workflow_section: false,
+                deferred_mass_prose: false,
+                roster_entries: 0,
+                chained_to_previous: true,
+            });
+        }
+    }
 }
 
 /// Append an `Intro` range covering the H2 heading + prelude before
@@ -3127,6 +3327,92 @@ mod tests {
             .set_language(&tree_sitter_md::LANGUAGE.into())
             .unwrap();
         parser.parse(source, None).unwrap()
+    }
+
+    /// Chunk bounds over the whole of `source`, with per-row token
+    /// totals computed the same way the caller does.
+    fn chunk_bounds_of(source: &str) -> Vec<(usize, usize)> {
+        let src_lines: Vec<&str> = source.lines().collect();
+        let end = src_lines.len();
+        let total: usize = (1..=end).map(|r| row_tokens(&src_lines, r)).sum();
+        oversize_chunk_bounds(&src_lines, 1, end, total)
+    }
+
+    /// A blank-separated prose paragraph of ~`tokens` tokens.
+    fn prose_block(tokens: usize) -> String {
+        let mut s = String::new();
+        for i in 0..tokens {
+            s.push_str(&format!("word{i} "));
+        }
+        s.push('\n');
+        s
+    }
+
+    #[test]
+    fn markdown_oversize_chunks_cover_range_and_stay_disjoint() {
+        let source = format!(
+            "## Big\n\n{}\n{}\n{}\n",
+            prose_block(220),
+            prose_block(220),
+            prose_block(220)
+        );
+        let bounds = chunk_bounds_of(&source);
+        assert!(bounds.len() >= 2, "expected a split, got {bounds:?}");
+        let end = source.lines().count();
+        assert_eq!(bounds.first().unwrap().0, 1);
+        assert_eq!(bounds.last().unwrap().1, end);
+        for pair in bounds.windows(2) {
+            assert_eq!(pair[0].1 + 1, pair[1].0, "gap/overlap in {bounds:?}");
+        }
+    }
+
+    #[test]
+    fn markdown_oversize_chunks_never_cut_inside_mismatched_fences() {
+        // A ~~~ fence whose body contains a ``` line (markdown
+        // tutorial shape), followed by a ```` fence containing a
+        // ``` line. Neither inner marker may close its fence, so no
+        // cut can land inside either fence.
+        let mut fence_a = String::from("~~~\n");
+        for i in 0..120 {
+            fence_a.push_str(&format!("```line {i} of embedded example\n"));
+        }
+        fence_a.push_str("~~~\n");
+        let mut fence_b = String::from("````\n");
+        for i in 0..120 {
+            fence_b.push_str(&format!("```inner {i}\n\n"));
+        }
+        fence_b.push_str("````\n");
+        let source = format!(
+            "## Big\n\n{fence_a}\n{}\n{fence_b}\n{}",
+            prose_block(150),
+            prose_block(150)
+        );
+        let src_lines: Vec<&str> = source.lines().collect();
+        let fence_rows: Vec<(usize, usize)> = {
+            // Row ranges of the two fences (1-based, inclusive).
+            let a_start = 3;
+            let a_end = a_start + 121;
+            let b_start = src_lines
+                .iter()
+                .position(|l| l.starts_with("````"))
+                .unwrap()
+                + 1;
+            let b_end = b_start
+                + src_lines[b_start..]
+                    .iter()
+                    .position(|l| l.starts_with("````"))
+                    .unwrap()
+                + 1;
+            vec![(a_start, a_end), (b_start, b_end)]
+        };
+        for (_, cut_end) in chunk_bounds_of(&source) {
+            for &(fs, fe) in &fence_rows {
+                assert!(
+                    cut_end < fs || cut_end >= fe,
+                    "cut at row {cut_end} lands inside fence {fs}..{fe}"
+                );
+            }
+        }
     }
 
     fn covered(source: &str) -> BTreeSet<usize> {

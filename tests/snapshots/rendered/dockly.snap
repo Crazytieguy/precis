@@ -6,7 +6,6 @@ expression: rendered
     devcontainer.json
 .github/
     ISSUE_TEMPLATE/
-        bug_report.yaml
     PULL_REQUEST_TEMPLATE.md
     mergify.yml
     workflows/
@@ -281,8 +280,6 @@ src/
         …
          160→  getService (serviceId, cb) {
         …
-         165→  getImage (imageId, cb) {
-        …
          233→module.exports = Util
     enum.js
            1→module.exports = {
@@ -335,10 +332,6 @@ src/
             …
     widgetsTemplates/
         base.hook.template.js
-            …
-               6→class myWidget extends baseWidget(EventEmitter) {
-            …
-              34→module.exports = myWidget
         help.widget.template.js
             …
                5→class myWidget extends baseWidget() {

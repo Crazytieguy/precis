@@ -11,6 +11,17 @@ README.md
        3→(The old master has moved to
        4→[historical/old](https://github.com/rui314/chibicc/tree/historical/old)
        5→branch. This is a new one uploaded in September 2020.)
+       7→chibicc is yet another small C compiler that implements most C11
+       8→features. Even though it still probably falls into the "toy compilers"
+       9→category just like other small compilers do, chibicc can compile
+      10→several real-world programs, including [Git](https://git-scm.com/),
+      11→[SQLite](https://sqlite.org),
+      12→[libpng](http://www.libpng.org/pub/png/libpng.html) and chibicc
+      13→itself, without making modifications to the compiled programs.
+      14→Generated executables of these programs pass their corresponding test
+      15→suites. So, chibicc actually supports a wide variety of C11 features
+      16→and is able to compile hundreds of thousands of lines of real-world C
+      17→code correctly.
     …
       55→## Status
     …
@@ -21,12 +32,7 @@ README.md
      128→## Design principles
     …
      180→## About the Author
-     181→
-     182→I'm Rui Ueyama. I'm the creator of [8cc](https://github.com/rui314/8cc),
-     183→which is a hobby C compiler, and also the original creator of the current
-     184→version of [LLVM lld](https://lld.llvm.org) linker, which is a
-     185→production-quality linker used by various operating systems and large-scale
-     186→build systems.
+    …
      188→## References
     …
 chibicc.h
@@ -71,24 +77,7 @@ chibicc.h
       72→// Token type
       73→typedef struct Token Token;
       74→struct Token {
-      75→  TokenKind kind;   // Token kind
-      76→  Token *next;      // Next token
-      77→  int64_t val;      // If kind is TK_NUM, its value
-      78→  long double fval; // If kind is TK_NUM, its value
-      79→  char *loc;        // Token location
-      80→  int len;          // Token length
-      81→  Type *ty;         // Used if TK_NUM or TK_STR
-      82→  char *str;        // String literal contents including terminating '\0'
-      83→
-      84→  File *file;       // Source location
-      85→  char *filename;   // Filename
-      86→  int line_no;      // Line number
-      87→  int line_delta;   // Line number
-      88→  bool at_bol;      // True if this token is at beginning of line
-      89→  bool has_space;   // True if this token follows a space character
-      90→  Hideset *hideset; // For macro expansion
-      91→  Token *origin;    // If this is expanded from a macro, the original token
-      92→};
+    …
       94→noreturn void error(char *fmt, ...) __attribute__((format(printf, 1, 2)));
       95→noreturn void error_at(char *loc, char *fmt, ...) __attribute__((format(printf, 2, 3)));
       96→noreturn void error_tok(Token *tok, char *fmt, ...) __attribute__((format(printf, 2, 3)));
