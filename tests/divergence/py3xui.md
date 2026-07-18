@@ -188,29 +188,29 @@ Score(3000)=0.541 I=0.821 C=0.357 ns_rows≤3K=33/52 (reached=14 partial=1 missi
 | walker |  | 5112 | 8 | python method at py3xui/async_api/async_api.py:120 |  |  | 0.490 |
 | walker |  | 5121 | 9 | python method at py3xui/async_api/async_api.py:107 |  |  | 0.490 |
 | walker |  | 5131 | 10 | python method at py3xui/async_api/async_api.py:129 |  |  | 0.490 |
-| ns | 5227 |  | 330 | ClientApi.add body | 4.6 | 2.6 | 0.476 |
-| walker |  | 5478 | 347 | python class body at py3xui/server/server.py:7 |  |  | 0.476 |
-| walker |  | 5532 | 54 | python method sigs in py3xui/api/api_server.py |  |  | 0.483 |
-| walker |  | 5532 | 0 | python method at py3xui/api/api_server.py:35 |  |  | 0.483 |
-| walker |  | 5532 | 0 | python method at py3xui/api/api_server.py:67 |  |  | 0.483 |
-| walker |  | 5532 | 0 | python method at py3xui/api/api_server.py:97 |  |  | 0.483 |
-| walker |  | 5560 | 28 | python decl names surface in py3xui/inbound/sniffing.py |  |  | 0.487 |
-| walker |  | 5560 | 0 | python decl at py3xui/inbound/sniffing.py:9 |  |  | 0.487 |
-| walker |  | 5560 | 0 | python decl at py3xui/inbound/sniffing.py:20 |  |  | 0.487 |
-| walker |  | 5570 | 10 | python method body at py3xui/api/api.py:93 body 100 |  |  | 0.487 |
-| ns | 5576 |  | 349 | ClientApi.get_by_email body | 4.7 | 2.6 | 0.472 |
-| walker |  | 5580 | 10 | python method body at py3xui/async_api/async_api.py:98 body 105 |  |  | 0.472 |
-| walker |  | 5598 | 18 | python decl doc at py3xui/inbound/sniffing.py:9 |  |  | 0.472 |
-| walker |  | 5609 | 11 | python method body at py3xui/api/api.py:115 body 122 |  |  | 0.472 |
-| walker |  | 5620 | 11 | python method body at py3xui/async_api/async_api.py:120 body 127 |  |  | 0.472 |
-| walker |  | 5675 | 55 | python method sigs in py3xui/async_api/async_api_server.py |  |  | 0.483 |
-| walker |  | 5675 | 0 | python method at py3xui/async_api/async_api_server.py:44 |  |  | 0.483 |
-| walker |  | 5675 | 0 | python method at py3xui/async_api/async_api_server.py:76 |  |  | 0.483 |
-| walker |  | 5675 | 0 | python method at py3xui/async_api/async_api_server.py:105 |  |  | 0.483 |
-| walker |  | 5991 | 316 | python class body at py3xui/inbound/inbound.py:38 |  |  | 0.484 |
-| walker |  | 6074 | 83 | python class body at py3xui/server/server.py:113 |  |  | 0.484 |
+| walker |  | 5185 | 54 | python method sigs in py3xui/api/api_server.py |  |  | 0.497 |
+| walker |  | 5185 | 0 | python method at py3xui/api/api_server.py:35 |  |  | 0.497 |
+| walker |  | 5185 | 0 | python method at py3xui/api/api_server.py:67 |  |  | 0.497 |
+| walker |  | 5185 | 0 | python method at py3xui/api/api_server.py:97 |  |  | 0.497 |
+| walker |  | 5213 | 28 | python decl names surface in py3xui/inbound/sniffing.py |  |  | 0.501 |
+| walker |  | 5213 | 0 | python decl at py3xui/inbound/sniffing.py:9 |  |  | 0.501 |
+| walker |  | 5213 | 0 | python decl at py3xui/inbound/sniffing.py:20 |  |  | 0.501 |
+| walker |  | 5223 | 10 | python method body at py3xui/api/api.py:93 body 100 |  |  | 0.501 |
+| ns | 5227 |  | 330 | ClientApi.add body | 4.6 | 2.6 | 0.487 |
+| walker |  | 5233 | 10 | python method body at py3xui/async_api/async_api.py:98 body 105 |  |  | 0.487 |
+| walker |  | 5251 | 18 | python decl doc at py3xui/inbound/sniffing.py:9 |  |  | 0.487 |
+| walker |  | 5262 | 11 | python method body at py3xui/api/api.py:115 body 122 |  |  | 0.487 |
+| walker |  | 5273 | 11 | python method body at py3xui/async_api/async_api.py:120 body 127 |  |  | 0.487 |
+| walker |  | 5328 | 55 | python method sigs in py3xui/async_api/async_api_server.py |  |  | 0.499 |
+| walker |  | 5328 | 0 | python method at py3xui/async_api/async_api_server.py:44 |  |  | 0.499 |
+| walker |  | 5328 | 0 | python method at py3xui/async_api/async_api_server.py:76 |  |  | 0.499 |
+| walker |  | 5328 | 0 | python method at py3xui/async_api/async_api_server.py:105 |  |  | 0.499 |
+| ns | 5576 |  | 349 | ClientApi.get_by_email body | 4.7 | 2.6 | 0.483 |
+| walker |  | 5644 | 316 | python class body at py3xui/inbound/inbound.py:38 |  |  | 0.484 |
+| walker |  | 5727 | 83 | python class body at py3xui/server/server.py:113 |  |  | 0.484 |
+| walker |  | 5793 | 66 | python decl doc at py3xui/server/server.py:100 |  |  | 0.484 |
 | ns | 6115 |  | 539 | README Quick Start: install + instantiate sync/async | 4.8 |  | 0.463 |
-| walker |  | 6140 | 66 | python decl doc at py3xui/server/server.py:100 |  |  | 0.463 |
+| walker |  | 6140 | 347 | python class body at py3xui/server/server.py:7 |  |  | 0.463 |
 | walker |  | 6216 | 76 | python decl doc at py3xui/server/server.py:54 |  |  | 0.463 |
 | walker |  | 6283 | 67 | python method at py3xui/api/api.py:139 |  |  | 0.463 |
 | walker |  | 6351 | 68 | python method at py3xui/async_api/async_api.py:144 |  |  | 0.463 |
@@ -273,14 +273,34 @@ Score(3000)=0.541 I=0.821 C=0.357 ns_rows≤3K=33/52 (reached=14 partial=1 missi
 | walker |  | 9210 | 13 | python method body at py3xui/api/api_base.py:128 body 134 |  |  | 0.464 |
 | walker |  | 9274 | 64 | py3xui/client/README.md section #1 |  |  | 0.464 |
 | ns | 9529 |  | 527 | BaseApi._request_with_retry body (core logic) | 5.4 | 4.2 | 0.450 |
-| walker |  | 9606 | 332 | python class body at py3xui/inbound/stream_settings.py:25 |  |  | 0.450 |
-| walker |  | 9972 | 366 | python method sigs in py3xui/async_api/async_api_base.py |  |  | 0.450 |
-| walker |  | 9972 | 0 | python method at py3xui/async_api/async_api_base.py:156 |  |  | 0.450 |
-| walker |  | 9972 | 0 | python method at py3xui/async_api/async_api_base.py:239 |  |  | 0.450 |
-| walker |  | 9972 | 0 | python method at py3xui/async_api/async_api_base.py:265 |  |  | 0.450 |
-| walker |  | 9972 | 0 | python method at py3xui/async_api/async_api_base.py:292 |  |  | 0.450 |
-| walker |  | 9972 | 0 | python method at py3xui/async_api/async_api_base.py:328 |  |  | 0.450 |
-| walker |  | 9980 | 8 | python method at py3xui/async_api/async_api_base.py:68 |  |  | 0.450 |
-| walker |  | 9988 | 8 | python method at py3xui/async_api/async_api_base.py:76 |  |  | 0.450 |
-| walker |  | 9996 | 8 | python method at py3xui/async_api/async_api_base.py:84 |  |  | 0.450 |
+| walker |  | 9640 | 366 | python method sigs in py3xui/async_api/async_api_base.py |  |  | 0.450 |
+| walker |  | 9640 | 0 | python method at py3xui/async_api/async_api_base.py:156 |  |  | 0.450 |
+| walker |  | 9640 | 0 | python method at py3xui/async_api/async_api_base.py:239 |  |  | 0.450 |
+| walker |  | 9640 | 0 | python method at py3xui/async_api/async_api_base.py:265 |  |  | 0.450 |
+| walker |  | 9640 | 0 | python method at py3xui/async_api/async_api_base.py:292 |  |  | 0.450 |
+| walker |  | 9640 | 0 | python method at py3xui/async_api/async_api_base.py:328 |  |  | 0.450 |
+| walker |  | 9648 | 8 | python method at py3xui/async_api/async_api_base.py:68 |  |  | 0.450 |
+| walker |  | 9656 | 8 | python method at py3xui/async_api/async_api_base.py:76 |  |  | 0.450 |
+| walker |  | 9664 | 8 | python method at py3xui/async_api/async_api_base.py:84 |  |  | 0.450 |
+| walker |  | 9672 | 8 | python method at py3xui/async_api/async_api_base.py:92 |  |  | 0.450 |
+| walker |  | 9680 | 8 | python method at py3xui/async_api/async_api_base.py:100 |  |  | 0.450 |
+| walker |  | 9688 | 8 | python method at py3xui/async_api/async_api_base.py:108 |  |  | 0.450 |
+| walker |  | 9696 | 8 | python method at py3xui/async_api/async_api_base.py:124 |  |  | 0.450 |
+| walker |  | 9704 | 8 | python method at py3xui/async_api/async_api_base.py:140 |  |  | 0.450 |
+| walker |  | 9712 | 8 | python method at py3xui/async_api/async_api_base.py:281 |  |  | 0.450 |
+| walker |  | 9721 | 9 | python method at py3xui/async_api/async_api_base.py:132 |  |  | 0.450 |
+| walker |  | 9731 | 10 | python method at py3xui/async_api/async_api_base.py:148 |  |  | 0.450 |
+| walker |  | 9742 | 11 | python method at py3xui/async_api/async_api_base.py:116 |  |  | 0.450 |
+| walker |  | 9752 | 10 | python method body at py3xui/async_api/async_api_base.py:68 body 74 |  |  | 0.450 |
+| walker |  | 9762 | 10 | python method body at py3xui/async_api/async_api_base.py:76 body 82 |  |  | 0.450 |
+| walker |  | 9772 | 10 | python method body at py3xui/async_api/async_api_base.py:84 body 90 |  |  | 0.450 |
+| walker |  | 9782 | 10 | python method body at py3xui/async_api/async_api_base.py:124 body 130 |  |  | 0.450 |
+| walker |  | 9793 | 11 | python method body at py3xui/async_api/async_api_base.py:132 body 138 |  |  | 0.450 |
+| walker |  | 9804 | 11 | python method body at py3xui/async_api/async_api_base.py:140 body 146 |  |  | 0.450 |
+| walker |  | 9816 | 12 | python method body at py3xui/async_api/async_api_base.py:92 body 98 |  |  | 0.450 |
+| walker |  | 9828 | 12 | python method body at py3xui/async_api/async_api_base.py:100 body 106 |  |  | 0.450 |
+| walker |  | 9840 | 12 | python method body at py3xui/async_api/async_api_base.py:108 body 114 |  |  | 0.450 |
+| walker |  | 9852 | 12 | python method body at py3xui/async_api/async_api_base.py:148 body 154 |  |  | 0.450 |
+| walker |  | 9865 | 13 | python method body at py3xui/async_api/async_api_base.py:116 body 122 |  |  | 0.450 |
+| walker |  | 9960 | 95 | python method at py3xui/api/api.py:67 |  |  | 0.450 |
 | ns | 9999 |  | 470 | .github/workflows/checks.yml (full) | 5.5 |  | 0.436 |

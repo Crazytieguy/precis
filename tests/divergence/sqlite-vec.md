@@ -31,9 +31,9 @@ Score(3000)=0.455 I=0.714 C=0.289 ns_rows≤3K=17/52 (reached=4 partial=0 missin
 | walker |  | 947 | 19 | python imports in tmp-static.py |  |  | 0.487 |
 | walker |  | 1019 | 72 | listing of 'site' |  |  | 0.419 |
 | ns | 1019 |  | 245 | Makefile: build + test targets | 1.7 |  | 0.419 |
-| walker |  | 1043 | 24 | listing of 'benchmarks/micro' |  |  | 0.419 |
-| walker |  | 1047 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.419 |
-| walker |  | 1127 | 80 | listing of 'examples' |  |  | 0.420 |
+| walker |  | 1099 | 80 | listing of 'examples' |  |  | 0.420 |
+| walker |  | 1123 | 24 | listing of 'benchmarks/micro' |  |  | 0.420 |
+| walker |  | 1127 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.420 |
 | ns | 1323 |  | 304 | README sample usage (vec0 create/insert) | 1.8 |  | 0.384 |
 | walker |  | 1445 | 318 | README.md section #0 |  |  | 0.384 |
 | walker |  | 1577 | 132 | python decl names surface in tmp-static.py |  |  | 0.384 |

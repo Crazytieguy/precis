@@ -2229,10 +2229,24 @@ kind = "full"
 
 [[batches]]
 position = 73
+key = 'Fs(DirListing { dir: "test/validation" })'
+descriptor = "listing of 'test/validation'"
+cost_tokens = 125
+cum_tokens = 3556
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/validation"
+entries = ["any", "array", "assign", "bigint", "boolean", "coerce", "date", "defaulted", "deprecated", "dynamic", "empty", "enums", "function", "instance", "integer", "intersection", "lazy", "literal", "map", "max", "min", "never", "nullable", "number", "object", "omit", "optional", "partial", "pattern", "pick", "record", "refine", "regexp", "set", "size", "string", "trimmed", "tuple", "type", "union", "unknown"]
+
+[[batches]]
+position = 74
 key = 'Typescript(ExportBody { file: "src/error.ts", start_line: 25, body_start_line: 36 })'
 descriptor = "export body at src/error.ts:25 body 36"
 cost_tokens = 165
-cum_tokens = 3596
+cum_tokens = 3721
 
 [batches.content]
 kind = "lines"
@@ -2244,20 +2258,6 @@ end = 47
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 74
-key = 'Fs(DirListing { dir: "test/validation" })'
-descriptor = "listing of 'test/validation'"
-cost_tokens = 125
-cum_tokens = 3721
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/validation"
-entries = ["any", "array", "assign", "bigint", "boolean", "coerce", "date", "defaulted", "deprecated", "dynamic", "empty", "enums", "function", "instance", "integer", "intersection", "lazy", "literal", "map", "max", "min", "never", "nullable", "number", "object", "omit", "optional", "partial", "pattern", "pick", "record", "refine", "regexp", "set", "size", "string", "trimmed", "tuple", "type", "union", "unknown"]
 
 [[batches]]
 position = 75

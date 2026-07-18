@@ -286,22 +286,22 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 | walker |  | 7154 | 33 | readme.md section #20 |  |  | 0.823 |
 | walker |  | 7198 | 44 | listing of 'test/server/managers/migrations' |  |  | 0.827 |
 | walker |  | 7278 | 80 | readme.md section #25 |  |  | 0.830 |
-| walker |  | 7321 | 43 | readme.md section #15 |  |  | 0.830 |
 | ns | 7437 |  | 327 | Database.js init() sequence | 3.3 |  | 0.816 |
-| walker |  | 7566 | 245 | module item names surface in index.js |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:13 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:21 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:38 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:39 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:41 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:42 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:43 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:44 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:45 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:47 |  |  | 0.821 |
-| walker |  | 7566 | 0 | module item at index.js:52 |  |  | 0.821 |
-| ns | 7721 |  | 284 | ApiRouter.js route-group section map | 3.4 |  | 0.810 |
-| walker |  | 7730 | 164 | module item at index.js:1 |  |  | 0.816 |
+| walker |  | 7523 | 245 | module item names surface in index.js |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:13 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:21 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:38 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:39 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:41 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:42 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:43 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:44 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:45 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:47 |  |  | 0.821 |
+| walker |  | 7523 | 0 | module item at index.js:52 |  |  | 0.821 |
+| walker |  | 7687 | 164 | module item at index.js:1 |  |  | 0.827 |
+| ns | 7721 |  | 284 | ApiRouter.js route-group section map | 3.4 |  | 0.816 |
+| walker |  | 7730 | 43 | readme.md section #15 |  |  | 0.816 |
 | walker |  | 7760 | 30 | readme.md section #34 |  |  | 0.816 |
 | ns | 7851 |  | 130 | SocketAuthority socket-event census | 3.5 |  | 0.812 |
 | ns | 7965 |  | 114 | Auth.js initAuthRoutes: auth HTTP surface | 3.6 |  | 0.809 |

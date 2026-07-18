@@ -243,25 +243,6 @@ src/
           68→}
         …
          204→macro_rules! anyhow {
-         205→    ($msg:literal $(,)?) => {
-         206→        $crate::__private::must_use({
-         207→            let error = $crate::__private::format_err($crate::__private::format_args!($msg));
-         208→            error
-         209→        })
-         210→    };
-         211→    ($err:expr $(,)?) => {
-         212→        $crate::__private::must_use({
-         213→            use $crate::__private::kind::*;
-         214→            let error = match $err {
-         215→                error => (&error).anyhow_kind().new(error),
-         216→            };
-         217→            error
-         218→        })
-         219→    };
-         220→    ($fmt:expr, $($arg:tt)*) => {
-         221→        $crate::Error::msg($crate::__private::format!($fmt, $($arg)*))
-         222→    };
-         223→}
         …
          230→macro_rules! __anyhow {
         …
@@ -289,3 +270,17 @@ tests/
     test_repr.rs
     test_source.rs
     ui/
+        chained-comparison.rs
+        chained-comparison.stderr
+        empty-ensure.rs
+        empty-ensure.stderr
+        ensure-nonbool.rs
+        ensure-nonbool.stderr
+        must-use.rs
+        must-use.stderr
+        no-impl.rs
+        no-impl.stderr
+        temporary-value.rs
+        temporary-value.stderr
+        wrong-interpolation.rs
+        wrong-interpolation.stderr

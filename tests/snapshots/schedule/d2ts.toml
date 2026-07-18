@@ -3029,10 +3029,38 @@ kind = "ellipsis"
 
 [[batches]]
 position = 109
+key = 'Fs(DirListing { dir: "packages/d2ql/tests" })'
+descriptor = "listing of 'packages/d2ql/tests'"
+cost_tokens = 115
+cum_tokens = 5862
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2ql/tests"
+entries = ["compiler.test.ts", "conditions.test.ts", "function-integration.test.ts", "functions.test.ts", "group-by.test.ts", "having.test.ts", "in-operator.test.ts", "join.test.ts", "key-by.test.ts", "like-operator.test.ts", "materialize.test.ts", "nested-conditions.test.ts", "order-by.test.ts", "query-builder", "query-types.test.ts", "store.test.ts", "table-alias.test.ts", "types.test.ts", "wildcard-select.test.ts", "with.test.ts"]
+
+[[batches]]
+position = 110
+key = 'Fs(DirListing { dir: "packages/d2ql/tests/query-builder" })'
+descriptor = "listing of 'packages/d2ql/tests/query-builder'"
+cost_tokens = 54
+cum_tokens = 5916
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2ql/tests/query-builder"
+entries = ["from.test.ts", "group-by.test.ts", "having.test.ts", "join.test.ts", "key-by.test.ts", "order-by.test.ts", "select-functions.test.ts", "select.test.ts", "where.test.ts", "with.test.ts"]
+
+[[batches]]
+position = 111
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/map.ts" })'
 descriptor = "export names surface in packages/d2ts/src/operators/map.ts"
 cost_tokens = 56
-cum_tokens = 5803
+cum_tokens = 5972
 
 [batches.content]
 kind = "lines"
@@ -3070,11 +3098,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 112
 key = 'Typescript(Export { file: "packages/d2ts/src/operators/map.ts", start_line: 34 })'
 descriptor = "export at packages/d2ts/src/operators/map.ts:34"
 cost_tokens = 0
-cum_tokens = 5803
+cum_tokens = 5972
 
 [batches.content]
 kind = "lines"
@@ -3096,11 +3124,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 113
 key = 'Typescript(Export { file: "packages/d2ts/src/operators/map.ts", start_line: 11 })'
 descriptor = "export at packages/d2ts/src/operators/map.ts:11"
 cost_tokens = 97
-cum_tokens = 5900
+cum_tokens = 6069
 
 [batches.content]
 kind = "lines"
@@ -3146,11 +3174,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 114
 key = 'Typescript(Imports { file: "packages/d2ql/src/index.ts" })'
 descriptor = "imports in packages/d2ql/src/index.ts"
 cost_tokens = 34
-cum_tokens = 5934
+cum_tokens = 6103
 
 [batches.content]
 kind = "lines"
@@ -3164,11 +3192,25 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 113
+position = 115
+key = 'Fs(DirListing { dir: "packages/d2mini/tests/operators" })'
+descriptor = "listing of 'packages/d2mini/tests/operators'"
+cost_tokens = 139
+cum_tokens = 6242
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2mini/tests/operators"
+entries = ["concat.test.ts", "consolidate.test.ts", "count.test.ts", "debug.test.ts", "distinct.test.ts", "filter.test.ts", "filterBy.test.ts", "groupBy.test.ts", "join-types.test.ts", "join.test.ts", "keying-types.test.ts", "keying.test.ts", "map.test.ts", "negate.test.ts", "orderBy.test.ts", "orderByWithFractionalIndex.test.ts", "orderByWithIndex.test.ts", "output.test.ts", "pipe.test.ts", "reduce.test.ts", "topK.test.ts", "topKWithFractionalIndex.test.ts", "topKWithIndex.test.ts"]
+
+[[batches]]
+position = 116
 key = 'Typescript(Export { file: "packages/d2ts/src/operators/reduce.ts", start_line: 127 })'
 descriptor = "export at packages/d2ts/src/operators/reduce.ts:127"
 cost_tokens = 85
-cum_tokens = 6019
+cum_tokens = 6327
 
 [batches.content]
 kind = "lines"
@@ -3190,11 +3232,11 @@ end = 133
 kind = "ellipsis"
 
 [[batches]]
-position = 114
+position = 117
 key = 'Typescript(Export { file: "packages/d2ts/src/operators/reduce.ts", start_line: 15 })'
 descriptor = "export at packages/d2ts/src/operators/reduce.ts:15"
 cost_tokens = 109
-cum_tokens = 6128
+cum_tokens = 6436
 
 [batches.content]
 kind = "lines"
@@ -3240,11 +3282,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 115
+position = 118
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/topKWithFractionalIndex.ts" })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/operators/topKWithFractionalIndex.ts"
 cost_tokens = 41
-cum_tokens = 6169
+cum_tokens = 6477
 
 [batches.content]
 kind = "lines"
@@ -3282,39 +3324,11 @@ end = 476
 kind = "ellipsis"
 
 [[batches]]
-position = 116
-key = 'Fs(DirListing { dir: "packages/d2ql/tests" })'
-descriptor = "listing of 'packages/d2ql/tests'"
-cost_tokens = 115
-cum_tokens = 6284
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2ql/tests"
-entries = ["compiler.test.ts", "conditions.test.ts", "function-integration.test.ts", "functions.test.ts", "group-by.test.ts", "having.test.ts", "in-operator.test.ts", "join.test.ts", "key-by.test.ts", "like-operator.test.ts", "materialize.test.ts", "nested-conditions.test.ts", "order-by.test.ts", "query-builder", "query-types.test.ts", "store.test.ts", "table-alias.test.ts", "types.test.ts", "wildcard-select.test.ts", "with.test.ts"]
-
-[[batches]]
-position = 117
-key = 'Fs(DirListing { dir: "packages/d2ql/tests/query-builder" })'
-descriptor = "listing of 'packages/d2ql/tests/query-builder'"
-cost_tokens = 54
-cum_tokens = 6338
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2ql/tests/query-builder"
-entries = ["from.test.ts", "group-by.test.ts", "having.test.ts", "join.test.ts", "key-by.test.ts", "order-by.test.ts", "select-functions.test.ts", "select.test.ts", "where.test.ts", "with.test.ts"]
-
-[[batches]]
-position = 118
+position = 119
 key = 'Typescript(Export { file: "packages/d2ts/src/operators/orderBy.ts", start_line: 76 })'
 descriptor = "export at packages/d2ts/src/operators/orderBy.ts:76"
 cost_tokens = 87
-cum_tokens = 6425
+cum_tokens = 6564
 
 [batches.content]
 kind = "lines"
@@ -3336,11 +3350,11 @@ end = 85
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Typescript(Export { file: "packages/d2ts/src/operators/orderBy.ts", start_line: 140 })'
 descriptor = "export at packages/d2ts/src/operators/orderBy.ts:140"
 cost_tokens = 87
-cum_tokens = 6512
+cum_tokens = 6651
 
 [batches.content]
 kind = "lines"
@@ -3362,11 +3376,11 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Typescript(Imports { file: "packages/d2ts/src/multiset.ts" })'
 descriptor = "imports in packages/d2ts/src/multiset.ts"
 cost_tokens = 19
-cum_tokens = 6531
+cum_tokens = 6670
 
 [batches.content]
 kind = "lines"
@@ -3380,11 +3394,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 183
-cum_tokens = 6714
+cum_tokens = 6853
 
 [batches.content]
 kind = "lines"
@@ -3398,11 +3412,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Markdown(HeadingsOutline { file: "packages/d2ts/README.md" })'
 descriptor = "headings outline in packages/d2ts/README.md"
 cost_tokens = 175
-cum_tokens = 6889
+cum_tokens = 7028
 
 [batches.content]
 kind = "lines"
@@ -3632,11 +3646,11 @@ end = 1077
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Markdown(Section { file: "packages/d2ts/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "packages/d2ts/README.md section #0"
 cost_tokens = 172
-cum_tokens = 7061
+cum_tokens = 7200
 
 [batches.content]
 kind = "lines"
@@ -3650,11 +3664,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Typescript(Export { file: "packages/d2ts/src/sqlite/operators/groupBy.ts", start_line: 101 })'
 descriptor = "export at packages/d2ts/src/sqlite/operators/groupBy.ts:101"
 cost_tokens = 61
-cum_tokens = 7122
+cum_tokens = 7261
 
 [batches.content]
 kind = "lines"
@@ -3676,11 +3690,11 @@ end = 106
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Typescript(Export { file: "packages/d2ts/src/d2.ts", start_line: 15 })'
 descriptor = "export at packages/d2ts/src/d2.ts:15"
 cost_tokens = 180
-cum_tokens = 7302
+cum_tokens = 7441
 
 [batches.content]
 kind = "lines"
@@ -3886,25 +3900,25 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 126
-key = 'Fs(DirListing { dir: "packages/d2mini/tests/operators" })'
-descriptor = "listing of 'packages/d2mini/tests/operators'"
-cost_tokens = 139
-cum_tokens = 7441
+position = 127
+key = 'Fs(DirListing { dir: "packages/d2ts/tests/operators" })'
+descriptor = "listing of 'packages/d2ts/tests/operators'"
+cost_tokens = 159
+cum_tokens = 7600
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "packages/d2mini/tests/operators"
-entries = ["concat.test.ts", "consolidate.test.ts", "count.test.ts", "debug.test.ts", "distinct.test.ts", "filter.test.ts", "filterBy.test.ts", "groupBy.test.ts", "join-types.test.ts", "join.test.ts", "keying-types.test.ts", "keying.test.ts", "map.test.ts", "negate.test.ts", "orderBy.test.ts", "orderByWithFractionalIndex.test.ts", "orderByWithIndex.test.ts", "output.test.ts", "pipe.test.ts", "reduce.test.ts", "topK.test.ts", "topKWithFractionalIndex.test.ts", "topKWithIndex.test.ts"]
+parent = "packages/d2ts/tests/operators"
+entries = ["buffer.test.ts", "concat.test.ts", "consolidate.test.ts", "count.test.ts", "debug.test.ts", "distinct.test.ts", "filter.test.ts", "filterBy-combined.test.ts", "groupBy.test.ts", "join-combined.test.ts", "join.test.ts", "keying-types.test.ts", "keying.test.ts", "map.test.ts", "negate.test.ts", "orderBy-combined.test.ts", "orderByWithFractionalIndex-combined.test.ts", "orderByWithIndex-combined.test.ts", "output.test.ts", "pipe.test.ts", "reduce.test.ts", "topK-combined.test.ts", "topKWithFractionalIndex-combined.test.ts", "topKWithIndex-combined.test.ts"]
 
 [[batches]]
-position = 127
+position = 128
 key = 'Markdown(Section { file: "README.md", section_index: 43, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "README.md section #43"
 cost_tokens = 257
-cum_tokens = 7698
+cum_tokens = 7857
 
 [batches.content]
 kind = "lines"
@@ -3918,11 +3932,11 @@ end = 697
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Typescript(Export { file: "packages/d2ts/src/sqlite/operators/count.ts", start_line: 39 })'
 descriptor = "export at packages/d2ts/src/sqlite/operators/count.ts:39"
 cost_tokens = 63
-cum_tokens = 7761
+cum_tokens = 7920
 
 [batches.content]
 kind = "lines"
@@ -3944,11 +3958,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Typescript(Export { file: "packages/d2ts/src/sqlite/operators/distinct.ts", start_line: 44 })'
 descriptor = "export at packages/d2ts/src/sqlite/operators/distinct.ts:44"
 cost_tokens = 63
-cum_tokens = 7824
+cum_tokens = 7983
 
 [batches.content]
 kind = "lines"
@@ -3970,11 +3984,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/buffer.ts" })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/operators/buffer.ts"
 cost_tokens = 45
-cum_tokens = 7869
+cum_tokens = 8028
 
 [batches.content]
 kind = "lines"
@@ -4012,11 +4026,11 @@ end = 150
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Typescript(Export { file: "packages/d2ts/src/sqlite/operators/buffer.ts", start_line: 149 })'
 descriptor = "export at packages/d2ts/src/sqlite/operators/buffer.ts:149"
 cost_tokens = 0
-cum_tokens = 7869
+cum_tokens = 8028
 
 [batches.content]
 kind = "lines"
@@ -4038,11 +4052,11 @@ end = 150
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/consolidate.ts" })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/operators/consolidate.ts"
 cost_tokens = 46
-cum_tokens = 7915
+cum_tokens = 8074
 
 [batches.content]
 kind = "lines"
@@ -4080,11 +4094,11 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Typescript(Export { file: "packages/d2ts/src/sqlite/operators/consolidate.ts", start_line: 148 })'
 descriptor = "export at packages/d2ts/src/sqlite/operators/consolidate.ts:148"
 cost_tokens = 0
-cum_tokens = 7915
+cum_tokens = 8074
 
 [batches.content]
 kind = "lines"
@@ -4106,11 +4120,11 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Typescript(Export { file: "packages/d2ts/src/sqlite/operators/buffer.ts", start_line: 32 })'
 descriptor = "export at packages/d2ts/src/sqlite/operators/buffer.ts:32"
 cost_tokens = 84
-cum_tokens = 7999
+cum_tokens = 8158
 
 [batches.content]
 kind = "lines"
@@ -4156,11 +4170,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Typescript(Export { file: "packages/d2ts/src/sqlite/operators/consolidate.ts", start_line: 31 })'
 descriptor = "export at packages/d2ts/src/sqlite/operators/consolidate.ts:31"
 cost_tokens = 84
-cum_tokens = 8083
+cum_tokens = 8242
 
 [batches.content]
 kind = "lines"
@@ -4206,11 +4220,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Typescript(Export { file: "packages/d2ts/src/order.ts", start_line: 29 })'
 descriptor = "export at packages/d2ts/src/order.ts:29"
 cost_tokens = 195
-cum_tokens = 8278
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -4448,11 +4462,11 @@ end = 129
 kind = "ellipsis"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Markdown(Section { file: "README.md", section_index: 44, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #44"
 cost_tokens = 105
-cum_tokens = 8383
+cum_tokens = 8542
 
 [batches.content]
 kind = "lines"
@@ -4464,20 +4478,6 @@ end = 704
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 138
-key = 'Fs(DirListing { dir: "packages/d2ts/tests/operators" })'
-descriptor = "listing of 'packages/d2ts/tests/operators'"
-cost_tokens = 159
-cum_tokens = 8542
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2ts/tests/operators"
-entries = ["buffer.test.ts", "concat.test.ts", "consolidate.test.ts", "count.test.ts", "debug.test.ts", "distinct.test.ts", "filter.test.ts", "filterBy-combined.test.ts", "groupBy.test.ts", "join-combined.test.ts", "join.test.ts", "keying-types.test.ts", "keying.test.ts", "map.test.ts", "negate.test.ts", "orderBy-combined.test.ts", "orderByWithFractionalIndex-combined.test.ts", "orderByWithIndex-combined.test.ts", "output.test.ts", "pipe.test.ts", "reduce.test.ts", "topK-combined.test.ts", "topKWithFractionalIndex-combined.test.ts", "topKWithIndex-combined.test.ts"]
 
 [[batches]]
 position = 139

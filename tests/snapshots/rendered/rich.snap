@@ -141,6 +141,43 @@ docs/
         traceback.rst
         tree.rst
 examples/
+    README.md
+    attrs.py
+    bars.py
+    columns.py
+    cp_progress.py
+    downloader.py
+    dynamic_progress.py
+    exception.py
+    export.py
+    file_progress.py
+    fullscreen.py
+    group.py
+    group2.py
+    highlighter.py
+    jobs.py
+    justify.py
+    justify2.py
+    layout.py
+    link.py
+    listdir.py
+    live_progress.py
+    log.py
+    overflow.py
+    padding.py
+    print_calendar.py
+    rainbow.py
+    recursive_error.py
+    repr.py
+    save_table_svg.py
+    screen.py
+    spinners.py
+    status.py
+    suppress.py
+    table.py
+    table_movie.py
+    top_lite_simulator.py
+    tree.py
 faq.yml
 imgs/
     columns.png
@@ -251,10 +288,6 @@ rich/
     _log_render.py
     _loop.py
     _null_file.py
-        …
-           5→class NullFile(IO[str]):
-        …
-          69→NULL_FILE = NullFile()
     _palettes.py
     _pick.py
            1→from typing import Optional
@@ -283,16 +316,6 @@ rich/
               13→from typing import TYPE_CHECKING, cast
               14→
               15→from rich._unicode_data._versions import VERSIONS
-            …
-              20→VERSION_ORDER = sorted(
-            …
-              28→VERSION_SET = frozenset(VERSIONS)
-              29→
-              30→
-              31→def _parse_version(version: str) -> tuple[int, int, int]:
-            …
-              58→@cache
-              59→def load(unicode_version: str = "auto") -> CellTable:
             …
         _versions.py
         unicode10-0-0.py
@@ -385,20 +408,8 @@ rich/
     markdown.py
     markup.py
     measure.py
-        …
-          11→class Measurement(NamedTuple):
-        …
-         125→def measure_renderables(
-        …
     padding.py
     pager.py
-        …
-           5→class Pager(ABC):
-           6→    """Base class for a pager."""
-        …
-          17→class SystemPager(Pager):
-          18→    """Uses the pager installed on the system."""
-        …
     palette.py
         …
           11→class Palette:

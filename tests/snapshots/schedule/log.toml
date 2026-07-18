@@ -2359,10 +2359,46 @@ kind = "full"
 
 [[batches]]
 position = 80
+key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 1478 })'
+descriptor = "pub-item doc lede at src/lib.rs:1478"
+cost_tokens = 127
+cum_tokens = 5946
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 1424
+end = 1432
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 83
+cum_tokens = 6029
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
 key = 'Rust(MethodSigs { file: "src/lib.rs" })'
 descriptor = "impl method sigs in src/lib.rs"
 cost_tokens = 2016
-cum_tokens = 7835
+cum_tokens = 8045
 
 [batches.content]
 kind = "lines"
@@ -3622,42 +3658,6 @@ end = 1570
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 81
-key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 1478 })'
-descriptor = "pub-item doc lede at src/lib.rs:1478"
-cost_tokens = 127
-cum_tokens = 7962
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/lib.rs"
-start = 1424
-end = 1432
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 82
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
-cost_tokens = 83
-cum_tokens = 8045
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 83

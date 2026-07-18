@@ -1363,10 +1363,126 @@ kind = "full"
 
 [[batches]]
 position = 44
+key = 'Typescript(ExportBody { file: "lib/argument.js", start_line: 143, body_start_line: 144 })'
+descriptor = "export body at lib/argument.js:143 body 144"
+cost_tokens = 55
+cum_tokens = 1947
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 144
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 25 })'
+descriptor = "export doc at lib/error.js:25"
+cost_tokens = 20
+cum_tokens = 1967
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/error.js"
+start = 22
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Typescript(Imports { file: "lib/argument.js" })'
+descriptor = "imports in lib/argument.js"
+cost_tokens = 14
+cum_tokens = 1981
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/argument.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Typescript(Imports { file: "lib/option.js" })'
+descriptor = "imports in lib/option.js"
+cost_tokens = 14
+cum_tokens = 1995
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 256 })'
+descriptor = "export member at lib/option.js:3 member 256"
+cost_tokens = 11
+cum_tokens = 2006
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/option.js"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'Typescript(Imports { file: "lib/help.js" })'
+descriptor = "imports in lib/help.js"
+cost_tokens = 17
+cum_tokens = 2023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/help.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
 key = 'Typescript(ExportMemberNamesChunk { file: "lib/command.js", start_line: 13, chunk_index: 0 })'
 descriptor = "export member names #1 at lib/command.js:13"
 cost_tokens = 253
-cum_tokens = 2145
+cum_tokens = 2276
 
 [batches.content]
 kind = "lines"
@@ -1597,122 +1713,6 @@ kind = "truncated"
 pattern = "^[^(]+"
 
 [[batches]]
-position = 45
-key = 'Typescript(ExportBody { file: "lib/argument.js", start_line: 143, body_start_line: 144 })'
-descriptor = "export body at lib/argument.js:143 body 144"
-cost_tokens = 55
-cum_tokens = 2200
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/argument.js"
-start = 144
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Typescript(ExportDoc { file: "lib/error.js", start_line: 25 })'
-descriptor = "export doc at lib/error.js:25"
-cost_tokens = 20
-cum_tokens = 2220
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/error.js"
-start = 22
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Typescript(Imports { file: "lib/argument.js" })'
-descriptor = "imports in lib/argument.js"
-cost_tokens = 14
-cum_tokens = 2234
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/argument.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
-key = 'Typescript(Imports { file: "lib/option.js" })'
-descriptor = "imports in lib/option.js"
-cost_tokens = 14
-cum_tokens = 2248
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/option.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
-key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 256 })'
-descriptor = "export member at lib/option.js:3 member 256"
-cost_tokens = 11
-cum_tokens = 2259
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/option.js"
-start = 256
-end = 256
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "lib/option.js"
-start = 257
-end = 257
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 50
-key = 'Typescript(Imports { file: "lib/help.js" })'
-descriptor = "imports in lib/help.js"
-cost_tokens = 17
-cum_tokens = 2276
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/help.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 51
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 244 })'
 descriptor = "export body at lib/option.js:3 body 244"
@@ -1838,38 +1838,10 @@ kind = "full"
 
 [[batches]]
 position = 57
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 813
-cum_tokens = 3454
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["args.literal.test.js", "args.variadic.test.js", "argument.chain.test.js", "argument.choices.test.js", "argument.custom-processing.test.js", "argument.required.test.js", "argument.variadic.test.js", "command.action.test.js", "command.addCommand.test.js", "command.addHelpOption.test.js", "command.addHelpText.test.js", "command.alias.test.js", "command.allowExcessArguments.test.js", "command.allowUnknownOption.test.js", "command.argumentVariations.test.js", "command.asterisk.test.js", "command.chain.test.js", "command.commandHelp.test.js", "command.configureHelp.test.js", "command.configureOutput.test.js", "command.copySettings.test.js", "command.createArgument.test.js", "command.createHelp.test.js", "command.createOption.test.js", "command.default.test.js", "command.description.test.js", "command.error.test.js", "command.executableSubcommand.inspect.test.js", "command.executableSubcommand.lookup.test.js", "command.executableSubcommand.mock.test.js", "command.executableSubcommand.search.test.js", "command.executableSubcommand.signals.test.js", "command.executableSubcommand.test.js", "command.exitOverride.test.js", "command.help.test.js", "command.helpCommand.test.js", "command.helpOption.test.js", "command.hook.test.js", "command.name.test.js", "command.nested.test.js", "command.onCommand.test.js", "command.option-misuse.test.js", "command.parse.test.js", "command.parseOptions.test.js", "command.positionalOptions.test.js", "command.registerClash.test.js", "command.showHelpAfterError.test.js", "command.showSuggestionAfterError.test.js", "command.summary.test.js", "command.unknownCommand.test.js", "command.unknownOption.test.js", "command.usage.test.js", "commander.configureCommand.test.js", "createCommand.test.js", "deprecated.test.js", "esm-imports-test.mjs", "fixtures", "fixtures-extensions", "help.argumentDescription.test.js", "help.boxWrap.test.js", "help.commandTerm.test.js", "help.commandUsage.test.js", "help.longestArgumentTermLength.test.js", "help.longestCommandTermLength.test.js", "help.longestOptionTermLength.test.js", "help.minWidthToWrap.test.js", "help.optionDescription.test.js", "help.optionTerm.test.js", "help.padWidth.test.js", "help.preformatted.test.js", "help.showGlobalOptions.test.js", "help.sortCommands.test.js", "help.sortOptions.test.js", "help.stripAnsi.test.js", "help.style.test.js", "help.subcommandDescription.test.js", "help.suggestion.test.js", "help.visibleArguments.test.js", "help.visibleCommands.test.js", "help.visibleGlobalOptions.test.js", "help.visibleOptions.test.js", "helpGroup.test.js", "incrementNodeInspectorPort.test.js", "negatives.test.js", "option.bad-flags.test.js", "option.chain.test.js", "options.bool.combo.test.js", "options.bool.small.combined.test.js", "options.bool.test.js", "options.camelcase.test.js", "options.choices.test.js", "options.conflicts.test.js", "options.custom-processing.test.js", "options.default.test.js", "options.dual-options.test.js", "options.env.test.js", "options.flags.test.js", "options.getset.test.js", "options.implies.test.js", "options.mandatory.test.js", "options.optional.test.js", "options.opts.test.js", "options.optsWithGlobals.test.js", "options.preset.test.js", "options.registerClash.test.js", "options.required.test.js", "options.twice.test.js", "options.values.test.js", "options.variadic.test.js", "options.version.test.js", "program.test.js", "ts-imports.test.ts", "useColor.test.js"]
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "tests/fixtures-extensions" })'
-descriptor = "listing of 'tests/fixtures-extensions'"
-cost_tokens = 29
-cum_tokens = 3483
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fixtures-extensions"
-entries = ["pm-try-cjs.cjs", "pm-try-mjs.mjs", "pm-try-ts.ts", "pm.js"]
-
-[[batches]]
-position = 59
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 282
-cum_tokens = 3765
+cum_tokens = 2923
 
 [batches.content]
 kind = "lines"
@@ -1899,29 +1871,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 60
-key = 'Json(Scripts { file: "package.json" })'
-descriptor = "package scripts in package.json"
-cost_tokens = 257
-cum_tokens = 4022
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 21
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
+position = 58
 key = 'Typescript(ExportMemberNames { file: "lib/help.js", start_line: 12 })'
 descriptor = "export member names at lib/help.js:12"
 cost_tokens = 436
-cum_tokens = 4458
+cum_tokens = 3359
 
 [batches.content]
 kind = "lines"
@@ -2296,11 +2250,29 @@ kind = "truncated"
 pattern = "^[^(]+"
 
 [[batches]]
-position = 62
+position = 59
+key = 'Json(Scripts { file: "package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 257
+cum_tokens = 3616
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 21
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 132 })'
 descriptor = "export member at lib/option.js:3 member 132"
 cost_tokens = 12
-cum_tokens = 4470
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2322,11 +2294,11 @@ end = 133
 kind = "ellipsis"
 
 [[batches]]
-position = 63
+position = 61
 key = 'Typescript(ExportDoc { file: "lib/command.js", start_line: 2752 })'
 descriptor = "export doc at lib/command.js:2752"
 cost_tokens = 34
-cum_tokens = 4504
+cum_tokens = 3662
 
 [batches.content]
 kind = "lines"
@@ -2340,11 +2312,11 @@ end = 2751
 kind = "full"
 
 [[batches]]
-position = 64
+position = 62
 key = 'Typescript(ExportNames { file: "lib/suggestSimilar.js" })'
 descriptor = "export names surface in lib/suggestSimilar.js"
 cost_tokens = 28
-cum_tokens = 4532
+cum_tokens = 3690
 
 [batches.content]
 kind = "lines"
@@ -2374,11 +2346,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 65
+position = 63
 key = 'Typescript(Export { file: "lib/suggestSimilar.js", start_line: 56 })'
 descriptor = "export at lib/suggestSimilar.js:56"
 cost_tokens = 0
-cum_tokens = 4532
+cum_tokens = 3690
 
 [batches.content]
 kind = "lines"
@@ -2400,11 +2372,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 66
+position = 64
 key = 'Markdown(HeadingsOutline { file: "docs/zh-CN/可变参数的选项.md" })'
 descriptor = "headings outline in docs/zh-CN/可变参数的选项.md"
 cost_tokens = 127
-cum_tokens = 4659
+cum_tokens = 3817
 
 [batches.content]
 kind = "lines"
@@ -2522,11 +2494,11 @@ end = 184
 kind = "ellipsis"
 
 [[batches]]
-position = 67
+position = 65
 key = 'Typescript(ModuleItem { file: "examples/custom-command-class.js", start_line: 6 })'
 descriptor = "module item at examples/custom-command-class.js:6"
 cost_tokens = 26
-cum_tokens = 4685
+cum_tokens = 3843
 
 [batches.content]
 kind = "lines"
@@ -2548,11 +2520,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 66
 key = 'Typescript(ExportBody { file: "lib/error.js", start_line: 4, body_start_line: 12 })'
 descriptor = "export body at lib/error.js:4 body 12"
 cost_tokens = 82
-cum_tokens = 4767
+cum_tokens = 3925
 
 [batches.content]
 kind = "lines"
@@ -2566,25 +2538,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Fs(DirListing { dir: "tests/fixtures" })'
-descriptor = "listing of 'tests/fixtures'"
-cost_tokens = 93
-cum_tokens = 4860
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fixtures"
-entries = ["another-dir", "inspect-sub.js", "inspect.js", "other-dir", "pm", "pm-cache-clear.js", "pm-cache-validate.js", "pm-cache.js", "pm-default", "pm-echo.js", "pm-fail.js", "pm-install", "pm-listen", "pm-publish.js", "pm-search", "pm-silent", "pm-terminate.js", "pmlink", "pmlink-install"]
-
-[[batches]]
-position = 70
+position = 67
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 121 })'
 descriptor = "export body at lib/option.js:3 body 121"
 cost_tokens = 19
-cum_tokens = 4879
+cum_tokens = 3944
 
 [batches.content]
 kind = "lines"
@@ -2598,11 +2556,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 71
+position = 68
 key = 'Markdown(Section { file: "Readme.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #24"
 cost_tokens = 90
-cum_tokens = 4969
+cum_tokens = 4034
 
 [batches.content]
 kind = "lines"
@@ -2616,11 +2574,11 @@ end = 964
 kind = "full"
 
 [[batches]]
-position = 72
+position = 69
 key = 'Markdown(HeadingsOutline { file: "docs/zh-CN/不再推荐使用的功能.md" })'
 descriptor = "headings outline in docs/zh-CN/不再推荐使用的功能.md"
 cost_tokens = 163
-cum_tokens = 5132
+cum_tokens = 4197
 
 [batches.content]
 kind = "lines"
@@ -2802,11 +2760,11 @@ end = 188
 kind = "ellipsis"
 
 [[batches]]
-position = 73
+position = 70
 key = 'Markdown(Section { file: "Readme.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #0"
 cost_tokens = 802
-cum_tokens = 5934
+cum_tokens = 4999
 
 [batches.content]
 kind = "lines"
@@ -2820,11 +2778,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 74
+position = 71
 key = 'Typescript(ModuleItem { file: "examples/custom-command-class.js", start_line: 15 })'
 descriptor = "module item at examples/custom-command-class.js:15"
 cost_tokens = 12
-cum_tokens = 5946
+cum_tokens = 5011
 
 [batches.content]
 kind = "lines"
@@ -2846,11 +2804,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 72
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 133 })'
 descriptor = "export body at lib/option.js:3 body 133"
 cost_tokens = 19
-cum_tokens = 5965
+cum_tokens = 5030
 
 [batches.content]
 kind = "lines"
@@ -2864,39 +2822,11 @@ end = 134
 kind = "full"
 
 [[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "tests/fixtures/another-dir" })'
-descriptor = "listing of 'tests/fixtures/another-dir'"
-cost_tokens = 3
-cum_tokens = 5968
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fixtures/another-dir"
-entries = ["pm"]
-
-[[batches]]
-position = 77
-key = 'Fs(DirListing { dir: "tests/fixtures/other-dir" })'
-descriptor = "listing of 'tests/fixtures/other-dir'"
-cost_tokens = 3
-cum_tokens = 5971
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/fixtures/other-dir"
-entries = ["pm"]
-
-[[batches]]
-position = 78
+position = 73
 key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 4 })'
 descriptor = "module item at examples/configure-output.js:4"
 cost_tokens = 14
-cum_tokens = 5985
+cum_tokens = 5044
 
 [batches.content]
 kind = "lines"
@@ -2918,11 +2848,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 74
 key = 'Typescript(ModuleItem { file: "examples/configure-output.js", start_line: 2 })'
 descriptor = "module item at examples/configure-output.js:2"
 cost_tokens = 11
-cum_tokens = 5996
+cum_tokens = 5055
 
 [batches.content]
 kind = "lines"
@@ -2936,11 +2866,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 80
+position = 75
 key = 'Typescript(ModuleItem { file: "examples/nestedCommands.js", start_line: 21 })'
 descriptor = "module item at examples/nestedCommands.js:21"
 cost_tokens = 14
-cum_tokens = 6010
+cum_tokens = 5069
 
 [batches.content]
 kind = "lines"
@@ -2962,11 +2892,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 76
 key = 'Typescript(ExportBody { file: "lib/option.js", start_line: 3, body_start_line: 257 })'
 descriptor = "export body at lib/option.js:3 body 257"
 cost_tokens = 19
-cum_tokens = 6029
+cum_tokens = 5088
 
 [batches.content]
 kind = "lines"
@@ -2980,11 +2910,11 @@ end = 257
 kind = "full"
 
 [[batches]]
-position = 82
+position = 77
 key = 'Typescript(ExportDoc { file: "lib/argument.js", start_line: 143 })'
 descriptor = "export doc at lib/argument.js:143"
 cost_tokens = 63
-cum_tokens = 6092
+cum_tokens = 5151
 
 [batches.content]
 kind = "lines"
@@ -2998,11 +2928,11 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 83
+position = 78
 key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 10 })'
 descriptor = "module item at examples/arguments-custom-processing.js:10"
 cost_tokens = 15
-cum_tokens = 6107
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -3024,11 +2954,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 79
 key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 8 })'
 descriptor = "module item at examples/arguments-custom-processing.js:8"
 cost_tokens = 11
-cum_tokens = 6118
+cum_tokens = 5177
 
 [batches.content]
 kind = "lines"
@@ -3042,11 +2972,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 85
+position = 80
 key = 'Typescript(ModuleItem { file: "examples/arguments-custom-processing.js", start_line: 20 })'
 descriptor = "module item at examples/arguments-custom-processing.js:20"
 cost_tokens = 14
-cum_tokens = 6132
+cum_tokens = 5191
 
 [batches.content]
 kind = "lines"
@@ -3068,11 +2998,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 81
 key = 'Typescript(ModuleItemBody { file: "examples/arguments-custom-processing.js", start_line: 20, body_start_line: 21 })'
 descriptor = "module item body at examples/arguments-custom-processing.js:20 body 21"
 cost_tokens = 13
-cum_tokens = 6145
+cum_tokens = 5204
 
 [batches.content]
 kind = "lines"
@@ -3084,6 +3014,76 @@ end = 21
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 82
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 813
+cum_tokens = 6017
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["args.literal.test.js", "args.variadic.test.js", "argument.chain.test.js", "argument.choices.test.js", "argument.custom-processing.test.js", "argument.required.test.js", "argument.variadic.test.js", "command.action.test.js", "command.addCommand.test.js", "command.addHelpOption.test.js", "command.addHelpText.test.js", "command.alias.test.js", "command.allowExcessArguments.test.js", "command.allowUnknownOption.test.js", "command.argumentVariations.test.js", "command.asterisk.test.js", "command.chain.test.js", "command.commandHelp.test.js", "command.configureHelp.test.js", "command.configureOutput.test.js", "command.copySettings.test.js", "command.createArgument.test.js", "command.createHelp.test.js", "command.createOption.test.js", "command.default.test.js", "command.description.test.js", "command.error.test.js", "command.executableSubcommand.inspect.test.js", "command.executableSubcommand.lookup.test.js", "command.executableSubcommand.mock.test.js", "command.executableSubcommand.search.test.js", "command.executableSubcommand.signals.test.js", "command.executableSubcommand.test.js", "command.exitOverride.test.js", "command.help.test.js", "command.helpCommand.test.js", "command.helpOption.test.js", "command.hook.test.js", "command.name.test.js", "command.nested.test.js", "command.onCommand.test.js", "command.option-misuse.test.js", "command.parse.test.js", "command.parseOptions.test.js", "command.positionalOptions.test.js", "command.registerClash.test.js", "command.showHelpAfterError.test.js", "command.showSuggestionAfterError.test.js", "command.summary.test.js", "command.unknownCommand.test.js", "command.unknownOption.test.js", "command.usage.test.js", "commander.configureCommand.test.js", "createCommand.test.js", "deprecated.test.js", "esm-imports-test.mjs", "fixtures", "fixtures-extensions", "help.argumentDescription.test.js", "help.boxWrap.test.js", "help.commandTerm.test.js", "help.commandUsage.test.js", "help.longestArgumentTermLength.test.js", "help.longestCommandTermLength.test.js", "help.longestOptionTermLength.test.js", "help.minWidthToWrap.test.js", "help.optionDescription.test.js", "help.optionTerm.test.js", "help.padWidth.test.js", "help.preformatted.test.js", "help.showGlobalOptions.test.js", "help.sortCommands.test.js", "help.sortOptions.test.js", "help.stripAnsi.test.js", "help.style.test.js", "help.subcommandDescription.test.js", "help.suggestion.test.js", "help.visibleArguments.test.js", "help.visibleCommands.test.js", "help.visibleGlobalOptions.test.js", "help.visibleOptions.test.js", "helpGroup.test.js", "incrementNodeInspectorPort.test.js", "negatives.test.js", "option.bad-flags.test.js", "option.chain.test.js", "options.bool.combo.test.js", "options.bool.small.combined.test.js", "options.bool.test.js", "options.camelcase.test.js", "options.choices.test.js", "options.conflicts.test.js", "options.custom-processing.test.js", "options.default.test.js", "options.dual-options.test.js", "options.env.test.js", "options.flags.test.js", "options.getset.test.js", "options.implies.test.js", "options.mandatory.test.js", "options.optional.test.js", "options.opts.test.js", "options.optsWithGlobals.test.js", "options.preset.test.js", "options.registerClash.test.js", "options.required.test.js", "options.twice.test.js", "options.values.test.js", "options.variadic.test.js", "options.version.test.js", "program.test.js", "ts-imports.test.ts", "useColor.test.js"]
+
+[[batches]]
+position = 83
+key = 'Fs(DirListing { dir: "tests/fixtures-extensions" })'
+descriptor = "listing of 'tests/fixtures-extensions'"
+cost_tokens = 29
+cum_tokens = 6046
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fixtures-extensions"
+entries = ["pm-try-cjs.cjs", "pm-try-mjs.mjs", "pm-try-ts.ts", "pm.js"]
+
+[[batches]]
+position = 84
+key = 'Fs(DirListing { dir: "tests/fixtures" })'
+descriptor = "listing of 'tests/fixtures'"
+cost_tokens = 93
+cum_tokens = 6139
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fixtures"
+entries = ["another-dir", "inspect-sub.js", "inspect.js", "other-dir", "pm", "pm-cache-clear.js", "pm-cache-validate.js", "pm-cache.js", "pm-default", "pm-echo.js", "pm-fail.js", "pm-install", "pm-listen", "pm-publish.js", "pm-search", "pm-silent", "pm-terminate.js", "pmlink", "pmlink-install"]
+
+[[batches]]
+position = 85
+key = 'Fs(DirListing { dir: "tests/fixtures/another-dir" })'
+descriptor = "listing of 'tests/fixtures/another-dir'"
+cost_tokens = 3
+cum_tokens = 6142
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fixtures/another-dir"
+entries = ["pm"]
+
+[[batches]]
+position = 86
+key = 'Fs(DirListing { dir: "tests/fixtures/other-dir" })'
+descriptor = "listing of 'tests/fixtures/other-dir'"
+cost_tokens = 3
+cum_tokens = 6145
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/fixtures/other-dir"
+entries = ["pm"]
 
 [[batches]]
 position = 87

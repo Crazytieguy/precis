@@ -1,7 +1,7 @@
 fixture = "svgo"
 budget = 10000
-cumulative_tokens = 9992
-batch_count = 123
+cumulative_tokens = 7256
+batch_count = 139
 
 [[batches]]
 position = 1
@@ -2426,24 +2426,10 @@ entries = ["expect-mismatch.txt", "ignore.txt", "skip.txt"]
 
 [[batches]]
 position = 103
-key = 'Fs(DirListing { dir: "test/plugins" })'
-descriptor = "listing of 'test/plugins'"
-cost_tokens = 3347
-cum_tokens = 8531
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/plugins"
-entries = ["_collections.test.js", "_index.test.js", "_transforms.test.js", "addAttributesToSVGElement.01.svg.txt", "addAttributesToSVGElement.02.svg.txt", "addAttributesToSVGElement.03.svg.txt", "addAttributesToSVGElement.04.svg.txt", "addClassesToSVGElement.01.svg.txt", "addClassesToSVGElement.02.svg.txt", "addClassesToSVGElement.03.svg.txt", "addClassesToSVGElement.test.js", "cleanupAttrs.01.svg.txt", "cleanupAttrs.02.svg.txt", "cleanupEnableBackground.01.svg.txt", "cleanupEnableBackground.02.svg.txt", "cleanupEnableBackground.03.svg.txt", "cleanupEnableBackground.04.svg.txt", "cleanupEnableBackground.05.svg.txt", "cleanupIds.01.svg.txt", "cleanupIds.02.svg.txt", "cleanupIds.03.svg.txt", "cleanupIds.04.svg.txt", "cleanupIds.05.svg.txt", "cleanupIds.06.svg.txt", "cleanupIds.07.svg.txt", "cleanupIds.08.svg.txt", "cleanupIds.09.svg.txt", "cleanupIds.10.svg.txt", "cleanupIds.11.svg.txt", "cleanupIds.12.svg.txt", "cleanupIds.13.svg.txt", "cleanupIds.14.svg.txt", "cleanupIds.15.svg.txt", "cleanupIds.16.svg.txt", "cleanupIds.17.svg.txt", "cleanupIds.18.svg.txt", "cleanupIds.19.svg.txt", "cleanupIds.20.svg.txt", "cleanupIds.21.svg.txt", "cleanupIds.22.svg.txt", "cleanupIds.23.svg.txt", "cleanupIds.24.svg.txt", "cleanupIds.25.svg.txt", "cleanupIds.26.svg.txt", "cleanupListOfValues.01.svg.txt", "cleanupListOfValues.02.svg.txt", "cleanupListOfValues.03.svg.txt", "cleanupNumericValues.01.svg.txt", "cleanupNumericValues.02.svg.txt", "cleanupNumericValues.03.svg.txt", "collapseGroups.01.svg.txt", "collapseGroups.02.svg.txt", "collapseGroups.06.svg.txt", "collapseGroups.07.svg.txt", "collapseGroups.08.svg.txt", "collapseGroups.09.svg.txt", "collapseGroups.11.svg.txt", "collapseGroups.12.svg.txt", "collapseGroups.13.svg.txt", "collapseGroups.14.svg.txt", "collapseGroups.15.svg.txt", "collapseGroups.16.svg.txt", "collapseGroups.17.svg.txt", "collapseGroups.18.svg.txt", "convertColors.01.svg.txt", "convertColors.02.svg.txt", "convertColors.03.svg.txt", "convertColors.04.svg.txt", "convertColors.05.svg.txt", "convertColors.06.svg.txt", "convertColors.07.svg.txt", "convertEllipseToCircle.01.svg.txt", "convertOneStopGradients.01.svg.txt", "convertOneStopGradients.02.svg.txt", "convertOneStopGradients.03.svg.txt", "convertPathData.01.svg.txt", "convertPathData.02.svg.txt", "convertPathData.03.svg.txt", "convertPathData.04.svg.txt", "convertPathData.05.svg.txt", "convertPathData.06.svg.txt", "convertPathData.07.svg.txt", "convertPathData.08.svg.txt", "convertPathData.09.svg.txt", "convertPathData.10.svg.txt", "convertPathData.11.svg.txt", "convertPathData.12.svg.txt", "convertPathData.13.svg.txt", "convertPathData.14.svg.txt", "convertPathData.15.svg.txt", "convertPathData.16.svg.txt", "convertPathData.17.svg.txt", "convertPathData.18.svg.txt", "convertPathData.19.svg.txt", "convertPathData.20.svg.txt", "convertPathData.21.svg.txt", "convertPathData.22.svg.txt", "convertPathData.23.svg.txt", "convertPathData.24.svg.txt", "convertPathData.25.svg.txt", "convertPathData.26.svg.txt", "convertPathData.27.svg.txt", "convertPathData.28.svg.txt", "convertPathData.29.svg.txt", "convertPathData.30.svg.txt", "convertPathData.31.svg.txt", "convertPathData.32.svg.txt", "convertPathData.33.svg.txt", "convertPathData.34.svg.txt", "convertPathData.35.svg.txt", "convertPathData.36.svg.txt", "convertPathData.37.svg.txt", "convertPathData.38.svg.txt", "convertPathData.39.svg.txt", "convertPathData.40.svg.txt", "convertShapeToPath.01.svg.txt", "convertShapeToPath.02.svg.txt", "convertShapeToPath.03.svg.txt", "convertShapeToPath.04.svg.txt", "convertShapeToPath.05.svg.txt", "convertStyleToAttrs.01.svg.txt", "convertStyleToAttrs.02.svg.txt", "convertStyleToAttrs.03.svg.txt", "convertStyleToAttrs.04.svg.txt", "convertStyleToAttrs.05.svg.txt", "convertTransform.01.svg.txt", "convertTransform.02.svg.txt", "convertTransform.03.svg.txt", "convertTransform.04.svg.txt", "convertTransform.05.svg.txt", "convertTransform.06.svg.txt", "convertTransform.07.svg.txt", "convertTransform.10.svg.txt", "convertTransform.11.svg.txt", "convertTransform.12.svg.txt", "convertTransform.13.svg.txt", "convertTransform.14.svg.txt", "convertTransform.15.svg.txt", "inlineStyles.01.svg.txt", "inlineStyles.02.svg.txt", "inlineStyles.03.svg.txt", "inlineStyles.04.svg.txt", "inlineStyles.05.svg.txt", "inlineStyles.06.svg.txt", "inlineStyles.07.svg.txt", "inlineStyles.08.svg.txt", "inlineStyles.09.svg.txt", "inlineStyles.10.svg.txt", "inlineStyles.11.svg.txt", "inlineStyles.12.svg.txt", "inlineStyles.13.svg.txt", "inlineStyles.14.svg.txt", "inlineStyles.15.svg.txt", "inlineStyles.16.svg.txt", "inlineStyles.17.svg.txt", "inlineStyles.18.svg.txt", "inlineStyles.19.svg.txt", "inlineStyles.20.svg.txt", "inlineStyles.21.svg.txt", "inlineStyles.22.svg.txt", "inlineStyles.23.svg.txt", "inlineStyles.24.svg.txt", "inlineStyles.25.svg.txt", "inlineStyles.26.svg.txt", "inlineStyles.27.svg.txt", "inlineStyles.28.svg.txt", "mergePaths.01.svg.txt", "mergePaths.02.svg.txt", "mergePaths.03.svg.txt", "mergePaths.04.svg.txt", "mergePaths.05.svg.txt", "mergePaths.06.svg.txt", "mergePaths.07.svg.txt", "mergePaths.08.svg.txt", "mergePaths.09.svg.txt", "mergePaths.10.svg.txt", "mergePaths.11.svg.txt", "mergePaths.12.svg.txt", "mergeStyles.01.svg.txt", "mergeStyles.02.svg.txt", "mergeStyles.03.svg.txt", "mergeStyles.04.svg.txt", "mergeStyles.05.svg.txt", "mergeStyles.06.svg.txt", "mergeStyles.07.svg.txt", "mergeStyles.08.svg.txt", "mergeStyles.09.svg.txt", "mergeStyles.10.svg.txt", "mergeStyles.11.svg.txt", "mergeStyles.12.svg.txt", "minifyStyles.01.svg.txt", "minifyStyles.02.svg.txt", "minifyStyles.03.svg.txt", "minifyStyles.04.svg.txt", "minifyStyles.05.svg.txt", "minifyStyles.06.svg.txt", "minifyStyles.07.svg.txt", "minifyStyles.08.svg.txt", "minifyStyles.09.svg.txt", "minifyStyles.10.svg.txt", "minifyStyles.11.svg.txt", "moveElemsAttrsToGroup.01.svg.txt", "moveElemsAttrsToGroup.02.svg.txt", "moveElemsAttrsToGroup.03.svg.txt", "moveElemsAttrsToGroup.04.svg.txt", "moveElemsAttrsToGroup.06.svg.txt", "moveElemsAttrsToGroup.07.svg.txt", "moveElemsAttrsToGroup.08.svg.txt", "moveGroupAttrsToElems.01.svg.txt", "moveGroupAttrsToElems.02.svg.txt", "moveGroupAttrsToElems.03.svg.txt", "moveGroupAttrsToElems.04.svg.txt", "moveGroupAttrsToElems.05.svg.txt", "moveGroupAttrsToElems.06.svg.txt", "prefixIds.01.svg.txt", "prefixIds.02.svg.txt", "prefixIds.03.svg.txt", "prefixIds.04.svg.txt", "prefixIds.05.svg.txt", "prefixIds.06.svg.txt", "prefixIds.07.svg.txt", "prefixIds.08.svg.txt", "prefixIds.09.svg.txt", "prefixIds.10.svg.txt", "prefixIds.11.svg.txt", "prefixIds.12.svg.txt", "prefixIds.13.svg.txt", "prefixIds.test.js", "removeAttributesBySelector.01.svg.txt", "removeAttributesBySelector.02.svg.txt", "removeAttributesBySelector.03.svg.txt", "removeAttributesBySelector.04.svg.txt", "removeAttributesBySelector.05.svg.txt", "removeAttrs.01.svg.txt", "removeAttrs.02.svg.txt", "removeAttrs.03.svg.txt", "removeAttrs.04.svg.txt", "removeAttrs.05.svg.txt", "removeAttrs.06.svg.txt", "removeAttrs.07.svg.txt", "removeComments.01.svg.txt", "removeComments.02.svg.txt", "removeComments.03.svg.txt", "removeDeprecatedAttrs.01.svg.txt", "removeDeprecatedAttrs.02.svg.txt", "removeDeprecatedAttrs.03.svg.txt", "removeDeprecatedAttrs.04.svg.txt", "removeDeprecatedAttrs.05.svg.txt", "removeDeprecatedAttrs.06.svg.txt", "removeDeprecatedAttrs.07.svg.txt", "removeDeprecatedAttrs.08.svg.txt", "removeDesc.01.svg.txt", "removeDimensions.01.svg.txt", "removeDimensions.02.svg.txt", "removeDimensions.03.svg.txt", "removeDimensions.04.svg.txt", "removeDimensions.05.svg.txt", "removeDoctype.01.svg.txt", "removeEditorsNSData.01.svg.txt", "removeEditorsNSData.02.svg.txt", "removeElementsByAttr.01.svg.txt", "removeElementsByAttr.02.svg.txt", "removeElementsByAttr.03.svg.txt", "removeElementsByAttr.04.svg.txt", "removeElementsByAttr.05.svg.txt", "removeElementsByAttr.06.svg.txt", "removeElementsByAttr.07.svg.txt", "removeEmptyAttrs.01.svg.txt", "removeEmptyAttrs.02.svg.txt", "removeEmptyContainers.01.svg.txt", "removeEmptyContainers.02.svg.txt", "removeEmptyContainers.03.svg.txt", "removeEmptyContainers.04.svg.txt", "removeEmptyContainers.05.svg.txt", "removeEmptyContainers.06.svg.txt", "removeEmptyContainers.07.svg.txt", "removeEmptyContainers.08.svg.txt", "removeEmptyText.01.svg.txt", "removeEmptyText.02.svg.txt", "removeEmptyText.03.svg.txt", "removeHiddenElems.01.svg.txt", "removeHiddenElems.02.svg.txt", "removeHiddenElems.03.svg.txt", "removeHiddenElems.04.svg.txt", "removeHiddenElems.05.svg.txt", "removeHiddenElems.06.svg.txt", "removeHiddenElems.07.svg.txt", "removeHiddenElems.08.svg.txt", "removeHiddenElems.09.svg.txt", "removeHiddenElems.10.svg.txt", "removeHiddenElems.11.svg.txt", "removeHiddenElems.12.svg.txt", "removeHiddenElems.13.svg.txt", "removeHiddenElems.14.svg.txt", "removeHiddenElems.15.svg.txt", "removeHiddenElems.16.svg.txt", "removeHiddenElems.17.svg.txt", "removeHiddenElems.18.svg.txt", "removeHiddenElems.19.svg.txt", "removeMetadata.01.svg.txt", "removeNonInheritableGroupAttrs.01.svg.txt", "removeNonInheritableGroupAttrs.02.svg.txt", "removeOffCanvasPaths.01.svg.txt", "removeOffCanvasPaths.02.svg.txt", "removeOffCanvasPaths.03.svg.txt", "removeOffCanvasPaths.04.svg.txt", "removeOffCanvasPaths.05.svg.txt", "removeOffCanvasPaths.06.svg.txt", "removeRasterImages.01.svg.txt", "removeRasterImages.02.svg.txt", "removeScripts.01.svg.txt", "removeScripts.02.svg.txt", "removeScripts.03.svg.txt", "removeScripts.04.svg.txt", "removeScripts.05.svg.txt", "removeStyleElement.01.svg.txt", "removeTitle.01.svg.txt", "removeUnknownsAndDefaults.01.svg.txt", "removeUnknownsAndDefaults.02.svg.txt", "removeUnknownsAndDefaults.03.svg.txt", "removeUnknownsAndDefaults.04.svg.txt", "removeUnknownsAndDefaults.05.svg.txt", "removeUnknownsAndDefaults.06.svg.txt", "removeUnknownsAndDefaults.07.svg.txt", "removeUnknownsAndDefaults.08.svg.txt", "removeUnknownsAndDefaults.09.svg.txt", "removeUnknownsAndDefaults.10.svg.txt", "removeUnknownsAndDefaults.11.svg.txt", "removeUnknownsAndDefaults.12.svg.txt", "removeUnknownsAndDefaults.13.svg.txt", "removeUnknownsAndDefaults.14.svg.txt", "removeUnknownsAndDefaults.15.svg.txt", "removeUnknownsAndDefaults.16.svg.txt", "removeUnknownsAndDefaults.17.svg.txt", "removeUnusedNS.01.svg.txt", "removeUnusedNS.02.svg.txt", "removeUnusedNS.03.svg.txt", "removeUnusedNS.04.svg.txt", "removeUnusedNS.05.svg.txt", "removeUnusedNS.06.svg.txt", "removeUnusedNS.07.svg.txt", "removeUselessDefs.01.svg.txt", "removeUselessDefs.02.svg.txt", "removeUselessDefs.03.svg.txt", "removeUselessDefs.04.svg.txt", "removeUselessDefs.05.svg.txt", "removeUselessStrokeAndFill.01.svg.txt", "removeUselessStrokeAndFill.02.svg.txt", "removeUselessStrokeAndFill.03.svg.txt", "removeUselessStrokeAndFill.04.svg.txt", "removeUselessStrokeAndFill.05.svg.txt", "removeViewBox.01.svg.txt", "removeViewBox.02.svg.txt", "removeViewBox.03.svg.txt", "removeViewBox.04.svg.txt", "removeViewBox.05.svg.txt", "removeXMLNS.01.svg.txt", "removeXMLProcInst.01.svg.txt", "removeXMLProcInst.02.svg.txt", "removeXlink.01.svg.txt", "removeXlink.02.svg.txt", "removeXlink.03.svg.txt", "removeXlink.04.svg.txt", "reusePaths.01.svg.txt", "reusePaths.02.svg.txt", "reusePaths.03.svg.txt", "reusePaths.04.svg.txt", "reusePaths.05.svg.txt", "reusePaths.06.svg.txt", "sortAttrs.01.svg.txt", "sortAttrs.02.svg.txt", "sortAttrs.03.svg.txt", "sortAttrs.04.svg.txt", "sortDefsChildren.01.svg.txt"]
-
-[[batches]]
-position = 104
 key = 'Typescript(ExportDoc { file: "lib/svgo/coa.js", start_line: 30 })'
 descriptor = "export doc at lib/svgo/coa.js:30"
 cost_tokens = 27
-cum_tokens = 8558
+cum_tokens = 5211
 
 [batches.content]
 kind = "lines"
@@ -2457,11 +2443,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 105
+position = 104
 key = 'Json(DevDependencies { file: "package.json" })'
 descriptor = "package dev/peer dependencies in package.json"
 cost_tokens = 446
-cum_tokens = 9004
+cum_tokens = 5657
 
 [batches.content]
 kind = "lines"
@@ -2475,11 +2461,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 106
+position = 105
 key = 'Typescript(Imports { file: "lib/svgo/plugins.js" })'
 descriptor = "imports in lib/svgo/plugins.js"
 cost_tokens = 15
-cum_tokens = 9019
+cum_tokens = 5672
 
 [batches.content]
 kind = "lines"
@@ -2493,11 +2479,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 107
+position = 106
 key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 195, body_start_line: 196 })'
 descriptor = "export body at lib/style.js:195 body 196"
 cost_tokens = 100
-cum_tokens = 9119
+cum_tokens = 5772
 
 [batches.content]
 kind = "lines"
@@ -2511,11 +2497,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 108
+position = 107
 key = 'Fs(DirListing { dir: "test/coa" })'
 descriptor = "listing of 'test/coa'"
 cost_tokens = 29
-cum_tokens = 9148
+cum_tokens = 5801
 
 [batches.content]
 kind = "fs"
@@ -2525,11 +2511,11 @@ parent = "test/coa"
 entries = ["_index.test.js", "testFolderWithNoSvg", "testSvg", "testSvgDatauri", "testSvgRecursively"]
 
 [[batches]]
-position = 109
+position = 108
 key = 'Fs(DirListing { dir: "test/coa/testFolderWithNoSvg" })'
 descriptor = "listing of 'test/coa/testFolderWithNoSvg'"
 cost_tokens = 3
-cum_tokens = 9151
+cum_tokens = 5804
 
 [batches.content]
 kind = "fs"
@@ -2539,11 +2525,11 @@ parent = "test/coa/testFolderWithNoSvg"
 entries = ["test"]
 
 [[batches]]
-position = 110
+position = 109
 key = 'Fs(DirListing { dir: "test/coa/testSvgDatauri" })'
 descriptor = "listing of 'test/coa/testSvgDatauri'"
 cost_tokens = 4
-cum_tokens = 9155
+cum_tokens = 5808
 
 [batches.content]
 kind = "fs"
@@ -2553,11 +2539,11 @@ parent = "test/coa/testSvgDatauri"
 entries = ["test.svg"]
 
 [[batches]]
-position = 111
+position = 110
 key = 'Fs(DirListing { dir: "test/coa/testSvg" })'
 descriptor = "listing of 'test/coa/testSvg'"
 cost_tokens = 10
-cum_tokens = 9165
+cum_tokens = 5818
 
 [batches.content]
 kind = "fs"
@@ -2567,11 +2553,11 @@ parent = "test/coa/testSvg"
 entries = ["test.1.svg", "test.svg"]
 
 [[batches]]
-position = 112
+position = 111
 key = 'Fs(DirListing { dir: "test/coa/testSvgRecursively" })'
 descriptor = "listing of 'test/coa/testSvgRecursively'"
 cost_tokens = 15
-cum_tokens = 9180
+cum_tokens = 5833
 
 [batches.content]
 kind = "fs"
@@ -2581,11 +2567,11 @@ parent = "test/coa/testSvgRecursively"
 entries = ["depth-1", "test.1.svg", "test.svg"]
 
 [[batches]]
-position = 113
+position = 112
 key = 'Fs(DirListing { dir: "test/coa/testSvgRecursively/depth-1" })'
 descriptor = "listing of 'test/coa/testSvgRecursively/depth-1'"
 cost_tokens = 5
-cum_tokens = 9185
+cum_tokens = 5838
 
 [batches.content]
 kind = "fs"
@@ -2595,11 +2581,11 @@ parent = "test/coa/testSvgRecursively/depth-1"
 entries = ["depth-2"]
 
 [[batches]]
-position = 114
+position = 113
 key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 302 })'
 descriptor = "export doc at lib/path.js:302"
 cost_tokens = 36
-cum_tokens = 9221
+cum_tokens = 5874
 
 [batches.content]
 kind = "lines"
@@ -2613,11 +2599,11 @@ end = 301
 kind = "full"
 
 [[batches]]
-position = 115
+position = 114
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 123
-cum_tokens = 9344
+cum_tokens = 5997
 
 [batches.content]
 kind = "lines"
@@ -2631,11 +2617,11 @@ end = 151
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'Typescript(Imports { file: "lib/xast.js" })'
 descriptor = "imports in lib/xast.js"
 cost_tokens = 38
-cum_tokens = 9382
+cum_tokens = 6035
 
 [batches.content]
 kind = "lines"
@@ -2649,11 +2635,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 117
+position = 116
 key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 141 })'
 descriptor = "export doc at lib/path.js:141"
 cost_tokens = 40
-cum_tokens = 9422
+cum_tokens = 6075
 
 [batches.content]
 kind = "lines"
@@ -2667,11 +2653,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 118
+position = 117
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 172
-cum_tokens = 9594
+cum_tokens = 6247
 
 [batches.content]
 kind = "lines"
@@ -2685,11 +2671,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 119
+position = 118
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 175
-cum_tokens = 9769
+cum_tokens = 6422
 
 [batches.content]
 kind = "lines"
@@ -2703,11 +2689,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 120
+position = 119
 key = 'Typescript(Imports { file: "lib/svgo/tools.js" })'
 descriptor = "imports in lib/svgo/tools.js"
 cost_tokens = 21
-cum_tokens = 9790
+cum_tokens = 6443
 
 [batches.content]
 kind = "lines"
@@ -2721,11 +2707,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #12"
 cost_tokens = 135
-cum_tokens = 9925
+cum_tokens = 6578
 
 [batches.content]
 kind = "lines"
@@ -2739,11 +2725,11 @@ end = 167
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'Typescript(Imports { file: "lib/svgo/css-select-adapter.js" })'
 descriptor = "imports in lib/svgo/css-select-adapter.js"
 cost_tokens = 22
-cum_tokens = 9947
+cum_tokens = 6600
 
 [batches.content]
 kind = "lines"
@@ -2757,11 +2743,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Typescript(ExportDoc { file: "lib/style.js", start_line: 211 })'
 descriptor = "export doc at lib/style.js:211"
 cost_tokens = 45
-cum_tokens = 9992
+cum_tokens = 6645
 
 [batches.content]
 kind = "lines"
@@ -2770,6 +2756,516 @@ kind = "lines"
 path = "lib/style.js"
 start = 207
 end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Typescript(ExportBody { file: "lib/svgo-node.js", start_line: 83, body_start_line: 84 })'
+descriptor = "export body at lib/svgo-node.js:83 body 84"
+cost_tokens = 152
+cum_tokens = 6797
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 84
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Typescript(ExportDoc { file: "lib/version.js", start_line: 7 })'
+descriptor = "export doc at lib/version.js:7"
+cost_tokens = 47
+cum_tokens = 6844
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/version.js"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Typescript(ExportNames { file: "lib/svgo/tools.js" })'
+descriptor = "export names surface in lib/svgo/tools.js"
+cost_tokens = 163
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 206
+end = 206
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 250
+end = 250
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 216
+end = 216
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 251
+end = 251
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 126
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 21 })'
+descriptor = "export at lib/svgo/tools.js:21"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 43 })'
+descriptor = "export at lib/svgo/tools.js:43"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 128
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 78 })'
+descriptor = "export at lib/svgo/tools.js:78"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 129
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 134 })'
+descriptor = "export at lib/svgo/tools.js:134"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 130
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 163 })'
+descriptor = "export at lib/svgo/tools.js:163"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 131
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 194 })'
+descriptor = "export at lib/svgo/tools.js:194"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 132
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 206 })'
+descriptor = "export at lib/svgo/tools.js:206"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 206
+end = 206
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 215 })'
+descriptor = "export at lib/svgo/tools.js:215"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 216
+end = 216
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 134
+key = 'Typescript(Export { file: "lib/svgo/tools.js", start_line: 250 })'
+descriptor = "export at lib/svgo/tools.js:250"
+cost_tokens = 0
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 250
+end = 250
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 251
+end = 251
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 135
+key = 'Typescript(ExportDoc { file: "lib/xast.js", start_line: 50 })'
+descriptor = "export doc at lib/xast.js:50"
+cost_tokens = 49
+cum_tokens = 7056
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/xast.js"
+start = 46
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Fs(DirListing { dir: "test/coa/testSvgRecursively/depth-1/depth-2" })'
+descriptor = "listing of 'test/coa/testSvgRecursively/depth-1/depth-2'"
+cost_tokens = 10
+cum_tokens = 7066
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/coa/testSvgRecursively/depth-1/depth-2"
+entries = ["test.1.svg", "test.svg"]
+
+[[batches]]
+position = 137
+key = 'Typescript(Imports { file: "lib/svgo-node.js" })'
+descriptor = "imports in lib/svgo-node.js"
+cost_tokens = 57
+cum_tokens = 7123
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Typescript(ExportDoc { file: "lib/style.js", start_line: 253 })'
+descriptor = "export doc at lib/style.js:253"
+cost_tokens = 63
+cum_tokens = 7186
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/style.js"
+start = 248
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Typescript(ExportDoc { file: "lib/svgo.js", start_line: 81 })'
+descriptor = "export doc at lib/svgo.js:81"
+cost_tokens = 70
+cum_tokens = 7256
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "lib/svgo.js"
+start = 74
+end = 80
 
 [batches.content.spans.render]
 kind = "full"

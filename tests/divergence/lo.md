@@ -1,4 +1,4 @@
-Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missing=9)
+Score(3000)=0.477 I=0.745 C=0.305 ns_rows≤3K=15/49 (reached=6 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -56,63 +56,63 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | ns | 1544 |  | 431 | .golangci.yml: enabled/disabled linters | 1.12 |  | 0.494 |
 | walker |  | 1631 | 286 | go module file go.mod |  |  | 0.556 |
 | walker |  | 1695 | 64 | go module file exp/simd/go.mod |  |  | 0.556 |
-| ns | 2016 |  | 472 | .github/workflows/test.yml: CI test matrix | 1.13 |  | 0.480 |
-| ns | 2435 |  | 419 | Makefile: build/test/bench/coverage targets | 1.14 |  | 0.455 |
-| walker |  | 2562 | 867 | README.md section #4 |  |  | 0.455 |
-| walker |  | 2917 | 355 | README.md section #5 |  |  | 0.455 |
-| ns | 2990 |  | 555 | docs site: package-variant guide (core + it) | 1.15 |  | 0.411 |
-| ns | 3048 |  | 58 | constraints.go: Clonable constraint (full file) | 2.9 |  | 0.420 |
-| walker |  | 3051 | 134 | README.md section #6 |  |  | 0.420 |
-| walker |  | 3207 | 156 | README.md section #7 |  |  | 0.420 |
-| walker |  | 3245 | 38 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.420 |
-| walker |  | 3245 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.420 |
-| walker |  | 3245 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.420 |
-| walker |  | 3253 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.420 |
-| walker |  | 3262 | 9 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.420 |
-| walker |  | 3277 | 15 | README.md section #139 |  |  | 0.420 |
-| walker |  | 3292 | 15 | README.md section #144 |  |  | 0.420 |
-| walker |  | 3342 | 50 | headings outline in exp/simd/README.md |  |  | 0.420 |
-| walker |  | 3540 | 198 | README.md section #8 |  |  | 0.420 |
-| walker |  | 3733 | 193 | README.md section #9 |  |  | 0.420 |
-| ns | 3876 |  | 828 | slice.go: exported-function roster | 2.10 |  | 0.366 |
-| walker |  | 3968 | 235 | README.md section #10 |  |  | 0.366 |
-| ns | 4249 |  | 373 | map.go: exported-function roster | 2.11 |  | 0.348 |
-| walker |  | 4503 | 535 | README.md section #11 |  |  | 0.348 |
-| ns | 4742 |  | 493 | find.go: exported-function roster | 2.12 |  | 0.328 |
-| walker |  | 4921 | 418 | README.md section #12 |  |  | 0.328 |
-| ns | 4930 |  | 188 | intersect.go: exported-function roster | 2.13 |  | 0.320 |
-| ns | 5070 |  | 140 | math.go: exported-function roster | 2.14 |  | 0.315 |
-| ns | 5182 |  | 112 | string.go: exported-function roster | 2.15 |  | 0.311 |
-| walker |  | 5202 | 281 | README.md section #13 |  |  | 0.311 |
-| walker |  | 5261 | 59 | listing of 'docs' |  |  | 0.359 |
-| walker |  | 5265 | 4 | listing of 'docs/plugins' |  |  | 0.359 |
-| walker |  | 5272 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.359 |
-| walker |  | 5293 | 21 | listing of 'docs/src' |  |  | 0.359 |
-| walker |  | 5313 | 20 | listing of 'docs/src/pages' |  |  | 0.359 |
-| walker |  | 5323 | 10 | go package + imports in exp/simd/simd.go |  |  | 0.359 |
-| walker |  | 5369 | 46 | go package + imports in concurrency.go |  |  | 0.359 |
+| walker |  | 1733 | 38 | go decl names surface in internal/xtime/noCopy.go |  |  | 0.556 |
+| walker |  | 1733 | 0 | go decl at internal/xtime/noCopy.go:10 |  |  | 0.556 |
+| walker |  | 1733 | 0 | go decl at internal/xtime/noCopy.go:13 |  |  | 0.556 |
+| walker |  | 1741 | 8 | go package + imports in internal/xtime/noCopy.go |  |  | 0.556 |
+| walker |  | 1750 | 9 | go package + imports in internal/constraints/ordered_go118.go |  |  | 0.556 |
+| walker |  | 1765 | 15 | README.md section #139 |  |  | 0.556 |
+| walker |  | 1780 | 15 | README.md section #144 |  |  | 0.556 |
+| walker |  | 1839 | 59 | listing of 'docs' |  |  | 0.645 |
+| walker |  | 1843 | 4 | listing of 'docs/plugins' |  |  | 0.645 |
+| walker |  | 1850 | 7 | listing of 'docs/plugins/helpers-pages' |  |  | 0.645 |
+| walker |  | 1900 | 50 | headings outline in exp/simd/README.md |  |  | 0.645 |
+| walker |  | 1921 | 21 | listing of 'docs/src' |  |  | 0.645 |
+| walker |  | 1941 | 20 | listing of 'docs/src/pages' |  |  | 0.645 |
+| walker |  | 1951 | 10 | go package + imports in exp/simd/simd.go |  |  | 0.645 |
+| walker |  | 1997 | 46 | go package + imports in concurrency.go |  |  | 0.645 |
+| ns | 2016 |  | 472 | .github/workflows/test.yml: CI test matrix | 1.13 |  | 0.556 |
+| walker |  | 2044 | 47 | go package + imports in errors.go |  |  | 0.556 |
+| walker |  | 2136 | 92 | go decl names surface in it/channel.go |  |  | 0.556 |
+| walker |  | 2136 | 0 | go decl at it/channel.go:13 |  |  | 0.556 |
+| walker |  | 2136 | 0 | go decl at it/channel.go:29 |  |  | 0.556 |
+| walker |  | 2136 | 0 | go decl at it/channel.go:45 |  |  | 0.556 |
+| walker |  | 2147 | 11 | go package + imports in internal/constraints/constraints.go |  |  | 0.556 |
+| walker |  | 2195 | 48 | go decl names surface in internal/xrand/ordered_go118.go |  |  | 0.556 |
+| walker |  | 2195 | 0 | go decl at internal/xrand/ordered_go118.go:8 |  |  | 0.556 |
+| walker |  | 2195 | 0 | go decl at internal/xrand/ordered_go118.go:15 |  |  | 0.556 |
+| walker |  | 2195 | 0 | go decl at internal/xrand/ordered_go118.go:22 |  |  | 0.556 |
+| walker |  | 2207 | 12 | go decl body at internal/xrand/ordered_go118.go:8 |  |  | 0.556 |
+| walker |  | 2255 | 48 | go decl names surface in internal/xrand/ordered_go122.go |  |  | 0.556 |
+| walker |  | 2255 | 0 | go decl at internal/xrand/ordered_go122.go:8 |  |  | 0.556 |
+| walker |  | 2255 | 0 | go decl at internal/xrand/ordered_go122.go:15 |  |  | 0.556 |
+| walker |  | 2255 | 0 | go decl at internal/xrand/ordered_go122.go:21 |  |  | 0.556 |
+| walker |  | 2264 | 9 | go decl body at internal/xrand/ordered_go122.go:21 |  |  | 0.556 |
+| walker |  | 2274 | 10 | go decl body at internal/xrand/ordered_go122.go:15 |  |  | 0.556 |
+| walker |  | 2286 | 12 | go decl body at internal/xrand/ordered_go122.go:8 |  |  | 0.556 |
+| ns | 2435 |  | 419 | Makefile: build/test/bench/coverage targets | 1.14 |  | 0.527 |
+| ns | 2990 |  | 555 | docs site: package-variant guide (core + it) | 1.15 |  | 0.477 |
+| ns | 3048 |  | 58 | constraints.go: Clonable constraint (full file) | 2.9 |  | 0.484 |
+| walker |  | 3153 | 867 | README.md section #4 |  |  | 0.484 |
+| walker |  | 3508 | 355 | README.md section #5 |  |  | 0.484 |
+| walker |  | 3642 | 134 | README.md section #6 |  |  | 0.484 |
+| walker |  | 3798 | 156 | README.md section #7 |  |  | 0.484 |
+| ns | 3876 |  | 828 | slice.go: exported-function roster | 2.10 |  | 0.423 |
+| walker |  | 3996 | 198 | README.md section #8 |  |  | 0.423 |
+| walker |  | 4189 | 193 | README.md section #9 |  |  | 0.423 |
+| ns | 4249 |  | 373 | map.go: exported-function roster | 2.11 |  | 0.402 |
+| walker |  | 4424 | 235 | README.md section #10 |  |  | 0.402 |
+| ns | 4742 |  | 493 | find.go: exported-function roster | 2.12 |  | 0.378 |
+| ns | 4930 |  | 188 | intersect.go: exported-function roster | 2.13 |  | 0.370 |
+| walker |  | 4959 | 535 | README.md section #11 |  |  | 0.370 |
+| ns | 5070 |  | 140 | math.go: exported-function roster | 2.14 |  | 0.364 |
+| ns | 5182 |  | 112 | string.go: exported-function roster | 2.15 |  | 0.359 |
+| walker |  | 5377 | 418 | README.md section #12 |  |  | 0.359 |
 | ns | 5413 |  | 231 | type_manipulation.go: exported-function roster | 2.16 |  | 0.351 |
-| walker |  | 5577 | 208 | README.md section #14 |  |  | 0.351 |
-| walker |  | 5624 | 47 | go package + imports in errors.go |  |  | 0.351 |
+| walker |  | 5658 | 281 | README.md section #13 |  |  | 0.351 |
 | ns | 5703 |  | 290 | errors.go: exported-function roster | 2.17 |  | 0.341 |
-| walker |  | 5716 | 92 | go decl names surface in it/channel.go |  |  | 0.341 |
-| walker |  | 5716 | 0 | go decl at it/channel.go:13 |  |  | 0.341 |
-| walker |  | 5716 | 0 | go decl at it/channel.go:29 |  |  | 0.341 |
-| walker |  | 5716 | 0 | go decl at it/channel.go:45 |  |  | 0.341 |
-| walker |  | 5727 | 11 | go package + imports in internal/constraints/constraints.go |  |  | 0.341 |
-| walker |  | 5775 | 48 | go decl names surface in internal/xrand/ordered_go118.go |  |  | 0.341 |
-| walker |  | 5775 | 0 | go decl at internal/xrand/ordered_go118.go:8 |  |  | 0.341 |
-| walker |  | 5775 | 0 | go decl at internal/xrand/ordered_go118.go:15 |  |  | 0.341 |
-| walker |  | 5775 | 0 | go decl at internal/xrand/ordered_go118.go:22 |  |  | 0.341 |
-| walker |  | 5787 | 12 | go decl body at internal/xrand/ordered_go118.go:8 |  |  | 0.341 |
-| walker |  | 5835 | 48 | go decl names surface in internal/xrand/ordered_go122.go |  |  | 0.341 |
-| walker |  | 5835 | 0 | go decl at internal/xrand/ordered_go122.go:8 |  |  | 0.341 |
-| walker |  | 5835 | 0 | go decl at internal/xrand/ordered_go122.go:15 |  |  | 0.341 |
-| walker |  | 5835 | 0 | go decl at internal/xrand/ordered_go122.go:21 |  |  | 0.341 |
-| walker |  | 5844 | 9 | go decl body at internal/xrand/ordered_go122.go:21 |  |  | 0.341 |
-| walker |  | 5854 | 10 | go decl body at internal/xrand/ordered_go122.go:15 |  |  | 0.341 |
 | ns | 5865 |  | 162 | retry.go: exported-function roster | 2.18 |  | 0.336 |
-| walker |  | 5866 | 12 | go decl body at internal/xrand/ordered_go122.go:8 |  |  | 0.336 |
+| walker |  | 5866 | 208 | README.md section #14 |  |  | 0.336 |
 | walker |  | 5888 | 22 | go package + imports in it/string.go |  |  | 0.336 |
 | walker |  | 5910 | 22 | go package + imports in parallel/slice.go |  |  | 0.336 |
 | walker |  | 5935 | 25 | listing of 'docs/src/theme' |  |  | 0.336 |
@@ -260,16 +260,11 @@ Score(3000)=0.411 I=0.655 C=0.258 ns_rows≤3K=15/49 (reached=5 partial=1 missin
 | walker |  | 9647 | 25 | README.md section #429 |  |  | 0.334 |
 | walker |  | 9672 | 25 | README.md section #432 |  |  | 0.334 |
 | ns | 9748 |  | 175 | it/seq.go body: FilterI | 3.6 |  | 0.331 |
-| walker |  | 9823 | 151 | go decl names surface in parallel/slice.go |  |  | 0.331 |
-| walker |  | 9823 | 0 | go decl at parallel/slice.go:8 |  |  | 0.331 |
-| walker |  | 9823 | 0 | go decl at parallel/slice.go:32 |  |  | 0.331 |
-| walker |  | 9823 | 0 | go decl at parallel/slice.go:50 |  |  | 0.331 |
-| walker |  | 9823 | 0 | go decl at parallel/slice.go:75 |  |  | 0.331 |
-| walker |  | 9823 | 0 | go decl at parallel/slice.go:95 |  |  | 0.331 |
-| walker |  | 9862 | 39 | listing of 'docs/docs' |  |  | 0.331 |
-| walker |  | 9888 | 26 | README.md section #46 |  |  | 0.331 |
-| walker |  | 9914 | 26 | README.md section #85 |  |  | 0.331 |
-| walker |  | 9940 | 26 | README.md section #110 |  |  | 0.331 |
-| walker |  | 9966 | 26 | README.md section #118 |  |  | 0.331 |
-| walker |  | 9992 | 26 | README.md section #120 |  |  | 0.331 |
-| ns | 9998 |  | 250 | docs/data/core-filter.md: per-helper doc-metadata schema | 3.7 |  | 0.327 |
+| walker |  | 9825 | 153 | listing of 'benchmark' |  |  | 0.360 |
+| walker |  | 9976 | 151 | go decl names surface in parallel/slice.go |  |  | 0.360 |
+| walker |  | 9976 | 0 | go decl at parallel/slice.go:8 |  |  | 0.360 |
+| walker |  | 9976 | 0 | go decl at parallel/slice.go:32 |  |  | 0.360 |
+| walker |  | 9976 | 0 | go decl at parallel/slice.go:50 |  |  | 0.360 |
+| walker |  | 9976 | 0 | go decl at parallel/slice.go:75 |  |  | 0.360 |
+| walker |  | 9976 | 0 | go decl at parallel/slice.go:95 |  |  | 0.360 |
+| ns | 9998 |  | 250 | docs/data/core-filter.md: per-helper doc-metadata schema | 3.7 |  | 0.356 |

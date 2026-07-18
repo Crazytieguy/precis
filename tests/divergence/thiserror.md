@@ -1,4 +1,4 @@
-Score(3000)=0.627 I=0.847 C=0.463 ns_rows≤3K=21/45 (reached=10 partial=2 missing=9)
+Score(3000)=0.649 I=0.861 C=0.489 ns_rows≤3K=21/45 (reached=11 partial=2 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -58,44 +58,44 @@ Score(3000)=0.627 I=0.847 C=0.463 ns_rows≤3K=21/45 (reached=10 partial=2 missi
 | walker |  | 2466 | 29 | pub-item names surface in impl/src/generics.rs |  |  | 0.673 |
 | walker |  | 2484 | 18 | pub item at impl/src/generics.rs:8 |  |  | 0.673 |
 | walker |  | 2525 | 41 | pub item at impl/src/generics.rs:48 |  |  | 0.673 |
-| walker |  | 2784 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.693 |
+| walker |  | 2569 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.673 |
+| walker |  | 2569 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.673 |
+| walker |  | 2569 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.673 |
+| walker |  | 2828 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.693 |
 | ns | 2912 |  | 461 | src/aserror.rs — AsDynError trait + impls | 3.1 |  | 0.627 |
-| ns | 3079 |  | 167 | src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated) | 3.2 |  | 0.605 |
-| walker |  | 3312 | 528 | listing of 'tests/ui' |  |  | 0.610 |
-| ns | 3354 |  | 275 | src/private.rs (re-export surface) + src/var.rs (Var pointer wrapper) | 3.3 |  | 0.584 |
-| ns | 3644 |  | 290 | src/display.rs — AsDisplay trait + Path Display impl | 3.4 |  | 0.555 |
-| walker |  | 3646 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.555 |
-| walker |  | 3930 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.597 |
-| walker |  | 3974 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.597 |
-| walker |  | 3974 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.597 |
-| walker |  | 3974 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.597 |
-| ns | 4061 |  | 417 | impl/src/ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind struct defs | 4.1 |  | 0.557 |
-| walker |  | 4363 | 389 | crate-doc tail at src/lib.rs:135 |  |  | 0.587 |
+| walker |  | 2950 | 122 | [package] in impl/Cargo.toml |  |  | 0.649 |
+| walker |  | 3009 | 59 | README.md section #11 |  |  | 0.649 |
+| walker |  | 3018 | 9 | listing of 'tests/no-std' |  |  | 0.664 |
+| ns | 3079 |  | 167 | src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated) | 3.2 |  | 0.641 |
+| walker |  | 3103 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.641 |
+| ns | 3354 |  | 275 | src/private.rs (re-export surface) + src/var.rs (Var pointer wrapper) | 3.3 |  | 0.613 |
+| walker |  | 3437 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.613 |
+| ns | 3644 |  | 290 | src/display.rs — AsDisplay trait + Path Display impl | 3.4 |  | 0.584 |
+| walker |  | 3721 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.624 |
+| ns | 4061 |  | 417 | impl/src/ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind struct defs | 4.1 |  | 0.583 |
+| walker |  | 4249 | 528 | listing of 'tests/ui' |  |  | 0.587 |
+| walker |  | 4300 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.587 |
+| walker |  | 4353 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.587 |
+| walker |  | 4425 | 72 | README.md section #2 |  |  | 0.587 |
+| walker |  | 4481 | 56 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.587 |
 | ns | 4623 |  | 562 | impl/src/attr.rs — Attrs/Display/Source/From/Transparent/Fmt/Trait struct defs | 5.1 |  | 0.542 |
-| walker |  | 4742 | 379 | crate-doc tail at src/lib.rs:176 |  |  | 0.542 |
-| walker |  | 4864 | 122 | [package] in impl/Cargo.toml |  |  | 0.558 |
-| ns | 4900 |  | 277 | impl/src/valid.rs — Struct::validate() dispatch | 6.1 |  | 0.539 |
-| walker |  | 4923 | 59 | README.md section #11 |  |  | 0.539 |
-| walker |  | 4932 | 9 | listing of 'tests/no-std' |  |  | 0.550 |
-| walker |  | 5017 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.550 |
-| walker |  | 5068 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.550 |
-| walker |  | 5121 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.550 |
+| walker |  | 4870 | 389 | crate-doc tail at src/lib.rs:135 |  |  | 0.569 |
+| ns | 4900 |  | 277 | impl/src/valid.rs — Struct::validate() dispatch | 6.1 |  | 0.550 |
+| walker |  | 5249 | 379 | crate-doc tail at src/lib.rs:176 |  |  | 0.550 |
 | ns | 5378 |  | 478 | impl/src/valid.rs — check_non_field_attrs() | 6.2 |  | 0.524 |
-| walker |  | 5662 | 541 | crate-doc tail at src/lib.rs:210 |  |  | 0.545 |
-| walker |  | 5734 | 72 | README.md section #2 |  |  | 0.545 |
-| walker |  | 5790 | 56 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.545 |
-| walker |  | 5920 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.545 |
-| walker |  | 5998 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.547 |
-| walker |  | 6024 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.549 |
-| walker |  | 6087 | 63 | pub item at impl/src/ast.rs:45 |  |  | 0.556 |
-| walker |  | 6140 | 53 | pub item at impl/src/ast.rs:15 |  |  | 0.564 |
-| walker |  | 6193 | 53 | pub item at impl/src/ast.rs:29 |  |  | 0.575 |
-| ns | 6219 |  | 841 | impl/src/valid.rs — check_field_attrs() | 6.3 |  | 0.533 |
-| walker |  | 6247 | 54 | pub item at impl/src/ast.rs:22 |  |  | 0.544 |
-| walker |  | 6312 | 65 | pub item at impl/src/ast.rs:36 |  |  | 0.561 |
-| walker |  | 6409 | 97 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.561 |
-| ns | 6441 |  | 222 | impl/src/expand.rs — derive()/try_expand() entry point | 7.1 |  | 0.558 |
-| walker |  | 6486 | 77 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.558 |
+| walker |  | 5379 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.524 |
+| walker |  | 5457 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.526 |
+| walker |  | 5483 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.528 |
+| walker |  | 5546 | 63 | pub item at impl/src/ast.rs:45 |  |  | 0.535 |
+| walker |  | 5599 | 53 | pub item at impl/src/ast.rs:15 |  |  | 0.543 |
+| walker |  | 5652 | 53 | pub item at impl/src/ast.rs:29 |  |  | 0.554 |
+| walker |  | 5706 | 54 | pub item at impl/src/ast.rs:22 |  |  | 0.567 |
+| walker |  | 5771 | 65 | pub item at impl/src/ast.rs:36 |  |  | 0.585 |
+| walker |  | 5868 | 97 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.586 |
+| walker |  | 5945 | 77 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.586 |
+| ns | 6219 |  | 841 | impl/src/valid.rs — check_field_attrs() | 6.3 |  | 0.543 |
+| ns | 6441 |  | 222 | impl/src/expand.rs — derive()/try_expand() entry point | 7.1 |  | 0.540 |
+| walker |  | 6486 | 541 | crate-doc tail at src/lib.rs:210 |  |  | 0.558 |
 | walker |  | 6507 | 21 | pub item at impl/src/scan_expr.rs:192 |  |  | 0.558 |
 | walker |  | 6812 | 305 | README.md section #12 |  |  | 0.558 |
 | walker |  | 6924 | 112 | pub-item names surface in impl/src/attr.rs |  |  | 0.559 |

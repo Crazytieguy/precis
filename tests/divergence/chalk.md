@@ -66,30 +66,30 @@ Score(3000)=0.627 I=0.875 C=0.450 ns_rows≤3K=21/50 (reached=11 partial=0 missi
 | walker |  | 1869 | 0 | module item at source/vendor/ansi-styles/index.js:221 |  |  | 0.697 |
 | walker |  | 1889 | 20 | readme.md section #20 |  |  | 0.697 |
 | ns | 1996 |  | 324 | index.d.ts imports + Options interface + Chalk const | 3.1 |  | 0.640 |
-| walker |  | 2143 | 254 | package scripts in package.json |  |  | 0.733 |
-| ns | 2153 |  | 157 | ChalkInstance call signature + level property | 3.2 |  | 0.701 |
-| ns | 2258 |  | 105 | ChalkInstance.rgb method (full doc example) | 3.3 |  | 0.680 |
-| ns | 2310 |  | 52 | ChalkInstance remaining model-setter signatures (locations) | 3.4 | 3.3 | 0.671 |
-| walker |  | 2397 | 254 | module item names surface in source/index.js |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:8 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:10 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:11 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:12 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:22 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:24 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:41 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:74 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:94 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:119 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:132 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:152 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:168 |  |  | 0.675 |
-| walker |  | 2397 | 0 | module item at source/index.js:204 |  |  | 0.675 |
-| ns | 2414 |  | 104 | ChalkInstance modifier roster (locations) | 3.5 |  | 0.658 |
-| walker |  | 2435 | 38 | module item at source/index.js:15 |  |  | 0.659 |
-| walker |  | 2495 | 60 | module item body at source/index.js:41 body 42 |  |  | 0.660 |
-| ns | 2597 |  | 183 | ChalkInstance color + background-color roster (locations, +ellipsis for bright variants) | 3.6 |  | 0.627 |
-| walker |  | 2610 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.628 |
+| walker |  | 2143 | 254 | module item names surface in source/index.js |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:8 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:10 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:11 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:12 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:22 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:24 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:41 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:74 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:94 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:119 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:132 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:152 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:168 |  |  | 0.644 |
+| walker |  | 2143 | 0 | module item at source/index.js:204 |  |  | 0.644 |
+| ns | 2153 |  | 157 | ChalkInstance call signature + level property | 3.2 |  | 0.616 |
+| walker |  | 2181 | 38 | module item at source/index.js:15 |  |  | 0.617 |
+| walker |  | 2241 | 60 | module item body at source/index.js:41 body 42 |  |  | 0.618 |
+| ns | 2258 |  | 105 | ChalkInstance.rgb method (full doc example) | 3.3 |  | 0.600 |
+| ns | 2310 |  | 52 | ChalkInstance remaining model-setter signatures (locations) | 3.4 | 3.3 | 0.592 |
+| walker |  | 2356 | 115 | module item body at source/index.js:24 body 25 |  |  | 0.593 |
+| ns | 2414 |  | 104 | ChalkInstance modifier roster (locations) | 3.5 |  | 0.578 |
+| ns | 2597 |  | 183 | ChalkInstance color + background-color roster (locations, +ellipsis for bright variants) | 3.6 |  | 0.548 |
+| walker |  | 2610 | 254 | package scripts in package.json |  |  | 0.628 |
 | walker |  | 2633 | 23 | readme.md section #21 |  |  | 0.628 |
 | walker |  | 2655 | 22 | readme.md section #22 |  |  | 0.628 |
 | walker |  | 2746 | 91 | readme.md section #2 |  |  | 0.651 |

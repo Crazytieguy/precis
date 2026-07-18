@@ -57,10 +57,10 @@ Score(3000)=0.835 I=0.894 C=0.780 ns_rows≤3K=17/42 (reached=12 partial=0 missi
 | walker |  | 3216 | 111 | json config tsconfig.json |  |  | 0.840 |
 | walker |  | 3252 | 36 | export names surface in src/context.ts |  |  | 0.840 |
 | walker |  | 3252 | 0 | export at src/context.ts:69 |  |  | 0.840 |
-| walker |  | 3269 | 17 | imports in playwright.config.ts |  |  | 0.840 |
-| walker |  | 3306 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.840 |
-| walker |  | 3306 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.840 |
-| walker |  | 3405 | 99 | listing of 'test/src/app' |  |  | 0.897 |
+| walker |  | 3351 | 99 | listing of 'test/src/app' |  |  | 0.897 |
+| walker |  | 3368 | 17 | imports in playwright.config.ts |  |  | 0.897 |
+| walker |  | 3405 | 37 | export names surface in src/use-controllable-state.ts |  |  | 0.897 |
+| walker |  | 3405 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.897 |
 | walker |  | 3471 | 66 | listing of 'test/tests' |  |  | 0.927 |
 | ns | 3558 |  | 369 | Overlay component (full) | 2.8 | 2.2 | 0.881 |
 | walker |  | 3785 | 314 | imports in src/index.tsx |  |  | 0.881 |
