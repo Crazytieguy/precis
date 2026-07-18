@@ -160,79 +160,42 @@ Per-fixture priority lives in the per-fixture reports
 (`tests/divergence/<fixture>.md`); cross-fixture survey via
 `head -1 tests/divergence/*.md`.
 
-### Settled — re-swept on the post-refreeze keys (2026-07-05); don't re-sweep
+### Settled knobs
 
-All global ranking knobs re-swept against the new answer keys after the
-wave-3 recall levers landed:
+The authoritative knob state is the **"Interaction re-sweep
+(2026-07-07)"** entry below — earlier "settled, don't re-sweep" lists
+(2026-07-05 and before) were each partially overturned by the next
+structural ship. Standing rule: settled values are only settled relative
+to the batch mix they were measured on; re-sweep the neighborhood after
+every structural ship. Two durable sweep caveats: `mix_signals` fu is
+non-monotone (midpoint re-sweeps mislead), and isolated single-knob wins
+(e.g. a C0 ranking-cost floor) can lose in the combined state —
+interaction-check before shipping. Overfit signature to watch: a shift
+that raises validation but lowers training — training is the objective
+(see `feedback_dont_decide_on_validation_holdout`).
 
-- **Concavity exponent 0.35** (`DEFAULT_CONCAVITY_EXPONENT`): confirmed
-  optimal on new keys (0.30 → 0.52248, 0.33 → 0.52375, 0.35 → 0.52503,
-  0.38 → 0.51913, 0.42 → 0.50501; pre-recall baseline).
-- **Additive ranking-cost floor** `value/(cost+C0)^k`: C0=0 still
-  optimal — C0=5 won in isolation (+0.0011) but lost to no-floor in the
-  combined post-knob state. Interaction-check before believing any
-  isolated C0 win.
-- **`mix_signals` weights** now `1000·cat + 280·fu + 300·ztu`: cat and
-  ztu regress in both directions; fu is **non-monotone** (280 → 0.53654,
-  400 → 0.53569, 340 → 0.53480 on the post-fix state) — a midpoint
-  re-sweep will mislead.
-- **`ORIENTATION_TIER_WINDOW` 300 / boost 1.4**: 300 edges 500, beats
-  0 and 900; boosts ≥1.7 regress.
-- **`ROSTER_MASS_FACTOR_CAP` 2.2**: flat across 1.8/2.2/2.8.
-
-Common overfit signature: shifting any of these toward the validation
-optimum raises validation but lowers training — training is the
-objective; don't chase it (see
-`feedback_dont_decide_on_validation_holdout`).
-
-~~Consequence: 0.65 is unreachable below the NS answer key / metric by
-re-ranking.~~ **Superseded 2026-06-12.** The loss-decomposition
-diagnostic (`cargo run --release --bin diagnose_loss`, see its module
-doc) showed 0.37 of A_3K mass was emitted-but-unbought and the NS-aware
-oracle ceiling over the existing pool was 0.8046 — the "~0.59 ceiling"
-was an artifact of *knob* sweeps, not of re-ranking as such. The binding
-bias was **roster-mass blindness**: roster batches (names surfaces,
-listings, member catalogs) had size-invariant value but linear cost, so
-`value/cost^k` always bought tiny rosters over the complete catalogs NS
-authors anchor on. `value::roster_mass_factor` (= `(n/12)^k` clamped
-`[1, 2.2]`, boost-only) is the fix class; wave-1 adoption across
-fs/python/C/markdown/rust/go/ts walkers plus spine-centrality signals
-(C include-graph hubs, python re-export pins, package-main visibility)
-moved training 0.5921 → 0.6105 in one day. Recall levers still pay,
-best on early / rank-1/2 atoms (Importance is `Σ damped/rank`, so a
-rank-1 atom ≈ 6× a rank-6 one).
-
-Adoption discipline learned the hard way: roster/centrality boosts must
-be gated to a *structurally selective* tier. Class-wide gates measured
-large single-fixture collapses before tightening (listings: plain
-`src/`-named or Go-subpackage gates → soluna −0.210 / beszel −0.073;
-inventory-only gate kept monaco +0.213 with one −0.006).
+Historical note (mechanism now in code): the old "~0.59 re-ranking
+ceiling" belief was a knob-sweep artifact. The loss-decomposition
+diagnostic exposed **roster-mass blindness** (size-invariant batch value
+vs linear cost bought tiny rosters over the complete catalogs NS authors
+anchor on); `value::roster_mass_factor` is the fix class. Durable
+adoption discipline: roster/centrality boosts must be gated to a
+*structurally selective* tier — class-wide gates measured large
+single-fixture collapses before tightening (soluna −0.210 vs
+inventory-only monaco +0.213).
 
 ### Tested-and-failed lever shapes (specifics block re-tries)
 
-- **Entrypoint-named `.d.ts` promotion (2026-06-12)**, two variants:
-  (a) global `.d`-stem strip in `is_entrypoint_file` — chalk −0.249 /
-  commander −0.165 (nested `source/index.d.ts` twins are type plumbing);
-  (b) root-scoped only (surface-seed + machinery-exempt the package
-  root's entrypoint-named `.d.ts`) — the target fixture itself regressed
-  (axios −0.086): whole-file promotion floods the early budget with the
-  wrong exports and displaces NS-first orientation. The axios
-  `index.d.ts` mass (0.506 of its A_3K) needs per-export / chunk-level
-  granularity driven by its divergence report, not a file-level flip.
-- **Sibling-count devaluation**, two variants: (a) uniform
-  `sibling_factor(n_siblings)` folded into `PubItem` depth factor —
-  regresses; anyhow's dense `src/lib.rs` (~25 pub items) is
-  *legitimately* dense while otree's `src/config/colors.rs` isn't, and
-  they look structurally identical. (b) per-file names-surface
-  `sqrt(K / n_siblings_in_dir)` across C/Python/Go/Lua/Rust/TS at
-  K=5/10/20 — all regress (K=5: cobra −0.118 / bubbletea −0.093 / vaul
-  −0.231; K=10: bubbletea −0.100; K=20 flat, no wins). Uniform demotion
-  preserves relative order *within* the dir but lets `package.json` /
-  README sections jump the dir's load-bearing primary (vaul's
-  `src/index.tsx`, bubbletea's `tea.go`). A working version needs a
-  signal that distinguishes "wide-but-shallow sweep" (htop's `darwin/`)
-  from "one primary + helpers" (vaul's `src/`); sibling count alone
-  can't.
+- **(old-key, 2026-06-12) Entrypoint-named `.d.ts` promotion**: both
+  global and root-scoped variants regressed, including the target
+  fixture — whole-file promotion floods the early budget with the wrong
+  exports; the axios `index.d.ts` mass needs per-export granularity, not
+  a file-level flip.
+- **(old-key) Sibling-count devaluation**: uniform sibling damps regress
+  in every tested form — demotion preserves order within the dir but
+  lets manifests/README jump the dir's load-bearing primary. A working
+  version needs a signal separating "wide-but-shallow sweep" from "one
+  primary + helpers"; sibling count alone can't.
 - **Empty-vs-elided dir marker — measured and reverted (2026-07-04).**
   Rendering a synthesized `…` child under every childless-but-non-empty
   listed directory (so it can't be misread as empty) costs −0.0031
@@ -273,27 +236,18 @@ inventory-only gate kept monaco +0.213 with one −0.006).
   genuine local optimum for re-ranking *already-emitted* content — only
   new-content recall moves it.
 
-### Shipped: budget-tier scheduler (2026-05-31)
+### Budget-tier scheduler — non-code rationale (shipped 2026-05-31)
 
-`WalkerKey::is_orientation()` tags orientation-class batches
-(authoritative set = the `is_orientation()` impls in `src/batch.rs`:
-Markdown, man-page ledes, Toml, non-`Whole` Json, Lua module identity);
-the scheduler multiplies their ratio by `ORIENTATION_TIER_BOOST` while
-`consumed.tokens < ORIENTATION_TIER_WINDOW` (500/1.4), at both the
-approx contender pass and the exact pass. **`FsKey` is deliberately
-excluded** — boosting the cheap dir-listing flood is the wrong
-direction (incl-FsKey window=1000/boost=2.0 measured training
-−0.0088). Calibrated to hold training Score(3000) flat (0.5908); the
-sub-primary budgets take a tiny training nick that buys a held-out
-gain at every budget (train Δ −0.0019 at 1000 → 0.0000 at 3000+;
-valid Δ +0.0295 at 1000 → +0.0094 at 3000). The trade is inherent
-(front-loaded orientation displaces some training fixtures' rank-1
-code atoms under 1K) and was **shipped on the user's explicit call**
-after surfacing it. Headroom: a per-fixture-structure-aware tier —
-deep-method-heavy fixtures (nano-vllm) want source early,
-orientation-heavy ones (sqlite-vec) don't, and the split crosses
-languages, so neither a global exponent nor a per-language override
-captures it.
+Mechanism is in code (`WalkerKey::is_orientation()` + the
+`ORIENTATION_TIER_*` boost in the scheduler). What the code can't say:
+**`FsKey` is deliberately excluded** — boosting the cheap dir-listing
+flood measured negative. The tier's train/val trade is inherent
+(front-loaded orientation displaces some training fixtures' rank-1 code
+atoms under 1K) and was **shipped on the user's explicit call** after
+surfacing it. Headroom: a per-fixture-structure-aware tier —
+deep-method-heavy fixtures want source early, orientation-heavy ones
+don't, and the split crosses languages, so neither a global exponent nor
+a per-language override captures it.
 
 ### Open
 
@@ -302,15 +256,10 @@ captures it.
   cmdk `walker_used` 9484 → 7302 at B=10K). Score(3000) is blind to
   this; check Score(9000) and high-B `walker_used`. Mitigation lever
   if needed: walker-side filter on absolute cost.
-- **JS class-member seeds swept (2026-06-10): inert at the primary
-  budget; keep the first-pass values.** Every direction tested leaves
-  training avg at 0.5921 with flat per-fixture headlines (commander /
-  dockly reorder sub-3K rows only): `ExportMember` concavity 0.35 /
-  0.40 / 0.55, `JS_CLASS_MEMBER_SPLIT_MIN` 8 / 16 (16 → dockly +0.001,
-  noise), split names factor 1.0 / 1.3, `export_member_value` weights
-  +cat 0.80 and all-down 0.45/0.70/0.40. The knobs sit in a flat
-  region of the training objective — don't re-sweep; a lift on the
-  JS-class fixtures needs new recall, not these values.
+- **(old-key, 2026-06-10) JS class-member seed knobs swept inert** at
+  the primary budget in every tested direction — treat as an unswept
+  hypothesis on the new keys, but the shape of the result (flat region;
+  a JS-class lift needs new recall, not these values) likely holds.
 - **htop-class OOP-spine recall**: a core-header in-degree boost
   (htop's `Object/Row/Process/Meter/Panel` headers still lose the
   ratio race) is the one identified lever class still viable —
