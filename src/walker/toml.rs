@@ -39,7 +39,6 @@ const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
 const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
 const PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR: f64 = 0.4;
-const PYPROJECT_NON_LEDE_IDENTITY_FACTOR: f64 = 0.1;
 
 /// Per-tool tables below this source-token size are packed with adjacent
 /// small tables. This avoids turning a large config roster into a swarm of
@@ -433,10 +432,6 @@ fn build_section_content(
     single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
-fn is_pyproject_filename(file: &Path) -> bool {
-    file.file_name().and_then(|n| n.to_str()) == Some("pyproject.toml")
-}
-
 fn is_cargo_manifest(file: &Path) -> bool {
     file.file_name().and_then(|name| name.to_str()) == Some("Cargo.toml")
 }
@@ -621,13 +616,9 @@ fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
     {
         return None;
     }
-    let project_is_lede = is_pyproject_filename(file)
-        || sections
-            .first()
-            .is_some_and(|(name, _, _)| is_pyproject_identity_table(name));
-    if !project_is_lede {
-        return Some(PYPROJECT_NON_LEDE_IDENTITY_FACTOR);
-    }
+    // Reaching this point already proves the file is a Python project
+    // manifest with an identity table. PEP 517 conventionally places
+    // `[build-system]` first, so table position is not an identity signal.
     let has_package_json = file
         .parent()
         .is_some_and(|parent| parent.join("package.json").exists());

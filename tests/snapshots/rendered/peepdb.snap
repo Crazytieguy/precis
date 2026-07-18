@@ -222,40 +222,6 @@ peepdb/
            1→from .cli import main
         …
     cli.py
-        …
-          16→class CustomEncoder(json.JSONEncoder):
-          17→    def default(self, obj):
-        …
-          25→@click.group()
-          26→@click.version_option()
-          27→def cli():
-        …
-          50→    pass
-          53→@cli.command()
-        …
-          86→@cli.command()
-          87→def list():
-          88→    """
-          89→    List saved connections.
-          90→
-          91→    Example:
-          92→    peepdb list
-          93→    """
-          94→    list_connections()
-          97→@cli.command()
-          98→@click.argument('connection_name')
-          99→@click.confirmation_option(prompt='Are you sure you want to remove this connection?')
-         100→def remove(connection_name):
-        …
-         113→@cli.command()
-         114→@click.confirmation_option(prompt='Are you sure you want to remove ALL saved connections?')
-         115→def remove_all():
-        …
-         126→@cli.command()
-        …
-         181→def main():
-         182→    cli()
-        …
     config.py
     core.py
     db/
@@ -288,7 +254,7 @@ peepdb/
             …
               17→    @abstractmethod
               18→    def connect(self) -> None:
-              19→        pass
+            …
               21→    @abstractmethod
               22→    def disconnect(self) -> None:
             …
@@ -339,7 +305,30 @@ project.toml
        1→[build-system]
        2→requires = ["setuptools>=45", "wheel"]
        3→build-backend = "setuptools.build_meta"
+       5→[project]
+       6→name = "peepdb"
+       7→version = "0.1.4"
+       8→description = "CLI tool to view database tables fast"
     …
+      12→readme = "README.md"
+      13→requires-python = ">=3.9"
+    …
+      25→dependencies = [
+      26→    "mysql-connector-python>=9.0.0",
+      27→    "psycopg2-binary>=2.9.9",
+      28→    "pymysql>=1.1.1",
+      29→    "mariadb",
+      30→    "cryptography>=43.0.0",
+      31→    "tabulate>=0.8.9",
+      32→    "click>=8.0.0",
+      33→]
+      34→
+      35→[project.optional-dependencies]
+      36→dev = [
+      37→    "coverage>=7.6.1",
+      38→    "pytest>=8.3.2",
+      39→    "pytest-cov>=5.0.0",
+      40→]
       42→[project.urls]
       43→Homepage = "https://github.com/PeepDB-dev/peepdb"
       44→"Bug Tracker" = "https://github.com/PeepDB-dev/peepdb/issues"

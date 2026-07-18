@@ -85,7 +85,6 @@ README.md
       36→## Table of Contents
     …
       51→## Key Features
-      53→- **Incremental Processing**: Efficiently process changes to input data without recomputing everything
     …
       71→- **Type Safety**: Full TypeScript type safety and inference through the pipeline API
       73→## Quick Start
@@ -97,15 +96,7 @@ README.md
      141→### Using with ElectricSQL
     …
      185→## Examples
-     186→
-     187→There are a number of examples in the [./examples](./examples) directory, covering:
-     188→
-     189→- [Basic usage](./examples/basic.ts) (map and filter)
-     190→- ["Fruit processed"](./examples/fruit-processed.ts) (reduce and consolidate)
-     191→- [Joins between two streams](./examples/join.ts)
-     192→- [Iterative computations](./examples/iterate.ts)
-     193→- [Modeling "includes" using joins](./examples/includes.ts)
-     194→- [ElectricSQL example](./examples/electric/) (using D2TS with ElectricSQL)
+    …
      196→## API
      197→
      198→### D2 graph construction
@@ -132,13 +123,6 @@ eslint.base.mjs
 examples/
     basic.ts
     d2ql/
-        README.md
-        basic_select.ts
-        functions.ts
-        group_by.ts
-        joins.ts
-        kitchen_sink.ts
-        where_conditions.ts
     electric/
         CHANGELOG.md
         README.md
@@ -250,6 +234,30 @@ packages/
             …
         eslint.config.mjs
         package.json
+            …
+               2→  "name": "@electric-sql/d2ts",
+               3→  "version": "0.1.8",
+               4→  "license": "Apache-2.0",
+               5→  "description": "D2TS is a TypeScript implementation of Differential Dataflow.",
+            …
+              20→  "type": "module",
+              21→  "main": "dist/index.js",
+              22→  "types": "dist/index.d.ts",
+              23→  "exports": {
+              24→    ".": {
+              25→      "types": "./dist/index.d.ts",
+              26→      "default": "./dist/index.js"
+              27→    },
+              28→    "./sqlite": {
+              29→      "types": "./dist/sqlite/index.d.ts",
+              30→      "default": "./dist/sqlite/index.js"
+              31→    },
+              32→    "./electric": {
+              33→      "types": "./dist/electric/index.d.ts",
+              34→      "default": "./dist/electric/index.js"
+              35→    }
+              36→  },
+            …
         src/
             d2.ts
                 …
@@ -288,11 +296,6 @@ packages/
                 consolidate.ts
                 count.ts
                 debug.ts
-                    …
-                      18→export class DebugOperator<T> extends UnaryOperator<T> {
-                    …
-                      74→export function debug<T>(
-                    …
                 distinct.ts
                 filter.ts
                 filterBy.ts

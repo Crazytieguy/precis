@@ -200,25 +200,6 @@ packages/
                 main.jsx
             vite.config.js
         template-qwik-ts/
-            README.md
-                   1→# Qwik + Vite
-                …
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                app.css
-                app.tsx
-                assets/
-                index.css
-                main.tsx
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
         template-react/
             README.md
                    1→# React + Vite
@@ -388,6 +369,14 @@ packages/
             true.d.ts
             true.js
         package.json
+            …
+               2→  "name": "vite",
+               3→  "version": "8.0.13",
+               4→  "type": "module",
+               5→  "license": "MIT",
+            …
+               7→  "description": "Native-ESM powered web dev build tool",
+            …
         rolldown.config.ts
         rolldown.dts.config.ts
         rollupLicensePlugin.ts

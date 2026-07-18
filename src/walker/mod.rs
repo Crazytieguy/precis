@@ -243,6 +243,12 @@ impl WalkCtx {
         self.json_state.is_workspace_member(file, &self.root)
     }
 
+    /// `true` iff `file` is the unique primary JS/TS workspace member.
+    pub fn is_primary_js_workspace_member(&self, file: &Path) -> bool {
+        self.json_state
+            .is_primary_workspace_member(file, &self.root)
+    }
+
     /// `true` iff `file` is in the TS/JS public surface.
     pub fn is_ts_public_surface(&self, file: &Path) -> bool {
         self.typescript_state.is_in_public_surface(file, self)
