@@ -1,7 +1,7 @@
 fixture = "vaul"
 budget = 10000
-cumulative_tokens = 9373
-batch_count = 104
+cumulative_tokens = 9570
+batch_count = 110
 
 [[batches]]
 position = 1
@@ -2643,10 +2643,150 @@ kind = "full"
 
 [[batches]]
 position = 104
+key = 'Typescript(TestNames { file: "test/tests/with-redirect.spec.ts", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/tests/with-redirect.spec.ts"
+cost_tokens = 29
+cum_tokens = 9255
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/tests/with-redirect.spec.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\.describe\('With redirect''''
+
+[[batches.content.spans]]
+path = "test/tests/with-redirect.spec.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  test\('should restore body position settings''''
+
+[[batches]]
+position = 105
+key = 'Typescript(TestNames { file: "test/tests/without-scaled-background.spec.ts", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/tests/without-scaled-background.spec.ts"
+cost_tokens = 29
+cum_tokens = 9284
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/tests/without-scaled-background.spec.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\.describe\('Without scaled background''''
+
+[[batches.content.spans]]
+path = "test/tests/without-scaled-background.spec.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  test\('should not scale background''''
+
+[[batches]]
+position = 106
+key = 'Typescript(TestNames { file: "test/tests/nested.spec.ts", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/tests/nested.spec.ts"
+cost_tokens = 30
+cum_tokens = 9314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/tests/nested.spec.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\.describe\('Nested tests''''
+
+[[batches.content.spans]]
+path = "test/tests/nested.spec.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  test\('should open and close nested drawer''''
+
+[[batches]]
+position = 107
+key = 'Typescript(TestNames { file: "test/tests/with-handle.spec.ts", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/tests/with-handle.spec.ts"
+cost_tokens = 32
+cum_tokens = 9346
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/tests/with-handle.spec.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\.describe\('With handle''''
+
+[[batches.content.spans]]
+path = "test/tests/with-handle.spec.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  test\('click should cycle to the next snap point''''
+
+[[batches]]
+position = 108
+key = 'Typescript(TestNames { file: "test/tests/initial-snap.spec.ts", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/tests/initial-snap.spec.ts"
+cost_tokens = 33
+cum_tokens = 9379
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/tests/initial-snap.spec.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\.describe\('Initial\-snap''''
+
+[[batches.content.spans]]
+path = "test/tests/initial-snap.spec.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  test\('should be open and snapped on initial load''''
+
+[[batches]]
+position = 109
 key = 'Typescript(ExportDoc { file: "src/use-position-fixed.ts", start_line: 15 })'
 descriptor = "export doc at src/use-position-fixed.ts:15"
 cost_tokens = 147
-cum_tokens = 9373
+cum_tokens = 9526
 
 [batches.content]
 kind = "lines"
@@ -2658,3 +2798,40 @@ end = 13
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 110
+key = 'Typescript(TestNames { file: "test/tests/with-scaled-background.spec.ts", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/tests/with-scaled-background.spec.ts"
+cost_tokens = 44
+cum_tokens = 9570
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/tests/with-scaled-background.spec.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\.describe\('With scaled background''''
+
+[[batches.content.spans]]
+path = "test/tests/with-scaled-background.spec.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  test\('should scale background''''
+
+[[batches.content.spans]]
+path = "test/tests/with-scaled-background.spec.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  test\('should scale background when dragging''''

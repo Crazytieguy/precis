@@ -1,7 +1,7 @@
 fixture = "semver"
 budget = 10000
-cumulative_tokens = 9857
-batch_count = 98
+cumulative_tokens = 9692
+batch_count = 131
 
 [[batches]]
 position = 1
@@ -1441,10 +1441,29 @@ entries = ["semver.js.test.cjs"]
 
 [[batches]]
 position = 69
+key = 'Typescript(TestNames { file: "test/map.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/map.js"
+cost_tokens = 16
+cum_tokens = 3404
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/map.js"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^t\.test\('tests match system''''
+
+[[batches]]
+position = 70
 key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #27"
 cost_tokens = 76
-cum_tokens = 3464
+cum_tokens = 3480
 
 [batches.content]
 kind = "lines"
@@ -1458,11 +1477,11 @@ end = 466
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 82
-cum_tokens = 3546
+cum_tokens = 3562
 
 [batches.content]
 kind = "lines"
@@ -1476,11 +1495,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Markdown(Section { file: "README.md", section_index: 51, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #51"
 cost_tokens = 85
-cum_tokens = 3631
+cum_tokens = 3647
 
 [batches.content]
 kind = "lines"
@@ -1494,11 +1513,11 @@ end = 556
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 576
-cum_tokens = 4207
+cum_tokens = 4223
 
 [batches.content]
 kind = "lines"
@@ -1520,11 +1539,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Typescript(ExportNames { file: "preload.js" })'
 descriptor = "export names surface in preload.js"
 cost_tokens = 14
-cum_tokens = 4221
+cum_tokens = 4237
 
 [batches.content]
 kind = "lines"
@@ -1538,11 +1557,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Typescript(ExportNames { file: "map.js" })'
 descriptor = "export names surface in map.js"
 cost_tokens = 21
-cum_tokens = 4242
+cum_tokens = 4258
 
 [batches.content]
 kind = "lines"
@@ -1556,11 +1575,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Typescript(Imports { file: "map.js" })'
 descriptor = "imports in map.js"
 cost_tokens = 6
-cum_tokens = 4248
+cum_tokens = 4264
 
 [batches.content]
 kind = "lines"
@@ -1574,11 +1593,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Typescript(Imports { file: "preload.js" })'
 descriptor = "imports in preload.js"
 cost_tokens = 8
-cum_tokens = 4256
+cum_tokens = 4272
 
 [batches.content]
 kind = "lines"
@@ -1592,11 +1611,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 91
-cum_tokens = 4347
+cum_tokens = 4363
 
 [batches.content]
 kind = "lines"
@@ -1610,11 +1629,11 @@ end = 217
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Markdown(Section { file: "README.md", section_index: 42, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #42"
 cost_tokens = 86
-cum_tokens = 4433
+cum_tokens = 4449
 
 [batches.content]
 kind = "lines"
@@ -1628,11 +1647,11 @@ end = 507
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Markdown(Section { file: "README.md", section_index: 33, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #33"
 cost_tokens = 76
-cum_tokens = 4509
+cum_tokens = 4525
 
 [batches.content]
 kind = "lines"
@@ -1646,11 +1665,11 @@ end = 483
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Markdown(Section { file: "README.md", section_index: 57, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #57"
 cost_tokens = 73
-cum_tokens = 4582
+cum_tokens = 4598
 
 [batches.content]
 kind = "lines"
@@ -1664,11 +1683,49 @@ end = 608
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
+key = 'Typescript(TestNames { file: "test/functions/rsort.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/rsort.js"
+cost_tokens = 13
+cum_tokens = 4611
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/rsort.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('sorting''''
+
+[[batches]]
+position = 83
+key = 'Typescript(TestNames { file: "test/functions/sort.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/sort.js"
+cost_tokens = 13
+cum_tokens = 4624
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/sort.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('sorting''''
+
+[[batches]]
+position = 84
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 112
-cum_tokens = 4694
+cum_tokens = 4736
 
 [batches.content]
 kind = "lines"
@@ -1682,11 +1739,277 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 82
+position = 85
+key = 'Typescript(TestNames { file: "test/functions/clean.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/clean.js"
+cost_tokens = 14
+cum_tokens = 4750
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/clean.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('clean tests''''
+
+[[batches]]
+position = 86
+key = 'Typescript(TestNames { file: "test/functions/compare-build.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/compare-build.js"
+cost_tokens = 14
+cum_tokens = 4764
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/compare-build.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('compareBuild''''
+
+[[batches]]
+position = 87
+key = 'Typescript(TestNames { file: "test/functions/major.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/major.js"
+cost_tokens = 14
+cum_tokens = 4778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/major.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('major tests''''
+
+[[batches]]
+position = 88
+key = 'Typescript(TestNames { file: "test/functions/minor.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/minor.js"
+cost_tokens = 14
+cum_tokens = 4792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/minor.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('minor tests''''
+
+[[batches]]
+position = 89
+key = 'Typescript(TestNames { file: "test/functions/patch.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/patch.js"
+cost_tokens = 14
+cum_tokens = 4806
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/patch.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('patch tests''''
+
+[[batches]]
+position = 90
+key = 'Typescript(TestNames { file: "test/functions/rcompare.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/rcompare.js"
+cost_tokens = 14
+cum_tokens = 4820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/rcompare.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('rcompare''''
+
+[[batches]]
+position = 91
+key = 'Typescript(TestNames { file: "test/functions/coerce.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/coerce.js"
+cost_tokens = 15
+cum_tokens = 4835
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/coerce.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('coerce tests''''
+
+[[batches]]
+position = 92
+key = 'Typescript(TestNames { file: "test/functions/inc.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/inc.js"
+cost_tokens = 15
+cum_tokens = 4850
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/inc.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('increment versions test''''
+
+[[batches]]
+position = 93
+key = 'Typescript(TestNames { file: "test/functions/prerelease.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/prerelease.js"
+cost_tokens = 15
+cum_tokens = 4865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/prerelease.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('prerelease''''
+
+[[batches]]
+position = 94
+key = 'Typescript(TestNames { file: "test/internal/lrucache.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/internal/lrucache.js"
+cost_tokens = 15
+cum_tokens = 4880
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/internal/lrucache.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('basic cache operation''''
+
+[[batches]]
+position = 95
+key = 'Typescript(TestNames { file: "test/ranges/to-comparators.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/to-comparators.js"
+cost_tokens = 15
+cum_tokens = 4895
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/to-comparators.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparators test''''
+
+[[batches]]
+position = 96
+key = 'Typescript(TestNames { file: "test/ranges/valid.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/valid.js"
+cost_tokens = 15
+cum_tokens = 4910
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/valid.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('valid range test''''
+
+[[batches]]
+position = 97
+key = 'Typescript(TestNames { file: "test/functions/compare-loose.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/compare-loose.js"
+cost_tokens = 17
+cum_tokens = 4927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/compare-loose.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('strict vs loose version numbers''''
+
+[[batches]]
+position = 98
+key = 'Typescript(TestNames { file: "test/ranges/min-version.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/min-version.js"
+cost_tokens = 17
+cum_tokens = 4944
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/min-version.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('minimum version in range tests''''
+
+[[batches]]
+position = 99
 key = 'Markdown(Section { file: "README.md", section_index: 50, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #50"
 cost_tokens = 133
-cum_tokens = 4827
+cum_tokens = 5077
 
 [batches.content]
 kind = "lines"
@@ -1700,11 +2023,30 @@ end = 552
 kind = "full"
 
 [[batches]]
-position = 83
+position = 100
+key = 'Typescript(TestNames { file: "test/internal/identifiers.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/internal/identifiers.js"
+cost_tokens = 18
+cum_tokens = 5095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/internal/identifiers.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('rcompareIdentifiers and compareIdentifiers''''
+
+[[batches]]
+position = 101
 key = 'Markdown(Section { file: "README.md", section_index: 44, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #44"
 cost_tokens = 155
-cum_tokens = 4982
+cum_tokens = 5250
 
 [batches.content]
 kind = "lines"
@@ -1718,11 +2060,11 @@ end = 516
 kind = "full"
 
 [[batches]]
-position = 84
+position = 102
 key = 'Markdown(Section { file: "README.md", section_index: 46, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #46"
 cost_tokens = 170
-cum_tokens = 5152
+cum_tokens = 5420
 
 [batches.content]
 kind = "lines"
@@ -1736,11 +2078,30 @@ end = 526
 kind = "full"
 
 [[batches]]
-position = 85
+position = 103
+key = 'Typescript(TestNames { file: "test/ranges/subset.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/subset.js"
+cost_tokens = 24
+cum_tokens = 5444
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/subset.js"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^t\.test\('range should be subset of itself in obj or string mode''''
+
+[[batches]]
+position = 104
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 185
-cum_tokens = 5337
+cum_tokens = 5629
 
 [batches.content]
 kind = "lines"
@@ -1754,11 +2115,30 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 86
+position = 105
+key = 'Typescript(TestNames { file: "test/internal/re.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/internal/re.js"
+cost_tokens = 25
+cum_tokens = 5654
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/internal/re.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('Semver itself has a list of src, re, and tokens''''
+
+[[batches]]
+position = 106
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 598
-cum_tokens = 5935
+cum_tokens = 6252
 
 [batches.content]
 kind = "lines"
@@ -1772,11 +2152,207 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 87
+position = 107
+key = 'Typescript(TestNames { file: "test/functions/compare.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/compare.js"
+cost_tokens = 27
+cum_tokens = 6279
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/compare.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparison tests''''
+
+[[batches.content.spans]]
+path = "test/functions/compare.js"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('equality tests''''
+
+[[batches]]
+position = 108
+key = 'Typescript(TestNames { file: "test/functions/eq.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/eq.js"
+cost_tokens = 27
+cum_tokens = 6306
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/eq.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparison tests''''
+
+[[batches.content.spans]]
+path = "test/functions/eq.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('equality tests''''
+
+[[batches]]
+position = 109
+key = 'Typescript(TestNames { file: "test/functions/gt.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/gt.js"
+cost_tokens = 27
+cum_tokens = 6333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/gt.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparison tests''''
+
+[[batches.content.spans]]
+path = "test/functions/gt.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('equality tests''''
+
+[[batches]]
+position = 110
+key = 'Typescript(TestNames { file: "test/functions/gte.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/gte.js"
+cost_tokens = 27
+cum_tokens = 6360
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/gte.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparison tests''''
+
+[[batches.content.spans]]
+path = "test/functions/gte.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('equality tests''''
+
+[[batches]]
+position = 111
+key = 'Typescript(TestNames { file: "test/functions/lt.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/lt.js"
+cost_tokens = 27
+cum_tokens = 6387
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/lt.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparison tests''''
+
+[[batches.content.spans]]
+path = "test/functions/lt.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('equality tests''''
+
+[[batches]]
+position = 112
+key = 'Typescript(TestNames { file: "test/functions/lte.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/lte.js"
+cost_tokens = 27
+cum_tokens = 6414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/lte.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparison tests''''
+
+[[batches.content.spans]]
+path = "test/functions/lte.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('equality tests''''
+
+[[batches]]
+position = 113
+key = 'Typescript(TestNames { file: "test/functions/neq.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/neq.js"
+cost_tokens = 27
+cum_tokens = 6441
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/neq.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparison tests''''
+
+[[batches.content.spans]]
+path = "test/functions/neq.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('equality tests''''
+
+[[batches]]
+position = 114
 key = 'Json(Whole { file: "release-please-config.json" })'
 descriptor = "json config release-please-config.json"
 cost_tokens = 350
-cum_tokens = 6285
+cum_tokens = 6791
 
 [batches.content]
 kind = "lines"
@@ -1790,11 +2366,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 88
+position = 115
 key = 'Markdown(Section { file: "README.md", section_index: 56, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #56"
 cost_tokens = 152
-cum_tokens = 6437
+cum_tokens = 6943
 
 [batches.content]
 kind = "lines"
@@ -1808,11 +2384,179 @@ end = 598
 kind = "full"
 
 [[batches]]
-position = 89
+position = 116
+key = 'Typescript(TestNames { file: "test/ranges/ltr.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/ltr.js"
+cost_tokens = 28
+cum_tokens = 6971
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/ltr.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('ltr tests''''
+
+[[batches.content.spans]]
+path = "test/ranges/ltr.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('negative ltr tests''''
+
+[[batches]]
+position = 117
+key = 'Typescript(TestNames { file: "test/functions/diff.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/diff.js"
+cost_tokens = 29
+cum_tokens = 7000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/diff.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('diff versions test''''
+
+[[batches.content.spans]]
+path = "test/functions/diff.js"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('throws on bad version''''
+
+[[batches]]
+position = 118
+key = 'Typescript(TestNames { file: "test/ranges/gtr.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/gtr.js"
+cost_tokens = 29
+cum_tokens = 7029
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/gtr.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('gtr tests''''
+
+[[batches.content.spans]]
+path = "test/ranges/gtr.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('negative gtr tests''''
+
+[[batches]]
+position = 119
+key = 'Typescript(TestNames { file: "test/ranges/max-satisfying.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/max-satisfying.js"
+cost_tokens = 29
+cum_tokens = 7058
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/max-satisfying.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('max satisfying''''
+
+[[batches.content.spans]]
+path = "test/ranges/max-satisfying.js"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('bad ranges in max satisfying''''
+
+[[batches]]
+position = 120
+key = 'Typescript(TestNames { file: "test/ranges/min-satisfying.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/min-satisfying.js"
+cost_tokens = 29
+cum_tokens = 7087
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/min-satisfying.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('min satisfying''''
+
+[[batches.content.spans]]
+path = "test/ranges/min-satisfying.js"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('bad ranges in min satisfying''''
+
+[[batches]]
+position = 121
+key = 'Typescript(TestNames { file: "test/internal/debug.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/internal/debug.js"
+cost_tokens = 32
+cum_tokens = 7119
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/internal/debug.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  t\.test\('without env set''''
+
+[[batches.content.spans]]
+path = "test/internal/debug.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^  t\.test\('with env set''''
+
+[[batches]]
+position = 122
 key = 'Markdown(Section { file: "README.md", section_index: 54, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #54"
 cost_tokens = 222
-cum_tokens = 6659
+cum_tokens = 7341
 
 [batches.content]
 kind = "lines"
@@ -1826,11 +2570,11 @@ end = 574
 kind = "full"
 
 [[batches]]
-position = 90
+position = 123
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #20"
 cost_tokens = 748
-cum_tokens = 7407
+cum_tokens = 8089
 
 [batches.content]
 kind = "lines"
@@ -1844,11 +2588,48 @@ end = 451
 kind = "full"
 
 [[batches]]
-position = 91
+position = 124
+key = 'Typescript(TestNames { file: "test/functions/cmp.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/cmp.js"
+cost_tokens = 40
+cum_tokens = 8129
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/functions/cmp.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('invalid cmp usage''''
+
+[[batches.content.spans]]
+path = "test/functions/cmp.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('comparison tests''''
+
+[[batches.content.spans]]
+path = "test/functions/cmp.js"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('equality tests''''
+
+[[batches]]
+position = 125
 key = 'Markdown(HeadingsOutline { file: "CONTRIBUTING.md" })'
 descriptor = "headings outline in CONTRIBUTING.md"
 cost_tokens = 119
-cum_tokens = 7526
+cum_tokens = 8248
 
 [batches.content]
 kind = "lines"
@@ -1966,11 +2747,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 126
 key = 'Markdown(Section { file: "CONTRIBUTING.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CONTRIBUTING.md section #0"
 cost_tokens = 0
-cum_tokens = 7526
+cum_tokens = 8248
 
 [batches.content]
 kind = "lines"
@@ -1984,11 +2765,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 93
+position = 127
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #15"
 cost_tokens = 285
-cum_tokens = 7811
+cum_tokens = 8533
 
 [batches.content]
 kind = "lines"
@@ -2002,11 +2783,11 @@ end = 304
 kind = "full"
 
 [[batches]]
-position = 94
+position = 128
 key = 'Markdown(Section { file: "README.md", section_index: 58, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #58"
 cost_tokens = 775
-cum_tokens = 8586
+cum_tokens = 9308
 
 [batches.content]
 kind = "lines"
@@ -2020,11 +2801,48 @@ end = 664
 kind = "full"
 
 [[batches]]
-position = 95
+position = 129
+key = 'Typescript(TestNames { file: "test/ranges/intersects.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/ranges/intersects.js"
+cost_tokens = 45
+cum_tokens = 9353
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/ranges/intersects.js"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('intersect comparators''''
+
+[[batches.content.spans]]
+path = "test/ranges/intersects.js"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('ranges intersect''''
+
+[[batches.content.spans]]
+path = "test/ranges/intersects.js"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "truncated"
+pattern = '''^test\('missing comparator parameter in intersect comparators''''
+
+[[batches]]
+position = 130
 key = 'Markdown(Section { file: "README.md", section_index: 49, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #49"
 cost_tokens = 293
-cum_tokens = 8879
+cum_tokens = 9646
 
 [batches.content]
 kind = "lines"
@@ -2038,55 +2856,38 @@ end = 546
 kind = "full"
 
 [[batches]]
-position = 96
-key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #11"
-cost_tokens = 316
-cum_tokens = 9195
+position = 131
+key = 'Typescript(TestNames { file: "test/functions/satisfies.js", chunk_index: 0, benchmark: false })'
+descriptor = "test names surface in test/functions/satisfies.js"
+cost_tokens = 46
+cum_tokens = 9692
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 219
-end = 248
+path = "test/functions/satisfies.js"
+start = 7
+end = 7
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 97
-key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #12"
-cost_tokens = 326
-cum_tokens = 9521
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = '''^test\('range tests''''
 
 [[batches.content.spans]]
-path = "README.md"
-start = 250
-end = 277
+path = "test/functions/satisfies.js"
+start = 13
+end = 13
 
 [batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #16"
-cost_tokens = 336
-cum_tokens = 9857
-
-[batches.content]
-kind = "lines"
+kind = "truncated"
+pattern = '''^test\('negative range tests''''
 
 [[batches.content.spans]]
-path = "README.md"
-start = 306
-end = 322
+path = "test/functions/satisfies.js"
+start = 19
+end = 19
 
 [batches.content.spans.render]
-kind = "full"
+kind = "truncated"
+pattern = '''^test\('invalid ranges never satisfied \(but do not throw\)''''

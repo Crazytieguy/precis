@@ -143,8 +143,14 @@ Score(3000)=0.835 I=0.894 C=0.780 ns_rows≤3K=17/42 (reached=12 partial=0 missi
 | ns | 8919 |  | 326 | use-position-fixed.ts — rationale comment + signature | 4.7 | 4.3 | 0.664 |
 | ns | 9033 |  | 114 | style.css — shared [data-vaul-drawer] base rule | 5.1 |  | 0.660 |
 | walker |  | 9226 | 1101 | export body at src/index.tsx:996 body 1000 |  |  | 0.679 |
+| walker |  | 9255 | 29 | test names surface in test/tests/with-redirect.spec.ts |  |  | 0.679 |
+| walker |  | 9284 | 29 | test names surface in test/tests/without-scaled-background.spec.ts |  |  | 0.679 |
+| walker |  | 9314 | 30 | test names surface in test/tests/nested.spec.ts |  |  | 0.679 |
+| walker |  | 9346 | 32 | test names surface in test/tests/with-handle.spec.ts |  |  | 0.679 |
 | ns | 9354 |  | 321 | test/src/app/page.tsx — demo index (full) | 6.1 |  | 0.669 |
-| walker |  | 9373 | 147 | export doc at src/use-position-fixed.ts:15 |  |  | 0.683 |
+| walker |  | 9379 | 33 | test names surface in test/tests/initial-snap.spec.ts |  |  | 0.669 |
+| walker |  | 9526 | 147 | export doc at src/use-position-fixed.ts:15 |  |  | 0.683 |
+| walker |  | 9570 | 44 | test names surface in test/tests/with-scaled-background.spec.ts |  |  | 0.683 |
 | ns | 9727 |  | 373 | Per-demo distinguishing Drawer.Root/Handle line, one per test/src/app/*/page.tsx route | 6.2 |  | 0.675 |
 | ns | 9906 |  | 179 | playwright.config.ts — webServer + device projects | 7.1 |  | 0.681 |
 | ns | 9984 |  | 78 | CI workflow — install/build/test steps | 7.2 |  | 0.679 |
