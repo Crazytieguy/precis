@@ -281,36 +281,6 @@ apps/
             linkwarden_dark.png
             linkwarden_light.png
             locales/
-                de/
-                    common.json
-                en/
-                    common.json
-                es/
-                    common.json
-                fr/
-                    common.json
-                it/
-                    common.json
-                ja/
-                    common.json
-                nl/
-                    common.json
-                pl/
-                    common.json
-                pt-BR/
-                    common.json
-                ro/
-                    common.json
-                ru/
-                    common.json
-                tr/
-                    common.json
-                uk/
-                    common.json
-                zh/
-                    common.json
-                zh-TW/
-                    common.json
             logo_maskable.png
             screenshots/
                 screenshot1.png
@@ -374,6 +344,22 @@ assets/
     star_repo.gif
 crowdin.yml
 docker-compose.yml
+       1→services:
+       2→  postgres:
+       3→    image: postgres:16-alpine
+    …
+       8→  linkwarden:
+    …
+      14→    image: ghcr.io/linkwarden/linkwarden:latest # comment to build from source
+      15→    ports:
+      16→      - 3000:3000
+    …
+      19→    depends_on:
+      20→      - postgres
+      21→      - meilisearch
+      22→  meilisearch:
+      23→    image: getmeili/meilisearch:v1.12.8
+    …
 package.json
     …
        2→  "name": "linkwarden",
