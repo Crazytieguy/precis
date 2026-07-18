@@ -18,6 +18,9 @@
 //! - `ExportMember { file, start_line, member_start_line }`: one member
 //!   surface of an exported JavaScript class, predecessor = the matching
 //!   class `Export`.
+//! - `ExportMemberDoc { file, start_line, chunk_index }`: one source-order
+//!   slice of documented interface / object-type members (JSDoc + signature),
+//!   predecessor = the matching `Export` header.
 //! - `ExportBody { file, start_line, body_start_line }`: body slice
 //!   (brace-stripped) of a function, class, or `const X = <fn-init>`
 //!   export, predecessor = the matching `Export`.
@@ -82,6 +85,13 @@ const MEMBER_CATALOG_SPLIT_TOKENS: usize = 450;
 const MEMBER_CATALOG_CHUNK_TARGET_TOKENS: usize = 250;
 /// Avoid creating a final crumb when a catalog barely crosses a cut.
 const MEMBER_CATALOG_CHUNK_MIN_TAIL_TOKENS: usize = 100;
+/// A tiny member comment is cheaper and flatter as part of its declaration.
+/// Split only when the declaration has enough documented-member mass to form
+/// an independent early-budget purchase.
+const DOCUMENTED_MEMBER_MIN_TOTAL_TOKENS: usize = 100;
+/// NS interface-member slices generally land in the 100-300 token envelope.
+const DOCUMENTED_MEMBER_CHUNK_TARGET_TOKENS: usize = 220;
+const DOCUMENTED_MEMBER_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 /// Rendered class surfaces above this cost are outside the early NS
 /// purchase envelope and split at member boundaries.
 const OVERSIZE_EXPORT_SPLIT_TOKENS: usize = 400;
@@ -342,8 +352,21 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 .iter()
                 .map(|item| {
                     let split_js_class = should_split_js_class_export(file, item);
+                    // Runtime implementation modules already compete through
+                    // their executable exports and often benefit from a
+                    // coherent whole type slab. This recall mechanism serves
+                    // type-only API modules and declaration files.
+                    let documented_member_plan = if split_js_class
+                        || (per_export_factor >= 1.0 && !is_declaration_file(file))
+                    {
+                        None
+                    } else {
+                        documented_member_plan(file, item.kind, item.decl, &source, ctx)
+                    };
                     let member_names_catalog = if split_js_class {
                         None
+                    } else if let Some(plan) = &documented_member_plan {
+                        plan.residual_catalog.clone()
                     } else {
                         member_names_catalog_lines(item.kind, item.decl, &source)
                     };
@@ -358,6 +381,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         };
                     ExportSplitPlan {
                         split_js_class,
+                        documented_member_plan,
                         member_names_catalog,
                         member_catalog_chunks,
                         oversized_export_chunks,
@@ -376,12 +400,47 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             // One unified names surface per file — NS authors anchor on
             // the complete catalog as a single unit (chunking measured
             // against unified on the post-refreeze keys: unified wins).
-            let names_lines = collect_export_names_from(
+            let documented_export_count = export_split_plans
+                .iter()
+                .filter(|plan| plan.documented_member_plan.is_some())
+                .count();
+            // Early promotion is reserved for a genuine per-file API group,
+            // not isolated type declarations scattered across a project.
+            // The latter displaced orientation in type-heavy repos without
+            // buying their doc slices inside the same budget window.
+            let promote_doc_headers = per_export_factor < 1.0
+                && !is_declaration_file(file)
+                && documented_export_count >= 3;
+            let documented_export_start_lines: HashSet<_> = if promote_doc_headers {
+                exports
+                    .iter()
+                    .zip(&export_split_plans)
+                    .filter_map(|(item, plan)| {
+                        plan.documented_member_plan
+                            .as_ref()
+                            .map(|_| item.start_line)
+                    })
+                    .collect()
+            } else {
+                HashSet::new()
+            };
+            let mut names_lines = collect_export_names_from(
                 &exports,
                 &export_start_lines,
                 &import_owned_lines,
                 &top_level_decl_start_lines,
             );
+            // A doc-rich declaration owns its header as the prerequisite
+            // for its member-doc slices. Remove that line (and the roster's
+            // courtesy ellipsis) from the file-level export catalog so the
+            // two sibling surfaces stay line-disjoint and the declaration
+            // need not wait for the whole-file roster to schedule.
+            names_lines
+                .full
+                .retain(|line| !documented_export_start_lines.contains(line));
+            names_lines
+                .ellipses
+                .retain(|line| !documented_export_start_lines.contains(&line.saturating_sub(1)));
             let mut names_gate: Option<BatchKey> = None;
             if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
                 let key = BatchKey::Typescript(TsKey::ExportNames { file: file.clone() });
@@ -408,6 +467,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     file: file.clone(),
                     start_line: item.start_line,
                 };
+                let ExportSplitPlan {
+                    split_js_class,
+                    documented_member_plan,
+                    member_names_catalog,
+                    member_catalog_chunks,
+                    oversized_export_chunks,
+                } = plan;
                 let export_surface_predecessor = item
                     .predecessor_start_line
                     .map(|start_line| {
@@ -416,32 +482,39 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             start_line,
                         })
                     })
-                    .or_else(|| names_gate.clone());
-                let ExportSplitPlan {
-                    split_js_class,
-                    member_names_catalog,
-                    member_catalog_chunks,
-                    oversized_export_chunks,
-                } = plan;
+                    .or_else(|| {
+                        if documented_member_plan.is_some() && promote_doc_headers {
+                            module_predecessor.clone()
+                        } else {
+                            names_gate.clone()
+                        }
+                    });
                 let partitioned_member_catalog = member_catalog_chunks
                     .as_ref()
                     .is_some_and(|chunks| chunks.len() > 1);
                 let mut export_lines = if let Some(chunks) = &oversized_export_chunks {
                     chunks[0].clone()
-                } else if split_js_class || member_names_catalog.is_some() {
+                } else if split_js_class
+                    || documented_member_plan.is_some()
+                    || member_names_catalog.is_some()
+                {
                     // Catalogued declarations trade the whole-member
                     // surface for a cheap header; the members arrive via
                     // the gated `ExportMemberNames` catalog instead.
                     header_surface_lines(
                         item.anchor,
-                        member_surface_body(item.kind, item.decl),
+                        if documented_member_plan.is_some() {
+                            documented_member_body(item.kind, item.decl)
+                        } else {
+                            member_surface_body(item.kind, item.decl)
+                        },
                         item.decl,
                         &source,
                     )
                 } else {
                     decl_surface_lines(item.kind, item.anchor, item.decl, &source, true)
                 };
-                if partitioned_member_catalog {
+                if partitioned_member_catalog || documented_member_plan.is_some() {
                     // Oversized catalog chunks are siblings of this header,
                     // all gated by ExportNames. Keep the header disjoint from
                     // them instead of placing its courtesy ellipsis on the
@@ -457,6 +530,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 );
                 let export_has_descendants = !doc_lines.is_empty()
                     || (split_js_class && !item.class_members.is_empty())
+                    || documented_member_plan.is_some()
                     || member_names_catalog.is_some()
                     || oversized_export_chunks.is_some()
                     || (!split_js_class && !item.body_parts.is_empty())
@@ -469,7 +543,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         predecessor: export_surface_predecessor,
                         content,
                         value: export_value(file, item.kind, ctx, js_factor)
-                            * contract_roster_factor(member_names_catalog.is_some()),
+                            * if documented_member_plan.is_some() && promote_doc_headers {
+                                1.0
+                            } else {
+                                contract_roster_factor(member_names_catalog.is_some())
+                            },
                     });
                 }
                 let export_predecessor = BatchKey::Typescript(export_key);
@@ -581,6 +659,45 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                                 ) * contract_roster_factor(true),
                             });
                         }
+                    }
+                }
+                if let Some(documented_member_plan) = documented_member_plan {
+                    let chunk_contents: Vec<(usize, BatchContent)> = documented_member_plan
+                        .chunks
+                        .iter()
+                        .enumerate()
+                        .filter_map(|(chunk_index, lines)| {
+                            single_file_lines_content(file, &source, lines.clone())
+                                .map(|content| (chunk_index, content))
+                        })
+                        .collect();
+                    let costs: Vec<usize> = chunk_contents
+                        .iter()
+                        .map(|(_, content)| ctx.marginal_tokens(content))
+                        .collect();
+                    let chunk_factors =
+                        conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT);
+                    for ((chunk_index, content), chunk_factor) in
+                        chunk_contents.into_iter().zip(chunk_factors)
+                    {
+                        out.push(Batch {
+                            key: TsKey::ExportMemberDoc {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                                chunk_index,
+                            }
+                            .into(),
+                            predecessor: Some(export_predecessor.clone()),
+                            content,
+                            value: export_member_names_value(
+                                file,
+                                item.kind,
+                                ctx,
+                                js_factor,
+                                documented_member_plan.documented_member_count,
+                                chunk_factor,
+                            ),
+                        });
                     }
                 }
                 if split_js_class {
@@ -912,6 +1029,7 @@ fn should_split_js_class_export(file: &Path, item: &ExportInfo<'_>) -> bool {
 /// `ExportNames` flags and the per-item emission.
 struct ExportSplitPlan {
     split_js_class: bool,
+    documented_member_plan: Option<DocumentedMemberPlan>,
     member_names_catalog: Option<MemberNamesCatalog>,
     member_catalog_chunks: Option<Vec<FileLines>>,
     oversized_export_chunks: Option<Vec<FileLines>>,
@@ -2917,6 +3035,41 @@ fn member_surface_body<'a>(kind: ItemKind, decl: Node<'a>) -> Option<Node<'a>> {
     }
 }
 
+fn documented_member_body<'a>(kind: ItemKind, decl: Node<'a>) -> Option<Node<'a>> {
+    match kind {
+        ItemKind::TypeAlias => single_object_type_body(decl.child_by_field_name("value")?),
+        _ => member_surface_body(kind, decl),
+    }
+}
+
+/// Find the sole object-literal member body inside a type alias. Public
+/// option types commonly refine `{ ... }` with `& SharedOptions`; treating
+/// only a direct `object_type` as the body made those member docs
+/// inexpressible. Refuse aliases with multiple object literals rather than
+/// selecting one arm of a union and silently dropping its peers.
+fn single_object_type_body(value: Node) -> Option<Node> {
+    fn collect<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
+        if node.kind() == "object_type" {
+            out.push(node);
+            return;
+        }
+        if !matches!(
+            node.kind(),
+            "intersection_type" | "union_type" | "parenthesized_type"
+        ) {
+            return;
+        }
+        let mut cursor = node.walk();
+        for child in node.named_children(&mut cursor) {
+            collect(child, out);
+        }
+    }
+
+    let mut bodies = Vec::new();
+    collect(value, &mut bodies);
+    (bodies.len() == 1).then(|| bodies[0])
+}
+
 /// `(first_line, end_line)` of every member surfaced by a declaration's
 /// member catalog — interface/object-type signatures, or public class
 /// members. Underscore-prefixed names are conventionally private and
@@ -2925,25 +3078,9 @@ fn member_surface_spans(kind: ItemKind, decl: Node, source: &str) -> Vec<(usize,
     let Some(body) = member_surface_body(kind, decl) else {
         return Vec::new();
     };
-    let is_class = is_class_node(decl);
     let mut cursor = body.walk();
     body.children(&mut cursor)
-        .filter(|member| {
-            let surfaced = if is_class {
-                class_surface_member_kind(member.kind())
-                    && !is_non_public_class_member(*member, source)
-            } else {
-                matches!(
-                    member.kind(),
-                    "property_signature"
-                        | "method_signature"
-                        | "call_signature"
-                        | "construct_signature"
-                        | "index_signature"
-                )
-            };
-            surfaced && !name_of(*member, source).is_some_and(|name| name.starts_with('_'))
-        })
+        .filter(|member| is_surfaced_member(kind, decl, *member, source))
         .map(|member| {
             (
                 member.start_position().row + 1,
@@ -2953,7 +3090,26 @@ fn member_surface_spans(kind: ItemKind, decl: Node, source: &str) -> Vec<(usize,
         .collect()
 }
 
+fn is_surfaced_member(kind: ItemKind, decl: Node, member: Node, source: &str) -> bool {
+    let surfaced = if is_class_node(decl) {
+        class_surface_member_kind(member.kind()) && !is_non_public_class_member(member, source)
+    } else if matches!(kind, ItemKind::Interface | ItemKind::TypeAlias) {
+        matches!(
+            member.kind(),
+            "property_signature"
+                | "method_signature"
+                | "call_signature"
+                | "construct_signature"
+                | "index_signature"
+        )
+    } else {
+        false
+    };
+    surfaced && !name_of(member, source).is_some_and(|name| name.starts_with('_'))
+}
+
 /// Member-name catalog chunks for one big declaration.
+#[derive(Clone)]
 struct MemberNamesCatalog {
     lines: FileLines,
     /// Class catalogs render truncated-to-name (the catalog is *which
@@ -2965,6 +3121,89 @@ struct MemberNamesCatalog {
 /// Minimum member count for a big interface / object-type alias to
 /// trade its whole-member surface for a header + member-name catalog.
 const MEMBER_CATALOG_MIN_MEMBERS: usize = 12;
+
+struct DocumentedMemberPlan {
+    chunks: Vec<FileLines>,
+    documented_member_count: usize,
+    /// Undocumented members remain a cheap, line-disjoint signature
+    /// catalog. A wholly undocumented declaration never creates this plan
+    /// and retains the pre-existing whole/catalog behavior.
+    residual_catalog: Option<MemberNamesCatalog>,
+}
+
+/// Split doc-rich interface/object-type members into source-order purchases.
+/// Each documented member owns its attached JSDoc and complete signature;
+/// undocumented signatures remain in a sibling catalog so all emitted spans
+/// are line-disjoint. Tiny doc mass keeps the declaration's old flat shape.
+fn documented_member_plan(
+    file: &Path,
+    kind: ItemKind,
+    decl: Node,
+    source: &str,
+    ctx: &WalkCtx,
+) -> Option<DocumentedMemberPlan> {
+    if !matches!(kind, ItemKind::Interface | ItemKind::TypeAlias) {
+        return None;
+    }
+    let body = documented_member_body(kind, decl)?;
+    let mut documented = Vec::new();
+    let mut undocumented_spans = Vec::new();
+    let mut cursor = body.walk();
+    for member in body.children(&mut cursor) {
+        if !is_surfaced_member(kind, decl, member, source) {
+            continue;
+        }
+        let mut doc_lines = Vec::new();
+        collect_jsdoc_above(member, source, &mut doc_lines, false);
+        if doc_lines.is_empty() {
+            undocumented_spans.push((
+                member.start_position().row + 1,
+                member.end_position().row + 1,
+            ));
+            continue;
+        }
+        extend_span(&mut doc_lines, member, source);
+        documented.push(FileLines::new(dedup_sorted(doc_lines)));
+    }
+    if documented.is_empty() {
+        return None;
+    }
+
+    let content_for = |lines: &FileLines| {
+        single_file_lines_content(file, source, lines.clone())
+            .map(|content| ctx.marginal_tokens(&content))
+            .unwrap_or(0)
+    };
+    let total_tokens: usize = documented.iter().map(content_for).sum();
+    if total_tokens < DOCUMENTED_MEMBER_MIN_TOTAL_TOKENS {
+        return None;
+    }
+
+    let lines_for = |range: std::ops::Range<usize>| {
+        let full = documented[range]
+            .iter()
+            .flat_map(|lines| lines.full.iter().copied())
+            .collect();
+        FileLines::new(full)
+    };
+    let chunks = budget_chunk_ranges(
+        documented.len(),
+        |range| content_for(&lines_for(range)),
+        DOCUMENTED_MEMBER_CHUNK_TARGET_TOKENS,
+        DOCUMENTED_MEMBER_CHUNK_MIN_TAIL_TOKENS,
+        |_| true,
+        |_| true,
+    )
+    .into_iter()
+    .map(lines_for)
+    .collect();
+
+    Some(DocumentedMemberPlan {
+        chunks,
+        documented_member_count: documented.len(),
+        residual_catalog: member_names_catalog_from_spans(undocumented_spans, false),
+    })
+}
 
 /// Unified member-first-line surface for a big declaration — the
 /// "header then one line per member" catalog shape NS authors anchor
@@ -2989,7 +3228,16 @@ fn member_names_catalog_lines(
     if spans.len() < min_members {
         return None;
     }
-    let truncate_to_name = is_class_node(decl);
+    member_names_catalog_from_spans(spans, is_class_node(decl))
+}
+
+fn member_names_catalog_from_spans(
+    spans: Vec<(usize, usize)>,
+    truncate_to_name: bool,
+) -> Option<MemberNamesCatalog> {
+    if spans.is_empty() {
+        return None;
+    }
     let first_lines: HashSet<usize> = spans.iter().map(|&(first, _)| first).collect();
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
@@ -4176,6 +4424,170 @@ mod tests {
             }
         }
         assert_eq!(covered.len(), 80, "partitions must cover every member");
+    }
+
+    #[test]
+    fn walker_typescript_doc_rich_interface_gets_disjoint_member_slices() {
+        let source = r#"export interface Options {
+  /**
+   * Controls the first behavior. This explanation deliberately carries
+   * enough semantic detail to make the documented member independently
+   * useful: it describes defaults, lifecycle timing, error behavior, and
+   * how callers should choose a value in production deployments.
+   *
+   * @example
+   * const options: Options = { first: 'enabled' };
+   */
+  first?: string;
+
+  count?: number;
+
+  /**
+   * Controls the second behavior. This companion explanation covers the
+   * interaction with the first option, the fallback used when omitted,
+   * and the observable result an API consumer should expect.
+   *
+   * @example
+   * const options: Options = { second: true };
+   */
+  second?: boolean;
+}
+"#;
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("fixture.ts");
+        std::fs::write(&file, source).unwrap();
+        let report =
+            Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None).run_with_report();
+        let export_key = BatchKey::Typescript(TsKey::Export {
+            file: file.clone(),
+            start_line: 1,
+        });
+        let owned: Vec<_> = report
+            .candidates
+            .iter()
+            .filter(|batch| {
+                batch.key == export_key
+                    || matches!(
+                        batch.key,
+                        BatchKey::Typescript(
+                            TsKey::ExportMemberDoc { .. } | TsKey::ExportMemberNames { .. }
+                        )
+                    )
+            })
+            .collect();
+        let docs: Vec<_> = owned
+            .iter()
+            .filter(|batch| {
+                matches!(
+                    batch.key,
+                    BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
+                )
+            })
+            .collect();
+        assert!(!docs.is_empty(), "expected documented-member slices");
+        assert!(
+            docs.iter()
+                .all(|batch| batch.predecessor.as_ref() == Some(&export_key))
+        );
+
+        let mut covered = HashSet::new();
+        for batch in owned {
+            let BatchContent::Lines { spans } = &batch.content else {
+                panic!("typescript member surfaces must be line content");
+            };
+            for span in spans {
+                for line in span.start..=span.end {
+                    assert!(
+                        covered.insert(line),
+                        "header, residual catalog, and doc slices overlap at line {line}"
+                    );
+                }
+            }
+        }
+        assert!(covered.contains(&2), "first JSDoc must be owned");
+        assert!(
+            covered.contains(&11),
+            "first member signature must be owned"
+        );
+        assert!(
+            covered.contains(&13),
+            "undocumented member must stay catalogued"
+        );
+        assert!(covered.contains(&15), "second JSDoc must be owned");
+        assert!(
+            covered.contains(&23),
+            "second member signature must be owned"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_tiny_member_doc_stays_flat() {
+        let source =
+            "export interface Small {\n  /** Whether enabled. */\n  enabled?: boolean;\n}\n";
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("fixture.ts");
+        std::fs::write(&file, source).unwrap();
+        let report =
+            Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None).run_with_report();
+        assert!(!report.candidates.iter().any(|batch| matches!(
+            batch.key,
+            BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
+        )));
+    }
+
+    #[test]
+    fn walker_typescript_documented_intersection_type_is_split() {
+        let source = r#"type Shared = { timeout?: number };
+export type Options = {
+  /**
+   * Controls request concurrency, including the default used when omitted,
+   * the minimum accepted value, and when a newly available slot is consumed.
+   * The setting applies to work that has not started yet, does not cancel
+   * work already in flight, and can be changed between requests. Callers
+   * should choose a finite value based on the downstream service limit and
+   * leave enough capacity for retries, health checks, and administrative
+   * traffic. Values below one are rejected before any request is queued.
+   *
+   * @example
+   * const options: Options = { concurrency: 4 };
+   */
+  concurrency?: number;
+} & Shared;
+"#;
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("fixture.ts");
+        std::fs::write(&file, source).unwrap();
+        let report =
+            Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None).run_with_report();
+        assert!(report.candidates.iter().any(|batch| matches!(
+            batch.key,
+            BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
+        )));
+    }
+
+    #[test]
+    fn walker_typescript_runtime_module_keeps_documented_type_slab() {
+        let source = r#"export interface Options {
+  /**
+   * Controls request concurrency, including the default used when omitted,
+   * the minimum accepted value, and when a newly available slot is consumed.
+   *
+   * @example
+   * const options: Options = { concurrency: 4 };
+   */
+  concurrency?: number;
+}
+export function run(options: Options): void { void options; }
+"#;
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("fixture.ts");
+        std::fs::write(&file, source).unwrap();
+        let report =
+            Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None).run_with_report();
+        assert!(!report.candidates.iter().any(|batch| matches!(
+            batch.key,
+            BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
+        )));
     }
 
     #[test]
