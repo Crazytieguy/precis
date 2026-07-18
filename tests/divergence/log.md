@@ -114,26 +114,27 @@ Score(3000)=0.572 I=0.810 C=0.404 ns_rows≤3K=17/47 (reached=6 partial=2 missin
 | walker |  | 7718 | 2016 | impl method sigs in src/lib.rs |  |  | 0.618 |
 | ns | 7822 |  | 373 | kv/key.rs: ToKey trait + Key struct | 5.4 |  | 0.602 |
 | walker |  | 7845 | 127 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.602 |
+| walker |  | 7928 | 83 | README.md section #1 |  |  | 0.602 |
+| walker |  | 8052 | 124 | pub-item doc lede at src/lib.rs:1611 |  |  | 0.602 |
 | ns | 8055 |  | 233 | kv/error.rs: Error struct, Inner enum, msg() constructor | 5.5 |  | 0.590 |
 | ns | 8101 |  | 46 | kv/source.rs: Source trait method roster | 5.6 |  | 0.588 |
-| walker |  | 8133 | 288 | crate attributes in src/lib.rs |  |  | 0.588 |
 | ns | 8185 |  | 84 | kv/source.rs: VisitSource trait | 5.7 |  | 0.591 |
-| walker |  | 8216 | 83 | README.md section #1 |  |  | 0.591 |
 | ns | 8288 |  | 103 | kv/value.rs: ToValue trait + Value struct | 5.8 |  | 0.596 |
-| walker |  | 8340 | 124 | pub-item doc lede at src/lib.rs:1611 |  |  | 0.596 |
+| walker |  | 8334 | 282 | crate-doc body in src/lib.rs |  |  | 0.596 |
 | ns | 8429 |  | 141 | kv/value.rs: dependency-free Inner enum (data model) | 5.9 |  | 0.589 |
-| walker |  | 8622 | 282 | crate-doc body in src/lib.rs |  |  | 0.589 |
+| walker |  | 8549 | 215 | pub-item doc lede at src/lib.rs:1396 |  |  | 0.589 |
+| walker |  | 8588 | 39 | pub-item doc lede at src/kv/value.rs:119 |  |  | 0.589 |
 | ns | 8713 |  | 284 | tests/macros.rs test-fn roster | 6.1 |  | 0.578 |
-| walker |  | 8837 | 215 | pub-item doc lede at src/lib.rs:1396 |  |  | 0.578 |
-| walker |  | 8876 | 39 | pub-item doc lede at src/kv/value.rs:119 |  |  | 0.578 |
 | ns | 8940 |  | 227 | tests/macros.rs: kv_common_value_types body | 6.2 | 6.1 | 0.568 |
-| ns | 9027 |  | 87 | CI workflow job-name roster | 7.1 |  | 0.565 |
-| ns | 9146 |  | 119 | test_max_level_features/Cargo.toml | 7.2 |  | 0.560 |
-| walker |  | 9230 | 354 | crate-doc body in src/kv/mod.rs |  |  | 0.580 |
-| ns | 9393 |  | 247 | README.md lede | 8.1 |  | 0.577 |
-| ns | 9632 |  | 239 | CHANGELOG.md: Unreleased + 0.4.29 | 8.2 |  | 0.571 |
-| walker |  | 9667 | 437 | pub item at src/kv/source.rs:51 |  |  | 0.574 |
+| walker |  | 8942 | 354 | crate-doc body in src/kv/mod.rs |  |  | 0.588 |
+| ns | 9027 |  | 87 | CI workflow job-name roster | 7.1 |  | 0.585 |
+| ns | 9146 |  | 119 | test_max_level_features/Cargo.toml | 7.2 |  | 0.580 |
+| walker |  | 9379 | 437 | pub item at src/kv/source.rs:51 |  |  | 0.583 |
+| ns | 9393 |  | 247 | README.md lede | 8.1 |  | 0.581 |
+| ns | 9632 |  | 239 | CHANGELOG.md: Unreleased + 0.4.29 | 8.2 |  | 0.574 |
 | ns | 9676 |  | 44 | CHANGELOG.md: sampled older version headings | 8.3 |  | 0.574 |
 | ns | 9766 |  | 90 | rfcs/0296-structured-logging.md heading roster | 8.4 |  | 0.570 |
-| ns | 9923 |  | 157 | RFC 0296: Summary | 8.5 | 8.4 | 0.567 |
-| ns | 9996 |  | 73 | src/serde.rs: serde impl roster | 9.1 |  | 0.565 |
+| walker |  | 9784 | 405 | [dependencies] in Cargo.toml |  |  | 0.577 |
+| ns | 9923 |  | 157 | RFC 0296: Summary | 8.5 | 8.4 | 0.574 |
+| walker |  | 9956 | 172 | impl method sigs in src/kv/key.rs |  |  | 0.579 |
+| ns | 9996 |  | 73 | src/serde.rs: serde impl roster | 9.1 |  | 0.577 |

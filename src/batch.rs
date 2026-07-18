@@ -139,7 +139,11 @@ pub enum RustKey {
     /// One ~200-token continuation chunk of an oversize crate-doc
     /// body, cut at blank doc lines outside doc code fences.
     /// Predecessor: the previous chunk (`CrateDocBody` for the first
-    /// tail).
+    /// tail). Scheduler-trait defaults (flat concavity, no breadth
+    /// pressure) are the initial shipped state, not yet swept —
+    /// `PubItemDocBody` steepens to 0.45 and markdown's `OversizeTail`
+    /// chunks steepen via `Section` index ≥ 1, so those are the
+    /// candidates if the tail train over-buys at higher budgets.
     CrateDocTail { file: PathBuf, start_line: usize },
     /// Contiguous top-of-file `#![…]` inner-attribute block (with its
     /// interleaved comment lines), entrypoint files only.

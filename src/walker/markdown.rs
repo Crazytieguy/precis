@@ -2511,7 +2511,8 @@ fn oversize_chunk_bounds(
 
 /// Per-row token count (row is 1-based; includes the newline). Rides
 /// the tokenizer's per-line memoization, so repeated sweeps are cheap.
-fn row_tokens(src_lines: &[&str], row: usize) -> usize {
+/// Shared with the Rust walker's crate-doc chunking and attr gate.
+pub(in crate::walker) fn row_tokens(src_lines: &[&str], row: usize) -> usize {
     src_lines
         .get(row - 1)
         .map(|l| tokenizer::count(&format!("{l}\n")))
