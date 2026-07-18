@@ -1,16 +1,18 @@
 //! TOML walker. Uses `tree-sitter-toml-ng` to identify top-level `[table]`
 //! headers and their line ranges. Emits one batch per ontology-recognized
-//! section group (identity / scripts / features / dependencies / config).
+//! section group (identity / scripts / features / ordinary dependencies /
+//! development dependencies / config).
 //!
 //! Keys:
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
 //!   `[project]`, `[tool.poetry]`
 //! - `Scripts { file }` — `[project.scripts]`, `[tool.poetry.scripts]`
 //! - `Features { file }` — `[features]`
-//! - `Dependencies { file }` — `[dependencies]`, `[dev-dependencies]`,
-//!   `[build-dependencies]`, `[workspace.dependencies]`,
-//!   `[tool.poetry.dependencies]`, Cargo target/dotted dependency tables,
-//!   and the PEP 621 dependency arrays under `[project]`
+//! - `Dependencies { file }` — Cargo `[dependencies]` /
+//!   `[workspace.dependencies]`, `[tool.poetry.dependencies]`, and the PEP
+//!   621 dependency arrays under `[project]`
+//! - `DevelopmentDependencies { file }` — Cargo `[dev-dependencies]`,
+//!   `[build-dependencies]`, and target-conditional dependency tables
 //! - `Config { file }` — manifest-level build-system, package metadata,
 //!   task-runner/tool config, Cargo profiles/targets, and packaging config
 
@@ -103,7 +105,24 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: dependencies_value(&file, ctx),
+                value: if is_cargo_manifest(&file) {
+                    cargo_dependencies_value(&file, ctx)
+                } else {
+                    dependencies_value(&file, ctx)
+                },
+            });
+        }
+        if let Some(content) = build_development_dependencies_content(
+            &file,
+            &source,
+            &sections,
+            python_project_manifest,
+        ) {
+            out.push(Batch {
+                key: TomlKey::DevelopmentDependencies { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: development_dependencies_value(&file, ctx),
             });
         }
         if let Some(content) =
@@ -129,11 +148,12 @@ fn build_dependencies_content(
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
+    let cargo_manifest = is_cargo_manifest(file);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start, end) in sections {
-        if is_dependency_section(name)
-            && (python_project_manifest
-                || !(name.starts_with("project.") || name.starts_with("tool.poetry.")))
+        if (python_project_manifest && is_dependency_section(name))
+            || (cargo_manifest && is_ordinary_dependency_section(name))
+            || (!python_project_manifest && !cargo_manifest && is_dependency_section(name))
         {
             line_numbers.extend(*start..=*end);
         }
@@ -143,6 +163,30 @@ fn build_dependencies_content(
             if let Some((start, end)) = project_pair_array_rows(tree, source, key) {
                 line_numbers.extend(start..=end);
             }
+        }
+    }
+    if line_numbers.is_empty() {
+        return None;
+    }
+    single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
+}
+
+/// Cargo dependency classes that describe tests, build-time tooling, or a
+/// platform-specific edge. They are useful context, but should not make the
+/// ordinary runtime dependency roster unaffordable.
+fn build_development_dependencies_content(
+    file: &Path,
+    source: &str,
+    sections: &[Section],
+    python_project_manifest: bool,
+) -> Option<crate::content::BatchContent> {
+    if python_project_manifest || !is_cargo_manifest(file) {
+        return None;
+    }
+    let mut line_numbers = Vec::new();
+    for (name, start, end) in sections {
+        if is_cargo_development_dependency_section(name) {
+            line_numbers.extend(*start..=*end);
         }
     }
     if line_numbers.is_empty() {
@@ -263,6 +307,10 @@ fn is_pyproject_filename(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()) == Some("pyproject.toml")
 }
 
+fn is_cargo_manifest(file: &Path) -> bool {
+    file.file_name().and_then(|name| name.to_str()) == Some("Cargo.toml")
+}
+
 fn is_python_project_manifest(file: &Path, sections: &[Section], source: &str) -> bool {
     match file.file_name().and_then(|n| n.to_str()) {
         Some("pyproject.toml") => true,
@@ -313,18 +361,30 @@ fn is_pep621_project_key(key: &str) -> bool {
 }
 
 fn is_dependency_section(name: &str) -> bool {
+    is_ordinary_dependency_section(name) || is_cargo_development_dependency_section(name)
+}
+
+fn is_ordinary_dependency_section(name: &str) -> bool {
     matches!(
         name,
         "dependencies"
-            | "dev-dependencies"
-            | "build-dependencies"
             | "workspace.dependencies"
             | "tool.poetry.dependencies"
             | "project.optional-dependencies"
     ) || name.starts_with("dependencies.")
+}
+
+fn is_cargo_development_dependency_section(name: &str) -> bool {
+    matches!(name, "dev-dependencies" | "build-dependencies")
         || name.starts_with("dev-dependencies.")
         || name.starts_with("build-dependencies.")
-        || (name.starts_with("target.") && name.ends_with(".dependencies"))
+        || (name.starts_with("target.")
+            && name.split('.').any(|segment| {
+                matches!(
+                    segment,
+                    "dependencies" | "dev-dependencies" | "build-dependencies"
+                )
+            }))
 }
 
 fn is_scripts_section(name: &str) -> bool {
@@ -449,6 +509,24 @@ fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
         _ => 0.4,
     };
     mix_signals(cat, 0.7, 0.4, path_depth_factor(file, ctx))
+}
+
+fn cargo_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let (cat, fu, ztu) = if file.parent() == Some(ctx.root()) {
+        (0.75, 0.6, 0.5)
+    } else {
+        (0.4, 0.7, 0.4)
+    };
+    mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
+}
+
+fn development_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let (cat, fu, ztu) = if file.parent() == Some(ctx.root()) {
+        (0.4, 0.7, 0.4)
+    } else {
+        (0.32, 0.58, 0.32)
+    };
+    mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
 }
 
 fn config_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -785,6 +863,7 @@ readme = "README.md"
             "dev-dependencies.foo",
             "build-dependencies.foo",
             "target.'cfg(unix)'.dependencies",
+            "target.'cfg(windows)'.dev-dependencies",
         ];
         for name in owned {
             assert!(
@@ -795,6 +874,46 @@ readme = "README.md"
         assert!(is_config_section(&file, "tool.ruff"));
         assert!(!is_config_section(&file, "test"));
         assert!(is_config_section(&PathBuf::from("Cargo.toml"), "test"));
+    }
+
+    #[test]
+    fn walker_toml_cargo_dependency_classes_are_disjoint() {
+        assert!(is_cargo_manifest(&PathBuf::from("Cargo.toml")));
+        assert!(!is_cargo_manifest(&PathBuf::from("pyproject.toml")));
+        assert!(!is_cargo_manifest(&PathBuf::from("config.toml")));
+
+        for name in [
+            "dependencies",
+            "dependencies.serde",
+            "workspace.dependencies",
+        ] {
+            assert!(is_ordinary_dependency_section(name), "ordinary: {name}");
+            assert!(
+                !is_cargo_development_dependency_section(name),
+                "not development: {name}"
+            );
+        }
+        for name in [
+            "dev-dependencies",
+            "dev-dependencies.proptest",
+            "build-dependencies",
+            "build-dependencies.cc",
+            "target.'cfg(unix)'.dependencies",
+            "target.'cfg(windows)'.dev-dependencies",
+            "target.'cfg(target_os = \"macos\")'.build-dependencies.bindgen",
+        ] {
+            assert!(
+                is_cargo_development_dependency_section(name),
+                "development/build/target: {name}"
+            );
+            assert!(
+                !is_ordinary_dependency_section(name),
+                "not ordinary: {name}"
+            );
+        }
+        for name in ["profile.release", "bin", "example", "test", "bench"] {
+            assert!(!is_dependency_section(name), "config/target only: {name}");
+        }
     }
 
     /// mdbook fixture: explicit `crates/*` glob, three literal entries

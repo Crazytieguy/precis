@@ -505,9 +505,12 @@ pub enum TomlKey {
     Scripts { file: PathBuf },
     /// `[features]` table.
     Features { file: PathBuf },
-    /// `[dependencies]` / `[dev-dependencies]` / `[build-dependencies]` /
-    /// `[workspace.dependencies]`.
+    /// Ordinary `[dependencies]` / `[workspace.dependencies]` tables,
+    /// plus Python-manifest dependency sections.
     Dependencies { file: PathBuf },
+    /// Cargo `[dev-dependencies]`, `[build-dependencies]`, and target-
+    /// conditional dependency tables.
+    DevelopmentDependencies { file: PathBuf },
     /// Manifest-level operational config: build systems, tool/task tables,
     /// package metadata, targets, and profiles.
     Config { file: PathBuf },
@@ -785,6 +788,9 @@ impl InnerKey for TomlKey {
             TomlKey::Scripts { file } => describe_in("entry-point scripts", file, root),
             TomlKey::Features { file } => describe_in("[features]", file, root),
             TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),
+            TomlKey::DevelopmentDependencies { file } => {
+                describe_in("dev/build/target dependencies", file, root)
+            }
             TomlKey::Config { file } => describe_in("manifest config", file, root),
         }
     }
