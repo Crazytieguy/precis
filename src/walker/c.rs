@@ -103,6 +103,12 @@ pub(in crate::walker) struct CState {
     /// Per-basename `#include "X"` in-degree across the tree, computed
     /// once. Prices include-graph hubs above leaf headers.
     include_in_degree: OnceCell<IncludeInDegreeIndex>,
+    /// The single non-test `.c` file carrying the large majority of the
+    /// project's C source lines *and* the program's `main`, if one
+    /// exists (computed once per run). In a single-implementation-file
+    /// binary that file *is* the API surface, so its names surface
+    /// prices at the header tier.
+    dominant_c_file: OnceCell<Option<PathBuf>>,
 }
 
 impl CState {
@@ -156,6 +162,15 @@ impl CState {
     fn include_in_degree(&self, root: &Path) -> &IncludeInDegreeIndex {
         self.include_in_degree
             .get_or_init(|| collect_include_in_degree(root))
+    }
+
+    /// True iff `file` is the project's dominant implementation file
+    /// (computed once per run).
+    fn is_dominant_c_file(&self, file: &Path, root: &Path) -> bool {
+        self.dominant_c_file
+            .get_or_init(|| find_dominant_c_file(root))
+            .as_deref()
+            == Some(file)
     }
 }
 
@@ -420,6 +435,136 @@ fn count_small_headers(root: &Path) -> usize {
         }
     }
     count
+}
+
+/// Minimum share of the project's non-test `.c` source lines one file
+/// must carry to count as the dominant implementation file. Sits above
+/// multi-module projects where the biggest file is merely large
+/// (chibicc's parse.c ~41%) and below true single-implementation-file
+/// layouts (krep ~92%, sds 100%).
+const DOMINANT_C_FILE_MIN_SHARE: f64 = 0.6;
+
+/// The non-test `.c` file carrying at least
+/// [`DOMINANT_C_FILE_MIN_SHARE`] of the project's non-test `.c`
+/// non-blank lines *and* defining an unconditional `main`, if any.
+/// Same coarse one-pass scan (and cap) as [`count_small_headers`];
+/// test dirs and test-named files are excluded so a large test suite
+/// can't mask a single-implementation-file layout.
+fn find_dominant_c_file(root: &Path) -> Option<PathBuf> {
+    const SCAN_CAP: usize = 4096;
+    let mut total_lines = 0usize;
+    let mut largest: Option<(PathBuf, usize)> = None;
+    let mut stack = vec![root.to_path_buf()];
+    let mut scanned = 0;
+    while let Some(dir) = stack.pop() {
+        let Ok(read_dir) = std::fs::read_dir(&dir) else {
+            continue;
+        };
+        for entry in read_dir.flatten() {
+            scanned += 1;
+            if scanned > SCAN_CAP {
+                return None;
+            }
+            let path = entry.path();
+            let name = entry.file_name().to_string_lossy().into_owned();
+            let Ok(file_type) = entry.file_type() else {
+                continue;
+            };
+            if file_type.is_dir() {
+                if !super::fs::should_skip_dir(&name) && !is_test_dir_name(&name) {
+                    stack.push(path);
+                }
+            } else if file_type.is_file()
+                && name.to_ascii_lowercase().ends_with(".c")
+                && !is_test_c_file_name(&name)
+            {
+                let Ok(text) = std::fs::read_to_string(&path) else {
+                    continue;
+                };
+                let lines = text.lines().filter(|l| !l.trim().is_empty()).count();
+                total_lines += lines;
+                if largest.as_ref().is_none_or(|(_, max)| lines > *max) {
+                    largest = Some((path, lines));
+                }
+            }
+        }
+    }
+    let (path, lines) = largest?;
+    if total_lines == 0 || (lines as f64 / total_lines as f64) < DOMINANT_C_FILE_MIN_SHARE {
+        return None;
+    }
+    // Binary-project gate: the promotion only holds when the dominant
+    // file is the program itself. A dominant *library* implementation
+    // (neco.c, sds.c) leaves the API-surface role with the header —
+    // promoting its roster displaces the header content NS anchors on
+    // (neco −0.23 measured). A `#ifdef`-gated test main (sds
+    // `SDS_TEST_MAIN`) doesn't make a library a binary.
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        return None;
+    };
+    defines_unconditional_main(&text).then_some(path)
+}
+
+/// True iff `source` defines a `main` that is compiled in the default
+/// configuration: at the top level, or under a *negative* guard
+/// (`#ifndef X` / `#if !defined(X)`, krep's `#if !defined(TESTING)`)
+/// that only excludes it from special builds. A main behind a positive
+/// feature guard (sds `#ifdef SDS_TEST_MAIN`) is off by default and
+/// doesn't count.
+fn defines_unconditional_main(source: &str) -> bool {
+    fn has_default_on_main(node: Node, source: &str) -> bool {
+        let mut cursor = node.walk();
+        node.children(&mut cursor).any(|child| match child.kind() {
+            "function_definition" => function_definition_name(child, source) == Some("main"),
+            "preproc_ifdef" => {
+                child.child(0).is_some_and(|d| d.kind() == "#ifndef")
+                    && has_default_on_main(child, source)
+            }
+            "preproc_if" => {
+                child
+                    .child_by_field_name("condition")
+                    .is_some_and(|c| source[c.byte_range()].trim_start().starts_with('!'))
+                    && has_default_on_main(child, source)
+            }
+            _ => false,
+        })
+    }
+    let mut parser = tree_sitter::Parser::new();
+    if parser
+        .set_language(&tree_sitter_c::LANGUAGE.into())
+        .is_err()
+    {
+        return false;
+    }
+    let Some(tree) = parser.parse(source, None) else {
+        return false;
+    };
+    has_default_on_main(tree.root_node(), source)
+}
+
+/// Name of a `function_definition` node: descends declarator wrappers
+/// (pointers, parenthesized declarators) to the `function_declarator`
+/// and returns its identifier text.
+fn function_definition_name<'a>(def: Node, source: &'a str) -> Option<&'a str> {
+    let mut node = def.child_by_field_name("declarator")?;
+    while node.kind() != "function_declarator" {
+        node = node.child_by_field_name("declarator")?;
+    }
+    let name = node.child_by_field_name("declarator")?;
+    (name.kind() == "identifier").then(|| &source[name.byte_range()])
+}
+
+fn is_test_dir_name(name: &str) -> bool {
+    matches!(
+        name.to_ascii_lowercase().as_str(),
+        "test" | "tests" | "spec" | "specs"
+    )
+}
+
+fn is_test_c_file_name(name: &str) -> bool {
+    let stem = name.to_ascii_lowercase();
+    let stem = stem.strip_suffix(".c").unwrap_or(&stem);
+    stem.starts_with("test_") || stem.ends_with("_test")
 }
 
 /// True iff `file`'s non-blank line count is within the whole-render
@@ -1454,6 +1599,24 @@ fn header_cat_factor(file: &Path) -> f64 {
     if is_header_file(file) { 1.15 } else { 0.55 }
 }
 
+/// [`header_cat_factor`] variant for the names surface only: the
+/// dominant implementation file of a single-implementation-file
+/// *binary* prices at the header tier — with no library consumer the
+/// header is internal plumbing, the program's function-location
+/// roster is the map NS authors rank top-tier. Deliberately not
+/// applied to `decl_value`: pricing the whole per-decl train up
+/// floods the budget with tiny decl rows (neco −0.23 measured) where
+/// the roster alone carries the NS-wanted location map. Structurally
+/// gated on [`find_dominant_c_file`]; everything else keeps the flat
+/// `.h`/`.c` split.
+fn names_surface_cat_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if is_header_file(file) || ctx.c_state().is_dominant_c_file(file, ctx.root()) {
+        1.15
+    } else {
+        0.55
+    }
+}
+
 /// Follow-up axis: headers stay neutral, `.c` content stays demoted.
 fn body_fu_factor(file: &Path) -> f64 {
     if is_header_file(file) { 1.0 } else { 0.55 }
@@ -1557,7 +1720,7 @@ fn decl_names_value(
     chunk_count: usize,
     chunk_decl_count: usize,
 ) -> f64 {
-    let cat = (0.80 * header_cat_factor(file)).min(1.0);
+    let cat = (0.80 * names_surface_cat_factor(file, ctx)).min(1.0);
     let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
     // Roster mass only for top include hubs: their catalog chunks lose
     // the breadth race to tiny-roster siblings (htop's per-meter
@@ -2332,6 +2495,46 @@ typedef int x;
         assert!(parse_include_headers(tmp.path()).is_none());
         std::fs::write(tmp.path().join("Makefile.am"), "AM_CFLAGS = -Wall\n").expect("write");
         assert!(parse_include_headers(tmp.path()).is_none());
+    }
+
+    #[test]
+    fn c_find_dominant_c_file_cases() {
+        let line = "int x;\n";
+        let main_def = "int main(int argc, char **argv) { return 0; }\n";
+        let gated_main = "#ifdef LIB_TEST_MAIN\nint main(void) { return 0; }\n#endif\n";
+
+        // Binary project: one big .c with an unconditional main
+        // dominates; the test dir is excluded from the tally.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("big.c"), line.repeat(100) + main_def).unwrap();
+        std::fs::write(root.join("small.c"), line.repeat(10)).unwrap();
+        std::fs::create_dir(root.join("test")).unwrap();
+        std::fs::write(root.join("test/test_big.c"), line.repeat(500)).unwrap();
+        assert_eq!(find_dominant_c_file(root), Some(root.join("big.c")));
+
+        // Spread project: no file reaches the dominance share.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("a.c"), line.repeat(100) + main_def).unwrap();
+        std::fs::write(root.join("b.c"), line.repeat(90)).unwrap();
+        std::fs::write(root.join("c.c"), line.repeat(80)).unwrap();
+        assert_eq!(find_dominant_c_file(root), None);
+
+        // Dominant library file: no main at all, or only a
+        // preproc-gated test main — not a binary, no promotion.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("lib.c"), line.repeat(100)).unwrap();
+        assert_eq!(find_dominant_c_file(root), None);
+        std::fs::write(root.join("lib.c"), line.repeat(100) + gated_main).unwrap();
+        assert_eq!(find_dominant_c_file(root), None);
+
+        // Negative guard (`#if !defined(TESTING)`) is compiled by
+        // default — still a binary.
+        let excluded_main = format!("#if !defined(TESTING)\n{main_def}#endif\n");
+        std::fs::write(root.join("lib.c"), line.repeat(100) + &excluded_main).unwrap();
+        assert_eq!(find_dominant_c_file(root), Some(root.join("lib.c")));
     }
 
     fn aggregate_group_count(filename: &str, src: &str) -> usize {
