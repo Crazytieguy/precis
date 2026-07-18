@@ -884,6 +884,20 @@ pub(crate) fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {
     v
 }
 
+/// Ellipsis markers for each maximal gap in `selected` within
+/// `1..=line_count` (first line of every gap).
+pub(crate) fn gap_ellipses(selected: &[usize], line_count: usize) -> Vec<usize> {
+    let mut ellipses = Vec::new();
+    let mut previous = 0usize;
+    for &line in selected.iter().chain(std::iter::once(&(line_count + 1))) {
+        if line > previous + 1 {
+            ellipses.push(previous + 1);
+        }
+        previous = line;
+    }
+    ellipses
+}
+
 /// 0-based rows inside `body` whose only content is comment text: rows
 /// touched by a `comment` node and by no non-comment token.
 pub(crate) fn comment_only_rows(body: Node) -> HashSet<usize> {

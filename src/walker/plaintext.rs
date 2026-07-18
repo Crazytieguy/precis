@@ -34,8 +34,8 @@ use crate::value::{
 };
 
 use super::{
-    FileLines, WalkCtx, budget_chunk_ranges, dedup_sorted, fs::list_dir, gated_read_source,
-    gated_whole_file_content, path_depth_factor, single_file_lines_content,
+    FileLines, WalkCtx, budget_chunk_ranges, dedup_sorted, fs::list_dir, gap_ellipses,
+    gated_read_source, gated_whole_file_content, path_depth_factor, single_file_lines_content,
     whole_file_lines_content,
 };
 
@@ -590,20 +590,6 @@ fn dockerfile_contract_lines(source: &str) -> Vec<usize> {
     selected.sort_unstable();
     selected.dedup();
     selected
-}
-
-/// Ellipsis markers for each maximal gap in `selected` within
-/// `1..=line_count` (first line of every gap).
-fn gap_ellipses(selected: &[usize], line_count: usize) -> Vec<usize> {
-    let mut ellipses = Vec::new();
-    let mut prev = 0usize;
-    for &line in selected.iter().chain(std::iter::once(&(line_count + 1))) {
-        if line > prev + 1 {
-            ellipses.push(prev + 1);
-        }
-        prev = line;
-    }
-    ellipses
 }
 
 /// Dockerfiles ship as a compact stage/contract head plus a gated

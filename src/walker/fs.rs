@@ -566,11 +566,15 @@ pub(crate) fn should_skip_dir(name: &str) -> bool {
 /// Rust module may legitimately be named `build/`; generated build output does
 /// not gain traversal merely by containing arbitrary artifacts.
 fn should_recurse_dir(dir: &Path, traversal_root: &Path) -> bool {
-    let Some(name) = dir.file_name().and_then(|name| name.to_str()) else {
+    let Some(name) = dir.file_name() else {
         return false;
     };
+    // Lossy, matching the pre-consolidation call sites: a non-UTF-8
+    // directory name is still traversed unless its lossy form is on the
+    // skip list.
+    let name = name.to_string_lossy();
     if name != "build" {
-        return !should_skip_dir(name);
+        return !should_skip_dir(&name);
     }
     is_owned_rust_build_dir(dir, traversal_root)
 }
@@ -579,7 +583,19 @@ fn should_recurse_dir(dir: &Path, traversal_root: &Path) -> bool {
 /// immediate Rust file and either lives below a conventional source tree or is
 /// explicitly paired with the package's `build.rs` script.
 fn is_owned_rust_build_dir(dir: &Path, traversal_root: &Path) -> bool {
-    if files_with_extension(dir, "rs").is_empty() {
+    // Existence check only — stop at the first Rust file instead of
+    // collecting and sorting the whole listing (this runs for every
+    // `build/` dir the traversal touches).
+    let has_rust_file = std::fs::read_dir(dir).is_ok_and(|entries| {
+        entries.flatten().any(|entry| {
+            let path = entry.path();
+            path.extension()
+                .and_then(|ext| ext.to_str())
+                .is_some_and(|ext| ext.eq_ignore_ascii_case("rs"))
+                && path.is_file()
+        })
+    });
+    if !has_rust_file {
         return false;
     }
     let Some(parent) = dir.parent() else {
@@ -605,38 +621,10 @@ pub(crate) fn is_test_dir_name(name: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::time::{SystemTime, UNIX_EPOCH};
-
-    struct TempDir(PathBuf);
-
-    impl TempDir {
-        fn new() -> Self {
-            let nonce = SystemTime::now()
-                .duration_since(UNIX_EPOCH)
-                .unwrap()
-                .as_nanos();
-            let dir = std::env::temp_dir().join(format!(
-                "precis-fs-build-dir-{}-{nonce}",
-                std::process::id()
-            ));
-            std::fs::create_dir_all(&dir).unwrap();
-            Self(dir)
-        }
-
-        fn path(&self) -> &Path {
-            &self.0
-        }
-    }
-
-    impl Drop for TempDir {
-        fn drop(&mut self) {
-            let _ = std::fs::remove_dir_all(&self.0);
-        }
-    }
 
     #[test]
-    fn owned_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
-        let temp = TempDir::new();
+    fn fs_owned_rust_build_dirs_recurse_but_generated_trees_stay_excluded() {
+        let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
         let source_build = root.join("src/build");
         let source_build_child = source_build.join("compile");

@@ -83,8 +83,10 @@ const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
 
 /// Preserve the historically winning unified names surface until it is
 /// too large to remain purchasable in the early budget window. Oversize
-/// catalogs are split near the target, with a small tail folded back into
-/// its predecessor so it cannot queue-jump as a crumb.
+/// catalogs are split near the target. The tiny-tail fold below caps the
+/// combined chunk at the split threshold, which the re-swept target
+/// (450 > 400) already exceeds — so the fold is currently inert and a
+/// trailing crumb chunk can occur.
 const DECL_NAMES_SPLIT_THRESHOLD_TOKENS: usize = 400;
 const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 450;
 const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;

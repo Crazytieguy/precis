@@ -1116,17 +1116,61 @@ fn has_adjacent_explanatory_comment(
             line.starts_with("//")
                 || line.starts_with("/*")
                 || line.starts_with('*')
-                || line.ends_with("*/")
+                // A `*/` terminator counts only when the line is comment
+                // through and through — either a block-comment
+                // continuation (no `/*` on the line) or nothing but
+                // whitespace before its `/*`. Otherwise a previous
+                // macro's own trailing `/* doc */` would be credited to
+                // this one.
+                || (line.ends_with("*/")
+                    && line.find("/*").is_none_or(|open| line[..open].trim().is_empty()))
         });
     if preceding_comment {
         return true;
     }
 
+    // `preproc_def` consumes its terminating newline, so `end_position()`
+    // is column 0 of the row after the macro and any same-line trailing
+    // comment sits inside the node text. Scan the macro's own last line,
+    // minus string-literal contents (`//` inside a URL value is not a
+    // comment).
     let end = node.end_position();
-    lines
-        .get(end.row)
-        .and_then(|line| line.get(end.column..))
-        .is_some_and(|suffix| suffix.contains("//") || suffix.contains("/*"))
+    let own_row = if end.column == 0 {
+        end.row.saturating_sub(1)
+    } else {
+        end.row
+    };
+    lines.get(own_row).is_some_and(|line| {
+        let stripped = strip_c_string_literals(line);
+        stripped.contains("//") || stripped.contains("/*")
+    })
+}
+
+/// The line with the contents of its double-quoted string literals
+/// removed (escapes respected), so comment markers are only found in
+/// actual code/comment text.
+fn strip_c_string_literals(line: &str) -> String {
+    let mut out = String::with_capacity(line.len());
+    let mut in_string = false;
+    let mut escaped = false;
+    for c in line.chars() {
+        if in_string {
+            if escaped {
+                escaped = false;
+            } else if c == '\\' {
+                escaped = true;
+            } else if c == '"' {
+                in_string = false;
+            }
+            continue;
+        }
+        if c == '"' {
+            in_string = true;
+            continue;
+        }
+        out.push(c);
+    }
+    out
 }
 
 /// One chunk of a big aggregate body — struct/union field group or
@@ -2048,10 +2092,11 @@ fn is_known_c_stdlib_stem(stem: &str) -> bool {
 }
 
 /// Configuration headers are the application's control surface. Once the
-/// structural role qualifies, keep its existing configuration batches at the
-/// neutral-depth declaration-names tier (`mix_signals(0.80, 0.60, 0.35, 1)`).
-/// This deliberately overrides generic directory-depth damping: `include/`
-/// placement does not make an application's user-tuned settings secondary.
+/// structural role qualifies, keep its existing configuration batches at a
+/// floor seeded from the neutral-depth declaration-names tier and re-swept
+/// upward on training (1073 -> 1250). This deliberately overrides generic
+/// directory-depth damping: `include/` placement does not make an
+/// application's user-tuned settings secondary.
 const CONFIGURATION_SURFACE_VALUE_FLOOR: f64 = 1250.0;
 
 /// A configuration header may be arbitrarily large, so its role cannot grant

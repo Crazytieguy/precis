@@ -1816,17 +1816,26 @@ fn range_has_flag_option_table(src_lines: &[&str], start: usize, end: usize) -> 
     let mut content_rows = 0usize;
     let mut table_rows = 0usize;
     let mut flag_rows = 0usize;
-    let mut in_fence = false;
+    // Marker-matched fence state (see `oversize_chunk_bounds`): only a
+    // delimiter of the same char with at least the opening run length
+    // closes the fence, so inner ``` lines can't desync the state.
+    let mut open_fence: Option<(char, usize)> = None;
     for line in &src_lines[start - 1..last] {
         let t = line.trim();
         if t.is_empty() || t.starts_with('#') {
             continue;
         }
-        if t.starts_with("```") || t.starts_with("~~~") {
-            in_fence = !in_fence;
+        if let Some((open_char, open_run)) = open_fence {
+            if fence_marker(t).is_some_and(|(c, run)| c == open_char && run >= open_run) {
+                open_fence = None;
+            }
             continue;
         }
-        if in_fence || is_markdown_rule_row(t) {
+        if let Some(marker) = fence_marker(t) {
+            open_fence = Some(marker);
+            continue;
+        }
+        if is_markdown_rule_row(t) {
             continue;
         }
         content_rows += 1;
@@ -1872,20 +1881,27 @@ fn range_has_cli_synopsis(src_lines: &[&str], start: usize, end: usize) -> bool 
     if start > last {
         return false;
     }
-    let mut in_fence = false;
+    // Marker-matched fence state (see `oversize_chunk_bounds`): only a
+    // delimiter of the same char with at least the opening run length
+    // closes the fence, so inner ``` lines can't desync the state.
+    let mut open_fence: Option<(char, usize)> = None;
     let mut awaiting_first_line = false;
     for line in &src_lines[start - 1..last] {
         let t = line.trim();
-        if t.starts_with("```") || t.starts_with("~~~") {
-            in_fence = !in_fence;
-            awaiting_first_line = in_fence;
+        if let Some((open_char, open_run)) = open_fence {
+            if fence_marker(t).is_some_and(|(c, run)| c == open_char && run >= open_run) {
+                open_fence = None;
+            } else if awaiting_first_line && !t.is_empty() {
+                if looks_like_cli_synopsis_line(t) {
+                    return true;
+                }
+                awaiting_first_line = false;
+            }
             continue;
         }
-        if in_fence && awaiting_first_line && !t.is_empty() {
-            if looks_like_cli_synopsis_line(t) {
-                return true;
-            }
-            awaiting_first_line = false;
+        if let Some(marker) = fence_marker(t) {
+            open_fence = Some(marker);
+            awaiting_first_line = true;
         }
     }
     false

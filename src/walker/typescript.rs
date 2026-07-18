@@ -89,7 +89,6 @@ const MEMBER_CATALOG_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 /// Split only when the declaration has enough documented-member mass to form
 /// an independent early-budget purchase.
 const DOCUMENTED_MEMBER_MIN_TOTAL_TOKENS: usize = 100;
-/// NS interface-member slices generally land in the 100-300 token envelope.
 const DOCUMENTED_MEMBER_CHUNK_TARGET_TOKENS: usize = 220;
 const DOCUMENTED_MEMBER_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 /// Rendered class surfaces above this cost are outside the early NS
@@ -546,7 +545,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             * if documented_member_plan.is_some() && promote_doc_headers {
                                 1.0
                             } else {
-                                contract_roster_factor(member_names_catalog.is_some())
+                                // A doc plan splits the members out of the
+                                // header just as a names catalog does, so it
+                                // keeps the contract-roster exemption:
+                                // otherwise documenting the last member of a
+                                // contract interface would drop its header
+                                // from 1.0 to the type-machinery damp.
+                                contract_roster_factor(
+                                    member_names_catalog.is_some()
+                                        || documented_member_plan.is_some(),
+                                )
                             },
                     });
                 }
@@ -2363,6 +2371,15 @@ fn declared_package_entry_sources_from_targets(
         if rel.is_empty() {
             continue;
         }
+        // Manifest targets are repository-controlled: reject absolute paths
+        // and parent components so a crafted `main`/`exports` entry cannot
+        // make the walker probe files outside the package directory.
+        if Path::new(rel)
+            .components()
+            .any(|component| !matches!(component, std::path::Component::Normal(_)))
+        {
+            continue;
+        }
         let stem = Path::new(rel).with_extension("");
         let mut variants = vec![stem.clone()];
         // Strip nested generated dirs level by level (`dist/esm/index`,
@@ -3146,6 +3163,14 @@ fn documented_member_plan(
         return None;
     }
     let body = documented_member_body(kind, decl)?;
+    // The header surface owns every row through the body's opening brace,
+    // and slices are sibling batches of the residual catalog — enforce
+    // line-disjointness by construction: a slice never re-claims a
+    // header-owned or already-sliced row (compact `{ member;` openers,
+    // trailing same-line JSDoc), and the catalog drops members whose
+    // name line is owned elsewhere.
+    let header_last_line = body.start_position().row + 1;
+    let mut claimed = HashSet::new();
     let mut documented = Vec::new();
     let mut undocumented_spans = Vec::new();
     let mut cursor = body.walk();
@@ -3163,11 +3188,17 @@ fn documented_member_plan(
             continue;
         }
         extend_span(&mut doc_lines, member, source);
-        documented.push(FileLines::new(dedup_sorted(doc_lines)));
+        let mut lines = dedup_sorted(doc_lines);
+        lines.retain(|&line| line > header_last_line && claimed.insert(line));
+        if lines.is_empty() {
+            continue;
+        }
+        documented.push(FileLines::new(lines));
     }
     if documented.is_empty() {
         return None;
     }
+    undocumented_spans.retain(|&(first, _)| first > header_last_line && !claimed.contains(&first));
 
     let content_for = |lines: &FileLines| {
         single_file_lines_content(file, source, lines.clone())
@@ -4311,6 +4342,27 @@ mod tests {
     }
 
     #[test]
+    fn walker_typescript_manifest_entry_escaping_targets_rejected() {
+        let dir = tempfile::tempdir().unwrap();
+        let outside = dir.path().join("outside.js");
+        std::fs::write(&outside, "export const secret = 1;\n").unwrap();
+        let root = dir.path().join("repo");
+        std::fs::create_dir(&root).unwrap();
+        std::fs::write(
+            root.join("package.json"),
+            format!(
+                r#"{{"main":"../outside.js","module":"{}","exports":{{".":"../outside.js"}}}}"#,
+                outside.display()
+            ),
+        )
+        .unwrap();
+        assert!(
+            declared_package_entry_sources(&root).is_empty(),
+            "absolute and parent-traversing manifest targets must be ignored"
+        );
+    }
+
+    #[test]
     fn walker_typescript_oversize_js_class_gets_member_catalog() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
@@ -4518,6 +4570,60 @@ mod tests {
             covered.contains(&23),
             "second member signature must be owned"
         );
+    }
+
+    /// Compact `{ member;` openers put a member on the header-owned brace
+    /// row, and a trailing same-line `/** ... */` starts the next member's
+    /// JSDoc on the previous member's row — both previously double-claimed
+    /// lines across sibling batches (debug-panicking in the scheduler).
+    #[test]
+    fn walker_typescript_doc_slices_stay_disjoint_on_shared_rows() {
+        let source = r#"export interface Options { compact?: string;
+  plain: number; /**
+   * Documents the alpha member. This explanation deliberately carries
+   * enough semantic detail to clear the documented-member token gate:
+   * defaults, lifecycle timing, error behavior, and production guidance.
+   */
+  alpha(input: string): number;
+
+  /**
+   * Documents the beta member with equally substantial guidance covering
+   * interaction with alpha, the fallback used when omitted, and the
+   * observable result an API consumer should expect in deployments.
+   */
+  beta?: boolean;
+}
+"#;
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("fixture.d.ts");
+        std::fs::write(&file, source).unwrap();
+        // Debug builds assert non-ancestor overlap inside the scheduler,
+        // so completing the run is itself the regression check.
+        let report =
+            Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None).run_with_report();
+        let mut covered = HashSet::new();
+        for batch in report.candidates.iter().filter(|batch| {
+            matches!(
+                batch.key,
+                BatchKey::Typescript(
+                    TsKey::Export { start_line: 1, .. }
+                        | TsKey::ExportMemberDoc { .. }
+                        | TsKey::ExportMemberNames { .. }
+                )
+            )
+        }) {
+            let BatchContent::Lines { spans } = &batch.content else {
+                panic!("typescript member surfaces must be line content");
+            };
+            for span in spans {
+                for line in span.start..=span.end {
+                    assert!(
+                        covered.insert(line),
+                        "header, residual catalog, and doc slices overlap at line {line}"
+                    );
+                }
+            }
+        }
     }
 
     #[test]

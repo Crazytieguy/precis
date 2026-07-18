@@ -23,7 +23,7 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
 /// Roster size at which [`roster_mass_factor`] is neutral; rosters this
 /// small already rank acceptably without help.
 pub const ROSTER_MASS_BASELINE: f64 = 11.0;
-/// Cap on the roster-mass boost (reached around ~110 entries).
+/// Cap on the roster-mass boost (reached around ~40 entries).
 pub const ROSTER_MASS_FACTOR_CAP: f64 = 1.6;
 
 /// Ratio-neutralizing factor for "roster" batches — complete catalogs of
@@ -569,8 +569,8 @@ pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 /// importance is concentrated. Deliberately excludes the cheap
 /// directory-listing (`FsKey`) flood, which the greedy already
 /// over-surfaces. The window stays short so the boost only breaks early
-/// ties; wider windows start displacing later structural wins (post-
-/// refreeze sweep: 300 > 500 > 0 > 900 on training).
+/// ties; wider windows start displacing later structural wins
+/// (post-mechanism re-sweep winner on training: 400, from 500).
 pub const ORIENTATION_TIER_WINDOW: usize = 400;
 pub const ORIENTATION_TIER_BOOST: f64 = 1.4;
 

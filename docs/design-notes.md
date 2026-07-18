@@ -663,16 +663,17 @@ evidence):
 
 ## Walker / value open items
 
-- **Config-surface header role (bareiron/tinyusb class, diagnosed
-  2026-07-18, unimplemented)**: macro-dense headers with
+- **Config-surface header role (bareiron/tinyusb class): SHIPPED
+  2026-07-18** as `is_configuration_surface_header` +
+  `CONFIGURATION_SURFACE_VALUE_FLOOR` in `src/walker/c.rs` (initial
+  role commit, then bounded-promotion repair capping floored batches
+  to the leading names/doc/aggregate slots; floor re-swept 1073 ->
+  1250). Original diagnosis: macro-dense headers with
   comment-annotated object-like config runs and few function decls
-  (bareiron globals.h — late mass 0.479, oracle has the atoms; also
-  tusb_option.h). Failure shape: PlayerData body is one 498-tok
-  atomic decl (no blank-line groups → aggregate splitter inert),
-  config comments are separate low-value DeclDoc batches, macros
-  split across name chunks. Candidate: class-based bounded value
-  floor on such headers' aggregate + config-doc batches; must be
-  measured against enum-like constant catalogs first.
+  (bareiron globals.h, tusb_option.h) left their aggregate + config-doc
+  batches at low value. Kept here for the residual: promotion is
+  positional (first-N batches), so headers that open with preamble
+  instead of settings still miss the floor.
 
 - **Split-batch invariant: a descendant must not emit Ellipsis records
   on lines its ancestor renders as content (codex adversarial finding,

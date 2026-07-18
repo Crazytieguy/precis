@@ -22,8 +22,9 @@ use crate::batch::{Batch, BatchKey, YamlKey};
 use crate::value::{DEFAULT_CONCAVITY_EXPONENT, mix_signals};
 
 use super::{
-    FileLines, WalkCtx, fs::files_with_any_extension, gated_read_source, gated_whole_file_content,
-    path_depth_factor, single_file_lines_content, whole_file_lines_content,
+    FileLines, WalkCtx, fs::files_with_any_extension, gap_ellipses, gated_read_source,
+    gated_whole_file_content, path_depth_factor, single_file_lines_content,
+    whole_file_lines_content,
 };
 
 /// Hard cap on the number of source lines a docker-compose file may
@@ -200,18 +201,6 @@ fn compose_skeleton(source: &str) -> (Vec<usize>, usize) {
     selected.dedup();
     let service_count = service_starts.len();
     (selected, service_count)
-}
-
-fn gap_ellipses(selected: &[usize], line_count: usize) -> Vec<usize> {
-    let mut ellipses = Vec::new();
-    let mut previous = 0usize;
-    for &line in selected.iter().chain(std::iter::once(&(line_count + 1))) {
-        if line > previous + 1 {
-            ellipses.push(previous + 1);
-        }
-        previous = line;
-    }
-    ellipses
 }
 
 fn push_compose_batches(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
