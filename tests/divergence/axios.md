@@ -165,117 +165,123 @@ Score(3000)=0.665 I=0.852 C=0.519 ns_rows≤3K=21/40 (reached=13 partial=1 missi
 | walker |  | 3775 | 36 | listing of 'tests/unit/core' |  |  | 0.699 |
 | walker |  | 3834 | 59 | listing of 'tests/unit/utils' |  |  | 0.703 |
 | walker |  | 3888 | 54 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.703 |
-| walker |  | 3974 | 86 | package runtime dependencies in package.json |  |  | 0.703 |
-| walker |  | 3992 | 18 | export names surface in lib/helpers/bind.js |  |  | 0.703 |
-| walker |  | 3992 | 0 | export at lib/helpers/bind.js:10 |  |  | 0.703 |
-| walker |  | 4010 | 18 | export names surface in lib/helpers/shouldBypassProxy.js |  |  | 0.703 |
-| walker |  | 4010 | 0 | export at lib/helpers/shouldBypassProxy.js:127 |  |  | 0.703 |
+| walker |  | 3906 | 18 | export names surface in lib/helpers/bind.js |  |  | 0.703 |
+| walker |  | 3906 | 0 | export at lib/helpers/bind.js:10 |  |  | 0.703 |
+| walker |  | 3924 | 18 | export names surface in lib/helpers/shouldBypassProxy.js |  |  | 0.703 |
+| walker |  | 3924 | 0 | export at lib/helpers/shouldBypassProxy.js:127 |  |  | 0.703 |
 | ns | 4035 |  | 727 | index.d.ts — AxiosRequestConfig interface, part 2 (beforeRedirect..redact) | 2.5 |  | 0.659 |
-| ns | 4234 |  | 199 | lib/core/InterceptorManager.js — constructor, use(), forEach() (docblocks elided) | 3.1 |  | 0.644 |
-| walker |  | 4313 | 303 | lib/adapters/README.md section #1 |  |  | 0.645 |
-| walker |  | 4450 | 137 | listing of 'docs/es/pages/advanced' |  |  | 0.645 |
-| walker |  | 4587 | 137 | listing of 'docs/fr/pages/advanced' |  |  | 0.645 |
-| walker |  | 4724 | 137 | listing of 'docs/pages/advanced' |  |  | 0.683 |
+| walker |  | 4227 | 303 | lib/adapters/README.md section #1 |  |  | 0.660 |
+| ns | 4234 |  | 199 | lib/core/InterceptorManager.js — constructor, use(), forEach() (docblocks elided) | 3.1 |  | 0.645 |
+| walker |  | 4364 | 137 | listing of 'docs/es/pages/advanced' |  |  | 0.645 |
+| walker |  | 4501 | 137 | listing of 'docs/fr/pages/advanced' |  |  | 0.645 |
+| walker |  | 4638 | 137 | listing of 'docs/pages/advanced' |  |  | 0.683 |
 | ns | 4729 |  | 495 | lib/core/dispatchRequest.js — part 1 (cancellation check, request transform, adapter call) | 3.2 |  | 0.654 |
-| walker |  | 4861 | 137 | listing of 'docs/zh/pages/advanced' |  |  | 0.654 |
-| walker |  | 4880 | 19 | export names surface in lib/core/settle.js |  |  | 0.654 |
-| walker |  | 4880 | 0 | export at lib/core/settle.js:14 |  |  | 0.654 |
-| walker |  | 4899 | 19 | export names surface in lib/core/transformData.js |  |  | 0.654 |
-| walker |  | 4899 | 0 | export at lib/core/transformData.js:15 |  |  | 0.654 |
-| walker |  | 4918 | 19 | export names surface in lib/helpers/estimateDataURLDecodedBytes.js |  |  | 0.654 |
-| walker |  | 4918 | 0 | export at lib/helpers/estimateDataURLDecodedBytes.js:10 |  |  | 0.654 |
+| walker |  | 4775 | 137 | listing of 'docs/zh/pages/advanced' |  |  | 0.654 |
+| walker |  | 4794 | 19 | export names surface in lib/core/settle.js |  |  | 0.654 |
+| walker |  | 4794 | 0 | export at lib/core/settle.js:14 |  |  | 0.654 |
+| walker |  | 4813 | 19 | export names surface in lib/core/transformData.js |  |  | 0.654 |
+| walker |  | 4813 | 0 | export at lib/core/transformData.js:15 |  |  | 0.654 |
+| walker |  | 4832 | 19 | export names surface in lib/helpers/estimateDataURLDecodedBytes.js |  |  | 0.654 |
+| walker |  | 4832 | 0 | export at lib/helpers/estimateDataURLDecodedBytes.js:10 |  |  | 0.654 |
 | ns | 5137 |  | 408 | lib/core/dispatchRequest.js — part 2 (response/rejection transform) | 3.3 |  | 0.629 |
-| walker |  | 5946 | 1028 | export names surface in index.d.ts |  |  | 0.630 |
-| walker |  | 5946 | 0 | export at index.d.ts:366 |  |  | 0.630 |
-| walker |  | 5946 | 0 | export at index.d.ts:461 |  |  | 0.630 |
-| walker |  | 5946 | 0 | export at index.d.ts:713 |  |  | 0.630 |
+| walker |  | 5860 | 1028 | export names surface in index.d.ts |  |  | 0.630 |
+| walker |  | 5860 | 0 | export at index.d.ts:366 |  |  | 0.630 |
+| walker |  | 5860 | 0 | export at index.d.ts:461 |  |  | 0.630 |
+| walker |  | 5860 | 0 | export at index.d.ts:713 |  |  | 0.630 |
 | ns | 6074 |  | 937 | lib/core/mergeConfig.js — part 1 (null-proto result object + per-strategy merge helper fns) | 3.4 |  | 0.591 |
-| walker |  | 6090 | 144 | export member names at index.d.ts:461 |  |  | 0.591 |
-| walker |  | 6282 | 192 | export member names at index.d.ts:713 |  |  | 0.591 |
-| walker |  | 6295 | 13 | export at index.d.ts:476 |  |  | 0.591 |
-| walker |  | 6307 | 12 | export at index.d.ts:535 |  |  | 0.591 |
-| walker |  | 6321 | 14 | export at index.d.ts:457 |  |  | 0.591 |
-| walker |  | 6335 | 14 | export at index.d.ts:545 |  |  | 0.591 |
-| ns | 6710 |  | 636 | lib/core/mergeConfig.js — part 2 (per-key mergeMap table + apply loop) | 3.5 |  | 0.572 |
-| walker |  | 7014 | 679 | export member names at index.d.ts:366 |  |  | 0.612 |
-| walker |  | 7030 | 16 | export at index.d.ts:541 |  |  | 0.612 |
-| ns | 7046 |  | 336 | lib/core/AxiosError.js — class signature + error code constants | 4.1 |  | 0.603 |
-| walker |  | 7049 | 19 | export at index.d.ts:6 |  |  | 0.603 |
-| walker |  | 7068 | 19 | export at index.d.ts:154 |  |  | 0.603 |
-| walker |  | 7089 | 21 | export at index.d.ts:158 |  |  | 0.603 |
-| walker |  | 7111 | 22 | export at index.d.ts:359 |  |  | 0.607 |
-| walker |  | 7134 | 23 | export at index.d.ts:480 |  |  | 0.607 |
-| walker |  | 7157 | 23 | export at index.d.ts:564 |  |  | 0.607 |
-| walker |  | 7180 | 23 | export at index.d.ts:676 |  |  | 0.607 |
-| walker |  | 7204 | 24 | export at index.d.ts:323 |  |  | 0.607 |
-| walker |  | 7229 | 25 | export at index.d.ts:549 |  |  | 0.607 |
-| walker |  | 7255 | 26 | export at index.d.ts:319 |  |  | 0.607 |
-| walker |  | 7281 | 26 | export at index.d.ts:327 |  |  | 0.607 |
-| walker |  | 7309 | 28 | export at index.d.ts:141 |  |  | 0.607 |
+| walker |  | 6120 | 260 | export member names #1 at index.d.ts:366 |  |  | 0.611 |
+| walker |  | 6264 | 144 | export member names at index.d.ts:461 |  |  | 0.611 |
+| walker |  | 6456 | 192 | export member names at index.d.ts:713 |  |  | 0.611 |
+| walker |  | 6469 | 13 | export at index.d.ts:476 |  |  | 0.611 |
+| walker |  | 6481 | 12 | export at index.d.ts:535 |  |  | 0.611 |
+| ns | 6710 |  | 636 | lib/core/mergeConfig.js — part 2 (per-key mergeMap table + apply loop) | 3.5 |  | 0.591 |
+| walker |  | 6729 | 248 | export member names #2 at index.d.ts:366 |  |  | 0.605 |
+| walker |  | 6743 | 14 | export at index.d.ts:457 |  |  | 0.605 |
+| walker |  | 6757 | 14 | export at index.d.ts:545 |  |  | 0.605 |
+| walker |  | 6928 | 171 | export member names #3 at index.d.ts:366 |  |  | 0.612 |
+| walker |  | 6944 | 16 | export at index.d.ts:541 |  |  | 0.612 |
+| walker |  | 6963 | 19 | export at index.d.ts:6 |  |  | 0.612 |
+| walker |  | 6982 | 19 | export at index.d.ts:154 |  |  | 0.612 |
+| walker |  | 7003 | 21 | export at index.d.ts:158 |  |  | 0.612 |
+| walker |  | 7025 | 22 | export at index.d.ts:359 |  |  | 0.616 |
+| ns | 7046 |  | 336 | lib/core/AxiosError.js — class signature + error code constants | 4.1 |  | 0.607 |
+| walker |  | 7048 | 23 | export at index.d.ts:480 |  |  | 0.607 |
+| walker |  | 7071 | 23 | export at index.d.ts:564 |  |  | 0.607 |
+| walker |  | 7094 | 23 | export at index.d.ts:676 |  |  | 0.607 |
+| walker |  | 7118 | 24 | export at index.d.ts:323 |  |  | 0.607 |
+| walker |  | 7143 | 25 | export at index.d.ts:549 |  |  | 0.607 |
+| walker |  | 7169 | 26 | export at index.d.ts:319 |  |  | 0.607 |
+| walker |  | 7195 | 26 | export at index.d.ts:327 |  |  | 0.607 |
+| walker |  | 7223 | 28 | export at index.d.ts:141 |  |  | 0.607 |
+| walker |  | 7253 | 30 | export at index.d.ts:680 |  |  | 0.607 |
+| walker |  | 7277 | 24 | export at index.d.ts:686 |  |  | 0.607 |
+| walker |  | 7311 | 34 | export at index.d.ts:558 |  |  | 0.607 |
 | ns | 7338 |  | 292 | lib/cancel/isCancel.js, CanceledError.js — full | 4.2 |  | 0.596 |
-| walker |  | 7339 | 30 | export at index.d.ts:680 |  |  | 0.596 |
-| walker |  | 7363 | 24 | export at index.d.ts:686 |  |  | 0.596 |
-| walker |  | 7397 | 34 | export at index.d.ts:558 |  |  | 0.596 |
+| walker |  | 7346 | 35 | export at index.d.ts:553 |  |  | 0.596 |
+| walker |  | 7382 | 36 | export at index.d.ts:569 |  |  | 0.596 |
 | ns | 7410 |  | 72 | lib/cancel/CancelToken.js — method locations | 4.3 |  | 0.594 |
-| walker |  | 7432 | 35 | export at index.d.ts:553 |  |  | 0.594 |
-| walker |  | 7468 | 36 | export at index.d.ts:569 |  |  | 0.594 |
-| walker |  | 7498 | 30 | export at index.d.ts:274 |  |  | 0.594 |
-| walker |  | 7539 | 41 | export at index.d.ts:163 |  |  | 0.594 |
-| walker |  | 7584 | 45 | export at index.d.ts:309 |  |  | 0.594 |
-| walker |  | 7631 | 47 | export at index.d.ts:293 |  |  | 0.594 |
+| walker |  | 7412 | 30 | export at index.d.ts:274 |  |  | 0.594 |
+| walker |  | 7453 | 41 | export at index.d.ts:163 |  |  | 0.594 |
+| walker |  | 7498 | 45 | export at index.d.ts:309 |  |  | 0.594 |
+| walker |  | 7545 | 47 | export at index.d.ts:293 |  |  | 0.594 |
+| walker |  | 7579 | 34 | export at index.d.ts:706 |  |  | 0.594 |
+| walker |  | 7628 | 49 | export at index.d.ts:279 |  |  | 0.594 |
 | ns | 7633 |  | 223 | lib/core/AxiosHeaders.js — method locations | 5.1 |  | 0.584 |
-| walker |  | 7665 | 34 | export at index.d.ts:706 |  |  | 0.584 |
-| walker |  | 7714 | 49 | export at index.d.ts:279 |  |  | 0.584 |
-| walker |  | 7772 | 58 | export at index.d.ts:145 |  |  | 0.584 |
+| walker |  | 7686 | 58 | export at index.d.ts:145 |  |  | 0.584 |
+| walker |  | 7727 | 41 | export at index.d.ts:690 |  |  | 0.584 |
 | ns | 7780 |  | 147 | lib/adapters/adapters.js, xhr.js, fetch.js, http.js — top-level function/export locations | 5.2 |  | 0.575 |
-| walker |  | 7813 | 41 | export at index.d.ts:690 |  |  | 0.575 |
-| walker |  | 7876 | 63 | export at index.d.ts:595 |  |  | 0.575 |
-| walker |  | 7943 | 67 | export at index.d.ts:286 |  |  | 0.575 |
+| walker |  | 7790 | 63 | export at index.d.ts:595 |  |  | 0.575 |
+| walker |  | 7857 | 67 | export at index.d.ts:286 |  |  | 0.575 |
+| walker |  | 7913 | 56 | export at index.d.ts:112 |  |  | 0.575 |
 | ns | 7983 |  | 203 | lib/helpers/* — one-line-per-file export locations, part 1 (serialization + parsing + config) | 5.3 |  | 0.571 |
-| walker |  | 7999 | 56 | export at index.d.ts:112 |  |  | 0.571 |
-| walker |  | 8072 | 73 | export at index.d.ts:484 |  |  | 0.571 |
-| walker |  | 8146 | 74 | export at index.d.ts:299 |  |  | 0.571 |
-| walker |  | 8165 | 19 | export body at lib/helpers/isAxiosError.js:12 body 13 |  |  | 0.571 |
-| walker |  | 8200 | 35 | module item at lib/defaults/index.js:11 |  |  | 0.571 |
-| walker |  | 8259 | 59 | COLLABORATOR_GUIDE.md section #5 |  |  | 0.571 |
-| walker |  | 8279 | 20 | export names surface in lib/core/mergeConfig.js |  |  | 0.571 |
-| walker |  | 8279 | 0 | export at lib/core/mergeConfig.js:17 |  |  | 0.571 |
-| walker |  | 8299 | 20 | export names surface in lib/helpers/combineURLs.js |  |  | 0.572 |
-| walker |  | 8299 | 0 | export at lib/helpers/combineURLs.js:11 |  |  | 0.572 |
-| walker |  | 8319 | 20 | export names surface in lib/helpers/deprecatedMethod.js |  |  | 0.572 |
-| walker |  | 8319 | 0 | export at lib/helpers/deprecatedMethod.js:15 |  |  | 0.572 |
-| ns | 8329 |  | 346 | lib/helpers/* — one-line-per-file export locations, part 2 (streaming + proxy/origin + data URIs + small utilities) | 5.4 |  | 0.565 |
-| walker |  | 8781 | 462 | package scripts in package.json |  |  | 0.565 |
-| ns | 8838 |  | 509 | README.md — Error Types table (per-code descriptions) | 6.1 |  | 0.561 |
-| walker |  | 8853 | 72 | listing of 'tests/smoke/bun/tests' |  |  | 0.575 |
-| walker |  | 8874 | 21 | export names surface in lib/helpers/toURLEncodedForm.js |  |  | 0.576 |
-| walker |  | 8874 | 0 | export at lib/helpers/toURLEncodedForm.js:7 |  |  | 0.576 |
-| walker |  | 8939 | 65 | export at index.d.ts:251 |  |  | 0.576 |
-| walker |  | 8943 | 4 | listing of 'docs/data' |  |  | 0.576 |
-| walker |  | 8947 | 4 | listing of 'examples/all' |  |  | 0.577 |
-| walker |  | 8951 | 4 | listing of 'examples/amd' |  |  | 0.578 |
-| walker |  | 8955 | 4 | listing of 'examples/transform-response' |  |  | 0.579 |
-| walker |  | 9033 | 78 | listing of 'tests/unit/helpers' |  |  | 0.588 |
-| walker |  | 9157 | 124 | listing of 'tests/browser' |  |  | 0.616 |
-| walker |  | 9179 | 22 | export names surface in lib/helpers/fromDataURI.js |  |  | 0.617 |
-| walker |  | 9179 | 0 | export at lib/helpers/fromDataURI.js:21 |  |  | 0.617 |
-| walker |  | 9203 | 24 | imports in lib/platform/index.js |  |  | 0.617 |
-| walker |  | 9319 | 116 | listing of 'tests/smoke/esm/tests' |  |  | 0.631 |
-| ns | 9323 |  | 485 | CHANGELOG.md — v1.16.0 Notable Changes | 6.2 |  | 0.625 |
-| walker |  | 9344 | 25 | export names surface in lib/core/buildFullPath.js |  |  | 0.625 |
-| walker |  | 9344 | 0 | export at lib/core/buildFullPath.js:16 |  |  | 0.625 |
-| walker |  | 9415 | 71 | CONTRIBUTORS.md section #3 |  |  | 0.625 |
-| walker |  | 9514 | 99 | export at index.d.ts:338 |  |  | 0.625 |
-| walker |  | 9540 | 26 | export names surface in lib/adapters/fetch.js |  |  | 0.625 |
-| walker |  | 9540 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.625 |
-| walker |  | 9672 | 132 | listing of 'tests/smoke/cjs/tests' |  |  | 0.649 |
-| walker |  | 9749 | 77 | CONTRIBUTORS.md section #1 |  |  | 0.649 |
-| walker |  | 9778 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.649 |
-| walker |  | 9807 | 29 | export names surface in lib/adapters/http.js |  |  | 0.650 |
-| walker |  | 9818 | 11 | export names surface in lib/platform/node/classes/FormData.js |  |  | 0.650 |
-| walker |  | 9844 | 26 | THREATMODEL.md section #52 |  |  | 0.650 |
-| ns | 9858 |  | 535 | lib/utils.js — full export roster | 6.3 |  | 0.628 |
-| walker |  | 9873 | 29 | export body at lib/helpers/bind.js:10 body 11 |  |  | 0.628 |
-| walker |  | 9902 | 29 | export body at lib/helpers/spread.js:24 body 25 |  |  | 0.628 |
-| ns | 9929 |  | 71 | lib/defaults/transitional.js — full | 6.4 |  | 0.625 |
-| ns | 9988 |  | 59 | lib/platform/index.js — full | 6.5 |  | 0.627 |
+| walker |  | 7986 | 73 | export at index.d.ts:484 |  |  | 0.571 |
+| walker |  | 8060 | 74 | export at index.d.ts:299 |  |  | 0.571 |
+| walker |  | 8079 | 19 | export body at lib/helpers/isAxiosError.js:12 body 13 |  |  | 0.571 |
+| walker |  | 8114 | 35 | module item at lib/defaults/index.js:11 |  |  | 0.571 |
+| walker |  | 8173 | 59 | COLLABORATOR_GUIDE.md section #5 |  |  | 0.571 |
+| walker |  | 8193 | 20 | export names surface in lib/core/mergeConfig.js |  |  | 0.571 |
+| walker |  | 8193 | 0 | export at lib/core/mergeConfig.js:17 |  |  | 0.571 |
+| walker |  | 8213 | 20 | export names surface in lib/helpers/combineURLs.js |  |  | 0.572 |
+| walker |  | 8213 | 0 | export at lib/helpers/combineURLs.js:11 |  |  | 0.572 |
+| walker |  | 8233 | 20 | export names surface in lib/helpers/deprecatedMethod.js |  |  | 0.572 |
+| walker |  | 8233 | 0 | export at lib/helpers/deprecatedMethod.js:15 |  |  | 0.572 |
+| walker |  | 8305 | 72 | listing of 'tests/smoke/bun/tests' |  |  | 0.587 |
+| walker |  | 8326 | 21 | export names surface in lib/helpers/toURLEncodedForm.js |  |  | 0.588 |
+| walker |  | 8326 | 0 | export at lib/helpers/toURLEncodedForm.js:7 |  |  | 0.588 |
+| ns | 8329 |  | 346 | lib/helpers/* — one-line-per-file export locations, part 2 (streaming + proxy/origin + data URIs + small utilities) | 5.4 |  | 0.581 |
+| walker |  | 8391 | 65 | export at index.d.ts:251 |  |  | 0.581 |
+| walker |  | 8395 | 4 | listing of 'docs/data' |  |  | 0.581 |
+| walker |  | 8399 | 4 | listing of 'examples/all' |  |  | 0.582 |
+| walker |  | 8403 | 4 | listing of 'examples/amd' |  |  | 0.583 |
+| walker |  | 8407 | 4 | listing of 'examples/transform-response' |  |  | 0.584 |
+| walker |  | 8485 | 78 | listing of 'tests/unit/helpers' |  |  | 0.593 |
+| walker |  | 8609 | 124 | listing of 'tests/browser' |  |  | 0.622 |
+| walker |  | 8631 | 22 | export names surface in lib/helpers/fromDataURI.js |  |  | 0.622 |
+| walker |  | 8631 | 0 | export at lib/helpers/fromDataURI.js:21 |  |  | 0.622 |
+| walker |  | 8655 | 24 | imports in lib/platform/index.js |  |  | 0.622 |
+| walker |  | 8771 | 116 | listing of 'tests/smoke/esm/tests' |  |  | 0.636 |
+| walker |  | 8796 | 25 | export names surface in lib/core/buildFullPath.js |  |  | 0.636 |
+| walker |  | 8796 | 0 | export at lib/core/buildFullPath.js:16 |  |  | 0.636 |
+| ns | 8838 |  | 509 | README.md — Error Types table (per-code descriptions) | 6.1 |  | 0.631 |
+| walker |  | 8867 | 71 | CONTRIBUTORS.md section #3 |  |  | 0.631 |
+| walker |  | 8966 | 99 | export at index.d.ts:338 |  |  | 0.631 |
+| walker |  | 8992 | 26 | export names surface in lib/adapters/fetch.js |  |  | 0.631 |
+| walker |  | 8992 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.631 |
+| walker |  | 9124 | 132 | listing of 'tests/smoke/cjs/tests' |  |  | 0.656 |
+| walker |  | 9201 | 77 | CONTRIBUTORS.md section #1 |  |  | 0.656 |
+| walker |  | 9230 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.656 |
+| walker |  | 9259 | 29 | export names surface in lib/adapters/http.js |  |  | 0.657 |
+| walker |  | 9270 | 11 | export names surface in lib/platform/node/classes/FormData.js |  |  | 0.657 |
+| walker |  | 9296 | 26 | THREATMODEL.md section #52 |  |  | 0.657 |
+| ns | 9323 |  | 485 | CHANGELOG.md — v1.16.0 Notable Changes | 6.2 |  | 0.650 |
+| walker |  | 9325 | 29 | export body at lib/helpers/bind.js:10 body 11 |  |  | 0.650 |
+| walker |  | 9354 | 29 | export body at lib/helpers/spread.js:24 body 25 |  |  | 0.650 |
+| walker |  | 9381 | 27 | ECOSYSTEM.md section #16 |  |  | 0.650 |
+| walker |  | 9410 | 29 | module item at lib/cancel/CanceledError.js:5 |  |  | 0.651 |
+| walker |  | 9442 | 32 | export names surface in lib/helpers/buildURL.js |  |  | 0.652 |
+| walker |  | 9442 | 0 | export at lib/helpers/buildURL.js:14 |  |  | 0.652 |
+| walker |  | 9442 | 0 | export at lib/helpers/buildURL.js:31 |  |  | 0.652 |
+| ns | 9858 |  | 535 | lib/utils.js — full export roster | 6.3 |  | 0.630 |
+| walker |  | 9927 | 485 | package identity metadata in package.json |  |  | 0.630 |
+| ns | 9929 |  | 71 | lib/defaults/transitional.js — full | 6.4 |  | 0.627 |
+| ns | 9988 |  | 59 | lib/platform/index.js — full | 6.5 |  | 0.628 |

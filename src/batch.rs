@@ -248,6 +248,24 @@ pub enum TsKey {
         /// Parent export line.
         start_line: usize,
     },
+    /// One source-order partition of an oversized member-name catalog.
+    /// Predecessor: the file's `ExportNames` surface.
+    ExportMemberNamesChunk {
+        file: PathBuf,
+        /// Parent export line.
+        start_line: usize,
+        /// Zero-based source-order partition index.
+        chunk_index: usize,
+    },
+    /// Continuation chunk of one oversized exported class declaration.
+    /// Predecessor: the matching `Export` head or previous tail chunk.
+    ExportTail {
+        file: PathBuf,
+        /// Parent export line.
+        start_line: usize,
+        /// Zero-based tail index (the `Export` head is implicit chunk 0).
+        chunk_index: usize,
+    },
     /// Body slice of an export with a `statement_block` body (outer
     /// braces stripped). Predecessor: matching `Export`.
     ExportBody {
@@ -728,7 +746,10 @@ impl InnerKey for TsKey {
     fn is_depth_follow_up(&self) -> bool {
         matches!(
             self,
-            TsKey::ExportBody { .. } | TsKey::ExportMember { .. } | TsKey::ModuleItemBody { .. }
+            TsKey::ExportBody { .. }
+                | TsKey::ExportMember { .. }
+                | TsKey::ExportTail { .. }
+                | TsKey::ModuleItemBody { .. }
         )
     }
 
@@ -749,7 +770,9 @@ impl InnerKey for TsKey {
             // Roster tier for the unified member catalog — measured:
             // dropping it to the default leaves axios flat and costs
             // commander -0.212 (2026-07-06).
-            TsKey::ExportMemberNames { .. } | TsKey::ModuleItemNames { .. } => 0.37,
+            TsKey::ExportMemberNames { .. }
+            | TsKey::ExportMemberNamesChunk { .. }
+            | TsKey::ModuleItemNames { .. } => 0.37,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -776,6 +799,24 @@ impl InnerKey for TsKey {
             ),
             TsKey::ExportMemberNames { file, start_line } => format!(
                 "export member names at {}:{start_line}",
+                display_path(file, root)
+            ),
+            TsKey::ExportMemberNamesChunk {
+                file,
+                start_line,
+                chunk_index,
+            } => format!(
+                "export member names #{} at {}:{start_line}",
+                chunk_index + 1,
+                display_path(file, root)
+            ),
+            TsKey::ExportTail {
+                file,
+                start_line,
+                chunk_index,
+            } => format!(
+                "export tail #{} at {}:{start_line}",
+                chunk_index + 1,
                 display_path(file, root)
             ),
             TsKey::ExportBody {
