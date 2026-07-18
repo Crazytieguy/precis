@@ -135,18 +135,6 @@ docs/
               29→### Custom Coercions
             …
         core.md
-               1→# Core
-               2→
-               3→### `assert`
-            …
-              15→### `create`
-            …
-              27→### `is`
-            …
-              41→### `mask`
-            …
-              56→### `validate`
-            …
         errors.md
                1→# Errors
             …
@@ -157,22 +145,6 @@ docs/
               32→### Multiple Errors
             …
         refinements.md
-               1→# Refinements
-            …
-               5→### `empty`
-            …
-              21→### `max`
-            …
-              35→### `min`
-            …
-              49→### `nonempty`
-            …
-              58→### `pattern`
-            …
-              70→### `size`
-            …
-              88→### Custom Refinements
-            …
         types.md
         typescript.md
                1→# TypeScript
@@ -184,28 +156,11 @@ docs/
               25→### `Infer`
             …
         utilities.md
-               1→# Utilities
-            …
-               5→### `assign`
-            …
-              20→### `deprecated`
-            …
-              38→### `dynamic`
-            …
-              51→### `lazy`
-            …
-              64→### `omit`
-            …
-              78→### `partial`
-            …
-              97→### `pick`
-            …
     resources/
         faq.md
         links.md
                1→# Resources
-               2→
-               3→A few resources that are helpful for building with Superstruct.
+            …
                5→## Libraries
             …
     summary.md
@@ -283,18 +238,6 @@ src/
           32→  failures: () => Array<Failure>;
         …
           35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
-          36→    let cached: Array<Failure> | undefined
-          37→    const { message, explanation, ...rest } = failure
-          38→    const { path } = failure
-          39→    const msg =
-          40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-          41→    super(explanation ?? msg)
-          42→    if (explanation != null) this.cause = msg
-          43→    Object.assign(this, rest)
-          44→    this.name = this.constructor.name
-          45→    this.failures = () => {
-          46→      return (cached ??= [failure, ...failures()])
-          47→    }
         …
     index.ts
            1→export * from './error.js'
@@ -304,9 +247,84 @@ src/
            5→export * from './structs/types.js'
            6→export * from './structs/utilities.js'
     struct.ts
-           1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
-           2→import { StructError, Failure } from './error.js'
         …
+          10→export class Struct<T = unknown, S = unknown> {
+        …
+         119→/**
+         120→ * Assert that a value passes a struct, throwing if it doesn't.
+         121→ */
+         123→export function assert<T, S>(
+         124→  value: unknown,
+         125→  struct: Struct<T, S>,
+         126→  message?: string
+         127→): asserts value is T {
+        …
+         135→/**
+         136→ * Create a value with the coercion logic of struct and validate it.
+         137→ */
+         139→export function create<T, S>(
+         140→  value: unknown,
+         141→  struct: Struct<T, S>,
+         142→  message?: string
+         143→): T {
+        …
+         153→/**
+         154→ * Mask a value, returning only the subset of properties defined by a struct.
+         155→ */
+         157→export function mask<T, S>(
+         158→  value: unknown,
+         159→  struct: Struct<T, S>,
+         160→  message?: string
+         161→): T {
+        …
+         171→/**
+         172→ * Check if a value passes a struct.
+         173→ */
+         175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
+         176→  const result = validate(value, struct)
+         177→  return !result[0]
+        …
+         185→export function validate<T, S>(
+         186→  value: unknown,
+         187→  struct: Struct<T, S>,
+         188→  options: {
+         189→    coerce?: boolean
+         190→    mask?: boolean
+         191→    message?: string
+         192→  } = {}
+         193→): [StructError, undefined] | [undefined, T] {
+        …
+         221→export type Context = {
+         222→  branch: Array<any>
+         223→  path: Array<any>
+         224→  mask?: boolean
+         225→}
+         227→/**
+         228→ * A type utility to extract the type from a `Struct` class.
+         229→ */
+         231→export type Infer<T extends Struct<any, any>> = T['TYPE']
+         233→/**
+         234→ * A type utility to describe that a struct represents a TypeScript type.
+         235→ */
+         237→export type Describe<T> = Struct<T, StructSchema<T>>
+         239→/**
+         240→ * A `Result` is returned from validation functions.
+         241→ */
+         243→export type Result =
+         244→  | boolean
+         245→  | string
+         246→  | Partial<Failure>
+         247→  | Iterable<boolean | string | Partial<Failure>>
+         249→/**
+         250→ * A `Coercer` takes an unknown value and optionally coerces it.
+         251→ */
+         253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
+         255→/**
+         256→ * A `Validator` takes an unknown value and validates it.
+         257→ */
+         259→export type Validator = (value: unknown, context: Context) => Result
+        …
+         266→export type Refiner<T> = (value: T, context: Context) => Result
     structs/
         coercions.ts
             …
@@ -315,14 +333,6 @@ src/
               18→  condition: Struct<C, any>,
               19→  coercer: Coercer<C>
               20→): Struct<T, S> {
-              21→  return new Struct({
-              22→    ...struct,
-              23→    coercer: (value, ctx) => {
-              24→      return is(value, condition)
-              25→        ? struct.coercer(coercer(value, ctx), ctx)
-              26→        : struct.coercer(value, ctx)
-              27→    },
-              28→  })
             …
               38→export function defaulted<T, S>(
               39→  struct: Struct<T, S>,
@@ -352,45 +362,4 @@ test/
     tsconfig.json
     typings/
     validation/
-        any/
-        array/
-        assign/
-        bigint/
-        boolean/
-        coerce/
-        date/
-        defaulted/
-        deprecated/
-        dynamic/
-        empty/
-        enums/
-        function/
-        instance/
-        integer/
-        intersection/
-        lazy/
-        literal/
-        map/
-        max/
-        min/
-        never/
-        nullable/
-        number/
-        object/
-        omit/
-        optional/
-        partial/
-        pattern/
-        pick/
-        record/
-        refine/
-        regexp/
-        set/
-        size/
-        string/
-        trimmed/
-        tuple/
-        type/
-        union/
-        unknown/
 tsconfig.json

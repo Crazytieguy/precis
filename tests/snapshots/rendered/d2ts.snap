@@ -87,7 +87,6 @@ README.md
       51→## Key Features
       53→- **Incremental Processing**: Efficiently process changes to input data without recomputing everything
     …
-      70→- **SQLite Integration**: Optional SQLite backend for persisting operator state allowing for larger datasets and resumable pipelines
       71→- **Type Safety**: Full TypeScript type safety and inference through the pipeline API
       73→## Quick Start
       74→
@@ -97,7 +96,6 @@ README.md
     …
      141→### Using with ElectricSQL
     …
-     183→There is a complete example in the [./examples/electric](./examples/electric) directory.
      185→## Examples
      186→
      187→There are a number of examples in the [./examples](./examples) directory, covering:
@@ -254,6 +252,24 @@ packages/
         package.json
         src/
             d2.ts
+                …
+                  11→export type D2Options = {
+                  12→  initialFrontier: Antichain | Version | number | number[]
+                  13→}
+                  15→export class D2 implements ID2 {
+                …
+                  93→export class StreamBuilder<T> implements IStreamBuilder<T> {
+                …
+                  97→  constructor(graph: ID2, writer: DifferenceStreamWriter<T>) {
+                …
+                 166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
+                 167→  sendData(
+                 168→    version: Version | number | number[],
+                 169→    collection: MultiSet<T> | MultiSetArray<T>,
+                 170→  ): void {
+                …
+                 174→  sendFrontier(frontier: Antichain | Version | number | number[]): void {
+                …
             electric/
                 index.ts
             graph.ts
@@ -271,19 +287,11 @@ packages/
                 concat.ts
                 consolidate.ts
                 count.ts
-                    …
-                      10→export class CountOperator<K, V> extends ReduceOperator<K, V, number> {
-                    …
-                      32→export function count<
-                    …
                 debug.ts
                     …
                       18→export class DebugOperator<T> extends UnaryOperator<T> {
                     …
                       74→export function debug<T>(
-                      75→  name: string,
-                      76→  indent: boolean = false,
-                      77→): PipedOperator<T, T> {
                     …
                 distinct.ts
                 filter.ts
@@ -330,17 +338,6 @@ packages/
                     …
                 topKWithFractionalIndex.ts
             order.ts
-                …
-                  10→export function v(version: number | number[]): Version {
-                …
-                  29→export class Version {
-                …
-                 138→export class Antichain {
-                …
-                 277→export class Frontier extends Antichain {
-                 278→  constructor(...elements: Version[]) {
-                 279→    super(elements)
-                …
             sqlite/
                 context.ts
                 database.ts

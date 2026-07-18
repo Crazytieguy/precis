@@ -13,25 +13,27 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | walker |  | 203 | 23 | listing of 'source' |  |  | 0.776 |
 | ns | 256 |  | 119 | readme.md — maintenance-mode notice | 2.2 | 2.1 | 0.714 |
 | walker |  | 266 | 63 | export names surface in source/index.ts |  |  | 0.714 |
+| walker |  | 299 | 33 | export at source/index.ts:16 |  |  | 0.714 |
 | ns | 315 |  | 59 | package.json — name, version, description, license | 2.3 |  | 0.719 |
-| walker |  | 387 | 121 | headings outline in readme.md |  |  | 0.734 |
-| walker |  | 394 | 7 | listing of '.github' |  |  | 0.747 |
-| walker |  | 398 | 4 | listing of '.github/workflows' |  |  | 0.759 |
-| ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.659 |
+| walker |  | 319 | 20 | export doc at source/index.ts:16 |  |  | 0.719 |
+| walker |  | 440 | 121 | headings outline in readme.md |  |  | 0.734 |
+| walker |  | 447 | 7 | listing of '.github' |  |  | 0.747 |
+| ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.649 |
+| walker |  | 451 | 4 | listing of '.github/workflows' |  |  | 0.659 |
 | ns | 554 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.617 |
-| walker |  | 599 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.617 |
-| walker |  | 636 | 37 | export names surface in source/priority-queue.ts |  |  | 0.617 |
+| walker |  | 652 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.658 |
 | ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.658 |
-| walker |  | 653 | 17 | export at source/priority-queue.ts:7 |  |  | 0.658 |
-| walker |  | 782 | 129 | export at source/priority-queue.ts:11 |  |  | 0.659 |
-| walker |  | 792 | 10 | readme.md section #5 |  |  | 0.659 |
-| walker |  | 823 | 31 | listing of 'test' |  |  | 0.777 |
-| ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.667 |
-| ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.646 |
-| ns | 1080 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.605 |
-| ns | 1352 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.533 |
-| walker |  | 1363 | 540 | export at source/index.ts:16 |  |  | 0.536 |
-| walker |  | 1383 | 20 | export doc at source/index.ts:16 |  |  | 0.536 |
+| walker |  | 689 | 37 | export names surface in source/priority-queue.ts |  |  | 0.658 |
+| walker |  | 706 | 17 | export at source/priority-queue.ts:7 |  |  | 0.658 |
+| ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.565 |
+| walker |  | 924 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.566 |
+| ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.548 |
+| walker |  | 1053 | 129 | export at source/priority-queue.ts:11 |  |  | 0.548 |
+| walker |  | 1063 | 10 | readme.md section #5 |  |  | 0.548 |
+| ns | 1080 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.513 |
+| walker |  | 1352 | 289 | export tail #2 at source/index.ts:16 |  |  | 0.455 |
+| ns | 1352 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.455 |
+| walker |  | 1383 | 31 | listing of 'test' |  |  | 0.536 |
 | walker |  | 1398 | 15 | readme.md section #24 |  |  | 0.536 |
 | walker |  | 1418 | 20 | imports in source/options.ts |  |  | 0.537 |
 | walker |  | 1502 | 84 | imports in source/index.ts |  |  | 0.537 |

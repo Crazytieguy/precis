@@ -1,7 +1,7 @@
 fixture = "monaco-editor"
 budget = 10000
-cumulative_tokens = 9943
-batch_count = 255
+cumulative_tokens = 9987
+batch_count = 260
 
 [[batches]]
 position = 1
@@ -4669,36 +4669,454 @@ kind = "full"
 
 [[batches]]
 position = 229
-key = 'Typescript(ExportNames { file: "samples/browser-esm-vite-react/src/components/Editor.tsx" })'
-descriptor = "export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx"
-cost_tokens = 18
-cum_tokens = 9133
+key = 'Typescript(ExportNames { file: "src/languages/features/css/cssWorker.ts" })'
+descriptor = "export names surface in src/languages/features/css/cssWorker.ts"
+cost_tokens = 51
+cum_tokens = 9166
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "samples/browser-esm-vite-react/src/components/Editor.tsx"
-start = 5
-end = 5
+path = "src/languages/features/css/cssWorker.ts"
+start = 10
+end = 10
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "samples/browser-esm-vite-react/src/components/Editor.tsx"
-start = 6
-end = 6
+path = "src/languages/features/css/cssWorker.ts"
+start = 232
+end = 232
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 237
+end = 237
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 233
+end = 233
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 238
+end = 238
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 230
-key = 'Typescript(Export { file: "samples/browser-esm-vite-react/src/components/Editor.tsx", start_line: 5 })'
-descriptor = "export at samples/browser-esm-vite-react/src/components/Editor.tsx:5"
+key = 'Typescript(Export { file: "src/languages/features/css/cssWorker.ts", start_line: 237 })'
+descriptor = "export at src/languages/features/css/cssWorker.ts:237"
 cost_tokens = 0
-cum_tokens = 9133
+cum_tokens = 9166
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 237
+end = 237
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 238
+end = 238
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 231
+key = 'Typescript(Export { file: "src/languages/features/css/cssWorker.ts", start_line: 232 })'
+descriptor = "export at src/languages/features/css/cssWorker.ts:232"
+cost_tokens = 21
+cum_tokens = 9187
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 232
+end = 235
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 232
+key = 'Typescript(Export { file: "src/languages/features/css/cssWorker.ts", start_line: 10 })'
+descriptor = "export at src/languages/features/css/cssWorker.ts:10"
+cost_tokens = 22
+cum_tokens = 9209
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 233
+key = 'Typescript(ExportBody { file: "src/languages/features/css/cssWorker.ts", start_line: 237, body_start_line: 238 })'
+descriptor = "export body at src/languages/features/css/cssWorker.ts:237 body 238"
+cost_tokens = 13
+cum_tokens = 9222
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/css/cssWorker.ts"
+start = 238
+end = 238
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 234
+key = 'Typescript(ExportNames { file: "src/languages/features/html/htmlWorker.ts" })'
+descriptor = "export names surface in src/languages/features/html/htmlWorker.ts"
+cost_tokens = 51
+cum_tokens = 9273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 235
+key = 'Typescript(Export { file: "src/languages/features/html/htmlWorker.ts", start_line: 162 })'
+descriptor = "export at src/languages/features/html/htmlWorker.ts:162"
+cost_tokens = 0
+cum_tokens = 9273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 236
+key = 'Typescript(Export { file: "src/languages/features/html/htmlWorker.ts", start_line: 157 })'
+descriptor = "export at src/languages/features/html/htmlWorker.ts:157"
+cost_tokens = 23
+cum_tokens = 9296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 157
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Typescript(Export { file: "src/languages/features/html/htmlWorker.ts", start_line: 11 })'
+descriptor = "export at src/languages/features/html/htmlWorker.ts:11"
+cost_tokens = 22
+cum_tokens = 9318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 238
+key = 'Typescript(ExportBody { file: "src/languages/features/html/htmlWorker.ts", start_line: 162, body_start_line: 163 })'
+descriptor = "export body at src/languages/features/html/htmlWorker.ts:162 body 163"
+cost_tokens = 13
+cum_tokens = 9331
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/html/htmlWorker.ts"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 239
+key = 'Typescript(ExportNames { file: "src/languages/features/json/jsonWorker.ts" })'
+descriptor = "export names surface in src/languages/features/json/jsonWorker.ts"
+cost_tokens = 51
+cum_tokens = 9382
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 227
+end = 227
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 233
+end = 233
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 228
+end = 228
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 234
+end = 234
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 240
+key = 'Typescript(Export { file: "src/languages/features/json/jsonWorker.ts", start_line: 233 })'
+descriptor = "export at src/languages/features/json/jsonWorker.ts:233"
+cost_tokens = 0
+cum_tokens = 9382
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 233
+end = 233
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 234
+end = 234
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 241
+key = 'Typescript(Export { file: "src/languages/features/json/jsonWorker.ts", start_line: 18 })'
+descriptor = "export at src/languages/features/json/jsonWorker.ts:18"
+cost_tokens = 22
+cum_tokens = 9404
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 242
+key = 'Typescript(ExportBody { file: "src/languages/features/json/jsonWorker.ts", start_line: 233, body_start_line: 234 })'
+descriptor = "export body at src/languages/features/json/jsonWorker.ts:233 body 234"
+cost_tokens = 13
+cum_tokens = 9417
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 234
+end = 234
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'Typescript(ExportNames { file: "samples/browser-esm-vite-react/src/components/Editor.tsx" })'
+descriptor = "export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx"
+cost_tokens = 18
+cum_tokens = 9435
 
 [batches.content]
 kind = "lines"
@@ -4720,11 +5138,37 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 231
+position = 244
+key = 'Typescript(Export { file: "samples/browser-esm-vite-react/src/components/Editor.tsx", start_line: 5 })'
+descriptor = "export at samples/browser-esm-vite-react/src/components/Editor.tsx:5"
+cost_tokens = 0
+cum_tokens = 9435
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-vite-react/src/components/Editor.tsx"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "samples/browser-esm-vite-react/src/components/Editor.tsx"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 245
 key = 'Typescript(ExportNames { file: "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx" })'
 descriptor = "export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx"
 cost_tokens = 18
-cum_tokens = 9151
+cum_tokens = 9453
 
 [batches.content]
 kind = "lines"
@@ -4746,11 +5190,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 232
+position = 246
 key = 'Typescript(Export { file: "samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx", start_line: 23 })'
 descriptor = "export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23"
 cost_tokens = 0
-cum_tokens = 9151
+cum_tokens = 9453
 
 [batches.content]
 kind = "lines"
@@ -4772,11 +5216,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 233
+position = 247
 key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 182 })'
 descriptor = "module item body at webpack-plugin/src/index.ts:159 body 182"
 cost_tokens = 87
-cum_tokens = 9238
+cum_tokens = 9540
 
 [batches.content]
 kind = "lines"
@@ -4790,11 +5234,29 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 234
+position = 248
+key = 'Typescript(Export { file: "src/languages/features/json/jsonWorker.ts", start_line: 227 })'
+descriptor = "export at src/languages/features/json/jsonWorker.ts:227"
+cost_tokens = 34
+cum_tokens = 9574
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/languages/features/json/jsonWorker.ts"
+start = 227
+end = 231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 52
-cum_tokens = 9290
+cum_tokens = 9626
 
 [batches.content]
 kind = "lines"
@@ -4808,11 +5270,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 235
+position = 250
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #13"
 cost_tokens = 59
-cum_tokens = 9349
+cum_tokens = 9685
 
 [batches.content]
 kind = "lines"
@@ -4826,11 +5288,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 236
+position = 251
 key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 559 })'
 descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 559"
 cost_tokens = 12
-cum_tokens = 9361
+cum_tokens = 9697
 
 [batches.content]
 kind = "lines"
@@ -4844,11 +5306,11 @@ end = 559
 kind = "full"
 
 [[batches]]
-position = 237
+position = 252
 key = 'Typescript(ExportNames { file: "src/internal/common/workers.ts" })'
 descriptor = "export names surface in src/internal/common/workers.ts"
 cost_tokens = 29
-cum_tokens = 9390
+cum_tokens = 9726
 
 [batches.content]
 kind = "lines"
@@ -4886,11 +5348,11 @@ end = 114
 kind = "ellipsis"
 
 [[batches]]
-position = 238
+position = 253
 key = 'Typescript(Export { file: "src/internal/common/workers.ts", start_line: 92 })'
 descriptor = "export at src/internal/common/workers.ts:92"
 cost_tokens = 23
-cum_tokens = 9413
+cum_tokens = 9749
 
 [batches.content]
 kind = "lines"
@@ -4912,11 +5374,11 @@ end = 95
 kind = "ellipsis"
 
 [[batches]]
-position = 239
+position = 254
 key = 'Fs(DirListing { dir: "test/smoke/amd" })'
 descriptor = "listing of 'test/smoke/amd'"
 cost_tokens = 4
-cum_tokens = 9417
+cum_tokens = 9753
 
 [batches.content]
 kind = "fs"
@@ -4926,11 +5388,11 @@ parent = "test/smoke/amd"
 entries = ["index.html"]
 
 [[batches]]
-position = 240
+position = 255
 key = 'Fs(DirListing { dir: "website/static" })'
 descriptor = "listing of 'website/static'"
 cost_tokens = 8
-cum_tokens = 9425
+cum_tokens = 9761
 
 [batches.content]
 kind = "fs"
@@ -4940,11 +5402,11 @@ parent = "website/static"
 entries = ["monarch", "monarch-static.html"]
 
 [[batches]]
-position = 241
+position = 256
 key = 'Typescript(ModuleItem { file: "src/languages/features/html/register.ts", start_line: 115 })'
 descriptor = "module item at src/languages/features/html/register.ts:115"
 cost_tokens = 181
-cum_tokens = 9606
+cum_tokens = 9942
 
 [batches.content]
 kind = "lines"
@@ -5062,11 +5524,11 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 242
+position = 257
 key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 136 })'
 descriptor = "module item body at src/languages/features/html/register.ts:115 body 136"
 cost_tokens = 10
-cum_tokens = 9616
+cum_tokens = 9952
 
 [batches.content]
 kind = "lines"
@@ -5080,11 +5542,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 243
+position = 258
 key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 132 })'
 descriptor = "module item body at src/languages/features/html/register.ts:115 body 132"
 cost_tokens = 11
-cum_tokens = 9627
+cum_tokens = 9963
 
 [batches.content]
 kind = "lines"
@@ -5098,11 +5560,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 244
+position = 259
 key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 140 })'
 descriptor = "module item body at src/languages/features/html/register.ts:115 body 140"
 cost_tokens = 11
-cum_tokens = 9638
+cum_tokens = 9974
 
 [batches.content]
 kind = "lines"
@@ -5116,11 +5578,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 245
+position = 260
 key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 128 })'
 descriptor = "module item body at src/languages/features/html/register.ts:115 body 128"
 cost_tokens = 13
-cum_tokens = 9651
+cum_tokens = 9987
 
 [batches.content]
 kind = "lines"
@@ -5129,198 +5591,6 @@ kind = "lines"
 path = "src/languages/features/html/register.ts"
 start = 128
 end = 128
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 246
-key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 144 })'
-descriptor = "module item body at src/languages/features/html/register.ts:115 body 144"
-cost_tokens = 28
-cum_tokens = 9679
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 144
-end = 145
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 247
-key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 149 })'
-descriptor = "module item body at src/languages/features/html/register.ts:115 body 149"
-cost_tokens = 30
-cum_tokens = 9709
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 149
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 248
-key = 'Typescript(ModuleItemBody { file: "src/languages/features/html/register.ts", start_line: 115, body_start_line: 122 })'
-descriptor = "module item body at src/languages/features/html/register.ts:115 body 122"
-cost_tokens = 35
-cum_tokens = 9744
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/html/register.ts"
-start = 122
-end = 124
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 249
-key = 'Typescript(ExportNames { file: "src/languages/features/css/cssMode.ts" })'
-descriptor = "export names surface in src/languages/features/css/cssMode.ts"
-cost_tokens = 21
-cum_tokens = 9765
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/css/cssMode.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/css/cssMode.ts"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 250
-key = 'Typescript(Export { file: "src/languages/features/css/cssMode.ts", start_line: 12 })'
-descriptor = "export at src/languages/features/css/cssMode.ts:12"
-cost_tokens = 0
-cum_tokens = 9765
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/css/cssMode.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/languages/features/css/cssMode.ts"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 251
-key = 'Typescript(ModuleItemBody { file: "monaco-lsp-client/generator/index.ts", start_line: 259, body_start_line: 558 })'
-descriptor = "module item body at monaco-lsp-client/generator/index.ts:259 body 558"
-cost_tokens = 12
-cum_tokens = 9777
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "monaco-lsp-client/generator/index.ts"
-start = 558
-end = 558
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 252
-key = 'Json(Dependencies { file: "samples/browser-esm-parcel/package.json" })'
-descriptor = "package dependencies in samples/browser-esm-parcel/package.json"
-cost_tokens = 50
-cum_tokens = 9827
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "samples/browser-esm-parcel/package.json"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 253
-key = 'Typescript(ExportNames { file: "src/languages/features/typescript/ts.worker.ts" })'
-descriptor = "export names surface in src/languages/features/typescript/ts.worker.ts"
-cost_tokens = 22
-cum_tokens = 9849
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/languages/features/typescript/ts.worker.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 254
-key = 'Fs(DirListing { dir: "website/scripts" })'
-descriptor = "listing of 'website/scripts'"
-cost_tokens = 9
-cum_tokens = 9858
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "website/scripts"
-entries = ["check-playground-samples-js.ts"]
-
-[[batches]]
-position = 255
-key = 'Typescript(ModuleItemBody { file: "webpack-plugin/src/index.ts", start_line: 159, body_start_line: 191 })'
-descriptor = "module item body at webpack-plugin/src/index.ts:159 body 191"
-cost_tokens = 85
-cum_tokens = 9943
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "webpack-plugin/src/index.ts"
-start = 191
-end = 200
 
 [batches.content.spans.render]
 kind = "full"
