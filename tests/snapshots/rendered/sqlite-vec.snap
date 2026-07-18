@@ -28,6 +28,16 @@ ARCHITECTURE.md
 LICENSE-APACHE
 LICENSE-MIT
 Makefile
+    …
+      63→TARGET_LOADABLE=$(prefix)/vec0.$(LOADABLE_EXTENSION)
+      64→TARGET_STATIC=$(prefix)/libsqlite_vec0.a
+      65→TARGET_STATIC_H=$(prefix)/sqlite-vec.h
+      66→TARGET_CLI=$(prefix)/sqlite3
+      67→
+      68→loadable: $(TARGET_LOADABLE)
+      69→static: $(TARGET_STATIC)
+      70→cli: $(TARGET_CLI)
+    …
 README.md
        1→# `sqlite-vec`
     …
@@ -142,9 +152,7 @@ bindings/
             go-sqlite3.patch
     python/
         extra_init.py
-               1→from typing import List
-               2→from struct import pack
-               3→from sqlite3 import Connection
+            …
                6→def serialize_float32(vector: List[float]) -> bytes:
                7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
                8→    return pack("%sf" % len(vector), *vector)
@@ -247,15 +255,11 @@ scripts/
 site/
     .gitignore
     .vitepress/
-        config.mts
-        theme/
     api-reference.md
     build-ref.mjs
     compiling.md
     features/
     getting-started/
-        installation.md
-        introduction.md
     guides/
         arithmetic.md
         binary-quant.md

@@ -347,6 +347,11 @@ pub enum PlaintextKey {
     /// tail. Chunks form a predecessor chain after [`PlaintextKey::Whole`]
     /// so later config groups cannot render before earlier ones.
     DotenvChunk { file: PathBuf, chunk_index: usize },
+    /// Source-ordered chunk of literal target/dependency rows from an
+    /// oversized root Makefile, plus bounded variable blocks that
+    /// directly govern build/test targets. Recipe, pattern, and
+    /// generated-output rules are deliberately absent.
+    MakefileSkeletonChunk { file: PathBuf, chunk_index: usize },
     /// `NAME` + `DESCRIPTION`-lede slice of a troff man page — the
     /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
     /// (or autotools `*.1.in`) manual.
@@ -953,6 +958,13 @@ impl InnerKey for PlaintextKey {
             PlaintextKey::DotenvChunk { file, chunk_index } => {
                 format!(
                     "plaintext dotenv tail chunk #{} of {}",
+                    chunk_index + 1,
+                    display_path(file, root),
+                )
+            }
+            PlaintextKey::MakefileSkeletonChunk { file, chunk_index } => {
+                format!(
+                    "Makefile target skeleton chunk #{} of {}",
                     chunk_index + 1,
                     display_path(file, root),
                 )
