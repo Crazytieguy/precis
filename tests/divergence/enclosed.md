@@ -59,8 +59,9 @@ Score(3000)=0.648 I=0.879 C=0.478 ns_rows≤3K=20/40 (reached=9 partial=0 missin
 | walker |  | 1104 | 59 | README headline in packages/lib/README.md |  |  | 0.503 |
 | walker |  | 1129 | 25 | listing of 'packages/lib/src/crypto' |  |  | 0.504 |
 | walker |  | 1140 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.504 |
-| ns | 1196 |  | 350 | README Features bullet list | 1.12 |  | 0.461 |
-| walker |  | 1246 | 106 | YAML config at docker-compose.yml |  |  | 0.557 |
+| walker |  | 1188 | 48 | YAML config at docker-compose.yml |  |  | 0.527 |
+| ns | 1196 |  | 350 | README Features bullet list | 1.12 |  | 0.482 |
+| walker |  | 1246 | 58 | YAML config tail at docker-compose.yml |  |  | 0.557 |
 | walker |  | 1273 | 27 | listing of 'packages/lib/src/notes' |  |  | 0.558 |
 | walker |  | 1302 | 29 | listing of '.github' |  |  | 0.609 |
 | walker |  | 1383 | 81 | listing of '.github/workflows' |  |  | 0.707 |
