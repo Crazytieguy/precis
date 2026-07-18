@@ -1,4 +1,4 @@
-Score(3000)=0.423 I=0.744 C=0.241 ns_rows≤3K=13/41 (reached=4 partial=1 missing=8)
+Score(3000)=0.441 I=0.751 C=0.259 ns_rows≤3K=13/41 (reached=4 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -68,92 +68,93 @@ Score(3000)=0.423 I=0.744 C=0.241 ns_rows≤3K=13/41 (reached=4 partial=1 missin
 | walker |  | 1473 | 13 | README.md section #23 |  |  | 0.381 |
 | walker |  | 1486 | 13 | README.md section #24 |  |  | 0.381 |
 | walker |  | 1582 | 96 | package runtime metadata in package.json |  |  | 0.381 |
-| walker |  | 1716 | 134 | plaintext config .env.sample |  |  | 0.456 |
-| ns | 1826 |  | 376 | Dockerfile (stages + build + CMD) | 1.10 |  | 0.416 |
-| walker |  | 1869 | 153 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.417 |
-| walker |  | 1928 | 59 | listing of 'apps/mobile/components' |  |  | 0.418 |
-| walker |  | 1954 | 26 | listing of 'apps/mobile/components/Formats' |  |  | 0.418 |
-| walker |  | 1986 | 32 | listing of 'apps/mobile/components/ActionSheets' |  |  | 0.418 |
-| walker |  | 2000 | 14 | README.md section #21 |  |  | 0.418 |
-| walker |  | 2012 | 12 | README.md section #22 |  |  | 0.418 |
-| walker |  | 2026 | 14 | README.md section #20 |  |  | 0.418 |
-| walker |  | 2135 | 109 | listing of 'packages/lib' |  |  | 0.419 |
-| walker |  | 2164 | 29 | README.md section #29 |  |  | 0.419 |
-| ns | 2173 |  | 347 | .env.sample: additional optional settings roster | 1.11 |  | 0.409 |
-| walker |  | 2221 | 57 | listing of 'apps/worker/lib' |  |  | 0.409 |
-| walker |  | 2283 | 62 | listing of 'apps/web/hooks' |  |  | 0.409 |
-| walker |  | 2298 | 15 | README.md section #11 |  |  | 0.409 |
-| walker |  | 2316 | 18 | listing of 'apps/web/e2e' |  |  | 0.409 |
-| walker |  | 2322 | 6 | listing of 'apps/web/e2e/tests' |  |  | 0.409 |
-| walker |  | 2339 | 17 | listing of 'apps/web/e2e/fixtures' |  |  | 0.409 |
-| walker |  | 2352 | 13 | listing of 'apps/web/e2e/fixtures/base' |  |  | 0.409 |
-| walker |  | 2394 | 42 | listing of 'apps/worker/lib/preservationScheme' |  |  | 0.410 |
-| walker |  | 2411 | 17 | README.md section #7 |  |  | 0.410 |
-| walker |  | 2427 | 16 | README.md section #6 |  |  | 0.410 |
-| walker |  | 2444 | 17 | README.md section #9 |  |  | 0.410 |
-| walker |  | 2460 | 16 | README.md section #8 |  |  | 0.410 |
-| walker |  | 2476 | 16 | README.md section #10 |  |  | 0.410 |
-| walker |  | 2493 | 17 | README.md section #16 |  |  | 0.410 |
-| walker |  | 2572 | 79 | listing of 'apps/web/public' |  |  | 0.410 |
-| walker |  | 2582 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.410 |
-| ns | 2630 |  | 457 | Root package.json (workspace scripts) | 1.12 |  | 0.387 |
-| walker |  | 2859 | 277 | plaintext config Dockerfile |  |  | 0.444 |
-| ns | 2897 |  | 267 | apps/mobile/package.json (identity + scripts) | 1.13 |  | 0.423 |
-| walker |  | 2908 | 49 | listing of 'apps/web/public/locales' |  |  | 0.423 |
-| walker |  | 2912 | 4 | listing of 'apps/web/public/locales/de' |  |  | 0.423 |
-| walker |  | 2916 | 4 | listing of 'apps/web/public/locales/en' |  |  | 0.423 |
-| walker |  | 2920 | 4 | listing of 'apps/web/public/locales/es' |  |  | 0.423 |
-| walker |  | 2924 | 4 | listing of 'apps/web/public/locales/fr' |  |  | 0.423 |
-| walker |  | 2928 | 4 | listing of 'apps/web/public/locales/it' |  |  | 0.423 |
-| walker |  | 2932 | 4 | listing of 'apps/web/public/locales/ja' |  |  | 0.423 |
-| walker |  | 2936 | 4 | listing of 'apps/web/public/locales/nl' |  |  | 0.423 |
-| walker |  | 2940 | 4 | listing of 'apps/web/public/locales/pl' |  |  | 0.423 |
-| walker |  | 2944 | 4 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.423 |
-| walker |  | 2948 | 4 | listing of 'apps/web/public/locales/ro' |  |  | 0.423 |
-| walker |  | 2952 | 4 | listing of 'apps/web/public/locales/ru' |  |  | 0.423 |
-| walker |  | 2956 | 4 | listing of 'apps/web/public/locales/tr' |  |  | 0.423 |
-| walker |  | 2960 | 4 | listing of 'apps/web/public/locales/uk' |  |  | 0.423 |
-| walker |  | 2964 | 4 | listing of 'apps/web/public/locales/zh' |  |  | 0.423 |
-| walker |  | 2968 | 4 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.423 |
-| walker |  | 3018 | 50 | listing of 'apps/mobile/components/ui' |  |  | 0.423 |
-| walker |  | 3104 | 86 | listing of 'apps/web/pages' |  |  | 0.423 |
-| walker |  | 3110 | 6 | listing of 'apps/web/pages/preserved' |  |  | 0.423 |
-| walker |  | 3118 | 8 | listing of 'apps/web/pages/api' |  |  | 0.423 |
-| walker |  | 3121 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.423 |
-| walker |  | 3130 | 9 | listing of 'apps/web/pages/public' |  |  | 0.423 |
-| walker |  | 3135 | 5 | listing of 'apps/web/pages/public/collections' |  |  | 0.423 |
-| walker |  | 3139 | 4 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.423 |
-| ns | 3140 |  | 243 | apps/web/package.json (identity + scripts) | 1.14 |  | 0.409 |
-| walker |  | 3145 | 6 | listing of 'apps/web/pages/public/links' |  |  | 0.409 |
-| walker |  | 3151 | 6 | listing of 'apps/web/pages/public/preserved' |  |  | 0.409 |
-| walker |  | 3162 | 11 | listing of 'apps/web/pages/collections' |  |  | 0.409 |
-| walker |  | 3173 | 11 | listing of 'apps/web/pages/tags' |  |  | 0.409 |
-| walker |  | 3185 | 12 | listing of 'apps/web/pages/auth' |  |  | 0.409 |
-| walker |  | 3199 | 14 | export names surface in apps/web/pages/index.tsx |  |  | 0.409 |
-| walker |  | 3199 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.409 |
-| walker |  | 3215 | 16 | listing of 'apps/web/pages/links' |  |  | 0.409 |
-| walker |  | 3234 | 19 | listing of 'apps/web/pages/admin' |  |  | 0.409 |
-| walker |  | 3244 | 10 | listing of 'apps/web/pages/public/collections/[id]' |  |  | 0.409 |
-| walker |  | 3287 | 43 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.409 |
-| walker |  | 3309 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.409 |
-| walker |  | 3328 | 19 | README.md section #15 |  |  | 0.409 |
-| walker |  | 3384 | 56 | listing of 'apps/web/pages/settings' |  |  | 0.409 |
-| walker |  | 3460 | 76 | export at packages/prisma/index.ts:5 |  |  | 0.409 |
-| ns | 3665 |  | 525 | apps/worker/package.json (scripts + dependencies) | 1.15 |  | 0.382 |
-| walker |  | 3755 | 295 | README.md section #0 |  |  | 0.382 |
-| walker |  | 3777 | 22 | README.md section #1 |  |  | 0.382 |
-| walker |  | 3799 | 22 | README.md section #2 |  |  | 0.382 |
-| walker |  | 4019 | 220 | Prisma schema TOC in packages/prisma/schema.prisma |  |  | 0.385 |
-| ns | 4020 |  | 355 | .env.sample: SSO provider roster (first 35 of 58, alphabetical) | 1.16 |  | 0.363 |
-| walker |  | 4034 | 15 | imports in packages/prisma/index.ts |  |  | 0.363 |
-| ns | 4043 |  | 23 | packages/prisma directory listing | 2.1 |  | 0.375 |
-| walker |  | 4058 | 24 | README.md section #5 |  |  | 0.375 |
-| walker |  | 4081 | 23 | README.md section #4 |  |  | 0.375 |
-| walker |  | 4106 | 25 | README.md section #13 |  |  | 0.375 |
-| walker |  | 4130 | 24 | README.md section #12 |  |  | 0.375 |
-| ns | 4246 |  | 203 | schema.prisma: every model/enum name (roster) | 2.2 |  | 0.412 |
-| ns | 4311 |  | 65 | schema.prisma: generator + datasource | 2.3 |  | 0.408 |
-| walker |  | 4440 | 310 | YAML config at docker-compose.yml |  |  | 0.477 |
+| walker |  | 1722 | 140 | YAML config at docker-compose.yml |  |  | 0.411 |
+| ns | 1826 |  | 376 | Dockerfile (stages + build + CMD) | 1.10 |  | 0.374 |
+| walker |  | 1856 | 134 | plaintext config .env.sample |  |  | 0.441 |
+| walker |  | 2009 | 153 | plaintext dotenv tail chunk #1 of .env.sample |  |  | 0.443 |
+| walker |  | 2068 | 59 | listing of 'apps/mobile/components' |  |  | 0.444 |
+| walker |  | 2094 | 26 | listing of 'apps/mobile/components/Formats' |  |  | 0.444 |
+| walker |  | 2126 | 32 | listing of 'apps/mobile/components/ActionSheets' |  |  | 0.444 |
+| walker |  | 2140 | 14 | README.md section #21 |  |  | 0.444 |
+| walker |  | 2152 | 12 | README.md section #22 |  |  | 0.444 |
+| walker |  | 2166 | 14 | README.md section #20 |  |  | 0.444 |
+| ns | 2173 |  | 347 | .env.sample: additional optional settings roster | 1.11 |  | 0.430 |
+| walker |  | 2275 | 109 | listing of 'packages/lib' |  |  | 0.431 |
+| walker |  | 2304 | 29 | README.md section #29 |  |  | 0.431 |
+| walker |  | 2361 | 57 | listing of 'apps/worker/lib' |  |  | 0.431 |
+| walker |  | 2423 | 62 | listing of 'apps/web/hooks' |  |  | 0.431 |
+| walker |  | 2438 | 15 | README.md section #11 |  |  | 0.431 |
+| walker |  | 2456 | 18 | listing of 'apps/web/e2e' |  |  | 0.431 |
+| walker |  | 2462 | 6 | listing of 'apps/web/e2e/tests' |  |  | 0.431 |
+| walker |  | 2479 | 17 | listing of 'apps/web/e2e/fixtures' |  |  | 0.431 |
+| walker |  | 2492 | 13 | listing of 'apps/web/e2e/fixtures/base' |  |  | 0.431 |
+| walker |  | 2534 | 42 | listing of 'apps/worker/lib/preservationScheme' |  |  | 0.432 |
+| walker |  | 2551 | 17 | README.md section #7 |  |  | 0.432 |
+| walker |  | 2567 | 16 | README.md section #6 |  |  | 0.432 |
+| walker |  | 2584 | 17 | README.md section #9 |  |  | 0.432 |
+| walker |  | 2600 | 16 | README.md section #8 |  |  | 0.432 |
+| walker |  | 2616 | 16 | README.md section #10 |  |  | 0.432 |
+| ns | 2630 |  | 457 | Root package.json (workspace scripts) | 1.12 |  | 0.408 |
+| walker |  | 2633 | 17 | README.md section #16 |  |  | 0.408 |
+| walker |  | 2712 | 79 | listing of 'apps/web/public' |  |  | 0.408 |
+| walker |  | 2722 | 10 | listing of 'apps/web/public/screenshots' |  |  | 0.408 |
+| ns | 2897 |  | 267 | apps/mobile/package.json (identity + scripts) | 1.13 |  | 0.388 |
+| walker |  | 2999 | 277 | plaintext config Dockerfile |  |  | 0.441 |
+| walker |  | 3048 | 49 | listing of 'apps/web/public/locales' |  |  | 0.441 |
+| walker |  | 3052 | 4 | listing of 'apps/web/public/locales/de' |  |  | 0.441 |
+| walker |  | 3056 | 4 | listing of 'apps/web/public/locales/en' |  |  | 0.441 |
+| walker |  | 3060 | 4 | listing of 'apps/web/public/locales/es' |  |  | 0.441 |
+| walker |  | 3064 | 4 | listing of 'apps/web/public/locales/fr' |  |  | 0.441 |
+| walker |  | 3068 | 4 | listing of 'apps/web/public/locales/it' |  |  | 0.441 |
+| walker |  | 3072 | 4 | listing of 'apps/web/public/locales/ja' |  |  | 0.441 |
+| walker |  | 3076 | 4 | listing of 'apps/web/public/locales/nl' |  |  | 0.441 |
+| walker |  | 3080 | 4 | listing of 'apps/web/public/locales/pl' |  |  | 0.441 |
+| walker |  | 3084 | 4 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.441 |
+| walker |  | 3088 | 4 | listing of 'apps/web/public/locales/ro' |  |  | 0.441 |
+| walker |  | 3092 | 4 | listing of 'apps/web/public/locales/ru' |  |  | 0.441 |
+| walker |  | 3096 | 4 | listing of 'apps/web/public/locales/tr' |  |  | 0.441 |
+| walker |  | 3100 | 4 | listing of 'apps/web/public/locales/uk' |  |  | 0.441 |
+| walker |  | 3104 | 4 | listing of 'apps/web/public/locales/zh' |  |  | 0.441 |
+| walker |  | 3108 | 4 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.441 |
+| ns | 3140 |  | 243 | apps/web/package.json (identity + scripts) | 1.14 |  | 0.426 |
+| walker |  | 3158 | 50 | listing of 'apps/mobile/components/ui' |  |  | 0.426 |
+| walker |  | 3244 | 86 | listing of 'apps/web/pages' |  |  | 0.426 |
+| walker |  | 3250 | 6 | listing of 'apps/web/pages/preserved' |  |  | 0.426 |
+| walker |  | 3258 | 8 | listing of 'apps/web/pages/api' |  |  | 0.426 |
+| walker |  | 3261 | 3 | listing of 'apps/web/pages/api/v2' |  |  | 0.426 |
+| walker |  | 3270 | 9 | listing of 'apps/web/pages/public' |  |  | 0.426 |
+| walker |  | 3275 | 5 | listing of 'apps/web/pages/public/collections' |  |  | 0.426 |
+| walker |  | 3279 | 4 | listing of 'apps/web/pages/api/v2/dashboard' |  |  | 0.426 |
+| walker |  | 3285 | 6 | listing of 'apps/web/pages/public/links' |  |  | 0.426 |
+| walker |  | 3291 | 6 | listing of 'apps/web/pages/public/preserved' |  |  | 0.426 |
+| walker |  | 3302 | 11 | listing of 'apps/web/pages/collections' |  |  | 0.426 |
+| walker |  | 3313 | 11 | listing of 'apps/web/pages/tags' |  |  | 0.426 |
+| walker |  | 3325 | 12 | listing of 'apps/web/pages/auth' |  |  | 0.426 |
+| walker |  | 3339 | 14 | export names surface in apps/web/pages/index.tsx |  |  | 0.426 |
+| walker |  | 3339 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.426 |
+| walker |  | 3355 | 16 | listing of 'apps/web/pages/links' |  |  | 0.426 |
+| walker |  | 3374 | 19 | listing of 'apps/web/pages/admin' |  |  | 0.426 |
+| walker |  | 3384 | 10 | listing of 'apps/web/pages/public/collections/[id]' |  |  | 0.426 |
+| walker |  | 3427 | 43 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.426 |
+| walker |  | 3449 | 22 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.426 |
+| walker |  | 3468 | 19 | README.md section #15 |  |  | 0.426 |
+| walker |  | 3524 | 56 | listing of 'apps/web/pages/settings' |  |  | 0.426 |
+| walker |  | 3600 | 76 | export at packages/prisma/index.ts:5 |  |  | 0.426 |
+| ns | 3665 |  | 525 | apps/worker/package.json (scripts + dependencies) | 1.15 |  | 0.398 |
+| walker |  | 3895 | 295 | README.md section #0 |  |  | 0.398 |
+| walker |  | 3917 | 22 | README.md section #1 |  |  | 0.398 |
+| walker |  | 3939 | 22 | README.md section #2 |  |  | 0.398 |
+| ns | 4020 |  | 355 | .env.sample: SSO provider roster (first 35 of 58, alphabetical) | 1.16 |  | 0.375 |
+| ns | 4043 |  | 23 | packages/prisma directory listing | 2.1 |  | 0.387 |
+| walker |  | 4109 | 170 | YAML config tail at docker-compose.yml |  |  | 0.451 |
+| ns | 4246 |  | 203 | schema.prisma: every model/enum name (roster) | 2.2 |  | 0.437 |
+| ns | 4311 |  | 65 | schema.prisma: generator + datasource | 2.3 |  | 0.432 |
+| walker |  | 4329 | 220 | Prisma schema TOC in packages/prisma/schema.prisma |  |  | 0.477 |
+| walker |  | 4344 | 15 | imports in packages/prisma/index.ts |  |  | 0.477 |
+| walker |  | 4368 | 24 | README.md section #5 |  |  | 0.477 |
+| walker |  | 4391 | 23 | README.md section #4 |  |  | 0.477 |
+| walker |  | 4416 | 25 | README.md section #13 |  |  | 0.477 |
+| walker |  | 4440 | 24 | README.md section #12 |  |  | 0.477 |
 | walker |  | 4457 | 17 | imports in apps/worker/index.ts |  |  | 0.477 |
 | walker |  | 4536 | 79 | listing of 'apps/web/lib/client' |  |  | 0.477 |
 | walker |  | 4560 | 24 | Prisma decl at packages/prisma/schema.prisma:77 |  |  | 0.477 |

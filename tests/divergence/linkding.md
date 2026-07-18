@@ -60,7 +60,8 @@ Score(3000)=0.669 I=0.692 C=0.646 ns_rows≤3K=17/60 (reached=9 partial=0 missin
 | walker |  | 1287 | 12 | python decl body at bookmarks/context_processors.py:20 body 21 |  |  | 0.452 |
 | ns | 1298 |  | 119 | bookmarks/ package layout | 2.1 |  | 0.539 |
 | walker |  | 1309 | 22 | python method at bookmarks/apps.py:7 |  |  | 0.539 |
-| walker |  | 1436 | 127 | YAML config at docker-compose.yml |  |  | 0.591 |
+| walker |  | 1368 | 59 | YAML config at docker-compose.yml |  |  | 0.550 |
+| walker |  | 1436 | 68 | YAML config tail at docker-compose.yml |  |  | 0.591 |
 | walker |  | 1471 | 35 | listing of 'docs' |  |  | 0.591 |
 | walker |  | 1531 | 60 | listing of 'bookmarks/frontend/components' |  |  | 0.598 |
 | walker |  | 1540 | 9 | python imports in bookmarks/apps.py |  |  | 0.598 |

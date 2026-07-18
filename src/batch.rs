@@ -347,9 +347,13 @@ pub enum PlaintextKey {
 /// reference/spec maps whose top-level keys are useful orientation.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum YamlKey {
-    /// Whole-file render of a `docker-compose.{yml,yaml}` file. Skipped
-    /// when the source exceeds the walker's line cap.
+    /// Whole-file render of a compact operational config. For compose
+    /// files with a non-trivial service body, carries the service
+    /// topology skeleton instead.
     Whole { file: PathBuf },
+    /// Compose rows complementary to the service-topology skeleton.
+    /// Predecessor: the matching [`YamlKey::Whole`] head.
+    Tail { file: PathBuf },
     /// Root and child keys in a root reference/API/spec map.
     TopLevelKeys { file: PathBuf },
 }
@@ -968,6 +972,9 @@ impl InnerKey for YamlKey {
     fn describe(&self, root: &Path) -> String {
         match self {
             YamlKey::Whole { file } => format!("YAML config at {}", display_path(file, root)),
+            YamlKey::Tail { file } => {
+                format!("YAML config tail at {}", display_path(file, root))
+            }
             YamlKey::TopLevelKeys { file } => {
                 format!(
                     "YAML reference map key roster in {}",

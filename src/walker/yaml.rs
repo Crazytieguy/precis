@@ -3,12 +3,10 @@
 //! deployment files, CI workflows, lint/hook configs, and docs-site
 //! configs.
 //!
-//! Implementation: hand-rolled, no tree-sitter dependency. The file is
-//! emitted as a single `Whole` batch capped by class. These operational
-//! configs are line-oriented enough that the whole-file Whole batch is
-//! sufficient — splitting per-service/job/hook would either produce many
-//! tiny batches or require a real YAML parser to handle block-style
-//! nesting.
+//! Implementation: hand-rolled, no tree-sitter dependency. Compact
+//! tooling configs are emitted as one `Whole` batch capped by class.
+//! Compose files use a service-topology head (service names plus image /
+//! build / ports / depends_on) followed by one gated complementary tail.
 //!
 //! **Secrets safety**: env values inlined in `environment:` blocks
 //! (`DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@…`) are
@@ -21,11 +19,11 @@
 use std::path::{Path, PathBuf};
 
 use crate::batch::{Batch, BatchKey, YamlKey};
-use crate::value::mix_signals;
+use crate::value::{DEFAULT_CONCAVITY_EXPONENT, mix_signals};
 
 use super::{
-    FileLines, WalkCtx, fs::files_with_any_extension, gated_whole_file_content, path_depth_factor,
-    single_file_lines_content,
+    FileLines, WalkCtx, fs::files_with_any_extension, gated_read_source, gated_whole_file_content,
+    path_depth_factor, single_file_lines_content, whole_file_lines_content,
 };
 
 /// Hard cap on the number of source lines a docker-compose file may
@@ -42,6 +40,11 @@ const COMPOSE_LINE_CAP: usize = 80;
 /// generous bound for indented YAML (the linkwarden fixture averages
 /// ~30 chars/line).
 const COMPOSE_BYTE_GATE: usize = COMPOSE_LINE_CAP * 100;
+
+/// Compose body value relative to the service-topology head. Mirrors
+/// the shipped Dockerfile contract/body split: the body is close
+/// operational follow-up, but the topology should purchase first.
+const COMPOSE_TAIL_FACTOR: f64 = 0.85;
 
 /// Compact CI/tooling configs stay cheap enough to render whole. Larger
 /// workflows/configs are intentionally left for explicit reads rather
@@ -67,6 +70,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         else {
             continue;
         };
+        if class == YamlClass::Compose {
+            push_compose_batches(&file, ctx, &mut out);
+            continue;
+        }
         let Some(content) = class.content(&file, ctx) else {
             continue;
         };
@@ -82,6 +89,201 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         });
     }
     out
+}
+
+fn yaml_indent(raw: &str) -> Option<usize> {
+    let mut indent = 0;
+    for character in raw.chars() {
+        match character {
+            ' ' => indent += 1,
+            '\t' => return None,
+            _ => break,
+        }
+    }
+    Some(indent)
+}
+
+fn yaml_mapping_key(trimmed: &str) -> Option<&str> {
+    if trimmed.is_empty() || trimmed.starts_with(['#', '-']) || is_yaml_document_marker(trimmed) {
+        return None;
+    }
+    let (key, _) = trimmed.split_once(':')?;
+    let key = key.trim().trim_matches(['\'', '"']);
+    (!key.is_empty()).then_some(key)
+}
+
+fn compose_field_selected(key: &str) -> bool {
+    matches!(key, "image" | "build" | "ports" | "depends_on")
+}
+
+/// 1-based rows in the compose service-topology skeleton: `services:`,
+/// every direct service name, and each service's direct image/build/
+/// ports/depends_on field including block-style descendants.
+fn compose_skeleton(source: &str) -> (Vec<usize>, usize) {
+    let lines: Vec<&str> = source.lines().collect();
+    let Some((services_index, services_indent)) =
+        lines.iter().enumerate().find_map(|(index, raw)| {
+            let trimmed = raw.trim();
+            (yaml_mapping_key(trimmed) == Some("services") && yaml_indent(raw) == Some(0))
+                .then(|| yaml_indent(raw).map(|indent| (index, indent)))
+                .flatten()
+        })
+    else {
+        return (Vec::new(), 0);
+    };
+    let services_end = (services_index + 1..lines.len())
+        .find(|&index| {
+            let trimmed = lines[index].trim();
+            !trimmed.is_empty()
+                && !trimmed.starts_with('#')
+                && yaml_indent(lines[index]).is_some_and(|indent| indent <= services_indent)
+        })
+        .unwrap_or(lines.len());
+    let Some(service_indent) = (services_index + 1..services_end)
+        .filter_map(|index| {
+            let trimmed = lines[index].trim();
+            let indent = yaml_indent(lines[index])?;
+            (indent > services_indent && yaml_mapping_key(trimmed).is_some()).then_some(indent)
+        })
+        .min()
+    else {
+        return (Vec::new(), 0);
+    };
+    let service_starts: Vec<usize> = (services_index + 1..services_end)
+        .filter(|&index| {
+            yaml_indent(lines[index]) == Some(service_indent)
+                && yaml_mapping_key(lines[index].trim()).is_some()
+        })
+        .collect();
+    if service_starts.is_empty() {
+        return (Vec::new(), 0);
+    }
+
+    let mut selected = vec![services_index + 1];
+    for (service_position, &service_start) in service_starts.iter().enumerate() {
+        let service_end = service_starts
+            .get(service_position + 1)
+            .copied()
+            .unwrap_or(services_end);
+        selected.push(service_start + 1);
+        let Some(field_indent) = (service_start + 1..service_end)
+            .filter_map(|index| {
+                let trimmed = lines[index].trim();
+                let indent = yaml_indent(lines[index])?;
+                (indent > service_indent && yaml_mapping_key(trimmed).is_some()).then_some(indent)
+            })
+            .min()
+        else {
+            continue;
+        };
+        let field_starts: Vec<usize> = (service_start + 1..service_end)
+            .filter(|&index| {
+                yaml_indent(lines[index]) == Some(field_indent)
+                    && yaml_mapping_key(lines[index].trim()).is_some()
+            })
+            .collect();
+        for (field_position, &field_start) in field_starts.iter().enumerate() {
+            let Some(key) = yaml_mapping_key(lines[field_start].trim()) else {
+                continue;
+            };
+            if !compose_field_selected(key) {
+                continue;
+            }
+            let field_end = field_starts
+                .get(field_position + 1)
+                .copied()
+                .unwrap_or(service_end);
+            selected.extend(field_start + 1..=field_end);
+        }
+    }
+    selected.sort_unstable();
+    selected.dedup();
+    let service_count = service_starts.len();
+    (selected, service_count)
+}
+
+fn gap_ellipses(selected: &[usize], line_count: usize) -> Vec<usize> {
+    let mut ellipses = Vec::new();
+    let mut previous = 0usize;
+    for &line in selected.iter().chain(std::iter::once(&(line_count + 1))) {
+        if line > previous + 1 {
+            ellipses.push(previous + 1);
+        }
+        previous = line;
+    }
+    ellipses
+}
+
+fn push_compose_batches(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
+    let Some(source) = gated_read_source(file, ctx, COMPOSE_BYTE_GATE) else {
+        return;
+    };
+    let line_count = source.lines().count();
+    if line_count == 0 || line_count > COMPOSE_LINE_CAP {
+        return;
+    }
+    let value = compose_value(file, ctx);
+    let head_key = YamlKey::Whole {
+        file: file.to_path_buf(),
+    };
+    let (head_lines, service_count) = compose_skeleton(&source);
+    let tail_lines: Vec<usize> = (1..=line_count)
+        .filter(|line| head_lines.binary_search(line).is_err())
+        .collect();
+    if head_lines.is_empty() || tail_lines.is_empty() {
+        if let Some(content) = whole_file_lines_content(file, &source) {
+            out.push(Batch {
+                key: head_key.into(),
+                predecessor: None,
+                content,
+                value,
+            });
+        }
+        return;
+    }
+    let head =
+        FileLines::new(head_lines.clone()).with_ellipses(gap_ellipses(&head_lines, line_count));
+    let Some(head_content) = single_file_lines_content(file, &source, head) else {
+        return;
+    };
+    // Multi-service files have topology value that the old whole-file
+    // lump systematically hid. Single-service compose is bimodal:
+    // sometimes early and tiny (Enclosed), sometimes a late, comment-
+    // heavy ops appendix (Audiobookshelf). Keep its former scheduling
+    // ratio so splitting does not promote it into a new semantic tier.
+    let head_value = if service_count > 1 {
+        value
+    } else {
+        let Some(whole_content) = whole_file_lines_content(file, &source) else {
+            return;
+        };
+        let whole_cost = ctx.marginal_tokens(&whole_content);
+        let head_cost = ctx.marginal_tokens(&head_content);
+        if whole_cost == 0 {
+            value
+        } else {
+            value * (head_cost as f64 / whole_cost as f64).powf(DEFAULT_CONCAVITY_EXPONENT)
+        }
+    };
+    out.push(Batch {
+        key: head_key.clone().into(),
+        predecessor: None,
+        content: head_content,
+        value: head_value,
+    });
+    // Complementary full rows only. Tail ellipses could land on a
+    // head-owned row and overwrite the already-rendered topology.
+    if let Some(content) = single_file_lines_content(file, &source, FileLines::new(tail_lines)) {
+        out.push(Batch {
+            key: YamlKey::Tail {
+                file: file.to_path_buf(),
+            }
+            .into(),
+            predecessor: Some(BatchKey::Yaml(head_key)),
+            content,
+            value: value * COMPOSE_TAIL_FACTOR,
+        });
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -377,18 +579,18 @@ fn is_root_file(file: &Path, ctx: &WalkCtx) -> bool {
     file.parent().is_some_and(|p| p == ctx.root())
 }
 
-/// True iff `name` is a docker-compose filename. Matches the base
-/// `docker-compose.{yml,yaml}` plus the conventional `compose.{yml,yaml}`
-/// shorthand introduced in Compose Spec v2. The dotted-variant pattern
-/// (`docker-compose.prod.yml`, `compose.override.yaml`) is intentionally
-/// not matched — those overlay files describe environment-specific
-/// overrides that are rarely the canonical deployment shape.
+/// True iff `name` matches `docker-compose*.{yml,yaml}` or
+/// `compose*.{yml,yaml}`, case-insensitively. Canonical files and
+/// environment-specific overlays share the same service-topology shape.
 fn is_docker_compose_name(name: &str) -> bool {
     let lower = name.to_ascii_lowercase();
-    matches!(
-        lower.as_str(),
-        "docker-compose.yml" | "docker-compose.yaml" | "compose.yml" | "compose.yaml"
-    )
+    let Some(stem) = lower
+        .strip_suffix(".yaml")
+        .or_else(|| lower.strip_suffix(".yml"))
+    else {
+        return false;
+    };
+    stem.starts_with("docker-compose") || stem.starts_with("compose")
 }
 
 fn compose_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -461,13 +663,12 @@ mod tests {
             "compose.yml",
             "compose.yaml",
             "Docker-Compose.YML",
+            "docker-compose.prod.yml",
+            "compose.override.yaml",
         ] {
             assert!(is_docker_compose_name(name), "{name} should match");
         }
         for name in [
-            // Overlay/override variants — out of scope by design.
-            "docker-compose.prod.yml",
-            "compose.override.yaml",
             // Other YAML filenames we don't claim.
             "ci.yml",
             "pnpm-workspace.yaml",
@@ -556,7 +757,37 @@ mod tests {
     }
 
     #[test]
-    fn yaml_emits_whole_batch_for_compose_file() {
+    fn yaml_compose_skeleton_selects_service_contract_fields() {
+        let source = "\
+name: demo
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: secret
+    ports:
+      - 5432:5432
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgres://db
+volumes:
+  data:
+";
+        assert_eq!(
+            compose_skeleton(source).0,
+            vec![2, 3, 4, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        );
+        assert_eq!(compose_skeleton(source).1, 2);
+    }
+
+    #[test]
+    fn yaml_emits_whole_batch_for_all_skeleton_compose_file() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         std::fs::write(
@@ -582,6 +813,61 @@ mod tests {
     }
 
     #[test]
+    fn yaml_compose_split_head_plus_tail_renders_whole_file() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let source = "\
+services:
+  web:
+    image: example/web:latest
+    environment:
+      WEB_MODE: production
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+  db:
+    image: postgres:16
+    volumes:
+      - data:/var/lib/postgresql/data
+volumes:
+  data:
+";
+        std::fs::write(root.join("compose.override.yml"), source).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
+        let report = scheduler.run_with_report();
+        let keys: Vec<_> = report
+            .scheduled
+            .iter()
+            .map(|record| record.key.clone())
+            .collect();
+        assert!(
+            keys.iter()
+                .any(|key| matches!(key, BatchKey::Yaml(YamlKey::Tail { .. }))),
+            "missing compose tail; scheduled keys: {keys:?}",
+        );
+        let rendered = report.tree.render();
+        let rendered_source_lines: Vec<_> = rendered
+            .lines()
+            .filter_map(|line| line.split_once('→').map(|(_, source_line)| source_line))
+            .collect();
+        for line in source.lines().filter(|line| !line.is_empty()) {
+            assert_eq!(
+                rendered_source_lines
+                    .iter()
+                    .filter(|rendered_line| **rendered_line == line)
+                    .count(),
+                source
+                    .lines()
+                    .filter(|source_line| *source_line == line)
+                    .count(),
+                "source line {line:?} should retain its exact multiplicity:\n{rendered}",
+            );
+        }
+    }
+
+    #[test]
     fn yaml_oversized_compose_skipped() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
@@ -596,10 +882,11 @@ mod tests {
         let report = scheduler.run_with_report();
         let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
         assert!(
-            !keys
-                .iter()
-                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::Whole { .. }))),
-            "unexpected Yaml::Whole batch for oversized compose; scheduled keys: {keys:?}",
+            !keys.iter().any(|k| matches!(
+                k,
+                BatchKey::Yaml(YamlKey::Whole { .. } | YamlKey::Tail { .. })
+            )),
+            "unexpected YAML compose batch for oversized compose; scheduled keys: {keys:?}",
         );
     }
 
