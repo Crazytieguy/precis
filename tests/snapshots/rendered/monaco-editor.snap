@@ -40,36 +40,6 @@ README.md
        1→# Monaco Editor
     …
        8→The Monaco Editor is the fully featured code editor from [VS Code](https://github.com/microsoft/vscode). Check out the [VS Code docs](https://code.visualstudio.com/docs/editor/editingevolved) to see some of the supported features.
-      10→![image](https://user-images.githubusercontent.com/5047891/94183711-290c0780-fea3-11ea-90e3-c88ff9d21bd6.png)
-      12→## Try it out
-    …
-      18→## Installing
-    …
-      31→## Localization
-    …
-      40→## Concepts
-    …
-      44→### Models
-    …
-      48→### URIs
-    …
-      52→### Editors
-    …
-      56→### Providers
-    …
-      62→### Disposables
-    …
-      66→## Documentation
-    …
-      76→## Issues
-    …
-      80→## FAQ
-    …
-     112→## Contributing / Local Development
-    …
-     117→## Code of Conduct
-    …
-     121→## License
     …
 SECURITY.md
 ThirdPartyNotices.txt
@@ -262,19 +232,42 @@ samples/
     legacy/
         README.md
         browser-amd-diff-editor/
+            index.html
+            modified.txt
+            original.txt
         browser-amd-editor/
             index.html
         browser-amd-iframe/
+            index.html
+            inner.html
         browser-amd-localized/
             index.html
         browser-amd-monarch/
             index.html
         browser-amd-requirejs/
+            index.html
         browser-amd-shadow-dom/
+            index.html
         browser-amd-shared-model/
+            index.html
         browser-amd-trusted-types/
+            index.html
         electron-amd/
+            electron-index.html
+            index.html
+            main.js
+            package.json
+                …
+                   2→	"name": "electron-amd",
+                …
         electron-amd-nodeIntegration/
+            electron-index.html
+            index.html
+            main.js
+            package.json
+                …
+                   2→	"name": "electron-amd-node-integration",
+                …
     nwjs-amd/
         index.html
     nwjs-amd-v2/
@@ -526,10 +519,7 @@ webpack-plugin/
            2→
            3→A plugin to simplify loading the [Monaco Editor](https://github.com/microsoft/monaco-editor) with [webpack](https://webpack.js.org/).
            5→## Installing
-           6→
-           7→```sh
-           8→npm install monaco-editor-webpack-plugin
-           9→```
+        …
           11→## Using
         …
           63→## Options

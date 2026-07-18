@@ -167,6 +167,13 @@ examples/
         LICENSE.txt
         README.rst
         flaskr/
+            __init__.py
+            auth.py
+            blog.py
+            db.py
+            schema.sql
+            static/
+            templates/
         pyproject.toml
         tests/
             conftest.py
@@ -344,6 +351,17 @@ tests/
                     __init__.py
                     templates/
         cliapp/
+            __init__.py
+            app.py
+            factory.py
+            importerrorapp.py
+            inner1/
+                __init__.py
+                inner2/
+                    __init__.py
+                    flask.py
+            message.txt
+            multiapp.py
         helloworld/
         subdomaintestmodule/
             __init__.py

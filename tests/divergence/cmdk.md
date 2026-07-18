@@ -24,15 +24,15 @@ Score(3000)=0.432 I=0.480 C=0.388 ns_rows≤3K=26/44 (reached=11 partial=0 missi
 | ns | 298 |  | 44 | website/public listing | 2.10 |  | 0.313 |
 | walker |  | 324 | 57 | headings outline in ARCHITECTURE.md |  |  | 0.313 |
 | walker |  | 329 | 5 | listing of '.husky' |  |  | 0.313 |
+| walker |  | 337 | 8 | listing of '.github' |  |  | 0.313 |
+| walker |  | 341 | 4 | listing of '.github/workflows' |  |  | 0.313 |
 | ns | 358 |  | 60 | test/pages listing | 2.11 |  | 0.283 |
-| walker |  | 409 | 80 | package scripts in cmdk/package.json |  |  | 0.284 |
-| ns | 416 |  | 58 | test/ listing | 2.12 |  | 0.259 |
-| walker |  | 417 | 8 | listing of '.github' |  |  | 0.259 |
-| walker |  | 421 | 4 | listing of '.github/workflows' |  |  | 0.259 |
-| ns | 470 |  | 54 | website/ listing | 2.13 |  | 0.238 |
-| ns | 573 |  | 103 | cmdk/tsup.config.ts | 2.14 |  | 0.223 |
-| walker |  | 760 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.226 |
-| walker |  | 770 | 10 | export names surface in playwright.config.ts |  |  | 0.226 |
+| ns | 416 |  | 58 | test/ listing | 2.12 |  | 0.257 |
+| ns | 470 |  | 54 | website/ listing | 2.13 |  | 0.237 |
+| ns | 573 |  | 103 | cmdk/tsup.config.ts | 2.14 |  | 0.222 |
+| walker |  | 680 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.225 |
+| walker |  | 690 | 10 | export names surface in playwright.config.ts |  |  | 0.225 |
+| walker |  | 770 | 80 | package scripts in cmdk/package.json |  |  | 0.226 |
 | ns | 795 |  | 222 | test/package.json | 2.15 |  | 0.206 |
 | walker |  | 972 | 202 | package scripts in package.json |  |  | 0.210 |
 | walker |  | 985 | 13 | export names surface in cmdk/tsup.config.ts |  |  | 0.211 |
@@ -141,24 +141,24 @@ Score(3000)=0.432 I=0.480 C=0.388 ns_rows≤3K=26/44 (reached=11 partial=0 missi
 | ns | 5845 |  | 1261 | Command filter/sort/select algorithm | 5.2 |  | 0.424 |
 | ns | 5922 |  | 77 | Empty component | 6.1 | 4.1 | 0.421 |
 | walker |  | 5971 | 439 | ARCHITECTURE.md section #0 |  |  | 0.421 |
-| walker |  | 6053 | 82 | README.md section #15 |  |  | 0.421 |
-| walker |  | 6145 | 92 | README.md section #32 |  |  | 0.421 |
-| walker |  | 6249 | 104 | README.md section #7 |  |  | 0.421 |
-| walker |  | 6354 | 105 | README.md section #14 |  |  | 0.421 |
-| ns | 6616 |  | 694 | Item component | 6.2 | 4.1 | 0.395 |
-| walker |  | 6811 | 457 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.395 |
-| ns | 6832 |  | 216 | commandScore exported entrypoint | 7.1 |  | 0.390 |
-| walker |  | 6900 | 89 | README.md section #25 |  |  | 0.390 |
-| walker |  | 6913 | 13 | listing of 'website/styles' |  |  | 0.397 |
-| walker |  | 7007 | 94 | README.md section #13 |  |  | 0.397 |
-| walker |  | 7125 | 118 | README.md section #16 |  |  | 0.397 |
-| walker |  | 7251 | 126 | README.md section #6 |  |  | 0.397 |
-| walker |  | 7382 | 131 | README.md section #9 |  |  | 0.397 |
-| walker |  | 7517 | 135 | README.md section #8 |  |  | 0.397 |
-| walker |  | 7527 | 10 | export names surface in test/pages/index.tsx |  |  | 0.397 |
-| walker |  | 7527 | 0 | export at test/pages/index.tsx:28 |  |  | 0.397 |
-| walker |  | 7537 | 10 | listing of 'website/components/code' |  |  | 0.404 |
-| walker |  | 7547 | 10 | listing of 'website/components/icons' |  |  | 0.410 |
+| walker |  | 5984 | 13 | listing of 'website/styles' |  |  | 0.429 |
+| walker |  | 6066 | 82 | README.md section #15 |  |  | 0.429 |
+| walker |  | 6158 | 92 | README.md section #32 |  |  | 0.429 |
+| walker |  | 6262 | 104 | README.md section #7 |  |  | 0.429 |
+| walker |  | 6367 | 105 | README.md section #14 |  |  | 0.429 |
+| ns | 6616 |  | 694 | Item component | 6.2 | 4.1 | 0.402 |
+| walker |  | 6824 | 457 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.402 |
+| ns | 6832 |  | 216 | commandScore exported entrypoint | 7.1 |  | 0.397 |
+| walker |  | 6913 | 89 | README.md section #25 |  |  | 0.397 |
+| walker |  | 6923 | 10 | listing of 'website/components/code' |  |  | 0.404 |
+| walker |  | 6933 | 10 | listing of 'website/components/icons' |  |  | 0.410 |
+| walker |  | 7027 | 94 | README.md section #13 |  |  | 0.410 |
+| walker |  | 7145 | 118 | README.md section #16 |  |  | 0.410 |
+| walker |  | 7271 | 126 | README.md section #6 |  |  | 0.410 |
+| walker |  | 7402 | 131 | README.md section #9 |  |  | 0.410 |
+| walker |  | 7537 | 135 | README.md section #8 |  |  | 0.410 |
+| walker |  | 7547 | 10 | export names surface in test/pages/index.tsx |  |  | 0.410 |
+| walker |  | 7547 | 0 | export at test/pages/index.tsx:28 |  |  | 0.410 |
 | ns | 7577 |  | 745 | command-score weighting constants | 7.2 |  | 0.392 |
 | walker |  | 7703 | 156 | README.md section #12 |  |  | 0.392 |
 | ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.388 |
@@ -175,7 +175,8 @@ Score(3000)=0.432 I=0.480 C=0.388 ns_rows≤3K=26/44 (reached=11 partial=0 missi
 | ns | 9452 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.450 |
 | ns | 9595 |  | 143 | Format/lint-staged tooling | 11.1 |  | 0.445 |
 | walker |  | 9756 | 641 | README.md section #2 |  |  | 0.445 |
-| walker |  | 9770 | 14 | export names surface in website/pages/index.tsx |  |  | 0.445 |
-| walker |  | 9770 | 0 | export at website/pages/index.tsx:29 |  |  | 0.445 |
-| ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.438 |
-| walker |  | 9949 | 179 | README.md section #33 |  |  | 0.438 |
+| walker |  | 9775 | 19 | listing of 'website/styles/cmdk' |  |  | 0.455 |
+| ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.449 |
+| walker |  | 9789 | 14 | export names surface in website/pages/index.tsx |  |  | 0.449 |
+| walker |  | 9789 | 0 | export at website/pages/index.tsx:29 |  |  | 0.449 |
+| walker |  | 9968 | 179 | README.md section #33 |  |  | 0.449 |

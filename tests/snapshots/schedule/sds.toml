@@ -1,7 +1,7 @@
 fixture = "sds"
 budget = 10000
-cumulative_tokens = 9886
-batch_count = 132
+cumulative_tokens = 9903
+batch_count = 137
 
 [[batches]]
 position = 1
@@ -483,28 +483,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 6
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #0"
-cost_tokens = 166
-cum_tokens = 855
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 9
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'C(DeclNames { file: "testhelp.h", chunk_index: 0 })'
 descriptor = "c decl names surface in testhelp.h"
 cost_tokens = 58
-cum_tokens = 913
+cum_tokens = 747
 
 [batches.content]
 kind = "lines"
@@ -542,11 +524,29 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
+position = 7
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #0"
+cost_tokens = 345
+cum_tokens = 1092
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 8
 key = 'C(DeclNames { file: "sds.h", chunk_index: 0 })'
 descriptor = "c decl names surface in sds.h"
 cost_tokens = 443
-cum_tokens = 1356
+cum_tokens = 1535
 
 [batches.content]
 kind = "lines"
@@ -764,7 +764,7 @@ position = 9
 key = 'C(Decl { file: "sds.h", start_line: 87 })'
 descriptor = "c decl at sds.h:87"
 cost_tokens = 0
-cum_tokens = 1356
+cum_tokens = 1535
 
 [batches.content]
 kind = "lines"
@@ -790,7 +790,7 @@ position = 10
 key = 'C(Decl { file: "sds.h", start_line: 104 })'
 descriptor = "c decl at sds.h:104"
 cost_tokens = 0
-cum_tokens = 1356
+cum_tokens = 1535
 
 [batches.content]
 kind = "lines"
@@ -816,7 +816,7 @@ position = 11
 key = 'C(Decl { file: "sds.h", start_line: 130 })'
 descriptor = "c decl at sds.h:130"
 cost_tokens = 0
-cum_tokens = 1356
+cum_tokens = 1535
 
 [batches.content]
 kind = "lines"
@@ -842,7 +842,7 @@ position = 12
 key = 'C(Decl { file: "sds.h", start_line: 154 })'
 descriptor = "c decl at sds.h:154"
 cost_tokens = 0
-cum_tokens = 1356
+cum_tokens = 1535
 
 [batches.content]
 kind = "lines"
@@ -868,7 +868,7 @@ position = 13
 key = 'C(Decl { file: "sds.h", start_line: 180 })'
 descriptor = "c decl at sds.h:180"
 cost_tokens = 0
-cum_tokens = 1356
+cum_tokens = 1535
 
 [batches.content]
 kind = "lines"
@@ -894,7 +894,7 @@ position = 14
 key = 'C(Decl { file: "sds.h", start_line: 197 })'
 descriptor = "c decl at sds.h:197"
 cost_tokens = 0
-cum_tokens = 1356
+cum_tokens = 1535
 
 [batches.content]
 kind = "lines"
@@ -920,7 +920,7 @@ position = 15
 key = 'C(Decl { file: "sds.h", start_line: 47 })'
 descriptor = "c decl at sds.h:47"
 cost_tokens = 37
-cum_tokens = 1393
+cum_tokens = 1572
 
 [batches.content]
 kind = "lines"
@@ -938,7 +938,7 @@ position = 16
 key = 'C(Decl { file: "sds.h", start_line: 51 })'
 descriptor = "c decl at sds.h:51"
 cost_tokens = 65
-cum_tokens = 1458
+cum_tokens = 1637
 
 [batches.content]
 kind = "lines"
@@ -956,7 +956,7 @@ position = 17
 key = 'C(Decl { file: "sds.h", start_line: 57 })'
 descriptor = "c decl at sds.h:57"
 cost_tokens = 65
-cum_tokens = 1523
+cum_tokens = 1702
 
 [batches.content]
 kind = "lines"
@@ -974,7 +974,7 @@ position = 18
 key = 'C(Decl { file: "sds.h", start_line: 63 })'
 descriptor = "c decl at sds.h:63"
 cost_tokens = 65
-cum_tokens = 1588
+cum_tokens = 1767
 
 [batches.content]
 kind = "lines"
@@ -992,7 +992,7 @@ position = 19
 key = 'C(Decl { file: "sds.h", start_line: 69 })'
 descriptor = "c decl at sds.h:69"
 cost_tokens = 65
-cum_tokens = 1653
+cum_tokens = 1832
 
 [batches.content]
 kind = "lines"
@@ -1010,7 +1010,7 @@ position = 20
 key = 'C(Includes { file: "sds.h" })'
 descriptor = "c includes in sds.h"
 cost_tokens = 30
-cum_tokens = 1683
+cum_tokens = 1862
 
 [batches.content]
 kind = "lines"
@@ -1028,7 +1028,7 @@ position = 21
 key = 'C(DeclDoc { file: "sds.h", start_line: 180 })'
 descriptor = "c decl doc at sds.h:180"
 cost_tokens = 20
-cum_tokens = 1703
+cum_tokens = 1882
 
 [batches.content]
 kind = "lines"
@@ -1046,7 +1046,7 @@ position = 22
 key = 'C(DeclNames { file: "sds.h", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in sds.h"
 cost_tokens = 451
-cum_tokens = 2154
+cum_tokens = 2333
 
 [batches.content]
 kind = "lines"
@@ -1112,7 +1112,7 @@ position = 23
 key = 'C(Decl { file: "sds.h", start_line: 232 })'
 descriptor = "c decl at sds.h:232"
 cost_tokens = 18
-cum_tokens = 2172
+cum_tokens = 2351
 
 [batches.content]
 kind = "lines"
@@ -1130,7 +1130,7 @@ position = 24
 key = 'C(DeclNames { file: "sds.h", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in sds.h"
 cost_tokens = 280
-cum_tokens = 2452
+cum_tokens = 2631
 
 [batches.content]
 kind = "lines"
@@ -1204,7 +1204,7 @@ position = 25
 key = 'C(Decl { file: "sds.h", start_line: 256 })'
 descriptor = "c decl at sds.h:256"
 cost_tokens = 0
-cum_tokens = 2452
+cum_tokens = 2631
 
 [batches.content]
 kind = "lines"
@@ -1222,7 +1222,7 @@ position = 26
 key = 'C(Decl { file: "sds.h", start_line: 266 })'
 descriptor = "c decl at sds.h:266"
 cost_tokens = 0
-cum_tokens = 2452
+cum_tokens = 2631
 
 [batches.content]
 kind = "lines"
@@ -1240,7 +1240,7 @@ position = 27
 key = 'C(DeclDoc { file: "sds.h", start_line: 256 })'
 descriptor = "c decl doc at sds.h:256"
 cost_tokens = 12
-cum_tokens = 2464
+cum_tokens = 2643
 
 [batches.content]
 kind = "lines"
@@ -1258,7 +1258,7 @@ position = 28
 key = 'C(HeaderBanner { file: "sds.h" })'
 descriptor = "c header banner in sds.h"
 cost_tokens = 493
-cum_tokens = 2957
+cum_tokens = 3136
 
 [batches.content]
 kind = "lines"
@@ -1276,7 +1276,7 @@ position = 29
 key = 'C(Decl { file: "testhelp.h", start_line: 44 })'
 descriptor = "c decl at testhelp.h:44"
 cost_tokens = 59
-cum_tokens = 3016
+cum_tokens = 3195
 
 [batches.content]
 kind = "lines"
@@ -1294,7 +1294,7 @@ position = 30
 key = 'C(DeclDoc { file: "sds.h", start_line: 266 })'
 descriptor = "c decl doc at sds.h:266"
 cost_tokens = 66
-cum_tokens = 3082
+cum_tokens = 3261
 
 [batches.content]
 kind = "lines"
@@ -1312,7 +1312,7 @@ position = 31
 key = 'C(DeclDoc { file: "sds.h", start_line: 47 })'
 descriptor = "c decl doc at sds.h:47"
 cost_tokens = 41
-cum_tokens = 3123
+cum_tokens = 3302
 
 [batches.content]
 kind = "lines"
@@ -1330,7 +1330,7 @@ position = 32
 key = 'C(Decl { file: "testhelp.h", start_line: 48 })'
 descriptor = "c decl at testhelp.h:48"
 cost_tokens = 99
-cum_tokens = 3222
+cum_tokens = 3401
 
 [batches.content]
 kind = "lines"
@@ -1348,7 +1348,7 @@ position = 33
 key = 'C(DeclNames { file: "sds.c", chunk_index: 0 })'
 descriptor = "c decl names surface in sds.c"
 cost_tokens = 476
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1726,7 +1726,7 @@ position = 34
 key = 'C(Decl { file: "sds.c", start_line: 89 })'
 descriptor = "c decl at sds.c:89"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1752,7 +1752,7 @@ position = 35
 key = 'C(Decl { file: "sds.c", start_line: 149 })'
 descriptor = "c decl at sds.c:149"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1778,7 +1778,7 @@ position = 36
 key = 'C(Decl { file: "sds.c", start_line: 154 })'
 descriptor = "c decl at sds.c:154"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1804,7 +1804,7 @@ position = 37
 key = 'C(Decl { file: "sds.c", start_line: 160 })'
 descriptor = "c decl at sds.c:160"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1830,7 +1830,7 @@ position = 38
 key = 'C(Decl { file: "sds.c", start_line: 165 })'
 descriptor = "c decl at sds.c:165"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1856,7 +1856,7 @@ position = 39
 key = 'C(Decl { file: "sds.c", start_line: 184 })'
 descriptor = "c decl at sds.c:184"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1882,7 +1882,7 @@ position = 40
 key = 'C(Decl { file: "sds.c", start_line: 193 })'
 descriptor = "c decl at sds.c:193"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1908,7 +1908,7 @@ position = 41
 key = 'C(Decl { file: "sds.c", start_line: 204 })'
 descriptor = "c decl at sds.c:204"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1934,7 +1934,7 @@ position = 42
 key = 'C(Decl { file: "sds.c", start_line: 256 })'
 descriptor = "c decl at sds.c:256"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1960,7 +1960,7 @@ position = 43
 key = 'C(Decl { file: "sds.c", start_line: 300 })'
 descriptor = "c decl at sds.c:300"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -1986,7 +1986,7 @@ position = 44
 key = 'C(Decl { file: "sds.c", start_line: 307 })'
 descriptor = "c decl at sds.c:307"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2012,7 +2012,7 @@ position = 45
 key = 'C(Decl { file: "sds.c", start_line: 334 })'
 descriptor = "c decl at sds.c:334"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2038,7 +2038,7 @@ position = 46
 key = 'C(Decl { file: "sds.c", start_line: 380 })'
 descriptor = "c decl at sds.c:380"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2064,7 +2064,7 @@ position = 47
 key = 'C(Decl { file: "sds.c", start_line: 398 })'
 descriptor = "c decl at sds.c:398"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2090,7 +2090,7 @@ position = 48
 key = 'C(Decl { file: "sds.c", start_line: 413 })'
 descriptor = "c decl at sds.c:413"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2116,7 +2116,7 @@ position = 49
 key = 'C(Decl { file: "sds.c", start_line: 421 })'
 descriptor = "c decl at sds.c:421"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2142,7 +2142,7 @@ position = 50
 key = 'C(Decl { file: "sds.c", start_line: 427 })'
 descriptor = "c decl at sds.c:427"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2168,7 +2168,7 @@ position = 51
 key = 'C(Decl { file: "sds.c", start_line: 440 })'
 descriptor = "c decl at sds.c:440"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2194,7 +2194,7 @@ position = 52
 key = 'C(Decl { file: "sds.c", start_line: 450 })'
 descriptor = "c decl at sds.c:450"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2212,7 +2212,7 @@ position = 53
 key = 'C(Decl { file: "sds.c", start_line: 451 })'
 descriptor = "c decl at sds.c:451"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2238,7 +2238,7 @@ position = 54
 key = 'C(Decl { file: "sds.c", start_line: 494 })'
 descriptor = "c decl at sds.c:494"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2264,7 +2264,7 @@ position = 55
 key = 'C(Decl { file: "sds.c", start_line: 526 })'
 descriptor = "c decl at sds.c:526"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2290,7 +2290,7 @@ position = 56
 key = 'C(Decl { file: "sds.c", start_line: 534 })'
 descriptor = "c decl at sds.c:534"
 cost_tokens = 0
-cum_tokens = 3698
+cum_tokens = 3877
 
 [batches.content]
 kind = "lines"
@@ -2316,7 +2316,7 @@ position = 57
 key = 'C(DeclBody { file: "sds.c", start_line: 149 })'
 descriptor = "c decl body at sds.c:149"
 cost_tokens = 13
-cum_tokens = 3711
+cum_tokens = 3890
 
 [batches.content]
 kind = "lines"
@@ -2334,7 +2334,7 @@ position = 58
 key = 'C(DeclDoc { file: "sds.c", start_line: 160 })'
 descriptor = "c decl doc at sds.c:160"
 cost_tokens = 12
-cum_tokens = 3723
+cum_tokens = 3902
 
 [batches.content]
 kind = "lines"
@@ -2352,7 +2352,7 @@ position = 59
 key = 'C(DeclBody { file: "sds.c", start_line: 160 })'
 descriptor = "c decl body at sds.c:160"
 cost_tokens = 17
-cum_tokens = 3740
+cum_tokens = 3919
 
 [batches.content]
 kind = "lines"
@@ -2370,7 +2370,7 @@ position = 60
 key = 'C(DeclBody { file: "sds.c", start_line: 413 })'
 descriptor = "c decl body at sds.c:413"
 cost_tokens = 17
-cum_tokens = 3757
+cum_tokens = 3936
 
 [batches.content]
 kind = "lines"
@@ -2388,7 +2388,7 @@ position = 61
 key = 'C(DeclBody { file: "sds.c", start_line: 440 })'
 descriptor = "c decl body at sds.c:440"
 cost_tokens = 17
-cum_tokens = 3774
+cum_tokens = 3953
 
 [batches.content]
 kind = "lines"
@@ -2406,7 +2406,7 @@ position = 62
 key = 'C(DeclBody { file: "sds.c", start_line: 307 })'
 descriptor = "c decl body at sds.c:307"
 cost_tokens = 19
-cum_tokens = 3793
+cum_tokens = 3972
 
 [batches.content]
 kind = "lines"
@@ -2424,7 +2424,7 @@ position = 63
 key = 'C(DeclBody { file: "sds.c", start_line: 421 })'
 descriptor = "c decl body at sds.c:421"
 cost_tokens = 19
-cum_tokens = 3812
+cum_tokens = 3991
 
 [batches.content]
 kind = "lines"
@@ -2442,7 +2442,7 @@ position = 64
 key = 'C(DeclDoc { file: "sds.c", start_line: 154 })'
 descriptor = "c decl doc at sds.c:154"
 cost_tokens = 20
-cum_tokens = 3832
+cum_tokens = 4011
 
 [batches.content]
 kind = "lines"
@@ -2460,7 +2460,7 @@ position = 65
 key = 'C(DeclBody { file: "sds.c", start_line: 184 })'
 descriptor = "c decl body at sds.c:184"
 cost_tokens = 27
-cum_tokens = 3859
+cum_tokens = 4038
 
 [batches.content]
 kind = "lines"
@@ -2478,7 +2478,7 @@ position = 66
 key = 'C(DeclBody { file: "sds.c", start_line: 193 })'
 descriptor = "c decl body at sds.c:193"
 cost_tokens = 27
-cum_tokens = 3886
+cum_tokens = 4065
 
 [batches.content]
 kind = "lines"
@@ -2496,7 +2496,7 @@ position = 67
 key = 'C(DeclDoc { file: "sds.c", start_line: 494 })'
 descriptor = "c decl doc at sds.c:494"
 cost_tokens = 21
-cum_tokens = 3907
+cum_tokens = 4086
 
 [batches.content]
 kind = "lines"
@@ -2514,7 +2514,7 @@ position = 68
 key = 'C(DeclDoc { file: "sds.c", start_line: 534 })'
 descriptor = "c decl doc at sds.c:534"
 cost_tokens = 22
-cum_tokens = 3929
+cum_tokens = 4108
 
 [batches.content]
 kind = "lines"
@@ -2532,7 +2532,7 @@ position = 69
 key = 'C(DeclDoc { file: "sds.c", start_line: 165 })'
 descriptor = "c decl doc at sds.c:165"
 cost_tokens = 23
-cum_tokens = 3952
+cum_tokens = 4131
 
 [batches.content]
 kind = "lines"
@@ -2550,7 +2550,7 @@ position = 70
 key = 'C(DeclBody { file: "sds.c", start_line: 165 })'
 descriptor = "c decl body at sds.c:165"
 cost_tokens = 32
-cum_tokens = 3984
+cum_tokens = 4163
 
 [batches.content]
 kind = "lines"
@@ -2568,7 +2568,7 @@ position = 71
 key = 'C(DeclBody { file: "sds.c", start_line: 300 })'
 descriptor = "c decl body at sds.c:300"
 cost_tokens = 32
-cum_tokens = 4016
+cum_tokens = 4195
 
 [batches.content]
 kind = "lines"
@@ -2586,7 +2586,7 @@ position = 72
 key = 'C(DeclBody { file: "sds.c", start_line: 154 })'
 descriptor = "c decl body at sds.c:154"
 cost_tokens = 37
-cum_tokens = 4053
+cum_tokens = 4232
 
 [batches.content]
 kind = "lines"
@@ -2604,7 +2604,7 @@ position = 73
 key = 'C(DeclDoc { file: "sds.c", start_line: 307 })'
 descriptor = "c decl doc at sds.c:307"
 cost_tokens = 34
-cum_tokens = 4087
+cum_tokens = 4266
 
 [batches.content]
 kind = "lines"
@@ -2622,7 +2622,7 @@ position = 74
 key = 'C(DeclDoc { file: "sds.c", start_line: 149 })'
 descriptor = "c decl doc at sds.c:149"
 cost_tokens = 36
-cum_tokens = 4123
+cum_tokens = 4302
 
 [batches.content]
 kind = "lines"
@@ -2640,7 +2640,7 @@ position = 75
 key = 'C(DeclBody { file: "sds.c", start_line: 526 })'
 descriptor = "c decl body at sds.c:526"
 cost_tokens = 47
-cum_tokens = 4170
+cum_tokens = 4349
 
 [batches.content]
 kind = "lines"
@@ -2658,7 +2658,7 @@ position = 76
 key = 'C(Includes { file: "sds.c" })'
 descriptor = "c includes in sds.c"
 cost_tokens = 83
-cum_tokens = 4253
+cum_tokens = 4432
 
 [batches.content]
 kind = "lines"
@@ -2676,7 +2676,7 @@ position = 77
 key = 'C(DeclDoc { file: "sds.c", start_line: 440 })'
 descriptor = "c decl doc at sds.c:440"
 cost_tokens = 41
-cum_tokens = 4294
+cum_tokens = 4473
 
 [batches.content]
 kind = "lines"
@@ -2694,7 +2694,7 @@ position = 78
 key = 'C(DeclDoc { file: "sds.c", start_line: 427 })'
 descriptor = "c decl doc at sds.c:427"
 cost_tokens = 42
-cum_tokens = 4336
+cum_tokens = 4515
 
 [batches.content]
 kind = "lines"
@@ -2712,7 +2712,7 @@ position = 79
 key = 'C(DeclBody { file: "sds.h", start_line: 87 })'
 descriptor = "c decl body at sds.h:87"
 cost_tokens = 165
-cum_tokens = 4501
+cum_tokens = 4680
 
 [batches.content]
 kind = "lines"
@@ -2730,7 +2730,7 @@ position = 80
 key = 'C(DeclBody { file: "sds.h", start_line: 180 })'
 descriptor = "c decl body at sds.h:180"
 cost_tokens = 165
-cum_tokens = 4666
+cum_tokens = 4845
 
 [batches.content]
 kind = "lines"
@@ -2748,7 +2748,7 @@ position = 81
 key = 'C(DeclDoc { file: "sds.c", start_line: 526 })'
 descriptor = "c decl doc at sds.c:526"
 cost_tokens = 51
-cum_tokens = 4717
+cum_tokens = 4896
 
 [batches.content]
 kind = "lines"
@@ -2766,7 +2766,7 @@ position = 82
 key = 'C(DeclBody { file: "sds.h", start_line: 197 })'
 descriptor = "c decl body at sds.h:197"
 cost_tokens = 205
-cum_tokens = 4922
+cum_tokens = 5101
 
 [batches.content]
 kind = "lines"
@@ -2784,7 +2784,7 @@ position = 83
 key = 'C(DeclDoc { file: "sds.c", start_line: 421 })'
 descriptor = "c decl doc at sds.c:421"
 cost_tokens = 67
-cum_tokens = 4989
+cum_tokens = 5168
 
 [batches.content]
 kind = "lines"
@@ -2802,7 +2802,7 @@ position = 84
 key = 'C(DeclBody { file: "sds.h", start_line: 130 })'
 descriptor = "c decl body at sds.h:130"
 cost_tokens = 237
-cum_tokens = 5226
+cum_tokens = 5405
 
 [batches.content]
 kind = "lines"
@@ -2820,7 +2820,7 @@ position = 85
 key = 'C(DeclDoc { file: "sds.c", start_line: 413 })'
 descriptor = "c decl doc at sds.c:413"
 cost_tokens = 68
-cum_tokens = 5294
+cum_tokens = 5473
 
 [batches.content]
 kind = "lines"
@@ -2838,7 +2838,7 @@ position = 86
 key = 'C(DeclDoc { file: "sds.c", start_line: 193 })'
 descriptor = "c decl doc at sds.c:193"
 cost_tokens = 69
-cum_tokens = 5363
+cum_tokens = 5542
 
 [batches.content]
 kind = "lines"
@@ -2856,7 +2856,7 @@ position = 87
 key = 'C(DeclBody { file: "sds.h", start_line: 104 })'
 descriptor = "c decl body at sds.h:104"
 cost_tokens = 244
-cum_tokens = 5607
+cum_tokens = 5786
 
 [batches.content]
 kind = "lines"
@@ -2874,7 +2874,7 @@ position = 88
 key = 'C(DeclBody { file: "sds.h", start_line: 154 })'
 descriptor = "c decl body at sds.h:154"
 cost_tokens = 252
-cum_tokens = 5859
+cum_tokens = 6038
 
 [batches.content]
 kind = "lines"
@@ -2892,7 +2892,7 @@ position = 89
 key = 'C(DeclDoc { file: "sds.c", start_line: 380 })'
 descriptor = "c decl doc at sds.c:380"
 cost_tokens = 73
-cum_tokens = 5932
+cum_tokens = 6111
 
 [batches.content]
 kind = "lines"
@@ -2910,7 +2910,7 @@ position = 90
 key = 'C(DeclBody { file: "sds.c", start_line: 427 })'
 descriptor = "c decl body at sds.c:427"
 cost_tokens = 100
-cum_tokens = 6032
+cum_tokens = 6211
 
 [batches.content]
 kind = "lines"
@@ -2928,7 +2928,7 @@ position = 91
 key = 'C(DeclBody { file: "sds.c", start_line: 398 })'
 descriptor = "c decl body at sds.c:398"
 cost_tokens = 104
-cum_tokens = 6136
+cum_tokens = 6315
 
 [batches.content]
 kind = "lines"
@@ -2946,7 +2946,7 @@ position = 92
 key = 'C(DeclNames { file: "sds.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in sds.c"
 cost_tokens = 440
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3228,7 +3228,7 @@ position = 93
 key = 'C(Decl { file: "sds.c", start_line: 591 })'
 descriptor = "c decl at sds.c:591"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3254,7 +3254,7 @@ position = 94
 key = 'C(Decl { file: "sds.c", start_line: 616 })'
 descriptor = "c decl at sds.c:616"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3280,7 +3280,7 @@ position = 95
 key = 'C(Decl { file: "sds.c", start_line: 725 })'
 descriptor = "c decl at sds.c:725"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3306,7 +3306,7 @@ position = 96
 key = 'C(Decl { file: "sds.c", start_line: 756 })'
 descriptor = "c decl at sds.c:756"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3332,7 +3332,7 @@ position = 97
 key = 'C(Decl { file: "sds.c", start_line: 783 })'
 descriptor = "c decl at sds.c:783"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3358,7 +3358,7 @@ position = 98
 key = 'C(Decl { file: "sds.c", start_line: 790 })'
 descriptor = "c decl at sds.c:790"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3384,7 +3384,7 @@ position = 99
 key = 'C(Decl { file: "sds.c", start_line: 807 })'
 descriptor = "c decl at sds.c:807"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3410,7 +3410,7 @@ position = 100
 key = 'C(Decl { file: "sds.c", start_line: 835 })'
 descriptor = "c decl at sds.c:835"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3436,7 +3436,7 @@ position = 101
 key = 'C(Decl { file: "sds.c", start_line: 885 })'
 descriptor = "c decl at sds.c:885"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3462,7 +3462,7 @@ position = 102
 key = 'C(Decl { file: "sds.c", start_line: 898 })'
 descriptor = "c decl at sds.c:898"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3488,7 +3488,7 @@ position = 103
 key = 'C(Decl { file: "sds.c", start_line: 925 })'
 descriptor = "c decl at sds.c:925"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3514,7 +3514,7 @@ position = 104
 key = 'C(Decl { file: "sds.c", start_line: 932 })'
 descriptor = "c decl at sds.c:932"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3540,7 +3540,7 @@ position = 105
 key = 'C(Decl { file: "sds.c", start_line: 973 })'
 descriptor = "c decl at sds.c:973"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3566,7 +3566,7 @@ position = 106
 key = 'C(Decl { file: "sds.c", start_line: 1092 })'
 descriptor = "c decl at sds.c:1092"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3592,7 +3592,7 @@ position = 107
 key = 'C(Decl { file: "sds.c", start_line: 1108 })'
 descriptor = "c decl at sds.c:1108"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3618,7 +3618,7 @@ position = 108
 key = 'C(Decl { file: "sds.c", start_line: 1120 })'
 descriptor = "c decl at sds.c:1120"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3644,7 +3644,7 @@ position = 109
 key = 'C(Decl { file: "sds.c", start_line: 1136 })'
 descriptor = "c decl at sds.c:1136"
 cost_tokens = 0
-cum_tokens = 6576
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -3662,7 +3662,7 @@ position = 110
 key = 'C(DeclDoc { file: "sds.c", start_line: 1120 })'
 descriptor = "c decl doc at sds.c:1120"
 cost_tokens = 20
-cum_tokens = 6596
+cum_tokens = 6775
 
 [batches.content]
 kind = "lines"
@@ -3680,7 +3680,7 @@ position = 111
 key = 'C(DeclDoc { file: "sds.c", start_line: 783 })'
 descriptor = "c decl doc at sds.c:783"
 cost_tokens = 21
-cum_tokens = 6617
+cum_tokens = 6796
 
 [batches.content]
 kind = "lines"
@@ -3698,7 +3698,7 @@ position = 112
 key = 'C(DeclDoc { file: "sds.c", start_line: 790 })'
 descriptor = "c decl doc at sds.c:790"
 cost_tokens = 21
-cum_tokens = 6638
+cum_tokens = 6817
 
 [batches.content]
 kind = "lines"
@@ -3716,7 +3716,7 @@ position = 113
 key = 'C(DeclDoc { file: "sds.c", start_line: 885 })'
 descriptor = "c decl doc at sds.c:885"
 cost_tokens = 26
-cum_tokens = 6664
+cum_tokens = 6843
 
 [batches.content]
 kind = "lines"
@@ -3734,7 +3734,7 @@ position = 114
 key = 'C(DeclBody { file: "sds.c", start_line: 885 })'
 descriptor = "c decl body at sds.c:885"
 cost_tokens = 39
-cum_tokens = 6703
+cum_tokens = 6882
 
 [batches.content]
 kind = "lines"
@@ -3752,7 +3752,7 @@ position = 115
 key = 'C(DeclDoc { file: "sds.c", start_line: 925 })'
 descriptor = "c decl doc at sds.c:925"
 cost_tokens = 33
-cum_tokens = 6736
+cum_tokens = 6915
 
 [batches.content]
 kind = "lines"
@@ -3770,7 +3770,7 @@ position = 116
 key = 'C(DeclDoc { file: "sds.c", start_line: 932 })'
 descriptor = "c decl doc at sds.c:932"
 cost_tokens = 34
-cum_tokens = 6770
+cum_tokens = 6949
 
 [batches.content]
 kind = "lines"
@@ -3788,7 +3788,7 @@ position = 117
 key = 'C(DeclBody { file: "sds.c", start_line: 783 })'
 descriptor = "c decl body at sds.c:783"
 cost_tokens = 48
-cum_tokens = 6818
+cum_tokens = 6997
 
 [batches.content]
 kind = "lines"
@@ -3806,7 +3806,7 @@ position = 118
 key = 'C(DeclBody { file: "sds.c", start_line: 790 })'
 descriptor = "c decl body at sds.c:790"
 cost_tokens = 48
-cum_tokens = 6866
+cum_tokens = 7045
 
 [batches.content]
 kind = "lines"
@@ -3824,7 +3824,7 @@ position = 119
 key = 'C(DeclBody { file: "sds.c", start_line: 925 })'
 descriptor = "c decl body at sds.c:925"
 cost_tokens = 49
-cum_tokens = 6915
+cum_tokens = 7094
 
 [batches.content]
 kind = "lines"
@@ -3842,7 +3842,7 @@ position = 120
 key = 'C(DeclDoc { file: "sds.c", start_line: 1108 })'
 descriptor = "c decl doc at sds.c:1108"
 cost_tokens = 38
-cum_tokens = 6953
+cum_tokens = 7132
 
 [batches.content]
 kind = "lines"
@@ -3860,7 +3860,7 @@ position = 121
 key = 'C(DeclBody { file: "sds.c", start_line: 591 })'
 descriptor = "c decl body at sds.c:591"
 cost_tokens = 64
-cum_tokens = 7017
+cum_tokens = 7196
 
 [batches.content]
 kind = "lines"
@@ -3878,7 +3878,7 @@ position = 122
 key = 'C(DeclBody { file: "sds.c", start_line: 1108 })'
 descriptor = "c decl body at sds.c:1108"
 cost_tokens = 104
-cum_tokens = 7121
+cum_tokens = 7300
 
 [batches.content]
 kind = "lines"
@@ -3896,7 +3896,7 @@ position = 123
 key = 'C(DeclBody { file: "sds.c", start_line: 1120 })'
 descriptor = "c decl body at sds.c:1120"
 cost_tokens = 108
-cum_tokens = 7229
+cum_tokens = 7408
 
 [batches.content]
 kind = "lines"
@@ -3914,7 +3914,7 @@ position = 124
 key = 'C(DeclDoc { file: "sds.c", start_line: 398 })'
 descriptor = "c decl doc at sds.c:398"
 cost_tokens = 85
-cum_tokens = 7314
+cum_tokens = 7493
 
 [batches.content]
 kind = "lines"
@@ -3929,144 +3929,234 @@ kind = "full"
 
 [[batches]]
 position = 125
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
-cost_tokens = 357
-cum_tokens = 7671
+key = 'C(DeclDoc { file: "sds.c", start_line: 300 })'
+descriptor = "c decl doc at sds.c:300"
+cost_tokens = 88
+cum_tokens = 7581
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 24
-end = 48
+path = "sds.c"
+start = 293
+end = 299
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 126
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #2"
-cost_tokens = 352
-cum_tokens = 8023
+key = 'C(DeclDoc { file: "sds.c", start_line: 450 })'
+descriptor = "c decl doc at sds.c:450"
+cost_tokens = 86
+cum_tokens = 7667
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 50
-end = 81
+path = "sds.c"
+start = 444
+end = 449
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 127
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #3"
-cost_tokens = 258
-cum_tokens = 8281
+key = 'C(DeclDoc { file: "sds.c", start_line: 256 })'
+descriptor = "c decl doc at sds.c:256"
+cost_tokens = 98
+cum_tokens = 7765
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 83
-end = 95
+path = "sds.c"
+start = 250
+end = 255
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 128
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #4"
-cost_tokens = 355
-cum_tokens = 8636
+key = 'C(DeclBody { file: "sds.c", start_line: 1092 })'
+descriptor = "c decl body at sds.c:1092"
+cost_tokens = 133
+cum_tokens = 7898
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 97
-end = 117
+path = "sds.c"
+start = 1093
+end = 1103
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 129
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #5"
-cost_tokens = 293
-cum_tokens = 8929
+key = 'C(DeclDoc { file: "sds.c", start_line: 1136 })'
+descriptor = "c decl doc at sds.c:1136"
+cost_tokens = 103
+cum_tokens = 8001
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 119
-end = 141
+path = "sds.c"
+start = 1131
+end = 1135
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 130
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #6"
-cost_tokens = 332
-cum_tokens = 9261
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 425
+cum_tokens = 8426
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "README.md"
-start = 143
-end = 169
+start = 39
+end = 72
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 131
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #7"
-cost_tokens = 353
-cum_tokens = 9614
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
+cost_tokens = 418
+cum_tokens = 8844
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "README.md"
-start = 171
-end = 204
+start = 74
+end = 101
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 132
-key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #8"
-cost_tokens = 272
-cum_tokens = 9886
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #3"
+cost_tokens = 408
+cum_tokens = 9252
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "README.md"
-start = 206
-end = 222
+start = 103
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'C(DeclBody { file: "sds.c", start_line: 380 })'
+descriptor = "c decl body at sds.c:380"
+cost_tokens = 135
+cum_tokens = 9387
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sds.c"
+start = 381
+end = 390
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'C(DeclBody { file: "sds.c", start_line: 807 })'
+descriptor = "c decl body at sds.c:807"
+cost_tokens = 138
+cum_tokens = 9525
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sds.c"
+start = 808
+end = 816
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'C(DeclDoc { file: "sds.c", start_line: 898 })'
+descriptor = "c decl doc at sds.c:898"
+cost_tokens = 110
+cum_tokens = 9635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sds.c"
+start = 892
+end = 897
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'C(DeclDoc { file: "sds.c", start_line: 204 })'
+descriptor = "c decl doc at sds.c:204"
+cost_tokens = 111
+cum_tokens = 9746
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sds.c"
+start = 198
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'C(DeclBody { file: "sds.c", start_line: 725 })'
+descriptor = "c decl body at sds.c:725"
+cost_tokens = 157
+cum_tokens = 9903
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sds.c"
+start = 726
+end = 737
 
 [batches.content.spans.render]
 kind = "full"

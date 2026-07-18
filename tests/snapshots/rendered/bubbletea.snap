@@ -97,17 +97,13 @@ keyboard.go
       34→	return k.Flags > 0
     …
       39→func (k KeyboardEnhancementsMsg) SupportsEventTypes() bool {
-      40→	return k.Flags&ansi.KittyReportEventTypes != 0
     …
       43→// SupportsAlternateKeys returns whether the terminal supports reporting
       44→// alternate key codes.
       45→func (k KeyboardEnhancementsMsg) SupportsAlternateKeys() bool {
-      46→	return k.Flags&ansi.KittyReportAlternateKeys != 0
     …
       51→func (k KeyboardEnhancementsMsg) SupportsAllKeysAsEscapeCodes() bool {
     …
-      55→// SupportsAssociatedText returns whether the terminal supports reporting
-      56→// associated text with key events.
       57→func (k KeyboardEnhancementsMsg) SupportsAssociatedText() bool {
     …
 logging.go
@@ -306,6 +302,16 @@ testdata/
         clear_screen.golden
         read_set_clipboard.golden
     TestViewModel/
+        altscreen.golden
+        altscreen_autoexit.golden
+        bg_set_color.golden
+        bp_stop_start.golden
+        cursor_hide.golden
+        cursor_hideshow.golden
+        kitty_stop_startreleases.golden
+        mouse_allmotion.golden
+        mouse_cellmotion.golden
+        mouse_disable.golden
 tty.go
 tty_unix.go
 tty_windows.go

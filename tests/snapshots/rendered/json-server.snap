@@ -204,6 +204,16 @@ pnpm-lock.yaml
 public/
     test.html
 schema.json
+       1→{
+       2→  "$schema": "https://json-schema.org/draft/2020-12/schema",
+       3→  "type": "object",
+       4→  "additionalProperties": {
+       5→    "oneOf": [
+       6→      { "type": "array" },
+       7→      { "type": "object" }
+       8→    ]
+       9→  }
+      10→}
 src/
     adapters/
         normalized-adapter.test.ts
@@ -253,6 +263,18 @@ src/
         …
     service.test.ts
     service.ts
+        …
+           9→export type Item = Record<string, unknown>
+          10→
+          11→export type Data = Record<string, Item[] | Item>
+          12→
+          13→export function isItem(obj: unknown): obj is Item {
+          14→  return typeof obj === 'object' && obj !== null && !Array.isArray(obj)
+        …
+          17→export type PaginatedItems = PaginationResult<Item>
+        …
+          81→export class Service {
+        …
     where-operators.ts
            1→export const WHERE_OPERATORS = [
            2→  'lt',

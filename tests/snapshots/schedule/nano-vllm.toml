@@ -157,10 +157,70 @@ kind = "ellipsis"
 
 [[batches]]
 position = 5
+key = 'Fs(DirListing { dir: "nanovllm" })'
+descriptor = "listing of 'nanovllm'"
+cost_tokens = 32
+cum_tokens = 151
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "nanovllm"
+entries = ["__init__.py", "config.py", "engine", "layers", "llm.py", "models", "sampling_params.py", "utils"]
+
+[[batches]]
+position = 6
+key = 'Python(Imports { file: "nanovllm/__init__.py" })'
+descriptor = "python imports in nanovllm/__init__.py"
+cost_tokens = 31
+cum_tokens = 182
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "nanovllm/models" })'
+descriptor = "listing of 'nanovllm/models'"
+cost_tokens = 6
+cum_tokens = 188
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "nanovllm/models"
+entries = ["qwen3.py"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "nanovllm/utils" })'
+descriptor = "listing of 'nanovllm/utils'"
+cost_tokens = 8
+cum_tokens = 196
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "nanovllm/utils"
+entries = ["context.py", "loader.py"]
+
+[[batches]]
+position = 9
 key = 'Python(DeclNames { file: "bench.py" })'
 descriptor = "python decl names surface in bench.py"
 cost_tokens = 11
-cum_tokens = 130
+cum_tokens = 207
 
 [batches.content]
 kind = "lines"
@@ -182,11 +242,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 10
 key = 'Python(Decl { file: "bench.py", start_line: 8 })'
 descriptor = "python decl at bench.py:8"
 cost_tokens = 0
-cum_tokens = 130
+cum_tokens = 207
 
 [batches.content]
 kind = "lines"
@@ -200,11 +260,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 7
+position = 11
 key = 'Python(DeclNames { file: "example.py" })'
 descriptor = "python decl names surface in example.py"
 cost_tokens = 11
-cum_tokens = 141
+cum_tokens = 218
 
 [batches.content]
 kind = "lines"
@@ -226,11 +286,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 12
 key = 'Python(Decl { file: "example.py", start_line: 6 })'
 descriptor = "python decl at example.py:6"
 cost_tokens = 0
-cum_tokens = 141
+cum_tokens = 218
 
 [batches.content]
 kind = "lines"
@@ -244,71 +304,25 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "nanovllm" })'
-descriptor = "listing of 'nanovllm'"
-cost_tokens = 32
-cum_tokens = 173
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "nanovllm"
-entries = ["__init__.py", "config.py", "engine", "layers", "llm.py", "models", "sampling_params.py", "utils"]
-
-[[batches]]
-position = 10
-key = 'Python(Imports { file: "nanovllm/__init__.py" })'
-descriptor = "python imports in nanovllm/__init__.py"
-cost_tokens = 31
-cum_tokens = 204
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/__init__.py"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "nanovllm/models" })'
-descriptor = "listing of 'nanovllm/models'"
-cost_tokens = 6
-cum_tokens = 210
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "nanovllm/models"
-entries = ["qwen3.py"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "nanovllm/utils" })'
-descriptor = "listing of 'nanovllm/utils'"
-cost_tokens = 8
-cum_tokens = 218
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "nanovllm/utils"
-entries = ["context.py", "loader.py"]
-
-[[batches]]
 position = 13
+key = 'Fs(DirListing { dir: "nanovllm/engine" })'
+descriptor = "listing of 'nanovllm/engine'"
+cost_tokens = 24
+cum_tokens = 242
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "nanovllm/engine"
+entries = ["block_manager.py", "llm_engine.py", "model_runner.py", "scheduler.py", "sequence.py"]
+
+[[batches]]
+position = 14
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 79
-cum_tokens = 297
+cum_tokens = 321
 
 [batches.content]
 kind = "lines"
@@ -322,11 +336,25 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 14
+position = 15
+key = 'Fs(DirListing { dir: "nanovllm/layers" })'
+descriptor = "listing of 'nanovllm/layers'"
+cost_tokens = 31
+cum_tokens = 352
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "nanovllm/layers"
+entries = ["activation.py", "attention.py", "embed_head.py", "layernorm.py", "linear.py", "rotary_embedding.py", "sampler.py"]
+
+[[batches]]
+position = 16
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 77
-cum_tokens = 374
+cum_tokens = 429
 
 [batches.content]
 kind = "lines"
@@ -340,43 +368,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "nanovllm/engine" })'
-descriptor = "listing of 'nanovllm/engine'"
-cost_tokens = 24
-cum_tokens = 398
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "nanovllm/engine"
-entries = ["block_manager.py", "llm_engine.py", "model_runner.py", "scheduler.py", "sequence.py"]
-
-[[batches]]
-position = 16
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #2"
-cost_tokens = 39
-cum_tokens = 437
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 19
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 17
 key = 'Python(DeclNames { file: "nanovllm/config.py" })'
 descriptor = "python decl names surface in nanovllm/config.py"
 cost_tokens = 12
-cum_tokens = 449
+cum_tokens = 441
 
 [batches.content]
 kind = "lines"
@@ -394,7 +390,7 @@ position = 18
 key = 'Python(Decl { file: "nanovllm/config.py", start_line: 6 })'
 descriptor = "python decl at nanovllm/config.py:6"
 cost_tokens = 7
-cum_tokens = 456
+cum_tokens = 448
 
 [batches.content]
 kind = "lines"
@@ -412,7 +408,7 @@ position = 19
 key = 'Python(MethodSigs { file: "nanovllm/config.py" })'
 descriptor = "python method sigs in nanovllm/config.py"
 cost_tokens = 14
-cum_tokens = 470
+cum_tokens = 462
 
 [batches.content]
 kind = "lines"
@@ -438,7 +434,7 @@ position = 20
 key = 'Python(Method { file: "nanovllm/config.py", start_line: 20 })'
 descriptor = "python method at nanovllm/config.py:20"
 cost_tokens = 0
-cum_tokens = 470
+cum_tokens = 462
 
 [batches.content]
 kind = "lines"
@@ -456,7 +452,7 @@ position = 21
 key = 'Python(DeclNames { file: "nanovllm/sampling_params.py" })'
 descriptor = "python decl names surface in nanovllm/sampling_params.py"
 cost_tokens = 12
-cum_tokens = 482
+cum_tokens = 474
 
 [batches.content]
 kind = "lines"
@@ -474,7 +470,7 @@ position = 22
 key = 'Python(Decl { file: "nanovllm/sampling_params.py", start_line: 4 })'
 descriptor = "python decl at nanovllm/sampling_params.py:4"
 cost_tokens = 8
-cum_tokens = 490
+cum_tokens = 482
 
 [batches.content]
 kind = "lines"
@@ -492,7 +488,7 @@ position = 23
 key = 'Python(MethodSigs { file: "nanovllm/sampling_params.py" })'
 descriptor = "python method sigs in nanovllm/sampling_params.py"
 cost_tokens = 14
-cum_tokens = 504
+cum_tokens = 496
 
 [batches.content]
 kind = "lines"
@@ -518,7 +514,7 @@ position = 24
 key = 'Python(Method { file: "nanovllm/sampling_params.py", start_line: 10 })'
 descriptor = "python method at nanovllm/sampling_params.py:10"
 cost_tokens = 0
-cum_tokens = 504
+cum_tokens = 496
 
 [batches.content]
 kind = "lines"
@@ -533,24 +529,28 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'Fs(DirListing { dir: "nanovllm/layers" })'
-descriptor = "listing of 'nanovllm/layers'"
-cost_tokens = 31
-cum_tokens = 535
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "nanovllm/layers"
-entries = ["activation.py", "attention.py", "embed_head.py", "layernorm.py", "linear.py", "rotary_embedding.py", "sampler.py"]
-
-[[batches]]
-position = 26
 key = 'Python(DeclNames { file: "nanovllm/llm.py" })'
 descriptor = "python decl names surface in nanovllm/llm.py"
 cost_tokens = 16
-cum_tokens = 551
+cum_tokens = 512
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "nanovllm/llm.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Python(Decl { file: "nanovllm/llm.py", start_line: 4 })'
+descriptor = "python decl at nanovllm/llm.py:4"
+cost_tokens = 0
+cum_tokens = 512
 
 [batches.content]
 kind = "lines"
@@ -565,28 +565,10 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Python(Decl { file: "nanovllm/llm.py", start_line: 4 })'
-descriptor = "python decl at nanovllm/llm.py:4"
-cost_tokens = 0
-cum_tokens = 551
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "nanovllm/llm.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
 key = 'Python(ClassBody { file: "nanovllm/llm.py", start_line: 4 })'
 descriptor = "python class body at nanovllm/llm.py:4"
 cost_tokens = 5
-cum_tokens = 556
+cum_tokens = 517
 
 [batches.content]
 kind = "lines"
@@ -595,6 +577,24 @@ kind = "lines"
 path = "nanovllm/llm.py"
 start = 5
 end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
+cost_tokens = 39
+cum_tokens = 556
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 23
 
 [batches.content.spans.render]
 kind = "full"

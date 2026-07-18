@@ -22,6 +22,16 @@ README.md
       15→suites. So, chibicc actually supports a wide variety of C11 features
       16→and is able to compile hundreds of thousands of lines of real-world C
       17→code correctly.
+      18→
+      19→chibicc is developed as the reference implementation for a book I'm
+      20→currently writing about the C compiler and the low-level programming.
+      21→The book covers the vast topic with an incremental approach; in the first
+      22→chapter, readers will implement a "compiler" that accepts just a single
+      23→number as a "language", which will then gain one feature at a time in each
+      24→section of the book until the language that the compiler accepts matches
+      25→what the C11 spec specifies. I took this incremental approach from [the
+      26→paper](http://scheme2006.cs.uchicago.edu/11-ghuloum.pdf) by Abdulaziz
+      27→Ghuloum.
     …
       55→## Status
     …

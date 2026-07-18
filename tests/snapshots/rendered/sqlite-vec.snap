@@ -142,7 +142,9 @@ bindings/
             go-sqlite3.patch
     python/
         extra_init.py
-            …
+               1→from typing import List
+               2→from struct import pack
+               3→from sqlite3 import Connection
                6→def serialize_float32(vector: List[float]) -> bytes:
                7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
                8→    return pack("%sf" % len(vector), *vector)
@@ -245,11 +247,15 @@ scripts/
 site/
     .gitignore
     .vitepress/
+        config.mts
+        theme/
     api-reference.md
     build-ref.mjs
     compiling.md
     features/
     getting-started/
+        installation.md
+        introduction.md
     guides/
         arithmetic.md
         binary-quant.md

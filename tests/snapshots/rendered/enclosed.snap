@@ -60,15 +60,13 @@ README.md
       36→## Features
     …
       39→- **File Attachments**: Share files securely with your notes.
-      40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
     …
       42→- **Minimalistic UI**: Simple and intuitive user interface for quick note sharing.
       43→- **i18n Support**: Available in multiple languages.
       44→- **Authentication**: Optional email/password authentication to create notes.
       45→- **Dark Mode**: A dark theme for late-night note sharing.
       46→- **Responsive Design**: Works on all devices, from desktops to mobile phones.
-      47→- **Open Source**: The source code is available under the Apache 2.0 License.
-      48→- **Self-Hostable**: Run your instance of Enclosed for private note sharing.
+    …
       49→- **CLI**: A command-line interface for creating notes from the terminal.
     …
       52→## Self host
@@ -201,6 +199,18 @@ packages/
                     i18n.models.ts
                     i18n.provider.tsx
                 notes/
+                    components/
+                        file-uploader.tsx
+                        note-password-field.tsx
+                    notes.constants.ts
+                    notes.context.tsx
+                    notes.models.test.ts
+                    notes.models.ts
+                    notes.services.ts
+                    notes.usecases.ts
+                    pages/
+                        create-note.page.tsx
+                        view-note.page.tsx
                 shared/
                     files/
                         convert.ts
@@ -208,6 +218,10 @@ packages/
                     hooks/
                         hooks.ts
                     http/
+                        http-client.models.test.ts
+                        http-client.models.ts
+                        http-client.ts
+                        http-errors.ts
                     style/
                         cn.ts
                     utils/
@@ -233,6 +247,11 @@ packages/
                 app/
                     auth/
                     config/
+                        config.models.ts
+                        config.routes.ts
+                        config.test-utils.ts
+                        config.ts
+                        config.types.ts
                     middlewares/
                     server.ts
                     server.types.ts
@@ -314,6 +333,12 @@ packages/
         src/
             api-definition.ts
             encryption-algorithms/
+                encryption-algorithms.constants.ts
+                encryption-algorithms.models.ts
+                encryption-algorithms.registry.test.ts
+                encryption-algorithms.registry.ts
+                encryption-algorithms.test-utils.ts
+                encryption-algorithms.types.ts
             index.node.ts
             index.test.ts
             index.web.ts
@@ -352,20 +377,21 @@ packages/
                 i18n.data.ts
             how-it-works.md
             index.md
-                …
-                   5→# Enclosed
-                …
-                  11→## Key Features
-                …
-                  27→## Why Enclosed?
-                …
-                  33→## Get Started
-                …
             integrations/
                 cli.md
                 npm-package.md
                 versioning.md
             public/
+                apple-touch-icon.png
+                favicon-16x16.png
+                favicon-32x32.png
+                favicon.ico
+                humans.txt
+                logo-dark.svg
+                logo-light.svg
+                logos/
+                og-image.png
+                robots.txt
             resources/
                 brand-kit.md
                 i18n.md
@@ -384,19 +410,7 @@ packages/
                5→## Installation
             …
               18→## Usage
-              19→
-              20→```javascript
-              21→import { createNote } from '@enclosed/lib';
-              22→
-              23→const { noteUrl } = await createNote({
-              24→  content: 'Hello, World!',
-              25→  password: 'password',
-              26→  ttlInSeconds: 3600,
-              27→  deleteAfterReading: true,
-              28→});
-              29→
-              30→console.log(noteUrl);
-              31→```
+            …
               33→## License
             …
               37→## Credits and Acknowledgements

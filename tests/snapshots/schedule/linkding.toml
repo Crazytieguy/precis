@@ -19,10 +19,24 @@ entries = [".coveragerc", ".devcontainer", ".dockerignore", ".env.sample", ".git
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "docker" })'
+descriptor = "listing of 'docker'"
+cost_tokens = 12
+cum_tokens = 127
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docker"
+entries = ["alpine.Dockerfile", "default.Dockerfile"]
+
+[[batches]]
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 54
-cum_tokens = 169
+cum_tokens = 181
 
 [batches.content]
 kind = "lines"
@@ -36,25 +50,25 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "docker" })'
-descriptor = "listing of 'docker'"
-cost_tokens = 12
-cum_tokens = 181
+position = 4
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 3
+cum_tokens = 184
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "docker"
-entries = ["alpine.Dockerfile", "default.Dockerfile"]
+parent = ".github"
+entries = ["workflows"]
 
 [[batches]]
-position = 4
+position = 5
 key = 'Plaintext(Whole { file: "version.txt" })'
 descriptor = "plaintext config version.txt"
 cost_tokens = 10
-cum_tokens = 191
+cum_tokens = 194
 
 [batches.content]
 kind = "lines"
@@ -68,25 +82,39 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 5
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 3
-cum_tokens = 194
+position = 6
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 13
+cum_tokens = 207
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = ".github"
-entries = ["workflows"]
+parent = ".github/workflows"
+entries = ["build-test.yaml", "build.yaml", "main.yaml"]
 
 [[batches]]
-position = 6
+position = 7
+key = 'Fs(DirListing { dir: ".devcontainer" })'
+descriptor = "listing of '.devcontainer'"
+cost_tokens = 5
+cum_tokens = 212
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".devcontainer"
+entries = ["devcontainer.json"]
+
+[[batches]]
+position = 8
 key = 'Python(DeclNames { file: "manage.py" })'
 descriptor = "python decl names surface in manage.py"
 cost_tokens = 11
-cum_tokens = 205
+cum_tokens = 223
 
 [batches.content]
 kind = "lines"
@@ -108,11 +136,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 9
 key = 'Python(Decl { file: "manage.py", start_line: 7 })'
 descriptor = "python decl at manage.py:7"
 cost_tokens = 0
-cum_tokens = 205
+cum_tokens = 223
 
 [batches.content]
 kind = "lines"
@@ -126,39 +154,25 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 8
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 13
-cum_tokens = 218
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["build-test.yaml", "build.yaml", "main.yaml"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: ".devcontainer" })'
-descriptor = "listing of '.devcontainer'"
-cost_tokens = 5
-cum_tokens = 223
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".devcontainer"
-entries = ["devcontainer.json"]
-
-[[batches]]
 position = 10
+key = 'Fs(DirListing { dir: "assets" })'
+descriptor = "listing of 'assets'"
+cost_tokens = 44
+cum_tokens = 267
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "assets"
+entries = ["header.afdesign", "header.png", "header.svg", "logo-inset.afdesign", "logo.afdesign", "logo.png", "logo.svg", "social-preview.afdesign", "social-preview.png"]
+
+[[batches]]
+position = 11
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 97
-cum_tokens = 320
+cum_tokens = 364
 
 [batches.content]
 kind = "lines"
@@ -324,20 +338,6 @@ end = 115
 kind = "ellipsis"
 
 [[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "assets" })'
-descriptor = "listing of 'assets'"
-cost_tokens = 44
-cum_tokens = 364
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "assets"
-entries = ["header.afdesign", "header.png", "header.svg", "logo-inset.afdesign", "logo.afdesign", "logo.png", "logo.svg", "social-preview.afdesign", "social-preview.png"]
-
-[[batches]]
 position = 12
 key = 'Fs(DirListing { dir: "bookmarks" })'
 descriptor = "listing of 'bookmarks'"
@@ -469,10 +469,80 @@ entries = ["background_tasks.html"]
 
 [[batches]]
 position = 21
+key = 'Fs(DirListing { dir: "bookmarks/templates/registration" })'
+descriptor = "listing of 'bookmarks/templates/registration'"
+cost_tokens = 16
+cum_tokens = 642
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/templates/registration"
+entries = ["login.html", "password_change_done.html", "password_change_form.html"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "bookmarks/views" })'
+descriptor = "listing of 'bookmarks/views'"
+cost_tokens = 74
+cum_tokens = 716
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/views"
+entries = ["__init__.py", "access.py", "assets.py", "auth.py", "bookmarks.py", "bundles.py", "contexts.py", "custom_css.py", "health.py", "manifest.py", "opensearch.py", "reload.py", "root.py", "settings.py", "tags.py", "toasts.py", "turbo.py"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "bookmarks/services" })'
+descriptor = "listing of 'bookmarks/services'"
+cost_tokens = 81
+cum_tokens = 797
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/services"
+entries = ["__init__.py", "assets.py", "auto_tagging.py", "bookmarks.py", "bundles.py", "exporter.py", "favicon_loader.py", "importer.py", "monolith.py", "parser.py", "preview_image_loader.py", "search_query_parser.py", "singlefile.py", "tags.py", "tasks.py", "wayback.py", "website_loader.py"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "bookmarks/templates/bundles" })'
+descriptor = "listing of 'bookmarks/templates/bundles'"
+cost_tokens = 20
+cum_tokens = 817
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/templates/bundles"
+entries = ["edit.html", "form.html", "index.html", "new.html", "preview.html"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "bookmarks/templates/tags" })'
+descriptor = "listing of 'bookmarks/templates/tags'"
+cost_tokens = 20
+cum_tokens = 837
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/templates/tags"
+entries = ["edit.html", "form.html", "index.html", "merge.html", "new.html"]
+
+[[batches]]
+position = 26
 key = 'Python(DeclNames { file: "bookmarks/wsgi.py" })'
 descriptor = "python decl names surface in bookmarks/wsgi.py"
 cost_tokens = 12
-cum_tokens = 638
+cum_tokens = 849
 
 [batches.content]
 kind = "lines"
@@ -486,39 +556,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "bookmarks/views" })'
-descriptor = "listing of 'bookmarks/views'"
-cost_tokens = 74
-cum_tokens = 712
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/views"
-entries = ["__init__.py", "access.py", "assets.py", "auth.py", "bookmarks.py", "bundles.py", "contexts.py", "custom_css.py", "health.py", "manifest.py", "opensearch.py", "reload.py", "root.py", "settings.py", "tags.py", "toasts.py", "turbo.py"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "bookmarks/templates/registration" })'
-descriptor = "listing of 'bookmarks/templates/registration'"
-cost_tokens = 16
-cum_tokens = 728
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/templates/registration"
-entries = ["login.html", "password_change_done.html", "password_change_form.html"]
-
-[[batches]]
-position = 24
+position = 27
 key = 'Python(DeclNames { file: "bookmarks/signals.py" })'
 descriptor = "python decl names surface in bookmarks/signals.py"
 cost_tokens = 13
-cum_tokens = 741
+cum_tokens = 862
 
 [batches.content]
 kind = "lines"
@@ -540,25 +582,39 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "bookmarks/services" })'
-descriptor = "listing of 'bookmarks/services'"
-cost_tokens = 81
-cum_tokens = 822
+position = 28
+key = 'Fs(DirListing { dir: "bookmarks/frontend/utils" })'
+descriptor = "listing of 'bookmarks/frontend/utils'"
+cost_tokens = 27
+cum_tokens = 889
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "bookmarks/services"
-entries = ["__init__.py", "assets.py", "auto_tagging.py", "bookmarks.py", "bundles.py", "exporter.py", "favicon_loader.py", "importer.py", "monolith.py", "parser.py", "preview_image_loader.py", "search_query_parser.py", "singlefile.py", "tags.py", "tasks.py", "wayback.py", "website_loader.py"]
+parent = "bookmarks/frontend/utils"
+entries = ["element.js", "focus.js", "input.js", "position-controller.js", "search-history.js", "tag-cache.js"]
 
 [[batches]]
-position = 26
+position = 29
+key = 'Fs(DirListing { dir: "bookmarks/templates/settings" })'
+descriptor = "listing of 'bookmarks/templates/settings'"
+cost_tokens = 27
+cum_tokens = 916
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/templates/settings"
+entries = ["bookmarklet.js", "bookmarklet_clientside.js", "create_api_token_modal.html", "general.html", "integrations.html"]
+
+[[batches]]
+position = 30
 key = 'Python(DeclNames { file: "bookmarks/apps.py" })'
 descriptor = "python decl names surface in bookmarks/apps.py"
 cost_tokens = 15
-cum_tokens = 837
+cum_tokens = 931
 
 [batches.content]
 kind = "lines"
@@ -572,11 +628,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 27
+position = 31
 key = 'Python(Decl { file: "bookmarks/apps.py", start_line: 4 })'
 descriptor = "python decl at bookmarks/apps.py:4"
 cost_tokens = 0
-cum_tokens = 837
+cum_tokens = 931
 
 [batches.content]
 kind = "lines"
@@ -590,11 +646,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 28
+position = 32
 key = 'Python(MethodSigs { file: "bookmarks/apps.py" })'
 descriptor = "python method sigs in bookmarks/apps.py"
 cost_tokens = 11
-cum_tokens = 848
+cum_tokens = 942
 
 [batches.content]
 kind = "lines"
@@ -616,11 +672,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 33
 key = 'Python(ClassBody { file: "bookmarks/apps.py", start_line: 4 })'
 descriptor = "python class body at bookmarks/apps.py:4"
 cost_tokens = 9
-cum_tokens = 857
+cum_tokens = 951
 
 [batches.content]
 kind = "lines"
@@ -634,11 +690,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 30
+position = 34
 key = 'Python(DeclNames { file: "bookmarks/type_defs.py" })'
 descriptor = "python decl names surface in bookmarks/type_defs.py"
 cost_tokens = 15
-cum_tokens = 872
+cum_tokens = 966
 
 [batches.content]
 kind = "lines"
@@ -647,80 +703,34 @@ kind = "lines"
 path = "bookmarks/type_defs.py"
 start = 11
 end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Python(Decl { file: "bookmarks/type_defs.py", start_line: 11 })'
-descriptor = "python decl at bookmarks/type_defs.py:11"
-cost_tokens = 0
-cum_tokens = 872
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/type_defs.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "bookmarks/templates/bundles" })'
-descriptor = "listing of 'bookmarks/templates/bundles'"
-cost_tokens = 20
-cum_tokens = 892
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/templates/bundles"
-entries = ["edit.html", "form.html", "index.html", "new.html", "preview.html"]
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "bookmarks/templates/tags" })'
-descriptor = "listing of 'bookmarks/templates/tags'"
-cost_tokens = 20
-cum_tokens = 912
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/templates/tags"
-entries = ["edit.html", "form.html", "index.html", "merge.html", "new.html"]
-
-[[batches]]
-position = 34
-key = 'Python(DeclNames { file: "bookmarks/validators.py" })'
-descriptor = "python decl names surface in bookmarks/validators.py"
-cost_tokens = 17
-cum_tokens = 929
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/validators.py"
-start = 5
-end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 35
-key = 'Python(Decl { file: "bookmarks/validators.py", start_line: 5 })'
-descriptor = "python decl at bookmarks/validators.py:5"
+key = 'Python(Decl { file: "bookmarks/type_defs.py", start_line: 11 })'
+descriptor = "python decl at bookmarks/type_defs.py:11"
 cost_tokens = 0
-cum_tokens = 929
+cum_tokens = 966
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/type_defs.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Python(DeclNames { file: "bookmarks/validators.py" })'
+descriptor = "python decl names surface in bookmarks/validators.py"
+cost_tokens = 17
+cum_tokens = 983
 
 [batches.content]
 kind = "lines"
@@ -734,11 +744,29 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
+key = 'Python(Decl { file: "bookmarks/validators.py", start_line: 5 })'
+descriptor = "python decl at bookmarks/validators.py:5"
+cost_tokens = 0
+cum_tokens = 983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/validators.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
 key = 'Python(MethodSigs { file: "bookmarks/validators.py" })'
 descriptor = "python method sigs in bookmarks/validators.py"
 cost_tokens = 15
-cum_tokens = 944
+cum_tokens = 998
 
 [batches.content]
 kind = "lines"
@@ -760,11 +788,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 39
 key = 'Python(Method { file: "bookmarks/validators.py", start_line: 11 })'
 descriptor = "python method at bookmarks/validators.py:11"
 cost_tokens = 0
-cum_tokens = 944
+cum_tokens = 998
 
 [batches.content]
 kind = "lines"
@@ -778,39 +806,81 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 38
-key = 'Fs(DirListing { dir: "bookmarks/frontend/utils" })'
-descriptor = "listing of 'bookmarks/frontend/utils'"
-cost_tokens = 27
-cum_tokens = 971
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/frontend/utils"
-entries = ["element.js", "focus.js", "input.js", "position-controller.js", "search-history.js", "tag-cache.js"]
-
-[[batches]]
-position = 39
-key = 'Fs(DirListing { dir: "bookmarks/templates/settings" })'
-descriptor = "listing of 'bookmarks/templates/settings'"
-cost_tokens = 27
-cum_tokens = 998
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/templates/settings"
-entries = ["bookmarklet.js", "bookmarklet_clientside.js", "create_api_token_modal.html", "general.html", "integrations.html"]
-
-[[batches]]
 position = 40
+key = 'Fs(DirListing { dir: "bookmarks/styles" })'
+descriptor = "listing of 'bookmarks/styles'"
+cost_tokens = 69
+cum_tokens = 1067
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/styles"
+entries = ["auth.css", "bookmark-details.css", "bookmark-form.css", "bookmark-page.css", "bundles.css", "components.css", "crud.css", "layout.css", "markdown.css", "reader-mode.css", "responsive.css", "settings.css", "tags.css", "theme", "theme-dark.css", "theme-light.css"]
+
+[[batches]]
+position = 41
+key = 'Fs(DirListing { dir: "bookmarks/templates/shared" })'
+descriptor = "listing of 'bookmarks/templates/shared'"
+cost_tokens = 41
+cum_tokens = 1108
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/templates/shared"
+entries = ["dev_tool.html", "error_list.html", "head.html", "layout.html", "messages.html", "modal_header.html", "nav_menu.html", "pagination.html", "top_frame.html"]
+
+[[batches]]
+position = 42
+key = 'Fs(DirListing { dir: "bookmarks/management/commands" })'
+descriptor = "listing of 'bookmarks/management/commands'"
+cost_tokens = 46
+cum_tokens = 1154
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/management/commands"
+entries = ["backup.py", "create_initial_superuser.py", "enable_wal.py", "ensure_superuser.py", "full_backup.py", "generate_secret_key.py", "import_netscape.py", "migrate_tasks.py"]
+
+[[batches]]
+position = 43
+key = 'Fs(DirListing { dir: "bookmarks/static" })'
+descriptor = "listing of 'bookmarks/static'"
+cost_tokens = 92
+cum_tokens = 1246
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/static"
+entries = ["apple-touch-icon.png", "favicon.ico", "favicon.svg", "icons.svg", "linkding-screenshot.png", "live-reload.js", "logo-192.png", "logo-512.png", "logo.png", "logo.svg", "maskable-logo-192.png", "maskable-logo-512.png", "maskable-logo.svg", "preview-placeholder.svg", "robots.txt", "safari-pinned-tab.svg", "vendor"]
+
+[[batches]]
+position = 44
+key = 'Fs(DirListing { dir: "bookmarks/static/vendor" })'
+descriptor = "listing of 'bookmarks/static/vendor'"
+cost_tokens = 5
+cum_tokens = 1251
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/static/vendor"
+entries = ["Readability.js"]
+
+[[batches]]
+position = 45
 key = 'Python(DeclNames { file: "bookmarks/context_processors.py" })'
 descriptor = "python decl names surface in bookmarks/context_processors.py"
 cost_tokens = 24
-cum_tokens = 1022
+cum_tokens = 1275
 
 [batches.content]
 kind = "lines"
@@ -848,11 +918,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 46
 key = 'Python(Decl { file: "bookmarks/context_processors.py", start_line: 5 })'
 descriptor = "python decl at bookmarks/context_processors.py:5"
 cost_tokens = 0
-cum_tokens = 1022
+cum_tokens = 1275
 
 [batches.content]
 kind = "lines"
@@ -866,11 +936,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 42
+position = 47
 key = 'Python(Decl { file: "bookmarks/context_processors.py", start_line: 20 })'
 descriptor = "python decl at bookmarks/context_processors.py:20"
 cost_tokens = 0
-cum_tokens = 1022
+cum_tokens = 1275
 
 [batches.content]
 kind = "lines"
@@ -884,11 +954,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 43
+position = 48
 key = 'Python(DeclBody { file: "bookmarks/context_processors.py", start_line: 20, body_start_line: 21 })'
 descriptor = "python decl body at bookmarks/context_processors.py:20 body 21"
 cost_tokens = 12
-cum_tokens = 1034
+cum_tokens = 1287
 
 [batches.content]
 kind = "lines"
@@ -902,11 +972,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 44
+position = 49
 key = 'Python(Method { file: "bookmarks/apps.py", start_line: 7 })'
 descriptor = "python method at bookmarks/apps.py:7"
 cost_tokens = 22
-cum_tokens = 1056
+cum_tokens = 1309
 
 [batches.content]
 kind = "lines"
@@ -920,11 +990,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 45
+position = 50
 key = 'Yaml(Whole { file: "docker-compose.yml" })'
 descriptor = "YAML config at docker-compose.yml"
 cost_tokens = 127
-cum_tokens = 1183
+cum_tokens = 1436
 
 [batches.content]
 kind = "lines"
@@ -938,25 +1008,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 46
-key = 'Fs(DirListing { dir: "bookmarks/styles" })'
-descriptor = "listing of 'bookmarks/styles'"
-cost_tokens = 69
-cum_tokens = 1252
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/styles"
-entries = ["auth.css", "bookmark-details.css", "bookmark-form.css", "bookmark-page.css", "bundles.css", "components.css", "crud.css", "layout.css", "markdown.css", "reader-mode.css", "responsive.css", "settings.css", "tags.css", "theme", "theme-dark.css", "theme-light.css"]
-
-[[batches]]
-position = 47
+position = 51
 key = 'Fs(DirListing { dir: "docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 35
-cum_tokens = 1287
+cum_tokens = 1471
 
 [batches.content]
 kind = "fs"
@@ -966,25 +1022,25 @@ parent = "docs"
 entries = [".gitignore", "README.md", "astro.config.mjs", "package-lock.json", "package.json", "public", "src", "tsconfig.json"]
 
 [[batches]]
-position = 48
-key = 'Fs(DirListing { dir: "bookmarks/templates/shared" })'
-descriptor = "listing of 'bookmarks/templates/shared'"
-cost_tokens = 41
-cum_tokens = 1328
+position = 52
+key = 'Fs(DirListing { dir: "bookmarks/frontend/components" })'
+descriptor = "listing of 'bookmarks/frontend/components'"
+cost_tokens = 60
+cum_tokens = 1531
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "bookmarks/templates/shared"
-entries = ["dev_tool.html", "error_list.html", "head.html", "layout.html", "messages.html", "modal_header.html", "nav_menu.html", "pagination.html", "top_frame.html"]
+parent = "bookmarks/frontend/components"
+entries = ["bookmark-page.js", "clear-button.js", "confirm-dropdown.js", "details-modal.js", "dev-tool.js", "dropdown.js", "filter-drawer.js", "form.js", "modal.js", "search-autocomplete.js", "tag-autocomplete.js", "upload-button.js"]
 
 [[batches]]
-position = 49
+position = 53
 key = 'Python(Imports { file: "bookmarks/apps.py" })'
 descriptor = "python imports in bookmarks/apps.py"
 cost_tokens = 9
-cum_tokens = 1337
+cum_tokens = 1540
 
 [batches.content]
 kind = "lines"
@@ -998,11 +1054,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 50
+position = 54
 key = 'Python(DeclNames { file: "bookmarks/urls.py" })'
 descriptor = "python decl names surface in bookmarks/urls.py"
 cost_tokens = 31
-cum_tokens = 1368
+cum_tokens = 1571
 
 [batches.content]
 kind = "lines"
@@ -1024,11 +1080,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 51
+position = 55
 key = 'Python(ClassBody { file: "bookmarks/type_defs.py", start_line: 11 })'
 descriptor = "python class body at bookmarks/type_defs.py:11"
 cost_tokens = 32
-cum_tokens = 1400
+cum_tokens = 1603
 
 [batches.content]
 kind = "lines"
@@ -1042,11 +1098,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 52
+position = 56
 key = 'Fs(DirListing { dir: "docs/src" })'
 descriptor = "listing of 'docs/src'"
 cost_tokens = 17
-cum_tokens = 1417
+cum_tokens = 1620
 
 [batches.content]
 kind = "fs"
@@ -1056,11 +1112,11 @@ parent = "docs/src"
 entries = ["assets", "components", "content", "env.d.ts", "styles"]
 
 [[batches]]
-position = 53
+position = 57
 key = 'Fs(DirListing { dir: "docs/src/content" })'
 descriptor = "listing of 'docs/src/content'"
 cost_tokens = 7
-cum_tokens = 1424
+cum_tokens = 1627
 
 [batches.content]
 kind = "fs"
@@ -1070,11 +1126,11 @@ parent = "docs/src/content"
 entries = ["config.ts", "docs"]
 
 [[batches]]
-position = 54
+position = 58
 key = 'Python(DeclNames { file: "bookmarks/views/health.py" })'
 descriptor = "python decl names surface in bookmarks/views/health.py"
 cost_tokens = 12
-cum_tokens = 1436
+cum_tokens = 1639
 
 [batches.content]
 kind = "lines"
@@ -1096,11 +1152,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 59
 key = 'Python(Decl { file: "bookmarks/views/health.py", start_line: 7 })'
 descriptor = "python decl at bookmarks/views/health.py:7"
 cost_tokens = 0
-cum_tokens = 1436
+cum_tokens = 1639
 
 [batches.content]
 kind = "lines"
@@ -1114,11 +1170,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 56
+position = 60
 key = 'Python(DeclNames { file: "bookmarks/views/manifest.py" })'
 descriptor = "python decl names surface in bookmarks/views/manifest.py"
 cost_tokens = 12
-cum_tokens = 1448
+cum_tokens = 1651
 
 [batches.content]
 kind = "lines"
@@ -1140,11 +1196,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 61
 key = 'Python(Decl { file: "bookmarks/views/manifest.py", start_line: 5 })'
 descriptor = "python decl at bookmarks/views/manifest.py:5"
 cost_tokens = 0
-cum_tokens = 1448
+cum_tokens = 1651
 
 [batches.content]
 kind = "lines"
@@ -1158,11 +1214,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 58
+position = 62
 key = 'Python(DeclNames { file: "bookmarks/views/root.py" })'
 descriptor = "python decl names surface in bookmarks/views/root.py"
 cost_tokens = 12
-cum_tokens = 1460
+cum_tokens = 1663
 
 [batches.content]
 kind = "lines"
@@ -1184,11 +1240,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 63
 key = 'Python(Decl { file: "bookmarks/views/root.py", start_line: 7 })'
 descriptor = "python decl at bookmarks/views/root.py:7"
 cost_tokens = 17
-cum_tokens = 1477
+cum_tokens = 1680
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1258,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 60
+position = 64
 key = 'Python(DeclNames { file: "bookmarks/views/toasts.py" })'
 descriptor = "python decl names surface in bookmarks/views/toasts.py"
 cost_tokens = 12
-cum_tokens = 1489
+cum_tokens = 1692
 
 [batches.content]
 kind = "lines"
@@ -1228,11 +1284,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 65
 key = 'Python(Decl { file: "bookmarks/views/toasts.py", start_line: 9 })'
 descriptor = "python decl at bookmarks/views/toasts.py:9"
 cost_tokens = 8
-cum_tokens = 1497
+cum_tokens = 1700
 
 [batches.content]
 kind = "lines"
@@ -1246,25 +1302,39 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 62
-key = 'Fs(DirListing { dir: "bookmarks/management/commands" })'
-descriptor = "listing of 'bookmarks/management/commands'"
-cost_tokens = 46
-cum_tokens = 1543
+position = 66
+key = 'Fs(DirListing { dir: "bookmarks/templates/bookmarks" })'
+descriptor = "listing of 'bookmarks/templates/bookmarks'"
+cost_tokens = 69
+cum_tokens = 1769
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "bookmarks/management/commands"
-entries = ["backup.py", "create_initial_superuser.py", "enable_wal.py", "ensure_superuser.py", "full_backup.py", "generate_secret_key.py", "import_netscape.py", "migrate_tasks.py"]
+parent = "bookmarks/templates/bookmarks"
+entries = ["bookmark_list.html", "bookmark_page.html", "bulk_edit_bar.html", "bundle_section.html", "close.html", "details", "edit.html", "empty_bookmarks.html", "form.html", "new.html", "read.html", "search.html", "tag_cloud.html", "tag_section.html", "user_section.html"]
 
 [[batches]]
-position = 63
+position = 67
+key = 'Fs(DirListing { dir: "bookmarks/templates/bookmarks/details" })'
+descriptor = "listing of 'bookmarks/templates/bookmarks/details'"
+cost_tokens = 17
+cum_tokens = 1786
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "bookmarks/templates/bookmarks/details"
+entries = ["asset_icon.html", "assets.html", "form.html", "modal.html"]
+
+[[batches]]
+position = 68
 key = 'Python(Decl { file: "bookmarks/signals.py", start_line: 6 })'
 descriptor = "python decl at bookmarks/signals.py:6"
 cost_tokens = 44
-cum_tokens = 1587
+cum_tokens = 1830
 
 [batches.content]
 kind = "lines"
@@ -1278,39 +1348,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 64
-key = 'Fs(DirListing { dir: "bookmarks/static" })'
-descriptor = "listing of 'bookmarks/static'"
-cost_tokens = 92
-cum_tokens = 1679
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/static"
-entries = ["apple-touch-icon.png", "favicon.ico", "favicon.svg", "icons.svg", "linkding-screenshot.png", "live-reload.js", "logo-192.png", "logo-512.png", "logo.png", "logo.svg", "maskable-logo-192.png", "maskable-logo-512.png", "maskable-logo.svg", "preview-placeholder.svg", "robots.txt", "safari-pinned-tab.svg", "vendor"]
-
-[[batches]]
-position = 65
-key = 'Fs(DirListing { dir: "bookmarks/static/vendor" })'
-descriptor = "listing of 'bookmarks/static/vendor'"
-cost_tokens = 5
-cum_tokens = 1684
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/static/vendor"
-entries = ["Readability.js"]
-
-[[batches]]
-position = 66
+position = 69
 key = 'Plaintext(Whole { file: ".env.sample" })'
 descriptor = "plaintext config .env.sample"
 cost_tokens = 164
-cum_tokens = 1848
+cum_tokens = 1994
 
 [batches.content]
 kind = "lines"
@@ -1332,11 +1374,25 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 67
+position = 70
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 50
+cum_tokens = 2044
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["build-docker.sh", "coverage.sh", "generate-changelog.py", "release.sh", "run-docker.sh", "run-postgres.sh", "setup-ublock.sh", "test-environments", "test-postgres.sh"]
+
+[[batches]]
+position = 71
 key = 'Python(DeclNames { file: "bookmarks/views/opensearch.py" })'
 descriptor = "python decl names surface in bookmarks/views/opensearch.py"
 cost_tokens = 14
-cum_tokens = 1862
+cum_tokens = 2058
 
 [batches.content]
 kind = "lines"
@@ -1358,11 +1414,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 72
 key = 'Python(Decl { file: "bookmarks/views/opensearch.py", start_line: 5 })'
 descriptor = "python decl at bookmarks/views/opensearch.py:5"
 cost_tokens = 0
-cum_tokens = 1862
+cum_tokens = 2058
 
 [batches.content]
 kind = "lines"
@@ -1376,25 +1432,25 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Fs(DirListing { dir: "bookmarks/frontend/components" })'
-descriptor = "listing of 'bookmarks/frontend/components'"
-cost_tokens = 60
-cum_tokens = 1922
+position = 73
+key = 'Fs(DirListing { dir: "bookmarks/styles/theme" })'
+descriptor = "listing of 'bookmarks/styles/theme'"
+cost_tokens = 87
+cum_tokens = 2145
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "bookmarks/frontend/components"
-entries = ["bookmark-page.js", "clear-button.js", "confirm-dropdown.js", "details-modal.js", "dev-tool.js", "dropdown.js", "filter-drawer.js", "form.js", "modal.js", "search-autocomplete.js", "tag-autocomplete.js", "upload-button.js"]
+parent = "bookmarks/styles/theme"
+entries = ["LICENSE", "_normalize.css", "animations.css", "asian.css", "autocomplete.css", "badges.css", "base.css", "buttons.css", "code.css", "dropdowns.css", "empty.css", "forms.css", "menus.css", "modals.css", "pagination.css", "tables.css", "tabs.css", "toasts.css", "typography.css", "utilities.css", "variables.css"]
 
 [[batches]]
-position = 70
+position = 74
 key = 'Python(DeclNames { file: "bookmarks/api/auth.py" })'
 descriptor = "python decl names surface in bookmarks/api/auth.py"
 cost_tokens = 16
-cum_tokens = 1938
+cum_tokens = 2161
 
 [batches.content]
 kind = "lines"
@@ -1408,11 +1464,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 71
+position = 75
 key = 'Python(Decl { file: "bookmarks/api/auth.py", start_line: 8 })'
 descriptor = "python decl at bookmarks/api/auth.py:8"
 cost_tokens = 0
-cum_tokens = 1938
+cum_tokens = 2161
 
 [batches.content]
 kind = "lines"
@@ -1426,11 +1482,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 72
+position = 76
 key = 'Python(MethodSigs { file: "bookmarks/api/auth.py" })'
 descriptor = "python method sigs in bookmarks/api/auth.py"
 cost_tokens = 13
-cum_tokens = 1951
+cum_tokens = 2174
 
 [batches.content]
 kind = "lines"
@@ -1452,11 +1508,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 73
+position = 77
 key = 'Python(Method { file: "bookmarks/api/auth.py", start_line: 17 })'
 descriptor = "python method at bookmarks/api/auth.py:17"
 cost_tokens = 0
-cum_tokens = 1951
+cum_tokens = 2174
 
 [batches.content]
 kind = "lines"
@@ -1470,11 +1526,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 74
+position = 78
 key = 'Python(DeclNames { file: "bookmarks/services/wayback.py" })'
 descriptor = "python decl names surface in bookmarks/services/wayback.py"
 cost_tokens = 16
-cum_tokens = 1967
+cum_tokens = 2190
 
 [batches.content]
 kind = "lines"
@@ -1496,11 +1552,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 79
 key = 'Python(Decl { file: "bookmarks/services/wayback.py", start_line: 6 })'
 descriptor = "python decl at bookmarks/services/wayback.py:6"
 cost_tokens = 24
-cum_tokens = 1991
+cum_tokens = 2214
 
 [batches.content]
 kind = "lines"
@@ -1514,11 +1570,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 76
+position = 80
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 202
-cum_tokens = 2193
+cum_tokens = 2416
 
 [batches.content]
 kind = "lines"
@@ -1532,39 +1588,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 77
-key = 'Fs(DirListing { dir: "bookmarks/templates/bookmarks" })'
-descriptor = "listing of 'bookmarks/templates/bookmarks'"
-cost_tokens = 69
-cum_tokens = 2262
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/templates/bookmarks"
-entries = ["bookmark_list.html", "bookmark_page.html", "bulk_edit_bar.html", "bundle_section.html", "close.html", "details", "edit.html", "empty_bookmarks.html", "form.html", "new.html", "read.html", "search.html", "tag_cloud.html", "tag_section.html", "user_section.html"]
-
-[[batches]]
-position = 78
-key = 'Fs(DirListing { dir: "bookmarks/templates/bookmarks/details" })'
-descriptor = "listing of 'bookmarks/templates/bookmarks/details'"
-cost_tokens = 17
-cum_tokens = 2279
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/templates/bookmarks/details"
-entries = ["asset_icon.html", "assets.html", "form.html", "modal.html"]
-
-[[batches]]
-position = 79
+position = 81
 key = 'Python(Imports { file: "manage.py" })'
 descriptor = "python imports in manage.py"
 cost_tokens = 37
-cum_tokens = 2316
+cum_tokens = 2453
 
 [batches.content]
 kind = "lines"
@@ -1578,11 +1606,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 80
+position = 82
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 361
-cum_tokens = 2677
+cum_tokens = 2814
 
 [batches.content]
 kind = "lines"
@@ -1596,11 +1624,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 81
+position = 83
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 17
-cum_tokens = 2694
+cum_tokens = 2831
 
 [batches.content]
 kind = "lines"
@@ -1614,11 +1642,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 82
+position = 84
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #20"
 cost_tokens = 17
-cum_tokens = 2711
+cum_tokens = 2848
 
 [batches.content]
 kind = "lines"
@@ -1632,11 +1660,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 83
+position = 85
 key = 'Python(Imports { file: "bookmarks/context_processors.py" })'
 descriptor = "python imports in bookmarks/context_processors.py"
 cost_tokens = 17
-cum_tokens = 2728
+cum_tokens = 2865
 
 [batches.content]
 kind = "lines"
@@ -1650,25 +1678,653 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 84
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 50
-cum_tokens = 2778
+position = 86
+key = 'Python(DeclNames { file: "bookmarks/middlewares.py" })'
+descriptor = "python decl names surface in bookmarks/middlewares.py"
+cost_tokens = 57
+cum_tokens = 2922
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["build-docker.sh", "coverage.sh", "generate-changelog.py", "release.sh", "run-docker.sh", "run-postgres.sh", "setup-ublock.sh", "test-environments", "test-postgres.sh"]
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 11
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
-position = 85
+position = 87
+key = 'Python(Decl { file: "bookmarks/middlewares.py", start_line: 7 })'
+descriptor = "python decl at bookmarks/middlewares.py:7"
+cost_tokens = 0
+cum_tokens = 2922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Python(Decl { file: "bookmarks/middlewares.py", start_line: 17 })'
+descriptor = "python decl at bookmarks/middlewares.py:17"
+cost_tokens = 0
+cum_tokens = 2922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Python(ClassBody { file: "bookmarks/middlewares.py", start_line: 7 })'
+descriptor = "python class body at bookmarks/middlewares.py:7"
+cost_tokens = 13
+cum_tokens = 2935
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Python(MethodSigs { file: "bookmarks/middlewares.py" })'
+descriptor = "python method sigs in bookmarks/middlewares.py"
+cost_tokens = 29
+cum_tokens = 2964
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 91
+key = 'Python(Method { file: "bookmarks/middlewares.py", start_line: 18 })'
+descriptor = "python method at bookmarks/middlewares.py:18"
+cost_tokens = 0
+cum_tokens = 2964
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Python(Method { file: "bookmarks/middlewares.py", start_line: 21 })'
+descriptor = "python method at bookmarks/middlewares.py:21"
+cost_tokens = 12
+cum_tokens = 2976
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 21
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Python(MethodBody { file: "bookmarks/middlewares.py", start_line: 18, body_start_line: 19 })'
+descriptor = "python method body at bookmarks/middlewares.py:18 body 19"
+cost_tokens = 10
+cum_tokens = 2986
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Python(Imports { file: "bookmarks/validators.py" })'
+descriptor = "python imports in bookmarks/validators.py"
+cost_tokens = 18
+cum_tokens = 3004
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/validators.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #0"
+cost_tokens = 360
+cum_tokens = 3364
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 14
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #3"
+cost_tokens = 62
+cum_tokens = 3426
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 55
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Python(DeclNames { file: "bookmarks/management/commands/backup.py" })'
+descriptor = "python decl names surface in bookmarks/management/commands/backup.py"
+cost_tokens = 13
+cum_tokens = 3439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/backup.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'Python(Decl { file: "bookmarks/management/commands/backup.py", start_line: 7 })'
+descriptor = "python decl at bookmarks/management/commands/backup.py:7"
+cost_tokens = 0
+cum_tokens = 3439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/backup.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Python(ClassBody { file: "bookmarks/management/commands/backup.py", start_line: 7 })'
+descriptor = "python class body at bookmarks/management/commands/backup.py:7"
+cost_tokens = 17
+cum_tokens = 3456
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/backup.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Python(DeclNames { file: "bookmarks/management/commands/ensure_superuser.py" })'
+descriptor = "python decl names surface in bookmarks/management/commands/ensure_superuser.py"
+cost_tokens = 13
+cum_tokens = 3469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/ensure_superuser.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Python(Decl { file: "bookmarks/management/commands/ensure_superuser.py", start_line: 5 })'
+descriptor = "python decl at bookmarks/management/commands/ensure_superuser.py:5"
+cost_tokens = 0
+cum_tokens = 3469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/ensure_superuser.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 102
+key = 'Python(DeclNames { file: "bookmarks/management/commands/full_backup.py" })'
+descriptor = "python decl names surface in bookmarks/management/commands/full_backup.py"
+cost_tokens = 13
+cum_tokens = 3482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/full_backup.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Python(Decl { file: "bookmarks/management/commands/full_backup.py", start_line: 9 })'
+descriptor = "python decl at bookmarks/management/commands/full_backup.py:9"
+cost_tokens = 0
+cum_tokens = 3482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/full_backup.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Python(ClassBody { file: "bookmarks/management/commands/full_backup.py", start_line: 9 })'
+descriptor = "python class body at bookmarks/management/commands/full_backup.py:9"
+cost_tokens = 18
+cum_tokens = 3500
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/full_backup.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Python(DeclNames { file: "bookmarks/management/commands/import_netscape.py" })'
+descriptor = "python decl names surface in bookmarks/management/commands/import_netscape.py"
+cost_tokens = 13
+cum_tokens = 3513
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/import_netscape.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Python(Decl { file: "bookmarks/management/commands/import_netscape.py", start_line: 7 })'
+descriptor = "python decl at bookmarks/management/commands/import_netscape.py:7"
+cost_tokens = 0
+cum_tokens = 3513
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/import_netscape.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Python(ClassBody { file: "bookmarks/management/commands/import_netscape.py", start_line: 7 })'
+descriptor = "python class body at bookmarks/management/commands/import_netscape.py:7"
+cost_tokens = 15
+cum_tokens = 3528
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/import_netscape.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Python(DeclNames { file: "bookmarks/management/commands/migrate_tasks.py" })'
+descriptor = "python decl names surface in bookmarks/management/commands/migrate_tasks.py"
+cost_tokens = 13
+cum_tokens = 3541
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/migrate_tasks.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Python(Decl { file: "bookmarks/management/commands/migrate_tasks.py", start_line: 9 })'
+descriptor = "python decl at bookmarks/management/commands/migrate_tasks.py:9"
+cost_tokens = 0
+cum_tokens = 3541
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/migrate_tasks.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Python(MethodSigs { file: "bookmarks/management/commands/migrate_tasks.py" })'
+descriptor = "python method sigs in bookmarks/management/commands/migrate_tasks.py"
+cost_tokens = 17
+cum_tokens = 3558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/migrate_tasks.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/migrate_tasks.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 111
+key = 'Python(Method { file: "bookmarks/management/commands/migrate_tasks.py", start_line: 12 })'
+descriptor = "python method at bookmarks/management/commands/migrate_tasks.py:12"
+cost_tokens = 0
+cum_tokens = 3558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/migrate_tasks.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'Python(ClassBody { file: "bookmarks/management/commands/migrate_tasks.py", start_line: 9 })'
+descriptor = "python class body at bookmarks/management/commands/migrate_tasks.py:9"
+cost_tokens = 18
+cum_tokens = 3576
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/migrate_tasks.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Toml(Identity { file: "pyproject.toml" })'
+descriptor = "[package] in pyproject.toml"
+cost_tokens = 82
+cum_tokens = 3658
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Python(MethodBody { file: "bookmarks/apps.py", start_line: 7, body_start_line: 10 })'
+descriptor = "python method body at bookmarks/apps.py:7 body 10"
+cost_tokens = 14
+cum_tokens = 3672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/apps.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Python(ClassBody { file: "bookmarks/api/auth.py", start_line: 8 })'
+descriptor = "python class body at bookmarks/api/auth.py:8"
+cost_tokens = 33
+cum_tokens = 3705
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/api/auth.py"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Python(ClassBody { file: "bookmarks/management/commands/ensure_superuser.py", start_line: 5 })'
+descriptor = "python class body at bookmarks/management/commands/ensure_superuser.py:5"
+cost_tokens = 20
+cum_tokens = 3725
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/management/commands/ensure_superuser.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Python(DeclDoc { file: "bookmarks/validators.py", start_line: 5 })'
+descriptor = "python decl doc at bookmarks/validators.py:5"
+cost_tokens = 51
+cum_tokens = 3776
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bookmarks/validators.py"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #16"
+cost_tokens = 20
+cum_tokens = 3796
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
 key = 'Python(DeclNames { file: "bookmarks/settings/base.py" })'
 descriptor = "python decl names surface in bookmarks/settings/base.py"
 cost_tokens = 270
-cum_tokens = 3048
+cum_tokens = 4066
 
 [batches.content]
 kind = "lines"
@@ -1741,662 +2397,6 @@ kind = "full"
 path = "bookmarks/settings/base.py"
 start = 110
 end = 112
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 86
-key = 'Python(DeclNames { file: "bookmarks/middlewares.py" })'
-descriptor = "python decl names surface in bookmarks/middlewares.py"
-cost_tokens = 57
-cum_tokens = 3105
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 11
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 87
-key = 'Python(Decl { file: "bookmarks/middlewares.py", start_line: 7 })'
-descriptor = "python decl at bookmarks/middlewares.py:7"
-cost_tokens = 0
-cum_tokens = 3105
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 88
-key = 'Python(Decl { file: "bookmarks/middlewares.py", start_line: 17 })'
-descriptor = "python decl at bookmarks/middlewares.py:17"
-cost_tokens = 0
-cum_tokens = 3105
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'Python(ClassBody { file: "bookmarks/middlewares.py", start_line: 7 })'
-descriptor = "python class body at bookmarks/middlewares.py:7"
-cost_tokens = 13
-cum_tokens = 3118
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 90
-key = 'Python(MethodSigs { file: "bookmarks/middlewares.py" })'
-descriptor = "python method sigs in bookmarks/middlewares.py"
-cost_tokens = 29
-cum_tokens = 3147
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 91
-key = 'Python(Method { file: "bookmarks/middlewares.py", start_line: 18 })'
-descriptor = "python method at bookmarks/middlewares.py:18"
-cost_tokens = 0
-cum_tokens = 3147
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
-key = 'Python(Method { file: "bookmarks/middlewares.py", start_line: 21 })'
-descriptor = "python method at bookmarks/middlewares.py:21"
-cost_tokens = 12
-cum_tokens = 3159
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 21
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 93
-key = 'Python(MethodBody { file: "bookmarks/middlewares.py", start_line: 18, body_start_line: 19 })'
-descriptor = "python method body at bookmarks/middlewares.py:18 body 19"
-cost_tokens = 10
-cum_tokens = 3169
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/middlewares.py"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
-key = 'Python(Imports { file: "bookmarks/validators.py" })'
-descriptor = "python imports in bookmarks/validators.py"
-cost_tokens = 18
-cum_tokens = 3187
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/validators.py"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 95
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #0"
-cost_tokens = 360
-cum_tokens = 3547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 14
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #3"
-cost_tokens = 62
-cum_tokens = 3609
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 55
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 97
-key = 'Python(DeclNames { file: "bookmarks/management/commands/backup.py" })'
-descriptor = "python decl names surface in bookmarks/management/commands/backup.py"
-cost_tokens = 13
-cum_tokens = 3622
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/backup.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'Python(Decl { file: "bookmarks/management/commands/backup.py", start_line: 7 })'
-descriptor = "python decl at bookmarks/management/commands/backup.py:7"
-cost_tokens = 0
-cum_tokens = 3622
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/backup.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
-key = 'Python(ClassBody { file: "bookmarks/management/commands/backup.py", start_line: 7 })'
-descriptor = "python class body at bookmarks/management/commands/backup.py:7"
-cost_tokens = 17
-cum_tokens = 3639
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/backup.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Python(DeclNames { file: "bookmarks/management/commands/ensure_superuser.py" })'
-descriptor = "python decl names surface in bookmarks/management/commands/ensure_superuser.py"
-cost_tokens = 13
-cum_tokens = 3652
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/ensure_superuser.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Python(Decl { file: "bookmarks/management/commands/ensure_superuser.py", start_line: 5 })'
-descriptor = "python decl at bookmarks/management/commands/ensure_superuser.py:5"
-cost_tokens = 0
-cum_tokens = 3652
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/ensure_superuser.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 102
-key = 'Python(DeclNames { file: "bookmarks/management/commands/full_backup.py" })'
-descriptor = "python decl names surface in bookmarks/management/commands/full_backup.py"
-cost_tokens = 13
-cum_tokens = 3665
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/full_backup.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Python(Decl { file: "bookmarks/management/commands/full_backup.py", start_line: 9 })'
-descriptor = "python decl at bookmarks/management/commands/full_backup.py:9"
-cost_tokens = 0
-cum_tokens = 3665
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/full_backup.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Python(ClassBody { file: "bookmarks/management/commands/full_backup.py", start_line: 9 })'
-descriptor = "python class body at bookmarks/management/commands/full_backup.py:9"
-cost_tokens = 18
-cum_tokens = 3683
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/full_backup.py"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Python(DeclNames { file: "bookmarks/management/commands/import_netscape.py" })'
-descriptor = "python decl names surface in bookmarks/management/commands/import_netscape.py"
-cost_tokens = 13
-cum_tokens = 3696
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/import_netscape.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Python(Decl { file: "bookmarks/management/commands/import_netscape.py", start_line: 7 })'
-descriptor = "python decl at bookmarks/management/commands/import_netscape.py:7"
-cost_tokens = 0
-cum_tokens = 3696
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/import_netscape.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Python(ClassBody { file: "bookmarks/management/commands/import_netscape.py", start_line: 7 })'
-descriptor = "python class body at bookmarks/management/commands/import_netscape.py:7"
-cost_tokens = 15
-cum_tokens = 3711
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/import_netscape.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'Python(DeclNames { file: "bookmarks/management/commands/migrate_tasks.py" })'
-descriptor = "python decl names surface in bookmarks/management/commands/migrate_tasks.py"
-cost_tokens = 13
-cum_tokens = 3724
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/migrate_tasks.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Python(Decl { file: "bookmarks/management/commands/migrate_tasks.py", start_line: 9 })'
-descriptor = "python decl at bookmarks/management/commands/migrate_tasks.py:9"
-cost_tokens = 0
-cum_tokens = 3724
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/migrate_tasks.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Python(MethodSigs { file: "bookmarks/management/commands/migrate_tasks.py" })'
-descriptor = "python method sigs in bookmarks/management/commands/migrate_tasks.py"
-cost_tokens = 17
-cum_tokens = 3741
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/migrate_tasks.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/migrate_tasks.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 111
-key = 'Python(Method { file: "bookmarks/management/commands/migrate_tasks.py", start_line: 12 })'
-descriptor = "python method at bookmarks/management/commands/migrate_tasks.py:12"
-cost_tokens = 0
-cum_tokens = 3741
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/migrate_tasks.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Python(ClassBody { file: "bookmarks/management/commands/migrate_tasks.py", start_line: 9 })'
-descriptor = "python class body at bookmarks/management/commands/migrate_tasks.py:9"
-cost_tokens = 18
-cum_tokens = 3759
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/migrate_tasks.py"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Toml(Identity { file: "pyproject.toml" })'
-descriptor = "[package] in pyproject.toml"
-cost_tokens = 82
-cum_tokens = 3841
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Python(MethodBody { file: "bookmarks/apps.py", start_line: 7, body_start_line: 10 })'
-descriptor = "python method body at bookmarks/apps.py:7 body 10"
-cost_tokens = 14
-cum_tokens = 3855
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/apps.py"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Fs(DirListing { dir: "bookmarks/styles/theme" })'
-descriptor = "listing of 'bookmarks/styles/theme'"
-cost_tokens = 87
-cum_tokens = 3942
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "bookmarks/styles/theme"
-entries = ["LICENSE", "_normalize.css", "animations.css", "asian.css", "autocomplete.css", "badges.css", "base.css", "buttons.css", "code.css", "dropdowns.css", "empty.css", "forms.css", "menus.css", "modals.css", "pagination.css", "tables.css", "tabs.css", "toasts.css", "typography.css", "utilities.css", "variables.css"]
-
-[[batches]]
-position = 116
-key = 'Python(ClassBody { file: "bookmarks/api/auth.py", start_line: 8 })'
-descriptor = "python class body at bookmarks/api/auth.py:8"
-cost_tokens = 33
-cum_tokens = 3975
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/api/auth.py"
-start = 14
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'Python(ClassBody { file: "bookmarks/management/commands/ensure_superuser.py", start_line: 5 })'
-descriptor = "python class body at bookmarks/management/commands/ensure_superuser.py:5"
-cost_tokens = 20
-cum_tokens = 3995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/management/commands/ensure_superuser.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
-key = 'Python(DeclDoc { file: "bookmarks/validators.py", start_line: 5 })'
-descriptor = "python decl doc at bookmarks/validators.py:5"
-cost_tokens = 51
-cum_tokens = 4046
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bookmarks/validators.py"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #16"
-cost_tokens = 20
-cum_tokens = 4066
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 118
-end = 118
 
 [batches.content.spans.render]
 kind = "full"

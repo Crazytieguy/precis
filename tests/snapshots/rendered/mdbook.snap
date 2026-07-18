@@ -88,11 +88,23 @@ crates/
         src/
     mdbook-html/
         Cargo.toml
-            …
-              36→[features]
-              37→search = ["dep:elasticlunr-rs"]
         README.md
         front-end/
+            css/
+            fonts/
+            images/
+                favicon.png
+                favicon.svg
+            js/
+                book.js
+                clipboard.min.js
+                highlight.js
+            playground_editor/
+            searcher/
+                elasticlunr.min.js
+                mark.min.js
+                searcher.js
+            templates/
         src/
             html/
                 admonitions.rs

@@ -173,6 +173,19 @@ bookmarks/
             import_netscape.py
             migrate_tasks.py
     middlewares.py
+        …
+           7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
+           8→    header = settings.LD_AUTH_PROXY_USERNAME_HEADER
+          11→default_global_settings = GlobalSettings()
+          12→
+          13→standard_profile = UserProfile()
+        …
+          17→class LinkdingMiddleware:
+          18→    def __init__(self, get_response):
+          19→        self.get_response = get_response
+          21→    def __call__(self, request):
+          22→        # add global settings to request
+        …
     migrations/
     models.py
     queries.py
@@ -249,6 +262,27 @@ bookmarks/
         settings.css
         tags.css
         theme/
+            LICENSE
+            _normalize.css
+            animations.css
+            asian.css
+            autocomplete.css
+            badges.css
+            base.css
+            buttons.css
+            code.css
+            dropdowns.css
+            empty.css
+            forms.css
+            menus.css
+            modals.css
+            pagination.css
+            tables.css
+            tabs.css
+            toasts.css
+            typography.css
+            utilities.css
+            variables.css
         theme-dark.css
         theme-light.css
     tasks.py

@@ -19,10 +19,24 @@ entries = [".flake8", ".github", ".gitignore", ".pylintrc", ".vscode", "CODE_OF_
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "dev" })'
+descriptor = "listing of 'dev'"
+cost_tokens = 27
+cum_tokens = 83
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "dev"
+entries = ["clean_trash.sh", "create_venv.sh", "push.sh", "pydoc.sh", "requirements.txt"]
+
+[[batches]]
+position = 3
 key = 'Fs(DirListing { dir: "py3xui" })'
 descriptor = "listing of 'py3xui'"
 cost_tokens = 25
-cum_tokens = 81
+cum_tokens = 108
 
 [batches.content]
 kind = "fs"
@@ -32,11 +46,11 @@ parent = "py3xui"
 entries = ["__init__.py", "api", "async_api", "client", "inbound", "server", "utils"]
 
 [[batches]]
-position = 3
+position = 4
 key = 'Python(Imports { file: "py3xui/__init__.py" })'
 descriptor = "python imports in py3xui/__init__.py"
 cost_tokens = 94
-cum_tokens = 175
+cum_tokens = 202
 
 [batches.content]
 kind = "lines"
@@ -50,11 +64,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 4
+position = 5
 key = 'Fs(DirListing { dir: "py3xui/client" })'
 descriptor = "listing of 'py3xui/client'"
 cost_tokens = 14
-cum_tokens = 189
+cum_tokens = 216
 
 [batches.content]
 kind = "fs"
@@ -64,11 +78,11 @@ parent = "py3xui/client"
 entries = ["README.md", "__init__.py", "client.py"]
 
 [[batches]]
-position = 5
+position = 6
 key = 'Fs(DirListing { dir: "py3xui/server" })'
 descriptor = "listing of 'py3xui/server'"
 cost_tokens = 14
-cum_tokens = 203
+cum_tokens = 230
 
 [batches.content]
 kind = "fs"
@@ -78,11 +92,11 @@ parent = "py3xui/server"
 entries = ["README.md", "__init__.py", "server.py"]
 
 [[batches]]
-position = 6
+position = 7
 key = 'Fs(DirListing { dir: "py3xui/utils" })'
 descriptor = "listing of 'py3xui/utils'"
 cost_tokens = 14
-cum_tokens = 217
+cum_tokens = 244
 
 [batches.content]
 kind = "fs"
@@ -92,11 +106,11 @@ parent = "py3xui/utils"
 entries = ["README.md", "__init__.py", "env.py"]
 
 [[batches]]
-position = 7
+position = 8
 key = 'Python(Imports { file: "py3xui/client/__init__.py" })'
 descriptor = "python imports in py3xui/client/__init__.py"
 cost_tokens = 28
-cum_tokens = 245
+cum_tokens = 272
 
 [batches.content]
 kind = "lines"
@@ -110,11 +124,25 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
+key = 'Fs(DirListing { dir: "py3xui/inbound" })'
+descriptor = "listing of 'py3xui/inbound'"
+cost_tokens = 32
+cum_tokens = 304
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "py3xui/inbound"
+entries = ["README.md", "__init__.py", "bases.py", "inbound.py", "settings.py", "sniffing.py", "stream_settings.py"]
+
+[[batches]]
+position = 10
 key = 'Python(DeclNames { file: "py3xui/utils/__init__.py" })'
 descriptor = "python decl names surface in py3xui/utils/__init__.py"
 cost_tokens = 17
-cum_tokens = 262
+cum_tokens = 321
 
 [batches.content]
 kind = "lines"
@@ -128,11 +156,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 9
+position = 11
 key = 'Python(Imports { file: "py3xui/utils/__init__.py" })'
 descriptor = "python imports in py3xui/utils/__init__.py"
 cost_tokens = 31
-cum_tokens = 293
+cum_tokens = 352
 
 [batches.content]
 kind = "lines"
@@ -146,11 +174,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 10
+position = 12
 key = 'Python(Imports { file: "py3xui/server/__init__.py" })'
 descriptor = "python imports in py3xui/server/__init__.py"
 cost_tokens = 32
-cum_tokens = 325
+cum_tokens = 384
 
 [batches.content]
 kind = "lines"
@@ -164,57 +192,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "dev" })'
-descriptor = "listing of 'dev'"
-cost_tokens = 27
-cum_tokens = 352
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "dev"
-entries = ["clean_trash.sh", "create_venv.sh", "push.sh", "pydoc.sh", "requirements.txt"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "py3xui/inbound" })'
-descriptor = "listing of 'py3xui/inbound'"
-cost_tokens = 32
-cum_tokens = 384
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "py3xui/inbound"
-entries = ["README.md", "__init__.py", "bases.py", "inbound.py", "settings.py", "sniffing.py", "stream_settings.py"]
-
-[[batches]]
 position = 13
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 61
-cum_tokens = 445
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 19
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
 key = 'Fs(DirListing { dir: "py3xui/api" })'
 descriptor = "listing of 'py3xui/api'"
 cost_tokens = 40
-cum_tokens = 485
+cum_tokens = 424
 
 [batches.content]
 kind = "fs"
@@ -224,11 +206,11 @@ parent = "py3xui/api"
 entries = ["README.md", "__init__.py", "api.py", "api_base.py", "api_client.py", "api_database.py", "api_inbound.py", "api_server.py"]
 
 [[batches]]
-position = 15
+position = 14
 key = 'Fs(DirListing { dir: "py3xui/async_api" })'
 descriptor = "listing of 'py3xui/async_api'"
 cost_tokens = 46
-cum_tokens = 531
+cum_tokens = 470
 
 [batches.content]
 kind = "fs"
@@ -238,11 +220,25 @@ parent = "py3xui/async_api"
 entries = ["README.md", "__init__.py", "async_api.py", "async_api_base.py", "async_api_client.py", "async_api_database.py", "async_api_inbound.py", "async_api_server.py"]
 
 [[batches]]
+position = 15
+key = 'Fs(DirListing { dir: ".vscode" })'
+descriptor = "listing of '.vscode'"
+cost_tokens = 12
+cum_tokens = 482
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".vscode"
+entries = ["launch.json", "settings.json", "tasks.json"]
+
+[[batches]]
 position = 16
 key = 'Python(DeclNames { file: "py3xui/api/api.py" })'
 descriptor = "python decl names surface in py3xui/api/api.py"
 cost_tokens = 11
-cum_tokens = 542
+cum_tokens = 493
 
 [batches.content]
 kind = "lines"
@@ -260,7 +256,7 @@ position = 17
 key = 'Python(Decl { file: "py3xui/api/api.py", start_line: 13 })'
 descriptor = "python decl at py3xui/api/api.py:13"
 cost_tokens = 0
-cum_tokens = 542
+cum_tokens = 493
 
 [batches.content]
 kind = "lines"
@@ -278,7 +274,7 @@ position = 18
 key = 'Python(Imports { file: "py3xui/api/__init__.py" })'
 descriptor = "python imports in py3xui/api/__init__.py"
 cost_tokens = 80
-cum_tokens = 622
+cum_tokens = 573
 
 [batches.content]
 kind = "lines"
@@ -296,7 +292,7 @@ position = 19
 key = 'Python(Imports { file: "py3xui/inbound/__init__.py" })'
 descriptor = "python imports in py3xui/inbound/__init__.py"
 cost_tokens = 82
-cum_tokens = 704
+cum_tokens = 655
 
 [batches.content]
 kind = "lines"
@@ -314,7 +310,7 @@ position = 20
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api.py" })'
 descriptor = "python decl names surface in py3xui/async_api/async_api.py"
 cost_tokens = 12
-cum_tokens = 716
+cum_tokens = 667
 
 [batches.content]
 kind = "lines"
@@ -332,7 +328,7 @@ position = 21
 key = 'Python(Decl { file: "py3xui/async_api/async_api.py", start_line: 18 })'
 descriptor = "python decl at py3xui/async_api/async_api.py:18"
 cost_tokens = 0
-cum_tokens = 716
+cum_tokens = 667
 
 [batches.content]
 kind = "lines"
@@ -350,7 +346,7 @@ position = 22
 key = 'Python(Imports { file: "py3xui/async_api/__init__.py" })'
 descriptor = "python imports in py3xui/async_api/__init__.py"
 cost_tokens = 91
-cum_tokens = 807
+cum_tokens = 758
 
 [batches.content]
 kind = "lines"
@@ -365,24 +361,10 @@ kind = "full"
 
 [[batches]]
 position = 23
-key = 'Fs(DirListing { dir: ".vscode" })'
-descriptor = "listing of '.vscode'"
-cost_tokens = 12
-cum_tokens = 819
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".vscode"
-entries = ["launch.json", "settings.json", "tasks.json"]
-
-[[batches]]
-position = 24
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 18
-cum_tokens = 837
+cum_tokens = 776
 
 [batches.content]
 kind = "fs"
@@ -392,11 +374,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
 
 [[batches]]
-position = 25
+position = 24
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 23
-cum_tokens = 860
+cum_tokens = 799
 
 [batches.content]
 kind = "fs"
@@ -406,11 +388,43 @@ parent = ".github/workflows"
 entries = ["checks.yml", "checkspr.yml", "issues.yml", "pypi.yml", "stale.yml"]
 
 [[batches]]
+position = 25
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 61
+cum_tokens = 860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 19
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 26
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 25
+cum_tokens = 885
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["__init__.py", "responses", "test_api.py", "test_async_api.py", "test_env.py"]
+
+[[batches]]
+position = 27
 key = 'Markdown(ReadmeHeadline { file: "py3xui/inbound/README.md" })'
 descriptor = "README headline in py3xui/inbound/README.md"
 cost_tokens = 64
-cum_tokens = 924
+cum_tokens = 949
 
 [batches.content]
 kind = "lines"
@@ -424,11 +438,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Markdown(ReadmeHeadline { file: "py3xui/api/README.md" })'
 descriptor = "README headline in py3xui/api/README.md"
 cost_tokens = 66
-cum_tokens = 990
+cum_tokens = 1015
 
 [batches.content]
 kind = "lines"
@@ -442,11 +456,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Markdown(ReadmeHeadline { file: "py3xui/utils/README.md" })'
 descriptor = "README headline in py3xui/utils/README.md"
 cost_tokens = 67
-cum_tokens = 1057
+cum_tokens = 1082
 
 [batches.content]
 kind = "lines"
@@ -460,11 +474,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Python(DeclNames { file: "py3xui/client/client.py" })'
 descriptor = "python decl names surface in py3xui/client/client.py"
 cost_tokens = 23
-cum_tokens = 1080
+cum_tokens = 1105
 
 [batches.content]
 kind = "lines"
@@ -481,34 +495,34 @@ kind = "full"
 path = "py3xui/client/client.py"
 start = 36
 end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Python(Decl { file: "py3xui/client/client.py", start_line: 7 })'
-descriptor = "python decl at py3xui/client/client.py:7"
-cost_tokens = 0
-cum_tokens = 1080
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "py3xui/client/client.py"
-start = 7
-end = 7
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 31
+key = 'Python(Decl { file: "py3xui/client/client.py", start_line: 7 })'
+descriptor = "python decl at py3xui/client/client.py:7"
+cost_tokens = 0
+cum_tokens = 1105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "py3xui/client/client.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
 key = 'Python(Decl { file: "py3xui/client/client.py", start_line: 36 })'
 descriptor = "python decl at py3xui/client/client.py:36"
 cost_tokens = 0
-cum_tokens = 1080
+cum_tokens = 1105
 
 [batches.content]
 kind = "lines"
@@ -522,11 +536,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Python(DeclDoc { file: "py3xui/client/client.py", start_line: 7 })'
 descriptor = "python decl doc at py3xui/client/client.py:7"
 cost_tokens = 18
-cum_tokens = 1098
+cum_tokens = 1123
 
 [batches.content]
 kind = "lines"
@@ -540,11 +554,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Markdown(ReadmeHeadline { file: "py3xui/server/README.md" })'
 descriptor = "README headline in py3xui/server/README.md"
 cost_tokens = 72
-cum_tokens = 1170
+cum_tokens = 1195
 
 [batches.content]
 kind = "lines"
@@ -558,11 +572,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Markdown(ReadmeHeadline { file: "py3xui/client/README.md" })'
 descriptor = "README headline in py3xui/client/README.md"
 cost_tokens = 73
-cum_tokens = 1243
+cum_tokens = 1268
 
 [batches.content]
 kind = "lines"
@@ -576,11 +590,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Markdown(HeadingsOutline { file: "py3xui/client/README.md" })'
 descriptor = "headings outline in py3xui/client/README.md"
 cost_tokens = 19
-cum_tokens = 1262
+cum_tokens = 1287
 
 [batches.content]
 kind = "lines"
@@ -618,11 +632,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Python(DeclNames { file: "py3xui/inbound/inbound.py" })'
 descriptor = "python decl names surface in py3xui/inbound/inbound.py"
 cost_tokens = 25
-cum_tokens = 1287
+cum_tokens = 1312
 
 [batches.content]
 kind = "lines"
@@ -639,34 +653,34 @@ kind = "full"
 path = "py3xui/inbound/inbound.py"
 start = 38
 end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'Python(Decl { file: "py3xui/inbound/inbound.py", start_line: 15 })'
-descriptor = "python decl at py3xui/inbound/inbound.py:15"
-cost_tokens = 0
-cum_tokens = 1287
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "py3xui/inbound/inbound.py"
-start = 15
-end = 15
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 38
+key = 'Python(Decl { file: "py3xui/inbound/inbound.py", start_line: 15 })'
+descriptor = "python decl at py3xui/inbound/inbound.py:15"
+cost_tokens = 0
+cum_tokens = 1312
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "py3xui/inbound/inbound.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
 key = 'Python(Decl { file: "py3xui/inbound/inbound.py", start_line: 38 })'
 descriptor = "python decl at py3xui/inbound/inbound.py:38"
 cost_tokens = 0
-cum_tokens = 1287
+cum_tokens = 1312
 
 [batches.content]
 kind = "lines"
@@ -680,11 +694,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Python(DeclDoc { file: "py3xui/inbound/inbound.py", start_line: 15 })'
 descriptor = "python decl doc at py3xui/inbound/inbound.py:15"
 cost_tokens = 18
-cum_tokens = 1305
+cum_tokens = 1330
 
 [batches.content]
 kind = "lines"
@@ -698,11 +712,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Markdown(ReadmeHeadline { file: "py3xui/async_api/README.md" })'
 descriptor = "README headline in py3xui/async_api/README.md"
 cost_tokens = 79
-cum_tokens = 1384
+cum_tokens = 1409
 
 [batches.content]
 kind = "lines"
@@ -716,11 +730,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 69
-cum_tokens = 1453
+cum_tokens = 1478
 
 [batches.content]
 kind = "lines"
@@ -740,20 +754,6 @@ end = 11
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 42
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 25
-cum_tokens = 1478
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["__init__.py", "responses", "test_api.py", "test_async_api.py", "test_env.py"]
 
 [[batches]]
 position = 43

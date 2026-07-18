@@ -18,35 +18,35 @@ Score(3000)=0.835 I=0.894 C=0.780 ns_rows≤3K=17/42 (reached=12 partial=0 missi
 | walker |  | 266 | 13 | export names surface in playwright.config.ts |  |  | 0.940 |
 | ns | 383 |  | 137 | package.json — scripts | 1.5 |  | 0.816 |
 | walker |  | 403 | 137 | package scripts in package.json |  |  | 0.950 |
+| walker |  | 426 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.950 |
 | ns | 435 |  | 52 | test/ workspace top-level listing | 1.6 |  | 0.829 |
 | ns | 534 |  | 99 | test/src/app/ demo route listing | 1.7 |  | 0.693 |
-| walker |  | 575 | 172 | package entrypoints in package.json |  |  | 0.707 |
-| walker |  | 598 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.707 |
-| ns | 600 |  | 66 | test/tests/ Playwright spec listing | 1.8 |  | 0.651 |
-| ns | 772 |  | 172 | package.json — entry points + files | 1.9 |  | 0.694 |
-| walker |  | 822 | 224 | export names surface in src/index.tsx |  |  | 0.701 |
-| walker |  | 822 | 0 | export at src/index.tsx:1098 |  |  | 0.701 |
-| walker |  | 822 | 0 | export at src/index.tsx:1130 |  |  | 0.701 |
-| walker |  | 835 | 13 | export at src/index.tsx:989 |  |  | 0.701 |
-| walker |  | 848 | 13 | export at src/index.tsx:803 |  |  | 0.701 |
-| walker |  | 877 | 29 | export at src/index.tsx:996 |  |  | 0.701 |
-| walker |  | 911 | 34 | export at src/index.tsx:833 |  |  | 0.702 |
-| ns | 983 |  | 211 | package.json — devDependencies | 1.10 |  | 0.650 |
-| walker |  | 1031 | 120 | export at src/index.tsx:40 |  |  | 0.652 |
-| ns | 1134 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.624 |
-| walker |  | 1192 | 161 | export at src/index.tsx:27 |  |  | 0.631 |
-| ns | 1249 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.599 |
-| walker |  | 1293 | 101 | export at src/index.tsx:1137 |  |  | 0.663 |
-| ns | 1415 |  | 166 | index.tsx top-level export locations | 2.2 |  | 0.677 |
-| walker |  | 1611 | 318 | export at src/index.tsx:139 |  |  | 0.685 |
-| walker |  | 1625 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.685 |
-| walker |  | 1639 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.685 |
-| walker |  | 1654 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.685 |
-| walker |  | 1654 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.685 |
-| ns | 1701 |  | 286 | WithFadeFromProps / WithoutFadeFromProps (full) | 2.3 | 2.2 | 0.709 |
-| walker |  | 1706 | 52 | listing of 'test' |  |  | 0.764 |
-| walker |  | 1709 | 3 | listing of 'test/src' |  |  | 0.764 |
-| walker |  | 1725 | 16 | export names surface in src/use-composed-refs.ts |  |  | 0.764 |
+| ns | 600 |  | 66 | test/tests/ Playwright spec listing | 1.8 |  | 0.637 |
+| walker |  | 650 | 224 | export names surface in src/index.tsx |  |  | 0.644 |
+| walker |  | 650 | 0 | export at src/index.tsx:1098 |  |  | 0.644 |
+| walker |  | 650 | 0 | export at src/index.tsx:1130 |  |  | 0.644 |
+| walker |  | 663 | 13 | export at src/index.tsx:989 |  |  | 0.644 |
+| walker |  | 676 | 13 | export at src/index.tsx:803 |  |  | 0.644 |
+| walker |  | 705 | 29 | export at src/index.tsx:996 |  |  | 0.644 |
+| walker |  | 739 | 34 | export at src/index.tsx:833 |  |  | 0.644 |
+| ns | 772 |  | 172 | package.json — entry points + files | 1.9 |  | 0.578 |
+| walker |  | 859 | 120 | export at src/index.tsx:40 |  |  | 0.580 |
+| ns | 983 |  | 211 | package.json — devDependencies | 1.10 |  | 0.537 |
+| walker |  | 1020 | 161 | export at src/index.tsx:27 |  |  | 0.543 |
+| walker |  | 1121 | 101 | export at src/index.tsx:1137 |  |  | 0.549 |
+| ns | 1134 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.526 |
+| ns | 1249 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.566 |
+| ns | 1415 |  | 166 | index.tsx top-level export locations | 2.2 |  | 0.590 |
+| walker |  | 1439 | 318 | export at src/index.tsx:139 |  |  | 0.597 |
+| walker |  | 1453 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.597 |
+| walker |  | 1467 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.598 |
+| walker |  | 1482 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.598 |
+| walker |  | 1482 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.598 |
+| walker |  | 1534 | 52 | listing of 'test' |  |  | 0.662 |
+| walker |  | 1537 | 3 | listing of 'test/src' |  |  | 0.662 |
+| walker |  | 1553 | 16 | export names surface in src/use-composed-refs.ts |  |  | 0.662 |
+| ns | 1701 |  | 286 | WithFadeFromProps / WithoutFadeFromProps (full) | 2.3 | 2.2 | 0.691 |
+| walker |  | 1725 | 172 | package entrypoints in package.json |  |  | 0.764 |
 | walker |  | 1759 | 34 | package runtime dependencies in package.json |  |  | 0.769 |
 | ns | 2243 |  | 542 | DialogProps — core open/behavior props (open .. dismissible) | 2.4 | 2.2 | 0.676 |
 | ns | 2441 |  | 198 | DialogProps — drag/modal/direction props (onDrag .. direction) | 2.5 | 2.2 | 0.652 |
@@ -66,29 +66,29 @@ Score(3000)=0.835 I=0.894 C=0.780 ns_rows≤3K=17/42 (reached=12 partial=0 missi
 | walker |  | 3785 | 314 | imports in src/index.tsx |  |  | 0.881 |
 | walker |  | 3797 | 12 | imports in src/use-controllable-state.ts |  |  | 0.881 |
 | walker |  | 3811 | 14 | imports in src/use-composed-refs.ts |  |  | 0.881 |
+| walker |  | 3820 | 9 | listing of 'test/public' |  |  | 0.881 |
 | ns | 3902 |  | 344 | ContentProps type + Content()'s destructured context fields | 2.9 | 2.2 | 0.837 |
-| walker |  | 3935 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.837 |
-| walker |  | 3994 | 59 | export body at src/context.ts:69 body 70 |  |  | 0.837 |
+| walker |  | 3944 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.837 |
+| walker |  | 4003 | 59 | export body at src/context.ts:69 body 70 |  |  | 0.837 |
 | ns | 4147 |  | 245 | HandleProps type + Handle()'s destructured context fields | 2.10 | 2.2 | 0.810 |
 | ns | 4466 |  | 319 | NestedRoot() (full) | 2.11 | 2.2 | 0.776 |
-| walker |  | 4506 | 512 | export at playwright.config.ts:12 |  |  | 0.778 |
-| walker |  | 4532 | 26 | export doc at playwright.config.ts:12 |  |  | 0.778 |
+| walker |  | 4515 | 512 | export at playwright.config.ts:12 |  |  | 0.778 |
+| walker |  | 4541 | 26 | export doc at playwright.config.ts:12 |  |  | 0.778 |
 | ns | 4547 |  | 81 | Portal component (full) | 2.12 | 2.2 | 0.769 |
-| walker |  | 4550 | 18 | imports in src/helpers.ts |  |  | 0.769 |
-| walker |  | 4661 | 111 | json config turbo.json |  |  | 0.769 |
+| walker |  | 4559 | 18 | imports in src/helpers.ts |  |  | 0.769 |
+| walker |  | 4670 | 111 | json config turbo.json |  |  | 0.758 |
 | ns | 4670 |  | 123 | Content()'s rendered JSX — pointer/focus handler + isDeltaInDirection locations | 2.13 | 2.9 | 0.758 |
-| walker |  | 4758 | 97 | export names surface in src/use-prevent-scroll.ts |  |  | 0.759 |
-| walker |  | 4758 | 0 | export at src/use-prevent-scroll.ts:29 |  |  | 0.759 |
-| walker |  | 4758 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.759 |
-| walker |  | 4758 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.759 |
-| walker |  | 4758 | 0 | export at src/use-prevent-scroll.ts:294 |  |  | 0.759 |
-| walker |  | 4799 | 41 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.759 |
+| walker |  | 4767 | 97 | export names surface in src/use-prevent-scroll.ts |  |  | 0.759 |
+| walker |  | 4767 | 0 | export at src/use-prevent-scroll.ts:29 |  |  | 0.759 |
+| walker |  | 4767 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.759 |
+| walker |  | 4767 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.759 |
+| walker |  | 4767 | 0 | export at src/use-prevent-scroll.ts:294 |  |  | 0.759 |
+| walker |  | 4808 | 41 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.759 |
 | ns | 4838 |  | 168 | Root() internal handler locations | 3.1 | 2.7 | 0.746 |
-| walker |  | 4861 | 62 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.746 |
+| walker |  | 4870 | 62 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.746 |
 | ns | 5110 |  | 272 | onPress() (full) | 3.2 | 3.1 | 0.728 |
-| walker |  | 5178 | 317 | export body at src/index.tsx:803 body 805 |  |  | 0.762 |
-| walker |  | 5270 | 92 | export body at src/use-prevent-scroll.ts:34 body 35 |  |  | 0.762 |
-| walker |  | 5279 | 9 | listing of 'test/public' |  |  | 0.762 |
+| walker |  | 5187 | 317 | export body at src/index.tsx:803 body 805 |  |  | 0.762 |
+| walker |  | 5279 | 92 | export body at src/use-prevent-scroll.ts:34 body 35 |  |  | 0.762 |
 | walker |  | 5302 | 23 | imports in src/context.ts |  |  | 0.762 |
 | walker |  | 5325 | 23 | imports in src/use-position-fixed.ts |  |  | 0.762 |
 | walker |  | 5437 | 112 | export names surface in src/browser.ts |  |  | 0.762 |

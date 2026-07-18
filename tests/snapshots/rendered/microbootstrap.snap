@@ -252,11 +252,6 @@ microbootstrap/
             …
               18→class CorsInstrument(Instrument[CorsConfig]):
             …
-              22→    def is_ready(self) -> bool:
-            …
-              27→    @classmethod
-              28→    def get_config_type(cls) -> type[CorsConfig]:
-              29→        return CorsConfig
         health_checks_instrument.py
         instrument_box.py
             …
@@ -345,6 +340,11 @@ pyproject.toml
 tests/
     __init__.py
     bootstrappers/
+        __init__.py
+        test_fastapi.py
+        test_faststream.py
+        test_litestar.py
+        test_litestar_opentelemetry.py
     conftest.py
     instruments/
     test_granian_server.py

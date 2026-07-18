@@ -26,15 +26,33 @@ agent/
     agent_cache_test.go
     agent_test_helpers.go
         …
+           3→package agent
+           5→// TESTING ONLY: GetConnectionManager is a helper function to get the connection manager for testing.
            6→func (a *Agent) GetConnectionManager() *ConnectionManager {
            7→	return a.connectionManager
         …
     battery/
         battery.go
+            …
+               2→package battery
+               4→const (
+               5→	stateUnknown uint8 = iota
+               6→	stateEmpty
+               7→	stateFull
+               8→	stateCharging
+               9→	stateDischarging
+              10→	stateIdle
+              11→)
         battery_darwin.go
         battery_linux.go
         battery_linux_test.go
         battery_stub.go
+            …
+               7→func HasReadableBattery() bool {
+               8→	return false
+            …
+              11→func GetBatteryStats() (uint8, uint8, error) {
+            …
         battery_windows.go
     client.go
     client_test.go
@@ -55,19 +73,51 @@ agent/
     emmc_linux.go
     emmc_linux_test.go
     emmc_stub.go
+        …
+           3→package agent
+        …
+           7→func scanEmmcDevices() []*DeviceInfo {
+           8→	return nil
+        …
+          11→func (sm *SmartManager) collectEmmcHealth(deviceInfo *DeviceInfo) (bool, error) {
+          12→	return false, nil
+        …
     fingerprint.go
     fingerprint_test.go
     gpu.go
     gpu_amd_linux.go
     gpu_amd_linux_test.go
     gpu_amd_unsupported.go
+        …
+           9→func (gm *GPUManager) hasAmdSysfs() bool {
+          10→	return false
+        …
+          13→func (gm *GPUManager) collectAmdStats() error {
+          14→	return errors.ErrUnsupported
+        …
     gpu_darwin.go
     gpu_darwin_test.go
     gpu_darwin_unsupported.go
+        …
+           3→package agent
+        …
+           6→func (gm *GPUManager) startPowermetricsCollector() {}
+        …
+           9→func (gm *GPUManager) startMacmonCollector() {}
     gpu_intel.go
     gpu_nvml.go
     gpu_nvml_linux.go
     gpu_nvml_unsupported.go
+        …
+           3→package agent
+           4→
+           5→import "fmt"
+           7→type nvmlCollector struct {
+           8→	gm *GPUManager
+           9→}
+          11→func (c *nvmlCollector) init() error {
+        …
+          15→func (c *nvmlCollector) start() {}
     gpu_nvml_windows.go
     gpu_nvtop.go
     gpu_test.go
@@ -82,6 +132,14 @@ agent/
     mdraid_linux.go
     mdraid_linux_test.go
     mdraid_stub.go
+        …
+           3→package agent
+           5→func scanMdraidDevices() []*DeviceInfo {
+           6→	return nil
+        …
+           9→func (sm *SmartManager) collectMdraidHealth(deviceInfo *DeviceInfo) (bool, error) {
+          10→	return false, nil
+        …
     network.go
     network_test.go
     response.go
@@ -99,7 +157,11 @@ agent/
     smart.go
     smart_nonwindows.go
         …
+           3→package agent
+           4→
+           5→import "errors"
            7→func ensureEmbeddedSmartctl() (string, error) {
+           8→	return "", errors.ErrUnsupported
         …
     smart_test.go
     smart_windows.go
@@ -132,6 +194,7 @@ agent/
         zfs_unsupported.go
             …
                7→func ARCSize() (uint64, error) {
+               8→	return 0, errors.ErrUnsupported
             …
 beszel.go
        1→// Package beszel provides core application constants and version information
@@ -207,13 +270,6 @@ internal/
         ghupdate.go
         ghupdate_test.go
         release.go
-            …
-               8→type releaseAsset struct {
-            …
-              15→type release struct {
-            …
-              26→func (r *release) findAssetBySuffix(suffix string) (*releaseAsset, error) {
-            …
         selinux.go
             …
               10→func HandleSELinuxContext(path string) error {
@@ -227,13 +283,6 @@ internal/
         api.go
         api_test.go
         collections.go
-            …
-               8→type collectionRules struct {
-            …
-              17→func setCollectionAuthSettings(app core.App) error {
-            …
-             115→func applyCollectionRules(app core.App, collectionNames []string, rules collectionRules) error {
-            …
         collections_test.go
         config/
             config.go
@@ -248,13 +297,6 @@ internal/
         hub_test.go
         hub_test_helpers.go
         server.go
-            …
-              13→type PublicAppInfo struct {
-            …
-              21→func modifyIndexHTML(hub *Hub, html []byte) string {
-            …
-              31→func getPublicAppInfo(hub *Hub) PublicAppInfo {
-            …
         server_development.go
         server_production.go
             …
@@ -364,19 +406,12 @@ readme.md
        1→# Beszel
        2→
        3→Beszel is a lightweight server monitoring platform that includes Docker statistics, historical data, and alert functions.
-       5→It has a friendly web interface, simple configuration, and is ready to use out of the box. It supports automatic backup, multi-user, OAuth authentication, and API access.
-       6→
-       7→[![agent Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel-agent/latest?logo=docker&label=agent%20image%20size)](https://hub.docker.com/r/henrygd/beszel-agent)
-       8→[![hub Docker Image Size](https://img.shields.io/docker/image-size/henrygd/beszel/latest?logo=docker&label=hub%20image%20size)](https://hub.docker.com/r/henrygd/beszel)
-       9→[![MIT license](https://img.shields.io/github/license/henrygd/beszel?color=%239944ee)](https://github.com/henrygd/beszel/blob/main/LICENSE)
-      10→[![Crowdin](https://badges.crowdin.net/beszel/localized.svg)](https://crowdin.com/project/beszel)
-      11→
-      12→![Screenshot of Beszel dashboard and system page, side by side. The dashboard shows metrics from multiple connected systems, while the system page shows detailed metrics for a single system.](https://henrygd-assets.b-cdn.net/beszel/screenshot-new.png)
+    …
       14→## Features
       16→- **Lightweight**: Smaller and less resource-intensive than leading solutions.
       17→- **Simple**: Easy setup with little manual configuration required.
       18→- **Docker stats**: Tracks CPU, memory, and network usage history for each container.
-      19→- **Alerts**: Configurable alerts for CPU, memory, disk, bandwidth, temperature, load average, and status.
+    …
       20→- **Multi-user**: Users manage their own systems. Admins can share systems across users.
       21→- **OAuth / OIDC**: Supports many OAuth2 providers. Password auth can be disabled.
       22→- **Automatic backups**: Save to and restore from disk or S3-compatible storage.
@@ -387,17 +422,12 @@ readme.md
       33→
       34→The [quick start guide](https://beszel.dev/guide/getting-started) and other documentation is available on our website, [beszel.dev](https://beszel.dev). You'll be up and running in a few minutes.
       36→## Screenshots
-      37→
-      38→![Dashboard](https://beszel.dev/image/dashboard.png)
-      39→![System page](https://beszel.dev/image/system-full.png)
-      40→![Notification Settings](https://beszel.dev/image/settings-notifications.png)
+    …
       42→## Supported metrics
     …
       48→- **Network usage** - Host system and containers.
       49→- **Load average** - Host system.
       50→- **Temperature** - Host system sensors.
-    …
-      52→- **Battery** - Host system battery charge.
     …
       56→## Help and discussion
     …
@@ -430,6 +460,13 @@ supplemental/
                 .helmignore
                 Chart.yaml
                 templates/
+                    NOTES.txt
+                    _helpers.tpl
+                    deployment.yaml
+                    ingress.yaml
+                    service.yaml
+                    tests/
+                    volume-claim.yaml
                 values.yaml
     licenses/
         LibreHardwareMonitor/

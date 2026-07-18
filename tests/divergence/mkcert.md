@@ -16,9 +16,9 @@ Score(3000)=0.674 I=0.849 C=0.534 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | ns | 334 |  | 141 | README section-heading census | 1.6 |  | 0.584 |
 | walker |  | 408 | 253 | YAML config at .github/workflows/test.yml |  |  | 0.586 |
 | ns | 447 |  | 113 | README lede — pitch + install transcript | 1.7 | 1.6 | 0.538 |
-| walker |  | 543 | 135 | headings outline in README.md |  |  | 0.705 |
-| ns | 571 |  | 124 | README lede — why a local CA | 1.8 |  | 0.682 |
-| walker |  | 693 | 150 | go module file go.mod |  |  | 0.807 |
+| walker |  | 558 | 150 | go module file go.mod |  |  | 0.680 |
+| ns | 571 |  | 124 | README lede — why a local CA | 1.8 |  | 0.657 |
+| walker |  | 693 | 135 | headings outline in README.md |  |  | 0.807 |
 | walker |  | 734 | 41 | README.md section #1 |  |  | 0.807 |
 | ns | 824 |  | 253 | main.go package header + imports | 1.9 |  | 0.633 |
 | walker |  | 1029 | 295 | go decl names surface in main.go |  |  | 0.649 |
@@ -120,31 +120,31 @@ Score(3000)=0.674 I=0.849 C=0.534 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 | walker |  | 4839 | 22 | go decl doc at truststore_darwin.go:25 |  |  | 0.646 |
 | ns | 4961 |  | 435 | install() — NSS + Java install | 4.5 |  | 0.620 |
 | walker |  | 5046 | 207 | README.md section #12 |  |  | 0.621 |
-| ns | 5086 |  | 125 | init() — userAndHostname | 5.1 | 2.2 | 0.610 |
-| walker |  | 5195 | 149 | go decl names surface in truststore_linux.go |  |  | 0.628 |
-| walker |  | 5195 | 0 | go decl at truststore_linux.go:27 |  |  | 0.628 |
-| walker |  | 5195 | 0 | go decl at truststore_linux.go:51 |  |  | 0.628 |
-| walker |  | 5195 | 0 | go decl at truststore_linux.go:55 |  |  | 0.628 |
-| walker |  | 5195 | 0 | go decl at truststore_linux.go:77 |  |  | 0.628 |
-| walker |  | 5288 | 93 | go decl body at main.go:345 |  |  | 0.628 |
-| walker |  | 5317 | 29 | go decl at truststore_linux.go:17 |  |  | 0.636 |
-| walker |  | 5483 | 166 | go decl body at main.go:382 |  |  | 0.636 |
-| walker |  | 5600 | 117 | go decl body at cert.go:37 |  |  | 0.657 |
-| walker |  | 5856 | 256 | go decl body at main.go:240 |  |  | 0.698 |
-| walker |  | 5881 | 25 | go decl body at truststore_linux.go:51 |  |  | 0.698 |
-| ns | 5899 |  | 813 | makeCert() — template construction (SANs, KeyUsage, ExtKeyUsage) | 5.2 | 2.2 | 0.650 |
-| walker |  | 6134 | 253 | go package + imports in cert.go |  |  | 0.650 |
-| walker |  | 6268 | 134 | go decl body at truststore_java.go:81 |  |  | 0.650 |
-| walker |  | 6406 | 138 | go decl body at truststore_java.go:94 |  |  | 0.650 |
-| ns | 6545 |  | 646 | makeCert() — signing, file writes (PEM/PKCS12), and expiry message | 5.3 |  | 0.621 |
-| walker |  | 6556 | 150 | go decl body at truststore_java.go:110 |  |  | 0.621 |
-| walker |  | 6699 | 143 | go decl body at truststore_nss.go:73 |  |  | 0.621 |
-| walker |  | 6754 | 55 | README.md section #16 |  |  | 0.621 |
-| ns | 6770 |  | 225 | printHosts() — certificate-creation banner | 5.4 | 2.2 | 0.610 |
-| walker |  | 6903 | 149 | go decl body at truststore_nss.go:106 |  |  | 0.610 |
-| walker |  | 7006 | 103 | README.md section #3 |  |  | 0.610 |
-| walker |  | 7113 | 107 | README.md section #6 |  |  | 0.610 |
-| walker |  | 7122 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.625 |
+| walker |  | 5055 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.638 |
+| ns | 5086 |  | 125 | init() — userAndHostname | 5.1 | 2.2 | 0.627 |
+| walker |  | 5204 | 149 | go decl names surface in truststore_linux.go |  |  | 0.645 |
+| walker |  | 5204 | 0 | go decl at truststore_linux.go:27 |  |  | 0.645 |
+| walker |  | 5204 | 0 | go decl at truststore_linux.go:51 |  |  | 0.645 |
+| walker |  | 5204 | 0 | go decl at truststore_linux.go:55 |  |  | 0.645 |
+| walker |  | 5204 | 0 | go decl at truststore_linux.go:77 |  |  | 0.645 |
+| walker |  | 5297 | 93 | go decl body at main.go:345 |  |  | 0.645 |
+| walker |  | 5326 | 29 | go decl at truststore_linux.go:17 |  |  | 0.653 |
+| walker |  | 5492 | 166 | go decl body at main.go:382 |  |  | 0.653 |
+| walker |  | 5609 | 117 | go decl body at cert.go:37 |  |  | 0.674 |
+| walker |  | 5865 | 256 | go decl body at main.go:240 |  |  | 0.715 |
+| walker |  | 5890 | 25 | go decl body at truststore_linux.go:51 |  |  | 0.715 |
+| ns | 5899 |  | 813 | makeCert() — template construction (SANs, KeyUsage, ExtKeyUsage) | 5.2 | 2.2 | 0.666 |
+| walker |  | 6143 | 253 | go package + imports in cert.go |  |  | 0.666 |
+| walker |  | 6277 | 134 | go decl body at truststore_java.go:81 |  |  | 0.666 |
+| walker |  | 6415 | 138 | go decl body at truststore_java.go:94 |  |  | 0.666 |
+| ns | 6545 |  | 646 | makeCert() — signing, file writes (PEM/PKCS12), and expiry message | 5.3 |  | 0.636 |
+| walker |  | 6565 | 150 | go decl body at truststore_java.go:110 |  |  | 0.636 |
+| walker |  | 6708 | 143 | go decl body at truststore_nss.go:73 |  |  | 0.637 |
+| walker |  | 6763 | 55 | README.md section #16 |  |  | 0.637 |
+| ns | 6770 |  | 225 | printHosts() — certificate-creation banner | 5.4 | 2.2 | 0.625 |
+| walker |  | 6912 | 149 | go decl body at truststore_nss.go:106 |  |  | 0.625 |
+| walker |  | 7015 | 103 | README.md section #3 |  |  | 0.625 |
+| walker |  | 7122 | 107 | README.md section #6 |  |  | 0.625 |
 | ns | 7154 |  | 384 | generateKey() + fileNames() | 5.5 | 2.2 | 0.608 |
 | walker |  | 7512 | 390 | go decl body at main.go:307 |  |  | 0.608 |
 | ns | 7548 |  | 394 | loadCA() — load existing CA or trigger creation | 5.6 | 2.2 | 0.592 |

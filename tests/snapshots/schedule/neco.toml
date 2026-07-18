@@ -79,28 +79,10 @@ entries = ["README.md", "bench.c", "fail_counters.h", "panic.h", "priv_funcs.h",
 
 [[batches]]
 position = 6
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 427
-cum_tokens = 638
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 14
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 15
-cum_tokens = 653
+cum_tokens = 226
 
 [batches.content]
 kind = "fs"
@@ -110,11 +92,11 @@ parent = ".github"
 entries = ["CONTRIBUTING.md", "PULL_REQUEST_TEMPLATE.md", "workflows"]
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 657
+cum_tokens = 230
 
 [batches.content]
 kind = "fs"
@@ -124,11 +106,11 @@ parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 143
-cum_tokens = 800
+cum_tokens = 373
 
 [batches.content]
 kind = "lines"
@@ -137,6 +119,24 @@ kind = "lines"
 path = ".github/workflows/main.yml"
 start = 1
 end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 427
+cum_tokens = 800
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 14
+end = 33
 
 [batches.content.spans.render]
 kind = "full"
@@ -505,8 +505,8 @@ kind = "full"
 
 [[batches]]
 position = 15
-key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #22"
+key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #21"
 cost_tokens = 19
 cum_tokens = 1241
 
@@ -707,8 +707,8 @@ kind = "ellipsis"
 
 [[batches]]
 position = 22
-key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #17"
+key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #16"
 cost_tokens = 15
 cum_tokens = 1860
 
@@ -751,8 +751,8 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #15"
+key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #14"
 cost_tokens = 65
 cum_tokens = 2039
 
@@ -1807,8 +1807,8 @@ kind = "full"
 
 [[batches]]
 position = 56
-key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #20"
+key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #19"
 cost_tokens = 33
 cum_tokens = 3935
 
@@ -2407,8 +2407,8 @@ kind = "full"
 
 [[batches]]
 position = 88
-key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #18"
+key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #17"
 cost_tokens = 48
 cum_tokens = 5699
 
@@ -2717,8 +2717,8 @@ kind = "full"
 
 [[batches]]
 position = 99
-key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #19"
+key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #18"
 cost_tokens = 52
 cum_tokens = 6534
 

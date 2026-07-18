@@ -7,27 +7,27 @@ Score(3000)=0.762 I=0.902 C=0.644 ns_rows≤3K=16/40 (reached=8 partial=1 missin
 | walker |  | 100 | 4 | listing of 'src' |  |  | 0.000 |
 | ns | 114 |  | 86 | README badges line + who depends on pluggy + doc pointer | 1.2 |  | 0.000 |
 | walker |  | 119 | 19 | listing of 'changelog' |  |  | 0.000 |
+| walker |  | 123 | 4 | listing of '.claude' |  |  | 0.000 |
 | ns | 200 |  | 86 | Directory listing: docs/ and its worked-example subtree | 1.3 |  | 0.000 |
-| walker |  | 238 | 119 | README headline in README.rst |  |  | 0.484 |
-| ns | 293 |  | 93 | Directory listing: changelog, CI, downstream smoke-tests, scripts | 1.4 |  | 0.360 |
-| ns | 445 |  | 152 | pluggy/__init__.py: __all__ (the literal public export list) | 1.5 |  | 0.298 |
-| ns | 646 |  | 201 | Directory listing: repo root, src/pluggy, testing | 1.6 |  | 0.350 |
-| walker |  | 784 | 546 | README.rst section #0 |  |  | 0.371 |
-| walker |  | 788 | 4 | listing of '.claude' |  |  | 0.371 |
-| walker |  | 820 | 32 | listing of 'docs' |  |  | 0.406 |
-| walker |  | 823 | 3 | listing of 'docs/_static' |  |  | 0.406 |
-| walker |  | 827 | 4 | listing of 'docs/_static/img' |  |  | 0.406 |
-| walker |  | 870 | 43 | listing of 'src/pluggy' |  |  | 0.492 |
-| ns | 904 |  | 258 | pluggy/__init__.py: re-export imports + dynamic __version__ | 1.7 | 1.5 | 0.439 |
-| walker |  | 1188 | 318 | python imports in src/pluggy/__init__.py |  |  | 0.599 |
-| walker |  | 1204 | 16 | python decl names surface in src/pluggy/__init__.py |  |  | 0.607 |
-| walker |  | 1204 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.607 |
-| ns | 1237 |  | 333 | README definitive example, part 1: markers + spec/impl namespaces | 1.8 |  | 0.656 |
-| walker |  | 1247 | 43 | listing of 'downstream' |  |  | 0.699 |
+| walker |  | 242 | 119 | README headline in README.rst |  |  | 0.484 |
+| walker |  | 274 | 32 | listing of 'docs' |  |  | 0.582 |
+| walker |  | 277 | 3 | listing of 'docs/_static' |  |  | 0.582 |
+| walker |  | 281 | 4 | listing of 'docs/_static/img' |  |  | 0.582 |
+| ns | 293 |  | 93 | Directory listing: changelog, CI, downstream smoke-tests, scripts | 1.4 |  | 0.430 |
+| ns | 445 |  | 152 | pluggy/__init__.py: __all__ (the literal public export list) | 1.5 |  | 0.356 |
+| ns | 646 |  | 201 | Directory listing: repo root, src/pluggy, testing | 1.6 |  | 0.385 |
+| walker |  | 827 | 546 | README.rst section #0 |  |  | 0.406 |
+| walker |  | 870 | 43 | listing of 'downstream' |  |  | 0.476 |
+| ns | 904 |  | 258 | pluggy/__init__.py: re-export imports + dynamic __version__ | 1.7 | 1.5 | 0.424 |
+| walker |  | 913 | 43 | listing of 'src/pluggy' |  |  | 0.496 |
+| walker |  | 1231 | 318 | python imports in src/pluggy/__init__.py |  |  | 0.652 |
+| ns | 1237 |  | 333 | README definitive example, part 1: markers + spec/impl namespaces | 1.8 |  | 0.693 |
+| walker |  | 1247 | 16 | python decl names surface in src/pluggy/__init__.py |  |  | 0.699 |
+| walker |  | 1247 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.699 |
 | walker |  | 1260 | 13 | listing of '.github' |  |  | 0.725 |
 | walker |  | 1264 | 4 | listing of '.github/workflows' |  |  | 0.735 |
-| walker |  | 1307 | 43 | tool.setuptools_scm+uv config in pyproject.toml |  |  | 0.735 |
-| walker |  | 1321 | 14 | listing of 'scripts' |  |  | 0.756 |
+| walker |  | 1278 | 14 | listing of 'scripts' |  |  | 0.756 |
+| walker |  | 1321 | 43 | tool.setuptools_scm+uv config in pyproject.toml |  |  | 0.756 |
 | walker |  | 1372 | 51 | tool.setuptools config in pyproject.toml |  |  | 0.756 |
 | walker |  | 1423 | 51 | [package] in pyproject.toml |  |  | 0.756 |
 | ns | 1445 |  | 208 | README definitive example, part 2: manager wiring + call + real output | 1.9 | 1.8 | 0.765 |
@@ -42,8 +42,8 @@ Score(3000)=0.762 I=0.902 C=0.644 ns_rows≤3K=16/40 (reached=8 partial=1 missin
 | walker |  | 1573 | 7 | python imports in src/pluggy/_warnings.py |  |  | 0.756 |
 | walker |  | 1588 | 15 | listing of 'docs/examples' |  |  | 0.780 |
 | walker |  | 1596 | 8 | listing of 'docs/examples/eggsample' |  |  | 0.800 |
-| walker |  | 1658 | 62 | listing of 'testing' |  |  | 0.872 |
-| walker |  | 1678 | 20 | listing of 'docs/examples/eggsample/eggsample' |  |  | 0.920 |
+| walker |  | 1616 | 20 | listing of 'docs/examples/eggsample/eggsample' |  |  | 0.846 |
+| walker |  | 1678 | 62 | listing of 'testing' |  |  | 0.920 |
 | walker |  | 1725 | 47 | plaintext config docs/requirements.txt |  |  | 0.920 |
 | walker |  | 1791 | 66 | python decl body at src/pluggy/__init__.py:32 body 33 |  |  | 0.954 |
 | ns | 1815 |  | 318 | _result.py / _tracing.py / _warnings.py: every class/def location | 2.2 |  | 0.883 |

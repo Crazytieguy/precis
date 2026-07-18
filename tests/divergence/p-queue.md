@@ -16,19 +16,19 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | walker |  | 297 | 63 | export names surface in source/index.ts |  |  | 0.716 |
 | ns | 315 |  | 59 | package.json — name, version, description, license | 2.3 |  | 0.721 |
 | walker |  | 330 | 33 | export at source/index.ts:16 |  |  | 0.721 |
-| walker |  | 350 | 20 | export doc at source/index.ts:16 |  |  | 0.721 |
-| ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.635 |
-| walker |  | 471 | 121 | headings outline in readme.md |  |  | 0.649 |
-| walker |  | 478 | 7 | listing of '.github' |  |  | 0.660 |
-| walker |  | 482 | 4 | listing of '.github/workflows' |  |  | 0.669 |
-| ns | 554 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.627 |
-| ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.666 |
-| walker |  | 683 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.666 |
-| walker |  | 720 | 37 | export names surface in source/priority-queue.ts |  |  | 0.666 |
-| walker |  | 737 | 17 | export at source/priority-queue.ts:7 |  |  | 0.666 |
-| ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.572 |
-| ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.554 |
-| walker |  | 955 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.554 |
+| walker |  | 337 | 7 | listing of '.github' |  |  | 0.734 |
+| walker |  | 341 | 4 | listing of '.github/workflows' |  |  | 0.745 |
+| ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.656 |
+| walker |  | 542 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.656 |
+| ns | 554 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.615 |
+| walker |  | 562 | 20 | export doc at source/index.ts:16 |  |  | 0.615 |
+| walker |  | 599 | 37 | export names surface in source/priority-queue.ts |  |  | 0.615 |
+| walker |  | 616 | 17 | export at source/priority-queue.ts:7 |  |  | 0.615 |
+| ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.559 |
+| walker |  | 834 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.560 |
+| ns | 855 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.480 |
+| ns | 931 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.465 |
+| walker |  | 955 | 121 | headings outline in readme.md |  |  | 0.554 |
 | ns | 1080 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.519 |
 | walker |  | 1084 | 129 | export at source/priority-queue.ts:11 |  |  | 0.519 |
 | walker |  | 1094 | 10 | readme.md section #5 |  |  | 0.519 |
@@ -44,7 +44,7 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | ns | 1732 |  | 145 | source/options.ts — Options (intervalCap, interval) | 3.4 | 3.3 | 0.528 |
 | walker |  | 1810 | 81 | json config tsconfig.json |  |  | 0.528 |
 | ns | 1847 |  | 115 | source/options.ts — Options (carryoverIntervalCount) | 3.5 | 3.4 | 0.507 |
-| walker |  | 1857 | 47 | readme.md section #44 |  |  | 0.507 |
+| walker |  | 1857 | 47 | readme.md section #41 |  |  | 0.507 |
 | ns | 2165 |  | 318 | source/options.ts — Options (strict) | 3.6 | 3.5 | 0.481 |
 | walker |  | 2241 | 384 | readme.md section #0 |  |  | 0.502 |
 | walker |  | 2266 | 25 | readme.md section #9 |  |  | 0.502 |
@@ -68,7 +68,7 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | walker |  | 3286 | 73 | readme.md section #10 |  |  | 0.534 |
 | ns | 3314 |  | 382 | source/priority-queue.ts — enqueue (binary insertion) | 3.11 | 3.10 | 0.500 |
 | walker |  | 3321 | 35 | export names surface in source/queue.ts |  |  | 0.502 |
-| walker |  | 3488 | 167 | readme.md section #45 |  |  | 0.502 |
+| walker |  | 3488 | 167 | readme.md section #42 |  |  | 0.502 |
 | ns | 3717 |  | 403 | source/priority-queue.ts — setPriority + remove | 3.12 | 3.11 | 0.476 |
 | ns | 3951 |  | 234 | source/priority-queue.ts — dequeue | 3.13 | 3.10 | 0.461 |
 | ns | 4225 |  | 274 | source/priority-queue.ts — filter/size/#compact | 3.14 | 3.13 | 0.442 |
@@ -81,7 +81,7 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | walker |  | 5073 | 258 | package dev/peer dependencies in package.json |  |  | 0.598 |
 | walker |  | 5128 | 55 | export names surface in source/options.ts |  |  | 0.599 |
 | ns | 5289 |  | 287 | source/index.ts — public member roster (locations) | 4.4 |  | 0.616 |
-| walker |  | 5395 | 267 | readme.md section #36 |  |  | 0.616 |
+| walker |  | 5395 | 267 | readme.md section #35 |  |  | 0.616 |
 | ns | 5575 |  | 286 | source/index.ts — private member roster (locations) | 4.5 |  | 0.600 |
 | ns | 5742 |  | 167 | source/index.ts — constructor (defaults merge) | 4.6 | 4.4 | 0.590 |
 | ns | 6314 |  | 572 | source/index.ts — constructor (validation + field assignment) | 4.7 | 4.6 | 0.567 |

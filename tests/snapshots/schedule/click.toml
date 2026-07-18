@@ -145,64 +145,10 @@ kind = "full"
 
 [[batches]]
 position = 7
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 13
-cum_tokens = 307
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 23
-cum_tokens = 330
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["lock.yaml", "pre-commit.yaml", "publish.yaml", "tests.yaml", "zizmor.yaml"]
-
-[[batches]]
-position = 9
-key = 'Toml(Identity { file: "pyproject.toml" })'
-descriptor = "[package] in pyproject.toml"
-cost_tokens = 78
-cum_tokens = 408
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
 key = 'Fs(DirListing { dir: ".devcontainer" })'
 descriptor = "listing of '.devcontainer'"
 cost_tokens = 11
-cum_tokens = 419
+cum_tokens = 305
 
 [batches.content]
 kind = "fs"
@@ -212,11 +158,11 @@ parent = ".devcontainer"
 entries = ["devcontainer.json", "on-create-command.sh"]
 
 [[batches]]
-position = 11
+position = 8
 key = 'Fs(DirListing { dir: "src/click" })'
 descriptor = "listing of 'src/click'"
 cost_tokens = 86
-cum_tokens = 505
+cum_tokens = 391
 
 [batches.content]
 kind = "fs"
@@ -226,11 +172,11 @@ parent = "src/click"
 entries = ["__init__.py", "_compat.py", "_termui_impl.py", "_textwrap.py", "_utils.py", "_winconsole.py", "core.py", "decorators.py", "exceptions.py", "formatting.py", "globals.py", "parser.py", "py.typed", "shell_completion.py", "termui.py", "testing.py", "types.py", "utils.py"]
 
 [[batches]]
-position = 12
+position = 9
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 1 })'
 descriptor = "python imports #1 in src/click/__init__.py"
 cost_tokens = 15
-cum_tokens = 520
+cum_tokens = 406
 
 [batches.content]
 kind = "lines"
@@ -244,11 +190,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 13
+position = 10
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 0 })'
 descriptor = "python imports in src/click/__init__.py"
 cost_tokens = 71
-cum_tokens = 591
+cum_tokens = 477
 
 [batches.content]
 kind = "lines"
@@ -262,11 +208,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 14
+position = 11
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 6 })'
 descriptor = "python imports #6 in src/click/__init__.py"
 cost_tokens = 18
-cum_tokens = 609
+cum_tokens = 495
 
 [batches.content]
 kind = "lines"
@@ -280,11 +226,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 15
+position = 12
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 5 })'
 descriptor = "python imports #5 in src/click/__init__.py"
 cost_tokens = 30
-cum_tokens = 639
+cum_tokens = 525
 
 [batches.content]
 kind = "lines"
@@ -298,11 +244,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 16
+position = 13
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 2 })'
 descriptor = "python imports #2 in src/click/__init__.py"
 cost_tokens = 100
-cum_tokens = 739
+cum_tokens = 625
 
 [batches.content]
 kind = "lines"
@@ -316,11 +262,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 17
+position = 14
 key = 'Python(DeclNames { file: "src/click/__init__.py" })'
 descriptor = "python decl names surface in src/click/__init__.py"
 cost_tokens = 18
-cum_tokens = 757
+cum_tokens = 643
 
 [batches.content]
 kind = "lines"
@@ -342,11 +288,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 15
 key = 'Python(Decl { file: "src/click/__init__.py", start_line: 77 })'
 descriptor = "python decl at src/click/__init__.py:77"
 cost_tokens = 0
-cum_tokens = 757
+cum_tokens = 643
 
 [batches.content]
 kind = "lines"
@@ -360,11 +306,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 19
+position = 16
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 3 })'
 descriptor = "python imports #3 in src/click/__init__.py"
 cost_tokens = 161
-cum_tokens = 918
+cum_tokens = 804
 
 [batches.content]
 kind = "lines"
@@ -378,11 +324,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 20
+position = 17
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 4 })'
 descriptor = "python imports #4 in src/click/__init__.py"
 cost_tokens = 144
-cum_tokens = 1062
+cum_tokens = 948
 
 [batches.content]
 kind = "lines"
@@ -396,11 +342,39 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 21
+position = 18
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 13
+cum_tokens = 961
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 23
+cum_tokens = 984
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["lock.yaml", "pre-commit.yaml", "publish.yaml", "tests.yaml", "zizmor.yaml"]
+
+[[batches]]
+position = 20
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 9 })'
 descriptor = "python imports #9 in src/click/__init__.py"
 cost_tokens = 88
-cum_tokens = 1150
+cum_tokens = 1072
 
 [batches.content]
 kind = "lines"
@@ -414,11 +388,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 7 })'
 descriptor = "python imports #7 in src/click/__init__.py"
 cost_tokens = 189
-cum_tokens = 1339
+cum_tokens = 1261
 
 [batches.content]
 kind = "lines"
@@ -432,11 +406,39 @@ end = 54
 kind = "full"
 
 [[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 192
+cum_tokens = 1453
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["_static", "advanced.md", "api.md", "arguments.md", "changes.rst", "click-concepts.md", "command-line-reference.md", "commands-and-groups.md", "commands.md", "complex.md", "conf.py", "contrib.md", "contributing.md", "design-opinions.md", "documentation.md", "entry-points.md", "exceptions.md", "extending-click.md", "faqs.md", "handling-files.md", "index.rst", "license.md", "option-decorators.md", "options.md", "parameter-types.md", "parameters.md", "prompts.md", "quickstart.md", "setuptools.md", "shell-completion.md", "standalone-apps.md", "support-multiple-versions.md", "testing.md", "unicode-support.md", "upgrade-guides.md", "utils.md", "virtualenv.md", "why.md", "wincmd.md"]
+
+[[batches]]
 position = 23
+key = 'Fs(DirListing { dir: "docs/_static" })'
+descriptor = "listing of 'docs/_static'"
+cost_tokens = 15
+cum_tokens = 1468
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/_static"
+entries = ["click-icon.svg", "click-logo.svg", "click-name.svg"]
+
+[[batches]]
+position = 24
 key = 'Python(ImportChunk { file: "src/click/__init__.py", chunk_index: 8 })'
 descriptor = "python imports #8 in src/click/__init__.py"
 cost_tokens = 180
-cum_tokens = 1519
+cum_tokens = 1648
 
 [batches.content]
 kind = "lines"
@@ -450,11 +452,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 36
-cum_tokens = 1555
+cum_tokens = 1684
 
 [batches.content]
 kind = "fs"
@@ -464,32 +466,30 @@ parent = "examples"
 entries = ["README", "aliases", "colors", "completion", "complex", "imagepipe", "inout", "naval", "repo", "termui", "validation"]
 
 [[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 192
-cum_tokens = 1747
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["_static", "advanced.md", "api.md", "arguments.md", "changes.rst", "click-concepts.md", "command-line-reference.md", "commands-and-groups.md", "commands.md", "complex.md", "conf.py", "contrib.md", "contributing.md", "design-opinions.md", "documentation.md", "entry-points.md", "exceptions.md", "extending-click.md", "faqs.md", "handling-files.md", "index.rst", "license.md", "option-decorators.md", "options.md", "parameter-types.md", "parameters.md", "prompts.md", "quickstart.md", "setuptools.md", "shell-completion.md", "standalone-apps.md", "support-multiple-versions.md", "testing.md", "unicode-support.md", "upgrade-guides.md", "utils.md", "virtualenv.md", "why.md", "wincmd.md"]
-
-[[batches]]
 position = 26
-key = 'Fs(DirListing { dir: "docs/_static" })'
-descriptor = "listing of 'docs/_static'"
-cost_tokens = 15
+key = 'Toml(Identity { file: "pyproject.toml" })'
+descriptor = "[package] in pyproject.toml"
+cost_tokens = 78
 cum_tokens = 1762
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "docs/_static"
-entries = ["click-icon.svg", "click-logo.svg", "click-name.svg"]
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 27
@@ -1277,10 +1277,344 @@ kind = "full"
 
 [[batches]]
 position = 55
+key = 'Python(DeclNames { file: "src/click/types.py" })'
+descriptor = "python decl names surface in src/click/types.py"
+cost_tokens = 252
+cum_tokens = 4135
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 210
+end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 248
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 253
+end = 253
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 422
+end = 422
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 426
+end = 426
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 495
+end = 495
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 513
+end = 513
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/click/types.py"
+start = 521
+end = 521
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Markdown(HeadingsOutline { file: "docs/faqs.md" })'
+descriptor = "headings outline in docs/faqs.md"
+cost_tokens = 36
+cum_tokens = 4171
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/faqs.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/faqs.md"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/faqs.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/faqs.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 57
+key = 'Markdown(Section { file: "docs/faqs.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/faqs.md section #0"
+cost_tokens = 36
+cum_tokens = 4207
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/faqs.md"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Markdown(HeadingsOutline { file: "docs/parameters.md" })'
+descriptor = "headings outline in docs/parameters.md"
+cost_tokens = 39
+cum_tokens = 4246
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 59
+key = 'Markdown(Section { file: "docs/parameters.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/parameters.md section #0"
+cost_tokens = 47
+cum_tokens = 4293
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/parameters.md"
+start = 3
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Markdown(HeadingsOutline { file: "docs/virtualenv.md" })'
+descriptor = "headings outline in docs/virtualenv.md"
+cost_tokens = 40
+cum_tokens = 4333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/virtualenv.md"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/virtualenv.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/virtualenv.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "docs/virtualenv.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 61
+key = 'Markdown(Section { file: "docs/virtualenv.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "docs/virtualenv.md section #0"
+cost_tokens = 0
+cum_tokens = 4333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/virtualenv.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
 key = 'Python(DeclNames { file: "src/click/_compat.py" })'
 descriptor = "python decl names surface in src/click/_compat.py"
 cost_tokens = 254
-cum_tokens = 4137
+cum_tokens = 4587
 
 [batches.content]
 kind = "lines"
@@ -1460,340 +1794,6 @@ end = 228
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 56
-key = 'Python(DeclNames { file: "src/click/types.py" })'
-descriptor = "python decl names surface in src/click/types.py"
-cost_tokens = 252
-cum_tokens = 4389
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 185
-end = 185
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 210
-end = 210
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 222
-end = 222
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 248
-end = 248
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 253
-end = 253
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 422
-end = 422
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 426
-end = 426
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 495
-end = 495
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 513
-end = 513
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/click/types.py"
-start = 521
-end = 521
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Markdown(HeadingsOutline { file: "docs/faqs.md" })'
-descriptor = "headings outline in docs/faqs.md"
-cost_tokens = 36
-cum_tokens = 4425
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/faqs.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/faqs.md"
-start = 8
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/faqs.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/faqs.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 58
-key = 'Markdown(Section { file: "docs/faqs.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/faqs.md section #0"
-cost_tokens = 36
-cum_tokens = 4461
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/faqs.md"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
-key = 'Markdown(HeadingsOutline { file: "docs/parameters.md" })'
-descriptor = "headings outline in docs/parameters.md"
-cost_tokens = 39
-cum_tokens = 4500
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 60
-key = 'Markdown(Section { file: "docs/parameters.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/parameters.md section #0"
-cost_tokens = 47
-cum_tokens = 4547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/parameters.md"
-start = 3
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
-key = 'Markdown(HeadingsOutline { file: "docs/virtualenv.md" })'
-descriptor = "headings outline in docs/virtualenv.md"
-cost_tokens = 40
-cum_tokens = 4587
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/virtualenv.md"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/virtualenv.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/virtualenv.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "docs/virtualenv.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 62
-key = 'Markdown(Section { file: "docs/virtualenv.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "docs/virtualenv.md section #0"
-cost_tokens = 0
-cum_tokens = 4587
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/virtualenv.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 63

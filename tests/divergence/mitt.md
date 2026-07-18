@@ -10,25 +10,25 @@ Score(3000)=0.842 I=0.944 C=0.751 ns_rows≤3K=19/47 (reached=14 partial=2 missi
 | ns | 127 |  | 63 | README identity: title, tagline, runtime claims | 1.3 |  | 0.625 |
 | ns | 241 |  | 114 | README feature bullets | 1.4 |  | 0.546 |
 | walker |  | 284 | 187 | README headline in README.md |  |  | 0.801 |
-| ns | 335 |  | 94 | README table of contents | 1.5 |  | 0.678 |
-| ns | 424 |  | 89 | src/index.ts export roster (all 8 exports, names only) | 2.1 |  | 0.595 |
-| walker |  | 428 | 144 | headings outline in README.md |  |  | 0.600 |
-| walker |  | 438 | 10 | listing of '.github' |  |  | 0.625 |
-| walker |  | 447 | 9 | listing of '.github/workflows' |  |  | 0.673 |
-| ns | 506 |  | 82 | Type aliases: EventType, Handler, WildcardHandler | 2.2 | 2.1 | 0.598 |
-| ns | 618 |  | 112 | Type aliases: EventHandlerList, WildCardEventHandlerList, EventHandlerMap | 2.3 | 2.1 | 0.531 |
-| walker |  | 664 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.534 |
-| walker |  | 676 | 12 | listing of 'test' |  |  | 0.593 |
-| ns | 824 |  | 206 | Emitter<Events> interface (full) | 2.4 | 2.1 | 0.512 |
-| walker |  | 836 | 160 | export names surface in src/index.ts |  |  | 0.639 |
-| walker |  | 850 | 14 | export at src/index.ts:13 |  |  | 0.650 |
-| walker |  | 873 | 23 | export at src/index.ts:46 |  |  | 0.651 |
-| walker |  | 901 | 28 | export at src/index.ts:6 |  |  | 0.677 |
-| ns | 902 |  | 78 | mitt() factory: JSDoc + signature | 2.5 | 2.1 | 0.652 |
-| walker |  | 936 | 35 | export at src/index.ts:18 |  |  | 0.679 |
-| ns | 996 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.637 |
-| walker |  | 1133 | 197 | export at src/index.ts:23 |  |  | 0.763 |
-| walker |  | 1179 | 46 | export doc at src/index.ts:46 |  |  | 0.807 |
+| walker |  | 294 | 10 | listing of '.github' |  |  | 0.835 |
+| walker |  | 303 | 9 | listing of '.github/workflows' |  |  | 0.900 |
+| ns | 335 |  | 94 | README table of contents | 1.5 |  | 0.762 |
+| ns | 424 |  | 89 | src/index.ts export roster (all 8 exports, names only) | 2.1 |  | 0.669 |
+| ns | 506 |  | 82 | Type aliases: EventType, Handler, WildcardHandler | 2.2 | 2.1 | 0.594 |
+| walker |  | 520 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.597 |
+| walker |  | 532 | 12 | listing of 'test' |  |  | 0.663 |
+| ns | 618 |  | 112 | Type aliases: EventHandlerList, WildCardEventHandlerList, EventHandlerMap | 2.3 | 2.1 | 0.589 |
+| walker |  | 692 | 160 | export names surface in src/index.ts |  |  | 0.735 |
+| walker |  | 706 | 14 | export at src/index.ts:13 |  |  | 0.748 |
+| walker |  | 729 | 23 | export at src/index.ts:46 |  |  | 0.749 |
+| walker |  | 757 | 28 | export at src/index.ts:6 |  |  | 0.779 |
+| walker |  | 792 | 35 | export at src/index.ts:18 |  |  | 0.813 |
+| ns | 824 |  | 206 | Emitter<Events> interface (full) | 2.4 | 2.1 | 0.704 |
+| ns | 902 |  | 78 | mitt() factory: JSDoc + signature | 2.5 | 2.1 | 0.677 |
+| walker |  | 989 | 197 | export at src/index.ts:23 |  |  | 0.812 |
+| ns | 996 |  | 94 | mitt() body: GenericEventHandler, all init, return-object open | 2.6 | 2.5 | 0.761 |
+| walker |  | 1035 | 46 | export doc at src/index.ts:46 |  |  | 0.804 |
+| walker |  | 1179 | 144 | headings outline in README.md |  |  | 0.807 |
 | ns | 1197 |  | 201 | on() implementation | 2.7 | 2.6 | 0.744 |
 | walker |  | 1210 | 31 | README.md section #18 |  |  | 0.745 |
 | walker |  | 1248 | 38 | README.md section #15 |  |  | 0.745 |

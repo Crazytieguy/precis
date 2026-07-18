@@ -177,38 +177,10 @@ kind = "full"
 
 [[batches]]
 position = 9
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 13
-cum_tokens = 379
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 23
-cum_tokens = 402
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["lock.yaml", "pre-commit.yaml", "publish.yaml", "tests.yaml", "zizmor.yaml"]
-
-[[batches]]
-position = 11
 key = 'Fs(DirListing { dir: ".devcontainer" })'
 descriptor = "listing of '.devcontainer'"
 cost_tokens = 11
-cum_tokens = 413
+cum_tokens = 377
 
 [batches.content]
 kind = "fs"
@@ -218,11 +190,371 @@ parent = ".devcontainer"
 entries = ["devcontainer.json", "on-create-command.sh"]
 
 [[batches]]
+position = 10
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 13
+cum_tokens = 390
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 23
+cum_tokens = 413
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["lock.yaml", "pre-commit.yaml", "publish.yaml", "tests.yaml", "zizmor.yaml"]
+
+[[batches]]
 position = 12
+key = 'Fs(DirListing { dir: "src/flask" })'
+descriptor = "listing of 'src/flask'"
+cost_tokens = 91
+cum_tokens = 504
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/flask"
+entries = ["__init__.py", "__main__.py", "app.py", "blueprints.py", "cli.py", "config.py", "ctx.py", "debughelpers.py", "globals.py", "helpers.py", "json", "logging.py", "py.typed", "sansio", "sessions.py", "signals.py", "templating.py", "testing.py", "typing.py", "views.py", "wrappers.py"]
+
+[[batches]]
+position = 13
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 0 })'
+descriptor = "python imports in src/flask/__init__.py"
+cost_tokens = 13
+cum_tokens = 517
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 1 })'
+descriptor = "python imports #1 in src/flask/__init__.py"
+cost_tokens = 12
+cum_tokens = 529
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 2 })'
+descriptor = "python imports #2 in src/flask/__init__.py"
+cost_tokens = 13
+cum_tokens = 542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 3 })'
+descriptor = "python imports #3 in src/flask/__init__.py"
+cost_tokens = 12
+cum_tokens = 554
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 7 })'
+descriptor = "python imports #7 in src/flask/__init__.py"
+cost_tokens = 14
+cum_tokens = 568
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "src/flask/json" })'
+descriptor = "listing of 'src/flask/json'"
+cost_tokens = 14
+cum_tokens = 582
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/flask/json"
+entries = ["__init__.py", "provider.py", "tag.py"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "src/flask/sansio" })'
+descriptor = "listing of 'src/flask/sansio'"
+cost_tokens = 17
+cum_tokens = 599
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/flask/sansio"
+entries = ["README.md", "app.py", "blueprints.py", "scaffold.py"]
+
+[[batches]]
+position = 20
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 4 })'
+descriptor = "python imports #4 in src/flask/__init__.py"
+cost_tokens = 66
+cum_tokens = 665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 5
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 5 })'
+descriptor = "python imports #5 in src/flask/__init__.py"
+cost_tokens = 50
+cum_tokens = 715
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 10 })'
+descriptor = "python imports #10 in src/flask/__init__.py"
+cost_tokens = 26
+cum_tokens = 741
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 38
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Python(Imports { file: "src/flask/json/__init__.py" })'
+descriptor = "python imports in src/flask/json/__init__.py"
+cost_tokens = 64
+cum_tokens = 805
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/json/__init__.py"
+start = 1
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 9 })'
+descriptor = "python imports #9 in src/flask/__init__.py"
+cost_tokens = 64
+cum_tokens = 869
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 34
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 6 })'
+descriptor = "python imports #6 in src/flask/__init__.py"
+cost_tokens = 144
+cum_tokens = 1013
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 13
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Python(Imports { file: "src/flask/__main__.py" })'
+descriptor = "python imports in src/flask/__main__.py"
+cost_tokens = 12
+cum_tokens = 1025
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__main__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 176
+cum_tokens = 1201
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["Makefile", "_static", "api.rst", "appcontext.rst", "async-await.rst", "blueprints.rst", "changes.rst", "cli.rst", "conf.py", "config.rst", "contributing.rst", "debugging.rst", "deploying", "design.rst", "errorhandling.rst", "extensiondev.rst", "extensions.rst", "gevent.rst", "index.rst", "installation.rst", "license.rst", "lifecycle.rst", "logging.rst", "make.bat", "patterns", "quickstart.rst", "reqcontext.rst", "server.rst", "shell.rst", "signals.rst", "templating.rst", "testing.rst", "tutorial", "views.rst", "web-security.rst"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "docs/_static" })'
+descriptor = "listing of 'docs/_static'"
+cost_tokens = 27
+cum_tokens = 1228
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/_static"
+entries = ["debugger.png", "flask-icon.svg", "flask-logo.svg", "flask-name.svg", "pycharm-run-config.png"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "docs/deploying" })'
+descriptor = "listing of 'docs/deploying'"
+cost_tokens = 64
+cum_tokens = 1292
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/deploying"
+entries = ["apache-httpd.rst", "asgi.rst", "eventlet.rst", "gevent.rst", "gunicorn.rst", "index.rst", "mod_wsgi.rst", "nginx.rst", "proxy_fix.rst", "uwsgi.rst", "waitress.rst"]
+
+[[batches]]
+position = 30
+key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 8 })'
+descriptor = "python imports #8 in src/flask/__init__.py"
+cost_tokens = 166
+cum_tokens = 1458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/__init__.py"
+start = 24
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Fs(DirListing { dir: "docs/tutorial" })'
+descriptor = "listing of 'docs/tutorial'"
+cost_tokens = 78
+cum_tokens = 1536
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/tutorial"
+entries = ["blog.rst", "database.rst", "deploy.rst", "factory.rst", "flaskr_edit.png", "flaskr_index.png", "flaskr_login.png", "index.rst", "install.rst", "layout.rst", "next.rst", "static.rst", "templates.rst", "tests.rst", "views.rst"]
+
+[[batches]]
+position = 32
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 85
-cum_tokens = 498
+cum_tokens = 1621
 
 [batches.content]
 kind = "lines"
@@ -244,361 +576,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 13
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 145
-cum_tokens = 643
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 23
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "src/flask" })'
-descriptor = "listing of 'src/flask'"
-cost_tokens = 91
-cum_tokens = 734
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/flask"
-entries = ["__init__.py", "__main__.py", "app.py", "blueprints.py", "cli.py", "config.py", "ctx.py", "debughelpers.py", "globals.py", "helpers.py", "json", "logging.py", "py.typed", "sansio", "sessions.py", "signals.py", "templating.py", "testing.py", "typing.py", "views.py", "wrappers.py"]
-
-[[batches]]
-position = 15
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 0 })'
-descriptor = "python imports in src/flask/__init__.py"
-cost_tokens = 13
-cum_tokens = 747
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 1 })'
-descriptor = "python imports #1 in src/flask/__init__.py"
-cost_tokens = 12
-cum_tokens = 759
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 2 })'
-descriptor = "python imports #2 in src/flask/__init__.py"
-cost_tokens = 13
-cum_tokens = 772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 3 })'
-descriptor = "python imports #3 in src/flask/__init__.py"
-cost_tokens = 12
-cum_tokens = 784
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 7 })'
-descriptor = "python imports #7 in src/flask/__init__.py"
-cost_tokens = 14
-cum_tokens = 798
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "src/flask/sansio" })'
-descriptor = "listing of 'src/flask/sansio'"
-cost_tokens = 17
-cum_tokens = 815
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/flask/sansio"
-entries = ["README.md", "app.py", "blueprints.py", "scaffold.py"]
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: "src/flask/json" })'
-descriptor = "listing of 'src/flask/json'"
-cost_tokens = 14
-cum_tokens = 829
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/flask/json"
-entries = ["__init__.py", "provider.py", "tag.py"]
-
-[[batches]]
-position = 22
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 4 })'
-descriptor = "python imports #4 in src/flask/__init__.py"
-cost_tokens = 66
-cum_tokens = 895
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 5
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 5 })'
-descriptor = "python imports #5 in src/flask/__init__.py"
-cost_tokens = 50
-cum_tokens = 945
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 9
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 10 })'
-descriptor = "python imports #10 in src/flask/__init__.py"
-cost_tokens = 26
-cum_tokens = 971
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 38
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Python(Imports { file: "src/flask/json/__init__.py" })'
-descriptor = "python imports in src/flask/json/__init__.py"
-cost_tokens = 64
-cum_tokens = 1035
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/json/__init__.py"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 9 })'
-descriptor = "python imports #9 in src/flask/__init__.py"
-cost_tokens = 64
-cum_tokens = 1099
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 34
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 6 })'
-descriptor = "python imports #6 in src/flask/__init__.py"
-cost_tokens = 144
-cum_tokens = 1243
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 13
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Python(Imports { file: "src/flask/__main__.py" })'
-descriptor = "python imports in src/flask/__main__.py"
-cost_tokens = 12
-cum_tokens = 1255
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__main__.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Python(ImportChunk { file: "src/flask/__init__.py", chunk_index: 8 })'
-descriptor = "python imports #8 in src/flask/__init__.py"
-cost_tokens = 166
-cum_tokens = 1421
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/__init__.py"
-start = 24
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 176
-cum_tokens = 1597
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["Makefile", "_static", "api.rst", "appcontext.rst", "async-await.rst", "blueprints.rst", "changes.rst", "cli.rst", "conf.py", "config.rst", "contributing.rst", "debugging.rst", "deploying", "design.rst", "errorhandling.rst", "extensiondev.rst", "extensions.rst", "gevent.rst", "index.rst", "installation.rst", "license.rst", "lifecycle.rst", "logging.rst", "make.bat", "patterns", "quickstart.rst", "reqcontext.rst", "server.rst", "shell.rst", "signals.rst", "templating.rst", "testing.rst", "tutorial", "views.rst", "web-security.rst"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "docs/_static" })'
-descriptor = "listing of 'docs/_static'"
-cost_tokens = 27
-cum_tokens = 1624
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/_static"
-entries = ["debugger.png", "flask-icon.svg", "flask-logo.svg", "flask-name.svg", "pycharm-run-config.png"]
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "docs/deploying" })'
-descriptor = "listing of 'docs/deploying'"
-cost_tokens = 64
-cum_tokens = 1688
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/deploying"
-entries = ["apache-httpd.rst", "asgi.rst", "eventlet.rst", "gevent.rst", "gunicorn.rst", "index.rst", "mod_wsgi.rst", "nginx.rst", "proxy_fix.rst", "uwsgi.rst", "waitress.rst"]
-
-[[batches]]
 position = 33
-key = 'Fs(DirListing { dir: "docs/tutorial" })'
-descriptor = "listing of 'docs/tutorial'"
-cost_tokens = 78
-cum_tokens = 1766
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/tutorial"
-entries = ["blog.rst", "database.rst", "deploy.rst", "factory.rst", "flaskr_edit.png", "flaskr_index.png", "flaskr_login.png", "index.rst", "install.rst", "layout.rst", "next.rst", "static.rst", "templates.rst", "tests.rst", "views.rst"]
-
-[[batches]]
-position = 34
 key = 'Python(DeclNames { file: "src/flask/json/__init__.py" })'
 descriptor = "python decl names surface in src/flask/json/__init__.py"
 cost_tokens = 123
-cum_tokens = 1889
+cum_tokens = 1744
 
 [batches.content]
 kind = "lines"
@@ -684,11 +666,11 @@ end = 139
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Python(Decl { file: "src/flask/json/__init__.py", start_line: 13 })'
 descriptor = "python decl at src/flask/json/__init__.py:13"
 cost_tokens = 0
-cum_tokens = 1889
+cum_tokens = 1744
 
 [batches.content]
 kind = "lines"
@@ -702,11 +684,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Python(Decl { file: "src/flask/json/__init__.py", start_line: 47 })'
 descriptor = "python decl at src/flask/json/__init__.py:47"
 cost_tokens = 0
-cum_tokens = 1889
+cum_tokens = 1744
 
 [batches.content]
 kind = "lines"
@@ -720,11 +702,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Python(Decl { file: "src/flask/json/__init__.py", start_line: 77 })'
 descriptor = "python decl at src/flask/json/__init__.py:77"
 cost_tokens = 0
-cum_tokens = 1889
+cum_tokens = 1744
 
 [batches.content]
 kind = "lines"
@@ -738,11 +720,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Python(Decl { file: "src/flask/json/__init__.py", start_line: 108 })'
 descriptor = "python decl at src/flask/json/__init__.py:108"
 cost_tokens = 0
-cum_tokens = 1889
+cum_tokens = 1744
 
 [batches.content]
 kind = "lines"
@@ -756,11 +738,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Python(Decl { file: "src/flask/json/__init__.py", start_line: 138 })'
 descriptor = "python decl at src/flask/json/__init__.py:138"
 cost_tokens = 0
-cum_tokens = 1889
+cum_tokens = 1744
 
 [batches.content]
 kind = "lines"
@@ -774,11 +756,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Python(DeclDoc { file: "src/flask/json/__init__.py", start_line: 13 })'
 descriptor = "python decl doc at src/flask/json/__init__.py:13"
 cost_tokens = 11
-cum_tokens = 1900
+cum_tokens = 1755
 
 [batches.content]
 kind = "lines"
@@ -792,11 +774,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Python(DeclDoc { file: "src/flask/json/__init__.py", start_line: 77 })'
 descriptor = "python decl doc at src/flask/json/__init__.py:77"
 cost_tokens = 11
-cum_tokens = 1911
+cum_tokens = 1766
 
 [batches.content]
 kind = "lines"
@@ -810,11 +792,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Python(DeclDoc { file: "src/flask/json/__init__.py", start_line: 108 })'
 descriptor = "python decl doc at src/flask/json/__init__.py:108"
 cost_tokens = 15
-cum_tokens = 1926
+cum_tokens = 1781
 
 [batches.content]
 kind = "lines"
@@ -828,11 +810,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Python(DeclDoc { file: "src/flask/json/__init__.py", start_line: 47 })'
 descriptor = "python decl doc at src/flask/json/__init__.py:47"
 cost_tokens = 16
-cum_tokens = 1942
+cum_tokens = 1797
 
 [batches.content]
 kind = "lines"
@@ -841,6 +823,24 @@ kind = "lines"
 path = "src/flask/json/__init__.py"
 start = 48
 end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 145
+cum_tokens = 1942
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 23
+end = 34
 
 [batches.content.spans.render]
 kind = "full"
@@ -865,28 +865,24 @@ kind = "full"
 
 [[batches]]
 position = 45
-key = 'Python(DeclNames { file: "src/flask/blueprints.py" })'
-descriptor = "python decl names surface in src/flask/blueprints.py"
-cost_tokens = 15
-cum_tokens = 1982
+key = 'Fs(DirListing { dir: "docs/patterns" })'
+descriptor = "listing of 'docs/patterns'"
+cost_tokens = 145
+cum_tokens = 2112
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "src/flask/blueprints.py"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "docs/patterns"
+entries = ["appdispatch.rst", "appfactories.rst", "caching.rst", "celery.rst", "deferredcallbacks.rst", "favicon.rst", "fileuploads.rst", "flashing.rst", "index.rst", "javascript.rst", "jquery.rst", "lazyloading.rst", "methodoverrides.rst", "mongoengine.rst", "packages.rst", "requestchecksum.rst", "singlepageapplications.rst", "sqlalchemy.rst", "sqlite3.rst", "streaming.rst", "subclassing.rst", "templateinheritance.rst", "urlprocessors.rst", "viewdecorators.rst", "wtforms.rst"]
 
 [[batches]]
 position = 46
-key = 'Python(Decl { file: "src/flask/blueprints.py", start_line: 18 })'
-descriptor = "python decl at src/flask/blueprints.py:18"
-cost_tokens = 0
-cum_tokens = 1982
+key = 'Python(DeclNames { file: "src/flask/blueprints.py" })'
+descriptor = "python decl names surface in src/flask/blueprints.py"
+cost_tokens = 15
+cum_tokens = 2127
 
 [batches.content]
 kind = "lines"
@@ -901,10 +897,28 @@ kind = "full"
 
 [[batches]]
 position = 47
+key = 'Python(Decl { file: "src/flask/blueprints.py", start_line: 18 })'
+descriptor = "python decl at src/flask/blueprints.py:18"
+cost_tokens = 0
+cum_tokens = 2127
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/blueprints.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
 key = 'Markdown(ReadmeHeadline { file: "src/flask/sansio/README.md" })'
 descriptor = "README headline in src/flask/sansio/README.md"
 cost_tokens = 77
-cum_tokens = 2059
+cum_tokens = 2204
 
 [batches.content]
 kind = "lines"
@@ -918,11 +932,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Fs(DirListing { dir: "examples/celery" })'
 descriptor = "listing of 'examples/celery'"
 cost_tokens = 24
-cum_tokens = 2083
+cum_tokens = 2228
 
 [batches.content]
 kind = "fs"
@@ -932,11 +946,11 @@ parent = "examples/celery"
 entries = ["README.md", "make_celery.py", "pyproject.toml", "requirements.txt", "src"]
 
 [[batches]]
-position = 49
+position = 50
 key = 'Fs(DirListing { dir: "examples/celery/src" })'
 descriptor = "listing of 'examples/celery/src'"
 cost_tokens = 4
-cum_tokens = 2087
+cum_tokens = 2232
 
 [batches.content]
 kind = "fs"
@@ -946,11 +960,11 @@ parent = "examples/celery/src"
 entries = ["task_app"]
 
 [[batches]]
-position = 50
+position = 51
 key = 'Fs(DirListing { dir: "examples/celery/src/task_app" })'
 descriptor = "listing of 'examples/celery/src/task_app'"
 cost_tokens = 17
-cum_tokens = 2104
+cum_tokens = 2249
 
 [batches.content]
 kind = "fs"
@@ -960,11 +974,11 @@ parent = "examples/celery/src/task_app"
 entries = ["__init__.py", "tasks.py", "templates", "views.py"]
 
 [[batches]]
-position = 51
+position = 52
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 134
-cum_tokens = 2238
+cum_tokens = 2383
 
 [batches.content]
 kind = "lines"
@@ -986,11 +1000,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Python(DeclDoc { file: "src/flask/json/__init__.py", start_line: 138 })'
 descriptor = "python decl doc at src/flask/json/__init__.py:138"
 cost_tokens = 74
-cum_tokens = 2312
+cum_tokens = 2457
 
 [batches.content]
 kind = "lines"
@@ -1004,11 +1018,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Fs(DirListing { dir: "examples/javascript" })'
 descriptor = "listing of 'examples/javascript'"
 cost_tokens = 27
-cum_tokens = 2339
+cum_tokens = 2484
 
 [batches.content]
 kind = "fs"
@@ -1018,11 +1032,11 @@ parent = "examples/javascript"
 entries = [".gitignore", "LICENSE.txt", "README.rst", "js_example", "pyproject.toml", "tests"]
 
 [[batches]]
-position = 54
+position = 55
 key = 'Fs(DirListing { dir: "examples/javascript/js_example" })'
 descriptor = "listing of 'examples/javascript/js_example'"
 cost_tokens = 13
-cum_tokens = 2352
+cum_tokens = 2497
 
 [batches.content]
 kind = "fs"
@@ -1032,11 +1046,11 @@ parent = "examples/javascript/js_example"
 entries = ["__init__.py", "templates", "views.py"]
 
 [[batches]]
-position = 55
+position = 56
 key = 'Fs(DirListing { dir: "examples/tutorial" })'
 descriptor = "listing of 'examples/tutorial'"
 cost_tokens = 27
-cum_tokens = 2379
+cum_tokens = 2524
 
 [batches.content]
 kind = "fs"
@@ -1046,11 +1060,11 @@ parent = "examples/tutorial"
 entries = [".gitignore", "LICENSE.txt", "README.rst", "flaskr", "pyproject.toml", "tests"]
 
 [[batches]]
-position = 56
+position = 57
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 145
-cum_tokens = 2524
+cum_tokens = 2669
 
 [batches.content]
 kind = "fs"
@@ -1060,11 +1074,11 @@ parent = "tests"
 entries = ["conftest.py", "static", "templates", "test_appctx.py", "test_apps", "test_async.py", "test_basic.py", "test_blueprints.py", "test_cli.py", "test_config.py", "test_converters.py", "test_helpers.py", "test_instance_config.py", "test_json.py", "test_json_tag.py", "test_logging.py", "test_regression.py", "test_reqctx.py", "test_request.py", "test_session_interface.py", "test_signals.py", "test_subclassing.py", "test_templating.py", "test_testing.py", "test_user_error_handler.py", "test_views.py", "type_check"]
 
 [[batches]]
-position = 57
+position = 58
 key = 'Fs(DirListing { dir: "tests/type_check" })'
 descriptor = "listing of 'tests/type_check'"
 cost_tokens = 19
-cum_tokens = 2543
+cum_tokens = 2688
 
 [batches.content]
 kind = "fs"
@@ -1072,20 +1086,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "tests/type_check"
 entries = ["typing_app_decorators.py", "typing_error_handler.py", "typing_route.py"]
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "docs/patterns" })'
-descriptor = "listing of 'docs/patterns'"
-cost_tokens = 145
-cum_tokens = 2688
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/patterns"
-entries = ["appdispatch.rst", "appfactories.rst", "caching.rst", "celery.rst", "deferredcallbacks.rst", "favicon.rst", "fileuploads.rst", "flashing.rst", "index.rst", "javascript.rst", "jquery.rst", "lazyloading.rst", "methodoverrides.rst", "mongoengine.rst", "packages.rst", "requestchecksum.rst", "singlepageapplications.rst", "sqlalchemy.rst", "sqlite3.rst", "streaming.rst", "subclassing.rst", "templateinheritance.rst", "urlprocessors.rst", "viewdecorators.rst", "wtforms.rst"]
 
 [[batches]]
 position = 59
@@ -1173,10 +1173,24 @@ entries = ["__init__.py", "static", "templates"]
 
 [[batches]]
 position = 65
+key = 'Fs(DirListing { dir: "examples/tutorial/flaskr" })'
+descriptor = "listing of 'examples/tutorial/flaskr'"
+cost_tokens = 28
+cum_tokens = 2796
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples/tutorial/flaskr"
+entries = ["__init__.py", "auth.py", "blog.py", "db.py", "schema.sql", "static", "templates"]
+
+[[batches]]
+position = 66
 key = 'Fs(DirListing { dir: "examples/tutorial/tests" })'
 descriptor = "listing of 'examples/tutorial/tests'"
 cost_tokens = 30
-cum_tokens = 2798
+cum_tokens = 2826
 
 [batches.content]
 kind = "fs"
@@ -1186,55 +1200,97 @@ parent = "examples/tutorial/tests"
 entries = ["conftest.py", "data.sql", "test_auth.py", "test_blog.py", "test_db.py", "test_factory.py"]
 
 [[batches]]
-position = 66
-key = 'Python(DeclNames { file: "src/flask/wrappers.py" })'
-descriptor = "python decl names surface in src/flask/wrappers.py"
-cost_tokens = 24
-cum_tokens = 2822
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/wrappers.py"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/flask/wrappers.py"
-start = 222
-end = 222
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 67
-key = 'Python(Decl { file: "src/flask/wrappers.py", start_line: 18 })'
-descriptor = "python decl at src/flask/wrappers.py:18"
-cost_tokens = 0
-cum_tokens = 2822
+key = 'Fs(DirListing { dir: "tests/test_apps/cliapp" })'
+descriptor = "listing of 'tests/test_apps/cliapp'"
+cost_tokens = 33
+cum_tokens = 2859
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "src/flask/wrappers.py"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "tests/test_apps/cliapp"
+entries = ["__init__.py", "app.py", "factory.py", "importerrorapp.py", "inner1", "message.txt", "multiapp.py"]
 
 [[batches]]
 position = 68
+key = 'Fs(DirListing { dir: "tests/test_apps/cliapp/inner1" })'
+descriptor = "listing of 'tests/test_apps/cliapp/inner1'"
+cost_tokens = 10
+cum_tokens = 2869
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/test_apps/cliapp/inner1"
+entries = ["__init__.py", "inner2"]
+
+[[batches]]
+position = 69
+key = 'Fs(DirListing { dir: "tests/test_apps/cliapp/inner1/inner2" })'
+descriptor = "listing of 'tests/test_apps/cliapp/inner1/inner2'"
+cost_tokens = 10
+cum_tokens = 2879
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/test_apps/cliapp/inner1/inner2"
+entries = ["__init__.py", "flask.py"]
+
+[[batches]]
+position = 70
+key = 'Python(DeclNames { file: "src/flask/wrappers.py" })'
+descriptor = "python decl names surface in src/flask/wrappers.py"
+cost_tokens = 24
+cum_tokens = 2903
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/wrappers.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/wrappers.py"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Python(Decl { file: "src/flask/wrappers.py", start_line: 18 })'
+descriptor = "python decl at src/flask/wrappers.py:18"
+cost_tokens = 0
+cum_tokens = 2903
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/wrappers.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
 key = 'Python(Decl { file: "src/flask/wrappers.py", start_line: 222 })'
 descriptor = "python decl at src/flask/wrappers.py:222"
 cost_tokens = 0
-cum_tokens = 2822
+cum_tokens = 2903
 
 [batches.content]
 kind = "lines"
@@ -1248,11 +1304,11 @@ end = 222
 kind = "full"
 
 [[batches]]
-position = 69
+position = 73
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 75
-cum_tokens = 2897
+cum_tokens = 2978
 
 [batches.content]
 kind = "lines"
@@ -1266,11 +1322,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 70
+position = 74
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "mypy+pyright" })'
 descriptor = "tool.mypy+pyright config in pyproject.toml"
 cost_tokens = 193
-cum_tokens = 3090
+cum_tokens = 3171
 
 [batches.content]
 kind = "lines"
@@ -1284,11 +1340,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 71
+position = 75
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "ruff" })'
 descriptor = "tool.ruff config in pyproject.toml"
 cost_tokens = 196
-cum_tokens = 3286
+cum_tokens = 3367
 
 [batches.content]
 kind = "lines"
@@ -1302,11 +1358,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 72
+position = 76
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 90
-cum_tokens = 3376
+cum_tokens = 3457
 
 [batches.content]
 kind = "lines"
@@ -1318,62 +1374,6 @@ end = 45
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 73
-key = 'Fs(DirListing { dir: "examples/tutorial/flaskr" })'
-descriptor = "listing of 'examples/tutorial/flaskr'"
-cost_tokens = 28
-cum_tokens = 3404
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples/tutorial/flaskr"
-entries = ["__init__.py", "auth.py", "blog.py", "db.py", "schema.sql", "static", "templates"]
-
-[[batches]]
-position = 74
-key = 'Fs(DirListing { dir: "tests/test_apps/cliapp" })'
-descriptor = "listing of 'tests/test_apps/cliapp'"
-cost_tokens = 33
-cum_tokens = 3437
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/test_apps/cliapp"
-entries = ["__init__.py", "app.py", "factory.py", "importerrorapp.py", "inner1", "message.txt", "multiapp.py"]
-
-[[batches]]
-position = 75
-key = 'Fs(DirListing { dir: "tests/test_apps/cliapp/inner1" })'
-descriptor = "listing of 'tests/test_apps/cliapp/inner1'"
-cost_tokens = 10
-cum_tokens = 3447
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/test_apps/cliapp/inner1"
-entries = ["__init__.py", "inner2"]
-
-[[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "tests/test_apps/cliapp/inner1/inner2" })'
-descriptor = "listing of 'tests/test_apps/cliapp/inner1/inner2'"
-cost_tokens = 10
-cum_tokens = 3457
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/test_apps/cliapp/inner1/inner2"
-entries = ["__init__.py", "flask.py"]
 
 [[batches]]
 position = 77

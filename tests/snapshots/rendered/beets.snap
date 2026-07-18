@@ -25,50 +25,6 @@ CODE_OF_CONDUCT.rst
 CONTRIBUTING.rst
 LICENSE
 README.rst
-    …
-      13→beets
-      14→=====
-      15→
-      16→Beets is the media library management system for obsessive music geeks.
-      17→
-      18→The purpose of beets is to get your music collection right once and for all. It
-      19→catalogs your collection, automatically improving its metadata as it goes. It
-      20→then provides a suite of tools for manipulating and accessing your music.
-      21→
-      22→Here's an example of beets' brainy tag corrector doing its thing:
-      23→
-      24→::
-      25→
-      26→    $ beet import ~/music/ladytron
-      27→    Tagging:
-      28→        Ladytron - Witching Hour
-      29→    (Similarity: 98.4%)
-      30→     * Last One Standing      -> The Last One Standing
-      31→     * Beauty                 -> Beauty*2
-      32→     * White Light Generation -> Whitelightgenerator
-      33→     * All the Way            -> All the Way...
-      34→
-      35→Because beets is designed as a library, it can do almost anything you can
-      36→imagine for your music collection. Via plugins_, beets becomes a panacea:
-      37→
-      38→- Fetch or calculate all the metadata you could possibly need: `album art`_,
-      39→  lyrics_, genres_, tempos_, ReplayGain_ levels, or `acoustic fingerprints`_.
-      40→- Get metadata from MusicBrainz_, Discogs_, and Beatport_. Or guess metadata
-      41→  using songs' filenames or their acoustic fingerprints.
-      42→- `Transcode audio`_ to any format you like.
-      43→- Check your library for `duplicate tracks and albums`_ or for `albums that are
-      44→  missing tracks`_.
-      45→- Clean up crufty tags left behind by other, less-awesome tools.
-      46→- Embed and extract album art from files' metadata.
-      47→- Browse your music library graphically through a Web browser and play it in any
-      48→  browser that supports `HTML5 Audio`_.
-      49→- Analyze music files' metadata from the command line.
-      50→- Listen to your library with a music player that speaks the MPD_ protocol and
-      51→  works with a staggering variety of interfaces.
-      52→
-      53→If beets doesn't do what you want yet, `writing your own plugin`_ is shockingly
-      54→simple if you know a little Python.
-    …
 README_kr.rst
 SECURITY.md
 beets/
@@ -270,6 +226,98 @@ beets/
         pipeline.py
         units.py
 beetsplug/
+    _typing.py
+    _utils/
+    absubmit.py
+    acousticbrainz.py
+    advancedrewrite.py
+    albumtypes.py
+    aura.py
+    autobpm.py
+    badfiles.py
+    bareasc.py
+    beatport.py
+    bench.py
+    bpd/
+        __init__.py
+        gstplayer.py
+    bpm.py
+    bpsync.py
+    bucket.py
+    chroma.py
+    convert.py
+    deezer.py
+    discogs/
+        __init__.py
+        states.py
+        types.py
+    duplicates.py
+    edit.py
+    embedart.py
+    embyupdate.py
+    export.py
+    fetchart.py
+    filefilter.py
+    fish.py
+    freedesktop.py
+    fromfilename.py
+    ftintitle.py
+    fuzzy.py
+    hook.py
+    ihate.py
+    importadded.py
+    importfeeds.py
+    importsource.py
+    info.py
+    inline.py
+    ipfs.py
+    keyfinder.py
+    kodiupdate.py
+    lastgenre/
+    lastimport.py
+    limit.py
+    listenbrainz.py
+    loadext.py
+    lyrics.py
+    mbcollection.py
+    mbpseudo.py
+    mbsubmit.py
+    mbsync.py
+    metasync/
+        __init__.py
+        amarok.py
+        itunes.py
+    missing.py
+    mpdstats.py
+    mpdupdate.py
+    musicbrainz.py
+    parentwork.py
+    permissions.py
+    play.py
+    playlist.py
+    plexupdate.py
+    random.py
+    replace.py
+    replaygain.py
+    rewrite.py
+    scrub.py
+    smartplaylist.py
+    sonosupdate.py
+    spotify.py
+    subsonicplaylist.py
+    subsonicupdate.py
+    substitute.py
+    the.py
+    thumbnails.py
+    tidal/
+    titlecase.py
+    types.py
+    unimported.py
+    web/
+        __init__.py
+        static/
+        templates/
+    zero.py
 codecov.yml
 docs/
     .gitignore

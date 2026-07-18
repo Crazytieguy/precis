@@ -5,25 +5,25 @@ Score(3000)=0.750 I=0.899 C=0.625 ns_rows≤3K=16/45 (reached=11 partial=2 missi
 | walker |  | 34 | 34 | listing of '.' |  |  | 1.000 |
 | ns | 34 |  | 34 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 38 | 4 | listing of 'src' |  |  | 1.000 |
-| walker |  | 93 | 55 | [dependencies] in pyproject.toml |  |  | 1.000 |
-| ns | 130 |  | 96 | README lede opening | 1.2 |  | 0.815 |
-| walker |  | 134 | 41 | listing of 'docs' |  |  | 0.823 |
-| walker |  | 204 | 70 | [package] in pyproject.toml |  |  | 0.845 |
-| ns | 241 |  | 111 | Package identity: name, Python support, deps | 1.3 |  | 0.826 |
-| walker |  | 276 | 72 | listing of 'src/typeguard' |  |  | 0.867 |
-| ns | 367 |  | 126 | Project URLs + pytest entry point | 1.4 |  | 0.729 |
-| ns | 480 |  | 113 | Source + docs file rosters | 2.1 |  | 0.789 |
-| ns | 580 |  | 100 | Tests directory roster | 2.2 |  | 0.671 |
-| ns | 643 |  | 63 | CI, community-health, and mypy-fixture file rosters | 2.3 |  | 0.599 |
-| walker |  | 697 | 421 | python imports in src/typeguard/__init__.py |  |  | 0.618 |
-| walker |  | 735 | 38 | python decl names surface in src/typeguard/__init__.py |  |  | 0.619 |
-| walker |  | 735 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.619 |
-| walker |  | 783 | 48 | tool.mypy config in pyproject.toml |  |  | 0.620 |
-| walker |  | 810 | 27 | listing of '.github' |  |  | 0.643 |
-| walker |  | 818 | 8 | listing of '.github/workflows' |  |  | 0.660 |
-| ns | 841 |  | 198 | typeguard/__init__.py: import re-exports (checkers/config/decorators) | 3.1 |  | 0.690 |
-| ns | 1135 |  | 294 | typeguard/__init__.py: import re-exports (exceptions/functions/importhook/memo/suppression/utils) + rebinding loop | 3.2 | 3.1 | 0.677 |
-| walker |  | 1293 | 475 | YAML config at .github/workflows/test.yml |  |  | 0.687 |
+| walker |  | 79 | 41 | listing of 'docs' |  |  | 1.000 |
+| ns | 130 |  | 96 | README lede opening | 1.2 |  | 0.811 |
+| walker |  | 134 | 55 | [dependencies] in pyproject.toml |  |  | 0.823 |
+| walker |  | 206 | 72 | listing of 'src/typeguard' |  |  | 0.845 |
+| ns | 241 |  | 111 | Package identity: name, Python support, deps | 1.3 |  | 0.699 |
+| ns | 367 |  | 126 | Project URLs + pytest entry point | 1.4 |  | 0.580 |
+| ns | 480 |  | 113 | Source + docs file rosters | 2.1 |  | 0.701 |
+| ns | 580 |  | 100 | Tests directory roster | 2.2 |  | 0.596 |
+| walker |  | 627 | 421 | python imports in src/typeguard/__init__.py |  |  | 0.617 |
+| ns | 643 |  | 63 | CI, community-health, and mypy-fixture file rosters | 2.3 |  | 0.551 |
+| walker |  | 665 | 38 | python decl names surface in src/typeguard/__init__.py |  |  | 0.551 |
+| walker |  | 665 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.551 |
+| walker |  | 713 | 48 | tool.mypy config in pyproject.toml |  |  | 0.552 |
+| walker |  | 740 | 27 | listing of '.github' |  |  | 0.576 |
+| walker |  | 748 | 8 | listing of '.github/workflows' |  |  | 0.594 |
+| ns | 841 |  | 198 | typeguard/__init__.py: import re-exports (checkers/config/decorators) | 3.1 |  | 0.631 |
+| ns | 1135 |  | 294 | typeguard/__init__.py: import re-exports (exceptions/functions/importhook/memo/suppression/utils) + rebinding loop | 3.2 | 3.1 | 0.624 |
+| walker |  | 1223 | 475 | YAML config at .github/workflows/test.yml |  |  | 0.634 |
+| walker |  | 1293 | 70 | [package] in pyproject.toml |  |  | 0.687 |
 | ns | 1299 |  | 164 | typeguard/__init__.py: config attr + plugin autoload | 3.3 | 3.2 | 0.635 |
 | ns | 1355 |  | 56 | pytest config (pyproject.toml) | 4.1 |  | 0.621 |
 | ns | 1563 |  | 208 | ruff lint config (pyproject.toml) | 4.2 |  | 0.573 |
@@ -40,13 +40,13 @@ Score(3000)=0.750 I=0.899 C=0.625 ns_rows≤3K=16/45 (reached=11 partial=2 missi
 | walker |  | 2210 | 192 | manifest config in pyproject.toml |  |  | 0.652 |
 | walker |  | 2416 | 206 | tool.ruff config in pyproject.toml |  |  | 0.720 |
 | walker |  | 2620 | 204 | tool.setuptools+setuptools_scm+pytest+coverage config in pyproject.toml |  |  | 0.736 |
-| walker |  | 2689 | 69 | python decl body at src/typeguard/__init__.py:37 body 38 |  |  | 0.755 |
-| walker |  | 2725 | 36 | python decl names surface in src/typeguard/_pytest_plugin.py |  |  | 0.755 |
-| walker |  | 2725 | 0 | python decl at src/typeguard/_pytest_plugin.py:16 |  |  | 0.755 |
-| walker |  | 2725 | 0 | python decl at src/typeguard/_pytest_plugin.py:75 |  |  | 0.755 |
-| ns | 2744 |  | 543 | _checkers.py: origin_type_checkers dispatch table | 5.2 | 5.1 | 0.679 |
-| walker |  | 2825 | 100 | listing of 'tests' |  |  | 0.735 |
-| walker |  | 2839 | 14 | listing of 'tests/mypy' |  |  | 0.749 |
+| walker |  | 2720 | 100 | listing of 'tests' |  |  | 0.800 |
+| walker |  | 2734 | 14 | listing of 'tests/mypy' |  |  | 0.815 |
+| ns | 2744 |  | 543 | _checkers.py: origin_type_checkers dispatch table | 5.2 | 5.1 | 0.733 |
+| walker |  | 2803 | 69 | python decl body at src/typeguard/__init__.py:37 body 38 |  |  | 0.749 |
+| walker |  | 2839 | 36 | python decl names surface in src/typeguard/_pytest_plugin.py |  |  | 0.749 |
+| walker |  | 2839 | 0 | python decl at src/typeguard/_pytest_plugin.py:16 |  |  | 0.749 |
+| walker |  | 2839 | 0 | python decl at src/typeguard/_pytest_plugin.py:75 |  |  | 0.749 |
 | walker |  | 2860 | 21 | python imports in src/typeguard/_exceptions.py |  |  | 0.749 |
 | walker |  | 2909 | 49 | python decl names surface in src/typeguard/_exceptions.py |  |  | 0.749 |
 | walker |  | 2909 | 0 | python decl at src/typeguard/_exceptions.py:5 |  |  | 0.749 |
@@ -242,19 +242,19 @@ Score(3000)=0.750 I=0.899 C=0.625 ns_rows≤3K=16/45 (reached=11 partial=2 missi
 | walker |  | 8418 | 81 | python decl doc at src/typeguard/_utils.py:104 |  |  | 0.559 |
 | walker |  | 8478 | 60 | python method doc at src/typeguard/_transformer.py:1224 |  |  | 0.559 |
 | walker |  | 8539 | 61 | python method doc at src/typeguard/_transformer.py:1036 |  |  | 0.559 |
-| ns | 8580 |  | 368 | _transformer.py: TransformMemo fields | 15.3 | 15.1 | 0.571 |
-| walker |  | 8582 | 43 | python method at src/typeguard/_transformer.py:516 |  |  | 0.571 |
-| walker |  | 8654 | 72 | python method doc at src/typeguard/_transformer.py:650 |  |  | 0.571 |
-| walker |  | 8787 | 133 | python decl at src/typeguard/_transformer.py:70 |  |  | 0.587 |
-| walker |  | 8863 | 76 | python method doc at src/typeguard/_importhook.py:138 |  |  | 0.587 |
-| ns | 8879 |  | 299 | _transformer.py: visit_FunctionDef (target selection + overload handling) | 15.4 | 15.1 | 0.579 |
-| walker |  | 8926 | 63 | python imports in src/typeguard/_config.py |  |  | 0.586 |
-| ns | 9031 |  | 152 | features.rst: what is checked | 16.1 |  | 0.579 |
-| walker |  | 9101 | 175 | python decl doc at src/typeguard/_config.py:30 |  |  | 0.579 |
-| walker |  | 9257 | 156 | python decl at src/typeguard/_transformer.py:100 |  |  | 0.600 |
-| ns | 9308 |  | 277 | userguide.rst: forward reference handling notes | 16.2 |  | 0.593 |
-| walker |  | 9424 | 167 | python decl doc at src/typeguard/_importhook.py:183 |  |  | 0.593 |
-| walker |  | 9438 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.601 |
+| walker |  | 8553 | 14 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.567 |
+| ns | 8580 |  | 368 | _transformer.py: TransformMemo fields | 15.3 | 15.1 | 0.579 |
+| walker |  | 8596 | 43 | python method at src/typeguard/_transformer.py:516 |  |  | 0.579 |
+| walker |  | 8668 | 72 | python method doc at src/typeguard/_transformer.py:650 |  |  | 0.579 |
+| walker |  | 8801 | 133 | python decl at src/typeguard/_transformer.py:70 |  |  | 0.596 |
+| walker |  | 8877 | 76 | python method doc at src/typeguard/_importhook.py:138 |  |  | 0.596 |
+| ns | 8879 |  | 299 | _transformer.py: visit_FunctionDef (target selection + overload handling) | 15.4 | 15.1 | 0.587 |
+| walker |  | 8940 | 63 | python imports in src/typeguard/_config.py |  |  | 0.594 |
+| ns | 9031 |  | 152 | features.rst: what is checked | 16.1 |  | 0.588 |
+| walker |  | 9115 | 175 | python decl doc at src/typeguard/_config.py:30 |  |  | 0.588 |
+| walker |  | 9271 | 156 | python decl at src/typeguard/_transformer.py:100 |  |  | 0.608 |
+| ns | 9308 |  | 277 | userguide.rst: forward reference handling notes | 16.2 |  | 0.601 |
+| walker |  | 9438 | 167 | python decl doc at src/typeguard/_importhook.py:183 |  |  | 0.601 |
 | ns | 9458 |  | 150 | userguide.rst: debugging instrumented code | 16.3 |  | 0.597 |
 | walker |  | 9519 | 81 | python imports in src/typeguard/_suppression.py |  |  | 0.600 |
 | ns | 9563 |  | 105 | versionhistory.rst: latest UNRELEASED entry | 17.1 |  | 0.598 |

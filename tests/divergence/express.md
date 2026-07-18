@@ -11,10 +11,10 @@ Score(3000)=0.732 I=0.902 C=0.594 ns_rows≤3K=15/40 (reached=8 partial=0 missin
 | ns | 168 |  | 101 | examples/ directory listing | 1.3 |  | 0.596 |
 | walker |  | 176 | 31 | package runtime metadata in package.json |  |  | 0.596 |
 | walker |  | 226 | 50 | package entrypoints in package.json |  |  | 0.597 |
-| walker |  | 234 | 8 | imports in index.js |  |  | 0.597 |
-| walker |  | 242 | 8 | listing of '.github' |  |  | 0.597 |
-| ns | 254 |  | 86 | test/acceptance/ directory listing | 1.4 |  | 0.488 |
-| walker |  | 260 | 18 | listing of '.github/workflows' |  |  | 0.490 |
+| walker |  | 234 | 8 | listing of '.github' |  |  | 0.597 |
+| walker |  | 252 | 18 | listing of '.github/workflows' |  |  | 0.599 |
+| ns | 254 |  | 86 | test/acceptance/ directory listing | 1.4 |  | 0.490 |
+| walker |  | 260 | 8 | imports in index.js |  |  | 0.490 |
 | ns | 284 |  | 30 | test/support, .github/workflows listings | 1.5 |  | 0.486 |
 | ns | 347 |  | 63 | CI: lint/test commands + Node version matrix | 1.6 |  | 0.474 |
 | ns | 465 |  | 118 | Readme quickstart snippet | 1.7 |  | 0.430 |

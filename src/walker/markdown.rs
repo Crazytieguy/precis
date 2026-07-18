@@ -94,12 +94,12 @@ const BODY_BLOCK_SPLIT_BYTES: usize = 350;
 /// code-heavy sections tokenize markedly denser per byte than prose,
 /// so a byte gate mis-sizes exactly the fence-rich sections this
 /// split targets.
-const OVERSIZE_SECTION_SPLIT_TOKENS: usize = 400;
+const OVERSIZE_SECTION_SPLIT_TOKENS: usize = 500;
 
 /// Greedy per-chunk token target for the oversize head-split — inside
 /// the NS early-batch envelope, low enough that a fence-heavy chunk
 /// pair doesn't overshoot it before the first cut candidate.
-const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 200;
+const OVERSIZE_CHUNK_TARGET_TOKENS: usize = 300;
 
 /// Tail-chunk value factor relative to the parent section. Above the
 /// generic `BODY_BLOCK_SIGNAL_SCALE`: a tail is the direct

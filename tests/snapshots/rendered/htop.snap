@@ -238,11 +238,7 @@ Process.h
       68→} ProcessCmdlineHighlight;
     …
       74→typedef struct ProcessMergedCommand_ {
-      75→   uint64_t lastUpdate;                        /* Marker based on settings->lastUpdate to track when the rendering needs refreshing */
-      76→   char* str;                                  /* merged Command string */
-      77→   size_t highlightCount;                      /* how many portions of cmdline to highlight */
-      78→   ProcessCmdlineHighlight highlights[8];      /* which portions of cmdline to highlight */
-      79→} ProcessMergedCommand;
+    …
       81→typedef struct Process_ {
     …
      201→} Process;
@@ -320,6 +316,17 @@ autogen.sh
 check-pcp-style.sh
 configure.ac
 darwin/
+    DarwinMachine.c
+    DarwinMachine.h
+    DarwinProcess.c
+    DarwinProcess.h
+    DarwinProcessTable.c
+    DarwinProcessTable.h
+    Platform.c
+    Platform.h
+    PlatformHelpers.c
+    PlatformHelpers.h
+    ProcessField.h
 docs/
     ai-contributions-policy.md
     images/
@@ -327,6 +334,15 @@ docs/
     styleguide.md
     understanding-htop-versions.md
 dragonflybsd/
+    DragonFlyBSDMachine.c
+    DragonFlyBSDMachine.h
+    DragonFlyBSDProcess.c
+    DragonFlyBSDProcess.h
+    DragonFlyBSDProcessTable.c
+    DragonFlyBSDProcessTable.h
+    Platform.c
+    Platform.h
+    ProcessField.h
 freebsd/
     FreeBSDMachine.c
     FreeBSDMachine.h
@@ -347,7 +363,18 @@ htop.svg
 iwyu/
 linux/
 m4/
+    ax_check_compile_flag.m4
 netbsd/
+    NetBSDMachine.c
+    NetBSDMachine.h
+    NetBSDProcess.c
+    NetBSDProcess.h
+    NetBSDProcessTable.c
+    NetBSDProcessTable.h
+    Platform.c
+    Platform.h
+    ProcessField.h
+    README.md
 openbsd/
     OpenBSDMachine.c
     OpenBSDMachine.h

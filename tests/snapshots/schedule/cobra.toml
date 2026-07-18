@@ -249,10 +249,286 @@ kind = "full"
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "site/content" })'
+descriptor = "listing of 'site/content'"
+cost_tokens = 26
+cum_tokens = 474
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/content"
+entries = ["active_help.md", "completions", "docgen", "projects_using_cobra.md", "user_guide.md"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "doc" })'
+descriptor = "listing of 'doc'"
+cost_tokens = 59
+cum_tokens = 533
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "doc"
+entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.go", "md_docs.go", "md_docs_test.go", "rest_docs.go", "rest_docs_test.go", "util.go", "yaml_docs.go", "yaml_docs_test.go"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 13
+cum_tokens = 546
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["dependabot.yml", "labeler.yml", "workflows"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 9
+cum_tokens = 555
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["labeler.yml", "test.yml"]
+
+[[batches]]
+position = 13
+key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
+descriptor = "YAML config at .github/workflows/test.yml"
+cost_tokens = 545
+cum_tokens = 1100
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 1
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "site/content/docgen" })'
+descriptor = "listing of 'site/content/docgen'"
+cost_tokens = 21
+cum_tokens = 1121
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/content/docgen"
+entries = ["_index.md", "man.md", "md.md", "rest.md", "yaml.md"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "site/content/completions" })'
+descriptor = "listing of 'site/content/completions'"
+cost_tokens = 23
+cum_tokens = 1144
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/content/completions"
+entries = ["_index.md", "bash.md", "fish.md", "powershell.md", "zsh.md"]
+
+[[batches]]
+position = 16
+key = 'Go(GoMod { file: "go.mod" })'
+descriptor = "go module file go.mod"
+cost_tokens = 99
+cum_tokens = 1243
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Go(DeclNames { file: "fish_completions.go", chunk_index: 0 })'
+descriptor = "go decl names surface in fish_completions.go"
+cost_tokens = 75
+cum_tokens = 1318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 277
+end = 277
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 285
+end = 285
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 18
+key = 'Go(Decl { file: "fish_completions.go", start_line: 25 })'
+descriptor = "go decl at fish_completions.go:25"
+cost_tokens = 0
+cum_tokens = 1318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Go(Decl { file: "fish_completions.go", start_line: 276 })'
+descriptor = "go decl at fish_completions.go:276"
+cost_tokens = 0
+cum_tokens = 1318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Go(Decl { file: "fish_completions.go", start_line: 284 })'
+descriptor = "go decl at fish_completions.go:284"
+cost_tokens = 0
+cum_tokens = 1318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 284 })'
+descriptor = "go decl doc at fish_completions.go:284"
+cost_tokens = 14
+cum_tokens = 1332
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 283
+end = 283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 276 })'
+descriptor = "go decl doc at fish_completions.go:276"
+cost_tokens = 19
+cum_tokens = 1351
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "fish_completions.go"
+start = 275
+end = 275
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
 key = 'Markdown(HeadingsOutline { file: "CONDUCT.md" })'
 descriptor = "headings outline in CONDUCT.md"
 cost_tokens = 94
-cum_tokens = 542
+cum_tokens = 1445
 
 [batches.content]
 kind = "lines"
@@ -384,282 +660,6 @@ end = 36
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "doc" })'
-descriptor = "listing of 'doc'"
-cost_tokens = 59
-cum_tokens = 601
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "doc"
-entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.go", "md_docs.go", "md_docs_test.go", "rest_docs.go", "rest_docs_test.go", "util.go", "yaml_docs.go", "yaml_docs_test.go"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "site/content" })'
-descriptor = "listing of 'site/content'"
-cost_tokens = 26
-cum_tokens = 627
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/content"
-entries = ["active_help.md", "completions", "docgen", "projects_using_cobra.md", "user_guide.md"]
-
-[[batches]]
-position = 12
-key = 'Go(GoMod { file: "go.mod" })'
-descriptor = "go module file go.mod"
-cost_tokens = 99
-cum_tokens = 726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "go.mod"
-start = 1
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 13
-cum_tokens = 739
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "labeler.yml", "workflows"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 9
-cum_tokens = 748
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["labeler.yml", "test.yml"]
-
-[[batches]]
-position = 15
-key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
-descriptor = "YAML config at .github/workflows/test.yml"
-cost_tokens = 545
-cum_tokens = 1293
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 1
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "site/content/docgen" })'
-descriptor = "listing of 'site/content/docgen'"
-cost_tokens = 21
-cum_tokens = 1314
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/content/docgen"
-entries = ["_index.md", "man.md", "md.md", "rest.md", "yaml.md"]
-
-[[batches]]
-position = 17
-key = 'Go(DeclNames { file: "fish_completions.go", chunk_index: 0 })'
-descriptor = "go decl names surface in fish_completions.go"
-cost_tokens = 75
-cum_tokens = 1389
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 276
-end = 276
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 277
-end = 277
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 285
-end = 285
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 18
-key = 'Go(Decl { file: "fish_completions.go", start_line: 25 })'
-descriptor = "go decl at fish_completions.go:25"
-cost_tokens = 0
-cum_tokens = 1389
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Go(Decl { file: "fish_completions.go", start_line: 276 })'
-descriptor = "go decl at fish_completions.go:276"
-cost_tokens = 0
-cum_tokens = 1389
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 276
-end = 276
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Go(Decl { file: "fish_completions.go", start_line: 284 })'
-descriptor = "go decl at fish_completions.go:284"
-cost_tokens = 0
-cum_tokens = 1389
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 284 })'
-descriptor = "go decl doc at fish_completions.go:284"
-cost_tokens = 14
-cum_tokens = 1403
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 283
-end = 283
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Go(DeclDoc { file: "fish_completions.go", start_line: 276 })'
-descriptor = "go decl doc at fish_completions.go:276"
-cost_tokens = 19
-cum_tokens = 1422
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "fish_completions.go"
-start = 275
-end = 275
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "site/content/completions" })'
-descriptor = "listing of 'site/content/completions'"
-cost_tokens = 23
-cum_tokens = 1445
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/content/completions"
-entries = ["_index.md", "bash.md", "fish.md", "powershell.md", "zsh.md"]
 
 [[batches]]
 position = 24

@@ -271,12 +271,33 @@ src/
         linux/
             soluna_linux_ime.c
             soluna_linux_ime.h
+                …
+                   4→#include <stdbool.h>
+                   6→bool soluna_linux_ensure_im(void);
+                   7→void soluna_linux_on_rect_cleared(void);
+                   8→void soluna_linux_update_spot(void);
+                   9→void soluna_linux_focus_in(void);
+                  10→void soluna_linux_focus_out(void);
+                  11→void soluna_linux_shutdown_ime(void);
+                  12→bool soluna_linux_should_skip_event(const sapp_event *ev);
+                  13→void soluna_linux_handle_event(const sapp_event *ev);
+                …
         macos/
+            soluna_macos_ime.h
+            soluna_macos_ime.m
         wasm/
             soluna_ime.js
             soluna_openurl.js
             soluna_wasm_ime.h
         windows/
+            soluna_windows_ime.c
+            soluna_windows_ime.h
+                …
+                   4→void soluna_win32_install_wndproc(void);
+                   5→void soluna_win32_apply_ime_rect(void);
+                   6→void soluna_win32_set_ime_font(const char *font_name, float height_px);
+                   7→void soluna_win32_reset_ime_font(void);
+                …
     render.c
     render_bindings.c
     render_bindings.h
@@ -300,39 +321,6 @@ src/
         settings.lua
         start.lua
     sprite_submit.h
-        …
-           2→#define soluna_sprite_submit_h
-        …
-           9→static inline int32_t
-          10→to_fixpoint_(float v) {
-        …
-          15→static inline void
-          16→sprite_set_xy(struct draw_primitive *p, float x, float y) {
-        …
-          21→static inline void
-          22→sprite_apply_xy(struct draw_primitive *p, float x, float y) {
-        …
-          27→static inline int
-          28→convert_scale_(float scale) {
-        …
-          43→static inline uint32_t
-          44→convert_scale_part_(uint32_t scale12) {
-        …
-          56→static inline int
-          57→convert_rot_(float rot) {
-        …
-          66→static inline void
-          67→sprite_set_scale(struct draw_primitive *p, float scale) {
-        …
-          71→static inline void
-          72→sprite_set_rot(struct draw_primitive *p, float rot) {
-        …
-          76→static inline void
-          77→sprite_set_sr(struct draw_primitive *p, float scale, float rot) {
-        …
-          81→static inline void
-          82→sprite_apply_scale(struct draw_primitive *p, uint32_t scale_fix12) {
-        …
     spritemgr.c
     spritemgr.h
         …
