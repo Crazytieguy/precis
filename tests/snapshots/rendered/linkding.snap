@@ -19,6 +19,17 @@ expression: rendered
       10→LD_CONTEXT_PATH=
       11→# Username of the initial superuser to create, leave empty to not create one
       12→LD_SUPERUSER_NAME=
+      13→# Password for the initial superuser, leave empty to disable credentials authentication and rely on proxy authentication instead
+      14→LD_SUPERUSER_PASSWORD=
+      15→# Option to disable background tasks
+      16→LD_DISABLE_BACKGROUND_TASKS=False
+      17→# Option to disable URL validation for bookmarks completely
+      18→LD_DISABLE_URL_VALIDATION=False
+      19→# Enables support for authentication proxies such as Authelia
+      20→LD_ENABLE_AUTH_PROXY=False
+      21→# Name of the request header that the auth proxy passes to the application to identify the user
+      22→# See docs/Options.md for more details
+      23→LD_AUTH_PROXY_USERNAME_HEADER=
     …
 .gitattributes
 .github/
@@ -96,7 +107,6 @@ README.md
     …
      114→### DevContainers
     …
-     132→The frontend is now available under http://localhost:8000
 SECURITY.md
 assets/
     header.afdesign
@@ -130,8 +140,7 @@ bookmarks/
            9→        # noinspection PyUnusedImports
         …
     context_processors.py
-           1→from bookmarks import utils
-           2→from bookmarks.models import Toast
+        …
            5→def toasts(request):
         …
           20→def app_version(request):
@@ -173,19 +182,6 @@ bookmarks/
             import_netscape.py
             migrate_tasks.py
     middlewares.py
-        …
-           7→class CustomRemoteUserMiddleware(RemoteUserMiddleware):
-           8→    header = settings.LD_AUTH_PROXY_USERNAME_HEADER
-          11→default_global_settings = GlobalSettings()
-          12→
-          13→standard_profile = UserProfile()
-        …
-          17→class LinkdingMiddleware:
-          18→    def __init__(self, get_response):
-          19→        self.get_response = get_response
-          21→    def __call__(self, request):
-          22→        # add global settings to request
-        …
     migrations/
     models.py
     queries.py

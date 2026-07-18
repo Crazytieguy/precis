@@ -17,6 +17,22 @@ expression: rendered
        9→
       10→# Docker installation database settings
       11→POSTGRES_PASSWORD=
+      13→# Additional Optional Settings
+      14→PAGINATION_TAKE_COUNT=
+      15→STORAGE_FOLDER=
+      16→AUTOSCROLL_TIMEOUT=
+      17→NEXT_PUBLIC_DISABLE_REGISTRATION=
+      18→NEXT_PUBLIC_CREDENTIALS_ENABLED=
+      19→DISABLE_NEW_SSO_USERS=
+      20→MAX_LINKS_PER_USER=
+      21→ARCHIVE_TAKE_COUNT=
+      22→BROWSER_TIMEOUT=
+      23→IGNORE_URL_SIZE_LIMIT=
+      24→NEXT_PUBLIC_DEMO=
+      25→NEXT_PUBLIC_DEMO_USERNAME=
+      26→NEXT_PUBLIC_DEMO_PASSWORD=
+      27→NEXT_PUBLIC_ADMIN=
+      28→NEXT_PUBLIC_MAX_FILE_BUFFER=
     …
 .eslintrc.json
 .github/
@@ -184,14 +200,6 @@ apps/
             Links.tsx
             TagListing.tsx
             ui/
-                Button.tsx
-                IconSymbol.ios.tsx
-                IconSymbol.tsx
-                Icons.tsx
-                Input.tsx
-                Spinner.tsx
-                TabBarBackground.ios.tsx
-                TabBarBackground.tsx
         eas.json
         lib/
             cache.ts
@@ -260,37 +268,6 @@ apps/
         next.config.js
         package.json
         pages/
-            _app.tsx
-            _document.tsx
-            admin/
-            api/
-                v1/
-                v2/
-                    dashboard/
-                        index.ts
-            auth/
-            collections/
-            confirmation.tsx
-            dashboard.tsx
-            forgot.tsx
-            index.tsx
-            links/
-            login.tsx
-            member-onboarding.tsx
-            preserved/
-                [id].tsx
-            public/
-                collections/
-                    [id]/
-                links/
-                    [id].tsx
-                preserved/
-                    [id].tsx
-            register.tsx
-            search.tsx
-            settings/
-            subscribe.tsx
-            tags/
         playwright.config.ts
         postcss.config.js
         public/
