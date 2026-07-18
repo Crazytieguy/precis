@@ -1,4 +1,4 @@
-Score(3000)=0.405 I=0.743 C=0.220 ns_rows≤3K=21/48 (reached=5 partial=1 missing=15)
+Score(3000)=0.642 I=0.814 C=0.507 ns_rows≤3K=21/48 (reached=9 partial=2 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -42,168 +42,174 @@ Score(3000)=0.405 I=0.743 C=0.220 ns_rows≤3K=21/48 (reached=5 partial=1 missin
 | walker |  | 1784 | 25 | c includes in include/tools.h |  |  | 0.574 |
 | walker |  | 1809 | 25 | c decl body at include/tools.h:11 |  |  | 0.575 |
 | ns | 2148 |  | 524 | globals.h: PlayerData struct | 2.3 |  | 0.462 |
-| walker |  | 2189 | 380 | c decl names surface in include/globals.h |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:19 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:23 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:26 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:29 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:32 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:35 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:38 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:41 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:45 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:49 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:53 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:56 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:59 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:63 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:66 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:71 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:75 |  |  | 0.464 |
-| walker |  | 2189 | 0 | c decl at include/globals.h:93 |  |  | 0.464 |
-| walker |  | 2197 | 8 | c decl doc at include/globals.h:59 |  |  | 0.465 |
-| walker |  | 2207 | 10 | c decl doc at include/globals.h:66 |  |  | 0.465 |
-| walker |  | 2218 | 11 | c decl doc at include/globals.h:26 |  |  | 0.465 |
-| walker |  | 2229 | 11 | c decl doc at include/globals.h:29 |  |  | 0.465 |
-| walker |  | 2251 | 22 | c includes in include/globals.h |  |  | 0.466 |
-| walker |  | 2264 | 13 | c decl doc at include/globals.h:41 |  |  | 0.466 |
-| walker |  | 2316 | 52 | c decl names surface in src/tools.c |  |  | 0.466 |
-| walker |  | 2316 | 0 | c decl at src/tools.c:42 |  |  | 0.466 |
-| walker |  | 2316 | 0 | c decl at src/tools.c:44 |  |  | 0.466 |
-| ns | 2418 |  | 270 | globals.h: MobData, EntityData(Value) | 2.4 |  | 0.418 |
-| ns | 2661 |  | 243 | globals.h: global state externs (buffers, seeds, counts) | 2.5 |  | 0.381 |
-| walker |  | 2732 | 416 | c decl names surface in include/packets.h |  |  | 0.383 |
-| walker |  | 2732 | 0 | c decl at include/packets.h:5 |  |  | 0.383 |
-| walker |  | 2732 | 0 | c decl at include/packets.h:28 |  |  | 0.383 |
-| walker |  | 2739 | 7 | c decl doc at include/packets.h:28 |  |  | 0.383 |
-| walker |  | 2748 | 9 | c decl doc at include/packets.h:5 |  |  | 0.383 |
-| walker |  | 2803 | 55 | c decl names surface in src/structures.c |  |  | 0.383 |
-| walker |  | 2803 | 0 | c decl at src/structures.c:9 |  |  | 0.383 |
-| walker |  | 2803 | 0 | c decl at src/structures.c:16 |  |  | 0.383 |
-| walker |  | 2861 | 58 | c decl names surface in src/varnum.c |  |  | 0.383 |
-| walker |  | 2861 | 0 | c decl at src/varnum.c:14 |  |  | 0.383 |
-| walker |  | 2861 | 0 | c decl at src/varnum.c:34 |  |  | 0.383 |
-| walker |  | 2861 | 0 | c decl at src/varnum.c:43 |  |  | 0.383 |
-| walker |  | 2873 | 12 | c includes in src/serialize.c |  |  | 0.383 |
-| walker |  | 2887 | 14 | c decl doc at include/globals.h:19 |  |  | 0.383 |
-| ns | 2974 |  | 313 | globals.h: core server-loop tuning (#define) | 3.1 |  | 0.405 |
-| walker |  | 3355 | 468 | c decl names surface in include/procedures.h |  |  | 0.407 |
-| ns | 3367 |  | 393 | globals.h: worldgen tuning (#define) | 3.2 |  | 0.397 |
-| walker |  | 3380 | 25 | c includes in include/procedures.h |  |  | 0.397 |
-| walker |  | 3447 | 67 | c decl names surface in src/crafting.c |  |  | 0.397 |
-| walker |  | 3447 | 0 | c decl at src/crafting.c:9 |  |  | 0.397 |
-| walker |  | 3447 | 0 | c decl at src/crafting.c:352 |  |  | 0.397 |
-| walker |  | 3776 | 329 | README.md section #3 |  |  | 0.438 |
-| ns | 3877 |  | 510 | globals.h: storage/network tuning (#define) | 3.3 |  | 0.406 |
-| walker |  | 3895 | 119 | README.md section #1 |  |  | 0.423 |
-| walker |  | 3909 | 14 | c decl doc at include/globals.h:35 |  |  | 0.430 |
-| walker |  | 3937 | 28 | c decl at src/crafting.c:349 |  |  | 0.430 |
-| walker |  | 4295 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.432 |
-| walker |  | 4320 | 25 | README.md section #5 |  |  | 0.434 |
-| ns | 4324 |  | 447 | globals.h: gameplay feature toggles, part 1 (#define) | 3.4 |  | 0.410 |
-| ns | 4687 |  | 363 | globals.h: gameplay feature toggles, part 2 + dev logging (#define) | 3.5 |  | 0.390 |
-| walker |  | 4689 | 369 | c decl names surface #1 in include/globals.h |  |  | 0.477 |
-| walker |  | 4689 | 0 | c decl at include/globals.h:103 |  |  | 0.477 |
-| walker |  | 4689 | 0 | c decl at include/globals.h:106 |  |  | 0.477 |
-| walker |  | 4710 | 21 | c decl at include/globals.h:255 |  |  | 0.479 |
-| walker |  | 4754 | 44 | c decl at include/globals.h:191 |  |  | 0.496 |
-| walker |  | 4811 | 57 | c decl at include/globals.h:260 |  |  | 0.505 |
-| walker |  | 4824 | 13 | c decl doc at include/globals.h:106 |  |  | 0.506 |
-| ns | 4832 |  | 145 | globals.h: platform bootstrap (#define/#ifdef) | 3.6 |  | 0.506 |
-| walker |  | 4965 | 141 | c decl at include/globals.h:240 |  |  | 0.551 |
-| ns | 5405 |  | 573 | packets.h: every C->S / S->C packet function name | 4.1 |  | 0.524 |
-| walker |  | 5494 | 529 | plaintext config build.sh |  |  | 0.525 |
-| walker |  | 5508 | 14 | c decl doc at src/structures.c:16 |  |  | 0.525 |
-| walker |  | 5525 | 17 | c decl doc at include/globals.h:38 |  |  | 0.529 |
-| walker |  | 5565 | 40 | README.md section #6 |  |  | 0.530 |
-| walker |  | 5606 | 41 | README.md section #7 |  |  | 0.531 |
-| ns | 5804 |  | 399 | procedures.h: every core game-logic function name | 4.2 |  | 0.567 |
-| ns | 6196 |  | 392 | tools.h: byte/network primitives + inline helpers | 4.3 |  | 0.582 |
-| ns | 6296 |  | 100 | varnum.h: VarInt protocol primitives | 4.4 |  | 0.587 |
-| walker |  | 6358 | 752 | c decl names surface #1 in include/packets.h |  |  | 0.656 |
-| walker |  | 6377 | 19 | c decl doc at include/globals.h:56 |  |  | 0.659 |
-| walker |  | 6422 | 45 | README.md section #8 |  |  | 0.664 |
-| ns | 6504 |  | 208 | worldgen.h: chunk types + terrain-query API | 4.5 |  | 0.673 |
-| ns | 6700 |  | 196 | serialize.h: disk-sync API, with its no-op fallback | 4.6 |  | 0.678 |
-| ns | 6770 |  | 70 | structures.h + crafting.h: world-structure and crafting API | 4.7 |  | 0.679 |
-| walker |  | 6920 | 498 | c decl at include/globals.h:200 |  |  | 0.743 |
-| walker |  | 6967 | 47 | README.md section #9 |  |  | 0.748 |
-| ns | 7179 |  | 409 | main.c: handlePacket doc comment + signature | 5.1 |  | 0.728 |
-| walker |  | 7195 | 228 | c decl names surface in src/globals.c |  |  | 0.728 |
-| walker |  | 7221 | 26 | imports in build_registries.js |  |  | 0.728 |
-| walker |  | 7282 | 61 | c includes in src/structures.c |  |  | 0.728 |
-| walker |  | 7347 | 65 | c includes in src/crafting.c |  |  | 0.728 |
-| walker |  | 7399 | 52 | c decl doc at include/globals.h:103 |  |  | 0.730 |
-| walker |  | 7426 | 27 | c decl doc at include/globals.h:32 |  |  | 0.734 |
-| ns | 7512 |  | 333 | main.c: login/configuration handshake dispatch (packet 0x00) | 5.2 |  | 0.715 |
-| ns | 7725 |  | 213 | main.c: fall-damage check in movement packets | 5.3 |  | 0.706 |
-| walker |  | 7835 | 409 | c decl names surface in src/worldgen.c |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:13 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:24 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:51 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:117 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:126 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:142 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:160 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:173 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:323 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:358 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:374 |  |  | 0.706 |
-| walker |  | 7835 | 0 | c decl at src/worldgen.c:401 |  |  | 0.706 |
-| walker |  | 7862 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.706 |
-| ns | 7954 |  | 229 | main.c: main() socket bootstrap (socket + SO_REUSEADDR) | 5.4 |  | 0.694 |
-| walker |  | 8137 | 275 | README.md section #4 |  |  | 0.707 |
-| walker |  | 8175 | 38 | c decl doc at src/worldgen.c:401 |  |  | 0.707 |
-| walker |  | 8202 | 27 | c decl doc at include/globals.h:45 |  |  | 0.711 |
-| walker |  | 8236 | 34 | c decl doc at src/tools.c:42 |  |  | 0.711 |
-| walker |  | 8342 | 106 | c includes in src/worldgen.c |  |  | 0.711 |
-| walker |  | 8401 | 59 | c decl body at src/structures.c:9 |  |  | 0.711 |
-| ns | 8441 |  | 487 | main.c: main() event loop shape | 5.5 |  | 0.687 |
-| walker |  | 8510 | 109 | c includes in src/globals.c |  |  | 0.687 |
-| walker |  | 8571 | 61 | c decl body at src/varnum.c:34 |  |  | 0.687 |
-| walker |  | 8598 | 27 | c decl doc at include/globals.h:75 |  |  | 0.689 |
-| ns | 8659 |  | 218 | packets.c: cs_handshake — the read-side wire pattern | 6.1 |  | 0.679 |
-| walker |  | 8716 | 118 | c includes in src/varnum.c |  |  | 0.679 |
-| walker |  | 8768 | 52 | c decl doc at src/worldgen.c:126 |  |  | 0.679 |
-| ns | 8852 |  | 193 | packets.c: sc_loginSuccess — the write-side wire pattern + VarInt-framed packet shape | 6.2 |  | 0.671 |
-| ns | 8958 |  | 106 | procedures.c: helper functions not declared in procedures.h | 7.1 |  | 0.667 |
-| ns | 9160 |  | 202 | procedures.c: makeBlockChange's base-terrain dedup check | 7.2 |  | 0.659 |
-| ns | 9230 |  | 70 | worldgen.c: internal helpers not declared in worldgen.h | 8.1 |  | 0.661 |
-| walker |  | 9287 | 519 | c decl names surface in src/procedures.c |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:21 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:37 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:45 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:54 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:75 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:119 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:130 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:146 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:177 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:199 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:214 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:239 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:286 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:321 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:396 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:434 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:478 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:495 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:512 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:652 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:721 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:746 |  |  | 0.661 |
-| walker |  | 9287 | 0 | c decl at src/procedures.c:775 |  |  | 0.661 |
-| walker |  | 9302 | 15 | c decl doc at src/procedures.c:495 |  |  | 0.661 |
-| walker |  | 9318 | 16 | c decl doc at src/procedures.c:54 |  |  | 0.661 |
-| walker |  | 9334 | 16 | c decl doc at src/procedures.c:75 |  |  | 0.661 |
-| walker |  | 9350 | 16 | c decl doc at src/procedures.c:146 |  |  | 0.661 |
-| walker |  | 9367 | 17 | c decl doc at src/procedures.c:321 |  |  | 0.661 |
-| walker |  | 9384 | 17 | c decl doc at src/procedures.c:775 |  |  | 0.661 |
-| walker |  | 9402 | 18 | c decl doc at src/procedures.c:177 |  |  | 0.661 |
-| walker |  | 9420 | 18 | c decl doc at src/procedures.c:721 |  |  | 0.661 |
-| ns | 9490 |  | 260 | crafting.c: single-item crafting recipes (getCraftingOutput, case 1) | 9.1 |  | 0.654 |
-| ns | 9586 |  | 96 | structures.c: setBlockIfReplaceable helper (not in structures.h) | 10.1 |  | 0.655 |
-| ns | 9694 |  | 108 | build.sh: registries.h precondition check | 11.1 |  | 0.658 |
-| ns | 9792 |  | 98 | serialize.c: FILE_PATH — where world.bin actually lives per platform | 12.1 |  | 0.654 |
-| walker |  | 9953 | 533 | README.md section #2 |  |  | 0.671 |
-| ns | 9991 |  | 199 | tools.c: fast_rand + splitmix64 (the only randomness source) | 13.1 |  | 0.664 |
+| walker |  | 2180 | 371 | c decl names surface #1 in include/globals.h |  |  | 0.512 |
+| walker |  | 2180 | 0 | c decl at include/globals.h:103 |  |  | 0.512 |
+| walker |  | 2180 | 0 | c decl at include/globals.h:106 |  |  | 0.512 |
+| walker |  | 2188 | 8 | c decl at include/globals.h:200 |  |  | 0.512 |
+| walker |  | 2209 | 21 | c decl at include/globals.h:255 |  |  | 0.512 |
+| walker |  | 2222 | 13 | c decl doc at include/globals.h:106 |  |  | 0.512 |
+| walker |  | 2266 | 44 | c decl at include/globals.h:191 |  |  | 0.550 |
+| walker |  | 2323 | 57 | c decl at include/globals.h:260 |  |  | 0.551 |
+| ns | 2418 |  | 270 | globals.h: MobData, EntityData(Value) | 2.4 |  | 0.516 |
+| walker |  | 2464 | 141 | c decl at include/globals.h:240 |  |  | 0.604 |
+| ns | 2661 |  | 243 | globals.h: global state externs (buffers, seeds, counts) | 2.5 |  | 0.632 |
+| walker |  | 2842 | 378 | c decl names surface in include/globals.h |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:19 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:23 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:26 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:29 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:32 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:35 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:38 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:41 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:45 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:49 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:53 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:56 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:59 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:63 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:66 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:71 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:75 |  |  | 0.635 |
+| walker |  | 2842 | 0 | c decl at include/globals.h:93 |  |  | 0.635 |
+| walker |  | 2850 | 8 | c decl doc at include/globals.h:59 |  |  | 0.636 |
+| walker |  | 2860 | 10 | c decl doc at include/globals.h:66 |  |  | 0.636 |
+| walker |  | 2871 | 11 | c decl doc at include/globals.h:26 |  |  | 0.636 |
+| walker |  | 2882 | 11 | c decl doc at include/globals.h:29 |  |  | 0.637 |
+| walker |  | 2895 | 13 | c decl doc at include/globals.h:41 |  |  | 0.637 |
+| walker |  | 2909 | 14 | c decl doc at include/globals.h:19 |  |  | 0.638 |
+| walker |  | 2923 | 14 | c decl doc at include/globals.h:35 |  |  | 0.638 |
+| walker |  | 2945 | 22 | c includes in include/globals.h |  |  | 0.639 |
+| walker |  | 2962 | 17 | c decl doc at include/globals.h:38 |  |  | 0.639 |
+| ns | 2974 |  | 313 | globals.h: core server-loop tuning (#define) | 3.1 |  | 0.642 |
+| walker |  | 2981 | 19 | c decl doc at include/globals.h:56 |  |  | 0.642 |
+| walker |  | 3033 | 52 | c decl names surface in src/tools.c |  |  | 0.642 |
+| walker |  | 3033 | 0 | c decl at src/tools.c:42 |  |  | 0.642 |
+| walker |  | 3033 | 0 | c decl at src/tools.c:44 |  |  | 0.642 |
+| ns | 3367 |  | 393 | globals.h: worldgen tuning (#define) | 3.2 |  | 0.614 |
+| walker |  | 3449 | 416 | c decl names surface in include/packets.h |  |  | 0.616 |
+| walker |  | 3449 | 0 | c decl at include/packets.h:5 |  |  | 0.616 |
+| walker |  | 3449 | 0 | c decl at include/packets.h:28 |  |  | 0.616 |
+| walker |  | 3456 | 7 | c decl doc at include/packets.h:28 |  |  | 0.616 |
+| walker |  | 3465 | 9 | c decl doc at include/packets.h:5 |  |  | 0.616 |
+| walker |  | 3520 | 55 | c decl names surface in src/structures.c |  |  | 0.616 |
+| walker |  | 3520 | 0 | c decl at src/structures.c:9 |  |  | 0.616 |
+| walker |  | 3520 | 0 | c decl at src/structures.c:16 |  |  | 0.616 |
+| walker |  | 3578 | 58 | c decl names surface in src/varnum.c |  |  | 0.616 |
+| walker |  | 3578 | 0 | c decl at src/varnum.c:14 |  |  | 0.616 |
+| walker |  | 3578 | 0 | c decl at src/varnum.c:34 |  |  | 0.616 |
+| walker |  | 3578 | 0 | c decl at src/varnum.c:43 |  |  | 0.616 |
+| walker |  | 3590 | 12 | c includes in src/serialize.c |  |  | 0.616 |
+| walker |  | 3642 | 52 | c decl doc at include/globals.h:103 |  |  | 0.617 |
+| ns | 3877 |  | 510 | globals.h: storage/network tuning (#define) | 3.3 |  | 0.577 |
+| walker |  | 4110 | 468 | c decl names surface in include/procedures.h |  |  | 0.579 |
+| walker |  | 4135 | 25 | c includes in include/procedures.h |  |  | 0.579 |
+| walker |  | 4202 | 67 | c decl names surface in src/crafting.c |  |  | 0.579 |
+| walker |  | 4202 | 0 | c decl at src/crafting.c:9 |  |  | 0.579 |
+| walker |  | 4202 | 0 | c decl at src/crafting.c:352 |  |  | 0.579 |
+| ns | 4324 |  | 447 | globals.h: gameplay feature toggles, part 1 (#define) | 3.4 |  | 0.548 |
+| walker |  | 4531 | 329 | README.md section #3 |  |  | 0.577 |
+| walker |  | 4558 | 27 | c decl doc at include/globals.h:32 |  |  | 0.585 |
+| walker |  | 4677 | 119 | README.md section #1 |  |  | 0.599 |
+| ns | 4687 |  | 363 | globals.h: gameplay feature toggles, part 2 + dev logging (#define) | 3.5 |  | 0.570 |
+| walker |  | 4705 | 28 | c decl at src/crafting.c:349 |  |  | 0.570 |
+| walker |  | 4732 | 27 | c decl doc at include/globals.h:45 |  |  | 0.576 |
+| ns | 4832 |  | 145 | globals.h: platform bootstrap (#define/#ifdef) | 3.6 |  | 0.573 |
+| walker |  | 5090 | 358 | c decl names surface #1 in include/procedures.h |  |  | 0.576 |
+| walker |  | 5115 | 25 | README.md section #5 |  |  | 0.577 |
+| walker |  | 5142 | 27 | c decl doc at include/globals.h:75 |  |  | 0.581 |
+| ns | 5405 |  | 573 | packets.h: every C->S / S->C packet function name | 4.1 |  | 0.550 |
+| walker |  | 5671 | 529 | plaintext config build.sh |  |  | 0.550 |
+| walker |  | 5685 | 14 | c decl doc at src/structures.c:16 |  |  | 0.550 |
+| walker |  | 5716 | 31 | c decl doc at include/globals.h:49 |  |  | 0.557 |
+| ns | 5804 |  | 399 | procedures.h: every core game-logic function name | 4.2 |  | 0.591 |
+| walker |  | 5959 | 243 | c aggregate member group at include/globals.h:200 group 201 |  |  | 0.613 |
+| ns | 6196 |  | 392 | tools.h: byte/network primitives + inline helpers | 4.3 |  | 0.624 |
+| walker |  | 6206 | 247 | c aggregate member group at include/globals.h:200 group 223 |  |  | 0.674 |
+| walker |  | 6246 | 40 | README.md section #6 |  |  | 0.674 |
+| walker |  | 6287 | 41 | README.md section #7 |  |  | 0.675 |
+| ns | 6296 |  | 100 | varnum.h: VarInt protocol primitives | 4.4 |  | 0.678 |
+| ns | 6504 |  | 208 | worldgen.h: chunk types + terrain-query API | 4.5 |  | 0.687 |
+| ns | 6700 |  | 196 | serialize.h: disk-sync API, with its no-op fallback | 4.6 |  | 0.692 |
+| ns | 6770 |  | 70 | structures.h + crafting.h: world-structure and crafting API | 4.7 |  | 0.693 |
+| walker |  | 7039 | 752 | c decl names surface #1 in include/packets.h |  |  | 0.754 |
+| walker |  | 7072 | 33 | c decl doc at include/globals.h:63 |  |  | 0.759 |
+| walker |  | 7117 | 45 | README.md section #8 |  |  | 0.764 |
+| walker |  | 7164 | 47 | README.md section #9 |  |  | 0.770 |
+| ns | 7179 |  | 409 | main.c: handlePacket doc comment + signature | 5.1 |  | 0.749 |
+| walker |  | 7392 | 228 | c decl names surface in src/globals.c |  |  | 0.749 |
+| walker |  | 7429 | 37 | c decl doc at include/globals.h:53 |  |  | 0.754 |
+| walker |  | 7455 | 26 | imports in build_registries.js |  |  | 0.754 |
+| ns | 7512 |  | 333 | main.c: login/configuration handshake dispatch (packet 0x00) | 5.2 |  | 0.735 |
+| walker |  | 7516 | 61 | c includes in src/structures.c |  |  | 0.735 |
+| walker |  | 7554 | 38 | c decl doc at include/globals.h:23 |  |  | 0.743 |
+| walker |  | 7619 | 65 | c includes in src/crafting.c |  |  | 0.743 |
+| ns | 7725 |  | 213 | main.c: fall-damage check in movement packets | 5.3 |  | 0.734 |
+| ns | 7954 |  | 229 | main.c: main() socket bootstrap (socket + SO_REUSEADDR) | 5.4 |  | 0.721 |
+| walker |  | 8028 | 409 | c decl names surface in src/worldgen.c |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:13 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:24 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:51 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:117 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:126 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:142 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:160 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:173 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:323 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:358 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:374 |  |  | 0.721 |
+| walker |  | 8028 | 0 | c decl at src/worldgen.c:401 |  |  | 0.721 |
+| walker |  | 8055 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.721 |
+| walker |  | 8330 | 275 | README.md section #4 |  |  | 0.735 |
+| walker |  | 8368 | 38 | c decl doc at src/worldgen.c:401 |  |  | 0.735 |
+| walker |  | 8402 | 34 | c decl doc at src/tools.c:42 |  |  | 0.735 |
+| ns | 8441 |  | 487 | main.c: main() event loop shape | 5.5 |  | 0.710 |
+| walker |  | 8508 | 106 | c includes in src/worldgen.c |  |  | 0.710 |
+| walker |  | 8567 | 59 | c decl body at src/structures.c:9 |  |  | 0.710 |
+| ns | 8659 |  | 218 | packets.c: cs_handshake — the read-side wire pattern | 6.1 |  | 0.700 |
+| walker |  | 8676 | 109 | c includes in src/globals.c |  |  | 0.700 |
+| walker |  | 8737 | 61 | c decl body at src/varnum.c:34 |  |  | 0.700 |
+| walker |  | 8791 | 54 | c decl doc at include/globals.h:71 |  |  | 0.710 |
+| ns | 8852 |  | 193 | packets.c: sc_loginSuccess — the write-side wire pattern + VarInt-framed packet shape | 6.2 |  | 0.702 |
+| walker |  | 8909 | 118 | c includes in src/varnum.c |  |  | 0.702 |
+| ns | 8958 |  | 106 | procedures.c: helper functions not declared in procedures.h | 7.1 |  | 0.697 |
+| walker |  | 8961 | 52 | c decl doc at src/worldgen.c:126 |  |  | 0.697 |
+| ns | 9160 |  | 202 | procedures.c: makeBlockChange's base-terrain dedup check | 7.2 |  | 0.689 |
+| ns | 9230 |  | 70 | worldgen.c: internal helpers not declared in worldgen.h | 8.1 |  | 0.691 |
+| walker |  | 9480 | 519 | c decl names surface in src/procedures.c |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:21 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:37 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:45 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:54 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:75 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:119 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:130 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:146 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:177 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:199 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:214 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:239 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:286 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:321 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:396 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:434 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:478 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:495 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:512 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:652 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:721 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:746 |  |  | 0.691 |
+| walker |  | 9480 | 0 | c decl at src/procedures.c:775 |  |  | 0.691 |
+| ns | 9490 |  | 260 | crafting.c: single-item crafting recipes (getCraftingOutput, case 1) | 9.1 |  | 0.684 |
+| walker |  | 9495 | 15 | c decl doc at src/procedures.c:495 |  |  | 0.684 |
+| walker |  | 9511 | 16 | c decl doc at src/procedures.c:54 |  |  | 0.684 |
+| walker |  | 9527 | 16 | c decl doc at src/procedures.c:75 |  |  | 0.684 |
+| walker |  | 9543 | 16 | c decl doc at src/procedures.c:146 |  |  | 0.684 |
+| walker |  | 9560 | 17 | c decl doc at src/procedures.c:321 |  |  | 0.684 |
+| walker |  | 9577 | 17 | c decl doc at src/procedures.c:775 |  |  | 0.684 |
+| ns | 9586 |  | 96 | structures.c: setBlockIfReplaceable helper (not in structures.h) | 10.1 |  | 0.684 |
+| walker |  | 9595 | 18 | c decl doc at src/procedures.c:177 |  |  | 0.684 |
+| walker |  | 9613 | 18 | c decl doc at src/procedures.c:721 |  |  | 0.684 |
+| ns | 9694 |  | 108 | build.sh: registries.h precondition check | 11.1 |  | 0.687 |
+| ns | 9792 |  | 98 | serialize.c: FILE_PATH — where world.bin actually lives per platform | 12.1 |  | 0.682 |
+| ns | 9991 |  | 199 | tools.c: fast_rand + splitmix64 (the only randomness source) | 13.1 |  | 0.675 |
