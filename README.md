@@ -7,7 +7,6 @@ A CLI tool that extracts a token-efficient summary of a path, designed to replac
 Here's what `precis` shows for [developit/mitt](https://github.com/developit/mitt), a tiny TypeScript event emitter, at a 900-token budget:
 
 <!-- precis-example-start -->
-
 ```
 .editorconfig
 .eslintrc
@@ -56,35 +55,6 @@ README.md
       17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
       18→
       19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-      21→## Table of Contents
-    …
-      30→## Install
-    …
-      56→## Usage
-    …
-      81→### Typescript
-    …
-     113→## Examples & Demos
-    …
-     123→## API
-    …
-     138→### mitt
-    …
-     144→### all
-    …
-     148→### on
-    …
-     157→### off
-    …
-     167→### emit
-    …
-     179→## Contribute
-    …
-     184→### Reporting Issues
-    …
-     189→### Submitting pull requests
-    …
-     203→## License
     …
 package.json
     …
@@ -100,6 +70,9 @@ src/
         …
            5→export type Handler<T = unknown> = (event: T) => void;
            6→export type WildcardHandler<T = Record<string, unknown>> = (
+           7→	type: keyof T,
+           8→	event: T[keyof T]
+           9→) => void;
         …
           12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
           13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
@@ -107,7 +80,9 @@ src/
           15→>;
         …
           18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
-        …
+          19→	keyof Events | '*',
+          20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
+          21→>;
           23→export interface Emitter<Events extends Record<EventType, unknown>> {
         …
           46→export default function mitt<Events extends Record<EventType, unknown>>(
@@ -119,7 +94,6 @@ test/
     test-types-compilation.ts
 tsconfig.json
 ```
-
 <!-- precis-example-end -->
 
 The file tree shows everything that exists; the README lede and heading outline give orientation; `package.json` identifies the package; and `src/index.ts` shows the full exported type surface with signatures. Line numbers make every entry a precise jump target for follow-up reads.
