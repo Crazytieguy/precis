@@ -56,6 +56,13 @@ README.md
 rustfmt.toml
 sps/
     Cargo.toml
+        …
+          13→[[bin]]
+          14→name = "sps"
+          15→path = "src/main.rs"
+        …
+          54→[build-dependencies]
+          55→clap_complete = "4.5.57"
     src/
         cli/
             info.rs
@@ -65,6 +72,9 @@ sps/
             reinstall.rs
             search.rs
             status.rs
+                …
+                 399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
+                …
             uninstall.rs
             update.rs
                 …
@@ -74,99 +84,60 @@ sps/
             upgrade.rs
         cli.rs
             …
-              35→pub struct CliArgs {
+              32→#[derive(Parser, Debug)]
             …
+              35→pub struct CliArgs {
+              36→    #[arg(short, long, action = ArgAction::Count, global = true)]
+              37→    pub verbose: u8,
+              38→
+              39→    #[command(subcommand)]
+              40→    pub command: Command,
+              41→}
+              43→#[derive(Subcommand, Debug)]
               44→pub enum Command {
+              45→    Init(InitArgs),
+              46→    Search(Search),
+              47→    List(List),
+              48→    Info(Info),
+              49→    Update(Update),
+              50→    Install(InstallArgs),
+              51→    Uninstall(Uninstall),
+              52→    Reinstall(ReinstallArgs),
+              53→    Upgrade(UpgradeArgs),
+              54→}
             …
         main.rs
             …
-              57→async fn main() -> spResult<()> {
-              58→    let cli_args = CliArgs::parse();
-              60→    if let Command::Init(ref init_args_ref) = cli_args.command {
-              61→        match run_init_command(init_args_ref, cli_args.verbose).await {
-              62→            Ok(_) => {
-              63→                return Ok(());
-              64→            }
-              65→            Err(e) => {
-              66→                eprintln!("{}: Init command failed: {:#}", "Error".red().bold(), e);
-              67→                process::exit(1);
-              68→            }
-              69→        }
-              70→    }
-              72→    let config = Config::load().map_err(|e| {
-              73→        SpsError::Config(format!(
-              74→            "Could not load config (have you run 'sps init'?): {e}"
-              75→        ))
-              76→    })?;
-              78→    let level_filter = match cli_args.verbose {
-              79→        0 => LevelFilter::INFO,
-              80→        1 => LevelFilter::DEBUG,
-              81→        _ => LevelFilter::TRACE,
-              82→    };
-              83→    let max_log_level = level_filter.into_level().unwrap_or(tracing::Level::INFO);
-              85→    let env_filter = EnvFilter::builder()
-              86→        .with_default_directive(level_filter.into())
-              87→        .with_env_var("SPS_LOG")
-              88→        .from_env_lossy();
-              90→    let log_dir = config.logs_dir();
+               2→use std::process::{self}; // StdCommand is used
+               3→use std::sync::Arc;
+               4→use std::time::{Duration, SystemTime};
+               5→use std::{env, fs};
+               6→
+               7→use clap::Parser;
+               8→use colored::Colorize;
+               9→use sps_common::cache::Cache;
+              10→use sps_common::config::Config;
+              11→use sps_common::error::{Result as spResult, SpsError};
+              12→use tracing::level_filters::LevelFilter;
+              13→use tracing::{debug, error, warn}; // Import all necessary tracing macros
+              14→use tracing_subscriber::fmt::writer::MakeWriterExt;
+              15→use tracing_subscriber::EnvFilter;
+              16→
+              17→mod cli;
+              18→mod pipeline;
             …
-             135→    let cache = Arc::new(Cache::new(&config).map_err(|e| {
-             136→        SpsError::Cache(format!(
-             137→            "Could not initialize cache (ensure 'sps init' was successful): {e}"
-             138→        ))
-             139→    })?);
-             141→    let needs_update_check = matches!(
-             142→        cli_args.command,
-             143→        Command::Install(_) | Command::Search { .. } | Command::Info { .. } | Command::Upgrade(_)
-             144→    );
-             146→    if needs_update_check {
-             147→        if let Err(e) = check_and_run_auto_update(&config, Arc::clone(&cache)).await {
-             148→            error!("Error during auto-update check: {}", e); // Use `error!` macro
-             149→        }
-             150→    } else {
-             151→        debug!(
-             152→            // Use `debug!` macro
-             153→            "Skipping auto-update check for command: {:?}",
-             154→            cli_args.command
-             155→        );
-             156→    }
-             158→    // Pass config and cache to the command's run method
-             159→    let command_execution_result = match &cli_args.command {
-             160→        Command::Init(_) => {
-             161→            /* This case is handled above and main exits */
-             162→            unreachable!()
-             163→        }
-             164→        _ => cli_args.command.run(&config, cache).await,
-             165→    };
-             167→    if let Err(e) = command_execution_result {
-             168→        // For pipeline commands (Install, Reinstall, Upgrade), errors are already
-             169→        // displayed via the status system, so only log in verbose mode
-             170→        let is_pipeline_command = matches!(
-             171→            cli_args.command,
-             172→            Command::Install(_) | Command::Reinstall(_) | Command::Upgrade(_)
-             173→        );
-             174→
-             175→        if is_pipeline_command {
-             176→            // Only show error details in verbose mode
-             177→            if cli_args.verbose > 0 {
-             178→                error!("Command failed: {:#}", e);
-             179→                eprintln!("{}: {:#}", "Error".red().bold(), e);
-             180→            }
-             181→        } else {
-             182→            // For non-pipeline commands, show errors normally
-             183→            error!("Command failed: {:#}", e);
-             184→            eprintln!("{}: {:#}", "Error".red().bold(), e);
-             185→        }
-             186→        process::exit(1);
-             187→    }
-             189→    debug!("Command completed successfully."); // Use `debug!` macro
-             190→    Ok(())
+              20→use cli::{CliArgs, Command, InitArgs};
+            …
+              57→async fn main() -> spResult<()> {
             …
         pipeline/
             downloader.rs
             planner.rs
             runner.rs
         pipeline.rs
+               1→pub mod downloader;
+               2→pub mod planner;
+               3→pub mod runner;
 sps-common/
     Cargo.toml
     src/
@@ -175,6 +146,15 @@ sps-common/
         dependency/
             definition.rs
             mod.rs
+                   1→pub mod definition; // Renamed from 'dependency'
+                   2→pub mod requirement;
+                   3→pub mod resolver;
+                …
+                   6→pub use definition::{Dependency, DependencyExt, DependencyTag}; // Updated source module
+                   7→pub use requirement::Requirement;
+                   8→pub use resolver::{
+                   9→    DependencyResolver, ResolutionContext, ResolutionStatus, ResolvedDependency, ResolvedGraph,
+                  10→};
             requirement.rs
             resolver.rs
         error.rs
@@ -202,6 +182,17 @@ sps-common/
             formula.rs
             mod.rs
                 …
+                   3→use std::sync::Arc;
+                   4→
+                   5→pub mod artifact;
+                   6→pub mod cask;
+                   7→pub mod formula;
+                   8→pub mod tap;
+                   9→pub mod version;
+                …
+                  12→pub use artifact::InstalledArtifact;
+                  13→pub use cask::Cask;
+                  14→pub use formula::Formula;
                   16→#[derive(Debug, Clone)]
                   17→pub enum InstallTargetIdentifier {
                   18→    Formula(Arc<Formula>),
@@ -247,6 +238,16 @@ sps-core/
                     …
                       33→/// Checks if a suitable bottle exists for the current platform, considering fallbacks.
                       34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
+                      35→    let result = crate::install::bottle::exec::get_bottle_for_platform(formula);
+                      36→    debug!(
+                      37→        "has_bottle_for_current_platform check for '{}': {:?}",
+                      38→        formula.name(),
+                      39→        result.is_ok()
+                      40→    );
+                      41→    if let Err(e) = &result {
+                      42→        debug!("Reason for no bottle: {}", e);
+                      43→    }
+                      44→    result.is_ok()
                     …
                      159→pub fn get_formula_cellar_path(formula: &Formula, config: &Config) -> PathBuf {
                      160→    // Use Config method
@@ -266,6 +267,16 @@ sps-core/
             devtools.rs
             extract.rs
             mod.rs
+                …
+                   5→use std::path::PathBuf;
+                   6→
+                   7→use sps_common::config::Config;
+                   8→use sps_common::model::formula::Formula;
+                …
+                  11→pub mod bottle;
+                  12→pub mod cask;
+                  13→pub mod devtools;
+                  14→pub mod extract;
                 …
                   17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
                   18→    // Use new Config method

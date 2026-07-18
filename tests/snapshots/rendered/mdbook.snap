@@ -7,6 +7,12 @@ expression: rendered
 .git-blame-ignore-revs
 .gitattributes
 .github/
+    ISSUE_TEMPLATE/
+    renovate.json5
+    workflows/
+        deploy.yml
+        main.yml
+        update-dependencies.yml
 .gitignore
 CHANGELOG.md
 CODE_OF_CONDUCT.md
@@ -42,28 +48,6 @@ crates/
                    4→use std::process::Command;
                 …
                   14→fn main() {
-                  15→    let mut args = std::env::args().skip(1);
-                  16→    let (Some(mdbook1), Some(book1), Some(mdbook2), Some(book2)) =
-                  17→        (args.next(), args.next(), args.next(), args.next())
-                  18→    else {
-                  19→        eprintln!("error: Expected four arguments: <exe1> <dir1> <exe2> <dir2>");
-                  20→        std::process::exit(1);
-                  21→    };
-                  22→    let mdbook1 = Path::new(&mdbook1);
-                  23→    let mdbook2 = Path::new(&mdbook2);
-                  24→    let book1 = Path::new(&book1);
-                  25→    let book2 = Path::new(&book2);
-                  26→    let compare1 = Path::new("compare1");
-                  27→    let compare2 = Path::new("compare2");
-                  28→    clean(compare1);
-                  29→    clean(compare2);
-                  30→    clean(&book1.join("book"));
-                  31→    clean(&book2.join("book"));
-                  32→    build(mdbook1, book1);
-                  33→    std::fs::rename(book1.join("book"), compare1).unwrap();
-                  34→    build(mdbook2, book2);
-                  35→    std::fs::rename(book2.join("book"), compare2).unwrap();
-                  36→    diff(compare1, compare2);
                 …
     mdbook-core/
         Cargo.toml
@@ -89,6 +73,8 @@ crates/
                 mod.rs
                        1→//! Various helpers and utilities.
                     …
+                      17→macro_rules! static_regex {
+                    …
                       28→/// Prints a "backtrace" of some `Error`.
                       29→pub fn log_backtrace(e: &Error) {
                     …
@@ -102,6 +88,9 @@ crates/
         src/
     mdbook-html/
         Cargo.toml
+            …
+              36→[features]
+              37→search = ["dep:elasticlunr-rs"]
         README.md
         front-end/
         src/
@@ -193,8 +182,24 @@ crates/
                   44→    }
                   45→}
                 …
+                  49→#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+                  50→#[non_exhaustive]
                   51→pub struct PreprocessorContext {
-                …
+                  52→    /// The location of the book directory on disk.
+                  53→    pub root: PathBuf,
+                  54→    /// The book configuration (`book.toml`).
+                  55→    pub config: Config,
+                  56→    /// The `Renderer` this preprocessor is being used with.
+                  57→    pub renderer: String,
+                  58→    /// The calling `mdbook` version.
+                  59→    pub mdbook_version: String,
+                  60→    /// Internal mapping of chapter titles.
+                  61→    ///
+                  62→    /// This is used internally by mdbook to compute custom chapter titles.
+                  63→    /// This should not be used outside of mdbook's internals.
+                  64→    #[serde(skip)]
+                  65→    pub chapter_titles: RefCell<HashMap<PathBuf, String>>,
+                  66→}
                   68→impl PreprocessorContext {
                 …
                   70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
@@ -289,6 +294,29 @@ guide/
         cli/
         continuous-integration.md
         for_developers/
+            README.md
+            backends.md
+            mdbook-wordcount/
+                Cargo.toml
+                src/
+                    main.rs
+                        …
+                          12→fn main() {
+                          13→    let mut stdin = io::stdin();
+                          14→    let ctx = RenderContext::from_json(&mut stdin).unwrap();
+                          15→    let cfg: WordcountConfig = ctx.config
+                          16→        .get_deserialized("output.wordcount")
+                          17→        .unwrap_or_default();
+                          19→    let _ = fs::create_dir_all(&ctx.destination);
+                          20→    let mut f = File::create(ctx.destination.join("wordcounts.txt")).unwrap();
+                        …
+                          44→#[derive(Debug, Default, Serialize, Deserialize)]
+                        …
+                          46→pub struct WordcountConfig {
+                          47→    pub ignores: Vec<String>,
+                          48→    pub deny_odds: bool,
+                          49→}
+            preprocessors.md
         format/
         guide/
             README.md

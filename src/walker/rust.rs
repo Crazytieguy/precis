@@ -39,7 +39,10 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, RustKey};
 use crate::content::{BatchContent, Span};
-use crate::value::{depth_factor, mix_signals, roster_mass_factor};
+use crate::value::{
+    DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, depth_factor, mix_signals,
+    roster_mass_factor,
+};
 
 use super::{
     BodyPart, ENTRY_BODY_PART_CAP, FileLines, WalkCtx, body_part_value_factor, build_file_spans,
@@ -60,6 +63,22 @@ pub struct RustState {
     expanded_dirs: RefCell<HashSet<PathBuf>>,
     manifest_package_lookup: RefCell<HashMap<PathBuf, bool>>,
     crate_pub_traits: OnceCell<HashSet<String>>,
+}
+
+/// Nested-package `src/main.rs` bodies below this many statement parts retain
+/// the established per-statement shape. Past this point the body is a fragment
+/// train: tiny statements are more useful as source-order flow chunks than as
+/// independently schedulable crumbs. Root application entrypoints stay
+/// statement-granular because their main flow is repository orientation.
+const ENTRY_BODY_COALESCE_MIN_PARTS: usize = 15;
+/// Rendered-token envelope for coalesced entry-body flow chunks.
+const ENTRY_BODY_CHUNK_MIN_TOKENS: usize = 150;
+const ENTRY_BODY_CHUNK_MAX_TOKENS: usize = 300;
+
+#[derive(Debug)]
+struct ValuedBodyPart {
+    part: BodyPart,
+    value_factor: f64,
 }
 
 impl RustState {
@@ -560,20 +579,32 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     // a gentle sqrt decay so the opening steps still anchor
                     // while the body stops out-massing the rest of the repo.
                     //
-                    // A real bin `src/main.rs` (not under examples/) keeps
-                    // full value: its top-level statements are distinct
-                    // tutorial-step state that NS authors anchor on as
-                    // consecutive ranges (e.g. sps NS 1.6-1.10 split main
-                    // into 5 sections, hyperfine's run() into halves).
-                    let part_value_factor = if body_split_example_main {
+                    // A root bin `src/main.rs` (not under examples/) keeps
+                    // full per-statement value: its top-level statements are
+                    // repository-orientation flow that NS authors anchor on
+                    // as consecutive ranges (e.g. otree's main thirds and
+                    // hyperfine's run() halves). Highly fragmented nested
+                    // workspace binaries are coalesced and value-conserved
+                    // below so their auxiliary flows do not dominate the
+                    // repository schedule.
+                    let valued_parts = if body_split_example_main {
                         parts = coalesce_body_parts_tail(parts, ENTRY_BODY_PART_CAP);
-                        entry_body_part_value_factor(parts.len())
+                        let value_factor = entry_body_part_value_factor(parts.len());
+                        parts
+                            .into_iter()
+                            .map(|part| ValuedBodyPart { part, value_factor })
+                            .collect()
                     } else if src_main_entry {
-                        1.0
+                        coalesce_src_main_body_parts(file, &source, parts, ctx)
                     } else {
-                        body_part_value_factor(parts.len())
+                        let value_factor = body_part_value_factor(parts.len());
+                        parts
+                            .into_iter()
+                            .map(|part| ValuedBodyPart { part, value_factor })
+                            .collect()
                     };
-                    for part in parts {
+                    for valued_part in valued_parts {
+                        let part = valued_part.part;
                         let Some(body_start_line) = part.start_line() else {
                             continue;
                         };
@@ -591,7 +622,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             Some(item_key.clone()),
                             content,
                             entry_item_body_value(file, item.kind, item.surface, ctx)
-                                * part_value_factor,
+                                * valued_part.value_factor,
                         ));
                     }
                 }
@@ -1798,6 +1829,104 @@ fn body_parts_for_item(child: Node, src_lines: &[&str]) -> Vec<BodyPart> {
     statement_block_parts(child.child_by_field_name("body"), src_lines, "block")
 }
 
+/// Coalesce adjacent tiny statement parts in a highly fragmented nested
+/// package's `src/main.rs` body. The package and count gates leave ordinary
+/// entry flows and root application spines alone. Large statements already
+/// occupy a coherent scheduling unit and delimit the tiny runs on either side;
+/// within each run we greedily form roughly 150-300-token source-order chunks.
+///
+/// Once the shape changes, [`conserved_catalog_chunk_factors`] allocates one
+/// entry-body base value across the chunks using the same cost concavity that
+/// ranks `EntryItemBody`. Coalescing therefore removes the accidental value
+/// multiplication caused by statement splitting without adding a new blanket
+/// pressure rule for every entrypoint body.
+fn coalesce_src_main_body_parts(
+    file: &Path,
+    source: &str,
+    parts: Vec<BodyPart>,
+    ctx: &WalkCtx,
+) -> Vec<ValuedBodyPart> {
+    let nested_package = ctx
+        .rust_state()
+        .nearest_member_dir(file, ctx.root())
+        .is_some_and(|member_dir| member_dir != ctx.root());
+    if !nested_package || parts.len() < ENTRY_BODY_COALESCE_MIN_PARTS {
+        return parts
+            .into_iter()
+            .map(|part| ValuedBodyPart {
+                part,
+                value_factor: 1.0,
+            })
+            .collect();
+    }
+
+    let part_cost = |part: &BodyPart| {
+        single_file_lines_content(file, source, FileLines::new(part.lines.clone()))
+            .map(|content| ctx.marginal_tokens(&content))
+            .unwrap_or(0)
+    };
+    let merge_parts = |parts: &[BodyPart]| BodyPart {
+        lines: dedup_sorted(
+            parts
+                .iter()
+                .flat_map(|part| part.lines.iter().copied())
+                .collect(),
+        ),
+    };
+
+    let mut chunks = Vec::new();
+    let mut tiny_run = Vec::new();
+    let flush_tiny_run = |run: &mut Vec<BodyPart>, chunks: &mut Vec<BodyPart>| {
+        let mut run_chunks = Vec::new();
+        let mut start = 0;
+        while start < run.len() {
+            let mut end = start + 1;
+            let mut chunk = merge_parts(&run[start..end]);
+            while end < run.len() && part_cost(&chunk) < ENTRY_BODY_CHUNK_MIN_TOKENS {
+                end += 1;
+                chunk = merge_parts(&run[start..end]);
+            }
+            run_chunks.push(chunk);
+            start = end;
+        }
+        run.clear();
+
+        if run_chunks.len() >= 2 {
+            let tail_cost = run_chunks.last().map(&part_cost).unwrap_or(0);
+            if tail_cost < ENTRY_BODY_CHUNK_MIN_TOKENS {
+                let tail = run_chunks.pop().expect("tail exists");
+                let previous = run_chunks.pop().expect("previous exists");
+                let merged = merge_parts(&[previous.clone(), tail.clone()]);
+                if part_cost(&merged) <= ENTRY_BODY_CHUNK_MAX_TOKENS {
+                    run_chunks.push(merged);
+                } else {
+                    run_chunks.push(previous);
+                    run_chunks.push(tail);
+                }
+            }
+        }
+        chunks.extend(run_chunks);
+    };
+
+    for part in parts {
+        if part_cost(&part) < ENTRY_BODY_CHUNK_MIN_TOKENS {
+            tiny_run.push(part);
+        } else {
+            flush_tiny_run(&mut tiny_run, &mut chunks);
+            chunks.push(part);
+        }
+    }
+    flush_tiny_run(&mut tiny_run, &mut chunks);
+
+    let costs: Vec<usize> = chunks.iter().map(part_cost).collect();
+    let factors = conserved_catalog_chunk_factors(&costs, DEFAULT_CONCAVITY_EXPONENT);
+    chunks
+        .into_iter()
+        .zip(factors)
+        .map(|(part, value_factor)| ValuedBodyPart { part, value_factor })
+        .collect()
+}
+
 /// Lines of the lede or body section of the outer rustdoc preceding
 /// the item at `start_line`. Both sections share the same heading-split
 /// logic as the crate-level `//!` doc: doctest-hidden lines are stripped
@@ -2980,6 +3109,77 @@ use self::not_pub::Hidden;
                 .any(|b| matches!(&b.key, BatchKey::Rust(RustKey::CrateAttrs { .. }))),
             "no CrateAttrs from mod.rs attrs or license-header-padded roots"
         );
+    }
+
+    #[test]
+    fn rust_nested_fragmented_entry_body_coalesces_and_conserves_value() {
+        let dir = tempdir();
+        let root = dir.path();
+        let member = root.join("member");
+        let root_src = root.join("src");
+        let member_src = member.join("src");
+        std::fs::create_dir_all(&root_src).unwrap();
+        std::fs::create_dir_all(&member_src).unwrap();
+        std::fs::write(
+            root.join("Cargo.toml"),
+            "[package]\nname='root'\nversion='0.1.0'\n[workspace]\nmembers=['member']\n",
+        )
+        .unwrap();
+        std::fs::write(
+            member.join("Cargo.toml"),
+            "[package]\nname='member'\nversion='0.1.0'\n",
+        )
+        .unwrap();
+        let mut source = String::from("fn main() {\n");
+        for index in 0..ENTRY_BODY_COALESCE_MIN_PARTS {
+            source.push_str(&format!(
+                "    let value_{index:02} = \"a moderately descriptive entry flow step\";\n"
+            ));
+        }
+        source.push_str("}\n");
+        let root_main = root_src.join("main.rs");
+        let member_main = member_src.join("main.rs");
+        std::fs::write(&root_main, &source).unwrap();
+        std::fs::write(&member_main, &source).unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let root_batches = expand_in_dir(&root_src, &ctx);
+        let member_batches = expand_in_dir(&member_src, &ctx);
+        let entry_bodies = |batches: Vec<Batch<BatchKey>>, file: &Path| {
+            batches
+                .into_iter()
+                .filter(|batch| {
+                    matches!(
+                        &batch.key,
+                        BatchKey::Rust(RustKey::EntryItemBody { file: batch_file, .. })
+                            if batch_file == file
+                    )
+                })
+                .collect::<Vec<_>>()
+        };
+        let root_bodies = entry_bodies(root_batches, &root_main);
+        let member_bodies = entry_bodies(member_batches, &member_main);
+        assert_eq!(root_bodies.len(), ENTRY_BODY_COALESCE_MIN_PARTS);
+        assert!(member_bodies.len() < ENTRY_BODY_COALESCE_MIN_PARTS);
+
+        let costs: Vec<usize> = member_bodies
+            .iter()
+            .map(|batch| ctx.marginal_tokens(&batch.content))
+            .collect();
+        assert!(
+            costs
+                .iter()
+                .all(|&cost| cost <= ENTRY_BODY_CHUNK_MAX_TOKENS)
+        );
+        let factors = conserved_catalog_chunk_factors(&costs, DEFAULT_CONCAVITY_EXPONENT);
+        let bases: Vec<f64> = member_bodies
+            .iter()
+            .zip(&factors)
+            .map(|(batch, factor)| batch.value / factor)
+            .collect();
+        let total: f64 = member_bodies.iter().map(|batch| batch.value).sum();
+        assert!(bases.iter().all(|base| (base - bases[0]).abs() < 1e-9));
+        assert!((total - bases[0]).abs() < 1e-9);
     }
 
     /// Minimal scratch-dir helper. Avoids pulling in the `tempfile` crate
