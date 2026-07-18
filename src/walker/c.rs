@@ -825,10 +825,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         };
 
-        let decls = find_decls(&tree, &source, file);
+        let mut decls = find_decls(&tree, &source, file);
         if decls.is_empty() {
             push_includes(&mut out, None);
             continue;
+        }
+        let configuration_surface = is_configuration_surface_header(file, &source, &tree, &decls);
+        if configuration_surface {
+            apply_configuration_surface_aggregate_splits(&mut decls, &source);
         }
         // Last 0-based row claimed by the file's HeaderBanner (the
         // leading run of comment children of root). Used as a stop
@@ -892,6 +896,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     chunk_index,
                     names_chunk_count,
                     chunk_ranges[chunk_index].len(),
+                    configuration_surface,
                 ),
             });
         }
@@ -925,7 +930,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: decl_key.clone().into(),
                     predecessor: Some(names_predecessor.clone()),
                     content,
-                    value: decl_value(file, info.kind, ctx),
+                    value: decl_value(file, info.kind, ctx, configuration_surface),
                 });
             }
             let decl_predecessor = BatchKey::C(decl_key);
@@ -938,7 +943,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     .into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
-                    value: decl_doc_value(file, info.kind, ctx),
+                    value: decl_doc_value(file, info.kind, ctx, configuration_surface),
                 });
             }
             if info.has_body
@@ -971,7 +976,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         .into(),
                         predecessor: Some(decl_predecessor.clone()),
                         content,
-                        value: aggregate_member_group_value(file, info.kind, ctx),
+                        value: aggregate_member_group_value(
+                            file,
+                            info.kind,
+                            ctx,
+                            configuration_surface,
+                        ),
                     });
                 }
             }
@@ -1022,6 +1032,96 @@ struct DeclInfo {
     /// Per-group member-batches for big aggregates. When non-empty the
     /// parent `Decl` is trimmed to the type header + closing brace.
     member_groups: Vec<AggregateMemberGroup>,
+}
+
+/// Minimum structural evidence for treating a header as an application
+/// configuration surface rather than a general declaration catalog.
+///
+/// The count gate excludes small API headers with a handful of constants;
+/// the annotation ratio rejects generated register / enum-like macro catalogs;
+/// and the function ceiling rejects ordinary APIs which happen to define many
+/// documented constants alongside their callable surface.
+const CONFIG_SURFACE_MIN_OBJECT_MACROS: usize = 24;
+const CONFIG_SURFACE_MIN_ANNOTATED_MACROS: usize = 12;
+const CONFIG_SURFACE_MAX_FUNCTION_DECLS: usize = 4;
+
+#[derive(Debug, Default, PartialEq, Eq)]
+struct ConfigurationSurfaceStats {
+    object_macros: usize,
+    annotated_object_macros: usize,
+    function_decls: usize,
+    total_decls: usize,
+}
+
+fn is_configuration_surface_header(
+    file: &Path,
+    source: &str,
+    tree: &Tree,
+    decls: &[(Node, DeclInfo)],
+) -> bool {
+    if !is_header_file(file) {
+        return false;
+    }
+    let stats = configuration_surface_stats(source, tree, decls);
+    stats.object_macros >= CONFIG_SURFACE_MIN_OBJECT_MACROS
+        && stats.annotated_object_macros >= CONFIG_SURFACE_MIN_ANNOTATED_MACROS
+        && stats.annotated_object_macros * 2 >= stats.object_macros
+        && stats.function_decls <= CONFIG_SURFACE_MAX_FUNCTION_DECLS
+        && stats.object_macros * 2 >= stats.total_decls
+}
+
+fn configuration_surface_stats(
+    source: &str,
+    tree: &Tree,
+    decls: &[(Node, DeclInfo)],
+) -> ConfigurationSurfaceStats {
+    let lines: Vec<&str> = source.lines().collect();
+    let banner_end_row = header_banner_end_row(tree);
+    let mut stats = ConfigurationSurfaceStats {
+        total_decls: decls.len(),
+        ..ConfigurationSurfaceStats::default()
+    };
+    for (node, info) in decls {
+        match info.kind {
+            DeclKind::Macro => {
+                stats.object_macros += 1;
+                if has_adjacent_explanatory_comment(*node, &lines, banner_end_row) {
+                    stats.annotated_object_macros += 1;
+                }
+            }
+            DeclKind::FunctionDef | DeclKind::FunctionDecl => stats.function_decls += 1,
+            DeclKind::Typedef | DeclKind::Aggregate | DeclKind::Variable | DeclKind::MacroFn => {}
+        }
+    }
+    stats
+}
+
+fn has_adjacent_explanatory_comment(
+    node: Node,
+    lines: &[&str],
+    banner_end_row: Option<usize>,
+) -> bool {
+    let start_row = node.start_position().row;
+    let preceding_comment = start_row
+        .checked_sub(1)
+        .filter(|row| banner_end_row.is_none_or(|banner_end| *row > banner_end))
+        .and_then(|row| lines.get(row))
+        .is_some_and(|line| {
+            let line = line.trim();
+            line.starts_with("//")
+                || line.starts_with("/*")
+                || line.starts_with('*')
+                || line.ends_with("*/")
+        });
+    if preceding_comment {
+        return true;
+    }
+
+    let end = node.end_position();
+    lines
+        .get(end.row)
+        .and_then(|line| line.get(end.column..))
+        .is_some_and(|suffix| suffix.contains("//") || suffix.contains("/*"))
 }
 
 /// One chunk of a big aggregate body — struct/union field group or
@@ -1365,6 +1465,10 @@ const AGGREGATE_STRUCT_MIN_GROUPS: usize = 3;
 /// wants at that granularity.
 const AGGREGATE_STRUCT_GROUP_MIN_ROWS: usize = 5;
 
+/// Comment sections in configuration structs include explanatory rows, so a
+/// wider minimum keeps tiny annotated tails from queue-jumping the core fields.
+const CONFIGURATION_AGGREGATE_GROUP_MIN_ROWS: usize = 10;
+
 /// Minimum enumerators for enum chunking. Below this, the whole enum
 /// fits in budget as one `Decl` and splitting adds churn.
 const AGGREGATE_ENUM_CHUNK_MIN: usize = 32;
@@ -1428,6 +1532,70 @@ fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMem
     }
 }
 
+/// Configuration structs often use explanatory comment blocks instead of
+/// blank lines to divide semantic field groups. For a qualifying header only,
+/// let those blocks split an otherwise-atomic large struct. Existing ordinary
+/// aggregate splitting wins when it already found useful blank-line groups.
+fn apply_configuration_surface_aggregate_splits(decls: &mut [(Node, DeclInfo)], source: &str) {
+    for (node, info) in decls {
+        if !info.member_groups.is_empty()
+            || !matches!(info.kind, DeclKind::Aggregate | DeclKind::Typedef)
+        {
+            continue;
+        }
+        let Some(body) = find_aggregate_body(*node) else {
+            continue;
+        };
+        info.member_groups = collect_struct_comment_groups(body, source);
+    }
+}
+
+fn collect_struct_comment_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
+    if body.kind() != "field_declaration_list" {
+        return Vec::new();
+    }
+    let body_start = body.start_position().row;
+    let body_end = body.end_position().row;
+    if body_end.saturating_sub(body_start) + 1 < AGGREGATE_STRUCT_MIN_LINES {
+        return Vec::new();
+    }
+
+    let lines: Vec<&str> = source.lines().collect();
+    let mut groups = Vec::new();
+    let mut rows = Vec::new();
+    let mut previous_was_comment = false;
+    for row in (body_start + 1)..body_end {
+        let Some(line) = lines.get(row) else {
+            continue;
+        };
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
+            previous_was_comment = false;
+            continue;
+        }
+        let comment_start = trimmed.starts_with("//") || trimmed.starts_with("/*");
+        let comment_line = comment_start || trimmed.starts_with('*');
+        if comment_start && !previous_was_comment && !rows.is_empty() {
+            groups.push(AggregateMemberGroup {
+                group_start_line: rows[0],
+                rows: std::mem::take(&mut rows),
+            });
+        }
+        rows.push(row + 1);
+        previous_was_comment = comment_line;
+    }
+    if !rows.is_empty() {
+        groups.push(AggregateMemberGroup {
+            group_start_line: rows[0],
+            rows,
+        });
+    }
+    if groups.len() < AGGREGATE_STRUCT_MIN_GROUPS {
+        return Vec::new();
+    }
+    coalesce_crumb_groups_with_min(groups, CONFIGURATION_AGGREGATE_GROUP_MIN_ROWS)
+}
+
 /// Blank-line-separated field groups for a struct/union body.
 /// Standalone full-line comment rows are elided — NS struct renders
 /// skip them, and comment-per-field styles (htop `Process.h`) otherwise
@@ -1457,17 +1625,24 @@ fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMe
 /// group absorbs the next one until it clears the minimum, and a
 /// trailing crumb folds into its predecessor.
 fn coalesce_crumb_groups(groups: Vec<AggregateMemberGroup>) -> Vec<AggregateMemberGroup> {
+    coalesce_crumb_groups_with_min(groups, AGGREGATE_STRUCT_GROUP_MIN_ROWS)
+}
+
+fn coalesce_crumb_groups_with_min(
+    groups: Vec<AggregateMemberGroup>,
+    min_rows: usize,
+) -> Vec<AggregateMemberGroup> {
     let mut merged: Vec<AggregateMemberGroup> = Vec::new();
     for group in groups {
         match merged.last_mut() {
-            Some(prev) if prev.rows.len() < AGGREGATE_STRUCT_GROUP_MIN_ROWS => {
+            Some(prev) if prev.rows.len() < min_rows => {
                 prev.rows.extend(group.rows);
             }
             _ => merged.push(group),
         }
     }
     if let [.., prev, last] = merged.as_mut_slice()
-        && last.rows.len() < AGGREGATE_STRUCT_GROUP_MIN_ROWS
+        && last.rows.len() < min_rows
     {
         let tail = std::mem::take(&mut last.rows);
         prev.rows.extend(tail);
@@ -1775,6 +1950,7 @@ fn decl_names_value(
     chunk_index: usize,
     chunk_count: usize,
     chunk_decl_count: usize,
+    configuration_surface: bool,
 ) -> f64 {
     let cat = (0.80 * names_surface_catastrophic_factor(file, ctx)).min(1.0);
     let base = mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx));
@@ -1790,9 +1966,11 @@ fn decl_names_value(
     } else {
         1.0
     };
-    base * names_surface_chunk_factor(chunk_index, chunk_count)
+    let value = base
+        * names_surface_chunk_factor(chunk_index, chunk_count)
         * mass
-        * include_centrality_factor(file, ctx)
+        * include_centrality_factor(file, ctx);
+    configuration_surface_value_floor(value, configuration_surface)
 }
 
 /// Value for a whole small header delivered in one batch. Catastrophic
@@ -1860,18 +2038,49 @@ fn is_known_c_stdlib_stem(stem: &str) -> bool {
     )
 }
 
-fn decl_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
+/// Configuration headers are the application's control surface. Once the
+/// structural role qualifies, keep its existing configuration batches at the
+/// neutral-depth declaration-names tier (`mix_signals(0.80, 0.60, 0.35, 1)`).
+/// This deliberately overrides generic directory-depth damping: `include/`
+/// placement does not make an application's user-tuned settings secondary.
+const CONFIGURATION_SURFACE_VALUE_FLOOR: f64 = 1073.0;
+
+fn configuration_surface_value_floor(value: f64, configuration_surface: bool) -> f64 {
+    if configuration_surface {
+        value.max(CONFIGURATION_SURFACE_VALUE_FLOOR)
+    } else {
+        value
+    }
+}
+
+fn is_configuration_surface_decl_kind(kind: DeclKind) -> bool {
+    matches!(
+        kind,
+        DeclKind::Typedef | DeclKind::Aggregate | DeclKind::Variable | DeclKind::Macro
+    )
+}
+
+fn decl_value(file: &Path, kind: DeclKind, ctx: &WalkCtx, configuration_surface: bool) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.70 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.85 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.65, c_depth_factor(file, ctx)) * include_centrality_factor(file, ctx)
+    let value = mix_signals(cat, fu, 0.65, c_depth_factor(file, ctx))
+        * include_centrality_factor(file, ctx);
+    configuration_surface_value_floor(
+        value,
+        configuration_surface && is_configuration_surface_decl_kind(kind),
+    )
 }
 
-fn decl_doc_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
+fn decl_doc_value(file: &Path, kind: DeclKind, ctx: &WalkCtx, configuration_surface: bool) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.20 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.6 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.8, c_depth_factor(file, ctx))
+    let value = mix_signals(cat, fu, 0.8, c_depth_factor(file, ctx));
+    configuration_surface_value_floor(
+        value,
+        configuration_surface && is_configuration_surface_decl_kind(kind),
+    )
 }
 
 fn decl_body_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
@@ -1886,11 +2095,18 @@ fn decl_body_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
 /// one section of the aggregate's identity, not the entire type — so
 /// the scheduler still favours unchunked anchors in load-bearing files
 /// over a blanket per-group sweep.
-fn aggregate_member_group_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
+fn aggregate_member_group_value(
+    file: &Path,
+    kind: DeclKind,
+    ctx: &WalkCtx,
+    configuration_surface: bool,
+) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.45 * k * header_cat_factor(file)).min(1.0);
     let fu = (0.75 * k * body_fu_factor(file)).min(1.0);
-    mix_signals(cat, fu, 0.45, c_depth_factor(file, ctx)) * include_centrality_factor(file, ctx)
+    let value = mix_signals(cat, fu, 0.45, c_depth_factor(file, ctx))
+        * include_centrality_factor(file, ctx);
+    configuration_surface_value_floor(value, configuration_surface)
 }
 
 // --- parser -------------------------------------------------------------
@@ -2156,6 +2372,51 @@ mod tests {
             );
             assert_eq!(decls[0].1.kind, DeclKind::FunctionDecl);
         }
+    }
+
+    fn configuration_surface_role(filename: &str, source: &str) -> bool {
+        let (source, tree) = parse(source);
+        let file = std::path::Path::new(filename);
+        let decls = find_decls(&tree, &source, file);
+        is_configuration_surface_header(file, &source, &tree, &decls)
+    }
+
+    #[test]
+    fn c_configuration_surface_role_cases() {
+        let mut documented_config = String::new();
+        for i in 0..CONFIG_SURFACE_MIN_OBJECT_MACROS {
+            if i % 2 == 0 {
+                documented_config.push_str(&format!(
+                    "// User-facing setting {i}.\n#define CFG_SETTING_{i} {i}\n"
+                ));
+            } else {
+                documented_config.push_str(&format!(
+                    "#define CFG_SETTING_{i} {i} // User-facing setting.\n"
+                ));
+            }
+        }
+        assert!(configuration_surface_role("config.h", &documented_config));
+        assert!(!configuration_surface_role("config.c", &documented_config));
+
+        let undocumented_catalog: String = (0..CONFIG_SURFACE_MIN_OBJECT_MACROS)
+            .map(|i| format!("#define ITEM_KIND_{i} {i}\n"))
+            .collect();
+        assert!(!configuration_surface_role(
+            "item_kinds.h",
+            &undocumented_catalog
+        ));
+
+        let mut callable_api = documented_config.clone();
+        for i in 0..=CONFIG_SURFACE_MAX_FUNCTION_DECLS {
+            callable_api.push_str(&format!("int api_function_{i}(void);\n"));
+        }
+        assert!(!configuration_surface_role("api.h", &callable_api));
+
+        let mut macro_minority = documented_config;
+        for i in 0..(CONFIG_SURFACE_MIN_OBJECT_MACROS + 1) {
+            macro_minority.push_str(&format!("extern int runtime_state_{i};\n"));
+        }
+        assert!(!configuration_surface_role("state_api.h", &macro_minority));
     }
 
     #[test]
@@ -2759,6 +3020,35 @@ typedef int x;
                 "expected {expected} AggregateMemberGroup batches for {filename}",
             );
         }
+    }
+
+    #[test]
+    fn c_configuration_struct_uses_comment_boundaries() {
+        let mut src = String::from("typedef struct {\n");
+        for i in 0..20 {
+            src.push_str(&format!("  int core_{i};\n"));
+        }
+        for (section, comment_rows) in [("cursor", 2), ("flags", 2), ("modes", 6)] {
+            for i in 0..comment_rows {
+                src.push_str(&format!("  // {section} explanation {i}\n"));
+            }
+            src.push_str(&format!("  int {section};\n"));
+        }
+        src.push_str("} ConfigState;\n");
+
+        let (source, tree) = parse(&src);
+        let decls = find_decls(&tree, &source, std::path::Path::new("config.h"));
+        let body = find_aggregate_body(decls[0].0).unwrap();
+        assert!(collect_aggregate_member_groups(body, &source).is_empty());
+        let groups = collect_struct_comment_groups(body, &source);
+        assert_eq!(groups.len(), 2);
+        assert!(groups.iter().flat_map(|group| &group.rows).any(|line| {
+            source
+                .lines()
+                .nth(line - 1)
+                .unwrap()
+                .contains("explanation")
+        }));
     }
 
     #[test]
