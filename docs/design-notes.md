@@ -633,7 +633,28 @@ evidence):
   granularity for p-queue remains an open recall gap, not a split
   problem.
 
+- **C conditional include-switchboard ungate** (tinyusb 3.1 target):
+  split-by-conditional-block + names-tier pricing + ungate measured
+  tinyusb 0.530 → 0.504 — the host block surfaces early but
+  displaces README-aligned content; the 665-tok device block still
+  misses 3K. Plain-list gating confirmed right.
+- **C non-essential source names floor 0.5** (krep test rosters):
+  unguarded costs neco −0.031; with a ≥4-decl guard exactly flat —
+  the target rosters stay at ~8K regardless. The floor can't beat
+  the 0.2 non-essential damp's distance from the frontier.
+
 ## Walker / value open items
+
+- **Config-surface header role (bareiron/tinyusb class, diagnosed
+  2026-07-18, unimplemented)**: macro-dense headers with
+  comment-annotated object-like config runs and few function decls
+  (bareiron globals.h — late mass 0.479, oracle has the atoms; also
+  tusb_option.h). Failure shape: PlayerData body is one 498-tok
+  atomic decl (no blank-line groups → aggregate splitter inert),
+  config comments are separate low-value DeclDoc batches, macros
+  split across name chunks. Candidate: class-based bounded value
+  floor on such headers' aggregate + config-doc batches; must be
+  measured against enum-like constant catalogs first.
 
 - **Split-batch invariant: a descendant must not emit Ellipsis records
   on lines its ancestor renders as content (codex adversarial finding,
