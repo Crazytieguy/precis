@@ -186,10 +186,7 @@ impl<W: Walker> Scheduler<W> {
         // batch that doesn't fit (no fallback to smaller batches).
         {
             crate::time_span!("scheduler_loop");
-            loop {
-                let Some((id, cost)) = self.best_exact() else {
-                    break;
-                };
+            while let Some((id, cost)) = self.best_exact() {
                 if !self.fits(cost) {
                     break;
                 }
