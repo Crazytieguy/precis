@@ -3,8 +3,9 @@ use clap::Parser;
 use std::path::PathBuf;
 
 /// Claude Code hook `additionalContext` is capped at 10,000 bytes.
-/// The plugin wrapper adds ~400 bytes of header/help/fences around precis output.
-const PLUGIN_BYTE_BUDGET: usize = 9500;
+/// The plugin wrapper adds header/help/fences around precis output —
+/// 570 bytes measured; the margin below absorbs help-text drift.
+const PLUGIN_BYTE_BUDGET: usize = 9350;
 
 #[derive(Parser)]
 #[command(about = "Extract a token-efficient summary of a directory", version)]
