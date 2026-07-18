@@ -327,13 +327,16 @@ pub enum PlaintextKey {
     /// Whole-file render. Skipped when line count or rendered token
     /// cost exceeds the walker's caps. For split classes (dotenv
     /// samples, long Dockerfiles) this key carries the head slice
-    /// instead, with the rest under [`PlaintextKey::Tail`].
+    /// instead, with the rest under [`PlaintextKey::DotenvChunk`] or
+    /// [`PlaintextKey::Tail`].
     Whole { file: PathBuf },
-    /// Rows complementary to a head-shaped `Whole` batch — dotenv
-    /// samples: the optional-settings roster after the mandatory head;
-    /// Dockerfiles: the build-mechanics body interleaved between the
-    /// head's contract lines.
+    /// Dockerfile build-mechanics rows complementary to the contract
+    /// lines carried by a head-shaped `Whole` batch.
     Tail { file: PathBuf },
+    /// Source-ordered chunk of a long dotenv sample's optional-settings
+    /// tail. Chunks form a predecessor chain after [`PlaintextKey::Whole`]
+    /// so later config groups cannot render before earlier ones.
+    DotenvChunk { file: PathBuf, chunk_index: usize },
     /// `NAME` + `DESCRIPTION`-lede slice of a troff man page — the
     /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
     /// (or autotools `*.1.in`) manual.
@@ -921,6 +924,13 @@ impl InnerKey for PlaintextKey {
             }
             PlaintextKey::Tail { file } => {
                 format!("plaintext config tail of {}", display_path(file, root))
+            }
+            PlaintextKey::DotenvChunk { file, chunk_index } => {
+                format!(
+                    "plaintext dotenv tail chunk #{} of {}",
+                    chunk_index + 1,
+                    display_path(file, root),
+                )
             }
             PlaintextKey::ManLede { file } => {
                 format!(
