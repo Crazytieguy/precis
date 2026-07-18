@@ -141,16 +141,17 @@ chibicc.h
      171→  char **label;
      172→  long addend;
      173→};
-    …
+     175→// AST node
      176→typedef enum {
     …
      225→} NodeKind;
-    …
+     227→// AST node type
      228→struct Node {
      229→  NodeKind kind; // Node kind
      230→  Node *next;    // Next node
      231→  Type *ty;      // Type, e.g. int or pointer to int
      232→  Token *tok;    // Representative token
+     233→
      234→  Node *lhs;     // Left-hand side
      235→  Node *rhs;     // Right-hand side
     …

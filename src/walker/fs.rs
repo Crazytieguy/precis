@@ -472,10 +472,7 @@ fn is_large_root_test_inventory_dir(
     let Some(name) = dir.file_name().and_then(|n| n.to_str()) else {
         return false;
     };
-    if !matches!(
-        name.to_ascii_lowercase().as_str(),
-        "test" | "tests" | "spec" | "specs"
-    ) {
+    if !is_test_dir_name(name) {
         return false;
     }
     let catalog_files = children
@@ -562,5 +559,13 @@ pub(crate) fn should_skip_dir(name: &str) -> bool {
     matches!(
         name,
         "target" | "node_modules" | ".git" | "dist" | "build" | ".next" | "__pycache__"
+    )
+}
+
+/// A `test`/`tests`/`spec`/`specs` directory name, case-insensitive.
+pub(crate) fn is_test_dir_name(name: &str) -> bool {
+    matches!(
+        name.to_ascii_lowercase().as_str(),
+        "test" | "tests" | "spec" | "specs"
     )
 }

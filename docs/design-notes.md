@@ -474,6 +474,29 @@ worst −0.004. Calibration knowledge from the tuning loop:
   README delivery but the chunks still price past the 3K frontier.
   Their gains show up at 5–7K rows.
 
+## C-cluster session (2026-07-18): crumb coalescing + dominant-binary roster
+
+Two shipped C-walker changes, mean 0.6029 → 0.6034:
+
+- **Struct field-group crumb coalescing** (+0.0003; htop +0.025,
+  chibicc −0.004 at 3K but up at every later NS row): merge adjacent
+  blank-line field groups below `AGGREGATE_STRUCT_GROUP_MIN_ROWS` (5)
+  content rows. 1–2-line crumbs are near-free and queue-jump the
+  `value/cost^0.35` race. MIN swept 4/5/6: 4 leaves htop confetti
+  partially intact; 5 ≡ 6.
+- **Dominant-binary names-surface promotion** (+0.0002; krep +0.010
+  at 3K, larger gains at 5–6K): a non-test `.c` with ≥60% of C source
+  lines *and* a default-configuration `main` prices its DeclNames at
+  the header tier. Measured guards: (a) library variant (no main
+  gate) → neco −0.230 / sds −0.004 — a dominant *library* impl must
+  not out-bid its API header; (b) main polarity matters — sds's
+  `#ifdef SDS_TEST_MAIN` main is not a binary marker, krep's
+  `#if !defined(TESTING)` is; (c) promoting `decl_value` too is a
+  no-op on the gated set (train rows are ~free once the surface
+  lands); (d) extending `roster_mass_factor` to the dominant file:
+  krep 0.384 → 0.377 — earlier arrival displaces NS-wanted README
+  orientation.
+
 ## Extreme-budget contract sweep (2026-07-06): corpus clean
 
 `for f in tests/fixtures/*/; do cargo run -q -- --budget 1000000 $f;
