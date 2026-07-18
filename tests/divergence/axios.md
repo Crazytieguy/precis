@@ -188,15 +188,17 @@ Score(3000)=0.665 I=0.852 C=0.519 ns_rows≤3K=21/40 (reached=13 partial=1 missi
 | walker |  | 5860 | 0 | export at index.d.ts:366 |  |  | 0.630 |
 | walker |  | 5860 | 0 | export at index.d.ts:461 |  |  | 0.630 |
 | walker |  | 5860 | 0 | export at index.d.ts:713 |  |  | 0.630 |
-| walker |  | 6004 | 144 | export member names at index.d.ts:461 |  |  | 0.630 |
 | ns | 6074 |  | 937 | lib/core/mergeConfig.js — part 1 (null-proto result object + per-strategy merge helper fns) | 3.4 |  | 0.591 |
-| walker |  | 6196 | 192 | export member names at index.d.ts:713 |  |  | 0.591 |
-| walker |  | 6209 | 13 | export at index.d.ts:476 |  |  | 0.591 |
-| walker |  | 6221 | 12 | export at index.d.ts:535 |  |  | 0.591 |
-| walker |  | 6235 | 14 | export at index.d.ts:457 |  |  | 0.591 |
-| walker |  | 6249 | 14 | export at index.d.ts:545 |  |  | 0.591 |
-| ns | 6710 |  | 636 | lib/core/mergeConfig.js — part 2 (per-key mergeMap table + apply loop) | 3.5 |  | 0.572 |
-| walker |  | 6928 | 679 | export member names at index.d.ts:366 |  |  | 0.612 |
+| walker |  | 6120 | 260 | export member names #1 at index.d.ts:366 |  |  | 0.611 |
+| walker |  | 6264 | 144 | export member names at index.d.ts:461 |  |  | 0.611 |
+| walker |  | 6456 | 192 | export member names at index.d.ts:713 |  |  | 0.611 |
+| walker |  | 6469 | 13 | export at index.d.ts:476 |  |  | 0.611 |
+| walker |  | 6481 | 12 | export at index.d.ts:535 |  |  | 0.611 |
+| ns | 6710 |  | 636 | lib/core/mergeConfig.js — part 2 (per-key mergeMap table + apply loop) | 3.5 |  | 0.591 |
+| walker |  | 6729 | 248 | export member names #2 at index.d.ts:366 |  |  | 0.605 |
+| walker |  | 6743 | 14 | export at index.d.ts:457 |  |  | 0.605 |
+| walker |  | 6757 | 14 | export at index.d.ts:545 |  |  | 0.605 |
+| walker |  | 6928 | 171 | export member names #3 at index.d.ts:366 |  |  | 0.612 |
 | walker |  | 6944 | 16 | export at index.d.ts:541 |  |  | 0.612 |
 | walker |  | 6963 | 19 | export at index.d.ts:6 |  |  | 0.612 |
 | walker |  | 6982 | 19 | export at index.d.ts:154 |  |  | 0.612 |

@@ -48,7 +48,10 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TsKey};
 use crate::content::{BatchContent, Render, Span};
-use crate::value::{mix_signals, reexport_import_chunk_factor, roster_mass_factor};
+use crate::render::RenderedTree;
+use crate::value::{
+    mix_signals, names_surface_chunk_factor, reexport_import_chunk_factor, roster_mass_factor,
+};
 
 use super::import_chunks::{
     ImportGroup, REEXPORT_IMPORT_MAX_OTHER_LINES, REEXPORT_IMPORT_MAX_OTHER_STATEMENTS,
@@ -72,6 +75,13 @@ const JS_CLASS_MEMBER_SPLIT_MIN: usize = 12;
 /// this, the per-method `ExportMember` batches dominate the early
 /// budget on concavity without satisfying any catalog-shape NS row.
 const JS_CLASS_MEMBER_SPLIT_MAX: usize = 40;
+/// A unified member catalog above this rendered cost is outside the
+/// early NS authoring envelope and loses the purchase race as a slab.
+const MEMBER_CATALOG_SPLIT_TOKENS: usize = 450;
+/// Greedy rendered-token target for source-order catalog partitions.
+const MEMBER_CATALOG_CHUNK_TARGET_TOKENS: usize = 250;
+/// Avoid creating a final crumb when a catalog barely crosses a cut.
+const MEMBER_CATALOG_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 /// Minimum prototype-method assignments in a JS file for the synthesized
 /// per-method exports to fire. Below this floor a couple incidental
 /// `thing.helper = function …` lines shouldn't hijack the file shape.
@@ -364,7 +374,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 } else {
                     member_names_catalog_lines(item.kind, item.decl, &source)
                 };
-                let export_lines = if split_js_class || member_names_catalog.is_some() {
+                let member_catalog_chunks = member_names_catalog
+                    .as_ref()
+                    .map(|catalog| member_names_catalog_chunks(file, &source, catalog, ctx));
+                let partitioned_member_catalog = member_catalog_chunks
+                    .as_ref()
+                    .is_some_and(|chunks| chunks.len() > 1);
+                let mut export_lines = if split_js_class || member_names_catalog.is_some() {
                     // Catalogued declarations trade the whole-member
                     // surface for a cheap header; the members arrive via
                     // the gated `ExportMemberNames` catalog instead.
@@ -377,6 +393,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 } else {
                     decl_surface_lines(item.kind, item.anchor, item.decl, &source, true)
                 };
+                if partitioned_member_catalog {
+                    // Oversized catalog chunks are siblings of this header,
+                    // all gated by ExportNames. Keep the header disjoint from
+                    // them instead of placing its courtesy ellipsis on the
+                    // first member line.
+                    export_lines.ellipses.clear();
+                }
                 let mut doc_lines = Vec::new();
                 collect_jsdoc_above(
                     item.anchor,
@@ -406,31 +429,71 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 // budget, and a sibling body batch could collide with
                 // the catalog's ellipsis markers (non-ancestor overlap).
                 let mut body_parts_predecessor = export_predecessor.clone();
-                if let Some(member_catalog) = member_names_catalog {
+                if let (Some(member_catalog), Some(member_catalog_chunks)) =
+                    (member_names_catalog, member_catalog_chunks)
+                {
                     let member_count = member_catalog.lines.full.len();
-                    let content = if member_catalog.truncate_to_name {
-                        truncated_member_names_content(file, &source, &member_catalog.lines)
+                    if member_catalog_chunks.len() == 1 {
+                        let content = member_names_catalog_content(
+                            file,
+                            &source,
+                            &member_catalog_chunks[0],
+                            member_catalog.truncate_to_name,
+                        );
+                        if let Some(content) = content {
+                            let key = TsKey::ExportMemberNames {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                            };
+                            out.push(Batch {
+                                key: key.clone().into(),
+                                predecessor: Some(export_predecessor.clone()),
+                                content,
+                                value: export_member_names_value(
+                                    file,
+                                    item.kind,
+                                    ctx,
+                                    js_factor,
+                                    member_count,
+                                    0,
+                                    1,
+                                ) * contract_roster_factor(true),
+                            });
+                            body_parts_predecessor = BatchKey::Typescript(key);
+                        }
                     } else {
-                        single_file_lines_content(file, &source, member_catalog.lines)
-                    };
-                    if let Some(content) = content {
-                        let key = TsKey::ExportMemberNames {
-                            file: file.clone(),
-                            start_line: item.start_line,
-                        };
-                        out.push(Batch {
-                            key: key.clone().into(),
-                            predecessor: Some(export_predecessor.clone()),
-                            content,
-                            value: export_member_names_value(
+                        let chunk_predecessor = names_gate
+                            .clone()
+                            .unwrap_or_else(|| export_predecessor.clone());
+                        for (chunk_index, lines) in member_catalog_chunks.iter().enumerate() {
+                            let Some(content) = member_names_catalog_content(
                                 file,
-                                item.kind,
-                                ctx,
-                                js_factor,
-                                member_count,
-                            ) * contract_roster_factor(true),
-                        });
-                        body_parts_predecessor = BatchKey::Typescript(key);
+                                &source,
+                                lines,
+                                member_catalog.truncate_to_name,
+                            ) else {
+                                continue;
+                            };
+                            let key = TsKey::ExportMemberNamesChunk {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                                chunk_index,
+                            };
+                            out.push(Batch {
+                                key: key.into(),
+                                predecessor: Some(chunk_predecessor.clone()),
+                                content,
+                                value: export_member_names_value(
+                                    file,
+                                    item.kind,
+                                    ctx,
+                                    js_factor,
+                                    member_count,
+                                    chunk_index,
+                                    member_catalog_chunks.len(),
+                                ) * contract_roster_factor(true),
+                            });
+                        }
                     }
                 }
                 if split_js_class {
@@ -2144,8 +2207,12 @@ fn export_member_names_value(
     ctx: &WalkCtx,
     js_factor: f64,
     member_count: usize,
+    chunk_index: usize,
+    chunk_count: usize,
 ) -> f64 {
-    export_member_value(file, kind, ctx, js_factor) * roster_mass_factor(member_count)
+    export_member_value(file, kind, ctx, js_factor)
+        * roster_mass_factor(member_count)
+        * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 
 /// Module-private classes carry per-method query value (constructors,
@@ -2766,6 +2833,76 @@ fn truncated_member_names_content(
     } else {
         Some(BatchContent::Lines { spans })
     }
+}
+
+fn member_names_catalog_content(
+    file: &Path,
+    source: &str,
+    lines: &FileLines,
+    truncate_to_name: bool,
+) -> Option<BatchContent> {
+    if truncate_to_name {
+        truncated_member_names_content(file, source, lines)
+    } else {
+        single_file_lines_content(file, source, lines.clone())
+    }
+}
+
+/// Keep affordable catalogs unified. Above the early-purchase envelope,
+/// partition at member boundaries in source order so every member appears
+/// exactly once and each slice can compete independently.
+fn member_names_catalog_chunks(
+    file: &Path,
+    source: &str,
+    catalog: &MemberNamesCatalog,
+    ctx: &WalkCtx,
+) -> Vec<FileLines> {
+    let Some(whole) =
+        member_names_catalog_content(file, source, &catalog.lines, catalog.truncate_to_name)
+    else {
+        return Vec::new();
+    };
+    let fresh_tree = || RenderedTree::new(ctx.root().to_path_buf(), ctx.source_cache().clone());
+    let cost = |lines: &FileLines| {
+        member_names_catalog_content(file, source, lines, catalog.truncate_to_name)
+            .map(|content| fresh_tree().marginal_cost(&content).tokens)
+            .unwrap_or(0)
+    };
+    if fresh_tree().marginal_cost(&whole).tokens <= MEMBER_CATALOG_SPLIT_TOKENS {
+        return vec![catalog.lines.clone()];
+    }
+
+    let mut chunks = Vec::new();
+    let mut current = FileLines::default();
+    for (member_index, &line) in catalog.lines.full.iter().enumerate() {
+        current.full.push(line);
+        current.ellipses.extend(
+            catalog
+                .lines
+                .ellipses
+                .iter()
+                .copied()
+                .filter(|e| *e == line + 1),
+        );
+        let members_remain = member_index + 1 < catalog.lines.full.len();
+        if members_remain && cost(&current) >= MEMBER_CATALOG_CHUNK_TARGET_TOKENS {
+            chunks.push(std::mem::take(&mut current));
+        }
+    }
+    if !current.full.is_empty() {
+        chunks.push(current);
+    }
+    if chunks.len() > 1
+        && chunks
+            .last()
+            .is_some_and(|tail| cost(tail) < MEMBER_CATALOG_CHUNK_MIN_TAIL_TOKENS)
+    {
+        let tail = chunks.pop().expect("tail checked above");
+        let previous = chunks.last_mut().expect("multiple chunks checked above");
+        previous.full.extend(tail.full);
+        previous.ellipses.extend(tail.ellipses);
+    }
+    chunks
 }
 
 fn class_member_infos(class_decl: Node, src_lines: &[&str]) -> Vec<ClassMemberInfo> {
@@ -3715,6 +3852,62 @@ mod tests {
             .find(|b| b.key == catalog_key)
             .expect("expected unified member-name catalog");
         assert_eq!(catalog.predecessor.as_ref(), Some(&export_key));
+        assert!(!report.candidates.iter().any(|batch| matches!(
+            batch.key,
+            BatchKey::Typescript(TsKey::ExportMemberNamesChunk { .. })
+        )));
+    }
+
+    #[test]
+    fn walker_typescript_oversized_member_catalog_is_partitioned() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut src = String::from("export class Command {\n");
+        for index in 0..80 {
+            src.push_str(&format!(
+                "  configure_with_a_descriptive_public_method_name_{index}() {{ return {index}; }}\n"
+            ));
+        }
+        src.push_str("}\n");
+        let file = root.join("catalog.js");
+        std::fs::write(&file, src).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 100_000, None);
+        let report = scheduler.run_with_report();
+        let names_key = BatchKey::Typescript(TsKey::ExportNames { file: file.clone() });
+        let chunks: Vec<_> = report
+            .candidates
+            .iter()
+            .filter(|batch| {
+                matches!(
+                    batch.key,
+                    BatchKey::Typescript(TsKey::ExportMemberNamesChunk { .. })
+                )
+            })
+            .collect();
+        assert!(chunks.len() > 1, "expected multiple catalog partitions");
+        assert!(
+            chunks
+                .iter()
+                .all(|chunk| chunk.predecessor.as_ref() == Some(&names_key))
+        );
+        assert!(!report.candidates.iter().any(|batch| matches!(
+            batch.key,
+            BatchKey::Typescript(TsKey::ExportMemberNames { .. })
+        )));
+
+        let mut covered = HashSet::new();
+        for chunk in chunks {
+            let BatchContent::Lines { spans } = &chunk.content else {
+                panic!("member catalog partition must contain lines");
+            };
+            for span in spans {
+                for line in span.start..=span.end {
+                    assert!(covered.insert(line), "partition overlap at line {line}");
+                }
+            }
+        }
+        assert_eq!(covered.len(), 80, "partitions must cover every member");
     }
 
     #[test]
