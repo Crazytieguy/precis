@@ -322,6 +322,27 @@ fn is_literal_make_target(name: &str) -> bool {
         })
 }
 
+fn is_make_target_specific_assignment(rhs: &str) -> bool {
+    let rhs = rhs
+        .strip_prefix("private")
+        .filter(|rest| rest.starts_with(char::is_whitespace))
+        .unwrap_or(rhs)
+        .trim_start();
+    let Some(operator_at) = [":=", "?=", "+=", "="]
+        .into_iter()
+        .filter_map(|operator| rhs.find(operator))
+        .min()
+    else {
+        return false;
+    };
+    let name = rhs[..operator_at].trim();
+    !name.is_empty()
+        && !name.chars().any(char::is_whitespace)
+        && !name
+            .chars()
+            .any(|ch| matches!(ch, '$' | '%' | '/' | '\\' | ':' | ';'))
+}
+
 fn makefile_target(line: &str) -> Option<(Vec<String>, String)> {
     if line.starts_with(char::is_whitespace) || line.trim_start().starts_with('#') {
         return None;
@@ -330,13 +351,15 @@ fn makefile_target(line: &str) -> Option<(Vec<String>, String)> {
     let colon = text.find(':')?;
     let lhs = text[..colon].trim();
     let rhs = text[colon + 1..].trim();
-    // Target-specific assignments, static-pattern rules, and inline
-    // recipes are not target/dependency skeleton rows.
-    if rhs.contains(':')
-        || rhs.contains(';')
-        || [":=", "?=", "+=", "!=", "="]
-            .into_iter()
-            .any(|operator| rhs.contains(operator))
+    // Target-specific variable assignments are valid user-invokable
+    // targets. Static-pattern rules and inline recipes are not skeleton
+    // rows; nor are arbitrary dependency strings containing assignments.
+    if rhs.contains(';')
+        || (!is_make_target_specific_assignment(rhs)
+            && (rhs.contains(':')
+                || ["?=", "+=", "!=", "="]
+                    .into_iter()
+                    .any(|operator| rhs.contains(operator))))
     {
         return None;
     }
@@ -1294,7 +1317,23 @@ test: $(TEST_DEPS)
             .into_iter()
             .flatten()
             .collect();
-        assert_eq!(selected, vec![1, 2, 4, 6, 7, 15, 17]);
+        assert_eq!(selected, vec![1, 2, 4, 6, 7, 13, 15, 17]);
+    }
+
+    #[test]
+    fn plaintext_makefile_skeleton_keeps_target_specific_assignment_operators() {
+        let source = "\
+plain: MODE = debug
+simple: MODE := release
+append: CFLAGS += -DTEST
+default: TOOLCHAIN ?= stable
+scoped: private MODE := release
+";
+        let selected: Vec<usize> = makefile_skeleton_items(source)
+            .into_iter()
+            .flatten()
+            .collect();
+        assert_eq!(selected, vec![1, 2, 3, 4, 5]);
     }
 
     #[test]

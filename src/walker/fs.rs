@@ -56,10 +56,15 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str]) -> Vec<PathBuf> {
     let mut out: Vec<PathBuf> = read_dir
         .flatten()
         .filter_map(|e| {
-            let path = e.path();
-            if !path.is_file() {
+            // `Path::is_file` follows symlinks. Extension discovery feeds
+            // whole-file readers as well as parsers, so admitting a link
+            // here could render content outside the walk root. Use the
+            // directory entry's non-following type and reject symlinks
+            // uniformly before any metadata or source read.
+            if !e.file_type().ok()?.is_file() {
                 return None;
             }
+            let path = e.path();
             let actual = path.extension().and_then(|e| e.to_str())?;
             exts.iter()
                 .any(|ext| actual.eq_ignore_ascii_case(ext))

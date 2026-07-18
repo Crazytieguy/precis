@@ -589,7 +589,118 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 // budget, and a sibling body batch could collide with
                 // the catalog's ellipsis markers (non-ancestor overlap).
                 let mut body_parts_predecessor = oversized_tail_predecessor;
-                if let (Some(member_catalog), Some(member_catalog_chunks)) =
+                if let Some(documented_member_plan) = documented_member_plan {
+                    let catalog_contents: Vec<(usize, BatchContent)> =
+                        if let (Some(catalog), Some(chunks)) = (
+                            member_names_catalog.as_ref(),
+                            member_catalog_chunks.as_ref(),
+                        ) {
+                            chunks
+                                .iter()
+                                .enumerate()
+                                .filter_map(|(chunk_index, lines)| {
+                                    member_names_catalog_content(
+                                        file,
+                                        &source,
+                                        lines,
+                                        catalog.truncate_to_name,
+                                    )
+                                    .map(|content| (chunk_index, content))
+                                })
+                                .collect()
+                        } else {
+                            Vec::new()
+                        };
+                    let doc_contents: Vec<(usize, BatchContent)> = documented_member_plan
+                        .chunks
+                        .iter()
+                        .enumerate()
+                        .filter_map(|(chunk_index, lines)| {
+                            single_file_lines_content(file, &source, lines.clone())
+                                .map(|content| (chunk_index, content))
+                        })
+                        .collect();
+                    // A mixed declaration is one member surface, even when
+                    // documented members become slices and undocumented
+                    // members remain a residual catalog. Allocate one
+                    // declaration-level value across every emitted piece;
+                    // conserving each group independently would award the
+                    // declaration two complete catalog bases.
+                    let costs: Vec<usize> = catalog_contents
+                        .iter()
+                        .chain(&doc_contents)
+                        .map(|(_, content)| ctx.marginal_tokens(content))
+                        .collect();
+                    let surface_factors =
+                        conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT);
+                    let catalog_piece_count = catalog_contents.len();
+                    let total_member_count = documented_member_plan.documented_member_count
+                        + member_names_catalog
+                            .map(|catalog| catalog.lines.full.len())
+                            .unwrap_or(0);
+                    let mut factors = surface_factors.into_iter();
+                    let chunk_predecessor = names_gate
+                        .clone()
+                        .unwrap_or_else(|| export_predecessor.clone());
+                    for (chunk_index, content) in catalog_contents {
+                        let key = if catalog_piece_count == 1 {
+                            TsKey::ExportMemberNames {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                            }
+                        } else {
+                            TsKey::ExportMemberNamesChunk {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                                chunk_index,
+                            }
+                        };
+                        let predecessor = if catalog_piece_count == 1 {
+                            export_predecessor.clone()
+                        } else {
+                            chunk_predecessor.clone()
+                        };
+                        let chunk_factor = factors.next().expect("catalog factor");
+                        out.push(Batch {
+                            key: key.clone().into(),
+                            predecessor: Some(predecessor),
+                            content,
+                            value: export_member_names_value(
+                                file,
+                                item.kind,
+                                ctx,
+                                js_factor,
+                                total_member_count,
+                                chunk_factor,
+                            ),
+                        });
+                        if catalog_piece_count == 1 {
+                            body_parts_predecessor = BatchKey::Typescript(key);
+                        }
+                    }
+                    for (chunk_index, content) in doc_contents {
+                        let chunk_factor = factors.next().expect("documented-member factor");
+                        out.push(Batch {
+                            key: TsKey::ExportMemberDoc {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                                chunk_index,
+                            }
+                            .into(),
+                            predecessor: Some(export_predecessor.clone()),
+                            content,
+                            value: export_member_names_value(
+                                file,
+                                item.kind,
+                                ctx,
+                                js_factor,
+                                total_member_count,
+                                chunk_factor,
+                            ),
+                        });
+                    }
+                    debug_assert!(factors.next().is_none());
+                } else if let (Some(member_catalog), Some(member_catalog_chunks)) =
                     (member_names_catalog, member_catalog_chunks)
                 {
                     let member_count = member_catalog.lines.full.len();
@@ -667,45 +778,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                                 ) * contract_roster_factor(true),
                             });
                         }
-                    }
-                }
-                if let Some(documented_member_plan) = documented_member_plan {
-                    let chunk_contents: Vec<(usize, BatchContent)> = documented_member_plan
-                        .chunks
-                        .iter()
-                        .enumerate()
-                        .filter_map(|(chunk_index, lines)| {
-                            single_file_lines_content(file, &source, lines.clone())
-                                .map(|content| (chunk_index, content))
-                        })
-                        .collect();
-                    let costs: Vec<usize> = chunk_contents
-                        .iter()
-                        .map(|(_, content)| ctx.marginal_tokens(content))
-                        .collect();
-                    let chunk_factors =
-                        conserved_catalog_chunk_factors(&costs, CATALOG_ROSTER_CONCAVITY_EXPONENT);
-                    for ((chunk_index, content), chunk_factor) in
-                        chunk_contents.into_iter().zip(chunk_factors)
-                    {
-                        out.push(Batch {
-                            key: TsKey::ExportMemberDoc {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                                chunk_index,
-                            }
-                            .into(),
-                            predecessor: Some(export_predecessor.clone()),
-                            content,
-                            value: export_member_names_value(
-                                file,
-                                item.kind,
-                                ctx,
-                                js_factor,
-                                documented_member_plan.documented_member_count,
-                                chunk_factor,
-                            ),
-                        });
                     }
                 }
                 if split_js_class {
@@ -4540,6 +4612,39 @@ mod tests {
         assert!(
             docs.iter()
                 .all(|batch| batch.predecessor.as_ref() == Some(&export_key))
+        );
+        assert!(
+            owned.iter().any(|batch| matches!(
+                batch.key,
+                BatchKey::Typescript(TsKey::ExportMemberNames { .. })
+            )),
+            "the undocumented member must form a residual catalog",
+        );
+
+        let member_surface_total: f64 = owned
+            .iter()
+            .filter(|batch| {
+                matches!(
+                    batch.key,
+                    BatchKey::Typescript(
+                        TsKey::ExportMemberDoc { .. }
+                            | TsKey::ExportMemberNames { .. }
+                            | TsKey::ExportMemberNamesChunk { .. }
+                    )
+                )
+            })
+            .map(|batch| batch.value)
+            .sum();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let js_factor = js_value_factor(&file, &ctx)
+            * public_surface_factor(&file, &ctx)
+            * secondary_ts_workspace_member_factor(&file, &ctx);
+        let unsplit_value =
+            export_member_names_value(&file, ItemKind::Interface, &ctx, js_factor, 3, 1.0);
+        assert!(
+            (member_surface_total - unsplit_value).abs() < 1e-9,
+            "mixed residual + documented surfaces must conserve one declaration allocation: \
+             total={member_surface_total}, unsplit={unsplit_value}",
         );
 
         let mut covered = HashSet::new();
