@@ -124,7 +124,7 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | walker |  | 3832 | 113 | pub item at src/command.rs:22 |  |  | 0.642 |
 | walker |  | 3845 | 13 | pub-item doc lede at src/command.rs:22 |  |  | 0.642 |
 | walker |  | 3926 | 81 | man-page NAME + DESCRIPTION in doc/hyperfine.1 |  |  | 0.642 |
-| walker |  | 3965 | 39 | README.md section #4 |  |  | 0.615 |
+| walker |  | 3965 | 39 | README.md section #13 |  |  | 0.615 |
 | ns | 3965 |  | 358 | options.rs — --runs/--min-runs/--max-runs resolution | 3.2 |  | 0.615 |
 | walker |  | 4034 | 69 | pub item at src/benchmark/scheduler.rs:13 |  |  | 0.615 |
 | walker |  | 4133 | 99 | pub item at src/parameter/range_step.rs:7 |  |  | 0.615 |
@@ -171,7 +171,7 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | walker |  | 5997 | 40 | pub item at src/benchmark/relative_speed.rs:98 |  |  | 0.532 |
 | walker |  | 6051 | 54 | pub item at src/benchmark/relative_speed.rs:86 |  |  | 0.532 |
 | walker |  | 6134 | 83 | pub item at src/benchmark/relative_speed.rs:7 |  |  | 0.532 |
-| walker |  | 6188 | 54 | README.md section #7 |  |  | 0.532 |
+| walker |  | 6188 | 54 | README.md section #16 |  |  | 0.532 |
 | ns | 6204 |  | 281 | benchmark/executor.rs — Executor trait | 5.3 |  | 0.520 |
 | walker |  | 6328 | 140 | pub item at src/benchmark/timing_result.rs:5 |  |  | 0.520 |
 | ns | 6456 |  | 252 | benchmark/executor.rs — ShellExecutor shell-spawn-time calibration | 5.4 | 5.3 | 0.506 |
@@ -186,8 +186,8 @@ Score(3000)=0.696 I=0.871 C=0.556 ns_rows≤3K=15/41 (reached=8 partial=1 missin
 | ns | 7642 |  | 243 | benchmark/benchmark_result.rs — remaining fields (min/max/times/memory/exit_codes/parameters) | 6.4 | 6.3 | 0.467 |
 | ns | 7800 |  | 158 | output/format.rs — automatic time-unit selection thresholds | 6.5 |  | 0.464 |
 | walker |  | 7876 | 269 | pub item at src/benchmark/executor.rs:35 |  |  | 0.493 |
-| walker |  | 7950 | 74 | README.md section #8 |  |  | 0.493 |
-| walker |  | 8032 | 82 | README.md section #6 |  |  | 0.493 |
+| walker |  | 7950 | 74 | README.md section #17 |  |  | 0.493 |
+| walker |  | 8032 | 82 | README.md section #15 |  |  | 0.493 |
 | ns | 8061 |  | 261 | export/mod.rs — ExportType enum + Exporter trait | 7.1 |  | 0.492 |
 | walker |  | 8362 | 330 | mod/use plumbing in src/benchmark/mod.rs |  |  | 0.492 |
 | ns | 8372 |  | 311 | export/json.rs — full file | 7.2 |  | 0.480 |

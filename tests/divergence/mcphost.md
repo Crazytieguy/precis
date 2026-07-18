@@ -110,7 +110,7 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | ns | 1998 |  | 44 | cmd/root.go rootCmd identity (Use/Short) | 4.2 | 4.1 | 0.685 |
 | walker |  | 2015 | 48 | README.md section #31 |  |  | 0.685 |
 | walker |  | 2049 | 34 | go decl doc at sdk/types.go:24 |  |  | 0.685 |
-| walker |  | 2089 | 40 | README.md section #38 |  |  | 0.685 |
+| walker |  | 2089 | 40 | README.md section #61 |  |  | 0.685 |
 | ns | 2107 |  | 109 | cmd/root.go: hidden Ollama-only flags | 4.3 | 4.1 | 0.678 |
 | walker |  | 2109 | 20 | README.md section #19 |  |  | 0.678 |
 | walker |  | 2166 | 57 | go decl names surface in internal/config/merger.go |  |  | 0.678 |
@@ -188,7 +188,7 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | walker |  | 4700 | 33 | go decl doc at internal/ui/factory.go:13 |  |  | 0.596 |
 | walker |  | 4764 | 64 | go decl at internal/models/models_data.go:7 |  |  | 0.596 |
 | walker |  | 4776 | 12 | go decl doc at internal/models/models_data.go:7 |  |  | 0.596 |
-| walker |  | 4834 | 58 | README.md section #36 |  |  | 0.596 |
+| walker |  | 4834 | 58 | README.md section #59 |  |  | 0.596 |
 | walker |  | 4868 | 34 | go decl doc at internal/models/generate_models.go:50 |  |  | 0.596 |
 | walker |  | 4933 | 65 | go decl at internal/hooks/config.go:21 |  |  | 0.596 |
 | walker |  | 4946 | 13 | sdk/README.md section #15 |  |  | 0.596 |
@@ -202,7 +202,7 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | walker |  | 5111 | 9 | go decl body at internal/ui/tool_approval_input.go:48 |  |  | 0.596 |
 | walker |  | 5126 | 15 | go decl doc at internal/ui/fuzzy.go:117 |  |  | 0.596 |
 | ns | 5178 |  | 509 | README: Builtin Servers config shape + available builtin names | 5.4 | 5.1 | 0.567 |
-| walker |  | 5192 | 66 | README.md section #39 |  |  | 0.567 |
+| walker |  | 5192 | 66 | README.md section #62 |  |  | 0.567 |
 | walker |  | 5405 | 213 | go decl names surface in sdk/mcphost.go |  |  | 0.567 |
 | walker |  | 5405 | 0 | go decl at sdk/mcphost.go:40 |  |  | 0.567 |
 | walker |  | 5405 | 0 | go decl at sdk/mcphost.go:130 |  |  | 0.567 |
@@ -352,7 +352,7 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | ns | 9268 |  | 79 | internal/auth/credentials.go: API key precedence order | 11.1 |  | 0.429 |
 | walker |  | 9296 | 38 | go decl doc at internal/ui/spinner.go:149 |  |  | 0.429 |
 | walker |  | 9348 | 52 | go decl doc at internal/ui/spinner.go:16 |  |  | 0.429 |
-| walker |  | 9440 | 92 | README.md section #37 |  |  | 0.429 |
+| walker |  | 9440 | 92 | README.md section #60 |  |  | 0.429 |
 | walker |  | 9501 | 61 | go decl doc at internal/hooks/schemas.go:32 |  |  | 0.429 |
 | walker |  | 9553 | 52 | go decl doc at internal/config/merger.go:13 |  |  | 0.429 |
 | walker |  | 9573 | 20 | sdk/README.md section #9 |  |  | 0.429 |

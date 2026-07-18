@@ -241,18 +241,26 @@ kind = "full"
 
 [[batches]]
 position = 13
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #0"
-cost_tokens = 147
-cum_tokens = 643
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 141
+cum_tokens = 637
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 26
-end = 28
+path = "pyproject.toml"
+start = 18
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 53
+end = 56
 
 [batches.content.spans.render]
 kind = "full"
@@ -262,7 +270,7 @@ position = 14
 key = 'Fs(DirListing { dir: "src/requests" })'
 descriptor = "listing of 'src/requests'"
 cost_tokens = 90
-cum_tokens = 733
+cum_tokens = 727
 
 [batches.content]
 kind = "fs"
@@ -276,7 +284,7 @@ position = 15
 key = 'Python(Imports { file: "src/requests/__init__.py" })'
 descriptor = "python imports in src/requests/__init__.py"
 cost_tokens = 1002
-cum_tokens = 1735
+cum_tokens = 1729
 
 [batches.content]
 kind = "lines"
@@ -310,7 +318,7 @@ position = 16
 key = 'Python(DeclNames { file: "src/requests/__init__.py" })'
 descriptor = "python decl names surface in src/requests/__init__.py"
 cost_tokens = 34
-cum_tokens = 1769
+cum_tokens = 1763
 
 [batches.content]
 kind = "lines"
@@ -352,7 +360,7 @@ position = 17
 key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 99 })'
 descriptor = "python decl at src/requests/__init__.py:99"
 cost_tokens = 16
-cum_tokens = 1785
+cum_tokens = 1779
 
 [batches.content]
 kind = "lines"
@@ -370,7 +378,7 @@ position = 18
 key = 'Fs(DirListing { dir: "docs/community" })'
 descriptor = "listing of 'docs/community'"
 cost_tokens = 38
-cum_tokens = 1823
+cum_tokens = 1817
 
 [batches.content]
 kind = "fs"
@@ -384,7 +392,7 @@ position = 19
 key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 60 })'
 descriptor = "python decl at src/requests/__init__.py:60"
 cost_tokens = 47
-cum_tokens = 1870
+cum_tokens = 1864
 
 [batches.content]
 kind = "lines"
@@ -402,7 +410,7 @@ position = 20
 key = 'Python(Imports { file: "setup.py" })'
 descriptor = "python imports in setup.py"
 cost_tokens = 20
-cum_tokens = 1890
+cum_tokens = 1884
 
 [batches.content]
 kind = "lines"
@@ -425,36 +433,10 @@ kind = "full"
 
 [[batches]]
 position = 21
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 141
-cum_tokens = 2031
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 18
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 53
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
 cost_tokens = 63
-cum_tokens = 2094
+cum_tokens = 1947
 
 [batches.content]
 kind = "lines"
@@ -468,11 +450,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 43
-cum_tokens = 2137
+cum_tokens = 1990
 
 [batches.content]
 kind = "fs"
@@ -482,11 +464,11 @@ parent = ".github"
 entries = ["CODEOWNERS", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "FUNDING.yml", "ISSUE_TEMPLATE", "ISSUE_TEMPLATE.md", "SECURITY.md", "dependabot.yml", "workflows"]
 
 [[batches]]
-position = 24
+position = 23
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 41
-cum_tokens = 2178
+cum_tokens = 2031
 
 [batches.content]
 kind = "fs"
@@ -496,11 +478,11 @@ parent = ".github/workflows"
 entries = ["close-issues.yml", "codeql-analysis.yml", "lint.yml", "lock-issues.yml", "publish.yml", "run-tests.yml", "typecheck.yml", "zizmor.yml"]
 
 [[batches]]
-position = 25
+position = 24
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 14
-cum_tokens = 2192
+cum_tokens = 2045
 
 [batches.content]
 kind = "fs"
@@ -510,11 +492,11 @@ parent = ".github/ISSUE_TEMPLATE"
 entries = ["Bug_report.md", "Custom.md", "Feature_request.md"]
 
 [[batches]]
-position = 26
+position = 25
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 356
-cum_tokens = 2548
+cum_tokens = 2401
 
 [batches.content]
 kind = "lines"
@@ -528,11 +510,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Plaintext(Whole { file: "docs/requirements.txt" })'
 descriptor = "plaintext config docs/requirements.txt"
 cost_tokens = 39
-cum_tokens = 2587
+cum_tokens = 2440
 
 [batches.content]
 kind = "lines"
@@ -546,11 +528,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 77
-cum_tokens = 2664
+cum_tokens = 2517
 
 [batches.content]
 kind = "fs"
@@ -560,11 +542,11 @@ parent = "tests"
 entries = ["__init__.py", "certs", "compat.py", "conftest.py", "test_adapters.py", "test_help.py", "test_hooks.py", "test_lowlevel.py", "test_packages.py", "test_requests.py", "test_structures.py", "test_testserver.py", "test_utils.py", "testserver", "utils.py"]
 
 [[batches]]
-position = 29
+position = 28
 key = 'Fs(DirListing { dir: "tests/testserver" })'
 descriptor = "listing of 'tests/testserver'"
 cost_tokens = 10
-cum_tokens = 2674
+cum_tokens = 2527
 
 [batches.content]
 kind = "fs"
@@ -574,11 +556,11 @@ parent = "tests/testserver"
 entries = ["__init__.py", "server.py"]
 
 [[batches]]
-position = 30
+position = 29
 key = 'Fs(DirListing { dir: "tests/certs" })'
 descriptor = "listing of 'tests/certs'"
 cost_tokens = 14
-cum_tokens = 2688
+cum_tokens = 2541
 
 [batches.content]
 kind = "fs"
@@ -588,11 +570,11 @@ parent = "tests/certs"
 entries = ["README.md", "expired", "mtls", "valid"]
 
 [[batches]]
-position = 31
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: true })'
-descriptor = "README.md section #3"
+position = 30
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: true })'
+descriptor = "README.md section #4"
 cost_tokens = 256
-cum_tokens = 2944
+cum_tokens = 2797
 
 [batches.content]
 kind = "lines"
@@ -606,11 +588,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Python(DeclNames { file: "src/requests/help.py" })'
 descriptor = "python decl names surface in src/requests/help.py"
 cost_tokens = 36
-cum_tokens = 2980
+cum_tokens = 2833
 
 [batches.content]
 kind = "lines"
@@ -664,11 +646,11 @@ end = 129
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Python(Decl { file: "src/requests/help.py", start_line: 37 })'
 descriptor = "python decl at src/requests/help.py:37"
 cost_tokens = 0
-cum_tokens = 2980
+cum_tokens = 2833
 
 [batches.content]
 kind = "lines"
@@ -682,11 +664,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Python(Decl { file: "src/requests/help.py", start_line: 69 })'
 descriptor = "python decl at src/requests/help.py:69"
 cost_tokens = 0
-cum_tokens = 2980
+cum_tokens = 2833
 
 [batches.content]
 kind = "lines"
@@ -700,11 +682,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Python(Decl { file: "src/requests/help.py", start_line: 128 })'
 descriptor = "python decl at src/requests/help.py:128"
 cost_tokens = 0
-cum_tokens = 2980
+cum_tokens = 2833
 
 [batches.content]
 kind = "lines"
@@ -718,11 +700,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Python(DeclDoc { file: "src/requests/help.py", start_line: 69 })'
 descriptor = "python decl doc at src/requests/help.py:69"
 cost_tokens = 13
-cum_tokens = 2993
+cum_tokens = 2846
 
 [batches.content]
 kind = "lines"
@@ -736,11 +718,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Python(DeclDoc { file: "src/requests/help.py", start_line: 128 })'
 descriptor = "python decl doc at src/requests/help.py:128"
 cost_tokens = 14
-cum_tokens = 3007
+cum_tokens = 2860
 
 [batches.content]
 kind = "lines"
@@ -754,11 +736,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Python(DeclBody { file: "src/requests/help.py", start_line: 128, body_start_line: 130 })'
 descriptor = "python decl body at src/requests/help.py:128 body 130"
 cost_tokens = 18
-cum_tokens = 3025
+cum_tokens = 2878
 
 [batches.content]
 kind = "lines"
@@ -772,11 +754,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Python(DeclNames { file: "src/requests/status_codes.py" })'
 descriptor = "python decl names surface in src/requests/status_codes.py"
 cost_tokens = 50
-cum_tokens = 3075
+cum_tokens = 2928
 
 [batches.content]
 kind = "lines"
@@ -806,11 +788,11 @@ end = 110
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Python(Decl { file: "src/requests/status_codes.py", start_line: 109 })'
 descriptor = "python decl at src/requests/status_codes.py:109"
 cost_tokens = 0
-cum_tokens = 3075
+cum_tokens = 2928
 
 [batches.content]
 kind = "lines"
@@ -819,6 +801,24 @@ kind = "lines"
 path = "src/requests/status_codes.py"
 start = 109
 end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 147
+cum_tokens = 3075
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 26
+end = 28
 
 [batches.content.spans.render]
 kind = "full"
@@ -2071,8 +2071,8 @@ kind = "full"
 
 [[batches]]
 position = 84
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #2"
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #3"
 cost_tokens = 176
 cum_tokens = 4752
 

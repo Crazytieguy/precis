@@ -87,7 +87,7 @@ Score(3000)=0.671 I=0.884 C=0.510 ns_rows≤3K=20/54 (reached=13 partial=0 missi
 | walker |  | 2221 | 20 | python class body at htmy/renderer/baseline.py:18 |  |  | 0.759 |
 | walker |  | 2244 | 23 | README.md section #1 |  |  | 0.769 |
 | walker |  | 2265 | 21 | README.md section #2 |  |  | 0.787 |
-| walker |  | 2298 | 33 | README.md section #51 |  |  | 0.787 |
+| walker |  | 2298 | 33 | README.md section #52 |  |  | 0.787 |
 | walker |  | 2322 | 24 | README.md section #11 |  |  | 0.797 |
 | walker |  | 2347 | 25 | README.md section #6 |  |  | 0.735 |
 | ns | 2347 |  | 364 | htmy/typing.py -- Component protocols | 2.2 | 2.1 | 0.735 |
@@ -158,7 +158,7 @@ Score(3000)=0.671 I=0.884 C=0.510 ns_rows≤3K=20/54 (reached=13 partial=0 missi
 | walker |  | 3686 | 0 | python method at htmy/snippet.py:265 |  |  | 0.618 |
 | walker |  | 3697 | 11 | python method doc at htmy/snippet.py:241 |  |  | 0.618 |
 | walker |  | 3715 | 18 | python method at htmy/snippet.py:272 |  |  | 0.618 |
-| walker |  | 3772 | 57 | README.md section #49 |  |  | 0.618 |
+| walker |  | 3772 | 57 | README.md section #50 |  |  | 0.618 |
 | walker |  | 3787 | 15 | python method doc at htmy/snippet.py:272 |  |  | 0.618 |
 | ns | 3825 |  | 171 | htmy/tag.py -- _TagImpl.htmy (rendering logic) | 3.1 |  | 0.603 |
 | walker |  | 4004 | 217 | headings outline in docs/index.md |  |  | 0.603 |
@@ -228,7 +228,7 @@ Score(3000)=0.671 I=0.884 C=0.510 ns_rows≤3K=20/54 (reached=13 partial=0 missi
 | walker |  | 5901 | 33 | docs/api/utils.md section #0 |  |  | 0.556 |
 | walker |  | 5941 | 40 | python method doc at htmy/core.py:108 |  |  | 0.556 |
 | ns | 5989 |  | 288 | htmy/html.py -- tag roster: tables (continued), headings & media tags | 3.9 | 3.3 | 0.544 |
-| walker |  | 6011 | 70 | README.md section #48 |  |  | 0.544 |
+| walker |  | 6011 | 70 | README.md section #49 |  |  | 0.544 |
 | walker |  | 6045 | 34 | docs/api/etree.md section #0 |  |  | 0.544 |
 | walker |  | 6079 | 34 | docs/api/function_component.md section #0 |  |  | 0.544 |
 | ns | 6110 |  | 121 | htmy/function_component.py -- module intro & type aliases | 4.1 |  | 0.538 |

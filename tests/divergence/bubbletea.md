@@ -351,31 +351,35 @@ Score(3000)=0.499 I=0.802 C=0.311 ns_rows≤3K=16/48 (reached=5 partial=0 missin
 | ns | 8911 |  | 278 | UPGRADE_GUIDE_V2.md: intro + migration checklist | 8.1 |  | 0.494 |
 | walker |  | 8916 | 155 | go struct field group at tea.go:84 group 149 |  |  | 0.496 |
 | walker |  | 9162 | 246 | headings outline in README.md |  |  | 0.496 |
-| walker |  | 9176 | 14 | README.md section #3 |  |  | 0.496 |
+| walker |  | 9176 | 14 | README.md section #4 |  |  | 0.496 |
 | ns | 9191 |  | 280 | UPGRADE_GUIDE_V2.md: View field table | 8.2 |  | 0.491 |
-| walker |  | 9427 | 251 | README.md section #0 |  |  | 0.507 |
-| ns | 9561 |  | 370 | UPGRADE_GUIDE_V2.md: Key + Mouse field-rename tables | 8.3 |  | 0.500 |
-| walker |  | 9633 | 206 | go decl names surface in options.go |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:17 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:22 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:30 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:40 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:58 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:66 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:76 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:84 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:98 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:133 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:142 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:153 |  |  | 0.512 |
-| walker |  | 9633 | 0 | go decl at options.go:163 |  |  | 0.512 |
-| walker |  | 9657 | 24 | go decl doc at options.go:84 |  |  | 0.512 |
-| walker |  | 9691 | 34 | go decl doc at options.go:30 |  |  | 0.512 |
-| walker |  | 9728 | 37 | go decl doc at options.go:66 |  |  | 0.512 |
-| walker |  | 9755 | 27 | go decl body at options.go:30 |  |  | 0.512 |
-| walker |  | 9812 | 57 | go decl doc at options.go:22 |  |  | 0.512 |
-| walker |  | 9873 | 61 | go decl doc at options.go:40 |  |  | 0.512 |
-| walker |  | 9934 | 61 | go decl doc at options.go:142 |  |  | 0.512 |
-| ns | 9936 |  | 375 | Taskfile.yaml + .golangci.yml | 9.1 |  | 0.499 |
-| ns | 9985 |  | 49 | .github/ subdirectory listings | 9.3 |  | 0.499 |
-| ns | 9994 |  | 9 | LICENSE: license identification | 9.4 |  | 0.499 |
+| walker |  | 9382 | 206 | go decl names surface in options.go |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:17 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:22 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:30 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:40 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:58 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:66 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:76 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:84 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:98 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:133 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:142 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:153 |  |  | 0.503 |
+| walker |  | 9382 | 0 | go decl at options.go:163 |  |  | 0.503 |
+| walker |  | 9406 | 24 | go decl doc at options.go:84 |  |  | 0.503 |
+| walker |  | 9440 | 34 | go decl doc at options.go:30 |  |  | 0.503 |
+| walker |  | 9477 | 37 | go decl doc at options.go:66 |  |  | 0.503 |
+| walker |  | 9504 | 27 | go decl body at options.go:30 |  |  | 0.503 |
+| walker |  | 9561 | 57 | go decl doc at options.go:22 |  |  | 0.496 |
+| ns | 9561 |  | 370 | UPGRADE_GUIDE_V2.md: Key + Mouse field-rename tables | 8.3 |  | 0.496 |
+| walker |  | 9622 | 61 | go decl doc at options.go:40 |  |  | 0.496 |
+| walker |  | 9683 | 61 | go decl doc at options.go:142 |  |  | 0.496 |
+| walker |  | 9756 | 73 | go decl doc at options.go:17 |  |  | 0.496 |
+| walker |  | 9784 | 28 | go decl doc at tty.go:33 |  |  | 0.496 |
+| walker |  | 9870 | 86 | go decl at mod.go:9 |  |  | 0.496 |
+| walker |  | 9876 | 6 | go decl doc at mod.go:9 |  |  | 0.496 |
+| ns | 9936 |  | 375 | Taskfile.yaml + .golangci.yml | 9.1 |  | 0.483 |
+| walker |  | 9937 | 61 | go decl doc at clipboard.go:15 |  |  | 0.483 |
+| ns | 9985 |  | 49 | .github/ subdirectory listings | 9.3 |  | 0.484 |
+| ns | 9994 |  | 9 | LICENSE: license identification | 9.4 |  | 0.483 |

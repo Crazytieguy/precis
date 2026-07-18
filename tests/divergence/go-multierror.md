@@ -105,43 +105,47 @@ Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | walker |  | 3358 | 81 | go decl body at flatten.go:20 |  |  | 0.636 |
 | ns | 3463 |  | 155 | Error.WrappedErrors() | 2.10 | 1.4 | 0.647 |
 | ns | 3483 |  | 20 | Error.GoString() | 2.11 | 1.4 | 0.647 |
-| walker |  | 3556 | 198 | go decl body at prefix.go:16 |  |  | 0.650 |
-| ns | 3834 |  | 351 | Append() doc + *Error branch | 3.1 | 1.5 | 0.623 |
-| walker |  | 3863 | 307 | README.md section #2 |  |  | 0.683 |
-| ns | 3939 |  | 105 | Append() default branch | 3.2 | 3.1 | 0.671 |
-| ns | 4140 |  | 201 | README: building a list of errors (Append usage) | 3.3 |  | 0.650 |
-| walker |  | 4183 | 320 | go decl body at append.go:14 |  |  | 0.720 |
-| walker |  | 4239 | 56 | headings outline in CHANGELOG.md |  |  | 0.721 |
-| walker |  | 4239 | 0 | CHANGELOG.md section #0 |  |  | 0.721 |
-| ns | 4352 |  | 212 | README: migrating basic error aggregation to errors.Join | 3.4 |  | 0.695 |
-| ns | 4385 |  | 33 | ErrorFormatFunc type | 4.1 | 1.5 | 0.697 |
-| ns | 4569 |  | 184 | ListFormatFunc — the default formatter | 4.2 | 1.5 | 0.704 |
-| ns | 4712 |  | 143 | README: customizing the formatting of the errors | 4.3 |  | 0.688 |
-| ns | 4883 |  | 171 | README: migrating custom formatting to errors.Join | 4.4 |  | 0.672 |
-| ns | 4945 |  | 62 | Group struct | 5.1 | 1.5 | 0.676 |
-| ns | 5106 |  | 161 | Group.Go() | 5.2 | 1.5 | 0.683 |
-| ns | 5176 |  | 70 | Group.Wait() | 5.3 | 1.5 | 0.686 |
-| walker |  | 5205 | 966 | README.md section #1 |  |  | 0.773 |
-| walker |  | 5239 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.773 |
-| walker |  | 5256 | 17 | go test names surface in group_test.go |  |  | 0.773 |
-| ns | 5517 |  | 341 | README: migrating Group to errgroup / a manual mutex | 5.4 |  | 0.782 |
-| ns | 5655 |  | 138 | Flatten() | 6.1 | 1.5 | 0.783 |
-| ns | 5754 |  | 99 | flatten() recursive helper (unexported) | 6.2 |  | 0.784 |
-| ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.788 |
-| ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.786 |
-| walker |  | 6368 | 1112 | README.md section #3 |  |  | 0.906 |
-| walker |  | 6570 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.908 |
+| walker |  | 3734 | 376 | README.md section #1 |  |  | 0.654 |
+| ns | 3834 |  | 351 | Append() doc + *Error branch | 3.1 | 1.5 | 0.626 |
+| walker |  | 3932 | 198 | go decl body at prefix.go:16 |  |  | 0.629 |
+| ns | 3939 |  | 105 | Append() default branch | 3.2 | 3.1 | 0.618 |
+| ns | 4140 |  | 201 | README: building a list of errors (Append usage) | 3.3 |  | 0.598 |
+| walker |  | 4239 | 307 | README.md section #4 |  |  | 0.656 |
+| ns | 4352 |  | 212 | README: migrating basic error aggregation to errors.Join | 3.4 |  | 0.673 |
+| ns | 4385 |  | 33 | ErrorFormatFunc type | 4.1 | 1.5 | 0.675 |
+| ns | 4569 |  | 184 | ListFormatFunc — the default formatter | 4.2 | 1.5 | 0.683 |
+| walker |  | 4580 | 341 | README.md section #2 |  |  | 0.687 |
+| ns | 4712 |  | 143 | README: customizing the formatting of the errors | 4.3 |  | 0.672 |
+| walker |  | 4819 | 239 | README.md section #3 |  |  | 0.700 |
+| ns | 4883 |  | 171 | README: migrating custom formatting to errors.Join | 4.4 |  | 0.709 |
+| ns | 4945 |  | 62 | Group struct | 5.1 | 1.5 | 0.712 |
+| ns | 5106 |  | 161 | Group.Go() | 5.2 | 1.5 | 0.719 |
+| ns | 5176 |  | 70 | Group.Wait() | 5.3 | 1.5 | 0.720 |
+| walker |  | 5219 | 400 | README.md section #5 |  |  | 0.773 |
+| ns | 5517 |  | 341 | README: migrating Group to errgroup / a manual mutex | 5.4 |  | 0.781 |
+| walker |  | 5539 | 320 | go decl body at append.go:14 |  |  | 0.828 |
+| ns | 5655 |  | 138 | Flatten() | 6.1 | 1.5 | 0.828 |
+| ns | 5754 |  | 99 | flatten() recursive helper (unexported) | 6.2 |  | 0.828 |
+| walker |  | 5915 | 376 | README.md section #6 |  |  | 0.878 |
+| ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.876 |
+| ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.872 |
+| walker |  | 6241 | 326 | README.md section #7 |  |  | 0.905 |
+| walker |  | 6297 | 56 | headings outline in CHANGELOG.md |  |  | 0.906 |
+| walker |  | 6297 | 0 | CHANGELOG.md section #0 |  |  | 0.906 |
+| walker |  | 6331 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.906 |
+| walker |  | 6348 | 17 | go test names surface in group_test.go |  |  | 0.906 |
+| walker |  | 6550 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.908 |
+| walker |  | 6574 | 24 | .github/pull_request_template.md section #0 |  |  | 0.908 |
 | ns | 6587 |  | 364 | TestErrorUnwrap | 9.1 | 1.6 | 0.877 |
-| walker |  | 6594 | 24 | .github/pull_request_template.md section #0 |  |  | 0.877 |
-| walker |  | 6628 | 34 | go test names surface in flatten_test.go |  |  | 0.878 |
-| walker |  | 6662 | 34 | go test names surface in sort_test.go |  |  | 0.879 |
-| walker |  | 6700 | 38 | go test names surface in format_test.go |  |  | 0.883 |
-| walker |  | 6754 | 54 | go test names surface in prefix_test.go |  |  | 0.888 |
-| walker |  | 6777 | 23 | .github/pull_request_template.md section #2 |  |  | 0.888 |
-| walker |  | 6889 | 112 | go test names surface in append_test.go |  |  | 0.908 |
+| walker |  | 6608 | 34 | go test names surface in flatten_test.go |  |  | 0.878 |
+| walker |  | 6642 | 34 | go test names surface in sort_test.go |  |  | 0.879 |
+| walker |  | 6680 | 38 | go test names surface in format_test.go |  |  | 0.883 |
+| walker |  | 6734 | 54 | go test names surface in prefix_test.go |  |  | 0.888 |
+| walker |  | 6757 | 23 | .github/pull_request_template.md section #2 |  |  | 0.888 |
+| walker |  | 6869 | 112 | go test names surface in append_test.go |  |  | 0.908 |
 | ns | 6939 |  | 352 | TestAppend_Error | 9.2 | 1.7 | 0.881 |
-| walker |  | 7025 | 136 | go test names surface in multierror_test.go |  |  | 0.898 |
-| walker |  | 7062 | 37 | .github/pull_request_template.md section #1 |  |  | 0.898 |
+| walker |  | 7005 | 136 | go test names surface in multierror_test.go |  |  | 0.898 |
+| walker |  | 7042 | 37 | .github/pull_request_template.md section #1 |  |  | 0.898 |
 | ns | 7396 |  | 457 | TestGroup (whole file) | 9.3 | 1.7 | 0.866 |
 | ns | 7642 |  | 246 | TestFlatten | 9.4 | 1.7 | 0.845 |
 | ns | 7934 |  | 292 | prefix_test.go (whole file) | 9.5 | 1.7 | 0.823 |

@@ -32,7 +32,7 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 1178 | 233 | headings outline in README.md |  |  | 0.696 |
 | walker |  | 1222 | 44 | README.md section #0 |  |  | 0.696 |
 | ns | 1240 |  | 217 | neco.h — Channels group (make/retain/release/send/broadcast) | 3.2 |  | 0.654 |
-| walker |  | 1241 | 19 | README.md section #21 |  |  | 0.654 |
+| walker |  | 1241 | 19 | README.md section #22 |  |  | 0.654 |
 | walker |  | 1292 | 51 | listing of 'examples' |  |  | 0.715 |
 | ns | 1467 |  | 227 | neco.h — Channels group (recv/tryrecv/close/select/case) | 3.3 |  | 0.681 |
 | walker |  | 1711 | 419 | c decl names surface in neco.h |  |  | 0.746 |
@@ -41,10 +41,10 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | ns | 1748 |  | 281 | neco.h — Generators group | 3.4 |  | 0.704 |
 | walker |  | 1774 | 63 | README.md section #2 |  |  | 0.742 |
 | walker |  | 1845 | 71 | headings outline in docs/assets/API_head.md |  |  | 0.742 |
-| walker |  | 1860 | 15 | README.md section #16 |  |  | 0.742 |
+| walker |  | 1860 | 15 | README.md section #17 |  |  | 0.742 |
 | walker |  | 1974 | 114 | c includes in neco.h |  |  | 0.742 |
 | ns | 2030 |  | 282 | neco.h — Mutexes group | 3.5 |  | 0.697 |
-| walker |  | 2039 | 65 | README.md section #14 |  |  | 0.697 |
+| walker |  | 2039 | 65 | README.md section #15 |  |  | 0.697 |
 | walker |  | 2169 | 130 | README.md section #1 |  |  | 0.756 |
 | ns | 2513 |  | 483 | neco.h — WaitGroups + Condition variables groups | 3.6 |  | 0.691 |
 | walker |  | 2667 | 498 | c decl names surface #1 in neco.h |  |  | 0.762 |
@@ -79,7 +79,7 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 3690 | 93 | c decl at neco.c:1337 |  |  | 0.739 |
 | walker |  | 3791 | 101 | c decl at neco.c:1364 |  |  | 0.739 |
 | walker |  | 3902 | 111 | docs/README.md section #1 |  |  | 0.739 |
-| walker |  | 3935 | 33 | README.md section #19 |  |  | 0.739 |
+| walker |  | 3935 | 33 | README.md section #20 |  |  | 0.739 |
 | ns | 4027 |  | 485 | neco.h — remaining declarations, part A: Posix wrappers + fd helpers | 3.9 |  | 0.700 |
 | walker |  | 4060 | 125 | docs/API.md section #0 |  |  | 0.700 |
 | walker |  | 4073 | 13 | docs/API.md section #3 |  |  | 0.700 |
@@ -119,7 +119,7 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 5599 | 54 | docs/API.md section #43 |  |  | 0.701 |
 | walker |  | 5651 | 52 | docs/API.md section #44 |  |  | 0.701 |
 | ns | 5683 |  | 158 | tests/README.md — run.sh env-var knobs | 4.3 |  | 0.690 |
-| walker |  | 5699 | 48 | README.md section #17 |  |  | 0.690 |
+| walker |  | 5699 | 48 | README.md section #18 |  |  | 0.690 |
 | walker |  | 5717 | 18 | docs/API.md section #11 |  |  | 0.690 |
 | ns | 5834 |  | 151 | neco.c — amalgamation vs NECO_NOAMALGA switch | 4.4 |  | 0.675 |
 | walker |  | 5897 | 180 | docs/TECHNICAL.md section #0 |  |  | 0.675 |
@@ -132,7 +132,7 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 6451 | 24 | c decl at neco.h:179 |  |  | 0.699 |
 | walker |  | 6467 | 16 | c decl doc at neco.h:188 |  |  | 0.702 |
 | walker |  | 6482 | 15 | c decl doc at neco.h:191 |  |  | 0.705 |
-| walker |  | 6534 | 52 | README.md section #18 |  |  | 0.705 |
+| walker |  | 6534 | 52 | README.md section #19 |  |  | 0.705 |
 | ns | 6731 |  | 400 | neco.c — top-level neco_* definitions, range 1/5 (name only) | 6.1 |  | 0.681 |
 | walker |  | 6739 | 205 | c decl at neco.c:1124 |  |  | 0.681 |
 | walker |  | 7052 | 313 | c decl names surface #1 in neco.c |  |  | 0.681 |

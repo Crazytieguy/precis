@@ -12,7 +12,7 @@ Score(3000)=0.591 I=0.781 C=0.447 ns_rows≤3K=17/106 (reached=6 partial=1 missi
 | ns | 158 |  | 31 | pyproject.toml - package name | 1.3 |  | 0.596 |
 | ns | 202 |  | 44 | README - one-line project description | 1.4 |  | 0.576 |
 | walker |  | 204 | 99 | headings outline in README.md |  |  | 0.578 |
-| walker |  | 224 | 20 | README.md section #12 |  |  | 0.578 |
+| walker |  | 224 | 20 | README.md section #14 |  |  | 0.578 |
 | walker |  | 271 | 47 | listing of 'src/chronos' |  |  | 0.693 |
 | ns | 329 |  | 127 | chronos2/config.py + chronos2/trainer.py - locations | 2.1 |  | 0.596 |
 | ns | 455 |  | 126 | df_utils.py + utils.py + boto_utils.py - locations | 2.2 |  | 0.535 |
@@ -39,7 +39,7 @@ Score(3000)=0.591 I=0.781 C=0.447 ns_rows≤3K=17/106 (reached=6 partial=1 missi
 | walker |  | 1111 | 8 | python method at src/chronos/base.py:58 |  |  | 0.713 |
 | walker |  | 1119 | 8 | python method at src/chronos/base.py:62 |  |  | 0.713 |
 | walker |  | 1187 | 68 | [package] in pyproject.toml |  |  | 0.724 |
-| walker |  | 1217 | 30 | README.md section #11 |  |  | 0.724 |
+| walker |  | 1217 | 30 | README.md section #13 |  |  | 0.724 |
 | walker |  | 1252 | 35 | python class body at src/chronos/base.py:44 |  |  | 0.724 |
 | ns | 1253 |  | 248 | chronos2/model.py - class/def locations | 2.6 |  | 0.647 |
 | walker |  | 1270 | 18 | python method doc at src/chronos/base.py:35 |  |  | 0.647 |
@@ -123,7 +123,7 @@ Score(3000)=0.591 I=0.781 C=0.447 ns_rows≤3K=17/106 (reached=6 partial=1 missi
 | ns | 3885 |  | 47 | ChronosBoltModelForForecasting.forward + decode - quantile loss | 5.5 | 2.8 | 0.609 |
 | ns | 3936 |  | 51 | ChronosBoltPipeline construction + embed() | 5.6 | 2.8 | 0.606 |
 | walker |  | 3987 | 312 | manifest config in pyproject.toml |  |  | 0.606 |
-| walker |  | 4020 | 33 | README.md section #9 |  |  | 0.606 |
+| walker |  | 4020 | 33 | README.md section #11 |  |  | 0.606 |
 | walker |  | 4064 | 44 | python decl names surface in src/chronos/df_utils.py |  |  | 0.604 |
 | ns | 4064 |  | 128 | ChronosBoltPipeline.predict - long-horizon quantile-unrolling heuristic | 5.7 | 2.8 | 0.604 |
 | walker |  | 4095 | 31 | python class body at src/chronos/chronos_bolt.py:403 |  |  | 0.610 |

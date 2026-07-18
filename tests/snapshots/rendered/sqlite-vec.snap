@@ -54,19 +54,7 @@ README.md
       26→  </picture>
       27→  </a>
       28→</p>
-      29→
-      30→<p align="center">
-      31→<i>
-      32→<code>sqlite-vec</code> is a
-      33→<a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">Mozilla Builders project</a>,
-      34→with additional sponsorship from
-      35→<a href="https://fly.io/"><img width=14px src="./.github/logos/flyio.small.ico"/> Fly.io </a>,
-      36→<a href="https://tur.so/sqlite-vec"><img width=14px src="./.github/logos/turso.small.ico"/> Turso</a>,
-      37→<a href="https://sqlitecloud.io/"><img width=14px src="./.github/logos/sqlitecloud.small.svg"/> SQLite Cloud</a>, and
-      38→<a href="https://shinkai.com/"><img width=14px src="./.github/logos/shinkai.small.svg"/> Shinkai</a>.
-      39→See <a href="#sponsors">the Sponsors section</a> for more details.
-      40→</i>
-      41→</p>
+    …
       43→## Installing
     …
       61→## Sample usage
@@ -110,6 +98,23 @@ README.md
     …
 SECURITY.md
 TODO
+       1→- [ ] add `xyz_info` shadow table with version etc.
+       2→
+       3→- later
+       4→  - [ ] partition: UPDATE support
+       5→  - [ ] skip invalid validity entries in knn filter?
+       6→  - [ ] nulls in metadata
+       7→  - [ ] partition `x in (...)` handling
+       8→  - [ ] blobs/date/datetime
+       9→  - [ ] uuid/ulid perf
+      10→  - [ ] Aux columns: `NOT NULL` constraint
+      11→  - [ ] Metadata columns: `NOT NULL` constraint
+      12→   - [ ] Partiion key: `NOT NULL` constraint
+      13→  - [ ] dictionary encoding?
+      14→  - [ ] properly sqlite3_vtab_nochange / sqlite3_value_nochange handling
+      15→  - [ ] perf
+      16→    - [ ] aux: cache INSERT
+      17→    - [ ] aux: LEFT JOIN on `_rowids` queries to avoid N lookup queries
 VERSION
        1→0.1.7-alpha.10
 benchmarks/
