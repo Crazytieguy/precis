@@ -63,36 +63,39 @@ Score(3000)=0.602 I=0.844 C=0.430 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | ns | 3703 |  | 732 | Context trait doc (prose, code examples elided) | 3.1 | 2.1 | 0.554 |
 | ns | 4012 |  | 309 | macros.rs bail! doc + expansion | 3.2 |  | 0.544 |
 | walker |  | 4058 | 398 | impl method sigs in src/ptr.rs |  |  | 0.560 |
-| walker |  | 4195 | 137 | README.md section #8 |  |  | 0.560 |
-| walker |  | 4245 | 50 | pub-item names surface in src/ptr.rs |  |  | 0.567 |
-| walker |  | 4258 | 13 | pub item at src/ptr.rs:181 |  |  | 0.567 |
-| walker |  | 4305 | 47 | pub item at src/ptr.rs:6 |  |  | 0.567 |
-| walker |  | 4366 | 61 | pub item at src/ptr.rs:64 |  |  | 0.568 |
-| walker |  | 4389 | 23 | pub-item names surface in tests/drop/mod.rs |  |  | 0.568 |
-| walker |  | 4413 | 24 | pub item at tests/drop/mod.rs:26 |  |  | 0.568 |
-| walker |  | 4438 | 25 | pub item at tests/drop/mod.rs:9 |  |  | 0.568 |
-| ns | 4461 |  | 449 | macros.rs anyhow! doc + expansion | 3.3 |  | 0.557 |
-| walker |  | 4500 | 62 | pub item at src/ptr.rs:125 |  |  | 0.558 |
-| walker |  | 4554 | 54 | pub-item names surface in src/wrapper.rs |  |  | 0.567 |
-| walker |  | 4563 | 9 | pub item at src/wrapper.rs:11 |  |  | 0.567 |
-| walker |  | 4572 | 9 | pub item at src/wrapper.rs:34 |  |  | 0.567 |
-| walker |  | 4581 | 9 | pub item at src/wrapper.rs:58 |  |  | 0.567 |
-| ns | 4691 |  | 230 | macros.rs ensure! doc summary | 3.4 |  | 0.555 |
-| walker |  | 4799 | 218 | README.md section #7 |  |  | 0.588 |
-| walker |  | 4898 | 99 | pub item at src/chain.rs:16 |  |  | 0.588 |
-| walker |  | 4981 | 83 | pub item at src/error.rs:934 |  |  | 0.588 |
-| walker |  | 5056 | 75 | pub-item names surface in src/kind.rs |  |  | 0.603 |
-| ns | 5275 |  | 584 | kind.rs tagged-dispatch explanation (top comment) | 3.5 | 2.3 | 0.567 |
-| walker |  | 5283 | 227 | README.md section #4 |  |  | 0.567 |
-| walker |  | 5381 | 98 | impl method sigs in src/kind.rs |  |  | 0.574 |
-| ns | 5624 |  | 349 | Error struct: Display/Debug output forms | 3.6 |  | 0.555 |
-| ns | 5711 |  | 87 | Chain doc + struct def | 3.7 | 2.1 | 0.557 |
-| ns | 5951 |  | 240 | Result alias doc | 3.8 | 2.1 | 0.568 |
-| ns | 6324 |  | 373 | error.rs unsafe construct() — the type-erasure trick | 4.1 | 2.2 | 0.550 |
-| ns | 6540 |  | 216 | error.rs object_downcast — concrete unsafe cast | 4.2 |  | 0.540 |
-| ns | 6692 |  | 152 | ptr.rs Own/Ref/Mut struct shapes | 4.3 | 2.3 | 0.556 |
-| ns | 6816 |  | 124 | chain.rs Iterator::next impl | 4.4 | 2.3 | 0.550 |
-| walker |  | 6971 | 1590 | crate-doc body in src/lib.rs |  |  | 0.550 |
+| ns | 4461 |  | 449 | macros.rs anyhow! doc + expansion | 3.3 |  | 0.549 |
+| walker |  | 4586 | 528 | crate-doc body in src/lib.rs |  |  | 0.549 |
+| ns | 4691 |  | 230 | macros.rs ensure! doc summary | 3.4 |  | 0.537 |
+| walker |  | 4723 | 137 | README.md section #8 |  |  | 0.537 |
+| walker |  | 5092 | 369 | crate-doc tail at src/lib.rs:95 |  |  | 0.537 |
+| ns | 5275 |  | 584 | kind.rs tagged-dispatch explanation (top comment) | 3.5 | 2.3 | 0.505 |
+| walker |  | 5473 | 381 | crate-doc tail at src/lib.rs:142 |  |  | 0.505 |
+| ns | 5624 |  | 349 | Error struct: Display/Debug output forms | 3.6 |  | 0.488 |
+| ns | 5711 |  | 87 | Chain doc + struct def | 3.7 | 2.1 | 0.492 |
+| walker |  | 5785 | 312 | crate-doc tail at src/lib.rs:179 |  |  | 0.492 |
+| walker |  | 5835 | 50 | pub-item names surface in src/ptr.rs |  |  | 0.498 |
+| walker |  | 5848 | 13 | pub item at src/ptr.rs:181 |  |  | 0.498 |
+| walker |  | 5895 | 47 | pub item at src/ptr.rs:6 |  |  | 0.498 |
+| ns | 5951 |  | 240 | Result alias doc | 3.8 | 2.1 | 0.512 |
+| walker |  | 5956 | 61 | pub item at src/ptr.rs:64 |  |  | 0.512 |
+| walker |  | 5979 | 23 | pub-item names surface in tests/drop/mod.rs |  |  | 0.512 |
+| walker |  | 6003 | 24 | pub item at tests/drop/mod.rs:26 |  |  | 0.512 |
+| walker |  | 6028 | 25 | pub item at tests/drop/mod.rs:9 |  |  | 0.512 |
+| walker |  | 6090 | 62 | pub item at src/ptr.rs:125 |  |  | 0.513 |
+| walker |  | 6144 | 54 | pub-item names surface in src/wrapper.rs |  |  | 0.521 |
+| walker |  | 6153 | 9 | pub item at src/wrapper.rs:11 |  |  | 0.521 |
+| walker |  | 6162 | 9 | pub item at src/wrapper.rs:34 |  |  | 0.521 |
+| walker |  | 6171 | 9 | pub item at src/wrapper.rs:58 |  |  | 0.521 |
+| ns | 6324 |  | 373 | error.rs unsafe construct() — the type-erasure trick | 4.1 | 2.2 | 0.505 |
+| walker |  | 6389 | 218 | README.md section #7 |  |  | 0.532 |
+| walker |  | 6488 | 99 | pub item at src/chain.rs:16 |  |  | 0.532 |
+| ns | 6540 |  | 216 | error.rs object_downcast — concrete unsafe cast | 4.2 |  | 0.522 |
+| walker |  | 6571 | 83 | pub item at src/error.rs:934 |  |  | 0.522 |
+| walker |  | 6646 | 75 | pub-item names surface in src/kind.rs |  |  | 0.534 |
+| ns | 6692 |  | 152 | ptr.rs Own/Ref/Mut struct shapes | 4.3 | 2.3 | 0.550 |
+| ns | 6816 |  | 124 | chain.rs Iterator::next impl | 4.4 | 2.3 | 0.544 |
+| walker |  | 6873 | 227 | README.md section #4 |  |  | 0.544 |
+| walker |  | 6971 | 98 | impl method sigs in src/kind.rs |  |  | 0.550 |
 | ns | 7040 |  | 224 | fmt.rs ErrorImpl::debug impl | 4.5 | 2.3 | 0.538 |
 | walker |  | 7062 | 91 | pub-item names surface in src/nightly.rs |  |  | 0.546 |
 | walker |  | 7062 | 0 | pub item at src/nightly.rs:41 |  |  | 0.546 |

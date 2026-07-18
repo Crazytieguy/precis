@@ -97,26 +97,12 @@ README.md
       51→- Errors may be enums, structs with named fields, tuple structs, or unit
       52→  structs.
     …
-     204→- See also the [`anyhow`] library for a convenient single error type to use in
-     205→  application code.
-     206→
-     207→  [`anyhow`]: https://github.com/dtolnay/anyhow
-    …
      211→## Comparison to anyhow
     …
 build/
 build.rs
 impl/
     Cargo.toml
-           1→[package]
-           2→name = "thiserror-impl"
-           3→version = "2.0.18"
-           4→authors = ["David Tolnay <dtolnay@gmail.com>"]
-           5→description = "Implementation detail of the `thiserror` crate"
-           6→edition = "2021"
-           7→license = "MIT OR Apache-2.0"
-           8→repository = "https://github.com/dtolnay/thiserror"
-           9→rust-version = "1.71"
         …
           14→[dependencies]
           15→proc-macro2 = "1.0.74"
@@ -138,11 +124,6 @@ impl/
         ast.rs
         attr.rs
         expand.rs
-            …
-              12→pub fn derive(input: &DeriveInput) -> TokenStream {
-            …
-             505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
-            …
         fallback.rs
         fmt.rs
         generics.rs
@@ -224,6 +205,51 @@ src/
           11→//!
           12→//! <br>
           13→//!
+          14→//! # Example
+          15→//!
+          16→//! ```rust
+        …
+          18→//! use thiserror::Error;
+          19→//!
+          20→//! #[derive(Error, Debug)]
+          21→//! pub enum DataStoreError {
+          22→//!     #[error("data store disconnected")]
+          23→//!     Disconnect(#[from] io::Error),
+          24→//!     #[error("the data for key `{0}` is not available")]
+          25→//!     Redaction(String),
+          26→//!     #[error("invalid header (expected {expected:?}, found {found:?})")]
+          27→//!     InvalidHeader {
+          28→//!         expected: String,
+          29→//!         found: String,
+          30→//!     },
+          31→//!     #[error("unknown data store error")]
+          32→//!     Unknown,
+          33→//! }
+          34→//! ```
+          35→//!
+          36→//! <br>
+          37→//!
+          38→//! # Details
+          39→//!
+          40→//! - Thiserror deliberately does not appear in your public API. You get the
+          41→//!   same thing as if you had written an implementation of
+          42→//!   [`std::error::Error`] by hand, and switching from handwritten impls to
+          43→//!   thiserror or vice versa is not a breaking change.
+          44→//!
+          45→//! - Errors may be enums, structs with named fields, tuple structs, or unit
+          46→//!   structs.
+          47→//!
+          48→//! - A [`Display`] impl is generated for your error if you provide
+          49→//!   `#[error("...")]` messages on the struct or each variant of your enum, as
+          50→//!   shown above in the example.
+          51→//!
+          52→//!   The messages support a shorthand for interpolating fields from the error.
+          53→//!
+          54→//!     - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
+          55→//!     - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
+          56→//!     - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
+          57→//!     - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
+          58→//!
         …
          281→mod aserror;
          282→mod display;
@@ -258,77 +284,3 @@ tests/
     test_source.rs
     test_transparent.rs
     ui/
-        bad-field-attr.rs
-        bad-field-attr.stderr
-        concat-display.rs
-        concat-display.stderr
-        display-underscore.rs
-        display-underscore.stderr
-        duplicate-enum-source.rs
-        duplicate-enum-source.stderr
-        duplicate-fmt.rs
-        duplicate-fmt.stderr
-        duplicate-struct-source.rs
-        duplicate-struct-source.stderr
-        duplicate-transparent.rs
-        duplicate-transparent.stderr
-        expression-fallback.rs
-        expression-fallback.stderr
-        fallback-impl-with-display.rs
-        fallback-impl-with-display.stderr
-        from-backtrace-backtrace.rs
-        from-backtrace-backtrace.stderr
-        from-not-source.rs
-        from-not-source.stderr
-        invalid-input-impl-anyway.rs
-        invalid-input-impl-anyway.stderr
-        lifetime.rs
-        lifetime.stderr
-        missing-display.rs
-        missing-display.stderr
-        missing-fmt.rs
-        missing-fmt.stderr
-        no-display.rs
-        no-display.stderr
-        numbered-positional-tuple.rs
-        numbered-positional-tuple.stderr
-        raw-identifier.rs
-        raw-identifier.stderr
-        same-from-type.rs
-        same-from-type.stderr
-        source-enum-not-error.rs
-        source-enum-not-error.stderr
-        source-enum-unnamed-field-not-error.rs
-        source-enum-unnamed-field-not-error.stderr
-        source-struct-not-error.rs
-        source-struct-not-error.stderr
-        source-struct-unnamed-field-not-error.rs
-        source-struct-unnamed-field-not-error.stderr
-        struct-with-fmt.rs
-        struct-with-fmt.stderr
-        transparent-display.rs
-        transparent-display.stderr
-        transparent-enum-many.rs
-        transparent-enum-many.stderr
-        transparent-enum-not-error.rs
-        transparent-enum-not-error.stderr
-        transparent-enum-source.rs
-        transparent-enum-source.stderr
-        transparent-enum-unnamed-field-not-error.rs
-        transparent-enum-unnamed-field-not-error.stderr
-        transparent-struct-many.rs
-        transparent-struct-many.stderr
-        transparent-struct-not-error.rs
-        transparent-struct-not-error.stderr
-        transparent-struct-source.rs
-        transparent-struct-source.stderr
-        transparent-struct-unnamed-field-not-error.rs
-        transparent-struct-unnamed-field-not-error.stderr
-        unconditional-recursion.rs
-        unconditional-recursion.stderr
-        unexpected-field-fmt.rs
-        unexpected-field-fmt.stderr
-        unexpected-struct-source.rs
-        unexpected-struct-source.stderr
-        union.rs
-        union.stderr

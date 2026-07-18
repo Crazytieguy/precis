@@ -132,8 +132,15 @@ pub enum RustKey {
     CrateDocLede { file: PathBuf },
     /// `//!` module-doc body — after the first paragraph. Predecessor:
     /// matching `CrateDocLede`, or `None` when the crate doc opens with
-    /// a heading and no Lede candidate is emitted.
+    /// a heading and no Lede candidate is emitted. When the body is
+    /// oversize it shrinks to the first ~200-token chunk, followed by
+    /// chained `CrateDocTail` chunks.
     CrateDocBody { file: PathBuf },
+    /// One ~200-token continuation chunk of an oversize crate-doc
+    /// body, cut at blank doc lines outside doc code fences.
+    /// Predecessor: the previous chunk (`CrateDocBody` for the first
+    /// tail).
+    CrateDocTail { file: PathBuf, start_line: usize },
     /// `use` + `mod` + `pub use` plumbing at the top of a file.
     ModUse { file: PathBuf },
     /// Surface listing of every top-level `pub` item name in a file —
@@ -602,6 +609,9 @@ impl InnerKey for RustKey {
         match self {
             RustKey::CrateDocLede { file } => describe_in("crate-doc lede", file, root),
             RustKey::CrateDocBody { file } => describe_in("crate-doc body", file, root),
+            RustKey::CrateDocTail { file, start_line } => {
+                describe_at("crate-doc tail", file, *start_line, root)
+            }
             RustKey::ModUse { file } => describe_in("mod/use plumbing", file, root),
             RustKey::PubItemNames { file } => describe_in("pub-item names surface", file, root),
             RustKey::PubItem { file, start_line } => {

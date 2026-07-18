@@ -231,20 +231,44 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             } else {
                 false
             };
-            if let Some(content) =
-                build_per_file_content(file, ctx, parse_rust, collect_section(DocSection::Body))
-            {
+            if let Some((source, tree)) = parse_rust(ctx, file) {
+                let body_lines = collect_module_doc_lines(&tree, &source, DocSection::Body);
+                let body_value = crate_doc_body_value(file, ctx);
                 // The lede batch is the predecessor only when it was
                 // actually emitted — a crate doc that opens with a
                 // heading has no lede, so the body would otherwise
                 // orphan itself on a never-resolved predecessor key.
-                let predecessor = lede_emitted.then_some(BatchKey::Rust(lede_key));
-                out.push(batch(
-                    RustKey::CrateDocBody { file: file.clone() },
-                    predecessor,
-                    content,
-                    crate_doc_body_value(file, ctx),
-                ));
+                let mut predecessor = lede_emitted.then_some(BatchKey::Rust(lede_key));
+                let chunks = crate_doc_chunks(body_lines, &source);
+                let head_factor = if chunks.len() > 1 {
+                    CRATE_DOC_HEAD_FACTOR
+                } else {
+                    1.0
+                };
+                for (i, chunk) in chunks.into_iter().enumerate() {
+                    let start_line = chunk.first().copied().unwrap_or(1);
+                    let Some(content) =
+                        single_file_lines_content(file, &source, FileLines::new(chunk))
+                    else {
+                        continue;
+                    };
+                    let (key, value) = if i == 0 {
+                        (
+                            RustKey::CrateDocBody { file: file.clone() },
+                            body_value * head_factor,
+                        )
+                    } else {
+                        (
+                            RustKey::CrateDocTail {
+                                file: file.clone(),
+                                start_line,
+                            },
+                            body_value * CRATE_DOC_TAIL_FACTOR,
+                        )
+                    };
+                    out.push(batch(key.clone(), predecessor.take(), content, value));
+                    predecessor = Some(BatchKey::Rust(key));
+                }
             }
         }
         // ModUse stays gated to entrypoints + workspace members: `use`
@@ -1274,6 +1298,108 @@ fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> V
         break;
     }
     split_doc_lines_at_first_heading(all, source, section)
+}
+
+/// Crate-doc body tokens at which the lede-vs-rest binary stops
+/// working: one multi-thousand-token remainder batch loses the ≤3K
+/// purchase race wholesale, where mid-grained chunks can be bought
+/// slice by slice. Mirrors the markdown oversize head-split.
+const CRATE_DOC_SPLIT_TOKENS: usize = 400;
+/// Cut the running chunk at the first eligible boundary past this.
+const CRATE_DOC_CHUNK_TARGET_TOKENS: usize = 200;
+/// Never leave a trailing chunk smaller than this.
+const CRATE_DOC_CHUNK_MIN_TAIL_TOKENS: usize = 100;
+/// Tail chunks are strict continuations of the body head. Milder than
+/// the markdown `OversizeTail`'s 0.85: crate-doc placement is bimodal
+/// across NSes (thiserror ranks doc slices ≤2.5K, anyhow ranks the
+/// same content ~7K), and at 0.85 the tail train buys deep into the
+/// ≤3K window on doc-late crates, displacing their method-sig /
+/// listing anchors (measured: anyhow −0.027 at 0.85).
+const CRATE_DOC_TAIL_FACTOR: f64 = 0.75;
+/// Head chunk of a *split* body sits slightly below an unsplit body so
+/// small unchunked crate docs win comparable rank races (same shape as
+/// `CHUNKED_NAMES_FIRST_CHUNK_FACTOR`).
+const CRATE_DOC_HEAD_FACTOR: f64 = 0.9;
+
+/// Split an oversize crate-doc body (`lines` = retained `//!` rows,
+/// hidden-doctest lines already stripped) into successive
+/// ~[`CRATE_DOC_CHUNK_TARGET_TOKENS`]-token chunks, cutting after
+/// blank doc lines outside doc code fences. Rustdoc is markdown, so
+/// this mirrors `markdown::oversize_chunk_bounds` — but boundaries are
+/// judged on the *normalized* doc content (marker stripped), while
+/// token cost is the raw source row that actually renders. A cut is
+/// skipped when the next non-blank doc line opens a fence (the fence
+/// binds to the paragraph introducing it). Bodies under
+/// [`CRATE_DOC_SPLIT_TOKENS`] come back as a single chunk.
+fn crate_doc_chunks(lines: Vec<usize>, source: &str) -> Vec<Vec<usize>> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let doc_row_tokens = |n: usize| {
+        src_lines
+            .get(n - 1)
+            .map(|l| crate::tokenizer::count(&format!("{l}\n")))
+            .unwrap_or(0)
+    };
+    let normalized = |n: usize| {
+        src_lines
+            .get(n - 1)
+            .and_then(|raw| normalize_rustdoc_line(raw))
+            .unwrap_or("")
+            .trim_start()
+    };
+    let total: usize = lines.iter().map(|&n| doc_row_tokens(n)).sum();
+    if total < CRATE_DOC_SPLIT_TOKENS {
+        return vec![lines];
+    }
+    let next_nonblank_opens_fence = |rest: &[usize]| {
+        rest.iter()
+            .map(|&n| normalized(n))
+            .find(|t| !t.is_empty())
+            .and_then(super::markdown::fence_marker)
+            .is_some()
+    };
+    let mut chunks = Vec::new();
+    let mut current: Vec<usize> = Vec::new();
+    let mut chunk_tokens = 0usize;
+    let mut remaining = total;
+    let mut open_fence: Option<(char, usize)> = None;
+    for (i, &n) in lines.iter().enumerate() {
+        let tokens = doc_row_tokens(n);
+        current.push(n);
+        chunk_tokens += tokens;
+        remaining -= tokens.min(remaining);
+        let t = normalized(n);
+        // Marker-matched fence state, same as the markdown splitter:
+        // only a delimiter of the same char with at least the opening
+        // run length closes the fence.
+        if let Some((open_char, open_run)) = open_fence {
+            if super::markdown::fence_marker(t)
+                .is_some_and(|(c, run)| c == open_char && run >= open_run)
+            {
+                open_fence = None;
+            }
+            continue;
+        }
+        if let Some(marker) = super::markdown::fence_marker(t) {
+            open_fence = Some(marker);
+            continue;
+        }
+        if !t.is_empty() {
+            continue;
+        }
+        // Blank doc line outside a fence: candidate cut after this row.
+        if chunk_tokens < CRATE_DOC_CHUNK_TARGET_TOKENS
+            || remaining < CRATE_DOC_CHUNK_MIN_TAIL_TOKENS
+            || next_nonblank_opens_fence(&lines[i + 1..])
+        {
+            continue;
+        }
+        chunks.push(std::mem::take(&mut current));
+        chunk_tokens = 0;
+    }
+    if !current.is_empty() {
+        chunks.push(current);
+    }
+    chunks
 }
 
 /// Shared rustdoc heading-split — strip hidden doctest lines, then
