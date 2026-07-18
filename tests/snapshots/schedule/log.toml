@@ -1,7 +1,7 @@
 fixture = "log"
 budget = 10000
-cumulative_tokens = 9956
-batch_count = 89
+cumulative_tokens = 9667
+batch_count = 88
 
 [[batches]]
 position = 1
@@ -3625,10 +3625,36 @@ kind = "full"
 
 [[batches]]
 position = 81
+key = 'Rust(CrateAttrs { file: "src/lib.rs" })'
+descriptor = "crate attributes in src/lib.rs"
+cost_tokens = 288
+cum_tokens = 8133
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/lib.rs"
+start = 348
+end = 355
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 83
-cum_tokens = 7928
+cum_tokens = 8216
 
 [batches.content]
 kind = "lines"
@@ -3642,11 +3668,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 1611 })'
 descriptor = "pub-item doc lede at src/lib.rs:1611"
 cost_tokens = 124
-cum_tokens = 8052
+cum_tokens = 8340
 
 [batches.content]
 kind = "lines"
@@ -3660,11 +3686,11 @@ end = 1610
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Rust(CrateDocBody { file: "src/lib.rs" })'
 descriptor = "crate-doc body in src/lib.rs"
 cost_tokens = 282
-cum_tokens = 8334
+cum_tokens = 8622
 
 [batches.content]
 kind = "lines"
@@ -3678,11 +3704,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Rust(PubItemDocLede { file: "src/lib.rs", start_line: 1396 })'
 descriptor = "pub-item doc lede at src/lib.rs:1396"
 cost_tokens = 215
-cum_tokens = 8549
+cum_tokens = 8837
 
 [batches.content]
 kind = "lines"
@@ -3696,11 +3722,11 @@ end = 1394
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Rust(PubItemDocLede { file: "src/kv/value.rs", start_line: 119 })'
 descriptor = "pub-item doc lede at src/kv/value.rs:119"
 cost_tokens = 39
-cum_tokens = 8588
+cum_tokens = 8876
 
 [batches.content]
 kind = "lines"
@@ -3714,11 +3740,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Rust(CrateDocBody { file: "src/kv/mod.rs" })'
 descriptor = "crate-doc body in src/kv/mod.rs"
 cost_tokens = 354
-cum_tokens = 8942
+cum_tokens = 9230
 
 [batches.content]
 kind = "lines"
@@ -3748,11 +3774,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Rust(PubItem { file: "src/kv/source.rs", start_line: 51 })'
 descriptor = "pub item at src/kv/source.rs:51"
 cost_tokens = 437
-cum_tokens = 9379
+cum_tokens = 9667
 
 [batches.content]
 kind = "lines"
@@ -3764,143 +3790,3 @@ end = 88
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 88
-key = 'Toml(Dependencies { file: "Cargo.toml" })'
-descriptor = "[dependencies] in Cargo.toml"
-cost_tokens = 405
-cum_tokens = 9784
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 56
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'Rust(MethodSigs { file: "src/kv/key.rs" })'
-descriptor = "impl method sigs in src/kv/key.rs"
-cost_tokens = 172
-cum_tokens = 9956
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 21
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 27
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/kv/key.rs"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"

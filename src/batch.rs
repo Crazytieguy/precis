@@ -141,6 +141,9 @@ pub enum RustKey {
     /// Predecessor: the previous chunk (`CrateDocBody` for the first
     /// tail).
     CrateDocTail { file: PathBuf, start_line: usize },
+    /// Contiguous top-of-file `#![…]` inner-attribute block (with its
+    /// interleaved comment lines), entrypoint files only.
+    CrateAttrs { file: PathBuf },
     /// `use` + `mod` + `pub use` plumbing at the top of a file.
     ModUse { file: PathBuf },
     /// Surface listing of every top-level `pub` item name in a file —
@@ -612,6 +615,7 @@ impl InnerKey for RustKey {
             RustKey::CrateDocTail { file, start_line } => {
                 describe_at("crate-doc tail", file, *start_line, root)
             }
+            RustKey::CrateAttrs { file } => describe_in("crate attributes", file, root),
             RustKey::ModUse { file } => describe_in("mod/use plumbing", file, root),
             RustKey::PubItemNames { file } => describe_in("pub-item names surface", file, root),
             RustKey::PubItem { file, start_line } => {

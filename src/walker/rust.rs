@@ -269,6 +269,34 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     out.push(batch(key.clone(), predecessor.take(), content, value));
                     predecessor = Some(BatchKey::Rust(key));
                 }
+                // Primary-crate roots only: a secondary workspace
+                // member's attr block is peripheral config, and
+                // emitting it displaces mid-band source (thiserror
+                // impl/src/lib.rs: −0.04 on 4-7K rows even damped).
+                let attr_lines = if secondary_workspace_member_factor(file, ctx) == 1.0 {
+                    collect_crate_attr_lines(&tree, &source)
+                } else {
+                    Vec::new()
+                };
+                let attr_tokens: usize = {
+                    let src_lines: Vec<&str> = source.lines().collect();
+                    attr_lines
+                        .iter()
+                        .filter_map(|&n| src_lines.get(n - 1))
+                        .map(|l| crate::tokenizer::count(&format!("{l}\n")))
+                        .sum()
+                };
+                if attr_tokens >= CRATE_ATTRS_MIN_TOKENS
+                    && let Some(content) =
+                        single_file_lines_content(file, &source, FileLines::new(attr_lines))
+                {
+                    out.push(batch(
+                        RustKey::CrateAttrs { file: file.clone() },
+                        None,
+                        content,
+                        crate_attrs_value(file, ctx),
+                    ));
+                }
             }
         }
         // ModUse stays gated to entrypoints + workspace members: `use`
@@ -911,6 +939,24 @@ fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx)) * secondary
 }
 
+/// Attr blocks below this stay unemitted: one-liner boilerplate
+/// (`#![doc(html_root_url = …)]`, a lone `#![deny(warnings)]`) is not
+/// the crate-configuration surface NS rows anchor on, and emitting it
+/// on every entrypoint pollutes the early budget (measured: hyperfine
+/// −0.050 / toasty −0.013 ungated). Policy-heavy blocks (`no_std` +
+/// feature gates + lint policy, anyhow ~400 tokens) clear it easily.
+const CRATE_ATTRS_MIN_TOKENS: usize = 100;
+
+/// Same modest tier as plumbing-shaped `ModUse`: the attribute block
+/// is crate-configuration surface (`no_std`, feature gates, lint
+/// policy) most NSes rank low or ignore, but it has no other batch
+/// class at all (anyhow's NS ranks it ≤2K and the walker had nothing
+/// to deliver).
+fn crate_attrs_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.42 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.65, 0.38, rust_depth_factor(file, ctx))
+}
+
 fn mod_use_value(file: &Path, ctx: &WalkCtx, mod_decl_count: usize) -> f64 {
     // Crate entrypoints (lib.rs / main.rs) with ≥3 `mod foo;` top-level
     // declarations carry the crate's module table — the canonical list
@@ -1278,6 +1324,39 @@ enum DocSection {
     Lede,
     /// Everything after the first paragraph.
     Body,
+}
+
+/// Rows of the leading `#![…]` inner-attribute block: the contiguous
+/// run of `inner_attribute_item` nodes at the top of the file (module
+/// docs skipped — they belong to the `CrateDoc*` batches), plus plain
+/// comment lines that introduce a following attribute. Stops at the
+/// first real item. This is the crate-configuration surface
+/// (`no_std`, feature gates, lint policy) that has no other batch
+/// class.
+fn collect_crate_attr_lines(tree: &Tree, source: &str) -> Vec<usize> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = Vec::new();
+    let mut pending_comment_rows: Vec<usize> = Vec::new();
+    for child in root.children(&mut cursor) {
+        match child.kind() {
+            "line_comment" | "block_comment" => {
+                let text = &source[child.start_byte()..child.end_byte()];
+                if text.starts_with("//!") || text.starts_with("/*!") {
+                    continue;
+                }
+                let mut rows = Vec::new();
+                extend_span(&mut rows, child, source);
+                pending_comment_rows.extend(rows);
+            }
+            "inner_attribute_item" => {
+                out.append(&mut pending_comment_rows);
+                extend_span(&mut out, child, source);
+            }
+            _ => break,
+        }
+    }
+    dedup_sorted(out)
 }
 
 /// Crate-`//!` block lines, split at the first markdown heading
