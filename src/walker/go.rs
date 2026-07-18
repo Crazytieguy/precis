@@ -56,8 +56,8 @@ use crate::content::BatchContent;
 use crate::value::{mix_signals, names_surface_chunk_factor};
 
 use super::{
-    FileLines, WalkCtx, collect_blank_line_groups, collect_doc_comments_above, dedup_sorted,
-    extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
+    FileLines, WalkCtx, collect_blank_line_groups, collect_doc_comments_above, comment_only_rows,
+    dedup_sorted, extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
     fs::{files_with_extension, list_dir},
     push_rows, signature_end_row, single_file_lines_content,
 };
@@ -658,7 +658,23 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
         // Well-blank-separated mid-size structs stay whole: chunking
         // them mints a flood of tiny high-ratio groups (measured:
         // migrate −0.153 via `migration.go`'s 12 tiny groups).
-        let blank_groups = collect_blank_line_groups(struct_body, source);
+        // Standalone full-line comment rows are elided — NS struct
+        // renders skip them, and comment-per-field styles (cobra's
+        // `Command`) otherwise cost ~5x the field lines alone.
+        // Same-line trailing comments share a row with their field and
+        // stay; groups left empty (pure comment dividers) are dropped.
+        let comment_rows = comment_only_rows(struct_body);
+        let blank_groups: Vec<(usize, Vec<usize>)> = collect_blank_line_groups(struct_body, source)
+            .into_iter()
+            .filter_map(|(_, rows)| {
+                let rows: Vec<usize> = rows
+                    .into_iter()
+                    .filter(|row| !comment_rows.contains(&(row - 1)))
+                    .collect();
+                let start = *rows.first()?;
+                Some((start, rows))
+            })
+            .collect();
         let chunkable = body_lines >= STRUCT_FIELD_GROUP_MIN_LINES
             || (body_lines >= STRUCT_FIELD_GROUP_MONOLITH_MIN_LINES && blank_groups.len() <= 2);
         if chunkable {
@@ -1180,6 +1196,37 @@ mod tests {
             .iter()
             .flat_map(|span| span.start..=span.end)
             .collect()
+    }
+
+    #[test]
+    fn go_struct_field_groups_elide_comment_only_rows() {
+        // Comment-per-field style (cobra's `Command`): each blank-line
+        // group is two doc rows + one field row. Elision keeps only
+        // the field rows, so the group batches render as the name-only
+        // roster the NS convention wants.
+        let mut src = String::from("package foo\n\ntype Doc struct {\n");
+        for g in 0..20 {
+            src.push_str(&format!(
+                "\t// Field{g} does a thing.\n\t// More detail.\n\tField{g} string\n\n"
+            ));
+        }
+        src.push_str("}\n");
+        let (source, tree) = parse(&src);
+        let decls = find_decls(&tree, &source);
+        assert_eq!(decls.len(), 1);
+        let groups = &decls[0].1.struct_field_groups;
+        assert_eq!(groups.len(), 20, "one group per blank-line field run");
+        let src_lines: Vec<&str> = src.lines().collect();
+        for (_, rows) in groups {
+            assert_eq!(rows.len(), 1, "doc rows are elided from the group");
+            for &row in rows {
+                assert!(
+                    src_lines[row - 1].trim_start().starts_with("Field"),
+                    "comment-only rows are elided, got {:?}",
+                    src_lines[row - 1]
+                );
+            }
+        }
     }
 
     #[test]

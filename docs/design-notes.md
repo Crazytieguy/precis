@@ -509,6 +509,43 @@ overlap (wave-4 disjointness fix), tinyusb markdown per-bullet ranges
 `block_child_parts` trailing-comment row. Re-run the sweep when
 touching span-boundary construction in any walker.
 
+## Go struct field-group elision ledger (2026-07-18, wave3-go)
+
+Shipped: comment-only rows elided from chunked Go struct field groups
+(50b9487d) — the C walker's struct-render convention, moved to a
+shared `comment_only_rows` in `walker/mod.rs`. Mean 0.605155 →
+0.605465; bubbletea +0.028 (up at every budget), gin +0.033 at 3K,
+cobra −0.039. Accepted divergence, same as C: struct-interior comment
+rows of chunked structs belong to no batch at ANY budget (codex
+adversarial flagged this; see rejected recovery below). cobra/gin
+NSes are bimodal about struct docs — cobra 2.4/2.5 and gin Engine
+part 1 rank doc-inclusive slices, which costs cobra ~0.03–0.05 on
+rows past 3K and gin ~0.02–0.03 at 3.4–4.7K, offset corpus-wide by
+bubbletea's +0.026 mean per-row.
+
+Measured-dead in the same session (don't re-test without new
+evidence):
+- **Crumb coalescing on top of elision** (C-ship mirror,
+  `≥5`/`≥3`-row minimums): identical to worse vs plain elision on
+  every fixture — post-elision crumbs ARE the NS roster lines, so
+  merging only delays delivery. Coalescing WITHOUT elision is worse
+  than base (cobra −0.052): Go groups carry doc rows, so merged
+  groups inflate with bytes no NS roster wants (unlike C, where
+  elision predated the coalesce ship).
+- **`StructFieldGroupDoc` gated follow-up** (re-ships elided rows,
+  DeclDoc-priced, predecessor = its field group): Score(3000)-neutral
+  on all three movers, slightly negative at 4–7K, positive only on
+  cobra's ≥7.4K tail — does not pay for a new key variant. This is
+  exactly codex's recommended recovery; measured before rejection.
+- **Size-targeted DeclNames chunk partition** (greedy byte-mass
+  ranges, 800/1200-byte targets ≈ NS roster band): large loss at 3K
+  on every chunked fixture (bubbletea −0.13, cobra −0.09, gin −0.09,
+  migrate −0.06 vs post-elision state). Mechanism: per-batch DeclNames
+  value is size-invariant (roster_mass on DeclNames is measured-dead)
+  so meatier chunks always lose the early-budget ratio race. The
+  8-decl fixed chunk is at/past the ratio-optimal size;
+  kind-grouped partitions would be coarser still — same wall.
+
 ## Divergence open items
 
 - **Ellipsis atoms are credited on schedule content, not rendered
