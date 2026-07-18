@@ -121,7 +121,7 @@ package.json
     …
        2→	"name": "monaco-editor",
        3→	"version": "0.55.1",
-    …
+       4→	"vscodeRef": "86f5a62f058e3905f74a9fa65d04b2f3b533408e",
        5→	"private": true,
        6→	"description": "A browser based code editor",
     …
@@ -262,26 +262,17 @@ samples/
     legacy/
         README.md
         browser-amd-diff-editor/
-            index.html
-            modified.txt
-            original.txt
         browser-amd-editor/
             index.html
         browser-amd-iframe/
-            index.html
-            inner.html
         browser-amd-localized/
             index.html
         browser-amd-monarch/
             index.html
         browser-amd-requirejs/
-            index.html
         browser-amd-shadow-dom/
-            index.html
         browser-amd-shared-model/
-            index.html
         browser-amd-trusted-types/
-            index.html
         electron-amd/
         electron-amd-nodeIntegration/
     nwjs-amd/

@@ -115,6 +115,32 @@ README.md
     …
 cmdk/
     package.json
+        …
+           2→  "name": "cmdk",
+           3→  "version": "1.1.1",
+           4→  "license": "MIT",
+           5→  "main": "./dist/index.js",
+           6→  "module": "./dist/index.mjs",
+           7→  "types": "./dist/index.d.ts",
+           8→  "files": [
+           9→    "dist"
+          10→  ],
+          11→  "exports": {
+          12→    ".": {
+          13→      "types": "./dist/index.d.ts",
+          14→      "import": "./dist/index.mjs",
+          15→      "require": "./dist/index.js"
+          16→    }
+          17→  },
+          18→  "scripts": {
+          19→    "prepublishOnly": "cp ../README.md . && pnpm build",
+          20→    "postpublish": "rm README.md",
+          21→    "build": "tsup src",
+          22→    "dev": "tsup src --watch"
+          23→  },
+        …
+          37→  "sideEffects": false,
+        …
     src/
         command-score.ts
         index.tsx
@@ -126,21 +152,11 @@ cmdk/
              123→type Context = {
             …
              137→type State = {
-             138→  search: string
-             139→  value: string
-             140→  selectedItemId?: string
-             141→  filtered: { count: number; items: Map<string, number>; groups: Set<string> }
-             142→}
+            …
              143→type Store = {
-             144→  subscribe: (callback: () => void) => () => void
-             145→  snapshot: () => State
-             146→  setState: <K extends keyof State>(key: K, value: State[K], opts?: any) => void
-             147→  emit: () => void
-             148→}
+            …
              149→type Group = {
-             150→  id: string
-             151→  forceMount?: boolean
-             152→}
+            …
              154→const GROUP_SELECTOR = `[cmdk-group=""]`
              155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
              156→const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`
@@ -236,20 +252,12 @@ cmdk/
              993→function useLazyRef<T>(fn: () => T) {
             …
             1010→function useValue(
-            1011→  id: string,
-            1012→  ref: React.RefObject<HTMLElement>,
-            1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
-            1014→  aliases: string[] = [],
-            1015→) {
             …
             1046→const useScheduleLayoutEffect = () => {
             …
             1061→function renderChildren(children: React.ReactElement) {
             …
             1071→function SlottableWithNestedChildren(
-            1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
-            1073→  render: (child: React.ReactNode) => JSX.Element,
-            1074→) {
             …
             1081→const srOnlyStyles = {
             …

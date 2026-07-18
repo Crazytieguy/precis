@@ -7,6 +7,7 @@
 //! generated JSONs are skipped. The full key→batch mapping lives in the
 //! `is_*_key` predicates below.
 
+use std::cell::OnceCell;
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -40,6 +41,7 @@ const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 #[derive(Default)]
 pub struct JsonState {
     membership: WorkspaceMembership,
+    primary_member: OnceCell<Option<PathBuf>>,
 }
 
 impl JsonState {
@@ -47,6 +49,21 @@ impl JsonState {
     pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
         self.membership
             .is_member(file, || collect_workspace_members(root))
+    }
+
+    /// `true` iff `file` is the unique publishable member whose package
+    /// name matches the repository name (or the root package name).
+    pub fn is_primary_workspace_member(&self, file: &Path, root: &Path) -> bool {
+        let primary = self.primary_member.get_or_init(|| {
+            find_primary_workspace_member(
+                root,
+                self.membership.members(|| collect_workspace_members(root)),
+            )
+        });
+        let Some(primary) = primary else {
+            return false;
+        };
+        file.canonicalize().is_ok_and(|file| file == *primary)
     }
 }
 
@@ -106,6 +123,16 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     };
     let manifest_role = package_json_role(&pairs);
     let scripts_deps_factor = manifest_role.scripts_deps_factor();
+    // A paired inline lint + coverage policy is part of the test workflow.
+    // A lone linter ruleset is not enough: folding one into Scripts can turn
+    // a small operational batch into a large config appendix.
+    let has_xo_and_c8 = pairs.iter().any(|(name, _, _, _)| name == "xo")
+        && pairs.iter().any(|(name, _, _, _)| name == "c8");
+    let scripts_key_match = if has_xo_and_c8 {
+        is_scripts_or_inline_lint_coverage_key
+    } else {
+        is_scripts_key
+    };
     let mut sections = Vec::new();
     let mut collect = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
         let Some(content) = section_content(file, &source, &pairs, name_match) else {
@@ -132,7 +159,7 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
     collect(
         JsonKey::Scripts { file: f.clone() },
         scripts_value(file, ctx) * scripts_deps_factor,
-        is_scripts_key,
+        scripts_key_match,
     );
     collect(
         JsonKey::Dependencies { file: f.clone() },
@@ -277,7 +304,14 @@ fn is_skipped_json(name: &str) -> bool {
 fn is_identity_key(k: &str) -> bool {
     matches!(
         k,
-        "name" | "version" | "description" | "license" | "licenses" | "type" | "private"
+        "name"
+            | "version"
+            | "description"
+            | "license"
+            | "licenses"
+            | "type"
+            | "private"
+            | "vscodeRef"
     )
 }
 
@@ -330,6 +364,10 @@ fn is_scripts_key(k: &str) -> bool {
     matches!(k, "scripts" | "bin-scripts")
 }
 
+fn is_scripts_or_inline_lint_coverage_key(k: &str) -> bool {
+    is_scripts_key(k) || matches!(k, "xo" | "c8")
+}
+
 fn is_runtime_dependencies_key(k: &str) -> bool {
     matches!(
         k,
@@ -354,7 +392,7 @@ fn is_package_section_key(k: &str) -> bool {
         || is_identity_meta_key(k)
         || is_entry_key(k)
         || is_runtime_key(k)
-        || is_scripts_key(k)
+        || is_scripts_or_inline_lint_coverage_key(k)
         || is_runtime_dependencies_key(k)
         || is_dev_dependencies_key(k)
 }
@@ -410,13 +448,16 @@ fn is_scaffold_template_path(file: &Path) -> bool {
 }
 
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let m = if ctx.is_js_workspace_member(file) {
+    let primary_member = ctx.is_primary_js_workspace_member(file);
+    let m = if primary_member {
+        1.0
+    } else if ctx.is_js_workspace_member(file) {
         WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0
     };
     let s = secondary_package_json_factor(file);
-    mix_signals(m, 0.7 * m, 0.85 * m, path_depth_factor(file, ctx)) * s
+    mix_signals(m, 0.7 * m, 0.85 * m, manifest_depth_factor(file, ctx)) * s
 }
 
 fn identity_meta_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -442,7 +483,7 @@ fn entry_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Scripts, not Entry). A missed Entry block is not a
     // catastrophic-omission risk — `precis` users can re-read the
     // file at trivial cost.
-    mix_signals(0.55, 0.55, 0.45, path_depth_factor(file, ctx))
+    mix_signals(0.55, 0.55, 0.45, manifest_depth_factor(file, ctx))
         * secondary_package_json_factor(file)
 }
 
@@ -457,16 +498,29 @@ fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // surface, so they don't earn a top-rank slot — but cmdk NS 1.8
     // (Root scripts) does pin Scripts as tier-1, so we don't drop the
     // weight as far as Entry.
-    mix_signals(0.5, 0.6, 0.45, path_depth_factor(file, ctx)) * secondary_package_json_factor(file)
+    mix_signals(0.5, 0.6, 0.45, manifest_depth_factor(file, ctx))
+        * secondary_package_json_factor(file)
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.25, 0.5, 0.25, path_depth_factor(file, ctx)) * secondary_package_json_factor(file)
+    mix_signals(0.25, 0.5, 0.25, manifest_depth_factor(file, ctx))
+        * secondary_package_json_factor(file)
 }
 
 fn dev_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.24, 0.48, 0.24, path_depth_factor(file, ctx))
+    mix_signals(0.24, 0.48, 0.24, manifest_depth_factor(file, ctx))
         * secondary_package_json_factor(file)
+}
+
+/// Primary publishable members rank like root manifests for the operational
+/// surfaces that establish what the package is and how it ships. Appendix
+/// metadata and runtime constraints retain ordinary path-depth pricing.
+fn manifest_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if ctx.is_primary_js_workspace_member(file) {
+        1.0
+    } else {
+        path_depth_factor(file, ctx)
+    }
 }
 
 fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
@@ -553,6 +607,55 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
         out.remove(&canonical_root_manifest);
     }
     out
+}
+
+/// Pick the single workspace member whose package name matches either the
+/// repository directory name or the root package name. Scoped package names
+/// also match by their final component (`@scope/d2ts` ↔ `d2ts`). If a member
+/// manifest cannot be read or more than one member matches, fail closed.
+fn find_primary_workspace_member(root: &Path, members: &HashSet<PathBuf>) -> Option<PathBuf> {
+    let mut target_names = HashSet::new();
+    if let Some(repo_name) = root.file_name().and_then(|name| name.to_str()) {
+        insert_package_name_aliases(&mut target_names, repo_name);
+    }
+    if let Some(root_name) = manifest_package_name(root) {
+        insert_package_name_aliases(&mut target_names, &root_name);
+    }
+    if target_names.is_empty() {
+        return None;
+    }
+
+    let mut matched = None;
+    for member in members {
+        let member_dir = member.parent()?;
+        let member_name = manifest_package_name(member_dir)?;
+        let is_match = package_name_aliases(&member_name)
+            .into_iter()
+            .any(|name| target_names.contains(name));
+        if !is_match {
+            continue;
+        }
+        if matched.is_some() {
+            return None;
+        }
+        matched = Some(member.clone());
+    }
+    matched
+}
+
+fn manifest_package_name(dir: &Path) -> Option<String> {
+    let (source, tree) = parse_manifest(dir)?;
+    let object = first_child_of_kind(tree.root_node(), "object", false)?;
+    let value = object_field_value(object, "name", &source)?;
+    (value.kind() == "string").then(|| unquote_string(value, &source))
+}
+
+fn package_name_aliases(name: &str) -> [&str; 2] {
+    [name, name.rsplit_once('/').map_or(name, |(_, leaf)| leaf)]
+}
+
+fn insert_package_name_aliases(names: &mut HashSet<String>, name: &str) {
+    names.extend(package_name_aliases(name).into_iter().map(str::to_owned));
 }
 
 /// Parse `<dir>/package.json` into its source text + tree. The caller
@@ -865,6 +968,20 @@ mod tests {
     }
 
     #[test]
+    fn walker_json_manifest_recall_keys_join_nearest_existing_class() {
+        assert!(is_identity_key("vscodeRef"));
+        assert!(is_scripts_or_inline_lint_coverage_key("xo"));
+        assert!(is_scripts_or_inline_lint_coverage_key("c8"));
+        assert!(!is_scripts_key("xo"));
+        assert!(!is_scripts_key("c8"));
+        assert!(!is_identity_meta_key("vscodeRef"));
+        assert!(!is_dev_dependencies_key("xo"));
+        assert!(!is_dev_dependencies_key("c8"));
+        assert!(is_package_section_key("xo"));
+        assert!(is_package_section_key("c8"));
+    }
+
+    #[test]
     fn walker_json_only_compact_sections_require_overlap_chain() {
         let multiline = pairs_for_manifest(
             "{\n  \"name\": \"demo\",\n  \"scripts\": {\"test\": \"vitest\"},\n  \"dependencies\": {\"react\": \"19\"}\n}\n",
@@ -960,6 +1077,64 @@ mod tests {
             !members.contains(&root_pkg),
             "root package.json must be excluded from member set"
         );
+    }
+
+    #[test]
+    fn walker_json_primary_member_matches_repo_name_through_scope() {
+        let outer = tempfile::tempdir().unwrap();
+        let root = outer.path().join("primary-package");
+        fs::create_dir(&root).unwrap();
+        write_pkg(
+            &root,
+            r#"{"name":"workspace-shell","workspaces":["packages/*"]}"#,
+        );
+        seed_members(&root, &["packages/primary-package", "packages/satellite"]);
+        write_pkg(
+            &root.join("packages/primary-package"),
+            r#"{"name":"@scope/primary-package"}"#,
+        );
+
+        let members = collect_workspace_members(&root);
+        let primary = find_primary_workspace_member(&root, &members).unwrap();
+        assert_eq!(primary, member_path(&root, "packages/primary-package"));
+    }
+
+    #[test]
+    fn walker_json_primary_member_can_match_root_package_name() {
+        let root = tempfile::tempdir().unwrap();
+        write_pkg(
+            root.path(),
+            r#"{"name":"published-package","workspaces":["packages/*"]}"#,
+        );
+        seed_members(root.path(), &["packages/published", "packages/satellite"]);
+        write_pkg(
+            &root.path().join("packages/published"),
+            r#"{"name":"published-package"}"#,
+        );
+
+        let members = collect_workspace_members(root.path());
+        let primary = find_primary_workspace_member(root.path(), &members).unwrap();
+        assert_eq!(primary, member_path(root.path(), "packages/published"));
+    }
+
+    #[test]
+    fn walker_json_primary_member_fails_closed_on_ambiguity() {
+        let outer = tempfile::tempdir().unwrap();
+        let root = outer.path().join("primary-package");
+        fs::create_dir(&root).unwrap();
+        write_pkg(
+            &root,
+            r#"{"name":"workspace-shell","workspaces":["packages/*"]}"#,
+        );
+        seed_members(&root, &["packages/a", "packages/b"]);
+        write_pkg(&root.join("packages/a"), r#"{"name":"primary-package"}"#);
+        write_pkg(
+            &root.join("packages/b"),
+            r#"{"name":"@scope/primary-package"}"#,
+        );
+
+        let members = collect_workspace_members(&root);
+        assert_eq!(find_primary_workspace_member(&root, &members), None);
     }
 
     #[test]

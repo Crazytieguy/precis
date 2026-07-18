@@ -116,6 +116,25 @@ package.json
       51→		"text"
       52→	],
     …
+      65→	"xo": {
+      66→		"rules": {
+      67→			"unicorn/prefer-string-slice": "off",
+      68→			"@typescript-eslint/consistent-type-imports": "off",
+      69→			"@typescript-eslint/consistent-type-exports": "off",
+      70→			"@typescript-eslint/consistent-type-definitions": "off",
+      71→			"unicorn/expiring-todo-comments": "off"
+      72→		}
+      73→	},
+      74→	"c8": {
+      75→		"reporter": [
+      76→			"text",
+      77→			"lcov"
+      78→		],
+      79→		"exclude": [
+      80→			"source/vendor"
+      81→		]
+      82→	}
+    …
 readme.md
     …
       10→> Terminal string styling done right
@@ -161,26 +180,9 @@ readme.md
      180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
      181→- `inverse` - Invert background and foreground colors.
      182→- `hidden` - Print the text but make it invisible.
-     183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
-     184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
+    …
      186→### Colors
-     187→
-     188→- `black`
-     189→- `red`
-     190→- `green`
-     191→- `yellow`
-     192→- `blue`
-     193→- `magenta`
-     194→- `cyan`
-     195→- `white`
-     196→- `blackBright` (alias: `gray`, `grey`)
-     197→- `redBright`
-     198→- `greenBright`
-     199→- `yellowBright`
-     200→- `blueBright`
-     201→- `magentaBright`
-     202→- `cyanBright`
-     203→- `whiteBright`
+    …
      205→### Background colors
     …
      224→## 256 and Truecolor color support
