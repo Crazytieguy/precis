@@ -159,24 +159,25 @@ Score(3000)=0.374 I=0.461 C=0.303 ns_rows≤3K=26/44 (reached=10 partial=0 missi
 | walker |  | 7537 | 135 | README.md section #8 |  |  | 0.410 |
 | walker |  | 7547 | 10 | export names surface in test/pages/index.tsx |  |  | 0.410 |
 | walker |  | 7547 | 0 | export at test/pages/index.tsx:28 |  |  | 0.410 |
+| walker |  | 7576 | 29 | test names surface in test/dialog.test.ts |  |  | 0.410 |
 | ns | 7577 |  | 745 | command-score weighting constants | 7.2 |  | 0.392 |
-| walker |  | 7703 | 156 | README.md section #12 |  |  | 0.392 |
 | ns | 7722 |  | 145 | dialog.test.ts | 8.1 |  | 0.388 |
-| walker |  | 7859 | 156 | README.md section #11 |  |  | 0.388 |
-| walker |  | 7871 | 12 | export at test/pages/index.tsx:3 |  |  | 0.388 |
-| ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.402 |
-| walker |  | 8304 | 433 | README.md section #35 |  |  | 0.432 |
+| walker |  | 7732 | 156 | README.md section #12 |  |  | 0.388 |
+| walker |  | 7888 | 156 | README.md section #11 |  |  | 0.388 |
+| walker |  | 7900 | 12 | export at test/pages/index.tsx:3 |  |  | 0.388 |
+| ns | 7942 |  | 220 | CI test pipeline steps | 8.2 |  | 0.403 |
+| walker |  | 8333 | 433 | README.md section #35 |  |  | 0.432 |
 | ns | 8373 |  | 431 | group.test.ts | 8.3 |  | 0.422 |
 | ns | 8681 |  | 308 | playwright.config.ts | 8.4 |  | 0.413 |
 | ns | 8937 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.405 |
-| walker |  | 8987 | 683 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.460 |
-| ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.456 |
-| walker |  | 9115 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.461 |
+| walker |  | 9016 | 683 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.461 |
+| ns | 9105 |  | 168 | website icon component roster | 10.1 |  | 0.457 |
+| walker |  | 9144 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.461 |
 | ns | 9452 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.450 |
 | ns | 9595 |  | 143 | Format/lint-staged tooling | 11.1 |  | 0.445 |
-| walker |  | 9756 | 641 | README.md section #2 |  |  | 0.445 |
-| walker |  | 9775 | 19 | listing of 'website/styles/cmdk' |  |  | 0.455 |
-| ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.449 |
-| walker |  | 9789 | 14 | export names surface in website/pages/index.tsx |  |  | 0.449 |
-| walker |  | 9789 | 0 | export at website/pages/index.tsx:29 |  |  | 0.449 |
-| walker |  | 9968 | 179 | README.md section #33 |  |  | 0.449 |
+| ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.439 |
+| walker |  | 9785 | 641 | README.md section #2 |  |  | 0.439 |
+| walker |  | 9804 | 19 | listing of 'website/styles/cmdk' |  |  | 0.449 |
+| walker |  | 9818 | 14 | export names surface in website/pages/index.tsx |  |  | 0.449 |
+| walker |  | 9818 | 0 | export at website/pages/index.tsx:29 |  |  | 0.449 |
+| walker |  | 9997 | 179 | README.md section #33 |  |  | 0.449 |

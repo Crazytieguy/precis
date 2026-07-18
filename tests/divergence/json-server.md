@@ -92,47 +92,51 @@ Score(3000)=0.842 I=0.933 C=0.761 ns_rows≤3K=23/51 (reached=15 partial=2 missi
 | ns | 4069 |  | 58 | app.ts: exported/function signatures | 4.1 |  | 0.801 |
 | ns | 4099 |  | 30 | bin.ts: function signatures | 4.2 | 2.1 | 0.797 |
 | walker |  | 4207 | 732 | README.md section #2 |  |  | 0.812 |
-| walker |  | 4262 | 55 | README.md section #12 |  |  | 0.822 |
-| walker |  | 4323 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.823 |
-| walker |  | 4336 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.823 |
+| walker |  | 4221 | 14 | test names surface in src/paginate.test.ts |  |  | 0.812 |
+| walker |  | 4276 | 55 | README.md section #12 |  |  | 0.822 |
+| walker |  | 4291 | 15 | test names surface in src/matches-where.test.ts |  |  | 0.823 |
+| walker |  | 4306 | 15 | test names surface in src/parse-where.test.ts |  |  | 0.823 |
 | ns | 4349 |  | 250 | service.ts: exported types + Service class member signatures | 4.3 |  | 0.801 |
-| walker |  | 4385 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.802 |
-| walker |  | 4399 | 14 | imports in src/adapters/observer.ts |  |  | 0.802 |
+| walker |  | 4367 | 61 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.801 |
+| walker |  | 4380 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.801 |
+| walker |  | 4429 | 49 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.802 |
 | ns | 4439 |  | 90 | normalized-adapter.ts: exported items + class member signatures | 4.4 |  | 0.803 |
+| walker |  | 4443 | 14 | imports in src/adapters/observer.ts |  |  | 0.803 |
 | ns | 4473 |  | 34 | matches-where.ts: function signatures | 4.5 |  | 0.801 |
-| walker |  | 4516 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.801 |
 | ns | 4518 |  | 45 | parse-where.ts: function signatures | 4.6 |  | 0.797 |
-| walker |  | 4587 | 71 | README.md section #17 |  |  | 0.807 |
-| ns | 4614 |  | 96 | paginate.ts: PaginationResult type + paginate signature | 4.7 |  | 0.809 |
-| walker |  | 4741 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.811 |
-| ns | 4783 |  | 169 | where-operators.ts (full file) | 4.8 |  | 0.812 |
-| walker |  | 4827 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.814 |
-| ns | 4837 |  | 54 | random-id.ts (full file) | 4.9 |  | 0.812 |
-| walker |  | 4933 | 106 | README.md section #4 |  |  | 0.812 |
-| ns | 5163 |  | 326 | observer.ts (full file) | 4.10 |  | 0.804 |
-| walker |  | 5288 | 355 | export at src/service.ts:81 |  |  | 0.815 |
-| walker |  | 5330 | 42 | imports in src/matches-where.ts |  |  | 0.815 |
-| walker |  | 5489 | 159 | README.md section #5 |  |  | 0.815 |
-| walker |  | 5616 | 127 | README.md section #11 |  |  | 0.824 |
-| walker |  | 5673 | 57 | imports in src/parse-where.ts |  |  | 0.824 |
+| walker |  | 4560 | 117 | export body at src/parse-where.ts:58 body 59 |  |  | 0.797 |
+| ns | 4614 |  | 96 | paginate.ts: PaginationResult type + paginate signature | 4.7 |  | 0.800 |
+| walker |  | 4631 | 71 | README.md section #17 |  |  | 0.809 |
+| ns | 4783 |  | 169 | where-operators.ts (full file) | 4.8 |  | 0.811 |
+| walker |  | 4785 | 154 | export at src/adapters/observer.ts:4 |  |  | 0.812 |
+| ns | 4837 |  | 54 | random-id.ts (full file) | 4.9 |  | 0.811 |
+| walker |  | 4871 | 86 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.812 |
+| walker |  | 4977 | 106 | README.md section #4 |  |  | 0.812 |
+| ns | 5163 |  | 326 | observer.ts (full file) | 4.10 |  | 0.805 |
+| walker |  | 5332 | 355 | export at src/service.ts:81 |  |  | 0.815 |
+| walker |  | 5374 | 42 | imports in src/matches-where.ts |  |  | 0.815 |
+| walker |  | 5533 | 159 | README.md section #5 |  |  | 0.815 |
+| walker |  | 5660 | 127 | README.md section #11 |  |  | 0.824 |
 | ns | 5715 |  | 552 | service.ts: #get/has/findById/find bodies | 5.1 | 4.3 | 0.780 |
-| walker |  | 5813 | 140 | README.md section #10 |  |  | 0.802 |
-| walker |  | 5968 | 155 | README.md section #14 |  |  | 0.825 |
+| walker |  | 5717 | 57 | imports in src/parse-where.ts |  |  | 0.780 |
+| walker |  | 5857 | 140 | README.md section #10 |  |  | 0.802 |
+| walker |  | 6012 | 155 | README.md section #14 |  |  | 0.825 |
 | ns | 6175 |  | 460 | service.ts: create/update/patch/destroyById bodies | 5.2 | 4.3 | 0.793 |
-| walker |  | 6290 | 322 | export body at src/paginate.ts:11 body 12 |  |  | 0.795 |
+| walker |  | 6334 | 322 | export body at src/paginate.ts:11 body 12 |  |  | 0.795 |
 | ns | 6473 |  | 298 | normalized-adapter.ts: read/write bodies | 5.3 | 4.4 | 0.771 |
-| walker |  | 6541 | 251 | export body at src/adapters/normalized-adapter.ts:11 body 15 |  |  | 0.798 |
-| walker |  | 6589 | 48 | imports in src/adapters/normalized-adapter.ts |  |  | 0.798 |
-| walker |  | 6693 | 104 | imports in src/service.ts |  |  | 0.798 |
-| walker |  | 7019 | 326 | README.md section #3 |  |  | 0.798 |
-| walker |  | 7190 | 171 | imports in src/app.ts |  |  | 0.798 |
+| walker |  | 6585 | 251 | export body at src/adapters/normalized-adapter.ts:11 body 15 |  |  | 0.798 |
+| walker |  | 6633 | 48 | imports in src/adapters/normalized-adapter.ts |  |  | 0.798 |
+| walker |  | 6737 | 104 | imports in src/service.ts |  |  | 0.798 |
+| walker |  | 6775 | 38 | test names surface in src/adapters/normalized-adapter.test.ts |  |  | 0.798 |
+| walker |  | 7101 | 326 | README.md section #3 |  |  | 0.798 |
+| walker |  | 7272 | 171 | imports in src/app.ts |  |  | 0.798 |
 | ns | 7462 |  | 989 | matches-where.ts: full matchesWhere body | 5.4 | 4.5 | 0.746 |
-| ns | 8156 |  | 694 | parse-where.ts: full body (splitKey/setPathOp/coerceValue/parseWhere) | 5.5 | 4.6 | 0.712 |
-| walker |  | 8185 | 995 | export body at src/service.ts:81 body 85 |  |  | 0.776 |
+| ns | 8156 |  | 694 | parse-where.ts: full body (splitKey/setPathOp/coerceValue/parseWhere) | 5.5 | 4.6 | 0.713 |
+| walker |  | 8267 | 995 | export body at src/service.ts:81 body 85 |  |  | 0.776 |
 | ns | 8498 |  | 342 | paginate.ts: full paginate() body | 5.6 | 4.7 | 0.780 |
-| ns | 8701 |  | 203 | Top-level test-suite roster (all *.test.ts files) | 6.1 |  | 0.772 |
-| walker |  | 9014 | 829 | export body at src/matches-where.ts:24 body 25 |  |  | 0.814 |
-| ns | 9763 |  | 1062 | matches-where.test.ts (full file) | 6.2 | 6.1 | 0.781 |
-| walker |  | 9877 | 863 | export body at src/app.ts:94 body 95 |  |  | 0.781 |
-| ns | 9906 |  | 143 | views/index.html: resource-listing loop | 7.1 |  | 0.777 |
-| ns | 9923 |  | 17 | public/test.html (full) | 7.2 |  | 0.777 |
+| ns | 8701 |  | 203 | Top-level test-suite roster (all *.test.ts files) | 6.1 |  | 0.774 |
+| walker |  | 9096 | 829 | export body at src/matches-where.ts:24 body 25 |  |  | 0.816 |
+| ns | 9763 |  | 1062 | matches-where.test.ts (full file) | 6.2 | 6.1 | 0.783 |
+| ns | 9906 |  | 143 | views/index.html: resource-listing loop | 7.1 |  | 0.779 |
+| ns | 9923 |  | 17 | public/test.html (full) | 7.2 |  | 0.778 |
+| walker |  | 9959 | 863 | export body at src/app.ts:94 body 95 |  |  | 0.778 |

@@ -73,30 +73,31 @@ Score(3000)=0.842 I=0.944 C=0.751 ns_rows≤3K=19/47 (reached=14 partial=2 missi
 | walker |  | 5224 | 192 | README.md section #17 |  |  | 0.598 |
 | walker |  | 5243 | 19 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.598 |
 | walker |  | 5259 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.598 |
-| walker |  | 5287 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.598 |
 | ns | 5375 |  | 196 | test-types-compilation.ts: emit() type inference checks | 4.13 |  | 0.584 |
-| walker |  | 5397 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.585 |
-| walker |  | 5410 | 13 | imports in test/test-types-compilation.ts |  |  | 0.585 |
-| walker |  | 5484 | 74 | plaintext config .gitignore |  |  | 0.585 |
-| ns | 5534 |  | 159 | package.json: repository/keywords/homepage/authors/license/files | 5.1 |  | 0.600 |
-| walker |  | 5649 | 165 | plaintext config .editorconfig |  |  | 0.601 |
-| ns | 5674 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.590 |
-| walker |  | 5958 | 309 | plaintext config LICENSE |  |  | 0.591 |
-| ns | 6043 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.608 |
-| ns | 6192 |  | 149 | tsconfig.json (full) | 6.1 |  | 0.619 |
-| ns | 6417 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.603 |
-| walker |  | 6458 | 500 | plaintext config .eslintrc |  |  | 0.639 |
-| walker |  | 6520 | 62 | imports in test/index_test.ts |  |  | 0.640 |
-| ns | 6692 |  | 275 | .eslintrc: rule overrides | 6.3 |  | 0.656 |
-| ns | 6857 |  | 165 | .editorconfig (full) | 6.4 |  | 0.665 |
-| ns | 6931 |  | 74 | .gitignore (full) | 6.5 |  | 0.669 |
-| ns | 7148 |  | 217 | CI workflow: main.yml (full) | 6.6 |  | 0.679 |
-| ns | 7268 |  | 120 | CI workflow: compressed-size.yml (full) | 6.7 |  | 0.684 |
-| ns | 7557 |  | 289 | README: Install section | 7.1 |  | 0.693 |
-| ns | 7791 |  | 234 | README: Usage section (core example) | 7.2 |  | 0.701 |
-| ns | 8104 |  | 313 | README: TypeScript usage section | 7.3 |  | 0.710 |
-| ns | 8215 |  | 111 | README: Examples & Demos | 7.4 |  | 0.712 |
-| ns | 8544 |  | 329 | README: Contribute section | 7.5 |  | 0.716 |
-| ns | 8756 |  | 212 | PULL_REQUEST_TEMPLATE.md (full) | 7.6 |  | 0.714 |
-| ns | 9065 |  | 309 | LICENSE (full) | 7.7 |  | 0.719 |
-| ns | 9103 |  | 38 | README: License section | 7.8 |  | 0.720 |
+| ns | 5534 |  | 159 | package.json: repository/keywords/homepage/authors/license/files | 5.1 |  | 0.598 |
+| walker |  | 5633 | 374 | test names surface in test/index_test.ts |  |  | 0.604 |
+| walker |  | 5661 | 28 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.605 |
+| ns | 5674 |  | 140 | package.json: mocha and prettier config blocks | 5.2 |  | 0.593 |
+| walker |  | 5771 | 110 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.594 |
+| walker |  | 5784 | 13 | imports in test/test-types-compilation.ts |  |  | 0.594 |
+| walker |  | 5858 | 74 | plaintext config .gitignore |  |  | 0.595 |
+| walker |  | 6023 | 165 | plaintext config .editorconfig |  |  | 0.596 |
+| ns | 6043 |  | 369 | package.json: devDependencies (full list) | 5.3 |  | 0.613 |
+| ns | 6192 |  | 149 | tsconfig.json (full) | 6.1 |  | 0.623 |
+| walker |  | 6332 | 309 | plaintext config LICENSE |  |  | 0.625 |
+| ns | 6417 |  | 225 | .eslintrc: ignores, extends, parser, env, globals | 6.2 |  | 0.609 |
+| ns | 6692 |  | 275 | .eslintrc: rule overrides | 6.3 |  | 0.592 |
+| walker |  | 6832 | 500 | plaintext config .eslintrc |  |  | 0.660 |
+| ns | 6857 |  | 165 | .editorconfig (full) | 6.4 |  | 0.668 |
+| walker |  | 6892 | 60 | imports in test/index_test.ts |  |  | 0.671 |
+| ns | 6931 |  | 74 | .gitignore (full) | 6.5 |  | 0.675 |
+| ns | 7148 |  | 217 | CI workflow: main.yml (full) | 6.6 |  | 0.686 |
+| ns | 7268 |  | 120 | CI workflow: compressed-size.yml (full) | 6.7 |  | 0.690 |
+| ns | 7557 |  | 289 | README: Install section | 7.1 |  | 0.699 |
+| ns | 7791 |  | 234 | README: Usage section (core example) | 7.2 |  | 0.706 |
+| ns | 8104 |  | 313 | README: TypeScript usage section | 7.3 |  | 0.715 |
+| ns | 8215 |  | 111 | README: Examples & Demos | 7.4 |  | 0.717 |
+| ns | 8544 |  | 329 | README: Contribute section | 7.5 |  | 0.721 |
+| ns | 8756 |  | 212 | PULL_REQUEST_TEMPLATE.md (full) | 7.6 |  | 0.720 |
+| ns | 9065 |  | 309 | LICENSE (full) | 7.7 |  | 0.724 |
+| ns | 9103 |  | 38 | README: License section | 7.8 |  | 0.725 |
