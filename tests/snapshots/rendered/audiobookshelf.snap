@@ -285,9 +285,7 @@ docs/
            1→# OpenAPI specification
            2→
            3→This directory includes the OpenAPI spec for the ABS server. The spec is made up of a number of individual `yaml` files located here and in the subfolders, with `root.yaml` being the file that references all of the others. The files are organized to have the same hierarchy as the server source files. The full spec is bundled into one file in `openapi.json`.
-           5→The spec is linted and bundled using [`redocly-cli`](https://redocly.com/docs/cli/). This tool also generates HTML docs for the spec.
-           6→
-           7→The tools created by [`pb33f`](https://pb33f.io/), specifically `vacuum` and `wiretap`, are also useful for linting and verification. These tools check for some other things, such as validating requests to and responses from the server.
+        …
            9→### Bundling the spec
         …
           15→### Linting the spec
@@ -524,6 +522,17 @@ server/
             oldDbFiles.js
         notifications.js
         parsers/
+            parseComicInfoMetadata.js
+            parseComicMetadata.js
+            parseEbookMetadata.js
+            parseEpubMetadata.js
+            parseFullName.js
+            parseNameString.js
+            parseNfoMetadata.js
+            parseOPML.js
+            parseOpfMetadata.js
+            parseOverdriveMediaMarkers.js
+            parseSeriesString.js
         podcastUtils.js
         prober.js
         profiler.js
@@ -543,11 +552,3 @@ server/
 tailwind.config.js
 test/
     server/
-        Logger.test.js
-        controllers/
-        finders/
-        managers/
-        migrations/
-        objects/
-        providers/
-        utils/

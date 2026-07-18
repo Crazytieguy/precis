@@ -121,10 +121,70 @@ entries = ["base.ts", "graph.ts", "index.ts"]
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: ".changeset" })'
+descriptor = "listing of '.changeset'"
+cost_tokens = 8
+cum_tokens = 236
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".changeset"
+entries = ["README.md", "config.json"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "packages/d2ql" })'
+descriptor = "listing of 'packages/d2ql'"
+cost_tokens = 25
+cum_tokens = 261
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2ql"
+entries = ["README.md", "eslint.config.mjs", "package.json", "src", "tests", "tsconfig.json"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "packages/d2mini" })'
+descriptor = "listing of 'packages/d2mini'"
+cost_tokens = 30
+cum_tokens = 291
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2mini"
+entries = ["CHANGELOG.md", "README.md", "eslint.config.mjs", "package.json", "src", "tests", "tsconfig.json"]
+
+[[batches]]
+position = 12
+key = 'Markdown(ReadmeHeadline { file: "packages/d2mini/README.md" })'
+descriptor = "README headline in packages/d2mini/README.md"
+cost_tokens = 59
+cum_tokens = 350
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2mini/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
 key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
 descriptor = "YAML config at .github/workflows/ci.yml"
 cost_tokens = 652
-cum_tokens = 880
+cum_tokens = 1002
 
 [batches.content]
 kind = "lines"
@@ -146,53 +206,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 10
-key = 'Fs(DirListing { dir: ".changeset" })'
-descriptor = "listing of '.changeset'"
-cost_tokens = 8
-cum_tokens = 888
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".changeset"
-entries = ["README.md", "config.json"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "packages/d2ql" })'
-descriptor = "listing of 'packages/d2ql'"
-cost_tokens = 25
-cum_tokens = 913
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2ql"
-entries = ["README.md", "eslint.config.mjs", "package.json", "src", "tests", "tsconfig.json"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "packages/d2mini" })'
-descriptor = "listing of 'packages/d2mini'"
-cost_tokens = 30
-cum_tokens = 943
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2mini"
-entries = ["CHANGELOG.md", "README.md", "eslint.config.mjs", "package.json", "src", "tests", "tsconfig.json"]
-
-[[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: "packages/d2ts" })'
 descriptor = "listing of 'packages/d2ts'"
 cost_tokens = 36
-cum_tokens = 979
+cum_tokens = 1038
 
 [batches.content]
 kind = "fs"
@@ -202,11 +220,11 @@ parent = "packages/d2ts"
 entries = ["CHANGELOG.md", "README.md", "eslint.config.mjs", "package.json", "src", "tests", "tsconfig.json", "vitest.config.js"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Json(Identity { file: "packages/d2ts/package.json" })'
 descriptor = "package identity in packages/d2ts/package.json"
 cost_tokens = 85
-cum_tokens = 1064
+cum_tokens = 1123
 
 [batches.content]
 kind = "lines"
@@ -228,11 +246,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Typescript(ExportNames { file: "eslint.base.mjs" })'
 descriptor = "export names surface in eslint.base.mjs"
 cost_tokens = 11
-cum_tokens = 1075
+cum_tokens = 1134
 
 [batches.content]
 kind = "lines"
@@ -254,11 +272,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Fs(DirListing { dir: "packages/d2mini/src" })'
 descriptor = "listing of 'packages/d2mini/src'"
 cost_tokens = 33
-cum_tokens = 1108
+cum_tokens = 1167
 
 [batches.content]
 kind = "fs"
@@ -268,11 +286,11 @@ parent = "packages/d2mini/src"
 entries = ["d2.ts", "graph.ts", "index.ts", "indexes.ts", "multiset.ts", "operators", "types.ts", "utils.ts"]
 
 [[batches]]
-position = 17
+position = 18
 key = 'Fs(DirListing { dir: "packages/d2mini/src/operators" })'
 descriptor = "listing of 'packages/d2mini/src/operators'"
 cost_tokens = 104
-cum_tokens = 1212
+cum_tokens = 1271
 
 [batches.content]
 kind = "fs"
@@ -280,24 +298,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "packages/d2mini/src/operators"
 entries = ["concat.ts", "consolidate.ts", "count.ts", "debug.ts", "distinct.ts", "filter.ts", "filterBy.ts", "groupBy.ts", "index.ts", "join.ts", "keying.ts", "map.ts", "negate.ts", "orderBy.ts", "orderByBTree.ts", "output.ts", "pipe.ts", "reduce.ts", "topK.ts", "topKWithFractionalIndex.ts", "topKWithFractionalIndexBTree.ts"]
-
-[[batches]]
-position = 18
-key = 'Markdown(ReadmeHeadline { file: "packages/d2mini/README.md" })'
-descriptor = "README headline in packages/d2mini/README.md"
-cost_tokens = 59
-cum_tokens = 1271
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2mini/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 19
@@ -1335,10 +1335,110 @@ kind = "full"
 
 [[batches]]
 position = 56
+key = 'Fs(DirListing { dir: "packages/d2ts/src/sqlite/operators" })'
+descriptor = "listing of 'packages/d2ts/src/sqlite/operators'"
+cost_tokens = 57
+cum_tokens = 3587
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2ts/src/sqlite/operators"
+entries = ["buffer.ts", "consolidate.ts", "count.ts", "distinct.ts", "filterBy.ts", "groupBy.ts", "index.ts", "join.ts", "orderBy.ts", "reduce.ts", "topK.ts", "topKWithFractionalIndex.ts"]
+
+[[batches]]
+position = 57
+key = 'Typescript(Imports { file: "packages/d2ts/src/sqlite/operators/index.ts" })'
+descriptor = "imports in packages/d2ts/src/sqlite/operators/index.ts"
+cost_tokens = 148
+cum_tokens = 3735
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/sqlite/operators/index.ts"
+start = 1
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/filterBy.ts" })'
+descriptor = "export names surface in packages/d2ts/src/sqlite/operators/filterBy.ts"
+cost_tokens = 13
+cum_tokens = 3748
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/sqlite/operators/filterBy.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/sqlite/operators/filterBy.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 59
+key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/groupBy.ts" })'
+descriptor = "export names surface in packages/d2ts/src/sqlite/operators/groupBy.ts"
+cost_tokens = 24
+cum_tokens = 3772
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/sqlite/operators/groupBy.ts"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/sqlite/operators/groupBy.ts"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/sqlite/operators/groupBy.ts"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/sqlite/operators/groupBy.ts"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 60
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/count.ts" })'
 descriptor = "export names surface in packages/d2ts/src/operators/count.ts"
 cost_tokens = 36
-cum_tokens = 3566
+cum_tokens = 3808
 
 [batches.content]
 kind = "lines"
@@ -1376,11 +1476,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 61
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/order.ts" })'
 descriptor = "export names surface in packages/d2ts/src/order.ts"
 cost_tokens = 55
-cum_tokens = 3621
+cum_tokens = 3863
 
 [batches.content]
 kind = "lines"
@@ -1450,11 +1550,11 @@ end = 278
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 62
 key = 'Typescript(Export { file: "packages/d2ts/src/order.ts", start_line: 10 })'
 descriptor = "export at packages/d2ts/src/order.ts:10"
 cost_tokens = 0
-cum_tokens = 3621
+cum_tokens = 3863
 
 [batches.content]
 kind = "lines"
@@ -1476,11 +1576,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 63
 key = 'Typescript(Export { file: "packages/d2ts/src/order.ts", start_line: 277 })'
 descriptor = "export at packages/d2ts/src/order.ts:277"
 cost_tokens = 12
-cum_tokens = 3633
+cum_tokens = 3875
 
 [batches.content]
 kind = "lines"
@@ -1502,11 +1602,11 @@ end = 279
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 64
 key = 'Typescript(ExportBody { file: "packages/d2ts/src/order.ts", start_line: 277, body_start_line: 279 })'
 descriptor = "export body at packages/d2ts/src/order.ts:277 body 279"
 cost_tokens = 8
-cum_tokens = 3641
+cum_tokens = 3883
 
 [batches.content]
 kind = "lines"
@@ -1520,11 +1620,11 @@ end = 279
 kind = "full"
 
 [[batches]]
-position = 61
+position = 65
 key = 'Fs(DirListing { dir: "packages/d2ts/tests" })'
 descriptor = "listing of 'packages/d2ts/tests'"
 cost_tokens = 41
-cum_tokens = 3682
+cum_tokens = 3924
 
 [batches.content]
 kind = "fs"
@@ -1534,11 +1634,11 @@ parent = "packages/d2ts/tests"
 entries = ["electric.test.ts", "graph.test.ts", "multiset.test.ts", "operators", "operators-sqlite", "order.test.ts", "utils.test.ts", "version-index.test.ts"]
 
 [[batches]]
-position = 62
+position = 66
 key = 'Fs(DirListing { dir: "packages/d2ts/tests/operators-sqlite" })'
 descriptor = "listing of 'packages/d2ts/tests/operators-sqlite'"
 cost_tokens = 41
-cum_tokens = 3723
+cum_tokens = 3965
 
 [batches.content]
 kind = "fs"
@@ -1548,11 +1648,11 @@ parent = "packages/d2ts/tests/operators-sqlite"
 entries = ["buffer.test.ts", "consolidate.test.ts", "count.test.ts", "distinct.test.ts", "groupBy.test.ts", "injection.test.ts", "join.test.ts", "reduce.test.ts"]
 
 [[batches]]
-position = 63
+position = 67
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/multiset.ts" })'
 descriptor = "export names surface in packages/d2ts/src/multiset.ts"
 cost_tokens = 56
-cum_tokens = 3779
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -1590,11 +1690,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 64
+position = 68
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/distinct.ts" })'
 descriptor = "export names surface in packages/d2ts/src/operators/distinct.ts"
 cost_tokens = 37
-cum_tokens = 3816
+cum_tokens = 4058
 
 [batches.content]
 kind = "lines"
@@ -1632,763 +1732,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 65
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/count.ts", start_line: 10 })'
-descriptor = "export at packages/d2ts/src/operators/count.ts:10"
-cost_tokens = 69
-cum_tokens = 3885
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/count.ts"
-start = 10
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/count.ts"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 66
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/distinct.ts", start_line: 10 })'
-descriptor = "export at packages/d2ts/src/operators/distinct.ts:10"
-cost_tokens = 69
-cum_tokens = 3954
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/distinct.ts"
-start = 10
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/distinct.ts"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 67
-key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/buffer.ts" })'
-descriptor = "export names surface in packages/d2ts/src/operators/buffer.ts"
-cost_tokens = 40
-cum_tokens = 3994
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 68
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/buffer.ts", start_line: 62 })'
-descriptor = "export at packages/d2ts/src/operators/buffer.ts:62"
-cost_tokens = 0
-cum_tokens = 3994
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 69
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/buffer.ts", start_line: 17 })'
-descriptor = "export at packages/d2ts/src/operators/buffer.ts:17"
-cost_tokens = 11
-cum_tokens = 4005
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/buffer.ts"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 70
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/count.ts", start_line: 32 })'
-descriptor = "export at packages/d2ts/src/operators/count.ts:32"
-cost_tokens = 58
-cum_tokens = 4063
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/count.ts"
-start = 32
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/count.ts"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 71
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/distinct.ts", start_line: 37 })'
-descriptor = "export at packages/d2ts/src/operators/distinct.ts:37"
-cost_tokens = 58
-cum_tokens = 4121
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/distinct.ts"
-start = 37
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/distinct.ts"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 72
-key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/concat.ts" })'
-descriptor = "export names surface in packages/d2ts/src/operators/concat.ts"
-cost_tokens = 41
-cum_tokens = 4162
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/concat.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/concat.ts"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/concat.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/concat.ts"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 73
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/concat.ts", start_line: 11 })'
-descriptor = "export at packages/d2ts/src/operators/concat.ts:11"
-cost_tokens = 9
-cum_tokens = 4171
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/concat.ts"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/concat.ts"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 74
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/concat.ts", start_line: 54 })'
-descriptor = "export at packages/d2ts/src/operators/concat.ts:54"
-cost_tokens = 29
-cum_tokens = 4200
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/concat.ts"
-start = 54
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/concat.ts"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 75
-key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/consolidate.ts" })'
-descriptor = "export names surface in packages/d2ts/src/operators/consolidate.ts"
-cost_tokens = 41
-cum_tokens = 4241
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 76
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/consolidate.ts", start_line: 61 })'
-descriptor = "export at packages/d2ts/src/operators/consolidate.ts:61"
-cost_tokens = 0
-cum_tokens = 4241
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 77
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/consolidate.ts", start_line: 16 })'
-descriptor = "export at packages/d2ts/src/operators/consolidate.ts:16"
-cost_tokens = 11
-cum_tokens = 4252
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/consolidate.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 78
-key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/topKWithFractionalIndex.ts" })'
-descriptor = "export names surface in packages/d2ts/src/operators/topKWithFractionalIndex.ts"
-cost_tokens = 41
-cum_tokens = 4293
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts"
-start = 372
-end = 372
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts"
-start = 373
-end = 373
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 79
-key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/reduce.ts" })'
-descriptor = "export names surface in packages/d2ts/src/operators/reduce.ts"
-cost_tokens = 43
-cum_tokens = 4336
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/reduce.ts"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/reduce.ts"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/reduce.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/reduce.ts"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 80
-key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/negate.ts" })'
-descriptor = "export names surface in packages/d2ts/src/operators/negate.ts"
-cost_tokens = 44
-cum_tokens = 4380
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/negate.ts"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/negate.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/negate.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/negate.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 81
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/negate.ts", start_line: 19 })'
-descriptor = "export at packages/d2ts/src/operators/negate.ts:19"
-cost_tokens = 0
-cum_tokens = 4380
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/negate.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/negate.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 82
-key = 'Typescript(Export { file: "packages/d2ts/src/operators/negate.ts", start_line: 10 })'
-descriptor = "export at packages/d2ts/src/operators/negate.ts:10"
-cost_tokens = 17
-cum_tokens = 4397
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/negate.ts"
-start = 10
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/operators/negate.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 83
-key = 'Json(Dependencies { file: "packages/d2ts/package.json" })'
-descriptor = "package runtime dependencies in packages/d2ts/package.json"
-cost_tokens = 74
-cum_tokens = 4471
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/package.json"
-start = 73
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
-key = 'Typescript(Imports { file: "packages/d2ts/src/order.ts" })'
-descriptor = "imports in packages/d2ts/src/order.ts"
-cost_tokens = 15
-cum_tokens = 4486
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/order.ts"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 85
-key = 'Typescript(Export { file: "packages/d2ts/src/version-index.ts", start_line: 8 })'
-descriptor = "export at packages/d2ts/src/version-index.ts:8"
-cost_tokens = 156
-cum_tokens = 4642
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/version-index.ts"
-start = 8
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 86
-key = 'Markdown(Section { file: "packages/d2ql/README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "packages/d2ql/README.md section #4"
-cost_tokens = 30
-cum_tokens = 4672
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ql/README.md"
-start = 140
-end = 142
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 87
-key = 'Fs(DirListing { dir: "packages/d2ts/src/sqlite/operators" })'
-descriptor = "listing of 'packages/d2ts/src/sqlite/operators'"
-cost_tokens = 57
-cum_tokens = 4729
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2ts/src/sqlite/operators"
-entries = ["buffer.ts", "consolidate.ts", "count.ts", "distinct.ts", "filterBy.ts", "groupBy.ts", "index.ts", "join.ts", "orderBy.ts", "reduce.ts", "topK.ts", "topKWithFractionalIndex.ts"]
-
-[[batches]]
-position = 88
-key = 'Typescript(Imports { file: "packages/d2ts/src/sqlite/operators/index.ts" })'
-descriptor = "imports in packages/d2ts/src/sqlite/operators/index.ts"
-cost_tokens = 148
-cum_tokens = 4877
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/sqlite/operators/index.ts"
-start = 1
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/filterBy.ts" })'
-descriptor = "export names surface in packages/d2ts/src/sqlite/operators/filterBy.ts"
-cost_tokens = 13
-cum_tokens = 4890
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/sqlite/operators/filterBy.ts"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/sqlite/operators/filterBy.ts"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 90
-key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/groupBy.ts" })'
-descriptor = "export names surface in packages/d2ts/src/sqlite/operators/groupBy.ts"
-cost_tokens = 24
-cum_tokens = 4914
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/sqlite/operators/groupBy.ts"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/sqlite/operators/groupBy.ts"
-start = 101
-end = 101
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/sqlite/operators/groupBy.ts"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/sqlite/operators/groupBy.ts"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 91
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/topK.ts" })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/operators/topK.ts"
 cost_tokens = 26
-cum_tokens = 4940
+cum_tokens = 4084
 
 [batches.content]
 kind = "lines"
@@ -2426,11 +1774,591 @@ end = 76
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 70
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/count.ts", start_line: 10 })'
+descriptor = "export at packages/d2ts/src/operators/count.ts:10"
+cost_tokens = 69
+cum_tokens = 4153
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/count.ts"
+start = 10
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/count.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 71
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/distinct.ts", start_line: 10 })'
+descriptor = "export at packages/d2ts/src/operators/distinct.ts:10"
+cost_tokens = 69
+cum_tokens = 4222
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/distinct.ts"
+start = 10
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/distinct.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 72
+key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/buffer.ts" })'
+descriptor = "export names surface in packages/d2ts/src/operators/buffer.ts"
+cost_tokens = 40
+cum_tokens = 4262
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 73
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/buffer.ts", start_line: 62 })'
+descriptor = "export at packages/d2ts/src/operators/buffer.ts:62"
+cost_tokens = 0
+cum_tokens = 4262
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 74
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/buffer.ts", start_line: 17 })'
+descriptor = "export at packages/d2ts/src/operators/buffer.ts:17"
+cost_tokens = 11
+cum_tokens = 4273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/buffer.ts"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 75
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/count.ts", start_line: 32 })'
+descriptor = "export at packages/d2ts/src/operators/count.ts:32"
+cost_tokens = 58
+cum_tokens = 4331
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/count.ts"
+start = 32
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/count.ts"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 76
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/distinct.ts", start_line: 37 })'
+descriptor = "export at packages/d2ts/src/operators/distinct.ts:37"
+cost_tokens = 58
+cum_tokens = 4389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/distinct.ts"
+start = 37
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/distinct.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 77
+key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/concat.ts" })'
+descriptor = "export names surface in packages/d2ts/src/operators/concat.ts"
+cost_tokens = 41
+cum_tokens = 4430
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/concat.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/concat.ts"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/concat.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/concat.ts"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 78
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/concat.ts", start_line: 11 })'
+descriptor = "export at packages/d2ts/src/operators/concat.ts:11"
+cost_tokens = 9
+cum_tokens = 4439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/concat.ts"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/concat.ts"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 79
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/concat.ts", start_line: 54 })'
+descriptor = "export at packages/d2ts/src/operators/concat.ts:54"
+cost_tokens = 29
+cum_tokens = 4468
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/concat.ts"
+start = 54
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/concat.ts"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 80
+key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/consolidate.ts" })'
+descriptor = "export names surface in packages/d2ts/src/operators/consolidate.ts"
+cost_tokens = 41
+cum_tokens = 4509
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 81
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/consolidate.ts", start_line: 61 })'
+descriptor = "export at packages/d2ts/src/operators/consolidate.ts:61"
+cost_tokens = 0
+cum_tokens = 4509
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 82
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/consolidate.ts", start_line: 16 })'
+descriptor = "export at packages/d2ts/src/operators/consolidate.ts:16"
+cost_tokens = 11
+cum_tokens = 4520
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/consolidate.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 83
+key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/topKWithFractionalIndex.ts" })'
+descriptor = "export names surface in packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+cost_tokens = 41
+cum_tokens = 4561
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+start = 372
+end = 372
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 84
+key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/reduce.ts" })'
+descriptor = "export names surface in packages/d2ts/src/operators/reduce.ts"
+cost_tokens = 43
+cum_tokens = 4604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/reduce.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/reduce.ts"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/reduce.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/reduce.ts"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 85
+key = 'Typescript(ExportNames { file: "packages/d2ts/src/operators/negate.ts" })'
+descriptor = "export names surface in packages/d2ts/src/operators/negate.ts"
+cost_tokens = 44
+cum_tokens = 4648
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/negate.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/negate.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/negate.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/negate.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 86
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/negate.ts", start_line: 19 })'
+descriptor = "export at packages/d2ts/src/operators/negate.ts:19"
+cost_tokens = 0
+cum_tokens = 4648
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/negate.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/negate.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 87
+key = 'Typescript(Export { file: "packages/d2ts/src/operators/negate.ts", start_line: 10 })'
+descriptor = "export at packages/d2ts/src/operators/negate.ts:10"
+cost_tokens = 17
+cum_tokens = 4665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/negate.ts"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/operators/negate.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 88
 key = 'Typescript(Export { file: "packages/d2ts/src/sqlite/operators/groupBy.ts", start_line: 49 })'
 descriptor = "export at packages/d2ts/src/sqlite/operators/groupBy.ts:49"
 cost_tokens = 43
-cum_tokens = 4983
+cum_tokens = 4708
 
 [batches.content]
 kind = "lines"
@@ -2452,11 +2380,11 @@ end = 52
 kind = "ellipsis"
 
 [[batches]]
-position = 93
+position = 89
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/count.ts" })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/operators/count.ts"
 cost_tokens = 32
-cum_tokens = 5015
+cum_tokens = 4740
 
 [batches.content]
 kind = "lines"
@@ -2494,11 +2422,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 90
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/distinct.ts" })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/operators/distinct.ts"
 cost_tokens = 33
-cum_tokens = 5048
+cum_tokens = 4773
 
 [batches.content]
 kind = "lines"
@@ -2534,6 +2462,78 @@ end = 45
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 91
+key = 'Json(Dependencies { file: "packages/d2ts/package.json" })'
+descriptor = "package runtime dependencies in packages/d2ts/package.json"
+cost_tokens = 74
+cum_tokens = 4847
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/package.json"
+start = 73
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Typescript(Imports { file: "packages/d2ts/src/order.ts" })'
+descriptor = "imports in packages/d2ts/src/order.ts"
+cost_tokens = 15
+cum_tokens = 4862
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/order.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Typescript(Export { file: "packages/d2ts/src/version-index.ts", start_line: 8 })'
+descriptor = "export at packages/d2ts/src/version-index.ts:8"
+cost_tokens = 156
+cum_tokens = 5018
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/version-index.ts"
+start = 8
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Markdown(Section { file: "packages/d2ql/README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "packages/d2ql/README.md section #4"
+cost_tokens = 30
+cum_tokens = 5048
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ql/README.md"
+start = 140
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 95

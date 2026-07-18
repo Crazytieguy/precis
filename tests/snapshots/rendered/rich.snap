@@ -141,43 +141,6 @@ docs/
         traceback.rst
         tree.rst
 examples/
-    README.md
-    attrs.py
-    bars.py
-    columns.py
-    cp_progress.py
-    downloader.py
-    dynamic_progress.py
-    exception.py
-    export.py
-    file_progress.py
-    fullscreen.py
-    group.py
-    group2.py
-    highlighter.py
-    jobs.py
-    justify.py
-    justify2.py
-    layout.py
-    link.py
-    listdir.py
-    live_progress.py
-    log.py
-    overflow.py
-    padding.py
-    print_calendar.py
-    rainbow.py
-    recursive_error.py
-    repr.py
-    save_table_svg.py
-    screen.py
-    spinners.py
-    status.py
-    suppress.py
-    table.py
-    table_movie.py
-    top_lite_simulator.py
-    tree.py
 faq.yml
 imgs/
     columns.png
@@ -255,12 +218,6 @@ rich/
           39→def reconfigure(*args: Any, **kwargs: Any) -> None:
         …
           53→def print(
-          54→    *objects: Any,
-          55→    sep: str = " ",
-          56→    end: str = "\n",
-          57→    file: Optional[IO[str]] = None,
-          58→    flush: bool = False,
-          59→) -> None:
         …
           77→def print_json(
         …
@@ -286,10 +243,6 @@ rich/
     _emoji_replace.py
     _export_format.py
     _extension.py
-           1→from typing import Any
-           4→def load_ipython_extension(ip: Any) -> None:  # pragma: no cover
-           5→    # prevent circular import
-        …
     _fileno.py
         …
            6→def get_fileno(file_like: IO[str]) -> int | None:
@@ -317,9 +270,52 @@ rich/
         …
           12→@contextlib.contextmanager
           13→def timer(subject: str = "time") -> Generator[None, None, None]:
-          14→    """print the elapsed time. (only used in debugging)"""
         …
     _unicode_data/
+        __init__.py
+               1→from __future__ import annotations
+               2→
+               3→import bisect
+               4→import os
+               5→import sys
+            …
+              12→from importlib import import_module
+              13→from typing import TYPE_CHECKING, cast
+              14→
+              15→from rich._unicode_data._versions import VERSIONS
+            …
+              20→VERSION_ORDER = sorted(
+            …
+              28→VERSION_SET = frozenset(VERSIONS)
+              29→
+              30→
+              31→def _parse_version(version: str) -> tuple[int, int, int]:
+            …
+              58→@cache
+              59→def load(unicode_version: str = "auto") -> CellTable:
+            …
+        _versions.py
+        unicode10-0-0.py
+        unicode11-0-0.py
+        unicode12-0-0.py
+        unicode12-1-0.py
+        unicode13-0-0.py
+        unicode14-0-0.py
+        unicode15-0-0.py
+        unicode15-1-0.py
+        unicode16-0-0.py
+        unicode17-0-0.py
+        unicode4-1-0.py
+        unicode5-0-0.py
+        unicode5-1-0.py
+        unicode5-2-0.py
+        unicode6-0-0.py
+        unicode6-1-0.py
+        unicode6-2-0.py
+        unicode6-3-0.py
+        unicode7-0-0.py
+        unicode8-0-0.py
+        unicode9-0-0.py
     _win32_console.py
     _windows.py
         …
@@ -328,9 +324,6 @@ rich/
            7→    """Windows features available."""
         …
     _windows_renderer.py
-        …
-           7→def legacy_windows_render(buffer: Iterable[Segment], term: LegacyWindowsTerm) -> None:
-        …
     _wrap.py
     abc.py
            1→from abc import ABC
@@ -368,7 +361,6 @@ rich/
     diagnose.py
         …
           10→def report() -> None:  # pragma: no cover
-          11→    """Print a report to the terminal with debugging information"""
         …
     emoji.py
     errors.py
@@ -395,7 +387,6 @@ rich/
     measure.py
         …
           11→class Measurement(NamedTuple):
-          12→    """Stores the minimum and maximum widths (in characters) required to render an object."""
         …
          125→def measure_renderables(
         …
@@ -426,7 +417,7 @@ rich/
     protocol.py
     py.typed
     region.py
-           1→from typing import NamedTuple
+        …
            4→class Region(NamedTuple):
            5→    """Defines a rectangular region of the screen."""
         …

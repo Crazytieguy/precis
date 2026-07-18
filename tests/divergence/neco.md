@@ -10,21 +10,21 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 85 | 21 | listing of 'docs/assets' |  |  | 0.886 |
 | ns | 197 |  | 122 | README Features — core bullets | 1.3 |  | 0.683 |
 | walker |  | 211 | 126 | listing of 'tests' |  |  | 0.717 |
-| ns | 338 |  | 141 | README Goals / non-goals | 1.4 |  | 0.562 |
-| ns | 410 |  | 72 | README 'Using' — how to build it in | 1.5 |  | 0.495 |
-| ns | 435 |  | 25 | docs/ listing | 2.1 |  | 0.562 |
-| ns | 456 |  | 21 | docs/assets/ listing | 2.2 |  | 0.593 |
-| ns | 470 |  | 14 | docs/tools/ listing | 2.3 |  | 0.571 |
-| ns | 486 |  | 16 | docs/tools/doxygen-md/ listing | 2.4 |  | 0.546 |
-| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.489 |
-| walker |  | 638 | 427 | README headline in README.md |  |  | 0.643 |
-| walker |  | 653 | 15 | listing of '.github' |  |  | 0.645 |
-| walker |  | 657 | 4 | listing of '.github/workflows' |  |  | 0.646 |
-| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.718 |
-| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.675 |
-| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.681 |
-| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.682 |
-| walker |  | 800 | 143 | YAML config at .github/workflows/main.yml |  |  | 0.686 |
+| walker |  | 226 | 15 | listing of '.github' |  |  | 0.720 |
+| walker |  | 230 | 4 | listing of '.github/workflows' |  |  | 0.721 |
+| ns | 338 |  | 141 | README Goals / non-goals | 1.4 |  | 0.565 |
+| walker |  | 373 | 143 | YAML config at .github/workflows/main.yml |  |  | 0.568 |
+| ns | 410 |  | 72 | README 'Using' — how to build it in | 1.5 |  | 0.501 |
+| ns | 435 |  | 25 | docs/ listing | 2.1 |  | 0.569 |
+| ns | 456 |  | 21 | docs/assets/ listing | 2.2 |  | 0.599 |
+| ns | 470 |  | 14 | docs/tools/ listing | 2.3 |  | 0.578 |
+| ns | 486 |  | 16 | docs/tools/doxygen-md/ listing | 2.4 |  | 0.552 |
+| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.494 |
+| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.605 |
+| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.569 |
+| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.577 |
+| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.580 |
+| walker |  | 800 | 427 | README headline in README.md |  |  | 0.686 |
 | walker |  | 889 | 89 | c header banner in neco.h |  |  | 0.686 |
 | walker |  | 903 | 14 | listing of 'docs/tools' |  |  | 0.707 |
 | walker |  | 945 | 42 | listing of 'deps' |  |  | 0.770 |
@@ -32,7 +32,7 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 1178 | 233 | headings outline in README.md |  |  | 0.696 |
 | walker |  | 1222 | 44 | README.md section #0 |  |  | 0.696 |
 | ns | 1240 |  | 217 | neco.h — Channels group (make/retain/release/send/broadcast) | 3.2 |  | 0.654 |
-| walker |  | 1241 | 19 | README.md section #22 |  |  | 0.654 |
+| walker |  | 1241 | 19 | README.md section #21 |  |  | 0.654 |
 | walker |  | 1292 | 51 | listing of 'examples' |  |  | 0.715 |
 | ns | 1467 |  | 227 | neco.h — Channels group (recv/tryrecv/close/select/case) | 3.3 |  | 0.681 |
 | walker |  | 1711 | 419 | c decl names surface in neco.h |  |  | 0.746 |
@@ -41,10 +41,10 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | ns | 1748 |  | 281 | neco.h — Generators group | 3.4 |  | 0.704 |
 | walker |  | 1774 | 63 | README.md section #2 |  |  | 0.742 |
 | walker |  | 1845 | 71 | headings outline in docs/assets/API_head.md |  |  | 0.742 |
-| walker |  | 1860 | 15 | README.md section #17 |  |  | 0.742 |
+| walker |  | 1860 | 15 | README.md section #16 |  |  | 0.742 |
 | walker |  | 1974 | 114 | c includes in neco.h |  |  | 0.742 |
 | ns | 2030 |  | 282 | neco.h — Mutexes group | 3.5 |  | 0.697 |
-| walker |  | 2039 | 65 | README.md section #15 |  |  | 0.697 |
+| walker |  | 2039 | 65 | README.md section #14 |  |  | 0.697 |
 | walker |  | 2169 | 130 | README.md section #1 |  |  | 0.756 |
 | ns | 2513 |  | 483 | neco.h — WaitGroups + Condition variables groups | 3.6 |  | 0.691 |
 | walker |  | 2667 | 498 | c decl names surface #1 in neco.h |  |  | 0.762 |
@@ -79,7 +79,7 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 3690 | 93 | c decl at neco.c:1337 |  |  | 0.739 |
 | walker |  | 3791 | 101 | c decl at neco.c:1364 |  |  | 0.739 |
 | walker |  | 3902 | 111 | docs/README.md section #1 |  |  | 0.739 |
-| walker |  | 3935 | 33 | README.md section #20 |  |  | 0.739 |
+| walker |  | 3935 | 33 | README.md section #19 |  |  | 0.739 |
 | ns | 4027 |  | 485 | neco.h — remaining declarations, part A: Posix wrappers + fd helpers | 3.9 |  | 0.700 |
 | walker |  | 4060 | 125 | docs/API.md section #0 |  |  | 0.700 |
 | walker |  | 4073 | 13 | docs/API.md section #3 |  |  | 0.700 |
@@ -119,7 +119,7 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 5599 | 54 | docs/API.md section #43 |  |  | 0.701 |
 | walker |  | 5651 | 52 | docs/API.md section #44 |  |  | 0.701 |
 | ns | 5683 |  | 158 | tests/README.md — run.sh env-var knobs | 4.3 |  | 0.690 |
-| walker |  | 5699 | 48 | README.md section #18 |  |  | 0.690 |
+| walker |  | 5699 | 48 | README.md section #17 |  |  | 0.690 |
 | walker |  | 5717 | 18 | docs/API.md section #11 |  |  | 0.690 |
 | ns | 5834 |  | 151 | neco.c — amalgamation vs NECO_NOAMALGA switch | 4.4 |  | 0.675 |
 | walker |  | 5897 | 180 | docs/TECHNICAL.md section #0 |  |  | 0.675 |
@@ -132,7 +132,7 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 6451 | 24 | c decl at neco.h:179 |  |  | 0.699 |
 | walker |  | 6467 | 16 | c decl doc at neco.h:188 |  |  | 0.702 |
 | walker |  | 6482 | 15 | c decl doc at neco.h:191 |  |  | 0.705 |
-| walker |  | 6534 | 52 | README.md section #19 |  |  | 0.705 |
+| walker |  | 6534 | 52 | README.md section #18 |  |  | 0.705 |
 | ns | 6731 |  | 400 | neco.c — top-level neco_* definitions, range 1/5 (name only) | 6.1 |  | 0.681 |
 | walker |  | 6739 | 205 | c decl at neco.c:1124 |  |  | 0.681 |
 | walker |  | 7052 | 313 | c decl names surface #1 in neco.c |  |  | 0.681 |

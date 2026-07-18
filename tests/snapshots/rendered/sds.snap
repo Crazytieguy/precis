@@ -36,6 +36,21 @@ README.md
       20→
       21→SDS is a string library for C designed to augment the limited libc string
       22→handling functionalities by adding heap allocated strings that are:
+      23→
+      24→* Simpler to use.
+      25→* Binary safe.
+      26→* Computationally more efficient.
+      27→* But yet... Compatible with normal C string functions.
+      28→
+      29→This is achieved using an alternative design in which instead of using a C
+      30→structure to represent a string, we use a binary prefix that is stored
+      31→before the actual pointer to the string that is returned by SDS to the user.
+      32→
+      33→    +--------+-------------------------------+-----------+
+      34→    | Header | Binary safe C alike string... | Null term |
+      35→    +--------+-------------------------------+-----------+
+      36→             |
+      37→             `-> Pointer returned to the user.
     …
       55→Advantages and disadvantages of SDS
       56→===
@@ -111,37 +126,6 @@ README.md
     …
 sds.c
 sds.h
-       1→/* SDSLib 2.0 -- A C dynamic strings library
-       2→ *
-       3→ * Copyright (c) 2006-2015, Salvatore Sanfilippo <antirez at gmail dot com>
-       4→ * Copyright (c) 2015, Oran Agra
-       5→ * Copyright (c) 2015, Redis Labs, Inc
-       6→ * All rights reserved.
-       7→ *
-       8→ * Redistribution and use in source and binary forms, with or without
-       9→ * modification, are permitted provided that the following conditions are met:
-      10→ *
-      11→ *   * Redistributions of source code must retain the above copyright notice,
-      12→ *     this list of conditions and the following disclaimer.
-      13→ *   * Redistributions in binary form must reproduce the above copyright
-      14→ *     notice, this list of conditions and the following disclaimer in the
-      15→ *     documentation and/or other materials provided with the distribution.
-      16→ *   * Neither the name of Redis nor the names of its contributors may be used
-      17→ *     to endorse or promote products derived from this software without
-      18→ *     specific prior written permission.
-      19→ *
-      20→ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-      21→ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-      22→ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-      23→ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-      24→ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-      25→ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-      26→ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-      27→ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-      28→ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-      29→ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-      30→ * POSSIBILITY OF SUCH DAMAGE.
-      31→ */
     …
       36→#define SDS_MAX_PREALLOC (1024*1024)
       37→extern const char *SDS_NOINIT;

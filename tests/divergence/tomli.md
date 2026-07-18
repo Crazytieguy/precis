@@ -11,14 +11,14 @@ Score(3000)=0.423 I=0.707 C=0.254 ns_rows≤3K=29/43 (reached=9 partial=1 missin
 | walker |  | 69 | 3 | listing of '.github' |  |  | 0.000 |
 | walker |  | 73 | 4 | listing of '.github/workflows' |  |  | 0.000 |
 | ns | 80 |  | 20 | benchmark/ listing | 1.5 |  | 0.000 |
-| ns | 110 |  | 30 | tests/ top-level listing | 1.6 |  | 0.000 |
-| walker |  | 131 | 58 | headings outline in tomllib.md |  |  | 0.000 |
-| ns | 143 |  | 33 | tests/data/invalid/dotted-keys/ listing | 1.7 |  | 0.000 |
-| walker |  | 157 | 26 | listing of 'src/tomli' |  |  | 0.205 |
+| walker |  | 99 | 26 | listing of 'src/tomli' |  |  | 0.274 |
+| ns | 110 |  | 30 | tests/ top-level listing | 1.6 |  | 0.226 |
+| ns | 143 |  | 33 | tests/data/invalid/dotted-keys/ listing | 1.7 |  | 0.205 |
 | ns | 199 |  | 56 | External toml-test invalid/ category listing | 1.8 |  | 0.156 |
-| ns | 261 |  | 62 | Repo root listing | 1.9 |  | 0.272 |
-| ns | 269 |  | 8 | MANIFEST.in (full, 1 line) | 1.10 |  | 0.269 |
-| walker |  | 287 | 130 | python imports in src/tomli/__init__.py |  |  | 0.282 |
+| walker |  | 229 | 130 | python imports in src/tomli/__init__.py |  |  | 0.163 |
+| ns | 261 |  | 62 | Repo root listing | 1.9 |  | 0.285 |
+| ns | 269 |  | 8 | MANIFEST.in (full, 1 line) | 1.10 |  | 0.282 |
+| walker |  | 287 | 58 | headings outline in tomllib.md |  |  | 0.282 |
 | walker |  | 295 | 8 | listing of 'fuzzer' |  |  | 0.469 |
 | walker |  | 304 | 9 | listing of 'profiler' |  |  | 0.541 |
 | ns | 323 |  | 54 | _parser.py roster: entry points + error class | 1.11 |  | 0.516 |
@@ -41,17 +41,17 @@ Score(3000)=0.423 I=0.707 C=0.254 ns_rows≤3K=29/43 (reached=9 partial=1 missin
 | walker |  | 1273 | 150 | tool.coverage config in pyproject.toml |  |  | 0.518 |
 | ns | 1396 |  | 171 | .pre-commit-config.yaml hook-id roster | 2.6 |  | 0.494 |
 | ns | 1497 |  | 101 | tests/data/valid/ listing | 2.7 |  | 0.464 |
-| walker |  | 1533 | 260 | python decl names surface in src/tomli/_parser.py |  |  | 0.506 |
-| ns | 1651 |  | 154 | tests/data/invalid/ listing | 2.8 |  | 0.470 |
-| ns | 1676 |  | 25 | Sample invalid TOML fixture (dotted-keys/extend-defined-aot) | 2.9 |  | 0.466 |
-| ns | 1915 |  | 239 | Test method roster (test_data/test_error/test_misc) | 2.10 |  | 0.441 |
-| walker |  | 1918 | 385 | headings outline in README.md |  |  | 0.441 |
-| walker |  | 1927 | 9 | README.md section #0 |  |  | 0.441 |
-| walker |  | 1933 | 6 | README.md section #19 |  |  | 0.441 |
-| walker |  | 1958 | 25 | README.md section #2 |  |  | 0.441 |
-| walker |  | 1966 | 8 | README.md section #13 |  |  | 0.441 |
-| walker |  | 1977 | 11 | README.md section #14 |  |  | 0.441 |
-| walker |  | 1991 | 14 | README.md section #18 |  |  | 0.441 |
+| ns | 1651 |  | 154 | tests/data/invalid/ listing | 2.8 |  | 0.431 |
+| walker |  | 1658 | 385 | headings outline in README.md |  |  | 0.431 |
+| walker |  | 1667 | 9 | README.md section #0 |  |  | 0.431 |
+| walker |  | 1673 | 6 | README.md section #19 |  |  | 0.431 |
+| ns | 1676 |  | 25 | Sample invalid TOML fixture (dotted-keys/extend-defined-aot) | 2.9 |  | 0.427 |
+| walker |  | 1698 | 25 | README.md section #2 |  |  | 0.427 |
+| walker |  | 1706 | 8 | README.md section #13 |  |  | 0.427 |
+| walker |  | 1717 | 11 | README.md section #14 |  |  | 0.427 |
+| walker |  | 1731 | 14 | README.md section #18 |  |  | 0.427 |
+| ns | 1915 |  | 239 | Test method roster (test_data/test_error/test_misc) | 2.10 |  | 0.405 |
+| walker |  | 1991 | 260 | python decl names surface in src/tomli/_parser.py |  |  | 0.441 |
 | walker |  | 2019 | 28 | README.md section #16 |  |  | 0.441 |
 | ns | 2024 |  | 109 | _types.py (full) | 2.11 |  | 0.430 |
 | ns | 2179 |  | 155 | Sample valid TOML/JSON fixture pair (array-subtables) | 3.1 |  | 0.411 |
@@ -66,12 +66,12 @@ Score(3000)=0.423 I=0.707 C=0.254 ns_rows≤3K=29/43 (reached=9 partial=1 missin
 | walker |  | 2687 | 40 | README.md section #9 |  |  | 0.416 |
 | ns | 2711 |  | 194 | pyproject.toml build-system + core [project] identity | 3.4 |  | 0.423 |
 | walker |  | 2726 | 39 | README.md section #22 |  |  | 0.423 |
-| walker |  | 2735 | 9 | README headline in benchmark/README.md |  |  | 0.423 |
-| walker |  | 2784 | 49 | README.md section #17 |  |  | 0.423 |
-| walker |  | 2840 | 56 | README.md section #5 |  |  | 0.423 |
-| walker |  | 2896 | 56 | README.md section #8 |  |  | 0.423 |
-| walker |  | 2954 | 58 | README.md section #4 |  |  | 0.423 |
-| walker |  | 2960 | 6 | listing of 'tests/data' |  |  | 0.423 |
+| walker |  | 2732 | 6 | listing of 'tests/data' |  |  | 0.423 |
+| walker |  | 2741 | 9 | README headline in benchmark/README.md |  |  | 0.423 |
+| walker |  | 2790 | 49 | README.md section #17 |  |  | 0.423 |
+| walker |  | 2846 | 56 | README.md section #5 |  |  | 0.423 |
+| walker |  | 2902 | 56 | README.md section #8 |  |  | 0.423 |
+| walker |  | 2960 | 58 | README.md section #4 |  |  | 0.423 |
 | walker |  | 2990 | 30 | tomllib.md section #3 |  |  | 0.423 |
 | ns | 3036 |  | 325 | README intro | 3.5 |  | 0.410 |
 | ns | 3257 |  | 221 | README usage: parse a TOML string | 4.1 |  | 0.397 |
@@ -132,40 +132,36 @@ Score(3000)=0.423 I=0.707 C=0.254 ns_rows≤3K=29/43 (reached=9 partial=1 missin
 | walker |  | 8984 | 1057 | YAML config at .pre-commit-config.yaml |  |  | 0.464 |
 | walker |  | 9016 | 32 | python decl at profiler/profiler_script.py:12 |  |  | 0.464 |
 | walker |  | 9027 | 11 | python imports in fuzzer/fuzz.py |  |  | 0.464 |
-| walker |  | 9087 | 60 | python decl at benchmark/run.py:15 |  |  | 0.464 |
 | ns | 9105 |  | 961 | loads()/load() entry point + parse loop | 5.5 | 1.11 | 0.437 |
-| walker |  | 9147 | 60 | python decl names surface in fuzzer/fuzz.py |  |  | 0.437 |
-| walker |  | 9147 | 0 | python decl at fuzzer/fuzz.py:53 |  |  | 0.437 |
-| walker |  | 9147 | 0 | python decl at fuzzer/fuzz.py:59 |  |  | 0.437 |
-| walker |  | 9162 | 15 | python decl at fuzzer/fuzz.py:20 |  |  | 0.437 |
-| walker |  | 9186 | 24 | python decl at fuzzer/fuzz.py:71 |  |  | 0.437 |
-| walker |  | 9204 | 18 | python decl doc at fuzzer/fuzz.py:59 |  |  | 0.437 |
-| walker |  | 9305 | 101 | listing of 'tests/data/valid' |  |  | 0.458 |
-| walker |  | 9310 | 5 | listing of 'tests/data/valid/_external' |  |  | 0.458 |
-| walker |  | 9316 | 6 | listing of 'tests/data/valid/_external/toml-test' |  |  | 0.458 |
-| walker |  | 9338 | 22 | listing of 'tests/data/valid/dates-and-times' |  |  | 0.458 |
-| walker |  | 9364 | 26 | listing of 'tests/data/valid/array' |  |  | 0.458 |
-| walker |  | 9390 | 26 | listing of 'tests/data/valid/inline-table' |  |  | 0.458 |
-| walker |  | 9418 | 28 | listing of 'tests/data/valid/multiline-basic-str' |  |  | 0.458 |
-| walker |  | 9423 | 5 | json config tests/data/valid/no-newlines.json |  |  | 0.458 |
-| walker |  | 9449 | 26 | python test names surface in tests/test_data.py |  |  | 0.458 |
-| walker |  | 9493 | 44 | plaintext config fuzzer/requirements.txt |  |  | 0.458 |
-| walker |  | 9579 | 86 | python decl names surface in tests/burntsushi.py |  |  | 0.458 |
-| walker |  | 9579 | 0 | python decl at tests/burntsushi.py:11 |  |  | 0.458 |
-| walker |  | 9579 | 0 | python decl at tests/burntsushi.py:42 |  |  | 0.458 |
-| walker |  | 9579 | 0 | python decl at tests/burntsushi.py:68 |  |  | 0.458 |
-| walker |  | 9579 | 0 | python decl at tests/burntsushi.py:92 |  |  | 0.458 |
-| walker |  | 9579 | 0 | python decl at tests/burntsushi.py:96 |  |  | 0.458 |
-| walker |  | 9611 | 32 | python decl doc at tests/burntsushi.py:42 |  |  | 0.458 |
-| walker |  | 9664 | 53 | CHANGELOG.md section #1 |  |  | 0.461 |
-| walker |  | 9722 | 58 | benchmark/README.md section #2 |  |  | 0.461 |
-| walker |  | 9762 | 40 | python decl body at fuzzer/fuzz.py:71 body 73 |  |  | 0.461 |
-| walker |  | 9781 | 19 | python decl body at tests/burntsushi.py:92 body 93 |  |  | 0.461 |
-| walker |  | 9935 | 154 | listing of 'tests/data/invalid' |  |  | 0.488 |
-| walker |  | 9940 | 5 | listing of 'tests/data/invalid/_external' |  |  | 0.488 |
-| walker |  | 9946 | 6 | listing of 'tests/data/invalid/dates-and-times' |  |  | 0.488 |
-| walker |  | 9952 | 6 | listing of 'tests/data/invalid/literal-str' |  |  | 0.488 |
-| walker |  | 9958 | 6 | listing of 'tests/data/invalid/_external/toml-test' |  |  | 0.488 |
-| walker |  | 9973 | 15 | listing of 'tests/data/invalid/multiline-literal-str' |  |  | 0.488 |
-| ns | 9987 |  | 882 | key_value_rule / parse_key_value_pair / parse_key (full bodies) | 5.6 | 2.2 | 0.466 |
-| walker |  | 9991 | 18 | listing of 'tests/data/invalid/array-of-tables' |  |  | 0.466 |
+| walker |  | 9128 | 101 | listing of 'tests/data/valid' |  |  | 0.458 |
+| walker |  | 9133 | 5 | listing of 'tests/data/valid/_external' |  |  | 0.458 |
+| walker |  | 9139 | 6 | listing of 'tests/data/valid/_external/toml-test' |  |  | 0.458 |
+| walker |  | 9161 | 22 | listing of 'tests/data/valid/dates-and-times' |  |  | 0.458 |
+| walker |  | 9187 | 26 | listing of 'tests/data/valid/array' |  |  | 0.458 |
+| walker |  | 9213 | 26 | listing of 'tests/data/valid/inline-table' |  |  | 0.458 |
+| walker |  | 9241 | 28 | listing of 'tests/data/valid/multiline-basic-str' |  |  | 0.458 |
+| walker |  | 9246 | 5 | json config tests/data/valid/no-newlines.json |  |  | 0.458 |
+| walker |  | 9306 | 60 | python decl at benchmark/run.py:15 |  |  | 0.458 |
+| walker |  | 9366 | 60 | python decl names surface in fuzzer/fuzz.py |  |  | 0.458 |
+| walker |  | 9366 | 0 | python decl at fuzzer/fuzz.py:53 |  |  | 0.458 |
+| walker |  | 9366 | 0 | python decl at fuzzer/fuzz.py:59 |  |  | 0.458 |
+| walker |  | 9381 | 15 | python decl at fuzzer/fuzz.py:20 |  |  | 0.458 |
+| walker |  | 9405 | 24 | python decl at fuzzer/fuzz.py:71 |  |  | 0.458 |
+| walker |  | 9423 | 18 | python decl doc at fuzzer/fuzz.py:59 |  |  | 0.458 |
+| walker |  | 9577 | 154 | listing of 'tests/data/invalid' |  |  | 0.485 |
+| walker |  | 9582 | 5 | listing of 'tests/data/invalid/_external' |  |  | 0.485 |
+| walker |  | 9588 | 6 | listing of 'tests/data/invalid/dates-and-times' |  |  | 0.485 |
+| walker |  | 9594 | 6 | listing of 'tests/data/invalid/literal-str' |  |  | 0.485 |
+| walker |  | 9600 | 6 | listing of 'tests/data/invalid/_external/toml-test' |  |  | 0.485 |
+| walker |  | 9615 | 15 | listing of 'tests/data/invalid/multiline-literal-str' |  |  | 0.485 |
+| walker |  | 9633 | 18 | listing of 'tests/data/invalid/array-of-tables' |  |  | 0.485 |
+| walker |  | 9651 | 18 | listing of 'tests/data/invalid/boolean' |  |  | 0.485 |
+| walker |  | 9672 | 21 | listing of 'tests/data/invalid/table' |  |  | 0.485 |
+| walker |  | 9695 | 23 | listing of 'tests/data/invalid/array' |  |  | 0.485 |
+| walker |  | 9728 | 33 | listing of 'tests/data/invalid/dotted-keys' |  |  | 0.495 |
+| walker |  | 9768 | 40 | listing of 'tests/data/invalid/keys-and-vals' |  |  | 0.495 |
+| walker |  | 9810 | 42 | listing of 'tests/data/invalid/multiline-basic-str' |  |  | 0.495 |
+| walker |  | 9899 | 89 | listing of 'tests/data/invalid/inline-table' |  |  | 0.495 |
+| walker |  | 9925 | 26 | python test names surface in tests/test_data.py |  |  | 0.496 |
+| walker |  | 9969 | 44 | plaintext config fuzzer/requirements.txt |  |  | 0.496 |
+| ns | 9987 |  | 882 | key_value_rule / parse_key_value_pair / parse_key (full bodies) | 5.6 | 2.2 | 0.474 |

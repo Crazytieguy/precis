@@ -23,10 +23,6 @@ expression: rendered
     CODE_OF_CONDUCT.md
     FUNDING.yml
     ISSUE_TEMPLATE/
-        ask-a-question.md
-        bug-report.md
-        feature-request.md
-        installation-problem.yml
     SECURITY.md
     pull_request_template.md
     workflows/
@@ -74,14 +70,7 @@ README.md
       28→## Intro & motivation
       29→
       30→**Linkwarden is a self-hosted, open-source collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.**
-      32→The objective is to organize useful webpages and articles you find across the web in one place, and since useful webpages can go away (see the inevitability of [Link Rot](https://en.wikipedia.org/wiki/Link_rot)), Linkwarden also saves a copy of each webpage as a Screenshot and PDF, ensuring accessibility even if the original content is no longer available.
-      33→
-      34→In addition to preservation, Linkwarden provides a user-friendly reading and annotation experience that blends the simplicity of a “read-it-later” tool with the reliability of a web archive. Whether you’re highlighting key ideas, jotting down thoughts, or revisiting content long after it’s disappeared from the web, Linkwarden keeps your knowledge accessible and organized.
-      35→
-      36→Linkwarden is also designed with collaboration in mind, enabling you to share links with the public and/or collaborate seamlessly with multiple users.
-      37→
-      38→> [!TIP]  
-      39→> Our official [Cloud](https://linkwarden.app/#pricing) offering provides the simplest way to begin using Linkwarden and it's the preferred choice for many due to its time-saving benefits. <br> Your subscription supports our hosting infrastructure and ongoing development. <br> Alternatively, if you prefer self-hosting Linkwarden, you can do so by following our [Installation documentation](https://docs.linkwarden.app/self-hosting/installation).
+    …
       41→## Features
     …
       48→- 👥 Collaborate on gathering links in a collection
@@ -91,7 +80,6 @@ README.md
       52→- 🔍 Full text search, filter and sort for easy retrieval
       53→- 🌓 Dark/Light mode support
     …
-      57→- 🔐 SSO integration (Enterprise and Self-hosted users only)
       58→- 🍎 iOS Shortcut to save links to Linkwarden
       59→- 🔑 API keys
       60→- ✅ Bulk actions
@@ -196,6 +184,14 @@ apps/
             Links.tsx
             TagListing.tsx
             ui/
+                Button.tsx
+                IconSymbol.ios.tsx
+                IconSymbol.tsx
+                Icons.tsx
+                Input.tsx
+                Spinner.tsx
+                TabBarBackground.ios.tsx
+                TabBarBackground.tsx
         eas.json
         lib/
             cache.ts
@@ -264,9 +260,85 @@ apps/
         next.config.js
         package.json
         pages/
+            _app.tsx
+            _document.tsx
+            admin/
+            api/
+                v1/
+                v2/
+                    dashboard/
+                        index.ts
+            auth/
+            collections/
+            confirmation.tsx
+            dashboard.tsx
+            forgot.tsx
+            index.tsx
+            links/
+            login.tsx
+            member-onboarding.tsx
+            preserved/
+                [id].tsx
+            public/
+                collections/
+                    [id]/
+                links/
+                    [id].tsx
+                preserved/
+                    [id].tsx
+            register.tsx
+            search.tsx
+            settings/
+            subscribe.tsx
+            tags/
         playwright.config.ts
         postcss.config.js
         public/
+            android-chrome-192x192.png
+            android-chrome-512x512.png
+            apple-touch-icon.png
+            favicon-16x16.png
+            favicon-32x32.png
+            favicon.ico
+            icon.png
+            linkwarden_dark.png
+            linkwarden_light.png
+            locales/
+                de/
+                    common.json
+                en/
+                    common.json
+                es/
+                    common.json
+                fr/
+                    common.json
+                it/
+                    common.json
+                ja/
+                    common.json
+                nl/
+                    common.json
+                pl/
+                    common.json
+                pt-BR/
+                    common.json
+                ro/
+                    common.json
+                ru/
+                    common.json
+                tr/
+                    common.json
+                uk/
+                    common.json
+                zh/
+                    common.json
+                zh-TW/
+                    common.json
+            logo_maskable.png
+            screenshots/
+                screenshot1.png
+                screenshot2.png
+            site.webmanifest
         scripts/
         store/
             links.ts
@@ -294,6 +366,13 @@ apps/
             getLinkBatch.ts
             getLinkBatchFairly.ts
             preservationScheme/
+                handleArchivePreview.ts
+                handleMonolith.ts
+                handleReadability.ts
+                handleScreenshotAndPdf.ts
+                imageHandler.ts
+                pdfHandler.ts
+                sendToWayback.ts
             prompts.ts
             protectPageRequests.ts
         package.json
@@ -369,13 +448,6 @@ packages/
         index.ts
             …
                5→export const prisma =
-               6→  globalForPrisma.prisma ||
-               7→  new PrismaClient({
-               8→    log:
-               9→      process.env.DEBUG === "true"
-              10→        ? ["query", "info", "warn", "error"]
-              11→        : ["warn", "error"],
-              12→  });
             …
         migrations/
         package.json

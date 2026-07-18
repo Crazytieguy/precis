@@ -9,9 +9,9 @@ Score(3000)=0.627 I=0.847 C=0.463 ns_rows≤3K=21/45 (reached=10 partial=2 missi
 | ns | 110 |  | 72 | src/ and impl/src/ directory listings | 1.2 |  | 0.570 |
 | walker |  | 125 | 36 | [dependencies] in Cargo.toml |  |  | 0.572 |
 | walker |  | 154 | 29 | headings outline in README.md |  |  | 0.572 |
-| walker |  | 179 | 25 | listing of 'src' |  |  | 0.634 |
-| ns | 191 |  | 81 | tests/ and tests/no-std/ directory listings | 1.3 |  | 0.483 |
-| walker |  | 198 | 19 | listing of 'impl' |  |  | 0.483 |
+| walker |  | 173 | 19 | listing of 'impl' |  |  | 0.572 |
+| ns | 191 |  | 81 | tests/ and tests/no-std/ directory listings | 1.3 |  | 0.436 |
+| walker |  | 198 | 25 | listing of 'src' |  |  | 0.483 |
 | ns | 207 |  | 16 | build/, .github/, .github/workflows/ listings | 1.4 |  | 0.463 |
 | ns | 257 |  | 50 | Cargo.toml — package identity (name/version/authors) | 1.5 |  | 0.441 |
 | ns | 370 |  | 113 | Cargo.toml — categories/description/docs/edition/keywords/license/repo/rust-version | 1.6 |  | 0.405 |
@@ -76,14 +76,14 @@ Score(3000)=0.627 I=0.847 C=0.463 ns_rows≤3K=21/45 (reached=10 partial=2 missi
 | walker |  | 4864 | 122 | [package] in impl/Cargo.toml |  |  | 0.558 |
 | ns | 4900 |  | 277 | impl/src/valid.rs — Struct::validate() dispatch | 6.1 |  | 0.539 |
 | walker |  | 4923 | 59 | README.md section #11 |  |  | 0.539 |
-| walker |  | 5008 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.539 |
-| walker |  | 5059 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.539 |
-| walker |  | 5112 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.539 |
-| ns | 5378 |  | 478 | impl/src/valid.rs — check_non_field_attrs() | 6.2 |  | 0.514 |
-| walker |  | 5653 | 541 | crate-doc tail at src/lib.rs:210 |  |  | 0.535 |
-| walker |  | 5725 | 72 | README.md section #2 |  |  | 0.535 |
-| walker |  | 5781 | 56 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.535 |
-| walker |  | 5790 | 9 | listing of 'tests/no-std' |  |  | 0.545 |
+| walker |  | 4932 | 9 | listing of 'tests/no-std' |  |  | 0.550 |
+| walker |  | 5017 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.550 |
+| walker |  | 5068 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.550 |
+| walker |  | 5121 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.550 |
+| ns | 5378 |  | 478 | impl/src/valid.rs — check_non_field_attrs() | 6.2 |  | 0.524 |
+| walker |  | 5662 | 541 | crate-doc tail at src/lib.rs:210 |  |  | 0.545 |
+| walker |  | 5734 | 72 | README.md section #2 |  |  | 0.545 |
+| walker |  | 5790 | 56 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.545 |
 | walker |  | 5920 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.545 |
 | walker |  | 5998 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.547 |
 | walker |  | 6024 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.549 |

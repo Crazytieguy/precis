@@ -12,35 +12,35 @@ Score(3000)=0.689 I=0.795 C=0.598 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | ns | 236 |  | 105 | pyproject.toml package identity | 1.3 |  | 0.816 |
 | ns | 265 |  | 29 | CHANGES.rst range markers | 1.4 |  | 0.783 |
 | walker |  | 294 | 99 | README.md section #0 |  |  | 0.783 |
-| walker |  | 307 | 13 | listing of '.github' |  |  | 0.783 |
-| walker |  | 330 | 23 | listing of '.github/workflows' |  |  | 0.786 |
-| ns | 383 |  | 118 | docs/ sitemap (index.rst toctree, Documentation + Tutorials) | 1.5 |  | 0.608 |
-| walker |  | 408 | 78 | [package] in pyproject.toml |  |  | 0.668 |
-| walker |  | 419 | 11 | listing of '.devcontainer' |  |  | 0.670 |
-| ns | 467 |  | 84 | docs/ sitemap (index.rst toctree, How to Guides) | 1.6 | 1.5 | 0.595 |
-| walker |  | 505 | 86 | listing of 'src/click' |  |  | 0.616 |
-| walker |  | 520 | 15 | python imports #1 in src/click/__init__.py |  |  | 0.616 |
-| ns | 553 |  | 86 | src/click/ module listing | 1.7 |  | 0.688 |
-| walker |  | 591 | 71 | python imports in src/click/__init__.py |  |  | 0.689 |
-| walker |  | 609 | 18 | python imports #6 in src/click/__init__.py |  |  | 0.689 |
-| walker |  | 639 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.689 |
-| walker |  | 739 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.693 |
-| walker |  | 757 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.693 |
-| walker |  | 757 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.693 |
-| ns | 760 |  | 207 | docs/ + docs/_static/ listing | 1.8 |  | 0.532 |
-| walker |  | 918 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.533 |
-| ns | 943 |  | 183 | tests/ + tests/typing/ listing | 1.9 |  | 0.462 |
-| walker |  | 1062 | 144 | python imports #4 in src/click/__init__.py |  |  | 0.466 |
-| walker |  | 1150 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.467 |
-| ns | 1159 |  | 216 | examples/ tree listing | 1.10 |  | 0.393 |
-| ns | 1220 |  | 61 | .github/ + .devcontainer/ listing | 1.11 |  | 0.411 |
-| ns | 1317 |  | 97 | pyproject.toml: pytest invocation config | 1.12 |  | 0.401 |
-| walker |  | 1339 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.404 |
-| ns | 1513 |  | 196 | click/__init__.py: docstring + core exports | 2.1 |  | 0.441 |
-| walker |  | 1519 | 180 | python imports #8 in src/click/__init__.py |  |  | 0.444 |
-| walker |  | 1555 | 36 | listing of 'examples' |  |  | 0.452 |
-| walker |  | 1747 | 192 | listing of 'docs' |  |  | 0.585 |
-| walker |  | 1762 | 15 | listing of 'docs/_static' |  |  | 0.605 |
+| walker |  | 305 | 11 | listing of '.devcontainer' |  |  | 0.783 |
+| ns | 383 |  | 118 | docs/ sitemap (index.rst toctree, Documentation + Tutorials) | 1.5 |  | 0.606 |
+| walker |  | 391 | 86 | listing of 'src/click' |  |  | 0.628 |
+| walker |  | 406 | 15 | python imports #1 in src/click/__init__.py |  |  | 0.628 |
+| ns | 467 |  | 84 | docs/ sitemap (index.rst toctree, How to Guides) | 1.6 | 1.5 | 0.559 |
+| walker |  | 477 | 71 | python imports in src/click/__init__.py |  |  | 0.559 |
+| walker |  | 495 | 18 | python imports #6 in src/click/__init__.py |  |  | 0.559 |
+| walker |  | 525 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.560 |
+| ns | 553 |  | 86 | src/click/ module listing | 1.7 |  | 0.646 |
+| walker |  | 625 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.650 |
+| walker |  | 643 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.650 |
+| walker |  | 643 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.650 |
+| ns | 760 |  | 207 | docs/ + docs/_static/ listing | 1.8 |  | 0.499 |
+| walker |  | 804 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.500 |
+| ns | 943 |  | 183 | tests/ + tests/typing/ listing | 1.9 |  | 0.434 |
+| walker |  | 948 | 144 | python imports #4 in src/click/__init__.py |  |  | 0.437 |
+| walker |  | 961 | 13 | listing of '.github' |  |  | 0.437 |
+| walker |  | 984 | 23 | listing of '.github/workflows' |  |  | 0.439 |
+| walker |  | 1072 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.440 |
+| ns | 1159 |  | 216 | examples/ tree listing | 1.10 |  | 0.370 |
+| ns | 1220 |  | 61 | .github/ + .devcontainer/ listing | 1.11 |  | 0.390 |
+| walker |  | 1261 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.393 |
+| ns | 1317 |  | 97 | pyproject.toml: pytest invocation config | 1.12 |  | 0.384 |
+| walker |  | 1453 | 192 | listing of 'docs' |  |  | 0.534 |
+| walker |  | 1468 | 15 | listing of 'docs/_static' |  |  | 0.556 |
+| ns | 1513 |  | 196 | click/__init__.py: docstring + core exports | 2.1 |  | 0.576 |
+| walker |  | 1648 | 180 | python imports #8 in src/click/__init__.py |  |  | 0.579 |
+| walker |  | 1684 | 36 | listing of 'examples' |  |  | 0.586 |
+| walker |  | 1762 | 78 | [package] in pyproject.toml |  |  | 0.605 |
 | walker |  | 1778 | 16 | python decl names surface in src/click/_textwrap.py |  |  | 0.605 |
 | walker |  | 1778 | 0 | python decl at src/click/_textwrap.py:8 |  |  | 0.605 |
 | ns | 1820 |  | 307 | click/__init__.py: decorators + exceptions exports | 2.2 |  | 0.628 |
@@ -78,16 +78,16 @@ Score(3000)=0.689 I=0.795 C=0.598 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | walker |  | 3663 | 87 | docs/wincmd.md section #0 |  |  | 0.650 |
 | walker |  | 3883 | 220 | README.md section #1 |  |  | 0.650 |
 | ns | 3884 |  | 470 | Context — public method locations | 3.3 |  | 0.627 |
-| walker |  | 4137 | 254 | python decl names surface in src/click/_compat.py |  |  | 0.627 |
-| ns | 4328 |  | 444 | Context.invoke — Command branch | 3.4 | 3.3 | 0.598 |
-| walker |  | 4389 | 252 | python decl names surface in src/click/types.py |  |  | 0.599 |
-| walker |  | 4425 | 36 | headings outline in docs/faqs.md |  |  | 0.599 |
-| walker |  | 4461 | 36 | docs/faqs.md section #0 |  |  | 0.599 |
-| walker |  | 4500 | 39 | headings outline in docs/parameters.md |  |  | 0.599 |
+| walker |  | 4135 | 252 | python decl names surface in src/click/types.py |  |  | 0.628 |
+| walker |  | 4171 | 36 | headings outline in docs/faqs.md |  |  | 0.628 |
+| walker |  | 4207 | 36 | docs/faqs.md section #0 |  |  | 0.628 |
+| walker |  | 4246 | 39 | headings outline in docs/parameters.md |  |  | 0.628 |
+| walker |  | 4293 | 47 | docs/parameters.md section #0 |  |  | 0.628 |
+| ns | 4328 |  | 444 | Context.invoke — Command branch | 3.4 | 3.3 | 0.599 |
+| walker |  | 4333 | 40 | headings outline in docs/virtualenv.md |  |  | 0.599 |
+| walker |  | 4333 | 0 | docs/virtualenv.md section #0 |  |  | 0.599 |
 | ns | 4531 |  | 203 | Command.__init__ signature | 4.1 |  | 0.587 |
-| walker |  | 4547 | 47 | docs/parameters.md section #0 |  |  | 0.587 |
-| walker |  | 4587 | 40 | headings outline in docs/virtualenv.md |  |  | 0.587 |
-| walker |  | 4587 | 0 | docs/virtualenv.md section #0 |  |  | 0.587 |
+| walker |  | 4587 | 254 | python decl names surface in src/click/_compat.py |  |  | 0.587 |
 | walker |  | 4846 | 259 | python decl names surface in src/click/_winconsole.py |  |  | 0.587 |
 | walker |  | 4970 | 124 | docs/extending-click.md section #0 |  |  | 0.587 |
 | ns | 5004 |  | 473 | Command — public method locations | 4.2 |  | 0.572 |

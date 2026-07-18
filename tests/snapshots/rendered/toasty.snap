@@ -9,42 +9,6 @@ expression: rendered
 .gitignore
 CLAUDE.md
 Cargo.toml
-       1→[workspace]
-       2→resolver = "2"
-       3→members = [
-       4→    "crates/toasty",
-       5→    "crates/toasty-cli",
-       6→    "crates/toasty-codegen",
-       7→    "crates/toasty-core",
-       8→    "crates/toasty-macros",
-       9→    "crates/toasty-sql",
-      10→
-      11→    # Driver implementations
-      12→    "crates/toasty-driver-dynamodb",
-      13→    "crates/toasty-driver-mysql",
-      14→    "crates/toasty-driver-postgresql",
-      15→    "crates/toasty-driver-sqlite",
-      16→
-      17→    # Driver integration test suite
-      18→    "crates/toasty-driver-integration-suite",
-      19→    "crates/toasty-driver-integration-suite-macros",
-      20→
-      21→    # General utilities.
-      22→    "crates/std-util",
-      23→
-      24→    # Examples
-      25→    "examples/composite-key",
-      26→    "examples/hello-toasty",
-      27→    "examples/todo-with-cli",
-      28→    "examples/user-has-one-profile",
-      29→
-      30→    # Tests
-      31→    "tests",
-      32→
-      33→    # Benchmarks
-      34→    "benches",
-      35→]
-    …
 LICENSE
 README.md
        1→# Toasty
@@ -75,6 +39,20 @@ crates/
     std-util/
         Cargo.toml
         src/
+            lib.rs
+                   1→pub mod num;
+                   2→pub mod option;
+                   3→pub mod result;
+                   4→pub mod slice;
+                   5→pub mod str;
+                   6→
+                   7→pub mod prelude {
+                …
+            num.rs
+            option.rs
+            result.rs
+            slice.rs
+            str.rs
     toasty/
         CONTEXT.md
         Cargo.toml
@@ -94,6 +72,22 @@ crates/
                     as_expr.rs
                 eval.rs
                 exec/
+                    action.rs
+                    delete_by_key.rs
+                    eval.rs
+                    exec_statement.rs
+                    filter.rs
+                    find_pk_by_index.rs
+                    get_by_key.rs
+                    nested_merge.rs
+                    output.rs
+                    plan.rs
+                    project.rs
+                    query_pk.rs
+                    rmw.rs
+                    set_var.rs
+                    update_by_key.rs
+                    var.rs
                 exec.rs
                 hir.rs
                 index/
@@ -108,6 +102,22 @@ crates/
                     returning.rs
                 lower.rs
                 mir/
+                    const.rs
+                    delete_by_key.rs
+                    eval.rs
+                    exec_statement.rs
+                    filter.rs
+                    find_pk_by_index.rs
+                    get_by_key.rs
+                    logical_plan.rs
+                    nested_merge.rs
+                    node.rs
+                    operation.rs
+                    project.rs
+                    query_pk.rs
+                    read_modify_write.rs
+                    store.rs
+                    update_by_key.rs
                 mir.rs
                 plan/
                     execution.rs
@@ -115,6 +125,25 @@ crates/
                     statement.rs
                 plan.rs
                 simplify/
+                    association.rs
+                    expr_and.rs
+                    expr_any.rs
+                    expr_binary_op.rs
+                    expr_cast.rs
+                    expr_concat_str.rs
+                    expr_exists.rs
+                    expr_in_list.rs
+                    expr_is_null.rs
+                    expr_list.rs
+                    expr_map.rs
+                    expr_not.rs
+                    expr_or.rs
+                    expr_project.rs
+                    expr_record.rs
+                    lift_in_subquery.rs
+                    lift_pk_select.rs
+                    rewrite_root_path_expr.rs
+                    stmt_query.rs
                 simplify.rs
                 ty.rs
                 verify.rs
@@ -245,6 +274,21 @@ crates/
                 response.rs
             driver.rs
             error/
+                adhoc.rs
+                condition_failed.rs
+                connection_pool.rs
+                driver_operation_failed.rs
+                expression_evaluation_failed.rs
+                invalid_connection_url.rs
+                invalid_driver_configuration.rs
+                invalid_record_count.rs
+                invalid_result.rs
+                invalid_schema.rs
+                invalid_statement.rs
+                invalid_type_conversion.rs
+                record_not_found.rs
+                unsupported_feature.rs
+                validation.rs
             error.rs
             lib.rs
                 …
@@ -431,20 +475,27 @@ crates/
                 value.rs
             serializer.rs
             stmt/
+                add_column.rs
+                alter_column.rs
+                alter_table.rs
+                column_def.rs
+                copy_table.rs
+                create_index.rs
+                create_table.rs
+                drop_column.rs
+                drop_index.rs
+                drop_table.rs
+                ident.rs
+                name.rs
+                pragma.rs
+                table_name.rs
+                ty.rs
             stmt.rs
         tests/
 docs/
     ARCHITECTURE.md
     CHANGE_GUIDE.md
     CONTEXT.md
-           1→# Documentation Context
-        …
-           5→## Writing Style
-        …
-          18→### Examples
-        …
-          28→## Document Structure
-        …
     architecture/
         query-engine.md
         type-system.md

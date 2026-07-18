@@ -4,15 +4,15 @@ Score(3000)=0.748 I=0.881 C=0.635 ns_rows≤3K=17/43 (reached=9 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 40 | 40 | listing of '.' |  |  | 1.000 |
 | ns | 40 |  | 40 | Root directory listing | 1.1 |  | 1.000 |
-| walker |  | 111 | 71 | package identity in package.json |  |  | 1.000 |
-| walker |  | 127 | 16 | listing of 'source' |  |  | 1.000 |
-| walker |  | 139 | 12 | export names surface in source/index.ts |  |  | 1.000 |
-| walker |  | 139 | 0 | export at source/index.ts:36 |  |  | 1.000 |
+| walker |  | 52 | 12 | listing of 'media' |  |  | 1.000 |
+| walker |  | 123 | 71 | package identity in package.json |  |  | 1.000 |
+| walker |  | 139 | 16 | listing of 'source' |  |  | 1.000 |
 | ns | 145 |  | 105 | package.json — identity | 1.2 |  | 0.843 |
-| walker |  | 160 | 21 | export at source/index.ts:10 |  |  | 0.843 |
-| walker |  | 172 | 12 | listing of 'media' |  |  | 0.843 |
-| walker |  | 193 | 21 | listing of 'source/errors' |  |  | 0.851 |
-| walker |  | 201 | 8 | listing of 'source/core' |  |  | 0.856 |
+| walker |  | 151 | 12 | export names surface in source/index.ts |  |  | 0.843 |
+| walker |  | 151 | 0 | export at source/index.ts:36 |  |  | 0.843 |
+| walker |  | 172 | 21 | export at source/index.ts:10 |  |  | 0.843 |
+| walker |  | 180 | 8 | listing of 'source/core' |  |  | 0.847 |
+| walker |  | 201 | 21 | listing of 'source/errors' |  |  | 0.856 |
 | walker |  | 232 | 31 | package runtime metadata in package.json |  |  | 0.856 |
 | ns | 250 |  | 105 | package.json — scripts | 1.3 |  | 0.708 |
 | walker |  | 265 | 33 | listing of 'source/types' |  |  | 0.731 |
@@ -21,16 +21,16 @@ Score(3000)=0.748 I=0.881 C=0.635 ns_rows≤3K=17/43 (reached=9 partial=1 missin
 | walker |  | 486 | 183 | README headline in readme.md |  |  | 0.847 |
 | ns | 492 |  | 126 | README benefits list | 1.5 |  | 0.849 |
 | walker |  | 552 | 66 | listing of 'test' |  |  | 0.864 |
-| walker |  | 567 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.864 |
+| walker |  | 563 | 11 | listing of '.github' |  |  | 0.864 |
+| walker |  | 567 | 4 | listing of '.github/workflows' |  |  | 0.864 |
 | ns | 590 |  | 98 | test/ tree breadth | 2.1 |  | 0.800 |
-| walker |  | 592 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.801 |
-| walker |  | 608 | 16 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.801 |
-| walker |  | 619 | 11 | listing of '.github' |  |  | 0.801 |
-| walker |  | 623 | 4 | listing of '.github/workflows' |  |  | 0.801 |
 | ns | 690 |  | 100 | README top-level (H2) section map | 2.2 |  | 0.751 |
 | ns | 835 |  | 145 | README H3 section map (API + Tips headers) | 2.3 |  | 0.696 |
-| ns | 922 |  | 87 | README usage example | 2.4 |  | 0.664 |
-| walker |  | 958 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.680 |
+| walker |  | 902 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.712 |
+| walker |  | 917 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.712 |
+| ns | 922 |  | 87 | README usage example | 2.4 |  | 0.680 |
+| walker |  | 942 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.680 |
+| walker |  | 958 | 16 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.680 |
 | walker |  | 977 | 19 | export names surface in source/errors/HTTPError.ts |  |  | 0.680 |
 | walker |  | 1034 | 57 | export at source/errors/HTTPError.ts:5 |  |  | 0.680 |
 | walker |  | 1139 | 105 | package entrypoints in package.json |  |  | 0.680 |
@@ -115,61 +115,61 @@ Score(3000)=0.748 I=0.881 C=0.635 ns_rows≤3K=17/43 (reached=9 partial=1 missin
 | walker |  | 4575 | 16 | export names surface in source/types/response.ts |  |  | 0.589 |
 | ns | 4575 |  | 604 | core/Ky.ts — #retry orchestration loop | 6.5 | 6.1 | 0.589 |
 | walker |  | 4597 | 22 | export at source/types/response.ts:1 |  |  | 0.589 |
-| walker |  | 4999 | 402 | readme.md section #46 |  |  | 0.589 |
-| walker |  | 5047 | 48 | export names surface in source/utils/normalize.ts |  |  | 0.589 |
-| walker |  | 5047 | 0 | export at source/utils/normalize.ts:28 |  |  | 0.589 |
+| walker |  | 4645 | 48 | export names surface in source/utils/normalize.ts |  |  | 0.589 |
+| walker |  | 4645 | 0 | export at source/utils/normalize.ts:28 |  |  | 0.589 |
+| walker |  | 4667 | 22 | export at source/utils/normalize.ts:5 |  |  | 0.589 |
+| walker |  | 4730 | 63 | readme.md section #37 |  |  | 0.589 |
+| walker |  | 4842 | 112 | json config tsconfig.dist.json |  |  | 0.589 |
 | ns | 5054 |  | 479 | core/Ky.ts — #fetch | 6.6 | 6.1 | 0.560 |
-| walker |  | 5069 | 22 | export at source/utils/normalize.ts:5 |  |  | 0.560 |
-| walker |  | 5132 | 63 | readme.md section #37 |  |  | 0.560 |
-| walker |  | 5244 | 112 | json config tsconfig.dist.json |  |  | 0.560 |
 | ns | 5296 |  | 242 | types/options.ts — KyOptions/Options field roster | 7.1 |  | 0.550 |
-| walker |  | 5321 | 77 | readme.md section #31 |  |  | 0.550 |
-| walker |  | 5400 | 79 | readme.md section #23 |  |  | 0.550 |
-| walker |  | 5423 | 23 | export names surface in source/types/retry.ts |  |  | 0.550 |
-| walker |  | 5438 | 15 | imports in source/utils/timeout.ts |  |  | 0.550 |
+| walker |  | 5323 | 481 | readme.md section #46 |  |  | 0.550 |
+| walker |  | 5400 | 77 | readme.md section #31 |  |  | 0.550 |
 | ns | 5454 |  | 158 | types/options.ts — InternalOptions | 7.2 |  | 0.543 |
-| walker |  | 5533 | 95 | readme.md section #26 |  |  | 0.543 |
-| walker |  | 5549 | 16 | imports in source/utils/delay.ts |  |  | 0.543 |
-| walker |  | 5784 | 235 | readme.md section #39 |  |  | 0.543 |
-| walker |  | 6144 | 360 | readme.md section #2 |  |  | 0.561 |
-| ns | 6167 |  | 713 | types/hooks.ts — hook signatures and state types | 8.1 |  | 0.526 |
-| walker |  | 6254 | 110 | readme.md section #9 |  |  | 0.526 |
-| walker |  | 6343 | 89 | export names surface in source/utils/body.ts |  |  | 0.526 |
-| walker |  | 6343 | 0 | export at source/utils/body.ts:5 |  |  | 0.526 |
-| walker |  | 6343 | 0 | export at source/utils/body.ts:90 |  |  | 0.526 |
-| walker |  | 6343 | 0 | export at source/utils/body.ts:119 |  |  | 0.526 |
+| walker |  | 5479 | 79 | readme.md section #23 |  |  | 0.543 |
+| walker |  | 5502 | 23 | export names surface in source/types/retry.ts |  |  | 0.543 |
+| walker |  | 5517 | 15 | imports in source/utils/timeout.ts |  |  | 0.543 |
+| walker |  | 5612 | 95 | readme.md section #26 |  |  | 0.543 |
+| walker |  | 5628 | 16 | imports in source/utils/delay.ts |  |  | 0.543 |
+| walker |  | 5863 | 235 | readme.md section #39 |  |  | 0.543 |
+| ns | 6167 |  | 713 | types/hooks.ts — hook signatures and state types | 8.1 |  | 0.510 |
+| walker |  | 6223 | 360 | readme.md section #2 |  |  | 0.526 |
+| walker |  | 6333 | 110 | readme.md section #9 |  |  | 0.526 |
+| walker |  | 6422 | 89 | export names surface in source/utils/body.ts |  |  | 0.526 |
+| walker |  | 6422 | 0 | export at source/utils/body.ts:5 |  |  | 0.526 |
+| walker |  | 6422 | 0 | export at source/utils/body.ts:90 |  |  | 0.526 |
+| walker |  | 6422 | 0 | export at source/utils/body.ts:119 |  |  | 0.526 |
 | ns | 6505 |  | 338 | types/hooks.ts — beforeRetry short-circuit rule | 8.2 |  | 0.521 |
-| walker |  | 6518 | 175 | export doc at source/utils/type-guards.ts:49 |  |  | 0.521 |
-| walker |  | 6634 | 116 | readme.md section #5 |  |  | 0.521 |
+| walker |  | 6597 | 175 | export doc at source/utils/type-guards.ts:49 |  |  | 0.521 |
 | ns | 6670 |  | 165 | types/retry.ts — RetryOptions field roster | 9.1 |  | 0.515 |
+| walker |  | 6713 | 116 | readme.md section #5 |  |  | 0.515 |
 | ns | 6790 |  | 120 | types/retry.ts — shouldRetry contract | 9.2 | 9.1 | 0.511 |
-| walker |  | 7005 | 371 | package dev/peer dependencies in package.json |  |  | 0.511 |
-| walker |  | 7122 | 117 | readme.md section #20 |  |  | 0.511 |
+| walker |  | 7084 | 371 | package dev/peer dependencies in package.json |  |  | 0.511 |
 | ns | 7126 |  | 336 | core/constants.ts — request methods, response types, misc constants | 10.1 |  | 0.498 |
 | ns | 7167 |  | 41 | core/constants.ts — ForceRetryOptions field roster | 10.2 |  | 0.497 |
+| walker |  | 7201 | 117 | readme.md section #20 |  |  | 0.497 |
 | ns | 7219 |  | 52 | core/constants.ts — RetryMarker class and the retry() factory | 10.3 |  | 0.495 |
 | ns | 7260 |  | 41 | core/constants.ts — option registries roster | 10.4 |  | 0.493 |
-| walker |  | 7304 | 182 | export doc at source/utils/type-guards.ts:71 |  |  | 0.493 |
-| walker |  | 7463 | 159 | export body at source/utils/timeout.ts:9 body 15 |  |  | 0.494 |
-| ns | 7545 |  | 285 | errors/HTTPError.ts | 11.1 |  | 0.510 |
-| ns | 7654 |  | 109 | errors/TimeoutError.ts | 11.2 |  | 0.515 |
-| walker |  | 7679 | 216 | export doc at source/utils/type-guards.ts:27 |  |  | 0.515 |
-| walker |  | 7899 | 220 | export doc at source/utils/type-guards.ts:98 |  |  | 0.515 |
+| walker |  | 7383 | 182 | export doc at source/utils/type-guards.ts:71 |  |  | 0.493 |
+| ns | 7545 |  | 285 | errors/HTTPError.ts | 11.1 |  | 0.509 |
+| walker |  | 7617 | 234 | readme.md section #47 |  |  | 0.509 |
+| ns | 7654 |  | 109 | errors/TimeoutError.ts | 11.2 |  | 0.514 |
+| walker |  | 7776 | 159 | export body at source/utils/timeout.ts:9 body 15 |  |  | 0.515 |
+| walker |  | 7992 | 216 | export doc at source/utils/type-guards.ts:27 |  |  | 0.515 |
 | ns | 8010 |  | 356 | errors/ForceRetryError.ts | 11.3 |  | 0.533 |
-| walker |  | 8066 | 167 | export body at source/utils/delay.ts:9 body 13 |  |  | 0.534 |
-| ns | 8092 |  | 82 | utils/merge.ts — function roster | 12.1 |  | 0.532 |
-| walker |  | 8185 | 119 | export names surface in source/utils/merge.ts |  |  | 0.534 |
-| walker |  | 8185 | 0 | export at source/utils/merge.ts:6 |  |  | 0.534 |
-| walker |  | 8185 | 0 | export at source/utils/merge.ts:16 |  |  | 0.534 |
-| walker |  | 8185 | 0 | export at source/utils/merge.ts:86 |  |  | 0.534 |
-| walker |  | 8279 | 94 | export at source/utils/merge.ts:38 |  |  | 0.534 |
-| walker |  | 8363 | 84 | export body at source/utils/merge.ts:6 body 7 |  |  | 0.534 |
-| ns | 8381 |  | 289 | utils/merge.ts — deepMerge's context special-casing | 12.2 | 12.1 | 0.524 |
-| walker |  | 8445 | 82 | export at source/types/retry.ts:3 |  |  | 0.525 |
-| ns | 8524 |  | 143 | utils/normalize.ts — default retry options | 12.3 |  | 0.521 |
-| walker |  | 8601 | 156 | readme.md section #17 |  |  | 0.521 |
+| ns | 8092 |  | 82 | utils/merge.ts — function roster | 12.1 |  | 0.530 |
+| walker |  | 8212 | 220 | export doc at source/utils/type-guards.ts:98 |  |  | 0.530 |
+| walker |  | 8379 | 167 | export body at source/utils/delay.ts:9 body 13 |  |  | 0.532 |
+| ns | 8381 |  | 289 | utils/merge.ts — deepMerge's context special-casing | 12.2 | 12.1 | 0.522 |
+| walker |  | 8498 | 119 | export names surface in source/utils/merge.ts |  |  | 0.524 |
+| walker |  | 8498 | 0 | export at source/utils/merge.ts:6 |  |  | 0.524 |
+| walker |  | 8498 | 0 | export at source/utils/merge.ts:16 |  |  | 0.524 |
+| walker |  | 8498 | 0 | export at source/utils/merge.ts:86 |  |  | 0.524 |
+| ns | 8524 |  | 143 | utils/normalize.ts — default retry options | 12.3 |  | 0.520 |
+| walker |  | 8592 | 94 | export at source/utils/merge.ts:38 |  |  | 0.520 |
+| walker |  | 8676 | 84 | export body at source/utils/merge.ts:6 body 7 |  |  | 0.520 |
+| walker |  | 8758 | 82 | export at source/types/retry.ts:3 |  |  | 0.521 |
 | ns | 8787 |  | 263 | utils/body.ts — progress-callback edge cases | 12.4 |  | 0.513 |
-| walker |  | 8914 | 313 | readme.md section #47 |  |  | 0.513 |
+| walker |  | 8914 | 156 | readme.md section #17 |  |  | 0.513 |
 | walker |  | 9081 | 167 | readme.md section #4 |  |  | 0.513 |
 | ns | 9105 |  | 318 | utils/options.ts — findUnknownOptions | 12.5 |  | 0.505 |
 | walker |  | 9113 | 32 | imports in source/utils/body.ts |  |  | 0.505 |

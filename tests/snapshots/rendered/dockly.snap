@@ -6,6 +6,7 @@ expression: rendered
     devcontainer.json
 .github/
     ISSUE_TEMPLATE/
+        bug_report.yaml
     PULL_REQUEST_TEMPLATE.md
     mergify.yml
     workflows/
@@ -333,7 +334,9 @@ src/
         styles.js
             …
               55→module.exports = {
-            …
+              56→  darkStyle,
+              57→  lightStyle
+              58→}
         theme.selector.js
             …
               13→module.exports = () => {

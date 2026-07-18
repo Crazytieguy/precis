@@ -33,10 +33,24 @@ entries = ["typeguard"]
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 41
+cum_tokens = 79
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["api.rst", "conf.py", "contributing.rst", "extending.rst", "features.rst", "index.rst", "userguide.rst", "versionhistory.rst"]
+
+[[batches]]
+position = 4
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 55
-cum_tokens = 93
+cum_tokens = 134
 
 [batches.content]
 kind = "lines"
@@ -50,25 +64,151 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 41
-cum_tokens = 134
+position = 5
+key = 'Fs(DirListing { dir: "src/typeguard" })'
+descriptor = "listing of 'src/typeguard'"
+cost_tokens = 72
+cum_tokens = 206
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "docs"
-entries = ["api.rst", "conf.py", "contributing.rst", "extending.rst", "features.rst", "index.rst", "userguide.rst", "versionhistory.rst"]
+parent = "src/typeguard"
+entries = ["__init__.py", "_checkers.py", "_config.py", "_decorators.py", "_exceptions.py", "_functions.py", "_importhook.py", "_memo.py", "_pytest_plugin.py", "_suppression.py", "_transformer.py", "_utils.py", "py.typed"]
 
 [[batches]]
-position = 5
+position = 6
+key = 'Python(Imports { file: "src/typeguard/__init__.py" })'
+descriptor = "python imports in src/typeguard/__init__.py"
+cost_tokens = 421
+cum_tokens = 627
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/__init__.py"
+start = 1
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Python(DeclNames { file: "src/typeguard/__init__.py" })'
+descriptor = "python decl names surface in src/typeguard/__init__.py"
+cost_tokens = 38
+cum_tokens = 665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/__init__.py"
+start = 34
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/__init__.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 8
+key = 'Python(Decl { file: "src/typeguard/__init__.py", start_line: 37 })'
+descriptor = "python decl at src/typeguard/__init__.py:37"
+cost_tokens = 0
+cum_tokens = 665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/__init__.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "mypy" })'
+descriptor = "tool.mypy config in pyproject.toml"
+cost_tokens = 48
+cum_tokens = 713
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 99
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 27
+cum_tokens = 740
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "SECURITY.md", "dependabot.yml", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 8
+cum_tokens = 748
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["publish.yml", "test.yml"]
+
+[[batches]]
+position = 12
+key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
+descriptor = "YAML config at .github/workflows/test.yml"
+cost_tokens = 475
+cum_tokens = 1223
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 1
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 70
-cum_tokens = 204
+cum_tokens = 1293
 
 [batches.content]
 kind = "lines"
@@ -93,146 +233,6 @@ kind = "full"
 path = "pyproject.toml"
 start = 26
 end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "src/typeguard" })'
-descriptor = "listing of 'src/typeguard'"
-cost_tokens = 72
-cum_tokens = 276
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/typeguard"
-entries = ["__init__.py", "_checkers.py", "_config.py", "_decorators.py", "_exceptions.py", "_functions.py", "_importhook.py", "_memo.py", "_pytest_plugin.py", "_suppression.py", "_transformer.py", "_utils.py", "py.typed"]
-
-[[batches]]
-position = 7
-key = 'Python(Imports { file: "src/typeguard/__init__.py" })'
-descriptor = "python imports in src/typeguard/__init__.py"
-cost_tokens = 421
-cum_tokens = 697
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/__init__.py"
-start = 1
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
-key = 'Python(DeclNames { file: "src/typeguard/__init__.py" })'
-descriptor = "python decl names surface in src/typeguard/__init__.py"
-cost_tokens = 38
-cum_tokens = 735
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/__init__.py"
-start = 34
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/__init__.py"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 9
-key = 'Python(Decl { file: "src/typeguard/__init__.py", start_line: 37 })'
-descriptor = "python decl at src/typeguard/__init__.py:37"
-cost_tokens = 0
-cum_tokens = 735
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/__init__.py"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
-key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "mypy" })'
-descriptor = "tool.mypy config in pyproject.toml"
-cost_tokens = 48
-cum_tokens = 783
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 99
-end = 103
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 27
-cum_tokens = 810
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "SECURITY.md", "dependabot.yml", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 8
-cum_tokens = 818
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["publish.yml", "test.yml"]
-
-[[batches]]
-position = 13
-key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
-descriptor = "YAML config at .github/workflows/test.yml"
-cost_tokens = 475
-cum_tokens = 1293
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 1
-end = 42
 
 [batches.content.spans.render]
 kind = "full"
@@ -435,10 +435,38 @@ kind = "full"
 
 [[batches]]
 position = 24
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 100
+cum_tokens = 2720
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["__init__.py", "conftest.py", "deferredannos.py", "dummymodule.py", "dummymodule_py312.py", "mypy", "test_checkers.py", "test_importhook.py", "test_instrumentation.py", "test_plugins.py", "test_pytest_plugin.py", "test_suppression.py", "test_transformer.py", "test_typechecked.py", "test_utils.py", "test_warn_on_error.py"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "tests/mypy" })'
+descriptor = "listing of 'tests/mypy'"
+cost_tokens = 14
+cum_tokens = 2734
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests/mypy"
+entries = ["negative.py", "positive.py", "test_type_annotations.py"]
+
+[[batches]]
+position = 26
 key = 'Python(DeclBody { file: "src/typeguard/__init__.py", start_line: 37, body_start_line: 38 })'
 descriptor = "python decl body at src/typeguard/__init__.py:37 body 38"
 cost_tokens = 69
-cum_tokens = 2689
+cum_tokens = 2803
 
 [batches.content]
 kind = "lines"
@@ -452,11 +480,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 25
+position = 27
 key = 'Python(DeclNames { file: "src/typeguard/_pytest_plugin.py" })'
 descriptor = "python decl names surface in src/typeguard/_pytest_plugin.py"
 cost_tokens = 36
-cum_tokens = 2725
+cum_tokens = 2839
 
 [batches.content]
 kind = "lines"
@@ -494,11 +522,11 @@ end = 76
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 28
 key = 'Python(Decl { file: "src/typeguard/_pytest_plugin.py", start_line: 16 })'
 descriptor = "python decl at src/typeguard/_pytest_plugin.py:16"
 cost_tokens = 0
-cum_tokens = 2725
+cum_tokens = 2839
 
 [batches.content]
 kind = "lines"
@@ -512,11 +540,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 27
+position = 29
 key = 'Python(Decl { file: "src/typeguard/_pytest_plugin.py", start_line: 75 })'
 descriptor = "python decl at src/typeguard/_pytest_plugin.py:75"
 cost_tokens = 0
-cum_tokens = 2725
+cum_tokens = 2839
 
 [batches.content]
 kind = "lines"
@@ -528,34 +556,6 @@ end = 75
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 100
-cum_tokens = 2825
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["__init__.py", "conftest.py", "deferredannos.py", "dummymodule.py", "dummymodule_py312.py", "mypy", "test_checkers.py", "test_importhook.py", "test_instrumentation.py", "test_plugins.py", "test_pytest_plugin.py", "test_suppression.py", "test_transformer.py", "test_typechecked.py", "test_utils.py", "test_warn_on_error.py"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "tests/mypy" })'
-descriptor = "listing of 'tests/mypy'"
-cost_tokens = 14
-cum_tokens = 2839
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/mypy"
-entries = ["negative.py", "positive.py", "test_type_annotations.py"]
 
 [[batches]]
 position = 30
@@ -5515,10 +5515,24 @@ kind = "full"
 
 [[batches]]
 position = 204
+key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '.github/ISSUE_TEMPLATE'"
+cost_tokens = 14
+cum_tokens = 8553
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/ISSUE_TEMPLATE"
+entries = ["bug_report.yaml", "config.yml", "features_request.yaml"]
+
+[[batches]]
+position = 205
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 516 })'
 descriptor = "python method at src/typeguard/_transformer.py:516"
 cost_tokens = 43
-cum_tokens = 8582
+cum_tokens = 8596
 
 [batches.content]
 kind = "lines"
@@ -5532,11 +5546,11 @@ end = 519
 kind = "full"
 
 [[batches]]
-position = 205
+position = 206
 key = 'Python(MethodDoc { file: "src/typeguard/_transformer.py", start_line: 650 })'
 descriptor = "python method doc at src/typeguard/_transformer.py:650"
 cost_tokens = 72
-cum_tokens = 8654
+cum_tokens = 8668
 
 [batches.content]
 kind = "lines"
@@ -5550,11 +5564,11 @@ end = 658
 kind = "full"
 
 [[batches]]
-position = 206
+position = 207
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 70 })'
 descriptor = "python decl at src/typeguard/_transformer.py:70"
 cost_tokens = 133
-cum_tokens = 8787
+cum_tokens = 8801
 
 [batches.content]
 kind = "lines"
@@ -5568,11 +5582,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 207
+position = 208
 key = 'Python(MethodDoc { file: "src/typeguard/_importhook.py", start_line: 138 })'
 descriptor = "python method doc at src/typeguard/_importhook.py:138"
 cost_tokens = 76
-cum_tokens = 8863
+cum_tokens = 8877
 
 [batches.content]
 kind = "lines"
@@ -5586,11 +5600,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 208
+position = 209
 key = 'Python(Imports { file: "src/typeguard/_config.py" })'
 descriptor = "python imports in src/typeguard/_config.py"
 cost_tokens = 63
-cum_tokens = 8926
+cum_tokens = 8940
 
 [batches.content]
 kind = "lines"
@@ -5604,11 +5618,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 209
+position = 210
 key = 'Python(DeclDoc { file: "src/typeguard/_config.py", start_line: 30 })'
 descriptor = "python decl doc at src/typeguard/_config.py:30"
 cost_tokens = 175
-cum_tokens = 9101
+cum_tokens = 9115
 
 [batches.content]
 kind = "lines"
@@ -5622,11 +5636,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 210
+position = 211
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 100 })'
 descriptor = "python decl at src/typeguard/_transformer.py:100"
 cost_tokens = 156
-cum_tokens = 9257
+cum_tokens = 9271
 
 [batches.content]
 kind = "lines"
@@ -5640,11 +5654,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 211
+position = 212
 key = 'Python(DeclDoc { file: "src/typeguard/_importhook.py", start_line: 183 })'
 descriptor = "python decl doc at src/typeguard/_importhook.py:183"
 cost_tokens = 167
-cum_tokens = 9424
+cum_tokens = 9438
 
 [batches.content]
 kind = "lines"
@@ -5656,20 +5670,6 @@ end = 201
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 212
-key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
-descriptor = "listing of '.github/ISSUE_TEMPLATE'"
-cost_tokens = 14
-cum_tokens = 9438
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/ISSUE_TEMPLATE"
-entries = ["bug_report.yaml", "config.yml", "features_request.yaml"]
 
 [[batches]]
 position = 213

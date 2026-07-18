@@ -29,40 +29,40 @@ Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | walker |  | 486 | 0 | go decl at group.go:20 |  |  | 0.690 |
 | walker |  | 486 | 0 | go decl at group.go:36 |  |  | 0.690 |
 | walker |  | 519 | 33 | go decl at group.go:10 |  |  | 0.691 |
-| walker |  | 531 | 12 | go package + imports in sort.go |  |  | 0.691 |
-| walker |  | 584 | 53 | go decl names surface in sort.go |  |  | 0.758 |
-| walker |  | 584 | 0 | go decl at sort.go:7 |  |  | 0.758 |
-| walker |  | 584 | 0 | go decl at sort.go:16 |  |  | 0.758 |
-| walker |  | 584 | 0 | go decl at sort.go:21 |  |  | 0.758 |
-| walker |  | 595 | 11 | go decl doc at sort.go:7 |  |  | 0.758 |
-| walker |  | 609 | 14 | go decl doc at sort.go:16 |  |  | 0.759 |
-| walker |  | 623 | 14 | go decl doc at sort.go:21 |  |  | 0.759 |
-| ns | 677 |  | 209 | Test-function locations: the other six _test.go files | 1.7 |  | 0.653 |
-| walker |  | 797 | 174 | go decl names surface in multierror.go |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:18 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:31 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:42 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:53 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:71 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:99 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:102 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:108 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:117 |  |  | 0.720 |
-| walker |  | 797 | 0 | go decl at multierror.go:122 |  |  | 0.720 |
-| walker |  | 820 | 23 | go decl at multierror.go:13 |  |  | 0.721 |
-| walker |  | 835 | 15 | go decl body at multierror.go:42 |  |  | 0.721 |
-| walker |  | 844 | 9 | go decl doc at multierror.go:102 |  |  | 0.721 |
-| walker |  | 882 | 38 | go decl doc at multierror.go:13 |  |  | 0.724 |
-| walker |  | 893 | 11 | go decl body at multierror.go:102 |  |  | 0.724 |
-| walker |  | 909 | 16 | go decl doc at multierror.go:122 |  |  | 0.725 |
-| walker |  | 927 | 18 | go decl doc at multierror.go:117 |  |  | 0.725 |
-| walker |  | 940 | 13 | go decl body at multierror.go:117 |  |  | 0.725 |
-| walker |  | 953 | 13 | go decl body at multierror.go:122 |  |  | 0.725 |
-| ns | 962 |  | 285 | README lede + stdlib-errors.Join deprecation note | 1.8 |  | 0.690 |
-| walker |  | 991 | 38 | go package + imports in multierror.go |  |  | 0.690 |
-| walker |  | 1022 | 31 | go decl body at multierror.go:53 |  |  | 0.690 |
-| walker |  | 1036 | 14 | listing of '.github' |  |  | 0.709 |
-| walker |  | 1048 | 12 | listing of '.github/workflows' |  |  | 0.743 |
+| walker |  | 533 | 14 | listing of '.github' |  |  | 0.717 |
+| walker |  | 545 | 12 | listing of '.github/workflows' |  |  | 0.761 |
+| walker |  | 557 | 12 | go package + imports in sort.go |  |  | 0.761 |
+| walker |  | 610 | 53 | go decl names surface in sort.go |  |  | 0.827 |
+| walker |  | 610 | 0 | go decl at sort.go:7 |  |  | 0.827 |
+| walker |  | 610 | 0 | go decl at sort.go:16 |  |  | 0.827 |
+| walker |  | 610 | 0 | go decl at sort.go:21 |  |  | 0.827 |
+| walker |  | 621 | 11 | go decl doc at sort.go:7 |  |  | 0.827 |
+| walker |  | 635 | 14 | go decl doc at sort.go:16 |  |  | 0.827 |
+| walker |  | 649 | 14 | go decl doc at sort.go:21 |  |  | 0.827 |
+| ns | 677 |  | 209 | Test-function locations: the other six _test.go files | 1.7 |  | 0.712 |
+| walker |  | 823 | 174 | go decl names surface in multierror.go |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:18 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:31 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:42 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:53 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:71 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:99 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:102 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:108 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:117 |  |  | 0.778 |
+| walker |  | 823 | 0 | go decl at multierror.go:122 |  |  | 0.778 |
+| walker |  | 846 | 23 | go decl at multierror.go:13 |  |  | 0.778 |
+| walker |  | 861 | 15 | go decl body at multierror.go:42 |  |  | 0.779 |
+| walker |  | 870 | 9 | go decl doc at multierror.go:102 |  |  | 0.779 |
+| walker |  | 908 | 38 | go decl doc at multierror.go:13 |  |  | 0.782 |
+| walker |  | 919 | 11 | go decl body at multierror.go:102 |  |  | 0.782 |
+| walker |  | 935 | 16 | go decl doc at multierror.go:122 |  |  | 0.783 |
+| walker |  | 953 | 18 | go decl doc at multierror.go:117 |  |  | 0.783 |
+| ns | 962 |  | 285 | README lede + stdlib-errors.Join deprecation note | 1.8 |  | 0.742 |
+| walker |  | 966 | 13 | go decl body at multierror.go:117 |  |  | 0.742 |
+| walker |  | 979 | 13 | go decl body at multierror.go:122 |  |  | 0.743 |
+| walker |  | 1017 | 38 | go package + imports in multierror.go |  |  | 0.743 |
+| walker |  | 1048 | 31 | go decl body at multierror.go:53 |  |  | 0.743 |
 | walker |  | 1077 | 29 | go decl doc at group.go:10 |  |  | 0.744 |
 | walker |  | 1095 | 18 | go decl body at sort.go:21 |  |  | 0.744 |
 | walker |  | 1128 | 33 | go decl doc at format.go:13 |  |  | 0.744 |
@@ -105,59 +105,57 @@ Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | walker |  | 3358 | 81 | go decl body at flatten.go:20 |  |  | 0.636 |
 | ns | 3463 |  | 155 | Error.WrappedErrors() | 2.10 | 1.4 | 0.647 |
 | ns | 3483 |  | 20 | Error.GoString() | 2.11 | 1.4 | 0.647 |
-| walker |  | 3734 | 376 | README.md section #1 |  |  | 0.654 |
-| ns | 3834 |  | 351 | Append() doc + *Error branch | 3.1 | 1.5 | 0.626 |
-| walker |  | 3932 | 198 | go decl body at prefix.go:16 |  |  | 0.629 |
-| ns | 3939 |  | 105 | Append() default branch | 3.2 | 3.1 | 0.618 |
-| ns | 4140 |  | 201 | README: building a list of errors (Append usage) | 3.3 |  | 0.598 |
-| walker |  | 4239 | 307 | README.md section #4 |  |  | 0.656 |
-| ns | 4352 |  | 212 | README: migrating basic error aggregation to errors.Join | 3.4 |  | 0.673 |
-| ns | 4385 |  | 33 | ErrorFormatFunc type | 4.1 | 1.5 | 0.675 |
-| ns | 4569 |  | 184 | ListFormatFunc — the default formatter | 4.2 | 1.5 | 0.683 |
-| walker |  | 4580 | 341 | README.md section #2 |  |  | 0.687 |
-| ns | 4712 |  | 143 | README: customizing the formatting of the errors | 4.3 |  | 0.672 |
-| walker |  | 4819 | 239 | README.md section #3 |  |  | 0.700 |
-| ns | 4883 |  | 171 | README: migrating custom formatting to errors.Join | 4.4 |  | 0.709 |
-| ns | 4945 |  | 62 | Group struct | 5.1 | 1.5 | 0.712 |
-| ns | 5106 |  | 161 | Group.Go() | 5.2 | 1.5 | 0.719 |
-| ns | 5176 |  | 70 | Group.Wait() | 5.3 | 1.5 | 0.720 |
-| walker |  | 5219 | 400 | README.md section #5 |  |  | 0.773 |
+| walker |  | 3556 | 198 | go decl body at prefix.go:16 |  |  | 0.650 |
+| ns | 3834 |  | 351 | Append() doc + *Error branch | 3.1 | 1.5 | 0.623 |
+| walker |  | 3863 | 307 | README.md section #3 |  |  | 0.683 |
+| ns | 3939 |  | 105 | Append() default branch | 3.2 | 3.1 | 0.671 |
+| ns | 4140 |  | 201 | README: building a list of errors (Append usage) | 3.3 |  | 0.650 |
+| walker |  | 4183 | 320 | go decl body at append.go:14 |  |  | 0.720 |
+| ns | 4352 |  | 212 | README: migrating basic error aggregation to errors.Join | 3.4 |  | 0.695 |
+| ns | 4385 |  | 33 | ErrorFormatFunc type | 4.1 | 1.5 | 0.696 |
+| ns | 4569 |  | 184 | ListFormatFunc — the default formatter | 4.2 | 1.5 | 0.703 |
+| ns | 4712 |  | 143 | README: customizing the formatting of the errors | 4.3 |  | 0.687 |
+| ns | 4883 |  | 171 | README: migrating custom formatting to errors.Join | 4.4 |  | 0.671 |
+| walker |  | 4905 | 722 | README.md section #1 |  |  | 0.739 |
+| ns | 4945 |  | 62 | Group struct | 5.1 | 1.5 | 0.741 |
+| ns | 5106 |  | 161 | Group.Go() | 5.2 | 1.5 | 0.746 |
+| walker |  | 5144 | 239 | README.md section #2 |  |  | 0.772 |
+| ns | 5176 |  | 70 | Group.Wait() | 5.3 | 1.5 | 0.773 |
 | ns | 5517 |  | 341 | README: migrating Group to errgroup / a manual mutex | 5.4 |  | 0.781 |
-| walker |  | 5539 | 320 | go decl body at append.go:14 |  |  | 0.828 |
-| ns | 5655 |  | 138 | Flatten() | 6.1 | 1.5 | 0.828 |
-| ns | 5754 |  | 99 | flatten() recursive helper (unexported) | 6.2 |  | 0.828 |
-| walker |  | 5915 | 376 | README.md section #6 |  |  | 0.878 |
-| ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.876 |
-| ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.872 |
-| walker |  | 6241 | 326 | README.md section #7 |  |  | 0.905 |
-| walker |  | 6297 | 56 | headings outline in CHANGELOG.md |  |  | 0.906 |
-| walker |  | 6297 | 0 | CHANGELOG.md section #0 |  |  | 0.906 |
-| walker |  | 6331 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.906 |
-| walker |  | 6348 | 17 | go test names surface in group_test.go |  |  | 0.906 |
-| walker |  | 6550 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.908 |
-| walker |  | 6574 | 24 | .github/pull_request_template.md section #0 |  |  | 0.908 |
-| ns | 6587 |  | 364 | TestErrorUnwrap | 9.1 | 1.6 | 0.877 |
-| walker |  | 6608 | 34 | go test names surface in flatten_test.go |  |  | 0.878 |
-| walker |  | 6642 | 34 | go test names surface in sort_test.go |  |  | 0.879 |
-| walker |  | 6680 | 38 | go test names surface in format_test.go |  |  | 0.883 |
-| walker |  | 6734 | 54 | go test names surface in prefix_test.go |  |  | 0.888 |
-| walker |  | 6757 | 23 | .github/pull_request_template.md section #2 |  |  | 0.888 |
-| walker |  | 6869 | 112 | go test names surface in append_test.go |  |  | 0.908 |
-| ns | 6939 |  | 352 | TestAppend_Error | 9.2 | 1.7 | 0.881 |
-| walker |  | 7005 | 136 | go test names surface in multierror_test.go |  |  | 0.898 |
-| walker |  | 7042 | 37 | .github/pull_request_template.md section #1 |  |  | 0.898 |
-| ns | 7396 |  | 457 | TestGroup (whole file) | 9.3 | 1.7 | 0.866 |
-| ns | 7642 |  | 246 | TestFlatten | 9.4 | 1.7 | 0.845 |
-| ns | 7934 |  | 292 | prefix_test.go (whole file) | 9.5 | 1.7 | 0.823 |
-| ns | 8213 |  | 279 | format_test.go (whole file) | 9.6 | 1.7 | 0.800 |
-| ns | 8453 |  | 240 | TestSortMultiple (sort_test.go) | 9.7 | 1.7 | 0.783 |
-| ns | 8594 |  | 141 | TestErrorErrorOrNil | 9.8 | 1.6 | 0.776 |
-| ns | 8982 |  | 388 | Makefile | 10.1 |  | 0.782 |
-| ns | 9024 |  | 42 | CI job-name locations (go-multierror.yml) | 10.2 |  | 0.780 |
-| ns | 9224 |  | 200 | linux-tests job body | 10.3 | 10.2 | 0.771 |
-| ns | 9426 |  | 202 | actionlint.yml | 10.4 |  | 0.774 |
-| ns | 9610 |  | 184 | dependabot.yml | 10.5 |  | 0.765 |
-| ns | 9690 |  | 80 | CODEOWNERS | 10.6 |  | 0.762 |
-| ns | 9843 |  | 153 | PR template | 10.7 |  | 0.761 |
-| ns | 9899 |  | 56 | CHANGELOG.md | 10.8 |  | 0.763 |
-| ns | 9936 |  | 37 | LICENSE header | 10.9 |  | 0.762 |
+| ns | 5655 |  | 138 | Flatten() | 6.1 | 1.5 | 0.783 |
+| walker |  | 5698 | 554 | README.md section #4 |  |  | 0.847 |
+| walker |  | 5754 | 56 | headings outline in CHANGELOG.md |  |  | 0.848 |
+| walker |  | 5754 | 0 | CHANGELOG.md section #0 |  |  | 0.848 |
+| ns | 5754 |  | 99 | flatten() recursive helper (unexported) | 6.2 |  | 0.848 |
+| walker |  | 5788 | 34 | headings outline in .github/pull_request_template.md |  |  | 0.848 |
+| ns | 6073 |  | 319 | Prefix() | 7.1 | 1.5 | 0.848 |
+| ns | 6223 |  | 150 | Len/Swap/Less — sort.Interface | 8.1 | 1.5 | 0.845 |
+| walker |  | 6341 | 553 | README.md section #5 |  |  | 0.905 |
+| walker |  | 6358 | 17 | go test names surface in group_test.go |  |  | 0.905 |
+| walker |  | 6560 | 202 | YAML config at .github/workflows/actionlint.yml |  |  | 0.906 |
+| walker |  | 6584 | 24 | .github/pull_request_template.md section #0 |  |  | 0.906 |
+| ns | 6587 |  | 364 | TestErrorUnwrap | 9.1 | 1.6 | 0.876 |
+| walker |  | 6618 | 34 | go test names surface in flatten_test.go |  |  | 0.877 |
+| walker |  | 6652 | 34 | go test names surface in sort_test.go |  |  | 0.878 |
+| walker |  | 6690 | 38 | go test names surface in format_test.go |  |  | 0.881 |
+| walker |  | 6744 | 54 | go test names surface in prefix_test.go |  |  | 0.887 |
+| walker |  | 6767 | 23 | .github/pull_request_template.md section #2 |  |  | 0.887 |
+| walker |  | 6879 | 112 | go test names surface in append_test.go |  |  | 0.907 |
+| ns | 6939 |  | 352 | TestAppend_Error | 9.2 | 1.7 | 0.880 |
+| walker |  | 7015 | 136 | go test names surface in multierror_test.go |  |  | 0.896 |
+| walker |  | 7052 | 37 | .github/pull_request_template.md section #1 |  |  | 0.897 |
+| ns | 7396 |  | 457 | TestGroup (whole file) | 9.3 | 1.7 | 0.864 |
+| ns | 7642 |  | 246 | TestFlatten | 9.4 | 1.7 | 0.844 |
+| ns | 7934 |  | 292 | prefix_test.go (whole file) | 9.5 | 1.7 | 0.822 |
+| ns | 8213 |  | 279 | format_test.go (whole file) | 9.6 | 1.7 | 0.799 |
+| ns | 8453 |  | 240 | TestSortMultiple (sort_test.go) | 9.7 | 1.7 | 0.782 |
+| ns | 8594 |  | 141 | TestErrorErrorOrNil | 9.8 | 1.6 | 0.775 |
+| ns | 8982 |  | 388 | Makefile | 10.1 |  | 0.781 |
+| ns | 9024 |  | 42 | CI job-name locations (go-multierror.yml) | 10.2 |  | 0.779 |
+| ns | 9224 |  | 200 | linux-tests job body | 10.3 | 10.2 | 0.770 |
+| ns | 9426 |  | 202 | actionlint.yml | 10.4 |  | 0.773 |
+| ns | 9610 |  | 184 | dependabot.yml | 10.5 |  | 0.764 |
+| ns | 9690 |  | 80 | CODEOWNERS | 10.6 |  | 0.761 |
+| ns | 9843 |  | 153 | PR template | 10.7 |  | 0.760 |
+| ns | 9899 |  | 56 | CHANGELOG.md | 10.8 |  | 0.762 |
+| ns | 9936 |  | 37 | LICENSE header | 10.9 |  | 0.761 |

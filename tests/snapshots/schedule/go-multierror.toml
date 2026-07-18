@@ -1,7 +1,7 @@
 fixture = "go-multierror"
 budget = 10000
-cumulative_tokens = 7042
-batch_count = 105
+cumulative_tokens = 7052
+batch_count = 103
 
 [[batches]]
 position = 1
@@ -547,10 +547,38 @@ kind = "full"
 
 [[batches]]
 position = 22
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 14
+cum_tokens = 533
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["dependabot.yml", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 12
+cum_tokens = 545
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["actionlint.yml", "go-multierror.yml"]
+
+[[batches]]
+position = 24
 key = 'Go(PackageImports { file: "sort.go" })'
 descriptor = "go package + imports in sort.go"
 cost_tokens = 12
-cum_tokens = 531
+cum_tokens = 557
 
 [batches.content]
 kind = "lines"
@@ -564,11 +592,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 23
+position = 25
 key = 'Go(DeclNames { file: "sort.go", chunk_index: 0 })'
 descriptor = "go decl names surface in sort.go"
 cost_tokens = 53
-cum_tokens = 584
+cum_tokens = 610
 
 [batches.content]
 kind = "lines"
@@ -622,11 +650,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 26
 key = 'Go(Decl { file: "sort.go", start_line: 7 })'
 descriptor = "go decl at sort.go:7"
 cost_tokens = 0
-cum_tokens = 584
+cum_tokens = 610
 
 [batches.content]
 kind = "lines"
@@ -640,11 +668,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 25
+position = 27
 key = 'Go(Decl { file: "sort.go", start_line: 16 })'
 descriptor = "go decl at sort.go:16"
 cost_tokens = 0
-cum_tokens = 584
+cum_tokens = 610
 
 [batches.content]
 kind = "lines"
@@ -658,11 +686,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 26
+position = 28
 key = 'Go(Decl { file: "sort.go", start_line: 21 })'
 descriptor = "go decl at sort.go:21"
 cost_tokens = 0
-cum_tokens = 584
+cum_tokens = 610
 
 [batches.content]
 kind = "lines"
@@ -676,11 +704,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 27
+position = 29
 key = 'Go(DeclDoc { file: "sort.go", start_line: 7 })'
 descriptor = "go decl doc at sort.go:7"
 cost_tokens = 11
-cum_tokens = 595
+cum_tokens = 621
 
 [batches.content]
 kind = "lines"
@@ -694,11 +722,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 28
+position = 30
 key = 'Go(DeclDoc { file: "sort.go", start_line: 16 })'
 descriptor = "go decl doc at sort.go:16"
 cost_tokens = 14
-cum_tokens = 609
+cum_tokens = 635
 
 [batches.content]
 kind = "lines"
@@ -712,11 +740,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 29
+position = 31
 key = 'Go(DeclDoc { file: "sort.go", start_line: 21 })'
 descriptor = "go decl doc at sort.go:21"
 cost_tokens = 14
-cum_tokens = 623
+cum_tokens = 649
 
 [batches.content]
 kind = "lines"
@@ -730,11 +758,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 30
+position = 32
 key = 'Go(DeclNames { file: "multierror.go", chunk_index: 0 })'
 descriptor = "go decl names surface in multierror.go"
 cost_tokens = 174
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -916,11 +944,11 @@ end = 123
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 33
 key = 'Go(Decl { file: "multierror.go", start_line: 18 })'
 descriptor = "go decl at multierror.go:18"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -934,11 +962,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 32
+position = 34
 key = 'Go(Decl { file: "multierror.go", start_line: 31 })'
 descriptor = "go decl at multierror.go:31"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -952,11 +980,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 33
+position = 35
 key = 'Go(Decl { file: "multierror.go", start_line: 42 })'
 descriptor = "go decl at multierror.go:42"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -970,11 +998,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 34
+position = 36
 key = 'Go(Decl { file: "multierror.go", start_line: 53 })'
 descriptor = "go decl at multierror.go:53"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -988,11 +1016,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 35
+position = 37
 key = 'Go(Decl { file: "multierror.go", start_line: 71 })'
 descriptor = "go decl at multierror.go:71"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -1006,11 +1034,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 36
+position = 38
 key = 'Go(Decl { file: "multierror.go", start_line: 99 })'
 descriptor = "go decl at multierror.go:99"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -1024,11 +1052,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 37
+position = 39
 key = 'Go(Decl { file: "multierror.go", start_line: 102 })'
 descriptor = "go decl at multierror.go:102"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -1042,11 +1070,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 38
+position = 40
 key = 'Go(Decl { file: "multierror.go", start_line: 108 })'
 descriptor = "go decl at multierror.go:108"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -1060,11 +1088,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 39
+position = 41
 key = 'Go(Decl { file: "multierror.go", start_line: 117 })'
 descriptor = "go decl at multierror.go:117"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -1078,11 +1106,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 40
+position = 42
 key = 'Go(Decl { file: "multierror.go", start_line: 122 })'
 descriptor = "go decl at multierror.go:122"
 cost_tokens = 0
-cum_tokens = 797
+cum_tokens = 823
 
 [batches.content]
 kind = "lines"
@@ -1096,11 +1124,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 41
+position = 43
 key = 'Go(Decl { file: "multierror.go", start_line: 13 })'
 descriptor = "go decl at multierror.go:13"
 cost_tokens = 23
-cum_tokens = 820
+cum_tokens = 846
 
 [batches.content]
 kind = "lines"
@@ -1114,11 +1142,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 42
+position = 44
 key = 'Go(DeclBody { file: "multierror.go", start_line: 42 })'
 descriptor = "go decl body at multierror.go:42"
 cost_tokens = 15
-cum_tokens = 835
+cum_tokens = 861
 
 [batches.content]
 kind = "lines"
@@ -1132,11 +1160,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 43
+position = 45
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 102 })'
 descriptor = "go decl doc at multierror.go:102"
 cost_tokens = 9
-cum_tokens = 844
+cum_tokens = 870
 
 [batches.content]
 kind = "lines"
@@ -1150,11 +1178,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 44
+position = 46
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 13 })'
 descriptor = "go decl doc at multierror.go:13"
 cost_tokens = 38
-cum_tokens = 882
+cum_tokens = 908
 
 [batches.content]
 kind = "lines"
@@ -1168,11 +1196,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 45
+position = 47
 key = 'Go(DeclBody { file: "multierror.go", start_line: 102 })'
 descriptor = "go decl body at multierror.go:102"
 cost_tokens = 11
-cum_tokens = 893
+cum_tokens = 919
 
 [batches.content]
 kind = "lines"
@@ -1186,11 +1214,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 46
+position = 48
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 122 })'
 descriptor = "go decl doc at multierror.go:122"
 cost_tokens = 16
-cum_tokens = 909
+cum_tokens = 935
 
 [batches.content]
 kind = "lines"
@@ -1204,11 +1232,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 47
+position = 49
 key = 'Go(DeclDoc { file: "multierror.go", start_line: 117 })'
 descriptor = "go decl doc at multierror.go:117"
 cost_tokens = 18
-cum_tokens = 927
+cum_tokens = 953
 
 [batches.content]
 kind = "lines"
@@ -1222,11 +1250,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 48
+position = 50
 key = 'Go(DeclBody { file: "multierror.go", start_line: 117 })'
 descriptor = "go decl body at multierror.go:117"
 cost_tokens = 13
-cum_tokens = 940
+cum_tokens = 966
 
 [batches.content]
 kind = "lines"
@@ -1240,11 +1268,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 49
+position = 51
 key = 'Go(DeclBody { file: "multierror.go", start_line: 122 })'
 descriptor = "go decl body at multierror.go:122"
 cost_tokens = 13
-cum_tokens = 953
+cum_tokens = 979
 
 [batches.content]
 kind = "lines"
@@ -1258,11 +1286,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 50
+position = 52
 key = 'Go(PackageImports { file: "multierror.go" })'
 descriptor = "go package + imports in multierror.go"
 cost_tokens = 38
-cum_tokens = 991
+cum_tokens = 1017
 
 [batches.content]
 kind = "lines"
@@ -1276,11 +1304,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 51
+position = 53
 key = 'Go(DeclBody { file: "multierror.go", start_line: 53 })'
 descriptor = "go decl body at multierror.go:53"
 cost_tokens = 31
-cum_tokens = 1022
+cum_tokens = 1048
 
 [batches.content]
 kind = "lines"
@@ -1292,34 +1320,6 @@ end = 57
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 52
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 14
-cum_tokens = 1036
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 53
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 12
-cum_tokens = 1048
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["actionlint.yml", "go-multierror.yml"]
 
 [[batches]]
 position = 54
@@ -1845,28 +1845,10 @@ kind = "full"
 
 [[batches]]
 position = 83
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
-cost_tokens = 376
-cum_tokens = 3734
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 12
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
 key = 'Go(DeclBody { file: "prefix.go", start_line: 16 })'
 descriptor = "go decl body at prefix.go:16"
 cost_tokens = 198
-cum_tokens = 3932
+cum_tokens = 3556
 
 [batches.content]
 kind = "lines"
@@ -1880,11 +1862,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 85
-key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #4"
+position = 84
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #3"
 cost_tokens = 307
-cum_tokens = 4239
+cum_tokens = 3863
 
 [batches.content]
 kind = "lines"
@@ -1898,18 +1880,36 @@ end = 127
 kind = "full"
 
 [[batches]]
+position = 85
+key = 'Go(DeclBody { file: "append.go", start_line: 14 })'
+descriptor = "go decl body at append.go:14"
+cost_tokens = 320
+cum_tokens = 4183
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "append.go"
+start = 15
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 86
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #2"
-cost_tokens = 341
-cum_tokens = 4580
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 722
+cum_tokens = 4905
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "README.md"
-start = 54
+start = 12
 end = 86
 
 [batches.content.spans.render]
@@ -1917,10 +1917,10 @@ kind = "full"
 
 [[batches]]
 position = 87
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #3"
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
 cost_tokens = 239
-cum_tokens = 4819
+cum_tokens = 5144
 
 [batches.content]
 kind = "lines"
@@ -1935,10 +1935,10 @@ kind = "full"
 
 [[batches]]
 position = 88
-key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #5"
-cost_tokens = 400
-cum_tokens = 5219
+key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #4"
+cost_tokens = 554
+cum_tokens = 5698
 
 [batches.content]
 kind = "lines"
@@ -1946,107 +1946,53 @@ kind = "lines"
 [[batches.content.spans]]
 path = "README.md"
 start = 129
-end = 169
+end = 183
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 89
-key = 'Go(DeclBody { file: "append.go", start_line: 14 })'
-descriptor = "go decl body at append.go:14"
-cost_tokens = 320
-cum_tokens = 5539
+key = 'Markdown(HeadingsOutline { file: "CHANGELOG.md" })'
+descriptor = "headings outline in CHANGELOG.md"
+cost_tokens = 56
+cum_tokens = 5754
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "append.go"
-start = 15
-end = 45
+path = "CHANGELOG.md"
+start = 1
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 90
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #6"
-cost_tokens = 376
-cum_tokens = 5915
+key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "CHANGELOG.md section #0"
+cost_tokens = 0
+cum_tokens = 5754
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "README.md"
-start = 171
-end = 202
+path = "CHANGELOG.md"
+start = 1
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 91
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #7"
-cost_tokens = 326
-cum_tokens = 6241
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 204
-end = 231
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
-key = 'Markdown(HeadingsOutline { file: "CHANGELOG.md" })'
-descriptor = "headings outline in CHANGELOG.md"
-cost_tokens = 56
-cum_tokens = 6297
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "CHANGELOG.md"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 93
-key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "CHANGELOG.md section #0"
-cost_tokens = 0
-cum_tokens = 6297
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "CHANGELOG.md"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
 key = 'Markdown(HeadingsOutline { file: ".github/pull_request_template.md" })'
 descriptor = "headings outline in .github/pull_request_template.md"
 cost_tokens = 34
-cum_tokens = 6331
+cum_tokens = 5788
 
 [batches.content]
 kind = "lines"
@@ -2100,11 +2046,29 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 92
+key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #5"
+cost_tokens = 553
+cum_tokens = 6341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 185
+end = 231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
 key = 'Go(TestNames { file: "group_test.go" })'
 descriptor = "go test names surface in group_test.go"
 cost_tokens = 17
-cum_tokens = 6348
+cum_tokens = 6358
 
 [batches.content]
 kind = "lines"
@@ -2126,11 +2090,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 94
 key = 'Yaml(Whole { file: ".github/workflows/actionlint.yml" })'
 descriptor = "YAML config at .github/workflows/actionlint.yml"
 cost_tokens = 202
-cum_tokens = 6550
+cum_tokens = 6560
 
 [batches.content]
 kind = "lines"
@@ -2144,11 +2108,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 97
+position = 95
 key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = ".github/pull_request_template.md section #0"
 cost_tokens = 24
-cum_tokens = 6574
+cum_tokens = 6584
 
 [batches.content]
 kind = "lines"
@@ -2162,11 +2126,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 98
+position = 96
 key = 'Go(TestNames { file: "flatten_test.go" })'
 descriptor = "go test names surface in flatten_test.go"
 cost_tokens = 34
-cum_tokens = 6608
+cum_tokens = 6618
 
 [batches.content]
 kind = "lines"
@@ -2204,11 +2168,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 97
 key = 'Go(TestNames { file: "sort_test.go" })'
 descriptor = "go test names surface in sort_test.go"
 cost_tokens = 34
-cum_tokens = 6642
+cum_tokens = 6652
 
 [batches.content]
 kind = "lines"
@@ -2246,11 +2210,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 98
 key = 'Go(TestNames { file: "format_test.go" })'
 descriptor = "go test names surface in format_test.go"
 cost_tokens = 38
-cum_tokens = 6680
+cum_tokens = 6690
 
 [batches.content]
 kind = "lines"
@@ -2288,11 +2252,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 101
+position = 99
 key = 'Go(TestNames { file: "prefix_test.go" })'
 descriptor = "go test names surface in prefix_test.go"
 cost_tokens = 54
-cum_tokens = 6734
+cum_tokens = 6744
 
 [batches.content]
 kind = "lines"
@@ -2346,11 +2310,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 102
+position = 100
 key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = ".github/pull_request_template.md section #2"
 cost_tokens = 23
-cum_tokens = 6757
+cum_tokens = 6767
 
 [batches.content]
 kind = "lines"
@@ -2364,11 +2328,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 103
+position = 101
 key = 'Go(TestNames { file: "append_test.go" })'
 descriptor = "go test names surface in append_test.go"
 cost_tokens = 112
-cum_tokens = 6869
+cum_tokens = 6879
 
 [batches.content]
 kind = "lines"
@@ -2470,11 +2434,11 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 102
 key = 'Go(TestNames { file: "multierror_test.go" })'
 descriptor = "go test names surface in multierror_test.go"
 cost_tokens = 136
-cum_tokens = 7005
+cum_tokens = 7015
 
 [batches.content]
 kind = "lines"
@@ -2608,11 +2572,11 @@ end = 158
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 103
 key = 'Markdown(Section { file: ".github/pull_request_template.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = ".github/pull_request_template.md section #1"
 cost_tokens = 37
-cum_tokens = 7042
+cum_tokens = 7052
 
 [batches.content]
 kind = "lines"

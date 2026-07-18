@@ -6,23 +6,23 @@ Score(3000)=0.384 I=0.726 C=0.203 ns_rows≤3K=20/41 (reached=5 partial=0 missin
 | walker |  | 35 | 35 | listing of '.' |  |  | 0.000 |
 | ns | 54 |  | 35 | Root directory listing | 1.2 |  | 0.780 |
 | walker |  | 101 | 66 | README headline in README.md |  |  | 1.000 |
-| ns | 117 |  | 63 | test/ and .github/ (incl. workflows/) listings | 1.3 |  | 0.623 |
-| walker |  | 152 | 51 | c header banner in krep.h |  |  | 0.623 |
-| walker |  | 165 | 13 | listing of '.github' |  |  | 0.648 |
-| walker |  | 173 | 8 | listing of '.github/workflows' |  |  | 0.690 |
+| walker |  | 114 | 13 | listing of '.github' |  |  | 1.000 |
+| ns | 117 |  | 63 | test/ and .github/ (incl. workflows/) listings | 1.3 |  | 0.648 |
+| walker |  | 122 | 8 | listing of '.github/workflows' |  |  | 0.690 |
 | ns | 235 |  | 118 | krep.c locations: match-result mgmt + line-finding helpers | 1.4 |  | 0.561 |
 | ns | 342 |  | 107 | krep.c locations: printing + usage + BM prep | 1.5 |  | 0.489 |
-| walker |  | 409 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.495 |
-| ns | 506 |  | 164 | krep is not a grep/ripgrep replacement (design intent) | 1.6 |  | 0.466 |
-| ns | 603 |  | 97 | krep.c locations: remaining search algorithms + dispatch | 1.7 |  | 0.427 |
-| walker |  | 691 | 282 | headings outline in README.md |  |  | 0.428 |
-| walker |  | 709 | 18 | README.md section #42 |  |  | 0.429 |
-| ns | 734 |  | 131 | CLI usage synopsis (README) | 1.8 |  | 0.389 |
-| walker |  | 841 | 132 | README.md section #21 |  |  | 0.515 |
-| ns | 945 |  | 211 | How Krep Works (README): smart algorithm selection | 1.9 |  | 0.464 |
-| walker |  | 956 | 115 | README.md section #0 |  |  | 0.516 |
-| walker |  | 977 | 21 | README.md section #49 |  |  | 0.516 |
-| walker |  | 1019 | 42 | listing of 'test' |  |  | 0.651 |
+| walker |  | 358 | 236 | YAML config at .github/workflows/ci.yml |  |  | 0.495 |
+| walker |  | 409 | 51 | c header banner in krep.h |  |  | 0.495 |
+| walker |  | 451 | 42 | listing of 'test' |  |  | 0.717 |
+| ns | 506 |  | 164 | krep is not a grep/ripgrep replacement (design intent) | 1.6 |  | 0.671 |
+| ns | 603 |  | 97 | krep.c locations: remaining search algorithms + dispatch | 1.7 |  | 0.615 |
+| walker |  | 733 | 282 | headings outline in README.md |  |  | 0.616 |
+| ns | 734 |  | 131 | CLI usage synopsis (README) | 1.8 |  | 0.559 |
+| walker |  | 751 | 18 | README.md section #42 |  |  | 0.560 |
+| walker |  | 883 | 132 | README.md section #21 |  |  | 0.672 |
+| ns | 945 |  | 211 | How Krep Works (README): smart algorithm selection | 1.9 |  | 0.602 |
+| walker |  | 998 | 115 | README.md section #0 |  |  | 0.651 |
+| walker |  | 1019 | 21 | README.md section #49 |  |  | 0.651 |
 | walker |  | 1048 | 29 | README.md section #50 |  |  | 0.651 |
 | walker |  | 1066 | 18 | README.md section #12 |  |  | 0.651 |
 | walker |  | 1085 | 19 | README.md section #7 |  |  | 0.651 |

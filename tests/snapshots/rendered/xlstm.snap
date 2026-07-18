@@ -191,6 +191,39 @@ xlstm/
             src/
                 __init__.py
                 cuda/
+                    lstm_pointwise.cu
+                    slstm.cc
+                    slstm.h
+                           1→// Copyright (c) NXAI GmbH and its affiliates 2023
+                           2→// Korbinian Poeppel
+                           3→
+                           4→// Adapted from the haste library
+                           5→//
+                           6→// See:
+                           7→// Copyright 2020 LMNT, Inc. All Rights Reserved.
+                           8→//
+                           9→// Licensed under the Apache License, Version 2.0 (the "License");
+                          10→// you may not use this file except in compliance with the License.
+                          11→// You may obtain a copy of the License at
+                          12→//
+                          13→//    http://www.apache.org/licenses/LICENSE-2.0
+                          14→//
+                          15→// Unless required by applicable law or agreed to in writing, software
+                          16→// distributed under the License is distributed on an "AS IS" BASIS,
+                          17→// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                          18→// See the License for the specific language governing permissions and
+                          19→// limitations under the License.
+                          20→// ==============================================================================
+                        …
+                          24→#include "../util/util.h"
+                        …
+                          44→namespace slstm {
+                        …
+                    slstm_backward.cu
+                    slstm_backward_cut.cu
+                    slstm_forward.cu
+                    slstm_pointwise.cu
+                    slstm_pointwise.cuh
                 cuda_init.py
                 util/
                 vanilla/
@@ -210,16 +243,6 @@ xlstm/
                           17→def slstm_forward(
                         …
                           77→def slstm_forward_step(
-                          78→    x: torch.Tensor,  # [B, G*I]
-                          79→    states: torch.Tensor,  # [4, B, H] only the first is used for recurrence!
-                          80→    R: torch.Tensor,  # [K, R*H, H] - K num_heads
-                          81→    b: torch.Tensor,  # [T*H]
-                          82→    pointwise_forward: Callable[
-                          83→        tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, dict[str, float]],
-                          84→        tuple[torch.Tensor, torch.Tensor],
-                          85→    ],
-                          86→    constants: dict[str, float] = {},
-                          87→) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
                         …
                     lstm.py
                     slstm.py
@@ -247,12 +270,6 @@ xlstm/
               47→    config_class = LinearHeadwiseExpandConfig
             …
         ln.py
-            …
-               8→class LayerNorm(nn.Module):
-               9→    """LayerNorm but with an optional bias. PyTorch doesn't support simply bias=False."""
-            …
-              51→class MultiHeadLayerNorm(LayerNorm):
-            …
         util.py
     utils.py
         …

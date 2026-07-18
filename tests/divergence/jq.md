@@ -9,40 +9,40 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | walker |  | 161 | 71 | README headline in README.md |  |  | 0.811 |
 | ns | 198 |  | 65 | docs/ and docs/content/ directory listing | 1.3 |  | 0.662 |
 | walker |  | 233 | 72 | headings outline in README.md |  |  | 0.662 |
-| walker |  | 242 | 9 | listing of 'vendor' |  |  | 0.664 |
-| walker |  | 294 | 52 | listing of 'docs' |  |  | 0.774 |
-| ns | 317 |  | 119 | src/ directory listing — headers and grammar files | 1.4 |  | 0.622 |
-| walker |  | 350 | 56 | README headline in docs/README.md |  |  | 0.622 |
-| walker |  | 363 | 13 | listing of 'docs/content' |  |  | 0.693 |
-| walker |  | 367 | 4 | listing of 'docs/content/download' |  |  | 0.693 |
-| walker |  | 371 | 4 | listing of 'docs/content/tutorial' |  |  | 0.693 |
-| walker |  | 392 | 21 | listing of 'docs/templates' |  |  | 0.693 |
+| walker |  | 285 | 52 | listing of 'docs' |  |  | 0.772 |
+| walker |  | 298 | 13 | listing of 'docs/content' |  |  | 0.860 |
+| walker |  | 302 | 4 | listing of 'docs/content/download' |  |  | 0.860 |
+| walker |  | 306 | 4 | listing of 'docs/content/tutorial' |  |  | 0.860 |
+| ns | 317 |  | 119 | src/ directory listing — headers and grammar files | 1.4 |  | 0.691 |
+| walker |  | 362 | 56 | README headline in docs/README.md |  |  | 0.691 |
+| walker |  | 383 | 21 | listing of 'docs/templates' |  |  | 0.691 |
+| walker |  | 392 | 9 | listing of 'vendor' |  |  | 0.693 |
+| walker |  | 423 | 31 | listing of 'docs/public' |  |  | 0.693 |
+| walker |  | 427 | 4 | listing of 'docs/public/css' |  |  | 0.693 |
 | ns | 431 |  | 114 | src/ directory listing — implementation files | 1.5 |  | 0.595 |
-| walker |  | 444 | 52 | README.md section #1 |  |  | 0.595 |
-| walker |  | 475 | 31 | listing of 'docs/public' |  |  | 0.595 |
-| walker |  | 479 | 4 | listing of 'docs/public/css' |  |  | 0.595 |
-| walker |  | 484 | 5 | listing of 'docs/public/js' |  |  | 0.595 |
-| walker |  | 496 | 12 | listing of '.github' |  |  | 0.603 |
-| walker |  | 531 | 35 | listing of '.github/workflows' |  |  | 0.678 |
+| walker |  | 432 | 5 | listing of 'docs/public/js' |  |  | 0.595 |
+| walker |  | 444 | 12 | listing of '.github' |  |  | 0.603 |
+| walker |  | 479 | 35 | listing of '.github/workflows' |  |  | 0.678 |
+| walker |  | 500 | 21 | listing of 'docs/templates/shared' |  |  | 0.678 |
+| walker |  | 514 | 14 | listing of 'scripts' |  |  | 0.678 |
 | ns | 538 |  | 107 | tests/ directory listing — test data and driver scripts | 1.6 |  | 0.601 |
-| walker |  | 552 | 21 | listing of 'docs/templates/shared' |  |  | 0.601 |
-| walker |  | 566 | 14 | listing of 'scripts' |  |  | 0.601 |
-| walker |  | 613 | 47 | listing of 'config/m4' |  |  | 0.601 |
+| walker |  | 561 | 47 | listing of 'config/m4' |  |  | 0.601 |
+| walker |  | 584 | 23 | listing of 'm4' |  |  | 0.601 |
+| walker |  | 627 | 43 | listing of 'docs/content/manual' |  |  | 0.601 |
+| walker |  | 631 | 4 | listing of 'docs/content/manual/dev' |  |  | 0.601 |
+| walker |  | 635 | 4 | listing of 'docs/content/manual/v1.3' |  |  | 0.601 |
+| walker |  | 639 | 4 | listing of 'docs/content/manual/v1.4' |  |  | 0.601 |
+| walker |  | 643 | 4 | listing of 'docs/content/manual/v1.5' |  |  | 0.601 |
+| walker |  | 647 | 4 | listing of 'docs/content/manual/v1.6' |  |  | 0.601 |
+| walker |  | 651 | 4 | listing of 'docs/content/manual/v1.7' |  |  | 0.601 |
+| walker |  | 655 | 4 | listing of 'docs/content/manual/v1.8' |  |  | 0.601 |
 | ns | 687 |  | 149 | tests/ directory listing — fuzz harnesses, modules/, torture/ | 1.7 |  | 0.535 |
 | ns | 705 |  | 18 | Remaining top-level support dirs: vendor, config | 1.8 |  | 0.547 |
 | ns | 776 |  | 71 | README.md — one-paragraph pitch | 1.9 |  | 0.555 |
-| walker |  | 846 | 233 | listing of 'src' |  |  | 0.787 |
-| walker |  | 869 | 23 | c decl names surface in src/jv_file.c |  |  | 0.787 |
-| walker |  | 869 | 0 | c decl at src/jv_file.c:12 |  |  | 0.787 |
-| walker |  | 892 | 23 | listing of 'm4' |  |  | 0.787 |
-| walker |  | 935 | 43 | listing of 'docs/content/manual' |  |  | 0.787 |
-| walker |  | 939 | 4 | listing of 'docs/content/manual/dev' |  |  | 0.787 |
-| walker |  | 943 | 4 | listing of 'docs/content/manual/v1.3' |  |  | 0.787 |
-| walker |  | 947 | 4 | listing of 'docs/content/manual/v1.4' |  |  | 0.787 |
-| walker |  | 951 | 4 | listing of 'docs/content/manual/v1.5' |  |  | 0.787 |
-| walker |  | 955 | 4 | listing of 'docs/content/manual/v1.6' |  |  | 0.787 |
-| walker |  | 959 | 4 | listing of 'docs/content/manual/v1.7' |  |  | 0.787 |
-| walker |  | 963 | 4 | listing of 'docs/content/manual/v1.8' |  |  | 0.787 |
+| walker |  | 888 | 233 | listing of 'src' |  |  | 0.787 |
+| walker |  | 911 | 23 | c decl names surface in src/jv_file.c |  |  | 0.787 |
+| walker |  | 911 | 0 | c decl at src/jv_file.c:12 |  |  | 0.787 |
+| walker |  | 963 | 52 | README.md section #1 |  |  | 0.787 |
 | walker |  | 1001 | 38 | c decl names surface in src/jq_test.c |  |  | 0.787 |
 | walker |  | 1001 | 0 | c decl at src/jq_test.c:21 |  |  | 0.787 |
 | walker |  | 1017 | 16 | c decl at src/jq_test.c:78 |  |  | 0.787 |
@@ -74,23 +74,23 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | walker |  | 2848 | 26 | c decl at src/linker.c:28 |  |  | 0.809 |
 | ns | 2874 |  | 660 | jv.h — jv_kind enum, jv struct, and core value lifecycle API | 3.3 |  | 0.787 |
 | walker |  | 2876 | 28 | c decl at src/linker.c:23 |  |  | 0.787 |
-| walker |  | 2959 | 83 | README.md section #7 |  |  | 0.787 |
-| walker |  | 2990 | 31 | README.md section #3 |  |  | 0.787 |
+| walker |  | 2974 | 98 | listing of 'sig' |  |  | 0.787 |
 | ns | 3008 |  | 134 | jv.h — array API | 3.4 |  | 0.775 |
-| walker |  | 3075 | 85 | c decl names surface in src/main.c |  |  | 0.775 |
-| walker |  | 3156 | 81 | c whole header in src/linker.h |  |  | 0.775 |
-| walker |  | 3241 | 85 | README.md section #8 |  |  | 0.782 |
-| ns | 3337 |  | 329 | jv.h — string API | 3.5 |  | 0.758 |
+| walker |  | 3057 | 83 | README.md section #7 |  |  | 0.775 |
+| walker |  | 3088 | 31 | README.md section #3 |  |  | 0.775 |
+| walker |  | 3173 | 85 | c decl names surface in src/main.c |  |  | 0.775 |
+| walker |  | 3254 | 81 | c whole header in src/linker.h |  |  | 0.775 |
+| ns | 3337 |  | 329 | jv.h — string API | 3.5 |  | 0.752 |
+| walker |  | 3339 | 85 | README.md section #8 |  |  | 0.758 |
 | ns | 3518 |  | 181 | jv_alloc.h — allocator API | 3.6 |  | 0.741 |
-| walker |  | 3622 | 381 | c decl names surface #1 in src/jq.h |  |  | 0.764 |
-| walker |  | 3622 | 0 | c decl at src/jq.h:60 |  |  | 0.764 |
-| walker |  | 3652 | 30 | README.md section #2 |  |  | 0.764 |
-| ns | 3717 |  | 199 | manual.yml — top-level section table of contents | 4.1 |  | 0.748 |
-| walker |  | 3758 | 106 | c decl names surface in src/jv_print.c |  |  | 0.748 |
-| walker |  | 3758 | 0 | c decl at src/jv_print.c:40 |  |  | 0.748 |
-| walker |  | 3855 | 97 | c whole header in src/jq_parser.h |  |  | 0.748 |
+| ns | 3717 |  | 199 | manual.yml — top-level section table of contents | 4.1 |  | 0.725 |
+| walker |  | 3720 | 381 | c decl names surface #1 in src/jq.h |  |  | 0.748 |
+| walker |  | 3720 | 0 | c decl at src/jq.h:60 |  |  | 0.748 |
+| walker |  | 3750 | 30 | README.md section #2 |  |  | 0.748 |
+| walker |  | 3856 | 106 | c decl names surface in src/jv_print.c |  |  | 0.748 |
+| walker |  | 3856 | 0 | c decl at src/jv_print.c:40 |  |  | 0.748 |
 | ns | 3874 |  | 157 | builtin.jq — sampler of jq-coded (not C) builtin definitions | 4.2 |  | 0.738 |
-| walker |  | 3953 | 98 | listing of 'sig' |  |  | 0.738 |
+| walker |  | 3953 | 97 | c whole header in src/jq_parser.h |  |  | 0.738 |
 | walker |  | 4039 | 86 | c decl names surface in src/util.h |  |  | 0.738 |
 | walker |  | 4054 | 15 | c decl at src/util.h:44 |  |  | 0.738 |
 | ns | 4206 |  | 332 | manual.yml — Assignment section: no-references / deep-copy mental model | 4.3 | 4.1 | 0.718 |
@@ -103,40 +103,40 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | walker |  | 4342 | 0 | c decl at src/locfile.c:50 |  |  | 0.714 |
 | walker |  | 4342 | 0 | c decl at src/locfile.c:63 |  |  | 0.714 |
 | walker |  | 4360 | 18 | c decl body at src/locfile.c:37 |  |  | 0.714 |
-| walker |  | 4404 | 44 | README.md section #5 |  |  | 0.721 |
-| walker |  | 4727 | 323 | docs/README.md section #0 |  |  | 0.721 |
-| walker |  | 4814 | 87 | c decl doc at src/jq.h:60 |  |  | 0.721 |
-| ns | 5054 |  | 762 | manual.yml — 'Builtin operators and functions' entry roster, part 1/2 (38 entries) | 4.5 |  | 0.686 |
-| walker |  | 5446 | 632 | c decl names surface #1 in src/jv.h |  |  | 0.711 |
-| walker |  | 5508 | 62 | c decl at src/jv.h:110 |  |  | 0.711 |
-| walker |  | 5623 | 115 | c decl at src/jv.h:92 |  |  | 0.711 |
-| walker |  | 5676 | 53 | c decl names surface in src/exec_stack.h |  |  | 0.711 |
-| ns | 5725 |  | 671 | manual.yml — 'Builtin operators and functions' entry roster, part 2/2 (37 entries) | 4.6 | 4.5 | 0.681 |
-| walker |  | 5839 | 163 | c decl names surface in src/jv_unicode.c |  |  | 0.681 |
-| walker |  | 5839 | 0 | c decl at src/jv_unicode.c:11 |  |  | 0.681 |
-| walker |  | 5839 | 0 | c decl at src/jv_unicode.c:29 |  |  | 0.681 |
-| walker |  | 5839 | 0 | c decl at src/jv_unicode.c:77 |  |  | 0.681 |
-| walker |  | 5839 | 0 | c decl at src/jv_unicode.c:86 |  |  | 0.681 |
-| walker |  | 5839 | 0 | c decl at src/jv_unicode.c:93 |  |  | 0.681 |
-| walker |  | 5839 | 0 | c decl at src/jv_unicode.c:100 |  |  | 0.681 |
-| walker |  | 5839 | 0 | c decl at src/jv_unicode.c:124 |  |  | 0.681 |
-| walker |  | 6241 | 402 | c decl names surface #2 in src/jv.h |  |  | 0.701 |
-| walker |  | 6260 | 19 | c decl doc at src/jv_unicode.c:86 |  |  | 0.701 |
-| walker |  | 6436 | 176 | c decl names surface in src/jv_alloc.c |  |  | 0.701 |
-| walker |  | 6436 | 0 | c decl at src/jv_alloc.c:141 |  |  | 0.701 |
-| walker |  | 6436 | 0 | c decl at src/jv_alloc.c:149 |  |  | 0.701 |
-| walker |  | 6436 | 0 | c decl at src/jv_alloc.c:153 |  |  | 0.701 |
-| walker |  | 6436 | 0 | c decl at src/jv_alloc.c:162 |  |  | 0.701 |
-| walker |  | 6436 | 0 | c decl at src/jv_alloc.c:167 |  |  | 0.701 |
-| walker |  | 6436 | 0 | c decl at src/jv_alloc.c:175 |  |  | 0.701 |
-| walker |  | 6436 | 0 | c decl at src/jv_alloc.c:179 |  |  | 0.701 |
-| walker |  | 6436 | 0 | c decl at src/jv_alloc.c:183 |  |  | 0.701 |
-| walker |  | 6444 | 8 | c decl body at src/jv_alloc.c:179 |  |  | 0.701 |
-| walker |  | 6453 | 9 | c decl body at src/jv_alloc.c:149 |  |  | 0.701 |
-| walker |  | 6462 | 9 | c decl body at src/jv_alloc.c:175 |  |  | 0.701 |
-| walker |  | 6489 | 27 | c decl at src/jv_alloc.c:7 |  |  | 0.701 |
-| walker |  | 6494 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.707 |
-| walker |  | 6499 | 5 | listing of 'tests/torture' |  |  | 0.707 |
+| walker |  | 4365 | 5 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.720 |
+| walker |  | 4370 | 5 | listing of 'tests/torture' |  |  | 0.720 |
+| walker |  | 4414 | 44 | README.md section #5 |  |  | 0.727 |
+| walker |  | 4737 | 323 | docs/README.md section #0 |  |  | 0.727 |
+| walker |  | 4824 | 87 | c decl doc at src/jq.h:60 |  |  | 0.727 |
+| ns | 5054 |  | 762 | manual.yml — 'Builtin operators and functions' entry roster, part 1/2 (38 entries) | 4.5 |  | 0.692 |
+| walker |  | 5456 | 632 | c decl names surface #1 in src/jv.h |  |  | 0.717 |
+| walker |  | 5518 | 62 | c decl at src/jv.h:110 |  |  | 0.717 |
+| walker |  | 5633 | 115 | c decl at src/jv.h:92 |  |  | 0.717 |
+| walker |  | 5686 | 53 | c decl names surface in src/exec_stack.h |  |  | 0.717 |
+| ns | 5725 |  | 671 | manual.yml — 'Builtin operators and functions' entry roster, part 2/2 (37 entries) | 4.6 | 4.5 | 0.686 |
+| walker |  | 5849 | 163 | c decl names surface in src/jv_unicode.c |  |  | 0.686 |
+| walker |  | 5849 | 0 | c decl at src/jv_unicode.c:11 |  |  | 0.686 |
+| walker |  | 5849 | 0 | c decl at src/jv_unicode.c:29 |  |  | 0.686 |
+| walker |  | 5849 | 0 | c decl at src/jv_unicode.c:77 |  |  | 0.686 |
+| walker |  | 5849 | 0 | c decl at src/jv_unicode.c:86 |  |  | 0.686 |
+| walker |  | 5849 | 0 | c decl at src/jv_unicode.c:93 |  |  | 0.686 |
+| walker |  | 5849 | 0 | c decl at src/jv_unicode.c:100 |  |  | 0.686 |
+| walker |  | 5849 | 0 | c decl at src/jv_unicode.c:124 |  |  | 0.686 |
+| walker |  | 6251 | 402 | c decl names surface #2 in src/jv.h |  |  | 0.707 |
+| walker |  | 6270 | 19 | c decl doc at src/jv_unicode.c:86 |  |  | 0.707 |
+| walker |  | 6446 | 176 | c decl names surface in src/jv_alloc.c |  |  | 0.707 |
+| walker |  | 6446 | 0 | c decl at src/jv_alloc.c:141 |  |  | 0.707 |
+| walker |  | 6446 | 0 | c decl at src/jv_alloc.c:149 |  |  | 0.707 |
+| walker |  | 6446 | 0 | c decl at src/jv_alloc.c:153 |  |  | 0.707 |
+| walker |  | 6446 | 0 | c decl at src/jv_alloc.c:162 |  |  | 0.707 |
+| walker |  | 6446 | 0 | c decl at src/jv_alloc.c:167 |  |  | 0.707 |
+| walker |  | 6446 | 0 | c decl at src/jv_alloc.c:175 |  |  | 0.707 |
+| walker |  | 6446 | 0 | c decl at src/jv_alloc.c:179 |  |  | 0.707 |
+| walker |  | 6446 | 0 | c decl at src/jv_alloc.c:183 |  |  | 0.707 |
+| walker |  | 6454 | 8 | c decl body at src/jv_alloc.c:179 |  |  | 0.707 |
+| walker |  | 6463 | 9 | c decl body at src/jv_alloc.c:149 |  |  | 0.707 |
+| walker |  | 6472 | 9 | c decl body at src/jv_alloc.c:175 |  |  | 0.707 |
+| walker |  | 6499 | 27 | c decl at src/jv_alloc.c:7 |  |  | 0.707 |
 | ns | 6543 |  | 818 | opcode_list.h (full) — complete bytecode opcode roster | 5.1 |  | 0.669 |
 | walker |  | 6695 | 196 | c decl names surface in src/inject_errors.c |  |  | 0.669 |
 | walker |  | 6695 | 0 | c decl at src/inject_errors.c:39 |  |  | 0.669 |

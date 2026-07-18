@@ -169,10 +169,56 @@ kind = "ellipsis"
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 7
+cum_tokens = 337
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["security.md", "workflows"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 341
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["main.yml"]
+
+[[batches]]
+position = 11
+key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
+descriptor = "YAML config at .github/workflows/main.yml"
+cost_tokens = 201
+cum_tokens = 542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/main.yml"
+start = 1
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
 key = 'Typescript(ExportDoc { file: "source/index.ts", start_line: 16 })'
 descriptor = "export doc at source/index.ts:16"
 cost_tokens = 20
-cum_tokens = 350
+cum_tokens = 562
 
 [batches.content]
 kind = "lines"
@@ -186,11 +232,161 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 10
+position = 13
+key = 'Typescript(ExportNames { file: "source/priority-queue.ts" })'
+descriptor = "export names surface in source/priority-queue.ts"
+cost_tokens = 37
+cum_tokens = 599
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 7 })'
+descriptor = "export at source/priority-queue.ts:7"
+cost_tokens = 17
+cum_tokens = 616
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/priority-queue.ts"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 0 })'
+descriptor = "export tail #1 at source/index.ts:16"
+cost_tokens = 218
+cum_tokens = 834
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 382
+end = 382
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 386
+end = 386
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 432
+end = 432
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 443
+end = 444
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 581
+end = 588
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 383
+end = 383
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 387
+end = 387
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 433
+end = 433
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 445
+end = 445
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/index.ts"
+start = 589
+end = 589
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 16
 key = 'Markdown(HeadingsOutline { file: "readme.md" })'
 descriptor = "headings outline in readme.md"
 cost_tokens = 121
-cum_tokens = 471
+cum_tokens = 955
 
 [batches.content]
 kind = "lines"
@@ -367,202 +563,6 @@ kind = "ellipsis"
 path = "readme.md"
 start = 1072
 end = 1072
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 7
-cum_tokens = 478
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["security.md", "workflows"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 482
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["main.yml"]
-
-[[batches]]
-position = 13
-key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
-descriptor = "YAML config at .github/workflows/main.yml"
-cost_tokens = 201
-cum_tokens = 683
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/main.yml"
-start = 1
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Typescript(ExportNames { file: "source/priority-queue.ts" })'
-descriptor = "export names surface in source/priority-queue.ts"
-cost_tokens = 37
-cum_tokens = 720
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 15
-key = 'Typescript(Export { file: "source/priority-queue.ts", start_line: 7 })'
-descriptor = "export at source/priority-queue.ts:7"
-cost_tokens = 17
-cum_tokens = 737
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/priority-queue.ts"
-start = 7
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Typescript(ExportTail { file: "source/index.ts", start_line: 16, chunk_index: 0 })'
-descriptor = "export tail #1 at source/index.ts:16"
-cost_tokens = 218
-cum_tokens = 955
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 382
-end = 382
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 386
-end = 386
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 432
-end = 432
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 443
-end = 444
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 581
-end = 588
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 383
-end = 383
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 387
-end = 387
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 433
-end = 433
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 445
-end = 445
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/index.ts"
-start = 589
-end = 589
 
 [batches.content.spans.render]
 kind = "ellipsis"
@@ -1113,8 +1113,8 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Markdown(Section { file: "readme.md", section_index: 44, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #44"
+key = 'Markdown(Section { file: "readme.md", section_index: 41, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "readme.md section #41"
 cost_tokens = 47
 cum_tokens = 1857
 
@@ -1469,8 +1469,8 @@ kind = "ellipsis"
 
 [[batches]]
 position = 45
-key = 'Markdown(Section { file: "readme.md", section_index: 45, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #45"
+key = 'Markdown(Section { file: "readme.md", section_index: 42, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "readme.md section #42"
 cost_tokens = 167
 cum_tokens = 3488
 
@@ -1665,8 +1665,8 @@ kind = "ellipsis"
 
 [[batches]]
 position = 51
-key = 'Markdown(Section { file: "readme.md", section_index: 36, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "readme.md section #36"
+key = 'Markdown(Section { file: "readme.md", section_index: 35, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "readme.md section #35"
 cost_tokens = 267
 cum_tokens = 5395
 

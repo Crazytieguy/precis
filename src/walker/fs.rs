@@ -159,7 +159,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         // package listing — all ~80 modules"). At the lower 0.6 cat,
         // an 80-name listing's ratio loses to small sibling listings of
         // peripheral dirs.
-        (0.75, 0.55, 0.35)
+        (0.85, 0.55, 0.35)
     } else if source_dir || source_inventory_dir || readme_cited {
         // README-cited dirs (an `examples/` directory the README links
         // canonical scripts from) are part of the documented public
@@ -168,7 +168,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         // to compete in the early budget.
         (0.9, 0.5, 0.3)
     } else {
-        (0.8, 0.45, 0.25)
+        (0.95, 0.45, 0.25)
     };
     let depth = if source_inventory_dir && under_root_source_ancestor {
         // A flat partition under a root-adjacent `lib/`/`src/` is the

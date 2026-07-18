@@ -11,13 +11,13 @@ Score(3000)=0.642 I=0.814 C=0.507 ns_rows≤3K=21/48 (reached=9 partial=2 missin
 | walker |  | 178 | 51 | headings outline in README.md |  |  | 0.417 |
 | ns | 199 |  | 26 | README: title + tagline | 1.5 |  | 0.446 |
 | walker |  | 241 | 63 | README.md section #0 |  |  | 0.454 |
-| walker |  | 289 | 48 | listing of 'src' |  |  | 0.690 |
-| walker |  | 296 | 7 | listing of '.github' |  |  | 0.690 |
-| ns | 297 |  | 98 | README: priorities + protocol/MC version | 1.6 |  | 0.691 |
-| walker |  | 300 | 4 | listing of '.github/workflows' |  |  | 0.691 |
-| ns | 331 |  | 34 | README: client-support warning | 1.7 |  | 0.698 |
-| walker |  | 338 | 38 | listing of 'include' |  |  | 0.880 |
-| walker |  | 395 | 57 | c whole header in include/structures.h |  |  | 0.880 |
+| walker |  | 279 | 38 | listing of 'include' |  |  | 0.676 |
+| ns | 297 |  | 98 | README: priorities + protocol/MC version | 1.6 |  | 0.682 |
+| ns | 331 |  | 34 | README: client-support warning | 1.7 |  | 0.691 |
+| walker |  | 336 | 57 | c whole header in include/structures.h |  |  | 0.691 |
+| walker |  | 384 | 48 | listing of 'src' |  |  | 0.880 |
+| walker |  | 391 | 7 | listing of '.github' |  |  | 0.880 |
+| walker |  | 395 | 4 | listing of '.github/workflows' |  |  | 0.880 |
 | ns | 460 |  | 129 | README: Quick start | 1.8 |  | 0.835 |
 | walker |  | 491 | 96 | c whole header in include/crafting.h |  |  | 0.835 |
 | ns | 558 |  | 98 | README: Configuration intro | 1.9 |  | 0.796 |
