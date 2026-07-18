@@ -2225,7 +2225,7 @@ fn export_names_value(
 ) -> f64 {
     let cat = (0.8 * entrypoint_boost(file, ctx)).min(1.0);
     let class_split_factor = if has_oversized_ts_class_export {
-        1.5
+        1.25
     } else if has_split_js_class_export {
         1.12
     } else {

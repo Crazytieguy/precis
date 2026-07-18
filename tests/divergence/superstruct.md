@@ -1,4 +1,4 @@
-Score(3000)=0.553 I=0.859 C=0.356 ns_rows≤3K=14/40 (reached=5 partial=1 missing=8)
+Score(3000)=0.638 I=0.892 C=0.456 ns_rows≤3K=14/40 (reached=6 partial=1 missing=7)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -45,44 +45,44 @@ Score(3000)=0.553 I=0.859 C=0.356 ns_rows≤3K=14/40 (reached=5 partial=1 missin
 | walker |  | 1543 | 36 | headings outline in docs/guides/01-getting-started.md |  |  | 0.731 |
 | walker |  | 1543 | 0 | docs/guides/01-getting-started.md section #0 |  |  | 0.731 |
 | walker |  | 1587 | 44 | headings outline in docs/guides/06-using-typescript.md |  |  | 0.731 |
+| walker |  | 1627 | 40 | headings outline in docs/reference/errors.md |  |  | 0.731 |
+| walker |  | 1653 | 26 | export doc at src/error.ts:5 |  |  | 0.731 |
 | ns | 1675 |  | 144 | Struct class fields | 2.2 | 2.1 | 0.697 |
-| walker |  | 1820 | 233 | export names surface in src/struct.ts |  |  | 0.720 |
-| walker |  | 1820 | 0 | export at src/struct.ts:175 |  |  | 0.720 |
-| walker |  | 1820 | 0 | export at src/struct.ts:231 |  |  | 0.720 |
-| walker |  | 1820 | 0 | export at src/struct.ts:237 |  |  | 0.720 |
-| walker |  | 1820 | 0 | export at src/struct.ts:253 |  |  | 0.720 |
-| walker |  | 1820 | 0 | export at src/struct.ts:259 |  |  | 0.720 |
-| walker |  | 1820 | 0 | export at src/struct.ts:266 |  |  | 0.720 |
-| walker |  | 1854 | 34 | export at src/struct.ts:221 |  |  | 0.721 |
-| walker |  | 1895 | 41 | export at src/struct.ts:243 |  |  | 0.721 |
-| walker |  | 1932 | 37 | export at src/struct.ts:139 |  |  | 0.722 |
-| walker |  | 1969 | 37 | export at src/struct.ts:157 |  |  | 0.722 |
-| walker |  | 2009 | 40 | export at src/struct.ts:123 |  |  | 0.722 |
-| ns | 2058 |  | 383 | Struct constructor body | 2.3 | 2.1 | 0.632 |
-| walker |  | 2092 | 83 | export at src/struct.ts:185 |  |  | 0.633 |
-| walker |  | 2116 | 24 | export body at src/struct.ts:175 body 176 |  |  | 0.633 |
-| walker |  | 2139 | 23 | export doc at src/struct.ts:243 |  |  | 0.633 |
-| walker |  | 2164 | 25 | export doc at src/struct.ts:259 |  |  | 0.634 |
-| walker |  | 2204 | 40 | headings outline in docs/reference/errors.md |  |  | 0.634 |
-| walker |  | 2227 | 23 | export doc at src/struct.ts:175 |  |  | 0.634 |
-| walker |  | 2253 | 26 | export doc at src/error.ts:5 |  |  | 0.635 |
-| walker |  | 2305 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.635 |
-| walker |  | 2347 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.635 |
-| walker |  | 2374 | 27 | export doc at src/struct.ts:231 |  |  | 0.635 |
-| walker |  | 2401 | 27 | export doc at src/struct.ts:237 |  |  | 0.636 |
-| walker |  | 2429 | 28 | export doc at src/struct.ts:253 |  |  | 0.637 |
-| walker |  | 2474 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.637 |
-| walker |  | 2502 | 28 | export doc at src/struct.ts:123 |  |  | 0.638 |
-| walker |  | 2527 | 25 | listing of 'test/api' |  |  | 0.638 |
-| walker |  | 2585 | 58 | export names surface in src/structs/coercions.ts |  |  | 0.638 |
-| walker |  | 2585 | 0 | export at src/structs/coercions.ts:79 |  |  | 0.638 |
-| ns | 2598 |  | 540 | Struct instance methods (assert/create/is/mask/validate) | 2.4 | 2.1 | 0.552 |
-| walker |  | 2604 | 19 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.552 |
-| walker |  | 2651 | 47 | export at src/structs/coercions.ts:16 |  |  | 0.552 |
-| walker |  | 2708 | 57 | export at src/structs/coercions.ts:38 |  |  | 0.552 |
-| walker |  | 2737 | 29 | export doc at src/struct.ts:139 |  |  | 0.553 |
-| walker |  | 2767 | 30 | export doc at src/struct.ts:157 |  |  | 0.553 |
-| walker |  | 3084 | 317 | mdBook SUMMARY at docs/summary.md |  |  | 0.640 |
+| walker |  | 1705 | 52 | headings outline in docs/guides/02-validating-data.md |  |  | 0.697 |
+| walker |  | 1747 | 42 | headings outline in docs/reference/typescript.md |  |  | 0.697 |
+| walker |  | 1792 | 45 | headings outline in docs/reference/coercions.md |  |  | 0.697 |
+| walker |  | 1817 | 25 | listing of 'test/api' |  |  | 0.697 |
+| walker |  | 1875 | 58 | export names surface in src/structs/coercions.ts |  |  | 0.698 |
+| walker |  | 1875 | 0 | export at src/structs/coercions.ts:79 |  |  | 0.698 |
+| walker |  | 1894 | 19 | export body at src/structs/coercions.ts:79 body 80 |  |  | 0.698 |
+| walker |  | 1941 | 47 | export at src/structs/coercions.ts:16 |  |  | 0.698 |
+| walker |  | 1998 | 57 | export at src/structs/coercions.ts:38 |  |  | 0.698 |
+| ns | 2058 |  | 383 | Struct constructor body | 2.3 | 2.1 | 0.611 |
+| walker |  | 2315 | 317 | mdBook SUMMARY at docs/summary.md |  |  | 0.711 |
+| walker |  | 2548 | 233 | export names surface in src/struct.ts |  |  | 0.729 |
+| walker |  | 2548 | 0 | export at src/struct.ts:175 |  |  | 0.729 |
+| walker |  | 2548 | 0 | export at src/struct.ts:231 |  |  | 0.729 |
+| walker |  | 2548 | 0 | export at src/struct.ts:237 |  |  | 0.729 |
+| walker |  | 2548 | 0 | export at src/struct.ts:253 |  |  | 0.729 |
+| walker |  | 2548 | 0 | export at src/struct.ts:259 |  |  | 0.729 |
+| walker |  | 2548 | 0 | export at src/struct.ts:266 |  |  | 0.729 |
+| walker |  | 2582 | 34 | export at src/struct.ts:221 |  |  | 0.730 |
+| ns | 2598 |  | 540 | Struct instance methods (assert/create/is/mask/validate) | 2.4 | 2.1 | 0.632 |
+| walker |  | 2623 | 41 | export at src/struct.ts:243 |  |  | 0.632 |
+| walker |  | 2660 | 37 | export at src/struct.ts:139 |  |  | 0.633 |
+| walker |  | 2697 | 37 | export at src/struct.ts:157 |  |  | 0.633 |
+| walker |  | 2737 | 40 | export at src/struct.ts:123 |  |  | 0.633 |
+| walker |  | 2820 | 83 | export at src/struct.ts:185 |  |  | 0.634 |
+| walker |  | 2844 | 24 | export body at src/struct.ts:175 body 176 |  |  | 0.634 |
+| walker |  | 2867 | 23 | export doc at src/struct.ts:243 |  |  | 0.635 |
+| walker |  | 2892 | 25 | export doc at src/struct.ts:259 |  |  | 0.635 |
+| walker |  | 2915 | 23 | export doc at src/struct.ts:175 |  |  | 0.636 |
+| walker |  | 2942 | 27 | export doc at src/struct.ts:231 |  |  | 0.636 |
+| walker |  | 2969 | 27 | export doc at src/struct.ts:237 |  |  | 0.637 |
+| walker |  | 2997 | 28 | export doc at src/struct.ts:253 |  |  | 0.638 |
+| walker |  | 3025 | 28 | export doc at src/struct.ts:123 |  |  | 0.638 |
+| walker |  | 3054 | 29 | export doc at src/struct.ts:139 |  |  | 0.639 |
+| walker |  | 3084 | 30 | export doc at src/struct.ts:157 |  |  | 0.640 |
 | walker |  | 3311 | 227 | export at src/struct.ts:10 |  |  | 0.685 |
 | walker |  | 3373 | 62 | headings outline in docs/reference/core.md |  |  | 0.685 |
 | walker |  | 3373 | 0 | docs/reference/core.md section #0 |  |  | 0.685 |

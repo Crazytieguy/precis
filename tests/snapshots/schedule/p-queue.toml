@@ -91,10 +91,28 @@ entries = ["index.ts", "lower-bound.ts", "options.ts", "priority-queue.ts", "que
 
 [[batches]]
 position = 6
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 31
+cum_tokens = 234
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
 key = 'Typescript(ExportNames { file: "source/index.ts" })'
 descriptor = "export names surface in source/index.ts"
 cost_tokens = 63
-cum_tokens = 266
+cum_tokens = 297
 
 [batches.content]
 kind = "lines"
@@ -116,11 +134,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Typescript(Export { file: "source/index.ts", start_line: 16 })'
 descriptor = "export at source/index.ts:16"
 cost_tokens = 33
-cum_tokens = 299
+cum_tokens = 330
 
 [batches.content]
 kind = "lines"
@@ -148,24 +166,6 @@ end = 86
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 8
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 31
-cum_tokens = 330
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 14
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 9

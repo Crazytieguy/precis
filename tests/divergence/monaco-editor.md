@@ -281,38 +281,36 @@ Score(3000)=0.440 I=0.809 C=0.239 ns_rows≤3K=18/53 (reached=4 partial=0 missin
 | ns | 9104 |  | 13 | test/ directory listing | 9.1 |  | 0.537 |
 | walker |  | 9105 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 557 |  |  | 0.537 |
 | walker |  | 9212 | 107 | samples/README.md section #3 |  |  | 0.537 |
-| walker |  | 9263 | 51 | export names surface in src/languages/features/css/cssWorker.ts |  |  | 0.537 |
-| walker |  | 9263 | 0 | export at src/languages/features/css/cssWorker.ts:237 |  |  | 0.537 |
-| walker |  | 9284 | 21 | export at src/languages/features/css/cssWorker.ts:232 |  |  | 0.537 |
-| walker |  | 9306 | 22 | export at src/languages/features/css/cssWorker.ts:10 |  |  | 0.537 |
-| walker |  | 9319 | 13 | export body at src/languages/features/css/cssWorker.ts:237 body 238 |  |  | 0.530 |
+| walker |  | 9230 | 18 | export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx |  |  | 0.537 |
+| walker |  | 9230 | 0 | export at samples/browser-esm-vite-react/src/components/Editor.tsx:5 |  |  | 0.537 |
+| walker |  | 9248 | 18 | export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx |  |  | 0.537 |
+| walker |  | 9248 | 0 | export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23 |  |  | 0.537 |
 | ns | 9319 |  | 215 | CI workflow: build/test/package/smoke/website steps | 9.2 |  | 0.530 |
-| walker |  | 9370 | 51 | export names surface in src/languages/features/html/htmlWorker.ts |  |  | 0.530 |
-| walker |  | 9370 | 0 | export at src/languages/features/html/htmlWorker.ts:162 |  |  | 0.530 |
-| walker |  | 9393 | 23 | export at src/languages/features/html/htmlWorker.ts:157 |  |  | 0.530 |
-| walker |  | 9415 | 22 | export at src/languages/features/html/htmlWorker.ts:11 |  |  | 0.530 |
-| ns | 9423 |  | 104 | samples/ directory listing | 10.1 |  | 0.538 |
-| walker |  | 9428 | 13 | export body at src/languages/features/html/htmlWorker.ts:162 body 163 |  |  | 0.538 |
-| walker |  | 9479 | 51 | export names surface in src/languages/features/json/jsonWorker.ts |  |  | 0.538 |
-| walker |  | 9479 | 0 | export at src/languages/features/json/jsonWorker.ts:233 |  |  | 0.538 |
-| walker |  | 9501 | 22 | export at src/languages/features/json/jsonWorker.ts:18 |  |  | 0.538 |
-| walker |  | 9514 | 13 | export body at src/languages/features/json/jsonWorker.ts:233 body 234 |  |  | 0.538 |
-| walker |  | 9532 | 18 | export names surface in samples/browser-esm-vite-react/src/components/Editor.tsx |  |  | 0.538 |
-| walker |  | 9532 | 0 | export at samples/browser-esm-vite-react/src/components/Editor.tsx:5 |  |  | 0.538 |
-| walker |  | 9550 | 18 | export names surface in samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx |  |  | 0.538 |
-| walker |  | 9550 | 0 | export at samples/browser-esm-webpack-typescript-react/src/components/Editor.tsx:23 |  |  | 0.538 |
-| walker |  | 9637 | 87 | module item body at webpack-plugin/src/index.ts:159 body 182 |  |  | 0.538 |
-| walker |  | 9671 | 34 | export at src/languages/features/json/jsonWorker.ts:227 |  |  | 0.529 |
-| ns | 9671 |  | 248 | docs/integrate-esm.md: webpack + MonacoWebpackPlugin recipe | 10.2 |  | 0.529 |
-| walker |  | 9723 | 52 | README.md section #7 |  |  | 0.532 |
-| walker |  | 9782 | 59 | README.md section #13 |  |  | 0.532 |
-| ns | 9816 |  | 145 | CHANGELOG.md: latest release (0.55.0) | 10.3 |  | 0.529 |
-| walker |  | 9863 | 81 | package runtime dependencies in monaco-lsp-client/package.json |  |  | 0.529 |
-| ns | 9874 |  | 58 | Tooling config files: .nvmrc, .prettierrc (style keys only) | 10.4 |  | 0.527 |
-| walker |  | 9875 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 559 |  |  | 0.527 |
-| ns | 9885 |  | 11 | src/deprecated/ directory listing | 10.5 |  | 0.529 |
-| walker |  | 9904 | 29 | export names surface in src/internal/common/workers.ts |  |  | 0.529 |
-| walker |  | 9927 | 23 | export at src/internal/common/workers.ts:92 |  |  | 0.530 |
-| walker |  | 9931 | 4 | listing of 'test/smoke/amd' |  |  | 0.530 |
-| walker |  | 9939 | 8 | listing of 'website/static' |  |  | 0.530 |
+| walker |  | 9335 | 87 | module item body at webpack-plugin/src/index.ts:159 body 182 |  |  | 0.530 |
+| walker |  | 9387 | 52 | README.md section #7 |  |  | 0.534 |
+| ns | 9423 |  | 104 | samples/ directory listing | 10.1 |  | 0.541 |
+| walker |  | 9446 | 59 | README.md section #13 |  |  | 0.541 |
+| walker |  | 9527 | 81 | package runtime dependencies in monaco-lsp-client/package.json |  |  | 0.541 |
+| walker |  | 9539 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 559 |  |  | 0.541 |
+| walker |  | 9568 | 29 | export names surface in src/internal/common/workers.ts |  |  | 0.542 |
+| walker |  | 9591 | 23 | export at src/internal/common/workers.ts:92 |  |  | 0.542 |
+| walker |  | 9595 | 4 | listing of 'test/smoke/amd' |  |  | 0.542 |
+| walker |  | 9603 | 8 | listing of 'website/static' |  |  | 0.542 |
+| ns | 9671 |  | 248 | docs/integrate-esm.md: webpack + MonacoWebpackPlugin recipe | 10.2 |  | 0.533 |
+| walker |  | 9784 | 181 | module item at src/languages/features/html/register.ts:115 |  |  | 0.533 |
+| walker |  | 9794 | 10 | module item body at src/languages/features/html/register.ts:115 body 136 |  |  | 0.533 |
+| walker |  | 9805 | 11 | module item body at src/languages/features/html/register.ts:115 body 132 |  |  | 0.533 |
+| walker |  | 9816 | 11 | module item body at src/languages/features/html/register.ts:115 body 140 |  |  | 0.530 |
+| ns | 9816 |  | 145 | CHANGELOG.md: latest release (0.55.0) | 10.3 |  | 0.530 |
+| walker |  | 9829 | 13 | module item body at src/languages/features/html/register.ts:115 body 128 |  |  | 0.530 |
+| walker |  | 9857 | 28 | module item body at src/languages/features/html/register.ts:115 body 144 |  |  | 0.530 |
+| ns | 9874 |  | 58 | Tooling config files: .nvmrc, .prettierrc (style keys only) | 10.4 |  | 0.528 |
+| ns | 9885 |  | 11 | src/deprecated/ directory listing | 10.5 |  | 0.530 |
+| walker |  | 9887 | 30 | module item body at src/languages/features/html/register.ts:115 body 149 |  |  | 0.530 |
+| walker |  | 9922 | 35 | module item body at src/languages/features/html/register.ts:115 body 122 |  |  | 0.530 |
+| walker |  | 9943 | 21 | export names surface in src/languages/features/css/cssMode.ts |  |  | 0.530 |
+| walker |  | 9943 | 0 | export at src/languages/features/css/cssMode.ts:12 |  |  | 0.530 |
 | ns | 9945 |  | 60 | website/ top-level listing | 10.6 |  | 0.536 |
+| walker |  | 9955 | 12 | module item body at monaco-lsp-client/generator/index.ts:259 body 558 |  |  | 0.536 |
+| walker |  | 9977 | 22 | export names surface in src/languages/features/typescript/ts.worker.ts |  |  | 0.536 |
+| walker |  | 9986 | 9 | listing of 'website/scripts' |  |  | 0.536 |

@@ -11,11 +11,11 @@ Score(3000)=0.460 I=0.788 C=0.268 ns_rows≤3K=21/42 (reached=7 partial=2 missin
 | ns | 137 |  | 27 | readme.md title + tagline | 2.1 |  | 0.575 |
 | walker |  | 180 | 67 | README headline in readme.md |  |  | 0.648 |
 | walker |  | 203 | 23 | listing of 'source' |  |  | 0.776 |
-| ns | 256 |  | 119 | readme.md — maintenance-mode notice | 2.2 | 2.1 | 0.714 |
-| walker |  | 266 | 63 | export names surface in source/index.ts |  |  | 0.714 |
-| walker |  | 299 | 33 | export at source/index.ts:16 |  |  | 0.714 |
-| ns | 315 |  | 59 | package.json — name, version, description, license | 2.3 |  | 0.719 |
-| walker |  | 330 | 31 | package runtime metadata in package.json |  |  | 0.721 |
+| walker |  | 234 | 31 | package runtime metadata in package.json |  |  | 0.777 |
+| ns | 256 |  | 119 | readme.md — maintenance-mode notice | 2.2 | 2.1 | 0.716 |
+| walker |  | 297 | 63 | export names surface in source/index.ts |  |  | 0.716 |
+| ns | 315 |  | 59 | package.json — name, version, description, license | 2.3 |  | 0.721 |
+| walker |  | 330 | 33 | export at source/index.ts:16 |  |  | 0.721 |
 | walker |  | 350 | 20 | export doc at source/index.ts:16 |  |  | 0.721 |
 | ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.635 |
 | walker |  | 471 | 121 | headings outline in readme.md |  |  | 0.649 |
