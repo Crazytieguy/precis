@@ -166,6 +166,36 @@ src/
           12→//! <br>
           13→//!
         …
+         209→#![doc(html_root_url = "https://docs.rs/anyhow/1.0.101")]
+         210→#![cfg_attr(error_generic_member_access, feature(error_generic_member_access))]
+         211→#![no_std]
+         212→#![deny(dead_code, unsafe_op_in_unsafe_fn, unused_imports, unused_mut)]
+         213→#![allow(
+         214→    clippy::doc_markdown,
+         215→    clippy::elidable_lifetime_names,
+         216→    clippy::enum_glob_use,
+         217→    clippy::explicit_auto_deref,
+         218→    clippy::extra_unused_type_parameters,
+         219→    clippy::incompatible_msrv,
+         220→    clippy::let_underscore_untyped,
+         221→    clippy::missing_errors_doc,
+         222→    clippy::missing_panics_doc,
+         223→    clippy::module_name_repetitions,
+         224→    clippy::must_use_candidate,
+         225→    clippy::needless_doctest_main,
+         226→    clippy::needless_lifetimes,
+         227→    clippy::new_ret_no_self,
+         228→    clippy::redundant_else,
+         229→    clippy::return_self_not_must_use,
+         230→    clippy::struct_field_names,
+         231→    clippy::uninlined_format_args,
+         232→    clippy::unused_self,
+         233→    clippy::used_underscore_binding,
+         234→    clippy::wildcard_imports,
+         235→    clippy::wrong_self_convention
+         236→)]
+         237→#![allow(unknown_lints, mismatched_lifetime_syntaxes)]
+        …
          252→mod backtrace;
          253→mod chain;
          254→mod context;
@@ -190,19 +220,6 @@ src/
          276→use core::error::Error as StdError;
         …
          286→pub use anyhow as format_err;
-         288→/// The `Error` type, a wrapper around a dynamic error type.
-         289→///
-         290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
-         291→/// differences:
-         292→///
-         293→/// - `Error` requires that the error is `Send`, `Sync`, and `'static`.
-         294→/// - `Error` guarantees that a backtrace is available, even if the underlying
-         295→///   error type does not provide one.
-         296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
-         297→///   size instead of two.
-         298→///
-         299→/// <br>
-         300→///
         …
          389→#[repr(transparent)]
          390→pub struct Error {
@@ -219,13 +236,6 @@ src/
          417→}
         …
          468→pub type Result<T, E = Error> = core::result::Result<T, E>;
-         470→/// Provides the `context` method for `Result`.
-         471→///
-         472→/// This trait is sealed and cannot be implemented for types outside of
-         473→/// `anyhow`.
-         474→///
-         475→/// <br>
-         476→///
         …
          616→pub trait Context<T, E>: context::private::Sealed {
          617→    /// Wrap the error value with additional context.
@@ -251,16 +261,6 @@ src/
     macros.rs
         …
           58→macro_rules! bail {
-          59→    ($msg:literal $(,)?) => {
-          60→        return $crate::__private::Err($crate::__anyhow!($msg))
-          61→    };
-          62→    ($err:expr $(,)?) => {
-          63→        return $crate::__private::Err($crate::__anyhow!($err))
-          64→    };
-          65→    ($fmt:expr, $($arg:tt)*) => {
-          66→        return $crate::__private::Err($crate::__anyhow!($fmt, $($arg)*))
-          67→    };
-          68→}
         …
          204→macro_rules! anyhow {
         …

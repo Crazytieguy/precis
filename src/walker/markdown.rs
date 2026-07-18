@@ -2511,7 +2511,8 @@ fn oversize_chunk_bounds(
 
 /// Per-row token count (row is 1-based; includes the newline). Rides
 /// the tokenizer's per-line memoization, so repeated sweeps are cheap.
-fn row_tokens(src_lines: &[&str], row: usize) -> usize {
+/// Shared with the Rust walker's crate-doc chunking and attr gate.
+pub(in crate::walker) fn row_tokens(src_lines: &[&str], row: usize) -> usize {
     src_lines
         .get(row - 1)
         .map(|l| tokenizer::count(&format!("{l}\n")))
@@ -2519,8 +2520,9 @@ fn row_tokens(src_lines: &[&str], row: usize) -> usize {
 }
 
 /// The fence delimiter at the start of an already-trimmed line — its
-/// marker char and run length (≥ 3) — if any.
-fn fence_marker(trimmed: &str) -> Option<(char, usize)> {
+/// marker char and run length (≥ 3) — if any. Shared with the Rust
+/// walker's crate-doc chunking (rustdoc is markdown).
+pub(in crate::walker) fn fence_marker(trimmed: &str) -> Option<(char, usize)> {
     let c = trimmed.chars().next()?;
     if c != '`' && c != '~' {
         return None;

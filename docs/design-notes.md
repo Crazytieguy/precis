@@ -497,6 +497,35 @@ Two shipped C-walker changes, mean 0.6029 → 0.6034:
   krep 0.384 → 0.377 — earlier arrival displaces NS-wanted README
   orientation.
 
+## Rust wave (2026-07-18): 0.6047 → 0.6067
+
+Two ships (crate-doc oversize split bfd4076b, crate-attribute recall
+23e0c914 + review fixes 05916e36) and one measured-dead attempt:
+
+- **Crate-doc chunk placement is bimodal across NSes**: thiserror
+  ranks doc slices ≤2.5K, anyhow ranks the identical shape ~7K. The
+  shipped balance (head 0.9×, tails 0.75×) holds both headlines; the
+  residual trade is anyhow −0.03..−0.07 on 4.7-6.5K rows vs thiserror
+  gains at 3-3.6K and 6.2-7.4K. `CrateDocTail` scheduler-trait
+  defaults (flat concavity, no breadth pressure) are unswept — see
+  the key's doc for the candidate levers if the tail train over-buys.
+- **MethodSigs per-impl-group split — measured dead (reverted, three
+  variants)**: splitting oversize (≥400-token) catalogs per self type
+  (All-scope full sigs / first-line roster / ExportedOnly membership)
+  never moved Score(3000) — log's per-type rosters still price at
+  3.5-6.5K, past the NS windows that want them (the early-budget
+  ratio wall again), and the mechanism only fires on log among
+  training fixtures (toasty/otree/hyperfine catalogs are single-self-
+  type). The ExportedOnly variant was curve-positive on log
+  (+0.066 summed, mixed on the budget grid) but flat-primary +
+  single-fixture doesn't pay for ~180 lines. A retry needs the
+  groups to *win purchase ≤3K* (value/tier treatment), not more
+  granularity shapes.
+- **CrateAttrs gate provenance**: 150-token floor and primary-crate-
+  root scope are each backed by a measured failure (hyperfine −0.050
+  / toasty −0.013 ungated; log 140-token lint list −0.02..−0.05 on
+  4-8K rows; thiserror secondary impl crate −0.04 even damped).
+
 ## Extreme-budget contract sweep (2026-07-06): corpus clean
 
 `for f in tests/fixtures/*/; do cargo run -q -- --budget 1000000 $f;

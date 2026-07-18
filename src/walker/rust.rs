@@ -211,15 +211,11 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
     for file in &rust_files {
         let ep = is_entrypoint_file(file);
-        if ep {
+        if ep && let Some((source, tree)) = parse_rust(ctx, file) {
             let lede_key = RustKey::CrateDocLede { file: file.clone() };
-            let collect_section = |section| {
-                move |tree: &Tree, source: &str| {
-                    FileLines::new(collect_module_doc_lines(tree, source, section))
-                }
-            };
+            let lede_lines = collect_module_doc_lines(&tree, &source, DocSection::Lede);
             let lede_emitted = if let Some(content) =
-                build_per_file_content(file, ctx, parse_rust, collect_section(DocSection::Lede))
+                single_file_lines_content(file, &source, FileLines::new(lede_lines))
             {
                 out.push(batch(
                     lede_key.clone(),
@@ -231,20 +227,70 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             } else {
                 false
             };
-            if let Some(content) =
-                build_per_file_content(file, ctx, parse_rust, collect_section(DocSection::Body))
-            {
-                // The lede batch is the predecessor only when it was
-                // actually emitted — a crate doc that opens with a
-                // heading has no lede, so the body would otherwise
-                // orphan itself on a never-resolved predecessor key.
-                let predecessor = lede_emitted.then_some(BatchKey::Rust(lede_key));
-                out.push(batch(
-                    RustKey::CrateDocBody { file: file.clone() },
-                    predecessor,
-                    content,
-                    crate_doc_body_value(file, ctx),
-                ));
+            let body_lines = collect_module_doc_lines(&tree, &source, DocSection::Body);
+            let body_value = crate_doc_body_value(file, ctx);
+            // The lede batch is the predecessor only when it was
+            // actually emitted — a crate doc that opens with a
+            // heading has no lede, so the body would otherwise
+            // orphan itself on a never-resolved predecessor key.
+            let mut predecessor = lede_emitted.then_some(BatchKey::Rust(lede_key));
+            let chunks = crate_doc_chunks(body_lines, &source);
+            let head_factor = if chunks.len() > 1 {
+                CRATE_DOC_HEAD_FACTOR
+            } else {
+                1.0
+            };
+            for (i, chunk) in chunks.into_iter().enumerate() {
+                let start_line = chunk.first().copied().unwrap_or(1);
+                let Some(content) = single_file_lines_content(file, &source, FileLines::new(chunk))
+                else {
+                    continue;
+                };
+                let (key, value) = if i == 0 {
+                    (
+                        RustKey::CrateDocBody { file: file.clone() },
+                        body_value * head_factor,
+                    )
+                } else {
+                    (
+                        RustKey::CrateDocTail {
+                            file: file.clone(),
+                            start_line,
+                        },
+                        body_value * CRATE_DOC_TAIL_FACTOR,
+                    )
+                };
+                out.push(batch(key.clone(), predecessor.take(), content, value));
+                predecessor = Some(BatchKey::Rust(key));
+            }
+            // Crate roots of the primary crate only. `mod.rs` is an
+            // entrypoint file but its inner attrs are module-level
+            // lint config, not crate configuration; a secondary
+            // workspace member's attr block is peripheral config, and
+            // emitting it displaces mid-band source (thiserror
+            // impl/src/lib.rs: −0.04 on 4-7K rows even damped).
+            let is_crate_root = file
+                .file_name()
+                .and_then(|n| n.to_str())
+                .is_some_and(|n| n == "lib.rs" || n == "main.rs");
+            if is_crate_root && !is_secondary_workspace_member(file, ctx) {
+                let attr_lines = collect_crate_attr_lines(&tree, &source);
+                let src_lines: Vec<&str> = source.lines().collect();
+                let attr_tokens: usize = attr_lines
+                    .iter()
+                    .map(|&n| super::markdown::row_tokens(&src_lines, n))
+                    .sum();
+                if attr_tokens >= CRATE_ATTRS_MIN_TOKENS
+                    && let Some(content) =
+                        single_file_lines_content(file, &source, FileLines::new(attr_lines))
+                {
+                    out.push(batch(
+                        RustKey::CrateAttrs { file: file.clone() },
+                        None,
+                        content,
+                        crate_attrs_value(file, ctx),
+                    ));
+                }
             }
         }
         // ModUse stays gated to entrypoints + workspace members: `use`
@@ -852,19 +898,23 @@ fn rust_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-fn secondary_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+/// A workspace member whose crate dir basename differs from the repo
+/// root's — the sub-crates around a workspace's primary crate.
+fn is_secondary_workspace_member(file: &Path, ctx: &WalkCtx) -> bool {
     let Some(manifest_dir) = ctx.rust_state().nearest_member_dir(file, ctx.root()) else {
-        return 1.0;
+        return false;
     };
-    let same_basename = ctx
-        .root()
+    !ctx.root()
         .file_name()
         .zip(manifest_dir.file_name())
-        .is_some_and(|(r, m)| r == m);
-    if same_basename {
-        1.0
-    } else {
+        .is_some_and(|(r, m)| r == m)
+}
+
+fn secondary_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if is_secondary_workspace_member(file, ctx) {
         SECONDARY_WORKSPACE_MEMBER_FACTOR
+    } else {
+        1.0
     }
 }
 
@@ -885,6 +935,26 @@ fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let secondary = secondary_workspace_member_factor(file, ctx);
     let cat = (0.35 * entrypoint_boost(file)).min(1.0);
     mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx)) * secondary
+}
+
+/// Attr blocks below this stay unemitted: boilerplate and plain lint
+/// lists (`#![doc(html_root_url = …)]`, a lone `#![deny(warnings)]`,
+/// log's 140-token allow/deny block) are not the crate-configuration
+/// surface NS rows anchor on, and emitting them pollutes the early
+/// budget (measured: hyperfine −0.050 / toasty −0.013 at a 100-token
+/// floor; log −0.02..−0.05 on 4-8K rows at 140 tokens). Policy-heavy
+/// blocks (`no_std` + feature gates + lint policy, anyhow ~400
+/// tokens) clear it easily.
+const CRATE_ATTRS_MIN_TOKENS: usize = 150;
+
+/// Same modest tier as plumbing-shaped `ModUse`: the attribute block
+/// is crate-configuration surface (`no_std`, feature gates, lint
+/// policy) most NSes rank low or ignore, but it has no other batch
+/// class at all (anyhow's NS ranks it ≤2K and the walker had nothing
+/// to deliver).
+fn crate_attrs_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.42 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.65, 0.38, rust_depth_factor(file, ctx))
 }
 
 fn mod_use_value(file: &Path, ctx: &WalkCtx, mod_decl_count: usize) -> f64 {
@@ -1256,6 +1326,46 @@ enum DocSection {
     Body,
 }
 
+/// Rows of the leading `#![…]` inner-attribute block: the contiguous
+/// run of `inner_attribute_item` nodes at the top of the file (module
+/// docs skipped — they belong to the `CrateDoc*` batches), plus plain
+/// comment lines *interleaved between attributes* — the ones that
+/// introduce the next attribute. Comments before the first attribute
+/// (license/copyright headers) stay out, so boilerplate can't clear
+/// the [`CRATE_ATTRS_MIN_TOKENS`] gate on the attributes' behalf.
+/// Stops at the first real item. This is the crate-configuration
+/// surface (`no_std`, feature gates, lint policy) that has no other
+/// batch class.
+fn collect_crate_attr_lines(tree: &Tree, source: &str) -> Vec<usize> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = Vec::new();
+    let mut pending_comment_rows: Vec<usize> = Vec::new();
+    let mut seen_attr = false;
+    for child in root.children(&mut cursor) {
+        match child.kind() {
+            "line_comment" | "block_comment" => {
+                let text = &source[child.start_byte()..child.end_byte()];
+                if text.starts_with("//!") || text.starts_with("/*!") {
+                    // Module docs break the attr run's comment context.
+                    pending_comment_rows.clear();
+                    continue;
+                }
+                if seen_attr {
+                    extend_span(&mut pending_comment_rows, child, source);
+                }
+            }
+            "inner_attribute_item" => {
+                out.append(&mut pending_comment_rows);
+                extend_span(&mut out, child, source);
+                seen_attr = true;
+            }
+            _ => break,
+        }
+    }
+    dedup_sorted(out)
+}
+
 /// Crate-`//!` block lines, split at the first markdown heading
 /// (lede vs body). Doctest-hidden `# …` lines are stripped before the
 /// split so they can't capture the heading boundary.
@@ -1274,6 +1384,105 @@ fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> V
         break;
     }
     split_doc_lines_at_first_heading(all, source, section)
+}
+
+/// Crate-doc body tokens at which the lede-vs-rest binary stops
+/// working: one multi-thousand-token remainder batch loses the ≤3K
+/// purchase race wholesale, where mid-grained chunks can be bought
+/// slice by slice. Mirrors the markdown oversize head-split.
+const CRATE_DOC_SPLIT_TOKENS: usize = 400;
+/// Cut the running chunk at the first eligible boundary past this.
+const CRATE_DOC_CHUNK_TARGET_TOKENS: usize = 200;
+/// Never leave a trailing chunk smaller than this.
+const CRATE_DOC_CHUNK_MIN_TAIL_TOKENS: usize = 100;
+/// Tail chunks are strict continuations of the body head. Milder than
+/// the markdown `OversizeTail`'s 0.85: crate-doc placement is bimodal
+/// across NSes (thiserror ranks doc slices ≤2.5K, anyhow ranks the
+/// same content ~7K), and at 0.85 the tail train buys deep into the
+/// ≤3K window on doc-late crates, displacing their method-sig /
+/// listing anchors (measured: anyhow −0.027 at 0.85).
+const CRATE_DOC_TAIL_FACTOR: f64 = 0.75;
+/// Head chunk of a *split* body sits slightly below an unsplit body so
+/// small unchunked crate docs win comparable rank races (same shape as
+/// `CHUNKED_NAMES_FIRST_CHUNK_FACTOR`).
+const CRATE_DOC_HEAD_FACTOR: f64 = 0.9;
+
+/// Split an oversize crate-doc body (`lines` = retained `//!` rows,
+/// hidden-doctest lines already stripped) into successive
+/// ~[`CRATE_DOC_CHUNK_TARGET_TOKENS`]-token chunks, cutting after
+/// blank doc lines outside doc code fences. Rustdoc is markdown, so
+/// this mirrors `markdown::oversize_chunk_bounds` — but boundaries are
+/// judged on the *normalized* doc content (marker stripped), while
+/// token cost is the raw source row that actually renders. A cut is
+/// skipped when the next non-blank doc line opens a fence (the fence
+/// binds to the paragraph introducing it). Bodies under
+/// [`CRATE_DOC_SPLIT_TOKENS`] come back as a single chunk.
+fn crate_doc_chunks(lines: Vec<usize>, source: &str) -> Vec<Vec<usize>> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let doc_row_tokens = |n: usize| super::markdown::row_tokens(&src_lines, n);
+    // `/*! … */` block docs carry rows with no marker at all —
+    // `normalize_rustdoc_line` returns `None` for them, but they ARE
+    // doc content, so fall back to the raw line: fences inside such
+    // blocks must reach the fence tracker, and prose rows must not
+    // read as blank cut points.
+    let normalized = |n: usize| {
+        let raw = src_lines.get(n - 1).copied().unwrap_or("");
+        normalize_rustdoc_line(raw).unwrap_or(raw).trim_start()
+    };
+    let total: usize = lines.iter().map(|&n| doc_row_tokens(n)).sum();
+    if total < CRATE_DOC_SPLIT_TOKENS {
+        return vec![lines];
+    }
+    let next_nonblank_opens_fence = |rest: &[usize]| {
+        rest.iter()
+            .map(|&n| normalized(n))
+            .find(|t| !t.is_empty())
+            .and_then(super::markdown::fence_marker)
+            .is_some()
+    };
+    let mut chunks = Vec::new();
+    let mut current: Vec<usize> = Vec::new();
+    let mut chunk_tokens = 0usize;
+    let mut remaining = total;
+    let mut open_fence: Option<(char, usize)> = None;
+    for (i, &n) in lines.iter().enumerate() {
+        let tokens = doc_row_tokens(n);
+        current.push(n);
+        chunk_tokens += tokens;
+        remaining -= tokens.min(remaining);
+        let t = normalized(n);
+        // Marker-matched fence state, same as the markdown splitter:
+        // only a delimiter of the same char with at least the opening
+        // run length closes the fence.
+        if let Some((open_char, open_run)) = open_fence {
+            if super::markdown::fence_marker(t)
+                .is_some_and(|(c, run)| c == open_char && run >= open_run)
+            {
+                open_fence = None;
+            }
+            continue;
+        }
+        if let Some(marker) = super::markdown::fence_marker(t) {
+            open_fence = Some(marker);
+            continue;
+        }
+        if !t.is_empty() {
+            continue;
+        }
+        // Blank doc line outside a fence: candidate cut after this row.
+        if chunk_tokens < CRATE_DOC_CHUNK_TARGET_TOKENS
+            || remaining < CRATE_DOC_CHUNK_MIN_TAIL_TOKENS
+            || next_nonblank_opens_fence(&lines[i + 1..])
+        {
+            continue;
+        }
+        chunks.push(std::mem::take(&mut current));
+        chunk_tokens = 0;
+    }
+    if !current.is_empty() {
+        chunks.push(current);
+    }
+    chunks
 }
 
 /// Shared rustdoc heading-split — strip hidden doctest lines, then
@@ -2740,6 +2949,36 @@ use self::not_pub::Hidden;
                 .iter()
                 .any(|b| matches!(&b.key, BatchKey::Rust(RustKey::CrateDocLede { .. }))),
             "no CrateDocLede batch when the doc opens with a heading"
+        );
+    }
+
+    /// `mod.rs` counts as an entrypoint (crate-doc lede etc.), but its
+    /// leading `#![…]` block is module-level lint config, not crate
+    /// configuration: no `CrateAttrs` batch. And license/copyright
+    /// comments before a crate root's first attribute must not count
+    /// toward the token gate.
+    #[test]
+    fn rust_crate_attrs_skip_mod_rs_and_license_headers() {
+        let attr_block: String = (0..40)
+            .map(|i| format!("#![allow(clippy_lint_number_{i:02})]\n"))
+            .collect();
+        let license: String = (0..30)
+            .map(|i| format!("// Copyright notice line number {i:02} of the license header\n"))
+            .collect();
+        let mod_rs = format!("{attr_block}\npub struct A;\n");
+        let lib_rs = format!("{license}#![allow(unused)]\n\npub struct B;\n");
+        let (dir, src) = write_vis_tree(&[
+            ("nested/mod.rs", mod_rs.as_str()),
+            ("lib.rs", lib_rs.as_str()),
+        ]);
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let mut batches = expand_in_dir(&src, &ctx);
+        batches.extend(expand_in_dir(&src.join("nested"), &ctx));
+        assert!(
+            !batches
+                .iter()
+                .any(|b| matches!(&b.key, BatchKey::Rust(RustKey::CrateAttrs { .. }))),
+            "no CrateAttrs from mod.rs attrs or license-header-padded roots"
         );
     }
 
