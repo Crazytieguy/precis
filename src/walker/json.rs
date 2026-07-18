@@ -2,10 +2,10 @@
 //! `Cargo.toml` (identity / scripts ≈ features / dependencies) plus
 //! JS-specific `Entry` and `Runtime` batches for entrypoint pointers
 //! (`main`/`module`/`exports`/…) and runtime constraints. Other small
-//! JSON configs (`tsconfig.json`, `.eslintrc.json`, `jsr.json`,
-//! `turbo.json`, …) get a single `Whole` batch; lockfiles and large
-//! generated JSONs are skipped. The full key→batch mapping lives in the
-//! `is_*_key` predicates below.
+//! JSON-family configs (`tsconfig.json`, `.eslintrc.json`, `*.json5`,
+//! `*.code-workspace`, …) get a single `Whole` batch; lockfiles and large
+//! generated files are skipped. The full `package.json` key→batch mapping
+//! lives in the `is_*_key` predicates below.
 
 use std::cell::{OnceCell, RefCell};
 use std::collections::{HashMap, HashSet};
@@ -16,11 +16,11 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
-use crate::value::mix_signals;
+use crate::value::{depth_factor, mix_signals};
 
 use super::workspace::{WorkspaceMembership, canonical_member, expand_member_entry};
 use super::{
-    FileLines, WalkCtx, dedup_sorted, first_child_of_kind, fs::files_with_extension,
+    FileLines, WalkCtx, dedup_sorted, first_child_of_kind, fs::files_with_any_extension,
     gated_whole_file_content, path_depth_factor, single_file_lines_content,
 };
 
@@ -79,12 +79,14 @@ impl JsonState {
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let json_files = files_with_extension(dir, "json");
-    if json_files.is_empty() {
+    // Keep admission extension-bounded: these are explicit JSON-family
+    // formats, not files guessed to be JSON from their contents.
+    let json_family_files = files_with_any_extension(dir, &["json", "json5", "code-workspace"]);
+    if json_family_files.is_empty() {
         return Vec::new();
     }
     let mut out = Vec::new();
-    for file in json_files {
+    for file in json_family_files {
         let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
             continue;
         };
@@ -544,10 +546,25 @@ fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
     // and don't carry the project's TS dialect like the root tsconfig
     // does, so they get the lower mid-rank weight.
     let lower = name.to_ascii_lowercase();
-    let is_root_tsconfig = lower == "tsconfig.json";
-    let cat = if is_root_tsconfig { 0.55 } else { 0.3 };
-    let ztu = if is_root_tsconfig { 0.7 } else { 0.45 };
-    mix_signals(cat, 0.55, ztu, path_depth_factor(file, ctx))
+    if lower.ends_with(".code-workspace") || lower.ends_with(".json5") {
+        // These explicitly admitted sidecars are otherwise the only copy of
+        // workspace topology or non-JSON data/config. Their strict size cap
+        // keeps this identity-like admission value away from generated data.
+        let depth = if lower.ends_with(".json5") {
+            // Small JSON5 files are commonly the data/config payload inside
+            // a fixtures/examples directory; applying that directory's
+            // generic source-code damp would make admission ineffective.
+            depth_factor(ctx.depth_from_root(file))
+        } else {
+            path_depth_factor(file, ctx)
+        };
+        mix_signals(1.0, 0.7, 0.85, depth)
+    } else {
+        let is_root_tsconfig = lower == "tsconfig.json";
+        let cat = if is_root_tsconfig { 0.55 } else { 0.3 };
+        let ztu = if is_root_tsconfig { 0.7 } else { 0.45 };
+        mix_signals(cat, 0.55, ztu, path_depth_factor(file, ctx))
+    }
 }
 
 // --- parser + AST helpers ---
@@ -956,6 +973,42 @@ mod tests {
             .unwrap();
         let tree = parser.parse(source.as_bytes(), None).unwrap();
         top_level_pairs(&tree, source)
+    }
+
+    #[test]
+    fn walker_json_admits_only_bounded_json_family_sidecars() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        fs::write(
+            root.join("settings.code-workspace"),
+            "{\n  \"folders\": []\n}\n",
+        )
+        .unwrap();
+        fs::write(root.join("data.json5"), "{\n  // comment\n  value: 1\n}\n").unwrap();
+        fs::write(root.join("not-json.yaml"), "value: 1\n").unwrap();
+        fs::write(
+            root.join("large.json5"),
+            "value\n".repeat(WHOLE_LINE_CAP + 1),
+        )
+        .unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+        let whole_files: HashSet<PathBuf> = batches
+            .into_iter()
+            .filter_map(|batch| match batch.key {
+                BatchKey::Json(JsonKey::Whole { file }) => Some(file),
+                _ => None,
+            })
+            .collect();
+
+        assert_eq!(
+            whole_files,
+            HashSet::from([
+                root.join("data.json5"),
+                root.join("settings.code-workspace"),
+            ])
+        );
     }
 
     #[test]

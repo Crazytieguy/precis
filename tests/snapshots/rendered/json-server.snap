@@ -138,6 +138,33 @@ README.md
 fixtures/
     db.json
     db.json5
+           1→{
+           2→  posts: [
+           3→    {
+           4→      id: "1",
+           5→      title: "a title",
+           6→    },
+           7→    {
+           8→      id: "2",
+           9→      title: "another title",
+          10→    },
+          11→  ],
+          12→  comments: [
+          13→    {
+          14→      id: "1",
+          15→      text: "a comment about post 1",
+          16→      postId: "1",
+          17→    },
+          18→    {
+          19→      id: "2",
+          20→      text: "another comment about post 1",
+          21→      postId: "1",
+          22→    },
+          23→  ],
+          24→  profile: {
+          25→    name: "typicode",
+          26→  },
+          27→}
 package.json
     …
        2→  "name": "json-server",
@@ -263,18 +290,6 @@ src/
         …
     service.test.ts
     service.ts
-        …
-           9→export type Item = Record<string, unknown>
-          10→
-          11→export type Data = Record<string, Item[] | Item>
-          12→
-          13→export function isItem(obj: unknown): obj is Item {
-          14→  return typeof obj === 'object' && obj !== null && !Array.isArray(obj)
-        …
-          17→export type PaginatedItems = PaginationResult<Item>
-        …
-          81→export class Service {
-        …
     where-operators.ts
            1→export const WHERE_OPERATORS = [
            2→  'lt',
