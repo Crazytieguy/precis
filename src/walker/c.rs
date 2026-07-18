@@ -444,16 +444,25 @@ fn count_small_headers(root: &Path) -> usize {
 /// layouts (krep ~92%, sds 100%).
 const DOMINANT_C_FILE_MIN_SHARE: f64 = 0.6;
 
+/// Byte budget for the dominance scan across all counted `.c` files.
+/// Covers the corpus' largest C tree (tinyusb, ~4.9 MB of `.c`) with
+/// headroom; amalgamation-scale trees (mongoose, ~35 MB) bail out.
+/// Fail closed: over budget means no promotion.
+const DOMINANT_SCAN_MAX_BYTES: u64 = 8 * 1024 * 1024;
+
 /// The non-test `.c` file carrying at least
 /// [`DOMINANT_C_FILE_MIN_SHARE`] of the project's non-test `.c`
-/// non-blank lines *and* defining an unconditional `main`, if any.
-/// Same coarse one-pass scan (and cap) as [`count_small_headers`];
-/// test dirs and test-named files are excluded so a large test suite
+/// non-blank lines *and* holding the project's only
+/// default-configuration `main`, if any. Same coarse one-pass scan
+/// (and cap) as [`count_small_headers`], plus a byte budget; test
+/// dirs and test-named files are excluded so a large test suite
 /// can't mask a single-implementation-file layout.
 fn find_dominant_c_file(root: &Path) -> Option<PathBuf> {
     const SCAN_CAP: usize = 4096;
     let mut total_lines = 0usize;
     let mut largest: Option<(PathBuf, usize)> = None;
+    let mut main_candidates: Vec<PathBuf> = Vec::new();
+    let mut remaining_bytes = DOMINANT_SCAN_MAX_BYTES;
     let mut stack = vec![root.to_path_buf()];
     let mut scanned = 0;
     while let Some(dir) = stack.pop() {
@@ -466,25 +475,32 @@ fn find_dominant_c_file(root: &Path) -> Option<PathBuf> {
                 return None;
             }
             let path = entry.path();
-            let name = entry.file_name().to_string_lossy().into_owned();
+            let file_name = entry.file_name();
+            let name = file_name.to_string_lossy();
             let Ok(file_type) = entry.file_type() else {
                 continue;
             };
             if file_type.is_dir() {
-                if !super::fs::should_skip_dir(&name) && !is_test_dir_name(&name) {
+                if !super::fs::should_skip_dir(&name) && !super::fs::is_test_dir_name(&name) {
                     stack.push(path);
                 }
             } else if file_type.is_file()
                 && name.to_ascii_lowercase().ends_with(".c")
                 && !is_test_c_file_name(&name)
             {
-                let Ok(text) = std::fs::read_to_string(&path) else {
+                let Some(scan) = scan_c_source(&path, remaining_bytes) else {
                     continue;
                 };
-                let lines = text.lines().filter(|l| !l.trim().is_empty()).count();
-                total_lines += lines;
-                if largest.as_ref().is_none_or(|(_, max)| lines > *max) {
-                    largest = Some((path, lines));
+                if scan.bytes > remaining_bytes {
+                    return None;
+                }
+                remaining_bytes -= scan.bytes;
+                total_lines += scan.lines;
+                if scan.may_define_main {
+                    main_candidates.push(path.clone());
+                }
+                if largest.as_ref().is_none_or(|(_, max)| scan.lines > *max) {
+                    largest = Some((path, scan.lines));
                 }
             }
         }
@@ -498,11 +514,70 @@ fn find_dominant_c_file(root: &Path) -> Option<PathBuf> {
     // (neco.c, sds.c) leaves the API-surface role with the header —
     // promoting its roster displaces the header content NS anchors on
     // (neco −0.23 measured). A `#ifdef`-gated test main (sds
-    // `SDS_TEST_MAIN`) doesn't make a library a binary.
-    let Ok(text) = std::fs::read_to_string(&path) else {
-        return None;
-    };
-    defines_unconditional_main(&text).then_some(path)
+    // `SDS_TEST_MAIN`) doesn't make a library a binary, and a second
+    // default-configuration `main` elsewhere (multi-binary repo) means
+    // the dominant file isn't *the* program — fail closed.
+    let mut default_main_files = main_candidates.into_iter().filter(|candidate| {
+        std::fs::read_to_string(candidate).is_ok_and(|text| defines_unconditional_main(&text))
+    });
+    let first = default_main_files.next()?;
+    (first == path && default_main_files.next().is_none()).then_some(path)
+}
+
+/// One counted file's scan result: non-blank line count, bytes read,
+/// and whether any line textually looks like it could define `main`
+/// (prefilter for the [`defines_unconditional_main`] parse).
+#[derive(Default)]
+struct CSourceScan {
+    lines: usize,
+    bytes: u64,
+    may_define_main: bool,
+}
+
+/// Buffered per-line scan of one `.c` file. Reads raw bytes so a
+/// non-UTF-8 byte can't silently drop the file from the dominance
+/// tally; stops early (with `bytes` past `max_bytes`) once the budget
+/// is blown so an oversized file isn't read to the end. `None` on I/O
+/// error — the file is skipped, matching the sibling scans.
+fn scan_c_source(path: &Path, max_bytes: u64) -> Option<CSourceScan> {
+    use std::io::BufRead;
+    let file = std::fs::File::open(path).ok()?;
+    let mut reader = std::io::BufReader::new(file);
+    let mut line = Vec::new();
+    let mut scan = CSourceScan::default();
+    loop {
+        line.clear();
+        let n = reader.read_until(b'\n', &mut line).ok()?;
+        if n == 0 {
+            return Some(scan);
+        }
+        scan.bytes += n as u64;
+        if scan.bytes > max_bytes {
+            return Some(scan);
+        }
+        if line.iter().any(|b| !b.is_ascii_whitespace()) {
+            scan.lines += 1;
+        }
+        if !scan.may_define_main && line_may_define_main(&line) {
+            scan.may_define_main = true;
+        }
+    }
+}
+
+/// Cheap textual prefilter for a `main` definition: a standalone
+/// `main` token followed by `(` (or by nothing — a definition broken
+/// across lines). False positives (calls, comments) only cost a
+/// parse in [`defines_unconditional_main`].
+fn line_may_define_main(line: &[u8]) -> bool {
+    let is_ident = |b: u8| b.is_ascii_alphanumeric() || b == b'_';
+    line.windows(4).enumerate().any(|(i, window)| {
+        window == b"main"
+            && (i == 0 || !is_ident(line[i - 1]))
+            && match line[i + 4..].iter().find(|b| !b.is_ascii_whitespace()) {
+                Some(&next) => next == b'(',
+                None => true,
+            }
+    })
 }
 
 /// True iff `source` defines a `main` that is compiled in the default
@@ -510,8 +585,14 @@ fn find_dominant_c_file(root: &Path) -> Option<PathBuf> {
 /// (`#ifndef X` / `#if !defined(X)`, krep's `#if !defined(TESTING)`)
 /// that only excludes it from special builds. A main behind a positive
 /// feature guard (sds `#ifdef SDS_TEST_MAIN`) is off by default and
-/// doesn't count.
+/// doesn't count, and neither does one behind a compound condition
+/// (`#if !defined(X) && defined(Y)`) — the leading `!` doesn't make
+/// the whole guard default-on, so compound guards fail closed.
 fn defines_unconditional_main(source: &str) -> bool {
+    fn is_negation_only_condition(condition: &str) -> bool {
+        let condition = condition.trim();
+        condition.starts_with('!') && !condition.contains("&&") && !condition.contains("||")
+    }
     fn has_default_on_main(node: Node, source: &str) -> bool {
         let mut cursor = node.walk();
         node.children(&mut cursor).any(|child| match child.kind() {
@@ -523,7 +604,7 @@ fn defines_unconditional_main(source: &str) -> bool {
             "preproc_if" => {
                 child
                     .child_by_field_name("condition")
-                    .is_some_and(|c| source[c.byte_range()].trim_start().starts_with('!'))
+                    .is_some_and(|c| is_negation_only_condition(&source[c.byte_range()]))
                     && has_default_on_main(child, source)
             }
             _ => false,
@@ -554,17 +635,13 @@ fn function_definition_name<'a>(def: Node, source: &'a str) -> Option<&'a str> {
     (name.kind() == "identifier").then(|| &source[name.byte_range()])
 }
 
-fn is_test_dir_name(name: &str) -> bool {
-    matches!(
-        name.to_ascii_lowercase().as_str(),
-        "test" | "tests" | "spec" | "specs"
-    )
-}
-
 fn is_test_c_file_name(name: &str) -> bool {
     let stem = name.to_ascii_lowercase();
     let stem = stem.strip_suffix(".c").unwrap_or(&stem);
-    stem.starts_with("test_") || stem.ends_with("_test")
+    matches!(stem, "test" | "tests")
+        || stem.starts_with("test_")
+        || stem.ends_with("_test")
+        || stem.ends_with("_tests")
 }
 
 /// True iff `file`'s non-blank line count is within the whole-render
@@ -1334,11 +1411,15 @@ fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMem
             if body_end.saturating_sub(body_start) + 1 < AGGREGATE_STRUCT_MIN_LINES {
                 return Vec::new();
             }
+            // Eligibility is judged on the raw blank-line groups:
+            // coalescing may merge below the gate, but a struct whose
+            // author laid out 3+ sections stays chunked (as 1-2 wider
+            // batches) rather than collapsing to a whole-Decl slab.
             let groups = collect_struct_blank_line_groups(body, source);
             if groups.len() < AGGREGATE_STRUCT_MIN_GROUPS {
                 return Vec::new();
             }
-            groups
+            coalesce_crumb_groups(groups)
         }
         "enumerator_list" => collect_enum_chunks(body),
         _ => Vec::new(),
@@ -1353,7 +1434,7 @@ fn collect_aggregate_member_groups(body: Node, source: &str) -> Vec<AggregateMem
 /// dividers) are dropped.
 fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMemberGroup> {
     let comment_rows = comment_only_rows(body);
-    let groups = collect_blank_line_groups(body, source)
+    collect_blank_line_groups(body, source)
         .into_iter()
         .filter_map(|(_, rows)| {
             let rows: Vec<usize> = rows
@@ -1366,8 +1447,7 @@ fn collect_struct_blank_line_groups(body: Node, source: &str) -> Vec<AggregateMe
                 rows,
             })
         })
-        .collect();
-    coalesce_crumb_groups(groups)
+        .collect()
 }
 
 /// Merge adjacent groups so none carries fewer than
@@ -1384,17 +1464,12 @@ fn coalesce_crumb_groups(groups: Vec<AggregateMemberGroup>) -> Vec<AggregateMemb
             _ => merged.push(group),
         }
     }
-    if merged.len() >= 2
-        && merged
-            .last()
-            .is_some_and(|g| g.rows.len() < AGGREGATE_STRUCT_GROUP_MIN_ROWS)
+    if let [.., prev, last] = merged.as_mut_slice()
+        && last.rows.len() < AGGREGATE_STRUCT_GROUP_MIN_ROWS
     {
-        let tail = merged.pop().expect("len checked above");
-        merged
-            .last_mut()
-            .expect("len checked above")
-            .rows
-            .extend(tail.rows);
+        let tail = std::mem::take(&mut last.rows);
+        prev.rows.extend(tail);
+        merged.pop();
     }
     merged
 }
@@ -1596,7 +1671,13 @@ fn explicit_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 /// Catastrophic-axis multiplier: headers carry the public API, `.c`
 /// content is implementation detail.
 fn header_cat_factor(file: &Path) -> f64 {
-    if is_header_file(file) { 1.15 } else { 0.55 }
+    cat_tier(is_header_file(file))
+}
+
+/// The two category tiers behind [`header_cat_factor`] and
+/// [`names_surface_cat_factor`], defined once so a retune moves both.
+fn cat_tier(header_tier: bool) -> f64 {
+    if header_tier { 1.15 } else { 0.55 }
 }
 
 /// [`header_cat_factor`] variant for the names surface only: the
@@ -1610,11 +1691,7 @@ fn header_cat_factor(file: &Path) -> f64 {
 /// gated on [`find_dominant_c_file`]; everything else keeps the flat
 /// `.h`/`.c` split.
 fn names_surface_cat_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    if is_header_file(file) || ctx.c_state().is_dominant_c_file(file, ctx.root()) {
-        1.15
-    } else {
-        0.55
-    }
+    cat_tier(is_header_file(file) || ctx.c_state().is_dominant_c_file(file, ctx.root()))
 }
 
 /// Follow-up axis: headers stay neutral, `.c` content stays demoted.
@@ -2535,6 +2612,30 @@ typedef int x;
         let excluded_main = format!("#if !defined(TESTING)\n{main_def}#endif\n");
         std::fs::write(root.join("lib.c"), line.repeat(100) + &excluded_main).unwrap();
         assert_eq!(find_dominant_c_file(root), Some(root.join("lib.c")));
+
+        // Compound guard: a leading `!` conjoined with a positive
+        // feature test is off by default — fail closed.
+        let compound_main =
+            format!("#if !defined(TESTING) && defined(BUILD_CLI)\n{main_def}#endif\n");
+        std::fs::write(root.join("lib.c"), line.repeat(100) + &compound_main).unwrap();
+        assert_eq!(find_dominant_c_file(root), None);
+
+        // Multi-binary repo: a second default-configuration main in a
+        // smaller file means the dominant file isn't *the* program.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("big.c"), line.repeat(100) + main_def).unwrap();
+        std::fs::write(root.join("tool.c"), line.repeat(10) + main_def).unwrap();
+        assert_eq!(find_dominant_c_file(root), None);
+
+        // Root-level test files (tests.c, foo_tests.c) are excluded
+        // from the tally like test dirs — they can't mask dominance.
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("big.c"), line.repeat(100) + main_def).unwrap();
+        std::fs::write(root.join("tests.c"), line.repeat(200)).unwrap();
+        std::fs::write(root.join("big_tests.c"), line.repeat(200)).unwrap();
+        assert_eq!(find_dominant_c_file(root), Some(root.join("big.c")));
     }
 
     fn aggregate_group_count(filename: &str, src: &str) -> usize {
@@ -2575,6 +2676,29 @@ typedef int x;
         }
         crumb_groups.push_str("};\n");
 
+        let mut wide_plus_crumbs = String::from("struct WidePlusCrumbs {\n");
+        for i in 0..28 {
+            wide_plus_crumbs.push_str(&format!("  int w_{i};\n"));
+        }
+        for g in 0..2 {
+            wide_plus_crumbs.push('\n');
+            for i in 0..2 {
+                wide_plus_crumbs.push_str(&format!("  int c_{g}_{i};\n"));
+            }
+        }
+        wide_plus_crumbs.push_str("};\n");
+
+        let mut alternating = String::from("struct Alternating {\n");
+        for (g, width) in [20, 2, 20, 2].into_iter().enumerate() {
+            if g > 0 {
+                alternating.push('\n');
+            }
+            for i in 0..width {
+                alternating.push_str(&format!("  int f_{g}_{i};\n"));
+            }
+        }
+        alternating.push_str("};\n");
+
         let mut two_groups = String::from("struct Pair {\n");
         for i in 0..20 {
             two_groups.push_str(&format!("  int a_{i};\n"));
@@ -2614,6 +2738,22 @@ typedef int x;
                 "crumbs.h",
                 crumb_groups,
                 5,
+            ),
+            (
+                // Gate-then-coalesce boundary, 3 raw groups -> 1: the
+                // [28,2,2] layout passes the 3-group gate on raw
+                // groups, then merges (2+2 -> 4, trailing fold) into
+                // one 32-row batch instead of losing chunking.
+                "wide_plus_crumbs.h",
+                wide_plus_crumbs,
+                1,
+            ),
+            (
+                // Gate-then-coalesce boundary, 4 raw groups -> 2:
+                // [20,2,20,2] -> [20,22,2] -> trailing fold [20,24].
+                "alternating.h",
+                alternating,
+                2,
             ),
             (
                 // Two-group struct: below the chunking threshold (3 groups),
