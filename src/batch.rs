@@ -289,10 +289,14 @@ pub enum JsonKey {
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum PlaintextKey {
     /// Whole-file render. Skipped when line count or rendered token
-    /// cost exceeds the walker's caps.
+    /// cost exceeds the walker's caps. For split classes (dotenv
+    /// samples, long Dockerfiles) this key carries the head slice
+    /// instead, with the rest under [`PlaintextKey::Tail`].
     Whole { file: PathBuf },
-    /// Continuation rows past a head-shaped `Whole` batch (dotenv
-    /// samples: the optional-settings roster after the mandatory head).
+    /// Rows complementary to a head-shaped `Whole` batch — dotenv
+    /// samples: the optional-settings roster after the mandatory head;
+    /// Dockerfiles: the build-mechanics body interleaved between the
+    /// head's contract lines.
     Tail { file: PathBuf },
     /// `NAME` + `DESCRIPTION`-lede slice of a troff man page — the
     /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`

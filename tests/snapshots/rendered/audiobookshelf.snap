@@ -33,6 +33,22 @@ expression: rendered
     settings.json
     tasks.json
 Dockerfile
+       1→ARG NUSQLITE3_DIR="/usr/local/lib/nusqlite3"
+       2→ARG NUSQLITE3_PATH="${NUSQLITE3_DIR}/libnusqlite3.so"
+       3→
+       4→### STAGE 0: Build client ###
+       5→FROM node:20-alpine AS build-client
+    …
+      12→### STAGE 1: Build server ###
+      13→FROM node:20-alpine AS build-server
+    …
+      43→### STAGE 2: Create minimal runtime image ###
+      44→FROM node:20-alpine
+    …
+      62→EXPOSE 80
+    …
+      72→ENTRYPOINT ["tini", "--"]
+      73→CMD ["node", "index.js"]
 LICENSE
 build/
 client/
@@ -508,17 +524,6 @@ server/
             oldDbFiles.js
         notifications.js
         parsers/
-            parseComicInfoMetadata.js
-            parseComicMetadata.js
-            parseEbookMetadata.js
-            parseEpubMetadata.js
-            parseFullName.js
-            parseNameString.js
-            parseNfoMetadata.js
-            parseOPML.js
-            parseOpfMetadata.js
-            parseOverdriveMediaMarkers.js
-            parseSeriesString.js
         podcastUtils.js
         prober.js
         profiler.js
@@ -542,10 +547,6 @@ test/
         controllers/
         finders/
         managers/
-            ApiCacheManager.test.js
-            BinaryManager.test.js
-            MigrationManager.test.js
-            migrations/
         migrations/
         objects/
         providers/

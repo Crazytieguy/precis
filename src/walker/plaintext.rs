@@ -24,14 +24,15 @@
 //! intentionally short — anything bigger should either be a `Read` call
 //! by the agent or land in a format-aware walker.
 
+use std::collections::VecDeque;
 use std::path::Path;
 
 use crate::batch::{Batch, BatchKey, PlaintextKey};
 use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, dedup_sorted, fs::list_dir, gated_whole_file_content, path_depth_factor,
-    single_file_lines_content,
+    FileLines, WalkCtx, dedup_sorted, fs::list_dir, gated_read_source, gated_whole_file_content,
+    path_depth_factor, single_file_lines_content, whole_file_lines_content,
 };
 
 /// Line cap on a `Whole` plaintext batch.
@@ -45,6 +46,22 @@ const REQUIREMENTS_HEAD_LINE_CAP: usize = 8;
 
 /// Line cap on `Makefile` / `Dockerfile` whole batches.
 const BUILD_ENTRYPOINT_LINE_CAP: usize = 100;
+
+/// FS-metadata pre-flight gate for build entrypoints (same ≈80
+/// bytes/line multiplier as [`PLAINTEXT_BYTE_GATE`]).
+const BUILD_ENTRYPOINT_BYTE_GATE: usize = BUILD_ENTRYPOINT_LINE_CAP * 80;
+
+/// Tail-batch value factor for the Dockerfile split — the `RUN` /
+/// `COPY` bodies are follow-up to the stage + contract skeleton, but
+/// close follow-up: NSes that rank a Dockerfile at all want the build
+/// commands within the same budget window as the skeleton.
+const DOCKERFILE_TAIL_FACTOR: f64 = 0.85;
+
+/// Minimum line count before a Dockerfile is split. Short Dockerfiles
+/// are already their own skeleton and NSes rank them whole; only past
+/// this size does the whole-file lump price the stage/contract
+/// skeleton out of the early budget.
+const DOCKERFILE_SPLIT_MIN_LINES: usize = 40;
 
 /// Rows in the dotenv head batch — samples lead with the
 /// mandatory-settings block by convention (linkwarden's first 11 rows
@@ -76,6 +93,9 @@ pub(crate) enum Class {
     Toolchain,
     /// Compact build/deploy entrypoints.
     BuildEntrypoint,
+    /// Container build file (`Dockerfile` / `Containerfile`), split
+    /// into a stage/contract head + gated body tail.
+    Dockerfile,
     /// Compact build/test plumbing scripts and manifests.
     BuildScript,
     /// Legacy Python packaging metadata (`setup.cfg`).
@@ -117,7 +137,8 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
             return Some(Class::Toolchain);
         }
-        "Makefile" | "Dockerfile" => return Some(Class::BuildEntrypoint),
+        "Makefile" => return Some(Class::BuildEntrypoint),
+        "Dockerfile" | "Containerfile" => return Some(Class::Dockerfile),
         ".gitmodules" | "configure.ac" => return Some(Class::BuildScript),
         "setup.cfg" => return Some(Class::PackageConfig),
         "requirements.txt" => return Some(Class::Requirements),
@@ -167,7 +188,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let Some(class) = classify_plaintext(&name) else {
             continue;
         };
-        if matches!(class, Class::BuildEntrypoint) && dir != ctx.root() {
+        if matches!(class, Class::BuildEntrypoint | Class::Dockerfile) && dir != ctx.root() {
             continue;
         }
         if matches!(class, Class::BuildScript) && !is_build_script_location(&file, dir, ctx) {
@@ -175,6 +196,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
         if matches!(class, Class::DotenvSample) {
             push_dotenv_batches(&file, class, ctx, &mut out);
+            continue;
+        }
+        if matches!(class, Class::Dockerfile) {
+            push_dockerfile_batches(&file, class, ctx, &mut out);
             continue;
         }
         let content = match class {
@@ -188,7 +213,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             Class::BuildEntrypoint => gated_whole_file_content(
                 &file,
                 ctx,
-                BUILD_ENTRYPOINT_LINE_CAP * 80,
+                BUILD_ENTRYPOINT_BYTE_GATE,
                 BUILD_ENTRYPOINT_LINE_CAP,
             ),
             _ => gated_whole_file_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
@@ -217,7 +242,7 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::IgnoreList => (0.20, 0.30, 0.25),
         Class::EditorConfig => (0.25, 0.35, 0.30),
         Class::Toolchain => (0.30, 0.35, 0.30),
-        Class::BuildEntrypoint => (0.70, 0.55, 0.60),
+        Class::BuildEntrypoint | Class::Dockerfile => (0.70, 0.55, 0.60),
         Class::BuildScript => (0.60, 0.50, 0.55),
         Class::PackageConfig => (0.45, 0.55, 0.45),
         Class::Requirements => (0.35, 0.45, 0.35),
@@ -254,13 +279,7 @@ fn is_build_script_location(file: &Path, dir: &Path, ctx: &WalkCtx) -> bool {
 /// gated tail batch — a single head-sampled lump prices the mandatory
 /// block out of the early budget NS authors rank it in.
 fn push_dotenv_batches(file: &Path, class: Class, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
-    let byte_len = std::fs::metadata(file)
-        .map(|m| m.len() as usize)
-        .unwrap_or(usize::MAX);
-    if byte_len > DOTENV_BYTE_GATE {
-        return;
-    }
-    let Some(source) = ctx.read_source(file) else {
+    let Some(source) = gated_read_source(file, ctx, DOTENV_BYTE_GATE) else {
         return;
     };
     let line_count = source.lines().count();
@@ -301,6 +320,231 @@ fn push_dotenv_batches(file: &Path, class: Class, ctx: &WalkCtx, out: &mut Vec<B
             predecessor: Some(BatchKey::Plaintext(head_key)),
             content,
             value: head_value * DOTENV_TAIL_FACTOR,
+        });
+    }
+}
+
+/// Dockerfile instructions that form the container's operational
+/// contract: stage boundaries plus what the finished image exposes
+/// and runs. Per-stage build environment (`ARG`/`ENV`/`WORKDIR`) and
+/// build mechanics (`RUN`/`COPY`/`ADD`, labels) are body, not
+/// skeleton — NS authors consistently elide them from the early rank
+/// and pick them up with the stage bodies.
+fn is_dockerfile_contract_instruction(instruction: &str) -> bool {
+    matches!(
+        instruction,
+        "FROM" | "EXPOSE" | "VOLUME" | "USER" | "ENTRYPOINT" | "CMD" | "HEALTHCHECK" | "STOPSIGNAL"
+    )
+}
+
+/// Escape character for line continuations: `\` unless a leading
+/// `# escape=` parser directive picks the backtick (Windows-style
+/// Dockerfiles).
+fn dockerfile_escape_char(lines: &[&str]) -> char {
+    // Parser directives are `# key=value` comments before any other
+    // content; the first non-directive line ends the block.
+    for raw in lines {
+        let Some(rest) = raw.trim().strip_prefix('#') else {
+            break;
+        };
+        let Some((key, value)) = rest.split_once('=') else {
+            break;
+        };
+        if key.trim().eq_ignore_ascii_case("escape") && value.trim() == "`" {
+            return '`';
+        }
+    }
+    '\\'
+}
+
+/// Append the delimiters of any heredocs opened on `line` (`<<EOF`,
+/// `<<-EOF`, quoted variants). Delimiters must start with a letter or
+/// underscore, which keeps shell arithmetic like `1<<2` out.
+fn collect_heredoc_openers(line: &str, out: &mut VecDeque<String>) {
+    let mut rest = line;
+    while let Some(pos) = rest.find("<<") {
+        rest = &rest[pos + 2..];
+        let mut s = rest.strip_prefix('-').unwrap_or(rest);
+        if let Some(unquoted) = s.strip_prefix(['"', '\'']) {
+            s = unquoted;
+        }
+        if !s.starts_with(|c: char| c.is_ascii_alphabetic() || c == '_') {
+            continue;
+        }
+        let delimiter: String = s
+            .chars()
+            .take_while(|c| c.is_ascii_alphanumeric() || *c == '_')
+            .collect();
+        out.push_back(delimiter);
+    }
+}
+
+/// 1-based lines of the Dockerfile contract skeleton: every contract
+/// instruction with its continuation lines and heredoc body, the
+/// contiguous comment block directly above each `FROM` (stage-label
+/// comments by convention), and pre-`FROM` global `ARG`s (they feed
+/// `FROM ${...}` references). `ONBUILD` routes by its payload
+/// instruction.
+fn dockerfile_contract_lines(source: &str) -> Vec<usize> {
+    let lines: Vec<&str> = source.lines().collect();
+    let escape = dockerfile_escape_char(&lines);
+    let mut selected = Vec::new();
+    // `Some(sel)` while inside a continuation of an instruction whose
+    // selection state is `sel`.
+    let mut continuation: Option<bool> = None;
+    // Delimiters of heredocs whose bodies are still pending; body
+    // lines inherit the opening instruction's selection state.
+    let mut heredocs: VecDeque<String> = VecDeque::new();
+    let mut heredoc_selected = false;
+    let mut seen_from = false;
+    for (i, raw) in lines.iter().enumerate() {
+        let line = raw.trim();
+        if let Some(sel) = continuation {
+            if sel {
+                selected.push(i + 1);
+            }
+            // Comment and blank lines inside a continuation don't end
+            // it (Docker skips them).
+            if !line.is_empty() && !line.starts_with('#') {
+                collect_heredoc_openers(line, &mut heredocs);
+                if !line.ends_with(escape) {
+                    continuation = None;
+                }
+            }
+            continue;
+        }
+        if let Some(delimiter) = heredocs.front() {
+            if heredoc_selected {
+                selected.push(i + 1);
+            }
+            if line == delimiter {
+                heredocs.pop_front();
+            }
+            continue;
+        }
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let mut instruction = line
+            .split_whitespace()
+            .next()
+            .unwrap_or_default()
+            .to_ascii_uppercase();
+        if instruction == "ONBUILD" {
+            instruction = line
+                .split_whitespace()
+                .nth(1)
+                .unwrap_or_default()
+                .to_ascii_uppercase();
+        }
+        let is_selected = is_dockerfile_contract_instruction(&instruction)
+            || (instruction == "ARG" && !seen_from);
+        if instruction == "FROM" {
+            seen_from = true;
+        }
+        collect_heredoc_openers(line, &mut heredocs);
+        heredoc_selected = is_selected;
+        if line.ends_with(escape) {
+            continuation = Some(is_selected);
+        }
+        if !is_selected {
+            continue;
+        }
+        if instruction == "FROM" {
+            // Attach the stage-label comment block.
+            let mut j = i;
+            while j > 0 && lines[j - 1].trim_start().starts_with('#') {
+                j -= 1;
+                selected.push(j + 1);
+            }
+        }
+        selected.push(i + 1);
+    }
+    selected.sort_unstable();
+    selected.dedup();
+    selected
+}
+
+/// Ellipsis markers for each maximal gap in `selected` within
+/// `1..=line_count` (first line of every gap).
+fn gap_ellipses(selected: &[usize], line_count: usize) -> Vec<usize> {
+    let mut ellipses = Vec::new();
+    let mut prev = 0usize;
+    for &line in selected.iter().chain(std::iter::once(&(line_count + 1))) {
+        if line > prev + 1 {
+            ellipses.push(prev + 1);
+        }
+        prev = line;
+    }
+    ellipses
+}
+
+/// Dockerfiles ship as a compact stage/contract head plus a gated
+/// body tail — NS authors rank the stage markers + operational
+/// contract inside the early budget and the `RUN`/`COPY` build
+/// mechanics as follow-up; a whole-file lump prices the contract out
+/// (same shape as the dotenv-sample split).
+fn push_dockerfile_batches(
+    file: &Path,
+    class: Class,
+    ctx: &WalkCtx,
+    out: &mut Vec<Batch<BatchKey>>,
+) {
+    let Some(source) = gated_read_source(file, ctx, BUILD_ENTRYPOINT_BYTE_GATE) else {
+        return;
+    };
+    let line_count = source.lines().count();
+    if line_count == 0 || line_count > BUILD_ENTRYPOINT_LINE_CAP {
+        return;
+    }
+    let value = class_value(class, file, ctx);
+    let head_key = PlaintextKey::Whole {
+        file: file.to_path_buf(),
+    };
+    let split = (line_count > DOCKERFILE_SPLIT_MIN_LINES)
+        .then(|| {
+            let head_lines = dockerfile_contract_lines(&source);
+            let tail_lines: Vec<usize> = (1..=line_count)
+                .filter(|line| head_lines.binary_search(line).is_err())
+                .collect();
+            (head_lines, tail_lines)
+        })
+        .filter(|(head_lines, tail_lines)| !head_lines.is_empty() && !tail_lines.is_empty());
+    let Some((head_lines, tail_lines)) = split else {
+        // Short, not Dockerfile-shaped, or all-contract: ship whole.
+        if let Some(content) = whole_file_lines_content(file, &source) {
+            out.push(Batch {
+                key: head_key.into(),
+                predecessor: None,
+                content,
+                value,
+            });
+        }
+        return;
+    };
+    let ellipses = gap_ellipses(&head_lines, line_count);
+    let head = FileLines::new(head_lines).with_ellipses(ellipses);
+    if let Some(content) = single_file_lines_content(file, &source, head) {
+        out.push(Batch {
+            key: head_key.clone().into(),
+            predecessor: None,
+            content,
+            value,
+        });
+    }
+    // No tail ellipses: head ∪ tail covers every line, and a tail
+    // Ellipsis record on a head-owned line would replace the head's
+    // already-rendered row (`apply_spans` overwrites ancestor records
+    // unconditionally).
+    if let Some(content) = single_file_lines_content(file, &source, FileLines::new(tail_lines)) {
+        out.push(Batch {
+            key: PlaintextKey::Tail {
+                file: file.to_path_buf(),
+            }
+            .into(),
+            predecessor: Some(BatchKey::Plaintext(head_key)),
+            content,
+            value: value * DOCKERFILE_TAIL_FACTOR,
         });
     }
 }
@@ -497,7 +741,8 @@ mod tests {
             (".tool-versions", Some(Class::Toolchain)),
             ("pnpm-workspace.yaml", Some(Class::Toolchain)),
             ("Makefile", Some(Class::BuildEntrypoint)),
-            ("Dockerfile", Some(Class::BuildEntrypoint)),
+            ("Dockerfile", Some(Class::Dockerfile)),
+            ("Containerfile", Some(Class::Dockerfile)),
             ("testall.sh", Some(Class::BuildScript)),
             ("build.sh", Some(Class::BuildScript)),
             (".gitmodules", Some(Class::BuildScript)),
@@ -611,6 +856,95 @@ mod tests {
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         assert_no_plaintext_whole(&report, "LICENSE");
+    }
+
+    #[test]
+    fn plaintext_dockerfile_contract_lines_select_stages_and_contract() {
+        let src = "\
+# Stage: builder\n\
+# uses rust\n\
+FROM rust:1.86 AS builder\n\
+\n\
+RUN cargo build \\\n\
+    # comment inside continuation\n\
+    --release\n\
+\n\
+FROM node:20 AS app\n\
+ENV FOO=1 \\\n\
+    BAR=2\n\
+COPY . .\n\
+HEALTHCHECK --interval=30s \\\n\
+    CMD [\"curl\", \"http://localhost/\"]\n\
+EXPOSE 3000\n\
+CMD [\"node\", \"index.js\"]\n";
+        let selected = dockerfile_contract_lines(src);
+        // Stage comments + FROMs, HEALTHCHECK with continuation,
+        // EXPOSE, CMD — but not ENV (build environment) and not RUN
+        // (with its interior comment + continuation) or COPY.
+        assert_eq!(selected, vec![1, 2, 3, 9, 13, 14, 15, 16]);
+        assert_eq!(gap_ellipses(&selected, 16), vec![4, 10]);
+        // Leading gap gets a marker too.
+        assert_eq!(gap_ellipses(&[3, 4], 6), vec![1, 5]);
+    }
+
+    #[test]
+    fn plaintext_dockerfile_contract_lines_parser_edges() {
+        // Pre-FROM global ARG feeds `FROM ${...}` and is contract;
+        // post-FROM ARG is per-stage build environment.
+        let src = "ARG BASE=alpine\nFROM ${BASE} AS app\nARG DEBUG=0\nCMD [\"app\"]\n";
+        assert_eq!(dockerfile_contract_lines(src), vec![1, 2, 4]);
+        // ONBUILD routes by its payload instruction.
+        let src = "FROM base\nONBUILD EXPOSE 80\nONBUILD RUN make\n";
+        assert_eq!(dockerfile_contract_lines(src), vec![1, 2]);
+        // Heredoc body lines belong to the opening instruction even
+        // when one starts with a contract keyword.
+        let src = "FROM base\nRUN <<EOF\nFROM not-an-instruction\nEOF\nEXPOSE 80\n";
+        assert_eq!(dockerfile_contract_lines(src), vec![1, 5]);
+        // Blank lines inside a continuation don't end it.
+        let src = "FROM base\nENTRYPOINT [\"sh\", \\\n\n  \"-c\", \"run.sh\"]\nRUN make\n";
+        assert_eq!(dockerfile_contract_lines(src), vec![1, 2, 3, 4]);
+        // A `# escape=` directive switches the continuation character
+        // (the directive line itself rides along as the comment block
+        // above the first FROM).
+        let src =
+            "# escape=`\nFROM base\nHEALTHCHECK --interval=30s `\n  CMD curl localhost\nRUN make\n";
+        assert_eq!(dockerfile_contract_lines(src), vec![1, 2, 3, 4]);
+    }
+
+    /// A long Dockerfile schedules as head + gated tail; with both
+    /// batches paid for, the render reconstructs every source line
+    /// exactly once. Regression for the tail's gap ellipses landing on
+    /// head-owned lines and deleting rendered contract rows (Codex
+    /// adversarial review).
+    #[test]
+    fn plaintext_dockerfile_split_head_plus_tail_renders_whole_file() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut src = String::from("# Stage: builder\nFROM rust:1.86 AS builder\n");
+        for i in 0..40 {
+            src.push_str(&format!("RUN echo step-{i:02}\n"));
+        }
+        src.push_str("# Stage: app\nFROM alpine AS app\nEXPOSE 3000\nENTRYPOINT [\"app\"]\n");
+        std::fs::write(root.join("Dockerfile"), &src).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
+        let report = scheduler.run_with_report();
+        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
+        assert!(
+            keys.iter().any(|k| matches!(
+                k,
+                BatchKey::Plaintext(PlaintextKey::Tail { file }) if file.ends_with("Dockerfile"),
+            )),
+            "expected a scheduled Dockerfile tail batch; scheduled keys: {keys:?}",
+        );
+        let rendered = report.tree.render();
+        for line in src.lines() {
+            assert_eq!(
+                rendered.matches(line).count(),
+                1,
+                "source line {line:?} should render exactly once:\n{rendered}",
+            );
+        }
     }
 
     #[test]

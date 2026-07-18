@@ -523,6 +523,29 @@ touching span-boundary construction in any walker.
 
 ## Walker / value open items
 
+- **Split-batch invariant: a descendant must not emit Ellipsis records
+  on lines its ancestor renders as content (codex adversarial finding,
+  2026-07-18).** `RenderedTree::apply_spans` replaces ancestor-owned
+  records unconditionally, so a tail batch's gap ellipsis on a
+  head-owned line demotes the already-paid-for row to `…` in the final
+  render. Divergence scoring atomizes schedule content, not rendered
+  output, so this deletion is invisible to `Score` — it only shows in
+  the render. The Dockerfile split's complementary tail therefore
+  ships full-lines-only (head ∪ tail covers the file; the renderer
+  synthesizes gap markers from the anchor set). The dotenv tail was
+  never affected (its single ellipsis points past both slices).
+  Regression test: `plaintext_dockerfile_split_head_plus_tail_renders_whole_file`.
+- **Dockerfile head/tail split high-cum curve (2026-07-18, open).**
+  The split (head = stage/contract skeleton, tail = build mechanics at
+  0.85×, files >40 lines) nets +0.0004 corpus mean at 3K (linkwarden
+  +0.057, audiobookshelf −0.026, enclosed 0.000) but leaves
+  `Score(B=cum)` dips on the changed fixtures' 3–6K rows (worst:
+  linkwarden 1.16 @4020 0.383→0.341, enclosed 2.3 @3143 0.616→0.588,
+  audiobookshelf 2.6 @5274 0.742→0.722; audiobookshelf's 6.6K+ rows
+  gain). The dips are cost displacement from the mechanism itself, not
+  the ellipsis bug above — they were unchanged by that fix. Per-row
+  data before retuning `DOCKERFILE_TAIL_FACTOR` / `DOCKERFILE_SPLIT_MIN_LINES`;
+  don't retune blind.
 - **tomli const-lump acceptance (2026-07-06).** Unifying names surfaces
   (one catalog per file) cost tomli −0.034: `_parser.py`'s const-heavy
   surface now buys all const name lines as one lump where chunking let

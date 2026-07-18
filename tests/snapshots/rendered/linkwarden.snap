@@ -41,6 +41,27 @@ expression: rendered
     settings.json
 .yarnrc.yml
 Dockerfile
+       1→# Stage: monolith-builder
+       2→# Purpose: Uses the Rust image to build monolith
+       3→# Notes:
+       4→#  - Fine to leave extra here, as only the resulting binary is copied out
+       5→FROM docker.io/rust:1.86-bullseye AS monolith-builder
+    …
+       9→# Stage: main-app
+      10→# Purpose: Compiles the frontend and
+      11→# Notes:
+      12→#  - Nothing extra should be left here.  All commands should cleanup
+      13→FROM node:20.19.6-bullseye-slim AS main-app
+    …
+      62→HEALTHCHECK --interval=30s \
+      63→            --timeout=5s \
+      64→            --start-period=10s \
+      65→            --retries=3 \
+      66→            CMD [ "/usr/bin/curl", "--silent", "--fail", "http://127.0.0.1:3000/" ]
+      67→
+      68→EXPOSE 3000
+      69→
+      70→CMD ["sh", "-c", "yarn prisma:deploy && yarn concurrently:start"]
 LICENSE.md
 README.md
        1→<div align="center">
@@ -62,8 +83,6 @@ README.md
       38→> [!TIP]  
       39→> Our official [Cloud](https://linkwarden.app/#pricing) offering provides the simplest way to begin using Linkwarden and it's the preferred choice for many due to its time-saving benefits. <br> Your subscription supports our hosting infrastructure and ongoing development. <br> Alternatively, if you prefer self-hosting Linkwarden, you can do so by following our [Installation documentation](https://docs.linkwarden.app/self-hosting/installation).
       41→## Features
-      43→- 📸 Auto capture a screenshot, PDF, and single html file of each webpage
-      44→- 📖 Reader view of the webpage, with the ability to highlight and annotate text
     …
       48→- 👥 Collaborate on gathering links in a collection
       49→- 🎛️ Customize the permissions of each member
@@ -275,13 +294,6 @@ apps/
             getLinkBatch.ts
             getLinkBatchFairly.ts
             preservationScheme/
-                handleArchivePreview.ts
-                handleMonolith.ts
-                handleReadability.ts
-                handleScreenshotAndPdf.ts
-                imageHandler.ts
-                pdfHandler.ts
-                sendToWayback.ts
             prompts.ts
             protectPageRequests.ts
         package.json
