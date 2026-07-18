@@ -57,8 +57,9 @@ use crate::tokenizer;
 use crate::value::{is_orientation_doc, mix_signals, roster_mass_factor};
 
 use super::{
-    FileLines, WalkCtx, extend_nonblank_rows, first_child_of_kind, fs::files_with_extension,
-    node_end_row_trimmed, path_depth_factor, single_file_lines_content, whole_file_lines_content,
+    FileLines, WalkCtx, budget_chunk_ranges, extend_nonblank_rows, first_child_of_kind,
+    fs::files_with_extension, node_end_row_trimmed, path_depth_factor, single_file_lines_content,
+    whole_file_lines_content,
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
@@ -2462,21 +2463,14 @@ fn push_canonical_usage_fence_split(
 /// cut is skipped when the next non-blank row opens a fence (the
 /// fence binds to the paragraph introducing it) or when the remainder
 /// would fall below [`OVERSIZE_CHUNK_MIN_TAIL_TOKENS`].
-fn oversize_chunk_bounds(
-    src_lines: &[&str],
-    start: usize,
-    end: usize,
-    total_tokens: usize,
-) -> Vec<(usize, usize)> {
-    let mut bounds = Vec::new();
-    let mut chunk_start = start;
-    let mut chunk_tokens = 0usize;
-    let mut remaining = total_tokens;
+fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(usize, usize)> {
+    let item_count = end - start + 1;
+    let mut token_prefix = Vec::with_capacity(item_count + 1);
+    token_prefix.push(0);
+    let mut legal_split = vec![false; item_count];
     let mut open_fence: Option<(char, usize)> = None;
-    for row in start..=end {
-        let tokens = row_tokens(src_lines, row);
-        chunk_tokens += tokens;
-        remaining -= tokens.min(remaining);
+    for (index, row) in (start..=end).enumerate() {
+        token_prefix.push(token_prefix[index] + row_tokens(src_lines, row));
         let t = src_lines.get(row - 1).copied().unwrap_or("").trim_start();
         // Marker-matched fence state: only a delimiter of the same
         // char with at least the opening run length closes the fence,
@@ -2495,21 +2489,21 @@ fn oversize_chunk_bounds(
         if !t.is_empty() {
             continue;
         }
-        // Blank row outside a fence: candidate cut after this row.
-        if chunk_tokens < OVERSIZE_CHUNK_TARGET_TOKENS
-            || remaining < OVERSIZE_CHUNK_MIN_TAIL_TOKENS
-            || next_nonblank_opens_fence(src_lines, row + 1, end)
-        {
-            continue;
+        if index + 1 < item_count {
+            legal_split[index + 1] = !next_nonblank_opens_fence(src_lines, row + 1, end);
         }
-        bounds.push((chunk_start, row));
-        chunk_start = row + 1;
-        chunk_tokens = 0;
     }
-    if chunk_start <= end {
-        bounds.push((chunk_start, end));
-    }
-    bounds
+    budget_chunk_ranges(
+        item_count,
+        |range| token_prefix[range.end] - token_prefix[range.start],
+        OVERSIZE_CHUNK_TARGET_TOKENS,
+        OVERSIZE_CHUNK_MIN_TAIL_TOKENS,
+        |index| legal_split[index],
+        |_| true,
+    )
+    .into_iter()
+    .map(|range| (start + range.start, start + range.end - 1))
+    .collect()
 }
 
 /// Per-row token count (row is 1-based; includes the newline). Rides
@@ -2570,7 +2564,7 @@ fn push_whole_or_head_split(
         out.push(head);
         return;
     }
-    for (i, (chunk_start, chunk_end)) in oversize_chunk_bounds(src_lines, start, end, tokens)
+    for (i, (chunk_start, chunk_end)) in oversize_chunk_bounds(src_lines, start, end)
         .into_iter()
         .enumerate()
     {
@@ -3338,13 +3332,11 @@ mod tests {
         parser.parse(source, None).unwrap()
     }
 
-    /// Chunk bounds over the whole of `source`, with per-row token
-    /// totals computed the same way the caller does.
+    /// Chunk bounds over the whole of `source`.
     fn chunk_bounds_of(source: &str) -> Vec<(usize, usize)> {
         let src_lines: Vec<&str> = source.lines().collect();
         let end = src_lines.len();
-        let total: usize = (1..=end).map(|r| row_tokens(&src_lines, r)).sum();
-        oversize_chunk_bounds(&src_lines, 1, end, total)
+        oversize_chunk_bounds(&src_lines, 1, end)
     }
 
     /// A blank-separated prose paragraph of ~`tokens` tokens.

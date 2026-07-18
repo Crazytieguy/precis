@@ -12,6 +12,7 @@
 
 use std::cell::{OnceCell, RefCell};
 use std::collections::{BTreeSet, HashMap, HashSet};
+use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -36,6 +37,40 @@ pub mod toml;
 pub mod typescript;
 mod workspace;
 pub mod yaml;
+
+/// Greedily partition source-ordered items once a range reaches `target`.
+/// A final range cheaper than `min_tail` folds into its predecessor when
+/// `merge_tail` accepts the combined range. `split_after` uses exclusive
+/// item indices, allowing callers to preserve structural cut boundaries.
+pub(super) fn budget_chunk_ranges(
+    item_count: usize,
+    cost: impl Fn(Range<usize>) -> usize,
+    target: usize,
+    min_tail: usize,
+    split_after: impl Fn(usize) -> bool,
+    merge_tail: impl Fn(Range<usize>) -> bool,
+) -> Vec<Range<usize>> {
+    let mut ranges = Vec::new();
+    let mut start = 0;
+    for end in 1..item_count {
+        if split_after(end) && cost(start..end) >= target {
+            ranges.push(start..end);
+            start = end;
+        }
+    }
+    if start < item_count {
+        let tail = start..item_count;
+        if cost(tail.clone()) < min_tail
+            && let Some(previous) = ranges.last_mut()
+            && merge_tail(previous.start..tail.end)
+        {
+            previous.end = tail.end;
+        } else {
+            ranges.push(tail);
+        }
+    }
+    ranges
+}
 
 /// Walker contract — `Key` is walker-private so the scheduler/render
 /// code stays generic over walkers.

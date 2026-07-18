@@ -45,11 +45,11 @@ use crate::value::{
 };
 
 use super::{
-    BodyPart, ENTRY_BODY_PART_CAP, FileLines, WalkCtx, body_part_value_factor, build_file_spans,
-    build_per_file_content, coalesce_body_parts_tail, collect_doc_comments_above_filtered,
-    dedup_sorted, entry_body_part_value_factor, extend_span, file_depth_factor,
-    file_lines_covered_by, fs::files_with_extension, name_of, push_rows, signature_end_row,
-    single_file_lines_content, statement_block_parts,
+    BodyPart, ENTRY_BODY_PART_CAP, FileLines, WalkCtx, body_part_value_factor, budget_chunk_ranges,
+    build_file_spans, build_per_file_content, coalesce_body_parts_tail,
+    collect_doc_comments_above_filtered, dedup_sorted, entry_body_part_value_factor, extend_span,
+    file_depth_factor, file_lines_covered_by, fs::files_with_extension, name_of, push_rows,
+    signature_end_row, single_file_lines_content, statement_block_parts,
 };
 
 /// Per-run Rust-walker state owned by [`WalkCtx`] — memoizes module
@@ -1471,16 +1471,12 @@ fn crate_doc_chunks(lines: Vec<usize>, source: &str) -> Vec<Vec<usize>> {
             .and_then(super::markdown::fence_marker)
             .is_some()
     };
-    let mut chunks = Vec::new();
-    let mut current: Vec<usize> = Vec::new();
-    let mut chunk_tokens = 0usize;
-    let mut remaining = total;
+    let mut token_prefix = Vec::with_capacity(lines.len() + 1);
+    token_prefix.push(0);
+    let mut legal_split = vec![false; lines.len()];
     let mut open_fence: Option<(char, usize)> = None;
     for (i, &n) in lines.iter().enumerate() {
-        let tokens = doc_row_tokens(n);
-        current.push(n);
-        chunk_tokens += tokens;
-        remaining -= tokens.min(remaining);
+        token_prefix.push(token_prefix[i] + doc_row_tokens(n));
         let t = normalized(n);
         // Marker-matched fence state, same as the markdown splitter:
         // only a delimiter of the same char with at least the opening
@@ -1500,20 +1496,21 @@ fn crate_doc_chunks(lines: Vec<usize>, source: &str) -> Vec<Vec<usize>> {
         if !t.is_empty() {
             continue;
         }
-        // Blank doc line outside a fence: candidate cut after this row.
-        if chunk_tokens < CRATE_DOC_CHUNK_TARGET_TOKENS
-            || remaining < CRATE_DOC_CHUNK_MIN_TAIL_TOKENS
-            || next_nonblank_opens_fence(&lines[i + 1..])
-        {
-            continue;
+        if i + 1 < lines.len() {
+            legal_split[i + 1] = !next_nonblank_opens_fence(&lines[i + 1..]);
         }
-        chunks.push(std::mem::take(&mut current));
-        chunk_tokens = 0;
     }
-    if !current.is_empty() {
-        chunks.push(current);
-    }
-    chunks
+    budget_chunk_ranges(
+        lines.len(),
+        |range| token_prefix[range.end] - token_prefix[range.start],
+        CRATE_DOC_CHUNK_TARGET_TOKENS,
+        CRATE_DOC_CHUNK_MIN_TAIL_TOKENS,
+        |index| legal_split[index],
+        |_| true,
+    )
+    .into_iter()
+    .map(|range| lines[range].to_vec())
+    .collect()
 }
 
 /// Shared rustdoc heading-split — strip hidden doctest lines, then

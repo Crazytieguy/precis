@@ -63,10 +63,10 @@ use super::import_chunks::{
     groups_to_file_lines, node_line_count, push_import_group, should_chunk_import_groups,
 };
 use super::{
-    BodyPart, FileLines, WalkCtx, body_part_value_factor, dedup_sorted, extend_nonblank_rows,
-    extend_span, file_depth_factor, file_lines_covered_by, first_child_of_kind,
-    fs::files_with_extension, name_of, push_rows, signature_end_row, single_file_lines_content,
-    statement_block_parts,
+    BodyPart, FileLines, WalkCtx, body_part_value_factor, budget_chunk_ranges, dedup_sorted,
+    extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
+    first_child_of_kind, fs::files_with_extension, name_of, push_rows, signature_end_row,
+    single_file_lines_content, statement_block_parts,
 };
 
 const VISIBILITY_PUBLIC: f64 = 1.0;
@@ -944,27 +944,14 @@ fn decl_names_chunk_ranges(
         return std::iter::once(0..decls.len()).collect();
     }
 
-    let mut ranges = Vec::new();
-    let mut start = 0;
-    for end in 1..=decls.len() {
-        if range_cost(start..end) >= DECL_NAMES_CHUNK_TARGET_TOKENS {
-            ranges.push(start..end);
-            start = end;
-        }
-    }
-    if start < decls.len() {
-        let tail = start..decls.len();
-        if range_cost(tail.clone()) < DECL_NAMES_TINY_TAIL_TOKENS
-            && let Some(previous) = ranges.last()
-            && range_cost(previous.start..tail.end) <= DECL_NAMES_SPLIT_THRESHOLD_TOKENS
-        {
-            let previous = ranges.pop().expect("last range was just observed");
-            ranges.push(previous.start..tail.end);
-        } else {
-            ranges.push(tail);
-        }
-    }
-    ranges
+    budget_chunk_ranges(
+        decls.len(),
+        range_cost,
+        DECL_NAMES_CHUNK_TARGET_TOKENS,
+        DECL_NAMES_TINY_TAIL_TOKENS,
+        |_| true,
+        |range| range_cost(range) <= DECL_NAMES_SPLIT_THRESHOLD_TOKENS,
+    )
 }
 
 fn collect_methods_by_class<'a>(
