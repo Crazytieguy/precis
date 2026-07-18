@@ -160,34 +160,99 @@ src/
               43→    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
             …
         _checkers.py
+            …
+              81→TypeCheckerCallable: TypeAlias = Callable[
+              82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
+              83→]
+              84→TypeCheckLookupCallback: TypeAlias = Callable[
+              85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
+              86→]
+              88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
+              89→generic_alias_types: tuple[type, ...] = (
+              90→    type(List),
+              91→    type(List[Any]),
+              92→    types.GenericAlias,
+              93→)
+            …
+              96→_missing = object()
+            …
+              99→BINARY_MAGIC_METHODS = {
+            …
+             153→def check_callable(
+             154→    value: Any,
+             155→    origin_type: Any,
+             156→    args: tuple[Any, ...],
+             157→    memo: TypeCheckMemo,
+             158→) -> None:
+            …
+             212→def check_mapping(
+             213→    value: Any,
+             214→    origin_type: Any,
+             215→    args: tuple[Any, ...],
+             216→    memo: TypeCheckMemo,
+             217→) -> None:
+            …
+             247→def check_typed_dict(
+            …
+             305→def check_list(
+            …
+             324→def check_sequence(
+            …
+             343→def check_set(
+            …
+             365→def check_tuple(
+            …
+             423→def check_union(
+            …
+             447→def check_uniontype(
+            …
+             474→def check_class(
+            …
+             536→def check_newtype(
+            …
+             545→def check_instance(
+            …
+             555→def check_typevar(
+            …
+             586→def _is_literal_type(typ: object) -> bool:
+            …
+             590→def check_literal(
+            …
+             623→def check_literal_string(
+            …
+             632→def check_typeguard(
+            …
+             641→def check_none(
+            …
+             651→def check_number(
+            …
+             663→def check_io(
+            …
+             679→def check_signature_compatible(subject: type, protocol: type, attrname: str) -> None:
+            …
+             834→def check_protocol(
+            …
+             885→def check_byteslike(
+            …
+             895→def check_self(
+            …
+             915→def check_paramspec(
+            …
+             924→def check_type_internal(
+             925→    value: Any,
+             926→    annotation: Any,
+             927→    memo: TypeCheckMemo,
+             928→) -> None:
+            …
+            1005→origin_type_checkers: dict[
+            …
+            1061→def builtin_checker_lookup(
+            1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
+            1063→) -> TypeCheckerCallable | None:
+            …
+            1099→def load_plugins() -> None:
+            …
         _config.py
-            …
-              11→T = TypeVar("T")
-              12→
-              13→
-              14→class ForwardRefPolicy(Enum):
-            …
-              25→    ERROR = auto()
-              26→    WARN = auto()
-              27→    IGNORE = auto()
-              30→class CollectionCheckStrategy(Enum):
-            …
-              49→    FIRST_ITEM = auto()
-              50→    ALL_ITEMS = auto()
-              52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
-            …
-              62→@dataclass
-              63→class TypeCheckConfiguration:
-              64→    """
-              65→     You can change Typeguard's behavior with these settings.
-            …
-              98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
-              99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
-             100→    collection_check_strategy: CollectionCheckStrategy = (
-             101→        CollectionCheckStrategy.FIRST_ITEM
-             102→    )
-             103→    debug_instrumentation: bool = False
-             106→global_config = TypeCheckConfiguration()
         _decorators.py
         _exceptions.py
                1→from collections import deque
@@ -204,7 +269,7 @@ src/
               19→class InstrumentationWarning(UserWarning):
               20→    """Emitted when there's a problem with instrumenting a function for type checks."""
               22→    def __init__(self, message: str):
-              23→        super().__init__(message)
+            …
               26→class TypeCheckError(Exception):
               27→    """
               28→    Raised by typeguard's type checkers when a type mismatch is detected.
@@ -225,13 +290,6 @@ src/
             …
               35→    __slots__ = "globals", "locals", "self_type", "config"
               37→    def __init__(
-              38→        self,
-              39→        globals: dict[str, Any],
-              40→        locals: dict[str, Any],
-              41→        *,
-              42→        self_type: type | None = None,
-              43→        config: TypeCheckConfiguration = global_config,
-              44→    ):
             …
         _pytest_plugin.py
             …
@@ -240,20 +298,6 @@ src/
               75→def pytest_configure(config: Config) -> None:
             …
         _suppression.py
-            …
-              15→P = ParamSpec("P")
-              16→T = TypeVar("T")
-              17→
-              18→type_checks_suppressed = 0
-              19→type_checks_suppress_lock = Lock()
-              22→@overload
-              23→def suppress_type_checks(func: Callable[P, T]) -> Callable[P, T]: ...
-              26→@overload
-              27→def suppress_type_checks() -> ContextManager[None]: ...
-              30→def suppress_type_checks(
-              31→    func: Callable[P, T] | None = None,
-              32→) -> Callable[P, T] | ContextManager[None]:
-            …
         _transformer.py
         _utils.py
         py.typed

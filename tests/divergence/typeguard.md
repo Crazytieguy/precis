@@ -1,4 +1,4 @@
-Score(3000)=0.618 I=0.825 C=0.463 ns_rows≤3K=16/45 (reached=7 partial=2 missing=7)
+Score(3000)=0.692 I=0.841 C=0.570 ns_rows≤3K=16/45 (reached=8 partial=2 missing=6)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -41,79 +41,80 @@ Score(3000)=0.618 I=0.825 C=0.463 ns_rows≤3K=16/45 (reached=7 partial=2 missin
 | walker |  | 1986 | 100 | listing of 'tests' |  |  | 0.722 |
 | walker |  | 2000 | 14 | listing of 'tests/mypy' |  |  | 0.739 |
 | walker |  | 2021 | 21 | python imports in src/typeguard/_exceptions.py |  |  | 0.739 |
-| walker |  | 2070 | 49 | python decl names surface in src/typeguard/_exceptions.py |  |  | 0.739 |
-| walker |  | 2070 | 0 | python decl at src/typeguard/_exceptions.py:5 |  |  | 0.739 |
-| walker |  | 2070 | 0 | python decl at src/typeguard/_exceptions.py:12 |  |  | 0.739 |
-| walker |  | 2070 | 0 | python decl at src/typeguard/_exceptions.py:19 |  |  | 0.739 |
-| walker |  | 2070 | 0 | python decl at src/typeguard/_exceptions.py:26 |  |  | 0.739 |
-| walker |  | 2091 | 21 | python decl doc at src/typeguard/_exceptions.py:19 |  |  | 0.739 |
-| walker |  | 2113 | 22 | python decl doc at src/typeguard/_exceptions.py:12 |  |  | 0.739 |
-| walker |  | 2145 | 32 | python decl doc at src/typeguard/_exceptions.py:26 |  |  | 0.740 |
-| walker |  | 2187 | 42 | python decl doc at src/typeguard/_exceptions.py:5 |  |  | 0.740 |
-| ns | 2201 |  | 305 | _checkers.py: every check_* function's signature | 5.1 |  | 0.683 |
-| walker |  | 2268 | 81 | python method sigs in src/typeguard/_exceptions.py |  |  | 0.684 |
-| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:15 |  |  | 0.684 |
-| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:22 |  |  | 0.684 |
-| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:31 |  |  | 0.684 |
-| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:35 |  |  | 0.684 |
-| walker |  | 2268 | 0 | python method at src/typeguard/_exceptions.py:38 |  |  | 0.684 |
-| walker |  | 2277 | 9 | python method body at src/typeguard/_exceptions.py:15 body 16 |  |  | 0.685 |
-| walker |  | 2286 | 9 | python method body at src/typeguard/_exceptions.py:22 body 23 |  |  | 0.685 |
-| walker |  | 2353 | 67 | python decl names surface in src/typeguard/_suppression.py |  |  | 0.685 |
-| walker |  | 2361 | 8 | python decl at src/typeguard/_suppression.py:22 |  |  | 0.685 |
-| walker |  | 2371 | 10 | python decl at src/typeguard/_suppression.py:26 |  |  | 0.685 |
-| walker |  | 2405 | 34 | python decl at src/typeguard/_suppression.py:30 |  |  | 0.685 |
-| walker |  | 2419 | 14 | python decl body at src/typeguard/_suppression.py:26 body 27 |  |  | 0.685 |
-| walker |  | 2439 | 20 | python decl body at src/typeguard/_suppression.py:22 body 23 |  |  | 0.685 |
-| walker |  | 2507 | 68 | python decl names surface in src/typeguard/_config.py |  |  | 0.685 |
-| walker |  | 2507 | 0 | python decl at src/typeguard/_config.py:14 |  |  | 0.685 |
-| walker |  | 2507 | 0 | python decl at src/typeguard/_config.py:30 |  |  | 0.685 |
-| walker |  | 2516 | 9 | python decl at src/typeguard/_config.py:62 |  |  | 0.685 |
-| walker |  | 2537 | 21 | python method sigs in src/typeguard/_config.py |  |  | 0.685 |
-| walker |  | 2537 | 0 | python method at src/typeguard/_config.py:52 |  |  | 0.685 |
-| walker |  | 2557 | 20 | python class body at src/typeguard/_config.py:30 |  |  | 0.685 |
-| walker |  | 2585 | 28 | python class body at src/typeguard/_config.py:14 |  |  | 0.686 |
-| walker |  | 2607 | 22 | python decl doc at src/typeguard/_config.py:62 |  |  | 0.686 |
-| walker |  | 2691 | 84 | python class body at src/typeguard/_config.py:62 |  |  | 0.687 |
-| ns | 2744 |  | 543 | _checkers.py: origin_type_checkers dispatch table | 5.2 | 5.1 | 0.618 |
-| walker |  | 2762 | 71 | python method at src/typeguard/_memo.py:37 |  |  | 0.618 |
-| ns | 3090 |  | 346 | _checkers.py: check_type_internal's dispatch loop | 5.3 | 5.1 | 0.582 |
-| walker |  | 3189 | 427 | python decl names surface in src/typeguard/_checkers.py |  |  | 0.654 |
-| walker |  | 3189 | 0 | python decl at src/typeguard/_checkers.py:586 |  |  | 0.654 |
-| walker |  | 3189 | 0 | python decl at src/typeguard/_checkers.py:679 |  |  | 0.654 |
-| walker |  | 3189 | 0 | python decl at src/typeguard/_checkers.py:1099 |  |  | 0.654 |
-| walker |  | 3213 | 24 | python decl at src/typeguard/_checkers.py:81 |  |  | 0.654 |
-| walker |  | 3240 | 27 | python decl at src/typeguard/_checkers.py:84 |  |  | 0.654 |
-| walker |  | 3277 | 37 | python decl at src/typeguard/_checkers.py:924 |  |  | 0.654 |
-| ns | 3300 |  | 210 | _checkers.py: check_typed_dict's extra_items handling | 5.4 | 5.1 | 0.632 |
-| walker |  | 3315 | 38 | python decl at src/typeguard/_checkers.py:1061 |  |  | 0.632 |
-| walker |  | 3346 | 31 | python decl at src/typeguard/_checkers.py:89 |  |  | 0.632 |
-| walker |  | 3396 | 50 | python decl at src/typeguard/_checkers.py:153 |  |  | 0.632 |
-| walker |  | 3446 | 50 | python decl at src/typeguard/_checkers.py:212 |  |  | 0.632 |
-| walker |  | 3496 | 50 | python decl at src/typeguard/_checkers.py:247 |  |  | 0.632 |
+| ns | 2201 |  | 305 | _checkers.py: every check_* function's signature | 5.1 |  | 0.682 |
+| walker |  | 2276 | 255 | python decl names surface in src/typeguard/_checkers.py |  |  | 0.733 |
+| walker |  | 2325 | 49 | python decl names surface in src/typeguard/_exceptions.py |  |  | 0.734 |
+| walker |  | 2325 | 0 | python decl at src/typeguard/_exceptions.py:5 |  |  | 0.734 |
+| walker |  | 2325 | 0 | python decl at src/typeguard/_exceptions.py:12 |  |  | 0.734 |
+| walker |  | 2325 | 0 | python decl at src/typeguard/_exceptions.py:19 |  |  | 0.734 |
+| walker |  | 2325 | 0 | python decl at src/typeguard/_exceptions.py:26 |  |  | 0.734 |
+| walker |  | 2346 | 21 | python decl doc at src/typeguard/_exceptions.py:19 |  |  | 0.734 |
+| walker |  | 2368 | 22 | python decl doc at src/typeguard/_exceptions.py:12 |  |  | 0.734 |
+| walker |  | 2400 | 32 | python decl doc at src/typeguard/_exceptions.py:26 |  |  | 0.734 |
+| walker |  | 2442 | 42 | python decl doc at src/typeguard/_exceptions.py:5 |  |  | 0.735 |
+| walker |  | 2523 | 81 | python method sigs in src/typeguard/_exceptions.py |  |  | 0.736 |
+| walker |  | 2523 | 0 | python method at src/typeguard/_exceptions.py:15 |  |  | 0.736 |
+| walker |  | 2523 | 0 | python method at src/typeguard/_exceptions.py:22 |  |  | 0.736 |
+| walker |  | 2523 | 0 | python method at src/typeguard/_exceptions.py:31 |  |  | 0.736 |
+| walker |  | 2523 | 0 | python method at src/typeguard/_exceptions.py:35 |  |  | 0.736 |
+| walker |  | 2523 | 0 | python method at src/typeguard/_exceptions.py:38 |  |  | 0.736 |
+| walker |  | 2532 | 9 | python method body at src/typeguard/_exceptions.py:15 body 16 |  |  | 0.736 |
+| walker |  | 2704 | 172 | python decl names surface #1 in src/typeguard/_checkers.py |  |  | 0.770 |
+| walker |  | 2704 | 0 | python decl at src/typeguard/_checkers.py:586 |  |  | 0.770 |
+| walker |  | 2704 | 0 | python decl at src/typeguard/_checkers.py:679 |  |  | 0.770 |
+| walker |  | 2704 | 0 | python decl at src/typeguard/_checkers.py:1099 |  |  | 0.770 |
+| walker |  | 2728 | 24 | python decl at src/typeguard/_checkers.py:81 |  |  | 0.770 |
+| ns | 2744 |  | 543 | _checkers.py: origin_type_checkers dispatch table | 5.2 | 5.1 | 0.692 |
+| walker |  | 2755 | 27 | python decl at src/typeguard/_checkers.py:84 |  |  | 0.692 |
+| walker |  | 2792 | 37 | python decl at src/typeguard/_checkers.py:924 |  |  | 0.692 |
+| walker |  | 2830 | 38 | python decl at src/typeguard/_checkers.py:1061 |  |  | 0.692 |
+| walker |  | 2861 | 31 | python decl at src/typeguard/_checkers.py:89 |  |  | 0.692 |
+| walker |  | 2911 | 50 | python decl at src/typeguard/_checkers.py:153 |  |  | 0.692 |
+| walker |  | 2961 | 50 | python decl at src/typeguard/_checkers.py:212 |  |  | 0.692 |
+| walker |  | 3011 | 50 | python decl at src/typeguard/_checkers.py:247 |  |  | 0.692 |
+| walker |  | 3061 | 50 | python decl at src/typeguard/_checkers.py:305 |  |  | 0.692 |
+| ns | 3090 |  | 346 | _checkers.py: check_type_internal's dispatch loop | 5.3 | 5.1 | 0.651 |
+| walker |  | 3111 | 50 | python decl at src/typeguard/_checkers.py:324 |  |  | 0.651 |
+| walker |  | 3161 | 50 | python decl at src/typeguard/_checkers.py:343 |  |  | 0.651 |
+| walker |  | 3211 | 50 | python decl at src/typeguard/_checkers.py:423 |  |  | 0.652 |
+| walker |  | 3261 | 50 | python decl at src/typeguard/_checkers.py:447 |  |  | 0.652 |
+| ns | 3300 |  | 210 | _checkers.py: check_typed_dict's extra_items handling | 5.4 | 5.1 | 0.630 |
+| walker |  | 3311 | 50 | python decl at src/typeguard/_checkers.py:474 |  |  | 0.630 |
+| walker |  | 3361 | 50 | python decl at src/typeguard/_checkers.py:536 |  |  | 0.630 |
+| walker |  | 3411 | 50 | python decl at src/typeguard/_checkers.py:545 |  |  | 0.630 |
+| walker |  | 3461 | 50 | python decl at src/typeguard/_checkers.py:590 |  |  | 0.630 |
+| walker |  | 3511 | 50 | python decl at src/typeguard/_checkers.py:623 |  |  | 0.630 |
 | ns | 3536 |  | 236 | _checkers.py: check_union (exemplar checker body) | 5.5 | 5.1 | 0.607 |
-| walker |  | 3546 | 50 | python decl at src/typeguard/_checkers.py:305 |  |  | 0.607 |
-| walker |  | 3596 | 50 | python decl at src/typeguard/_checkers.py:324 |  |  | 0.607 |
-| walker |  | 3646 | 50 | python decl at src/typeguard/_checkers.py:343 |  |  | 0.607 |
-| walker |  | 3696 | 50 | python decl at src/typeguard/_checkers.py:423 |  |  | 0.609 |
-| walker |  | 3746 | 50 | python decl at src/typeguard/_checkers.py:447 |  |  | 0.609 |
-| walker |  | 3796 | 50 | python decl at src/typeguard/_checkers.py:474 |  |  | 0.609 |
-| ns | 3816 |  | 280 | _config.py: policy enums (members + iterate_samples) | 6.1 |  | 0.587 |
-| walker |  | 3846 | 50 | python decl at src/typeguard/_checkers.py:536 |  |  | 0.587 |
-| walker |  | 3896 | 50 | python decl at src/typeguard/_checkers.py:545 |  |  | 0.587 |
-| walker |  | 3946 | 50 | python decl at src/typeguard/_checkers.py:590 |  |  | 0.587 |
-| walker |  | 3996 | 50 | python decl at src/typeguard/_checkers.py:623 |  |  | 0.587 |
-| walker |  | 4046 | 50 | python decl at src/typeguard/_checkers.py:632 |  |  | 0.587 |
-| walker |  | 4096 | 50 | python decl at src/typeguard/_checkers.py:641 |  |  | 0.587 |
-| walker |  | 4146 | 50 | python decl at src/typeguard/_checkers.py:651 |  |  | 0.587 |
-| walker |  | 4196 | 50 | python decl at src/typeguard/_checkers.py:663 |  |  | 0.587 |
-| ns | 4210 |  | 394 | _config.py: TypeCheckConfiguration (incl. docstring defaults) | 6.2 | 6.1 | 0.561 |
-| walker |  | 4246 | 50 | python decl at src/typeguard/_checkers.py:834 |  |  | 0.561 |
-| walker |  | 4296 | 50 | python decl at src/typeguard/_checkers.py:885 |  |  | 0.561 |
-| walker |  | 4346 | 50 | python decl at src/typeguard/_checkers.py:895 |  |  | 0.561 |
-| walker |  | 4396 | 50 | python decl at src/typeguard/_checkers.py:915 |  |  | 0.561 |
-| walker |  | 4459 | 63 | python decl at src/typeguard/_checkers.py:365 |  |  | 0.561 |
-| walker |  | 4528 | 69 | python decl at src/typeguard/_checkers.py:555 |  |  | 0.561 |
+| walker |  | 3561 | 50 | python decl at src/typeguard/_checkers.py:632 |  |  | 0.607 |
+| walker |  | 3611 | 50 | python decl at src/typeguard/_checkers.py:641 |  |  | 0.607 |
+| walker |  | 3661 | 50 | python decl at src/typeguard/_checkers.py:651 |  |  | 0.607 |
+| walker |  | 3711 | 50 | python decl at src/typeguard/_checkers.py:663 |  |  | 0.607 |
+| walker |  | 3761 | 50 | python decl at src/typeguard/_checkers.py:834 |  |  | 0.607 |
+| walker |  | 3811 | 50 | python decl at src/typeguard/_checkers.py:885 |  |  | 0.607 |
+| ns | 3816 |  | 280 | _config.py: policy enums (members + iterate_samples) | 6.1 |  | 0.577 |
+| walker |  | 3861 | 50 | python decl at src/typeguard/_checkers.py:895 |  |  | 0.577 |
+| walker |  | 3911 | 50 | python decl at src/typeguard/_checkers.py:915 |  |  | 0.577 |
+| walker |  | 3974 | 63 | python decl at src/typeguard/_checkers.py:365 |  |  | 0.577 |
+| walker |  | 4043 | 69 | python decl at src/typeguard/_checkers.py:555 |  |  | 0.577 |
+| walker |  | 4052 | 9 | python method body at src/typeguard/_exceptions.py:22 body 23 |  |  | 0.577 |
+| walker |  | 4119 | 67 | python decl names surface in src/typeguard/_suppression.py |  |  | 0.577 |
+| walker |  | 4127 | 8 | python decl at src/typeguard/_suppression.py:22 |  |  | 0.577 |
+| walker |  | 4137 | 10 | python decl at src/typeguard/_suppression.py:26 |  |  | 0.577 |
+| walker |  | 4171 | 34 | python decl at src/typeguard/_suppression.py:30 |  |  | 0.577 |
+| walker |  | 4185 | 14 | python decl body at src/typeguard/_suppression.py:26 body 27 |  |  | 0.577 |
+| walker |  | 4205 | 20 | python decl body at src/typeguard/_suppression.py:22 body 23 |  |  | 0.577 |
+| ns | 4210 |  | 394 | _config.py: TypeCheckConfiguration (incl. docstring defaults) | 6.2 | 6.1 | 0.544 |
+| walker |  | 4273 | 68 | python decl names surface in src/typeguard/_config.py |  |  | 0.545 |
+| walker |  | 4273 | 0 | python decl at src/typeguard/_config.py:14 |  |  | 0.545 |
+| walker |  | 4273 | 0 | python decl at src/typeguard/_config.py:30 |  |  | 0.545 |
+| walker |  | 4282 | 9 | python decl at src/typeguard/_config.py:62 |  |  | 0.545 |
+| walker |  | 4303 | 21 | python method sigs in src/typeguard/_config.py |  |  | 0.547 |
+| walker |  | 4303 | 0 | python method at src/typeguard/_config.py:52 |  |  | 0.547 |
+| walker |  | 4323 | 20 | python class body at src/typeguard/_config.py:30 |  |  | 0.549 |
+| walker |  | 4351 | 28 | python class body at src/typeguard/_config.py:14 |  |  | 0.552 |
+| walker |  | 4373 | 22 | python decl doc at src/typeguard/_config.py:62 |  |  | 0.553 |
+| walker |  | 4457 | 84 | python class body at src/typeguard/_config.py:62 |  |  | 0.560 |
+| walker |  | 4528 | 71 | python method at src/typeguard/_memo.py:37 |  |  | 0.561 |
 | ns | 4646 |  | 436 | _exceptions.py (full) | 7.1 |  | 0.557 |
 | walker |  | 4700 | 172 | python decl names surface in src/typeguard/_transformer.py |  |  | 0.557 |
 | walker |  | 4700 | 0 | python decl at src/typeguard/_transformer.py:285 |  |  | 0.557 |

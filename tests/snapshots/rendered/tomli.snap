@@ -66,7 +66,9 @@ README.md
      157→- pure Python with zero dependencies
     …
      161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
-    …
+     162→- 100% spec compliant: passes all tests in
+     163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
+     164→  test suite
      165→- thoroughly tested: 100% branch coverage
      167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
      169→No.
@@ -89,6 +91,8 @@ README.md
 benchmark/
     LICENSE
     README.md
+           1→# Benchmark
+        …
     data.toml
     requirements.txt
     run.py
@@ -190,8 +194,6 @@ src/
              415→) -> Pos:
             …
              447→def parse_key_value_pair(
-             448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
-             449→) -> tuple[Pos, Key, Any]:
             …
              463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
             …

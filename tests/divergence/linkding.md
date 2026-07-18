@@ -1,4 +1,4 @@
-Score(3000)=0.657 I=0.682 C=0.633 ns_rows≤3K=17/60 (reached=8 partial=1 missing=8)
+Score(3000)=0.656 I=0.681 C=0.633 ns_rows≤3K=17/60 (reached=8 partial=1 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -58,331 +58,284 @@ Score(3000)=0.657 I=0.682 C=0.633 ns_rows≤3K=17/60 (reached=8 partial=1 missin
 | walker |  | 1252 | 69 | listing of 'bookmarks/styles' |  |  | 0.514 |
 | walker |  | 1287 | 35 | listing of 'docs' |  |  | 0.515 |
 | ns | 1298 |  | 119 | bookmarks/ package layout | 2.1 |  | 0.581 |
-| walker |  | 1328 | 41 | listing of 'bookmarks/templates/shared' |  |  | 0.585 |
-| walker |  | 1337 | 9 | python imports in bookmarks/apps.py |  |  | 0.585 |
-| walker |  | 1368 | 31 | python decl names surface in bookmarks/urls.py |  |  | 0.585 |
-| walker |  | 1400 | 32 | python class body at bookmarks/type_defs.py:11 |  |  | 0.585 |
-| walker |  | 1417 | 17 | listing of 'docs/src' |  |  | 0.586 |
-| walker |  | 1424 | 7 | listing of 'docs/src/content' |  |  | 0.586 |
-| walker |  | 1436 | 12 | python decl names surface in bookmarks/views/health.py |  |  | 0.586 |
-| walker |  | 1436 | 0 | python decl at bookmarks/views/health.py:7 |  |  | 0.586 |
-| walker |  | 1448 | 12 | python decl names surface in bookmarks/views/manifest.py |  |  | 0.586 |
-| walker |  | 1448 | 0 | python decl at bookmarks/views/manifest.py:5 |  |  | 0.586 |
-| walker |  | 1460 | 12 | python decl names surface in bookmarks/views/root.py |  |  | 0.586 |
-| walker |  | 1477 | 17 | python decl at bookmarks/views/root.py:7 |  |  | 0.586 |
-| walker |  | 1489 | 12 | python decl names surface in bookmarks/views/toasts.py |  |  | 0.586 |
-| walker |  | 1497 | 8 | python decl at bookmarks/views/toasts.py:9 |  |  | 0.586 |
-| walker |  | 1543 | 46 | listing of 'bookmarks/management/commands' |  |  | 0.593 |
-| ns | 1557 |  | 259 | bookmarks/ Python subpackage listings: api, services, views, management/commands, settings, templatetags | 2.2 |  | 0.647 |
-| walker |  | 1587 | 44 | python decl at bookmarks/signals.py:6 |  |  | 0.647 |
-| ns | 1662 |  | 105 | Frontend directory listings | 2.3 |  | 0.619 |
-| walker |  | 1679 | 92 | listing of 'bookmarks/static' |  |  | 0.619 |
-| walker |  | 1684 | 5 | listing of 'bookmarks/static/vendor' |  |  | 0.619 |
-| walker |  | 1848 | 164 | plaintext config .env.sample |  |  | 0.649 |
-| walker |  | 1862 | 14 | python decl names surface in bookmarks/views/opensearch.py |  |  | 0.649 |
-| walker |  | 1862 | 0 | python decl at bookmarks/views/opensearch.py:5 |  |  | 0.649 |
-| walker |  | 1922 | 60 | listing of 'bookmarks/frontend/components' |  |  | 0.696 |
-| ns | 1935 |  | 273 | Template and stylesheet directory listings | 2.4 |  | 0.667 |
-| walker |  | 1938 | 16 | python decl names surface in bookmarks/api/auth.py |  |  | 0.667 |
-| walker |  | 1938 | 0 | python decl at bookmarks/api/auth.py:8 |  |  | 0.667 |
-| walker |  | 1951 | 13 | python method sigs in bookmarks/api/auth.py |  |  | 0.667 |
-| walker |  | 1951 | 0 | python method at bookmarks/api/auth.py:17 |  |  | 0.667 |
-| walker |  | 1967 | 16 | python decl names surface in bookmarks/services/wayback.py |  |  | 0.667 |
-| walker |  | 1991 | 24 | python decl at bookmarks/services/wayback.py:6 |  |  | 0.667 |
-| ns | 2067 |  | 132 | docs/ Astro site directory listing | 2.5 |  | 0.639 |
-| ns | 2136 |  | 69 | Docker, CI workflow, and brand-asset listings | 2.6 |  | 0.644 |
-| walker |  | 2193 | 202 | [dependencies] in pyproject.toml |  |  | 0.662 |
-| walker |  | 2262 | 69 | listing of 'bookmarks/templates/bookmarks' |  |  | 0.708 |
-| walker |  | 2279 | 17 | listing of 'bookmarks/templates/bookmarks/details' |  |  | 0.708 |
-| walker |  | 2316 | 37 | python imports in manage.py |  |  | 0.708 |
-| walker |  | 2677 | 361 | plaintext config Makefile |  |  | 0.759 |
-| walker |  | 2694 | 17 | README.md section #11 |  |  | 0.759 |
-| ns | 2704 |  | 568 | Unit-test directory listing: full (79 files) | 2.7 |  | 0.671 |
-| walker |  | 2711 | 17 | README.md section #20 |  |  | 0.671 |
-| walker |  | 2728 | 17 | python imports in bookmarks/context_processors.py |  |  | 0.671 |
-| walker |  | 2778 | 50 | listing of 'scripts' |  |  | 0.671 |
-| ns | 2797 |  | 93 | Migration filenames: initial + most recent 8 (of 54 total) | 2.8 |  | 0.663 |
-| walker |  | 2835 | 57 | python decl names surface in bookmarks/middlewares.py |  |  | 0.663 |
-| walker |  | 2835 | 0 | python decl at bookmarks/middlewares.py:7 |  |  | 0.663 |
-| walker |  | 2835 | 0 | python decl at bookmarks/middlewares.py:17 |  |  | 0.663 |
-| walker |  | 2848 | 13 | python class body at bookmarks/middlewares.py:7 |  |  | 0.663 |
-| walker |  | 2877 | 29 | python method sigs in bookmarks/middlewares.py |  |  | 0.663 |
-| walker |  | 2877 | 0 | python method at bookmarks/middlewares.py:18 |  |  | 0.663 |
-| ns | 2880 |  | 83 | Tag model | 3.1 |  | 0.657 |
-| walker |  | 2889 | 12 | python method at bookmarks/middlewares.py:21 |  |  | 0.657 |
-| walker |  | 2899 | 10 | python method body at bookmarks/middlewares.py:18 body 19 |  |  | 0.657 |
-| walker |  | 2917 | 18 | python imports in bookmarks/validators.py |  |  | 0.657 |
+| walker |  | 1557 | 270 | python decl names surface in bookmarks/settings/base.py |  |  | 0.597 |
+| ns | 1557 |  | 259 | bookmarks/ Python subpackage listings: api, services, views, management/commands, settings, templatetags | 2.2 |  | 0.597 |
+| walker |  | 1598 | 41 | listing of 'bookmarks/templates/shared' |  |  | 0.601 |
+| walker |  | 1607 | 9 | python imports in bookmarks/apps.py |  |  | 0.601 |
+| walker |  | 1638 | 31 | python decl names surface in bookmarks/urls.py |  |  | 0.601 |
+| ns | 1662 |  | 105 | Frontend directory listings | 2.3 |  | 0.576 |
+| walker |  | 1670 | 32 | python class body at bookmarks/type_defs.py:11 |  |  | 0.576 |
+| walker |  | 1687 | 17 | listing of 'docs/src' |  |  | 0.577 |
+| walker |  | 1694 | 7 | listing of 'docs/src/content' |  |  | 0.578 |
+| walker |  | 1706 | 12 | python decl names surface in bookmarks/views/health.py |  |  | 0.578 |
+| walker |  | 1706 | 0 | python decl at bookmarks/views/health.py:7 |  |  | 0.578 |
+| walker |  | 1718 | 12 | python decl names surface in bookmarks/views/manifest.py |  |  | 0.578 |
+| walker |  | 1718 | 0 | python decl at bookmarks/views/manifest.py:5 |  |  | 0.578 |
+| walker |  | 1730 | 12 | python decl names surface in bookmarks/views/root.py |  |  | 0.578 |
+| walker |  | 1747 | 17 | python decl at bookmarks/views/root.py:7 |  |  | 0.578 |
+| walker |  | 1759 | 12 | python decl names surface in bookmarks/views/toasts.py |  |  | 0.578 |
+| walker |  | 1767 | 8 | python decl at bookmarks/views/toasts.py:9 |  |  | 0.578 |
+| walker |  | 1813 | 46 | listing of 'bookmarks/management/commands' |  |  | 0.619 |
+| walker |  | 1857 | 44 | python decl at bookmarks/signals.py:6 |  |  | 0.619 |
+| ns | 1935 |  | 273 | Template and stylesheet directory listings | 2.4 |  | 0.604 |
+| walker |  | 1949 | 92 | listing of 'bookmarks/static' |  |  | 0.604 |
+| walker |  | 1954 | 5 | listing of 'bookmarks/static/vendor' |  |  | 0.604 |
+| ns | 2067 |  | 132 | docs/ Astro site directory listing | 2.5 |  | 0.581 |
+| walker |  | 2118 | 164 | plaintext config .env.sample |  |  | 0.605 |
+| walker |  | 2132 | 14 | python decl names surface in bookmarks/views/opensearch.py |  |  | 0.605 |
+| walker |  | 2132 | 0 | python decl at bookmarks/views/opensearch.py:5 |  |  | 0.605 |
+| ns | 2136 |  | 69 | Docker, CI workflow, and brand-asset listings | 2.6 |  | 0.611 |
+| walker |  | 2192 | 60 | listing of 'bookmarks/frontend/components' |  |  | 0.644 |
+| walker |  | 2208 | 16 | python decl names surface in bookmarks/api/auth.py |  |  | 0.644 |
+| walker |  | 2208 | 0 | python decl at bookmarks/api/auth.py:8 |  |  | 0.644 |
+| walker |  | 2221 | 13 | python method sigs in bookmarks/api/auth.py |  |  | 0.644 |
+| walker |  | 2221 | 0 | python method at bookmarks/api/auth.py:17 |  |  | 0.644 |
+| walker |  | 2237 | 16 | python decl names surface in bookmarks/services/wayback.py |  |  | 0.644 |
+| walker |  | 2261 | 24 | python decl at bookmarks/services/wayback.py:6 |  |  | 0.644 |
+| walker |  | 2463 | 202 | [dependencies] in pyproject.toml |  |  | 0.662 |
+| walker |  | 2532 | 69 | listing of 'bookmarks/templates/bookmarks' |  |  | 0.708 |
+| walker |  | 2549 | 17 | listing of 'bookmarks/templates/bookmarks/details' |  |  | 0.708 |
+| walker |  | 2586 | 37 | python imports in manage.py |  |  | 0.708 |
+| ns | 2704 |  | 568 | Unit-test directory listing: full (79 files) | 2.7 |  | 0.626 |
+| ns | 2797 |  | 93 | Migration filenames: initial + most recent 8 (of 54 total) | 2.8 |  | 0.618 |
+| ns | 2880 |  | 83 | Tag model | 3.1 |  | 0.612 |
+| walker |  | 2947 | 361 | plaintext config Makefile |  |  | 0.656 |
+| walker |  | 2964 | 17 | README.md section #11 |  |  | 0.656 |
+| walker |  | 2981 | 17 | README.md section #20 |  |  | 0.656 |
 | ns | 3059 |  | 179 | Bookmark model: field declarations head | 3.2 |  | 0.647 |
 | ns | 3169 |  | 110 | BookmarkAsset model: type/content-type/status constants | 3.3 |  | 0.638 |
-| walker |  | 3277 | 360 | README.md section #0 |  |  | 0.721 |
-| walker |  | 3339 | 62 | README.md section #3 |  |  | 0.721 |
-| walker |  | 3352 | 13 | python decl names surface in bookmarks/management/commands/backup.py |  |  | 0.721 |
-| walker |  | 3352 | 0 | python decl at bookmarks/management/commands/backup.py:7 |  |  | 0.721 |
-| walker |  | 3369 | 17 | python class body at bookmarks/management/commands/backup.py:7 |  |  | 0.721 |
-| walker |  | 3382 | 13 | python decl names surface in bookmarks/management/commands/ensure_superuser.py |  |  | 0.721 |
-| walker |  | 3382 | 0 | python decl at bookmarks/management/commands/ensure_superuser.py:5 |  |  | 0.721 |
-| walker |  | 3395 | 13 | python decl names surface in bookmarks/management/commands/full_backup.py |  |  | 0.721 |
-| walker |  | 3395 | 0 | python decl at bookmarks/management/commands/full_backup.py:9 |  |  | 0.721 |
-| walker |  | 3413 | 18 | python class body at bookmarks/management/commands/full_backup.py:9 |  |  | 0.721 |
-| walker |  | 3426 | 13 | python decl names surface in bookmarks/management/commands/import_netscape.py |  |  | 0.721 |
-| walker |  | 3426 | 0 | python decl at bookmarks/management/commands/import_netscape.py:7 |  |  | 0.721 |
-| ns | 3435 |  | 266 | BookmarkBundle model: filter fields head | 3.4 |  | 0.702 |
-| walker |  | 3441 | 15 | python class body at bookmarks/management/commands/import_netscape.py:7 |  |  | 0.702 |
-| walker |  | 3454 | 13 | python decl names surface in bookmarks/management/commands/migrate_tasks.py |  |  | 0.702 |
-| walker |  | 3454 | 0 | python decl at bookmarks/management/commands/migrate_tasks.py:9 |  |  | 0.702 |
-| walker |  | 3471 | 17 | python method sigs in bookmarks/management/commands/migrate_tasks.py |  |  | 0.702 |
-| walker |  | 3471 | 0 | python method at bookmarks/management/commands/migrate_tasks.py:12 |  |  | 0.702 |
-| walker |  | 3489 | 18 | python class body at bookmarks/management/commands/migrate_tasks.py:9 |  |  | 0.702 |
-| walker |  | 3571 | 82 | [package] in pyproject.toml |  |  | 0.723 |
-| walker |  | 3585 | 14 | python method body at bookmarks/apps.py:7 body 10 |  |  | 0.723 |
-| walker |  | 3672 | 87 | listing of 'bookmarks/styles/theme' |  |  | 0.723 |
-| ns | 3675 |  | 240 | BookmarkSearch: sort/filter constants and param list | 3.5 |  | 0.702 |
-| walker |  | 3705 | 33 | python class body at bookmarks/api/auth.py:8 |  |  | 0.702 |
-| walker |  | 3725 | 20 | python class body at bookmarks/management/commands/ensure_superuser.py:5 |  |  | 0.702 |
-| walker |  | 3776 | 51 | python decl doc at bookmarks/validators.py:5 |  |  | 0.702 |
-| walker |  | 3796 | 20 | README.md section #16 |  |  | 0.702 |
-| walker |  | 3825 | 29 | python method sigs in bookmarks/management/commands/backup.py |  |  | 0.702 |
-| walker |  | 3825 | 0 | python method at bookmarks/management/commands/backup.py:10 |  |  | 0.702 |
-| walker |  | 3825 | 0 | python method at bookmarks/management/commands/backup.py:13 |  |  | 0.702 |
-| walker |  | 3854 | 29 | python method sigs in bookmarks/management/commands/ensure_superuser.py |  |  | 0.702 |
-| walker |  | 3854 | 0 | python method at bookmarks/management/commands/ensure_superuser.py:8 |  |  | 0.702 |
-| walker |  | 3854 | 0 | python method at bookmarks/management/commands/ensure_superuser.py:13 |  |  | 0.702 |
-| walker |  | 3883 | 29 | python method sigs in bookmarks/management/commands/import_netscape.py |  |  | 0.702 |
-| walker |  | 3883 | 0 | python method at bookmarks/management/commands/import_netscape.py:10 |  |  | 0.702 |
-| walker |  | 3883 | 0 | python method at bookmarks/management/commands/import_netscape.py:16 |  |  | 0.702 |
-| ns | 3895 |  | 220 | UserProfile: settings-choice catalog head | 3.6 |  | 0.688 |
-| walker |  | 3955 | 72 | README.md section #4 |  |  | 0.688 |
-| walker |  | 3968 | 13 | python imports in bookmarks/views/custom_css.py |  |  | 0.688 |
-| walker |  | 4062 | 94 | python decl names surface in bookmarks/widgets.py |  |  | 0.688 |
-| walker |  | 4062 | 0 | python decl at bookmarks/widgets.py:7 |  |  | 0.688 |
-| walker |  | 4062 | 0 | python decl at bookmarks/widgets.py:11 |  |  | 0.688 |
-| walker |  | 4062 | 0 | python decl at bookmarks/widgets.py:19 |  |  | 0.688 |
-| walker |  | 4062 | 0 | python decl at bookmarks/widgets.py:27 |  |  | 0.688 |
-| walker |  | 4062 | 0 | python decl at bookmarks/widgets.py:35 |  |  | 0.688 |
-| walker |  | 4062 | 0 | python decl at bookmarks/widgets.py:43 |  |  | 0.688 |
-| walker |  | 4062 | 0 | python decl at bookmarks/widgets.py:63 |  |  | 0.688 |
-| walker |  | 4074 | 12 | python class body at bookmarks/widgets.py:7 |  |  | 0.688 |
-| ns | 4095 |  | 200 | Toast and FeedToken models | 3.7 |  | 0.674 |
-| walker |  | 4200 | 126 | python method sigs in bookmarks/widgets.py |  |  | 0.674 |
-| walker |  | 4200 | 0 | python method at bookmarks/widgets.py:12 |  |  | 0.674 |
-| walker |  | 4200 | 0 | python method at bookmarks/widgets.py:20 |  |  | 0.674 |
-| walker |  | 4200 | 0 | python method at bookmarks/widgets.py:28 |  |  | 0.674 |
-| walker |  | 4200 | 0 | python method at bookmarks/widgets.py:36 |  |  | 0.674 |
-| walker |  | 4200 | 0 | python method at bookmarks/widgets.py:44 |  |  | 0.674 |
-| walker |  | 4200 | 0 | python method at bookmarks/widgets.py:48 |  |  | 0.674 |
-| walker |  | 4200 | 0 | python method at bookmarks/widgets.py:64 |  |  | 0.674 |
+| walker |  | 3249 | 268 | python decl names surface #1 in bookmarks/settings/base.py |  |  | 0.638 |
+| walker |  | 3266 | 17 | python imports in bookmarks/context_processors.py |  |  | 0.638 |
+| walker |  | 3316 | 50 | listing of 'scripts' |  |  | 0.638 |
+| walker |  | 3373 | 57 | python decl names surface in bookmarks/middlewares.py |  |  | 0.638 |
+| walker |  | 3373 | 0 | python decl at bookmarks/middlewares.py:7 |  |  | 0.638 |
+| walker |  | 3373 | 0 | python decl at bookmarks/middlewares.py:17 |  |  | 0.638 |
+| walker |  | 3386 | 13 | python class body at bookmarks/middlewares.py:7 |  |  | 0.638 |
+| walker |  | 3415 | 29 | python method sigs in bookmarks/middlewares.py |  |  | 0.638 |
+| walker |  | 3415 | 0 | python method at bookmarks/middlewares.py:18 |  |  | 0.638 |
+| walker |  | 3427 | 12 | python method at bookmarks/middlewares.py:21 |  |  | 0.638 |
+| ns | 3435 |  | 266 | BookmarkBundle model: filter fields head | 3.4 |  | 0.621 |
+| walker |  | 3437 | 10 | python method body at bookmarks/middlewares.py:18 body 19 |  |  | 0.621 |
+| walker |  | 3455 | 18 | python imports in bookmarks/validators.py |  |  | 0.621 |
+| ns | 3675 |  | 240 | BookmarkSearch: sort/filter constants and param list | 3.5 |  | 0.604 |
+| walker |  | 3815 | 360 | README.md section #0 |  |  | 0.682 |
+| walker |  | 3877 | 62 | README.md section #3 |  |  | 0.682 |
+| walker |  | 3890 | 13 | python decl names surface in bookmarks/management/commands/backup.py |  |  | 0.682 |
+| walker |  | 3890 | 0 | python decl at bookmarks/management/commands/backup.py:7 |  |  | 0.682 |
+| ns | 3895 |  | 220 | UserProfile: settings-choice catalog head | 3.6 |  | 0.668 |
+| walker |  | 3907 | 17 | python class body at bookmarks/management/commands/backup.py:7 |  |  | 0.668 |
+| walker |  | 3920 | 13 | python decl names surface in bookmarks/management/commands/ensure_superuser.py |  |  | 0.668 |
+| walker |  | 3920 | 0 | python decl at bookmarks/management/commands/ensure_superuser.py:5 |  |  | 0.668 |
+| walker |  | 3933 | 13 | python decl names surface in bookmarks/management/commands/full_backup.py |  |  | 0.668 |
+| walker |  | 3933 | 0 | python decl at bookmarks/management/commands/full_backup.py:9 |  |  | 0.668 |
+| walker |  | 3951 | 18 | python class body at bookmarks/management/commands/full_backup.py:9 |  |  | 0.668 |
+| walker |  | 3964 | 13 | python decl names surface in bookmarks/management/commands/import_netscape.py |  |  | 0.668 |
+| walker |  | 3964 | 0 | python decl at bookmarks/management/commands/import_netscape.py:7 |  |  | 0.668 |
+| walker |  | 3979 | 15 | python class body at bookmarks/management/commands/import_netscape.py:7 |  |  | 0.668 |
+| walker |  | 3992 | 13 | python decl names surface in bookmarks/management/commands/migrate_tasks.py |  |  | 0.668 |
+| walker |  | 3992 | 0 | python decl at bookmarks/management/commands/migrate_tasks.py:9 |  |  | 0.668 |
+| walker |  | 4009 | 17 | python method sigs in bookmarks/management/commands/migrate_tasks.py |  |  | 0.668 |
+| walker |  | 4009 | 0 | python method at bookmarks/management/commands/migrate_tasks.py:12 |  |  | 0.668 |
+| walker |  | 4027 | 18 | python class body at bookmarks/management/commands/migrate_tasks.py:9 |  |  | 0.668 |
+| ns | 4095 |  | 200 | Toast and FeedToken models | 3.7 |  | 0.654 |
+| walker |  | 4109 | 82 | [package] in pyproject.toml |  |  | 0.674 |
+| walker |  | 4123 | 14 | python method body at bookmarks/apps.py:7 body 10 |  |  | 0.674 |
 | ns | 4204 |  | 109 | ApiToken model: field declarations | 3.8 |  | 0.667 |
-| walker |  | 4213 | 13 | python method at bookmarks/widgets.py:67 |  |  | 0.667 |
-| walker |  | 4222 | 9 | python method body at bookmarks/widgets.py:64 body 65 |  |  | 0.667 |
-| walker |  | 4317 | 95 | python decl names surface in bookmarks/feeds.py |  |  | 0.667 |
-| walker |  | 4317 | 0 | python decl at bookmarks/feeds.py:21 |  |  | 0.667 |
-| walker |  | 4317 | 0 | python decl at bookmarks/feeds.py:31 |  |  | 0.667 |
-| walker |  | 4317 | 0 | python decl at bookmarks/feeds.py:73 |  |  | 0.667 |
-| walker |  | 4317 | 0 | python decl at bookmarks/feeds.py:84 |  |  | 0.667 |
-| walker |  | 4317 | 0 | python decl at bookmarks/feeds.py:97 |  |  | 0.667 |
-| walker |  | 4317 | 0 | python decl at bookmarks/feeds.py:110 |  |  | 0.667 |
-| walker |  | 4325 | 8 | python decl at bookmarks/feeds.py:14 |  |  | 0.667 |
-| walker |  | 4347 | 22 | python class body at bookmarks/feeds.py:73 |  |  | 0.667 |
-| walker |  | 4370 | 23 | python class body at bookmarks/feeds.py:84 |  |  | 0.667 |
-| walker |  | 4393 | 23 | python class body at bookmarks/feeds.py:97 |  |  | 0.667 |
-| walker |  | 4418 | 25 | python class body at bookmarks/feeds.py:110 |  |  | 0.667 |
+| walker |  | 4210 | 87 | listing of 'bookmarks/styles/theme' |  |  | 0.667 |
+| walker |  | 4243 | 33 | python class body at bookmarks/api/auth.py:8 |  |  | 0.667 |
+| walker |  | 4263 | 20 | python class body at bookmarks/management/commands/ensure_superuser.py:5 |  |  | 0.667 |
+| walker |  | 4314 | 51 | python decl doc at bookmarks/validators.py:5 |  |  | 0.667 |
+| walker |  | 4334 | 20 | README.md section #16 |  |  | 0.667 |
+| walker |  | 4363 | 29 | python method sigs in bookmarks/management/commands/backup.py |  |  | 0.667 |
+| walker |  | 4363 | 0 | python method at bookmarks/management/commands/backup.py:10 |  |  | 0.667 |
+| walker |  | 4363 | 0 | python method at bookmarks/management/commands/backup.py:13 |  |  | 0.667 |
+| walker |  | 4392 | 29 | python method sigs in bookmarks/management/commands/ensure_superuser.py |  |  | 0.667 |
+| walker |  | 4392 | 0 | python method at bookmarks/management/commands/ensure_superuser.py:8 |  |  | 0.667 |
+| walker |  | 4392 | 0 | python method at bookmarks/management/commands/ensure_superuser.py:13 |  |  | 0.667 |
+| walker |  | 4421 | 29 | python method sigs in bookmarks/management/commands/import_netscape.py |  |  | 0.655 |
+| walker |  | 4421 | 0 | python method at bookmarks/management/commands/import_netscape.py:10 |  |  | 0.655 |
+| walker |  | 4421 | 0 | python method at bookmarks/management/commands/import_netscape.py:16 |  |  | 0.655 |
 | ns | 4421 |  | 217 | GlobalSettings model: superuser-only instance settings | 3.9 |  | 0.655 |
-| walker |  | 4452 | 34 | python class body at bookmarks/feeds.py:14 |  |  | 0.655 |
-| ns | 4638 |  | 217 | bookmarks/urls.py: bookmark routes head and the API router mounts | 4.1 |  | 0.644 |
-| walker |  | 4758 | 306 | python method sigs in bookmarks/feeds.py |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:32 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:48 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:51 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:57 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:60 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:63 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:66 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:69 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:77 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:80 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:88 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:93 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:101 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:106 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:114 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:117 |  |  | 0.644 |
-| walker |  | 4758 | 0 | python method at bookmarks/feeds.py:120 |  |  | 0.644 |
+| walker |  | 4493 | 72 | README.md section #4 |  |  | 0.655 |
+| walker |  | 4506 | 13 | python imports in bookmarks/views/custom_css.py |  |  | 0.655 |
+| walker |  | 4600 | 94 | python decl names surface in bookmarks/widgets.py |  |  | 0.655 |
+| walker |  | 4600 | 0 | python decl at bookmarks/widgets.py:7 |  |  | 0.655 |
+| walker |  | 4600 | 0 | python decl at bookmarks/widgets.py:11 |  |  | 0.655 |
+| walker |  | 4600 | 0 | python decl at bookmarks/widgets.py:19 |  |  | 0.655 |
+| walker |  | 4600 | 0 | python decl at bookmarks/widgets.py:27 |  |  | 0.655 |
+| walker |  | 4600 | 0 | python decl at bookmarks/widgets.py:35 |  |  | 0.655 |
+| walker |  | 4600 | 0 | python decl at bookmarks/widgets.py:43 |  |  | 0.655 |
+| walker |  | 4600 | 0 | python decl at bookmarks/widgets.py:63 |  |  | 0.655 |
+| walker |  | 4612 | 12 | python class body at bookmarks/widgets.py:7 |  |  | 0.655 |
+| ns | 4638 |  | 217 | bookmarks/urls.py: bookmark routes head and the API router mounts | 4.1 |  | 0.645 |
+| walker |  | 4738 | 126 | python method sigs in bookmarks/widgets.py |  |  | 0.645 |
+| walker |  | 4738 | 0 | python method at bookmarks/widgets.py:12 |  |  | 0.645 |
+| walker |  | 4738 | 0 | python method at bookmarks/widgets.py:20 |  |  | 0.645 |
+| walker |  | 4738 | 0 | python method at bookmarks/widgets.py:28 |  |  | 0.645 |
+| walker |  | 4738 | 0 | python method at bookmarks/widgets.py:36 |  |  | 0.645 |
+| walker |  | 4738 | 0 | python method at bookmarks/widgets.py:44 |  |  | 0.645 |
+| walker |  | 4738 | 0 | python method at bookmarks/widgets.py:48 |  |  | 0.645 |
+| walker |  | 4738 | 0 | python method at bookmarks/widgets.py:64 |  |  | 0.645 |
+| walker |  | 4751 | 13 | python method at bookmarks/widgets.py:67 |  |  | 0.645 |
+| walker |  | 4760 | 9 | python method body at bookmarks/widgets.py:64 body 65 |  |  | 0.645 |
 | ns | 4784 |  | 146 | queries.py: query_bookmarks/archived entry points | 5.1 |  | 0.637 |
 | ns | 4903 |  | 119 | queries.py: _base_bookmarks_query head (user/modified_since filters) | 5.2 |  | 0.630 |
-| walker |  | 4906 | 148 | python decl names surface in bookmarks/utils.py |  |  | 0.630 |
-| walker |  | 4906 | 0 | python decl at bookmarks/utils.py:21 |  |  | 0.630 |
-| walker |  | 4906 | 0 | python decl at bookmarks/utils.py:106 |  |  | 0.630 |
-| walker |  | 4906 | 0 | python decl at bookmarks/utils.py:150 |  |  | 0.630 |
-| walker |  | 4906 | 0 | python decl at bookmarks/utils.py:170 |  |  | 0.630 |
-| walker |  | 4914 | 8 | python decl at bookmarks/utils.py:36 |  |  | 0.630 |
-| walker |  | 4934 | 20 | python decl at bookmarks/utils.py:143 |  |  | 0.630 |
-| walker |  | 4958 | 24 | python decl at bookmarks/utils.py:63 |  |  | 0.630 |
-| walker |  | 4982 | 24 | python decl at bookmarks/utils.py:83 |  |  | 0.630 |
-| walker |  | 5007 | 25 | python class body at bookmarks/utils.py:36 |  |  | 0.630 |
-| walker |  | 5031 | 24 | python decl at bookmarks/utils.py:43 |  |  | 0.630 |
-| walker |  | 5052 | 21 | python decl doc at bookmarks/utils.py:43 |  |  | 0.630 |
+| walker |  | 5011 | 251 | python decl names surface #2 in bookmarks/settings/base.py |  |  | 0.630 |
 | ns | 5063 |  | 160 | search_query_parser.py: token vocabulary | 5.3 |  | 0.620 |
-| walker |  | 5131 | 79 | python decl at bookmarks/utils.py:158 |  |  | 0.620 |
+| walker |  | 5106 | 95 | python decl names surface in bookmarks/feeds.py |  |  | 0.620 |
+| walker |  | 5106 | 0 | python decl at bookmarks/feeds.py:21 |  |  | 0.620 |
+| walker |  | 5106 | 0 | python decl at bookmarks/feeds.py:31 |  |  | 0.620 |
+| walker |  | 5106 | 0 | python decl at bookmarks/feeds.py:73 |  |  | 0.620 |
+| walker |  | 5106 | 0 | python decl at bookmarks/feeds.py:84 |  |  | 0.620 |
+| walker |  | 5106 | 0 | python decl at bookmarks/feeds.py:97 |  |  | 0.620 |
+| walker |  | 5106 | 0 | python decl at bookmarks/feeds.py:110 |  |  | 0.620 |
+| walker |  | 5114 | 8 | python decl at bookmarks/feeds.py:14 |  |  | 0.620 |
+| walker |  | 5136 | 22 | python class body at bookmarks/feeds.py:73 |  |  | 0.620 |
+| walker |  | 5159 | 23 | python class body at bookmarks/feeds.py:84 |  |  | 0.620 |
+| walker |  | 5182 | 23 | python class body at bookmarks/feeds.py:97 |  |  | 0.620 |
+| walker |  | 5207 | 25 | python class body at bookmarks/feeds.py:110 |  |  | 0.620 |
 | ns | 5240 |  | 177 | search_query_parser.py: AST node vocabulary head | 5.4 |  | 0.606 |
-| walker |  | 5242 | 111 | python decl names surface in bookmarks/forms.py |  |  | 0.606 |
-| walker |  | 5242 | 0 | python decl at bookmarks/forms.py:124 |  |  | 0.606 |
-| walker |  | 5242 | 0 | python decl at bookmarks/forms.py:161 |  |  | 0.606 |
-| walker |  | 5242 | 0 | python decl at bookmarks/forms.py:215 |  |  | 0.606 |
-| walker |  | 5242 | 0 | python decl at bookmarks/forms.py:248 |  |  | 0.606 |
-| walker |  | 5242 | 0 | python decl at bookmarks/forms.py:306 |  |  | 0.606 |
-| walker |  | 5242 | 0 | python decl at bookmarks/forms.py:371 |  |  | 0.606 |
-| walker |  | 5254 | 12 | python decl at bookmarks/forms.py:31 |  |  | 0.606 |
-| walker |  | 5286 | 32 | python decl at bookmarks/forms.py:118 |  |  | 0.606 |
-| walker |  | 5297 | 11 | python decl body at bookmarks/forms.py:118 body 121 |  |  | 0.606 |
-| walker |  | 5329 | 32 | python class body at bookmarks/forms.py:161 |  |  | 0.606 |
-| walker |  | 5376 | 47 | python class body at bookmarks/forms.py:124 |  |  | 0.606 |
+| walker |  | 5241 | 34 | python class body at bookmarks/feeds.py:14 |  |  | 0.606 |
 | ns | 5378 |  | 138 | search_query_parser.py: term re-serialization | 5.5 |  | 0.602 |
-| walker |  | 5469 | 93 | python class body at bookmarks/forms.py:371 |  |  | 0.602 |
 | ns | 5493 |  | 115 | views/bookmarks.py: index view (canonical list-page assembly pattern) | 6.1 |  | 0.597 |
+| walker |  | 5547 | 306 | python method sigs in bookmarks/feeds.py |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:32 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:48 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:51 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:57 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:60 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:63 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:66 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:69 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:77 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:80 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:88 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:93 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:101 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:106 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:114 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:117 |  |  | 0.597 |
+| walker |  | 5547 | 0 | python method at bookmarks/feeds.py:120 |  |  | 0.597 |
 | ns | 5584 |  | 91 | views/bookmarks.py: handle_action single-bookmark action dispatch head | 6.2 |  | 0.593 |
-| walker |  | 5681 | 212 | python method sigs in bookmarks/forms.py |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:57 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:91 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:131 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:135 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:149 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:165 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:169 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:189 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:244 |  |  | 0.593 |
-| walker |  | 5681 | 0 | python method at bookmarks/forms.py:381 |  |  | 0.593 |
-| walker |  | 5689 | 8 | python method at bookmarks/forms.py:79 |  |  | 0.593 |
-| walker |  | 5697 | 8 | python method at bookmarks/forms.py:85 |  |  | 0.593 |
+| walker |  | 5695 | 148 | python decl names surface in bookmarks/utils.py |  |  | 0.593 |
+| walker |  | 5695 | 0 | python decl at bookmarks/utils.py:21 |  |  | 0.593 |
+| walker |  | 5695 | 0 | python decl at bookmarks/utils.py:106 |  |  | 0.593 |
+| walker |  | 5695 | 0 | python decl at bookmarks/utils.py:150 |  |  | 0.593 |
+| walker |  | 5695 | 0 | python decl at bookmarks/utils.py:170 |  |  | 0.593 |
+| walker |  | 5703 | 8 | python decl at bookmarks/utils.py:36 |  |  | 0.593 |
+| walker |  | 5723 | 20 | python decl at bookmarks/utils.py:143 |  |  | 0.593 |
+| walker |  | 5747 | 24 | python decl at bookmarks/utils.py:63 |  |  | 0.593 |
+| walker |  | 5771 | 24 | python decl at bookmarks/utils.py:83 |  |  | 0.593 |
+| walker |  | 5796 | 25 | python class body at bookmarks/utils.py:36 |  |  | 0.593 |
+| walker |  | 5820 | 24 | python decl at bookmarks/utils.py:43 |  |  | 0.593 |
 | ns | 5832 |  | 248 | views/contexts.py: RequestContext.__init__ (search-AST resolution per request) | 6.3 |  | 0.583 |
+| walker |  | 5841 | 21 | python decl doc at bookmarks/utils.py:43 |  |  | 0.583 |
+| walker |  | 5920 | 79 | python decl at bookmarks/utils.py:158 |  |  | 0.583 |
 | ns | 5988 |  | 156 | views/contexts.py: AddTagItem (tag-chip click-to-filter query building) | 6.4 |  | 0.578 |
-| walker |  | 6000 | 303 | python class body at bookmarks/forms.py:215 |  |  | 0.578 |
-| walker |  | 6051 | 51 | python method at bookmarks/forms.py:275 |  |  | 0.578 |
+| walker |  | 6031 | 111 | python decl names surface in bookmarks/forms.py |  |  | 0.578 |
+| walker |  | 6031 | 0 | python decl at bookmarks/forms.py:124 |  |  | 0.578 |
+| walker |  | 6031 | 0 | python decl at bookmarks/forms.py:161 |  |  | 0.578 |
+| walker |  | 6031 | 0 | python decl at bookmarks/forms.py:215 |  |  | 0.578 |
+| walker |  | 6031 | 0 | python decl at bookmarks/forms.py:248 |  |  | 0.578 |
+| walker |  | 6031 | 0 | python decl at bookmarks/forms.py:306 |  |  | 0.578 |
+| walker |  | 6031 | 0 | python decl at bookmarks/forms.py:371 |  |  | 0.578 |
+| walker |  | 6043 | 12 | python decl at bookmarks/forms.py:31 |  |  | 0.578 |
+| walker |  | 6075 | 32 | python decl at bookmarks/forms.py:118 |  |  | 0.578 |
+| walker |  | 6086 | 11 | python decl body at bookmarks/forms.py:118 body 121 |  |  | 0.578 |
 | ns | 6111 |  | 123 | views/contexts.py: TagCloudContext.__init__ head (tag cloud assembly) | 6.5 |  | 0.573 |
+| walker |  | 6118 | 32 | python class body at bookmarks/forms.py:161 |  |  | 0.573 |
+| walker |  | 6165 | 47 | python class body at bookmarks/forms.py:124 |  |  | 0.573 |
+| walker |  | 6258 | 93 | python class body at bookmarks/forms.py:371 |  |  | 0.573 |
 | ns | 6292 |  | 181 | forms.py: BookmarkForm field declarations | 7.1 |  | 0.568 |
 | ns | 6459 |  | 167 | forms.py: BookmarkSearchForm sort choice constants | 7.2 |  | 0.563 |
+| walker |  | 6470 | 212 | python method sigs in bookmarks/forms.py |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:57 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:91 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:131 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:135 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:149 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:165 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:169 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:189 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:244 |  |  | 0.563 |
+| walker |  | 6470 | 0 | python method at bookmarks/forms.py:381 |  |  | 0.563 |
+| walker |  | 6478 | 8 | python method at bookmarks/forms.py:79 |  |  | 0.563 |
+| walker |  | 6486 | 8 | python method at bookmarks/forms.py:85 |  |  | 0.563 |
 | ns | 6580 |  | 121 | views/access.py: bookmark_read ownership/sharing permission check head | 8.1 |  | 0.559 |
-| walker |  | 6765 | 714 | python class body at bookmarks/forms.py:306 |  |  | 0.559 |
+| walker |  | 6789 | 303 | python class body at bookmarks/forms.py:215 |  |  | 0.559 |
 | ns | 6801 |  | 221 | views/settings.py: general settings view head | 8.2 |  | 0.552 |
+| walker |  | 6840 | 51 | python method at bookmarks/forms.py:275 |  |  | 0.552 |
 | ns | 6935 |  | 134 | views/settings.py: create_api_token head | 8.3 |  | 0.547 |
-| walker |  | 7059 | 294 | python class body at bookmarks/forms.py:31 |  |  | 0.557 |
-| walker |  | 7090 | 31 | python decl names surface in bookmarks/services/monolith.py |  |  | 0.557 |
-| walker |  | 7090 | 0 | python decl at bookmarks/services/monolith.py:9 |  |  | 0.557 |
-| walker |  | 7090 | 0 | python decl at bookmarks/services/monolith.py:16 |  |  | 0.557 |
-| walker |  | 7097 | 7 | python class body at bookmarks/services/monolith.py:9 |  |  | 0.557 |
-| ns | 7158 |  | 223 | views/tags.py and views/bundles.py: index view heads | 8.4 |  | 0.551 |
-| walker |  | 7204 | 107 | README.md section #1 |  |  | 0.551 |
-| ns | 7471 |  | 313 | views/auth.py: LinkdingLoginView | 9.1 |  | 0.540 |
-| walker |  | 7574 | 370 | python class body at bookmarks/forms.py:248 |  |  | 0.552 |
-| ns | 7705 |  | 234 | api/routes.py: BookmarkViewSet declaration and permission override | 10.1 |  | 0.544 |
-| walker |  | 7769 | 195 | python decl names surface in bookmarks/admin.py |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:29 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:62 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:77 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:108 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:215 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:228 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:272 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:289 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:297 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:306 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:312 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:318 |  |  | 0.544 |
-| walker |  | 7769 | 0 | python decl at bookmarks/admin.py:324 |  |  | 0.544 |
-| walker |  | 7783 | 14 | python class body at bookmarks/admin.py:297 |  |  | 0.544 |
-| walker |  | 7806 | 23 | python class body at bookmarks/admin.py:29 |  |  | 0.544 |
-| walker |  | 7832 | 26 | python class body at bookmarks/admin.py:77 |  |  | 0.544 |
-| walker |  | 7861 | 29 | python class body at bookmarks/admin.py:318 |  |  | 0.544 |
-| ns | 7893 |  | 188 | api/serializers.py: BookmarkSerializer field list | 10.2 |  | 0.536 |
-| walker |  | 7898 | 37 | python class body at bookmarks/admin.py:312 |  |  | 0.536 |
-| walker |  | 7946 | 48 | python class body at bookmarks/admin.py:306 |  |  | 0.536 |
-| walker |  | 8000 | 54 | python class body at bookmarks/admin.py:289 |  |  | 0.536 |
-| ns | 8036 |  | 143 | services/tasks.py: web-archive snapshot creation gate | 11.1 |  | 0.532 |
-| ns | 8146 |  | 110 | services/tasks.py: HTML snapshot feature gate | 11.2 |  | 0.529 |
-| walker |  | 8228 | 228 | python class body at bookmarks/admin.py:108 |  |  | 0.529 |
-| ns | 8283 |  | 137 | services/website_loader.py: WebsiteMetadata shape | 11.3 |  | 0.525 |
-| walker |  | 8368 | 140 | python class body at bookmarks/admin.py:272 |  |  | 0.525 |
+| ns | 7158 |  | 223 | views/tags.py and views/bundles.py: index view heads | 8.4 |  | 0.541 |
+| ns | 7471 |  | 313 | views/auth.py: LinkdingLoginView | 9.1 |  | 0.530 |
+| walker |  | 7554 | 714 | python class body at bookmarks/forms.py:306 |  |  | 0.530 |
+| ns | 7705 |  | 234 | api/routes.py: BookmarkViewSet declaration and permission override | 10.1 |  | 0.523 |
+| walker |  | 7848 | 294 | python class body at bookmarks/forms.py:31 |  |  | 0.532 |
+| walker |  | 7879 | 31 | python decl names surface in bookmarks/services/monolith.py |  |  | 0.532 |
+| walker |  | 7879 | 0 | python decl at bookmarks/services/monolith.py:9 |  |  | 0.532 |
+| walker |  | 7879 | 0 | python decl at bookmarks/services/monolith.py:16 |  |  | 0.532 |
+| walker |  | 7886 | 7 | python class body at bookmarks/services/monolith.py:9 |  |  | 0.532 |
+| ns | 7893 |  | 188 | api/serializers.py: BookmarkSerializer field list | 10.2 |  | 0.525 |
+| walker |  | 7993 | 107 | README.md section #1 |  |  | 0.525 |
+| ns | 8036 |  | 143 | services/tasks.py: web-archive snapshot creation gate | 11.1 |  | 0.521 |
+| ns | 8146 |  | 110 | services/tasks.py: HTML snapshot feature gate | 11.2 |  | 0.518 |
+| ns | 8283 |  | 137 | services/website_loader.py: WebsiteMetadata shape | 11.3 |  | 0.513 |
+| walker |  | 8363 | 370 | python class body at bookmarks/forms.py:248 |  |  | 0.524 |
 | ns | 8393 |  | 110 | services/bookmarks.py: create_bookmark dedup-by-URL entry head | 12.1 |  | 0.521 |
-| walker |  | 8432 | 64 | python class body at bookmarks/admin.py:215 |  |  | 0.521 |
-| walker |  | 8501 | 69 | python class body at bookmarks/admin.py:324 |  |  | 0.521 |
 | ns | 8504 |  | 111 | services/assets.py: create_snapshot_asset | 12.2 |  | 0.518 |
-| ns | 8604 |  | 100 | services/auto_tagging.py: get_tags rule-matching entry head | 12.3 |  | 0.515 |
-| ns | 8746 |  | 142 | settings/base.py: INSTALLED_APPS | 13.1 |  | 0.511 |
-| walker |  | 8776 | 275 | python method sigs in bookmarks/admin.py |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:30 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:38 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:48 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:81 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:88 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:133 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:141 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:156 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:171 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:186 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:200 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:235 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:240 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:245 |  |  | 0.511 |
-| walker |  | 8776 | 0 | python method at bookmarks/admin.py:300 |  |  | 0.511 |
-| walker |  | 8784 | 8 | python method at bookmarks/admin.py:34 |  |  | 0.511 |
-| walker |  | 8795 | 11 | python method at bookmarks/admin.py:216 |  |  | 0.511 |
+| walker |  | 8558 | 195 | python decl names surface in bookmarks/admin.py |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:29 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:62 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:77 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:108 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:215 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:228 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:272 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:289 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:297 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:306 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:312 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:318 |  |  | 0.518 |
+| walker |  | 8558 | 0 | python decl at bookmarks/admin.py:324 |  |  | 0.518 |
+| walker |  | 8572 | 14 | python class body at bookmarks/admin.py:297 |  |  | 0.518 |
+| walker |  | 8595 | 23 | python class body at bookmarks/admin.py:29 |  |  | 0.518 |
+| ns | 8604 |  | 100 | services/auto_tagging.py: get_tags rule-matching entry head | 12.3 |  | 0.514 |
+| walker |  | 8621 | 26 | python class body at bookmarks/admin.py:77 |  |  | 0.514 |
+| walker |  | 8650 | 29 | python class body at bookmarks/admin.py:318 |  |  | 0.514 |
+| walker |  | 8687 | 37 | python class body at bookmarks/admin.py:312 |  |  | 0.514 |
+| walker |  | 8735 | 48 | python class body at bookmarks/admin.py:306 |  |  | 0.514 |
+| ns | 8746 |  | 142 | settings/base.py: INSTALLED_APPS | 13.1 |  | 0.510 |
+| walker |  | 8789 | 54 | python class body at bookmarks/admin.py:289 |  |  | 0.510 |
 | ns | 8886 |  | 140 | settings/base.py: OIDC enable block head | 13.2 |  | 0.508 |
-| walker |  | 8887 | 92 | python class body at bookmarks/admin.py:228 |  |  | 0.508 |
-| walker |  | 8920 | 33 | python decl names surface in bookmarks/templatetags/bookmarks.py |  |  | 0.508 |
-| walker |  | 8965 | 45 | python decl at bookmarks/templatetags/bookmarks.py:9 |  |  | 0.508 |
-| ns | 9049 |  | 163 | settings/base.py: favicon settings | 13.3 |  | 0.505 |
-| ns | 9158 |  | 109 | admin.py: AdminBookmark list_display/search_fields head | 14.1 |  | 0.510 |
-| walker |  | 9223 | 258 | python decl names surface in bookmarks/models.py |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:21 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:36 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:49 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:53 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:129 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:183 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:224 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:346 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:483 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:490 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:516 |  |  | 0.511 |
-| walker |  | 9223 | 0 | python decl at bookmarks/models.py:539 |  |  | 0.511 |
-| walker |  | 9237 | 14 | python decl at bookmarks/models.py:116 |  |  | 0.511 |
-| walker |  | 9252 | 15 | python decl at bookmarks/models.py:172 |  |  | 0.511 |
-| walker |  | 9267 | 15 | python decl at bookmarks/models.py:478 |  |  | 0.511 |
-| walker |  | 9284 | 17 | python decl at bookmarks/models.py:472 |  |  | 0.511 |
+| walker |  | 9017 | 228 | python class body at bookmarks/admin.py:108 |  |  | 0.509 |
+| ns | 9049 |  | 163 | settings/base.py: favicon settings | 13.3 |  | 0.506 |
+| walker |  | 9157 | 140 | python class body at bookmarks/admin.py:272 |  |  | 0.506 |
+| ns | 9158 |  | 109 | admin.py: AdminBookmark list_display/search_fields head | 14.1 |  | 0.511 |
+| walker |  | 9221 | 64 | python class body at bookmarks/admin.py:215 |  |  | 0.511 |
+| walker |  | 9290 | 69 | python class body at bookmarks/admin.py:324 |  |  | 0.511 |
 | ns | 9306 |  | 148 | middlewares.py: LinkdingMiddleware head | 15.1 |  | 0.508 |
-| walker |  | 9309 | 25 | python decl at bookmarks/models.py:30 |  |  | 0.508 |
-| walker |  | 9316 | 7 | python decl body at bookmarks/models.py:478 body 480 |  |  | 0.508 |
-| walker |  | 9342 | 26 | python decl doc at bookmarks/models.py:490 |  |  | 0.509 |
-| walker |  | 9387 | 45 | python class body at bookmarks/models.py:21 |  |  | 0.512 |
-| ns | 9435 |  | 129 | utils.py: normalize_url head | 15.2 |  | 0.508 |
-| walker |  | 9441 | 54 | python class body at bookmarks/models.py:483 |  |  | 0.511 |
-| ns | 9634 |  | 199 | frontend/utils/element.js: HeadlessElement base class | 16.1 |  | 0.506 |
-| walker |  | 9850 | 409 | python method sigs in bookmarks/models.py |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:26 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:98 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:102 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:158 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:168 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:220 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:287 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:462 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:503 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:512 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:526 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:535 |  |  | 0.507 |
-| walker |  | 9850 | 0 | python method at bookmarks/models.py:566 |  |  | 0.507 |
-| walker |  | 9858 | 8 | python method at bookmarks/models.py:82 |  |  | 0.507 |
-| ns | 9862 |  | 228 | bootstrap.sh: container entrypoint startup sequence | 17.1 |  | 0.502 |
-| walker |  | 9866 | 8 | python method at bookmarks/models.py:89 |  |  | 0.502 |
-| walker |  | 9874 | 8 | python method at bookmarks/models.py:93 |  |  | 0.502 |
-| walker |  | 9882 | 8 | python method at bookmarks/models.py:150 |  |  | 0.502 |
-| walker |  | 9890 | 8 | python method at bookmarks/models.py:291 |  |  | 0.502 |
-| walker |  | 9898 | 8 | python method at bookmarks/models.py:295 |  |  | 0.502 |
-| walker |  | 9906 | 8 | python method at bookmarks/models.py:303 |  |  | 0.502 |
-| walker |  | 9914 | 8 | python method at bookmarks/models.py:307 |  |  | 0.502 |
-| walker |  | 9922 | 8 | python method at bookmarks/models.py:311 |  |  | 0.502 |
-| walker |  | 9930 | 8 | python method at bookmarks/models.py:322 |  |  | 0.502 |
-| walker |  | 9938 | 8 | python method at bookmarks/models.py:328 |  |  | 0.502 |
-| walker |  | 9946 | 8 | python method at bookmarks/models.py:508 |  |  | 0.502 |
-| walker |  | 9954 | 8 | python method at bookmarks/models.py:531 |  |  | 0.502 |
-| walker |  | 9962 | 8 | python method at bookmarks/models.py:558 |  |  | 0.502 |
-| ns | 9977 |  | 115 | options.md: heading locations for the most commonly configured options | 18.1 |  | 0.499 |
+| ns | 9435 |  | 129 | utils.py: normalize_url head | 15.2 |  | 0.504 |
+| walker |  | 9565 | 275 | python method sigs in bookmarks/admin.py |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:30 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:38 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:48 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:81 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:88 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:133 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:141 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:156 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:171 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:186 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:200 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:235 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:240 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:245 |  |  | 0.504 |
+| walker |  | 9565 | 0 | python method at bookmarks/admin.py:300 |  |  | 0.504 |
+| walker |  | 9573 | 8 | python method at bookmarks/admin.py:34 |  |  | 0.504 |
+| walker |  | 9584 | 11 | python method at bookmarks/admin.py:216 |  |  | 0.504 |
+| ns | 9634 |  | 199 | frontend/utils/element.js: HeadlessElement base class | 16.1 |  | 0.499 |
+| walker |  | 9676 | 92 | python class body at bookmarks/admin.py:228 |  |  | 0.499 |
+| walker |  | 9709 | 33 | python decl names surface in bookmarks/templatetags/bookmarks.py |  |  | 0.499 |
+| walker |  | 9754 | 45 | python decl at bookmarks/templatetags/bookmarks.py:9 |  |  | 0.499 |
+| ns | 9862 |  | 228 | bootstrap.sh: container entrypoint startup sequence | 17.1 |  | 0.494 |
+| ns | 9977 |  | 115 | options.md: heading locations for the most commonly configured options | 18.1 |  | 0.491 |

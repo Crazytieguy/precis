@@ -80,18 +80,7 @@ docs/
         …
     command-line-reference.md
            1→# General Command Line Topics
-           2→
-           3→```{currentmodule} click
-           4→```
-           5→
-           6→```{contents}
-           7→---
-           8→depth: 1
-           9→local: true
-          10→---
-          11→```
-          12→
-          13→(exit-codes)=
+        …
           14→## Exit Codes
         …
     commands-and-groups.md
@@ -120,20 +109,8 @@ docs/
         …
     documentation.md
     entry-points.md
-           1→# Packaging Entry Points
-        …
-          20→## Project Files
-        …
-          71→## Installation
-        …
     exceptions.md
     extending-click.md
-           1→# Extending Click
-        …
-          16→## Custom Groups
-        …
-          73→## Command Aliases
-        …
     faqs.md
     handling-files.md
     index.rst
@@ -170,19 +147,6 @@ docs/
     virtualenv.md
     why.md
     wincmd.md
-           1→# Windows Console Notes
-           2→
-           3→```{versionadded} 6.0
-           4→```
-           5→
-           6→Click emulates output streams on Windows to support unicode to the Windows console through separate APIs and we perform
-           7→different decoding of parameters.
-           8→
-           9→Here is a brief overview of how this works and what it means to you.
-          11→## Unicode Arguments
-        …
-          24→## Unicode Output and Input
-        …
 examples/
     README
     aliases/
@@ -286,6 +250,31 @@ src/
               77→def __getattr__(name: str) -> object:
             …
         _compat.py
+            …
+              19→def _make_text_stream(
+            …
+              40→def is_ascii_encoding(encoding: str) -> bool:
+            …
+              48→def get_best_encoding(stream: t.IO[t.Any]) -> str:
+            …
+              56→class _NonClosingTextIOWrapper(io.TextIOWrapper):
+            …
+              82→class _FixupStream:
+            …
+             151→def _is_binary_reader(stream: t.IO[t.Any], default: bool = False) -> bool:
+            …
+             160→def _is_binary_writer(stream: t.IO[t.Any], default: bool = False) -> bool:
+            …
+             173→def _find_binary_reader(stream: t.IO[t.Any]) -> t.BinaryIO | None:
+            …
+             191→def _find_binary_writer(stream: t.IO[t.Any]) -> t.BinaryIO | None:
+            …
+             209→def _stream_is_misconfigured(stream: t.TextIO) -> bool:
+            …
+             218→def _is_compat_stream_attr(stream: t.TextIO, attr: str, value: str | None) -> bool:
+            …
+             227→def _is_compatible_text_stream(
+            …
         _termui_impl.py
         _textwrap.py
             …

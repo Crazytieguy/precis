@@ -1,7 +1,7 @@
 fixture = "flask"
 budget = 10000
-cumulative_tokens = 9967
-batch_count = 259
+cumulative_tokens = 9999
+batch_count = 249
 
 [[batches]]
 position = 1
@@ -1497,10 +1497,212 @@ kind = "full"
 
 [[batches]]
 position = 81
+key = 'Python(DeclNames { file: "src/flask/cli.py" })'
+descriptor = "python decl names surface in src/flask/cli.py"
+cost_tokens = 258
+cum_tokens = 3485
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 241
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 267
+end = 267
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 380
+end = 380
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 405
+end = 405
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 440
+end = 440
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 468
+end = 468
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 493
+end = 493
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 531
+end = 531
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 201
+end = 201
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 242
+end = 242
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 268
+end = 268
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 381
+end = 381
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 441
+end = 441
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 469
+end = 469
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/flask/cli.py"
+start = 494
+end = 494
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 82
 key = 'Python(DeclNames { file: "src/flask/config.py" })'
 descriptor = "python decl names surface in src/flask/config.py"
 cost_tokens = 56
-cum_tokens = 3283
+cum_tokens = 3541
 
 [batches.content]
 kind = "lines"
@@ -1522,11 +1724,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Python(Decl { file: "src/flask/config.py", start_line: 20 })'
 descriptor = "python decl at src/flask/config.py:20"
 cost_tokens = 0
-cum_tokens = 3283
+cum_tokens = 3541
 
 [batches.content]
 kind = "lines"
@@ -1540,11 +1742,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Python(Decl { file: "src/flask/config.py", start_line: 50 })'
 descriptor = "python decl at src/flask/config.py:50"
 cost_tokens = 0
-cum_tokens = 3283
+cum_tokens = 3541
 
 [batches.content]
 kind = "lines"
@@ -1558,11 +1760,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Python(DeclDoc { file: "src/flask/config.py", start_line: 20 })'
 descriptor = "python decl doc at src/flask/config.py:20"
 cost_tokens = 14
-cum_tokens = 3297
+cum_tokens = 3555
 
 [batches.content]
 kind = "lines"
@@ -1576,11 +1778,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Python(DeclDoc { file: "src/flask/config.py", start_line: 50 })'
 descriptor = "python decl doc at src/flask/config.py:50"
 cost_tokens = 46
-cum_tokens = 3343
+cum_tokens = 3601
 
 [batches.content]
 kind = "lines"
@@ -1594,11 +1796,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Python(MethodSigs { file: "src/flask/config.py" })'
 descriptor = "python method sigs in src/flask/config.py"
 cost_tokens = 261
-cum_tokens = 3604
+cum_tokens = 3862
 
 [batches.content]
 kind = "lines"
@@ -1812,11 +2014,11 @@ end = 367
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Python(Method { file: "src/flask/config.py", start_line: 35 })'
 descriptor = "python method at src/flask/config.py:35"
 cost_tokens = 0
-cum_tokens = 3604
+cum_tokens = 3862
 
 [batches.content]
 kind = "lines"
@@ -1830,11 +2032,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Python(Method { file: "src/flask/config.py", start_line: 46 })'
 descriptor = "python method at src/flask/config.py:46"
 cost_tokens = 0
-cum_tokens = 3604
+cum_tokens = 3862
 
 [batches.content]
 kind = "lines"
@@ -1848,11 +2050,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Python(Method { file: "src/flask/config.py", start_line: 102 })'
 descriptor = "python method at src/flask/config.py:102"
 cost_tokens = 0
-cum_tokens = 3604
+cum_tokens = 3862
 
 [batches.content]
 kind = "lines"
@@ -1866,11 +2068,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Python(Method { file: "src/flask/config.py", start_line: 218 })'
 descriptor = "python method at src/flask/config.py:218"
 cost_tokens = 0
-cum_tokens = 3604
+cum_tokens = 3862
 
 [batches.content]
 kind = "lines"
@@ -1884,11 +2086,11 @@ end = 218
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Python(Method { file: "src/flask/config.py", start_line: 366 })'
 descriptor = "python method at src/flask/config.py:366"
 cost_tokens = 0
-cum_tokens = 3604
+cum_tokens = 3862
 
 [batches.content]
 kind = "lines"
@@ -1902,11 +2104,11 @@ end = 366
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Python(Method { file: "src/flask/config.py", start_line: 32 })'
 descriptor = "python method at src/flask/config.py:32"
 cost_tokens = 8
-cum_tokens = 3612
+cum_tokens = 3870
 
 [batches.content]
 kind = "lines"
@@ -1920,11 +2122,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Python(MethodBody { file: "src/flask/config.py", start_line: 32, body_start_line: 33 })'
 descriptor = "python method body at src/flask/config.py:32 body 33"
 cost_tokens = 0
-cum_tokens = 3612
+cum_tokens = 3870
 
 [batches.content]
 kind = "lines"
@@ -1938,11 +2140,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Python(Method { file: "src/flask/config.py", start_line: 29 })'
 descriptor = "python method at src/flask/config.py:29"
 cost_tokens = 10
-cum_tokens = 3622
+cum_tokens = 3880
 
 [batches.content]
 kind = "lines"
@@ -1956,11 +2158,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Python(MethodBody { file: "src/flask/config.py", start_line: 29, body_start_line: 30 })'
 descriptor = "python method body at src/flask/config.py:29 body 30"
 cost_tokens = 0
-cum_tokens = 3622
+cum_tokens = 3880
 
 [batches.content]
 kind = "lines"
@@ -1974,11 +2176,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Python(Method { file: "src/flask/config.py", start_line: 187 })'
 descriptor = "python method at src/flask/config.py:187"
 cost_tokens = 31
-cum_tokens = 3653
+cum_tokens = 3911
 
 [batches.content]
 kind = "lines"
@@ -1992,11 +2194,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Python(Method { file: "src/flask/config.py", start_line: 304 })'
 descriptor = "python method at src/flask/config.py:304"
 cost_tokens = 36
-cum_tokens = 3689
+cum_tokens = 3947
 
 [batches.content]
 kind = "lines"
@@ -2010,11 +2212,11 @@ end = 306
 kind = "full"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Python(Method { file: "src/flask/config.py", start_line: 23 })'
 descriptor = "python method at src/flask/config.py:23"
 cost_tokens = 37
-cum_tokens = 3726
+cum_tokens = 3984
 
 [batches.content]
 kind = "lines"
@@ -2028,11 +2230,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Python(Method { file: "src/flask/config.py", start_line: 323 })'
 descriptor = "python method at src/flask/config.py:323"
 cost_tokens = 37
-cum_tokens = 3763
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -2046,11 +2248,11 @@ end = 325
 kind = "full"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Python(Method { file: "src/flask/config.py", start_line: 126 })'
 descriptor = "python method at src/flask/config.py:126"
 cost_tokens = 40
-cum_tokens = 3803
+cum_tokens = 4061
 
 [batches.content]
 kind = "lines"
@@ -2064,11 +2266,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Python(Method { file: "src/flask/config.py", start_line: 94 })'
 descriptor = "python method at src/flask/config.py:94"
 cost_tokens = 49
-cum_tokens = 3852
+cum_tokens = 4110
 
 [batches.content]
 kind = "lines"
@@ -2082,11 +2284,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Python(MethodSigs { file: "src/flask/wrappers.py" })'
 descriptor = "python method sigs in src/flask/wrappers.py"
 cost_tokens = 234
-cum_tokens = 4086
+cum_tokens = 4344
 
 [batches.content]
 kind = "lines"
@@ -2284,11 +2486,11 @@ end = 248
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 197 })'
 descriptor = "python method at src/flask/wrappers.py:197"
 cost_tokens = 0
-cum_tokens = 4086
+cum_tokens = 4344
 
 [batches.content]
 kind = "lines"
@@ -2302,11 +2504,11 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 212 })'
 descriptor = "python method at src/flask/wrappers.py:212"
 cost_tokens = 0
-cum_tokens = 4086
+cum_tokens = 4344
 
 [batches.content]
 kind = "lines"
@@ -2320,11 +2522,11 @@ end = 212
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 246 })'
 descriptor = "python method at src/flask/wrappers.py:246"
 cost_tokens = 6
-cum_tokens = 4092
+cum_tokens = 4350
 
 [batches.content]
 kind = "lines"
@@ -2338,11 +2540,11 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 59 })'
 descriptor = "python method at src/flask/wrappers.py:59"
 cost_tokens = 8
-cum_tokens = 4100
+cum_tokens = 4358
 
 [batches.content]
 kind = "lines"
@@ -2356,11 +2558,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 92 })'
 descriptor = "python method at src/flask/wrappers.py:92"
 cost_tokens = 8
-cum_tokens = 4108
+cum_tokens = 4366
 
 [batches.content]
 kind = "lines"
@@ -2374,11 +2576,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 146 })'
 descriptor = "python method at src/flask/wrappers.py:146"
 cost_tokens = 8
-cum_tokens = 4116
+cum_tokens = 4374
 
 [batches.content]
 kind = "lines"
@@ -2392,11 +2594,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 161 })'
 descriptor = "python method at src/flask/wrappers.py:161"
 cost_tokens = 8
-cum_tokens = 4124
+cum_tokens = 4382
 
 [batches.content]
 kind = "lines"
@@ -2410,11 +2612,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 180 })'
 descriptor = "python method at src/flask/wrappers.py:180"
 cost_tokens = 8
-cum_tokens = 4132
+cum_tokens = 4390
 
 [batches.content]
 kind = "lines"
@@ -2428,11 +2630,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 88 })'
 descriptor = "python method at src/flask/wrappers.py:88"
 cost_tokens = 11
-cum_tokens = 4143
+cum_tokens = 4401
 
 [batches.content]
 kind = "lines"
@@ -2446,11 +2648,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 142 })'
 descriptor = "python method at src/flask/wrappers.py:142"
 cost_tokens = 11
-cum_tokens = 4154
+cum_tokens = 4412
 
 [batches.content]
 kind = "lines"
@@ -2464,11 +2666,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 115 })'
 descriptor = "python method at src/flask/wrappers.py:115"
 cost_tokens = 12
-cum_tokens = 4166
+cum_tokens = 4424
 
 [batches.content]
 kind = "lines"
@@ -2482,11 +2684,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Python(Method { file: "src/flask/wrappers.py", start_line: 119 })'
 descriptor = "python method at src/flask/wrappers.py:119"
 cost_tokens = 15
-cum_tokens = 4181
+cum_tokens = 4439
 
 [batches.content]
 kind = "lines"
@@ -2500,11 +2702,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Python(Imports { file: "src/flask/signals.py" })'
 descriptor = "python imports in src/flask/signals.py"
 cost_tokens = 28
-cum_tokens = 4209
+cum_tokens = 4467
 
 [batches.content]
 kind = "lines"
@@ -2518,11 +2720,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Python(DeclNames { file: "src/flask/views.py" })'
 descriptor = "python decl names surface in src/flask/views.py"
 cost_tokens = 61
-cum_tokens = 4270
+cum_tokens = 4528
 
 [batches.content]
 kind = "lines"
@@ -2552,11 +2754,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Python(Decl { file: "src/flask/views.py", start_line: 16 })'
 descriptor = "python decl at src/flask/views.py:16"
 cost_tokens = 0
-cum_tokens = 4270
+cum_tokens = 4528
 
 [batches.content]
 kind = "lines"
@@ -2570,11 +2772,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Python(Decl { file: "src/flask/views.py", start_line: 138 })'
 descriptor = "python decl at src/flask/views.py:138"
 cost_tokens = 0
-cum_tokens = 4270
+cum_tokens = 4528
 
 [batches.content]
 kind = "lines"
@@ -2588,11 +2790,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Python(Decl { file: "src/flask/views.py", start_line: 11 })'
 descriptor = "python decl at src/flask/views.py:11"
 cost_tokens = 32
-cum_tokens = 4302
+cum_tokens = 4560
 
 [batches.content]
 kind = "lines"
@@ -2606,11 +2808,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Python(MethodSigs { file: "src/flask/views.py" })'
 descriptor = "python method sigs in src/flask/views.py"
 cost_tokens = 77
-cum_tokens = 4379
+cum_tokens = 4637
 
 [batches.content]
 kind = "lines"
@@ -2680,11 +2882,11 @@ end = 183
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Python(Method { file: "src/flask/views.py", start_line: 78 })'
 descriptor = "python method at src/flask/views.py:78"
 cost_tokens = 0
-cum_tokens = 4379
+cum_tokens = 4637
 
 [batches.content]
 kind = "lines"
@@ -2698,11 +2900,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Python(Method { file: "src/flask/views.py", start_line: 165 })'
 descriptor = "python method at src/flask/views.py:165"
 cost_tokens = 0
-cum_tokens = 4379
+cum_tokens = 4637
 
 [batches.content]
 kind = "lines"
@@ -2716,11 +2918,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Python(Method { file: "src/flask/views.py", start_line: 182 })'
 descriptor = "python method at src/flask/views.py:182"
 cost_tokens = 0
-cum_tokens = 4379
+cum_tokens = 4637
 
 [batches.content]
 kind = "lines"
@@ -2734,11 +2936,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Python(MethodBody { file: "src/flask/views.py", start_line: 78, body_start_line: 83 })'
 descriptor = "python method body at src/flask/views.py:78 body 83"
 cost_tokens = 12
-cum_tokens = 4391
+cum_tokens = 4649
 
 [batches.content]
 kind = "lines"
@@ -2752,11 +2954,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Python(Method { file: "src/flask/views.py", start_line: 85 })'
 descriptor = "python method at src/flask/views.py:85"
 cost_tokens = 42
-cum_tokens = 4433
+cum_tokens = 4691
 
 [batches.content]
 kind = "lines"
@@ -2770,11 +2972,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Python(DeclDoc { file: "src/flask/views.py", start_line: 138 })'
 descriptor = "python decl doc at src/flask/views.py:138"
 cost_tokens = 50
-cum_tokens = 4483
+cum_tokens = 4741
 
 [batches.content]
 kind = "lines"
@@ -2788,11 +2990,11 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Python(DeclNames { file: "tests/test_apps/cliapp/inner1/__init__.py" })'
 descriptor = "python decl names surface in tests/test_apps/cliapp/inner1/__init__.py"
 cost_tokens = 8
-cum_tokens = 4491
+cum_tokens = 4749
 
 [batches.content]
 kind = "lines"
@@ -2806,11 +3008,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Python(ClassBody { file: "src/flask/views.py", start_line: 16 })'
 descriptor = "python class body at src/flask/views.py:16"
 cost_tokens = 451
-cum_tokens = 4942
+cum_tokens = 5200
 
 [batches.content]
 kind = "lines"
@@ -2824,11 +3026,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Python(ClassBody { file: "src/flask/wrappers.py", start_line: 18 })'
 descriptor = "python class body at src/flask/wrappers.py:18"
 cost_tokens = 404
-cum_tokens = 5346
+cum_tokens = 5604
 
 [batches.content]
 kind = "lines"
@@ -2842,11 +3044,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Python(DeclNames { file: "src/flask/logging.py" })'
 descriptor = "python decl names surface in src/flask/logging.py"
 cost_tokens = 70
-cum_tokens = 5416
+cum_tokens = 5674
 
 [batches.content]
 kind = "lines"
@@ -2908,11 +3110,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Python(Decl { file: "src/flask/logging.py", start_line: 31 })'
 descriptor = "python decl at src/flask/logging.py:31"
 cost_tokens = 0
-cum_tokens = 5416
+cum_tokens = 5674
 
 [batches.content]
 kind = "lines"
@@ -2926,11 +3128,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Python(Decl { file: "src/flask/logging.py", start_line: 58 })'
 descriptor = "python decl at src/flask/logging.py:58"
 cost_tokens = 0
-cum_tokens = 5416
+cum_tokens = 5674
 
 [batches.content]
 kind = "lines"
@@ -2944,11 +3146,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Python(Decl { file: "src/flask/logging.py", start_line: 15 })'
 descriptor = "python decl at src/flask/logging.py:15"
 cost_tokens = 15
-cum_tokens = 5431
+cum_tokens = 5689
 
 [batches.content]
 kind = "lines"
@@ -2962,11 +3164,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Python(DeclDoc { file: "src/flask/logging.py", start_line: 31 })'
 descriptor = "python decl doc at src/flask/logging.py:31"
 cost_tokens = 49
-cum_tokens = 5480
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -2980,11 +3182,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Python(DeclBody { file: "src/flask/logging.py", start_line: 15, body_start_line: 28 })'
 descriptor = "python decl body at src/flask/logging.py:15 body 28"
 cost_tokens = 9
-cum_tokens = 5489
+cum_tokens = 5747
 
 [batches.content]
 kind = "lines"
@@ -2998,11 +3200,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Python(DeclBody { file: "src/flask/json/__init__.py", start_line: 47, body_start_line: 70 })'
 descriptor = "python decl body at src/flask/json/__init__.py:47 body 70"
 cost_tokens = 60
-cum_tokens = 5549
+cum_tokens = 5807
 
 [batches.content]
 kind = "lines"
@@ -3016,11 +3218,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Python(DeclDoc { file: "src/flask/views.py", start_line: 16 })'
 descriptor = "python decl doc at src/flask/views.py:16"
 cost_tokens = 85
-cum_tokens = 5634
+cum_tokens = 5892
 
 [batches.content]
 kind = "lines"
@@ -3034,11 +3236,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'Python(DeclNames { file: "src/flask/json/provider.py" })'
 descriptor = "python decl names surface in src/flask/json/provider.py"
 cost_tokens = 43
-cum_tokens = 5677
+cum_tokens = 5935
 
 [batches.content]
 kind = "lines"
@@ -3076,11 +3278,11 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 140
 key = 'Python(Decl { file: "src/flask/json/provider.py", start_line: 19 })'
 descriptor = "python decl at src/flask/json/provider.py:19"
 cost_tokens = 0
-cum_tokens = 5677
+cum_tokens = 5935
 
 [batches.content]
 kind = "lines"
@@ -3094,11 +3296,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Python(Decl { file: "src/flask/json/provider.py", start_line: 108 })'
 descriptor = "python decl at src/flask/json/provider.py:108"
 cost_tokens = 0
-cum_tokens = 5677
+cum_tokens = 5935
 
 [batches.content]
 kind = "lines"
@@ -3112,11 +3314,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Python(Decl { file: "src/flask/json/provider.py", start_line: 124 })'
 descriptor = "python decl at src/flask/json/provider.py:124"
 cost_tokens = 0
-cum_tokens = 5677
+cum_tokens = 5935
 
 [batches.content]
 kind = "lines"
@@ -3130,11 +3332,11 @@ end = 124
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Python(Method { file: "src/flask/config.py", start_line: 256 })'
 descriptor = "python method at src/flask/config.py:256"
 cost_tokens = 75
-cum_tokens = 5752
+cum_tokens = 6010
 
 [batches.content]
 kind = "lines"
@@ -3148,11 +3350,11 @@ end = 262
 kind = "full"
 
 [[batches]]
-position = 143
+position = 144
 key = 'Python(Imports { file: "src/flask/typing.py" })'
 descriptor = "python imports in src/flask/typing.py"
 cost_tokens = 39
-cum_tokens = 5791
+cum_tokens = 6049
 
 [batches.content]
 kind = "lines"
@@ -3166,11 +3368,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 144
+position = 145
 key = 'Python(DeclNames { file: "src/flask/testing.py" })'
 descriptor = "python decl names surface in src/flask/testing.py"
 cost_tokens = 82
-cum_tokens = 5873
+cum_tokens = 6131
 
 [batches.content]
 kind = "lines"
@@ -3216,11 +3418,11 @@ end = 101
 kind = "ellipsis"
 
 [[batches]]
-position = 145
+position = 146
 key = 'Python(Decl { file: "src/flask/testing.py", start_line: 27 })'
 descriptor = "python decl at src/flask/testing.py:27"
 cost_tokens = 0
-cum_tokens = 5873
+cum_tokens = 6131
 
 [batches.content]
 kind = "lines"
@@ -3234,11 +3436,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 146
+position = 147
 key = 'Python(Decl { file: "src/flask/testing.py", start_line: 100 })'
 descriptor = "python decl at src/flask/testing.py:100"
 cost_tokens = 0
-cum_tokens = 5873
+cum_tokens = 6131
 
 [batches.content]
 kind = "lines"
@@ -3252,11 +3454,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Python(Decl { file: "src/flask/testing.py", start_line: 109 })'
 descriptor = "python decl at src/flask/testing.py:109"
 cost_tokens = 0
-cum_tokens = 5873
+cum_tokens = 6131
 
 [batches.content]
 kind = "lines"
@@ -3270,11 +3472,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Python(Decl { file: "src/flask/testing.py", start_line: 265 })'
 descriptor = "python decl at src/flask/testing.py:265"
 cost_tokens = 0
-cum_tokens = 5873
+cum_tokens = 6131
 
 [batches.content]
 kind = "lines"
@@ -3288,11 +3490,11 @@ end = 265
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Python(ClassBody { file: "src/flask/testing.py", start_line: 109 })'
 descriptor = "python class body at src/flask/testing.py:109"
 cost_tokens = 11
-cum_tokens = 5884
+cum_tokens = 6142
 
 [batches.content]
 kind = "lines"
@@ -3306,11 +3508,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Python(MethodSigs { file: "src/flask/testing.py" })'
 descriptor = "python method sigs in src/flask/testing.py"
 cost_tokens = 196
-cum_tokens = 6080
+cum_tokens = 6338
 
 [batches.content]
 kind = "lines"
@@ -3492,11 +3694,11 @@ end = 276
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 88 })'
 descriptor = "python method at src/flask/testing.py:88"
 cost_tokens = 0
-cum_tokens = 6080
+cum_tokens = 6338
 
 [batches.content]
 kind = "lines"
@@ -3510,11 +3712,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 152
+position = 153
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 125 })'
 descriptor = "python method at src/flask/testing.py:125"
 cost_tokens = 0
-cum_tokens = 6080
+cum_tokens = 6338
 
 [batches.content]
 kind = "lines"
@@ -3528,11 +3730,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 185 })'
 descriptor = "python method at src/flask/testing.py:185"
 cost_tokens = 0
-cum_tokens = 6080
+cum_tokens = 6338
 
 [batches.content]
 kind = "lines"
@@ -3546,11 +3748,11 @@ end = 185
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 249 })'
 descriptor = "python method at src/flask/testing.py:249"
 cost_tokens = 0
-cum_tokens = 6080
+cum_tokens = 6338
 
 [batches.content]
 kind = "lines"
@@ -3564,11 +3766,11 @@ end = 249
 kind = "full"
 
 [[batches]]
-position = 155
+position = 156
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 271 })'
 descriptor = "python method at src/flask/testing.py:271"
 cost_tokens = 0
-cum_tokens = 6080
+cum_tokens = 6338
 
 [batches.content]
 kind = "lines"
@@ -3582,11 +3784,11 @@ end = 271
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 275 })'
 descriptor = "python method at src/flask/testing.py:275"
 cost_tokens = 36
-cum_tokens = 6116
+cum_tokens = 6374
 
 [batches.content]
 kind = "lines"
@@ -3600,11 +3802,11 @@ end = 277
 kind = "full"
 
 [[batches]]
-position = 157
+position = 158
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 135 })'
 descriptor = "python method at src/flask/testing.py:135"
 cost_tokens = 41
-cum_tokens = 6157
+cum_tokens = 6415
 
 [batches.content]
 kind = "lines"
@@ -3618,11 +3820,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 255 })'
 descriptor = "python method at src/flask/testing.py:255"
 cost_tokens = 54
-cum_tokens = 6211
+cum_tokens = 6469
 
 [batches.content]
 kind = "lines"
@@ -3636,11 +3838,11 @@ end = 260
 kind = "full"
 
 [[batches]]
-position = 159
+position = 160
 key = 'Python(DeclDoc { file: "src/flask/testing.py", start_line: 265 })'
 descriptor = "python decl doc at src/flask/testing.py:265"
 cost_tokens = 64
-cum_tokens = 6275
+cum_tokens = 6533
 
 [batches.content]
 kind = "lines"
@@ -3654,11 +3856,11 @@ end = 269
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 204 })'
 descriptor = "python method at src/flask/testing.py:204"
 cost_tokens = 63
-cum_tokens = 6338
+cum_tokens = 6596
 
 [batches.content]
 kind = "lines"
@@ -3672,11 +3874,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 161
+position = 162
 key = 'Python(Method { file: "src/flask/testing.py", start_line: 193 })'
 descriptor = "python method at src/flask/testing.py:193"
 cost_tokens = 33
-cum_tokens = 6371
+cum_tokens = 6629
 
 [batches.content]
 kind = "lines"
@@ -3690,11 +3892,11 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 162
+position = 163
 key = 'Python(MethodDoc { file: "src/flask/views.py", start_line: 78 })'
 descriptor = "python method doc at src/flask/views.py:78"
 cost_tokens = 51
-cum_tokens = 6422
+cum_tokens = 6680
 
 [batches.content]
 kind = "lines"
@@ -3708,11 +3910,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 163
+position = 164
 key = 'Python(Imports { file: "tests/test_apps/blueprintapp/apps/admin/__init__.py" })'
 descriptor = "python imports in tests/test_apps/blueprintapp/apps/admin/__init__.py"
 cost_tokens = 21
-cum_tokens = 6443
+cum_tokens = 6701
 
 [batches.content]
 kind = "lines"
@@ -3726,11 +3928,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 164
+position = 165
 key = 'Python(Imports { file: "tests/test_apps/blueprintapp/apps/frontend/__init__.py" })'
 descriptor = "python imports in tests/test_apps/blueprintapp/apps/frontend/__init__.py"
 cost_tokens = 21
-cum_tokens = 6464
+cum_tokens = 6722
 
 [batches.content]
 kind = "lines"
@@ -3744,11 +3946,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 165
+position = 166
 key = 'Python(Imports { file: "examples/tutorial/flaskr/__init__.py" })'
 descriptor = "python imports in examples/tutorial/flaskr/__init__.py"
 cost_tokens = 23
-cum_tokens = 6487
+cum_tokens = 6745
 
 [batches.content]
 kind = "lines"
@@ -3762,11 +3964,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 166
+position = 167
 key = 'Python(DeclNames { file: "examples/tutorial/flaskr/__init__.py" })'
 descriptor = "python decl names surface in examples/tutorial/flaskr/__init__.py"
 cost_tokens = 11
-cum_tokens = 6498
+cum_tokens = 6756
 
 [batches.content]
 kind = "lines"
@@ -3788,11 +3990,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 167
+position = 168
 key = 'Python(Decl { file: "examples/tutorial/flaskr/__init__.py", start_line: 6 })'
 descriptor = "python decl at examples/tutorial/flaskr/__init__.py:6"
 cost_tokens = 0
-cum_tokens = 6498
+cum_tokens = 6756
 
 [batches.content]
 kind = "lines"
@@ -3806,11 +4008,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 168
+position = 169
 key = 'Python(MethodDoc { file: "src/flask/testing.py", start_line: 88 })'
 descriptor = "python method doc at src/flask/testing.py:88"
 cost_tokens = 59
-cum_tokens = 6557
+cum_tokens = 6815
 
 [batches.content]
 kind = "lines"
@@ -3824,11 +4026,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 169
+position = 170
 key = 'Python(ClassBody { file: "src/flask/json/provider.py", start_line: 124 })'
 descriptor = "python class body at src/flask/json/provider.py:124"
 cost_tokens = 365
-cum_tokens = 6922
+cum_tokens = 7180
 
 [batches.content]
 kind = "lines"
@@ -3842,11 +4044,11 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 170
+position = 171
 key = 'Python(DeclNames { file: "src/flask/helpers.py" })'
 descriptor = "python decl names surface in src/flask/helpers.py"
 cost_tokens = 258
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4100,11 +4302,11 @@ end = 645
 kind = "ellipsis"
 
 [[batches]]
-position = 171
+position = 172
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 28 })'
 descriptor = "python decl at src/flask/helpers.py:28"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4118,11 +4320,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 172
+position = 173
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 36 })'
 descriptor = "python decl at src/flask/helpers.py:36"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4136,11 +4338,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 173
+position = 174
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 151 })'
 descriptor = "python decl at src/flask/helpers.py:151"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4154,11 +4356,11 @@ end = 151
 kind = "full"
 
 [[batches]]
-position = 174
+position = 175
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 281 })'
 descriptor = "python decl at src/flask/helpers.py:281"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4172,11 +4374,11 @@ end = 281
 kind = "full"
 
 [[batches]]
-position = 175
+position = 176
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 304 })'
 descriptor = "python decl at src/flask/helpers.py:304"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4190,11 +4392,11 @@ end = 304
 kind = "full"
 
 [[batches]]
-position = 176
+position = 177
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 326 })'
 descriptor = "python decl at src/flask/helpers.py:326"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4208,11 +4410,11 @@ end = 326
 kind = "full"
 
 [[batches]]
-position = 177
+position = 178
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 402 })'
 descriptor = "python decl at src/flask/helpers.py:402"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4226,11 +4428,11 @@ end = 402
 kind = "full"
 
 [[batches]]
-position = 178
+position = 179
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 587 })'
 descriptor = "python decl at src/flask/helpers.py:587"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4244,11 +4446,11 @@ end = 587
 kind = "full"
 
 [[batches]]
-position = 179
+position = 180
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 654 })'
 descriptor = "python decl at src/flask/helpers.py:654"
 cost_tokens = 0
-cum_tokens = 7180
+cum_tokens = 7438
 
 [batches.content]
 kind = "lines"
@@ -4262,11 +4464,11 @@ end = 654
 kind = "full"
 
 [[batches]]
-position = 180
+position = 181
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 51 })'
 descriptor = "python decl at src/flask/helpers.py:51"
 cost_tokens = 35
-cum_tokens = 7215
+cum_tokens = 7473
 
 [batches.content]
 kind = "lines"
@@ -4280,11 +4482,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 181
+position = 182
 key = 'Python(DeclBody { file: "src/flask/helpers.py", start_line: 51, body_start_line: 54 })'
 descriptor = "python decl body at src/flask/helpers.py:51 body 54"
 cost_tokens = 13
-cum_tokens = 7228
+cum_tokens = 7486
 
 [batches.content]
 kind = "lines"
@@ -4298,11 +4500,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 182
+position = 183
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 57 })'
 descriptor = "python decl at src/flask/helpers.py:57"
 cost_tokens = 37
-cum_tokens = 7265
+cum_tokens = 7523
 
 [batches.content]
 kind = "lines"
@@ -4316,11 +4518,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 183
+position = 184
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 254 })'
 descriptor = "python decl at src/flask/helpers.py:254"
 cost_tokens = 37
-cum_tokens = 7302
+cum_tokens = 7560
 
 [batches.content]
 kind = "lines"
@@ -4334,11 +4536,11 @@ end = 256
 kind = "full"
 
 [[batches]]
-position = 184
+position = 185
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 360 })'
 descriptor = "python decl at src/flask/helpers.py:360"
 cost_tokens = 39
-cum_tokens = 7341
+cum_tokens = 7599
 
 [batches.content]
 kind = "lines"
@@ -4352,11 +4554,11 @@ end = 362
 kind = "full"
 
 [[batches]]
-position = 185
+position = 186
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 644 })'
 descriptor = "python decl at src/flask/helpers.py:644"
 cost_tokens = 18
-cum_tokens = 7359
+cum_tokens = 7617
 
 [batches.content]
 kind = "lines"
@@ -4370,11 +4572,11 @@ end = 645
 kind = "full"
 
 [[batches]]
-position = 186
+position = 187
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 543 })'
 descriptor = "python decl at src/flask/helpers.py:543"
 cost_tokens = 49
-cum_tokens = 7408
+cum_tokens = 7666
 
 [batches.content]
 kind = "lines"
@@ -4388,11 +4590,11 @@ end = 547
 kind = "full"
 
 [[batches]]
-position = 187
+position = 188
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 543 })'
 descriptor = "python decl doc at src/flask/helpers.py:543"
 cost_tokens = 20
-cum_tokens = 7428
+cum_tokens = 7686
 
 [batches.content]
 kind = "lines"
@@ -4406,11 +4608,11 @@ end = 548
 kind = "full"
 
 [[batches]]
-position = 188
+position = 189
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 63 })'
 descriptor = "python decl at src/flask/helpers.py:63"
 cost_tokens = 55
-cum_tokens = 7483
+cum_tokens = 7741
 
 [batches.content]
 kind = "lines"
@@ -4424,11 +4626,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 189
+position = 190
 key = 'Python(MethodSigs { file: "src/flask/helpers.py" })'
 descriptor = "python method sigs in src/flask/helpers.py"
 cost_tokens = 62
-cum_tokens = 7545
+cum_tokens = 7803
 
 [batches.content]
 kind = "lines"
@@ -4498,11 +4700,11 @@ end = 677
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 191
 key = 'Python(Method { file: "src/flask/helpers.py", start_line: 659 })'
 descriptor = "python method at src/flask/helpers.py:659"
 cost_tokens = 0
-cum_tokens = 7545
+cum_tokens = 7803
 
 [batches.content]
 kind = "lines"
@@ -4516,11 +4718,11 @@ end = 659
 kind = "full"
 
 [[batches]]
-position = 191
+position = 192
 key = 'Python(Method { file: "src/flask/helpers.py", start_line: 662 })'
 descriptor = "python method at src/flask/helpers.py:662"
 cost_tokens = 0
-cum_tokens = 7545
+cum_tokens = 7803
 
 [batches.content]
 kind = "lines"
@@ -4534,11 +4736,11 @@ end = 662
 kind = "full"
 
 [[batches]]
-position = 192
+position = 193
 key = 'Python(Method { file: "src/flask/helpers.py", start_line: 676 })'
 descriptor = "python method at src/flask/helpers.py:676"
 cost_tokens = 0
-cum_tokens = 7545
+cum_tokens = 7803
 
 [batches.content]
 kind = "lines"
@@ -4552,11 +4754,11 @@ end = 676
 kind = "full"
 
 [[batches]]
-position = 193
+position = 194
 key = 'Python(MethodDoc { file: "src/flask/helpers.py", start_line: 676 })'
 descriptor = "python method doc at src/flask/helpers.py:676"
 cost_tokens = 13
-cum_tokens = 7558
+cum_tokens = 7816
 
 [batches.content]
 kind = "lines"
@@ -4570,11 +4772,11 @@ end = 677
 kind = "full"
 
 [[batches]]
-position = 194
+position = 195
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 28 })'
 descriptor = "python decl doc at src/flask/helpers.py:28"
 cost_tokens = 50
-cum_tokens = 7608
+cum_tokens = 7866
 
 [batches.content]
 kind = "lines"
@@ -4588,11 +4790,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 195
+position = 196
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 200 })'
 descriptor = "python decl at src/flask/helpers.py:200"
 cost_tokens = 90
-cum_tokens = 7698
+cum_tokens = 7956
 
 [batches.content]
 kind = "lines"
@@ -4606,11 +4808,11 @@ end = 208
 kind = "full"
 
 [[batches]]
-position = 196
+position = 197
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 200 })'
 descriptor = "python decl doc at src/flask/helpers.py:200"
 cost_tokens = 18
-cum_tokens = 7716
+cum_tokens = 7974
 
 [batches.content]
 kind = "lines"
@@ -4624,11 +4826,11 @@ end = 209
 kind = "full"
 
 [[batches]]
-position = 197
+position = 198
 key = 'Python(Method { file: "src/flask/helpers.py", start_line: 665 })'
 descriptor = "python method at src/flask/helpers.py:665"
 cost_tokens = 59
-cum_tokens = 7775
+cum_tokens = 8033
 
 [batches.content]
 kind = "lines"
@@ -4642,11 +4844,11 @@ end = 670
 kind = "full"
 
 [[batches]]
-position = 198
+position = 199
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 63 })'
 descriptor = "python decl doc at src/flask/helpers.py:63"
 cost_tokens = 77
-cum_tokens = 7852
+cum_tokens = 8110
 
 [batches.content]
 kind = "lines"
@@ -4660,11 +4862,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 199
+position = 200
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 654 })'
 descriptor = "python decl doc at src/flask/helpers.py:654"
 cost_tokens = 42
-cum_tokens = 7894
+cum_tokens = 8152
 
 [batches.content]
 kind = "lines"
@@ -4678,11 +4880,11 @@ end = 657
 kind = "full"
 
 [[batches]]
-position = 200
+position = 201
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 36 })'
 descriptor = "python decl doc at src/flask/helpers.py:36"
 cost_tokens = 82
-cum_tokens = 7976
+cum_tokens = 8234
 
 [batches.content]
 kind = "lines"
@@ -4696,11 +4898,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 201
+position = 202
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 587 })'
 descriptor = "python decl doc at src/flask/helpers.py:587"
 cost_tokens = 91
-cum_tokens = 8067
+cum_tokens = 8325
 
 [batches.content]
 kind = "lines"
@@ -4714,11 +4916,11 @@ end = 595
 kind = "full"
 
 [[batches]]
-position = 202
+position = 203
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 360 })'
 descriptor = "python decl doc at src/flask/helpers.py:360"
 cost_tokens = 98
-cum_tokens = 8165
+cum_tokens = 8423
 
 [batches.content]
 kind = "lines"
@@ -4732,11 +4934,11 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 203
+position = 204
 key = 'Python(Decl { file: "src/flask/helpers.py", start_line: 417 })'
 descriptor = "python decl at src/flask/helpers.py:417"
 cost_tokens = 143
-cum_tokens = 8308
+cum_tokens = 8566
 
 [batches.content]
 kind = "lines"
@@ -4750,11 +4952,11 @@ end = 426
 kind = "full"
 
 [[batches]]
-position = 204
+position = 205
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 417 })'
 descriptor = "python decl doc at src/flask/helpers.py:417"
 cost_tokens = 16
-cum_tokens = 8324
+cum_tokens = 8582
 
 [batches.content]
 kind = "lines"
@@ -4768,11 +4970,11 @@ end = 427
 kind = "full"
 
 [[batches]]
-position = 205
+position = 206
 key = 'Python(DeclDoc { file: "src/flask/helpers.py", start_line: 151 })'
 descriptor = "python decl doc at src/flask/helpers.py:151"
 cost_tokens = 103
-cum_tokens = 8427
+cum_tokens = 8685
 
 [batches.content]
 kind = "lines"
@@ -4786,11 +4988,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 206
+position = 207
 key = 'Python(DeclNames { file: "src/flask/ctx.py" })'
 descriptor = "python decl names surface in src/flask/ctx.py"
 cost_tokens = 150
-cum_tokens = 8577
+cum_tokens = 8835
 
 [batches.content]
 kind = "lines"
@@ -4892,11 +5094,11 @@ end = 529
 kind = "ellipsis"
 
 [[batches]]
-position = 207
+position = 208
 key = 'Python(Decl { file: "src/flask/ctx.py", start_line: 30 })'
 descriptor = "python decl at src/flask/ctx.py:30"
 cost_tokens = 0
-cum_tokens = 8577
+cum_tokens = 8835
 
 [batches.content]
 kind = "lines"
@@ -4910,11 +5112,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 208
+position = 209
 key = 'Python(Decl { file: "src/flask/ctx.py", start_line: 154 })'
 descriptor = "python decl at src/flask/ctx.py:154"
 cost_tokens = 0
-cum_tokens = 8577
+cum_tokens = 8835
 
 [batches.content]
 kind = "lines"
@@ -4928,11 +5130,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 209
+position = 210
 key = 'Python(Decl { file: "src/flask/ctx.py", start_line: 209 })'
 descriptor = "python decl at src/flask/ctx.py:209"
 cost_tokens = 0
-cum_tokens = 8577
+cum_tokens = 8835
 
 [batches.content]
 kind = "lines"
@@ -4946,11 +5148,11 @@ end = 209
 kind = "full"
 
 [[batches]]
-position = 210
+position = 211
 key = 'Python(Decl { file: "src/flask/ctx.py", start_line: 235 })'
 descriptor = "python decl at src/flask/ctx.py:235"
 cost_tokens = 0
-cum_tokens = 8577
+cum_tokens = 8835
 
 [batches.content]
 kind = "lines"
@@ -4964,11 +5166,11 @@ end = 235
 kind = "full"
 
 [[batches]]
-position = 211
+position = 212
 key = 'Python(Decl { file: "src/flask/ctx.py", start_line: 260 })'
 descriptor = "python decl at src/flask/ctx.py:260"
 cost_tokens = 0
-cum_tokens = 8577
+cum_tokens = 8835
 
 [batches.content]
 kind = "lines"
@@ -4982,11 +5184,11 @@ end = 260
 kind = "full"
 
 [[batches]]
-position = 212
+position = 213
 key = 'Python(Decl { file: "src/flask/ctx.py", start_line: 528 })'
 descriptor = "python decl at src/flask/ctx.py:528"
 cost_tokens = 0
-cum_tokens = 8577
+cum_tokens = 8835
 
 [batches.content]
 kind = "lines"
@@ -5000,11 +5202,11 @@ end = 528
 kind = "full"
 
 [[batches]]
-position = 213
+position = 214
 key = 'Python(Decl { file: "src/flask/ctx.py", start_line: 118 })'
 descriptor = "python decl at src/flask/ctx.py:118"
 cost_tokens = 27
-cum_tokens = 8604
+cum_tokens = 8862
 
 [batches.content]
 kind = "lines"
@@ -5018,11 +5220,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 214
+position = 215
 key = 'Python(DeclDoc { file: "src/flask/ctx.py", start_line: 209 })'
 descriptor = "python decl doc at src/flask/ctx.py:209"
 cost_tokens = 20
-cum_tokens = 8624
+cum_tokens = 8882
 
 [batches.content]
 kind = "lines"
@@ -5036,11 +5238,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 215
+position = 216
 key = 'Python(DeclBody { file: "src/flask/ctx.py", start_line: 235, body_start_line: 257 })'
 descriptor = "python decl body at src/flask/ctx.py:235 body 257"
 cost_tokens = 16
-cum_tokens = 8640
+cum_tokens = 8898
 
 [batches.content]
 kind = "lines"
@@ -5054,11 +5256,11 @@ end = 257
 kind = "full"
 
 [[batches]]
-position = 216
+position = 217
 key = 'Python(DeclBody { file: "src/flask/ctx.py", start_line: 209, body_start_line: 232 })'
 descriptor = "python decl body at src/flask/ctx.py:209 body 232"
 cost_tokens = 23
-cum_tokens = 8663
+cum_tokens = 8921
 
 [batches.content]
 kind = "lines"
@@ -5072,11 +5274,11 @@ end = 232
 kind = "full"
 
 [[batches]]
-position = 217
+position = 218
 key = 'Python(MethodSigs { file: "src/flask/ctx.py" })'
 descriptor = "python method sigs in src/flask/ctx.py"
 cost_tokens = 422
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5434,11 +5636,11 @@ end = 519
 kind = "ellipsis"
 
 [[batches]]
-position = 218
+position = 219
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 53 })'
 descriptor = "python method at src/flask/ctx.py:53"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5452,11 +5654,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 219
+position = 220
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 59 })'
 descriptor = "python method at src/flask/ctx.py:59"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5470,11 +5672,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 220
+position = 221
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 62 })'
 descriptor = "python method at src/flask/ctx.py:62"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5488,11 +5690,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 221
+position = 222
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 68 })'
 descriptor = "python method at src/flask/ctx.py:68"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5506,11 +5708,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 222
+position = 223
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 79 })'
 descriptor = "python method at src/flask/ctx.py:79"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5524,11 +5726,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 223
+position = 224
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 93 })'
 descriptor = "python method at src/flask/ctx.py:93"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5542,11 +5744,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 224
+position = 225
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 105 })'
 descriptor = "python method at src/flask/ctx.py:105"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5560,11 +5762,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 225
+position = 226
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 108 })'
 descriptor = "python method at src/flask/ctx.py:108"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5578,11 +5780,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 226
+position = 227
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 111 })'
 descriptor = "python method at src/flask/ctx.py:111"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5596,11 +5798,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 227
+position = 228
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 355 })'
 descriptor = "python method at src/flask/ctx.py:355"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5614,11 +5816,11 @@ end = 355
 kind = "full"
 
 [[batches]]
-position = 228
+position = 229
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 381 })'
 descriptor = "python method at src/flask/ctx.py:381"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5632,11 +5834,11 @@ end = 381
 kind = "full"
 
 [[batches]]
-position = 229
+position = 230
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 405 })'
 descriptor = "python method at src/flask/ctx.py:405"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5650,11 +5852,11 @@ end = 405
 kind = "full"
 
 [[batches]]
-position = 230
+position = 231
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 416 })'
 descriptor = "python method at src/flask/ctx.py:416"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5668,11 +5870,11 @@ end = 416
 kind = "full"
 
 [[batches]]
-position = 231
+position = 232
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 446 })'
 descriptor = "python method at src/flask/ctx.py:446"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5686,11 +5888,11 @@ end = 446
 kind = "full"
 
 [[batches]]
-position = 232
+position = 233
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 506 })'
 descriptor = "python method at src/flask/ctx.py:506"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5704,11 +5906,11 @@ end = 506
 kind = "full"
 
 [[batches]]
-position = 233
+position = 234
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 518 })'
 descriptor = "python method at src/flask/ctx.py:518"
 cost_tokens = 0
-cum_tokens = 9085
+cum_tokens = 9343
 
 [batches.content]
 kind = "lines"
@@ -5722,11 +5924,11 @@ end = 518
 kind = "full"
 
 [[batches]]
-position = 234
+position = 235
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 339 })'
 descriptor = "python method at src/flask/ctx.py:339"
 cost_tokens = 8
-cum_tokens = 9093
+cum_tokens = 9351
 
 [batches.content]
 kind = "lines"
@@ -5740,11 +5942,11 @@ end = 340
 kind = "full"
 
 [[batches]]
-position = 235
+position = 236
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 350 })'
 descriptor = "python method at src/flask/ctx.py:350"
 cost_tokens = 8
-cum_tokens = 9101
+cum_tokens = 9359
 
 [batches.content]
 kind = "lines"
@@ -5758,11 +5960,11 @@ end = 351
 kind = "full"
 
 [[batches]]
-position = 236
+position = 237
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 370 })'
 descriptor = "python method at src/flask/ctx.py:370"
 cost_tokens = 8
-cum_tokens = 9109
+cum_tokens = 9367
 
 [batches.content]
 kind = "lines"
@@ -5776,11 +5978,11 @@ end = 371
 kind = "full"
 
 [[batches]]
-position = 237
+position = 238
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 395 })'
 descriptor = "python method at src/flask/ctx.py:395"
 cost_tokens = 8
-cum_tokens = 9117
+cum_tokens = 9375
 
 [batches.content]
 kind = "lines"
@@ -5794,11 +5996,11 @@ end = 396
 kind = "full"
 
 [[batches]]
-position = 238
+position = 239
 key = 'Python(MethodDoc { file: "src/flask/ctx.py", start_line: 350 })'
 descriptor = "python method doc at src/flask/ctx.py:350"
 cost_tokens = 16
-cum_tokens = 9133
+cum_tokens = 9391
 
 [batches.content]
 kind = "lines"
@@ -5812,11 +6014,11 @@ end = 352
 kind = "full"
 
 [[batches]]
-position = 239
+position = 240
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 300 })'
 descriptor = "python method at src/flask/ctx.py:300"
 cost_tokens = 58
-cum_tokens = 9191
+cum_tokens = 9449
 
 [batches.content]
 kind = "lines"
@@ -5830,11 +6032,11 @@ end = 306
 kind = "full"
 
 [[batches]]
-position = 240
+position = 241
 key = 'Python(Method { file: "src/flask/ctx.py", start_line: 510 })'
 descriptor = "python method at src/flask/ctx.py:510"
 cost_tokens = 58
-cum_tokens = 9249
+cum_tokens = 9507
 
 [batches.content]
 kind = "lines"
@@ -5848,11 +6050,11 @@ end = 515
 kind = "full"
 
 [[batches]]
-position = 241
+position = 242
 key = 'Python(ClassBody { file: "src/flask/ctx.py", start_line: 30 })'
 descriptor = "python class body at src/flask/ctx.py:30"
 cost_tokens = 31
-cum_tokens = 9280
+cum_tokens = 9538
 
 [batches.content]
 kind = "lines"
@@ -5866,11 +6068,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 242
+position = 243
 key = 'Python(DeclDoc { file: "src/flask/ctx.py", start_line: 154 })'
 descriptor = "python decl doc at src/flask/ctx.py:154"
 cost_tokens = 57
-cum_tokens = 9337
+cum_tokens = 9595
 
 [batches.content]
 kind = "lines"
@@ -5884,11 +6086,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 243
+position = 244
 key = 'Python(MethodDoc { file: "src/flask/ctx.py", start_line: 405 })'
 descriptor = "python method doc at src/flask/ctx.py:405"
 cost_tokens = 38
-cum_tokens = 9375
+cum_tokens = 9633
 
 [batches.content]
 kind = "lines"
@@ -5902,11 +6104,11 @@ end = 408
 kind = "full"
 
 [[batches]]
-position = 244
+position = 245
 key = 'Python(MethodDoc { file: "src/flask/ctx.py", start_line: 381 })'
 descriptor = "python method doc at src/flask/ctx.py:381"
 cost_tokens = 20
-cum_tokens = 9395
+cum_tokens = 9653
 
 [batches.content]
 kind = "lines"
@@ -5920,11 +6122,11 @@ end = 382
 kind = "full"
 
 [[batches]]
-position = 245
+position = 246
 key = 'Python(DeclDoc { file: "src/flask/ctx.py", start_line: 260 })'
 descriptor = "python decl doc at src/flask/ctx.py:260"
 cost_tokens = 93
-cum_tokens = 9488
+cum_tokens = 9746
 
 [batches.content]
 kind = "lines"
@@ -5938,11 +6140,11 @@ end = 265
 kind = "full"
 
 [[batches]]
-position = 246
+position = 247
 key = 'Python(MethodDoc { file: "src/flask/ctx.py", start_line: 370 })'
 descriptor = "python method doc at src/flask/ctx.py:370"
 cost_tokens = 55
-cum_tokens = 9543
+cum_tokens = 9801
 
 [batches.content]
 kind = "lines"
@@ -5956,11 +6158,11 @@ end = 375
 kind = "full"
 
 [[batches]]
-position = 247
+position = 248
 key = 'Python(DeclBody { file: "src/flask/json/__init__.py", start_line: 77, body_start_line: 105 })'
 descriptor = "python decl body at src/flask/json/__init__.py:77 body 105"
 cost_tokens = 14
-cum_tokens = 9557
+cum_tokens = 9815
 
 [batches.content]
 kind = "lines"
@@ -5974,11 +6176,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 248
+position = 249
 key = 'Python(DeclNames { file: "src/flask/signals.py" })'
 descriptor = "python decl names surface in src/flask/signals.py"
 cost_tokens = 184
-cum_tokens = 9741
+cum_tokens = 9999
 
 [batches.content]
 kind = "lines"
@@ -5987,252 +6189,6 @@ kind = "lines"
 path = "src/flask/signals.py"
 start = 6
 end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 249
-key = 'Python(DeclNames { file: "src/flask/sessions.py" })'
-descriptor = "python decl names surface in src/flask/sessions.py"
-cost_tokens = 122
-cum_tokens = 9863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 273
-end = 276
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 277
-end = 277
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 250
-key = 'Python(Decl { file: "src/flask/sessions.py", start_line: 24 })'
-descriptor = "python decl at src/flask/sessions.py:24"
-cost_tokens = 0
-cum_tokens = 9863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 251
-key = 'Python(Decl { file: "src/flask/sessions.py", start_line: 57 })'
-descriptor = "python decl at src/flask/sessions.py:57"
-cost_tokens = 0
-cum_tokens = 9863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 252
-key = 'Python(Decl { file: "src/flask/sessions.py", start_line: 83 })'
-descriptor = "python decl at src/flask/sessions.py:83"
-cost_tokens = 0
-cum_tokens = 9863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 253
-key = 'Python(Decl { file: "src/flask/sessions.py", start_line: 100 })'
-descriptor = "python decl at src/flask/sessions.py:100"
-cost_tokens = 0
-cum_tokens = 9863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 254
-key = 'Python(Decl { file: "src/flask/sessions.py", start_line: 276 })'
-descriptor = "python decl at src/flask/sessions.py:276"
-cost_tokens = 0
-cum_tokens = 9863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 276
-end = 276
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 255
-key = 'Python(Decl { file: "src/flask/sessions.py", start_line: 284 })'
-descriptor = "python decl at src/flask/sessions.py:284"
-cost_tokens = 0
-cum_tokens = 9863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 256
-key = 'Python(DeclDoc { file: "src/flask/sessions.py", start_line: 24 })'
-descriptor = "python decl doc at src/flask/sessions.py:24"
-cost_tokens = 15
-cum_tokens = 9878
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 257
-key = 'Python(ClassBody { file: "src/flask/sessions.py", start_line: 83 })'
-descriptor = "python class body at src/flask/sessions.py:83"
-cost_tokens = 39
-cum_tokens = 9917
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 96
-end = 97
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 258
-key = 'Python(DeclDoc { file: "src/flask/sessions.py", start_line: 284 })'
-descriptor = "python decl doc at src/flask/sessions.py:284"
-cost_tokens = 39
-cum_tokens = 9956
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 285
-end = 287
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 259
-key = 'Python(DeclBody { file: "src/flask/sessions.py", start_line: 276, body_start_line: 281 })'
-descriptor = "python decl body at src/flask/sessions.py:276 body 281"
-cost_tokens = 11
-cum_tokens = 9967
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/flask/sessions.py"
-start = 281
-end = 281
 
 [batches.content.spans.render]
 kind = "full"

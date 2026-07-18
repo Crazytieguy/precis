@@ -420,8 +420,15 @@ pub enum PythonKey {
     /// Chunked `Imports` for large `__init__.py` re-export walls.
     ImportChunk { file: PathBuf, chunk_index: usize },
     /// Names surface for top-level class/def/non-dunder consts — one
-    /// unified catalog per file.
+    /// unified catalog per file unless the rendered surface exceeds the
+    /// Python walker's oversize threshold. For an oversize catalog this
+    /// remains the first chunk, preserving the established key/value.
     DeclNames { file: PathBuf },
+    /// Continuation of an oversize top-level names surface. Chained after
+    /// `DeclNames` (and then the preceding continuation) so the catalog
+    /// retains source-roster order without creating independently
+    /// schedulable crumbs.
+    DeclNamesChunk { file: PathBuf, chunk_index: usize },
     /// One top-level item — header + up to 2 docstring-summary rows
     /// for class/def, or assignment line(s) for const.
     Decl { file: PathBuf, start_line: usize },
@@ -940,14 +947,16 @@ impl InnerKey for PythonKey {
         )
     }
 
-    /// `DeclNames` + `ImportChunk` use a mild `0.37` (broad
+    /// `DeclNames` / `DeclNamesChunk` + `ImportChunk` use a mild `0.37` (broad
     /// catalog-shaped surfaces). Per-decl / per-method batches use
     /// `0.45` (matches C / Go) for the same reason — short decls
     /// emitted in bulk. `ClassBody` keeps the default; field listings
     /// tie structurally to the class.
     fn concavity_exponent(&self) -> f64 {
         match self {
-            PythonKey::ImportChunk { .. } | PythonKey::DeclNames { .. } => 0.37,
+            PythonKey::ImportChunk { .. }
+            | PythonKey::DeclNames { .. }
+            | PythonKey::DeclNamesChunk { .. } => 0.37,
             PythonKey::Decl { .. }
             | PythonKey::DeclBody { .. }
             | PythonKey::Method { .. }
@@ -963,6 +972,9 @@ impl InnerKey for PythonKey {
                 describe_chunked_surface("python imports", file, *chunk_index, root)
             }
             PythonKey::DeclNames { file } => describe_in("python decl names surface", file, root),
+            PythonKey::DeclNamesChunk { file, chunk_index } => {
+                describe_chunked_surface("python decl names surface", file, *chunk_index, root)
+            }
             PythonKey::Decl { file, start_line } => {
                 describe_at("python decl", file, *start_line, root)
             }

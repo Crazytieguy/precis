@@ -1,7 +1,7 @@
 fixture = "typeguard"
 budget = 10000
 cumulative_tokens = 9944
-batch_count = 228
+batch_count = 229
 
 [[batches]]
 position = 1
@@ -479,809 +479,13 @@ kind = "full"
 
 [[batches]]
 position = 26
-key = 'Python(DeclNames { file: "src/typeguard/_exceptions.py" })'
-descriptor = "python decl names surface in src/typeguard/_exceptions.py"
-cost_tokens = 49
-cum_tokens = 2070
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 5 })'
-descriptor = "python decl at src/typeguard/_exceptions.py:5"
-cost_tokens = 0
-cum_tokens = 2070
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 12 })'
-descriptor = "python decl at src/typeguard/_exceptions.py:12"
-cost_tokens = 0
-cum_tokens = 2070
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 19 })'
-descriptor = "python decl at src/typeguard/_exceptions.py:19"
-cost_tokens = 0
-cum_tokens = 2070
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 26 })'
-descriptor = "python decl at src/typeguard/_exceptions.py:26"
-cost_tokens = 0
-cum_tokens = 2070
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 19 })'
-descriptor = "python decl doc at src/typeguard/_exceptions.py:19"
-cost_tokens = 21
-cum_tokens = 2091
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
-key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 12 })'
-descriptor = "python decl doc at src/typeguard/_exceptions.py:12"
-cost_tokens = 22
-cum_tokens = 2113
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 26 })'
-descriptor = "python decl doc at src/typeguard/_exceptions.py:26"
-cost_tokens = 32
-cum_tokens = 2145
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 27
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 5 })'
-descriptor = "python decl doc at src/typeguard/_exceptions.py:5"
-cost_tokens = 42
-cum_tokens = 2187
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
-key = 'Python(MethodSigs { file: "src/typeguard/_exceptions.py" })'
-descriptor = "python method sigs in src/typeguard/_exceptions.py"
-cost_tokens = 81
-cum_tokens = 2268
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 36
-key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 15 })'
-descriptor = "python method at src/typeguard/_exceptions.py:15"
-cost_tokens = 0
-cum_tokens = 2268
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 22 })'
-descriptor = "python method at src/typeguard/_exceptions.py:22"
-cost_tokens = 0
-cum_tokens = 2268
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 31 })'
-descriptor = "python method at src/typeguard/_exceptions.py:31"
-cost_tokens = 0
-cum_tokens = 2268
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 35 })'
-descriptor = "python method at src/typeguard/_exceptions.py:35"
-cost_tokens = 0
-cum_tokens = 2268
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 38 })'
-descriptor = "python method at src/typeguard/_exceptions.py:38"
-cost_tokens = 0
-cum_tokens = 2268
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Python(MethodBody { file: "src/typeguard/_exceptions.py", start_line: 15, body_start_line: 16 })'
-descriptor = "python method body at src/typeguard/_exceptions.py:15 body 16"
-cost_tokens = 9
-cum_tokens = 2277
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Python(MethodBody { file: "src/typeguard/_exceptions.py", start_line: 22, body_start_line: 23 })'
-descriptor = "python method body at src/typeguard/_exceptions.py:22 body 23"
-cost_tokens = 9
-cum_tokens = 2286
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_exceptions.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Python(DeclNames { file: "src/typeguard/_suppression.py" })'
-descriptor = "python decl names surface in src/typeguard/_suppression.py"
-cost_tokens = 67
-cum_tokens = 2353
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_suppression.py"
-start = 15
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_suppression.py"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_suppression.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 44
-key = 'Python(Decl { file: "src/typeguard/_suppression.py", start_line: 22 })'
-descriptor = "python decl at src/typeguard/_suppression.py:22"
-cost_tokens = 8
-cum_tokens = 2361
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_suppression.py"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 45
-key = 'Python(Decl { file: "src/typeguard/_suppression.py", start_line: 26 })'
-descriptor = "python decl at src/typeguard/_suppression.py:26"
-cost_tokens = 10
-cum_tokens = 2371
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_suppression.py"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Python(Decl { file: "src/typeguard/_suppression.py", start_line: 30 })'
-descriptor = "python decl at src/typeguard/_suppression.py:30"
-cost_tokens = 34
-cum_tokens = 2405
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_suppression.py"
-start = 30
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Python(DeclBody { file: "src/typeguard/_suppression.py", start_line: 26, body_start_line: 27 })'
-descriptor = "python decl body at src/typeguard/_suppression.py:26 body 27"
-cost_tokens = 14
-cum_tokens = 2419
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_suppression.py"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
-key = 'Python(DeclBody { file: "src/typeguard/_suppression.py", start_line: 22, body_start_line: 23 })'
-descriptor = "python decl body at src/typeguard/_suppression.py:22 body 23"
-cost_tokens = 20
-cum_tokens = 2439
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_suppression.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
-key = 'Python(DeclNames { file: "src/typeguard/_config.py" })'
-descriptor = "python decl names surface in src/typeguard/_config.py"
-cost_tokens = 68
-cum_tokens = 2507
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 11
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Python(Decl { file: "src/typeguard/_config.py", start_line: 14 })'
-descriptor = "python decl at src/typeguard/_config.py:14"
-cost_tokens = 0
-cum_tokens = 2507
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
-key = 'Python(Decl { file: "src/typeguard/_config.py", start_line: 30 })'
-descriptor = "python decl at src/typeguard/_config.py:30"
-cost_tokens = 0
-cum_tokens = 2507
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 52
-key = 'Python(Decl { file: "src/typeguard/_config.py", start_line: 62 })'
-descriptor = "python decl at src/typeguard/_config.py:62"
-cost_tokens = 9
-cum_tokens = 2516
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 62
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 53
-key = 'Python(MethodSigs { file: "src/typeguard/_config.py" })'
-descriptor = "python method sigs in src/typeguard/_config.py"
-cost_tokens = 21
-cum_tokens = 2537
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 54
-key = 'Python(Method { file: "src/typeguard/_config.py", start_line: 52 })'
-descriptor = "python method at src/typeguard/_config.py:52"
-cost_tokens = 0
-cum_tokens = 2537
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 55
-key = 'Python(ClassBody { file: "src/typeguard/_config.py", start_line: 30 })'
-descriptor = "python class body at src/typeguard/_config.py:30"
-cost_tokens = 20
-cum_tokens = 2557
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 49
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 56
-key = 'Python(ClassBody { file: "src/typeguard/_config.py", start_line: 14 })'
-descriptor = "python class body at src/typeguard/_config.py:14"
-cost_tokens = 28
-cum_tokens = 2585
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 25
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Python(DeclDoc { file: "src/typeguard/_config.py", start_line: 62 })'
-descriptor = "python decl doc at src/typeguard/_config.py:62"
-cost_tokens = 22
-cum_tokens = 2607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 64
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 58
-key = 'Python(ClassBody { file: "src/typeguard/_config.py", start_line: 62 })'
-descriptor = "python class body at src/typeguard/_config.py:62"
-cost_tokens = 84
-cum_tokens = 2691
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_config.py"
-start = 98
-end = 103
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
-key = 'Python(Method { file: "src/typeguard/_memo.py", start_line: 37 })'
-descriptor = "python method at src/typeguard/_memo.py:37"
-cost_tokens = 71
-cum_tokens = 2762
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_memo.py"
-start = 37
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 60
 key = 'Python(DeclNames { file: "src/typeguard/_checkers.py" })'
 descriptor = "python decl names surface in src/typeguard/_checkers.py"
-cost_tokens = 427
-cum_tokens = 3189
+cost_tokens = 255
+cum_tokens = 2276
 
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 88
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 96
-end = 96
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 99
-end = 99
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches.content.spans]]
 path = "src/typeguard/_checkers.py"
@@ -1455,62 +659,6 @@ kind = "full"
 path = "src/typeguard/_checkers.py"
 start = 834
 end = 834
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 885
-end = 885
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 895
-end = 895
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 915
-end = 915
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 924
-end = 924
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 1005
-end = 1005
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 1061
-end = 1061
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/typeguard/_checkers.py"
-start = 1099
-end = 1099
 
 [batches.content.spans.render]
 kind = "full"
@@ -1691,6 +839,496 @@ end = 835
 [batches.content.spans.render]
 kind = "ellipsis"
 
+[[batches]]
+position = 27
+key = 'Python(DeclNames { file: "src/typeguard/_exceptions.py" })'
+descriptor = "python decl names surface in src/typeguard/_exceptions.py"
+cost_tokens = 49
+cum_tokens = 2325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 5 })'
+descriptor = "python decl at src/typeguard/_exceptions.py:5"
+cost_tokens = 0
+cum_tokens = 2325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 12 })'
+descriptor = "python decl at src/typeguard/_exceptions.py:12"
+cost_tokens = 0
+cum_tokens = 2325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 19 })'
+descriptor = "python decl at src/typeguard/_exceptions.py:19"
+cost_tokens = 0
+cum_tokens = 2325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Python(Decl { file: "src/typeguard/_exceptions.py", start_line: 26 })'
+descriptor = "python decl at src/typeguard/_exceptions.py:26"
+cost_tokens = 0
+cum_tokens = 2325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 19 })'
+descriptor = "python decl doc at src/typeguard/_exceptions.py:19"
+cost_tokens = 21
+cum_tokens = 2346
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 12 })'
+descriptor = "python decl doc at src/typeguard/_exceptions.py:12"
+cost_tokens = 22
+cum_tokens = 2368
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 26 })'
+descriptor = "python decl doc at src/typeguard/_exceptions.py:26"
+cost_tokens = 32
+cum_tokens = 2400
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 27
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Python(DeclDoc { file: "src/typeguard/_exceptions.py", start_line: 5 })'
+descriptor = "python decl doc at src/typeguard/_exceptions.py:5"
+cost_tokens = 42
+cum_tokens = 2442
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Python(MethodSigs { file: "src/typeguard/_exceptions.py" })'
+descriptor = "python method sigs in src/typeguard/_exceptions.py"
+cost_tokens = 81
+cum_tokens = 2523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 37
+key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 15 })'
+descriptor = "python method at src/typeguard/_exceptions.py:15"
+cost_tokens = 0
+cum_tokens = 2523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 22 })'
+descriptor = "python method at src/typeguard/_exceptions.py:22"
+cost_tokens = 0
+cum_tokens = 2523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 31 })'
+descriptor = "python method at src/typeguard/_exceptions.py:31"
+cost_tokens = 0
+cum_tokens = 2523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 35 })'
+descriptor = "python method at src/typeguard/_exceptions.py:35"
+cost_tokens = 0
+cum_tokens = 2523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Python(Method { file: "src/typeguard/_exceptions.py", start_line: 38 })'
+descriptor = "python method at src/typeguard/_exceptions.py:38"
+cost_tokens = 0
+cum_tokens = 2523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Python(MethodBody { file: "src/typeguard/_exceptions.py", start_line: 15, body_start_line: 16 })'
+descriptor = "python method body at src/typeguard/_exceptions.py:15 body 16"
+cost_tokens = 9
+cum_tokens = 2532
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Python(DeclNamesChunk { file: "src/typeguard/_checkers.py", chunk_index: 1 })'
+descriptor = "python decl names surface #1 in src/typeguard/_checkers.py"
+cost_tokens = 172
+cum_tokens = 2704
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 88
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 885
+end = 885
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 895
+end = 895
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 915
+end = 915
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 924
+end = 924
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 1005
+end = 1005
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 1061
+end = 1061
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_checkers.py"
+start = 1099
+end = 1099
+
+[batches.content.spans.render]
+kind = "full"
+
 [[batches.content.spans]]
 path = "src/typeguard/_checkers.py"
 start = 886
@@ -1740,11 +1378,11 @@ end = 1100
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 44
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 586 })'
 descriptor = "python decl at src/typeguard/_checkers.py:586"
 cost_tokens = 0
-cum_tokens = 3189
+cum_tokens = 2704
 
 [batches.content]
 kind = "lines"
@@ -1758,11 +1396,11 @@ end = 586
 kind = "full"
 
 [[batches]]
-position = 62
+position = 45
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 679 })'
 descriptor = "python decl at src/typeguard/_checkers.py:679"
 cost_tokens = 0
-cum_tokens = 3189
+cum_tokens = 2704
 
 [batches.content]
 kind = "lines"
@@ -1776,11 +1414,11 @@ end = 679
 kind = "full"
 
 [[batches]]
-position = 63
+position = 46
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 1099 })'
 descriptor = "python decl at src/typeguard/_checkers.py:1099"
 cost_tokens = 0
-cum_tokens = 3189
+cum_tokens = 2704
 
 [batches.content]
 kind = "lines"
@@ -1794,11 +1432,11 @@ end = 1099
 kind = "full"
 
 [[batches]]
-position = 64
+position = 47
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 81 })'
 descriptor = "python decl at src/typeguard/_checkers.py:81"
 cost_tokens = 24
-cum_tokens = 3213
+cum_tokens = 2728
 
 [batches.content]
 kind = "lines"
@@ -1812,11 +1450,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 65
+position = 48
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 84 })'
 descriptor = "python decl at src/typeguard/_checkers.py:84"
 cost_tokens = 27
-cum_tokens = 3240
+cum_tokens = 2755
 
 [batches.content]
 kind = "lines"
@@ -1830,11 +1468,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 66
+position = 49
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 924 })'
 descriptor = "python decl at src/typeguard/_checkers.py:924"
 cost_tokens = 37
-cum_tokens = 3277
+cum_tokens = 2792
 
 [batches.content]
 kind = "lines"
@@ -1848,11 +1486,11 @@ end = 928
 kind = "full"
 
 [[batches]]
-position = 67
+position = 50
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 1061 })'
 descriptor = "python decl at src/typeguard/_checkers.py:1061"
 cost_tokens = 38
-cum_tokens = 3315
+cum_tokens = 2830
 
 [batches.content]
 kind = "lines"
@@ -1866,11 +1504,11 @@ end = 1063
 kind = "full"
 
 [[batches]]
-position = 68
+position = 51
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 89 })'
 descriptor = "python decl at src/typeguard/_checkers.py:89"
 cost_tokens = 31
-cum_tokens = 3346
+cum_tokens = 2861
 
 [batches.content]
 kind = "lines"
@@ -1884,11 +1522,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 69
+position = 52
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 153 })'
 descriptor = "python decl at src/typeguard/_checkers.py:153"
 cost_tokens = 50
-cum_tokens = 3396
+cum_tokens = 2911
 
 [batches.content]
 kind = "lines"
@@ -1902,11 +1540,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 70
+position = 53
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 212 })'
 descriptor = "python decl at src/typeguard/_checkers.py:212"
 cost_tokens = 50
-cum_tokens = 3446
+cum_tokens = 2961
 
 [batches.content]
 kind = "lines"
@@ -1920,11 +1558,11 @@ end = 217
 kind = "full"
 
 [[batches]]
-position = 71
+position = 54
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 247 })'
 descriptor = "python decl at src/typeguard/_checkers.py:247"
 cost_tokens = 50
-cum_tokens = 3496
+cum_tokens = 3011
 
 [batches.content]
 kind = "lines"
@@ -1938,11 +1576,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 72
+position = 55
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 305 })'
 descriptor = "python decl at src/typeguard/_checkers.py:305"
 cost_tokens = 50
-cum_tokens = 3546
+cum_tokens = 3061
 
 [batches.content]
 kind = "lines"
@@ -1956,11 +1594,11 @@ end = 310
 kind = "full"
 
 [[batches]]
-position = 73
+position = 56
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 324 })'
 descriptor = "python decl at src/typeguard/_checkers.py:324"
 cost_tokens = 50
-cum_tokens = 3596
+cum_tokens = 3111
 
 [batches.content]
 kind = "lines"
@@ -1974,11 +1612,11 @@ end = 329
 kind = "full"
 
 [[batches]]
-position = 74
+position = 57
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 343 })'
 descriptor = "python decl at src/typeguard/_checkers.py:343"
 cost_tokens = 50
-cum_tokens = 3646
+cum_tokens = 3161
 
 [batches.content]
 kind = "lines"
@@ -1992,11 +1630,11 @@ end = 348
 kind = "full"
 
 [[batches]]
-position = 75
+position = 58
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 423 })'
 descriptor = "python decl at src/typeguard/_checkers.py:423"
 cost_tokens = 50
-cum_tokens = 3696
+cum_tokens = 3211
 
 [batches.content]
 kind = "lines"
@@ -2010,11 +1648,11 @@ end = 428
 kind = "full"
 
 [[batches]]
-position = 76
+position = 59
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 447 })'
 descriptor = "python decl at src/typeguard/_checkers.py:447"
 cost_tokens = 50
-cum_tokens = 3746
+cum_tokens = 3261
 
 [batches.content]
 kind = "lines"
@@ -2028,11 +1666,11 @@ end = 452
 kind = "full"
 
 [[batches]]
-position = 77
+position = 60
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 474 })'
 descriptor = "python decl at src/typeguard/_checkers.py:474"
 cost_tokens = 50
-cum_tokens = 3796
+cum_tokens = 3311
 
 [batches.content]
 kind = "lines"
@@ -2046,11 +1684,11 @@ end = 479
 kind = "full"
 
 [[batches]]
-position = 78
+position = 61
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 536 })'
 descriptor = "python decl at src/typeguard/_checkers.py:536"
 cost_tokens = 50
-cum_tokens = 3846
+cum_tokens = 3361
 
 [batches.content]
 kind = "lines"
@@ -2064,11 +1702,11 @@ end = 541
 kind = "full"
 
 [[batches]]
-position = 79
+position = 62
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 545 })'
 descriptor = "python decl at src/typeguard/_checkers.py:545"
 cost_tokens = 50
-cum_tokens = 3896
+cum_tokens = 3411
 
 [batches.content]
 kind = "lines"
@@ -2082,11 +1720,11 @@ end = 550
 kind = "full"
 
 [[batches]]
-position = 80
+position = 63
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 590 })'
 descriptor = "python decl at src/typeguard/_checkers.py:590"
 cost_tokens = 50
-cum_tokens = 3946
+cum_tokens = 3461
 
 [batches.content]
 kind = "lines"
@@ -2100,11 +1738,11 @@ end = 595
 kind = "full"
 
 [[batches]]
-position = 81
+position = 64
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 623 })'
 descriptor = "python decl at src/typeguard/_checkers.py:623"
 cost_tokens = 50
-cum_tokens = 3996
+cum_tokens = 3511
 
 [batches.content]
 kind = "lines"
@@ -2118,11 +1756,11 @@ end = 628
 kind = "full"
 
 [[batches]]
-position = 82
+position = 65
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 632 })'
 descriptor = "python decl at src/typeguard/_checkers.py:632"
 cost_tokens = 50
-cum_tokens = 4046
+cum_tokens = 3561
 
 [batches.content]
 kind = "lines"
@@ -2136,11 +1774,11 @@ end = 637
 kind = "full"
 
 [[batches]]
-position = 83
+position = 66
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 641 })'
 descriptor = "python decl at src/typeguard/_checkers.py:641"
 cost_tokens = 50
-cum_tokens = 4096
+cum_tokens = 3611
 
 [batches.content]
 kind = "lines"
@@ -2154,11 +1792,11 @@ end = 646
 kind = "full"
 
 [[batches]]
-position = 84
+position = 67
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 651 })'
 descriptor = "python decl at src/typeguard/_checkers.py:651"
 cost_tokens = 50
-cum_tokens = 4146
+cum_tokens = 3661
 
 [batches.content]
 kind = "lines"
@@ -2172,11 +1810,11 @@ end = 656
 kind = "full"
 
 [[batches]]
-position = 85
+position = 68
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 663 })'
 descriptor = "python decl at src/typeguard/_checkers.py:663"
 cost_tokens = 50
-cum_tokens = 4196
+cum_tokens = 3711
 
 [batches.content]
 kind = "lines"
@@ -2190,11 +1828,11 @@ end = 668
 kind = "full"
 
 [[batches]]
-position = 86
+position = 69
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 834 })'
 descriptor = "python decl at src/typeguard/_checkers.py:834"
 cost_tokens = 50
-cum_tokens = 4246
+cum_tokens = 3761
 
 [batches.content]
 kind = "lines"
@@ -2208,11 +1846,11 @@ end = 839
 kind = "full"
 
 [[batches]]
-position = 87
+position = 70
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 885 })'
 descriptor = "python decl at src/typeguard/_checkers.py:885"
 cost_tokens = 50
-cum_tokens = 4296
+cum_tokens = 3811
 
 [batches.content]
 kind = "lines"
@@ -2226,11 +1864,11 @@ end = 890
 kind = "full"
 
 [[batches]]
-position = 88
+position = 71
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 895 })'
 descriptor = "python decl at src/typeguard/_checkers.py:895"
 cost_tokens = 50
-cum_tokens = 4346
+cum_tokens = 3861
 
 [batches.content]
 kind = "lines"
@@ -2244,11 +1882,11 @@ end = 900
 kind = "full"
 
 [[batches]]
-position = 89
+position = 72
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 915 })'
 descriptor = "python decl at src/typeguard/_checkers.py:915"
 cost_tokens = 50
-cum_tokens = 4396
+cum_tokens = 3911
 
 [batches.content]
 kind = "lines"
@@ -2262,11 +1900,11 @@ end = 920
 kind = "full"
 
 [[batches]]
-position = 90
+position = 73
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 365 })'
 descriptor = "python decl at src/typeguard/_checkers.py:365"
 cost_tokens = 63
-cum_tokens = 4459
+cum_tokens = 3974
 
 [batches.content]
 kind = "lines"
@@ -2280,11 +1918,11 @@ end = 371
 kind = "full"
 
 [[batches]]
-position = 91
+position = 74
 key = 'Python(Decl { file: "src/typeguard/_checkers.py", start_line: 555 })'
 descriptor = "python decl at src/typeguard/_checkers.py:555"
 cost_tokens = 69
-cum_tokens = 4528
+cum_tokens = 4043
 
 [batches.content]
 kind = "lines"
@@ -2298,7 +1936,379 @@ end = 562
 kind = "full"
 
 [[batches]]
+position = 75
+key = 'Python(MethodBody { file: "src/typeguard/_exceptions.py", start_line: 22, body_start_line: 23 })'
+descriptor = "python method body at src/typeguard/_exceptions.py:22 body 23"
+cost_tokens = 9
+cum_tokens = 4052
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_exceptions.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Python(DeclNames { file: "src/typeguard/_suppression.py" })'
+descriptor = "python decl names surface in src/typeguard/_suppression.py"
+cost_tokens = 67
+cum_tokens = 4119
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_suppression.py"
+start = 15
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_suppression.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_suppression.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 77
+key = 'Python(Decl { file: "src/typeguard/_suppression.py", start_line: 22 })'
+descriptor = "python decl at src/typeguard/_suppression.py:22"
+cost_tokens = 8
+cum_tokens = 4127
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_suppression.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Python(Decl { file: "src/typeguard/_suppression.py", start_line: 26 })'
+descriptor = "python decl at src/typeguard/_suppression.py:26"
+cost_tokens = 10
+cum_tokens = 4137
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_suppression.py"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Python(Decl { file: "src/typeguard/_suppression.py", start_line: 30 })'
+descriptor = "python decl at src/typeguard/_suppression.py:30"
+cost_tokens = 34
+cum_tokens = 4171
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_suppression.py"
+start = 30
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Python(DeclBody { file: "src/typeguard/_suppression.py", start_line: 26, body_start_line: 27 })'
+descriptor = "python decl body at src/typeguard/_suppression.py:26 body 27"
+cost_tokens = 14
+cum_tokens = 4185
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_suppression.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Python(DeclBody { file: "src/typeguard/_suppression.py", start_line: 22, body_start_line: 23 })'
+descriptor = "python decl body at src/typeguard/_suppression.py:22 body 23"
+cost_tokens = 20
+cum_tokens = 4205
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_suppression.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Python(DeclNames { file: "src/typeguard/_config.py" })'
+descriptor = "python decl names surface in src/typeguard/_config.py"
+cost_tokens = 68
+cum_tokens = 4273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 11
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Python(Decl { file: "src/typeguard/_config.py", start_line: 14 })'
+descriptor = "python decl at src/typeguard/_config.py:14"
+cost_tokens = 0
+cum_tokens = 4273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Python(Decl { file: "src/typeguard/_config.py", start_line: 30 })'
+descriptor = "python decl at src/typeguard/_config.py:30"
+cost_tokens = 0
+cum_tokens = 4273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Python(Decl { file: "src/typeguard/_config.py", start_line: 62 })'
+descriptor = "python decl at src/typeguard/_config.py:62"
+cost_tokens = 9
+cum_tokens = 4282
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 62
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Python(MethodSigs { file: "src/typeguard/_config.py" })'
+descriptor = "python method sigs in src/typeguard/_config.py"
+cost_tokens = 21
+cum_tokens = 4303
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 87
+key = 'Python(Method { file: "src/typeguard/_config.py", start_line: 52 })'
+descriptor = "python method at src/typeguard/_config.py:52"
+cost_tokens = 0
+cum_tokens = 4303
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Python(ClassBody { file: "src/typeguard/_config.py", start_line: 30 })'
+descriptor = "python class body at src/typeguard/_config.py:30"
+cost_tokens = 20
+cum_tokens = 4323
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 49
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Python(ClassBody { file: "src/typeguard/_config.py", start_line: 14 })'
+descriptor = "python class body at src/typeguard/_config.py:14"
+cost_tokens = 28
+cum_tokens = 4351
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 25
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Python(DeclDoc { file: "src/typeguard/_config.py", start_line: 62 })'
+descriptor = "python decl doc at src/typeguard/_config.py:62"
+cost_tokens = 22
+cum_tokens = 4373
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 64
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Python(ClassBody { file: "src/typeguard/_config.py", start_line: 62 })'
+descriptor = "python class body at src/typeguard/_config.py:62"
+cost_tokens = 84
+cum_tokens = 4457
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_config.py"
+start = 98
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 92
+key = 'Python(Method { file: "src/typeguard/_memo.py", start_line: 37 })'
+descriptor = "python method at src/typeguard/_memo.py:37"
+cost_tokens = 71
+cum_tokens = 4528
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/typeguard/_memo.py"
+start = 37
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
 key = 'Python(DeclNames { file: "src/typeguard/_transformer.py" })'
 descriptor = "python decl names surface in src/typeguard/_transformer.py"
 cost_tokens = 172
@@ -2396,7 +2406,7 @@ end = 488
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 285 })'
 descriptor = "python decl at src/typeguard/_transformer.py:285"
 cost_tokens = 0
@@ -2414,7 +2424,7 @@ end = 285
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 313 })'
 descriptor = "python decl at src/typeguard/_transformer.py:313"
 cost_tokens = 0
@@ -2432,7 +2442,7 @@ end = 313
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 338 })'
 descriptor = "python decl at src/typeguard/_transformer.py:338"
 cost_tokens = 0
@@ -2450,7 +2460,7 @@ end = 338
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 488 })'
 descriptor = "python decl at src/typeguard/_transformer.py:488"
 cost_tokens = 0
@@ -2468,7 +2478,7 @@ end = 488
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 117 })'
 descriptor = "python decl at src/typeguard/_transformer.py:117"
 cost_tokens = 8
@@ -2486,7 +2496,7 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 84 })'
 descriptor = "python decl at src/typeguard/_transformer.py:84"
 cost_tokens = 22
@@ -2504,7 +2514,7 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Python(DeclDoc { file: "src/typeguard/_transformer.py", start_line: 313 })'
 descriptor = "python decl doc at src/typeguard/_transformer.py:313"
 cost_tokens = 17
@@ -2522,7 +2532,7 @@ end = 314
 kind = "full"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 88 })'
 descriptor = "python decl at src/typeguard/_transformer.py:88"
 cost_tokens = 24
@@ -2540,7 +2550,7 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 92 })'
 descriptor = "python decl at src/typeguard/_transformer.py:92"
 cost_tokens = 26
@@ -2558,7 +2568,7 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Python(Decl { file: "src/typeguard/_transformer.py", start_line: 96 })'
 descriptor = "python decl at src/typeguard/_transformer.py:96"
 cost_tokens = 26
@@ -2576,7 +2586,7 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Python(ClassBody { file: "src/typeguard/_transformer.py", start_line: 313 })'
 descriptor = "python class body at src/typeguard/_transformer.py:313"
 cost_tokens = 26
@@ -2594,7 +2604,7 @@ end = 317
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Python(MethodSigs { file: "src/typeguard/_transformer.py" })'
 descriptor = "python method sigs in src/typeguard/_transformer.py"
 cost_tokens = 999
@@ -3372,7 +3382,7 @@ end = 1225
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 141 })'
 descriptor = "python method at src/typeguard/_transformer.py:141"
 cost_tokens = 0
@@ -3390,7 +3400,7 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 171 })'
 descriptor = "python method at src/typeguard/_transformer.py:171"
 cost_tokens = 0
@@ -3408,7 +3418,7 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 183 })'
 descriptor = "python method at src/typeguard/_transformer.py:183"
 cost_tokens = 0
@@ -3426,7 +3436,7 @@ end = 183
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 206 })'
 descriptor = "python method at src/typeguard/_transformer.py:206"
 cost_tokens = 0
@@ -3444,7 +3454,7 @@ end = 206
 kind = "full"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 212 })'
 descriptor = "python method at src/typeguard/_transformer.py:212"
 cost_tokens = 0
@@ -3462,7 +3472,7 @@ end = 212
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 225 })'
 descriptor = "python method at src/typeguard/_transformer.py:225"
 cost_tokens = 0
@@ -3480,7 +3490,7 @@ end = 225
 kind = "full"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 238 })'
 descriptor = "python method at src/typeguard/_transformer.py:238"
 cost_tokens = 0
@@ -3498,7 +3508,7 @@ end = 238
 kind = "full"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 275 })'
 descriptor = "python method at src/typeguard/_transformer.py:275"
 cost_tokens = 0
@@ -3516,7 +3526,7 @@ end = 275
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 286 })'
 descriptor = "python method at src/typeguard/_transformer.py:286"
 cost_tokens = 0
@@ -3534,7 +3544,7 @@ end = 286
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 289 })'
 descriptor = "python method at src/typeguard/_transformer.py:289"
 cost_tokens = 0
@@ -3552,7 +3562,7 @@ end = 289
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 293 })'
 descriptor = "python method at src/typeguard/_transformer.py:293"
 cost_tokens = 0
@@ -3570,7 +3580,7 @@ end = 293
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 297 })'
 descriptor = "python method at src/typeguard/_transformer.py:297"
 cost_tokens = 0
@@ -3588,7 +3598,7 @@ end = 297
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 302 })'
 descriptor = "python method at src/typeguard/_transformer.py:302"
 cost_tokens = 0
@@ -3606,7 +3616,7 @@ end = 302
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 306 })'
 descriptor = "python method at src/typeguard/_transformer.py:306"
 cost_tokens = 0
@@ -3624,7 +3634,7 @@ end = 306
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 309 })'
 descriptor = "python method at src/typeguard/_transformer.py:309"
 cost_tokens = 0
@@ -3642,7 +3652,7 @@ end = 309
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 319 })'
 descriptor = "python method at src/typeguard/_transformer.py:319"
 cost_tokens = 0
@@ -3660,7 +3670,7 @@ end = 319
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 322 })'
 descriptor = "python method at src/typeguard/_transformer.py:322"
 cost_tokens = 0
@@ -3678,7 +3688,7 @@ end = 322
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 325 })'
 descriptor = "python method at src/typeguard/_transformer.py:325"
 cost_tokens = 0
@@ -3696,7 +3706,7 @@ end = 325
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 328 })'
 descriptor = "python method at src/typeguard/_transformer.py:328"
 cost_tokens = 0
@@ -3714,7 +3724,7 @@ end = 328
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 334 })'
 descriptor = "python method at src/typeguard/_transformer.py:334"
 cost_tokens = 0
@@ -3732,7 +3742,7 @@ end = 334
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 347 })'
 descriptor = "python method at src/typeguard/_transformer.py:347"
 cost_tokens = 0
@@ -3750,7 +3760,7 @@ end = 347
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 374 })'
 descriptor = "python method at src/typeguard/_transformer.py:374"
 cost_tokens = 0
@@ -3768,7 +3778,7 @@ end = 374
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 401 })'
 descriptor = "python method at src/typeguard/_transformer.py:401"
 cost_tokens = 0
@@ -3786,7 +3796,7 @@ end = 401
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 407 })'
 descriptor = "python method at src/typeguard/_transformer.py:407"
 cost_tokens = 0
@@ -3804,7 +3814,7 @@ end = 407
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 466 })'
 descriptor = "python method at src/typeguard/_transformer.py:466"
 cost_tokens = 0
@@ -3822,7 +3832,7 @@ end = 466
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 476 })'
 descriptor = "python method at src/typeguard/_transformer.py:476"
 cost_tokens = 0
@@ -3840,7 +3850,7 @@ end = 476
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 498 })'
 descriptor = "python method at src/typeguard/_transformer.py:498"
 cost_tokens = 0
@@ -3858,7 +3868,7 @@ end = 498
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 570 })'
 descriptor = "python method at src/typeguard/_transformer.py:570"
 cost_tokens = 0
@@ -3876,7 +3886,7 @@ end = 570
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 580 })'
 descriptor = "python method at src/typeguard/_transformer.py:580"
 cost_tokens = 0
@@ -3894,7 +3904,7 @@ end = 580
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 596 })'
 descriptor = "python method at src/typeguard/_transformer.py:596"
 cost_tokens = 0
@@ -3912,7 +3922,7 @@ end = 596
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 600 })'
 descriptor = "python method at src/typeguard/_transformer.py:600"
 cost_tokens = 0
@@ -3930,7 +3940,7 @@ end = 600
 kind = "full"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 608 })'
 descriptor = "python method at src/typeguard/_transformer.py:608"
 cost_tokens = 0
@@ -3948,7 +3958,7 @@ end = 608
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 615 })'
 descriptor = "python method at src/typeguard/_transformer.py:615"
 cost_tokens = 0
@@ -3966,7 +3976,7 @@ end = 615
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 624 })'
 descriptor = "python method at src/typeguard/_transformer.py:624"
 cost_tokens = 0
@@ -3984,7 +3994,7 @@ end = 624
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 918 })'
 descriptor = "python method at src/typeguard/_transformer.py:918"
 cost_tokens = 0
@@ -4002,7 +4012,7 @@ end = 918
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 945 })'
 descriptor = "python method at src/typeguard/_transformer.py:945"
 cost_tokens = 0
@@ -4020,7 +4030,7 @@ end = 945
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 994 })'
 descriptor = "python method at src/typeguard/_transformer.py:994"
 cost_tokens = 0
@@ -4038,7 +4048,7 @@ end = 994
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 1036 })'
 descriptor = "python method at src/typeguard/_transformer.py:1036"
 cost_tokens = 0
@@ -4056,7 +4066,7 @@ end = 1036
 kind = "full"
 
 [[batches]]
-position = 143
+position = 144
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 1138 })'
 descriptor = "python method at src/typeguard/_transformer.py:1138"
 cost_tokens = 0
@@ -4074,7 +4084,7 @@ end = 1138
 kind = "full"
 
 [[batches]]
-position = 144
+position = 145
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 1181 })'
 descriptor = "python method at src/typeguard/_transformer.py:1181"
 cost_tokens = 0
@@ -4092,7 +4102,7 @@ end = 1181
 kind = "full"
 
 [[batches]]
-position = 145
+position = 146
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 1224 })'
 descriptor = "python method at src/typeguard/_transformer.py:1224"
 cost_tokens = 0
@@ -4110,7 +4120,7 @@ end = 1224
 kind = "full"
 
 [[batches]]
-position = 146
+position = 147
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 352 })'
 descriptor = "python method at src/typeguard/_transformer.py:352"
 cost_tokens = 11
@@ -4128,7 +4138,7 @@ end = 353
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 472 })'
 descriptor = "python method at src/typeguard/_transformer.py:472"
 cost_tokens = 11
@@ -4146,7 +4156,7 @@ end = 473
 kind = "full"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 577 })'
 descriptor = "python method at src/typeguard/_transformer.py:577"
 cost_tokens = 7
@@ -4164,7 +4174,7 @@ end = 578
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Python(MethodBody { file: "src/typeguard/_transformer.py", start_line: 577, body_start_line: 578 })'
 descriptor = "python method body at src/typeguard/_transformer.py:577 body 578"
 cost_tokens = 0
@@ -4182,7 +4192,7 @@ end = 578
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 574 })'
 descriptor = "python method at src/typeguard/_transformer.py:574"
 cost_tokens = 9
@@ -4200,7 +4210,7 @@ end = 575
 kind = "full"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Python(MethodBody { file: "src/typeguard/_transformer.py", start_line: 574, body_start_line: 575 })'
 descriptor = "python method body at src/typeguard/_transformer.py:574 body 575"
 cost_tokens = 0
@@ -4218,7 +4228,7 @@ end = 575
 kind = "full"
 
 [[batches]]
-position = 152
+position = 153
 key = 'Python(MethodDoc { file: "src/typeguard/_transformer.py", start_line: 225 })'
 descriptor = "python method doc at src/typeguard/_transformer.py:225"
 cost_tokens = 13
@@ -4236,7 +4246,7 @@ end = 226
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 913 })'
 descriptor = "python method at src/typeguard/_transformer.py:913"
 cost_tokens = 29
@@ -4254,7 +4264,7 @@ end = 915
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 650 })'
 descriptor = "python method at src/typeguard/_transformer.py:650"
 cost_tokens = 32
@@ -4272,7 +4282,7 @@ end = 652
 kind = "full"
 
 [[batches]]
-position = 155
+position = 156
 key = 'Python(MethodDoc { file: "src/typeguard/_transformer.py", start_line: 918 })'
 descriptor = "python method doc at src/typeguard/_transformer.py:918"
 cost_tokens = 17
@@ -4290,7 +4300,7 @@ end = 919
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Python(Method { file: "src/typeguard/_transformer.py", start_line: 489 })'
 descriptor = "python method at src/typeguard/_transformer.py:489"
 cost_tokens = 36
@@ -4308,7 +4318,7 @@ end = 491
 kind = "full"
 
 [[batches]]
-position = 157
+position = 158
 key = 'Python(MethodDoc { file: "src/typeguard/_transformer.py", start_line: 1138 })'
 descriptor = "python method doc at src/typeguard/_transformer.py:1138"
 cost_tokens = 23
@@ -4326,7 +4336,7 @@ end = 1139
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'Python(ClassBody { file: "src/typeguard/_transformer.py", start_line: 338 })'
 descriptor = "python class body at src/typeguard/_transformer.py:338"
 cost_tokens = 112
@@ -4344,7 +4354,7 @@ end = 345
 kind = "full"
 
 [[batches]]
-position = 159
+position = 160
 key = 'Python(ClassBody { file: "src/typeguard/_transformer.py", start_line: 117 })'
 descriptor = "python class body at src/typeguard/_transformer.py:117"
 cost_tokens = 355
@@ -4362,7 +4372,7 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'Python(MethodDoc { file: "src/typeguard/_transformer.py", start_line: 1181 })'
 descriptor = "python method doc at src/typeguard/_transformer.py:1181"
 cost_tokens = 43
@@ -4380,7 +4390,7 @@ end = 1185
 kind = "full"
 
 [[batches]]
-position = 161
+position = 162
 key = 'Python(MethodDoc { file: "src/typeguard/_transformer.py", start_line: 994 })'
 descriptor = "python method doc at src/typeguard/_transformer.py:994"
 cost_tokens = 46
@@ -4398,7 +4408,7 @@ end = 999
 kind = "full"
 
 [[batches]]
-position = 162
+position = 163
 key = 'Python(MethodBody { file: "src/typeguard/_exceptions.py", start_line: 35, body_start_line: 36 })'
 descriptor = "python method body at src/typeguard/_exceptions.py:35 body 36"
 cost_tokens = 9
@@ -4416,7 +4426,7 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 163
+position = 164
 key = 'Python(DeclNames { file: "src/typeguard/_functions.py" })'
 descriptor = "python decl names surface in src/typeguard/_functions.py"
 cost_tokens = 130
@@ -4546,7 +4556,7 @@ end = 292
 kind = "ellipsis"
 
 [[batches]]
-position = 164
+position = 165
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 291 })'
 descriptor = "python decl at src/typeguard/_functions.py:291"
 cost_tokens = 0
@@ -4564,7 +4574,7 @@ end = 291
 kind = "full"
 
 [[batches]]
-position = 165
+position = 166
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 118 })'
 descriptor = "python decl at src/typeguard/_functions.py:118"
 cost_tokens = 46
@@ -4582,7 +4592,7 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 166
+position = 167
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 149 })'
 descriptor = "python decl at src/typeguard/_functions.py:149"
 cost_tokens = 47
@@ -4600,7 +4610,7 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 167
+position = 168
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 185 })'
 descriptor = "python decl at src/typeguard/_functions.py:185"
 cost_tokens = 48
@@ -4618,7 +4628,7 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 168
+position = 169
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 216 })'
 descriptor = "python decl at src/typeguard/_functions.py:216"
 cost_tokens = 48
@@ -4636,7 +4646,7 @@ end = 221
 kind = "full"
 
 [[batches]]
-position = 169
+position = 170
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 245 })'
 descriptor = "python decl at src/typeguard/_functions.py:245"
 cost_tokens = 49
@@ -4654,7 +4664,7 @@ end = 249
 kind = "full"
 
 [[batches]]
-position = 170
+position = 171
 key = 'Python(DeclBody { file: "src/typeguard/_functions.py", start_line: 291, body_start_line: 299 })'
 descriptor = "python decl body at src/typeguard/_functions.py:291 body 299"
 cost_tokens = 19
@@ -4672,7 +4682,7 @@ end = 299
 kind = "full"
 
 [[batches]]
-position = 171
+position = 172
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 28 })'
 descriptor = "python decl at src/typeguard/_functions.py:28"
 cost_tokens = 91
@@ -4690,7 +4700,7 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 172
+position = 173
 key = 'Python(DeclBody { file: "src/typeguard/_functions.py", start_line: 28, body_start_line: 36 })'
 descriptor = "python decl body at src/typeguard/_functions.py:28 body 36"
 cost_tokens = 9
@@ -4708,7 +4718,7 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 173
+position = 174
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 39 })'
 descriptor = "python decl at src/typeguard/_functions.py:39"
 cost_tokens = 90
@@ -4726,7 +4736,7 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 174
+position = 175
 key = 'Python(DeclBody { file: "src/typeguard/_functions.py", start_line: 39, body_start_line: 47 })'
 descriptor = "python decl body at src/typeguard/_functions.py:39 body 47"
 cost_tokens = 7
@@ -4744,7 +4754,7 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 175
+position = 176
 key = 'Python(DeclDoc { file: "src/typeguard/_functions.py", start_line: 291 })'
 descriptor = "python decl doc at src/typeguard/_functions.py:291"
 cost_tokens = 66
@@ -4762,7 +4772,7 @@ end = 298
 kind = "full"
 
 [[batches]]
-position = 176
+position = 177
 key = 'Python(Decl { file: "src/typeguard/_functions.py", start_line: 50 })'
 descriptor = "python decl at src/typeguard/_functions.py:50"
 cost_tokens = 125
@@ -4780,7 +4790,7 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 177
+position = 178
 key = 'Python(DeclDoc { file: "src/typeguard/_functions.py", start_line: 50 })'
 descriptor = "python decl doc at src/typeguard/_functions.py:50"
 cost_tokens = 22
@@ -4798,7 +4808,7 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 178
+position = 179
 key = 'Python(DeclNames { file: "src/typeguard/_decorators.py" })'
 descriptor = "python decl names surface in src/typeguard/_decorators.py"
 cost_tokens = 89
@@ -4880,7 +4890,7 @@ end = 151
 kind = "ellipsis"
 
 [[batches]]
-position = 179
+position = 180
 key = 'Python(Decl { file: "src/typeguard/_decorators.py", start_line: 32 })'
 descriptor = "python decl at src/typeguard/_decorators.py:32"
 cost_tokens = 0
@@ -4898,7 +4908,7 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 180
+position = 181
 key = 'Python(Decl { file: "src/typeguard/_decorators.py", start_line: 56 })'
 descriptor = "python decl at src/typeguard/_decorators.py:56"
 cost_tokens = 0
@@ -4916,7 +4926,7 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 181
+position = 182
 key = 'Python(Decl { file: "src/typeguard/_decorators.py", start_line: 146 })'
 descriptor = "python decl at src/typeguard/_decorators.py:146"
 cost_tokens = 10
@@ -4934,7 +4944,7 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 182
+position = 183
 key = 'Python(Decl { file: "src/typeguard/_decorators.py", start_line: 36 })'
 descriptor = "python decl at src/typeguard/_decorators.py:36"
 cost_tokens = 34
@@ -4952,7 +4962,7 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 183
+position = 184
 key = 'Python(DeclBody { file: "src/typeguard/_decorators.py", start_line: 32, body_start_line: 33 })'
 descriptor = "python decl body at src/typeguard/_decorators.py:32 body 33"
 cost_tokens = 20
@@ -4970,7 +4980,7 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 184
+position = 185
 key = 'Python(DeclBody { file: "src/typeguard/_decorators.py", start_line: 146, body_start_line: 147 })'
 descriptor = "python decl body at src/typeguard/_decorators.py:146 body 147"
 cost_tokens = 21
@@ -4988,7 +4998,7 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 185
+position = 186
 key = 'Python(Decl { file: "src/typeguard/_decorators.py", start_line: 136 })'
 descriptor = "python decl at src/typeguard/_decorators.py:136"
 cost_tokens = 97
@@ -5006,7 +5016,7 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 186
+position = 187
 key = 'Python(DeclBody { file: "src/typeguard/_decorators.py", start_line: 136, body_start_line: 143 })'
 descriptor = "python decl body at src/typeguard/_decorators.py:136 body 143"
 cost_tokens = 19
@@ -5024,7 +5034,7 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 187
+position = 188
 key = 'Python(Decl { file: "src/typeguard/_decorators.py", start_line: 150 })'
 descriptor = "python decl at src/typeguard/_decorators.py:150"
 cost_tokens = 104
@@ -5042,7 +5052,7 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 188
+position = 189
 key = 'Python(DeclDoc { file: "src/typeguard/_decorators.py", start_line: 150 })'
 descriptor = "python decl doc at src/typeguard/_decorators.py:150"
 cost_tokens = 22
@@ -5060,7 +5070,7 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 189
+position = 190
 key = 'Python(DeclNames { file: "src/typeguard/_importhook.py" })'
 descriptor = "python decl names surface in src/typeguard/_importhook.py"
 cost_tokens = 117
@@ -5150,7 +5160,7 @@ end = 184
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 191
 key = 'Python(Decl { file: "src/typeguard/_importhook.py", start_line: 51 })'
 descriptor = "python decl at src/typeguard/_importhook.py:51"
 cost_tokens = 0
@@ -5168,7 +5178,7 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 191
+position = 192
 key = 'Python(Decl { file: "src/typeguard/_importhook.py", start_line: 55 })'
 descriptor = "python decl at src/typeguard/_importhook.py:55"
 cost_tokens = 0
@@ -5186,7 +5196,7 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 192
+position = 193
 key = 'Python(Decl { file: "src/typeguard/_importhook.py", start_line: 109 })'
 descriptor = "python decl at src/typeguard/_importhook.py:109"
 cost_tokens = 0
@@ -5204,7 +5214,7 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 193
+position = 194
 key = 'Python(Decl { file: "src/typeguard/_importhook.py", start_line: 156 })'
 descriptor = "python decl at src/typeguard/_importhook.py:156"
 cost_tokens = 0
@@ -5222,7 +5232,7 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 194
+position = 195
 key = 'Python(DeclBody { file: "src/typeguard/_importhook.py", start_line: 51, body_start_line: 52 })'
 descriptor = "python decl body at src/typeguard/_importhook.py:51 body 52"
 cost_tokens = 18
@@ -5240,7 +5250,7 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 195
+position = 196
 key = 'Python(Decl { file: "src/typeguard/_importhook.py", start_line: 183 })'
 descriptor = "python decl at src/typeguard/_importhook.py:183"
 cost_tokens = 49
@@ -5258,7 +5268,7 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 196
+position = 197
 key = 'Python(DeclDoc { file: "src/typeguard/_importhook.py", start_line: 156 })'
 descriptor = "python decl doc at src/typeguard/_importhook.py:156"
 cost_tokens = 31
@@ -5276,7 +5286,7 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 197
+position = 198
 key = 'Python(Decl { file: "src/typeguard/_importhook.py", start_line: 45 })'
 descriptor = "python decl at src/typeguard/_importhook.py:45"
 cost_tokens = 33
@@ -5294,7 +5304,7 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 198
+position = 199
 key = 'Python(MethodSigs { file: "src/typeguard/_importhook.py" })'
 descriptor = "python method sigs in src/typeguard/_importhook.py"
 cost_tokens = 151
@@ -5448,7 +5458,7 @@ end = 176
 kind = "ellipsis"
 
 [[batches]]
-position = 199
+position = 200
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 120 })'
 descriptor = "python method at src/typeguard/_importhook.py:120"
 cost_tokens = 0
@@ -5466,7 +5476,7 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 200
+position = 201
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 138 })'
 descriptor = "python method at src/typeguard/_importhook.py:138"
 cost_tokens = 0
@@ -5484,7 +5494,7 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 201
+position = 202
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 161 })'
 descriptor = "python method at src/typeguard/_importhook.py:161"
 cost_tokens = 0
@@ -5502,7 +5512,7 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 202
+position = 203
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 164 })'
 descriptor = "python method at src/typeguard/_importhook.py:164"
 cost_tokens = 0
@@ -5520,7 +5530,7 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 203
+position = 204
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 175 })'
 descriptor = "python method at src/typeguard/_importhook.py:175"
 cost_tokens = 0
@@ -5538,7 +5548,7 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 204
+position = 205
 key = 'Python(MethodDoc { file: "src/typeguard/_importhook.py", start_line: 175 })'
 descriptor = "python method doc at src/typeguard/_importhook.py:175"
 cost_tokens = 12
@@ -5556,7 +5566,7 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 205
+position = 206
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 99 })'
 descriptor = "python method at src/typeguard/_importhook.py:99"
 cost_tokens = 29
@@ -5574,7 +5584,7 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 206
+position = 207
 key = 'Python(MethodBody { file: "src/typeguard/_importhook.py", start_line: 164, body_start_line: 165 })'
 descriptor = "python method body at src/typeguard/_importhook.py:164 body 165"
 cost_tokens = 5
@@ -5592,7 +5602,7 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 207
+position = 208
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 167 })'
 descriptor = "python method at src/typeguard/_importhook.py:167"
 cost_tokens = 52
@@ -5610,7 +5620,7 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 208
+position = 209
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 124 })'
 descriptor = "python method at src/typeguard/_importhook.py:124"
 cost_tokens = 56
@@ -5628,7 +5638,7 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 209
+position = 210
 key = 'Python(Method { file: "src/typeguard/_importhook.py", start_line: 56 })'
 descriptor = "python method at src/typeguard/_importhook.py:56"
 cost_tokens = 76
@@ -5646,7 +5656,7 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 210
+position = 211
 key = 'Python(DeclDoc { file: "src/typeguard/_importhook.py", start_line: 109 })'
 descriptor = "python decl doc at src/typeguard/_importhook.py:109"
 cost_tokens = 109
@@ -5664,7 +5674,7 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 211
+position = 212
 key = 'Python(DeclDoc { file: "src/typeguard/_config.py", start_line: 14 })'
 descriptor = "python decl doc at src/typeguard/_config.py:14"
 cost_tokens = 113
@@ -5682,7 +5692,7 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 212
+position = 213
 key = 'Python(Imports { file: "src/typeguard/_memo.py" })'
 descriptor = "python imports in src/typeguard/_memo.py"
 cost_tokens = 45
@@ -5700,7 +5710,7 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 213
+position = 214
 key = 'Python(MethodDoc { file: "src/typeguard/_transformer.py", start_line: 945 })'
 descriptor = "python method doc at src/typeguard/_transformer.py:945"
 cost_tokens = 56
@@ -5718,7 +5728,7 @@ end = 950
 kind = "full"
 
 [[batches]]
-position = 214
+position = 215
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 854
@@ -5752,7 +5762,7 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 215
+position = 216
 key = 'Python(DeclNames { file: "src/typeguard/_utils.py" })'
 descriptor = "python decl names surface in src/typeguard/_utils.py"
 cost_tokens = 131
@@ -5874,7 +5884,7 @@ end = 163
 kind = "ellipsis"
 
 [[batches]]
-position = 216
+position = 217
 key = 'Python(Decl { file: "src/typeguard/_utils.py", start_line: 66 })'
 descriptor = "python decl at src/typeguard/_utils.py:66"
 cost_tokens = 0
@@ -5892,7 +5902,7 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 217
+position = 218
 key = 'Python(Decl { file: "src/typeguard/_utils.py", start_line: 104 })'
 descriptor = "python decl at src/typeguard/_utils.py:104"
 cost_tokens = 0
@@ -5910,7 +5920,7 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 218
+position = 219
 key = 'Python(Decl { file: "src/typeguard/_utils.py", start_line: 127 })'
 descriptor = "python decl at src/typeguard/_utils.py:127"
 cost_tokens = 0
@@ -5928,7 +5938,7 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 219
+position = 220
 key = 'Python(Decl { file: "src/typeguard/_utils.py", start_line: 142 })'
 descriptor = "python decl at src/typeguard/_utils.py:142"
 cost_tokens = 0
@@ -5946,7 +5956,7 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 220
+position = 221
 key = 'Python(Decl { file: "src/typeguard/_utils.py", start_line: 154 })'
 descriptor = "python decl at src/typeguard/_utils.py:154"
 cost_tokens = 0
@@ -5964,7 +5974,7 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 221
+position = 222
 key = 'Python(Decl { file: "src/typeguard/_utils.py", start_line: 162 })'
 descriptor = "python decl at src/typeguard/_utils.py:162"
 cost_tokens = 0
@@ -5982,7 +5992,7 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 222
+position = 223
 key = 'Python(Decl { file: "src/typeguard/_utils.py", start_line: 172 })'
 descriptor = "python decl at src/typeguard/_utils.py:172"
 cost_tokens = 8
@@ -6000,7 +6010,7 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 223
+position = 224
 key = 'Python(ClassBody { file: "src/typeguard/_utils.py", start_line: 172 })'
 descriptor = "python class body at src/typeguard/_utils.py:172"
 cost_tokens = 10
@@ -6018,7 +6028,7 @@ end = 174
 kind = "full"
 
 [[batches]]
-position = 224
+position = 225
 key = 'Python(MethodSigs { file: "src/typeguard/_utils.py" })'
 descriptor = "python method sigs in src/typeguard/_utils.py"
 cost_tokens = 14
@@ -6044,7 +6054,7 @@ end = 177
 kind = "ellipsis"
 
 [[batches]]
-position = 225
+position = 226
 key = 'Python(Method { file: "src/typeguard/_utils.py", start_line: 176 })'
 descriptor = "python method at src/typeguard/_utils.py:176"
 cost_tokens = 0
@@ -6062,7 +6072,7 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 226
+position = 227
 key = 'Python(MethodBody { file: "src/typeguard/_utils.py", start_line: 176, body_start_line: 177 })'
 descriptor = "python method body at src/typeguard/_utils.py:176 body 177"
 cost_tokens = 7
@@ -6080,7 +6090,7 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 227
+position = 228
 key = 'Python(DeclDoc { file: "src/typeguard/_utils.py", start_line: 127 })'
 descriptor = "python decl doc at src/typeguard/_utils.py:127"
 cost_tokens = 73
@@ -6098,7 +6108,7 @@ end = 134
 kind = "full"
 
 [[batches]]
-position = 228
+position = 229
 key = 'Python(DeclDoc { file: "src/typeguard/_utils.py", start_line: 104 })'
 descriptor = "python decl doc at src/typeguard/_utils.py:104"
 cost_tokens = 81

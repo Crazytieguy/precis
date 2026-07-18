@@ -93,24 +93,7 @@ README.md
       40→## Supported Features & Best–Practices
     …
       58→## Cloning the repository
-      59→
-      60→When cloning the Requests repository, you may need to add the `-c
-      61→fetch.fsck.badTimezone=ignore` flag to avoid an error about a bad commit timestamp (see
-      62→[this issue](https://github.com/psf/requests/issues/2690) for more background):
-      63→
-      64→```shell
-      65→git clone -c fetch.fsck.badTimezone=ignore https://github.com/psf/requests.git
-      66→```
-      67→
-      68→You can also apply this setting to your global Git config:
-      69→
-      70→```shell
-      71→git config --global fetch.fsck.badTimezone ignore
-      72→```
-      73→
-      74→---
-      75→
-      76→[![Kenneth Reitz](https://raw.githubusercontent.com/psf/requests/main/ext/kr.png)](https://kennethreitz.org) [![Python Software Foundation](https://raw.githubusercontent.com/psf/requests/main/ext/psf.png)](https://www.python.org/psf)
+    …
 docs/
     .nojekyll
     Makefile
@@ -315,32 +298,43 @@ src/
         cookies.py
         exceptions.py
         help.py
-            …
-              37→def _implementation():
-            …
-              69→def info() -> dict[str, Any]:
-              70→    """Generate information for a bug report."""
-            …
-             128→def main():
-             129→    """Pretty-print the bug information as JSON."""
-             130→    print(json.dumps(info(), sort_keys=True, indent=2))
-            …
         hooks.py
         models.py
         packages.py
         py.typed
         sessions.py
         status_codes.py
-            …
-              23→_codes = {
-            …
-             106→codes: LookupDict[int] = LookupDict(name="status_codes")
-             107→
-             108→
-             109→def _init():
-            …
         structures.py
         utils.py
+            …
+             149→def dict_to_sequence(
+            …
+             160→def super_len(o: Any) -> int:
+            …
+             231→def get_netrc_auth(
+            …
+             283→def guess_filename(obj: Any) -> str | None:
+            …
+             290→def extract_zipped_paths(path: str) -> str:
+            …
+             328→@contextlib.contextmanager
+            …
+             341→def from_key_val_list(
+            …
+             376→def to_key_val_list(
+            …
+             408→def parse_list_header(value: str) -> list[str]:
+            …
+             440→def parse_dict_header(value: str) -> dict[str, str | None]:
+            …
+             475→def unquote_header_value(value: str, is_filename: bool = False) -> str:
+            …
+             500→def dict_from_cookiejar(cj: CookieJar) -> dict[str, str | None]:
+            …
+             511→def add_dict_to_cookiejar(cj: CookieJar, cookie_dict: dict[str, str]) -> CookieJar:
+            …
+             522→def get_encodings_from_content(content: str) -> list[str]:
+            …
 tests/
     __init__.py
     certs/
