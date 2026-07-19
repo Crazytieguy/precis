@@ -46,6 +46,7 @@ pub enum BatchKey {
     Python(PythonKey),
     Lua(LuaKey),
     Yaml(YamlKey),
+    Sql(SqlKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -99,6 +100,7 @@ impl_batchkey! {
     Python => PythonKey,
     Lua => LuaKey,
     Yaml => YamlKey,
+    Sql => SqlKey,
 }
 
 /// Per-walker contributions to the [`WalkerKey`] dispatch on
@@ -373,6 +375,17 @@ pub enum PlaintextKey {
     /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
     /// (or autotools `*.1.in`) manual.
     ManLede { file: PathBuf },
+}
+
+/// Root-contract SQL batches. Migration forests and other incidental SQL
+/// stay unreachable: the SQL walker admits only root files or exact paths
+/// cited from a root README/build file.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum SqlKey {
+    /// Source-ordered, semicolon-aligned DDL statements.
+    SchemaChunk { file: PathBuf, chunk_index: usize },
+    /// A bounded set of representative `SELECT ... WHERE` contracts.
+    QueryChunk { file: PathBuf, chunk_index: usize },
 }
 
 /// YAML batches. Narrowly scoped to operational configs and root
@@ -1019,6 +1032,27 @@ impl InnerKey for PlaintextKey {
                     display_path(file, root)
                 )
             }
+        }
+    }
+}
+
+impl InnerKey for SqlKey {
+    fn is_orientation(&self) -> bool {
+        true
+    }
+
+    fn describe(&self, root: &Path) -> String {
+        match self {
+            SqlKey::SchemaChunk { file, chunk_index } => format!(
+                "SQL schema contracts chunk #{} in {}",
+                chunk_index + 1,
+                display_path(file, root),
+            ),
+            SqlKey::QueryChunk { file, chunk_index } => format!(
+                "SQL SELECT/WHERE contracts chunk #{} in {}",
+                chunk_index + 1,
+                display_path(file, root),
+            ),
         }
     }
 }

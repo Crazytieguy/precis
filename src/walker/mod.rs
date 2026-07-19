@@ -33,6 +33,7 @@ pub mod plaintext;
 pub mod prisma;
 pub mod python;
 pub mod rust;
+pub mod sql;
 pub mod toml;
 pub mod typescript;
 mod workspace;
@@ -116,6 +117,7 @@ impl Walker for FsWalker {
         out.extend(python::expand_in_dir(dir, ctx));
         out.extend(lua::expand_in_dir(dir, ctx));
         out.extend(yaml::expand_in_dir(dir, ctx));
+        out.extend(sql::expand_in_dir(dir, ctx));
         out
     }
 }
@@ -136,6 +138,8 @@ pub struct WalkCtx {
     /// Files hyperlinked from the root README — exempts them from the
     /// `examples/`-style non-essential demotion.
     readme_cited_paths: OnceCell<HashSet<PathBuf>>,
+    /// Nested SQL files named exactly by a root README/build file.
+    sql_cited_paths: OnceCell<HashSet<PathBuf>>,
 }
 
 impl WalkCtx {
@@ -155,6 +159,7 @@ impl WalkCtx {
             c_state: c::CState::default(),
             python_state: python::PythonState::default(),
             readme_cited_paths: OnceCell::new(),
+            sql_cited_paths: OnceCell::new(),
         }
     }
 
@@ -216,6 +221,16 @@ impl WalkCtx {
         cited
             .iter()
             .any(|cited_path| cited_path.starts_with(&canonical))
+    }
+
+    /// True iff a nested SQL path is named exactly by a root README or
+    /// build file. Root SQL files are admitted directly by the SQL walker.
+    pub(in crate::walker) fn is_sql_cited(&self, path: &Path) -> bool {
+        let cited = self
+            .sql_cited_paths
+            .get_or_init(|| sql::collect_root_cited_sql_paths(&self.root));
+        let canonical = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
+        cited.contains(&canonical)
     }
 
     /// True when `path` is an auto-injected agent doc (AGENTS.md /
