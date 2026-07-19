@@ -258,6 +258,15 @@ pub enum TsKey {
         /// Zero-based source-order slice index.
         chunk_index: usize,
     },
+    /// Detail/example continuation of one oversized documented member.
+    /// Predecessor: the corresponding `ExportMemberDoc` head.
+    ExportMemberDocTail {
+        file: PathBuf,
+        /// Parent export line.
+        start_line: usize,
+        /// Zero-based source-order slice index shared with the head.
+        chunk_index: usize,
+    },
     /// Whole member-name catalog of one big exported declaration
     /// (interface / object-type alias / class above the per-member
     /// split range). Predecessor: the matching `Export` header.
@@ -786,6 +795,7 @@ impl InnerKey for TsKey {
             TsKey::ExportBody { .. }
                 | TsKey::ExportMember { .. }
                 | TsKey::ExportMemberDoc { .. }
+                | TsKey::ExportMemberDocTail { .. }
                 | TsKey::ExportTail { .. }
                 | TsKey::ModuleItemBody { .. }
         )
@@ -809,6 +819,7 @@ impl InnerKey for TsKey {
             // dropping it to the default leaves axios flat and costs
             // commander -0.212 (2026-07-06).
             TsKey::ExportMemberDoc { .. }
+            | TsKey::ExportMemberDocTail { .. }
             | TsKey::ExportMemberNames { .. }
             | TsKey::ExportMemberNamesChunk { .. }
             | TsKey::ModuleItemNames { .. }
@@ -857,6 +868,15 @@ impl InnerKey for TsKey {
                 chunk_index,
             } => format!(
                 "export member docs #{} at {}:{start_line}",
+                chunk_index + 1,
+                display_path(file, root)
+            ),
+            TsKey::ExportMemberDocTail {
+                file,
+                start_line,
+                chunk_index,
+            } => format!(
+                "export member docs tail #{} at {}:{start_line}",
                 chunk_index + 1,
                 display_path(file, root)
             ),

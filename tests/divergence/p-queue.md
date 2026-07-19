@@ -1,4 +1,4 @@
-Score(3000)=0.493 I=0.787 C=0.310 ns_rows≤3K=21/42 (reached=8 partial=3 missing=10)
+Score(3000)=0.503 I=0.789 C=0.321 ns_rows≤3K=21/42 (reached=9 partial=3 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,47 +57,47 @@ Score(3000)=0.493 I=0.787 C=0.310 ns_rows≤3K=21/42 (reached=8 partial=3 missin
 | walker |  | 2517 | 25 | readme.md section #9 |  |  | 0.545 |
 | walker |  | 2542 | 25 | readme.md section #25 |  |  | 0.545 |
 | walker |  | 2596 | 54 | package runtime dependencies in package.json |  |  | 0.545 |
-| ns | 2715 |  | 318 | source/options.ts — TaskOptions (AbortSignal cancellation example) | 3.9 | 3.8 | 0.499 |
-| walker |  | 2725 | 129 | readme.md section #1 |  |  | 0.499 |
-| walker |  | 2755 | 30 | readme.md section #22 |  |  | 0.499 |
-| walker |  | 2802 | 47 | imports in source/priority-queue.ts |  |  | 0.499 |
-| walker |  | 2835 | 33 | readme.md section #19 |  |  | 0.499 |
-| walker |  | 2869 | 34 | readme.md section #3 |  |  | 0.499 |
-| ns | 2932 |  | 217 | source/priority-queue.ts — type + class fields | 3.10 |  | 0.493 |
-| walker |  | 3108 | 239 | package identity metadata in package.json |  |  | 0.516 |
-| walker |  | 3148 | 40 | export names surface in source/lower-bound.ts |  |  | 0.516 |
-| walker |  | 3148 | 0 | export at source/lower-bound.ts:3 |  |  | 0.516 |
-| walker |  | 3197 | 49 | readme.md section #8 |  |  | 0.516 |
-| ns | 3314 |  | 382 | source/priority-queue.ts — enqueue (binary insertion) | 3.11 | 3.10 | 0.483 |
-| walker |  | 3477 | 280 | export member docs #1 at source/options.ts:27 |  |  | 0.556 |
-| ns | 3717 |  | 403 | source/priority-queue.ts — setPriority + remove | 3.12 | 3.11 | 0.526 |
-| walker |  | 3871 | 394 | export member docs #1 at source/options.ts:111 |  |  | 0.616 |
-| ns | 3951 |  | 234 | source/priority-queue.ts — dequeue | 3.13 | 3.10 | 0.596 |
-| walker |  | 4074 | 203 | readme.md section #2 |  |  | 0.650 |
-| walker |  | 4138 | 64 | readme.md section #26 |  |  | 0.650 |
-| walker |  | 4211 | 73 | readme.md section #10 |  |  | 0.650 |
-| ns | 4225 |  | 274 | source/priority-queue.ts — filter/size/#compact | 3.14 | 3.13 | 0.624 |
-| walker |  | 4246 | 35 | export names surface in source/queue.ts |  |  | 0.626 |
-| walker |  | 4413 | 167 | readme.md section #42 |  |  | 0.626 |
-| ns | 4445 |  | 220 | source/index.ts — imports, Task/EventName types, class doc | 4.1 |  | 0.619 |
-| ns | 4749 |  | 304 | source/index.ts — PQueue class fields (interval/strict/rate-limit state) | 4.2 |  | 0.596 |
-| ns | 5002 |  | 253 | source/index.ts — PQueue class fields (queue/concurrency/task-tracking state) | 4.3 | 4.2 | 0.578 |
-| ns | 5289 |  | 287 | source/index.ts — public member roster (locations) | 4.4 |  | 0.597 |
-| walker |  | 5524 | 1111 | export body at source/priority-queue.ts:11 body 18 |  |  | 0.746 |
-| ns | 5575 |  | 286 | source/index.ts — private member roster (locations) | 4.5 |  | 0.727 |
-| walker |  | 5679 | 155 | export body at source/lower-bound.ts:3 body 4 |  |  | 0.727 |
-| walker |  | 5738 | 59 | imports in bench.ts |  |  | 0.727 |
-| ns | 5742 |  | 167 | source/index.ts — constructor (defaults merge) | 4.6 | 4.4 | 0.714 |
-| walker |  | 5996 | 258 | package dev/peer dependencies in package.json |  |  | 0.714 |
-| walker |  | 6263 | 267 | readme.md section #35 |  |  | 0.714 |
-| ns | 6314 |  | 572 | source/index.ts — constructor (validation + field assignment) | 4.7 | 4.6 | 0.686 |
-| ns | 6456 |  | 142 | source/index.ts — admission-control getters | 4.8 | 4.5 | 0.675 |
-| ns | 6959 |  | 503 | test/basic.ts — test-name roster (part 1 of 2) | 5.1 |  | 0.655 |
-| ns | 7491 |  | 532 | test/basic.ts — test-name roster (part 2 of 2) | 5.2 | 5.1 | 0.637 |
-| ns | 8122 |  | 631 | test/advanced.ts — test-name roster (part 1 of 2) | 5.3 |  | 0.617 |
-| ns | 8772 |  | 650 | test/advanced.ts — test-name roster (part 2 of 2) | 5.4 | 5.3 | 0.600 |
-| ns | 9271 |  | 499 | test/strict.ts — test-name roster | 5.5 |  | 0.585 |
-| ns | 9451 |  | 180 | test/priority-queue.ts — test-name roster | 5.6 |  | 0.581 |
-| ns | 9578 |  | 127 | test/validation.ts — test-name roster | 5.7 |  | 0.578 |
-| ns | 9750 |  | 172 | test/rate-limit.ts — test-name roster | 5.8 |  | 0.574 |
-| ns | 9937 |  | 187 | test/debug.ts — test-name roster | 5.9 |  | 0.569 |
+| walker |  | 2690 | 94 | export member docs #1 at source/options.ts:111 |  |  | 0.556 |
+| ns | 2715 |  | 318 | source/options.ts — TaskOptions (AbortSignal cancellation example) | 3.9 | 3.8 | 0.509 |
+| walker |  | 2819 | 129 | readme.md section #1 |  |  | 0.509 |
+| walker |  | 2849 | 30 | readme.md section #22 |  |  | 0.509 |
+| walker |  | 2896 | 47 | imports in source/priority-queue.ts |  |  | 0.510 |
+| walker |  | 2929 | 33 | readme.md section #19 |  |  | 0.510 |
+| ns | 2932 |  | 217 | source/priority-queue.ts — type + class fields | 3.10 |  | 0.503 |
+| walker |  | 2963 | 34 | readme.md section #3 |  |  | 0.503 |
+| walker |  | 3202 | 239 | package identity metadata in package.json |  |  | 0.525 |
+| walker |  | 3242 | 40 | export names surface in source/lower-bound.ts |  |  | 0.525 |
+| walker |  | 3242 | 0 | export at source/lower-bound.ts:3 |  |  | 0.525 |
+| walker |  | 3291 | 49 | readme.md section #8 |  |  | 0.525 |
+| ns | 3314 |  | 382 | source/priority-queue.ts — enqueue (binary insertion) | 3.11 | 3.10 | 0.492 |
+| walker |  | 3571 | 280 | export member docs #1 at source/options.ts:27 |  |  | 0.564 |
+| ns | 3717 |  | 403 | source/priority-queue.ts — setPriority + remove | 3.12 | 3.11 | 0.534 |
+| walker |  | 3774 | 203 | readme.md section #2 |  |  | 0.592 |
+| walker |  | 3838 | 64 | readme.md section #26 |  |  | 0.592 |
+| walker |  | 3911 | 73 | readme.md section #10 |  |  | 0.592 |
+| walker |  | 3946 | 35 | export names surface in source/queue.ts |  |  | 0.594 |
+| ns | 3951 |  | 234 | source/priority-queue.ts — dequeue | 3.13 | 3.10 | 0.575 |
+| walker |  | 4113 | 167 | readme.md section #42 |  |  | 0.575 |
+| ns | 4225 |  | 274 | source/priority-queue.ts — filter/size/#compact | 3.14 | 3.13 | 0.552 |
+| ns | 4445 |  | 220 | source/index.ts — imports, Task/EventName types, class doc | 4.1 |  | 0.548 |
+| ns | 4749 |  | 304 | source/index.ts — PQueue class fields (interval/strict/rate-limit state) | 4.2 |  | 0.528 |
+| ns | 5002 |  | 253 | source/index.ts — PQueue class fields (queue/concurrency/task-tracking state) | 4.3 | 4.2 | 0.512 |
+| walker |  | 5224 | 1111 | export body at source/priority-queue.ts:11 body 18 |  |  | 0.680 |
+| ns | 5289 |  | 287 | source/index.ts — public member roster (locations) | 4.4 |  | 0.692 |
+| walker |  | 5379 | 155 | export body at source/lower-bound.ts:3 body 4 |  |  | 0.692 |
+| walker |  | 5438 | 59 | imports in bench.ts |  |  | 0.692 |
+| ns | 5575 |  | 286 | source/index.ts — private member roster (locations) | 4.5 |  | 0.675 |
+| walker |  | 5696 | 258 | package dev/peer dependencies in package.json |  |  | 0.675 |
+| ns | 5742 |  | 167 | source/index.ts — constructor (defaults merge) | 4.6 | 4.4 | 0.663 |
+| walker |  | 5963 | 267 | readme.md section #35 |  |  | 0.663 |
+| ns | 6314 |  | 572 | source/index.ts — constructor (validation + field assignment) | 4.7 | 4.6 | 0.637 |
+| ns | 6456 |  | 142 | source/index.ts — admission-control getters | 4.8 | 4.5 | 0.627 |
+| ns | 6959 |  | 503 | test/basic.ts — test-name roster (part 1 of 2) | 5.1 |  | 0.608 |
+| ns | 7491 |  | 532 | test/basic.ts — test-name roster (part 2 of 2) | 5.2 | 5.1 | 0.591 |
+| ns | 8122 |  | 631 | test/advanced.ts — test-name roster (part 1 of 2) | 5.3 |  | 0.573 |
+| ns | 8772 |  | 650 | test/advanced.ts — test-name roster (part 2 of 2) | 5.4 | 5.3 | 0.557 |
+| ns | 9271 |  | 499 | test/strict.ts — test-name roster | 5.5 |  | 0.543 |
+| ns | 9451 |  | 180 | test/priority-queue.ts — test-name roster | 5.6 |  | 0.540 |
+| ns | 9578 |  | 127 | test/validation.ts — test-name roster | 5.7 |  | 0.537 |
+| ns | 9750 |  | 172 | test/rate-limit.ts — test-name roster | 5.8 |  | 0.533 |
+| ns | 9937 |  | 187 | test/debug.ts — test-name roster | 5.9 |  | 0.529 |
