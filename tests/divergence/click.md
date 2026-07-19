@@ -9,28 +9,28 @@ Score(3000)=0.689 I=0.795 C=0.598 ns_rows≤3K=18/46 (reached=10 partial=1 missi
 | walker |  | 134 | 81 | README headline in README.md |  |  | 1.000 |
 | walker |  | 164 | 30 | headings outline in README.md |  |  | 1.000 |
 | walker |  | 195 | 31 | [dependencies] in pyproject.toml |  |  | 1.000 |
+| walker |  | 206 | 11 | listing of '.devcontainer' |  |  | 1.000 |
 | ns | 236 |  | 105 | pyproject.toml package identity | 1.3 |  | 0.816 |
 | ns | 265 |  | 29 | CHANGES.rst range markers | 1.4 |  | 0.783 |
-| walker |  | 294 | 99 | README.md section #0 |  |  | 0.783 |
-| walker |  | 305 | 11 | listing of '.devcontainer' |  |  | 0.783 |
-| ns | 383 |  | 118 | docs/ sitemap (index.rst toctree, Documentation + Tutorials) | 1.5 |  | 0.606 |
-| walker |  | 391 | 86 | listing of 'src/click' |  |  | 0.628 |
-| walker |  | 406 | 15 | python imports #1 in src/click/__init__.py |  |  | 0.628 |
-| ns | 467 |  | 84 | docs/ sitemap (index.rst toctree, How to Guides) | 1.6 | 1.5 | 0.559 |
-| walker |  | 477 | 71 | python imports in src/click/__init__.py |  |  | 0.559 |
-| walker |  | 495 | 18 | python imports #6 in src/click/__init__.py |  |  | 0.559 |
-| walker |  | 525 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.560 |
-| ns | 553 |  | 86 | src/click/ module listing | 1.7 |  | 0.646 |
-| walker |  | 625 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.650 |
-| walker |  | 643 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.650 |
-| walker |  | 643 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.650 |
-| ns | 760 |  | 207 | docs/ + docs/_static/ listing | 1.8 |  | 0.499 |
-| walker |  | 804 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.500 |
-| ns | 943 |  | 183 | tests/ + tests/typing/ listing | 1.9 |  | 0.434 |
-| walker |  | 948 | 144 | python imports #4 in src/click/__init__.py |  |  | 0.437 |
-| walker |  | 961 | 13 | listing of '.github' |  |  | 0.437 |
-| walker |  | 984 | 23 | listing of '.github/workflows' |  |  | 0.439 |
-| walker |  | 1072 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.440 |
+| walker |  | 292 | 86 | listing of 'src/click' |  |  | 0.812 |
+| walker |  | 307 | 15 | python imports #1 in src/click/__init__.py |  |  | 0.812 |
+| walker |  | 378 | 71 | python imports in src/click/__init__.py |  |  | 0.813 |
+| ns | 383 |  | 118 | docs/ sitemap (index.rst toctree, Documentation + Tutorials) | 1.5 |  | 0.629 |
+| walker |  | 396 | 18 | python imports #6 in src/click/__init__.py |  |  | 0.629 |
+| walker |  | 426 | 30 | python imports #5 in src/click/__init__.py |  |  | 0.629 |
+| ns | 467 |  | 84 | docs/ sitemap (index.rst toctree, How to Guides) | 1.6 | 1.5 | 0.560 |
+| walker |  | 526 | 100 | python imports #2 in src/click/__init__.py |  |  | 0.563 |
+| walker |  | 544 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.563 |
+| walker |  | 544 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.563 |
+| ns | 553 |  | 86 | src/click/ module listing | 1.7 |  | 0.650 |
+| walker |  | 705 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.652 |
+| ns | 760 |  | 207 | docs/ + docs/_static/ listing | 1.8 |  | 0.500 |
+| walker |  | 849 | 144 | python imports #4 in src/click/__init__.py |  |  | 0.504 |
+| walker |  | 862 | 13 | listing of '.github' |  |  | 0.504 |
+| walker |  | 885 | 23 | listing of '.github/workflows' |  |  | 0.506 |
+| ns | 943 |  | 183 | tests/ + tests/typing/ listing | 1.9 |  | 0.439 |
+| walker |  | 973 | 88 | python imports #9 in src/click/__init__.py |  |  | 0.440 |
+| walker |  | 1072 | 99 | README.md section #0 |  |  | 0.440 |
 | ns | 1159 |  | 216 | examples/ tree listing | 1.10 |  | 0.370 |
 | ns | 1220 |  | 61 | .github/ + .devcontainer/ listing | 1.11 |  | 0.390 |
 | walker |  | 1261 | 189 | python imports #7 in src/click/__init__.py |  |  | 0.393 |

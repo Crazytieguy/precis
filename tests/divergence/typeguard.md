@@ -7,16 +7,16 @@ Score(3000)=0.750 I=0.899 C=0.625 ns_rows≤3K=16/45 (reached=11 partial=2 missi
 | walker |  | 38 | 4 | listing of 'src' |  |  | 1.000 |
 | walker |  | 79 | 41 | listing of 'docs' |  |  | 1.000 |
 | ns | 130 |  | 96 | README lede opening | 1.2 |  | 0.811 |
-| walker |  | 134 | 55 | [dependencies] in pyproject.toml |  |  | 0.823 |
-| walker |  | 206 | 72 | listing of 'src/typeguard' |  |  | 0.845 |
-| ns | 241 |  | 111 | Package identity: name, Python support, deps | 1.3 |  | 0.699 |
-| ns | 367 |  | 126 | Project URLs + pytest entry point | 1.4 |  | 0.580 |
-| ns | 480 |  | 113 | Source + docs file rosters | 2.1 |  | 0.701 |
-| ns | 580 |  | 100 | Tests directory roster | 2.2 |  | 0.596 |
-| walker |  | 627 | 421 | python imports in src/typeguard/__init__.py |  |  | 0.617 |
-| ns | 643 |  | 63 | CI, community-health, and mypy-fixture file rosters | 2.3 |  | 0.551 |
-| walker |  | 665 | 38 | python decl names surface in src/typeguard/__init__.py |  |  | 0.551 |
-| walker |  | 665 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.551 |
+| walker |  | 151 | 72 | listing of 'src/typeguard' |  |  | 0.845 |
+| ns | 241 |  | 111 | Package identity: name, Python support, deps | 1.3 |  | 0.633 |
+| ns | 367 |  | 126 | Project URLs + pytest entry point | 1.4 |  | 0.525 |
+| ns | 480 |  | 113 | Source + docs file rosters | 2.1 |  | 0.672 |
+| walker |  | 572 | 421 | python imports in src/typeguard/__init__.py |  |  | 0.696 |
+| ns | 580 |  | 100 | Tests directory roster | 2.2 |  | 0.591 |
+| walker |  | 610 | 38 | python decl names surface in src/typeguard/__init__.py |  |  | 0.592 |
+| walker |  | 610 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.592 |
+| ns | 643 |  | 63 | CI, community-health, and mypy-fixture file rosters | 2.3 |  | 0.529 |
+| walker |  | 665 | 55 | [dependencies] in pyproject.toml |  |  | 0.551 |
 | walker |  | 713 | 48 | tool.mypy config in pyproject.toml |  |  | 0.552 |
 | walker |  | 740 | 27 | listing of '.github' |  |  | 0.576 |
 | walker |  | 748 | 8 | listing of '.github/workflows' |  |  | 0.594 |

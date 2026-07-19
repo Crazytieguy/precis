@@ -19,10 +19,52 @@ entries = [".devcontainer", ".dockerignore", ".env.sample", ".eslintrc.json", ".
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "apps" })'
+descriptor = "listing of 'apps'"
+cost_tokens = 9
+cum_tokens = 88
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps"
+entries = ["mobile", "web", "worker"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "patches" })'
+descriptor = "listing of 'patches'"
+cost_tokens = 11
+cum_tokens = 99
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "patches"
+entries = ["xcode+3.0.1.patch"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "packages" })'
+descriptor = "listing of 'packages'"
+cost_tokens = 15
+cum_tokens = 114
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages"
+entries = ["filesystem", "lib", "prisma", "router", "types"]
+
+[[batches]]
+position = 5
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 43
-cum_tokens = 122
+cum_tokens = 157
 
 [batches.content]
 kind = "lines"
@@ -42,48 +84,6 @@ end = 5
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "apps" })'
-descriptor = "listing of 'apps'"
-cost_tokens = 9
-cum_tokens = 131
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps"
-entries = ["mobile", "web", "worker"]
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "patches" })'
-descriptor = "listing of 'patches'"
-cost_tokens = 11
-cum_tokens = 142
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "patches"
-entries = ["xcode+3.0.1.patch"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "packages" })'
-descriptor = "listing of 'packages'"
-cost_tokens = 15
-cum_tokens = 157
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages"
-entries = ["filesystem", "lib", "prisma", "router", "types"]
 
 [[batches]]
 position = 6
@@ -115,28 +115,10 @@ entries = ["global.ts", "inputSelect.ts", "package.json"]
 
 [[batches]]
 position = 8
-key = 'Json(Entry { file: "package.json" })'
-descriptor = "package entrypoints in package.json"
-cost_tokens = 34
-cum_tokens = 208
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
 key = 'Fs(DirListing { dir: "assets" })'
 descriptor = "listing of 'assets'"
 cost_tokens = 33
-cum_tokens = 241
+cum_tokens = 207
 
 [batches.content]
 kind = "fs"
@@ -146,11 +128,11 @@ parent = "assets"
 entries = ["app_store.png", "google_play.png", "home.png", "logo.png", "logo_small.png", "mobile_apps.png", "star_repo.gif"]
 
 [[batches]]
-position = 10
+position = 9
 key = 'Fs(DirListing { dir: ".devcontainer" })'
 descriptor = "listing of '.devcontainer'"
 cost_tokens = 5
-cum_tokens = 246
+cum_tokens = 212
 
 [batches.content]
 kind = "fs"
@@ -160,37 +142,11 @@ parent = ".devcontainer"
 entries = ["devcontainer.json"]
 
 [[batches]]
-position = 11
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 198
-cum_tokens = 444
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 28
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
+position = 10
 key = 'Fs(DirListing { dir: "packages/prisma" })'
 descriptor = "listing of 'packages/prisma'"
 cost_tokens = 23
-cum_tokens = 467
+cum_tokens = 235
 
 [batches.content]
 kind = "fs"
@@ -200,11 +156,11 @@ parent = "packages/prisma"
 entries = ["client", "index.ts", "migrations", "package.json", "schema.prisma", "seed.js"]
 
 [[batches]]
-position = 13
+position = 11
 key = 'Fs(DirListing { dir: "packages/prisma/client" })'
 descriptor = "listing of 'packages/prisma/client'"
 cost_tokens = 9
-cum_tokens = 476
+cum_tokens = 244
 
 [batches.content]
 kind = "fs"
@@ -214,11 +170,11 @@ parent = "packages/prisma/client"
 entries = ["index.d.ts", "index.js"]
 
 [[batches]]
-position = 14
+position = 12
 key = 'Fs(DirListing { dir: "apps/worker" })'
 descriptor = "listing of 'apps/worker'"
 cost_tokens = 26
-cum_tokens = 502
+cum_tokens = 270
 
 [batches.content]
 kind = "fs"
@@ -228,11 +184,11 @@ parent = "apps/worker"
 entries = ["index.ts", "lib", "package.json", "templates", "tsconfig.json", "worker.ts", "workers"]
 
 [[batches]]
-position = 15
+position = 13
 key = 'Fs(DirListing { dir: "apps/worker/templates" })'
 descriptor = "listing of 'apps/worker/templates'"
 cost_tokens = 5
-cum_tokens = 507
+cum_tokens = 275
 
 [batches.content]
 kind = "fs"
@@ -242,11 +198,11 @@ parent = "apps/worker/templates"
 entries = ["trialEnded.html"]
 
 [[batches]]
-position = 16
+position = 14
 key = 'Typescript(ExportNames { file: "packages/prisma/index.ts" })'
 descriptor = "export names surface in packages/prisma/index.ts"
 cost_tokens = 12
-cum_tokens = 519
+cum_tokens = 287
 
 [batches.content]
 kind = "lines"
@@ -268,11 +224,29 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 15
+key = 'Json(Entry { file: "package.json" })'
+descriptor = "package entrypoints in package.json"
+cost_tokens = 34
+cum_tokens = 321
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
 key = 'Fs(DirListing { dir: "packages/filesystem" })'
 descriptor = "listing of 'packages/filesystem'"
 cost_tokens = 54
-cum_tokens = 573
+cum_tokens = 375
 
 [batches.content]
 kind = "fs"
@@ -280,6 +254,32 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "packages/filesystem"
 entries = ["createFile.ts", "createFolder.ts", "fileExists.ts", "index.ts", "manageFiles.ts", "moveFile.ts", "package.json", "readFile.ts", "removeFile.ts", "removeFolder.ts", "s3Client.ts"]
+
+[[batches]]
+position = 17
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 198
+cum_tokens = 573
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 28
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 18

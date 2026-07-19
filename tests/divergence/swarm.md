@@ -15,11 +15,11 @@ Score(3000)=0.664 I=0.871 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missin
 | walker |  | 169 | 12 | python decl names surface in swarm/core.py |  |  | 1.000 |
 | walker |  | 169 | 0 | python decl at swarm/core.py:26 |  |  | 1.000 |
 | walker |  | 201 | 32 | manifest config in pyproject.toml |  |  | 1.000 |
-| ns | 245 |  | 131 | README title + deprecation notice | 1.4 |  | 0.816 |
-| ns | 353 |  | 108 | README install instructions | 1.5 |  | 0.661 |
-| walker |  | 394 | 193 | headings outline in README.md |  |  | 0.680 |
-| ns | 399 |  | 46 | examples/ directory listing | 1.6 |  | 0.601 |
-| walker |  | 419 | 25 | listing of 'tests' |  |  | 0.602 |
+| walker |  | 226 | 25 | listing of 'tests' |  |  | 1.000 |
+| ns | 245 |  | 131 | README title + deprecation notice | 1.4 |  | 0.817 |
+| ns | 353 |  | 108 | README install instructions | 1.5 |  | 0.662 |
+| ns | 399 |  | 46 | examples/ directory listing | 1.6 |  | 0.586 |
+| walker |  | 419 | 193 | headings outline in README.md |  |  | 0.602 |
 | ns | 506 |  | 107 | README section-heading locations (full H1/H2 roster) | 1.7 |  | 0.655 |
 | ns | 646 |  | 140 | README overview | 1.8 |  | 0.616 |
 | walker |  | 760 | 341 | listing of 'logs' |  |  | 0.616 |

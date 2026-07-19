@@ -61,186 +61,10 @@ entries = ["extra_init.py"]
 
 [[batches]]
 position = 5
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 60
-cum_tokens = 153
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
-key = 'Toml(Identity { file: "sqlite-dist.toml" })'
-descriptor = "[package] in sqlite-dist.toml"
-cost_tokens = 104
-cum_tokens = 257
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sqlite-dist.toml"
-start = 1
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Markdown(HeadingsOutline { file: "README.md" })'
-descriptor = "headings outline in README.md"
-cost_tokens = 38
-cum_tokens = 295
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 97
-end = 97
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 152
-end = 152
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 153
-end = 153
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 8
-key = 'Markdown(HeadingsOutline { file: "ARCHITECTURE.md" })'
-descriptor = "headings outline in ARCHITECTURE.md"
-cost_tokens = 48
-cum_tokens = 343
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "ARCHITECTURE.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ARCHITECTURE.md"
-start = 11
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ARCHITECTURE.md"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "ARCHITECTURE.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "ARCHITECTURE.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "ARCHITECTURE.md"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 9
 key = 'Yaml(TopLevelKeys { file: "reference.yaml" })'
 descriptor = "YAML reference map key roster in reference.yaml"
 cost_tokens = 315
-cum_tokens = 658
+cum_tokens = 408
 
 [batches.content]
 kind = "lines"
@@ -654,11 +478,11 @@ end = 325
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 6
 key = 'Fs(DirListing { dir: "bindings/go/ncruces" })'
 descriptor = "listing of 'bindings/go/ncruces'"
 cost_tokens = 8
-cum_tokens = 666
+cum_tokens = 416
 
 [batches.content]
 kind = "fs"
@@ -668,11 +492,11 @@ parent = "bindings/go/ncruces"
 entries = ["go-sqlite3.patch"]
 
 [[batches]]
-position = 11
+position = 7
 key = 'Plaintext(Whole { file: "VERSION" })'
 descriptor = "plaintext config VERSION"
 cost_tokens = 13
-cum_tokens = 679
+cum_tokens = 429
 
 [batches.content]
 kind = "lines"
@@ -686,11 +510,37 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 12
+position = 8
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 60
+cum_tokens = 489
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 6
-cum_tokens = 685
+cum_tokens = 495
 
 [batches.content]
 kind = "fs"
@@ -700,11 +550,11 @@ parent = ".github"
 entries = ["logos", "workflows"]
 
 [[batches]]
-position = 13
+position = 10
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 12
-cum_tokens = 697
+cum_tokens = 507
 
 [batches.content]
 kind = "fs"
@@ -714,11 +564,103 @@ parent = ".github/workflows"
 entries = ["release.yaml", "site.yaml", "test.yaml"]
 
 [[batches]]
-position = 14
+position = 11
+key = 'Toml(Identity { file: "sqlite-dist.toml" })'
+descriptor = "[package] in sqlite-dist.toml"
+cost_tokens = 104
+cum_tokens = 611
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sqlite-dist.toml"
+start = 1
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Markdown(HeadingsOutline { file: "README.md" })'
+descriptor = "headings outline in README.md"
+cost_tokens = 38
+cum_tokens = 649
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 152
+end = 152
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
 key = 'Fs(DirListing { dir: "bindings/rust" })'
 descriptor = "listing of 'bindings/rust'"
 cost_tokens = 27
-cum_tokens = 724
+cum_tokens = 676
 
 [batches.content]
 kind = "fs"
@@ -728,11 +670,11 @@ parent = "bindings/rust"
 entries = [".gitignore", "Cargo.lock", "Cargo.toml.tmpl", "Makefile", "build.rs", "src"]
 
 [[batches]]
-position = 15
+position = 14
 key = 'Fs(DirListing { dir: "bindings/rust/src" })'
 descriptor = "listing of 'bindings/rust/src'"
 cost_tokens = 4
-cum_tokens = 728
+cum_tokens = 680
 
 [batches.content]
 kind = "fs"
@@ -742,11 +684,11 @@ parent = "bindings/rust/src"
 entries = ["lib.rs"]
 
 [[batches]]
-position = 16
+position = 15
 key = 'Rust(ModUse { file: "bindings/rust/src/lib.rs" })'
 descriptor = "mod/use plumbing in bindings/rust/src/lib.rs"
 cost_tokens = 11
-cum_tokens = 739
+cum_tokens = 691
 
 [batches.content]
 kind = "lines"
@@ -763,6 +705,64 @@ kind = "full"
 path = "bindings/rust/src/lib.rs"
 start = 8
 end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 16
+key = 'Markdown(HeadingsOutline { file: "ARCHITECTURE.md" })'
+descriptor = "headings outline in ARCHITECTURE.md"
+cost_tokens = 48
+cum_tokens = 739
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 11
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "ARCHITECTURE.md"
+start = 50
+end = 50
 
 [batches.content.spans.render]
 kind = "ellipsis"

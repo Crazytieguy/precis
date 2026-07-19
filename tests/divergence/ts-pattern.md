@@ -4,28 +4,28 @@ Score(3000)=0.645 I=0.843 C=0.493 ns_rows≤3K=17/45 (reached=7 partial=3 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 48 | 48 | listing of '.' |  |  | 1.000 |
 | ns | 48 |  | 48 | Repo root listing | 1.1 |  | 1.000 |
-| ns | 120 |  | 72 | Public export surface (src/index.ts) | 1.2 |  | 0.816 |
-| walker |  | 121 | 73 | package identity in package.json |  |  | 0.820 |
-| walker |  | 147 | 26 | listing of 'docs' |  |  | 0.822 |
-| ns | 149 |  | 29 | src/ listing | 1.3 |  | 0.691 |
-| walker |  | 176 | 29 | listing of 'src' |  |  | 0.861 |
-| walker |  | 192 | 16 | export names surface in src/index.ts |  |  | 0.865 |
-| walker |  | 200 | 8 | listing of 'src/internals' |  |  | 0.866 |
-| ns | 213 |  | 64 | src/types/ and src/internals/ listings | 1.4 |  | 0.693 |
-| walker |  | 242 | 42 | imports in src/index.ts |  |  | 0.765 |
-| ns | 290 |  | 77 | docs/, benchmarks/, scripts/, .github/ listings | 1.5 |  | 0.657 |
-| ns | 357 |  | 67 | examples/ tree listings | 1.6 |  | 0.568 |
-| walker |  | 392 | 150 | README headline in README.md |  |  | 0.570 |
-| walker |  | 398 | 6 | listing of 'scripts' |  |  | 0.576 |
-| walker |  | 454 | 56 | listing of 'src/types' |  |  | 0.724 |
-| walker |  | 463 | 9 | listing of '.github' |  |  | 0.740 |
-| walker |  | 481 | 18 | export names surface in src/errors.ts |  |  | 0.740 |
+| walker |  | 74 | 26 | listing of 'docs' |  |  | 1.000 |
+| walker |  | 103 | 29 | listing of 'src' |  |  | 1.000 |
+| walker |  | 119 | 16 | export names surface in src/index.ts |  |  | 1.000 |
+| ns | 120 |  | 72 | Public export surface (src/index.ts) | 1.2 |  | 0.856 |
+| walker |  | 127 | 8 | listing of 'src/internals' |  |  | 0.857 |
+| ns | 149 |  | 29 | src/ listing | 1.3 |  | 0.862 |
+| walker |  | 169 | 42 | imports in src/index.ts |  |  | 0.952 |
+| ns | 213 |  | 64 | src/types/ and src/internals/ listings | 1.4 |  | 0.761 |
+| walker |  | 242 | 73 | package identity in package.json |  |  | 0.765 |
+| walker |  | 248 | 6 | listing of 'scripts' |  |  | 0.766 |
+| ns | 290 |  | 77 | docs/, benchmarks/, scripts/, .github/ listings | 1.5 |  | 0.664 |
+| walker |  | 304 | 56 | listing of 'src/types' |  |  | 0.834 |
+| walker |  | 313 | 9 | listing of '.github' |  |  | 0.853 |
+| walker |  | 331 | 18 | export names surface in src/errors.ts |  |  | 0.853 |
+| walker |  | 343 | 12 | export at src/errors.ts:5 |  |  | 0.853 |
+| ns | 357 |  | 67 | examples/ tree listings | 1.6 |  | 0.737 |
+| walker |  | 363 | 20 | export names surface in src/match.ts |  |  | 0.737 |
+| walker |  | 383 | 20 | export at src/match.ts:32 |  |  | 0.737 |
+| walker |  | 399 | 16 | export body at src/match.ts:32 body 35 |  |  | 0.737 |
+| walker |  | 409 | 10 | listing of 'examples' |  |  | 0.740 |
 | ns | 483 |  | 126 | Config bundle A1: jsr.json, jest.config.cjs | 1.7 |  | 0.673 |
-| walker |  | 493 | 12 | export at src/errors.ts:5 |  |  | 0.673 |
-| walker |  | 513 | 20 | export names surface in src/match.ts |  |  | 0.673 |
-| walker |  | 533 | 20 | export at src/match.ts:32 |  |  | 0.673 |
-| walker |  | 549 | 16 | export body at src/match.ts:32 body 35 |  |  | 0.673 |
-| walker |  | 559 | 10 | listing of 'examples' |  |  | 0.675 |
+| walker |  | 559 | 150 | README headline in README.md |  |  | 0.675 |
 | ns | 637 |  | 154 | Config bundle A2: tsconfig.json | 1.8 |  | 0.615 |
 | ns | 655 |  | 18 | Config bundle B: .prettierrc | 1.9 |  | 0.607 |
 | walker |  | 668 | 109 | README.md section #0 |  |  | 0.607 |

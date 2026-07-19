@@ -8,18 +8,18 @@ Score(3000)=0.870 I=0.951 C=0.796 ns_rows≤3K=21/42 (reached=15 partial=3 missi
 | ns | 48 |  | 15 | README title | 1.2 |  | 0.886 |
 | walker |  | 88 | 47 | README headline in README.md |  |  | 1.000 |
 | ns | 140 |  | 92 | README badges | 1.3 |  | 0.917 |
-| walker |  | 153 | 65 | lua module identity in middleclass.lua |  |  | 0.920 |
-| ns | 170 |  | 30 | README tagline | 1.4 |  | 0.916 |
-| walker |  | 199 | 46 | headings outline in UPDATING.md |  |  | 0.916 |
-| ns | 228 |  | 58 | spec/ directory listing | 1.5 |  | 0.686 |
-| walker |  | 280 | 81 | headings outline in README.md |  |  | 0.689 |
-| ns | 308 |  | 80 | rockspecs/ directory listing | 1.6 |  | 0.592 |
-| ns | 316 |  | 8 | performance/ directory listing | 1.7 |  | 0.613 |
-| walker |  | 338 | 58 | listing of 'spec' |  |  | 0.819 |
-| walker |  | 418 | 80 | listing of 'rockspecs' |  |  | 0.954 |
-| walker |  | 443 | 25 | lua decl names surface in performance/run.lua |  |  | 0.954 |
-| walker |  | 443 | 0 | lua decl at performance/run.lua:19 |  |  | 0.954 |
-| walker |  | 443 | 0 | lua decl at performance/run.lua:37 |  |  | 0.954 |
+| walker |  | 146 | 58 | listing of 'spec' |  |  | 0.920 |
+| ns | 170 |  | 30 | README tagline | 1.4 |  | 0.926 |
+| walker |  | 211 | 65 | lua module identity in middleclass.lua |  |  | 0.926 |
+| ns | 228 |  | 58 | spec/ directory listing | 1.5 |  | 0.945 |
+| walker |  | 257 | 46 | headings outline in UPDATING.md |  |  | 0.945 |
+| ns | 308 |  | 80 | rockspecs/ directory listing | 1.6 |  | 0.812 |
+| ns | 316 |  | 8 | performance/ directory listing | 1.7 |  | 0.816 |
+| walker |  | 337 | 80 | listing of 'rockspecs' |  |  | 0.950 |
+| walker |  | 362 | 25 | lua decl names surface in performance/run.lua |  |  | 0.950 |
+| walker |  | 362 | 0 | lua decl at performance/run.lua:19 |  |  | 0.950 |
+| walker |  | 362 | 0 | lua decl at performance/run.lua:37 |  |  | 0.950 |
+| walker |  | 443 | 81 | headings outline in README.md |  |  | 0.954 |
 | ns | 445 |  | 129 | README Quick Look (class + initialize + static var) | 1.8 |  | 0.756 |
 | walker |  | 481 | 38 | lua decl names surface in spec/metamethods_spec.lua |  |  | 0.756 |
 | walker |  | 481 | 0 | lua decl at spec/metamethods_spec.lua:3 |  |  | 0.756 |

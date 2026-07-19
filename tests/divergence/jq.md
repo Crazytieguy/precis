@@ -8,25 +8,25 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | ns | 133 |  | 52 | .github/ directory listing (workflows, issue template) | 1.2 |  | 0.809 |
 | walker |  | 161 | 71 | README headline in README.md |  |  | 0.811 |
 | ns | 198 |  | 65 | docs/ and docs/content/ directory listing | 1.3 |  | 0.662 |
-| walker |  | 233 | 72 | headings outline in README.md |  |  | 0.662 |
-| walker |  | 285 | 52 | listing of 'docs' |  |  | 0.772 |
-| walker |  | 298 | 13 | listing of 'docs/content' |  |  | 0.860 |
-| walker |  | 302 | 4 | listing of 'docs/content/download' |  |  | 0.860 |
-| walker |  | 306 | 4 | listing of 'docs/content/tutorial' |  |  | 0.860 |
-| ns | 317 |  | 119 | src/ directory listing — headers and grammar files | 1.4 |  | 0.691 |
-| walker |  | 362 | 56 | README headline in docs/README.md |  |  | 0.691 |
-| walker |  | 383 | 21 | listing of 'docs/templates' |  |  | 0.691 |
-| walker |  | 392 | 9 | listing of 'vendor' |  |  | 0.693 |
-| walker |  | 423 | 31 | listing of 'docs/public' |  |  | 0.693 |
-| walker |  | 427 | 4 | listing of 'docs/public/css' |  |  | 0.693 |
-| ns | 431 |  | 114 | src/ directory listing — implementation files | 1.5 |  | 0.595 |
-| walker |  | 432 | 5 | listing of 'docs/public/js' |  |  | 0.595 |
-| walker |  | 444 | 12 | listing of '.github' |  |  | 0.603 |
-| walker |  | 479 | 35 | listing of '.github/workflows' |  |  | 0.678 |
-| walker |  | 500 | 21 | listing of 'docs/templates/shared' |  |  | 0.678 |
-| walker |  | 514 | 14 | listing of 'scripts' |  |  | 0.678 |
+| walker |  | 213 | 52 | listing of 'docs' |  |  | 0.772 |
+| walker |  | 226 | 13 | listing of 'docs/content' |  |  | 0.859 |
+| walker |  | 230 | 4 | listing of 'docs/content/download' |  |  | 0.859 |
+| walker |  | 234 | 4 | listing of 'docs/content/tutorial' |  |  | 0.859 |
+| walker |  | 255 | 21 | listing of 'docs/templates' |  |  | 0.859 |
+| walker |  | 264 | 9 | listing of 'vendor' |  |  | 0.861 |
+| walker |  | 295 | 31 | listing of 'docs/public' |  |  | 0.861 |
+| walker |  | 299 | 4 | listing of 'docs/public/css' |  |  | 0.861 |
+| walker |  | 304 | 5 | listing of 'docs/public/js' |  |  | 0.861 |
+| walker |  | 316 | 12 | listing of '.github' |  |  | 0.873 |
+| ns | 317 |  | 119 | src/ directory listing — headers and grammar files | 1.4 |  | 0.702 |
+| walker |  | 351 | 35 | listing of '.github/workflows' |  |  | 0.789 |
+| walker |  | 407 | 56 | README headline in docs/README.md |  |  | 0.789 |
+| walker |  | 428 | 21 | listing of 'docs/templates/shared' |  |  | 0.789 |
+| ns | 431 |  | 114 | src/ directory listing — implementation files | 1.5 |  | 0.677 |
+| walker |  | 442 | 14 | listing of 'scripts' |  |  | 0.677 |
+| walker |  | 489 | 47 | listing of 'config/m4' |  |  | 0.677 |
 | ns | 538 |  | 107 | tests/ directory listing — test data and driver scripts | 1.6 |  | 0.601 |
-| walker |  | 561 | 47 | listing of 'config/m4' |  |  | 0.601 |
+| walker |  | 561 | 72 | headings outline in README.md |  |  | 0.601 |
 | walker |  | 584 | 23 | listing of 'm4' |  |  | 0.601 |
 | walker |  | 627 | 43 | listing of 'docs/content/manual' |  |  | 0.601 |
 | walker |  | 631 | 4 | listing of 'docs/content/manual/dev' |  |  | 0.601 |

@@ -4,11 +4,11 @@ Score(3000)=0.674 I=0.849 C=0.534 ns_rows≤3K=19/40 (reached=12 partial=1 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 50 | 50 | listing of '.' |  |  | 1.000 |
 | ns | 50 |  | 50 | Root file listing | 1.1 |  | 1.000 |
-| ns | 74 |  | 24 | .github directory listing | 1.2 |  | 0.783 |
-| walker |  | 88 | 38 | README headline in README.md |  |  | 0.786 |
-| ns | 103 |  | 29 | go.mod — module path + Go version | 1.3 |  | 0.716 |
-| walker |  | 111 | 23 | go package doc lede in main.go |  |  | 0.717 |
-| walker |  | 140 | 29 | go module identity in go.mod |  |  | 0.812 |
+| walker |  | 73 | 23 | go package doc lede in main.go |  |  | 1.000 |
+| ns | 74 |  | 24 | .github directory listing | 1.2 |  | 0.784 |
+| walker |  | 102 | 29 | go module identity in go.mod |  |  | 0.801 |
+| ns | 103 |  | 29 | go.mod — module path + Go version | 1.3 |  | 0.810 |
+| walker |  | 140 | 38 | README headline in README.md |  |  | 0.812 |
 | walker |  | 147 | 7 | listing of '.github' |  |  | 0.835 |
 | walker |  | 155 | 8 | listing of '.github/workflows' |  |  | 0.899 |
 | ns | 163 |  | 60 | go.mod — direct dependencies | 1.4 |  | 0.790 |

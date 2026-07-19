@@ -7,22 +7,22 @@ Score(3000)=0.481 I=0.705 C=0.328 ns_rows≤3K=17/52 (reached=4 partial=0 missin
 | walker |  | 83 | 9 | listing of 'bindings' |  |  | 1.000 |
 | walker |  | 88 | 5 | listing of 'bindings/go' |  |  | 1.000 |
 | walker |  | 93 | 5 | listing of 'bindings/python' |  |  | 1.000 |
-| walker |  | 153 | 60 | README headline in README.md |  |  | 1.000 |
-| ns | 159 |  | 85 | .gitignore (top artifact patterns) | 1.2 |  | 0.767 |
-| walker |  | 257 | 104 | [package] in sqlite-dist.toml |  |  | 0.767 |
-| ns | 271 |  | 112 | README lede | 1.3 |  | 0.713 |
-| walker |  | 295 | 38 | headings outline in README.md |  |  | 0.713 |
-| walker |  | 343 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.713 |
-| ns | 382 |  | 111 | scripts/vendor.sh | 1.4 |  | 0.639 |
-| ns | 525 |  | 143 | Version + distribution-target manifest | 1.5 |  | 0.549 |
-| walker |  | 658 | 315 | YAML reference map key roster in reference.yaml |  |  | 0.557 |
-| walker |  | 666 | 8 | listing of 'bindings/go/ncruces' |  |  | 0.557 |
-| walker |  | 679 | 13 | plaintext config VERSION |  |  | 0.558 |
-| walker |  | 685 | 6 | listing of '.github' |  |  | 0.558 |
-| walker |  | 697 | 12 | listing of '.github/workflows' |  |  | 0.558 |
-| walker |  | 724 | 27 | listing of 'bindings/rust' |  |  | 0.559 |
-| walker |  | 728 | 4 | listing of 'bindings/rust/src' |  |  | 0.559 |
-| walker |  | 739 | 11 | mod/use plumbing in bindings/rust/src/lib.rs |  |  | 0.559 |
+| ns | 159 |  | 85 | .gitignore (top artifact patterns) | 1.2 |  | 0.762 |
+| ns | 271 |  | 112 | README lede | 1.3 |  | 0.679 |
+| ns | 382 |  | 111 | scripts/vendor.sh | 1.4 |  | 0.608 |
+| walker |  | 408 | 315 | YAML reference map key roster in reference.yaml |  |  | 0.618 |
+| walker |  | 416 | 8 | listing of 'bindings/go/ncruces' |  |  | 0.618 |
+| walker |  | 429 | 13 | plaintext config VERSION |  |  | 0.618 |
+| walker |  | 489 | 60 | README headline in README.md |  |  | 0.649 |
+| walker |  | 495 | 6 | listing of '.github' |  |  | 0.649 |
+| walker |  | 507 | 12 | listing of '.github/workflows' |  |  | 0.649 |
+| ns | 525 |  | 143 | Version + distribution-target manifest | 1.5 |  | 0.558 |
+| walker |  | 611 | 104 | [package] in sqlite-dist.toml |  |  | 0.558 |
+| walker |  | 649 | 38 | headings outline in README.md |  |  | 0.558 |
+| walker |  | 676 | 27 | listing of 'bindings/rust' |  |  | 0.559 |
+| walker |  | 680 | 4 | listing of 'bindings/rust/src' |  |  | 0.559 |
+| walker |  | 691 | 11 | mod/use plumbing in bindings/rust/src/lib.rs |  |  | 0.559 |
+| walker |  | 739 | 48 | headings outline in ARCHITECTURE.md |  |  | 0.559 |
 | ns | 774 |  | 249 | TODO roadmap | 1.6 |  | 0.484 |
 | walker |  | 883 | 144 | listing of 'tests' |  |  | 0.487 |
 | walker |  | 896 | 13 | listing of 'scripts' |  |  | 0.487 |

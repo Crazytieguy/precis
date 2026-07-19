@@ -75,10 +75,38 @@ entries = ["Cargo.toml", "src"]
 
 [[batches]]
 position = 6
+key = 'Fs(DirListing { dir: "sps/src" })'
+descriptor = "listing of 'sps/src'"
+cost_tokens = 18
+cum_tokens = 97
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "sps/src"
+entries = ["cli", "cli.rs", "main.rs", "pipeline", "pipeline.rs"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "sps/src/pipeline" })'
+descriptor = "listing of 'sps/src/pipeline'"
+cost_tokens = 12
+cum_tokens = 109
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "sps/src/pipeline"
+entries = ["downloader.rs", "planner.rs", "runner.rs"]
+
+[[batches]]
+position = 8
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 39
-cum_tokens = 118
+cum_tokens = 148
 
 [batches.content]
 kind = "lines"
@@ -100,57 +128,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 7
-key = 'Toml(Identity { file: "Cargo.toml" })'
-descriptor = "[package] in Cargo.toml"
-cost_tokens = 77
-cum_tokens = 195
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 1
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "sps/src" })'
-descriptor = "listing of 'sps/src'"
-cost_tokens = 18
-cum_tokens = 213
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "sps/src"
-entries = ["cli", "cli.rs", "main.rs", "pipeline", "pipeline.rs"]
-
-[[batches]]
 position = 9
-key = 'Fs(DirListing { dir: "sps/src/pipeline" })'
-descriptor = "listing of 'sps/src/pipeline'"
-cost_tokens = 12
-cum_tokens = 225
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "sps/src/pipeline"
-entries = ["downloader.rs", "planner.rs", "runner.rs"]
-
-[[batches]]
-position = 10
 key = 'Rust(EntryItem { file: "sps/src/main.rs", start_line: 57 })'
 descriptor = "entry item at sps/src/main.rs:57"
 cost_tokens = 17
-cum_tokens = 242
+cum_tokens = 165
 
 [batches.content]
 kind = "lines"
@@ -170,6 +152,24 @@ end = 58
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Toml(Identity { file: "Cargo.toml" })'
+descriptor = "[package] in Cargo.toml"
+cost_tokens = 77
+cum_tokens = 242
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 1
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 11

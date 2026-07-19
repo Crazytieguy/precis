@@ -47,28 +47,10 @@ entries = ["api.rst", "conf.py", "contributing.rst", "extending.rst", "features.
 
 [[batches]]
 position = 4
-key = 'Toml(Dependencies { file: "pyproject.toml" })'
-descriptor = "[dependencies] in pyproject.toml"
-cost_tokens = 55
-cum_tokens = 134
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 27
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 5
 key = 'Fs(DirListing { dir: "src/typeguard" })'
 descriptor = "listing of 'src/typeguard'"
 cost_tokens = 72
-cum_tokens = 206
+cum_tokens = 151
 
 [batches.content]
 kind = "fs"
@@ -78,11 +60,11 @@ parent = "src/typeguard"
 entries = ["__init__.py", "_checkers.py", "_config.py", "_decorators.py", "_exceptions.py", "_functions.py", "_importhook.py", "_memo.py", "_pytest_plugin.py", "_suppression.py", "_transformer.py", "_utils.py", "py.typed"]
 
 [[batches]]
-position = 6
+position = 5
 key = 'Python(Imports { file: "src/typeguard/__init__.py" })'
 descriptor = "python imports in src/typeguard/__init__.py"
 cost_tokens = 421
-cum_tokens = 627
+cum_tokens = 572
 
 [batches.content]
 kind = "lines"
@@ -96,11 +78,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 7
+position = 6
 key = 'Python(DeclNames { file: "src/typeguard/__init__.py" })'
 descriptor = "python decl names surface in src/typeguard/__init__.py"
 cost_tokens = 38
-cum_tokens = 665
+cum_tokens = 610
 
 [batches.content]
 kind = "lines"
@@ -122,11 +104,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 7
 key = 'Python(Decl { file: "src/typeguard/__init__.py", start_line: 37 })'
 descriptor = "python decl at src/typeguard/__init__.py:37"
 cost_tokens = 0
-cum_tokens = 665
+cum_tokens = 610
 
 [batches.content]
 kind = "lines"
@@ -135,6 +117,24 @@ kind = "lines"
 path = "src/typeguard/__init__.py"
 start = 37
 end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Toml(Dependencies { file: "pyproject.toml" })'
+descriptor = "[dependencies] in pyproject.toml"
+cost_tokens = 55
+cum_tokens = 665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 27
+end = 30
 
 [batches.content.spans.render]
 kind = "full"

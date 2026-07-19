@@ -33,10 +33,24 @@ entries = ["posting"]
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: ".codex" })'
+descriptor = "listing of '.codex'"
+cost_tokens = 3
+cum_tokens = 54
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".codex"
+entries = ["environments"]
+
+[[batches]]
+position = 4
 key = 'Toml(Scripts { file: "pyproject.toml" })'
 descriptor = "entry-point scripts in pyproject.toml"
 cost_tokens = 26
-cum_tokens = 77
+cum_tokens = 80
 
 [batches.content]
 kind = "lines"
@@ -50,25 +64,81 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: ".codex" })'
-descriptor = "listing of '.codex'"
-cost_tokens = 3
-cum_tokens = 80
+position = 5
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 40
+cum_tokens = 120
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = ".codex"
-entries = ["environments"]
+parent = "docs"
+entries = ["CHANGELOG.md", "CNAME", "assets", "faq.md", "guide", "home-image.afdesign", "index.md", "overrides", "roadmap.md", "stylesheets"]
 
 [[batches]]
-position = 5
+position = 6
+key = 'Fs(DirListing { dir: "docs/overrides" })'
+descriptor = "listing of 'docs/overrides'"
+cost_tokens = 4
+cum_tokens = 124
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/overrides"
+entries = ["home.html"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "docs/stylesheets" })'
+descriptor = "listing of 'docs/stylesheets'"
+cost_tokens = 4
+cum_tokens = 128
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/stylesheets"
+entries = ["extra.css"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 8
+cum_tokens = 136
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["FUNDING.yml", "workflows"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 12
+cum_tokens = 148
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["coverage.yml", "docs.yml", "test.yml"]
+
+[[batches]]
+position = 10
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 91
-cum_tokens = 171
+cum_tokens = 239
 
 [batches.content]
 kind = "lines"
@@ -82,11 +152,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 6
+position = 11
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 42
-cum_tokens = 213
+cum_tokens = 281
 
 [batches.content]
 kind = "lines"
@@ -156,81 +226,193 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 40
-cum_tokens = 253
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["CHANGELOG.md", "CNAME", "assets", "faq.md", "guide", "home-image.afdesign", "index.md", "overrides", "roadmap.md", "stylesheets"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "docs/overrides" })'
-descriptor = "listing of 'docs/overrides'"
-cost_tokens = 4
-cum_tokens = 257
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/overrides"
-entries = ["home.html"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "docs/stylesheets" })'
-descriptor = "listing of 'docs/stylesheets'"
-cost_tokens = 4
-cum_tokens = 261
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/stylesheets"
-entries = ["extra.css"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 8
-cum_tokens = 269
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "workflows"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 12
-cum_tokens = 281
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["coverage.yml", "docs.yml", "test.yml"]
-
-[[batches]]
 position = 12
+key = 'Fs(DirListing { dir: "docs/guide" })'
+descriptor = "listing of 'docs/guide'"
+cost_tokens = 56
+cum_tokens = 337
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/guide"
+entries = ["collections.md", "command_palette.md", "configuration.md", "environments.md", "external_tools.md", "help_system.md", "importing.md", "index.md", "keymap.md", "navigation.md", "requests.md", "scripting.md", "themes.md"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "src/posting" })'
+descriptor = "listing of 'src/posting'"
+cost_tokens = 156
+cum_tokens = 493
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting"
+entries = ["__init__.py", "__main__.py", "_start_time.py", "app.py", "auth.py", "collection.py", "commands.py", "config.py", "exit_codes.py", "files.py", "help_data.py", "help_screen.py", "highlight_url.py", "highlighters.py", "importing", "jump_overlay.py", "jumper.py", "locations.py", "messages.py", "posting.scss", "request_headers.py", "save_request.py", "scripts.py", "suggesters.py", "themes.py", "tuple_to_multidict.py", "types.py", "urls.py", "user_host.py", "variables.py", "version.py", "widgets", "xresources.py", "yaml.py"]
+
+[[batches]]
+position = 14
+key = 'Python(Imports { file: "src/posting/__init__.py" })'
+descriptor = "python imports in src/posting/__init__.py"
+cost_tokens = 267
+cum_tokens = 760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/__init__.py"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/__init__.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/posting/__init__.py"
+start = 10
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "src/posting/importing" })'
+descriptor = "listing of 'src/posting/importing'"
+cost_tokens = 14
+cum_tokens = 774
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting/importing"
+entries = ["curl.py", "open_api.py", "postman.py"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "src/posting/widgets" })'
+descriptor = "listing of 'src/posting/widgets'"
+cost_tokens = 87
+cum_tokens = 861
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting/widgets"
+entries = ["__init__.py", "center_middle.py", "collection", "confirmation.py", "datatable.py", "input.py", "key_value.py", "key_value_copy_modal.py", "load_env_file_dialog.py", "request", "response", "rich_log.py", "select.py", "tabbed_content.py", "text_area.py", "tree.py", "variable_autocomplete.py", "variable_input.py"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "src/posting/widgets/response" })'
+descriptor = "listing of 'src/posting/widgets/response'"
+cost_tokens = 30
+cum_tokens = 891
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting/widgets/response"
+entries = ["cookies_table.py", "response_area.py", "response_body.py", "response_headers.py", "response_trace.py", "script_output.py"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "src/posting/widgets/request" })'
+descriptor = "listing of 'src/posting/widgets/request'"
+cost_tokens = 66
+cum_tokens = 957
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting/widgets/request"
+entries = ["__init__.py", "form_editor.py", "header_editor.py", "method_selection.py", "path_editor.py", "query_editor.py", "request_auth.py", "request_body.py", "request_editor.py", "request_metadata.py", "request_options.py", "request_scripts.py", "url_bar.py"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "src/posting/widgets/collection" })'
+descriptor = "listing of 'src/posting/widgets/collection'"
+cost_tokens = 10
+cum_tokens = 967
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/posting/widgets/collection"
+entries = ["browser.py", "new_request_modal.py"]
+
+[[batches]]
+position = 20
+key = 'Python(DeclNames { file: "src/posting/_start_time.py" })'
+descriptor = "python decl names surface in src/posting/_start_time.py"
+cost_tokens = 15
+cum_tokens = 982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/_start_time.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Python(Imports { file: "src/posting/_start_time.py" })'
+descriptor = "python imports in src/posting/_start_time.py"
+cost_tokens = 5
+cum_tokens = 987
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/_start_time.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "docs/assets" })'
+descriptor = "listing of 'docs/assets'"
+cost_tokens = 86
+cum_tokens = 1073
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/assets"
+entries = ["collection-tree.png", "compact-mode-and-themes.mp4", "contextual-help.png", "curl-export.png", "default-collection.png", "environments.mp4", "home-efficiency-video.mp4", "home-image-ad-15aug24.svg", "jump-mode.png", "request-method-dropdown.png", "scripts-tab.png", "search-requests.png", "url-autocomplete.gif", "url-bar.png"]
+
+[[batches]]
+position = 23
 key = 'Markdown(HeadingsOutline { file: "docs/roadmap.md" })'
 descriptor = "headings outline in docs/roadmap.md"
 cost_tokens = 55
-cum_tokens = 336
+cum_tokens = 1128
 
 [batches.content]
 kind = "lines"
@@ -316,11 +498,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 13
+position = 24
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 41
-cum_tokens = 377
+cum_tokens = 1169
 
 [batches.content]
 kind = "lines"
@@ -334,11 +516,29 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 14
+position = 25
+key = 'Python(DeclNames { file: "src/posting/exit_codes.py" })'
+descriptor = "python decl names surface in src/posting/exit_codes.py"
+cost_tokens = 10
+cum_tokens = 1179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/posting/exit_codes.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 73
-cum_tokens = 450
+cum_tokens = 1252
 
 [batches.content]
 kind = "lines"
@@ -355,206 +555,6 @@ kind = "full"
 path = "pyproject.toml"
 start = 25
 end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "docs/guide" })'
-descriptor = "listing of 'docs/guide'"
-cost_tokens = 56
-cum_tokens = 506
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/guide"
-entries = ["collections.md", "command_palette.md", "configuration.md", "environments.md", "external_tools.md", "help_system.md", "importing.md", "index.md", "keymap.md", "navigation.md", "requests.md", "scripting.md", "themes.md"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "src/posting" })'
-descriptor = "listing of 'src/posting'"
-cost_tokens = 156
-cum_tokens = 662
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/posting"
-entries = ["__init__.py", "__main__.py", "_start_time.py", "app.py", "auth.py", "collection.py", "commands.py", "config.py", "exit_codes.py", "files.py", "help_data.py", "help_screen.py", "highlight_url.py", "highlighters.py", "importing", "jump_overlay.py", "jumper.py", "locations.py", "messages.py", "posting.scss", "request_headers.py", "save_request.py", "scripts.py", "suggesters.py", "themes.py", "tuple_to_multidict.py", "types.py", "urls.py", "user_host.py", "variables.py", "version.py", "widgets", "xresources.py", "yaml.py"]
-
-[[batches]]
-position = 17
-key = 'Python(Imports { file: "src/posting/__init__.py" })'
-descriptor = "python imports in src/posting/__init__.py"
-cost_tokens = 267
-cum_tokens = 929
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/__init__.py"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/__init__.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/posting/__init__.py"
-start = 10
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "src/posting/importing" })'
-descriptor = "listing of 'src/posting/importing'"
-cost_tokens = 14
-cum_tokens = 943
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/posting/importing"
-entries = ["curl.py", "open_api.py", "postman.py"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "src/posting/widgets" })'
-descriptor = "listing of 'src/posting/widgets'"
-cost_tokens = 87
-cum_tokens = 1030
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/posting/widgets"
-entries = ["__init__.py", "center_middle.py", "collection", "confirmation.py", "datatable.py", "input.py", "key_value.py", "key_value_copy_modal.py", "load_env_file_dialog.py", "request", "response", "rich_log.py", "select.py", "tabbed_content.py", "text_area.py", "tree.py", "variable_autocomplete.py", "variable_input.py"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "src/posting/widgets/response" })'
-descriptor = "listing of 'src/posting/widgets/response'"
-cost_tokens = 30
-cum_tokens = 1060
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/posting/widgets/response"
-entries = ["cookies_table.py", "response_area.py", "response_body.py", "response_headers.py", "response_trace.py", "script_output.py"]
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: "src/posting/widgets/request" })'
-descriptor = "listing of 'src/posting/widgets/request'"
-cost_tokens = 66
-cum_tokens = 1126
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/posting/widgets/request"
-entries = ["__init__.py", "form_editor.py", "header_editor.py", "method_selection.py", "path_editor.py", "query_editor.py", "request_auth.py", "request_body.py", "request_editor.py", "request_metadata.py", "request_options.py", "request_scripts.py", "url_bar.py"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: "src/posting/widgets/collection" })'
-descriptor = "listing of 'src/posting/widgets/collection'"
-cost_tokens = 10
-cum_tokens = 1136
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/posting/widgets/collection"
-entries = ["browser.py", "new_request_modal.py"]
-
-[[batches]]
-position = 23
-key = 'Python(DeclNames { file: "src/posting/_start_time.py" })'
-descriptor = "python decl names surface in src/posting/_start_time.py"
-cost_tokens = 15
-cum_tokens = 1151
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/_start_time.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Python(Imports { file: "src/posting/_start_time.py" })'
-descriptor = "python imports in src/posting/_start_time.py"
-cost_tokens = 5
-cum_tokens = 1156
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/_start_time.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "docs/assets" })'
-descriptor = "listing of 'docs/assets'"
-cost_tokens = 86
-cum_tokens = 1242
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/assets"
-entries = ["collection-tree.png", "compact-mode-and-themes.mp4", "contextual-help.png", "curl-export.png", "default-collection.png", "environments.mp4", "home-efficiency-video.mp4", "home-image-ad-15aug24.svg", "jump-mode.png", "request-method-dropdown.png", "scripts-tab.png", "search-requests.png", "url-autocomplete.gif", "url-bar.png"]
-
-[[batches]]
-position = 26
-key = 'Python(DeclNames { file: "src/posting/exit_codes.py" })'
-descriptor = "python decl names surface in src/posting/exit_codes.py"
-cost_tokens = 10
-cum_tokens = 1252
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/posting/exit_codes.py"
-start = 1
-end = 1
 
 [batches.content.spans.render]
 kind = "full"

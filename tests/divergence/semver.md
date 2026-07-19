@@ -6,28 +6,28 @@ Score(3000)=0.676 I=0.750 C=0.610 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 103 | 103 | listing of '.' |  |  | 0.000 |
 | walker |  | 106 | 3 | listing of 'tap-snapshots' |  |  | 0.000 |
 | walker |  | 111 | 5 | listing of 'bin' |  |  | 0.000 |
-| walker |  | 137 | 26 | README headline in README.md |  |  | 0.000 |
-| ns | 166 |  | 103 | Root directory listing | 1.2 |  | 0.616 |
-| walker |  | 198 | 61 | package identity in package.json |  |  | 0.785 |
-| walker |  | 210 | 12 | export names surface in index.js |  |  | 0.785 |
-| walker |  | 227 | 17 | listing of 'classes' |  |  | 0.798 |
-| ns | 236 |  | 70 | README title + install | 1.3 |  | 0.700 |
-| ns | 253 |  | 17 | classes/ listing | 1.4 |  | 0.703 |
-| walker |  | 254 | 27 | listing of 'internal' |  |  | 0.712 |
-| walker |  | 284 | 30 | package runtime metadata in package.json |  |  | 0.712 |
-| walker |  | 340 | 56 | listing of 'ranges' |  |  | 0.730 |
+| walker |  | 123 | 12 | export names surface in index.js |  |  | 0.000 |
+| walker |  | 140 | 17 | listing of 'classes' |  |  | 0.000 |
+| walker |  | 166 | 26 | README headline in README.md |  |  | 0.632 |
+| ns | 166 |  | 103 | Root directory listing | 1.2 |  | 0.632 |
+| walker |  | 193 | 27 | listing of 'internal' |  |  | 0.643 |
+| ns | 236 |  | 70 | README title + install | 1.3 |  | 0.566 |
+| ns | 253 |  | 17 | classes/ listing | 1.4 |  | 0.571 |
+| walker |  | 254 | 61 | package identity in package.json |  |  | 0.712 |
+| walker |  | 310 | 56 | listing of 'ranges' |  |  | 0.730 |
+| walker |  | 340 | 30 | package runtime metadata in package.json |  |  | 0.730 |
 | ns | 358 |  | 105 | functions/ listing | 1.5 |  | 0.563 |
-| walker |  | 400 | 60 | package identity metadata in package.json |  |  | 0.563 |
 | ns | 414 |  | 56 | ranges/ listing | 1.6 |  | 0.591 |
 | ns | 441 |  | 27 | internal/ listing | 1.7 |  | 0.602 |
-| ns | 446 |  | 5 | bin/ listing | 1.8 |  | 0.603 |
-| ns | 484 |  | 38 | benchmarks/ listing | 1.9 |  | 0.580 |
-| walker |  | 505 | 105 | listing of 'functions' |  |  | 0.746 |
-| ns | 517 |  | 33 | test/ top-level listing | 1.10 |  | 0.702 |
-| walker |  | 533 | 28 | listing of '.github' |  |  | 0.707 |
-| ns | 534 |  | 17 | test/classes/ listing | 1.11 |  | 0.691 |
-| walker |  | 574 | 41 | listing of '.github/workflows' |  |  | 0.695 |
-| walker |  | 607 | 33 | listing of 'test' |  |  | 0.750 |
+| walker |  | 445 | 105 | listing of 'functions' |  |  | 0.777 |
+| ns | 446 |  | 5 | bin/ listing | 1.8 |  | 0.777 |
+| walker |  | 473 | 28 | listing of '.github' |  |  | 0.781 |
+| ns | 484 |  | 38 | benchmarks/ listing | 1.9 |  | 0.751 |
+| walker |  | 514 | 41 | listing of '.github/workflows' |  |  | 0.756 |
+| ns | 517 |  | 33 | test/ top-level listing | 1.10 |  | 0.711 |
+| ns | 534 |  | 17 | test/classes/ listing | 1.11 |  | 0.695 |
+| walker |  | 547 | 33 | listing of 'test' |  |  | 0.750 |
+| walker |  | 607 | 60 | package identity metadata in package.json |  |  | 0.750 |
 | ns | 639 |  | 105 | test/functions/ listing | 1.12 |  | 0.665 |
 | ns | 695 |  | 56 | test/ranges/ listing | 1.13 |  | 0.634 |
 | ns | 722 |  | 27 | test/internal/ listing | 1.14 |  | 0.619 |

@@ -12,33 +12,33 @@ Score(3000)=0.670 I=0.838 C=0.536 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | ns | 141 |  | 37 | go.mod + .go-version | 1.3 |  | 0.871 |
 | walker |  | 145 | 20 | go decl names surface in append.go |  |  | 0.872 |
 | walker |  | 145 | 0 | go decl at append.go:14 |  |  | 0.872 |
-| ns | 228 |  | 87 | Public API locations: multierror.go | 1.4 |  | 0.784 |
-| walker |  | 303 | 158 | README headline in README.md |  |  | 0.788 |
-| walker |  | 352 | 49 | headings outline in README.md |  |  | 0.788 |
-| ns | 372 |  | 144 | Public API locations: append/flatten/format/group/prefix/sort | 1.5 |  | 0.677 |
-| walker |  | 384 | 32 | go decl names surface in flatten.go |  |  | 0.681 |
-| walker |  | 384 | 0 | go decl at flatten.go:8 |  |  | 0.681 |
-| walker |  | 384 | 0 | go decl at flatten.go:20 |  |  | 0.681 |
-| walker |  | 418 | 34 | go decl names surface in format.go |  |  | 0.707 |
-| walker |  | 418 | 0 | go decl at format.go:13 |  |  | 0.707 |
-| walker |  | 418 | 0 | go decl at format.go:17 |  |  | 0.707 |
-| walker |  | 428 | 10 | go package + imports in append.go |  |  | 0.707 |
-| walker |  | 438 | 10 | go package + imports in flatten.go |  |  | 0.707 |
-| ns | 468 |  | 96 | Test-function locations: multierror_test.go | 1.6 |  | 0.645 |
-| walker |  | 486 | 48 | go decl names surface in group.go |  |  | 0.690 |
-| walker |  | 486 | 0 | go decl at group.go:20 |  |  | 0.690 |
-| walker |  | 486 | 0 | go decl at group.go:36 |  |  | 0.690 |
-| walker |  | 519 | 33 | go decl at group.go:10 |  |  | 0.691 |
-| walker |  | 533 | 14 | listing of '.github' |  |  | 0.717 |
-| walker |  | 545 | 12 | listing of '.github/workflows' |  |  | 0.761 |
-| walker |  | 557 | 12 | go package + imports in sort.go |  |  | 0.761 |
-| walker |  | 610 | 53 | go decl names surface in sort.go |  |  | 0.827 |
-| walker |  | 610 | 0 | go decl at sort.go:7 |  |  | 0.827 |
-| walker |  | 610 | 0 | go decl at sort.go:16 |  |  | 0.827 |
-| walker |  | 610 | 0 | go decl at sort.go:21 |  |  | 0.827 |
-| walker |  | 621 | 11 | go decl doc at sort.go:7 |  |  | 0.827 |
-| walker |  | 635 | 14 | go decl doc at sort.go:16 |  |  | 0.827 |
-| walker |  | 649 | 14 | go decl doc at sort.go:21 |  |  | 0.827 |
+| walker |  | 177 | 32 | go decl names surface in flatten.go |  |  | 0.873 |
+| walker |  | 177 | 0 | go decl at flatten.go:8 |  |  | 0.873 |
+| walker |  | 177 | 0 | go decl at flatten.go:20 |  |  | 0.873 |
+| walker |  | 211 | 34 | go decl names surface in format.go |  |  | 0.877 |
+| walker |  | 211 | 0 | go decl at format.go:13 |  |  | 0.877 |
+| walker |  | 211 | 0 | go decl at format.go:17 |  |  | 0.877 |
+| walker |  | 221 | 10 | go package + imports in append.go |  |  | 0.877 |
+| ns | 228 |  | 87 | Public API locations: multierror.go | 1.4 |  | 0.789 |
+| walker |  | 231 | 10 | go package + imports in flatten.go |  |  | 0.789 |
+| walker |  | 279 | 48 | go decl names surface in group.go |  |  | 0.797 |
+| walker |  | 279 | 0 | go decl at group.go:20 |  |  | 0.797 |
+| walker |  | 279 | 0 | go decl at group.go:36 |  |  | 0.797 |
+| walker |  | 312 | 33 | go decl at group.go:10 |  |  | 0.798 |
+| walker |  | 326 | 14 | listing of '.github' |  |  | 0.832 |
+| walker |  | 338 | 12 | listing of '.github/workflows' |  |  | 0.892 |
+| walker |  | 350 | 12 | go package + imports in sort.go |  |  | 0.892 |
+| ns | 372 |  | 144 | Public API locations: append/flatten/format/group/prefix/sort | 1.5 |  | 0.831 |
+| walker |  | 403 | 53 | go decl names surface in sort.go |  |  | 0.902 |
+| walker |  | 403 | 0 | go decl at sort.go:7 |  |  | 0.902 |
+| walker |  | 403 | 0 | go decl at sort.go:16 |  |  | 0.902 |
+| walker |  | 403 | 0 | go decl at sort.go:21 |  |  | 0.902 |
+| walker |  | 414 | 11 | go decl doc at sort.go:7 |  |  | 0.902 |
+| walker |  | 428 | 14 | go decl doc at sort.go:16 |  |  | 0.903 |
+| walker |  | 442 | 14 | go decl doc at sort.go:21 |  |  | 0.903 |
+| ns | 468 |  | 96 | Test-function locations: multierror_test.go | 1.6 |  | 0.823 |
+| walker |  | 600 | 158 | README headline in README.md |  |  | 0.827 |
+| walker |  | 649 | 49 | headings outline in README.md |  |  | 0.827 |
 | ns | 677 |  | 209 | Test-function locations: the other six _test.go files | 1.7 |  | 0.712 |
 | walker |  | 823 | 174 | go decl names surface in multierror.go |  |  | 0.778 |
 | walker |  | 823 | 0 | go decl at multierror.go:18 |  |  | 0.778 |

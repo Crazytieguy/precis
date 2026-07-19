@@ -33,36 +33,10 @@ entries = ["logo.ai", "logo.png", "logo.svg"]
 
 [[batches]]
 position = 3
-key = 'Json(Identity { file: "package.json" })'
-descriptor = "package identity in package.json"
-cost_tokens = 71
-cum_tokens = 123
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 2
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 4
 key = 'Fs(DirListing { dir: "source" })'
 descriptor = "listing of 'source'"
 cost_tokens = 16
-cum_tokens = 139
+cum_tokens = 68
 
 [batches.content]
 kind = "fs"
@@ -72,11 +46,11 @@ parent = "source"
 entries = ["core", "errors", "index.ts", "types", "utils"]
 
 [[batches]]
-position = 5
+position = 4
 key = 'Typescript(ExportNames { file: "source/index.ts" })'
 descriptor = "export names surface in source/index.ts"
 cost_tokens = 12
-cum_tokens = 151
+cum_tokens = 80
 
 [batches.content]
 kind = "lines"
@@ -98,11 +72,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 5
 key = 'Typescript(Export { file: "source/index.ts", start_line: 36 })'
 descriptor = "export at source/index.ts:36"
 cost_tokens = 0
-cum_tokens = 151
+cum_tokens = 80
 
 [batches.content]
 kind = "lines"
@@ -116,11 +90,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 7
+position = 6
 key = 'Typescript(Export { file: "source/index.ts", start_line: 10 })'
 descriptor = "export at source/index.ts:10"
 cost_tokens = 21
-cum_tokens = 172
+cum_tokens = 101
 
 [batches.content]
 kind = "lines"
@@ -142,11 +116,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: "source/core" })'
 descriptor = "listing of 'source/core'"
 cost_tokens = 8
-cum_tokens = 180
+cum_tokens = 109
 
 [batches.content]
 kind = "fs"
@@ -156,11 +130,11 @@ parent = "source/core"
 entries = ["Ky.ts", "constants.ts"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Fs(DirListing { dir: "source/errors" })'
 descriptor = "listing of 'source/errors'"
 cost_tokens = 21
-cum_tokens = 201
+cum_tokens = 130
 
 [batches.content]
 kind = "fs"
@@ -170,11 +144,79 @@ parent = "source/errors"
 entries = ["ForceRetryError.ts", "HTTPError.ts", "NonError.ts", "TimeoutError.ts"]
 
 [[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "source/types" })'
+descriptor = "listing of 'source/types'"
+cost_tokens = 33
+cum_tokens = 163
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/types"
+entries = ["ResponsePromise.ts", "common.ts", "hooks.ts", "ky.ts", "options.ts", "request.ts", "response.ts", "retry.ts"]
+
+[[batches]]
 position = 10
+key = 'Json(Identity { file: "package.json" })'
+descriptor = "package identity in package.json"
+cost_tokens = 71
+cum_tokens = 234
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "source/utils" })'
+descriptor = "listing of 'source/utils'"
+cost_tokens = 38
+cum_tokens = 272
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/utils"
+entries = ["body.ts", "delay.ts", "is.ts", "merge.ts", "normalize.ts", "options.ts", "timeout.ts", "type-guards.ts", "types.ts"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 66
+cum_tokens = 338
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["browser.ts", "bytes.ts", "context.ts", "fetch.ts", "formdata-searchparams.ts", "headers.ts", "helpers", "hooks.ts", "http-error.ts", "main.ts", "memory-leak.ts", "methods.ts", "prefix-url.ts", "retry.ts", "stream.ts"]
+
+[[batches]]
+position = 13
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 31
-cum_tokens = 232
+cum_tokens = 369
 
 [batches.content]
 kind = "lines"
@@ -188,79 +230,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "source/types" })'
-descriptor = "listing of 'source/types'"
-cost_tokens = 33
-cum_tokens = 265
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/types"
-entries = ["ResponsePromise.ts", "common.ts", "hooks.ts", "ky.ts", "options.ts", "request.ts", "response.ts", "retry.ts"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "source/utils" })'
-descriptor = "listing of 'source/utils'"
-cost_tokens = 38
-cum_tokens = 303
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/utils"
-entries = ["body.ts", "delay.ts", "is.ts", "merge.ts", "normalize.ts", "options.ts", "timeout.ts", "type-guards.ts", "types.ts"]
-
-[[batches]]
-position = 13
-key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
-descriptor = "README headline in readme.md"
-cost_tokens = 183
-cum_tokens = 486
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "readme.md"
-start = 20
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 14
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 66
-cum_tokens = 552
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["browser.ts", "bytes.ts", "context.ts", "fetch.ts", "formdata-searchparams.ts", "headers.ts", "helpers", "hooks.ts", "http-error.ts", "main.ts", "memory-leak.ts", "methods.ts", "prefix-url.ts", "retry.ts", "stream.ts"]
-
-[[batches]]
-position = 15
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 11
-cum_tokens = 563
+cum_tokens = 380
 
 [batches.content]
 kind = "fs"
@@ -270,11 +244,11 @@ parent = ".github"
 entries = ["funding.yml", "security.md", "workflows"]
 
 [[batches]]
-position = 16
+position = 15
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 567
+cum_tokens = 384
 
 [batches.content]
 kind = "fs"
@@ -284,11 +258,11 @@ parent = ".github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 17
+position = 16
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 335
-cum_tokens = 902
+cum_tokens = 719
 
 [batches.content]
 kind = "lines"
@@ -302,11 +276,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Typescript(ExportNames { file: "source/errors/TimeoutError.ts" })'
 descriptor = "export names surface in source/errors/TimeoutError.ts"
 cost_tokens = 15
-cum_tokens = 917
+cum_tokens = 734
 
 [batches.content]
 kind = "lines"
@@ -328,11 +302,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Typescript(Export { file: "source/errors/TimeoutError.ts", start_line: 3 })'
 descriptor = "export at source/errors/TimeoutError.ts:3"
 cost_tokens = 25
-cum_tokens = 942
+cum_tokens = 759
 
 [batches.content]
 kind = "lines"
@@ -354,11 +328,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Typescript(ExportNames { file: "source/errors/ForceRetryError.ts" })'
 descriptor = "export names surface in source/errors/ForceRetryError.ts"
 cost_tokens = 16
-cum_tokens = 958
+cum_tokens = 775
 
 [batches.content]
 kind = "lines"
@@ -378,6 +352,32 @@ end = 9
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
+descriptor = "README headline in readme.md"
+cost_tokens = 183
+cum_tokens = 958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "readme.md"
+start = 20
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 21

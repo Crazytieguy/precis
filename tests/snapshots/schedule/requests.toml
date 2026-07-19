@@ -47,10 +47,216 @@ entries = ["LICENSE", "kr.png", "psf.png", "requests-logo-compressed.png", "requ
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 54
+cum_tokens = 165
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = [".nojekyll", "Makefile", "_static", "_templates", "_themes", "api.rst", "community", "conf.py", "dev", "index.rst", "make.bat", "requirements.txt", "user"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "docs/_templates" })'
+descriptor = "listing of 'docs/_templates'"
+cost_tokens = 4
+cum_tokens = 169
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/_templates"
+entries = ["sidebar.html"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "docs/_static" })'
+descriptor = "listing of 'docs/_static'"
+cost_tokens = 9
+cum_tokens = 178
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/_static"
+entries = ["custom.css", "requests-sidebar.png"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "docs/dev" })'
+descriptor = "listing of 'docs/dev'"
+cost_tokens = 10
+cum_tokens = 188
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/dev"
+entries = ["authors.rst", "contributing.rst"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "docs/_themes" })'
+descriptor = "listing of 'docs/_themes'"
+cost_tokens = 14
+cum_tokens = 202
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/_themes"
+entries = [".gitignore", "LICENSE", "flask_theme_support.py"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "docs/user" })'
+descriptor = "listing of 'docs/user'"
+cost_tokens = 21
+cum_tokens = 223
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/user"
+entries = ["advanced.rst", "authentication.rst", "install.rst", "quickstart.rst"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "docs/community" })'
+descriptor = "listing of 'docs/community'"
+cost_tokens = 38
+cum_tokens = 261
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/community"
+entries = ["faq.rst", "out-there.rst", "recommended.rst", "release-process.rst", "support.rst", "updates.rst", "vulnerabilities.rst"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "src/requests" })'
+descriptor = "listing of 'src/requests'"
+cost_tokens = 90
+cum_tokens = 351
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/requests"
+entries = ["__init__.py", "__version__.py", "_internal_utils.py", "_types.py", "adapters.py", "api.py", "auth.py", "certs.py", "compat.py", "cookies.py", "exceptions.py", "help.py", "hooks.py", "models.py", "packages.py", "py.typed", "sessions.py", "status_codes.py", "structures.py", "utils.py"]
+
+[[batches]]
+position = 12
+key = 'Python(Imports { file: "src/requests/__init__.py" })'
+descriptor = "python imports in src/requests/__init__.py"
+cost_tokens = 1002
+cum_tokens = 1353
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 1
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 155
+end = 214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Python(DeclNames { file: "src/requests/__init__.py" })'
+descriptor = "python decl names surface in src/requests/__init__.py"
+cost_tokens = 34
+cum_tokens = 1387
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 99 })'
+descriptor = "python decl at src/requests/__init__.py:99"
+cost_tokens = 16
+cum_tokens = 1403
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/requests/__init__.py"
+start = 99
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 175
-cum_tokens = 286
+cum_tokens = 1578
 
 [batches.content]
 kind = "lines"
@@ -72,11 +278,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 5
+position = 16
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 40
-cum_tokens = 326
+cum_tokens = 1618
 
 [batches.content]
 kind = "lines"
@@ -128,212 +334,6 @@ end = 59
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 54
-cum_tokens = 380
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = [".nojekyll", "Makefile", "_static", "_templates", "_themes", "api.rst", "community", "conf.py", "dev", "index.rst", "make.bat", "requirements.txt", "user"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs/_templates" })'
-descriptor = "listing of 'docs/_templates'"
-cost_tokens = 4
-cum_tokens = 384
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/_templates"
-entries = ["sidebar.html"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "docs/_static" })'
-descriptor = "listing of 'docs/_static'"
-cost_tokens = 9
-cum_tokens = 393
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/_static"
-entries = ["custom.css", "requests-sidebar.png"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "docs/dev" })'
-descriptor = "listing of 'docs/dev'"
-cost_tokens = 10
-cum_tokens = 403
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/dev"
-entries = ["authors.rst", "contributing.rst"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "docs/_themes" })'
-descriptor = "listing of 'docs/_themes'"
-cost_tokens = 14
-cum_tokens = 417
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/_themes"
-entries = [".gitignore", "LICENSE", "flask_theme_support.py"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "docs/user" })'
-descriptor = "listing of 'docs/user'"
-cost_tokens = 21
-cum_tokens = 438
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/user"
-entries = ["advanced.rst", "authentication.rst", "install.rst", "quickstart.rst"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "docs/community" })'
-descriptor = "listing of 'docs/community'"
-cost_tokens = 38
-cum_tokens = 476
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/community"
-entries = ["faq.rst", "out-there.rst", "recommended.rst", "release-process.rst", "support.rst", "updates.rst", "vulnerabilities.rst"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "src/requests" })'
-descriptor = "listing of 'src/requests'"
-cost_tokens = 90
-cum_tokens = 566
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/requests"
-entries = ["__init__.py", "__version__.py", "_internal_utils.py", "_types.py", "adapters.py", "api.py", "auth.py", "certs.py", "compat.py", "cookies.py", "exceptions.py", "help.py", "hooks.py", "models.py", "packages.py", "py.typed", "sessions.py", "status_codes.py", "structures.py", "utils.py"]
-
-[[batches]]
-position = 14
-key = 'Python(Imports { file: "src/requests/__init__.py" })'
-descriptor = "python imports in src/requests/__init__.py"
-cost_tokens = 1002
-cum_tokens = 1568
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 1
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 155
-end = 214
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Python(DeclNames { file: "src/requests/__init__.py" })'
-descriptor = "python decl names surface in src/requests/__init__.py"
-cost_tokens = 34
-cum_tokens = 1602
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 99
-end = 99
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 16
-key = 'Python(Decl { file: "src/requests/__init__.py", start_line: 99 })'
-descriptor = "python decl at src/requests/__init__.py:99"
-cost_tokens = 16
-cum_tokens = 1618
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/requests/__init__.py"
-start = 99
-end = 100
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 17

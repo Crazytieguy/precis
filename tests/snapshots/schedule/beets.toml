@@ -19,10 +19,24 @@ entries = [".git-blame-ignore-revs", ".github", ".gitignore", ".pre-commit-confi
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "extra" })'
+descriptor = "listing of 'extra'"
+cost_tokens = 19
+cum_tokens = 102
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "extra"
+entries = ["_beet", "ascii_logo.txt", "beets.reg", "release.py"]
+
+[[batches]]
+position = 3
 key = 'Toml(Scripts { file: "pyproject.toml" })'
 descriptor = "entry-point scripts in pyproject.toml"
 cost_tokens = 29
-cum_tokens = 112
+cum_tokens = 131
 
 [batches.content]
 kind = "lines"
@@ -34,20 +48,6 @@ end = 185
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "extra" })'
-descriptor = "listing of 'extra'"
-cost_tokens = 19
-cum_tokens = 131
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "extra"
-entries = ["_beet", "ascii_logo.txt", "beets.reg", "release.py"]
 
 [[batches]]
 position = 4

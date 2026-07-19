@@ -4,27 +4,27 @@ Score(3000)=0.732 I=0.902 C=0.594 ns_rows≤3K=15/40 (reached=8 partial=0 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 24 |  | 24 | lib/ directory listing | 1.1 |  | 0.000 |
 | walker |  | 43 | 43 | listing of '.' |  |  | 0.000 |
+| walker |  | 58 | 15 | export names surface in index.js |  |  | 0.000 |
 | ns | 67 |  | 43 | Root directory listing | 1.2 |  | 0.473 |
-| walker |  | 106 | 63 | package identity in package.json |  |  | 0.474 |
-| walker |  | 121 | 15 | export names surface in index.js |  |  | 0.474 |
-| walker |  | 145 | 24 | listing of 'lib' |  |  | 1.000 |
+| walker |  | 82 | 24 | listing of 'lib' |  |  | 1.000 |
+| walker |  | 145 | 63 | package identity in package.json |  |  | 1.000 |
+| walker |  | 153 | 8 | listing of '.github' |  |  | 1.000 |
 | ns | 168 |  | 101 | examples/ directory listing | 1.3 |  | 0.596 |
-| walker |  | 176 | 31 | package runtime metadata in package.json |  |  | 0.596 |
-| walker |  | 226 | 50 | package entrypoints in package.json |  |  | 0.597 |
-| walker |  | 234 | 8 | listing of '.github' |  |  | 0.597 |
-| walker |  | 252 | 18 | listing of '.github/workflows' |  |  | 0.599 |
+| walker |  | 171 | 18 | listing of '.github/workflows' |  |  | 0.598 |
+| walker |  | 179 | 8 | imports in index.js |  |  | 0.598 |
+| walker |  | 210 | 31 | package runtime metadata in package.json |  |  | 0.598 |
 | ns | 254 |  | 86 | test/acceptance/ directory listing | 1.4 |  | 0.490 |
-| walker |  | 260 | 8 | imports in index.js |  |  | 0.490 |
+| walker |  | 260 | 50 | package entrypoints in package.json |  |  | 0.490 |
 | ns | 284 |  | 30 | test/support, .github/workflows listings | 1.5 |  | 0.486 |
 | ns | 347 |  | 63 | CI: lint/test commands + Node version matrix | 1.6 |  | 0.474 |
 | ns | 465 |  | 118 | Readme quickstart snippet | 1.7 |  | 0.430 |
 | ns | 613 |  | 148 | Readme Running Tests | 1.8 |  | 0.387 |
-| walker |  | 680 | 420 | README headline in Readme.md |  |  | 0.497 |
-| ns | 875 |  | 262 | package.json scripts/engines/files | 1.9 |  | 0.462 |
-| walker |  | 1056 | 376 | listing of 'test' |  |  | 0.487 |
-| ns | 1182 |  | 307 | package.json identity | 1.10 |  | 0.445 |
-| walker |  | 1184 | 128 | headings outline in Readme.md |  |  | 0.449 |
-| walker |  | 1196 | 12 | listing of 'test/support' |  |  | 0.480 |
+| walker |  | 636 | 376 | listing of 'test' |  |  | 0.408 |
+| walker |  | 648 | 12 | listing of 'test/support' |  |  | 0.453 |
+| ns | 875 |  | 262 | package.json scripts/engines/files | 1.9 |  | 0.424 |
+| walker |  | 1068 | 420 | README headline in Readme.md |  |  | 0.521 |
+| ns | 1182 |  | 307 | package.json identity | 1.10 |  | 0.476 |
+| walker |  | 1196 | 128 | headings outline in Readme.md |  |  | 0.480 |
 | walker |  | 1297 | 101 | listing of 'examples' |  |  | 0.663 |
 | walker |  | 1384 | 87 | Readme.md section #2 |  |  | 0.663 |
 | ns | 1558 |  | 376 | test/ directory listing | 1.11 |  | 0.749 |

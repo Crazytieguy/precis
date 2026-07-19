@@ -33,10 +33,38 @@ entries = ["probe.rs"]
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: "impl" })'
+descriptor = "listing of 'impl'"
+cost_tokens = 19
+cum_tokens = 61
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "impl"
+entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 25
+cum_tokens = 86
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["aserror.rs", "display.rs", "lib.rs", "private.rs", "provide.rs", "var.rs"]
+
+[[batches]]
+position = 5
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 47
-cum_tokens = 89
+cum_tokens = 133
 
 [batches.content]
 kind = "lines"
@@ -58,11 +86,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 4
+position = 6
 key = 'Toml(Dependencies { file: "Cargo.toml" })'
 descriptor = "[dependencies] in Cargo.toml"
 cost_tokens = 36
-cum_tokens = 125
+cum_tokens = 169
 
 [batches.content]
 kind = "lines"
@@ -76,11 +104,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 5
+position = 7
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 29
-cum_tokens = 154
+cum_tokens = 198
 
 [batches.content]
 kind = "lines"
@@ -134,83 +162,11 @@ end = 212
 kind = "ellipsis"
 
 [[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "impl" })'
-descriptor = "listing of 'impl'"
-cost_tokens = 19
-cum_tokens = 173
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "impl"
-entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 25
-cum_tokens = 198
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["aserror.rs", "display.rs", "lib.rs", "private.rs", "provide.rs", "var.rs"]
-
-[[batches]]
 position = 8
-key = 'Toml(Identity { file: "Cargo.toml" })'
-descriptor = "[package] in Cargo.toml"
-cost_tokens = 185
-cum_tokens = 383
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 1
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 39
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #0"
-cost_tokens = 72
-cum_tokens = 455
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 12
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
 key = 'Rust(ModUse { file: "src/lib.rs" })'
 descriptor = "mod/use plumbing in src/lib.rs"
 cost_tokens = 62
-cum_tokens = 517
+cum_tokens = 260
 
 [batches.content]
 kind = "lines"
@@ -232,11 +188,11 @@ end = 289
 kind = "full"
 
 [[batches]]
-position = 11
+position = 9
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 525
+cum_tokens = 268
 
 [batches.content]
 kind = "fs"
@@ -246,11 +202,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
-position = 12
+position = 10
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 529
+cum_tokens = 272
 
 [batches.content]
 kind = "fs"
@@ -260,11 +216,11 @@ parent = ".github/workflows"
 entries = ["ci.yml"]
 
 [[batches]]
-position = 13
+position = 11
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 72
-cum_tokens = 601
+cum_tokens = 344
 
 [batches.content]
 kind = "fs"
@@ -272,6 +228,50 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "tests"
 entries = ["compiletest.rs", "no-std", "test_backtrace.rs", "test_display.rs", "test_error.rs", "test_expr.rs", "test_from.rs", "test_generics.rs", "test_lints.rs", "test_option.rs", "test_path.rs", "test_source.rs", "test_transparent.rs", "ui"]
+
+[[batches]]
+position = 12
+key = 'Toml(Identity { file: "Cargo.toml" })'
+descriptor = "[package] in Cargo.toml"
+cost_tokens = 185
+cum_tokens = 529
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 1
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 39
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #0"
+cost_tokens = 72
+cum_tokens = 601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 12
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 14

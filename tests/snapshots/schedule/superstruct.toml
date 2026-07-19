@@ -19,10 +19,80 @@ entries = [".editorconfig", ".eslintrc", ".gitbook.yaml", ".github", ".gitignore
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 19
+cum_tokens = 84
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["error.ts", "index.ts", "struct.ts", "structs", "utils.ts"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "src/structs" })'
+descriptor = "listing of 'src/structs'"
+cost_tokens = 18
+cum_tokens = 102
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/structs"
+entries = ["coercions.ts", "refinements.ts", "types.ts", "utilities.ts"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 21
+cum_tokens = 123
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "docs/resources" })'
+descriptor = "listing of 'docs/resources'"
+cost_tokens = 8
+cum_tokens = 131
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/resources"
+entries = ["faq.md", "links.md"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: ".vscode" })'
+descriptor = "listing of '.vscode'"
+cost_tokens = 4
+cum_tokens = 135
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".vscode"
+entries = ["settings.json"]
+
+[[batches]]
+position = 7
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 82
-cum_tokens = 147
+cum_tokens = 217
 
 [batches.content]
 kind = "lines"
@@ -44,81 +114,117 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 19
-cum_tokens = 166
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["error.ts", "index.ts", "struct.ts", "structs", "utils.ts"]
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "src/structs" })'
-descriptor = "listing of 'src/structs'"
-cost_tokens = 18
-cum_tokens = 184
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/structs"
-entries = ["coercions.ts", "refinements.ts", "types.ts", "utilities.ts"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 21
-cum_tokens = 205
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "docs/resources" })'
-descriptor = "listing of 'docs/resources'"
-cost_tokens = 8
-cum_tokens = 213
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/resources"
-entries = ["faq.md", "links.md"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: ".vscode" })'
-descriptor = "listing of '.vscode'"
-cost_tokens = 4
-cum_tokens = 217
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".vscode"
-entries = ["settings.json"]
-
-[[batches]]
 position = 8
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 8
+cum_tokens = 225
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["dependabot.yml", "workflows"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 229
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml"]
+
+[[batches]]
+position = 10
+key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
+descriptor = "YAML config at .github/workflows/ci.yml"
+cost_tokens = 175
+cum_tokens = 404
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/ci.yml"
+start = 1
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 55
+cum_tokens = 459
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["README.md", "basic-validation.js", "composing-structs.js", "custom-errors.js", "custom-types.js", "default-values.js", "optional-values.js", "package.json", "returning-errors.js", "testing-values.js", "throwing-errors.js"]
+
+[[batches]]
+position = 12
+key = 'Typescript(Imports { file: "src/index.ts" })'
+descriptor = "imports in src/index.ts"
+cost_tokens = 79
+cum_tokens = 538
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "docs/images" })'
+descriptor = "listing of 'docs/images'"
+cost_tokens = 29
+cum_tokens = 567
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/images"
+entries = ["banner.png", "demo-screenshot.png", "docs-screenshot.png", "icon.png", "logo.png", "logo.sketch"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "docs/reference" })'
+descriptor = "listing of 'docs/reference'"
+cost_tokens = 31
+cum_tokens = 598
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/reference"
+entries = ["coercions.md", "core.md", "errors.md", "refinements.md", "types.md", "typescript.md", "utilities.md"]
+
+[[batches]]
+position = 15
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 34
-cum_tokens = 251
+cum_tokens = 632
 
 [batches.content]
 kind = "lines"
@@ -132,11 +238,67 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 9
+position = 16
+key = 'Typescript(ExportNames { file: "src/error.ts" })'
+descriptor = "export names surface in src/error.ts"
+cost_tokens = 27
+cum_tokens = 659
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/error.ts"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "docs/guides" })'
+descriptor = "listing of 'docs/guides'"
+cost_tokens = 51
+cum_tokens = 710
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/guides"
+entries = ["01-getting-started.md", "02-validating-data.md", "03-coercing-data.md", "04-refining-validation.md", "05-handling-errors.md", "06-using-typescript.md"]
+
+[[batches]]
+position = 18
 key = 'Markdown(HeadingsOutline { file: "docs/resources/links.md" })'
 descriptor = "headings outline in docs/resources/links.md"
 cost_tokens = 18
-cum_tokens = 269
+cum_tokens = 728
 
 [batches.content]
 kind = "lines"
@@ -174,11 +336,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 19
 key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 197
-cum_tokens = 466
+cum_tokens = 925
 
 [batches.content]
 kind = "lines"
@@ -208,117 +370,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 11
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 8
-cum_tokens = 474
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "workflows"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 478
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml"]
-
-[[batches]]
-position = 13
-key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
-descriptor = "YAML config at .github/workflows/ci.yml"
-cost_tokens = 175
-cum_tokens = 653
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/ci.yml"
-start = 1
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 55
-cum_tokens = 708
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["README.md", "basic-validation.js", "composing-structs.js", "custom-errors.js", "custom-types.js", "default-values.js", "optional-values.js", "package.json", "returning-errors.js", "testing-values.js", "throwing-errors.js"]
-
-[[batches]]
-position = 15
-key = 'Typescript(Imports { file: "src/index.ts" })'
-descriptor = "imports in src/index.ts"
-cost_tokens = 79
-cum_tokens = 787
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/index.ts"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "docs/images" })'
-descriptor = "listing of 'docs/images'"
-cost_tokens = 29
-cum_tokens = 816
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/images"
-entries = ["banner.png", "demo-screenshot.png", "docs-screenshot.png", "icon.png", "logo.png", "logo.sketch"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "docs/reference" })'
-descriptor = "listing of 'docs/reference'"
-cost_tokens = 31
-cum_tokens = 847
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/reference"
-entries = ["coercions.md", "core.md", "errors.md", "refinements.md", "types.md", "typescript.md", "utilities.md"]
-
-[[batches]]
-position = 18
+position = 20
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 54
-cum_tokens = 901
+cum_tokens = 979
 
 [batches.content]
 kind = "lines"
@@ -418,62 +474,6 @@ end = 232
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 19
-key = 'Typescript(ExportNames { file: "src/error.ts" })'
-descriptor = "export names surface in src/error.ts"
-cost_tokens = 27
-cum_tokens = 928
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/error.ts"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "docs/guides" })'
-descriptor = "listing of 'docs/guides'"
-cost_tokens = 51
-cum_tokens = 979
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/guides"
-entries = ["01-getting-started.md", "02-validating-data.md", "03-coercing-data.md", "04-refining-validation.md", "05-handling-errors.md", "06-using-typescript.md"]
 
 [[batches]]
 position = 21

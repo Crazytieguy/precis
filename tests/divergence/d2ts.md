@@ -4,34 +4,34 @@ Score(3000)=0.405 I=0.689 C=0.238 ns_rows≤3K=25/65 (reached=7 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 54 | 54 | listing of '.' |  |  | 1.000 |
 | ns | 54 |  | 54 | Repo root listing | 1.1 |  | 1.000 |
-| walker |  | 135 | 81 | README headline in README.md |  |  | 1.000 |
-| ns | 135 |  | 81 | README concept lede | 1.2 |  | 1.000 |
-| walker |  | 138 | 3 | listing of '.github' |  |  | 1.000 |
-| walker |  | 142 | 4 | listing of '.github/workflows' |  |  | 1.000 |
-| walker |  | 164 | 22 | listing of 'packages' |  |  | 1.000 |
-| ns | 180 |  | 45 | README operator name roster (part 1: top-level features) | 1.3 |  | 0.887 |
-| walker |  | 199 | 35 | listing of 'examples' |  |  | 0.889 |
-| walker |  | 216 | 17 | listing of 'packages/d2ts-benchmark' |  |  | 0.889 |
+| walker |  | 57 | 3 | listing of '.github' |  |  | 1.000 |
+| walker |  | 61 | 4 | listing of '.github/workflows' |  |  | 1.000 |
+| walker |  | 83 | 22 | listing of 'packages' |  |  | 1.000 |
+| walker |  | 118 | 35 | listing of 'examples' |  |  | 1.000 |
+| walker |  | 135 | 17 | listing of 'packages/d2ts-benchmark' |  |  | 0.898 |
+| ns | 135 |  | 81 | README concept lede | 1.2 |  | 0.898 |
+| ns | 180 |  | 45 | README operator name roster (part 1: top-level features) | 1.3 |  | 0.785 |
+| walker |  | 216 | 81 | README headline in README.md |  |  | 0.889 |
 | walker |  | 228 | 12 | listing of 'packages/d2ts-benchmark/src' |  |  | 0.889 |
 | walker |  | 236 | 8 | listing of '.changeset' |  |  | 0.889 |
 | walker |  | 261 | 25 | listing of 'packages/d2ql' |  |  | 0.889 |
 | ns | 288 |  | 108 | README operator name roster (part 2a: buffer..join) | 1.4 | 1.3 | 0.725 |
 | walker |  | 291 | 30 | listing of 'packages/d2mini' |  |  | 0.725 |
-| walker |  | 350 | 59 | README headline in packages/d2mini/README.md |  |  | 0.727 |
-| ns | 383 |  | 95 | README operator name roster (part 2b: keyBy..pipe) | 1.5 | 1.4 | 0.636 |
-| ns | 405 |  | 22 | packages/* listing | 1.6 |  | 0.662 |
-| ns | 539 |  | 134 | Root package.json scripts | 1.7 |  | 0.585 |
-| ns | 565 |  | 26 | pnpm workspace globs | 1.8 |  | 0.564 |
-| ns | 717 |  | 152 | d2ts package manifest: exports map | 2.1 |  | 0.488 |
-| ns | 853 |  | 136 | d2mini package manifest: single export (contrastive) | 2.2 |  | 0.448 |
-| walker |  | 1002 | 652 | YAML config at .github/workflows/ci.yml |  |  | 0.448 |
-| ns | 1025 |  | 172 | d2ql package manifest: query-builder/store subpaths | 2.3 |  | 0.408 |
-| walker |  | 1038 | 36 | listing of 'packages/d2ts' |  |  | 0.408 |
-| walker |  | 1123 | 85 | package identity in packages/d2ts/package.json |  |  | 0.408 |
-| ns | 1133 |  | 108 | d2mini README (differentiator prose) | 2.4 |  | 0.409 |
-| walker |  | 1134 | 11 | export names surface in eslint.base.mjs |  |  | 0.409 |
-| walker |  | 1167 | 33 | listing of 'packages/d2mini/src' |  |  | 0.409 |
-| walker |  | 1271 | 104 | listing of 'packages/d2mini/src/operators' |  |  | 0.411 |
+| ns | 383 |  | 95 | README operator name roster (part 2b: keyBy..pipe) | 1.5 | 1.4 | 0.634 |
+| ns | 405 |  | 22 | packages/* listing | 1.6 |  | 0.660 |
+| ns | 539 |  | 134 | Root package.json scripts | 1.7 |  | 0.583 |
+| ns | 565 |  | 26 | pnpm workspace globs | 1.8 |  | 0.562 |
+| ns | 717 |  | 152 | d2ts package manifest: exports map | 2.1 |  | 0.487 |
+| ns | 853 |  | 136 | d2mini package manifest: single export (contrastive) | 2.2 |  | 0.447 |
+| walker |  | 943 | 652 | YAML config at .github/workflows/ci.yml |  |  | 0.447 |
+| walker |  | 979 | 36 | listing of 'packages/d2ts' |  |  | 0.447 |
+| ns | 1025 |  | 172 | d2ql package manifest: query-builder/store subpaths | 2.3 |  | 0.407 |
+| walker |  | 1064 | 85 | package identity in packages/d2ts/package.json |  |  | 0.407 |
+| walker |  | 1075 | 11 | export names surface in eslint.base.mjs |  |  | 0.407 |
+| walker |  | 1108 | 33 | listing of 'packages/d2mini/src' |  |  | 0.408 |
+| ns | 1133 |  | 108 | d2mini README (differentiator prose) | 2.4 |  | 0.392 |
+| walker |  | 1212 | 104 | listing of 'packages/d2mini/src/operators' |  |  | 0.394 |
+| walker |  | 1271 | 59 | README headline in packages/d2mini/README.md |  |  | 0.411 |
 | ns | 1299 |  | 166 | d2ql README: current-features checklist | 2.5 |  | 0.383 |
 | walker |  | 1315 | 44 | listing of 'packages/d2ts/src' |  |  | 0.388 |
 | walker |  | 1319 | 4 | listing of 'packages/d2ts/src/electric' |  |  | 0.388 |

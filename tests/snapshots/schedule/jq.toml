@@ -51,10 +51,224 @@ kind = "full"
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 52
+cum_tokens = 213
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["Pipfile", "Pipfile.lock", "README.md", "build_manpage.py", "build_mantests.py", "build_website.py", "content", "manual_schema.yml", "public", "templates", "validate_manual_schema.py"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "docs/content" })'
+descriptor = "listing of 'docs/content'"
+cost_tokens = 13
+cum_tokens = 226
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/content"
+entries = ["download", "index.yml", "manual", "tutorial"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "docs/content/download" })'
+descriptor = "listing of 'docs/content/download'"
+cost_tokens = 4
+cum_tokens = 230
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/content/download"
+entries = ["default.yml"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "docs/content/tutorial" })'
+descriptor = "listing of 'docs/content/tutorial'"
+cost_tokens = 4
+cum_tokens = 234
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/content/tutorial"
+entries = ["default.yml"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "docs/templates" })'
+descriptor = "listing of 'docs/templates'"
+cost_tokens = 21
+cum_tokens = 255
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/templates"
+entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "vendor" })'
+descriptor = "listing of 'vendor'"
+cost_tokens = 9
+cum_tokens = 264
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "vendor"
+entries = ["decNumber", "oniguruma"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "docs/public" })'
+descriptor = "listing of 'docs/public'"
+cost_tokens = 31
+cum_tokens = 295
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/public"
+entries = [".htaccess", "CNAME", "css", "icon.png", "icon.svg", "jq.svg", "js", "robots.txt"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "docs/public/css" })'
+descriptor = "listing of 'docs/public/css'"
+cost_tokens = 4
+cum_tokens = 299
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/public/css"
+entries = ["style.css"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "docs/public/js" })'
+descriptor = "listing of 'docs/public/js'"
+cost_tokens = 5
+cum_tokens = 304
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/public/js"
+entries = ["manual-search.js"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 12
+cum_tokens = 316
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 35
+cum_tokens = 351
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml", "decnum.yml", "manpage.yml", "oniguruma.yml", "scanbuild.yml", "valgrind.yml", "website.yml"]
+
+[[batches]]
+position = 15
+key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
+descriptor = "README headline in docs/README.md"
+cost_tokens = 56
+cum_tokens = 407
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/README.md"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "docs/templates/shared" })'
+descriptor = "listing of 'docs/templates/shared'"
+cost_tokens = 21
+cum_tokens = 428
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs/templates/shared"
+entries = ["_footer.html.j2", "_head.html.j2", "_navbar.html.j2"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 14
+cum_tokens = 442
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["crosscompile", "gen_utf8_tables.py", "version"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "config/m4" })'
+descriptor = "listing of 'config/m4'"
+cost_tokens = 47
+cum_tokens = 489
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "config/m4"
+entries = [".gitignore", "check-math-func.m4", "find-func-no-libs.m4", "find-func-no-libs2.m4", "find-func.m4", "misc.m4"]
+
+[[batches]]
+position = 19
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 72
-cum_tokens = 233
+cum_tokens = 561
 
 [batches.content]
 kind = "lines"
@@ -154,220 +368,6 @@ end = 74
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 52
-cum_tokens = 285
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["Pipfile", "Pipfile.lock", "README.md", "build_manpage.py", "build_mantests.py", "build_website.py", "content", "manual_schema.yml", "public", "templates", "validate_manual_schema.py"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "docs/content" })'
-descriptor = "listing of 'docs/content'"
-cost_tokens = 13
-cum_tokens = 298
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/content"
-entries = ["download", "index.yml", "manual", "tutorial"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs/content/download" })'
-descriptor = "listing of 'docs/content/download'"
-cost_tokens = 4
-cum_tokens = 302
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/content/download"
-entries = ["default.yml"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "docs/content/tutorial" })'
-descriptor = "listing of 'docs/content/tutorial'"
-cost_tokens = 4
-cum_tokens = 306
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/content/tutorial"
-entries = ["default.yml"]
-
-[[batches]]
-position = 9
-key = 'Markdown(ReadmeHeadline { file: "docs/README.md" })'
-descriptor = "README headline in docs/README.md"
-cost_tokens = 56
-cum_tokens = 362
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/README.md"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "docs/templates" })'
-descriptor = "listing of 'docs/templates'"
-cost_tokens = 21
-cum_tokens = 383
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/templates"
-entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "vendor" })'
-descriptor = "listing of 'vendor'"
-cost_tokens = 9
-cum_tokens = 392
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "vendor"
-entries = ["decNumber", "oniguruma"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "docs/public" })'
-descriptor = "listing of 'docs/public'"
-cost_tokens = 31
-cum_tokens = 423
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/public"
-entries = [".htaccess", "CNAME", "css", "icon.png", "icon.svg", "jq.svg", "js", "robots.txt"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "docs/public/css" })'
-descriptor = "listing of 'docs/public/css'"
-cost_tokens = 4
-cum_tokens = 427
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/public/css"
-entries = ["style.css"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "docs/public/js" })'
-descriptor = "listing of 'docs/public/js'"
-cost_tokens = 5
-cum_tokens = 432
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/public/js"
-entries = ["manual-search.js"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 12
-cum_tokens = 444
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["ISSUE_TEMPLATE", "dependabot.yml", "workflows"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 35
-cum_tokens = 479
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml", "decnum.yml", "manpage.yml", "oniguruma.yml", "scanbuild.yml", "valgrind.yml", "website.yml"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "docs/templates/shared" })'
-descriptor = "listing of 'docs/templates/shared'"
-cost_tokens = 21
-cum_tokens = 500
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/templates/shared"
-entries = ["_footer.html.j2", "_head.html.j2", "_navbar.html.j2"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 14
-cum_tokens = 514
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["crosscompile", "gen_utf8_tables.py", "version"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "config/m4" })'
-descriptor = "listing of 'config/m4'"
-cost_tokens = 47
-cum_tokens = 561
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "config/m4"
-entries = [".gitignore", "check-math-func.m4", "find-func-no-libs.m4", "find-func-no-libs2.m4", "find-func.m4", "misc.m4"]
 
 [[batches]]
 position = 20

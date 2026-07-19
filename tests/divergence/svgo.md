@@ -6,36 +6,36 @@ Score(3000)=0.435 I=0.763 C=0.248 ns_rows≤3K=15/40 (reached=5 partial=1 missin
 | ns | 86 |  | 86 | Root directory listing | 1.1 |  | 1.000 |
 | walker |  | 89 | 3 | listing of 'test-d' |  |  | 1.000 |
 | walker |  | 94 | 5 | listing of 'bin' |  |  | 1.000 |
-| walker |  | 137 | 43 | README headline in README.md |  |  | 1.000 |
+| walker |  | 102 | 8 | listing of 'test-d/lib' |  |  | 1.000 |
+| walker |  | 127 | 25 | listing of 'logo' |  |  | 1.000 |
+| walker |  | 170 | 43 | README headline in README.md |  |  | 0.893 |
 | ns | 170 |  | 84 | package.json — identity fields | 1.2 |  | 0.893 |
-| walker |  | 215 | 78 | package identity in package.json |  |  | 0.966 |
-| walker |  | 223 | 8 | listing of 'test-d/lib' |  |  | 0.966 |
-| walker |  | 248 | 25 | listing of 'logo' |  |  | 0.966 |
-| walker |  | 253 | 5 | listing of 'scripts' |  |  | 0.966 |
+| walker |  | 175 | 5 | listing of 'scripts' |  |  | 0.893 |
+| walker |  | 253 | 78 | package identity in package.json |  |  | 0.966 |
 | walker |  | 296 | 43 | listing of 'docs' |  |  | 0.967 |
 | walker |  | 302 | 6 | listing of '.yarn' |  |  | 0.967 |
 | ns | 304 |  | 134 | README title + tagline | 1.3 |  | 0.916 |
 | walker |  | 321 | 19 | listing of 'docs/02-usage' |  |  | 0.916 |
-| walker |  | 370 | 49 | package runtime metadata in package.json |  |  | 0.916 |
-| ns | 467 |  | 163 | package.json — bin/types/exports | 1.4 |  | 0.747 |
-| walker |  | 476 | 106 | headings outline in README.md |  |  | 0.747 |
-| walker |  | 510 | 34 | listing of 'docs/06-migrations' |  |  | 0.747 |
-| walker |  | 522 | 12 | listing of '.github' |  |  | 0.748 |
-| walker |  | 544 | 22 | listing of '.github/workflows' |  |  | 0.748 |
-| ns | 594 |  | 127 | package.json — key scripts | 1.5 |  | 0.711 |
-| walker |  | 634 | 90 | listing of 'lib' |  |  | 0.721 |
-| walker |  | 653 | 19 | listing of 'lib/svgo' |  |  | 0.721 |
-| walker |  | 666 | 13 | listing of 'lib/util' |  |  | 0.721 |
-| walker |  | 673 | 7 | export names surface in lib/types.js |  |  | 0.721 |
-| walker |  | 689 | 16 | export names surface in lib/builtin.js |  |  | 0.721 |
-| walker |  | 706 | 17 | export names surface in lib/version.js |  |  | 0.721 |
-| walker |  | 706 | 0 | export at lib/version.js:7 |  |  | 0.721 |
-| walker |  | 722 | 16 | README.md section #10 |  |  | 0.722 |
+| walker |  | 355 | 34 | listing of 'docs/06-migrations' |  |  | 0.916 |
+| walker |  | 367 | 12 | listing of '.github' |  |  | 0.917 |
+| walker |  | 389 | 22 | listing of '.github/workflows' |  |  | 0.917 |
+| ns | 467 |  | 163 | package.json — bin/types/exports | 1.4 |  | 0.748 |
+| walker |  | 479 | 90 | listing of 'lib' |  |  | 0.758 |
+| walker |  | 498 | 19 | listing of 'lib/svgo' |  |  | 0.758 |
+| walker |  | 511 | 13 | listing of 'lib/util' |  |  | 0.758 |
+| walker |  | 518 | 7 | export names surface in lib/types.js |  |  | 0.758 |
+| walker |  | 534 | 16 | export names surface in lib/builtin.js |  |  | 0.758 |
+| walker |  | 551 | 17 | export names surface in lib/version.js |  |  | 0.758 |
+| walker |  | 551 | 0 | export at lib/version.js:7 |  |  | 0.758 |
+| walker |  | 578 | 27 | export names surface in lib/svgo.js |  |  | 0.758 |
+| walker |  | 578 | 0 | export at lib/svgo.js:81 |  |  | 0.758 |
+| ns | 594 |  | 127 | package.json — key scripts | 1.5 |  | 0.720 |
+| walker |  | 627 | 49 | package runtime metadata in package.json |  |  | 0.720 |
+| walker |  | 644 | 17 | export names surface in lib/util/map-nodes-to-parents.js |  |  | 0.721 |
+| walker |  | 644 | 0 | export at lib/util/map-nodes-to-parents.js:9 |  |  | 0.721 |
 | ns | 725 |  | 131 | package.json — runtime dependencies | 1.6 |  | 0.652 |
-| walker |  | 749 | 27 | export names surface in lib/svgo.js |  |  | 0.652 |
-| walker |  | 749 | 0 | export at lib/svgo.js:81 |  |  | 0.652 |
-| walker |  | 766 | 17 | export names surface in lib/util/map-nodes-to-parents.js |  |  | 0.653 |
-| walker |  | 766 | 0 | export at lib/util/map-nodes-to-parents.js:9 |  |  | 0.653 |
+| walker |  | 750 | 106 | headings outline in README.md |  |  | 0.652 |
+| walker |  | 766 | 16 | README.md section #10 |  |  | 0.653 |
 | ns | 789 |  | 64 | README — rationale ('Why?') | 1.7 |  | 0.634 |
 | walker |  | 808 | 42 | export names surface in lib/svgo-node.js |  |  | 0.634 |
 | walker |  | 808 | 0 | export at lib/svgo-node.js:44 |  |  | 0.634 |

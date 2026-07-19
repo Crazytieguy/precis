@@ -7,27 +7,27 @@ Score(3000)=0.498 I=0.806 C=0.308 ns_rows≤3K=18/68 (reached=6 partial=0 missin
 | walker |  | 72 | 9 | listing of 'notebooks' |  |  | 1.000 |
 | walker |  | 75 | 3 | listing of '.github' |  |  | 1.000 |
 | walker |  | 83 | 8 | listing of '.github/workflows' |  |  | 1.000 |
+| walker |  | 111 | 28 | listing of 'res' |  |  | 1.000 |
 | ns | 122 |  | 59 | pyproject.toml - package name/version/description | 1.2 |  | 0.874 |
+| walker |  | 126 | 15 | listing of 'notebooks/xlstm_large' |  |  | 0.875 |
 | ns | 141 |  | 19 | README - title line | 1.3 |  | 0.849 |
-| walker |  | 186 | 103 | README headline in README.md |  |  | 0.879 |
-| walker |  | 214 | 28 | listing of 'res' |  |  | 0.879 |
-| walker |  | 229 | 15 | listing of 'notebooks/xlstm_large' |  |  | 0.880 |
-| ns | 258 |  | 117 | xlstm/ package-root + subpackage listings | 1.4 |  | 0.556 |
-| walker |  | 265 | 36 | listing of 'xlstm' |  |  | 0.594 |
-| walker |  | 285 | 20 | listing of 'xlstm/blocks' |  |  | 0.646 |
-| walker |  | 306 | 21 | listing of 'xlstm/blocks/slstm' |  |  | 0.646 |
-| walker |  | 326 | 20 | listing of 'xlstm/blocks/slstm/src' |  |  | 0.646 |
-| ns | 335 |  | 77 | README - About paragraph (the xLSTM idea) | 1.5 |  | 0.621 |
-| walker |  | 342 | 16 | listing of 'xlstm/blocks/slstm/src/vanilla' |  |  | 0.621 |
-| walker |  | 365 | 23 | listing of 'xlstm/blocks/mlstm' |  |  | 0.621 |
-| walker |  | 393 | 28 | listing of 'xlstm/xlstm_large' |  |  | 0.728 |
-| walker |  | 426 | 33 | listing of 'xlstm/components' |  |  | 0.898 |
-| ns | 459 |  | 124 | README - xLSTM 7B / xLSTM Large callout | 1.6 |  | 0.837 |
-| walker |  | 472 | 46 | listing of 'experiments' |  |  | 0.838 |
-| walker |  | 486 | 14 | listing of 'experiments/data' |  |  | 0.838 |
-| walker |  | 510 | 24 | listing of 'experiments/data/formal_language' |  |  | 0.839 |
-| walker |  | 536 | 26 | listing of 'experiments/data/formal_language/tasks' |  |  | 0.840 |
-| walker |  | 578 | 42 | python imports in xlstm/xlstm_large/__init__.py |  |  | 0.841 |
+| walker |  | 162 | 36 | listing of 'xlstm' |  |  | 0.859 |
+| walker |  | 182 | 20 | listing of 'xlstm/blocks' |  |  | 0.872 |
+| walker |  | 203 | 21 | listing of 'xlstm/blocks/slstm' |  |  | 0.872 |
+| walker |  | 223 | 20 | listing of 'xlstm/blocks/slstm/src' |  |  | 0.872 |
+| walker |  | 239 | 16 | listing of 'xlstm/blocks/slstm/src/vanilla' |  |  | 0.872 |
+| ns | 258 |  | 117 | xlstm/ package-root + subpackage listings | 1.4 |  | 0.627 |
+| walker |  | 262 | 23 | listing of 'xlstm/blocks/mlstm' |  |  | 0.627 |
+| walker |  | 290 | 28 | listing of 'xlstm/xlstm_large' |  |  | 0.740 |
+| walker |  | 323 | 33 | listing of 'xlstm/components' |  |  | 0.918 |
+| ns | 335 |  | 77 | README - About paragraph (the xLSTM idea) | 1.5 |  | 0.883 |
+| walker |  | 369 | 46 | listing of 'experiments' |  |  | 0.883 |
+| walker |  | 383 | 14 | listing of 'experiments/data' |  |  | 0.884 |
+| walker |  | 407 | 24 | listing of 'experiments/data/formal_language' |  |  | 0.885 |
+| walker |  | 433 | 26 | listing of 'experiments/data/formal_language/tasks' |  |  | 0.886 |
+| ns | 459 |  | 124 | README - xLSTM 7B / xLSTM Large callout | 1.6 |  | 0.826 |
+| walker |  | 475 | 42 | python imports in xlstm/xlstm_large/__init__.py |  |  | 0.826 |
+| walker |  | 578 | 103 | README headline in README.md |  |  | 0.841 |
 | walker |  | 611 | 33 | listing of 'notebooks/xlstm' |  |  | 0.841 |
 | ns | 641 |  | 182 | xlstm/__init__.py - public package API | 2.1 |  | 0.768 |
 | walker |  | 656 | 45 | python decl names surface in xlstm/blocks/slstm/src/vanilla/__init__.py |  |  | 0.768 |

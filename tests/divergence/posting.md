@@ -5,46 +5,46 @@ Score(3000)=0.714 I=0.914 C=0.558 ns_rows≤3K=21/40 (reached=14 partial=0 missi
 | walker |  | 48 | 48 | listing of '.' |  |  | 1.000 |
 | ns | 48 |  | 48 | Fixture root listing | 1.1 |  | 1.000 |
 | walker |  | 51 | 3 | listing of 'src' |  |  | 1.000 |
+| walker |  | 54 | 3 | listing of '.codex' |  |  | 1.000 |
 | ns | 62 |  | 14 | src/posting/importing/ listing | 1.2 |  | 0.896 |
 | ns | 72 |  | 10 | widgets/collection/ listing | 1.3 |  | 0.841 |
-| walker |  | 77 | 26 | entry-point scripts in pyproject.toml |  |  | 0.841 |
-| walker |  | 80 | 3 | listing of '.codex' |  |  | 0.841 |
+| walker |  | 80 | 26 | entry-point scripts in pyproject.toml |  |  | 0.841 |
 | ns | 92 |  | 20 | .github/ + .github/workflows/ listing | 1.4 |  | 0.735 |
-| ns | 122 |  | 30 | widgets/response/ listing | 1.5 |  | 0.645 |
-| ns | 162 |  | 40 | docs/ listing | 1.6 |  | 0.546 |
-| walker |  | 171 | 91 | README headline in README.md |  |  | 0.546 |
-| walker |  | 213 | 42 | headings outline in README.md |  |  | 0.546 |
-| ns | 228 |  | 66 | widgets/request/ listing | 1.7 |  | 0.463 |
-| walker |  | 253 | 40 | listing of 'docs' |  |  | 0.613 |
-| walker |  | 257 | 4 | listing of 'docs/overrides' |  |  | 0.614 |
-| walker |  | 261 | 4 | listing of 'docs/stylesheets' |  |  | 0.614 |
-| walker |  | 269 | 8 | listing of '.github' |  |  | 0.627 |
-| walker |  | 281 | 12 | listing of '.github/workflows' |  |  | 0.690 |
+| walker |  | 120 | 40 | listing of 'docs' |  |  | 0.763 |
+| ns | 122 |  | 30 | widgets/response/ listing | 1.5 |  | 0.671 |
+| walker |  | 124 | 4 | listing of 'docs/overrides' |  |  | 0.671 |
+| walker |  | 128 | 4 | listing of 'docs/stylesheets' |  |  | 0.672 |
+| walker |  | 136 | 8 | listing of '.github' |  |  | 0.691 |
+| walker |  | 148 | 12 | listing of '.github/workflows' |  |  | 0.791 |
+| ns | 162 |  | 40 | docs/ listing | 1.6 |  | 0.812 |
+| ns | 228 |  | 66 | widgets/request/ listing | 1.7 |  | 0.689 |
+| walker |  | 239 | 91 | README headline in README.md |  |  | 0.689 |
+| walker |  | 281 | 42 | headings outline in README.md |  |  | 0.690 |
 | ns | 284 |  | 56 | docs/guide/ listing | 1.8 |  | 0.607 |
-| walker |  | 336 | 55 | headings outline in docs/roadmap.md |  |  | 0.607 |
-| walker |  | 377 | 41 | README.md section #2 |  |  | 0.607 |
-| ns | 383 |  | 99 | tests/ listing | 1.9 |  | 0.531 |
-| walker |  | 450 | 73 | [package] in pyproject.toml |  |  | 0.531 |
-| ns | 470 |  | 87 | src/posting/widgets/ listing | 1.10 |  | 0.473 |
-| walker |  | 506 | 56 | listing of 'docs/guide' |  |  | 0.579 |
-| ns | 626 |  | 156 | src/posting/ package listing | 1.11 |  | 0.489 |
-| walker |  | 662 | 156 | listing of 'src/posting' |  |  | 0.673 |
+| walker |  | 337 | 56 | listing of 'docs/guide' |  |  | 0.742 |
+| ns | 383 |  | 99 | tests/ listing | 1.9 |  | 0.649 |
+| ns | 470 |  | 87 | src/posting/widgets/ listing | 1.10 |  | 0.579 |
+| walker |  | 493 | 156 | listing of 'src/posting' |  |  | 0.598 |
+| ns | 626 |  | 156 | src/posting/ package listing | 1.11 |  | 0.673 |
 | ns | 728 |  | 102 | tests/ fixture sub-listing (sample-* dirs) | 1.12 |  | 0.628 |
-| walker |  | 929 | 267 | python imports in src/posting/__init__.py |  |  | 0.628 |
-| walker |  | 943 | 14 | listing of 'src/posting/importing' |  |  | 0.652 |
-| ns | 1000 |  | 272 | mkdocs.yml nav (guide table of contents) | 1.13 |  | 0.609 |
-| ns | 1014 |  | 14 | tests/sample-collections/jsonplaceholder/ + scripts/ listing | 1.14 |  | 0.601 |
-| ns | 1022 |  | 8 | docs/overrides/ + docs/stylesheets/ listing | 1.15 |  | 0.605 |
-| walker |  | 1030 | 87 | listing of 'src/posting/widgets' |  |  | 0.681 |
-| walker |  | 1060 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.716 |
-| walker |  | 1126 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.778 |
-| ns | 1134 |  | 112 | sample config.yaml (concrete example) | 2.1 |  | 0.749 |
-| walker |  | 1136 | 10 | listing of 'src/posting/widgets/collection' |  |  | 0.762 |
-| walker |  | 1151 | 15 | python decl names surface in src/posting/_start_time.py |  |  | 0.762 |
-| walker |  | 1156 | 5 | python imports in src/posting/_start_time.py |  |  | 0.762 |
-| ns | 1193 |  | 59 | __main__.py — every CLI command signature (location catalog) | 2.2 |  | 0.749 |
-| walker |  | 1242 | 86 | listing of 'docs/assets' |  |  | 0.749 |
-| walker |  | 1252 | 10 | python decl names surface in src/posting/exit_codes.py |  |  | 0.749 |
+| walker |  | 760 | 267 | python imports in src/posting/__init__.py |  |  | 0.628 |
+| walker |  | 774 | 14 | listing of 'src/posting/importing' |  |  | 0.652 |
+| walker |  | 861 | 87 | listing of 'src/posting/widgets' |  |  | 0.736 |
+| walker |  | 891 | 30 | listing of 'src/posting/widgets/response' |  |  | 0.774 |
+| walker |  | 957 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.842 |
+| walker |  | 967 | 10 | listing of 'src/posting/widgets/collection' |  |  | 0.857 |
+| walker |  | 982 | 15 | python decl names surface in src/posting/_start_time.py |  |  | 0.857 |
+| walker |  | 987 | 5 | python imports in src/posting/_start_time.py |  |  | 0.857 |
+| ns | 1000 |  | 272 | mkdocs.yml nav (guide table of contents) | 1.13 |  | 0.801 |
+| ns | 1014 |  | 14 | tests/sample-collections/jsonplaceholder/ + scripts/ listing | 1.14 |  | 0.790 |
+| ns | 1022 |  | 8 | docs/overrides/ + docs/stylesheets/ listing | 1.15 |  | 0.791 |
+| walker |  | 1073 | 86 | listing of 'docs/assets' |  |  | 0.791 |
+| walker |  | 1128 | 55 | headings outline in docs/roadmap.md |  |  | 0.791 |
+| ns | 1134 |  | 112 | sample config.yaml (concrete example) | 2.1 |  | 0.762 |
+| walker |  | 1169 | 41 | README.md section #2 |  |  | 0.762 |
+| walker |  | 1179 | 10 | python decl names surface in src/posting/exit_codes.py |  |  | 0.762 |
+| ns | 1193 |  | 59 | __main__.py — every CLI command signature (location catalog) | 2.2 |  | 0.748 |
+| walker |  | 1252 | 73 | [package] in pyproject.toml |  |  | 0.749 |
 | walker |  | 1471 | 219 | plaintext config Makefile |  |  | 0.752 |
 | walker |  | 1483 | 12 | python decl names surface in src/posting/help_data.py |  |  | 0.752 |
 | walker |  | 1491 | 8 | python decl at src/posting/help_data.py:4 |  |  | 0.752 |

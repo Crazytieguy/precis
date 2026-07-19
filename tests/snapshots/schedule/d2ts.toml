@@ -19,10 +19,80 @@ entries = [".changeset", ".github", ".gitignore", ".prettierrc.cjs", "LICENSE", 
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 3
+cum_tokens = 57
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["workflows"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 61
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["ci.yml"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "packages" })'
+descriptor = "listing of 'packages'"
+cost_tokens = 22
+cum_tokens = 83
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages"
+entries = ["d2mini", "d2ql", "d2ts", "d2ts-benchmark"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 35
+cum_tokens = 118
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["basic.ts", "d2ql", "electric", "fruit-processed.ts", "includes.ts", "iterate.ts", "join.ts", "min_max.ts"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "packages/d2ts-benchmark" })'
+descriptor = "listing of 'packages/d2ts-benchmark'"
+cost_tokens = 17
+cum_tokens = 135
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2ts-benchmark"
+entries = ["CHANGELOG.md", "package.json", "src", "tsconfig.json"]
+
+[[batches]]
+position = 7
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 81
-cum_tokens = 135
+cum_tokens = 216
 
 [batches.content]
 kind = "lines"
@@ -34,76 +104,6 @@ end = 28
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 3
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 3
-cum_tokens = 138
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["workflows"]
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 142
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["ci.yml"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "packages" })'
-descriptor = "listing of 'packages'"
-cost_tokens = 22
-cum_tokens = 164
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages"
-entries = ["d2mini", "d2ql", "d2ts", "d2ts-benchmark"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 35
-cum_tokens = 199
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["basic.ts", "d2ql", "electric", "fruit-processed.ts", "includes.ts", "iterate.ts", "join.ts", "min_max.ts"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "packages/d2ts-benchmark" })'
-descriptor = "listing of 'packages/d2ts-benchmark'"
-cost_tokens = 17
-cum_tokens = 216
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2ts-benchmark"
-entries = ["CHANGELOG.md", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
 position = 8
@@ -163,28 +163,10 @@ entries = ["CHANGELOG.md", "README.md", "eslint.config.mjs", "package.json", "sr
 
 [[batches]]
 position = 12
-key = 'Markdown(ReadmeHeadline { file: "packages/d2mini/README.md" })'
-descriptor = "README headline in packages/d2mini/README.md"
-cost_tokens = 59
-cum_tokens = 350
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2mini/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
 key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
 descriptor = "YAML config at .github/workflows/ci.yml"
 cost_tokens = 652
-cum_tokens = 1002
+cum_tokens = 943
 
 [batches.content]
 kind = "lines"
@@ -206,11 +188,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Fs(DirListing { dir: "packages/d2ts" })'
 descriptor = "listing of 'packages/d2ts'"
 cost_tokens = 36
-cum_tokens = 1038
+cum_tokens = 979
 
 [batches.content]
 kind = "fs"
@@ -220,11 +202,11 @@ parent = "packages/d2ts"
 entries = ["CHANGELOG.md", "README.md", "eslint.config.mjs", "package.json", "src", "tests", "tsconfig.json", "vitest.config.js"]
 
 [[batches]]
-position = 15
+position = 14
 key = 'Json(Identity { file: "packages/d2ts/package.json" })'
 descriptor = "package identity in packages/d2ts/package.json"
 cost_tokens = 85
-cum_tokens = 1123
+cum_tokens = 1064
 
 [batches.content]
 kind = "lines"
@@ -246,11 +228,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Typescript(ExportNames { file: "eslint.base.mjs" })'
 descriptor = "export names surface in eslint.base.mjs"
 cost_tokens = 11
-cum_tokens = 1134
+cum_tokens = 1075
 
 [batches.content]
 kind = "lines"
@@ -272,11 +254,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Fs(DirListing { dir: "packages/d2mini/src" })'
 descriptor = "listing of 'packages/d2mini/src'"
 cost_tokens = 33
-cum_tokens = 1167
+cum_tokens = 1108
 
 [batches.content]
 kind = "fs"
@@ -286,11 +268,11 @@ parent = "packages/d2mini/src"
 entries = ["d2.ts", "graph.ts", "index.ts", "indexes.ts", "multiset.ts", "operators", "types.ts", "utils.ts"]
 
 [[batches]]
-position = 18
+position = 17
 key = 'Fs(DirListing { dir: "packages/d2mini/src/operators" })'
 descriptor = "listing of 'packages/d2mini/src/operators'"
 cost_tokens = 104
-cum_tokens = 1271
+cum_tokens = 1212
 
 [batches.content]
 kind = "fs"
@@ -298,6 +280,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "packages/d2mini/src/operators"
 entries = ["concat.ts", "consolidate.ts", "count.ts", "debug.ts", "distinct.ts", "filter.ts", "filterBy.ts", "groupBy.ts", "index.ts", "join.ts", "keying.ts", "map.ts", "negate.ts", "orderBy.ts", "orderByBTree.ts", "output.ts", "pipe.ts", "reduce.ts", "topK.ts", "topKWithFractionalIndex.ts", "topKWithFractionalIndexBTree.ts"]
+
+[[batches]]
+position = 18
+key = 'Markdown(ReadmeHeadline { file: "packages/d2mini/README.md" })'
+descriptor = "README headline in packages/d2mini/README.md"
+cost_tokens = 59
+cum_tokens = 1271
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2mini/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 19

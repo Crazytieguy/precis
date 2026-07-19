@@ -16,20 +16,20 @@ Score(3000)=0.454 I=0.722 C=0.285 ns_rows≤3K=29/43 (reached=10 partial=1 missi
 | ns | 143 |  | 33 | tests/data/invalid/dotted-keys/ listing | 1.7 |  | 0.205 |
 | ns | 199 |  | 56 | External toml-test invalid/ category listing | 1.8 |  | 0.156 |
 | walker |  | 229 | 130 | python imports in src/tomli/__init__.py |  |  | 0.163 |
-| ns | 261 |  | 62 | Repo root listing | 1.9 |  | 0.285 |
-| ns | 269 |  | 8 | MANIFEST.in (full, 1 line) | 1.10 |  | 0.282 |
-| walker |  | 287 | 58 | headings outline in tomllib.md |  |  | 0.282 |
-| walker |  | 295 | 8 | listing of 'fuzzer' |  |  | 0.469 |
-| walker |  | 304 | 9 | listing of 'profiler' |  |  | 0.541 |
-| ns | 323 |  | 54 | _parser.py roster: entry points + error class | 1.11 |  | 0.516 |
-| ns | 401 |  | 78 | CI workflow job roster | 1.12 |  | 0.486 |
-| ns | 448 |  | 47 | _re.py function roster | 1.13 |  | 0.471 |
-| ns | 566 |  | 118 | pyproject.toml tox environment roster | 1.14 |  | 0.444 |
-| ns | 696 |  | 130 | tomli/__init__.py (full public API) | 2.1 |  | 0.478 |
-| walker |  | 697 | 393 | README headline in README.md |  |  | 0.478 |
-| walker |  | 714 | 17 | listing of 'scripts' |  |  | 0.537 |
-| walker |  | 734 | 20 | listing of 'benchmark' |  |  | 0.597 |
-| walker |  | 764 | 30 | listing of 'tests' |  |  | 0.660 |
+| walker |  | 237 | 8 | listing of 'fuzzer' |  |  | 0.308 |
+| walker |  | 246 | 9 | listing of 'profiler' |  |  | 0.389 |
+| ns | 261 |  | 62 | Repo root listing | 1.9 |  | 0.546 |
+| ns | 269 |  | 8 | MANIFEST.in (full, 1 line) | 1.10 |  | 0.541 |
+| walker |  | 304 | 58 | headings outline in tomllib.md |  |  | 0.541 |
+| walker |  | 321 | 17 | listing of 'scripts' |  |  | 0.615 |
+| ns | 323 |  | 54 | _parser.py roster: entry points + error class | 1.11 |  | 0.587 |
+| walker |  | 341 | 20 | listing of 'benchmark' |  |  | 0.661 |
+| walker |  | 371 | 30 | listing of 'tests' |  |  | 0.741 |
+| ns | 401 |  | 78 | CI workflow job roster | 1.12 |  | 0.698 |
+| ns | 448 |  | 47 | _re.py function roster | 1.13 |  | 0.676 |
+| ns | 566 |  | 118 | pyproject.toml tox environment roster | 1.14 |  | 0.638 |
+| ns | 696 |  | 130 | tomli/__init__.py (full public API) | 2.1 |  | 0.660 |
+| walker |  | 764 | 393 | README headline in README.md |  |  | 0.660 |
 | ns | 818 |  | 122 | _parser.py roster: table/array/key rules | 2.2 |  | 0.618 |
 | walker |  | 863 | 99 | manifest config in pyproject.toml |  |  | 0.618 |
 | ns | 945 |  | 127 | pyproject.toml mypy strict config | 2.3 |  | 0.579 |

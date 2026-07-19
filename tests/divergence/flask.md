@@ -10,51 +10,51 @@ Score(3000)=0.648 I=0.646 C=0.650 ns_rows≤3K=28/48 (reached=18 partial=0 missi
 | walker |  | 53 | 3 | listing of 'src' |  |  | 0.000 |
 | ns | 67 |  | 17 | src/flask/sansio listing | 1.5 |  | 0.000 |
 | walker |  | 80 | 27 | entry-point scripts in pyproject.toml |  |  | 0.000 |
-| ns | 91 |  | 24 | examples/celery listing | 1.6 |  | 0.000 |
-| ns | 108 |  | 17 | examples/celery/src/task_app listing | 1.7 |  | 0.000 |
-| ns | 135 |  | 27 | examples/javascript listing | 1.8 |  | 0.000 |
-| ns | 158 |  | 23 | .github/workflows listing | 1.9 |  | 0.000 |
-| walker |  | 182 | 102 | README headline in README.md |  |  | 0.000 |
-| ns | 187 |  | 29 | tests/test_apps listing | 1.10 |  | 0.000 |
-| walker |  | 212 | 30 | headings outline in README.md |  |  | 0.000 |
-| ns | 214 |  | 27 | examples/tutorial listing | 1.11 |  | 0.000 |
-| walker |  | 221 | 9 | listing of 'examples' |  |  | 0.090 |
+| walker |  | 89 | 9 | listing of 'examples' |  |  | 0.180 |
+| ns | 91 |  | 24 | examples/celery listing | 1.6 |  | 0.151 |
+| ns | 108 |  | 17 | examples/celery/src/task_app listing | 1.7 |  | 0.135 |
+| ns | 135 |  | 27 | examples/javascript listing | 1.8 |  | 0.118 |
+| ns | 158 |  | 23 | .github/workflows listing | 1.9 |  | 0.108 |
+| ns | 187 |  | 29 | tests/test_apps listing | 1.10 |  | 0.098 |
+| walker |  | 191 | 102 | README headline in README.md |  |  | 0.098 |
+| ns | 214 |  | 27 | examples/tutorial listing | 1.11 |  | 0.090 |
+| walker |  | 221 | 30 | headings outline in README.md |  |  | 0.090 |
 | ns | 242 |  | 28 | examples/tutorial/flaskr listing | 1.12 |  | 0.083 |
-| ns | 306 |  | 64 | docs/deploying listing | 1.13 |  | 0.074 |
-| walker |  | 343 | 122 | README.md section #0 |  |  | 0.074 |
-| ns | 356 |  | 50 | Root listing | 1.14 |  | 0.161 |
-| walker |  | 366 | 23 | tool.codespell config in pyproject.toml |  |  | 0.161 |
-| walker |  | 377 | 11 | listing of '.devcontainer' |  |  | 0.161 |
-| walker |  | 390 | 13 | listing of '.github' |  |  | 0.211 |
-| walker |  | 413 | 23 | listing of '.github/workflows' |  |  | 0.254 |
-| ns | 447 |  | 91 | src/flask top listing | 1.15 |  | 0.222 |
-| walker |  | 504 | 91 | listing of 'src/flask' |  |  | 0.330 |
-| walker |  | 517 | 13 | python imports in src/flask/__init__.py |  |  | 0.330 |
-| ns | 525 |  | 78 | docs/tutorial listing | 1.16 |  | 0.304 |
-| walker |  | 529 | 12 | python imports #1 in src/flask/__init__.py |  |  | 0.304 |
-| walker |  | 542 | 13 | python imports #2 in src/flask/__init__.py |  |  | 0.304 |
-| walker |  | 554 | 12 | python imports #3 in src/flask/__init__.py |  |  | 0.304 |
-| walker |  | 568 | 14 | python imports #7 in src/flask/__init__.py |  |  | 0.304 |
-| walker |  | 582 | 14 | listing of 'src/flask/json' |  |  | 0.385 |
-| walker |  | 599 | 17 | listing of 'src/flask/sansio' |  |  | 0.429 |
-| walker |  | 665 | 66 | python imports #4 in src/flask/__init__.py |  |  | 0.429 |
+| walker |  | 244 | 23 | tool.codespell config in pyproject.toml |  |  | 0.083 |
+| walker |  | 255 | 11 | listing of '.devcontainer' |  |  | 0.083 |
+| walker |  | 268 | 13 | listing of '.github' |  |  | 0.143 |
+| walker |  | 291 | 23 | listing of '.github/workflows' |  |  | 0.209 |
+| ns | 306 |  | 64 | docs/deploying listing | 1.13 |  | 0.187 |
+| ns | 356 |  | 50 | Root listing | 1.14 |  | 0.254 |
+| walker |  | 382 | 91 | listing of 'src/flask' |  |  | 0.282 |
+| walker |  | 395 | 13 | python imports in src/flask/__init__.py |  |  | 0.282 |
+| walker |  | 407 | 12 | python imports #1 in src/flask/__init__.py |  |  | 0.282 |
+| walker |  | 420 | 13 | python imports #2 in src/flask/__init__.py |  |  | 0.282 |
+| walker |  | 432 | 12 | python imports #3 in src/flask/__init__.py |  |  | 0.282 |
+| walker |  | 446 | 14 | python imports #7 in src/flask/__init__.py |  |  | 0.282 |
+| ns | 447 |  | 91 | src/flask top listing | 1.15 |  | 0.330 |
+| walker |  | 460 | 14 | listing of 'src/flask/json' |  |  | 0.417 |
+| walker |  | 477 | 17 | listing of 'src/flask/sansio' |  |  | 0.465 |
+| ns | 525 |  | 78 | docs/tutorial listing | 1.16 |  | 0.429 |
+| walker |  | 543 | 66 | python imports #4 in src/flask/__init__.py |  |  | 0.429 |
+| walker |  | 593 | 50 | python imports #5 in src/flask/__init__.py |  |  | 0.429 |
+| walker |  | 619 | 26 | python imports #10 in src/flask/__init__.py |  |  | 0.429 |
 | ns | 670 |  | 145 | docs/patterns listing | 1.17 |  | 0.382 |
-| walker |  | 715 | 50 | python imports #5 in src/flask/__init__.py |  |  | 0.382 |
-| walker |  | 741 | 26 | python imports #10 in src/flask/__init__.py |  |  | 0.382 |
-| walker |  | 805 | 64 | python imports in src/flask/json/__init__.py |  |  | 0.382 |
+| walker |  | 683 | 64 | python imports in src/flask/json/__init__.py |  |  | 0.382 |
+| walker |  | 747 | 64 | python imports #9 in src/flask/__init__.py |  |  | 0.382 |
 | ns | 815 |  | 145 | tests/ top listing | 1.18 |  | 0.345 |
-| walker |  | 869 | 64 | python imports #9 in src/flask/__init__.py |  |  | 0.345 |
+| walker |  | 891 | 144 | python imports #6 in src/flask/__init__.py |  |  | 0.345 |
+| walker |  | 903 | 12 | python imports in src/flask/__main__.py |  |  | 0.345 |
 | ns | 991 |  | 176 | docs/ top listing | 1.19 |  | 0.309 |
-| walker |  | 1013 | 144 | python imports #6 in src/flask/__init__.py |  |  | 0.309 |
-| walker |  | 1025 | 12 | python imports in src/flask/__main__.py |  |  | 0.309 |
 | ns | 1068 |  | 77 | logging.py locations | 2.1 |  | 0.306 |
-| walker |  | 1201 | 176 | listing of 'docs' |  |  | 0.409 |
-| walker |  | 1228 | 27 | listing of 'docs/_static' |  |  | 0.409 |
-| walker |  | 1292 | 64 | listing of 'docs/deploying' |  |  | 0.450 |
+| walker |  | 1079 | 176 | listing of 'docs' |  |  | 0.409 |
+| walker |  | 1106 | 27 | listing of 'docs/_static' |  |  | 0.409 |
+| walker |  | 1170 | 64 | listing of 'docs/deploying' |  |  | 0.450 |
+| walker |  | 1336 | 166 | python imports #8 in src/flask/__init__.py |  |  | 0.450 |
 | ns | 1370 |  | 302 | ctx.py: _AppCtxGlobals (the g object) + copy_current_request_context/__enter__/__exit__/__repr__/deprecated-shim locations | 2.2 |  | 0.432 |
-| ns | 1451 |  | 81 | blueprints.py (concrete) locations | 2.3 |  | 0.427 |
-| walker |  | 1458 | 166 | python imports #8 in src/flask/__init__.py |  |  | 0.427 |
-| walker |  | 1536 | 78 | listing of 'docs/tutorial' |  |  | 0.470 |
+| walker |  | 1414 | 78 | listing of 'docs/tutorial' |  |  | 0.476 |
+| ns | 1451 |  | 81 | blueprints.py (concrete) locations | 2.3 |  | 0.470 |
+| walker |  | 1536 | 122 | README.md section #0 |  |  | 0.470 |
 | walker |  | 1621 | 85 | [package] in pyproject.toml |  |  | 0.470 |
 | ns | 1635 |  | 184 | views.py locations | 2.4 |  | 0.458 |
 | walker |  | 1744 | 123 | python decl names surface in src/flask/json/__init__.py |  |  | 0.459 |

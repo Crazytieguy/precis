@@ -11,61 +11,61 @@ Score(3000)=0.530 I=0.631 C=0.445 ns_rows≤3K=23/43 (reached=11 partial=1 missi
 | walker |  | 150 | 14 | listing of 'lib/SEGGER_RTT' |  |  | 0.000 |
 | walker |  | 172 | 22 | listing of 'lib/rt-thread' |  |  | 0.000 |
 | walker |  | 179 | 7 | listing of 'lib/rt-thread/port' |  |  | 0.000 |
+| walker |  | 194 | 15 | listing of 'hw/mcu' |  |  | 0.000 |
+| walker |  | 199 | 5 | listing of 'hw/mcu/bridgetek' |  |  | 0.000 |
+| walker |  | 204 | 5 | listing of 'hw/mcu/sony' |  |  | 0.000 |
+| walker |  | 210 | 6 | listing of 'hw/mcu/nordic' |  |  | 0.000 |
 | ns | 218 |  | 115 | README key features bullets | 1.3 |  | 0.000 |
-| walker |  | 309 | 130 | README headline in README.rst |  |  | 0.548 |
-| ns | 325 |  | 107 | Root directory listing | 1.4 |  | 0.737 |
-| ns | 375 |  | 50 | src/ top-level listing | 1.5 |  | 0.638 |
-| ns | 409 |  | 34 | examples/ top-level listing | 1.6 |  | 0.589 |
-| ns | 426 |  | 17 | test/ and hw/ top-level listings | 1.7 |  | 0.570 |
-| walker |  | 465 | 156 | README.rst section #5 |  |  | 0.577 |
-| walker |  | 480 | 15 | listing of 'hw/mcu' |  |  | 0.577 |
-| walker |  | 485 | 5 | listing of 'hw/mcu/bridgetek' |  |  | 0.577 |
-| walker |  | 490 | 5 | listing of 'hw/mcu/sony' |  |  | 0.577 |
-| walker |  | 496 | 6 | listing of 'hw/mcu/nordic' |  |  | 0.577 |
-| walker |  | 531 | 35 | listing of 'lib/SEGGER_RTT/RTT' |  |  | 0.577 |
-| walker |  | 568 | 37 | listing of 'lib/networking' |  |  | 0.577 |
-| walker |  | 577 | 9 | listing of 'lib/SEGGER_RTT/Config' |  |  | 0.577 |
-| ns | 580 |  | 154 | docs/, tools/, lib/ top-level listings | 1.8 |  | 0.467 |
-| walker |  | 583 | 6 | listing of '.PVS-Studio' |  |  | 0.467 |
-| walker |  | 593 | 10 | listing of 'hw/mcu/dialog' |  |  | 0.467 |
-| walker |  | 599 | 6 | listing of '.claude' |  |  | 0.467 |
-| walker |  | 674 | 75 | c decl names surface in lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h |  |  | 0.467 |
-| walker |  | 680 | 6 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407 |  |  | 0.467 |
-| walker |  | 690 | 10 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404 |  |  | 0.467 |
-| walker |  | 745 | 55 | c decl names surface in lib/networking/dhserver.h |  |  | 0.467 |
-| ns | 755 |  | 175 | README project layout tree | 1.9 |  | 0.441 |
-| walker |  | 795 | 50 | listing of 'src' |  |  | 0.528 |
-| walker |  | 815 | 20 | listing of 'src/typec' |  |  | 0.528 |
-| walker |  | 837 | 22 | listing of 'src/device' |  |  | 0.528 |
-| walker |  | 867 | 30 | listing of 'src/host' |  |  | 0.528 |
-| walker |  | 913 | 46 | listing of 'src/class' |  |  | 0.534 |
-| ns | 943 |  | 188 | README Device Stack intro + first 7 classes | 1.10 |  | 0.502 |
-| walker |  | 998 | 85 | listing of 'src/portable' |  |  | 0.511 |
-| walker |  | 1051 | 53 | listing of 'docs' |  |  | 0.558 |
-| walker |  | 1055 | 4 | listing of 'docs/_static' |  |  | 0.558 |
-| walker |  | 1069 | 14 | listing of 'docs/assets' |  |  | 0.558 |
-| walker |  | 1093 | 24 | listing of 'docs/info' |  |  | 0.558 |
-| walker |  | 1149 | 56 | listing of 'src/common' |  |  | 0.558 |
-| walker |  | 1157 | 8 | listing of 'hw/mcu/bridgetek/ft9xx' |  |  | 0.558 |
-| walker |  | 1165 | 8 | listing of 'hw/mcu/sony/cxd56' |  |  | 0.558 |
-| ns | 1176 |  | 233 | README Device Stack remaining classes + escape hatch | 1.11 |  | 0.535 |
-| walker |  | 1234 | 69 | c decl names surface in lib/networking/dnserver.h |  |  | 0.535 |
-| walker |  | 1243 | 9 | listing of '.circleci' |  |  | 0.535 |
-| walker |  | 1307 | 64 | listing of 'src/osal' |  |  | 0.540 |
-| ns | 1330 |  | 154 | README Host Stack class list | 1.12 |  | 0.563 |
-| walker |  | 1411 | 104 | c decl names surface in src/osal/osal.h |  |  | 0.563 |
-| walker |  | 1411 | 0 | c decl at src/osal/osal.h:39 |  |  | 0.563 |
-| walker |  | 1416 | 5 | c decl doc at src/osal/osal.h:39 |  |  | 0.563 |
-| walker |  | 1426 | 10 | listing of 'test' |  |  | 0.585 |
-| walker |  | 1471 | 45 | c decl at lib/networking/dhserver.h:42 |  |  | 0.585 |
-| walker |  | 1508 | 37 | listing of 'docs/reference' |  |  | 0.587 |
-| ns | 1537 |  | 207 | README Power Delivery + OSAL support lists | 1.13 |  | 0.556 |
+| walker |  | 245 | 35 | listing of 'lib/SEGGER_RTT/RTT' |  |  | 0.000 |
+| walker |  | 282 | 37 | listing of 'lib/networking' |  |  | 0.000 |
+| walker |  | 291 | 9 | listing of 'lib/SEGGER_RTT/Config' |  |  | 0.000 |
+| walker |  | 297 | 6 | listing of '.PVS-Studio' |  |  | 0.000 |
+| walker |  | 307 | 10 | listing of 'hw/mcu/dialog' |  |  | 0.000 |
+| walker |  | 313 | 6 | listing of '.claude' |  |  | 0.000 |
+| ns | 325 |  | 107 | Root directory listing | 1.4 |  | 0.408 |
+| ns | 375 |  | 50 | src/ top-level listing | 1.5 |  | 0.354 |
+| walker |  | 388 | 75 | c decl names surface in lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h |  |  | 0.354 |
+| walker |  | 394 | 6 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:407 |  |  | 0.354 |
+| walker |  | 404 | 10 | c decl at lib/SEGGER_RTT/Config/SEGGER_RTT_Conf.h:404 |  |  | 0.354 |
+| ns | 409 |  | 34 | examples/ top-level listing | 1.6 |  | 0.327 |
+| ns | 426 |  | 17 | test/ and hw/ top-level listings | 1.7 |  | 0.316 |
+| walker |  | 459 | 55 | c decl names surface in lib/networking/dhserver.h |  |  | 0.316 |
+| walker |  | 509 | 50 | listing of 'src' |  |  | 0.411 |
+| walker |  | 529 | 20 | listing of 'src/typec' |  |  | 0.411 |
+| walker |  | 551 | 22 | listing of 'src/device' |  |  | 0.411 |
+| ns | 580 |  | 154 | docs/, tools/, lib/ top-level listings | 1.8 |  | 0.332 |
+| walker |  | 581 | 30 | listing of 'src/host' |  |  | 0.332 |
+| walker |  | 627 | 46 | listing of 'src/class' |  |  | 0.341 |
+| walker |  | 712 | 85 | listing of 'src/portable' |  |  | 0.356 |
+| ns | 755 |  | 175 | README project layout tree | 1.9 |  | 0.336 |
+| walker |  | 765 | 53 | listing of 'docs' |  |  | 0.377 |
+| walker |  | 769 | 4 | listing of 'docs/_static' |  |  | 0.377 |
+| walker |  | 783 | 14 | listing of 'docs/assets' |  |  | 0.377 |
+| walker |  | 807 | 24 | listing of 'docs/info' |  |  | 0.377 |
+| walker |  | 863 | 56 | listing of 'src/common' |  |  | 0.377 |
+| walker |  | 871 | 8 | listing of 'hw/mcu/bridgetek/ft9xx' |  |  | 0.377 |
+| walker |  | 879 | 8 | listing of 'hw/mcu/sony/cxd56' |  |  | 0.377 |
+| ns | 943 |  | 188 | README Device Stack intro + first 7 classes | 1.10 |  | 0.354 |
+| walker |  | 948 | 69 | c decl names surface in lib/networking/dnserver.h |  |  | 0.354 |
+| walker |  | 957 | 9 | listing of '.circleci' |  |  | 0.354 |
+| walker |  | 1021 | 64 | listing of 'src/osal' |  |  | 0.361 |
+| walker |  | 1125 | 104 | c decl names surface in src/osal/osal.h |  |  | 0.361 |
+| walker |  | 1125 | 0 | c decl at src/osal/osal.h:39 |  |  | 0.361 |
+| walker |  | 1130 | 5 | c decl doc at src/osal/osal.h:39 |  |  | 0.361 |
+| walker |  | 1140 | 10 | listing of 'test' |  |  | 0.382 |
+| ns | 1176 |  | 233 | README Device Stack remaining classes + escape hatch | 1.11 |  | 0.366 |
+| walker |  | 1185 | 45 | c decl at lib/networking/dhserver.h:42 |  |  | 0.366 |
+| walker |  | 1222 | 37 | listing of 'docs/reference' |  |  | 0.369 |
+| walker |  | 1281 | 59 | c decl names surface in src/common/tusb_debug.h |  |  | 0.369 |
+| walker |  | 1294 | 13 | c includes in src/osal/osal.h |  |  | 0.369 |
+| ns | 1330 |  | 154 | README Host Stack class list | 1.12 |  | 0.352 |
+| walker |  | 1424 | 130 | README headline in README.rst |  |  | 0.534 |
+| ns | 1537 |  | 207 | README Power Delivery + OSAL support lists | 1.13 |  | 0.505 |
+| walker |  | 1580 | 156 | README.rst section #5 |  |  | 0.556 |
 | ns | 1583 |  | 46 | src/class/ listing | 2.1 |  | 0.577 |
 | ns | 1668 |  | 85 | src/portable/ listing | 2.2 |  | 0.603 |
-| walker |  | 1727 | 219 | README.rst section #7 |  |  | 0.619 |
-| ns | 1747 |  | 79 | src/osal/ + hw/mcu/ listings | 2.3 |  | 0.629 |
-| walker |  | 1786 | 59 | c decl names surface in src/common/tusb_debug.h |  |  | 0.629 |
-| walker |  | 1799 | 13 | c includes in src/osal/osal.h |  |  | 0.629 |
+| ns | 1747 |  | 79 | src/osal/ + hw/mcu/ listings | 2.3 |  | 0.615 |
+| walker |  | 1799 | 219 | README.rst section #7 |  |  | 0.629 |
 | ns | 1961 |  | 214 | examples/device/ listing | 2.4 |  | 0.575 |
 | walker |  | 1993 | 194 | c decl names surface in src/typec/pd_types.h |  |  | 0.575 |
 | walker |  | 2004 | 11 | c decl at src/typec/pd_types.h:229 |  |  | 0.575 |

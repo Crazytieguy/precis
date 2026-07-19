@@ -10,30 +10,30 @@ Score(3000)=0.624 I=0.869 C=0.448 ns_rows≤3K=16/40 (reached=10 partial=1 missi
 | walker |  | 257 | 117 | plaintext config Makefile |  |  | 0.559 |
 | ns | 281 |  | 98 | struct sdshdr5 layout | 1.4 |  | 0.483 |
 | walker |  | 290 | 33 | c decl names surface in sdsalloc.h |  |  | 0.484 |
+| walker |  | 348 | 58 | c decl names surface in testhelp.h |  |  | 0.484 |
 | ns | 364 |  | 83 | struct sdshdr8 layout | 1.5 |  | 0.430 |
 | ns | 447 |  | 83 | struct sdshdr16 layout | 1.6 |  | 0.390 |
 | ns | 530 |  | 83 | struct sdshdr32 layout | 1.7 |  | 0.359 |
 | ns | 613 |  | 83 | struct sdshdr64 layout | 1.8 |  | 0.333 |
-| walker |  | 689 | 399 | headings outline in README.md |  |  | 0.464 |
-| walker |  | 747 | 58 | c decl names surface in testhelp.h |  |  | 0.464 |
-| ns | 794 |  | 181 | SDS_TYPE_* constants and SDS_HDR/SDS_HDR_VAR macros | 1.9 |  | 0.414 |
-| ns | 1025 |  | 231 | README lede: what SDS is, v1-vs-v2 compatibility | 1.10 | 1.2 | 0.394 |
-| walker |  | 1092 | 345 | README.md section #0 |  |  | 0.539 |
-| ns | 1348 |  | 323 | README: how SDS strings work (header-prefix design + diagram) | 1.11 | 1.2 | 0.546 |
-| walker |  | 1535 | 443 | c decl names surface in sds.h |  |  | 0.657 |
-| walker |  | 1535 | 0 | c decl at sds.h:87 |  |  | 0.657 |
-| walker |  | 1535 | 0 | c decl at sds.h:104 |  |  | 0.657 |
-| walker |  | 1535 | 0 | c decl at sds.h:130 |  |  | 0.657 |
-| walker |  | 1535 | 0 | c decl at sds.h:154 |  |  | 0.657 |
-| walker |  | 1535 | 0 | c decl at sds.h:180 |  |  | 0.657 |
-| walker |  | 1535 | 0 | c decl at sds.h:197 |  |  | 0.657 |
-| walker |  | 1572 | 37 | c decl at sds.h:47 |  |  | 0.672 |
-| walker |  | 1637 | 65 | c decl at sds.h:51 |  |  | 0.718 |
-| walker |  | 1702 | 65 | c decl at sds.h:57 |  |  | 0.761 |
-| walker |  | 1767 | 65 | c decl at sds.h:63 |  |  | 0.802 |
-| ns | 1806 |  | 458 | sdslen() / sdsavail() inline accessors | 1.12 |  | 0.660 |
-| walker |  | 1832 | 65 | c decl at sds.h:69 |  |  | 0.693 |
-| walker |  | 1862 | 30 | c includes in sds.h |  |  | 0.729 |
+| walker |  | 791 | 443 | c decl names surface in sds.h |  |  | 0.413 |
+| walker |  | 791 | 0 | c decl at sds.h:87 |  |  | 0.413 |
+| walker |  | 791 | 0 | c decl at sds.h:104 |  |  | 0.413 |
+| walker |  | 791 | 0 | c decl at sds.h:130 |  |  | 0.413 |
+| walker |  | 791 | 0 | c decl at sds.h:154 |  |  | 0.413 |
+| walker |  | 791 | 0 | c decl at sds.h:180 |  |  | 0.413 |
+| walker |  | 791 | 0 | c decl at sds.h:197 |  |  | 0.413 |
+| ns | 794 |  | 181 | SDS_TYPE_* constants and SDS_HDR/SDS_HDR_VAR macros | 1.9 |  | 0.505 |
+| walker |  | 828 | 37 | c decl at sds.h:47 |  |  | 0.529 |
+| walker |  | 893 | 65 | c decl at sds.h:51 |  |  | 0.601 |
+| walker |  | 958 | 65 | c decl at sds.h:57 |  |  | 0.668 |
+| walker |  | 1023 | 65 | c decl at sds.h:63 |  |  | 0.731 |
+| ns | 1025 |  | 231 | README lede: what SDS is, v1-vs-v2 compatibility | 1.10 | 1.2 | 0.657 |
+| walker |  | 1088 | 65 | c decl at sds.h:69 |  |  | 0.708 |
+| walker |  | 1118 | 30 | c includes in sds.h |  |  | 0.761 |
+| ns | 1348 |  | 323 | README: how SDS strings work (header-prefix design + diagram) | 1.11 | 1.2 | 0.644 |
+| walker |  | 1517 | 399 | headings outline in README.md |  |  | 0.720 |
+| ns | 1806 |  | 458 | sdslen() / sdsavail() inline accessors | 1.12 |  | 0.592 |
+| walker |  | 1862 | 345 | README.md section #0 |  |  | 0.729 |
 | walker |  | 1882 | 20 | c decl doc at sds.h:180 |  |  | 0.729 |
 | ns | 1969 |  | 163 | sdssetlen() inline mutator (TYPE_16/32/64 cases elided) | 1.13 |  | 0.690 |
 | ns | 2149 |  | 180 | sdsinclen() inline mutator (TYPE_16/32/64 cases elided) | 1.14 |  | 0.654 |

@@ -559,21 +559,6 @@ fn is_locale_language(s: &str) -> bool {
 /// batches via [`crate::batch::WalkerKey::concavity_exponent`].
 pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
 
-/// Early-budget orientation tier. While the schedule is still filling
-/// its first [`ORIENTATION_TIER_WINDOW`] tokens, orientation-class
-/// batches (README / man-page orientation prose, manifest identity —
-/// see [`crate::batch::WalkerKey::is_orientation`]) get their scheduling
-/// ratio multiplied by [`ORIENTATION_TIER_BOOST`]. The greedy
-/// `value/cost` picker otherwise lets cheap high-ratio code chunks crowd
-/// high-rank orientation atoms out of the early budget, where score
-/// importance is concentrated. Deliberately excludes the cheap
-/// directory-listing (`FsKey`) flood, which the greedy already
-/// over-surfaces. The window stays short so the boost only breaks early
-/// ties; wider windows start displacing later structural wins
-/// (post-mechanism re-sweep winner on training: 400, from 500).
-pub const ORIENTATION_TIER_WINDOW: usize = 400;
-pub const ORIENTATION_TIER_BOOST: f64 = 1.4;
-
 /// Late-budget tier for operationally dense prose sections. These
 /// batches keep their normal ratio while the protected early budget is
 /// filling, then compete with a multiplier once compact source rosters
@@ -584,16 +569,6 @@ pub const ORIENTATION_TIER_BOOST: f64 = 1.4;
 /// 0.25 keeps the corpus mean stable while still scaling with budget.
 pub const PROSE_MASS_WINDOW_FRACTION: f64 = 0.25;
 pub const PROSE_MASS_BOOST: f64 = 1.5;
-
-/// Ratio multiplier for the early-budget orientation tier. `1.0` once the
-/// window is past or for non-orientation batches.
-pub fn orientation_tier_multiplier(consumed_tokens: usize, is_orientation: bool) -> f64 {
-    if is_orientation && consumed_tokens < ORIENTATION_TIER_WINDOW {
-        ORIENTATION_TIER_BOOST
-    } else {
-        1.0
-    }
-}
 
 /// Ratio multiplier for deferred operational prose after the early
 /// source-roster window.

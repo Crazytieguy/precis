@@ -19,10 +19,80 @@ entries = [".github", ".gitignore", "CHANGELOG.md", "Cargo.toml", "LICENSE-APACH
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 3
+cum_tokens = 49
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["workflows"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 53
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["main.yml"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 21
+cum_tokens = 74
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["__private_api.rs", "kv", "lib.rs", "macros.rs", "serde.rs"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "src/kv" })'
+descriptor = "listing of 'src/kv'"
+cost_tokens = 20
+cum_tokens = 94
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/kv"
+entries = ["error.rs", "key.rs", "mod.rs", "source.rs", "value.rs"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "benches" })'
+descriptor = "listing of 'benches'"
+cost_tokens = 4
+cum_tokens = 98
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "benches"
+entries = ["value.rs"]
+
+[[batches]]
+position = 7
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 52
-cum_tokens = 98
+cum_tokens = 150
 
 [batches.content]
 kind = "lines"
@@ -44,81 +114,71 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 3
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 3
-cum_tokens = 101
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["workflows"]
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 105
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["main.yml"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 21
-cum_tokens = 126
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["__private_api.rs", "kv", "lib.rs", "macros.rs", "serde.rs"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "src/kv" })'
-descriptor = "listing of 'src/kv'"
-cost_tokens = 20
-cum_tokens = 146
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/kv"
-entries = ["error.rs", "key.rs", "mod.rs", "source.rs", "value.rs"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "benches" })'
-descriptor = "listing of 'benches'"
-cost_tokens = 4
-cum_tokens = 150
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "benches"
-entries = ["value.rs"]
-
-[[batches]]
 position = 8
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 8
+cum_tokens = 158
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["integration.rs", "macros.rs"]
+
+[[batches]]
+position = 9
+key = 'Rust(CrateDocLede { file: "src/kv/mod.rs" })'
+descriptor = "crate-doc lede in src/kv/mod.rs"
+cost_tokens = 91
+cum_tokens = 249
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/kv/mod.rs"
+start = 1
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "test_max_level_features" })'
+descriptor = "listing of 'test_max_level_features'"
+cost_tokens = 9
+cum_tokens = 258
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test_max_level_features"
+entries = ["Cargo.toml", "main.rs"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "rfcs" })'
+descriptor = "listing of 'rfcs'"
+cost_tokens = 10
+cum_tokens = 268
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "rfcs"
+entries = ["0296-structured-logging.md"]
+
+[[batches]]
+position = 12
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 56
-cum_tokens = 206
+cum_tokens = 324
 
 [batches.content]
 kind = "lines"
@@ -188,11 +248,11 @@ end = 107
 kind = "ellipsis"
 
 [[batches]]
-position = 9
+position = 13
 key = 'Toml(Identity { file: "Cargo.toml" })'
 descriptor = "[package] in Cargo.toml"
 cost_tokens = 191
-cum_tokens = 397
+cum_tokens = 515
 
 [batches.content]
 kind = "lines"
@@ -206,11 +266,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 10
+position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 64
-cum_tokens = 461
+cum_tokens = 579
 
 [batches.content]
 kind = "lines"
@@ -222,66 +282,6 @@ end = 16
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 8
-cum_tokens = 469
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["integration.rs", "macros.rs"]
-
-[[batches]]
-position = 12
-key = 'Rust(CrateDocLede { file: "src/kv/mod.rs" })'
-descriptor = "crate-doc lede in src/kv/mod.rs"
-cost_tokens = 91
-cum_tokens = 560
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/kv/mod.rs"
-start = 1
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "test_max_level_features" })'
-descriptor = "listing of 'test_max_level_features'"
-cost_tokens = 9
-cum_tokens = 569
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test_max_level_features"
-entries = ["Cargo.toml", "main.rs"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "rfcs" })'
-descriptor = "listing of 'rfcs'"
-cost_tokens = 10
-cum_tokens = 579
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "rfcs"
-entries = ["0296-structured-logging.md"]
 
 [[batches]]
 position = 15

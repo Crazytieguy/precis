@@ -5,33 +5,33 @@ Score(3000)=0.693 I=0.899 C=0.535 ns_rows≤3K=20/54 (reached=14 partial=0 missi
 | walker |  | 33 | 33 | listing of '.' |  |  | 1.000 |
 | ns | 33 |  | 33 | Root directory listing | 1.1 |  | 1.000 |
 | walker |  | 53 | 20 | listing of 'docs' |  |  | 1.000 |
-| ns | 105 |  | 72 | Package identity (title + tagline) | 1.2 |  | 0.784 |
-| ns | 164 |  | 59 | README key-features bullets, part 1 | 1.3 |  | 0.679 |
-| walker |  | 202 | 149 | README headline in README.md |  |  | 0.867 |
-| walker |  | 209 | 7 | listing of '.github' |  |  | 0.753 |
-| ns | 209 |  | 45 | README section map (heading locations), part 1 | 1.4 |  | 0.753 |
-| walker |  | 228 | 19 | listing of '.github/workflows' |  |  | 0.759 |
-| ns | 257 |  | 48 | README section map (heading locations), part 2 | 1.5 | 1.4 | 0.677 |
-| walker |  | 293 | 65 | listing of 'htmy' |  |  | 0.688 |
-| walker |  | 310 | 17 | python imports in htmy/__init__.py |  |  | 0.688 |
-| walker |  | 327 | 17 | python imports #2 in htmy/__init__.py |  |  | 0.688 |
-| ns | 339 |  | 82 | README key-features bullets, part 2a | 1.6 | 1.3 | 0.637 |
-| walker |  | 340 | 13 | python imports #3 in htmy/__init__.py |  |  | 0.637 |
-| walker |  | 358 | 18 | python imports #5 in htmy/__init__.py |  |  | 0.637 |
-| walker |  | 382 | 24 | python imports #4 in htmy/__init__.py |  |  | 0.638 |
-| ns | 492 |  | 153 | README key-features bullets, part 2b | 1.7 | 1.3 | 0.560 |
-| walker |  | 502 | 120 | python imports #1 in htmy/__init__.py |  |  | 0.565 |
-| walker |  | 516 | 14 | listing of 'htmy/md' |  |  | 0.569 |
-| walker |  | 542 | 26 | python imports #6 in htmy/__init__.py |  |  | 0.570 |
-| walker |  | 564 | 22 | listing of 'htmy/renderer' |  |  | 0.577 |
-| ns | 603 |  | 111 | README section map (heading locations), part 3 | 1.8 | 1.5 | 0.501 |
-| walker |  | 606 | 42 | python imports #7 in htmy/__init__.py |  |  | 0.503 |
-| walker |  | 631 | 25 | python decl names surface in htmy/__init__.py |  |  | 0.503 |
-| walker |  | 693 | 62 | python imports in htmy/renderer/__init__.py |  |  | 0.503 |
-| walker |  | 729 | 36 | python decl names surface in htmy/renderer/__init__.py |  |  | 0.449 |
-| ns | 729 |  | 126 | pyproject.toml -- project metadata & runtime deps | 1.9 |  | 0.449 |
-| walker |  | 771 | 42 | listing of 'docs/api' |  |  | 0.449 |
-| walker |  | 783 | 12 | listing of 'docs/api/renderer' |  |  | 0.449 |
+| walker |  | 60 | 7 | listing of '.github' |  |  | 1.000 |
+| walker |  | 79 | 19 | listing of '.github/workflows' |  |  | 1.000 |
+| ns | 105 |  | 72 | Package identity (title + tagline) | 1.2 |  | 0.791 |
+| walker |  | 144 | 65 | listing of 'htmy' |  |  | 0.805 |
+| walker |  | 161 | 17 | python imports in htmy/__init__.py |  |  | 0.805 |
+| ns | 164 |  | 59 | README key-features bullets, part 1 | 1.3 |  | 0.698 |
+| walker |  | 178 | 17 | python imports #2 in htmy/__init__.py |  |  | 0.698 |
+| walker |  | 191 | 13 | python imports #3 in htmy/__init__.py |  |  | 0.698 |
+| walker |  | 209 | 18 | python imports #5 in htmy/__init__.py |  |  | 0.606 |
+| ns | 209 |  | 45 | README section map (heading locations), part 1 | 1.4 |  | 0.606 |
+| walker |  | 233 | 24 | python imports #4 in htmy/__init__.py |  |  | 0.607 |
+| ns | 257 |  | 48 | README section map (heading locations), part 2 | 1.5 | 1.4 | 0.542 |
+| ns | 339 |  | 82 | README key-features bullets, part 2a | 1.6 | 1.3 | 0.501 |
+| walker |  | 353 | 120 | python imports #1 in htmy/__init__.py |  |  | 0.507 |
+| walker |  | 367 | 14 | listing of 'htmy/md' |  |  | 0.510 |
+| walker |  | 393 | 26 | python imports #6 in htmy/__init__.py |  |  | 0.512 |
+| walker |  | 415 | 22 | listing of 'htmy/renderer' |  |  | 0.519 |
+| walker |  | 457 | 42 | python imports #7 in htmy/__init__.py |  |  | 0.521 |
+| walker |  | 482 | 25 | python decl names surface in htmy/__init__.py |  |  | 0.521 |
+| ns | 492 |  | 153 | README key-features bullets, part 2b | 1.7 | 1.3 | 0.458 |
+| walker |  | 544 | 62 | python imports in htmy/renderer/__init__.py |  |  | 0.458 |
+| walker |  | 580 | 36 | python decl names surface in htmy/renderer/__init__.py |  |  | 0.458 |
+| ns | 603 |  | 111 | README section map (heading locations), part 3 | 1.8 | 1.5 | 0.398 |
+| walker |  | 622 | 42 | listing of 'docs/api' |  |  | 0.398 |
+| walker |  | 634 | 12 | listing of 'docs/api/renderer' |  |  | 0.398 |
+| ns | 729 |  | 126 | pyproject.toml -- project metadata & runtime deps | 1.9 |  | 0.355 |
+| walker |  | 783 | 149 | README headline in README.md |  |  | 0.449 |
 | walker |  | 795 | 12 | python decl names surface in htmy/error_boundary.py |  |  | 0.449 |
 | walker |  | 795 | 0 | python decl at htmy/error_boundary.py:15 |  |  | 0.449 |
 | ns | 835 |  | 106 | pyproject.toml -- poe task shortcuts | 1.10 |  | 0.419 |

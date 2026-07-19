@@ -4,42 +4,42 @@ Score(3000)=0.835 I=0.894 C=0.780 ns_rows≤3K=17/42 (reached=12 partial=0 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 62 | 62 | listing of '.' |  |  | 1.000 |
 | ns | 62 |  | 62 | Fixture root listing | 1.1 |  | 1.000 |
+| walker |  | 65 | 3 | listing of '.github' |  |  | 1.000 |
+| walker |  | 69 | 4 | listing of '.github/workflows' |  |  | 1.000 |
+| walker |  | 73 | 4 | listing of '.vscode' |  |  | 1.000 |
 | ns | 107 |  | 45 | package.json — name/version/description | 1.2 |  | 0.896 |
-| walker |  | 120 | 58 | package identity in package.json |  |  | 1.000 |
-| walker |  | 141 | 21 | package runtime metadata in package.json |  |  | 1.000 |
-| walker |  | 144 | 3 | listing of '.github' |  |  | 1.000 |
-| walker |  | 148 | 4 | listing of '.github/workflows' |  |  | 1.000 |
-| walker |  | 152 | 4 | listing of '.vscode' |  |  | 1.000 |
+| walker |  | 131 | 58 | package identity in package.json |  |  | 1.000 |
+| walker |  | 152 | 21 | package runtime metadata in package.json |  |  | 1.000 |
 | ns | 175 |  | 68 | README.md (full) | 1.3 |  | 0.911 |
 | walker |  | 223 | 71 | listing of 'src' |  |  | 0.929 |
 | walker |  | 240 | 17 | module item at src/index.tsx:993 |  |  | 0.929 |
 | ns | 246 |  | 71 | src/ directory listing | 1.4 |  | 0.940 |
 | walker |  | 253 | 13 | module item at src/index.tsx:994 |  |  | 0.940 |
 | walker |  | 266 | 13 | export names surface in playwright.config.ts |  |  | 0.940 |
+| walker |  | 289 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.940 |
 | ns | 383 |  | 137 | package.json — scripts | 1.5 |  | 0.816 |
-| walker |  | 403 | 137 | package scripts in package.json |  |  | 0.950 |
-| walker |  | 426 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.950 |
-| ns | 435 |  | 52 | test/ workspace top-level listing | 1.6 |  | 0.829 |
-| ns | 534 |  | 99 | test/src/app/ demo route listing | 1.7 |  | 0.693 |
-| ns | 600 |  | 66 | test/tests/ Playwright spec listing | 1.8 |  | 0.637 |
-| walker |  | 650 | 224 | export names surface in src/index.tsx |  |  | 0.644 |
-| walker |  | 650 | 0 | export at src/index.tsx:1098 |  |  | 0.644 |
-| walker |  | 650 | 0 | export at src/index.tsx:1130 |  |  | 0.644 |
-| walker |  | 663 | 13 | export at src/index.tsx:989 |  |  | 0.644 |
-| walker |  | 676 | 13 | export at src/index.tsx:803 |  |  | 0.644 |
-| walker |  | 705 | 29 | export at src/index.tsx:996 |  |  | 0.644 |
-| walker |  | 739 | 34 | export at src/index.tsx:833 |  |  | 0.644 |
-| ns | 772 |  | 172 | package.json — entry points + files | 1.9 |  | 0.578 |
-| walker |  | 859 | 120 | export at src/index.tsx:40 |  |  | 0.580 |
-| ns | 983 |  | 211 | package.json — devDependencies | 1.10 |  | 0.537 |
-| walker |  | 1020 | 161 | export at src/index.tsx:27 |  |  | 0.543 |
-| walker |  | 1121 | 101 | export at src/index.tsx:1137 |  |  | 0.549 |
-| ns | 1134 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.526 |
-| ns | 1249 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.566 |
-| ns | 1415 |  | 166 | index.tsx top-level export locations | 2.2 |  | 0.590 |
-| walker |  | 1439 | 318 | export at src/index.tsx:139 |  |  | 0.597 |
-| walker |  | 1453 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.597 |
-| walker |  | 1467 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.598 |
+| ns | 435 |  | 52 | test/ workspace top-level listing | 1.6 |  | 0.712 |
+| walker |  | 513 | 224 | export names surface in src/index.tsx |  |  | 0.720 |
+| walker |  | 513 | 0 | export at src/index.tsx:1098 |  |  | 0.720 |
+| walker |  | 513 | 0 | export at src/index.tsx:1130 |  |  | 0.720 |
+| walker |  | 526 | 13 | export at src/index.tsx:989 |  |  | 0.720 |
+| ns | 534 |  | 99 | test/src/app/ demo route listing | 1.7 |  | 0.602 |
+| walker |  | 539 | 13 | export at src/index.tsx:803 |  |  | 0.602 |
+| walker |  | 568 | 29 | export at src/index.tsx:996 |  |  | 0.602 |
+| ns | 600 |  | 66 | test/tests/ Playwright spec listing | 1.8 |  | 0.554 |
+| walker |  | 602 | 34 | export at src/index.tsx:833 |  |  | 0.554 |
+| walker |  | 722 | 120 | export at src/index.tsx:40 |  |  | 0.556 |
+| ns | 772 |  | 172 | package.json — entry points + files | 1.9 |  | 0.499 |
+| walker |  | 883 | 161 | export at src/index.tsx:27 |  |  | 0.505 |
+| ns | 983 |  | 211 | package.json — devDependencies | 1.10 |  | 0.468 |
+| walker |  | 984 | 101 | export at src/index.tsx:1137 |  |  | 0.473 |
+| ns | 1134 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.453 |
+| ns | 1249 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.503 |
+| walker |  | 1302 | 318 | export at src/index.tsx:139 |  |  | 0.510 |
+| walker |  | 1316 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.510 |
+| walker |  | 1330 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.510 |
+| ns | 1415 |  | 166 | index.tsx top-level export locations | 2.2 |  | 0.540 |
+| walker |  | 1467 | 137 | package scripts in package.json |  |  | 0.598 |
 | walker |  | 1482 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.598 |
 | walker |  | 1482 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.598 |
 | walker |  | 1534 | 52 | listing of 'test' |  |  | 0.662 |

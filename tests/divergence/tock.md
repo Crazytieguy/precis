@@ -16,18 +16,18 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 129 | 9 | listing of 'internal/config' |  |  | 0.922 |
 | walker |  | 138 | 9 | listing of 'internal/extra' |  |  | 0.836 |
 | ns | 138 |  | 33 | go.mod identity (module + Go version) | 1.3 |  | 0.836 |
-| walker |  | 229 | 91 | README headline in README.md |  |  | 0.836 |
-| walker |  | 240 | 11 | listing of 'internal/timeutil' |  |  | 0.840 |
-| ns | 267 |  | 129 | Makefile target names + commands (lint + test) | 1.4 |  | 0.762 |
-| walker |  | 273 | 33 | go module identity in go.mod |  |  | 0.840 |
-| walker |  | 285 | 12 | listing of 'internal/core' |  |  | 0.842 |
-| walker |  | 289 | 4 | listing of 'internal/core/errors' |  |  | 0.843 |
-| walker |  | 293 | 4 | listing of 'internal/core/models' |  |  | 0.844 |
-| walker |  | 299 | 6 | listing of 'internal/core/dto' |  |  | 0.844 |
-| walker |  | 306 | 7 | listing of 'internal/core/ports' |  |  | 0.844 |
-| walker |  | 311 | 5 | listing of 'demo' |  |  | 0.844 |
-| walker |  | 320 | 9 | listing of 'internal/services/activity' |  |  | 0.844 |
-| walker |  | 331 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.844 |
+| walker |  | 149 | 11 | listing of 'internal/timeutil' |  |  | 0.840 |
+| walker |  | 182 | 33 | go module identity in go.mod |  |  | 0.911 |
+| walker |  | 194 | 12 | listing of 'internal/core' |  |  | 0.911 |
+| walker |  | 198 | 4 | listing of 'internal/core/errors' |  |  | 0.911 |
+| walker |  | 202 | 4 | listing of 'internal/core/models' |  |  | 0.911 |
+| walker |  | 208 | 6 | listing of 'internal/core/dto' |  |  | 0.911 |
+| walker |  | 215 | 7 | listing of 'internal/core/ports' |  |  | 0.911 |
+| walker |  | 220 | 5 | listing of 'demo' |  |  | 0.911 |
+| walker |  | 229 | 9 | listing of 'internal/services/activity' |  |  | 0.911 |
+| walker |  | 240 | 11 | listing of 'internal/adapters/repositories' |  |  | 0.911 |
+| ns | 267 |  | 129 | Makefile target names + commands (lint + test) | 1.4 |  | 0.844 |
+| walker |  | 331 | 91 | README headline in README.md |  |  | 0.844 |
 | walker |  | 340 | 9 | listing of 'internal/adapters/repositories/notes' |  |  | 0.844 |
 | walker |  | 349 | 9 | listing of 'internal/adapters/repositories/timewarrior' |  |  | 0.844 |
 | walker |  | 363 | 14 | listing of '.github' |  |  | 0.844 |

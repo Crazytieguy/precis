@@ -3,21 +3,21 @@ Score(3000)=0.692 I=0.816 C=0.587 ns_rows≤3K=22/60 (reached=13 partial=1 missi
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 31 | 31 | listing of '.' |  |  | 0.000 |
-| ns | 47 |  | 47 | Root + src/ file listing | 1.1 |  | 0.573 |
-| walker |  | 76 | 45 | README headline in README.md |  |  | 0.586 |
-| ns | 99 |  | 52 | package.json name/version/description | 1.2 |  | 0.517 |
-| walker |  | 141 | 65 | package identity in package.json |  |  | 0.642 |
-| walker |  | 157 | 16 | listing of 'src' |  |  | 1.000 |
-| walker |  | 189 | 32 | package runtime metadata in package.json |  |  | 1.000 |
-| ns | 212 |  | 113 | src/index.js — node/browser dispatch | 1.3 |  | 0.757 |
-| walker |  | 232 | 43 | module-doc lede in src/index.js |  |  | 0.793 |
+| walker |  | 47 | 16 | listing of 'src' |  |  | 1.000 |
+| ns | 47 |  | 47 | Root + src/ file listing | 1.1 |  | 1.000 |
+| walker |  | 92 | 45 | README headline in README.md |  |  | 1.000 |
+| ns | 99 |  | 52 | package.json name/version/description | 1.2 |  | 0.895 |
+| walker |  | 157 | 65 | package identity in package.json |  |  | 1.000 |
+| walker |  | 200 | 43 | module-doc lede in src/index.js |  |  | 1.000 |
+| ns | 212 |  | 113 | src/index.js — node/browser dispatch | 1.3 |  | 0.793 |
+| walker |  | 232 | 32 | package runtime metadata in package.json |  |  | 0.793 |
 | ns | 240 |  | 28 | package.json main/browser fields | 1.4 |  | 0.758 |
 | ns | 285 |  | 45 | README lede | 1.5 |  | 0.769 |
 | walker |  | 300 | 68 | package entrypoints in package.json |  |  | 0.814 |
+| walker |  | 314 | 14 | export names surface in karma.conf.js |  |  | 0.814 |
+| walker |  | 314 | 0 | export at karma.conf.js:1 |  |  | 0.814 |
 | ns | 395 |  | 110 | README section-heading roster (part 1, all levels) | 1.6 |  | 0.678 |
-| walker |  | 408 | 108 | package scripts in package.json |  |  | 0.689 |
-| walker |  | 422 | 14 | export names surface in karma.conf.js |  |  | 0.689 |
-| walker |  | 422 | 0 | export at karma.conf.js:1 |  |  | 0.689 |
+| walker |  | 422 | 108 | package scripts in package.json |  |  | 0.689 |
 | ns | 529 |  | 134 | README section-heading roster (part 2, all levels) | 1.7 |  | 0.586 |
 | walker |  | 613 | 191 | headings outline in README.md |  |  | 0.791 |
 | walker |  | 638 | 25 | README.md section #1 |  |  | 0.791 |

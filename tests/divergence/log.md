@@ -4,26 +4,26 @@ Score(3000)=0.591 I=0.818 C=0.426 ns_rows≤3K=17/47 (reached=7 partial=2 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 46 | 46 | listing of '.' |  |  | 1.000 |
 | ns | 46 |  | 46 | Root directory listing | 1.1 |  | 1.000 |
+| walker |  | 49 | 3 | listing of '.github' |  |  | 1.000 |
+| walker |  | 53 | 4 | listing of '.github/workflows' |  |  | 1.000 |
 | ns | 67 |  | 21 | src/ directory listing | 1.2 |  | 0.811 |
-| ns | 87 |  | 20 | src/kv/ directory listing | 1.3 |  | 0.694 |
-| walker |  | 98 | 52 | README headline in README.md |  |  | 0.694 |
-| walker |  | 101 | 3 | listing of '.github' |  |  | 0.694 |
-| walker |  | 105 | 4 | listing of '.github/workflows' |  |  | 0.694 |
-| ns | 122 |  | 35 | Secondary directory listings (tests/, benches/, CI, test_max_level_features/, rfcs/) | 1.4 |  | 0.591 |
-| walker |  | 126 | 21 | listing of 'src' |  |  | 0.728 |
-| walker |  | 146 | 20 | listing of 'src/kv' |  |  | 0.850 |
-| walker |  | 150 | 4 | listing of 'benches' |  |  | 0.860 |
-| ns | 159 |  | 37 | triagebot.toml + .gitignore + .precis-pin | 1.5 |  | 0.781 |
-| walker |  | 206 | 56 | headings outline in README.md |  |  | 0.781 |
-| ns | 293 |  | 134 | Cargo.toml package identity (name/version/license/repo) | 1.6 |  | 0.652 |
-| walker |  | 397 | 191 | [package] in Cargo.toml |  |  | 0.836 |
-| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.743 |
-| walker |  | 461 | 64 | README.md section #0 |  |  | 0.744 |
-| walker |  | 469 | 8 | listing of 'tests' |  |  | 0.768 |
-| ns | 551 |  | 103 | Cargo.toml package identity (MSRV, edition, docs.rs features) | 1.8 |  | 0.730 |
-| walker |  | 560 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.730 |
-| walker |  | 569 | 9 | listing of 'test_max_level_features' |  |  | 0.765 |
-| walker |  | 579 | 10 | listing of 'rfcs' |  |  | 0.787 |
+| walker |  | 74 | 21 | listing of 'src' |  |  | 1.000 |
+| ns | 87 |  | 20 | src/kv/ directory listing | 1.3 |  | 0.856 |
+| walker |  | 94 | 20 | listing of 'src/kv' |  |  | 1.000 |
+| walker |  | 98 | 4 | listing of 'benches' |  |  | 1.000 |
+| ns | 122 |  | 35 | Secondary directory listings (tests/, benches/, CI, test_max_level_features/, rfcs/) | 1.4 |  | 0.859 |
+| walker |  | 150 | 52 | README headline in README.md |  |  | 0.860 |
+| walker |  | 158 | 8 | listing of 'tests' |  |  | 0.898 |
+| ns | 159 |  | 37 | triagebot.toml + .gitignore + .precis-pin | 1.5 |  | 0.816 |
+| walker |  | 249 | 91 | crate-doc lede in src/kv/mod.rs |  |  | 0.817 |
+| walker |  | 258 | 9 | listing of 'test_max_level_features' |  |  | 0.873 |
+| walker |  | 268 | 10 | listing of 'rfcs' |  |  | 0.909 |
+| ns | 293 |  | 134 | Cargo.toml package identity (name/version/license/repo) | 1.6 |  | 0.758 |
+| walker |  | 324 | 56 | headings outline in README.md |  |  | 0.758 |
+| ns | 448 |  | 155 | Crate-doc lede (lib.rs) | 1.7 |  | 0.674 |
+| walker |  | 515 | 191 | [package] in Cargo.toml |  |  | 0.831 |
+| ns | 551 |  | 103 | Cargo.toml package identity (MSRV, edition, docs.rs features) | 1.8 |  | 0.787 |
+| walker |  | 579 | 64 | README.md section #0 |  |  | 0.787 |
 | walker |  | 615 | 36 | manifest config in Cargo.toml |  |  | 0.827 |
 | ns | 688 |  | 137 | Cargo.toml [features]: max_level_*/release_max_level_* | 1.9 |  | 0.731 |
 | walker |  | 760 | 145 | mod/use plumbing in src/lib.rs |  |  | 0.731 |

@@ -33,10 +33,52 @@ entries = ["logo.png", "logo.svg", "screenshot.png"]
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: "source" })'
+descriptor = "listing of 'source'"
+cost_tokens = 22
+cum_tokens = 80
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source"
+entries = ["index.d.ts", "index.js", "index.test-d.ts", "utilities.js", "vendor"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "source/vendor" })'
+descriptor = "listing of 'source/vendor'"
+cost_tokens = 9
+cum_tokens = 89
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/vendor"
+entries = ["ansi-styles", "supports-color"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "source/vendor/supports-color" })'
+descriptor = "listing of 'source/vendor/supports-color'"
+cost_tokens = 18
+cum_tokens = 107
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/vendor/supports-color"
+entries = ["browser.d.ts", "browser.js", "index.d.ts", "index.js"]
+
+[[batches]]
+position = 6
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 66
-cum_tokens = 124
+cum_tokens = 173
 
 [batches.content]
 kind = "lines"
@@ -58,53 +100,229 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "source" })'
-descriptor = "listing of 'source'"
-cost_tokens = 22
-cum_tokens = 146
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source"
-entries = ["index.d.ts", "index.js", "index.test-d.ts", "utilities.js", "vendor"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "source/vendor" })'
-descriptor = "listing of 'source/vendor'"
-cost_tokens = 9
-cum_tokens = 155
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/vendor"
-entries = ["ansi-styles", "supports-color"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "source/vendor/supports-color" })'
-descriptor = "listing of 'source/vendor/supports-color'"
-cost_tokens = 18
-cum_tokens = 173
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "source/vendor/supports-color"
-entries = ["browser.d.ts", "browser.js", "index.d.ts", "index.js"]
-
-[[batches]]
 position = 7
+key = 'Fs(DirListing { dir: "source/vendor/ansi-styles" })'
+descriptor = "listing of 'source/vendor/ansi-styles'"
+cost_tokens = 9
+cum_tokens = 182
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "source/vendor/ansi-styles"
+entries = ["index.d.ts", "index.js"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 8
+cum_tokens = 190
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["rainbow.js", "screenshot.js"]
+
+[[batches]]
+position = 9
+key = 'Typescript(ExportNames { file: "source/index.js" })'
+descriptor = "export names surface in source/index.js"
+cost_tokens = 56
+cum_tokens = 246
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 220
+end = 220
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 206
+end = 206
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 221
+end = 221
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Typescript(Export { file: "source/index.js", start_line: 225 })'
+descriptor = "export at source/index.js:225"
+cost_tokens = 0
+cum_tokens = 246
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Typescript(Export { file: "source/index.js", start_line: 34 })'
+descriptor = "export at source/index.js:34"
+cost_tokens = 8
+cum_tokens = 254
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 34
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 12
+key = 'Typescript(Export { file: "source/index.js", start_line: 50 })'
+descriptor = "export at source/index.js:50"
+cost_tokens = 13
+cum_tokens = 267
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'Typescript(ExportBody { file: "source/index.js", start_line: 50, body_start_line: 51 })'
+descriptor = "export body at source/index.js:50 body 51"
+cost_tokens = 9
+cum_tokens = 276
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Typescript(Export { file: "source/index.js", start_line: 220 })'
+descriptor = "export at source/index.js:220"
+cost_tokens = 27
+cum_tokens = 303
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 220
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Typescript(ExportBody { file: "source/index.js", start_line: 34, body_start_line: 36 })'
+descriptor = "export body at source/index.js:34 body 36"
+cost_tokens = 26
+cum_tokens = 329
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/index.js"
+start = 36
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
 key = 'Markdown(ReadmeHeadline { file: "readme.md" })'
 descriptor = "README headline in readme.md"
 cost_tokens = 105
-cum_tokens = 278
+cum_tokens = 434
 
 [batches.content]
 kind = "lines"
@@ -126,25 +344,135 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "source/vendor/ansi-styles" })'
-descriptor = "listing of 'source/vendor/ansi-styles'"
-cost_tokens = 9
-cum_tokens = 287
+position = 17
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 11
+cum_tokens = 445
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "source/vendor/ansi-styles"
-entries = ["index.d.ts", "index.js"]
+parent = ".github"
+entries = ["funding.yml", "security.md", "workflows"]
 
 [[batches]]
-position = 9
+position = 18
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 449
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["main.yml"]
+
+[[batches]]
+position = 19
+key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
+descriptor = "YAML config at .github/workflows/main.yml"
+cost_tokens = 260
+cum_tokens = 709
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/main.yml"
+start = 1
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Typescript(ExportNames { file: "source/vendor/ansi-styles/index.js" })'
+descriptor = "export names surface in source/vendor/ansi-styles/index.js"
+cost_tokens = 78
+cum_tokens = 787
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/vendor/ansi-styles/index.js"
+start = 68
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/vendor/ansi-styles/index.js"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/vendor/ansi-styles/index.js"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 21
+key = 'Typescript(Export { file: "source/vendor/ansi-styles/index.js", start_line: 223 })'
+descriptor = "export at source/vendor/ansi-styles/index.js:223"
+cost_tokens = 0
+cum_tokens = 787
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/vendor/ansi-styles/index.js"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Typescript(Export { file: "source/vendor/ansi-styles/index.js", start_line: 73 })'
+descriptor = "export at source/vendor/ansi-styles/index.js:73"
+cost_tokens = 9
+cum_tokens = 796
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "source/vendor/ansi-styles/index.js"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "source/vendor/ansi-styles/index.js"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 23
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 46
-cum_tokens = 333
+cum_tokens = 842
 
 [batches.content]
 kind = "lines"
@@ -158,11 +486,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 10
+position = 24
 key = 'Markdown(HeadingsOutline { file: "code-of-conduct.md" })'
 descriptor = "headings outline in code-of-conduct.md"
 cost_tokens = 74
-cum_tokens = 407
+cum_tokens = 916
 
 [batches.content]
 kind = "lines"
@@ -264,11 +592,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 25
 key = 'Markdown(Section { file: "code-of-conduct.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "code-of-conduct.md section #0"
 cost_tokens = 0
-cum_tokens = 407
+cum_tokens = 916
 
 [batches.content]
 kind = "lines"
@@ -280,334 +608,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 8
-cum_tokens = 415
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["rainbow.js", "screenshot.js"]
-
-[[batches]]
-position = 13
-key = 'Typescript(ExportNames { file: "source/index.js" })'
-descriptor = "export names surface in source/index.js"
-cost_tokens = 56
-cum_tokens = 471
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 205
-end = 205
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 220
-end = 220
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 206
-end = 206
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 221
-end = 221
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Typescript(Export { file: "source/index.js", start_line: 225 })'
-descriptor = "export at source/index.js:225"
-cost_tokens = 0
-cum_tokens = 471
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'Typescript(Export { file: "source/index.js", start_line: 34 })'
-descriptor = "export at source/index.js:34"
-cost_tokens = 8
-cum_tokens = 479
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 34
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 16
-key = 'Typescript(Export { file: "source/index.js", start_line: 50 })'
-descriptor = "export at source/index.js:50"
-cost_tokens = 13
-cum_tokens = 492
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 17
-key = 'Typescript(ExportBody { file: "source/index.js", start_line: 50, body_start_line: 51 })'
-descriptor = "export body at source/index.js:50 body 51"
-cost_tokens = 9
-cum_tokens = 501
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Typescript(Export { file: "source/index.js", start_line: 220 })'
-descriptor = "export at source/index.js:220"
-cost_tokens = 27
-cum_tokens = 528
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 220
-end = 223
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Typescript(ExportBody { file: "source/index.js", start_line: 34, body_start_line: 36 })'
-descriptor = "export body at source/index.js:34 body 36"
-cost_tokens = 26
-cum_tokens = 554
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/index.js"
-start = 36
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 11
-cum_tokens = 565
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["funding.yml", "security.md", "workflows"]
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 569
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["main.yml"]
-
-[[batches]]
-position = 22
-key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
-descriptor = "YAML config at .github/workflows/main.yml"
-cost_tokens = 260
-cum_tokens = 829
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/main.yml"
-start = 1
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'Typescript(ExportNames { file: "source/vendor/ansi-styles/index.js" })'
-descriptor = "export names surface in source/vendor/ansi-styles/index.js"
-cost_tokens = 78
-cum_tokens = 907
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/vendor/ansi-styles/index.js"
-start = 68
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/vendor/ansi-styles/index.js"
-start = 223
-end = 223
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/vendor/ansi-styles/index.js"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 24
-key = 'Typescript(Export { file: "source/vendor/ansi-styles/index.js", start_line: 223 })'
-descriptor = "export at source/vendor/ansi-styles/index.js:223"
-cost_tokens = 0
-cum_tokens = 907
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/vendor/ansi-styles/index.js"
-start = 223
-end = 223
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Typescript(Export { file: "source/vendor/ansi-styles/index.js", start_line: 73 })'
-descriptor = "export at source/vendor/ansi-styles/index.js:73"
-cost_tokens = 9
-cum_tokens = 916
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "source/vendor/ansi-styles/index.js"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "source/vendor/ansi-styles/index.js"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 26

@@ -5,51 +5,51 @@ Score(3000)=0.647 I=0.836 C=0.501 ns_rows≤3K=31/50 (reached=15 partial=2 missi
 | walker |  | 55 | 55 | listing of '.' |  |  | 1.000 |
 | ns | 55 |  | 55 | Repo root listing | 1.1 |  | 1.000 |
 | ns | 68 |  | 13 | internal/entities/ directory listing | 1.2 |  | 0.867 |
+| walker |  | 85 | 30 | go package doc lede in beszel.go |  |  | 0.868 |
 | ns | 87 |  | 19 | .github/workflows/ directory listing | 1.3 |  | 0.773 |
-| walker |  | 94 | 39 | README headline in readme.md |  |  | 0.773 |
-| walker |  | 124 | 30 | go package doc lede in beszel.go |  |  | 0.774 |
-| walker |  | 150 | 26 | listing of 'supplemental' |  |  | 0.796 |
-| walker |  | 155 | 5 | listing of 'supplemental/guides' |  |  | 0.796 |
-| walker |  | 161 | 6 | listing of 'supplemental/kubernetes' |  |  | 0.796 |
-| walker |  | 164 | 3 | listing of 'supplemental/kubernetes/beszel-hub' |  |  | 0.796 |
-| walker |  | 174 | 10 | listing of 'supplemental/docker' |  |  | 0.796 |
-| walker |  | 179 | 5 | listing of 'supplemental/docker/agent' |  |  | 0.796 |
+| walker |  | 111 | 26 | listing of 'supplemental' |  |  | 0.796 |
+| walker |  | 116 | 5 | listing of 'supplemental/guides' |  |  | 0.796 |
+| walker |  | 122 | 6 | listing of 'supplemental/kubernetes' |  |  | 0.796 |
+| walker |  | 125 | 3 | listing of 'supplemental/kubernetes/beszel-hub' |  |  | 0.796 |
+| walker |  | 135 | 10 | listing of 'supplemental/docker' |  |  | 0.796 |
+| walker |  | 140 | 5 | listing of 'supplemental/docker/agent' |  |  | 0.796 |
+| walker |  | 145 | 5 | listing of 'supplemental/docker/hub' |  |  | 0.796 |
+| walker |  | 150 | 5 | listing of 'supplemental/docker/same-system' |  |  | 0.796 |
+| walker |  | 160 | 10 | listing of 'supplemental/licenses' |  |  | 0.796 |
+| walker |  | 163 | 3 | listing of 'supplemental/licenses/LibreHardwareMonitor' |  |  | 0.796 |
+| walker |  | 166 | 3 | listing of 'supplemental/licenses/smartmontools' |  |  | 0.796 |
 | ns | 181 |  | 94 | SECURITY.md — full | 1.4 |  | 0.678 |
-| walker |  | 184 | 5 | listing of 'supplemental/docker/hub' |  |  | 0.679 |
-| walker |  | 189 | 5 | listing of 'supplemental/docker/same-system' |  |  | 0.679 |
-| walker |  | 199 | 10 | listing of 'supplemental/licenses' |  |  | 0.679 |
-| walker |  | 202 | 3 | listing of 'supplemental/licenses/LibreHardwareMonitor' |  |  | 0.679 |
-| walker |  | 205 | 3 | listing of 'supplemental/licenses/smartmontools' |  |  | 0.679 |
+| walker |  | 205 | 39 | README headline in readme.md |  |  | 0.679 |
 | ns | 207 |  | 26 | supplemental/ directory listing | 1.5 |  | 0.717 |
 | ns | 234 |  | 27 | .github/ directory listing | 1.6 |  | 0.656 |
 | walker |  | 239 | 34 | go module identity in go.mod |  |  | 0.656 |
-| walker |  | 307 | 68 | headings outline in readme.md |  |  | 0.656 |
-| ns | 356 |  | 122 | internal/common/common-ssh.go — full | 1.7 |  | 0.579 |
-| walker |  | 379 | 72 | go decl names surface in beszel.go |  |  | 0.582 |
-| walker |  | 379 | 0 | go decl at beszel.go:15 |  |  | 0.582 |
-| walker |  | 379 | 0 | go decl at beszel.go:18 |  |  | 0.582 |
-| ns | 385 |  | 29 | internal/site/src/ directory listing | 1.8 |  | 0.540 |
-| walker |  | 396 | 17 | go decl doc at beszel.go:18 |  |  | 0.542 |
-| walker |  | 435 | 39 | go decl at beszel.go:7 |  |  | 0.545 |
-| ns | 437 |  | 52 | internal/site/src/lib/ directory listing | 1.9 |  | 0.493 |
-| walker |  | 452 | 17 | go decl doc at beszel.go:15 |  |  | 0.495 |
-| walker |  | 518 | 66 | listing of 'internal' |  |  | 0.503 |
-| walker |  | 522 | 4 | listing of 'internal/users' |  |  | 0.503 |
-| walker |  | 528 | 6 | listing of 'internal/cmd' |  |  | 0.503 |
-| walker |  | 532 | 4 | listing of 'internal/cmd/hub' |  |  | 0.503 |
-| walker |  | 544 | 12 | listing of 'internal/common' |  |  | 0.503 |
-| walker |  | 557 | 13 | listing of 'internal/entities' |  |  | 0.560 |
-| walker |  | 561 | 4 | listing of 'internal/entities/container' |  |  | 0.560 |
-| walker |  | 565 | 4 | listing of 'internal/entities/system' |  |  | 0.560 |
-| walker |  | 574 | 9 | listing of 'internal/cmd/agent' |  |  | 0.560 |
-| walker |  | 583 | 9 | listing of 'internal/entities/smart' |  |  | 0.560 |
-| walker |  | 594 | 11 | listing of 'internal/entities/systemd' |  |  | 0.560 |
-| walker |  | 624 | 30 | listing of 'internal/ghupdate' |  |  | 0.560 |
-| walker |  | 649 | 25 | go package + imports in beszel.go |  |  | 0.564 |
-| ns | 652 |  | 215 | beszel.go — version/AppName constants | 1.10 |  | 0.622 |
-| walker |  | 685 | 36 | listing of 'internal/records' |  |  | 0.625 |
-| ns | 707 |  | 55 | internal/hub/ws/, transport/, expirymap/ directory listings | 1.11 |  | 0.583 |
-| walker |  | 722 | 37 | listing of 'supplemental/debian' |  |  | 0.584 |
+| walker |  | 311 | 72 | go decl names surface in beszel.go |  |  | 0.659 |
+| walker |  | 311 | 0 | go decl at beszel.go:15 |  |  | 0.659 |
+| walker |  | 311 | 0 | go decl at beszel.go:18 |  |  | 0.659 |
+| walker |  | 328 | 17 | go decl doc at beszel.go:18 |  |  | 0.661 |
+| ns | 356 |  | 122 | internal/common/common-ssh.go — full | 1.7 |  | 0.583 |
+| walker |  | 367 | 39 | go decl at beszel.go:7 |  |  | 0.587 |
+| walker |  | 384 | 17 | go decl doc at beszel.go:15 |  |  | 0.590 |
+| ns | 385 |  | 29 | internal/site/src/ directory listing | 1.8 |  | 0.547 |
+| ns | 437 |  | 52 | internal/site/src/lib/ directory listing | 1.9 |  | 0.495 |
+| walker |  | 450 | 66 | listing of 'internal' |  |  | 0.503 |
+| walker |  | 454 | 4 | listing of 'internal/users' |  |  | 0.503 |
+| walker |  | 460 | 6 | listing of 'internal/cmd' |  |  | 0.503 |
+| walker |  | 464 | 4 | listing of 'internal/cmd/hub' |  |  | 0.503 |
+| walker |  | 476 | 12 | listing of 'internal/common' |  |  | 0.503 |
+| walker |  | 489 | 13 | listing of 'internal/entities' |  |  | 0.560 |
+| walker |  | 493 | 4 | listing of 'internal/entities/container' |  |  | 0.560 |
+| walker |  | 497 | 4 | listing of 'internal/entities/system' |  |  | 0.560 |
+| walker |  | 506 | 9 | listing of 'internal/cmd/agent' |  |  | 0.560 |
+| walker |  | 515 | 9 | listing of 'internal/entities/smart' |  |  | 0.560 |
+| walker |  | 526 | 11 | listing of 'internal/entities/systemd' |  |  | 0.560 |
+| walker |  | 556 | 30 | listing of 'internal/ghupdate' |  |  | 0.560 |
+| walker |  | 581 | 25 | go package + imports in beszel.go |  |  | 0.564 |
+| walker |  | 617 | 36 | listing of 'internal/records' |  |  | 0.566 |
+| ns | 652 |  | 215 | beszel.go — version/AppName constants | 1.10 |  | 0.625 |
+| walker |  | 654 | 37 | listing of 'supplemental/debian' |  |  | 0.626 |
+| ns | 707 |  | 55 | internal/hub/ws/, transport/, expirymap/ directory listings | 1.11 |  | 0.584 |
+| walker |  | 722 | 68 | headings outline in readme.md |  |  | 0.584 |
 | walker |  | 738 | 16 | listing of 'supplemental/kubernetes/beszel-hub/charts' |  |  | 0.585 |
 | ns | 764 |  | 57 | internal/hub/systems/ directory listing | 1.12 |  | 0.553 |
 | walker |  | 813 | 75 | listing of 'internal/site' |  |  | 0.560 |

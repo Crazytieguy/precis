@@ -4,26 +4,26 @@ Score(3000)=0.416 I=0.745 C=0.233 ns_rows≤3K=13/41 (reached=4 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 58 |  | 58 | Root identity: .precis-pin + README lede | 1.1 |  | 0.000 |
 | walker |  | 79 | 79 | listing of '.' |  |  | 0.000 |
-| walker |  | 122 | 43 | package identity in package.json |  |  | 0.000 |
-| walker |  | 131 | 9 | listing of 'apps' |  |  | 0.000 |
-| ns | 137 |  | 79 | Root directory listing | 1.2 |  | 0.750 |
-| walker |  | 142 | 11 | listing of 'patches' |  |  | 0.750 |
-| walker |  | 157 | 15 | listing of 'packages' |  |  | 0.788 |
+| walker |  | 88 | 9 | listing of 'apps' |  |  | 0.000 |
+| walker |  | 99 | 11 | listing of 'patches' |  |  | 0.000 |
+| walker |  | 114 | 15 | listing of 'packages' |  |  | 0.000 |
+| ns | 137 |  | 79 | Root directory listing | 1.2 |  | 0.788 |
+| walker |  | 157 | 43 | package identity in package.json |  |  | 0.788 |
 | walker |  | 161 | 4 | listing of '.vscode' |  |  | 0.769 |
 | ns | 161 |  | 24 | apps/ and packages/ workspace listings | 1.3 |  | 0.769 |
 | walker |  | 174 | 13 | listing of 'packages/types' |  |  | 0.769 |
-| walker |  | 208 | 34 | package entrypoints in package.json |  |  | 0.769 |
-| walker |  | 241 | 33 | listing of 'assets' |  |  | 0.769 |
-| walker |  | 246 | 5 | listing of '.devcontainer' |  |  | 0.769 |
-| ns | 295 |  | 134 | .env.sample: NextAuth + database settings | 1.4 |  | 0.641 |
-| ns | 423 |  | 128 | vitest.config.mts | 1.5 |  | 0.546 |
-| walker |  | 444 | 198 | README headline in README.md |  |  | 0.709 |
-| walker |  | 467 | 23 | listing of 'packages/prisma' |  |  | 0.711 |
-| walker |  | 476 | 9 | listing of 'packages/prisma/client' |  |  | 0.711 |
-| walker |  | 502 | 26 | listing of 'apps/worker' |  |  | 0.711 |
-| walker |  | 507 | 5 | listing of 'apps/worker/templates' |  |  | 0.711 |
-| walker |  | 519 | 12 | export names surface in packages/prisma/index.ts |  |  | 0.711 |
-| walker |  | 573 | 54 | listing of 'packages/filesystem' |  |  | 0.712 |
+| walker |  | 207 | 33 | listing of 'assets' |  |  | 0.769 |
+| walker |  | 212 | 5 | listing of '.devcontainer' |  |  | 0.769 |
+| walker |  | 235 | 23 | listing of 'packages/prisma' |  |  | 0.771 |
+| walker |  | 244 | 9 | listing of 'packages/prisma/client' |  |  | 0.771 |
+| walker |  | 270 | 26 | listing of 'apps/worker' |  |  | 0.771 |
+| walker |  | 275 | 5 | listing of 'apps/worker/templates' |  |  | 0.771 |
+| walker |  | 287 | 12 | export names surface in packages/prisma/index.ts |  |  | 0.771 |
+| ns | 295 |  | 134 | .env.sample: NextAuth + database settings | 1.4 |  | 0.643 |
+| walker |  | 321 | 34 | package entrypoints in package.json |  |  | 0.643 |
+| walker |  | 375 | 54 | listing of 'packages/filesystem' |  |  | 0.644 |
+| ns | 423 |  | 128 | vitest.config.mts | 1.5 |  | 0.548 |
+| walker |  | 573 | 198 | README headline in README.md |  |  | 0.712 |
 | walker |  | 609 | 36 | listing of 'apps/worker/workers' |  |  | 0.712 |
 | ns | 631 |  | 208 | next-i18next.config.js (supported locales) | 1.6 |  | 0.578 |
 | walker |  | 681 | 72 | listing of 'packages/router' |  |  | 0.580 |

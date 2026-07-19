@@ -19,10 +19,24 @@ entries = [".dockerignore", ".github", ".gitignore", ".nvmrc", "CONTRIBUTING.md"
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "packages" })'
+descriptor = "listing of 'packages'"
+cost_tokens = 25
+cum_tokens = 82
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages"
+entries = ["app-client", "app-server", "cli", "crypto", "deploy-cloudflare", "docs", "lib"]
+
+[[batches]]
+position = 3
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 64
-cum_tokens = 121
+cum_tokens = 146
 
 [batches.content]
 kind = "lines"
@@ -44,51 +58,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "packages" })'
-descriptor = "listing of 'packages'"
-cost_tokens = 25
-cum_tokens = 146
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages"
-entries = ["app-client", "app-server", "cli", "crypto", "deploy-cloudflare", "docs", "lib"]
-
-[[batches]]
 position = 4
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 110
-cum_tokens = 256
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 9
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 26
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 5
 key = 'Fs(DirListing { dir: "packages/docs" })'
 descriptor = "listing of 'packages/docs'"
 cost_tokens = 17
-cum_tokens = 273
+cum_tokens = 163
 
 [batches.content]
 kind = "fs"
@@ -98,37 +72,11 @@ parent = "packages/docs"
 entries = [".vitepress", "eslint.config.js", "package.json", "src"]
 
 [[batches]]
-position = 6
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 51
-cum_tokens = 324
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 12
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
+position = 5
 key = 'Fs(DirListing { dir: "packages/app-server" })'
 descriptor = "listing of 'packages/app-server'"
 cost_tokens = 23
-cum_tokens = 347
+cum_tokens = 186
 
 [batches.content]
 kind = "fs"
@@ -138,11 +86,11 @@ parent = "packages/app-server"
 entries = ["eslint.config.js", "package.json", "src", "tsconfig.json", "wrangler.toml"]
 
 [[batches]]
-position = 8
+position = 6
 key = 'Fs(DirListing { dir: "packages/deploy-cloudflare" })'
 descriptor = "listing of 'packages/deploy-cloudflare'"
 cost_tokens = 25
-cum_tokens = 372
+cum_tokens = 211
 
 [batches.content]
 kind = "fs"
@@ -152,11 +100,11 @@ parent = "packages/deploy-cloudflare"
 entries = [".nvmrc", "_routes.json", "build.sh", "package.json", "wrangler.toml"]
 
 [[batches]]
-position = 9
+position = 7
 key = 'Fs(DirListing { dir: "packages/crypto" })'
 descriptor = "listing of 'packages/crypto'"
 cost_tokens = 26
-cum_tokens = 398
+cum_tokens = 237
 
 [batches.content]
 kind = "fs"
@@ -166,11 +114,11 @@ parent = "packages/crypto"
 entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
-position = 10
+position = 8
 key = 'Fs(DirListing { dir: "packages/lib" })'
 descriptor = "listing of 'packages/lib'"
 cost_tokens = 26
-cum_tokens = 424
+cum_tokens = 263
 
 [batches.content]
 kind = "fs"
@@ -180,11 +128,11 @@ parent = "packages/lib"
 entries = ["README.md", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
-position = 11
+position = 9
 key = 'Fs(DirListing { dir: "packages/lib/src" })'
 descriptor = "listing of 'packages/lib/src'"
 cost_tokens = 16
-cum_tokens = 440
+cum_tokens = 279
 
 [batches.content]
 kind = "fs"
@@ -194,11 +142,11 @@ parent = "packages/lib/src"
 entries = ["api", "crypto", "files", "index.ts", "notes"]
 
 [[batches]]
-position = 12
+position = 10
 key = 'Fs(DirListing { dir: "packages/lib/src/files" })'
 descriptor = "listing of 'packages/lib/src/files'"
 cost_tokens = 5
-cum_tokens = 445
+cum_tokens = 284
 
 [batches.content]
 kind = "fs"
@@ -208,11 +156,11 @@ parent = "packages/lib/src/files"
 entries = ["files.models.ts"]
 
 [[batches]]
-position = 13
+position = 11
 key = 'Typescript(ExportNames { file: "packages/lib/src/index.ts" })'
 descriptor = "export names surface in packages/lib/src/index.ts"
 cost_tokens = 10
-cum_tokens = 455
+cum_tokens = 294
 
 [batches.content]
 kind = "lines"
@@ -234,11 +182,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 12
 key = 'Fs(DirListing { dir: "packages/cli" })'
 descriptor = "listing of 'packages/cli'"
 cost_tokens = 29
-cum_tokens = 484
+cum_tokens = 323
 
 [batches.content]
 kind = "fs"
@@ -248,11 +196,11 @@ parent = "packages/cli"
 entries = ["README.md", "bin", "build.config.ts", "eslint.config.js", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
-position = 15
+position = 13
 key = 'Fs(DirListing { dir: "packages/cli/bin" })'
 descriptor = "listing of 'packages/cli/bin'"
 cost_tokens = 5
-cum_tokens = 489
+cum_tokens = 328
 
 [batches.content]
 kind = "fs"
@@ -262,11 +210,37 @@ parent = "packages/cli/bin"
 entries = ["enclosed.mjs"]
 
 [[batches]]
-position = 16
+position = 14
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 110
+cum_tokens = 438
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 26
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
 key = 'Fs(DirListing { dir: "packages/app-server/src" })'
 descriptor = "listing of 'packages/app-server/src'"
 cost_tokens = 21
-cum_tokens = 510
+cum_tokens = 459
 
 [batches.content]
 kind = "fs"
@@ -276,11 +250,11 @@ parent = "packages/app-server/src"
 entries = ["index.cloudflare.ts", "index.node.ts", "modules", "reset.d.ts", "scripts"]
 
 [[batches]]
-position = 17
+position = 16
 key = 'Fs(DirListing { dir: "packages/cli/src" })'
 descriptor = "listing of 'packages/cli/src'"
 cost_tokens = 21
-cum_tokens = 531
+cum_tokens = 480
 
 [batches.content]
 kind = "fs"
@@ -290,11 +264,11 @@ parent = "packages/cli/src"
 entries = ["cli.ts", "config", "create-note", "files", "shared", "view-note"]
 
 [[batches]]
-position = 18
+position = 17
 key = 'Fs(DirListing { dir: "packages/cli/src/shared" })'
 descriptor = "listing of 'packages/cli/src/shared'"
 cost_tokens = 10
-cum_tokens = 541
+cum_tokens = 490
 
 [batches.content]
 kind = "fs"
@@ -304,11 +278,11 @@ parent = "packages/cli/src/shared"
 entries = ["cli.models.ts", "http.models.ts"]
 
 [[batches]]
-position = 19
+position = 18
 key = 'Fs(DirListing { dir: "packages/cli/src/files" })'
 descriptor = "listing of 'packages/cli/src/files'"
 cost_tokens = 11
-cum_tokens = 552
+cum_tokens = 501
 
 [batches.content]
 kind = "fs"
@@ -318,11 +292,11 @@ parent = "packages/cli/src/files"
 entries = ["files.services.test.ts", "files.services.ts"]
 
 [[batches]]
-position = 20
+position = 19
 key = 'Fs(DirListing { dir: "packages/cli/src/view-note" })'
 descriptor = "listing of 'packages/cli/src/view-note'"
 cost_tokens = 12
-cum_tokens = 564
+cum_tokens = 513
 
 [batches.content]
 kind = "fs"
@@ -332,11 +306,11 @@ parent = "packages/cli/src/view-note"
 entries = ["view-note.command.ts", "view-note.models.ts"]
 
 [[batches]]
-position = 21
+position = 20
 key = 'Fs(DirListing { dir: "packages/app-server/src/modules" })'
 descriptor = "listing of 'packages/app-server/src/modules'"
 cost_tokens = 15
-cum_tokens = 579
+cum_tokens = 528
 
 [batches.content]
 kind = "fs"
@@ -344,6 +318,32 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "packages/app-server/src/modules"
 entries = ["app", "notes", "shared", "storage", "tasks"]
+
+[[batches]]
+position = 21
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 51
+cum_tokens = 579
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 12
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 22

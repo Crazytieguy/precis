@@ -7,30 +7,30 @@ Score(3000)=0.676 I=0.875 C=0.522 ns_rows≤3K=18/46 (reached=11 partial=1 missi
 | walker |  | 61 | 27 | [features] in Cargo.toml |  |  | 1.000 |
 | ns | 83 |  | 49 | src/ module listing | 1.2 |  | 0.606 |
 | walker |  | 128 | 67 | README headline in README.md |  |  | 0.608 |
-| walker |  | 172 | 44 | headings outline in README.md |  |  | 0.608 |
 | ns | 173 |  | 90 | tests/ top-level listing | 1.3 |  | 0.419 |
-| ns | 277 |  | 104 | test-support subdirectory listings | 1.4 |  | 0.330 |
-| ns | 304 |  | 27 | Cargo.toml feature flags | 1.5 |  | 0.366 |
-| walker |  | 337 | 165 | [package] in Cargo.toml |  |  | 0.376 |
-| walker |  | 411 | 74 | README.md section #0 |  |  | 0.378 |
-| walker |  | 460 | 49 | listing of 'src' |  |  | 0.584 |
-| walker |  | 468 | 8 | listing of '.github' |  |  | 0.584 |
-| ns | 469 |  | 165 | Cargo.toml package identity | 1.6 |  | 0.638 |
-| walker |  | 472 | 4 | listing of '.github/workflows' |  |  | 0.638 |
-| ns | 510 |  | 41 | README pitch sentence | 1.7 |  | 0.645 |
-| walker |  | 562 | 90 | pub-item names surface in src/lib.rs |  |  | 0.646 |
-| walker |  | 562 | 0 | pub item at src/lib.rs:468 |  |  | 0.646 |
-| walker |  | 575 | 13 | pub item at src/lib.rs:650 |  |  | 0.646 |
-| walker |  | 601 | 26 | pub item at src/lib.rs:390 |  |  | 0.646 |
-| ns | 620 |  | 110 | Cargo.toml dependencies | 1.8 |  | 0.618 |
-| walker |  | 630 | 29 | pub item at src/lib.rs:415 |  |  | 0.618 |
-| walker |  | 640 | 10 | pub item body at src/lib.rs:650 body 651 |  |  | 0.618 |
-| ns | 673 |  | 53 | Misc root config: toolchain, gitignore, funding, pin | 1.9 |  | 0.592 |
-| walker |  | 730 | 90 | listing of 'tests' |  |  | 0.767 |
-| walker |  | 890 | 160 | pub item at src/lib.rs:616 |  |  | 0.767 |
-| ns | 898 |  | 225 | Cargo.toml dev-dependencies + docs.rs metadata | 1.10 |  | 0.695 |
-| ns | 933 |  | 35 | README install snippet | 1.11 |  | 0.703 |
-| walker |  | 972 | 82 | macro_export names across src |  |  | 0.703 |
+| walker |  | 177 | 49 | listing of 'src' |  |  | 0.696 |
+| walker |  | 185 | 8 | listing of '.github' |  |  | 0.696 |
+| walker |  | 189 | 4 | listing of '.github/workflows' |  |  | 0.696 |
+| ns | 277 |  | 104 | test-support subdirectory listings | 1.4 |  | 0.549 |
+| walker |  | 279 | 90 | pub-item names surface in src/lib.rs |  |  | 0.550 |
+| walker |  | 279 | 0 | pub item at src/lib.rs:468 |  |  | 0.550 |
+| walker |  | 292 | 13 | pub item at src/lib.rs:650 |  |  | 0.550 |
+| ns | 304 |  | 27 | Cargo.toml feature flags | 1.5 |  | 0.569 |
+| walker |  | 318 | 26 | pub item at src/lib.rs:390 |  |  | 0.569 |
+| walker |  | 347 | 29 | pub item at src/lib.rs:415 |  |  | 0.570 |
+| walker |  | 357 | 10 | pub item body at src/lib.rs:650 body 651 |  |  | 0.570 |
+| walker |  | 401 | 44 | headings outline in README.md |  |  | 0.570 |
+| ns | 469 |  | 165 | Cargo.toml package identity | 1.6 |  | 0.512 |
+| walker |  | 491 | 90 | listing of 'tests' |  |  | 0.721 |
+| ns | 510 |  | 41 | README pitch sentence | 1.7 |  | 0.726 |
+| ns | 620 |  | 110 | Cargo.toml dependencies | 1.8 |  | 0.694 |
+| walker |  | 651 | 160 | pub item at src/lib.rs:616 |  |  | 0.695 |
+| ns | 673 |  | 53 | Misc root config: toolchain, gitignore, funding, pin | 1.9 |  | 0.666 |
+| walker |  | 816 | 165 | [package] in Cargo.toml |  |  | 0.764 |
+| walker |  | 898 | 82 | macro_export names across src |  |  | 0.692 |
+| ns | 898 |  | 225 | Cargo.toml dev-dependencies + docs.rs metadata | 1.10 |  | 0.692 |
+| ns | 933 |  | 35 | README install snippet | 1.11 |  | 0.676 |
+| walker |  | 972 | 74 | README.md section #0 |  |  | 0.703 |
 | ns | 1071 |  | 138 | lib.rs module declarations + extern crate | 1.12 |  | 0.641 |
 | walker |  | 1082 | 110 | [dependencies] in Cargo.toml |  |  | 0.678 |
 | ns | 1291 |  | 220 | README no-std support section | 1.13 |  | 0.634 |

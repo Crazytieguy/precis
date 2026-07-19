@@ -59,10 +59,24 @@ kind = "full"
 
 [[batches]]
 position = 4
+key = 'Fs(DirListing { dir: "spec" })'
+descriptor = "listing of 'spec'"
+cost_tokens = 58
+cum_tokens = 146
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "spec"
+entries = ["class_spec.lua", "classes_spec.lua", "default_methods_spec.lua", "instances_spec.lua", "metamethods_lua_5_2.lua", "metamethods_lua_5_3.lua", "metamethods_spec.lua", "mixins_spec.lua"]
+
+[[batches]]
+position = 5
 key = 'Lua(ModuleIdentity { file: "middleclass.lua" })'
 descriptor = "lua module identity in middleclass.lua"
 cost_tokens = 65
-cum_tokens = 153
+cum_tokens = 211
 
 [batches.content]
 kind = "lines"
@@ -76,11 +90,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 5
+position = 6
 key = 'Markdown(HeadingsOutline { file: "UPDATING.md" })'
 descriptor = "headings outline in UPDATING.md"
 cost_tokens = 46
-cum_tokens = 199
+cum_tokens = 257
 
 [batches.content]
 kind = "lines"
@@ -118,11 +132,119 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 7
+key = 'Fs(DirListing { dir: "rockspecs" })'
+descriptor = "listing of 'rockspecs'"
+cost_tokens = 80
+cum_tokens = 337
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "rockspecs"
+entries = ["middleclass-3.0-0.rockspec", "middleclass-3.1-0.rockspec", "middleclass-3.2-0.rockspec", "middleclass-4.0-0.rockspec", "middleclass-4.1-0.rockspec", "middleclass-4.1.1-0.rockspec"]
+
+[[batches]]
+position = 8
+key = 'Lua(DeclNames { file: "performance/run.lua" })'
+descriptor = "lua decl names surface in performance/run.lua"
+cost_tokens = 25
+cum_tokens = 362
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "performance/run.lua"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "performance/run.lua"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "performance/run.lua"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "performance/run.lua"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Lua(Decl { file: "performance/run.lua", start_line: 19 })'
+descriptor = "lua decl at performance/run.lua:19"
+cost_tokens = 0
+cum_tokens = 362
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "performance/run.lua"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "performance/run.lua"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'Lua(Decl { file: "performance/run.lua", start_line: 37 })'
+descriptor = "lua decl at performance/run.lua:37"
+cost_tokens = 0
+cum_tokens = 362
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "performance/run.lua"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "performance/run.lua"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 81
-cum_tokens = 280
+cum_tokens = 443
 
 [batches.content]
 kind = "lines"
@@ -219,128 +341,6 @@ kind = "ellipsis"
 path = "README.md"
 start = 77
 end = 77
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "spec" })'
-descriptor = "listing of 'spec'"
-cost_tokens = 58
-cum_tokens = 338
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "spec"
-entries = ["class_spec.lua", "classes_spec.lua", "default_methods_spec.lua", "instances_spec.lua", "metamethods_lua_5_2.lua", "metamethods_lua_5_3.lua", "metamethods_spec.lua", "mixins_spec.lua"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "rockspecs" })'
-descriptor = "listing of 'rockspecs'"
-cost_tokens = 80
-cum_tokens = 418
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "rockspecs"
-entries = ["middleclass-3.0-0.rockspec", "middleclass-3.1-0.rockspec", "middleclass-3.2-0.rockspec", "middleclass-4.0-0.rockspec", "middleclass-4.1-0.rockspec", "middleclass-4.1.1-0.rockspec"]
-
-[[batches]]
-position = 9
-key = 'Lua(DeclNames { file: "performance/run.lua" })'
-descriptor = "lua decl names surface in performance/run.lua"
-cost_tokens = 25
-cum_tokens = 443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "performance/run.lua"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "performance/run.lua"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "performance/run.lua"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "performance/run.lua"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 10
-key = 'Lua(Decl { file: "performance/run.lua", start_line: 19 })'
-descriptor = "lua decl at performance/run.lua:19"
-cost_tokens = 0
-cum_tokens = 443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "performance/run.lua"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "performance/run.lua"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 11
-key = 'Lua(Decl { file: "performance/run.lua", start_line: 37 })'
-descriptor = "lua decl at performance/run.lua:37"
-cost_tokens = 0
-cum_tokens = 443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "performance/run.lua"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "performance/run.lua"
-start = 38
-end = 38
 
 [batches.content.spans.render]
 kind = "ellipsis"

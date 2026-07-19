@@ -6,29 +6,29 @@ Score(3000)=0.667 I=0.885 C=0.502 ns_rows≤3K=18/46 (reached=9 partial=0 missin
 | ns | 40 |  | 40 | Repo root listing | 1.1 |  | 1.000 |
 | ns | 52 |  | 12 | README title | 1.2 |  | 0.956 |
 | walker |  | 55 | 15 | listing of 'contribute' |  |  | 0.958 |
-| ns | 105 |  | 53 | go.mod module identity | 1.3 |  | 0.797 |
-| walker |  | 118 | 63 | README headline in README.md |  |  | 0.833 |
-| walker |  | 142 | 24 | README.md section #0 |  |  | 0.833 |
-| walker |  | 150 | 8 | listing of 'contribute/conf' |  |  | 0.833 |
-| walker |  | 177 | 27 | go decl names surface in main.go |  |  | 0.834 |
-| walker |  | 177 | 0 | go decl at main.go:14 |  |  | 0.834 |
-| walker |  | 180 | 3 | listing of '.github' |  |  | 0.834 |
-| walker |  | 188 | 8 | listing of '.github/workflows' |  |  | 0.835 |
-| ns | 224 |  | 119 | Top package-dir listings (cmd/, internal/, sdk/, examples/, contribute/) | 2.1 |  | 0.491 |
-| walker |  | 342 | 154 | YAML config at .github/workflows/ci.yml |  |  | 0.491 |
-| walker |  | 366 | 24 | listing of 'sdk' |  |  | 0.537 |
-| ns | 377 |  | 153 | internal/{agent,auth,builtin,config,hooks} file listings | 2.2 |  | 0.393 |
-| walker |  | 406 | 40 | README headline in sdk/README.md |  |  | 0.393 |
-| walker |  | 436 | 30 | listing of 'internal' |  |  | 0.512 |
-| walker |  | 444 | 8 | listing of 'internal/session' |  |  | 0.512 |
-| walker |  | 456 | 12 | listing of 'internal/agent' |  |  | 0.515 |
-| walker |  | 469 | 13 | listing of 'internal/tokens' |  |  | 0.515 |
-| ns | 474 |  | 97 | internal/{models,session,tokens,tools} + models subpackage listings | 2.3 |  | 0.460 |
-| walker |  | 505 | 36 | listing of 'cmd' |  |  | 0.566 |
-| walker |  | 522 | 17 | listing of 'internal/auth' |  |  | 0.575 |
-| ns | 565 |  | 91 | internal/ui/{.,progress} file listing | 2.4 |  | 0.521 |
-| walker |  | 575 | 53 | go module identity in go.mod |  |  | 0.568 |
-| walker |  | 581 | 6 | listing of 'examples' |  |  | 0.597 |
+| walker |  | 63 | 8 | listing of 'contribute/conf' |  |  | 0.958 |
+| walker |  | 90 | 27 | go decl names surface in main.go |  |  | 0.959 |
+| walker |  | 90 | 0 | go decl at main.go:14 |  |  | 0.959 |
+| walker |  | 93 | 3 | listing of '.github' |  |  | 0.959 |
+| walker |  | 101 | 8 | listing of '.github/workflows' |  |  | 0.961 |
+| ns | 105 |  | 53 | go.mod module identity | 1.3 |  | 0.799 |
+| ns | 224 |  | 119 | Top package-dir listings (cmd/, internal/, sdk/, examples/, contribute/) | 2.1 |  | 0.471 |
+| walker |  | 255 | 154 | YAML config at .github/workflows/ci.yml |  |  | 0.471 |
+| walker |  | 279 | 24 | listing of 'sdk' |  |  | 0.518 |
+| walker |  | 309 | 30 | listing of 'internal' |  |  | 0.682 |
+| walker |  | 317 | 8 | listing of 'internal/session' |  |  | 0.682 |
+| walker |  | 329 | 12 | listing of 'internal/agent' |  |  | 0.683 |
+| walker |  | 342 | 13 | listing of 'internal/tokens' |  |  | 0.684 |
+| ns | 377 |  | 153 | internal/{agent,auth,builtin,config,hooks} file listings | 2.2 |  | 0.502 |
+| walker |  | 378 | 36 | listing of 'cmd' |  |  | 0.625 |
+| walker |  | 395 | 17 | listing of 'internal/auth' |  |  | 0.636 |
+| walker |  | 458 | 63 | README headline in README.md |  |  | 0.648 |
+| ns | 474 |  | 97 | internal/{models,session,tokens,tools} + models subpackage listings | 2.3 |  | 0.575 |
+| walker |  | 482 | 24 | README.md section #0 |  |  | 0.575 |
+| walker |  | 535 | 53 | go module identity in go.mod |  |  | 0.627 |
+| walker |  | 541 | 6 | listing of 'examples' |  |  | 0.659 |
+| ns | 565 |  | 91 | internal/ui/{.,progress} file listing | 2.4 |  | 0.597 |
+| walker |  | 581 | 40 | README headline in sdk/README.md |  |  | 0.597 |
 | walker |  | 616 | 35 | listing of 'internal/models' |  |  | 0.640 |
 | walker |  | 621 | 5 | listing of 'internal/models/anthropic' |  |  | 0.648 |
 | walker |  | 626 | 5 | listing of 'internal/models/gemini' |  |  | 0.657 |

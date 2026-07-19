@@ -17,16 +17,16 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | ns | 410 |  | 72 | README 'Using' — how to build it in | 1.5 |  | 0.501 |
 | ns | 435 |  | 25 | docs/ listing | 2.1 |  | 0.569 |
 | ns | 456 |  | 21 | docs/assets/ listing | 2.2 |  | 0.599 |
+| walker |  | 462 | 89 | c header banner in neco.h |  |  | 0.599 |
 | ns | 470 |  | 14 | docs/tools/ listing | 2.3 |  | 0.578 |
-| ns | 486 |  | 16 | docs/tools/doxygen-md/ listing | 2.4 |  | 0.552 |
-| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.494 |
-| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.605 |
-| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.569 |
-| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.577 |
-| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.580 |
-| walker |  | 800 | 427 | README headline in README.md |  |  | 0.686 |
-| walker |  | 889 | 89 | c header banner in neco.h |  |  | 0.686 |
-| walker |  | 903 | 14 | listing of 'docs/tools' |  |  | 0.707 |
+| walker |  | 476 | 14 | listing of 'docs/tools' |  |  | 0.623 |
+| ns | 486 |  | 16 | docs/tools/doxygen-md/ listing | 2.4 |  | 0.595 |
+| ns | 537 |  | 51 | examples/ listing | 2.5 |  | 0.532 |
+| ns | 663 |  | 126 | tests/ listing | 2.6 |  | 0.630 |
+| ns | 705 |  | 42 | deps/ listing | 2.7 |  | 0.592 |
+| ns | 720 |  | 15 | .github/ listing | 2.8 |  | 0.599 |
+| ns | 724 |  | 4 | .github/workflows/ listing | 2.9 |  | 0.601 |
+| walker |  | 903 | 427 | README headline in README.md |  |  | 0.707 |
 | walker |  | 945 | 42 | listing of 'deps' |  |  | 0.770 |
 | ns | 1023 |  | 299 | neco.h — Basic operations group | 3.1 |  | 0.695 |
 | walker |  | 1178 | 233 | headings outline in README.md |  |  | 0.696 |

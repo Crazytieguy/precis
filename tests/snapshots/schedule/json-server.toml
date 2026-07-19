@@ -19,10 +19,38 @@ entries = [".gitattributes", ".github", ".gitignore", ".husky", ".oxfmtrc.json",
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "public" })'
+descriptor = "listing of 'public'"
+cost_tokens = 4
+cum_tokens = 52
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "public"
+entries = ["test.html"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "views" })'
+descriptor = "listing of 'views'"
+cost_tokens = 4
+cum_tokens = 56
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "views"
+entries = ["index.html"]
+
+[[batches]]
+position = 4
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 11
-cum_tokens = 59
+cum_tokens = 67
 
 [batches.content]
 kind = "lines"
@@ -34,34 +62,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "public" })'
-descriptor = "listing of 'public'"
-cost_tokens = 4
-cum_tokens = 63
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "public"
-entries = ["test.html"]
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "views" })'
-descriptor = "listing of 'views'"
-cost_tokens = 4
-cum_tokens = 67
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "views"
-entries = ["index.html"]
 
 [[batches]]
 position = 5
@@ -99,28 +99,10 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 34
-cum_tokens = 170
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 72
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'Fs(DirListing { dir: ".husky" })'
 descriptor = "listing of '.husky'"
 cost_tokens = 5
-cum_tokens = 175
+cum_tokens = 141
 
 [batches.content]
 kind = "fs"
@@ -130,11 +112,11 @@ parent = ".husky"
 entries = ["pre-commit"]
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 183
+cum_tokens = 149
 
 [batches.content]
 kind = "fs"
@@ -144,11 +126,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 192
+cum_tokens = 158
 
 [batches.content]
 kind = "fs"
@@ -158,11 +140,11 @@ parent = ".github/workflows"
 entries = ["node.js.yml", "publish.yml"]
 
 [[batches]]
-position = 10
+position = 9
 key = 'Yaml(Whole { file: ".github/workflows/node.js.yml" })'
 descriptor = "YAML config at .github/workflows/node.js.yml"
 cost_tokens = 196
-cum_tokens = 388
+cum_tokens = 354
 
 [batches.content]
 kind = "lines"
@@ -176,11 +158,71 @@ end = 18
 kind = "full"
 
 [[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "fixtures" })'
+descriptor = "listing of 'fixtures'"
+cost_tokens = 9
+cum_tokens = 363
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "fixtures"
+entries = ["db.json", "db.json5"]
+
+[[batches]]
 position = 11
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 71
+cum_tokens = 434
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["adapters", "app.test.ts", "app.ts", "bin.ts", "matches-where.test.ts", "matches-where.ts", "paginate.test.ts", "paginate.ts", "parse-where.test.ts", "parse-where.ts", "random-id.ts", "service.test.ts", "service.ts", "where-operators.ts"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "src/adapters" })'
+descriptor = "listing of 'src/adapters'"
+cost_tokens = 17
+cum_tokens = 451
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/adapters"
+entries = ["normalized-adapter.test.ts", "normalized-adapter.ts", "observer.ts"]
+
+[[batches]]
+position = 13
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 34
+cum_tokens = 485
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 72
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 69
-cum_tokens = 457
+cum_tokens = 554
 
 [batches.content]
 kind = "lines"
@@ -192,48 +234,6 @@ end = 33
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "fixtures" })'
-descriptor = "listing of 'fixtures'"
-cost_tokens = 9
-cum_tokens = 466
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "fixtures"
-entries = ["db.json", "db.json5"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 71
-cum_tokens = 537
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["adapters", "app.test.ts", "app.ts", "bin.ts", "matches-where.test.ts", "matches-where.ts", "paginate.test.ts", "paginate.ts", "parse-where.test.ts", "parse-where.ts", "random-id.ts", "service.test.ts", "service.ts", "where-operators.ts"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "src/adapters" })'
-descriptor = "listing of 'src/adapters'"
-cost_tokens = 17
-cum_tokens = 554
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/adapters"
-entries = ["normalized-adapter.test.ts", "normalized-adapter.ts", "observer.ts"]
 
 [[batches]]
 position = 15

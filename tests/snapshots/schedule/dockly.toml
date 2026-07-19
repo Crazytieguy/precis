@@ -33,10 +33,38 @@ entries = ["modes.js", "node.version.js"]
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: "hooks" })'
+descriptor = "listing of 'hooks'"
+cost_tokens = 24
+cum_tokens = 105
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "hooks"
+entries = ["containers.hook.js", "images.hook.js", "services.hook.js", "shell.hook.js"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: ".vscode" })'
+descriptor = "listing of '.vscode'"
+cost_tokens = 4
+cum_tokens = 109
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".vscode"
+entries = ["launch.json"]
+
+[[batches]]
+position = 5
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 66
-cum_tokens = 147
+cum_tokens = 175
 
 [batches.content]
 kind = "lines"
@@ -58,57 +86,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "hooks" })'
-descriptor = "listing of 'hooks'"
-cost_tokens = 24
-cum_tokens = 171
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "hooks"
-entries = ["containers.hook.js", "images.hook.js", "services.hook.js", "shell.hook.js"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: ".vscode" })'
-descriptor = "listing of '.vscode'"
-cost_tokens = 4
-cum_tokens = 175
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".vscode"
-entries = ["launch.json"]
-
-[[batches]]
 position = 6
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 34
-cum_tokens = 209
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 21
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'Fs(DirListing { dir: ".devcontainer" })'
 descriptor = "listing of '.devcontainer'"
 cost_tokens = 5
-cum_tokens = 214
+cum_tokens = 180
 
 [batches.content]
 kind = "fs"
@@ -118,11 +100,11 @@ parent = ".devcontainer"
 entries = ["devcontainer.json"]
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: "widgets" })'
 descriptor = "listing of 'widgets'"
 cost_tokens = 37
-cum_tokens = 251
+cum_tokens = 217
 
 [batches.content]
 kind = "fs"
@@ -132,37 +114,11 @@ parent = "widgets"
 entries = ["actionStatus.widget.js", "actionsMenu.widget.js", "containers", "help.widget.js", "images", "searchInput.widget.js", "services", "toolbar.widget.js"]
 
 [[batches]]
-position = 9
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 140
-cum_tokens = 391
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 27
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
+position = 8
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 39
-cum_tokens = 430
+cum_tokens = 256
 
 [batches.content]
 kind = "fs"
@@ -172,11 +128,11 @@ parent = "src"
 entries = ["assetsLoader.js", "baseWidget.js", "cli.js", "dockerUtil.js", "enum.js", "grid.config.js", "screen.js", "themes", "widgetsTemplates"]
 
 [[batches]]
-position = 11
+position = 9
 key = 'Fs(DirListing { dir: "src/themes" })'
 descriptor = "listing of 'src/themes'"
 cost_tokens = 9
-cum_tokens = 439
+cum_tokens = 265
 
 [batches.content]
 kind = "fs"
@@ -186,11 +142,11 @@ parent = "src/themes"
 entries = ["styles.js", "theme.selector.js"]
 
 [[batches]]
-position = 12
+position = 10
 key = 'Fs(DirListing { dir: "src/widgetsTemplates" })'
 descriptor = "listing of 'src/widgetsTemplates'"
 cost_tokens = 31
-cum_tokens = 470
+cum_tokens = 296
 
 [batches.content]
 kind = "fs"
@@ -200,11 +156,11 @@ parent = "src/widgetsTemplates"
 entries = ["base.hook.template.js", "help.widget.template.js", "info.widget.template.js", "list.widget.template.js", "logs.widget.template.js"]
 
 [[batches]]
-position = 13
+position = 11
 key = 'Fs(DirListing { dir: "widgets/images" })'
 descriptor = "listing of 'widgets/images'"
 cost_tokens = 19
-cum_tokens = 489
+cum_tokens = 315
 
 [batches.content]
 kind = "fs"
@@ -214,11 +170,11 @@ parent = "widgets/images"
 entries = ["imageInfo.widget.js", "imageList.widget.js", "imageUtilization.widget.js"]
 
 [[batches]]
-position = 14
+position = 12
 key = 'Typescript(ExportNames { file: "lib/node.version.js" })'
 descriptor = "export names surface in lib/node.version.js"
 cost_tokens = 10
-cum_tokens = 499
+cum_tokens = 325
 
 [batches.content]
 kind = "lines"
@@ -240,11 +196,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 13
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 47 })'
 descriptor = "module item at index.js:47"
 cost_tokens = 14
-cum_tokens = 513
+cum_tokens = 339
 
 [batches.content]
 kind = "lines"
@@ -266,11 +222,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 14
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 72 })'
 descriptor = "module item at index.js:72"
 cost_tokens = 13
-cum_tokens = 526
+cum_tokens = 352
 
 [batches.content]
 kind = "lines"
@@ -292,11 +248,11 @@ end = 73
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 15
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 86 })'
 descriptor = "module item at index.js:86"
 cost_tokens = 13
-cum_tokens = 539
+cum_tokens = 365
 
 [batches.content]
 kind = "lines"
@@ -318,11 +274,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 16
 key = 'Typescript(ExportNames { file: "lib/modes.js" })'
 descriptor = "export names surface in lib/modes.js"
 cost_tokens = 12
-cum_tokens = 551
+cum_tokens = 377
 
 [batches.content]
 kind = "lines"
@@ -344,11 +300,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 17
 key = 'Typescript(ExportNames { file: "src/cli.js" })'
 descriptor = "export names surface in src/cli.js"
 cost_tokens = 12
-cum_tokens = 563
+cum_tokens = 389
 
 [batches.content]
 kind = "lines"
@@ -362,11 +318,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 20
+position = 18
 key = 'Typescript(ExportNames { file: "src/dockerUtil.js" })'
 descriptor = "export names surface in src/dockerUtil.js"
 cost_tokens = 20
-cum_tokens = 583
+cum_tokens = 409
 
 [batches.content]
 kind = "lines"
@@ -396,11 +352,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 19
 key = 'Typescript(Export { file: "src/dockerUtil.js", start_line: 5 })'
 descriptor = "export at src/dockerUtil.js:5"
 cost_tokens = 0
-cum_tokens = 583
+cum_tokens = 409
 
 [batches.content]
 kind = "lines"
@@ -422,11 +378,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 20
 key = 'Typescript(ExportNames { file: "src/screen.js" })'
 descriptor = "export names surface in src/screen.js"
 cost_tokens = 20
-cum_tokens = 603
+cum_tokens = 429
 
 [batches.content]
 kind = "lines"
@@ -456,11 +412,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 23
+position = 21
 key = 'Typescript(Export { file: "src/screen.js", start_line: 18 })'
 descriptor = "export at src/screen.js:18"
 cost_tokens = 0
-cum_tokens = 603
+cum_tokens = 429
 
 [batches.content]
 kind = "lines"
@@ -482,11 +438,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 22
 key = 'Typescript(ModuleItem { file: "index.js", start_line: 17 })'
 descriptor = "module item at index.js:17"
 cost_tokens = 14
-cum_tokens = 617
+cum_tokens = 443
 
 [batches.content]
 kind = "lines"
@@ -500,11 +456,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 25
+position = 23
 key = 'Fs(DirListing { dir: "widgets/services" })'
 descriptor = "listing of 'widgets/services'"
 cost_tokens = 31
-cum_tokens = 648
+cum_tokens = 474
 
 [batches.content]
 kind = "fs"
@@ -514,11 +470,11 @@ parent = "widgets/services"
 entries = ["servicesInfo.widget.js", "servicesList.widget.js", "servicesLogs.widget.js", "servicesStatus.widget.js", "servicesVsImages.widget.js"]
 
 [[batches]]
-position = 26
+position = 24
 key = 'Typescript(ExportMember { file: "src/dockerUtil.js", start_line: 5, member_start_line: 6 })'
 descriptor = "export member at src/dockerUtil.js:5 member 6"
 cost_tokens = 10
-cum_tokens = 658
+cum_tokens = 484
 
 [batches.content]
 kind = "lines"
@@ -540,11 +496,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 25
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 48 })'
 descriptor = "export member at src/screen.js:18 member 48"
 cost_tokens = 10
-cum_tokens = 668
+cum_tokens = 494
 
 [batches.content]
 kind = "lines"
@@ -566,11 +522,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 26
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 180 })'
 descriptor = "export member at src/screen.js:18 member 180"
 cost_tokens = 10
-cum_tokens = 678
+cum_tokens = 504
 
 [batches.content]
 kind = "lines"
@@ -592,11 +548,11 @@ end = 181
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 27
 key = 'Typescript(ExportMember { file: "src/screen.js", start_line: 18, member_start_line: 192 })'
 descriptor = "export member at src/screen.js:18 member 192"
 cost_tokens = 10
-cum_tokens = 688
+cum_tokens = 514
 
 [batches.content]
 kind = "lines"
@@ -618,11 +574,11 @@ end = 193
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 28
 key = 'Typescript(ExportBody { file: "src/screen.js", start_line: 18, body_start_line: 193 })'
 descriptor = "export body at src/screen.js:18 body 193"
 cost_tokens = 9
-cum_tokens = 697
+cum_tokens = 523
 
 [batches.content]
 kind = "lines"
@@ -631,6 +587,50 @@ kind = "lines"
 path = "src/screen.js"
 start = 193
 end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 34
+cum_tokens = 557
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 21
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 140
+cum_tokens = 697
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 27
+end = 28
 
 [batches.content.spans.render]
 kind = "full"

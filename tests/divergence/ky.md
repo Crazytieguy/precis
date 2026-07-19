@@ -5,32 +5,32 @@ Score(3000)=0.748 I=0.881 C=0.635 ns_rows≤3K=17/43 (reached=9 partial=1 missin
 | walker |  | 40 | 40 | listing of '.' |  |  | 1.000 |
 | ns | 40 |  | 40 | Root directory listing | 1.1 |  | 1.000 |
 | walker |  | 52 | 12 | listing of 'media' |  |  | 1.000 |
-| walker |  | 123 | 71 | package identity in package.json |  |  | 1.000 |
-| walker |  | 139 | 16 | listing of 'source' |  |  | 1.000 |
-| ns | 145 |  | 105 | package.json — identity | 1.2 |  | 0.843 |
-| walker |  | 151 | 12 | export names surface in source/index.ts |  |  | 0.843 |
-| walker |  | 151 | 0 | export at source/index.ts:36 |  |  | 0.843 |
-| walker |  | 172 | 21 | export at source/index.ts:10 |  |  | 0.843 |
-| walker |  | 180 | 8 | listing of 'source/core' |  |  | 0.847 |
-| walker |  | 201 | 21 | listing of 'source/errors' |  |  | 0.856 |
-| walker |  | 232 | 31 | package runtime metadata in package.json |  |  | 0.856 |
-| ns | 250 |  | 105 | package.json — scripts | 1.3 |  | 0.708 |
-| walker |  | 265 | 33 | listing of 'source/types' |  |  | 0.731 |
-| walker |  | 303 | 38 | listing of 'source/utils' |  |  | 0.752 |
-| ns | 366 |  | 116 | source/ tree breadth | 1.4 |  | 0.830 |
-| walker |  | 486 | 183 | README headline in readme.md |  |  | 0.847 |
-| ns | 492 |  | 126 | README benefits list | 1.5 |  | 0.849 |
-| walker |  | 552 | 66 | listing of 'test' |  |  | 0.864 |
-| walker |  | 563 | 11 | listing of '.github' |  |  | 0.864 |
-| walker |  | 567 | 4 | listing of '.github/workflows' |  |  | 0.864 |
-| ns | 590 |  | 98 | test/ tree breadth | 2.1 |  | 0.800 |
-| ns | 690 |  | 100 | README top-level (H2) section map | 2.2 |  | 0.751 |
-| ns | 835 |  | 145 | README H3 section map (API + Tips headers) | 2.3 |  | 0.696 |
-| walker |  | 902 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.712 |
-| walker |  | 917 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.712 |
-| ns | 922 |  | 87 | README usage example | 2.4 |  | 0.680 |
-| walker |  | 942 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.680 |
-| walker |  | 958 | 16 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.680 |
+| walker |  | 68 | 16 | listing of 'source' |  |  | 1.000 |
+| walker |  | 80 | 12 | export names surface in source/index.ts |  |  | 1.000 |
+| walker |  | 80 | 0 | export at source/index.ts:36 |  |  | 1.000 |
+| walker |  | 101 | 21 | export at source/index.ts:10 |  |  | 1.000 |
+| walker |  | 109 | 8 | listing of 'source/core' |  |  | 1.000 |
+| walker |  | 130 | 21 | listing of 'source/errors' |  |  | 1.000 |
+| ns | 145 |  | 105 | package.json — identity | 1.2 |  | 0.774 |
+| walker |  | 163 | 33 | listing of 'source/types' |  |  | 0.799 |
+| walker |  | 234 | 71 | package identity in package.json |  |  | 0.874 |
+| ns | 250 |  | 105 | package.json — scripts | 1.3 |  | 0.731 |
+| walker |  | 272 | 38 | listing of 'source/utils' |  |  | 0.752 |
+| walker |  | 338 | 66 | listing of 'test' |  |  | 0.752 |
+| ns | 366 |  | 116 | source/ tree breadth | 1.4 |  | 0.845 |
+| walker |  | 369 | 31 | package runtime metadata in package.json |  |  | 0.845 |
+| walker |  | 380 | 11 | listing of '.github' |  |  | 0.845 |
+| walker |  | 384 | 4 | listing of '.github/workflows' |  |  | 0.845 |
+| ns | 492 |  | 126 | README benefits list | 1.5 |  | 0.764 |
+| ns | 590 |  | 98 | test/ tree breadth | 2.1 |  | 0.721 |
+| ns | 690 |  | 100 | README top-level (H2) section map | 2.2 |  | 0.675 |
+| walker |  | 719 | 335 | YAML config at .github/workflows/main.yml |  |  | 0.691 |
+| walker |  | 734 | 15 | export names surface in source/errors/TimeoutError.ts |  |  | 0.691 |
+| walker |  | 759 | 25 | export at source/errors/TimeoutError.ts:3 |  |  | 0.692 |
+| walker |  | 775 | 16 | export names surface in source/errors/ForceRetryError.ts |  |  | 0.692 |
+| ns | 835 |  | 145 | README H3 section map (API + Tips headers) | 2.3 |  | 0.641 |
+| ns | 922 |  | 87 | README usage example | 2.4 |  | 0.612 |
+| walker |  | 958 | 183 | README headline in readme.md |  |  | 0.680 |
 | walker |  | 977 | 19 | export names surface in source/errors/HTTPError.ts |  |  | 0.680 |
 | walker |  | 1034 | 57 | export at source/errors/HTTPError.ts:5 |  |  | 0.680 |
 | walker |  | 1139 | 105 | package entrypoints in package.json |  |  | 0.680 |

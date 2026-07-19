@@ -5,26 +5,26 @@ Score(3000)=0.649 I=0.861 C=0.489 ns_rows≤3K=21/45 (reached=11 partial=2 missi
 | walker |  | 38 | 38 | listing of '.' |  |  | 1.000 |
 | ns | 38 |  | 38 | Root directory listing | 1.1 |  | 1.000 |
 | walker |  | 42 | 4 | listing of 'build' |  |  | 1.000 |
-| walker |  | 89 | 47 | README headline in README.md |  |  | 1.000 |
-| ns | 110 |  | 72 | src/ and impl/src/ directory listings | 1.2 |  | 0.570 |
-| walker |  | 125 | 36 | [dependencies] in Cargo.toml |  |  | 0.572 |
-| walker |  | 154 | 29 | headings outline in README.md |  |  | 0.572 |
-| walker |  | 173 | 19 | listing of 'impl' |  |  | 0.572 |
-| ns | 191 |  | 81 | tests/ and tests/no-std/ directory listings | 1.3 |  | 0.436 |
-| walker |  | 198 | 25 | listing of 'src' |  |  | 0.483 |
+| walker |  | 61 | 19 | listing of 'impl' |  |  | 1.000 |
+| walker |  | 86 | 25 | listing of 'src' |  |  | 1.000 |
+| ns | 110 |  | 72 | src/ and impl/src/ directory listings | 1.2 |  | 0.632 |
+| walker |  | 133 | 47 | README headline in README.md |  |  | 0.632 |
+| walker |  | 169 | 36 | [dependencies] in Cargo.toml |  |  | 0.634 |
+| ns | 191 |  | 81 | tests/ and tests/no-std/ directory listings | 1.3 |  | 0.483 |
+| walker |  | 198 | 29 | headings outline in README.md |  |  | 0.483 |
 | ns | 207 |  | 16 | build/, .github/, .github/workflows/ listings | 1.4 |  | 0.463 |
 | ns | 257 |  | 50 | Cargo.toml — package identity (name/version/authors) | 1.5 |  | 0.441 |
-| ns | 370 |  | 113 | Cargo.toml — categories/description/docs/edition/keywords/license/repo/rust-version | 1.6 |  | 0.405 |
-| walker |  | 383 | 185 | [package] in Cargo.toml |  |  | 0.569 |
-| ns | 391 |  | 21 | Cargo.toml — [features] header | 1.7 |  | 0.553 |
-| walker |  | 455 | 72 | README.md section #0 |  |  | 0.553 |
-| walker |  | 517 | 62 | mod/use plumbing in src/lib.rs |  |  | 0.553 |
-| walker |  | 525 | 8 | listing of '.github' |  |  | 0.577 |
-| walker |  | 529 | 4 | listing of '.github/workflows' |  |  | 0.598 |
-| ns | 536 |  | 145 | Cargo.toml — std feature doc comment | 1.8 |  | 0.539 |
-| ns | 568 |  | 32 | Cargo.toml — [dependencies] | 1.9 |  | 0.548 |
-| ns | 592 |  | 24 | Cargo.toml — [workspace] | 1.10 |  | 0.556 |
-| walker |  | 601 | 72 | listing of 'tests' |  |  | 0.678 |
+| walker |  | 260 | 62 | mod/use plumbing in src/lib.rs |  |  | 0.442 |
+| walker |  | 268 | 8 | listing of '.github' |  |  | 0.475 |
+| walker |  | 272 | 4 | listing of '.github/workflows' |  |  | 0.502 |
+| walker |  | 344 | 72 | listing of 'tests' |  |  | 0.682 |
+| ns | 370 |  | 113 | Cargo.toml — categories/description/docs/edition/keywords/license/repo/rust-version | 1.6 |  | 0.626 |
+| ns | 391 |  | 21 | Cargo.toml — [features] header | 1.7 |  | 0.608 |
+| walker |  | 529 | 185 | [package] in Cargo.toml |  |  | 0.742 |
+| ns | 536 |  | 145 | Cargo.toml — std feature doc comment | 1.8 |  | 0.669 |
+| ns | 568 |  | 32 | Cargo.toml — [dependencies] | 1.9 |  | 0.674 |
+| ns | 592 |  | 24 | Cargo.toml — [workspace] | 1.10 |  | 0.678 |
+| walker |  | 601 | 72 | README.md section #0 |  |  | 0.678 |
 | walker |  | 648 | 47 | listing of 'impl/src' |  |  | 0.848 |
 | ns | 671 |  | 79 | impl/Cargo.toml — package identity (name/version/authors/description/edition) | 1.11 |  | 0.806 |
 | walker |  | 690 | 42 | pub item at impl/src/lib.rs:40 |  |  | 0.807 |
