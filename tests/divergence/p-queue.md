@@ -90,14 +90,29 @@ Score(3000)=0.503 I=0.789 C=0.321 ns_rows≤3K=21/42 (reached=9 partial=3 missin
 | walker |  | 5696 | 258 | package dev/peer dependencies in package.json |  |  | 0.675 |
 | ns | 5742 |  | 167 | source/index.ts — constructor (defaults merge) | 4.6 | 4.4 | 0.663 |
 | walker |  | 5963 | 267 | readme.md section #35 |  |  | 0.663 |
+| walker |  | 6079 | 116 | readme.md section #18 |  |  | 0.663 |
+| walker |  | 6204 | 125 | readme.md section #11 |  |  | 0.663 |
 | ns | 6314 |  | 572 | source/index.ts — constructor (validation + field assignment) | 4.7 | 4.6 | 0.637 |
-| ns | 6456 |  | 142 | source/index.ts — admission-control getters | 4.8 | 4.5 | 0.627 |
-| ns | 6959 |  | 503 | test/basic.ts — test-name roster (part 1 of 2) | 5.1 |  | 0.608 |
-| ns | 7491 |  | 532 | test/basic.ts — test-name roster (part 2 of 2) | 5.2 | 5.1 | 0.591 |
-| ns | 8122 |  | 631 | test/advanced.ts — test-name roster (part 1 of 2) | 5.3 |  | 0.573 |
-| ns | 8772 |  | 650 | test/advanced.ts — test-name roster (part 2 of 2) | 5.4 | 5.3 | 0.557 |
-| ns | 9271 |  | 499 | test/strict.ts — test-name roster | 5.5 |  | 0.543 |
-| ns | 9451 |  | 180 | test/priority-queue.ts — test-name roster | 5.6 |  | 0.540 |
-| ns | 9578 |  | 127 | test/validation.ts — test-name roster | 5.7 |  | 0.537 |
-| ns | 9750 |  | 172 | test/rate-limit.ts — test-name roster | 5.8 |  | 0.533 |
-| ns | 9937 |  | 187 | test/debug.ts — test-name roster | 5.9 |  | 0.529 |
+| walker |  | 6330 | 126 | readme.md section #17 |  |  | 0.637 |
+| walker |  | 6444 | 114 | export at source/queue.ts:3 |  |  | 0.656 |
+| ns | 6456 |  | 142 | source/index.ts — admission-control getters | 4.8 | 4.5 | 0.645 |
+| walker |  | 6584 | 140 | readme.md section #15 |  |  | 0.645 |
+| walker |  | 6732 | 148 | readme.md section #13 |  |  | 0.645 |
+| walker |  | 6901 | 169 | readme.md section #12 |  |  | 0.645 |
+| ns | 6959 |  | 503 | test/basic.ts — test-name roster (part 1 of 2) | 5.1 |  | 0.626 |
+| walker |  | 7070 | 169 | readme.md section #23 |  |  | 0.626 |
+| ns | 7491 |  | 532 | test/basic.ts — test-name roster (part 2 of 2) | 5.2 | 5.1 | 0.609 |
+| walker |  | 7498 | 428 | readme.md section #34 |  |  | 0.609 |
+| walker |  | 7922 | 424 | readme.md section #36 |  |  | 0.609 |
+| ns | 8122 |  | 631 | test/advanced.ts — test-name roster (part 1 of 2) | 5.3 |  | 0.590 |
+| walker |  | 8478 | 556 | readme.md section #29 |  |  | 0.590 |
+| walker |  | 8677 | 199 | readme.md section #14 |  |  | 0.590 |
+| ns | 8772 |  | 650 | test/advanced.ts — test-name roster (part 2 of 2) | 5.4 | 5.3 | 0.573 |
+| walker |  | 8909 | 232 | readme.md section #20 |  |  | 0.573 |
+| ns | 9271 |  | 499 | test/strict.ts — test-name roster | 5.5 |  | 0.559 |
+| walker |  | 9380 | 471 | readme.md section #30 |  |  | 0.559 |
+| ns | 9451 |  | 180 | test/priority-queue.ts — test-name roster | 5.6 |  | 0.555 |
+| ns | 9578 |  | 127 | test/validation.ts — test-name roster | 5.7 |  | 0.552 |
+| ns | 9750 |  | 172 | test/rate-limit.ts — test-name roster | 5.8 |  | 0.548 |
+| walker |  | 9841 | 461 | readme.md section #31 |  |  | 0.548 |
+| ns | 9937 |  | 187 | test/debug.ts — test-name roster | 5.9 |  | 0.544 |
