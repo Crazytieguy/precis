@@ -558,6 +558,12 @@ pub(crate) fn build_per_file_content(
 /// every span starts and ends on content. Ellipses superseded by `Full`
 /// coverage are dropped.
 pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> Vec<Span> {
+    // Empty collectors are common (for example, one doc probe per C
+    // declaration). Bail out before indexing every source line: on a giant
+    // flat file, doing that scan once per empty collector is quadratic.
+    if lines.full.is_empty() && lines.ellipses.is_empty() {
+        return Vec::new();
+    }
     let src_lines: Vec<&str> = source.lines().collect();
     let blank = |n: usize| src_lines.get(n - 1).is_some_and(|t| t.trim().is_empty());
     let full: BTreeSet<usize> = lines
