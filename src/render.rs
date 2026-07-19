@@ -541,7 +541,13 @@ fn format_marker_row(indent_depth: usize) -> String {
 
 fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
-    s.push_str(name);
+    for ch in name.chars() {
+        if ch.is_control() {
+            s.extend(ch.escape_default());
+        } else {
+            s.push(ch);
+        }
+    }
     if matches!(kind, EntryKind::Directory) {
         s.push('/');
     }
@@ -723,6 +729,21 @@ mod tests {
         assert_eq!(exact.tokens, 0);
         assert_eq!(exact.bytes, 0);
         assert_eq!(approx_tokens, 0);
+    }
+
+    #[test]
+    fn render_listing_escapes_control_characters_in_names() {
+        let cache = SourceCache::new();
+        let mut tree = RenderedTree::new(stub_dir(), cache);
+        let content = listing(&["name\nwith\ttabs.md"]);
+
+        let cost = tree.marginal_cost(&content);
+        tree.apply(&content, BatchId::new(0), |_| true);
+
+        let rendered = tree.render();
+        assert_eq!(rendered, "name\\nwith\\ttabs.md\n");
+        assert_eq!(cost.bytes, rendered.len());
+        assert_eq!(cost.tokens, tokenizer::count(&rendered));
     }
 
     #[test]
