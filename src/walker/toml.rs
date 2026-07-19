@@ -37,6 +37,11 @@ use super::{
 /// crate identity is mostly inherited from the workspace root.
 const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
+/// In a primary-name collision, manifests that definitely are not a
+/// primary candidate stay behind the equally damped candidates. This is
+/// not promotion: every candidate retains the normal member damp.
+const AMBIGUOUS_SECONDARY_IDENTITY_FACTOR: f64 = WORKSPACE_MEMBER_IDENTITY_FACTOR * 0.7;
+
 const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
 const PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR: f64 = 0.4;
 
@@ -610,7 +615,15 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let m = if let Some(factor) = pyproject_identity_factor(file, ctx) {
         factor
     } else if ctx.is_workspace_member(file) {
-        WORKSPACE_MEMBER_IDENTITY_FACTOR
+        if ctx.rust_state().has_ambiguous_primary_member(ctx.root())
+            && !ctx
+                .rust_state()
+                .is_ambiguous_primary_member(file, ctx.root())
+        {
+            AMBIGUOUS_SECONDARY_IDENTITY_FACTOR
+        } else {
+            WORKSPACE_MEMBER_IDENTITY_FACTOR
+        }
     } else {
         1.0
     };
@@ -859,6 +872,27 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     candidates
 }
 
+/// Case-insensitive Cargo package-name matches for the repository basename,
+/// but only when more than one member matches. The caller uses this explicit
+/// ambiguity state to fail closed instead of letting an exact-case basename
+/// shortcut select one candidate or a definite secondary win a cost tie.
+pub(super) fn ambiguous_primary_workspace_members(
+    root: &Path,
+    members: &HashSet<PathBuf>,
+) -> Option<HashSet<PathBuf>> {
+    let target = root.file_name()?.to_str()?;
+    let mut matches = HashSet::new();
+    for manifest in members {
+        let text = std::fs::read_to_string(manifest).ok()?;
+        let value = toml::from_str::<toml::Value>(&text).ok()?;
+        let name = value.get("package")?.as_table()?.get("name")?.as_str()?;
+        if name.eq_ignore_ascii_case(target) {
+            matches.insert(manifest.clone());
+        }
+    }
+    (matches.len() > 1).then_some(matches)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -882,6 +916,67 @@ mod tests {
         }
         let members = collect_workspace_members(dir.path());
         (dir, members)
+    }
+
+    fn case_collision_workspace() -> (tempfile::TempDir, PathBuf, Vec<PathBuf>) {
+        let outer = tempfile::tempdir().unwrap();
+        let root = outer.path().join("acme");
+        fs::create_dir(&root).unwrap();
+        fs::write(
+            root.join("Cargo.toml"),
+            "[workspace]\nmembers=['crates/acme','crates/upper','crates/mixed','crates/other']\n",
+        )
+        .unwrap();
+        let packages = [
+            ("crates/acme", "acme"),
+            ("crates/upper", "ACME"),
+            ("crates/mixed", "Acme"),
+            ("crates/other", "other"),
+        ];
+        let manifests = packages
+            .iter()
+            .map(|(rel, name)| {
+                let dir = root.join(rel);
+                fs::create_dir_all(dir.join("src")).unwrap();
+                let manifest = dir.join("Cargo.toml");
+                fs::write(
+                    &manifest,
+                    format!("[package]\nname='{name}'\nversion='0.1.0'\n"),
+                )
+                .unwrap();
+                fs::write(dir.join("src/lib.rs"), "").unwrap();
+                manifest.canonicalize().unwrap()
+            })
+            .collect();
+        (outer, root, manifests)
+    }
+
+    #[test]
+    fn walker_toml_primary_member_case_collision_fails_closed_without_inversion() {
+        let (_outer, root, manifests) = case_collision_workspace();
+        let members = collect_workspace_members(&root);
+        let ambiguous = ambiguous_primary_workspace_members(&root, &members).unwrap();
+
+        assert_eq!(ambiguous.len(), 3);
+        assert!(manifests[..3].iter().all(|path| ambiguous.contains(path)));
+        assert!(!ambiguous.contains(&manifests[3]));
+
+        let ctx = WalkCtx::new(root.clone());
+        let candidate_values: Vec<f64> = manifests[..3]
+            .iter()
+            .map(|manifest| identity_value(manifest, &ctx))
+            .collect();
+        assert!(candidate_values.windows(2).all(|pair| pair[0] == pair[1]));
+        assert!(identity_value(&manifests[3], &ctx) < candidate_values[0]);
+
+        let output = crate::render(&[root], 200, None).unwrap();
+        assert!(
+            ["acme", "ACME", "Acme"]
+                .iter()
+                .any(|name| output.contains(&format!("name='{name}'"))),
+            "a colliding candidate must win before a definite secondary:\n{output}"
+        );
+        assert!(!output.contains("name='other'"), "output:\n{output}");
     }
 
     #[test]

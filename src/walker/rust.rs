@@ -58,6 +58,7 @@ use super::{
 pub struct RustState {
     module_visibility: OnceCell<HashMap<PathBuf, Visibility>>,
     workspace: super::workspace::WorkspaceMembership,
+    ambiguous_primary_members: OnceCell<Option<HashSet<PathBuf>>>,
     nearest_member_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
     cargo_source_dirs: OnceCell<Vec<PathBuf>>,
     expanded_dirs: RefCell<HashSet<PathBuf>>,
@@ -86,6 +87,7 @@ impl RustState {
         Self {
             module_visibility: OnceCell::new(),
             workspace: super::workspace::WorkspaceMembership::default(),
+            ambiguous_primary_members: OnceCell::new(),
             nearest_member_dir_lookup: RefCell::new(HashMap::new()),
             cargo_source_dirs: OnceCell::new(),
             expanded_dirs: RefCell::new(HashSet::new()),
@@ -114,6 +116,28 @@ impl RustState {
     pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
         self.workspace
             .is_member(file, || super::toml::collect_workspace_members(root))
+    }
+
+    fn ambiguous_primary_members(&self, root: &Path) -> Option<&HashSet<PathBuf>> {
+        self.ambiguous_primary_members
+            .get_or_init(|| {
+                super::toml::ambiguous_primary_workspace_members(
+                    root,
+                    self.workspace
+                        .members(|| super::toml::collect_workspace_members(root)),
+                )
+            })
+            .as_ref()
+    }
+
+    pub(in crate::walker) fn has_ambiguous_primary_member(&self, root: &Path) -> bool {
+        self.ambiguous_primary_members(root).is_some()
+    }
+
+    pub(in crate::walker) fn is_ambiguous_primary_member(&self, file: &Path, root: &Path) -> bool {
+        let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
+        self.ambiguous_primary_members(root)
+            .is_some_and(|members| members.contains(&key))
     }
 
     /// Directory of the nearest enclosing `Cargo.toml` iff it's a
@@ -935,6 +959,9 @@ fn is_secondary_workspace_member(file: &Path, ctx: &WalkCtx) -> bool {
     let Some(manifest_dir) = ctx.rust_state().nearest_member_dir(file, ctx.root()) else {
         return false;
     };
+    if ctx.rust_state().has_ambiguous_primary_member(ctx.root()) {
+        return true;
+    }
     !ctx.root()
         .file_name()
         .zip(manifest_dir.file_name())
@@ -3177,6 +3204,43 @@ use self::not_pub::Hidden;
         let total: f64 = member_bodies.iter().map(|batch| batch.value).sum();
         assert!(bases.iter().all(|base| (base - bases[0]).abs() < 1e-9));
         assert!((total - bases[0]).abs() < 1e-9);
+    }
+
+    #[test]
+    fn rust_case_colliding_primary_members_are_all_secondary() {
+        let outer = tempdir();
+        let root = outer.path().join("acme");
+        std::fs::create_dir(&root).unwrap();
+        std::fs::write(
+            root.join("Cargo.toml"),
+            "[workspace]\nmembers=['crates/acme','crates/upper','crates/mixed','crates/other']\n",
+        )
+        .unwrap();
+        let mut sources = Vec::new();
+        for (rel, name) in [
+            ("crates/acme", "acme"),
+            ("crates/upper", "ACME"),
+            ("crates/mixed", "Acme"),
+            ("crates/other", "other"),
+        ] {
+            let dir = root.join(rel);
+            std::fs::create_dir_all(dir.join("src")).unwrap();
+            std::fs::write(
+                dir.join("Cargo.toml"),
+                format!("[package]\nname='{name}'\nversion='0.1.0'\n"),
+            )
+            .unwrap();
+            let source = dir.join("src/lib.rs");
+            std::fs::write(&source, "pub fn api() {}\n").unwrap();
+            sources.push(source);
+        }
+
+        let ctx = WalkCtx::new(root);
+        assert!(
+            sources
+                .iter()
+                .all(|file| is_secondary_workspace_member(file, &ctx))
+        );
     }
 
     /// Minimal scratch-dir helper. Avoids pulling in the `tempfile` crate
