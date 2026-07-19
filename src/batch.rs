@@ -388,6 +388,15 @@ pub enum YamlKey {
     Tail { file: PathBuf },
     /// Root and child keys in a root reference/API/spec map.
     TopLevelKeys { file: PathBuf },
+    /// Bounded leaf-contract slice from one family in a root
+    /// reference/API/spec map. Carries each leaf key, parameter/schema
+    /// keys, the first description paragraph, and one example.
+    /// Predecessor: the matching [`YamlKey::TopLevelKeys`] roster.
+    ReferenceLeafSlice {
+        file: PathBuf,
+        family_start_line: usize,
+        chunk_index: usize,
+    },
 }
 
 /// Prisma schema batches.
@@ -1057,7 +1066,21 @@ impl InnerKey for YamlKey {
                     display_path(file, root)
                 )
             }
+            YamlKey::ReferenceLeafSlice {
+                file,
+                family_start_line,
+                chunk_index,
+            } => format!(
+                "YAML reference leaf contracts in {}:{} chunk {}",
+                display_path(file, root),
+                family_start_line,
+                chunk_index + 1,
+            ),
         }
+    }
+
+    fn is_depth_follow_up(&self) -> bool {
+        matches!(self, YamlKey::ReferenceLeafSlice { .. })
     }
 }
 

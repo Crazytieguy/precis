@@ -22,8 +22,8 @@ use crate::batch::{Batch, BatchKey, YamlKey};
 use crate::value::{DEFAULT_CONCAVITY_EXPONENT, mix_signals};
 
 use super::{
-    FileLines, WalkCtx, fs::files_with_any_extension, gap_ellipses, gated_read_source,
-    gated_whole_file_content, path_depth_factor, single_file_lines_content,
+    FileLines, WalkCtx, budget_chunk_ranges, fs::files_with_any_extension, gap_ellipses,
+    gated_read_source, gated_whole_file_content, path_depth_factor, single_file_lines_content,
     whole_file_lines_content,
 };
 
@@ -58,6 +58,15 @@ const WORKFLOW_HEAD_LINE_CAP: usize = 60;
 const WORKFLOW_HEAD_BYTE_GATE: usize = 3_000;
 const REFERENCE_MAP_BYTE_GATE: usize = 80_000;
 const REFERENCE_MAP_KEY_LINE_CAP: usize = 80;
+const REFERENCE_LEAF_CHUNK_TARGET_TOKENS: usize = 220;
+const REFERENCE_LEAF_CHUNK_MIN_TAIL_TOKENS: usize = 80;
+const REFERENCE_DESCRIPTION_LINE_CAP: usize = 12;
+const REFERENCE_SCHEMA_KEY_CAP: usize = 16;
+const REFERENCE_EXAMPLE_LINE_CAP: usize = 24;
+// The roster is a cheap orientation surface; the follow-up carries actual
+// contract answers. Allocate a larger (still file-level conserved) depth
+// budget so several independent families can clear ordinary source batches.
+const REFERENCE_LEAF_VALUE_FACTOR: f64 = 2.75;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
@@ -75,19 +84,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             push_compose_batches(&file, ctx, &mut out);
             continue;
         }
-        let Some(content) = class.content(&file, ctx) else {
-            continue;
-        };
-        let key = match class {
-            YamlClass::ReferenceMap => YamlKey::TopLevelKeys { file: file.clone() },
-            _ => YamlKey::Whole { file: file.clone() },
-        };
-        out.push(Batch {
-            key: key.into(),
-            predecessor: None,
-            content,
-            value: class.value(&file, ctx),
-        });
+        if class == YamlClass::ReferenceMap {
+            push_reference_map_batches(&file, ctx, &mut out);
+        } else if let Some(content) = class.content(&file, ctx) {
+            out.push(Batch {
+                key: YamlKey::Whole { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: class.value(&file, ctx),
+            });
+        }
     }
     out
 }
@@ -340,6 +346,318 @@ fn reference_map_key_content(file: &Path, ctx: &WalkCtx) -> Option<crate::conten
         return None;
     }
     single_file_lines_content(file, &source, lines)
+}
+
+#[derive(Debug)]
+struct ReferenceFamily {
+    start_line: usize,
+    leaves: Vec<FileLines>,
+}
+
+fn push_reference_map_batches(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
+    let Some(roster_content) = reference_map_key_content(file, ctx) else {
+        return;
+    };
+    let roster_key = YamlKey::TopLevelKeys {
+        file: file.to_path_buf(),
+    };
+    let value = reference_map_value(file, ctx);
+    out.push(Batch {
+        key: roster_key.clone().into(),
+        predecessor: None,
+        content: roster_content,
+        value,
+    });
+
+    let Some(source) = ctx.read_source(file) else {
+        return;
+    };
+    let families = reference_leaf_families(&source);
+    let mut chunks = Vec::new();
+    for family in families {
+        let lines_for = |range: std::ops::Range<usize>| {
+            let mut full: Vec<usize> = family.leaves[range]
+                .iter()
+                .flat_map(|lines| lines.full.iter().copied())
+                .collect();
+            full.sort_unstable();
+            full.dedup();
+            let ellipses = reference_slice_ellipses(&full);
+            FileLines::new(full).with_ellipses(ellipses)
+        };
+        let cost = |range: std::ops::Range<usize>| {
+            single_file_lines_content(file, &source, lines_for(range))
+                .map(|content| ctx.marginal_tokens(&content))
+                .unwrap_or(0)
+        };
+        for (chunk_index, range) in budget_chunk_ranges(
+            family.leaves.len(),
+            cost,
+            REFERENCE_LEAF_CHUNK_TARGET_TOKENS,
+            REFERENCE_LEAF_CHUNK_MIN_TAIL_TOKENS,
+            |_| true,
+            |range| cost(range) <= REFERENCE_LEAF_CHUNK_TARGET_TOKENS + 50,
+        )
+        .into_iter()
+        .enumerate()
+        {
+            if let Some(content) = single_file_lines_content(file, &source, lines_for(range)) {
+                chunks.push((family.start_line, chunk_index, content));
+            }
+        }
+    }
+    let costs: Vec<_> = chunks
+        .iter()
+        .map(|(_, _, content)| ctx.marginal_tokens(content))
+        .collect();
+    let factors = conserved_reference_slice_factors(&costs);
+    let leaf_value = value * REFERENCE_LEAF_VALUE_FACTOR;
+    for ((family_start_line, chunk_index, content), factor) in chunks.into_iter().zip(factors) {
+        out.push(Batch {
+            key: YamlKey::ReferenceLeafSlice {
+                file: file.to_path_buf(),
+                family_start_line,
+                chunk_index,
+            }
+            .into(),
+            predecessor: Some(BatchKey::Yaml(roster_key.clone())),
+            content,
+            value: leaf_value * factor,
+        });
+    }
+}
+
+/// Conserve one file-level value across independent semantic families while
+/// keeping their unscheduled `value / cost^k` ratios equal. Unlike a
+/// source-ordered catalog, no family is a privileged head: constructors,
+/// operations, and schemas should compete on their own bounded cost once the
+/// common roster has opened the train.
+fn conserved_reference_slice_factors(costs: &[usize]) -> Vec<f64> {
+    if costs.is_empty() {
+        return Vec::new();
+    }
+    let weights: Vec<f64> = costs
+        .iter()
+        .map(|cost| (*cost as f64).powf(DEFAULT_CONCAVITY_EXPONENT))
+        .collect();
+    let total: f64 = weights.iter().sum();
+    if total == 0.0 {
+        return vec![1.0 / costs.len() as f64; costs.len()];
+    }
+    weights.into_iter().map(|weight| weight / total).collect()
+}
+
+fn reference_slice_ellipses(full: &[usize]) -> Vec<usize> {
+    full.windows(2)
+        .filter_map(|pair| (pair[1] > pair[0] + 1).then_some(pair[0] + 1))
+        .collect()
+}
+
+fn reference_leaf_families(source: &str) -> Vec<ReferenceFamily> {
+    let lines: Vec<&str> = source.lines().collect();
+    let family_starts: Vec<usize> = lines
+        .iter()
+        .enumerate()
+        .filter_map(|(index, raw)| {
+            (yaml_indent(raw) == Some(0) && yaml_mapping_key(raw.trim()).is_some()).then_some(index)
+        })
+        .collect();
+    let mut families = Vec::new();
+    for (family_position, &family_start) in family_starts.iter().enumerate() {
+        let family_end = family_starts
+            .get(family_position + 1)
+            .copied()
+            .unwrap_or(lines.len());
+        let Some(leaf_indent) = (family_start + 1..family_end)
+            .filter_map(|index| {
+                let indent = yaml_indent(lines[index])?;
+                (indent > 0 && yaml_mapping_key(lines[index].trim()).is_some()).then_some(indent)
+            })
+            .min()
+        else {
+            continue;
+        };
+        let leaf_starts: Vec<usize> = (family_start + 1..family_end)
+            .filter(|&index| {
+                yaml_indent(lines[index]) == Some(leaf_indent)
+                    && yaml_mapping_key(lines[index].trim()).is_some()
+            })
+            .collect();
+        let mut leaves = Vec::new();
+        for (leaf_position, &leaf_start) in leaf_starts.iter().enumerate() {
+            let leaf_end = leaf_starts
+                .get(leaf_position + 1)
+                .copied()
+                .unwrap_or(family_end);
+            if let Some(slice) = reference_leaf_slice(&lines, leaf_start, leaf_end, leaf_indent) {
+                leaves.push(slice);
+            }
+        }
+        if !leaves.is_empty() {
+            families.push(ReferenceFamily {
+                start_line: family_start + 1,
+                leaves,
+            });
+        }
+    }
+    families
+}
+
+fn reference_leaf_slice(
+    lines: &[&str],
+    leaf_start: usize,
+    leaf_end: usize,
+    leaf_indent: usize,
+) -> Option<FileLines> {
+    let mut selected = vec![leaf_start + 1];
+    let field_indent = (leaf_start + 1..leaf_end)
+        .filter_map(|index| {
+            let indent = yaml_indent(lines[index])?;
+            (indent > leaf_indent && yaml_mapping_key(lines[index].trim()).is_some())
+                .then_some(indent)
+        })
+        .min();
+    let Some(field_indent) = field_indent else {
+        return Some(FileLines::new(selected));
+    };
+    for field_start in leaf_start + 1..leaf_end {
+        if yaml_indent(lines[field_start]) != Some(field_indent) {
+            continue;
+        }
+        let Some(key) = yaml_mapping_key(lines[field_start].trim()) else {
+            continue;
+        };
+        let field_end = (field_start + 1..leaf_end)
+            .find(|&index| {
+                let trimmed = lines[index].trim();
+                !trimmed.is_empty()
+                    && !trimmed.starts_with('#')
+                    && yaml_indent(lines[index]).is_some_and(|indent| indent <= field_indent)
+            })
+            .unwrap_or(leaf_end);
+        if matches!(
+            key,
+            "param" | "params" | "parameter" | "parameters" | "schema" | "schemas"
+        ) {
+            selected.extend(reference_schema_key_lines(
+                lines,
+                field_start,
+                field_end,
+                field_indent,
+            ));
+        } else if matches!(key, "desc" | "description" | "summary") {
+            selected.extend(reference_description_lines(lines, field_start, field_end));
+        } else if matches!(key, "example" | "examples") {
+            selected.extend(reference_example_lines(
+                lines,
+                field_start,
+                field_end,
+                field_indent,
+            ));
+        }
+    }
+    selected.sort_unstable();
+    selected.dedup();
+    Some(FileLines::new(selected))
+}
+
+fn yaml_value_after_key(raw: &str) -> Option<&str> {
+    raw.trim().split_once(':').map(|(_, value)| value.trim())
+}
+
+fn reference_schema_key_lines(
+    lines: &[&str],
+    field_start: usize,
+    field_end: usize,
+    field_indent: usize,
+) -> Vec<usize> {
+    let mut selected = vec![field_start + 1];
+    if yaml_value_after_key(lines[field_start]).is_some_and(|value| !value.is_empty()) {
+        return selected;
+    }
+    selected.extend(
+        (field_start + 1..field_end)
+            .filter(|&index| {
+                yaml_indent(lines[index]).is_some_and(|indent| indent > field_indent)
+                    && yaml_mapping_key(lines[index].trim()).is_some()
+            })
+            .take(REFERENCE_SCHEMA_KEY_CAP)
+            .map(|index| index + 1),
+    );
+    selected
+}
+
+fn reference_description_lines(lines: &[&str], field_start: usize, field_end: usize) -> Vec<usize> {
+    let value = yaml_value_after_key(lines[field_start]).unwrap_or_default();
+    if !matches!(value, "|" | ">" | "|-" | ">-" | "|+" | ">+") {
+        return vec![field_start + 1];
+    }
+    let mut selected = vec![field_start + 1];
+    let Some(paragraph_start) =
+        (field_start + 1..field_end).find(|&index| !lines[index].trim().is_empty())
+    else {
+        return selected;
+    };
+    for (index, raw) in lines
+        .iter()
+        .enumerate()
+        .take(field_end)
+        .skip(paragraph_start)
+    {
+        if (index > paragraph_start && raw.trim().is_empty())
+            || selected.len() >= REFERENCE_DESCRIPTION_LINE_CAP
+        {
+            break;
+        }
+        selected.push(index + 1);
+    }
+    selected
+}
+
+fn reference_example_lines(
+    lines: &[&str],
+    field_start: usize,
+    field_end: usize,
+    field_indent: usize,
+) -> Vec<usize> {
+    let value = yaml_value_after_key(lines[field_start]).unwrap_or_default();
+    if !value.is_empty() && !matches!(value, "|" | ">" | "|-" | ">-" | "|+" | ">+") {
+        return vec![field_start + 1];
+    }
+    let mut selected = vec![field_start + 1];
+    let Some(first_content) = (field_start + 1..field_end).find(|&index| {
+        let trimmed = lines[index].trim();
+        !trimmed.is_empty() && !trimmed.starts_with('#')
+    }) else {
+        return selected;
+    };
+    if matches!(value, "|" | ">" | "|-" | ">-" | "|+" | ">+") {
+        selected.extend(
+            (first_content..field_end)
+                .take(REFERENCE_EXAMPLE_LINE_CAP)
+                .map(|index| index + 1),
+        );
+        return selected;
+    }
+    let content_indent = yaml_indent(lines[first_content]).unwrap_or(field_indent + 1);
+    for (index, raw) in lines.iter().enumerate().take(field_end).skip(first_content) {
+        if selected.len() > REFERENCE_EXAMPLE_LINE_CAP {
+            break;
+        }
+        if index > first_content {
+            let trimmed = raw.trim();
+            let indent = yaml_indent(raw).unwrap_or(0);
+            if !trimmed.is_empty()
+                && (indent < content_indent
+                    || (indent == content_indent && trimmed.starts_with('-'))
+                    || (indent == content_indent && yaml_mapping_key(trimmed).is_some()))
+            {
+                break;
+            }
+        }
+        selected.push(index + 1);
+    }
+    selected
 }
 
 fn head_capped_yaml_content(
@@ -913,16 +1231,17 @@ volumes:
     }
 
     #[test]
-    fn yaml_emits_root_reference_map_top_level_keys() {
+    fn yaml_emits_root_reference_map_roster_then_conserved_leaf_contracts() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
+        let file = root.join("reference.yaml");
         std::fs::write(
-            root.join("reference.yaml"),
-            "constructors:\n  vec_f32:\n    desc: Vector constructors\n    functions:\n      - vec_f32\nmeta:\n  vec_version:\n    params: []\n",
+            &file,
+            "constructors:\n  vec_f32:\n    params: [vector]\n    schema:\n      type: array\n      items:\n        type: number\n    desc: |\n\n      First description paragraph.\n      It has two lines.\n\n      Later detail is omitted.\n    example:\n      - |\n        select vec_f32('[1, 2]');\n      - select vec_f32('[3, 4]');\nmeta:\n  vec_version:\n    params: []\n    desc: Returns the version.\n    example: |\n      select 'urn:version';\n",
         )
         .unwrap();
 
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 100_000, None);
         let report = scheduler.run_with_report();
         let rendered = report.tree.render();
 
@@ -930,12 +1249,48 @@ volumes:
         assert!(rendered.contains("meta:"), "{rendered}");
         assert!(rendered.contains("vec_f32:"), "{rendered}");
         assert!(rendered.contains("vec_version:"), "{rendered}");
-        assert!(!rendered.contains("params"), "{rendered}");
-        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
+        assert!(rendered.contains("params: [vector]"), "{rendered}");
+        assert!(rendered.contains("type: array"), "{rendered}");
         assert!(
-            keys.iter()
-                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::TopLevelKeys { .. }))),
-            "missing Yaml::TopLevelKeys batch; scheduled keys: {keys:?}",
+            rendered.contains("First description paragraph."),
+            "{rendered}"
+        );
+        assert!(!rendered.contains("Later detail is omitted."), "{rendered}");
+        assert!(rendered.contains("select vec_f32('[1, 2]');"), "{rendered}");
+        assert!(rendered.contains("select 'urn:version';"), "{rendered}");
+        assert!(
+            !rendered.contains("select vec_f32('[3, 4]');"),
+            "{rendered}"
+        );
+
+        let roster_key = BatchKey::Yaml(YamlKey::TopLevelKeys { file: file.clone() });
+        let roster = report
+            .candidates
+            .iter()
+            .find(|batch| batch.key == roster_key)
+            .expect("missing YAML reference roster");
+        let slices: Vec<_> = report
+            .candidates
+            .iter()
+            .filter(|batch| {
+                matches!(
+                    batch.key,
+                    BatchKey::Yaml(YamlKey::ReferenceLeafSlice { .. })
+                )
+            })
+            .collect();
+        assert!(!slices.is_empty(), "missing YAML reference leaf slices");
+        assert!(
+            slices
+                .iter()
+                .all(|slice| slice.predecessor.as_ref() == Some(&roster_key)),
+            "every leaf slice must be successor-gated by the roster: {slices:#?}",
+        );
+        let slice_value: f64 = slices.iter().map(|slice| slice.value).sum();
+        let expected_leaf_value = roster.value * REFERENCE_LEAF_VALUE_FACTOR;
+        assert!(
+            (slice_value - expected_leaf_value).abs() < 1e-9,
+            "leaf slice value must be conserved: slices={slice_value}, expected={expected_leaf_value}",
         );
     }
 
@@ -955,6 +1310,41 @@ volumes:
                 .iter()
                 .any(|k| matches!(k, BatchKey::Yaml(YamlKey::TopLevelKeys { .. }))),
             "nested reference map should not emit Yaml::TopLevelKeys; scheduled keys: {keys:?}",
+        );
+        assert!(
+            !keys
+                .iter()
+                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::ReferenceLeafSlice { .. }))),
+            "nested reference map should not emit leaf slices; scheduled keys: {keys:?}",
+        );
+    }
+
+    #[test]
+    fn yaml_reference_leaf_contracts_are_inert_on_workflow_tooling_and_compose() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let workflow = root.join(".github/workflows/reference.yaml");
+        std::fs::create_dir_all(workflow.parent().unwrap()).unwrap();
+        for file in [
+            workflow,
+            root.join(".golangci.yml"),
+            root.join("compose.yaml"),
+        ] {
+            std::fs::write(
+                file,
+                "services:\n  test:\n    params: [value]\n    desc: A description.\n    example: run test\n",
+            )
+            .unwrap();
+        }
+
+        let report = Scheduler::new(root.to_path_buf(), FsWalker, 100_000, None).run_with_report();
+        assert!(
+            !report.candidates.iter().any(|batch| matches!(
+                batch.key,
+                BatchKey::Yaml(YamlKey::ReferenceLeafSlice { .. })
+            )),
+            "non-reference YAML emitted reference leaf slices: {:#?}",
+            report.candidates,
         );
     }
 
