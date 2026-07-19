@@ -706,6 +706,19 @@ evidence):
   concave pricing (the split family only pays where the fused batch
   cannot win at all).
 
+- **2026-07-18 evening batch (ideation-driven, mostly dead)**: Go
+  import-crumb suppression (7 variants — freed tokens never buy
+  NS-aligned replacements); declared-member manifest tier (best
+  +0.0002 curve-mixed, single-member workspaces −0.232 edge, ~100
+  LOC doesn't pay — cmdk's oracle-visible manifest gap does not
+  convert); Python __init__ re-export depth waiver (directionally
+  correct — xlstm targets 8K→1.5K — but displaces 3K aggregates;
+  caps can't separate xlstm's 7 targets from chronos's transitive 9).
+  Shipped from the batch: root SQL contract walker (+0.0009,
+  sqlite-vec +0.067). Meta-lesson: at ~0.630 the tree is at a local
+  optimum for value-side re-ranking; only new recall or purchasable
+  shape pays.
+
 ## Walker / value open items
 
 - **Config-surface header role (bareiron/tinyusb class): SHIPPED
