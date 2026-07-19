@@ -11,14 +11,7 @@ expression: rendered
 .gitignore
 ARCHITECTURE.md
        1→# `sqlite-vec` Architecture
-       2→
-       3→Internal documentation for how `sqlite-vec` works under-the-hood. Not meant for
-       4→users of the `sqlite-vec` project, consult
-       5→[the official `sqlite-vec` documentation](https://alexgarcia.xyz/sqlite-vec) for
-       6→how-to-guides. Rather, this is for people interested in how `sqlite-vec` works
-       7→and some guidelines to any future contributors.
-       8→
-       9→Very much a WIP.
+    …
       11→## `vec0`
       12→
       13→### Shadow Tables
@@ -121,9 +114,6 @@ benchmarks/
         build.rs
         src/
             lib.rs
-                …
-                   8→pub fn init_vec() {
-                …
     profiling/
     self-params/
         build.py
@@ -238,19 +228,9 @@ reference.yaml
     …
      308→quantization:
      309→  vec_quantize_binary:
-     310→    params: [vector]
-     311→    desc: |
-     312→      Quantize a float32 or int8 vector into a bitvector.
-     313→      For every element in the vector, a `1` is assigned to positive numbers and a `0` is assigned to negative numbers.
-     314→      These values are then packed into a bit vector.
-    …
-     317→    example:
-     318→      - select vec_quantize_binary('[1, 2, 3, 4, 5, 6, 7, 8]');
     …
      324→  vec_quantize_i8:
-     325→    params: [vector, "[start]", "[end]"]
-     326→    desc: x
-     327→    example: select 'todo';
+    …
      328→vec0:
      329→  vec0:
      330→    params: []
@@ -290,17 +270,6 @@ site/
     public/
     sqlite.tmlanguage.json
     using/
-        android-ios.md
-        c.md
-        datasette.md
-        go.md
-        js.md
-        python.md
-        rqlite.md
-        ruby.md
-        rust.md
-        sqlite-utils.md
-        wasm.md
     versioning.md
 sqlite-dist.toml
        1→[package]
@@ -315,6 +284,46 @@ sqlite-dist.toml
 sqlite-vec.c
 sqlite-vec.h.tmpl
 test.sql
+    …
+      13→create virtual table v using vec0(
+      14→  vector float[1],
+      15→  name1 text,
+      16→  name2 text,
+      17→  age int,
+      18→  chunk_size=8
+      19→);
+    …
+      56→create virtual table v using vec0(
+      57→  vector float[1],
+      58→  +description text
+      59→);
+    …
+      65→create virtual table vec_articles using vec0(
+      66→  article_id integer primary key,
+      67→  year integer partition key,
+      68→  headline_embedding float[1],
+      69→  +headline text,
+      70→  +url text,
+      71→  word_count integer,
+      72→  print_section text,
+      73→  print_page integer,
+      74→  pub_date text,
+      75→);
+    …
+     289→select
+     290→  movie_id,
+     291→  title,
+     292→  genre,
+     293→  num_reviews,
+     294→  mean_rating,
+     295→  distance
+     296→from vec_movies
+     297→where synopsis_embedding match '[15.5]'
+     298→  and genre = 'scifi'
+     299→  and num_reviews between 100 and 500
+     300→  and mean_rating > 3.5
+     301→  and k = 5;
+    …
 tests/
     .gitignore
     .python-version
@@ -326,17 +335,6 @@ tests/
     conftest.py
     correctness/
     fuzz/
-        .gitignore
-        Makefile
-        README.md
-        corpus/
-        exec.c
-        exec.dict
-        json.c
-        numpy.c
-        numpy.dict
-        vec0-create.c
-        vec0-create.dict
     fuzz.py
     leak-fixtures/
     minimum/
