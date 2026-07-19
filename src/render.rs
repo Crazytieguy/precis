@@ -12,6 +12,7 @@
 
 use std::cell::RefCell;
 use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::ops::Range;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::sync::Arc;
@@ -25,9 +26,56 @@ use crate::tokenizer;
 
 const INDENT_UNIT: &str = "    ";
 
-/// Shared source-file cache — read each file at most once per run.
+#[derive(Debug)]
+struct CachedSource {
+    text: Arc<str>,
+    line_ranges: Box<[Range<usize>]>,
+    /// Prefix count of non-blank lines; element 0 is the empty prefix.
+    non_blank_prefix: Box<[usize]>,
+}
+
+impl CachedSource {
+    fn new(text: Arc<str>) -> Self {
+        let base = text.as_ptr() as usize;
+        let mut line_ranges = Vec::new();
+        let mut non_blank_prefix = vec![0];
+        for line in text.lines() {
+            let start = line.as_ptr() as usize - base;
+            line_ranges.push(start..start + line.len());
+            non_blank_prefix.push(
+                non_blank_prefix.last().copied().unwrap_or(0)
+                    + usize::from(!line.trim().is_empty()),
+            );
+        }
+        Self {
+            text,
+            line_ranges: line_ranges.into_boxed_slice(),
+            non_blank_prefix: non_blank_prefix.into_boxed_slice(),
+        }
+    }
+
+    fn line(&self, number: usize) -> Option<&str> {
+        let range = self.line_ranges.get(number.checked_sub(1)?)?.clone();
+        self.text.get(range)
+    }
+
+    fn line_count(&self) -> usize {
+        self.line_ranges.len()
+    }
+
+    /// Whether the inclusive 1-based range holds a non-blank source line.
+    fn gap_has_content(&self, start: usize, end: usize) -> bool {
+        if start == 0 || start > end || start > self.line_count() {
+            return false;
+        }
+        let end = end.min(self.line_count());
+        self.non_blank_prefix[end] > self.non_blank_prefix[start - 1]
+    }
+}
+
+/// Shared source-file cache — read and index each file at most once per run.
 #[derive(Clone, Debug, Default)]
-pub struct SourceCache(Rc<RefCell<HashMap<PathBuf, Arc<str>>>>);
+pub struct SourceCache(Rc<RefCell<HashMap<PathBuf, Arc<CachedSource>>>>);
 
 impl SourceCache {
     pub fn new() -> Self {
@@ -41,11 +89,13 @@ impl SourceCache {
         if let Some(cached) = self.0.borrow().get(path) {
             #[cfg(feature = "timing")]
             crate::timing::record(|c| &mut c.source_read, _start.elapsed(), Some(true));
-            return Some(cached.clone());
+            return Some(cached.text.clone());
         }
         let text = std::fs::read_to_string(path).ok()?;
         let arc: Arc<str> = Arc::from(text);
-        self.0.borrow_mut().insert(path.to_path_buf(), arc.clone());
+        self.0
+            .borrow_mut()
+            .insert(path.to_path_buf(), Arc::new(CachedSource::new(arc.clone())));
         #[cfg(feature = "timing")]
         crate::timing::record(|c| &mut c.source_read, _start.elapsed(), Some(false));
         Some(arc)
@@ -53,7 +103,17 @@ impl SourceCache {
 
     /// Insert a pre-loaded source. Idempotent.
     pub fn insert(&self, path: PathBuf, source: Arc<str>) {
-        self.0.borrow_mut().entry(path).or_insert(source);
+        self.0
+            .borrow_mut()
+            .entry(path)
+            .or_insert_with(|| Arc::new(CachedSource::new(source)));
+    }
+
+    fn view(&self, path: &Path) -> Option<Arc<CachedSource>> {
+        // Populate through the public read path so timing/cache behavior stays
+        // centralized, then borrow the already-built line index.
+        self.get(path)?;
+        self.0.borrow().get(path).cloned()
     }
 }
 
@@ -248,24 +308,19 @@ impl RenderedTree {
         F: FnMut(Cost),
         T: Fn(&str) -> usize,
     {
-        let resolved = explode_spans(spans);
         // Group by path — costs are accounted per file (row deltas +
         // synthesized-marker delta), so source/indent lookups and the
         // anchor sets are built once per file.
-        let mut by_path: BTreeMap<&Path, Vec<(usize, &Render)>> = BTreeMap::new();
-        for (path, line, render) in &resolved {
-            by_path
-                .entry(path.as_path())
-                .or_default()
-                .push((*line, render));
+        // Keep spans compressed here: expanding every range into cloned
+        // `(PathBuf, line, Render)` rows dominated repeated scheduler probes
+        // on large roster chunks.
+        let mut by_path: BTreeMap<&Path, Vec<&Span>> = BTreeMap::new();
+        for span in spans {
+            by_path.entry(span.path.as_path()).or_default().push(span);
         }
 
-        for (path, entries) in by_path {
-            let source = self.source_cache.get(path);
-            let src_lines: Vec<&str> = source
-                .as_deref()
-                .map(|s| s.lines().collect())
-                .unwrap_or_default();
+        for (path, file_spans) in by_path {
+            let source = self.source_cache.view(path);
             let indent_depth = self.depth_from_root(path);
             let existing = match self.nodes.get(path) {
                 Some(TreeNode::File { content }) => Some(content),
@@ -277,52 +332,43 @@ impl RenderedTree {
             // renderer invariant means marker count is a function of
             // the anchor set, so the delta is exact given the current
             // tree state.
-            let anchors_before = existing.map(content_anchor_lines).unwrap_or_default();
-            let has_records_before = existing.is_some_and(|c| !c.is_empty());
-            let mut anchors_after = anchors_before.clone();
-            for (n, r) in &entries {
-                if matches!(r, Render::Ellipsis) {
-                    // `apply_spans` replaces records unconditionally, so
-                    // an Ellipsis entry un-anchors a line a predecessor
-                    // rendered as content — mirror that removal here or
-                    // the marker delta drifts from what render() emits.
-                    anchors_after.remove(n);
-                } else {
-                    anchors_after.insert(*n);
-                }
-            }
             let mut d_tokens: isize = 0;
             let mut d_bytes: isize = 0;
-            for (line_num, render) in entries {
-                debug_assert!(
-                    src_lines.is_empty() || line_num >= 1 && line_num <= src_lines.len(),
-                    "span line {} out of range (1..={}) for {} — schema load should have caught this",
-                    line_num,
-                    src_lines.len(),
-                    path.display(),
-                );
-                let source_line = src_lines.get(line_num - 1).copied().unwrap_or("");
-                if !matches!(render, Render::Ellipsis) {
-                    let new_row = format_line_row(line_num, render, source_line, indent_depth);
-                    d_tokens += tokens(&new_row) as isize;
-                    d_bytes += new_row.len() as isize;
-                }
-                if let Some(existing) = existing
-                    && let Some(old) = existing.get(&line_num)
-                    && !matches!(old.render, Render::Ellipsis)
-                {
-                    let old_row = format_line_row(line_num, &old.render, source_line, indent_depth);
-                    d_tokens -= tokens(&old_row) as isize;
-                    d_bytes -= old_row.len() as isize;
+            for span in &file_spans {
+                for line_num in span.start..=span.end {
+                    debug_assert!(
+                        source.is_none()
+                            || line_num >= 1 && line_num <= source.as_ref().unwrap().line_count(),
+                        "span line {} out of range (1..={}) for {} — schema load should have caught this",
+                        line_num,
+                        source.as_ref().map_or(0, |s| s.line_count()),
+                        path.display(),
+                    );
+                    let source_line = source.as_ref().and_then(|s| s.line(line_num)).unwrap_or("");
+                    if !matches!(span.render, Render::Ellipsis) {
+                        let new_row =
+                            format_line_row(line_num, &span.render, source_line, indent_depth);
+                        d_tokens += tokens(&new_row) as isize;
+                        d_bytes += new_row.len() as isize;
+                    }
+                    if let Some(existing) = existing
+                        && let Some(old) = existing.get(&line_num)
+                        && !matches!(old.render, Render::Ellipsis)
+                    {
+                        let old_row =
+                            format_line_row(line_num, &old.render, source_line, indent_depth);
+                        d_tokens -= tokens(&old_row) as isize;
+                        d_bytes -= old_row.len() as isize;
+                    }
                 }
             }
-            let markers_before =
-                marker_count(&anchors_before, has_records_before, &src_lines) as isize;
-            let markers_after = marker_count(&anchors_after, true, &src_lines) as isize;
-            if markers_after != markers_before {
+            let marker_delta = source.as_deref().map_or(0, |source| {
+                local_marker_delta(existing, &file_spans, source)
+            });
+            if marker_delta != 0 {
                 let marker_row = format_marker_row(indent_depth);
-                d_tokens += (markers_after - markers_before) * tokens(&marker_row) as isize;
-                d_bytes += (markers_after - markers_before) * marker_row.len() as isize;
+                d_tokens += marker_delta * tokens(&marker_row) as isize;
+                d_bytes += marker_delta * marker_row.len() as isize;
             }
             visit(Cost {
                 tokens: d_tokens.max(0) as usize,
@@ -428,21 +474,17 @@ impl RenderedTree {
         if content.is_empty() {
             return;
         }
-        let source = self.source_cache.get(path);
-        let src_lines: Vec<&str> = source
-            .as_deref()
-            .map(|s| s.lines().collect())
-            .unwrap_or_default();
+        let source = self.source_cache.view(path);
         // Elision marking is a renderer invariant: a `…` row appears
         // iff the adjacent elided source is non-blank (leading,
         // between anchors, trailing). Author-supplied Ellipsis records
         // are gap occupants, not rows — synthesis subsumes them.
         let anchors = content_anchor_lines(content);
         let marker_row = format_marker_row(indent_depth);
-        walk_anchor_gaps(&anchors, &src_lines, |event| match event {
+        walk_anchor_gaps(&anchors, source.as_deref(), |event| match event {
             GapWalkEvent::Gap => out.push_str(&marker_row),
             GapWalkEvent::Anchor(number) => {
-                let source_line = src_lines.get(number - 1).copied().unwrap_or("");
+                let source_line = source.as_ref().and_then(|s| s.line(number)).unwrap_or("");
                 out.push_str(&format_line_row(
                     number,
                     &content[&number].render,
@@ -475,31 +517,94 @@ fn content_anchor_lines(content: &BTreeMap<usize, LineRecord>) -> BTreeSet<usize
         .collect()
 }
 
-/// Whether the inclusive 1-based line range holds at least one
-/// non-blank source line. Empty or out-of-range → false.
-fn gap_has_content(src_lines: &[&str], start: usize, end: usize) -> bool {
-    (start..=end).any(|l| src_lines.get(l - 1).is_some_and(|t| !t.trim().is_empty()))
+/// Exact synthesized-marker change caused by replacing `entries` in one file.
+/// Only the gap bounded by the nearest unchanged anchors can change, so this
+/// avoids cloning and rescanning the file's full accumulated anchor set for
+/// every scheduler probe.
+fn local_marker_delta(
+    existing: Option<&BTreeMap<usize, LineRecord>>,
+    spans: &[&Span],
+    source: &CachedSource,
+) -> isize {
+    let Some(first_changed) = spans.iter().map(|span| span.start).min() else {
+        return 0;
+    };
+    let last_changed = spans
+        .iter()
+        .map(|span| span.end)
+        .max()
+        .unwrap_or(first_changed);
+
+    let is_anchor = |record: &&LineRecord| !matches!(record.render, Render::Ellipsis);
+    let left = existing.and_then(|content| {
+        content
+            .range(..first_changed)
+            .rev()
+            .find(|(_, record)| is_anchor(record))
+            .map(|(line, _)| *line)
+    });
+    let right = existing.and_then(|content| {
+        content
+            .range((
+                std::ops::Bound::Excluded(last_changed),
+                std::ops::Bound::Unbounded,
+            ))
+            .find(|(_, record)| is_anchor(record))
+            .map(|(line, _)| *line)
+    });
+
+    let mut before = BTreeSet::new();
+    if let Some(content) = existing {
+        before.extend(
+            content
+                .range(first_changed..=last_changed)
+                .filter(|(_, record)| !matches!(record.render, Render::Ellipsis))
+                .map(|(line, _)| *line),
+        );
+    }
+    let mut after = before.clone();
+    for span in spans {
+        for line in span.start..=span.end {
+            if matches!(span.render, Render::Ellipsis) {
+                after.remove(&line);
+            } else {
+                after.insert(line);
+            }
+        }
+    }
+
+    let has_records_before = existing.is_some_and(|content| !content.is_empty());
+    let before_count = if has_records_before {
+        marker_count_between(left, right, &before, source)
+    } else {
+        0
+    };
+    let after_count = marker_count_between(left, right, &after, source);
+    after_count as isize - before_count as isize
 }
 
-/// Number of `…` marker rows [`RenderedTree::render_file`] synthesizes
-/// for a file: one per elided gap (leading / between anchors /
-/// trailing) that contains non-blank source. Elision marking is a
-/// renderer invariant — `…` appears iff adjacent elided source is
-/// non-blank — so this is derived from the anchor set alone;
-/// author-supplied Ellipsis records never emit rows of their own.
-/// `has_records` distinguishes a file with records but no anchors
-/// (whole body elided → at most one marker) from a listing-only file
-/// (no records → no markers).
-fn marker_count(anchors: &BTreeSet<usize>, has_records: bool, src_lines: &[&str]) -> usize {
-    if !has_records {
-        return 0;
-    }
+/// Count non-blank gaps between unchanged outer anchors. `inner` contains
+/// every anchor inside those bounds for the tree state being measured.
+fn marker_count_between(
+    left: Option<usize>,
+    right: Option<usize>,
+    inner: &BTreeSet<usize>,
+    source: &CachedSource,
+) -> usize {
     let mut count = 0;
-    walk_anchor_gaps(anchors, src_lines, |event| {
-        if matches!(event, GapWalkEvent::Gap) {
+    let mut previous = left.unwrap_or(0);
+    for &anchor in inner {
+        if anchor > previous + 1 && source.gap_has_content(previous + 1, anchor - 1) {
             count += 1;
         }
-    });
+        previous = anchor;
+    }
+    let gap_end = right
+        .map(|anchor| anchor.saturating_sub(1))
+        .unwrap_or_else(|| source.line_count());
+    if gap_end > previous && source.gap_has_content(previous + 1, gap_end) {
+        count += 1;
+    }
     count
 }
 
@@ -515,18 +620,18 @@ enum GapWalkEvent {
 /// differently, so both must go through here.
 fn walk_anchor_gaps(
     anchors: &BTreeSet<usize>,
-    src_lines: &[&str],
+    source: Option<&CachedSource>,
     mut visit: impl FnMut(GapWalkEvent),
 ) {
     let mut prev = 0usize;
     for &a in anchors {
-        if a > prev + 1 && gap_has_content(src_lines, prev + 1, a - 1) {
+        if a > prev + 1 && source.is_some_and(|s| s.gap_has_content(prev + 1, a - 1)) {
             visit(GapWalkEvent::Gap);
         }
         visit(GapWalkEvent::Anchor(a));
         prev = a;
     }
-    if gap_has_content(src_lines, prev + 1, src_lines.len()) {
+    if source.is_some_and(|s| s.gap_has_content(prev + 1, s.line_count())) {
         visit(GapWalkEvent::Gap);
     }
 }
