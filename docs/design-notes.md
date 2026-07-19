@@ -691,6 +691,21 @@ evidence):
   whole-decl atomicity loss (sps Formula/Cask class) needs a value
   mechanism, not granularity.
 
+- **README-usage symbol-match decl promotion (2026-07-18, the
+  novel-discriminator attempt on the primary-body cluster)**: dead in
+  three variants (uniform 1.25x/2x, cost-ramped 1-3x, cap 3;
+  −0.0008..−0.0031). Failure modes: generic demo identifiers consume
+  the cap (superstruct: string/number/is, not assert/create);
+  exact-name routing picks wrapper files (svgo-node.js over svgo.js);
+  README evidence goes stale across fixture revisions (cobra); and
+  even a successfully promoted signature leaves its BODY unpurchased
+  (swarm run sig 3247→1121, target row 0.619→0.518). Seventh
+  confirmation: this cluster is body-purchase/shape, not rank. Also
+  measured dead same day: go.mod dep split — conserved splits of an
+  ALREADY-PURCHASABLE batch reduce aggregate purchasing power under
+  concave pricing (the split family only pays where the fused batch
+  cannot win at all).
+
 ## Walker / value open items
 
 - **Config-surface header role (bareiron/tinyusb class): SHIPPED
