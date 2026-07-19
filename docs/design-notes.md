@@ -719,6 +719,32 @@ evidence):
   optimum for value-side re-ranking; only new recall or purchasable
   shape pays.
 
+## Ideation sweep (2026-07-19): next queue drafted, three recall holes verified
+
+Session scope: adopted `integration` onto `v0.2-rewrite` (ff to
+c2e200ff; 405/405 tests, clippy clean, training mean 0.6302), then a
+four-agent read-only sweep over the lowest-Score and lowest-I training
+fixtures. Ranked queue + full evidence in
+`ignore/next-session-queue-2026-07-19.md` and
+`ignore/ideation-2026-07-19/*.md` (gitignored — regenerate from the
+divergence reports if lost). Durable facts found (verified in src, not
+yet fixed):
+
+- **`.mts`/`.cts` files are never walked** (`is_ts_or_tsx_file`,
+  src/walker/typescript.rs) — e.g. vitest.config.mts invisible.
+- **`LICENSE.md` has no owning walker** while bare `LICENSE` is
+  value-floored; cmdk's rank-1 NS row has zero walker rows at any
+  budget.
+- **Root tool-config files (`.flake8`, `.pylintrc`, `tox.ini`,
+  `.readthedocs.yml`) have no owning walker** (`classify_plaintext` /
+  `yaml_class` both pass on them).
+- The low-I cluster (htop 0.42 / cmdk 0.46 / rich 0.59 / flask 0.65)
+  is dominated by the `roster_mass_factor` [1.0, 1.6] clamp losing the
+  `value/cost^0.35` race exactly at NS-primary flagship catalogs
+  (htop linux/ @9523 vs NS @1299 needs ≈2.09) — the "cap 2.2
+  confirmed" ledger entry predates the 07-18 structural ships, so the
+  cap neighborhood is due a re-sweep.
+
 ## Walker / value open items
 
 - **Config-surface header role (bareiron/tinyusb class): SHIPPED
