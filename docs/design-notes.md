@@ -743,9 +743,12 @@ yet fixed):
 - The low-I cluster (htop 0.42 / cmdk 0.46 / rich 0.59 / flask 0.65)
   is dominated by the `roster_mass_factor` [1.0, 1.6] clamp losing the
   `value/cost^0.35` race exactly at NS-primary flagship catalogs
-  (htop linux/ @9523 vs NS @1299 needs ≈2.09) — the "cap 2.2
-  confirmed" ledger entry predates the 07-18 structural ships, so the
-  cap neighborhood is due a re-sweep.
+  (htop linux/ @9523 vs NS @1299 needs ≈2.09). Probed same session:
+  blanket cap 1.6→2.2 is −0.0025 mean (lo −0.112, thiserror −0.040,
+  linkwarden −0.028) and htop stays FLAT — the 07-18 down-sweep to
+  1.6 is confirmed on this frontier, the blanket raise is dead, and
+  htop's listing race is evidently not cap-controlled (diagnose
+  before any discriminated variant).
 
 ## Walker / value open items
 
