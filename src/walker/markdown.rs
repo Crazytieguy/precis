@@ -115,6 +115,19 @@ const OVERSIZE_TAIL_FACTOR: f64 = 0.85;
 /// folds into the current chunk instead of spawning a micro-tail.
 const OVERSIZE_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 
+/// Emergency source-character ceiling between natural blank-line cuts.
+/// Long unbroken paragraphs may have no structural split point at all;
+/// safe row boundaries outside fences keep those ranges purchasable.
+const OVERSIZE_HARD_CHUNK_CHAR_CAP: usize = 4_096;
+
+/// A pathological README paragraph must not turn `ReadmeHeadline` into
+/// a multi-megabyte batch. Normal ledes stay untouched; only a very
+/// large block is reduced to a bounded prefix, and individually huge
+/// rows in that prefix are truncated further for early purchase.
+const HEADLINE_BLOCK_BYTE_GATE: usize = 16 * 1024;
+const HEADLINE_OVERSIZE_LEDE_BYTES: usize = 640;
+const HEADLINE_OVERSIZE_LINE_CHARS: usize = 320;
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md");
     let mut out = Vec::new();
@@ -221,6 +234,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if gates.truncated && !ranges.iter().any(|r| r.roster_entries > 0) {
             outline_emits = false;
             ranges = logical_sections(&file, &tree, &source, false, false, root_readme);
+        }
+        if ranges.is_empty() && !markdown_has_heading(&tree) {
+            ranges = headingless_fallback_ranges(&file, &source);
         }
         if ranges.is_empty() {
             continue;
@@ -657,6 +673,53 @@ fn collect_heading_nodes<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
             collect_heading_nodes(child, out);
         }
     }
+}
+
+fn markdown_has_heading(tree: &Tree) -> bool {
+    let mut nodes = Vec::new();
+    collect_heading_nodes(tree.root_node(), &mut nodes);
+    !nodes.is_empty()
+}
+
+fn headingless_fallback_ranges(file: &Path, source: &str) -> Vec<SectionRange> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let Some(start) = src_lines.iter().position(|line| !line.trim().is_empty()) else {
+        return Vec::new();
+    };
+    let end = src_lines
+        .iter()
+        .rposition(|line| !line.trim().is_empty())
+        .expect("non-empty start implies non-empty end");
+    let mut out = Vec::new();
+    push_whole_or_head_split(
+        &mut out,
+        &src_lines,
+        SectionRange {
+            start: start + 1,
+            end: end + 1,
+            // A headingless README is still the project's orientation
+            // lede. Other headingless Markdown (licenses, generated
+            // fragments, footer snippets) remains reachable without
+            // competing at the same value as a named section.
+            kind: if is_readme(file) {
+                SectionKind::Whole
+            } else {
+                SectionKind::BodyBlock
+            },
+            parent_index: 0,
+            synthetic_intro_present: false,
+            parent_is_canonical_usage_h2: false,
+            is_canonical_operational_section: false,
+            is_reference_usage_section: false,
+            reference_shaped: false,
+            dev_workflow_section: false,
+            deferred_mass_prose: false,
+            roster_entries: 0,
+            chained_to_previous: false,
+        },
+        true,
+    );
+    out
 }
 
 fn build_section_content(
@@ -1238,7 +1301,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
             i += 1;
             continue;
         }
-        extend_rows_inclusive(&mut covered, block, source);
+        extend_headline_block_rows(&mut covered, block, source);
         // Any substantive post-H1 block (paragraph, block_quote, list,
         // code lede) counts as a lede — the decorative-title fallback
         // below must only fire for a genuinely bare image/badge title,
@@ -1283,7 +1346,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
             if is_decorative_block(inner, source) {
                 continue;
             }
-            extend_rows_inclusive(&mut covered, inner, source);
+            extend_headline_block_rows(&mut covered, inner, source);
             if inner.kind() == "paragraph" {
                 break;
             }
@@ -1308,11 +1371,23 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
 
 fn build_headline_spans(file: &Path, source: &str, spec: &HeadlineSpec) -> Vec<Span> {
     let trunc_row = spec.truncate.as_ref().map(|t| t.row);
+    let src_lines: Vec<&str> = source.lines().collect();
+    let oversize_rows: Vec<usize> = spec
+        .covered_rows
+        .iter()
+        .copied()
+        .filter(|row| {
+            Some(*row) != trunc_row
+                && src_lines
+                    .get(*row - 1)
+                    .is_some_and(|line| line.chars().count() > HEADLINE_OVERSIZE_LINE_CHARS)
+        })
+        .collect();
     let full_rows: Vec<usize> = spec
         .covered_rows
         .iter()
         .copied()
-        .filter(|n| Some(*n) != trunc_row)
+        .filter(|row| Some(*row) != trunc_row && !oversize_rows.contains(row))
         .collect();
 
     // Full rows go through `build_file_spans` (blank-filter + merge);
@@ -1327,8 +1402,16 @@ fn build_headline_spans(file: &Path, source: &str, spec: &HeadlineSpec) -> Vec<S
                 pattern: t.pattern.clone(),
             },
         });
-        spans.sort_by_key(|s| s.start);
     }
+    spans.extend(oversize_rows.into_iter().map(|row| Span {
+        path: file.to_path_buf(),
+        start: row,
+        end: row,
+        render: Render::Truncated {
+            pattern: format!(r"(?s)^.{{1,{HEADLINE_OVERSIZE_LINE_CHARS}}}"),
+        },
+    }));
+    spans.sort_by_key(|span| span.start);
     spans
 }
 
@@ -1338,6 +1421,28 @@ fn extend_rows_inclusive(out: &mut BTreeSet<usize>, node: Node, source: &str) {
     let last = node_end_row_trimmed(node, source);
     for row in node.start_position().row..=last {
         out.insert(row + 1);
+    }
+}
+
+fn extend_headline_block_rows(out: &mut BTreeSet<usize>, node: Node, source: &str) {
+    if node.end_byte() - node.start_byte() <= HEADLINE_BLOCK_BYTE_GATE {
+        extend_rows_inclusive(out, node, source);
+        return;
+    }
+    let src_lines: Vec<&str> = source.lines().collect();
+    let start = node.start_position().row;
+    let end = node_end_row_trimmed(node, source);
+    let mut bytes = 0usize;
+    for row in start..=end {
+        let line = src_lines.get(row).copied().unwrap_or_default();
+        if line.trim().is_empty() {
+            continue;
+        }
+        out.insert(row + 1);
+        bytes += line.len() + 1;
+        if bytes >= HEADLINE_OVERSIZE_LEDE_BYTES {
+            break;
+        }
     }
 }
 
@@ -2669,11 +2774,16 @@ fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(u
     let item_count = end - start + 1;
     let mut token_prefix = Vec::with_capacity(item_count + 1);
     token_prefix.push(0);
+    let mut char_prefix = Vec::with_capacity(item_count + 1);
+    char_prefix.push(0);
     let mut legal_split = vec![false; item_count];
+    let mut safe_split = vec![false; item_count];
     let mut open_fence: Option<(char, usize)> = None;
     for (index, row) in (start..=end).enumerate() {
         token_prefix.push(token_prefix[index] + row_tokens(src_lines, row));
-        let t = src_lines.get(row - 1).copied().unwrap_or("").trim_start();
+        let raw = src_lines.get(row - 1).copied().unwrap_or("");
+        let t = raw.trim_start();
+        char_prefix.push(char_prefix[index] + raw.chars().count() + 1);
         // Marker-matched fence state: only a delimiter of the same
         // char with at least the opening run length closes the fence,
         // so a ``` line inside a ~~~ fence or a ````-fenced markdown
@@ -2682,17 +2792,34 @@ fn oversize_chunk_bounds(src_lines: &[&str], start: usize, end: usize) -> Vec<(u
             if fence_marker(t).is_some_and(|(c, run)| c == open_char && run >= open_run) {
                 open_fence = None;
             }
+            if index + 1 < item_count {
+                safe_split[index + 1] = open_fence.is_none();
+            }
             continue;
         }
         if let Some(marker) = fence_marker(t) {
             open_fence = Some(marker);
             continue;
         }
+        if index + 1 < item_count {
+            safe_split[index + 1] = true;
+        }
         if !t.is_empty() {
             continue;
         }
         if index + 1 < item_count {
             legal_split[index + 1] = !next_nonblank_opens_fence(src_lines, row + 1, end);
+        }
+    }
+    let mut chunk_start = 0usize;
+    for index in 1..item_count {
+        if legal_split[index] {
+            chunk_start = index;
+        } else if safe_split[index]
+            && char_prefix[index] - char_prefix[chunk_start] >= OVERSIZE_HARD_CHUNK_CHAR_CAP
+        {
+            legal_split[index] = true;
+            chunk_start = index;
         }
     }
     budget_chunk_ranges(
@@ -3565,6 +3692,8 @@ fn is_intro_section_title(heading: Node, source: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::scheduler::Scheduler;
+    use crate::walker::FsWalker;
     use std::path::PathBuf;
     use tree_sitter::Parser;
 
@@ -3609,6 +3738,63 @@ mod tests {
         for pair in bounds.windows(2) {
             assert_eq!(pair[0].1 + 1, pair[1].0, "gap/overlap in {bounds:?}");
         }
+    }
+
+    #[test]
+    fn markdown_oversize_chunks_split_unbroken_prose_at_safe_row_boundaries() {
+        let long_line = "word ".repeat(360);
+        let source = std::iter::repeat_n(long_line.as_str(), 12)
+            .collect::<Vec<_>>()
+            .join("\n");
+        let bounds = chunk_bounds_of(&source);
+        assert!(bounds.len() > 1, "expected hard splits, got {bounds:?}");
+        let end = source.lines().count();
+        assert_eq!(bounds.first().unwrap().0, 1);
+        assert_eq!(bounds.last().unwrap().1, end);
+        for pair in bounds.windows(2) {
+            assert_eq!(pair[0].1 + 1, pair[1].0, "gap/overlap in {bounds:?}");
+        }
+    }
+
+    #[test]
+    fn markdown_headingless_readme_emits_fallback_at_small_budget() {
+        let dir = tempfile::tempdir().unwrap();
+        std::fs::write(
+            dir.path().join("README.md"),
+            "just two lines of prose without any heading at all.\nsecond line here.\n",
+        )
+        .unwrap();
+
+        let scheduler = Scheduler::new(dir.path().to_path_buf(), FsWalker, 200, None);
+        let rendered = scheduler.run().render();
+        assert!(rendered.contains("just two lines of prose"), "{rendered}");
+        assert!(rendered.contains("second line here"), "{rendered}");
+    }
+
+    #[test]
+    fn markdown_headingless_non_readme_uses_body_value() {
+        let ranges = headingless_fallback_ranges(
+            &PathBuf::from("LICENSE.md"),
+            "license prose without a heading\n",
+        );
+        assert_eq!(ranges.len(), 1);
+        assert_eq!(ranges[0].kind, SectionKind::BodyBlock);
+    }
+
+    #[test]
+    fn markdown_headline_bounds_a_giant_unbroken_lede() {
+        let long_line = "word ".repeat(400);
+        let source = format!(
+            "# Giant Doc\n\n{}\n",
+            std::iter::repeat_n(long_line.as_str(), 10)
+                .collect::<Vec<_>>()
+                .join("\n")
+        );
+        let spans = rendered_spans(&source);
+        assert_eq!(spans.len(), 2, "unexpected headline spans: {spans:?}");
+        assert_eq!((spans[0].start, spans[0].end), (1, 1));
+        assert_eq!((spans[1].start, spans[1].end), (3, 3));
+        assert!(matches!(spans[1].render, Render::Truncated { .. }));
     }
 
     #[test]
