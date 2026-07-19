@@ -59,8 +59,8 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TsKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::value::{
-    CATALOG_ROSTER_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, mix_signals,
-    reexport_import_chunk_factor, roster_mass_factor,
+    CATALOG_ROSTER_CONCAVITY_EXPONENT, DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors,
+    mix_signals, reexport_import_chunk_factor, roster_mass_factor,
 };
 
 use super::import_chunks::{
@@ -112,6 +112,12 @@ const OVERSIZE_EXPORT_CHUNK_TARGET_TOKENS: usize = 200;
 const OVERSIZE_EXPORT_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 /// Direct continuation of an export whose head already won purchase.
 const OVERSIZE_EXPORT_TAIL_FACTOR: f64 = 0.85;
+/// Exported class bodies above this rendered-cost envelope are partitioned at
+/// method-statement boundaries. A batch that cannot honor the envelope at a
+/// natural boundary is suppressed rather than recreating a prefix blocker.
+const CLASS_BODY_CHUNK_MAX_TOKENS: usize = 1_200;
+const CLASS_BODY_CHUNK_TARGET_TOKENS: usize = 800;
+const CLASS_BODY_CHUNK_MIN_TAIL_TOKENS: usize = 300;
 /// Minimum prototype-method assignments in a JS file for the synthesized
 /// per-method exports to fire. Below this floor a couple incidental
 /// `thing.helper = function …` lines shouldn't hijack the file shape.
@@ -1044,17 +1050,32 @@ fn emit_export_body_parts(
     predecessor: &BatchKey,
 ) {
     let parts = disjoint_body_parts(parts);
-    // Factory body parts are sibling anchors; skip the per-partition
-    // value damping.
-    let part_value_factor = if item.factory_sibling_body_parts {
-        1.0
+    // Class method bodies skip late-body decay. Oversized class aggregates
+    // become one value-conserved train: splitting their shape must not
+    // multiply the declaration's total value.
+    let is_class_peer = matches!(item.kind, ItemKind::Class)
+        || (matches!(item.kind, ItemKind::Default) && is_class_node(item.decl));
+    let valued_parts = if is_class_peer {
+        bounded_class_body_parts(emit.file, emit.source, parts, emit.ctx)
     } else {
-        body_part_value_factor(parts.len())
+        // Factory body parts are sibling anchors; skip the per-partition
+        // value damping.
+        let factor = if item.factory_sibling_body_parts {
+            1.0
+        } else {
+            body_part_value_factor(parts.len())
+        };
+        parts
+            .into_iter()
+            .map(|part| ValuedClassBodyPart {
+                part,
+                value_factor: factor,
+            })
+            .collect()
     };
-    // Class method bodies are peer units — each is its own semantic
-    // unit so the late-body decay doesn't apply.
-    let is_class_peer = matches!(item.kind, ItemKind::Class | ItemKind::Default);
-    for part in parts {
+    let mut class_predecessor = predecessor.clone();
+    for valued_part in valued_parts {
+        let part = valued_part.part;
         let Some(body_start_line) = part.start_line() else {
             continue;
         };
@@ -1069,24 +1090,94 @@ fn emit_export_body_parts(
         } else {
             body_segment_value_factor(*emit.body_segment_index)
         };
+        let key = TsKey::ExportBody {
+            file: emit.file.to_path_buf(),
+            start_line: item.start_line,
+            body_start_line,
+        };
         out.push(Batch {
-            key: TsKey::ExportBody {
-                file: emit.file.to_path_buf(),
-                start_line: item.start_line,
-                body_start_line,
-            }
-            .into(),
-            predecessor: Some(predecessor.clone()),
+            key: key.clone().into(),
+            predecessor: Some(if is_class_peer {
+                class_predecessor.clone()
+            } else {
+                predecessor.clone()
+            }),
             content,
             value: export_body_value(emit.file, item.kind, emit.ctx, emit.js_factor)
                 * emit.per_export_factor
-                * part_value_factor
+                * valued_part.value_factor
                 * segment_factor,
         });
-        if !is_class_peer {
+        if is_class_peer {
+            class_predecessor = BatchKey::Typescript(key);
+        } else {
             *emit.body_segment_index += 1;
         }
     }
+}
+
+struct ValuedClassBodyPart {
+    part: BodyPart,
+    value_factor: f64,
+}
+
+/// Bound exported-class body batches at a fixed rendered-cost envelope.
+/// Source-ordered method-statement parts are packed with
+/// [`budget_chunk_ranges`], then one declaration-level value is conserved
+/// across the resulting predecessor chain. If one indivisible statement is
+/// itself over the envelope, suppress the class body: emitting it would
+/// recreate the exact prefix blocker this shaping rule exists to prevent.
+fn bounded_class_body_parts(
+    file: &Path,
+    source: &str,
+    parts: Vec<BodyPart>,
+    ctx: &WalkCtx,
+) -> Vec<ValuedClassBodyPart> {
+    if parts.is_empty() {
+        return Vec::new();
+    }
+    let lines_for = |range: std::ops::Range<usize>| BodyPart {
+        lines: dedup_sorted(
+            parts[range]
+                .iter()
+                .flat_map(|part| part.lines.iter().copied())
+                .collect(),
+        ),
+    };
+    let cost = |part: &BodyPart| {
+        single_file_lines_content(file, source, FileLines::new(part.lines.clone()))
+            .map(|content| ctx.marginal_tokens(&content))
+            .unwrap_or(0)
+    };
+    let whole = lines_for(0..parts.len());
+    if cost(&whole) <= CLASS_BODY_CHUNK_MAX_TOKENS {
+        return vec![ValuedClassBodyPart {
+            part: whole,
+            value_factor: 1.0,
+        }];
+    }
+    let ranges = budget_chunk_ranges(
+        parts.len(),
+        |range| cost(&lines_for(range)),
+        CLASS_BODY_CHUNK_TARGET_TOKENS,
+        CLASS_BODY_CHUNK_MIN_TAIL_TOKENS,
+        |_| true,
+        |range| cost(&lines_for(range)) <= CLASS_BODY_CHUNK_MAX_TOKENS,
+    );
+    let chunks: Vec<BodyPart> = ranges.into_iter().map(lines_for).collect();
+    let costs: Vec<usize> = chunks.iter().map(cost).collect();
+    if costs
+        .iter()
+        .any(|&tokens| tokens > CLASS_BODY_CHUNK_MAX_TOKENS)
+    {
+        return Vec::new();
+    }
+    let factors = conserved_catalog_chunk_factors(&costs, DEFAULT_CONCAVITY_EXPONENT);
+    chunks
+        .into_iter()
+        .zip(factors)
+        .map(|(part, value_factor)| ValuedClassBodyPart { part, value_factor })
+        .collect()
 }
 
 fn body_segment_value_factor(body_segment_index: usize) -> f64 {
@@ -1321,13 +1412,12 @@ fn make_export_info<'a>(
     };
     let factory_sibling_body_parts =
         !collect_class_members && is_factory_body_match(decl, kind, source, src_lines);
+    let class_body = matches!(kind, ItemKind::Class | ItemKind::Default) && is_class_node(decl);
     let body_parts = if collect_class_members {
-        merged_body_parts(
-            class_members
-                .iter()
-                .flat_map(|member| member.body_parts.clone())
-                .collect(),
-        )
+        class_members
+            .iter()
+            .flat_map(|member| member.body_parts.clone())
+            .collect()
     } else {
         let parts = body_parts(decl, kind, source, src_lines);
         // Factory bodies expose their public surface as two distinct
@@ -1335,7 +1425,7 @@ fn make_export_info<'a>(
         // those parts as separate ExportBody batches rather than
         // merging the table into the catalog (which would inflate the
         // body cost out of the auto-injection budget).
-        if factory_sibling_body_parts {
+        if factory_sibling_body_parts || class_body {
             parts
         } else {
             merged_body_parts(parts)
@@ -5402,6 +5492,63 @@ export function run(options: Options): void { void options; }
                 start_line: 1,
                 chunk_index,
             });
+        }
+    }
+
+    #[test]
+    fn walker_typescript_oversized_class_body_is_bounded_and_value_conserved() {
+        let mut source = String::from("export class Large {\n");
+        for method in 0..60 {
+            source.push_str(&format!(
+                "  method_{method}(input: string): string {{\n    const value = input + 'a deliberately long semantic payload for chunk-cost coverage';\n    return value + 'with enough source mass to require several bounded class body chunks';\n  }}\n"
+            ));
+        }
+        source.push_str("}\n");
+
+        let dir = tempfile::tempdir().unwrap();
+        let file = dir.path().join("fixture.ts");
+        std::fs::write(&file, &source).unwrap();
+        let tree = parse(&source);
+        let exports = export_infos_for_path(&file, &tree, &source);
+        let item = exports.first().unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let chunks = bounded_class_body_parts(&file, &source, item.body_parts.clone(), &ctx);
+
+        assert!(chunks.len() > 1, "expected an oversized body to split");
+        for chunk in &chunks {
+            let content =
+                single_file_lines_content(&file, &source, FileLines::new(chunk.part.lines.clone()))
+                    .unwrap();
+            assert!(ctx.marginal_tokens(&content) <= CLASS_BODY_CHUNK_MAX_TOKENS);
+        }
+        let total_factor: f64 = chunks.iter().map(|chunk| chunk.value_factor).sum();
+        assert!((total_factor - 1.0).abs() < 1e-9);
+        let covered: Vec<_> = chunks
+            .iter()
+            .flat_map(|chunk| chunk.part.lines.iter().copied())
+            .collect();
+        let original: Vec<_> = item
+            .body_parts
+            .iter()
+            .flat_map(|part| part.lines.iter().copied())
+            .collect();
+        assert_eq!(covered, original);
+
+        let report =
+            Scheduler::new(dir.path().to_path_buf(), FsWalker, 100_000, None).run_with_report();
+        let body_batches: Vec<_> = report
+            .candidates
+            .iter()
+            .filter(|batch| {
+                matches!(
+                    batch.key,
+                    BatchKey::Typescript(TsKey::ExportBody { start_line: 1, .. })
+                )
+            })
+            .collect();
+        assert_eq!(body_batches.len(), chunks.len());
+        for pair in body_batches.windows(2) {
+            assert_eq!(pair[1].predecessor.as_ref(), Some(&pair[0].key));
         }
     }
 

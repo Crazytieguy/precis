@@ -211,29 +211,27 @@ Score(3000)=0.727 I=0.860 C=0.614 ns_rows≤3K=19/43 (reached=12 partial=1 missi
 | walker |  | 7880 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 136 |  |  | 0.611 |
 | walker |  | 7902 | 22 | listing of 'docs/src/assets/scss/libs' |  |  | 0.611 |
 | walker |  | 7965 | 63 | export body at src/dockerUtil.js:5 body 56 |  |  | 0.611 |
-| walker |  | 7978 | 13 | export body at src/screen.js:18 body 87 |  |  | 0.612 |
-| walker |  | 8003 | 25 | listing of 'docs/src/assets/scss/layout' |  |  | 0.612 |
-| walker |  | 8012 | 9 | export body at src/dockerUtil.js:5 body 125 |  |  | 0.612 |
-| walker |  | 8026 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 139 |  |  | 0.612 |
-| walker |  | 8042 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 140 |  |  | 0.612 |
-| walker |  | 8087 | 45 | listing of 'docs/src/assets/fonts' |  |  | 0.612 |
-| ns | 8097 |  | 233 | baseWidget.js (full) | 6.1 |  | 0.621 |
-| walker |  | 8153 | 66 | export body at src/dockerUtil.js:5 body 34 |  |  | 0.624 |
-| walker |  | 8273 | 120 | export body at src/screen.js:18 body 36 |  |  | 0.628 |
-| walker |  | 8345 | 72 | export body at src/dockerUtil.js:5 body 79 |  |  | 0.635 |
-| walker |  | 8359 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 143 |  |  | 0.635 |
-| walker |  | 8375 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 144 |  |  | 0.635 |
-| walker |  | 8437 | 62 | listing of 'docs/src/assets/images' |  |  | 0.635 |
-| ns | 8524 |  | 427 | widgetsTemplates/*.js: method-name roster across all 5 templates | 6.2 |  | 0.648 |
-| walker |  | 8563 | 126 | export body at src/screen.js:18 body 20 |  |  | 0.661 |
-| ns | 9000 |  | 476 | help.widget.template.js: getWidgetContents (full keybinding cheat-sheet) | 6.3 | 6.2 | 0.645 |
-| walker |  | 9211 | 648 | export body at src/widgetsTemplates/logs.widget.template.js:7 body 9 |  |  | 0.645 |
-| ns | 9238 |  | 238 | hooks/*.hook.js: method-name roster across all 4 hooks | 7.1 |  | 0.637 |
-| walker |  | 9293 | 82 | export body at src/dockerUtil.js:5 body 44 |  |  | 0.637 |
-| walker |  | 9426 | 133 | export body at src/screen.js:18 body 139 |  |  | 0.642 |
-| ns | 9628 |  | 390 | widgets/**/*.widget.js: panel-label roster (all 20 concrete widgets) | 8.1 |  | 0.630 |
-| ns | 9705 |  | 77 | List-table column headers: containers / images / services | 8.2 | 8.1 | 0.629 |
-| ns | 9875 |  | 170 | Dockerfile (full) | 12.1 |  | 0.634 |
-| walker |  | 9923 | 497 | YAML config at .github/workflows/main.yml |  |  | 0.634 |
-| walker |  | 9945 | 22 | export body at src/widgetsTemplates/list.widget.template.js:8 body 156 |  |  | 0.634 |
-| ns | 9984 |  | 109 | dockerRunScript.sh (full) | 12.2 |  | 0.637 |
+| walker |  | 7990 | 25 | listing of 'docs/src/assets/scss/layout' |  |  | 0.611 |
+| walker |  | 8056 | 66 | export body at src/dockerUtil.js:5 body 34 |  |  | 0.614 |
+| walker |  | 8070 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 139 |  |  | 0.614 |
+| walker |  | 8086 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 140 |  |  | 0.614 |
+| ns | 8097 |  | 233 | baseWidget.js (full) | 6.1 |  | 0.623 |
+| walker |  | 8131 | 45 | listing of 'docs/src/assets/fonts' |  |  | 0.623 |
+| walker |  | 8251 | 120 | export body at src/screen.js:18 body 36 |  |  | 0.627 |
+| walker |  | 8323 | 72 | export body at src/dockerUtil.js:5 body 79 |  |  | 0.634 |
+| walker |  | 8449 | 126 | export body at src/screen.js:18 body 20 |  |  | 0.647 |
+| walker |  | 8463 | 14 | export member at src/widgetsTemplates/list.widget.template.js:8 member 143 |  |  | 0.648 |
+| walker |  | 8479 | 16 | export body at src/widgetsTemplates/list.widget.template.js:8 body 144 |  |  | 0.648 |
+| ns | 8524 |  | 427 | widgetsTemplates/*.js: method-name roster across all 5 templates | 6.2 |  | 0.660 |
+| walker |  | 8541 | 62 | listing of 'docs/src/assets/images' |  |  | 0.660 |
+| walker |  | 8623 | 82 | export body at src/dockerUtil.js:5 body 44 |  |  | 0.660 |
+| walker |  | 8756 | 133 | export body at src/screen.js:18 body 139 |  |  | 0.664 |
+| ns | 9000 |  | 476 | help.widget.template.js: getWidgetContents (full keybinding cheat-sheet) | 6.3 | 6.2 | 0.649 |
+| ns | 9238 |  | 238 | hooks/*.hook.js: method-name roster across all 4 hooks | 7.1 |  | 0.641 |
+| walker |  | 9404 | 648 | export body at src/widgetsTemplates/logs.widget.template.js:7 body 9 |  |  | 0.641 |
+| walker |  | 9490 | 86 | export body at src/dockerUtil.js:5 body 89 |  |  | 0.641 |
+| ns | 9628 |  | 390 | widgets/**/*.widget.js: panel-label roster (all 20 concrete widgets) | 8.1 |  | 0.629 |
+| ns | 9705 |  | 77 | List-table column headers: containers / images / services | 8.2 | 8.1 | 0.628 |
+| ns | 9875 |  | 170 | Dockerfile (full) | 12.1 |  | 0.633 |
+| ns | 9984 |  | 109 | dockerRunScript.sh (full) | 12.2 |  | 0.636 |
+| walker |  | 9987 | 497 | YAML config at .github/workflows/main.yml |  |  | 0.636 |
