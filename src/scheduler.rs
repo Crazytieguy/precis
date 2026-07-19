@@ -399,9 +399,6 @@ impl<W: Walker> Scheduler<W> {
                 entry.value,
                 exact_cost.tokens,
                 entry.key.concavity_exponent(),
-            ) * crate::value::orientation_tier_multiplier(
-                self.consumed.tokens,
-                entry.key.is_orientation(),
             ) * crate::value::prose_mass_tier_multiplier(
                 self.consumed.tokens,
                 self.token_budget,
@@ -444,10 +441,6 @@ impl<W: Walker> Scheduler<W> {
             let approx_tokens = self.approx_cost_cache[&id];
             let entry = &self.entries[id.index()];
             let ratio = score_ratio(entry.value, approx_tokens, entry.key.concavity_exponent())
-                * crate::value::orientation_tier_multiplier(
-                    self.consumed.tokens,
-                    entry.key.is_orientation(),
-                )
                 * crate::value::prose_mass_tier_multiplier(
                     self.consumed.tokens,
                     self.token_budget,

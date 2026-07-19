@@ -19,10 +19,52 @@ entries = [".editorconfig", ".gitattributes", ".github", ".gitignore", ".prettie
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "typings" })'
+descriptor = "listing of 'typings'"
+cost_tokens = 17
+cum_tokens = 119
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "typings"
+entries = ["esm.d.mts", "index.d.ts", "index.test-d.ts"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 25
+cum_tokens = 144
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib"
+entries = ["argument.js", "command.js", "error.js", "help.js", "option.js", "suggestSimilar.js"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 36
+cum_tokens = 180
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["deprecated.md", "help-in-depth.md", "options-in-depth.md", "parsing-and-hooks.md", "release-policy.md", "terminology.md", "zh-CN"]
+
+[[batches]]
+position = 5
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 77
-cum_tokens = 179
+cum_tokens = 257
 
 [batches.content]
 kind = "lines"
@@ -52,25 +94,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "typings" })'
-descriptor = "listing of 'typings'"
-cost_tokens = 17
-cum_tokens = 196
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "typings"
-entries = ["esm.d.mts", "index.d.ts", "index.test-d.ts"]
-
-[[batches]]
-position = 4
+position = 6
 key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 65
-cum_tokens = 261
+cum_tokens = 322
 
 [batches.content]
 kind = "lines"
@@ -92,25 +120,25 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "lib" })'
-descriptor = "listing of 'lib'"
+position = 7
+key = 'Fs(DirListing { dir: "docs/zh-CN" })'
+descriptor = "listing of 'docs/zh-CN'"
 cost_tokens = 25
-cum_tokens = 286
+cum_tokens = 347
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "lib"
-entries = ["argument.js", "command.js", "error.js", "help.js", "option.js", "suggestSimilar.js"]
+parent = "docs/zh-CN"
+entries = ["不再推荐使用的功能.md", "可变参数的选项.md", "术语表.md"]
 
 [[batches]]
-position = 6
+position = 8
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 30
-cum_tokens = 316
+cum_tokens = 377
 
 [batches.content]
 kind = "lines"
@@ -124,57 +152,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 36
-cum_tokens = 352
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["deprecated.md", "help-in-depth.md", "options-in-depth.md", "parsing-and-hooks.md", "release-policy.md", "terminology.md", "zh-CN"]
-
-[[batches]]
-position = 8
-key = 'Markdown(Section { file: "Readme.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "Readme.md section #1"
-cost_tokens = 35
-cum_tokens = 387
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Readme.md"
-start = 61
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 9
-key = 'Fs(DirListing { dir: "docs/zh-CN" })'
-descriptor = "listing of 'docs/zh-CN'"
-cost_tokens = 25
-cum_tokens = 412
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs/zh-CN"
-entries = ["不再推荐使用的功能.md", "可变参数的选项.md", "术语表.md"]
-
-[[batches]]
-position = 10
 key = 'Typescript(ExportNames { file: "lib/option.js" })'
 descriptor = "export names surface in lib/option.js"
 cost_tokens = 42
-cum_tokens = 454
+cum_tokens = 419
 
 [batches.content]
 kind = "lines"
@@ -220,11 +202,11 @@ end = 269
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 10
 key = 'Typescript(Export { file: "lib/option.js", start_line: 3 })'
 descriptor = "export at lib/option.js:3"
 cost_tokens = 0
-cum_tokens = 454
+cum_tokens = 419
 
 [batches.content]
 kind = "lines"
@@ -246,11 +228,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 11
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 203 })'
 descriptor = "export member at lib/option.js:3 member 203"
 cost_tokens = 10
-cum_tokens = 464
+cum_tokens = 429
 
 [batches.content]
 kind = "lines"
@@ -272,11 +254,11 @@ end = 204
 kind = "ellipsis"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Typescript(Export { file: "lib/option.js", start_line: 268 })'
 descriptor = "export at lib/option.js:268"
 cost_tokens = 26
-cum_tokens = 490
+cum_tokens = 455
 
 [batches.content]
 kind = "lines"
@@ -322,11 +304,11 @@ end = 298
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 65 })'
 descriptor = "export member at lib/option.js:3 member 65"
 cost_tokens = 11
-cum_tokens = 501
+cum_tokens = 466
 
 [batches.content]
 kind = "lines"
@@ -348,11 +330,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 82 })'
 descriptor = "export member at lib/option.js:3 member 82"
 cost_tokens = 11
-cum_tokens = 512
+cum_tokens = 477
 
 [batches.content]
 kind = "lines"
@@ -374,11 +356,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 120 })'
 descriptor = "export member at lib/option.js:3 member 120"
 cost_tokens = 11
-cum_tokens = 523
+cum_tokens = 488
 
 [batches.content]
 kind = "lines"
@@ -400,11 +382,11 @@ end = 121
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 20
-cum_tokens = 543
+cum_tokens = 508
 
 [batches.content]
 kind = "fs"
@@ -414,11 +396,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "PULL_REQUEST_TEMPLATE.md", "dependabot.yml", "workflows"]
 
 [[batches]]
-position = 18
+position = 17
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 10
-cum_tokens = 553
+cum_tokens = 518
 
 [batches.content]
 kind = "fs"
@@ -428,11 +410,11 @@ parent = ".github/workflows"
 entries = ["codeql-analysis.yml", "tests.yml"]
 
 [[batches]]
-position = 19
+position = 18
 key = 'Yaml(Whole { file: ".github/workflows/tests.yml" })'
 descriptor = "YAML config at .github/workflows/tests.yml"
 cost_tokens = 335
-cum_tokens = 888
+cum_tokens = 853
 
 [batches.content]
 kind = "lines"
@@ -441,6 +423,24 @@ kind = "lines"
 path = ".github/workflows/tests.yml"
 start = 1
 end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Markdown(Section { file: "Readme.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "Readme.md section #1"
+cost_tokens = 35
+cum_tokens = 888
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Readme.md"
+start = 61
+end = 65
 
 [batches.content.spans.render]
 kind = "full"

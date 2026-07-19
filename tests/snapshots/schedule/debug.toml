@@ -19,10 +19,24 @@ entries = [".editorconfig", ".gitignore", ".travis.yml", "LICENSE", "README.md",
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 16
+cum_tokens = 47
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["browser.js", "common.js", "index.js", "node.js"]
+
+[[batches]]
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 45
-cum_tokens = 76
+cum_tokens = 92
 
 [batches.content]
 kind = "lines"
@@ -44,11 +58,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 3
+position = 4
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 65
-cum_tokens = 141
+cum_tokens = 157
 
 [batches.content]
 kind = "lines"
@@ -78,43 +92,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 16
-cum_tokens = 157
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["browser.js", "common.js", "index.js", "node.js"]
-
-[[batches]]
 position = 5
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 32
-cum_tokens = 189
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 56
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
 key = 'Typescript(ModuleDocLede { file: "src/index.js" })'
 descriptor = "module-doc lede in src/index.js"
 cost_tokens = 43
-cum_tokens = 232
+cum_tokens = 200
 
 [batches.content]
 kind = "lines"
@@ -123,6 +105,24 @@ kind = "lines"
 path = "src/index.js"
 start = 1
 end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 32
+cum_tokens = 232
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 56
+end = 58
 
 [batches.content.spans.render]
 kind = "full"
@@ -155,28 +155,36 @@ kind = "full"
 
 [[batches]]
 position = 8
-key = 'Json(Scripts { file: "package.json" })'
-descriptor = "package scripts in package.json"
-cost_tokens = 108
-cum_tokens = 408
+key = 'Typescript(ExportNames { file: "karma.conf.js" })'
+descriptor = "export names surface in karma.conf.js"
+cost_tokens = 14
+cum_tokens = 314
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "package.json"
-start = 26
-end = 32
+path = "karma.conf.js"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "karma.conf.js"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
 position = 9
-key = 'Typescript(ExportNames { file: "karma.conf.js" })'
-descriptor = "export names surface in karma.conf.js"
-cost_tokens = 14
-cum_tokens = 422
+key = 'Typescript(Export { file: "karma.conf.js", start_line: 1 })'
+descriptor = "export at karma.conf.js:1"
+cost_tokens = 0
+cum_tokens = 314
 
 [batches.content]
 kind = "lines"
@@ -199,29 +207,21 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'Typescript(Export { file: "karma.conf.js", start_line: 1 })'
-descriptor = "export at karma.conf.js:1"
-cost_tokens = 0
+key = 'Json(Scripts { file: "package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 108
 cum_tokens = 422
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "karma.conf.js"
-start = 1
-end = 1
+path = "package.json"
+start = 26
+end = 32
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "karma.conf.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 11

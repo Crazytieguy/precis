@@ -5,32 +5,32 @@ Score(3000)=0.374 I=0.461 C=0.303 ns_rows≤3K=26/44 (reached=10 partial=0 missi
 | ns | 29 |  | 29 | License header | 1.1 |  | 0.000 |
 | walker |  | 62 | 62 | listing of '.' |  |  | 0.000 |
 | ns | 63 |  | 34 | pnpm workspace member list | 1.2 |  | 0.000 |
-| walker |  | 89 | 27 | package identity in package.json |  |  | 0.000 |
-| walker |  | 102 | 13 | listing of 'cmdk' |  |  | 0.000 |
+| walker |  | 75 | 13 | listing of 'cmdk' |  |  | 0.000 |
+| walker |  | 102 | 27 | package identity in package.json |  |  | 0.000 |
 | ns | 125 |  | 62 | Repo root listing | 1.3 |  | 0.475 |
 | ns | 135 |  | 10 | website/components/code listing | 2.1 |  | 0.451 |
 | walker |  | 144 | 42 | package identity in cmdk/package.json |  |  | 0.451 |
 | ns | 145 |  | 10 | website/components/icons listing | 2.2 |  | 0.430 |
-| ns | 155 |  | 10 | cmdk/src listing | 2.3 |  | 0.411 |
-| walker |  | 165 | 21 | package runtime metadata in package.json |  |  | 0.411 |
-| ns | 174 |  | 19 | website/styles/cmdk listing | 2.4 |  | 0.379 |
-| ns | 197 |  | 23 | website/components/cmdk listing | 2.5 |  | 0.353 |
-| ns | 211 |  | 14 | website/components listing | 2.6 |  | 0.332 |
-| ns | 224 |  | 13 | cmdk/ package listing | 2.7 |  | 0.346 |
-| ns | 241 |  | 17 | website/pages listing | 2.8 |  | 0.332 |
-| ns | 254 |  | 13 | website/styles listing | 2.9 |  | 0.320 |
-| walker |  | 257 | 92 | README headline in README.md |  |  | 0.320 |
-| walker |  | 267 | 10 | listing of 'cmdk/src' |  |  | 0.346 |
+| walker |  | 154 | 10 | listing of 'cmdk/src' |  |  | 0.442 |
+| ns | 155 |  | 10 | cmdk/src listing | 2.3 |  | 0.448 |
+| walker |  | 159 | 5 | listing of '.husky' |  |  | 0.448 |
+| ns | 174 |  | 19 | website/styles/cmdk listing | 2.4 |  | 0.414 |
+| walker |  | 180 | 21 | package runtime metadata in package.json |  |  | 0.414 |
+| walker |  | 188 | 8 | listing of '.github' |  |  | 0.414 |
+| walker |  | 192 | 4 | listing of '.github/workflows' |  |  | 0.414 |
+| ns | 197 |  | 23 | website/components/cmdk listing | 2.5 |  | 0.385 |
+| ns | 211 |  | 14 | website/components listing | 2.6 |  | 0.362 |
+| ns | 224 |  | 13 | cmdk/ package listing | 2.7 |  | 0.374 |
+| ns | 241 |  | 17 | website/pages listing | 2.8 |  | 0.359 |
+| ns | 254 |  | 13 | website/styles listing | 2.9 |  | 0.346 |
 | ns | 298 |  | 44 | website/public listing | 2.10 |  | 0.313 |
-| walker |  | 324 | 57 | headings outline in ARCHITECTURE.md |  |  | 0.313 |
-| walker |  | 329 | 5 | listing of '.husky' |  |  | 0.313 |
-| walker |  | 337 | 8 | listing of '.github' |  |  | 0.313 |
-| walker |  | 341 | 4 | listing of '.github/workflows' |  |  | 0.313 |
-| ns | 358 |  | 60 | test/pages listing | 2.11 |  | 0.283 |
+| ns | 358 |  | 60 | test/pages listing | 2.11 |  | 0.282 |
 | ns | 416 |  | 58 | test/ listing | 2.12 |  | 0.257 |
-| ns | 470 |  | 54 | website/ listing | 2.13 |  | 0.237 |
-| ns | 573 |  | 103 | cmdk/tsup.config.ts | 2.14 |  | 0.222 |
-| walker |  | 680 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.225 |
+| ns | 470 |  | 54 | website/ listing | 2.13 |  | 0.236 |
+| walker |  | 531 | 339 | YAML config at .github/workflows/test.yml |  |  | 0.240 |
+| ns | 573 |  | 103 | cmdk/tsup.config.ts | 2.14 |  | 0.224 |
+| walker |  | 623 | 92 | README headline in README.md |  |  | 0.224 |
+| walker |  | 680 | 57 | headings outline in ARCHITECTURE.md |  |  | 0.225 |
 | walker |  | 690 | 10 | export names surface in playwright.config.ts |  |  | 0.225 |
 | walker |  | 770 | 80 | package scripts in cmdk/package.json |  |  | 0.226 |
 | ns | 795 |  | 222 | test/package.json | 2.15 |  | 0.206 |

@@ -4,22 +4,22 @@ Score(3000)=0.639 I=0.812 C=0.502 ns_rows≤3K=21/48 (reached=9 partial=2 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 29 | 29 | listing of '.' |  |  | 1.000 |
 | ns | 29 |  | 29 | Root directory listing | 1.1 |  | 1.000 |
-| ns | 67 |  | 38 | include/ directory listing | 1.2 |  | 0.636 |
-| ns | 115 |  | 48 | src/ directory listing | 1.3 |  | 0.471 |
-| walker |  | 127 | 98 | README headline in README.md |  |  | 0.477 |
-| ns | 173 |  | 58 | .gitignore (full) | 1.4 |  | 0.417 |
-| walker |  | 178 | 51 | headings outline in README.md |  |  | 0.417 |
-| ns | 199 |  | 26 | README: title + tagline | 1.5 |  | 0.446 |
-| walker |  | 241 | 63 | README.md section #0 |  |  | 0.454 |
-| walker |  | 279 | 38 | listing of 'include' |  |  | 0.676 |
-| ns | 297 |  | 98 | README: priorities + protocol/MC version | 1.6 |  | 0.682 |
-| ns | 331 |  | 34 | README: client-support warning | 1.7 |  | 0.691 |
-| walker |  | 336 | 57 | c whole header in include/structures.h |  |  | 0.691 |
-| walker |  | 384 | 48 | listing of 'src' |  |  | 0.880 |
-| walker |  | 391 | 7 | listing of '.github' |  |  | 0.880 |
-| walker |  | 395 | 4 | listing of '.github/workflows' |  |  | 0.880 |
-| ns | 460 |  | 129 | README: Quick start | 1.8 |  | 0.835 |
-| walker |  | 491 | 96 | c whole header in include/crafting.h |  |  | 0.835 |
+| walker |  | 67 | 38 | listing of 'include' |  |  | 1.000 |
+| ns | 67 |  | 38 | include/ directory listing | 1.2 |  | 1.000 |
+| ns | 115 |  | 48 | src/ directory listing | 1.3 |  | 0.740 |
+| walker |  | 124 | 57 | c whole header in include/structures.h |  |  | 0.740 |
+| walker |  | 172 | 48 | listing of 'src' |  |  | 1.000 |
+| ns | 173 |  | 58 | .gitignore (full) | 1.4 |  | 0.874 |
+| walker |  | 179 | 7 | listing of '.github' |  |  | 0.874 |
+| walker |  | 183 | 4 | listing of '.github/workflows' |  |  | 0.874 |
+| ns | 199 |  | 26 | README: title + tagline | 1.5 |  | 0.846 |
+| walker |  | 281 | 98 | README headline in README.md |  |  | 0.883 |
+| ns | 297 |  | 98 | README: priorities + protocol/MC version | 1.6 |  | 0.841 |
+| ns | 331 |  | 34 | README: client-support warning | 1.7 |  | 0.817 |
+| walker |  | 377 | 96 | c whole header in include/crafting.h |  |  | 0.818 |
+| walker |  | 428 | 51 | headings outline in README.md |  |  | 0.818 |
+| ns | 460 |  | 129 | README: Quick start | 1.8 |  | 0.776 |
+| walker |  | 491 | 63 | README.md section #0 |  |  | 0.835 |
 | ns | 558 |  | 98 | README: Configuration intro | 1.9 |  | 0.796 |
 | walker |  | 641 | 150 | c whole header in include/varnum.h |  |  | 0.797 |
 | ns | 760 |  | 202 | README: Compilation intro + Linux build command | 1.10 |  | 0.762 |

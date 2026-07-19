@@ -4,13 +4,13 @@ Score(3000)=0.566 I=0.766 C=0.418 ns_rows≤3K=20/42 (reached=7 partial=0 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 51 | 51 | listing of '.' |  |  | 1.000 |
 | ns | 51 |  | 51 | Root directory listing | 1.1 |  | 1.000 |
-| ns | 87 |  | 36 | include/ directory listing | 1.2 |  | 0.794 |
-| walker |  | 128 | 77 | README headline in README.md |  |  | 0.794 |
-| walker |  | 164 | 36 | listing of 'include' |  |  | 1.000 |
+| walker |  | 87 | 36 | listing of 'include' |  |  | 1.000 |
+| ns | 87 |  | 36 | include/ directory listing | 1.2 |  | 1.000 |
+| walker |  | 164 | 77 | README headline in README.md |  |  | 1.000 |
 | ns | 195 |  | 108 | CLI: FileType enum + take_arg[] argument-consuming flags | 1.3 |  | 0.829 |
-| walker |  | 223 | 59 | headings outline in README.md |  |  | 0.829 |
 | ns | 338 |  | 143 | CLI flags, part A: output/link-mode/preprocess switches | 1.4 |  | 0.720 |
-| walker |  | 434 | 211 | listing of 'test' |  |  | 0.756 |
+| walker |  | 375 | 211 | listing of 'test' |  |  | 0.756 |
+| walker |  | 434 | 59 | headings outline in README.md |  |  | 0.756 |
 | ns | 536 |  | 198 | README lede | 1.5 |  | 0.649 |
 | ns | 562 |  | 26 | test/thirdparty/ directory listing | 1.6 |  | 0.606 |
 | ns | 714 |  | 152 | README: supported-feature bullet list | 1.7 |  | 0.529 |

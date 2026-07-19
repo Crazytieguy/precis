@@ -47,10 +47,74 @@ entries = ["CobraMain.png"]
 
 [[batches]]
 position = 4
+key = 'Go(GoModIdentity { file: "go.mod" })'
+descriptor = "go module identity in go.mod"
+cost_tokens = 30
+cum_tokens = 229
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "go.mod"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Go(PackageDocLede { file: "command.go" })'
+descriptor = "go package doc lede in command.go"
+cost_tokens = 48
+cum_tokens = 277
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "command.go"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "site/content" })'
+descriptor = "listing of 'site/content'"
+cost_tokens = 26
+cum_tokens = 303
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/content"
+entries = ["active_help.md", "completions", "docgen", "projects_using_cobra.md", "user_guide.md"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "doc" })'
+descriptor = "listing of 'doc'"
+cost_tokens = 59
+cum_tokens = 362
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "doc"
+entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.go", "md_docs.go", "md_docs_test.go", "rest_docs.go", "rest_docs_test.go", "util.go", "yaml_docs.go", "yaml_docs_test.go"]
+
+[[batches]]
+position = 8
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 96
-cum_tokens = 295
+cum_tokens = 458
 
 [batches.content]
 kind = "lines"
@@ -72,47 +136,79 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 5
-key = 'Go(GoModIdentity { file: "go.mod" })'
-descriptor = "go module identity in go.mod"
-cost_tokens = 30
-cum_tokens = 325
+position = 9
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 13
+cum_tokens = 471
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["dependabot.yml", "labeler.yml", "workflows"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 9
+cum_tokens = 480
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["labeler.yml", "test.yml"]
+
+[[batches]]
+position = 11
+key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
+descriptor = "YAML config at .github/workflows/test.yml"
+cost_tokens = 545
+cum_tokens = 1025
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "go.mod"
+path = ".github/workflows/test.yml"
 start = 1
-end = 3
+end = 60
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 6
-key = 'Go(PackageDocLede { file: "command.go" })'
-descriptor = "go package doc lede in command.go"
-cost_tokens = 48
-cum_tokens = 373
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
-path = "command.go"
-start = 15
-end = 16
+path = ".github/workflows/test.yml"
+start = 61
+end = 61
 
 [batches.content.spans.render]
-kind = "full"
+kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 12
+key = 'Fs(DirListing { dir: "site/content/docgen" })'
+descriptor = "listing of 'site/content/docgen'"
+cost_tokens = 21
+cum_tokens = 1046
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/content/docgen"
+entries = ["_index.md", "man.md", "md.md", "rest.md", "yaml.md"]
+
+[[batches]]
+position = 13
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 63
-cum_tokens = 436
+cum_tokens = 1109
 
 [batches.content]
 kind = "lines"
@@ -230,11 +326,11 @@ end = 132
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 14
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 12
-cum_tokens = 448
+cum_tokens = 1121
 
 [batches.content]
 kind = "lines"
@@ -246,102 +342,6 @@ end = 33
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "site/content" })'
-descriptor = "listing of 'site/content'"
-cost_tokens = 26
-cum_tokens = 474
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/content"
-entries = ["active_help.md", "completions", "docgen", "projects_using_cobra.md", "user_guide.md"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "doc" })'
-descriptor = "listing of 'doc'"
-cost_tokens = 59
-cum_tokens = 533
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "doc"
-entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.go", "md_docs.go", "md_docs_test.go", "rest_docs.go", "rest_docs_test.go", "util.go", "yaml_docs.go", "yaml_docs_test.go"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 13
-cum_tokens = 546
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["dependabot.yml", "labeler.yml", "workflows"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 9
-cum_tokens = 555
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["labeler.yml", "test.yml"]
-
-[[batches]]
-position = 13
-key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
-descriptor = "YAML config at .github/workflows/test.yml"
-cost_tokens = 545
-cum_tokens = 1100
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 1
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "site/content/docgen" })'
-descriptor = "listing of 'site/content/docgen'"
-cost_tokens = 21
-cum_tokens = 1121
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/content/docgen"
-entries = ["_index.md", "man.md", "md.md", "rest.md", "yaml.md"]
 
 [[batches]]
 position = 15

@@ -47,54 +47,10 @@ entries = ["semver.js"]
 
 [[batches]]
 position = 4
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 26
-cum_tokens = 137
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 5
-key = 'Json(Identity { file: "package.json" })'
-descriptor = "package identity in package.json"
-cost_tokens = 61
-cum_tokens = 198
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 2
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
 key = 'Typescript(ExportNames { file: "index.js" })'
 descriptor = "export names surface in index.js"
 cost_tokens = 12
-cum_tokens = 210
+cum_tokens = 123
 
 [batches.content]
 kind = "lines"
@@ -116,11 +72,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 5
 key = 'Fs(DirListing { dir: "classes" })'
 descriptor = "listing of 'classes'"
 cost_tokens = 17
-cum_tokens = 227
+cum_tokens = 140
 
 [batches.content]
 kind = "fs"
@@ -130,11 +86,29 @@ parent = "classes"
 entries = ["comparator.js", "index.js", "range.js", "semver.js"]
 
 [[batches]]
-position = 8
+position = 6
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 26
+cum_tokens = 166
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
 key = 'Fs(DirListing { dir: "internal" })'
 descriptor = "listing of 'internal'"
 cost_tokens = 27
-cum_tokens = 254
+cum_tokens = 193
 
 [batches.content]
 kind = "fs"
@@ -144,11 +118,51 @@ parent = "internal"
 entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-options.js", "re.js"]
 
 [[batches]]
+position = 8
+key = 'Json(Identity { file: "package.json" })'
+descriptor = "package identity in package.json"
+cost_tokens = 61
+cum_tokens = 254
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "ranges" })'
+descriptor = "listing of 'ranges'"
+cost_tokens = 56
+cum_tokens = 310
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "ranges"
+entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
+
+[[batches]]
+position = 10
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 30
-cum_tokens = 284
+cum_tokens = 340
 
 [batches.content]
 kind = "lines"
@@ -162,25 +176,67 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "ranges" })'
-descriptor = "listing of 'ranges'"
-cost_tokens = 56
-cum_tokens = 340
+position = 11
+key = 'Fs(DirListing { dir: "functions" })'
+descriptor = "listing of 'functions'"
+cost_tokens = 105
+cum_tokens = 445
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "ranges"
-entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
+parent = "functions"
+entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
 
 [[batches]]
-position = 11
+position = 12
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 28
+cum_tokens = 473
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["CODEOWNERS", "ISSUE_TEMPLATE", "actions", "dependabot.yml", "matchers", "settings.yml", "workflows"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 41
+cum_tokens = 514
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["audit.yml", "ci-release.yml", "ci.yml", "codeql-analysis.yml", "post-dependabot.yml", "pull-request.yml", "release-integration.yml", "release.yml"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 33
+cum_tokens = 547
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["bin", "classes", "fixtures", "functions", "index.js", "integration", "internal", "map.js", "preload.js", "ranges"]
+
+[[batches]]
+position = 15
 key = 'Json(IdentityMeta { file: "package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 60
-cum_tokens = 400
+cum_tokens = 607
 
 [batches.content]
 kind = "lines"
@@ -200,62 +256,6 @@ end = 52
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "functions" })'
-descriptor = "listing of 'functions'"
-cost_tokens = 105
-cum_tokens = 505
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "functions"
-entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 28
-cum_tokens = 533
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["CODEOWNERS", "ISSUE_TEMPLATE", "actions", "dependabot.yml", "matchers", "settings.yml", "workflows"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 41
-cum_tokens = 574
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["audit.yml", "ci-release.yml", "ci.yml", "codeql-analysis.yml", "post-dependabot.yml", "pull-request.yml", "release-integration.yml", "release.yml"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 33
-cum_tokens = 607
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["bin", "classes", "fixtures", "functions", "index.js", "integration", "internal", "map.js", "preload.js", "ranges"]
 
 [[batches]]
 position = 16

@@ -4,32 +4,32 @@ Score(3000)=0.638 I=0.892 C=0.456 ns_rows≤3K=14/40 (reached=6 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 65 | 65 | listing of '.' |  |  | 1.000 |
 | ns | 65 |  | 65 | Repo root listing | 1.1 |  | 1.000 |
-| ns | 102 |  | 37 | src/ and src/structs/ listings | 1.2 |  | 0.783 |
-| ns | 130 |  | 28 | test/ top-level listing | 1.3 |  | 0.681 |
-| walker |  | 147 | 82 | package identity in package.json |  |  | 0.685 |
-| walker |  | 166 | 19 | listing of 'src' |  |  | 0.746 |
-| walker |  | 184 | 18 | listing of 'src/structs' |  |  | 0.875 |
-| ns | 185 |  | 55 | examples/ listing | 1.4 |  | 0.739 |
-| walker |  | 205 | 21 | listing of 'docs' |  |  | 0.742 |
-| walker |  | 213 | 8 | listing of 'docs/resources' |  |  | 0.743 |
-| walker |  | 217 | 4 | listing of '.vscode' |  |  | 0.743 |
-| walker |  | 251 | 34 | package runtime metadata in package.json |  |  | 0.744 |
-| walker |  | 269 | 18 | headings outline in docs/resources/links.md |  |  | 0.744 |
-| ns | 325 |  | 140 | docs/ listing (all levels) | 1.5 |  | 0.586 |
+| walker |  | 84 | 19 | listing of 'src' |  |  | 1.000 |
+| walker |  | 102 | 18 | listing of 'src/structs' |  |  | 1.000 |
+| ns | 102 |  | 37 | src/ and src/structs/ listings | 1.2 |  | 1.000 |
+| walker |  | 123 | 21 | listing of 'docs' |  |  | 1.000 |
+| ns | 130 |  | 28 | test/ top-level listing | 1.3 |  | 0.873 |
+| walker |  | 131 | 8 | listing of 'docs/resources' |  |  | 0.875 |
+| walker |  | 135 | 4 | listing of '.vscode' |  |  | 0.875 |
+| ns | 185 |  | 55 | examples/ listing | 1.4 |  | 0.740 |
+| walker |  | 217 | 82 | package identity in package.json |  |  | 0.743 |
+| walker |  | 225 | 8 | listing of '.github' |  |  | 0.743 |
+| walker |  | 229 | 4 | listing of '.github/workflows' |  |  | 0.743 |
+| ns | 325 |  | 140 | docs/ listing (all levels) | 1.5 |  | 0.585 |
+| walker |  | 404 | 175 | YAML config at .github/workflows/ci.yml |  |  | 0.586 |
 | ns | 420 |  | 95 | package.json identity (name/desc/version) | 1.6 |  | 0.584 |
-| walker |  | 466 | 197 | README headline in Readme.md |  |  | 0.584 |
-| walker |  | 474 | 8 | listing of '.github' |  |  | 0.584 |
-| walker |  | 478 | 4 | listing of '.github/workflows' |  |  | 0.584 |
-| ns | 572 |  | 152 | package.json entry points, files, engines | 1.7 | 1.6 | 0.537 |
-| walker |  | 653 | 175 | YAML config at .github/workflows/ci.yml |  |  | 0.538 |
-| walker |  | 708 | 55 | listing of 'examples' |  |  | 0.639 |
-| ns | 743 |  | 171 | Readme concept lede | 1.8 |  | 0.631 |
-| walker |  | 787 | 79 | imports in src/index.ts |  |  | 0.631 |
-| walker |  | 816 | 29 | listing of 'docs/images' |  |  | 0.670 |
-| walker |  | 847 | 31 | listing of 'docs/reference' |  |  | 0.740 |
-| walker |  | 901 | 54 | headings outline in Readme.md |  |  | 0.740 |
-| walker |  | 928 | 27 | export names surface in src/error.ts |  |  | 0.740 |
-| walker |  | 979 | 51 | listing of 'docs/guides' |  |  | 0.820 |
+| walker |  | 459 | 55 | listing of 'examples' |  |  | 0.697 |
+| walker |  | 538 | 79 | imports in src/index.ts |  |  | 0.697 |
+| walker |  | 567 | 29 | listing of 'docs/images' |  |  | 0.741 |
+| ns | 572 |  | 152 | package.json entry points, files, engines | 1.7 | 1.6 | 0.672 |
+| walker |  | 598 | 31 | listing of 'docs/reference' |  |  | 0.744 |
+| walker |  | 632 | 34 | package runtime metadata in package.json |  |  | 0.750 |
+| walker |  | 659 | 27 | export names surface in src/error.ts |  |  | 0.750 |
+| walker |  | 710 | 51 | listing of 'docs/guides' |  |  | 0.832 |
+| walker |  | 728 | 18 | headings outline in docs/resources/links.md |  |  | 0.832 |
+| ns | 743 |  | 171 | Readme concept lede | 1.8 |  | 0.816 |
+| walker |  | 925 | 197 | README headline in Readme.md |  |  | 0.820 |
+| walker |  | 979 | 54 | headings outline in Readme.md |  |  | 0.820 |
 | walker |  | 998 | 19 | Readme.md section #11 |  |  | 0.820 |
 | ns | 1060 |  | 317 | docs/summary.md (site nav) | 1.9 |  | 0.714 |
 | walker |  | 1074 | 76 | package entrypoints in package.json |  |  | 0.757 |

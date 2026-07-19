@@ -7,31 +7,31 @@ Score(3000)=0.645 I=0.875 C=0.476 ns_rows≤3K=18/40 (reached=11 partial=1 missi
 | ns | 77 |  | 10 | .github/workflows/ directory listing | 1.3 |  | 0.000 |
 | ns | 97 |  | 20 | .github/ directory listing | 1.4 |  | 0.000 |
 | walker |  | 102 | 102 | listing of '.' |  |  | 0.000 |
-| ns | 122 |  | 25 | lib/ directory listing | 1.5 |  | 0.000 |
-| ns | 158 |  | 36 | docs/ directory listing | 1.6 |  | 0.000 |
-| walker |  | 179 | 77 | package identity in package.json |  |  | 0.283 |
-| walker |  | 196 | 17 | listing of 'typings' |  |  | 0.447 |
-| ns | 260 |  | 102 | Root directory listing | 1.7 |  | 0.666 |
-| walker |  | 261 | 65 | README headline in Readme.md |  |  | 0.670 |
-| walker |  | 286 | 25 | listing of 'lib' |  |  | 0.771 |
-| ns | 294 |  | 34 | Readme.md title + one-line tagline | 1.8 |  | 0.773 |
-| walker |  | 316 | 30 | package runtime metadata in package.json |  |  | 0.778 |
-| walker |  | 352 | 36 | listing of 'docs' |  |  | 0.878 |
-| walker |  | 387 | 35 | Readme.md section #1 |  |  | 0.878 |
-| walker |  | 412 | 25 | listing of 'docs/zh-CN' |  |  | 0.878 |
+| walker |  | 119 | 17 | listing of 'typings' |  |  | 0.328 |
+| ns | 122 |  | 25 | lib/ directory listing | 1.5 |  | 0.253 |
+| walker |  | 144 | 25 | listing of 'lib' |  |  | 0.498 |
+| ns | 158 |  | 36 | docs/ directory listing | 1.6 |  | 0.404 |
+| walker |  | 180 | 36 | listing of 'docs' |  |  | 0.587 |
+| walker |  | 257 | 77 | package identity in package.json |  |  | 0.872 |
+| ns | 260 |  | 102 | Root directory listing | 1.7 |  | 0.870 |
+| ns | 294 |  | 34 | Readme.md title + one-line tagline | 1.8 |  | 0.850 |
+| walker |  | 322 | 65 | README headline in Readme.md |  |  | 0.873 |
+| walker |  | 347 | 25 | listing of 'docs/zh-CN' |  |  | 0.873 |
+| walker |  | 377 | 30 | package runtime metadata in package.json |  |  | 0.878 |
+| walker |  | 419 | 42 | export names surface in lib/option.js |  |  | 0.878 |
+| walker |  | 419 | 0 | export at lib/option.js:3 |  |  | 0.878 |
+| walker |  | 429 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.878 |
 | ns | 430 |  | 136 | esm.mjs (ESM entry point) full body | 1.9 |  | 0.750 |
-| walker |  | 454 | 42 | export names surface in lib/option.js |  |  | 0.750 |
-| walker |  | 454 | 0 | export at lib/option.js:3 |  |  | 0.750 |
+| walker |  | 455 | 26 | export at lib/option.js:268 |  |  | 0.750 |
 | ns | 460 |  | 30 | package.json engines | 1.10 |  | 0.754 |
-| walker |  | 464 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.754 |
-| walker |  | 490 | 26 | export at lib/option.js:268 |  |  | 0.754 |
-| walker |  | 501 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.754 |
-| walker |  | 512 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.754 |
-| walker |  | 523 | 11 | export member at lib/option.js:3 member 120 |  |  | 0.754 |
-| walker |  | 543 | 20 | listing of '.github' |  |  | 0.820 |
-| walker |  | 553 | 10 | listing of '.github/workflows' |  |  | 0.860 |
+| walker |  | 466 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.754 |
+| walker |  | 477 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.754 |
+| walker |  | 488 | 11 | export member at lib/option.js:3 member 120 |  |  | 0.754 |
+| walker |  | 508 | 20 | listing of '.github' |  |  | 0.820 |
+| walker |  | 518 | 10 | listing of '.github/workflows' |  |  | 0.860 |
 | ns | 697 |  | 237 | examples/ directory listing | 1.11 |  | 0.646 |
-| walker |  | 888 | 335 | YAML config at .github/workflows/tests.yml |  |  | 0.646 |
+| walker |  | 853 | 335 | YAML config at .github/workflows/tests.yml |  |  | 0.646 |
+| walker |  | 888 | 35 | Readme.md section #1 |  |  | 0.646 |
 | walker |  | 930 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.646 |
 | ns | 958 |  | 261 | package.json scripts block | 1.12 |  | 0.604 |
 | walker |  | 1088 | 158 | export names surface in index.js |  |  | 0.608 |

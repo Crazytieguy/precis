@@ -4,8 +4,8 @@ Score(3000)=0.619 I=0.813 C=0.471 ns_rows≤3K=20/51 (reached=13 partial=0 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 83 | 83 | listing of '.' |  |  | 1.000 |
 | ns | 83 |  | 83 | Repo root listing | 1.1 |  | 1.000 |
-| walker |  | 112 | 29 | entry-point scripts in pyproject.toml |  |  | 1.000 |
-| walker |  | 131 | 19 | listing of 'extra' |  |  | 1.000 |
+| walker |  | 102 | 19 | listing of 'extra' |  |  | 1.000 |
+| walker |  | 131 | 29 | entry-point scripts in pyproject.toml |  |  | 1.000 |
 | ns | 150 |  | 67 | beets/ package listing | 1.2 |  | 0.693 |
 | walker |  | 198 | 67 | listing of 'beets' |  |  | 1.000 |
 | walker |  | 207 | 9 | listing of 'beets/ui' |  |  | 1.000 |

@@ -5,49 +5,49 @@ Score(3000)=0.669 I=0.692 C=0.646 ns_rows≤3K=17/60 (reached=9 partial=0 missin
 | ns | 91 |  | 91 | README lede: what linkding is | 1.1 |  | 0.000 |
 | walker |  | 115 | 115 | listing of '.' |  |  | 0.000 |
 | walker |  | 127 | 12 | listing of 'docker' |  |  | 0.000 |
-| walker |  | 181 | 54 | README headline in README.md |  |  | 0.577 |
-| walker |  | 184 | 3 | listing of '.github' |  |  | 0.577 |
-| walker |  | 194 | 10 | plaintext config version.txt |  |  | 0.577 |
-| ns | 206 |  | 115 | Root directory listing | 1.2 |  | 0.771 |
-| walker |  | 207 | 13 | listing of '.github/workflows' |  |  | 0.772 |
-| walker |  | 212 | 5 | listing of '.devcontainer' |  |  | 0.772 |
+| walker |  | 130 | 3 | listing of '.github' |  |  | 0.000 |
+| walker |  | 140 | 10 | plaintext config version.txt |  |  | 0.000 |
+| walker |  | 153 | 13 | listing of '.github/workflows' |  |  | 0.000 |
+| walker |  | 158 | 5 | listing of '.devcontainer' |  |  | 0.000 |
+| ns | 206 |  | 115 | Root directory listing | 1.2 |  | 0.567 |
+| walker |  | 212 | 54 | README headline in README.md |  |  | 0.772 |
 | walker |  | 223 | 11 | python decl names surface in manage.py |  |  | 0.772 |
 | walker |  | 223 | 0 | python decl at manage.py:7 |  |  | 0.772 |
 | walker |  | 267 | 44 | listing of 'assets' |  |  | 0.777 |
 | ns | 350 |  | 144 | Makefile: init/serve/tasks/test targets | 1.3 |  | 0.630 |
-| walker |  | 364 | 97 | headings outline in README.md |  |  | 0.630 |
-| walker |  | 483 | 119 | listing of 'bookmarks' |  |  | 0.654 |
-| walker |  | 486 | 3 | listing of 'bookmarks/management' |  |  | 0.654 |
-| ns | 493 |  | 143 | package.json: JS build scripts | 1.4 |  | 0.597 |
-| walker |  | 504 | 18 | listing of 'bookmarks/api' |  |  | 0.597 |
-| walker |  | 522 | 18 | listing of 'bookmarks/templatetags' |  |  | 0.597 |
-| walker |  | 544 | 22 | listing of 'bookmarks/settings' |  |  | 0.598 |
-| walker |  | 576 | 32 | python imports in bookmarks/settings/__init__.py |  |  | 0.598 |
-| walker |  | 594 | 18 | listing of 'bookmarks/frontend' |  |  | 0.599 |
+| walker |  | 386 | 119 | listing of 'bookmarks' |  |  | 0.654 |
+| walker |  | 389 | 3 | listing of 'bookmarks/management' |  |  | 0.654 |
+| walker |  | 407 | 18 | listing of 'bookmarks/api' |  |  | 0.654 |
+| walker |  | 425 | 18 | listing of 'bookmarks/templatetags' |  |  | 0.655 |
+| walker |  | 447 | 22 | listing of 'bookmarks/settings' |  |  | 0.656 |
+| walker |  | 479 | 32 | python imports in bookmarks/settings/__init__.py |  |  | 0.656 |
+| ns | 493 |  | 143 | package.json: JS build scripts | 1.4 |  | 0.598 |
+| walker |  | 497 | 18 | listing of 'bookmarks/frontend' |  |  | 0.599 |
+| walker |  | 524 | 27 | listing of 'bookmarks/templates' |  |  | 0.599 |
+| walker |  | 529 | 5 | listing of 'bookmarks/templates/admin' |  |  | 0.599 |
+| walker |  | 545 | 16 | listing of 'bookmarks/templates/registration' |  |  | 0.599 |
 | ns | 611 |  | 118 | docker-compose.yml: reference deployment | 1.5 |  | 0.549 |
-| walker |  | 621 | 27 | listing of 'bookmarks/templates' |  |  | 0.549 |
-| walker |  | 626 | 5 | listing of 'bookmarks/templates/admin' |  |  | 0.549 |
-| walker |  | 642 | 16 | listing of 'bookmarks/templates/registration' |  |  | 0.549 |
-| walker |  | 716 | 74 | listing of 'bookmarks/views' |  |  | 0.555 |
-| walker |  | 797 | 81 | listing of 'bookmarks/services' |  |  | 0.568 |
-| ns | 810 |  | 199 | .env.sample head: container/host/superuser options | 1.6 |  | 0.508 |
-| walker |  | 817 | 20 | listing of 'bookmarks/templates/bundles' |  |  | 0.509 |
-| walker |  | 837 | 20 | listing of 'bookmarks/templates/tags' |  |  | 0.509 |
-| walker |  | 849 | 12 | python decl names surface in bookmarks/wsgi.py |  |  | 0.509 |
-| walker |  | 862 | 13 | python decl names surface in bookmarks/signals.py |  |  | 0.509 |
-| walker |  | 889 | 27 | listing of 'bookmarks/frontend/utils' |  |  | 0.511 |
-| ns | 900 |  | 90 | Current version and latest changelog entry head | 1.7 |  | 0.489 |
-| walker |  | 916 | 27 | listing of 'bookmarks/templates/settings' |  |  | 0.490 |
-| walker |  | 931 | 15 | python decl names surface in bookmarks/apps.py |  |  | 0.490 |
-| walker |  | 931 | 0 | python decl at bookmarks/apps.py:4 |  |  | 0.490 |
-| walker |  | 942 | 11 | python method sigs in bookmarks/apps.py |  |  | 0.490 |
-| walker |  | 951 | 9 | python class body at bookmarks/apps.py:4 |  |  | 0.490 |
-| walker |  | 966 | 15 | python decl names surface in bookmarks/type_defs.py |  |  | 0.490 |
-| walker |  | 966 | 0 | python decl at bookmarks/type_defs.py:11 |  |  | 0.490 |
-| walker |  | 983 | 17 | python decl names surface in bookmarks/validators.py |  |  | 0.490 |
-| walker |  | 983 | 0 | python decl at bookmarks/validators.py:5 |  |  | 0.490 |
-| walker |  | 998 | 15 | python method sigs in bookmarks/validators.py |  |  | 0.490 |
-| walker |  | 998 | 0 | python method at bookmarks/validators.py:11 |  |  | 0.490 |
+| walker |  | 619 | 74 | listing of 'bookmarks/views' |  |  | 0.555 |
+| walker |  | 700 | 81 | listing of 'bookmarks/services' |  |  | 0.568 |
+| walker |  | 720 | 20 | listing of 'bookmarks/templates/bundles' |  |  | 0.568 |
+| walker |  | 740 | 20 | listing of 'bookmarks/templates/tags' |  |  | 0.569 |
+| walker |  | 752 | 12 | python decl names surface in bookmarks/wsgi.py |  |  | 0.569 |
+| walker |  | 765 | 13 | python decl names surface in bookmarks/signals.py |  |  | 0.569 |
+| walker |  | 792 | 27 | listing of 'bookmarks/frontend/utils' |  |  | 0.571 |
+| ns | 810 |  | 199 | .env.sample head: container/host/superuser options | 1.6 |  | 0.511 |
+| walker |  | 819 | 27 | listing of 'bookmarks/templates/settings' |  |  | 0.512 |
+| walker |  | 834 | 15 | python decl names surface in bookmarks/apps.py |  |  | 0.512 |
+| walker |  | 834 | 0 | python decl at bookmarks/apps.py:4 |  |  | 0.512 |
+| walker |  | 845 | 11 | python method sigs in bookmarks/apps.py |  |  | 0.512 |
+| walker |  | 854 | 9 | python class body at bookmarks/apps.py:4 |  |  | 0.512 |
+| walker |  | 869 | 15 | python decl names surface in bookmarks/type_defs.py |  |  | 0.512 |
+| walker |  | 869 | 0 | python decl at bookmarks/type_defs.py:11 |  |  | 0.512 |
+| walker |  | 886 | 17 | python decl names surface in bookmarks/validators.py |  |  | 0.512 |
+| walker |  | 886 | 0 | python decl at bookmarks/validators.py:5 |  |  | 0.512 |
+| ns | 900 |  | 90 | Current version and latest changelog entry head | 1.7 |  | 0.490 |
+| walker |  | 901 | 15 | python method sigs in bookmarks/validators.py |  |  | 0.490 |
+| walker |  | 901 | 0 | python method at bookmarks/validators.py:11 |  |  | 0.490 |
+| walker |  | 998 | 97 | headings outline in README.md |  |  | 0.490 |
 | walker |  | 1067 | 69 | listing of 'bookmarks/styles' |  |  | 0.494 |
 | walker |  | 1108 | 41 | listing of 'bookmarks/templates/shared' |  |  | 0.497 |
 | walker |  | 1154 | 46 | listing of 'bookmarks/management/commands' |  |  | 0.503 |

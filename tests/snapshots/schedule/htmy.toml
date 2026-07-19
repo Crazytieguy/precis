@@ -33,28 +33,10 @@ entries = ["api", "components-guide.md", "examples", "function-components.md", "
 
 [[batches]]
 position = 3
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 149
-cum_tokens = 202
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 6
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 4
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
-cum_tokens = 209
+cum_tokens = 60
 
 [batches.content]
 kind = "fs"
@@ -64,11 +46,11 @@ parent = ".github"
 entries = ["funding.yml", "workflows"]
 
 [[batches]]
-position = 5
+position = 4
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 19
-cum_tokens = 228
+cum_tokens = 79
 
 [batches.content]
 kind = "fs"
@@ -78,11 +60,11 @@ parent = ".github/workflows"
 entries = ["build-docs.yml", "linters.yml", "publish.yml", "tests.yml"]
 
 [[batches]]
-position = 6
+position = 5
 key = 'Fs(DirListing { dir: "htmy" })'
 descriptor = "listing of 'htmy'"
 cost_tokens = 65
-cum_tokens = 293
+cum_tokens = 144
 
 [batches.content]
 kind = "fs"
@@ -92,11 +74,11 @@ parent = "htmy"
 entries = ["__init__.py", "core.py", "error_boundary.py", "etree.py", "function_component.py", "html.py", "i18n.py", "io.py", "md", "py.typed", "renderer", "snippet.py", "tag.py", "typing.py", "utils.py"]
 
 [[batches]]
-position = 7
+position = 6
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 0 })'
 descriptor = "python imports in htmy/__init__.py"
 cost_tokens = 17
-cum_tokens = 310
+cum_tokens = 161
 
 [batches.content]
 kind = "lines"
@@ -110,11 +92,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 8
+position = 7
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 2 })'
 descriptor = "python imports #2 in htmy/__init__.py"
 cost_tokens = 17
-cum_tokens = 327
+cum_tokens = 178
 
 [batches.content]
 kind = "lines"
@@ -128,11 +110,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 9
+position = 8
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 3 })'
 descriptor = "python imports #3 in htmy/__init__.py"
 cost_tokens = 13
-cum_tokens = 340
+cum_tokens = 191
 
 [batches.content]
 kind = "lines"
@@ -146,11 +128,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 10
+position = 9
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 5 })'
 descriptor = "python imports #5 in htmy/__init__.py"
 cost_tokens = 18
-cum_tokens = 358
+cum_tokens = 209
 
 [batches.content]
 kind = "lines"
@@ -164,11 +146,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 11
+position = 10
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 4 })'
 descriptor = "python imports #4 in htmy/__init__.py"
 cost_tokens = 24
-cum_tokens = 382
+cum_tokens = 233
 
 [batches.content]
 kind = "lines"
@@ -182,11 +164,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 12
+position = 11
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 1 })'
 descriptor = "python imports #1 in htmy/__init__.py"
 cost_tokens = 120
-cum_tokens = 502
+cum_tokens = 353
 
 [batches.content]
 kind = "lines"
@@ -200,11 +182,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Fs(DirListing { dir: "htmy/md" })'
 descriptor = "listing of 'htmy/md'"
 cost_tokens = 14
-cum_tokens = 516
+cum_tokens = 367
 
 [batches.content]
 kind = "fs"
@@ -214,11 +196,11 @@ parent = "htmy/md"
 entries = ["__init__.py", "core.py", "typing.py"]
 
 [[batches]]
-position = 14
+position = 13
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 6 })'
 descriptor = "python imports #6 in htmy/__init__.py"
 cost_tokens = 26
-cum_tokens = 542
+cum_tokens = 393
 
 [batches.content]
 kind = "lines"
@@ -232,11 +214,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Fs(DirListing { dir: "htmy/renderer" })'
 descriptor = "listing of 'htmy/renderer'"
 cost_tokens = 22
-cum_tokens = 564
+cum_tokens = 415
 
 [batches.content]
 kind = "fs"
@@ -246,11 +228,11 @@ parent = "htmy/renderer"
 entries = ["__init__.py", "baseline.py", "context.py", "default.py", "typing.py"]
 
 [[batches]]
-position = 16
+position = 15
 key = 'Python(ImportChunk { file: "htmy/__init__.py", chunk_index: 7 })'
 descriptor = "python imports #7 in htmy/__init__.py"
 cost_tokens = 42
-cum_tokens = 606
+cum_tokens = 457
 
 [batches.content]
 kind = "lines"
@@ -264,11 +246,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Python(DeclNames { file: "htmy/__init__.py" })'
 descriptor = "python decl names surface in htmy/__init__.py"
 cost_tokens = 25
-cum_tokens = 631
+cum_tokens = 482
 
 [batches.content]
 kind = "lines"
@@ -282,11 +264,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Python(Imports { file: "htmy/renderer/__init__.py" })'
 descriptor = "python imports in htmy/renderer/__init__.py"
 cost_tokens = 62
-cum_tokens = 693
+cum_tokens = 544
 
 [batches.content]
 kind = "lines"
@@ -300,11 +282,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Python(DeclNames { file: "htmy/renderer/__init__.py" })'
 descriptor = "python decl names surface in htmy/renderer/__init__.py"
 cost_tokens = 36
-cum_tokens = 729
+cum_tokens = 580
 
 [batches.content]
 kind = "lines"
@@ -334,11 +316,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Fs(DirListing { dir: "docs/api" })'
 descriptor = "listing of 'docs/api'"
 cost_tokens = 42
-cum_tokens = 771
+cum_tokens = 622
 
 [batches.content]
 kind = "fs"
@@ -348,11 +330,11 @@ parent = "docs/api"
 entries = ["core.md", "etree.md", "function_component.md", "html.md", "i18n.md", "md.md", "renderer", "snippet.md", "typing.md", "utils.md"]
 
 [[batches]]
-position = 21
+position = 20
 key = 'Fs(DirListing { dir: "docs/api/renderer" })'
 descriptor = "listing of 'docs/api/renderer'"
 cost_tokens = 12
-cum_tokens = 783
+cum_tokens = 634
 
 [batches.content]
 kind = "fs"
@@ -360,6 +342,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "docs/api/renderer"
 entries = ["baseline.md", "default.md", "typing.md"]
+
+[[batches]]
+position = 21
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 149
+cum_tokens = 783
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 6
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 22

@@ -4,31 +4,31 @@ Score(3000)=0.617 I=0.809 C=0.470 ns_rows≤3K=19/53 (reached=9 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 38 | 38 | listing of '.' |  |  | 1.000 |
 | ns | 38 |  | 38 | Root directory listing | 1.1 |  | 1.000 |
-| walker |  | 67 | 29 | entry-point scripts in project.toml |  |  | 1.000 |
-| walker |  | 70 | 3 | listing of '.github' |  |  | 1.000 |
-| ns | 72 |  | 34 | peepdb/ package listing | 1.2 |  | 0.720 |
-| walker |  | 78 | 8 | listing of '.github/workflows' |  |  | 0.724 |
-| ns | 117 |  | 45 | peepdb/db/ backend listing | 1.3 |  | 0.561 |
-| ns | 159 |  | 42 | peepdb/tests/ listing | 1.4 |  | 0.493 |
-| walker |  | 175 | 97 | README headline in README.md |  |  | 0.497 |
-| ns | 200 |  | 41 | docs/ listing (Jekyll site) | 1.5 |  | 0.429 |
-| walker |  | 203 | 28 | listing of 'images' |  |  | 0.434 |
-| ns | 208 |  | 8 | .github/workflows/ listing | 1.6 |  | 0.457 |
-| ns | 236 |  | 28 | images/ listing | 1.7 |  | 0.494 |
-| walker |  | 237 | 34 | listing of 'peepdb' |  |  | 0.637 |
-| walker |  | 278 | 41 | listing of 'docs' |  |  | 0.773 |
-| walker |  | 323 | 45 | listing of 'peepdb/db' |  |  | 0.916 |
+| walker |  | 41 | 3 | listing of '.github' |  |  | 1.000 |
+| walker |  | 49 | 8 | listing of '.github/workflows' |  |  | 1.000 |
+| ns | 72 |  | 34 | peepdb/ package listing | 1.2 |  | 0.724 |
+| walker |  | 77 | 28 | listing of 'images' |  |  | 0.733 |
+| walker |  | 106 | 29 | entry-point scripts in project.toml |  |  | 0.733 |
+| ns | 117 |  | 45 | peepdb/db/ backend listing | 1.3 |  | 0.568 |
+| walker |  | 140 | 34 | listing of 'peepdb' |  |  | 0.788 |
+| ns | 159 |  | 42 | peepdb/tests/ listing | 1.4 |  | 0.692 |
+| walker |  | 181 | 41 | listing of 'docs' |  |  | 0.713 |
+| ns | 200 |  | 41 | docs/ listing (Jekyll site) | 1.5 |  | 0.754 |
+| ns | 208 |  | 8 | .github/workflows/ listing | 1.6 |  | 0.759 |
+| walker |  | 226 | 45 | listing of 'peepdb/db' |  |  | 0.913 |
+| ns | 236 |  | 28 | images/ listing | 1.7 |  | 0.910 |
+| walker |  | 323 | 97 | README headline in README.md |  |  | 0.916 |
 | ns | 333 |  | 97 | README title + one-line description | 1.8 |  | 0.914 |
-| walker |  | 419 | 96 | README headline in docs/README.md |  |  | 0.914 |
 | ns | 512 |  | 179 | README feature list | 1.9 |  | 0.835 |
 | ns | 693 |  | 181 | MANIFEST.in + .gitignore | 2.1 |  | 0.687 |
-| ns | 978 |  | 285 | Installation: pip install + system deps + verification | 2.2 |  | 0.588 |
-| walker |  | 1012 | 593 | YAML config at .github/workflows/test.yml |  |  | 0.600 |
-| walker |  | 1023 | 11 | python decl names surface in peepdb/exceptions.py |  |  | 0.600 |
-| walker |  | 1023 | 0 | python decl at peepdb/exceptions.py:1 |  |  | 0.600 |
-| walker |  | 1028 | 5 | python class body at peepdb/exceptions.py:1 |  |  | 0.600 |
-| walker |  | 1042 | 14 | python decl names surface in peepdb/db/base.py |  |  | 0.600 |
-| walker |  | 1042 | 0 | python decl at peepdb/db/base.py:5 |  |  | 0.600 |
+| walker |  | 916 | 593 | YAML config at .github/workflows/test.yml |  |  | 0.701 |
+| walker |  | 927 | 11 | python decl names surface in peepdb/exceptions.py |  |  | 0.701 |
+| walker |  | 927 | 0 | python decl at peepdb/exceptions.py:1 |  |  | 0.701 |
+| walker |  | 932 | 5 | python class body at peepdb/exceptions.py:1 |  |  | 0.701 |
+| walker |  | 946 | 14 | python decl names surface in peepdb/db/base.py |  |  | 0.701 |
+| walker |  | 946 | 0 | python decl at peepdb/db/base.py:5 |  |  | 0.701 |
+| ns | 978 |  | 285 | Installation: pip install + system deps + verification | 2.2 |  | 0.600 |
+| walker |  | 1042 | 96 | README headline in docs/README.md |  |  | 0.600 |
 | walker |  | 1054 | 12 | python imports in peepdb/__main__.py |  |  | 0.600 |
 | walker |  | 1068 | 14 | python imports in setup.py |  |  | 0.600 |
 | walker |  | 1122 | 54 | headings outline in docs/installation.md |  |  | 0.602 |

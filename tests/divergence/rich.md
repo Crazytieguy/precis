@@ -9,18 +9,18 @@ Score(3000)=0.539 I=0.588 C=0.494 ns_rows≤3K=22/104 (reached=7 partial=0 missi
 | ns | 210 |  | 91 | Makefile: test / format / typecheck / docs targets | 1.3 |  | 0.000 |
 | walker |  | 222 | 19 | listing of 'docs' |  |  | 0.000 |
 | walker |  | 231 | 9 | listing of 'docs/images' |  |  | 0.000 |
+| walker |  | 239 | 8 | listing of '.faq' |  |  | 0.000 |
 | ns | 296 |  | 86 | tox.ini: multi-Python test matrix + lint/docs envs | 1.4 |  | 0.000 |
-| walker |  | 378 | 147 | README headline in README.md |  |  | 0.127 |
-| ns | 443 |  | 147 | CONTRIBUTING.md: prerequisites, tests, typecheck, formatting | 1.5 | 1.3 | 0.105 |
-| walker |  | 469 | 91 | headings outline in README.md |  |  | 0.105 |
-| walker |  | 491 | 22 | README.md section #0 |  |  | 0.105 |
-| walker |  | 499 | 8 | listing of '.faq' |  |  | 0.105 |
-| ns | 560 |  | 117 | .pre-commit-config.yaml: hooks run on every commit | 1.6 |  | 0.090 |
-| walker |  | 572 | 73 | listing of 'questions' |  |  | 0.090 |
-| ns | 590 |  | 30 | .github/workflows/ listing | 1.7 |  | 0.083 |
-| walker |  | 617 | 45 | README headline in questions/README.md |  |  | 0.083 |
+| walker |  | 312 | 73 | listing of 'questions' |  |  | 0.000 |
+| walker |  | 357 | 45 | README headline in questions/README.md |  |  | 0.000 |
+| ns | 443 |  | 147 | CONTRIBUTING.md: prerequisites, tests, typecheck, formatting | 1.5 | 1.3 | 0.000 |
+| walker |  | 455 | 98 | listing of 'imgs' |  |  | 0.000 |
+| ns | 560 |  | 117 | .pre-commit-config.yaml: hooks run on every commit | 1.6 |  | 0.000 |
+| ns | 590 |  | 30 | .github/workflows/ listing | 1.7 |  | 0.000 |
+| walker |  | 602 | 147 | README headline in README.md |  |  | 0.083 |
 | ns | 665 |  | 75 | pythonpackage.yml: main CI test matrix | 1.8 | 1.7 | 0.074 |
-| walker |  | 715 | 98 | listing of 'imgs' |  |  | 0.074 |
+| walker |  | 693 | 91 | headings outline in README.md |  |  | 0.074 |
+| walker |  | 715 | 22 | README.md section #0 |  |  | 0.074 |
 | walker |  | 736 | 21 | listing of 'benchmarks' |  |  | 0.074 |
 | walker |  | 759 | 23 | listing of '.github' |  |  | 0.074 |
 | ns | 764 |  | 99 | .readthedocs.yml: docs build config | 1.9 |  | 0.068 |

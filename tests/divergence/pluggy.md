@@ -8,22 +8,22 @@ Score(3000)=0.762 I=0.902 C=0.644 ns_rows≤3K=16/40 (reached=8 partial=1 missin
 | ns | 114 |  | 86 | README badges line + who depends on pluggy + doc pointer | 1.2 |  | 0.000 |
 | walker |  | 119 | 19 | listing of 'changelog' |  |  | 0.000 |
 | walker |  | 123 | 4 | listing of '.claude' |  |  | 0.000 |
-| ns | 200 |  | 86 | Directory listing: docs/ and its worked-example subtree | 1.3 |  | 0.000 |
-| walker |  | 242 | 119 | README headline in README.rst |  |  | 0.484 |
-| walker |  | 274 | 32 | listing of 'docs' |  |  | 0.582 |
-| walker |  | 277 | 3 | listing of 'docs/_static' |  |  | 0.582 |
-| walker |  | 281 | 4 | listing of 'docs/_static/img' |  |  | 0.582 |
-| ns | 293 |  | 93 | Directory listing: changelog, CI, downstream smoke-tests, scripts | 1.4 |  | 0.430 |
-| ns | 445 |  | 152 | pluggy/__init__.py: __all__ (the literal public export list) | 1.5 |  | 0.356 |
-| ns | 646 |  | 201 | Directory listing: repo root, src/pluggy, testing | 1.6 |  | 0.385 |
-| walker |  | 827 | 546 | README.rst section #0 |  |  | 0.406 |
-| walker |  | 870 | 43 | listing of 'downstream' |  |  | 0.476 |
-| ns | 904 |  | 258 | pluggy/__init__.py: re-export imports + dynamic __version__ | 1.7 | 1.5 | 0.424 |
-| walker |  | 913 | 43 | listing of 'src/pluggy' |  |  | 0.496 |
-| walker |  | 1231 | 318 | python imports in src/pluggy/__init__.py |  |  | 0.652 |
-| ns | 1237 |  | 333 | README definitive example, part 1: markers + spec/impl namespaces | 1.8 |  | 0.693 |
-| walker |  | 1247 | 16 | python decl names surface in src/pluggy/__init__.py |  |  | 0.699 |
-| walker |  | 1247 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.699 |
+| walker |  | 155 | 32 | listing of 'docs' |  |  | 0.000 |
+| walker |  | 158 | 3 | listing of 'docs/_static' |  |  | 0.000 |
+| walker |  | 162 | 4 | listing of 'docs/_static/img' |  |  | 0.000 |
+| ns | 200 |  | 86 | Directory listing: docs/ and its worked-example subtree | 1.3 |  | 0.110 |
+| walker |  | 205 | 43 | listing of 'downstream' |  |  | 0.134 |
+| walker |  | 248 | 43 | listing of 'src/pluggy' |  |  | 0.146 |
+| ns | 293 |  | 93 | Directory listing: changelog, CI, downstream smoke-tests, scripts | 1.4 |  | 0.210 |
+| ns | 445 |  | 152 | pluggy/__init__.py: __all__ (the literal public export list) | 1.5 |  | 0.174 |
+| walker |  | 566 | 318 | python imports in src/pluggy/__init__.py |  |  | 0.335 |
+| walker |  | 582 | 16 | python decl names surface in src/pluggy/__init__.py |  |  | 0.336 |
+| walker |  | 582 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.336 |
+| ns | 646 |  | 201 | Directory listing: repo root, src/pluggy, testing | 1.6 |  | 0.335 |
+| walker |  | 701 | 119 | README headline in README.rst |  |  | 0.654 |
+| ns | 904 |  | 258 | pluggy/__init__.py: re-export imports + dynamic __version__ | 1.7 | 1.5 | 0.631 |
+| ns | 1237 |  | 333 | README definitive example, part 1: markers + spec/impl namespaces | 1.8 |  | 0.548 |
+| walker |  | 1247 | 546 | README.rst section #0 |  |  | 0.699 |
 | walker |  | 1260 | 13 | listing of '.github' |  |  | 0.725 |
 | walker |  | 1264 | 4 | listing of '.github/workflows' |  |  | 0.735 |
 | walker |  | 1278 | 14 | listing of 'scripts' |  |  | 0.756 |

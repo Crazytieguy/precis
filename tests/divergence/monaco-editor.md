@@ -6,40 +6,40 @@ Score(3000)=0.513 I=0.830 C=0.317 ns_rows≤3K=18/53 (reached=5 partial=0 missin
 | walker |  | 116 | 116 | listing of '.' |  |  | 1.000 |
 | ns | 116 |  | 91 | Root directory listing: remaining dirs + all root files | 1.2 |  | 1.000 |
 | walker |  | 122 | 6 | listing of 'test-results' |  |  | 1.000 |
-| ns | 183 |  | 67 | README title + pitch | 1.3 |  | 0.963 |
-| walker |  | 189 | 67 | README headline in README.md |  |  | 1.000 |
-| ns | 288 |  | 105 | README: Installing — npm install, esm/, monaco.d.ts | 1.4 |  | 0.878 |
-| walker |  | 295 | 106 | package identity in package.json |  |  | 0.887 |
-| walker |  | 331 | 36 | headings outline in MAINTAINING.md |  |  | 0.887 |
-| walker |  | 356 | 25 | listing of 'src' |  |  | 0.892 |
-| walker |  | 359 | 3 | listing of 'src/internal' |  |  | 0.892 |
-| walker |  | 370 | 11 | listing of 'src/deprecated' |  |  | 0.892 |
-| walker |  | 381 | 11 | listing of 'src/languages' |  |  | 0.893 |
-| walker |  | 394 | 13 | listing of 'src/deprecated/language' |  |  | 0.893 |
-| walker |  | 414 | 20 | export names surface in src/index.ts |  |  | 0.893 |
-| ns | 427 |  | 139 | package.json: name/version/vscodeRef | 1.5 |  | 0.838 |
-| walker |  | 435 | 21 | listing of 'src/languages/features' |  |  | 0.839 |
-| walker |  | 459 | 24 | listing of 'src/languages/features/css' |  |  | 0.839 |
-| ns | 468 |  | 41 | README: AMD deprecation warning | 1.6 |  | 0.829 |
-| walker |  | 483 | 24 | listing of 'src/languages/features/html' |  |  | 0.829 |
-| walker |  | 510 | 27 | listing of 'monaco-lsp-client' |  |  | 0.829 |
-| walker |  | 514 | 4 | listing of 'monaco-lsp-client/generator' |  |  | 0.829 |
-| walker |  | 543 | 29 | listing of 'webpack-plugin' |  |  | 0.830 |
-| walker |  | 572 | 29 | listing of 'src/languages/features/json' |  |  | 0.830 |
-| walker |  | 579 | 7 | listing of 'src/deprecated/basic-languages' |  |  | 0.830 |
-| walker |  | 611 | 32 | listing of 'src/languages/features/typescript' |  |  | 0.830 |
-| walker |  | 616 | 5 | listing of '.devcontainer' |  |  | 0.830 |
-| walker |  | 621 | 5 | listing of '.husky' |  |  | 0.830 |
-| walker |  | 629 | 8 | listing of 'src/internal/common' |  |  | 0.830 |
-| walker |  | 644 | 15 | listing of 'monaco-lsp-client/src' |  |  | 0.830 |
-| ns | 674 |  | 206 | README: Concepts (Models, URIs) | 1.7 |  | 0.769 |
-| walker |  | 682 | 38 | listing of 'docs' |  |  | 0.769 |
-| walker |  | 692 | 10 | listing of 'src/deprecated/editor' |  |  | 0.769 |
-| walker |  | 698 | 6 | listing of 'scripts' |  |  | 0.769 |
-| walker |  | 718 | 20 | listing of 'webpack-plugin/src' |  |  | 0.769 |
-| walker |  | 722 | 4 | listing of 'webpack-plugin/src/loaders' |  |  | 0.769 |
-| walker |  | 730 | 8 | listing of 'webpack-plugin/src/plugins' |  |  | 0.769 |
-| walker |  | 737 | 7 | listing of 'src/languages/features/common' |  |  | 0.769 |
+| walker |  | 147 | 25 | listing of 'src' |  |  | 1.000 |
+| walker |  | 150 | 3 | listing of 'src/internal' |  |  | 1.000 |
+| walker |  | 161 | 11 | listing of 'src/deprecated' |  |  | 1.000 |
+| walker |  | 172 | 11 | listing of 'src/languages' |  |  | 1.000 |
+| ns | 183 |  | 67 | README title + pitch | 1.3 |  | 0.970 |
+| walker |  | 185 | 13 | listing of 'src/deprecated/language' |  |  | 0.970 |
+| walker |  | 205 | 20 | export names surface in src/index.ts |  |  | 0.970 |
+| walker |  | 226 | 21 | listing of 'src/languages/features' |  |  | 0.970 |
+| walker |  | 250 | 24 | listing of 'src/languages/features/css' |  |  | 0.970 |
+| walker |  | 274 | 24 | listing of 'src/languages/features/html' |  |  | 0.970 |
+| ns | 288 |  | 105 | README: Installing — npm install, esm/, monaco.d.ts | 1.4 |  | 0.852 |
+| walker |  | 301 | 27 | listing of 'monaco-lsp-client' |  |  | 0.853 |
+| walker |  | 305 | 4 | listing of 'monaco-lsp-client/generator' |  |  | 0.853 |
+| walker |  | 334 | 29 | listing of 'webpack-plugin' |  |  | 0.854 |
+| walker |  | 363 | 29 | listing of 'src/languages/features/json' |  |  | 0.854 |
+| walker |  | 370 | 7 | listing of 'src/deprecated/basic-languages' |  |  | 0.854 |
+| walker |  | 402 | 32 | listing of 'src/languages/features/typescript' |  |  | 0.854 |
+| walker |  | 407 | 5 | listing of '.devcontainer' |  |  | 0.854 |
+| walker |  | 412 | 5 | listing of '.husky' |  |  | 0.854 |
+| walker |  | 420 | 8 | listing of 'src/internal/common' |  |  | 0.854 |
+| ns | 427 |  | 139 | package.json: name/version/vscodeRef | 1.5 |  | 0.758 |
+| walker |  | 435 | 15 | listing of 'monaco-lsp-client/src' |  |  | 0.758 |
+| ns | 468 |  | 41 | README: AMD deprecation warning | 1.6 |  | 0.749 |
+| walker |  | 473 | 38 | listing of 'docs' |  |  | 0.749 |
+| walker |  | 483 | 10 | listing of 'src/deprecated/editor' |  |  | 0.749 |
+| walker |  | 489 | 6 | listing of 'scripts' |  |  | 0.749 |
+| walker |  | 556 | 67 | README headline in README.md |  |  | 0.778 |
+| walker |  | 576 | 20 | listing of 'webpack-plugin/src' |  |  | 0.778 |
+| walker |  | 580 | 4 | listing of 'webpack-plugin/src/loaders' |  |  | 0.778 |
+| walker |  | 588 | 8 | listing of 'webpack-plugin/src/plugins' |  |  | 0.778 |
+| walker |  | 595 | 7 | listing of 'src/languages/features/common' |  |  | 0.778 |
+| ns | 674 |  | 206 | README: Concepts (Models, URIs) | 1.7 |  | 0.720 |
+| walker |  | 701 | 106 | package identity in package.json |  |  | 0.769 |
+| walker |  | 737 | 36 | headings outline in MAINTAINING.md |  |  | 0.769 |
 | walker |  | 785 | 48 | package identity in monaco-lsp-client/package.json |  |  | 0.769 |
 | walker |  | 789 | 4 | listing of 'scripts/lib' |  |  | 0.769 |
 | ns | 947 |  | 273 | README: Concepts (Editors, Providers, Disposables) | 1.8 |  | 0.682 |

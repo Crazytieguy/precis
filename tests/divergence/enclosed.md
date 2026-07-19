@@ -4,33 +4,33 @@ Score(3000)=0.648 I=0.879 C=0.478 ns_rows≤3K=20/40 (reached=9 partial=0 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 57 | 57 | listing of '.' |  |  | 1.000 |
 | ns | 57 |  | 57 | Root directory listing | 1.1 |  | 1.000 |
-| ns | 82 |  | 25 | packages/ directory listing | 1.2 |  | 0.783 |
-| walker |  | 121 | 64 | package identity in package.json |  |  | 0.784 |
-| walker |  | 146 | 25 | listing of 'packages' |  |  | 1.000 |
+| walker |  | 82 | 25 | listing of 'packages' |  |  | 1.000 |
+| ns | 82 |  | 25 | packages/ directory listing | 1.2 |  | 1.000 |
+| walker |  | 146 | 64 | package identity in package.json |  |  | 1.000 |
 | ns | 156 |  | 74 | README title + tagline | 1.3 |  | 0.860 |
-| walker |  | 256 | 110 | README headline in README.md |  |  | 1.000 |
-| walker |  | 273 | 17 | listing of 'packages/docs' |  |  | 1.000 |
-| ns | 274 |  | 118 | README intro paragraph | 1.4 |  | 0.887 |
-| ns | 303 |  | 29 | .github/ directory listing | 1.5 |  | 0.804 |
-| walker |  | 324 | 51 | package runtime metadata in package.json |  |  | 0.806 |
-| walker |  | 347 | 23 | listing of 'packages/app-server' |  |  | 0.806 |
-| walker |  | 372 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.806 |
-| walker |  | 398 | 26 | listing of 'packages/crypto' |  |  | 0.807 |
-| ns | 402 |  | 99 | docker-compose.yml | 1.6 |  | 0.698 |
-| walker |  | 424 | 26 | listing of 'packages/lib' |  |  | 0.698 |
-| walker |  | 440 | 16 | listing of 'packages/lib/src' |  |  | 0.699 |
-| walker |  | 445 | 5 | listing of 'packages/lib/src/files' |  |  | 0.699 |
-| walker |  | 455 | 10 | export names surface in packages/lib/src/index.ts |  |  | 0.699 |
+| walker |  | 163 | 17 | listing of 'packages/docs' |  |  | 0.860 |
+| walker |  | 186 | 23 | listing of 'packages/app-server' |  |  | 0.860 |
+| walker |  | 211 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.861 |
+| walker |  | 237 | 26 | listing of 'packages/crypto' |  |  | 0.861 |
+| walker |  | 263 | 26 | listing of 'packages/lib' |  |  | 0.862 |
+| ns | 274 |  | 118 | README intro paragraph | 1.4 |  | 0.750 |
+| walker |  | 279 | 16 | listing of 'packages/lib/src' |  |  | 0.751 |
+| walker |  | 284 | 5 | listing of 'packages/lib/src/files' |  |  | 0.751 |
+| walker |  | 294 | 10 | export names surface in packages/lib/src/index.ts |  |  | 0.751 |
+| ns | 303 |  | 29 | .github/ directory listing | 1.5 |  | 0.681 |
+| walker |  | 323 | 29 | listing of 'packages/cli' |  |  | 0.681 |
+| walker |  | 328 | 5 | listing of 'packages/cli/bin' |  |  | 0.681 |
+| ns | 402 |  | 99 | docker-compose.yml | 1.6 |  | 0.589 |
+| walker |  | 438 | 110 | README headline in README.md |  |  | 0.697 |
+| walker |  | 459 | 21 | listing of 'packages/app-server/src' |  |  | 0.698 |
+| walker |  | 480 | 21 | listing of 'packages/cli/src' |  |  | 0.698 |
 | ns | 483 |  | 81 | .github/workflows listing | 1.7 |  | 0.610 |
-| walker |  | 484 | 29 | listing of 'packages/cli' |  |  | 0.610 |
-| walker |  | 489 | 5 | listing of 'packages/cli/bin' |  |  | 0.610 |
-| ns | 497 |  | 14 | .github/ISSUE_TEMPLATE listing | 1.8 |  | 0.594 |
-| walker |  | 510 | 21 | listing of 'packages/app-server/src' |  |  | 0.594 |
-| walker |  | 531 | 21 | listing of 'packages/cli/src' |  |  | 0.595 |
-| walker |  | 541 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.595 |
-| walker |  | 552 | 11 | listing of 'packages/cli/src/files' |  |  | 0.595 |
-| walker |  | 564 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.595 |
-| walker |  | 579 | 15 | listing of 'packages/app-server/src/modules' |  |  | 0.595 |
+| walker |  | 490 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.610 |
+| ns | 497 |  | 14 | .github/ISSUE_TEMPLATE listing | 1.8 |  | 0.593 |
+| walker |  | 501 | 11 | listing of 'packages/cli/src/files' |  |  | 0.594 |
+| walker |  | 513 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.594 |
+| walker |  | 528 | 15 | listing of 'packages/app-server/src/modules' |  |  | 0.594 |
+| walker |  | 579 | 51 | package runtime metadata in package.json |  |  | 0.595 |
 | walker |  | 591 | 12 | listing of 'packages/app-server/src/modules/shared' |  |  | 0.596 |
 | walker |  | 595 | 4 | listing of 'packages/app-server/src/modules/shared/utils' |  |  | 0.596 |
 | ns | 646 |  | 149 | pnpm workspace + node version | 1.9 |  | 0.540 |

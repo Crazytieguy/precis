@@ -33,46 +33,10 @@ entries = ["boost.sh", "build.sh", "conf", "contribute.md"]
 
 [[batches]]
 position = 3
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 63
-cum_tokens = 118
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 4
-key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #0"
-cost_tokens = 24
-cum_tokens = 142
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 5
 key = 'Fs(DirListing { dir: "contribute/conf" })'
 descriptor = "listing of 'contribute/conf'"
 cost_tokens = 8
-cum_tokens = 150
+cum_tokens = 63
 
 [batches.content]
 kind = "fs"
@@ -82,11 +46,11 @@ parent = "contribute/conf"
 entries = ["demo.json", "demo.yml"]
 
 [[batches]]
-position = 6
+position = 4
 key = 'Go(DeclNames { file: "main.go", chunk_index: 0 })'
 descriptor = "go decl names surface in main.go"
 cost_tokens = 27
-cum_tokens = 177
+cum_tokens = 90
 
 [batches.content]
 kind = "lines"
@@ -108,11 +72,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 5
 key = 'Go(Decl { file: "main.go", start_line: 14 })'
 descriptor = "go decl at main.go:14"
 cost_tokens = 0
-cum_tokens = 177
+cum_tokens = 90
 
 [batches.content]
 kind = "lines"
@@ -126,11 +90,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 8
+position = 6
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 180
+cum_tokens = 93
 
 [batches.content]
 kind = "fs"
@@ -140,11 +104,11 @@ parent = ".github"
 entries = ["workflows"]
 
 [[batches]]
-position = 9
+position = 7
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
-cum_tokens = 188
+cum_tokens = 101
 
 [batches.content]
 kind = "fs"
@@ -154,11 +118,11 @@ parent = ".github/workflows"
 entries = ["ci.yml", "release.yml"]
 
 [[batches]]
-position = 10
+position = 8
 key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
 descriptor = "YAML config at .github/workflows/ci.yml"
 cost_tokens = 154
-cum_tokens = 342
+cum_tokens = 255
 
 [batches.content]
 kind = "lines"
@@ -172,11 +136,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 11
+position = 9
 key = 'Fs(DirListing { dir: "sdk" })'
 descriptor = "listing of 'sdk'"
 cost_tokens = 24
-cum_tokens = 366
+cum_tokens = 279
 
 [batches.content]
 kind = "fs"
@@ -186,29 +150,11 @@ parent = "sdk"
 entries = ["README.md", "examples", "mcphost.go", "mcphost_test.go", "types.go"]
 
 [[batches]]
-position = 12
-key = 'Markdown(ReadmeHeadline { file: "sdk/README.md" })'
-descriptor = "README headline in sdk/README.md"
-cost_tokens = 40
-cum_tokens = 406
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sdk/README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
+position = 10
 key = 'Fs(DirListing { dir: "internal" })'
 descriptor = "listing of 'internal'"
 cost_tokens = 30
-cum_tokens = 436
+cum_tokens = 309
 
 [batches.content]
 kind = "fs"
@@ -218,11 +164,11 @@ parent = "internal"
 entries = ["agent", "auth", "builtin", "config", "hooks", "models", "session", "tokens", "tools", "ui"]
 
 [[batches]]
-position = 14
+position = 11
 key = 'Fs(DirListing { dir: "internal/session" })'
 descriptor = "listing of 'internal/session'"
 cost_tokens = 8
-cum_tokens = 444
+cum_tokens = 317
 
 [batches.content]
 kind = "fs"
@@ -232,11 +178,11 @@ parent = "internal/session"
 entries = ["manager.go", "session.go"]
 
 [[batches]]
-position = 15
+position = 12
 key = 'Fs(DirListing { dir: "internal/agent" })'
 descriptor = "listing of 'internal/agent'"
 cost_tokens = 12
-cum_tokens = 456
+cum_tokens = 329
 
 [batches.content]
 kind = "fs"
@@ -246,11 +192,11 @@ parent = "internal/agent"
 entries = ["agent.go", "factory.go", "streaming.go"]
 
 [[batches]]
-position = 16
+position = 13
 key = 'Fs(DirListing { dir: "internal/tokens" })'
 descriptor = "listing of 'internal/tokens'"
 cost_tokens = 13
-cum_tokens = 469
+cum_tokens = 342
 
 [batches.content]
 kind = "fs"
@@ -260,11 +206,11 @@ parent = "internal/tokens"
 entries = ["anthropic.go", "counter.go", "init.go"]
 
 [[batches]]
-position = 17
+position = 14
 key = 'Fs(DirListing { dir: "cmd" })'
 descriptor = "listing of 'cmd'"
 cost_tokens = 36
-cum_tokens = 505
+cum_tokens = 378
 
 [batches.content]
 kind = "fs"
@@ -274,11 +220,11 @@ parent = "cmd"
 entries = ["auth.go", "hooks.go", "root.go", "script.go", "script_deepseek_test.go", "script_integration_test.go", "script_test.go"]
 
 [[batches]]
-position = 18
+position = 15
 key = 'Fs(DirListing { dir: "internal/auth" })'
 descriptor = "listing of 'internal/auth'"
 cost_tokens = 17
-cum_tokens = 522
+cum_tokens = 395
 
 [batches.content]
 kind = "fs"
@@ -288,11 +234,47 @@ parent = "internal/auth"
 entries = ["browser.go", "credentials.go", "credentials_test.go", "oauth.go"]
 
 [[batches]]
-position = 19
+position = 16
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 63
+cum_tokens = 458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #0"
+cost_tokens = 24
+cum_tokens = 482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
 key = 'Go(GoModIdentity { file: "go.mod" })'
 descriptor = "go module identity in go.mod"
 cost_tokens = 53
-cum_tokens = 575
+cum_tokens = 535
 
 [batches.content]
 kind = "lines"
@@ -306,11 +288,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 6
-cum_tokens = 581
+cum_tokens = 541
 
 [batches.content]
 kind = "fs"
@@ -318,6 +300,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "examples"
 entries = ["hooks", "scripts"]
+
+[[batches]]
+position = 20
+key = 'Markdown(ReadmeHeadline { file: "sdk/README.md" })'
+descriptor = "README headline in sdk/README.md"
+cost_tokens = 40
+cum_tokens = 581
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sdk/README.md"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 21

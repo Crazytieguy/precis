@@ -19,10 +19,42 @@ entries = [".editorconfig", ".eslintignore", ".eslintrc.yml", ".github", ".gitig
 
 [[batches]]
 position = 2
+key = 'Typescript(ExportNames { file: "index.js" })'
+descriptor = "export names surface in index.js"
+cost_tokens = 15
+cum_tokens = 58
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "index.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 24
+cum_tokens = 82
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "lib"
+entries = ["application.js", "express.js", "request.js", "response.js", "utils.js", "view.js"]
+
+[[batches]]
+position = 4
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 63
-cum_tokens = 106
+cum_tokens = 145
 
 [batches.content]
 kind = "lines"
@@ -44,79 +76,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 3
-key = 'Typescript(ExportNames { file: "index.js" })'
-descriptor = "export names surface in index.js"
-cost_tokens = 15
-cum_tokens = 121
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "index.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "lib" })'
-descriptor = "listing of 'lib'"
-cost_tokens = 24
-cum_tokens = 145
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "lib"
-entries = ["application.js", "express.js", "request.js", "response.js", "utils.js", "view.js"]
-
-[[batches]]
 position = 5
-key = 'Json(Runtime { file: "package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 31
-cum_tokens = 176
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 82
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
-key = 'Json(Entry { file: "package.json" })'
-descriptor = "package entrypoints in package.json"
-cost_tokens = 50
-cum_tokens = 226
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 85
-end = 90
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 234
+cum_tokens = 153
 
 [batches.content]
 kind = "fs"
@@ -126,11 +90,11 @@ parent = ".github"
 entries = ["dependabot.yml", "workflows"]
 
 [[batches]]
-position = 8
+position = 6
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 18
-cum_tokens = 252
+cum_tokens = 171
 
 [batches.content]
 kind = "fs"
@@ -140,11 +104,11 @@ parent = ".github/workflows"
 entries = ["ci.yml", "codeql.yml", "legacy.yml", "scorecard.yml"]
 
 [[batches]]
-position = 9
+position = 7
 key = 'Typescript(Imports { file: "index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 8
-cum_tokens = 260
+cum_tokens = 179
 
 [batches.content]
 kind = "lines"
@@ -158,11 +122,75 @@ end = 9
 kind = "full"
 
 [[batches]]
+position = 8
+key = 'Json(Runtime { file: "package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 31
+cum_tokens = 210
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 82
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Json(Entry { file: "package.json" })'
+descriptor = "package entrypoints in package.json"
+cost_tokens = 50
+cum_tokens = 260
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 85
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 10
+key = 'Fs(DirListing { dir: "test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 376
+cum_tokens = 636
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test"
+entries = ["Route.js", "Router.js", "acceptance", "app.all.js", "app.engine.js", "app.head.js", "app.js", "app.listen.js", "app.locals.js", "app.options.js", "app.param.js", "app.render.js", "app.request.js", "app.response.js", "app.route.js", "app.router.js", "app.routes.error.js", "app.use.js", "config.js", "exports.js", "express.json.js", "express.raw.js", "express.static.js", "express.text.js", "express.urlencoded.js", "fixtures", "middleware.basic.js", "regression.js", "req.accepts.js", "req.acceptsCharsets.js", "req.acceptsEncodings.js", "req.acceptsLanguages.js", "req.baseUrl.js", "req.fresh.js", "req.get.js", "req.host.js", "req.hostname.js", "req.ip.js", "req.ips.js", "req.is.js", "req.path.js", "req.protocol.js", "req.query.js", "req.range.js", "req.route.js", "req.secure.js", "req.signedCookies.js", "req.stale.js", "req.subdomains.js", "req.xhr.js", "res.append.js", "res.attachment.js", "res.clearCookie.js", "res.cookie.js", "res.download.js", "res.format.js", "res.get.js", "res.json.js", "res.jsonp.js", "res.links.js", "res.locals.js", "res.location.js", "res.redirect.js", "res.render.js", "res.send.js", "res.sendFile.js", "res.sendStatus.js", "res.set.js", "res.status.js", "res.type.js", "res.vary.js", "support", "utils.js"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "test/support" })'
+descriptor = "listing of 'test/support'"
+cost_tokens = 12
+cum_tokens = 648
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "test/support"
+entries = ["env.js", "tmpl.js", "utils.js"]
+
+[[batches]]
+position = 12
 key = 'Markdown(ReadmeHeadline { file: "Readme.md" })'
 descriptor = "README headline in Readme.md"
 cost_tokens = 420
-cum_tokens = 680
+cum_tokens = 1068
 
 [batches.content]
 kind = "lines"
@@ -184,25 +212,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 376
-cum_tokens = 1056
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test"
-entries = ["Route.js", "Router.js", "acceptance", "app.all.js", "app.engine.js", "app.head.js", "app.js", "app.listen.js", "app.locals.js", "app.options.js", "app.param.js", "app.render.js", "app.request.js", "app.response.js", "app.route.js", "app.router.js", "app.routes.error.js", "app.use.js", "config.js", "exports.js", "express.json.js", "express.raw.js", "express.static.js", "express.text.js", "express.urlencoded.js", "fixtures", "middleware.basic.js", "regression.js", "req.accepts.js", "req.acceptsCharsets.js", "req.acceptsEncodings.js", "req.acceptsLanguages.js", "req.baseUrl.js", "req.fresh.js", "req.get.js", "req.host.js", "req.hostname.js", "req.ip.js", "req.ips.js", "req.is.js", "req.path.js", "req.protocol.js", "req.query.js", "req.range.js", "req.route.js", "req.secure.js", "req.signedCookies.js", "req.stale.js", "req.subdomains.js", "req.xhr.js", "res.append.js", "res.attachment.js", "res.clearCookie.js", "res.cookie.js", "res.download.js", "res.format.js", "res.get.js", "res.json.js", "res.jsonp.js", "res.links.js", "res.locals.js", "res.location.js", "res.redirect.js", "res.render.js", "res.send.js", "res.sendFile.js", "res.sendStatus.js", "res.set.js", "res.status.js", "res.type.js", "res.vary.js", "support", "utils.js"]
-
-[[batches]]
-position = 12
+position = 13
 key = 'Markdown(HeadingsOutline { file: "Readme.md" })'
 descriptor = "headings outline in Readme.md"
 cost_tokens = 128
-cum_tokens = 1184
+cum_tokens = 1196
 
 [batches.content]
 kind = "lines"
@@ -414,20 +428,6 @@ end = 264
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "test/support" })'
-descriptor = "listing of 'test/support'"
-cost_tokens = 12
-cum_tokens = 1196
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "test/support"
-entries = ["env.js", "tmpl.js", "utils.js"]
 
 [[batches]]
 position = 14

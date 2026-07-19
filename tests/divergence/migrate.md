@@ -9,26 +9,26 @@ Score(3000)=0.494 I=0.674 C=0.362 ns_rows≤3K=14/42 (reached=4 partial=2 missin
 | walker |  | 134 | 6 | listing of 'internal' |  |  | 0.000 |
 | walker |  | 145 | 11 | listing of 'dktesting' |  |  | 0.000 |
 | walker |  | 157 | 12 | listing of 'cli' |  |  | 0.000 |
+| walker |  | 166 | 9 | listing of 'internal/url' |  |  | 0.000 |
+| walker |  | 178 | 12 | go decl names surface in log.go |  |  | 0.000 |
+| walker |  | 182 | 4 | listing of '.circleci' |  |  | 0.000 |
 | ns | 207 |  | 93 | Code-base structure map (FAQ) | 1.3 |  | 0.000 |
-| walker |  | 208 | 51 | README headline in README.md |  |  | 0.000 |
-| walker |  | 237 | 29 | README headline in cli/README.md |  |  | 0.000 |
-| walker |  | 246 | 9 | listing of 'internal/url' |  |  | 0.000 |
-| walker |  | 258 | 12 | go decl names surface in log.go |  |  | 0.000 |
-| walker |  | 262 | 4 | listing of '.circleci' |  |  | 0.000 |
-| walker |  | 297 | 35 | go module identity in go.mod |  |  | 0.416 |
+| walker |  | 217 | 35 | go module identity in go.mod |  |  | 0.415 |
+| walker |  | 232 | 15 | listing of 'cmd/migrate' |  |  | 0.415 |
+| walker |  | 242 | 10 | README headline in cmd/migrate/README.md |  |  | 0.415 |
+| walker |  | 293 | 51 | README headline in README.md |  |  | 0.416 |
+| walker |  | 322 | 29 | README headline in cli/README.md |  |  | 0.416 |
 | ns | 325 |  | 118 | Build entry points (Makefile) | 1.4 |  | 0.358 |
-| walker |  | 350 | 53 | headings outline in GETTING_STARTED.md |  |  | 0.358 |
-| walker |  | 365 | 15 | listing of 'cmd/migrate' |  |  | 0.358 |
-| walker |  | 375 | 10 | README headline in cmd/migrate/README.md |  |  | 0.358 |
-| walker |  | 382 | 7 | listing of '.github' |  |  | 0.358 |
-| walker |  | 386 | 4 | listing of '.github/workflows' |  |  | 0.358 |
-| ns | 450 |  | 125 | Root directory listing | 1.5 |  | 0.665 |
-| walker |  | 458 | 72 | go package doc lede in migrate.go |  |  | 0.780 |
-| walker |  | 470 | 12 | go decl names surface in cli/main.go |  |  | 0.780 |
-| walker |  | 470 | 0 | go decl at cli/main.go:6 |  |  | 0.780 |
-| walker |  | 482 | 12 | go decl names surface in cli/version.go |  |  | 0.780 |
-| walker |  | 482 | 0 | go decl at cli/version.go:4 |  |  | 0.780 |
-| walker |  | 489 | 7 | go package + imports in log.go |  |  | 0.780 |
+| walker |  | 329 | 7 | listing of '.github' |  |  | 0.358 |
+| walker |  | 333 | 4 | listing of '.github/workflows' |  |  | 0.358 |
+| walker |  | 405 | 72 | go package doc lede in migrate.go |  |  | 0.598 |
+| walker |  | 417 | 12 | go decl names surface in cli/main.go |  |  | 0.598 |
+| walker |  | 417 | 0 | go decl at cli/main.go:6 |  |  | 0.598 |
+| walker |  | 429 | 12 | go decl names surface in cli/version.go |  |  | 0.598 |
+| walker |  | 429 | 0 | go decl at cli/version.go:4 |  |  | 0.598 |
+| walker |  | 436 | 7 | go package + imports in log.go |  |  | 0.598 |
+| ns | 450 |  | 125 | Root directory listing | 1.5 |  | 0.780 |
+| walker |  | 489 | 53 | headings outline in GETTING_STARTED.md |  |  | 0.780 |
 | walker |  | 578 | 89 | listing of 'source' |  |  | 0.783 |
 | walker |  | 591 | 13 | listing of 'source/file' |  |  | 0.783 |
 | walker |  | 604 | 13 | listing of 'source/google_cloud_storage' |  |  | 0.783 |

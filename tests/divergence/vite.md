@@ -6,16 +6,16 @@ Score(3000)=0.470 I=0.711 C=0.311 ns_rows≤3K=24/49 (reached=7 partial=0 missin
 | ns | 91 |  | 91 | Root directory listing | 1.1 |  | 1.000 |
 | walker |  | 104 | 13 | listing of 'packages' |  |  | 1.000 |
 | walker |  | 137 | 33 | listing of 'patches' |  |  | 1.000 |
-| ns | 176 |  | 85 | README lede | 1.2 |  | 0.850 |
-| ns | 320 |  | 144 | Root package.json: key scripts | 1.3 |  | 0.756 |
-| walker |  | 322 | 185 | README headline in README.md |  |  | 0.899 |
-| ns | 333 |  | 13 | packages/ directory listing | 1.4 |  | 0.897 |
-| walker |  | 358 | 36 | headings outline in README.md |  |  | 0.897 |
-| walker |  | 370 | 12 | README.md section #3 |  |  | 0.897 |
-| walker |  | 389 | 19 | README.md section #2 |  |  | 0.897 |
-| walker |  | 419 | 30 | listing of 'packages/plugin-legacy' |  |  | 0.898 |
-| walker |  | 442 | 23 | listing of 'packages/plugin-legacy/src' |  |  | 0.898 |
-| walker |  | 458 | 16 | listing of 'packages/plugin-legacy/src/__tests__' |  |  | 0.898 |
+| walker |  | 167 | 30 | listing of 'packages/plugin-legacy' |  |  | 1.000 |
+| ns | 176 |  | 85 | README lede | 1.2 |  | 0.851 |
+| walker |  | 190 | 23 | listing of 'packages/plugin-legacy/src' |  |  | 0.851 |
+| walker |  | 206 | 16 | listing of 'packages/plugin-legacy/src/__tests__' |  |  | 0.851 |
+| ns | 320 |  | 144 | Root package.json: key scripts | 1.3 |  | 0.757 |
+| ns | 333 |  | 13 | packages/ directory listing | 1.4 |  | 0.767 |
+| walker |  | 391 | 185 | README headline in README.md |  |  | 0.898 |
+| walker |  | 427 | 36 | headings outline in README.md |  |  | 0.898 |
+| walker |  | 439 | 12 | README.md section #3 |  |  | 0.898 |
+| walker |  | 458 | 19 | README.md section #2 |  |  | 0.898 |
 | walker |  | 471 | 13 | export names surface in vitest.config.e2e.ts |  |  | 0.898 |
 | walker |  | 484 | 13 | export names surface in vitest.config.ts |  |  | 0.898 |
 | ns | 504 |  | 171 | pnpm-workspace.yaml: layout + patched/overridden deps | 1.5 |  | 0.759 |

@@ -5,57 +5,57 @@ Score(3000)=0.730 I=0.910 C=0.586 ns_rows≤3K=19/41 (reached=11 partial=1 missi
 | ns | 45 |  | 45 | Root directory listing — source and docs | 1.1 |  | 0.000 |
 | walker |  | 125 | 125 | listing of '.' |  |  | 1.000 |
 | ns | 125 |  | 80 | Root directory listing — tooling config and packaging | 1.2 | 1.1 | 1.000 |
-| ns | 162 |  | 37 | go.mod — module + Go version | 1.3 |  | 0.930 |
-| walker |  | 186 | 61 | README headline in README.md |  |  | 0.930 |
-| walker |  | 211 | 25 | go decl names surface in main.go |  |  | 0.931 |
-| walker |  | 211 | 0 | go decl at main.go:11 |  |  | 0.931 |
-| walker |  | 211 | 0 | go decl at main.go:13 |  |  | 0.931 |
-| walker |  | 243 | 32 | go module identity in go.mod |  |  | 0.983 |
-| walker |  | 253 | 10 | plaintext config VERSION |  |  | 0.984 |
-| ns | 258 |  | 96 | Binary entrypoint (main.go) + VERSION | 1.4 |  | 0.846 |
-| walker |  | 263 | 10 | go decl doc at main.go:11 |  |  | 0.856 |
+| walker |  | 150 | 25 | go decl names surface in main.go |  |  | 1.000 |
+| walker |  | 150 | 0 | go decl at main.go:11 |  |  | 1.000 |
+| walker |  | 150 | 0 | go decl at main.go:13 |  |  | 1.000 |
+| ns | 162 |  | 37 | go.mod — module + Go version | 1.3 |  | 0.931 |
+| walker |  | 182 | 32 | go module identity in go.mod |  |  | 0.983 |
+| walker |  | 192 | 10 | plaintext config VERSION |  |  | 0.984 |
+| walker |  | 202 | 10 | go decl doc at main.go:11 |  |  | 0.985 |
+| ns | 258 |  | 96 | Binary entrypoint (main.go) + VERSION | 1.4 |  | 0.856 |
+| walker |  | 263 | 61 | README headline in README.md |  |  | 0.856 |
 | ns | 280 |  | 22 | pkg/exprparser/ directory listing | 2.1 |  | 0.805 |
-| walker |  | 318 | 55 | headings outline in README.md |  |  | 0.805 |
+| walker |  | 304 | 41 | listing of 'pkg' |  |  | 0.805 |
+| walker |  | 320 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.805 |
+| walker |  | 329 | 9 | listing of 'pkg/gh' |  |  | 0.717 |
 | ns | 329 |  | 49 | pkg/artifacts/ and pkg/artifactcache/ directory listings | 2.2 |  | 0.717 |
-| walker |  | 383 | 65 | headings outline in IMAGES.md |  |  | 0.717 |
-| ns | 385 |  | 56 | pkg/model/ directory listing | 2.3 |  | 0.645 |
-| walker |  | 424 | 41 | listing of 'pkg' |  |  | 0.645 |
-| walker |  | 440 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.646 |
-| walker |  | 449 | 9 | listing of 'pkg/gh' |  |  | 0.646 |
-| ns | 450 |  | 65 | cmd/ directory listing | 2.4 |  | 0.579 |
-| walker |  | 471 | 22 | listing of 'pkg/exprparser' |  |  | 0.625 |
-| walker |  | 495 | 24 | listing of 'pkg/artifacts' |  |  | 0.645 |
-| walker |  | 520 | 25 | listing of 'pkg/artifactcache' |  |  | 0.718 |
-| walker |  | 523 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.718 |
-| walker |  | 536 | 13 | listing of 'pkg/filecollector' |  |  | 0.719 |
-| ns | 538 |  | 88 | pkg/common/ and pkg/common/git/ directory listing | 2.5 |  | 0.642 |
-| walker |  | 540 | 4 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.642 |
-| walker |  | 573 | 33 | listing of 'pkg/lookpath' |  |  | 0.647 |
-| walker |  | 592 | 19 | listing of 'pkg/schema' |  |  | 0.651 |
-| ns | 628 |  | 90 | gh/, lookpath/, filecollector/, workflowpattern/, schema/ directory listings | 2.6 |  | 0.689 |
-| walker |  | 638 | 46 | listing of 'cmd' |  |  | 0.735 |
-| walker |  | 657 | 19 | listing of 'cmd/testdata' |  |  | 0.773 |
-| walker |  | 665 | 8 | listing of '.vscode' |  |  | 0.773 |
-| walker |  | 721 | 56 | listing of 'pkg/model' |  |  | 0.840 |
-| walker |  | 739 | 18 | listing of 'pkg/artifacts/testdata' |  |  | 0.840 |
-| walker |  | 743 | 4 | listing of 'pkg/artifacts/testdata/GHSL-2023-004' |  |  | 0.840 |
-| walker |  | 747 | 4 | listing of 'pkg/artifacts/testdata/upload-and-download' |  |  | 0.840 |
-| walker |  | 751 | 4 | listing of 'pkg/artifacts/testdata/v4' |  |  | 0.840 |
-| walker |  | 769 | 18 | go decl names surface in cmd/graph.go |  |  | 0.840 |
-| walker |  | 769 | 0 | go decl at cmd/graph.go:10 |  |  | 0.840 |
-| walker |  | 787 | 18 | go decl names surface in cmd/list.go |  |  | 0.840 |
-| walker |  | 787 | 0 | go decl at cmd/list.go:11 |  |  | 0.840 |
-| ns | 788 |  | 160 | pkg/container/ directory listing | 2.7 |  | 0.744 |
-| walker |  | 866 | 79 | listing of 'pkg/common' |  |  | 0.812 |
-| walker |  | 875 | 9 | listing of 'pkg/common/git' |  |  | 0.829 |
-| walker |  | 896 | 21 | listing of 'pkg/model/testdata' |  |  | 0.829 |
-| walker |  | 900 | 4 | listing of 'pkg/model/testdata/container-volumes' |  |  | 0.829 |
-| walker |  | 904 | 4 | listing of 'pkg/model/testdata/empty-workflow' |  |  | 0.829 |
-| walker |  | 908 | 4 | listing of 'pkg/model/testdata/strategy' |  |  | 0.829 |
-| walker |  | 915 | 7 | listing of 'pkg/model/testdata/nested' |  |  | 0.829 |
-| walker |  | 919 | 4 | listing of 'pkg/model/testdata/nested/workflows' |  |  | 0.829 |
-| walker |  | 940 | 21 | go decl names surface in cmd/platforms.go |  |  | 0.829 |
-| walker |  | 940 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.829 |
+| walker |  | 351 | 22 | listing of 'pkg/exprparser' |  |  | 0.774 |
+| walker |  | 375 | 24 | listing of 'pkg/artifacts' |  |  | 0.799 |
+| ns | 385 |  | 56 | pkg/model/ directory listing | 2.3 |  | 0.719 |
+| walker |  | 400 | 25 | listing of 'pkg/artifactcache' |  |  | 0.801 |
+| walker |  | 403 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.801 |
+| walker |  | 416 | 13 | listing of 'pkg/filecollector' |  |  | 0.802 |
+| walker |  | 420 | 4 | listing of 'pkg/artifactcache/testdata/example' |  |  | 0.802 |
+| ns | 450 |  | 65 | cmd/ directory listing | 2.4 |  | 0.719 |
+| walker |  | 453 | 33 | listing of 'pkg/lookpath' |  |  | 0.724 |
+| walker |  | 472 | 19 | listing of 'pkg/schema' |  |  | 0.729 |
+| walker |  | 518 | 46 | listing of 'cmd' |  |  | 0.791 |
+| walker |  | 537 | 19 | listing of 'cmd/testdata' |  |  | 0.843 |
+| ns | 538 |  | 88 | pkg/common/ and pkg/common/git/ directory listing | 2.5 |  | 0.752 |
+| walker |  | 545 | 8 | listing of '.vscode' |  |  | 0.752 |
+| walker |  | 601 | 56 | listing of 'pkg/model' |  |  | 0.830 |
+| walker |  | 619 | 18 | listing of 'pkg/artifacts/testdata' |  |  | 0.830 |
+| walker |  | 623 | 4 | listing of 'pkg/artifacts/testdata/GHSL-2023-004' |  |  | 0.830 |
+| walker |  | 627 | 4 | listing of 'pkg/artifacts/testdata/upload-and-download' |  |  | 0.830 |
+| ns | 628 |  | 90 | gh/, lookpath/, filecollector/, workflowpattern/, schema/ directory listings | 2.6 |  | 0.840 |
+| walker |  | 631 | 4 | listing of 'pkg/artifacts/testdata/v4' |  |  | 0.840 |
+| walker |  | 649 | 18 | go decl names surface in cmd/graph.go |  |  | 0.840 |
+| walker |  | 649 | 0 | go decl at cmd/graph.go:10 |  |  | 0.840 |
+| walker |  | 667 | 18 | go decl names surface in cmd/list.go |  |  | 0.840 |
+| walker |  | 667 | 0 | go decl at cmd/list.go:11 |  |  | 0.840 |
+| walker |  | 746 | 79 | listing of 'pkg/common' |  |  | 0.917 |
+| walker |  | 755 | 9 | listing of 'pkg/common/git' |  |  | 0.935 |
+| ns | 788 |  | 160 | pkg/container/ directory listing | 2.7 |  | 0.828 |
+| walker |  | 810 | 55 | headings outline in README.md |  |  | 0.829 |
+| walker |  | 831 | 21 | listing of 'pkg/model/testdata' |  |  | 0.829 |
+| walker |  | 835 | 4 | listing of 'pkg/model/testdata/container-volumes' |  |  | 0.829 |
+| walker |  | 839 | 4 | listing of 'pkg/model/testdata/empty-workflow' |  |  | 0.829 |
+| walker |  | 843 | 4 | listing of 'pkg/model/testdata/strategy' |  |  | 0.829 |
+| walker |  | 850 | 7 | listing of 'pkg/model/testdata/nested' |  |  | 0.829 |
+| walker |  | 854 | 4 | listing of 'pkg/model/testdata/nested/workflows' |  |  | 0.829 |
+| walker |  | 875 | 21 | go decl names surface in cmd/platforms.go |  |  | 0.829 |
+| walker |  | 875 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.829 |
+| walker |  | 940 | 65 | headings outline in IMAGES.md |  |  | 0.829 |
 | walker |  | 963 | 23 | listing of 'pkg/exprparser/testdata' |  |  | 0.829 |
 | walker |  | 970 | 7 | listing of 'pkg/exprparser/testdata/for-hashing-3' |  |  | 0.829 |
 | walker |  | 975 | 5 | listing of 'pkg/exprparser/testdata/for-hashing-3/nested' |  |  | 0.829 |

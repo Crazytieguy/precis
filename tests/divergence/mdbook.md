@@ -14,42 +14,42 @@ Score(3000)=0.563 I=0.820 C=0.386 ns_rows≤3K=21/46 (reached=8 partial=0 missin
 | walker |  | 154 | 13 | entry item body at src/main.rs:18 body 21 |  |  | 0.812 |
 | walker |  | 168 | 14 | entry item body at src/main.rs:18 body 23 |  |  | 0.812 |
 | ns | 172 |  | 45 | src/ and src/cmd/ listing | 1.3 |  | 0.679 |
+| walker |  | 173 | 5 | listing of '.cargo' |  |  | 0.679 |
 | ns | 191 |  | 19 | guide/ and tests/ top-level listing | 1.4 |  | 0.659 |
-| ns | 229 |  | 38 | CI entrypoints: .github/workflows/ and ci/ listing | 1.5 |  | 0.605 |
-| walker |  | 247 | 79 | README headline in README.md |  |  | 0.608 |
-| walker |  | 271 | 24 | README.md section #0 |  |  | 0.610 |
-| ns | 272 |  | 43 | rustfmt/cargo-alias config | 1.6 |  | 0.591 |
-| walker |  | 276 | 5 | listing of '.cargo' |  |  | 0.591 |
-| walker |  | 314 | 38 | listing of 'src/cmd' |  |  | 0.735 |
-| walker |  | 323 | 9 | listing of 'src/cmd/watch' |  |  | 0.735 |
-| ns | 332 |  | 60 | Workspace Cargo.toml: [workspace].members | 1.7 |  | 0.692 |
-| walker |  | 341 | 18 | crate-doc lede in src/cmd/mod.rs |  |  | 0.692 |
-| walker |  | 389 | 48 | listing of 'crates' |  |  | 0.808 |
-| walker |  | 401 | 12 | listing of 'crates/mdbook-compare' |  |  | 0.808 |
-| walker |  | 405 | 4 | listing of 'crates/mdbook-compare/src' |  |  | 0.808 |
-| walker |  | 417 | 12 | entry item at crates/mdbook-compare/src/main.rs:14 |  |  | 0.808 |
-| walker |  | 435 | 18 | crate-doc lede in crates/mdbook-compare/src/main.rs |  |  | 0.808 |
-| ns | 436 |  | 104 | package.json (JS lint tooling) | 1.8 |  | 0.739 |
-| walker |  | 447 | 12 | listing of 'crates/mdbook-core' |  |  | 0.739 |
-| walker |  | 459 | 12 | listing of 'crates/mdbook-driver' |  |  | 0.739 |
-| walker |  | 471 | 12 | listing of 'crates/mdbook-markdown' |  |  | 0.739 |
-| walker |  | 475 | 4 | listing of 'crates/mdbook-markdown/src' |  |  | 0.739 |
-| walker |  | 487 | 12 | listing of 'crates/mdbook-preprocessor' |  |  | 0.739 |
-| walker |  | 491 | 4 | listing of 'crates/mdbook-preprocessor/src' |  |  | 0.739 |
-| walker |  | 503 | 12 | listing of 'crates/mdbook-renderer' |  |  | 0.739 |
-| walker |  | 507 | 4 | listing of 'crates/mdbook-renderer/src' |  |  | 0.739 |
-| walker |  | 519 | 12 | listing of 'crates/mdbook-summary' |  |  | 0.739 |
-| walker |  | 523 | 4 | listing of 'crates/mdbook-summary/src' |  |  | 0.739 |
-| walker |  | 549 | 26 | impl method sigs in crates/mdbook-markdown/src/lib.rs |  |  | 0.739 |
-| walker |  | 565 | 16 | listing of 'crates/mdbook-html' |  |  | 0.739 |
-| ns | 582 |  | 146 | Root README, part 1: pitch + guide/contributing links | 1.9 |  | 0.715 |
-| walker |  | 587 | 22 | mod/use plumbing in crates/mdbook-compare/src/main.rs |  |  | 0.715 |
-| walker |  | 610 | 23 | pub-item names surface in crates/mdbook-renderer/src/lib.rs |  |  | 0.715 |
-| walker |  | 698 | 88 | pub item at crates/mdbook-renderer/src/lib.rs:28 |  |  | 0.718 |
-| walker |  | 750 | 52 | entry item body at src/main.rs:18 body 50 |  |  | 0.718 |
-| ns | 760 |  | 178 | Workspace Cargo.toml: main package metadata | 1.10 |  | 0.648 |
-| walker |  | 789 | 39 | impl method sigs in crates/mdbook-preprocessor/src/lib.rs |  |  | 0.648 |
-| walker |  | 796 | 7 | listing of 'tests' |  |  | 0.674 |
+| walker |  | 211 | 38 | listing of 'src/cmd' |  |  | 0.820 |
+| walker |  | 220 | 9 | listing of 'src/cmd/watch' |  |  | 0.820 |
+| ns | 229 |  | 38 | CI entrypoints: .github/workflows/ and ci/ listing | 1.5 |  | 0.754 |
+| walker |  | 238 | 18 | crate-doc lede in src/cmd/mod.rs |  |  | 0.754 |
+| ns | 272 |  | 43 | rustfmt/cargo-alias config | 1.6 |  | 0.729 |
+| walker |  | 286 | 48 | listing of 'crates' |  |  | 0.852 |
+| walker |  | 298 | 12 | listing of 'crates/mdbook-compare' |  |  | 0.852 |
+| walker |  | 302 | 4 | listing of 'crates/mdbook-compare/src' |  |  | 0.852 |
+| walker |  | 314 | 12 | entry item at crates/mdbook-compare/src/main.rs:14 |  |  | 0.852 |
+| walker |  | 332 | 18 | crate-doc lede in crates/mdbook-compare/src/main.rs |  |  | 0.802 |
+| ns | 332 |  | 60 | Workspace Cargo.toml: [workspace].members | 1.7 |  | 0.802 |
+| walker |  | 344 | 12 | listing of 'crates/mdbook-core' |  |  | 0.802 |
+| walker |  | 356 | 12 | listing of 'crates/mdbook-driver' |  |  | 0.802 |
+| walker |  | 368 | 12 | listing of 'crates/mdbook-markdown' |  |  | 0.802 |
+| walker |  | 372 | 4 | listing of 'crates/mdbook-markdown/src' |  |  | 0.802 |
+| walker |  | 384 | 12 | listing of 'crates/mdbook-preprocessor' |  |  | 0.802 |
+| walker |  | 388 | 4 | listing of 'crates/mdbook-preprocessor/src' |  |  | 0.802 |
+| walker |  | 400 | 12 | listing of 'crates/mdbook-renderer' |  |  | 0.802 |
+| walker |  | 404 | 4 | listing of 'crates/mdbook-renderer/src' |  |  | 0.802 |
+| walker |  | 416 | 12 | listing of 'crates/mdbook-summary' |  |  | 0.802 |
+| walker |  | 420 | 4 | listing of 'crates/mdbook-summary/src' |  |  | 0.802 |
+| ns | 436 |  | 104 | package.json (JS lint tooling) | 1.8 |  | 0.733 |
+| walker |  | 446 | 26 | impl method sigs in crates/mdbook-markdown/src/lib.rs |  |  | 0.733 |
+| walker |  | 462 | 16 | listing of 'crates/mdbook-html' |  |  | 0.733 |
+| walker |  | 484 | 22 | mod/use plumbing in crates/mdbook-compare/src/main.rs |  |  | 0.733 |
+| walker |  | 507 | 23 | pub-item names surface in crates/mdbook-renderer/src/lib.rs |  |  | 0.733 |
+| ns | 582 |  | 146 | Root README, part 1: pitch + guide/contributing links | 1.9 |  | 0.669 |
+| walker |  | 595 | 88 | pub item at crates/mdbook-renderer/src/lib.rs:28 |  |  | 0.672 |
+| walker |  | 647 | 52 | entry item body at src/main.rs:18 body 50 |  |  | 0.672 |
+| walker |  | 686 | 39 | impl method sigs in crates/mdbook-preprocessor/src/lib.rs |  |  | 0.672 |
+| walker |  | 693 | 7 | listing of 'tests' |  |  | 0.702 |
+| ns | 760 |  | 178 | Workspace Cargo.toml: main package metadata | 1.10 |  | 0.633 |
+| walker |  | 772 | 79 | README headline in README.md |  |  | 0.657 |
+| walker |  | 796 | 24 | README.md section #0 |  |  | 0.674 |
 | walker |  | 827 | 31 | mod/use plumbing in crates/mdbook-markdown/src/lib.rs |  |  | 0.674 |
 | walker |  | 838 | 11 | listing of 'examples' |  |  | 0.674 |
 | walker |  | 856 | 18 | listing of 'crates/mdbook-core/src' |  |  | 0.674 |

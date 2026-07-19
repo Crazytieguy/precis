@@ -19,10 +19,24 @@ entries = [".github", ".gitignore", ".husky", ".prettierignore", ".prettierrc.js
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "cmdk" })'
+descriptor = "listing of 'cmdk'"
+cost_tokens = 13
+cum_tokens = 75
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "cmdk"
+entries = ["package.json", "src", "tsup.config.ts"]
+
+[[batches]]
+position = 3
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 27
-cum_tokens = 89
+cum_tokens = 102
 
 [batches.content]
 kind = "lines"
@@ -34,20 +48,6 @@ end = 3
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 3
-key = 'Fs(DirListing { dir: "cmdk" })'
-descriptor = "listing of 'cmdk'"
-cost_tokens = 13
-cum_tokens = 102
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "cmdk"
-entries = ["package.json", "src", "tsup.config.ts"]
 
 [[batches]]
 position = 4
@@ -69,10 +69,38 @@ kind = "full"
 
 [[batches]]
 position = 5
+key = 'Fs(DirListing { dir: "cmdk/src" })'
+descriptor = "listing of 'cmdk/src'"
+cost_tokens = 10
+cum_tokens = 154
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "cmdk/src"
+entries = ["command-score.ts", "index.tsx"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: ".husky" })'
+descriptor = "listing of '.husky'"
+cost_tokens = 5
+cum_tokens = 159
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".husky"
+entries = ["pre-commit"]
+
+[[batches]]
+position = 7
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 21
-cum_tokens = 165
+cum_tokens = 180
 
 [batches.content]
 kind = "lines"
@@ -86,11 +114,57 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 6
+position = 8
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 8
+cum_tokens = 188
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["FUNDING.yml", "workflows"]
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 192
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["test.yml"]
+
+[[batches]]
+position = 10
+key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
+descriptor = "YAML config at .github/workflows/test.yml"
+cost_tokens = 339
+cum_tokens = 531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/workflows/test.yml"
+start = 1
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 92
-cum_tokens = 257
+cum_tokens = 623
 
 [batches.content]
 kind = "lines"
@@ -113,25 +187,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "cmdk/src" })'
-descriptor = "listing of 'cmdk/src'"
-cost_tokens = 10
-cum_tokens = 267
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "cmdk/src"
-entries = ["command-score.ts", "index.tsx"]
-
-[[batches]]
-position = 8
+position = 12
 key = 'Markdown(HeadingsOutline { file: "ARCHITECTURE.md" })'
 descriptor = "headings outline in ARCHITECTURE.md"
 cost_tokens = 57
-cum_tokens = 324
+cum_tokens = 680
 
 [batches.content]
 kind = "lines"
@@ -231,66 +291,6 @@ end = 97
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: ".husky" })'
-descriptor = "listing of '.husky'"
-cost_tokens = 5
-cum_tokens = 329
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".husky"
-entries = ["pre-commit"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 8
-cum_tokens = 337
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "workflows"]
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 341
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["test.yml"]
-
-[[batches]]
-position = 12
-key = 'Yaml(Whole { file: ".github/workflows/test.yml" })'
-descriptor = "YAML config at .github/workflows/test.yml"
-cost_tokens = 339
-cum_tokens = 680
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/workflows/test.yml"
-start = 1
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 13

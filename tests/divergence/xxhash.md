@@ -7,16 +7,16 @@ Score(3000)=0.742 I=0.902 C=0.610 ns_rows≤3K=18/48 (reached=10 partial=2 missi
 | walker |  | 94 | 11 | listing of 'xxhsum' |  |  | 1.000 |
 | walker |  | 108 | 14 | listing of 'dynamic' |  |  | 1.000 |
 | walker |  | 123 | 15 | listing of 'xxhashbench' |  |  | 1.000 |
+| walker |  | 126 | 3 | listing of '.github' |  |  | 1.000 |
 | ns | 127 |  | 44 | Subdirectory listings | 1.2 |  | 0.955 |
-| ns | 158 |  | 31 | go.mod (module identity) | 1.3 |  | 0.896 |
-| walker |  | 189 | 66 | README headline in README.md |  |  | 0.905 |
-| ns | 205 |  | 47 | Package doc comment | 1.4 |  | 0.855 |
-| walker |  | 220 | 31 | headings outline in README.md |  |  | 0.855 |
-| walker |  | 223 | 3 | listing of '.github' |  |  | 0.855 |
-| walker |  | 227 | 4 | listing of '.github/workflows' |  |  | 0.895 |
-| walker |  | 258 | 31 | go module identity in go.mod |  |  | 0.953 |
-| walker |  | 258 | 0 | go module file go.mod |  |  | 0.953 |
-| walker |  | 297 | 39 | go package doc lede in xxhash.go |  |  | 0.982 |
+| walker |  | 130 | 4 | listing of '.github/workflows' |  |  | 1.000 |
+| ns | 158 |  | 31 | go.mod (module identity) | 1.3 |  | 0.938 |
+| walker |  | 161 | 31 | go module identity in go.mod |  |  | 1.000 |
+| walker |  | 161 | 0 | go module file go.mod |  |  | 1.000 |
+| walker |  | 200 | 39 | go package doc lede in xxhash.go |  |  | 1.000 |
+| ns | 205 |  | 47 | Package doc comment | 1.4 |  | 0.977 |
+| walker |  | 266 | 66 | README headline in README.md |  |  | 0.982 |
+| walker |  | 297 | 31 | headings outline in README.md |  |  | 0.982 |
 | ns | 309 |  | 104 | README heading + badges | 1.5 |  | 0.921 |
 | walker |  | 332 | 35 | go decl names surface in xxhash_asm.go |  |  | 0.922 |
 | walker |  | 332 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.922 |

@@ -33,10 +33,322 @@ entries = [".last-run.json"]
 
 [[batches]]
 position = 3
+key = 'Fs(DirListing { dir: "src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 25
+cum_tokens = 147
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src"
+entries = ["deprecated", "editor.ts", "features", "index.ts", "internal", "languages", "tsconfig.json"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "src/internal" })'
+descriptor = "listing of 'src/internal'"
+cost_tokens = 3
+cum_tokens = 150
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/internal"
+entries = ["common"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "src/deprecated" })'
+descriptor = "listing of 'src/deprecated'"
+cost_tokens = 11
+cum_tokens = 161
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/deprecated"
+entries = ["basic-languages", "editor", "language"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "src/languages" })'
+descriptor = "listing of 'src/languages'"
+cost_tokens = 11
+cum_tokens = 172
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages"
+entries = ["definitions", "features", "register.all.ts"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "src/deprecated/language" })'
+descriptor = "listing of 'src/deprecated/language'"
+cost_tokens = 13
+cum_tokens = 185
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/deprecated/language"
+entries = ["css", "html", "json", "typescript"]
+
+[[batches]]
+position = 8
+key = 'Typescript(ExportNames { file: "src/index.ts" })'
+descriptor = "export names surface in src/index.ts"
+cost_tokens = 20
+cum_tokens = 205
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "src/languages/features" })'
+descriptor = "listing of 'src/languages/features'"
+cost_tokens = 21
+cum_tokens = 226
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/features"
+entries = ["common", "css", "html", "json", "register.all.ts", "typescript"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "src/languages/features/css" })'
+descriptor = "listing of 'src/languages/features/css'"
+cost_tokens = 24
+cum_tokens = 250
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/features/css"
+entries = ["css.worker.ts", "cssMode.ts", "cssWorker.ts", "register.ts", "workerManager.ts"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "src/languages/features/html" })'
+descriptor = "listing of 'src/languages/features/html'"
+cost_tokens = 24
+cum_tokens = 274
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/features/html"
+entries = ["html.worker.ts", "htmlMode.ts", "htmlWorker.ts", "register.ts", "workerManager.ts"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "monaco-lsp-client" })'
+descriptor = "listing of 'monaco-lsp-client'"
+cost_tokens = 27
+cum_tokens = 301
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "monaco-lsp-client"
+entries = ["README.md", "generator", "package-lock.json", "package.json", "rolldown.config.mjs", "src"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "monaco-lsp-client/generator" })'
+descriptor = "listing of 'monaco-lsp-client/generator'"
+cost_tokens = 4
+cum_tokens = 305
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "monaco-lsp-client/generator"
+entries = ["index.ts"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "webpack-plugin" })'
+descriptor = "listing of 'webpack-plugin'"
+cost_tokens = 29
+cum_tokens = 334
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin"
+entries = [".npmignore", "LICENSE", "README.md", "package-lock.json", "package.json", "src", "tsconfig.json"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "src/languages/features/json" })'
+descriptor = "listing of 'src/languages/features/json'"
+cost_tokens = 29
+cum_tokens = 363
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/features/json"
+entries = ["json.worker.ts", "jsonMode.ts", "jsonWorker.ts", "register.ts", "tokenization.ts", "workerManager.ts"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "src/deprecated/basic-languages" })'
+descriptor = "listing of 'src/deprecated/basic-languages'"
+cost_tokens = 7
+cum_tokens = 370
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/deprecated/basic-languages"
+entries = ["monaco.contribution.ts"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "src/languages/features/typescript" })'
+descriptor = "listing of 'src/languages/features/typescript'"
+cost_tokens = 32
+cum_tokens = 402
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/features/typescript"
+entries = ["languageFeatures.ts", "lib", "register.ts", "ts.worker.ts", "tsMode.ts", "tsWorker.ts", "workerManager.ts"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: ".devcontainer" })'
+descriptor = "listing of '.devcontainer'"
+cost_tokens = 5
+cum_tokens = 407
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".devcontainer"
+entries = ["devcontainer.json"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: ".husky" })'
+descriptor = "listing of '.husky'"
+cost_tokens = 5
+cum_tokens = 412
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".husky"
+entries = ["pre-commit"]
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: "src/internal/common" })'
+descriptor = "listing of 'src/internal/common'"
+cost_tokens = 8
+cum_tokens = 420
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/internal/common"
+entries = ["initialize.ts", "workers.ts"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "monaco-lsp-client/src" })'
+descriptor = "listing of 'monaco-lsp-client/src'"
+cost_tokens = 15
+cum_tokens = 435
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "monaco-lsp-client/src"
+entries = ["adapters", "index.ts", "types.ts", "utils.ts"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 38
+cum_tokens = 473
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["code-structure.dio.svg", "debugging-core.gif", "debugging-languages.gif", "integrate-esm.md", "launch config.png", "out-folders.dio.svg"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "src/deprecated/editor" })'
+descriptor = "listing of 'src/deprecated/editor'"
+cost_tokens = 10
+cum_tokens = 483
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/deprecated/editor"
+entries = ["editor.main.ts", "editor.worker.ts"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 6
+cum_tokens = 489
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["ci", "lib"]
+
+[[batches]]
+position = 25
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 67
-cum_tokens = 189
+cum_tokens = 556
 
 [batches.content]
 kind = "lines"
@@ -58,11 +370,67 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 4
+position = 26
+key = 'Fs(DirListing { dir: "webpack-plugin/src" })'
+descriptor = "listing of 'webpack-plugin/src'"
+cost_tokens = 20
+cum_tokens = 576
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin/src"
+entries = ["index.ts", "loader-utils.d.ts", "loaders", "plugins", "types.ts"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "webpack-plugin/src/loaders" })'
+descriptor = "listing of 'webpack-plugin/src/loaders'"
+cost_tokens = 4
+cum_tokens = 580
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin/src/loaders"
+entries = ["include.ts"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "webpack-plugin/src/plugins" })'
+descriptor = "listing of 'webpack-plugin/src/plugins'"
+cost_tokens = 8
+cum_tokens = 588
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "webpack-plugin/src/plugins"
+entries = ["AddWorkerEntryPointPlugin.ts"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "src/languages/features/common" })'
+descriptor = "listing of 'src/languages/features/common'"
+cost_tokens = 7
+cum_tokens = 595
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "src/languages/features/common"
+entries = ["lspLanguageFeatures.ts"]
+
+[[batches]]
+position = 30
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 106
-cum_tokens = 295
+cum_tokens = 701
 
 [batches.content]
 kind = "lines"
@@ -84,11 +452,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 5
+position = 31
 key = 'Markdown(HeadingsOutline { file: "MAINTAINING.md" })'
 descriptor = "headings outline in MAINTAINING.md"
 cost_tokens = 36
-cum_tokens = 331
+cum_tokens = 737
 
 [batches.content]
 kind = "lines"
@@ -140,374 +508,6 @@ end = 51
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "src" })'
-descriptor = "listing of 'src'"
-cost_tokens = 25
-cum_tokens = 356
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src"
-entries = ["deprecated", "editor.ts", "features", "index.ts", "internal", "languages", "tsconfig.json"]
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "src/internal" })'
-descriptor = "listing of 'src/internal'"
-cost_tokens = 3
-cum_tokens = 359
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/internal"
-entries = ["common"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "src/deprecated" })'
-descriptor = "listing of 'src/deprecated'"
-cost_tokens = 11
-cum_tokens = 370
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/deprecated"
-entries = ["basic-languages", "editor", "language"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "src/languages" })'
-descriptor = "listing of 'src/languages'"
-cost_tokens = 11
-cum_tokens = 381
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages"
-entries = ["definitions", "features", "register.all.ts"]
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "src/deprecated/language" })'
-descriptor = "listing of 'src/deprecated/language'"
-cost_tokens = 13
-cum_tokens = 394
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/deprecated/language"
-entries = ["css", "html", "json", "typescript"]
-
-[[batches]]
-position = 11
-key = 'Typescript(ExportNames { file: "src/index.ts" })'
-descriptor = "export names surface in src/index.ts"
-cost_tokens = 20
-cum_tokens = 414
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/index.ts"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "src/languages/features" })'
-descriptor = "listing of 'src/languages/features'"
-cost_tokens = 21
-cum_tokens = 435
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/features"
-entries = ["common", "css", "html", "json", "register.all.ts", "typescript"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "src/languages/features/css" })'
-descriptor = "listing of 'src/languages/features/css'"
-cost_tokens = 24
-cum_tokens = 459
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/features/css"
-entries = ["css.worker.ts", "cssMode.ts", "cssWorker.ts", "register.ts", "workerManager.ts"]
-
-[[batches]]
-position = 14
-key = 'Fs(DirListing { dir: "src/languages/features/html" })'
-descriptor = "listing of 'src/languages/features/html'"
-cost_tokens = 24
-cum_tokens = 483
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/features/html"
-entries = ["html.worker.ts", "htmlMode.ts", "htmlWorker.ts", "register.ts", "workerManager.ts"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "monaco-lsp-client" })'
-descriptor = "listing of 'monaco-lsp-client'"
-cost_tokens = 27
-cum_tokens = 510
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "monaco-lsp-client"
-entries = ["README.md", "generator", "package-lock.json", "package.json", "rolldown.config.mjs", "src"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "monaco-lsp-client/generator" })'
-descriptor = "listing of 'monaco-lsp-client/generator'"
-cost_tokens = 4
-cum_tokens = 514
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "monaco-lsp-client/generator"
-entries = ["index.ts"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "webpack-plugin" })'
-descriptor = "listing of 'webpack-plugin'"
-cost_tokens = 29
-cum_tokens = 543
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "webpack-plugin"
-entries = [".npmignore", "LICENSE", "README.md", "package-lock.json", "package.json", "src", "tsconfig.json"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "src/languages/features/json" })'
-descriptor = "listing of 'src/languages/features/json'"
-cost_tokens = 29
-cum_tokens = 572
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/features/json"
-entries = ["json.worker.ts", "jsonMode.ts", "jsonWorker.ts", "register.ts", "tokenization.ts", "workerManager.ts"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "src/deprecated/basic-languages" })'
-descriptor = "listing of 'src/deprecated/basic-languages'"
-cost_tokens = 7
-cum_tokens = 579
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/deprecated/basic-languages"
-entries = ["monaco.contribution.ts"]
-
-[[batches]]
-position = 20
-key = 'Fs(DirListing { dir: "src/languages/features/typescript" })'
-descriptor = "listing of 'src/languages/features/typescript'"
-cost_tokens = 32
-cum_tokens = 611
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/features/typescript"
-entries = ["languageFeatures.ts", "lib", "register.ts", "ts.worker.ts", "tsMode.ts", "tsWorker.ts", "workerManager.ts"]
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: ".devcontainer" })'
-descriptor = "listing of '.devcontainer'"
-cost_tokens = 5
-cum_tokens = 616
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".devcontainer"
-entries = ["devcontainer.json"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: ".husky" })'
-descriptor = "listing of '.husky'"
-cost_tokens = 5
-cum_tokens = 621
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".husky"
-entries = ["pre-commit"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "src/internal/common" })'
-descriptor = "listing of 'src/internal/common'"
-cost_tokens = 8
-cum_tokens = 629
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/internal/common"
-entries = ["initialize.ts", "workers.ts"]
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "monaco-lsp-client/src" })'
-descriptor = "listing of 'monaco-lsp-client/src'"
-cost_tokens = 15
-cum_tokens = 644
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "monaco-lsp-client/src"
-entries = ["adapters", "index.ts", "types.ts", "utils.ts"]
-
-[[batches]]
-position = 25
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 38
-cum_tokens = 682
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["code-structure.dio.svg", "debugging-core.gif", "debugging-languages.gif", "integrate-esm.md", "launch config.png", "out-folders.dio.svg"]
-
-[[batches]]
-position = 26
-key = 'Fs(DirListing { dir: "src/deprecated/editor" })'
-descriptor = "listing of 'src/deprecated/editor'"
-cost_tokens = 10
-cum_tokens = 692
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/deprecated/editor"
-entries = ["editor.main.ts", "editor.worker.ts"]
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 6
-cum_tokens = 698
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["ci", "lib"]
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "webpack-plugin/src" })'
-descriptor = "listing of 'webpack-plugin/src'"
-cost_tokens = 20
-cum_tokens = 718
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "webpack-plugin/src"
-entries = ["index.ts", "loader-utils.d.ts", "loaders", "plugins", "types.ts"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "webpack-plugin/src/loaders" })'
-descriptor = "listing of 'webpack-plugin/src/loaders'"
-cost_tokens = 4
-cum_tokens = 722
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "webpack-plugin/src/loaders"
-entries = ["include.ts"]
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "webpack-plugin/src/plugins" })'
-descriptor = "listing of 'webpack-plugin/src/plugins'"
-cost_tokens = 8
-cum_tokens = 730
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "webpack-plugin/src/plugins"
-entries = ["AddWorkerEntryPointPlugin.ts"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "src/languages/features/common" })'
-descriptor = "listing of 'src/languages/features/common'"
-cost_tokens = 7
-cum_tokens = 737
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "src/languages/features/common"
-entries = ["lspLanguageFeatures.ts"]
 
 [[batches]]
 position = 32

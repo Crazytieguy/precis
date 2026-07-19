@@ -11,20 +11,20 @@ Score(3000)=0.528 I=0.816 C=0.342 ns_rows≤3K=16/48 (reached=5 partial=1 missin
 | walker |  | 226 | 14 | listing of 'tutorials' |  |  | 1.000 |
 | walker |  | 234 | 8 | listing of 'tutorials/basics' |  |  | 1.000 |
 | walker |  | 242 | 8 | listing of 'tutorials/commands' |  |  | 1.000 |
-| walker |  | 318 | 76 | README headline in README.md |  |  | 1.000 |
-| walker |  | 347 | 29 | go module identity in go.mod |  |  | 1.000 |
-| ns | 355 |  | 153 | README lede | 1.5 |  | 0.934 |
-| walker |  | 361 | 14 | go decl names surface in profile.go |  |  | 0.934 |
-| walker |  | 372 | 11 | go decl at profile.go:13 |  |  | 0.934 |
-| walker |  | 394 | 22 | go decl names surface in focus.go |  |  | 0.934 |
-| walker |  | 394 | 0 | go decl at focus.go:5 |  |  | 0.934 |
-| walker |  | 394 | 0 | go decl at focus.go:9 |  |  | 0.934 |
-| walker |  | 417 | 23 | go decl names surface in input.go |  |  | 0.934 |
-| walker |  | 417 | 0 | go decl at input.go:8 |  |  | 0.934 |
-| walker |  | 443 | 26 | go decl names surface in raw.go |  |  | 0.934 |
-| walker |  | 443 | 0 | go decl at raw.go:33 |  |  | 0.934 |
-| walker |  | 456 | 13 | go decl at raw.go:5 |  |  | 0.934 |
-| walker |  | 478 | 22 | listing of 'testdata/TestClearMsg' |  |  | 0.934 |
+| walker |  | 271 | 29 | go module identity in go.mod |  |  | 1.000 |
+| walker |  | 285 | 14 | go decl names surface in profile.go |  |  | 1.000 |
+| walker |  | 296 | 11 | go decl at profile.go:13 |  |  | 1.000 |
+| walker |  | 318 | 22 | go decl names surface in focus.go |  |  | 1.000 |
+| walker |  | 318 | 0 | go decl at focus.go:5 |  |  | 1.000 |
+| walker |  | 318 | 0 | go decl at focus.go:9 |  |  | 1.000 |
+| walker |  | 341 | 23 | go decl names surface in input.go |  |  | 1.000 |
+| walker |  | 341 | 0 | go decl at input.go:8 |  |  | 1.000 |
+| ns | 355 |  | 153 | README lede | 1.5 |  | 0.920 |
+| walker |  | 367 | 26 | go decl names surface in raw.go |  |  | 0.920 |
+| walker |  | 367 | 0 | go decl at raw.go:33 |  |  | 0.920 |
+| walker |  | 380 | 13 | go decl at raw.go:5 |  |  | 0.920 |
+| walker |  | 402 | 22 | listing of 'testdata/TestClearMsg' |  |  | 0.921 |
+| walker |  | 478 | 76 | README headline in README.md |  |  | 0.934 |
 | walker |  | 485 | 7 | go package + imports in focus.go |  |  | 0.934 |
 | walker |  | 492 | 7 | go package + imports in raw.go |  |  | 0.934 |
 | walker |  | 501 | 9 | go package + imports in clipboard.go |  |  | 0.934 |

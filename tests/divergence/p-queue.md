@@ -6,25 +6,25 @@ Score(3000)=0.503 I=0.789 C=0.321 ns_rows≤3K=21/42 (reached=9 partial=3 missin
 | ns | 39 |  | 39 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 45 | 6 | listing of 'test-d' |  |  | 1.000 |
 | ns | 62 |  | 23 | source/ listing | 1.2 |  | 0.811 |
-| ns | 110 |  | 48 | test/, test-d/, .github/ listings | 1.3 |  | 0.602 |
-| walker |  | 113 | 68 | package identity in package.json |  |  | 0.612 |
-| ns | 137 |  | 27 | readme.md title + tagline | 2.1 |  | 0.575 |
-| walker |  | 180 | 67 | README headline in readme.md |  |  | 0.648 |
-| walker |  | 203 | 23 | listing of 'source' |  |  | 0.776 |
-| walker |  | 234 | 31 | package runtime metadata in package.json |  |  | 0.777 |
-| walker |  | 248 | 14 | export at source/options.ts:111 |  |  | 0.777 |
-| ns | 256 |  | 119 | readme.md — maintenance-mode notice | 2.2 | 2.1 | 0.716 |
-| walker |  | 261 | 13 | export at source/options.ts:97 |  |  | 0.716 |
-| ns | 315 |  | 59 | package.json — name, version, description, license | 2.3 |  | 0.721 |
-| walker |  | 324 | 63 | export names surface in source/index.ts |  |  | 0.721 |
-| walker |  | 357 | 33 | export at source/index.ts:16 |  |  | 0.721 |
-| walker |  | 364 | 7 | listing of '.github' |  |  | 0.734 |
-| walker |  | 368 | 4 | listing of '.github/workflows' |  |  | 0.745 |
-| ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.656 |
-| ns | 554 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.615 |
-| walker |  | 569 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.615 |
-| walker |  | 589 | 20 | export doc at source/index.ts:16 |  |  | 0.615 |
-| walker |  | 619 | 30 | export at source/options.ts:27 |  |  | 0.615 |
+| walker |  | 68 | 23 | listing of 'source' |  |  | 1.000 |
+| walker |  | 82 | 14 | export at source/options.ts:111 |  |  | 1.000 |
+| walker |  | 95 | 13 | export at source/options.ts:97 |  |  | 1.000 |
+| ns | 110 |  | 48 | test/, test-d/, .github/ listings | 1.3 |  | 0.742 |
+| ns | 137 |  | 27 | readme.md title + tagline | 2.1 |  | 0.698 |
+| walker |  | 163 | 68 | package identity in package.json |  |  | 0.708 |
+| walker |  | 226 | 63 | export names surface in source/index.ts |  |  | 0.708 |
+| ns | 256 |  | 119 | readme.md — maintenance-mode notice | 2.2 | 2.1 | 0.647 |
+| walker |  | 259 | 33 | export at source/index.ts:16 |  |  | 0.647 |
+| ns | 315 |  | 59 | package.json — name, version, description, license | 2.3 |  | 0.661 |
+| walker |  | 326 | 67 | README headline in readme.md |  |  | 0.719 |
+| walker |  | 333 | 7 | listing of '.github' |  |  | 0.732 |
+| walker |  | 337 | 4 | listing of '.github/workflows' |  |  | 0.743 |
+| ns | 448 |  | 133 | package.json — repository, funding, type, exports, sideEffects, engines | 2.4 | 2.3 | 0.646 |
+| walker |  | 538 | 201 | YAML config at .github/workflows/main.yml |  |  | 0.646 |
+| ns | 554 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.605 |
+| walker |  | 558 | 20 | export doc at source/index.ts:16 |  |  | 0.605 |
+| walker |  | 588 | 30 | export at source/options.ts:27 |  |  | 0.605 |
+| walker |  | 619 | 31 | package runtime metadata in package.json |  |  | 0.615 |
 | ns | 652 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.559 |
 | walker |  | 656 | 37 | export names surface in source/priority-queue.ts |  |  | 0.559 |
 | walker |  | 673 | 17 | export at source/priority-queue.ts:7 |  |  | 0.560 |

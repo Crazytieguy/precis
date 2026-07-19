@@ -4,86 +4,86 @@ Score(3000)=0.793 I=0.934 C=0.674 ns_rows≤3K=14/44 (reached=9 partial=1 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 82 | 82 | listing of '.' |  |  | 1.000 |
 | ns | 82 |  | 82 | Repo root listing | 1.1 |  | 1.000 |
-| ns | 145 |  | 63 | server/ top-level listing | 1.2 |  | 0.714 |
-| walker |  | 151 | 69 | package identity in package.json |  |  | 0.714 |
-| walker |  | 166 | 15 | listing of 'images' |  |  | 0.714 |
-| walker |  | 179 | 13 | package identity metadata in package.json |  |  | 0.714 |
-| walker |  | 182 | 3 | listing of 'test' |  |  | 0.714 |
-| walker |  | 205 | 23 | listing of 'docs' |  |  | 0.715 |
+| walker |  | 97 | 15 | listing of 'images' |  |  | 1.000 |
+| walker |  | 100 | 3 | listing of 'test' |  |  | 1.000 |
+| walker |  | 123 | 23 | listing of 'docs' |  |  | 1.000 |
+| ns | 145 |  | 63 | server/ top-level listing | 1.2 |  | 0.715 |
+| walker |  | 192 | 69 | package identity in package.json |  |  | 0.715 |
+| walker |  | 205 | 13 | package identity metadata in package.json |  |  | 0.715 |
 | ns | 210 |  | 65 | client/ top-level listing | 1.3 |  | 0.583 |
-| walker |  | 231 | 26 | package entrypoints in package.json |  |  | 0.583 |
-| ns | 309 |  | 99 | server/{auth,routers,finders,providers} listings | 1.4 |  | 0.498 |
-| walker |  | 386 | 155 | README headline in readme.md |  |  | 0.498 |
-| ns | 483 |  | 174 | server/{scanner,objects,...} listings | 1.5 |  | 0.401 |
-| walker |  | 484 | 98 | README headline in docs/README.md |  |  | 0.401 |
-| walker |  | 547 | 63 | listing of 'server' |  |  | 0.562 |
-| walker |  | 562 | 15 | listing of 'server/finders' |  |  | 0.565 |
-| walker |  | 578 | 16 | listing of 'server/routers' |  |  | 0.577 |
-| walker |  | 597 | 19 | listing of 'server/auth' |  |  | 0.595 |
-| ns | 606 |  | 123 | client/{store,plugins,middleware,mixins,layouts,players} listings | 1.6 |  | 0.524 |
-| walker |  | 662 | 65 | listing of 'client' |  |  | 0.633 |
-| walker |  | 666 | 4 | listing of 'client/middleware' |  |  | 0.633 |
-| walker |  | 675 | 9 | listing of 'client/cypress' |  |  | 0.633 |
-| walker |  | 687 | 12 | listing of 'client/layouts' |  |  | 0.636 |
-| ns | 696 |  | 90 | client/cypress/ full listing | 1.7 |  | 0.592 |
-| walker |  | 704 | 17 | listing of 'client/mixins' |  |  | 0.598 |
-| walker |  | 717 | 13 | listing of 'client/cypress/support' |  |  | 0.605 |
-| walker |  | 743 | 26 | listing of 'client/players' |  |  | 0.622 |
-| walker |  | 771 | 28 | listing of 'client/store' |  |  | 0.660 |
-| ns | 788 |  | 92 | .github/ full listing | 1.8 |  | 0.622 |
-| walker |  | 801 | 30 | listing of 'docs/controllers' |  |  | 0.622 |
-| walker |  | 834 | 33 | listing of 'docs/objects' |  |  | 0.624 |
-| walker |  | 839 | 5 | listing of 'docs/objects/settings' |  |  | 0.624 |
-| walker |  | 851 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.624 |
-| ns | 860 |  | 72 | build/, .devcontainer/, .vscode/, images/ listings | 1.9 |  | 0.593 |
-| walker |  | 864 | 13 | listing of 'docs/objects/entities' |  |  | 0.593 |
-| walker |  | 880 | 16 | listing of 'docs/objects/files' |  |  | 0.593 |
-| walker |  | 946 | 66 | package identity in client/package.json |  |  | 0.593 |
-| walker |  | 958 | 12 | package entrypoints in client/package.json |  |  | 0.593 |
-| walker |  | 994 | 36 | listing of 'client/plugins' |  |  | 0.648 |
-| walker |  | 1033 | 39 | listing of 'client/assets' |  |  | 0.648 |
-| walker |  | 1046 | 13 | listing of 'client/assets/ebooks' |  |  | 0.649 |
-| walker |  | 1059 | 13 | listing of '.github' |  |  | 0.651 |
-| walker |  | 1099 | 40 | listing of 'client/components' |  |  | 0.651 |
-| walker |  | 1105 | 6 | listing of 'client/components/content' |  |  | 0.651 |
-| walker |  | 1113 | 8 | listing of 'client/components/prompt' |  |  | 0.651 |
-| walker |  | 1130 | 17 | listing of 'client/components/player' |  |  | 0.651 |
-| walker |  | 1151 | 21 | listing of 'docs/objects/metadata' |  |  | 0.651 |
-| walker |  | 1157 | 6 | listing of 'client/cypress/tests' |  |  | 0.657 |
-| walker |  | 1160 | 3 | listing of 'client/cypress/tests/components' |  |  | 0.660 |
-| ns | 1194 |  | 334 | server/{controllers,managers,models} listings | 1.10 |  | 0.556 |
-| walker |  | 1209 | 49 | listing of 'server/providers' |  |  | 0.604 |
-| walker |  | 1225 | 16 | listing of '.vscode' |  |  | 0.611 |
-| walker |  | 1251 | 26 | listing of 'client/components/readers' |  |  | 0.612 |
-| walker |  | 1302 | 51 | listing of 'client/pages' |  |  | 0.612 |
-| walker |  | 1306 | 4 | listing of 'client/pages/audiobook' |  |  | 0.612 |
-| walker |  | 1310 | 4 | listing of 'client/pages/batch' |  |  | 0.612 |
-| walker |  | 1314 | 4 | listing of 'client/pages/item' |  |  | 0.613 |
-| walker |  | 1318 | 4 | listing of 'client/pages/library' |  |  | 0.613 |
-| walker |  | 1322 | 4 | listing of 'client/pages/upload' |  |  | 0.613 |
-| walker |  | 1327 | 5 | listing of 'client/pages/author' |  |  | 0.613 |
-| walker |  | 1332 | 5 | listing of 'client/pages/collection' |  |  | 0.613 |
-| walker |  | 1337 | 5 | listing of 'client/pages/playlist' |  |  | 0.613 |
-| walker |  | 1342 | 5 | listing of 'client/pages/share' |  |  | 0.613 |
-| walker |  | 1346 | 4 | listing of 'client/pages/item/_id' |  |  | 0.613 |
-| walker |  | 1358 | 12 | listing of 'client/pages/audiobook/_id' |  |  | 0.614 |
-| walker |  | 1410 | 52 | listing of 'server/objects' |  |  | 0.628 |
-| walker |  | 1421 | 11 | listing of 'server/objects/metadata' |  |  | 0.633 |
-| walker |  | 1436 | 15 | listing of 'server/objects/settings' |  |  | 0.641 |
-| walker |  | 1457 | 21 | listing of 'server/objects/files' |  |  | 0.656 |
-| ns | 1459 |  | 265 | server/utils/{generators,migrations,parsers,queries} listings | 1.11 |  | 0.594 |
-| walker |  | 1511 | 54 | listing of 'client/static' |  |  | 0.596 |
-| walker |  | 1514 | 3 | listing of 'client/static/libs' |  |  | 0.596 |
-| walker |  | 1519 | 5 | listing of 'client/static/textures' |  |  | 0.596 |
-| walker |  | 1529 | 10 | listing of 'client/static/libarchive' |  |  | 0.596 |
-| walker |  | 1536 | 7 | listing of 'client/static/libs/marked' |  |  | 0.596 |
-| walker |  | 1547 | 11 | listing of 'client/static/libarchive/wasm-gen' |  |  | 0.596 |
-| walker |  | 1571 | 24 | listing of 'client/static/fonts' |  |  | 0.596 |
-| walker |  | 1582 | 11 | listing of 'client/static/fonts/Ubuntu_Mono' |  |  | 0.596 |
-| walker |  | 1600 | 18 | listing of '.devcontainer' |  |  | 0.607 |
-| walker |  | 1613 | 13 | package identity metadata in client/package.json |  |  | 0.607 |
-| walker |  | 1643 | 30 | listing of 'client/components/covers' |  |  | 0.607 |
-| walker |  | 1710 | 67 | listing of '.github/workflows' |  |  | 0.636 |
+| walker |  | 268 | 63 | listing of 'server' |  |  | 0.817 |
+| walker |  | 283 | 15 | listing of 'server/finders' |  |  | 0.817 |
+| walker |  | 299 | 16 | listing of 'server/routers' |  |  | 0.820 |
+| ns | 309 |  | 99 | server/{auth,routers,finders,providers} listings | 1.4 |  | 0.716 |
+| walker |  | 318 | 19 | listing of 'server/auth' |  |  | 0.739 |
+| walker |  | 344 | 26 | package entrypoints in package.json |  |  | 0.739 |
+| walker |  | 409 | 65 | listing of 'client' |  |  | 0.892 |
+| walker |  | 413 | 4 | listing of 'client/middleware' |  |  | 0.892 |
+| walker |  | 422 | 9 | listing of 'client/cypress' |  |  | 0.892 |
+| walker |  | 434 | 12 | listing of 'client/layouts' |  |  | 0.893 |
+| walker |  | 451 | 17 | listing of 'client/mixins' |  |  | 0.894 |
+| walker |  | 464 | 13 | listing of 'client/cypress/support' |  |  | 0.895 |
+| ns | 483 |  | 174 | server/{scanner,objects,...} listings | 1.5 |  | 0.721 |
+| walker |  | 490 | 26 | listing of 'client/players' |  |  | 0.723 |
+| walker |  | 518 | 28 | listing of 'client/store' |  |  | 0.728 |
+| walker |  | 548 | 30 | listing of 'docs/controllers' |  |  | 0.728 |
+| walker |  | 581 | 33 | listing of 'docs/objects' |  |  | 0.730 |
+| walker |  | 586 | 5 | listing of 'docs/objects/settings' |  |  | 0.730 |
+| walker |  | 598 | 12 | listing of 'docs/objects/mediaTypes' |  |  | 0.730 |
+| ns | 606 |  | 123 | client/{store,plugins,middleware,mixins,layouts,players} listings | 1.6 |  | 0.706 |
+| walker |  | 611 | 13 | listing of 'docs/objects/entities' |  |  | 0.706 |
+| walker |  | 627 | 16 | listing of 'docs/objects/files' |  |  | 0.706 |
+| walker |  | 693 | 66 | package identity in client/package.json |  |  | 0.706 |
+| ns | 696 |  | 90 | client/cypress/ full listing | 1.7 |  | 0.662 |
+| walker |  | 705 | 12 | package entrypoints in client/package.json |  |  | 0.662 |
+| walker |  | 741 | 36 | listing of 'client/plugins' |  |  | 0.725 |
+| walker |  | 780 | 39 | listing of 'client/assets' |  |  | 0.725 |
+| ns | 788 |  | 92 | .github/ full listing | 1.8 |  | 0.683 |
+| walker |  | 793 | 13 | listing of 'client/assets/ebooks' |  |  | 0.683 |
+| walker |  | 806 | 13 | listing of '.github' |  |  | 0.685 |
+| walker |  | 846 | 40 | listing of 'client/components' |  |  | 0.685 |
+| walker |  | 852 | 6 | listing of 'client/components/content' |  |  | 0.685 |
+| walker |  | 860 | 8 | listing of 'client/components/prompt' |  |  | 0.651 |
+| ns | 860 |  | 72 | build/, .devcontainer/, .vscode/, images/ listings | 1.9 |  | 0.651 |
+| walker |  | 877 | 17 | listing of 'client/components/player' |  |  | 0.651 |
+| walker |  | 898 | 21 | listing of 'docs/objects/metadata' |  |  | 0.651 |
+| walker |  | 1053 | 155 | README headline in readme.md |  |  | 0.651 |
+| walker |  | 1059 | 6 | listing of 'client/cypress/tests' |  |  | 0.657 |
+| walker |  | 1062 | 3 | listing of 'client/cypress/tests/components' |  |  | 0.660 |
+| walker |  | 1111 | 49 | listing of 'server/providers' |  |  | 0.718 |
+| walker |  | 1127 | 16 | listing of '.vscode' |  |  | 0.727 |
+| walker |  | 1153 | 26 | listing of 'client/components/readers' |  |  | 0.727 |
+| ns | 1194 |  | 334 | server/{controllers,managers,models} listings | 1.10 |  | 0.612 |
+| walker |  | 1204 | 51 | listing of 'client/pages' |  |  | 0.612 |
+| walker |  | 1208 | 4 | listing of 'client/pages/audiobook' |  |  | 0.612 |
+| walker |  | 1212 | 4 | listing of 'client/pages/batch' |  |  | 0.612 |
+| walker |  | 1216 | 4 | listing of 'client/pages/item' |  |  | 0.613 |
+| walker |  | 1220 | 4 | listing of 'client/pages/library' |  |  | 0.613 |
+| walker |  | 1224 | 4 | listing of 'client/pages/upload' |  |  | 0.613 |
+| walker |  | 1229 | 5 | listing of 'client/pages/author' |  |  | 0.613 |
+| walker |  | 1234 | 5 | listing of 'client/pages/collection' |  |  | 0.613 |
+| walker |  | 1239 | 5 | listing of 'client/pages/playlist' |  |  | 0.613 |
+| walker |  | 1244 | 5 | listing of 'client/pages/share' |  |  | 0.613 |
+| walker |  | 1248 | 4 | listing of 'client/pages/item/_id' |  |  | 0.613 |
+| walker |  | 1260 | 12 | listing of 'client/pages/audiobook/_id' |  |  | 0.614 |
+| walker |  | 1312 | 52 | listing of 'server/objects' |  |  | 0.628 |
+| walker |  | 1323 | 11 | listing of 'server/objects/metadata' |  |  | 0.633 |
+| walker |  | 1338 | 15 | listing of 'server/objects/settings' |  |  | 0.641 |
+| walker |  | 1359 | 21 | listing of 'server/objects/files' |  |  | 0.656 |
+| walker |  | 1413 | 54 | listing of 'client/static' |  |  | 0.658 |
+| walker |  | 1416 | 3 | listing of 'client/static/libs' |  |  | 0.658 |
+| walker |  | 1421 | 5 | listing of 'client/static/textures' |  |  | 0.658 |
+| walker |  | 1431 | 10 | listing of 'client/static/libarchive' |  |  | 0.658 |
+| walker |  | 1438 | 7 | listing of 'client/static/libs/marked' |  |  | 0.658 |
+| walker |  | 1449 | 11 | listing of 'client/static/libarchive/wasm-gen' |  |  | 0.658 |
+| ns | 1459 |  | 265 | server/utils/{generators,migrations,parsers,queries} listings | 1.11 |  | 0.596 |
+| walker |  | 1473 | 24 | listing of 'client/static/fonts' |  |  | 0.596 |
+| walker |  | 1484 | 11 | listing of 'client/static/fonts/Ubuntu_Mono' |  |  | 0.596 |
+| walker |  | 1502 | 18 | listing of '.devcontainer' |  |  | 0.607 |
+| walker |  | 1515 | 13 | package identity metadata in client/package.json |  |  | 0.607 |
+| walker |  | 1545 | 30 | listing of 'client/components/covers' |  |  | 0.607 |
+| walker |  | 1612 | 67 | listing of '.github/workflows' |  |  | 0.636 |
+| walker |  | 1710 | 98 | README headline in docs/README.md |  |  | 0.636 |
 | walker |  | 1732 | 22 | listing of 'client/static/fonts/absicons' |  |  | 0.636 |
 | walker |  | 1770 | 38 | listing of 'client/components/controls' |  |  | 0.637 |
 | ns | 1811 |  | 352 | server/migrations/ + server/libs/ listings | 1.12 |  | 0.582 |

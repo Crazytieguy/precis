@@ -61,36 +61,10 @@ entries = ["assets", "config.toml", "content", "layouts", "static"]
 
 [[batches]]
 position = 5
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 68
-cum_tokens = 160
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 7
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
 key = 'Fs(DirListing { dir: "clibs" })'
 descriptor = "listing of 'clibs'"
 cost_tokens = 21
-cum_tokens = 181
+cum_tokens = 113
 
 [batches.content]
 kind = "fs"
@@ -100,11 +74,11 @@ parent = "clibs"
 entries = ["datalist", "ltask", "lua", "soluna", "yoga", "zip"]
 
 [[batches]]
-position = 7
+position = 6
 key = 'Fs(DirListing { dir: "clibs/datalist" })'
 descriptor = "listing of 'clibs/datalist'"
 cost_tokens = 4
-cum_tokens = 185
+cum_tokens = 117
 
 [batches.content]
 kind = "fs"
@@ -114,11 +88,11 @@ parent = "clibs/datalist"
 entries = ["make.lua"]
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: "clibs/ltask" })'
 descriptor = "listing of 'clibs/ltask'"
 cost_tokens = 4
-cum_tokens = 189
+cum_tokens = 121
 
 [batches.content]
 kind = "fs"
@@ -128,11 +102,11 @@ parent = "clibs/ltask"
 entries = ["make.lua"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Fs(DirListing { dir: "clibs/lua" })'
 descriptor = "listing of 'clibs/lua'"
 cost_tokens = 4
-cum_tokens = 193
+cum_tokens = 125
 
 [batches.content]
 kind = "fs"
@@ -142,11 +116,11 @@ parent = "clibs/lua"
 entries = ["make.lua"]
 
 [[batches]]
-position = 10
+position = 9
 key = 'Fs(DirListing { dir: "clibs/yoga" })'
 descriptor = "listing of 'clibs/yoga'"
 cost_tokens = 4
-cum_tokens = 197
+cum_tokens = 129
 
 [batches.content]
 kind = "fs"
@@ -156,11 +130,11 @@ parent = "clibs/yoga"
 entries = ["make.lua"]
 
 [[batches]]
-position = 11
+position = 10
 key = 'Fs(DirListing { dir: "clibs/zip" })'
 descriptor = "listing of 'clibs/zip'"
 cost_tokens = 4
-cum_tokens = 201
+cum_tokens = 133
 
 [batches.content]
 kind = "fs"
@@ -170,11 +144,37 @@ parent = "clibs/zip"
 entries = ["make.lua"]
 
 [[batches]]
-position = 12
+position = 11
 key = 'Lua(DeclNames { file: "make.lua" })'
 descriptor = "lua decl names surface in make.lua"
 cost_tokens = 14
-cum_tokens = 215
+cum_tokens = 147
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "make.lua"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "make.lua"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 12
+key = 'Lua(Decl { file: "make.lua", start_line: 4 })'
+descriptor = "lua decl at make.lua:4"
+cost_tokens = 0
+cum_tokens = 147
 
 [batches.content]
 kind = "lines"
@@ -197,36 +197,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 13
-key = 'Lua(Decl { file: "make.lua", start_line: 4 })'
-descriptor = "lua decl at make.lua:4"
-cost_tokens = 0
-cum_tokens = 215
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "make.lua"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "make.lua"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
 key = 'Fs(DirListing { dir: "script" })'
 descriptor = "listing of 'script'"
 cost_tokens = 23
-cum_tokens = 238
+cum_tokens = 170
 
 [batches.content]
 kind = "fs"
@@ -236,11 +210,11 @@ parent = "script"
 entries = ["build_web.lua", "datalist2c.lua", "hashversion.lua", "lua2c.lua"]
 
 [[batches]]
-position = 15
+position = 14
 key = 'Fs(DirListing { dir: "web/static" })'
 descriptor = "listing of 'web/static'"
 cost_tokens = 10
-cum_tokens = 248
+cum_tokens = 180
 
 [batches.content]
 kind = "fs"
@@ -250,11 +224,11 @@ parent = "web/static"
 entries = ["coi-serviceworker.min.js", "fonts"]
 
 [[batches]]
-position = 16
+position = 15
 key = 'Fs(DirListing { dir: "web/content" })'
 descriptor = "listing of 'web/content'"
 cost_tokens = 16
-cum_tokens = 264
+cum_tokens = 196
 
 [batches.content]
 kind = "fs"
@@ -264,11 +238,11 @@ parent = "web/content"
 entries = ["_index.md", "docs", "examples", "playframe.md"]
 
 [[batches]]
-position = 17
+position = 16
 key = 'Fs(DirListing { dir: "web/content/docs" })'
 descriptor = "listing of 'web/content/docs'"
 cost_tokens = 5
-cum_tokens = 269
+cum_tokens = 201
 
 [batches.content]
 kind = "fs"
@@ -278,11 +252,37 @@ parent = "web/content/docs"
 entries = ["_index.md"]
 
 [[batches]]
-position = 18
+position = 17
 key = 'Lua(DeclNames { file: "script/hashversion.lua" })'
 descriptor = "lua decl names surface in script/hashversion.lua"
 cost_tokens = 11
-cum_tokens = 280
+cum_tokens = 212
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/hashversion.lua"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/hashversion.lua"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 18
+key = 'Lua(Decl { file: "script/hashversion.lua", start_line: 1 })'
+descriptor = "lua decl at script/hashversion.lua:1"
+cost_tokens = 0
+cum_tokens = 212
 
 [batches.content]
 kind = "lines"
@@ -305,36 +305,294 @@ kind = "ellipsis"
 
 [[batches]]
 position = 19
-key = 'Lua(Decl { file: "script/hashversion.lua", start_line: 1 })'
-descriptor = "lua decl at script/hashversion.lua:1"
-cost_tokens = 0
-cum_tokens = 280
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 6
+cum_tokens = 218
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["actions", "workflows"]
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 8
+cum_tokens = 226
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["nightly.yml", "pages.yml"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "web/assets" })'
+descriptor = "listing of 'web/assets'"
+cost_tokens = 19
+cum_tokens = 245
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/assets"
+entries = ["htmx.js", "play.js", "playframe.js", "site.css"]
+
+[[batches]]
+position = 22
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 68
+cum_tokens = 313
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "script/hashversion.lua"
-start = 1
-end = 1
+path = "README.md"
+start = 3
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "script/hashversion.lua"
-start = 2
-end = 2
+path = "README.md"
+start = 7
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Lua(DeclNames { file: "script/datalist2c.lua" })'
+descriptor = "lua decl names surface in script/datalist2c.lua"
+cost_tokens = 14
+cum_tokens = 327
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/datalist2c.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/datalist2c.lua"
+start = 15
+end = 15
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 24
+key = 'Lua(Decl { file: "script/datalist2c.lua", start_line: 14 })'
+descriptor = "lua decl at script/datalist2c.lua:14"
+cost_tokens = 0
+cum_tokens = 327
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/datalist2c.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/datalist2c.lua"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 25
+key = 'Lua(DeclNames { file: "script/lua2c.lua" })'
+descriptor = "lua decl names surface in script/lua2c.lua"
+cost_tokens = 14
+cum_tokens = 341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/lua2c.lua"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/lua2c.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 26
+key = 'Lua(Decl { file: "script/lua2c.lua", start_line: 13 })'
+descriptor = "lua decl at script/lua2c.lua:13"
+cost_tokens = 0
+cum_tokens = 341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "script/lua2c.lua"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "script/lua2c.lua"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "web/static/fonts" })'
+descriptor = "listing of 'web/static/fonts'"
+cost_tokens = 13
+cum_tokens = 354
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/static/fonts"
+entries = ["SourceHanSansSC-Regular.ttf", "arial.ttf"]
+
+[[batches]]
+position = 28
+key = 'Fs(DirListing { dir: "clibs/soluna" })'
+descriptor = "listing of 'clibs/soluna'"
+cost_tokens = 26
+cum_tokens = 380
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "clibs/soluna"
+entries = ["compile_lua.lua", "compile_shader.lua", "make.lua", "runlua.lua", "shader2c.lua"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "web/layouts" })'
+descriptor = "listing of 'web/layouts'"
+cost_tokens = 26
+cum_tokens = 406
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/layouts"
+entries = ["_default", "docs", "examples", "index.html", "partials", "playframe", "shortcodes"]
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "web/layouts/docs" })'
+descriptor = "listing of 'web/layouts/docs'"
+cost_tokens = 4
+cum_tokens = 410
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/layouts/docs"
+entries = ["list.html"]
+
+[[batches]]
+position = 31
+key = 'Fs(DirListing { dir: "web/layouts/playframe" })'
+descriptor = "listing of 'web/layouts/playframe'"
+cost_tokens = 4
+cum_tokens = 414
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/layouts/playframe"
+entries = ["single.html"]
+
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "web/layouts/partials" })'
+descriptor = "listing of 'web/layouts/partials'"
+cost_tokens = 8
+cum_tokens = 422
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/layouts/partials"
+entries = ["footer.html", "nav.html"]
+
+[[batches]]
+position = 33
+key = 'Fs(DirListing { dir: "web/layouts/_default" })'
+descriptor = "listing of 'web/layouts/_default'"
+cost_tokens = 17
+cum_tokens = 439
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "web/layouts/_default"
+entries = ["baseof.html", "single.html", "term.html", "terms.html"]
+
+[[batches]]
+position = 34
+key = 'Fs(DirListing { dir: "docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 91
+cum_tokens = 530
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "docs"
+entries = ["app.lua", "args.lua", "callback.lua", "coroutine.lua", "crypt.lua", "datalist.lua", "file.lua", "font.lua", "font_system.lua", "image.lua", "layout.lua", "lfs.lua", "material_mask.lua", "material_perspective_quad.lua", "material_quad.lua", "material_text.lua", "soluna.lua", "text.lua", "url.lua", "zip.lua"]
+
+[[batches]]
+position = 35
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 69
-cum_tokens = 349
+cum_tokens = 599
 
 [batches.content]
 kind = "lines"
@@ -434,264 +692,6 @@ end = 58
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 21
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 6
-cum_tokens = 355
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["actions", "workflows"]
-
-[[batches]]
-position = 22
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 8
-cum_tokens = 363
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["nightly.yml", "pages.yml"]
-
-[[batches]]
-position = 23
-key = 'Fs(DirListing { dir: "web/assets" })'
-descriptor = "listing of 'web/assets'"
-cost_tokens = 19
-cum_tokens = 382
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/assets"
-entries = ["htmx.js", "play.js", "playframe.js", "site.css"]
-
-[[batches]]
-position = 24
-key = 'Lua(DeclNames { file: "script/datalist2c.lua" })'
-descriptor = "lua decl names surface in script/datalist2c.lua"
-cost_tokens = 14
-cum_tokens = 396
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/datalist2c.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/datalist2c.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 25
-key = 'Lua(Decl { file: "script/datalist2c.lua", start_line: 14 })'
-descriptor = "lua decl at script/datalist2c.lua:14"
-cost_tokens = 0
-cum_tokens = 396
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/datalist2c.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/datalist2c.lua"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 26
-key = 'Lua(DeclNames { file: "script/lua2c.lua" })'
-descriptor = "lua decl names surface in script/lua2c.lua"
-cost_tokens = 14
-cum_tokens = 410
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/lua2c.lua"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/lua2c.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 27
-key = 'Lua(Decl { file: "script/lua2c.lua", start_line: 13 })'
-descriptor = "lua decl at script/lua2c.lua:13"
-cost_tokens = 0
-cum_tokens = 410
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "script/lua2c.lua"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "script/lua2c.lua"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "web/static/fonts" })'
-descriptor = "listing of 'web/static/fonts'"
-cost_tokens = 13
-cum_tokens = 423
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/static/fonts"
-entries = ["SourceHanSansSC-Regular.ttf", "arial.ttf"]
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "clibs/soluna" })'
-descriptor = "listing of 'clibs/soluna'"
-cost_tokens = 26
-cum_tokens = 449
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "clibs/soluna"
-entries = ["compile_lua.lua", "compile_shader.lua", "make.lua", "runlua.lua", "shader2c.lua"]
-
-[[batches]]
-position = 30
-key = 'Fs(DirListing { dir: "web/layouts" })'
-descriptor = "listing of 'web/layouts'"
-cost_tokens = 26
-cum_tokens = 475
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/layouts"
-entries = ["_default", "docs", "examples", "index.html", "partials", "playframe", "shortcodes"]
-
-[[batches]]
-position = 31
-key = 'Fs(DirListing { dir: "web/layouts/docs" })'
-descriptor = "listing of 'web/layouts/docs'"
-cost_tokens = 4
-cum_tokens = 479
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/layouts/docs"
-entries = ["list.html"]
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "web/layouts/playframe" })'
-descriptor = "listing of 'web/layouts/playframe'"
-cost_tokens = 4
-cum_tokens = 483
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/layouts/playframe"
-entries = ["single.html"]
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "web/layouts/partials" })'
-descriptor = "listing of 'web/layouts/partials'"
-cost_tokens = 8
-cum_tokens = 491
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/layouts/partials"
-entries = ["footer.html", "nav.html"]
-
-[[batches]]
-position = 34
-key = 'Fs(DirListing { dir: "web/layouts/_default" })'
-descriptor = "listing of 'web/layouts/_default'"
-cost_tokens = 17
-cum_tokens = 508
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "web/layouts/_default"
-entries = ["baseof.html", "single.html", "term.html", "terms.html"]
-
-[[batches]]
-position = 35
-key = 'Fs(DirListing { dir: "docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 91
-cum_tokens = 599
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "docs"
-entries = ["app.lua", "args.lua", "callback.lua", "coroutine.lua", "crypt.lua", "datalist.lua", "file.lua", "font.lua", "font_system.lua", "image.lua", "layout.lua", "lfs.lua", "material_mask.lua", "material_perspective_quad.lua", "material_quad.lua", "material_text.lua", "soluna.lua", "text.lua", "url.lua", "zip.lua"]
 
 [[batches]]
 position = 36

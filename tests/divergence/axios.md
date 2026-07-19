@@ -9,22 +9,22 @@ Score(3000)=0.670 I=0.854 C=0.526 ns_rows≤3K=21/40 (reached=13 partial=1 missi
 | walker |  | 153 | 153 | listing of '.' |  |  | 0.536 |
 | walker |  | 163 | 10 | export names surface in index.js |  |  | 0.536 |
 | walker |  | 175 | 12 | listing of 'sandbox' |  |  | 0.536 |
+| walker |  | 179 | 4 | listing of '.husky' |  |  | 0.536 |
 | ns | 182 |  | 65 | Root documentation files | 1.5 |  | 0.542 |
-| walker |  | 251 | 76 | package identity in package.json |  |  | 0.542 |
-| walker |  | 255 | 4 | listing of '.husky' |  |  | 0.445 |
-| ns | 255 |  | 73 | lib/env, lib/platform listings (incl. node/browser/common subdirs) | 1.6 |  | 0.445 |
-| walker |  | 284 | 29 | listing of 'lib' |  |  | 0.821 |
-| walker |  | 292 | 8 | listing of 'lib/defaults' |  |  | 0.822 |
-| walker |  | 303 | 11 | listing of 'lib/env' |  |  | 0.827 |
-| walker |  | 316 | 13 | listing of 'lib/platform' |  |  | 0.850 |
-| walker |  | 323 | 7 | listing of 'lib/platform/browser' |  |  | 0.868 |
-| walker |  | 330 | 7 | listing of 'lib/platform/node' |  |  | 0.891 |
-| walker |  | 345 | 15 | listing of 'lib/platform/browser/classes' |  |  | 0.932 |
-| ns | 348 |  | 93 | lib/core, lib/adapters, lib/cancel, lib/defaults listings | 1.7 |  | 0.794 |
-| walker |  | 361 | 16 | listing of 'lib/cancel' |  |  | 0.802 |
-| walker |  | 365 | 4 | listing of 'lib/platform/common' |  |  | 0.816 |
-| walker |  | 385 | 20 | listing of 'lib/adapters' |  |  | 0.845 |
-| walker |  | 390 | 5 | listing of 'lib/env/classes' |  |  | 0.859 |
+| walker |  | 208 | 29 | listing of 'lib' |  |  | 1.000 |
+| walker |  | 216 | 8 | listing of 'lib/defaults' |  |  | 1.000 |
+| walker |  | 227 | 11 | listing of 'lib/env' |  |  | 1.000 |
+| walker |  | 240 | 13 | listing of 'lib/platform' |  |  | 1.000 |
+| walker |  | 247 | 7 | listing of 'lib/platform/browser' |  |  | 1.000 |
+| walker |  | 254 | 7 | listing of 'lib/platform/node' |  |  | 1.000 |
+| ns | 255 |  | 73 | lib/env, lib/platform listings (incl. node/browser/common subdirs) | 1.6 |  | 0.891 |
+| walker |  | 269 | 15 | listing of 'lib/platform/browser/classes' |  |  | 0.932 |
+| walker |  | 285 | 16 | listing of 'lib/cancel' |  |  | 0.933 |
+| walker |  | 289 | 4 | listing of 'lib/platform/common' |  |  | 0.949 |
+| walker |  | 309 | 20 | listing of 'lib/adapters' |  |  | 0.953 |
+| walker |  | 314 | 5 | listing of 'lib/env/classes' |  |  | 0.970 |
+| ns | 348 |  | 93 | lib/core, lib/adapters, lib/cancel, lib/defaults listings | 1.7 |  | 0.859 |
+| walker |  | 390 | 76 | package identity in package.json |  |  | 0.859 |
 | walker |  | 396 | 6 | listing of 'scripts' |  |  | 0.859 |
 | walker |  | 406 | 10 | export names surface in lib/axios.js |  |  | 0.859 |
 | ns | 447 |  | 99 | lib/helpers listing, part 1 (A-N) | 1.8 |  | 0.770 |

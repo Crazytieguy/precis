@@ -9,11 +9,11 @@ Score(3000)=0.784 I=0.899 C=0.684 ns_rows≤3K=16/41 (reached=9 partial=2 missin
 | ns | 114 |  | 42 | testdata/ directory tree listing | 1.5 |  | 0.000 |
 | ns | 169 |  | 55 | .github/ directory listing (workflows, issue templates) | 1.6 |  | 0.000 |
 | walker |  | 229 | 229 | listing of '.' |  |  | 0.000 |
-| walker |  | 240 | 11 | README headline in README.md |  |  | 0.000 |
-| walker |  | 243 | 3 | listing of 'codec' |  |  | 0.000 |
-| ns | 244 |  | 75 | render/ directory listing | 1.7 |  | 0.000 |
-| walker |  | 247 | 4 | listing of 'docs' |  |  | 0.043 |
-| walker |  | 254 | 7 | listing of 'internal' |  |  | 0.068 |
+| walker |  | 232 | 3 | listing of 'codec' |  |  | 0.000 |
+| walker |  | 236 | 4 | listing of 'docs' |  |  | 0.055 |
+| walker |  | 243 | 7 | listing of 'internal' |  |  | 0.086 |
+| ns | 244 |  | 75 | render/ directory listing | 1.7 |  | 0.068 |
+| walker |  | 254 | 11 | README headline in README.md |  |  | 0.068 |
 | walker |  | 269 | 15 | listing of 'ginS' |  |  | 0.173 |
 | walker |  | 284 | 15 | listing of 'testdata' |  |  | 0.208 |
 | walker |  | 292 | 8 | listing of 'testdata/certificate' |  |  | 0.248 |

@@ -59,28 +59,10 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 187
-cum_tokens = 284
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 9
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 5
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 10
-cum_tokens = 294
+cum_tokens = 107
 
 [batches.content]
 kind = "fs"
@@ -90,11 +72,11 @@ parent = ".github"
 entries = ["PULL_REQUEST_TEMPLATE.md", "workflows"]
 
 [[batches]]
-position = 6
+position = 5
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 303
+cum_tokens = 116
 
 [batches.content]
 kind = "fs"
@@ -104,11 +86,11 @@ parent = ".github/workflows"
 entries = ["compressed-size.yml", "main.yml"]
 
 [[batches]]
-position = 7
+position = 6
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 217
-cum_tokens = 520
+cum_tokens = 333
 
 [batches.content]
 kind = "lines"
@@ -122,11 +104,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 12
-cum_tokens = 532
+cum_tokens = 345
 
 [batches.content]
 kind = "fs"
@@ -134,6 +116,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "test"
 entries = ["index_test.ts", "test-types-compilation.ts"]
+
+[[batches]]
+position = 8
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 187
+cum_tokens = 532
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 9

@@ -93,10 +93,38 @@ kind = "full"
 
 [[batches]]
 position = 7
+key = 'Fs(DirListing { dir: "fuzzer" })'
+descriptor = "listing of 'fuzzer'"
+cost_tokens = 8
+cum_tokens = 237
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "fuzzer"
+entries = ["fuzz.py", "requirements.txt"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "profiler" })'
+descriptor = "listing of 'profiler'"
+cost_tokens = 9
+cum_tokens = 246
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "profiler"
+entries = ["profiler_script.py", "requirements.txt"]
+
+[[batches]]
+position = 9
 key = 'Markdown(HeadingsOutline { file: "tomllib.md" })'
 descriptor = "headings outline in tomllib.md"
 cost_tokens = 58
-cum_tokens = 287
+cum_tokens = 304
 
 [batches.content]
 kind = "lines"
@@ -150,39 +178,53 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "fuzzer" })'
-descriptor = "listing of 'fuzzer'"
-cost_tokens = 8
-cum_tokens = 295
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "fuzzer"
-entries = ["fuzz.py", "requirements.txt"]
-
-[[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "profiler" })'
-descriptor = "listing of 'profiler'"
-cost_tokens = 9
-cum_tokens = 304
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "profiler"
-entries = ["profiler_script.py", "requirements.txt"]
-
-[[batches]]
 position = 10
+key = 'Fs(DirListing { dir: "scripts" })'
+descriptor = "listing of 'scripts'"
+cost_tokens = 17
+cum_tokens = 321
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "scripts"
+entries = ["mypyc_tox", "requirements.txt", "use_setuptools.py"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "benchmark" })'
+descriptor = "listing of 'benchmark'"
+cost_tokens = 20
+cum_tokens = 341
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "benchmark"
+entries = ["LICENSE", "README.md", "data.toml", "requirements.txt", "run.py"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 30
+cum_tokens = 371
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "tests"
+entries = ["__init__.py", "burntsushi.py", "data", "test_data.py", "test_error.py", "test_misc.py"]
+
+[[batches]]
+position = 13
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 393
-cum_tokens = 697
+cum_tokens = 764
 
 [batches.content]
 kind = "lines"
@@ -202,48 +244,6 @@ end = 28
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 17
-cum_tokens = 714
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "scripts"
-entries = ["mypyc_tox", "requirements.txt", "use_setuptools.py"]
-
-[[batches]]
-position = 12
-key = 'Fs(DirListing { dir: "benchmark" })'
-descriptor = "listing of 'benchmark'"
-cost_tokens = 20
-cum_tokens = 734
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "benchmark"
-entries = ["LICENSE", "README.md", "data.toml", "requirements.txt", "run.py"]
-
-[[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 30
-cum_tokens = 764
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests"
-entries = ["__init__.py", "burntsushi.py", "data", "test_data.py", "test_error.py", "test_misc.py"]
 
 [[batches]]
 position = 14

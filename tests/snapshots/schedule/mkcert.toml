@@ -19,28 +19,10 @@ entries = [".github", "AUTHORS", "LICENSE", "README.md", "cert.go", "go.mod", "g
 
 [[batches]]
 position = 2
-key = 'Markdown(ReadmeHeadline { file: "README.md" })'
-descriptor = "README headline in README.md"
-cost_tokens = 38
-cum_tokens = 88
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 3
 key = 'Go(PackageDocLede { file: "main.go" })'
 descriptor = "go package doc lede in main.go"
 cost_tokens = 23
-cum_tokens = 111
+cum_tokens = 73
 
 [batches.content]
 kind = "lines"
@@ -54,17 +36,35 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 4
+position = 3
 key = 'Go(GoModIdentity { file: "go.mod" })'
 descriptor = "go module identity in go.mod"
 cost_tokens = 29
-cum_tokens = 140
+cum_tokens = 102
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "go.mod"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Markdown(ReadmeHeadline { file: "README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 38
+cum_tokens = 140
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
 start = 1
 end = 3
 

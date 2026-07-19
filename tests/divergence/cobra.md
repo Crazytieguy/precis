@@ -7,25 +7,25 @@ Score(3000)=0.571 I=0.798 C=0.409 ns_rows≤3K=16/43 (reached=8 partial=0 missin
 | walker |  | 191 | 191 | listing of '.' |  |  | 0.000 |
 | walker |  | 194 | 3 | listing of 'site' |  |  | 0.000 |
 | walker |  | 199 | 5 | listing of 'assets' |  |  | 0.000 |
-| ns | 233 |  | 109 | README tagline + adoption | 1.3 |  | 0.000 |
-| walker |  | 295 | 96 | README headline in README.md |  |  | 0.082 |
-| walker |  | 325 | 30 | go module identity in go.mod |  |  | 0.496 |
-| ns | 371 |  | 138 | Repo root listing, part 1: Go source/test files | 1.4 |  | 0.755 |
-| walker |  | 373 | 48 | go package doc lede in command.go |  |  | 0.755 |
-| ns | 424 |  | 53 | Repo root listing, part 2: docs, CI, and meta | 1.5 | 1.4 | 0.762 |
-| walker |  | 436 | 63 | headings outline in README.md |  |  | 0.762 |
-| walker |  | 448 | 12 | README.md section #0 |  |  | 0.762 |
-| walker |  | 474 | 26 | listing of 'site/content' |  |  | 0.767 |
-| ns | 497 |  | 73 | site/content/ doc-tree subdirectory listings | 1.6 |  | 0.672 |
-| walker |  | 533 | 59 | listing of 'doc' |  |  | 0.682 |
-| walker |  | 546 | 13 | listing of '.github' |  |  | 0.688 |
-| walker |  | 555 | 9 | listing of '.github/workflows' |  |  | 0.692 |
-| ns | 578 |  | 81 | doc/ and .github/ subdirectory listings | 1.7 |  | 0.710 |
-| ns | 697 |  | 119 | README Overview: feature bullets, part 1 | 1.8 |  | 0.665 |
+| walker |  | 229 | 30 | go module identity in go.mod |  |  | 0.577 |
+| ns | 233 |  | 109 | README tagline + adoption | 1.3 |  | 0.480 |
+| walker |  | 277 | 48 | go package doc lede in command.go |  |  | 0.480 |
+| walker |  | 303 | 26 | listing of 'site/content' |  |  | 0.480 |
+| walker |  | 362 | 59 | listing of 'doc' |  |  | 0.480 |
+| ns | 371 |  | 138 | Repo root listing, part 1: Go source/test files | 1.4 |  | 0.766 |
+| ns | 424 |  | 53 | Repo root listing, part 2: docs, CI, and meta | 1.5 | 1.4 | 0.774 |
+| walker |  | 458 | 96 | README headline in README.md |  |  | 0.778 |
+| walker |  | 471 | 13 | listing of '.github' |  |  | 0.785 |
+| walker |  | 480 | 9 | listing of '.github/workflows' |  |  | 0.790 |
+| ns | 497 |  | 73 | site/content/ doc-tree subdirectory listings | 1.6 |  | 0.692 |
+| ns | 578 |  | 81 | doc/ and .github/ subdirectory listings | 1.7 |  | 0.709 |
+| ns | 697 |  | 119 | README Overview: feature bullets, part 1 | 1.8 |  | 0.664 |
 | ns | 861 |  | 164 | README Overview: feature bullets, part 2 | 1.9 | 1.8 | 0.630 |
+| walker |  | 1025 | 545 | YAML config at .github/workflows/test.yml |  |  | 0.630 |
 | ns | 1027 |  | 166 | Command struct fields, part 1a: identity + args + version, name only | 2.1 |  | 0.582 |
-| walker |  | 1100 | 545 | YAML config at .github/workflows/test.yml |  |  | 0.582 |
-| walker |  | 1121 | 21 | listing of 'site/content/docgen' |  |  | 0.614 |
+| walker |  | 1046 | 21 | listing of 'site/content/docgen' |  |  | 0.613 |
+| walker |  | 1109 | 63 | headings outline in README.md |  |  | 0.614 |
+| walker |  | 1121 | 12 | README.md section #0 |  |  | 0.614 |
 | walker |  | 1144 | 23 | listing of 'site/content/completions' |  |  | 0.663 |
 | ns | 1222 |  | 195 | Command struct fields, part 1b: run-hooks, name only | 2.2 |  | 0.632 |
 | walker |  | 1243 | 99 | go module file go.mod |  |  | 0.739 |

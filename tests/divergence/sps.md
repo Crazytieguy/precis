@@ -8,13 +8,13 @@ Score(3000)=0.430 I=0.672 C=0.275 ns_rows≤3K=23/81 (reached=4 partial=0 missin
 | walker |  | 63 | 8 | listing of 'sps-common' |  |  | 1.000 |
 | walker |  | 71 | 8 | listing of 'sps-core' |  |  | 1.000 |
 | walker |  | 79 | 8 | listing of 'sps-net' |  |  | 1.000 |
-| ns | 111 |  | 64 | README: project status & planned-rewrite warning | 1.2 |  | 0.874 |
-| walker |  | 118 | 39 | README headline in README.md |  |  | 0.875 |
-| ns | 188 |  | 77 | Root Cargo.toml: workspace members | 1.3 |  | 0.676 |
-| walker |  | 195 | 77 | [package] in Cargo.toml |  |  | 0.911 |
-| walker |  | 213 | 18 | listing of 'sps/src' |  |  | 0.911 |
-| walker |  | 225 | 12 | listing of 'sps/src/pipeline' |  |  | 0.912 |
-| walker |  | 242 | 17 | entry item at sps/src/main.rs:57 |  |  | 0.912 |
+| walker |  | 97 | 18 | listing of 'sps/src' |  |  | 1.000 |
+| walker |  | 109 | 12 | listing of 'sps/src/pipeline' |  |  | 1.000 |
+| ns | 111 |  | 64 | README: project status & planned-rewrite warning | 1.2 |  | 0.875 |
+| walker |  | 148 | 39 | README headline in README.md |  |  | 0.876 |
+| walker |  | 165 | 17 | entry item at sps/src/main.rs:57 |  |  | 0.876 |
+| ns | 188 |  | 77 | Root Cargo.toml: workspace members | 1.3 |  | 0.677 |
+| walker |  | 242 | 77 | [package] in Cargo.toml |  |  | 0.912 |
 | walker |  | 282 | 40 | listing of 'sps/src/cli' |  |  | 0.915 |
 | walker |  | 303 | 21 | listing of 'sps-net/src' |  |  | 0.916 |
 | ns | 308 |  | 120 | README: crate roles & feature status | 1.4 |  | 0.781 |

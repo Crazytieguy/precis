@@ -7,16 +7,16 @@ Score(3000)=0.842 I=0.944 C=0.751 ns_rows≤3K=19/47 (reached=14 partial=2 missi
 | walker |  | 33 | 4 | listing of 'src' |  |  | 1.000 |
 | ns | 64 |  | 35 | src/, test/, and .github/ contents | 1.2 |  | 0.714 |
 | walker |  | 97 | 64 | package identity in package.json |  |  | 0.715 |
-| ns | 127 |  | 63 | README identity: title, tagline, runtime claims | 1.3 |  | 0.625 |
-| ns | 241 |  | 114 | README feature bullets | 1.4 |  | 0.546 |
-| walker |  | 284 | 187 | README headline in README.md |  |  | 0.801 |
-| walker |  | 294 | 10 | listing of '.github' |  |  | 0.835 |
-| walker |  | 303 | 9 | listing of '.github/workflows' |  |  | 0.900 |
-| ns | 335 |  | 94 | README table of contents | 1.5 |  | 0.762 |
-| ns | 424 |  | 89 | src/index.ts export roster (all 8 exports, names only) | 2.1 |  | 0.669 |
-| ns | 506 |  | 82 | Type aliases: EventType, Handler, WildcardHandler | 2.2 | 2.1 | 0.594 |
-| walker |  | 520 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.597 |
-| walker |  | 532 | 12 | listing of 'test' |  |  | 0.663 |
+| walker |  | 107 | 10 | listing of '.github' |  |  | 0.765 |
+| walker |  | 116 | 9 | listing of '.github/workflows' |  |  | 0.860 |
+| ns | 127 |  | 63 | README identity: title, tagline, runtime claims | 1.3 |  | 0.751 |
+| ns | 241 |  | 114 | README feature bullets | 1.4 |  | 0.657 |
+| walker |  | 333 | 217 | YAML config at .github/workflows/main.yml |  |  | 0.661 |
+| ns | 335 |  | 94 | README table of contents | 1.5 |  | 0.559 |
+| walker |  | 345 | 12 | listing of 'test' |  |  | 0.650 |
+| ns | 424 |  | 89 | src/index.ts export roster (all 8 exports, names only) | 2.1 |  | 0.571 |
+| ns | 506 |  | 82 | Type aliases: EventType, Handler, WildcardHandler | 2.2 | 2.1 | 0.507 |
+| walker |  | 532 | 187 | README headline in README.md |  |  | 0.663 |
 | ns | 618 |  | 112 | Type aliases: EventHandlerList, WildCardEventHandlerList, EventHandlerMap | 2.3 | 2.1 | 0.589 |
 | walker |  | 692 | 160 | export names surface in src/index.ts |  |  | 0.735 |
 | walker |  | 706 | 14 | export at src/index.ts:13 |  |  | 0.748 |
