@@ -730,8 +730,10 @@ fixtures. Ranked queue + full evidence in
 divergence reports if lost). Durable facts found (verified in src, not
 yet fixed):
 
-- **`.mts`/`.cts` files are never walked** (`is_ts_or_tsx_file`,
-  src/walker/typescript.rs) — e.g. vitest.config.mts invisible.
+- **`.mts`/`.cts` files were never walked** (`is_ts_or_tsx_file`,
+  src/walker/typescript.rs) — FIXED same session (linkwarden +0.001,
+  vitest.config.mts now schedules at its NS slot; corpus otherwise
+  unchanged).
 - **`LICENSE.md` has no owning walker** while bare `LICENSE` is
   value-floored; cmdk's rank-1 NS row has zero walker rows at any
   budget.

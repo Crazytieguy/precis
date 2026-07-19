@@ -243,7 +243,8 @@ impl TypescriptState {
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let js_like_files = files_with_any_extension(dir, &["ts", "tsx", "js", "mjs", "cjs"]);
+    let js_like_files =
+        files_with_any_extension(dir, &["ts", "tsx", "mts", "cts", "js", "mjs", "cjs"]);
     if js_like_files.is_empty() {
         return Vec::new();
     }
@@ -1535,9 +1536,12 @@ fn has_ambient_declaration(stmt: Node) -> bool {
 
 /// True for TypeScript declaration files (`.d.ts` / `.d.tsx`).
 pub(crate) fn is_declaration_file(path: &Path) -> bool {
-    path.file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|n| n.ends_with(".d.ts") || n.ends_with(".d.tsx"))
+    path.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
+        n.ends_with(".d.ts")
+            || n.ends_with(".d.tsx")
+            || n.ends_with(".d.mts")
+            || n.ends_with(".d.cts")
+    })
 }
 
 /// `TYPE_MACHINERY_FILE_FACTOR` when the file emits no runtime code —
@@ -2291,13 +2295,16 @@ fn is_entrypoint_file(path: &Path) -> bool {
         return false;
     };
     matches!(stem, "index" | "main" | "mod" | "esm")
-        && matches!(ext, "ts" | "tsx" | "js" | "mjs" | "cjs")
+        && matches!(ext, "ts" | "tsx" | "mts" | "cts" | "js" | "mjs" | "cjs")
 }
 
 pub(crate) fn is_ts_or_tsx_file(path: &Path) -> bool {
-    path.extension()
-        .and_then(|e| e.to_str())
-        .is_some_and(|e| e.eq_ignore_ascii_case("ts") || e.eq_ignore_ascii_case("tsx"))
+    path.extension().and_then(|e| e.to_str()).is_some_and(|e| {
+        e.eq_ignore_ascii_case("ts")
+            || e.eq_ignore_ascii_case("tsx")
+            || e.eq_ignore_ascii_case("mts")
+            || e.eq_ignore_ascii_case("cts")
+    })
 }
 
 fn is_tsx_file(path: &Path) -> bool {
