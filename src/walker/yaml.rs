@@ -19,7 +19,7 @@
 use std::path::{Path, PathBuf};
 
 use crate::batch::{Batch, BatchKey, YamlKey};
-use crate::value::{DEFAULT_CONCAVITY_EXPONENT, mix_signals};
+use crate::value::{DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, mix_signals};
 
 use super::{
     FileLines, WalkCtx, budget_chunk_ranges, fs::files_with_any_extension, gap_ellipses,
@@ -28,12 +28,10 @@ use super::{
 };
 
 /// Hard cap on the number of source lines a docker-compose file may
-/// have to be considered for a `Whole` batch. Typical real-world
+/// have to be considered for a whole-file body. Typical real-world
 /// compose files are well under this (the linkwarden fixture is 28
-/// lines, beszel's 18, audiobookshelf's 27); above the cap the file is
-/// dropped wholesale rather than partially rendered. A long compose
-/// file with many services is `Read`-territory anyway — the whole
-/// point of the Whole batch is the cheap orientation hit.
+/// lines, beszel's 18, audiobookshelf's 27); above the cap only the
+/// bounded service-topology skeleton is emitted.
 const COMPOSE_LINE_CAP: usize = 80;
 
 /// FS-metadata pre-flight gate: skip files whose raw byte size is
@@ -41,6 +39,19 @@ const COMPOSE_LINE_CAP: usize = 80;
 /// generous bound for indented YAML (the linkwarden fixture averages
 /// ~30 chars/line).
 const COMPOSE_BYTE_GATE: usize = COMPOSE_LINE_CAP * 100;
+
+/// Larger pre-flight gate for extracting a topology skeleton from an
+/// over-cap compose file. The emitted content remains bounded below;
+/// this only permits reading realistic multi-service deployment files.
+const COMPOSE_SKELETON_BYTE_GATE: usize = 256 * 1024;
+
+/// Defense in depth for adversarial compose inputs: even when the
+/// source contains hundreds of services or huge selected field blocks,
+/// the topology surface stays a bounded orientation batch.
+const COMPOSE_SKELETON_SERVICE_CAP: usize = 80;
+const COMPOSE_SKELETON_ROW_CAP: usize = 400;
+const COMPOSE_SKELETON_CHUNK_TARGET_TOKENS: usize = 90;
+const COMPOSE_SKELETON_CHUNK_MIN_TOKENS: usize = 50;
 
 /// Compose body value relative to the service-topology head. Mirrors
 /// the shipped Dockerfile contract/body split: the body is close
@@ -167,7 +178,11 @@ fn compose_skeleton(source: &str) -> (Vec<usize>, usize) {
     }
 
     let mut selected = vec![services_index + 1];
-    for (service_position, &service_start) in service_starts.iter().enumerate() {
+    for (service_position, &service_start) in service_starts
+        .iter()
+        .take(COMPOSE_SKELETON_SERVICE_CAP)
+        .enumerate()
+    {
         let service_end = service_starts
             .get(service_position + 1)
             .copied()
@@ -205,23 +220,95 @@ fn compose_skeleton(source: &str) -> (Vec<usize>, usize) {
     }
     selected.sort_unstable();
     selected.dedup();
-    let service_count = service_starts.len();
+    selected.truncate(COMPOSE_SKELETON_ROW_CAP);
+    let service_count = service_starts.len().min(COMPOSE_SKELETON_SERVICE_CAP);
     (selected, service_count)
 }
 
+fn compose_skeleton_contents(
+    file: &Path,
+    source: &str,
+    selected: &[usize],
+    ctx: &WalkCtx,
+) -> Vec<crate::content::BatchContent> {
+    let line_count = source.lines().count();
+    let all_ellipses = gap_ellipses(selected, line_count);
+    let lines_for = |range: std::ops::Range<usize>| {
+        let chunk_lines = selected[range].to_vec();
+        let is_first_chunk = chunk_lines.first() == selected.first();
+        let ellipses = all_ellipses
+            .iter()
+            .copied()
+            .filter(|ellipsis| {
+                (*ellipsis == 1 && is_first_chunk)
+                    || ellipsis
+                        .checked_sub(1)
+                        .is_some_and(|previous| chunk_lines.binary_search(&previous).is_ok())
+            })
+            .collect();
+        FileLines::new(chunk_lines).with_ellipses(ellipses)
+    };
+    let cost = |range: std::ops::Range<usize>| {
+        single_file_lines_content(file, source, lines_for(range))
+            .map(|content| ctx.marginal_tokens(&content))
+            .unwrap_or(0)
+    };
+    budget_chunk_ranges(
+        selected.len(),
+        cost,
+        COMPOSE_SKELETON_CHUNK_TARGET_TOKENS,
+        COMPOSE_SKELETON_CHUNK_MIN_TOKENS,
+        |_| true,
+        |range| cost(range) <= COMPOSE_SKELETON_CHUNK_TARGET_TOKENS + 40,
+    )
+    .into_iter()
+    .filter_map(|range| single_file_lines_content(file, source, lines_for(range)))
+    .collect()
+}
+
 fn push_compose_batches(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
-    let Some(source) = gated_read_source(file, ctx, COMPOSE_BYTE_GATE) else {
+    let byte_len = std::fs::metadata(file)
+        .map(|metadata| metadata.len() as usize)
+        .unwrap_or(usize::MAX);
+    let Some(source) = gated_read_source(file, ctx, COMPOSE_SKELETON_BYTE_GATE) else {
         return;
     };
     let line_count = source.lines().count();
-    if line_count == 0 || line_count > COMPOSE_LINE_CAP {
+    if line_count == 0 || (line_count <= COMPOSE_LINE_CAP && byte_len > COMPOSE_BYTE_GATE) {
         return;
     }
+    let over_cap = line_count > COMPOSE_LINE_CAP;
     let value = compose_value(file, ctx);
     let head_key = YamlKey::Whole {
         file: file.to_path_buf(),
     };
     let (head_lines, service_count) = compose_skeleton(&source);
+    if over_cap {
+        if head_lines.is_empty() {
+            return;
+        }
+        let contents = compose_skeleton_contents(file, &source, &head_lines, ctx);
+        let costs: Vec<usize> = contents
+            .iter()
+            .map(|content| ctx.marginal_tokens(content))
+            .collect();
+        let factors = conserved_catalog_chunk_factors(&costs, DEFAULT_CONCAVITY_EXPONENT);
+        let mut predecessor = None;
+        for (chunk_index, (content, factor)) in contents.into_iter().zip(factors).enumerate() {
+            let key = YamlKey::ComposeSkeletonChunk {
+                file: file.to_path_buf(),
+                chunk_index,
+            };
+            out.push(Batch {
+                key: key.clone().into(),
+                predecessor,
+                content,
+                value: value * factor,
+            });
+            predecessor = Some(BatchKey::Yaml(key));
+        }
+        return;
+    }
     let tail_lines: Vec<usize> = (1..=line_count)
         .filter(|line| head_lines.binary_search(line).is_err())
         .collect();
@@ -1191,25 +1278,43 @@ volumes:
     }
 
     #[test]
-    fn yaml_oversized_compose_skipped() {
+    fn yaml_oversized_compose_emits_bounded_topology_head_only() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
-        // > COMPOSE_LINE_CAP lines, each short enough to keep the byte
-        // count under the byte gate so the line-count check fires.
-        let body: String = (0..(COMPOSE_LINE_CAP + 10))
-            .map(|i| format!("  svc{i}: image\n"))
-            .collect();
+        let mut body = String::from("services:\n");
+        for i in 0..(COMPOSE_SKELETON_SERVICE_CAP + 10) {
+            body.push_str(&format!(
+                "  svc{i}:\n    image: image{i}\n    environment:\n      NOISE: value\n"
+            ));
+        }
         std::fs::write(root.join("docker-compose.yml"), body).unwrap();
 
-        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
         let report = scheduler.run_with_report();
         let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
         assert!(
-            !keys.iter().any(|k| matches!(
-                k,
-                BatchKey::Yaml(YamlKey::Whole { .. } | YamlKey::Tail { .. })
-            )),
-            "unexpected YAML compose batch for oversized compose; scheduled keys: {keys:?}",
+            keys.iter()
+                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::ComposeSkeletonChunk { .. }))),
+            "missing YAML topology head for oversized compose; scheduled keys: {keys:?}",
+        );
+        assert!(
+            !keys
+                .iter()
+                .any(|k| matches!(k, BatchKey::Yaml(YamlKey::Tail { .. }))),
+            "oversized compose must not emit a tail; scheduled keys: {keys:?}",
+        );
+        let rendered = report.tree.render();
+        assert!(
+            rendered.contains("svc0:"),
+            "missing first service:\n{rendered}"
+        );
+        assert!(
+            rendered.contains("image0"),
+            "missing selected contract field:\n{rendered}"
+        );
+        assert!(
+            !rendered.contains(&format!("svc{}:", COMPOSE_SKELETON_SERVICE_CAP)),
+            "service cap was not enforced:\n{rendered}"
         );
     }
 

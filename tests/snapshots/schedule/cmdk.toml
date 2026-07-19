@@ -1,7 +1,7 @@
 fixture = "cmdk"
 budget = 10000
-cumulative_tokens = 9997
-batch_count = 135
+cumulative_tokens = 9804
+batch_count = 132
 
 [[batches]]
 position = 1
@@ -3229,73 +3229,3 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "website/styles/cmdk"
 entries = ["framer.scss", "linear.scss", "raycast.scss", "vercel.scss"]
-
-[[batches]]
-position = 133
-key = 'Typescript(ExportNames { file: "website/pages/index.tsx" })'
-descriptor = "export names surface in website/pages/index.tsx"
-cost_tokens = 14
-cum_tokens = 9818
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "website/pages/index.tsx"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "website/pages/index.tsx"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 134
-key = 'Typescript(Export { file: "website/pages/index.tsx", start_line: 29 })'
-descriptor = "export at website/pages/index.tsx:29"
-cost_tokens = 0
-cum_tokens = 9818
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "website/pages/index.tsx"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "website/pages/index.tsx"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 135
-key = 'Markdown(Section { file: "README.md", section_index: 33, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #33"
-cost_tokens = 179
-cum_tokens = 9997
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 405
-end = 424
-
-[batches.content.spans.render]
-kind = "full"

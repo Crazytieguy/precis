@@ -178,6 +178,3 @@ Score(3000)=0.374 I=0.461 C=0.303 ns_rows≤3K=26/44 (reached=10 partial=0 missi
 | ns | 9776 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.439 |
 | walker |  | 9785 | 641 | README.md section #2 |  |  | 0.439 |
 | walker |  | 9804 | 19 | listing of 'website/styles/cmdk' |  |  | 0.449 |
-| walker |  | 9818 | 14 | export names surface in website/pages/index.tsx |  |  | 0.449 |
-| walker |  | 9818 | 0 | export at website/pages/index.tsx:29 |  |  | 0.449 |
-| walker |  | 9997 | 179 | README.md section #33 |  |  | 0.449 |

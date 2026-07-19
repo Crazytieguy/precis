@@ -180,22 +180,23 @@ Score(3000)=0.867 I=0.957 C=0.785 ns_rows≤3K=20/42 (reached=17 partial=1 missi
 | walker |  | 8608 | 453 | c decl names surface #4 in neco.h |  |  | 0.633 |
 | ns | 8658 |  | 480 | neco.c — neco_cancel(_dl) implementation | 7.1 | 6.1 | 0.609 |
 | walker |  | 8780 | 172 | c decl at neco.h:287 |  |  | 0.629 |
-| walker |  | 8795 | 15 | docs/assets/API_head.md section #12 |  |  | 0.629 |
-| walker |  | 8876 | 81 | docs/API.md section #121 |  |  | 0.629 |
-| walker |  | 8959 | 83 | docs/API.md section #135 |  |  | 0.629 |
-| walker |  | 8975 | 16 | docs/assets/API_head.md section #10 |  |  | 0.629 |
-| walker |  | 9061 | 86 | docs/API.md section #86 |  |  | 0.629 |
+| walker |  | 8812 | 32 | docs/assets/API_foot.md section #0 |  |  | 0.629 |
+| walker |  | 8827 | 15 | docs/assets/API_head.md section #12 |  |  | 0.629 |
+| walker |  | 8908 | 81 | docs/API.md section #121 |  |  | 0.629 |
+| walker |  | 8991 | 83 | docs/API.md section #135 |  |  | 0.629 |
+| walker |  | 9007 | 16 | docs/assets/API_head.md section #10 |  |  | 0.629 |
+| walker |  | 9093 | 86 | docs/API.md section #86 |  |  | 0.629 |
 | ns | 9106 |  | 448 | neco.c — neco_chan_send(_dl) / neco_chan_broadcast | 7.2 | 6.2 | 0.610 |
-| walker |  | 9145 | 84 | docs/API.md section #87 |  |  | 0.610 |
-| walker |  | 9232 | 87 | docs/API.md section #90 |  |  | 0.610 |
-| walker |  | 9319 | 87 | docs/API.md section #122 |  |  | 0.610 |
-| walker |  | 9406 | 87 | docs/API.md section #124 |  |  | 0.610 |
-| walker |  | 9493 | 87 | docs/API.md section #123 |  |  | 0.610 |
-| walker |  | 9581 | 88 | docs/API.md section #42 |  |  | 0.610 |
+| walker |  | 9177 | 84 | docs/API.md section #87 |  |  | 0.610 |
+| walker |  | 9264 | 87 | docs/API.md section #90 |  |  | 0.610 |
+| walker |  | 9351 | 87 | docs/API.md section #122 |  |  | 0.610 |
+| walker |  | 9438 | 87 | docs/API.md section #124 |  |  | 0.610 |
+| walker |  | 9525 | 87 | docs/API.md section #123 |  |  | 0.610 |
 | ns | 9605 |  | 499 | neco.c — neco_chan_recv(_dl) / neco_chan_tryrecv | 7.3 | 6.2 | 0.591 |
-| walker |  | 9669 | 88 | docs/API.md section #89 |  |  | 0.591 |
+| walker |  | 9613 | 88 | docs/API.md section #42 |  |  | 0.591 |
+| walker |  | 9701 | 88 | docs/API.md section #89 |  |  | 0.591 |
 | ns | 9734 |  | 129 | tests/tests.h — do_test/do_test_ registration macros | 8.1 |  | 0.585 |
-| walker |  | 9757 | 88 | docs/API.md section #88 |  |  | 0.585 |
-| walker |  | 9845 | 88 | docs/API.md section #99 |  |  | 0.585 |
-| walker |  | 9932 | 87 | docs/API.md section #100 |  |  | 0.585 |
+| walker |  | 9789 | 88 | docs/API.md section #88 |  |  | 0.585 |
+| walker |  | 9877 | 88 | docs/API.md section #99 |  |  | 0.585 |
+| walker |  | 9964 | 87 | docs/API.md section #100 |  |  | 0.585 |
 | ns | 9993 |  | 259 | tests/tests.h — expect() assertion macro | 8.2 |  | 0.578 |

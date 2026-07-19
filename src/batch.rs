@@ -396,6 +396,10 @@ pub enum YamlKey {
     /// files with a non-trivial service body, carries the service
     /// topology skeleton instead.
     Whole { file: PathBuf },
+    /// Source-ordered chunk of a bounded service-topology skeleton from
+    /// an over-cap compose file. Chunks form a predecessor chain so the
+    /// deployment map grows as a stable prefix.
+    ComposeSkeletonChunk { file: PathBuf, chunk_index: usize },
     /// Compose rows complementary to the service-topology skeleton.
     /// Predecessor: the matching [`YamlKey::Whole`] head.
     Tail { file: PathBuf },
@@ -1083,6 +1087,11 @@ impl InnerKey for YamlKey {
     fn describe(&self, root: &Path) -> String {
         match self {
             YamlKey::Whole { file } => format!("YAML config at {}", display_path(file, root)),
+            YamlKey::ComposeSkeletonChunk { file, chunk_index } => format!(
+                "compose topology skeleton chunk #{} at {}",
+                chunk_index + 1,
+                display_path(file, root),
+            ),
             YamlKey::Tail { file } => {
                 format!("YAML config tail at {}", display_path(file, root))
             }

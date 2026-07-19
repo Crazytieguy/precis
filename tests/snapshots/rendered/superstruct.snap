@@ -41,7 +41,7 @@ Readme.md
        9→<br/>
       10→<br/>
     …
-      36→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
+      36→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql…
     …
       42→### Usage
       43→
@@ -118,7 +118,7 @@ docs/
         logo.png
         logo.sketch
     readme.md
-           1→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [TypeScript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
+           1→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [TypeScript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql…
         …
            7→### Usage
            8→
@@ -261,6 +261,9 @@ src/
         …
           10→export class Struct<T = unknown, S = unknown> {
         …
+         119→/**
+         120→ * Assert that a value passes a struct, throwing if it doesn't.
+         121→ */
          123→export function assert<T, S>(
          124→  value: unknown,
          125→  struct: Struct<T, S>,

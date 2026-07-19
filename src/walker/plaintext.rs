@@ -55,6 +55,14 @@ const BUILD_ENTRYPOINT_LINE_CAP: usize = 100;
 /// bytes/line multiplier as [`PLAINTEXT_BYTE_GATE`]).
 const BUILD_ENTRYPOINT_BYTE_GATE: usize = BUILD_ENTRYPOINT_LINE_CAP * 80;
 
+/// Larger read gate used only to extract the bounded contract skeleton
+/// from an over-cap Dockerfile. Build-command bodies remain suppressed.
+const DOCKERFILE_SKELETON_BYTE_GATE: usize = 256 * 1024;
+
+/// Hard bound on selected contract rows from an adversarial Dockerfile
+/// with repeated ENV/LABEL/ARG or continuation/heredoc bodies.
+const DOCKERFILE_SKELETON_ROW_CAP: usize = 80;
+
 /// Oversized Makefiles are parsed into a bounded structural skeleton,
 /// so they can tolerate realistic recipe-heavy files without admitting
 /// arbitrarily large plaintext inputs.
@@ -987,17 +995,41 @@ fn push_dockerfile_batches(
     ctx: &WalkCtx,
     out: &mut Vec<Batch<BatchKey>>,
 ) {
-    let Some(source) = gated_read_source(file, ctx, BUILD_ENTRYPOINT_BYTE_GATE) else {
+    let byte_len = std::fs::metadata(file)
+        .map(|metadata| metadata.len() as usize)
+        .unwrap_or(usize::MAX);
+    let Some(source) = gated_read_source(file, ctx, DOCKERFILE_SKELETON_BYTE_GATE) else {
         return;
     };
     let line_count = source.lines().count();
-    if line_count == 0 || line_count > BUILD_ENTRYPOINT_LINE_CAP {
+    if line_count == 0
+        || (line_count <= BUILD_ENTRYPOINT_LINE_CAP && byte_len > BUILD_ENTRYPOINT_BYTE_GATE)
+    {
         return;
     }
+    let over_cap = line_count > BUILD_ENTRYPOINT_LINE_CAP;
     let value = class_value(class, file, ctx);
     let head_key = PlaintextKey::Whole {
         file: file.to_path_buf(),
     };
+    if over_cap {
+        let mut head_lines = dockerfile_contract_lines(&source);
+        head_lines.truncate(DOCKERFILE_SKELETON_ROW_CAP);
+        if head_lines.is_empty() {
+            return;
+        }
+        let ellipses = gap_ellipses(&head_lines, line_count);
+        let head = FileLines::new(head_lines).with_ellipses(ellipses);
+        if let Some(content) = single_file_lines_content(file, &source, head) {
+            out.push(Batch {
+                key: head_key.into(),
+                predecessor: None,
+                content,
+                value,
+            });
+        }
+        return;
+    }
     let split = (line_count > DOCKERFILE_SPLIT_MIN_LINES)
         .then(|| {
             let head_lines = dockerfile_contract_lines(&source);
@@ -1666,6 +1698,62 @@ CMD [\"node\", \"index.js\"]\n";
                 "source line {line:?} should render exactly once:\n{rendered}",
             );
         }
+    }
+
+    #[test]
+    fn plaintext_oversized_dockerfile_emits_contract_head_only() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut src = String::from("FROM ubuntu:24.04\n");
+        for i in 0..BUILD_ENTRYPOINT_LINE_CAP + 2 {
+            src.push_str(&format!("RUN echo step-{i}\n"));
+        }
+        src.push_str("CMD [\"run\"]\n");
+        std::fs::write(root.join("Dockerfile"), &src).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
+        let report = scheduler.run_with_report();
+        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
+        assert!(
+            keys.iter()
+                .any(|key| matches!(key, BatchKey::Plaintext(PlaintextKey::Whole { .. }))),
+            "missing Dockerfile contract head; scheduled keys: {keys:?}",
+        );
+        assert!(
+            !keys
+                .iter()
+                .any(|key| matches!(key, BatchKey::Plaintext(PlaintextKey::Tail { .. }))),
+            "oversized Dockerfile must not emit a tail; scheduled keys: {keys:?}",
+        );
+        let rendered = report.tree.render();
+        assert!(rendered.contains("FROM ubuntu:24.04"), "{rendered}");
+        assert!(rendered.contains("CMD [\"run\"]"), "{rendered}");
+        assert!(!rendered.contains("RUN echo step-0"), "{rendered}");
+    }
+
+    #[test]
+    fn plaintext_under_cap_all_contract_dockerfile_stays_whole() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let mut src = String::from("FROM ubuntu:24.04\n");
+        for port in 1..89 {
+            src.push_str(&format!("EXPOSE {port}\n"));
+        }
+        src.push_str("CMD [\"run\"]\n");
+        assert!(src.lines().count() <= BUILD_ENTRYPOINT_LINE_CAP);
+        std::fs::write(root.join("Dockerfile"), &src).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 1_000_000, None);
+        let report = scheduler.run_with_report();
+        let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
+        assert!(
+            !keys
+                .iter()
+                .any(|key| matches!(key, BatchKey::Plaintext(PlaintextKey::Tail { .. }))),
+            "under-cap all-contract Dockerfile must stay whole; scheduled keys: {keys:?}",
+        );
+        let rendered = report.tree.render();
+        assert!(rendered.contains("EXPOSE 88"), "{rendered}");
     }
 
     #[test]

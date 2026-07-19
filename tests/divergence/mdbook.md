@@ -213,38 +213,39 @@ Score(3000)=0.563 I=0.820 C=0.386 ns_rows≤3K=21/46 (reached=8 partial=0 missin
 | ns | 7517 |  | 333 | src/cmd/watch.rs: flags + WatcherKind | 3.9 |  | 0.576 |
 | walker |  | 7534 | 327 | pub item at crates/mdbook-html/src/theme/mod.rs:40 |  |  | 0.576 |
 | walker |  | 7671 | 137 | mod/use plumbing in crates/mdbook-summary/src/lib.rs |  |  | 0.576 |
-| walker |  | 7770 | 99 | mod/use plumbing in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.576 |
+| walker |  | 7764 | 93 | README headline in crates/mdbook-driver/README.md |  |  | 0.576 |
+| walker |  | 7863 | 99 | mod/use plumbing in crates/mdbook-driver/src/builtin_renderers/mod.rs |  |  | 0.576 |
 | ns | 7877 |  | 360 | src/cmd/clean.rs: make_subcommand + execute | 3.10 |  | 0.561 |
-| walker |  | 8103 | 333 | entry item body at src/main.rs:18 body 24 |  |  | 0.596 |
-| ns | 8139 |  | 262 | Config struct: book/build/rust/output/preprocessor fields | 4.1 |  | 0.586 |
-| walker |  | 8206 | 103 | mod/use plumbing in crates/mdbook-core/src/utils/mod.rs |  |  | 0.586 |
-| walker |  | 8355 | 149 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |  |  | 0.586 |
-| walker |  | 8457 | 102 | README headline in crates/mdbook-driver/README.md |  |  | 0.586 |
+| ns | 8139 |  | 262 | Config struct: book/build/rust/output/preprocessor fields | 4.1 |  | 0.552 |
+| walker |  | 8196 | 333 | entry item body at src/main.rs:18 body 24 |  |  | 0.586 |
+| walker |  | 8299 | 103 | mod/use plumbing in crates/mdbook-core/src/utils/mod.rs |  |  | 0.586 |
+| walker |  | 8448 | 149 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |  |  | 0.586 |
 | ns | 8547 |  | 408 | BookConfig struct + defaults | 4.2 |  | 0.572 |
-| walker |  | 8635 | 178 | crate-doc lede in crates/mdbook-html/src/html/mod.rs |  |  | 0.572 |
-| walker |  | 8744 | 109 | mod/use plumbing in crates/mdbook-html/src/theme/mod.rs |  |  | 0.572 |
-| walker |  | 8804 | 60 | pub-item names surface in src/cmd/watch.rs |  |  | 0.572 |
-| walker |  | 8804 | 0 | pub item at src/cmd/watch.rs:12 |  |  | 0.572 |
-| walker |  | 8804 | 0 | pub item at src/cmd/watch.rs:37 |  |  | 0.572 |
-| walker |  | 8823 | 19 | pub item at src/cmd/watch.rs:21 |  |  | 0.573 |
-| walker |  | 8879 | 56 | pub item at src/cmd/watch.rs:62 |  |  | 0.573 |
-| walker |  | 8933 | 54 | [package] in guide/src/for_developers/mdbook-wordcount/Cargo.toml |  |  | 0.573 |
+| walker |  | 8626 | 178 | crate-doc lede in crates/mdbook-html/src/html/mod.rs |  |  | 0.572 |
+| walker |  | 8735 | 109 | mod/use plumbing in crates/mdbook-html/src/theme/mod.rs |  |  | 0.572 |
+| walker |  | 8795 | 60 | pub-item names surface in src/cmd/watch.rs |  |  | 0.572 |
+| walker |  | 8795 | 0 | pub item at src/cmd/watch.rs:12 |  |  | 0.572 |
+| walker |  | 8795 | 0 | pub item at src/cmd/watch.rs:37 |  |  | 0.572 |
+| walker |  | 8814 | 19 | pub item at src/cmd/watch.rs:21 |  |  | 0.573 |
+| walker |  | 8870 | 56 | pub item at src/cmd/watch.rs:62 |  |  | 0.573 |
+| walker |  | 8924 | 54 | [package] in guide/src/for_developers/mdbook-wordcount/Cargo.toml |  |  | 0.573 |
 | ns | 8953 |  | 406 | HtmlConfig struct, part 1: theme/punctuation/mathjax/css/js/fold/playground/code/print/section-label | 4.3 |  | 0.560 |
-| walker |  | 8981 | 48 | crates/mdbook-driver/README.md section #0 |  |  | 0.560 |
-| walker |  | 9029 | 48 | crates/mdbook-markdown/README.md section #0 |  |  | 0.560 |
-| walker |  | 9077 | 48 | crates/mdbook-preprocessor/README.md section #0 |  |  | 0.560 |
-| walker |  | 9125 | 48 | crates/mdbook-renderer/README.md section #0 |  |  | 0.560 |
-| walker |  | 9173 | 48 | crates/mdbook-summary/README.md section #0 |  |  | 0.560 |
-| walker |  | 9334 | 161 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |  |  | 0.560 |
+| walker |  | 8972 | 48 | crates/mdbook-driver/README.md section #0 |  |  | 0.560 |
+| walker |  | 9020 | 48 | crates/mdbook-markdown/README.md section #0 |  |  | 0.560 |
+| walker |  | 9068 | 48 | crates/mdbook-preprocessor/README.md section #0 |  |  | 0.560 |
+| walker |  | 9116 | 48 | crates/mdbook-renderer/README.md section #0 |  |  | 0.560 |
+| walker |  | 9164 | 48 | crates/mdbook-summary/README.md section #0 |  |  | 0.560 |
+| walker |  | 9325 | 161 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |  |  | 0.560 |
 | ns | 9358 |  | 405 | HtmlConfig struct, part 2: search/git/404/edit-url | 4.4 | 4.3 | 0.552 |
-| walker |  | 9384 | 50 | crates/mdbook-core/README.md section #0 |  |  | 0.552 |
+| walker |  | 9375 | 50 | crates/mdbook-core/README.md section #0 |  |  | 0.552 |
 | ns | 9401 |  | 43 | HtmlConfig struct, part 3: redirect/hash-files/sidebar-header-nav | 4.5 |  | 0.550 |
-| walker |  | 9434 | 50 | crates/mdbook-html/README.md section #0 |  |  | 0.550 |
+| walker |  | 9425 | 50 | crates/mdbook-html/README.md section #0 |  |  | 0.550 |
 | ns | 9469 |  | 68 | guide/book.toml: concrete [book] table sample | 4.6 |  | 0.549 |
-| walker |  | 9622 | 188 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:10 |  |  | 0.549 |
-| walker |  | 9694 | 72 | README headline in guide/src/guide/README.md |  |  | 0.549 |
+| walker |  | 9613 | 188 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:10 |  |  | 0.549 |
+| walker |  | 9685 | 72 | README headline in guide/src/guide/README.md |  |  | 0.549 |
 | ns | 9821 |  | 352 | Remaining directory shape: guide/src subsections, front-end assets, testsuite | 5.1 |  | 0.542 |
 | ns | 9832 |  | 11 | examples/ listing | 5.2 |  | 0.543 |
-| walker |  | 9898 | 204 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:49 |  |  | 0.543 |
-| walker |  | 9930 | 32 | headings outline in guide/src/format/mathjax.md |  |  | 0.543 |
+| walker |  | 9889 | 204 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:49 |  |  | 0.543 |
+| walker |  | 9921 | 32 | headings outline in guide/src/format/mathjax.md |  |  | 0.543 |
 | ns | 9990 |  | 158 | tests/gui listing | 5.3 |  | 0.536 |
+| walker |  | 9996 | 75 | README headline in guide/src/cli/README.md |  |  | 0.536 |
