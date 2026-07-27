@@ -54,11 +54,11 @@ Score(3000)=0.563 I=0.820 C=0.386 ns_rows≤3K=21/46 (reached=8 partial=0 missin
 | walker |  | 850 | 11 | listing of 'examples' |  |  | 0.674 |
 | walker |  | 869 | 19 | listing of 'crates/mdbook-core/src' |  |  | 0.674 |
 | walker |  | 872 | 3 | listing of 'crates/mdbook-core/src/book' |  |  | 0.674 |
-| walker |  | 889 | 17 | listing of 'crates/mdbook-core/src/utils' |  |  | 0.674 |
-| walker |  | 908 | 19 | pub item at crates/mdbook-core/src/utils/mod.rs:29 |  |  | 0.674 |
-| walker |  | 918 | 10 | crate-doc lede in crates/mdbook-core/src/utils/mod.rs |  |  | 0.674 |
-| walker |  | 943 | 25 | pub item at crates/mdbook-core/src/lib.rs:7 |  |  | 0.674 |
-| walker |  | 962 | 19 | crate-doc lede in crates/mdbook-core/src/lib.rs |  |  | 0.675 |
+| walker |  | 893 | 21 | crate-doc lede in crates/mdbook-core/src/lib.rs |  |  | 0.674 |
+| walker |  | 910 | 17 | listing of 'crates/mdbook-core/src/utils' |  |  | 0.674 |
+| walker |  | 922 | 12 | crate-doc lede in crates/mdbook-core/src/utils/mod.rs |  |  | 0.674 |
+| walker |  | 939 | 17 | pub item at crates/mdbook-core/src/utils/mod.rs:29 |  |  | 0.674 |
+| walker |  | 962 | 23 | pub item at crates/mdbook-core/src/lib.rs:7 |  |  | 0.675 |
 | walker |  | 996 | 34 | mod/use plumbing in crates/mdbook-core/src/lib.rs |  |  | 0.676 |
 | walker |  | 1040 | 44 | pub-item names surface in crates/mdbook-markdown/src/lib.rs |  |  | 0.676 |
 | walker |  | 1040 | 0 | pub item at crates/mdbook-markdown/src/lib.rs:44 |  |  | 0.676 |

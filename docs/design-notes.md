@@ -876,6 +876,87 @@ yet fixed):
 
 ## Walker / value open items
 
+- **Rust primary-member election by dependency centrality: SHIPPED
+  2026-07-26** as `MemberFacts` (`src/walker/toml.rs`) +
+  `MemberRole` / `RustState::primary_member` /
+  `CENTRALITY_PRIMARY_MEMBER_FACTOR` (`src/walker/rust.rs`), replacing
+  the name-match-only signal the
+  2026-07-18 session flagged as wrong for Rust workspaces. Rule: when
+  the repo-basename-matched member has no sibling dependents (or there
+  is no name match), elect the member with the strictly highest
+  in-degree among intra-workspace `[dependencies]` edges, ≥2 dependents.
+  **An edge must RESOLVE to a sibling member, never merely share its
+  name.** Three accepted forms: the entry's own `path`; `workspace =
+  true` looked up through the root `[workspace.dependencies]` table;
+  and a registry entry that a root `[patch.*]` table redirects at a
+  member by path. All three occur in the corpus (mdbook and toasty use
+  the second, sps the third — sps declares siblings by version, so a
+  `path`-only reader sees an edgeless workspace). Matching on package
+  name alone — the first cut — counts a genuine crates.io dependency
+  that happens to share a member's name as internal, and two such
+  consumers are enough to elect a hub nothing depends on; that is a
+  silent wrong answer on repos the corpus doesn't contain, so name-only
+  matching is not an acceptable shortcut here. Each dependent→dependee
+  pair counts once regardless of how many entries route to it.
+  **The lift is partial (0.85, not the name match's 1.0)** and that is
+  the load-bearing part: the sps trade curve is sharply non-linear.
+  Measured Score(3000) / worst 7.5–10K `Score(B=cum)` dip on sps:
+  0.70 (base) 0.430 / —; 0.85 **0.451 / −0.014**; 0.90 0.456 / −0.075;
+  1.00 0.456 / −0.102. The full lift buys no more early budget than the
+  partial one and displaces seven times more already-scheduled content
+  (NS 5.x `sps/src/cli/*` structs) out of the tail. Corpus +0.0003
+  (0.6302 → 0.6305); only sps moves, mdbook re-orders at a flat
+  headline, toasty/thiserror untouched.
+  Also measured and rejected: hub *replaces* the name match
+  unconditionally (toasty → toasty-core; Score(3000) identical, −0.001
+  to −0.002 on toasty's 9K rows — pure churn, so a name match with
+  dependents keeps the slot); hub promoted *alongside* the name match
+  (sps 0.454, and the same −0.09 tail collapse — the displacement is
+  the promotion's volume, not the demotion of the shell crate).
+  Residual: sps NS 5.4 (`cli.rs` Command enum, NS cum 6830) no longer
+  renders at the 10K snapshot budget. The generalization to JS/TS
+  workspaces and Go modules is untouched and unmeasured — deliberately
+  out of scope so the Rust measurement stayed readable.
+  **Role identity and value factor are separate axes, deliberately.**
+  `MemberRole::is_primary` gates the primary-only batch classes (today
+  just `CrateAttrs`); `MemberRole::value_factor` prices confidence.
+  A first cut derived the predicate from the factor
+  (`factor < 1.0 == secondary`), which silently classified the elected
+  hub as secondary and withheld `CrateAttrs` from the very crate it had
+  just called primary — caught in adversarial review. Never re-derive
+  the role from the factor.
+  Note this also means the 1.0-vs-0.85 sweep above conflated two
+  changes: at 1.0 the hub cleared the `< 1.0` predicate and was
+  `CrateAttrs`-eligible, at 0.85 it wasn't. Granting the hub
+  `CrateAttrs` at 0.85 was then measured separately and is **exactly
+  inert on this corpus** — not one baseline byte moves. Cause is
+  absence of input, not absence of effect: `collect_crate_attr_lines`
+  only fires on inner `#![…]` items, and both elected hubs
+  (`sps-common/src/lib.rs`, `mdbook-core/src/lib.rs`) have zero of
+  them; no Rust workspace fixture emits a `CrateAttrs` batch at all.
+  So the "crate attrs are orientation-dense, this should pay" prior is
+  untested here rather than refuted — it needs a fixture whose hub
+  carries a ≥`CRATE_ATTRS_MIN_TOKENS` attribute block.
+  **Two further correctness rules, both fail-closed.** (a) The name
+  match resolves on package name when several member *dirs* share the
+  repo basename (`crates/acme` + `tools/acme`); picking whichever the
+  member `HashSet` yields first let process hash order decide which
+  subtree got damped, which is a bug on its own terms whichever crate
+  is the better answer. (b) If any member manifest fails to parse or
+  declares no package, `MemberFacts::complete` is false and the
+  centrality election is skipped entirely, falling back to name-match
+  behaviour — the unreadable member's edges are exactly the ones that
+  could have changed the answer.
+  **Corpus-safety caveat, acknowledged not resolved:** ≥2 and 0.85 were
+  tuned on sps, and four training workspaces (sps, toasty, mdbook,
+  thiserror) do not establish field safety. Mitigation is that the
+  wrong answers are now bounded by construction — unresolvable edges,
+  colliding names, and partial manifests all fail closed to prior
+  behaviour rather than electing something. The stricter edge
+  resolution left every elected crate in the corpus unchanged (zero
+  baseline movement), so the 0.85 knee measured under name-only
+  matching still stands; re-sweep if a future fixture's election moves.
+
 - **Config-surface header role (bareiron/tinyusb class): SHIPPED
   2026-07-18** as `is_configuration_surface_header` +
   `CONFIGURATION_SURFACE_VALUE_FLOOR` in `src/walker/c.rs` (initial

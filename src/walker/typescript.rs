@@ -2472,7 +2472,7 @@ fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
 /// plugin-legacy/`, `linkwarden/apps/worker/`) is auxiliary from the
 /// repo's perspective — its imports/exports/per-item batches should
 /// rank below the primary package's surface. Mirrors Rust's
-/// `secondary_workspace_member_factor`.
+/// `workspace_member_value_factor`.
 ///
 /// Sub-package detection uses the nearest-enclosing-non-root
 /// `package.json` (see `TypescriptState::nearest_subpackage_dir`). This

@@ -1,7 +1,7 @@
 fixture = "sps"
 budget = 10000
-cumulative_tokens = 9978
-batch_count = 158
+cumulative_tokens = 9958
+batch_count = 163
 
 [[batches]]
 position = 1
@@ -613,52 +613,10 @@ kind = "full"
 
 [[batches]]
 position = 37
-key = 'Rust(PubItemNames { file: "sps/src/cli.rs" })'
-descriptor = "pub-item names surface in sps/src/cli.rs"
-cost_tokens = 23
-cum_tokens = 981
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli.rs"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli.rs"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli.rs"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/cli.rs"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 38
 key = 'Rust(ModUse { file: "sps-core/src/check/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/check/mod.rs"
 cost_tokens = 47
-cum_tokens = 1028
+cum_tokens = 1005
 
 [batches.content]
 kind = "lines"
@@ -672,11 +630,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 113
-cum_tokens = 1141
+cum_tokens = 1118
 
 [batches.content]
 kind = "lines"
@@ -826,11 +784,11 @@ end = 165
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 68
-cum_tokens = 1209
+cum_tokens = 1186
 
 [batches.content]
 kind = "lines"
@@ -844,11 +802,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Rust(PubItemNames { file: "sps-core/src/install/bottle/mod.rs" })'
 descriptor = "pub-item names surface in sps-core/src/install/bottle/mod.rs"
 cost_tokens = 77
-cum_tokens = 1286
+cum_tokens = 1263
 
 [batches.content]
 kind = "lines"
@@ -918,11 +876,11 @@ end = 166
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Rust(PubItem { file: "sps-core/src/install/bottle/mod.rs", start_line: 34 })'
 descriptor = "pub item at sps-core/src/install/bottle/mod.rs:34"
 cost_tokens = 0
-cum_tokens = 1286
+cum_tokens = 1263
 
 [batches.content]
 kind = "lines"
@@ -944,11 +902,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Rust(PubItem { file: "sps-core/src/install/bottle/mod.rs", start_line: 159 })'
 descriptor = "pub item at sps-core/src/install/bottle/mod.rs:159"
 cost_tokens = 0
-cum_tokens = 1286
+cum_tokens = 1263
 
 [batches.content]
 kind = "lines"
@@ -970,11 +928,11 @@ end = 160
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Rust(PubItem { file: "sps-core/src/install/bottle/mod.rs", start_line: 18 })'
 descriptor = "pub item at sps-core/src/install/bottle/mod.rs:18"
 cost_tokens = 44
-cum_tokens = 1330
+cum_tokens = 1307
 
 [batches.content]
 kind = "lines"
@@ -996,11 +954,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 45
+position = 44
 key = 'Rust(PubItem { file: "sps-core/src/install/bottle/mod.rs", start_line: 165 })'
 descriptor = "pub item at sps-core/src/install/bottle/mod.rs:165"
 cost_tokens = 50
-cum_tokens = 1380
+cum_tokens = 1357
 
 [batches.content]
 kind = "lines"
@@ -1022,11 +980,11 @@ end = 170
 kind = "ellipsis"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Rust(PubItemBody { file: "sps-core/src/install/bottle/mod.rs", start_line: 159, body_start_line: 160 })'
 descriptor = "pub item body at sps-core/src/install/bottle/mod.rs:159 body 160"
 cost_tokens = 25
-cum_tokens = 1405
+cum_tokens = 1382
 
 [batches.content]
 kind = "lines"
@@ -1040,11 +998,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Rust(PubItemDocLede { file: "sps-core/src/install/bottle/mod.rs", start_line: 18 })'
 descriptor = "pub-item doc lede at sps-core/src/install/bottle/mod.rs:18"
 cost_tokens = 13
-cum_tokens = 1418
+cum_tokens = 1395
 
 [batches.content]
 kind = "lines"
@@ -1058,81 +1016,63 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 48
-key = 'Rust(PubItem { file: "sps/src/cli/update.rs", start_line: 11 })'
-descriptor = "pub item at sps/src/cli/update.rs:11"
-cost_tokens = 25
-cum_tokens = 1443
+position = 47
+key = 'Rust(ModUse { file: "sps-core/src/upgrade/mod.rs" })'
+descriptor = "mod/use plumbing in sps-core/src/upgrade/mod.rs"
+cost_tokens = 75
+cum_tokens = 1470
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "sps/src/cli/update.rs"
-start = 10
-end = 11
+path = "sps-core/src/upgrade/mod.rs"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-core/src/upgrade/mod.rs"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Rust(ModUse { file: "sps-core/src/uninstall/mod.rs" })'
+descriptor = "mod/use plumbing in sps-core/src/uninstall/mod.rs"
+cost_tokens = 77
+cum_tokens = 1547
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/mod.rs"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-core/src/uninstall/mod.rs"
+start = 8
+end = 10
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 49
-key = 'Rust(ModUse { file: "sps-core/src/upgrade/mod.rs" })'
-descriptor = "mod/use plumbing in sps-core/src/upgrade/mod.rs"
-cost_tokens = 75
-cum_tokens = 1518
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/upgrade/mod.rs"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-core/src/upgrade/mod.rs"
-start = 8
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Rust(ModUse { file: "sps-core/src/uninstall/mod.rs" })'
-descriptor = "mod/use plumbing in sps-core/src/uninstall/mod.rs"
-cost_tokens = 77
-cum_tokens = 1595
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/uninstall/mod.rs"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-core/src/uninstall/mod.rs"
-start = 8
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
 key = 'Rust(ModUse { file: "sps-net/src/lib.rs" })'
 descriptor = "mod/use plumbing in sps-net/src/lib.rs"
 cost_tokens = 284
-cum_tokens = 1879
+cum_tokens = 1831
 
 [batches.content]
 kind = "lines"
@@ -1154,11 +1094,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 52
+position = 50
 key = 'Rust(PubItemDocLede { file: "sps-core/src/install/bottle/mod.rs", start_line: 34 })'
 descriptor = "pub-item doc lede at sps-core/src/install/bottle/mod.rs:34"
 cost_tokens = 20
-cum_tokens = 1899
+cum_tokens = 1851
 
 [batches.content]
 kind = "lines"
@@ -1172,11 +1112,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 53
+position = 51
 key = 'Rust(ModUse { file: "sps-core/src/install/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/install/mod.rs"
 cost_tokens = 83
-cum_tokens = 1982
+cum_tokens = 1934
 
 [batches.content]
 kind = "lines"
@@ -1198,11 +1138,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 54
+position = 52
 key = 'Toml(Config { file: "sps/Cargo.toml" })'
 descriptor = "manifest config in sps/Cargo.toml"
 cost_tokens = 32
-cum_tokens = 2014
+cum_tokens = 1966
 
 [batches.content]
 kind = "lines"
@@ -1216,11 +1156,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 55
+position = 53
 key = 'Fs(DirListing { dir: "sps-core/src/build/compile" })'
 descriptor = "listing of 'sps-core/src/build/compile'"
 cost_tokens = 33
-cum_tokens = 2047
+cum_tokens = 1999
 
 [batches.content]
 kind = "fs"
@@ -1230,11 +1170,11 @@ parent = "sps-core/src/build/compile"
 entries = ["cargo.rs", "cmake.rs", "go.rs", "make.rs", "meson.rs", "mod.rs", "perl.rs", "python.rs"]
 
 [[batches]]
-position = 56
+position = 54
 key = 'Rust(PubItemBody { file: "sps-core/src/install/bottle/mod.rs", start_line: 18, body_start_line: 23 })'
 descriptor = "pub item body at sps-core/src/install/bottle/mod.rs:18 body 23"
 cost_tokens = 92
-cum_tokens = 2139
+cum_tokens = 2091
 
 [batches.content]
 kind = "lines"
@@ -1248,11 +1188,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 57
+position = 55
 key = 'Rust(PubItemNames { file: "sps-core/src/build/compile/mod.rs" })'
 descriptor = "pub-item names surface in sps-core/src/build/compile/mod.rs"
 cost_tokens = 84
-cum_tokens = 2223
+cum_tokens = 2175
 
 [batches.content]
 kind = "lines"
@@ -1322,11 +1262,11 @@ end = 294
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 56
 key = 'Rust(PubItem { file: "sps-core/src/build/compile/mod.rs", start_line: 40 })'
 descriptor = "pub item at sps-core/src/build/compile/mod.rs:40"
 cost_tokens = 0
-cum_tokens = 2223
+cum_tokens = 2175
 
 [batches.content]
 kind = "lines"
@@ -1348,11 +1288,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 57
 key = 'Rust(PubItemBody { file: "sps-core/src/build/compile/mod.rs", start_line: 40, body_start_line: 41 })'
 descriptor = "pub item body at sps-core/src/build/compile/mod.rs:40 body 41"
 cost_tokens = 18
-cum_tokens = 2241
+cum_tokens = 2193
 
 [batches.content]
 kind = "lines"
@@ -1366,11 +1306,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 60
+position = 58
 key = 'Rust(PubItem { file: "sps-core/src/build/compile/mod.rs", start_line: 44 })'
 descriptor = "pub item at sps-core/src/build/compile/mod.rs:44"
 cost_tokens = 44
-cum_tokens = 2285
+cum_tokens = 2237
 
 [batches.content]
 kind = "lines"
@@ -1392,11 +1332,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 59
 key = 'Rust(PubItem { file: "sps-core/src/build/compile/mod.rs", start_line: 293 })'
 descriptor = "pub item at sps-core/src/build/compile/mod.rs:293"
 cost_tokens = 56
-cum_tokens = 2341
+cum_tokens = 2293
 
 [batches.content]
 kind = "lines"
@@ -1418,11 +1358,11 @@ end = 299
 kind = "ellipsis"
 
 [[batches]]
-position = 62
+position = 60
 key = 'Rust(PubItemBody { file: "sps-core/src/install/bottle/mod.rs", start_line: 34, body_start_line: 35 })'
 descriptor = "pub item body at sps-core/src/install/bottle/mod.rs:34 body 35"
 cost_tokens = 117
-cum_tokens = 2458
+cum_tokens = 2410
 
 [batches.content]
 kind = "lines"
@@ -1436,37 +1376,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 63
-key = 'Rust(PubItem { file: "sps/src/cli/status.rs", start_line: 399 })'
-descriptor = "pub item at sps/src/cli/status.rs:399"
-cost_tokens = 30
-cum_tokens = 2488
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/status.rs"
-start = 399
-end = 399
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli/status.rs"
-start = 400
-end = 400
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 64
+position = 61
 key = 'Rust(ModUse { file: "sps-common/src/model/mod.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/model/mod.rs"
 cost_tokens = 92
-cum_tokens = 2580
+cum_tokens = 2502
 
 [batches.content]
 kind = "lines"
@@ -1488,11 +1402,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 65
+position = 62
 key = 'Rust(ModUse { file: "sps-common/src/dependency/mod.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/dependency/mod.rs"
 cost_tokens = 99
-cum_tokens = 2679
+cum_tokens = 2601
 
 [batches.content]
 kind = "lines"
@@ -1514,55 +1428,107 @@ end = 10
 kind = "full"
 
 [[batches]]
+position = 63
+key = 'Rust(PubItemNames { file: "sps-common/src/keg.rs" })'
+descriptor = "pub-item names surface in sps-common/src/keg.rs"
+cost_tokens = 26
+cum_tokens = 2627
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 64
+key = 'Rust(PubItem { file: "sps-common/src/keg.rs", start_line: 21 })'
+descriptor = "pub item at sps-common/src/keg.rs:21"
+cost_tokens = 22
+cum_tokens = 2649
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 20
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Rust(PubItem { file: "sps-common/src/keg.rs", start_line: 13 })'
+descriptor = "pub item at sps-common/src/keg.rs:13"
+cost_tokens = 52
+cum_tokens = 2701
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 12
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 66
-key = 'Rust(PubItem { file: "sps/src/cli.rs", start_line: 35 })'
-descriptor = "pub item at sps/src/cli.rs:35"
-cost_tokens = 75
+key = 'Rust(PubItem { file: "sps-common/src/cache.rs", start_line: 15 })'
+descriptor = "pub item at sps-common/src/cache.rs:15"
+cost_tokens = 53
 cum_tokens = 2754
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "sps/src/cli.rs"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli.rs"
-start = 35
-end = 41
+path = "sps-common/src/cache.rs"
+start = 15
+end = 18
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 67
-key = 'Rust(PubItem { file: "sps/src/cli.rs", start_line: 44 })'
-descriptor = "pub item at sps/src/cli.rs:44"
-cost_tokens = 98
-cum_tokens = 2852
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli.rs"
-start = 43
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
 key = 'Toml(DevelopmentDependencies { file: "sps/Cargo.toml" })'
 descriptor = "dev/build/target dependencies in sps/Cargo.toml"
 cost_tokens = 24
-cum_tokens = 2876
+cum_tokens = 2778
 
 [batches.content]
 kind = "lines"
@@ -1576,29 +1542,115 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Rust(ModUse { file: "sps/src/pipeline.rs" })'
-descriptor = "mod/use plumbing in sps/src/pipeline.rs"
-cost_tokens = 24
-cum_tokens = 2900
+position = 68
+key = 'Rust(PubItemNames { file: "sps-common/src/config.rs" })'
+descriptor = "pub-item names surface in sps-common/src/config.rs"
+cost_tokens = 29
+cum_tokens = 2807
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "sps/src/pipeline.rs"
-start = 1
-end = 3
+path = "sps-common/src/config.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 199
+end = 199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 69
+key = 'Rust(PubItem { file: "sps-common/src/config.rs", start_line: 199 })'
+descriptor = "pub item at sps-common/src/config.rs:199"
+cost_tokens = 0
+cum_tokens = 2807
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 199
+end = 199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 70
+key = 'Rust(PubItemBody { file: "sps-common/src/config.rs", start_line: 199, body_start_line: 200 })'
+descriptor = "pub item body at sps-common/src/config.rs:199 body 200"
+cost_tokens = 9
+cum_tokens = 2816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 200
+end = 200
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
+key = 'Rust(PubItem { file: "sps-common/src/formulary.rs", start_line: 12 })'
+descriptor = "pub item at sps-common/src/formulary.rs:12"
+cost_tokens = 61
+cum_tokens = 2877
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/formulary.rs"
+start = 11
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
 key = 'Rust(ModUse { file: "sps/src/main.rs" })'
 descriptor = "mod/use plumbing in sps/src/main.rs"
 cost_tokens = 223
-cum_tokens = 3123
+cum_tokens = 3100
 
 [batches.content]
 kind = "lines"
@@ -1620,11 +1672,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 71
+position = 73
 key = 'Rust(ModUse { file: "sps-core/src/install/bottle/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/install/bottle/mod.rs"
 cost_tokens = 159
-cum_tokens = 3282
+cum_tokens = 3259
 
 [batches.content]
 kind = "lines"
@@ -1654,11 +1706,63 @@ end = 230
 kind = "full"
 
 [[batches]]
-position = 72
+position = 74
+key = 'Rust(PubItemNames { file: "sps-common/src/error.rs" })'
+descriptor = "pub-item names surface in sps-common/src/error.rs"
+cost_tokens = 35
+cum_tokens = 3294
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/error.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/error.rs"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/error.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 75
+key = 'Rust(PubItem { file: "sps-common/src/model/version.rs", start_line: 11 })'
+descriptor = "pub item at sps-common/src/model/version.rs:11"
+cost_tokens = 39
+cum_tokens = 3333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/version.rs"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 90
-cum_tokens = 3372
+cum_tokens = 3423
 
 [batches.content]
 kind = "lines"
@@ -1672,69 +1776,29 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 73
-key = 'Rust(PubItemNames { file: "sps/src/pipeline/planner.rs" })'
-descriptor = "pub-item names surface in sps/src/pipeline/planner.rs"
-cost_tokens = 54
-cum_tokens = 3426
+position = 77
+key = 'Rust(PubItemDocLede { file: "sps-common/src/cache.rs", start_line: 15 })'
+descriptor = "pub-item doc lede at sps-common/src/cache.rs:15"
+cost_tokens = 12
+cum_tokens = 3435
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "sps/src/pipeline/planner.rs"
-start = 25
-end = 25
+path = "sps-common/src/cache.rs"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/planner.rs"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/planner.rs"
-start = 184
-end = 184
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/planner.rs"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/planner.rs"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/planner.rs"
-start = 185
-end = 185
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
-position = 74
+position = 78
 key = 'Rust(PubItemNames { file: "sps-core/src/install/cask/mod.rs" })'
 descriptor = "pub-item names surface in sps-core/src/install/cask/mod.rs"
 cost_tokens = 220
-cum_tokens = 3646
+cum_tokens = 3655
 
 [batches.content]
 kind = "lines"
@@ -1900,11 +1964,11 @@ end = 687
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 79
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 37 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:37"
 cost_tokens = 0
-cum_tokens = 3646
+cum_tokens = 3655
 
 [batches.content]
 kind = "lines"
@@ -1926,11 +1990,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 76
+position = 80
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 43 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:43"
 cost_tokens = 0
-cum_tokens = 3646
+cum_tokens = 3655
 
 [batches.content]
 kind = "lines"
@@ -1952,11 +2016,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 77
+position = 81
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 49 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:49"
 cost_tokens = 0
-cum_tokens = 3646
+cum_tokens = 3655
 
 [batches.content]
 kind = "lines"
@@ -1978,11 +2042,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 78
+position = 82
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 73 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:73"
 cost_tokens = 0
-cum_tokens = 3646
+cum_tokens = 3655
 
 [batches.content]
 kind = "lines"
@@ -2004,11 +2068,11 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 83
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 686 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:686"
 cost_tokens = 0
-cum_tokens = 3646
+cum_tokens = 3655
 
 [batches.content]
 kind = "lines"
@@ -2030,11 +2094,11 @@ end = 687
 kind = "ellipsis"
 
 [[batches]]
-position = 80
+position = 84
 key = 'Rust(PubItemBody { file: "sps-core/src/install/cask/mod.rs", start_line: 43, body_start_line: 44 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:43 body 44"
 cost_tokens = 16
-cum_tokens = 3662
+cum_tokens = 3671
 
 [batches.content]
 kind = "lines"
@@ -2048,11 +2112,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 81
+position = 85
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 580 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:580"
 cost_tokens = 45
-cum_tokens = 3707
+cum_tokens = 3716
 
 [batches.content]
 kind = "lines"
@@ -2074,11 +2138,11 @@ end = 585
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 86
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 77 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:77"
 cost_tokens = 46
-cum_tokens = 3753
+cum_tokens = 3762
 
 [batches.content]
 kind = "lines"
@@ -2100,11 +2164,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 87
 key = 'Rust(PubItemBody { file: "sps-core/src/install/cask/mod.rs", start_line: 73, body_start_line: 74 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:73 body 74"
 cost_tokens = 19
-cum_tokens = 3772
+cum_tokens = 3781
 
 [batches.content]
 kind = "lines"
@@ -2118,11 +2182,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 84
+position = 88
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 612 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:612"
 cost_tokens = 47
-cum_tokens = 3819
+cum_tokens = 3828
 
 [batches.content]
 kind = "lines"
@@ -2144,11 +2208,11 @@ end = 617
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 89
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 232 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:232"
 cost_tokens = 54
-cum_tokens = 3873
+cum_tokens = 3882
 
 [batches.content]
 kind = "lines"
@@ -2170,11 +2234,11 @@ end = 238
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 90
 key = 'Rust(PubItemBody { file: "sps-core/src/install/cask/mod.rs", start_line: 37, body_start_line: 38 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:37 body 38"
 cost_tokens = 42
-cum_tokens = 3915
+cum_tokens = 3924
 
 [batches.content]
 kind = "lines"
@@ -2188,11 +2252,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 87
+position = 91
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/mod.rs", start_line: 25 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:25"
 cost_tokens = 134
-cum_tokens = 4049
+cum_tokens = 4058
 
 [batches.content]
 kind = "lines"
@@ -2206,11 +2270,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 88
+position = 92
 key = 'Rust(PubItemDocLede { file: "sps-core/src/install/cask/mod.rs", start_line: 37 })'
 descriptor = "pub-item doc lede at sps-core/src/install/cask/mod.rs:37"
 cost_tokens = 18
-cum_tokens = 4067
+cum_tokens = 4076
 
 [batches.content]
 kind = "lines"
@@ -2224,11 +2288,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 89
+position = 93
 key = 'Rust(PubItemDocLede { file: "sps-core/src/install/cask/mod.rs", start_line: 43 })'
 descriptor = "pub-item doc lede at sps-core/src/install/cask/mod.rs:43"
 cost_tokens = 20
-cum_tokens = 4087
+cum_tokens = 4096
 
 [batches.content]
 kind = "lines"
@@ -2242,11 +2306,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 90
+position = 94
 key = 'Rust(PubItemDocLede { file: "sps-core/src/install/cask/mod.rs", start_line: 49 })'
 descriptor = "pub-item doc lede at sps-core/src/install/cask/mod.rs:49"
 cost_tokens = 44
-cum_tokens = 4131
+cum_tokens = 4140
 
 [batches.content]
 kind = "lines"
@@ -2260,11 +2324,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 91
+position = 95
 key = 'Rust(PubItemDocLede { file: "sps-core/src/install/cask/mod.rs", start_line: 686 })'
 descriptor = "pub-item doc lede at sps-core/src/install/cask/mod.rs:686"
 cost_tokens = 51
-cum_tokens = 4182
+cum_tokens = 4191
 
 [batches.content]
 kind = "lines"
@@ -2278,11 +2342,11 @@ end = 685
 kind = "full"
 
 [[batches]]
-position = 92
+position = 96
 key = 'Rust(PubItemBody { file: "sps-core/src/install/cask/mod.rs", start_line: 686, body_start_line: 687 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:686 body 687"
 cost_tokens = 27
-cum_tokens = 4209
+cum_tokens = 4218
 
 [batches.content]
 kind = "lines"
@@ -2296,11 +2360,11 @@ end = 687
 kind = "full"
 
 [[batches]]
-position = 93
+position = 97
 key = 'Rust(PubItemBody { file: "sps-core/src/install/cask/mod.rs", start_line: 49, body_start_line: 70 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:49 body 70"
 cost_tokens = 9
-cum_tokens = 4218
+cum_tokens = 4227
 
 [batches.content]
 kind = "lines"
@@ -2314,1119 +2378,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 94
-key = 'Rust(PubItem { file: "sps/src/cli/init.rs", start_line: 16 })'
-descriptor = "pub item at sps/src/cli/init.rs:16"
-cost_tokens = 71
-cum_tokens = 4289
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/init.rs"
-start = 15
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 95
-key = 'Rust(PubItem { file: "sps-core/src/build/compile/mod.rs", start_line: 37 })'
-descriptor = "pub item at sps-core/src/build/compile/mod.rs:37"
-cost_tokens = 36
-cum_tokens = 4325
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/build/compile/mod.rs"
-start = 37
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
-key = 'Rust(PubItemNames { file: "sps/src/cli/search.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/search.rs"
-cost_tokens = 65
-cum_tokens = 4390
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 240
-end = 240
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 241
-end = 241
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 97
-key = 'Rust(PubItem { file: "sps/src/cli/search.rs", start_line: 240 })'
-descriptor = "pub item at sps/src/cli/search.rs:240"
-cost_tokens = 0
-cum_tokens = 4390
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 240
-end = 240
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 241
-end = 241
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 98
-key = 'Rust(PubItem { file: "sps/src/cli/search.rs", start_line: 23 })'
-descriptor = "pub item at sps/src/cli/search.rs:23"
-cost_tokens = 27
-cum_tokens = 4417
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 23
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
-key = 'Rust(PubItem { file: "sps/src/cli/search.rs", start_line: 42 })'
-descriptor = "pub item at sps/src/cli/search.rs:42"
-cost_tokens = 52
-cum_tokens = 4469
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 42
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 100
-key = 'Rust(PubItem { file: "sps/src/cli/search.rs", start_line: 15 })'
-descriptor = "pub item at sps/src/cli/search.rs:15"
-cost_tokens = 76
-cum_tokens = 4545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/search.rs"
-start = 14
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Rust(PubItemNames { file: "sps/src/pipeline/runner.rs" })'
-descriptor = "pub-item names surface in sps/src/pipeline/runner.rs"
-cost_tokens = 66
-cum_tokens = 4611
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'Rust(PubItem { file: "sps/src/pipeline/runner.rs", start_line: 56 })'
-descriptor = "pub item at sps/src/pipeline/runner.rs:56"
-cost_tokens = 0
-cum_tokens = 4611
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 103
-key = 'Rust(PubItem { file: "sps/src/pipeline/runner.rs", start_line: 31 })'
-descriptor = "pub item at sps/src/pipeline/runner.rs:31"
-cost_tokens = 46
-cum_tokens = 4657
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 30
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Rust(PubItem { file: "sps/src/pipeline/runner.rs", start_line: 38 })'
-descriptor = "pub item at sps/src/pipeline/runner.rs:38"
-cost_tokens = 48
-cum_tokens = 4705
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 37
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Rust(PubItem { file: "sps/src/pipeline/runner.rs", start_line: 67 })'
-descriptor = "pub item at sps/src/pipeline/runner.rs:67"
-cost_tokens = 65
-cum_tokens = 4770
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 67
-end = 73
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps/src/pipeline/runner.rs"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 106
-key = 'Rust(PubItem { file: "sps-core/src/utils/applescript.rs", start_line: 75 })'
-descriptor = "pub item at sps-core/src/utils/applescript.rs:75"
-cost_tokens = 25
-cum_tokens = 4795
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/utils/applescript.rs"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-core/src/utils/applescript.rs"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 107
-key = 'Rust(PubItem { file: "sps-common/src/cache.rs", start_line: 15 })'
-descriptor = "pub item at sps-common/src/cache.rs:15"
-cost_tokens = 53
-cum_tokens = 4848
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/cache.rs"
-start = 15
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #3"
-cost_tokens = 80
-cum_tokens = 4928
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 54
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 58 })'
-descriptor = "entry item body at sps/src/main.rs:57 body 58"
-cost_tokens = 147
-cum_tokens = 5075
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/main.rs"
-start = 58
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Toml(Dependencies { file: "Cargo.toml" })'
-descriptor = "[dependencies] in Cargo.toml"
-cost_tokens = 574
-cum_tokens = 5649
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Cargo.toml"
-start = 16
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Rust(PubItem { file: "sps/src/cli/info.rs", start_line: 14 })'
-descriptor = "pub item at sps/src/cli/info.rs:14"
-cost_tokens = 94
-cum_tokens = 5743
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/info.rs"
-start = 13
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Rust(ModUse { file: "sps-core/src/install/cask/mod.rs" })'
-descriptor = "mod/use plumbing in sps-core/src/install/cask/mod.rs"
-cost_tokens = 261
-cum_tokens = 6004
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/install/cask/mod.rs"
-start = 1
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-core/src/install/cask/mod.rs"
-start = 230
-end = 230
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Rust(PubItem { file: "sps-common/src/formulary.rs", start_line: 12 })'
-descriptor = "pub item at sps-common/src/formulary.rs:12"
-cost_tokens = 61
-cum_tokens = 6065
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/formulary.rs"
-start = 11
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #2"
-cost_tokens = 104
-cum_tokens = 6169
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 42
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Rust(PubItem { file: "sps/src/cli/upgrade.rs", start_line: 12 })'
-descriptor = "pub item at sps/src/cli/upgrade.rs:12"
-cost_tokens = 104
-cum_tokens = 6273
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/upgrade.rs"
-start = 11
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'Rust(PubItemBody { file: "sps-core/src/build/compile/mod.rs", start_line: 44, body_start_line: 71 })'
-descriptor = "pub item body at sps-core/src/build/compile/mod.rs:44 body 71"
-cost_tokens = 17
-cum_tokens = 6290
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/build/compile/mod.rs"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'Rust(PubItem { file: "sps-common/src/model/version.rs", start_line: 11 })'
-descriptor = "pub item at sps-common/src/model/version.rs:11"
-cost_tokens = 39
-cum_tokens = 6329
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/model/version.rs"
-start = 10
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
-key = 'Rust(PubItem { file: "sps/src/cli/reinstall.rs", start_line: 12 })'
-descriptor = "pub item at sps/src/cli/reinstall.rs:12"
-cost_tokens = 113
-cum_tokens = 6442
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/reinstall.rs"
-start = 11
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Rust(PubItemDocLede { file: "sps-common/src/cache.rs", start_line: 15 })'
-descriptor = "pub-item doc lede at sps-common/src/cache.rs:15"
-cost_tokens = 12
-cum_tokens = 6454
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/cache.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
-key = 'Rust(ModUse { file: "sps-core/src/build/compile/mod.rs" })'
-descriptor = "mod/use plumbing in sps-core/src/build/compile/mod.rs"
-cost_tokens = 347
-cum_tokens = 6801
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/build/compile/mod.rs"
-start = 3
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
-key = 'Rust(PubItem { file: "sps/src/cli/list.rs", start_line: 16 })'
-descriptor = "pub item at sps/src/cli/list.rs:16"
-cost_tokens = 134
-cum_tokens = 6935
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/list.rs"
-start = 15
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
-key = 'Rust(PubItemNames { file: "sps-common/src/keg.rs" })'
-descriptor = "pub-item names surface in sps-common/src/keg.rs"
-cost_tokens = 26
-cum_tokens = 6961
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/keg.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-common/src/keg.rs"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-common/src/keg.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps-common/src/keg.rs"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 123
-key = 'Rust(PubItem { file: "sps-common/src/keg.rs", start_line: 21 })'
-descriptor = "pub item at sps-common/src/keg.rs:21"
-cost_tokens = 22
-cum_tokens = 6983
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/keg.rs"
-start = 20
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
-key = 'Rust(PubItem { file: "sps-common/src/keg.rs", start_line: 13 })'
-descriptor = "pub item at sps-common/src/keg.rs:13"
-cost_tokens = 52
-cum_tokens = 7035
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/keg.rs"
-start = 12
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
-key = 'Rust(PubItemDocLede { file: "sps-common/src/keg.rs", start_line: 21 })'
-descriptor = "pub-item doc lede at sps-common/src/keg.rs:21"
-cost_tokens = 13
-cum_tokens = 7048
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/keg.rs"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 126
-key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #9"
-cost_tokens = 81
-cum_tokens = 7129
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 164
-end = 171
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
-key = 'Rust(PubItem { file: "sps-common/src/dependency/requirement.rs", start_line: 7 })'
-descriptor = "pub item at sps-common/src/dependency/requirement.rs:7"
-cost_tokens = 64
-cum_tokens = 7193
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/dependency/requirement.rs"
-start = 6
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 128
-key = 'Rust(PubItemDocLede { file: "sps-common/src/keg.rs", start_line: 13 })'
-descriptor = "pub-item doc lede at sps-common/src/keg.rs:13"
-cost_tokens = 15
-cum_tokens = 7208
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/keg.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'Rust(PubItemBody { file: "sps-core/src/install/cask/mod.rs", start_line: 49, body_start_line: 50 })'
-descriptor = "pub item body at sps-core/src/install/cask/mod.rs:49 body 50"
-cost_tokens = 23
-cum_tokens = 7231
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/install/cask/mod.rs"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Rust(PubItemNames { file: "sps-common/src/config.rs" })'
-descriptor = "pub-item names surface in sps-common/src/config.rs"
-cost_tokens = 29
-cum_tokens = 7260
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/config.rs"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-common/src/config.rs"
-start = 199
-end = 199
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-common/src/config.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "sps-common/src/config.rs"
-start = 200
-end = 200
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 131
-key = 'Rust(PubItem { file: "sps-common/src/config.rs", start_line: 199 })'
-descriptor = "pub item at sps-common/src/config.rs:199"
-cost_tokens = 0
-cum_tokens = 7260
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/config.rs"
-start = 199
-end = 199
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-common/src/config.rs"
-start = 200
-end = 200
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 132
-key = 'Rust(PubItemBody { file: "sps-common/src/config.rs", start_line: 199, body_start_line: 200 })'
-descriptor = "pub item body at sps-common/src/config.rs:199 body 200"
-cost_tokens = 9
-cum_tokens = 7269
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/config.rs"
-start = 200
-end = 200
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 133
-key = 'Rust(ModUse { file: "sps-common/src/error.rs" })'
-descriptor = "mod/use plumbing in sps-common/src/error.rs"
-cost_tokens = 28
-cum_tokens = 7297
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/error.rs"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
-key = 'Rust(PubItem { file: "sps-common/src/config.rs", start_line: 15 })'
-descriptor = "pub item at sps-common/src/config.rs:15"
-cost_tokens = 104
-cum_tokens = 7401
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/config.rs"
-start = 14
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 135
-key = 'Fs(DirListing { dir: "sps-core/src/install/cask/artifacts" })'
-descriptor = "listing of 'sps-core/src/install/cask/artifacts'"
-cost_tokens = 114
-cum_tokens = 7515
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "sps-core/src/install/cask/artifacts"
-entries = ["app.rs", "audio_unit_plugin.rs", "binary.rs", "colorpicker.rs", "dictionary.rs", "font.rs", "input_method.rs", "installer.rs", "internet_plugin.rs", "keyboard_layout.rs", "manpage.rs", "mdimporter.rs", "mod.rs", "pkg.rs", "preflight.rs", "prefpane.rs", "qlplugin.rs", "screen_saver.rs", "service.rs", "suite.rs", "uninstall.rs", "vst3_plugin.rs", "vst_plugin.rs", "zap.rs"]
-
-[[batches]]
-position = 136
-key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #6"
-cost_tokens = 109
-cum_tokens = 7624
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 123
-end = 136
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'Rust(PubItemNames { file: "sps-common/src/error.rs" })'
-descriptor = "pub-item names surface in sps-common/src/error.rs"
-cost_tokens = 33
-cum_tokens = 7657
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/error.rs"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-common/src/error.rs"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-common/src/error.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 138
-key = 'Rust(PubItem { file: "sps/src/cli/uninstall.rs", start_line: 17 })'
-descriptor = "pub item at sps/src/cli/uninstall.rs:17"
-cost_tokens = 185
-cum_tokens = 7842
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps/src/cli/uninstall.rs"
-start = 16
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 139
-key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #7"
-cost_tokens = 112
-cum_tokens = 7954
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 138
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 140
-key = 'Rust(ModUse { file: "sps-core/src/install/cask/artifacts/mod.rs" })'
-descriptor = "mod/use plumbing in sps-core/src/install/cask/artifacts/mod.rs"
-cost_tokens = 539
-cum_tokens = 8493
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/install/cask/artifacts/mod.rs"
-start = 1
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-core/src/install/cask/artifacts/mod.rs"
-start = 26
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 141
-key = 'Rust(PubItem { file: "sps-core/src/install/cask/artifacts/uninstall.rs", start_line: 9 })'
-descriptor = "pub item at sps-core/src/install/cask/artifacts/uninstall.rs:9"
-cost_tokens = 28
-cum_tokens = 8521
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-core/src/install/cask/artifacts/uninstall.rs"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "sps-core/src/install/cask/artifacts/uninstall.rs"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 142
 key = 'Rust(PubItemNames { file: "sps-common/src/dependency/definition.rs" })'
 descriptor = "pub-item names surface in sps-common/src/dependency/definition.rs"
 cost_tokens = 23
-cum_tokens = 8544
+cum_tokens = 4250
 
 [batches.content]
 kind = "lines"
@@ -3464,11 +2420,47 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 99
+key = 'Rust(PubItem { file: "sps/src/cli/update.rs", start_line: 11 })'
+descriptor = "pub item at sps/src/cli/update.rs:11"
+cost_tokens = 25
+cum_tokens = 4275
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps/src/cli/update.rs"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Rust(PubItemDocLede { file: "sps-common/src/keg.rs", start_line: 21 })'
+descriptor = "pub-item doc lede at sps-common/src/keg.rs:21"
+cost_tokens = 13
+cum_tokens = 4288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
 key = 'Rust(PubItem { file: "sps-common/src/dependency/definition.rs", start_line: 53 })'
 descriptor = "pub item at sps-common/src/dependency/definition.rs:53"
 cost_tokens = 63
-cum_tokens = 8607
+cum_tokens = 4351
 
 [batches.content]
 kind = "lines"
@@ -3482,11 +2474,145 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 144
+position = 102
+key = 'Rust(PubItem { file: "sps-core/src/build/compile/mod.rs", start_line: 37 })'
+descriptor = "pub item at sps-core/src/build/compile/mod.rs:37"
+cost_tokens = 36
+cum_tokens = 4387
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/mod.rs"
+start = 37
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Rust(PubItem { file: "sps-core/src/utils/applescript.rs", start_line: 75 })'
+descriptor = "pub item at sps-core/src/utils/applescript.rs:75"
+cost_tokens = 25
+cum_tokens = 4412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/utils/applescript.rs"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-core/src/utils/applescript.rs"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 104
+key = 'Rust(PubItem { file: "sps-common/src/dependency/requirement.rs", start_line: 7 })'
+descriptor = "pub item at sps-common/src/dependency/requirement.rs:7"
+cost_tokens = 64
+cum_tokens = 4476
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/dependency/requirement.rs"
+start = 6
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Rust(PubItemDocLede { file: "sps-common/src/keg.rs", start_line: 13 })'
+descriptor = "pub-item doc lede at sps-common/src/keg.rs:13"
+cost_tokens = 15
+cum_tokens = 4491
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #3"
+cost_tokens = 80
+cum_tokens = 4571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 54
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Rust(EntryItemBody { file: "sps/src/main.rs", start_line: 57, body_start_line: 58 })'
+descriptor = "entry item body at sps/src/main.rs:57 body 58"
+cost_tokens = 147
+cum_tokens = 4718
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps/src/main.rs"
+start = 58
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Toml(Dependencies { file: "Cargo.toml" })'
+descriptor = "[dependencies] in Cargo.toml"
+cost_tokens = 574
+cum_tokens = 5292
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Cargo.toml"
+start = 16
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
 key = 'Rust(PubItem { file: "sps-common/src/dependency/definition.rs", start_line: 31 })'
 descriptor = "pub item at sps-common/src/dependency/definition.rs:31"
 cost_tokens = 56
-cum_tokens = 8663
+cum_tokens = 5348
 
 [batches.content]
 kind = "lines"
@@ -3500,11 +2626,847 @@ end = 35
 kind = "full"
 
 [[batches]]
+position = 110
+key = 'Rust(ModUse { file: "sps-common/src/error.rs" })'
+descriptor = "mod/use plumbing in sps-common/src/error.rs"
+cost_tokens = 26
+cum_tokens = 5374
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/error.rs"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Rust(PubItem { file: "sps/src/cli/status.rs", start_line: 399 })'
+descriptor = "pub item at sps/src/cli/status.rs:399"
+cost_tokens = 30
+cum_tokens = 5404
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps/src/cli/status.rs"
+start = 399
+end = 399
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps/src/cli/status.rs"
+start = 400
+end = 400
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'Rust(PubItem { file: "sps-common/src/config.rs", start_line: 15 })'
+descriptor = "pub item at sps-common/src/config.rs:15"
+cost_tokens = 104
+cum_tokens = 5508
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/config.rs"
+start = 14
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Rust(ModUse { file: "sps-core/src/install/cask/mod.rs" })'
+descriptor = "mod/use plumbing in sps-core/src/install/cask/mod.rs"
+cost_tokens = 261
+cum_tokens = 5769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/mod.rs"
+start = 1
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/mod.rs"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #2"
+cost_tokens = 104
+cum_tokens = 5873
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 42
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Rust(PubItemBody { file: "sps-core/src/build/compile/mod.rs", start_line: 44, body_start_line: 71 })'
+descriptor = "pub item body at sps-core/src/build/compile/mod.rs:44 body 71"
+cost_tokens = 17
+cum_tokens = 5890
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/mod.rs"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Rust(PubItemNames { file: "sps/src/cli.rs" })'
+descriptor = "pub-item names surface in sps/src/cli.rs"
+cost_tokens = 23
+cum_tokens = 5913
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps/src/cli.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps/src/cli.rs"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps/src/cli.rs"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps/src/cli.rs"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 117
+key = 'Rust(PubItem { file: "sps/src/cli.rs", start_line: 35 })'
+descriptor = "pub item at sps/src/cli.rs:35"
+cost_tokens = 75
+cum_tokens = 5988
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps/src/cli.rs"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps/src/cli.rs"
+start = 35
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Rust(PubItem { file: "sps/src/cli.rs", start_line: 44 })'
+descriptor = "pub item at sps/src/cli.rs:44"
+cost_tokens = 98
+cum_tokens = 6086
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps/src/cli.rs"
+start = 43
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Rust(ModUse { file: "sps-core/src/build/compile/mod.rs" })'
+descriptor = "mod/use plumbing in sps-core/src/build/compile/mod.rs"
+cost_tokens = 347
+cum_tokens = 6433
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/build/compile/mod.rs"
+start = 3
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #9"
+cost_tokens = 81
+cum_tokens = 6514
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 164
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Rust(PubItemDocLede { file: "sps-common/src/model/version.rs", start_line: 11 })'
+descriptor = "pub-item doc lede at sps-common/src/model/version.rs:11"
+cost_tokens = 15
+cum_tokens = 6529
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/version.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'Rust(ModUse { file: "sps/src/pipeline.rs" })'
+descriptor = "mod/use plumbing in sps/src/pipeline.rs"
+cost_tokens = 24
+cum_tokens = 6553
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps/src/pipeline.rs"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Rust(PubItemBody { file: "sps-core/src/install/cask/mod.rs", start_line: 49, body_start_line: 50 })'
+descriptor = "pub item body at sps-core/src/install/cask/mod.rs:49 body 50"
+cost_tokens = 23
+cum_tokens = 6576
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/mod.rs"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Rust(ModUse { file: "sps-common/src/dependency/requirement.rs" })'
+descriptor = "mod/use plumbing in sps-common/src/dependency/requirement.rs"
+cost_tokens = 25
+cum_tokens = 6601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/dependency/requirement.rs"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Rust(PubItemNames { file: "sps-common/src/pipeline.rs" })'
+descriptor = "pub-item names surface in sps-common/src/pipeline.rs"
+cost_tokens = 92
+cum_tokens = 6693
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 192
+end = 192
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 126
+key = 'Rust(PubItem { file: "sps-common/src/pipeline.rs", start_line: 14 })'
+descriptor = "pub item at sps-common/src/pipeline.rs:14"
+cost_tokens = 41
+cum_tokens = 6734
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 13
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Rust(PubItem { file: "sps-common/src/pipeline.rs", start_line: 184 })'
+descriptor = "pub item at sps-common/src/pipeline.rs:184"
+cost_tokens = 50
+cum_tokens = 6784
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 184
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Rust(PubItem { file: "sps-common/src/pipeline.rs", start_line: 42 })'
+descriptor = "pub item at sps-common/src/pipeline.rs:42"
+cost_tokens = 65
+cum_tokens = 6849
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 41
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Rust(PubItem { file: "sps-common/src/pipeline.rs", start_line: 20 })'
+descriptor = "pub item at sps-common/src/pipeline.rs:20"
+cost_tokens = 82
+cum_tokens = 6931
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 20
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Rust(PubItem { file: "sps-common/src/pipeline.rs", start_line: 33 })'
+descriptor = "pub item at sps-common/src/pipeline.rs:33"
+cost_tokens = 73
+cum_tokens = 7004
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 32
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Rust(PubItem { file: "sps-common/src/pipeline.rs", start_line: 191 })'
+descriptor = "pub item at sps-common/src/pipeline.rs:191"
+cost_tokens = 105
+cum_tokens = 7109
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 190
+end = 196
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Rust(PubItemDocLede { file: "sps-common/src/pipeline.rs", start_line: 191 })'
+descriptor = "pub-item doc lede at sps-common/src/pipeline.rs:191"
+cost_tokens = 16
+cum_tokens = 7125
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'Rust(PubItem { file: "sps-common/src/pipeline.rs", start_line: 163 })'
+descriptor = "pub item at sps-common/src/pipeline.rs:163"
+cost_tokens = 230
+cum_tokens = 7355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 162
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Rust(PubItemDocLede { file: "sps-common/src/pipeline.rs", start_line: 163 })'
+descriptor = "pub-item doc lede at sps-common/src/pipeline.rs:163"
+cost_tokens = 17
+cum_tokens = 7372
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/pipeline.rs"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Fs(DirListing { dir: "sps-core/src/install/cask/artifacts" })'
+descriptor = "listing of 'sps-core/src/install/cask/artifacts'"
+cost_tokens = 114
+cum_tokens = 7486
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "sps-core/src/install/cask/artifacts"
+entries = ["app.rs", "audio_unit_plugin.rs", "binary.rs", "colorpicker.rs", "dictionary.rs", "font.rs", "input_method.rs", "installer.rs", "internet_plugin.rs", "keyboard_layout.rs", "manpage.rs", "mdimporter.rs", "mod.rs", "pkg.rs", "preflight.rs", "prefpane.rs", "qlplugin.rs", "screen_saver.rs", "service.rs", "suite.rs", "uninstall.rs", "vst3_plugin.rs", "vst_plugin.rs", "zap.rs"]
+
+[[batches]]
+position = 136
+key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #6"
+cost_tokens = 109
+cum_tokens = 7595
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 123
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Rust(ModUse { file: "sps-common/src/model/artifact.rs" })'
+descriptor = "mod/use plumbing in sps-common/src/model/artifact.rs"
+cost_tokens = 32
+cum_tokens = 7627
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/artifact.rs"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #7"
+cost_tokens = 112
+cum_tokens = 7739
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 138
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Rust(PubItem { file: "sps/src/cli/init.rs", start_line: 16 })'
+descriptor = "pub item at sps/src/cli/init.rs:16"
+cost_tokens = 71
+cum_tokens = 7810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps/src/cli/init.rs"
+start = 15
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Rust(PubItem { file: "sps-common/src/model/tap.rs", start_line: 10 })'
+descriptor = "pub item at sps-common/src/model/tap.rs:10"
+cost_tokens = 125
+cum_tokens = 7935
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/tap.rs"
+start = 10
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Rust(PubItemDocLede { file: "sps-common/src/model/tap.rs", start_line: 10 })'
+descriptor = "pub-item doc lede at sps-common/src/model/tap.rs:10"
+cost_tokens = 17
+cum_tokens = 7952
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/tap.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Rust(ModUse { file: "sps-core/src/install/cask/artifacts/mod.rs" })'
+descriptor = "mod/use plumbing in sps-core/src/install/cask/artifacts/mod.rs"
+cost_tokens = 539
+cum_tokens = 8491
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/mod.rs"
+start = 1
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/mod.rs"
+start = 26
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Rust(PubItem { file: "sps-core/src/install/cask/artifacts/uninstall.rs", start_line: 9 })'
+descriptor = "pub item at sps-core/src/install/cask/artifacts/uninstall.rs:9"
+cost_tokens = 28
+cum_tokens = 8519
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/uninstall.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-core/src/install/cask/artifacts/uninstall.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 144
+key = 'Rust(ModUse { file: "sps-common/src/dependency/definition.rs" })'
+descriptor = "mod/use plumbing in sps-common/src/dependency/definition.rs"
+cost_tokens = 38
+cum_tokens = 8557
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/dependency/definition.rs"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 145
+key = 'Rust(ModUse { file: "sps-common/src/keg.rs" })'
+descriptor = "mod/use plumbing in sps-common/src/keg.rs"
+cost_tokens = 67
+cum_tokens = 8624
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 2
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/keg.rs"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
 key = 'Rust(PubItemNames { file: "sps-core/src/check/update.rs" })'
 descriptor = "pub-item names surface in sps-core/src/check/update.rs"
 cost_tokens = 26
-cum_tokens = 8689
+cum_tokens = 8650
 
 [batches.content]
 kind = "lines"
@@ -3542,11 +3504,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 146
+position = 147
 key = 'Rust(PubItem { file: "sps-core/src/check/update.rs", start_line: 89 })'
 descriptor = "pub item at sps-core/src/check/update.rs:89"
 cost_tokens = 46
-cum_tokens = 8735
+cum_tokens = 8696
 
 [batches.content]
 kind = "lines"
@@ -3568,11 +3530,11 @@ end = 94
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Rust(PubItem { file: "sps-core/src/check/update.rs", start_line: 23 })'
 descriptor = "pub item at sps-core/src/check/update.rs:23"
 cost_tokens = 72
-cum_tokens = 8807
+cum_tokens = 8768
 
 [batches.content]
 kind = "lines"
@@ -3586,11 +3548,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Toml(Identity { file: "sps-common/Cargo.toml" })'
 descriptor = "[package] in sps-common/Cargo.toml"
 cost_tokens = 114
-cum_tokens = 8921
+cum_tokens = 8882
 
 [batches.content]
 kind = "lines"
@@ -3604,11 +3566,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Toml(Identity { file: "sps-core/Cargo.toml" })'
 descriptor = "[package] in sps-core/Cargo.toml"
 cost_tokens = 114
-cum_tokens = 9035
+cum_tokens = 8996
 
 [batches.content]
 kind = "lines"
@@ -3622,11 +3584,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Toml(Identity { file: "sps-net/Cargo.toml" })'
 descriptor = "[package] in sps-net/Cargo.toml"
 cost_tokens = 114
-cum_tokens = 9149
+cum_tokens = 9110
 
 [batches.content]
 kind = "lines"
@@ -3640,11 +3602,259 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 151
+position = 152
+key = 'Rust(ModUse { file: "sps-common/src/cache.rs" })'
+descriptor = "mod/use plumbing in sps-common/src/cache.rs"
+cost_tokens = 68
+cum_tokens = 9178
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/cache.rs"
+start = 4
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Rust(PubItemNames { file: "sps-common/src/model/formula.rs" })'
+descriptor = "pub-item names surface in sps-common/src/model/formula.rs"
+cost_tokens = 80
+cum_tokens = 9258
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 360
+end = 360
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 361
+end = 361
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'Rust(PubItem { file: "sps-common/src/model/formula.rs", start_line: 34 })'
+descriptor = "pub item at sps-common/src/model/formula.rs:34"
+cost_tokens = 40
+cum_tokens = 9298
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 33
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Rust(PubItem { file: "sps-common/src/model/formula.rs", start_line: 28 })'
+descriptor = "pub item at sps-common/src/model/formula.rs:28"
+cost_tokens = 43
+cum_tokens = 9341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 27
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Rust(PubItem { file: "sps-common/src/model/formula.rs", start_line: 39 })'
+descriptor = "pub item at sps-common/src/model/formula.rs:39"
+cost_tokens = 60
+cum_tokens = 9401
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 38
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Rust(PubItem { file: "sps-common/src/model/formula.rs", start_line: 47 })'
+descriptor = "pub item at sps-common/src/model/formula.rs:47"
+cost_tokens = 68
+cum_tokens = 9469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 46
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Rust(PubItem { file: "sps-common/src/model/formula.rs", start_line: 19 })'
+descriptor = "pub item at sps-common/src/model/formula.rs:19"
+cost_tokens = 69
+cum_tokens = 9538
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 18
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Rust(PubItem { file: "sps-common/src/model/formula.rs", start_line: 360 })'
+descriptor = "pub item at sps-common/src/model/formula.rs:360"
+cost_tokens = 99
+cum_tokens = 9637
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "sps-common/src/model/formula.rs"
+start = 360
+end = 366
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
 key = 'Rust(PubItem { file: "sps-core/src/install/cask/artifacts/zap.rs", start_line: 18 })'
 descriptor = "pub item at sps-core/src/install/cask/artifacts/zap.rs:18"
 cost_tokens = 33
-cum_tokens = 9182
+cum_tokens = 9670
 
 [batches.content]
 kind = "lines"
@@ -3666,11 +3876,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 161
 key = 'Rust(PubItem { file: "sps-core/src/upgrade/cask.rs", start_line: 15 })'
 descriptor = "pub item at sps-core/src/upgrade/cask.rs:15"
 cost_tokens = 77
-cum_tokens = 9259
+cum_tokens = 9747
 
 [batches.content]
 kind = "lines"
@@ -3692,11 +3902,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 162
 key = 'Rust(PubItem { file: "sps-core/src/uninstall/formula.rs", start_line: 10 })'
 descriptor = "pub item at sps-core/src/uninstall/formula.rs:10"
 cost_tokens = 78
-cum_tokens = 9337
+cum_tokens = 9825
 
 [batches.content]
 kind = "lines"
@@ -3718,29 +3928,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 154
-key = 'Rust(PubItemDocLede { file: "sps-common/src/model/version.rs", start_line: 11 })'
-descriptor = "pub-item doc lede at sps-common/src/model/version.rs:11"
-cost_tokens = 15
-cum_tokens = 9352
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/model/version.rs"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
+position = 163
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 133
-cum_tokens = 9485
+cum_tokens = 9958
 
 [batches.content]
 kind = "lines"
@@ -3749,60 +3941,6 @@ kind = "lines"
 path = "README.md"
 start = 151
 end = 162
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
-key = 'Rust(ModUse { file: "sps-common/src/dependency/requirement.rs" })'
-descriptor = "mod/use plumbing in sps-common/src/dependency/requirement.rs"
-cost_tokens = 25
-cum_tokens = 9510
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/src/dependency/requirement.rs"
-start = 2
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
-key = 'Toml(Dependencies { file: "sps-common/Cargo.toml" })'
-descriptor = "[dependencies] in sps-common/Cargo.toml"
-cost_tokens = 234
-cum_tokens = 9744
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-common/Cargo.toml"
-start = 10
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
-key = 'Toml(Dependencies { file: "sps-net/Cargo.toml" })'
-descriptor = "[dependencies] in sps-net/Cargo.toml"
-cost_tokens = 234
-cum_tokens = 9978
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "sps-net/Cargo.toml"
-start = 10
-end = 25
 
 [batches.content.spans.render]
 kind = "full"

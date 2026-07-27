@@ -745,10 +745,28 @@ entries = ["tests.rs"]
 
 [[batches]]
 position = 43
+key = 'Rust(CrateDocLede { file: "crates/mdbook-core/src/lib.rs" })'
+descriptor = "crate-doc lede in crates/mdbook-core/src/lib.rs"
+cost_tokens = 21
+cum_tokens = 893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-core/src/lib.rs"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
 key = 'Fs(DirListing { dir: "crates/mdbook-core/src/utils" })'
 descriptor = "listing of 'crates/mdbook-core/src/utils'"
 cost_tokens = 17
-cum_tokens = 889
+cum_tokens = 910
 
 [batches.content]
 kind = "fs"
@@ -758,11 +776,29 @@ parent = "crates/mdbook-core/src/utils"
 entries = ["fs.rs", "html.rs", "mod.rs", "toml_ext.rs"]
 
 [[batches]]
-position = 44
+position = 45
+key = 'Rust(CrateDocLede { file: "crates/mdbook-core/src/utils/mod.rs" })'
+descriptor = "crate-doc lede in crates/mdbook-core/src/utils/mod.rs"
+cost_tokens = 12
+cum_tokens = 922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "crates/mdbook-core/src/utils/mod.rs"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
 key = 'Rust(PubItem { file: "crates/mdbook-core/src/utils/mod.rs", start_line: 29 })'
 descriptor = "pub item at crates/mdbook-core/src/utils/mod.rs:29"
-cost_tokens = 19
-cum_tokens = 908
+cost_tokens = 17
+cum_tokens = 939
 
 [batches.content]
 kind = "lines"
@@ -784,29 +820,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 45
-key = 'Rust(CrateDocLede { file: "crates/mdbook-core/src/utils/mod.rs" })'
-descriptor = "crate-doc lede in crates/mdbook-core/src/utils/mod.rs"
-cost_tokens = 10
-cum_tokens = 918
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-core/src/utils/mod.rs"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
+position = 47
 key = 'Rust(PubItem { file: "crates/mdbook-core/src/lib.rs", start_line: 7 })'
 descriptor = "pub item at crates/mdbook-core/src/lib.rs:7"
-cost_tokens = 25
-cum_tokens = 943
+cost_tokens = 23
+cum_tokens = 962
 
 [batches.content]
 kind = "lines"
@@ -815,24 +833,6 @@ kind = "lines"
 path = "crates/mdbook-core/src/lib.rs"
 start = 7
 end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Rust(CrateDocLede { file: "crates/mdbook-core/src/lib.rs" })'
-descriptor = "crate-doc lede in crates/mdbook-core/src/lib.rs"
-cost_tokens = 19
-cum_tokens = 962
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "crates/mdbook-core/src/lib.rs"
-start = 1
-end = 1
 
 [batches.content.spans.render]
 kind = "full"

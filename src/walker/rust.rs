@@ -58,7 +58,9 @@ use super::{
 pub struct RustState {
     module_visibility: OnceCell<HashMap<PathBuf, Visibility>>,
     workspace: super::workspace::WorkspaceMembership,
-    ambiguous_primary_members: OnceCell<Option<HashSet<PathBuf>>>,
+    member_facts: OnceCell<super::toml::MemberFacts>,
+    primary_member: OnceCell<Option<(PathBuf, MemberRole)>>,
+    member_dir_role_lookup: RefCell<HashMap<PathBuf, MemberRole>>,
     nearest_member_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
     cargo_source_dirs: OnceCell<Vec<PathBuf>>,
     expanded_dirs: RefCell<HashSet<PathBuf>>,
@@ -82,12 +84,48 @@ struct ValuedBodyPart {
     value_factor: f64,
 }
 
+/// A crate's standing in its workspace. At most one member is primary — the
+/// crate whose source surface carries the repository — and it is primary in
+/// one sense only: [`Self::is_primary`] gates the primary-only batch classes
+/// for every variant that reports it. The two primary variants differ only in
+/// how confident the evidence is, which [`Self::value_factor`] prices; nothing
+/// else may re-derive "is this primary" from that factor.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum MemberRole {
+    /// Primary on the strong signal: the crate dir shares the repository's
+    /// basename and the rest of the workspace depends on it. Also the role of
+    /// a crate with no workspace siblings to rank it against at all.
+    Primary,
+    /// Primary on centrality alone: the name match is outside the workspace's
+    /// dependency fabric (or absent), so the crate the other members are
+    /// built on carries the repository instead.
+    PrimaryByCentrality,
+    /// One of the sub-crates around the primary.
+    Secondary,
+}
+
+impl MemberRole {
+    fn is_primary(self) -> bool {
+        self != Self::Secondary
+    }
+
+    fn value_factor(self) -> f64 {
+        match self {
+            Self::Primary => 1.0,
+            Self::PrimaryByCentrality => CENTRALITY_PRIMARY_MEMBER_FACTOR,
+            Self::Secondary => SECONDARY_WORKSPACE_MEMBER_FACTOR,
+        }
+    }
+}
+
 impl RustState {
     pub fn new() -> Self {
         Self {
             module_visibility: OnceCell::new(),
             workspace: super::workspace::WorkspaceMembership::default(),
-            ambiguous_primary_members: OnceCell::new(),
+            member_facts: OnceCell::new(),
+            primary_member: OnceCell::new(),
+            member_dir_role_lookup: RefCell::new(HashMap::new()),
             nearest_member_dir_lookup: RefCell::new(HashMap::new()),
             cargo_source_dirs: OnceCell::new(),
             expanded_dirs: RefCell::new(HashSet::new()),
@@ -118,26 +156,84 @@ impl RustState {
             .is_member(file, || super::toml::collect_workspace_members(root))
     }
 
-    fn ambiguous_primary_members(&self, root: &Path) -> Option<&HashSet<PathBuf>> {
-        self.ambiguous_primary_members
+    fn member_facts(&self, root: &Path) -> &super::toml::MemberFacts {
+        self.member_facts
+            .get_or_init(|| super::toml::read_member_facts(root, self.workspace_members(root)))
+    }
+
+    /// `true` when the workspace's primary member is ambiguous and `file` is
+    /// not one of the colliding candidates — the only case where a member can
+    /// be called definitely-secondary without knowing which one is primary.
+    pub(in crate::walker) fn is_definite_secondary_member(&self, file: &Path, root: &Path) -> bool {
+        let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
+        self.member_facts(root)
+            .ambiguous_primary()
+            .is_some_and(|members| !members.contains(&key))
+    }
+
+    /// Manifest of the one workspace member whose source surface carries the
+    /// repository, and how it was identified. The crate dir sharing the repo's
+    /// basename normally is it, but a repo named after its CLI binary puts
+    /// that name on a thin shell that depends on everything and is depended on
+    /// by nothing; there the crate the rest of the workspace is built on is
+    /// the real surface. `None` when the name signal collides and no member is
+    /// central enough to break the tie.
+    fn primary_member(&self, root: &Path) -> Option<&(PathBuf, MemberRole)> {
+        self.primary_member
             .get_or_init(|| {
-                super::toml::ambiguous_primary_workspace_members(
-                    root,
-                    self.workspace
-                        .members(|| super::toml::collect_workspace_members(root)),
-                )
+                let facts = self.member_facts(root);
+                let named = self.name_matched_member(root);
+                if named.is_some_and(|named| facts.has_sibling_dependents(named)) {
+                    return named.map(|m| (m.clone(), MemberRole::Primary));
+                }
+                facts
+                    .dependency_hub(PRIMARY_MEMBER_MIN_IN_DEGREE)
+                    .map(|hub| (hub.clone(), MemberRole::PrimaryByCentrality))
+                    .or_else(|| named.map(|m| (m.clone(), MemberRole::Primary)))
             })
             .as_ref()
     }
 
-    pub(in crate::walker) fn has_ambiguous_primary_member(&self, root: &Path) -> bool {
-        self.ambiguous_primary_members(root).is_some()
+    /// The member whose crate dir shares the repository's basename. Several
+    /// members can (`crates/acme` and `tools/acme`), so the choice is settled
+    /// on the package name rather than on whichever the member set happens to
+    /// yield first — iteration order over the set is not stable across runs,
+    /// and a primary chosen by hash order would damp a different subtree each
+    /// time. Fails closed when nothing breaks the tie.
+    fn name_matched_member(&self, root: &Path) -> Option<&PathBuf> {
+        let facts = self.member_facts(root);
+        if facts.ambiguous_primary().is_some() {
+            return None;
+        }
+        let base = root.file_name()?;
+        let shares_basename = |m: &&PathBuf| m.parent().and_then(Path::file_name) == Some(base);
+        let mut dir_matches = self.workspace_members(root).iter().filter(shares_basename);
+        let first = dir_matches.next()?;
+        match dir_matches.next() {
+            None => Some(first),
+            Some(_) => facts.name_matched_member().filter(shares_basename),
+        }
     }
 
-    pub(in crate::walker) fn is_ambiguous_primary_member(&self, file: &Path, root: &Path) -> bool {
-        let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
-        self.ambiguous_primary_members(root)
-            .is_some_and(|members| members.contains(&key))
+    /// Role of the member owning dir `dir`. Memoized: the caller reaches this
+    /// once per valued batch, and the comparison needs a canonicalization to
+    /// line up with the member set.
+    fn member_dir_role(&self, dir: &Path, root: &Path) -> MemberRole {
+        if let Some(&hit) = self.member_dir_role_lookup.borrow().get(dir) {
+            return hit;
+        }
+        let hit = self
+            .primary_member(root)
+            .filter(|(primary, _)| {
+                dir.join("Cargo.toml")
+                    .canonicalize()
+                    .is_ok_and(|manifest| &manifest == primary)
+            })
+            .map_or(MemberRole::Secondary, |&(_, role)| role);
+        self.member_dir_role_lookup
+            .borrow_mut()
+            .insert(dir.to_path_buf(), hit);
+        hit
     }
 
     /// Directory of the nearest enclosing `Cargo.toml` iff it's a
@@ -323,7 +419,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 .file_name()
                 .and_then(|n| n.to_str())
                 .is_some_and(|n| n == "lib.rs" || n == "main.rs");
-            if is_crate_root && !is_secondary_workspace_member(file, ctx) {
+            if is_crate_root && workspace_member_role(file, ctx).is_primary() {
                 let attr_lines = collect_crate_attr_lines(&tree, &source);
                 let src_lines: Vec<&str> = source.lines().collect();
                 let attr_tokens: usize = attr_lines
@@ -950,56 +1046,63 @@ fn entrypoint_boost(path: &Path) -> f64 {
 /// anchors win the early budget over per-file signature sweeps.
 const SECONDARY_WORKSPACE_MEMBER_FACTOR: f64 = 0.7;
 
+/// Sibling dependents a member needs before its centrality can name it
+/// primary. A repo named after its CLI binary puts the substance in a
+/// library crate the other members are built on, and the binary is a thin
+/// shell; but a single dependent is just an ordinary helper-crate split,
+/// which says nothing about where the repository's surface lives.
+const PRIMARY_MEMBER_MIN_IN_DEGREE: usize = 2;
+
+/// Source-value factor for a primary member elected by centrality rather
+/// than by name. Centrality is the weaker evidence of the two — it says the
+/// crate is load-bearing, not that it is what the repository is *about* — so
+/// it earns a partial lift out of the secondary damp rather than the full
+/// undamped slot a name match gets. Measured: the full 1.0 lift buys no more
+/// early budget than this one and displaces seven times more already-
+/// scheduled content out of the high-budget tail (docs/design-notes.md).
+const CENTRALITY_PRIMARY_MEMBER_FACTOR: f64 = 0.85;
+
 fn rust_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     let ep = is_entrypoint_file(file);
     let base = file_depth_factor(file, ctx, ep);
     if ep {
         base
     } else {
-        base * secondary_workspace_member_factor(file, ctx)
+        base * workspace_member_value_factor(file, ctx)
     }
 }
 
-/// A workspace member whose crate dir basename differs from the repo
-/// root's — the sub-crates around a workspace's primary crate.
-fn is_secondary_workspace_member(file: &Path, ctx: &WalkCtx) -> bool {
-    let Some(manifest_dir) = ctx.rust_state().nearest_member_dir(file, ctx.root()) else {
-        return false;
-    };
-    if ctx.rust_state().has_ambiguous_primary_member(ctx.root()) {
-        return true;
+/// Role of the workspace member owning `file`. Files outside any member —
+/// a plain single-crate repo, or a workspace root's own crate — are treated
+/// as primary: there are no sibling crates to rank them against.
+fn workspace_member_role(file: &Path, ctx: &WalkCtx) -> MemberRole {
+    match ctx.rust_state().nearest_member_dir(file, ctx.root()) {
+        Some(manifest_dir) => ctx.rust_state().member_dir_role(&manifest_dir, ctx.root()),
+        None => MemberRole::Primary,
     }
-    !ctx.root()
-        .file_name()
-        .zip(manifest_dir.file_name())
-        .is_some_and(|(r, m)| r == m)
 }
 
-fn secondary_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    if is_secondary_workspace_member(file, ctx) {
-        SECONDARY_WORKSPACE_MEMBER_FACTOR
-    } else {
-        1.0
-    }
+fn workspace_member_value_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    workspace_member_role(file, ctx).value_factor()
 }
 
 fn crate_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Secondary workspace members (mdbook-html, mdbook-driver, etc.)
     // also emit a crate-doc lede from their lib.rs / main.rs even
-    // though `secondary_workspace_member_factor` doesn't apply (those
+    // though `workspace_member_value_factor` doesn't apply (those
     // files *are* entrypoints). NS authors rarely anchor on each
     // sub-crate's lede; damp the lede on secondary members so the
     // primary crate's lede + structural ARCHITECTURE rows compete
     // first in budget.
-    let secondary = secondary_workspace_member_factor(file, ctx);
+    let member_factor = workspace_member_value_factor(file, ctx);
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.5, 0.9, rust_depth_factor(file, ctx)) * secondary
+    mix_signals(cat, 0.5, 0.9, rust_depth_factor(file, ctx)) * member_factor
 }
 
 fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let secondary = secondary_workspace_member_factor(file, ctx);
+    let member_factor = workspace_member_value_factor(file, ctx);
     let cat = (0.35 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx)) * secondary
+    mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx)) * member_factor
 }
 
 /// Attr blocks below this stay unemitted: boilerplate and plain lint
@@ -1064,9 +1167,9 @@ fn pub_item_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // 0.7 secondary factor here so a workspace with N sub-crates
     // doesn't flood the early budget with N per-crate name surfaces.
     let s = file_visibility_factor(file, ctx);
-    let secondary = secondary_workspace_member_factor(file, ctx);
+    let member_factor = workspace_member_value_factor(file, ctx);
     let cat = (0.8 * entrypoint_boost(file) * s).min(1.0);
-    mix_signals(cat, 0.6 * s, 0.35 * s, rust_depth_factor(file, ctx)) * secondary
+    mix_signals(cat, 0.6 * s, 0.35 * s, rust_depth_factor(file, ctx)) * member_factor
 }
 
 fn pub_item_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
@@ -3213,40 +3316,148 @@ use self::not_pub::Hidden;
         assert!((total - bases[0]).abs() < 1e-9);
     }
 
+    /// Builds `<tmp>/<root_name>/` with one member dir per `(dir, manifest)`
+    /// entry and a `src/lib.rs` in each; returns the member source files in
+    /// the order given.
+    fn workspace_with_members(
+        root_name: &str,
+        root_manifest: &str,
+        members: &[(&str, String)],
+    ) -> (TempDir, PathBuf, Vec<PathBuf>) {
+        let outer = tempdir();
+        let root = outer.path().join(root_name);
+        std::fs::create_dir(&root).unwrap();
+        std::fs::write(root.join("Cargo.toml"), root_manifest).unwrap();
+        let sources = members
+            .iter()
+            .map(|(rel, manifest)| {
+                let dir = root.join(rel);
+                std::fs::create_dir_all(dir.join("src")).unwrap();
+                std::fs::write(dir.join("Cargo.toml"), manifest).unwrap();
+                let source = dir.join("src/lib.rs");
+                std::fs::write(&source, "pub fn api() {}\n").unwrap();
+                source
+            })
+            .collect();
+        (outer, root, sources)
+    }
+
+    fn version_dep_member(name: &str, deps: &[&str]) -> String {
+        let deps: String = deps
+            .iter()
+            .map(|dep| format!("{dep} = '1'\n"))
+            .collect::<String>();
+        format!("[package]\nname='{name}'\nversion='0.1.0'\n[dependencies]\n{deps}")
+    }
+
+    /// A workspace named after its CLI binary: the name-matched member is a
+    /// leaf shell, and the crate the other members are built on is the real
+    /// surface. Siblings are declared by version and redirected at the root,
+    /// the shape sps uses, so the edge detection cannot lean on `path = `.
+    #[test]
+    fn rust_dependency_hub_outranks_a_name_match_with_no_dependents() {
+        let (_outer, root, sources) = workspace_with_members(
+            "acme",
+            "[workspace]\nmembers=['acme','acme-common','acme-net']\n\
+             [patch.crates-io]\n\
+             acme-common = { path = 'acme-common' }\nacme-net = { path = 'acme-net' }\n",
+            &[
+                (
+                    "acme",
+                    version_dep_member("acme", &["acme-common", "acme-net"]),
+                ),
+                ("acme-common", version_dep_member("acme-common", &[])),
+                ("acme-net", version_dep_member("acme-net", &["acme-common"])),
+            ],
+        );
+
+        let ctx = WalkCtx::new(root);
+        let role = |source| workspace_member_role(source, &ctx);
+        assert_eq!(role(&sources[0]), MemberRole::Secondary);
+        assert_eq!(role(&sources[1]), MemberRole::PrimaryByCentrality);
+        assert_eq!(role(&sources[2]), MemberRole::Secondary);
+        // The elected hub is primary, so it is eligible for the
+        // primary-only batch classes, not just the softened damp.
+        assert!(role(&sources[1]).is_primary());
+    }
+
+    /// Without the root redirect the same manifests describe three crates that
+    /// Two member dirs can share the repository's basename. The winner must
+    /// not depend on iteration order over the member set, so it is settled on
+    /// the package name Cargo keeps unique. This workspace also has no
+    /// resolvable edges at all, so it pins the no-hub fallback to the name
+    /// match.
+    #[test]
+    fn rust_colliding_dir_basenames_resolve_on_package_name() {
+        let (_outer, root, sources) = workspace_with_members(
+            "acme",
+            "[workspace]\nmembers=['crates/acme','tools/acme']\n",
+            &[
+                ("crates/acme", version_dep_member("acme", &[])),
+                ("tools/acme", version_dep_member("acme-tools", &[])),
+            ],
+        );
+
+        for _ in 0..8 {
+            let ctx = WalkCtx::new(root.clone());
+            assert_eq!(
+                workspace_member_role(&sources[0], &ctx),
+                MemberRole::Primary
+            );
+            assert_eq!(
+                workspace_member_role(&sources[1], &ctx),
+                MemberRole::Secondary
+            );
+        }
+    }
+
+    /// A name-matched member the workspace actually depends on keeps the
+    /// primary slot even when a sibling has a higher in-degree — centrality
+    /// only arbitrates when the name match is outside the dependency fabric.
+    #[test]
+    fn rust_depended_on_name_match_outranks_a_more_central_sibling() {
+        let member = |name: &str, deps: &[&str]| {
+            let deps: String = deps
+                .iter()
+                .map(|dep| format!("{dep} = {{ path = '../{dep}' }}\n"))
+                .collect::<String>();
+            format!("[package]\nname='{name}'\nversion='0.1.0'\n[dependencies]\n{deps}")
+        };
+        let (_outer, root, sources) = workspace_with_members(
+            "acme",
+            "[workspace]\nmembers=['acme','acme-core','acme-sql','acme-driver']\n",
+            &[
+                ("acme", member("acme", &["acme-core"])),
+                ("acme-core", member("acme-core", &[])),
+                ("acme-sql", member("acme-sql", &["acme", "acme-core"])),
+                ("acme-driver", member("acme-driver", &["acme", "acme-core"])),
+            ],
+        );
+
+        let ctx = WalkCtx::new(root);
+        let role = |source| workspace_member_role(source, &ctx);
+        assert_eq!(role(&sources[0]), MemberRole::Primary);
+        assert_eq!(role(&sources[1]), MemberRole::Secondary);
+    }
+
     #[test]
     fn rust_case_colliding_primary_members_are_all_secondary() {
-        let outer = tempdir();
-        let root = outer.path().join("acme");
-        std::fs::create_dir(&root).unwrap();
-        std::fs::write(
-            root.join("Cargo.toml"),
+        let (_outer, root, sources) = workspace_with_members(
+            "acme",
             "[workspace]\nmembers=['crates/acme','crates/upper','crates/mixed','crates/other']\n",
-        )
-        .unwrap();
-        let mut sources = Vec::new();
-        for (rel, name) in [
-            ("crates/acme", "acme"),
-            ("crates/upper", "ACME"),
-            ("crates/mixed", "Acme"),
-            ("crates/other", "other"),
-        ] {
-            let dir = root.join(rel);
-            std::fs::create_dir_all(dir.join("src")).unwrap();
-            std::fs::write(
-                dir.join("Cargo.toml"),
-                format!("[package]\nname='{name}'\nversion='0.1.0'\n"),
-            )
-            .unwrap();
-            let source = dir.join("src/lib.rs");
-            std::fs::write(&source, "pub fn api() {}\n").unwrap();
-            sources.push(source);
-        }
+            &[
+                ("crates/acme", version_dep_member("acme", &[])),
+                ("crates/upper", version_dep_member("ACME", &[])),
+                ("crates/mixed", version_dep_member("Acme", &[])),
+                ("crates/other", version_dep_member("other", &[])),
+            ],
+        );
 
         let ctx = WalkCtx::new(root);
         assert!(
             sources
                 .iter()
-                .all(|file| is_secondary_workspace_member(file, &ctx))
+                .all(|file| workspace_member_role(file, &ctx) == MemberRole::Secondary)
         );
     }
 
