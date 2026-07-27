@@ -562,7 +562,7 @@ impl<W: Walker> Scheduler<W> {
         else {
             return None;
         };
-        let ranked = rank_seed_entries(parent, paths);
+        let ranked = rank_seed_entries(parent, paths, self.ctx.dir_filter());
         let prefix = |k: usize| {
             // Back to name order: a degraded listing is otherwise an
             // ordinary listing of a subset, and every consumer of batch
@@ -743,11 +743,13 @@ impl<W: Walker> Scheduler<W> {
 ///   component to it, so `README.md` outranks `README.ja.md`.
 ///
 /// Name order breaks ties, so the result is total and deterministic.
-fn rank_seed_entries(parent: &Path, paths: &[PathBuf]) -> Vec<PathBuf> {
-    // Same re-probe the cost path uses: the names are already through
-    // the walk's ignore rules, so an unfiltered `list_dir` is just the
-    // cheapest way to recover their kinds.
-    let kinds = list_dir(parent, &DirFilter::none());
+fn rank_seed_entries(parent: &Path, paths: &[PathBuf], filter: &DirFilter) -> Vec<PathBuf> {
+    // Re-probe to recover kinds. Uses the walk's own filter rather than
+    // an unfiltered listing: its caches are already warm, and it is the
+    // filter that decides whether a symlinked entry is a directory at
+    // all, so asking anything else here could rank an entry as a file
+    // that the listing itself resolved to a directory.
+    let kinds = list_dir(parent, filter);
     let mut ranked = paths.to_vec();
     ranked.sort_by_cached_key(|path| {
         let name = path
