@@ -272,6 +272,62 @@ Corpus impact: exactly zero, for both the original restore and this
 follow-up — no fixture has a `.git`, so every baseline regenerated
 byte-identical.
 
+## Content outside the walk root doesn't belong in it at all (2026-07-26)
+
+precis summarizes *a path*, and it runs on untrusted checkouts whose
+output is pasted into chat contexts and agent loops. Until this change
+`fs_util::list_dir` classified every non-directory entry as `File`, so a
+repository shipping `config.ini -> ~/.config/app/credentials.ini` had its
+contents read and rendered verbatim by the plaintext fallback —
+reproduced, marker and all. The typed walkers were already right
+(`fs::files_with_any_extension` rejects non-following file types); the
+rule existed and the fallback simply never went through it.
+
+The fix is deliberately *not* another per-walker check. Containment is
+now a property of the listing layer, so every consumer inherits it:
+
+**`DirFilter` always knows its walk root**, canonical form included —
+`tests/fixtures` is a symlink, so every fixture walk reaches its root
+through one, and comparing an entry's canonicalized target against a
+non-canonical root would reject every in-repo link in the corpus. The
+literal root still bounds the `.gitignore` ancestor walk; the canonical
+one is only for resolving links. `DirFilter::none()` became
+`DirFilter::unfiltered(root)` for this reason: a filter with no root can
+express no containment, so there is no way to construct one.
+
+**A link surfaces only when it resolves inside the root**, and then with
+the kind of what it resolves to. Escaping and dangling links are dropped
+— a dangling one can be neither classified nor cleared. In-root links
+keep their rows: `CLAUDE.md -> AGENTS.md` and `README -> README.md` are
+real structure that several fixtures carry, and hiding them would trade
+one misreport for another.
+
+**Listing *through* a link yields nothing.** This is what makes the walk
+finite, and it replaces cycle bookkeeping rather than adding it: no
+traversal path can contain a link component, so the walk is exactly the
+real directory tree and `link -> .` / `link -> ..` are unreachable rather
+than merely bounded. Depth caps and visited-sets were both considered;
+both are state that a stateless listing call has no good place to keep,
+and an ancestor-only check misses mutual `a/x -> b`, `b/y -> a` loops.
+
+The same non-following entry type went into `walker/fs.rs`'s recursive
+extension walk and `walker/c.rs`'s source enumeration, which reach files
+without going through a listing.
+
+**Not reached, and still open:** walkers that probe a *named* path
+directly — `dir.join("Cargo.toml").is_file()`, `package.json`,
+`__init__.py`, `mod.rs` — follow links and then read. A checkout shipping
+`Cargo.toml -> /etc/passwd` still gets that file parsed and rendered.
+Closing it properly wants one contained-read helper adopted across
+~8 walker modules; `SourceCache` is not the chokepoint it looks like
+(≈10 walkers call `read_to_string` directly).
+
+Corpus impact: `Score(B=cum)` identical at every budget on the 7-point
+grid. One rendered row moved — `enclosed`'s
+`packages/deploy-cloudflare/.nvmrc` is `.nvmrc -> .nvmrc`, a genuine
+upstream ELOOP link, and dropping it stops precis promising a Node
+version pin that does not exist.
+
 ## Cross-language vs language-specific concerns
 
 Many concerns precis cares about are cross-language (value heuristics,

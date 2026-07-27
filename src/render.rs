@@ -392,7 +392,7 @@ impl RenderedTree {
                 Some(TreeNode::Dir { children }) => Some(children),
                 _ => None,
             };
-            let probed = list_dir(parent, &DirFilter::none());
+            let probed = list_dir(parent, &self.dir_filter);
             // Signed per-group accounting: new entry rows, minus the
             // elision marker the parent's own row sheds once it renders
             // children, plus the change in its trailing partial-listing
@@ -525,9 +525,12 @@ impl RenderedTree {
             );
             return;
         };
-        // Kind lookup only, for names the (already filtered) batch
-        // carries — an unfiltered probe can't widen what renders.
-        let probed = list_dir(parent, &DirFilter::none());
+        // Kind lookup only, for names the batch already carries. The
+        // walk's own filter rather than a bare one: it is what decided
+        // those names in the first place, its caches make the probe
+        // nearly free, and a bare filter would have no walk root to
+        // resolve a linked entry's kind against.
+        let probed = list_dir(parent, &self.dir_filter);
         let resolved: Vec<(String, EntryKind)> = paths
             .iter()
             .filter_map(|p| {
