@@ -582,6 +582,7 @@ fn comment_text_is_empty(trimmed: &str) -> bool {
 /// and admitting those is exactly the failure v0.1's head slice had.
 fn boilerplate_banner_end(source: &str) -> usize {
     let mut block: Vec<&str> = Vec::new();
+    let mut reached_content = false;
     for line in source.lines() {
         let trimmed = line.trim();
         if trimmed.is_empty() || trimmed.starts_with("#!") {
@@ -589,9 +590,16 @@ fn boilerplate_banner_end(source: &str) -> usize {
             continue;
         }
         if !is_comment_line(trimmed) {
+            reached_content = true;
             break;
         }
         block.push(trimmed);
+    }
+    // A file that is comments all the way down is a comment-formatted
+    // document, not a banner followed by code; skipping it would leave
+    // nothing to render.
+    if !reached_content {
+        return 0;
     }
     let is_banner = block.iter().any(|line| {
         let lower = line.to_ascii_lowercase();
@@ -656,8 +664,7 @@ fn declaration_surface(source: &str) -> Vec<usize> {
     let mut used = [0usize; 3];
     let mut selected: Vec<usize> = Vec::new();
     for level in levels.into_iter().take(SOURCE_TEXT_MAX_INDENT_LEVELS) {
-        for &(indent, line, class) in rows.iter().filter(|(indent, ..)| *indent == level) {
-            debug_assert_eq!(indent, level);
+        for &(_, line, class) in rows.iter().filter(|(indent, ..)| *indent == level) {
             let slot = match class {
                 SurfaceLine::Import => 0,
                 SurfaceLine::Comment => 1,
