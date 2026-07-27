@@ -843,6 +843,14 @@ Measured frontier (training corpus): mean 0.6151 → 0.6147.
 - Premium 1.4/cap 0.9 (shipped): head back at 1256; commander fully
   recovered; htmy +0.008; tomli −0.038 residual.
 
+**`CATALOG_HEAD_PREMIUM` is live, not inert** (measured 2026-07-26 —
+corrects a read-only audit that assumed every conserved split is
+2-chunk). The cap binds only for `share₀ ≥ 0.370`; instrumenting
+`conserved_catalog_chunk_factors` over the corpus gives 232 invocations,
+of which **68 are below the cap** — splits run 2 to 27 chunks and every
+n ≥ 3 split leaves the premium uncapped. Sweep the premium and the cap
+together, not the cap alone.
+
 The tomli residual is the direct cost of removing replication: its old
 chunk #1 bought at 2256 cum with inflated value and earned mid-budget
 roster credit; conserved tails price at ~0.05–0.2 of base and buy at
