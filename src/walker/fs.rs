@@ -167,7 +167,7 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     //      their (legitimately) large listing loses every V/C race to
     //      tiny sibling dirs.
     let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
-    let under_root_source_ancestor = has_root_adjacent_source_ancestor(dir, ctx);
+    let under_root_source_ancestor = has_source_root_ancestor(dir, ctx);
     let source_inventory_dir = !source_dir
         && !module_source_dir
         && (non_essential < 1.0 || under_root_source_ancestor)
@@ -291,7 +291,7 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
     if parent_source_dir || is_module_source_dir(parent) {
         return false;
     }
-    let under_source_ancestor = has_root_adjacent_source_ancestor(parent, ctx);
+    let under_source_ancestor = has_source_root_ancestor(parent, ctx);
     if ctx.non_essential_factor(parent) >= 1.0 && !under_source_ancestor {
         return false;
     }
@@ -450,6 +450,7 @@ fn module_sibling_child_dir_count(
 pub(in crate::walker) struct FsState {
     source_inventory_counts: RefCell<HashMap<PathBuf, usize>>,
     child_dir_counts: RefCell<HashMap<PathBuf, usize>>,
+    entry_counts: RefCell<HashMap<PathBuf, usize>>,
 }
 
 impl FsState {
@@ -478,6 +479,21 @@ impl FsState {
         }
         let count = child_dir_count_uncached(dir, filter);
         self.child_dir_counts
+            .borrow_mut()
+            .insert(dir.to_path_buf(), count);
+        count
+    }
+
+    /// Total listed entries in `dir`, cached — the size of the listing
+    /// the scheduler would have to buy. Cached for the same reason as
+    /// [`FsState::child_dir_count`]: the catalog test asks about the
+    /// same parent once per child.
+    pub(in crate::walker) fn entry_count(&self, dir: &Path, filter: &DirFilter) -> usize {
+        if let Some(count) = self.entry_counts.borrow().get(dir).copied() {
+            return count;
+        }
+        let count = list_dir(dir, filter).len();
+        self.entry_counts
             .borrow_mut()
             .insert(dir.to_path_buf(), count);
         count
@@ -533,10 +549,9 @@ fn is_large_root_test_inventory_dir(
 }
 
 /// True when `dir` lies under a `src`/`lib`/`source`/`pkg/` dir that
-/// belongs to a package root. Promotes flat source partitions into the
-/// inventory tier; the shallowness gate avoids crowding in
-/// multi-package layouts.
-fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
+/// belongs to a package root — the repo's own, or any module's.
+/// Promotes flat source partitions into the inventory tier.
+fn has_source_root_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
     let root = ctx.root();
     let mut parent = dir.parent();
     while let Some(p) = parent {
@@ -544,8 +559,14 @@ fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
             return false;
         }
         if (is_source_dir(p) || is_go_pkg_wrapper(p))
-            && p.parent()
-                .is_some_and(|owner| owner == root || is_package_root_dir(owner, ctx.dir_filter()))
+            && p.parent().is_some_and(|owner| {
+                // The repo's own `src/` promotes everything beneath it;
+                // a module's `src/` promotes only its catalogs.
+                owner == root
+                    || (ctx.fs_state().entry_count(dir, ctx.dir_filter())
+                        >= MODULE_SOURCE_ROOT_MIN_ENTRIES
+                        && is_package_root_dir(owner, ctx.dir_filter()))
+            })
         {
             return true;
         }
@@ -553,6 +574,34 @@ fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
     }
     false
 }
+
+/// Entries a directory under a *module's* source root needs before its
+/// listing is promoted into the inventory tier.
+///
+/// The repo has one `src/`, so promoting everything under it costs a
+/// bounded number of listings. A monorepo has one per package, and
+/// promoting every directory beneath every package floods the early
+/// budget with small leaf partitions — measured at 35 listings before
+/// the first line of code in a six-package monorepo, and ~570 tokens
+/// of component directories from an embedded frontend in another.
+/// Those listings are individually cheap, which is exactly why they
+/// win the `value/cost^k` race and exactly why they are the wrong
+/// thing to buy first: at 1000–2000 tokens there is no budget left for
+/// the files they name, so the listing is paid for and nothing comes
+/// back. By 3000 the files start landing and it turns positive.
+///
+/// Requiring the listing to be a *catalog* — a package's API
+/// partition, not a leaf of four files — keeps the promotion for the
+/// directories whose names are worth the tokens.
+///
+/// Swept 10 / 16 / 20 / 25 / 35 across the budget grid. The response
+/// is a monotone trade curve, not a peak: raising it recovers early
+/// budgets and gives back some of the 3000–6240 gain, and by 35 the
+/// promotion is inert on the corpus. This value is therefore a
+/// position on that curve, not an optimum — 20 keeps the 3000–6240
+/// gain whole. `docs/design-notes.md` records the full grid and what
+/// 25 buys if the early budgets are ever weighted higher.
+const MODULE_SOURCE_ROOT_MIN_ENTRIES: usize = 20;
 
 /// Manifest filenames that mark a directory as a package root — the
 /// point a language's source layout is measured from.

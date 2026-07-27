@@ -1043,11 +1043,73 @@ directory under `<module>/src/` was ever a source inventory. Now a
 a package manifest (`is_package_root_dir` / `PACKAGE_MANIFEST_FILES`).
 Corpus effect is real and two-sided: vite +0.167, beszel +0.108, sps
 +0.101 against monaco-editor −0.064, linkwarden −0.054, mdbook
-−0.015 (net +0.0031). The losers are repos whose *peripheral*
+−0.015 (net +0.0031 at 3000). The losers are repos whose *peripheral*
 sub-packages (`monaco-lsp-client/src/adapters`, `webpack-plugin/src`)
 now surface early; the winners are repos whose primary package lives
 one level down. If this is ever retuned, the discriminator wanted is
 primary-vs-peripheral module, not the root-adjacency test it replaced.
+
+### It sold the early budgets, and why (2026-07-26 follow-up)
+
+Ungated, the promotion bought 3000–6240 and **sold 1000–2080**. The
+whole effect is this commit — the unparsed-language fallback is
+early-budget-neutral to four decimals. Corpus means over the 71
+training fixtures, at every grid budget:
+
+| variant | 1000 | 1442 | 2080 | **3000** | 4327 | 6240 | 9000 |
+|---|---|---|---|---|---|---|---|
+| promotion off (pre-commit) | 0.6266 | 0.6226 | 0.6270 | 0.6351 | 0.5963 | 0.5650 | 0.5428 |
+| ungated (as merged) | 0.6249 | 0.6170 | 0.6245 | **0.6377** | 0.5986 | 0.5680 | 0.5442 |
+| ≥10 entries | 0.6255 | 0.6200 | 0.6259 | 0.6371 | 0.5982 | 0.5677 | 0.5437 |
+| ≥16 entries | 0.6255 | 0.6206 | 0.6260 | 0.6368 | 0.5986 | 0.5674 | 0.5434 |
+| **≥20 entries (shipped)** | 0.6255 | 0.6206 | 0.6275 | **0.6378** | 0.5994 | 0.5673 | 0.5436 |
+| ≥25 entries | 0.6266 | 0.6227 | 0.6271 | 0.6361 | 0.5972 | 0.5663 | 0.5436 |
+| ≥35 entries | 0.6266 | 0.6226 | 0.6270 | 0.6351 | 0.5963 | 0.5656 | 0.5428 |
+| distance ≤1 below src | 0.6254 | 0.6188 | 0.6274 | 0.6348 | 0.5954 | 0.5647 | 0.5420 |
+| distance ≤2 below src | 0.6255 | 0.6174 | 0.6257 | 0.6358 | 0.5966 | 0.5667 | 0.5436 |
+| module depth un-pinned | 0.6254 | 0.6169 | 0.6245 | 0.6378 | 0.5997 | 0.5691 | 0.5451 |
+
+**Cause.** Not one large listing — *many small* ones. A monorepo has
+one source root per package, so the promotion fires on every directory
+beneath every package at once: 35 listings before the first line of
+code in `enclosed` (six co-equal packages), ~570 tokens of
+`internal/site/src/components/**` in `beszel` (an embedded React app
+with its own `package.json`). Each is 3–60 tokens, which is precisely
+why they win the `value/cost^k` race, and precisely why they are the
+wrong first purchase: at 1000–2000 there is no budget left for the
+files they name. `enclosed` −0.234 and `beszel` −0.196 at 1442 are
+essentially the entire −0.0057; no other fixture moves more than
+0.005.
+
+**What did *not* work, and what it rules out.**
+
+- **The depth pin is not the driver.** Routing module-relative
+  inventories to the clamped `inventory_depth_factor` instead of the
+  depth-1 pin is inert (−0.0001 at 1442). At the shipped ≥20 gate it
+  is *exactly* inert — identical grid to six decimals. So the
+  promotion's cost lives in the tier + `roster_mass_factor`, not in
+  the depth pin. Do not re-probe the pin.
+- **Distance below the source root is the wrong gate.** Both ≤1 and
+  ≤2 are dominated — worse early *and* worse at 3000 than the size
+  gate. The deep listings that cost early are the same ones that pay
+  at 3000, so cutting by depth cuts both.
+
+**The trade is real but small, and the size gate buys most of it for
+free.** ≥20 is ≥ the ungated tree at 1000/1442/2080/3000/4327 and
+−0.0007/−0.0006 at 6240/9000 — i.e. it recovers two thirds of the
+early loss while keeping the 3000 headline whole. The residual
+(−0.0011 at 1000, −0.0020 at 1442 versus not promoting at all) is
+irreducible on these levers: buying it out needs ≥25, which zeroes
+the early cost and is Pareto-≥ the pre-commit tree at *every* budget,
+but gives back 0.0017 of the 3000 gain. Shipped at 20 because
+`Score(3000)` is the stated priority; **≥25 is the one-constant
+change if early budgets are ever weighted higher.**
+
+Out-of-corpus behaviour is insensitive to the constant anywhere in
+[0, 25] — Java/Ruby/PHP/Swift content-line counts are identical, and
+gson is slightly *better* at 25 (127 vs 113 content lines, the
+suppressed package listings freeing budget). So the choice is a pure
+corpus-policy call, not a capability one.
 
 Also fixed alongside: `is_source_dir` and the non-essential directory
 classifier were **case-sensitive**, so `Source/`, `Sources/`,
