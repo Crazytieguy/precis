@@ -93,120 +93,148 @@ Score(3000)=0.434 I=0.721 C=0.261 ns_rows≤3K=20/41 (reached=7 partial=0 missin
 | walker |  | 3199 | 5 | c decl at krep.c:461 |  |  | 0.433 |
 | ns | 3209 |  | 147 | Makefile: source file lists (main vs test binary) | 1.22 |  | 0.422 |
 | walker |  | 3226 | 27 | README.md section #3 |  |  | 0.422 |
-| walker |  | 3240 | 14 | c decl doc at krep.h:22 |  |  | 0.422 |
-| walker |  | 3270 | 30 | README.md section #4 |  |  | 0.422 |
-| walker |  | 3392 | 122 | README.md section #1 |  |  | 0.422 |
-| walker |  | 3508 | 116 | c includes in krep.h |  |  | 0.422 |
 | ns | 3562 |  | 353 | Makefile: phony targets (test/test-directory/ci/bench-rg/install/clean) | 1.23 |  | 0.395 |
-| walker |  | 3767 | 259 | c decl at krep.h:104 |  |  | 0.397 |
-| walker |  | 3774 | 7 | c decl doc at krep.c:77 |  |  | 0.397 |
-| walker |  | 3784 | 10 | c decl doc at krep.h:104 |  |  | 0.397 |
-| ns | 3798 |  | 236 | CI workflow (ci.yml) | 1.24 |  | 0.445 |
-| walker |  | 3818 | 34 | README.md section #2 |  |  | 0.445 |
-| walker |  | 3853 | 35 | README.md section #13 |  |  | 0.445 |
-| ns | 3863 |  | 65 | Release workflow: trigger + permissions (build/package/publish steps elided) | 1.25 |  | 0.437 |
-| ns | 4052 |  | 189 | krep.h: match_position_t / match_result_t | 2.1 |  | 0.449 |
-| walker |  | 4271 | 418 | c decl names surface #1 in krep.c |  |  | 0.481 |
-| walker |  | 4277 | 6 | c decl at krep.c:1125 |  |  | 0.481 |
-| walker |  | 4283 | 6 | c decl at krep.c:1137 |  |  | 0.481 |
-| walker |  | 4289 | 6 | c decl at krep.c:1198 |  |  | 0.481 |
-| walker |  | 4295 | 6 | c decl at krep.c:1213 |  |  | 0.481 |
-| walker |  | 4301 | 6 | c decl at krep.c:1771 |  |  | 0.481 |
-| walker |  | 4307 | 6 | c decl at krep.c:1919 |  |  | 0.481 |
-| walker |  | 4313 | 6 | c decl at krep.c:1964 |  |  | 0.481 |
-| walker |  | 4319 | 6 | c decl at krep.c:1999 |  |  | 0.481 |
-| walker |  | 4325 | 6 | c decl at krep.c:2274 |  |  | 0.481 |
-| walker |  | 4331 | 6 | c decl at krep.c:3442 |  |  | 0.481 |
-| walker |  | 4337 | 6 | c decl at krep.c:4104 |  |  | 0.481 |
-| walker |  | 4343 | 6 | c decl at krep.c:4209 |  |  | 0.481 |
-| walker |  | 4349 | 6 | c decl at krep.c:4313 |  |  | 0.481 |
-| walker |  | 4355 | 6 | c decl at krep.c:4332 |  |  | 0.481 |
-| walker |  | 4402 | 47 | c decl at krep.c:3146 |  |  | 0.481 |
-| walker |  | 4443 | 41 | c decl at krep.c:1389 |  |  | 0.481 |
-| walker |  | 4484 | 41 | c decl at krep.c:3891 |  |  | 0.481 |
-| walker |  | 4525 | 41 | c decl at krep.c:4371 |  |  | 0.481 |
-| ns | 4551 |  | 499 | krep.h: search_params_t and the search_func_t signature | 2.2 |  | 0.453 |
-| walker |  | 4575 | 50 | c decl at krep.c:1628 |  |  | 0.453 |
-| walker |  | 4644 | 69 | c decl at krep.c:3154 |  |  | 0.453 |
-| walker |  | 4715 | 71 | c decl at krep.c:1259 |  |  | 0.457 |
-| walker |  | 4744 | 29 | README.md section #44 |  |  | 0.457 |
-| ns | 4831 |  | 280 | krep.h: thread_data_t (per-chunk thread argument struct) | 2.3 |  | 0.484 |
-| walker |  | 5123 | 379 | c decl at krep.h:65 |  |  | 0.540 |
-| walker |  | 5132 | 9 | c decl doc at krep.c:93 |  |  | 0.540 |
-| ns | 5181 |  | 350 | krep.h: thread_pool_t / task_t + thread-pool API | 2.4 |  | 0.559 |
-| walker |  | 5272 | 140 | Makefile target skeleton chunk #1 of Makefile |  |  | 0.574 |
-| walker |  | 5285 | 13 | c decl doc at krep.h:65 |  |  | 0.578 |
-| ns | 5513 |  | 332 | krep.h: public API signatures + return-code contracts (trimmed of doc prose) | 2.5 |  | 0.565 |
-| ns | 5883 |  | 370 | krep.h: skip_directories[] (full) + skip_extensions[] (sampled) | 2.6 |  | 0.552 |
-| walker |  | 6020 | 735 | c decl names surface #1 in krep.h |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:161 |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:170 |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:180 |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:183 |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:200 |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:203 |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:231 |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:278 |  |  | 0.566 |
-| walker |  | 6020 | 0 | c decl at krep.h:288 |  |  | 0.566 |
-| walker |  | 6025 | 5 | c decl at krep.h:298 |  |  | 0.566 |
-| walker |  | 6030 | 5 | c decl at krep.h:312 |  |  | 0.566 |
-| walker |  | 6037 | 7 | c decl doc at krep.h:203 |  |  | 0.566 |
-| walker |  | 6047 | 10 | c decl doc at krep.h:183 |  |  | 0.568 |
-| walker |  | 6057 | 10 | c decl doc at krep.h:231 |  |  | 0.570 |
-| walker |  | 6076 | 19 | c decl body at krep.h:298 |  |  | 0.570 |
-| walker |  | 6116 | 40 | README.md section #19 |  |  | 0.575 |
-| ns | 6142 |  | 259 | krep.h: is_word_char / is_whole_word_match (whole-word semantics) | 2.7 |  | 0.561 |
-| walker |  | 6179 | 63 | c decl body at krep.h:312 |  |  | 0.567 |
-| walker |  | 6189 | 10 | c decl doc at krep.c:139 |  |  | 0.567 |
-| walker |  | 6268 | 79 | c header banner in krep.c |  |  | 0.567 |
-| walker |  | 6303 | 35 | README.md section #47 |  |  | 0.567 |
-| ns | 6639 |  | 497 | aho_corasick.h (full) | 2.8 |  | 0.540 |
-| walker |  | 6800 | 497 | c whole header in aho_corasick.h |  |  | 0.596 |
-| walker |  | 6855 | 55 | README.md section #17 |  |  | 0.602 |
-| walker |  | 6912 | 57 | README.md section #20 |  |  | 0.616 |
-| walker |  | 6924 | 12 | c decl doc at krep.h:19 |  |  | 0.616 |
-| walker |  | 6937 | 13 | c decl doc at krep.c:244 |  |  | 0.616 |
-| walker |  | 7005 | 68 | c decl doc at krep.h:298 |  |  | 0.616 |
-| walker |  | 7028 | 23 | c decl doc at krep.h:49 |  |  | 0.621 |
-| walker |  | 7205 | 177 | c decl names surface in aho_corasick.c |  |  | 0.621 |
-| walker |  | 7205 | 0 | c decl at aho_corasick.c:293 |  |  | 0.621 |
-| walker |  | 7205 | 0 | c decl at aho_corasick.c:296 |  |  | 0.621 |
-| walker |  | 7210 | 5 | c decl at aho_corasick.c:111 |  |  | 0.621 |
-| walker |  | 7215 | 5 | c decl at aho_corasick.c:274 |  |  | 0.621 |
-| walker |  | 7220 | 5 | c decl at aho_corasick.c:287 |  |  | 0.621 |
-| walker |  | 7257 | 37 | c decl at aho_corasick.c:299 |  |  | 0.621 |
-| walker |  | 7270 | 13 | c decl doc at aho_corasick.c:299 |  |  | 0.621 |
-| ns | 7300 |  | 661 | krep.c: select_search_algorithm (head+tail) | 3.1 | 1.7 | 0.588 |
-| walker |  | 7333 | 63 | c decl at aho_corasick.c:26 |  |  | 0.588 |
-| walker |  | 7630 | 297 | README.md section #22 |  |  | 0.588 |
-| walker |  | 7699 | 69 | README.md section #46 |  |  | 0.595 |
-| walker |  | 7715 | 16 | c decl doc at krep.c:401 |  |  | 0.595 |
-| ns | 7749 |  | 449 | krep.c: is_repetitive_pattern (full) | 3.2 | 1.7 | 0.571 |
-| walker |  | 8005 | 290 | README.md section #41 |  |  | 0.571 |
-| walker |  | 8031 | 26 | c header banner in test/test_krep.h |  |  | 0.571 |
-| ns | 8033 |  | 284 | krep.c: find_line_start / find_line_end | 3.3 | 1.4 | 0.559 |
-| walker |  | 8051 | 20 | c decl doc at krep.h:34 |  |  | 0.559 |
-| walker |  | 8065 | 14 | c decl doc at krep.c:125 |  |  | 0.559 |
-| walker |  | 8154 | 89 | README.md section #48 |  |  | 0.559 |
-| walker |  | 8246 | 92 | README.md section #45 |  |  | 0.580 |
-| walker |  | 8371 | 125 | README.md section #18 |  |  | 0.602 |
-| walker |  | 8389 | 18 | c decl doc at krep.c:175 |  |  | 0.602 |
-| ns | 8425 |  | 392 | aho_corasick.c: ac_node/ac_trie struct layout + free/root_has_outputs | 3.4 |  | 0.588 |
-| walker |  | 8479 | 90 | c decl doc at krep.h:170 |  |  | 0.590 |
-| walker |  | 8493 | 14 | c decl doc at aho_corasick.c:111 |  |  | 0.590 |
-| walker |  | 8604 | 111 | c decl at aho_corasick.c:17 |  |  | 0.599 |
-| ns | 8706 |  | 281 | krep.c: gitignore_is_ignored (parent-chain precedence) | 3.5 | 1.12 | 0.587 |
-| walker |  | 8759 | 155 | README.md section #43 |  |  | 0.608 |
-| walker |  | 8811 | 52 | c header banner in test/test_compat.h |  |  | 0.608 |
-| walker |  | 8848 | 37 | c decl doc at krep.h:98 |  |  | 0.615 |
-| walker |  | 8858 | 10 | c decl doc at krep.c:1137 |  |  | 0.615 |
-| walker |  | 8954 | 96 | c decl doc at krep.h:180 |  |  | 0.617 |
-| ns | 9264 |  | 558 | krep.c: should_skip_directory / should_skip_extension | 3.6 | 1.12 | 0.594 |
-| ns | 9546 |  | 282 | krep.c: main()'s getopt_long option table | 3.7 | 1.13 | 0.588 |
-| walker |  | 9677 | 723 | c includes in krep.c |  |  | 0.588 |
-| walker |  | 9754 | 77 | c header banner in aho_corasick.c |  |  | 0.588 |
-| walker |  | 9765 | 11 | c decl doc at krep.c:1125 |  |  | 0.588 |
-| walker |  | 9882 | 117 | c includes in aho_corasick.c |  |  | 0.588 |
-| walker |  | 9979 | 97 | c decl doc at krep.h:278 |  |  | 0.588 |
-| walker |  | 9990 | 11 | c decl doc at krep.c:4332 |  |  | 0.588 |
-| ns | 9998 |  | 452 | test/test_krep.c: main() suite composition/order (full body) | 3.8 | 1.14 | 0.573 |
+| ns | 3798 |  | 236 | CI workflow (ci.yml) | 1.24 |  | 0.443 |
+| ns | 3863 |  | 65 | Release workflow: trigger + permissions (build/package/publish steps elided) | 1.25 |  | 0.434 |
+| walker |  | 3942 | 716 | c decl names surface #2 in krep.c |  |  | 0.498 |
+| walker |  | 3942 | 0 | c decl at krep.c:39 |  |  | 0.498 |
+| walker |  | 3942 | 0 | c decl at krep.c:42 |  |  | 0.498 |
+| walker |  | 3942 | 0 | c decl at krep.c:44 |  |  | 0.498 |
+| walker |  | 3942 | 0 | c decl at krep.c:116 |  |  | 0.498 |
+| walker |  | 3942 | 0 | c decl at krep.c:2249 |  |  | 0.498 |
+| walker |  | 3947 | 5 | c decl at krep.c:128 |  |  | 0.498 |
+| walker |  | 3952 | 5 | c decl at krep.c:420 |  |  | 0.498 |
+| walker |  | 3957 | 5 | c decl at krep.c:438 |  |  | 0.498 |
+| walker |  | 3963 | 6 | c decl at krep.c:1084 |  |  | 0.498 |
+| walker |  | 3969 | 6 | c decl at krep.c:1585 |  |  | 0.498 |
+| walker |  | 3975 | 6 | c decl at krep.c:1873 |  |  | 0.498 |
+| walker |  | 3981 | 6 | c decl at krep.c:2252 |  |  | 0.498 |
+| walker |  | 3987 | 6 | c decl at krep.c:2265 |  |  | 0.498 |
+| walker |  | 3993 | 6 | c decl at krep.c:3071 |  |  | 0.498 |
+| walker |  | 3999 | 6 | c decl at krep.c:3090 |  |  | 0.498 |
+| walker |  | 4005 | 6 | c decl at krep.c:3122 |  |  | 0.498 |
+| walker |  | 4011 | 6 | c decl at krep.c:3163 |  |  | 0.498 |
+| walker |  | 4017 | 6 | c decl at krep.c:3180 |  |  | 0.498 |
+| walker |  | 4023 | 6 | c decl at krep.c:3240 |  |  | 0.498 |
+| walker |  | 4029 | 6 | c decl at krep.c:3272 |  |  | 0.498 |
+| walker |  | 4035 | 6 | c decl at krep.c:3297 |  |  | 0.498 |
+| walker |  | 4041 | 6 | c decl at krep.c:4046 |  |  | 0.498 |
+| walker |  | 4047 | 6 | c decl at krep.c:4251 |  |  | 0.498 |
+| ns | 4052 |  | 189 | krep.h: match_position_t / match_result_t | 2.1 |  | 0.507 |
+| walker |  | 4071 | 24 | c decl at krep.c:3310 |  |  | 0.507 |
+| walker |  | 4108 | 37 | c decl at krep.c:329 |  |  | 0.507 |
+| walker |  | 4122 | 14 | c decl doc at krep.h:22 |  |  | 0.507 |
+| walker |  | 4152 | 30 | README.md section #4 |  |  | 0.507 |
+| walker |  | 4274 | 122 | README.md section #1 |  |  | 0.507 |
+| walker |  | 4390 | 116 | c includes in krep.h |  |  | 0.507 |
+| ns | 4551 |  | 499 | krep.h: search_params_t and the search_func_t signature | 2.2 |  | 0.478 |
+| walker |  | 4649 | 259 | c decl at krep.h:104 |  |  | 0.481 |
+| walker |  | 4656 | 7 | c decl doc at krep.c:77 |  |  | 0.481 |
+| walker |  | 4666 | 10 | c decl doc at krep.h:104 |  |  | 0.481 |
+| walker |  | 4700 | 34 | README.md section #2 |  |  | 0.481 |
+| walker |  | 4735 | 35 | README.md section #13 |  |  | 0.481 |
+| ns | 4831 |  | 280 | krep.h: thread_data_t (per-chunk thread argument struct) | 2.3 |  | 0.506 |
+| walker |  | 5153 | 418 | c decl names surface #1 in krep.c |  |  | 0.564 |
+| walker |  | 5159 | 6 | c decl at krep.c:1125 |  |  | 0.564 |
+| walker |  | 5165 | 6 | c decl at krep.c:1137 |  |  | 0.564 |
+| walker |  | 5171 | 6 | c decl at krep.c:1198 |  |  | 0.564 |
+| walker |  | 5177 | 6 | c decl at krep.c:1213 |  |  | 0.564 |
+| ns | 5181 |  | 350 | krep.h: thread_pool_t / task_t + thread-pool API | 2.4 |  | 0.584 |
+| walker |  | 5183 | 6 | c decl at krep.c:1771 |  |  | 0.584 |
+| walker |  | 5189 | 6 | c decl at krep.c:1919 |  |  | 0.584 |
+| walker |  | 5195 | 6 | c decl at krep.c:1964 |  |  | 0.584 |
+| walker |  | 5201 | 6 | c decl at krep.c:1999 |  |  | 0.584 |
+| walker |  | 5207 | 6 | c decl at krep.c:2274 |  |  | 0.584 |
+| walker |  | 5213 | 6 | c decl at krep.c:3442 |  |  | 0.584 |
+| walker |  | 5219 | 6 | c decl at krep.c:4104 |  |  | 0.584 |
+| walker |  | 5225 | 6 | c decl at krep.c:4209 |  |  | 0.584 |
+| walker |  | 5231 | 6 | c decl at krep.c:4313 |  |  | 0.584 |
+| walker |  | 5237 | 6 | c decl at krep.c:4332 |  |  | 0.584 |
+| walker |  | 5284 | 47 | c decl at krep.c:3146 |  |  | 0.584 |
+| walker |  | 5325 | 41 | c decl at krep.c:1389 |  |  | 0.584 |
+| walker |  | 5366 | 41 | c decl at krep.c:3891 |  |  | 0.584 |
+| walker |  | 5407 | 41 | c decl at krep.c:4371 |  |  | 0.584 |
+| walker |  | 5457 | 50 | c decl at krep.c:1628 |  |  | 0.584 |
+| ns | 5513 |  | 332 | krep.h: public API signatures + return-code contracts (trimmed of doc prose) | 2.5 |  | 0.571 |
+| walker |  | 5526 | 69 | c decl at krep.c:3154 |  |  | 0.571 |
+| walker |  | 5597 | 71 | c decl at krep.c:1259 |  |  | 0.576 |
+| walker |  | 5626 | 29 | README.md section #44 |  |  | 0.576 |
+| ns | 5883 |  | 370 | krep.h: skip_directories[] (full) + skip_extensions[] (sampled) | 2.6 |  | 0.563 |
+| walker |  | 6005 | 379 | c decl at krep.h:65 |  |  | 0.611 |
+| walker |  | 6014 | 9 | c decl doc at krep.c:93 |  |  | 0.611 |
+| ns | 6142 |  | 259 | krep.h: is_word_char / is_whole_word_match (whole-word semantics) | 2.7 |  | 0.594 |
+| walker |  | 6154 | 140 | Makefile target skeleton chunk #1 of Makefile |  |  | 0.607 |
+| walker |  | 6211 | 57 | c decl names surface #1 in aho_corasick.c |  |  | 0.607 |
+| walker |  | 6216 | 5 | c decl at aho_corasick.c:34 |  |  | 0.607 |
+| walker |  | 6221 | 5 | c decl at aho_corasick.c:55 |  |  | 0.607 |
+| walker |  | 6226 | 5 | c decl at aho_corasick.c:86 |  |  | 0.607 |
+| walker |  | 6239 | 13 | c decl doc at krep.h:65 |  |  | 0.611 |
+| ns | 6639 |  | 497 | aho_corasick.h (full) | 2.8 |  | 0.582 |
+| walker |  | 6974 | 735 | c decl names surface #1 in krep.h |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:161 |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:170 |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:180 |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:183 |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:200 |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:203 |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:231 |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:278 |  |  | 0.595 |
+| walker |  | 6974 | 0 | c decl at krep.h:288 |  |  | 0.595 |
+| walker |  | 6979 | 5 | c decl at krep.h:298 |  |  | 0.595 |
+| walker |  | 6984 | 5 | c decl at krep.h:312 |  |  | 0.595 |
+| walker |  | 6991 | 7 | c decl doc at krep.h:203 |  |  | 0.595 |
+| walker |  | 7001 | 10 | c decl doc at krep.h:183 |  |  | 0.597 |
+| walker |  | 7011 | 10 | c decl doc at krep.h:231 |  |  | 0.599 |
+| walker |  | 7030 | 19 | c decl body at krep.h:298 |  |  | 0.600 |
+| walker |  | 7070 | 40 | README.md section #19 |  |  | 0.604 |
+| walker |  | 7133 | 63 | c decl body at krep.h:312 |  |  | 0.610 |
+| walker |  | 7143 | 10 | c decl doc at krep.c:139 |  |  | 0.610 |
+| walker |  | 7222 | 79 | c header banner in krep.c |  |  | 0.610 |
+| walker |  | 7257 | 35 | README.md section #47 |  |  | 0.610 |
+| walker |  | 7268 | 11 | c decl doc at aho_corasick.c:34 |  |  | 0.610 |
+| ns | 7300 |  | 661 | krep.c: select_search_algorithm (head+tail) | 3.1 | 1.7 | 0.577 |
+| ns | 7749 |  | 449 | krep.c: is_repetitive_pattern (full) | 3.2 | 1.7 | 0.554 |
+| walker |  | 7765 | 497 | c whole header in aho_corasick.h |  |  | 0.605 |
+| walker |  | 7820 | 55 | README.md section #17 |  |  | 0.610 |
+| walker |  | 7877 | 57 | README.md section #20 |  |  | 0.623 |
+| walker |  | 7889 | 12 | c decl doc at krep.h:19 |  |  | 0.623 |
+| walker |  | 7902 | 13 | c decl doc at krep.c:244 |  |  | 0.623 |
+| walker |  | 7914 | 12 | c decl doc at aho_corasick.c:55 |  |  | 0.623 |
+| walker |  | 7926 | 12 | c decl doc at krep.c:125 |  |  | 0.623 |
+| walker |  | 7994 | 68 | c decl doc at krep.h:298 |  |  | 0.623 |
+| walker |  | 8017 | 23 | c decl doc at krep.h:49 |  |  | 0.627 |
+| ns | 8033 |  | 284 | krep.c: find_line_start / find_line_end | 3.3 | 1.4 | 0.613 |
+| walker |  | 8192 | 175 | c decl names surface in aho_corasick.c |  |  | 0.614 |
+| walker |  | 8192 | 0 | c decl at aho_corasick.c:293 |  |  | 0.614 |
+| walker |  | 8192 | 0 | c decl at aho_corasick.c:296 |  |  | 0.614 |
+| walker |  | 8197 | 5 | c decl at aho_corasick.c:111 |  |  | 0.614 |
+| walker |  | 8202 | 5 | c decl at aho_corasick.c:274 |  |  | 0.614 |
+| walker |  | 8207 | 5 | c decl at aho_corasick.c:287 |  |  | 0.614 |
+| walker |  | 8244 | 37 | c decl at aho_corasick.c:299 |  |  | 0.614 |
+| walker |  | 8257 | 13 | c decl doc at aho_corasick.c:299 |  |  | 0.614 |
+| walker |  | 8318 | 61 | c decl at aho_corasick.c:26 |  |  | 0.614 |
+| ns | 8425 |  | 392 | aho_corasick.c: ac_node/ac_trie struct layout + free/root_has_outputs | 3.4 |  | 0.600 |
+| walker |  | 8615 | 297 | README.md section #22 |  |  | 0.600 |
+| walker |  | 8684 | 69 | README.md section #46 |  |  | 0.606 |
+| ns | 8706 |  | 281 | krep.c: gitignore_is_ignored (parent-chain precedence) | 3.5 | 1.12 | 0.595 |
+| walker |  | 8974 | 290 | README.md section #41 |  |  | 0.595 |
+| walker |  | 9000 | 26 | c header banner in test/test_krep.h |  |  | 0.595 |
+| walker |  | 9016 | 16 | c decl doc at krep.c:401 |  |  | 0.595 |
+| walker |  | 9036 | 20 | c decl doc at krep.h:34 |  |  | 0.595 |
+| walker |  | 9125 | 89 | README.md section #48 |  |  | 0.595 |
+| walker |  | 9217 | 92 | README.md section #45 |  |  | 0.615 |
+| walker |  | 9232 | 15 | c decl doc at aho_corasick.c:86 |  |  | 0.615 |
+| ns | 9264 |  | 558 | krep.c: should_skip_directory / should_skip_extension | 3.6 | 1.12 | 0.593 |
+| walker |  | 9357 | 125 | README.md section #18 |  |  | 0.612 |
+| walker |  | 9375 | 18 | c decl doc at krep.c:175 |  |  | 0.612 |
+| walker |  | 9465 | 90 | c decl doc at krep.h:170 |  |  | 0.614 |
+| walker |  | 9479 | 14 | c decl doc at aho_corasick.c:111 |  |  | 0.614 |
+| ns | 9546 |  | 282 | krep.c: main()'s getopt_long option table | 3.7 | 1.13 | 0.608 |
+| walker |  | 9590 | 111 | c decl at aho_corasick.c:17 |  |  | 0.617 |
+| walker |  | 9745 | 155 | README.md section #43 |  |  | 0.637 |
+| walker |  | 9797 | 52 | c header banner in test/test_compat.h |  |  | 0.637 |
+| walker |  | 9834 | 37 | c decl doc at krep.h:98 |  |  | 0.643 |
+| walker |  | 9844 | 10 | c decl doc at krep.c:1137 |  |  | 0.643 |
+| walker |  | 9855 | 11 | c decl doc at krep.c:128 |  |  | 0.643 |
+| walker |  | 9951 | 96 | c decl doc at krep.h:180 |  |  | 0.645 |
+| ns | 9998 |  | 452 | test/test_krep.c: main() suite composition/order (full body) | 3.8 | 1.14 | 0.628 |

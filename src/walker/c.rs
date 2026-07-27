@@ -8,8 +8,10 @@
 //!   and contains at least one `#include` (the conditional include-map
 //!   idiom: `#if CFG_TUH_HID { #include "class/hid/hid_host.h" }`).
 //!   Conditional blocks that wrap real code are opaque.
-//! - `DeclNames { file }`: surface listing of every top-level public
-//!   declaration's first line — catastrophic-omission hedge
+//! - `DeclNames { file, chunk_index }`: surface listing of top-level
+//!   declaration first lines — catastrophic-omission hedge. The file's
+//!   external- and internal-linkage decls form two independent chunk
+//!   series under this one key (see [`DeclLinkage`], [`names_chunks`]).
 //!
 //! Per-decl keys (keyed by start line so each decl has a distinct batch):
 //! - `Decl { file, start_line }`: one top-level public declaration's
@@ -28,7 +30,9 @@
 //!   header + closing brace so the two render disjoint body rows.
 //!
 //! Public-vs-private rule:
-//! - `.c` files: top-level `static` items are excluded (file-private).
+//! - `.c` files: top-level `static` items are surfaced when the project
+//!   builds a program of its own rather than a library — see
+//!   [`admits_internal_decls`] — and excluded otherwise.
 //! - `.h` files: `static inline` definitions are included (header-only
 //!   inline accessors are part of the public API expansion); other
 //!   `static` items are excluded.
@@ -104,12 +108,10 @@ pub(in crate::walker) struct CState {
     /// Per-basename `#include "X"` in-degree across the tree, computed
     /// once. Prices include-graph hubs above leaf headers.
     include_in_degree: OnceCell<IncludeInDegreeIndex>,
-    /// The single non-test `.c` file carrying the large majority of the
-    /// project's C source lines *and* the program's `main`, if one
-    /// exists (computed once per run). In a single-implementation-file
-    /// binary that file *is* the API surface, so its names surface
-    /// prices at the header tier.
-    dominant_c_file: OnceCell<Option<PathBuf>>,
+    /// One-pass facts about the project's non-test `.c` sources
+    /// (computed once per run); `None` when the scan bailed out, which
+    /// every derived signal treats as "no information".
+    project_scan: OnceCell<Option<CProjectScan>>,
 }
 
 impl CState {
@@ -165,13 +167,25 @@ impl CState {
             .get_or_init(|| collect_include_in_degree(root, filter))
     }
 
+    fn project_scan(&self, root: &Path, filter: &DirFilter) -> Option<&CProjectScan> {
+        self.project_scan
+            .get_or_init(|| scan_c_project(root, filter))
+            .as_ref()
+    }
+
     /// True iff `file` is the project's dominant implementation file
     /// (computed once per run).
     fn is_dominant_c_file(&self, file: &Path, root: &Path, filter: &DirFilter) -> bool {
-        self.dominant_c_file
-            .get_or_init(|| find_dominant_c_file(root, filter))
-            .as_deref()
+        self.project_scan(root, filter)
+            .and_then(CProjectScan::dominant_c_file)
             == Some(file)
+    }
+
+    /// True iff the project builds a program of its own (computed once
+    /// per run).
+    fn builds_a_program(&self, root: &Path, filter: &DirFilter) -> bool {
+        self.project_scan(root, filter)
+            .is_some_and(|scan| scan.builds_a_program(root))
     }
 }
 
@@ -462,14 +476,76 @@ const DOMINANT_C_FILE_MIN_SHARE: f64 = 0.6;
 /// Fail closed: over budget means no promotion.
 const DOMINANT_SCAN_MAX_BYTES: u64 = 8 * 1024 * 1024;
 
-/// The non-test `.c` file carrying at least
-/// [`DOMINANT_C_FILE_MIN_SHARE`] of the project's non-test `.c`
-/// non-blank lines *and* holding the project's only
-/// default-configuration `main`, if any. Same coarse one-pass scan
-/// (and cap) as [`count_small_headers`], plus a byte budget; test
-/// dirs and test-named files are excluded so a large test suite
-/// can't mask a single-implementation-file layout.
-fn find_dominant_c_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
+/// One-pass facts about the project's non-test `.c` sources.
+struct CProjectScan {
+    /// Non-blank line total across every counted `.c` file.
+    total_lines: usize,
+    /// The counted `.c` file with the most non-blank lines.
+    largest: Option<(PathBuf, usize)>,
+    /// Counted `.c` files defining a default-configuration `main`.
+    default_mains: Vec<PathBuf>,
+}
+
+impl CProjectScan {
+    /// The `.c` file carrying at least [`DOMINANT_C_FILE_MIN_SHARE`] of
+    /// the project's non-test `.c` non-blank lines *and* holding its
+    /// only default-configuration `main`, if any.
+    ///
+    /// Binary-project gate: the promotion only holds when the dominant
+    /// file is the program itself. A dominant *library* implementation
+    /// (neco.c, sds.c) leaves the API-surface role with the header —
+    /// promoting its roster displaces the header content NS anchors on
+    /// (neco −0.23 measured). A `#ifdef`-gated test main (sds
+    /// `SDS_TEST_MAIN`) doesn't make a library a binary, and a second
+    /// default-configuration `main` elsewhere (multi-binary repo) means
+    /// the dominant file isn't *the* program — fail closed.
+    fn dominant_c_file(&self) -> Option<&Path> {
+        let (path, lines) = self.largest.as_ref()?;
+        if self.total_lines == 0
+            || (*lines as f64 / self.total_lines as f64) < DOMINANT_C_FILE_MIN_SHARE
+        {
+            return None;
+        }
+        (self.default_mains.len() == 1 && self.default_mains[0] == *path).then_some(path.as_path())
+    }
+
+    /// True iff the project builds a program of its own — some counted
+    /// `.c` file outside an illustrative tree defines a
+    /// default-configuration `main`. A library's only `main`s live in
+    /// its test harness (already excluded from the scan) or its
+    /// `examples/` programs, which demonstrate the library rather than
+    /// being it.
+    fn builds_a_program(&self, root: &Path) -> bool {
+        self.default_mains
+            .iter()
+            .any(|path| !is_under_illustrative_dir(path, root))
+    }
+}
+
+/// Directory names whose programs demonstrate a project rather than
+/// being it (tinyusb `examples/`, sqlite-vec `examples/simple-c/`) —
+/// the same role [`super::fs::is_test_dir_name`] plays for harnesses.
+fn is_under_illustrative_dir(file: &Path, root: &Path) -> bool {
+    file.strip_prefix(root)
+        .unwrap_or(file)
+        .parent()
+        .into_iter()
+        .flat_map(Path::components)
+        .filter_map(|c| c.as_os_str().to_str())
+        .any(|name| {
+            matches!(
+                name.to_ascii_lowercase().as_str(),
+                "example" | "examples" | "demo" | "demos" | "sample" | "samples"
+            )
+        })
+}
+
+/// Walk the project's non-test `.c` files once. Same coarse one-pass
+/// scan (and cap) as [`count_small_headers`], plus a byte budget; test
+/// dirs and test-named files are excluded so a large test suite can't
+/// mask a single-implementation-file layout. `None` when the scan
+/// bailed — callers must treat that as "no information".
+fn scan_c_project(root: &Path, filter: &DirFilter) -> Option<CProjectScan> {
     const SCAN_CAP: usize = 4096;
     let mut total_lines = 0usize;
     let mut largest: Option<(PathBuf, usize)> = None;
@@ -521,23 +597,17 @@ fn find_dominant_c_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
             }
         }
     }
-    let (path, lines) = largest?;
-    if total_lines == 0 || (lines as f64 / total_lines as f64) < DOMINANT_C_FILE_MIN_SHARE {
-        return None;
-    }
-    // Binary-project gate: the promotion only holds when the dominant
-    // file is the program itself. A dominant *library* implementation
-    // (neco.c, sds.c) leaves the API-surface role with the header —
-    // promoting its roster displaces the header content NS anchors on
-    // (neco −0.23 measured). A `#ifdef`-gated test main (sds
-    // `SDS_TEST_MAIN`) doesn't make a library a binary, and a second
-    // default-configuration `main` elsewhere (multi-binary repo) means
-    // the dominant file isn't *the* program — fail closed.
-    let mut default_main_files = main_candidates.into_iter().filter(|candidate| {
-        std::fs::read_to_string(candidate).is_ok_and(|text| defines_unconditional_main(&text))
-    });
-    let first = default_main_files.next()?;
-    (first == path && default_main_files.next().is_none()).then_some(path)
+    let default_mains = main_candidates
+        .into_iter()
+        .filter(|candidate| {
+            std::fs::read_to_string(candidate).is_ok_and(|text| defines_unconditional_main(&text))
+        })
+        .collect();
+    Some(CProjectScan {
+        total_lines,
+        largest,
+        default_mains,
+    })
 }
 
 /// One counted file's scan result: non-blank line count, bytes read,
@@ -765,6 +835,41 @@ fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
     )
 }
 
+/// One names-surface chunk: which decls it lists, and its position in
+/// its own linkage group's chunk series. The external and internal
+/// groups are chunked and ranked independently — they are two separate
+/// rosters that happen to share a key — so adding an internal roster to
+/// a file never reprices its public one.
+struct NamesChunk {
+    range: Range<usize>,
+    index_in_group: usize,
+    group_chunk_count: usize,
+}
+
+/// Chunk `decls` with a forced break between the external-linkage
+/// prefix (`external_count` entries) and the internal-linkage tail.
+fn names_chunks(external_count: usize, decl_count: usize) -> Vec<NamesChunk> {
+    let mut out = Vec::new();
+    for (offset, count) in [
+        (0, external_count),
+        (external_count, decl_count - external_count),
+    ] {
+        let ranges = count_based_chunk_ranges(count);
+        let group_chunk_count = ranges.len();
+        out.extend(
+            ranges
+                .into_iter()
+                .enumerate()
+                .map(|(index_in_group, range)| NamesChunk {
+                    range: range.start + offset..range.end + offset,
+                    index_in_group,
+                    group_chunk_count,
+                }),
+        );
+    }
+    out
+}
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let c_files = c_source_files(dir, ctx);
     if c_files.is_empty() {
@@ -831,7 +936,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         };
 
-        let mut decls = find_decls(&tree, &source, file);
+        let mut decls = find_decls(&tree, &source, file, admits_internal_decls(file, ctx));
         if decls.is_empty() {
             push_includes(&mut out, None);
             continue;
@@ -851,9 +956,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // "Public fn declarations — utility fns" across chunks. Chunk
         // only when the surface is large enough that the unified batch
         // would lose the value/cost race against per-decl batches.
-        let chunk_ranges = count_based_chunk_ranges(decls.len());
-        let names_chunk_count = chunk_ranges.len();
-        let names_predecessors: Vec<_> = (0..names_chunk_count)
+        let external_count = decls
+            .iter()
+            .filter(|(_, i)| i.linkage == DeclLinkage::External)
+            .count();
+        let chunks = names_chunks(external_count, decls.len());
+        let names_predecessors: Vec<_> = (0..chunks.len())
             .map(|chunk_index| {
                 BatchKey::C(CKey::DeclNames {
                     file: file.clone(),
@@ -864,11 +972,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let all_starts: std::collections::HashSet<usize> =
             decls.iter().map(|(_, i)| i.start_line).collect();
         let src_lines: Vec<&str> = source.lines().collect();
-        let names_lines_by_chunk: Vec<FileLines> = chunk_ranges
+        let names_lines_by_chunk: Vec<FileLines> = chunks
             .iter()
-            .map(|range| {
+            .map(|chunk| {
                 collect_decl_names_from_with_global_starts(
-                    &decls[range.clone()],
+                    &decls[chunk.range.clone()],
                     &all_starts,
                     &src_lines,
                 )
@@ -878,15 +986,17 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // ranges so callers don't re-divide.
         let decl_to_chunk: Vec<usize> = {
             let mut v = vec![0_usize; decls.len()];
-            for (chunk_index, range) in chunk_ranges.iter().enumerate() {
-                for i in range.clone() {
+            for (chunk_index, chunk) in chunks.iter().enumerate() {
+                for i in chunk.range.clone() {
                     v[i] = chunk_index;
                 }
             }
             v
         };
         let mut names_chunk0_emitted = false;
-        for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
+        for ((chunk_index, chunk), names_lines) in
+            chunks.iter().enumerate().zip(&names_lines_by_chunk)
+        {
             let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
             else {
                 continue;
@@ -899,9 +1009,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: decl_names_value(
                     file,
                     ctx,
-                    chunk_index,
-                    names_chunk_count,
-                    chunk_ranges[chunk_index].len(),
+                    chunk,
                     configuration_surface && configuration_surface_names_chunk_floored(chunk_index),
                 ),
             });
@@ -1045,10 +1153,31 @@ impl DeclKind {
     }
 }
 
+/// Whether a top-level decl is visible outside its translation unit.
+///
+/// In most languages "private" means "lower value", and for a `.h` file
+/// that holds: the header *is* the contract, so a `static` item in one
+/// is noise. A `.c` file is the opposite — its `static` items are the
+/// implementation, and in a program (an interpreter, a CLI tool, a
+/// compiler) `main` plus a wall of `static` helpers is essentially all
+/// there is. So in a project that [`admits_internal_decls`], internal
+/// decls are surfaced as an ordinary decl train, priced by kind exactly
+/// like external ones; the linkage split only decides *membership* and
+/// which names-surface group a decl chunks into. A restricted value
+/// axis was swept (×0.5 / ×0.75 on the whole internal train) and is
+/// strictly worse: the damped roster never wins purchase at all, so the
+/// recall it unlocks is never delivered.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum DeclLinkage {
+    External,
+    Internal,
+}
+
 #[derive(Debug, Clone)]
 struct DeclInfo {
     start_line: usize,
     kind: DeclKind,
+    linkage: DeclLinkage,
     /// Gates `DeclBody` emission — true only for `function_definition`.
     has_body: bool,
     /// Per-group member-batches for big aggregates. When non-empty the
@@ -1204,16 +1333,26 @@ struct AggregateMemberGroup {
 /// declaration-only feature gates (conditionally-compiled API). `.c`
 /// gates stay opaque: there, conditional compilation is implementation
 /// detail (sqlite-vec's `#ifndef _WIN32` portability-shim typedefs).
-fn find_decls<'a>(tree: &'a Tree, source: &str, file: &Path) -> Vec<(Node<'a>, DeclInfo)> {
+/// External-linkage decls come first, then internal-linkage ones — each
+/// group in source order, so the two roster groups chunk separately.
+fn find_decls<'a>(
+    tree: &'a Tree,
+    source: &str,
+    file: &Path,
+    admit_internal: bool,
+) -> Vec<(Node<'a>, DeclInfo)> {
     let in_header = is_header_file(file);
     let mut out = Vec::new();
     walk_top_level(tree.root_node(), source, in_header, &mut |node| {
-        if let Some(info) = classify_decl(node, source, in_header) {
+        if let Some(info) = classify_decl(node, source, in_header)
+            && (admit_internal || info.linkage == DeclLinkage::External)
+        {
             out.push((node, info));
         }
     });
     out.sort_by_key(|(_, d)| d.start_line);
     out.dedup_by_key(|(_, d)| d.start_line);
+    out.sort_by_key(|(_, d)| d.linkage == DeclLinkage::Internal);
     out
 }
 
@@ -1458,25 +1597,20 @@ fn is_header_guard(ifdef: Node, source: &str) -> bool {
     false
 }
 
-/// Classify a top-level node as a public decl. `None` for unsurfaced
-/// kinds (preproc_include, comments, `static` in `.c` files, …).
+/// Classify a top-level node as a decl. `None` for unsurfaced kinds
+/// (preproc_include, comments, non-inline `static` in `.h` files, …).
 fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> {
     let start_line = node.start_position().row + 1;
-    let (kind, has_body) = match node.kind() {
+    let (kind, has_body, internal) = match node.kind() {
         "function_definition" => {
-            let static_ = has_static_specifier(node, source);
-            let inline = has_storage_class(node, source, "inline");
-            // .c file: static excluded. .h file: static excluded unless
-            // also inline (header-only inline accessor).
-            if static_ && !(in_header && inline) {
-                return None;
-            }
-            (DeclKind::FunctionDef, true)
+            // A header's `static inline` definition is the header-only
+            // accessor idiom — part of the API expansion, not internal
+            // linkage.
+            let internal = has_static_specifier(node, source)
+                && !(in_header && has_storage_class(node, source, "inline"));
+            (DeclKind::FunctionDef, true, internal)
         }
         "declaration" => {
-            if has_static_specifier(node, source) {
-                return None;
-            }
             let kind = if has_struct_union_or_enum(node) {
                 DeclKind::Aggregate
             } else if has_function_declarator(node) {
@@ -1484,24 +1618,37 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
             } else {
                 DeclKind::Variable
             };
-            (kind, false)
+            (kind, false, has_static_specifier(node, source))
         }
-        "type_definition" => (DeclKind::Typedef, false),
+        "type_definition" => (DeclKind::Typedef, false, false),
         // Tree-sitter-c parses a top-level bare `struct foo { … };`
         // (no declarator) as a `struct_specifier` followed by a `;`
         // token rather than wrapping them in a `declaration`. Surface
         // the specifier itself.
-        "struct_specifier" | "union_specifier" | "enum_specifier" => (DeclKind::Aggregate, false),
+        "struct_specifier" | "union_specifier" | "enum_specifier" => {
+            (DeclKind::Aggregate, false, false)
+        }
         "preproc_def" => {
             // Skip the header-guard's own `#define X` — it's part of
             // the guard envelope, not a public macro.
             if is_header_guard_define(node, source) {
                 return None;
             }
-            (DeclKind::Macro, false)
+            (DeclKind::Macro, false, false)
         }
-        "preproc_function_def" => (DeclKind::MacroFn, false),
+        "preproc_function_def" => (DeclKind::MacroFn, false, false),
         _ => return None,
+    };
+    // A `static` item in a header is an implementation leak — the file's
+    // job is to declare a contract, so there is nothing to surface. In a
+    // `.c` file it is ordinary internal linkage; see [`DeclLinkage`].
+    if internal && in_header {
+        return None;
+    }
+    let linkage = if internal {
+        DeclLinkage::Internal
+    } else {
+        DeclLinkage::External
     };
     let member_groups = if matches!(kind, DeclKind::Aggregate | DeclKind::Typedef) {
         find_aggregate_body(node)
@@ -1513,9 +1660,31 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
     Some(DeclInfo {
         start_line,
         kind,
+        linkage,
         has_body,
         member_groups,
     })
+}
+
+/// True iff `file`'s internal-linkage (`static`) declarations are
+/// surfaced at all.
+///
+/// The distinction is library vs program, and it is project-wide. A
+/// library's headers are its contract, so its `static` items really are
+/// implementation detail the reader can skip — surfacing them displaces
+/// the API surface NS authors anchor on. A program has no third-party
+/// contract at all: `main` plus a wall of `static` helpers *is* the
+/// program, its headers are C's module plumbing, and hiding internal
+/// linkage hides the substance. A project counts as a library when it
+/// declares an installed header set or when nothing outside its test
+/// and example trees defines `main`.
+///
+/// Headers never reach here with internal decls — [`classify_decl`]
+/// drops those outright, in either kind of project.
+fn admits_internal_decls(file: &Path, ctx: &WalkCtx) -> bool {
+    !is_header_file(file)
+        && ctx.c_state().public_headers(ctx.root()).is_none()
+        && ctx.c_state().builds_a_program(ctx.root(), ctx.dir_filter())
 }
 
 /// Minimum struct/union body span (lines) for field-group chunking.
@@ -1869,7 +2038,7 @@ fn whole_small_header_eligible(file: &Path, ctx: &WalkCtx) -> bool {
     // Require a real public surface — a header that's only includes /
     // a guard / a forward declaration belongs to the decomposed path
     // (its `Includes` batch), not a whole-file render.
-    !find_decls(&tree, &source, file).is_empty()
+    !find_decls(&tree, &source, file, false).is_empty()
 }
 
 /// Whole-file content for a small public-API header, or `None` if it
@@ -2025,9 +2194,7 @@ fn includes_value(file: &Path, ctx: &WalkCtx) -> f64 {
 fn decl_names_value(
     file: &Path,
     ctx: &WalkCtx,
-    chunk_index: usize,
-    chunk_count: usize,
-    chunk_decl_count: usize,
+    chunk: &NamesChunk,
     configuration_surface: bool,
 ) -> f64 {
     let cat = (0.80 * names_surface_catastrophic_factor(file, ctx)).min(1.0);
@@ -2040,12 +2207,12 @@ fn decl_names_value(
     // promotes big-roster type catalogs the NS ignores (tinyusb
     // pd_types.h), dragging the gated per-decl train along.
     let mass = if is_top_include_hub(file, ctx) {
-        roster_mass_factor(chunk_decl_count)
+        roster_mass_factor(chunk.range.len())
     } else {
         1.0
     };
     let value = base
-        * names_surface_chunk_factor(chunk_index, chunk_count)
+        * names_surface_chunk_factor(chunk.index_in_group, chunk.group_chunk_count)
         * mass
         * include_centrality_factor(file, ctx);
     configuration_surface_value_floor(value, configuration_surface)
@@ -2466,7 +2633,7 @@ mod tests {
             let (source, tree) = parse(src);
             let body = header_guard_body_node(tree.root_node(), &source);
             assert!(body.is_some(), "header guard not detected in:\n{src}");
-            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"));
+            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
             assert_eq!(
                 decls.len(),
                 1,
@@ -2479,7 +2646,7 @@ mod tests {
     fn configuration_surface_role(filename: &str, source: &str) -> bool {
         let (source, tree) = parse(source);
         let file = std::path::Path::new(filename);
-        let decls = find_decls(&tree, &source, file);
+        let decls = find_decls(&tree, &source, file, true);
         is_configuration_surface_header(file, &source, &tree, &decls)
     }
 
@@ -2625,7 +2792,7 @@ int gated_only(int x);
         ];
         for src in cases {
             let (source, tree) = parse(src);
-            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"));
+            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
             assert!(
                 decls.is_empty(),
                 "feature-gated linkage spec must stay opaque; got decls:\n{src}\n{decls:?}",
@@ -2660,7 +2827,7 @@ typedef int bar_t;
 ";
         for src in &[bare, wrapped] {
             let (source, tree) = parse(src);
-            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"));
+            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
             let kinds: Vec<DeclKind> = decls.iter().map(|(_, d)| d.kind).collect();
             assert_eq!(
                 kinds,
@@ -2671,14 +2838,59 @@ typedef int bar_t;
     }
 
     #[test]
-    fn c_static_inline_in_header_is_public_but_not_in_c() {
+    fn c_static_inline_is_external_in_header_internal_in_c() {
         let header = "static inline int sdslen(const char *s) { return 0; }\n";
         let (source, tree) = parse(header);
-        let h_decls = find_decls(&tree, &source, std::path::Path::new("sds.h"));
-        let c_decls = find_decls(&tree, &source, std::path::Path::new("sds.c"));
+        let h_decls = find_decls(&tree, &source, std::path::Path::new("sds.h"), true);
+        let c_decls = find_decls(&tree, &source, std::path::Path::new("sds.c"), true);
         assert_eq!(h_decls.len(), 1, "static inline in .h should be public");
         assert_eq!(h_decls[0].1.kind, DeclKind::FunctionDef);
-        assert!(c_decls.is_empty(), "static in .c should be private");
+        assert_eq!(h_decls[0].1.linkage, DeclLinkage::External);
+        assert_eq!(c_decls.len(), 1, "static in .c is surfaced, not dropped");
+        assert_eq!(c_decls[0].1.linkage, DeclLinkage::Internal);
+        assert!(
+            find_decls(&tree, &source, std::path::Path::new("sds.c"), false).is_empty(),
+            "internal-linkage decls stay hidden when the file doesn't admit them"
+        );
+    }
+
+    #[test]
+    fn c_static_non_inline_stays_hidden_in_a_header() {
+        let (source, tree) = parse("static int helper(void) { return 0; }\n");
+        assert!(
+            find_decls(&tree, &source, std::path::Path::new("api.h"), true).is_empty(),
+            "a non-inline static definition in a header is an implementation leak"
+        );
+    }
+
+    #[test]
+    fn c_internal_decls_sort_after_external_ones_and_chunk_separately() {
+        let src = "\
+static int helper_a(void) { return 0; }
+int api_one(void);
+static int helper_b(void) { return 1; }
+int api_two(void);
+";
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree, &source, std::path::Path::new("prog.c"), true);
+        let starts: Vec<usize> = decls.iter().map(|(_, d)| d.start_line).collect();
+        assert_eq!(
+            starts,
+            vec![2, 4, 1, 3],
+            "external group first, each group in source order"
+        );
+        let external_count = decls
+            .iter()
+            .filter(|(_, d)| d.linkage == DeclLinkage::External)
+            .count();
+        let chunks = names_chunks(external_count, decls.len());
+        assert_eq!(chunks.len(), 2, "one chunk per linkage group");
+        assert!(
+            chunks
+                .iter()
+                .all(|c| c.index_in_group == 0 && c.group_chunk_count == 1),
+            "each group's chunk series is ranked independently"
+        );
     }
 
     #[test]
@@ -2691,7 +2903,7 @@ sds sdsnew(const char *init);
 sds sdsnewlen(const void *init, size_t initlen) { return 0; }
 ";
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, std::path::Path::new("sds.h"));
+        let decls = find_decls(&tree, &source, std::path::Path::new("sds.h"), true);
         let kinds: Vec<DeclKind> = decls.iter().map(|(_, d)| d.kind).collect();
         assert_eq!(
             kinds,
@@ -2736,7 +2948,7 @@ void llco_second(void) { return; }
         // Stronger guarantee: spans claimed by C::Decl batches in the
         // same file are pairwise disjoint by row.
         let (source, tree) = parse(src);
-        let decls = find_decls(&tree, &source, std::path::Path::new("neco-mini.c"));
+        let decls = find_decls(&tree, &source, std::path::Path::new("neco-mini.c"), true);
         let all_starts: std::collections::HashSet<usize> =
             decls.iter().map(|(_, i)| i.start_line).collect();
         let mut claimed: std::collections::HashMap<usize, usize> = std::collections::HashMap::new();
@@ -2930,6 +3142,33 @@ typedef int x;
         assert!(parse_include_headers(tmp.path()).is_none());
         std::fs::write(tmp.path().join("Makefile.am"), "AM_CFLAGS = -Wall\n").expect("write");
         assert!(parse_include_headers(tmp.path()).is_none());
+    }
+
+    fn find_dominant_c_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
+        let scan = scan_c_project(root, filter)?;
+        scan.dominant_c_file().map(Path::to_path_buf)
+    }
+
+    #[test]
+    fn c_builds_a_program_ignores_test_and_example_mains() {
+        let line = "int x;\n";
+        let main_def = "int main(int argc, char **argv) { return 0; }\n";
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("lib.c"), line.repeat(10)).unwrap();
+        std::fs::create_dir_all(root.join("examples/simple")).unwrap();
+        std::fs::write(root.join("examples/simple/demo.c"), main_def).unwrap();
+        std::fs::create_dir(root.join("tests")).unwrap();
+        std::fs::write(root.join("tests/harness.c"), main_def).unwrap();
+        let scan = scan_c_project(root, &DirFilter::none()).unwrap();
+        assert!(
+            !scan.builds_a_program(root),
+            "example and test programs demonstrate a library, they aren't it"
+        );
+
+        std::fs::write(root.join("cli.c"), main_def).unwrap();
+        let scan = scan_c_project(root, &DirFilter::none()).unwrap();
+        assert!(scan.builds_a_program(root));
     }
 
     #[test]
@@ -3164,7 +3403,7 @@ typedef int x;
         src.push_str("} ConfigState;\n");
 
         let (source, tree) = parse(&src);
-        let decls = find_decls(&tree, &source, std::path::Path::new("config.h"));
+        let decls = find_decls(&tree, &source, std::path::Path::new("config.h"), true);
         let body = find_aggregate_body(decls[0].0).unwrap();
         assert!(collect_aggregate_member_groups(body, &source).is_empty());
         let groups = collect_struct_comment_groups(body, &source);
@@ -3198,7 +3437,7 @@ typedef int x;
         }
         src.push_str("} Multi;\n");
         let (source, tree) = parse(&src);
-        let decls = find_decls(&tree, &source, std::path::Path::new("multi.h"));
+        let decls = find_decls(&tree, &source, std::path::Path::new("multi.h"), true);
         let enum_decl = decls
             .iter()
             .find(|(_, d)| d.kind == DeclKind::Typedef && !d.member_groups.is_empty())

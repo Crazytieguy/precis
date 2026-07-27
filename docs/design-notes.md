@@ -840,6 +840,84 @@ total ≤ ~675 tokens). `DECL_NAMES_SPLIT_THRESHOLD_TOKENS` /
 `DECL_NAMES_CHUNK_TARGET_TOKENS` / `conserved_catalog_chunk_factors` on
 the Python path are removable dead weight, not a live knob.
 
+## C internal-linkage recall (2026-07-26): flat @3K, +0.0006 @6.2K
+
+Closed the corpus's #2 pool-absent class: `classify_decl` returned
+`None` for every file-scope `static` in a `.c` file, so **no
+internal-linkage decl, body, or doc was reachable at any budget in any
+C fixture** (1837 NS tokens inside 3K, 9860 overall, 8 fixtures). This
+also subsumes the standing "C option-table / argument-parsing roster"
+queue item — those `strcmp` chains and `take_arg[]`/`long_opts[]`
+tables were missing because they sit inside `static` functions, not
+because they are tables.
+
+Shipped as `DeclLinkage` + `admits_internal_decls` +
+`CProjectScan::builds_a_program`. Grid means (71 training fixtures):
+`0.6266 / 0.6226 / 0.6270 / 0.6351 / 0.5966→0.5969 / 0.5653→0.5659 /
+0.5457→0.5454` at 1000/1442/2080/3000/4327/6240/9000. Movers: krep
++0.0266 @4.3K, +0.0437 @6.2K, −0.0218 @9K; chibicc +0.0017 @9K. The
+3000-budget rendered snapshots are byte-identical corpus-wide.
+
+Load-bearing findings:
+
+- **The discriminator is library-vs-program and it is project-wide,
+  not per-file.** Every per-file proxy fails: htop `CommandLine.c` and
+  krep `krep.c` both have a same-stem sibling header, so "no own
+  header contract" excludes exactly the fixtures that pay. A project
+  is a library when it declares an installed header set
+  (`include_HEADERS`, jq) or when nothing outside its test and example
+  trees defines an unconditional `main` (neco, sds, tinyusb,
+  sqlite-vec). Ungated, those libraries regress: **neco −0.0405 @9K,
+  jq −0.0090, sqlite-vec −0.0067** — their `static` implementation
+  displaces the header API their NSes anchor on. Gated, every one of
+  those deltas goes to exactly zero and both gains survive. The
+  `examples/`-dir exclusion is load-bearing on its own: without it
+  sqlite-vec's `examples/simple-c/demo.c` main makes an extension
+  library look like a program.
+- **A restricted value axis is strictly worse here, unlike the Rust
+  private-method case.** Swept ×0.5 and ×0.75 on the whole internal
+  train (roster + decl + doc + body): at 0.5 nothing arrives at any
+  budget and the corpus is byte-identical to the ungated baseline; at
+  0.75 krep keeps +0.0437 @6.2K but loses +0.0266 @4.3K; at 1.0 both
+  land. Internal decls are now priced by kind exactly like external
+  ones — the linkage split decides membership and roster grouping
+  only, and the damp constant was removed.
+- **Splitting the internal roster finer is unstable.** The internal
+  names surface chunks at `C_DECL_NAMES_CHUNK_SIZE` (24) like the
+  external one. Dropping to 8 does move the headline (krep +0.0100
+  @3K, mean +0.0002) but costs krep −0.0406 @1442; at 12 it is krep
+  −0.1174 @1442. Summed over the grid both are worse than 24. The
+  small early chunks queue-jump exactly as the struct-field-crumb and
+  early-budget-ratio-wall entries predict.
+- **The external and internal groups are two independent chunk
+  series under one `DeclNames` key** — separate `index_in_group` /
+  `group_chunk_count`, so admitting an internal roster never reprices
+  the file's public one.
+
+Measured dead in the same lane (specifics block retries):
+
+- **Entry-point names-surface promotion** (extend the dominant-binary
+  header-tier promotion in `names_surface_catastrophic_factor` to any
+  project's sole `main`-defining `.c`): chibicc −0.1058 @1442,
+  −0.0013 @3K, −0.0171 @4.3K. Same failure mode the C-cluster ledger
+  records for extending `roster_mass_factor` to the dominant file —
+  earlier roster arrival displaces NS-wanted README orientation.
+- **`secondary_root_pair_factor` tightening** (require the eponymous
+  `<repo>.c` to exist, not just `<repo>.h`, before damping depth-1
+  siblings — chibicc's `chibicc.h` is a shared *internal* header over
+  main/parse/codegen, not half of a primary pair): chibicc −0.0961
+  @1442, −0.0524 @2080, −0.1282 @4.3K, −0.1442 @6.2K. The damp is
+  load-bearing on multi-module flat programs regardless of its stated
+  rationale; do not "fix" it without a replacement damp.
+
+Still out of reach after this lane: the ≤3K half of the class. chibicc
+ranks main.c's flag dispatch as *individual `strcmp` lines* across six
+NS rows ≤1900, and krep ranks six krep.c location rosters at 236–1520;
+the internal roster lands at 3942 (krep) or past 10K (chibicc, whose
+main.c also carries the `secondary_root_pair_factor` 0.5 damp). This is
+the early-budget ratio wall again — the recall is now in the pool, so
+it is a pricing problem, not an absence problem.
+
 ## Extreme-budget contract sweep (2026-07-06): corpus clean
 
 `for f in tests/fixtures/*/; do cargo run -q -- --budget 1000000 $f;
