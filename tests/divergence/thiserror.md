@@ -1,4 +1,4 @@
-Score(3000)=0.661 I=0.871 C=0.501 ns_rows≤3K=21/45 (reached=11 partial=2 missing=8)
+Score(3000)=0.661 I=0.872 C=0.502 ns_rows≤3K=21/45 (reached=11 partial=2 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -48,144 +48,142 @@ Score(3000)=0.661 I=0.871 C=0.501 ns_rows≤3K=21/45 (reached=11 partial=2 missi
 | ns | 1950 |  | 346 | Display-shorthand table + #[from] rule statement | 2.2 |  | 0.680 |
 | ns | 2177 |  | 227 | #[from] example + #[source] rule statement | 2.3 |  | 0.653 |
 | walker |  | 2186 | 333 | crate-doc body in src/lib.rs |  |  | 0.733 |
-| walker |  | 2214 | 28 | pub-item names surface in src/provide.rs |  |  | 0.733 |
 | ns | 2271 |  | 94 | provide()/backtrace rule statement | 2.4 |  | 0.723 |
-| walker |  | 2358 | 144 | manifest config in impl/Cargo.toml |  |  | 0.723 |
-| walker |  | 2387 | 29 | pub-item names surface in src/display.rs |  |  | 0.723 |
-| walker |  | 2417 | 30 | pub-item names surface in src/aserror.rs |  |  | 0.723 |
-| walker |  | 2445 | 28 | pub-item names surface in impl/src/unraw.rs |  |  | 0.723 |
+| walker |  | 2330 | 144 | manifest config in impl/Cargo.toml |  |  | 0.723 |
+| walker |  | 2358 | 28 | pub-item names surface in impl/src/unraw.rs |  |  | 0.723 |
+| walker |  | 2375 | 17 | pub item at impl/src/unraw.rs:12 |  |  | 0.723 |
+| walker |  | 2408 | 33 | pub item at impl/src/unraw.rs:82 |  |  | 0.723 |
+| walker |  | 2437 | 29 | pub-item names surface in impl/src/generics.rs |  |  | 0.723 |
+| walker |  | 2455 | 18 | pub item at impl/src/generics.rs:8 |  |  | 0.695 |
 | ns | 2455 |  | 184 | #[error(transparent)] rule + 'anything else' variant example | 2.5 |  | 0.695 |
-| walker |  | 2462 | 17 | pub item at impl/src/unraw.rs:12 |  |  | 0.695 |
-| walker |  | 2495 | 33 | pub item at impl/src/unraw.rs:82 |  |  | 0.695 |
-| walker |  | 2524 | 29 | pub-item names surface in impl/src/generics.rs |  |  | 0.695 |
-| walker |  | 2542 | 18 | pub item at impl/src/generics.rs:8 |  |  | 0.695 |
-| walker |  | 2583 | 41 | pub item at impl/src/generics.rs:48 |  |  | 0.695 |
-| walker |  | 2591 | 8 | listing of 'tests/no-std' |  |  | 0.711 |
-| walker |  | 2635 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.711 |
-| walker |  | 2635 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.711 |
-| walker |  | 2635 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.711 |
-| walker |  | 2894 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.730 |
-| ns | 2916 |  | 461 | src/aserror.rs — AsDynError trait + impls | 3.1 |  | 0.661 |
-| walker |  | 3016 | 122 | [package] in impl/Cargo.toml |  |  | 0.683 |
-| walker |  | 3075 | 59 | README.md section #11 |  |  | 0.683 |
-| ns | 3083 |  | 167 | src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated) | 3.2 |  | 0.659 |
-| walker |  | 3160 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.659 |
-| walker |  | 3160 | 0 | impl method at impl/src/unraw.rs:15 |  |  | 0.659 |
-| walker |  | 3160 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.659 |
-| walker |  | 3160 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.659 |
-| walker |  | 3160 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.659 |
-| walker |  | 3171 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.659 |
-| walker |  | 3183 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.659 |
-| ns | 3358 |  | 275 | src/private.rs (re-export surface) + src/var.rs (Var pointer wrapper) | 3.3 |  | 0.631 |
-| ns | 3648 |  | 290 | src/display.rs — AsDisplay trait + Path Display impl | 3.4 |  | 0.600 |
-| walker |  | 3710 | 527 | listing of 'tests/ui' |  |  | 0.605 |
-| walker |  | 4044 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.605 |
-| ns | 4065 |  | 417 | impl/src/ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind struct defs | 4.1 |  | 0.565 |
-| walker |  | 4328 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.602 |
-| walker |  | 4379 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.602 |
-| walker |  | 4432 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.602 |
-| walker |  | 4504 | 72 | README.md section #2 |  |  | 0.602 |
-| walker |  | 4512 | 8 | pub item at src/aserror.rs:45 |  |  | 0.602 |
-| walker |  | 4520 | 8 | pub item at src/display.rs:46 |  |  | 0.602 |
-| walker |  | 4528 | 8 | pub item at src/provide.rs:19 |  |  | 0.603 |
-| walker |  | 4584 | 56 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.603 |
-| ns | 4627 |  | 562 | impl/src/attr.rs — Attrs/Display/Source/From/Transparent/Fmt/Trait struct defs | 5.1 |  | 0.556 |
+| walker |  | 2496 | 41 | pub item at impl/src/generics.rs:48 |  |  | 0.695 |
+| walker |  | 2540 | 44 | pub-item names surface in src/provide.rs |  |  | 0.695 |
+| walker |  | 2585 | 45 | pub-item names surface in src/display.rs |  |  | 0.695 |
+| walker |  | 2631 | 46 | pub-item names surface in src/aserror.rs |  |  | 0.695 |
+| walker |  | 2639 | 8 | listing of 'tests/no-std' |  |  | 0.712 |
+| walker |  | 2683 | 44 | pub-item names surface in impl/src/expand.rs |  |  | 0.712 |
+| walker |  | 2683 | 0 | pub item at impl/src/expand.rs:12 |  |  | 0.712 |
+| walker |  | 2683 | 0 | pub item at impl/src/expand.rs:505 |  |  | 0.712 |
+| ns | 2916 |  | 461 | src/aserror.rs — AsDynError trait + impls | 3.1 |  | 0.644 |
+| walker |  | 2942 | 259 | crate-doc tail at src/lib.rs:45 |  |  | 0.661 |
+| walker |  | 3064 | 122 | [package] in impl/Cargo.toml |  |  | 0.683 |
+| ns | 3083 |  | 167 | src/provide.rs — ThiserrorProvide trait + blanket impl (cfg-gated) | 3.2 |  | 0.661 |
+| walker |  | 3123 | 59 | README.md section #11 |  |  | 0.661 |
+| walker |  | 3208 | 85 | impl method sigs in impl/src/unraw.rs |  |  | 0.661 |
+| walker |  | 3208 | 0 | impl method at impl/src/unraw.rs:15 |  |  | 0.661 |
+| walker |  | 3208 | 0 | impl method at impl/src/unraw.rs:19 |  |  | 0.661 |
+| walker |  | 3208 | 0 | impl method at impl/src/unraw.rs:32 |  |  | 0.661 |
+| walker |  | 3208 | 0 | impl method at impl/src/unraw.rs:88 |  |  | 0.661 |
+| walker |  | 3219 | 11 | impl method body at impl/src/unraw.rs:15 body 16 |  |  | 0.661 |
+| walker |  | 3231 | 12 | impl method body at impl/src/unraw.rs:32 body 33 |  |  | 0.661 |
+| ns | 3358 |  | 275 | src/private.rs (re-export surface) + src/var.rs (Var pointer wrapper) | 3.3 |  | 0.632 |
+| ns | 3648 |  | 290 | src/display.rs — AsDisplay trait + Path Display impl | 3.4 |  | 0.602 |
+| walker |  | 3758 | 527 | listing of 'tests/ui' |  |  | 0.606 |
+| ns | 4065 |  | 417 | impl/src/ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind struct defs | 4.1 |  | 0.566 |
+| walker |  | 4092 | 334 | crate-doc tail at src/lib.rs:59 |  |  | 0.566 |
+| walker |  | 4376 | 284 | crate-doc tail at src/lib.rs:99 |  |  | 0.603 |
+| walker |  | 4427 | 51 | mod/use plumbing in impl/src/valid.rs |  |  | 0.603 |
+| walker |  | 4480 | 53 | mod/use plumbing in impl/src/prop.rs |  |  | 0.603 |
+| walker |  | 4552 | 72 | README.md section #2 |  |  | 0.603 |
+| walker |  | 4608 | 56 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.603 |
+| ns | 4627 |  | 562 | impl/src/attr.rs — Attrs/Display/Source/From/Transparent/Fmt/Trait struct defs | 5.1 |  | 0.557 |
 | ns | 4904 |  | 277 | impl/src/valid.rs — Struct::validate() dispatch | 6.1 |  | 0.538 |
-| walker |  | 4973 | 389 | crate-doc tail at src/lib.rs:135 |  |  | 0.563 |
-| walker |  | 5352 | 379 | crate-doc tail at src/lib.rs:176 |  |  | 0.563 |
-| ns | 5382 |  | 478 | impl/src/valid.rs — check_non_field_attrs() | 6.2 |  | 0.537 |
-| walker |  | 5482 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.537 |
-| walker |  | 5482 | 0 | impl method at impl/src/generics.rs:13 |  |  | 0.537 |
-| walker |  | 5482 | 0 | impl method at impl/src/generics.rs:19 |  |  | 0.537 |
-| walker |  | 5482 | 0 | impl method at impl/src/generics.rs:54 |  |  | 0.537 |
-| walker |  | 5482 | 0 | impl method at impl/src/generics.rs:61 |  |  | 0.537 |
-| walker |  | 5482 | 0 | impl method at impl/src/generics.rs:74 |  |  | 0.537 |
-| walker |  | 5514 | 32 | impl method body at impl/src/generics.rs:19 body 20 |  |  | 0.537 |
-| walker |  | 5645 | 131 | impl method sigs in impl/src/valid.rs |  |  | 0.537 |
-| walker |  | 5645 | 0 | impl method at impl/src/valid.rs:6 |  |  | 0.537 |
-| walker |  | 5645 | 0 | impl method at impl/src/valid.rs:15 |  |  | 0.537 |
-| walker |  | 5645 | 0 | impl method at impl/src/valid.rs:46 |  |  | 0.537 |
-| walker |  | 5645 | 0 | impl method at impl/src/valid.rs:67 |  |  | 0.537 |
-| walker |  | 5645 | 0 | impl method at impl/src/valid.rs:92 |  |  | 0.537 |
-| walker |  | 5723 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.539 |
-| walker |  | 5749 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.541 |
-| walker |  | 5812 | 63 | pub item at impl/src/ast.rs:45 |  |  | 0.548 |
-| walker |  | 5865 | 53 | pub item at impl/src/ast.rs:15 |  |  | 0.557 |
-| walker |  | 5918 | 53 | pub item at impl/src/ast.rs:29 |  |  | 0.567 |
-| walker |  | 5972 | 54 | pub item at impl/src/ast.rs:22 |  |  | 0.580 |
-| walker |  | 6037 | 65 | pub item at impl/src/ast.rs:36 |  |  | 0.598 |
-| walker |  | 6134 | 97 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.598 |
-| walker |  | 6171 | 37 | impl method body at impl/src/generics.rs:13 body 14 |  |  | 0.598 |
-| walker |  | 6208 | 37 | impl method body at impl/src/generics.rs:54 body 55 |  |  | 0.598 |
+| walker |  | 4997 | 389 | crate-doc tail at src/lib.rs:135 |  |  | 0.564 |
+| walker |  | 5376 | 379 | crate-doc tail at src/lib.rs:176 |  |  | 0.564 |
+| ns | 5382 |  | 478 | impl/src/valid.rs — check_non_field_attrs() | 6.2 |  | 0.538 |
+| walker |  | 5506 | 130 | impl method sigs in impl/src/generics.rs |  |  | 0.538 |
+| walker |  | 5506 | 0 | impl method at impl/src/generics.rs:13 |  |  | 0.538 |
+| walker |  | 5506 | 0 | impl method at impl/src/generics.rs:19 |  |  | 0.538 |
+| walker |  | 5506 | 0 | impl method at impl/src/generics.rs:54 |  |  | 0.538 |
+| walker |  | 5506 | 0 | impl method at impl/src/generics.rs:61 |  |  | 0.538 |
+| walker |  | 5506 | 0 | impl method at impl/src/generics.rs:74 |  |  | 0.538 |
+| walker |  | 5538 | 32 | impl method body at impl/src/generics.rs:19 body 20 |  |  | 0.538 |
+| walker |  | 5669 | 131 | impl method sigs in impl/src/valid.rs |  |  | 0.538 |
+| walker |  | 5669 | 0 | impl method at impl/src/valid.rs:6 |  |  | 0.538 |
+| walker |  | 5669 | 0 | impl method at impl/src/valid.rs:15 |  |  | 0.538 |
+| walker |  | 5669 | 0 | impl method at impl/src/valid.rs:46 |  |  | 0.538 |
+| walker |  | 5669 | 0 | impl method at impl/src/valid.rs:67 |  |  | 0.538 |
+| walker |  | 5669 | 0 | impl method at impl/src/valid.rs:92 |  |  | 0.538 |
+| walker |  | 5747 | 78 | pub-item names surface in impl/src/ast.rs |  |  | 0.540 |
+| walker |  | 5773 | 26 | pub item at impl/src/ast.rs:10 |  |  | 0.542 |
+| walker |  | 5836 | 63 | pub item at impl/src/ast.rs:45 |  |  | 0.549 |
+| walker |  | 5889 | 53 | pub item at impl/src/ast.rs:15 |  |  | 0.557 |
+| walker |  | 5942 | 53 | pub item at impl/src/ast.rs:29 |  |  | 0.568 |
+| walker |  | 5996 | 54 | pub item at impl/src/ast.rs:22 |  |  | 0.581 |
+| walker |  | 6061 | 65 | pub item at impl/src/ast.rs:36 |  |  | 0.599 |
+| walker |  | 6158 | 97 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.599 |
+| walker |  | 6195 | 37 | impl method body at impl/src/generics.rs:13 body 14 |  |  | 0.599 |
 | ns | 6223 |  | 841 | impl/src/valid.rs — check_field_attrs() | 6.3 |  | 0.555 |
-| walker |  | 6285 | 77 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.555 |
-| ns | 6445 |  | 222 | impl/src/expand.rs — derive()/try_expand() entry point | 7.1 |  | 0.551 |
-| walker |  | 6826 | 541 | crate-doc tail at src/lib.rs:210 |  |  | 0.569 |
-| walker |  | 6847 | 21 | pub item at impl/src/scan_expr.rs:192 |  |  | 0.569 |
-| ns | 7008 |  | 563 | impl/src/expand.rs — impl_struct(): source() body construction | 7.2 |  | 0.547 |
-| walker |  | 7152 | 305 | README.md section #12 |  |  | 0.547 |
-| walker |  | 7264 | 112 | pub-item names surface in impl/src/attr.rs |  |  | 0.548 |
-| walker |  | 7264 | 0 | pub item at impl/src/attr.rs:69 |  |  | 0.548 |
-| walker |  | 7300 | 36 | pub item at impl/src/attr.rs:51 |  |  | 0.550 |
-| walker |  | 7336 | 36 | pub item at impl/src/attr.rs:45 |  |  | 0.552 |
-| ns | 7337 |  | 329 | impl/src/expand.rs — from_initializer(): generated From-impl body | 7.3 |  | 0.539 |
-| walker |  | 7372 | 36 | pub item at impl/src/attr.rs:39 |  |  | 0.542 |
-| walker |  | 7408 | 36 | pub item at impl/src/attr.rs:33 |  |  | 0.546 |
-| ns | 7433 |  | 96 | impl/src/expand.rs — impl_enum() entry: per-variant source() dispatch | 7.4 |  | 0.542 |
-| walker |  | 7500 | 92 | pub item at impl/src/attr.rs:57 |  |  | 0.554 |
-| walker |  | 7590 | 90 | pub item at impl/src/attr.rs:11 |  |  | 0.568 |
-| ns | 7634 |  | 201 | impl/src/fmt.rs — expand_shorthand() signature + setup | 8.1 |  | 0.561 |
-| walker |  | 7702 | 112 | pub item at impl/src/attr.rs:21 |  |  | 0.585 |
-| walker |  | 7801 | 99 | mod/use plumbing in impl/src/generics.rs |  |  | 0.585 |
-| walker |  | 7901 | 100 | mod/use plumbing in impl/src/unraw.rs |  |  | 0.585 |
-| walker |  | 7950 | 49 | impl method body at impl/src/unraw.rs:88 body 89 |  |  | 0.585 |
-| walker |  | 7976 | 26 | pub item at impl/src/fallback.rs:7 |  |  | 0.585 |
-| ns | 8048 |  | 414 | impl/src/fallback.rs (full file) | 9.1 |  | 0.571 |
-| ns | 8077 |  | 29 | impl/src/generics.rs — ParamsInScope/InferredBounds struct locations | 9.2 |  | 0.572 |
-| walker |  | 8088 | 112 | mod/use plumbing in impl/src/ast.rs |  |  | 0.572 |
+| walker |  | 6232 | 37 | impl method body at impl/src/generics.rs:54 body 55 |  |  | 0.555 |
+| walker |  | 6309 | 77 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.555 |
+| ns | 6445 |  | 222 | impl/src/expand.rs — derive()/try_expand() entry point | 7.1 |  | 0.552 |
+| walker |  | 6850 | 541 | crate-doc tail at src/lib.rs:210 |  |  | 0.570 |
+| walker |  | 6871 | 21 | pub item at impl/src/scan_expr.rs:192 |  |  | 0.570 |
+| ns | 7008 |  | 563 | impl/src/expand.rs — impl_struct(): source() body construction | 7.2 |  | 0.548 |
+| walker |  | 7176 | 305 | README.md section #12 |  |  | 0.548 |
+| walker |  | 7288 | 112 | pub-item names surface in impl/src/attr.rs |  |  | 0.549 |
+| walker |  | 7288 | 0 | pub item at impl/src/attr.rs:69 |  |  | 0.549 |
+| walker |  | 7324 | 36 | pub item at impl/src/attr.rs:51 |  |  | 0.551 |
+| ns | 7337 |  | 329 | impl/src/expand.rs — from_initializer(): generated From-impl body | 7.3 |  | 0.537 |
+| walker |  | 7360 | 36 | pub item at impl/src/attr.rs:45 |  |  | 0.540 |
+| walker |  | 7396 | 36 | pub item at impl/src/attr.rs:39 |  |  | 0.543 |
+| walker |  | 7432 | 36 | pub item at impl/src/attr.rs:33 |  |  | 0.546 |
+| ns | 7433 |  | 96 | impl/src/expand.rs — impl_enum() entry: per-variant source() dispatch | 7.4 |  | 0.543 |
+| walker |  | 7524 | 92 | pub item at impl/src/attr.rs:57 |  |  | 0.555 |
+| walker |  | 7614 | 90 | pub item at impl/src/attr.rs:11 |  |  | 0.569 |
+| ns | 7634 |  | 201 | impl/src/fmt.rs — expand_shorthand() signature + setup | 8.1 |  | 0.562 |
+| walker |  | 7726 | 112 | pub item at impl/src/attr.rs:21 |  |  | 0.586 |
+| walker |  | 7825 | 99 | mod/use plumbing in impl/src/generics.rs |  |  | 0.586 |
+| walker |  | 7925 | 100 | mod/use plumbing in impl/src/unraw.rs |  |  | 0.586 |
+| walker |  | 7974 | 49 | impl method body at impl/src/unraw.rs:88 body 89 |  |  | 0.586 |
+| walker |  | 8000 | 26 | pub item at impl/src/fallback.rs:7 |  |  | 0.586 |
+| ns | 8048 |  | 414 | impl/src/fallback.rs (full file) | 9.1 |  | 0.572 |
+| ns | 8077 |  | 29 | impl/src/generics.rs — ParamsInScope/InferredBounds struct locations | 9.2 |  | 0.573 |
+| walker |  | 8112 | 112 | mod/use plumbing in impl/src/ast.rs |  |  | 0.573 |
 | ns | 8128 |  | 51 | impl/src/unraw.rs + impl/src/scan_expr.rs — type/fn locations | 9.3 |  | 0.574 |
-| walker |  | 8222 | 134 | README.md section #9 |  |  | 0.574 |
+| walker |  | 8246 | 134 | README.md section #9 |  |  | 0.574 |
 | ns | 8291 |  | 163 | impl/src/prop.rs — from_field/source_field/backtrace_field/has_* predicate locations | 9.4 |  | 0.568 |
-| ns | 8485 |  | 194 | build.rs — rerun-if-changed / rustc-check-cfg declarations + OUT_DIR/private.rs generation | 10.1 |  | 0.562 |
-| walker |  | 8539 | 317 | impl method sigs in impl/src/prop.rs |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:7 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:11 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:15 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:19 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:26 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:32 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:38 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:54 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:58 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:62 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:66 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:73 |  |  | 0.575 |
-| walker |  | 8539 | 0 | impl method at impl/src/prop.rs:77 |  |  | 0.575 |
-| walker |  | 8563 | 24 | pub-item names surface in tests/test_backtrace.rs |  |  | 0.575 |
-| walker |  | 8575 | 12 | pub item at tests/test_backtrace.rs:8 |  |  | 0.575 |
-| ns | 8687 |  | 202 | ci.yml — header + every job key (roster) | 11.1 |  | 0.566 |
-| walker |  | 8720 | 145 | mod/use plumbing in impl/src/expand.rs |  |  | 0.566 |
-| walker |  | 8745 | 25 | pub-item names surface in tests/test_expr.rs |  |  | 0.566 |
-| walker |  | 8770 | 25 | pub-item names surface in tests/test_path.rs |  |  | 0.566 |
-| walker |  | 8921 | 151 | mod/use plumbing in impl/src/attr.rs |  |  | 0.566 |
-| ns | 8951 |  | 264 | ci.yml — primary `test` job detail | 11.2 |  | 0.558 |
-| ns | 8994 |  | 43 | rust-toolchain.toml + .gitignore + FUNDING.yml | 11.3 |  | 0.556 |
-| ns | 9184 |  | 190 | tests/test_error.rs — canonical error shapes | 12.1 |  | 0.547 |
-| walker |  | 9215 | 294 | impl method sigs in impl/src/ast.rs |  |  | 0.547 |
-| walker |  | 9215 | 0 | impl method at impl/src/ast.rs:55 |  |  | 0.547 |
-| walker |  | 9215 | 0 | impl method at impl/src/ast.rs:68 |  |  | 0.547 |
-| walker |  | 9215 | 0 | impl method at impl/src/ast.rs:86 |  |  | 0.547 |
-| walker |  | 9215 | 0 | impl method at impl/src/ast.rs:119 |  |  | 0.547 |
-| walker |  | 9215 | 0 | impl method at impl/src/ast.rs:131 |  |  | 0.547 |
-| walker |  | 9215 | 0 | impl method at impl/src/ast.rs:139 |  |  | 0.547 |
-| walker |  | 9215 | 0 | impl method at impl/src/ast.rs:157 |  |  | 0.547 |
-| walker |  | 9215 | 0 | impl method at impl/src/ast.rs:165 |  |  | 0.547 |
-| walker |  | 9257 | 42 | impl method sigs in impl/src/fmt.rs |  |  | 0.548 |
-| walker |  | 9257 | 0 | impl method at impl/src/fmt.rs:16 |  |  | 0.548 |
-| walker |  | 9267 | 10 | pub item body at impl/src/attr.rs:69 body 121 |  |  | 0.548 |
-| ns | 9388 |  | 204 | tests/test_from.rs — #[from] shapes (struct/tuple, plain and Option<T>) | 12.2 |  | 0.539 |
-| walker |  | 9439 | 172 | README.md section #7 |  |  | 0.539 |
-| walker |  | 9621 | 182 | README.md section #5 |  |  | 0.539 |
-| walker |  | 9659 | 38 | pub item at tests/test_path.rs:29 |  |  | 0.539 |
-| walker |  | 9851 | 192 | mod/use plumbing in impl/src/fmt.rs |  |  | 0.539 |
-| ns | 9915 |  | 527 | tests/ui/ directory listing (all 37 compile-fail cases + their .stderr) | 13.1 |  | 0.574 |
+| ns | 8485 |  | 194 | build.rs — rerun-if-changed / rustc-check-cfg declarations + OUT_DIR/private.rs generation | 10.1 |  | 0.563 |
+| walker |  | 8563 | 317 | impl method sigs in impl/src/prop.rs |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:7 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:11 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:15 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:19 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:26 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:32 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:38 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:54 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:58 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:62 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:66 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:73 |  |  | 0.576 |
+| walker |  | 8563 | 0 | impl method at impl/src/prop.rs:77 |  |  | 0.576 |
+| walker |  | 8587 | 24 | pub-item names surface in tests/test_backtrace.rs |  |  | 0.576 |
+| walker |  | 8599 | 12 | pub item at tests/test_backtrace.rs:8 |  |  | 0.576 |
+| ns | 8687 |  | 202 | ci.yml — header + every job key (roster) | 11.1 |  | 0.567 |
+| walker |  | 8744 | 145 | mod/use plumbing in impl/src/expand.rs |  |  | 0.567 |
+| walker |  | 8769 | 25 | pub-item names surface in tests/test_expr.rs |  |  | 0.567 |
+| walker |  | 8794 | 25 | pub-item names surface in tests/test_path.rs |  |  | 0.567 |
+| walker |  | 8945 | 151 | mod/use plumbing in impl/src/attr.rs |  |  | 0.567 |
+| ns | 8951 |  | 264 | ci.yml — primary `test` job detail | 11.2 |  | 0.559 |
+| ns | 8994 |  | 43 | rust-toolchain.toml + .gitignore + FUNDING.yml | 11.3 |  | 0.557 |
+| ns | 9184 |  | 190 | tests/test_error.rs — canonical error shapes | 12.1 |  | 0.548 |
+| walker |  | 9239 | 294 | impl method sigs in impl/src/ast.rs |  |  | 0.548 |
+| walker |  | 9239 | 0 | impl method at impl/src/ast.rs:55 |  |  | 0.548 |
+| walker |  | 9239 | 0 | impl method at impl/src/ast.rs:68 |  |  | 0.548 |
+| walker |  | 9239 | 0 | impl method at impl/src/ast.rs:86 |  |  | 0.548 |
+| walker |  | 9239 | 0 | impl method at impl/src/ast.rs:119 |  |  | 0.548 |
+| walker |  | 9239 | 0 | impl method at impl/src/ast.rs:131 |  |  | 0.548 |
+| walker |  | 9239 | 0 | impl method at impl/src/ast.rs:139 |  |  | 0.548 |
+| walker |  | 9239 | 0 | impl method at impl/src/ast.rs:157 |  |  | 0.548 |
+| walker |  | 9239 | 0 | impl method at impl/src/ast.rs:165 |  |  | 0.548 |
+| walker |  | 9281 | 42 | impl method sigs in impl/src/fmt.rs |  |  | 0.548 |
+| walker |  | 9281 | 0 | impl method at impl/src/fmt.rs:16 |  |  | 0.548 |
+| walker |  | 9291 | 10 | pub item body at impl/src/attr.rs:69 body 121 |  |  | 0.548 |
+| ns | 9388 |  | 204 | tests/test_from.rs — #[from] shapes (struct/tuple, plain and Option<T>) | 12.2 |  | 0.540 |
+| walker |  | 9463 | 172 | README.md section #7 |  |  | 0.540 |
+| walker |  | 9488 | 25 | pub item at src/aserror.rs:5 |  |  | 0.540 |
+| walker |  | 9670 | 182 | README.md section #5 |  |  | 0.540 |
+| walker |  | 9708 | 38 | pub item at tests/test_path.rs:29 |  |  | 0.540 |
+| walker |  | 9900 | 192 | mod/use plumbing in impl/src/fmt.rs |  |  | 0.540 |
+| ns | 9915 |  | 527 | tests/ui/ directory listing (all 37 compile-fail cases + their .stderr) | 13.1 |  | 0.575 |

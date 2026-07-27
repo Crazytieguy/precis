@@ -105,39 +105,39 @@ Score(3000)=0.451 I=0.676 C=0.302 ns_rows≤3K=23/81 (reached=5 partial=0 missin
 | ns | 3392 |  | 105 | build backend roster: cargo/cmake/go/make/meson/perl/python signatures | 3.5 | 3.4 | 0.439 |
 | walker |  | 3456 | 90 | README.md section #1 |  |  | 0.451 |
 | walker |  | 3468 | 12 | pub-item doc lede at sps-common/src/cache.rs:15 |  |  | 0.451 |
+| walker |  | 3491 | 23 | pub-item names surface in sps-common/src/dependency/definition.rs |  |  | 0.451 |
+| walker |  | 3516 | 25 | pub item at sps/src/cli/update.rs:11 |  |  | 0.451 |
+| walker |  | 3529 | 13 | pub-item doc lede at sps-common/src/keg.rs:21 |  |  | 0.451 |
 | ns | 3564 |  | 172 | build/env.rs: kept-env allowlist & BuildEnvironment struct | 3.6 |  | 0.440 |
-| ns | 3675 |  | 111 | build/env.rs: dependency-path -> CFLAGS/PKG_CONFIG_PATH wiring | 3.7 |  | 0.435 |
-| walker |  | 3688 | 220 | pub-item names surface in sps-core/src/install/cask/mod.rs |  |  | 0.435 |
-| walker |  | 3688 | 0 | pub item at sps-core/src/install/cask/mod.rs:37 |  |  | 0.435 |
-| walker |  | 3688 | 0 | pub item at sps-core/src/install/cask/mod.rs:43 |  |  | 0.435 |
-| walker |  | 3688 | 0 | pub item at sps-core/src/install/cask/mod.rs:49 |  |  | 0.435 |
-| walker |  | 3688 | 0 | pub item at sps-core/src/install/cask/mod.rs:73 |  |  | 0.435 |
-| walker |  | 3688 | 0 | pub item at sps-core/src/install/cask/mod.rs:686 |  |  | 0.435 |
-| walker |  | 3704 | 16 | pub item body at sps-core/src/install/cask/mod.rs:43 body 44 |  |  | 0.435 |
-| walker |  | 3750 | 46 | pub item at sps-core/src/install/cask/mod.rs:77 |  |  | 0.435 |
-| walker |  | 3769 | 19 | pub item body at sps-core/src/install/cask/mod.rs:73 body 74 |  |  | 0.435 |
-| ns | 3788 |  | 113 | install/mod.rs + install/bottle/mod.rs: install module map & bottle entry point | 3.8 |  | 0.444 |
-| walker |  | 3816 | 47 | pub item at sps-core/src/install/cask/mod.rs:612 |  |  | 0.444 |
-| walker |  | 3870 | 54 | pub item at sps-core/src/install/cask/mod.rs:232 |  |  | 0.444 |
-| ns | 3896 |  | 108 | install/bottle/exec.rs: download & install signatures | 3.9 |  | 0.438 |
-| ns | 3924 |  | 28 | install/bottle/link.rs: link/unlink signature roster | 3.10 |  | 0.436 |
-| walker |  | 3936 | 66 | pub item at sps-core/src/install/cask/mod.rs:580 |  |  | 0.436 |
-| walker |  | 3978 | 42 | pub item body at sps-core/src/install/cask/mod.rs:37 body 38 |  |  | 0.436 |
-| ns | 3988 |  | 64 | install/bottle/macho.rs: Mach-O relocation patching (macOS vs. stub) | 3.11 |  | 0.433 |
-| walker |  | 4112 | 134 | pub item at sps-core/src/install/cask/mod.rs:25 |  |  | 0.433 |
-| walker |  | 4130 | 18 | pub-item doc lede at sps-core/src/install/cask/mod.rs:37 |  |  | 0.433 |
-| walker |  | 4150 | 20 | pub-item doc lede at sps-core/src/install/cask/mod.rs:43 |  |  | 0.433 |
-| walker |  | 4194 | 44 | pub-item doc lede at sps-core/src/install/cask/mod.rs:49 |  |  | 0.433 |
-| walker |  | 4245 | 51 | pub-item doc lede at sps-core/src/install/cask/mod.rs:686 |  |  | 0.433 |
-| walker |  | 4272 | 27 | pub item body at sps-core/src/install/cask/mod.rs:686 body 687 |  |  | 0.433 |
-| walker |  | 4281 | 9 | pub item body at sps-core/src/install/cask/mod.rs:49 body 70 |  |  | 0.433 |
-| walker |  | 4304 | 23 | pub-item names surface in sps-common/src/dependency/definition.rs |  |  | 0.433 |
-| walker |  | 4329 | 25 | pub item at sps/src/cli/update.rs:11 |  |  | 0.433 |
-| walker |  | 4342 | 13 | pub-item doc lede at sps-common/src/keg.rs:21 |  |  | 0.423 |
-| ns | 4342 |  | 354 | install/cask/mod.rs + artifacts/mod.rs: cask manifest & 23-artifact roster | 3.12 |  | 0.423 |
-| ns | 4373 |  | 31 | install/cask/artifacts/app.rs: primary .app installer signatures | 3.13 |  | 0.422 |
-| walker |  | 4405 | 63 | pub item at sps-common/src/dependency/definition.rs:53 |  |  | 0.422 |
-| walker |  | 4441 | 36 | pub item at sps-core/src/build/compile/mod.rs:37 |  |  | 0.424 |
+| walker |  | 3592 | 63 | pub item at sps-common/src/dependency/definition.rs:53 |  |  | 0.440 |
+| walker |  | 3628 | 36 | pub item at sps-core/src/build/compile/mod.rs:37 |  |  | 0.443 |
+| ns | 3675 |  | 111 | build/env.rs: dependency-path -> CFLAGS/PKG_CONFIG_PATH wiring | 3.7 |  | 0.437 |
+| ns | 3788 |  | 113 | install/mod.rs + install/bottle/mod.rs: install module map & bottle entry point | 3.8 |  | 0.446 |
+| walker |  | 3869 | 241 | pub-item names surface in sps-core/src/install/cask/mod.rs |  |  | 0.446 |
+| walker |  | 3869 | 0 | pub item at sps-core/src/install/cask/mod.rs:37 |  |  | 0.446 |
+| walker |  | 3869 | 0 | pub item at sps-core/src/install/cask/mod.rs:43 |  |  | 0.446 |
+| walker |  | 3869 | 0 | pub item at sps-core/src/install/cask/mod.rs:49 |  |  | 0.446 |
+| walker |  | 3869 | 0 | pub item at sps-core/src/install/cask/mod.rs:73 |  |  | 0.446 |
+| walker |  | 3869 | 0 | pub item at sps-core/src/install/cask/mod.rs:686 |  |  | 0.446 |
+| walker |  | 3885 | 16 | pub item body at sps-core/src/install/cask/mod.rs:43 body 44 |  |  | 0.446 |
+| ns | 3896 |  | 108 | install/bottle/exec.rs: download & install signatures | 3.9 |  | 0.440 |
+| ns | 3924 |  | 28 | install/bottle/link.rs: link/unlink signature roster | 3.10 |  | 0.439 |
+| walker |  | 3930 | 45 | pub item at sps-core/src/install/cask/mod.rs:580 |  |  | 0.439 |
+| walker |  | 3976 | 46 | pub item at sps-core/src/install/cask/mod.rs:77 |  |  | 0.439 |
+| ns | 3988 |  | 64 | install/bottle/macho.rs: Mach-O relocation patching (macOS vs. stub) | 3.11 |  | 0.435 |
+| walker |  | 3995 | 19 | pub item body at sps-core/src/install/cask/mod.rs:73 body 74 |  |  | 0.435 |
+| walker |  | 4042 | 47 | pub item at sps-core/src/install/cask/mod.rs:612 |  |  | 0.435 |
+| walker |  | 4096 | 54 | pub item at sps-core/src/install/cask/mod.rs:232 |  |  | 0.435 |
+| walker |  | 4138 | 42 | pub item body at sps-core/src/install/cask/mod.rs:37 body 38 |  |  | 0.435 |
+| walker |  | 4272 | 134 | pub item at sps-core/src/install/cask/mod.rs:25 |  |  | 0.436 |
+| walker |  | 4290 | 18 | pub-item doc lede at sps-core/src/install/cask/mod.rs:37 |  |  | 0.436 |
+| walker |  | 4310 | 20 | pub-item doc lede at sps-core/src/install/cask/mod.rs:43 |  |  | 0.436 |
+| ns | 4342 |  | 354 | install/cask/mod.rs + artifacts/mod.rs: cask manifest & 23-artifact roster | 3.12 |  | 0.425 |
+| walker |  | 4354 | 44 | pub-item doc lede at sps-core/src/install/cask/mod.rs:49 |  |  | 0.425 |
+| ns | 4373 |  | 31 | install/cask/artifacts/app.rs: primary .app installer signatures | 3.13 |  | 0.424 |
+| walker |  | 4405 | 51 | pub-item doc lede at sps-core/src/install/cask/mod.rs:686 |  |  | 0.424 |
+| walker |  | 4432 | 27 | pub item body at sps-core/src/install/cask/mod.rs:686 body 687 |  |  | 0.424 |
+| walker |  | 4441 | 9 | pub item body at sps-core/src/install/cask/mod.rs:49 body 70 |  |  | 0.424 |
 | ns | 4443 |  | 70 | install/cask/artifacts/zap.rs: zap-stanza installer & path-safety helpers | 3.14 |  | 0.421 |
 | walker |  | 4466 | 25 | pub item at sps-core/src/utils/applescript.rs:75 |  |  | 0.421 |
 | ns | 4517 |  | 74 | install/cask dmg.rs + helpers.rs: DMG mount/extract & robust path removal | 3.15 |  | 0.418 |

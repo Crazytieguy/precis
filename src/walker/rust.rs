@@ -551,7 +551,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             // own with no predecessor.
             let emit_names_surface = items.len() > 1;
             let names_key = RustKey::PubItemNames { file: file.clone() };
-            let parent_names_lines = collect_pub_item_names(&items);
+            let parent_names_lines = collect_pub_item_names(&items, &source);
             if emit_names_surface
                 && let Some(content) =
                     single_file_lines_content(file, &source, parent_names_lines.clone())
@@ -1944,14 +1944,15 @@ fn collect_mod_use(tree: &Tree, source: &str) -> FileLines {
 /// Header lines for every top-level pub item (name + first line only, with
 /// an ellipsis marker where the body would be). Surface listing — see
 /// `PubItemNames`.
-fn collect_pub_item_names(items: &[PubItemInfo<'_>]) -> FileLines {
+fn collect_pub_item_names(items: &[PubItemInfo<'_>], source: &str) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for item in items {
+        full.extend(attr_rows_above(item.node, source, is_disavowal_attribute));
         full.push(item.start_line);
         ellipses.push(item.start_line + 1);
     }
-    FileLines::new(full).with_ellipses(ellipses)
+    FileLines::new(dedup_sorted(full)).with_ellipses(ellipses)
 }
 
 /// Lines for a single pub item's decl at `start_line`. For struct/enum/
@@ -2003,9 +2004,19 @@ fn is_api_shape_attribute(node: Node, source: &str) -> bool {
 fn is_polarity_attribute(node: Node, source: &str) -> bool {
     let text = attribute_body(node, source);
     text.starts_with("cfg(")
-        || text.starts_with("doc(hidden)")
-        || text.starts_with("deprecated")
         || text.starts_with("macro_export")
+        || is_disavowal_attribute(node, source)
+}
+
+/// The subset of [`is_polarity_attribute`] that contradicts a *names
+/// roster* rather than qualifying it. A roster claims "these items
+/// exist"; `#[cfg(…)]` only refines when, but `#[doc(hidden)]` and
+/// `#[deprecated]` say the item is not one the reader should reach for
+/// — the roster is frequently the only place an item appears, so
+/// listing it clean asserts the opposite.
+fn is_disavowal_attribute(node: Node, source: &str) -> bool {
+    let text = attribute_body(node, source);
+    text.starts_with("doc(hidden)") || text.starts_with("deprecated")
 }
 
 /// Source text of an `attribute_item` with its `#[` opener stripped, so
@@ -3055,6 +3066,37 @@ pub struct Foo;
             "gating and deprecation ride with the item alongside API shape; \
              implementation attributes and cfg_attr stay out, and a rejected \
              attribute in the middle must not hide the ones above it"
+        );
+    }
+
+    #[test]
+    fn rust_pub_item_roster_disavows_what_the_crate_disavows() {
+        let src = r#"
+#[doc(hidden)]
+pub trait Sealed {}
+
+#[deprecated(note = "use Bar")]
+pub struct Foo;
+
+#[cfg(feature = "std")]
+pub struct Gated;
+
+pub struct Plain;
+"#;
+        let tree = parse(src);
+        let items = find_top_level_item_starts(&tree, src, TopLevelItemVisibility::Public);
+        assert_eq!(
+            rendered(src, &collect_pub_item_names(&items, src)),
+            vec![
+                "#[doc(hidden)]",
+                "pub trait Sealed {}",
+                "#[deprecated(note = \"use Bar\")]",
+                "pub struct Foo;",
+                "pub struct Gated;",
+                "pub struct Plain;",
+            ],
+            "a roster claims these items exist; `cfg` only refines when, but \
+             doc(hidden)/deprecated contradict the roster's own claim"
         );
     }
 
