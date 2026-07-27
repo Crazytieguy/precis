@@ -39,7 +39,8 @@
 //! - The wrapping `#ifndef X` / `#define X` / `#endif` header guard
 //!   (recognized structurally — first `#ifndef` whose name is then
 //!   `#define`d on the next line, regardless of naming convention) is
-//!   descended into transparently. `extern "C" { ... }` linkage specs
+//!   descended into transparently, and its `#define X` is envelope
+//!   rather than a macro decl — see [`is_header_guard_define`]. `extern "C" { ... }` linkage specs
 //!   (including the `#ifdef __cplusplus` wrapper idiom common in C
 //!   headers) are likewise descended through so the wrapped decls are
 //!   visited as top-level. Other `preproc_if` / `preproc_ifdef` blocks
@@ -1342,9 +1343,10 @@ fn find_decls<'a>(
     admit_internal: bool,
 ) -> Vec<(Node<'a>, DeclInfo)> {
     let in_header = is_header_file(file);
+    let guard_name = header_guard_name(tree.root_node(), source);
     let mut out = Vec::new();
     walk_top_level(tree.root_node(), source, in_header, &mut |node| {
-        if let Some(info) = classify_decl(node, source, in_header)
+        if let Some(info) = classify_decl(node, source, in_header, guard_name)
             && (admit_internal || info.linkage == DeclLinkage::External)
         {
             out.push((node, info));
@@ -1565,6 +1567,13 @@ fn header_guard_body_node<'a>(root: Node<'a>, source: &str) -> Option<Node<'a>> 
     }
 }
 
+/// The symbol of the file's wrapping header guard, when it has one.
+fn header_guard_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
+    let guard = header_guard_body_node(root, source)?;
+    let name = guard.child_by_field_name("name")?;
+    Some(&source[name.start_byte()..name.end_byte()])
+}
+
 /// True iff `node` is `#ifndef X / #define X / … / #endif`.
 fn is_header_guard(ifdef: Node, source: &str) -> bool {
     let text = &source[ifdef.start_byte()..ifdef.end_byte()];
@@ -1599,7 +1608,14 @@ fn is_header_guard(ifdef: Node, source: &str) -> bool {
 
 /// Classify a top-level node as a decl. `None` for unsurfaced kinds
 /// (preproc_include, comments, non-inline `static` in `.h` files, …).
-fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> {
+/// `guard_name` is the file's header-guard symbol, if it has one — see
+/// [`is_header_guard_define`].
+fn classify_decl(
+    node: Node,
+    source: &str,
+    in_header: bool,
+    guard_name: Option<&str>,
+) -> Option<DeclInfo> {
     let start_line = node.start_position().row + 1;
     let (kind, has_body, internal) = match node.kind() {
         "function_definition" => {
@@ -1631,7 +1647,7 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
         "preproc_def" => {
             // Skip the header-guard's own `#define X` — it's part of
             // the guard envelope, not a public macro.
-            if is_header_guard_define(node, source) {
+            if is_header_guard_define(node, source, guard_name) {
                 return None;
             }
             (DeclKind::Macro, false, false)
@@ -1917,15 +1933,27 @@ fn collect_enum_chunks(body: Node) -> Vec<AggregateMemberGroup> {
         .collect()
 }
 
-/// True iff `#define X` is the back-half of a header guard —
-/// uppercase name and no value.
-fn is_header_guard_define(node: Node, source: &str) -> bool {
+/// True iff `#define X` is the back-half of a header guard — the
+/// envelope that says "this is a header", not a declaration.
+///
+/// Matched against the file's own `#ifndef X` when the walker found a
+/// wrapping guard, so the recognition is structural rather than a
+/// naming convention: a mixed-case guard symbol is as much a guard as
+/// an all-caps one, and left in it becomes the file's *first* roster
+/// line — the cheapest thing any budget can buy there, so the first
+/// token ever spent on the header buys a symbol that carries nothing.
+/// The name-shape fallback (all-caps, no value) still covers guards
+/// this walker did not recognize as file-wrapping.
+fn is_header_guard_define(node: Node, source: &str, guard_name: Option<&str>) -> bool {
     let Some(name_node) = node.child_by_field_name("name") else {
         return false;
     };
     let name = &source[name_node.start_byte()..name_node.end_byte()];
     if name.is_empty() {
         return false;
+    }
+    if guard_name == Some(name) {
+        return node.child_by_field_name("value").is_none();
     }
     if !name
         .chars()
@@ -2641,6 +2669,33 @@ mod tests {
             );
             assert_eq!(decls[0].1.kind, DeclKind::FunctionDecl);
         }
+    }
+
+    #[test]
+    fn c_mixed_case_header_guard_is_not_a_declaration() {
+        // Guard symbols that aren't all-caps (htop's `HEADER_Foo`,
+        // soluna's `soluna_foo_h`) are guards all the same. Left on the
+        // roster the guard is its first and cheapest line, so the first
+        // token spent on the header buys a symbol carrying nothing.
+        let cases = &[
+            "#ifndef HEADER_ZfsArcStats\n#define HEADER_ZfsArcStats\nint foo();\n#endif\n",
+            "#ifndef soluna_version_h\n#define soluna_version_h\nint foo();\n#endif\n",
+        ];
+        for src in cases {
+            let (source, tree) = parse(src);
+            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
+            assert_eq!(
+                decls.iter().map(|(_, i)| i.kind).collect::<Vec<_>>(),
+                vec![DeclKind::FunctionDecl],
+                "the guard's `#define` is envelope, not a macro decl:\n{src}"
+            );
+        }
+        // Only the guard's own symbol is envelope: another mixed-case
+        // `#define` beside it is a real macro and keeps its place.
+        let (source, tree) = parse("#ifndef FOO_H\n#define FOO_H\n#define Foo_Debug\n#endif\n");
+        let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
+        assert_eq!(decls.len(), 1);
+        assert_eq!(decls[0].1.start_line, 3);
     }
 
     fn configuration_surface_role(filename: &str, source: &str) -> bool {
