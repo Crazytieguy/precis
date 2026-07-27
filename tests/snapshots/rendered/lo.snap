@@ -29,6 +29,75 @@ README.md
       68→## 💡 Usage
     …
      100→## 🤠 Spec
+     101→
+     102→GoDoc: [godoc.org/github.com/samber/lo](https://godoc.org/github.com/samber/lo)
+     103→
+     104→Documentation: [lo.samber.dev](https://lo.samber.dev/docs/about)
+     105→
+     106→Supported helpers for slices:
+     107→
+     108→- [Filter](#filter)
+     109→- [Map](#map)
+     110→- [UniqMap](#uniqmap)
+     111→- [FilterMap](#filtermap)
+     112→- [FlatMap](#flatmap)
+     113→- [Reduce](#reduce)
+     114→- [ReduceRight](#reduceright)
+     115→- [ForEach](#foreach)
+     116→- [ForEachWhile](#foreachwhile)
+     117→- [Times](#times)
+     118→- [Uniq](#uniq)
+     119→- [UniqBy](#uniqby)
+     120→- [GroupBy](#groupby)
+     121→- [GroupByMap](#groupbymap)
+     122→- [Chunk](#chunk)
+     123→- [Window](#window)
+     124→- [Sliding](#sliding)
+     125→- [PartitionBy](#partitionby)
+     126→- [Flatten](#flatten)
+     127→- [Concat](#concat)
+     128→- [Interleave](#interleave)
+     129→- [Shuffle](#shuffle)
+     130→- [Reverse](#reverse)
+     131→- [Fill](#fill)
+     132→- [Repeat](#repeat)
+     133→- [RepeatBy](#repeatby)
+     134→- [KeyBy](#keyby)
+     135→- [SliceToMap / Associate](#slicetomap-alias-associate)
+     136→- [FilterSliceToMap](#filterslicetomap)
+     137→- [Keyify](#keyify)
+     138→- [Take](#take)
+     139→- [TakeWhile](#takewhile)
+     140→- [TakeFilter](#takefilter)
+     141→- [Drop](#drop)
+     142→- [DropRight](#dropright)
+     143→- [DropWhile](#dropwhile)
+     144→- [DropRightWhile](#droprightwhile)
+     145→- [DropByIndex](#DropByIndex)
+     146→- [Reject](#reject)
+     147→- [RejectMap](#rejectmap)
+     148→- [FilterReject](#filterreject)
+     149→- [Count](#count)
+     150→- [CountBy](#countby)
+     151→- [CountValues](#countvalues)
+     152→- [CountValuesBy](#countvaluesby)
+     153→- [Subset](#subset)
+     154→- [Slice](#slice)
+     155→- [Replace](#replace)
+     156→- [ReplaceAll](#replaceall)
+     157→- [Clone](#clone)
+     158→- [Compact](#compact)
+     159→- [IsSorted](#issorted)
+     160→- [IsSortedBy](#issortedby)
+     161→- [Splice](#Splice)
+     162→- [Cut](#Cut)
+     163→- [CutPrefix](#CutPrefix)
+     164→- [CutSuffix](#CutSuffix)
+     165→- [Trim](#Trim)
+     166→- [TrimLeft](#TrimLeft)
+     167→- [TrimPrefix](#TrimPrefix)
+     168→- [TrimRight](#TrimRight)
+     169→- [TrimSuffix](#TrimSuffix)
     …
     1624→Creates a slice of the map keys.
     …
@@ -48,19 +117,9 @@ README.md
 benchmark/ …
 channel.go …
 channel_test.go …
-concurrency.go
-       1→package lo
-       2→
-       3→import (
-       4→	"context"
-       5→	"sync"
-       6→	"time"
-       7→)
-    …
+concurrency.go …
 concurrency_test.go …
-condition.go
-       1→package lo
-    …
+condition.go …
 condition_test.go …
 constraints.go
        1→package lo
@@ -95,15 +154,7 @@ docs/
         theme/ …
     static/ …
     tsconfig.json …
-errors.go
-       1→package lo
-       2→
-       3→import (
-       4→	"errors"
-       5→	"fmt"
-       6→	"reflect"
-       7→)
-    …
+errors.go …
 errors_test.go …
 exp/
     simd/
@@ -161,9 +212,7 @@ exp/
         unsafe.go …
 find.go …
 find_test.go …
-func.go
-       1→package lo
-    …
+func.go …
 func_test.go …
 go.mod
        1→module github.com/samber/lo
@@ -196,10 +245,7 @@ internal/
                2→# Constraints
                3→
                4→This package is for Go 1.18 retrocompatiblity purpose.
-        constraints.go
-            …
-               7→package constraints
-            …
+        constraints.go …
         ordered_go118.go
             …
                3→package constraints
@@ -248,9 +294,7 @@ internal/
               14→func (*noCopy) Unlock() {}
         real.go …
         time.go …
-intersect.go
-       1→package lo
-    …
+intersect.go …
 intersect_test.go …
 it/
     channel.go
@@ -291,9 +335,7 @@ it/
     type_manipulation_test.go …
 lo_example_test.go …
 lo_test.go …
-map.go
-       1→package lo
-    …
+map.go …
 map_test.go …
 math.go …
 math_test.go …
@@ -311,24 +353,10 @@ slice.go …
 slice_test.go …
 string.go …
 string_test.go …
-time.go
-       1→package lo
-       2→
-       3→import (
-       4→	"time"
-       5→)
-    …
+time.go …
 time_test.go …
-tuples.go
-       1→package lo
-    …
+tuples.go …
 tuples_test.go …
-type_manipulation.go
-       1→package lo
-       2→
-       3→import "reflect"
-    …
+type_manipulation.go …
 type_manipulation_test.go …
-types.go
-       1→package lo
-    …
+types.go …

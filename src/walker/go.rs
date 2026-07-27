@@ -3,7 +3,9 @@
 //!
 //! Per-file keys:
 //! - `PackageImports { file }`: `package …` clause + `import (…)` block.
-//!   Plumbing batch.
+//!   Plumbing batch. Predecessor: the file's `DeclNames` head chunk when
+//!   the file declares anything — imports refine a summarized file, they
+//!   don't open an unsummarized one.
 //! - `DeclNames { file }`: surface listing of every top-level
 //!   declaration's first line — visibility-blind catastrophic-omission
 //!   hedge. Grouped `type ( … )` / `var ( … )` / `const ( … )` blocks
@@ -352,21 +354,6 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 });
             }
         }
-        if let Some(content) =
-            single_file_lines_content(file, &source, collect_package_imports(&tree, &source))
-        {
-            out.push(Batch {
-                key: GoKey::PackageImports { file: file.clone() }.into(),
-                predecessor: None,
-                content,
-                value: GoRole::PackageImports.value(file, ctx, entry_factor, 1.0),
-            });
-        }
-
-        if decls.is_empty() {
-            continue;
-        }
-
         // Names-surface chunking: only oversized API files (both many
         // decls AND many lines) chunk. Smaller files emit their full
         // surface so it can land in one batch at small budgets.
@@ -401,8 +388,10 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 .map(|chunk| collect_decl_names_from(chunk, &all_name_lines))
                 .collect()
         };
+        let mut names_head_emitted = false;
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
+                names_head_emitted = names_head_emitted || chunk_index == 0;
                 out.push(Batch {
                     key: names_keys[chunk_index].clone().into(),
                     predecessor: None,
@@ -411,6 +400,26 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         * names_surface_chunk_factor(chunk_index, chunk_count),
                 });
             }
+        }
+        // The import block is a refinement of the file's declaration
+        // roster, not an entry point into the file. Ungated it is the
+        // cheapest batch any source file offers, so the first token ever
+        // spent on a file buys `package X` + a list of dependencies —
+        // which renders as a confident "examined, it's plumbing" where a
+        // bare filename honestly rendered "not covered". Gating behind
+        // the roster keeps imports purchasable (they really do carry the
+        // dependency surface) while making a declaration listing the
+        // file's first admitted content. Files with no declarations have
+        // no roster to gate on and stay ungated.
+        if let Some(content) =
+            single_file_lines_content(file, &source, collect_package_imports(&tree, &source))
+        {
+            out.push(Batch {
+                key: GoKey::PackageImports { file: file.clone() }.into(),
+                predecessor: names_head_emitted.then(|| BatchKey::Go(names_keys[0].clone())),
+                content,
+                value: GoRole::PackageImports.value(file, ctx, entry_factor, 1.0),
+            });
         }
         for (decl_index, (node, info)) in decls.iter().enumerate() {
             let chunk_index = decl_index / GO_DECL_NAMES_CHUNK_SIZE;
@@ -1505,6 +1514,40 @@ package foo
         let (source, tree) = parse(src);
         let (lede, _) = collect_package_doc_parts(&tree, &source);
         assert_eq!(lede.full, vec![1, 2]);
+    }
+
+    /// `PackageImports` predecessor for the sole `.go` file in a temp dir.
+    fn package_imports_predecessor(src: &str) -> Option<BatchKey> {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("subject.go");
+        std::fs::write(&path, src).unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        expand_source_files(&[path], &ctx)
+            .into_iter()
+            .find(|b| matches!(b.key, BatchKey::Go(GoKey::PackageImports { .. })))
+            .expect("emits a PackageImports batch")
+            .predecessor
+    }
+
+    #[test]
+    fn go_imports_gate_on_the_files_declaration_roster() {
+        let pred = package_imports_predecessor(
+            "package foo\n\nimport \"strings\"\n\nfunc Foo(s string) string { return s }\n",
+        );
+        assert!(
+            matches!(
+                pred,
+                Some(BatchKey::Go(GoKey::DeclNames { chunk_index: 0, .. }))
+            ),
+            "imports should refine the decl roster, not open the file: {pred:?}"
+        );
+    }
+
+    #[test]
+    fn go_imports_stay_ungated_when_the_file_declares_nothing() {
+        // No roster exists to gate on, so gating would strand the batch.
+        let pred = package_imports_predecessor("package foo\n\nimport \"strings\"\n");
+        assert_eq!(pred, None);
     }
 
     #[test]

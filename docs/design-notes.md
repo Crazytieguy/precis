@@ -1615,3 +1615,64 @@ large families (instead of flushing on each large family) is worse —
 the old occasional solo sub-minimum pack is a cheap early buy, the
 merged pack schedules later (htmy/tomli). The flush-on-large behavior
 is deliberate now; see the comment in `pack_small_tool_config_families`.
+
+## Import blocks are refinements, not entry points (2026-07-26)
+
+**Shipped** as `PackageImports`'s `DeclNames`-head predecessor in
+`src/walker/go.rs` and `ModUse`'s declaration-surface predecessor in
+`src/walker/rust.rs`. Corpus-flat at every grid budget
+(Score(3000) 0.6389 → 0.6388, Score(9000) +0.0002); shipped for the
+render, not the headline.
+
+**The defect.** A blind usability probe found the only class where
+*more* budget makes the reader more confidently wrong: an ungated
+import block is the cheapest batch a source file offers, so the first
+marginal token ever spent on a file buys its least informative region.
+gin's `routergroup.go` at 9000 rendered `package gin` + four std
+imports and nothing else — "examined, it's plumbing" — while the same
+file at 3000 rendered bare and correctly read as "not covered". Every
+ranking improvement that shifts budget toward a file first buys that
+file's imports, so this silently taxes future work.
+
+**Suppression is dead; reordering is not.** The 2026-07-18 "Go
+import-crumb suppression (7 variants)" result stands — deleting the
+content frees tokens that never buy NS-aligned replacements, and that
+is confirmed again here: the metric does not move. The mechanisms
+differ in what they predict. Gating keeps the batch purchasable (the
+dependency surface really is informative on some files) and only
+denies it the *first* slot; the win is that a file's first admitted
+content is now a declaration roster, and a file that cannot afford one
+stays honestly bare. Measured by rendering the 12 Go + 8 Rust training
+fixtures at 3000 and 9000 and counting files whose entire rendered
+content is import plumbing: **41 → 5**, and 4 of the 5 residual are
+files that declare nothing at all (nothing to gate on) or a genuine
+`doc.go`. Dense-budget band means (50-token steps) are +0.0002 at
+0.5–1.5K, +0.0001 at 1.5–3K, flat above.
+
+**Rule.** Go: every `PackageImports` gates on its file's `DeclNames`
+head chunk; decl-less files stay ungated. Rust: `ModUse` gates on
+`PubItemNames` (or the lone `PubItem` when no roster is emitted) **only
+when the block declares nothing** — a top-level `mod` item or a
+`pub use` re-export publishes names rather than importing them, so
+those blocks are declaration surface and stay entry points. The Rust
+half is near-inert on this corpus (one file, sps `model/artifact.rs`);
+it is carried because the class is identical and the guard is what
+keeps crate-root module tables and re-export surfaces unaffected.
+
+**Measured and rejected: splitting the `package` clause out of the
+imports batch** (clause rides the package-doc lede, `PackageImports`
+becomes imports-only). Motivated by xxhash, whose NS 1.4 "package doc
+comment" spans `xxhash.go:1-3` — line 3 is the clause, so gating the
+fused batch flips that row from reached to partial (−0.005). The split
+costs more than it recovers: gin −0.064 @2080, act −0.036 @1442,
+corpus −0.0008 @2080 / −0.0004 @9000. `package X` carries real
+NS-aligned mass on files with no package comment; it is not plumbing.
+The xxhash −0.005 is accepted as the price of the gate.
+
+**Residual class, not addressed:** a Go file that declares nothing
+renders its bare `package X` clause as its whole content
+(`lo/simd.go`, `mcphost/internal/tokens/anthropic.go`). Same shape in
+miniature, but there is no roster to gate on and the batch is ~3
+tokens. Other walkers were out of this lane's file ownership; C
+include guards (probe-reported, ~7 occurrences at 3K in htop, ~25 at
+9K) are the same defect in `src/walker/c.rs` and are unfixed.
