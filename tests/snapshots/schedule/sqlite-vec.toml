@@ -1207,10 +1207,62 @@ kind = "full"
 
 [[batches]]
 position = 32
+key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 40, chunk_index: 1 })'
+descriptor = "YAML reference leaf contracts in reference.yaml:40 chunk 2"
+cost_tokens = 55
+cum_tokens = 2211
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "reference.yaml"
+start = 72
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "reference.yaml"
+start = 79
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "reference.yaml"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 33
+key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 328, chunk_index: 0 })'
+descriptor = "YAML reference leaf contracts in reference.yaml:328 chunk 1"
+cost_tokens = 62
+cum_tokens = 2273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "reference.yaml"
+start = 329
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
 key = 'Python(DeclNames { file: "tmp-static.py" })'
 descriptor = "python decl names surface in tmp-static.py"
 cost_tokens = 132
-cum_tokens = 2288
+cum_tokens = 2405
 
 [batches.content]
 kind = "lines"
@@ -1248,11 +1300,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 35
 key = 'Python(Decl { file: "tmp-static.py", start_line: 25 })'
 descriptor = "python decl at tmp-static.py:25"
 cost_tokens = 0
-cum_tokens = 2288
+cum_tokens = 2405
 
 [batches.content]
 kind = "lines"
@@ -1261,58 +1313,6 @@ kind = "lines"
 path = "tmp-static.py"
 start = 25
 end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 40, chunk_index: 1 })'
-descriptor = "YAML reference leaf contracts in reference.yaml:40 chunk 2"
-cost_tokens = 55
-cum_tokens = 2343
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "reference.yaml"
-start = 72
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "reference.yaml"
-start = 79
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "reference.yaml"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 35
-key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 328, chunk_index: 0 })'
-descriptor = "YAML reference leaf contracts in reference.yaml:328 chunk 1"
-cost_tokens = 62
-cum_tokens = 2405
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "reference.yaml"
-start = 329
-end = 336
 
 [batches.content.spans.render]
 kind = "full"
@@ -1491,160 +1491,10 @@ kind = "full"
 
 [[batches]]
 position = 44
-key = 'Python(DeclNames { file: "bindings/python/extra_init.py" })'
-descriptor = "python decl names surface in bindings/python/extra_init.py"
-cost_tokens = 39
-cum_tokens = 3555
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 45
-key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 6 })'
-descriptor = "python decl at bindings/python/extra_init.py:6"
-cost_tokens = 0
-cum_tokens = 3555
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 11 })'
-descriptor = "python decl at bindings/python/extra_init.py:11"
-cost_tokens = 0
-cum_tokens = 3555
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
-descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
-cost_tokens = 17
-cum_tokens = 3572
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
-key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 6 })'
-descriptor = "python decl doc at bindings/python/extra_init.py:6"
-cost_tokens = 22
-cum_tokens = 3594
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
-key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 11 })'
-descriptor = "python decl doc at bindings/python/extra_init.py:11"
-cost_tokens = 24
-cum_tokens = 3618
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
-descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
-cost_tokens = 17
-cum_tokens = 3635
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "bindings/python/extra_init.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
 key = 'Plaintext(Whole { file: "TODO" })'
 descriptor = "plaintext config TODO"
 cost_tokens = 249
-cum_tokens = 3884
+cum_tokens = 3765
 
 [batches.content]
 kind = "lines"
@@ -1658,11 +1508,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 52
+position = 45
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 258, chunk_index: 0 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:258 chunk 1"
 cost_tokens = 243
-cum_tokens = 4127
+cum_tokens = 4008
 
 [batches.content]
 kind = "lines"
@@ -1756,11 +1606,25 @@ end = 297
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 46
+key = 'Fs(DirListing { dir: "site/getting-started" })'
+descriptor = "listing of 'site/getting-started'"
+cost_tokens = 7
+cum_tokens = 4015
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "site/getting-started"
+entries = ["installation.md", "introduction.md"]
+
+[[batches]]
+position = 47
 key = 'Python(Imports { file: "bindings/python/extra_init.py" })'
 descriptor = "python imports in bindings/python/extra_init.py"
-cost_tokens = 26
-cum_tokens = 4153
+cost_tokens = 30
+cum_tokens = 4045
 
 [batches.content]
 kind = "lines"
@@ -1774,25 +1638,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 54
-key = 'Fs(DirListing { dir: "site/getting-started" })'
-descriptor = "listing of 'site/getting-started'"
-cost_tokens = 7
-cum_tokens = 4160
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "site/getting-started"
-entries = ["installation.md", "introduction.md"]
-
-[[batches]]
-position = 55
+position = 48
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 83, chunk_index: 2 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:83 chunk 3"
 cost_tokens = 235
-cum_tokens = 4395
+cum_tokens = 4280
 
 [batches.content]
 kind = "lines"
@@ -1886,11 +1736,11 @@ end = 243
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 49
 key = 'Fs(DirListing { dir: "site/.vitepress" })'
 descriptor = "listing of 'site/.vitepress'"
 cost_tokens = 8
-cum_tokens = 4403
+cum_tokens = 4288
 
 [batches.content]
 kind = "fs"
@@ -1900,11 +1750,11 @@ parent = "site/.vitepress"
 entries = ["config.mts", "theme"]
 
 [[batches]]
-position = 57
+position = 50
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 157
-cum_tokens = 4560
+cum_tokens = 4445
 
 [batches.content]
 kind = "lines"
@@ -1918,11 +1768,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 58
+position = 51
 key = 'C(DeclNames { file: "sqlite-vec.c", chunk_index: 0 })'
 descriptor = "c decl names surface in sqlite-vec.c"
 cost_tokens = 396
-cum_tokens = 4956
+cum_tokens = 4841
 
 [batches.content]
 kind = "lines"
@@ -2080,11 +1930,11 @@ end = 684
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 52
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 591 })'
 descriptor = "c decl at sqlite-vec.c:591"
 cost_tokens = 0
-cum_tokens = 4956
+cum_tokens = 4841
 
 [batches.content]
 kind = "lines"
@@ -2106,11 +1956,11 @@ end = 592
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 53
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 614 })'
 descriptor = "c decl at sqlite-vec.c:614"
 cost_tokens = 0
-cum_tokens = 4956
+cum_tokens = 4841
 
 [batches.content]
 kind = "lines"
@@ -2132,11 +1982,11 @@ end = 615
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 54
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 629 })'
 descriptor = "c decl at sqlite-vec.c:629"
 cost_tokens = 0
-cum_tokens = 4956
+cum_tokens = 4841
 
 [batches.content]
 kind = "lines"
@@ -2158,11 +2008,11 @@ end = 630
 kind = "ellipsis"
 
 [[batches]]
-position = 62
+position = 55
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 646 })'
 descriptor = "c decl at sqlite-vec.c:646"
 cost_tokens = 0
-cum_tokens = 4956
+cum_tokens = 4841
 
 [batches.content]
 kind = "lines"
@@ -2184,11 +2034,11 @@ end = 647
 kind = "ellipsis"
 
 [[batches]]
-position = 63
+position = 56
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 656 })'
 descriptor = "c decl at sqlite-vec.c:656"
 cost_tokens = 0
-cum_tokens = 4956
+cum_tokens = 4841
 
 [batches.content]
 kind = "lines"
@@ -2210,11 +2060,11 @@ end = 657
 kind = "ellipsis"
 
 [[batches]]
-position = 64
+position = 57
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 667 })'
 descriptor = "c decl at sqlite-vec.c:667"
 cost_tokens = 0
-cum_tokens = 4956
+cum_tokens = 4841
 
 [batches.content]
 kind = "lines"
@@ -2236,11 +2086,11 @@ end = 668
 kind = "ellipsis"
 
 [[batches]]
-position = 65
+position = 58
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 598 })'
 descriptor = "c decl at sqlite-vec.c:598"
 cost_tokens = 42
-cum_tokens = 4998
+cum_tokens = 4883
 
 [batches.content]
 kind = "lines"
@@ -2254,11 +2104,11 @@ end = 603
 kind = "full"
 
 [[batches]]
-position = 66
+position = 59
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 115 })'
 descriptor = "c decl at sqlite-vec.c:115"
 cost_tokens = 80
-cum_tokens = 5078
+cum_tokens = 4963
 
 [batches.content]
 kind = "lines"
@@ -2272,11 +2122,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 67
+position = 60
 key = 'Fs(DirListing { dir: "site/features" })'
 descriptor = "listing of 'site/features'"
 cost_tokens = 9
-cum_tokens = 5087
+cum_tokens = 4972
 
 [batches.content]
 kind = "fs"
@@ -2286,11 +2136,11 @@ parent = "site/features"
 entries = ["knn.md", "vec0.md"]
 
 [[batches]]
-position = 68
+position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "README.md section #4"
 cost_tokens = 474
-cum_tokens = 5561
+cum_tokens = 5446
 
 [batches.content]
 kind = "lines"
@@ -2304,11 +2154,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 69
+position = 62
 key = 'Fs(DirListing { dir: "benchmarks/micro/benches" })'
 descriptor = "listing of 'benchmarks/micro/benches'"
 cost_tokens = 5
-cum_tokens = 5566
+cum_tokens = 5451
 
 [batches.content]
 kind = "fs"
@@ -2318,11 +2168,11 @@ parent = "benchmarks/micro/benches"
 entries = ["my_benchmark.rs"]
 
 [[batches]]
-position = 70
+position = 63
 key = 'Fs(DirListing { dir: "tests/fuzz/corpus" })'
 descriptor = "listing of 'tests/fuzz/corpus'"
 cost_tokens = 5
-cum_tokens = 5571
+cum_tokens = 5456
 
 [batches.content]
 kind = "fs"
@@ -2332,11 +2182,11 @@ parent = "tests/fuzz/corpus"
 entries = ["vec0-create"]
 
 [[batches]]
-position = 71
+position = 64
 key = 'Fs(DirListing { dir: "tests/correctness" })'
 descriptor = "listing of 'tests/correctness'"
 cost_tokens = 10
-cum_tokens = 5581
+cum_tokens = 5466
 
 [batches.content]
 kind = "fs"
@@ -2346,11 +2196,11 @@ parent = "tests/correctness"
 entries = ["build.py", "test-correctness.py"]
 
 [[batches]]
-position = 72
+position = 65
 key = 'C(DeclBody { file: "sqlite-vec.c", start_line: 591 })'
 descriptor = "c decl body at sqlite-vec.c:591"
 cost_tokens = 68
-cum_tokens = 5649
+cum_tokens = 5534
 
 [batches.content]
 kind = "lines"
@@ -2364,11 +2214,11 @@ end = 596
 kind = "full"
 
 [[batches]]
-position = 73
+position = 66
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 83, chunk_index: 1 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:83 chunk 2"
 cost_tokens = 211
-cum_tokens = 5860
+cum_tokens = 5745
 
 [batches.content]
 kind = "lines"
@@ -2430,11 +2280,11 @@ end = 177
 kind = "ellipsis"
 
 [[batches]]
-position = 74
+position = 67
 key = 'Fs(DirListing { dir: "benchmarks/profiling" })'
 descriptor = "listing of 'benchmarks/profiling'"
 cost_tokens = 11
-cum_tokens = 5871
+cum_tokens = 5756
 
 [batches.content]
 kind = "fs"
@@ -2444,11 +2294,11 @@ parent = "benchmarks/profiling"
 entries = ["build-from-npy.sql", "query-k.sql"]
 
 [[batches]]
-position = 75
+position = 68
 key = 'Fs(DirListing { dir: "tests/minimum" })'
 descriptor = "listing of 'tests/minimum'"
 cost_tokens = 12
-cum_tokens = 5883
+cum_tokens = 5768
 
 [batches.content]
 kind = "fs"
@@ -2458,11 +2308,11 @@ parent = "tests/minimum"
 entries = [".gitignore", "Makefile", "demo.c"]
 
 [[batches]]
-position = 76
+position = 69
 key = 'C(DeclBody { file: "sqlite-vec.c", start_line: 646 })'
 descriptor = "c decl body at sqlite-vec.c:646"
 cost_tokens = 76
-cum_tokens = 5959
+cum_tokens = 5844
 
 [batches.content]
 kind = "lines"
@@ -2471,6 +2321,156 @@ kind = "lines"
 path = "sqlite-vec.c"
 start = 647
 end = 653
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Python(DeclNames { file: "bindings/python/extra_init.py" })'
+descriptor = "python decl names surface in bindings/python/extra_init.py"
+cost_tokens = 35
+cum_tokens = 5879
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 71
+key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 6 })'
+descriptor = "python decl at bindings/python/extra_init.py:6"
+cost_tokens = 0
+cum_tokens = 5879
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 11 })'
+descriptor = "python decl at bindings/python/extra_init.py:11"
+cost_tokens = 0
+cum_tokens = 5879
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
+descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
+cost_tokens = 17
+cum_tokens = 5896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 6 })'
+descriptor = "python decl doc at bindings/python/extra_init.py:6"
+cost_tokens = 22
+cum_tokens = 5918
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 11 })'
+descriptor = "python decl doc at bindings/python/extra_init.py:11"
+cost_tokens = 24
+cum_tokens = 5942
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
+descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
+cost_tokens = 17
+cum_tokens = 5959
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "bindings/python/extra_init.py"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "full"

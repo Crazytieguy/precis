@@ -12,78 +12,78 @@ Score(3000)=0.664 I=0.871 C=0.506 ns_rows≤3K=16/52 (reached=8 partial=2 missin
 | walker |  | 138 | 46 | python imports in swarm/__init__.py |  |  | 0.897 |
 | walker |  | 147 | 9 | listing of 'swarm/repl' |  |  | 1.000 |
 | walker |  | 160 | 13 | python imports in swarm/repl/__init__.py |  |  | 1.000 |
-| walker |  | 172 | 12 | python decl names surface in swarm/core.py |  |  | 1.000 |
-| walker |  | 172 | 0 | python decl at swarm/core.py:26 |  |  | 1.000 |
-| walker |  | 204 | 32 | manifest config in pyproject.toml |  |  | 1.000 |
-| walker |  | 229 | 25 | listing of 'tests' |  |  | 1.000 |
+| walker |  | 192 | 32 | manifest config in pyproject.toml |  |  | 1.000 |
+| walker |  | 217 | 25 | listing of 'tests' |  |  | 1.000 |
 | ns | 250 |  | 131 | README title + deprecation notice | 1.4 |  | 0.817 |
 | ns | 358 |  | 108 | README install instructions | 1.5 |  | 0.662 |
-| ns | 412 |  | 54 | examples/ directory listing | 1.6 |  | 0.586 |
-| walker |  | 422 | 193 | headings outline in README.md |  |  | 0.602 |
+| walker |  | 410 | 193 | headings outline in README.md |  |  | 0.681 |
+| ns | 412 |  | 54 | examples/ directory listing | 1.6 |  | 0.602 |
 | ns | 519 |  | 107 | README section-heading locations (full H1/H2 roster) | 1.7 |  | 0.655 |
 | ns | 659 |  | 140 | README overview | 1.8 |  | 0.616 |
-| walker |  | 762 | 340 | listing of 'logs' |  |  | 0.616 |
-| walker |  | 816 | 54 | listing of 'examples' |  |  | 0.718 |
-| walker |  | 832 | 16 | listing of 'examples/weather_agent' |  |  | 0.718 |
-| walker |  | 849 | 17 | listing of 'examples/personal_shopper' |  |  | 0.719 |
-| walker |  | 871 | 22 | listing of 'examples/triage_agent' |  |  | 0.720 |
-| walker |  | 897 | 26 | listing of 'examples/airline' |  |  | 0.721 |
-| walker |  | 900 | 3 | listing of 'examples/airline/data' |  |  | 0.721 |
-| walker |  | 913 | 13 | listing of 'examples/airline/data/routines' |  |  | 0.721 |
-| walker |  | 926 | 13 | listing of 'examples/airline/configs' |  |  | 0.721 |
+| walker |  | 750 | 340 | listing of 'logs' |  |  | 0.616 |
+| walker |  | 804 | 54 | listing of 'examples' |  |  | 0.718 |
+| walker |  | 820 | 16 | listing of 'examples/weather_agent' |  |  | 0.718 |
+| walker |  | 837 | 17 | listing of 'examples/personal_shopper' |  |  | 0.719 |
+| walker |  | 859 | 22 | listing of 'examples/triage_agent' |  |  | 0.720 |
+| walker |  | 885 | 26 | listing of 'examples/airline' |  |  | 0.721 |
+| walker |  | 888 | 3 | listing of 'examples/airline/data' |  |  | 0.721 |
+| walker |  | 901 | 13 | listing of 'examples/airline/data/routines' |  |  | 0.721 |
+| walker |  | 914 | 13 | listing of 'examples/airline/configs' |  |  | 0.721 |
 | ns | 927 |  | 268 | setup.cfg — package metadata + autopep8 config | 1.9 |  | 0.590 |
-| walker |  | 959 | 33 | listing of 'examples/basic' |  |  | 0.591 |
-| walker |  | 977 | 18 | python imports in swarm/util.py |  |  | 0.591 |
-| ns | 1045 |  | 118 | pyproject.toml + pre-commit config | 1.10 |  | 0.563 |
-| walker |  | 1057 | 80 | python method sigs in swarm/core.py |  |  | 0.565 |
-| walker |  | 1057 | 0 | python method at swarm/core.py:27 |  |  | 0.565 |
-| walker |  | 1057 | 0 | python method at swarm/core.py:71 |  |  | 0.565 |
-| walker |  | 1095 | 38 | listing of 'examples/customer_service_streaming' |  |  | 0.566 |
-| walker |  | 1121 | 26 | listing of 'examples/customer_service_streaming/configs' |  |  | 0.566 |
-| walker |  | 1135 | 14 | listing of 'examples/customer_service_streaming/configs/tools' |  |  | 0.566 |
-| walker |  | 1198 | 63 | python decl names surface in swarm/types.py |  |  | 0.567 |
-| walker |  | 1198 | 0 | python decl at swarm/types.py:14 |  |  | 0.567 |
-| walker |  | 1198 | 0 | python decl at swarm/types.py:23 |  |  | 0.567 |
-| walker |  | 1198 | 0 | python decl at swarm/types.py:29 |  |  | 0.567 |
-| walker |  | 1231 | 33 | python class body at swarm/types.py:23 |  |  | 0.567 |
-| ns | 1256 |  | 211 | README Examples section | 1.11 |  | 0.540 |
-| walker |  | 1266 | 35 | python class body at swarm/types.py:29 |  |  | 0.540 |
-| walker |  | 1301 | 35 | listing of 'examples/customer_service_streaming/src' |  |  | 0.540 |
-| walker |  | 1320 | 19 | listing of 'examples/customer_service_streaming/src/swarm' |  |  | 0.541 |
-| walker |  | 1333 | 13 | listing of 'examples/customer_service_streaming/src/swarm/engines' |  |  | 0.541 |
-| ns | 1392 |  | 136 | SECURITY.md | 1.12 |  | 0.529 |
-| walker |  | 1401 | 68 | python decl names surface in swarm/util.py |  |  | 0.529 |
-| walker |  | 1401 | 0 | python decl at swarm/util.py:5 |  |  | 0.529 |
-| walker |  | 1401 | 0 | python decl at swarm/util.py:13 |  |  | 0.529 |
-| walker |  | 1401 | 0 | python decl at swarm/util.py:21 |  |  | 0.529 |
-| walker |  | 1401 | 0 | python decl at swarm/util.py:31 |  |  | 0.529 |
-| walker |  | 1404 | 3 | listing of 'examples/customer_service' |  |  | 0.529 |
-| walker |  | 1407 | 3 | listing of 'examples/customer_service_lite' |  |  | 0.529 |
-| walker |  | 1447 | 40 | listing of 'examples/support_bot' |  |  | 0.530 |
-| walker |  | 1522 | 75 | README.md section #10 |  |  | 0.530 |
-| walker |  | 1610 | 88 | python class body at swarm/types.py:14 |  |  | 0.532 |
-| walker |  | 1673 | 63 | python method at swarm/core.py:89 |  |  | 0.532 |
+| walker |  | 947 | 33 | listing of 'examples/basic' |  |  | 0.591 |
+| walker |  | 965 | 18 | python imports in swarm/util.py |  |  | 0.591 |
+| walker |  | 1003 | 38 | listing of 'examples/customer_service_streaming' |  |  | 0.592 |
+| walker |  | 1029 | 26 | listing of 'examples/customer_service_streaming/configs' |  |  | 0.592 |
+| walker |  | 1043 | 14 | listing of 'examples/customer_service_streaming/configs/tools' |  |  | 0.592 |
+| ns | 1045 |  | 118 | pyproject.toml + pre-commit config | 1.10 |  | 0.564 |
+| walker |  | 1055 | 12 | python decl names surface in swarm/core.py |  |  | 0.564 |
+| walker |  | 1055 | 0 | python decl at swarm/core.py:26 |  |  | 0.564 |
+| walker |  | 1135 | 80 | python method sigs in swarm/core.py |  |  | 0.566 |
+| walker |  | 1135 | 0 | python method at swarm/core.py:27 |  |  | 0.566 |
+| walker |  | 1135 | 0 | python method at swarm/core.py:71 |  |  | 0.566 |
+| walker |  | 1170 | 35 | listing of 'examples/customer_service_streaming/src' |  |  | 0.567 |
+| walker |  | 1189 | 19 | listing of 'examples/customer_service_streaming/src/swarm' |  |  | 0.567 |
+| walker |  | 1202 | 13 | listing of 'examples/customer_service_streaming/src/swarm/engines' |  |  | 0.568 |
+| walker |  | 1205 | 3 | listing of 'examples/customer_service' |  |  | 0.568 |
+| walker |  | 1208 | 3 | listing of 'examples/customer_service_lite' |  |  | 0.568 |
+| walker |  | 1248 | 40 | listing of 'examples/support_bot' |  |  | 0.568 |
+| ns | 1256 |  | 211 | README Examples section | 1.11 |  | 0.541 |
+| walker |  | 1323 | 75 | README.md section #10 |  |  | 0.541 |
+| walker |  | 1386 | 63 | python method at swarm/core.py:89 |  |  | 0.541 |
+| ns | 1392 |  | 136 | SECURITY.md | 1.12 |  | 0.528 |
+| walker |  | 1449 | 63 | python decl names surface in swarm/types.py |  |  | 0.529 |
+| walker |  | 1449 | 0 | python decl at swarm/types.py:14 |  |  | 0.529 |
+| walker |  | 1449 | 0 | python decl at swarm/types.py:23 |  |  | 0.529 |
+| walker |  | 1449 | 0 | python decl at swarm/types.py:29 |  |  | 0.529 |
+| walker |  | 1482 | 33 | python class body at swarm/types.py:23 |  |  | 0.529 |
+| walker |  | 1517 | 35 | python class body at swarm/types.py:29 |  |  | 0.530 |
+| walker |  | 1605 | 88 | python class body at swarm/types.py:14 |  |  | 0.532 |
 | ns | 1820 |  | 428 | swarm/types.py — Agent/Response/Result models | 2.1 |  | 0.494 |
 | ns | 1900 |  | 80 | core.py — Swarm class method locations | 2.2 |  | 0.512 |
 | ns | 1936 |  | 36 | core.py — Swarm.__init__ | 2.3 | 2.2 | 0.505 |
-| walker |  | 2270 | 597 | README.md section #0 |  |  | 0.609 |
-| walker |  | 2538 | 268 | plaintext config setup.cfg |  |  | 0.735 |
+| walker |  | 2202 | 597 | README.md section #0 |  |  | 0.609 |
+| walker |  | 2470 | 268 | plaintext config setup.cfg |  |  | 0.735 |
+| walker |  | 2552 | 82 | README.md section #11 |  |  | 0.735 |
 | ns | 2576 |  | 640 | core.py — Swarm.run() body | 2.4 | 2.2 | 0.619 |
-| walker |  | 2620 | 82 | README.md section #11 |  |  | 0.619 |
+| walker |  | 2620 | 68 | python decl names surface in swarm/util.py |  |  | 0.619 |
+| walker |  | 2620 | 0 | python decl at swarm/util.py:5 |  |  | 0.619 |
+| walker |  | 2620 | 0 | python decl at swarm/util.py:13 |  |  | 0.619 |
+| walker |  | 2620 | 0 | python decl at swarm/util.py:21 |  |  | 0.619 |
+| walker |  | 2620 | 0 | python decl at swarm/util.py:31 |  |  | 0.619 |
 | walker |  | 2707 | 87 | python decl doc at swarm/types.py:29 |  |  | 0.652 |
 | walker |  | 2781 | 74 | python method at swarm/core.py:32 |  |  | 0.653 |
-| walker |  | 2824 | 43 | python decl names surface in swarm/repl/repl.py |  |  | 0.653 |
-| walker |  | 2824 | 0 | python decl at swarm/repl/repl.py:6 |  |  | 0.653 |
-| walker |  | 2824 | 0 | python decl at swarm/repl/repl.py:37 |  |  | 0.653 |
-| walker |  | 2850 | 26 | python decl at swarm/repl/repl.py:60 |  |  | 0.653 |
-| walker |  | 2870 | 20 | python imports in swarm/repl/repl.py |  |  | 0.653 |
-| walker |  | 2897 | 27 | python method body at swarm/core.py:27 body 28 |  |  | 0.664 |
-| walker |  | 2989 | 92 | python method at swarm/core.py:139 |  |  | 0.664 |
-| walker |  | 3097 | 108 | python decl doc at swarm/util.py:31 |  |  | 0.664 |
+| walker |  | 2808 | 27 | python method body at swarm/core.py:27 body 28 |  |  | 0.664 |
+| walker |  | 2832 | 24 | python imports in swarm/repl/repl.py |  |  | 0.664 |
+| walker |  | 2924 | 92 | python method at swarm/core.py:139 |  |  | 0.664 |
+| walker |  | 3032 | 108 | python decl doc at swarm/util.py:31 |  |  | 0.664 |
+| walker |  | 3093 | 61 | python decl body at swarm/util.py:13 body 14 |  |  | 0.665 |
 | ns | 3121 |  | 545 | core.py — handle_tool_calls() body | 2.5 | 2.2 | 0.599 |
-| walker |  | 3158 | 61 | python decl body at swarm/util.py:13 body 14 |  |  | 0.599 |
-| walker |  | 3264 | 106 | python method at swarm/core.py:231 |  |  | 0.603 |
-| walker |  | 3268 | 4 | listing of 'examples/customer_service_streaming/logs' |  |  | 0.603 |
+| walker |  | 3199 | 106 | python method at swarm/core.py:231 |  |  | 0.603 |
+| walker |  | 3203 | 4 | listing of 'examples/customer_service_streaming/logs' |  |  | 0.603 |
+| walker |  | 3242 | 39 | python decl names surface in swarm/repl/repl.py |  |  | 0.603 |
+| walker |  | 3242 | 0 | python decl at swarm/repl/repl.py:6 |  |  | 0.603 |
+| walker |  | 3242 | 0 | python decl at swarm/repl/repl.py:37 |  |  | 0.603 |
+| walker |  | 3268 | 26 | python decl at swarm/repl/repl.py:60 |  |  | 0.603 |
 | walker |  | 3420 | 152 | README.md section #12 |  |  | 0.603 |
 | walker |  | 3622 | 202 | README.md section #2 |  |  | 0.632 |
 | walker |  | 3625 | 3 | listing of 'examples/customer_service_streaming/src/runs' |  |  | 0.632 |

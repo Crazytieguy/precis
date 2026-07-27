@@ -54,8 +54,8 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
 use crate::value::{
-    CATALOG_ROSTER_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors, depth_factor, mix_signals,
-    reexport_import_chunk_factor, roster_mass_factor_with_baseline,
+    CATALOG_ROSTER_CONCAVITY_EXPONENT, DEFAULT_CONCAVITY_EXPONENT, ROSTER_MASS_FACTOR_CAP,
+    conserved_catalog_chunk_factors, depth_factor, mix_signals, reexport_import_chunk_factor,
 };
 
 use super::import_chunks::{
@@ -72,13 +72,13 @@ use super::{
 const VISIBILITY_PUBLIC: f64 = 1.0;
 const VISIBILITY_UNDERSCORE: f64 = 0.6;
 
-/// Neutral roster size for Python decl/method/field surfaces. Small and
-/// mid-size surfaces already rank acceptably; catalog-sized surfaces
-/// (a 12-decl names chunk, a 30-method sigs batch) otherwise lose
-/// `value/cost^k` rank to trinket files because their value is flat
-/// while cost grows with entry count. Calibrated: a baseline of 2
-/// lifts nearly every multi-decl file and floods orientation content
-/// (README sections, re-export walls) out of the early budget.
+/// Neutral roster size for Python decl/method/field surfaces: surfaces
+/// this big are priced as-is, bigger ones are lifted and smaller ones
+/// demoted, because a roster's value is flat while its cost grows with
+/// entry count. Calibrated: a baseline of 2 lifts nearly every
+/// multi-decl file and floods orientation content (README sections,
+/// re-export walls) out of the early budget; 8 is measured flat at the
+/// primary budget (better at 2080, worse at 3000).
 const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
 
 /// Preserve the historically winning unified names surface until it is
@@ -91,14 +91,26 @@ const DECL_NAMES_SPLIT_THRESHOLD_TOKENS: usize = 400;
 const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 450;
 const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;
 
-/// `__init__.py` rosters are excluded: the entrypoint depth pin already
-/// privileges them, and boosting on top floods nested-package
+/// Two-sided, unlike the shared [`crate::value::roster_mass_factor`]:
+/// the boost-only form prices a one-decl module's 11-token roster at the
+/// same size-invariant value as a 40-decl module's 600-token one, so the
+/// early budget goes on enumerating trinket modules one name at a time
+/// while a flagship module's roster — the predecessor of every per-decl
+/// batch in the file — never clears the frontier and the whole file
+/// contributes nothing. Demoting under-baseline rosters is what makes
+/// the factor actually roster-size-neutral in the direction that
+/// decides the early-budget race.
+///
+/// `__init__.py` rosters are exempt: the entrypoint depth pin already
+/// privileges them, and re-pricing on top floods nested-package
 /// `__init__` surfaces ahead of the re-export walls NS authors rank.
 fn python_roster_mass_factor(file: &Path, entries: usize) -> f64 {
     if is_python_entrypoint(file) {
         return 1.0;
     }
-    roster_mass_factor_with_baseline(entries, PYTHON_ROSTER_MASS_BASELINE)
+    (entries.max(1) as f64 / PYTHON_ROSTER_MASS_BASELINE)
+        .powf(DEFAULT_CONCAVITY_EXPONENT)
+        .min(ROSTER_MASS_FACTOR_CAP)
 }
 
 /// Per-run Python walker state: spine-module sets cached per package

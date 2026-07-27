@@ -758,6 +758,58 @@ Rust has no `PubItem` size splitter — a pricing/granularity gap, and
 note the adjacent "oversized public Rust struct/enum head-split" is
 already measured dead, so a retry needs a value mechanism.
 
+## Python roster toll gate (2026-07-26): the gate is not the lever, the race is
+
+Diagnosis said Python per-decl batches are stranded behind an expensive
+`DeclNames` roster (88 files, 16 of 18 Python fixtures). Measured on
+`rich` with a standalone pool ranking (empty tree, `value/cost^0.35`):
+`console.py`'s roster is value 899.6 / cost **591** / ratio **96.4**,
+rank 2037 of 5932, while the 3K frontier sits at ratio **~182** — the
+one-line rosters of trinket modules (`measure.py` 562.2/25/182.2,
+`pager.py`, `_null_file.py`) — and the file's own decls rank 9–170
+(ratio 300–393). **The gap is ~1.9× and every roster-side lever is
+bounded below it**: a conserving split lifts the head by
+`1.4 · share^0.02` ≈ 1.35×, truncating the roster's rendering ≈1.33×,
+the roster-mass cap raise is already dead (2026-07-19). Chunk-gating
+was already dead. So the toll gate is closed as a *ranking* lever.
+
+Measured dead this lane (specifics block retries):
+
+- **Principal-declaration promotion** — for a file whose roster costs
+  >250 tokens, drop its leading `N` roster entries and emit those
+  `Decl` batches ungated (roster ∪ principals still names everything;
+  no value minted, only a predecessor edge and a few roster lines
+  moved). Overlap-safe by construction, so it is *not* the dead
+  head-chunk gate. N=4: mean **−0.0055** (beets −0.141, requests
+  −0.087, linkding −0.059, tomli −0.046). N=1: **−0.0006**. Failure
+  mode is structural, not magnitude: `decl_value` (908.7 on rich) is
+  calibrated for a batch bought *behind* a roster at ~0 marginal cost,
+  so a freed decl out-ranks nearly everything and delivers an isolated
+  `class Foo:` line. **A free-standing decl needs different pricing
+  than a gated one; any retry must reprice, not just re-gate.** The
+  target fixture did not even move (rich flat at both N).
+
+Shipped instead — **two-sided `python_roster_mass_factor`** (drop the
+`≥ 1.0` clamp, keeping baseline 6 and cap 1.6). Don't raise the
+flagship, demote the trinkets: a 1-decl roster now prices at 0.53×, a
+5-decl one at 0.94×. 3K mean **0.6340 → 0.6353**; across the grid
++0.0003 / **+0.0048** / +0.0014 / +0.0013 / +0.0008 / −0.0016 / −0.0005
+at 1000–9000. Movers: linkding +0.085 (README feature overview lands
+instead of six 1-class module rosters), nano-vllm +0.023, peepdb
++0.007, htmy +0.003, **xlstm −0.019** — the honest cost: in a repo
+whose flagship modules genuinely are 1–2-decl config dataclasses, the
+demotion hits the NS-wanted rosters. Baseline 8 (two-sided) is the
+same curve shifted: 3K flat (0.6339) but 2080 +0.0031 and 6240 +0.0007
+— sweep baseline and cap together if this is revisited.
+
+Instrument note: the Python names-surface splitter is **inert** —
+`DeclNamesChunk` has 0 scheduled rows at any budget ≤10K across all 71
+training fixtures, and no Python file in rich/beets/flask/click splits
+at all (the tiny-tail fold at `python.rs` absorbs the second chunk when
+total ≤ ~675 tokens). `DECL_NAMES_SPLIT_THRESHOLD_TOKENS` /
+`DECL_NAMES_CHUNK_TARGET_TOKENS` / `conserved_catalog_chunk_factors` on
+the Python path are removable dead weight, not a live knob.
+
 ## Extreme-budget contract sweep (2026-07-06): corpus clean
 
 `for f in tests/fixtures/*/; do cargo run -q -- --budget 1000000 $f;

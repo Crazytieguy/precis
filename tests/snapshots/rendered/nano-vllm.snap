@@ -28,7 +28,16 @@ README.md
       31→  --local-dir-use-symlinks False
       32→```
       34→## Quick Start
-    …
+      35→
+      36→See `example.py` for usage. The API mirrors vLLM's interface with minor differences in the `LLM.generate` method:
+      37→```python
+      38→from nanovllm import LLM, SamplingParams
+      39→llm = LLM("/YOUR/MODEL/PATH", enforce_eager=True, tensor_parallel_size=1)
+      40→sampling_params = SamplingParams(temperature=0.6, max_tokens=256)
+      41→prompts = ["Hello, Nano-vLLM."]
+      42→outputs = llm.generate(prompts, sampling_params)
+      43→outputs[0]["text"]
+      44→```
       46→## Benchmark
     …
       64→## Star History
@@ -77,27 +86,68 @@ nanovllm/
         block_manager.py
             …
                8→class Block:
+              10→    def __init__(self, block_id):
+            …
+              16→    def update(self, hash: int, token_ids: list[int]):
+              17→        self.hash = hash
+              18→        self.token_ids = token_ids
+              20→    def reset(self):
             …
               26→class BlockManager:
+              28→    def __init__(self, num_blocks: int, block_size: int):
             …
-        llm_engine.py
+              35→    @classmethod
+              36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
             …
-              15→class LLMEngine:
-              17→    def __init__(self, model, **kwargs):
+              43→    def _allocate_block(self, block_id: int) -> Block:
             …
-              36→    def exit(self):
+              51→    def _deallocate_block(self, block_id: int) -> Block:
             …
-              42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
+              56→    def can_allocate(self, seq: Sequence) -> bool:
+              57→        return len(self.free_block_ids) >= seq.num_blocks
+              59→    def allocate(self, seq: Sequence):
             …
-              48→    def step(self):
+              84→    def deallocate(self, seq: Sequence):
             …
-              56→    def is_finished(self):
-              57→        return self.scheduler.is_finished()
-              59→    def generate(
+              93→    def can_append(self, seq: Sequence) -> bool:
             …
+              96→    def may_append(self, seq: Sequence):
+            …
+        llm_engine.py …
         model_runner.py
             …
               15→class ModelRunner:
+              17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
+            …
+              50→    def exit(self):
+            …
+              61→    def loop(self):
+            …
+              68→    def read_shm(self):
+            …
+              76→    def write_shm(self, method_name, *args):
+            …
+              85→    def call(self, method_name, *args):
+            …
+              91→    def warmup_model(self):
+            …
+             100→    def allocate_kv_cache(self):
+            …
+             120→    def prepare_block_tables(self, seqs: list[Sequence]):
+            …
+             126→    def prepare_prefill(self, seqs: list[Sequence]):
+            …
+             164→    def prepare_decode(self, seqs: list[Sequence]):
+            …
+             182→    def prepare_sample(self, seqs: list[Sequence]):
+            …
+             189→    @torch.inference_mode()
+             190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
+            …
+             208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
+            …
+             216→    @torch.inference_mode()
+             217→    def capture_cudagraph(self):
             …
         scheduler.py
             …
@@ -171,29 +221,7 @@ nanovllm/
               12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
             …
         attention.py …
-        embed_head.py
-            …
-               9→class VocabParallelEmbedding(nn.Module):
-              11→    def __init__(
-              12→        self,
-              13→        num_embeddings: int,
-              14→        embedding_dim: int,
-              15→    ):
-            …
-              27→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
-            …
-              34→    def forward(self, x: torch.Tensor):
-            …
-              45→class ParallelLMHead(VocabParallelEmbedding):
-              47→    def __init__(
-              48→        self,
-              49→        num_embeddings: int,
-              50→        embedding_dim: int,
-              51→        bias: bool = False,
-              52→    ):
-            …
-              56→    def forward(self, x: torch.Tensor):
-            …
+        embed_head.py …
         layernorm.py
                1→import torch
                2→from torch import nn
@@ -235,24 +263,8 @@ nanovllm/
               10→) -> torch.Tensor:
             …
               17→class RotaryEmbedding(nn.Module):
-              19→    def __init__(
-              20→        self,
-              21→        head_size: int,
-              22→        rotary_dim: int,
-              23→        max_position_embeddings: int,
-              24→        base: float,
-              25→    ) -> None:
-            …
-              38→    def forward(
             …
               51→@lru_cache(1)
-              52→def get_rope(
-              53→    head_size: int,
-              54→    rotary_dim: int,
-              55→    max_position: int,
-              56→    base: float,
-              57→    rope_scaling: dict | None = None,
-              58→):
             …
         sampler.py
                1→import torch
@@ -283,12 +295,7 @@ nanovllm/
                1→from dataclasses import dataclass
                2→import torch
             …
-        loader.py
-            …
-               8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
-               9→    param.data.copy_(loaded_weight)
-              12→def load_model(model: nn.Module, path: str):
-            …
+        loader.py …
 pyproject.toml
        1→[build-system]
        2→requires = ["setuptools>=61"]
