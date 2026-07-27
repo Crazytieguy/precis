@@ -75,111 +75,111 @@ Score(3000)=0.641 I=0.833 C=0.493 ns_rows≤3K=17/45 (reached=7 partial=3 missin
 | walker |  | 3448 | 154 | json config tsconfig.json |  |  | 0.687 |
 | walker |  | 3451 | 3 | listing of 'examples/gif-fetcher/public' |  |  | 0.692 |
 | ns | 3492 |  | 644 | match.ts: MatchExpression class + .with() | 3.2 |  | 0.645 |
-| walker |  | 3618 | 167 | export names surface in src/internals/symbols.ts |  |  | 0.646 |
-| walker |  | 3618 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.646 |
-| walker |  | 3693 | 75 | imports in src/match.ts |  |  | 0.652 |
-| ns | 3709 |  | 217 | match.ts: .when() + .otherwise() | 3.3 |  | 0.637 |
-| walker |  | 3817 | 124 | README.md section #11 |  |  | 0.638 |
-| walker |  | 3872 | 55 | README.md section #5 |  |  | 0.641 |
-| walker |  | 3879 | 7 | listing of 'tests/types-catalog' |  |  | 0.649 |
-| ns | 3888 |  | 179 | match.ts: .exhaustive()/.run()/.returnType()/.narrow() + defaultCatcher | 3.4 |  | 0.640 |
-| walker |  | 4027 | 148 | README.md section #10 |  |  | 0.640 |
+| walker |  | 3526 | 75 | imports in src/match.ts |  |  | 0.650 |
+| walker |  | 3650 | 124 | README.md section #11 |  |  | 0.651 |
+| walker |  | 3705 | 55 | README.md section #5 |  |  | 0.654 |
+| ns | 3709 |  | 217 | match.ts: .when() + .otherwise() | 3.3 |  | 0.639 |
+| ns | 3888 |  | 179 | match.ts: .exhaustive()/.run()/.returnType()/.narrow() + defaultCatcher | 3.4 |  | 0.629 |
+| walker |  | 3890 | 185 | export names surface in src/internals/symbols.ts |  |  | 0.631 |
+| walker |  | 3890 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.631 |
+| walker |  | 3897 | 7 | listing of 'tests/types-catalog' |  |  | 0.640 |
 | ns | 4042 |  | 154 | src/errors.ts full (NonExhaustiveError) | 3.5 |  | 0.647 |
-| walker |  | 4087 | 60 | README.md section #6 |  |  | 0.651 |
-| walker |  | 4150 | 63 | README.md section #1 |  |  | 0.656 |
+| walker |  | 4045 | 148 | README.md section #10 |  |  | 0.647 |
+| walker |  | 4105 | 60 | README.md section #6 |  |  | 0.651 |
+| walker |  | 4168 | 63 | README.md section #1 |  |  | 0.656 |
 | ns | 4229 |  | 187 | src/internals/symbols.ts: all 5 well-known symbol + type declarations | 3.6 |  | 0.662 |
-| walker |  | 4279 | 129 | package dev/peer dependencies in package.json |  |  | 0.686 |
-| walker |  | 4288 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.696 |
-| walker |  | 4334 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.703 |
-| walker |  | 4427 | 93 | json config jsr.json |  |  | 0.716 |
-| walker |  | 4578 | 151 | export doc at src/is-matching.ts:48 |  |  | 0.716 |
-| walker |  | 4623 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.723 |
-| ns | 4625 |  | 396 | internals/helpers.ts: isObject/isMatcher/isOptionalPattern + matchPattern's matcher-protocol dispatch | 3.7 |  | 0.691 |
-| walker |  | 4853 | 230 | README.md section #9 |  |  | 0.692 |
+| walker |  | 4297 | 129 | package dev/peer dependencies in package.json |  |  | 0.686 |
+| walker |  | 4306 | 9 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.696 |
+| walker |  | 4352 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.703 |
+| walker |  | 4445 | 93 | json config jsr.json |  |  | 0.716 |
+| walker |  | 4596 | 151 | export doc at src/is-matching.ts:48 |  |  | 0.716 |
+| ns | 4625 |  | 396 | internals/helpers.ts: isObject/isMatcher/isOptionalPattern + matchPattern's matcher-protocol dispatch | 3.7 |  | 0.684 |
+| walker |  | 4641 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.691 |
+| walker |  | 4871 | 230 | README.md section #9 |  |  | 0.692 |
 | ns | 4968 |  | 343 | internals/helpers.ts: matchPattern's object/primitive fallback + getSelectionKeys/flatMap | 3.8 |  | 0.665 |
-| walker |  | 5029 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.665 |
-| walker |  | 5043 | 14 | listing of 'examples/one-file-demo' |  |  | 0.677 |
+| walker |  | 5047 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.665 |
+| walker |  | 5061 | 14 | listing of 'examples/one-file-demo' |  |  | 0.677 |
 | ns | 5191 |  | 223 | src/is-matching.ts: implementation | 3.9 |  | 0.684 |
 | ns | 5665 |  | 474 | README Getting Started: motivating State/Event types | 4.1 | 2.3 | 0.658 |
-| walker |  | 5697 | 654 | export names surface in src/patterns.ts |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:116 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:241 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:294 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:356 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:672 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:782 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:793 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:805 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:928 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:1075 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:1201 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:1211 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:1221 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:1231 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:1241 |  |  | 0.661 |
-| walker |  | 5697 | 0 | export at src/patterns.ts:1274 |  |  | 0.661 |
-| walker |  | 5722 | 25 | export at src/patterns.ts:131 |  |  | 0.661 |
-| walker |  | 5750 | 28 | export at src/patterns.ts:246 |  |  | 0.661 |
-| walker |  | 5779 | 29 | export at src/patterns.ts:643 |  |  | 0.661 |
-| walker |  | 5809 | 30 | export at src/patterns.ts:1251 |  |  | 0.661 |
-| walker |  | 5839 | 30 | export at src/patterns.ts:1271 |  |  | 0.661 |
-| walker |  | 5875 | 36 | export at src/patterns.ts:445 |  |  | 0.661 |
-| walker |  | 5918 | 43 | export at src/patterns.ts:81 |  |  | 0.661 |
-| walker |  | 5960 | 42 | export at src/patterns.ts:611 |  |  | 0.661 |
-| walker |  | 6003 | 43 | export at src/patterns.ts:242 |  |  | 0.661 |
-| walker |  | 6046 | 43 | export at src/patterns.ts:295 |  |  | 0.661 |
+| walker |  | 5715 | 654 | export names surface in src/patterns.ts |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:116 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:241 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:294 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:356 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:672 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:782 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:793 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:805 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:928 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:1075 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:1201 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:1211 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:1221 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:1231 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:1241 |  |  | 0.661 |
+| walker |  | 5715 | 0 | export at src/patterns.ts:1274 |  |  | 0.661 |
+| walker |  | 5740 | 25 | export at src/patterns.ts:131 |  |  | 0.661 |
+| walker |  | 5768 | 28 | export at src/patterns.ts:246 |  |  | 0.661 |
+| walker |  | 5797 | 29 | export at src/patterns.ts:643 |  |  | 0.661 |
+| walker |  | 5827 | 30 | export at src/patterns.ts:1251 |  |  | 0.661 |
+| walker |  | 5857 | 30 | export at src/patterns.ts:1271 |  |  | 0.661 |
+| walker |  | 5893 | 36 | export at src/patterns.ts:445 |  |  | 0.661 |
+| walker |  | 5936 | 43 | export at src/patterns.ts:81 |  |  | 0.661 |
+| walker |  | 5978 | 42 | export at src/patterns.ts:611 |  |  | 0.661 |
+| walker |  | 6021 | 43 | export at src/patterns.ts:242 |  |  | 0.661 |
 | ns | 6062 |  | 397 | README Getting Started: full reducer example | 4.2 | 4.1 | 0.637 |
-| walker |  | 6095 | 49 | export at src/patterns.ts:100 |  |  | 0.637 |
-| walker |  | 6139 | 44 | export at src/patterns.ts:696 |  |  | 0.637 |
-| walker |  | 6184 | 45 | export at src/patterns.ts:433 |  |  | 0.637 |
-| walker |  | 6229 | 45 | export at src/patterns.ts:536 |  |  | 0.637 |
-| walker |  | 6274 | 45 | export at src/patterns.ts:572 |  |  | 0.637 |
-| walker |  | 6323 | 49 | export at src/patterns.ts:637 |  |  | 0.637 |
-| walker |  | 6373 | 50 | export at src/patterns.ts:299 |  |  | 0.637 |
-| walker |  | 6425 | 52 | export at src/patterns.ts:646 |  |  | 0.637 |
+| walker |  | 6064 | 43 | export at src/patterns.ts:295 |  |  | 0.637 |
+| walker |  | 6113 | 49 | export at src/patterns.ts:100 |  |  | 0.637 |
+| walker |  | 6157 | 44 | export at src/patterns.ts:696 |  |  | 0.637 |
+| walker |  | 6202 | 45 | export at src/patterns.ts:433 |  |  | 0.637 |
+| walker |  | 6247 | 45 | export at src/patterns.ts:536 |  |  | 0.637 |
+| walker |  | 6292 | 45 | export at src/patterns.ts:572 |  |  | 0.637 |
+| walker |  | 6341 | 49 | export at src/patterns.ts:637 |  |  | 0.637 |
+| walker |  | 6391 | 50 | export at src/patterns.ts:299 |  |  | 0.637 |
+| walker |  | 6443 | 52 | export at src/patterns.ts:646 |  |  | 0.637 |
 | ns | 6479 |  | 417 | patterns.ts: location roster of every exported P.* member | 5.1 |  | 0.649 |
-| walker |  | 6485 | 60 | export at src/patterns.ts:187 |  |  | 0.649 |
-| walker |  | 6563 | 78 | export at src/patterns.ts:357 |  |  | 0.649 |
+| walker |  | 6503 | 60 | export at src/patterns.ts:187 |  |  | 0.649 |
+| walker |  | 6581 | 78 | export at src/patterns.ts:357 |  |  | 0.649 |
 | ns | 6641 |  | 162 | patterns.ts: P.select() doc + first overload signature | 5.2 | 5.1 | 0.641 |
-| walker |  | 6657 | 94 | export at src/patterns.ts:437 |  |  | 0.641 |
-| walker |  | 6752 | 95 | export at src/patterns.ts:362 |  |  | 0.641 |
-| walker |  | 6849 | 97 | export at src/patterns.ts:686 |  |  | 0.641 |
-| walker |  | 6999 | 150 | export at src/patterns.ts:48 |  |  | 0.645 |
+| walker |  | 6675 | 94 | export at src/patterns.ts:437 |  |  | 0.641 |
+| walker |  | 6770 | 95 | export at src/patterns.ts:362 |  |  | 0.641 |
+| walker |  | 6867 | 97 | export at src/patterns.ts:686 |  |  | 0.641 |
+| walker |  | 7017 | 150 | export at src/patterns.ts:48 |  |  | 0.645 |
 | ns | 7041 |  | 400 | patterns.ts: P.select() implementation | 5.3 | 5.2 | 0.623 |
-| walker |  | 7149 | 150 | export at src/patterns.ts:673 |  |  | 0.623 |
-| walker |  | 7270 | 121 | export doc at src/patterns.ts:116 |  |  | 0.623 |
-| walker |  | 7387 | 117 | export doc at src/patterns.ts:1251 |  |  | 0.623 |
+| walker |  | 7167 | 150 | export at src/patterns.ts:673 |  |  | 0.623 |
+| walker |  | 7288 | 121 | export doc at src/patterns.ts:116 |  |  | 0.623 |
+| walker |  | 7405 | 117 | export doc at src/patterns.ts:1251 |  |  | 0.623 |
 | ns | 7489 |  | 448 | patterns.ts: P.optional() full body | 5.4 | 5.1 | 0.603 |
-| walker |  | 7519 | 132 | export doc at src/patterns.ts:100 |  |  | 0.603 |
-| walker |  | 7626 | 107 | export doc at src/patterns.ts:1221 |  |  | 0.603 |
-| walker |  | 7757 | 131 | export doc at src/patterns.ts:294 |  |  | 0.603 |
-| walker |  | 7866 | 109 | export doc at src/patterns.ts:782 |  |  | 0.603 |
+| walker |  | 7537 | 132 | export doc at src/patterns.ts:100 |  |  | 0.603 |
+| walker |  | 7644 | 107 | export doc at src/patterns.ts:1221 |  |  | 0.603 |
+| walker |  | 7775 | 131 | export doc at src/patterns.ts:294 |  |  | 0.603 |
+| walker |  | 7884 | 109 | export doc at src/patterns.ts:782 |  |  | 0.603 |
 | ns | 7920 |  | 431 | README Patterns: P.select (anonymous + named selection) | 6.1 | 2.3 | 0.587 |
-| walker |  | 7975 | 109 | export doc at src/patterns.ts:1211 |  |  | 0.587 |
-| walker |  | 8085 | 110 | export doc at src/patterns.ts:793 |  |  | 0.587 |
-| walker |  | 8196 | 111 | export doc at src/patterns.ts:928 |  |  | 0.587 |
+| walker |  | 7993 | 109 | export doc at src/patterns.ts:1211 |  |  | 0.587 |
+| walker |  | 8103 | 110 | export doc at src/patterns.ts:793 |  |  | 0.587 |
+| walker |  | 8214 | 111 | export doc at src/patterns.ts:928 |  |  | 0.587 |
 | ns | 8230 |  | 310 | types/Pattern.ts: Matcher<> interface + MatcherType | 7.1 |  | 0.572 |
-| walker |  | 8310 | 114 | export doc at src/patterns.ts:1201 |  |  | 0.572 |
+| walker |  | 8328 | 114 | export doc at src/patterns.ts:1201 |  |  | 0.572 |
 | ns | 8436 |  | 206 | types/Pattern.ts: Pattern<a> core definition | 7.2 |  | 0.565 |
-| walker |  | 8463 | 153 | export doc at src/patterns.ts:81 |  |  | 0.565 |
+| walker |  | 8481 | 153 | export doc at src/patterns.ts:81 |  |  | 0.565 |
 | ns | 8523 |  | 87 | types/Match.ts: Match<> interface opening | 7.3 |  | 0.561 |
-| walker |  | 8581 | 118 | export doc at src/patterns.ts:1231 |  |  | 0.561 |
+| walker |  | 8599 | 118 | export doc at src/patterns.ts:1231 |  |  | 0.561 |
 | ns | 8608 |  | 85 | types/FindSelected.ts: selection-record tags | 7.4 |  | 0.557 |
 | ns | 8713 |  | 105 | types/InvertPattern.ts: InvertPattern<p,input> entry | 7.5 |  | 0.554 |
-| walker |  | 8723 | 142 | export doc at src/patterns.ts:241 |  |  | 0.554 |
-| walker |  | 8866 | 143 | export doc at src/patterns.ts:672 |  |  | 0.566 |
-| walker |  | 9010 | 144 | export doc at src/patterns.ts:611 |  |  | 0.566 |
+| walker |  | 8741 | 142 | export doc at src/patterns.ts:241 |  |  | 0.554 |
+| walker |  | 8884 | 143 | export doc at src/patterns.ts:672 |  |  | 0.566 |
+| walker |  | 9028 | 144 | export doc at src/patterns.ts:611 |  |  | 0.566 |
 | ns | 9053 |  | 340 | types/DistributeUnions.ts: exhaustiveness algorithm doc comment | 7.6 |  | 0.558 |
 | ns | 9080 |  | 27 | types/ExtractPreciseValue.ts: entry declaration | 7.7 |  | 0.557 |
-| walker |  | 9130 | 120 | export doc at src/patterns.ts:805 |  |  | 0.557 |
 | ns | 9131 |  | 51 | types/DeepExclude.ts full | 7.8 |  | 0.556 |
+| walker |  | 9148 | 120 | export doc at src/patterns.ts:805 |  |  | 0.556 |
 | ns | 9159 |  | 28 | types/IsMatching.ts: entry declaration | 7.9 |  | 0.556 |
 | ns | 9244 |  | 85 | types/helpers.ts: Equal<> + Expect<> declarations | 7.10 |  | 0.553 |
-| walker |  | 9250 | 120 | export doc at src/patterns.ts:1075 |  |  | 0.553 |
+| walker |  | 9268 | 120 | export doc at src/patterns.ts:1075 |  |  | 0.553 |
 | ns | 9288 |  | 44 | types/BuildMany.ts: BuildMany<> entry declaration | 7.11 |  | 0.552 |
-| walker |  | 9370 | 120 | export doc at src/patterns.ts:1241 |  |  | 0.552 |
-| walker |  | 9516 | 146 | export doc at src/patterns.ts:187 |  |  | 0.559 |
+| walker |  | 9388 | 120 | export doc at src/patterns.ts:1241 |  |  | 0.552 |
+| walker |  | 9534 | 146 | export doc at src/patterns.ts:187 |  |  | 0.559 |
 | ns | 9602 |  | 314 | tests/matcher-protocol.test.ts: Some<T> class implementing the Matcher Protocol | 8.1 |  | 0.547 |
-| walker |  | 9670 | 154 | export doc at src/patterns.ts:637 |  |  | 0.547 |
+| walker |  | 9688 | 154 | export doc at src/patterns.ts:637 |  |  | 0.547 |
 | ns | 9738 |  | 136 | tests/matcher-protocol.test.ts: None class + Option<T> union | 8.2 |  | 0.542 |
-| walker |  | 9841 | 171 | export doc at src/patterns.ts:433 |  |  | 0.542 |
+| walker |  | 9859 | 171 | export doc at src/patterns.ts:433 |  |  | 0.542 |

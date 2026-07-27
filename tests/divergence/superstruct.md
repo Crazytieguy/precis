@@ -148,35 +148,35 @@ Score(3000)=0.639 I=0.887 C=0.460 ns_rows≤3K=14/40 (reached=6 partial=2 missin
 | walker |  | 7424 | 48 | imports in src/structs/coercions.ts |  |  | 0.583 |
 | ns | 7484 |  | 789 | run() traversal body | 8.2 | 8.1 | 0.549 |
 | walker |  | 7487 | 63 | docs/reference/coercions.md section #0 |  |  | 0.549 |
-| walker |  | 7707 | 220 | export names surface in src/structs/utilities.ts |  |  | 0.560 |
-| walker |  | 7707 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.560 |
-| walker |  | 7707 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.560 |
-| walker |  | 7707 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.560 |
-| walker |  | 7707 | 0 | export at src/structs/utilities.ts:247 |  |  | 0.560 |
-| walker |  | 7726 | 19 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.561 |
-| walker |  | 7759 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.561 |
-| walker |  | 7796 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.561 |
-| walker |  | 7834 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.561 |
-| walker |  | 7877 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.561 |
-| walker |  | 7921 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.561 |
-| ns | 7939 |  | 455 | StructError property table | 9.1 |  | 0.555 |
-| walker |  | 7966 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.555 |
-| walker |  | 8068 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.555 |
-| walker |  | 8094 | 26 | export doc at src/structs/utilities.ts:71 |  |  | 0.558 |
-| ns | 8104 |  | 165 | test/validation/ kind roster | 10.1 |  | 0.580 |
-| walker |  | 8244 | 150 | export at src/structs/utilities.ts:30 |  |  | 0.580 |
-| ns | 8286 |  | 182 | test/typings/ file roster | 10.2 |  | 0.601 |
-| ns | 8418 |  | 132 | test/validation/object/valid.ts (fixture shape) | 10.3 |  | 0.595 |
-| walker |  | 8426 | 182 | export at src/structs/utilities.ts:44 |  |  | 0.595 |
-| walker |  | 8473 | 47 | export doc at src/structs/utilities.ts:247 |  |  | 0.595 |
-| walker |  | 8528 | 55 | export doc at src/structs/utilities.ts:80 |  |  | 0.595 |
-| walker |  | 8585 | 57 | export doc at src/structs/utilities.ts:171 |  |  | 0.595 |
-| walker |  | 8642 | 57 | export doc at src/structs/utilities.ts:221 |  |  | 0.595 |
+| ns | 7939 |  | 455 | StructError property table | 9.1 |  | 0.543 |
+| walker |  | 8003 | 516 | Readme.md section #2 |  |  | 0.543 |
+| ns | 8104 |  | 165 | test/validation/ kind roster | 10.1 |  | 0.567 |
+| walker |  | 8241 | 238 | export names surface in src/structs/utilities.ts |  |  | 0.577 |
+| walker |  | 8241 | 0 | export at src/structs/utilities.ts:60 |  |  | 0.577 |
+| walker |  | 8241 | 0 | export at src/structs/utilities.ts:71 |  |  | 0.577 |
+| walker |  | 8241 | 0 | export at src/structs/utilities.ts:140 |  |  | 0.577 |
+| walker |  | 8241 | 0 | export at src/structs/utilities.ts:247 |  |  | 0.577 |
+| walker |  | 8260 | 19 | export body at src/structs/utilities.ts:71 body 72 |  |  | 0.578 |
+| ns | 8286 |  | 182 | test/typings/ file roster | 10.2 |  | 0.599 |
+| walker |  | 8293 | 33 | export at src/structs/utilities.ts:106 |  |  | 0.599 |
+| walker |  | 8330 | 37 | export at src/structs/utilities.ts:197 |  |  | 0.599 |
+| walker |  | 8368 | 38 | export at src/structs/utilities.ts:80 |  |  | 0.599 |
+| walker |  | 8411 | 43 | export at src/structs/utilities.ts:221 |  |  | 0.599 |
+| ns | 8418 |  | 132 | test/validation/object/valid.ts (fixture shape) | 10.3 |  | 0.592 |
+| walker |  | 8455 | 44 | export at src/structs/utilities.ts:171 |  |  | 0.592 |
+| walker |  | 8500 | 45 | export at src/structs/utilities.ts:17 |  |  | 0.592 |
+| walker |  | 8602 | 102 | export at src/structs/utilities.ts:21 |  |  | 0.592 |
+| walker |  | 8628 | 26 | export doc at src/structs/utilities.ts:71 |  |  | 0.595 |
 | ns | 8694 |  | 276 | examples/basic-validation.js | 11.1 |  | 0.582 |
-| walker |  | 8705 | 63 | export doc at src/structs/utilities.ts:197 |  |  | 0.582 |
+| walker |  | 8778 | 150 | export at src/structs/utilities.ts:30 |  |  | 0.582 |
+| walker |  | 8807 | 29 | export doc at src/structs/utilities.ts:247 |  |  | 0.582 |
+| walker |  | 8989 | 182 | export at src/structs/utilities.ts:44 |  |  | 0.582 |
 | ns | 9020 |  | 326 | package.json scripts | 12.1 |  | 0.589 |
+| walker |  | 9044 | 55 | export doc at src/structs/utilities.ts:80 |  |  | 0.589 |
+| walker |  | 9101 | 57 | export doc at src/structs/utilities.ts:171 |  |  | 0.589 |
+| walker |  | 9158 | 57 | export doc at src/structs/utilities.ts:221 |  |  | 0.589 |
 | ns | 9205 |  | 185 | tsconfig.json | 12.2 |  | 0.596 |
-| walker |  | 9221 | 516 | Readme.md section #2 |  |  | 0.596 |
+| walker |  | 9221 | 63 | export doc at src/structs/utilities.ts:197 |  |  | 0.596 |
 | walker |  | 9289 | 68 | export doc at src/structs/utilities.ts:17 |  |  | 0.596 |
 | walker |  | 9366 | 77 | export doc at src/structs/coercions.ts:79 |  |  | 0.596 |
 | ns | 9380 |  | 175 | .github/workflows/ci.yml | 12.3 |  | 0.602 |
