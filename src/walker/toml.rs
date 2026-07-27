@@ -16,7 +16,8 @@
 //!   621 dependency arrays under `[project]`
 //! - `DevelopmentDependencies { file }` — Cargo `[dev-dependencies]`,
 //!   `[build-dependencies]`, target-conditional dependency tables, and PEP
-//!   735 `[dependency-groups]`
+//!   735 `[dependency-groups]`; predecessor: `Dependencies` on the same
+//!   file when that manifest has a runtime roster
 //! - `ToolConfig { file, tool }` — one Python-manifest `tool.<name>` family,
 //!   with adjacent small tables packed into compact families
 //! - `Config { file }` — every other table of a manifest, whatever it is
@@ -132,11 +133,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: features_value(&file, ctx),
             });
         }
+        let mut runtime_dependencies = None;
         if let Some(content) =
             build_dependencies_content(&file, &source, &pairs, &sections, python_project_manifest)
         {
+            let key: BatchKey = TomlKey::Dependencies { file: file.clone() }.into();
+            runtime_dependencies = Some(key.clone());
             out.push(Batch {
-                key: TomlKey::Dependencies { file: file.clone() }.into(),
+                key,
                 predecessor: None,
                 content,
                 value: if is_cargo_manifest(&file) {
@@ -154,7 +158,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         ) {
             out.push(Batch {
                 key: TomlKey::DevelopmentDependencies { file: file.clone() }.into(),
-                predecessor: None,
+                // Tooling, test and build rosters gate behind the runtime
+                // roster of the same manifest: a manifest that shows its
+                // test harness while withholding what the package is built
+                // on reads as a package with no runtime dependencies.
+                // Pricing cannot supply that ordering — under per-token
+                // ranking a short enough dev block outranks any
+                // priced-higher longer runtime block. A manifest that
+                // genuinely declares no runtime dependencies emits no
+                // Dependencies batch and keeps its dev roster ungated.
+                predecessor: runtime_dependencies,
                 content,
                 value: development_dependencies_value(&file, ctx),
             });
@@ -1616,6 +1629,50 @@ pytest = "*"
         }
         for name in ["profile.release", "bin", "example", "test", "bench"] {
             assert!(!is_dependency_section(name), "config/target only: {name}");
+        }
+    }
+
+    /// Dev/build/target rosters must never be purchasable before the runtime
+    /// roster of the same manifest — otherwise a manifest can render its
+    /// tooling alone and read as having no runtime dependencies. A manifest
+    /// without a runtime roster has nothing to gate behind.
+    #[test]
+    fn walker_toml_development_dependencies_gate_behind_runtime_dependencies() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        fs::write(
+            root.join("Cargo.toml"),
+            "[package]\nname='demo'\nversion='0.1.0'\n\
+             [dependencies]\nserde='1'\n[dev-dependencies]\nproptest='1'\n",
+        )
+        .unwrap();
+        fs::create_dir(root.join("leaf")).unwrap();
+        fs::write(
+            root.join("leaf/Cargo.toml"),
+            "[package]\nname='leaf'\nversion='0.1.0'\n[dev-dependencies]\nproptest='1'\n",
+        )
+        .unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        for (rel, expected) in [
+            (
+                "Cargo.toml",
+                Some(BatchKey::Toml(TomlKey::Dependencies {
+                    file: root.join("Cargo.toml"),
+                })),
+            ),
+            ("leaf/Cargo.toml", None),
+        ] {
+            let manifest = root.join(rel);
+            let batches = expand_in_dir(manifest.parent().unwrap(), &ctx);
+            let dev = batches
+                .iter()
+                .find(|b| {
+                    matches!(&b.key, BatchKey::Toml(TomlKey::DevelopmentDependencies { file })
+                        if *file == manifest)
+                })
+                .expect("development dependencies batch");
+            assert_eq!(dev.predecessor, expected, "{rel}");
         }
     }
 

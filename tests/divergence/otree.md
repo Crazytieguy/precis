@@ -97,27 +97,27 @@ Score(3000)=0.594 I=0.805 C=0.438 ns_rows≤3K=16/42 (reached=7 partial=1 missin
 | walker |  | 3126 | 29 | pub item at src/ui/app.rs:48 |  |  | 0.594 |
 | walker |  | 3459 | 333 | pub item at src/parse/mod.rs:36 |  |  | 0.597 |
 | ns | 3479 |  | 540 | cmd.rs: CommandArgs fields, part 2 (layout/size/wrap/meta flags) | 2.5 |  | 0.541 |
-| walker |  | 3509 | 50 | dev/build/target dependencies in Cargo.toml |  |  | 0.543 |
-| ns | 3540 |  | 61 | cmd.rs: impl CommandArgs — locations | 2.6 |  | 0.538 |
-| walker |  | 3735 | 226 | mod/use plumbing in src/main.rs |  |  | 0.624 |
-| walker |  | 3820 | 85 | pub item at src/tree.rs:14 |  |  | 0.625 |
-| ns | 3830 |  | 290 | cmd.rs: get_content_type extension mapping | 2.7 | 2.6 | 0.598 |
-| walker |  | 3908 | 88 | pub item at src/live_reload.rs:16 |  |  | 0.598 |
-| walker |  | 3955 | 47 | pub item at src/ui/popup.rs:18 |  |  | 0.598 |
-| walker |  | 4005 | 50 | pub item at src/ui/header.rs:11 |  |  | 0.598 |
-| walker |  | 4048 | 43 | pub-item names surface in src/parse/json.rs |  |  | 0.598 |
-| walker |  | 4048 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.598 |
-| walker |  | 4093 | 45 | pub-item names surface in src/ui/filter.rs |  |  | 0.598 |
-| walker |  | 4124 | 31 | pub item at src/ui/filter.rs:20 |  |  | 0.598 |
-| walker |  | 4162 | 38 | pub item at src/ui/filter.rs:34 |  |  | 0.598 |
-| walker |  | 4197 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.598 |
-| walker |  | 4244 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.598 |
-| ns | 4289 |  | 459 | cmd.rs: update_config (CLI-flag-over-config precedence) | 2.8 | 2.6 | 0.554 |
-| ns | 4297 |  | 8 | config/ listing | 3.1 |  | 0.556 |
-| ns | 4304 |  | 7 | config/themes/ listing | 3.2 |  | 0.557 |
-| walker |  | 4580 | 336 | pub item at src/config/mod.rs:17 |  |  | 0.557 |
-| walker |  | 4619 | 39 | listing of 'examples' |  |  | 0.558 |
-| walker |  | 4890 | 271 | [dependencies] in Cargo.toml |  |  | 0.603 |
+| ns | 3540 |  | 61 | cmd.rs: impl CommandArgs — locations | 2.6 |  | 0.536 |
+| walker |  | 3685 | 226 | mod/use plumbing in src/main.rs |  |  | 0.622 |
+| walker |  | 3770 | 85 | pub item at src/tree.rs:14 |  |  | 0.623 |
+| ns | 3830 |  | 290 | cmd.rs: get_content_type extension mapping | 2.7 | 2.6 | 0.596 |
+| walker |  | 3858 | 88 | pub item at src/live_reload.rs:16 |  |  | 0.596 |
+| walker |  | 3905 | 47 | pub item at src/ui/popup.rs:18 |  |  | 0.596 |
+| walker |  | 3955 | 50 | pub item at src/ui/header.rs:11 |  |  | 0.596 |
+| walker |  | 3998 | 43 | pub-item names surface in src/parse/json.rs |  |  | 0.596 |
+| walker |  | 3998 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.596 |
+| walker |  | 4043 | 45 | pub-item names surface in src/ui/filter.rs |  |  | 0.597 |
+| walker |  | 4074 | 31 | pub item at src/ui/filter.rs:20 |  |  | 0.597 |
+| walker |  | 4112 | 38 | pub item at src/ui/filter.rs:34 |  |  | 0.597 |
+| walker |  | 4147 | 35 | pub item at src/ui/filter.rs:27 |  |  | 0.597 |
+| walker |  | 4194 | 47 | pub item at src/ui/filter.rs:13 |  |  | 0.597 |
+| ns | 4289 |  | 459 | cmd.rs: update_config (CLI-flag-over-config precedence) | 2.8 | 2.6 | 0.553 |
+| ns | 4297 |  | 8 | config/ listing | 3.1 |  | 0.555 |
+| ns | 4304 |  | 7 | config/themes/ listing | 3.2 |  | 0.556 |
+| walker |  | 4530 | 336 | pub item at src/config/mod.rs:17 |  |  | 0.556 |
+| walker |  | 4569 | 39 | listing of 'examples' |  |  | 0.556 |
+| walker |  | 4842 | 273 | [dependencies] in Cargo.toml |  |  | 0.601 |
+| walker |  | 4890 | 48 | dev/build/target dependencies in Cargo.toml |  |  | 0.603 |
 | walker |  | 4952 | 62 | pub-item names surface in src/parse/syntax.rs |  |  | 0.603 |
 | walker |  | 4952 | 0 | pub item at src/parse/syntax.rs:139 |  |  | 0.603 |
 | walker |  | 4952 | 0 | pub item at src/parse/syntax.rs:201 |  |  | 0.603 |

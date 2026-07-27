@@ -231,12 +231,22 @@ microbootstrap/
         …
           31→    def print_bootstrap_table(self) -> None:
         …
-    exceptions.py …
+    exceptions.py
+           1→class MicroBootstrapBaseError(Exception):
+           2→    """Base for all exceptions."""
+           5→class ConfigMergeError(MicroBootstrapBaseError):
+           6→    """Raises when it's impossible to merge configs due to type mismatch."""
+           9→class MissingInstrumentError(MicroBootstrapBaseError):
+          10→    """Raises when attempting to configure instrument, that is not supported yet."""
     granian_server.py
         …
           16→GRANIAN_LOG_LEVELS_MAP = {
         …
           27→def create_granian_server(
+          28→    target: str,
+          29→    settings: ServerConfig,
+          30→    **granian_options: typing.Any,  # noqa: ANN401
+          31→) -> GranianServer[typing.Any]:
         …
     helpers.py …
     instruments/
@@ -265,7 +275,13 @@ microbootstrap/
           34→        *instrument_configs: InstrumentConfigT,
           35→    ) -> typing_extensions.Self:
         …
+          40→    @classmethod
           41→    def use_instrument(
+          42→        cls,
+          43→    ) -> typing.Callable[
+          44→        [type[Instrument[InstrumentConfigT]]],
+          45→        type[Instrument[InstrumentConfigT]],
+          46→    ]:
         …
           51→    def setup(self) -> None:
         …
@@ -304,21 +320,6 @@ pyproject.toml
       59→version = "0"
       60→authors = [{ name = "community-of-python" }]
     …
-      77→[dependency-groups]
-      78→dev = [
-      79→    "anyio>=4.8.0",
-      80→    "httpx>=0.28.1",
-      81→    "mypy>=1.14.1",
-      82→    "pre-commit>=4.0.1",
-      83→    "pytest>=8.3.4",
-      84→    "pytest-cov>=6.0.0",
-      85→    "pytest-mock>=3.14.0",
-      86→    "pytest-xdist>=3.6.1",
-      87→    "redis>=5.2.1",
-      88→    "ruff>=0.9.1",
-      89→    "trio>=0.28.0",
-      90→    "typing-extensions>=4.12.2",
-      91→]
       93→[build-system]
       94→requires = ["uv_build"]
       95→build-backend = "uv_build"
