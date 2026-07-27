@@ -9,7 +9,10 @@
 //!   hedge. Grouped `type ( … )` / `var ( … )` / `const ( … )` blocks
 //!   contribute one entry per inner spec, so the hedge surfaces every
 //!   exported name even when the whole-group `Decl` batch isn't
-//!   scheduled.
+//!   scheduled. A decl's `Deprecated:` doc line rides here rather than
+//!   in `DeclDoc`: the roster is often the only place a decl appears,
+//!   and listing a deprecated decl among live siblings without its
+//!   marker steers the reader onto the API the package disowned.
 //! - `TestNames { file }`: in `_test.go` files only, surface listing of
 //!   `Test*` / `Benchmark*` / `Example*` first lines (Go's `go test`
 //!   lookup contract). No bodies / docs from test files.
@@ -383,7 +386,12 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // chunk_count == 1: single batch covers all decls.
         let all_name_lines: HashSet<usize> = decls
             .iter()
-            .flat_map(|(_, info)| info.name_lines.iter().copied())
+            .flat_map(|(_, info)| {
+                info.name_lines
+                    .iter()
+                    .copied()
+                    .chain(info.deprecation_marker)
+            })
             .collect();
         let names_lines_by_chunk: Vec<FileLines> = if chunk_count == 1 {
             vec![collect_decl_names_from(&decls, &all_name_lines)]
@@ -414,7 +422,12 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 start_line: info.start_line,
             };
             let decl_lines = collect_decl(info);
-            let doc_lines = collect_doc_comments_above(*node, &source);
+            // The marker line belongs to the names surface; dropping it
+            // here keeps the two batches' line sets disjoint.
+            let mut doc_lines = collect_doc_comments_above(*node, &source);
+            doc_lines
+                .full
+                .retain(|l| Some(*l) != info.deprecation_marker);
             let body_lines = if info.kind.has_body() {
                 collect_decl_body(info, &src_lines)
             } else {
@@ -542,6 +555,10 @@ struct DeclInfo {
     name_lines: Vec<usize>,
     body_rows: Option<(usize, usize)>,
     exported: bool,
+    /// Line of the doc comment's `Deprecated:` marker, if any. Rides
+    /// with the names surface rather than the doc batch — see
+    /// [`collect_decl_names_from`].
+    deprecation_marker: Option<usize>,
     /// Blank-line-separated field groups inside a big struct body;
     /// when present, `decl_lines` covers only header + closing brace.
     struct_field_groups: Vec<(usize, Vec<usize>)>,
@@ -569,32 +586,38 @@ impl DeclInfo {
 }
 
 fn find_decls<'a>(tree: &'a Tree, source: &str) -> Vec<(Node<'a>, DeclInfo)> {
+    let src_lines: Vec<&str> = source.lines().collect();
     let root = tree.root_node();
     let mut out = Vec::new();
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
-        match child.kind() {
-            "function_declaration" => {
-                if let Some(info) = func_or_method_info(child, source, DeclKind::Func) {
-                    out.push((child, info));
-                }
-            }
-            "method_declaration" => {
-                if let Some(info) = func_or_method_info(child, source, DeclKind::Method) {
-                    out.push((child, info));
-                }
-            }
-            "type_declaration" => out.push((child, grouped_type_info(child, source))),
-            "var_declaration" => {
-                out.push((child, grouped_value_info(child, source, DeclKind::Var)))
-            }
-            "const_declaration" => {
-                out.push((child, grouped_value_info(child, source, DeclKind::Const)))
-            }
-            _ => continue,
-        }
+        let info = match child.kind() {
+            "function_declaration" => func_or_method_info(child, source, DeclKind::Func),
+            "method_declaration" => func_or_method_info(child, source, DeclKind::Method),
+            "type_declaration" => Some(grouped_type_info(child, source)),
+            "var_declaration" => Some(grouped_value_info(child, source, DeclKind::Var)),
+            "const_declaration" => Some(grouped_value_info(child, source, DeclKind::Const)),
+            _ => None,
+        };
+        let Some(mut info) = info else { continue };
+        info.deprecation_marker = deprecation_marker_line(child, source, &src_lines);
+        out.push((child, info));
     }
     out
+}
+
+/// 1-based line of the `Deprecated:` marker in `node`'s doc comment —
+/// Go's documented deprecation convention. `None` for a live decl.
+fn deprecation_marker_line(node: Node, source: &str, src_lines: &[&str]) -> Option<usize> {
+    collect_doc_comments_above(node, source)
+        .full
+        .into_iter()
+        .find(|line| {
+            src_lines.get(line - 1).is_some_and(|text| {
+                text.trim_start_matches(['/', '\t', ' '])
+                    .starts_with("Deprecated:")
+            })
+        })
 }
 
 fn func_or_method_info(node: Node, source: &str, kind: DeclKind) -> Option<DeclInfo> {
@@ -614,6 +637,7 @@ fn func_or_method_info(node: Node, source: &str, kind: DeclKind) -> Option<DeclI
         name_lines: vec![start_line],
         body_rows: body_interior_rows(node),
         exported,
+        deprecation_marker: None,
         struct_field_groups: Vec::new(),
     })
 }
@@ -706,6 +730,7 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
         name_lines,
         body_rows: None,
         exported,
+        deprecation_marker: None,
         struct_field_groups,
     }
 }
@@ -802,6 +827,7 @@ fn grouped_value_info(node: Node, source: &str, kind: DeclKind) -> DeclInfo {
         name_lines,
         body_rows: None,
         exported,
+        deprecation_marker: None,
         struct_field_groups: Vec::new(),
     }
 }
@@ -1121,6 +1147,12 @@ fn collect_decl_names_from(
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for (_, info) in decls {
+        // The roster is often the *only* place a decl appears, and a
+        // deprecated decl listed among live siblings steers the reader
+        // onto the API the package told them not to use. The marker
+        // rides with the roster line instead of competing as `DeclDoc`,
+        // so it cannot be separated from what it negates.
+        full.extend(info.deprecation_marker);
         for &line in &info.name_lines {
             full.push(line);
             let ellipsis_line = line + 1;
@@ -1370,6 +1402,58 @@ func Bar() {}
         assert!(
             bar_doc.full.is_empty(),
             "blank-line gap separates the comment from Bar's decl; got {bar_doc:?}"
+        );
+    }
+
+    #[test]
+    fn go_deprecation_marker_rides_with_the_names_roster() {
+        let src = "\
+package foo
+
+// Old does a thing.
+//
+// Deprecated: Use New instead.
+func Old() {}
+
+// New does a thing.
+func New() {}
+";
+        let (source, tree) = parse(src);
+        let src_lines: Vec<&str> = source.lines().collect();
+        let decls = find_decls(&tree, &source);
+        assert_eq!(decls[0].1.deprecation_marker, Some(5));
+        assert_eq!(decls[1].1.deprecation_marker, None);
+
+        let all_name_lines = decls
+            .iter()
+            .flat_map(|(_, info)| {
+                info.name_lines
+                    .iter()
+                    .copied()
+                    .chain(info.deprecation_marker)
+            })
+            .collect();
+        let names = collect_decl_names_from(&decls, &all_name_lines);
+        assert_eq!(
+            names.full,
+            vec![5, 6, 9],
+            "the roster carries the marker, so `Old` can never render without it"
+        );
+        assert!(
+            !names.ellipses.contains(&5),
+            "the marker line is real content, not an elision marker"
+        );
+
+        // The doc batch keeps the prose and drops the marker line, so
+        // the two batches' line sets stay disjoint.
+        let mut doc_lines = collect_doc_comments_above(decls[0].0, &source);
+        doc_lines
+            .full
+            .retain(|l| Some(*l) != decls[0].1.deprecation_marker);
+        assert_eq!(doc_lines.full, vec![3, 4]);
+        assert_eq!(
+            deprecation_marker_line(decls[1].0, &source, &src_lines),
+            None
         );
     }
 

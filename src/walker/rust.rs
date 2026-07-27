@@ -31,6 +31,11 @@
 //! A per-method rustdoc key (Python's `MethodDoc`) was measured and
 //! left out: it moved no fixture at any budget in the grid.
 //!
+//! Attributes are filtered, not dropped wholesale — see
+//! [`is_api_shape_attribute`] for the shape family and
+//! [`is_polarity_attribute`] for the family whose absence would make the
+//! line beneath it false.
+//!
 //! Cross-file keys (scoped by source directory):
 //! - `MacroNames { src_dir }`: exported macro name list
 //!
@@ -546,7 +551,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             // own with no predecessor.
             let emit_names_surface = items.len() > 1;
             let names_key = RustKey::PubItemNames { file: file.clone() };
-            let parent_names_lines = collect_pub_item_names(&items);
+            let parent_names_lines = collect_pub_item_names(&items, &source);
             if emit_names_surface
                 && let Some(content) =
                     single_file_lines_content(file, &source, parent_names_lines.clone())
@@ -1914,26 +1919,23 @@ fn is_rust_lang(info: &str) -> bool {
     RUST_ATTRS.iter().any(|a| token.eq_ignore_ascii_case(a))
 }
 
-fn collect_mod_use(tree: &Tree, _source: &str) -> FileLines {
+fn collect_mod_use(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for child in root.children(&mut cursor) {
-        match child.kind() {
-            "use_declaration" => push_rows(
-                &mut full,
-                child.start_position().row,
-                signature_end_row(child),
-            ),
-            "mod_item" => {
-                let sig_end = signature_end_row(child);
-                push_rows(&mut full, child.start_position().row, sig_end);
-                if child.child_by_field_name("body").is_some() {
-                    ellipses.push(sig_end + 2);
-                }
-            }
-            _ => {}
+        if !matches!(child.kind(), "use_declaration" | "mod_item") {
+            continue;
+        }
+        // Two `use … as StdError` rows whose `#[cfg(feature = "std")]`
+        // gates were dropped read as a duplicate import rather than a
+        // std/no_std fork; a `#[doc(hidden)] pub mod` reads as API.
+        full.extend(attr_rows_above(child, source, is_polarity_attribute));
+        let sig_end = signature_end_row(child);
+        push_rows(&mut full, child.start_position().row, sig_end);
+        if child.kind() == "mod_item" && child.child_by_field_name("body").is_some() {
+            ellipses.push(sig_end + 2);
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
@@ -1942,14 +1944,15 @@ fn collect_mod_use(tree: &Tree, _source: &str) -> FileLines {
 /// Header lines for every top-level pub item (name + first line only, with
 /// an ellipsis marker where the body would be). Surface listing — see
 /// `PubItemNames`.
-fn collect_pub_item_names(items: &[PubItemInfo<'_>]) -> FileLines {
+fn collect_pub_item_names(items: &[PubItemInfo<'_>], source: &str) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for item in items {
+        full.extend(attr_rows_above(item.node, source, is_disavowal_attribute));
         full.push(item.start_line);
         ellipses.push(item.start_line + 1);
     }
-    FileLines::new(full).with_ellipses(ellipses)
+    FileLines::new(dedup_sorted(full)).with_ellipses(ellipses)
 }
 
 /// Lines for a single pub item's decl at `start_line`. For struct/enum/
@@ -1973,16 +1976,75 @@ fn collect_private_entry_item(child: Node, source: &str, whole: bool) -> FileLin
 /// Attribute paths that define the item's API shape — the ones NS rows
 /// anchor on (`#[derive(toasty::Model)]`, `#[repr(transparent)]`,
 /// `#[proc_macro_derive(Error, …)]`, mdbook's
-/// `#[allow(exhaustive_structs)]`). Implementation / conditional-
-/// compilation attributes (`#[inline]`, `#[cfg(…)]`, `#[doc(hidden)]`)
-/// stay out: including them re-prices names-surface-covered items
-/// from 0 and floods attr-heavy facade files (measured: log −0.013
-/// when all attributes were included).
+/// `#[allow(exhaustive_structs)]`). Implementation attributes
+/// (`#[inline]`, `#[cold]`, `#[serde(…)]`) stay out: including them
+/// re-prices names-surface-covered items from 0 and floods attr-heavy
+/// facade files (measured: log −0.013 when all attributes were
+/// included).
 fn is_api_shape_attribute(node: Node, source: &str) -> bool {
-    let text = source[node.start_byte()..node.end_byte()].trim_start_matches(['#', '[']);
+    let text = attribute_body(node, source);
     ["derive", "repr", "proc_macro", "non_exhaustive", "allow"]
         .iter()
         .any(|p| text.starts_with(p))
+}
+
+/// Attributes that **invert** what the line below them claims instead
+/// of decorating it. Dropping one is not a saving, it makes the
+/// retained line false: a `#[cfg(…)]`-gated item reads as
+/// unconditional, a `#[doc(hidden)]` module reads as public API, a
+/// `#[deprecated]` function reads as the one to call, and a
+/// `macro_rules!` without its `#[macro_export]` reads as crate-private.
+///
+/// Deliberately narrower than "everything [`is_api_shape_attribute`]
+/// rejects": `#[cfg_attr(…)]` conditionally applies *another*
+/// attribute rather than gating the item, so it stays out with the rest
+/// of the decoration. At most a handful of items in a file carry one of
+/// these, so the family's token cost is a small fraction of the
+/// all-attributes measurement that excluded it.
+fn is_polarity_attribute(node: Node, source: &str) -> bool {
+    let text = attribute_body(node, source);
+    text.starts_with("cfg(")
+        || text.starts_with("macro_export")
+        || is_disavowal_attribute(node, source)
+}
+
+/// The subset of [`is_polarity_attribute`] that contradicts a *names
+/// roster* rather than qualifying it. A roster claims "these items
+/// exist"; `#[cfg(…)]` only refines when, but `#[doc(hidden)]` and
+/// `#[deprecated]` say the item is not one the reader should reach for
+/// — the roster is frequently the only place an item appears, so
+/// listing it clean asserts the opposite.
+fn is_disavowal_attribute(node: Node, source: &str) -> bool {
+    let text = attribute_body(node, source);
+    text.starts_with("doc(hidden)") || text.starts_with("deprecated")
+}
+
+/// Source text of an `attribute_item` with its `#[` opener stripped, so
+/// path matching starts at the attribute's own path.
+fn attribute_body<'a>(node: Node, source: &'a str) -> &'a str {
+    source[node.start_byte()..node.end_byte()].trim_start_matches(['#', '['])
+}
+
+/// Rows of the run of outer `#[…]` attributes immediately above `node`
+/// that `keep` accepts. A rejected attribute does not break the run —
+/// an `#[inline]` sitting between the item and its `#[cfg]` must not
+/// hide the `#[cfg]`.
+fn attr_rows_above<F>(node: Node, source: &str, keep: F) -> Vec<usize>
+where
+    F: Fn(Node, &str) -> bool,
+{
+    let mut rows = Vec::new();
+    let mut cur = node.prev_sibling();
+    while let Some(prev) = cur {
+        if prev.kind() != "attribute_item" {
+            break;
+        }
+        if keep(prev, source) {
+            extend_span(&mut rows, prev, source);
+        }
+        cur = prev.prev_sibling();
+    }
+    rows
 }
 
 fn collect_item_lines(child: Node, source: &str, whole: bool) -> FileLines {
@@ -1990,18 +2052,9 @@ fn collect_item_lines(child: Node, source: &str, whole: bool) -> FileLines {
     // render paths — NS rows anchor on lines starting at the attribute.
     // `whole` keeps every attribute (whole-item renders are example /
     // model anchors where the full decl block is the point).
-    let mut attr_lines = Vec::new();
-    let mut cur = child.prev_sibling();
-    while let Some(prev) = cur {
-        if prev.kind() == "attribute_item" {
-            if whole || is_api_shape_attribute(prev, source) {
-                extend_span(&mut attr_lines, prev, source);
-            }
-            cur = prev.prev_sibling();
-        } else {
-            break;
-        }
-    }
+    let attr_lines = attr_rows_above(child, source, |attr, src| {
+        whole || is_api_shape_attribute(attr, src) || is_polarity_attribute(attr, src)
+    });
     if whole {
         let mut full = attr_lines;
         extend_span(&mut full, child, source);
@@ -2285,6 +2338,14 @@ fn collect_method_sigs(methods: &[ImplMethodInfo<'_>], first_line_only: bool) ->
                 signature_end_row(method.impl_node)
             };
             push_rows(&mut full, impl_start, impl_end);
+            // An impl's `where` bound is what makes the impl applicable,
+            // not decoration: truncating `impl<T, E> Context<T, E> for
+            // Result<T, E>` at its first row asserts a blanket impl. The
+            // location shape keeps the bound rows even though it drops
+            // everything else past the first line.
+            if first_line_only {
+                push_where_clause_rows(&mut full, method.impl_node);
+            }
         }
         let sig_start = method.node.start_position().row;
         let sig_end = if first_line_only {
@@ -2298,6 +2359,18 @@ fn collect_method_sigs(methods: &[ImplMethodInfo<'_>], first_line_only: bool) ->
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
+}
+
+/// Rows of `node`'s `where` clause, if it has one.
+fn push_where_clause_rows(out: &mut Vec<usize>, node: Node) {
+    let mut cursor = node.walk();
+    let Some(clause) = node
+        .children(&mut cursor)
+        .find(|c| c.kind() == "where_clause")
+    else {
+        return;
+    };
+    push_rows(out, clause.start_position().row, clause.end_position().row);
 }
 
 /// Per-method dive for the methods the file's `MethodSigs` roster names:
@@ -2952,6 +3025,143 @@ struct F;
         );
         // Private items have no visibility_modifier and are filtered out.
         assert!(!by_head.contains_key("struct F;"));
+    }
+
+    /// Source lines a `FileLines` selects, for readable assertions.
+    fn rendered(src: &str, lines: &FileLines) -> Vec<String> {
+        let by_row: Vec<&str> = src.lines().collect();
+        lines
+            .full
+            .iter()
+            .map(|l| by_row[l - 1].to_string())
+            .collect()
+    }
+
+    #[test]
+    fn rust_polarity_attributes_ride_with_their_item() {
+        let src = r#"
+#[cfg(feature = "std")]
+#[derive(Clone)]
+#[inline]
+#[serde(rename = "x")]
+#[cfg_attr(docsrs, doc(cfg(feature = "std")))]
+#[deprecated(note = "use Bar")]
+pub struct Foo;
+"#;
+        let tree = parse(src);
+        let root = tree.root_node();
+        let mut cursor = root.walk();
+        let item = root
+            .children(&mut cursor)
+            .find(|c| c.kind() == "struct_item")
+            .expect("struct_item");
+        assert_eq!(
+            rendered(src, &collect_item_lines(item, src, false)),
+            vec![
+                "#[cfg(feature = \"std\")]",
+                "#[derive(Clone)]",
+                "#[deprecated(note = \"use Bar\")]",
+                "pub struct Foo;",
+            ],
+            "gating and deprecation ride with the item alongside API shape; \
+             implementation attributes and cfg_attr stay out, and a rejected \
+             attribute in the middle must not hide the ones above it"
+        );
+    }
+
+    #[test]
+    fn rust_pub_item_roster_disavows_what_the_crate_disavows() {
+        let src = r#"
+#[doc(hidden)]
+pub trait Sealed {}
+
+#[deprecated(note = "use Bar")]
+pub struct Foo;
+
+#[cfg(feature = "std")]
+pub struct Gated;
+
+pub struct Plain;
+"#;
+        let tree = parse(src);
+        let items = find_top_level_item_starts(&tree, src, TopLevelItemVisibility::Public);
+        assert_eq!(
+            rendered(src, &collect_pub_item_names(&items, src)),
+            vec![
+                "#[doc(hidden)]",
+                "pub trait Sealed {}",
+                "#[deprecated(note = \"use Bar\")]",
+                "pub struct Foo;",
+                "pub struct Gated;",
+                "pub struct Plain;",
+            ],
+            "a roster claims these items exist; `cfg` only refines when, but \
+             doc(hidden)/deprecated contradict the roster's own claim"
+        );
+    }
+
+    #[test]
+    fn rust_mod_use_plumbing_keeps_its_gates() {
+        let src = r#"
+#[cfg(feature = "std")]
+use std::error::Error as StdError;
+#[cfg(not(feature = "std"))]
+use core::error::Error as StdError;
+#[inline]
+use crate::plain::Thing;
+#[doc(hidden)]
+pub mod __private {
+    pub fn helper() {}
+}
+"#;
+        let tree = parse(src);
+        assert_eq!(
+            rendered(src, &collect_mod_use(&tree, src)),
+            vec![
+                "#[cfg(feature = \"std\")]",
+                "use std::error::Error as StdError;",
+                "#[cfg(not(feature = \"std\"))]",
+                "use core::error::Error as StdError;",
+                "use crate::plain::Thing;",
+                "#[doc(hidden)]",
+                "pub mod __private {",
+            ],
+            "without the gates the two `StdError` imports read as a duplicate \
+             rather than a std/no_std fork, and `__private` reads as API"
+        );
+    }
+
+    #[test]
+    fn rust_impl_roster_keeps_the_bound_that_makes_the_impl_apply() {
+        let src = r#"
+pub trait Ctx {}
+
+impl<T, E> Ctx for Result<T, E>
+where
+    E: std::error::Error + Send + Sync + 'static,
+{
+    pub fn thing(self) -> T
+    where
+        T: Clone,
+    {
+        todo!()
+    }
+}
+"#;
+        let tree = parse(src);
+        let pub_traits = HashSet::from(["Ctx".to_string()]);
+        let methods = collect_impl_methods(&tree, src, MethodSigScope::OwnApiOnly, &pub_traits);
+        assert_eq!(
+            rendered(src, &collect_method_sigs(&methods, true)),
+            vec![
+                "impl<T, E> Ctx for Result<T, E>",
+                "where",
+                "    E: std::error::Error + Send + Sync + 'static,",
+                "    pub fn thing(self) -> T",
+            ],
+            "the impl's applicability bound is not a tail the location shape \
+             may truncate — without it the roster asserts a blanket impl"
+        );
     }
 
     #[test]

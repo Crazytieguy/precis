@@ -1,6 +1,6 @@
 fixture = "sqlite-vec"
 budget = 10000
-cumulative_tokens = 9922
+cumulative_tokens = 9930
 batch_count = 139
 
 [[batches]]
@@ -687,15 +687,15 @@ entries = ["lib.rs"]
 position = 15
 key = 'Rust(ModUse { file: "bindings/rust/src/lib.rs" })'
 descriptor = "mod/use plumbing in bindings/rust/src/lib.rs"
-cost_tokens = 11
-cum_tokens = 697
+cost_tokens = 19
+cum_tokens = 705
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "bindings/rust/src/lib.rs"
-start = 7
+start = 6
 end = 7
 
 [batches.content.spans.render]
@@ -714,7 +714,7 @@ position = 16
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 148
-cum_tokens = 845
+cum_tokens = 853
 
 [batches.content]
 kind = "fs"
@@ -728,7 +728,7 @@ position = 17
 key = 'Markdown(HeadingsOutline { file: "ARCHITECTURE.md" })'
 descriptor = "headings outline in ARCHITECTURE.md"
 cost_tokens = 48
-cum_tokens = 893
+cum_tokens = 901
 
 [batches.content]
 kind = "lines"
@@ -786,7 +786,7 @@ position = 18
 key = 'Fs(DirListing { dir: "scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 12
-cum_tokens = 905
+cum_tokens = 913
 
 [batches.content]
 kind = "fs"
@@ -800,7 +800,7 @@ position = 19
 key = 'Fs(DirListing { dir: "benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 22
-cum_tokens = 927
+cum_tokens = 935
 
 [batches.content]
 kind = "fs"
@@ -814,7 +814,7 @@ position = 20
 key = 'Fs(DirListing { dir: "benchmarks/self-params" })'
 descriptor = "listing of 'benchmarks/self-params'"
 cost_tokens = 12
-cum_tokens = 939
+cum_tokens = 947
 
 [batches.content]
 kind = "fs"
@@ -828,7 +828,7 @@ position = 21
 key = 'Python(Imports { file: "tmp-static.py" })'
 descriptor = "python imports in tmp-static.py"
 cost_tokens = 19
-cum_tokens = 958
+cum_tokens = 966
 
 [batches.content]
 kind = "lines"
@@ -846,7 +846,7 @@ position = 22
 key = 'Plaintext(MakefileSkeletonChunk { file: "Makefile", chunk_index: 0 })'
 descriptor = "Makefile target skeleton chunk #1 of Makefile"
 cost_tokens = 103
-cum_tokens = 1061
+cum_tokens = 1069
 
 [batches.content]
 kind = "lines"
@@ -880,7 +880,7 @@ position = 23
 key = 'Fs(DirListing { dir: "site" })'
 descriptor = "listing of 'site'"
 cost_tokens = 77
-cum_tokens = 1138
+cum_tokens = 1146
 
 [batches.content]
 kind = "fs"
@@ -894,7 +894,7 @@ position = 24
 key = 'Fs(DirListing { dir: "site/.vitepress" })'
 descriptor = "listing of 'site/.vitepress'"
 cost_tokens = 8
-cum_tokens = 1146
+cum_tokens = 1154
 
 [batches.content]
 kind = "fs"
@@ -908,7 +908,7 @@ position = 25
 key = 'Fs(DirListing { dir: "site/.vitepress/theme" })'
 descriptor = "listing of 'site/.vitepress/theme'"
 cost_tokens = 16
-cum_tokens = 1162
+cum_tokens = 1170
 
 [batches.content]
 kind = "fs"
@@ -922,7 +922,7 @@ position = 26
 key = 'Fs(DirListing { dir: "benchmarks/micro" })'
 descriptor = "listing of 'benchmarks/micro'"
 cost_tokens = 25
-cum_tokens = 1187
+cum_tokens = 1195
 
 [batches.content]
 kind = "fs"
@@ -936,7 +936,7 @@ position = 27
 key = 'Fs(DirListing { dir: "benchmarks/micro/src" })'
 descriptor = "listing of 'benchmarks/micro/src'"
 cost_tokens = 3
-cum_tokens = 1190
+cum_tokens = 1198
 
 [batches.content]
 kind = "fs"
@@ -950,7 +950,7 @@ position = 28
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 95
-cum_tokens = 1285
+cum_tokens = 1293
 
 [batches.content]
 kind = "fs"
@@ -964,7 +964,7 @@ position = 29
 key = 'Sql(QueryChunk { file: "test.sql", chunk_index: 0 })'
 descriptor = "SQL SELECT/WHERE contracts chunk #1 in test.sql"
 cost_tokens = 128
-cum_tokens = 1413
+cum_tokens = 1421
 
 [batches.content]
 kind = "lines"
@@ -990,7 +990,7 @@ position = 30
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 318
-cum_tokens = 1731
+cum_tokens = 1739
 
 [batches.content]
 kind = "lines"
@@ -1008,7 +1008,7 @@ position = 31
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 1, chunk_index: 0 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:1 chunk 1"
 cost_tokens = 165
-cum_tokens = 1896
+cum_tokens = 1904
 
 [batches.content]
 kind = "lines"
@@ -1154,7 +1154,7 @@ position = 32
 key = 'Sql(SchemaChunk { file: "test.sql", chunk_index: 0 })'
 descriptor = "SQL schema contracts chunk #1 in test.sql"
 cost_tokens = 209
-cum_tokens = 2105
+cum_tokens = 2113
 
 [batches.content]
 kind = "lines"
@@ -1220,7 +1220,7 @@ position = 33
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 31, chunk_index: 0 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:31 chunk 1"
 cost_tokens = 75
-cum_tokens = 2180
+cum_tokens = 2188
 
 [batches.content]
 kind = "lines"
@@ -1238,7 +1238,7 @@ position = 34
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 40, chunk_index: 1 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:40 chunk 2"
 cost_tokens = 55
-cum_tokens = 2235
+cum_tokens = 2243
 
 [batches.content]
 kind = "lines"
@@ -1272,7 +1272,7 @@ position = 35
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 328, chunk_index: 0 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:328 chunk 1"
 cost_tokens = 62
-cum_tokens = 2297
+cum_tokens = 2305
 
 [batches.content]
 kind = "lines"
@@ -1290,7 +1290,7 @@ position = 36
 key = 'Python(DeclNames { file: "tmp-static.py" })'
 descriptor = "python decl names surface in tmp-static.py"
 cost_tokens = 132
-cum_tokens = 2429
+cum_tokens = 2437
 
 [batches.content]
 kind = "lines"
@@ -1332,7 +1332,7 @@ position = 37
 key = 'Python(Decl { file: "tmp-static.py", start_line: 25 })'
 descriptor = "python decl at tmp-static.py:25"
 cost_tokens = 0
-cum_tokens = 2429
+cum_tokens = 2437
 
 [batches.content]
 kind = "lines"
@@ -1350,7 +1350,7 @@ position = 38
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 523
-cum_tokens = 2952
+cum_tokens = 2960
 
 [batches.content]
 kind = "lines"
@@ -1368,7 +1368,7 @@ position = 39
 key = 'Fs(DirListing { dir: "site/guides" })'
 descriptor = "listing of 'site/guides'"
 cost_tokens = 44
-cum_tokens = 2996
+cum_tokens = 3004
 
 [batches.content]
 kind = "fs"
@@ -1382,7 +1382,7 @@ position = 40
 key = 'Fs(DirListing { dir: "site/using" })'
 descriptor = "listing of 'site/using'"
 cost_tokens = 48
-cum_tokens = 3044
+cum_tokens = 3052
 
 [batches.content]
 kind = "fs"
@@ -1396,7 +1396,7 @@ position = 41
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #0"
 cost_tokens = 121
-cum_tokens = 3165
+cum_tokens = 3173
 
 [batches.content]
 kind = "lines"
@@ -1414,7 +1414,7 @@ position = 42
 key = 'Rust(PubItem { file: "benchmarks/micro/src/lib.rs", start_line: 8 })'
 descriptor = "pub item at benchmarks/micro/src/lib.rs:8"
 cost_tokens = 14
-cum_tokens = 3179
+cum_tokens = 3187
 
 [batches.content]
 kind = "lines"
@@ -1440,7 +1440,7 @@ position = 43
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 308, chunk_index: 0 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:308 chunk 1"
 cost_tokens = 163
-cum_tokens = 3342
+cum_tokens = 3350
 
 [batches.content]
 kind = "lines"
@@ -1490,7 +1490,7 @@ position = 44
 key = 'Fs(DirListing { dir: "tests/fuzz" })'
 descriptor = "listing of 'tests/fuzz'"
 cost_tokens = 48
-cum_tokens = 3390
+cum_tokens = 3398
 
 [batches.content]
 kind = "fs"
@@ -1504,7 +1504,7 @@ position = 45
 key = 'Python(Decl { file: "tmp-static.py", start_line: 13 })'
 descriptor = "python decl at tmp-static.py:13"
 cost_tokens = 150
-cum_tokens = 3540
+cum_tokens = 3548
 
 [batches.content]
 kind = "lines"
@@ -1522,7 +1522,7 @@ position = 46
 key = 'Plaintext(Whole { file: "TODO" })'
 descriptor = "plaintext config TODO"
 cost_tokens = 249
-cum_tokens = 3789
+cum_tokens = 3797
 
 [batches.content]
 kind = "lines"
@@ -1540,7 +1540,7 @@ position = 47
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 258, chunk_index: 0 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:258 chunk 1"
 cost_tokens = 243
-cum_tokens = 4032
+cum_tokens = 4040
 
 [batches.content]
 kind = "lines"
@@ -1638,7 +1638,7 @@ position = 48
 key = 'Fs(DirListing { dir: "site/getting-started" })'
 descriptor = "listing of 'site/getting-started'"
 cost_tokens = 7
-cum_tokens = 4039
+cum_tokens = 4047
 
 [batches.content]
 kind = "fs"
@@ -1652,7 +1652,7 @@ position = 49
 key = 'Python(Imports { file: "bindings/python/extra_init.py" })'
 descriptor = "python imports in bindings/python/extra_init.py"
 cost_tokens = 30
-cum_tokens = 4069
+cum_tokens = 4077
 
 [batches.content]
 kind = "lines"
@@ -1670,7 +1670,7 @@ position = 50
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 83, chunk_index: 2 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:83 chunk 3"
 cost_tokens = 235
-cum_tokens = 4304
+cum_tokens = 4312
 
 [batches.content]
 kind = "lines"
@@ -1768,7 +1768,7 @@ position = 51
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 157
-cum_tokens = 4461
+cum_tokens = 4469
 
 [batches.content]
 kind = "lines"
@@ -1786,7 +1786,7 @@ position = 52
 key = 'C(DeclNames { file: "sqlite-vec.c", chunk_index: 0 })'
 descriptor = "c decl names surface in sqlite-vec.c"
 cost_tokens = 396
-cum_tokens = 4857
+cum_tokens = 4865
 
 [batches.content]
 kind = "lines"
@@ -1948,7 +1948,7 @@ position = 53
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 591 })'
 descriptor = "c decl at sqlite-vec.c:591"
 cost_tokens = 0
-cum_tokens = 4857
+cum_tokens = 4865
 
 [batches.content]
 kind = "lines"
@@ -1974,7 +1974,7 @@ position = 54
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 614 })'
 descriptor = "c decl at sqlite-vec.c:614"
 cost_tokens = 0
-cum_tokens = 4857
+cum_tokens = 4865
 
 [batches.content]
 kind = "lines"
@@ -2000,7 +2000,7 @@ position = 55
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 629 })'
 descriptor = "c decl at sqlite-vec.c:629"
 cost_tokens = 0
-cum_tokens = 4857
+cum_tokens = 4865
 
 [batches.content]
 kind = "lines"
@@ -2026,7 +2026,7 @@ position = 56
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 646 })'
 descriptor = "c decl at sqlite-vec.c:646"
 cost_tokens = 0
-cum_tokens = 4857
+cum_tokens = 4865
 
 [batches.content]
 kind = "lines"
@@ -2052,7 +2052,7 @@ position = 57
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 656 })'
 descriptor = "c decl at sqlite-vec.c:656"
 cost_tokens = 0
-cum_tokens = 4857
+cum_tokens = 4865
 
 [batches.content]
 kind = "lines"
@@ -2078,7 +2078,7 @@ position = 58
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 667 })'
 descriptor = "c decl at sqlite-vec.c:667"
 cost_tokens = 0
-cum_tokens = 4857
+cum_tokens = 4865
 
 [batches.content]
 kind = "lines"
@@ -2104,7 +2104,7 @@ position = 59
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 598 })'
 descriptor = "c decl at sqlite-vec.c:598"
 cost_tokens = 42
-cum_tokens = 4899
+cum_tokens = 4907
 
 [batches.content]
 kind = "lines"
@@ -2122,7 +2122,7 @@ position = 60
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 115 })'
 descriptor = "c decl at sqlite-vec.c:115"
 cost_tokens = 80
-cum_tokens = 4979
+cum_tokens = 4987
 
 [batches.content]
 kind = "lines"
@@ -2140,7 +2140,7 @@ position = 61
 key = 'Fs(DirListing { dir: "site/features" })'
 descriptor = "listing of 'site/features'"
 cost_tokens = 9
-cum_tokens = 4988
+cum_tokens = 4996
 
 [batches.content]
 kind = "fs"
@@ -2154,7 +2154,7 @@ position = 62
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: true })'
 descriptor = "README.md section #4"
 cost_tokens = 474
-cum_tokens = 5462
+cum_tokens = 5470
 
 [batches.content]
 kind = "lines"
@@ -2172,7 +2172,7 @@ position = 63
 key = 'Fs(DirListing { dir: "benchmarks/micro/benches" })'
 descriptor = "listing of 'benchmarks/micro/benches'"
 cost_tokens = 5
-cum_tokens = 5467
+cum_tokens = 5475
 
 [batches.content]
 kind = "fs"
@@ -2186,7 +2186,7 @@ position = 64
 key = 'Fs(DirListing { dir: "tests/fuzz/corpus" })'
 descriptor = "listing of 'tests/fuzz/corpus'"
 cost_tokens = 5
-cum_tokens = 5472
+cum_tokens = 5480
 
 [batches.content]
 kind = "fs"
@@ -2200,7 +2200,7 @@ position = 65
 key = 'Fs(DirListing { dir: "tests/correctness" })'
 descriptor = "listing of 'tests/correctness'"
 cost_tokens = 10
-cum_tokens = 5482
+cum_tokens = 5490
 
 [batches.content]
 kind = "fs"
@@ -2214,7 +2214,7 @@ position = 66
 key = 'C(DeclBody { file: "sqlite-vec.c", start_line: 591 })'
 descriptor = "c decl body at sqlite-vec.c:591"
 cost_tokens = 68
-cum_tokens = 5550
+cum_tokens = 5558
 
 [batches.content]
 kind = "lines"
@@ -2232,7 +2232,7 @@ position = 67
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 83, chunk_index: 1 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:83 chunk 2"
 cost_tokens = 211
-cum_tokens = 5761
+cum_tokens = 5769
 
 [batches.content]
 kind = "lines"
@@ -2298,7 +2298,7 @@ position = 68
 key = 'Fs(DirListing { dir: "benchmarks/profiling" })'
 descriptor = "listing of 'benchmarks/profiling'"
 cost_tokens = 11
-cum_tokens = 5772
+cum_tokens = 5780
 
 [batches.content]
 kind = "fs"
@@ -2312,7 +2312,7 @@ position = 69
 key = 'Fs(DirListing { dir: "tests/minimum" })'
 descriptor = "listing of 'tests/minimum'"
 cost_tokens = 12
-cum_tokens = 5784
+cum_tokens = 5792
 
 [batches.content]
 kind = "fs"
@@ -2326,7 +2326,7 @@ position = 70
 key = 'C(DeclBody { file: "sqlite-vec.c", start_line: 646 })'
 descriptor = "c decl body at sqlite-vec.c:646"
 cost_tokens = 76
-cum_tokens = 5860
+cum_tokens = 5868
 
 [batches.content]
 kind = "lines"
@@ -2344,7 +2344,7 @@ position = 71
 key = 'Python(DeclNames { file: "bindings/python/extra_init.py" })'
 descriptor = "python decl names surface in bindings/python/extra_init.py"
 cost_tokens = 35
-cum_tokens = 5895
+cum_tokens = 5903
 
 [batches.content]
 kind = "lines"
@@ -2386,7 +2386,7 @@ position = 72
 key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 6 })'
 descriptor = "python decl at bindings/python/extra_init.py:6"
 cost_tokens = 0
-cum_tokens = 5895
+cum_tokens = 5903
 
 [batches.content]
 kind = "lines"
@@ -2404,7 +2404,7 @@ position = 73
 key = 'Python(Decl { file: "bindings/python/extra_init.py", start_line: 11 })'
 descriptor = "python decl at bindings/python/extra_init.py:11"
 cost_tokens = 0
-cum_tokens = 5895
+cum_tokens = 5903
 
 [batches.content]
 kind = "lines"
@@ -2422,7 +2422,7 @@ position = 74
 key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
 descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
 cost_tokens = 17
-cum_tokens = 5912
+cum_tokens = 5920
 
 [batches.content]
 kind = "lines"
@@ -2440,7 +2440,7 @@ position = 75
 key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 6 })'
 descriptor = "python decl doc at bindings/python/extra_init.py:6"
 cost_tokens = 22
-cum_tokens = 5934
+cum_tokens = 5942
 
 [batches.content]
 kind = "lines"
@@ -2458,7 +2458,7 @@ position = 76
 key = 'Python(DeclDoc { file: "bindings/python/extra_init.py", start_line: 11 })'
 descriptor = "python decl doc at bindings/python/extra_init.py:11"
 cost_tokens = 24
-cum_tokens = 5958
+cum_tokens = 5966
 
 [batches.content]
 kind = "lines"
@@ -2476,7 +2476,7 @@ position = 77
 key = 'Python(DeclBody { file: "bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
 descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
 cost_tokens = 17
-cum_tokens = 5975
+cum_tokens = 5983
 
 [batches.content]
 kind = "lines"
@@ -2494,7 +2494,7 @@ position = 78
 key = 'C(Includes { file: "sqlite-vec.c" })'
 descriptor = "c includes in sqlite-vec.c"
 cost_tokens = 153
-cum_tokens = 6128
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -2512,7 +2512,7 @@ position = 79
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #6"
 cost_tokens = 37
-cum_tokens = 6165
+cum_tokens = 6173
 
 [batches.content]
 kind = "lines"
@@ -2530,7 +2530,7 @@ position = 80
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #5"
 cost_tokens = 36
-cum_tokens = 6201
+cum_tokens = 6209
 
 [batches.content]
 kind = "lines"
@@ -2548,7 +2548,7 @@ position = 81
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #4"
 cost_tokens = 37
-cum_tokens = 6238
+cum_tokens = 6246
 
 [batches.content]
 kind = "lines"
@@ -2566,7 +2566,7 @@ position = 82
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #3"
 cost_tokens = 36
-cum_tokens = 6274
+cum_tokens = 6282
 
 [batches.content]
 kind = "lines"
@@ -2584,7 +2584,7 @@ position = 83
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 40, chunk_index: 0 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:40 chunk 1"
 cost_tokens = 227
-cum_tokens = 6501
+cum_tokens = 6509
 
 [batches.content]
 kind = "lines"
@@ -2650,7 +2650,7 @@ position = 84
 key = 'Fs(DirListing { dir: "tests/leak-fixtures" })'
 descriptor = "listing of 'tests/leak-fixtures'"
 cost_tokens = 14
-cum_tokens = 6515
+cum_tokens = 6523
 
 [batches.content]
 kind = "fs"
@@ -2664,7 +2664,7 @@ position = 85
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #7"
 cost_tokens = 40
-cum_tokens = 6555
+cum_tokens = 6563
 
 [batches.content]
 kind = "lines"
@@ -2682,7 +2682,7 @@ position = 86
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 271
-cum_tokens = 6826
+cum_tokens = 6834
 
 [batches.content]
 kind = "lines"
@@ -2700,7 +2700,7 @@ position = 87
 key = 'Rust(ModUse { file: "benchmarks/micro/src/lib.rs" })'
 descriptor = "mod/use plumbing in benchmarks/micro/src/lib.rs"
 cost_tokens = 16
-cum_tokens = 6842
+cum_tokens = 6850
 
 [batches.content]
 kind = "lines"
@@ -2718,7 +2718,7 @@ position = 88
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #8"
 cost_tokens = 41
-cum_tokens = 6883
+cum_tokens = 6891
 
 [batches.content]
 kind = "lines"
@@ -2736,7 +2736,7 @@ position = 89
 key = 'Python(DeclBody { file: "tmp-static.py", start_line: 25, body_start_line: 26 })'
 descriptor = "python decl body at tmp-static.py:25 body 26"
 cost_tokens = 211
-cum_tokens = 7094
+cum_tokens = 7102
 
 [batches.content]
 kind = "lines"
@@ -2754,7 +2754,7 @@ position = 90
 key = 'Yaml(ReferenceLeafSlice { file: "reference.yaml", family_start_line: 83, chunk_index: 0 })'
 descriptor = "YAML reference leaf contracts in reference.yaml:83 chunk 1"
 cost_tokens = 303
-cum_tokens = 7397
+cum_tokens = 7405
 
 [batches.content]
 kind = "lines"
@@ -2852,7 +2852,7 @@ position = 91
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #2"
 cost_tokens = 53
-cum_tokens = 7450
+cum_tokens = 7458
 
 [batches.content]
 kind = "lines"
@@ -2870,7 +2870,7 @@ position = 92
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #1"
 cost_tokens = 53
-cum_tokens = 7503
+cum_tokens = 7511
 
 [batches.content]
 kind = "lines"
@@ -2888,7 +2888,7 @@ position = 93
 key = 'Toml(Identity { file: "tests/Cargo.toml" })'
 descriptor = "[package] in tests/Cargo.toml"
 cost_tokens = 41
-cum_tokens = 7544
+cum_tokens = 7552
 
 [batches.content]
 kind = "lines"
@@ -2906,7 +2906,7 @@ position = 94
 key = 'C(DeclNames { file: "sqlite-vec.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in sqlite-vec.c"
 cost_tokens = 500
-cum_tokens = 8044
+cum_tokens = 8052
 
 [batches.content]
 kind = "lines"
@@ -3220,7 +3220,7 @@ position = 95
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1317 })'
 descriptor = "c decl at sqlite-vec.c:1317"
 cost_tokens = 0
-cum_tokens = 8044
+cum_tokens = 8052
 
 [batches.content]
 kind = "lines"
@@ -3246,7 +3246,7 @@ position = 96
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1812 })'
 descriptor = "c decl at sqlite-vec.c:1812"
 cost_tokens = 0
-cum_tokens = 8044
+cum_tokens = 8052
 
 [batches.content]
 kind = "lines"
@@ -3272,7 +3272,7 @@ position = 97
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1816 })'
 descriptor = "c decl at sqlite-vec.c:1816"
 cost_tokens = 0
-cum_tokens = 8044
+cum_tokens = 8052
 
 [batches.content]
 kind = "lines"
@@ -3298,7 +3298,7 @@ position = 98
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1824 })'
 descriptor = "c decl at sqlite-vec.c:1824"
 cost_tokens = 0
-cum_tokens = 8044
+cum_tokens = 8052
 
 [batches.content]
 kind = "lines"
@@ -3324,7 +3324,7 @@ position = 99
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1892 })'
 descriptor = "c decl at sqlite-vec.c:1892"
 cost_tokens = 0
-cum_tokens = 8044
+cum_tokens = 8052
 
 [batches.content]
 kind = "lines"
@@ -3350,7 +3350,7 @@ position = 100
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1886 })'
 descriptor = "c decl at sqlite-vec.c:1886"
 cost_tokens = 11
-cum_tokens = 8055
+cum_tokens = 8063
 
 [batches.content]
 kind = "lines"
@@ -3376,7 +3376,7 @@ position = 101
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1050 })'
 descriptor = "c decl at sqlite-vec.c:1050"
 cost_tokens = 25
-cum_tokens = 8080
+cum_tokens = 8088
 
 [batches.content]
 kind = "lines"
@@ -3394,7 +3394,7 @@ position = 102
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1880 })'
 descriptor = "c decl at sqlite-vec.c:1880"
 cost_tokens = 34
-cum_tokens = 8114
+cum_tokens = 8122
 
 [batches.content]
 kind = "lines"
@@ -3412,7 +3412,7 @@ position = 103
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 964 })'
 descriptor = "c decl at sqlite-vec.c:964"
 cost_tokens = 30
-cum_tokens = 8144
+cum_tokens = 8152
 
 [batches.content]
 kind = "lines"
@@ -3438,7 +3438,7 @@ position = 104
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1806 })'
 descriptor = "c decl at sqlite-vec.c:1806"
 cost_tokens = 38
-cum_tokens = 8182
+cum_tokens = 8190
 
 [batches.content]
 kind = "lines"
@@ -3456,7 +3456,7 @@ position = 105
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1900 })'
 descriptor = "c decl at sqlite-vec.c:1900"
 cost_tokens = 35
-cum_tokens = 8217
+cum_tokens = 8225
 
 [batches.content]
 kind = "lines"
@@ -3482,7 +3482,7 @@ position = 106
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1956 })'
 descriptor = "c decl at sqlite-vec.c:1956"
 cost_tokens = 38
-cum_tokens = 8255
+cum_tokens = 8263
 
 [batches.content]
 kind = "lines"
@@ -3508,7 +3508,7 @@ position = 107
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2033 })'
 descriptor = "c decl at sqlite-vec.c:2033"
 cost_tokens = 38
-cum_tokens = 8293
+cum_tokens = 8301
 
 [batches.content]
 kind = "lines"
@@ -3534,7 +3534,7 @@ position = 108
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2111 })'
 descriptor = "c decl at sqlite-vec.c:2111"
 cost_tokens = 42
-cum_tokens = 8335
+cum_tokens = 8343
 
 [batches.content]
 kind = "lines"
@@ -3560,7 +3560,7 @@ position = 109
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 998 })'
 descriptor = "c decl at sqlite-vec.c:998"
 cost_tokens = 54
-cum_tokens = 8389
+cum_tokens = 8397
 
 [batches.content]
 kind = "lines"
@@ -3586,7 +3586,7 @@ position = 110
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 1798 })'
 descriptor = "c decl at sqlite-vec.c:1798"
 cost_tokens = 69
-cum_tokens = 8458
+cum_tokens = 8466
 
 [batches.content]
 kind = "lines"
@@ -3604,7 +3604,7 @@ position = 111
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2091 })'
 descriptor = "c decl at sqlite-vec.c:2091"
 cost_tokens = 83
-cum_tokens = 8541
+cum_tokens = 8549
 
 [batches.content]
 kind = "lines"
@@ -3622,7 +3622,7 @@ position = 112
 key = 'Fs(DirListing { dir: "tests/afbd" })'
 descriptor = "listing of 'tests/afbd'"
 cost_tokens = 23
-cum_tokens = 8564
+cum_tokens = 8572
 
 [batches.content]
 kind = "fs"
@@ -3636,7 +3636,7 @@ position = 113
 key = 'Fs(DirListing { dir: "tests/fuzz/corpus/vec0-create" })'
 descriptor = "listing of 'tests/fuzz/corpus/vec0-create'"
 cost_tokens = 7
-cum_tokens = 8571
+cum_tokens = 8579
 
 [batches.content]
 kind = "fs"
@@ -3650,7 +3650,7 @@ position = 114
 key = 'Rust(PubItemBody { file: "benchmarks/micro/src/lib.rs", start_line: 8, body_start_line: 9 })'
 descriptor = "pub item body at benchmarks/micro/src/lib.rs:8 body 9"
 cost_tokens = 39
-cum_tokens = 8610
+cum_tokens = 8618
 
 [batches.content]
 kind = "lines"
@@ -3668,7 +3668,7 @@ position = 115
 key = 'Toml(Dependencies { file: "tests/Cargo.toml" })'
 descriptor = "[dependencies] in tests/Cargo.toml"
 cost_tokens = 7
-cum_tokens = 8617
+cum_tokens = 8625
 
 [batches.content]
 kind = "lines"
@@ -3686,7 +3686,7 @@ position = 116
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #11"
 cost_tokens = 68
-cum_tokens = 8685
+cum_tokens = 8693
 
 [batches.content]
 kind = "lines"
@@ -3704,7 +3704,7 @@ position = 117
 key = 'Markdown(Section { file: "ARCHITECTURE.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "ARCHITECTURE.md section #12"
 cost_tokens = 67
-cum_tokens = 8752
+cum_tokens = 8760
 
 [batches.content]
 kind = "lines"
@@ -3722,7 +3722,7 @@ position = 118
 key = 'C(DeclNames { file: "sqlite-vec.c", chunk_index: 2 })'
 descriptor = "c decl names surface #2 in sqlite-vec.c"
 cost_tokens = 411
-cum_tokens = 9163
+cum_tokens = 9171
 
 [batches.content]
 kind = "lines"
@@ -4052,7 +4052,7 @@ position = 119
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2280 })'
 descriptor = "c decl at sqlite-vec.c:2280"
 cost_tokens = 0
-cum_tokens = 9163
+cum_tokens = 9171
 
 [batches.content]
 kind = "lines"
@@ -4078,7 +4078,7 @@ position = 120
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2731 })'
 descriptor = "c decl at sqlite-vec.c:2731"
 cost_tokens = 0
-cum_tokens = 9163
+cum_tokens = 9171
 
 [batches.content]
 kind = "lines"
@@ -4104,7 +4104,7 @@ position = 121
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2267 })'
 descriptor = "c decl at sqlite-vec.c:2267"
 cost_tokens = 11
-cum_tokens = 9174
+cum_tokens = 9182
 
 [batches.content]
 kind = "lines"
@@ -4130,7 +4130,7 @@ position = 122
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2724 })'
 descriptor = "c decl at sqlite-vec.c:2724"
 cost_tokens = 11
-cum_tokens = 9185
+cum_tokens = 9193
 
 [batches.content]
 kind = "lines"
@@ -4156,7 +4156,7 @@ position = 123
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2430 })'
 descriptor = "c decl at sqlite-vec.c:2430"
 cost_tokens = 16
-cum_tokens = 9201
+cum_tokens = 9209
 
 [batches.content]
 kind = "lines"
@@ -4174,7 +4174,7 @@ position = 124
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2877 })'
 descriptor = "c decl at sqlite-vec.c:2877"
 cost_tokens = 16
-cum_tokens = 9217
+cum_tokens = 9225
 
 [batches.content]
 kind = "lines"
@@ -4192,7 +4192,7 @@ position = 125
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2641 })'
 descriptor = "c decl at sqlite-vec.c:2641"
 cost_tokens = 14
-cum_tokens = 9231
+cum_tokens = 9239
 
 [batches.content]
 kind = "lines"
@@ -4218,7 +4218,7 @@ position = 126
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2294 })'
 descriptor = "c decl at sqlite-vec.c:2294"
 cost_tokens = 15
-cum_tokens = 9246
+cum_tokens = 9254
 
 [batches.content]
 kind = "lines"
@@ -4244,7 +4244,7 @@ position = 127
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2250 })'
 descriptor = "c decl at sqlite-vec.c:2250"
 cost_tokens = 33
-cum_tokens = 9279
+cum_tokens = 9287
 
 [batches.content]
 kind = "lines"
@@ -4262,7 +4262,7 @@ position = 128
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2256 })'
 descriptor = "c decl at sqlite-vec.c:2256"
 cost_tokens = 33
-cum_tokens = 9312
+cum_tokens = 9320
 
 [batches.content]
 kind = "lines"
@@ -4280,7 +4280,7 @@ position = 129
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2261 })'
 descriptor = "c decl at sqlite-vec.c:2261"
 cost_tokens = 37
-cum_tokens = 9349
+cum_tokens = 9357
 
 [batches.content]
 kind = "lines"
@@ -4298,7 +4298,7 @@ position = 130
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2718 })'
 descriptor = "c decl at sqlite-vec.c:2718"
 cost_tokens = 37
-cum_tokens = 9386
+cum_tokens = 9394
 
 [batches.content]
 kind = "lines"
@@ -4316,7 +4316,7 @@ position = 131
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2635 })'
 descriptor = "c decl at sqlite-vec.c:2635"
 cost_tokens = 40
-cum_tokens = 9426
+cum_tokens = 9434
 
 [batches.content]
 kind = "lines"
@@ -4334,7 +4334,7 @@ position = 132
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2881 })'
 descriptor = "c decl at sqlite-vec.c:2881"
 cost_tokens = 43
-cum_tokens = 9469
+cum_tokens = 9477
 
 [batches.content]
 kind = "lines"
@@ -4352,7 +4352,7 @@ position = 133
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2171 })'
 descriptor = "c decl at sqlite-vec.c:2171"
 cost_tokens = 38
-cum_tokens = 9507
+cum_tokens = 9515
 
 [batches.content]
 kind = "lines"
@@ -4378,7 +4378,7 @@ position = 134
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2236 })'
 descriptor = "c decl at sqlite-vec.c:2236"
 cost_tokens = 59
-cum_tokens = 9566
+cum_tokens = 9574
 
 [batches.content]
 kind = "lines"
@@ -4396,7 +4396,7 @@ position = 135
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2242 })'
 descriptor = "c decl at sqlite-vec.c:2242"
 cost_tokens = 61
-cum_tokens = 9627
+cum_tokens = 9635
 
 [batches.content]
 kind = "lines"
@@ -4414,7 +4414,7 @@ position = 136
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2740 })'
 descriptor = "c decl at sqlite-vec.c:2740"
 cost_tokens = 57
-cum_tokens = 9684
+cum_tokens = 9692
 
 [batches.content]
 kind = "lines"
@@ -4440,7 +4440,7 @@ position = 137
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2435 })'
 descriptor = "c decl at sqlite-vec.c:2435"
 cost_tokens = 74
-cum_tokens = 9758
+cum_tokens = 9766
 
 [batches.content]
 kind = "lines"
@@ -4458,7 +4458,7 @@ position = 138
 key = 'C(Decl { file: "sqlite-vec.c", start_line: 2622 })'
 descriptor = "c decl at sqlite-vec.c:2622"
 cost_tokens = 134
-cum_tokens = 9892
+cum_tokens = 9900
 
 [batches.content]
 kind = "lines"
@@ -4476,7 +4476,7 @@ position = 139
 key = 'Fs(DirListing { dir: "benchmarks/exhaustive-memory" })'
 descriptor = "listing of 'benchmarks/exhaustive-memory'"
 cost_tokens = 30
-cum_tokens = 9922
+cum_tokens = 9930
 
 [batches.content]
 kind = "fs"
