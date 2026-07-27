@@ -2,9 +2,9 @@ Score(3000)=0.730 I=0.910 C=0.586 ns_rows≤3K=19/41 (reached=11 partial=1 missi
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| ns | 47 |  | 47 | Root directory listing — source and docs | 1.1 |  | 0.000 |
+| ns | 48 |  | 48 | Root directory listing — source and docs | 1.1 |  | 0.000 |
 | walker |  | 129 | 129 | listing of '.' |  |  | 1.000 |
-| ns | 129 |  | 82 | Root directory listing — tooling config and packaging | 1.2 | 1.1 | 1.000 |
+| ns | 129 |  | 81 | Root directory listing — tooling config and packaging | 1.2 | 1.1 | 1.000 |
 | walker |  | 154 | 25 | go decl names surface in main.go |  |  | 1.000 |
 | walker |  | 154 | 0 | go decl at main.go:11 |  |  | 1.000 |
 | walker |  | 154 | 0 | go decl at main.go:13 |  |  | 1.000 |

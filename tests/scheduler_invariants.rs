@@ -187,6 +187,66 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     );
 }
 
+#[test]
+fn scheduler_invariants_unaffordable_seed_listing_degrades_to_a_marked_prefix() {
+    // Every batch a walker emits is gated on the seed listing, so a seed
+    // too big for the budget used to leave the schedule empty and the
+    // caller with an empty string.
+    struct RootListing(PathBuf);
+    impl Walker for RootListing {
+        type Key = BatchKey;
+
+        fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            let dir = self.0.clone();
+            vec![Batch {
+                key: BatchKey::Fs(FsKey::DirListing { dir: dir.clone() }),
+                predecessor: None,
+                content: BatchContent::Fs {
+                    groups: vec![FsGroup {
+                        // Bare names, matching what `walker::fs` emits.
+                        entries: FsEntries::Listed(
+                            precis::fs_util::list_dir(&dir, ctx.dir_filter())
+                                .into_keys()
+                                .map(PathBuf::from)
+                                .collect(),
+                        ),
+                        parent: dir,
+                    }],
+                },
+                value: 900.0,
+            }]
+        }
+        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            Vec::new()
+        }
+    }
+
+    const ENTRIES: usize = 60;
+    const BUDGET: usize = 100;
+    let temp = tempfile::tempdir().unwrap();
+    let root = temp.path().to_path_buf();
+    for i in 0..ENTRIES {
+        std::fs::write(root.join(format!("entry_{i:03}.txt")), "x").unwrap();
+    }
+
+    let scheduler = Scheduler::new(root.clone(), RootListing(root), BUDGET, None);
+    let rendered = scheduler.run().render();
+    let listed = rendered.lines().filter(|l| l.contains("entry_")).count();
+    assert!(listed > 0, "seed listing degraded to nothing: {rendered:?}");
+    assert!(
+        listed < ENTRIES,
+        "whole listing fit — budget no longer exercises the prefix path",
+    );
+    assert!(
+        precis::tokenizer::count(&rendered) <= BUDGET,
+        "partial listing broke the budget: {rendered:?}",
+    );
+    assert!(
+        rendered.ends_with("…\n"),
+        "a listing cut short must say so: {rendered:?}",
+    );
+}
+
 #[cfg(debug_assertions)]
 #[test]
 #[should_panic(expected = "non-ancestor overlap")]

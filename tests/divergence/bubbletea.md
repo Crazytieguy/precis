@@ -2,11 +2,11 @@ Score(3000)=0.528 I=0.816 C=0.342 ns_rows≤3K=16/48 (reached=5 partial=1 missin
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| ns | 55 |  | 55 | Root: project scaffolding listing | 1.1 |  | 0.000 |
-| ns | 106 |  | 51 | Root: message/command Go file listing | 1.2 |  | 0.000 |
-| ns | 176 |  | 70 | Root: Program/runtime/platform Go file listing | 1.3 |  | 0.000 |
+| ns | 56 |  | 56 | Root: project scaffolding listing | 1.1 |  | 0.000 |
+| ns | 107 |  | 51 | Root: message/command Go file listing | 1.2 |  | 0.000 |
+| ns | 177 |  | 70 | Root: Program/runtime/platform Go file listing | 1.3 |  | 0.000 |
 | walker |  | 206 | 206 | listing of '.' |  |  | 1.000 |
-| ns | 206 |  | 30 | Root: _test.go file listing | 1.4 |  | 1.000 |
+| ns | 206 |  | 29 | Root: _test.go file listing | 1.4 |  | 1.000 |
 | walker |  | 217 | 11 | listing of 'testdata' |  |  | 1.000 |
 | walker |  | 232 | 15 | listing of 'tutorials' |  |  | 1.000 |
 | walker |  | 239 | 7 | listing of 'tutorials/basics' |  |  | 1.000 |

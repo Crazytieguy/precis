@@ -12,8 +12,8 @@ Score(3000)=0.600 I=0.852 C=0.423 ns_rows≤3K=16/43 (reached=9 partial=0 missin
 | walker |  | 280 | 48 | go package doc lede in command.go |  |  | 0.480 |
 | walker |  | 307 | 27 | listing of 'site/content' |  |  | 0.480 |
 | walker |  | 365 | 58 | listing of 'doc' |  |  | 0.480 |
-| ns | 371 |  | 138 | Repo root listing, part 1: Go source/test files | 1.4 |  | 0.766 |
-| ns | 428 |  | 57 | Repo root listing, part 2: docs, CI, and meta | 1.5 | 1.4 | 0.774 |
+| ns | 372 |  | 139 | Repo root listing, part 1: Go source/test files | 1.4 |  | 0.766 |
+| ns | 428 |  | 56 | Repo root listing, part 2: docs, CI, and meta | 1.5 | 1.4 | 0.774 |
 | walker |  | 461 | 96 | README headline in README.md |  |  | 0.778 |
 | walker |  | 481 | 20 | listing of 'site/content/docgen' |  |  | 0.788 |
 | walker |  | 494 | 13 | listing of '.github' |  |  | 0.794 |

@@ -2,9 +2,9 @@ Score(3000)=0.449 I=0.820 C=0.246 ns_rows≤3K=18/53 (reached=4 partial=0 missin
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| ns | 35 |  | 35 | Root directory listing: top-level dirs | 1.1 |  | 0.000 |
+| ns | 36 |  | 36 | Root directory listing: top-level dirs | 1.1 |  | 0.000 |
 | walker |  | 131 | 131 | listing of '.' |  |  | 1.000 |
-| ns | 131 |  | 96 | Root directory listing: remaining dirs + all root files | 1.2 |  | 1.000 |
+| ns | 131 |  | 95 | Root directory listing: remaining dirs + all root files | 1.2 |  | 1.000 |
 | walker |  | 136 | 5 | listing of 'test-results' |  |  | 1.000 |
 | walker |  | 164 | 28 | listing of 'src' |  |  | 1.000 |
 | walker |  | 167 | 3 | listing of 'src/internal' |  |  | 1.000 |

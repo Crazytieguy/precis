@@ -3,14 +3,14 @@ Score(3000)=0.670 I=0.854 C=0.526 ns_rows≤3K=21/40 (reached=13 partial=1 missi
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 36 |  | 36 | lib/ top-level listing | 1.1 |  | 0.000 |
-| ns | 61 |  | 25 | Root directories | 1.2 |  | 0.000 |
-| ns | 73 |  | 12 | Root entry points and type declarations | 1.3 |  | 0.000 |
-| ns | 131 |  | 58 | Root config/build/tooling files | 1.4 |  | 0.000 |
+| ns | 62 |  | 26 | Root directories | 1.2 |  | 0.000 |
+| ns | 74 |  | 12 | Root entry points and type declarations | 1.3 |  | 0.000 |
+| ns | 132 |  | 58 | Root config/build/tooling files | 1.4 |  | 0.000 |
 | walker |  | 161 | 161 | listing of '.' |  |  | 0.536 |
 | walker |  | 172 | 11 | listing of 'sandbox' |  |  | 0.536 |
 | walker |  | 182 | 10 | export names surface in index.js |  |  | 0.536 |
 | walker |  | 185 | 3 | listing of '.husky' |  |  | 0.536 |
-| ns | 196 |  | 65 | Root documentation files | 1.5 |  | 0.542 |
+| ns | 196 |  | 64 | Root documentation files | 1.5 |  | 0.542 |
 | walker |  | 220 | 35 | listing of 'lib' |  |  | 1.000 |
 | walker |  | 227 | 7 | listing of 'lib/defaults' |  |  | 1.000 |
 | walker |  | 238 | 11 | listing of 'lib/env' |  |  | 1.000 |
@@ -27,9 +27,9 @@ Score(3000)=0.670 I=0.854 C=0.526 ns_rows≤3K=21/40 (reached=13 partial=1 missi
 | ns | 362 |  | 89 | lib/core, lib/adapters, lib/cancel, lib/defaults listings | 1.7 |  | 0.859 |
 | walker |  | 403 | 76 | package identity in package.json |  |  | 0.859 |
 | walker |  | 451 | 48 | listing of 'lib/core' |  |  | 0.971 |
-| ns | 460 |  | 98 | lib/helpers listing, part 1 (A-N) | 1.8 |  | 0.871 |
-| walker |  | 461 | 10 | export names surface in lib/axios.js |  |  | 0.871 |
-| ns | 551 |  | 91 | lib/helpers listing, part 2 (N-Z) | 1.9 |  | 0.795 |
+| walker |  | 461 | 10 | export names surface in lib/axios.js |  |  | 0.971 |
+| ns | 462 |  | 100 | lib/helpers listing, part 1 (A-N) | 1.8 |  | 0.871 |
+| ns | 551 |  | 89 | lib/helpers listing, part 2 (N-Z) | 1.9 |  | 0.795 |
 | walker |  | 650 | 189 | listing of 'lib/helpers' |  |  | 0.978 |
 | walker |  | 660 | 10 | listing of 'lib/platform/node/classes' |  |  | 1.000 |
 | walker |  | 670 | 10 | export names surface in lib/defaults/index.js |  |  | 1.000 |

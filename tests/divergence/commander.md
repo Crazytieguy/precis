@@ -196,10 +196,10 @@ Score(3000)=0.645 I=0.875 C=0.476 ns_rows≤3K=18/40 (reached=11 partial=1 missi
 | walker |  | 9143 | 16 | imports in examples/options-env.js |  |  | 0.482 |
 | walker |  | 9159 | 16 | imports in examples/options-extra.js |  |  | 0.482 |
 | walker |  | 9175 | 16 | imports in examples/options-implies.js |  |  | 0.482 |
-| ns | 9184 |  | 47 | tests/: argument-parsing test files | 7.1 |  | 0.487 |
+| ns | 9186 |  | 49 | tests/: argument-parsing test files | 7.1 |  | 0.487 |
 | walker |  | 9195 | 20 | export body at lib/option.js:3 body 231 |  |  | 0.487 |
 | walker |  | 9444 | 249 | docs/terminology.md section #0 |  |  | 0.507 |
-| ns | 9524 |  | 340 | tests/: command.* test files | 7.2 |  | 0.533 |
-| ns | 9704 |  | 180 | tests/: help.* test files | 7.3 |  | 0.545 |
-| ns | 9884 |  | 180 | tests/: option.*/options.* test files | 7.4 |  | 0.557 |
-| ns | 9951 |  | 67 | tests/: remaining root-level test files + fixtures/, fixtures-extensions/ | 7.5 |  | 0.562 |
+| ns | 9526 |  | 340 | tests/: command.* test files | 7.2 |  | 0.533 |
+| ns | 9706 |  | 180 | tests/: help.* test files | 7.3 |  | 0.545 |
+| ns | 9886 |  | 180 | tests/: option.*/options.* test files | 7.4 |  | 0.557 |
+| ns | 9951 |  | 65 | tests/: remaining root-level test files + fixtures/, fixtures-extensions/ | 7.5 |  | 0.562 |

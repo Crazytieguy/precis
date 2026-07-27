@@ -168,10 +168,14 @@ pub struct RenderedTree {
     root: PathBuf,
     nodes: HashMap<PathBuf, TreeNode>,
     source_cache: SourceCache,
-    /// Memo for "does this entry hold anything on disk" — one `read_dir`
-    /// or `stat` per entry, asked once per render and once per scheduler
-    /// cost probe.
+    /// Memo for "does this file hold anything on disk" — one `stat` per
+    /// file, asked once per render and once per scheduler cost probe.
+    /// Directories go through [`Self::dir_entry_counts`], which answers
+    /// the same question and more.
     entry_non_empty: RefCell<HashMap<PathBuf, bool>>,
+    /// Memo for "how many entries does this directory show" — the
+    /// denominator behind [`Self::listing_partial`].
+    dir_entry_counts: RefCell<HashMap<PathBuf, usize>>,
     /// Same ignore rules discovery walks under, so the elision marker
     /// means "content precis is withholding" rather than "content precis
     /// would never show". A directory holding only ignored entries is
@@ -204,6 +208,7 @@ impl RenderedTree {
             nodes,
             source_cache,
             entry_non_empty: RefCell::new(HashMap::new()),
+            dir_entry_counts: RefCell::new(HashMap::new()),
             dir_filter,
         }
     }
@@ -305,17 +310,33 @@ impl RenderedTree {
     /// marker so a genuinely empty directory or zero-byte file keeps
     /// rendering as a bare name.
     fn entry_non_empty(&self, path: &Path, kind: EntryKind) -> bool {
+        // Directories answer from the entry-count memo — a second bool
+        // memo over the same key would be `count > 0` restated.
+        if matches!(kind, EntryKind::Directory) {
+            return self.dir_entry_count(path) > 0;
+        }
         if let Some(&known) = self.entry_non_empty.borrow().get(path) {
             return known;
         }
-        let non_empty = match kind {
-            EntryKind::Directory => !list_dir(path, &self.dir_filter).is_empty(),
-            EntryKind::File => std::fs::metadata(path).is_ok_and(|m| m.len() > 0),
-        };
+        let non_empty = std::fs::metadata(path).is_ok_and(|m| m.len() > 0);
         self.entry_non_empty
             .borrow_mut()
             .insert(path.to_path_buf(), non_empty);
         non_empty
+    }
+
+    /// Entries `dir` shows through the walk's ignore rules — the same
+    /// set a listing batch draws from, so it is the denominator for
+    /// "is this listing complete".
+    fn dir_entry_count(&self, dir: &Path) -> usize {
+        if let Some(&known) = self.dir_entry_counts.borrow().get(dir) {
+            return known;
+        }
+        let count = list_dir(dir, &self.dir_filter).len();
+        self.dir_entry_counts
+            .borrow_mut()
+            .insert(dir.to_path_buf(), count);
+        count
     }
 
     /// Whether `path`'s entry row carries the elision marker: it shows
@@ -374,10 +395,12 @@ impl RenderedTree {
             let probed = list_dir(parent, &DirFilter::none());
             // Signed per-group accounting: new entry rows, minus the
             // elision marker the parent's own row sheds once it renders
-            // children.
+            // children, plus the change in its trailing partial-listing
+            // marker.
             let mut d_tokens: isize = 0;
             let mut d_bytes: isize = 0;
-            let mut listed_any = false;
+            let listed_before = already_listed.map_or(0, |c| c.len());
+            let mut new_rows = 0usize;
             for p in paths {
                 let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
                     continue;
@@ -391,11 +414,21 @@ impl RenderedTree {
                     format_entry_row(name, kind, indent_depth, self.entry_elided(&child, kind));
                 d_tokens += tokens(&row) as isize;
                 d_bytes += row.len() as isize;
-                listed_any = true;
+                new_rows += 1;
             }
-            if listed_any && let Some(marker) = self.entry_marker_cost(parent, tokens) {
+            if new_rows > 0
+                && let Some(marker) = self.entry_marker_cost(parent, tokens)
+            {
                 d_tokens -= marker.tokens as isize;
                 d_bytes -= marker.bytes as isize;
+            }
+            let shown = self.dir_entry_count(parent);
+            let partial_delta = isize::from(listing_partial(listed_before + new_rows, shown))
+                - isize::from(listing_partial(listed_before, shown));
+            if partial_delta != 0 {
+                let row = format_marker_row(indent_depth);
+                d_tokens += partial_delta * tokens(&row) as isize;
+                d_bytes += partial_delta * row.len() as isize;
             }
             visit(Cost {
                 tokens: d_tokens.max(0) as usize,
@@ -577,6 +610,9 @@ impl RenderedTree {
                     self.render_file(&path.join(name), indent_depth + 1, out);
                 }
             }
+        }
+        if listing_partial(children.len(), self.dir_entry_count(path)) {
+            out.push_str(&format_marker_row(indent_depth));
         }
     }
 
@@ -782,6 +818,16 @@ fn walk_anchor_gaps(
 }
 
 /// One synthesized elision marker row.
+/// Whether a directory showing `listed` of its `shown` entries needs a
+/// trailing `…` row. Same argument as the entry-row marker: a listing
+/// cut short is otherwise byte-identical to a complete one, and readers
+/// take marker-absence as proof of completeness. A directory showing
+/// none of its entries is covered by the marker on its own entry row
+/// instead.
+fn listing_partial(listed: usize, shown: usize) -> bool {
+    listed > 0 && listed < shown
+}
+
 fn format_marker_row(indent_depth: usize) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
     s.push('…');

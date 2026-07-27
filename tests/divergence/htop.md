@@ -4,25 +4,25 @@ Score(3000)=0.483 I=0.423 C=0.551 ns_rows≤3K=17/48 (reached=7 partial=0 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | ns | 42 |  | 42 | Version and release state | 1.1 |  | 0.000 |
 | ns | 146 |  | 104 | User-facing quick keys (README Quick Start) | 1.2 |  | 0.000 |
-| ns | 264 |  | 118 | Repository root: directories, build files, docs, tests | 1.3 |  | 0.000 |
-| ns | 433 |  | 169 | htop(1) manual section map | 1.4 |  | 0.000 |
-| ns | 505 |  | 72 | pcp-htop(5) manual section map | 1.5 |  | 0.000 |
-| ns | 706 |  | 201 | Root roster 1/3: core spine and infrastructure | 2.1 |  | 0.000 |
+| ns | 265 |  | 119 | Repository root: directories, build files, docs, tests | 1.3 |  | 0.000 |
+| ns | 434 |  | 169 | htop(1) manual section map | 1.4 |  | 0.000 |
+| ns | 506 |  | 72 | pcp-htop(5) manual section map | 1.5 |  | 0.000 |
+| ns | 707 |  | 201 | Root roster 1/3: core spine and infrastructure | 2.1 |  | 0.000 |
 | walker |  | 729 | 729 | listing of '.' |  |  | 0.592 |
 | walker |  | 753 | 24 | listing of 'docs' |  |  | 0.592 |
 | walker |  | 756 | 3 | listing of 'docs/images' |  |  | 0.592 |
 | walker |  | 792 | 36 | listing of 'zfs' |  |  | 0.593 |
 | walker |  | 822 | 30 | c decl names surface in zfs/ZfsArcStats.h |  |  | 0.593 |
-| ns | 874 |  | 168 | Root roster 2/3: meters and dynamic providers | 2.2 |  | 0.602 |
+| ns | 875 |  | 168 | Root roster 2/3: meters and dynamic providers | 2.2 |  | 0.602 |
 | walker |  | 877 | 55 | README headline in README.md |  |  | 0.602 |
 | walker |  | 921 | 44 | listing of 'solaris' |  |  | 0.603 |
 | walker |  | 965 | 44 | listing of 'unsupported' |  |  | 0.606 |
 | walker |  | 988 | 23 | plaintext config autogen.sh |  |  | 0.606 |
 | walker |  | 1038 | 50 | listing of 'freebsd' |  |  | 0.607 |
-| ns | 1060 |  | 186 | Root roster 3/3: panels, screens, and process features | 2.3 |  | 0.610 |
+| ns | 1061 |  | 186 | Root roster 3/3: panels, screens, and process features | 2.3 |  | 0.610 |
 | walker |  | 1088 | 50 | listing of 'openbsd' |  |  | 0.613 |
 | walker |  | 1095 | 7 | listing of 'm4' |  |  | 0.613 |
-| ns | 1116 |  | 56 | Root roster: remaining docs, assets, CI config | 2.4 |  | 0.613 |
+| ns | 1116 |  | 55 | Root roster: remaining docs, assets, CI config | 2.4 |  | 0.613 |
 | ns | 1314 |  | 198 | linux/ platform sources (complete) | 2.5 |  | 0.559 |
 | walker |  | 1394 | 299 | c decl names surface in Machine.h |  |  | 0.559 |
 | walker |  | 1401 | 7 | c decl at Machine.h:38 |  |  | 0.559 |
