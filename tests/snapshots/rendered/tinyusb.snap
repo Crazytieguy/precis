@@ -136,6 +136,14 @@ lib/
               46→	uint32_t   lease;
               47→} dhcp_entry_t;
               49→typedef struct dhcp_config
+              50→{
+              51→	ip4_addr_t    router;
+              52→	uint16_t      port;
+              53→	ip4_addr_t    dns;
+              54→	const char   *domain;
+              55→	int           num_entry;
+              56→	dhcp_entry_t *entries;
+              57→} dhcp_config_t;
             …
               62→err_t dhserv_init(const dhcp_config_t *c);
               63→void dhserv_free(void);

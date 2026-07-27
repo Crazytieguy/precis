@@ -1796,3 +1796,46 @@ miniature, but there is no roster to gate on and the batch is ~3
 tokens. Other walkers were out of this lane's file ownership; C
 include guards (probe-reported, ~7 occurrences at 3K in htop, ~25 at
 9K) are the same defect in `src/walker/c.rs` and are unfixed.
+
+## C header guards and identity slots (2026-07-26)
+
+Follow-up lane to "Import blocks are refinements, not entry points",
+which flagged C include guards as the same defect. Both changes are
+corpus-flat at 3000 and shipped for the render.
+
+**C's include block was already gated.** `Includes` has taken the
+file's first `DeclNames` chunk as its predecessor since 2026-06-12, so
+the Go/Rust fix has no C analogue to port. What the probe actually saw
+(`2→#define HEADER_ZfsArcStats` as a header's entire rendered content)
+came from a different leak: the guard's `#define` was recognized by
+*name shape* — all-caps, no value — while the `#ifndef` half was
+recognized structurally. Guards named `HEADER_CamelCase` (htop) or
+`soluna_version_h` (soluna) failed the shape test and classified as
+public macros, landing first on the file's roster because they sit on
+line 2. Matching the define against the file's own guard symbol fixes
+it: 25 lines leave the corpus rendering, mean flat, 2080 +0.0003.
+
+**The all-caps fallback is load-bearing.** Dropping it and relying on
+the structural match alone costs **bareiron −0.170 @3000** — value-less
+all-caps `#define`s that are build switches rather than guards then
+flood the roster. Both rules stay.
+
+**C has no polarity-qualifier population.** The Rust/Go/TS roster-tier
+qualifier lanes have no C counterpart to port: `__attribute__((
+deprecated))` and `__attribute__((visibility))` appear in zero training
+`.c`/`.h` decls outside a vendored tinyusb BSP's Doxygen prose. Do not
+re-run "bind the C disavowal qualifier to the roster" — there is
+nothing to bind.
+
+**What C has instead is the identity slot.** A struct big enough to
+split renders as `typedef struct Process_ { … } Process;` — a name and
+nothing else — and on the names roster it renders as its opening line
+alone. C's two ways of saying what a type *is* both live in the first
+member: the embedded supertype of the vtable idiom (`Row super;`) and
+the discriminant of a tagged union (`NodeKind kind;`). Hoisting a
+single-line, non-pointer, non-array, non-bitfield leading member of a
+named type onto both the roster and the trimmed `Decl` header
+(`base_object_member_line`) is corpus-flat at 3000 and +0.0002 @4327
+(htop +0.015, tinyusb −0.001). Six fixtures have any qualifying
+aggregate. htop's rendering trades `ProcessMergedCommand`'s four leaf
+fields for the fact that `Process` extends `Row`.

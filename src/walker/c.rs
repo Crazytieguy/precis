@@ -39,7 +39,9 @@
 //! - The wrapping `#ifndef X` / `#define X` / `#endif` header guard
 //!   (recognized structurally — first `#ifndef` whose name is then
 //!   `#define`d on the next line, regardless of naming convention) is
-//!   descended into transparently. `extern "C" { ... }` linkage specs
+//!   descended into transparently, and its `#define X` is envelope
+//!   rather than a macro decl — see [`is_header_guard_define`].
+//!   `extern "C" { ... }` linkage specs
 //!   (including the `#ifdef __cplusplus` wrapper idiom common in C
 //!   headers) are likewise descended through so the wrapped decls are
 //!   visited as top-level. Other `preproc_if` / `preproc_ifdef` blocks
@@ -1088,7 +1090,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             // the parent `Decl`'s span was trimmed in `collect_decl` to
             // the type header + closer so the group rows don't overlap.
             for group in &info.member_groups {
-                let lines = FileLines::new(group.rows.clone());
+                // The identity slot rides with the `Decl` header;
+                // dropping it here keeps the two batches disjoint.
+                let mut rows = group.rows.clone();
+                rows.retain(|row| Some(*row) != info.base_member_line);
+                let lines = FileLines::new(rows);
                 if let Some(content) = single_file_lines_content(file, &source, lines) {
                     let configuration_surface_aggregate_group = configuration_surface
                         && configuration_surface_aggregate_group_floored(
@@ -1183,6 +1189,11 @@ struct DeclInfo {
     /// Per-group member-batches for big aggregates. When non-empty the
     /// parent `Decl` is trimmed to the type header + closing brace.
     member_groups: Vec<AggregateMemberGroup>,
+    /// Line of the aggregate's leading by-value composite member, if it
+    /// has one — see [`base_object_member_line`]. Rides with the names
+    /// roster and with the trimmed `Decl` header rather than with its
+    /// member group.
+    base_member_line: Option<usize>,
 }
 
 /// Minimum structural evidence for treating a header as an application
@@ -1342,9 +1353,10 @@ fn find_decls<'a>(
     admit_internal: bool,
 ) -> Vec<(Node<'a>, DeclInfo)> {
     let in_header = is_header_file(file);
+    let guard_name = header_guard_name(tree.root_node(), source);
     let mut out = Vec::new();
     walk_top_level(tree.root_node(), source, in_header, &mut |node| {
-        if let Some(info) = classify_decl(node, source, in_header)
+        if let Some(info) = classify_decl(node, source, in_header, guard_name)
             && (admit_internal || info.linkage == DeclLinkage::External)
         {
             out.push((node, info));
@@ -1565,6 +1577,13 @@ fn header_guard_body_node<'a>(root: Node<'a>, source: &str) -> Option<Node<'a>> 
     }
 }
 
+/// The symbol of the file's wrapping header guard, when it has one.
+fn header_guard_name<'a>(root: Node, source: &'a str) -> Option<&'a str> {
+    let guard = header_guard_body_node(root, source)?;
+    let name = guard.child_by_field_name("name")?;
+    Some(&source[name.start_byte()..name.end_byte()])
+}
+
 /// True iff `node` is `#ifndef X / #define X / … / #endif`.
 fn is_header_guard(ifdef: Node, source: &str) -> bool {
     let text = &source[ifdef.start_byte()..ifdef.end_byte()];
@@ -1599,7 +1618,14 @@ fn is_header_guard(ifdef: Node, source: &str) -> bool {
 
 /// Classify a top-level node as a decl. `None` for unsurfaced kinds
 /// (preproc_include, comments, non-inline `static` in `.h` files, …).
-fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> {
+/// `guard_name` is the file's header-guard symbol, if it has one — see
+/// [`is_header_guard_define`].
+fn classify_decl(
+    node: Node,
+    source: &str,
+    in_header: bool,
+    guard_name: Option<&str>,
+) -> Option<DeclInfo> {
     let start_line = node.start_position().row + 1;
     let (kind, has_body, internal) = match node.kind() {
         "function_definition" => {
@@ -1631,7 +1657,7 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
         "preproc_def" => {
             // Skip the header-guard's own `#define X` — it's part of
             // the guard envelope, not a public macro.
-            if is_header_guard_define(node, source) {
+            if is_header_guard_define(node, source, guard_name) {
                 return None;
             }
             (DeclKind::Macro, false, false)
@@ -1650,19 +1676,18 @@ fn classify_decl(node: Node, source: &str, in_header: bool) -> Option<DeclInfo> 
     } else {
         DeclLinkage::External
     };
-    let member_groups = if matches!(kind, DeclKind::Aggregate | DeclKind::Typedef) {
-        find_aggregate_body(node)
-            .map(|body| collect_aggregate_member_groups(body, source))
-            .unwrap_or_default()
-    } else {
-        Vec::new()
-    };
+    let aggregate_body = matches!(kind, DeclKind::Aggregate | DeclKind::Typedef)
+        .then(|| find_aggregate_body(node))
+        .flatten();
     Some(DeclInfo {
         start_line,
         kind,
         linkage,
         has_body,
-        member_groups,
+        member_groups: aggregate_body
+            .map(|body| collect_aggregate_member_groups(body, source))
+            .unwrap_or_default(),
+        base_member_line: aggregate_body.and_then(base_object_member_line),
     })
 }
 
@@ -1712,9 +1737,54 @@ const AGGREGATE_ENUM_CHUNK_MIN: usize = 32;
 /// NS authors use ("ND_ADD through ND_SHR" ~10-14 enumerators).
 const AGGREGATE_ENUM_CHUNK_SIZE: usize = 12;
 
-/// Locate the body node of a top-level aggregate decl: `struct`/`union`/
-/// `enum` specifier, `declaration` over one of those, or `typedef
-/// struct { … } X`. Returns the inner field/enumerator list.
+/// Line of the aggregate's leading by-value composite member — the slot
+/// C uses to say what a type *is* rather than what it holds: the
+/// embedded supertype of the vtable idiom (`Row super;` opening
+/// `struct Process_`) or the discriminant of a tagged union
+/// (`NodeKind kind;` opening `struct Node`).
+///
+/// A split aggregate renders as its type header plus closing brace,
+/// and on the names roster it renders as its opening line alone — in
+/// both cases the type's name is all that survives, so a type that
+/// *is a* `Row` reads as unrelated to `Row` and a tagged union reads
+/// as an untagged bag of fields. The line rides with both tiers,
+/// which form a predecessor chain (roster → `Decl` → member groups),
+/// so it can never be separated from the type it identifies.
+///
+/// Scalars are data and stay in their member group; a pointer, array,
+/// or bitfield member references something else rather than embedding
+/// it, and a multi-line member is not an identity slot.
+fn base_object_member_line(body: Node) -> Option<usize> {
+    if body.kind() != "field_declaration_list" {
+        return None;
+    }
+    let mut cursor = body.walk();
+    let first = body
+        .named_children(&mut cursor)
+        .find(|child| child.kind() != "comment")?;
+    if first.kind() != "field_declaration" || first.start_position().row != first.end_position().row
+    {
+        return None;
+    }
+    let member_type = first.child_by_field_name("type")?;
+    let composite_type = match member_type.kind() {
+        // A named type: `Row super;`. Built-ins (including `size_t` and
+        // the `stdint` family) parse as `primitive_type`, so plain
+        // scalars never reach here.
+        "type_identifier" => true,
+        // The untypedef'd form: `struct Row_ super;`. A body here would
+        // be an inline anonymous definition, not an embedding.
+        "struct_specifier" | "union_specifier" => member_type.child_by_field_name("body").is_none(),
+        _ => false,
+    };
+    // A plain identifier declarator is the by-value form; `*`, `[]`,
+    // and `:` shapes wrap it in a pointer/array/bitfield declarator.
+    if !composite_type || first.child_by_field_name("declarator")?.kind() != "field_identifier" {
+        return None;
+    }
+    Some(first.start_position().row + 1)
+}
+
 fn find_aggregate_body(node: Node) -> Option<Node> {
     fn spec_body(spec: Node) -> Option<Node> {
         match spec.kind() {
@@ -1917,15 +1987,27 @@ fn collect_enum_chunks(body: Node) -> Vec<AggregateMemberGroup> {
         .collect()
 }
 
-/// True iff `#define X` is the back-half of a header guard —
-/// uppercase name and no value.
-fn is_header_guard_define(node: Node, source: &str) -> bool {
+/// True iff `#define X` is the back-half of a header guard — the
+/// envelope that says "this is a header", not a declaration.
+///
+/// Matched against the file's own `#ifndef X` when the walker found a
+/// wrapping guard, so the recognition is structural rather than a
+/// naming convention: a mixed-case guard symbol is as much a guard as
+/// an all-caps one, and left in it becomes the file's *first* roster
+/// line — the cheapest thing any budget can buy there, so the first
+/// token ever spent on the header buys a symbol that carries nothing.
+/// The name-shape fallback (all-caps, no value) still covers guards
+/// this walker did not recognize as file-wrapping.
+fn is_header_guard_define(node: Node, source: &str, guard_name: Option<&str>) -> bool {
     let Some(name_node) = node.child_by_field_name("name") else {
         return false;
     };
     let name = &source[name_node.start_byte()..name_node.end_byte()];
     if name.is_empty() {
         return false;
+    }
+    if guard_name == Some(name) {
+        return node.child_by_field_name("value").is_none();
     }
     if !name
         .chars()
@@ -2496,12 +2578,19 @@ fn collect_decl_names_from_with_global_starts(
     // `ellipsis_line_safe` / `all_starts`.
     for (_, info) in decls {
         full.push(info.start_line);
+        // The roster is often the only place an aggregate appears, and
+        // its opening line alone says nothing about what the type is —
+        // see [`base_object_member_line`].
+        full.extend(info.base_member_line);
         let ellipsis_line = info.start_line + 1;
-        if !all_starts.contains(&ellipsis_line) && ellipsis_line_safe(ellipsis_line, src_lines) {
+        if Some(ellipsis_line) != info.base_member_line
+            && !all_starts.contains(&ellipsis_line)
+            && ellipsis_line_safe(ellipsis_line, src_lines)
+        {
             ellipses.push(ellipsis_line);
         }
     }
-    FileLines::new(full).with_ellipses(ellipses)
+    FileLines::new(dedup_sorted(full)).with_ellipses(ellipses)
 }
 
 /// True iff the line is safe to claim as an ellipsis marker — not
@@ -2577,6 +2666,12 @@ fn collect_decl(
                 let body_start = body.start_position().row;
                 let body_end = body.end_position().row;
                 push_rows(&mut full, start_row, body_start);
+                // The identity slot is what the type is built on, not
+                // one field among many — see
+                // [`base_object_member_line`]. `Decl` is the member
+                // groups' predecessor, so binding it here makes it
+                // impossible to render the type header without it.
+                full.extend(info.base_member_line);
                 if body_end > body_start && body_end <= end_row {
                     full.push(body_end + 1);
                 }
@@ -2641,6 +2736,95 @@ mod tests {
             );
             assert_eq!(decls[0].1.kind, DeclKind::FunctionDecl);
         }
+    }
+
+    #[test]
+    fn c_mixed_case_header_guard_is_not_a_declaration() {
+        // Guard symbols that aren't all-caps (htop's `HEADER_Foo`,
+        // soluna's `soluna_foo_h`) are guards all the same. Left on the
+        // roster the guard is its first and cheapest line, so the first
+        // token spent on the header buys a symbol carrying nothing.
+        let cases = &[
+            "#ifndef HEADER_ZfsArcStats\n#define HEADER_ZfsArcStats\nint foo();\n#endif\n",
+            "#ifndef soluna_version_h\n#define soluna_version_h\nint foo();\n#endif\n",
+        ];
+        for src in cases {
+            let (source, tree) = parse(src);
+            let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
+            assert_eq!(
+                decls.iter().map(|(_, i)| i.kind).collect::<Vec<_>>(),
+                vec![DeclKind::FunctionDecl],
+                "the guard's `#define` is envelope, not a macro decl:\n{src}"
+            );
+        }
+        // Only the guard's own symbol is envelope: another mixed-case
+        // `#define` beside it is a real macro and keeps its place.
+        let (source, tree) = parse("#ifndef FOO_H\n#define FOO_H\n#define Foo_Debug\n#endif\n");
+        let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
+        assert_eq!(decls.len(), 1);
+        assert_eq!(decls[0].1.start_line, 3);
+    }
+
+    /// `base_member_line` of the sole top-level decl in `src`.
+    fn base_member_line_of(src: &str) -> Option<usize> {
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
+        decls[0].1.base_member_line
+    }
+
+    #[test]
+    fn c_leading_composite_member_is_the_types_identity_slot() {
+        // The vtable idiom's embedded supertype and a tagged union's
+        // discriminant both say what the type *is*.
+        assert_eq!(
+            base_member_line_of("struct P {\n  Row super;\n  int a;\n};\n"),
+            Some(2)
+        );
+        assert_eq!(
+            base_member_line_of("struct P {\n  struct Row_ super;\n  int a;\n};\n"),
+            Some(2)
+        );
+        // A scalar first member is data, not identity.
+        assert_eq!(
+            base_member_line_of("struct P {\n  int a;\n  Row r;\n};\n"),
+            None
+        );
+        assert_eq!(
+            base_member_line_of("struct P {\n  size_t n;\n  Row r;\n};\n"),
+            None
+        );
+        // A pointer references another object rather than embedding it.
+        assert_eq!(
+            base_member_line_of("struct P {\n  Row* parent;\n  int a;\n};\n"),
+            None
+        );
+        assert_eq!(
+            base_member_line_of("struct P {\n  Row rows[4];\n  int a;\n};\n"),
+            None
+        );
+        // An inline anonymous aggregate is a definition, not an embed.
+        assert_eq!(
+            base_member_line_of("struct P {\n  struct { int x; } p;\n  int a;\n};\n"),
+            None
+        );
+    }
+
+    #[test]
+    fn c_names_roster_carries_the_identity_slot() {
+        // The roster is often the only place a type appears, so its
+        // opening line alone would render `Process` as unrelated to the
+        // hierarchy it is a leaf of.
+        let src = "struct P {\n  Row super;\n  int a;\n};\nint plain(void);\n";
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
+        let starts: HashSet<usize> = decls.iter().map(|(_, i)| i.start_line).collect();
+        let src_lines: Vec<&str> = source.lines().collect();
+        let names = collect_decl_names_from_with_global_starts(&decls, &starts, &src_lines);
+        assert_eq!(names.full, vec![1, 2, 5]);
+        assert!(
+            !names.ellipses.contains(&2),
+            "the identity slot is real content, not an elision marker"
+        );
     }
 
     fn configuration_surface_role(filename: &str, source: &str) -> bool {
