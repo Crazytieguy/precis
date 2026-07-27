@@ -111,10 +111,28 @@ kind = "full"
 
 [[batches]]
 position = 6
+key = 'Json(Dependencies { file: "package.json" })'
+descriptor = "package runtime dependencies in package.json"
+cost_tokens = 32
+cum_tokens = 232
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 33
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 32
-cum_tokens = 232
+cum_tokens = 264
 
 [batches.content]
 kind = "lines"
@@ -128,11 +146,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 68
-cum_tokens = 300
+cum_tokens = 332
 
 [batches.content]
 kind = "lines"
@@ -154,37 +172,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Typescript(ExportNames { file: "karma.conf.js" })'
 descriptor = "export names surface in karma.conf.js"
 cost_tokens = 14
-cum_tokens = 314
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "karma.conf.js"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "karma.conf.js"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 9
-key = 'Typescript(Export { file: "karma.conf.js", start_line: 1 })'
-descriptor = "export at karma.conf.js:1"
-cost_tokens = 0
-cum_tokens = 314
+cum_tokens = 346
 
 [batches.content]
 kind = "lines"
@@ -207,10 +199,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
+key = 'Typescript(Export { file: "karma.conf.js", start_line: 1 })'
+descriptor = "export at karma.conf.js:1"
+cost_tokens = 0
+cum_tokens = 346
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "karma.conf.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "karma.conf.js"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
-cost_tokens = 108
-cum_tokens = 422
+cost_tokens = 106
+cum_tokens = 452
 
 [batches.content]
 kind = "lines"
@@ -224,11 +242,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 191
-cum_tokens = 613
+cum_tokens = 643
 
 [batches.content]
 kind = "lines"
@@ -538,11 +556,11 @@ end = 458
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 25
-cum_tokens = 638
+cum_tokens = 668
 
 [batches.content]
 kind = "lines"
@@ -556,11 +574,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Yaml(Whole { file: ".travis.yml" })'
 descriptor = "YAML config at .travis.yml"
 cost_tokens = 132
-cum_tokens = 770
+cum_tokens = 800
 
 [batches.content]
 kind = "lines"
@@ -569,24 +587,6 @@ kind = "lines"
 path = ".travis.yml"
 start = 1
 end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 14
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package runtime dependencies in package.json"
-cost_tokens = 30
-cum_tokens = 800
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 33
-end = 35
 
 [batches.content.spans.render]
 kind = "full"

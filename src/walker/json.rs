@@ -117,10 +117,12 @@ fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<Batc
 }
 
 /// Emit independently purchasable `package.json` surfaces. On ordinary
-/// multi-line manifests every section hangs directly off Identity, so appendix
+/// multi-line manifests every section hangs directly off Identity — except
+/// dev dependencies, which hang off runtime dependencies — so appendix
 /// metadata cannot gate entrypoints, scripts, or runtime dependencies. Compact
 /// manifests whose sections share a physical line retain a local chain because
-/// the scheduler only permits line overlap along predecessor ancestry.
+/// the scheduler only permits line overlap along predecessor ancestry; that
+/// chain visits Dependencies before DevDependencies too.
 fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
     let Some((source, tree)) = parse_json(ctx, file) else {
         return;
@@ -199,6 +201,16 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         .first()
         .filter(|(key, _, _)| matches!(key, JsonKey::Identity { .. }))
         .map(|(key, _, _)| BatchKey::Json(key.clone()));
+    // Dev/tooling dependencies gate behind runtime dependencies rather
+    // than off Identity: a manifest that shows its test runner and
+    // linter while withholding what the package is actually built on
+    // reads as a package with no runtime dependencies. Ordering is a
+    // guarantee; pricing alone cannot supply one, because a short
+    // enough dev block outranks any priced-higher longer block.
+    let runtime_dependencies = sections
+        .iter()
+        .find(|(key, _, _)| matches!(key, JsonKey::Dependencies { .. }))
+        .map(|(key, _, _)| BatchKey::Json(key.clone()));
     let mut previous = None;
     for (key, content, value) in sections {
         let emitted = BatchKey::Json(key.clone());
@@ -206,6 +218,8 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
             None
         } else if overlap_chain {
             previous.clone()
+        } else if matches!(key, JsonKey::DevDependencies { .. }) {
+            runtime_dependencies.clone().or_else(|| identity.clone())
         } else {
             identity.clone()
         };
@@ -519,9 +533,33 @@ fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
         * secondary_package_json_factor(file)
 }
 
+/// What a package depends on at runtime is a primary statement of what
+/// it *is* — a database driver, an HTTP client, a template engine.
+/// Priced flat, the class sat below `Entry` / `Scripts` / `Runtime` and
+/// only 4% above `DevDependencies`, a gap per-token ranking erases:
+/// whichever of the two blocks is physically shorter wins, and that is
+/// routinely the dev block, so a manifest could render its tooling and
+/// nothing else. Only manifests that describe the repository itself are
+/// promoted — a demo/sample sub-package's dependency list is
+/// scaffolding, and promoting those buys clutter.
+const REPOSITORY_DEPENDENCIES_BOOST: f64 = 2.2;
+
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let boost = if describes_repository(file, ctx) {
+        REPOSITORY_DEPENDENCIES_BOOST
+    } else {
+        1.0
+    };
     mix_signals(0.25, 0.5, 0.25, manifest_depth_factor(file, ctx))
         * secondary_package_json_factor(file)
+        * boost
+}
+
+/// True iff this manifest describes the repository itself — the root
+/// `package.json`, or the one publishable workspace member whose name
+/// matches the repo.
+fn describes_repository(file: &Path, ctx: &WalkCtx) -> bool {
+    file.parent() == Some(ctx.root()) || ctx.is_primary_js_workspace_member(file)
 }
 
 fn dev_dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -1058,6 +1096,30 @@ mod tests {
             assert!(is_dev_dependencies_key(key), "dev/peer key: {key}");
             assert!(!is_runtime_dependencies_key(key), "not runtime: {key}");
         }
+    }
+
+    /// Dev dependencies must never be purchasable before the runtime
+    /// dependencies of the same manifest — otherwise a manifest can
+    /// render its tooling alone and read as having no runtime deps.
+    #[test]
+    fn walker_json_dev_dependencies_gate_behind_runtime_dependencies() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        write_pkg(
+            root,
+            "{\n  \"name\": \"demo\",\n  \"dependencies\": {\n    \"redis\": \"^4\"\n  },\n  \"devDependencies\": {\n    \"vitest\": \"^1\"\n  }\n}\n",
+        );
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+        let dependencies = BatchKey::Json(JsonKey::Dependencies {
+            file: root.join("package.json"),
+        });
+        let dev = batches
+            .iter()
+            .find(|b| matches!(b.key, BatchKey::Json(JsonKey::DevDependencies { .. })))
+            .expect("dev dependencies batch");
+        assert_eq!(dev.predecessor.as_ref(), Some(&dependencies));
     }
 
     #[test]

@@ -92,12 +92,7 @@ Readme.md
      127→## Examples
     …
      147→## Contributing
-     148→
-     149→The Express.js project welcomes all constructive contributions. Contributions take many forms,
-     150→from code for bug fixes and enhancements, to additions and fixes to documentation, additional
-     151→tests, triaging incoming pull requests and issues, and more!
-     152→
-     153→See the [Contributing Guide] for more technical details on contributing.
+    …
      155→### Security Issues
     …
      159→### Running Tests
@@ -108,14 +103,10 @@ Readme.md
     …
      184→* [jonchurch](https://github.com/jonchurch) - **Jon Church**
     …
-     190→* [ctcpip](https://github.com/ctcpip) - **Chris de Almeida**
      192→<details>
      193→<summary>TC emeriti members</summary>
     …
      205→### Triagers
-    …
-     209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
-     210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
     …
      216→* [krzysdz](https://github.com/krzysdz)
     …
@@ -162,42 +153,6 @@ lib/
         …
           16→var finalhandler = require('finalhandler');
         …
-          59→app.init = function init() {
-        …
-          85→/**
-          86→ * Initialize application configuration.
-          87→ * @private
-          88→ */
-          90→app.defaultConfiguration = function defaultConfiguration() {
-        …
-         152→app.handle = function handle(req, res, callback) {
-        …
-         190→app.use = function use(fn) {
-        …
-         256→app.route = function route(path) {
-        …
-         294→app.engine = function engine(ext, fn) {
-        …
-         322→app.param = function param(name, fn) {
-        …
-         351→app.set = function set(setting, val) {
-        …
-         399→app.path = function path() {
-        …
-         420→app.enabled = function enabled(setting) {
-        …
-         439→app.disabled = function disabled(setting) {
-        …
-         451→app.enable = function enable(setting) {
-        …
-         463→app.disable = function disable(setting) {
-        …
-         494→app.all = function all(path) {
-        …
-         522→app.render = function render(name, options, callback) {
-        …
-         598→app.listen = function listen() {
-        …
     express.js
         …
            9→'use strict';
@@ -208,12 +163,7 @@ lib/
           24→ * Expose `createApplication()`.
           25→ */
           27→exports = module.exports = createApplication;
-          29→/**
-          30→ * Create an express application.
-          31→ *
-          32→ * @return {Function}
-          33→ * @api public
-          34→ */
+        …
           36→function createApplication() {
         …
           58→/**
@@ -278,6 +228,37 @@ package.json
        4→  "version": "5.2.1",
     …
       15→  "license": "MIT",
+    …
+      34→  "dependencies": {
+      35→    "accepts": "^2.0.0",
+      36→    "body-parser": "^2.2.1",
+      37→    "content-disposition": "^1.0.0",
+      38→    "content-type": "^1.0.5",
+      39→    "cookie": "^0.7.1",
+      40→    "cookie-signature": "^1.2.1",
+      41→    "debug": "^4.4.0",
+      42→    "depd": "^2.0.0",
+      43→    "encodeurl": "^2.0.0",
+      44→    "escape-html": "^1.0.3",
+      45→    "etag": "^1.8.1",
+      46→    "finalhandler": "^2.1.0",
+      47→    "fresh": "^2.0.0",
+      48→    "http-errors": "^2.0.0",
+      49→    "merge-descriptors": "^2.0.0",
+      50→    "mime-types": "^3.0.0",
+      51→    "on-finished": "^2.4.1",
+      52→    "once": "^1.4.0",
+      53→    "parseurl": "^1.3.3",
+      54→    "proxy-addr": "^2.0.7",
+      55→    "qs": "^6.14.2",
+      56→    "range-parser": "^1.2.1",
+      57→    "router": "^2.2.0",
+      58→    "send": "^1.1.0",
+      59→    "serve-static": "^2.2.0",
+      60→    "statuses": "^2.0.1",
+      61→    "type-is": "^2.0.1",
+      62→    "vary": "^1.1.2"
+      63→  },
     …
       82→  "engines": {
       83→    "node": ">= 18"

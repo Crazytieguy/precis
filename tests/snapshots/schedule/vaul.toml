@@ -87,10 +87,28 @@ kind = "full"
 
 [[batches]]
 position = 6
+key = 'Json(Dependencies { file: "package.json" })'
+descriptor = "package runtime dependencies in package.json"
+cost_tokens = 36
+cum_tokens = 169
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "package.json"
+start = 66
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
-cost_tokens = 21
-cum_tokens = 154
+cost_tokens = 19
+cum_tokens = 188
 
 [batches.content]
 kind = "lines"
@@ -104,11 +122,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 70
-cum_tokens = 224
+cum_tokens = 258
 
 [batches.content]
 kind = "fs"
@@ -118,11 +136,11 @@ parent = "src"
 entries = ["browser.ts", "constants.ts", "context.ts", "helpers.ts", "index.tsx", "style.css", "types.ts", "use-composed-refs.ts", "use-controllable-state.ts", "use-position-fixed.ts", "use-prevent-scroll.ts", "use-scale-background.ts", "use-snap-points.ts"]
 
 [[batches]]
-position = 8
+position = 9
 key = 'Typescript(ModuleItem { file: "src/index.tsx", start_line: 993 })'
 descriptor = "module item at src/index.tsx:993"
 cost_tokens = 17
-cum_tokens = 241
+cum_tokens = 275
 
 [batches.content]
 kind = "lines"
@@ -136,11 +154,11 @@ end = 993
 kind = "full"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Typescript(ModuleItem { file: "src/index.tsx", start_line: 994 })'
 descriptor = "module item at src/index.tsx:994"
 cost_tokens = 13
-cum_tokens = 254
+cum_tokens = 288
 
 [batches.content]
 kind = "lines"
@@ -154,11 +172,11 @@ end = 994
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 63
-cum_tokens = 317
+cum_tokens = 351
 
 [batches.content]
 kind = "lines"
@@ -172,11 +190,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Typescript(ExportNames { file: "playwright.config.ts" })'
 descriptor = "export names surface in playwright.config.ts"
 cost_tokens = 13
-cum_tokens = 330
+cum_tokens = 364
 
 [batches.content]
 kind = "lines"
@@ -198,11 +216,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Plaintext(Whole { file: "pnpm-workspace.yaml" })'
 descriptor = "plaintext config pnpm-workspace.yaml"
 cost_tokens = 23
-cum_tokens = 353
+cum_tokens = 387
 
 [batches.content]
 kind = "lines"
@@ -216,11 +234,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Typescript(ExportNames { file: "src/index.tsx" })'
 descriptor = "export names surface in src/index.tsx"
 cost_tokens = 224
-cum_tokens = 577
+cum_tokens = 611
 
 [batches.content]
 kind = "lines"
@@ -402,11 +420,11 @@ end = 1138
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 1098 })'
 descriptor = "export at src/index.tsx:1098"
 cost_tokens = 0
-cum_tokens = 577
+cum_tokens = 611
 
 [batches.content]
 kind = "lines"
@@ -428,11 +446,11 @@ end = 1099
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 1130 })'
 descriptor = "export at src/index.tsx:1130"
 cost_tokens = 0
-cum_tokens = 577
+cum_tokens = 611
 
 [batches.content]
 kind = "lines"
@@ -454,11 +472,11 @@ end = 1131
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 989 })'
 descriptor = "export at src/index.tsx:989"
 cost_tokens = 13
-cum_tokens = 590
+cum_tokens = 624
 
 [batches.content]
 kind = "lines"
@@ -472,11 +490,11 @@ end = 991
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 803 })'
 descriptor = "export at src/index.tsx:803"
 cost_tokens = 13
-cum_tokens = 603
+cum_tokens = 637
 
 [batches.content]
 kind = "lines"
@@ -498,11 +516,11 @@ end = 805
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 996 })'
 descriptor = "export at src/index.tsx:996"
 cost_tokens = 29
-cum_tokens = 632
+cum_tokens = 666
 
 [batches.content]
 kind = "lines"
@@ -524,11 +542,11 @@ end = 1000
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 833 })'
 descriptor = "export at src/index.tsx:833"
 cost_tokens = 34
-cum_tokens = 666
+cum_tokens = 700
 
 [batches.content]
 kind = "lines"
@@ -550,11 +568,11 @@ end = 837
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 40 })'
 descriptor = "export at src/index.tsx:40"
 cost_tokens = 120
-cum_tokens = 786
+cum_tokens = 820
 
 [batches.content]
 kind = "lines"
@@ -568,11 +586,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 27 })'
 descriptor = "export at src/index.tsx:27"
 cost_tokens = 161
-cum_tokens = 947
+cum_tokens = 981
 
 [batches.content]
 kind = "lines"
@@ -586,11 +604,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 1137 })'
 descriptor = "export at src/index.tsx:1137"
 cost_tokens = 101
-cum_tokens = 1048
+cum_tokens = 1082
 
 [batches.content]
 kind = "lines"
@@ -604,11 +622,11 @@ end = 1148
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Typescript(Export { file: "src/index.tsx", start_line: 139 })'
 descriptor = "export at src/index.tsx:139"
 cost_tokens = 318
-cum_tokens = 1366
+cum_tokens = 1400
 
 [batches.content]
 kind = "lines"
@@ -630,11 +648,11 @@ end = 170
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 54
-cum_tokens = 1420
+cum_tokens = 1454
 
 [batches.content]
 kind = "fs"
@@ -644,11 +662,11 @@ parent = "test"
 entries = [".eslintrc.json", ".gitignore", "README.md", "next.config.js", "package.json", "postcss.config.js", "public", "src", "tailwind.config.ts", "tests", "tsconfig.json"]
 
 [[batches]]
-position = 25
+position = 26
 key = 'Fs(DirListing { dir: "test/src" })'
 descriptor = "listing of 'test/src'"
 cost_tokens = 3
-cum_tokens = 1423
+cum_tokens = 1457
 
 [batches.content]
 kind = "fs"
@@ -658,11 +676,11 @@ parent = "test/src"
 entries = ["app"]
 
 [[batches]]
-position = 26
+position = 27
 key = 'Typescript(ExportNames { file: "src/use-position-fixed.ts" })'
 descriptor = "export names surface in src/use-position-fixed.ts"
 cost_tokens = 14
-cum_tokens = 1437
+cum_tokens = 1471
 
 [batches.content]
 kind = "lines"
@@ -684,11 +702,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Typescript(ExportNames { file: "src/use-snap-points.ts" })'
 descriptor = "export names surface in src/use-snap-points.ts"
 cost_tokens = 14
-cum_tokens = 1451
+cum_tokens = 1485
 
 [batches.content]
 kind = "lines"
@@ -710,11 +728,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 137
-cum_tokens = 1588
+cum_tokens = 1622
 
 [batches.content]
 kind = "lines"
@@ -728,37 +746,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Typescript(ExportNames { file: "src/use-scale-background.ts" })'
 descriptor = "export names surface in src/use-scale-background.ts"
 cost_tokens = 15
-cum_tokens = 1603
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/use-scale-background.ts"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/use-scale-background.ts"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 30
-key = 'Typescript(Export { file: "src/use-scale-background.ts", start_line: 8 })'
-descriptor = "export at src/use-scale-background.ts:8"
-cost_tokens = 0
-cum_tokens = 1603
+cum_tokens = 1637
 
 [batches.content]
 kind = "lines"
@@ -781,10 +773,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 31
+key = 'Typescript(Export { file: "src/use-scale-background.ts", start_line: 8 })'
+descriptor = "export at src/use-scale-background.ts:8"
+cost_tokens = 0
+cum_tokens = 1637
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/use-scale-background.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/use-scale-background.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 32
 key = 'Typescript(ExportNames { file: "src/use-composed-refs.ts" })'
 descriptor = "export names surface in src/use-composed-refs.ts"
 cost_tokens = 16
-cum_tokens = 1619
+cum_tokens = 1653
 
 [batches.content]
 kind = "lines"
@@ -798,11 +816,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Json(Entry { file: "package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 172
-cum_tokens = 1791
+cum_tokens = 1825
 
 [batches.content]
 kind = "lines"
@@ -811,24 +829,6 @@ kind = "lines"
 path = "package.json"
 start = 5
 end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'Json(Dependencies { file: "package.json" })'
-descriptor = "package runtime dependencies in package.json"
-cost_tokens = 34
-cum_tokens = 1825
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "package.json"
-start = 66
-end = 68
 
 [batches.content.spans.render]
 kind = "full"

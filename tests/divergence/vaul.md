@@ -9,46 +9,46 @@ Score(3000)=0.847 I=0.910 C=0.788 ns_rows≤3K=17/42 (reached=12 partial=1 missi
 | walker |  | 75 | 3 | listing of '.vscode' |  |  | 1.000 |
 | ns | 111 |  | 45 | package.json — name/version/description | 1.2 |  | 0.896 |
 | walker |  | 133 | 58 | package identity in package.json |  |  | 1.000 |
-| walker |  | 154 | 21 | package runtime metadata in package.json |  |  | 1.000 |
-| ns | 179 |  | 68 | README.md (full) | 1.3 |  | 0.911 |
-| walker |  | 224 | 70 | listing of 'src' |  |  | 0.929 |
-| walker |  | 241 | 17 | module item at src/index.tsx:993 |  |  | 0.929 |
-| ns | 249 |  | 70 | src/ directory listing | 1.4 |  | 0.940 |
-| walker |  | 254 | 13 | module item at src/index.tsx:994 |  |  | 0.940 |
-| walker |  | 317 | 63 | README.md section #0 |  |  | 0.980 |
-| walker |  | 330 | 13 | export names surface in playwright.config.ts |  |  | 0.980 |
-| walker |  | 353 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.980 |
-| ns | 386 |  | 137 | package.json — scripts | 1.5 |  | 0.851 |
-| ns | 440 |  | 54 | test/ workspace top-level listing | 1.6 |  | 0.743 |
-| ns | 555 |  | 115 | test/src/app/ demo route listing | 1.7 |  | 0.621 |
-| walker |  | 577 | 224 | export names surface in src/index.tsx |  |  | 0.627 |
-| walker |  | 577 | 0 | export at src/index.tsx:1098 |  |  | 0.627 |
-| walker |  | 577 | 0 | export at src/index.tsx:1130 |  |  | 0.627 |
-| walker |  | 590 | 13 | export at src/index.tsx:989 |  |  | 0.627 |
-| walker |  | 603 | 13 | export at src/index.tsx:803 |  |  | 0.627 |
-| ns | 620 |  | 65 | test/tests/ Playwright spec listing | 1.8 |  | 0.577 |
-| walker |  | 632 | 29 | export at src/index.tsx:996 |  |  | 0.578 |
-| walker |  | 666 | 34 | export at src/index.tsx:833 |  |  | 0.578 |
-| walker |  | 786 | 120 | export at src/index.tsx:40 |  |  | 0.580 |
-| ns | 792 |  | 172 | package.json — entry points + files | 1.9 |  | 0.520 |
-| walker |  | 947 | 161 | export at src/index.tsx:27 |  |  | 0.526 |
+| walker |  | 169 | 36 | package runtime dependencies in package.json |  |  | 1.000 |
+| ns | 179 |  | 68 | README.md (full) | 1.3 |  | 0.912 |
+| walker |  | 188 | 19 | package runtime metadata in package.json |  |  | 0.913 |
+| ns | 249 |  | 70 | src/ directory listing | 1.4 |  | 0.683 |
+| walker |  | 258 | 70 | listing of 'src' |  |  | 0.941 |
+| walker |  | 275 | 17 | module item at src/index.tsx:993 |  |  | 0.941 |
+| walker |  | 288 | 13 | module item at src/index.tsx:994 |  |  | 0.941 |
+| walker |  | 351 | 63 | README.md section #0 |  |  | 0.982 |
+| walker |  | 364 | 13 | export names surface in playwright.config.ts |  |  | 0.982 |
+| ns | 386 |  | 137 | package.json — scripts | 1.5 |  | 0.852 |
+| walker |  | 387 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.852 |
+| ns | 440 |  | 54 | test/ workspace top-level listing | 1.6 |  | 0.744 |
+| ns | 555 |  | 115 | test/src/app/ demo route listing | 1.7 |  | 0.622 |
+| walker |  | 611 | 224 | export names surface in src/index.tsx |  |  | 0.628 |
+| walker |  | 611 | 0 | export at src/index.tsx:1098 |  |  | 0.628 |
+| walker |  | 611 | 0 | export at src/index.tsx:1130 |  |  | 0.628 |
+| ns | 620 |  | 65 | test/tests/ Playwright spec listing | 1.8 |  | 0.578 |
+| walker |  | 624 | 13 | export at src/index.tsx:989 |  |  | 0.578 |
+| walker |  | 637 | 13 | export at src/index.tsx:803 |  |  | 0.578 |
+| walker |  | 666 | 29 | export at src/index.tsx:996 |  |  | 0.578 |
+| walker |  | 700 | 34 | export at src/index.tsx:833 |  |  | 0.579 |
+| ns | 792 |  | 172 | package.json — entry points + files | 1.9 |  | 0.519 |
+| walker |  | 820 | 120 | export at src/index.tsx:40 |  |  | 0.521 |
+| walker |  | 981 | 161 | export at src/index.tsx:27 |  |  | 0.527 |
 | ns | 1003 |  | 211 | package.json — devDependencies | 1.10 |  | 0.488 |
-| walker |  | 1048 | 101 | export at src/index.tsx:1137 |  |  | 0.493 |
-| ns | 1154 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.472 |
-| ns | 1269 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.520 |
-| walker |  | 1366 | 318 | export at src/index.tsx:139 |  |  | 0.527 |
-| walker |  | 1420 | 54 | listing of 'test' |  |  | 0.600 |
-| walker |  | 1423 | 3 | listing of 'test/src' |  |  | 0.600 |
-| ns | 1435 |  | 166 | index.tsx top-level export locations | 2.2 |  | 0.622 |
-| walker |  | 1437 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.622 |
-| walker |  | 1451 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.622 |
-| walker |  | 1588 | 137 | package scripts in package.json |  |  | 0.678 |
-| walker |  | 1603 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.678 |
-| walker |  | 1603 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.678 |
-| walker |  | 1619 | 16 | export names surface in src/use-composed-refs.ts |  |  | 0.678 |
-| ns | 1721 |  | 286 | WithFadeFromProps / WithoutFadeFromProps (full) | 2.3 | 2.2 | 0.705 |
-| walker |  | 1791 | 172 | package entrypoints in package.json |  |  | 0.778 |
-| walker |  | 1825 | 34 | package runtime dependencies in package.json |  |  | 0.783 |
+| walker |  | 1082 | 101 | export at src/index.tsx:1137 |  |  | 0.493 |
+| ns | 1154 |  | 151 | package.json — peerDependencies + runtime dependency | 1.11 |  | 0.482 |
+| ns | 1269 |  | 115 | Drawer export object (full public API surface) | 2.1 |  | 0.528 |
+| walker |  | 1400 | 318 | export at src/index.tsx:139 |  |  | 0.535 |
+| ns | 1435 |  | 166 | index.tsx top-level export locations | 2.2 |  | 0.563 |
+| walker |  | 1454 | 54 | listing of 'test' |  |  | 0.629 |
+| walker |  | 1457 | 3 | listing of 'test/src' |  |  | 0.629 |
+| walker |  | 1471 | 14 | export names surface in src/use-position-fixed.ts |  |  | 0.629 |
+| walker |  | 1485 | 14 | export names surface in src/use-snap-points.ts |  |  | 0.629 |
+| walker |  | 1622 | 137 | package scripts in package.json |  |  | 0.684 |
+| walker |  | 1637 | 15 | export names surface in src/use-scale-background.ts |  |  | 0.684 |
+| walker |  | 1637 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.684 |
+| walker |  | 1653 | 16 | export names surface in src/use-composed-refs.ts |  |  | 0.684 |
+| ns | 1721 |  | 286 | WithFadeFromProps / WithoutFadeFromProps (full) | 2.3 | 2.2 | 0.711 |
+| walker |  | 1825 | 172 | package entrypoints in package.json |  |  | 0.783 |
 | ns | 2263 |  | 542 | DialogProps — core open/behavior props (open .. dismissible) | 2.4 | 2.2 | 0.689 |
 | ns | 2461 |  | 198 | DialogProps — drag/modal/direction props (onDrag .. direction) | 2.5 | 2.2 | 0.664 |
 | ns | 2891 |  | 430 | DialogProps — snap/animation/misc props (defaultOpen .. autoFocus) | 2.6 | 2.2 | 0.615 |

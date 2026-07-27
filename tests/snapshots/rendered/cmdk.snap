@@ -91,6 +91,13 @@ cmdk/
           22→    "dev": "tsup src --watch"
           23→  },
         …
+          28→  "dependencies": {
+          29→    "@radix-ui/react-compose-refs": "^1.1.1",
+          30→    "@radix-ui/react-dialog": "^1.1.6",
+          31→    "@radix-ui/react-id": "^1.1.0",
+          32→    "@radix-ui/react-primitive": "^2.0.2"
+          33→  },
+        …
           37→  "sideEffects": false,
         …
     src/
@@ -152,12 +159,6 @@ cmdk/
              729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
             …
              774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-             775→  const { alwaysRender, ...etc } = props
-             776→  const ref = React.useRef<HTMLDivElement>(null)
-             777→  const render = useCmdk((state) => !state.search)
-             778→
-             779→  if (!alwaysRender && !render) return null
-             780→  return <Primitive.div ref={composeRefs(ref, forwardedRef)} {...etc} cmdk-separator="" role="separator" />
             …
              787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
             …

@@ -287,9 +287,7 @@ lib/
                5→- Browser polyfills
                6→- Managing cookies
                7→- Parsing HTTP headers
-        ZlibHeaderTransformStream.js
-            …
-              29→export default ZlibHeaderTransformStream;
+        ZlibHeaderTransformStream.js …
         bind.js …
         buildURL.js …
         callbackify.js
@@ -374,19 +372,9 @@ lib/
             index.js
                 …
                    5→const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
-                   7→const DIGIT = '0123456789';
                 …
                   27→export default {
-                  28→  isNode: true,
-                  29→  classes: {
-                  30→    URLSearchParams,
-                  31→    FormData,
-                  32→    Blob: (typeof Blob !== 'undefined' && Blob) || null,
-                  33→  },
-                  34→  ALPHABET,
-                  35→  generateString,
-                  36→  protocols: ['http', 'https', 'file', 'data'],
-                  37→};
+                …
     utils.js
         …
          872→export default {
@@ -401,6 +389,13 @@ package.json
        7→  "type": "module",
     …
       95→  "license": "MIT",
+    …
+     123→  "dependencies": {
+     124→    "follow-redirects": "^1.16.0",
+     125→    "form-data": "^4.0.5",
+     126→    "https-proxy-agent": "^5.0.1",
+     127→    "proxy-from-env": "^2.1.0"
+     128→  },
     …
 rollup.config.js …
 sandbox/

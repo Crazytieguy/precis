@@ -24,39 +24,39 @@ Score(3000)=0.503 I=0.789 C=0.321 ns_rows≤3K=21/42 (reached=9 partial=3 missin
 | ns | 555 |  | 106 | package.json — scripts | 2.5 | 2.4 | 0.605 |
 | walker |  | 559 | 20 | export doc at source/index.ts:16 |  |  | 0.605 |
 | walker |  | 589 | 30 | export at source/options.ts:27 |  |  | 0.605 |
-| walker |  | 620 | 31 | package runtime metadata in package.json |  |  | 0.615 |
-| ns | 653 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.559 |
-| walker |  | 657 | 37 | export names surface in source/priority-queue.ts |  |  | 0.559 |
-| walker |  | 674 | 17 | export at source/priority-queue.ts:7 |  |  | 0.560 |
-| walker |  | 750 | 76 | benchmark names surface in bench.ts |  |  | 0.564 |
+| walker |  | 643 | 54 | package runtime dependencies in package.json |  |  | 0.605 |
+| ns | 653 |  | 98 | readme.md — H2 section map | 2.6 | 2.1 | 0.551 |
+| walker |  | 674 | 31 | package runtime metadata in package.json |  |  | 0.559 |
+| walker |  | 711 | 37 | export names surface in source/priority-queue.ts |  |  | 0.559 |
+| walker |  | 728 | 17 | export at source/priority-queue.ts:7 |  |  | 0.560 |
+| walker |  | 804 | 76 | benchmark names surface in bench.ts |  |  | 0.564 |
 | ns | 856 |  | 203 | readme.md — Usage example | 2.7 | 2.6 | 0.484 |
 | ns | 932 |  | 76 | bench.ts — benchmark-name roster | 2.8 |  | 0.509 |
-| walker |  | 968 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.509 |
+| walker |  | 1022 | 218 | export tail #1 at source/index.ts:16 |  |  | 0.509 |
 | ns | 1081 |  | 149 | source/queue.ts (Queue interface + RunFunction) | 3.1 |  | 0.477 |
-| walker |  | 1089 | 121 | headings outline in readme.md |  |  | 0.556 |
-| walker |  | 1119 | 30 | listing of 'test' |  |  | 0.646 |
-| walker |  | 1248 | 129 | export at source/priority-queue.ts:11 |  |  | 0.647 |
-| walker |  | 1258 | 10 | readme.md section #5 |  |  | 0.647 |
+| walker |  | 1143 | 121 | headings outline in readme.md |  |  | 0.556 |
+| walker |  | 1173 | 30 | listing of 'test' |  |  | 0.646 |
+| walker |  | 1302 | 129 | export at source/priority-queue.ts:11 |  |  | 0.647 |
+| walker |  | 1312 | 10 | readme.md section #5 |  |  | 0.647 |
 | ns | 1353 |  | 272 | source/options.ts — TimeoutOptions | 3.2 |  | 0.570 |
-| walker |  | 1547 | 289 | export tail #2 at source/index.ts:16 |  |  | 0.573 |
-| ns | 1588 |  | 235 | source/options.ts — Options (concurrency, autoStart, queueClass) | 3.3 | 3.2 | 0.525 |
-| walker |  | 1639 | 92 | package entrypoints in package.json |  |  | 0.555 |
+| ns | 1588 |  | 235 | source/options.ts — Options (concurrency, autoStart, queueClass) | 3.3 | 3.2 | 0.523 |
+| walker |  | 1601 | 289 | export tail #2 at source/index.ts:16 |  |  | 0.525 |
+| walker |  | 1693 | 92 | package entrypoints in package.json |  |  | 0.555 |
 | ns | 1733 |  | 145 | source/options.ts — Options (intervalCap, interval) | 3.4 | 3.3 | 0.521 |
-| walker |  | 1743 | 104 | package scripts in package.json |  |  | 0.554 |
-| walker |  | 1758 | 15 | readme.md section #24 |  |  | 0.554 |
-| walker |  | 1776 | 18 | imports in source/options.ts |  |  | 0.554 |
+| walker |  | 1797 | 104 | package scripts in package.json |  |  | 0.554 |
+| walker |  | 1812 | 15 | readme.md section #24 |  |  | 0.554 |
+| walker |  | 1830 | 18 | imports in source/options.ts |  |  | 0.554 |
 | ns | 1848 |  | 115 | source/options.ts — Options (carryoverIntervalCount) | 3.5 | 3.4 | 0.532 |
-| walker |  | 1860 | 84 | imports in source/index.ts |  |  | 0.533 |
-| walker |  | 1980 | 120 | export member docs #1 at source/options.ts:97 |  |  | 0.536 |
-| walker |  | 2061 | 81 | json config tsconfig.json |  |  | 0.536 |
-| walker |  | 2108 | 47 | readme.md section #41 |  |  | 0.536 |
+| walker |  | 1914 | 84 | imports in source/index.ts |  |  | 0.533 |
+| walker |  | 2034 | 120 | export member docs #1 at source/options.ts:97 |  |  | 0.536 |
+| walker |  | 2115 | 81 | json config tsconfig.json |  |  | 0.536 |
+| walker |  | 2162 | 47 | readme.md section #41 |  |  | 0.536 |
 | ns | 2166 |  | 318 | source/options.ts — Options (strict) | 3.6 | 3.5 | 0.508 |
 | ns | 2309 |  | 143 | source/options.ts — QueueAddOptions | 3.7 | 3.3 | 0.531 |
 | ns | 2398 |  | 89 | source/options.ts — TaskOptions (signal field doc) | 3.8 | 3.2 | 0.526 |
-| walker |  | 2492 | 384 | readme.md section #0 |  |  | 0.545 |
-| walker |  | 2517 | 25 | readme.md section #9 |  |  | 0.545 |
-| walker |  | 2542 | 25 | readme.md section #25 |  |  | 0.545 |
-| walker |  | 2596 | 54 | package runtime dependencies in package.json |  |  | 0.545 |
+| walker |  | 2546 | 384 | readme.md section #0 |  |  | 0.545 |
+| walker |  | 2571 | 25 | readme.md section #9 |  |  | 0.545 |
+| walker |  | 2596 | 25 | readme.md section #25 |  |  | 0.545 |
 | walker |  | 2690 | 94 | export member docs #1 at source/options.ts:111 |  |  | 0.556 |
 | ns | 2716 |  | 318 | source/options.ts — TaskOptions (AbortSignal cancellation example) | 3.9 | 3.8 | 0.509 |
 | walker |  | 2819 | 129 | readme.md section #1 |  |  | 0.509 |
