@@ -934,6 +934,24 @@ budgets. Don't bump `value` to force a batch into a budget tier
 where it doesn't earn `A_B` credit — it just displaces walker
 batches that do.
 
+## Tree-level elision marker (2026-07-26): magnitude measured dead
+
+A blind-usability probe (6 agents, 6 languages, answering real questions
+from precis output alone) found the top defect was that a pruned tree
+entry rendered byte-identically to an empty one — three confidently
+*wrong* answers came from readers taking marker-absence as proof of
+emptiness. Fixed by trailing ` …` on any entry row that shows none of
+its contents while holding some; contract lives on `format_entry_row`.
+
+Carrying the magnitude alongside the marker (`linux/ …36` for
+directories, files left bare) is **measured dead**: mean 0.6280 vs
+0.6323 for the bare marker, over the same 71 fixtures. The count costs
++3 tokens per directory row against +1 for the bare glyph, and the
+extra two tokens land early enough in the schedule to push `vaul`'s
+1170-token batch over the 3K line (−0.232 on that fixture alone) and
+cost monaco-editor −0.065. A per-file magnitude is worse still — files
+are the bulk of entry rows, so the +2 applies everywhere.
+
 ## Min-tokens lower bound
 
 `RenderedTree::marginal_cost` is the only path to a real per-batch cost

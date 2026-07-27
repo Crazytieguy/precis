@@ -7,8 +7,8 @@ batch_count = 52
 position = 1
 key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
-cost_tokens = 29
-cum_tokens = 29
+cost_tokens = 32
+cum_tokens = 32
 
 [batches.content]
 kind = "fs"
@@ -21,8 +21,8 @@ entries = [".editorconfig", ".eslintrc", ".github", ".gitignore", "LICENSE", "RE
 position = 2
 key = 'Fs(DirListing { dir: "src" })'
 descriptor = "listing of 'src'"
-cost_tokens = 4
-cum_tokens = 33
+cost_tokens = 3
+cum_tokens = 35
 
 [batches.content]
 kind = "fs"
@@ -36,7 +36,7 @@ position = 3
 key = 'Json(Identity { file: "package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 64
-cum_tokens = 97
+cum_tokens = 99
 
 [batches.content]
 kind = "lines"
@@ -62,7 +62,7 @@ position = 4
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 10
-cum_tokens = 107
+cum_tokens = 109
 
 [batches.content]
 kind = "fs"
@@ -75,8 +75,8 @@ entries = ["PULL_REQUEST_TEMPLATE.md", "workflows"]
 position = 5
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
-cost_tokens = 9
-cum_tokens = 116
+cost_tokens = 8
+cum_tokens = 117
 
 [batches.content]
 kind = "fs"
@@ -90,7 +90,7 @@ position = 6
 key = 'Yaml(Whole { file: ".github/workflows/main.yml" })'
 descriptor = "YAML config at .github/workflows/main.yml"
 cost_tokens = 217
-cum_tokens = 333
+cum_tokens = 334
 
 [batches.content]
 kind = "lines"
@@ -107,7 +107,7 @@ kind = "full"
 position = 7
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
-cost_tokens = 12
+cost_tokens = 11
 cum_tokens = 345
 
 [batches.content]

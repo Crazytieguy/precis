@@ -2,20 +2,20 @@ Score(3000)=0.870 I=0.951 C=0.796 ns_rows≤3K=21/42 (reached=15 partial=3 missi
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
-| walker |  | 33 | 33 | listing of '.' |  |  | 1.000 |
-| ns | 33 |  | 33 | Repo root listing | 1.1 |  | 1.000 |
-| walker |  | 41 | 8 | listing of 'performance' |  |  | 1.000 |
-| ns | 48 |  | 15 | README title | 1.2 |  | 0.886 |
-| walker |  | 88 | 47 | README headline in README.md |  |  | 1.000 |
-| ns | 140 |  | 92 | README badges | 1.3 |  | 0.917 |
-| walker |  | 146 | 58 | listing of 'spec' |  |  | 0.920 |
-| ns | 170 |  | 30 | README tagline | 1.4 |  | 0.926 |
-| walker |  | 211 | 65 | lua module identity in middleclass.lua |  |  | 0.926 |
-| ns | 228 |  | 58 | spec/ directory listing | 1.5 |  | 0.945 |
-| walker |  | 257 | 46 | headings outline in UPDATING.md |  |  | 0.945 |
-| ns | 308 |  | 80 | rockspecs/ directory listing | 1.6 |  | 0.812 |
-| ns | 316 |  | 8 | performance/ directory listing | 1.7 |  | 0.816 |
-| walker |  | 337 | 80 | listing of 'rockspecs' |  |  | 0.950 |
+| walker |  | 36 | 36 | listing of '.' |  |  | 1.000 |
+| ns | 36 |  | 36 | Repo root listing | 1.1 |  | 1.000 |
+| walker |  | 43 | 7 | listing of 'performance' |  |  | 1.000 |
+| ns | 51 |  | 15 | README title | 1.2 |  | 0.886 |
+| walker |  | 90 | 47 | README headline in README.md |  |  | 1.000 |
+| ns | 143 |  | 92 | README badges | 1.3 |  | 0.917 |
+| walker |  | 147 | 57 | listing of 'spec' |  |  | 0.920 |
+| ns | 173 |  | 30 | README tagline | 1.4 |  | 0.926 |
+| walker |  | 212 | 65 | lua module identity in middleclass.lua |  |  | 0.926 |
+| ns | 230 |  | 57 | spec/ directory listing | 1.5 |  | 0.945 |
+| walker |  | 258 | 46 | headings outline in UPDATING.md |  |  | 0.945 |
+| ns | 309 |  | 79 | rockspecs/ directory listing | 1.6 |  | 0.812 |
+| ns | 316 |  | 7 | performance/ directory listing | 1.7 |  | 0.816 |
+| walker |  | 337 | 79 | listing of 'rockspecs' |  |  | 0.950 |
 | walker |  | 362 | 25 | lua decl names surface in performance/run.lua |  |  | 0.950 |
 | walker |  | 362 | 0 | lua decl at performance/run.lua:19 |  |  | 0.950 |
 | walker |  | 362 | 0 | lua decl at performance/run.lua:37 |  |  | 0.950 |

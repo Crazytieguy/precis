@@ -1,14 +1,14 @@
 fixture = "py3xui"
 budget = 10000
-cumulative_tokens = 9957
+cumulative_tokens = 9959
 batch_count = 254
 
 [[batches]]
 position = 1
 key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
-cost_tokens = 56
-cum_tokens = 56
+cost_tokens = 61
+cum_tokens = 61
 
 [batches.content]
 kind = "fs"
@@ -21,8 +21,8 @@ entries = [".flake8", ".github", ".gitignore", ".pylintrc", ".vscode", "CODE_OF_
 position = 2
 key = 'Fs(DirListing { dir: "dev" })'
 descriptor = "listing of 'dev'"
-cost_tokens = 27
-cum_tokens = 83
+cost_tokens = 26
+cum_tokens = 87
 
 [batches.content]
 kind = "fs"
@@ -35,8 +35,8 @@ entries = ["clean_trash.sh", "create_venv.sh", "push.sh", "pydoc.sh", "requireme
 position = 3
 key = 'Fs(DirListing { dir: "py3xui" })'
 descriptor = "listing of 'py3xui'"
-cost_tokens = 25
-cum_tokens = 108
+cost_tokens = 30
+cum_tokens = 117
 
 [batches.content]
 kind = "fs"
@@ -50,7 +50,7 @@ position = 4
 key = 'Python(Imports { file: "py3xui/__init__.py" })'
 descriptor = "python imports in py3xui/__init__.py"
 cost_tokens = 94
-cum_tokens = 202
+cum_tokens = 211
 
 [batches.content]
 kind = "lines"
@@ -67,8 +67,8 @@ kind = "full"
 position = 5
 key = 'Fs(DirListing { dir: "py3xui/client" })'
 descriptor = "listing of 'py3xui/client'"
-cost_tokens = 14
-cum_tokens = 216
+cost_tokens = 13
+cum_tokens = 224
 
 [batches.content]
 kind = "fs"
@@ -81,8 +81,8 @@ entries = ["README.md", "__init__.py", "client.py"]
 position = 6
 key = 'Fs(DirListing { dir: "py3xui/server" })'
 descriptor = "listing of 'py3xui/server'"
-cost_tokens = 14
-cum_tokens = 230
+cost_tokens = 13
+cum_tokens = 237
 
 [batches.content]
 kind = "fs"
@@ -95,8 +95,8 @@ entries = ["README.md", "__init__.py", "server.py"]
 position = 7
 key = 'Fs(DirListing { dir: "py3xui/utils" })'
 descriptor = "listing of 'py3xui/utils'"
-cost_tokens = 14
-cum_tokens = 244
+cost_tokens = 13
+cum_tokens = 250
 
 [batches.content]
 kind = "fs"
@@ -107,10 +107,24 @@ entries = ["README.md", "__init__.py", "env.py"]
 
 [[batches]]
 position = 8
+key = 'Fs(DirListing { dir: "py3xui/inbound" })'
+descriptor = "listing of 'py3xui/inbound'"
+cost_tokens = 31
+cum_tokens = 281
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "py3xui/inbound"
+entries = ["README.md", "__init__.py", "bases.py", "inbound.py", "settings.py", "sniffing.py", "stream_settings.py"]
+
+[[batches]]
+position = 9
 key = 'Python(Imports { file: "py3xui/client/__init__.py" })'
 descriptor = "python imports in py3xui/client/__init__.py"
 cost_tokens = 28
-cum_tokens = 272
+cum_tokens = 309
 
 [batches.content]
 kind = "lines"
@@ -124,25 +138,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 9
-key = 'Fs(DirListing { dir: "py3xui/inbound" })'
-descriptor = "listing of 'py3xui/inbound'"
-cost_tokens = 32
-cum_tokens = 304
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "py3xui/inbound"
-entries = ["README.md", "__init__.py", "bases.py", "inbound.py", "settings.py", "sniffing.py", "stream_settings.py"]
-
-[[batches]]
 position = 10
 key = 'Python(DeclNames { file: "py3xui/utils/__init__.py" })'
 descriptor = "python decl names surface in py3xui/utils/__init__.py"
 cost_tokens = 17
-cum_tokens = 321
+cum_tokens = 326
 
 [batches.content]
 kind = "lines"
@@ -160,7 +160,7 @@ position = 11
 key = 'Python(Imports { file: "py3xui/utils/__init__.py" })'
 descriptor = "python imports in py3xui/utils/__init__.py"
 cost_tokens = 31
-cum_tokens = 352
+cum_tokens = 357
 
 [batches.content]
 kind = "lines"
@@ -178,7 +178,7 @@ position = 12
 key = 'Python(Imports { file: "py3xui/server/__init__.py" })'
 descriptor = "python imports in py3xui/server/__init__.py"
 cost_tokens = 32
-cum_tokens = 384
+cum_tokens = 389
 
 [batches.content]
 kind = "lines"
@@ -195,8 +195,8 @@ kind = "full"
 position = 13
 key = 'Fs(DirListing { dir: "py3xui/api" })'
 descriptor = "listing of 'py3xui/api'"
-cost_tokens = 40
-cum_tokens = 424
+cost_tokens = 39
+cum_tokens = 428
 
 [batches.content]
 kind = "fs"
@@ -209,8 +209,8 @@ entries = ["README.md", "__init__.py", "api.py", "api_base.py", "api_client.py",
 position = 14
 key = 'Fs(DirListing { dir: "py3xui/async_api" })'
 descriptor = "listing of 'py3xui/async_api'"
-cost_tokens = 46
-cum_tokens = 470
+cost_tokens = 45
+cum_tokens = 473
 
 [batches.content]
 kind = "fs"
@@ -223,8 +223,8 @@ entries = ["README.md", "__init__.py", "async_api.py", "async_api_base.py", "asy
 position = 15
 key = 'Fs(DirListing { dir: ".vscode" })'
 descriptor = "listing of '.vscode'"
-cost_tokens = 12
-cum_tokens = 482
+cost_tokens = 11
+cum_tokens = 484
 
 [batches.content]
 kind = "fs"
@@ -238,7 +238,7 @@ position = 16
 key = 'Python(DeclNames { file: "py3xui/api/api.py" })'
 descriptor = "python decl names surface in py3xui/api/api.py"
 cost_tokens = 11
-cum_tokens = 493
+cum_tokens = 495
 
 [batches.content]
 kind = "lines"
@@ -256,7 +256,7 @@ position = 17
 key = 'Python(Decl { file: "py3xui/api/api.py", start_line: 13 })'
 descriptor = "python decl at py3xui/api/api.py:13"
 cost_tokens = 0
-cum_tokens = 493
+cum_tokens = 495
 
 [batches.content]
 kind = "lines"
@@ -274,7 +274,7 @@ position = 18
 key = 'Markdown(ReadmeHeadline { file: "py3xui/utils/README.md" })'
 descriptor = "README headline in py3xui/utils/README.md"
 cost_tokens = 31
-cum_tokens = 524
+cum_tokens = 526
 
 [batches.content]
 kind = "lines"
@@ -292,7 +292,7 @@ position = 19
 key = 'Python(Imports { file: "py3xui/api/__init__.py" })'
 descriptor = "python imports in py3xui/api/__init__.py"
 cost_tokens = 80
-cum_tokens = 604
+cum_tokens = 606
 
 [batches.content]
 kind = "lines"
@@ -310,7 +310,7 @@ position = 20
 key = 'Python(Imports { file: "py3xui/inbound/__init__.py" })'
 descriptor = "python imports in py3xui/inbound/__init__.py"
 cost_tokens = 82
-cum_tokens = 686
+cum_tokens = 688
 
 [batches.content]
 kind = "lines"
@@ -328,7 +328,7 @@ position = 21
 key = 'Markdown(Section { file: "py3xui/utils/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "py3xui/utils/README.md section #0"
 cost_tokens = 15
-cum_tokens = 701
+cum_tokens = 703
 
 [batches.content]
 kind = "lines"
@@ -346,7 +346,7 @@ position = 22
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api.py" })'
 descriptor = "python decl names surface in py3xui/async_api/async_api.py"
 cost_tokens = 12
-cum_tokens = 713
+cum_tokens = 715
 
 [batches.content]
 kind = "lines"
@@ -364,7 +364,7 @@ position = 23
 key = 'Python(Decl { file: "py3xui/async_api/async_api.py", start_line: 18 })'
 descriptor = "python decl at py3xui/async_api/async_api.py:18"
 cost_tokens = 0
-cum_tokens = 713
+cum_tokens = 715
 
 [batches.content]
 kind = "lines"
@@ -382,7 +382,7 @@ position = 24
 key = 'Python(Imports { file: "py3xui/async_api/__init__.py" })'
 descriptor = "python imports in py3xui/async_api/__init__.py"
 cost_tokens = 91
-cum_tokens = 804
+cum_tokens = 806
 
 [batches.content]
 kind = "lines"
@@ -400,7 +400,7 @@ position = 25
 key = 'Markdown(ReadmeHeadline { file: "py3xui/server/README.md" })'
 descriptor = "README headline in py3xui/server/README.md"
 cost_tokens = 36
-cum_tokens = 840
+cum_tokens = 842
 
 [batches.content]
 kind = "lines"
@@ -418,7 +418,7 @@ position = 26
 key = 'Markdown(ReadmeHeadline { file: "py3xui/client/README.md" })'
 descriptor = "README headline in py3xui/client/README.md"
 cost_tokens = 37
-cum_tokens = 877
+cum_tokens = 879
 
 [batches.content]
 kind = "lines"
@@ -433,38 +433,10 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 18
-cum_tokens = 895
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 23
-cum_tokens = 918
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["checks.yml", "checkspr.yml", "issues.yml", "pypi.yml", "stale.yml"]
-
-[[batches]]
-position = 29
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 61
-cum_tokens = 979
+cum_tokens = 940
 
 [batches.content]
 kind = "lines"
@@ -478,11 +450,39 @@ end = 23
 kind = "full"
 
 [[batches]]
+position = 28
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 19
+cum_tokens = 959
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 22
+cum_tokens = 981
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = ["checks.yml", "checkspr.yml", "issues.yml", "pypi.yml", "stale.yml"]
+
+[[batches]]
 position = 30
 key = 'Markdown(ReadmeHeadline { file: "py3xui/inbound/README.md" })'
 descriptor = "README headline in py3xui/inbound/README.md"
 cost_tokens = 47
-cum_tokens = 1026
+cum_tokens = 1028
 
 [batches.content]
 kind = "lines"
@@ -500,7 +500,7 @@ position = 31
 key = 'Markdown(HeadingsOutline { file: "py3xui/client/README.md" })'
 descriptor = "headings outline in py3xui/client/README.md"
 cost_tokens = 21
-cum_tokens = 1047
+cum_tokens = 1049
 
 [batches.content]
 kind = "lines"
@@ -542,7 +542,7 @@ position = 32
 key = 'Markdown(Section { file: "py3xui/client/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "py3xui/client/README.md section #0"
 cost_tokens = 13
-cum_tokens = 1060
+cum_tokens = 1062
 
 [batches.content]
 kind = "lines"
@@ -560,7 +560,7 @@ position = 33
 key = 'Markdown(ReadmeHeadline { file: "py3xui/api/README.md" })'
 descriptor = "README headline in py3xui/api/README.md"
 cost_tokens = 49
-cum_tokens = 1109
+cum_tokens = 1111
 
 [batches.content]
 kind = "lines"
@@ -578,7 +578,7 @@ position = 34
 key = 'Markdown(ReadmeHeadline { file: "py3xui/async_api/README.md" })'
 descriptor = "README headline in py3xui/async_api/README.md"
 cost_tokens = 59
-cum_tokens = 1168
+cum_tokens = 1170
 
 [batches.content]
 kind = "lines"
@@ -596,7 +596,7 @@ position = 35
 key = 'Fs(DirListing { dir: "tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 25
-cum_tokens = 1193
+cum_tokens = 1195
 
 [batches.content]
 kind = "fs"
@@ -610,7 +610,7 @@ position = 36
 key = 'Python(DeclNames { file: "py3xui/client/client.py" })'
 descriptor = "python decl names surface in py3xui/client/client.py"
 cost_tokens = 23
-cum_tokens = 1216
+cum_tokens = 1218
 
 [batches.content]
 kind = "lines"
@@ -636,7 +636,7 @@ position = 37
 key = 'Python(Decl { file: "py3xui/client/client.py", start_line: 7 })'
 descriptor = "python decl at py3xui/client/client.py:7"
 cost_tokens = 0
-cum_tokens = 1216
+cum_tokens = 1218
 
 [batches.content]
 kind = "lines"
@@ -654,7 +654,7 @@ position = 38
 key = 'Python(Decl { file: "py3xui/client/client.py", start_line: 36 })'
 descriptor = "python decl at py3xui/client/client.py:36"
 cost_tokens = 0
-cum_tokens = 1216
+cum_tokens = 1218
 
 [batches.content]
 kind = "lines"
@@ -672,7 +672,7 @@ position = 39
 key = 'Python(DeclDoc { file: "py3xui/client/client.py", start_line: 7 })'
 descriptor = "python decl doc at py3xui/client/client.py:7"
 cost_tokens = 18
-cum_tokens = 1234
+cum_tokens = 1236
 
 [batches.content]
 kind = "lines"
@@ -690,7 +690,7 @@ position = 40
 key = 'Python(DeclNames { file: "py3xui/inbound/inbound.py" })'
 descriptor = "python decl names surface in py3xui/inbound/inbound.py"
 cost_tokens = 25
-cum_tokens = 1259
+cum_tokens = 1261
 
 [batches.content]
 kind = "lines"
@@ -716,7 +716,7 @@ position = 41
 key = 'Python(Decl { file: "py3xui/inbound/inbound.py", start_line: 15 })'
 descriptor = "python decl at py3xui/inbound/inbound.py:15"
 cost_tokens = 0
-cum_tokens = 1259
+cum_tokens = 1261
 
 [batches.content]
 kind = "lines"
@@ -734,7 +734,7 @@ position = 42
 key = 'Python(Decl { file: "py3xui/inbound/inbound.py", start_line: 38 })'
 descriptor = "python decl at py3xui/inbound/inbound.py:38"
 cost_tokens = 0
-cum_tokens = 1259
+cum_tokens = 1261
 
 [batches.content]
 kind = "lines"
@@ -752,7 +752,7 @@ position = 43
 key = 'Python(DeclDoc { file: "py3xui/inbound/inbound.py", start_line: 15 })'
 descriptor = "python decl doc at py3xui/inbound/inbound.py:15"
 cost_tokens = 18
-cum_tokens = 1277
+cum_tokens = 1279
 
 [batches.content]
 kind = "lines"
@@ -770,7 +770,7 @@ position = 44
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 69
-cum_tokens = 1346
+cum_tokens = 1348
 
 [batches.content]
 kind = "lines"
@@ -796,7 +796,7 @@ position = 45
 key = 'Python(MethodSigs { file: "py3xui/inbound/inbound.py" })'
 descriptor = "python method sigs in py3xui/inbound/inbound.py"
 cost_tokens = 40
-cum_tokens = 1386
+cum_tokens = 1388
 
 [batches.content]
 kind = "lines"
@@ -838,7 +838,7 @@ position = 46
 key = 'Python(Method { file: "py3xui/inbound/inbound.py", start_line: 114 })'
 descriptor = "python method at py3xui/inbound/inbound.py:114"
 cost_tokens = 0
-cum_tokens = 1386
+cum_tokens = 1388
 
 [batches.content]
 kind = "lines"
@@ -856,7 +856,7 @@ position = 47
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 484
-cum_tokens = 1870
+cum_tokens = 1872
 
 [batches.content]
 kind = "lines"
@@ -907,7 +907,7 @@ position = 48
 key = 'Markdown(Prelude { file: "README.md" })'
 descriptor = "README prelude in README.md"
 cost_tokens = 120
-cum_tokens = 1990
+cum_tokens = 1992
 
 [batches.content]
 kind = "lines"
@@ -933,7 +933,7 @@ position = 49
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 167
-cum_tokens = 2157
+cum_tokens = 2159
 
 [batches.content]
 kind = "lines"
@@ -1167,7 +1167,7 @@ position = 50
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 162
-cum_tokens = 2319
+cum_tokens = 2321
 
 [batches.content]
 kind = "lines"
@@ -1185,7 +1185,7 @@ position = 51
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api_base.py" })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_base.py"
 cost_tokens = 13
-cum_tokens = 2332
+cum_tokens = 2334
 
 [batches.content]
 kind = "lines"
@@ -1203,7 +1203,7 @@ position = 52
 key = 'Python(Decl { file: "py3xui/async_api/async_api_base.py", start_line: 16 })'
 descriptor = "python decl at py3xui/async_api/async_api_base.py:16"
 cost_tokens = 0
-cum_tokens = 2332
+cum_tokens = 2334
 
 [batches.content]
 kind = "lines"
@@ -1221,7 +1221,7 @@ position = 53
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 43
-cum_tokens = 2375
+cum_tokens = 2377
 
 [batches.content]
 kind = "lines"
@@ -1239,7 +1239,7 @@ position = 54
 key = 'Python(DeclNames { file: "py3xui/api/api_client.py" })'
 descriptor = "python decl names surface in py3xui/api/api_client.py"
 cost_tokens = 14
-cum_tokens = 2389
+cum_tokens = 2391
 
 [batches.content]
 kind = "lines"
@@ -1257,7 +1257,7 @@ position = 55
 key = 'Python(Decl { file: "py3xui/api/api_client.py", start_line: 13 })'
 descriptor = "python decl at py3xui/api/api_client.py:13"
 cost_tokens = 0
-cum_tokens = 2389
+cum_tokens = 2391
 
 [batches.content]
 kind = "lines"
@@ -1275,7 +1275,7 @@ position = 56
 key = 'Python(DeclNames { file: "py3xui/api/api_database.py" })'
 descriptor = "python decl names surface in py3xui/api/api_database.py"
 cost_tokens = 14
-cum_tokens = 2403
+cum_tokens = 2405
 
 [batches.content]
 kind = "lines"
@@ -1293,7 +1293,7 @@ position = 57
 key = 'Python(Decl { file: "py3xui/api/api_database.py", start_line: 7 })'
 descriptor = "python decl at py3xui/api/api_database.py:7"
 cost_tokens = 0
-cum_tokens = 2403
+cum_tokens = 2405
 
 [batches.content]
 kind = "lines"
@@ -1311,7 +1311,7 @@ position = 58
 key = 'Python(MethodSigs { file: "py3xui/api/api_database.py" })'
 descriptor = "python method sigs in py3xui/api/api_database.py"
 cost_tokens = 14
-cum_tokens = 2417
+cum_tokens = 2419
 
 [batches.content]
 kind = "lines"
@@ -1337,7 +1337,7 @@ position = 59
 key = 'Python(Method { file: "py3xui/api/api_database.py", start_line: 32 })'
 descriptor = "python method at py3xui/api/api_database.py:32"
 cost_tokens = 0
-cum_tokens = 2417
+cum_tokens = 2419
 
 [batches.content]
 kind = "lines"
@@ -1355,7 +1355,7 @@ position = 60
 key = 'Python(DeclNames { file: "py3xui/api/api_server.py" })'
 descriptor = "python decl names surface in py3xui/api/api_server.py"
 cost_tokens = 14
-cum_tokens = 2431
+cum_tokens = 2433
 
 [batches.content]
 kind = "lines"
@@ -1373,7 +1373,7 @@ position = 61
 key = 'Python(Decl { file: "py3xui/api/api_server.py", start_line: 7 })'
 descriptor = "python decl at py3xui/api/api_server.py:7"
 cost_tokens = 0
-cum_tokens = 2431
+cum_tokens = 2433
 
 [batches.content]
 kind = "lines"
@@ -1391,7 +1391,7 @@ position = 62
 key = 'Python(DeclNames { file: "py3xui/api/api_inbound.py" })'
 descriptor = "python decl names surface in py3xui/api/api_inbound.py"
 cost_tokens = 15
-cum_tokens = 2446
+cum_tokens = 2448
 
 [batches.content]
 kind = "lines"
@@ -1409,7 +1409,7 @@ position = 63
 key = 'Python(Decl { file: "py3xui/api/api_inbound.py", start_line: 9 })'
 descriptor = "python decl at py3xui/api/api_inbound.py:9"
 cost_tokens = 0
-cum_tokens = 2446
+cum_tokens = 2448
 
 [batches.content]
 kind = "lines"
@@ -1427,7 +1427,7 @@ position = 64
 key = 'Python(DeclNames { file: "py3xui/inbound/bases.py" })'
 descriptor = "python decl names surface in py3xui/inbound/bases.py"
 cost_tokens = 15
-cum_tokens = 2461
+cum_tokens = 2463
 
 [batches.content]
 kind = "lines"
@@ -1445,7 +1445,7 @@ position = 65
 key = 'Python(Decl { file: "py3xui/inbound/bases.py", start_line: 9 })'
 descriptor = "python decl at py3xui/inbound/bases.py:9"
 cost_tokens = 0
-cum_tokens = 2461
+cum_tokens = 2463
 
 [batches.content]
 kind = "lines"
@@ -1463,7 +1463,7 @@ position = 66
 key = 'Python(MethodSigs { file: "py3xui/inbound/bases.py" })'
 descriptor = "python method sigs in py3xui/inbound/bases.py"
 cost_tokens = 11
-cum_tokens = 2472
+cum_tokens = 2474
 
 [batches.content]
 kind = "lines"
@@ -1489,7 +1489,7 @@ position = 67
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 131
-cum_tokens = 2603
+cum_tokens = 2605
 
 [batches.content]
 kind = "lines"
@@ -1515,7 +1515,7 @@ position = 68
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api_client.py" })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_client.py"
 cost_tokens = 17
-cum_tokens = 2620
+cum_tokens = 2622
 
 [batches.content]
 kind = "lines"
@@ -1533,7 +1533,7 @@ position = 69
 key = 'Python(Decl { file: "py3xui/async_api/async_api_client.py", start_line: 12 })'
 descriptor = "python decl at py3xui/async_api/async_api_client.py:12"
 cost_tokens = 0
-cum_tokens = 2620
+cum_tokens = 2622
 
 [batches.content]
 kind = "lines"
@@ -1551,7 +1551,7 @@ position = 70
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api_database.py" })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_database.py"
 cost_tokens = 17
-cum_tokens = 2637
+cum_tokens = 2639
 
 [batches.content]
 kind = "lines"
@@ -1569,7 +1569,7 @@ position = 71
 key = 'Python(Decl { file: "py3xui/async_api/async_api_database.py", start_line: 7 })'
 descriptor = "python decl at py3xui/async_api/async_api_database.py:7"
 cost_tokens = 0
-cum_tokens = 2637
+cum_tokens = 2639
 
 [batches.content]
 kind = "lines"
@@ -1587,7 +1587,7 @@ position = 72
 key = 'Python(MethodSigs { file: "py3xui/async_api/async_api_database.py" })'
 descriptor = "python method sigs in py3xui/async_api/async_api_database.py"
 cost_tokens = 15
-cum_tokens = 2652
+cum_tokens = 2654
 
 [batches.content]
 kind = "lines"
@@ -1613,7 +1613,7 @@ position = 73
 key = 'Python(Method { file: "py3xui/async_api/async_api_database.py", start_line: 32 })'
 descriptor = "python method at py3xui/async_api/async_api_database.py:32"
 cost_tokens = 0
-cum_tokens = 2652
+cum_tokens = 2654
 
 [batches.content]
 kind = "lines"
@@ -1631,7 +1631,7 @@ position = 74
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api_inbound.py" })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_inbound.py"
 cost_tokens = 17
-cum_tokens = 2669
+cum_tokens = 2671
 
 [batches.content]
 kind = "lines"
@@ -1649,7 +1649,7 @@ position = 75
 key = 'Python(Decl { file: "py3xui/async_api/async_api_inbound.py", start_line: 11 })'
 descriptor = "python decl at py3xui/async_api/async_api_inbound.py:11"
 cost_tokens = 0
-cum_tokens = 2669
+cum_tokens = 2671
 
 [batches.content]
 kind = "lines"
@@ -1667,7 +1667,7 @@ position = 76
 key = 'Python(DeclNames { file: "py3xui/async_api/async_api_server.py" })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_server.py"
 cost_tokens = 17
-cum_tokens = 2686
+cum_tokens = 2688
 
 [batches.content]
 kind = "lines"
@@ -1685,7 +1685,7 @@ position = 77
 key = 'Python(Decl { file: "py3xui/async_api/async_api_server.py", start_line: 8 })'
 descriptor = "python decl at py3xui/async_api/async_api_server.py:8"
 cost_tokens = 0
-cum_tokens = 2686
+cum_tokens = 2688
 
 [batches.content]
 kind = "lines"
@@ -1703,7 +1703,7 @@ position = 78
 key = 'Python(ClassBody { file: "py3xui/async_api/async_api_server.py", start_line: 8 })'
 descriptor = "python class body at py3xui/async_api/async_api_server.py:8"
 cost_tokens = 16
-cum_tokens = 2702
+cum_tokens = 2704
 
 [batches.content]
 kind = "lines"
@@ -1721,7 +1721,7 @@ position = 79
 key = 'Python(DeclDoc { file: "py3xui/inbound/bases.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/inbound/bases.py:9"
 cost_tokens = 19
-cum_tokens = 2721
+cum_tokens = 2723
 
 [batches.content]
 kind = "lines"
@@ -1739,7 +1739,7 @@ position = 80
 key = 'Python(Method { file: "py3xui/inbound/inbound.py", start_line: 88 })'
 descriptor = "python method at py3xui/inbound/inbound.py:88"
 cost_tokens = 38
-cum_tokens = 2759
+cum_tokens = 2761
 
 [batches.content]
 kind = "lines"
@@ -1757,7 +1757,7 @@ position = 81
 key = 'Python(DeclDoc { file: "py3xui/api/api_client.py", start_line: 13 })'
 descriptor = "python decl doc at py3xui/api/api_client.py:13"
 cost_tokens = 21
-cum_tokens = 2780
+cum_tokens = 2782
 
 [batches.content]
 kind = "lines"
@@ -1775,7 +1775,7 @@ position = 82
 key = 'Python(DeclDoc { file: "py3xui/api/api_database.py", start_line: 7 })'
 descriptor = "python decl doc at py3xui/api/api_database.py:7"
 cost_tokens = 21
-cum_tokens = 2801
+cum_tokens = 2803
 
 [batches.content]
 kind = "lines"
@@ -1793,7 +1793,7 @@ position = 83
 key = 'Python(DeclDoc { file: "py3xui/api/api_server.py", start_line: 7 })'
 descriptor = "python decl doc at py3xui/api/api_server.py:7"
 cost_tokens = 21
-cum_tokens = 2822
+cum_tokens = 2824
 
 [batches.content]
 kind = "lines"
@@ -1811,7 +1811,7 @@ position = 84
 key = 'Python(DeclDoc { file: "py3xui/async_api/async_api_database.py", start_line: 7 })'
 descriptor = "python decl doc at py3xui/async_api/async_api_database.py:7"
 cost_tokens = 21
-cum_tokens = 2843
+cum_tokens = 2845
 
 [batches.content]
 kind = "lines"
@@ -1829,7 +1829,7 @@ position = 85
 key = 'Python(DeclNames { file: "demo.py" })'
 descriptor = "python decl names surface in demo.py"
 cost_tokens = 348
-cum_tokens = 3191
+cum_tokens = 3193
 
 [batches.content]
 kind = "lines"
@@ -1943,7 +1943,7 @@ position = 86
 key = 'Python(Decl { file: "demo.py", start_line: 70 })'
 descriptor = "python decl at demo.py:70"
 cost_tokens = 0
-cum_tokens = 3191
+cum_tokens = 3193
 
 [batches.content]
 kind = "lines"
@@ -1961,7 +1961,7 @@ position = 87
 key = 'Python(DeclDoc { file: "py3xui/api/api.py", start_line: 13 })'
 descriptor = "python decl doc at py3xui/api/api.py:13"
 cost_tokens = 42
-cum_tokens = 3233
+cum_tokens = 3235
 
 [batches.content]
 kind = "lines"
@@ -1979,7 +1979,7 @@ position = 88
 key = 'Python(DeclDoc { file: "py3xui/async_api/async_api.py", start_line: 18 })'
 descriptor = "python decl doc at py3xui/async_api/async_api.py:18"
 cost_tokens = 42
-cum_tokens = 3275
+cum_tokens = 3277
 
 [batches.content]
 kind = "lines"
@@ -1997,7 +1997,7 @@ position = 89
 key = 'Python(DeclDoc { file: "py3xui/api/api_inbound.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/api/api_inbound.py:9"
 cost_tokens = 22
-cum_tokens = 3297
+cum_tokens = 3299
 
 [batches.content]
 kind = "lines"
@@ -2015,7 +2015,7 @@ position = 90
 key = 'Python(DeclDoc { file: "py3xui/async_api/async_api_base.py", start_line: 16 })'
 descriptor = "python decl doc at py3xui/async_api/async_api_base.py:16"
 cost_tokens = 22
-cum_tokens = 3319
+cum_tokens = 3321
 
 [batches.content]
 kind = "lines"
@@ -2033,7 +2033,7 @@ position = 91
 key = 'Python(DeclDoc { file: "py3xui/async_api/async_api_client.py", start_line: 12 })'
 descriptor = "python decl doc at py3xui/async_api/async_api_client.py:12"
 cost_tokens = 22
-cum_tokens = 3341
+cum_tokens = 3343
 
 [batches.content]
 kind = "lines"
@@ -2051,7 +2051,7 @@ position = 92
 key = 'Python(DeclDoc { file: "py3xui/async_api/async_api_inbound.py", start_line: 11 })'
 descriptor = "python decl doc at py3xui/async_api/async_api_inbound.py:11"
 cost_tokens = 22
-cum_tokens = 3363
+cum_tokens = 3365
 
 [batches.content]
 kind = "lines"
@@ -2069,7 +2069,7 @@ position = 93
 key = 'Python(DeclNames { file: "py3xui/api/api_base.py" })'
 descriptor = "python decl names surface in py3xui/api/api_base.py"
 cost_tokens = 22
-cum_tokens = 3385
+cum_tokens = 3387
 
 [batches.content]
 kind = "lines"
@@ -2095,7 +2095,7 @@ position = 94
 key = 'Python(Decl { file: "py3xui/api/api_base.py", start_line: 15 })'
 descriptor = "python decl at py3xui/api/api_base.py:15"
 cost_tokens = 0
-cum_tokens = 3385
+cum_tokens = 3387
 
 [batches.content]
 kind = "lines"
@@ -2113,7 +2113,7 @@ position = 95
 key = 'Python(Decl { file: "py3xui/api/api_base.py", start_line: 28 })'
 descriptor = "python decl at py3xui/api/api_base.py:28"
 cost_tokens = 0
-cum_tokens = 3385
+cum_tokens = 3387
 
 [batches.content]
 kind = "lines"
@@ -2131,7 +2131,7 @@ position = 96
 key = 'Python(DeclDoc { file: "py3xui/api/api_base.py", start_line: 15 })'
 descriptor = "python decl doc at py3xui/api/api_base.py:15"
 cost_tokens = 18
-cum_tokens = 3403
+cum_tokens = 3405
 
 [batches.content]
 kind = "lines"
@@ -2149,7 +2149,7 @@ position = 97
 key = 'Python(DeclDoc { file: "py3xui/api/api_base.py", start_line: 28 })'
 descriptor = "python decl doc at py3xui/api/api_base.py:28"
 cost_tokens = 21
-cum_tokens = 3424
+cum_tokens = 3426
 
 [batches.content]
 kind = "lines"
@@ -2167,7 +2167,7 @@ position = 98
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 22
-cum_tokens = 3446
+cum_tokens = 3448
 
 [batches.content]
 kind = "lines"
@@ -2185,7 +2185,7 @@ position = 99
 key = 'Python(Imports { file: "demo.py" })'
 descriptor = "python imports in demo.py"
 cost_tokens = 47
-cum_tokens = 3493
+cum_tokens = 3495
 
 [batches.content]
 kind = "lines"
@@ -2219,7 +2219,7 @@ position = 100
 key = 'Python(DeclNames { file: "py3xui/inbound/settings.py" })'
 descriptor = "python decl names surface in py3xui/inbound/settings.py"
 cost_tokens = 24
-cum_tokens = 3517
+cum_tokens = 3519
 
 [batches.content]
 kind = "lines"
@@ -2245,7 +2245,7 @@ position = 101
 key = 'Python(Decl { file: "py3xui/inbound/settings.py", start_line: 9 })'
 descriptor = "python decl at py3xui/inbound/settings.py:9"
 cost_tokens = 0
-cum_tokens = 3517
+cum_tokens = 3519
 
 [batches.content]
 kind = "lines"
@@ -2263,7 +2263,7 @@ position = 102
 key = 'Python(Decl { file: "py3xui/inbound/settings.py", start_line: 17 })'
 descriptor = "python decl at py3xui/inbound/settings.py:17"
 cost_tokens = 0
-cum_tokens = 3517
+cum_tokens = 3519
 
 [batches.content]
 kind = "lines"
@@ -2281,7 +2281,7 @@ position = 103
 key = 'Python(DeclDoc { file: "py3xui/inbound/settings.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/inbound/settings.py:9"
 cost_tokens = 18
-cum_tokens = 3535
+cum_tokens = 3537
 
 [batches.content]
 kind = "lines"
@@ -2299,7 +2299,7 @@ position = 104
 key = 'Python(ClassBody { file: "py3xui/inbound/settings.py", start_line: 9 })'
 descriptor = "python class body at py3xui/inbound/settings.py:9"
 cost_tokens = 35
-cum_tokens = 3570
+cum_tokens = 3572
 
 [batches.content]
 kind = "lines"
@@ -2317,7 +2317,7 @@ position = 105
 key = 'Python(ClassBody { file: "py3xui/inbound/settings.py", start_line: 17 })'
 descriptor = "python class body at py3xui/inbound/settings.py:17"
 cost_tokens = 35
-cum_tokens = 3605
+cum_tokens = 3607
 
 [batches.content]
 kind = "lines"
@@ -2335,7 +2335,7 @@ position = 106
 key = 'Python(DeclDoc { file: "demo.py", start_line: 70 })'
 descriptor = "python decl doc at demo.py:70"
 cost_tokens = 107
-cum_tokens = 3712
+cum_tokens = 3714
 
 [batches.content]
 kind = "lines"
@@ -2353,7 +2353,7 @@ position = 107
 key = 'Python(ClassBody { file: "py3xui/inbound/inbound.py", start_line: 15 })'
 descriptor = "python class body at py3xui/inbound/inbound.py:15"
 cost_tokens = 179
-cum_tokens = 3891
+cum_tokens = 3893
 
 [batches.content]
 kind = "lines"
@@ -2371,7 +2371,7 @@ position = 108
 key = 'Python(ClassBody { file: "py3xui/client/client.py", start_line: 7 })'
 descriptor = "python class body at py3xui/client/client.py:7"
 cost_tokens = 225
-cum_tokens = 4116
+cum_tokens = 4118
 
 [batches.content]
 kind = "lines"
@@ -2389,7 +2389,7 @@ position = 109
 key = 'Python(DeclNames { file: "py3xui/inbound/stream_settings.py" })'
 descriptor = "python decl names surface in py3xui/inbound/stream_settings.py"
 cost_tokens = 26
-cum_tokens = 4142
+cum_tokens = 4144
 
 [batches.content]
 kind = "lines"
@@ -2415,7 +2415,7 @@ position = 110
 key = 'Python(Decl { file: "py3xui/inbound/stream_settings.py", start_line: 9 })'
 descriptor = "python decl at py3xui/inbound/stream_settings.py:9"
 cost_tokens = 0
-cum_tokens = 4142
+cum_tokens = 4144
 
 [batches.content]
 kind = "lines"
@@ -2433,7 +2433,7 @@ position = 111
 key = 'Python(Decl { file: "py3xui/inbound/stream_settings.py", start_line: 25 })'
 descriptor = "python decl at py3xui/inbound/stream_settings.py:25"
 cost_tokens = 0
-cum_tokens = 4142
+cum_tokens = 4144
 
 [batches.content]
 kind = "lines"
@@ -2451,7 +2451,7 @@ position = 112
 key = 'Python(DeclDoc { file: "py3xui/inbound/stream_settings.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/inbound/stream_settings.py:9"
 cost_tokens = 18
-cum_tokens = 4160
+cum_tokens = 4162
 
 [batches.content]
 kind = "lines"
@@ -2469,7 +2469,7 @@ position = 113
 key = 'Markdown(HeadingsOutline { file: "py3xui/server/README.md" })'
 descriptor = "headings outline in py3xui/server/README.md"
 cost_tokens = 100
-cum_tokens = 4260
+cum_tokens = 4262
 
 [batches.content]
 kind = "lines"
@@ -2623,7 +2623,7 @@ position = 114
 key = 'Markdown(Section { file: "py3xui/server/README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "py3xui/server/README.md section #0"
 cost_tokens = 13
-cum_tokens = 4273
+cum_tokens = 4275
 
 [batches.content]
 kind = "lines"
@@ -2641,7 +2641,7 @@ position = 115
 key = 'Python(DeclNames { file: "py3xui/server/server.py" })'
 descriptor = "python decl names surface in py3xui/server/server.py"
 cost_tokens = 109
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2723,7 +2723,7 @@ position = 116
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 7 })'
 descriptor = "python decl at py3xui/server/server.py:7"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2741,7 +2741,7 @@ position = 117
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 43 })'
 descriptor = "python decl at py3xui/server/server.py:43"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2759,7 +2759,7 @@ position = 118
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 54 })'
 descriptor = "python decl at py3xui/server/server.py:54"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2777,7 +2777,7 @@ position = 119
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 67 })'
 descriptor = "python decl at py3xui/server/server.py:67"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2795,7 +2795,7 @@ position = 120
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 78 })'
 descriptor = "python decl at py3xui/server/server.py:78"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2813,7 +2813,7 @@ position = 121
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 89 })'
 descriptor = "python decl at py3xui/server/server.py:89"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2831,7 +2831,7 @@ position = 122
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 100 })'
 descriptor = "python decl at py3xui/server/server.py:100"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2849,7 +2849,7 @@ position = 123
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 113 })'
 descriptor = "python decl at py3xui/server/server.py:113"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2867,7 +2867,7 @@ position = 124
 key = 'Python(Decl { file: "py3xui/server/server.py", start_line: 125 })'
 descriptor = "python decl at py3xui/server/server.py:125"
 cost_tokens = 0
-cum_tokens = 4382
+cum_tokens = 4384
 
 [batches.content]
 kind = "lines"
@@ -2885,7 +2885,7 @@ position = 125
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 43 })'
 descriptor = "python class body at py3xui/server/server.py:43"
 cost_tokens = 18
-cum_tokens = 4400
+cum_tokens = 4402
 
 [batches.content]
 kind = "lines"
@@ -2903,7 +2903,7 @@ position = 126
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 67 })'
 descriptor = "python class body at py3xui/server/server.py:67"
 cost_tokens = 18
-cum_tokens = 4418
+cum_tokens = 4420
 
 [batches.content]
 kind = "lines"
@@ -2921,7 +2921,7 @@ position = 127
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 78 })'
 descriptor = "python class body at py3xui/server/server.py:78"
 cost_tokens = 18
-cum_tokens = 4436
+cum_tokens = 4438
 
 [batches.content]
 kind = "lines"
@@ -2939,7 +2939,7 @@ position = 128
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 89 })'
 descriptor = "python class body at py3xui/server/server.py:89"
 cost_tokens = 20
-cum_tokens = 4456
+cum_tokens = 4458
 
 [batches.content]
 kind = "lines"
@@ -2957,7 +2957,7 @@ position = 129
 key = 'Python(DeclDoc { file: "py3xui/server/server.py", start_line: 7 })'
 descriptor = "python decl doc at py3xui/server/server.py:7"
 cost_tokens = 16
-cum_tokens = 4472
+cum_tokens = 4474
 
 [batches.content]
 kind = "lines"
@@ -2975,7 +2975,7 @@ position = 130
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 100 })'
 descriptor = "python class body at py3xui/server/server.py:100"
 cost_tokens = 27
-cum_tokens = 4499
+cum_tokens = 4501
 
 [batches.content]
 kind = "lines"
@@ -2993,7 +2993,7 @@ position = 131
 key = 'Python(DeclDoc { file: "py3xui/server/server.py", start_line: 113 })'
 descriptor = "python decl doc at py3xui/server/server.py:113"
 cost_tokens = 22
-cum_tokens = 4521
+cum_tokens = 4523
 
 [batches.content]
 kind = "lines"
@@ -3011,7 +3011,7 @@ position = 132
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 54 })'
 descriptor = "python class body at py3xui/server/server.py:54"
 cost_tokens = 43
-cum_tokens = 4564
+cum_tokens = 4566
 
 [batches.content]
 kind = "lines"
@@ -3029,7 +3029,7 @@ position = 133
 key = 'Python(DeclDoc { file: "py3xui/server/server.py", start_line: 78 })'
 descriptor = "python decl doc at py3xui/server/server.py:78"
 cost_tokens = 52
-cum_tokens = 4616
+cum_tokens = 4618
 
 [batches.content]
 kind = "lines"
@@ -3047,7 +3047,7 @@ position = 134
 key = 'Python(DeclDoc { file: "py3xui/server/server.py", start_line: 67 })'
 descriptor = "python decl doc at py3xui/server/server.py:67"
 cost_tokens = 54
-cum_tokens = 4670
+cum_tokens = 4672
 
 [batches.content]
 kind = "lines"
@@ -3065,7 +3065,7 @@ position = 135
 key = 'Python(DeclDoc { file: "py3xui/server/server.py", start_line: 43 })'
 descriptor = "python decl doc at py3xui/server/server.py:43"
 cost_tokens = 57
-cum_tokens = 4727
+cum_tokens = 4729
 
 [batches.content]
 kind = "lines"
@@ -3083,7 +3083,7 @@ position = 136
 key = 'Python(DeclDoc { file: "py3xui/server/server.py", start_line: 89 })'
 descriptor = "python decl doc at py3xui/server/server.py:89"
 cost_tokens = 59
-cum_tokens = 4786
+cum_tokens = 4788
 
 [batches.content]
 kind = "lines"
@@ -3101,7 +3101,7 @@ position = 137
 key = 'Python(MethodSigs { file: "py3xui/api/api.py" })'
 descriptor = "python method sigs in py3xui/api/api.py"
 cost_tokens = 120
-cum_tokens = 4906
+cum_tokens = 4908
 
 [batches.content]
 kind = "lines"
@@ -3223,7 +3223,7 @@ position = 138
 key = 'Python(Method { file: "py3xui/api/api.py", start_line: 189 })'
 descriptor = "python method at py3xui/api/api.py:189"
 cost_tokens = 0
-cum_tokens = 4906
+cum_tokens = 4908
 
 [batches.content]
 kind = "lines"
@@ -3241,7 +3241,7 @@ position = 139
 key = 'Python(Method { file: "py3xui/api/api.py", start_line: 93 })'
 descriptor = "python method at py3xui/api/api.py:93"
 cost_tokens = 8
-cum_tokens = 4914
+cum_tokens = 4916
 
 [batches.content]
 kind = "lines"
@@ -3259,7 +3259,7 @@ position = 140
 key = 'Python(Method { file: "py3xui/api/api.py", start_line: 115 })'
 descriptor = "python method at py3xui/api/api.py:115"
 cost_tokens = 8
-cum_tokens = 4922
+cum_tokens = 4924
 
 [batches.content]
 kind = "lines"
@@ -3277,7 +3277,7 @@ position = 141
 key = 'Python(Method { file: "py3xui/api/api.py", start_line: 102 })'
 descriptor = "python method at py3xui/api/api.py:102"
 cost_tokens = 9
-cum_tokens = 4931
+cum_tokens = 4933
 
 [batches.content]
 kind = "lines"
@@ -3295,7 +3295,7 @@ position = 142
 key = 'Python(Method { file: "py3xui/api/api.py", start_line: 124 })'
 descriptor = "python method at py3xui/api/api.py:124"
 cost_tokens = 10
-cum_tokens = 4941
+cum_tokens = 4943
 
 [batches.content]
 kind = "lines"
@@ -3313,7 +3313,7 @@ position = 143
 key = 'Python(DeclDoc { file: "py3xui/async_api/async_api_server.py", start_line: 8 })'
 descriptor = "python decl doc at py3xui/async_api/async_api_server.py:8"
 cost_tokens = 31
-cum_tokens = 4972
+cum_tokens = 4974
 
 [batches.content]
 kind = "lines"
@@ -3331,7 +3331,7 @@ position = 144
 key = 'Python(MethodSigs { file: "py3xui/async_api/async_api.py" })'
 descriptor = "python method sigs in py3xui/async_api/async_api.py"
 cost_tokens = 121
-cum_tokens = 5093
+cum_tokens = 5095
 
 [batches.content]
 kind = "lines"
@@ -3453,7 +3453,7 @@ position = 145
 key = 'Python(Method { file: "py3xui/async_api/async_api.py", start_line: 194 })'
 descriptor = "python method at py3xui/async_api/async_api.py:194"
 cost_tokens = 0
-cum_tokens = 5093
+cum_tokens = 5095
 
 [batches.content]
 kind = "lines"
@@ -3471,7 +3471,7 @@ position = 146
 key = 'Python(Method { file: "py3xui/async_api/async_api.py", start_line: 98 })'
 descriptor = "python method at py3xui/async_api/async_api.py:98"
 cost_tokens = 8
-cum_tokens = 5101
+cum_tokens = 5103
 
 [batches.content]
 kind = "lines"
@@ -3489,7 +3489,7 @@ position = 147
 key = 'Python(Method { file: "py3xui/async_api/async_api.py", start_line: 120 })'
 descriptor = "python method at py3xui/async_api/async_api.py:120"
 cost_tokens = 8
-cum_tokens = 5109
+cum_tokens = 5111
 
 [batches.content]
 kind = "lines"
@@ -3507,7 +3507,7 @@ position = 148
 key = 'Python(Method { file: "py3xui/async_api/async_api.py", start_line: 107 })'
 descriptor = "python method at py3xui/async_api/async_api.py:107"
 cost_tokens = 9
-cum_tokens = 5118
+cum_tokens = 5120
 
 [batches.content]
 kind = "lines"
@@ -3525,7 +3525,7 @@ position = 149
 key = 'Python(Method { file: "py3xui/async_api/async_api.py", start_line: 129 })'
 descriptor = "python method at py3xui/async_api/async_api.py:129"
 cost_tokens = 10
-cum_tokens = 5128
+cum_tokens = 5130
 
 [batches.content]
 kind = "lines"
@@ -3543,7 +3543,7 @@ position = 150
 key = 'Python(MethodSigs { file: "py3xui/api/api_server.py" })'
 descriptor = "python method sigs in py3xui/api/api_server.py"
 cost_tokens = 54
-cum_tokens = 5182
+cum_tokens = 5184
 
 [batches.content]
 kind = "lines"
@@ -3601,7 +3601,7 @@ position = 151
 key = 'Python(Method { file: "py3xui/api/api_server.py", start_line: 35 })'
 descriptor = "python method at py3xui/api/api_server.py:35"
 cost_tokens = 0
-cum_tokens = 5182
+cum_tokens = 5184
 
 [batches.content]
 kind = "lines"
@@ -3619,7 +3619,7 @@ position = 152
 key = 'Python(Method { file: "py3xui/api/api_server.py", start_line: 67 })'
 descriptor = "python method at py3xui/api/api_server.py:67"
 cost_tokens = 0
-cum_tokens = 5182
+cum_tokens = 5184
 
 [batches.content]
 kind = "lines"
@@ -3637,7 +3637,7 @@ position = 153
 key = 'Python(Method { file: "py3xui/api/api_server.py", start_line: 97 })'
 descriptor = "python method at py3xui/api/api_server.py:97"
 cost_tokens = 0
-cum_tokens = 5182
+cum_tokens = 5184
 
 [batches.content]
 kind = "lines"
@@ -3655,7 +3655,7 @@ position = 154
 key = 'Python(DeclNames { file: "py3xui/inbound/sniffing.py" })'
 descriptor = "python decl names surface in py3xui/inbound/sniffing.py"
 cost_tokens = 28
-cum_tokens = 5210
+cum_tokens = 5212
 
 [batches.content]
 kind = "lines"
@@ -3681,7 +3681,7 @@ position = 155
 key = 'Python(Decl { file: "py3xui/inbound/sniffing.py", start_line: 9 })'
 descriptor = "python decl at py3xui/inbound/sniffing.py:9"
 cost_tokens = 0
-cum_tokens = 5210
+cum_tokens = 5212
 
 [batches.content]
 kind = "lines"
@@ -3699,7 +3699,7 @@ position = 156
 key = 'Python(Decl { file: "py3xui/inbound/sniffing.py", start_line: 20 })'
 descriptor = "python decl at py3xui/inbound/sniffing.py:20"
 cost_tokens = 0
-cum_tokens = 5210
+cum_tokens = 5212
 
 [batches.content]
 kind = "lines"
@@ -3717,7 +3717,7 @@ position = 157
 key = 'Python(MethodBody { file: "py3xui/api/api.py", start_line: 93, body_start_line: 100 })'
 descriptor = "python method body at py3xui/api/api.py:93 body 100"
 cost_tokens = 10
-cum_tokens = 5220
+cum_tokens = 5222
 
 [batches.content]
 kind = "lines"
@@ -3735,7 +3735,7 @@ position = 158
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api.py", start_line: 98, body_start_line: 105 })'
 descriptor = "python method body at py3xui/async_api/async_api.py:98 body 105"
 cost_tokens = 10
-cum_tokens = 5230
+cum_tokens = 5232
 
 [batches.content]
 kind = "lines"
@@ -3753,7 +3753,7 @@ position = 159
 key = 'Python(DeclDoc { file: "py3xui/inbound/sniffing.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/inbound/sniffing.py:9"
 cost_tokens = 18
-cum_tokens = 5248
+cum_tokens = 5250
 
 [batches.content]
 kind = "lines"
@@ -3771,7 +3771,7 @@ position = 160
 key = 'Python(MethodBody { file: "py3xui/api/api.py", start_line: 115, body_start_line: 122 })'
 descriptor = "python method body at py3xui/api/api.py:115 body 122"
 cost_tokens = 11
-cum_tokens = 5259
+cum_tokens = 5261
 
 [batches.content]
 kind = "lines"
@@ -3789,7 +3789,7 @@ position = 161
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api.py", start_line: 120, body_start_line: 127 })'
 descriptor = "python method body at py3xui/async_api/async_api.py:120 body 127"
 cost_tokens = 11
-cum_tokens = 5270
+cum_tokens = 5272
 
 [batches.content]
 kind = "lines"
@@ -3807,7 +3807,7 @@ position = 162
 key = 'Python(MethodSigs { file: "py3xui/async_api/async_api_server.py" })'
 descriptor = "python method sigs in py3xui/async_api/async_api_server.py"
 cost_tokens = 55
-cum_tokens = 5325
+cum_tokens = 5327
 
 [batches.content]
 kind = "lines"
@@ -3865,7 +3865,7 @@ position = 163
 key = 'Python(Method { file: "py3xui/async_api/async_api_server.py", start_line: 44 })'
 descriptor = "python method at py3xui/async_api/async_api_server.py:44"
 cost_tokens = 0
-cum_tokens = 5325
+cum_tokens = 5327
 
 [batches.content]
 kind = "lines"
@@ -3883,7 +3883,7 @@ position = 164
 key = 'Python(Method { file: "py3xui/async_api/async_api_server.py", start_line: 76 })'
 descriptor = "python method at py3xui/async_api/async_api_server.py:76"
 cost_tokens = 0
-cum_tokens = 5325
+cum_tokens = 5327
 
 [batches.content]
 kind = "lines"
@@ -3901,7 +3901,7 @@ position = 165
 key = 'Python(Method { file: "py3xui/async_api/async_api_server.py", start_line: 105 })'
 descriptor = "python method at py3xui/async_api/async_api_server.py:105"
 cost_tokens = 0
-cum_tokens = 5325
+cum_tokens = 5327
 
 [batches.content]
 kind = "lines"
@@ -3919,7 +3919,7 @@ position = 166
 key = 'Python(ClassBody { file: "py3xui/inbound/inbound.py", start_line: 38 })'
 descriptor = "python class body at py3xui/inbound/inbound.py:38"
 cost_tokens = 316
-cum_tokens = 5641
+cum_tokens = 5643
 
 [batches.content]
 kind = "lines"
@@ -3945,7 +3945,7 @@ position = 167
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 113 })'
 descriptor = "python class body at py3xui/server/server.py:113"
 cost_tokens = 83
-cum_tokens = 5724
+cum_tokens = 5726
 
 [batches.content]
 kind = "lines"
@@ -3963,7 +3963,7 @@ position = 168
 key = 'Python(DeclDoc { file: "py3xui/server/server.py", start_line: 100 })'
 descriptor = "python decl doc at py3xui/server/server.py:100"
 cost_tokens = 66
-cum_tokens = 5790
+cum_tokens = 5792
 
 [batches.content]
 kind = "lines"
@@ -3981,7 +3981,7 @@ position = 169
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 7 })'
 descriptor = "python class body at py3xui/server/server.py:7"
 cost_tokens = 347
-cum_tokens = 6137
+cum_tokens = 6139
 
 [batches.content]
 kind = "lines"
@@ -3999,7 +3999,7 @@ position = 170
 key = 'Python(DeclDoc { file: "py3xui/server/server.py", start_line: 54 })'
 descriptor = "python decl doc at py3xui/server/server.py:54"
 cost_tokens = 76
-cum_tokens = 6213
+cum_tokens = 6215
 
 [batches.content]
 kind = "lines"
@@ -4017,7 +4017,7 @@ position = 171
 key = 'Python(Method { file: "py3xui/api/api.py", start_line: 139 })'
 descriptor = "python method at py3xui/api/api.py:139"
 cost_tokens = 67
-cum_tokens = 6280
+cum_tokens = 6282
 
 [batches.content]
 kind = "lines"
@@ -4035,7 +4035,7 @@ position = 172
 key = 'Python(Method { file: "py3xui/async_api/async_api.py", start_line: 144 })'
 descriptor = "python method at py3xui/async_api/async_api.py:144"
 cost_tokens = 68
-cum_tokens = 6348
+cum_tokens = 6350
 
 [batches.content]
 kind = "lines"
@@ -4053,7 +4053,7 @@ position = 173
 key = 'Python(ClassBody { file: "py3xui/server/server.py", start_line: 125 })'
 descriptor = "python class body at py3xui/server/server.py:125"
 cost_tokens = 340
-cum_tokens = 6688
+cum_tokens = 6690
 
 [batches.content]
 kind = "lines"
@@ -4071,7 +4071,7 @@ position = 174
 key = 'Python(ClassBody { file: "py3xui/inbound/sniffing.py", start_line: 9 })'
 descriptor = "python class body at py3xui/inbound/sniffing.py:9"
 cost_tokens = 57
-cum_tokens = 6745
+cum_tokens = 6747
 
 [batches.content]
 kind = "lines"
@@ -4089,7 +4089,7 @@ position = 175
 key = 'Markdown(HeadingsOutline { file: "py3xui/api/README.md" })'
 descriptor = "headings outline in py3xui/api/README.md"
 cost_tokens = 143
-cum_tokens = 6888
+cum_tokens = 6890
 
 [batches.content]
 kind = "lines"
@@ -4291,7 +4291,7 @@ position = 176
 key = 'Plaintext(Whole { file: "dev/requirements.txt" })'
 descriptor = "plaintext config dev/requirements.txt"
 cost_tokens = 65
-cum_tokens = 6953
+cum_tokens = 6955
 
 [batches.content]
 kind = "lines"
@@ -4317,7 +4317,7 @@ position = 177
 key = 'Python(ClassBody { file: "py3xui/client/client.py", start_line: 36 })'
 descriptor = "python class body at py3xui/client/client.py:36"
 cost_tokens = 410
-cum_tokens = 7363
+cum_tokens = 7365
 
 [batches.content]
 kind = "lines"
@@ -4335,7 +4335,7 @@ position = 178
 key = 'Python(Method { file: "py3xui/inbound/bases.py", start_line: 12 })'
 descriptor = "python method at py3xui/inbound/bases.py:12"
 cost_tokens = 44
-cum_tokens = 7407
+cum_tokens = 7409
 
 [batches.content]
 kind = "lines"
@@ -4353,7 +4353,7 @@ position = 179
 key = 'Markdown(HeadingsOutline { file: "py3xui/inbound/README.md" })'
 descriptor = "headings outline in py3xui/inbound/README.md"
 cost_tokens = 151
-cum_tokens = 7558
+cum_tokens = 7560
 
 [batches.content]
 kind = "lines"
@@ -4571,7 +4571,7 @@ position = 180
 key = 'Python(ClassBody { file: "py3xui/api/api_base.py", start_line: 15 })'
 descriptor = "python class body at py3xui/api/api_base.py:15"
 cost_tokens = 76
-cum_tokens = 7634
+cum_tokens = 7636
 
 [batches.content]
 kind = "lines"
@@ -4589,7 +4589,7 @@ position = 181
 key = 'Markdown(HeadingsOutline { file: "py3xui/async_api/README.md" })'
 descriptor = "headings outline in py3xui/async_api/README.md"
 cost_tokens = 163
-cum_tokens = 7797
+cum_tokens = 7799
 
 [batches.content]
 kind = "lines"
@@ -4775,7 +4775,7 @@ position = 182
 key = 'Python(MethodDoc { file: "py3xui/api/api.py", start_line: 93 })'
 descriptor = "python method doc at py3xui/api/api.py:93"
 cost_tokens = 47
-cum_tokens = 7844
+cum_tokens = 7846
 
 [batches.content]
 kind = "lines"
@@ -4793,7 +4793,7 @@ position = 183
 key = 'Python(MethodDoc { file: "py3xui/async_api/async_api.py", start_line: 98 })'
 descriptor = "python method doc at py3xui/async_api/async_api.py:98"
 cost_tokens = 47
-cum_tokens = 7891
+cum_tokens = 7893
 
 [batches.content]
 kind = "lines"
@@ -4811,7 +4811,7 @@ position = 184
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 45
-cum_tokens = 7936
+cum_tokens = 7938
 
 [batches.content]
 kind = "lines"
@@ -4829,7 +4829,7 @@ position = 185
 key = 'Python(MethodDoc { file: "py3xui/api/api.py", start_line: 102 })'
 descriptor = "python method doc at py3xui/api/api.py:102"
 cost_tokens = 49
-cum_tokens = 7985
+cum_tokens = 7987
 
 [batches.content]
 kind = "lines"
@@ -4847,7 +4847,7 @@ position = 186
 key = 'Python(MethodDoc { file: "py3xui/async_api/async_api.py", start_line: 107 })'
 descriptor = "python method doc at py3xui/async_api/async_api.py:107"
 cost_tokens = 49
-cum_tokens = 8034
+cum_tokens = 8036
 
 [batches.content]
 kind = "lines"
@@ -4865,7 +4865,7 @@ position = 187
 key = 'Python(Imports { file: "py3xui/server/server.py" })'
 descriptor = "python imports in py3xui/server/server.py"
 cost_tokens = 42
-cum_tokens = 8076
+cum_tokens = 8078
 
 [batches.content]
 kind = "lines"
@@ -4883,7 +4883,7 @@ position = 188
 key = 'Python(Imports { file: "py3xui/client/client.py" })'
 descriptor = "python imports in py3xui/client/client.py"
 cost_tokens = 43
-cum_tokens = 8119
+cum_tokens = 8121
 
 [batches.content]
 kind = "lines"
@@ -4901,7 +4901,7 @@ position = 189
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 154
-cum_tokens = 8273
+cum_tokens = 8275
 
 [batches.content]
 kind = "lines"
@@ -4919,7 +4919,7 @@ position = 190
 key = 'Python(MethodDoc { file: "py3xui/async_api/async_api.py", start_line: 120 })'
 descriptor = "python method doc at py3xui/async_api/async_api.py:120"
 cost_tokens = 54
-cum_tokens = 8327
+cum_tokens = 8329
 
 [batches.content]
 kind = "lines"
@@ -4937,7 +4937,7 @@ position = 191
 key = 'Python(MethodDoc { file: "py3xui/inbound/inbound.py", start_line: 114 })'
 descriptor = "python method doc at py3xui/inbound/inbound.py:114"
 cost_tokens = 56
-cum_tokens = 8383
+cum_tokens = 8385
 
 [batches.content]
 kind = "lines"
@@ -4955,7 +4955,7 @@ position = 192
 key = 'Python(ClassBody { file: "py3xui/inbound/stream_settings.py", start_line: 9 })'
 descriptor = "python class body at py3xui/inbound/stream_settings.py:9"
 cost_tokens = 121
-cum_tokens = 8504
+cum_tokens = 8506
 
 [batches.content]
 kind = "lines"
@@ -4973,7 +4973,7 @@ position = 193
 key = 'Markdown(Section { file: "py3xui/server/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "py3xui/server/README.md section #1"
 cost_tokens = 63
-cum_tokens = 8567
+cum_tokens = 8569
 
 [batches.content]
 kind = "lines"
@@ -4991,7 +4991,7 @@ position = 194
 key = 'Python(MethodDoc { file: "py3xui/api/api.py", start_line: 115 })'
 descriptor = "python method doc at py3xui/api/api.py:115"
 cost_tokens = 58
-cum_tokens = 8625
+cum_tokens = 8627
 
 [batches.content]
 kind = "lines"
@@ -5009,7 +5009,7 @@ position = 195
 key = 'Python(MethodSigs { file: "py3xui/api/api_base.py" })'
 descriptor = "python method sigs in py3xui/api/api_base.py"
 cost_tokens = 357
-cum_tokens = 8982
+cum_tokens = 8984
 
 [batches.content]
 kind = "lines"
@@ -5339,7 +5339,7 @@ position = 196
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 168 })'
 descriptor = "python method at py3xui/api/api_base.py:168"
 cost_tokens = 0
-cum_tokens = 8982
+cum_tokens = 8984
 
 [batches.content]
 kind = "lines"
@@ -5357,7 +5357,7 @@ position = 197
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 194 })'
 descriptor = "python method at py3xui/api/api_base.py:194"
 cost_tokens = 0
-cum_tokens = 8982
+cum_tokens = 8984
 
 [batches.content]
 kind = "lines"
@@ -5375,7 +5375,7 @@ position = 198
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 220 })'
 descriptor = "python method at py3xui/api/api_base.py:220"
 cost_tokens = 0
-cum_tokens = 8982
+cum_tokens = 8984
 
 [batches.content]
 kind = "lines"
@@ -5393,7 +5393,7 @@ position = 199
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 236 })'
 descriptor = "python method at py3xui/api/api_base.py:236"
 cost_tokens = 0
-cum_tokens = 8982
+cum_tokens = 8984
 
 [batches.content]
 kind = "lines"
@@ -5411,7 +5411,7 @@ position = 200
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 333 })'
 descriptor = "python method at py3xui/api/api_base.py:333"
 cost_tokens = 0
-cum_tokens = 8982
+cum_tokens = 8984
 
 [batches.content]
 kind = "lines"
@@ -5429,7 +5429,7 @@ position = 201
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 80 })'
 descriptor = "python method at py3xui/api/api_base.py:80"
 cost_tokens = 8
-cum_tokens = 8990
+cum_tokens = 8992
 
 [batches.content]
 kind = "lines"
@@ -5447,7 +5447,7 @@ position = 202
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 88 })'
 descriptor = "python method at py3xui/api/api_base.py:88"
 cost_tokens = 8
-cum_tokens = 8998
+cum_tokens = 9000
 
 [batches.content]
 kind = "lines"
@@ -5465,7 +5465,7 @@ position = 203
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 96 })'
 descriptor = "python method at py3xui/api/api_base.py:96"
 cost_tokens = 8
-cum_tokens = 9006
+cum_tokens = 9008
 
 [batches.content]
 kind = "lines"
@@ -5483,7 +5483,7 @@ position = 204
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 104 })'
 descriptor = "python method at py3xui/api/api_base.py:104"
 cost_tokens = 8
-cum_tokens = 9014
+cum_tokens = 9016
 
 [batches.content]
 kind = "lines"
@@ -5501,7 +5501,7 @@ position = 205
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 112 })'
 descriptor = "python method at py3xui/api/api_base.py:112"
 cost_tokens = 8
-cum_tokens = 9022
+cum_tokens = 9024
 
 [batches.content]
 kind = "lines"
@@ -5519,7 +5519,7 @@ position = 206
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 120 })'
 descriptor = "python method at py3xui/api/api_base.py:120"
 cost_tokens = 8
-cum_tokens = 9030
+cum_tokens = 9032
 
 [batches.content]
 kind = "lines"
@@ -5537,7 +5537,7 @@ position = 207
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 136 })'
 descriptor = "python method at py3xui/api/api_base.py:136"
 cost_tokens = 8
-cum_tokens = 9038
+cum_tokens = 9040
 
 [batches.content]
 kind = "lines"
@@ -5555,7 +5555,7 @@ position = 208
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 152 })'
 descriptor = "python method at py3xui/api/api_base.py:152"
 cost_tokens = 8
-cum_tokens = 9046
+cum_tokens = 9048
 
 [batches.content]
 kind = "lines"
@@ -5573,7 +5573,7 @@ position = 209
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 210 })'
 descriptor = "python method at py3xui/api/api_base.py:210"
 cost_tokens = 8
-cum_tokens = 9054
+cum_tokens = 9056
 
 [batches.content]
 kind = "lines"
@@ -5591,7 +5591,7 @@ position = 210
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 144 })'
 descriptor = "python method at py3xui/api/api_base.py:144"
 cost_tokens = 9
-cum_tokens = 9063
+cum_tokens = 9065
 
 [batches.content]
 kind = "lines"
@@ -5609,7 +5609,7 @@ position = 211
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 160 })'
 descriptor = "python method at py3xui/api/api_base.py:160"
 cost_tokens = 10
-cum_tokens = 9073
+cum_tokens = 9075
 
 [batches.content]
 kind = "lines"
@@ -5627,7 +5627,7 @@ position = 212
 key = 'Python(Method { file: "py3xui/api/api_base.py", start_line: 128 })'
 descriptor = "python method at py3xui/api/api_base.py:128"
 cost_tokens = 11
-cum_tokens = 9084
+cum_tokens = 9086
 
 [batches.content]
 kind = "lines"
@@ -5645,7 +5645,7 @@ position = 213
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 80, body_start_line: 86 })'
 descriptor = "python method body at py3xui/api/api_base.py:80 body 86"
 cost_tokens = 10
-cum_tokens = 9094
+cum_tokens = 9096
 
 [batches.content]
 kind = "lines"
@@ -5663,7 +5663,7 @@ position = 214
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 88, body_start_line: 94 })'
 descriptor = "python method body at py3xui/api/api_base.py:88 body 94"
 cost_tokens = 10
-cum_tokens = 9104
+cum_tokens = 9106
 
 [batches.content]
 kind = "lines"
@@ -5681,7 +5681,7 @@ position = 215
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 96, body_start_line: 102 })'
 descriptor = "python method body at py3xui/api/api_base.py:96 body 102"
 cost_tokens = 10
-cum_tokens = 9114
+cum_tokens = 9116
 
 [batches.content]
 kind = "lines"
@@ -5699,7 +5699,7 @@ position = 216
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 136, body_start_line: 142 })'
 descriptor = "python method body at py3xui/api/api_base.py:136 body 142"
 cost_tokens = 10
-cum_tokens = 9124
+cum_tokens = 9126
 
 [batches.content]
 kind = "lines"
@@ -5717,7 +5717,7 @@ position = 217
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 144, body_start_line: 150 })'
 descriptor = "python method body at py3xui/api/api_base.py:144 body 150"
 cost_tokens = 11
-cum_tokens = 9135
+cum_tokens = 9137
 
 [batches.content]
 kind = "lines"
@@ -5735,7 +5735,7 @@ position = 218
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 152, body_start_line: 158 })'
 descriptor = "python method body at py3xui/api/api_base.py:152 body 158"
 cost_tokens = 11
-cum_tokens = 9146
+cum_tokens = 9148
 
 [batches.content]
 kind = "lines"
@@ -5753,7 +5753,7 @@ position = 219
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 104, body_start_line: 110 })'
 descriptor = "python method body at py3xui/api/api_base.py:104 body 110"
 cost_tokens = 12
-cum_tokens = 9158
+cum_tokens = 9160
 
 [batches.content]
 kind = "lines"
@@ -5771,7 +5771,7 @@ position = 220
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 112, body_start_line: 118 })'
 descriptor = "python method body at py3xui/api/api_base.py:112 body 118"
 cost_tokens = 12
-cum_tokens = 9170
+cum_tokens = 9172
 
 [batches.content]
 kind = "lines"
@@ -5789,7 +5789,7 @@ position = 221
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 120, body_start_line: 126 })'
 descriptor = "python method body at py3xui/api/api_base.py:120 body 126"
 cost_tokens = 12
-cum_tokens = 9182
+cum_tokens = 9184
 
 [batches.content]
 kind = "lines"
@@ -5807,7 +5807,7 @@ position = 222
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 160, body_start_line: 166 })'
 descriptor = "python method body at py3xui/api/api_base.py:160 body 166"
 cost_tokens = 12
-cum_tokens = 9194
+cum_tokens = 9196
 
 [batches.content]
 kind = "lines"
@@ -5825,7 +5825,7 @@ position = 223
 key = 'Python(MethodBody { file: "py3xui/api/api_base.py", start_line: 128, body_start_line: 134 })'
 descriptor = "python method body at py3xui/api/api_base.py:128 body 134"
 cost_tokens = 13
-cum_tokens = 9207
+cum_tokens = 9209
 
 [batches.content]
 kind = "lines"
@@ -5843,7 +5843,7 @@ position = 224
 key = 'Markdown(Section { file: "py3xui/client/README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "py3xui/client/README.md section #1"
 cost_tokens = 64
-cum_tokens = 9271
+cum_tokens = 9273
 
 [batches.content]
 kind = "lines"
@@ -5861,7 +5861,7 @@ position = 225
 key = 'Python(MethodSigs { file: "py3xui/async_api/async_api_base.py" })'
 descriptor = "python method sigs in py3xui/async_api/async_api_base.py"
 cost_tokens = 366
-cum_tokens = 9637
+cum_tokens = 9639
 
 [batches.content]
 kind = "lines"
@@ -6191,7 +6191,7 @@ position = 226
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 156 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:156"
 cost_tokens = 0
-cum_tokens = 9637
+cum_tokens = 9639
 
 [batches.content]
 kind = "lines"
@@ -6209,7 +6209,7 @@ position = 227
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 239 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:239"
 cost_tokens = 0
-cum_tokens = 9637
+cum_tokens = 9639
 
 [batches.content]
 kind = "lines"
@@ -6227,7 +6227,7 @@ position = 228
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 265 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:265"
 cost_tokens = 0
-cum_tokens = 9637
+cum_tokens = 9639
 
 [batches.content]
 kind = "lines"
@@ -6245,7 +6245,7 @@ position = 229
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 292 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:292"
 cost_tokens = 0
-cum_tokens = 9637
+cum_tokens = 9639
 
 [batches.content]
 kind = "lines"
@@ -6263,7 +6263,7 @@ position = 230
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 328 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:328"
 cost_tokens = 0
-cum_tokens = 9637
+cum_tokens = 9639
 
 [batches.content]
 kind = "lines"
@@ -6281,7 +6281,7 @@ position = 231
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 68 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:68"
 cost_tokens = 8
-cum_tokens = 9645
+cum_tokens = 9647
 
 [batches.content]
 kind = "lines"
@@ -6299,7 +6299,7 @@ position = 232
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 76 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:76"
 cost_tokens = 8
-cum_tokens = 9653
+cum_tokens = 9655
 
 [batches.content]
 kind = "lines"
@@ -6317,7 +6317,7 @@ position = 233
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 84 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:84"
 cost_tokens = 8
-cum_tokens = 9661
+cum_tokens = 9663
 
 [batches.content]
 kind = "lines"
@@ -6335,7 +6335,7 @@ position = 234
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 92 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:92"
 cost_tokens = 8
-cum_tokens = 9669
+cum_tokens = 9671
 
 [batches.content]
 kind = "lines"
@@ -6353,7 +6353,7 @@ position = 235
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 100 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:100"
 cost_tokens = 8
-cum_tokens = 9677
+cum_tokens = 9679
 
 [batches.content]
 kind = "lines"
@@ -6371,7 +6371,7 @@ position = 236
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 108 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:108"
 cost_tokens = 8
-cum_tokens = 9685
+cum_tokens = 9687
 
 [batches.content]
 kind = "lines"
@@ -6389,7 +6389,7 @@ position = 237
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 124 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:124"
 cost_tokens = 8
-cum_tokens = 9693
+cum_tokens = 9695
 
 [batches.content]
 kind = "lines"
@@ -6407,7 +6407,7 @@ position = 238
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 140 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:140"
 cost_tokens = 8
-cum_tokens = 9701
+cum_tokens = 9703
 
 [batches.content]
 kind = "lines"
@@ -6425,7 +6425,7 @@ position = 239
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 281 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:281"
 cost_tokens = 8
-cum_tokens = 9709
+cum_tokens = 9711
 
 [batches.content]
 kind = "lines"
@@ -6443,7 +6443,7 @@ position = 240
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 132 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:132"
 cost_tokens = 9
-cum_tokens = 9718
+cum_tokens = 9720
 
 [batches.content]
 kind = "lines"
@@ -6461,7 +6461,7 @@ position = 241
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 148 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:148"
 cost_tokens = 10
-cum_tokens = 9728
+cum_tokens = 9730
 
 [batches.content]
 kind = "lines"
@@ -6479,7 +6479,7 @@ position = 242
 key = 'Python(Method { file: "py3xui/async_api/async_api_base.py", start_line: 116 })'
 descriptor = "python method at py3xui/async_api/async_api_base.py:116"
 cost_tokens = 11
-cum_tokens = 9739
+cum_tokens = 9741
 
 [batches.content]
 kind = "lines"
@@ -6497,7 +6497,7 @@ position = 243
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 68, body_start_line: 74 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:68 body 74"
 cost_tokens = 10
-cum_tokens = 9749
+cum_tokens = 9751
 
 [batches.content]
 kind = "lines"
@@ -6515,7 +6515,7 @@ position = 244
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 76, body_start_line: 82 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:76 body 82"
 cost_tokens = 10
-cum_tokens = 9759
+cum_tokens = 9761
 
 [batches.content]
 kind = "lines"
@@ -6533,7 +6533,7 @@ position = 245
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 84, body_start_line: 90 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:84 body 90"
 cost_tokens = 10
-cum_tokens = 9769
+cum_tokens = 9771
 
 [batches.content]
 kind = "lines"
@@ -6551,7 +6551,7 @@ position = 246
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 124, body_start_line: 130 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:124 body 130"
 cost_tokens = 10
-cum_tokens = 9779
+cum_tokens = 9781
 
 [batches.content]
 kind = "lines"
@@ -6569,7 +6569,7 @@ position = 247
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 132, body_start_line: 138 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:132 body 138"
 cost_tokens = 11
-cum_tokens = 9790
+cum_tokens = 9792
 
 [batches.content]
 kind = "lines"
@@ -6587,7 +6587,7 @@ position = 248
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 140, body_start_line: 146 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:140 body 146"
 cost_tokens = 11
-cum_tokens = 9801
+cum_tokens = 9803
 
 [batches.content]
 kind = "lines"
@@ -6605,7 +6605,7 @@ position = 249
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 92, body_start_line: 98 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:92 body 98"
 cost_tokens = 12
-cum_tokens = 9813
+cum_tokens = 9815
 
 [batches.content]
 kind = "lines"
@@ -6623,7 +6623,7 @@ position = 250
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 100, body_start_line: 106 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:100 body 106"
 cost_tokens = 12
-cum_tokens = 9825
+cum_tokens = 9827
 
 [batches.content]
 kind = "lines"
@@ -6641,7 +6641,7 @@ position = 251
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 108, body_start_line: 114 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:108 body 114"
 cost_tokens = 12
-cum_tokens = 9837
+cum_tokens = 9839
 
 [batches.content]
 kind = "lines"
@@ -6659,7 +6659,7 @@ position = 252
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 148, body_start_line: 154 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:148 body 154"
 cost_tokens = 12
-cum_tokens = 9849
+cum_tokens = 9851
 
 [batches.content]
 kind = "lines"
@@ -6677,7 +6677,7 @@ position = 253
 key = 'Python(MethodBody { file: "py3xui/async_api/async_api_base.py", start_line: 116, body_start_line: 122 })'
 descriptor = "python method body at py3xui/async_api/async_api_base.py:116 body 122"
 cost_tokens = 13
-cum_tokens = 9862
+cum_tokens = 9864
 
 [batches.content]
 kind = "lines"
@@ -6695,7 +6695,7 @@ position = 254
 key = 'Python(Method { file: "py3xui/api/api.py", start_line: 67 })'
 descriptor = "python method at py3xui/api/api.py:67"
 cost_tokens = 95
-cum_tokens = 9957
+cum_tokens = 9959
 
 [batches.content]
 kind = "lines"

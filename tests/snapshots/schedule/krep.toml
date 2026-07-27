@@ -7,8 +7,8 @@ batch_count = 167
 position = 1
 key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
-cost_tokens = 35
-cum_tokens = 35
+cost_tokens = 37
+cum_tokens = 37
 
 [batches.content]
 kind = "fs"
@@ -22,7 +22,7 @@ position = 2
 key = 'Markdown(ReadmeHeadline { file: "README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 66
-cum_tokens = 101
+cum_tokens = 103
 
 [batches.content]
 kind = "lines"
@@ -48,7 +48,7 @@ position = 3
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 13
-cum_tokens = 114
+cum_tokens = 116
 
 [batches.content]
 kind = "fs"
@@ -61,8 +61,8 @@ entries = ["FUNDING.yml", "dependabot.yml", "workflows"]
 position = 4
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
-cost_tokens = 8
-cum_tokens = 122
+cost_tokens = 7
+cum_tokens = 123
 
 [batches.content]
 kind = "fs"
@@ -76,7 +76,7 @@ position = 5
 key = 'Yaml(Whole { file: ".github/workflows/ci.yml" })'
 descriptor = "YAML config at .github/workflows/ci.yml"
 cost_tokens = 236
-cum_tokens = 358
+cum_tokens = 359
 
 [batches.content]
 kind = "lines"
@@ -94,7 +94,7 @@ position = 6
 key = 'C(HeaderBanner { file: "krep.h" })'
 descriptor = "c header banner in krep.h"
 cost_tokens = 51
-cum_tokens = 409
+cum_tokens = 410
 
 [batches.content]
 kind = "lines"
@@ -111,7 +111,7 @@ kind = "full"
 position = 7
 key = 'Fs(DirListing { dir: "test" })'
 descriptor = "listing of 'test'"
-cost_tokens = 42
+cost_tokens = 41
 cum_tokens = 451
 
 [batches.content]

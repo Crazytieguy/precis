@@ -7,8 +7,8 @@ batch_count = 120
 position = 1
 key = 'Fs(DirListing { dir: "." })'
 descriptor = "listing of '.'"
-cost_tokens = 83
-cum_tokens = 83
+cost_tokens = 87
+cum_tokens = 87
 
 [batches.content]
 kind = "fs"
@@ -21,8 +21,8 @@ entries = [".github", "LICENSE.txt", "README.md", "bench_test.go", "dynamic", "g
 position = 2
 key = 'Fs(DirListing { dir: "xxhsum" })'
 descriptor = "listing of 'xxhsum'"
-cost_tokens = 11
-cum_tokens = 94
+cost_tokens = 10
+cum_tokens = 97
 
 [batches.content]
 kind = "fs"
@@ -35,8 +35,8 @@ entries = [".gitignore", "xxhsum.go"]
 position = 3
 key = 'Fs(DirListing { dir: "dynamic" })'
 descriptor = "listing of 'dynamic'"
-cost_tokens = 14
-cum_tokens = 108
+cost_tokens = 13
+cum_tokens = 110
 
 [batches.content]
 kind = "fs"
@@ -49,8 +49,8 @@ entries = [".gitignore", "dynamic_test.go", "plugin.go"]
 position = 4
 key = 'Fs(DirListing { dir: "xxhashbench" })'
 descriptor = "listing of 'xxhashbench'"
-cost_tokens = 15
-cum_tokens = 123
+cost_tokens = 14
+cum_tokens = 124
 
 [batches.content]
 kind = "fs"
@@ -64,7 +64,7 @@ position = 5
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 126
+cum_tokens = 127
 
 [batches.content]
 kind = "fs"
@@ -77,7 +77,7 @@ entries = ["workflows"]
 position = 6
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
+cost_tokens = 3
 cum_tokens = 130
 
 [batches.content]

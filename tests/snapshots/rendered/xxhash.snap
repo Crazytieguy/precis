@@ -61,7 +61,7 @@ expression: rendered
               54→        run: go test -v -count 1 -bench . -benchtime 1x
               55→        env:
               56→          GOARCH: ${{ matrix.arch }}
-LICENSE.txt
+LICENSE.txt …
 README.md
        1→# xxhash
     …
@@ -96,10 +96,10 @@ README.md
     …
       66→## Projects using this package
     …
-bench_test.go
+bench_test.go …
 dynamic/
-    .gitignore
-    dynamic_test.go
+    .gitignore …
+    dynamic_test.go …
     plugin.go
         …
           14→const (
@@ -201,8 +201,8 @@ xxhash.go
      241→func rol23(x uint64) uint64 { return bits.RotateLeft64(x, 23) }
      242→func rol27(x uint64) uint64 { return bits.RotateLeft64(x, 27) }
      243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
-xxhash_amd64.s
-xxhash_arm64.s
+xxhash_amd64.s …
+xxhash_arm64.s …
 xxhash_asm.go
     …
        7→package xxhash
@@ -229,7 +229,7 @@ xxhash_safe.go
       14→func (d *Digest) WriteString(s string) (n int, err error) {
       15→	return d.Write([]byte(s))
     …
-xxhash_test.go
+xxhash_test.go …
 xxhash_unsafe.go
     …
        7→package xxhash
@@ -254,7 +254,7 @@ xxhash_unsafe.go
       56→	s   string
       57→	cap int
       58→}
-xxhash_unsafe_test.go
+xxhash_unsafe_test.go …
 xxhashbench/
     go.mod
            1→module github.com/cespare/xxhash/xxhashbench
@@ -268,10 +268,10 @@ xxhashbench/
            9→)
           10→
           11→replace github.com/cespare/xxhash/v2 => ../
-    go.sum
-    xxhashbench_test.go
+    go.sum …
+    xxhashbench_test.go …
 xxhsum/
-    .gitignore
+    .gitignore …
     xxhsum.go
         …
           11→func main() {
