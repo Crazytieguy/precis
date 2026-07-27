@@ -580,8 +580,6 @@ pub enum PythonKey {
 /// get the C/Python-style per-decl breakdown.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum LuaKey {
-    /// Top-of-file comment block (license / brief).
-    Banner { file: PathBuf },
     /// Top-of-file module identity table — a `local M = { _VERSION =
     /// …, _DESCRIPTION = …, _URL = … }` metadata block (the standard
     /// Lua library "what is this" idiom), truncated before long-string
@@ -651,8 +649,10 @@ pub trait WalkerKey:
         crate::value::DEFAULT_CONCAVITY_EXPONENT
     }
 
-    /// True for orientation-rooted trains, which are exempt from the
-    /// scheduler's breadth-pressure penalty.
+    /// True for orientation content (README/manifest surfaces). A train
+    /// rooted here is excluded from the scheduler's
+    /// substantial-unopened count, so it never by itself turns breadth
+    /// pressure on for the rest of the pool.
     fn is_orientation(&self) -> bool {
         false
     }
@@ -1321,7 +1321,6 @@ impl InnerKey for LuaKey {
 
     fn describe(&self, root: &Path) -> String {
         match self {
-            LuaKey::Banner { file } => describe_in("lua banner", file, root),
             LuaKey::ModuleIdentity { file } => describe_in("lua module identity", file, root),
             LuaKey::MetaFileWhole { file } => {
                 format!("lua meta-file at {}", display_path(file, root))

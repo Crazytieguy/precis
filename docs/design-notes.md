@@ -236,18 +236,19 @@ inventory-only monaco +0.213).
   genuine local optimum for re-ranking *already-emitted* content — only
   new-content recall moves it.
 
-### Budget-tier scheduler — non-code rationale (shipped 2026-05-31)
+### Budget-tier scheduler — un-shipped 2026-07-18 (`ef80cfe5`)
 
-Mechanism is in code (`WalkerKey::is_orientation()` + the
-`ORIENTATION_TIER_*` boost in the scheduler). What the code can't say:
-**`FsKey` is deliberately excluded** — boosting the cheap dir-listing
-flood measured negative. The tier's train/val trade is inherent
-(front-loaded orientation displaces some training fixtures' rank-1 code
-atoms under 1K) and was **shipped on the user's explicit call** after
-surfacing it. Headroom: a per-fixture-structure-aware tier —
-deep-method-heavy fixtures want source early, orientation-heavy ones
-don't, and the split crosses languages, so neither a global exponent nor
-a per-language override captures it.
+The early-budget `ORIENTATION_TIER_*` ratio boost (shipped 2026-05-31)
+was removed as exactly neutral — all 71 training headlines identical to
+six decimals. Its constants are gone; only `WalkerKey::is_orientation()`
+survives, and its meaning changed: it now only keeps an orientation-
+rooted train out of the scheduler's `substantial_unopened` count. Two
+findings from the tier that still constrain future work: **`FsKey` must
+stay excluded** from any orientation promotion — boosting the cheap
+dir-listing flood measured negative — and a flat orientation tier is the
+wrong shape, because deep-method-heavy fixtures want source early while
+orientation-heavy ones don't, and the split crosses languages, so
+neither a global exponent nor a per-language override captures it.
 
 ### Open
 
@@ -366,7 +367,8 @@ state — four moved, four+ confirmed: ORIENTATION_TIER_WINDOW
 (+0.0012, never previously swept), PROSE_MASS_BOOST 1.3→1.5
 (+0.0010, dockly +0.077), CANONICAL_USAGE_SECTION_FACTOR 1.5→2.2
 (+0.0009, tinyusb +0.063). Confirmed at optimum on the new state:
-concavity 0.35 (sharp), ORIENTATION_TIER_BOOST 1.4, roster cap 2.2,
+concavity 0.35 (sharp), ORIENTATION_TIER_BOOST 1.4 (both
+ORIENTATION_TIER_* since deleted — see the budget-tier entry), roster cap 2.2,
 PROSE_MASS_WINDOW_FRACTION 0.25, TRAIN_PRESSURE_K 0.15,
 BODY_BLOCK/README_SUB scales, GO_ENTRY_FACTOR 1.4, go unexported
 0.6, REFERENCE_USAGE 1.3, python init factor 3.0. Lesson: every
@@ -840,6 +842,14 @@ Measured frontier (training corpus): mean 0.6151 → 0.6147.
 - Head ratio-parity (`share^k`, no premium): 0.6143.
 - Premium 1.4/cap 0.9 (shipped): head back at 1256; commander fully
   recovered; htmy +0.008; tomli −0.038 residual.
+
+**`CATALOG_HEAD_PREMIUM` is live, not inert** (measured 2026-07-26 —
+corrects a read-only audit that assumed every conserved split is
+2-chunk). The cap binds only for `share₀ ≥ 0.370`; instrumenting
+`conserved_catalog_chunk_factors` over the corpus gives 232 invocations,
+of which **68 are below the cap** — splits run 2 to 27 chunks and every
+n ≥ 3 split leaves the premium uncapped. Sweep the premium and the cap
+together, not the cap alone.
 
 The tomli residual is the direct cost of removing replication: its old
 chunk #1 bought at 2256 cum with inflated value and earned mid-budget

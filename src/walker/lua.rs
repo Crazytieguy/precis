@@ -19,10 +19,10 @@ use crate::batch::{Batch, BatchKey, LuaKey};
 use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
-    extend_nonblank_rows, extend_span, file_depth_factor, file_lines_covered_by,
-    fs::files_with_extension, node_end_row_trimmed, path_depth_factor, push_rows,
-    single_file_lines_content, trim_end_before_next_decl, whole_file_lines_content,
+    FileLines, WalkCtx, collect_doc_comments_above, dedup_sorted, extend_nonblank_rows,
+    file_depth_factor, file_lines_covered_by, fs::files_with_extension, node_end_row_trimmed,
+    path_depth_factor, push_rows, single_file_lines_content, trim_end_before_next_decl,
+    whole_file_lines_content,
 };
 
 /// Token cap for `MetaFileWhole` — above, fall back to per-decl.
@@ -57,15 +57,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: meta_file_whole_value(file, ctx),
             });
             continue;
-        }
-
-        if let Some(content) = build_per_file_content(file, ctx, parse_lua, collect_header_banner) {
-            out.push(Batch {
-                key: LuaKey::Banner { file: file.clone() }.into(),
-                predecessor: None,
-                content,
-                value: banner_value(file, ctx),
-            });
         }
 
         let identity_lines = collect_module_identity_lines(&source);
@@ -343,21 +334,6 @@ fn module_identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.80, 0.55, 0.75, path_depth_factor(file, ctx))
 }
 
-/// Top-of-file `--` comment block.
-fn collect_header_banner(tree: &Tree, source: &str) -> FileLines {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    let mut lines = Vec::new();
-    for child in root.children(&mut cursor) {
-        if child.kind() == "comment" {
-            extend_span(&mut lines, child, source);
-            continue;
-        }
-        break;
-    }
-    FileLines::new(lines)
-}
-
 fn collect_decl_names_from_with_global_starts(
     decls: &[(Node, DeclInfo)],
     all_starts: &std::collections::HashSet<usize>,
@@ -470,12 +446,6 @@ fn is_meta_file(source: &str) -> bool {
 }
 
 // --- value functions ----------------------------------------------------
-
-fn banner_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Banners are scaffolding; modest standalone value, mostly bait so
-    // the descendant decls get value reflected back.
-    mix_signals(0.20, 0.35, 0.35, path_depth_factor(file, ctx))
-}
 
 fn meta_file_whole_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // LuaCATS specs ARE the API contract — load-bearing for soluna's

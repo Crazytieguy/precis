@@ -83,10 +83,10 @@ const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
 
 /// Preserve the historically winning unified names surface until it is
 /// too large to remain purchasable in the early budget window. Oversize
-/// catalogs are split near the target. The tiny-tail fold below caps the
-/// combined chunk at the split threshold, which the re-swept target
-/// (450 > 400) already exceeds — so the fold is currently inert and a
-/// trailing crumb chunk can occur.
+/// catalogs are split near the target, and a final chunk below half the
+/// target folds back into its predecessor rather than becoming a
+/// trailing crumb — the last chunk gates the whole per-decl train, so a
+/// 30-token crumb gate costs a purchase for nothing.
 const DECL_NAMES_SPLIT_THRESHOLD_TOKENS: usize = 400;
 const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 450;
 const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;
@@ -210,10 +210,10 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
 
         // Keep the historically winning unified names surface unless its
         // rendered cost exceeds the early-budget purchase ceiling. Only
-        // then split near 250 tokens; continuations are chained so they do
-        // not become independently schedulable crumbs. Roster-mass pricing
-        // remains based on the complete catalog, and the catalog's value
-        // is a conserved total allocated across the chunks.
+        // then split near the chunk target; continuations are chained so
+        // they do not become independently schedulable crumbs. Roster-mass
+        // pricing remains based on the complete catalog, and the catalog's
+        // value is a conserved total allocated across the chunks.
         let roster = names_roster(&decls, &source);
         let roster_decls: Vec<_> = roster.iter().map(|&i| decls[i]).collect();
         let names_lines = collect_decl_names_from(&roster_decls, &all_name_lines);
@@ -952,7 +952,7 @@ fn decl_names_chunk_ranges(
         DECL_NAMES_CHUNK_TARGET_TOKENS,
         DECL_NAMES_TINY_TAIL_TOKENS,
         |_| true,
-        |range| range_cost(range) <= DECL_NAMES_SPLIT_THRESHOLD_TOKENS,
+        |_| true,
     )
 }
 

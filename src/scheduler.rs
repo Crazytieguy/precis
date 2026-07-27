@@ -116,9 +116,10 @@ pub struct Scheduler<W: Walker> {
 /// schedule breadth-first — every file's surface before any file's
 /// depth — while cheap follow-up batches (bodies, docs, members)
 /// otherwise out-ratio unopened siblings' surfaces and drive long
-/// same-train dives. Orientation-rooted trains (README headline ->
-/// outline -> sections) are exempt: NS authors sequence those deep by
-/// design (the blanket variant measured -0.004/-0.006).
+/// same-train dives. Restricting the penalty to depth follow-ups is what
+/// keeps orientation trains (README headline -> outline -> sections)
+/// unpenalized — NS authors sequence those deep by design, and the
+/// blanket variant measured -0.004/-0.006.
 const TRAIN_PRESSURE_K: f64 = 0.15;
 /// Scheduled batches a train may accumulate before pressure applies —
 /// normal decl -> doc -> body depth is wanted; 20-batch dives are not.
@@ -585,8 +586,7 @@ impl<W: Walker> Scheduler<W> {
 
     /// Breadth-pressure multiplier for `id`'s ratio. Applies only to
     /// depth follow-up batches (doc/body/member refinements) — surface
-    /// batches always rank at their raw ratio, and orientation-rooted
-    /// trains (README headline -> sections) are exempt wholesale.
+    /// batches always rank at their raw ratio.
     fn train_pressure(&mut self, id: BatchId) -> f64 {
         if self.substantial_unopened.len() < BREADTH_MIN_TRAINS {
             return 1.0;
@@ -595,9 +595,6 @@ impl<W: Walker> Scheduler<W> {
             return 1.0;
         }
         let root = self.train_root(id);
-        if self.entries[root.index()].key.is_orientation() {
-            return 1.0;
-        }
         let n = self.scheduled_per_root.get(&root).copied().unwrap_or(0);
         let over = n.saturating_sub(TRAIN_PRESSURE_FREE);
         1.0 / (1.0 + TRAIN_PRESSURE_K * over as f64)

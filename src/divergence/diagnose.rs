@@ -44,27 +44,22 @@ use super::{
 };
 
 /// Coverage-loss attribution at the primary budget. All fields are
-/// fractions of `|A_3K|`; `coverage + damping + partial_render + late +
-/// unscheduled + absent ≈ 1`.
+/// fractions of `|A_3K|`; the delivered share plus `damping +
+/// partial_render + late + unscheduled + absent ≈ 1`.
 #[derive(Debug, Clone, Copy)]
 pub struct Buckets {
-    pub coverage: f64,
     pub damping: f64,
     pub partial_render: f64,
     pub late: f64,
     pub unscheduled: f64,
     pub absent: f64,
-    pub a_3k_atoms: usize,
 }
 
 /// NS-aware greedy schedule over the full walker pool.
 #[derive(Debug, Clone)]
 pub struct OracleResult {
     pub score: f64,
-    pub importance: f64,
-    pub coverage: f64,
     pub used_tokens: usize,
-    pub batches_scheduled: usize,
     /// The oracle's purchases in order: (descriptor, exact tokens).
     pub schedule: Vec<(String, usize)>,
 }
@@ -84,7 +79,6 @@ pub struct LossReport {
     pub buckets: Buckets,
     pub oracle: OracleResult,
     pub pool_batches: usize,
-    pub relevant_batches: usize,
     /// Largest per-file loss contributors, descending.
     pub top_file_losses: Vec<FileLoss>,
 }
@@ -121,7 +115,6 @@ pub fn diagnose(ns: &NorthStar, schedule: &Schedule, fixture_root: &Path) -> Res
     Ok(LossReport {
         baseline,
         buckets,
-        relevant_batches: oracle_relevant_count(&ctx, &pool_atoms),
         oracle,
         pool_batches: pool.len(),
         top_file_losses,
@@ -159,7 +152,6 @@ fn decompose(
     cum_cap: &std::collections::BTreeMap<&Atom, usize>,
     pool_atom_set: &HashSet<&Atom>,
 ) -> (Buckets, Vec<FileLoss>) {
-    let mut delivered = 0.0;
     let mut damping = 0.0;
     let mut partial_render = 0.0;
     let mut late = 0.0;
@@ -177,7 +169,6 @@ fn decompose(
         let completion = completion_for_row(&row.atoms, cum_3k);
         for atom in &row.atoms {
             let credit = atom_credit(atom, cum_3k);
-            delivered += credit * completion;
             damping += credit * (1.0 - completion);
             let credit_loss = 1.0 - credit;
             if credit_loss <= 0.0 {
@@ -218,13 +209,11 @@ fn decompose(
 
     (
         Buckets {
-            coverage: delivered / n,
             damping: damping / n,
             partial_render: partial_render / n,
             late: late / n,
             unscheduled: unscheduled / n,
             absent: absent / n,
-            a_3k_atoms,
         },
         top,
     )
@@ -397,10 +386,7 @@ impl OracleEval {
         };
         OracleResult {
             score: (importance * coverage).sqrt(),
-            importance,
-            coverage,
             used_tokens,
-            batches_scheduled: schedule.len(),
             schedule,
         }
     }
@@ -440,18 +426,6 @@ fn relevant_indices(
     let mut out: Vec<usize> = relevant.into_iter().collect();
     out.sort_unstable();
     out
-}
-
-fn oracle_relevant_count(ctx: &BuildCtx, pool_atoms: &[Vec<GradedAtom>]) -> usize {
-    let ns_atoms: HashSet<&Atom> = ctx
-        .ns_rows
-        .iter()
-        .flat_map(|r| r.atoms.iter().map(|a| &a.atom))
-        .collect();
-    pool_atoms
-        .iter()
-        .filter(|atoms| atoms.iter().any(|a| ns_atoms.contains(&a.atom)))
-        .count()
 }
 
 fn run_oracle(
