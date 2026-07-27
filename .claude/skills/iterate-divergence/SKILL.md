@@ -182,8 +182,9 @@ perspectives.
 
 - Spawn an Agent for independent brainstorming on the walker /
   value design space.
-- Run `codex-companion task` to delegate ideation or analysis to
-  Codex.
+- Delegate ideation or analysis to a GPT model via the
+  `model-router:gpt-5.6-sol(high)` agent type, or get a critique of a
+  shipped change from `model-router:adversarial-code-reviewer`.
 
 ## Things to *not* do
 
