@@ -510,7 +510,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 MethodSigScope::OwnApiOnly
             };
             let methods = collect_impl_methods(&tree, &source, scope, pub_traits);
-            let lines = collect_method_sigs(&methods, scope == MethodSigScope::OwnApiOnly);
+            let lines = collect_method_sigs(&methods, &source, scope == MethodSigScope::OwnApiOnly);
             let method_count = count_own_api_impl_methods(&tree, &source, pub_traits);
             if let Some(content) = single_file_lines_content(file, &source, lines) {
                 let sigs_key = RustKey::MethodSigs { file: file.clone() };
@@ -2361,13 +2361,28 @@ fn collect_impl_methods<'a>(
 /// entrypoint default: collapsing every entrypoint roster to the
 /// location shape is measured negative (hyperfine −0.076), so an
 /// entrypoint roster is doing signature work, not just index work.
-fn collect_method_sigs(methods: &[ImplMethodInfo<'_>], first_line_only: bool) -> FileLines {
+///
+/// Both the impl header and the method rows carry their
+/// [`is_disavowal_attribute`] run, on the same refines-vs-contradicts
+/// split [`collect_pub_item_names`] uses: this roster claims these
+/// methods are the type's surface, which `#[cfg]` refines but
+/// `#[doc(hidden)]` / `#[deprecated]` contradict.
+fn collect_method_sigs(
+    methods: &[ImplMethodInfo<'_>],
+    source: &str,
+    first_line_only: bool,
+) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     let mut current_impl: Option<usize> = None;
     for method in methods {
         if current_impl != Some(method.impl_node.id()) {
             current_impl = Some(method.impl_node.id());
+            full.extend(attr_rows_above(
+                method.impl_node,
+                source,
+                is_disavowal_attribute,
+            ));
             let impl_start = method.impl_node.start_position().row;
             let impl_end = if first_line_only {
                 impl_start
@@ -2384,6 +2399,7 @@ fn collect_method_sigs(methods: &[ImplMethodInfo<'_>], first_line_only: bool) ->
                 push_where_clause_rows(&mut full, method.impl_node);
             }
         }
+        full.extend(attr_rows_above(method.node, source, is_disavowal_attribute));
         let sig_start = method.node.start_position().row;
         let sig_end = if first_line_only {
             sig_start
@@ -2504,15 +2520,21 @@ fn count_own_api_impl_methods(tree: &Tree, source: &str, pub_traits: &HashSet<St
     collect_impl_methods(tree, source, MethodSigScope::OwnApiOnly, pub_traits).len()
 }
 
+/// Roster of the crate's `#[macro_export]`ed macros. A `#[doc(hidden)]`
+/// macro is exported only because `macro_rules!` has no other way to
+/// reach a sibling module, so a roster that lists it clean asserts the
+/// opposite of what the crate says about it — the same contradicts-the-
+/// roster rule [`collect_pub_item_names`] applies to pub items.
 fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {
     let mut out = Vec::new();
     let mut ellipses = Vec::new();
     for_each_exported_macro(tree, source, |node, _name| {
+        out.extend(attr_rows_above(node, source, is_disavowal_attribute));
         let row = node.start_position().row;
         push_rows(&mut out, row, row);
         ellipses.push(row + 2);
     });
-    FileLines::new(out).with_ellipses(ellipses)
+    FileLines::new(dedup_sorted(out)).with_ellipses(ellipses)
 }
 
 /// Per-macro orientation gathered at `expand` time so each `MacroBody`
@@ -3189,7 +3211,7 @@ where
         let pub_traits = HashSet::from(["Ctx".to_string()]);
         let methods = collect_impl_methods(&tree, src, MethodSigScope::OwnApiOnly, &pub_traits);
         assert_eq!(
-            rendered(src, &collect_method_sigs(&methods, true)),
+            rendered(src, &collect_method_sigs(&methods, src, true)),
             vec![
                 "impl<T, E> Ctx for Result<T, E>",
                 "where",
@@ -3198,6 +3220,69 @@ where
             ],
             "the impl's applicability bound is not a tail the location shape \
              may truncate — without it the roster asserts a blanket impl"
+        );
+    }
+
+    #[test]
+    fn rust_method_roster_disavows_what_the_crate_disavows() {
+        let src = r#"
+pub struct Engine;
+
+#[deprecated(note = "use Engine")]
+impl Engine {
+    #[doc(hidden)]
+    pub fn internal(&self) {}
+
+    #[inline]
+    #[deprecated(note = "use run2")]
+    pub fn run(&self) {}
+
+    #[cfg(feature = "std")]
+    pub fn gated(&self) {}
+}
+"#;
+        let tree = parse(src);
+        let methods = collect_impl_methods(&tree, src, MethodSigScope::All, &HashSet::new());
+        assert_eq!(
+            rendered(src, &collect_method_sigs(&methods, src, true)),
+            vec![
+                "#[deprecated(note = \"use Engine\")]",
+                "impl Engine {",
+                "    #[doc(hidden)]",
+                "    pub fn internal(&self) {}",
+                "    #[deprecated(note = \"use run2\")]",
+                "    pub fn run(&self) {}",
+                "    pub fn gated(&self) {}",
+            ],
+            "a method roster claims these are the type's surface; `cfg` only \
+             refines when, but doc(hidden)/deprecated contradict the claim"
+        );
+    }
+
+    #[test]
+    fn rust_macro_roster_disavows_what_the_crate_disavows() {
+        let src = r#"
+#[doc(hidden)]
+#[macro_export]
+macro_rules! __private_impl {
+    () => {};
+}
+
+#[macro_export]
+macro_rules! bail {
+    () => {};
+}
+"#;
+        let tree = parse(src);
+        assert_eq!(
+            rendered(src, &collect_macro_name_lines(&tree, src)),
+            vec![
+                "#[doc(hidden)]",
+                "macro_rules! __private_impl {",
+                "macro_rules! bail {",
+            ],
+            "`macro_export` is the reason every row is on this roster, so it \
+             adds nothing; doc(hidden) is what separates the two rows"
         );
     }
 
