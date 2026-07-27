@@ -958,11 +958,18 @@ follow from them.
   Removal is byte-identical across all 71 divergence reports, all
   schedule TOMLs and all rendered snapshots. The chunk target is the
   one live knob.
-- **Standing hazard, not addressed here.** `names_gate` is the *last*
-  chunk, so in a split file `MethodSigs` and every per-decl batch gate
-  on a batch that never schedules ≤10K. Re-gating the per-decl train on
-  chunk 0 is an unmeasured lever, and the tiny-tail fold exists
-  precisely to limit the damage.
+- **Standing hazard, measured but not shipped.** `names_gate` is the
+  *last* chunk, so in a split file `MethodSigs` and every per-decl batch
+  gate on a batch that never schedules ≤10K — an ordering guarantee
+  nothing can satisfy. Gating on chunk 0 instead
+  (`names_keys.first()`) is non-negative at every grid budget —
+  1000/1442/2080 identical, 3K +0.0001, 4327 +0.0001, 6240 +0.0003,
+  9000 +0.0002 — and only tomli's report changes (+0.004 @3K). Left
+  unshipped: it weakens "the whole roster precedes per-decl detail" to
+  "the head does", on a single-fixture move inside the noise band, and
+  it also invalidates the tiny-tail fold's stated rationale (a crumb
+  tail would no longer gate anything). Decide the semantics first, then
+  re-measure.
 
 ## C internal-linkage recall (2026-07-26): flat @3K, +0.0006 @6.2K
 
