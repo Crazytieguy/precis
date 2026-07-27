@@ -47,11 +47,11 @@ Score(3000)=0.548 I=0.717 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missin
 | walker |  | 2105 | 209 | SQL schema contracts chunk #1 in test.sql |  |  | 0.445 |
 | ns | 2106 |  | 79 | reference.yaml: vec0 entry | 2.4 |  | 0.433 |
 | walker |  | 2180 | 75 | YAML reference leaf contracts in reference.yaml:31 chunk 1 |  |  | 0.472 |
-| walker |  | 2312 | 132 | python decl names surface in tmp-static.py |  |  | 0.472 |
-| walker |  | 2312 | 0 | python decl at tmp-static.py:25 |  |  | 0.472 |
-| ns | 2330 |  | 224 | site/features/vec0.md: 3 column-type summary table | 3.1 |  | 0.458 |
-| walker |  | 2367 | 55 | YAML reference leaf contracts in reference.yaml:40 chunk 2 |  |  | 0.458 |
-| walker |  | 2429 | 62 | YAML reference leaf contracts in reference.yaml:328 chunk 1 |  |  | 0.493 |
+| walker |  | 2235 | 55 | YAML reference leaf contracts in reference.yaml:40 chunk 2 |  |  | 0.472 |
+| walker |  | 2297 | 62 | YAML reference leaf contracts in reference.yaml:328 chunk 1 |  |  | 0.508 |
+| ns | 2330 |  | 224 | site/features/vec0.md: 3 column-type summary table | 3.1 |  | 0.493 |
+| walker |  | 2429 | 132 | python decl names surface in tmp-static.py |  |  | 0.493 |
+| walker |  | 2429 | 0 | python decl at tmp-static.py:25 |  |  | 0.493 |
 | ns | 2553 |  | 223 | site/features/vec0.md: metadata columns (intro + example) | 3.2 |  | 0.467 |
 | ns | 2695 |  | 142 | site/features/vec0.md: partition key columns (core example) | 3.3 |  | 0.451 |
 | ns | 2803 |  | 108 | test.sql: live vec0 constructor with partition + auxiliary columns | 3.4 |  | 0.473 |
@@ -66,48 +66,48 @@ Score(3000)=0.548 I=0.717 C=0.420 ns_rows≤3K=17/52 (reached=6 partial=0 missin
 | walker |  | 3342 | 163 | YAML reference leaf contracts in reference.yaml:308 chunk 1 |  |  | 0.528 |
 | walker |  | 3390 | 48 | listing of 'tests/fuzz' |  |  | 0.528 |
 | walker |  | 3540 | 150 | python decl at tmp-static.py:13 |  |  | 0.528 |
-| walker |  | 3579 | 39 | python decl names surface in bindings/python/extra_init.py |  |  | 0.528 |
-| walker |  | 3579 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.528 |
-| walker |  | 3579 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.528 |
-| walker |  | 3596 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.528 |
-| walker |  | 3618 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.528 |
-| walker |  | 3642 | 24 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.528 |
-| walker |  | 3659 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.528 |
 | ns | 3728 |  | 544 | sqlite-vec.c: sqlite3_vec_init entrypoint registration table | 4.3 |  | 0.510 |
-| walker |  | 3908 | 249 | plaintext config TODO |  |  | 0.562 |
+| walker |  | 3789 | 249 | plaintext config TODO |  |  | 0.562 |
+| walker |  | 4032 | 243 | YAML reference leaf contracts in reference.yaml:258 chunk 1 |  |  | 0.562 |
+| walker |  | 4039 | 7 | listing of 'site/getting-started' |  |  | 0.562 |
 | ns | 4043 |  | 315 | ARCHITECTURE.md: vec0 shadow tables | 5.1 |  | 0.525 |
-| walker |  | 4151 | 243 | YAML reference leaf contracts in reference.yaml:258 chunk 1 |  |  | 0.525 |
-| walker |  | 4177 | 26 | python imports in bindings/python/extra_init.py |  |  | 0.525 |
-| walker |  | 4184 | 7 | listing of 'site/getting-started' |  |  | 0.526 |
+| walker |  | 4069 | 30 | python imports in bindings/python/extra_init.py |  |  | 0.525 |
 | ns | 4273 |  | 230 | ARCHITECTURE.md: idxStr encoding intro | 5.2 |  | 0.514 |
-| walker |  | 4419 | 235 | YAML reference leaf contracts in reference.yaml:83 chunk 3 |  |  | 0.514 |
-| ns | 4449 |  | 176 | sqlite-vec.c: vec0_user_column_kind enum | 5.3 |  | 0.504 |
-| walker |  | 4576 | 157 | README.md section #6 |  |  | 0.504 |
-| ns | 4708 |  | 259 | sqlite-vec.c: per-column-kind definition structs | 5.4 |  | 0.485 |
+| walker |  | 4304 | 235 | YAML reference leaf contracts in reference.yaml:83 chunk 3 |  |  | 0.514 |
+| ns | 4449 |  | 176 | sqlite-vec.c: vec0_user_column_kind enum | 5.3 |  | 0.503 |
+| walker |  | 4461 | 157 | README.md section #6 |  |  | 0.503 |
+| ns | 4708 |  | 259 | sqlite-vec.c: per-column-kind definition structs | 5.4 |  | 0.484 |
+| walker |  | 4857 | 396 | c decl names surface in sqlite-vec.c |  |  | 0.485 |
+| walker |  | 4857 | 0 | c decl at sqlite-vec.c:591 |  |  | 0.485 |
+| walker |  | 4857 | 0 | c decl at sqlite-vec.c:614 |  |  | 0.485 |
+| walker |  | 4857 | 0 | c decl at sqlite-vec.c:629 |  |  | 0.485 |
+| walker |  | 4857 | 0 | c decl at sqlite-vec.c:646 |  |  | 0.485 |
+| walker |  | 4857 | 0 | c decl at sqlite-vec.c:656 |  |  | 0.485 |
+| walker |  | 4857 | 0 | c decl at sqlite-vec.c:667 |  |  | 0.485 |
+| walker |  | 4899 | 42 | c decl at sqlite-vec.c:598 |  |  | 0.485 |
 | ns | 4921 |  | 213 | sqlite-vec.c: idxStr kind enum | 5.5 |  | 0.477 |
-| walker |  | 4972 | 396 | c decl names surface in sqlite-vec.c |  |  | 0.477 |
-| walker |  | 4972 | 0 | c decl at sqlite-vec.c:591 |  |  | 0.477 |
-| walker |  | 4972 | 0 | c decl at sqlite-vec.c:614 |  |  | 0.477 |
-| walker |  | 4972 | 0 | c decl at sqlite-vec.c:629 |  |  | 0.477 |
-| walker |  | 4972 | 0 | c decl at sqlite-vec.c:646 |  |  | 0.477 |
-| walker |  | 4972 | 0 | c decl at sqlite-vec.c:656 |  |  | 0.477 |
-| walker |  | 4972 | 0 | c decl at sqlite-vec.c:667 |  |  | 0.477 |
-| walker |  | 5014 | 42 | c decl at sqlite-vec.c:598 |  |  | 0.477 |
-| walker |  | 5094 | 80 | c decl at sqlite-vec.c:115 |  |  | 0.491 |
-| walker |  | 5103 | 9 | listing of 'site/features' |  |  | 0.492 |
+| walker |  | 4979 | 80 | c decl at sqlite-vec.c:115 |  |  | 0.491 |
+| walker |  | 4988 | 9 | listing of 'site/features' |  |  | 0.491 |
 | ns | 5203 |  | 282 | sqlite-vec.c: vec0 virtual-table method roster (locations) | 5.6 |  | 0.477 |
-| ns | 5469 |  | 266 | sqlite-vec.c: KNN merge_sorted_lists (core algorithm) | 5.7 |  | 0.468 |
-| walker |  | 5577 | 474 | README.md section #4 |  |  | 0.468 |
-| walker |  | 5582 | 5 | listing of 'benchmarks/micro/benches' |  |  | 0.468 |
-| walker |  | 5587 | 5 | listing of 'tests/fuzz/corpus' |  |  | 0.468 |
-| walker |  | 5597 | 10 | listing of 'tests/correctness' |  |  | 0.468 |
-| walker |  | 5665 | 68 | c decl body at sqlite-vec.c:591 |  |  | 0.468 |
-| ns | 5690 |  | 221 | sqlite-vec.c: scalar SQL function roster (locations) | 6.1 | 4.2 | 0.458 |
-| walker |  | 5876 | 211 | YAML reference leaf contracts in reference.yaml:83 chunk 2 |  |  | 0.458 |
-| walker |  | 5887 | 11 | listing of 'benchmarks/profiling' |  |  | 0.458 |
-| walker |  | 5899 | 12 | listing of 'tests/minimum' |  |  | 0.458 |
+| walker |  | 5462 | 474 | README.md section #4 |  |  | 0.477 |
+| walker |  | 5467 | 5 | listing of 'benchmarks/micro/benches' |  |  | 0.477 |
+| ns | 5469 |  | 266 | sqlite-vec.c: KNN merge_sorted_lists (core algorithm) | 5.7 |  | 0.467 |
+| walker |  | 5472 | 5 | listing of 'tests/fuzz/corpus' |  |  | 0.467 |
+| walker |  | 5482 | 10 | listing of 'tests/correctness' |  |  | 0.468 |
+| walker |  | 5550 | 68 | c decl body at sqlite-vec.c:591 |  |  | 0.468 |
+| ns | 5690 |  | 221 | sqlite-vec.c: scalar SQL function roster (locations) | 6.1 | 4.2 | 0.457 |
+| walker |  | 5761 | 211 | YAML reference leaf contracts in reference.yaml:83 chunk 2 |  |  | 0.457 |
+| walker |  | 5772 | 11 | listing of 'benchmarks/profiling' |  |  | 0.457 |
+| walker |  | 5784 | 12 | listing of 'tests/minimum' |  |  | 0.458 |
+| walker |  | 5860 | 76 | c decl body at sqlite-vec.c:646 |  |  | 0.458 |
+| walker |  | 5895 | 35 | python decl names surface in bindings/python/extra_init.py |  |  | 0.458 |
+| walker |  | 5895 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.458 |
+| walker |  | 5895 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.458 |
+| walker |  | 5912 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.458 |
 | ns | 5922 |  | 232 | sqlite-vec.c: vec_f32 body | 6.2 | 6.1 | 0.448 |
-| walker |  | 5975 | 76 | c decl body at sqlite-vec.c:646 |  |  | 0.448 |
+| walker |  | 5934 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.448 |
+| walker |  | 5958 | 24 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.448 |
+| walker |  | 5975 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.448 |
 | walker |  | 6128 | 153 | c includes in sqlite-vec.c |  |  | 0.448 |
 | walker |  | 6165 | 37 | ARCHITECTURE.md section #6 |  |  | 0.439 |
 | ns | 6165 |  | 243 | sqlite-vec.c: vec_slice signature + bounds validation | 6.3 | 6.1 | 0.439 |
