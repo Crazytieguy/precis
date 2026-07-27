@@ -103,15 +103,6 @@ build/
 build.rs …
 impl/
     Cargo.toml
-           1→[package]
-           2→name = "thiserror-impl"
-           3→version = "2.0.18"
-           4→authors = ["David Tolnay <dtolnay@gmail.com>"]
-           5→description = "Implementation detail of the `thiserror` crate"
-           6→edition = "2021"
-           7→license = "MIT OR Apache-2.0"
-           8→repository = "https://github.com/dtolnay/thiserror"
-           9→rust-version = "1.71"
         …
           14→[dependencies]
           15→proc-macro2 = "1.0.74"
@@ -175,6 +166,10 @@ impl/
             …
               48→impl ToTokens for private {
               49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+              50→        tokens.append(Ident::new(
+              51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
+              52→            Span::call_site(),
+              53→        ));
             …
         prop.rs …
         scan_expr.rs …

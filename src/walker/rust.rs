@@ -20,6 +20,17 @@
 //!   `PubItemDocLede` (or `PubItem` directly when the doc starts with a
 //!   heading and no Lede candidate is emitted).
 //!
+//! Per-impl-method keys (keyed by the method's start line), for the
+//! methods the file's `MethodSigs` roster names — the roster is their
+//! shared predecessor:
+//! - `ImplMethod { file, start_line }`: the method's signature with a
+//!   body-elision marker
+//! - `ImplMethodBody { file, start_line, body_start_line }`: body
+//!   slices, split by top-level statement like `PubItemBody`
+//!
+//! A per-method rustdoc key (Python's `MethodDoc`) was measured and
+//! left out: it moved no fixture at any budget in the grid.
+//!
 //! Cross-file keys (scoped by source directory):
 //! - `MacroNames { src_dir }`: exported macro name list
 //!
@@ -474,16 +485,31 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             let scope = if ep {
                 MethodSigScope::All
             } else {
-                MethodSigScope::ExportedOnly
+                MethodSigScope::OwnApiOnly
             };
-            let lines = collect_method_sigs(&tree, &source, scope, pub_traits);
-            let method_count = count_exported_impl_methods(&tree, &source, pub_traits);
+            let methods = collect_impl_methods(&tree, &source, scope, pub_traits);
+            let lines = collect_method_sigs(&methods, scope == MethodSigScope::OwnApiOnly);
+            let method_count = count_own_api_impl_methods(&tree, &source, pub_traits);
             if let Some(content) = single_file_lines_content(file, &source, lines) {
+                let sigs_key = RustKey::MethodSigs { file: file.clone() };
                 out.push(batch(
-                    RustKey::MethodSigs { file: file.clone() },
+                    sigs_key.clone(),
                     None,
                     content,
                     method_sigs_value(file, ctx, method_count),
+                ));
+                // The roster names every method it renders, so it is the
+                // natural entry ticket for the per-method dive — and
+                // gating there keeps the signature-line overlap inside
+                // the predecessor chain.
+                let src_lines: Vec<&str> = source.lines().collect();
+                out.extend(emit_impl_methods(
+                    file,
+                    ctx,
+                    &source,
+                    &src_lines,
+                    &methods,
+                    &BatchKey::Rust(sigs_key),
                 ));
             }
         }
@@ -1266,10 +1292,10 @@ fn file_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 /// signatures (locations)" rows on.
 const METHOD_ROSTER_MIN: usize = 4;
 
-fn method_sigs_value(file: &Path, ctx: &WalkCtx, exported_method_count: usize) -> f64 {
+fn method_sigs_value(file: &Path, ctx: &WalkCtx, own_api_method_count: usize) -> f64 {
     let (cat, fu, ztu) = if is_entrypoint_file(file) {
         ((0.5 * entrypoint_boost(file)).min(1.0), 0.8, 0.4)
-    } else if exported_method_count >= METHOD_ROSTER_MIN {
+    } else if own_api_method_count >= METHOD_ROSTER_MIN {
         // Impl-heavy API file: the method-sig surface is the file's
         // primary API partition, not a secondary follow-up.
         (0.6, 0.7, 0.35)
@@ -1282,7 +1308,48 @@ fn method_sigs_value(file: &Path, ctx: &WalkCtx, exported_method_count: usize) -
     // signatures" rows on) lose every ratio race to trivial two-method
     // files. Same neutralizer as dir listings / names surfaces.
     mix_signals(cat, fu, ztu, rust_depth_factor(file, ctx))
-        * crate::value::roster_mass_factor(exported_method_count)
+        * crate::value::roster_mass_factor(own_api_method_count)
+}
+
+/// Per-method visibility axis, folded through the module's own
+/// visibility exactly as `pub_item_value` folds a top-level item's.
+///
+/// Trait-impl methods deliberately take no extra damp. A trait impl's
+/// method *set* is predictable from its header while an inherent impl's
+/// is the type's own API, so a discount looked principled — but 0.6 on
+/// the signature / 0.8 on the body measured identical to no discount at
+/// every budget in the grid, so the corpus does not support the extra
+/// axis and it stays out.
+fn impl_method_axis(method: &ImplMethodInfo<'_>, ctx: &WalkCtx, file: &Path) -> f64 {
+    effective_surface(method.surface, ctx, file).factor()
+}
+
+/// Weights mirror `pub_item_value` one tier down: an impl method is a
+/// member of an already-named type, not a top-level declaration, so the
+/// catastrophic-omission axis drops while follow-up stays close.
+fn impl_method_value(file: &Path, method: &ImplMethodInfo<'_>, ctx: &WalkCtx) -> f64 {
+    let s = impl_method_axis(method, ctx, file);
+    let cat = (0.45 * s * entrypoint_boost(file)).min(1.0);
+    mix_signals(
+        cat,
+        (0.75 * s).min(1.0),
+        0.55 * s,
+        rust_depth_factor(file, ctx),
+    )
+}
+
+/// A method body is priced at `pub_item_body_value` parity for a `fn`
+/// item (`0.45 · 0.95 · 0.95` etc.) — once the method's signature is
+/// delivered, its body is the same kind of buy as a free function's.
+fn impl_method_body_value(file: &Path, method: &ImplMethodInfo<'_>, ctx: &WalkCtx) -> f64 {
+    let s = impl_method_axis(method, ctx, file);
+    let cat = (0.41 * s * entrypoint_boost(file)).min(1.0);
+    mix_signals(
+        cat,
+        (0.72 * s).min(1.0),
+        0.66 * s,
+        rust_depth_factor(file, ctx),
+    )
 }
 
 fn registration_roster_value(file: &Path, ctx: &WalkCtx, entry_count: usize) -> f64 {
@@ -1946,7 +2013,14 @@ fn collect_item_lines(child: Node, source: &str, whole: bool) -> FileLines {
         "function_item" | "function_signature_item" => {
             let sig_end = signature_end_row(child);
             push_rows(&mut full, child.start_position().row, sig_end);
-            if child.child_by_field_name("body").is_some() {
+            // Only mark an elision when the body actually spans rows
+            // past its opening brace. A one-line body (`fn f() {}`)
+            // elides nothing, and the marker would land on the *next*
+            // item's line — a line this batch does not own.
+            if child
+                .child_by_field_name("body")
+                .is_some_and(|body| body.end_position().row > body.start_position().row)
+            {
                 ellipses.push(sig_end + 2);
             }
         }
@@ -2086,25 +2160,29 @@ fn collect_pub_item_doc_raw(child: Node, source: &str) -> Vec<usize> {
 enum MethodSigScope {
     /// Every impl header + method signature (entrypoint files).
     All,
-    /// Exported API only: `pub fn`s of inherent impls plus all methods
-    /// of impls of crate-public traits. Trait-integration plumbing
-    /// (`Display` / `Debug` / sealed-trait blanket impls) is skipped —
-    /// NS method-signature rows never anchor on it, and including it
-    /// makes impl-heavy files' surfaces unaffordable.
-    ExportedOnly,
+    /// Type-owned API only: every method of an inherent impl, plus all
+    /// methods of impls of crate-public traits. Trait-integration
+    /// plumbing (`Display` / `Debug` / sealed-trait blanket impls) is
+    /// skipped — NS method-signature rows never anchor on it, and
+    /// including it makes impl-heavy files' surfaces unaffordable.
+    OwnApiOnly,
 }
 
-/// Whether `method` (a fn inside `impl_node`'s body) is on the exported
-/// API surface — see [`MethodSigScope::ExportedOnly`].
-fn is_exported_method(
-    impl_node: Node,
-    method: Node,
-    source: &str,
-    pub_traits: &HashSet<String>,
-) -> bool {
+/// Whether `impl_node`'s methods belong on the file's own API roster —
+/// see [`MethodSigScope::OwnApiOnly`].
+///
+/// The two impl forms carry different information, so they are filtered
+/// differently. A **trait** impl's method set is dictated by the trait,
+/// so the roster only earns its cost when the trait is itself crate
+/// API. An **inherent** impl's methods are the type's own vocabulary
+/// whatever their declared visibility: NS "method roster" rows call for
+/// the private constructors and helpers by name alongside the `pub`
+/// ones, because a roster that silently drops them reads as the
+/// complete list when it is not.
+fn is_own_api_impl(impl_node: Node, source: &str, pub_traits: &HashSet<String>) -> bool {
     match impl_trait_name(impl_node, source) {
         Some(trait_name) => pub_traits.contains(trait_name),
-        None => matches!(item_visibility(method, source), Some(Visibility::Public)),
+        None => true,
     }
 }
 
@@ -2124,63 +2202,163 @@ fn base_type_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
     }
 }
 
-fn collect_method_sigs(
-    tree: &Tree,
+/// One `impl`-block method on the file's [`RustKey::MethodSigs`]
+/// surface, plus the axes its per-method batches are valued on.
+#[derive(Debug, Clone)]
+struct ImplMethodInfo<'a> {
+    impl_node: Node<'a>,
+    node: Node<'a>,
+    start_line: usize,
+    surface: ApiSurface,
+}
+
+/// Every `(impl block, method)` pair the `MethodSigs` roster renders
+/// under `scope`, in source order and grouped by impl block. Shared by
+/// the roster, the roster's method count, and the per-method batches so
+/// all three agree on what "the file's impl surface" is.
+fn collect_impl_methods<'a>(
+    tree: &'a Tree,
     source: &str,
     scope: MethodSigScope,
     pub_traits: &HashSet<String>,
-) -> FileLines {
+) -> Vec<ImplMethodInfo<'a>> {
     let root = tree.root_node();
     let mut cursor = root.walk();
+    let mut out = Vec::new();
+    for impl_node in root.children(&mut cursor) {
+        if impl_node.kind() != "impl_item" {
+            continue;
+        }
+        let Some(body) = impl_node.child_by_field_name("body") else {
+            continue;
+        };
+        if scope == MethodSigScope::OwnApiOnly && !is_own_api_impl(impl_node, source, pub_traits) {
+            continue;
+        }
+        let trait_impl = impl_trait_name(impl_node, source).is_some();
+        let impl_doc_hidden = has_doc_hidden(impl_node, source);
+        let mut body_cursor = body.walk();
+        for method in body.children(&mut body_cursor) {
+            if !matches!(method.kind(), "function_item" | "function_signature_item") {
+                continue;
+            }
+            // A trait-impl method carries no visibility modifier of its
+            // own — its reachability is the trait's, so it takes the
+            // trait's `Public` surface. An inherent method without
+            // `pub` is genuinely crate-internal.
+            let visibility = if trait_impl {
+                Visibility::Public
+            } else {
+                item_visibility(method, source).unwrap_or(Visibility::Restricted)
+            };
+            out.push(ImplMethodInfo {
+                impl_node,
+                node: method,
+                start_line: method.start_position().row + 1,
+                surface: ApiSurface {
+                    visibility,
+                    doc_hidden: impl_doc_hidden || has_doc_hidden(method, source),
+                },
+            });
+        }
+    }
+    out
+}
+
+/// `first_line_only` renders one line per impl header / method — the
+/// truncated-at-the-paren shape NS "method signatures (locations)" rows
+/// take. The full multi-line form (params + where-clauses) is the
+/// entrypoint default: collapsing every entrypoint roster to the
+/// location shape is measured negative (hyperfine −0.076), so an
+/// entrypoint roster is doing signature work, not just index work.
+fn collect_method_sigs(methods: &[ImplMethodInfo<'_>], first_line_only: bool) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    for child in root.children(&mut cursor) {
-        if child.kind() != "impl_item" {
-            continue;
+    let mut current_impl: Option<usize> = None;
+    for method in methods {
+        if current_impl != Some(method.impl_node.id()) {
+            current_impl = Some(method.impl_node.id());
+            let impl_start = method.impl_node.start_position().row;
+            let impl_end = if first_line_only {
+                impl_start
+            } else {
+                signature_end_row(method.impl_node)
+            };
+            push_rows(&mut full, impl_start, impl_end);
         }
-        let Some(body) = child.child_by_field_name("body") else {
-            continue;
-        };
-        let start_len = full.len();
-        let mut added_method = false;
-        // ExportedOnly renders one line per impl header / method — the
-        // truncated-at-the-paren shape NS "method signatures
-        // (locations)" rows take. Full multi-line signatures (params +
-        // where-clauses) triple the cost without adding location info.
-        let first_line_only = scope == MethodSigScope::ExportedOnly;
+        let sig_start = method.node.start_position().row;
         let sig_end = if first_line_only {
-            child.start_position().row
+            sig_start
         } else {
-            signature_end_row(child)
+            signature_end_row(method.node)
         };
-        push_rows(&mut full, child.start_position().row, sig_end);
-        let mut body_cursor = body.walk();
-        for inner in body.children(&mut body_cursor) {
-            if matches!(inner.kind(), "function_item" | "function_signature_item") {
-                if first_line_only && !is_exported_method(child, inner, source, pub_traits) {
-                    continue;
-                }
-                let inner_end = if first_line_only {
-                    inner.start_position().row
-                } else {
-                    signature_end_row(inner)
-                };
-                push_rows(&mut full, inner.start_position().row, inner_end);
-                added_method = true;
-                if first_line_only || inner.child_by_field_name("body").is_some() {
-                    ellipses.push(inner_end + 2);
-                }
-            }
-        }
-        if !added_method {
-            full.truncate(start_len);
+        push_rows(&mut full, sig_start, sig_end);
+        if first_line_only || method.node.child_by_field_name("body").is_some() {
+            ellipses.push(sig_end + 2);
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
+/// Per-method dive for the methods the file's `MethodSigs` roster names:
+/// signature (body elided), rustdoc, then statement-split body slices —
+/// the same head/doc/body shape `PubItem` uses for a top-level item.
+fn emit_impl_methods(
+    file: &Path,
+    ctx: &WalkCtx,
+    source: &str,
+    src_lines: &[&str],
+    methods: &[ImplMethodInfo<'_>],
+    sigs_gate: &BatchKey,
+) -> Vec<Batch<BatchKey>> {
+    let mut out = Vec::new();
+    for method in methods {
+        let method_key = RustKey::ImplMethod {
+            file: file.to_path_buf(),
+            start_line: method.start_line,
+        };
+        // Without a head batch the doc/body descendants would gate on an
+        // unreachable predecessor, so skip the whole method.
+        let Some(content) =
+            single_file_lines_content(file, source, collect_item_lines(method.node, source, false))
+        else {
+            continue;
+        };
+        out.push(batch(
+            method_key.clone(),
+            Some(sigs_gate.clone()),
+            content,
+            impl_method_value(file, method, ctx),
+        ));
+        let method_predecessor = BatchKey::Rust(method_key);
+
+        let parts = body_parts_for_item(method.node, src_lines);
+        let part_value_factor = body_part_value_factor(parts.len());
+        for part in parts {
+            let Some(body_start_line) = part.start_line() else {
+                continue;
+            };
+            let Some(content) = single_file_lines_content(file, source, FileLines::new(part.lines))
+            else {
+                continue;
+            };
+            out.push(batch(
+                RustKey::ImplMethodBody {
+                    file: file.to_path_buf(),
+                    start_line: method.start_line,
+                    body_start_line,
+                },
+                Some(method_predecessor.clone()),
+                content,
+                impl_method_body_value(file, method, ctx) * part_value_factor,
+            ));
+        }
+    }
+    out
+}
+
 /// Top-level `pub trait` names (not doc-hidden) across every crate
-/// source dir in the repo. Feeds [`is_exported_method`]'s trait-impl
+/// source dir in the repo. Feeds [`is_own_api_impl`]'s trait-impl
 /// check; memoized in [`RustState`].
 fn collect_crate_pub_trait_names(ctx: &WalkCtx) -> HashSet<String> {
     let mut out = HashSet::new();
@@ -2210,29 +2388,10 @@ fn collect_crate_pub_trait_names(ctx: &WalkCtx) -> HashSet<String> {
 }
 
 /// Count the impl methods on the file's exported surface (the
-/// [`MethodSigScope::ExportedOnly`] set). Feeds the roster tier and
+/// [`MethodSigScope::OwnApiOnly`] set). Feeds the roster tier and
 /// roster-mass factor in [`method_sigs_value`].
-fn count_exported_impl_methods(tree: &Tree, source: &str, pub_traits: &HashSet<String>) -> usize {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    let mut count = 0;
-    for child in root.children(&mut cursor) {
-        if child.kind() != "impl_item" {
-            continue;
-        }
-        let Some(body) = child.child_by_field_name("body") else {
-            continue;
-        };
-        let mut body_cursor = body.walk();
-        for inner in body.children(&mut body_cursor) {
-            if matches!(inner.kind(), "function_item" | "function_signature_item")
-                && is_exported_method(child, inner, source, pub_traits)
-            {
-                count += 1;
-            }
-        }
-    }
-    count
+fn count_own_api_impl_methods(tree: &Tree, source: &str, pub_traits: &HashSet<String>) -> usize {
+    collect_impl_methods(tree, source, MethodSigScope::OwnApiOnly, pub_traits).len()
 }
 
 fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {
@@ -3243,6 +3402,90 @@ use self::not_pub::Hidden;
                 .any(|b| matches!(&b.key, BatchKey::Rust(RustKey::CrateAttrs { .. }))),
             "no CrateAttrs from mod.rs attrs or license-header-padded roots"
         );
+    }
+
+    /// Inherent-impl methods get a per-method signature + body pair
+    /// whatever their declared visibility, gated on the file's
+    /// `MethodSigs` roster. Trait-integration impls stay off the roster
+    /// (and so get no per-method batches) unless the trait is crate API.
+    #[test]
+    fn rust_impl_methods_emit_head_doc_and_body_for_private_inherent_methods() {
+        let (dir, src) = write_vis_tree(&[
+            ("lib.rs", "pub mod thing;\n"),
+            (
+                "thing.rs",
+                "pub struct Thing;\n\
+             \n\
+             impl Thing {\n\
+             \x20   /// Build one.\n\
+             \x20   pub fn new() -> Self {\n\
+             \x20       Thing\n\
+             \x20   }\n\
+             \n\
+             \x20   fn helper(&self) -> usize {\n\
+             \x20       let n = 1;\n\
+             \x20       n + 1\n\
+             \x20   }\n\
+             }\n\
+             \n\
+             impl std::fmt::Debug for Thing {\n\
+             \x20   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {\n\
+             \x20       f.write_str(\"Thing\")\n\
+             \x20   }\n\
+             }\n",
+            ),
+        ]);
+        std::fs::write(
+            dir.path().join("Cargo.toml"),
+            "[package]\nname='t'\nversion='0.1.0'\n",
+        )
+        .unwrap();
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let batches = expand_in_dir(&src, &ctx);
+        let sigs = BatchKey::Rust(RustKey::MethodSigs {
+            file: src.join("thing.rs"),
+        });
+        let method_lines: Vec<usize> = batches
+            .iter()
+            .filter_map(|b| match &b.key {
+                BatchKey::Rust(RustKey::ImplMethod { start_line, .. }) => {
+                    assert_eq!(b.predecessor.as_ref(), Some(&sigs));
+                    Some(*start_line)
+                }
+                _ => None,
+            })
+            .collect();
+        assert_eq!(
+            method_lines,
+            vec![5, 9],
+            "both inherent methods (pub and private) get a per-method batch; \
+             the `Debug` impl is not crate API so it stays off the roster"
+        );
+        assert!(
+            batches.iter().any(
+                |b| matches!(&b.key, BatchKey::Rust(RustKey::ImplMethodBody { start_line, .. })
+                    if *start_line == 9)
+            ),
+            "the private method's body is now reachable"
+        );
+    }
+
+    /// A one-line body (`fn f() {}`) elides nothing, so the batch must
+    /// not emit a body-elision marker — it would land on the *next*
+    /// item's line and trip non-ancestor overlap.
+    #[test]
+    fn rust_one_line_fn_body_emits_no_elision_marker() {
+        let src = "pub fn a() {}\npub fn b() {\n    ()\n}\n";
+        let tree = parse(src);
+        let root = tree.root_node();
+        let one_liner = collect_item_lines(root.child(0).unwrap(), src, false);
+        assert_eq!(one_liner.full, vec![1]);
+        assert!(
+            one_liner.ellipses.is_empty(),
+            "no marker on `fn b`'s line, which this batch does not own"
+        );
+        let multi_line = collect_item_lines(root.child(1).unwrap(), src, false);
+        assert_eq!(multi_line.ellipses, vec![3], "real bodies still get one");
     }
 
     #[test]
