@@ -1,7 +1,7 @@
 fixture = "json-server"
 budget = 10000
-cumulative_tokens = 9959
-batch_count = 87
+cumulative_tokens = 9877
+batch_count = 83
 
 [[batches]]
 position = 1
@@ -1467,29 +1467,10 @@ kind = "full"
 
 [[batches]]
 position = 58
-key = 'Typescript(TestNames { file: "src/paginate.test.ts", chunk_index: 0, benchmark: false })'
-descriptor = "test names surface in src/paginate.test.ts"
-cost_tokens = 14
-cum_tokens = 4221
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/paginate.test.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^await test\('paginate''''
-
-[[batches]]
-position = 59
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #12"
 cost_tokens = 55
-cum_tokens = 4276
+cum_tokens = 4262
 
 [batches.content]
 kind = "lines"
@@ -1503,49 +1484,11 @@ end = 192
 kind = "full"
 
 [[batches]]
-position = 60
-key = 'Typescript(TestNames { file: "src/matches-where.test.ts", chunk_index: 0, benchmark: false })'
-descriptor = "test names surface in src/matches-where.test.ts"
-cost_tokens = 15
-cum_tokens = 4291
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/matches-where.test.ts"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^await test\('matchesWhere''''
-
-[[batches]]
-position = 61
-key = 'Typescript(TestNames { file: "src/parse-where.test.ts", chunk_index: 0, benchmark: false })'
-descriptor = "test names surface in src/parse-where.test.ts"
-cost_tokens = 15
-cum_tokens = 4306
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/parse-where.test.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^await test\('parseWhere''''
-
-[[batches]]
-position = 62
+position = 59
 key = 'Typescript(ExportNames { file: "src/adapters/normalized-adapter.ts" })'
 descriptor = "export names surface in src/adapters/normalized-adapter.ts"
 cost_tokens = 61
-cum_tokens = 4367
+cum_tokens = 4323
 
 [batches.content]
 kind = "lines"
@@ -1583,11 +1526,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 63
+position = 60
 key = 'Typescript(Export { file: "src/adapters/normalized-adapter.ts", start_line: 7 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:7"
 cost_tokens = 13
-cum_tokens = 4380
+cum_tokens = 4336
 
 [batches.content]
 kind = "lines"
@@ -1601,11 +1544,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 64
+position = 61
 key = 'Typescript(Export { file: "src/adapters/normalized-adapter.ts", start_line: 11 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:11"
 cost_tokens = 49
-cum_tokens = 4429
+cum_tokens = 4385
 
 [batches.content]
 kind = "lines"
@@ -1667,11 +1610,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 65
+position = 62
 key = 'Typescript(Imports { file: "src/adapters/observer.ts" })'
 descriptor = "imports in src/adapters/observer.ts"
 cost_tokens = 14
-cum_tokens = 4443
+cum_tokens = 4399
 
 [batches.content]
 kind = "lines"
@@ -1685,11 +1628,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 66
+position = 63
 key = 'Typescript(ExportBody { file: "src/parse-where.ts", start_line: 58, body_start_line: 59 })'
 descriptor = "export body at src/parse-where.ts:58 body 59"
 cost_tokens = 117
-cum_tokens = 4560
+cum_tokens = 4516
 
 [batches.content]
 kind = "lines"
@@ -1703,11 +1646,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 67
+position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #17"
 cost_tokens = 71
-cum_tokens = 4631
+cum_tokens = 4587
 
 [batches.content]
 kind = "lines"
@@ -1721,11 +1664,11 @@ end = 233
 kind = "full"
 
 [[batches]]
-position = 68
+position = 65
 key = 'Typescript(Export { file: "src/adapters/observer.ts", start_line: 4 })'
 descriptor = "export at src/adapters/observer.ts:4"
 cost_tokens = 154
-cum_tokens = 4785
+cum_tokens = 4741
 
 [batches.content]
 kind = "lines"
@@ -1787,11 +1730,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 69
+position = 66
 key = 'Typescript(ExportBody { file: "src/adapters/observer.ts", start_line: 4, body_start_line: 21 })'
 descriptor = "export body at src/adapters/observer.ts:4 body 21"
 cost_tokens = 86
-cum_tokens = 4871
+cum_tokens = 4827
 
 [batches.content]
 kind = "lines"
@@ -1821,11 +1764,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 70
+position = 67
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 106
-cum_tokens = 4977
+cum_tokens = 4933
 
 [batches.content]
 kind = "lines"
@@ -1839,11 +1782,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 71
+position = 68
 key = 'Typescript(Export { file: "src/service.ts", start_line: 81 })'
 descriptor = "export at src/service.ts:81"
 cost_tokens = 355
-cum_tokens = 5332
+cum_tokens = 5288
 
 [batches.content]
 kind = "lines"
@@ -2017,11 +1960,11 @@ end = 207
 kind = "ellipsis"
 
 [[batches]]
-position = 72
+position = 69
 key = 'Typescript(Imports { file: "src/matches-where.ts" })'
 descriptor = "imports in src/matches-where.ts"
 cost_tokens = 42
-cum_tokens = 5374
+cum_tokens = 5330
 
 [batches.content]
 kind = "lines"
@@ -2035,11 +1978,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 73
+position = 70
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 159
-cum_tokens = 5533
+cum_tokens = 5489
 
 [batches.content]
 kind = "lines"
@@ -2053,11 +1996,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 74
+position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 127
-cum_tokens = 5660
+cum_tokens = 5616
 
 [batches.content]
 kind = "lines"
@@ -2071,11 +2014,11 @@ end = 184
 kind = "full"
 
 [[batches]]
-position = 75
+position = 72
 key = 'Typescript(Imports { file: "src/parse-where.ts" })'
 descriptor = "imports in src/parse-where.ts"
 cost_tokens = 57
-cum_tokens = 5717
+cum_tokens = 5673
 
 [batches.content]
 kind = "lines"
@@ -2089,11 +2032,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 76
+position = 73
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 140
-cum_tokens = 5857
+cum_tokens = 5813
 
 [batches.content]
 kind = "lines"
@@ -2107,11 +2050,11 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 77
+position = 74
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #14"
 cost_tokens = 155
-cum_tokens = 6012
+cum_tokens = 5968
 
 [batches.content]
 kind = "lines"
@@ -2125,11 +2068,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 78
+position = 75
 key = 'Typescript(ExportBody { file: "src/paginate.ts", start_line: 11, body_start_line: 12 })'
 descriptor = "export body at src/paginate.ts:11 body 12"
 cost_tokens = 322
-cum_tokens = 6334
+cum_tokens = 6290
 
 [batches.content]
 kind = "lines"
@@ -2143,11 +2086,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 79
+position = 76
 key = 'Typescript(ExportBody { file: "src/adapters/normalized-adapter.ts", start_line: 11, body_start_line: 15 })'
 descriptor = "export body at src/adapters/normalized-adapter.ts:11 body 15"
 cost_tokens = 251
-cum_tokens = 6585
+cum_tokens = 6541
 
 [batches.content]
 kind = "lines"
@@ -2177,11 +2120,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 80
+position = 77
 key = 'Typescript(Imports { file: "src/adapters/normalized-adapter.ts" })'
 descriptor = "imports in src/adapters/normalized-adapter.ts"
 cost_tokens = 48
-cum_tokens = 6633
+cum_tokens = 6589
 
 [batches.content]
 kind = "lines"
@@ -2195,11 +2138,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 81
+position = 78
 key = 'Typescript(Imports { file: "src/service.ts" })'
 descriptor = "imports in src/service.ts"
 cost_tokens = 104
-cum_tokens = 6737
+cum_tokens = 6693
 
 [batches.content]
 kind = "lines"
@@ -2213,39 +2156,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 82
-key = 'Typescript(TestNames { file: "src/adapters/normalized-adapter.test.ts", chunk_index: 0, benchmark: false })'
-descriptor = "test names surface in src/adapters/normalized-adapter.test.ts"
-cost_tokens = 38
-cum_tokens = 6775
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/adapters/normalized-adapter.test.ts"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^await test\('read removes \$schema and normalizes ids''''
-
-[[batches.content.spans]]
-path = "src/adapters/normalized-adapter.test.ts"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^await test\('write always overwrites \$schema''''
-
-[[batches]]
-position = 83
+position = 79
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 326
-cum_tokens = 7101
+cum_tokens = 7019
 
 [batches.content]
 kind = "lines"
@@ -2259,11 +2174,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 84
+position = 80
 key = 'Typescript(Imports { file: "src/app.ts" })'
 descriptor = "imports in src/app.ts"
 cost_tokens = 171
-cum_tokens = 7272
+cum_tokens = 7190
 
 [batches.content]
 kind = "lines"
@@ -2277,11 +2192,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 85
+position = 81
 key = 'Typescript(ExportBody { file: "src/service.ts", start_line: 81, body_start_line: 85 })'
 descriptor = "export body at src/service.ts:81 body 85"
 cost_tokens = 995
-cum_tokens = 8267
+cum_tokens = 8185
 
 [batches.content]
 kind = "lines"
@@ -2391,11 +2306,11 @@ end = 220
 kind = "full"
 
 [[batches]]
-position = 86
+position = 82
 key = 'Typescript(ExportBody { file: "src/matches-where.ts", start_line: 24, body_start_line: 25 })'
 descriptor = "export body at src/matches-where.ts:24 body 25"
 cost_tokens = 829
-cum_tokens = 9096
+cum_tokens = 9014
 
 [batches.content]
 kind = "lines"
@@ -2409,11 +2324,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 87
+position = 83
 key = 'Typescript(ExportBody { file: "src/app.ts", start_line: 94, body_start_line: 95 })'
 descriptor = "export body at src/app.ts:94 body 95"
 cost_tokens = 863
-cum_tokens = 9959
+cum_tokens = 9877
 
 [batches.content]
 kind = "lines"

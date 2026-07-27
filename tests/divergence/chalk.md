@@ -148,37 +148,35 @@ Score(3000)=0.627 I=0.875 C=0.450 ns_rows≤3K=21/50 (reached=11 partial=0 missi
 | walker |  | 7622 | 65 | readme.md section #35 |  |  | 0.486 |
 | ns | 7663 |  | 318 | test/instance.js — isolated per-instance level | 6.4 |  | 0.475 |
 | walker |  | 7690 | 68 | readme.md section #33 |  |  | 0.475 |
-| walker |  | 7710 | 20 | test names surface in test/no-color-support.js |  |  | 0.475 |
-| walker |  | 7873 | 163 | code-of-conduct.md section #5 |  |  | 0.475 |
-| walker |  | 7940 | 67 | readme.md section #38 |  |  | 0.475 |
-| walker |  | 8045 | 105 | readme.md section #16 |  |  | 0.475 |
-| walker |  | 8153 | 108 | readme.md section #12 |  |  | 0.475 |
-| walker |  | 8166 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.475 |
-| walker |  | 8283 | 117 | module item names surface in source/vendor/supports-color/index.js |  |  | 0.476 |
-| walker |  | 8283 | 0 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.476 |
-| walker |  | 8283 | 0 | module item at source/vendor/supports-color/index.js:14 |  |  | 0.476 |
-| walker |  | 8283 | 0 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.476 |
-| walker |  | 8283 | 0 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.476 |
-| walker |  | 8283 | 0 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.476 |
-| walker |  | 8283 | 0 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.476 |
+| walker |  | 7853 | 163 | code-of-conduct.md section #5 |  |  | 0.475 |
+| walker |  | 7920 | 67 | readme.md section #38 |  |  | 0.475 |
+| walker |  | 8025 | 105 | readme.md section #16 |  |  | 0.475 |
+| walker |  | 8133 | 108 | readme.md section #12 |  |  | 0.475 |
+| walker |  | 8146 | 13 | imports in source/vendor/supports-color/browser.d.ts |  |  | 0.475 |
+| walker |  | 8263 | 117 | module item names surface in source/vendor/supports-color/index.js |  |  | 0.476 |
+| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:7 |  |  | 0.476 |
+| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:14 |  |  | 0.476 |
+| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.476 |
+| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.476 |
+| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.476 |
+| walker |  | 8263 | 0 | module item at source/vendor/supports-color/index.js:60 |  |  | 0.476 |
 | ns | 8287 |  | 624 | vendor/ansi-styles: wrap fns + modifier/color tables (+ellipsis for bgColor) | 7.1 |  | 0.510 |
-| walker |  | 8330 | 47 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.510 |
+| walker |  | 8310 | 47 | module item at source/vendor/supports-color/index.js:185 |  |  | 0.510 |
 | ns | 8354 |  | 67 | vendor/ansi-styles: exported name arrays | 7.2 |  | 0.513 |
-| walker |  | 8408 | 78 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.513 |
+| walker |  | 8388 | 78 | module item body at source/vendor/supports-color/index.js:7 body 8 |  |  | 0.513 |
 | ns | 8444 |  | 90 | vendor/ansi-styles: table-building + conversion-math function map (locations) | 7.3 |  | 0.518 |
-| walker |  | 8495 | 87 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.518 |
-| walker |  | 8627 | 132 | module item body at source/vendor/supports-color/index.js:33 body 34 |  |  | 0.519 |
-| walker |  | 8851 | 224 | code-of-conduct.md section #2 |  |  | 0.519 |
+| walker |  | 8475 | 87 | module item body at source/vendor/supports-color/index.js:47 body 48 |  |  | 0.518 |
+| walker |  | 8607 | 132 | module item body at source/vendor/supports-color/index.js:33 body 34 |  |  | 0.519 |
+| walker |  | 8831 | 224 | code-of-conduct.md section #2 |  |  | 0.519 |
 | ns | 8972 |  | 528 | vendor/supports-color: CLI flag + FORCE_COLOR parsing | 8.1 |  | 0.516 |
-| walker |  | 9005 | 154 | export body at source/utilities.js:21 body 22 |  |  | 0.529 |
+| walker |  | 8985 | 154 | export body at source/utilities.js:21 body 22 |  |  | 0.529 |
 | ns | 9074 |  | 102 | vendor/supports-color: translateLevel | 8.2 |  | 0.535 |
+| walker |  | 9408 | 423 | readme.md section #29 |  |  | 0.535 |
 | ns | 9415 |  | 341 | vendor/supports-color: _supportsColor() — Windows + CI vendor detection (+ellipsis for the rest of the cascade) | 8.3 |  | 0.525 |
-| walker |  | 9428 | 423 | readme.md section #29 |  |  | 0.525 |
-| walker |  | 9446 | 18 | imports in source/vendor/supports-color/index.d.ts |  |  | 0.525 |
+| walker |  | 9426 | 18 | imports in source/vendor/supports-color/index.d.ts |  |  | 0.525 |
 | ns | 9569 |  | 154 | vendor/supports-color: createSupportsColor + module-level stdout/stderr detection | 8.4 |  | 0.530 |
-| walker |  | 9615 | 169 | export body at source/utilities.js:2 body 3 |  |  | 0.545 |
+| walker |  | 9595 | 169 | export body at source/utilities.js:2 body 3 |  |  | 0.545 |
 | ns | 9673 |  | 104 | readme.md API section — chaining precedence rule | 9.1 |  | 0.547 |
-| walker |  | 9695 | 80 | imports in source/index.d.ts |  |  | 0.549 |
-| walker |  | 9744 | 49 | test names surface in test/instance.js |  |  | 0.549 |
+| walker |  | 9675 | 80 | imports in source/index.d.ts |  |  | 0.549 |
 | ns | 9955 |  | 282 | examples/screenshot.js | 10.1 |  | 0.539 |
-| ns | 10000 |  | 45 | license (MIT) — title + copyright line | 11.1 |  | 0.538 |
+| ns | 10000 |  | 45 | license (MIT) — title + copyright line | 11.1 |  | 0.537 |

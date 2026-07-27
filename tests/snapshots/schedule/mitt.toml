@@ -1103,10 +1103,154 @@ kind = "full"
 
 [[batches]]
 position = 44
+key = 'Markdown(Section { file: ".github/PULL_REQUEST_TEMPLATE.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = ".github/PULL_REQUEST_TEMPLATE.md section #3"
+cost_tokens = 28
+cum_tokens = 5287
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Markdown(Section { file: ".github/PULL_REQUEST_TEMPLATE.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = ".github/PULL_REQUEST_TEMPLATE.md section #0"
+cost_tokens = 110
+cum_tokens = 5397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 5
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Typescript(Imports { file: "test/test-types-compilation.ts" })'
+descriptor = "imports in test/test-types-compilation.ts"
+cost_tokens = 13
+cum_tokens = 5410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/test-types-compilation.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Plaintext(Whole { file: ".gitignore" })'
+descriptor = "plaintext config .gitignore"
+cost_tokens = 74
+cum_tokens = 5484
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".gitignore"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Plaintext(Whole { file: ".editorconfig" })'
+descriptor = "plaintext config .editorconfig"
+cost_tokens = 165
+cum_tokens = 5649
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".editorconfig"
+start = 1
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Plaintext(Whole { file: "LICENSE" })'
+descriptor = "plaintext config LICENSE"
+cost_tokens = 309
+cum_tokens = 5958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "LICENSE"
+start = 1
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'Plaintext(Whole { file: ".eslintrc" })'
+descriptor = "plaintext config .eslintrc"
+cost_tokens = 500
+cum_tokens = 6458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = ".eslintrc"
+start = 1
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Typescript(Imports { file: "test/index_test.ts" })'
+descriptor = "imports in test/index_test.ts"
+cost_tokens = 62
+cum_tokens = 6520
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
 key = 'Typescript(TestNames { file: "test/index_test.ts", chunk_index: 0, benchmark: false })'
 descriptor = "test names surface in test/index_test.ts"
-cost_tokens = 374
-cum_tokens = 5633
+cost_tokens = 372
+cum_tokens = 6892
 
 [batches.content]
 kind = "lines"
@@ -1335,147 +1479,3 @@ end = 189
 [batches.content.spans.render]
 kind = "truncated"
 pattern = '''^		it\('should invoke \* handlers''''
-
-[[batches]]
-position = 45
-key = 'Markdown(Section { file: ".github/PULL_REQUEST_TEMPLATE.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = ".github/PULL_REQUEST_TEMPLATE.md section #3"
-cost_tokens = 28
-cum_tokens = 5661
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Markdown(Section { file: ".github/PULL_REQUEST_TEMPLATE.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = ".github/PULL_REQUEST_TEMPLATE.md section #0"
-cost_tokens = 110
-cum_tokens = 5771
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".github/PULL_REQUEST_TEMPLATE.md"
-start = 5
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Typescript(Imports { file: "test/test-types-compilation.ts" })'
-descriptor = "imports in test/test-types-compilation.ts"
-cost_tokens = 13
-cum_tokens = 5784
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/test-types-compilation.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
-key = 'Plaintext(Whole { file: ".gitignore" })'
-descriptor = "plaintext config .gitignore"
-cost_tokens = 74
-cum_tokens = 5858
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".gitignore"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
-key = 'Plaintext(Whole { file: ".editorconfig" })'
-descriptor = "plaintext config .editorconfig"
-cost_tokens = 165
-cum_tokens = 6023
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".editorconfig"
-start = 1
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Plaintext(Whole { file: "LICENSE" })'
-descriptor = "plaintext config LICENSE"
-cost_tokens = 309
-cum_tokens = 6332
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "LICENSE"
-start = 1
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
-key = 'Plaintext(Whole { file: ".eslintrc" })'
-descriptor = "plaintext config .eslintrc"
-cost_tokens = 500
-cum_tokens = 6832
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = ".eslintrc"
-start = 1
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 52
-key = 'Typescript(Imports { file: "test/index_test.ts" })'
-descriptor = "imports in test/index_test.ts"
-cost_tokens = 60
-cum_tokens = 6892
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/index_test.ts"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"

@@ -257,10 +257,6 @@ source/
          108→	id?: string;
         …
          111→export type TaskOptions = {
-         112→	/**
-         113→	[`AbortSignal`](https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal) for cancellation of the operation. When aborted, it will be removed from the queue and the `queue.add()` call will reject with an `AbortError`. If the operation is already running, the signal will need to be handled by the operation itself.
-        …
-         147→	readonly signal?: AbortSignal | undefined;
         …
     priority-queue.ts
            1→import {type Queue, type RunFunction} from './queue.js';

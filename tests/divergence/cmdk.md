@@ -159,22 +159,21 @@ Score(3000)=0.400 I=0.471 C=0.339 ns_rows≤3K=26/44 (reached=10 partial=1 missi
 | walker |  | 7539 | 135 | README.md section #8 |  |  | 0.410 |
 | walker |  | 7549 | 10 | export names surface in test/pages/index.tsx |  |  | 0.410 |
 | walker |  | 7549 | 0 | export at test/pages/index.tsx:28 |  |  | 0.410 |
-| walker |  | 7578 | 29 | test names surface in test/dialog.test.ts |  |  | 0.410 |
 | ns | 7579 |  | 745 | command-score weighting constants | 7.2 |  | 0.392 |
+| walker |  | 7705 | 156 | README.md section #12 |  |  | 0.392 |
 | ns | 7724 |  | 145 | dialog.test.ts | 8.1 |  | 0.388 |
-| walker |  | 7734 | 156 | README.md section #12 |  |  | 0.388 |
-| walker |  | 7890 | 156 | README.md section #11 |  |  | 0.388 |
-| walker |  | 7902 | 12 | export at test/pages/index.tsx:3 |  |  | 0.388 |
-| ns | 7944 |  | 220 | CI test pipeline steps | 8.2 |  | 0.403 |
-| walker |  | 8335 | 433 | README.md section #35 |  |  | 0.432 |
-| walker |  | 8353 | 18 | listing of 'website/styles/cmdk' |  |  | 0.443 |
+| walker |  | 7861 | 156 | README.md section #11 |  |  | 0.388 |
+| walker |  | 7873 | 12 | export at test/pages/index.tsx:3 |  |  | 0.388 |
+| ns | 7944 |  | 220 | CI test pipeline steps | 8.2 |  | 0.402 |
+| walker |  | 8306 | 433 | README.md section #35 |  |  | 0.432 |
+| walker |  | 8324 | 18 | listing of 'website/styles/cmdk' |  |  | 0.443 |
 | ns | 8375 |  | 431 | group.test.ts | 8.3 |  | 0.433 |
 | ns | 8683 |  | 308 | playwright.config.ts | 8.4 |  | 0.424 |
-| ns | 8939 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.416 |
-| walker |  | 9036 | 683 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.471 |
+| ns | 8939 |  | 256 | test/pages/dialog.tsx | 9.1 |  | 0.415 |
+| walker |  | 9007 | 683 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.471 |
 | ns | 9107 |  | 168 | website icon component roster | 10.1 |  | 0.467 |
-| walker |  | 9164 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.472 |
+| walker |  | 9135 | 128 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.472 |
 | ns | 9454 |  | 347 | Vercel-theme demo: pages navigation state | 10.2 |  | 0.460 |
 | ns | 9597 |  | 143 | Format/lint-staged tooling | 11.1 |  | 0.455 |
+| walker |  | 9776 | 641 | README.md section #2 |  |  | 0.455 |
 | ns | 9778 |  | 181 | website Next.js + Vercel deploy config | 11.2 |  | 0.449 |
-| walker |  | 9805 | 641 | README.md section #2 |  |  | 0.449 |

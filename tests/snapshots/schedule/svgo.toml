@@ -1,7 +1,7 @@
 fixture = "svgo"
 budget = 10000
-cumulative_tokens = 9958
-batch_count = 154
+cumulative_tokens = 9943
+batch_count = 153
 
 [[batches]]
 position = 1
@@ -2510,29 +2510,10 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'Typescript(TestNames { file: "lib/parser.test.js", chunk_index: 0, benchmark: false })'
-descriptor = "test names surface in lib/parser.test.js"
-cost_tokens = 15
-cum_tokens = 6884
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "lib/parser.test.js"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^test\('a text preserved''''
-
-[[batches]]
-position = 108
 key = 'Typescript(Export { file: "lib/svgo/plugins.js", start_line: 14 })'
 descriptor = "export at lib/svgo/plugins.js:14"
 cost_tokens = 43
-cum_tokens = 6927
+cum_tokens = 6912
 
 [batches.content]
 kind = "lines"
@@ -2554,11 +2535,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 108
 key = 'Typescript(ExportDoc { file: "lib/svgo-node.js", start_line: 44 })'
 descriptor = "export doc at lib/svgo-node.js:44"
 cost_tokens = 114
-cum_tokens = 7041
+cum_tokens = 7026
 
 [batches.content]
 kind = "lines"
@@ -2572,11 +2553,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 110
+position = 109
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/cleanupListOfValues.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/cleanupListOfValues.mdx"
 cost_tokens = 32
-cum_tokens = 7073
+cum_tokens = 7058
 
 [batches.content]
 kind = "lines"
@@ -2598,11 +2579,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 111
+position = 110
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/convertEllipseToCircle.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/convertEllipseToCircle.mdx"
 cost_tokens = 32
-cum_tokens = 7105
+cum_tokens = 7090
 
 [batches.content]
 kind = "lines"
@@ -2624,11 +2605,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 112
+position = 111
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/convertOneStopGradients.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/convertOneStopGradients.mdx"
 cost_tokens = 33
-cum_tokens = 7138
+cum_tokens = 7123
 
 [batches.content]
 kind = "lines"
@@ -2650,11 +2631,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 113
+position = 112
 key = 'Typescript(ExportDoc { file: "lib/util/map-nodes-to-parents.js", start_line: 9 })'
 descriptor = "export doc at lib/util/map-nodes-to-parents.js:9"
 cost_tokens = 74
-cum_tokens = 7212
+cum_tokens = 7197
 
 [batches.content]
 kind = "lines"
@@ -2668,11 +2649,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 114
+position = 113
 key = 'Fs(DirListing { dir: "test/fixtures/config-loader/one/two" })'
 descriptor = "listing of 'test/fixtures/config-loader/one/two'"
 cost_tokens = 3
-cum_tokens = 7215
+cum_tokens = 7200
 
 [batches.content]
 kind = "fs"
@@ -2682,11 +2663,11 @@ parent = "test/fixtures/config-loader/one/two"
 entries = ["config.js"]
 
 [[batches]]
-position = 115
+position = 114
 key = 'Typescript(Imports { file: "lib/stringifier.js" })'
 descriptor = "imports in lib/stringifier.js"
 cost_tokens = 16
-cum_tokens = 7231
+cum_tokens = 7216
 
 [batches.content]
 kind = "lines"
@@ -2700,11 +2681,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'Fs(DirListing { dir: ".yarn/patches" })'
 descriptor = "listing of '.yarn/patches'"
 cost_tokens = 17
-cum_tokens = 7248
+cum_tokens = 7233
 
 [batches.content]
 kind = "fs"
@@ -2714,11 +2695,11 @@ parent = ".yarn/patches"
 entries = ["sax-npm-1.5.0-d40bca2226.patch"]
 
 [[batches]]
-position = 117
+position = 116
 key = 'Fs(DirListing { dir: "test/fixtures/config-loader/cjs" })'
 descriptor = "listing of 'test/fixtures/config-loader/cjs'"
 cost_tokens = 6
-cum_tokens = 7254
+cum_tokens = 7239
 
 [batches.content]
 kind = "fs"
@@ -2728,11 +2709,11 @@ parent = "test/fixtures/config-loader/cjs"
 entries = ["svgo.config.cjs"]
 
 [[batches]]
-position = 118
+position = 117
 key = 'Fs(DirListing { dir: "test/fixtures/config-loader/mjs" })'
 descriptor = "listing of 'test/fixtures/config-loader/mjs'"
 cost_tokens = 6
-cum_tokens = 7260
+cum_tokens = 7245
 
 [batches.content]
 kind = "fs"
@@ -2742,11 +2723,11 @@ parent = "test/fixtures/config-loader/mjs"
 entries = ["svgo.config.mjs"]
 
 [[batches]]
-position = 119
+position = 118
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/mergePaths.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/mergePaths.mdx"
 cost_tokens = 43
-cum_tokens = 7303
+cum_tokens = 7288
 
 [batches.content]
 kind = "lines"
@@ -2768,11 +2749,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 120
+position = 119
 key = 'Typescript(Imports { file: "lib/svgo.js" })'
 descriptor = "imports in lib/svgo.js"
 cost_tokens = 147
-cum_tokens = 7450
+cum_tokens = 7435
 
 [batches.content]
 kind = "lines"
@@ -2786,11 +2767,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/mergeStyles.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/mergeStyles.mdx"
 cost_tokens = 46
-cum_tokens = 7496
+cum_tokens = 7481
 
 [batches.content]
 kind = "lines"
@@ -2812,11 +2793,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'Typescript(Imports { file: "lib/path.js" })'
 descriptor = "imports in lib/path.js"
 cost_tokens = 22
-cum_tokens = 7518
+cum_tokens = 7503
 
 [batches.content]
 kind = "lines"
@@ -2830,11 +2811,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Typescript(ExportBody { file: "lib/svgo/coa.js", start_line: 19, body_start_line: 20 })'
 descriptor = "export body at lib/svgo/coa.js:19 body 20"
 cost_tokens = 50
-cum_tokens = 7568
+cum_tokens = 7553
 
 [batches.content]
 kind = "lines"
@@ -2848,11 +2829,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/addAttributesToSVGElement.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/addAttributesToSVGElement.mdx"
 cost_tokens = 48
-cum_tokens = 7616
+cum_tokens = 7601
 
 [batches.content]
 kind = "lines"
@@ -2890,11 +2871,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/moveElemsAttrsToGroup.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/moveElemsAttrsToGroup.mdx"
 cost_tokens = 49
-cum_tokens = 7665
+cum_tokens = 7650
 
 [batches.content]
 kind = "lines"
@@ -2909,6 +2890,32 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "docs/04-plugins/moveElemsAttrsToGroup.mdx"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Plaintext(DeclSurface { file: "docs/04-plugins/moveGroupAttrsToElems.mdx" })'
+descriptor = "declaration surface of docs/04-plugins/moveGroupAttrsToElems.mdx"
+cost_tokens = 49
+cum_tokens = 7699
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "docs/04-plugins/moveGroupAttrsToElems.mdx"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "docs/04-plugins/moveGroupAttrsToElems.mdx"
 start = 6
 end = 8
 
@@ -2917,36 +2924,10 @@ kind = "full"
 
 [[batches]]
 position = 126
-key = 'Plaintext(DeclSurface { file: "docs/04-plugins/moveGroupAttrsToElems.mdx" })'
-descriptor = "declaration surface of docs/04-plugins/moveGroupAttrsToElems.mdx"
-cost_tokens = 49
-cum_tokens = 7714
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "docs/04-plugins/moveGroupAttrsToElems.mdx"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "docs/04-plugins/moveGroupAttrsToElems.mdx"
-start = 6
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeElementsByAttr.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeElementsByAttr.mdx"
 cost_tokens = 49
-cum_tokens = 7763
+cum_tokens = 7748
 
 [batches.content]
 kind = "lines"
@@ -2968,11 +2949,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 128
+position = 127
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeAttributesBySelector.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeAttributesBySelector.mdx"
 cost_tokens = 51
-cum_tokens = 7814
+cum_tokens = 7799
 
 [batches.content]
 kind = "lines"
@@ -2994,11 +2975,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 129
+position = 128
 key = 'Typescript(ExportBody { file: "lib/svgo.js", start_line: 81, body_start_line: 82 })'
 descriptor = "export body at lib/svgo.js:81 body 82"
 cost_tokens = 601
-cum_tokens = 8415
+cum_tokens = 8400
 
 [batches.content]
 kind = "lines"
@@ -3012,11 +2993,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 130
+position = 129
 key = 'Typescript(Imports { file: "lib/parser.js" })'
 descriptor = "imports in lib/parser.js"
 cost_tokens = 25
-cum_tokens = 8440
+cum_tokens = 8425
 
 [batches.content]
 kind = "lines"
@@ -3030,11 +3011,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 131
+position = 130
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/convertTransform.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/convertTransform.mdx"
 cost_tokens = 54
-cum_tokens = 8494
+cum_tokens = 8479
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +3037,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 132
+position = 131
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeRasterImages.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeRasterImages.mdx"
 cost_tokens = 54
-cum_tokens = 8548
+cum_tokens = 8533
 
 [batches.content]
 kind = "lines"
@@ -3082,11 +3063,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'Fs(DirListing { dir: "test/regression/lists" })'
 descriptor = "listing of 'test/regression/lists'"
 cost_tokens = 13
-cum_tokens = 8561
+cum_tokens = 8546
 
 [batches.content]
 kind = "fs"
@@ -3096,11 +3077,11 @@ parent = "test/regression/lists"
 entries = ["expect-mismatch.txt", "ignore.txt", "skip.txt"]
 
 [[batches]]
-position = 134
+position = 133
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeUselessStrokeAndFill.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeUselessStrokeAndFill.mdx"
 cost_tokens = 56
-cum_tokens = 8617
+cum_tokens = 8602
 
 [batches.content]
 kind = "lines"
@@ -3122,11 +3103,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 135
+position = 134
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/inlineStyles.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/inlineStyles.mdx"
 cost_tokens = 58
-cum_tokens = 8675
+cum_tokens = 8660
 
 [batches.content]
 kind = "lines"
@@ -3148,11 +3129,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 136
+position = 135
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/minifyStyles.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/minifyStyles.mdx"
 cost_tokens = 58
-cum_tokens = 8733
+cum_tokens = 8718
 
 [batches.content]
 kind = "lines"
@@ -3174,11 +3155,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 137
+position = 136
 key = 'Typescript(ExportDoc { file: "lib/svgo/coa.js", start_line: 30 })'
 descriptor = "export doc at lib/svgo/coa.js:30"
 cost_tokens = 27
-cum_tokens = 8760
+cum_tokens = 8745
 
 [batches.content]
 kind = "lines"
@@ -3192,11 +3173,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 138
+position = 137
 key = 'Json(DevDependencies { file: "package.json" })'
 descriptor = "package dev/peer dependencies in package.json"
 cost_tokens = 446
-cum_tokens = 9206
+cum_tokens = 9191
 
 [batches.content]
 kind = "lines"
@@ -3210,11 +3191,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 139
+position = 138
 key = 'Typescript(Imports { file: "lib/svgo/plugins.js" })'
 descriptor = "imports in lib/svgo/plugins.js"
 cost_tokens = 15
-cum_tokens = 9221
+cum_tokens = 9206
 
 [batches.content]
 kind = "lines"
@@ -3228,11 +3209,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 140
+position = 139
 key = 'Typescript(ExportBody { file: "lib/style.js", start_line: 195, body_start_line: 196 })'
 descriptor = "export body at lib/style.js:195 body 196"
 cost_tokens = 100
-cum_tokens = 9321
+cum_tokens = 9306
 
 [batches.content]
 kind = "lines"
@@ -3246,11 +3227,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 141
+position = 140
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/cleanupNumericValues.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/cleanupNumericValues.mdx"
 cost_tokens = 65
-cum_tokens = 9386
+cum_tokens = 9371
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3253,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 142
+position = 141
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/convertShapeToPath.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/convertShapeToPath.mdx"
 cost_tokens = 65
-cum_tokens = 9451
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -3298,11 +3279,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 143
+position = 142
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeStyleElement.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeStyleElement.mdx"
 cost_tokens = 65
-cum_tokens = 9516
+cum_tokens = 9501
 
 [batches.content]
 kind = "lines"
@@ -3324,11 +3305,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 144
+position = 143
 key = 'Plaintext(DeclSurface { file: "docs/01-index.mdx" })'
 descriptor = "declaration surface of docs/01-index.mdx"
 cost_tokens = 127
-cum_tokens = 9643
+cum_tokens = 9628
 
 [batches.content]
 kind = "lines"
@@ -3358,11 +3339,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 145
+position = 144
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeDoctype.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeDoctype.mdx"
 cost_tokens = 68
-cum_tokens = 9711
+cum_tokens = 9696
 
 [batches.content]
 kind = "lines"
@@ -3384,11 +3365,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 146
+position = 145
 key = 'Fs(DirListing { dir: "test/coa" })'
 descriptor = "listing of 'test/coa'"
 cost_tokens = 32
-cum_tokens = 9743
+cum_tokens = 9728
 
 [batches.content]
 kind = "fs"
@@ -3398,11 +3379,11 @@ parent = "test/coa"
 entries = ["_index.test.js", "testFolderWithNoSvg", "testSvg", "testSvgDatauri", "testSvgRecursively"]
 
 [[batches]]
-position = 147
+position = 146
 key = 'Fs(DirListing { dir: "test/coa/testFolderWithNoSvg" })'
 descriptor = "listing of 'test/coa/testFolderWithNoSvg'"
 cost_tokens = 2
-cum_tokens = 9745
+cum_tokens = 9730
 
 [batches.content]
 kind = "fs"
@@ -3412,11 +3393,11 @@ parent = "test/coa/testFolderWithNoSvg"
 entries = ["test"]
 
 [[batches]]
-position = 148
+position = 147
 key = 'Fs(DirListing { dir: "test/coa/testSvgDatauri" })'
 descriptor = "listing of 'test/coa/testSvgDatauri'"
 cost_tokens = 3
-cum_tokens = 9748
+cum_tokens = 9733
 
 [batches.content]
 kind = "fs"
@@ -3426,11 +3407,11 @@ parent = "test/coa/testSvgDatauri"
 entries = ["test.svg"]
 
 [[batches]]
-position = 149
+position = 148
 key = 'Fs(DirListing { dir: "test/coa/testSvg" })'
 descriptor = "listing of 'test/coa/testSvg'"
 cost_tokens = 9
-cum_tokens = 9757
+cum_tokens = 9742
 
 [batches.content]
 kind = "fs"
@@ -3440,11 +3421,11 @@ parent = "test/coa/testSvg"
 entries = ["test.1.svg", "test.svg"]
 
 [[batches]]
-position = 150
+position = 149
 key = 'Fs(DirListing { dir: "test/coa/testSvgRecursively" })'
 descriptor = "listing of 'test/coa/testSvgRecursively'"
 cost_tokens = 15
-cum_tokens = 9772
+cum_tokens = 9757
 
 [batches.content]
 kind = "fs"
@@ -3454,11 +3435,11 @@ parent = "test/coa/testSvgRecursively"
 entries = ["depth-1", "test.1.svg", "test.svg"]
 
 [[batches]]
-position = 151
+position = 150
 key = 'Fs(DirListing { dir: "test/coa/testSvgRecursively/depth-1" })'
 descriptor = "listing of 'test/coa/testSvgRecursively/depth-1'"
 cost_tokens = 5
-cum_tokens = 9777
+cum_tokens = 9762
 
 [batches.content]
 kind = "fs"
@@ -3468,11 +3449,11 @@ parent = "test/coa/testSvgRecursively/depth-1"
 entries = ["depth-2"]
 
 [[batches]]
-position = 152
+position = 151
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/removeNonInheritableGroupAttrs.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/removeNonInheritableGroupAttrs.mdx"
 cost_tokens = 71
-cum_tokens = 9848
+cum_tokens = 9833
 
 [batches.content]
 kind = "lines"
@@ -3494,11 +3475,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 153
+position = 152
 key = 'Typescript(ExportDoc { file: "lib/path.js", start_line: 302 })'
 descriptor = "export doc at lib/path.js:302"
 cost_tokens = 36
-cum_tokens = 9884
+cum_tokens = 9869
 
 [batches.content]
 kind = "lines"
@@ -3512,11 +3493,11 @@ end = 301
 kind = "full"
 
 [[batches]]
-position = 154
+position = 153
 key = 'Plaintext(DeclSurface { file: "docs/04-plugins/cleanupAttrs.mdx" })'
 descriptor = "declaration surface of docs/04-plugins/cleanupAttrs.mdx"
 cost_tokens = 74
-cum_tokens = 9958
+cum_tokens = 9943
 
 [batches.content]
 kind = "lines"

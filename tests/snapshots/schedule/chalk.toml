@@ -1,7 +1,7 @@
 fixture = "chalk"
 budget = 10000
-cumulative_tokens = 9744
-batch_count = 130
+cumulative_tokens = 9675
+batch_count = 128
 
 [[batches]]
 position = 1
@@ -2660,29 +2660,10 @@ kind = "full"
 
 [[batches]]
 position = 107
-key = 'Typescript(TestNames { file: "test/no-color-support.js", chunk_index: 0, benchmark: false })'
-descriptor = "test names surface in test/no-color-support.js"
-cost_tokens = 20
-cum_tokens = 7710
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/no-color-support.js"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^test\('colors can be forced by using chalk\.level''''
-
-[[batches]]
-position = 108
 key = 'Markdown(Section { file: "code-of-conduct.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "code-of-conduct.md section #5"
 cost_tokens = 163
-cum_tokens = 7873
+cum_tokens = 7853
 
 [batches.content]
 kind = "lines"
@@ -2696,11 +2677,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 109
+position = 108
 key = 'Markdown(Section { file: "readme.md", section_index: 38, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #38"
 cost_tokens = 67
-cum_tokens = 7940
+cum_tokens = 7920
 
 [batches.content]
 kind = "lines"
@@ -2714,11 +2695,11 @@ end = 272
 kind = "full"
 
 [[batches]]
-position = 110
+position = 109
 key = 'Markdown(Section { file: "readme.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #16"
 cost_tokens = 105
-cum_tokens = 8045
+cum_tokens = 8025
 
 [batches.content]
 kind = "lines"
@@ -2732,11 +2713,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 111
+position = 110
 key = 'Markdown(Section { file: "readme.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #12"
 cost_tokens = 108
-cum_tokens = 8153
+cum_tokens = 8133
 
 [batches.content]
 kind = "lines"
@@ -2750,11 +2731,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 112
+position = 111
 key = 'Typescript(Imports { file: "source/vendor/supports-color/browser.d.ts" })'
 descriptor = "imports in source/vendor/supports-color/browser.d.ts"
 cost_tokens = 13
-cum_tokens = 8166
+cum_tokens = 8146
 
 [batches.content]
 kind = "lines"
@@ -2768,11 +2749,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 113
+position = 112
 key = 'Typescript(ModuleItemNames { file: "source/vendor/supports-color/index.js" })'
 descriptor = "module item names surface in source/vendor/supports-color/index.js"
 cost_tokens = 117
-cum_tokens = 8283
+cum_tokens = 8263
 
 [batches.content]
 kind = "lines"
@@ -2826,11 +2807,11 @@ end = 185
 kind = "full"
 
 [[batches]]
-position = 114
+position = 113
 key = 'Typescript(ModuleItem { file: "source/vendor/supports-color/index.js", start_line: 7 })'
 descriptor = "module item at source/vendor/supports-color/index.js:7"
 cost_tokens = 0
-cum_tokens = 8283
+cum_tokens = 8263
 
 [batches.content]
 kind = "lines"
@@ -2852,11 +2833,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 115
+position = 114
 key = 'Typescript(ModuleItem { file: "source/vendor/supports-color/index.js", start_line: 14 })'
 descriptor = "module item at source/vendor/supports-color/index.js:14"
 cost_tokens = 0
-cum_tokens = 8283
+cum_tokens = 8263
 
 [batches.content]
 kind = "lines"
@@ -2870,11 +2851,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'Typescript(ModuleItem { file: "source/vendor/supports-color/index.js", start_line: 16 })'
 descriptor = "module item at source/vendor/supports-color/index.js:16"
 cost_tokens = 0
-cum_tokens = 8283
+cum_tokens = 8263
 
 [batches.content]
 kind = "lines"
@@ -2888,11 +2869,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 117
+position = 116
 key = 'Typescript(ModuleItem { file: "source/vendor/supports-color/index.js", start_line: 33 })'
 descriptor = "module item at source/vendor/supports-color/index.js:33"
 cost_tokens = 0
-cum_tokens = 8283
+cum_tokens = 8263
 
 [batches.content]
 kind = "lines"
@@ -2914,11 +2895,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 117
 key = 'Typescript(ModuleItem { file: "source/vendor/supports-color/index.js", start_line: 47 })'
 descriptor = "module item at source/vendor/supports-color/index.js:47"
 cost_tokens = 0
-cum_tokens = 8283
+cum_tokens = 8263
 
 [batches.content]
 kind = "lines"
@@ -2940,11 +2921,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 118
 key = 'Typescript(ModuleItem { file: "source/vendor/supports-color/index.js", start_line: 60 })'
 descriptor = "module item at source/vendor/supports-color/index.js:60"
 cost_tokens = 0
-cum_tokens = 8283
+cum_tokens = 8263
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +2947,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 119
 key = 'Typescript(ModuleItem { file: "source/vendor/supports-color/index.js", start_line: 185 })'
 descriptor = "module item at source/vendor/supports-color/index.js:185"
 cost_tokens = 47
-cum_tokens = 8330
+cum_tokens = 8310
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +2965,11 @@ end = 188
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Typescript(ModuleItemBody { file: "source/vendor/supports-color/index.js", start_line: 7, body_start_line: 8 })'
 descriptor = "module item body at source/vendor/supports-color/index.js:7 body 8"
 cost_tokens = 78
-cum_tokens = 8408
+cum_tokens = 8388
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +2983,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'Typescript(ModuleItemBody { file: "source/vendor/supports-color/index.js", start_line: 47, body_start_line: 48 })'
 descriptor = "module item body at source/vendor/supports-color/index.js:47 body 48"
 cost_tokens = 87
-cum_tokens = 8495
+cum_tokens = 8475
 
 [batches.content]
 kind = "lines"
@@ -3020,11 +3001,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Typescript(ModuleItemBody { file: "source/vendor/supports-color/index.js", start_line: 33, body_start_line: 34 })'
 descriptor = "module item body at source/vendor/supports-color/index.js:33 body 34"
 cost_tokens = 132
-cum_tokens = 8627
+cum_tokens = 8607
 
 [batches.content]
 kind = "lines"
@@ -3038,11 +3019,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Markdown(Section { file: "code-of-conduct.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "code-of-conduct.md section #2"
 cost_tokens = 224
-cum_tokens = 8851
+cum_tokens = 8831
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +3037,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Typescript(ExportBody { file: "source/utilities.js", start_line: 21, body_start_line: 22 })'
 descriptor = "export body at source/utilities.js:21 body 22"
 cost_tokens = 154
-cum_tokens = 9005
+cum_tokens = 8985
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +3055,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 126
+position = 125
 key = 'Markdown(Section { file: "readme.md", section_index: 29, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #29"
 cost_tokens = 423
-cum_tokens = 9428
+cum_tokens = 9408
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +3073,11 @@ end = 244
 kind = "full"
 
 [[batches]]
-position = 127
+position = 126
 key = 'Typescript(Imports { file: "source/vendor/supports-color/index.d.ts" })'
 descriptor = "imports in source/vendor/supports-color/index.d.ts"
 cost_tokens = 18
-cum_tokens = 9446
+cum_tokens = 9426
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +3091,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 128
+position = 127
 key = 'Typescript(ExportBody { file: "source/utilities.js", start_line: 2, body_start_line: 3 })'
 descriptor = "export body at source/utilities.js:2 body 3"
 cost_tokens = 169
-cum_tokens = 9615
+cum_tokens = 9595
 
 [batches.content]
 kind = "lines"
@@ -3128,11 +3109,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 129
+position = 128
 key = 'Typescript(Imports { file: "source/index.d.ts" })'
 descriptor = "imports in source/index.d.ts"
 cost_tokens = 80
-cum_tokens = 9695
+cum_tokens = 9675
 
 [batches.content]
 kind = "lines"
@@ -3144,31 +3125,3 @@ end = 10
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 130
-key = 'Typescript(TestNames { file: "test/instance.js", chunk_index: 0, benchmark: false })'
-descriptor = "test names surface in test/instance.js"
-cost_tokens = 49
-cum_tokens = 9744
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "test/instance.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^test\('create an isolated context where colors can be disabled \(by level\)''''
-
-[[batches.content.spans]]
-path = "test/instance.js"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "truncated"
-pattern = '''^test\('the `level` option should be a number from 0 to 3''''
