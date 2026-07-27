@@ -14,6 +14,7 @@ use std::cell::{OnceCell, RefCell};
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::ops::Range;
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
 use std::sync::Arc;
 
 use tree_sitter::{Language, Node, Tree};
@@ -130,7 +131,7 @@ pub struct WalkCtx {
     /// Built once per run — every listing and file enumeration in the
     /// walk goes through it, so an ignored subtree is invisible to
     /// discovery rather than filtered out downstream.
-    dir_filter: DirFilter,
+    dir_filter: Rc<DirFilter>,
     source_cache: SourceCache,
     /// Tree-sitter parse results, keyed by path.
     tree_cache: RefCell<HashMap<PathBuf, Arc<Tree>>>,
@@ -154,7 +155,7 @@ impl WalkCtx {
 
     pub fn with_cache(root: PathBuf, source_cache: SourceCache) -> Self {
         Self {
-            dir_filter: DirFilter::new(&root),
+            dir_filter: Rc::new(DirFilter::new(&root)),
             root,
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
@@ -177,6 +178,12 @@ impl WalkCtx {
         &self.dir_filter
     }
 
+    /// Shared handle for the renderer, so cost probes reuse this run's
+    /// ignore caches instead of rebuilding them per probe.
+    pub fn dir_filter_handle(&self) -> Rc<DirFilter> {
+        Rc::clone(&self.dir_filter)
+    }
+
     pub fn source_cache(&self) -> &SourceCache {
         &self.source_cache
     }
@@ -184,9 +191,13 @@ impl WalkCtx {
     /// Rendered token cost of `content` against an otherwise-empty
     /// tree — the walkers' shared cost probe for split/chunk sizing.
     pub(crate) fn marginal_tokens(&self, content: &crate::content::BatchContent) -> usize {
-        crate::render::RenderedTree::new(self.root.clone(), self.source_cache.clone())
-            .marginal_cost(content)
-            .tokens
+        crate::render::RenderedTree::with_filter(
+            self.root.clone(),
+            self.source_cache.clone(),
+            self.dir_filter_handle(),
+        )
+        .marginal_cost(content)
+        .tokens
     }
 
     /// Depth of `path` relative to the seed root (root itself = 0).

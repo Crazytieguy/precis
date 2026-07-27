@@ -177,14 +177,28 @@ pub struct RenderedTree {
     /// would never show". A directory holding only ignored entries is
     /// empty as far as the reader is concerned, and marking it would
     /// promise substance that no budget can buy.
-    dir_filter: DirFilter,
+    ///
+    /// Shared rather than owned: the filter's caches are what keep the
+    /// "is anything visible beneath this directory" question from
+    /// costing a subtree walk, and a scheduler cost probe builds one of
+    /// these trees per call — an owned filter would throw the answers
+    /// away every time.
+    dir_filter: Rc<DirFilter>,
 }
 
 impl RenderedTree {
     pub fn new(root: PathBuf, source_cache: SourceCache) -> Self {
+        let dir_filter = Rc::new(DirFilter::new(&root));
+        Self::with_filter(root, source_cache, dir_filter)
+    }
+
+    pub fn with_filter(
+        root: PathBuf,
+        source_cache: SourceCache,
+        dir_filter: Rc<DirFilter>,
+    ) -> Self {
         let mut nodes = HashMap::new();
         nodes.insert(root.clone(), TreeNode::empty_dir());
-        let dir_filter = DirFilter::new(&root);
         Self {
             root,
             nodes,

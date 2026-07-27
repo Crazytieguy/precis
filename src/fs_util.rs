@@ -5,7 +5,6 @@
 
 use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap};
-use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
@@ -38,6 +37,23 @@ pub enum EntryKind {
 /// file, so gitignore matching alone never hides it.
 fn is_internal_entry(name: &str) -> bool {
     name == GIT_DIR || name == PRECIS_PIN_FILE
+}
+
+/// Directories the walker never recurses into — heavy/generated trees.
+/// They still appear in listings; only traversal is affected.
+///
+/// Kept alongside the gitignore filter rather than subsumed by it:
+/// inside a repository these names are almost always gitignored and the
+/// list never fires, but precis also runs on trees that aren't
+/// repositories (extracted archives, vendored snapshots, the fixture
+/// corpus), where the filter is inert by design and this is the only
+/// thing standing between the walk and a `node_modules` tree. Lives here
+/// so one module owns every "the walk does not look in there" rule.
+pub(crate) fn should_skip_dir(name: &str) -> bool {
+    matches!(
+        name,
+        "target" | "node_modules" | ".git" | "dist" | "build" | ".next" | "__pycache__"
+    )
 }
 
 /// Gitignore-aware visibility filter for one walk root, built once per
@@ -75,6 +91,10 @@ struct RepoIgnores {
     /// `.gitignore` matcher per directory; `None` for a directory with
     /// no `.gitignore`. Lazily populated.
     per_dir: RefCell<HashMap<PathBuf, Option<Rc<Gitignore>>>>,
+    /// Memo for [`DirFilter::hides_everything_in`]. Each directory is
+    /// probed at most once per run, which is what keeps the answer from
+    /// costing a repeated subtree walk.
+    vacuous: RefCell<HashMap<PathBuf, bool>>,
     /// `$GIT_DIR/info/exclude` then the global excludes file, consulted
     /// only after the whole `.gitignore` chain came back undecided.
     fallbacks: Vec<Gitignore>,
@@ -131,6 +151,7 @@ impl DirFilter {
             repo: Some(RepoIgnores {
                 root: root.to_path_buf(),
                 per_dir: RefCell::new(HashMap::new()),
+                vacuous: RefCell::new(HashMap::new()),
                 fallbacks,
             }),
         }
@@ -150,13 +171,84 @@ impl DirFilter {
         Self { repo: None }
     }
 
-    /// [`DirFilter::excludes`] for a directory entry, without building
-    /// the child path when there is nothing to ask. Directory scans
-    /// call this once per entry, and joining a `PathBuf` per entry to
-    /// answer "no" is the whole cost of the filter on a tree it has no
-    /// opinion about.
-    pub fn excludes_child(&self, dir: &Path, name: &OsStr, is_dir: bool) -> bool {
-        self.repo.is_some() && self.excludes(&dir.join(name), is_dir)
+    /// Whether the filter has any rules at all. Callers use it to skip
+    /// building a child path just to be told "no" — on a tree the filter
+    /// has no opinion about, that join per directory entry is the whole
+    /// cost of having a filter.
+    fn is_active(&self) -> bool {
+        self.repo.is_some()
+    }
+
+    /// True when `dir` holds something on disk yet the filter admits
+    /// nothing anywhere beneath it.
+    ///
+    /// This is the self-ignoring-directory idiom — a scratch, cache or
+    /// vendor directory whose own `.gitignore` is a single `*` — plus any
+    /// directory left holding only such directories. Git calls these
+    /// ignored (`git status --ignored` collapses the whole thing to one
+    /// `dir/` row, and `git check-ignore dir/` names the nested pattern),
+    /// even though no pattern matches the directory itself: the pattern
+    /// that hides it lives *inside* it, one level below where a parent's
+    /// listing decides.
+    ///
+    /// A **genuinely empty** directory is deliberately not this. It holds
+    /// nothing because it holds nothing, not because precis is
+    /// withholding it, and an empty directory is real repository
+    /// structure — dropping its row would substitute one lie for another.
+    ///
+    /// Answering costs one `read_dir`, and recurses only into a directory
+    /// that has no surviving file of its own, so the common case is a
+    /// single probe that stops at the first visible entry. Memoized per
+    /// run.
+    pub fn hides_everything_in(&self, dir: &Path) -> bool {
+        let Some(repo) = &self.repo else {
+            return false;
+        };
+        if let Some(&known) = repo.vacuous.borrow().get(dir) {
+            return known;
+        }
+        let vacuous = self.probe_hides_everything_in(dir);
+        repo.vacuous.borrow_mut().insert(dir.to_path_buf(), vacuous);
+        vacuous
+    }
+
+    fn probe_hides_everything_in(&self, dir: &Path) -> bool {
+        let Ok(read_dir) = std::fs::read_dir(dir) else {
+            return false;
+        };
+        let mut occupied = false;
+        let mut surviving_subdirs = Vec::new();
+        for entry in read_dir.flatten() {
+            occupied = true;
+            let name = entry.file_name();
+            if is_internal_entry(&name.to_string_lossy()) {
+                continue;
+            }
+            let Ok(file_type) = entry.file_type() else {
+                continue;
+            };
+            let path = entry.path();
+            let is_dir = file_type.is_dir();
+            if self.excludes(&path, is_dir) {
+                continue;
+            }
+            if !is_dir {
+                // A surviving file settles it without any recursion.
+                return false;
+            }
+            if should_skip_dir(&name.to_string_lossy()) {
+                // Heavy generated trees are listed but never entered, so
+                // the row itself is the content — and descending to
+                // confirm that is exactly the walk this filter exists to
+                // avoid.
+                return false;
+            }
+            surviving_subdirs.push(path);
+        }
+        occupied
+            && surviving_subdirs
+                .iter()
+                .all(|child| self.hides_everything_in(child))
     }
 
     /// [`DirFilter::excludes`] extended to `path`'s ancestors — true
@@ -318,8 +410,18 @@ pub fn list_dir(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> 
             } else {
                 EntryKind::File
             };
-            if filter.excludes_child(path, &name_os, matches!(kind, EntryKind::Directory)) {
-                return None;
+            if filter.is_active() {
+                let child = path.join(&name_os);
+                let is_dir = matches!(kind, EntryKind::Directory);
+                if filter.excludes(&child, is_dir) {
+                    return None;
+                }
+                // A directory that hides its whole contents is ignored
+                // content itself, not a directory that happens to be
+                // empty — see `hides_everything_in`.
+                if is_dir && filter.hides_everything_in(&child) {
+                    return None;
+                }
             }
             Some((name, kind))
         })
@@ -328,6 +430,9 @@ pub fn list_dir(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> 
 
 #[cfg(test)]
 mod tests {
+    use std::collections::BTreeSet;
+    use std::process::Command;
+
     use super::*;
 
     /// Every test here builds the filter without the user's global
@@ -335,6 +440,120 @@ mod tests {
     /// `cargo t`.
     fn names_in(dir: &Path, filter: &DirFilter) -> Vec<String> {
         list_dir(dir, filter).into_keys().collect()
+    }
+
+    /// Root-relative paths the listing walk admits, in the walk's own
+    /// order of discovery.
+    fn walk_visible(root: &Path, filter: &DirFilter) -> BTreeSet<String> {
+        let mut out = BTreeSet::new();
+        let mut stack = vec![root.to_path_buf()];
+        while let Some(dir) = stack.pop() {
+            for (name, kind) in list_dir(&dir, filter) {
+                let child = dir.join(&name);
+                out.insert(
+                    child
+                        .strip_prefix(root)
+                        .unwrap()
+                        .to_string_lossy()
+                        .into_owned(),
+                );
+                if matches!(kind, EntryKind::Directory) {
+                    stack.push(child);
+                }
+            }
+        }
+        out
+    }
+
+    /// `git` with global and system config neutralized, so the oracle
+    /// doesn't depend on whoever runs the suite either.
+    fn git(repo: &Path, args: &[&str]) -> String {
+        let out = Command::new("git")
+            .args(args)
+            .current_dir(repo)
+            .env("GIT_CONFIG_GLOBAL", "/dev/null")
+            .env("GIT_CONFIG_SYSTEM", "/dev/null")
+            .output()
+            .expect("`git` must be on PATH to run the gitignore parity test");
+        assert!(
+            out.status.success(),
+            "git {args:?} failed: {}",
+            String::from_utf8_lossy(&out.stderr)
+        );
+        String::from_utf8(out.stdout).expect("git output is UTF-8")
+    }
+
+    /// The whole filter, checked against git itself rather than against
+    /// hand-reasoned expectations.
+    ///
+    /// The oracle is git's *walk* (`ls-files`), not `git check-ignore`.
+    /// check-ignore answers "does a pattern match this path", which is a
+    /// one-level question: with `outer/inner/.gitignore` holding `*` it
+    /// calls `outer/inner/` ignored but `outer/` visible, while the walk
+    /// — and `git status --ignored` — collapses the whole chain. The
+    /// walking answer is the one a reader of the summary cares about.
+    #[test]
+    fn fs_util_filter_matches_the_paths_git_can_see() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        git(root, &["init", "-q", "."]);
+        std::fs::write(
+            root.join(".gitignore"),
+            // Unanchored, anchored, directory-only, and a negation whose
+            // position in the file is what makes it win.
+            "*.log\n/build\ntmp/\n!important.log\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(root.join(GIT_DIR).join("info")).unwrap();
+        std::fs::write(root.join(GIT_DIR).join("info/exclude"), "local-only\n").unwrap();
+
+        std::fs::write(root.join("README.md"), "# demo\n").unwrap();
+        std::fs::write(root.join("noisy.log"), "").unwrap();
+        std::fs::write(root.join("important.log"), "").unwrap();
+        std::fs::write(root.join("local-only"), "").unwrap();
+        std::fs::create_dir_all(root.join("build/lib")).unwrap();
+        std::fs::write(root.join("build/lib/out.o"), "").unwrap();
+        // Anchored `/build` doesn't reach here, so this one survives.
+        std::fs::create_dir_all(root.join("nested/build")).unwrap();
+        std::fs::write(root.join("nested/build/keep.rs"), "").unwrap();
+        // Nested .gitignore that both adds a rule and re-includes.
+        std::fs::create_dir(root.join("src")).unwrap();
+        std::fs::write(root.join("src/.gitignore"), "generated.rs\n!*.log\n").unwrap();
+        std::fs::write(root.join("src/lib.rs"), "").unwrap();
+        std::fs::write(root.join("src/generated.rs"), "").unwrap();
+        std::fs::write(root.join("src/trace.log"), "").unwrap();
+        // Self-ignoring scratch dir, and a parent left holding only one.
+        std::fs::create_dir(root.join("scratch")).unwrap();
+        std::fs::write(root.join("scratch/.gitignore"), "*\n").unwrap();
+        std::fs::write(root.join("scratch/notes"), "").unwrap();
+        std::fs::create_dir_all(root.join("outer/inner")).unwrap();
+        std::fs::write(root.join("outer/inner/.gitignore"), "*\n").unwrap();
+        std::fs::write(root.join("outer/inner/blob"), "").unwrap();
+        // Unanchored `tmp/` reaches any depth.
+        std::fs::create_dir_all(root.join("docs/tmp")).unwrap();
+        std::fs::write(root.join("docs/guide.md"), "").unwrap();
+        std::fs::write(root.join("docs/tmp/scratch.md"), "").unwrap();
+        // Git cannot represent an empty directory at all.
+        std::fs::create_dir(root.join("placeholder")).unwrap();
+
+        // Every file git can see, plus the directories on the way to one.
+        let mut expected: BTreeSet<String> = BTreeSet::new();
+        for file in git(root, &["ls-files", "--others", "--exclude-standard"]).lines() {
+            let mut prefix = String::new();
+            for part in file.split('/') {
+                if !prefix.is_empty() {
+                    prefix.push('/');
+                }
+                prefix.push_str(part);
+                expected.insert(prefix.clone());
+            }
+        }
+        // The one thing git has no way to report. An empty directory is
+        // real repository structure, so precis keeps listing it.
+        expected.insert("placeholder".to_string());
+
+        let filter = DirFilter::without_global_excludes(root);
+        assert_eq!(walk_visible(root, &filter), expected);
     }
 
     /// A tree with no `.git` is not a repository, so its `.gitignore`
@@ -403,6 +622,44 @@ mod tests {
         assert!(filter.excludes_tree(&root.join("examples"), true));
         // The walk root itself is always visible, ignored or not.
         assert!(!filter.excludes_tree(root, true));
+    }
+
+    /// The self-ignoring-directory idiom: a scratch dir whose own
+    /// `.gitignore` is `*`. No pattern matches the directory from
+    /// outside — the one that hides it lives inside it — so a parent's
+    /// listing has to look in. Git agrees these are ignored; it collapses
+    /// them to a single `dir/` row under `git status --ignored`.
+    #[test]
+    fn fs_util_filter_drops_a_directory_that_hides_all_its_own_contents() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        std::fs::create_dir(root.join(GIT_DIR)).unwrap();
+        std::fs::write(root.join(".gitignore"), "\n").unwrap();
+        // Hides everything it holds, including its own `.gitignore`.
+        std::fs::create_dir(root.join("scratch")).unwrap();
+        std::fs::write(root.join("scratch/.gitignore"), "*\n").unwrap();
+        std::fs::write(root.join("scratch/notes.txt"), "x").unwrap();
+        // Holds only such a directory — git collapses the whole chain.
+        std::fs::create_dir_all(root.join("outer/inner")).unwrap();
+        std::fs::write(root.join("outer/inner/.gitignore"), "*\n").unwrap();
+        std::fs::write(root.join("outer/inner/blob.bin"), "x").unwrap();
+        // Genuinely empty: real repository structure, keeps its row.
+        std::fs::create_dir(root.join("placeholder")).unwrap();
+        // Mixed: one hidden child, one real file.
+        std::fs::create_dir_all(root.join("mixed/cache")).unwrap();
+        std::fs::write(root.join("mixed/cache/.gitignore"), "*\n").unwrap();
+        std::fs::write(root.join("mixed/real.rs"), "").unwrap();
+
+        let filter = DirFilter::without_global_excludes(root);
+        assert_eq!(
+            names_in(root, &filter),
+            [".gitignore", "mixed", "placeholder"]
+        );
+        assert_eq!(names_in(&root.join("mixed"), &filter), ["real.rs"]);
+        assert!(filter.hides_everything_in(&root.join("scratch")));
+        assert!(filter.hides_everything_in(&root.join("outer")));
+        assert!(!filter.hides_everything_in(&root.join("placeholder")));
+        assert!(!filter.hides_everything_in(&root.join("mixed")));
     }
 
     /// A linked worktree carries a `.git` pointer file, and keeps

@@ -233,7 +233,7 @@ fn collect_include_in_degree(root: &Path, filter: &DirFilter) -> IncludeInDegree
                 continue;
             }
             if file_type.is_dir() {
-                if !super::fs::should_skip_dir(&entry.file_name().to_string_lossy()) {
+                if !crate::fs_util::should_skip_dir(&entry.file_name().to_string_lossy()) {
                     stack.push(path);
                 }
             } else if file_type.is_file()
@@ -361,7 +361,7 @@ fn collect_port_dirs(root: &Path, filter: &DirFilter) -> HashSet<PathBuf> {
         let subdirs: Vec<PathBuf> = read_dir
             .flatten()
             .filter(|e| e.file_type().map(|t| t.is_dir()).unwrap_or(false))
-            .filter(|e| !super::fs::should_skip_dir(&e.file_name().to_string_lossy()))
+            .filter(|e| !crate::fs_util::should_skip_dir(&e.file_name().to_string_lossy()))
             .map(|e| e.path())
             .filter(|p| !filter.excludes(p, true))
             .collect();
@@ -437,7 +437,7 @@ fn count_small_headers(root: &Path, filter: &DirFilter) -> usize {
                 continue;
             }
             if file_type.is_dir() {
-                if !super::fs::should_skip_dir(&entry.file_name().to_string_lossy()) {
+                if !crate::fs_util::should_skip_dir(&entry.file_name().to_string_lossy()) {
                     stack.push(path);
                 }
             } else if file_type.is_file() && is_header_file(&path) && header_is_small_by_size(&path)
@@ -496,7 +496,7 @@ fn find_dominant_c_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
                 continue;
             }
             if file_type.is_dir() {
-                if !super::fs::should_skip_dir(&name) && !super::fs::is_test_dir_name(&name) {
+                if !crate::fs_util::should_skip_dir(&name) && !super::fs::is_test_dir_name(&name) {
                     stack.push(path);
                 }
             } else if file_type.is_file()

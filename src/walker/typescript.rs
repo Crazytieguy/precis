@@ -4357,7 +4357,7 @@ fn find_all_entrypoints(root: &Path, filter: &DirFilter) -> Vec<PathBuf> {
             }
             if file_type.is_dir() {
                 let name = entry.file_name();
-                if !super::fs::should_skip_dir(&name.to_string_lossy()) {
+                if !crate::fs_util::should_skip_dir(&name.to_string_lossy()) {
                     walk(&path, filter, out);
                 }
             } else if file_type.is_file() && is_entrypoint_file(&path) {
