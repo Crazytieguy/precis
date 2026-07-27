@@ -10,7 +10,9 @@
 //! ranking falls outside the pool can be picked a round late, which is
 //! an accepted approximation. Under prefix-monotone scheduling (see
 //! `docs/design-notes.md`), if the top-ranked exact doesn't fit the
-//! scheduler stops, no fallback to smaller batches.
+//! scheduler stops, no fallback to smaller batches — with one
+//! exception at round 0, where stopping means returning nothing at all
+//! (`Scheduler::schedule_partial_seed`).
 //!
 //! Generic over `W: Walker` so the scheduler never names any walker-
 //! specific key variant. `W::Key` is an opaque [`WalkerKey`] as far as
@@ -23,9 +25,7 @@ use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
 use crate::batch::{Batch, BatchId, WalkerKey};
-use crate::content::BatchContent;
-#[cfg(debug_assertions)]
-use crate::content::FsEntries;
+use crate::content::{BatchContent, FsEntries, FsGroup};
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::ratio_with_exponent as score_ratio;
 use crate::walker::{WalkCtx, Walker};
@@ -51,7 +51,9 @@ pub struct RunReport<K: WalkerKey> {
     pub tree: RenderedTree,
     pub scheduled: Vec<ScheduledBatchRecord<K>>,
     /// All walker-emitted batches discovered during this run, including
-    /// batches that never made it into the prefix-monotone schedule.
+    /// batches that never made it into the prefix-monotone schedule. A
+    /// seed degraded by `Scheduler::schedule_partial_seed` appears in
+    /// the form it was scheduled in, not the form the walker emitted.
     pub candidates: Vec<Batch<K>>,
 }
 
@@ -186,11 +188,13 @@ impl<W: Walker> Scheduler<W> {
         }
 
         // Prefix-monotone scheduling — stop on the first top-ranked
-        // batch that doesn't fit (no fallback to smaller batches).
+        // batch that doesn't fit (no fallback to smaller batches),
+        // except at round 0 where stopping yields nothing at all.
         {
             crate::time_span!("scheduler_loop");
             while let Some((id, cost)) = self.best_exact() {
                 if !self.fits(cost) {
+                    self.schedule_partial_seed(id);
                     break;
                 }
                 self.schedule(id, cost);
@@ -480,17 +484,12 @@ impl<W: Walker> Scheduler<W> {
 
     // ---- scheduling ----
 
-    fn schedule(&mut self, id: BatchId, cost: Cost) {
-        debug_assert!(
-            !self.scheduled.contains(&id),
-            "batch {:?} scheduled twice",
-            id
-        );
-        debug_assert!(
-            self.fits(cost),
-            "scheduled batch exceeds token/byte budget; caller should have filtered it"
-        );
-
+    /// Apply `id`'s content to the tree and log it as scheduled.
+    /// Returns the applied content. Bookkeeping that only pays off in a
+    /// *later* round — cost invalidation, train counters, walker
+    /// expansion — lives in [`Self::schedule`]; a terminal partial
+    /// schedule skips it.
+    fn apply_and_record(&mut self, id: BatchId, cost: Cost) -> BatchContent {
         let ancestors = self.ancestors_of(id);
         let entry_content = self.entries[id.index()].content.clone();
         let conflicts = {
@@ -515,6 +514,92 @@ impl<W: Walker> Scheduler<W> {
         self.scheduled_log.push((id, cost));
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
+        entry_content
+    }
+
+    /// Terminal degradation for a budget too small to open the walk.
+    /// Every batch a walker emits is gated, directly or transitively, on
+    /// the seed listing, so a seed that doesn't fit leaves the pool
+    /// permanently empty and the caller with an empty string — no
+    /// output at all, and no indication why. Schedule the longest
+    /// affordable prefix of the seed's entries instead; the renderer
+    /// marks the shortened listing `…`, and the budget buys the head of
+    /// the repo map rather than nothing.
+    ///
+    /// Only listings degrade this way: entry rows are independent, so a
+    /// prefix of one is a smaller listing, where a prefix of a line
+    /// batch is a severed piece of source. Restricting this to the
+    /// still-empty schedule keeps the stop-on-first-ill-fit rule (and
+    /// the prefix-monotone schedule it buys) intact everywhere else.
+    fn schedule_partial_seed(&mut self, id: BatchId) {
+        if !self.scheduled_log.is_empty() {
+            return;
+        }
+        let Some((prefix, cost)) = self.affordable_fs_prefix(&self.entries[id.index()].content)
+        else {
+            return;
+        };
+        self.entries[id.index()].content = prefix;
+        self.apply_and_record(id, cost);
+    }
+
+    /// Longest prefix of a listing's entries that fits the remaining
+    /// budget, with its exact cost. Entries are dropped from the tail,
+    /// so what survives is the head of the listing the batch would have
+    /// rendered whole — sorted, because `list_dir` yields entries
+    /// sorted. A seed is one directory's listing; multi-group FS content
+    /// comes only from NS TOML, which never reaches the scheduler.
+    fn affordable_fs_prefix(&self, content: &BatchContent) -> Option<(BatchContent, Cost)> {
+        let BatchContent::Fs { groups } = content else {
+            return None;
+        };
+        let [
+            FsGroup {
+                parent,
+                entries: FsEntries::Listed(paths),
+            },
+        ] = groups.as_slice()
+        else {
+            return None;
+        };
+        let prefix = |k: usize| BatchContent::Fs {
+            groups: vec![FsGroup {
+                parent: parent.clone(),
+                entries: FsEntries::Listed(paths[..k].to_vec()),
+            }],
+        };
+        // Entry rows are independent, so cost climbs with the prefix
+        // length — binary-search the boundary, keeping the longest
+        // prefix that fit. Nothing downstream depends on the search
+        // finding the exact boundary: whatever it returns was measured.
+        let (mut lo, mut hi) = (0usize, paths.len());
+        let mut affordable = None;
+        while hi - lo > 1 {
+            let mid = lo + (hi - lo) / 2;
+            let candidate = prefix(mid);
+            let cost = self.tree.marginal_cost(&candidate);
+            if self.fits(cost) {
+                lo = mid;
+                affordable = Some((candidate, cost));
+            } else {
+                hi = mid;
+            }
+        }
+        affordable
+    }
+
+    fn schedule(&mut self, id: BatchId, cost: Cost) {
+        debug_assert!(
+            !self.scheduled.contains(&id),
+            "batch {:?} scheduled twice",
+            id
+        );
+        debug_assert!(
+            self.fits(cost),
+            "scheduled batch exceeds token/byte budget; caller should have filtered it"
+        );
+
+        let entry_content = self.apply_and_record(id, cost);
         // Zero-cost batches (already line-covered by an ancestor) don't
         // consume budget, so they don't count toward train pressure.
         if cost.tokens > 0 {

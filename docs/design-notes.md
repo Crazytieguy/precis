@@ -106,6 +106,39 @@ deliberate pressure on walker calibration (if a top batch consistently
 blocks small budgets, split it or lower its rank) and on NS authoring
 (the growth envelope keeps NS prefixes coherent at small budgets).
 
+**The one exception: an unaffordable seed (2026-07-26).** Under-
+utilization at the *first* round isn't under-utilization, it's total
+failure — every batch a walker emits is gated, directly or
+transitively, on the seed listing, so a seed that doesn't fit leaves
+the pool permanently empty and the caller with an empty string. That
+is repo-dependent — the threshold is the root listing's own cost, 729
+tokens for htop, and 4 of the 93 fixtures returned nothing at budget
+200 — and reads as a crash from a script or agent loop.
+`Scheduler::schedule_partial_seed` degrades that one round to the
+longest affordable prefix of the seed's entry rows and then stops.
+Listings only: entry rows are independent, so a prefix of one is a
+smaller listing, where a prefix of a line batch is severed source.
+
+The remedy this section prescribes above — *split the blocking batch or
+lower its rank* — is the right lever when a batch blocks *some* budgets,
+and it stays the first thing to reach for. It doesn't apply here: the
+seed is the only batch there is at round 0, so lowering its rank changes
+nothing, and chunking the root listing in the walker moves scheduling at
+every budget and forces a corpus-wide recalibration to fix a failure
+that only exists below the root listing's own cost. The scheduler-side
+degradation is provably a no-op above that threshold.
+
+The prefix property survives in the form that matters — `output(T₁) ⊆
+output(T₂)` for `T₁ < T₂` — and the *batch* prefix property is
+untouched above the first round, so slicing a `T_max` run still
+reproduces every sub-budget schedule the corpus is measured at. A
+partial listing renders a trailing `…` row (`RenderedTree::
+listing_partial`), on the same argument as the entry-row marker: a
+listing cut short is otherwise byte-identical to a complete one. NS
+batches list directories incrementally, so that marker also shows up
+in NS simulation — it shifted `exp_t` by 1–2 tokens on 9 fixtures at
+the 2026-07-26 freeze, with no `Score(3000)` movement anywhere.
+
 ## Auto-injected docs don't belong in precis output
 
 Files the host harness already loads into the model's context —

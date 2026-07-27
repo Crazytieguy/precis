@@ -17,18 +17,18 @@ Score(3000)=0.787 I=0.908 C=0.682 ns_rows≤3K=15/40 (reached=9 partial=2 missin
 | walker |  | 308 | 32 | listing of 'docs/public' |  |  | 0.861 |
 | walker |  | 311 | 3 | listing of 'docs/public/css' |  |  | 0.861 |
 | walker |  | 315 | 4 | listing of 'docs/public/js' |  |  | 0.861 |
-| ns | 332 |  | 118 | src/ directory listing — headers and grammar files | 1.4 |  | 0.693 |
+| ns | 334 |  | 120 | src/ directory listing — headers and grammar files | 1.4 |  | 0.693 |
 | walker |  | 335 | 20 | listing of 'docs/templates/shared' |  |  | 0.693 |
 | walker |  | 391 | 56 | README headline in docs/README.md |  |  | 0.693 |
 | walker |  | 404 | 13 | listing of '.github' |  |  | 0.702 |
 | walker |  | 438 | 34 | listing of '.github/workflows' |  |  | 0.789 |
-| ns | 446 |  | 114 | src/ directory listing — implementation files | 1.5 |  | 0.677 |
+| ns | 446 |  | 112 | src/ directory listing — implementation files | 1.5 |  | 0.677 |
 | walker |  | 451 | 13 | listing of 'scripts' |  |  | 0.677 |
 | walker |  | 497 | 46 | listing of 'config/m4' |  |  | 0.677 |
-| ns | 552 |  | 106 | tests/ directory listing — test data and driver scripts | 1.6 |  | 0.601 |
+| ns | 554 |  | 108 | tests/ directory listing — test data and driver scripts | 1.6 |  | 0.601 |
 | walker |  | 569 | 72 | headings outline in README.md |  |  | 0.601 |
 | walker |  | 591 | 22 | listing of 'm4' |  |  | 0.601 |
-| ns | 709 |  | 157 | tests/ directory listing — fuzz harnesses, modules/, torture/ | 1.7 |  | 0.535 |
+| ns | 709 |  | 155 | tests/ directory listing — fuzz harnesses, modules/, torture/ | 1.7 |  | 0.535 |
 | ns | 727 |  | 18 | Remaining top-level support dirs: vendor, config | 1.8 |  | 0.547 |
 | ns | 798 |  | 71 | README.md — one-paragraph pitch | 1.9 |  | 0.555 |
 | walker |  | 823 | 232 | listing of 'src' |  |  | 0.787 |
