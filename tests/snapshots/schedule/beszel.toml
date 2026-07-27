@@ -877,10 +877,24 @@ entries = ["systems-table-columns.tsx", "systems-table.tsx"]
 
 [[batches]]
 position = 49
+key = 'Fs(DirListing { dir: "internal/alerts" })'
+descriptor = "listing of 'internal/alerts'"
+cost_tokens = 97
+cum_tokens = 1329
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "internal/alerts"
+entries = ["alerts.go", "alerts_api.go", "alerts_api_test.go", "alerts_battery_test.go", "alerts_cache.go", "alerts_cache_test.go", "alerts_disk_test.go", "alerts_history.go", "alerts_quiet_hours_test.go", "alerts_smart.go", "alerts_smart_test.go", "alerts_status.go", "alerts_status_test.go", "alerts_system.go", "alerts_system_test.go", "alerts_test.go", "alerts_test_helpers.go"]
+
+[[batches]]
+position = 50
 key = 'Fs(DirListing { dir: "internal/site/src/components/systemd-table" })'
 descriptor = "listing of 'internal/site/src/components/systemd-table'"
 cost_tokens = 14
-cum_tokens = 1246
+cum_tokens = 1343
 
 [batches.content]
 kind = "fs"
@@ -890,39 +904,11 @@ parent = "internal/site/src/components/systemd-table"
 entries = ["systemd-table-columns.tsx", "systemd-table.tsx"]
 
 [[batches]]
-position = 50
-key = 'Fs(DirListing { dir: ".github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 29
-cum_tokens = 1275
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github"
-entries = ["CODEOWNERS", "DISCUSSION_TEMPLATE", "ISSUE_TEMPLATE", "funding.yml", "pull_request_template.md", "workflows"]
-
-[[batches]]
 position = 51
-key = 'Fs(DirListing { dir: ".github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 18
-cum_tokens = 1293
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = ".github/workflows"
-entries = ["docker-images.yml", "inactivity-actions.yml", "release.yml", "vulncheck.yml"]
-
-[[batches]]
-position = 52
 key = 'Fs(DirListing { dir: "internal/hub" })'
 descriptor = "listing of 'internal/hub'"
 cost_tokens = 93
-cum_tokens = 1386
+cum_tokens = 1436
 
 [batches.content]
 kind = "fs"
@@ -932,11 +918,11 @@ parent = "internal/hub"
 entries = ["agent_connect.go", "agent_connect_test.go", "api.go", "api_test.go", "collections.go", "collections_test.go", "config", "expirymap", "heartbeat", "hub.go", "hub_test.go", "hub_test_helpers.go", "server.go", "server_development.go", "server_production.go", "systems", "transport", "update.go", "utils", "ws"]
 
 [[batches]]
-position = 53
+position = 52
 key = 'Fs(DirListing { dir: "internal/hub/utils" })'
 descriptor = "listing of 'internal/hub/utils'"
 cost_tokens = 3
-cum_tokens = 1389
+cum_tokens = 1439
 
 [batches.content]
 kind = "fs"
@@ -946,11 +932,11 @@ parent = "internal/hub/utils"
 entries = ["utils.go"]
 
 [[batches]]
-position = 54
+position = 53
 key = 'Fs(DirListing { dir: "internal/hub/config" })'
 descriptor = "listing of 'internal/hub/config'"
 cost_tokens = 8
-cum_tokens = 1397
+cum_tokens = 1447
 
 [batches.content]
 kind = "fs"
@@ -960,11 +946,11 @@ parent = "internal/hub/config"
 entries = ["config.go", "config_test.go"]
 
 [[batches]]
-position = 55
+position = 54
 key = 'Fs(DirListing { dir: "internal/hub/heartbeat" })'
 descriptor = "listing of 'internal/hub/heartbeat'"
 cost_tokens = 8
-cum_tokens = 1405
+cum_tokens = 1455
 
 [batches.content]
 kind = "fs"
@@ -974,11 +960,11 @@ parent = "internal/hub/heartbeat"
 entries = ["heartbeat.go", "heartbeat_test.go"]
 
 [[batches]]
-position = 56
+position = 55
 key = 'Fs(DirListing { dir: "internal/hub/transport" })'
 descriptor = "listing of 'internal/hub/transport'"
 cost_tokens = 11
-cum_tokens = 1416
+cum_tokens = 1466
 
 [batches.content]
 kind = "fs"
@@ -988,11 +974,11 @@ parent = "internal/hub/transport"
 entries = ["ssh.go", "transport.go", "websocket.go"]
 
 [[batches]]
-position = 57
+position = 56
 key = 'Fs(DirListing { dir: "internal/hub/expirymap" })'
 descriptor = "listing of 'internal/hub/expirymap'"
 cost_tokens = 12
-cum_tokens = 1428
+cum_tokens = 1478
 
 [batches.content]
 kind = "fs"
@@ -1002,11 +988,11 @@ parent = "internal/hub/expirymap"
 entries = ["expirymap.go", "expirymap_test.go"]
 
 [[batches]]
-position = 58
+position = 57
 key = 'Fs(DirListing { dir: "internal/hub/ws" })'
 descriptor = "listing of 'internal/hub/ws'"
 cost_tokens = 29
-cum_tokens = 1457
+cum_tokens = 1507
 
 [batches.content]
 kind = "fs"
@@ -1016,18 +1002,32 @@ parent = "internal/hub/ws"
 entries = ["handlers.go", "request_manager.go", "request_manager_test.go", "ws.go", "ws_test.go", "ws_test_helpers.go"]
 
 [[batches]]
+position = 58
+key = 'Fs(DirListing { dir: ".github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 29
+cum_tokens = 1536
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = ".github"
+entries = ["CODEOWNERS", "DISCUSSION_TEMPLATE", "ISSUE_TEMPLATE", "funding.yml", "pull_request_template.md", "workflows"]
+
+[[batches]]
 position = 59
-key = 'Fs(DirListing { dir: "internal/alerts" })'
-descriptor = "listing of 'internal/alerts'"
-cost_tokens = 97
+key = 'Fs(DirListing { dir: ".github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 18
 cum_tokens = 1554
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "internal/alerts"
-entries = ["alerts.go", "alerts_api.go", "alerts_api_test.go", "alerts_battery_test.go", "alerts_cache.go", "alerts_cache_test.go", "alerts_disk_test.go", "alerts_history.go", "alerts_quiet_hours_test.go", "alerts_smart.go", "alerts_smart_test.go", "alerts_status.go", "alerts_status_test.go", "alerts_system.go", "alerts_system_test.go", "alerts_test.go", "alerts_test_helpers.go"]
+parent = ".github/workflows"
+entries = ["docker-images.yml", "inactivity-actions.yml", "release.yml", "vulncheck.yml"]
 
 [[batches]]
 position = 60

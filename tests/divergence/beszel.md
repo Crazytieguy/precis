@@ -68,20 +68,20 @@ Score(3000)=0.767 I=0.876 C=0.671 ns_rows≤3K=30/50 (reached=17 partial=2 missi
 | walker |  | 1220 | 12 | listing of 'internal/site/src/components/containers-table' |  |  | 0.633 |
 | walker |  | 1232 | 12 | listing of 'internal/site/src/components/systems-table' |  |  | 0.619 |
 | ns | 1232 |  | 102 | README architecture (hub/agent split) | 1.18 |  | 0.619 |
-| walker |  | 1246 | 14 | listing of 'internal/site/src/components/systemd-table' |  |  | 0.619 |
-| walker |  | 1275 | 29 | listing of '.github' |  |  | 0.654 |
-| walker |  | 1293 | 18 | listing of '.github/workflows' |  |  | 0.684 |
-| ns | 1307 |  | 75 | internal/site/ top-level listing | 1.19 |  | 0.705 |
-| walker |  | 1386 | 93 | listing of 'internal/hub' |  |  | 0.713 |
-| walker |  | 1389 | 3 | listing of 'internal/hub/utils' |  |  | 0.713 |
-| ns | 1396 |  | 89 | internal/hub/ directory listing | 1.20 |  | 0.733 |
-| walker |  | 1397 | 8 | listing of 'internal/hub/config' |  |  | 0.733 |
-| walker |  | 1405 | 8 | listing of 'internal/hub/heartbeat' |  |  | 0.733 |
-| walker |  | 1416 | 11 | listing of 'internal/hub/transport' |  |  | 0.737 |
-| walker |  | 1428 | 12 | listing of 'internal/hub/expirymap' |  |  | 0.742 |
-| walker |  | 1457 | 29 | listing of 'internal/hub/ws' |  |  | 0.776 |
-| ns | 1491 |  | 95 | README supported metrics list (head) | 1.21 |  | 0.760 |
-| walker |  | 1554 | 97 | listing of 'internal/alerts' |  |  | 0.766 |
+| ns | 1307 |  | 75 | internal/site/ top-level listing | 1.19 |  | 0.646 |
+| walker |  | 1329 | 97 | listing of 'internal/alerts' |  |  | 0.652 |
+| walker |  | 1343 | 14 | listing of 'internal/site/src/components/systemd-table' |  |  | 0.652 |
+| ns | 1396 |  | 89 | internal/hub/ directory listing | 1.20 |  | 0.610 |
+| walker |  | 1436 | 93 | listing of 'internal/hub' |  |  | 0.684 |
+| walker |  | 1439 | 3 | listing of 'internal/hub/utils' |  |  | 0.684 |
+| walker |  | 1447 | 8 | listing of 'internal/hub/config' |  |  | 0.684 |
+| walker |  | 1455 | 8 | listing of 'internal/hub/heartbeat' |  |  | 0.684 |
+| walker |  | 1466 | 11 | listing of 'internal/hub/transport' |  |  | 0.688 |
+| walker |  | 1478 | 12 | listing of 'internal/hub/expirymap' |  |  | 0.693 |
+| ns | 1491 |  | 95 | README supported metrics list (head) | 1.21 |  | 0.679 |
+| walker |  | 1507 | 29 | listing of 'internal/hub/ws' |  |  | 0.712 |
+| walker |  | 1536 | 29 | listing of '.github' |  |  | 0.741 |
+| walker |  | 1554 | 18 | listing of '.github/workflows' |  |  | 0.766 |
 | ns | 1588 |  | 97 | internal/alerts/ directory listing | 1.22 |  | 0.776 |
 | walker |  | 1670 | 116 | Makefile target skeleton chunk #1 of Makefile |  |  | 0.776 |
 | walker |  | 1726 | 56 | listing of 'internal/hub/systems' |  |  | 0.810 |
