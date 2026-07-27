@@ -156,131 +156,131 @@ Score(3000)=0.709 I=0.822 C=0.611 ns_rows≤3K=18/46 (reached=11 partial=1 missi
 | walker |  | 6599 | 17 | python decl doc at src/click/_termui_impl.py:386 |  |  | 0.541 |
 | ns | 6617 |  | 383 | Parameter — public method locations | 6.2 |  | 0.531 |
 | ns | 6982 |  | 365 | Option + Argument — public method locations | 6.3 |  | 0.523 |
-| walker |  | 7074 | 475 | python method sigs in src/click/_termui_impl.py |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:115 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:128 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:142 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:166 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:187 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:193 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:196 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:215 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:242 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:288 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:310 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:336 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:341 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:376 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:380 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:621 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:638 |  |  | 0.523 |
-| walker |  | 7074 | 0 | python method at src/click/_termui_impl.py:676 |  |  | 0.523 |
-| walker |  | 7082 | 8 | python method at src/click/_termui_impl.py:148 |  |  | 0.523 |
-| walker |  | 7090 | 8 | python method at src/click/_termui_impl.py:154 |  |  | 0.523 |
-| walker |  | 7098 | 8 | python method at src/click/_termui_impl.py:160 |  |  | 0.523 |
-| walker |  | 7108 | 10 | python method at src/click/_termui_impl.py:668 |  |  | 0.523 |
-| walker |  | 7108 | 0 | python method body at src/click/_termui_impl.py:668 body 669 |  |  | 0.523 |
-| walker |  | 7118 | 10 | python method at src/click/_termui_impl.py:673 |  |  | 0.523 |
-| walker |  | 7118 | 0 | python method body at src/click/_termui_impl.py:673 body 674 |  |  | 0.523 |
-| walker |  | 7131 | 13 | python method doc at src/click/_termui_impl.py:638 |  |  | 0.523 |
-| walker |  | 7189 | 58 | python method at src/click/_termui_impl.py:120 |  |  | 0.523 |
+| walker |  | 7024 | 425 | python method sigs in src/click/_termui_impl.py |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:115 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:128 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:142 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:166 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:187 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:193 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:196 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:215 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:242 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:288 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:310 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:336 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:341 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:376 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:380 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:621 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:638 |  |  | 0.523 |
+| walker |  | 7024 | 0 | python method at src/click/_termui_impl.py:676 |  |  | 0.523 |
+| walker |  | 7032 | 8 | python method at src/click/_termui_impl.py:148 |  |  | 0.523 |
+| walker |  | 7040 | 8 | python method at src/click/_termui_impl.py:154 |  |  | 0.523 |
+| walker |  | 7048 | 8 | python method at src/click/_termui_impl.py:160 |  |  | 0.523 |
+| walker |  | 7061 | 13 | python method doc at src/click/_termui_impl.py:638 |  |  | 0.523 |
+| walker |  | 7092 | 31 | python method at src/click/_termui_impl.py:673 |  |  | 0.523 |
+| walker |  | 7092 | 0 | python method body at src/click/_termui_impl.py:673 body 674 |  |  | 0.523 |
+| walker |  | 7126 | 34 | python method at src/click/_termui_impl.py:668 |  |  | 0.523 |
+| walker |  | 7126 | 0 | python method body at src/click/_termui_impl.py:668 body 669 |  |  | 0.523 |
+| walker |  | 7184 | 58 | python method at src/click/_termui_impl.py:120 |  |  | 0.523 |
 | ns | 7213 |  | 231 | decorators.py — public function locations | 7.1 |  | 0.517 |
-| walker |  | 7235 | 46 | python decl at src/click/_termui_impl.py:597 |  |  | 0.517 |
-| walker |  | 7254 | 19 | python decl doc at src/click/_termui_impl.py:597 |  |  | 0.517 |
-| walker |  | 7326 | 72 | python method at src/click/_termui_impl.py:609 |  |  | 0.517 |
-| walker |  | 7367 | 41 | python class body at src/click/_termui_impl.py:608 |  |  | 0.517 |
-| walker |  | 7417 | 50 | python decl at src/click/_termui_impl.py:442 |  |  | 0.517 |
-| walker |  | 7499 | 82 | python decl doc at src/click/_termui_impl.py:417 |  |  | 0.517 |
+| walker |  | 7230 | 46 | python decl at src/click/_termui_impl.py:597 |  |  | 0.517 |
+| walker |  | 7249 | 19 | python decl doc at src/click/_termui_impl.py:597 |  |  | 0.517 |
+| walker |  | 7321 | 72 | python method at src/click/_termui_impl.py:609 |  |  | 0.517 |
+| walker |  | 7362 | 41 | python class body at src/click/_termui_impl.py:608 |  |  | 0.517 |
+| walker |  | 7412 | 50 | python decl at src/click/_termui_impl.py:442 |  |  | 0.517 |
+| walker |  | 7494 | 82 | python decl doc at src/click/_termui_impl.py:417 |  |  | 0.517 |
 | ns | 7507 |  | 294 | types.py — class locations | 8.1 |  | 0.509 |
-| walker |  | 7550 | 51 | python decl at src/click/_termui_impl.py:546 |  |  | 0.509 |
-| walker |  | 7601 | 51 | python method doc at src/click/_termui_impl.py:341 |  |  | 0.509 |
-| walker |  | 7646 | 45 | python imports in src/click/_textwrap.py |  |  | 0.509 |
+| walker |  | 7545 | 51 | python decl at src/click/_termui_impl.py:546 |  |  | 0.509 |
+| walker |  | 7596 | 51 | python method doc at src/click/_termui_impl.py:341 |  |  | 0.509 |
+| walker |  | 7641 | 45 | python imports in src/click/_textwrap.py |  |  | 0.509 |
 | ns | 7714 |  | 207 | ParamType.convert() contract | 8.2 | 8.1 | 0.502 |
 | ns | 7818 |  | 104 | convert_type() dispatch (tail) | 8.3 | 8.1 | 0.497 |
-| walker |  | 7857 | 211 | python decl names surface in src/click/exceptions.py |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:19 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:26 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:35 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:65 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:108 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:150 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:221 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:251 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:278 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:295 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:304 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:313 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:330 |  |  | 0.498 |
-| walker |  | 7857 | 0 | python decl at src/click/exceptions.py:334 |  |  | 0.498 |
+| walker |  | 7852 | 211 | python decl names surface in src/click/exceptions.py |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:19 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:26 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:35 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:65 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:108 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:150 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:221 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:251 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:278 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:295 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:304 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:313 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:330 |  |  | 0.498 |
+| walker |  | 7852 | 0 | python decl at src/click/exceptions.py:334 |  |  | 0.498 |
 | ns | 7862 |  | 44 | parser.py — internal class locations | 9.1 |  | 0.496 |
-| walker |  | 7871 | 14 | python decl doc at src/click/exceptions.py:313 |  |  | 0.496 |
-| walker |  | 7885 | 14 | python decl doc at src/click/exceptions.py:330 |  |  | 0.496 |
-| walker |  | 7903 | 18 | python decl doc at src/click/exceptions.py:35 |  |  | 0.496 |
-| walker |  | 7922 | 19 | python decl doc at src/click/exceptions.py:251 |  |  | 0.496 |
-| walker |  | 7966 | 44 | python decl doc at src/click/exceptions.py:221 |  |  | 0.496 |
-| walker |  | 8019 | 53 | python decl doc at src/click/exceptions.py:334 |  |  | 0.496 |
+| walker |  | 7866 | 14 | python decl doc at src/click/exceptions.py:313 |  |  | 0.496 |
+| walker |  | 7880 | 14 | python decl doc at src/click/exceptions.py:330 |  |  | 0.496 |
+| walker |  | 7898 | 18 | python decl doc at src/click/exceptions.py:35 |  |  | 0.496 |
+| walker |  | 7917 | 19 | python decl doc at src/click/exceptions.py:251 |  |  | 0.496 |
+| walker |  | 7961 | 44 | python decl doc at src/click/exceptions.py:221 |  |  | 0.496 |
+| walker |  | 8014 | 53 | python decl doc at src/click/exceptions.py:334 |  |  | 0.496 |
 | ns | 8021 |  | 159 | exceptions.py — class locations | 9.2 |  | 0.504 |
-| walker |  | 8043 | 24 | python class body at src/click/exceptions.py:35 |  |  | 0.504 |
-| walker |  | 8056 | 13 | python class body at src/click/exceptions.py:65 |  |  | 0.504 |
+| walker |  | 8038 | 24 | python class body at src/click/exceptions.py:35 |  |  | 0.504 |
+| walker |  | 8051 | 13 | python class body at src/click/exceptions.py:65 |  |  | 0.504 |
 | ns | 8312 |  | 291 | formatting.py — function/class locations | 10.1 |  | 0.497 |
-| walker |  | 8418 | 362 | python method sigs in src/click/exceptions.py |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:41 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:48 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:51 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:54 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:76 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:81 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:137 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:173 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:213 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:245 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:272 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:305 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:309 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:316 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:324 |  |  | 0.497 |
-| walker |  | 8418 | 0 | python method at src/click/exceptions.py:343 |  |  | 0.497 |
-| walker |  | 8451 | 33 | python method at src/click/exceptions.py:288 |  |  | 0.497 |
-| walker |  | 8463 | 12 | python class body at src/click/exceptions.py:334 |  |  | 0.497 |
+| walker |  | 8413 | 362 | python method sigs in src/click/exceptions.py |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:41 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:48 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:51 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:54 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:76 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:81 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:137 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:173 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:213 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:245 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:272 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:305 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:309 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:316 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:324 |  |  | 0.497 |
+| walker |  | 8413 | 0 | python method at src/click/exceptions.py:343 |  |  | 0.497 |
+| walker |  | 8446 | 33 | python method at src/click/exceptions.py:288 |  |  | 0.497 |
+| walker |  | 8458 | 12 | python class body at src/click/exceptions.py:334 |  |  | 0.497 |
 | ns | 8526 |  | 214 | termui.py — public function locations | 10.2 |  | 0.491 |
-| walker |  | 8538 | 75 | python decl doc at src/click/exceptions.py:295 |  |  | 0.491 |
-| walker |  | 8608 | 70 | python method at src/click/exceptions.py:227 |  |  | 0.491 |
+| walker |  | 8533 | 75 | python decl doc at src/click/exceptions.py:295 |  |  | 0.491 |
+| walker |  | 8603 | 70 | python method at src/click/exceptions.py:227 |  |  | 0.491 |
 | ns | 8624 |  | 98 | _termui_impl.py — top-level locations | 10.3 |  | 0.495 |
-| walker |  | 8678 | 70 | python method at src/click/exceptions.py:254 |  |  | 0.495 |
-| walker |  | 8749 | 71 | python method at src/click/exceptions.py:126 |  |  | 0.495 |
+| walker |  | 8673 | 70 | python method at src/click/exceptions.py:254 |  |  | 0.495 |
+| walker |  | 8744 | 71 | python method at src/click/exceptions.py:126 |  |  | 0.495 |
 | ns | 8832 |  | 208 | utils.py — public function/class locations | 11.1 |  | 0.490 |
-| walker |  | 8838 | 89 | python decl doc at src/click/exceptions.py:65 |  |  | 0.490 |
-| walker |  | 8937 | 99 | python decl doc at src/click/exceptions.py:278 |  |  | 0.490 |
-| walker |  | 9026 | 89 | python method at src/click/exceptions.py:162 |  |  | 0.490 |
+| walker |  | 8833 | 89 | python decl doc at src/click/exceptions.py:65 |  |  | 0.490 |
+| walker |  | 8932 | 99 | python decl doc at src/click/exceptions.py:278 |  |  | 0.490 |
+| walker |  | 9021 | 89 | python method at src/click/exceptions.py:162 |  |  | 0.490 |
 | ns | 9104 |  | 272 | _compat.py: platform flags + '-' stream handling | 11.2 |  | 0.483 |
-| walker |  | 9165 | 139 | python decl names surface in src/click/parser.py |  |  | 0.488 |
-| walker |  | 9165 | 0 | python decl at src/click/parser.py:111 |  |  | 0.488 |
-| walker |  | 9165 | 0 | python decl at src/click/parser.py:120 |  |  | 0.488 |
-| walker |  | 9165 | 0 | python decl at src/click/parser.py:127 |  |  | 0.488 |
-| walker |  | 9165 | 0 | python decl at src/click/parser.py:185 |  |  | 0.488 |
-| walker |  | 9165 | 0 | python decl at src/click/parser.py:216 |  |  | 0.488 |
-| walker |  | 9165 | 0 | python decl at src/click/parser.py:224 |  |  | 0.488 |
-| walker |  | 9165 | 0 | python decl at src/click/parser.py:503 |  |  | 0.488 |
+| walker |  | 9160 | 139 | python decl names surface in src/click/parser.py |  |  | 0.488 |
+| walker |  | 9160 | 0 | python decl at src/click/parser.py:111 |  |  | 0.488 |
+| walker |  | 9160 | 0 | python decl at src/click/parser.py:120 |  |  | 0.488 |
+| walker |  | 9160 | 0 | python decl at src/click/parser.py:127 |  |  | 0.488 |
+| walker |  | 9160 | 0 | python decl at src/click/parser.py:185 |  |  | 0.488 |
+| walker |  | 9160 | 0 | python decl at src/click/parser.py:216 |  |  | 0.488 |
+| walker |  | 9160 | 0 | python decl at src/click/parser.py:224 |  |  | 0.488 |
+| walker |  | 9160 | 0 | python decl at src/click/parser.py:503 |  |  | 0.488 |
 | ns | 9253 |  | 149 | testing.py — class/method locations | 12.1 |  | 0.495 |
 | ns | 9376 |  | 123 | CliRunner.invoke() signature | 12.2 | 12.1 | 0.492 |
-| walker |  | 9480 | 315 | python method sigs in src/click/parser.py |  |  | 0.492 |
-| walker |  | 9480 | 0 | python method at src/click/parser.py:169 |  |  | 0.492 |
-| walker |  | 9480 | 0 | python method at src/click/parser.py:186 |  |  | 0.492 |
-| walker |  | 9480 | 0 | python method at src/click/parser.py:217 |  |  | 0.492 |
-| walker |  | 9480 | 0 | python method at src/click/parser.py:290 |  |  | 0.492 |
-| walker |  | 9480 | 0 | python method at src/click/parser.py:316 |  |  | 0.492 |
-| walker |  | 9480 | 0 | python method at src/click/parser.py:327 |  |  | 0.492 |
-| walker |  | 9480 | 0 | python method at src/click/parser.py:390 |  |  | 0.492 |
-| walker |  | 9480 | 0 | python method at src/click/parser.py:470 |  |  | 0.492 |
-| walker |  | 9488 | 8 | python method at src/click/parser.py:165 |  |  | 0.492 |
+| walker |  | 9475 | 315 | python method sigs in src/click/parser.py |  |  | 0.492 |
+| walker |  | 9475 | 0 | python method at src/click/parser.py:169 |  |  | 0.492 |
+| walker |  | 9475 | 0 | python method at src/click/parser.py:186 |  |  | 0.492 |
+| walker |  | 9475 | 0 | python method at src/click/parser.py:217 |  |  | 0.492 |
+| walker |  | 9475 | 0 | python method at src/click/parser.py:290 |  |  | 0.492 |
+| walker |  | 9475 | 0 | python method at src/click/parser.py:316 |  |  | 0.492 |
+| walker |  | 9475 | 0 | python method at src/click/parser.py:327 |  |  | 0.492 |
+| walker |  | 9475 | 0 | python method at src/click/parser.py:390 |  |  | 0.492 |
+| walker |  | 9475 | 0 | python method at src/click/parser.py:470 |  |  | 0.492 |
+| walker |  | 9483 | 8 | python method at src/click/parser.py:165 |  |  | 0.492 |
 | ns | 9500 |  | 124 | shell_completion.py — public locations | 12.3 |  | 0.488 |
-| walker |  | 9523 | 35 | python method at src/click/parser.py:298 |  |  | 0.488 |
-| walker |  | 9561 | 38 | python method at src/click/parser.py:241 |  |  | 0.488 |
-| walker |  | 9611 | 50 | python method at src/click/parser.py:191 |  |  | 0.488 |
-| walker |  | 9624 | 13 | python method body at src/click/parser.py:165 body 167 |  |  | 0.488 |
-| walker |  | 9673 | 49 | python decl at src/click/parser.py:51 |  |  | 0.488 |
-| walker |  | 9706 | 33 | python method at src/click/parser.py:363 |  |  | 0.488 |
-| walker |  | 9791 | 85 | python method at src/click/parser.py:128 |  |  | 0.488 |
-| walker |  | 9879 | 88 | python method at src/click/parser.py:265 |  |  | 0.488 |
-| walker |  | 9970 | 91 | python method at src/click/_termui_impl.py:134 |  |  | 0.488 |
+| walker |  | 9518 | 35 | python method at src/click/parser.py:298 |  |  | 0.488 |
+| walker |  | 9556 | 38 | python method at src/click/parser.py:241 |  |  | 0.488 |
+| walker |  | 9606 | 50 | python method at src/click/parser.py:191 |  |  | 0.488 |
+| walker |  | 9619 | 13 | python method body at src/click/parser.py:165 body 167 |  |  | 0.488 |
+| walker |  | 9668 | 49 | python decl at src/click/parser.py:51 |  |  | 0.488 |
+| walker |  | 9701 | 33 | python method at src/click/parser.py:363 |  |  | 0.488 |
+| walker |  | 9786 | 85 | python method at src/click/parser.py:128 |  |  | 0.488 |
+| walker |  | 9874 | 88 | python method at src/click/parser.py:265 |  |  | 0.488 |
+| walker |  | 9965 | 91 | python method at src/click/_termui_impl.py:134 |  |  | 0.488 |
 | ns | 9985 |  | 485 | docs/options.md — default/flag_value interaction table | 13.1 |  | 0.478 |

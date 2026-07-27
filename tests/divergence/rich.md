@@ -405,79 +405,79 @@ Score(3000)=0.603 I=0.724 C=0.502 ns_rows≤3K=22/104 (reached=8 partial=0 missi
 | ns | 8914 |  | 41 | rich/styled.py (excerpt) + rich/abc.py (excerpt) | 8.9 |  | 0.427 |
 | ns | 8992 |  | 78 | rich/theme.py: Theme class docstring+init + config property | 8.10 | 4.4 | 0.426 |
 | ns | 9049 |  | 57 | rich/terminal_theme.py: TerminalTheme docstring+init | 8.11 |  | 0.425 |
-| ns | 9103 |  | 54 | rich/jupyter.py (excerpt): JupyterMixin + _render_segments/display | 8.12 |  | 0.423 |
-| walker |  | 9131 | 329 | python method sigs in rich/containers.py |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:59 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:62 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:69 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:72 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:75 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:86 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:89 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:93 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:102 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:105 |  |  | 0.424 |
-| walker |  | 9131 | 0 | python method at rich/containers.py:108 |  |  | 0.424 |
-| walker |  | 9140 | 9 | python method at rich/containers.py:78 |  |  | 0.424 |
-| walker |  | 9149 | 9 | python method at rich/containers.py:82 |  |  | 0.424 |
-| walker |  | 9153 | 4 | python method body at rich/containers.py:78 body 80 |  |  | 0.424 |
-| ns | 9158 |  | 55 | rich/live_render.py: LiveRender docstring+init | 8.13 |  | 0.423 |
-| walker |  | 9181 | 28 | python method at rich/containers.py:46 |  |  | 0.423 |
-| walker |  | 9210 | 29 | python method at rich/containers.py:33 |  |  | 0.425 |
+| walker |  | 9088 | 286 | python method sigs in rich/containers.py |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:59 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:62 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:69 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:72 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:75 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:86 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:89 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:93 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:102 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:105 |  |  | 0.425 |
+| walker |  | 9088 | 0 | python method at rich/containers.py:108 |  |  | 0.425 |
+| ns | 9103 |  | 54 | rich/jupyter.py (excerpt): JupyterMixin + _render_segments/display | 8.12 |  | 0.424 |
+| walker |  | 9116 | 28 | python method at rich/containers.py:46 |  |  | 0.424 |
+| walker |  | 9145 | 29 | python method at rich/containers.py:33 |  |  | 0.426 |
+| ns | 9158 |  | 55 | rich/live_render.py: LiveRender docstring+init | 8.13 |  | 0.425 |
+| walker |  | 9174 | 29 | python method at rich/containers.py:40 |  |  | 0.425 |
+| walker |  | 9203 | 29 | python method at rich/containers.py:96 |  |  | 0.425 |
 | ns | 9223 |  | 65 | rich/pager.py (excerpt) + rich/file_proxy.py (excerpt) | 8.14 |  | 0.424 |
-| walker |  | 9239 | 29 | python method at rich/containers.py:40 |  |  | 0.424 |
-| walker |  | 9268 | 29 | python method at rich/containers.py:96 |  |  | 0.424 |
+| walker |  | 9233 | 30 | python method at rich/containers.py:78 |  |  | 0.424 |
+| walker |  | 9264 | 31 | python method at rich/containers.py:82 |  |  | 0.424 |
+| walker |  | 9279 | 15 | python method doc at rich/containers.py:40 |  |  | 0.425 |
 | ns | 9279 |  | 56 | Small internal helpers: _loop, _pick, _stack (of 6 in this family) | 9.1 |  | 0.425 |
-| walker |  | 9283 | 15 | python method doc at rich/containers.py:40 |  |  | 0.425 |
-| walker |  | 9298 | 15 | python method doc at rich/containers.py:96 |  |  | 0.425 |
+| walker |  | 9294 | 15 | python method doc at rich/containers.py:96 |  |  | 0.425 |
 | ns | 9345 |  | 66 | Small internal helpers: _fileno, _null_file, _extension (of 6 in this family) | 9.2 |  | 0.424 |
-| walker |  | 9392 | 94 | python decl names surface in rich/control.py |  |  | 0.424 |
-| walker |  | 9392 | 0 | python decl at rich/control.py:48 |  |  | 0.424 |
-| walker |  | 9426 | 34 | python decl at rich/control.py:181 |  |  | 0.424 |
-| walker |  | 9438 | 12 | python decl body at rich/control.py:181 body 192 |  |  | 0.424 |
+| walker |  | 9388 | 94 | python decl names surface in rich/control.py |  |  | 0.424 |
+| walker |  | 9388 | 0 | python decl at rich/control.py:48 |  |  | 0.424 |
+| walker |  | 9422 | 34 | python decl at rich/control.py:181 |  |  | 0.424 |
+| walker |  | 9434 | 12 | python decl body at rich/control.py:181 body 192 |  |  | 0.424 |
 | ns | 9439 |  | 94 | rich/_inspect.py: Inspect class + helper function location | 9.3 |  | 0.422 |
-| walker |  | 9473 | 35 | python decl at rich/control.py:195 |  |  | 0.422 |
-| walker |  | 9487 | 14 | python decl body at rich/control.py:195 body 208 |  |  | 0.422 |
+| walker |  | 9469 | 35 | python decl at rich/control.py:195 |  |  | 0.422 |
+| walker |  | 9483 | 14 | python decl body at rich/control.py:195 body 208 |  |  | 0.422 |
 | ns | 9492 |  | 53 | Windows console support: _win32_console.py, _windows.py, _windows_renderer.py | 9.4 |  | 0.422 |
-| walker |  | 9510 | 23 | python decl at rich/control.py:16 |  |  | 0.422 |
-| walker |  | 9568 | 58 | python decl at rich/control.py:20 |  |  | 0.422 |
-| walker |  | 9582 | 14 | python class body at rich/control.py:48 |  |  | 0.422 |
-| walker |  | 9608 | 26 | python imports in rich/default_styles.py |  |  | 0.422 |
+| walker |  | 9506 | 23 | python decl at rich/control.py:16 |  |  | 0.422 |
+| walker |  | 9564 | 58 | python decl at rich/control.py:20 |  |  | 0.422 |
+| walker |  | 9578 | 14 | python class body at rich/control.py:48 |  |  | 0.422 |
+| walker |  | 9604 | 26 | python imports in rich/default_styles.py |  |  | 0.422 |
 | ns | 9691 |  | 199 | Static data modules: _palettes, _spinners, _emoji_codes, _unicode_data/ | 9.5 |  | 0.434 |
 | ns | 9754 |  | 63 | rich/__main__.py: `python -m rich` demo card generator | 9.6 |  | 0.435 |
 | ns | 9775 |  | 21 | rich/diagnose.py: report() signature | 9.7 |  | 0.435 |
 | ns | 9811 |  | 36 | tests/conftest.py (excerpt) + tests/pytest.ini (excerpt) | 10.1 | 2.3 | 0.434 |
 | ns | 9851 |  | 40 | tests/render.py (excerpt): shared test-rendering helper | 10.2 |  | 0.432 |
-| walker |  | 9863 | 255 | python decl names surface in rich/markdown.py |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:25 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:82 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:91 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:107 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:133 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:167 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:192 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:218 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:231 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:272 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:284 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:296 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:308 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:340 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:372 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:414 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:425 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:465 |  |  | 0.441 |
-| walker |  | 9863 | 0 | python decl at rich/markdown.py:513 |  |  | 0.441 |
-| walker |  | 9871 | 8 | python decl at rich/markdown.py:127 |  |  | 0.441 |
-| walker |  | 9880 | 9 | python decl doc at rich/markdown.py:107 |  |  | 0.441 |
-| walker |  | 9889 | 9 | python decl doc at rich/markdown.py:133 |  |  | 0.441 |
+| walker |  | 9859 | 255 | python decl names surface in rich/markdown.py |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:25 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:82 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:91 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:107 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:133 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:167 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:192 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:218 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:231 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:272 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:284 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:296 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:308 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:340 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:372 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:414 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:425 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:465 |  |  | 0.441 |
+| walker |  | 9859 | 0 | python decl at rich/markdown.py:513 |  |  | 0.441 |
+| walker |  | 9867 | 8 | python decl at rich/markdown.py:127 |  |  | 0.441 |
+| walker |  | 9876 | 9 | python decl doc at rich/markdown.py:107 |  |  | 0.441 |
+| walker |  | 9885 | 9 | python decl doc at rich/markdown.py:133 |  |  | 0.441 |
 | ns | 9892 |  | 41 | docs/source/appendix.rst (excerpt): appendix toctree | 11.1 | 2.6 | 0.440 |
-| walker |  | 9899 | 10 | python decl doc at rich/markdown.py:192 |  |  | 0.440 |
-| walker |  | 9909 | 10 | python decl doc at rich/markdown.py:340 |  |  | 0.440 |
-| walker |  | 9921 | 12 | python decl doc at rich/markdown.py:372 |  |  | 0.440 |
-| walker |  | 9934 | 13 | python decl doc at rich/markdown.py:167 |  |  | 0.440 |
-| walker |  | 9947 | 13 | python decl doc at rich/markdown.py:218 |  |  | 0.440 |
+| walker |  | 9895 | 10 | python decl doc at rich/markdown.py:192 |  |  | 0.440 |
+| walker |  | 9905 | 10 | python decl doc at rich/markdown.py:340 |  |  | 0.440 |
+| walker |  | 9917 | 12 | python decl doc at rich/markdown.py:372 |  |  | 0.440 |
+| walker |  | 9930 | 13 | python decl doc at rich/markdown.py:167 |  |  | 0.440 |
+| walker |  | 9943 | 13 | python decl doc at rich/markdown.py:218 |  |  | 0.440 |
+| walker |  | 9956 | 13 | python decl doc at rich/markdown.py:465 |  |  | 0.440 |
 | ns | 9959 |  | 67 | CHANGELOG.md: most recent entries (15.0.0 back through 14.3.0) | 12.1 |  | 0.439 |
-| walker |  | 9960 | 13 | python decl doc at rich/markdown.py:465 |  |  | 0.439 |
-| walker |  | 9974 | 14 | python decl doc at rich/markdown.py:91 |  |  | 0.439 |
-| walker |  | 9988 | 14 | python decl doc at rich/markdown.py:425 |  |  | 0.439 |
+| walker |  | 9970 | 14 | python decl doc at rich/markdown.py:91 |  |  | 0.439 |
+| walker |  | 9984 | 14 | python decl doc at rich/markdown.py:425 |  |  | 0.439 |
+| walker |  | 9999 | 15 | python decl doc at rich/markdown.py:231 |  |  | 0.439 |

@@ -5,9 +5,16 @@
 //! - `ModuleDocLede { file }`: top-of-file `/** */` JSDoc block (entrypoints
 //!   only — files like `index.ts`, `main.ts`, `mod.ts`)
 //! - `Imports { file }`: `import` declarations + bare `export … from`
-//!   re-exports — plumbing, not items
+//!   re-exports — plumbing, not items. Star re-exports are the
+//!   exception; see `ExportNames`.
 //! - `ExportNames { file }`: every top-level export's first line as a
-//!   surface listing — catastrophic-omission hedge
+//!   surface listing — catastrophic-omission hedge. Two qualifiers ride
+//!   here rather than in the batch that would normally own them,
+//!   because a roster is frequently the only place an export appears
+//!   and it is `Export`'s predecessor: `export * from '…'` (which says
+//!   the surface is larger than the roster lists) and a JSDoc
+//!   `@deprecated` / `@internal` / `@private` marker (which says a
+//!   listed export is not one to reach for).
 //! - `TestNames { file, chunk_index, benchmark }`: string-label roster
 //!   from `test` / `it` / `describe` / `bench` calls in recognized test
 //!   and benchmark files. Oversize rosters are predecessor-chained,
@@ -272,18 +279,25 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
 
-        // Lines claimed by an imports / re-export-chunk batch on this
-        // file. Threaded into `collect_export_names_from` so the
+        // Lines the imports / re-export-chunk batches would claim on
+        // this file. Threaded into `collect_export_names_from` so the
         // names-surface ellipsis marker never lands on a line owned by
         // another peer batch — peers don't form an ancestor chain, so
-        // an overlap would be a scheduler conflict.
+        // an overlap would be a scheduler conflict. Recorded before the
+        // star re-exports are subtracted below: an ellipsis has no
+        // business on those rows either, since the roster renders them.
         let mut import_owned_lines: HashSet<usize> = HashSet::new();
+        // Star re-exports handed to the export roster — see
+        // [`roster_star_reexport_lines`].
+        let mut roster_star_lines: Vec<usize> = Vec::new();
         if let Some((source, tree)) = parse_ts(ctx, file) {
             let api_spine = ep && is_api_spine_entrypoint(file, ctx);
+            roster_star_lines = roster_star_reexport_lines(&tree, &source);
             if let Some(chunks) = collect_reexport_import_chunks(file, &tree, &source) {
                 let chunk_count = chunks.len();
-                for (chunk_index, (lines, is_reexport_wall)) in chunks.into_iter().enumerate() {
+                for (chunk_index, (mut lines, is_reexport_wall)) in chunks.into_iter().enumerate() {
                     import_owned_lines.extend(lines.full.iter().copied());
+                    lines.full.retain(|line| !roster_star_lines.contains(line));
                     let Some(content) = single_file_lines_content(file, &source, lines) else {
                         continue;
                     };
@@ -304,11 +318,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     });
                 }
             } else {
-                let lines = collect_imports(&tree, &source);
+                let mut lines = collect_imports(&tree, &source);
                 import_owned_lines.extend(lines.full.iter().copied());
                 let is_reexport_wall = is_entrypoint_file(file)
                     && api_spine
                     && is_mostly_reexport(&lines, &collect_bare_reexport_lines(&tree, &source));
+                lines.full.retain(|line| !roster_star_lines.contains(line));
                 if let Some(content) = single_file_lines_content(file, &source, lines) {
                     out.push(Batch {
                         key: TsKey::Imports { file: file.clone() }.into(),
@@ -462,6 +477,39 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             names_lines
                 .ellipses
                 .retain(|line| !documented_export_start_lines.contains(&line.saturating_sub(1)));
+            // A roster claims "these exports exist". A JSDoc tag that
+            // disavows one contradicts that claim, and it lives in
+            // `ExportDoc` — a batch that competes with the roster
+            // rather than riding with it, so a disavowed export
+            // routinely renders listed clean among live siblings. The
+            // roster is `Export`'s predecessor, so binding the marker
+            // here makes it impossible to render the export without it.
+            let disavowal_lines: HashSet<usize> = exports
+                .iter()
+                .filter(|item| {
+                    item.predecessor_start_line.is_none()
+                        && !documented_export_start_lines.contains(&item.start_line)
+                })
+                .flat_map(|item| {
+                    disavowal_doc_lines(item.anchor, &source, &src_lines, is_entrypoint_file(file))
+                })
+                .collect();
+            if !roster_star_lines.is_empty() || !disavowal_lines.is_empty() {
+                names_lines.full = dedup_sorted(
+                    names_lines
+                        .full
+                        .into_iter()
+                        .chain(roster_star_lines.iter().copied())
+                        .chain(disavowal_lines.iter().copied())
+                        .collect(),
+                );
+                // A hoisted line can be the courtesy ellipsis row of the
+                // export above it; Full wins, and the batch's own line
+                // sets must stay disjoint.
+                names_lines.ellipses.retain(|line| {
+                    !disavowal_lines.contains(line) && !roster_star_lines.contains(line)
+                });
+            }
             let mut names_gate: Option<BatchKey> = None;
             if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
                 let key = BatchKey::Typescript(TsKey::ExportNames { file: file.clone() });
@@ -549,6 +597,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     &mut doc_lines,
                     is_entrypoint_file(file),
                 );
+                // The disavowal marker rides with the roster; dropping
+                // it here keeps the two batches' line sets disjoint.
+                doc_lines.retain(|line| !disavowal_lines.contains(line));
                 let export_has_descendants = !doc_lines.is_empty()
                     || (split_js_class && !item.class_members.is_empty())
                     || documented_member_plan.is_some()
@@ -3006,6 +3057,47 @@ fn collect_bare_reexport_lines(tree: &Tree, source: &str) -> HashSet<usize> {
     lines.into_iter().collect()
 }
 
+/// Star re-exports (`export * from '…'` / `export * as ns from '…'`)
+/// that belong on the file's export roster rather than in the plumbing
+/// batch. Unlike a named re-export, a star does not enumerate what it
+/// publishes — it says the module's surface is *larger* than whatever
+/// is listed beside it. Left in the imports batch it competes with the
+/// roster and routinely loses, and the surviving `export { … }` sibling
+/// then reads as the module's complete surface.
+///
+/// Empty when the plumbing surface is itself a re-export wall: there
+/// the stars *are* the content, they are already priced as a roster,
+/// and hoisting a wall's worth of them would swamp the names surface.
+fn roster_star_reexport_lines(tree: &Tree, source: &str) -> Vec<usize> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut lines = Vec::new();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "export_statement" && is_star_reexport(child) {
+            extend_span(&mut lines, child, source);
+        }
+    }
+    if lines.is_empty()
+        || is_mostly_reexport(
+            &collect_imports(tree, source),
+            &collect_bare_reexport_lines(tree, source),
+        )
+    {
+        return Vec::new();
+    }
+    dedup_sorted(lines)
+}
+
+/// A bare re-export in the `*` / `* as ns` form, as opposed to the
+/// name-enumerating `export { a, b } from '…'`.
+fn is_star_reexport(node: Node) -> bool {
+    is_bare_reexport(node) && {
+        let mut cursor = node.walk();
+        node.children(&mut cursor)
+            .any(|child| matches!(child.kind(), "namespace_export" | "*"))
+    }
+}
+
 /// True when at least half of `lines` belong to bare re-export
 /// statements — the batch is publishing the API roster, not importing.
 fn is_mostly_reexport(lines: &FileLines, reexport_lines: &HashSet<usize>) -> bool {
@@ -4177,6 +4269,42 @@ fn collect_jsdoc_above(node: Node, source: &str, out: &mut Vec<usize>, skip_modu
     }
 }
 
+/// Lines of the JSDoc above `node` that disavow what it documents.
+/// Empty for a live export — a disavowal is rare, so a clean roster
+/// pays nothing for this.
+fn disavowal_doc_lines(
+    node: Node,
+    source: &str,
+    src_lines: &[&str],
+    skip_module_lede: bool,
+) -> Vec<usize> {
+    let mut doc_lines = Vec::new();
+    collect_jsdoc_above(node, source, &mut doc_lines, skip_module_lede);
+    doc_lines
+        .into_iter()
+        .filter(|line| {
+            src_lines
+                .get(line - 1)
+                .is_some_and(|text| is_disavowal_jsdoc_line(text))
+        })
+        .collect()
+}
+
+/// A JSDoc body line whose tag *contradicts* the item's presence on an
+/// export roster. The rest of the tag vocabulary — `@param`,
+/// `@returns`, `@public`, `@example` — describes or affirms the item,
+/// so it keeps competing as ordinary documentation.
+fn is_disavowal_jsdoc_line(text: &str) -> bool {
+    let body = text
+        .trim_start()
+        .trim_start_matches(['/', '*'])
+        .trim_start();
+    ["@deprecated", "@internal", "@private"].iter().any(|tag| {
+        body.strip_prefix(tag)
+            .is_some_and(|rest| !rest.starts_with(|c: char| c.is_alphanumeric()))
+    })
+}
+
 /// True if the leading `/** */` comment at `node` is the same one
 /// `ModuleDocLede` would claim — i.e. nothing precedes it except a
 /// `hash_bang_line` and/or non-JSDoc comments (license headers etc).
@@ -4662,6 +4790,84 @@ mod tests {
             &commonjs_reexports,
             &default_identifier_reexports,
         )
+    }
+
+    #[test]
+    fn walker_typescript_star_reexport_rides_with_the_export_roster() {
+        let entry = "\
+import { css } from './languages';
+import './features';
+
+export * from './editor';
+export { css };
+";
+        let tree = parse(entry);
+        assert_eq!(
+            roster_star_reexport_lines(&tree, entry),
+            vec![4],
+            "a star says the surface is larger than the `export {{ … }}` beside it, \
+             so it belongs on the roster rather than in the plumbing batch"
+        );
+        assert_eq!(
+            collect_imports(&tree, entry).full,
+            vec![1, 2, 4],
+            "the imports batch still claims it until the caller subtracts the roster lines"
+        );
+
+        let wall = "\
+export * from './a';
+export * from './b';
+export const VERSION = '1';
+";
+        let wall_tree = parse(wall);
+        assert!(
+            roster_star_reexport_lines(&wall_tree, wall).is_empty(),
+            "in a re-export wall the stars *are* the content and are already \
+             priced as a roster — hoisting them would swamp the names surface"
+        );
+
+        let named = "import a from './a';\n\nexport { b } from './b';\nexport const C = 1;\n";
+        let named_tree = parse(named);
+        assert!(
+            roster_star_reexport_lines(&named_tree, named).is_empty(),
+            "a named re-export enumerates what it publishes, so it does not \
+             contradict the roster's completeness"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_disavowing_jsdoc_tags_are_the_only_ones_hoisted() {
+        let src = "\
+/**
+ * Old thing.
+ *
+ * @deprecated Use `next` instead.
+ * @public
+ */
+export function old() {}
+";
+        let tree = parse(src);
+        let src_lines: Vec<&str> = src.lines().collect();
+        let root = tree.root_node();
+        let mut cursor = root.walk();
+        let export = root
+            .children(&mut cursor)
+            .find(|child| child.kind() == "export_statement")
+            .expect("export statement");
+        assert_eq!(
+            disavowal_doc_lines(export, src, &src_lines, false),
+            vec![4],
+            "only the tag that contradicts the roster's claim moves; the rest of \
+             the block keeps competing as documentation"
+        );
+
+        assert!(is_disavowal_jsdoc_line("/** @internal */"));
+        assert!(is_disavowal_jsdoc_line(" * @private"));
+        assert!(
+            !is_disavowal_jsdoc_line(" * @privateRemarks notes for maintainers"),
+            "tag matching must respect word boundaries"
+        );
+        assert!(!is_disavowal_jsdoc_line(" * @public"));
     }
 
     #[test]
