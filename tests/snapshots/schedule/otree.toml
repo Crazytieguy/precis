@@ -1,7 +1,7 @@
 fixture = "otree"
 budget = 10000
-cumulative_tokens = 9859
-batch_count = 132
+cumulative_tokens = 9958
+batch_count = 242
 
 [[batches]]
 position = 1
@@ -689,6 +689,32 @@ kind = "ellipsis"
 
 [[batches]]
 position = 37
+key = 'Rust(ImplMethod { file: "src/parse/mod.rs", start_line: 67 })'
+descriptor = "impl method at src/parse/mod.rs:67"
+cost_tokens = 0
+cum_tokens = 825
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/mod.rs"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/mod.rs"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
@@ -702,7 +728,7 @@ parent = ".github"
 entries = ["dependabot.yml", "workflows"]
 
 [[batches]]
-position = 38
+position = 39
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 16
@@ -716,7 +742,7 @@ parent = ".github/workflows"
 entries = ["cargo-check.yml", "release-binary.yml", "spell-check.yml"]
 
 [[batches]]
-position = 39
+position = 40
 key = 'Rust(PubItem { file: "src/clipboard.rs", start_line: 28 })'
 descriptor = "pub item at src/clipboard.rs:28"
 cost_tokens = 22
@@ -742,7 +768,7 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Toml(Identity { file: "Cargo.toml" })'
 descriptor = "[package] in Cargo.toml"
 cost_tokens = 141
@@ -760,7 +786,7 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Rust(PubItemNames { file: "src/config/mod.rs" })'
 descriptor = "pub-item names surface in src/config/mod.rs"
 cost_tokens = 93
@@ -914,7 +940,7 @@ end = 119
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 100 })'
 descriptor = "pub item at src/config/mod.rs:100"
 cost_tokens = 43
@@ -932,7 +958,7 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 83 })'
 descriptor = "pub item at src/config/mod.rs:83"
 cost_tokens = 59
@@ -950,7 +976,7 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 91 })'
 descriptor = "pub item at src/config/mod.rs:91"
 cost_tokens = 69
@@ -968,7 +994,7 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 53 })'
 descriptor = "pub item at src/config/mod.rs:53"
 cost_tokens = 76
@@ -986,7 +1012,7 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 74 })'
 descriptor = "pub item at src/config/mod.rs:74"
 cost_tokens = 76
@@ -1004,7 +1030,7 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 118 })'
 descriptor = "pub item at src/config/mod.rs:118"
 cost_tokens = 98
@@ -1022,7 +1048,7 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 62 })'
 descriptor = "pub item at src/config/mod.rs:62"
 cost_tokens = 101
@@ -1040,7 +1066,7 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 106 })'
 descriptor = "pub item at src/config/mod.rs:106"
 cost_tokens = 104
@@ -1058,7 +1084,7 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Rust(EntryItemBody { file: "src/main.rs", start_line: 27, body_start_line: 94 })'
 descriptor = "entry item body at src/main.rs:27 body 94"
 cost_tokens = 100
@@ -1076,7 +1102,7 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Rust(PubItemNames { file: "src/debug.rs" })'
 descriptor = "pub-item names surface in src/debug.rs"
 cost_tokens = 34
@@ -1118,7 +1144,7 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Rust(PubItem { file: "src/debug.rs", start_line: 19 })'
 descriptor = "pub item at src/debug.rs:19"
 cost_tokens = 0
@@ -1144,7 +1170,7 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Rust(PubItem { file: "src/debug.rs", start_line: 23 })'
 descriptor = "pub item at src/debug.rs:23"
 cost_tokens = 0
@@ -1170,7 +1196,7 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Rust(PubItemBody { file: "src/debug.rs", start_line: 19, body_start_line: 20 })'
 descriptor = "pub item body at src/debug.rs:19 body 20"
 cost_tokens = 11
@@ -1188,7 +1214,7 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 63
@@ -1294,7 +1320,7 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Rust(PubItem { file: "src/edit.rs", start_line: 10 })'
 descriptor = "pub item at src/edit.rs:10"
 cost_tokens = 44
@@ -1312,7 +1338,7 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Toml(Config { file: "Cargo.toml" })'
 descriptor = "manifest config in Cargo.toml"
 cost_tokens = 36
@@ -1330,7 +1356,7 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Rust(PubItem { file: "src/parse/mod.rs", start_line: 18 })'
 descriptor = "pub item at src/parse/mod.rs:18"
 cost_tokens = 194
@@ -1348,7 +1374,7 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Rust(PubItemNames { file: "src/ui/header.rs" })'
 descriptor = "pub-item names surface in src/ui/header.rs"
 cost_tokens = 23
@@ -1390,7 +1416,7 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Rust(PubItem { file: "src/ui/header.rs", start_line: 41 })'
 descriptor = "pub item at src/ui/header.rs:41"
 cost_tokens = 25
@@ -1408,7 +1434,7 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Rust(PubItemNames { file: "src/ui/popup.rs" })'
 descriptor = "pub-item names surface in src/ui/popup.rs"
 cost_tokens = 23
@@ -1450,7 +1476,7 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Rust(PubItem { file: "src/ui/popup.rs", start_line: 13 })'
 descriptor = "pub item at src/ui/popup.rs:13"
 cost_tokens = 29
@@ -1468,7 +1494,7 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Rust(PubItemNames { file: "src/tree.rs" })'
 descriptor = "pub-item names surface in src/tree.rs"
 cost_tokens = 48
@@ -1542,7 +1568,7 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Rust(PubItem { file: "src/tree.rs", start_line: 36 })'
 descriptor = "pub item at src/tree.rs:36"
 cost_tokens = 40
@@ -1560,7 +1586,7 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Rust(PubItem { file: "src/tree.rs", start_line: 42 })'
 descriptor = "pub item at src/tree.rs:42"
 cost_tokens = 57
@@ -1578,7 +1604,7 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 66
+position = 67
 key = 'Rust(PubItemNames { file: "src/ui/footer.rs" })'
 descriptor = "pub-item names surface in src/ui/footer.rs"
 cost_tokens = 26
@@ -1620,7 +1646,7 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 67
+position = 68
 key = 'Rust(PubItem { file: "src/ui/footer.rs", start_line: 16 })'
 descriptor = "pub item at src/ui/footer.rs:16"
 cost_tokens = 16
@@ -1638,7 +1664,7 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 68
+position = 69
 key = 'Rust(PubItem { file: "src/ui/footer.rs", start_line: 10 })'
 descriptor = "pub item at src/ui/footer.rs:10"
 cost_tokens = 34
@@ -1656,7 +1682,7 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 69
+position = 70
 key = 'Rust(EntryItemBody { file: "src/main.rs", start_line: 27, body_start_line: 79 })'
 descriptor = "entry item body at src/main.rs:27 body 79"
 cost_tokens = 174
@@ -1674,7 +1700,7 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Rust(PubItem { file: "src/parse/any.rs", start_line: 9 })'
 descriptor = "pub item at src/parse/any.rs:9"
 cost_tokens = 34
@@ -1692,7 +1718,7 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Rust(EntryItemBody { file: "src/main.rs", start_line: 27, body_start_line: 59 })'
 descriptor = "entry item body at src/main.rs:27 body 59"
 cost_tokens = 189
@@ -1710,7 +1736,7 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Rust(PubItem { file: "src/tree.rs", start_line: 25 })'
 descriptor = "pub item at src/tree.rs:25"
 cost_tokens = 72
@@ -1728,7 +1754,7 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Rust(PubItemNames { file: "src/config/keys.rs" })'
 descriptor = "pub-item names surface in src/config/keys.rs"
 cost_tokens = 33
@@ -1786,7 +1812,7 @@ end = 352
 kind = "ellipsis"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Rust(PubItem { file: "src/config/keys.rs", start_line: 351 })'
 descriptor = "pub item at src/config/keys.rs:351"
 cost_tokens = 38
@@ -1804,7 +1830,7 @@ end = 354
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Toml(DevelopmentDependencies { file: "Cargo.toml" })'
 descriptor = "dev/build/target dependencies in Cargo.toml"
 cost_tokens = 48
@@ -1822,7 +1848,7 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Rust(PubItemNames { file: "src/ui/app.rs" })'
 descriptor = "pub-item names surface in src/ui/app.rs"
 cost_tokens = 34
@@ -1880,7 +1906,7 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Rust(PubItem { file: "src/ui/app.rs", start_line: 86 })'
 descriptor = "pub item at src/ui/app.rs:86"
 cost_tokens = 23
@@ -1898,7 +1924,7 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Rust(PubItem { file: "src/ui/app.rs", start_line: 48 })'
 descriptor = "pub item at src/ui/app.rs:48"
 cost_tokens = 29
@@ -1916,7 +1942,7 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Rust(PubItem { file: "src/parse/mod.rs", start_line: 36 })'
 descriptor = "pub item at src/parse/mod.rs:36"
 cost_tokens = 333
@@ -1934,7 +1960,7 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Rust(ModUse { file: "src/main.rs" })'
 descriptor = "mod/use plumbing in src/main.rs"
 cost_tokens = 226
@@ -1952,7 +1978,7 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Rust(PubItem { file: "src/tree.rs", start_line: 14 })'
 descriptor = "pub item at src/tree.rs:14"
 cost_tokens = 85
@@ -1970,7 +1996,7 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Rust(PubItem { file: "src/live_reload.rs", start_line: 16 })'
 descriptor = "pub item at src/live_reload.rs:16"
 cost_tokens = 88
@@ -1988,7 +2014,7 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Rust(PubItem { file: "src/ui/popup.rs", start_line: 18 })'
 descriptor = "pub item at src/ui/popup.rs:18"
 cost_tokens = 47
@@ -2006,7 +2032,7 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Rust(PubItem { file: "src/ui/header.rs", start_line: 11 })'
 descriptor = "pub item at src/ui/header.rs:11"
 cost_tokens = 50
@@ -2024,7 +2050,7 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Rust(PubItemNames { file: "src/parse/json.rs" })'
 descriptor = "pub-item names surface in src/parse/json.rs"
 cost_tokens = 43
@@ -2066,7 +2092,7 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Rust(PubItem { file: "src/parse/json.rs", start_line: 26 })'
 descriptor = "pub item at src/parse/json.rs:26"
 cost_tokens = 0
@@ -2092,7 +2118,7 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Rust(PubItemNames { file: "src/ui/filter.rs" })'
 descriptor = "pub-item names surface in src/ui/filter.rs"
 cost_tokens = 45
@@ -2166,7 +2192,7 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Rust(PubItem { file: "src/ui/filter.rs", start_line: 20 })'
 descriptor = "pub item at src/ui/filter.rs:20"
 cost_tokens = 31
@@ -2184,7 +2210,7 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Rust(PubItem { file: "src/ui/filter.rs", start_line: 34 })'
 descriptor = "pub item at src/ui/filter.rs:34"
 cost_tokens = 38
@@ -2202,7 +2228,7 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Rust(PubItem { file: "src/ui/filter.rs", start_line: 27 })'
 descriptor = "pub item at src/ui/filter.rs:27"
 cost_tokens = 35
@@ -2220,7 +2246,7 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Rust(PubItem { file: "src/ui/filter.rs", start_line: 13 })'
 descriptor = "pub item at src/ui/filter.rs:13"
 cost_tokens = 47
@@ -2238,7 +2264,7 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Rust(PubItem { file: "src/config/mod.rs", start_line: 17 })'
 descriptor = "pub item at src/config/mod.rs:17"
 cost_tokens = 336
@@ -2256,7 +2282,7 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 40
@@ -2270,7 +2296,7 @@ parent = "examples"
 entries = ["edge.json", "edge.toml", "edge.yaml", "example.hcl", "example.json", "example.jsonl", "example.toml", "example.xml", "example.yaml"]
 
 [[batches]]
-position = 94
+position = 95
 key = 'Toml(Dependencies { file: "Cargo.toml" })'
 descriptor = "[dependencies] in Cargo.toml"
 cost_tokens = 271
@@ -2288,7 +2314,7 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Rust(PubItemNames { file: "src/parse/syntax.rs" })'
 descriptor = "pub-item names surface in src/parse/syntax.rs"
 cost_tokens = 62
@@ -2362,7 +2388,7 @@ end = 202
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Rust(PubItem { file: "src/parse/syntax.rs", start_line: 139 })'
 descriptor = "pub item at src/parse/syntax.rs:139"
 cost_tokens = 0
@@ -2388,7 +2414,7 @@ end = 140
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Rust(PubItem { file: "src/parse/syntax.rs", start_line: 201 })'
 descriptor = "pub item at src/parse/syntax.rs:201"
 cost_tokens = 0
@@ -2414,7 +2440,7 @@ end = 202
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Rust(PubItem { file: "src/parse/syntax.rs", start_line: 151 })'
 descriptor = "pub item at src/parse/syntax.rs:151"
 cost_tokens = 24
@@ -2432,385 +2458,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 99
-key = 'Rust(ModUse { file: "src/parse/mod.rs" })'
-descriptor = "mod/use plumbing in src/parse/mod.rs"
-cost_tokens = 123
-cum_tokens = 5132
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/parse/mod.rs"
-start = 1
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 100
-key = 'Rust(ModUse { file: "src/config/mod.rs" })'
-descriptor = "mod/use plumbing in src/config/mod.rs"
-cost_tokens = 132
-cum_tokens = 5264
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/mod.rs"
-start = 1
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Rust(PubItemNames { file: "src/config/colors.rs" })'
-descriptor = "pub-item names surface in src/config/colors.rs"
-cost_tokens = 77
-cum_tokens = 5341
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 162
-end = 162
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 251
-end = 251
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 286
-end = 286
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 324
-end = 324
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 342
-end = 342
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 163
-end = 163
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 252
-end = 252
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 287
-end = 287
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 325
-end = 325
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 343
-end = 343
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 102
-key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 324 })'
-descriptor = "pub item at src/config/colors.rs:324"
-cost_tokens = 45
-cum_tokens = 5386
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 323
-end = 327
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 251 })'
-descriptor = "pub item at src/config/colors.rs:251"
-cost_tokens = 91
-cum_tokens = 5477
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 250
-end = 259
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Rust(PubItem { file: "src/parse/syntax.rs", start_line: 11 })'
-descriptor = "pub item at src/parse/syntax.rs:11"
-cost_tokens = 120
-cum_tokens = 5597
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/parse/syntax.rs"
-start = 11
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #1"
-cost_tokens = 87
-cum_tokens = 5684
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 7
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Rust(MacroBody { file: "src/debug.rs", start_line: 8 })'
-descriptor = "macro_export body at src/debug.rs:8"
-cost_tokens = 93
-cum_tokens = 5777
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/debug.rs"
-start = 8
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 286 })'
-descriptor = "pub item at src/config/colors.rs:286"
-cost_tokens = 113
-cum_tokens = 5890
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 285
-end = 295
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'Rust(PubItem { file: "src/config/keys.rs", start_line: 54 })'
-descriptor = "pub item at src/config/keys.rs:54"
-cost_tokens = 143
-cum_tokens = 6033
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/keys.rs"
-start = 53
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 342 })'
-descriptor = "pub item at src/config/colors.rs:342"
-cost_tokens = 120
-cum_tokens = 6153
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 341
-end = 353
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Rust(ModUse { file: "src/ui/mod.rs" })'
-descriptor = "mod/use plumbing in src/ui/mod.rs"
-cost_tokens = 208
-cum_tokens = 6361
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ui/mod.rs"
-start = 1
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Rust(PubItem { file: "src/ui/data_block.rs", start_line: 16 })'
-descriptor = "pub item at src/ui/data_block.rs:16"
-cost_tokens = 143
-cum_tokens = 6504
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ui/data_block.rs"
-start = 16
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Rust(PubItem { file: "src/ui/tree_overview.rs", start_line: 19 })'
-descriptor = "pub item at src/ui/tree_overview.rs:19"
-cost_tokens = 158
-cum_tokens = 6662
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ui/tree_overview.rs"
-start = 19
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Rust(PubItemBody { file: "src/debug.rs", start_line: 23, body_start_line: 24 })'
-descriptor = "pub item body at src/debug.rs:23 body 24"
-cost_tokens = 118
-cum_tokens = 6780
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/debug.rs"
-start = 24
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
 key = 'Rust(MethodSigs { file: "src/config/mod.rs" })'
 descriptor = "impl method sigs in src/config/mod.rs"
 cost_tokens = 425
-cum_tokens = 7205
+cum_tokens = 5434
 
 [batches.content]
 kind = "lines"
@@ -3208,11 +2860,2009 @@ end = 323
 kind = "ellipsis"
 
 [[batches]]
+position = 101
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 131 })'
+descriptor = "impl method at src/config/mod.rs:131"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 144 })'
+descriptor = "impl method at src/config/mod.rs:144"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 103
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 161 })'
+descriptor = "impl method at src/config/mod.rs:161"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 104
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 171 })'
+descriptor = "impl method at src/config/mod.rs:171"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 105
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 196 })'
+descriptor = "impl method at src/config/mod.rs:196"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 196
+end = 196
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 106
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 212 })'
+descriptor = "impl method at src/config/mod.rs:212"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 213
+end = 213
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 107
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 218 })'
+descriptor = "impl method at src/config/mod.rs:218"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 218
+end = 218
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 219
+end = 219
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 108
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 222 })'
+descriptor = "impl method at src/config/mod.rs:222"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 109
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 226 })'
+descriptor = "impl method at src/config/mod.rs:226"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 226
+end = 226
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 227
+end = 227
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 110
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 232 })'
+descriptor = "impl method at src/config/mod.rs:232"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 232
+end = 232
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 233
+end = 233
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 111
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 241 })'
+descriptor = "impl method at src/config/mod.rs:241"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 241
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 242
+end = 242
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 249 })'
+descriptor = "impl method at src/config/mod.rs:249"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 249
+end = 249
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 250
+end = 250
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 113
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 256 })'
+descriptor = "impl method at src/config/mod.rs:256"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 114
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 260 })'
+descriptor = "impl method at src/config/mod.rs:260"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 260
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 261
+end = 261
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 115
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 266 })'
+descriptor = "impl method at src/config/mod.rs:266"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 266
+end = 266
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 267
+end = 267
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 116
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 273 })'
+descriptor = "impl method at src/config/mod.rs:273"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 273
+end = 273
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 274
+end = 274
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 117
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 277 })'
+descriptor = "impl method at src/config/mod.rs:277"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 277
+end = 277
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 278
+end = 278
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 118
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 283 })'
+descriptor = "impl method at src/config/mod.rs:283"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 283
+end = 283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 119
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 290 })'
+descriptor = "impl method at src/config/mod.rs:290"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 290
+end = 290
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 120
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 296 })'
+descriptor = "impl method at src/config/mod.rs:296"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 296
+end = 296
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 121
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 304 })'
+descriptor = "impl method at src/config/mod.rs:304"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 304
+end = 304
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 305
+end = 305
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 122
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 312 })'
+descriptor = "impl method at src/config/mod.rs:312"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 312
+end = 312
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 313
+end = 313
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 123
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 316 })'
+descriptor = "impl method at src/config/mod.rs:316"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 316
+end = 316
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 317
+end = 317
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 124
+key = 'Rust(ImplMethod { file: "src/config/mod.rs", start_line: 322 })'
+descriptor = "impl method at src/config/mod.rs:322"
+cost_tokens = 0
+cum_tokens = 5434
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 322
+end = 322
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 323
+end = 323
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 125
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 212, body_start_line: 213 })'
+descriptor = "impl method body at src/config/mod.rs:212 body 213"
+cost_tokens = 42
+cum_tokens = 5476
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 213
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 218, body_start_line: 219 })'
+descriptor = "impl method body at src/config/mod.rs:218 body 219"
+cost_tokens = 7
+cum_tokens = 5483
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 219
+end = 219
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 312, body_start_line: 313 })'
+descriptor = "impl method body at src/config/mod.rs:312 body 313"
+cost_tokens = 7
+cum_tokens = 5490
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 313
+end = 313
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 316, body_start_line: 317 })'
+descriptor = "impl method body at src/config/mod.rs:316 body 317"
+cost_tokens = 7
+cum_tokens = 5497
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 317
+end = 317
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Rust(ModUse { file: "src/parse/mod.rs" })'
+descriptor = "mod/use plumbing in src/parse/mod.rs"
+cost_tokens = 123
+cum_tokens = 5620
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/mod.rs"
+start = 1
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Rust(ModUse { file: "src/config/mod.rs" })'
+descriptor = "mod/use plumbing in src/config/mod.rs"
+cost_tokens = 132
+cum_tokens = 5752
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 1
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Rust(PubItemNames { file: "src/config/colors.rs" })'
+descriptor = "pub-item names surface in src/config/colors.rs"
+cost_tokens = 77
+cum_tokens = 5829
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 251
+end = 251
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 286
+end = 286
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 342
+end = 342
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 252
+end = 252
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 287
+end = 287
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 325
+end = 325
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 343
+end = 343
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 132
+key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 324 })'
+descriptor = "pub item at src/config/colors.rs:324"
+cost_tokens = 45
+cum_tokens = 5874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 323
+end = 327
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 251 })'
+descriptor = "pub item at src/config/colors.rs:251"
+cost_tokens = 91
+cum_tokens = 5965
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 250
+end = 259
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Rust(MethodSigs { file: "src/cmd.rs" })'
+descriptor = "impl method sigs in src/cmd.rs"
+cost_tokens = 92
+cum_tokens = 6057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 111
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 202
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 234
+end = 234
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 235
+end = 235
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 135
+key = 'Rust(ImplMethod { file: "src/cmd.rs", start_line: 112 })'
+descriptor = "impl method at src/cmd.rs:112"
+cost_tokens = 0
+cum_tokens = 6057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 136
+key = 'Rust(ImplMethod { file: "src/cmd.rs", start_line: 149 })'
+descriptor = "impl method at src/cmd.rs:149"
+cost_tokens = 0
+cum_tokens = 6057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 137
+key = 'Rust(ImplMethod { file: "src/cmd.rs", start_line: 202 })'
+descriptor = "impl method at src/cmd.rs:202"
+cost_tokens = 0
+cum_tokens = 6057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 202
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 138
+key = 'Rust(ImplMethod { file: "src/cmd.rs", start_line: 230 })'
+descriptor = "impl method at src/cmd.rs:230"
+cost_tokens = 0
+cum_tokens = 6057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 139
+key = 'Rust(ImplMethod { file: "src/cmd.rs", start_line: 234 })'
+descriptor = "impl method at src/cmd.rs:234"
+cost_tokens = 0
+cum_tokens = 6057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 234
+end = 234
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/cmd.rs"
+start = 235
+end = 235
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 140
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 222, body_start_line: 223 })'
+descriptor = "impl method body at src/config/mod.rs:222 body 223"
+cost_tokens = 8
+cum_tokens = 6065
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 277, body_start_line: 278 })'
+descriptor = "impl method body at src/config/mod.rs:277 body 278"
+cost_tokens = 8
+cum_tokens = 6073
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 278
+end = 278
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Rust(PubItem { file: "src/parse/syntax.rs", start_line: 11 })'
+descriptor = "pub item at src/parse/syntax.rs:11"
+cost_tokens = 120
+cum_tokens = 6193
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/syntax.rs"
+start = 11
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #1"
+cost_tokens = 87
+cum_tokens = 6280
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 7
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Rust(MacroBody { file: "src/debug.rs", start_line: 8 })'
+descriptor = "macro_export body at src/debug.rs:8"
+cost_tokens = 93
+cum_tokens = 6373
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/debug.rs"
+start = 8
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 286 })'
+descriptor = "pub item at src/config/colors.rs:286"
+cost_tokens = 113
+cum_tokens = 6486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 285
+end = 295
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Rust(PubItem { file: "src/config/keys.rs", start_line: 54 })'
+descriptor = "pub item at src/config/keys.rs:54"
+cost_tokens = 143
+cum_tokens = 6629
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 53
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 342 })'
+descriptor = "pub item at src/config/colors.rs:342"
+cost_tokens = 120
+cum_tokens = 6749
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/colors.rs"
+start = 341
+end = 353
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Rust(MethodSigs { file: "src/edit.rs" })'
+descriptor = "impl method sigs in src/edit.rs"
+cost_tokens = 122
+cum_tokens = 6871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 149
+key = 'Rust(ImplMethod { file: "src/edit.rs", start_line: 17 })'
+descriptor = "impl method at src/edit.rs:17"
+cost_tokens = 0
+cum_tokens = 6871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 150
+key = 'Rust(ImplMethod { file: "src/edit.rs", start_line: 40 })'
+descriptor = "impl method at src/edit.rs:40"
+cost_tokens = 0
+cum_tokens = 6871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 151
+key = 'Rust(ImplMethod { file: "src/edit.rs", start_line: 53 })'
+descriptor = "impl method at src/edit.rs:53"
+cost_tokens = 0
+cum_tokens = 6871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'Rust(ImplMethod { file: "src/edit.rs", start_line: 66 })'
+descriptor = "impl method at src/edit.rs:66"
+cost_tokens = 0
+cum_tokens = 6871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 153
+key = 'Rust(ImplMethod { file: "src/edit.rs", start_line: 92 })'
+descriptor = "impl method at src/edit.rs:92"
+cost_tokens = 0
+cum_tokens = 6871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'Rust(ImplMethod { file: "src/edit.rs", start_line: 100 })'
+descriptor = "impl method at src/edit.rs:100"
+cost_tokens = 0
+cum_tokens = 6871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/edit.rs"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 155
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 226, body_start_line: 227 })'
+descriptor = "impl method body at src/config/mod.rs:226 body 227"
+cost_tokens = 10
+cum_tokens = 6881
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 227
+end = 227
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 273, body_start_line: 274 })'
+descriptor = "impl method body at src/config/mod.rs:273 body 274"
+cost_tokens = 10
+cum_tokens = 6891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 274
+end = 274
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Rust(ModUse { file: "src/ui/mod.rs" })'
+descriptor = "mod/use plumbing in src/ui/mod.rs"
+cost_tokens = 208
+cum_tokens = 7099
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/mod.rs"
+start = 1
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 260, body_start_line: 261 })'
+descriptor = "impl method body at src/config/mod.rs:260 body 261"
+cost_tokens = 11
+cum_tokens = 7110
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 261
+end = 261
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Rust(PubItem { file: "src/ui/data_block.rs", start_line: 16 })'
+descriptor = "pub item at src/ui/data_block.rs:16"
+cost_tokens = 143
+cum_tokens = 7253
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/data_block.rs"
+start = 16
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'Rust(MethodSigs { file: "src/live_reload.rs" })'
+descriptor = "impl method sigs in src/live_reload.rs"
+cost_tokens = 153
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 27
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 98
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 161
+key = 'Rust(ImplMethod { file: "src/live_reload.rs", start_line: 54 })'
+descriptor = "impl method at src/live_reload.rs:54"
+cost_tokens = 0
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 162
+key = 'Rust(ImplMethod { file: "src/live_reload.rs", start_line: 64 })'
+descriptor = "impl method at src/live_reload.rs:64"
+cost_tokens = 0
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 163
+key = 'Rust(ImplMethod { file: "src/live_reload.rs", start_line: 71 })'
+descriptor = "impl method at src/live_reload.rs:71"
+cost_tokens = 0
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
+key = 'Rust(ImplMethod { file: "src/live_reload.rs", start_line: 99 })'
+descriptor = "impl method at src/live_reload.rs:99"
+cost_tokens = 0
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 165
+key = 'Rust(ImplMethod { file: "src/live_reload.rs", start_line: 103 })'
+descriptor = "impl method at src/live_reload.rs:103"
+cost_tokens = 0
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 166
+key = 'Rust(ImplMethod { file: "src/live_reload.rs", start_line: 107 })'
+descriptor = "impl method at src/live_reload.rs:107"
+cost_tokens = 0
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 167
+key = 'Rust(ImplMethod { file: "src/live_reload.rs", start_line: 112 })'
+descriptor = "impl method at src/live_reload.rs:112"
+cost_tokens = 0
+cum_tokens = 7406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 168
+key = 'Rust(PubItem { file: "src/ui/tree_overview.rs", start_line: 19 })'
+descriptor = "pub item at src/ui/tree_overview.rs:19"
+cost_tokens = 158
+cum_tokens = 7564
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/tree_overview.rs"
+start = 19
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Rust(PubItemBody { file: "src/debug.rs", start_line: 23, body_start_line: 24 })'
+descriptor = "pub item body at src/debug.rs:23 body 24"
+cost_tokens = 118
+cum_tokens = 7682
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/debug.rs"
+start = 24
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 256, body_start_line: 257 })'
+descriptor = "impl method body at src/config/mod.rs:256 body 257"
+cost_tokens = 13
+cum_tokens = 7695
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'Rust(ImplMethodBody { file: "src/live_reload.rs", start_line: 64, body_start_line: 65 })'
+descriptor = "impl method body at src/live_reload.rs:64 body 65"
+cost_tokens = 44
+cum_tokens = 7739
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 65
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
 key = 'Rust(MethodSigs { file: "src/parse/json.rs" })'
 descriptor = "impl method sigs in src/parse/json.rs"
 cost_tokens = 96
-cum_tokens = 7301
+cum_tokens = 7835
 
 [batches.content]
 kind = "lines"
@@ -3282,207 +4932,187 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 116
-key = 'Rust(MethodSigs { file: "src/tree.rs" })'
-descriptor = "impl method sigs in src/tree.rs"
-cost_tokens = 191
-cum_tokens = 7492
+position = 173
+key = 'Rust(ImplMethod { file: "src/parse/json.rs", start_line: 9 })'
+descriptor = "impl method at src/parse/json.rs:9"
+cost_tokens = 0
+cum_tokens = 7835
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/tree.rs"
-start = 51
-end = 52
+path = "src/parse/json.rs"
+start = 9
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "src/tree.rs"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 385
-end = 386
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 390
-end = 390
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 394
-end = 394
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 95
-end = 95
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 99
-end = 99
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 387
-end = 387
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 391
-end = 391
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/tree.rs"
-start = 395
-end = 395
+path = "src/parse/json.rs"
+start = 10
+end = 10
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 117
-key = 'Rust(MethodSigs { file: "src/parse/xml.rs" })'
-descriptor = "impl method sigs in src/parse/xml.rs"
-cost_tokens = 99
-cum_tokens = 7591
+position = 174
+key = 'Rust(ImplMethod { file: "src/parse/json.rs", start_line: 13 })'
+descriptor = "impl method at src/parse/json.rs:13"
+cost_tokens = 0
+cum_tokens = 7835
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "src/parse/xml.rs"
+path = "src/parse/json.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
 start = 14
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/xml.rs"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/xml.rs"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/xml.rs"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/xml.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/xml.rs"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/xml.rs"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/xml.rs"
-start = 33
-end = 33
+end = 14
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 175
+key = 'Rust(ImplMethod { file: "src/parse/json.rs", start_line: 17 })'
+descriptor = "impl method at src/parse/json.rs:17"
+cost_tokens = 0
+cum_tokens = 7835
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 176
+key = 'Rust(ImplMethod { file: "src/parse/json.rs", start_line: 21 })'
+descriptor = "impl method at src/parse/json.rs:21"
+cost_tokens = 0
+cum_tokens = 7835
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 177
+key = 'Rust(ImplMethodBody { file: "src/parse/json.rs", start_line: 13, body_start_line: 14 })'
+descriptor = "impl method body at src/parse/json.rs:13 body 14"
+cost_tokens = 7
+cum_tokens = 7842
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Rust(ImplMethodBody { file: "src/parse/json.rs", start_line: 9, body_start_line: 10 })'
+descriptor = "impl method body at src/parse/json.rs:9 body 10"
+cost_tokens = 8
+cum_tokens = 7850
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Rust(ImplMethodBody { file: "src/parse/json.rs", start_line: 21, body_start_line: 22 })'
+descriptor = "impl method body at src/parse/json.rs:21 body 22"
+cost_tokens = 13
+cum_tokens = 7863
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Rust(ImplMethodBody { file: "src/parse/json.rs", start_line: 17, body_start_line: 18 })'
+descriptor = "impl method body at src/parse/json.rs:17 body 18"
+cost_tokens = 17
+cum_tokens = 7880
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/json.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
 key = 'Rust(MethodSigs { file: "src/parse/hcl.rs" })'
 descriptor = "impl method sigs in src/parse/hcl.rs"
 cost_tokens = 100
-cum_tokens = 7691
+cum_tokens = 7980
 
 [batches.content]
 kind = "lines"
@@ -3552,11 +5182,187 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 182
+key = 'Rust(ImplMethod { file: "src/parse/hcl.rs", start_line: 11 })'
+descriptor = "impl method at src/parse/hcl.rs:11"
+cost_tokens = 0
+cum_tokens = 7980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 183
+key = 'Rust(ImplMethod { file: "src/parse/hcl.rs", start_line: 15 })'
+descriptor = "impl method at src/parse/hcl.rs:15"
+cost_tokens = 0
+cum_tokens = 7980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 184
+key = 'Rust(ImplMethod { file: "src/parse/hcl.rs", start_line: 19 })'
+descriptor = "impl method at src/parse/hcl.rs:19"
+cost_tokens = 0
+cum_tokens = 7980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 185
+key = 'Rust(ImplMethod { file: "src/parse/hcl.rs", start_line: 23 })'
+descriptor = "impl method at src/parse/hcl.rs:23"
+cost_tokens = 0
+cum_tokens = 7980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 186
+key = 'Rust(ImplMethodBody { file: "src/parse/hcl.rs", start_line: 15, body_start_line: 16 })'
+descriptor = "impl method body at src/parse/hcl.rs:15 body 16"
+cost_tokens = 7
+cum_tokens = 7987
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Rust(ImplMethodBody { file: "src/parse/hcl.rs", start_line: 11, body_start_line: 12 })'
+descriptor = "impl method body at src/parse/hcl.rs:11 body 12"
+cost_tokens = 9
+cum_tokens = 7996
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Rust(ImplMethodBody { file: "src/parse/hcl.rs", start_line: 23, body_start_line: 24 })'
+descriptor = "impl method body at src/parse/hcl.rs:23 body 24"
+cost_tokens = 14
+cum_tokens = 8010
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'Rust(ImplMethodBody { file: "src/parse/hcl.rs", start_line: 19, body_start_line: 20 })'
+descriptor = "impl method body at src/parse/hcl.rs:19 body 20"
+cost_tokens = 18
+cum_tokens = 8028
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/hcl.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
 key = 'Rust(MethodSigs { file: "src/parse/toml.rs" })'
 descriptor = "impl method sigs in src/parse/toml.rs"
 cost_tokens = 100
-cum_tokens = 7791
+cum_tokens = 8128
 
 [batches.content]
 kind = "lines"
@@ -3626,11 +5432,151 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 191
+key = 'Rust(ImplMethod { file: "src/parse/toml.rs", start_line: 12 })'
+descriptor = "impl method at src/parse/toml.rs:12"
+cost_tokens = 0
+cum_tokens = 8128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 192
+key = 'Rust(ImplMethod { file: "src/parse/toml.rs", start_line: 16 })'
+descriptor = "impl method at src/parse/toml.rs:16"
+cost_tokens = 0
+cum_tokens = 8128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 193
+key = 'Rust(ImplMethod { file: "src/parse/toml.rs", start_line: 20 })'
+descriptor = "impl method at src/parse/toml.rs:20"
+cost_tokens = 0
+cum_tokens = 8128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 194
+key = 'Rust(ImplMethod { file: "src/parse/toml.rs", start_line: 25 })'
+descriptor = "impl method at src/parse/toml.rs:25"
+cost_tokens = 0
+cum_tokens = 8128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 195
+key = 'Rust(ImplMethodBody { file: "src/parse/toml.rs", start_line: 16, body_start_line: 17 })'
+descriptor = "impl method body at src/parse/toml.rs:16 body 17"
+cost_tokens = 7
+cum_tokens = 8135
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'Rust(ImplMethodBody { file: "src/parse/toml.rs", start_line: 12, body_start_line: 13 })'
+descriptor = "impl method body at src/parse/toml.rs:12 body 13"
+cost_tokens = 9
+cum_tokens = 8144
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/toml.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
 key = 'Rust(MethodSigs { file: "src/parse/jsonl.rs" })'
 descriptor = "impl method sigs in src/parse/jsonl.rs"
 cost_tokens = 101
-cum_tokens = 7892
+cum_tokens = 8245
 
 [batches.content]
 kind = "lines"
@@ -3700,11 +5646,169 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 198
+key = 'Rust(ImplMethod { file: "src/parse/jsonl.rs", start_line: 10 })'
+descriptor = "impl method at src/parse/jsonl.rs:10"
+cost_tokens = 0
+cum_tokens = 8245
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 199
+key = 'Rust(ImplMethod { file: "src/parse/jsonl.rs", start_line: 14 })'
+descriptor = "impl method at src/parse/jsonl.rs:14"
+cost_tokens = 0
+cum_tokens = 8245
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 200
+key = 'Rust(ImplMethod { file: "src/parse/jsonl.rs", start_line: 18 })'
+descriptor = "impl method at src/parse/jsonl.rs:18"
+cost_tokens = 0
+cum_tokens = 8245
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 201
+key = 'Rust(ImplMethod { file: "src/parse/jsonl.rs", start_line: 35 })'
+descriptor = "impl method at src/parse/jsonl.rs:35"
+cost_tokens = 0
+cum_tokens = 8245
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 202
+key = 'Rust(ImplMethodBody { file: "src/parse/jsonl.rs", start_line: 14, body_start_line: 15 })'
+descriptor = "impl method body at src/parse/jsonl.rs:14 body 15"
+cost_tokens = 7
+cum_tokens = 8252
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
+key = 'Rust(ImplMethodBody { file: "src/parse/jsonl.rs", start_line: 10, body_start_line: 11 })'
+descriptor = "impl method body at src/parse/jsonl.rs:10 body 11"
+cost_tokens = 8
+cum_tokens = 8260
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'Rust(ImplMethodBody { file: "src/parse/jsonl.rs", start_line: 35, body_start_line: 36 })'
+descriptor = "impl method body at src/parse/jsonl.rs:35 body 36"
+cost_tokens = 15
+cum_tokens = 8275
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/jsonl.rs"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 205
 key = 'Rust(MethodSigs { file: "src/parse/yaml.rs" })'
 descriptor = "impl method sigs in src/parse/yaml.rs"
 cost_tokens = 101
-cum_tokens = 7993
+cum_tokens = 8376
 
 [batches.content]
 kind = "lines"
@@ -3774,11 +5878,329 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 206
+key = 'Rust(ImplMethod { file: "src/parse/yaml.rs", start_line: 11 })'
+descriptor = "impl method at src/parse/yaml.rs:11"
+cost_tokens = 0
+cum_tokens = 8376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 207
+key = 'Rust(ImplMethod { file: "src/parse/yaml.rs", start_line: 15 })'
+descriptor = "impl method at src/parse/yaml.rs:15"
+cost_tokens = 0
+cum_tokens = 8376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 208
+key = 'Rust(ImplMethod { file: "src/parse/yaml.rs", start_line: 19 })'
+descriptor = "impl method at src/parse/yaml.rs:19"
+cost_tokens = 0
+cum_tokens = 8376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 209
+key = 'Rust(ImplMethod { file: "src/parse/yaml.rs", start_line: 37 })'
+descriptor = "impl method at src/parse/yaml.rs:37"
+cost_tokens = 0
+cum_tokens = 8376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 210
+key = 'Rust(ImplMethodBody { file: "src/parse/yaml.rs", start_line: 15, body_start_line: 16 })'
+descriptor = "impl method body at src/parse/yaml.rs:15 body 16"
+cost_tokens = 7
+cum_tokens = 8383
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'Rust(ImplMethodBody { file: "src/parse/yaml.rs", start_line: 11, body_start_line: 12 })'
+descriptor = "impl method body at src/parse/yaml.rs:11 body 12"
+cost_tokens = 8
+cum_tokens = 8391
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/parse/yaml.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 212
+key = 'Rust(MethodSigs { file: "src/config/keys.rs" })'
+descriptor = "impl method sigs in src/config/keys.rs"
+cost_tokens = 105
+cum_tokens = 8496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 74
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 356
+end = 357
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 358
+end = 358
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 213
+key = 'Rust(ImplMethod { file: "src/config/keys.rs", start_line: 75 })'
+descriptor = "impl method at src/config/keys.rs:75"
+cost_tokens = 0
+cum_tokens = 8496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 214
+key = 'Rust(ImplMethod { file: "src/config/keys.rs", start_line: 121 })'
+descriptor = "impl method at src/config/keys.rs:121"
+cost_tokens = 0
+cum_tokens = 8496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 215
+key = 'Rust(ImplMethod { file: "src/config/keys.rs", start_line: 181 })'
+descriptor = "impl method at src/config/keys.rs:181"
+cost_tokens = 0
+cum_tokens = 8496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 216
+key = 'Rust(ImplMethod { file: "src/config/keys.rs", start_line: 357 })'
+descriptor = "impl method at src/config/keys.rs:357"
+cost_tokens = 0
+cum_tokens = 8496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 357
+end = 357
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/config/keys.rs"
+start = 358
+end = 358
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 217
 key = 'Rust(PubItem { file: "src/config/types.rs", start_line: 28 })'
 descriptor = "pub item at src/config/types.rs:28"
 cost_tokens = 206
-cum_tokens = 8199
+cum_tokens = 8702
 
 [batches.content]
 kind = "lines"
@@ -3792,11 +6214,215 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 123
+position = 218
+key = 'Rust(ImplMethod { file: "src/live_reload.rs", start_line: 28 })'
+descriptor = "impl method at src/live_reload.rs:28"
+cost_tokens = 52
+cum_tokens = 8754
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 28
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/live_reload.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 219
+key = 'Rust(MethodSigs { file: "src/ui/header.rs" })'
+descriptor = "impl method sigs in src/ui/header.rs"
+cost_tokens = 109
+cum_tokens = 8863
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 18
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 46
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 220
+key = 'Rust(ImplMethod { file: "src/ui/header.rs", start_line: 19 })'
+descriptor = "impl method at src/ui/header.rs:19"
+cost_tokens = 0
+cum_tokens = 8863
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 221
+key = 'Rust(ImplMethod { file: "src/ui/header.rs", start_line: 33 })'
+descriptor = "impl method at src/ui/header.rs:33"
+cost_tokens = 0
+cum_tokens = 8863
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 222
+key = 'Rust(ImplMethod { file: "src/ui/header.rs", start_line: 47 })'
+descriptor = "impl method at src/ui/header.rs:47"
+cost_tokens = 0
+cum_tokens = 8863
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 223
+key = 'Rust(ImplMethod { file: "src/ui/header.rs", start_line: 55 })'
+descriptor = "impl method at src/ui/header.rs:55"
+cost_tokens = 0
+cum_tokens = 8863
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/ui/header.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 224
 key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 21 })'
 descriptor = "pub item at src/config/colors.rs:21"
 cost_tokens = 232
-cum_tokens = 8431
+cum_tokens = 9095
 
 [batches.content]
 kind = "lines"
@@ -3810,11 +6436,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 124
+position = 225
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 104
-cum_tokens = 8535
+cum_tokens = 9199
 
 [batches.content]
 kind = "lines"
@@ -3828,11 +6454,531 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 125
+position = 226
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 131, body_start_line: 132 })'
+descriptor = "impl method body at src/config/mod.rs:131 body 132"
+cost_tokens = 126
+cum_tokens = 9325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 132
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'Rust(MethodSigs { file: "src/tree.rs" })'
+descriptor = "impl method sigs in src/tree.rs"
+cost_tokens = 246
+cum_tokens = 9571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 51
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 278
+end = 278
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 368
+end = 368
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 385
+end = 386
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 390
+end = 390
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 394
+end = 394
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 325
+end = 325
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 369
+end = 369
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 387
+end = 387
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 395
+end = 395
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 228
+key = 'Rust(ImplMethod { file: "src/tree.rs", start_line: 52 })'
+descriptor = "impl method at src/tree.rs:52"
+cost_tokens = 0
+cum_tokens = 9571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 229
+key = 'Rust(ImplMethod { file: "src/tree.rs", start_line: 58 })'
+descriptor = "impl method at src/tree.rs:58"
+cost_tokens = 0
+cum_tokens = 9571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 230
+key = 'Rust(ImplMethod { file: "src/tree.rs", start_line: 94 })'
+descriptor = "impl method at src/tree.rs:94"
+cost_tokens = 0
+cum_tokens = 9571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 231
+key = 'Rust(ImplMethod { file: "src/tree.rs", start_line: 98 })'
+descriptor = "impl method at src/tree.rs:98"
+cost_tokens = 0
+cum_tokens = 9571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 232
+key = 'Rust(ImplMethod { file: "src/tree.rs", start_line: 368 })'
+descriptor = "impl method at src/tree.rs:368"
+cost_tokens = 0
+cum_tokens = 9571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 368
+end = 368
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 369
+end = 369
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 233
+key = 'Rust(ImplMethod { file: "src/tree.rs", start_line: 386 })'
+descriptor = "impl method at src/tree.rs:386"
+cost_tokens = 0
+cum_tokens = 9571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 386
+end = 386
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 387
+end = 387
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 234
+key = 'Rust(ImplMethod { file: "src/tree.rs", start_line: 390 })'
+descriptor = "impl method at src/tree.rs:390"
+cost_tokens = 0
+cum_tokens = 9571
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 390
+end = 390
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 235
+key = 'Rust(ImplMethodBody { file: "src/tree.rs", start_line: 94, body_start_line: 95 })'
+descriptor = "impl method body at src/tree.rs:94 body 95"
+cost_tokens = 10
+cum_tokens = 9581
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Rust(ImplMethodBody { file: "src/tree.rs", start_line: 98, body_start_line: 99 })'
+descriptor = "impl method body at src/tree.rs:98 body 99"
+cost_tokens = 12
+cum_tokens = 9593
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Rust(ImplMethodBody { file: "src/tree.rs", start_line: 386, body_start_line: 387 })'
+descriptor = "impl method body at src/tree.rs:386 body 387"
+cost_tokens = 14
+cum_tokens = 9607
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 387
+end = 387
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'Rust(ImplMethodBody { file: "src/tree.rs", start_line: 390, body_start_line: 391 })'
+descriptor = "impl method body at src/tree.rs:390 body 391"
+cost_tokens = 17
+cum_tokens = 9624
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 239
+key = 'Rust(ImplMethodBody { file: "src/tree.rs", start_line: 52, body_start_line: 53 })'
+descriptor = "impl method body at src/tree.rs:52 body 53"
+cost_tokens = 47
+cum_tokens = 9671
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 53
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'Rust(ImplMethod { file: "src/tree.rs", start_line: 394 })'
+descriptor = "impl method at src/tree.rs:394"
+cost_tokens = 50
+cum_tokens = 9721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 394
+end = 399
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "src/tree.rs"
+start = 400
+end = 400
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 241
+key = 'Rust(ImplMethodBody { file: "src/config/mod.rs", start_line: 196, body_start_line: 197 })'
+descriptor = "impl method body at src/config/mod.rs:196 body 197"
+cost_tokens = 135
+cum_tokens = 9856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "src/config/mod.rs"
+start = 197
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
 key = 'Rust(PubItemBody { file: "src/parse/syntax.rs", start_line: 201, body_start_line: 202 })'
 descriptor = "pub item body at src/parse/syntax.rs:201 body 202"
 cost_tokens = 102
-cum_tokens = 8637
+cum_tokens = 9958
 
 [batches.content]
 kind = "lines"
@@ -3844,449 +6990,3 @@ end = 213
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 126
-key = 'Rust(MethodSigs { file: "src/ui/popup.rs" })'
-descriptor = "impl method sigs in src/ui/popup.rs"
-cost_tokens = 144
-cum_tokens = 8781
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 26
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/popup.rs"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 127
-key = 'Rust(PubItem { file: "src/ui/app.rs", start_line: 53 })'
-descriptor = "pub item at src/ui/app.rs:53"
-cost_tokens = 279
-cum_tokens = 9060
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ui/app.rs"
-start = 53
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 128
-key = 'Rust(MethodSigs { file: "src/config/colors.rs" })'
-descriptor = "impl method sigs in src/config/colors.rs"
-cost_tokens = 21
-cum_tokens = 9081
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 55
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 129
-key = 'Rust(PubItemBody { file: "src/parse/syntax.rs", start_line: 139, body_start_line: 140 })'
-descriptor = "pub item body at src/parse/syntax.rs:139 body 140"
-cost_tokens = 120
-cum_tokens = 9201
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/parse/syntax.rs"
-start = 140
-end = 148
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Rust(PubItem { file: "src/config/colors.rs", start_line: 78 })'
-descriptor = "pub item at src/config/colors.rs:78"
-cost_tokens = 320
-cum_tokens = 9521
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/config/colors.rs"
-start = 77
-end = 108
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 131
-key = 'Rust(MethodSigs { file: "src/ui/filter.rs" })'
-descriptor = "impl method sigs in src/ui/filter.rs"
-cost_tokens = 168
-cum_tokens = 9689
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 40
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 119
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 152
-end = 153
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 95
-end = 95
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 107
-end = 107
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/ui/filter.rs"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 132
-key = 'Rust(MethodSigs { file: "src/parse/any.rs" })'
-descriptor = "impl method sigs in src/parse/any.rs"
-cost_tokens = 170
-cum_tokens = 9859
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 13
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 25
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "src/parse/any.rs"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "ellipsis"

@@ -175,6 +175,10 @@ impl/
             …
               48→impl ToTokens for private {
               49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+              50→        tokens.append(Ident::new(
+              51→            concat!("__private", env!("CARGO_PKG_VERSION_PATCH")),
+              52→            Span::call_site(),
+              53→        ));
             …
         prop.rs
         scan_expr.rs

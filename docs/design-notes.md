@@ -556,6 +556,84 @@ Two ships (crate-doc oversize split bfd4076b, crate-attribute recall
   / toasty −0.013 ungated; log 140-token lint list −0.02..−0.05 on
   4-8K rows; thiserror secondary impl crate −0.04 even damped).
 
+## Rust per-impl-method recall (2026-07-26): 0.6302 → 0.6305
+
+Closed the largest pool-absent class in the corpus: `RustKey` had no
+per-method key and `item_kind_of` no `impl_item` arm, so **no inherent-
+impl method body was reachable at any budget in any Rust fixture** (950
+NS atoms, 8 of 8 Rust training fixtures). Shipped `ImplMethod` /
+`ImplMethodBody`, predecessor-gated on the file's existing `MethodSigs`
+roster — the roster already names every method it renders, so it is a
+genuine entry ticket instead of a dead end.
+
+Corpus means on the 7-budget grid (71 training fixtures):
+`0.6302→0.6305` @3K, `0.5924→0.5932` @4.3K, `0.5619→0.5627` @6.2K,
+`0.5429→0.5436` @9K; ≤2K unchanged. Only thiserror moves the 3K
+headline (+0.017); anyhow gains +0.044/+0.039/+0.030 at 4.3/6.2/9K.
+sps −0.012 @9K is the only regression at any budget.
+
+Load-bearing findings, in rough order of how much they'd cost to
+rediscover:
+
+- **The ≤3K Rust impl-method mass is roster-shaped, not body-shaped.**
+  Every ≤3K NS row on the affected fixtures (anyhow "Error impl method
+  roster" @2366, log "Level & LevelFilter public method roster" @1945
+  and "Record accessor method roster" @2557, sps keg.rs @2147) wants
+  *name-only, truncated-at-the-paren signatures*, and every one of them
+  is **priced-out, not absent** — `MethodSigs` for anyhow `src/error.rs`
+  lands at ~3.4K against an NS slot of 2366. The bodies this lane made
+  reachable sit at NS ranks 3.5K+ (otree cmd.rs `update_config` @4283,
+  `get_content_type` @3824), which is why a 950-atom recall win buys
+  +0.0003 at the primary budget. Whoever picks up the roster-pricing
+  half should not expect it to be blocked by recall.
+- **Visibility: inherent vs trait impls are filtered differently, and
+  the NSes say so.** `is_own_api_impl` (was `is_exported_method`) now
+  admits *every* method of an inherent impl regardless of `pub`, and
+  still requires a crate-public trait for a trait impl. anyhow's NS row
+  is explicit — "every method on `Error`/`ErrorImpl`, public or
+  private … Trait-impl methods (Display/Debug/Drop/Deref/From/AsRef)
+  are a separate, self-evident class and are deliberately not part of
+  this roster" — and thiserror `impl/src/prop.rs` ranks a roster of
+  `pub(crate)` methods. Worth +0.0006 at 4.3–9K, flat at 3K, and it
+  *removes* a filter.
+
+Measured-dead in the same lane (specifics block retries):
+
+- **Uniform one-line-per-method roster shape** (drop the entrypoint
+  `All` scope's full multi-line signatures now that `ImplMethod` renders
+  them): hyperfine −0.076 @3K, mdbook −0.016, mean −0.0013, nothing
+  gained. An entrypoint roster is doing signature work, not index work.
+- **Oversize-roster fallback to the one-line shape** (≥400 rendered
+  tokens, aimed at log's 2016-token `lib.rs` roster): flat @3K,
+  hyperfine −0.032 @4.3K, toasty −0.073 @9K. log was unmoved — the
+  fallback shape is still large because `All` membership includes every
+  trait impl.
+- **`ModUse` gate widening to `is_package_source_file`** (the second,
+  separable half of the diagnosis's recommendation): mean −0.0013,
+  anyhow −0.051, thiserror −0.038. Independently confirms the existing
+  in-code note that opening `ModUse` up floods the mid-budget.
+- **Trait-impl value damp** (0.6 on the signature / 0.8 on the body,
+  on the theory that a trait impl's method set is predictable from the
+  trait): byte-identical to no damp at all 7 budgets. The
+  inherent/trait distinction is real for *membership* and for the
+  visibility axis, inert for *value*.
+- **`ImplMethodDoc`** (Python's `MethodDoc` analog): moved no fixture at
+  any budget. Same outcome as the `StructFieldGroupDoc` follow-up in the
+  Go ledger — a per-member doc key does not pay for itself.
+
+Incidental correctness fix: `collect_item_lines` emitted a body-elision
+marker at `sig_end + 2` for a one-line body (`fn f() {}`), i.e. on the
+*next* item's line. Latent for `PubItem`; per-method batches hit it
+immediately (log `src/lib.rs:1290`/`1291` panicked the non-ancestor
+overlap assert). Regression test
+`rust_one_line_fn_body_emits_no_elision_marker`.
+
+Still absent after this lane (from the same diagnosis): otree's
+`cmd.rs` clap struct prices as one atomic 1047-token `PubItem` because
+Rust has no `PubItem` size splitter — a pricing/granularity gap, and
+note the adjacent "oversized public Rust struct/enum head-split" is
+already measured dead, so a retry needs a value mechanism.
+
 ## Extreme-budget contract sweep (2026-07-06): corpus clean
 
 `for f in tests/fixtures/*/; do cargo run -q -- --budget 1000000 $f;

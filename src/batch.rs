@@ -181,6 +181,19 @@ pub enum RustKey {
     PubItemDocBody { file: PathBuf, start_line: usize },
     /// Impl-block headers + method signatures in a single file.
     MethodSigs { file: PathBuf },
+    /// One `impl`-block method's signature (body elided), for a method
+    /// the file's `MethodSigs` roster already names. Predecessor: that
+    /// `MethodSigs` batch — the roster is the entry ticket, and gating
+    /// there keeps the sig-line overlap inside the predecessor chain.
+    ImplMethod { file: PathBuf, start_line: usize },
+    /// Body slice of an impl method, split by top-level statement —
+    /// the same shape as `PubItemBody`. Predecessor: matching
+    /// `ImplMethod`.
+    ImplMethodBody {
+        file: PathBuf,
+        start_line: usize,
+        body_start_line: usize,
+    },
     /// Private function signature plus same-constructor registration call anchors.
     RegistrationRoster { file: PathBuf, start_line: usize },
     /// `#[macro_export] macro_rules!` names across `src_dir`.
@@ -695,15 +708,19 @@ impl InnerKey for RustKey {
                 | RustKey::PubItemDocLede { .. }
                 | RustKey::PubItemDocBody { .. }
                 | RustKey::MacroBody { .. }
+                | RustKey::ImplMethodBody { .. }
         )
     }
 
     /// `PubItemDocBody` steepens to `0.45` — rustdoc prose past the
     /// first heading grows in cost without proportional structural value.
     /// `CrateDocBody` stays at the default (its bullets carry credit).
+    /// Per-method batches take the same `0.45` as their Python / C / Go
+    /// counterparts — short members emitted in bulk.
     fn concavity_exponent(&self) -> f64 {
         match self {
             RustKey::PubItemDocBody { .. } => 0.45,
+            RustKey::ImplMethod { .. } | RustKey::ImplMethodBody { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -741,6 +758,20 @@ impl InnerKey for RustKey {
                 describe_at("pub-item doc body", file, *start_line, root)
             }
             RustKey::MethodSigs { file } => describe_in("impl method sigs", file, root),
+            RustKey::ImplMethod { file, start_line } => {
+                describe_at("impl method", file, *start_line, root)
+            }
+            RustKey::ImplMethodBody {
+                file,
+                start_line,
+                body_start_line,
+            } => describe_at_body(
+                "impl method body",
+                file,
+                *start_line,
+                *body_start_line,
+                root,
+            ),
             RustKey::RegistrationRoster { file, start_line } => {
                 describe_at("registration roster", file, *start_line, root)
             }
