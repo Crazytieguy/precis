@@ -810,4 +810,54 @@ mod tests {
             BatchKey::Fs(FsKey::DirListing { dir }) if dir.starts_with(root.join("target"))
         )));
     }
+
+    /// A module's `src/` promotes a catalog partition but not a small
+    /// leaf, and only when the manifest that makes it a module is
+    /// something the repository actually declares.
+    #[test]
+    fn fs_module_source_root_promotes_catalogs_and_respects_ignored_manifests() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        let catalog = root.join("packages/lib/src/api");
+        let leaf = root.join("packages/lib/src/files");
+        std::fs::create_dir_all(&catalog).unwrap();
+        std::fs::create_dir_all(&leaf).unwrap();
+        std::fs::write(root.join("packages/lib/package.json"), "{}\n").unwrap();
+        for i in 0..MODULE_SOURCE_ROOT_MIN_ENTRIES {
+            std::fs::write(catalog.join(format!("m{i}.ts")), "export const x = 1;\n").unwrap();
+        }
+        for i in 0..3 {
+            std::fs::write(leaf.join(format!("f{i}.ts")), "export const y = 1;\n").unwrap();
+        }
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        assert!(has_source_root_ancestor(&catalog, &ctx));
+        assert!(
+            !has_source_root_ancestor(&leaf, &ctx),
+            "a four-file leaf is not a package's API partition"
+        );
+
+        // Same tree, but the manifest is gitignored: a manifest git
+        // hides is not the repository's statement about its layout,
+        // and the walker never lists it either.
+        let ignored = tempfile::tempdir().unwrap();
+        let iroot = ignored.path();
+        let icatalog = iroot.join("packages/lib/src/api");
+        std::fs::create_dir_all(&icatalog).unwrap();
+        std::fs::create_dir_all(iroot.join(".git")).unwrap();
+        std::fs::write(iroot.join(".gitignore"), "package.json\n").unwrap();
+        std::fs::write(iroot.join("packages/lib/package.json"), "{}\n").unwrap();
+        for i in 0..MODULE_SOURCE_ROOT_MIN_ENTRIES {
+            std::fs::write(icatalog.join(format!("m{i}.ts")), "export const x = 1;\n").unwrap();
+        }
+        let ictx = WalkCtx::new(iroot.to_path_buf());
+        assert!(!has_source_root_ancestor(&icatalog, &ictx));
+
+        // Controlled comparison: the same tree with the manifest
+        // un-ignored does promote, so the assertion above is about the
+        // ignore rules and not about the tree's shape.
+        std::fs::write(iroot.join(".gitignore"), "\n").unwrap();
+        let visible_ctx = WalkCtx::new(iroot.to_path_buf());
+        assert!(has_source_root_ancestor(&icatalog, &visible_ctx));
+    }
 }
