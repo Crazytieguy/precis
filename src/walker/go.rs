@@ -380,7 +380,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .chain(info.deprecation_marker)
             })
             .collect();
-        let names_lines_by_chunk: Vec<FileLines> = if chunk_count == 1 {
+        let mut names_lines_by_chunk: Vec<FileLines> = if chunk_count == 1 {
             vec![collect_decl_names_from(&decls, &all_name_lines)]
         } else {
             decls
@@ -388,6 +388,23 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 .map(|chunk| collect_decl_names_from(chunk, &all_name_lines))
                 .collect()
         };
+        // A `//go:build` constraint negates the roster's claim that
+        // these declarations are the package's API: they exist only for
+        // the builds it names. It sits above the `package` clause, in no
+        // batch at all, so the roster — routinely the only place these
+        // declarations appear — presented conditional code as universal.
+        // The head chunk is the right anchor for the same reason the
+        // `Deprecated:` marker rides here: it is the file's first
+        // admitted content and the predecessor of everything else in the
+        // file, so the constraint cannot be separated from what it
+        // qualifies.
+        let constraint_rows = build_constraint_rows(&src_lines);
+        if let Some(head) = names_lines_by_chunk.first_mut()
+            && !head.full.is_empty()
+            && !constraint_rows.is_empty()
+        {
+            head.full = dedup_sorted(head.full.iter().copied().chain(constraint_rows).collect());
+        }
         let mut names_head_emitted = false;
         for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
             if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
@@ -603,7 +620,7 @@ fn find_decls<'a>(tree: &'a Tree, source: &str) -> Vec<(Node<'a>, DeclInfo)> {
         let info = match child.kind() {
             "function_declaration" => func_or_method_info(child, source, DeclKind::Func),
             "method_declaration" => func_or_method_info(child, source, DeclKind::Method),
-            "type_declaration" => Some(grouped_type_info(child, source)),
+            "type_declaration" => Some(grouped_type_info(child, source, &src_lines)),
             "var_declaration" => Some(grouped_value_info(child, source, DeclKind::Var)),
             "const_declaration" => Some(grouped_value_info(child, source, DeclKind::Const)),
             _ => None,
@@ -622,11 +639,54 @@ fn deprecation_marker_line(node: Node, source: &str, src_lines: &[&str]) -> Opti
         .full
         .into_iter()
         .find(|line| {
-            src_lines.get(line - 1).is_some_and(|text| {
-                text.trim_start_matches(['/', '\t', ' '])
-                    .starts_with("Deprecated:")
-            })
+            src_lines
+                .get(line - 1)
+                .is_some_and(|text| is_deprecation_marker(text))
         })
+}
+
+/// A comment row opening Go's documented deprecation paragraph.
+fn is_deprecation_marker(text: &str) -> bool {
+    text.trim_start_matches(['/', '\t', ' '])
+        .starts_with("Deprecated:")
+}
+
+/// Rows of the file's `//go:build` constraint header. A constraint
+/// decides whether the file's contents exist at all for a given build,
+/// so it contradicts the roster below it in the strongest available
+/// sense — rendered without it, platform- or tag-specific declarations
+/// read as the package's universal API.
+///
+/// Go requires the constraint block to be followed by a blank line
+/// before the `package` clause; a comment that touches the clause is a
+/// doc comment, not a constraint. The pre-1.17 `// +build` mirror is
+/// dropped whenever the modern form is present — it restates the same
+/// constraint and would cost a second row to say so.
+fn build_constraint_rows(src_lines: &[&str]) -> Vec<usize> {
+    let mut modern = Vec::new();
+    let mut legacy = Vec::new();
+    let mut header_end = 0;
+    for (i, raw) in src_lines.iter().enumerate() {
+        let trimmed = raw.trim();
+        if trimmed.starts_with("package ") {
+            break;
+        }
+        if trimmed.starts_with("//go:build") {
+            modern.push(i + 1);
+        } else if trimmed.starts_with("// +build") {
+            legacy.push(i + 1);
+        } else {
+            continue;
+        }
+        header_end = i + 1;
+    }
+    if !src_lines
+        .get(header_end)
+        .is_some_and(|l| l.trim().is_empty())
+    {
+        return Vec::new();
+    }
+    if modern.is_empty() { legacy } else { modern }
 }
 
 fn func_or_method_info(node: Node, source: &str, kind: DeclKind) -> Option<DeclInfo> {
@@ -651,7 +711,7 @@ fn func_or_method_info(node: Node, source: &str, kind: DeclKind) -> Option<DeclI
     })
 }
 
-fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
+fn grouped_type_info(node: Node, source: &str, src_lines: &[&str]) -> DeclInfo {
     let mut cursor = node.walk();
     let mut name_lines = Vec::new();
     let mut exported = false;
@@ -696,13 +756,24 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
         // `Command`) otherwise cost ~5x the field lines alone.
         // Same-line trailing comments share a row with their field and
         // stay; groups left empty (pure comment dividers) are dropped.
+        //
+        // The one comment row that survives elision is a `Deprecated:`
+        // marker. Every other doc row elaborates a field the group
+        // already lists, so dropping it costs detail; this one
+        // contradicts the listing, and dropping it renders a field the
+        // package disowned as indistinguishable from its live siblings.
         let comment_rows = comment_only_rows(struct_body);
         let blank_groups: Vec<(usize, Vec<usize>)> = collect_blank_line_groups(struct_body, source)
             .into_iter()
             .filter_map(|(_, rows)| {
                 let rows: Vec<usize> = rows
                     .into_iter()
-                    .filter(|row| !comment_rows.contains(&(row - 1)))
+                    .filter(|row| {
+                        !comment_rows.contains(&(row - 1))
+                            || src_lines
+                                .get(row - 1)
+                                .is_some_and(|text| is_deprecation_marker(text))
+                    })
                     .collect();
                 let start = *rows.first()?;
                 Some((start, rows))
@@ -1271,6 +1342,39 @@ mod tests {
     }
 
     #[test]
+    fn go_struct_field_group_keeps_a_disavowed_field_s_marker() {
+        let mut src = String::from("package foo\n\ntype Doc struct {\n");
+        for g in 0..20 {
+            src.push_str(&format!("\t// Field{g} does a thing.\n"));
+            if g == 3 {
+                src.push_str("\t// Deprecated: use Field4 instead.\n");
+            } else {
+                src.push_str("\t// More detail.\n");
+            }
+            src.push_str(&format!("\tField{g} string\n\n"));
+        }
+        src.push_str("}\n");
+        let (source, tree) = parse(&src);
+        let decls = find_decls(&tree, &source);
+        let groups = &decls[0].1.struct_field_groups;
+        let src_lines: Vec<&str> = src.lines().collect();
+        let rendered: Vec<Vec<&str>> = groups
+            .iter()
+            .map(|(_, rows)| rows.iter().map(|&row| src_lines[row - 1].trim()).collect())
+            .collect();
+        assert_eq!(
+            rendered[3],
+            vec!["// Deprecated: use Field4 instead.", "Field3 string"],
+            "the row that contradicts the listing survives elision"
+        );
+        assert_eq!(
+            rendered[4],
+            vec!["Field4 string"],
+            "rows that merely elaborate a listed field are still elided"
+        );
+    }
+
+    #[test]
     fn go_emits_both_exported_and_unexported_decls() {
         let src = "package foo\n\nfunc Public() {}\nfunc private() {}\n";
         let (source, tree) = parse(src);
@@ -1280,6 +1384,39 @@ mod tests {
         assert!(decls[0].1.exported, "Public should be exported");
         assert_eq!(decls[1].1.start_line, 4);
         assert!(!decls[1].1.exported, "private should be unexported");
+    }
+
+    #[test]
+    fn go_build_constraint_rows_are_the_header_go_would_honor() {
+        let both = "\
+//go:build linux && amd64
+// +build linux,amd64
+
+package foo
+";
+        assert_eq!(
+            build_constraint_rows(&both.lines().collect::<Vec<_>>()),
+            vec![1],
+            "the pre-1.17 mirror restates the modern form and costs a second row"
+        );
+
+        let legacy = "// +build linux\n\npackage foo\n";
+        assert_eq!(
+            build_constraint_rows(&legacy.lines().collect::<Vec<_>>()),
+            vec![1]
+        );
+
+        // Go only honors a constraint separated from the clause by a
+        // blank line; touching it, the comment is package documentation
+        // and already belongs to another batch.
+        let touching = "//go:build linux\npackage foo\n";
+        assert!(
+            build_constraint_rows(&touching.lines().collect::<Vec<_>>()).is_empty(),
+            "a comment touching the package clause is a doc comment"
+        );
+
+        let unconstrained = "// Package foo does things.\npackage foo\n";
+        assert!(build_constraint_rows(&unconstrained.lines().collect::<Vec<_>>()).is_empty());
     }
 
     #[test]
