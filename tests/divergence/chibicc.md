@@ -74,117 +74,130 @@ Score(3000)=0.566 I=0.766 C=0.418 ns_rows≤3K=20/42 (reached=7 partial=0 missin
 | ns | 4122 |  | 528 | chibicc.h: NodeKind enum (every AST node kind) | 2.8 |  | 0.626 |
 | walker |  | 4126 | 142 | c aggregate member group at chibicc.h:176 group 177 |  |  | 0.633 |
 | walker |  | 4274 | 148 | c aggregate member group at chibicc.h:176 group 189 |  |  | 0.651 |
-| walker |  | 4373 | 99 | README.md section #8 |  |  | 0.651 |
-| walker |  | 4672 | 299 | c decl names surface #2 in chibicc.h |  |  | 0.654 |
+| walker |  | 4314 | 40 | c decl names surface #1 in unicode.c |  |  | 0.651 |
+| walker |  | 4314 | 0 | c decl at unicode.c:70 |  |  | 0.651 |
+| walker |  | 4314 | 0 | c decl at unicode.c:123 |  |  | 0.651 |
+| walker |  | 4413 | 99 | README.md section #8 |  |  | 0.651 |
+| walker |  | 4712 | 299 | c decl names surface #2 in chibicc.h |  |  | 0.654 |
 | ns | 4721 |  | 599 | chibicc.h: Node struct | 2.9 |  | 0.633 |
-| walker |  | 4859 | 187 | c includes in chibicc.h |  |  | 0.669 |
-| ns | 4874 |  | 153 | chibicc.h: TypeKind enum | 2.10 |  | 0.676 |
-| walker |  | 5024 | 165 | c aggregate member group at chibicc.h:176 group 201 |  |  | 0.698 |
-| walker |  | 5197 | 173 | c aggregate member group at chibicc.h:176 group 213 |  |  | 0.727 |
-| walker |  | 5207 | 10 | c includes in strings.c |  |  | 0.727 |
+| ns | 4874 |  | 153 | chibicc.h: TypeKind enum | 2.10 |  | 0.642 |
+| walker |  | 4899 | 187 | c includes in chibicc.h |  |  | 0.676 |
+| walker |  | 5064 | 165 | c aggregate member group at chibicc.h:176 group 201 |  |  | 0.698 |
+| walker |  | 5237 | 173 | c aggregate member group at chibicc.h:176 group 213 |  |  | 0.727 |
+| walker |  | 5247 | 10 | c includes in strings.c |  |  | 0.727 |
 | ns | 5313 |  | 439 | chibicc.h: Type struct | 2.11 |  | 0.705 |
-| walker |  | 5394 | 187 | README.md section #4 |  |  | 0.727 |
+| walker |  | 5434 | 187 | README.md section #4 |  |  | 0.727 |
 | ns | 5587 |  | 274 | chibicc.h: Member struct + extern ty_* globals | 2.12 |  | 0.734 |
 | ns | 5678 |  | 91 | chibicc.h: HashEntry/HashMap structs | 2.13 |  | 0.725 |
-| walker |  | 5693 | 299 | c decl names surface #3 in chibicc.h |  |  | 0.726 |
-| ns | 5718 |  | 40 | chibicc.h: main.c extern globals | 2.14 |  | 0.727 |
-| walker |  | 5726 | 33 | c decl at chibicc.h:428 |  |  | 0.730 |
-| walker |  | 5759 | 33 | c decl at chibicc.h:434 |  |  | 0.737 |
-| walker |  | 5815 | 56 | c whole header in include/stdnoreturn.h |  |  | 0.737 |
-| walker |  | 5898 | 83 | c decl names surface in main.c |  |  | 0.738 |
-| walker |  | 5898 | 0 | c decl at main.c:586 |  |  | 0.738 |
-| walker |  | 5898 | 0 | c decl at main.c:700 |  |  | 0.738 |
-| walker |  | 5908 | 10 | c includes in main.c |  |  | 0.738 |
-| walker |  | 5939 | 31 | c decl at main.c:3 |  |  | 0.742 |
-| walker |  | 6032 | 93 | c decl names surface in unicode.c |  |  | 0.742 |
-| walker |  | 6032 | 0 | c decl at unicode.c:4 |  |  | 0.742 |
-| walker |  | 6032 | 0 | c decl at unicode.c:37 |  |  | 0.742 |
-| walker |  | 6032 | 0 | c decl at unicode.c:87 |  |  | 0.742 |
-| walker |  | 6032 | 0 | c decl at unicode.c:110 |  |  | 0.742 |
-| walker |  | 6032 | 0 | c decl at unicode.c:181 |  |  | 0.742 |
-| walker |  | 6044 | 12 | c includes in unicode.c |  |  | 0.742 |
-| walker |  | 6056 | 12 | c decl doc at unicode.c:4 |  |  | 0.742 |
-| walker |  | 6069 | 13 | c decl doc at main.c:586 |  |  | 0.742 |
+| ns | 5718 |  | 40 | chibicc.h: main.c extern globals | 2.14 |  | 0.722 |
+| walker |  | 5733 | 299 | c decl names surface #3 in chibicc.h |  |  | 0.727 |
+| walker |  | 5766 | 33 | c decl at chibicc.h:428 |  |  | 0.730 |
+| walker |  | 5799 | 33 | c decl at chibicc.h:434 |  |  | 0.737 |
+| walker |  | 5867 | 68 | c decl names surface #1 in type.c |  |  | 0.738 |
+| walker |  | 5867 | 0 | c decl at type.c:20 |  |  | 0.738 |
+| walker |  | 5867 | 0 | c decl at type.c:134 |  |  | 0.738 |
+| walker |  | 5867 | 0 | c decl at type.c:170 |  |  | 0.738 |
+| walker |  | 5923 | 56 | c whole header in include/stdnoreturn.h |  |  | 0.738 |
+| walker |  | 6006 | 83 | c decl names surface in main.c |  |  | 0.738 |
+| walker |  | 6006 | 0 | c decl at main.c:586 |  |  | 0.738 |
+| walker |  | 6006 | 0 | c decl at main.c:700 |  |  | 0.738 |
+| walker |  | 6016 | 10 | c includes in main.c |  |  | 0.738 |
+| walker |  | 6047 | 31 | c decl at main.c:3 |  |  | 0.742 |
 | ns | 6122 |  | 404 | tokenize.c: every top-level function's location | 3.1 |  | 0.717 |
-| walker |  | 6329 | 260 | README.md section #5 |  |  | 0.717 |
-| walker |  | 6335 | 6 | c decl doc at chibicc.h:362 |  |  | 0.717 |
-| walker |  | 6421 | 86 | c whole header in include/stdbool.h |  |  | 0.717 |
-| walker |  | 6440 | 19 | c header banner in hashmap.c |  |  | 0.717 |
-| walker |  | 6531 | 91 | c whole header in include/stdalign.h |  |  | 0.717 |
-| walker |  | 6669 | 138 | c decl names surface in parse.c |  |  | 0.717 |
-| walker |  | 6669 | 0 | c decl at parse.c:31 |  |  | 0.717 |
-| walker |  | 6669 | 0 | c decl at parse.c:54 |  |  | 0.717 |
-| walker |  | 6669 | 0 | c decl at parse.c:75 |  |  | 0.717 |
-| walker |  | 6669 | 0 | c decl at parse.c:244 |  |  | 0.717 |
-| walker |  | 6669 | 0 | c decl at parse.c:1987 |  |  | 0.717 |
-| walker |  | 6669 | 0 | c decl at parse.c:3337 |  |  | 0.717 |
-| walker |  | 6679 | 10 | c decl doc at parse.c:31 |  |  | 0.717 |
-| walker |  | 6689 | 10 | c decl doc at parse.c:75 |  |  | 0.717 |
-| walker |  | 6703 | 14 | c includes in parse.c |  |  | 0.717 |
-| walker |  | 6745 | 42 | c decl at parse.c:76 |  |  | 0.717 |
-| walker |  | 6789 | 44 | c decl at parse.c:23 |  |  | 0.717 |
-| ns | 6808 |  | 686 | preprocess.c: every top-level function's location | 3.2 |  | 0.681 |
-| walker |  | 6934 | 145 | c decl names surface in codegen.c |  |  | 0.681 |
-| walker |  | 6934 | 0 | c decl at codegen.c:55 |  |  | 0.681 |
-| walker |  | 6934 | 0 | c decl at codegen.c:1585 |  |  | 0.681 |
-| walker |  | 6944 | 10 | c includes in codegen.c |  |  | 0.681 |
-| walker |  | 6963 | 19 | c decl body at codegen.c:55 |  |  | 0.681 |
-| walker |  | 7424 | 461 | README.md section #3 |  |  | 0.708 |
-| walker |  | 7481 | 57 | c whole header in test/include1.h |  |  | 0.708 |
-| walker |  | 7503 | 22 | c decl body at main.c:586 |  |  | 0.708 |
-| walker |  | 7520 | 17 | c decl doc at strings.c:20 |  |  | 0.708 |
-| ns | 7600 |  | 792 | parse.c: function-location roster, part A (scopes/types/initializers) | 3.3 |  | 0.670 |
-| walker |  | 7643 | 123 | c whole header in include/stddef.h |  |  | 0.670 |
-| walker |  | 8004 | 361 | README.md section #1 |  |  | 0.670 |
-| walker |  | 8221 | 217 | README.md section #2 |  |  | 0.670 |
-| ns | 8255 |  | 655 | parse.c: function-location roster, part B (stmts/exprs/structs/fns) | 3.4 |  | 0.644 |
-| walker |  | 8284 | 63 | c decl at parse.c:42 |  |  | 0.644 |
-| walker |  | 8309 | 25 | listing of 'test/thirdparty' |  |  | 0.655 |
-| walker |  | 8318 | 9 | c decl doc at chibicc.h:126 |  |  | 0.655 |
-| ns | 8426 |  | 171 | type.c: every top-level function's location | 3.5 |  | 0.648 |
-| walker |  | 8530 | 212 | c decl names surface in preprocess.c |  |  | 0.648 |
-| walker |  | 8530 | 0 | c decl at preprocess.c:54 |  |  | 0.648 |
-| walker |  | 8530 | 0 | c decl at preprocess.c:685 |  |  | 0.648 |
-| walker |  | 8530 | 0 | c decl at preprocess.c:993 |  |  | 0.648 |
-| walker |  | 8530 | 0 | c decl at preprocess.c:998 |  |  | 0.648 |
-| walker |  | 8530 | 0 | c decl at preprocess.c:1060 |  |  | 0.648 |
-| walker |  | 8530 | 0 | c decl at preprocess.c:1198 |  |  | 0.648 |
-| walker |  | 8552 | 22 | c decl at preprocess.c:28 |  |  | 0.648 |
-| walker |  | 8577 | 25 | c decl at preprocess.c:63 |  |  | 0.648 |
-| walker |  | 8589 | 12 | c includes in preprocess.c |  |  | 0.648 |
-| walker |  | 8602 | 13 | c decl body at preprocess.c:998 |  |  | 0.648 |
-| walker |  | 8636 | 34 | c decl at preprocess.c:1115 |  |  | 0.648 |
-| walker |  | 8677 | 41 | c decl at preprocess.c:34 |  |  | 0.648 |
-| walker |  | 8728 | 51 | c decl at preprocess.c:55 |  |  | 0.648 |
-| walker |  | 8800 | 72 | c decl at preprocess.c:44 |  |  | 0.648 |
-| ns | 8807 |  | 381 | codegen.c: every top-level function's location | 3.6 |  | 0.633 |
-| walker |  | 8875 | 75 | c decl at parse.c:32 |  |  | 0.633 |
-| ns | 9052 |  | 245 | strings.c + unicode.c + hashmap.c: every function's location | 3.7 |  | 0.625 |
-| walker |  | 9088 | 213 | c decl names surface in hashmap.c |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:6 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:9 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:12 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:15 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:108 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:112 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:117 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:121 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:126 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:130 |  |  | 0.630 |
-| walker |  | 9088 | 0 | c decl at hashmap.c:136 |  |  | 0.630 |
-| walker |  | 9100 | 12 | c includes in hashmap.c |  |  | 0.630 |
-| walker |  | 9108 | 8 | c decl doc at hashmap.c:6 |  |  | 0.630 |
-| walker |  | 9117 | 9 | c decl doc at hashmap.c:15 |  |  | 0.630 |
-| walker |  | 9132 | 15 | c decl body at hashmap.c:126 |  |  | 0.630 |
-| walker |  | 9148 | 16 | c decl body at hashmap.c:108 |  |  | 0.630 |
-| walker |  | 9277 | 129 | c decl names surface in include/stdarg.h |  |  | 0.630 |
-| walker |  | 9300 | 23 | c decl at include/stdarg.h:13 |  |  | 0.630 |
-| walker |  | 9349 | 49 | c decl at include/stdarg.h:4 |  |  | 0.630 |
-| ns | 9371 |  | 319 | main.c: every top-level function's location | 3.8 |  | 0.619 |
-| walker |  | 9404 | 55 | c decl at codegen.c:356 |  |  | 0.619 |
-| walker |  | 9421 | 17 | c decl body at hashmap.c:117 |  |  | 0.619 |
-| ns | 9572 |  | 201 | test/test.h: shared test-harness macro | 4.1 |  | 0.613 |
-| ns | 9699 |  | 127 | Hideset intersection: macro-hygiene fixed point | 4.2 | 3.2 | 0.609 |
-| walker |  | 9776 | 355 | README.md section #9 |  |  | 0.609 |
-| ns | 9888 |  | 189 | README: the calloc-and-never-free memory policy | 4.3 |  | 0.605 |
-| ns | 9918 |  | 30 | LICENSE: MIT, copyright line | 4.4 |  | 0.604 |
+| walker |  | 6138 | 91 | c decl names surface in unicode.c |  |  | 0.717 |
+| walker |  | 6138 | 0 | c decl at unicode.c:4 |  |  | 0.717 |
+| walker |  | 6138 | 0 | c decl at unicode.c:37 |  |  | 0.717 |
+| walker |  | 6138 | 0 | c decl at unicode.c:87 |  |  | 0.717 |
+| walker |  | 6138 | 0 | c decl at unicode.c:110 |  |  | 0.717 |
+| walker |  | 6138 | 0 | c decl at unicode.c:181 |  |  | 0.717 |
+| walker |  | 6150 | 12 | c includes in unicode.c |  |  | 0.717 |
+| walker |  | 6162 | 12 | c decl doc at unicode.c:4 |  |  | 0.717 |
+| walker |  | 6175 | 13 | c decl doc at main.c:586 |  |  | 0.717 |
+| walker |  | 6435 | 260 | README.md section #5 |  |  | 0.717 |
+| walker |  | 6441 | 6 | c decl doc at chibicc.h:362 |  |  | 0.717 |
+| walker |  | 6557 | 116 | c decl names surface #1 in hashmap.c |  |  | 0.718 |
+| walker |  | 6557 | 0 | c decl at hashmap.c:17 |  |  | 0.718 |
+| walker |  | 6557 | 0 | c decl at hashmap.c:28 |  |  | 0.718 |
+| walker |  | 6557 | 0 | c decl at hashmap.c:55 |  |  | 0.718 |
+| walker |  | 6557 | 0 | c decl at hashmap.c:60 |  |  | 0.718 |
+| walker |  | 6557 | 0 | c decl at hashmap.c:76 |  |  | 0.718 |
+| walker |  | 6574 | 17 | c header banner in hashmap.c |  |  | 0.718 |
+| walker |  | 6660 | 86 | c whole header in include/stdbool.h |  |  | 0.718 |
+| walker |  | 6751 | 91 | c whole header in include/stdalign.h |  |  | 0.718 |
+| ns | 6808 |  | 686 | preprocess.c: every top-level function's location | 3.2 |  | 0.682 |
+| walker |  | 6889 | 138 | c decl names surface in parse.c |  |  | 0.682 |
+| walker |  | 6889 | 0 | c decl at parse.c:31 |  |  | 0.682 |
+| walker |  | 6889 | 0 | c decl at parse.c:54 |  |  | 0.682 |
+| walker |  | 6889 | 0 | c decl at parse.c:75 |  |  | 0.682 |
+| walker |  | 6889 | 0 | c decl at parse.c:244 |  |  | 0.682 |
+| walker |  | 6889 | 0 | c decl at parse.c:1987 |  |  | 0.682 |
+| walker |  | 6889 | 0 | c decl at parse.c:3337 |  |  | 0.682 |
+| walker |  | 6899 | 10 | c decl doc at parse.c:31 |  |  | 0.682 |
+| walker |  | 6909 | 10 | c decl doc at parse.c:75 |  |  | 0.682 |
+| walker |  | 6923 | 14 | c includes in parse.c |  |  | 0.682 |
+| walker |  | 6965 | 42 | c decl at parse.c:76 |  |  | 0.682 |
+| walker |  | 7009 | 44 | c decl at parse.c:23 |  |  | 0.682 |
+| walker |  | 7154 | 145 | c decl names surface in codegen.c |  |  | 0.682 |
+| walker |  | 7154 | 0 | c decl at codegen.c:55 |  |  | 0.682 |
+| walker |  | 7154 | 0 | c decl at codegen.c:1585 |  |  | 0.682 |
+| walker |  | 7164 | 10 | c includes in codegen.c |  |  | 0.682 |
+| walker |  | 7183 | 19 | c decl body at codegen.c:55 |  |  | 0.682 |
+| ns | 7600 |  | 792 | parse.c: function-location roster, part A (scopes/types/initializers) | 3.3 |  | 0.646 |
+| walker |  | 7644 | 461 | README.md section #3 |  |  | 0.671 |
+| walker |  | 7701 | 57 | c whole header in test/include1.h |  |  | 0.671 |
+| walker |  | 7723 | 22 | c decl body at main.c:586 |  |  | 0.671 |
+| walker |  | 7740 | 17 | c decl doc at strings.c:20 |  |  | 0.671 |
+| walker |  | 7863 | 123 | c whole header in include/stddef.h |  |  | 0.671 |
+| walker |  | 8224 | 361 | README.md section #1 |  |  | 0.671 |
+| ns | 8255 |  | 655 | parse.c: function-location roster, part B (stmts/exprs/structs/fns) | 3.4 |  | 0.645 |
+| ns | 8426 |  | 171 | type.c: every top-level function's location | 3.5 |  | 0.638 |
+| walker |  | 8441 | 217 | README.md section #2 |  |  | 0.638 |
+| walker |  | 8504 | 63 | c decl at parse.c:42 |  |  | 0.638 |
+| walker |  | 8529 | 25 | listing of 'test/thirdparty' |  |  | 0.649 |
+| walker |  | 8538 | 9 | c decl doc at chibicc.h:126 |  |  | 0.649 |
+| walker |  | 8749 | 211 | c decl names surface in hashmap.c |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:6 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:9 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:12 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:15 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:108 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:112 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:117 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:121 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:126 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:130 |  |  | 0.650 |
+| walker |  | 8749 | 0 | c decl at hashmap.c:136 |  |  | 0.650 |
+| walker |  | 8761 | 12 | c includes in hashmap.c |  |  | 0.650 |
+| walker |  | 8769 | 8 | c decl doc at hashmap.c:6 |  |  | 0.650 |
+| walker |  | 8778 | 9 | c decl doc at hashmap.c:15 |  |  | 0.650 |
+| walker |  | 8793 | 15 | c decl body at hashmap.c:126 |  |  | 0.650 |
+| ns | 8807 |  | 381 | codegen.c: every top-level function's location | 3.6 |  | 0.635 |
+| walker |  | 8809 | 16 | c decl body at hashmap.c:108 |  |  | 0.635 |
+| walker |  | 9021 | 212 | c decl names surface in preprocess.c |  |  | 0.635 |
+| walker |  | 9021 | 0 | c decl at preprocess.c:54 |  |  | 0.635 |
+| walker |  | 9021 | 0 | c decl at preprocess.c:685 |  |  | 0.635 |
+| walker |  | 9021 | 0 | c decl at preprocess.c:993 |  |  | 0.635 |
+| walker |  | 9021 | 0 | c decl at preprocess.c:998 |  |  | 0.635 |
+| walker |  | 9021 | 0 | c decl at preprocess.c:1060 |  |  | 0.635 |
+| walker |  | 9021 | 0 | c decl at preprocess.c:1198 |  |  | 0.635 |
+| walker |  | 9043 | 22 | c decl at preprocess.c:28 |  |  | 0.635 |
+| ns | 9052 |  | 245 | strings.c + unicode.c + hashmap.c: every function's location | 3.7 |  | 0.642 |
+| walker |  | 9068 | 25 | c decl at preprocess.c:63 |  |  | 0.642 |
+| walker |  | 9080 | 12 | c includes in preprocess.c |  |  | 0.642 |
+| walker |  | 9093 | 13 | c decl body at preprocess.c:998 |  |  | 0.642 |
+| walker |  | 9127 | 34 | c decl at preprocess.c:1115 |  |  | 0.642 |
+| walker |  | 9168 | 41 | c decl at preprocess.c:34 |  |  | 0.642 |
+| walker |  | 9219 | 51 | c decl at preprocess.c:55 |  |  | 0.642 |
+| walker |  | 9291 | 72 | c decl at preprocess.c:44 |  |  | 0.642 |
+| walker |  | 9366 | 75 | c decl at parse.c:32 |  |  | 0.642 |
+| ns | 9371 |  | 319 | main.c: every top-level function's location | 3.8 |  | 0.630 |
+| walker |  | 9495 | 129 | c decl names surface in include/stdarg.h |  |  | 0.630 |
+| walker |  | 9518 | 23 | c decl at include/stdarg.h:13 |  |  | 0.630 |
+| walker |  | 9567 | 49 | c decl at include/stdarg.h:4 |  |  | 0.630 |
+| ns | 9572 |  | 201 | test/test.h: shared test-harness macro | 4.1 |  | 0.624 |
+| walker |  | 9622 | 55 | c decl at codegen.c:356 |  |  | 0.624 |
+| walker |  | 9639 | 17 | c decl body at hashmap.c:117 |  |  | 0.624 |
+| ns | 9699 |  | 127 | Hideset intersection: macro-hygiene fixed point | 4.2 | 3.2 | 0.620 |
+| ns | 9888 |  | 189 | README: the calloc-and-never-free memory policy | 4.3 |  | 0.616 |
+| ns | 9918 |  | 30 | LICENSE: MIT, copyright line | 4.4 |  | 0.615 |
+| walker |  | 9994 | 355 | README.md section #9 |  |  | 0.615 |

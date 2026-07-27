@@ -160,31 +160,33 @@ Score(3000)=0.483 I=0.423 C=0.551 ns_rows≤3K=17/48 (reached=7 partial=0 missin
 | walker |  | 8839 | 65 | c decl names surface in SignalsPanel.h |  |  | 0.421 |
 | ns | 8849 |  | 234 | CPUMeter.c: a canonical MeterClass instance | 7.4 |  | 0.417 |
 | walker |  | 8863 | 24 | c decl at SignalsPanel.h:17 |  |  | 0.417 |
+| walker |  | 8881 | 18 | c decl names surface #1 in generic/fdstat_sysctl.c |  |  | 0.417 |
 | ns | 8944 |  | 95 | linux/LinuxProcess.c: Process_fields table head | 7.5 |  | 0.416 |
-| walker |  | 8961 | 98 | c aggregate member group at Machine.h:38 group 39 |  |  | 0.421 |
-| walker |  | 9076 | 115 | man-page NAME + DESCRIPTION in pcp-htop.5.in |  |  | 0.422 |
-| walker |  | 9128 | 52 | c decl names surface in RowField.h |  |  | 0.422 |
-| walker |  | 9128 | 0 | c decl at RowField.h:53 |  |  | 0.422 |
-| walker |  | 9138 | 10 | c decl at RowField.h:13 |  |  | 0.422 |
-| walker |  | 9154 | 16 | c decl body at Process.h:278 |  |  | 0.422 |
-| walker |  | 9174 | 20 | c decl names surface in generic/hostname.c |  |  | 0.422 |
-| walker |  | 9174 | 0 | c decl at generic/hostname.c:15 |  |  | 0.422 |
-| walker |  | 9203 | 29 | c decl names surface in TasksMeter.h |  |  | 0.422 |
-| walker |  | 9231 | 28 | c includes in generic/UnwindPtrace.h |  |  | 0.422 |
-| walker |  | 9244 | 13 | c decl names surface in Debug.h |  |  | 0.422 |
+| walker |  | 8979 | 98 | c aggregate member group at Machine.h:38 group 39 |  |  | 0.421 |
+| walker |  | 9094 | 115 | man-page NAME + DESCRIPTION in pcp-htop.5.in |  |  | 0.422 |
+| walker |  | 9146 | 52 | c decl names surface in RowField.h |  |  | 0.422 |
+| walker |  | 9146 | 0 | c decl at RowField.h:53 |  |  | 0.422 |
+| walker |  | 9156 | 10 | c decl at RowField.h:13 |  |  | 0.422 |
+| walker |  | 9172 | 16 | c decl body at Process.h:278 |  |  | 0.422 |
+| walker |  | 9192 | 20 | c decl names surface in generic/hostname.c |  |  | 0.422 |
+| walker |  | 9192 | 0 | c decl at generic/hostname.c:15 |  |  | 0.422 |
+| walker |  | 9221 | 29 | c decl names surface in TasksMeter.h |  |  | 0.422 |
+| walker |  | 9249 | 28 | c includes in generic/UnwindPtrace.h |  |  | 0.422 |
 | ns | 9261 |  | 317 | Dynamic provider structs | 8.1 |  | 0.416 |
-| walker |  | 9295 | 51 | headings outline in docs/understanding-htop-versions.md |  |  | 0.416 |
-| walker |  | 9325 | 30 | c decl names surface in FileDescriptorMeter.h |  |  | 0.416 |
+| walker |  | 9262 | 13 | c decl names surface in Debug.h |  |  | 0.416 |
+| walker |  | 9313 | 51 | headings outline in docs/understanding-htop-versions.md |  |  | 0.416 |
+| walker |  | 9343 | 30 | c decl names surface in FileDescriptorMeter.h |  |  | 0.416 |
 | ns | 9389 |  | 128 | CI smoke runs (sanitizer job) | 9.1 |  | 0.414 |
 | ns | 9501 |  | 112 | Makefile.am developer targets | 9.2 |  | 0.412 |
-| walker |  | 9523 | 198 | listing of 'linux' |  |  | 0.441 |
-| walker |  | 9554 | 31 | c decl names surface in HostnameMeter.h |  |  | 0.441 |
-| walker |  | 9585 | 31 | c decl names surface in MemorySwapMeter.h |  |  | 0.441 |
-| walker |  | 9616 | 31 | c decl names surface in SysArchMeter.h |  |  | 0.441 |
-| walker |  | 9646 | 30 | c includes in zfs/ZfsArcMeter.h |  |  | 0.441 |
-| walker |  | 9676 | 30 | c includes in zfs/ZfsCompressedArcMeter.h |  |  | 0.441 |
+| walker |  | 9541 | 198 | listing of 'linux' |  |  | 0.441 |
+| walker |  | 9572 | 31 | c decl names surface in HostnameMeter.h |  |  | 0.441 |
+| walker |  | 9603 | 31 | c decl names surface in MemorySwapMeter.h |  |  | 0.441 |
+| walker |  | 9634 | 31 | c decl names surface in SysArchMeter.h |  |  | 0.441 |
+| walker |  | 9664 | 30 | c includes in zfs/ZfsArcMeter.h |  |  | 0.441 |
 | ns | 9687 |  | 186 | test_spec.lua: the interactive test list | 9.3 |  | 0.437 |
+| walker |  | 9694 | 30 | c includes in zfs/ZfsCompressedArcMeter.h |  |  | 0.437 |
+| walker |  | 9716 | 22 | c decl names surface in generic/fdstat_sysctl.c |  |  | 0.437 |
+| walker |  | 9716 | 0 | c decl at generic/fdstat_sysctl.c:64 |  |  | 0.437 |
 | ns | 9808 |  | 121 | ChangeLog: 3.5.1 release notes | 9.4 | 1.1 | 0.435 |
-| walker |  | 9915 | 239 | c decl at Panel.h:64 |  |  | 0.435 |
-| walker |  | 9999 | 84 | c decl names surface in DiskIOMeter.h |  |  | 0.435 |
+| walker |  | 9955 | 239 | c decl at Panel.h:64 |  |  | 0.435 |
 | ns | 10002 |  | 194 | configure.ac: feature flags beyond AGENTS.md's six | 9.5 |  | 0.432 |
