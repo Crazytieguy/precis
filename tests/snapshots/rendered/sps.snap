@@ -72,40 +72,10 @@ sps/
             reinstall.rs
             search.rs
             status.rs
-                …
-                 399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
-                …
             uninstall.rs
             update.rs
-                …
-                  10→#[derive(clap::Args, Debug)]
-                  11→pub struct Update;
-                …
             upgrade.rs
         cli.rs
-            …
-              32→#[derive(Parser, Debug)]
-            …
-              35→pub struct CliArgs {
-              36→    #[arg(short, long, action = ArgAction::Count, global = true)]
-              37→    pub verbose: u8,
-              38→
-              39→    #[command(subcommand)]
-              40→    pub command: Command,
-              41→}
-              43→#[derive(Subcommand, Debug)]
-              44→pub enum Command {
-              45→    Init(InitArgs),
-              46→    Search(Search),
-              47→    List(List),
-              48→    Info(Info),
-              49→    Update(Update),
-              50→    Install(InstallArgs),
-              51→    Uninstall(Uninstall),
-              52→    Reinstall(ReinstallArgs),
-              53→    Upgrade(UpgradeArgs),
-              54→}
-            …
         main.rs
             …
               57→async fn main() -> spResult<()> {
@@ -115,14 +85,23 @@ sps/
             planner.rs
             runner.rs
         pipeline.rs
-               1→pub mod downloader;
-               2→pub mod planner;
-               3→pub mod runner;
 sps-common/
     Cargo.toml
     src/
         cache.rs
+            …
+              15→pub struct Cache {
+              16→    cache_dir: PathBuf,
+              17→    _config: Config, // Keep a reference to config if needed for other paths or future use
+              18→}
+            …
         config.rs
+            …
+              15→pub struct Config {
+            …
+             199→pub fn load_config() -> Result<Config> {
+             200→    Config::load()
+            …
         dependency/
             definition.rs
             mod.rs
@@ -139,7 +118,27 @@ sps-common/
             resolver.rs
         error.rs
         formulary.rs
+            …
+              11→#[derive()]
+              12→pub struct Formulary {
+              13→    cache: Cache,
+              14→    parsed_cache: std::sync::Mutex<HashMap<String, std::sync::Arc<Formula>>>,
+              15→}
+            …
         keg.rs
+            …
+              12→#[derive(Debug, Clone, PartialEq, Eq)]
+              13→pub struct InstalledKeg {
+              14→    pub name: String,
+              15→    pub version_str: String,
+              16→    pub path: PathBuf,
+              17→}
+            …
+              20→#[derive(Debug)]
+              21→pub struct KegRegistry {
+              22→    config: Config,
+              23→}
+            …
         lib.rs
             …
                2→pub mod cache;

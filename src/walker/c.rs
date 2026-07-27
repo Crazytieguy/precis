@@ -1934,7 +1934,7 @@ fn platform_port_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 
 /// Damp depth-1 `.c/.h` files whose stem doesn't match the repo's
 /// basename when a stem-matching primary pair exists. Mirrors the Rust
-/// walker's `secondary_workspace_member_factor`: in a flat C project
+/// walker's `workspace_member_value_factor`: in a flat C project
 /// with `<repo>.c` + `<repo>.h` plus a sibling vendored algorithm
 /// (krep `aho_corasick.*`, single-file libraries pasted next to the
 /// project's own header), the primary pair is the orientation

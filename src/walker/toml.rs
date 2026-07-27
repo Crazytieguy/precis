@@ -18,7 +18,7 @@
 //! - `Config { file }` — other manifest-level build-system, package metadata,
 //!   Cargo profiles/targets, and packaging config
 
-use std::collections::{BTreeMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -615,10 +615,9 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let m = if let Some(factor) = pyproject_identity_factor(file, ctx) {
         factor
     } else if ctx.is_workspace_member(file) {
-        if ctx.rust_state().has_ambiguous_primary_member(ctx.root())
-            && !ctx
-                .rust_state()
-                .is_ambiguous_primary_member(file, ctx.root())
+        if ctx
+            .rust_state()
+            .is_definite_secondary_member(file, ctx.root())
         {
             AMBIGUOUS_SECONDARY_IDENTITY_FACTOR
         } else {
@@ -806,10 +805,7 @@ const CARGO_MANIFEST_FILENAME: &str = "Cargo.toml";
 /// applies to the union. Empty on parse error.
 pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     let root_manifest = root.join(CARGO_MANIFEST_FILENAME);
-    let Ok(text) = std::fs::read_to_string(&root_manifest) else {
-        return HashSet::new();
-    };
-    let Ok(value) = toml::from_str::<toml::Value>(&text) else {
+    let Some(value) = parse_manifest(&root_manifest) else {
         return HashSet::new();
     };
     // Path-dep auto-promotion only applies inside a Cargo workspace. Without
@@ -846,18 +842,10 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
             continue;
         };
         for dep in table.values() {
-            let Some(path_str) = dep
-                .as_table()
-                .and_then(|t| t.get("path"))
-                .and_then(|v| v.as_str())
-            else {
-                continue;
-            };
-            if let Some(member) = canonical_member(
-                &canonical_root,
-                &root.join(path_str),
-                CARGO_MANIFEST_FILENAME,
-            ) {
+            if let Some(path) = dep_path(dep)
+                && let Some(member) =
+                    canonical_member(&canonical_root, &root.join(path), CARGO_MANIFEST_FILENAME)
+            {
                 candidates.insert(member);
             }
         }
@@ -872,25 +860,217 @@ pub(super) fn collect_workspace_members(root: &Path) -> HashSet<PathBuf> {
     candidates
 }
 
-/// Case-insensitive Cargo package-name matches for the repository basename,
-/// but only when more than one member matches. The caller uses this explicit
-/// ambiguity state to fail closed instead of letting an exact-case basename
-/// shortcut select one candidate or a definite secondary win a cost tie.
-pub(super) fn ambiguous_primary_workspace_members(
-    root: &Path,
-    members: &HashSet<PathBuf>,
-) -> Option<HashSet<PathBuf>> {
-    let target = root.file_name()?.to_str()?;
-    let mut matches = HashSet::new();
-    for manifest in members {
-        let text = std::fs::read_to_string(manifest).ok()?;
-        let value = toml::from_str::<toml::Value>(&text).ok()?;
-        let name = value.get("package")?.as_table()?.get("name")?.as_str()?;
-        if name.eq_ignore_ascii_case(target) {
-            matches.insert(manifest.clone());
+/// Everything primary-member selection needs from the workspace members'
+/// own manifests, gathered in a single read pass over them.
+pub(super) struct MemberFacts {
+    /// Members whose `[package].name` matches the repository basename
+    /// case-insensitively.
+    basename_matches: HashSet<PathBuf>,
+    /// Member manifest → how many *sibling* members depend on it.
+    in_degrees: HashMap<PathBuf, usize>,
+    /// `false` when a member manifest could not be read or declares no
+    /// package. The skipped member's edges are exactly the ones that could
+    /// have changed the answer, so both questions below refuse to answer on
+    /// facts known to be partial.
+    complete: bool,
+}
+
+impl MemberFacts {
+    /// The colliding candidates when more than one member's package name
+    /// matches the repository basename. Callers use this explicit ambiguity
+    /// state to fail closed instead of letting an exact-case basename
+    /// shortcut select one candidate or a definite secondary win a cost tie.
+    pub(super) fn ambiguous_primary(&self) -> Option<&HashSet<PathBuf>> {
+        (self.complete && self.basename_matches.len() > 1).then_some(&self.basename_matches)
+    }
+
+    /// The single member whose package name matches the repository basename,
+    /// when exactly one does. Breaks ties between several members whose
+    /// *directory* shares the repo basename, since Cargo keeps package names
+    /// unique within a workspace.
+    pub(super) fn name_matched_member(&self) -> Option<&PathBuf> {
+        let mut matches = self.basename_matches.iter();
+        let only = matches.next()?;
+        matches.next().is_none().then_some(only)
+    }
+
+    /// Whether any sibling member depends on `manifest` — i.e. whether it is
+    /// inside the workspace's dependency fabric at all.
+    pub(super) fn has_sibling_dependents(&self, manifest: &Path) -> bool {
+        self.complete && self.in_degrees.get(manifest).is_some_and(|&d| d > 0)
+    }
+
+    /// The member the rest of the workspace is built on: the one with a
+    /// strictly greater in-degree than every sibling, provided it clears
+    /// `min_in_degree`. `None` for a flat workspace of independent crates,
+    /// a tie at the top, or a dependency graph known to be incomplete.
+    pub(super) fn dependency_hub(&self, min_in_degree: usize) -> Option<&PathBuf> {
+        if !self.complete {
+            return None;
+        }
+        let top = self.in_degrees.values().copied().max()?;
+        if top < min_in_degree {
+            return None;
+        }
+        let mut at_top = self
+            .in_degrees
+            .iter()
+            .filter_map(|(manifest, &degree)| (degree == top).then_some(manifest));
+        let hub = at_top.next()?;
+        at_top.next().is_none().then_some(hub)
+    }
+}
+
+/// The `path = "..."` of a dependency-style entry, if it has one.
+fn dep_path(spec: &toml::Value) -> Option<&str> {
+    spec.as_table()?.get("path")?.as_str()
+}
+
+fn package_name(manifest: &toml::Value) -> Option<&str> {
+    manifest.get("package")?.as_table()?.get("name")?.as_str()
+}
+
+fn parse_manifest(path: &Path) -> Option<toml::Value> {
+    toml::from_str(&std::fs::read_to_string(path).ok()?).ok()
+}
+
+/// The workspace member whose crate dir is `dir`, if `dir` holds one.
+fn member_at(canonical_root: &Path, members: &HashSet<PathBuf>, dir: &Path) -> Option<PathBuf> {
+    let manifest = canonical_member(canonical_root, dir, CARGO_MANIFEST_FILENAME)?;
+    members.contains(&manifest).then_some(manifest)
+}
+
+/// The root-manifest tables a member's `[dependencies]` entry may have to be
+/// resolved through before it can be called an intra-workspace edge.
+struct WorkspaceLinks<'a> {
+    canonical_root: &'a Path,
+    members: &'a HashSet<PathBuf>,
+    /// Root `[workspace.dependencies]`, which `workspace = true` inherits.
+    workspace_deps: Option<&'a toml::Table>,
+    /// Crate name → the member a root `[patch.*]` table redirects it to.
+    patched: HashMap<String, PathBuf>,
+}
+
+impl<'a> WorkspaceLinks<'a> {
+    fn new(
+        canonical_root: &'a Path,
+        members: &'a HashSet<PathBuf>,
+        root_manifest: Option<&'a toml::Value>,
+    ) -> Self {
+        let table = |value: Option<&'a toml::Value>, key| value?.as_table()?.get(key);
+        let patch_registries = table(root_manifest, "patch").and_then(|v| v.as_table());
+        let patched = patch_registries
+            .into_iter()
+            .flat_map(|registries| registries.values().filter_map(|v| v.as_table()))
+            .flatten()
+            .filter_map(|(name, spec)| {
+                let dir = canonical_root.join(dep_path(spec)?);
+                Some((name.clone(), member_at(canonical_root, members, &dir)?))
+            })
+            .collect();
+        Self {
+            canonical_root,
+            members,
+            workspace_deps: table(table(root_manifest, "workspace"), "dependencies")
+                .and_then(|v| v.as_table()),
+            patched,
         }
     }
-    (matches.len() > 1).then_some(matches)
+
+    /// The sibling member a `[dependencies]` entry resolves to, or `None`
+    /// when the dependency leaves the workspace.
+    ///
+    /// A registry entry resolves *only* when a root `[patch]` table proves
+    /// the redirection. Matching a bare version requirement on package name
+    /// alone would count a genuine crates.io dependency that happens to
+    /// share a member's name as an internal edge, and two such consumers are
+    /// enough to elect a hub nothing in the workspace depends on.
+    fn resolve(&self, dependent_dir: &Path, key: &str, dep: &toml::Value) -> Option<PathBuf> {
+        if let Some(path) = dep_path(dep) {
+            return self.member_at(&dependent_dir.join(path));
+        }
+        let field = |name: &str| dep.as_table()?.get(name);
+        let package = field("package").and_then(|v| v.as_str()).unwrap_or(key);
+        if field("workspace").and_then(|v| v.as_bool()) == Some(true)
+            && let Some(path) = self
+                .workspace_deps
+                .and_then(|deps| deps.get(package))
+                .and_then(dep_path)
+        {
+            return self.member_at(&self.canonical_root.join(path));
+        }
+        self.patched.get(package).cloned()
+    }
+
+    fn member_at(&self, dir: &Path) -> Option<PathBuf> {
+        member_at(self.canonical_root, self.members, dir)
+    }
+}
+
+/// Read every workspace member's manifest once. An intra-workspace dependency
+/// edge is a `[dependencies]` entry that *resolves* to a sibling member — via
+/// its own `path`, via `workspace = true` through the root
+/// `[workspace.dependencies]` table, or via a root `[patch]` redirection.
+/// Each dependent→dependee pair counts once however many times it is declared.
+pub(super) fn read_member_facts(root: &Path, members: &HashSet<PathBuf>) -> MemberFacts {
+    let target = root.file_name().and_then(|n| n.to_str());
+    let mut basename_matches = HashSet::new();
+    let mut parsed: Vec<(&PathBuf, toml::Value)> = Vec::new();
+    let mut complete = true;
+
+    for manifest in members {
+        let Some(value) = parse_manifest(manifest) else {
+            complete = false;
+            continue;
+        };
+        let Some(name) = package_name(&value) else {
+            complete = false;
+            continue;
+        };
+        if target.is_some_and(|target| name.eq_ignore_ascii_case(target)) {
+            basename_matches.insert(manifest.clone());
+        }
+        parsed.push((manifest, value));
+    }
+
+    MemberFacts {
+        basename_matches,
+        in_degrees: member_in_degrees(root, members, &parsed),
+        complete,
+    }
+}
+
+/// How many *sibling* members depend on each member, over the members that
+/// parsed. Members with no dependents are present with a zero.
+fn member_in_degrees(
+    root: &Path,
+    members: &HashSet<PathBuf>,
+    parsed: &[(&PathBuf, toml::Value)],
+) -> HashMap<PathBuf, usize> {
+    let mut in_degrees: HashMap<PathBuf, usize> =
+        parsed.iter().map(|(m, _)| ((*m).clone(), 0)).collect();
+    let Ok(canonical_root) = root.canonicalize() else {
+        return in_degrees;
+    };
+    let root_manifest = parse_manifest(&root.join(CARGO_MANIFEST_FILENAME));
+    let links = WorkspaceLinks::new(&canonical_root, members, root_manifest.as_ref());
+    for (manifest, value) in parsed {
+        let (Some(dir), Some(deps)) = (
+            manifest.parent(),
+            value.get("dependencies").and_then(|v| v.as_table()),
+        ) else {
+            continue;
+        };
+        let dependees: HashSet<PathBuf> = deps
+            .iter()
+            .filter_map(|(key, dep)| links.resolve(dir, key, dep))
+            .filter(|dependee| &dependee != manifest)
+            .collect();
+        for dependee in dependees {
+            *in_degrees.entry(dependee).or_default() += 1;
+        }
+    }
+    in_degrees
 }
 
 #[cfg(test)]
@@ -916,6 +1096,88 @@ mod tests {
         }
         let members = collect_workspace_members(dir.path());
         (dir, members)
+    }
+
+    fn member(name: &str, deps: &str) -> String {
+        format!("[package]\nname='{name}'\nversion='0.1.0'\n[dependencies]\n{deps}")
+    }
+
+    fn in_degree_of(dir: &Path, members: &HashSet<PathBuf>, rel: &str) -> usize {
+        let manifest = dir.join(rel).join("Cargo.toml").canonicalize().unwrap();
+        read_member_facts(dir, members)
+            .in_degrees
+            .get(&manifest)
+            .copied()
+            .unwrap_or(0)
+    }
+
+    /// Entries that name a member without resolving to it are not edges: an
+    /// unpatched registry requirement is resolved from crates.io however much
+    /// the name matches, and a `path` may point outside the member set. Left
+    /// uncounted, two such consumers would elect a hub nothing depends on.
+    #[test]
+    fn walker_toml_member_in_degrees_ignore_unresolvable_lookalikes() {
+        let (dir, members) = members_with(
+            "[workspace]\nmembers=['acme','one','two','three']\nexclude=['vendored']\n",
+            &[
+                ("acme", &member("acme", "")),
+                ("one", &member("one", "acme = '1.0'\n")),
+                ("two", &member("two", "acme = { version = '1.0' }\n")),
+                (
+                    "three",
+                    &member("three", "acme = { path = '../vendored' }\n"),
+                ),
+                ("vendored", &member("acme", "")),
+            ],
+        );
+        assert_eq!(in_degree_of(dir.path(), &members, "acme"), 0);
+        assert!(
+            read_member_facts(dir.path(), &members)
+                .dependency_hub(2)
+                .is_none()
+        );
+    }
+
+    /// The three ways a member really can name a sibling, plus the rule that a
+    /// dependent counts once however many entries it routes through.
+    #[test]
+    fn walker_toml_member_in_degrees_resolve_path_workspace_and_patch_edges() {
+        let (dir, members) = members_with(
+            "[workspace]\nmembers=['hub','viapath','viaws','viapatch','twice']\n\
+             [workspace.dependencies]\nhub = { path = 'hub' }\n\
+             [patch.crates-io]\nhub = { path = 'hub' }\n",
+            &[
+                ("hub", &member("hub", "")),
+                ("viapath", &member("viapath", "hub = { path = '../hub' }\n")),
+                ("viaws", &member("viaws", "hub.workspace = true\n")),
+                ("viapatch", &member("viapatch", "hub = '1.0'\n")),
+                (
+                    "twice",
+                    &member(
+                        "twice",
+                        "hub = { path = '../hub' }\naliased = { path = '../hub', package = 'hub' }\n",
+                    ),
+                ),
+            ],
+        );
+        assert_eq!(in_degree_of(dir.path(), &members, "hub"), 4);
+    }
+
+    /// An unreadable member manifest means the graph is missing exactly the
+    /// edges that might have changed the answer, so no hub is elected.
+    #[test]
+    fn walker_toml_dependency_hub_fails_closed_on_an_unparseable_member() {
+        let (dir, members) = members_with(
+            "[workspace]\nmembers=['hub','one','two','broken']\n",
+            &[
+                ("hub", &member("hub", "")),
+                ("one", &member("one", "hub = { path = '../hub' }\n")),
+                ("two", &member("two", "hub = { path = '../hub' }\n")),
+                ("broken", "[package\nname='broken'\n"),
+            ],
+        );
+        let manifests = read_member_facts(dir.path(), &members);
+        assert!(manifests.dependency_hub(2).is_none());
     }
 
     fn case_collision_workspace() -> (tempfile::TempDir, PathBuf, Vec<PathBuf>) {
@@ -955,7 +1217,8 @@ mod tests {
     fn walker_toml_primary_member_case_collision_fails_closed_without_inversion() {
         let (_outer, root, manifests) = case_collision_workspace();
         let members = collect_workspace_members(&root);
-        let ambiguous = ambiguous_primary_workspace_members(&root, &members).unwrap();
+        let member_facts = read_member_facts(&root, &members);
+        let ambiguous = member_facts.ambiguous_primary().unwrap();
 
         assert_eq!(ambiguous.len(), 3);
         assert!(manifests[..3].iter().all(|path| ambiguous.contains(path)));
@@ -1257,6 +1520,27 @@ pytest = "*"
         }
         for name in ["profile.release", "bin", "example", "test", "bench"] {
             assert!(!is_dependency_section(name), "config/target only: {name}");
+        }
+    }
+
+    /// The two real declaration styles the corpus exercises, pinned against
+    /// the actual manifests: mdbook routes siblings through `workspace = true`
+    /// plus the root `[workspace.dependencies]` table, while sps declares them
+    /// by version and redirects with `[patch.crates-io]`.
+    #[test]
+    fn walker_toml_dependency_hub_on_real_workspaces() {
+        for (fixture, expected) in [("mdbook", "crates/mdbook-core"), ("sps", "sps-common")] {
+            let root = fixture_path(fixture);
+            let members = collect_workspace_members(&root);
+            let hub = read_member_facts(&root, &members)
+                .dependency_hub(2)
+                .cloned();
+            let expected = root
+                .join(expected)
+                .join("Cargo.toml")
+                .canonicalize()
+                .unwrap();
+            assert_eq!(hub, Some(expected), "{fixture}");
         }
     }
 
