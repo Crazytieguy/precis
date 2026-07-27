@@ -360,9 +360,12 @@ fn prelude_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx)) * PRELUDE_VALUE_FACTOR
 }
 
-/// Discount on the section-0 value. Part of the prelude is chrome
-/// (logo wrapper, badges) even when the rest is the project's lede,
-/// so it should not outrank a heading-titled section of the same size.
+/// Premium over the index-0 [`readme_section_value`] — same signal mix,
+/// no index decay, times this. Swept: per-fixture rows are identical
+/// everywhere over [1.3, 1.6], and at 1.0 cobra's 211-token prelude
+/// prices out of the 3K frontier for −0.0004. Shipped at the low end of
+/// the measured-flat plateau; there is no argument for the exact value
+/// beyond that.
 const PRELUDE_VALUE_FACTOR: f64 = 1.3;
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -> f64 {
@@ -3768,14 +3771,12 @@ fn prelude_blocks<'a>(root: Node<'a>, first_headed: Node<'a>) -> Vec<Node<'a>> {
         .collect()
 }
 
-/// Blocks [`headline_spec`] steps over when looking for the lede:
-/// decorative image/badge paragraphs, tag-only HTML wrappers, in-page
-/// nav menus, and admin/deprecation warnings.
+/// Blocks [`headline_spec`] steps over when looking for the lede: the
+/// chrome of [`is_prelude_chrome_block`], plus admin/deprecation
+/// warnings — real prose, but not the "what is this" sentence.
 fn is_headline_skippable_block(block: Node, source: &str) -> bool {
-    is_decorative_block(block, source)
-        || is_html_nav_block(block, source)
-        || (block.kind() == "paragraph"
-            && (is_nav_link_paragraph(block, source) || is_admin_warning_paragraph(block, source)))
+    is_prelude_chrome_block(block, source)
+        || (block.kind() == "paragraph" && is_admin_warning_paragraph(block, source))
 }
 
 /// Prelude rows `ReadmeHeadline` left behind — the substantive blocks
@@ -3784,10 +3785,9 @@ fn is_headline_skippable_block(block: Node, source: &str) -> bool {
 /// of it, and no section range reaches above the first heading, so
 /// without this the rest of the lede is unreachable at any budget.
 ///
-/// Chrome (logo wrappers, badge walls, in-page nav) stays excluded:
-/// it is what the headline skips over on purpose, it tokenizes almost
-/// entirely as URLs, and it is the top of the README, so buying it
-/// displaces the earliest-ranked content in the schedule.
+/// [`is_prelude_chrome_block`] stays excluded: chrome tokenizes almost
+/// entirely as URLs, and it sits at the very top of the README, so
+/// buying it displaces the earliest-ranked content in the schedule.
 fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &HeadlineSpec) -> Vec<usize> {
     let Some(first_headed) = headed_sections(tree.root_node()).next() else {
         return Vec::new();
@@ -3818,11 +3818,12 @@ fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &HeadlineSpec) ->
     rows
 }
 
-/// Decoration rather than content: image/badge-only paragraphs,
-/// tag-only HTML wrappers, and in-page nav menus. A subset of
-/// [`is_headline_skippable_block`] — admin/deprecation warnings are
-/// skippable for the *headline* (they are not the "what is this"
-/// sentence) but are real prose and belong in the prelude batch.
+/// The chrome/substance line for the whole pre-heading region, stated
+/// once: decoration is image/badge-only paragraphs, tag-only HTML
+/// wrappers, and in-page nav menus. Everything else above the first
+/// heading is substance. Both readers of that region use this —
+/// `ReadmeHeadline` via [`is_headline_skippable_block`] (which adds
+/// admin warnings) and [`prelude_remainder_rows`] directly.
 fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
     is_decorative_block(block, source)
         || is_html_nav_block(block, source)

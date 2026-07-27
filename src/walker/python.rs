@@ -90,7 +90,14 @@ const PYTHON_ROSTER_MASS_BASELINE: f64 = 6.0;
 /// target folds back into its predecessor rather than becoming a
 /// trailing crumb — the last chunk gates the whole per-decl train, so a
 /// 30-token crumb gate costs a purchase for nothing.
-const DECL_NAMES_SPLIT_THRESHOLD_TOKENS: usize = 400;
+///
+/// What the split delivers at ≤10K is the *head* chunk, not the tail:
+/// no `DeclNamesChunk` row is scheduled at any budget ≤10K in the
+/// corpus, so the live effect is that an oversize roster reaches the
+/// frontier as a cheaper head slice repriced by
+/// [`conserved_catalog_chunk_factors`]. That is not the same as inert:
+/// unifying every roster regardless of size measures −0.0007 at 3K
+/// (tomli −0.053), so the target is a live knob.
 const DECL_NAMES_CHUNK_TARGET_TOKENS: usize = 450;
 const DECL_NAMES_TINY_TAIL_TOKENS: usize = DECL_NAMES_CHUNK_TARGET_TOKENS / 2;
 
@@ -244,11 +251,11 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         let all_name_lines = collect_all_name_lines(&decls, &flat_methods);
 
         // Keep the historically winning unified names surface unless its
-        // rendered cost exceeds the early-budget purchase ceiling. Only
-        // then split near the chunk target; continuations are chained so
-        // they do not become independently schedulable crumbs. Roster-mass
-        // pricing remains based on the complete catalog, and the catalog's
-        // value is a conserved total allocated across the chunks.
+        // rendered cost exceeds the chunk target; continuations are
+        // chained so they do not become independently schedulable crumbs.
+        // Roster-mass pricing remains based on the complete catalog, and
+        // the catalog's value is a conserved total allocated across the
+        // chunks.
         let roster = names_roster(&decls, &source);
         let roster_decls: Vec<_> = roster.iter().map(|&i| decls[i]).collect();
         let names_lines = collect_decl_names_from(&roster_decls, &all_name_lines);
@@ -955,10 +962,11 @@ fn collect_decl_names_from(decls: &[DeclInfo], all_name_lines: &HashSet<usize>) 
     FileLines::new(full).with_ellipses(ellipses)
 }
 
-/// Source-roster-order ranges for a Python names surface. Below the
-/// rendered-cost threshold the established unified surface is untouched.
-/// Oversize surfaces are greedily cut once they reach the target; a tail
-/// below half-target folds into the preceding range.
+/// Source-roster-order ranges for a Python names surface: greedily cut
+/// once a range reaches the target, with a tail below half-target folded
+/// into the preceding range. A roster whose whole cost is under the
+/// target yields the single range `0..len` — i.e. the established
+/// unified surface, untouched.
 fn decl_names_chunk_ranges(
     file: &Path,
     ctx: &WalkCtx,
@@ -976,11 +984,6 @@ fn decl_names_chunk_ranges(
             .map(|content| ctx.marginal_tokens(&content))
             .unwrap_or(0)
     };
-
-    if range_cost(0..decls.len()) <= DECL_NAMES_SPLIT_THRESHOLD_TOKENS {
-        // `vec![range]` trips clippy's `single_range_in_vec_init`.
-        return std::iter::once(0..decls.len()).collect();
-    }
 
     budget_chunk_ranges(
         decls.len(),
