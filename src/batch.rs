@@ -392,6 +392,10 @@ pub enum PlaintextKey {
     /// "what is this tool" answer for a CLI shipping a `*.1` / `*.5`
     /// (or autotools `*.1.in`) manual.
     ManLede { file: PathBuf },
+    /// Indentation-zero declaration surface of a source-like text file
+    /// no format-aware walker claims (Java, C++, Ruby, PHP, Swift,
+    /// Vue, CSS, reST, …). The language-agnostic fallback.
+    DeclSurface { file: PathBuf },
 }
 
 /// Root-contract SQL batches. Migration forests and other incidental SQL
@@ -1071,6 +1075,9 @@ impl InnerKey for PlaintextKey {
                     "man-page NAME + DESCRIPTION in {}",
                     display_path(file, root)
                 )
+            }
+            PlaintextKey::DeclSurface { file } => {
+                format!("declaration surface of {}", display_path(file, root))
             }
         }
     }

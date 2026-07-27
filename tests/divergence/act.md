@@ -290,82 +290,84 @@ Score(3000)=0.730 I=0.910 C=0.586 ns_rows≤3K=19/41 (reached=11 partial=1 missi
 | walker |  | 7384 | 12 | go decl doc at pkg/workflowpattern/workflow_pattern.go:38 |  |  | 0.518 |
 | walker |  | 7401 | 17 | go decl doc at pkg/workflowpattern/workflow_pattern.go:151 |  |  | 0.518 |
 | walker |  | 7420 | 19 | go decl doc at pkg/workflowpattern/workflow_pattern.go:177 |  |  | 0.518 |
+| walker |  | 7426 | 6 | declaration surface of pkg/exprparser/testdata/for-hashing-1.txt |  |  | 0.518 |
+| walker |  | 7432 | 6 | declaration surface of pkg/exprparser/testdata/for-hashing-2.txt |  |  | 0.518 |
 | ns | 7487 |  | 115 | Sample .actrc / secrets files | 8.3 |  | 0.514 |
-| walker |  | 7550 | 130 | go package doc lede in pkg/artifactcache/doc.go |  |  | 0.514 |
-| walker |  | 7677 | 127 | go decl names surface in pkg/model/step_result.go |  |  | 0.514 |
-| walker |  | 7677 | 0 | go decl at pkg/model/step_result.go:19 |  |  | 0.514 |
-| walker |  | 7677 | 0 | go decl at pkg/model/step_result.go:23 |  |  | 0.514 |
-| walker |  | 7677 | 0 | go decl at pkg/model/step_result.go:34 |  |  | 0.514 |
-| walker |  | 7684 | 7 | go decl at pkg/model/step_result.go:7 |  |  | 0.514 |
-| walker |  | 7733 | 49 | go decl at pkg/model/step_result.go:41 |  |  | 0.514 |
-| walker |  | 7790 | 57 | go package + imports in cmd/dir.go |  |  | 0.514 |
-| walker |  | 7802 | 12 | go decl body at pkg/model/step_result.go:19 |  |  | 0.514 |
+| walker |  | 7562 | 130 | go package doc lede in pkg/artifactcache/doc.go |  |  | 0.514 |
+| walker |  | 7689 | 127 | go decl names surface in pkg/model/step_result.go |  |  | 0.514 |
+| walker |  | 7689 | 0 | go decl at pkg/model/step_result.go:19 |  |  | 0.514 |
+| walker |  | 7689 | 0 | go decl at pkg/model/step_result.go:23 |  |  | 0.514 |
+| walker |  | 7689 | 0 | go decl at pkg/model/step_result.go:34 |  |  | 0.514 |
+| walker |  | 7696 | 7 | go decl at pkg/model/step_result.go:7 |  |  | 0.514 |
+| walker |  | 7745 | 49 | go decl at pkg/model/step_result.go:41 |  |  | 0.514 |
+| walker |  | 7802 | 57 | go package + imports in cmd/dir.go |  |  | 0.514 |
+| walker |  | 7814 | 12 | go decl body at pkg/model/step_result.go:19 |  |  | 0.514 |
 | ns | 7823 |  | 336 | Runner interface + Config struct (part 1: run behavior) | 9.1 |  | 0.505 |
-| walker |  | 7890 | 88 | go struct field group at cmd/input.go:10 group 59 |  |  | 0.509 |
-| walker |  | 7922 | 32 | go package + imports in pkg/common/job_error.go |  |  | 0.509 |
-| walker |  | 7984 | 62 | go package + imports in cmd/list.go |  |  | 0.509 |
-| walker |  | 8047 | 63 | go package + imports in cmd/graph.go |  |  | 0.509 |
-| walker |  | 8061 | 14 | go decl body at pkg/container/util_openbsd_mips64.go:15 |  |  | 0.509 |
-| walker |  | 8155 | 94 | go decl at pkg/model/job_context.go:3 |  |  | 0.509 |
-| walker |  | 8190 | 35 | go package + imports in pkg/common/line_writer.go |  |  | 0.509 |
-| walker |  | 8303 | 113 | README.md section #4 |  |  | 0.525 |
+| walker |  | 7902 | 88 | go struct field group at cmd/input.go:10 group 59 |  |  | 0.509 |
+| walker |  | 7934 | 32 | go package + imports in pkg/common/job_error.go |  |  | 0.509 |
+| walker |  | 7996 | 62 | go package + imports in cmd/list.go |  |  | 0.509 |
+| walker |  | 8059 | 63 | go package + imports in cmd/graph.go |  |  | 0.509 |
+| walker |  | 8073 | 14 | go decl body at pkg/container/util_openbsd_mips64.go:15 |  |  | 0.509 |
+| walker |  | 8167 | 94 | go decl at pkg/model/job_context.go:3 |  |  | 0.509 |
+| walker |  | 8202 | 35 | go package + imports in pkg/common/line_writer.go |  |  | 0.509 |
+| walker |  | 8315 | 113 | README.md section #4 |  |  | 0.525 |
 | ns | 8381 |  | 558 | Config struct (part 2: container/artifact-server/misc) | 9.2 | 9.1 | 0.513 |
-| walker |  | 8464 | 161 | go decl names surface in pkg/container/linux_container_environment_extensions.go |  |  | 0.513 |
-| walker |  | 8464 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:19 |  |  | 0.513 |
-| walker |  | 8464 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:50 |  |  | 0.513 |
-| walker |  | 8464 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:54 |  |  | 0.513 |
-| walker |  | 8464 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:58 |  |  | 0.513 |
-| walker |  | 8464 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:62 |  |  | 0.513 |
-| walker |  | 8464 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:66 |  |  | 0.513 |
-| walker |  | 8464 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:75 |  |  | 0.513 |
-| walker |  | 8469 | 5 | go decl at pkg/container/linux_container_environment_extensions.go:13 |  |  | 0.513 |
-| walker |  | 8476 | 7 | go decl body at pkg/container/linux_container_environment_extensions.go:75 |  |  | 0.513 |
-| walker |  | 8484 | 8 | go decl body at pkg/container/linux_container_environment_extensions.go:54 |  |  | 0.513 |
-| walker |  | 8495 | 11 | go decl body at pkg/container/linux_container_environment_extensions.go:50 |  |  | 0.513 |
-| walker |  | 8506 | 11 | go decl body at pkg/container/linux_container_environment_extensions.go:62 |  |  | 0.513 |
-| walker |  | 8671 | 165 | go decl names surface in pkg/runner/action_composite.go |  |  | 0.513 |
-| walker |  | 8671 | 0 | go decl at pkg/runner/action_composite.go:13 |  |  | 0.513 |
-| walker |  | 8671 | 0 | go decl at pkg/runner/action_composite.go:47 |  |  | 0.513 |
-| walker |  | 8671 | 0 | go decl at pkg/runner/action_composite.go:84 |  |  | 0.513 |
-| walker |  | 8671 | 0 | go decl at pkg/runner/action_composite.go:133 |  |  | 0.513 |
-| walker |  | 8671 | 0 | go decl at pkg/runner/action_composite.go:197 |  |  | 0.513 |
-| walker |  | 8671 | 0 | go decl at pkg/runner/action_composite.go:222 |  |  | 0.513 |
-| walker |  | 8701 | 30 | go decl at pkg/runner/action_composite.go:126 |  |  | 0.513 |
-| walker |  | 8717 | 16 | go decl doc at pkg/runner/action_composite.go:133 |  |  | 0.513 |
-| walker |  | 8792 | 75 | go package + imports in cmd/secrets.go |  |  | 0.513 |
-| walker |  | 8820 | 28 | go decl at pkg/model/step_result.go:13 |  |  | 0.513 |
+| walker |  | 8476 | 161 | go decl names surface in pkg/container/linux_container_environment_extensions.go |  |  | 0.513 |
+| walker |  | 8476 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:19 |  |  | 0.513 |
+| walker |  | 8476 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:50 |  |  | 0.513 |
+| walker |  | 8476 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:54 |  |  | 0.513 |
+| walker |  | 8476 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:58 |  |  | 0.513 |
+| walker |  | 8476 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:62 |  |  | 0.513 |
+| walker |  | 8476 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:66 |  |  | 0.513 |
+| walker |  | 8476 | 0 | go decl at pkg/container/linux_container_environment_extensions.go:75 |  |  | 0.513 |
+| walker |  | 8481 | 5 | go decl at pkg/container/linux_container_environment_extensions.go:13 |  |  | 0.513 |
+| walker |  | 8488 | 7 | go decl body at pkg/container/linux_container_environment_extensions.go:75 |  |  | 0.513 |
+| walker |  | 8496 | 8 | go decl body at pkg/container/linux_container_environment_extensions.go:54 |  |  | 0.513 |
+| walker |  | 8507 | 11 | go decl body at pkg/container/linux_container_environment_extensions.go:50 |  |  | 0.513 |
+| walker |  | 8518 | 11 | go decl body at pkg/container/linux_container_environment_extensions.go:62 |  |  | 0.513 |
+| walker |  | 8683 | 165 | go decl names surface in pkg/runner/action_composite.go |  |  | 0.513 |
+| walker |  | 8683 | 0 | go decl at pkg/runner/action_composite.go:13 |  |  | 0.513 |
+| walker |  | 8683 | 0 | go decl at pkg/runner/action_composite.go:47 |  |  | 0.513 |
+| walker |  | 8683 | 0 | go decl at pkg/runner/action_composite.go:84 |  |  | 0.513 |
+| walker |  | 8683 | 0 | go decl at pkg/runner/action_composite.go:133 |  |  | 0.513 |
+| walker |  | 8683 | 0 | go decl at pkg/runner/action_composite.go:197 |  |  | 0.513 |
+| walker |  | 8683 | 0 | go decl at pkg/runner/action_composite.go:222 |  |  | 0.513 |
+| walker |  | 8713 | 30 | go decl at pkg/runner/action_composite.go:126 |  |  | 0.513 |
+| walker |  | 8729 | 16 | go decl doc at pkg/runner/action_composite.go:133 |  |  | 0.513 |
+| walker |  | 8804 | 75 | go package + imports in cmd/secrets.go |  |  | 0.513 |
 | ns | 8828 |  | 447 | step_factory.go — Step.Type() to step-kind dispatch (full file) | 9.3 |  | 0.500 |
-| walker |  | 8928 | 108 | go decl at pkg/container/executions_environment.go:5 |  |  | 0.500 |
-| walker |  | 8939 | 11 | go decl body at cmd/input.go:85 |  |  | 0.500 |
-| walker |  | 8981 | 42 | go package + imports in pkg/common/file.go |  |  | 0.500 |
+| walker |  | 8832 | 28 | go decl at pkg/model/step_result.go:13 |  |  | 0.500 |
+| walker |  | 8940 | 108 | go decl at pkg/container/executions_environment.go:5 |  |  | 0.500 |
+| walker |  | 8951 | 11 | go decl body at cmd/input.go:85 |  |  | 0.500 |
+| walker |  | 8993 | 42 | go package + imports in pkg/common/file.go |  |  | 0.500 |
 | ns | 9143 |  | 315 | RunContext struct — per-job execution state | 9.4 |  | 0.490 |
-| walker |  | 9167 | 186 | go decl names surface in pkg/common/job_error.go |  |  | 0.490 |
-| walker |  | 9167 | 0 | go decl at pkg/common/job_error.go:16 |  |  | 0.490 |
-| walker |  | 9167 | 0 | go decl at pkg/common/job_error.go:26 |  |  | 0.490 |
-| walker |  | 9167 | 0 | go decl at pkg/common/job_error.go:31 |  |  | 0.490 |
-| walker |  | 9167 | 0 | go decl at pkg/common/job_error.go:36 |  |  | 0.490 |
-| walker |  | 9167 | 0 | go decl at pkg/common/job_error.go:40 |  |  | 0.490 |
-| walker |  | 9167 | 0 | go decl at pkg/common/job_error.go:51 |  |  | 0.490 |
-| walker |  | 9182 | 15 | go decl doc at pkg/common/job_error.go:16 |  |  | 0.490 |
-| walker |  | 9204 | 22 | go decl doc at pkg/common/job_error.go:31 |  |  | 0.490 |
-| walker |  | 9222 | 18 | go decl body at pkg/common/job_error.go:36 |  |  | 0.490 |
-| walker |  | 9250 | 28 | go decl doc at pkg/common/job_error.go:51 |  |  | 0.490 |
-| walker |  | 9273 | 23 | go decl body at pkg/common/job_error.go:26 |  |  | 0.490 |
-| walker |  | 9390 | 117 | go struct field group at cmd/input.go:10 group 23 |  |  | 0.498 |
+| walker |  | 9179 | 186 | go decl names surface in pkg/common/job_error.go |  |  | 0.490 |
+| walker |  | 9179 | 0 | go decl at pkg/common/job_error.go:16 |  |  | 0.490 |
+| walker |  | 9179 | 0 | go decl at pkg/common/job_error.go:26 |  |  | 0.490 |
+| walker |  | 9179 | 0 | go decl at pkg/common/job_error.go:31 |  |  | 0.490 |
+| walker |  | 9179 | 0 | go decl at pkg/common/job_error.go:36 |  |  | 0.490 |
+| walker |  | 9179 | 0 | go decl at pkg/common/job_error.go:40 |  |  | 0.490 |
+| walker |  | 9179 | 0 | go decl at pkg/common/job_error.go:51 |  |  | 0.490 |
+| walker |  | 9194 | 15 | go decl doc at pkg/common/job_error.go:16 |  |  | 0.490 |
+| walker |  | 9216 | 22 | go decl doc at pkg/common/job_error.go:31 |  |  | 0.490 |
+| walker |  | 9234 | 18 | go decl body at pkg/common/job_error.go:36 |  |  | 0.490 |
+| walker |  | 9262 | 28 | go decl doc at pkg/common/job_error.go:51 |  |  | 0.490 |
+| walker |  | 9285 | 23 | go decl body at pkg/common/job_error.go:26 |  |  | 0.490 |
+| walker |  | 9402 | 117 | go struct field group at cmd/input.go:10 group 23 |  |  | 0.498 |
 | ns | 9415 |  | 272 | Container interface — the execution-backend contract | 10.1 |  | 0.492 |
-| walker |  | 9419 | 29 | go decl body at cmd/notices.go:57 |  |  | 0.492 |
-| walker |  | 9463 | 44 | go package + imports in pkg/container/util_openbsd_mips64.go |  |  | 0.492 |
-| walker |  | 9507 | 44 | go package + imports in pkg/workflowpattern/workflow_pattern.go |  |  | 0.492 |
-| walker |  | 9626 | 119 | go struct field group at cmd/input.go:10 group 11 |  |  | 0.510 |
+| walker |  | 9431 | 29 | go decl body at cmd/notices.go:57 |  |  | 0.492 |
+| walker |  | 9475 | 44 | go package + imports in pkg/container/util_openbsd_mips64.go |  |  | 0.492 |
+| walker |  | 9519 | 44 | go package + imports in pkg/workflowpattern/workflow_pattern.go |  |  | 0.492 |
+| walker |  | 9638 | 119 | go struct field group at cmd/input.go:10 group 11 |  |  | 0.510 |
 | ns | 9664 |  | 249 | functions.go — every builtin GitHub Actions expression function | 11.1 |  | 0.505 |
-| walker |  | 9768 | 142 | go decl names surface in pkg/runner/run_context.go |  |  | 0.505 |
-| walker |  | 9768 | 0 | go decl at pkg/runner/run_context.go:58 |  |  | 0.505 |
-| walker |  | 9768 | 0 | go decl at pkg/runner/run_context.go:67 |  |  | 0.505 |
-| walker |  | 9768 | 0 | go decl at pkg/runner/run_context.go:78 |  |  | 0.505 |
-| walker |  | 9768 | 0 | go decl at pkg/runner/run_context.go:92 |  |  | 0.505 |
-| walker |  | 9768 | 0 | go decl at pkg/runner/run_context.go:98 |  |  | 0.505 |
-| walker |  | 9768 | 0 | go decl at pkg/runner/run_context.go:108 |  |  | 0.505 |
-| walker |  | 9789 | 21 | go decl at pkg/runner/run_context.go:62 |  |  | 0.505 |
-| walker |  | 9803 | 14 | go decl doc at pkg/runner/run_context.go:78 |  |  | 0.505 |
-| walker |  | 9818 | 15 | go decl body at pkg/runner/run_context.go:58 |  |  | 0.505 |
-| walker |  | 9832 | 14 | go decl body at pkg/runner/run_context.go:92 |  |  | 0.505 |
+| walker |  | 9780 | 142 | go decl names surface in pkg/runner/run_context.go |  |  | 0.505 |
+| walker |  | 9780 | 0 | go decl at pkg/runner/run_context.go:58 |  |  | 0.505 |
+| walker |  | 9780 | 0 | go decl at pkg/runner/run_context.go:67 |  |  | 0.505 |
+| walker |  | 9780 | 0 | go decl at pkg/runner/run_context.go:78 |  |  | 0.505 |
+| walker |  | 9780 | 0 | go decl at pkg/runner/run_context.go:92 |  |  | 0.505 |
+| walker |  | 9780 | 0 | go decl at pkg/runner/run_context.go:98 |  |  | 0.505 |
+| walker |  | 9780 | 0 | go decl at pkg/runner/run_context.go:108 |  |  | 0.505 |
+| walker |  | 9801 | 21 | go decl at pkg/runner/run_context.go:62 |  |  | 0.505 |
+| walker |  | 9815 | 14 | go decl doc at pkg/runner/run_context.go:78 |  |  | 0.505 |
+| walker |  | 9830 | 15 | go decl body at pkg/runner/run_context.go:58 |  |  | 0.505 |
+| walker |  | 9844 | 14 | go decl body at pkg/runner/run_context.go:92 |  |  | 0.505 |

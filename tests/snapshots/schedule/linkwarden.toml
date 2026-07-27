@@ -1,7 +1,7 @@
 fixture = "linkwarden"
 budget = 10000
-cumulative_tokens = 9906
-batch_count = 256
+cumulative_tokens = 9991
+batch_count = 250
 
 [[batches]]
 position = 1
@@ -769,38 +769,10 @@ entries = ["api", "client", "shared", "utils.ts"]
 
 [[batches]]
 position = 49
-key = 'Fs(DirListing { dir: "apps/web/templates" })'
-descriptor = "listing of 'apps/web/templates'"
-cost_tokens = 20
-cum_tokens = 1324
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/templates"
-entries = ["acceptInvitation.html", "passwordReset.html", "verifyEmail.html", "verifyEmailChange.html"]
-
-[[batches]]
-position = 50
-key = 'Fs(DirListing { dir: "apps/web/layouts" })'
-descriptor = "listing of 'apps/web/layouts'"
-cost_tokens = 23
-cum_tokens = 1347
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/layouts"
-entries = ["AdminLayout.tsx", "AuthRedirect.tsx", "MainLayout.tsx", "SettingsLayout.tsx"]
-
-[[batches]]
-position = 51
 key = 'Fs(DirListing { dir: "apps/web/lib/shared" })'
 descriptor = "listing of 'apps/web/lib/shared'"
 cost_tokens = 19
-cum_tokens = 1366
+cum_tokens = 1323
 
 [batches.content]
 kind = "fs"
@@ -810,11 +782,123 @@ parent = "apps/web/lib/shared"
 entries = ["fetchTitleAndHeaders.ts", "getSuffixFromFormat.ts", "isValidUrl.ts"]
 
 [[batches]]
+position = 50
+key = 'Fs(DirListing { dir: "apps/web/lib/api" })'
+descriptor = "listing of 'apps/web/lib/api'"
+cost_tokens = 100
+cum_tokens = 1423
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api"
+entries = ["archives", "controllers", "getCollectionRootOwnerAndMembers.ts", "getPermission.ts", "isAuthenticatedRequest.ts", "isDemoMode.ts", "paymentCheckout.ts", "preserved", "searchQueryBuilder.ts", "sendChangeEmailVerificationRequest.ts", "sendInvitationRequest.ts", "sendPasswordResetRequest.ts", "sendVerificationRequest.ts", "setCollection.ts", "stripe", "verifyByCredentials.ts", "verifyToken.ts", "verifyUser.ts"]
+
+[[batches]]
+position = 51
+key = 'Fs(DirListing { dir: "apps/web/lib/api/stripe" })'
+descriptor = "listing of 'apps/web/lib/api/stripe'"
+cost_tokens = 32
+cum_tokens = 1455
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/stripe"
+entries = ["checkSubscriptionByEmail.ts", "handleSubscription.ts", "stripeSDK.ts", "updateCustomerEmail.ts", "updateSeats.ts", "verifySubscription.ts"]
+
+[[batches]]
 position = 52
+key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers" })'
+descriptor = "listing of 'apps/web/lib/api/controllers'"
+cost_tokens = 47
+cum_tokens = 1502
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/controllers"
+entries = ["collections", "dashboard", "highlights", "links", "migration", "public", "search", "session", "tags", "tokens", "users", "worker"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "apps/web/lib/client" })'
+descriptor = "listing of 'apps/web/lib/client'"
+cost_tokens = 78
+cum_tokens = 1580
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/client"
+entries = ["addMemberToCollection.ts", "getLatestVersion.ts", "getPublicCollectionData.ts", "getPublicUserData.ts", "getServerSideProps.ts", "icons.ts", "importBookmarks.ts", "oklchVariableToHex.ts", "openLink.ts", "pinLink.ts", "remToPixels.ts", "resizeImage.ts", "unescapeString.ts"]
+
+[[batches]]
+position = 54
+key = 'Fs(DirListing { dir: "apps/web/templates" })'
+descriptor = "listing of 'apps/web/templates'"
+cost_tokens = 20
+cum_tokens = 1600
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/templates"
+entries = ["acceptInvitation.html", "passwordReset.html", "verifyEmail.html", "verifyEmailChange.html"]
+
+[[batches]]
+position = 55
+key = 'Fs(DirListing { dir: "apps/web/layouts" })'
+descriptor = "listing of 'apps/web/layouts'"
+cost_tokens = 23
+cum_tokens = 1623
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/layouts"
+entries = ["AdminLayout.tsx", "AuthRedirect.tsx", "MainLayout.tsx", "SettingsLayout.tsx"]
+
+[[batches]]
+position = 56
+key = 'Fs(DirListing { dir: "apps/web/lib/api/archives" })'
+descriptor = "listing of 'apps/web/lib/api/archives'"
+cost_tokens = 12
+cum_tokens = 1635
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/archives"
+entries = ["resolveAccessibleArchive.test.ts", "resolveAccessibleArchive.ts"]
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "apps/web/lib/api/preserved" })'
+descriptor = "listing of 'apps/web/lib/api/preserved'"
+cost_tokens = 16
+cum_tokens = 1651
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/web/lib/api/preserved"
+entries = ["createPreservedFormatUrl.test.ts", "createPreservedFormatUrl.ts"]
+
+[[batches]]
+position = 58
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 137
-cum_tokens = 1503
+cum_tokens = 1788
 
 [batches.content]
 kind = "lines"
@@ -1012,11 +1096,11 @@ end = 149
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 59
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #26"
 cost_tokens = 26
-cum_tokens = 1529
+cum_tokens = 1814
 
 [batches.content]
 kind = "lines"
@@ -1030,11 +1114,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 54
+position = 60
 key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #18"
 cost_tokens = 11
-cum_tokens = 1540
+cum_tokens = 1825
 
 [batches.content]
 kind = "lines"
@@ -1048,11 +1132,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 55
+position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #17"
 cost_tokens = 10
-cum_tokens = 1550
+cum_tokens = 1835
 
 [batches.content]
 kind = "lines"
@@ -1066,11 +1150,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 56
+position = 62
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #19"
 cost_tokens = 10
-cum_tokens = 1560
+cum_tokens = 1845
 
 [batches.content]
 kind = "lines"
@@ -1084,11 +1168,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 57
+position = 63
 key = 'Fs(DirListing { dir: "packages/lib" })'
 descriptor = "listing of 'packages/lib'"
 cost_tokens = 108
-cum_tokens = 1668
+cum_tokens = 1953
 
 [batches.content]
 kind = "fs"
@@ -1098,11 +1182,11 @@ parent = "packages/lib"
 entries = ["constants.ts", "formatStats.ts", "generatePreview.ts", "getFormatBasedOnPreference.ts", "getFormatFromContentType.ts", "getLinkTypeFromFormat.ts", "getOriginalFormat.ts", "getPreservedFormatUrl.ts", "isArchivalTag.ts", "meilisearchClient.ts", "package.json", "rssHandler.ts", "safeFetch.ts", "schemaValidation.ts", "ssrf.test.ts", "ssrf.ts", "transporter.ts", "utils.ts", "verifyCapacity.ts"]
 
 [[batches]]
-position = 58
+position = 64
 key = 'Fs(DirListing { dir: "apps/worker/lib" })'
 descriptor = "listing of 'apps/worker/lib'"
 cost_tokens = 57
-cum_tokens = 1725
+cum_tokens = 2010
 
 [batches.content]
 kind = "fs"
@@ -1112,11 +1196,25 @@ parent = "apps/worker/lib"
 entries = ["archiveHandler.ts", "autoTagLink.ts", "browser.ts", "countUnprocessedBillableLinks.ts", "fetchHeaders.ts", "getLinkBatch.ts", "getLinkBatchFairly.ts", "preservationScheme", "prompts.ts", "protectPageRequests.ts"]
 
 [[batches]]
-position = 59
+position = 65
+key = 'Fs(DirListing { dir: "apps/worker/lib/preservationScheme" })'
+descriptor = "listing of 'apps/worker/lib/preservationScheme'"
+cost_tokens = 41
+cum_tokens = 2051
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "apps/worker/lib/preservationScheme"
+entries = ["handleArchivePreview.ts", "handleMonolith.ts", "handleReadability.ts", "handleScreenshotAndPdf.ts", "imageHandler.ts", "pdfHandler.ts", "sendToWayback.ts"]
+
+[[batches]]
+position = 66
 key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #23"
 cost_tokens = 13
-cum_tokens = 1738
+cum_tokens = 2064
 
 [batches.content]
 kind = "lines"
@@ -1130,11 +1228,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 60
+position = 67
 key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #24"
 cost_tokens = 13
-cum_tokens = 1751
+cum_tokens = 2077
 
 [batches.content]
 kind = "lines"
@@ -1148,11 +1246,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 61
+position = 68
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 96
-cum_tokens = 1847
+cum_tokens = 2173
 
 [batches.content]
 kind = "lines"
@@ -1166,11 +1264,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 62
+position = 69
 key = 'Yaml(Whole { file: "docker-compose.yml" })'
 descriptor = "YAML config at docker-compose.yml"
 cost_tokens = 140
-cum_tokens = 1987
+cum_tokens = 2313
 
 [batches.content]
 kind = "lines"
@@ -1240,11 +1338,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 63
+position = 70
 key = 'Plaintext(Whole { file: ".env.sample" })'
 descriptor = "plaintext config .env.sample"
 cost_tokens = 134
-cum_tokens = 2121
+cum_tokens = 2447
 
 [batches.content]
 kind = "lines"
@@ -1266,11 +1364,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 64
+position = 71
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 14
-cum_tokens = 2135
+cum_tokens = 2461
 
 [batches.content]
 kind = "lines"
@@ -1284,11 +1382,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 65
+position = 72
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 12
-cum_tokens = 2147
+cum_tokens = 2473
 
 [batches.content]
 kind = "lines"
@@ -1302,11 +1400,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 66
+position = 73
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #20"
 cost_tokens = 14
-cum_tokens = 2161
+cum_tokens = 2487
 
 [batches.content]
 kind = "lines"
@@ -1320,11 +1418,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 67
+position = 74
 key = 'Markdown(Section { file: "README.md", section_index: 29, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #29"
 cost_tokens = 29
-cum_tokens = 2190
+cum_tokens = 2516
 
 [batches.content]
 kind = "lines"
@@ -1338,11 +1436,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 68
+position = 75
 key = 'Fs(DirListing { dir: "apps/mobile/components" })'
 descriptor = "listing of 'apps/mobile/components'"
 cost_tokens = 61
-cum_tokens = 2251
+cum_tokens = 2577
 
 [batches.content]
 kind = "fs"
@@ -1352,11 +1450,11 @@ parent = "apps/mobile/components"
 entries = ["ActionSheets", "CollectionListing.tsx", "DashboardItem.tsx", "DashboardSection.tsx", "ElementNotSupported.tsx", "Formats", "HapticTab.tsx", "LinkListing.tsx", "Links.tsx", "TagListing.tsx", "ui"]
 
 [[batches]]
-position = 69
+position = 76
 key = 'Fs(DirListing { dir: "apps/mobile/components/Formats" })'
 descriptor = "listing of 'apps/mobile/components/Formats'"
 cost_tokens = 25
-cum_tokens = 2276
+cum_tokens = 2602
 
 [batches.content]
 kind = "fs"
@@ -1366,11 +1464,11 @@ parent = "apps/mobile/components/Formats"
 entries = ["ImageFormat.tsx", "PdfFormat.tsx", "ReadableFormat.tsx", "WebpageFormat.tsx"]
 
 [[batches]]
-position = 70
+position = 77
 key = 'Fs(DirListing { dir: "apps/mobile/components/ActionSheets" })'
 descriptor = "listing of 'apps/mobile/components/ActionSheets'"
 cost_tokens = 31
-cum_tokens = 2307
+cum_tokens = 2633
 
 [batches.content]
 kind = "fs"
@@ -1380,11 +1478,11 @@ parent = "apps/mobile/components/ActionSheets"
 entries = ["AddLinkSheet.tsx", "EditLinkSheet.tsx", "NewCollectionSheet.tsx", "Sheets.tsx", "SupportSheet.tsx"]
 
 [[batches]]
-position = 71
+position = 78
 key = 'Fs(DirListing { dir: "apps/web/hooks" })'
 descriptor = "listing of 'apps/web/hooks'"
 cost_tokens = 61
-cum_tokens = 2368
+cum_tokens = 2694
 
 [batches.content]
 kind = "fs"
@@ -1394,11 +1492,11 @@ parent = "apps/web/hooks"
 entries = ["useArchivalTags.ts", "useCollectivePermissions.ts", "useDetectPageBottom.tsx", "useInitialData.tsx", "useMediaQuery.tsx", "useOnScreen.tsx", "usePermissions.tsx", "useSort.tsx", "useWindowDimensions.tsx"]
 
 [[batches]]
-position = 72
+position = 79
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 15
-cum_tokens = 2383
+cum_tokens = 2709
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1510,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 73
+position = 80
 key = 'Fs(DirListing { dir: "apps/web/e2e" })'
 descriptor = "listing of 'apps/web/e2e'"
 cost_tokens = 20
-cum_tokens = 2403
+cum_tokens = 2729
 
 [batches.content]
 kind = "fs"
@@ -1426,11 +1524,11 @@ parent = "apps/web/e2e"
 entries = [".env.example", "data", "fixtures", "index.ts", "tests"]
 
 [[batches]]
-position = 74
+position = 81
 key = 'Fs(DirListing { dir: "apps/web/e2e/tests" })'
 descriptor = "listing of 'apps/web/e2e/tests'"
 cost_tokens = 7
-cum_tokens = 2410
+cum_tokens = 2736
 
 [batches.content]
 kind = "fs"
@@ -1440,11 +1538,11 @@ parent = "apps/web/e2e/tests"
 entries = ["global", "public"]
 
 [[batches]]
-position = 75
+position = 82
 key = 'Fs(DirListing { dir: "apps/web/e2e/fixtures" })'
 descriptor = "listing of 'apps/web/e2e/fixtures'"
 cost_tokens = 17
-cum_tokens = 2427
+cum_tokens = 2753
 
 [batches.content]
 kind = "fs"
@@ -1454,11 +1552,11 @@ parent = "apps/web/e2e/fixtures"
 entries = ["base", "index.ts", "login-page.ts", "registration-page.ts"]
 
 [[batches]]
-position = 76
+position = 83
 key = 'Fs(DirListing { dir: "apps/web/e2e/fixtures/base" })'
 descriptor = "listing of 'apps/web/e2e/fixtures/base'"
 cost_tokens = 12
-cum_tokens = 2439
+cum_tokens = 2765
 
 [batches.content]
 kind = "fs"
@@ -1468,25 +1566,11 @@ parent = "apps/web/e2e/fixtures/base"
 entries = ["dashboard-page.ts", "modal.ts", "page.ts"]
 
 [[batches]]
-position = 77
-key = 'Fs(DirListing { dir: "apps/worker/lib/preservationScheme" })'
-descriptor = "listing of 'apps/worker/lib/preservationScheme'"
-cost_tokens = 41
-cum_tokens = 2480
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/worker/lib/preservationScheme"
-entries = ["handleArchivePreview.ts", "handleMonolith.ts", "handleReadability.ts", "handleScreenshotAndPdf.ts", "imageHandler.ts", "pdfHandler.ts", "sendToWayback.ts"]
-
-[[batches]]
-position = 78
+position = 84
 key = 'Fs(DirListing { dir: ".github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '.github/ISSUE_TEMPLATE'"
 cost_tokens = 21
-cum_tokens = 2501
+cum_tokens = 2786
 
 [batches.content]
 kind = "fs"
@@ -1496,11 +1580,11 @@ parent = ".github/ISSUE_TEMPLATE"
 entries = ["ask-a-question.md", "bug-report.md", "feature-request.md", "installation-problem.yml"]
 
 [[batches]]
-position = 79
+position = 85
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 17
-cum_tokens = 2518
+cum_tokens = 2803
 
 [batches.content]
 kind = "lines"
@@ -1514,11 +1598,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 80
+position = 86
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 16
-cum_tokens = 2534
+cum_tokens = 2819
 
 [batches.content]
 kind = "lines"
@@ -1532,11 +1616,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 81
+position = 87
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 17
-cum_tokens = 2551
+cum_tokens = 2836
 
 [batches.content]
 kind = "lines"
@@ -1550,11 +1634,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 82
+position = 88
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 16
-cum_tokens = 2567
+cum_tokens = 2852
 
 [batches.content]
 kind = "lines"
@@ -1568,11 +1652,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 83
+position = 89
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 16
-cum_tokens = 2583
+cum_tokens = 2868
 
 [batches.content]
 kind = "lines"
@@ -1586,11 +1670,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 84
+position = 90
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #16"
 cost_tokens = 17
-cum_tokens = 2600
+cum_tokens = 2885
 
 [batches.content]
 kind = "lines"
@@ -1604,11 +1688,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 85
+position = 91
 key = 'Fs(DirListing { dir: "apps/web/public" })'
 descriptor = "listing of 'apps/web/public'"
 cost_tokens = 80
-cum_tokens = 2680
+cum_tokens = 2965
 
 [batches.content]
 kind = "fs"
@@ -1618,11 +1702,11 @@ parent = "apps/web/public"
 entries = ["android-chrome-192x192.png", "android-chrome-512x512.png", "apple-touch-icon.png", "favicon-16x16.png", "favicon-32x32.png", "favicon.ico", "icon.png", "linkwarden_dark.png", "linkwarden_light.png", "locales", "logo_maskable.png", "screenshots", "site.webmanifest"]
 
 [[batches]]
-position = 86
+position = 92
 key = 'Fs(DirListing { dir: "apps/web/public/screenshots" })'
 descriptor = "listing of 'apps/web/public/screenshots'"
 cost_tokens = 9
-cum_tokens = 2689
+cum_tokens = 2974
 
 [batches.content]
 kind = "fs"
@@ -1632,11 +1716,11 @@ parent = "apps/web/public/screenshots"
 entries = ["screenshot1.png", "screenshot2.png"]
 
 [[batches]]
-position = 87
+position = 93
 key = 'Plaintext(Whole { file: "Dockerfile" })'
 descriptor = "plaintext config Dockerfile"
 cost_tokens = 277
-cum_tokens = 2966
+cum_tokens = 3251
 
 [batches.content]
 kind = "lines"
@@ -1682,11 +1766,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 94
 key = 'Fs(DirListing { dir: "apps/mobile/components/ui" })'
 descriptor = "listing of 'apps/mobile/components/ui'"
 cost_tokens = 49
-cum_tokens = 3015
+cum_tokens = 3300
 
 [batches.content]
 kind = "fs"
@@ -1696,11 +1780,11 @@ parent = "apps/mobile/components/ui"
 entries = ["Button.tsx", "IconSymbol.ios.tsx", "IconSymbol.tsx", "Icons.tsx", "Input.tsx", "Spinner.tsx", "TabBarBackground.ios.tsx", "TabBarBackground.tsx"]
 
 [[batches]]
-position = 89
+position = 95
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #15"
 cost_tokens = 19
-cum_tokens = 3034
+cum_tokens = 3319
 
 [batches.content]
 kind = "lines"
@@ -1714,11 +1798,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 90
+position = 96
 key = 'Fs(DirListing { dir: "apps/web/pages" })'
 descriptor = "listing of 'apps/web/pages'"
 cost_tokens = 94
-cum_tokens = 3128
+cum_tokens = 3413
 
 [batches.content]
 kind = "fs"
@@ -1728,11 +1812,11 @@ parent = "apps/web/pages"
 entries = ["_app.tsx", "_document.tsx", "admin", "api", "auth", "collections", "confirmation.tsx", "dashboard.tsx", "forgot.tsx", "index.tsx", "links", "login.tsx", "member-onboarding.tsx", "preserved", "public", "register.tsx", "search.tsx", "settings", "subscribe.tsx", "tags"]
 
 [[batches]]
-position = 91
+position = 97
 key = 'Fs(DirListing { dir: "apps/web/pages/preserved" })'
 descriptor = "listing of 'apps/web/pages/preserved'"
 cost_tokens = 5
-cum_tokens = 3133
+cum_tokens = 3418
 
 [batches.content]
 kind = "fs"
@@ -1742,11 +1826,11 @@ parent = "apps/web/pages/preserved"
 entries = ["[id].tsx"]
 
 [[batches]]
-position = 92
+position = 98
 key = 'Fs(DirListing { dir: "apps/web/pages/api" })'
 descriptor = "listing of 'apps/web/pages/api'"
 cost_tokens = 9
-cum_tokens = 3142
+cum_tokens = 3427
 
 [batches.content]
 kind = "fs"
@@ -1756,11 +1840,11 @@ parent = "apps/web/pages/api"
 entries = ["v1", "v2"]
 
 [[batches]]
-position = 93
+position = 99
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v2" })'
 descriptor = "listing of 'apps/web/pages/api/v2'"
 cost_tokens = 3
-cum_tokens = 3145
+cum_tokens = 3430
 
 [batches.content]
 kind = "fs"
@@ -1770,11 +1854,11 @@ parent = "apps/web/pages/api/v2"
 entries = ["dashboard"]
 
 [[batches]]
-position = 94
+position = 100
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v2/dashboard" })'
 descriptor = "listing of 'apps/web/pages/api/v2/dashboard'"
 cost_tokens = 3
-cum_tokens = 3148
+cum_tokens = 3433
 
 [batches.content]
 kind = "fs"
@@ -1784,11 +1868,11 @@ parent = "apps/web/pages/api/v2/dashboard"
 entries = ["index.ts"]
 
 [[batches]]
-position = 95
+position = 101
 key = 'Fs(DirListing { dir: "apps/web/pages/collections" })'
 descriptor = "listing of 'apps/web/pages/collections'"
 cost_tokens = 10
-cum_tokens = 3158
+cum_tokens = 3443
 
 [batches.content]
 kind = "fs"
@@ -1798,11 +1882,11 @@ parent = "apps/web/pages/collections"
 entries = ["[id].tsx", "index.tsx"]
 
 [[batches]]
-position = 96
+position = 102
 key = 'Fs(DirListing { dir: "apps/web/pages/tags" })'
 descriptor = "listing of 'apps/web/pages/tags'"
 cost_tokens = 10
-cum_tokens = 3168
+cum_tokens = 3453
 
 [batches.content]
 kind = "fs"
@@ -1812,11 +1896,11 @@ parent = "apps/web/pages/tags"
 entries = ["[id].tsx", "index.tsx"]
 
 [[batches]]
-position = 97
+position = 103
 key = 'Fs(DirListing { dir: "apps/web/pages/auth" })'
 descriptor = "listing of 'apps/web/pages/auth'"
 cost_tokens = 11
-cum_tokens = 3179
+cum_tokens = 3464
 
 [batches.content]
 kind = "fs"
@@ -1826,11 +1910,11 @@ parent = "apps/web/pages/auth"
 entries = ["reset-password.tsx", "verify-email.tsx"]
 
 [[batches]]
-position = 98
+position = 104
 key = 'Fs(DirListing { dir: "apps/web/pages/public" })'
 descriptor = "listing of 'apps/web/pages/public'"
 cost_tokens = 11
-cum_tokens = 3190
+cum_tokens = 3475
 
 [batches.content]
 kind = "fs"
@@ -1840,11 +1924,11 @@ parent = "apps/web/pages/public"
 entries = ["collections", "links", "preserved"]
 
 [[batches]]
-position = 99
+position = 105
 key = 'Fs(DirListing { dir: "apps/web/pages/public/collections" })'
 descriptor = "listing of 'apps/web/pages/public/collections'"
 cost_tokens = 4
-cum_tokens = 3194
+cum_tokens = 3479
 
 [batches.content]
 kind = "fs"
@@ -1854,11 +1938,11 @@ parent = "apps/web/pages/public/collections"
 entries = ["[id]"]
 
 [[batches]]
-position = 100
+position = 106
 key = 'Fs(DirListing { dir: "apps/web/pages/public/links" })'
 descriptor = "listing of 'apps/web/pages/public/links'"
 cost_tokens = 5
-cum_tokens = 3199
+cum_tokens = 3484
 
 [batches.content]
 kind = "fs"
@@ -1868,11 +1952,11 @@ parent = "apps/web/pages/public/links"
 entries = ["[id].tsx"]
 
 [[batches]]
-position = 101
+position = 107
 key = 'Fs(DirListing { dir: "apps/web/pages/public/preserved" })'
 descriptor = "listing of 'apps/web/pages/public/preserved'"
 cost_tokens = 5
-cum_tokens = 3204
+cum_tokens = 3489
 
 [batches.content]
 kind = "fs"
@@ -1882,11 +1966,11 @@ parent = "apps/web/pages/public/preserved"
 entries = ["[id].tsx"]
 
 [[batches]]
-position = 102
+position = 108
 key = 'Typescript(ExportNames { file: "apps/web/pages/index.tsx" })'
 descriptor = "export names surface in apps/web/pages/index.tsx"
 cost_tokens = 14
-cum_tokens = 3218
+cum_tokens = 3503
 
 [batches.content]
 kind = "lines"
@@ -1908,11 +1992,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 109
 key = 'Typescript(Export { file: "apps/web/pages/index.tsx", start_line: 4 })'
 descriptor = "export at apps/web/pages/index.tsx:4"
 cost_tokens = 0
-cum_tokens = 3218
+cum_tokens = 3503
 
 [batches.content]
 kind = "lines"
@@ -1934,11 +2018,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 110
 key = 'Fs(DirListing { dir: "apps/web/pages/links" })'
 descriptor = "listing of 'apps/web/pages/links'"
 cost_tokens = 15
-cum_tokens = 3233
+cum_tokens = 3518
 
 [batches.content]
 kind = "fs"
@@ -1948,11 +2032,11 @@ parent = "apps/web/pages/links"
 entries = ["[id].tsx", "index.tsx", "pinned.tsx"]
 
 [[batches]]
-position = 105
+position = 111
 key = 'Fs(DirListing { dir: "apps/web/pages/admin" })'
 descriptor = "listing of 'apps/web/pages/admin'"
 cost_tokens = 18
-cum_tokens = 3251
+cum_tokens = 3536
 
 [batches.content]
 kind = "fs"
@@ -1962,11 +2046,11 @@ parent = "apps/web/pages/admin"
 entries = ["background-jobs.tsx", "index.tsx", "user-administration.tsx"]
 
 [[batches]]
-position = 106
+position = 112
 key = 'Fs(DirListing { dir: "apps/web/pages/public/collections/[id]" })'
 descriptor = "listing of 'apps/web/pages/public/collections/[id]'"
 cost_tokens = 10
-cum_tokens = 3261
+cum_tokens = 3546
 
 [batches.content]
 kind = "fs"
@@ -1976,11 +2060,11 @@ parent = "apps/web/pages/public/collections/[id]"
 entries = ["index.tsx", "rss.tsx"]
 
 [[batches]]
-position = 107
+position = 113
 key = 'Typescript(ExportBody { file: "apps/web/pages/index.tsx", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at apps/web/pages/index.tsx:4 body 5"
 cost_tokens = 43
-cum_tokens = 3304
+cum_tokens = 3589
 
 [batches.content]
 kind = "lines"
@@ -1994,11 +2078,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 108
+position = 114
 key = 'Fs(DirListing { dir: "apps/web/pages/settings" })'
 descriptor = "listing of 'apps/web/pages/settings'"
 cost_tokens = 55
-cum_tokens = 3359
+cum_tokens = 3644
 
 [batches.content]
 kind = "fs"
@@ -2008,11 +2092,11 @@ parent = "apps/web/pages/settings"
 entries = ["access-tokens.tsx", "account.tsx", "background-jobs.tsx", "billing.tsx", "delete.tsx", "index.tsx", "password.tsx", "preference.tsx", "rss-subscriptions.tsx", "worker.tsx"]
 
 [[batches]]
-position = 109
+position = 115
 key = 'Typescript(Export { file: "vitest.config.mts", start_line: 4 })'
 descriptor = "export at vitest.config.mts:4"
 cost_tokens = 87
-cum_tokens = 3446
+cum_tokens = 3731
 
 [batches.content]
 kind = "lines"
@@ -2026,11 +2110,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 110
+position = 116
 key = 'Typescript(Export { file: "packages/prisma/index.ts", start_line: 5 })'
 descriptor = "export at packages/prisma/index.ts:5"
 cost_tokens = 76
-cum_tokens = 3522
+cum_tokens = 3807
 
 [batches.content]
 kind = "lines"
@@ -2044,11 +2128,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 111
+position = 117
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 295
-cum_tokens = 3817
+cum_tokens = 4102
 
 [batches.content]
 kind = "lines"
@@ -2062,11 +2146,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 112
+position = 118
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 22
-cum_tokens = 3839
+cum_tokens = 4124
 
 [batches.content]
 kind = "lines"
@@ -2080,11 +2164,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 113
+position = 119
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 22
-cum_tokens = 3861
+cum_tokens = 4146
 
 [batches.content]
 kind = "lines"
@@ -2098,11 +2182,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 114
+position = 120
 key = 'Fs(DirListing { dir: "apps/web/public/locales" })'
 descriptor = "listing of 'apps/web/public/locales'"
 cost_tokens = 63
-cum_tokens = 3924
+cum_tokens = 4209
 
 [batches.content]
 kind = "fs"
@@ -2112,11 +2196,11 @@ parent = "apps/web/public/locales"
 entries = ["de", "en", "es", "fr", "it", "ja", "nl", "pl", "pt-BR", "ro", "ru", "tr", "uk", "zh", "zh-TW"]
 
 [[batches]]
-position = 115
+position = 121
 key = 'Fs(DirListing { dir: "apps/web/public/locales/de" })'
 descriptor = "listing of 'apps/web/public/locales/de'"
 cost_tokens = 3
-cum_tokens = 3927
+cum_tokens = 4212
 
 [batches.content]
 kind = "fs"
@@ -2126,11 +2210,11 @@ parent = "apps/web/public/locales/de"
 entries = ["common.json"]
 
 [[batches]]
-position = 116
+position = 122
 key = 'Fs(DirListing { dir: "apps/web/public/locales/en" })'
 descriptor = "listing of 'apps/web/public/locales/en'"
 cost_tokens = 3
-cum_tokens = 3930
+cum_tokens = 4215
 
 [batches.content]
 kind = "fs"
@@ -2140,11 +2224,11 @@ parent = "apps/web/public/locales/en"
 entries = ["common.json"]
 
 [[batches]]
-position = 117
+position = 123
 key = 'Fs(DirListing { dir: "apps/web/public/locales/es" })'
 descriptor = "listing of 'apps/web/public/locales/es'"
 cost_tokens = 3
-cum_tokens = 3933
+cum_tokens = 4218
 
 [batches.content]
 kind = "fs"
@@ -2154,11 +2238,11 @@ parent = "apps/web/public/locales/es"
 entries = ["common.json"]
 
 [[batches]]
-position = 118
+position = 124
 key = 'Fs(DirListing { dir: "apps/web/public/locales/fr" })'
 descriptor = "listing of 'apps/web/public/locales/fr'"
 cost_tokens = 3
-cum_tokens = 3936
+cum_tokens = 4221
 
 [batches.content]
 kind = "fs"
@@ -2168,11 +2252,11 @@ parent = "apps/web/public/locales/fr"
 entries = ["common.json"]
 
 [[batches]]
-position = 119
+position = 125
 key = 'Fs(DirListing { dir: "apps/web/public/locales/it" })'
 descriptor = "listing of 'apps/web/public/locales/it'"
 cost_tokens = 3
-cum_tokens = 3939
+cum_tokens = 4224
 
 [batches.content]
 kind = "fs"
@@ -2182,11 +2266,11 @@ parent = "apps/web/public/locales/it"
 entries = ["common.json"]
 
 [[batches]]
-position = 120
+position = 126
 key = 'Fs(DirListing { dir: "apps/web/public/locales/ja" })'
 descriptor = "listing of 'apps/web/public/locales/ja'"
 cost_tokens = 3
-cum_tokens = 3942
+cum_tokens = 4227
 
 [batches.content]
 kind = "fs"
@@ -2196,11 +2280,11 @@ parent = "apps/web/public/locales/ja"
 entries = ["common.json"]
 
 [[batches]]
-position = 121
+position = 127
 key = 'Fs(DirListing { dir: "apps/web/public/locales/nl" })'
 descriptor = "listing of 'apps/web/public/locales/nl'"
 cost_tokens = 3
-cum_tokens = 3945
+cum_tokens = 4230
 
 [batches.content]
 kind = "fs"
@@ -2210,11 +2294,11 @@ parent = "apps/web/public/locales/nl"
 entries = ["common.json"]
 
 [[batches]]
-position = 122
+position = 128
 key = 'Fs(DirListing { dir: "apps/web/public/locales/pl" })'
 descriptor = "listing of 'apps/web/public/locales/pl'"
 cost_tokens = 3
-cum_tokens = 3948
+cum_tokens = 4233
 
 [batches.content]
 kind = "fs"
@@ -2224,11 +2308,11 @@ parent = "apps/web/public/locales/pl"
 entries = ["common.json"]
 
 [[batches]]
-position = 123
+position = 129
 key = 'Fs(DirListing { dir: "apps/web/public/locales/pt-BR" })'
 descriptor = "listing of 'apps/web/public/locales/pt-BR'"
 cost_tokens = 3
-cum_tokens = 3951
+cum_tokens = 4236
 
 [batches.content]
 kind = "fs"
@@ -2238,11 +2322,11 @@ parent = "apps/web/public/locales/pt-BR"
 entries = ["common.json"]
 
 [[batches]]
-position = 124
+position = 130
 key = 'Fs(DirListing { dir: "apps/web/public/locales/ro" })'
 descriptor = "listing of 'apps/web/public/locales/ro'"
 cost_tokens = 3
-cum_tokens = 3954
+cum_tokens = 4239
 
 [batches.content]
 kind = "fs"
@@ -2252,11 +2336,11 @@ parent = "apps/web/public/locales/ro"
 entries = ["common.json"]
 
 [[batches]]
-position = 125
+position = 131
 key = 'Fs(DirListing { dir: "apps/web/public/locales/ru" })'
 descriptor = "listing of 'apps/web/public/locales/ru'"
 cost_tokens = 3
-cum_tokens = 3957
+cum_tokens = 4242
 
 [batches.content]
 kind = "fs"
@@ -2266,11 +2350,11 @@ parent = "apps/web/public/locales/ru"
 entries = ["common.json"]
 
 [[batches]]
-position = 126
+position = 132
 key = 'Fs(DirListing { dir: "apps/web/public/locales/tr" })'
 descriptor = "listing of 'apps/web/public/locales/tr'"
 cost_tokens = 3
-cum_tokens = 3960
+cum_tokens = 4245
 
 [batches.content]
 kind = "fs"
@@ -2280,11 +2364,11 @@ parent = "apps/web/public/locales/tr"
 entries = ["common.json"]
 
 [[batches]]
-position = 127
+position = 133
 key = 'Fs(DirListing { dir: "apps/web/public/locales/uk" })'
 descriptor = "listing of 'apps/web/public/locales/uk'"
 cost_tokens = 3
-cum_tokens = 3963
+cum_tokens = 4248
 
 [batches.content]
 kind = "fs"
@@ -2294,11 +2378,11 @@ parent = "apps/web/public/locales/uk"
 entries = ["common.json"]
 
 [[batches]]
-position = 128
+position = 134
 key = 'Fs(DirListing { dir: "apps/web/public/locales/zh" })'
 descriptor = "listing of 'apps/web/public/locales/zh'"
 cost_tokens = 3
-cum_tokens = 3966
+cum_tokens = 4251
 
 [batches.content]
 kind = "fs"
@@ -2308,11 +2392,11 @@ parent = "apps/web/public/locales/zh"
 entries = ["common.json"]
 
 [[batches]]
-position = 129
+position = 135
 key = 'Fs(DirListing { dir: "apps/web/public/locales/zh-TW" })'
 descriptor = "listing of 'apps/web/public/locales/zh-TW'"
 cost_tokens = 3
-cum_tokens = 3969
+cum_tokens = 4254
 
 [batches.content]
 kind = "fs"
@@ -2322,11 +2406,11 @@ parent = "apps/web/public/locales/zh-TW"
 entries = ["common.json"]
 
 [[batches]]
-position = 130
+position = 136
 key = 'Yaml(Tail { file: "docker-compose.yml" })'
 descriptor = "YAML config tail at docker-compose.yml"
 cost_tokens = 170
-cum_tokens = 4139
+cum_tokens = 4424
 
 [batches.content]
 kind = "lines"
@@ -2364,11 +2448,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 131
+position = 137
 key = 'Prisma(Toc { file: "packages/prisma/schema.prisma" })'
 descriptor = "Prisma schema TOC in packages/prisma/schema.prisma"
 cost_tokens = 220
-cum_tokens = 4359
+cum_tokens = 4644
 
 [batches.content]
 kind = "lines"
@@ -2550,11 +2634,11 @@ end = 304
 kind = "full"
 
 [[batches]]
-position = 132
+position = 138
 key = 'Typescript(Imports { file: "packages/prisma/index.ts" })'
 descriptor = "imports in packages/prisma/index.ts"
 cost_tokens = 15
-cum_tokens = 4374
+cum_tokens = 4659
 
 [batches.content]
 kind = "lines"
@@ -2568,11 +2652,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 133
+position = 139
 key = 'Plaintext(DotenvChunk { file: ".env.sample", chunk_index: 0 })'
 descriptor = "plaintext dotenv tail chunk #1 of .env.sample"
 cost_tokens = 153
-cum_tokens = 4527
+cum_tokens = 4812
 
 [batches.content]
 kind = "lines"
@@ -2594,11 +2678,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 140
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 24
-cum_tokens = 4551
+cum_tokens = 4836
 
 [batches.content]
 kind = "lines"
@@ -2612,11 +2696,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 135
+position = 141
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 23
-cum_tokens = 4574
+cum_tokens = 4859
 
 [batches.content]
 kind = "lines"
@@ -2630,11 +2714,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 136
+position = 142
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #13"
 cost_tokens = 25
-cum_tokens = 4599
+cum_tokens = 4884
 
 [batches.content]
 kind = "lines"
@@ -2648,11 +2732,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 137
+position = 143
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #12"
 cost_tokens = 24
-cum_tokens = 4623
+cum_tokens = 4908
 
 [batches.content]
 kind = "lines"
@@ -2666,11 +2750,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 138
+position = 144
 key = 'Typescript(Imports { file: "apps/worker/index.ts" })'
 descriptor = "imports in apps/worker/index.ts"
 cost_tokens = 17
-cum_tokens = 4640
+cum_tokens = 4925
 
 [batches.content]
 kind = "lines"
@@ -2684,25 +2768,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 139
-key = 'Fs(DirListing { dir: "apps/web/lib/client" })'
-descriptor = "listing of 'apps/web/lib/client'"
-cost_tokens = 78
-cum_tokens = 4718
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/client"
-entries = ["addMemberToCollection.ts", "getLatestVersion.ts", "getPublicCollectionData.ts", "getPublicUserData.ts", "getServerSideProps.ts", "icons.ts", "importBookmarks.ts", "oklchVariableToHex.ts", "openLink.ts", "pinLink.ts", "remToPixels.ts", "resizeImage.ts", "unescapeString.ts"]
-
-[[batches]]
-position = 140
+position = 145
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 77 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:77"
 cost_tokens = 24
-cum_tokens = 4742
+cum_tokens = 4949
 
 [batches.content]
 kind = "lines"
@@ -2716,11 +2786,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 141
+position = 146
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 90 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:90"
 cost_tokens = 49
-cum_tokens = 4791
+cum_tokens = 4998
 
 [batches.content]
 kind = "lines"
@@ -2734,11 +2804,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 142
+position = 147
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 29
-cum_tokens = 4820
+cum_tokens = 5027
 
 [batches.content]
 kind = "lines"
@@ -2752,11 +2822,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 143
+position = 148
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 304 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:304"
 cost_tokens = 26
-cum_tokens = 4846
+cum_tokens = 5053
 
 [batches.content]
 kind = "lines"
@@ -2770,11 +2840,11 @@ end = 308
 kind = "full"
 
 [[batches]]
-position = 144
+position = 149
 key = 'Json(DevDependencies { file: "package.json" })'
 descriptor = "package dev/peer dependencies in package.json"
 cost_tokens = 48
-cum_tokens = 4894
+cum_tokens = 5101
 
 [batches.content]
 kind = "lines"
@@ -2788,11 +2858,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 145
+position = 150
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 83 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:83"
 cost_tokens = 35
-cum_tokens = 4929
+cum_tokens = 5136
 
 [batches.content]
 kind = "lines"
@@ -2806,11 +2876,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 146
+position = 151
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 166 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:166"
 cost_tokens = 210
-cum_tokens = 5139
+cum_tokens = 5346
 
 [batches.content]
 kind = "lines"
@@ -2824,11 +2894,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 147
+position = 152
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #14"
 cost_tokens = 31
-cum_tokens = 5170
+cum_tokens = 5377
 
 [batches.content]
 kind = "lines"
@@ -2842,389 +2912,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 148
-key = 'Fs(DirListing { dir: "apps/web/lib/api" })'
-descriptor = "listing of 'apps/web/lib/api'"
-cost_tokens = 100
-cum_tokens = 5270
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api"
-entries = ["archives", "controllers", "getCollectionRootOwnerAndMembers.ts", "getPermission.ts", "isAuthenticatedRequest.ts", "isDemoMode.ts", "paymentCheckout.ts", "preserved", "searchQueryBuilder.ts", "sendChangeEmailVerificationRequest.ts", "sendInvitationRequest.ts", "sendPasswordResetRequest.ts", "sendVerificationRequest.ts", "setCollection.ts", "stripe", "verifyByCredentials.ts", "verifyToken.ts", "verifyUser.ts"]
-
-[[batches]]
-position = 149
-key = 'Fs(DirListing { dir: "apps/web/lib/api/archives" })'
-descriptor = "listing of 'apps/web/lib/api/archives'"
-cost_tokens = 12
-cum_tokens = 5282
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/archives"
-entries = ["resolveAccessibleArchive.test.ts", "resolveAccessibleArchive.ts"]
-
-[[batches]]
-position = 150
-key = 'Fs(DirListing { dir: "apps/web/lib/api/preserved" })'
-descriptor = "listing of 'apps/web/lib/api/preserved'"
-cost_tokens = 16
-cum_tokens = 5298
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/preserved"
-entries = ["createPreservedFormatUrl.test.ts", "createPreservedFormatUrl.ts"]
-
-[[batches]]
-position = 151
-key = 'Fs(DirListing { dir: "apps/web/lib/api/stripe" })'
-descriptor = "listing of 'apps/web/lib/api/stripe'"
-cost_tokens = 32
-cum_tokens = 5330
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/stripe"
-entries = ["checkSubscriptionByEmail.ts", "handleSubscription.ts", "stripeSDK.ts", "updateCustomerEmail.ts", "updateSeats.ts", "verifySubscription.ts"]
-
-[[batches]]
-position = 152
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers" })'
-descriptor = "listing of 'apps/web/lib/api/controllers'"
-cost_tokens = 47
-cum_tokens = 5377
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers"
-entries = ["collections", "dashboard", "highlights", "links", "migration", "public", "search", "session", "tags", "tokens", "users", "worker"]
-
-[[batches]]
 position = 153
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/search" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/search'"
-cost_tokens = 4
-cum_tokens = 5381
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/search"
-entries = ["searchLinks.ts"]
-
-[[batches]]
-position = 154
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/session" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/session'"
-cost_tokens = 4
-cum_tokens = 5385
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/session"
-entries = ["createSession.ts"]
-
-[[batches]]
-position = 155
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/worker" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/worker'"
-cost_tokens = 5
-cum_tokens = 5390
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/worker"
-entries = ["getWorkerStats.ts"]
-
-[[batches]]
-position = 156
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/public" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/public'"
-cost_tokens = 11
-cum_tokens = 5401
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/public"
-entries = ["collections", "links", "users"]
-
-[[batches]]
-position = 157
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/public/links" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/public/links'"
-cost_tokens = 4
-cum_tokens = 5405
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/public/links"
-entries = ["linkId"]
-
-[[batches]]
-position = 158
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/public/collections" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/public/collections'"
-cost_tokens = 5
-cum_tokens = 5410
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/public/collections"
-entries = ["getPublicCollection.ts"]
-
-[[batches]]
-position = 159
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/public/users" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/public/users'"
-cost_tokens = 5
-cum_tokens = 5415
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/public/users"
-entries = ["getPublicUser.ts"]
-
-[[batches]]
-position = 160
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/public/links/linkId" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/public/links/linkId'"
-cost_tokens = 6
-cum_tokens = 5421
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/public/links/linkId"
-entries = ["getLinkById.ts"]
-
-[[batches]]
-position = 161
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/highlights" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/highlights'"
-cost_tokens = 13
-cum_tokens = 5434
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/highlights"
-entries = ["deleteHighlightById.ts", "postOrUpdateHighlight.ts"]
-
-[[batches]]
-position = 162
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/collections" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/collections'"
-cost_tokens = 14
-cum_tokens = 5448
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/collections"
-entries = ["collectionId", "getCollections.ts", "postCollection.ts"]
-
-[[batches]]
-position = 163
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/tokens" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/tokens'"
-cost_tokens = 14
-cum_tokens = 5462
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/tokens"
-entries = ["getTokens.ts", "postToken.ts", "tokenId"]
-
-[[batches]]
-position = 164
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/tokens/tokenId" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/tokens/tokenId'"
-cost_tokens = 6
-cum_tokens = 5468
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/tokens/tokenId"
-entries = ["deleteTokenById.ts"]
-
-[[batches]]
-position = 165
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/users" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/users'"
-cost_tokens = 14
-cum_tokens = 5482
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/users"
-entries = ["getUsers.ts", "postUser.ts", "userId"]
-
-[[batches]]
-position = 166
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/links" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/links'"
-cost_tokens = 18
-cum_tokens = 5500
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/links"
-entries = ["bulk", "getLinks.ts", "linkId", "postLink.ts"]
-
-[[batches]]
-position = 167
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/links/bulk" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/links/bulk'"
-cost_tokens = 11
-cum_tokens = 5511
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/links/bulk"
-entries = ["deleteLinksById.ts", "updateLinks.ts"]
-
-[[batches]]
-position = 168
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/dashboard" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/dashboard'"
-cost_tokens = 19
-cum_tokens = 5530
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/dashboard"
-entries = ["getDashboardData.ts", "getDashboardDataV2.ts", "updateDashboardLayout.ts"]
-
-[[batches]]
-position = 169
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/tags" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/tags'"
-cost_tokens = 27
-cum_tokens = 5557
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/tags"
-entries = ["bulkTagDelete.ts", "createOrUpdateTags.ts", "getTags.ts", "mergeTags.ts", "tagId"]
-
-[[batches]]
-position = 170
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/collections/collectionId" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/collections/collectionId'"
-cost_tokens = 20
-cum_tokens = 5577
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/collections/collectionId"
-entries = ["deleteCollectionById.ts", "getCollectionById.ts", "updateCollectionById.ts"]
-
-[[batches]]
-position = 171
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/tags/tagId" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/tags/tagId'"
-cost_tokens = 20
-cum_tokens = 5597
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/tags/tagId"
-entries = ["deleteTagById.ts", "getTagById.ts", "updateTagById.ts"]
-
-[[batches]]
-position = 172
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/links/linkId" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/links/linkId'"
-cost_tokens = 24
-cum_tokens = 5621
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/links/linkId"
-entries = ["deleteLinkById.ts", "getLinkById.ts", "highlight", "updateLinkById.ts"]
-
-[[batches]]
-position = 173
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/links/linkId/highlight" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/links/linkId/highlight'"
-cost_tokens = 5
-cum_tokens = 5626
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/links/linkId/highlight"
-entries = ["getLinkHighlights.ts"]
-
-[[batches]]
-position = 174
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/users/userId" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/users/userId'"
-cost_tokens = 26
-cum_tokens = 5652
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/users/userId"
-entries = ["deleteUserById.ts", "getUserById.ts", "updateUserById.ts", "updateUserPreference.ts"]
-
-[[batches]]
-position = 175
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 289 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:289"
 cost_tokens = 39
-cum_tokens = 5691
+cum_tokens = 5416
 
 [batches.content]
 kind = "lines"
@@ -3238,25 +2930,11 @@ end = 294
 kind = "full"
 
 [[batches]]
-position = 176
-key = 'Fs(DirListing { dir: "apps/web/lib/api/controllers/migration" })'
-descriptor = "listing of 'apps/web/lib/api/controllers/migration'"
-cost_tokens = 47
-cum_tokens = 5738
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "apps/web/lib/api/controllers/migration"
-entries = ["exportData.ts", "importFromHTMLFile.test.ts", "importFromHTMLFile.ts", "importFromLinkwarden.ts", "importFromOmnivore.ts", "importFromPocket.ts", "importFromWallabag.ts"]
-
-[[batches]]
-position = 177
+position = 154
 key = 'Typescript(Imports { file: "apps/web/pages/index.tsx" })'
 descriptor = "imports in apps/web/pages/index.tsx"
 cost_tokens = 25
-cum_tokens = 5763
+cum_tokens = 5441
 
 [batches.content]
 kind = "lines"
@@ -3270,11 +2948,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 178
+position = 155
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 28 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:28"
 cost_tokens = 285
-cum_tokens = 6048
+cum_tokens = 5726
 
 [batches.content]
 kind = "lines"
@@ -3288,11 +2966,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 179
+position = 156
 key = 'Json(Scripts { file: "package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 375
-cum_tokens = 6423
+cum_tokens = 6101
 
 [batches.content]
 kind = "lines"
@@ -3306,11 +2984,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 180
+position = 157
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1" })'
 descriptor = "listing of 'apps/web/pages/api/v1'"
 cost_tokens = 90
-cum_tokens = 6513
+cum_tokens = 6191
 
 [batches.content]
 kind = "fs"
@@ -3320,11 +2998,11 @@ parent = "apps/web/pages/api/v1"
 entries = ["archives", "auth", "avatar", "collections", "config", "dashboard", "getFavicon", "highlights", "links", "logins", "migration", "payment", "preserved", "public", "rss", "search", "session", "tags", "tokens", "users", "webhook", "worker"]
 
 [[batches]]
-position = 181
+position = 158
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/dashboard" })'
 descriptor = "listing of 'apps/web/pages/api/v1/dashboard'"
 cost_tokens = 3
-cum_tokens = 6516
+cum_tokens = 6194
 
 [batches.content]
 kind = "fs"
@@ -3334,11 +3012,11 @@ parent = "apps/web/pages/api/v1/dashboard"
 entries = ["index.ts"]
 
 [[batches]]
-position = 182
+position = 159
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/getFavicon" })'
 descriptor = "listing of 'apps/web/pages/api/v1/getFavicon'"
 cost_tokens = 3
-cum_tokens = 6519
+cum_tokens = 6197
 
 [batches.content]
 kind = "fs"
@@ -3348,11 +3026,11 @@ parent = "apps/web/pages/api/v1/getFavicon"
 entries = ["index.ts"]
 
 [[batches]]
-position = 183
+position = 160
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/logins" })'
 descriptor = "listing of 'apps/web/pages/api/v1/logins'"
 cost_tokens = 3
-cum_tokens = 6522
+cum_tokens = 6200
 
 [batches.content]
 kind = "fs"
@@ -3362,11 +3040,11 @@ parent = "apps/web/pages/api/v1/logins"
 entries = ["index.ts"]
 
 [[batches]]
-position = 184
+position = 161
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/migration" })'
 descriptor = "listing of 'apps/web/pages/api/v1/migration'"
 cost_tokens = 3
-cum_tokens = 6525
+cum_tokens = 6203
 
 [batches.content]
 kind = "fs"
@@ -3376,11 +3054,11 @@ parent = "apps/web/pages/api/v1/migration"
 entries = ["index.ts"]
 
 [[batches]]
-position = 185
+position = 162
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/payment" })'
 descriptor = "listing of 'apps/web/pages/api/v1/payment'"
 cost_tokens = 3
-cum_tokens = 6528
+cum_tokens = 6206
 
 [batches.content]
 kind = "fs"
@@ -3390,11 +3068,11 @@ parent = "apps/web/pages/api/v1/payment"
 entries = ["index.ts"]
 
 [[batches]]
-position = 186
+position = 163
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/search" })'
 descriptor = "listing of 'apps/web/pages/api/v1/search'"
 cost_tokens = 3
-cum_tokens = 6531
+cum_tokens = 6209
 
 [batches.content]
 kind = "fs"
@@ -3404,11 +3082,11 @@ parent = "apps/web/pages/api/v1/search"
 entries = ["index.ts"]
 
 [[batches]]
-position = 187
+position = 164
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/session" })'
 descriptor = "listing of 'apps/web/pages/api/v1/session'"
 cost_tokens = 3
-cum_tokens = 6534
+cum_tokens = 6212
 
 [batches.content]
 kind = "fs"
@@ -3418,11 +3096,11 @@ parent = "apps/web/pages/api/v1/session"
 entries = ["index.ts"]
 
 [[batches]]
-position = 188
+position = 165
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/webhook" })'
 descriptor = "listing of 'apps/web/pages/api/v1/webhook'"
 cost_tokens = 3
-cum_tokens = 6537
+cum_tokens = 6215
 
 [batches.content]
 kind = "fs"
@@ -3432,11 +3110,11 @@ parent = "apps/web/pages/api/v1/webhook"
 entries = ["index.ts"]
 
 [[batches]]
-position = 189
+position = 166
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/avatar" })'
 descriptor = "listing of 'apps/web/pages/api/v1/avatar'"
 cost_tokens = 5
-cum_tokens = 6542
+cum_tokens = 6220
 
 [batches.content]
 kind = "fs"
@@ -3446,11 +3124,11 @@ parent = "apps/web/pages/api/v1/avatar"
 entries = ["[id].ts"]
 
 [[batches]]
-position = 190
+position = 167
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/config" })'
 descriptor = "listing of 'apps/web/pages/api/v1/config'"
 cost_tokens = 8
-cum_tokens = 6550
+cum_tokens = 6228
 
 [batches.content]
 kind = "fs"
@@ -3460,11 +3138,11 @@ parent = "apps/web/pages/api/v1/config"
 entries = ["index.test.ts", "index.ts"]
 
 [[batches]]
-position = 191
+position = 168
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/worker" })'
 descriptor = "listing of 'apps/web/pages/api/v1/worker'"
 cost_tokens = 8
-cum_tokens = 6558
+cum_tokens = 6236
 
 [batches.content]
 kind = "fs"
@@ -3474,11 +3152,11 @@ parent = "apps/web/pages/api/v1/worker"
 entries = ["index.ts", "preservation.tsx"]
 
 [[batches]]
-position = 192
+position = 169
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/collections" })'
 descriptor = "listing of 'apps/web/pages/api/v1/collections'"
 cost_tokens = 9
-cum_tokens = 6567
+cum_tokens = 6245
 
 [batches.content]
 kind = "fs"
@@ -3488,11 +3166,11 @@ parent = "apps/web/pages/api/v1/collections"
 entries = ["[id].ts", "index.ts"]
 
 [[batches]]
-position = 193
+position = 170
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/highlights" })'
 descriptor = "listing of 'apps/web/pages/api/v1/highlights'"
 cost_tokens = 9
-cum_tokens = 6576
+cum_tokens = 6254
 
 [batches.content]
 kind = "fs"
@@ -3502,11 +3180,11 @@ parent = "apps/web/pages/api/v1/highlights"
 entries = ["[id].ts", "index.ts"]
 
 [[batches]]
-position = 194
+position = 171
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/rss" })'
 descriptor = "listing of 'apps/web/pages/api/v1/rss'"
 cost_tokens = 9
-cum_tokens = 6585
+cum_tokens = 6263
 
 [batches.content]
 kind = "fs"
@@ -3516,11 +3194,11 @@ parent = "apps/web/pages/api/v1/rss"
 entries = ["[id].ts", "index.ts"]
 
 [[batches]]
-position = 195
+position = 172
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/tokens" })'
 descriptor = "listing of 'apps/web/pages/api/v1/tokens'"
 cost_tokens = 9
-cum_tokens = 6594
+cum_tokens = 6272
 
 [batches.content]
 kind = "fs"
@@ -3530,11 +3208,11 @@ parent = "apps/web/pages/api/v1/tokens"
 entries = ["[id].ts", "index.ts"]
 
 [[batches]]
-position = 196
+position = 173
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/public" })'
 descriptor = "listing of 'apps/web/pages/api/v1/public'"
 cost_tokens = 11
-cum_tokens = 6605
+cum_tokens = 6283
 
 [batches.content]
 kind = "fs"
@@ -3544,11 +3222,11 @@ parent = "apps/web/pages/api/v1/public"
 entries = ["collections", "links", "users"]
 
 [[batches]]
-position = 197
+position = 174
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/public/links" })'
 descriptor = "listing of 'apps/web/pages/api/v1/public/links'"
 cost_tokens = 5
-cum_tokens = 6610
+cum_tokens = 6288
 
 [batches.content]
 kind = "fs"
@@ -3558,11 +3236,11 @@ parent = "apps/web/pages/api/v1/public/links"
 entries = ["[id].ts"]
 
 [[batches]]
-position = 198
+position = 175
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/public/users" })'
 descriptor = "listing of 'apps/web/pages/api/v1/public/users'"
 cost_tokens = 5
-cum_tokens = 6615
+cum_tokens = 6293
 
 [batches.content]
 kind = "fs"
@@ -3572,11 +3250,11 @@ parent = "apps/web/pages/api/v1/public/users"
 entries = ["[id].ts"]
 
 [[batches]]
-position = 199
+position = 176
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/links" })'
 descriptor = "listing of 'apps/web/pages/api/v1/links'"
 cost_tokens = 12
-cum_tokens = 6627
+cum_tokens = 6305
 
 [batches.content]
 kind = "fs"
@@ -3586,11 +3264,11 @@ parent = "apps/web/pages/api/v1/links"
 entries = ["[id]", "archive", "index.ts"]
 
 [[batches]]
-position = 200
+position = 177
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/links/archive" })'
 descriptor = "listing of 'apps/web/pages/api/v1/links/archive'"
 cost_tokens = 3
-cum_tokens = 6630
+cum_tokens = 6308
 
 [batches.content]
 kind = "fs"
@@ -3600,11 +3278,11 @@ parent = "apps/web/pages/api/v1/links/archive"
 entries = ["index.ts"]
 
 [[batches]]
-position = 201
+position = 178
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/users" })'
 descriptor = "listing of 'apps/web/pages/api/v1/users'"
 cost_tokens = 12
-cum_tokens = 6642
+cum_tokens = 6320
 
 [batches.content]
 kind = "fs"
@@ -3614,11 +3292,11 @@ parent = "apps/web/pages/api/v1/users"
 entries = ["[id]", "index.ts", "me.ts"]
 
 [[batches]]
-position = 202
+position = 179
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/users/[id]" })'
 descriptor = "listing of 'apps/web/pages/api/v1/users/[id]'"
 cost_tokens = 9
-cum_tokens = 6651
+cum_tokens = 6329
 
 [batches.content]
 kind = "fs"
@@ -3628,11 +3306,11 @@ parent = "apps/web/pages/api/v1/users/[id]"
 entries = ["index.ts", "preference.tsx"]
 
 [[batches]]
-position = 203
+position = 180
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/tags" })'
 descriptor = "listing of 'apps/web/pages/api/v1/tags'"
 cost_tokens = 13
-cum_tokens = 6664
+cum_tokens = 6342
 
 [batches.content]
 kind = "fs"
@@ -3642,11 +3320,11 @@ parent = "apps/web/pages/api/v1/tags"
 entries = ["[id].ts", "index.ts", "merge.ts"]
 
 [[batches]]
-position = 204
+position = 181
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/links/[id]" })'
 descriptor = "listing of 'apps/web/pages/api/v1/links/[id]'"
 cost_tokens = 12
-cum_tokens = 6676
+cum_tokens = 6354
 
 [batches.content]
 kind = "fs"
@@ -3656,11 +3334,11 @@ parent = "apps/web/pages/api/v1/links/[id]"
 entries = ["archive", "highlights", "index.ts"]
 
 [[batches]]
-position = 205
+position = 182
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/links/[id]/archive" })'
 descriptor = "listing of 'apps/web/pages/api/v1/links/[id]/archive'"
 cost_tokens = 3
-cum_tokens = 6679
+cum_tokens = 6357
 
 [batches.content]
 kind = "fs"
@@ -3670,11 +3348,11 @@ parent = "apps/web/pages/api/v1/links/[id]/archive"
 entries = ["index.ts"]
 
 [[batches]]
-position = 206
+position = 183
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/links/[id]/highlights" })'
 descriptor = "listing of 'apps/web/pages/api/v1/links/[id]/highlights'"
 cost_tokens = 3
-cum_tokens = 6682
+cum_tokens = 6360
 
 [batches.content]
 kind = "fs"
@@ -3684,11 +3362,11 @@ parent = "apps/web/pages/api/v1/links/[id]/highlights"
 entries = ["index.ts"]
 
 [[batches]]
-position = 207
+position = 184
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/preserved" })'
 descriptor = "listing of 'apps/web/pages/api/v1/preserved'"
 cost_tokens = 17
-cum_tokens = 6699
+cum_tokens = 6377
 
 [batches.content]
 kind = "fs"
@@ -3698,11 +3376,11 @@ parent = "apps/web/pages/api/v1/preserved"
 entries = ["token.test.ts", "token.ts", "view.test.ts", "view.ts"]
 
 [[batches]]
-position = 208
+position = 185
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/archives" })'
 descriptor = "listing of 'apps/web/pages/api/v1/archives'"
 cost_tokens = 18
-cum_tokens = 6717
+cum_tokens = 6395
 
 [batches.content]
 kind = "fs"
@@ -3712,11 +3390,11 @@ parent = "apps/web/pages/api/v1/archives"
 entries = ["[linkId].test.ts", "[linkId].ts", "index.ts"]
 
 [[batches]]
-position = 209
+position = 186
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/public/collections" })'
 descriptor = "listing of 'apps/web/pages/api/v1/public/collections'"
 cost_tokens = 13
-cum_tokens = 6730
+cum_tokens = 6408
 
 [batches.content]
 kind = "fs"
@@ -3726,11 +3404,11 @@ parent = "apps/web/pages/api/v1/public/collections"
 entries = ["[id].ts", "links", "tags"]
 
 [[batches]]
-position = 210
+position = 187
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/public/collections/links" })'
 descriptor = "listing of 'apps/web/pages/api/v1/public/collections/links'"
 cost_tokens = 3
-cum_tokens = 6733
+cum_tokens = 6411
 
 [batches.content]
 kind = "fs"
@@ -3740,11 +3418,11 @@ parent = "apps/web/pages/api/v1/public/collections/links"
 entries = ["index.ts"]
 
 [[batches]]
-position = 211
+position = 188
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/public/collections/tags" })'
 descriptor = "listing of 'apps/web/pages/api/v1/public/collections/tags'"
 cost_tokens = 3
-cum_tokens = 6736
+cum_tokens = 6414
 
 [batches.content]
 kind = "fs"
@@ -3754,11 +3432,11 @@ parent = "apps/web/pages/api/v1/public/collections/tags"
 entries = ["index.ts"]
 
 [[batches]]
-position = 212
+position = 189
 key = 'Fs(DirListing { dir: "apps/web/pages/api/v1/auth" })'
 descriptor = "listing of 'apps/web/pages/api/v1/auth'"
 cost_tokens = 21
-cum_tokens = 6757
+cum_tokens = 6435
 
 [batches.content]
 kind = "fs"
@@ -3768,11 +3446,11 @@ parent = "apps/web/pages/api/v1/auth"
 entries = ["[...nextauth].ts", "forgot-password.ts", "reset-password.ts", "verify-email.ts"]
 
 [[batches]]
-position = 213
+position = 190
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 5 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:5"
 cost_tokens = 27
-cum_tokens = 6784
+cum_tokens = 6462
 
 [batches.content]
 kind = "lines"
@@ -3786,11 +3464,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 214
+position = 191
 key = 'Plaintext(Tail { file: "Dockerfile" })'
 descriptor = "plaintext config tail of Dockerfile"
 cost_tokens = 522
-cum_tokens = 7306
+cum_tokens = 6984
 
 [batches.content]
 kind = "lines"
@@ -3812,11 +3490,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 215
+position = 192
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 126 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:126"
 cost_tokens = 320
-cum_tokens = 7626
+cum_tokens = 7304
 
 [batches.content]
 kind = "lines"
@@ -3830,11 +3508,11 @@ end = 149
 kind = "full"
 
 [[batches]]
-position = 216
+position = 193
 key = 'Markdown(Section { file: "README.md", section_index: 31, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #31"
 cost_tokens = 88
-cum_tokens = 7714
+cum_tokens = 7392
 
 [batches.content]
 kind = "lines"
@@ -3848,11 +3526,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 217
+position = 194
 key = 'Prisma(Decl { file: "packages/prisma/schema.prisma", start_line: 1 })'
 descriptor = "Prisma decl at packages/prisma/schema.prisma:1"
 cost_tokens = 16
-cum_tokens = 7730
+cum_tokens = 7408
 
 [batches.content]
 kind = "lines"
@@ -3866,11 +3544,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 218
+position = 195
 key = 'Markdown(Section { file: "README.md", section_index: 28, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #28"
 cost_tokens = 104
-cum_tokens = 7834
+cum_tokens = 7512
 
 [batches.content]
 kind = "lines"
@@ -3884,11 +3562,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 219
+position = 196
 key = 'Json(Identity { file: "packages/lib/package.json" })'
 descriptor = "package identity in packages/lib/package.json"
 cost_tokens = 42
-cum_tokens = 7876
+cum_tokens = 7554
 
 [batches.content]
 kind = "lines"
@@ -3902,11 +3580,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 220
+position = 197
 key = 'Json(Entry { file: "packages/lib/package.json" })'
 descriptor = "package entrypoints in packages/lib/package.json"
 cost_tokens = 12
-cum_tokens = 7888
+cum_tokens = 7566
 
 [batches.content]
 kind = "lines"
@@ -3920,11 +3598,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 221
+position = 198
 key = 'Json(Identity { file: "packages/router/package.json" })'
 descriptor = "package identity in packages/router/package.json"
 cost_tokens = 42
-cum_tokens = 7930
+cum_tokens = 7608
 
 [batches.content]
 kind = "lines"
@@ -3938,11 +3616,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 222
+position = 199
 key = 'Json(Entry { file: "packages/router/package.json" })'
 descriptor = "package entrypoints in packages/router/package.json"
 cost_tokens = 12
-cum_tokens = 7942
+cum_tokens = 7620
 
 [batches.content]
 kind = "lines"
@@ -3956,11 +3634,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 223
+position = 200
 key = 'Json(Identity { file: "packages/types/package.json" })'
 descriptor = "package identity in packages/types/package.json"
 cost_tokens = 42
-cum_tokens = 7984
+cum_tokens = 7662
 
 [batches.content]
 kind = "lines"
@@ -3974,11 +3652,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 224
+position = 201
 key = 'Json(Entry { file: "packages/types/package.json" })'
 descriptor = "package entrypoints in packages/types/package.json"
 cost_tokens = 12
-cum_tokens = 7996
+cum_tokens = 7674
 
 [batches.content]
 kind = "lines"
@@ -3992,11 +3670,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 225
+position = 202
 key = 'Json(Dependencies { file: "packages/types/package.json" })'
 descriptor = "package runtime dependencies in packages/types/package.json"
 cost_tokens = 43
-cum_tokens = 8039
+cum_tokens = 7717
 
 [batches.content]
 kind = "lines"
@@ -4010,11 +3688,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 226
+position = 203
 key = 'Fs(DirListing { dir: "apps/web/scripts" })'
 descriptor = "listing of 'apps/web/scripts'"
 cost_tokens = 3
-cum_tokens = 8042
+cum_tokens = 7720
 
 [batches.content]
 kind = "fs"
@@ -4024,11 +3702,11 @@ parent = "apps/web/scripts"
 entries = ["migration"]
 
 [[batches]]
-position = 227
+position = 204
 key = 'Json(Identity { file: "apps/worker/package.json" })'
 descriptor = "package identity in apps/worker/package.json"
 cost_tokens = 43
-cum_tokens = 8085
+cum_tokens = 7763
 
 [batches.content]
 kind = "lines"
@@ -4042,11 +3720,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 228
+position = 205
 key = 'Json(Entry { file: "apps/worker/package.json" })'
 descriptor = "package entrypoints in apps/worker/package.json"
 cost_tokens = 12
-cum_tokens = 8097
+cum_tokens = 7775
 
 [batches.content]
 kind = "lines"
@@ -4060,11 +3738,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 229
+position = 206
 key = 'Json(Scripts { file: "apps/worker/package.json" })'
 descriptor = "package scripts in apps/worker/package.json"
 cost_tokens = 58
-cum_tokens = 8155
+cum_tokens = 7833
 
 [batches.content]
 kind = "lines"
@@ -4078,11 +3756,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 230
+position = 207
 key = 'Json(Identity { file: "packages/filesystem/package.json" })'
 descriptor = "package identity in packages/filesystem/package.json"
 cost_tokens = 43
-cum_tokens = 8198
+cum_tokens = 7876
 
 [batches.content]
 kind = "lines"
@@ -4096,11 +3774,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 231
+position = 208
 key = 'Json(Entry { file: "packages/filesystem/package.json" })'
 descriptor = "package entrypoints in packages/filesystem/package.json"
 cost_tokens = 12
-cum_tokens = 8210
+cum_tokens = 7888
 
 [batches.content]
 kind = "lines"
@@ -4114,11 +3792,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 232
+position = 209
 key = 'Json(Dependencies { file: "packages/filesystem/package.json" })'
 descriptor = "package runtime dependencies in packages/filesystem/package.json"
 cost_tokens = 34
-cum_tokens = 8244
+cum_tokens = 7922
 
 [batches.content]
 kind = "lines"
@@ -4132,11 +3810,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 233
+position = 210
 key = 'Json(Identity { file: "packages/prisma/package.json" })'
 descriptor = "package identity in packages/prisma/package.json"
 cost_tokens = 43
-cum_tokens = 8287
+cum_tokens = 7965
 
 [batches.content]
 kind = "lines"
@@ -4150,11 +3828,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 234
+position = 211
 key = 'Json(Entry { file: "packages/prisma/package.json" })'
 descriptor = "package entrypoints in packages/prisma/package.json"
 cost_tokens = 27
-cum_tokens = 8314
+cum_tokens = 7992
 
 [batches.content]
 kind = "lines"
@@ -4176,11 +3854,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 235
+position = 212
 key = 'Json(Scripts { file: "packages/prisma/package.json" })'
 descriptor = "package scripts in packages/prisma/package.json"
 cost_tokens = 71
-cum_tokens = 8385
+cum_tokens = 8063
 
 [batches.content]
 kind = "lines"
@@ -4194,11 +3872,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 236
+position = 213
 key = 'Json(Dependencies { file: "packages/prisma/package.json" })'
 descriptor = "package runtime dependencies in packages/prisma/package.json"
 cost_tokens = 46
-cum_tokens = 8431
+cum_tokens = 8109
 
 [batches.content]
 kind = "lines"
@@ -4212,11 +3890,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 237
+position = 214
 key = 'Typescript(Imports { file: "vitest.config.mts" })'
 descriptor = "imports in vitest.config.mts"
 cost_tokens = 23
-cum_tokens = 8454
+cum_tokens = 8132
 
 [batches.content]
 kind = "lines"
@@ -4230,11 +3908,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 238
+position = 215
 key = 'Fs(DirListing { dir: "apps/web/components" })'
 descriptor = "listing of 'apps/web/components'"
 cost_tokens = 321
-cum_tokens = 8775
+cum_tokens = 8453
 
 [batches.content]
 kind = "fs"
@@ -4244,11 +3922,11 @@ parent = "apps/web/components"
 entries = ["AdminSidebar.tsx", "Announcement.tsx", "CenteredForm.tsx", "Checkbox.tsx", "ClickAwayHandler.tsx", "CollectionCard.tsx", "CollectionListing.tsx", "ConfirmationModal.tsx", "CopyButton.tsx", "DashboardItem.tsx", "DashboardLayoutDropdown.tsx", "DashboardLinks.tsx", "DragNDrop.tsx", "Drawer.tsx", "Dropdown.tsx", "Droppable.tsx", "HighlightDrawer.tsx", "Icon.tsx", "IconGrid.tsx", "IconPicker.tsx", "IconPopover.tsx", "ImportDropdown.tsx", "InputSelect", "InstallApp.tsx", "LinkDetails.tsx", "LinkListOptions.tsx", "LinkViews", "MobileNavigation.tsx", "MobileNavigationButton.tsx", "Modal.tsx", "ModalContent", "Navbar.tsx", "NoLinksFound.tsx", "PageHeader.tsx", "Popover.tsx", "Preservation", "PreserverdFormatRow.tsx", "ProfileDropdown.tsx", "ProfilePhoto.tsx", "RadioButton.tsx", "SearchBar.tsx", "SettingsSidebar.tsx", "Sidebar.tsx", "SidebarHighlightLink.tsx", "Skeletons.tsx", "SortDropdown.tsx", "TagCard.tsx", "TagListing.tsx", "TextInput.tsx", "TextStyleDropdown.tsx", "ToggleDarkMode.tsx", "UserListing.tsx", "ViewDropdown.tsx", "ui"]
 
 [[batches]]
-position = 239
+position = 216
 key = 'Fs(DirListing { dir: "apps/web/components/LinkViews" })'
 descriptor = "listing of 'apps/web/components/LinkViews'"
 cost_tokens = 9
-cum_tokens = 8784
+cum_tokens = 8462
 
 [batches.content]
 kind = "fs"
@@ -4258,11 +3936,11 @@ parent = "apps/web/components/LinkViews"
 entries = ["LinkComponents", "Links.tsx"]
 
 [[batches]]
-position = 240
+position = 217
 key = 'Fs(DirListing { dir: "apps/web/components/InputSelect" })'
 descriptor = "listing of 'apps/web/components/InputSelect'"
 cost_tokens = 15
-cum_tokens = 8799
+cum_tokens = 8477
 
 [batches.content]
 kind = "fs"
@@ -4272,11 +3950,11 @@ parent = "apps/web/components/InputSelect"
 entries = ["CollectionSelection.tsx", "TagSelection.tsx", "styles.ts"]
 
 [[batches]]
-position = 241
+position = 218
 key = 'Fs(DirListing { dir: "apps/web/components/Preservation" })'
 descriptor = "listing of 'apps/web/components/Preservation'"
 cost_tokens = 25
-cum_tokens = 8824
+cum_tokens = 8502
 
 [batches.content]
 kind = "fs"
@@ -4286,11 +3964,11 @@ parent = "apps/web/components/Preservation"
 entries = ["PreservationContent.tsx", "PreservationNavbar.tsx", "PreservationPageContent.tsx", "ReadableView.tsx"]
 
 [[batches]]
-position = 242
+position = 219
 key = 'Fs(DirListing { dir: "apps/web/components/ui" })'
 descriptor = "listing of 'apps/web/components/ui'"
 cost_tokens = 40
-cum_tokens = 8864
+cum_tokens = 8542
 
 [batches.content]
 kind = "fs"
@@ -4300,11 +3978,11 @@ parent = "apps/web/components/ui"
 entries = ["Loader.tsx", "button.tsx", "checkbox.tsx", "dropdown-menu.tsx", "icons.tsx", "separator.tsx", "tabs.tsx", "tooltip.tsx"]
 
 [[batches]]
-position = 243
+position = 220
 key = 'Fs(DirListing { dir: "apps/web/components/LinkViews/LinkComponents" })'
 descriptor = "listing of 'apps/web/components/LinkViews/LinkComponents'"
 cost_tokens = 61
-cum_tokens = 8925
+cum_tokens = 8603
 
 [batches.content]
 kind = "fs"
@@ -4314,11 +3992,11 @@ parent = "apps/web/components/LinkViews/LinkComponents"
 entries = ["LinkActions.tsx", "LinkCard.tsx", "LinkCollection.tsx", "LinkDate.tsx", "LinkFormats.tsx", "LinkIcon.tsx", "LinkList.tsx", "LinkMasonry.tsx", "LinkPin.tsx", "LinkTypeBadge.tsx"]
 
 [[batches]]
-position = 244
+position = 221
 key = 'Fs(DirListing { dir: "apps/web/components/ModalContent" })'
 descriptor = "listing of 'apps/web/components/ModalContent'"
 cost_tokens = 167
-cum_tokens = 9092
+cum_tokens = 8770
 
 [batches.content]
 kind = "fs"
@@ -4328,11 +4006,11 @@ parent = "apps/web/components/ModalContent"
 entries = ["BulkDeleteLinksModal.tsx", "BulkDeleteTagsModal.tsx", "BulkEditLinksModal.tsx", "DeleteCollectionModal.tsx", "DeleteLinkModal.tsx", "DeleteRssSubscriptionModal.tsx", "DeleteTagModal.tsx", "DeleteUserModal.tsx", "EditCollectionModal.tsx", "EditCollectionSharingModal.tsx", "EmailChangeVerificationModal.tsx", "InviteModal.tsx", "LinkModal.tsx", "MergeTagsModal.tsx", "NewCollectionModal.tsx", "NewLinkModal.tsx", "NewRssSubscriptionModal.tsx", "NewTagModal.tsx", "NewTokenModal.tsx", "NewUserModal.tsx", "RevokeTokenModal.tsx", "SurveyModal.tsx", "UploadFileModal.tsx"]
 
 [[batches]]
-position = 245
+position = 222
 key = 'Json(Identity { file: "apps/mobile/package.json" })'
 descriptor = "package identity in apps/mobile/package.json"
 cost_tokens = 46
-cum_tokens = 9138
+cum_tokens = 8816
 
 [batches.content]
 kind = "lines"
@@ -4362,11 +4040,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 246
+position = 223
 key = 'Json(Entry { file: "apps/mobile/package.json" })'
 descriptor = "package entrypoints in apps/mobile/package.json"
 cost_tokens = 12
-cum_tokens = 9150
+cum_tokens = 8828
 
 [batches.content]
 kind = "lines"
@@ -4380,11 +4058,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 247
+position = 224
 key = 'Json(Scripts { file: "apps/mobile/package.json" })'
 descriptor = "package scripts in apps/mobile/package.json"
 cost_tokens = 95
-cum_tokens = 9245
+cum_tokens = 8923
 
 [batches.content]
 kind = "lines"
@@ -4398,11 +4076,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 248
+position = 225
 key = 'Typescript(ExportNames { file: "apps/web/pages/settings/index.tsx" })'
 descriptor = "export names surface in apps/web/pages/settings/index.tsx"
 cost_tokens = 14
-cum_tokens = 9259
+cum_tokens = 8937
 
 [batches.content]
 kind = "lines"
@@ -4424,11 +4102,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 249
+position = 226
 key = 'Typescript(Export { file: "apps/web/pages/settings/index.tsx", start_line: 4 })'
 descriptor = "export at apps/web/pages/settings/index.tsx:4"
 cost_tokens = 0
-cum_tokens = 9259
+cum_tokens = 8937
 
 [batches.content]
 kind = "lines"
@@ -4450,11 +4128,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 250
+position = 227
 key = 'Json(Identity { file: "apps/web/package.json" })'
 descriptor = "package identity in apps/web/package.json"
 cost_tokens = 61
-cum_tokens = 9320
+cum_tokens = 8998
 
 [batches.content]
 kind = "lines"
@@ -4476,11 +4154,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 251
+position = 228
 key = 'Json(Entry { file: "apps/web/package.json" })'
 descriptor = "package entrypoints in apps/web/package.json"
 cost_tokens = 12
-cum_tokens = 9332
+cum_tokens = 9010
 
 [batches.content]
 kind = "lines"
@@ -4494,11 +4172,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 252
+position = 229
 key = 'Json(Scripts { file: "apps/web/package.json" })'
 descriptor = "package scripts in apps/web/package.json"
 cost_tokens = 128
-cum_tokens = 9460
+cum_tokens = 9138
 
 [batches.content]
 kind = "lines"
@@ -4512,11 +4190,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 253
+position = 230
 key = 'Json(DevDependencies { file: "packages/prisma/package.json" })'
 descriptor = "package dev/peer dependencies in packages/prisma/package.json"
 cost_tokens = 62
-cum_tokens = 9522
+cum_tokens = 9200
 
 [batches.content]
 kind = "lines"
@@ -4530,11 +4208,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 254
+position = 231
 key = 'Fs(DirListing { dir: "apps/web/e2e/data" })'
 descriptor = "listing of 'apps/web/e2e/data'"
 cost_tokens = 3
-cum_tokens = 9525
+cum_tokens = 9203
 
 [batches.content]
 kind = "fs"
@@ -4544,11 +4222,11 @@ parent = "apps/web/e2e/data"
 entries = ["user.ts"]
 
 [[batches]]
-position = 255
+position = 232
 key = 'Prisma(DeclTail { file: "packages/prisma/schema.prisma", start_line: 166, tail_start_line: 182 })'
 descriptor = "Prisma decl tail at packages/prisma/schema.prisma:166 body 182"
 cost_tokens = 179
-cum_tokens = 9704
+cum_tokens = 9382
 
 [batches.content]
 kind = "lines"
@@ -4562,11 +4240,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 256
+position = 233
 key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #27"
 cost_tokens = 202
-cum_tokens = 9906
+cum_tokens = 9584
 
 [batches.content]
 kind = "lines"
@@ -4578,3 +4256,413 @@ end = 99
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 234
+key = 'Json(Dependencies { file: "packages/router/package.json" })'
+descriptor = "package runtime dependencies in packages/router/package.json"
+cost_tokens = 102
+cum_tokens = 9686
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/router/package.json"
+start = 6
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'Json(DevDependencies { file: "packages/router/package.json" })'
+descriptor = "package dev/peer dependencies in packages/router/package.json"
+cost_tokens = 85
+cum_tokens = 9771
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/router/package.json"
+start = 14
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/collections/index.tsx" })'
+descriptor = "export names surface in apps/mobile/app/(tabs)/collections/index.tsx"
+cost_tokens = 15
+cum_tokens = 9786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/collections/index.tsx"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/collections/index.tsx"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 237
+key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/collections/index.tsx", start_line: 19 })'
+descriptor = "export at apps/mobile/app/(tabs)/collections/index.tsx:19"
+cost_tokens = 0
+cum_tokens = 9786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/collections/index.tsx"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/collections/index.tsx"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 238
+key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/dashboard/index.tsx" })'
+descriptor = "export names surface in apps/mobile/app/(tabs)/dashboard/index.tsx"
+cost_tokens = 15
+cum_tokens = 9801
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/dashboard/index.tsx"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/dashboard/index.tsx"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 239
+key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/dashboard/index.tsx", start_line: 24 })'
+descriptor = "export at apps/mobile/app/(tabs)/dashboard/index.tsx:24"
+cost_tokens = 0
+cum_tokens = 9801
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/dashboard/index.tsx"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/dashboard/index.tsx"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 240
+key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/links/index.tsx" })'
+descriptor = "export names surface in apps/mobile/app/(tabs)/links/index.tsx"
+cost_tokens = 15
+cum_tokens = 9816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/links/index.tsx"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/links/index.tsx"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 241
+key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/links/index.tsx", start_line: 8 })'
+descriptor = "export at apps/mobile/app/(tabs)/links/index.tsx:8"
+cost_tokens = 0
+cum_tokens = 9816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/links/index.tsx"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/links/index.tsx"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 242
+key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/settings/index.tsx" })'
+descriptor = "export names surface in apps/mobile/app/(tabs)/settings/index.tsx"
+cost_tokens = 15
+cum_tokens = 9831
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 243
+key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/settings/index.tsx", start_line: 32 })'
+descriptor = "export at apps/mobile/app/(tabs)/settings/index.tsx:32"
+cost_tokens = 0
+cum_tokens = 9831
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/settings/index.tsx"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 244
+key = 'Typescript(ExportNames { file: "apps/mobile/app/(tabs)/tags/index.tsx" })'
+descriptor = "export names surface in apps/mobile/app/(tabs)/tags/index.tsx"
+cost_tokens = 15
+cum_tokens = 9846
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 245
+key = 'Typescript(Export { file: "apps/mobile/app/(tabs)/tags/index.tsx", start_line: 32 })'
+descriptor = "export at apps/mobile/app/(tabs)/tags/index.tsx:32"
+cost_tokens = 0
+cum_tokens = 9846
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "apps/mobile/app/(tabs)/tags/index.tsx"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 246
+key = 'Typescript(Imports { file: "packages/filesystem/index.ts" })'
+descriptor = "imports in packages/filesystem/index.ts"
+cost_tokens = 100
+cum_tokens = 9946
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/filesystem/index.ts"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 247
+key = 'Typescript(ExportNames { file: "packages/filesystem/s3Client.ts" })'
+descriptor = "export names surface in packages/filesystem/s3Client.ts"
+cost_tokens = 12
+cum_tokens = 9958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/filesystem/s3Client.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 248
+key = 'Typescript(ExportNames { file: "packages/filesystem/createFile.ts" })'
+descriptor = "export names surface in packages/filesystem/createFile.ts"
+cost_tokens = 14
+cum_tokens = 9972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/filesystem/createFile.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/filesystem/createFile.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 249
+key = 'Typescript(ExportNames { file: "packages/filesystem/readFile.ts" })'
+descriptor = "export names surface in packages/filesystem/readFile.ts"
+cost_tokens = 19
+cum_tokens = 9991
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/filesystem/readFile.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/filesystem/readFile.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 250
+key = 'Typescript(Export { file: "packages/filesystem/readFile.ts", start_line: 19 })'
+descriptor = "export at packages/filesystem/readFile.ts:19"
+cost_tokens = 0
+cum_tokens = 9991
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/filesystem/readFile.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/filesystem/readFile.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"

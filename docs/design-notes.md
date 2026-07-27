@@ -982,6 +982,80 @@ yet fixed):
   htop's listing race is evidently not cap-controlled (diagnose
   before any discriminated variant).
 
+## Unparsed-language fallback (2026-07-26): the corpus cannot see this axis
+
+`Score(3000)` is computed over 71 fixtures that are Rust / Python /
+JS-TS / Go / C / Lua / Markdown only. **No fixture is written in any
+of the ~28 file types v0.1 rendered and v0.2 did not** (Java, C++,
+Ruby, PHP, Swift, Kotlin, C#, Scala, Elixir, Haskell, Zig, Dart, Vue,
+Svelte, CSS, reST, plain text …), so a total absence of content for
+those languages scored exactly the same as full coverage. The
+`ignore/session-2026-07-26/v01-vs-v02-audit.md` F2 finding measured
+28 of 30 common extensions rendering as a bare filename.
+
+Consequences for anyone working near this:
+
+- **A flat corpus mean is not evidence of no effect here.** Judge
+  fallback changes on out-of-corpus repositories at budget 3000; the
+  corpus number is a *guardrail only*. The lane that shipped this
+  used gson / guava / JSON-java (Java), fmt (C++), devise (Ruby),
+  laravel (PHP), Alamofire (Swift), vitepress (Vue), pico (CSS).
+- **Pure indentation-zero extraction is not enough on its own.**
+  Ruby (`module Foo`), C++ (`namespace`), Kotlin (`object`) put one
+  wrapper line at column zero and everything real below it — a
+  column-zero-only surface renders the *same line* for every file in
+  the project. The shipped rule descends indentation levels until the
+  roster is non-trivial (`SOURCE_TEXT_MIN_DECLS` /
+  `SOURCE_TEXT_MAX_INDENT_LEVELS`).
+- **Fully-nested markup has no surface at all.** XML/POM/XSD and HTML
+  yield `<?xml …>` / `<!DOCTYPE html>` / the root element and nothing
+  else, at ~27–120 tokens apiece. They are excluded on purpose; they
+  need a nesting-aware walker. Same for template dialects.
+- **Measured-dead in this lane: removing the depth damp for fallback
+  batches.** With `path_depth_factor` forced to 1.0, gson's Java
+  surfaces do schedule at 3K — but the ones that win are the
+  *cheapest* files (`package-info.java`, one-method interfaces, and
+  `test-shrinker/` fixtures), not `Gson.java` / `GsonBuilder.java`.
+  Depth is not the lever for the deep-package problem.
+- **Open: multi-module Java/JVM at 3K.** After the source-root
+  generalization below, a Maven reactor renders the full class-name
+  inventory of each module package, but no declaration surfaces —
+  the budget legitimately goes to the repo map plus README. Guava at
+  3000 is 197 listing batches out of ~200. That is the F3
+  listing-dominance problem, not a recall problem.
+- **Pricing discipline that held the corpus flat.** Three extension
+  tiers, not one: languages (`SOURCE_TEXT_LANGUAGE_EXTENSIONS`, also
+  the source-inventory signal) → contract formats (proto/graphql/tf/
+  gradle) → flat text (prose, config, shell, build glue, and
+  stylesheets). Putting stylesheets or shell in the language tier
+  costs real score: stylesheet dirs promoted to source inventories
+  measured dockly −0.078, and stylesheets at language pricing
+  measured linkding −0.044 (nine 10-token selector slices displacing
+  a package's Python decl surfaces).
+
+## Source roots are module-relative, not root-relative (2026-07-26)
+
+`has_root_adjacent_source_ancestor` used to require the `src`/`lib`
+dir to be a **direct child of the repo root**, so in any multi-module
+repo (Maven/Gradle reactors, Cargo workspaces, npm monorepos) no
+directory under `<module>/src/` was ever a source inventory. Now a
+`src`/`lib`/`source`/`sources` dir also counts when its parent holds
+a package manifest (`is_package_root_dir` / `PACKAGE_MANIFEST_FILES`).
+Corpus effect is real and two-sided: vite +0.167, beszel +0.108, sps
++0.101 against monaco-editor −0.064, linkwarden −0.054, mdbook
+−0.015 (net +0.0031). The losers are repos whose *peripheral*
+sub-packages (`monaco-lsp-client/src/adapters`, `webpack-plugin/src`)
+now surface early; the winners are repos whose primary package lives
+one level down. If this is ever retuned, the discriminator wanted is
+primary-vs-peripheral module, not the root-adjacency test it replaced.
+
+Also fixed alongside: `is_source_dir` and the non-essential directory
+classifier were **case-sensitive**, so `Source/`, `Sources/`,
+`Tests/`, `Scripts/` — the spelling used across Swift, C#,
+Objective-C and Java trees — matched nothing. Alamofire's `Tests/`
+outranked its `Source/` as a result. Corpus-flat (fixtures are
+lowercase), out-of-corpus decisive.
+
 ## Walker / value open items
 
 - **Rust primary-member election by dependency centrality: SHIPPED

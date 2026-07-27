@@ -1,28 +1,37 @@
-//! Plaintext walker. Emits `Whole` content batches for small known
-//! plaintext files that none of the format-aware walkers (Rust,
-//! Markdown, TOML, JSON, TypeScript, YAML, etc.) cover: license and
-//! ignore files, compact toolchain/build/package manifests, selected
-//! build scripts, requirement lists, version/TODO stamps, and man-page
-//! ledes. Without this walker, these files only appear in directory
-//! listings and their content is unreachable from the scheduler.
+//! Plaintext walker — the home for every file precis has no parser
+//! for. Two jobs:
 //!
-//! The whitelist remains credential-aware (see [`classify_plaintext`]).
+//! 1. **Named plaintext files** ([`classify_plaintext`]): license and
+//!    ignore files, compact toolchain/build/package manifests, selected
+//!    build scripts, requirement lists, version/TODO stamps, man-page
+//!    ledes, `Makefile`/`Dockerfile`/dotenv skeletons. These get
+//!    class-specific treatment and a per-class value preset.
+//! 2. **Every other source-like text file** ([`Class::SourceText`]):
+//!    the language-agnostic fallback for the ~90% of file formats no
+//!    tree-sitter walker in this crate claims — Java, C++, Ruby, PHP,
+//!    Swift, Kotlin, C#, Scala, Elixir, Haskell, Vue, Svelte, CSS,
+//!    HTML, reST, plain text and the rest of
+//!    [`SOURCE_TEXT_EXTENSIONS`]. Without it those files reach the
+//!    output as a bare filename in a directory listing and nothing
+//!    else, which is what a repository in any of those languages
+//!    renders as.
+//!
+//! The named whitelist is credential-aware (see [`classify_plaintext`]).
 //! Files with format-specific siblings (`.eslintrc.json`,
 //! `.prettierrc.js`, `LICENSE.md`) stay with the owning walker, and
 //! credential-bearing dotfiles (`.npmrc`, `.netrc`, `.env`, `.pypirc`)
 //! are NOT in the whitelist. Checked-in dotenv *samples*
 //! (`.env.sample` / `.env.example`) ARE admitted — they carry
 //! placeholder values by convention and are the deploy-facing
-//! config-key documentation. Shell scripts are only admitted from
-//! build-script locations, and exact env/secret/credential stems
-//! (`env`, `.env`, `secret`, `secrets`, `credential`, `credentials`,
-//! `creds`) are denied before `.sh` classification because they
-//! commonly export tokens for local tooling.
+//! config-key documentation. Shell scripts are only admitted to
+//! [`Class::BuildScript`] from build-script locations, and exact
+//! env/secret/credential stems ([`is_credential_stem`]) are denied
+//! before any `.sh` classification — in the fallback too — because
+//! they commonly export tokens for local tooling.
 //!
-//! Budget protection: `PLAINTEXT_LINE_CAP` skips any file whose source
-//! line count exceeds the cap. Plaintext files this walker owns are
-//! intentionally short — anything bigger should either be a `Read` call
-//! by the agent or land in a format-aware walker.
+//! Budget protection: `PLAINTEXT_LINE_CAP` bounds a `Whole` batch;
+//! a file over the cap is head-sampled rather than dropped, so
+//! "slightly too long" never means "renders as nothing".
 
 use std::collections::VecDeque;
 use std::ops::Range;
@@ -116,6 +125,49 @@ const DOTENV_TAIL_CHUNK_MIN_TOKENS: usize = 100;
 /// this is aggregate, never repeated per chunk.
 const DOTENV_TAIL_OPS_FACTOR: f64 = 1.25;
 
+/// Selection budget for a [`Class::SourceText`] declaration surface,
+/// per line class. Imports and comments are damped so a 40-import
+/// Java file or a 15-line license banner cannot consume the whole
+/// slice before the first declaration; declarations get the bulk.
+const SOURCE_TEXT_IMPORT_LINES: usize = 4;
+const SOURCE_TEXT_COMMENT_LINES: usize = 2;
+const SOURCE_TEXT_DECL_LINES: usize = 8;
+
+/// Declarations at which a surface stops descending into deeper
+/// indentation levels — enough to read as a roster rather than as a
+/// single wrapper line.
+const SOURCE_TEXT_MIN_DECLS: usize = 4;
+
+/// Hard bound on levels descended, so a file that never reaches
+/// [`SOURCE_TEXT_MIN_DECLS`] (a script that is one long block) walks
+/// into its statement bodies only so far.
+const SOURCE_TEXT_MAX_INDENT_LEVELS: usize = 4;
+
+/// Pre-flight byte gate for the fallback. Generous — only the
+/// declaration surface is rendered, not the file — but bounded so a
+/// stray data blob is never read.
+const SOURCE_TEXT_BYTE_GATE: usize = 512 * 1024;
+
+/// Mean bytes per line above which a file is machine-generated rather
+/// than hand-wrapped: minified bundles, single-line JSON-ish dumps and
+/// serialized blobs all sit in the thousands, hand-written source and
+/// prose in the tens. Rejects them without an extension blocklist.
+const SOURCE_TEXT_MAX_MEAN_LINE_BYTES: usize = 200;
+
+/// Characters past which an indentation-zero line stops being a
+/// declaration a reader skims and becomes an attribute dump, a data
+/// row, or generated output — a Maven `<project xmlns=…>` opener costs
+/// ~90 tokens and says nothing. Skipped rather than truncated: a
+/// half-line is not more informative than the filename.
+const SOURCE_TEXT_MAX_LINE_CHARS: usize = 200;
+
+/// Leading lines scanned for a generated-file banner.
+const SOURCE_TEXT_GENERATED_SCAN_LINES: usize = 8;
+
+/// Bytes scanned for a NUL, which no text file contains but a binary
+/// misnamed `.txt` (or a UTF-8-decodable data blob) does.
+const SOURCE_TEXT_NUL_SCAN_BYTES: usize = 8192;
+
 /// Pre-flight byte gate for dotenv samples — generous (they're
 /// head-sampled, not rendered whole) but bounded.
 const DOTENV_BYTE_GATE: usize = 64 * 1024;
@@ -149,6 +201,15 @@ pub(crate) enum Class {
     Version,
     /// Plain-text backlog.
     Todo,
+    /// A source file in a language no walker parses — the
+    /// language-agnostic fallback. Rendered as a declaration surface.
+    SourceText,
+    /// A prose or flat-config file with no owning walker. Same
+    /// extraction (a file with no nesting has every line at
+    /// indentation zero, so the surface *is* its head slice), but a
+    /// head slice claims much less than a declaration roster does and
+    /// is priced for it.
+    SourceProse,
 }
 
 /// Classify a file by name. `None` for files the walker doesn't own
@@ -188,10 +249,7 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         return Some(Class::DotenvSample);
     }
     if let Some(stem) = lower.strip_suffix(".sh") {
-        if matches!(
-            stem,
-            "env" | ".env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
-        ) {
+        if is_credential_stem(stem) {
             return None;
         }
         return Some(Class::BuildScript);
@@ -211,6 +269,468 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     None
 }
 
+/// File stems that never render regardless of extension — they
+/// commonly hold real tokens for local tooling.
+fn is_credential_stem(stem: &str) -> bool {
+    matches!(
+        stem,
+        "env" | ".env" | "secret" | "secrets" | "credential" | "credentials" | "creds"
+    )
+}
+
+/// Programming-language extensions the fallback claims. A directory
+/// of these files is a source package whether or not this crate can
+/// parse them, so [`crate::walker::fs::is_source_inventory_file`]
+/// reads from this list too — without it a `com/google/gson/` full of
+/// `.java` does not register as source, its listing loses the ratio
+/// race at depth, and the files inside it never even become
+/// candidates.
+///
+/// An allowlist rather than v0.1's "any extension that decodes as
+/// UTF-8" rule. SVG, source maps, PO catalogs, CSV, armored keys and
+/// notebooks are all valid text and all worthless as a declaration
+/// surface, and a blocklist of them is open-ended in a way this list
+/// is not — a format missing here renders as it does today (a name in
+/// a listing), a wrong entry renders noise.
+///
+/// Fully-nested markup (XML/POM/XSD, HTML, template dialects) is
+/// deliberately absent from all three lists: its only
+/// indentation-zero lines are the document declaration and the root
+/// element (`<!DOCTYPE html>`, `<project xmlns=…>`), so the fallback
+/// has nothing true to say about it and would spend real tokens
+/// saying it — ~27 tokens per page across a generated `docs/` tree.
+/// Markup needs a walker that understands nesting, not this one.
+pub(crate) const SOURCE_TEXT_LANGUAGE_EXTENSIONS: &[&str] = &[
+    // JVM / .NET
+    "java", "kt", "kts", "scala", "sc", "groovy", "clj", "cljs", "cljc", "cs", "fs", "fsx", "vb",
+    // C family (`.c` / `.h` belong to the C walker)
+    "cpp", "cc", "cxx", "hpp", "hh", "hxx", "m", "mm", "cu", "cuh",
+    // other compiled languages
+    "swift", "zig", "dart", "nim", "cr", "d", "hs", "lhs", "ml", "mli", "elm", "erl", "hrl", "ex",
+    "exs", // scripting
+    "rb", "php", "pl", "pm", "r", "jl", "tcl", "pyi", // component-file web frameworks
+    "vue", "svelte", "astro", "jsx",
+];
+
+/// Contract-bearing extensions whose indentation-zero lines are real
+/// declarations — protobuf messages, GraphQL types, Terraform blocks,
+/// Gradle plugin and dependency blocks — but whose *directories* are
+/// schema or config trees rather than source packages. Same surface
+/// value as a language file, no source-inventory promotion: promoting
+/// them buys stacks of asset-tree listings (measured: dockly −0.078
+/// when stylesheet dirs were promoted).
+const SOURCE_TEXT_DECLARATIVE_EXTENSIONS: &[&str] = &[
+    "proto", "thrift", "graphql", "gql", "capnp", "fbs", "tf", "tfvars", "hcl", "nix", "dhall",
+    "cue", "gradle", "gemspec", "podspec", "rake",
+];
+
+/// Extensions with no *program* structure to surface. `.bat`/`.cmd`
+/// are absent on purpose — in practice they are generated wrappers
+/// (`gradlew.bat`, `mvnw.cmd`), 158 tokens of argument marshalling.
+/// Two shapes, one price:
+///
+/// - prose, flat config, shell scripts and build glue are sequences
+///   of statements, so every line sits at indentation zero and the
+///   "surface" is just a head slice;
+/// - stylesheets do have declarations at indentation zero, but a
+///   selector list describes presentation, not what the program is
+///   or does — nine 10-token stylesheet slices displacing a
+///   package's Python decl surfaces is a bad trade (measured:
+///   linkding −0.044 at language pricing).
+///
+/// Claimed either way — a slice beats a bare filename — but priced
+/// near the floor, and never a source inventory.
+const SOURCE_TEXT_FLAT_EXTENSIONS: &[&str] = &[
+    "rst",
+    "adoc",
+    "asciidoc",
+    "txt",
+    "text",
+    "tex",
+    "org",
+    "mdx",
+    "ini",
+    "cfg",
+    "conf",
+    "properties",
+    "sh",
+    "bash",
+    "zsh",
+    "fish",
+    "ps1",
+    "psm1",
+    "awk",
+    "cmake",
+    "mk",
+    "mak",
+    "bzl",
+    "bazel",
+    "gyp",
+    "gni",
+    "ld",
+    "css",
+    "scss",
+    "sass",
+    "less",
+    "styl",
+];
+
+/// Extensionless build manifests the fallback claims by exact name.
+const SOURCE_TEXT_FILENAMES: &[&str] = &[
+    "Gemfile",
+    "Rakefile",
+    "Guardfile",
+    "Brewfile",
+    "Podfile",
+    "Procfile",
+    "Vagrantfile",
+    "Justfile",
+    "justfile",
+    "Jenkinsfile",
+    "Berksfile",
+    "Appfile",
+    "Fastfile",
+    "BUILD",
+    "WORKSPACE",
+    "SConstruct",
+    "meson.build",
+];
+
+/// The fallback class `name` falls into on name evidence alone, or
+/// `None` when the fallback doesn't own it. Rejects derived artifacts
+/// (minified/bundled output, lockfiles, source maps) and credential
+/// stems before the extension check — these are the text files whose
+/// content makes the output worse, not better.
+fn classify_source_text(name: &str) -> Option<Class> {
+    let lower = name.to_ascii_lowercase();
+    if SOURCE_TEXT_FILENAMES.contains(&name) {
+        return Some(Class::SourceText);
+    }
+    let (stem, ext) = lower.rsplit_once('.')?;
+    if is_credential_stem(stem) || is_credential_stem(&lower) {
+        return None;
+    }
+    // Derived siblings of a hand-authored source: `app.min.js`,
+    // `bundle.chunk.css`, `pnpm-lock.yaml`, `main.js.map`.
+    if stem.ends_with(".min")
+        || stem.ends_with("-min")
+        || stem.ends_with(".bundle")
+        || stem.ends_with(".chunk")
+        || stem.ends_with(".generated")
+        || stem.ends_with("_generated")
+        || stem.ends_with("-lock")
+        || stem.ends_with(".lock")
+        || ext == "map"
+        || ext == "lock"
+    {
+        return None;
+    }
+    if SOURCE_TEXT_LANGUAGE_EXTENSIONS.contains(&ext)
+        || SOURCE_TEXT_DECLARATIVE_EXTENSIONS.contains(&ext)
+    {
+        return Some(Class::SourceText);
+    }
+    if !SOURCE_TEXT_FLAT_EXTENSIONS.contains(&ext) {
+        return None;
+    }
+    // A legal text under a spelling `classify_plaintext`'s exhaustive
+    // list misses (`MIT-LICENSE.txt`, `LICENSE-THIRD-PARTY.txt`) is
+    // still a license and must be priced as one — at fallback pricing
+    // its head slice displaces real code (middleclass −0.008).
+    // `*-header` is the one common non-license `license` name: the
+    // boilerplate a project prepends to its own sources.
+    if (stem.contains("license") || stem.contains("licence") || stem == "copying")
+        && !stem.contains("header")
+    {
+        return Some(Class::License);
+    }
+    Some(Class::SourceProse)
+}
+
+/// Line classes inside a declaration surface. The three get separate
+/// selection budgets so a file's declarations survive a long import
+/// block or a long comment banner.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum SurfaceLine {
+    Import,
+    Comment,
+    Decl,
+}
+
+/// Prefixes of a module/dependency reference in any of the languages
+/// the fallback covers. `package` / `namespace` are
+/// deliberately absent — they name the unit rather than its
+/// dependencies, and are the single most informative line in a Java
+/// or C# file, so they rank as declarations.
+const SOURCE_TEXT_IMPORT_PREFIXES: &[&str] = &[
+    "import",
+    "#import",
+    "#include",
+    "#pragma",
+    "using ",
+    "require",
+    "from ",
+    "use ",
+    "@use",
+    "@import",
+    "@forward",
+    "open ",
+    "extern crate",
+    "include ",
+    "load(",
+    "export * from",
+    "export {",
+];
+
+/// Substrings that mark a comment line as boilerplate rather than
+/// content: legal banners, and pragmas addressed to a compiler or
+/// linter. Both open files across whole ecosystems — v0.1's
+/// head-slice fallback rendered the license banner and nothing else
+/// for most Java, C++ and Swift files, and `# frozen_string_literal:
+/// true` is the first line of essentially every modern Ruby file.
+const SOURCE_TEXT_BOILERPLATE_MARKERS: &[&str] = &[
+    "copyright",
+    "spdx-",
+    "all rights reserved",
+    "licensed under",
+    "license at",
+    "license, version",
+    "permission is hereby granted",
+    "warranties",
+    "frozen_string_literal",
+    "-*-",
+    "vim:",
+    "coding:",
+    "eslint-disable",
+    "prettier-ignore",
+    "stylelint-disable",
+    "clang-format",
+    "shellcheck",
+    "@ts-nocheck",
+    "noqa",
+    "type: ignore",
+];
+
+/// Classify one trimmed surface line. `None` drops it.
+fn classify_surface_line(trimmed: &str) -> Option<SurfaceLine> {
+    if is_block_closer(trimmed) || trimmed.starts_with("#!") {
+        return None;
+    }
+    let lower = trimmed.to_ascii_lowercase();
+    if SOURCE_TEXT_IMPORT_PREFIXES
+        .iter()
+        .any(|prefix| lower.starts_with(prefix))
+    {
+        return Some(SurfaceLine::Import);
+    }
+    if !is_comment_line(trimmed) {
+        return Some(SurfaceLine::Decl);
+    }
+    if SOURCE_TEXT_BOILERPLATE_MARKERS
+        .iter()
+        .any(|marker| lower.contains(marker))
+        || comment_text_is_empty(trimmed)
+    {
+        return None;
+    }
+    Some(SurfaceLine::Comment)
+}
+
+/// A line that only closes a block carries no information the opening
+/// line didn't already give.
+fn is_block_closer(trimmed: &str) -> bool {
+    matches!(trimmed, "end" | "fi" | "done" | "esac" | "#endif" | "*/")
+        || trimmed.chars().all(|c| "}])>;,`".contains(c))
+}
+
+/// Comment-opener detection across the covered languages. Ambiguous
+/// markers require a following space (or end of line) so CSS `#id {`
+/// and C `#include` are not read as comments.
+fn is_comment_line(trimmed: &str) -> bool {
+    for marker in ["//", "/*", "<!--", "\"\"\"", "'''"] {
+        if trimmed.starts_with(marker) {
+            return true;
+        }
+    }
+    for marker in ["#", "*", "--", ";", "%", "..", "@rem", "rem "] {
+        if let Some(rest) = trimmed.strip_prefix(marker)
+            && (rest.is_empty()
+                || rest.starts_with(char::is_whitespace)
+                || rest.starts_with(marker))
+        {
+            return true;
+        }
+    }
+    false
+}
+
+/// True when a comment line carries no words — `/*`, `//`, `# ---`,
+/// `****`. These are block punctuation, not content.
+fn comment_text_is_empty(trimmed: &str) -> bool {
+    !trimmed
+        .chars()
+        .any(|c| c.is_alphanumeric() || c == '_' || c == '$')
+}
+
+/// Number of leading lines occupied by a legal/pragma banner — the
+/// license header that opens most Java, C++, Swift and Go-adjacent
+/// source files. Zero when the file's opening comment block carries
+/// no boilerplate marker, so a genuine file-purpose comment survives.
+///
+/// Whole-block, not per-line: a marker matches "Copyright (c) 2014"
+/// but not the eight continuation lines of the same Apache header,
+/// and admitting those is exactly the failure v0.1's head slice had.
+fn boilerplate_banner_end(source: &str) -> usize {
+    let mut block: Vec<&str> = Vec::new();
+    let mut reached_content = false;
+    for line in source.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with("#!") {
+            block.push(trimmed);
+            continue;
+        }
+        if !is_comment_line(trimmed) {
+            reached_content = true;
+            break;
+        }
+        block.push(trimmed);
+    }
+    // A file that is comments all the way down is a comment-formatted
+    // document, not a banner followed by code; skipping it would leave
+    // nothing to render.
+    if !reached_content {
+        return 0;
+    }
+    let is_banner = block.iter().any(|line| {
+        let lower = line.to_ascii_lowercase();
+        SOURCE_TEXT_BOILERPLATE_MARKERS
+            .iter()
+            .any(|marker| lower.contains(marker))
+    });
+    if is_banner { block.len() } else { 0 }
+}
+
+/// The file's **declaration surface**: the lines at the shallowest
+/// indentation levels that together yield a non-trivial declaration
+/// roster, capped per line class.
+///
+/// Indentation is the one structural signal every text format shares,
+/// and the shallowest level is where a file's declarations live — in
+/// brace languages and indentation languages alike. Column zero alone
+/// answers Java, C#, Swift, PHP, CSS and single-file-component web
+/// frameworks; in a file with no nesting at all (prose, reST, plain
+/// text) every line qualifies, so the same rule degrades to a head
+/// slice, which is the right answer for those.
+///
+/// Descent is what makes it work for the rest. A Ruby file wraps
+/// everything in `module Foo`, a C++ header in a `namespace`, a
+/// Kotlin file in an `object` — column zero there is one line that is
+/// the same in every file of the project. So levels are added,
+/// shallowest first, until the roster has
+/// [`SOURCE_TEXT_MIN_DECLS`] declarations or
+/// [`SOURCE_TEXT_MAX_INDENT_LEVELS`] levels have been consumed.
+/// Files that already declare at column zero never descend, so this
+/// costs them nothing.
+///
+/// The result is a *surface*, not a summary: no parse, no signature
+/// reconstruction, no bodies. It is priced accordingly in
+/// [`class_value`] — strictly below every parsed language walker's
+/// declaration roster, and strictly above the nothing that a file in
+/// an unsupported language renders as today.
+fn declaration_surface(source: &str) -> Vec<usize> {
+    let banner_end = boilerplate_banner_end(source);
+    let mut rows: Vec<(usize, usize, SurfaceLine)> = Vec::new();
+    for (index, line) in source.lines().enumerate().skip(banner_end) {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.chars().count() > SOURCE_TEXT_MAX_LINE_CHARS {
+            continue;
+        }
+        let Some(class) = classify_surface_line(trimmed) else {
+            continue;
+        };
+        let indent = line.len() - line.trim_start().len();
+        rows.push((indent, index + 1, class));
+    }
+
+    let mut levels: Vec<usize> = rows.iter().map(|(indent, ..)| *indent).collect();
+    levels.sort_unstable();
+    levels.dedup();
+
+    let caps = [
+        SOURCE_TEXT_IMPORT_LINES,
+        SOURCE_TEXT_COMMENT_LINES,
+        SOURCE_TEXT_DECL_LINES,
+    ];
+    let mut used = [0usize; 3];
+    let mut selected: Vec<usize> = Vec::new();
+    for level in levels.into_iter().take(SOURCE_TEXT_MAX_INDENT_LEVELS) {
+        for &(_, line, class) in rows.iter().filter(|(indent, ..)| *indent == level) {
+            let slot = match class {
+                SurfaceLine::Import => 0,
+                SurfaceLine::Comment => 1,
+                SurfaceLine::Decl => 2,
+            };
+            if used[slot] == caps[slot] {
+                continue;
+            }
+            used[slot] += 1;
+            selected.push(line);
+        }
+        if used[2] >= SOURCE_TEXT_MIN_DECLS || used == caps {
+            break;
+        }
+    }
+    selected.sort_unstable();
+    selected
+}
+
+/// Declaration-surface content for one fallback file, or `None` when
+/// the file is unreadable, machine-generated, or has no surface.
+fn source_text_content(file: &Path, ctx: &WalkCtx) -> Option<crate::content::BatchContent> {
+    let source = gated_read_source(file, ctx, SOURCE_TEXT_BYTE_GATE)?;
+    if is_machine_generated_text(&source) {
+        return None;
+    }
+    let selected = declaration_surface(&source);
+    if selected.is_empty() {
+        return None;
+    }
+    // Full lines only — the renderer synthesizes a `…` row for every
+    // elided non-blank gap from the anchor set on its own.
+    single_file_lines_content(file, &source, FileLines::new(selected))
+}
+
+/// True for text that is machine-emitted rather than hand-authored:
+/// a NUL byte (no text file has one), lines too long to have been
+/// wrapped by a human, or a generator banner near the top. Applied
+/// after the read because none of it is visible from the filename.
+fn is_machine_generated_text(source: &str) -> bool {
+    if source
+        .as_bytes()
+        .iter()
+        .take(SOURCE_TEXT_NUL_SCAN_BYTES)
+        .any(|byte| *byte == 0)
+    {
+        return true;
+    }
+    let line_count = source.lines().count();
+    if line_count == 0 || source.len() / line_count > SOURCE_TEXT_MAX_MEAN_LINE_BYTES {
+        return true;
+    }
+    source
+        .lines()
+        .take(SOURCE_TEXT_GENERATED_SCAN_LINES)
+        .any(|line| {
+            let lower = line.to_ascii_lowercase();
+            lower.contains("@generated")
+                || lower.contains("code generated by")
+                || lower.contains("do not edit")
+                || lower.contains("automatically generated")
+                || lower.contains("auto-generated")
+                || lower.contains("autogenerated")
+        })
+}
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let entries = list_dir(dir, ctx.dir_filter());
     let mut out = Vec::new();
@@ -225,13 +745,33 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
             continue;
         }
-        let Some(class) = classify_plaintext(&name) else {
+        // A named class whose location gate rejects it (a nested
+        // `Makefile`, a `.sh` outside a build-script location) falls
+        // through to the fallback rather than out of the output.
+        let named = classify_plaintext(&name).filter(|class| match class {
+            Class::BuildEntrypoint | Class::Dockerfile => dir == ctx.root(),
+            Class::BuildScript => is_build_script_location(&file, dir, ctx),
+            _ => true,
+        });
+        // Root `README.rst` belongs to the markdown walker; emitting
+        // a second slice of it would overlap its spans.
+        let owned_by_markdown = dir == ctx.root() && super::markdown::is_readme_rst(&file);
+        let Some(class) = named.or_else(|| {
+            (!owned_by_markdown)
+                .then(|| classify_source_text(&name))
+                .flatten()
+        }) else {
             continue;
         };
-        if matches!(class, Class::BuildEntrypoint | Class::Dockerfile) && dir != ctx.root() {
-            continue;
-        }
-        if matches!(class, Class::BuildScript) && !is_build_script_location(&file, dir, ctx) {
+        if matches!(class, Class::SourceText | Class::SourceProse) {
+            if let Some(content) = source_text_content(&file, ctx) {
+                out.push(Batch {
+                    key: PlaintextKey::DeclSurface { file: file.clone() }.into(),
+                    predecessor: None,
+                    content,
+                    value: class_value(class, &file, ctx),
+                });
+            }
             continue;
         }
         if matches!(class, Class::DotenvSample) {
@@ -246,11 +786,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             push_makefile_batches(&file, class, ctx, &mut out);
             continue;
         }
+        // Head-sampled, not gated: a file one line over the cap used
+        // to render as nothing at all, which is strictly worse than
+        // the same file's first `PLAINTEXT_LINE_CAP` lines.
         let content = match class {
             Class::Requirements => {
                 head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, REQUIREMENTS_HEAD_LINE_CAP)
             }
-            _ => gated_whole_file_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
+            _ => head_sampled_content(&file, ctx, PLAINTEXT_BYTE_GATE, PLAINTEXT_LINE_CAP),
         };
         let Some(content) = content else {
             continue;
@@ -657,6 +1200,19 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         // TODO backlog: short header items are tier-1 orientation for
         // "what's pending / known limitations"; rest is appendix.
         Class::Todo => (0.40, 0.50, 0.40),
+        // Unparsed declaration surface. Priced below every parsed
+        // walker's names/decl roster (Python's is cat 0.4–0.65, C's
+        // and Rust's higher) because a column-zero line slice is a
+        // weaker claim about a file than a reconstructed declaration
+        // list: it should lose the `value/cost^k` race to any walker
+        // that actually understands the file, and win against the
+        // bare filename that is the only alternative.
+        Class::SourceText => (0.60, 0.55, 0.50),
+        // Head slice of a prose/config file. Near the license floor:
+        // it carries no declaration semantics at all, and unlike the
+        // named plaintext classes above nobody chose this file — it
+        // is whatever `.txt`/`.rst`/`.ini` happened to be in the tree.
+        Class::SourceProse => (0.22, 0.30, 0.25),
     };
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
 }
@@ -1225,6 +1781,156 @@ mod tests {
 
     use super::*;
 
+    /// Line numbers a surface selects, for readable assertions.
+    fn surface_of(source: &str) -> Vec<usize> {
+        declaration_surface(source)
+    }
+
+    #[test]
+    fn plaintext_source_text_surface_is_the_declaration_line_in_brace_languages() {
+        // Java: license banner dropped whole, `package` kept as a
+        // declaration, imports damped, class declaration reached.
+        let java = "/*\n * Copyright 2008 Google LLC\n *\n * Licensed under the Apache License.\n */\n\
+                    package com.google.gson;\n\n\
+                    import java.util.List;\nimport java.util.Map;\nimport java.util.Set;\n\
+                    import java.util.Deque;\nimport java.util.Queue;\nimport java.util.Objects;\n\n\
+                    public final class Gson {\n  private final List<X> factories;\n\
+                    \n  public String toJson(Object src) {\n    return \"\";\n  }\n}\n";
+        let selected = surface_of(java);
+        let lines: Vec<&str> = java.lines().collect();
+        let text: Vec<&str> = selected.iter().map(|n| lines[n - 1]).collect();
+        assert!(
+            text.iter().all(|line| !line.contains("Copyright")
+                && !line.contains("Licensed")
+                && *line != "/*"),
+            "banner leaked: {text:?}"
+        );
+        assert!(text.contains(&"package com.google.gson;"), "{text:?}");
+        assert!(text.contains(&"public final class Gson {"), "{text:?}");
+        assert_eq!(
+            text.iter()
+                .filter(|line| line.starts_with("import"))
+                .count(),
+            SOURCE_TEXT_IMPORT_LINES,
+            "imports not damped: {text:?}"
+        );
+    }
+
+    #[test]
+    fn plaintext_source_text_surface_descends_past_a_single_wrapper() {
+        // Ruby wraps everything in `module`; column zero alone is one
+        // line that is identical across the whole project.
+        let ruby = "# frozen_string_literal: true\n\nmodule Devise\n  class Mapping\n\
+                        def self.find_scope!(obj)\n      obj\n    end\n\
+                    \n    def initialize(name)\n      @name = name\n    end\n  end\nend\n";
+        let lines: Vec<&str> = ruby.lines().collect();
+        let text: Vec<&str> = surface_of(ruby).iter().map(|n| lines[n - 1]).collect();
+        assert!(text.contains(&"module Devise"), "{text:?}");
+        assert!(text.contains(&"  class Mapping"), "{text:?}");
+        assert!(
+            text.iter()
+                .any(|line| line.contains("def self.find_scope!")),
+            "descent stopped too early: {text:?}"
+        );
+        assert!(
+            !text
+                .iter()
+                .any(|line| line.contains("frozen_string_literal")),
+            "tooling pragma leaked: {text:?}"
+        );
+    }
+
+    #[test]
+    fn plaintext_source_text_surface_never_descends_when_column_zero_declares() {
+        // CSS selectors sit at column zero, so the surface stays there
+        // and never picks up property lines from inside a rule.
+        let css = "a {\n  color: red;\n}\n\nh1,\nh2 {\n  margin: 0;\n}\n\n\
+                   .card {\n  padding: 1rem;\n}\n\n#main {\n  display: flex;\n}\n";
+        let lines: Vec<&str> = css.lines().collect();
+        let text: Vec<&str> = surface_of(css).iter().map(|n| lines[n - 1]).collect();
+        assert!(
+            text.iter().all(|line| !line.starts_with(' ')),
+            "descended into rule bodies: {text:?}"
+        );
+        assert!(
+            text.contains(&"#main {"),
+            "`#main` read as a comment: {text:?}"
+        );
+    }
+
+    #[test]
+    fn plaintext_source_text_flat_file_degrades_to_a_head_slice() {
+        let prose = (1..=40)
+            .map(|n| format!("Paragraph line {n}."))
+            .collect::<Vec<_>>()
+            .join("\n");
+        let selected = surface_of(&prose);
+        assert_eq!(selected, (1..=SOURCE_TEXT_DECL_LINES).collect::<Vec<_>>());
+    }
+
+    #[test]
+    fn plaintext_source_text_classification_rejects_derived_and_credential_files() {
+        assert_eq!(classify_source_text("Gson.java"), Some(Class::SourceText));
+        assert_eq!(
+            classify_source_text("Session.swift"),
+            Some(Class::SourceText)
+        );
+        assert_eq!(classify_source_text("Layout.vue"), Some(Class::SourceText));
+        assert_eq!(classify_source_text("Gemfile"), Some(Class::SourceText));
+        assert_eq!(
+            classify_source_text("schema.proto"),
+            Some(Class::SourceText)
+        );
+        assert_eq!(classify_source_text("guide.rst"), Some(Class::SourceProse));
+        assert_eq!(classify_source_text("app.css"), Some(Class::SourceProse));
+        assert_eq!(classify_source_text("build.sh"), Some(Class::SourceProse));
+        // Derived artifacts and credentials never render.
+        assert_eq!(classify_source_text("app.min.css"), None);
+        assert_eq!(classify_source_text("vendor.bundle.css"), None);
+        assert_eq!(classify_source_text("main.js.map"), None);
+        assert_eq!(classify_source_text("pnpm-lock.yaml"), None);
+        assert_eq!(classify_source_text("secrets.sh"), None);
+        assert_eq!(classify_source_text("credentials.txt"), None);
+        // Legal texts are licenses, not prose — value-floored.
+        assert_eq!(
+            classify_source_text("MIT-LICENSE.txt"),
+            Some(Class::License)
+        );
+        assert_eq!(
+            classify_source_text("LICENSE-THIRD-PARTY.txt"),
+            Some(Class::License)
+        );
+        assert_eq!(
+            classify_source_text("license-header.txt"),
+            Some(Class::SourceProse)
+        );
+        // `.md`/`.rst` legal texts stay with the markdown walker.
+        assert_eq!(classify_source_text("LICENSE.md"), None);
+        // Formats an owning walker already claims stay with it.
+        for owned in [
+            "lib.rs",
+            "main.py",
+            "app.ts",
+            "go.mod",
+            "index.html",
+            "pom.xml",
+        ] {
+            assert_eq!(classify_source_text(owned), None, "{owned}");
+        }
+    }
+
+    #[test]
+    fn plaintext_source_text_rejects_machine_generated_text() {
+        assert!(is_machine_generated_text(
+            "// Code generated by protoc.\nx\n"
+        ));
+        assert!(is_machine_generated_text("/* @generated */\nx\n"));
+        assert!(is_machine_generated_text("a\0b\n"));
+        // One very long line: a minified bundle, not hand-wrapped text.
+        assert!(is_machine_generated_text(&"x".repeat(4096)));
+        assert!(!is_machine_generated_text("class Foo {\n  int x;\n}\n"));
+    }
+
     #[test]
     fn plaintext_man_page_name_and_lede() {
         assert!(is_man_page_name("htop.1"));
@@ -1492,11 +2198,13 @@ scoped: private MODE := release
         assert_no_plaintext_whole(&report, "LICENSE");
     }
 
-    /// A LICENSE whose byte count slips under the gate but whose line
-    /// count exceeds `PLAINTEXT_LINE_CAP` is dropped at materialize
-    /// time.
+    /// A file whose byte count slips under the gate but whose line
+    /// count exceeds `PLAINTEXT_LINE_CAP` renders its first
+    /// `PLAINTEXT_LINE_CAP` lines. The cap bounds what is *rendered*,
+    /// not whether the file is reachable at all — dropping it made
+    /// "one line too long" mean "renders as nothing".
     #[test]
-    fn plaintext_too_many_lines_skipped() {
+    fn plaintext_too_many_lines_head_sampled_not_skipped() {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         let body: String = (0..(PLAINTEXT_LINE_CAP + 5))
@@ -1506,7 +2214,17 @@ scoped: private MODE := release
 
         let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
-        assert_no_plaintext_whole(&report, "LICENSE");
+        assert_has_plaintext_whole(&report, "LICENSE");
+        let rendered = report.tree.render();
+        assert!(rendered.contains("line 0"), "{rendered}");
+        assert!(
+            rendered.contains(&format!("line {}", PLAINTEXT_LINE_CAP - 1)),
+            "{rendered}"
+        );
+        assert!(
+            !rendered.contains(&format!("line {PLAINTEXT_LINE_CAP}")),
+            "rendered past the cap: {rendered}"
+        );
     }
 
     #[test]

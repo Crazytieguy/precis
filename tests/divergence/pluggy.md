@@ -235,30 +235,31 @@ Score(3000)=0.762 I=0.902 C=0.644 ns_rows≤3K=16/40 (reached=8 partial=1 missin
 | walker |  | 8236 | 17 | python method body at src/pluggy/_tracing.py:67 body 68 |  |  | 0.576 |
 | ns | 8311 |  | 149 | pyproject.toml: every distinct [section] header (config-key roster) | 6.1 |  | 0.580 |
 | walker |  | 8323 | 87 | python method doc at src/pluggy/_manager.py:201 |  |  | 0.580 |
-| walker |  | 8403 | 80 | python decl names surface in src/pluggy/_callers.py |  |  | 0.585 |
-| walker |  | 8434 | 31 | python decl at src/pluggy/_callers.py:27 |  |  | 0.585 |
-| walker |  | 8465 | 31 | python decl doc at src/pluggy/_callers.py:27 |  |  | 0.585 |
-| walker |  | 8494 | 29 | python decl at src/pluggy/_callers.py:70 |  |  | 0.585 |
+| walker |  | 8363 | 40 | declaration surface of changelog/590.trivial.rst |  |  | 0.580 |
+| walker |  | 8443 | 80 | python decl names surface in src/pluggy/_callers.py |  |  | 0.585 |
+| walker |  | 8474 | 31 | python decl at src/pluggy/_callers.py:27 |  |  | 0.585 |
+| walker |  | 8505 | 31 | python decl doc at src/pluggy/_callers.py:27 |  |  | 0.579 |
 | ns | 8505 |  | 194 | tox.ini: [tox] envlist + [testenv] | 6.2 |  | 0.579 |
-| walker |  | 8528 | 34 | python decl at src/pluggy/_callers.py:60 |  |  | 0.579 |
-| ns | 8683 |  | 178 | tox.ini: [testenv:docs] + [pytest] | 6.3 | 6.2 | 0.572 |
-| walker |  | 8717 | 189 | python decl doc at src/pluggy/_manager.py:83 |  |  | 0.572 |
-| ns | 8795 |  | 112 | tox.ini: [testenv:release] | 6.4 | 6.2 | 0.568 |
-| walker |  | 8906 | 189 | python decl doc at src/pluggy/_warnings.py:10 |  |  | 0.587 |
-| ns | 8997 |  | 202 | .pre-commit-config.yaml: repo + hook-id roster | 6.5 |  | 0.582 |
-| walker |  | 9003 | 97 | python method doc at src/pluggy/_manager.py:304 |  |  | 0.582 |
-| ns | 9048 |  | 51 | .coveragerc: [run] section (what coverage.py tracks) | 6.6 |  | 0.579 |
-| walker |  | 9101 | 98 | python method doc at src/pluggy/_hooks.py:516 |  |  | 0.579 |
-| ns | 9111 |  | 63 | MANIFEST.in: full (sdist inclusion rules) | 6.7 |  | 0.576 |
-| walker |  | 9200 | 99 | python method doc at src/pluggy/_result.py:67 |  |  | 0.576 |
-| ns | 9221 |  | 110 | CHANGELOG.rst: pluggy 1.6.0 -- version header + deprecations | 7.1 |  | 0.572 |
-| walker |  | 9303 | 103 | python method doc at src/pluggy/_manager.py:395 |  |  | 0.572 |
-| ns | 9452 |  | 231 | CHANGELOG.rst: pluggy 1.6.0 -- bug fixes | 7.2 | 7.1 | 0.567 |
-| walker |  | 9519 | 216 | python class body at src/pluggy/_hooks.py:593 |  |  | 0.567 |
-| walker |  | 9578 | 59 | python decl at src/pluggy/_callers.py:82 |  |  | 0.567 |
-| walker |  | 9596 | 18 | python method body at src/pluggy/_tracing.py:60 body 61 |  |  | 0.567 |
-| ns | 9655 |  | 203 | changelog/README.rst: newsfragment type taxonomy + naming convention | 7.3 |  | 0.563 |
-| walker |  | 9705 | 109 | python imports in src/pluggy/_result.py |  |  | 0.563 |
-| walker |  | 9840 | 135 | python method doc at src/pluggy/_manager.py:176 |  |  | 0.563 |
-| walker |  | 9896 | 56 | python decl doc at src/pluggy/_callers.py:82 |  |  | 0.564 |
-| ns | 9980 |  | 325 | RELEASING.rst: full release procedure | 7.4 |  | 0.554 |
+| walker |  | 8534 | 29 | python decl at src/pluggy/_callers.py:70 |  |  | 0.579 |
+| walker |  | 8568 | 34 | python decl at src/pluggy/_callers.py:60 |  |  | 0.579 |
+| walker |  | 8665 | 97 | declaration surface of tox.ini |  |  | 0.581 |
+| ns | 8683 |  | 178 | tox.ini: [testenv:docs] + [pytest] | 6.3 | 6.2 | 0.575 |
+| ns | 8795 |  | 112 | tox.ini: [testenv:release] | 6.4 | 6.2 | 0.570 |
+| walker |  | 8854 | 189 | python decl doc at src/pluggy/_manager.py:83 |  |  | 0.570 |
+| ns | 8997 |  | 202 | .pre-commit-config.yaml: repo + hook-id roster | 6.5 |  | 0.565 |
+| walker |  | 9043 | 189 | python decl doc at src/pluggy/_warnings.py:10 |  |  | 0.584 |
+| ns | 9048 |  | 51 | .coveragerc: [run] section (what coverage.py tracks) | 6.6 |  | 0.581 |
+| ns | 9111 |  | 63 | MANIFEST.in: full (sdist inclusion rules) | 6.7 |  | 0.578 |
+| walker |  | 9140 | 97 | python method doc at src/pluggy/_manager.py:304 |  |  | 0.578 |
+| ns | 9221 |  | 110 | CHANGELOG.rst: pluggy 1.6.0 -- version header + deprecations | 7.1 |  | 0.575 |
+| walker |  | 9238 | 98 | python method doc at src/pluggy/_hooks.py:516 |  |  | 0.575 |
+| walker |  | 9337 | 99 | python method doc at src/pluggy/_result.py:67 |  |  | 0.575 |
+| walker |  | 9440 | 103 | python method doc at src/pluggy/_manager.py:395 |  |  | 0.575 |
+| ns | 9452 |  | 231 | CHANGELOG.rst: pluggy 1.6.0 -- bug fixes | 7.2 | 7.1 | 0.570 |
+| ns | 9655 |  | 203 | changelog/README.rst: newsfragment type taxonomy + naming convention | 7.3 |  | 0.565 |
+| walker |  | 9656 | 216 | python class body at src/pluggy/_hooks.py:593 |  |  | 0.565 |
+| walker |  | 9715 | 59 | python decl at src/pluggy/_callers.py:82 |  |  | 0.565 |
+| walker |  | 9849 | 134 | declaration surface of TIDELIFT.rst |  |  | 0.565 |
+| walker |  | 9867 | 18 | python method body at src/pluggy/_tracing.py:60 body 61 |  |  | 0.565 |
+| walker |  | 9976 | 109 | python imports in src/pluggy/_result.py |  |  | 0.565 |
+| ns | 9980 |  | 325 | RELEASING.rst: full release procedure | 7.4 |  | 0.555 |

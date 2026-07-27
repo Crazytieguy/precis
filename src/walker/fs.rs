@@ -320,10 +320,19 @@ const NON_JS_MODULE_ENTRYPOINT_FILES: &[&str] = &["mod.rs", "__init__.py"];
 const MODULE_SIBLING_EXTS: &[&str] = &["rs", "ts", "tsx", "py"];
 const MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT: usize = 2;
 
+/// Case-insensitive, and `Sources/` counts: that is the spelling
+/// SwiftPM mandates, and the same for `Source/` in Objective-C and
+/// C# trees. A case-sensitive check leaves those repos with no
+/// recognised source root at all.
 pub(crate) fn is_source_dir(dir: &Path) -> bool {
     dir.file_name()
         .and_then(|n| n.to_str())
-        .is_some_and(|name| matches!(name, "src" | "lib" | "source"))
+        .is_some_and(|name| {
+            matches!(
+                name.to_ascii_lowercase().as_str(),
+                "src" | "lib" | "source" | "sources"
+            )
+        })
 }
 
 /// `pkg/` directory next to a `go.mod` — the Go convention for
@@ -523,9 +532,10 @@ fn is_large_root_test_inventory_dir(
     catalog_files >= MIN_TEST_INDEX_FILES
 }
 
-/// True when `dir` lies under a root-level `src`/`lib`/`source`/`pkg/` dir.
-/// Promotes flat source partitions into the inventory tier; the
-/// shallowness gate avoids crowding in multi-package layouts.
+/// True when `dir` lies under a `src`/`lib`/`source`/`pkg/` dir that
+/// belongs to a package root. Promotes flat source partitions into the
+/// inventory tier; the shallowness gate avoids crowding in
+/// multi-package layouts.
 fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
     let root = ctx.root();
     let mut parent = dir.parent();
@@ -533,12 +543,56 @@ fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
         if p == root || !p.starts_with(root) {
             return false;
         }
-        if (is_source_dir(p) || is_go_pkg_wrapper(p)) && p.parent() == Some(root) {
+        if (is_source_dir(p) || is_go_pkg_wrapper(p))
+            && p.parent()
+                .is_some_and(|owner| owner == root || is_package_root_dir(owner, ctx.dir_filter()))
+        {
             return true;
         }
         parent = p.parent();
     }
     false
+}
+
+/// Manifest filenames that mark a directory as a package root — the
+/// point a language's source layout is measured from.
+const PACKAGE_MANIFEST_FILES: &[&str] = &[
+    "pom.xml",
+    "build.gradle",
+    "build.gradle.kts",
+    "build.sbt",
+    "package.json",
+    "Cargo.toml",
+    "pyproject.toml",
+    "setup.py",
+    "go.mod",
+    "composer.json",
+    "Gemfile",
+    "Package.swift",
+    "pubspec.yaml",
+    "mix.exs",
+];
+
+/// A directory holding its own package manifest. In a multi-module
+/// repo (Maven/Gradle reactors, Cargo workspaces, npm monorepos) the
+/// module directory plays the role the repo root plays in a
+/// single-module one, so `<module>/src/…` is as much a source root as
+/// `<root>/src/…`. Without this a Maven reactor's
+/// `gson/src/main/java/com/google/gson/` never registers as a source
+/// inventory, its 60-file listing loses the ratio race at depth 7,
+/// and nothing inside it is ever discovered.
+///
+/// Reads through the walk's ignore filter: a manifest git ignores is
+/// not this repository's statement about its own layout.
+fn is_package_root_dir(dir: &Path, filter: &DirFilter) -> bool {
+    let entries = list_dir(dir, filter);
+    PACKAGE_MANIFEST_FILES
+        .iter()
+        .any(|manifest| matches!(entries.get(*manifest), Some(EntryKind::File)))
+        || entries.iter().any(|(name, kind)| {
+            matches!(kind, EntryKind::File)
+                && (name.ends_with(".gemspec") || name.ends_with(".csproj"))
+        })
 }
 
 fn source_inventory_count_uncached(
@@ -575,19 +629,26 @@ fn source_inventory_count_uncached(
     count.min(target)
 }
 
+/// A directory is a source directory because of what its files *are*,
+/// not because of which languages this crate happens to parse — a
+/// `com/google/gson/` of `.java` is as much a package as a `src/` of
+/// `.ts`. The parsed languages are listed here; every other
+/// hand-authored source format comes from
+/// [`crate::walker::plaintext::SOURCE_TEXT_CODE_EXTENSIONS`].
 fn is_source_inventory_file(path: &Path) -> bool {
     // Markdown files count here because docs directories are inventories too:
     // a listing of pages often carries the orientation value.
-    const SOURCE_INVENTORY_EXTS: &[&str] = &[
+    const PARSED_INVENTORY_EXTS: &[&str] = &[
         "c", "cc", "cjs", "cpp", "cxx", "go", "h", "hpp", "js", "jsx", "md", "mdx", "mjs", "py",
         "rs", "ts", "tsx",
     ];
     path.extension()
         .and_then(|e| e.to_str())
         .is_some_and(|ext| {
-            SOURCE_INVENTORY_EXTS
-                .iter()
-                .any(|candidate| ext.eq_ignore_ascii_case(candidate))
+            let lower = ext.to_ascii_lowercase();
+            PARSED_INVENTORY_EXTS.contains(&lower.as_str())
+                || crate::walker::plaintext::SOURCE_TEXT_LANGUAGE_EXTENSIONS
+                    .contains(&lower.as_str())
         })
 }
 
