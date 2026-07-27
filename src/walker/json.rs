@@ -18,7 +18,9 @@ use crate::batch::{Batch, BatchKey, JsonKey};
 use crate::content::BatchContent;
 use crate::value::{depth_factor, mix_signals};
 
-use super::workspace::{WorkspaceMembership, canonical_member, expand_member_entry};
+use super::workspace::{
+    WORKSPACE_MEMBER_IDENTITY_FACTOR, WorkspaceMembership, canonical_member, expand_member_entry,
+};
 use super::{
     FileLines, WalkCtx, dedup_sorted, first_child_of_kind, fs::files_with_any_extension,
     gated_whole_file_content, path_depth_factor, single_file_lines_content,
@@ -31,10 +33,6 @@ const WHOLE_LINE_CAP: usize = 60;
 /// FS-metadata pre-flight gate (≈200 bytes/line × line cap) — typical
 /// generated JSONs are huge; skip without reading.
 const WHOLE_BYTE_GATE: usize = WHOLE_LINE_CAP * 200;
-
-/// Damp `Identity` signals on workspace-member `package.json` files —
-/// sub-package identity is mostly inherited from the root.
-const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
 /// Per-run JSON-walker state — caches the seed root's JS/TS workspace
 /// member set (npm/yarn `workspaces` + `pnpm-workspace.yaml`).

@@ -31,10 +31,10 @@ Score(3000)=0.470 I=0.725 C=0.305 ns_rows≤3K=29/43 (reached=11 partial=1 missi
 | ns | 714 |  | 130 | tomli/__init__.py (full public API) | 2.1 |  | 0.660 |
 | walker |  | 765 | 393 | README headline in README.md |  |  | 0.660 |
 | ns | 836 |  | 122 | _parser.py roster: table/array/key rules | 2.2 |  | 0.618 |
-| walker |  | 864 | 99 | manifest config in pyproject.toml |  |  | 0.618 |
-| ns | 963 |  | 127 | pyproject.toml mypy strict config | 2.3 |  | 0.579 |
-| walker |  | 965 | 101 | [package] in pyproject.toml |  |  | 0.581 |
-| walker |  | 1023 | 58 | package metadata in pyproject.toml |  |  | 0.582 |
+| walker |  | 870 | 105 | [package] in pyproject.toml |  |  | 0.618 |
+| walker |  | 930 | 60 | package metadata in pyproject.toml |  |  | 0.620 |
+| ns | 963 |  | 127 | pyproject.toml mypy strict config | 2.3 |  | 0.581 |
+| walker |  | 1023 | 93 | manifest config in pyproject.toml |  |  | 0.582 |
 | walker |  | 1055 | 32 | python imports in setup.py |  |  | 0.582 |
 | ns | 1101 |  | 138 | _parser.py roster: value parsing | 2.4 |  | 0.550 |
 | walker |  | 1182 | 127 | tool.isort config in pyproject.toml |  |  | 0.550 |

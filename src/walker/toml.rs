@@ -16,11 +16,14 @@
 //!   621 dependency arrays under `[project]`
 //! - `DevelopmentDependencies { file }` — Cargo `[dev-dependencies]`,
 //!   `[build-dependencies]`, target-conditional dependency tables, and PEP
-//!   735 `[dependency-groups]`
+//!   735 `[dependency-groups]`; predecessor: `Dependencies` on the same
+//!   file when that manifest has a runtime roster
 //! - `ToolConfig { file, tool }` — one Python-manifest `tool.<name>` family,
-//!   with adjacent small tables packed into compact families
+//!   with adjacent small tables packed into compact families; predecessor:
+//!   `Identity` on the same file when it has one
 //! - `Config { file }` — every other table of a manifest, whatever it is
-//!   named: build systems, targets, profiles, lints, patches, packaging
+//!   named: build systems, targets, profiles, lints, patches, packaging;
+//!   predecessor: `Identity` on the same file when it has one
 
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
@@ -31,15 +34,11 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TomlKey};
 use crate::value::mix_signals;
 
-use super::workspace::{canonical_member, expand_member_entry};
+use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{
     FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
     single_file_lines_content,
 };
-
-/// Damp `[package]` Identity on workspace-member Cargo.tomls — sub-
-/// crate identity is mostly inherited from the workspace root.
-const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
 /// In a primary-name collision, manifests that definitely are not a
 /// primary candidate stay behind the equally damped candidates. This is
@@ -77,6 +76,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             Vec::new()
         };
         let identity_residue = python_identity_non_lede_rows(&source, &sections);
+        let mut identity: Option<BatchKey> = None;
         if let Some(content) = build_section_content(
             &file,
             &source,
@@ -87,6 +87,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             },
             &identity_residue,
         ) {
+            identity = Some(TomlKey::Identity { file: file.clone() }.into());
             out.push(Batch {
                 key: TomlKey::Identity { file: file.clone() }.into(),
                 predecessor: None,
@@ -132,11 +133,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 value: features_value(&file, ctx),
             });
         }
+        let mut runtime_dependencies = None;
         if let Some(content) =
             build_dependencies_content(&file, &source, &pairs, &sections, python_project_manifest)
         {
+            let key: BatchKey = TomlKey::Dependencies { file: file.clone() }.into();
+            runtime_dependencies = Some(key.clone());
             out.push(Batch {
-                key: TomlKey::Dependencies { file: file.clone() }.into(),
+                key,
                 predecessor: None,
                 content,
                 value: if is_cargo_manifest(&file) {
@@ -154,11 +158,26 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         ) {
             out.push(Batch {
                 key: TomlKey::DevelopmentDependencies { file: file.clone() }.into(),
-                predecessor: None,
+                // Tooling, test and build rosters gate behind the runtime
+                // roster of the same manifest: a manifest that shows its
+                // test harness while withholding what the package is built
+                // on reads as a package with no runtime dependencies.
+                // Pricing cannot supply that ordering — under per-token
+                // ranking a short enough dev block outranks any
+                // priced-higher longer runtime block. A manifest that
+                // genuinely declares no runtime dependencies emits no
+                // Dependencies batch and keeps its dev roster ungated.
+                predecessor: runtime_dependencies,
                 content,
                 value: development_dependencies_value(&file, ctx),
             });
         }
+        // The config appendix of a manifest gates behind that manifest's
+        // identity block: linter settings and build-backend tables are
+        // qualifiers on a package the reader has not been told the name of
+        // yet. The load-bearing sections (scripts, features, dependency
+        // rosters) stay ungated — they answer what the project is on their
+        // own, and gating them costs more than it buys.
         for (tool, content) in
             build_tool_config_contents(&file, &source, &sections, python_project_manifest)
         {
@@ -168,7 +187,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     tool,
                 }
                 .into(),
-                predecessor: None,
+                predecessor: identity.clone(),
                 content,
                 value: config_value(&file, ctx),
             });
@@ -178,7 +197,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         {
             out.push(Batch {
                 key: TomlKey::Config { file: file.clone() }.into(),
-                predecessor: None,
+                predecessor: identity.clone(),
                 content,
                 value: config_value(&file, ctx),
             });
@@ -1616,6 +1635,91 @@ pytest = "*"
         }
         for name in ["profile.release", "bin", "example", "test", "bench"] {
             assert!(!is_dependency_section(name), "config/target only: {name}");
+        }
+    }
+
+    /// Dev/build/target rosters must never be purchasable before the runtime
+    /// roster of the same manifest — otherwise a manifest can render its
+    /// tooling alone and read as having no runtime dependencies. A manifest
+    /// without a runtime roster has nothing to gate behind.
+    #[test]
+    fn walker_toml_development_dependencies_gate_behind_runtime_dependencies() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        fs::write(
+            root.join("Cargo.toml"),
+            "[package]\nname='demo'\nversion='0.1.0'\n\
+             [dependencies]\nserde='1'\n[dev-dependencies]\nproptest='1'\n",
+        )
+        .unwrap();
+        fs::create_dir(root.join("leaf")).unwrap();
+        fs::write(
+            root.join("leaf/Cargo.toml"),
+            "[package]\nname='leaf'\nversion='0.1.0'\n[dev-dependencies]\nproptest='1'\n",
+        )
+        .unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        for (rel, expected) in [
+            (
+                "Cargo.toml",
+                Some(BatchKey::Toml(TomlKey::Dependencies {
+                    file: root.join("Cargo.toml"),
+                })),
+            ),
+            ("leaf/Cargo.toml", None),
+        ] {
+            let manifest = root.join(rel);
+            let batches = expand_in_dir(manifest.parent().unwrap(), &ctx);
+            let dev = batches
+                .iter()
+                .find(|b| {
+                    matches!(&b.key, BatchKey::Toml(TomlKey::DevelopmentDependencies { file })
+                        if *file == manifest)
+                })
+                .expect("development dependencies batch");
+            assert_eq!(dev.predecessor, expected, "{rel}");
+        }
+    }
+
+    /// A manifest's config appendix is a qualifier on the package the
+    /// identity block names, so it waits for it. A manifest that declares
+    /// no identity table at all — a bare `[build-system]` pyproject — has
+    /// nothing to wait for and stays ungated.
+    #[test]
+    fn walker_toml_config_appendix_gates_behind_identity() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        fs::write(
+            root.join("Cargo.toml"),
+            "[package]\nname='demo'\nversion='0.1.0'\n[profile.release]\nlto=true\n",
+        )
+        .unwrap();
+        fs::write(
+            root.join("pyproject.toml"),
+            "[build-system]\nrequires = ['setuptools']\nbuild-backend = 'setuptools.build_meta'\n",
+        )
+        .unwrap();
+
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+        for (rel, expected) in [
+            (
+                "Cargo.toml",
+                Some(BatchKey::Toml(TomlKey::Identity {
+                    file: root.join("Cargo.toml"),
+                })),
+            ),
+            ("pyproject.toml", None),
+        ] {
+            let file = root.join(rel);
+            let config = batches
+                .iter()
+                .find(
+                    |b| matches!(&b.key, BatchKey::Toml(TomlKey::Config { file: f }) if *f == file),
+                )
+                .expect("config batch");
+            assert_eq!(config.predecessor, expected, "{rel}");
         }
     }
 

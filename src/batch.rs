@@ -631,13 +631,16 @@ pub enum TomlKey {
     /// plus Python-manifest dependency sections.
     Dependencies { file: PathBuf },
     /// Cargo `[dev-dependencies]`, `[build-dependencies]`, and target-
-    /// conditional dependency tables.
+    /// conditional dependency tables. Predecessor: `Dependencies` on the
+    /// same file, when that manifest declares a runtime roster.
     DevelopmentDependencies { file: PathBuf },
     /// One top-level Python-manifest `tool.<name>` family, including its
     /// descendants, or a compact family of adjacent small tool tables.
+    /// Predecessor: `Identity` on the same file, when it has one.
     ToolConfig { file: PathBuf, tool: String },
     /// Manifest-level operational config outside Python `tool.*` families:
     /// build systems, package metadata, Cargo targets, and profiles.
+    /// Predecessor: `Identity` on the same file, when it has one.
     Config { file: PathBuf },
 }
 

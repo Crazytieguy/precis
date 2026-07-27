@@ -7,6 +7,13 @@ use std::cell::{OnceCell, RefCell};
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
+/// Damp the identity block of a workspace-member manifest — a sub-crate
+/// / sub-package states its own name and version, but what the project
+/// *is* is mostly inherited from the workspace root. Language-independent:
+/// Cargo members and npm/pnpm members answer the reader's question the
+/// same way, so both walkers price them the same.
+pub(super) const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
+
 /// Per-run cache of a workspace's resolved member-manifest set plus a
 /// raw-path → `is_member` lookup. Shared across the TOML, JSON, and
 /// Rust walkers; rust's `RustState` reuses TOML's resolver via this.

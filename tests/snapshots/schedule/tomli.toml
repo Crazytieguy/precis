@@ -247,36 +247,10 @@ kind = "full"
 
 [[batches]]
 position = 14
-key = 'Toml(Config { file: "pyproject.toml" })'
-descriptor = "manifest config in pyproject.toml"
-cost_tokens = 99
-cum_tokens = 864
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "pyproject.toml"
-start = 28
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
-cost_tokens = 101
-cum_tokens = 965
+cost_tokens = 105
+cum_tokens = 870
 
 [batches.content]
 kind = "lines"
@@ -306,11 +280,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
 descriptor = "package metadata in pyproject.toml"
-cost_tokens = 58
-cum_tokens = 1023
+cost_tokens = 60
+cum_tokens = 930
 
 [batches.content]
 kind = "lines"
@@ -335,6 +309,32 @@ kind = "full"
 path = "pyproject.toml"
 start = 26
 end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Toml(Config { file: "pyproject.toml" })'
+descriptor = "manifest config in pyproject.toml"
+cost_tokens = 93
+cum_tokens = 1023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 28
+end = 30
 
 [batches.content.spans.render]
 kind = "full"

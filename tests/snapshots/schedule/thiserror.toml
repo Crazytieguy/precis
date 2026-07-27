@@ -721,36 +721,10 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'Toml(Config { file: "impl/Cargo.toml" })'
-descriptor = "manifest config in impl/Cargo.toml"
-cost_tokens = 161
-cum_tokens = 2513
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "impl/Cargo.toml"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "impl/Cargo.toml"
-start = 19
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
 key = 'Rust(PubItemNames { file: "src/provide.rs" })'
 descriptor = "pub-item names surface in src/provide.rs"
 cost_tokens = 44
-cum_tokens = 2557
+cum_tokens = 2396
 
 [batches.content]
 kind = "lines"
@@ -788,11 +762,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Rust(PubItemNames { file: "src/display.rs" })'
 descriptor = "pub-item names surface in src/display.rs"
 cost_tokens = 45
-cum_tokens = 2602
+cum_tokens = 2441
 
 [batches.content]
 kind = "lines"
@@ -830,11 +804,11 @@ end = 47
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Rust(PubItemNames { file: "src/aserror.rs" })'
 descriptor = "pub-item names surface in src/aserror.rs"
 cost_tokens = 46
-cum_tokens = 2648
+cum_tokens = 2487
 
 [batches.content]
 kind = "lines"
@@ -872,11 +846,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Fs(DirListing { dir: "tests/no-std" })'
 descriptor = "listing of 'tests/no-std'"
 cost_tokens = 8
-cum_tokens = 2656
+cum_tokens = 2495
 
 [batches.content]
 kind = "fs"
@@ -886,11 +860,11 @@ parent = "tests/no-std"
 entries = ["Cargo.toml", "test.rs"]
 
 [[batches]]
-position = 40
+position = 39
 key = 'Rust(PubItemNames { file: "impl/src/expand.rs" })'
 descriptor = "pub-item names surface in impl/src/expand.rs"
 cost_tokens = 44
-cum_tokens = 2700
+cum_tokens = 2539
 
 [batches.content]
 kind = "lines"
@@ -923,42 +897,42 @@ kind = "ellipsis"
 path = "impl/src/expand.rs"
 start = 506
 end = 506
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 40
+key = 'Rust(PubItem { file: "impl/src/expand.rs", start_line: 12 })'
+descriptor = "pub item at impl/src/expand.rs:12"
+cost_tokens = 0
+cum_tokens = 2539
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "impl/src/expand.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "impl/src/expand.rs"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 41
-key = 'Rust(PubItem { file: "impl/src/expand.rs", start_line: 12 })'
-descriptor = "pub item at impl/src/expand.rs:12"
-cost_tokens = 0
-cum_tokens = 2700
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "impl/src/expand.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "impl/src/expand.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 42
 key = 'Rust(PubItem { file: "impl/src/expand.rs", start_line: 505 })'
 descriptor = "pub item at impl/src/expand.rs:505"
 cost_tokens = 0
-cum_tokens = 2700
+cum_tokens = 2539
 
 [batches.content]
 kind = "lines"
@@ -980,11 +954,11 @@ end = 506
 kind = "ellipsis"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Rust(CrateDocTail { file: "src/lib.rs", start_line: 45 })'
 descriptor = "crate-doc tail at src/lib.rs:45"
 cost_tokens = 259
-cum_tokens = 2959
+cum_tokens = 2798
 
 [batches.content]
 kind = "lines"
@@ -998,11 +972,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Toml(Identity { file: "impl/Cargo.toml" })'
 descriptor = "[package] in impl/Cargo.toml"
-cost_tokens = 120
-cum_tokens = 3079
+cost_tokens = 122
+cum_tokens = 2920
 
 [batches.content]
 kind = "lines"
@@ -1011,6 +985,32 @@ kind = "lines"
 path = "impl/Cargo.toml"
 start = 1
 end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Toml(Config { file: "impl/Cargo.toml" })'
+descriptor = "manifest config in impl/Cargo.toml"
+cost_tokens = 159
+cum_tokens = 3079
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "impl/Cargo.toml"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "impl/Cargo.toml"
+start = 19
+end = 28
 
 [batches.content.spans.render]
 kind = "full"
