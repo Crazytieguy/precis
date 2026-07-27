@@ -32,15 +32,11 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TomlKey};
 use crate::value::mix_signals;
 
-use super::workspace::{canonical_member, expand_member_entry};
+use super::workspace::{WORKSPACE_MEMBER_IDENTITY_FACTOR, canonical_member, expand_member_entry};
 use super::{
     FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
     single_file_lines_content,
 };
-
-/// Damp `[package]` Identity on workspace-member Cargo.tomls — sub-
-/// crate identity is mostly inherited from the workspace root.
-const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
 /// In a primary-name collision, manifests that definitely are not a
 /// primary candidate stay behind the equally damped candidates. This is
