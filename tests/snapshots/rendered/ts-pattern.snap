@@ -16,6 +16,25 @@ README.md
        5→with smart type inference.
        6→</p>
     …
+      20→```tsx
+      21→import { match, P } from 'ts-pattern';
+      22→
+      23→type Data =
+      24→  | { type: 'text'; content: string }
+      25→  | { type: 'img'; src: string };
+      26→
+      27→type Result =
+      28→  | { type: 'ok'; data: Data }
+      29→  | { type: 'error'; error: Error };
+      30→
+      31→const result: Result = ...;
+      32→
+      33→const html = match(result)
+      34→  .with({ type: 'error' }, () => <p>Oups! An error occured</p>)
+      35→  .with({ type: 'ok', data: { type: 'text' } }, (res) => <p>{res.data.content}</p>)
+      36→  .with({ type: 'ok', data: { type: 'img', src: P.select() } }, (src) => <img src={src} />)
+      37→  .exhaustive();
+      38→```
       40→## About
       41→
       42→Write **better** and **safer conditions**. Pattern matching lets you express complex conditions in a single, compact expression. Your code becomes **shorter** and **more readable**. Exhaustiveness checking ensures you haven’t forgotten **any possible case**.
@@ -191,52 +210,6 @@ src/
           33→  value: input
           34→): Match<input, output> {
           35→  return new MatchExpression(value, unmatched) as any;
-        …
-          38→/**
-          39→ * This class represents a match expression. It follows the
-          40→ * builder pattern, we chain methods to add features to the expression
-          41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
-          42→ * method to execute it.
-          43→ *
-          44→ * The types of this class aren't public, the public type definition
-          45→ * can be found in src/types/Match.ts.
-          46→ */
-          47→class MatchExpression<input, output> {
-          48→  constructor(private input: input, private state: MatchState<output>) {}
-          49→
-          50→  with(...args: any[]): MatchExpression<input, output> {
-          51→    if (this.state.matched) return this;
-          53→    const handler: (selection: unknown, value: input) => output =
-          54→      args[args.length - 1];
-          56→    const patterns: Pattern<input>[] = [args[0]];
-          57→    let predicate: ((value: input) => unknown) | undefined = undefined;
-        …
-          67→    let hasSelections = false;
-          68→    let selected: Record<string, unknown> = {};
-        …
-          91→    return new MatchExpression(this.input, state);
-        …
-          94→  when(
-          95→    predicate: (value: input) => unknown,
-          96→    handler: (selection: input, value: input) => output
-          97→  ): MatchExpression<input, output> {
-        …
-         110→  otherwise(handler: (value: input) => output): output {
-         111→    if (this.state.matched) return this.state.value;
-         112→    return handler(this.input);
-        …
-         115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
-         116→    if (this.state.matched) return this.state.value;
-         117→    return unexpectedValueHandler(this.input);
-        …
-         120→  run(): output {
-         121→    return this.exhaustive();
-        …
-         124→  returnType() {
-         125→    return this;
-        …
-         128→  narrow() {
-         129→    return this;
         …
     patterns.ts
     types/

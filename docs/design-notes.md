@@ -536,6 +536,70 @@ Measured-dead this session (don't re-test without new evidence):
   (exactly flat everywhere). The 3K frontier is the binding
   constraint; absent-bucket recall only pays at B ≥ 4327.
 
+## Markdown README prelude recall (2026-07-26): 0.6302 → 0.6321
+
+The pre-first-heading region of a README was read only by
+`ReadmeHeadline`, which takes at most two blocks of it (one lede plus
+a tagline extension). No `Section` range reaches above the first
+heading, so the rest of the prelude was **pool-absent** — 875 NS
+tokens ≤3K across 11 training fixtures in the 2026-07-26 recall
+census. Shipped as `MarkdownKey::Prelude { file }`: the *substantive*
+prelude blocks the headline left behind, predecessor `ReadmeHeadline`,
+priced at 1.3× the README index-0 section value. Movers: microbootstrap
++0.080, audiobookshelf +0.030, cobra +0.029, ts-pattern −0.004.
+
+- **Chrome must not ride along — measured, not assumed.** The first
+  cut emitted *every* uncovered prelude row (badges, logo wrappers,
+  screenshots) because several NSes rank the hero region whole (chalk
+  1.10 is literally "lede + badges + screenshot", middleclass 1.3 is
+  "README badges"). Corpus mean −0.0061: mitt −0.226, dockly −0.083,
+  tomli −0.057, neco −0.054, linkding −0.044 against chalk +0.028,
+  swarm/soluna/cmdk ≈+0.006 each. A badge wall is ~40 tokens of URL
+  per row at the very top of the schedule; the NSes that want it are
+  a minority and the ones that don't pay for it immediately. Whether
+  an NS ranks the hero is not a walker-visible signal — don't retry a
+  discriminator for it.
+- **The same lesson kills the section-0 half of the hole.** README
+  section 0 starts at `max(headline_last_row + 1, range.start)`, so
+  rows the headline *stepped over* inside its own range (middleclass's
+  badge rows between the setext title and the lede) are dropped too.
+  Replacing the prefix cut with a set difference over
+  `covered_rows` measured −0.0033 (xlstm −0.064, anyhow −0.050,
+  requests −0.050, thiserror −0.040, go-multierror −0.038 vs xxhash
+  +0.012, sqlite-vec +0.009, middleclass +0.008): the recovered rows
+  are chrome, and inflating a high-value early section's cost with
+  them costs more than they return. The prefix cut is correct; its
+  comment now says why.
+- **Two chrome classifiers were too narrow and both fixes paid.**
+  (a) `is_html_nav_block` only matched in-page anchors (`href="#"`),
+  so an absolute-URL link bar (`<a>Demo</a> · <a>Docs</a> · <a>CLI</a>`)
+  read as prose — it is now recognized by stripping the anchors and
+  checking the residue is separator punctuation. This also fires in
+  `ReadmeHeadline`, which is where audiobookshelf's +0.030 comes from:
+  its headline was spending 10 rows on a banner + link bar instead of
+  the "what is this" sentence under `# About`. (b) A badge wall
+  written as raw HTML inside a *markdown paragraph*
+  (`<a …><img …></a>` per line, linkwarden) was not decorative because
+  `is_decorative_paragraph` only inspects markdown inline nodes; the
+  tag-stripping test now applies to paragraphs too, gated on seeing a
+  real element tag so `<https://…>` autolinks stay content.
+- **Value factor is flat over [1.3, 1.6]** (identical per-fixture rows);
+  1.0 loses cobra (its 211-token prelude prices at 4889 instead of
+  ≤3K) for −0.0004. Shipped at 1.3.
+- **Known residue.** cobra's prelude drags in an eight-row Warp
+  sponsorship `<div>` — an `<img>` with a 13-character caption, which
+  is decoration but not tag-only. A "short caption + image ⇒ chrome"
+  rule would need a character threshold that separates it from
+  linkwarden's 29-character `<h1>Linkwarden</h1><h3>Bookmarks,
+  Evolved</h3>` title block; two data points is not enough to set one.
+  ts-pattern's −0.004 is its top-of-README `tsx` demo fence, which no
+  NS row ranks — kept deliberately: it is the same construct as
+  microbootstrap's fence, which is worth +0.080.
+- **Under-heading README body prose is NOT this class.** Every H2
+  becomes a `Section` batch, so a README that renders as headings with
+  elided bodies (chalk: 38 section batches spanning cum 1227–9428) is
+  *priced-out*, not pool-absent — a different, harder problem.
+
 ## Markdown oversize head-split (2026-07-18): 0.6029 → 0.6047
 
 Root-README sections ≥ 400 tokens that no structural split catches

@@ -42,6 +42,7 @@ Readme.md
       10→<br/>
     …
       36→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql…
+      38→But Superstruct is designed for validating data at runtime, so it throws (or returns) detailed runtime errors for you or your end users. This is especially useful in situations like accepting arbitrary input in a REST or GraphQL API. But it can even be used to validate internal data structures at runtime when needed.
     …
       42→### Usage
       43→
@@ -119,6 +120,7 @@ docs/
         logo.sketch
     readme.md
            1→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [TypeScript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql…
+           3→But Superstruct is designed for validating data at runtime, so it throws (or returns) detailed runtime errors for you or your end users. This is especially useful in situations like accepting arbitrary input in a REST or GraphQL API. But it can even be used to validate internal data structures at runtime when needed.
         …
            7→### Usage
            8→
@@ -261,9 +263,6 @@ src/
         …
           10→export class Struct<T = unknown, S = unknown> {
         …
-         119→/**
-         120→ * Assert that a value passes a struct, throwing if it doesn't.
-         121→ */
          123→export function assert<T, S>(
          124→  value: unknown,
          125→  struct: Struct<T, S>,
@@ -282,9 +281,6 @@ src/
          160→  message?: string
          161→): T {
         …
-         171→/**
-         172→ * Check if a value passes a struct.
-         173→ */
          175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
          176→  const result = validate(value, struct)
          177→  return !result[0]
@@ -304,13 +300,9 @@ src/
          223→  path: Array<any>
          224→  mask?: boolean
          225→}
-         227→/**
-         228→ * A type utility to extract the type from a `Struct` class.
-         229→ */
+        …
          231→export type Infer<T extends Struct<any, any>> = T['TYPE']
-         233→/**
-         234→ * A type utility to describe that a struct represents a TypeScript type.
-         235→ */
+        …
          237→export type Describe<T> = Struct<T, StructSchema<T>>
          239→/**
          240→ * A `Result` is returned from validation functions.
@@ -320,9 +312,7 @@ src/
          245→  | string
          246→  | Partial<Failure>
          247→  | Iterable<boolean | string | Partial<Failure>>
-         249→/**
-         250→ * A `Coercer` takes an unknown value and optionally coerces it.
-         251→ */
+        …
          253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
          255→/**
          256→ * A `Validator` takes an unknown value and validates it.

@@ -11,7 +11,46 @@ Justfile
 README.md
     …
       12→<b>microbootstrap</b> assists you in creating applications with all the necessary instruments already set up.
-    …
+      14→```python
+      15→# settings.py
+      16→from microbootstrap import LitestarSettings
+      17→
+      18→
+      19→class YourSettings(LitestarSettings):
+      20→    ...  # Your settings are stored here
+      21→
+      22→
+      23→settings = YourSettings()
+      24→
+      25→
+      26→# application.py
+      27→import litestar
+      28→from microbootstrap.bootstrappers.litestar import LitestarBootstrapper
+      29→
+      30→from your_application.settings import settings
+      31→
+      32→# Use the Litestar application!
+      33→application: litestar.Litestar = LitestarBootstrapper(settings).bootstrap()
+      34→```
+      35→
+      36→With <b>microbootstrap</b>, you receive an application with lightweight built-in support for:
+      37→
+      38→- `sentry`
+      39→- `prometheus`
+      40→- `opentelemetry`
+      41→- `logging`
+      42→- `cors`
+      43→- `swagger` - with additional offline version support
+      44→- `health-checks`
+      45→
+      46→Those instruments can be bootstrapped for:
+      47→
+      48→- `fastapi`,
+      49→- `litestar`,
+      50→- or `faststream` service,
+      51→- or even a service that doesn't use one of these frameworks.
+      52→
+      53→Interested? Let's dive right in ⚡
       55→## Table of Contents
       56→
       57→- [Installation](#installation)
@@ -213,45 +252,7 @@ microbootstrap/
     instruments/
         __init__.py
         base.py
-            …
-              15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
-              16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
-              17→
-              18→
-              19→class BaseInstrumentConfig(pydantic.BaseModel):
-              20→    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
-              23→@dataclasses.dataclass
-              24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
-              25→    instrument_config: InstrumentConfigT
-              26→    instrument_name: typing.ClassVar[str]
-              27→    ready_condition: typing.ClassVar[str]
-              29→    def configure_instrument(
-              30→        self,
-              31→        incoming_config: InstrumentConfigT,
-              32→    ) -> None:
-            …
-              35→    def write_status(self, console_writer: ConsoleWriter) -> None:
-            …
-              42→    @abc.abstractmethod
-              43→    def is_ready(self) -> bool: ...
-              45→    @classmethod
-              46→    @abc.abstractmethod
-              47→    def get_config_type(cls) -> type[InstrumentConfigT]:
-            …
-              50→    def bootstrap(self) -> None:
-            …
-              53→    def teardown(self) -> None:
-            …
-              56→    def bootstrap_before(self) -> dict[str, typing.Any]:
-            …
-              60→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
-            …
         cors_instrument.py
-            …
-               8→class CorsConfig(BaseInstrumentConfig):
-            …
-              18→class CorsInstrument(Instrument[CorsConfig]):
-            …
         health_checks_instrument.py
         instrument_box.py
             …
