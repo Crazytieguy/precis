@@ -555,7 +555,7 @@ fn source_inventory_count_uncached(
         }
         if file_type.is_dir() {
             let name = entry.file_name();
-            if !should_skip_dir(&name.to_string_lossy()) {
+            if !crate::fs_util::should_skip_dir(&name.to_string_lossy()) {
                 let child_count = state.source_inventory_count(&path, target, filter);
                 count += child_count.min(target.saturating_sub(count));
             }
@@ -592,22 +592,6 @@ fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 
     crate::value::depth_factor(depth) * non_essential.max(0.5)
 }
 
-/// Directories the walker never recurses into — heavy/generated trees.
-/// They still appear in listings; only walker traversal is affected.
-///
-/// Kept alongside the gitignore filter rather than subsumed by it:
-/// inside a repository these names are almost always gitignored and the
-/// list never fires, but precis also runs on trees that aren't
-/// repositories (extracted archives, vendored snapshots, the fixture
-/// corpus), where the filter is inert by design and this is the only
-/// thing standing between the walk and a `node_modules` tree.
-pub(crate) fn should_skip_dir(name: &str) -> bool {
-    matches!(
-        name,
-        "target" | "node_modules" | ".git" | "dist" | "build" | ".next" | "__pycache__"
-    )
-}
-
 /// Path-aware exception to the name-only heavy-directory policy. A checked-in
 /// Rust module may legitimately be named `build/`; generated build output does
 /// not gain traversal merely by containing arbitrary artifacts.
@@ -620,7 +604,7 @@ fn should_recurse_dir(dir: &Path, traversal_root: &Path) -> bool {
     // skip list.
     let name = name.to_string_lossy();
     if name != "build" {
-        return !should_skip_dir(&name);
+        return !crate::fs_util::should_skip_dir(&name);
     }
     is_owned_rust_build_dir(dir, traversal_root)
 }

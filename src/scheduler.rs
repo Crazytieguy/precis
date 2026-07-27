@@ -144,10 +144,12 @@ impl<W: Walker> Scheduler<W> {
         byte_budget: Option<usize>,
         source_cache: SourceCache,
     ) -> Self {
+        let ctx = WalkCtx::with_cache(root.clone(), source_cache.clone());
+        let tree = RenderedTree::with_filter(root, source_cache, ctx.dir_filter_handle());
         Self {
             walker,
-            ctx: WalkCtx::with_cache(root.clone(), source_cache.clone()),
-            tree: RenderedTree::new(root, source_cache),
+            ctx,
+            tree,
             token_budget,
             byte_budget,
             consumed: Cost::default(),
