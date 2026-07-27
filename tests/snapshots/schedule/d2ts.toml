@@ -1309,82 +1309,10 @@ kind = "full"
 
 [[batches]]
 position = 55
-key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
-descriptor = "README.md section #10"
-cost_tokens = 24
-cum_tokens = 3583
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "README.md"
-start = 183
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 56
-key = 'Fs(DirListing { dir: "packages/d2ts/tests" })'
-descriptor = "listing of 'packages/d2ts/tests'"
-cost_tokens = 42
-cum_tokens = 3625
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2ts/tests"
-entries = ["electric.test.ts", "graph.test.ts", "multiset.test.ts", "operators", "operators-sqlite", "order.test.ts", "utils.test.ts", "version-index.test.ts"]
-
-[[batches]]
-position = 57
-key = 'Fs(DirListing { dir: "packages/d2ts/tests/operators-sqlite" })'
-descriptor = "listing of 'packages/d2ts/tests/operators-sqlite'"
-cost_tokens = 40
-cum_tokens = 3665
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "packages/d2ts/tests/operators-sqlite"
-entries = ["buffer.test.ts", "consolidate.test.ts", "count.test.ts", "distinct.test.ts", "groupBy.test.ts", "injection.test.ts", "join.test.ts", "reduce.test.ts"]
-
-[[batches]]
-position = 58
-key = 'Typescript(ExportBody { file: "packages/d2ts/src/d2.ts", start_line: 166, body_start_line: 171 })'
-descriptor = "export body at packages/d2ts/src/d2.ts:166 body 171"
-cost_tokens = 26
-cum_tokens = 3691
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/d2.ts"
-start = 171
-end = 171
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "packages/d2ts/src/d2.ts"
-start = 175
-end = 175
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
 key = 'Fs(DirListing { dir: "packages/d2ts/src/sqlite/operators" })'
 descriptor = "listing of 'packages/d2ts/src/sqlite/operators'"
 cost_tokens = 56
-cum_tokens = 3747
+cum_tokens = 3615
 
 [batches.content]
 kind = "fs"
@@ -1394,11 +1322,11 @@ parent = "packages/d2ts/src/sqlite/operators"
 entries = ["buffer.ts", "consolidate.ts", "count.ts", "distinct.ts", "filterBy.ts", "groupBy.ts", "index.ts", "join.ts", "orderBy.ts", "reduce.ts", "topK.ts", "topKWithFractionalIndex.ts"]
 
 [[batches]]
-position = 60
+position = 56
 key = 'Typescript(Imports { file: "packages/d2ts/src/sqlite/operators/index.ts" })'
 descriptor = "imports in packages/d2ts/src/sqlite/operators/index.ts"
 cost_tokens = 148
-cum_tokens = 3895
+cum_tokens = 3763
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1340,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 61
+position = 57
 key = 'Typescript(ExportNames { file: "packages/d2ts/src/sqlite/operators/filterBy.ts" })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/operators/filterBy.ts"
 cost_tokens = 13
-cum_tokens = 3908
+cum_tokens = 3776
 
 [batches.content]
 kind = "lines"
@@ -1436,6 +1364,78 @@ end = 18
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 58
+key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
+descriptor = "README.md section #10"
+cost_tokens = 24
+cum_tokens = 3800
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Fs(DirListing { dir: "packages/d2ts/tests" })'
+descriptor = "listing of 'packages/d2ts/tests'"
+cost_tokens = 42
+cum_tokens = 3842
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2ts/tests"
+entries = ["electric.test.ts", "graph.test.ts", "multiset.test.ts", "operators", "operators-sqlite", "order.test.ts", "utils.test.ts", "version-index.test.ts"]
+
+[[batches]]
+position = 60
+key = 'Fs(DirListing { dir: "packages/d2ts/tests/operators-sqlite" })'
+descriptor = "listing of 'packages/d2ts/tests/operators-sqlite'"
+cost_tokens = 40
+cum_tokens = 3882
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "packages/d2ts/tests/operators-sqlite"
+entries = ["buffer.test.ts", "consolidate.test.ts", "count.test.ts", "distinct.test.ts", "groupBy.test.ts", "injection.test.ts", "join.test.ts", "reduce.test.ts"]
+
+[[batches]]
+position = 61
+key = 'Typescript(ExportBody { file: "packages/d2ts/src/d2.ts", start_line: 166, body_start_line: 171 })'
+descriptor = "export body at packages/d2ts/src/d2.ts:166 body 171"
+cost_tokens = 26
+cum_tokens = 3908
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/d2.ts"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "packages/d2ts/src/d2.ts"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 62

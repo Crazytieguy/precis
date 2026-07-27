@@ -47,15 +47,15 @@ Score(3000)=0.587 I=0.812 C=0.424 ns_rows≤3K=22/71 (reached=12 partial=2 missi
 | walker |  | 747 | 17 | listing of 'internal/adapters/repositories/file' |  |  | 0.703 |
 | ns | 747 |  | 23 | assets/ + demo/ listings | 2.9 |  | 0.703 |
 | walker |  | 764 | 17 | listing of 'internal/core/ports/mocks' |  |  | 0.735 |
-| walker |  | 772 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.735 |
-| walker |  | 797 | 25 | README.md section #22 |  |  | 0.735 |
-| walker |  | 835 | 38 | go decl names surface in internal/extra/extra.go |  |  | 0.735 |
-| walker |  | 835 | 0 | go decl at internal/extra/extra.go:11 |  |  | 0.735 |
-| walker |  | 913 | 78 | listing of 'internal/adapters/cli' |  |  | 0.857 |
-| walker |  | 930 | 17 | go decl names surface in internal/adapters/cli/start.go |  |  | 0.857 |
-| walker |  | 930 | 0 | go decl at internal/adapters/cli/start.go:17 |  |  | 0.857 |
-| walker |  | 947 | 17 | go decl names surface in internal/adapters/cli/stop.go |  |  | 0.857 |
-| walker |  | 947 | 0 | go decl at internal/adapters/cli/stop.go:14 |  |  | 0.857 |
+| walker |  | 842 | 78 | listing of 'internal/adapters/cli' |  |  | 0.856 |
+| walker |  | 850 | 8 | go decl body at cmd/tock/main.go:7 |  |  | 0.857 |
+| walker |  | 867 | 17 | go decl names surface in internal/adapters/cli/start.go |  |  | 0.857 |
+| walker |  | 867 | 0 | go decl at internal/adapters/cli/start.go:17 |  |  | 0.857 |
+| walker |  | 884 | 17 | go decl names surface in internal/adapters/cli/stop.go |  |  | 0.857 |
+| walker |  | 884 | 0 | go decl at internal/adapters/cli/stop.go:14 |  |  | 0.857 |
+| walker |  | 909 | 25 | README.md section #22 |  |  | 0.857 |
+| walker |  | 947 | 38 | go decl names surface in internal/extra/extra.go |  |  | 0.857 |
+| walker |  | 947 | 0 | go decl at internal/extra/extra.go:11 |  |  | 0.857 |
 | ns | 1025 |  | 278 | docs/commands.md table of contents | 2.10 |  | 0.772 |
 | ns | 1093 |  | 68 | cmd/tock/main.go | 3.1 |  | 0.745 |
 | ns | 1265 |  | 172 | models.Activity (the one domain entity) | 3.2 |  | 0.694 |

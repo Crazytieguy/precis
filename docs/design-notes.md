@@ -1495,6 +1495,60 @@ extra two tokens land early enough in the schedule to push `vaul`'s
 cost monaco-editor −0.065. A per-file magnitude is worse still — files
 are the bulk of entry rows, so the +2 applies everywhere.
 
+## Directory listings ranked by *ascending* entry count (2026-07-26)
+
+Round-2 usability probes found the biggest directory in a repository is
+the last thing precis ever shows: at budget 9000 htop expanded `m4/`
+(1 entry) and never `linux/` (36 files, the repo's largest subsystem).
+Mechanism: `dir_listing_value` is size-invariant while a listing's cost
+is linear in entries, so `value/cost^k` orders rosters smallest-first —
+and it gets monotonically worse with budget. `roster_mass_factor` is the
+existing cure, and it *was* live on the fs path, but only for the
+source-**inventory** tier, whose gate is
+`non_essential < 1.0 || under_root_source_ancestor`. A normal
+root-adjacent source directory satisfies neither, so the one class of
+directory the fix was written for never received it. (This reconciles
+the two earlier claims in the ledger: the blanket cap raise really is
+dead, *and* the fs catch-all really had no roster mass.)
+
+Shipped: any directory the structural catalog test recognizes
+(`is_source_inventory_dir`, ≥3 source files) is neutralized, excluding
+only named source roots and module dirs — those remain ledger-dead
+(soluna −0.210). Two departures from the inventory tier's call, both
+measured:
+
+| variant | 1000 | 1442 | 2080 | **3000** | 4327 | 6240 | 9000 |
+|---|---|---|---|---|---|---|---|
+| base (`d516cd1a`) | 0.6269 | 0.6249 | 0.6311 | **0.6413** | 0.6031 | 0.5696 | 0.5454 |
+| all entries, full mass | 0.6317 | 0.6245 | 0.6300 | 0.6377 | 0.6036 | 0.5705 | 0.5471 |
+| + catalog-child suppression extended the same way | 0.6237 | 0.6080 | 0.6059 | 0.6148 | 0.5739 | 0.5423 | 0.5214 |
+| terminal entries, full mass | 0.6332 | 0.6249 | 0.6331 | 0.6406 | 0.6045 | 0.5711 | 0.5468 |
+| terminal entries, 0.5 mass | 0.6300 | 0.6255 | 0.6325 | 0.6410 | 0.6044 | 0.5705 | 0.5468 |
+| **terminal entries, 0.75 mass (shipped)** | 0.6332 | 0.6253 | 0.6334 | **0.6412** | 0.6040 | 0.5711 | 0.5468 |
+
+- **Count only terminal (file) entries.** Counting subdirectory rows too
+  neutralizes package roots whose content lives one level down, and
+  buying that index seeds the swarm below it: vite's
+  `packages/create-vite` pulled **1751 tokens across 85 rows** of
+  `template-*/` scaffolding listings inside 3000 (−0.057), and
+  linkwarden's `apps/mobile` + `apps/web` the same way (−0.055). Both go
+  to exactly zero when the mass counts files only.
+- **Partial neutralization (0.75).** Non-monotone in strength: 0.75 is
+  above both 0.5 and 1.0 at 3000 and ties 1.0 at 1000/2080.
+- **Extending `parent_is_high_fanout_catalog`'s gate the same way is
+  measured dead** (−0.0265 at 3000, negative at all seven budgets). The
+  child-suppression precondition is load-bearing; do not re-run.
+
+The residual 3000 loser is **beets −0.055**, and it is a timing
+exposure, not a cost of this rule: the `beetsplug/` listing is NS row
+1.18 at `exp_t=1708` and the walker now delivers it at 1513 (was 2710),
+but scheduling it drags the same `python imports in beetsplug/*/
+__init__.py` cascade — 315/349/151/428/489/506 tokens of import blocks —
+from just past 3000 to just inside it. The identical cascade is present
+in the baseline schedule at 3079+. That is the probe's D2 ("a file's
+first admitted chunk is its least informative region") priced through
+`imports_value`'s `__init__.py` tier, not a listing-value problem.
+
 ## Min-tokens lower bound
 
 `RenderedTree::marginal_cost` is the only path to a real per-batch cost

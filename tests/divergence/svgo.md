@@ -27,51 +27,51 @@ Score(3000)=0.543 I=0.821 C=0.359 ns_rows≤3K=14/40 (reached=6 partial=1 missin
 | walker |  | 523 | 0 | export at lib/version.js:7 |  |  | 0.757 |
 | walker |  | 536 | 13 | listing of '.github' |  |  | 0.757 |
 | walker |  | 557 | 21 | listing of '.github/workflows' |  |  | 0.758 |
-| walker |  | 584 | 27 | export names surface in lib/svgo.js |  |  | 0.758 |
-| walker |  | 584 | 0 | export at lib/svgo.js:81 |  |  | 0.758 |
 | ns | 604 |  | 127 | package.json — key scripts | 1.5 |  | 0.720 |
-| walker |  | 633 | 49 | package runtime metadata in package.json |  |  | 0.720 |
-| walker |  | 650 | 17 | export names surface in lib/util/map-nodes-to-parents.js |  |  | 0.721 |
-| walker |  | 650 | 0 | export at lib/util/map-nodes-to-parents.js:9 |  |  | 0.721 |
-| ns | 735 |  | 131 | package.json — runtime dependencies | 1.6 |  | 0.652 |
-| walker |  | 756 | 106 | headings outline in README.md |  |  | 0.652 |
-| walker |  | 772 | 16 | README.md section #10 |  |  | 0.653 |
-| ns | 799 |  | 64 | README — rationale ('Why?') | 1.7 |  | 0.634 |
-| walker |  | 814 | 42 | export names surface in lib/svgo-node.js |  |  | 0.634 |
-| walker |  | 814 | 0 | export at lib/svgo-node.js:44 |  |  | 0.634 |
-| walker |  | 814 | 0 | export at lib/svgo-node.js:83 |  |  | 0.634 |
-| walker |  | 867 | 53 | export at lib/svgo.js:136 |  |  | 0.636 |
-| walker |  | 878 | 11 | README.md section #8 |  |  | 0.636 |
-| walker |  | 918 | 40 | listing of 'test' |  |  | 0.637 |
-| walker |  | 922 | 4 | listing of 'test/fixtures' |  |  | 0.637 |
-| walker |  | 977 | 55 | README.md section #1 |  |  | 0.574 |
-| ns | 977 |  | 178 | README — CLI usage | 2.1 |  | 0.574 |
-| walker |  | 995 | 18 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.574 |
-| walker |  | 1200 | 205 | package runtime dependencies in package.json |  |  | 0.663 |
-| ns | 1218 |  | 241 | README — svgo.config.mjs shape (plugins array + custom params) | 2.2 |  | 0.568 |
-| ns | 1383 |  | 165 | README — optimize() API usage | 2.3 |  | 0.523 |
-| ns | 1540 |  | 157 | lib/svgo/coa.js — function location roster | 2.4 |  | 0.491 |
-| walker |  | 1555 | 355 | listing of 'plugins' |  |  | 0.498 |
-| walker |  | 1638 | 83 | export names surface in lib/xast.js |  |  | 0.498 |
-| walker |  | 1638 | 0 | export at lib/xast.js:22 |  |  | 0.498 |
-| walker |  | 1638 | 0 | export at lib/xast.js:32 |  |  | 0.498 |
-| walker |  | 1638 | 0 | export at lib/xast.js:42 |  |  | 0.498 |
-| walker |  | 1638 | 0 | export at lib/xast.js:50 |  |  | 0.498 |
-| walker |  | 1657 | 19 | export body at lib/xast.js:42 body 43 |  |  | 0.498 |
-| walker |  | 1677 | 20 | export body at lib/xast.js:22 body 23 |  |  | 0.498 |
-| walker |  | 1697 | 20 | export body at lib/xast.js:32 body 33 |  |  | 0.498 |
-| walker |  | 1732 | 35 | export body at lib/xast.js:50 body 51 |  |  | 0.498 |
-| walker |  | 1767 | 35 | listing of 'test/regression' |  |  | 0.498 |
+| ns | 735 |  | 131 | package.json — runtime dependencies | 1.6 |  | 0.651 |
+| ns | 799 |  | 64 | README — rationale ('Why?') | 1.7 |  | 0.632 |
+| walker |  | 912 | 355 | listing of 'plugins' |  |  | 0.642 |
+| walker |  | 939 | 27 | export names surface in lib/svgo.js |  |  | 0.642 |
+| walker |  | 939 | 0 | export at lib/svgo.js:81 |  |  | 0.642 |
+| ns | 977 |  | 178 | README — CLI usage | 2.1 |  | 0.547 |
+| walker |  | 988 | 49 | package runtime metadata in package.json |  |  | 0.547 |
+| walker |  | 1005 | 17 | export names surface in lib/util/map-nodes-to-parents.js |  |  | 0.547 |
+| walker |  | 1005 | 0 | export at lib/util/map-nodes-to-parents.js:9 |  |  | 0.547 |
+| walker |  | 1111 | 106 | headings outline in README.md |  |  | 0.549 |
+| walker |  | 1127 | 16 | README.md section #10 |  |  | 0.549 |
+| walker |  | 1169 | 42 | export names surface in lib/svgo-node.js |  |  | 0.549 |
+| walker |  | 1169 | 0 | export at lib/svgo-node.js:44 |  |  | 0.549 |
+| walker |  | 1169 | 0 | export at lib/svgo-node.js:83 |  |  | 0.549 |
+| ns | 1218 |  | 241 | README — svgo.config.mjs shape (plugins array + custom params) | 2.2 |  | 0.471 |
+| walker |  | 1222 | 53 | export at lib/svgo.js:136 |  |  | 0.472 |
+| walker |  | 1233 | 11 | README.md section #8 |  |  | 0.472 |
+| walker |  | 1273 | 40 | listing of 'test' |  |  | 0.473 |
+| walker |  | 1277 | 4 | listing of 'test/fixtures' |  |  | 0.473 |
+| walker |  | 1332 | 55 | README.md section #1 |  |  | 0.499 |
+| walker |  | 1350 | 18 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.499 |
+| ns | 1383 |  | 165 | README — optimize() API usage | 2.3 |  | 0.461 |
+| ns | 1540 |  | 157 | lib/svgo/coa.js — function location roster | 2.4 |  | 0.433 |
+| walker |  | 1555 | 205 | package runtime dependencies in package.json |  |  | 0.498 |
 | ns | 1843 |  | 303 | lib/svgo/coa.js — flag definitions (makeProgram) | 2.5 | 2.4 | 0.451 |
 | ns | 1934 |  | 91 | lib/ directory listing | 3.1 |  | 0.510 |
-| walker |  | 1994 | 227 | package entrypoints in package.json |  |  | 0.582 |
-| walker |  | 2051 | 57 | README.md section #14 |  |  | 0.582 |
-| walker |  | 2073 | 22 | export names surface in lib/stringifier.js |  |  | 0.582 |
-| walker |  | 2073 | 0 | export at lib/stringifier.js:66 |  |  | 0.582 |
-| walker |  | 2086 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.582 |
-| walker |  | 2137 | 51 | listing of 'test/fixtures/config-loader' |  |  | 0.582 |
-| ns | 2318 |  | 384 | lib/svgo.js — resolvePluginConfig() | 3.2 |  | 0.524 |
-| walker |  | 2524 | 387 | listing of 'docs/04-plugins' |  |  | 0.524 |
+| walker |  | 1942 | 387 | listing of 'docs/04-plugins' |  |  | 0.510 |
+| walker |  | 2025 | 83 | export names surface in lib/xast.js |  |  | 0.510 |
+| walker |  | 2025 | 0 | export at lib/xast.js:22 |  |  | 0.510 |
+| walker |  | 2025 | 0 | export at lib/xast.js:32 |  |  | 0.510 |
+| walker |  | 2025 | 0 | export at lib/xast.js:42 |  |  | 0.510 |
+| walker |  | 2025 | 0 | export at lib/xast.js:50 |  |  | 0.510 |
+| walker |  | 2044 | 19 | export body at lib/xast.js:42 body 43 |  |  | 0.510 |
+| walker |  | 2064 | 20 | export body at lib/xast.js:22 body 23 |  |  | 0.510 |
+| walker |  | 2084 | 20 | export body at lib/xast.js:32 body 33 |  |  | 0.510 |
+| walker |  | 2119 | 35 | export body at lib/xast.js:50 body 51 |  |  | 0.510 |
+| walker |  | 2154 | 35 | listing of 'test/regression' |  |  | 0.510 |
+| ns | 2318 |  | 384 | lib/svgo.js — resolvePluginConfig() | 3.2 |  | 0.459 |
+| walker |  | 2381 | 227 | package entrypoints in package.json |  |  | 0.524 |
+| walker |  | 2438 | 57 | README.md section #14 |  |  | 0.524 |
+| walker |  | 2460 | 22 | export names surface in lib/stringifier.js |  |  | 0.524 |
+| walker |  | 2460 | 0 | export at lib/stringifier.js:66 |  |  | 0.524 |
+| walker |  | 2473 | 13 | imports in lib/util/map-nodes-to-parents.js |  |  | 0.524 |
+| walker |  | 2524 | 51 | listing of 'test/fixtures/config-loader' |  |  | 0.524 |
 | walker |  | 2554 | 30 | README.md section #5 |  |  | 0.524 |
 | walker |  | 2586 | 32 | export names surface in lib/path.js |  |  | 0.524 |
 | walker |  | 2586 | 0 | export at lib/path.js:141 |  |  | 0.524 |

@@ -135,10 +135,24 @@ entries = ["不再推荐使用的功能.md", "可变参数的选项.md", "术语
 
 [[batches]]
 position = 8
+key = 'Fs(DirListing { dir: "examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 236
+cum_tokens = 586
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "examples"
+entries = ["action-this.js", "alias.js", "argument.js", "arguments-custom-processing.js", "arguments-extra.js", "color-help-replacement.mjs", "color-help.mjs", "configure-help.js", "configure-output.js", "custom-command-class.js", "custom-help", "custom-help-description", "custom-help-text.js", "custom-version", "defaultCommand.js", "deploy", "description", "global-options-added.js", "global-options-nested.js", "help-centered.mjs", "help-groups.js", "help-subcommands-usage.js", "hook.js", "man-style-help.mjs", "nestedCommands.js", "options-boolean-or-value.js", "options-common.js", "options-conflicts.js", "options-custom-processing.js", "options-defaults.js", "options-env.js", "options-extra.js", "options-implies.js", "options-negatable.js", "options-required.js", "options-variadic.js", "pass-through-options.js", "pizza", "pm", "pm-install", "pm-list.js", "positional-options.js", "split.js", "string-util.js", "thank.js"]
+
+[[batches]]
+position = 9
 key = 'Json(Runtime { file: "package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 30
-cum_tokens = 380
+cum_tokens = 616
 
 [batches.content]
 kind = "lines"
@@ -152,11 +166,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 9
+position = 10
 key = 'Typescript(ExportNames { file: "lib/option.js" })'
 descriptor = "export names surface in lib/option.js"
 cost_tokens = 42
-cum_tokens = 422
+cum_tokens = 658
 
 [batches.content]
 kind = "lines"
@@ -202,11 +216,11 @@ end = 269
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Typescript(Export { file: "lib/option.js", start_line: 3 })'
 descriptor = "export at lib/option.js:3"
 cost_tokens = 0
-cum_tokens = 422
+cum_tokens = 658
 
 [batches.content]
 kind = "lines"
@@ -228,11 +242,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 203 })'
 descriptor = "export member at lib/option.js:3 member 203"
 cost_tokens = 10
-cum_tokens = 432
+cum_tokens = 668
 
 [batches.content]
 kind = "lines"
@@ -254,11 +268,11 @@ end = 204
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Typescript(Export { file: "lib/option.js", start_line: 268 })'
 descriptor = "export at lib/option.js:268"
 cost_tokens = 26
-cum_tokens = 458
+cum_tokens = 694
 
 [batches.content]
 kind = "lines"
@@ -304,11 +318,11 @@ end = 298
 kind = "ellipsis"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 65 })'
 descriptor = "export member at lib/option.js:3 member 65"
 cost_tokens = 11
-cum_tokens = 469
+cum_tokens = 705
 
 [batches.content]
 kind = "lines"
@@ -330,11 +344,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 15
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 82 })'
 descriptor = "export member at lib/option.js:3 member 82"
 cost_tokens = 11
-cum_tokens = 480
+cum_tokens = 716
 
 [batches.content]
 kind = "lines"
@@ -356,11 +370,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 16
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 120 })'
 descriptor = "export member at lib/option.js:3 member 120"
 cost_tokens = 11
-cum_tokens = 491
+cum_tokens = 727
 
 [batches.content]
 kind = "lines"
@@ -382,11 +396,11 @@ end = 121
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 20
-cum_tokens = 511
+cum_tokens = 747
 
 [batches.content]
 kind = "fs"
@@ -396,11 +410,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "PULL_REQUEST_TEMPLATE.md", "dependabot.yml", "workflows"]
 
 [[batches]]
-position = 17
+position = 18
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 520
+cum_tokens = 756
 
 [batches.content]
 kind = "fs"
@@ -410,11 +424,11 @@ parent = ".github/workflows"
 entries = ["codeql-analysis.yml", "tests.yml"]
 
 [[batches]]
-position = 18
+position = 19
 key = 'Yaml(Whole { file: ".github/workflows/tests.yml" })'
 descriptor = "YAML config at .github/workflows/tests.yml"
 cost_tokens = 335
-cum_tokens = 855
+cum_tokens = 1091
 
 [batches.content]
 kind = "lines"
@@ -428,11 +442,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Markdown(Section { file: "Readme.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "Readme.md section #1"
 cost_tokens = 35
-cum_tokens = 890
+cum_tokens = 1126
 
 [batches.content]
 kind = "lines"
@@ -446,11 +460,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Markdown(HeadingsOutline { file: "docs/help-in-depth.md" })'
 descriptor = "headings outline in docs/help-in-depth.md"
 cost_tokens = 42
-cum_tokens = 932
+cum_tokens = 1168
 
 [batches.content]
 kind = "lines"
@@ -520,11 +534,11 @@ end = 119
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Typescript(ExportNames { file: "index.js" })'
 descriptor = "export names surface in index.js"
 cost_tokens = 158
-cum_tokens = 1090
+cum_tokens = 1326
 
 [batches.content]
 kind = "lines"
@@ -554,11 +568,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Typescript(Export { file: "index.js", start_line: 17 })'
 descriptor = "export at index.js:17"
 cost_tokens = 0
-cum_tokens = 1090
+cum_tokens = 1326
 
 [batches.content]
 kind = "lines"
@@ -572,11 +586,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Typescript(ExportDoc { file: "index.js", start_line: 17 })'
 descriptor = "export doc at index.js:17"
 cost_tokens = 17
-cum_tokens = 1107
+cum_tokens = 1343
 
 [batches.content]
 kind = "lines"
@@ -590,11 +604,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Typescript(ExportNames { file: "lib/help.js" })'
 descriptor = "export names surface in lib/help.js"
 cost_tokens = 43
-cum_tokens = 1150
+cum_tokens = 1386
 
 [batches.content]
 kind = "lines"
@@ -640,11 +654,11 @@ end = 741
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Typescript(Export { file: "lib/help.js", start_line: 12 })'
 descriptor = "export at lib/help.js:12"
 cost_tokens = 0
-cum_tokens = 1150
+cum_tokens = 1386
 
 [batches.content]
 kind = "lines"
@@ -666,11 +680,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Typescript(Export { file: "lib/help.js", start_line: 740 })'
 descriptor = "export at lib/help.js:740"
 cost_tokens = 0
-cum_tokens = 1150
+cum_tokens = 1386
 
 [batches.content]
 kind = "lines"
@@ -692,11 +706,11 @@ end = 741
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Typescript(ExportMember { file: "lib/option.js", start_line: 3, member_start_line: 181 })'
 descriptor = "export member at lib/option.js:3 member 181"
 cost_tokens = 11
-cum_tokens = 1161
+cum_tokens = 1397
 
 [batches.content]
 kind = "lines"
@@ -716,20 +730,6 @@ end = 182
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 236
-cum_tokens = 1397
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "examples"
-entries = ["action-this.js", "alias.js", "argument.js", "arguments-custom-processing.js", "arguments-extra.js", "color-help-replacement.mjs", "color-help.mjs", "configure-help.js", "configure-output.js", "custom-command-class.js", "custom-help", "custom-help-description", "custom-help-text.js", "custom-version", "defaultCommand.js", "deploy", "description", "global-options-added.js", "global-options-nested.js", "help-centered.mjs", "help-groups.js", "help-subcommands-usage.js", "hook.js", "man-style-help.mjs", "nestedCommands.js", "options-boolean-or-value.js", "options-common.js", "options-conflicts.js", "options-custom-processing.js", "options-defaults.js", "options-env.js", "options-extra.js", "options-implies.js", "options-negatable.js", "options-required.js", "options-variadic.js", "pass-through-options.js", "pizza", "pm", "pm-install", "pm-list.js", "positional-options.js", "split.js", "string-util.js", "thank.js"]
 
 [[batches]]
 position = 29

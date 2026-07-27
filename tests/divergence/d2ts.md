@@ -83,14 +83,14 @@ Score(3000)=0.405 I=0.688 C=0.238 ns_rows≤3K=25/65 (reached=7 partial=1 missin
 | walker |  | 3499 | 31 | export names surface in packages/d2ts/src/operators/debug.ts |  |  | 0.435 |
 | walker |  | 3532 | 33 | export at packages/d2ts/src/operators/debug.ts:74 |  |  | 0.435 |
 | walker |  | 3559 | 27 | README.md section #4 |  |  | 0.442 |
-| walker |  | 3583 | 24 | README.md section #10 |  |  | 0.442 |
-| walker |  | 3625 | 42 | listing of 'packages/d2ts/tests' |  |  | 0.443 |
-| walker |  | 3665 | 40 | listing of 'packages/d2ts/tests/operators-sqlite' |  |  | 0.443 |
-| walker |  | 3691 | 26 | export body at packages/d2ts/src/d2.ts:166 body 171 |  |  | 0.443 |
-| walker |  | 3747 | 56 | listing of 'packages/d2ts/src/sqlite/operators' |  |  | 0.443 |
-| ns | 3756 |  | 324 | operators/base.ts: LinearUnaryOperator | 4.2 |  | 0.422 |
-| walker |  | 3895 | 148 | imports in packages/d2ts/src/sqlite/operators/index.ts |  |  | 0.422 |
-| walker |  | 3908 | 13 | export names surface in packages/d2ts/src/sqlite/operators/filterBy.ts |  |  | 0.422 |
+| walker |  | 3615 | 56 | listing of 'packages/d2ts/src/sqlite/operators' |  |  | 0.442 |
+| ns | 3756 |  | 324 | operators/base.ts: LinearUnaryOperator | 4.2 |  | 0.421 |
+| walker |  | 3763 | 148 | imports in packages/d2ts/src/sqlite/operators/index.ts |  |  | 0.422 |
+| walker |  | 3776 | 13 | export names surface in packages/d2ts/src/sqlite/operators/filterBy.ts |  |  | 0.422 |
+| walker |  | 3800 | 24 | README.md section #10 |  |  | 0.422 |
+| walker |  | 3842 | 42 | listing of 'packages/d2ts/tests' |  |  | 0.422 |
+| walker |  | 3882 | 40 | listing of 'packages/d2ts/tests/operators-sqlite' |  |  | 0.422 |
+| walker |  | 3908 | 26 | export body at packages/d2ts/src/d2.ts:166 body 171 |  |  | 0.422 |
 | walker |  | 3932 | 24 | export names surface in packages/d2ts/src/sqlite/operators/groupBy.ts |  |  | 0.422 |
 | ns | 3957 |  | 201 | operators/map.ts (canonical simple-operator class shape) | 4.3 | 4.2 | 0.409 |
 | walker |  | 3968 | 36 | export names surface in packages/d2ts/src/operators/count.ts |  |  | 0.409 |
