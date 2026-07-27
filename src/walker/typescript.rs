@@ -25,9 +25,6 @@
 //! - `ExportMemberDoc { file, start_line, chunk_index }`: one source-order
 //!   slice of documented interface / object-type members (JSDoc + signature),
 //!   predecessor = the matching `Export` header.
-//! - `ExportMemberDocTail { file, start_line, chunk_index }`: conserved
-//!   detail/example continuation of one oversized member doc slice,
-//!   predecessor = its `ExportMemberDoc` head.
 //! - `ExportBody { file, start_line, body_start_line }`: body slice
 //!   (brace-stripped) of a function, class, or `const X = <fn-init>`
 //!   export, predecessor = the matching `Export`.
@@ -99,11 +96,6 @@ const MEMBER_CATALOG_CHUNK_MIN_TAIL_TOKENS: usize = 100;
 const DOCUMENTED_MEMBER_MIN_TOTAL_TOKENS: usize = 100;
 const DOCUMENTED_MEMBER_CHUNK_TARGET_TOKENS: usize = 220;
 const DOCUMENTED_MEMBER_CHUNK_MIN_TAIL_TOKENS: usize = 100;
-/// One member's documentation above this envelope can lose the purchase race
-/// as a slab. Keep its signature and contract/default paragraphs together,
-/// then gate the remaining example/detail behind that head.
-const OVERSIZED_MEMBER_DOC_SPLIT_TOKENS: usize = 300;
-const OVERSIZED_MEMBER_DOC_MIN_TAIL_TOKENS: usize = 100;
 /// Rendered class surfaces above this cost are outside the early NS
 /// purchase envelope and split at member boundaries.
 const OVERSIZE_EXPORT_SPLIT_TOKENS: usize = 400;
@@ -641,16 +633,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         } else {
                             Vec::new()
                         };
-                    let doc_contents: Vec<(usize, Option<usize>, BatchContent)> =
-                        documented_member_plan
-                            .chunks
-                            .iter()
-                            .enumerate()
-                            .filter_map(|(chunk_index, chunk)| {
-                                single_file_lines_content(file, &source, chunk.lines.clone())
-                                    .map(|content| (chunk_index, chunk.tail_of, content))
-                            })
-                            .collect();
+                    let doc_contents: Vec<(usize, BatchContent)> = documented_member_plan
+                        .chunks
+                        .iter()
+                        .enumerate()
+                        .filter_map(|(chunk_index, lines)| {
+                            single_file_lines_content(file, &source, lines.clone())
+                                .map(|content| (chunk_index, content))
+                        })
+                        .collect();
                     // A mixed declaration is one member surface, even when
                     // documented members become slices and undocumented
                     // members remain a residual catalog. Allocate one
@@ -663,7 +654,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         .chain(
                             doc_contents
                                 .iter()
-                                .map(|(_, _, content)| ctx.marginal_tokens(content)),
+                                .map(|(_, content)| ctx.marginal_tokens(content)),
                         )
                         .collect();
                     let surface_factors =
@@ -713,28 +704,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             body_parts_predecessor = BatchKey::Typescript(key);
                         }
                     }
-                    let mut doc_head_keys = HashMap::new();
-                    for (chunk_index, tail_of, content) in doc_contents {
+                    for (chunk_index, content) in doc_contents {
                         let chunk_factor = factors.next().expect("documented-member factor");
-                        let key = if tail_of.is_some() {
-                            TsKey::ExportMemberDocTail {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                                chunk_index,
-                            }
-                        } else {
-                            TsKey::ExportMemberDoc {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                                chunk_index,
-                            }
-                        };
-                        let predecessor = tail_of
-                            .and_then(|head_index| doc_head_keys.get(&head_index).cloned())
-                            .unwrap_or_else(|| export_predecessor.clone());
                         out.push(Batch {
-                            key: key.clone().into(),
-                            predecessor: Some(predecessor),
+                            key: TsKey::ExportMemberDoc {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                                chunk_index,
+                            }
+                            .into(),
+                            predecessor: Some(export_predecessor.clone()),
                             content,
                             value: export_member_names_value(
                                 file,
@@ -745,9 +724,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                                 chunk_factor,
                             ),
                         });
-                        if tail_of.is_none() {
-                            doc_head_keys.insert(chunk_index, BatchKey::Typescript(key));
-                        }
                     }
                     debug_assert!(factors.next().is_none());
                 } else if let (Some(member_catalog), Some(member_catalog_chunks)) =
@@ -3541,7 +3517,7 @@ struct MemberNamesCatalog {
 const MEMBER_CATALOG_MIN_MEMBERS: usize = 12;
 
 struct DocumentedMemberPlan {
-    chunks: Vec<DocumentedMemberChunk>,
+    chunks: Vec<FileLines>,
     documented_member_count: usize,
     /// Undocumented members remain a cheap, line-disjoint signature
     /// catalog. A wholly undocumented declaration never creates this plan
@@ -3549,15 +3525,8 @@ struct DocumentedMemberPlan {
     residual_catalog: Option<MemberNamesCatalog>,
 }
 
-struct DocumentedMemberChunk {
-    lines: FileLines,
-    /// Chunk index of the signature/contract head when this is a gated tail.
-    tail_of: Option<usize>,
-}
-
 struct DocumentedMember {
     lines: FileLines,
-    signature_start_line: usize,
 }
 
 /// Split doc-rich interface/object-type members into source-order purchases.
@@ -3607,7 +3576,6 @@ fn documented_member_plan(
         }
         documented.push(DocumentedMember {
             lines: FileLines::new(lines),
-            signature_start_line: member.start_position().row + 1,
         });
     }
     if documented.is_empty() {
@@ -3643,108 +3611,11 @@ fn documented_member_plan(
         |_| true,
         |_| true,
     );
-    let mut chunks = Vec::new();
-    for range in ranges {
-        if range.len() == 1 {
-            let member = &documented[range.start];
-            if let Some((head, tail)) = oversized_member_doc_parts(file, source, member, ctx) {
-                let head_index = chunks.len();
-                chunks.push(DocumentedMemberChunk {
-                    lines: head,
-                    tail_of: None,
-                });
-                chunks.push(DocumentedMemberChunk {
-                    lines: tail,
-                    tail_of: Some(head_index),
-                });
-                continue;
-            }
-        }
-        chunks.push(DocumentedMemberChunk {
-            lines: lines_for(range),
-            tail_of: None,
-        });
-    }
-
     Some(DocumentedMemberPlan {
-        chunks,
+        chunks: ranges.into_iter().map(lines_for).collect(),
         documented_member_count: documented.len(),
         residual_catalog: member_names_catalog_from_spans(undocumented_spans, false),
     })
-}
-
-/// Split a single oversized JSDoc member at a paragraph boundary. The head
-/// retains the opening contract plus adjacent default/minimum/maximum
-/// paragraphs and the complete signature. Everything after the first detail
-/// or example paragraph becomes a line-disjoint, value-conserved tail.
-fn oversized_member_doc_parts(
-    file: &Path,
-    source: &str,
-    member: &DocumentedMember,
-    ctx: &WalkCtx,
-) -> Option<(FileLines, FileLines)> {
-    let cost = |lines: &FileLines| {
-        single_file_lines_content(file, source, lines.clone())
-            .map(|content| ctx.marginal_tokens(&content))
-            .unwrap_or(0)
-    };
-    if cost(&member.lines) < OVERSIZED_MEMBER_DOC_SPLIT_TOKENS {
-        return None;
-    }
-
-    let source_lines: Vec<&str> = source.lines().collect();
-    let doc_lines: Vec<usize> = member
-        .lines
-        .full
-        .iter()
-        .copied()
-        .filter(|&line| line < member.signature_start_line)
-        .collect();
-    let normalized = |line: usize| {
-        source_lines[line - 1]
-            .trim()
-            .trim_start_matches("/**")
-            .trim_start_matches('*')
-            .trim()
-    };
-
-    let mut paragraph_starts = Vec::new();
-    let mut in_paragraph = false;
-    for &line in &doc_lines {
-        let text = normalized(line);
-        let substantive = !text.is_empty() && text != "*/";
-        if substantive && !in_paragraph {
-            paragraph_starts.push(line);
-        }
-        in_paragraph = substantive;
-    }
-    let tail_start = paragraph_starts.into_iter().skip(1).find(|&line| {
-        let text = normalized(line).to_ascii_lowercase();
-        !(text.starts_with("@default")
-            || text.starts_with("default:")
-            || text.starts_with("minimum:")
-            || text.starts_with("maximum:"))
-    })?;
-
-    let head = FileLines::new(
-        member
-            .lines
-            .full
-            .iter()
-            .copied()
-            .filter(|&line| line < tail_start || line >= member.signature_start_line)
-            .collect(),
-    );
-    let tail = FileLines::new(
-        member
-            .lines
-            .full
-            .iter()
-            .copied()
-            .filter(|&line| line >= tail_start && line < member.signature_start_line)
-            .collect(),
-    );
-    (cost(&tail) >= OVERSIZED_MEMBER_DOC_MIN_TAIL_TOKENS).then_some((head, tail))
 }
 
 /// Unified member-first-line surface for a big declaration — the
@@ -5324,77 +5195,6 @@ mod tests {
             batch.key,
             BatchKey::Typescript(TsKey::ExportMemberDoc { .. })
         )));
-    }
-
-    #[test]
-    fn walker_typescript_oversized_single_member_doc_gets_conserved_gated_tail() {
-        let mut source = String::from(
-            "export interface Options {\n  /**\n   * Cancels the operation when the signal aborts.\n   *\n   * @default undefined\n   *\n   * @example\n   * ```ts\n",
-        );
-        for step in 0..45 {
-            source.push_str(&format!(
-                "   * controller.signal.addEventListener('abort', () => cancelStep{step}());\n"
-            ));
-        }
-        source.push_str("   * ```\n   */\n  signal?: AbortSignal;\n}\n");
-
-        let dir = tempfile::tempdir().unwrap();
-        let file = dir.path().join("fixture.d.ts");
-        std::fs::write(&file, &source).unwrap();
-        let report =
-            Scheduler::new(dir.path().to_path_buf(), FsWalker, 1_000_000, None).run_with_report();
-        let head = report
-            .candidates
-            .iter()
-            .find(|batch| {
-                matches!(
-                    batch.key,
-                    BatchKey::Typescript(TsKey::ExportMemberDoc { start_line: 1, .. })
-                )
-            })
-            .expect("oversized member must retain a signature/contract head");
-        let tail = report
-            .candidates
-            .iter()
-            .find(|batch| {
-                matches!(
-                    batch.key,
-                    BatchKey::Typescript(TsKey::ExportMemberDocTail { start_line: 1, .. })
-                )
-            })
-            .expect("oversized example must become a gated tail");
-        assert_eq!(tail.predecessor.as_ref(), Some(&head.key));
-
-        let lines = |batch: &Batch<BatchKey>| {
-            let BatchContent::Lines { spans } = &batch.content else {
-                panic!("member doc split must contain lines");
-            };
-            spans
-                .iter()
-                .flat_map(|span| span.start..=span.end)
-                .collect::<HashSet<_>>()
-        };
-        let head_lines = lines(head);
-        let tail_lines = lines(tail);
-        assert!(head_lines.contains(&3), "contract paragraph stays in head");
-        assert!(head_lines.contains(&5), "default paragraph stays in head");
-        assert!(
-            head_lines.contains(&(source.lines().count() - 1)),
-            "member signature stays in head"
-        );
-        assert!(tail_lines.contains(&7), "example marker starts the tail");
-        assert!(head_lines.is_disjoint(&tail_lines));
-
-        let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let js_factor = js_value_factor(&file, &ctx)
-            * public_surface_factor(&file, &ctx)
-            * secondary_ts_workspace_member_factor(&file, &ctx);
-        let unsplit_value =
-            export_member_names_value(&file, ItemKind::Interface, &ctx, js_factor, 1, 1.0);
-        assert!(
-            (head.value + tail.value - unsplit_value).abs() < 1e-9,
-            "head and tail must conserve the unsplit member value"
-        );
     }
 
     #[test]
