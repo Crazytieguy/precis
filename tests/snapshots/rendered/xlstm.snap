@@ -95,12 +95,17 @@ pyproject.toml
        5→[project]
        6→name = "xlstm"
        7→version = "2.0.5"
-    …
+       8→authors = [
+       9→  { name="Maximilian Beck", email="beck@ml.jku.at" },
+      10→  { name="Korbinian Poeppel", email="poeppel@ml.jku.at" },
+      11→  { name="Andreas Auer", email="auer@ml.jku.at" },
+      12→]
       13→description = "A novel LSTM variant with promising performance compared to Transformers or State Space Models."
       14→readme = "README.md"
-    …
+      15→license = {file="LICENSE"}
       16→requires-python = ">=3.9"
     …
+      21→keywords = ["LSTM", "Transformer", "Machine Learning", "Deep Learning", "State Space Models"]
       22→dependencies = [
       23→    "torch",
       24→    "einops",
@@ -121,7 +126,8 @@ pyproject.toml
       39→    "seaborn",
       40→    "mlstm_kernels",
       41→]
-    …
+      44→# [tool.setuptools]
+      45→# include_package_data = true
       47→[tool.setuptools.package-data]
       48→"xlstm" = ["blocks/slstm/src/cuda/*.c", "blocks/slstm/src/cuda/*.cc", "blocks/slstm/src/cuda/*.h", "blocks/slstm/src/cuda/*.cu", "blocks/slstm/src/cuda/*.cuh", "blocks/slstm/src/util/*.c", "blocks/slstm/src/util/*.cc", "blocks/slstm/src/util/*.h", "blocks/slstm/src/util/*.cu", "blocks/slstm/src/util/*.cuh"]
       49→

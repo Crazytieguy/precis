@@ -23,11 +23,6 @@ Cargo.toml
       10→repository = "https://github.com/fioncat/otree"
       11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
     …
-      38→[profile.release]
-      39→lto = true
-      40→strip = true
-      41→incremental = false
-    …
 LICENSE …
 README.md
        1→# OTree - Object Tree TUI Viewer
@@ -280,7 +275,14 @@ src/
           14→pub struct Tree {
         …
           25→pub struct ItemValue {
-        …
+          26→    pub name: String,
+          27→    pub value: Value,
+          28→
+          29→    pub field_type: FieldType,
+          30→    pub description: Cow<'static, str>,
+          31→
+          32→    pub tokens: Vec<SyntaxToken>,
+          33→}
           35→#[derive(Debug, Clone, Copy)]
           36→pub struct HighlightKeyword<'a> {
           37→    pub text: &'a str,

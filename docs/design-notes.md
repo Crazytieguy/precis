@@ -710,6 +710,61 @@ Two ships (crate-doc oversize split bfd4076b, crate-attribute recall
   / toasty −0.013 ungated; log 140-token lint list −0.02..−0.05 on
   4-8K rows; thiserror secondary impl crate −0.04 even damped).
 
+## TOML manifest recall (2026-07-26): 0.6351 → 0.6360
+
+Closed the widest pool-absent class by fixture count (876 NS tokens ≤3K
+over 16 training fixtures in the recall census): a Python identity table
+contributed only six whitelisted single-line scalars, and `Config` took
+only an enumerated list of table names, so author rosters, project URLs,
+keywords, `[lib]`, `[lints.*]` and `[patch.*]` were unreachable at any
+budget. Shipped as `TomlKey::PackageMetadata` (predecessor `Identity`,
+priced at the manifest-config tier), plus an inverted `is_config_section`
+— every table of a manifest that no other batch claims — and a
+structural `is_manifest_toml` (declares `[package]`/`[workspace]`, or is
+a Python manifest) so `sqlite-dist.toml`-style dialects are recognized.
+PEP 735 `[dependency-groups]` moved to `DevelopmentDependencies`, where
+its Cargo analogue already lives. Movers: rich +0.064, peepdb +0.021,
+click +0.020, py3xui +0.017, beets +0.013 vs xlstm −0.050, tomli −0.037,
+requests −0.018. Positive at every budget measured (2080 +0.0022, 4327
++0.0024, 6000 +0.0028, 9000 +0.0014).
+
+- **Widening an existing batch to close a recall hole costs that batch
+  its slot — measured twice in one lane.** Taking the whole `[project]`
+  table into `Identity` (the obvious fix, and a net code *deletion*)
+  measured **−0.0010**: rich's Identity went 81 → 132 tokens and fell
+  from cum 1382 to 5748, xlstm 1358 → 3523, microbootstrap 2456 → 5692.
+  An 18% ratio drop is enough to lose an early slot outright, and the
+  fixtures that lose it are the ones whose NS ranks manifest identity at
+  1.x. Folding the same rows into the existing `Config` batch instead
+  measured **−0.0020** (peepdb −0.052, typeguard −0.040) for the same
+  reason. Only the *additive* form — new content in its own batch, no
+  existing batch's cost changed — paid. Same failure visible inside the
+  shipped version: otree's `Config` grew 36 → 123 tokens with
+  `[lints.clippy]` and fell from 2021 to 5842, so the 107 NS tokens that
+  motivated the row still don't land. This is not a split (nothing
+  already purchasable was cut) — it is the rule that recall must arrive
+  as a new batch, not as a bigger one.
+- **Trove classifiers and archive globs earn no place.** `classifiers`,
+  `packages`, `include`, `exclude` are excluded from `PackageMetadata`:
+  the classifier list restates `license` / `requires-python` /
+  `description` in a fixed registry vocabulary, and it is the single
+  largest key in most PEP 621 manifests. Including them measured
+  **+0.0001** vs **+0.0008** for excluding them (xlstm −0.050 either
+  way, but rich +0.064 and beets +0.013 only appear once the classifier
+  wall is gone). Only py3xui's NS ranks classifiers.
+- **The metadata value is on a plateau.** `config_value` × {0.7, 1.0,
+  1.3, 1.8} → 0.6354 / 0.6359 / 0.6359 / 0.6359. Shipped at 1.0 (no
+  constant). 0.7 loses rich/beets/py3xui/chronos without recovering
+  xlstm.
+- **Cargo `[package]` must stay whole.** Applying the packaging-mechanics
+  filter to it as well (dropping `exclude`, `include`) cost log −0.007
+  on its own — those rows are NS-wanted. The lede/metadata split is a
+  Python-manifest rule because only PEP 621 tables carry four times
+  their lede in metadata.
+- Residual losses are cliff artifacts, not signal: tomli's slack at 3000
+  is 4 tokens with a 464-token names surface ending at cum 2947, so any
+  58-token insertion anywhere earlier costs it −0.037.
+
 ## Rust per-impl-method recall (2026-07-26): 0.6302 → 0.6305
 
 Closed the largest pool-absent class in the corpus: `RustKey` had no

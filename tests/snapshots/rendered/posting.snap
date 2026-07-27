@@ -202,9 +202,14 @@ pyproject.toml
        2→name = "posting"
        3→version = "2.10.0"
        4→description = "The modern API client that lives in your terminal."
+       5→authors = [
+       6→    { name = "Darren Burns", email = "darrenb900@gmail.com" }
+       7→]
     …
       25→readme = "README.md"
       26→requires-python = ">= 3.11"
+      27→license = { file = "LICENSE" }
+      28→keywords = ["tui", "http", "client", "terminal", "api", "testing", "textual", "cli", "posting", "developer-tool"]
     …
       49→[project.scripts]
       50→posting = "posting.__main__:cli"

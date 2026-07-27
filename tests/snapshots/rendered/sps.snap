@@ -18,6 +18,12 @@ Cargo.toml
        6→    "sps-core",
        7→    "sps-net",
        8→]
+      10→[patch.crates-io]
+      11→sps-common  = { path = "sps-common" }
+      12→sps-core    = { path = "sps-core" }
+      13→sps-net     = { path = "sps-net" }
+      14→
+      15→# Shared dependencies defined once
     …
       43→[profile.release]
       44→lto = true
@@ -61,8 +67,6 @@ sps/
           14→name = "sps"
           15→path = "src/main.rs"
         …
-          54→[build-dependencies]
-          55→clap_complete = "4.5.57"
     src/
         cli/
             info.rs …
@@ -95,13 +99,7 @@ sps-common/
               17→    _config: Config, // Keep a reference to config if needed for other paths or future use
               18→}
             …
-        config.rs
-            …
-              15→pub struct Config {
-            …
-             199→pub fn load_config() -> Result<Config> {
-             200→    Config::load()
-            …
+        config.rs …
         dependency/
             definition.rs …
             mod.rs

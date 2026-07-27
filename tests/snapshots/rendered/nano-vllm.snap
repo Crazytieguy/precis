@@ -257,10 +257,6 @@ nanovllm/
                2→import torch
                3→from torch import nn
                6→def apply_rotary_emb(
-               7→    x: torch.Tensor,
-               8→    cos: torch.Tensor,
-               9→    sin: torch.Tensor,
-              10→) -> torch.Tensor:
             …
               17→class RotaryEmbedding(nn.Module):
             …
@@ -303,9 +299,9 @@ pyproject.toml
        5→[project]
        6→name = "nano-vllm"
        7→version = "0.2.0"
-    …
+       8→authors = [{ name = "Xingkai Yu" }]
        9→license = "MIT"
-    …
+      10→license-files = ["LICENSE"]
       11→readme = "README.md"
       12→description = "a lightweight vLLM implementation built from scratch"
       13→requires-python = ">=3.10,<3.13"

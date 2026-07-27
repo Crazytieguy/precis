@@ -618,6 +618,10 @@ pub enum LuaKey {
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block.
     Identity { file: PathBuf },
+    /// The rest of a Python identity table once the lede is taken: author and
+    /// maintainer rosters, project URLs, keywords, trove classifiers and
+    /// packaging globs. Predecessor: `Identity` on the same file.
+    PackageMetadata { file: PathBuf },
     /// Entry-point console scripts: `[project.scripts]` (PEP 621) or
     /// `[tool.poetry.scripts]` — the "how do I run this" surface.
     Scripts { file: PathBuf },
@@ -966,12 +970,16 @@ impl InnerKey for TsKey {
 
 impl InnerKey for TomlKey {
     fn is_orientation(&self) -> bool {
-        !matches!(self, TomlKey::ToolConfig { .. } | TomlKey::Config { .. })
+        !matches!(
+            self,
+            TomlKey::ToolConfig { .. } | TomlKey::Config { .. } | TomlKey::PackageMetadata { .. }
+        )
     }
 
     fn describe(&self, root: &Path) -> String {
         match self {
             TomlKey::Identity { file } => describe_in("[package]", file, root),
+            TomlKey::PackageMetadata { file } => describe_in("package metadata", file, root),
             TomlKey::Scripts { file } => describe_in("entry-point scripts", file, root),
             TomlKey::Features { file } => describe_in("[features]", file, root),
             TomlKey::Dependencies { file } => describe_in("[dependencies]", file, root),

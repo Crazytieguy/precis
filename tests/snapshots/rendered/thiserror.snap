@@ -104,6 +104,8 @@ build.rs …
 impl/
     Cargo.toml
         …
+          11→[lib]
+          12→proc-macro = true
           14→[dependencies]
           15→proc-macro2 = "1.0.74"
           16→quote = "1.0.35"

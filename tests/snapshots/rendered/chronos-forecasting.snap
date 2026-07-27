@@ -57,10 +57,18 @@ notebooks/
 pyproject.toml
        1→[project]
        2→name = "chronos-forecasting"
-    …
+       3→dynamic = ["version"]
+       4→authors = [
+       5→  { name = "Abdul Fatir Ansari", email = "ansarnd@amazon.com" },
+       6→  { name = "Lorenzo Stella", email = "stellalo@amazon.com" },
+       7→  { name = "Caner Turkmen", email = "atturkm@amazon.com" },
+       8→  { name = "Oleksandr Shchur", email = "shchuro@amazon.com" },
+       9→  { name = "Jaris Küken", email = "kuekenj@amazon.com" },
+      10→  { name = "Andreas Auer", email = "auerand@amazon.com" },
+      11→]
       12→description = "Chronos: Pretrained models for time series forecasting"
       13→readme = "README.md"
-    …
+      14→license = { file = "LICENSE" }
       15→requires-python = ">=3.10"
     …
 scripts/
