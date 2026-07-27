@@ -920,13 +920,49 @@ demotion hits the NS-wanted rosters. Baseline 8 (two-sided) is the
 same curve shifted: 3K flat (0.6339) but 2080 +0.0031 and 6240 +0.0007
 — sweep baseline and cap together if this is revisited.
 
-Instrument note: the Python names-surface splitter is **inert** —
-`DeclNamesChunk` has 0 scheduled rows at any budget ≤10K across all 71
-training fixtures, and no Python file in rich/beets/flask/click splits
-at all (the tiny-tail fold at `python.rs` absorbs the second chunk when
-total ≤ ~675 tokens). `DECL_NAMES_SPLIT_THRESHOLD_TOKENS` /
-`DECL_NAMES_CHUNK_TARGET_TOKENS` / `conserved_catalog_chunk_factors` on
-the Python path are removable dead weight, not a live knob.
+Instrument note: `DeclNamesChunk` has 0 scheduled rows at any budget
+≤10K across all 71 training fixtures — true, and re-verified 2026-07-26.
+**The inference that the splitter is therefore removable dead weight is
+false** (corrected 2026-07-27; see below).
+
+## Python DeclNames splitter is live, not dead (2026-07-27): flat
+
+Correction to the instrument note above. Both halves of the 2026-07-26
+evidence are individually true and the "dead weight" conclusion does not
+follow from them.
+
+- **Instrument (probe on `decl_names_chunk_ranges`, 71 training
+  fixtures).** 7 Python files split into ≥2 chunks: htmy `html.py`
+  (114 decls / 1626 tok → 4), linkding `settings/base.py` (61 / 1292 →
+  3), beets `util/__init__.py` (57 / 937 → 2), sqlite-vec
+  `test-loadable.py` (79 / 1135 → 2), requests `utils.py` (50 / 972 →
+  2), tomli `_parser.py` (43 / 906 → 2), click `_compat.py` (39 / 809 →
+  2). 20 more files enter the chunker and fold back to one range.
+- **Why "0 scheduled `DeclNamesChunk` rows" does not mean inert.** Chunk
+  0 ships under the plain `DeclNames` key; only chunks ≥1 carry the
+  `DeclNamesChunk` key. So the measurement says the *tail* never
+  delivers ≤10K — the split's live effect is on the head, which reaches
+  the frontier as a cheaper slice repriced by
+  `conserved_catalog_chunk_factors`.
+- **Measured.** Unifying every roster regardless of size
+  (`threshold = usize::MAX`) moves 3K 0.6412 → 0.6405, tomli −0.053,
+  no other training fixture's report changes. Reproduces the earlier
+  −0.0008 and settles it: do not delete the splitter.
+- **What was genuinely redundant, and is now deleted.** The
+  `DECL_NAMES_SPLIT_THRESHOLD_TOKENS = 400` early exit.
+  `budget_chunk_ranges` cuts only when a range's cost reaches its
+  `target` (450), so every roster the early exit short-circuited already
+  came back as the single range `0..len`. Threshold < target ⇒ pure
+  redundancy — which is also why the earlier "fix the inverted
+  threshold" attempt measured exactly flat: any value ≤ ~675 is a no-op.
+  Removal is byte-identical across all 71 divergence reports, all
+  schedule TOMLs and all rendered snapshots. The chunk target is the
+  one live knob.
+- **Standing hazard, not addressed here.** `names_gate` is the *last*
+  chunk, so in a split file `MethodSigs` and every per-decl batch gate
+  on a batch that never schedules ≤10K. Re-gating the per-decl train on
+  chunk 0 is an unmeasured lever, and the tiny-tail fold exists
+  precisely to limit the damage.
 
 ## C internal-linkage recall (2026-07-26): flat @3K, +0.0006 @6.2K
 
