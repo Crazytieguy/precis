@@ -2,6 +2,10 @@
 //! listing, the gitignore-aware visibility filter every listing goes
 //! through, plus the internal [`EntryKind`] used by the renderer to
 //! decide whether to trail a `/` on each name.
+//!
+//! Containment is this module's job, not each walker's: every name
+//! precis surfaces comes out of [`list_dir`], and nothing it yields
+//! resolves outside the walk root. See [`resolved_kind`].
 
 use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap};
@@ -66,6 +70,14 @@ pub(crate) fn should_skip_dir(name: &str) -> bool {
 /// pays one `GitignoreBuilder` per directory that actually carries a
 /// `.gitignore`.
 pub struct DirFilter {
+    /// Walk root as the caller named it. Bounds the `.gitignore`
+    /// ancestor walk, and marks the one path [`list_dir`] will list
+    /// through even if it is a link.
+    root: PathBuf,
+    /// The same root resolved, so a link's canonicalized target can be
+    /// tested against it even when the root itself was reached through
+    /// a link — `tests/fixtures` is one, so every fixture walk is.
+    canonical_root: PathBuf,
     /// `None` when gitignore rules don't apply to this root — see
     /// [`DirFilter::new`].
     repo: Option<RepoIgnores>,
@@ -76,18 +88,14 @@ impl std::fmt::Debug for DirFilter {
     /// if they were; what a reader wants from a dump is whether ignore
     /// rules are active at all, and for which root.
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match &self.repo {
-            Some(repo) => f
-                .debug_struct("DirFilter")
-                .field("root", &repo.root)
-                .finish_non_exhaustive(),
-            None => f.write_str("DirFilter::none"),
-        }
+        f.debug_struct("DirFilter")
+            .field("root", &self.root)
+            .field("ignore_rules", &self.repo.is_some())
+            .finish_non_exhaustive()
     }
 }
 
 struct RepoIgnores {
-    root: PathBuf,
     /// `.gitignore` matcher per directory; `None` for a directory with
     /// no `.gitignore`. Lazily populated.
     per_dir: RefCell<HashMap<PathBuf, Option<Rc<Gitignore>>>>,
@@ -135,7 +143,7 @@ impl DirFilter {
 
     fn build(root: &Path, use_global_excludes: bool) -> Self {
         let Some(common_dir) = git_common_dir(root) else {
-            return Self::none();
+            return Self::unfiltered(root);
         };
         let mut fallbacks = Vec::new();
         if let Some(matcher) = build_gitignore(root, &common_dir.join("info/exclude")) {
@@ -149,11 +157,11 @@ impl DirFilter {
         }
         Self {
             repo: Some(RepoIgnores {
-                root: root.to_path_buf(),
                 per_dir: RefCell::new(HashMap::new()),
                 vacuous: RefCell::new(HashMap::new()),
                 fallbacks,
             }),
+            ..Self::unfiltered(root)
         }
     }
 
@@ -164,19 +172,29 @@ impl DirFilter {
         Self::build(root, false)
     }
 
-    /// Filter with no ignore rules of its own — `list_dir` still drops
-    /// [`is_internal_entry`] names. For call sites that only re-probe
-    /// entry kinds for names an already-filtered listing produced.
-    pub fn none() -> Self {
-        Self { repo: None }
+    /// Filter with no ignore rules of its own, still scoped to `root`:
+    /// [`list_dir`] keeps dropping [`is_internal_entry`] names and
+    /// anything resolving outside `root`. For call sites that only
+    /// re-probe entry kinds for names an already-filtered listing
+    /// produced.
+    pub fn unfiltered(root: &Path) -> Self {
+        Self {
+            root: root.to_path_buf(),
+            canonical_root: root.canonicalize().unwrap_or_else(|_| root.to_path_buf()),
+            repo: None,
+        }
     }
 
-    /// Whether the filter has any rules at all. Callers use it to skip
-    /// building a child path just to be told "no" — on a tree the filter
-    /// has no opinion about, that join per directory entry is the whole
-    /// cost of having a filter.
-    fn is_active(&self) -> bool {
-        self.repo.is_some()
+    /// True when `dir` is a symbolic link rather than a real directory,
+    /// and so must not be listed *through*.
+    ///
+    /// The root is exempt: a caller may legitimately point precis at a
+    /// link, and that link is then the walk's whole scope rather than an
+    /// escape from it.
+    fn is_linked_subdirectory(&self, dir: &Path) -> bool {
+        dir != self.root
+            && dir != self.canonical_root
+            && std::fs::symlink_metadata(dir).is_ok_and(|meta| meta.file_type().is_symlink())
     }
 
     /// True when `dir` holds something on disk yet the filter admits
@@ -213,6 +231,12 @@ impl DirFilter {
     }
 
     fn probe_hides_everything_in(&self, dir: &Path) -> bool {
+        // A linked directory is never listed through, so its row is all
+        // there is of it and the filter never withholds that row — the
+        // same reasoning `should_skip_dir` gets below.
+        if self.is_linked_subdirectory(dir) {
+            return false;
+        }
         let Ok(read_dir) = std::fs::read_dir(dir) else {
             return false;
         };
@@ -228,7 +252,11 @@ impl DirFilter {
                 continue;
             };
             let path = entry.path();
-            let is_dir = file_type.is_dir();
+            // An entry the listing drops is not a surviving one.
+            let Some(kind) = resolved_kind(&path, &file_type, &self.canonical_root) else {
+                continue;
+            };
+            let is_dir = matches!(kind, EntryKind::Directory);
             if self.excludes(&path, is_dir) {
                 continue;
             }
@@ -263,15 +291,15 @@ impl DirFilter {
     /// still gets read and parsed. Costs one match per ancestor, so use
     /// it at traversal entry points, not per directory entry.
     pub fn excludes_tree(&self, path: &Path, is_dir: bool) -> bool {
-        let Some(repo) = &self.repo else {
+        if self.repo.is_none() {
             return false;
-        };
+        }
         if self.excludes(path, is_dir) {
             return true;
         }
         let mut dir = path.parent();
         while let Some(current) = dir {
-            if current == repo.root || !current.starts_with(&repo.root) {
+            if current == self.root || !current.starts_with(&self.root) {
                 return false;
             }
             if self.excludes(current, true) {
@@ -290,7 +318,7 @@ impl DirFilter {
         // Containment is what bounds the ancestor walk below at the repo
         // root. Without it a stray out-of-tree path would climb past the
         // root reading `.gitignore` files that don't govern this walk.
-        if !path.starts_with(&repo.root) {
+        if !path.starts_with(&self.root) {
             return false;
         }
         // Walk the `.gitignore` chain from the entry's own directory up
@@ -303,7 +331,7 @@ impl DirFilter {
             {
                 return ignored;
             }
-            if current == repo.root {
+            if current == self.root {
                 break;
             }
             dir = current.parent();
@@ -385,15 +413,68 @@ fn resolve_relative_to(base: &Path, target: &str) -> PathBuf {
     }
 }
 
+/// Kind an entry surfaces as, or `None` when it must not surface at all.
+///
+/// An ordinary entry is its own type. A symbolic link is the type of
+/// what it resolves to, and only when that lands inside `canonical_root`
+/// — the containment rule the whole walk rests on. precis summarizes
+/// *a path*; a link out of that path has no business contributing
+/// either content or structure, and a checkout that ships one
+/// (`config.ini -> ~/.config/app/credentials.ini`) would otherwise have
+/// precis read arbitrary files off the machine running it and paste them
+/// into whatever context the summary feeds. A dangling link resolves to
+/// nothing, so it can be neither classified nor cleared, and goes the
+/// same way.
+///
+/// A link that stays inside the root is an alias for content the walk
+/// can already reach, and hiding it would misreport real repository
+/// structure (`CLAUDE.md -> AGENTS.md`, `README -> README.md`), so it
+/// keeps its row.
+///
+/// Costs one `canonicalize` per link and nothing per ordinary entry.
+fn resolved_kind(
+    child: &Path,
+    file_type: &std::fs::FileType,
+    canonical_root: &Path,
+) -> Option<EntryKind> {
+    if !file_type.is_symlink() {
+        return Some(entry_kind(file_type.is_dir()));
+    }
+    let target = child.canonicalize().ok()?;
+    target
+        .starts_with(canonical_root)
+        .then(|| entry_kind(target.is_dir()))
+}
+
+fn entry_kind(is_dir: bool) -> EntryKind {
+    if is_dir {
+        EntryKind::Directory
+    } else {
+        EntryKind::File
+    }
+}
+
 /// Read a directory's immediate children into a name-keyed map. Names
 /// are lossy UTF-8 (rare non-UTF-8 paths lose information, accepted so
 /// names round-trip through TOML).
 ///
-/// Drops `.git`, the precis-internal `.precis-pin`, and whatever
-/// `filter` hides. Non-ignored dotfiles are repo content and stay:
-/// `.github`, `.gitignore`, `.dockerignore` are all things the North
-/// Stars rank, so nothing is filtered for being hidden as such.
+/// Drops `.git`, the precis-internal `.precis-pin`, anything resolving
+/// outside the walk root (see [`resolved_kind`]), and whatever `filter`
+/// hides. Non-ignored dotfiles are repo content and stay: `.github`,
+/// `.gitignore`, `.dockerignore` are all things the North Stars rank, so
+/// nothing is filtered for being hidden as such.
+///
+/// Listing a *linked* directory yields nothing. Every name under it is
+/// already reachable at the target's real path, and refusing to list
+/// through a link is what keeps the walk finite: `link -> .` or
+/// `link -> ..` otherwise manufactures paths without end, and no
+/// per-walker cycle check would be needed if traversal only ever
+/// descends through real directories — which this makes true by
+/// construction.
 pub fn list_dir(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> {
+    if filter.is_linked_subdirectory(path) {
+        return BTreeMap::new();
+    }
     let Ok(read_dir) = std::fs::read_dir(path) else {
         return BTreeMap::new();
     };
@@ -405,23 +486,17 @@ pub fn list_dir(path: &Path, filter: &DirFilter) -> BTreeMap<String, EntryKind> 
             if is_internal_entry(&name) {
                 return None;
             }
-            let kind = if e.file_type().ok()?.is_dir() {
-                EntryKind::Directory
-            } else {
-                EntryKind::File
-            };
-            if filter.is_active() {
-                let child = path.join(&name_os);
-                let is_dir = matches!(kind, EntryKind::Directory);
-                if filter.excludes(&child, is_dir) {
-                    return None;
-                }
-                // A directory that hides its whole contents is ignored
-                // content itself, not a directory that happens to be
-                // empty — see `hides_everything_in`.
-                if is_dir && filter.hides_everything_in(&child) {
-                    return None;
-                }
+            let child = path.join(&name_os);
+            let kind = resolved_kind(&child, &e.file_type().ok()?, &filter.canonical_root)?;
+            let is_dir = matches!(kind, EntryKind::Directory);
+            if filter.excludes(&child, is_dir) {
+                return None;
+            }
+            // A directory that hides its whole contents is ignored
+            // content itself, not a directory that happens to be
+            // empty — see `hides_everything_in`.
+            if is_dir && filter.hides_everything_in(&child) {
+                return None;
             }
             Some((name, kind))
         })
@@ -660,6 +735,52 @@ mod tests {
         assert!(filter.hides_everything_in(&root.join("outer")));
         assert!(!filter.hides_everything_in(&root.join("placeholder")));
         assert!(!filter.hides_everything_in(&root.join("mixed")));
+    }
+
+    /// The listing layer is where containment lives, so state it here
+    /// too rather than only through the renderer: a link surfaces
+    /// exactly when it resolves inside the walk root, with the kind of
+    /// what it resolves to, and a linked directory is never listed
+    /// through.
+    #[cfg(unix)]
+    #[test]
+    fn fs_util_list_dir_admits_only_links_that_resolve_inside_the_root() {
+        use std::os::unix::fs::symlink;
+
+        let temp = tempfile::tempdir().unwrap();
+        let outside = temp.path().join("outside");
+        let root = temp.path().join("repo");
+        std::fs::create_dir_all(outside.join("nested")).unwrap();
+        std::fs::create_dir_all(root.join("src")).unwrap();
+        std::fs::write(outside.join("secret.txt"), "leak").unwrap();
+        std::fs::write(root.join("README.md"), "# demo\n").unwrap();
+
+        symlink(outside.join("secret.txt"), root.join("escaping.txt")).unwrap();
+        symlink(&outside, root.join("escaping-dir")).unwrap();
+        symlink("nowhere.txt", root.join("dangling.txt")).unwrap();
+        symlink("README.md", root.join("CLAUDE.md")).unwrap();
+        symlink("src", root.join("linked-src")).unwrap();
+        symlink(".", root.join("selfloop")).unwrap();
+
+        let filter = DirFilter::without_global_excludes(&root);
+        let listed = list_dir(&root, &filter);
+        assert_eq!(
+            listed.keys().cloned().collect::<Vec<_>>(),
+            ["CLAUDE.md", "README.md", "linked-src", "selfloop", "src"]
+        );
+        // A link takes the kind of what it resolves to, not `File`.
+        assert_eq!(listed["CLAUDE.md"], EntryKind::File);
+        assert_eq!(listed["linked-src"], EntryKind::Directory);
+        // Listing through a link yields nothing — the walk descends only
+        // real directories, which is what makes a cycle unreachable
+        // rather than merely bounded.
+        assert!(list_dir(&root.join("selfloop"), &filter).is_empty());
+        assert!(list_dir(&root.join("linked-src"), &filter).is_empty());
+        // ...except at the root, which is the walk's scope rather than
+        // an escape from it.
+        let via_link = root.join("selfloop");
+        let filter = DirFilter::without_global_excludes(&via_link);
+        assert!(!list_dir(&via_link, &filter).is_empty());
     }
 
     /// A linked worktree carries a `.git` pointer file, and keeps

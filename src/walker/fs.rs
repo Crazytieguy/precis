@@ -105,16 +105,27 @@ fn walk_files_recursive(
         return;
     };
     for entry in read_dir.flatten() {
+        // Non-following entry types, for the reason spelled out in
+        // `files_with_any_extension`: `Path::is_dir`/`is_file` resolve
+        // links, so this walk would otherwise descend a `docs -> /etc`
+        // link straight out of the root — and a `link -> ..` one would
+        // never come back at all. Links are listed by
+        // `crate::fs_util::list_dir` when they stay inside the root;
+        // they are never a traversal edge.
+        let Ok(file_type) = entry.file_type() else {
+            continue;
+        };
         let path = entry.path();
-        if path.is_dir() {
+        if file_type.is_dir() {
             if should_recurse_dir(&path, traversal_root) && !ctx.dir_filter().excludes(&path, true)
             {
                 walk_files_recursive(&path, traversal_root, ext, ctx, out);
             }
-        } else if path
-            .extension()
-            .and_then(|e| e.to_str())
-            .is_some_and(|actual| actual.eq_ignore_ascii_case(ext))
+        } else if file_type.is_file()
+            && path
+                .extension()
+                .and_then(|e| e.to_str())
+                .is_some_and(|actual| actual.eq_ignore_ascii_case(ext))
             && !ctx.dir_filter().excludes(&path, false)
         {
             out.push(path);

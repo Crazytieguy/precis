@@ -1990,10 +1990,13 @@ fn c_source_files(dir: &Path, ctx: &WalkCtx) -> Vec<PathBuf> {
     let mut out: Vec<PathBuf> = read_dir
         .flatten()
         .filter_map(|e| {
-            let path = e.path();
-            if !path.is_file() {
+            // Non-following, as in `fs::files_with_any_extension`: every
+            // path here gets read and parsed, so `Path::is_file`
+            // resolving a link would render a file outside the walk root.
+            if !e.file_type().ok()?.is_file() {
                 return None;
             }
+            let path = e.path();
             let name = path.file_name().and_then(|n| n.to_str())?;
             // Same filter the listing uses: a file the listing hides
             // must not come back as a content batch.
@@ -3160,14 +3163,14 @@ typedef int x;
         std::fs::write(root.join("examples/simple/demo.c"), main_def).unwrap();
         std::fs::create_dir(root.join("tests")).unwrap();
         std::fs::write(root.join("tests/harness.c"), main_def).unwrap();
-        let scan = scan_c_project(root, &DirFilter::none()).unwrap();
+        let scan = scan_c_project(root, &DirFilter::unfiltered(root)).unwrap();
         assert!(
             !scan.builds_a_program(root),
             "example and test programs demonstrate a library, they aren't it"
         );
 
         std::fs::write(root.join("cli.c"), main_def).unwrap();
-        let scan = scan_c_project(root, &DirFilter::none()).unwrap();
+        let scan = scan_c_project(root, &DirFilter::unfiltered(root)).unwrap();
         assert!(scan.builds_a_program(root));
     }
 
@@ -3186,7 +3189,7 @@ typedef int x;
         std::fs::create_dir(root.join("test")).unwrap();
         std::fs::write(root.join("test/test_big.c"), line.repeat(500)).unwrap();
         assert_eq!(
-            find_dominant_c_file(root, &DirFilter::none()),
+            find_dominant_c_file(root, &DirFilter::unfiltered(root)),
             Some(root.join("big.c"))
         );
 
@@ -3196,23 +3199,32 @@ typedef int x;
         std::fs::write(root.join("a.c"), line.repeat(100) + main_def).unwrap();
         std::fs::write(root.join("b.c"), line.repeat(90)).unwrap();
         std::fs::write(root.join("c.c"), line.repeat(80)).unwrap();
-        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
+        assert_eq!(
+            find_dominant_c_file(root, &DirFilter::unfiltered(root)),
+            None
+        );
 
         // Dominant library file: no main at all, or only a
         // preproc-gated test main — not a binary, no promotion.
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         std::fs::write(root.join("lib.c"), line.repeat(100)).unwrap();
-        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
+        assert_eq!(
+            find_dominant_c_file(root, &DirFilter::unfiltered(root)),
+            None
+        );
         std::fs::write(root.join("lib.c"), line.repeat(100) + gated_main).unwrap();
-        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
+        assert_eq!(
+            find_dominant_c_file(root, &DirFilter::unfiltered(root)),
+            None
+        );
 
         // Negative guard (`#if !defined(TESTING)`) is compiled by
         // default — still a binary.
         let excluded_main = format!("#if !defined(TESTING)\n{main_def}#endif\n");
         std::fs::write(root.join("lib.c"), line.repeat(100) + &excluded_main).unwrap();
         assert_eq!(
-            find_dominant_c_file(root, &DirFilter::none()),
+            find_dominant_c_file(root, &DirFilter::unfiltered(root)),
             Some(root.join("lib.c"))
         );
 
@@ -3221,7 +3233,10 @@ typedef int x;
         let compound_main =
             format!("#if !defined(TESTING) && defined(BUILD_CLI)\n{main_def}#endif\n");
         std::fs::write(root.join("lib.c"), line.repeat(100) + &compound_main).unwrap();
-        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
+        assert_eq!(
+            find_dominant_c_file(root, &DirFilter::unfiltered(root)),
+            None
+        );
 
         // Multi-binary repo: a second default-configuration main in a
         // smaller file means the dominant file isn't *the* program.
@@ -3229,7 +3244,10 @@ typedef int x;
         let root = dir.path();
         std::fs::write(root.join("big.c"), line.repeat(100) + main_def).unwrap();
         std::fs::write(root.join("tool.c"), line.repeat(10) + main_def).unwrap();
-        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
+        assert_eq!(
+            find_dominant_c_file(root, &DirFilter::unfiltered(root)),
+            None
+        );
 
         // Root-level test files (tests.c, foo_tests.c) are excluded
         // from the tally like test dirs — they can't mask dominance.
@@ -3239,7 +3257,7 @@ typedef int x;
         std::fs::write(root.join("tests.c"), line.repeat(200)).unwrap();
         std::fs::write(root.join("big_tests.c"), line.repeat(200)).unwrap();
         assert_eq!(
-            find_dominant_c_file(root, &DirFilter::none()),
+            find_dominant_c_file(root, &DirFilter::unfiltered(root)),
             Some(root.join("big.c"))
         );
     }
