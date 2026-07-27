@@ -100,79 +100,46 @@ Score(3000)=0.676 I=0.750 C=0.610 ns_rows≤3K=29/43 (reached=17 partial=2 missi
 | walker |  | 3240 | 70 | README.md section #32 |  |  | 0.669 |
 | walker |  | 3311 | 71 | README.md section #28 |  |  | 0.669 |
 | walker |  | 3388 | 77 | README.md section #6 |  |  | 0.672 |
-| walker |  | 3404 | 16 | test names surface in test/map.js |  |  | 0.672 |
 | ns | 3410 |  | 316 | README: Range Grammar (BNF) | 3.2 | 2.10 | 0.649 |
-| walker |  | 3480 | 76 | README.md section #27 |  |  | 0.649 |
-| walker |  | 3562 | 82 | README.md section #8 |  |  | 0.649 |
-| walker |  | 3647 | 85 | README.md section #51 |  |  | 0.649 |
+| walker |  | 3464 | 76 | README.md section #27 |  |  | 0.649 |
+| walker |  | 3546 | 82 | README.md section #8 |  |  | 0.649 |
+| walker |  | 3631 | 85 | README.md section #51 |  |  | 0.649 |
 | ns | 3835 |  | 425 | README: Versions + Ranges core vocabulary | 3.3 | 2.10 | 0.627 |
 | ns | 4094 |  | 259 | ranges/ trivial bundle part A: gtr, ltr, intersects | 3.4 |  | 0.610 |
-| walker |  | 4223 | 576 | imports in index.js |  |  | 0.610 |
-| walker |  | 4237 | 14 | export names surface in preload.js |  |  | 0.610 |
-| walker |  | 4258 | 21 | export names surface in map.js |  |  | 0.610 |
-| walker |  | 4264 | 6 | imports in map.js |  |  | 0.610 |
-| walker |  | 4272 | 8 | imports in preload.js |  |  | 0.610 |
+| walker |  | 4207 | 576 | imports in index.js |  |  | 0.610 |
+| walker |  | 4221 | 14 | export names surface in preload.js |  |  | 0.610 |
+| walker |  | 4242 | 21 | export names surface in map.js |  |  | 0.610 |
+| walker |  | 4248 | 6 | imports in map.js |  |  | 0.610 |
+| walker |  | 4256 | 8 | imports in preload.js |  |  | 0.610 |
 | ns | 4342 |  | 248 | ranges/ trivial bundle part B: to-comparators, valid | 3.5 |  | 0.592 |
-| walker |  | 4363 | 91 | README.md section #10 |  |  | 0.592 |
-| walker |  | 4449 | 86 | README.md section #42 |  |  | 0.592 |
+| walker |  | 4347 | 91 | README.md section #10 |  |  | 0.592 |
+| walker |  | 4433 | 86 | README.md section #42 |  |  | 0.592 |
 | ns | 4458 |  | 116 | functions/ comparison-wrapper pattern: gt, rcompare | 3.6 |  | 0.585 |
-| walker |  | 4525 | 76 | README.md section #33 |  |  | 0.585 |
-| walker |  | 4598 | 73 | README.md section #57 |  |  | 0.585 |
-| walker |  | 4611 | 13 | test names surface in test/functions/rsort.js |  |  | 0.585 |
-| walker |  | 4624 | 13 | test names surface in test/functions/sort.js |  |  | 0.585 |
-| walker |  | 4736 | 112 | README.md section #9 |  |  | 0.585 |
-| walker |  | 4750 | 14 | test names surface in test/functions/clean.js |  |  | 0.585 |
-| walker |  | 4764 | 14 | test names surface in test/functions/compare-build.js |  |  | 0.585 |
+| walker |  | 4509 | 76 | README.md section #33 |  |  | 0.585 |
+| walker |  | 4582 | 73 | README.md section #57 |  |  | 0.585 |
+| walker |  | 4694 | 112 | README.md section #9 |  |  | 0.585 |
 | ns | 4766 |  | 308 | functions/ compare-family + sort: compare, compare-loose, compare-build, sort | 3.7 |  | 0.567 |
-| walker |  | 4778 | 14 | test names surface in test/functions/major.js |  |  | 0.567 |
-| walker |  | 4792 | 14 | test names surface in test/functions/minor.js |  |  | 0.567 |
-| walker |  | 4806 | 14 | test names surface in test/functions/patch.js |  |  | 0.567 |
-| walker |  | 4820 | 14 | test names surface in test/functions/rcompare.js |  |  | 0.567 |
-| walker |  | 4835 | 15 | test names surface in test/functions/coerce.js |  |  | 0.567 |
-| walker |  | 4850 | 15 | test names surface in test/functions/inc.js |  |  | 0.567 |
-| walker |  | 4865 | 15 | test names surface in test/functions/prerelease.js |  |  | 0.567 |
-| walker |  | 4880 | 15 | test names surface in test/internal/lrucache.js |  |  | 0.567 |
-| walker |  | 4895 | 15 | test names surface in test/ranges/to-comparators.js |  |  | 0.567 |
-| walker |  | 4910 | 15 | test names surface in test/ranges/valid.js |  |  | 0.567 |
-| walker |  | 4927 | 17 | test names surface in test/functions/compare-loose.js |  |  | 0.567 |
-| walker |  | 4944 | 17 | test names surface in test/ranges/min-version.js |  |  | 0.567 |
-| walker |  | 5077 | 133 | README.md section #50 |  |  | 0.567 |
-| walker |  | 5095 | 18 | test names surface in test/internal/identifiers.js |  |  | 0.567 |
-| walker |  | 5250 | 155 | README.md section #44 |  |  | 0.567 |
-| walker |  | 5420 | 170 | README.md section #46 |  |  | 0.567 |
-| walker |  | 5444 | 24 | test names surface in test/ranges/subset.js |  |  | 0.567 |
-| ns | 5500 |  | 734 | functions/ trivial bundle: satisfies, valid, clean, prerelease, parse, inc | 3.8 |  | 0.523 |
-| walker |  | 5629 | 185 | README.md section #7 |  |  | 0.537 |
-| walker |  | 5654 | 25 | test names surface in test/internal/re.js |  |  | 0.537 |
-| ns | 6065 |  | 565 | README: CLI options reference | 3.9 |  | 0.511 |
-| walker |  | 6252 | 598 | README.md section #5 |  |  | 0.541 |
-| walker |  | 6279 | 27 | test names surface in test/functions/compare.js |  |  | 0.541 |
-| walker |  | 6306 | 27 | test names surface in test/functions/eq.js |  |  | 0.541 |
-| walker |  | 6333 | 27 | test names surface in test/functions/gt.js |  |  | 0.541 |
-| walker |  | 6360 | 27 | test names surface in test/functions/gte.js |  |  | 0.541 |
-| walker |  | 6387 | 27 | test names surface in test/functions/lt.js |  |  | 0.541 |
-| walker |  | 6414 | 27 | test names surface in test/functions/lte.js |  |  | 0.541 |
-| walker |  | 6441 | 27 | test names surface in test/functions/neq.js |  |  | 0.541 |
+| walker |  | 4827 | 133 | README.md section #50 |  |  | 0.567 |
+| walker |  | 4982 | 155 | README.md section #44 |  |  | 0.567 |
+| walker |  | 5152 | 170 | README.md section #46 |  |  | 0.567 |
+| walker |  | 5337 | 185 | README.md section #7 |  |  | 0.583 |
+| ns | 5500 |  | 734 | functions/ trivial bundle: satisfies, valid, clean, prerelease, parse, inc | 3.8 |  | 0.537 |
+| walker |  | 5935 | 598 | README.md section #5 |  |  | 0.569 |
+| ns | 6065 |  | 565 | README: CLI options reference | 3.9 |  | 0.541 |
+| walker |  | 6285 | 350 | json config release-please-config.json |  |  | 0.541 |
+| walker |  | 6437 | 152 | README.md section #56 |  |  | 0.541 |
+| walker |  | 6659 | 222 | README.md section #54 |  |  | 0.541 |
 | ns | 6750 |  | 685 | ranges/subset.js: algorithm specification (header comment) | 3.10 |  | 0.524 |
-| walker |  | 6791 | 350 | json config release-please-config.json |  |  | 0.524 |
-| walker |  | 6943 | 152 | README.md section #56 |  |  | 0.524 |
-| walker |  | 6971 | 28 | test names surface in test/ranges/ltr.js |  |  | 0.524 |
-| walker |  | 7000 | 29 | test names surface in test/functions/diff.js |  |  | 0.524 |
-| walker |  | 7029 | 29 | test names surface in test/ranges/gtr.js |  |  | 0.524 |
-| walker |  | 7058 | 29 | test names surface in test/ranges/max-satisfying.js |  |  | 0.524 |
-| walker |  | 7087 | 29 | test names surface in test/ranges/min-satisfying.js |  |  | 0.524 |
-| walker |  | 7119 | 32 | test names surface in test/internal/debug.js |  |  | 0.524 |
 | ns | 7307 |  | 557 | ranges/max-satisfying.js + min-satisfying.js | 3.11 |  | 0.502 |
-| walker |  | 7341 | 222 | README.md section #54 |  |  | 0.502 |
-| ns | 7861 |  | 554 | ranges/simplify.js | 3.12 |  | 0.483 |
-| walker |  | 8089 | 748 | README.md section #20 |  |  | 0.483 |
-| walker |  | 8129 | 40 | test names surface in test/functions/cmp.js |  |  | 0.483 |
-| walker |  | 8248 | 119 | headings outline in CONTRIBUTING.md |  |  | 0.483 |
-| walker |  | 8248 | 0 | CONTRIBUTING.md section #0 |  |  | 0.483 |
-| walker |  | 8533 | 285 | README.md section #15 |  |  | 0.485 |
+| walker |  | 7407 | 748 | README.md section #20 |  |  | 0.502 |
+| walker |  | 7526 | 119 | headings outline in CONTRIBUTING.md |  |  | 0.502 |
+| walker |  | 7526 | 0 | CONTRIBUTING.md section #0 |  |  | 0.502 |
+| walker |  | 7811 | 285 | README.md section #15 |  |  | 0.504 |
+| ns | 7861 |  | 554 | ranges/simplify.js | 3.12 |  | 0.485 |
+| walker |  | 8586 | 775 | README.md section #58 |  |  | 0.485 |
 | ns | 8737 |  | 876 | SemVer: constructor + format + toString | 4.1 | 2.1 | 0.457 |
-| walker |  | 9308 | 775 | README.md section #58 |  |  | 0.457 |
-| walker |  | 9353 | 45 | test names surface in test/ranges/intersects.js |  |  | 0.457 |
-| walker |  | 9646 | 293 | README.md section #49 |  |  | 0.457 |
-| walker |  | 9692 | 46 | test names surface in test/functions/satisfies.js |  |  | 0.457 |
-| ns | 9728 |  | 991 | SemVer: compare / compareMain / comparePre / compareBuild | 4.2 | 2.1 | 0.430 |
+| walker |  | 8879 | 293 | README.md section #49 |  |  | 0.457 |
+| walker |  | 9195 | 316 | README.md section #11 |  |  | 0.459 |
+| walker |  | 9521 | 326 | README.md section #12 |  |  | 0.461 |
+| ns | 9728 |  | 991 | SemVer: compare / compareMain / comparePre / compareBuild | 4.2 | 2.1 | 0.433 |
+| walker |  | 9857 | 336 | README.md section #16 |  |  | 0.436 |

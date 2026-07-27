@@ -133,63 +133,62 @@ Score(3000)=0.502 I=0.795 C=0.317 ns_rows≤3K=14/40 (reached=5 partial=1 missin
 | walker |  | 6760 | 105 | export doc at lib/builtin.js:62 |  |  | 0.551 |
 | walker |  | 6869 | 109 | export doc at lib/xast.js:32 |  |  | 0.551 |
 | ns | 6870 |  | 982 | Plugin name + description roster (2/2: removeDimensions..sortDefsChildren) | 4.3 |  | 0.517 |
-| walker |  | 6884 | 15 | test names surface in lib/parser.test.js |  |  | 0.517 |
-| walker |  | 6927 | 43 | export at lib/svgo/plugins.js:14 |  |  | 0.517 |
-| walker |  | 7041 | 114 | export doc at lib/svgo-node.js:44 |  |  | 0.517 |
-| walker |  | 7115 | 74 | export doc at lib/util/map-nodes-to-parents.js:9 |  |  | 0.517 |
-| walker |  | 7118 | 3 | listing of 'test/fixtures/config-loader/one/two' |  |  | 0.517 |
-| walker |  | 7134 | 16 | imports in lib/stringifier.js |  |  | 0.517 |
-| walker |  | 7151 | 17 | listing of '.yarn/patches' |  |  | 0.517 |
-| walker |  | 7157 | 6 | listing of 'test/fixtures/config-loader/cjs' |  |  | 0.517 |
-| walker |  | 7163 | 6 | listing of 'test/fixtures/config-loader/mjs' |  |  | 0.517 |
+| walker |  | 6912 | 43 | export at lib/svgo/plugins.js:14 |  |  | 0.517 |
+| walker |  | 7026 | 114 | export doc at lib/svgo-node.js:44 |  |  | 0.517 |
+| walker |  | 7100 | 74 | export doc at lib/util/map-nodes-to-parents.js:9 |  |  | 0.517 |
+| walker |  | 7103 | 3 | listing of 'test/fixtures/config-loader/one/two' |  |  | 0.517 |
+| walker |  | 7119 | 16 | imports in lib/stringifier.js |  |  | 0.517 |
+| walker |  | 7136 | 17 | listing of '.yarn/patches' |  |  | 0.517 |
+| walker |  | 7142 | 6 | listing of 'test/fixtures/config-loader/cjs' |  |  | 0.517 |
+| walker |  | 7148 | 6 | listing of 'test/fixtures/config-loader/mjs' |  |  | 0.517 |
 | ns | 7240 |  | 370 | plugins/preset-default.js — the default pipeline, in order | 4.4 |  | 0.498 |
-| walker |  | 7310 | 147 | imports in lib/svgo.js |  |  | 0.498 |
-| walker |  | 7332 | 22 | imports in lib/path.js |  |  | 0.498 |
-| walker |  | 7382 | 50 | export body at lib/svgo/coa.js:19 body 20 |  |  | 0.498 |
+| walker |  | 7295 | 147 | imports in lib/svgo.js |  |  | 0.498 |
+| walker |  | 7317 | 22 | imports in lib/path.js |  |  | 0.498 |
+| walker |  | 7367 | 50 | export body at lib/svgo/coa.js:19 body 20 |  |  | 0.498 |
 | ns | 7474 |  | 234 | plugins/_collections.js — export location roster | 4.5 |  | 0.492 |
 | ns | 7692 |  | 218 | plugins/convertPathData.js — function location roster | 4.6 |  | 0.484 |
-| walker |  | 7983 | 601 | export body at lib/svgo.js:81 body 82 |  |  | 0.561 |
-| walker |  | 8008 | 25 | imports in lib/parser.js |  |  | 0.561 |
-| walker |  | 8021 | 13 | listing of 'test/regression/lists' |  |  | 0.561 |
-| walker |  | 8048 | 27 | export doc at lib/svgo/coa.js:30 |  |  | 0.561 |
+| walker |  | 7968 | 601 | export body at lib/svgo.js:81 body 82 |  |  | 0.561 |
+| walker |  | 7993 | 25 | imports in lib/parser.js |  |  | 0.561 |
+| walker |  | 8006 | 13 | listing of 'test/regression/lists' |  |  | 0.561 |
+| walker |  | 8033 | 27 | export doc at lib/svgo/coa.js:30 |  |  | 0.561 |
 | ns | 8201 |  | 509 | plugins/removeComments.js — full plugin, as a worked example | 4.7 | 4.2 | 0.537 |
 | ns | 8246 |  | 45 | docs/ directory listing | 5.1 |  | 0.541 |
 | ns | 8418 |  | 172 | docs/05-plugins-api.mdx — custom plugin shape | 5.2 |  | 0.533 |
-| walker |  | 8494 | 446 | package dev/peer dependencies in package.json |  |  | 0.533 |
-| walker |  | 8509 | 15 | imports in lib/svgo/plugins.js |  |  | 0.533 |
+| walker |  | 8479 | 446 | package dev/peer dependencies in package.json |  |  | 0.533 |
+| walker |  | 8494 | 15 | imports in lib/svgo/plugins.js |  |  | 0.533 |
 | ns | 8592 |  | 174 | docs/06-migrations/01-migration-from-v3-to-v4.mdx — default-preset changes | 5.3 |  | 0.530 |
-| walker |  | 8609 | 100 | export body at lib/style.js:195 body 196 |  |  | 0.530 |
-| walker |  | 8641 | 32 | listing of 'test/coa' |  |  | 0.530 |
-| walker |  | 8643 | 2 | listing of 'test/coa/testFolderWithNoSvg' |  |  | 0.530 |
-| walker |  | 8646 | 3 | listing of 'test/coa/testSvgDatauri' |  |  | 0.530 |
-| walker |  | 8655 | 9 | listing of 'test/coa/testSvg' |  |  | 0.530 |
-| walker |  | 8670 | 15 | listing of 'test/coa/testSvgRecursively' |  |  | 0.530 |
-| walker |  | 8675 | 5 | listing of 'test/coa/testSvgRecursively/depth-1' |  |  | 0.530 |
-| walker |  | 8711 | 36 | export doc at lib/path.js:302 |  |  | 0.530 |
+| walker |  | 8594 | 100 | export body at lib/style.js:195 body 196 |  |  | 0.530 |
+| walker |  | 8626 | 32 | listing of 'test/coa' |  |  | 0.530 |
+| walker |  | 8628 | 2 | listing of 'test/coa/testFolderWithNoSvg' |  |  | 0.530 |
+| walker |  | 8631 | 3 | listing of 'test/coa/testSvgDatauri' |  |  | 0.530 |
+| walker |  | 8640 | 9 | listing of 'test/coa/testSvg' |  |  | 0.530 |
+| walker |  | 8655 | 15 | listing of 'test/coa/testSvgRecursively' |  |  | 0.530 |
+| walker |  | 8660 | 5 | listing of 'test/coa/testSvgRecursively/depth-1' |  |  | 0.530 |
+| walker |  | 8696 | 36 | export doc at lib/path.js:302 |  |  | 0.530 |
 | ns | 8815 |  | 223 | .github/workflows/ci.yml — trigger + lint job | 6.2 |  | 0.520 |
-| ns | 8828 |  | 13 | .github/ directory listing | 6.3 |  | 0.522 |
-| walker |  | 8834 | 123 | README.md section #11 |  |  | 0.543 |
+| walker |  | 8819 | 123 | README.md section #11 |  |  | 0.542 |
+| ns | 8828 |  | 13 | .github/ directory listing | 6.3 |  | 0.543 |
 | ns | 8849 |  | 21 | .github/workflows/ directory listing | 6.4 |  | 0.546 |
-| walker |  | 8874 | 40 | export doc at lib/path.js:141 |  |  | 0.546 |
+| walker |  | 8859 | 40 | export doc at lib/path.js:141 |  |  | 0.546 |
 | ns | 9015 |  | 166 | CONTRIBUTING.md — regression-test host-dependence caveat | 6.5 |  | 0.543 |
-| walker |  | 9046 | 172 | README.md section #6 |  |  | 0.543 |
+| walker |  | 9031 | 172 | README.md section #6 |  |  | 0.543 |
 | ns | 9159 |  | 144 | scripts/sync-version.js | 6.6 |  | 0.540 |
 | ns | 9199 |  | 40 | test/ directory listing | 7.1 |  | 0.544 |
-| walker |  | 9221 | 175 | README.md section #9 |  |  | 0.544 |
-| walker |  | 9242 | 21 | imports in lib/svgo/tools.js |  |  | 0.544 |
-| walker |  | 9377 | 135 | README.md section #12 |  |  | 0.544 |
-| walker |  | 9399 | 22 | imports in lib/svgo/css-select-adapter.js |  |  | 0.544 |
-| walker |  | 9444 | 45 | export doc at lib/style.js:211 |  |  | 0.544 |
-| walker |  | 9607 | 163 | export names surface in lib/svgo/tools.js |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:21 |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:43 |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:78 |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:134 |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:163 |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:194 |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:206 |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:215 |  |  | 0.561 |
-| walker |  | 9607 | 0 | export at lib/svgo/tools.js:250 |  |  | 0.561 |
-| walker |  | 9616 | 9 | listing of 'test/coa/testSvgRecursively/depth-1/depth-2' |  |  | 0.561 |
+| walker |  | 9206 | 175 | README.md section #9 |  |  | 0.544 |
+| walker |  | 9227 | 21 | imports in lib/svgo/tools.js |  |  | 0.544 |
+| walker |  | 9362 | 135 | README.md section #12 |  |  | 0.544 |
+| walker |  | 9384 | 22 | imports in lib/svgo/css-select-adapter.js |  |  | 0.544 |
+| walker |  | 9429 | 45 | export doc at lib/style.js:211 |  |  | 0.544 |
+| walker |  | 9592 | 163 | export names surface in lib/svgo/tools.js |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:21 |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:43 |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:78 |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:134 |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:163 |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:194 |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:206 |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:215 |  |  | 0.561 |
+| walker |  | 9592 | 0 | export at lib/svgo/tools.js:250 |  |  | 0.561 |
+| walker |  | 9601 | 9 | listing of 'test/coa/testSvgRecursively/depth-1/depth-2' |  |  | 0.561 |
 | ns | 9871 |  | 672 | test/plugins/_index.test.js — per-plugin fixture convention | 7.2 |  | 0.541 |
 | ns | 9981 |  | 110 | test/plugins/removeComments.01.svg.txt — a worked fixture example | 7.3 |  | 0.536 |

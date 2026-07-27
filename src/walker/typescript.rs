@@ -2890,12 +2890,12 @@ fn is_test_name_callee(function: Node, source: &str, kind: TestFileKind) -> bool
 }
 
 fn test_names_value(file: &Path, ctx: &WalkCtx, kind: TestFileKind, entries: usize) -> f64 {
-    // Match the established Go/Python semantic-recall tier. Test bodies,
-    // imports, and declarations retain the ordinary 0.2 non-essential
-    // discount; only this compact inventory gets the same 0.5 floor as
-    // orientation rosters, so the semantic index can precede its content.
-    let depth = crate::value::depth_factor(ctx.depth_from_root(file));
-    let roster_location = depth * ctx.non_essential_factor(file).max(0.5);
+    // A test-label roster is semantic recall inside a non-essential file,
+    // and takes that file's ordinary non-essential discount. Overriding the
+    // discount here would let test-label mass — unbounded in a repo with a
+    // large test tree — outbid the source surfaces it is an index of.
+    let roster_location =
+        crate::value::depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file);
     let benchmark_factor =
         if kind == TestFileKind::Benchmark && entries <= BENCHMARK_NAMES_EARLY_TIER_MAX {
             BENCHMARK_NAMES_VALUE_FACTOR
@@ -4743,23 +4743,25 @@ mod tests {
     }
 
     #[test]
-    fn walker_typescript_only_compact_benchmark_rosters_get_early_tier() {
+    fn walker_typescript_test_roster_takes_the_ordinary_non_essential_discount() {
         let dir = tempfile::tempdir().unwrap();
-        let file = dir.path().join("bench.ts");
+        let test_dir = dir.path().join("test");
+        std::fs::create_dir(&test_dir).unwrap();
+        let file = test_dir.join("basic.ts");
+        std::fs::write(&file, "test('a', () => {});\n").unwrap();
         let ctx = WalkCtx::new(dir.path().to_path_buf());
-        let compact = test_names_value(
-            &file,
-            &ctx,
-            TestFileKind::Benchmark,
-            BENCHMARK_NAMES_EARLY_TIER_MAX,
+        let expected = mix_signals(
+            0.40,
+            0.0,
+            0.30,
+            crate::value::depth_factor(ctx.depth_from_root(&file))
+                * ctx.non_essential_factor(&file),
         );
-        let matrix = test_names_value(
-            &file,
-            &ctx,
-            TestFileKind::Benchmark,
-            BENCHMARK_NAMES_EARLY_TIER_MAX + 1,
+        assert!((test_names_value(&file, &ctx, TestFileKind::Test, 1) - expected).abs() < 1e-9);
+        assert!(
+            ctx.non_essential_factor(&file) < 0.5,
+            "a test file must stay damped — the roster no longer floors it"
         );
-        assert_eq!(compact, matrix * BENCHMARK_NAMES_VALUE_FACTOR);
     }
 
     #[test]
