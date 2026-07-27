@@ -651,8 +651,10 @@ pub trait WalkerKey:
         crate::value::DEFAULT_CONCAVITY_EXPONENT
     }
 
-    /// True for orientation-rooted trains, which are exempt from the
-    /// scheduler's breadth-pressure penalty.
+    /// True for orientation content (README/manifest surfaces). A train
+    /// rooted here is excluded from the scheduler's
+    /// substantial-unopened count, so it never by itself turns breadth
+    /// pressure on for the rest of the pool.
     fn is_orientation(&self) -> bool {
         false
     }
