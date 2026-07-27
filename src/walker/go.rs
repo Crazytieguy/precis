@@ -69,7 +69,7 @@ const GOMOD_WHOLE_LINE_CAP: usize = 72;
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     out.extend(expand_gomod(dir, ctx));
-    let (test_files, source_files): (Vec<_>, Vec<_>) = files_with_extension(dir, "go")
+    let (test_files, source_files): (Vec<_>, Vec<_>) = files_with_extension(dir, "go", ctx)
         .into_iter()
         .partition(|p| is_test_file(p));
     out.extend(expand_test_files(&test_files, ctx));
@@ -79,7 +79,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
 fn expand_gomod(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
-    for (name, kind) in list_dir(dir) {
+    for (name, kind) in list_dir(dir, ctx.dir_filter()) {
         if !matches!(kind, crate::fs_util::EntryKind::File) {
             continue;
         }

@@ -20,6 +20,7 @@ use tree_sitter::{Language, Node, Tree};
 
 use crate::batch::{Batch, BatchKey, FsKey, WalkerKey};
 use crate::content::{BatchContent, Render, Span};
+use crate::fs_util::DirFilter;
 use crate::render::SourceCache;
 
 pub mod c;
@@ -126,6 +127,10 @@ impl Walker for FsWalker {
 /// walker run state in language-named fields below.
 pub struct WalkCtx {
     root: PathBuf,
+    /// Built once per run — every listing and file enumeration in the
+    /// walk goes through it, so an ignored subtree is invisible to
+    /// discovery rather than filtered out downstream.
+    dir_filter: DirFilter,
     source_cache: SourceCache,
     /// Tree-sitter parse results, keyed by path.
     tree_cache: RefCell<HashMap<PathBuf, Arc<Tree>>>,
@@ -149,6 +154,7 @@ impl WalkCtx {
 
     pub fn with_cache(root: PathBuf, source_cache: SourceCache) -> Self {
         Self {
+            dir_filter: DirFilter::new(&root),
             root,
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
@@ -165,6 +171,10 @@ impl WalkCtx {
 
     pub fn root(&self) -> &Path {
         &self.root
+    }
+
+    pub fn dir_filter(&self) -> &DirFilter {
+        &self.dir_filter
     }
 
     pub fn source_cache(&self) -> &SourceCache {
@@ -228,7 +238,7 @@ impl WalkCtx {
     pub(in crate::walker) fn is_sql_cited(&self, path: &Path) -> bool {
         let cited = self
             .sql_cited_paths
-            .get_or_init(|| sql::collect_root_cited_sql_paths(&self.root));
+            .get_or_init(|| sql::collect_root_cited_sql_paths(&self.root, self));
         let canonical = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
         cited.contains(&canonical)
     }

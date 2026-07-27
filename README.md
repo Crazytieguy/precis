@@ -167,6 +167,8 @@ precis . --token-budget 8000       # with a larger token budget
 
 The default budget is 3000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation.
 
+When the path is a git repository, `precis` honours `.gitignore` (including nested ones, `.git/info/exclude`, and your global excludes file), so build output, virtualenvs and dependency trees don't eat the budget. `.git/` itself never appears. Non-ignored dotfiles such as `.github/` and `.gitignore` are repository content and are summarized normally.
+
 ## Supported languages
 
 - **Rust** — public item signatures, module docs, manifest + workspace structure

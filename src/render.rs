@@ -21,7 +21,7 @@ use crate::batch::BatchId;
 use crate::content::{
     BatchContent, FsEntries, FsGroup, Render, Span, explode_spans, with_truncate_regex,
 };
-use crate::fs_util::{EntryKind, list_dir};
+use crate::fs_util::{DirFilter, EntryKind, list_dir};
 use crate::tokenizer;
 
 const INDENT_UNIT: &str = "    ";
@@ -283,7 +283,7 @@ impl RenderedTree {
                 Some(TreeNode::Dir { children }) => Some(children),
                 _ => None,
             };
-            let probed = list_dir(parent);
+            let probed = list_dir(parent, &DirFilter::none());
             for p in paths {
                 let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
                     continue;
@@ -387,7 +387,9 @@ impl RenderedTree {
             );
             return;
         };
-        let probed = list_dir(parent);
+        // Kind lookup only, for names the (already filtered) batch
+        // carries — an unfiltered probe can't widen what renders.
+        let probed = list_dir(parent, &DirFilter::none());
         let resolved: Vec<(String, EntryKind)> = paths
             .iter()
             .filter_map(|p| {

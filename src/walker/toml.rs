@@ -55,7 +55,7 @@ const TOOL_CONFIG_FAMILY_MAX_TOKENS: usize = 240;
 type Section = (String, usize, usize);
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let toml_files = files_with_extension(dir, "toml");
+    let toml_files = files_with_extension(dir, "toml", ctx);
     if toml_files.is_empty() {
         return Vec::new();
     }

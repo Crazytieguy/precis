@@ -32,7 +32,7 @@ const META_FILE_TOKEN_CAP: usize = 400;
 const META_DOC_DENSITY_THRESHOLD: f64 = 0.60;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let lua_files = files_with_extension(dir, "lua");
+    let lua_files = files_with_extension(dir, "lua", ctx);
     if lua_files.is_empty() {
         return Vec::new();
     }

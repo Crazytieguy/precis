@@ -53,6 +53,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, CKey};
 use crate::content::BatchContent;
+use crate::fs_util::DirFilter;
 use crate::value::{mix_signals, names_surface_chunk_factor, roster_mass_factor};
 
 /// Chunk size for C decl-name surfaces with no structural signal.
@@ -143,32 +144,32 @@ impl CState {
     /// True iff the project is small-header-sparse enough for the
     /// whole-file render — count of small headers tree-wide at or below
     /// [`WHOLE_HEADER_PROJECT_MAX`]. Computed once per run.
-    fn whole_header_render_allowed(&self, root: &Path) -> bool {
+    fn whole_header_render_allowed(&self, root: &Path, filter: &DirFilter) -> bool {
         *self
             .small_header_count
-            .get_or_init(|| count_small_headers(root))
+            .get_or_init(|| count_small_headers(root, filter))
             <= WHOLE_HEADER_PROJECT_MAX
     }
 
     /// True iff `dir` is a member of a mirrored-sibling platform-port
     /// group (computed once per run).
-    fn is_port_dir(&self, dir: &Path, root: &Path) -> bool {
+    fn is_port_dir(&self, dir: &Path, root: &Path, filter: &DirFilter) -> bool {
         self.port_dirs
-            .get_or_init(|| collect_port_dirs(root))
+            .get_or_init(|| collect_port_dirs(root, filter))
             .contains(dir)
     }
 
     /// Include-graph in-degree index (computed once per run).
-    fn include_in_degree(&self, root: &Path) -> &IncludeInDegreeIndex {
+    fn include_in_degree(&self, root: &Path, filter: &DirFilter) -> &IncludeInDegreeIndex {
         self.include_in_degree
-            .get_or_init(|| collect_include_in_degree(root))
+            .get_or_init(|| collect_include_in_degree(root, filter))
     }
 
     /// True iff `file` is the project's dominant implementation file
     /// (computed once per run).
-    fn is_dominant_c_file(&self, file: &Path, root: &Path) -> bool {
+    fn is_dominant_c_file(&self, file: &Path, root: &Path, filter: &DirFilter) -> bool {
         self.dominant_c_file
-            .get_or_init(|| find_dominant_c_file(root))
+            .get_or_init(|| find_dominant_c_file(root, filter))
             .as_deref()
             == Some(file)
     }
@@ -208,7 +209,7 @@ const INCLUDE_LEAF_MIN_PROJECT_HEADERS: usize = 20;
 
 /// Walk the tree counting `#include "X"` per basename. Same coarse
 /// one-pass pattern (and cap) as [`count_small_headers`].
-fn collect_include_in_degree(root: &Path) -> IncludeInDegreeIndex {
+fn collect_include_in_degree(root: &Path, filter: &DirFilter) -> IncludeInDegreeIndex {
     const SCAN_CAP: usize = 4096;
     let mut c_files: Vec<PathBuf> = Vec::new();
     let mut header_copies: HashMap<String, usize> = HashMap::new();
@@ -228,6 +229,9 @@ fn collect_include_in_degree(root: &Path) -> IncludeInDegreeIndex {
             let Ok(file_type) = entry.file_type() else {
                 continue;
             };
+            if filter.excludes(&path, file_type.is_dir()) {
+                continue;
+            }
             if file_type.is_dir() {
                 if !super::fs::should_skip_dir(&entry.file_name().to_string_lossy()) {
                     stack.push(path);
@@ -294,7 +298,9 @@ fn include_centrality_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
         return 1.0;
     };
-    let index = ctx.c_state().include_in_degree(ctx.root());
+    let index = ctx
+        .c_state()
+        .include_in_degree(ctx.root(), ctx.dir_filter());
     let mut factor = 1.0;
     if index.max_header_to_header >= INCLUDE_HUB_MIN_MAX_IN_DEGREE
         && let Some(&in_degree) = index.header_to_header.get(name)
@@ -323,7 +329,9 @@ fn is_top_include_hub(file: &Path, ctx: &WalkCtx) -> bool {
     let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
         return false;
     };
-    let index = ctx.c_state().include_in_degree(ctx.root());
+    let index = ctx
+        .c_state()
+        .include_in_degree(ctx.root(), ctx.dir_filter());
     index.max_header_to_header >= INCLUDE_HUB_MIN_MAX_IN_DEGREE
         && index.header_to_header.get(name).copied().unwrap_or(0) * 2 >= index.max_header_to_header
 }
@@ -341,7 +349,7 @@ const MIN_PORT_SHARED_NAMES: usize = 2;
 /// actually carry a shared name are marked, so shared-helper siblings
 /// (`generic/`, `zfs/`) that don't mirror the skeleton keep full weight.
 /// Size-capped; symlinks not followed.
-fn collect_port_dirs(root: &Path) -> HashSet<PathBuf> {
+fn collect_port_dirs(root: &Path, filter: &DirFilter) -> HashSet<PathBuf> {
     const SCAN_CAP: usize = 4096;
     let mut ports = HashSet::new();
     let mut stack = vec![root.to_path_buf()];
@@ -355,6 +363,7 @@ fn collect_port_dirs(root: &Path) -> HashSet<PathBuf> {
             .filter(|e| e.file_type().map(|t| t.is_dir()).unwrap_or(false))
             .filter(|e| !super::fs::should_skip_dir(&e.file_name().to_string_lossy()))
             .map(|e| e.path())
+            .filter(|p| !filter.excludes(p, true))
             .collect();
         for sd in &subdirs {
             stack.push(sd.clone());
@@ -406,7 +415,7 @@ fn collect_port_dirs(root: &Path) -> HashSet<PathBuf> {
 /// [`WHOLE_HEADER_MAX_SRC_LINES`] non-blank lines. Size-only (no parse)
 /// — a coarse project-shape signal, capped so a pathological tree can't
 /// stall the run. Symlinks are not followed.
-fn count_small_headers(root: &Path) -> usize {
+fn count_small_headers(root: &Path, filter: &DirFilter) -> usize {
     const SCAN_CAP: usize = 4096;
     let mut count = 0;
     let mut stack = vec![root.to_path_buf()];
@@ -424,6 +433,9 @@ fn count_small_headers(root: &Path) -> usize {
             let Ok(file_type) = entry.file_type() else {
                 continue;
             };
+            if filter.excludes(&path, file_type.is_dir()) {
+                continue;
+            }
             if file_type.is_dir() {
                 if !super::fs::should_skip_dir(&entry.file_name().to_string_lossy()) {
                     stack.push(path);
@@ -457,7 +469,7 @@ const DOMINANT_SCAN_MAX_BYTES: u64 = 8 * 1024 * 1024;
 /// (and cap) as [`count_small_headers`], plus a byte budget; test
 /// dirs and test-named files are excluded so a large test suite
 /// can't mask a single-implementation-file layout.
-fn find_dominant_c_file(root: &Path) -> Option<PathBuf> {
+fn find_dominant_c_file(root: &Path, filter: &DirFilter) -> Option<PathBuf> {
     const SCAN_CAP: usize = 4096;
     let mut total_lines = 0usize;
     let mut largest: Option<(PathBuf, usize)> = None;
@@ -480,6 +492,9 @@ fn find_dominant_c_file(root: &Path) -> Option<PathBuf> {
             let Ok(file_type) = entry.file_type() else {
                 continue;
             };
+            if filter.excludes(&path, file_type.is_dir()) {
+                continue;
+            }
             if file_type.is_dir() {
                 if !super::fs::should_skip_dir(&name) && !super::fs::is_test_dir_name(&name) {
                     stack.push(path);
@@ -751,7 +766,7 @@ fn count_based_chunk_ranges(decl_count: usize) -> Vec<Range<usize>> {
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let c_files = c_source_files(dir);
+    let c_files = c_source_files(dir, ctx);
     if c_files.is_empty() {
         return Vec::new();
     }
@@ -760,7 +775,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     // a small handful of small headers — each a load-bearing module API.
     // A project flooded with small headers (many-small-modules layout)
     // keeps the decomposed names-surface so budget reaches breadth.
-    let allow_whole_headers = ctx.c_state().whole_header_render_allowed(ctx.root());
+    let allow_whole_headers = ctx
+        .c_state()
+        .whole_header_render_allowed(ctx.root(), ctx.dir_filter());
 
     let mut out = Vec::new();
     for file in &c_files {
@@ -1797,7 +1814,7 @@ fn declarator_is_function(node: Node) -> bool {
 // --- value functions ----------------------------------------------------
 
 /// C source files this walker owns: `.c` and `.h`.
-fn c_source_files(dir: &Path) -> Vec<PathBuf> {
+fn c_source_files(dir: &Path, ctx: &WalkCtx) -> Vec<PathBuf> {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return Vec::new();
     };
@@ -1809,7 +1826,10 @@ fn c_source_files(dir: &Path) -> Vec<PathBuf> {
                 return None;
             }
             let name = path.file_name().and_then(|n| n.to_str())?;
-            is_c_source_file_name(name).then_some(path)
+            // Same filter the listing uses: a file the listing hides
+            // must not come back as a content batch.
+            (is_c_source_file_name(name) && !ctx.dir_filter().excludes(&path, false))
+                .then_some(path)
         })
         .collect();
     out.sort();
@@ -1898,7 +1918,12 @@ fn catastrophic_tier(header_tier: bool) -> f64 {
 /// gated on [`find_dominant_c_file`]; everything else keeps the flat
 /// `.h`/`.c` split.
 fn names_surface_catastrophic_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    catastrophic_tier(is_header_file(file) || ctx.c_state().is_dominant_c_file(file, ctx.root()))
+    catastrophic_tier(
+        is_header_file(file)
+            || ctx
+                .c_state()
+                .is_dominant_c_file(file, ctx.root(), ctx.dir_filter()),
+    )
 }
 
 /// Follow-up axis: headers stay neutral, `.c` content stays demoted.
@@ -1925,7 +1950,7 @@ fn platform_port_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     let Some(dir) = file.parent() else {
         return 1.0;
     };
-    if ctx.c_state().is_port_dir(dir, ctx.root()) {
+    if ctx.c_state().is_port_dir(dir, ctx.root(), ctx.dir_filter()) {
         PLATFORM_PORT_FACTOR
     } else {
         1.0
@@ -2921,7 +2946,10 @@ typedef int x;
         std::fs::write(root.join("small.c"), line.repeat(10)).unwrap();
         std::fs::create_dir(root.join("test")).unwrap();
         std::fs::write(root.join("test/test_big.c"), line.repeat(500)).unwrap();
-        assert_eq!(find_dominant_c_file(root), Some(root.join("big.c")));
+        assert_eq!(
+            find_dominant_c_file(root, &DirFilter::none()),
+            Some(root.join("big.c"))
+        );
 
         // Spread project: no file reaches the dominance share.
         let dir = tempfile::tempdir().unwrap();
@@ -2929,29 +2957,32 @@ typedef int x;
         std::fs::write(root.join("a.c"), line.repeat(100) + main_def).unwrap();
         std::fs::write(root.join("b.c"), line.repeat(90)).unwrap();
         std::fs::write(root.join("c.c"), line.repeat(80)).unwrap();
-        assert_eq!(find_dominant_c_file(root), None);
+        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
 
         // Dominant library file: no main at all, or only a
         // preproc-gated test main — not a binary, no promotion.
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         std::fs::write(root.join("lib.c"), line.repeat(100)).unwrap();
-        assert_eq!(find_dominant_c_file(root), None);
+        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
         std::fs::write(root.join("lib.c"), line.repeat(100) + gated_main).unwrap();
-        assert_eq!(find_dominant_c_file(root), None);
+        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
 
         // Negative guard (`#if !defined(TESTING)`) is compiled by
         // default — still a binary.
         let excluded_main = format!("#if !defined(TESTING)\n{main_def}#endif\n");
         std::fs::write(root.join("lib.c"), line.repeat(100) + &excluded_main).unwrap();
-        assert_eq!(find_dominant_c_file(root), Some(root.join("lib.c")));
+        assert_eq!(
+            find_dominant_c_file(root, &DirFilter::none()),
+            Some(root.join("lib.c"))
+        );
 
         // Compound guard: a leading `!` conjoined with a positive
         // feature test is off by default — fail closed.
         let compound_main =
             format!("#if !defined(TESTING) && defined(BUILD_CLI)\n{main_def}#endif\n");
         std::fs::write(root.join("lib.c"), line.repeat(100) + &compound_main).unwrap();
-        assert_eq!(find_dominant_c_file(root), None);
+        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
 
         // Multi-binary repo: a second default-configuration main in a
         // smaller file means the dominant file isn't *the* program.
@@ -2959,7 +2990,7 @@ typedef int x;
         let root = dir.path();
         std::fs::write(root.join("big.c"), line.repeat(100) + main_def).unwrap();
         std::fs::write(root.join("tool.c"), line.repeat(10) + main_def).unwrap();
-        assert_eq!(find_dominant_c_file(root), None);
+        assert_eq!(find_dominant_c_file(root, &DirFilter::none()), None);
 
         // Root-level test files (tests.c, foo_tests.c) are excluded
         // from the tally like test dirs — they can't mask dominance.
@@ -2968,7 +2999,10 @@ typedef int x;
         std::fs::write(root.join("big.c"), line.repeat(100) + main_def).unwrap();
         std::fs::write(root.join("tests.c"), line.repeat(200)).unwrap();
         std::fs::write(root.join("big_tests.c"), line.repeat(200)).unwrap();
-        assert_eq!(find_dominant_c_file(root), Some(root.join("big.c")));
+        assert_eq!(
+            find_dominant_c_file(root, &DirFilter::none()),
+            Some(root.join("big.c"))
+        );
     }
 
     fn aggregate_group_count(filename: &str, src: &str) -> usize {

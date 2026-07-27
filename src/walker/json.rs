@@ -81,7 +81,8 @@ impl JsonState {
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     // Keep admission extension-bounded: these are explicit JSON-family
     // formats, not files guessed to be JSON from their contents.
-    let json_family_files = files_with_any_extension(dir, &["json", "json5", "code-workspace"]);
+    let json_family_files =
+        files_with_any_extension(dir, &["json", "json5", "code-workspace"], ctx);
     if json_family_files.is_empty() {
         return Vec::new();
     }

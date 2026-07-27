@@ -237,6 +237,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 }
 
 fn expand_rust_files_in_dir_once(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+    // Cargo source dirs are resolved from the manifest, not reached by
+    // the listing walk, so this is where an ignored `examples/` or
+    // `benches/` has to be rejected — its *files* don't match the
+    // directory-only pattern that hides it.
+    if ctx.dir_filter().excludes_tree(dir, true) {
+        return Vec::new();
+    }
     if !ctx.rust_state().mark_dir_expanded(dir) {
         return Vec::new();
     }
@@ -244,7 +251,7 @@ fn expand_rust_files_in_dir_once(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKe
 }
 
 fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let rust_files = files_with_extension(dir, "rs");
+    let rust_files = files_with_extension(dir, "rs", ctx);
     if rust_files.is_empty() {
         return Vec::new();
     }
@@ -1321,7 +1328,7 @@ fn collect_cargo_source_dirs(root: &Path, ctx: &WalkCtx) -> Vec<PathBuf> {
             continue;
         };
         for source_root in ["src", "tests", "benches", "examples"] {
-            dirs.extend(rust_parent_dirs_under(&package_root.join(source_root)));
+            dirs.extend(rust_parent_dirs_under(&package_root.join(source_root), ctx));
         }
         if package_root.join("build.rs").is_file() {
             dirs.push(package_root.to_path_buf());
@@ -1343,12 +1350,12 @@ fn is_example_source_path(root: &Path, path: &Path) -> bool {
         })
 }
 
-fn rust_parent_dirs_under(dir: &Path) -> Vec<PathBuf> {
+fn rust_parent_dirs_under(dir: &Path, ctx: &WalkCtx) -> Vec<PathBuf> {
     if !dir.exists() {
         return Vec::new();
     }
     let mut dirs = Vec::new();
-    for file in super::fs::files_with_extension_recursive(dir, "rs") {
+    for file in super::fs::files_with_extension_recursive(dir, "rs", ctx) {
         if let Some(parent) = file.parent() {
             dirs.push(parent.to_path_buf());
         }
@@ -2079,7 +2086,7 @@ fn collect_crate_pub_trait_names(ctx: &WalkCtx) -> HashSet<String> {
         .cargo_source_dirs(|| collect_cargo_source_dirs(ctx.root(), ctx))
         .clone();
     for dir in &source_dirs {
-        for file in files_with_extension(dir, "rs") {
+        for file in files_with_extension(dir, "rs", ctx) {
             let Some((source, tree)) = parse_rust(ctx, &file) else {
                 continue;
             };

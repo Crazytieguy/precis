@@ -109,7 +109,7 @@ pub(in crate::walker) struct PythonState {
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let py_files = files_with_extension(dir, "py");
+    let py_files = files_with_extension(dir, "py", ctx);
     if py_files.is_empty() {
         return Vec::new();
     }
