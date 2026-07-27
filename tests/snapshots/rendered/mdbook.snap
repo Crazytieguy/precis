@@ -19,13 +19,6 @@ CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
-    …
-     129→[features]
-     130→default = ["watch", "serve", "search"]
-     131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
-     132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
-     133→search = ["mdbook-html/search"]
-    …
 LICENSE
 README.md
        1→# mdBook
@@ -101,9 +94,6 @@ crates/
                 highlight.js
             playground_editor/
             searcher/
-                elasticlunr.min.js
-                mark.min.js
-                searcher.js
             templates/
         src/
             html/
@@ -118,6 +108,13 @@ crates/
             html_handlebars/
                 hbs_renderer.rs
                 helpers/
+                    fontawesome.rs
+                    mod.rs
+                           1→pub(crate) mod fontawesome;
+                           2→pub(crate) mod resources;
+                           3→pub(crate) mod toc;
+                    resources.rs
+                    toc.rs
                 mod.rs
                 search.rs
                 static_files.rs

@@ -42,366 +42,10 @@ netlify.toml
 package.json
 packages/
     create-vite/
-        CHANGELOG.md
-        LICENSE
-        README.md
-               1→# create-vite <a href="https://npmjs.com/package/create-vite"><img src="https://img.shields.io/npm/v/create-vite" alt="npm package"></a>
-               3→## Scaffolding Your First Vite Project
-            …
-              82→## Community Templates
-            …
-        __tests__/
-            cli.spec.ts
-        index.js
-        package.json
-        src/
-            index.ts
-        template-lit/
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                assets/
-                    hero.png
-                    lit.svg
-                    vite.svg
-                index.css
-                my-element.js
-        template-lit-ts/
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                assets/
-                    hero.png
-                    lit.svg
-                    vite.svg
-                index.css
-                my-element.ts
-            tsconfig.json
-        template-preact/
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                app.css
-                app.jsx
-                assets/
-                    hero.png
-                    preact.svg
-                    vite.svg
-                index.css
-                main.jsx
-            vite.config.js
-        template-preact-ts/
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                app.css
-                app.tsx
-                assets/
-                    hero.png
-                    preact.svg
-                    vite.svg
-                index.css
-                main.tsx
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
-        template-qwik/
-            README.md
-                   1→# Qwik + Vite
-                …
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                app.css
-                app.jsx
-                assets/
-                    hero.png
-                    qwik.svg
-                    vite.svg
-                index.css
-                main.jsx
-            vite.config.js
-        template-qwik-ts/
-            README.md
-                   1→# Qwik + Vite
-                …
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                app.css
-                app.tsx
-                assets/
-                    hero.png
-                    qwik.svg
-                    vite.svg
-                index.css
-                main.tsx
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
-        template-react/
-            README.md
-                   1→# React + Vite
-                   2→
-                   3→This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-                …
-            _gitignore
-            eslint.config.js
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.css
-                App.jsx
-                assets/
-                    hero.png
-                    react.svg
-                    vite.svg
-                index.css
-                main.jsx
-            vite.config.js
-        template-react-ts/
-            README.md
-                   1→# React + TypeScript + Vite
-                   2→
-                   3→This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-                …
-            _gitignore
-            eslint.config.js
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.css
-                App.tsx
-                assets/
-                    hero.png
-                    react.svg
-                    vite.svg
-                index.css
-                main.tsx
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
-        template-solid/
-            README.md
-                   1→## Usage
-                   2→
-                   3→```bash
-                   4→$ npm install # or pnpm install or yarn install
-                   5→```
-                …
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.css
-                App.jsx
-                assets/
-                    hero.png
-                    solid.svg
-                    vite.svg
-                index.css
-                index.jsx
-            vite.config.js
-        template-solid-ts/
-            README.md
-                   1→## Usage
-                   2→
-                   3→```bash
-                   4→$ npm install # or pnpm install or yarn install
-                   5→```
-                …
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.css
-                App.tsx
-                assets/
-                    hero.png
-                    solid.svg
-                    vite.svg
-                index.css
-                index.tsx
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
-        template-svelte/
-            .vscode/
-            README.md
-                   1→# Svelte + Vite
-                   2→
-                   3→This template should help get you started developing with Svelte in Vite.
-                …
-            _gitignore
-            index.html
-            jsconfig.json
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.svelte
-                app.css
-                assets/
-                    hero.png
-                    svelte.svg
-                    vite.svg
-                lib/
-                    Counter.svelte
-                main.js
-                    …
-                       9→export default app
-            svelte.config.js
-            vite.config.js
-        template-svelte-ts/
-            .vscode/
-            README.md
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.svelte
-                app.css
-                assets/
-                    hero.png
-                    svelte.svg
-                    vite.svg
-                lib/
-                    Counter.svelte
-                main.ts
-                    …
-                       9→export default app
-            svelte.config.js
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
-        template-vanilla/
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                assets/
-                    hero.png
-                    javascript.svg
-                    vite.svg
-                counter.js
-                main.js
-                style.css
-        template-vanilla-ts/
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                assets/
-                    hero.png
-                    typescript.svg
-                    vite.svg
-                counter.ts
-                main.ts
-                style.css
-            tsconfig.json
-        template-vue/
-            .vscode/
-            README.md
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.vue
-                assets/
-                    hero.png
-                    vite.svg
-                    vue.svg
-                components/
-                    HelloWorld.vue
-                main.js
-                style.css
-            vite.config.js
-        template-vue-ts/
-            .vscode/
-            README.md
-            _gitignore
-            index.html
-            package.json
-            public/
-                favicon.svg
-                icons.svg
-            src/
-                App.vue
-                assets/
-                    hero.png
-                    vite.svg
-                    vue.svg
-                components/
-                    HelloWorld.vue
-                main.ts
-                style.css
-            tsconfig.app.json
-            tsconfig.json
-            tsconfig.node.json
-            vite.config.ts
-        tsconfig.json
-        tsdown.config.ts
     plugin-legacy/
         CHANGELOG.md
         LICENSE
         README.md
-               1→# @vitejs/plugin-legacy…
-               3→Vite's minimum browser support target is [native ESM dynamic import](https://caniuse.com/es6-module-dynamic-import), and [`import.meta`](https://caniuse.com/mdn-javascript_operators_import_meta). This plugin provides support for legacy browsers that do not support those features when building for production.
-            …
         package.json
         src/
             __tests__/
@@ -468,6 +112,77 @@ packages/
                 utils.ts
             node/
                 __tests__/
+                    __snapshots__/
+                        utils.spec.ts.snap
+                    assetSource.spec.ts
+                    build.spec.ts
+                    config.spec.ts
+                    constants.spec.ts
+                    dev.spec.ts
+                    env/
+                    env.spec.ts
+                    environment.spec.ts
+                    external.spec.ts
+                    filterRegex.spec.ts
+                    fixtures/
+                    html.spec.ts
+                    http.spec.ts
+                    optimizer/
+                    package.json
+                    packages/
+                    plugins/
+                        __snapshots__/
+                            license.spec.ts.snap
+                        assetImportMetaUrl.spec.ts
+                        css.spec.ts
+                        cssPreprocessorTeardown.spec.ts
+                        define.spec.ts
+                        dynamicImportVar/
+                            __snapshots__/
+                                parse.spec.ts.snap
+                            mods/
+                            parse.spec.ts
+                        esbuild.spec.ts
+                        fixtures/
+                        hooks.spec.ts
+                        import.spec.ts
+                        importGlob/
+                            __snapshots__/
+                                fixture.spec.ts.snap
+                            fixture-a/
+                                .foo/
+                                .gitignore
+                                index.ts
+                                modules/
+                                    a.ts
+                                    b.ts
+                                    index.ts
+                                node_modules/
+                                sibling.ts
+                            fixture-b/
+                                a.ts
+                                b.ts
+                                index.ts
+                            fixture.spec.ts
+                            parse.spec.ts
+                            utils.spec.ts
+                        index.spec.ts
+                        license.spec.ts
+                        modulePreloadPolyfill/
+                        oxc.spec.ts
+                        pluginFilter.spec.ts
+                        terser.spec.ts
+                        wasm.spec.ts
+                        worker.spec.ts
+                        workerImportMetaUrl.spec.ts
+                    resolve.spec.ts
+                    runnerImport.spec.ts
+                    scan.spec.ts
+                    shortcuts.spec.ts
+                    utils/
+                        isFileReadable/
+                            permission-test-file
+                    utils.spec.ts
                 __tests_dts__/
                     config.ts
                     plugin.ts
@@ -508,20 +223,210 @@ packages/
                 logger.ts
                 nodeResolve.ts
                 optimizer/
+                    index.ts
+                    optimizer.ts
+                    pluginConverter.ts
+                    resolve.ts
+                    rolldownDepPlugin.ts
+                    scan.ts
                 packages.ts
                 plugin.ts
                 plugins/
+                    asset.ts
+                    assetImportMetaUrl.ts
+                    clientInjections.ts
+                    css.ts
+                    define.ts
+                    dynamicImportVars.ts
+                    esbuild.ts
+                    esbuildBannerFooterCompatPlugin.ts
+                    forwardConsole.ts
+                    html.ts
+                    importAnalysis.ts
+                    importAnalysisBuild.ts
+                    importMetaGlob.ts
+                    index.ts
+                    json.ts
+                    license.ts
+                    manifest.ts
+                    modulePreloadPolyfill.ts
+                    optimizedDeps.ts
+                    oxc.ts
+                    pluginFilter.ts
+                    preAlias.ts
+                    prepareOutDir.ts
+                    reporter.ts
+                    resolve.ts
+                    terser.ts
+                    wasm.ts
+                    worker.ts
+                    workerImportMetaUrl.ts
                 preview.ts
                 publicDir.ts
                 server/
+                    __tests__/
+                        fixtures/
+                        moduleGraph.spec.ts
+                        pluginContainer.spec.ts
+                        search-root.spec.ts
+                        sourcemap.spec.ts
+                        transformRequest.spec.ts
+                        watcher.spec.ts
+                    environment.ts
+                    environments/
+                        fetchableEnvironments.ts
+                        fullBundleEnvironment.ts
+                        runnableEnvironment.ts
+                    hmr.ts
+                    index.ts
+                    middlewares/
+                        __tests__/
+                        base.ts
+                        error.ts
+                        hostCheck.ts
+                        htmlFallback.ts
+                        indexHtml.ts
+                        memoryFiles.ts
+                        notFound.ts
+                        proxy.ts
+                        rejectInvalidRequest.ts
+                        static.ts
+                        time.ts
+                        transform.ts
+                        triggerLazyBundling.ts
+                    mixedModuleGraph.ts
+                    moduleGraph.ts
+                    openBrowser.ts
+                    pluginContainer.ts
+                    searchRoot.ts
+                    send.ts
+                    sourcemap.ts
+                    transformRequest.ts
+                    warmup.ts
+                    ws.ts
                 shortcuts.ts
                 ssr/
+                    __tests__/
+                        __snapshots__/
+                            ssrLoadModule.spec.ts.snap
+                        fixtures/
+                        ssrLoadModule.spec.ts
+                        ssrStacktrace.spec.ts
+                        ssrTransform.spec.ts
+                    fetchModule.ts
+                    index.ts
+                           1→import type { DepOptimizationConfig } from '../optimizer'
+                           2→import { mergeWithDefaults } from '../utils'
+                           4→export type SSRTarget = 'node' | 'webworker'
+                           5→
+                           6→export type SsrDepOptimizationConfig = DepOptimizationConfig
+                           7→
+                           8→export interface SSROptions {
+                           9→  noExternal?: string | RegExp | (string | RegExp)[] | true
+                          10→  external?: string[] | true
+                          11→
+                          12→  /**
+                          13→   * Define the target for the ssr build. The browser field in package.json
+                          14→   * is ignored for node but used if webworker is the target
+                          15→   * This option will be removed in a future major version
+                          16→   * @default 'node'
+                          17→   */
+                          18→  target?: SSRTarget
+                          19→
+                          20→  /**
+                          21→   * Control over which dependencies are optimized during SSR and esbuild options
+                          22→   * During build:
+                          23→   *   no external CJS dependencies are optimized by default
+                          24→   * During dev:
+                          25→   *   explicit no external CJS dependencies are optimized by default
+                          26→   * @experimental
+                          27→   */
+                          28→  optimizeDeps?: SsrDepOptimizationConfig
+                          29→
+                          30→  resolve?: {
+                          31→    /**
+                          32→     * Conditions that are used in the plugin pipeline. The default value is the root config's `resolve.conditions`.
+                          33→     *
+                          34→     * Use this to override the default ssr conditions for the ssr build.
+                          35→     *
+                          36→     * @default rootConfig.resolve.conditions
+                          37→     */
+                          38→    conditions?: string[]
+                          39→
+                          40→    /**
+                          41→     * Conditions that are used during ssr import (including `ssrLoadModule`) of externalized dependencies.
+                          42→     *
+                          43→     * @default ['node', 'module-sync']
+                          44→     */
+                          45→    externalConditions?: string[]
+                          46→
+                          47→    mainFields?: string[]
+                          48→  }
+                          49→}
+                          51→export interface ResolvedSSROptions extends SSROptions {
+                          52→  target: SSRTarget
+                          53→  optimizeDeps: SsrDepOptimizationConfig
+                          54→}
+                        …
+                          63→export const ssrConfigDefaults: Readonly<Partial<SSROptions>> =
+                          64→  _ssrConfigDefaults
+                          66→export function resolveSSROptions(
+                          67→  ssr: SSROptions | undefined,
+                          68→  preserveSymlinks: boolean,
+                          69→): ResolvedSSROptions {
+                          70→  const defaults = mergeWithDefaults(_ssrConfigDefaults, {
+                          71→    optimizeDeps: { esbuildOptions: { preserveSymlinks } },
+                          72→  } satisfies SSROptions)
+                          73→  return mergeWithDefaults(defaults, ssr ?? {})
+                        …
+                    runnerImport.ts
+                    runtime/
+                        __tests__/
+                            fixture-outside.js
+                            fixtures/
+                            package.json
+                            server-hmr.spec.ts
+                            server-no-hmr.spec.ts
+                            server-runtime.spec.ts
+                            server-source-maps.spec.ts
+                            server-worker-runner.invoke.spec.ts
+                            server-worker-runner.spec.ts
+                            utils.ts
+                        serverModuleRunner.ts
+                    ssrManifestPlugin.ts
+                    ssrModuleLoader.ts
+                    ssrStacktrace.ts
+                    ssrTransform.ts
                 tsconfig.json
                 typeUtils.ts
                 utils.ts
                 watch.ts
             shared/
+                __tests__/
+                    forwardConsole.spec.ts
+                builtin.ts
+                constants.ts
+                forwardConsole.ts
+                hmr.ts
+                hmrHandler.ts
+                invokeMethods.ts
+                moduleRunnerTransport.ts
+                ssrTransform.ts
+                tsconfig.json
+                utils.ts
             types/
+                alias.d.ts
+                anymatch.d.ts
+                chokidar.d.ts
+                commonjs.d.ts
+                connect.d.ts
+                dynamicImportVars.d.ts
+                package.json
+                    …
+                       3→  "version": "0.0.0"
+                    …
+                shims.d.ts
+                ws.d.ts
         tsconfig.base.json
         tsconfig.check.json
         tsconfig.json
@@ -533,11 +438,6 @@ packages/
             importGlob.d.ts
             importMeta.d.ts
             internal/
-                cssPreprocessorOptions.d.ts
-                esbuildOptions.d.ts
-                lightningcssOptions.d.ts
-                rollupTypeCompat.d.ts
-                terserOptions.d.ts
             metadata.d.ts
 patches/
     chokidar@3.6.0.patch

@@ -52,19 +52,6 @@ docs/
     launch config.png
     out-folders.dio.svg
 editor.code-workspace
-       1→{
-       2→	"folders": [
-       3→		{
-       4→			"path": "../vscode"
-       5→		},
-       6→		{
-       7→			"path": "../vscode-loc"
-       8→		},
-       9→		{
-      10→			"path": "."
-      11→		}
-      12→	]
-      13→}
 gulpfile.js
 monaco-lsp-client/
     README.md
@@ -94,9 +81,30 @@ monaco-lsp-client/
             LspConnection.ts
             TextDocumentSynchronizer.ts
             languageFeatures/
+                LspCodeActionFeature.ts
+                LspCodeLensFeature.ts
+                LspCompletionFeature.ts
+                LspDeclarationFeature.ts
+                LspDefinitionFeature.ts
+                LspDiagnosticsFeature.ts
+                LspDocumentHighlightFeature.ts
+                LspDocumentLinkFeature.ts
+                LspDocumentSymbolFeature.ts
+                LspFoldingRangeFeature.ts
+                LspFormattingFeature.ts
+                LspHoverFeature.ts
+                LspImplementationFeature.ts
+                LspInlayHintsFeature.ts
+                LspOnTypeFormattingFeature.ts
+                LspRangeFormattingFeature.ts
+                LspReferencesFeature.ts
+                LspRenameFeature.ts
+                LspSelectionRangeFeature.ts
+                LspSemanticTokensFeature.ts
+                LspSignatureHelpFeature.ts
+                LspTypeDefinitionFeature.ts
+                common.ts
         index.ts
-            …
-               5→export { MonacoLspClient, WebSocketTransport, createTransportToWorker, createTransportToIFrame };
         types.ts
         utils.ts
 package-lock.json
@@ -278,9 +286,6 @@ samples/
             index.html
             main.js
             package.json
-                …
-                   2→	"name": "electron-amd-node-integration",
-                …
     nwjs-amd/
         index.html
     nwjs-amd-v2/
@@ -506,8 +511,6 @@ src/
                 tokenization.ts
                 workerManager.ts
             register.all.ts
-                …
-                   6→export { css, html, json, typescript };
             typescript/
                 languageFeatures.ts
                 lib/

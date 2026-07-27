@@ -180,12 +180,6 @@ packages/
             types.ts
             utils.ts
         tests/
-            graph.test.ts
-            indexes.test.ts
-            multiset.test.ts
-            operators/
-            test-utils.ts
-            utils.test.ts
         tsconfig.json
     d2ql/
         README.md
@@ -260,24 +254,6 @@ packages/
             …
         src/
             d2.ts
-                …
-                  11→export type D2Options = {
-                  12→  initialFrontier: Antichain | Version | number | number[]
-                  13→}
-                  15→export class D2 implements ID2 {
-                …
-                  93→export class StreamBuilder<T> implements IStreamBuilder<T> {
-                …
-                  97→  constructor(graph: ID2, writer: DifferenceStreamWriter<T>) {
-                …
-                 166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
-                 167→  sendData(
-                 168→    version: Version | number | number[],
-                 169→    collection: MultiSet<T> | MultiSetArray<T>,
-                 170→  ): void {
-                …
-                 174→  sendFrontier(frontier: Antichain | Version | number | number[]): void {
-                …
             electric/
                 index.ts
             graph.ts
@@ -334,11 +310,6 @@ packages/
                 pipe.ts
                 reduce.ts
                 topK.ts
-                    …
-                      22→export function topK<
-                    …
-                      60→export function topKWithIndex<
-                    …
                 topKWithFractionalIndex.ts
             order.ts
             sqlite/
@@ -346,15 +317,37 @@ packages/
                 database.ts
                 index.ts
                 operators/
+                    buffer.ts
+                    consolidate.ts
+                    count.ts
+                    distinct.ts
+                    filterBy.ts
+                        …
+                          17→export function filterBy<
+                        …
+                    groupBy.ts
+                    index.ts
+                           1→export * from './consolidate.js'
+                           2→export * from './count.js'
+                           3→export * from './distinct.js'
+                           4→export * from './join.js'
+                           5→export * from './reduce.js'
+                           6→export * from './buffer.js'
+                           7→export * from './filterBy.js'
+                           8→export { groupBy, mode } from './groupBy.js'
+                           9→export * from './orderBy.js'
+                          10→export * from './topK.js'
+                          11→export * from './topKWithFractionalIndex.js'
+                          12→export * from '../context.js'
+                    join.ts
+                    orderBy.ts
+                    reduce.ts
+                    topK.ts
+                    topKWithFractionalIndex.ts
                 version-index.ts
             types.ts
             utils.ts
             version-index.ts
-                …
-                   8→export interface IndexType<K, V> {
-                …
-                  28→export class Index<K, V> implements IndexType<K, V> {
-                …
         tests/
         tsconfig.json
         vitest.config.js

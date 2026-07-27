@@ -1,4 +1,4 @@
-Score(3000)=0.405 I=0.689 C=0.238 ns_rows≤3K=25/65 (reached=7 partial=1 missing=17)
+Score(3000)=0.401 I=0.690 C=0.233 ns_rows≤3K=25/65 (reached=7 partial=1 missing=17)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -39,55 +39,55 @@ Score(3000)=0.405 I=0.689 C=0.238 ns_rows≤3K=25/65 (reached=7 partial=1 missin
 | ns | 1343 |  | 44 | packages/d2ts/src listing | 3.1 |  | 0.446 |
 | walker |  | 1409 | 70 | imports in packages/d2ts/src/index.ts |  |  | 0.449 |
 | ns | 1413 |  | 70 | d2ts public export barrel | 3.2 |  | 0.473 |
-| walker |  | 1507 | 98 | listing of 'packages/d2ts/src/operators' |  |  | 0.473 |
+| walker |  | 1466 | 57 | listing of 'packages/d2ts/src/sqlite/operators' |  |  | 0.473 |
 | ns | 1562 |  | 149 | types.ts: Message/DataMessage/FrontierMessage envelope | 3.3 |  | 0.441 |
+| walker |  | 1564 | 98 | listing of 'packages/d2ts/src/operators' |  |  | 0.441 |
 | ns | 1690 |  | 128 | graph.ts: dataflow-edge read handle | 3.4 |  | 0.420 |
-| walker |  | 1747 | 240 | imports in packages/d2ts/src/operators/index.ts |  |  | 0.424 |
-| walker |  | 1760 | 13 | export names surface in packages/d2ts/src/operators/filterBy.ts |  |  | 0.424 |
-| ns | 1830 |  | 140 | graph.ts: Operator abstract base | 3.5 |  | 0.405 |
-| walker |  | 1837 | 77 | README headline in packages/d2ql/README.md |  |  | 0.405 |
-| walker |  | 1870 | 33 | packages/d2ql/README.md section #0 |  |  | 0.405 |
-| walker |  | 1948 | 78 | README headline in packages/d2ts/README.md |  |  | 0.405 |
-| ns | 1969 |  | 139 | d2.ts: D2 graph constructor | 3.6 |  | 0.391 |
-| walker |  | 1987 | 39 | packages/d2mini/README.md section #0 |  |  | 0.403 |
-| ns | 2069 |  | 100 | d2.ts: StreamBuilder essentials | 3.7 |  | 0.392 |
-| walker |  | 2160 | 173 | headings outline in README.md |  |  | 0.392 |
-| ns | 2255 |  | 186 | multiset.ts: MultiSet.map/filter | 3.8 |  | 0.374 |
-| walker |  | 2332 | 172 | README.md section #0 |  |  | 0.374 |
-| walker |  | 2358 | 26 | plaintext config pnpm-workspace.yaml |  |  | 0.390 |
-| walker |  | 2427 | 69 | listing of 'packages/d2ql/src' |  |  | 0.391 |
-| walker |  | 2436 | 9 | listing of 'packages/d2ql/src/query-builder' |  |  | 0.391 |
-| walker |  | 2493 | 57 | module-doc lede in packages/d2ql/src/index.ts |  |  | 0.391 |
-| ns | 2498 |  | 243 | multiset.ts: MultiSet.join | 3.9 |  | 0.374 |
+| walker |  | 1712 | 148 | imports in packages/d2ts/src/sqlite/operators/index.ts |  |  | 0.421 |
+| ns | 1830 |  | 140 | graph.ts: Operator abstract base | 3.5 |  | 0.402 |
+| walker |  | 1952 | 240 | imports in packages/d2ts/src/operators/index.ts |  |  | 0.406 |
+| walker |  | 1965 | 13 | export names surface in packages/d2ts/src/operators/filterBy.ts |  |  | 0.406 |
+| ns | 1969 |  | 139 | d2.ts: D2 graph constructor | 3.6 |  | 0.392 |
+| walker |  | 2042 | 77 | README headline in packages/d2ql/README.md |  |  | 0.392 |
+| ns | 2069 |  | 100 | d2.ts: StreamBuilder essentials | 3.7 |  | 0.381 |
+| walker |  | 2075 | 33 | packages/d2ql/README.md section #0 |  |  | 0.381 |
+| walker |  | 2153 | 78 | README headline in packages/d2ts/README.md |  |  | 0.381 |
+| walker |  | 2192 | 39 | packages/d2mini/README.md section #0 |  |  | 0.392 |
+| ns | 2255 |  | 186 | multiset.ts: MultiSet.map/filter | 3.8 |  | 0.375 |
+| walker |  | 2365 | 173 | headings outline in README.md |  |  | 0.375 |
+| ns | 2498 |  | 243 | multiset.ts: MultiSet.join | 3.9 |  | 0.358 |
+| walker |  | 2537 | 172 | README.md section #0 |  |  | 0.358 |
+| walker |  | 2563 | 26 | plaintext config pnpm-workspace.yaml |  |  | 0.373 |
 | ns | 2620 |  | 122 | order.ts: v() / Version core | 3.10 |  | 0.363 |
-| walker |  | 2668 | 175 | package entrypoints in packages/d2ts/package.json |  |  | 0.428 |
-| walker |  | 2692 | 24 | listing of 'examples/electric' |  |  | 0.428 |
-| walker |  | 2700 | 8 | listing of 'examples/electric/src' |  |  | 0.428 |
-| walker |  | 2722 | 22 | README.md section #5 |  |  | 0.420 |
-| ns | 2722 |  | 102 | order.ts: Antichain minimal-set invariant | 3.11 | 3.10 | 0.420 |
-| walker |  | 2789 | 67 | export names surface in packages/d2ts/src/d2.ts |  |  | 0.421 |
-| walker |  | 2810 | 21 | export at packages/d2ts/src/d2.ts:93 |  |  | 0.425 |
-| walker |  | 2832 | 22 | export at packages/d2ts/src/d2.ts:11 |  |  | 0.425 |
-| walker |  | 2870 | 38 | export names surface in packages/d2ts/src/version-index.ts |  |  | 0.425 |
-| walker |  | 2896 | 26 | export names surface in packages/d2ts/src/operators/topK.ts |  |  | 0.425 |
-| ns | 2956 |  | 234 | utils.ts: WeakRefMap | 3.12 |  | 0.405 |
-| walker |  | 2967 | 71 | export at packages/d2ts/src/d2.ts:166 |  |  | 0.405 |
-| walker |  | 2996 | 29 | listing of 'packages/d2mini/tests' |  |  | 0.405 |
-| ns | 3182 |  | 226 | version-index.ts: Index (join/reduce's shared trace structure) | 3.13 |  | 0.389 |
-| walker |  | 3184 | 188 | package scripts in packages/d2ts/package.json |  |  | 0.389 |
-| walker |  | 3208 | 24 | README.md section #2 |  |  | 0.394 |
-| walker |  | 3357 | 149 | README.md section #11 |  |  | 0.394 |
-| walker |  | 3389 | 32 | listing of 'examples/d2ql' |  |  | 0.394 |
-| walker |  | 3420 | 31 | export names surface in packages/d2ts/src/operators/debug.ts |  |  | 0.394 |
-| ns | 3422 |  | 240 | operators/index.ts export barrel | 4.1 |  | 0.435 |
-| walker |  | 3453 | 33 | export at packages/d2ts/src/operators/debug.ts:74 |  |  | 0.435 |
-| walker |  | 3480 | 27 | README.md section #4 |  |  | 0.442 |
-| walker |  | 3504 | 24 | README.md section #10 |  |  | 0.442 |
-| walker |  | 3530 | 26 | export body at packages/d2ts/src/d2.ts:166 body 171 |  |  | 0.442 |
-| walker |  | 3587 | 57 | listing of 'packages/d2ts/src/sqlite/operators' |  |  | 0.442 |
-| walker |  | 3735 | 148 | imports in packages/d2ts/src/sqlite/operators/index.ts |  |  | 0.443 |
+| walker |  | 2632 | 69 | listing of 'packages/d2ql/src' |  |  | 0.364 |
+| walker |  | 2641 | 9 | listing of 'packages/d2ql/src/query-builder' |  |  | 0.364 |
+| walker |  | 2698 | 57 | module-doc lede in packages/d2ql/src/index.ts |  |  | 0.364 |
+| walker |  | 2711 | 13 | export names surface in packages/d2ts/src/sqlite/operators/filterBy.ts |  |  | 0.364 |
+| ns | 2722 |  | 102 | order.ts: Antichain minimal-set invariant | 3.11 | 3.10 | 0.356 |
+| walker |  | 2886 | 175 | package entrypoints in packages/d2ts/package.json |  |  | 0.419 |
+| walker |  | 2910 | 24 | listing of 'examples/electric' |  |  | 0.419 |
+| walker |  | 2918 | 8 | listing of 'examples/electric/src' |  |  | 0.419 |
+| walker |  | 2940 | 22 | README.md section #5 |  |  | 0.421 |
+| ns | 2956 |  | 234 | utils.ts: WeakRefMap | 3.12 |  | 0.401 |
+| walker |  | 3007 | 67 | export names surface in packages/d2ts/src/d2.ts |  |  | 0.402 |
+| walker |  | 3028 | 21 | export at packages/d2ts/src/d2.ts:93 |  |  | 0.406 |
+| walker |  | 3050 | 22 | export at packages/d2ts/src/d2.ts:11 |  |  | 0.406 |
+| walker |  | 3088 | 38 | export names surface in packages/d2ts/src/version-index.ts |  |  | 0.406 |
+| walker |  | 3114 | 26 | export names surface in packages/d2ts/src/operators/topK.ts |  |  | 0.406 |
+| ns | 3182 |  | 226 | version-index.ts: Index (join/reduce's shared trace structure) | 3.13 |  | 0.390 |
+| walker |  | 3185 | 71 | export at packages/d2ts/src/d2.ts:166 |  |  | 0.390 |
+| walker |  | 3214 | 29 | listing of 'packages/d2mini/tests' |  |  | 0.390 |
+| walker |  | 3402 | 188 | package scripts in packages/d2ts/package.json |  |  | 0.390 |
+| ns | 3422 |  | 240 | operators/index.ts export barrel | 4.1 |  | 0.432 |
+| walker |  | 3426 | 24 | README.md section #2 |  |  | 0.436 |
+| walker |  | 3575 | 149 | README.md section #11 |  |  | 0.436 |
+| walker |  | 3607 | 32 | listing of 'examples/d2ql' |  |  | 0.436 |
+| walker |  | 3638 | 31 | export names surface in packages/d2ts/src/operators/debug.ts |  |  | 0.436 |
+| walker |  | 3671 | 33 | export at packages/d2ts/src/operators/debug.ts:74 |  |  | 0.436 |
+| walker |  | 3698 | 27 | README.md section #4 |  |  | 0.443 |
+| walker |  | 3722 | 24 | README.md section #10 |  |  | 0.443 |
 | ns | 3746 |  | 324 | operators/base.ts: LinearUnaryOperator | 4.2 |  | 0.422 |
-| walker |  | 3748 | 13 | export names surface in packages/d2ts/src/sqlite/operators/filterBy.ts |  |  | 0.422 |
+| walker |  | 3748 | 26 | export body at packages/d2ts/src/d2.ts:166 body 171 |  |  | 0.422 |
 | walker |  | 3772 | 24 | export names surface in packages/d2ts/src/sqlite/operators/groupBy.ts |  |  | 0.422 |
 | walker |  | 3808 | 36 | export names surface in packages/d2ts/src/operators/count.ts |  |  | 0.422 |
 | walker |  | 3863 | 55 | export names surface in packages/d2ts/src/order.ts |  |  | 0.422 |

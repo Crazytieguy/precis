@@ -500,9 +500,10 @@ fn is_large_root_test_inventory_dir(
     catalog_files >= MIN_TEST_INDEX_FILES
 }
 
-/// True when `dir` lies under a root-level `src`/`lib`/`source`/`pkg/` dir.
-/// Promotes flat source partitions into the inventory tier; the
-/// shallowness gate avoids crowding in multi-package layouts.
+/// True when `dir` lies under a `src`/`lib`/`source`/`pkg/` dir that
+/// belongs to a package root. Promotes flat source partitions into the
+/// inventory tier; the shallowness gate avoids crowding in
+/// multi-package layouts.
 fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
     let root = ctx.root();
     let mut parent = dir.parent();
@@ -510,12 +511,53 @@ fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
         if p == root || !p.starts_with(root) {
             return false;
         }
-        if (is_source_dir(p) || is_go_pkg_wrapper(p)) && p.parent() == Some(root) {
+        if (is_source_dir(p) || is_go_pkg_wrapper(p))
+            && p.parent()
+                .is_some_and(|owner| owner == root || is_package_root_dir(owner))
+        {
             return true;
         }
         parent = p.parent();
     }
     false
+}
+
+/// Manifest filenames that mark a directory as a package root — the
+/// point a language's source layout is measured from.
+const PACKAGE_MANIFEST_FILES: &[&str] = &[
+    "pom.xml",
+    "build.gradle",
+    "build.gradle.kts",
+    "build.sbt",
+    "package.json",
+    "Cargo.toml",
+    "pyproject.toml",
+    "setup.py",
+    "go.mod",
+    "composer.json",
+    "Gemfile",
+    "Package.swift",
+    "pubspec.yaml",
+    "mix.exs",
+];
+
+/// A directory holding its own package manifest. In a multi-module
+/// repo (Maven/Gradle reactors, Cargo workspaces, npm monorepos) the
+/// module directory plays the role the repo root plays in a
+/// single-module one, so `<module>/src/…` is as much a source root as
+/// `<root>/src/…`. Without this a Maven reactor's
+/// `gson/src/main/java/com/google/gson/` never registers as a source
+/// inventory, its 60-file listing loses the ratio race at depth 7,
+/// and nothing inside it is ever discovered.
+fn is_package_root_dir(dir: &Path) -> bool {
+    let entries = list_dir(dir);
+    PACKAGE_MANIFEST_FILES
+        .iter()
+        .any(|manifest| matches!(entries.get(*manifest), Some(EntryKind::File)))
+        || entries.iter().any(|(name, kind)| {
+            matches!(kind, EntryKind::File)
+                && (name.ends_with(".gemspec") || name.ends_with(".csproj"))
+        })
 }
 
 fn source_inventory_count_uncached(state: &FsState, dir: &Path, target: usize) -> usize {
