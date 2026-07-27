@@ -1,7 +1,7 @@
 fixture = "pluggy"
 budget = 10000
-cumulative_tokens = 9896
-batch_count = 220
+cumulative_tokens = 9958
+batch_count = 221
 
 [[batches]]
 position = 1
@@ -307,10 +307,28 @@ kind = "full"
 
 [[batches]]
 position = 20
+key = 'Toml(DevelopmentDependencies { file: "pyproject.toml" })'
+descriptor = "dev/build/target dependencies in pyproject.toml"
+cost_tokens = 42
+cum_tokens = 1391
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 38
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "setuptools" })'
 descriptor = "tool.setuptools config in pyproject.toml"
-cost_tokens = 51
-cum_tokens = 1400
+cost_tokens = 49
+cum_tokens = 1440
 
 [batches.content]
 kind = "lines"
@@ -324,11 +342,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 51
-cum_tokens = 1451
+cum_tokens = 1491
 
 [batches.content]
 kind = "lines"
@@ -358,11 +376,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Toml(Config { file: "pyproject.toml" })'
 descriptor = "manifest config in pyproject.toml"
 cost_tokens = 63
-cum_tokens = 1514
+cum_tokens = 1554
 
 [batches.content]
 kind = "lines"
@@ -376,11 +394,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Python(DeclNames { file: "src/pluggy/_warnings.py" })'
 descriptor = "python decl names surface in src/pluggy/_warnings.py"
 cost_tokens = 24
-cum_tokens = 1538
+cum_tokens = 1578
 
 [batches.content]
 kind = "lines"
@@ -402,11 +420,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Python(Decl { file: "src/pluggy/_warnings.py", start_line: 4 })'
 descriptor = "python decl at src/pluggy/_warnings.py:4"
 cost_tokens = 0
-cum_tokens = 1538
+cum_tokens = 1578
 
 [batches.content]
 kind = "lines"
@@ -420,11 +438,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Python(Decl { file: "src/pluggy/_warnings.py", start_line: 10 })'
 descriptor = "python decl at src/pluggy/_warnings.py:10"
 cost_tokens = 16
-cum_tokens = 1554
+cum_tokens = 1594
 
 [batches.content]
 kind = "lines"
@@ -438,11 +456,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Python(ClassBody { file: "src/pluggy/_warnings.py", start_line: 4 })'
 descriptor = "python class body at src/pluggy/_warnings.py:4"
 cost_tokens = 13
-cum_tokens = 1567
+cum_tokens = 1607
 
 [batches.content]
 kind = "lines"
@@ -456,11 +474,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Python(ClassBody { file: "src/pluggy/_warnings.py", start_line: 10 })'
 descriptor = "python class body at src/pluggy/_warnings.py:10"
 cost_tokens = 13
-cum_tokens = 1580
+cum_tokens = 1620
 
 [batches.content]
 kind = "lines"
@@ -474,11 +492,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Python(DeclDoc { file: "src/pluggy/_warnings.py", start_line: 4 })'
 descriptor = "python decl doc at src/pluggy/_warnings.py:4"
 cost_tokens = 14
-cum_tokens = 1594
+cum_tokens = 1634
 
 [batches.content]
 kind = "lines"
@@ -492,11 +510,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Python(Imports { file: "src/pluggy/_warnings.py" })'
 descriptor = "python imports in src/pluggy/_warnings.py"
 cost_tokens = 7
-cum_tokens = 1601
+cum_tokens = 1641
 
 [batches.content]
 kind = "lines"
@@ -510,11 +528,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Fs(DirListing { dir: "docs/examples" })'
 descriptor = "listing of 'docs/examples'"
 cost_tokens = 16
-cum_tokens = 1617
+cum_tokens = 1657
 
 [batches.content]
 kind = "fs"
@@ -524,11 +542,11 @@ parent = "docs/examples"
 entries = ["eggsample", "eggsample-spam", "toy-example.py"]
 
 [[batches]]
-position = 31
+position = 32
 key = 'Fs(DirListing { dir: "docs/examples/eggsample" })'
 descriptor = "listing of 'docs/examples/eggsample'"
 cost_tokens = 8
-cum_tokens = 1625
+cum_tokens = 1665
 
 [batches.content]
 kind = "fs"
@@ -538,11 +556,45 @@ parent = "docs/examples/eggsample"
 entries = ["eggsample", "setup.py"]
 
 [[batches]]
-position = 32
+position = 33
+key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
+descriptor = "package metadata in pyproject.toml"
+cost_tokens = 78
+cum_tokens = 1743
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 10
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
 key = 'Fs(DirListing { dir: "docs/examples/eggsample/eggsample" })'
 descriptor = "listing of 'docs/examples/eggsample/eggsample'"
 cost_tokens = 19
-cum_tokens = 1644
+cum_tokens = 1762
 
 [batches.content]
 kind = "fs"
@@ -552,11 +604,11 @@ parent = "docs/examples/eggsample/eggsample"
 entries = ["__init__.py", "hookspecs.py", "host.py", "lib.py"]
 
 [[batches]]
-position = 33
+position = 35
 key = 'Fs(DirListing { dir: "testing" })'
 descriptor = "listing of 'testing'"
 cost_tokens = 61
-cum_tokens = 1705
+cum_tokens = 1823
 
 [batches.content]
 kind = "fs"
@@ -566,11 +618,11 @@ parent = "testing"
 entries = ["benchmark.py", "conftest.py", "test_details.py", "test_helpers.py", "test_hookcaller.py", "test_invocations.py", "test_multicall.py", "test_pluginmanager.py", "test_result.py", "test_tracer.py", "test_warnings.py"]
 
 [[batches]]
-position = 34
+position = 36
 key = 'Plaintext(Whole { file: "docs/requirements.txt" })'
 descriptor = "plaintext config docs/requirements.txt"
 cost_tokens = 47
-cum_tokens = 1752
+cum_tokens = 1870
 
 [batches.content]
 kind = "lines"
@@ -584,11 +636,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 35
+position = 37
 key = 'Python(DeclBody { file: "src/pluggy/__init__.py", start_line: 32, body_start_line: 33 })'
 descriptor = "python decl body at src/pluggy/__init__.py:32 body 33"
 cost_tokens = 66
-cum_tokens = 1818
+cum_tokens = 1936
 
 [batches.content]
 kind = "lines"
@@ -602,11 +654,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 36
+position = 38
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "mypy" })'
 descriptor = "tool.mypy config in pyproject.toml"
 cost_tokens = 236
-cum_tokens = 2054
+cum_tokens = 2172
 
 [batches.content]
 kind = "lines"
@@ -620,11 +672,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 37
+position = 39
 key = 'Python(DeclNames { file: "src/pluggy/_result.py" })'
 descriptor = "python decl names surface in src/pluggy/_result.py"
 cost_tokens = 81
-cum_tokens = 2135
+cum_tokens = 2253
 
 [batches.content]
 kind = "lines"
@@ -654,11 +706,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 38
+position = 40
 key = 'Python(Decl { file: "src/pluggy/_result.py", start_line: 20 })'
 descriptor = "python decl at src/pluggy/_result.py:20"
 cost_tokens = 0
-cum_tokens = 2135
+cum_tokens = 2253
 
 [batches.content]
 kind = "lines"
@@ -672,11 +724,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 39
+position = 41
 key = 'Python(Decl { file: "src/pluggy/_result.py", start_line: 24 })'
 descriptor = "python decl at src/pluggy/_result.py:24"
 cost_tokens = 11
-cum_tokens = 2146
+cum_tokens = 2264
 
 [batches.content]
 kind = "lines"
@@ -690,11 +742,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 40
+position = 42
 key = 'Python(DeclDoc { file: "src/pluggy/_result.py", start_line: 20 })'
 descriptor = "python decl doc at src/pluggy/_result.py:20"
 cost_tokens = 9
-cum_tokens = 2155
+cum_tokens = 2273
 
 [batches.content]
 kind = "lines"
@@ -708,11 +760,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 41
+position = 43
 key = 'Python(ClassBody { file: "src/pluggy/_result.py", start_line: 24 })'
 descriptor = "python class body at src/pluggy/_result.py:24"
 cost_tokens = 22
-cum_tokens = 2177
+cum_tokens = 2295
 
 [batches.content]
 kind = "lines"
@@ -726,11 +778,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 42
+position = 44
 key = 'Python(DeclDoc { file: "src/pluggy/_result.py", start_line: 24 })'
 descriptor = "python decl doc at src/pluggy/_result.py:24"
 cost_tokens = 32
-cum_tokens = 2209
+cum_tokens = 2327
 
 [batches.content]
 kind = "lines"
@@ -744,11 +796,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 43
+position = 45
 key = 'Python(MethodSigs { file: "src/pluggy/_result.py" })'
 descriptor = "python method sigs in src/pluggy/_result.py"
 cost_tokens = 127
-cum_tokens = 2336
+cum_tokens = 2454
 
 [batches.content]
 kind = "lines"
@@ -866,11 +918,11 @@ end = 92
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 46
 key = 'Python(Method { file: "src/pluggy/_result.py", start_line: 67 })'
 descriptor = "python method at src/pluggy/_result.py:67"
 cost_tokens = 0
-cum_tokens = 2336
+cum_tokens = 2454
 
 [batches.content]
 kind = "lines"
@@ -884,11 +936,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 45
+position = 47
 key = 'Python(Method { file: "src/pluggy/_result.py", start_line: 80 })'
 descriptor = "python method at src/pluggy/_result.py:80"
 cost_tokens = 0
-cum_tokens = 2336
+cum_tokens = 2454
 
 [batches.content]
 kind = "lines"
@@ -902,11 +954,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 46
+position = 48
 key = 'Python(Method { file: "src/pluggy/_result.py", start_line: 91 })'
 descriptor = "python method at src/pluggy/_result.py:91"
 cost_tokens = 0
-cum_tokens = 2336
+cum_tokens = 2454
 
 [batches.content]
 kind = "lines"
@@ -920,11 +972,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 47
+position = 49
 key = 'Python(Method { file: "src/pluggy/_result.py", start_line: 42 })'
 descriptor = "python method at src/pluggy/_result.py:42"
 cost_tokens = 8
-cum_tokens = 2344
+cum_tokens = 2462
 
 [batches.content]
 kind = "lines"
@@ -938,11 +990,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 48
+position = 50
 key = 'Python(Method { file: "src/pluggy/_result.py", start_line: 51 })'
 descriptor = "python method at src/pluggy/_result.py:51"
 cost_tokens = 8
-cum_tokens = 2352
+cum_tokens = 2470
 
 [batches.content]
 kind = "lines"
@@ -956,11 +1008,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 49
+position = 51
 key = 'Python(Method { file: "src/pluggy/_result.py", start_line: 56 })'
 descriptor = "python method at src/pluggy/_result.py:56"
 cost_tokens = 8
-cum_tokens = 2360
+cum_tokens = 2478
 
 [batches.content]
 kind = "lines"
@@ -974,11 +1026,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 50
+position = 52
 key = 'Python(MethodDoc { file: "src/pluggy/_result.py", start_line: 42 })'
 descriptor = "python method doc at src/pluggy/_result.py:42"
 cost_tokens = 12
-cum_tokens = 2372
+cum_tokens = 2490
 
 [batches.content]
 kind = "lines"
@@ -992,11 +1044,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 51
+position = 53
 key = 'Python(MethodDoc { file: "src/pluggy/_result.py", start_line: 51 })'
 descriptor = "python method doc at src/pluggy/_result.py:51"
 cost_tokens = 12
-cum_tokens = 2384
+cum_tokens = 2502
 
 [batches.content]
 kind = "lines"
@@ -1010,11 +1062,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 52
+position = 54
 key = 'Python(MethodDoc { file: "src/pluggy/_result.py", start_line: 56 })'
 descriptor = "python method doc at src/pluggy/_result.py:56"
 cost_tokens = 12
-cum_tokens = 2396
+cum_tokens = 2514
 
 [batches.content]
 kind = "lines"
@@ -1028,11 +1080,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 53
+position = 55
 key = 'Python(Method { file: "src/pluggy/_result.py", start_line: 31 })'
 descriptor = "python method at src/pluggy/_result.py:31"
 cost_tokens = 40
-cum_tokens = 2436
+cum_tokens = 2554
 
 [batches.content]
 kind = "lines"
@@ -1046,11 +1098,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 54
+position = 56
 key = 'Python(MethodDoc { file: "src/pluggy/_result.py", start_line: 31 })'
 descriptor = "python method doc at src/pluggy/_result.py:31"
 cost_tokens = 12
-cum_tokens = 2448
+cum_tokens = 2566
 
 [batches.content]
 kind = "lines"
@@ -1064,11 +1116,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 55
+position = 57
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "ruff" })'
 descriptor = "tool.ruff config in pyproject.toml"
 cost_tokens = 250
-cum_tokens = 2698
+cum_tokens = 2816
 
 [batches.content]
 kind = "lines"
@@ -1082,11 +1134,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 56
+position = 58
 key = 'Python(DeclNames { file: "src/pluggy/_manager.py" })'
 descriptor = "python decl names surface in src/pluggy/_manager.py"
 cost_tokens = 120
-cum_tokens = 2818
+cum_tokens = 2936
 
 [batches.content]
 kind = "lines"
@@ -1156,11 +1208,11 @@ end = 526
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 59
 key = 'Python(Decl { file: "src/pluggy/_manager.py", start_line: 42 })'
 descriptor = "python decl at src/pluggy/_manager.py:42"
 cost_tokens = 0
-cum_tokens = 2818
+cum_tokens = 2936
 
 [batches.content]
 kind = "lines"
@@ -1174,11 +1226,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 58
+position = 60
 key = 'Python(Decl { file: "src/pluggy/_manager.py", start_line: 52 })'
 descriptor = "python decl at src/pluggy/_manager.py:52"
 cost_tokens = 0
-cum_tokens = 2818
+cum_tokens = 2936
 
 [batches.content]
 kind = "lines"
@@ -1192,11 +1244,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 59
+position = 61
 key = 'Python(Decl { file: "src/pluggy/_manager.py", start_line: 65 })'
 descriptor = "python decl at src/pluggy/_manager.py:65"
 cost_tokens = 0
-cum_tokens = 2818
+cum_tokens = 2936
 
 [batches.content]
 kind = "lines"
@@ -1210,11 +1262,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 60
+position = 62
 key = 'Python(Decl { file: "src/pluggy/_manager.py", start_line: 83 })'
 descriptor = "python decl at src/pluggy/_manager.py:83"
 cost_tokens = 0
-cum_tokens = 2818
+cum_tokens = 2936
 
 [batches.content]
 kind = "lines"
@@ -1228,11 +1280,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 61
+position = 63
 key = 'Python(Decl { file: "src/pluggy/_manager.py", start_line: 525 })'
 descriptor = "python decl at src/pluggy/_manager.py:525"
 cost_tokens = 0
-cum_tokens = 2818
+cum_tokens = 2936
 
 [batches.content]
 kind = "lines"
@@ -1246,11 +1298,11 @@ end = 525
 kind = "full"
 
 [[batches]]
-position = 62
+position = 64
 key = 'Python(DeclDoc { file: "src/pluggy/_manager.py", start_line: 65 })'
 descriptor = "python decl doc at src/pluggy/_manager.py:65"
 cost_tokens = 13
-cum_tokens = 2831
+cum_tokens = 2949
 
 [batches.content]
 kind = "lines"
@@ -1264,11 +1316,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 63
+position = 65
 key = 'Python(DeclDoc { file: "src/pluggy/_manager.py", start_line: 52 })'
 descriptor = "python decl doc at src/pluggy/_manager.py:52"
 cost_tokens = 48
-cum_tokens = 2879
+cum_tokens = 2997
 
 [batches.content]
 kind = "lines"
@@ -1282,11 +1334,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 64
+position = 66
 key = 'Python(Decl { file: "src/pluggy/_manager.py", start_line: 37 })'
 descriptor = "python decl at src/pluggy/_manager.py:37"
 cost_tokens = 26
-cum_tokens = 2905
+cum_tokens = 3023
 
 [batches.content]
 kind = "lines"
@@ -1300,11 +1352,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 65
+position = 67
 key = 'Python(DeclBody { file: "src/pluggy/_manager.py", start_line: 525, body_start_line: 526 })'
 descriptor = "python decl body at src/pluggy/_manager.py:525 body 526"
 cost_tokens = 16
-cum_tokens = 2921
+cum_tokens = 3039
 
 [batches.content]
 kind = "lines"
@@ -1318,11 +1370,11 @@ end = 526
 kind = "full"
 
 [[batches]]
-position = 66
+position = 68
 key = 'Python(DeclNames { file: "src/pluggy/_hooks.py" })'
 descriptor = "python decl names surface in src/pluggy/_hooks.py"
 cost_tokens = 345
-cum_tokens = 3266
+cum_tokens = 3384
 
 [batches.content]
 kind = "lines"
@@ -1448,11 +1500,11 @@ end = 294
 kind = "ellipsis"
 
 [[batches]]
-position = 67
+position = 69
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 40 })'
 descriptor = "python decl at src/pluggy/_hooks.py:40"
 cost_tokens = 0
-cum_tokens = 3266
+cum_tokens = 3384
 
 [batches.content]
 kind = "lines"
@@ -1466,11 +1518,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 68
+position = 70
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 56 })'
 descriptor = "python decl at src/pluggy/_hooks.py:56"
 cost_tokens = 0
-cum_tokens = 3266
+cum_tokens = 3384
 
 [batches.content]
 kind = "lines"
@@ -1484,11 +1536,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 69
+position = 71
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 281 })'
 descriptor = "python decl at src/pluggy/_hooks.py:281"
 cost_tokens = 0
-cum_tokens = 3266
+cum_tokens = 3384
 
 [batches.content]
 kind = "lines"
@@ -1502,11 +1554,11 @@ end = 281
 kind = "full"
 
 [[batches]]
-position = 70
+position = 72
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 293 })'
 descriptor = "python decl at src/pluggy/_hooks.py:293"
 cost_tokens = 0
-cum_tokens = 3266
+cum_tokens = 3384
 
 [batches.content]
 kind = "lines"
@@ -1520,11 +1572,11 @@ end = 293
 kind = "full"
 
 [[batches]]
-position = 71
+position = 73
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 382 })'
 descriptor = "python decl at src/pluggy/_hooks.py:382"
 cost_tokens = 0
-cum_tokens = 3266
+cum_tokens = 3384
 
 [batches.content]
 kind = "lines"
@@ -1538,11 +1590,11 @@ end = 382
 kind = "full"
 
 [[batches]]
-position = 72
+position = 74
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 593 })'
 descriptor = "python decl at src/pluggy/_hooks.py:593"
 cost_tokens = 0
-cum_tokens = 3266
+cum_tokens = 3384
 
 [batches.content]
 kind = "lines"
@@ -1556,11 +1608,11 @@ end = 593
 kind = "full"
 
 [[batches]]
-position = 73
+position = 75
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 358 })'
 descriptor = "python decl at src/pluggy/_hooks.py:358"
 cost_tokens = 8
-cum_tokens = 3274
+cum_tokens = 3392
 
 [batches.content]
 kind = "lines"
@@ -1574,11 +1626,11 @@ end = 359
 kind = "full"
 
 [[batches]]
-position = 74
+position = 76
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 638 })'
 descriptor = "python decl at src/pluggy/_hooks.py:638"
 cost_tokens = 8
-cum_tokens = 3282
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -1592,11 +1644,11 @@ end = 639
 kind = "full"
 
 [[batches]]
-position = 75
+position = 77
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 696 })'
 descriptor = "python decl at src/pluggy/_hooks.py:696"
 cost_tokens = 8
-cum_tokens = 3290
+cum_tokens = 3408
 
 [batches.content]
 kind = "lines"
@@ -1610,11 +1662,11 @@ end = 697
 kind = "full"
 
 [[batches]]
-position = 76
+position = 78
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 77 })'
 descriptor = "python decl at src/pluggy/_hooks.py:77"
 cost_tokens = 9
-cum_tokens = 3299
+cum_tokens = 3417
 
 [batches.content]
 kind = "lines"
@@ -1628,11 +1680,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 77
+position = 79
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 164 })'
 descriptor = "python decl at src/pluggy/_hooks.py:164"
 cost_tokens = 9
-cum_tokens = 3308
+cum_tokens = 3426
 
 [batches.content]
 kind = "lines"
@@ -1646,11 +1698,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 78
+position = 80
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 40 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:40"
 cost_tokens = 12
-cum_tokens = 3320
+cum_tokens = 3438
 
 [batches.content]
 kind = "lines"
@@ -1664,11 +1716,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 79
+position = 81
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 56 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:56"
 cost_tokens = 12
-cum_tokens = 3332
+cum_tokens = 3450
 
 [batches.content]
 kind = "lines"
@@ -1682,11 +1734,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 80
+position = 82
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 77 })'
 descriptor = "python class body at src/pluggy/_hooks.py:77"
 cost_tokens = 16
-cum_tokens = 3348
+cum_tokens = 3466
 
 [batches.content]
 kind = "lines"
@@ -1700,11 +1752,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 81
+position = 83
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 164 })'
 descriptor = "python class body at src/pluggy/_hooks.py:164"
 cost_tokens = 16
-cum_tokens = 3364
+cum_tokens = 3482
 
 [batches.content]
 kind = "lines"
@@ -1718,11 +1770,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 82
+position = 84
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 382 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:382"
 cost_tokens = 17
-cum_tokens = 3381
+cum_tokens = 3499
 
 [batches.content]
 kind = "lines"
@@ -1736,11 +1788,11 @@ end = 383
 kind = "full"
 
 [[batches]]
-position = 83
+position = 85
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 638 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:638"
 cost_tokens = 18
-cum_tokens = 3399
+cum_tokens = 3517
 
 [batches.content]
 kind = "lines"
@@ -1754,11 +1806,11 @@ end = 640
 kind = "full"
 
 [[batches]]
-position = 84
+position = 86
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 358 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:358"
 cost_tokens = 31
-cum_tokens = 3430
+cum_tokens = 3548
 
 [batches.content]
 kind = "lines"
@@ -1772,11 +1824,11 @@ end = 361
 kind = "full"
 
 [[batches]]
-position = 85
+position = 87
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 638 })'
 descriptor = "python class body at src/pluggy/_hooks.py:638"
 cost_tokens = 112
-cum_tokens = 3542
+cum_tokens = 3660
 
 [batches.content]
 kind = "lines"
@@ -1790,11 +1842,11 @@ end = 654
 kind = "full"
 
 [[batches]]
-position = 86
+position = 88
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 358 })'
 descriptor = "python class body at src/pluggy/_hooks.py:358"
 cost_tokens = 52
-cum_tokens = 3594
+cum_tokens = 3712
 
 [batches.content]
 kind = "lines"
@@ -1816,11 +1868,11 @@ end = 370
 kind = "full"
 
 [[batches]]
-position = 87
+position = 89
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 696 })'
 descriptor = "python class body at src/pluggy/_hooks.py:696"
 cost_tokens = 88
-cum_tokens = 3682
+cum_tokens = 3800
 
 [batches.content]
 kind = "lines"
@@ -1834,11 +1886,11 @@ end = 707
 kind = "full"
 
 [[batches]]
-position = 88
+position = 90
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 382 })'
 descriptor = "python class body at src/pluggy/_hooks.py:382"
 cost_tokens = 92
-cum_tokens = 3774
+cum_tokens = 3892
 
 [batches.content]
 kind = "lines"
@@ -1868,11 +1920,11 @@ end = 423
 kind = "full"
 
 [[batches]]
-position = 89
+position = 91
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 377 })'
 descriptor = "python decl at src/pluggy/_hooks.py:377"
 cost_tokens = 24
-cum_tokens = 3798
+cum_tokens = 3916
 
 [batches.content]
 kind = "lines"
@@ -1886,11 +1938,11 @@ end = 379
 kind = "full"
 
 [[batches]]
-position = 90
+position = 92
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 56 })'
 descriptor = "python class body at src/pluggy/_hooks.py:56"
 cost_tokens = 224
-cum_tokens = 4022
+cum_tokens = 4140
 
 [batches.content]
 kind = "lines"
@@ -1904,11 +1956,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 91
+position = 93
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 40 })'
 descriptor = "python class body at src/pluggy/_hooks.py:40"
 cost_tokens = 162
-cum_tokens = 4184
+cum_tokens = 4302
 
 [batches.content]
 kind = "lines"
@@ -1922,11 +1974,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 92
+position = 94
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 593 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:593"
 cost_tokens = 32
-cum_tokens = 4216
+cum_tokens = 4334
 
 [batches.content]
 kind = "lines"
@@ -1940,11 +1992,11 @@ end = 595
 kind = "full"
 
 [[batches]]
-position = 93
+position = 95
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 164 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:164"
 cost_tokens = 80
-cum_tokens = 4296
+cum_tokens = 4414
 
 [batches.content]
 kind = "lines"
@@ -1958,11 +2010,11 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 94
+position = 96
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 77 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:77"
 cost_tokens = 81
-cum_tokens = 4377
+cum_tokens = 4495
 
 [batches.content]
 kind = "lines"
@@ -1976,11 +2028,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 95
+position = 97
 key = 'Python(MethodSigs { file: "src/pluggy/_hooks.py" })'
 descriptor = "python method sigs in src/pluggy/_hooks.py"
 cost_tokens = 540
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2466,11 +2518,11 @@ end = 710
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 98
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 88 })'
 descriptor = "python method at src/pluggy/_hooks.py:88"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2484,11 +2536,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 97
+position = 99
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 175 })'
 descriptor = "python method at src/pluggy/_hooks.py:175"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2502,11 +2554,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 98
+position = 100
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 365 })'
 descriptor = "python method at src/pluggy/_hooks.py:365"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2520,11 +2572,11 @@ end = 365
 kind = "full"
 
 [[batches]]
-position = 99
+position = 101
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 420 })'
 descriptor = "python method at src/pluggy/_hooks.py:420"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2538,11 +2590,11 @@ end = 420
 kind = "full"
 
 [[batches]]
-position = 100
+position = 102
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 438 })'
 descriptor = "python method at src/pluggy/_hooks.py:438"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2556,11 +2608,11 @@ end = 438
 kind = "full"
 
 [[batches]]
-position = 101
+position = 103
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 442 })'
 descriptor = "python method at src/pluggy/_hooks.py:442"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2574,11 +2626,11 @@ end = 442
 kind = "full"
 
 [[batches]]
-position = 102
+position = 104
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 449 })'
 descriptor = "python method at src/pluggy/_hooks.py:449"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2592,11 +2644,11 @@ end = 449
 kind = "full"
 
 [[batches]]
-position = 103
+position = 105
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 453 })'
 descriptor = "python method at src/pluggy/_hooks.py:453"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2610,11 +2662,11 @@ end = 453
 kind = "full"
 
 [[batches]]
-position = 104
+position = 106
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 477 })'
 descriptor = "python method at src/pluggy/_hooks.py:477"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2628,11 +2680,11 @@ end = 477
 kind = "full"
 
 [[batches]]
-position = 105
+position = 107
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 499 })'
 descriptor = "python method at src/pluggy/_hooks.py:499"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2646,11 +2698,11 @@ end = 499
 kind = "full"
 
 [[batches]]
-position = 106
+position = 108
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 577 })'
 descriptor = "python method at src/pluggy/_hooks.py:577"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2664,11 +2716,11 @@ end = 577
 kind = "full"
 
 [[batches]]
-position = 107
+position = 109
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 612 })'
 descriptor = "python method at src/pluggy/_hooks.py:612"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2682,11 +2734,11 @@ end = 612
 kind = "full"
 
 [[batches]]
-position = 108
+position = 110
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 634 })'
 descriptor = "python method at src/pluggy/_hooks.py:634"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2700,11 +2752,11 @@ end = 634
 kind = "full"
 
 [[batches]]
-position = 109
+position = 111
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 692 })'
 descriptor = "python method at src/pluggy/_hooks.py:692"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2718,11 +2770,11 @@ end = 692
 kind = "full"
 
 [[batches]]
-position = 110
+position = 112
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 709 })'
 descriptor = "python method at src/pluggy/_hooks.py:709"
 cost_tokens = 0
-cum_tokens = 4917
+cum_tokens = 5035
 
 [batches.content]
 kind = "lines"
@@ -2736,11 +2788,11 @@ end = 709
 kind = "full"
 
 [[batches]]
-position = 111
+position = 113
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 626 })'
 descriptor = "python method at src/pluggy/_hooks.py:626"
 cost_tokens = 8
-cum_tokens = 4925
+cum_tokens = 5043
 
 [batches.content]
 kind = "lines"
@@ -2754,11 +2806,11 @@ end = 627
 kind = "full"
 
 [[batches]]
-position = 112
+position = 114
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 630 })'
 descriptor = "python method at src/pluggy/_hooks.py:630"
 cost_tokens = 8
-cum_tokens = 4933
+cum_tokens = 5051
 
 [batches.content]
 kind = "lines"
@@ -2772,11 +2824,11 @@ end = 631
 kind = "full"
 
 [[batches]]
-position = 113
+position = 115
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 365 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:365"
 cost_tokens = 10
-cum_tokens = 4943
+cum_tokens = 5061
 
 [batches.content]
 kind = "lines"
@@ -2790,11 +2842,11 @@ end = 366
 kind = "full"
 
 [[batches]]
-position = 114
+position = 116
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 543 })'
 descriptor = "python method at src/pluggy/_hooks.py:543"
 cost_tokens = 31
-cum_tokens = 4974
+cum_tokens = 5092
 
 [batches.content]
 kind = "lines"
@@ -2808,11 +2860,11 @@ end = 545
 kind = "full"
 
 [[batches]]
-position = 115
+position = 117
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 449 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:449"
 cost_tokens = 15
-cum_tokens = 4989
+cum_tokens = 5107
 
 [batches.content]
 kind = "lines"
@@ -2826,11 +2878,11 @@ end = 450
 kind = "full"
 
 [[batches]]
-position = 116
+position = 118
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 618 })'
 descriptor = "python method at src/pluggy/_hooks.py:618"
 cost_tokens = 15
-cum_tokens = 5004
+cum_tokens = 5122
 
 [batches.content]
 kind = "lines"
@@ -2844,11 +2896,11 @@ end = 619
 kind = "full"
 
 [[batches]]
-position = 117
+position = 119
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 438 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:438"
 cost_tokens = 18
-cum_tokens = 5022
+cum_tokens = 5140
 
 [batches.content]
 kind = "lines"
@@ -2862,11 +2914,11 @@ end = 439
 kind = "full"
 
 [[batches]]
-position = 118
+position = 120
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 424 })'
 descriptor = "python method at src/pluggy/_hooks.py:424"
 cost_tokens = 41
-cum_tokens = 5063
+cum_tokens = 5181
 
 [batches.content]
 kind = "lines"
@@ -2880,11 +2932,11 @@ end = 428
 kind = "full"
 
 [[batches]]
-position = 119
+position = 121
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 480 })'
 descriptor = "python method at src/pluggy/_hooks.py:480"
 cost_tokens = 17
-cum_tokens = 5080
+cum_tokens = 5198
 
 [batches.content]
 kind = "lines"
@@ -2898,11 +2950,11 @@ end = 481
 kind = "full"
 
 [[batches]]
-position = 120
+position = 122
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 516 })'
 descriptor = "python method at src/pluggy/_hooks.py:516"
 cost_tokens = 52
-cum_tokens = 5132
+cum_tokens = 5250
 
 [batches.content]
 kind = "lines"
@@ -2916,11 +2968,11 @@ end = 520
 kind = "full"
 
 [[batches]]
-position = 121
+position = 123
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 453 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:453"
 cost_tokens = 14
-cum_tokens = 5146
+cum_tokens = 5264
 
 [batches.content]
 kind = "lines"
@@ -2934,11 +2986,11 @@ end = 454
 kind = "full"
 
 [[batches]]
-position = 122
+position = 124
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 656 })'
 descriptor = "python method at src/pluggy/_hooks.py:656"
 cost_tokens = 63
-cum_tokens = 5209
+cum_tokens = 5327
 
 [batches.content]
 kind = "lines"
@@ -2952,11 +3004,11 @@ end = 662
 kind = "full"
 
 [[batches]]
-position = 123
+position = 125
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 656 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:656"
 cost_tokens = 12
-cum_tokens = 5221
+cum_tokens = 5339
 
 [batches.content]
 kind = "lines"
@@ -2970,11 +3022,11 @@ end = 663
 kind = "full"
 
 [[batches]]
-position = 124
+position = 126
 key = 'Python(Decl { file: "src/pluggy/_hooks.py", start_line: 33 })'
 descriptor = "python decl at src/pluggy/_hooks.py:33"
 cost_tokens = 34
-cum_tokens = 5255
+cum_tokens = 5373
 
 [batches.content]
 kind = "lines"
@@ -2988,11 +3040,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 125
+position = 127
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 393 })'
 descriptor = "python method at src/pluggy/_hooks.py:393"
 cost_tokens = 70
-cum_tokens = 5325
+cum_tokens = 5443
 
 [batches.content]
 kind = "lines"
@@ -3006,11 +3058,11 @@ end = 399
 kind = "full"
 
 [[batches]]
-position = 126
+position = 128
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 393 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:393"
 cost_tokens = 12
-cum_tokens = 5337
+cum_tokens = 5455
 
 [batches.content]
 kind = "lines"
@@ -3024,11 +3076,11 @@ end = 400
 kind = "full"
 
 [[batches]]
-position = 127
+position = 129
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 577 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:577"
 cost_tokens = 21
-cum_tokens = 5358
+cum_tokens = 5476
 
 [batches.content]
 kind = "lines"
@@ -3042,11 +3094,11 @@ end = 578
 kind = "full"
 
 [[batches]]
-position = 128
+position = 130
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 543 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:543"
 cost_tokens = 45
-cum_tokens = 5403
+cum_tokens = 5521
 
 [batches.content]
 kind = "lines"
@@ -3060,11 +3112,11 @@ end = 548
 kind = "full"
 
 [[batches]]
-position = 129
+position = 131
 key = 'Python(MethodSigs { file: "src/pluggy/_manager.py" })'
 descriptor = "python method sigs in src/pluggy/_manager.py"
 cost_tokens = 615
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3550,11 +3602,11 @@ end = 513
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 132
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 59 })'
 descriptor = "python method at src/pluggy/_manager.py:59"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3568,11 +3620,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 131
+position = 133
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 68 })'
 descriptor = "python method at src/pluggy/_manager.py:68"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3586,11 +3638,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 132
+position = 134
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 76 })'
 descriptor = "python method at src/pluggy/_manager.py:76"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3604,11 +3656,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 133
+position = 135
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 79 })'
 descriptor = "python method at src/pluggy/_manager.py:79"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3622,11 +3674,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 134
+position = 136
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 125 })'
 descriptor = "python method at src/pluggy/_manager.py:125"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3640,11 +3692,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 135
+position = 137
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 176 })'
 descriptor = "python method at src/pluggy/_manager.py:176"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3658,11 +3710,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 136
+position = 138
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 233 })'
 descriptor = "python method at src/pluggy/_manager.py:233"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3676,11 +3728,11 @@ end = 233
 kind = "full"
 
 [[batches]]
-position = 137
+position = 139
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 238 })'
 descriptor = "python method at src/pluggy/_manager.py:238"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3694,11 +3746,11 @@ end = 238
 kind = "full"
 
 [[batches]]
-position = 138
+position = 140
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 242 })'
 descriptor = "python method at src/pluggy/_manager.py:242"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3712,11 +3764,11 @@ end = 242
 kind = "full"
 
 [[batches]]
-position = 139
+position = 141
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 252 })'
 descriptor = "python method at src/pluggy/_manager.py:252"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3730,11 +3782,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 140
+position = 142
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 296 })'
 descriptor = "python method at src/pluggy/_manager.py:296"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3748,11 +3800,11 @@ end = 296
 kind = "full"
 
 [[batches]]
-position = 141
+position = 143
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 300 })'
 descriptor = "python method at src/pluggy/_manager.py:300"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3766,11 +3818,11 @@ end = 300
 kind = "full"
 
 [[batches]]
-position = 142
+position = 144
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 304 })'
 descriptor = "python method at src/pluggy/_manager.py:304"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3784,11 +3836,11 @@ end = 304
 kind = "full"
 
 [[batches]]
-position = 143
+position = 145
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 315 })'
 descriptor = "python method at src/pluggy/_manager.py:315"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3802,11 +3854,11 @@ end = 315
 kind = "full"
 
 [[batches]]
-position = 144
+position = 146
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 319 })'
 descriptor = "python method at src/pluggy/_manager.py:319"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3820,11 +3872,11 @@ end = 319
 kind = "full"
 
 [[batches]]
-position = 145
+position = 147
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 323 })'
 descriptor = "python method at src/pluggy/_manager.py:323"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3838,11 +3890,11 @@ end = 323
 kind = "full"
 
 [[batches]]
-position = 146
+position = 148
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 331 })'
 descriptor = "python method at src/pluggy/_manager.py:331"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3856,11 +3908,11 @@ end = 331
 kind = "full"
 
 [[batches]]
-position = 147
+position = 149
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 379 })'
 descriptor = "python method at src/pluggy/_manager.py:379"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3874,11 +3926,11 @@ end = 379
 kind = "full"
 
 [[batches]]
-position = 148
+position = 150
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 395 })'
 descriptor = "python method at src/pluggy/_manager.py:395"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3892,11 +3944,11 @@ end = 395
 kind = "full"
 
 [[batches]]
-position = 149
+position = 151
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 425 })'
 descriptor = "python method at src/pluggy/_manager.py:425"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3910,11 +3962,11 @@ end = 425
 kind = "full"
 
 [[batches]]
-position = 150
+position = 152
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 430 })'
 descriptor = "python method at src/pluggy/_manager.py:430"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3928,11 +3980,11 @@ end = 430
 kind = "full"
 
 [[batches]]
-position = 151
+position = 153
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 434 })'
 descriptor = "python method at src/pluggy/_manager.py:434"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3946,11 +3998,11 @@ end = 434
 kind = "full"
 
 [[batches]]
-position = 152
+position = 154
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 487 })'
 descriptor = "python method at src/pluggy/_manager.py:487"
 cost_tokens = 0
-cum_tokens = 6018
+cum_tokens = 6136
 
 [batches.content]
 kind = "lines"
@@ -3964,11 +4016,11 @@ end = 487
 kind = "full"
 
 [[batches]]
-position = 153
+position = 155
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 71 })'
 descriptor = "python method at src/pluggy/_manager.py:71"
 cost_tokens = 8
-cum_tokens = 6026
+cum_tokens = 6144
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +4034,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 154
+position = 156
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 100 })'
 descriptor = "python method at src/pluggy/_manager.py:100"
 cost_tokens = 10
-cum_tokens = 6036
+cum_tokens = 6154
 
 [batches.content]
 kind = "lines"
@@ -4000,11 +4052,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 155
+position = 157
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 512 })'
 descriptor = "python method at src/pluggy/_manager.py:512"
 cost_tokens = 28
-cum_tokens = 6064
+cum_tokens = 6182
 
 [batches.content]
 kind = "lines"
@@ -4018,11 +4070,11 @@ end = 514
 kind = "full"
 
 [[batches]]
-position = 156
+position = 158
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 300 })'
 descriptor = "python method doc at src/pluggy/_manager.py:300"
 cost_tokens = 14
-cum_tokens = 6078
+cum_tokens = 6196
 
 [batches.content]
 kind = "lines"
@@ -4036,11 +4088,11 @@ end = 301
 kind = "full"
 
 [[batches]]
-position = 157
+position = 159
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 278 })'
 descriptor = "python method at src/pluggy/_manager.py:278"
 cost_tokens = 31
-cum_tokens = 6109
+cum_tokens = 6227
 
 [batches.content]
 kind = "lines"
@@ -4054,11 +4106,11 @@ end = 280
 kind = "full"
 
 [[batches]]
-position = 158
+position = 160
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 450 })'
 descriptor = "python method at src/pluggy/_manager.py:450"
 cost_tokens = 31
-cum_tokens = 6140
+cum_tokens = 6258
 
 [batches.content]
 kind = "lines"
@@ -4072,11 +4124,11 @@ end = 452
 kind = "full"
 
 [[batches]]
-position = 159
+position = 161
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 238 })'
 descriptor = "python method doc at src/pluggy/_manager.py:238"
 cost_tokens = 15
-cum_tokens = 6155
+cum_tokens = 6273
 
 [batches.content]
 kind = "lines"
@@ -4090,11 +4142,11 @@ end = 239
 kind = "full"
 
 [[batches]]
-position = 160
+position = 162
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 296 })'
 descriptor = "python method doc at src/pluggy/_manager.py:296"
 cost_tokens = 15
-cum_tokens = 6170
+cum_tokens = 6288
 
 [batches.content]
 kind = "lines"
@@ -4108,11 +4160,11 @@ end = 297
 kind = "full"
 
 [[batches]]
-position = 161
+position = 163
 key = 'Python(Method { file: "src/pluggy/_manager.py", start_line: 201 })'
 descriptor = "python method at src/pluggy/_manager.py:201"
 cost_tokens = 35
-cum_tokens = 6205
+cum_tokens = 6323
 
 [batches.content]
 kind = "lines"
@@ -4126,11 +4178,11 @@ end = 203
 kind = "full"
 
 [[batches]]
-position = 162
+position = 164
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 319 })'
 descriptor = "python method doc at src/pluggy/_manager.py:319"
 cost_tokens = 17
-cum_tokens = 6222
+cum_tokens = 6340
 
 [batches.content]
 kind = "lines"
@@ -4144,11 +4196,11 @@ end = 320
 kind = "full"
 
 [[batches]]
-position = 163
+position = 165
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 233 })'
 descriptor = "python method doc at src/pluggy/_manager.py:233"
 cost_tokens = 18
-cum_tokens = 6240
+cum_tokens = 6358
 
 [batches.content]
 kind = "lines"
@@ -4162,11 +4214,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 164
+position = 166
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 315 })'
 descriptor = "python method doc at src/pluggy/_manager.py:315"
 cost_tokens = 18
-cum_tokens = 6258
+cum_tokens = 6376
 
 [batches.content]
 kind = "lines"
@@ -4180,11 +4232,11 @@ end = 316
 kind = "full"
 
 [[batches]]
-position = 165
+position = 167
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 430 })'
 descriptor = "python method doc at src/pluggy/_manager.py:430"
 cost_tokens = 21
-cum_tokens = 6279
+cum_tokens = 6397
 
 [batches.content]
 kind = "lines"
@@ -4198,11 +4250,11 @@ end = 431
 kind = "full"
 
 [[batches]]
-position = 166
+position = 168
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 323 })'
 descriptor = "python method doc at src/pluggy/_manager.py:323"
 cost_tokens = 29
-cum_tokens = 6308
+cum_tokens = 6426
 
 [batches.content]
 kind = "lines"
@@ -4216,11 +4268,11 @@ end = 325
 kind = "full"
 
 [[batches]]
-position = 167
+position = 169
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 425 })'
 descriptor = "python method doc at src/pluggy/_manager.py:425"
 cost_tokens = 30
-cum_tokens = 6338
+cum_tokens = 6456
 
 [batches.content]
 kind = "lines"
@@ -4234,11 +4286,11 @@ end = 427
 kind = "full"
 
 [[batches]]
-position = 168
+position = 170
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 242 })'
 descriptor = "python method doc at src/pluggy/_manager.py:242"
 cost_tokens = 35
-cum_tokens = 6373
+cum_tokens = 6491
 
 [batches.content]
 kind = "lines"
@@ -4252,11 +4304,11 @@ end = 246
 kind = "full"
 
 [[batches]]
-position = 169
+position = 171
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 487 })'
 descriptor = "python method doc at src/pluggy/_manager.py:487"
 cost_tokens = 42
-cum_tokens = 6415
+cum_tokens = 6533
 
 [batches.content]
 kind = "lines"
@@ -4270,11 +4322,11 @@ end = 491
 kind = "full"
 
 [[batches]]
-position = 170
+position = 172
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 379 })'
 descriptor = "python method doc at src/pluggy/_manager.py:379"
 cost_tokens = 44
-cum_tokens = 6459
+cum_tokens = 6577
 
 [batches.content]
 kind = "lines"
@@ -4288,11 +4340,11 @@ end = 382
 kind = "full"
 
 [[batches]]
-position = 171
+position = 173
 key = 'Python(DeclDoc { file: "src/pluggy/_hooks.py", start_line: 293 })'
 descriptor = "python decl doc at src/pluggy/_hooks.py:293"
 cost_tokens = 79
-cum_tokens = 6538
+cum_tokens = 6656
 
 [batches.content]
 kind = "lines"
@@ -4306,11 +4358,11 @@ end = 299
 kind = "full"
 
 [[batches]]
-position = 172
+position = 174
 key = 'Python(Imports { file: "docs/examples/eggsample/eggsample/__init__.py" })'
 descriptor = "python imports in docs/examples/eggsample/eggsample/__init__.py"
 cost_tokens = 10
-cum_tokens = 6548
+cum_tokens = 6666
 
 [batches.content]
 kind = "lines"
@@ -4324,11 +4376,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 173
+position = 175
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 512 })'
 descriptor = "python method doc at src/pluggy/_manager.py:512"
 cost_tokens = 50
-cum_tokens = 6598
+cum_tokens = 6716
 
 [batches.content]
 kind = "lines"
@@ -4342,11 +4394,11 @@ end = 517
 kind = "full"
 
 [[batches]]
-position = 174
+position = 176
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 91 })'
 descriptor = "python method at src/pluggy/_hooks.py:91"
 cost_tokens = 84
-cum_tokens = 6682
+cum_tokens = 6800
 
 [batches.content]
 kind = "lines"
@@ -4360,11 +4412,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 175
+position = 177
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "towncrier" })'
 descriptor = "tool.towncrier config in pyproject.toml"
 cost_tokens = 392
-cum_tokens = 7074
+cum_tokens = 7192
 
 [batches.content]
 kind = "lines"
@@ -4378,11 +4430,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 176
+position = 178
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 101 })'
 descriptor = "python method at src/pluggy/_hooks.py:101"
 cost_tokens = 91
-cum_tokens = 7165
+cum_tokens = 7283
 
 [batches.content]
 kind = "lines"
@@ -4396,11 +4448,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 177
+position = 179
 key = 'Python(MethodDoc { file: "src/pluggy/_result.py", start_line: 80 })'
 descriptor = "python method doc at src/pluggy/_result.py:80"
 cost_tokens = 61
-cum_tokens = 7226
+cum_tokens = 7344
 
 [batches.content]
 kind = "lines"
@@ -4414,11 +4466,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 178
+position = 180
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 111 })'
 descriptor = "python method at src/pluggy/_hooks.py:111"
 cost_tokens = 97
-cum_tokens = 7323
+cum_tokens = 7441
 
 [batches.content]
 kind = "lines"
@@ -4432,11 +4484,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 179
+position = 181
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 252 })'
 descriptor = "python method doc at src/pluggy/_manager.py:252"
 cost_tokens = 63
-cum_tokens = 7386
+cum_tokens = 7504
 
 [batches.content]
 kind = "lines"
@@ -4450,11 +4502,11 @@ end = 257
 kind = "full"
 
 [[batches]]
-position = 180
+position = 182
 key = 'Python(MethodDoc { file: "src/pluggy/_result.py", start_line: 91 })'
 descriptor = "python method doc at src/pluggy/_result.py:91"
 cost_tokens = 63
-cum_tokens = 7449
+cum_tokens = 7567
 
 [batches.content]
 kind = "lines"
@@ -4468,11 +4520,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 181
+position = 183
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 178 })'
 descriptor = "python method at src/pluggy/_hooks.py:178"
 cost_tokens = 99
-cum_tokens = 7548
+cum_tokens = 7666
 
 [batches.content]
 kind = "lines"
@@ -4486,11 +4538,11 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 182
+position = 184
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 434 })'
 descriptor = "python method doc at src/pluggy/_manager.py:434"
 cost_tokens = 65
-cum_tokens = 7613
+cum_tokens = 7731
 
 [batches.content]
 kind = "lines"
@@ -4504,11 +4556,11 @@ end = 440
 kind = "full"
 
 [[batches]]
-position = 183
+position = 185
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 190 })'
 descriptor = "python method at src/pluggy/_hooks.py:190"
 cost_tokens = 106
-cum_tokens = 7719
+cum_tokens = 7837
 
 [batches.content]
 kind = "lines"
@@ -4522,11 +4574,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 184
+position = 186
 key = 'Python(Method { file: "src/pluggy/_hooks.py", start_line: 202 })'
 descriptor = "python method at src/pluggy/_hooks.py:202"
 cost_tokens = 112
-cum_tokens = 7831
+cum_tokens = 7949
 
 [batches.content]
 kind = "lines"
@@ -4540,11 +4592,11 @@ end = 211
 kind = "full"
 
 [[batches]]
-position = 185
+position = 187
 key = 'Python(DeclNames { file: "src/pluggy/_tracing.py" })'
 descriptor = "python decl names surface in src/pluggy/_tracing.py"
 cost_tokens = 67
-cum_tokens = 7898
+cum_tokens = 8016
 
 [batches.content]
 kind = "lines"
@@ -4566,11 +4618,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 186
+position = 188
 key = 'Python(Decl { file: "src/pluggy/_tracing.py", start_line: 16 })'
 descriptor = "python decl at src/pluggy/_tracing.py:16"
 cost_tokens = 0
-cum_tokens = 7898
+cum_tokens = 8016
 
 [batches.content]
 kind = "lines"
@@ -4584,11 +4636,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 187
+position = 189
 key = 'Python(Decl { file: "src/pluggy/_tracing.py", start_line: 59 })'
 descriptor = "python decl at src/pluggy/_tracing.py:59"
 cost_tokens = 0
-cum_tokens = 7898
+cum_tokens = 8016
 
 [batches.content]
 kind = "lines"
@@ -4602,11 +4654,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 188
+position = 190
 key = 'Python(MethodSigs { file: "src/pluggy/_tracing.py" })'
 descriptor = "python method sigs in src/pluggy/_tracing.py"
 cost_tokens = 210
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4756,11 +4808,11 @@ end = 68
 kind = "ellipsis"
 
 [[batches]]
-position = 189
+position = 191
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 17 })'
 descriptor = "python method at src/pluggy/_tracing.py:17"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4774,11 +4826,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 190
+position = 192
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 22 })'
 descriptor = "python method at src/pluggy/_tracing.py:22"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4792,11 +4844,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 191
+position = 193
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 25 })'
 descriptor = "python method at src/pluggy/_tracing.py:25"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4810,11 +4862,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 192
+position = 194
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 42 })'
 descriptor = "python method at src/pluggy/_tracing.py:42"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4828,11 +4880,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 193
+position = 195
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 48 })'
 descriptor = "python method at src/pluggy/_tracing.py:48"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4846,11 +4898,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 194
+position = 196
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 51 })'
 descriptor = "python method at src/pluggy/_tracing.py:51"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4864,11 +4916,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 195
+position = 197
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 60 })'
 descriptor = "python method at src/pluggy/_tracing.py:60"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4882,11 +4934,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 196
+position = 198
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 64 })'
 descriptor = "python method at src/pluggy/_tracing.py:64"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4900,11 +4952,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 197
+position = 199
 key = 'Python(Method { file: "src/pluggy/_tracing.py", start_line: 67 })'
 descriptor = "python method at src/pluggy/_tracing.py:67"
 cost_tokens = 0
-cum_tokens = 8108
+cum_tokens = 8226
 
 [batches.content]
 kind = "lines"
@@ -4918,11 +4970,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 198
+position = 200
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 48, body_start_line: 49 })'
 descriptor = "python method body at src/pluggy/_tracing.py:48 body 49"
 cost_tokens = 9
-cum_tokens = 8117
+cum_tokens = 8235
 
 [batches.content]
 kind = "lines"
@@ -4936,11 +4988,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 199
+position = 201
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 22, body_start_line: 23 })'
 descriptor = "python method body at src/pluggy/_tracing.py:22 body 23"
 cost_tokens = 12
-cum_tokens = 8129
+cum_tokens = 8247
 
 [batches.content]
 kind = "lines"
@@ -4954,11 +5006,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 200
+position = 202
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 64, body_start_line: 65 })'
 descriptor = "python method body at src/pluggy/_tracing.py:64 body 65"
 cost_tokens = 13
-cum_tokens = 8142
+cum_tokens = 8260
 
 [batches.content]
 kind = "lines"
@@ -4972,11 +5024,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 201
+position = 203
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 499 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:499"
 cost_tokens = 77
-cum_tokens = 8219
+cum_tokens = 8337
 
 [batches.content]
 kind = "lines"
@@ -4990,11 +5042,11 @@ end = 507
 kind = "full"
 
 [[batches]]
-position = 202
+position = 204
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 67, body_start_line: 68 })'
 descriptor = "python method body at src/pluggy/_tracing.py:67 body 68"
 cost_tokens = 17
-cum_tokens = 8236
+cum_tokens = 8354
 
 [batches.content]
 kind = "lines"
@@ -5008,11 +5060,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 203
+position = 205
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 201 })'
 descriptor = "python method doc at src/pluggy/_manager.py:201"
 cost_tokens = 87
-cum_tokens = 8323
+cum_tokens = 8441
 
 [batches.content]
 kind = "lines"
@@ -5026,11 +5078,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 204
+position = 206
 key = 'Python(DeclNames { file: "src/pluggy/_callers.py" })'
 descriptor = "python decl names surface in src/pluggy/_callers.py"
 cost_tokens = 80
-cum_tokens = 8403
+cum_tokens = 8521
 
 [batches.content]
 kind = "lines"
@@ -5100,11 +5152,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 205
+position = 207
 key = 'Python(Decl { file: "src/pluggy/_callers.py", start_line: 27 })'
 descriptor = "python decl at src/pluggy/_callers.py:27"
 cost_tokens = 31
-cum_tokens = 8434
+cum_tokens = 8552
 
 [batches.content]
 kind = "lines"
@@ -5118,11 +5170,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 206
+position = 208
 key = 'Python(DeclDoc { file: "src/pluggy/_callers.py", start_line: 27 })'
 descriptor = "python decl doc at src/pluggy/_callers.py:27"
 cost_tokens = 31
-cum_tokens = 8465
+cum_tokens = 8583
 
 [batches.content]
 kind = "lines"
@@ -5136,11 +5188,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 207
+position = 209
 key = 'Python(Decl { file: "src/pluggy/_callers.py", start_line: 70 })'
 descriptor = "python decl at src/pluggy/_callers.py:70"
 cost_tokens = 29
-cum_tokens = 8494
+cum_tokens = 8612
 
 [batches.content]
 kind = "lines"
@@ -5154,11 +5206,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 208
+position = 210
 key = 'Python(Decl { file: "src/pluggy/_callers.py", start_line: 60 })'
 descriptor = "python decl at src/pluggy/_callers.py:60"
 cost_tokens = 34
-cum_tokens = 8528
+cum_tokens = 8646
 
 [batches.content]
 kind = "lines"
@@ -5172,11 +5224,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 209
+position = 211
 key = 'Python(DeclDoc { file: "src/pluggy/_manager.py", start_line: 83 })'
 descriptor = "python decl doc at src/pluggy/_manager.py:83"
 cost_tokens = 189
-cum_tokens = 8717
+cum_tokens = 8835
 
 [batches.content]
 kind = "lines"
@@ -5190,11 +5242,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 210
+position = 212
 key = 'Python(DeclDoc { file: "src/pluggy/_warnings.py", start_line: 10 })'
 descriptor = "python decl doc at src/pluggy/_warnings.py:10"
 cost_tokens = 189
-cum_tokens = 8906
+cum_tokens = 9024
 
 [batches.content]
 kind = "lines"
@@ -5208,11 +5260,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 211
+position = 213
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 304 })'
 descriptor = "python method doc at src/pluggy/_manager.py:304"
 cost_tokens = 97
-cum_tokens = 9003
+cum_tokens = 9121
 
 [batches.content]
 kind = "lines"
@@ -5226,11 +5278,11 @@ end = 311
 kind = "full"
 
 [[batches]]
-position = 212
+position = 214
 key = 'Python(MethodDoc { file: "src/pluggy/_hooks.py", start_line: 516 })'
 descriptor = "python method doc at src/pluggy/_hooks.py:516"
 cost_tokens = 98
-cum_tokens = 9101
+cum_tokens = 9219
 
 [batches.content]
 kind = "lines"
@@ -5244,11 +5296,11 @@ end = 528
 kind = "full"
 
 [[batches]]
-position = 213
+position = 215
 key = 'Python(MethodDoc { file: "src/pluggy/_result.py", start_line: 67 })'
 descriptor = "python method doc at src/pluggy/_result.py:67"
 cost_tokens = 99
-cum_tokens = 9200
+cum_tokens = 9318
 
 [batches.content]
 kind = "lines"
@@ -5262,11 +5314,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 214
+position = 216
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 395 })'
 descriptor = "python method doc at src/pluggy/_manager.py:395"
 cost_tokens = 103
-cum_tokens = 9303
+cum_tokens = 9421
 
 [batches.content]
 kind = "lines"
@@ -5280,11 +5332,11 @@ end = 405
 kind = "full"
 
 [[batches]]
-position = 215
+position = 217
 key = 'Python(ClassBody { file: "src/pluggy/_hooks.py", start_line: 593 })'
 descriptor = "python class body at src/pluggy/_hooks.py:593"
 cost_tokens = 216
-cum_tokens = 9519
+cum_tokens = 9637
 
 [batches.content]
 kind = "lines"
@@ -5298,11 +5350,11 @@ end = 610
 kind = "full"
 
 [[batches]]
-position = 216
+position = 218
 key = 'Python(Decl { file: "src/pluggy/_callers.py", start_line: 82 })'
 descriptor = "python decl at src/pluggy/_callers.py:82"
 cost_tokens = 59
-cum_tokens = 9578
+cum_tokens = 9696
 
 [batches.content]
 kind = "lines"
@@ -5316,11 +5368,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 217
+position = 219
 key = 'Python(MethodBody { file: "src/pluggy/_tracing.py", start_line: 60, body_start_line: 61 })'
 descriptor = "python method body at src/pluggy/_tracing.py:60 body 61"
 cost_tokens = 18
-cum_tokens = 9596
+cum_tokens = 9714
 
 [batches.content]
 kind = "lines"
@@ -5334,11 +5386,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 218
+position = 220
 key = 'Python(Imports { file: "src/pluggy/_result.py" })'
 descriptor = "python imports in src/pluggy/_result.py"
 cost_tokens = 109
-cum_tokens = 9705
+cum_tokens = 9823
 
 [batches.content]
 kind = "lines"
@@ -5352,11 +5404,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 219
+position = 221
 key = 'Python(MethodDoc { file: "src/pluggy/_manager.py", start_line: 176 })'
 descriptor = "python method doc at src/pluggy/_manager.py:176"
 cost_tokens = 135
-cum_tokens = 9840
+cum_tokens = 9958
 
 [batches.content]
 kind = "lines"
@@ -5365,24 +5417,6 @@ kind = "lines"
 path = "src/pluggy/_manager.py"
 start = 177
 end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 220
-key = 'Python(DeclDoc { file: "src/pluggy/_callers.py", start_line: 82 })'
-descriptor = "python decl doc at src/pluggy/_callers.py:82"
-cost_tokens = 56
-cum_tokens = 9896
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "src/pluggy/_callers.py"
-start = 88
-end = 92
 
 [batches.content.spans.render]
 kind = "full"

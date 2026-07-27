@@ -18,6 +18,12 @@ Cargo.toml
        6→    "sps-core",
        7→    "sps-net",
        8→]
+      10→[patch.crates-io]
+      11→sps-common  = { path = "sps-common" }
+      12→sps-core    = { path = "sps-core" }
+      13→sps-net     = { path = "sps-net" }
+      14→
+      15→# Shared dependencies defined once
     …
       43→[profile.release]
       44→lto = true

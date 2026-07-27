@@ -5,18 +5,22 @@
 //!
 //! Keys:
 //! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
-//!   `[project]`, `[tool.poetry]`
+//!   `[project]`, `[tool.poetry]`; the Python tables contribute their lede
+//!   only, so the batch stays cheap enough to win an early slot
+//! - `PackageMetadata { file }` — the rest of a Python identity table: author
+//!   and maintainer rosters, project URLs, keywords
 //! - `Scripts { file }` — `[project.scripts]`, `[tool.poetry.scripts]`
 //! - `Features { file }` — `[features]`
 //! - `Dependencies { file }` — Cargo `[dependencies]` /
 //!   `[workspace.dependencies]`, `[tool.poetry.dependencies]`, and the PEP
 //!   621 dependency arrays under `[project]`
 //! - `DevelopmentDependencies { file }` — Cargo `[dev-dependencies]`,
-//!   `[build-dependencies]`, and target-conditional dependency tables
+//!   `[build-dependencies]`, target-conditional dependency tables, and PEP
+//!   735 `[dependency-groups]`
 //! - `ToolConfig { file, tool }` — one Python-manifest `tool.<name>` family,
 //!   with adjacent small tables packed into compact families
-//! - `Config { file }` — other manifest-level build-system, package metadata,
-//!   Cargo profiles/targets, and packaging config
+//! - `Config { file }` — every other table of a manifest, whatever it is
+//!   named: build systems, targets, profiles, lints, patches, packaging
 
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
@@ -66,6 +70,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         };
         let sections = collect_sections(&tree, &source);
         let python_project_manifest = is_python_project_manifest(&file, &sections, &source);
+        // Pair-level detail is only consulted for Python identity tables.
+        let pairs = if python_project_manifest {
+            collect_table_pairs(&tree, &source)
+        } else {
+            Vec::new()
+        };
+        let identity_residue = python_identity_non_lede_rows(&source, &sections);
         if let Some(content) = build_section_content(
             &file,
             &source,
@@ -74,7 +85,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 matches!(n, "package" | "workspace" | "workspace.package")
                     || (python_project_manifest && matches!(n, "project" | "tool.poetry"))
             },
-            python_project_manifest,
+            &identity_residue,
         ) {
             out.push(Batch {
                 key: TomlKey::Identity { file: file.clone() }.into(),
@@ -82,13 +93,23 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 content,
                 value: identity_value(&file, ctx),
             });
+            if let Some(content) =
+                build_package_metadata_content(&file, &source, &pairs, &identity_residue)
+            {
+                out.push(Batch {
+                    key: TomlKey::PackageMetadata { file: file.clone() }.into(),
+                    predecessor: Some(TomlKey::Identity { file: file.clone() }.into()),
+                    content,
+                    value: config_value(&file, ctx),
+                });
+            }
         }
         if let Some(content) = build_section_content(
             &file,
             &source,
             &sections,
             |n| is_scripts_section(n) && python_project_manifest,
-            python_project_manifest,
+            &HashSet::new(),
         ) {
             out.push(Batch {
                 key: TomlKey::Scripts { file: file.clone() }.into(),
@@ -102,7 +123,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             &source,
             &sections,
             |n| n == "features",
-            python_project_manifest,
+            &HashSet::new(),
         ) {
             out.push(Batch {
                 key: TomlKey::Features { file: file.clone() }.into(),
@@ -112,7 +133,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
         if let Some(content) =
-            build_dependencies_content(&file, &source, &tree, &sections, python_project_manifest)
+            build_dependencies_content(&file, &source, &pairs, &sections, python_project_manifest)
         {
             out.push(Batch {
                 key: TomlKey::Dependencies { file: file.clone() }.into(),
@@ -171,14 +192,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 fn build_dependencies_content(
     file: &Path,
     source: &str,
-    tree: &Tree,
+    pairs: &[TablePair],
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
     let cargo_manifest = is_cargo_manifest(file);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start, end) in sections {
-        if (python_project_manifest && is_dependency_section(name))
+        if (python_project_manifest
+            && is_dependency_section(name)
+            && !is_dependency_group_section(name))
             || (cargo_manifest && is_ordinary_dependency_section(name))
             // Non-manifest TOMLs keep the pre-split exclusion of
             // pyproject-shaped sections: a poetry/PEP-621 dep table in a
@@ -192,11 +215,7 @@ fn build_dependencies_content(
         }
     }
     if python_project_manifest {
-        for key in ["dependencies", "optional-dependencies"] {
-            if let Some((start, end)) = project_pair_array_rows(tree, source, key) {
-                line_numbers.extend(start..=end);
-            }
-        }
+        line_numbers.extend(pep621_dependency_array_rows(pairs));
     }
     if line_numbers.is_empty() {
         return None;
@@ -204,8 +223,9 @@ fn build_dependencies_content(
     single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
-/// Cargo dependency classes that describe tests, build-time tooling, or a
-/// platform-specific edge. They are useful context, but should not make the
+/// Dependency classes that describe tests, build-time tooling, or a
+/// platform-specific edge — Cargo's dev/build/target tables and PEP 735's
+/// `[dependency-groups]`. They are useful context, but should not make the
 /// ordinary runtime dependency roster unaffordable.
 fn build_development_dependencies_content(
     file: &Path,
@@ -213,12 +233,19 @@ fn build_development_dependencies_content(
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
-    if python_project_manifest || !is_cargo_manifest(file) {
+    if !python_project_manifest && !is_cargo_manifest(file) {
         return None;
     }
+    let is_development = |name: &str| {
+        if python_project_manifest {
+            is_dependency_group_section(name)
+        } else {
+            is_cargo_development_dependency_section(name)
+        }
+    };
     let mut line_numbers = Vec::new();
     for (name, start, end) in sections {
-        if is_cargo_development_dependency_section(name) {
+        if is_development(name) {
             line_numbers.extend(*start..=*end);
         }
     }
@@ -234,10 +261,10 @@ fn build_tool_config_contents(
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Vec<(String, crate::content::BatchContent)> {
-    if !should_partition_tool_config(file, source, sections, python_project_manifest) {
+    if !should_partition_tool_config(source, sections, python_project_manifest) {
         return Vec::new();
     }
-    pack_small_tool_config_families(source, collect_tool_config_lines(file, sections))
+    pack_small_tool_config_families(source, collect_tool_config_lines(sections))
         .into_iter()
         .filter_map(|(tool, lines)| {
             single_file_lines_content(file, source, FileLines::new(dedup_sorted(lines)))
@@ -287,7 +314,6 @@ fn pack_small_tool_config_families(
 }
 
 fn should_partition_tool_config(
-    file: &Path,
     source: &str,
     sections: &[Section],
     python_project_manifest: bool,
@@ -296,7 +322,7 @@ fn should_partition_tool_config(
         return false;
     }
     let source_lines: Vec<&str> = source.lines().collect();
-    let tool_tokens: usize = collect_tool_config_lines(file, sections)
+    let tool_tokens: usize = collect_tool_config_lines(sections)
         .values()
         .map(|lines| tool_config_source_tokens(&source_lines, lines))
         .sum();
@@ -323,10 +349,10 @@ fn flush_small_tool_family(
     }
 }
 
-fn collect_tool_config_lines(file: &Path, sections: &[Section]) -> BTreeMap<String, Vec<usize>> {
+fn collect_tool_config_lines(sections: &[Section]) -> BTreeMap<String, Vec<usize>> {
     let mut families: BTreeMap<String, Vec<usize>> = BTreeMap::new();
     for (name, start, end) in sections {
-        if !is_config_section(file, name) {
+        if !is_config_section(name) {
             continue;
         }
         let Some(tool) = top_level_tool_name(name) else {
@@ -337,20 +363,38 @@ fn collect_tool_config_lines(file: &Path, sections: &[Section]) -> BTreeMap<Stri
     families
 }
 
+/// The identity-table residue, minus the dependency arrays the dependency
+/// batch owns — no two peer batches may claim the same row.
+fn build_package_metadata_content(
+    file: &Path,
+    source: &str,
+    pairs: &[TablePair],
+    identity_residue: &HashSet<usize>,
+) -> Option<crate::content::BatchContent> {
+    let dropped: HashSet<usize> = pep621_dependency_array_rows(pairs)
+        .chain(packaging_mechanics_rows(pairs))
+        .collect();
+    let line_numbers = dedup_sorted(identity_residue.difference(&dropped).copied().collect());
+    if line_numbers.is_empty() {
+        return None;
+    }
+    single_file_lines_content(file, source, FileLines::new(line_numbers))
+}
+
 fn build_config_content(
     file: &Path,
     source: &str,
     sections: &[Section],
     python_project_manifest: bool,
 ) -> Option<crate::content::BatchContent> {
-    if !is_manifest_toml(file, python_project_manifest) {
+    if !is_manifest_toml(sections, python_project_manifest) {
         return None;
     }
     let partition_tool_config =
-        should_partition_tool_config(file, source, sections, python_project_manifest);
+        should_partition_tool_config(source, sections, python_project_manifest);
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start, end) in sections {
-        if is_config_section(file, name)
+        if is_config_section(name)
             && (!partition_tool_config || top_level_tool_name(name).is_none())
         {
             line_numbers.extend(*start..=*end);
@@ -362,48 +406,54 @@ fn build_config_content(
     single_file_lines_content(file, source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
-/// Row span of `<key> = [...]` inside the `[project]` table.
-fn project_pair_array_rows(tree: &Tree, source: &str, key: &str) -> Option<(usize, usize)> {
+/// One `key = value` pair written directly under a top-level `[table]`, with
+/// the inclusive 1-based row span of the whole pair — a multi-line array or
+/// inline table runs through its closing bracket.
+struct TablePair {
+    table: String,
+    key: String,
+    start: usize,
+    end: usize,
+    value_is_array: bool,
+}
+
+fn collect_table_pairs(tree: &Tree, source: &str) -> Vec<TablePair> {
     let root = tree.root_node();
     let mut cursor = root.walk();
+    let mut out = Vec::new();
     for child in root.children(&mut cursor) {
         if child.kind() != "table" {
             continue;
         }
-        let Some(name) = extract_table_name(child, source) else {
+        let Some(table) = extract_table_name(child, source) else {
             continue;
         };
-        if name != "project" {
-            continue;
-        }
         let mut pair_cursor = child.walk();
         for pair in child.children(&mut pair_cursor) {
             if pair.kind() != "pair" {
                 continue;
             }
-            if pair_key_matches(pair, source, key) {
-                let value_node = pair_value_node(pair)?;
-                if value_node.kind() != "array" {
-                    return None;
-                }
-                return Some((
-                    pair.start_position().row + 1,
-                    value_node.end_position().row + 1,
-                ));
-            }
+            let Some(key) = pair_key(pair, source) else {
+                continue;
+            };
+            let value = pair_value_node(pair);
+            out.push(TablePair {
+                table: table.clone(),
+                key,
+                start: pair.start_position().row + 1,
+                end: value.unwrap_or(pair).end_position().row + 1,
+                value_is_array: value.is_some_and(|v| v.kind() == "array"),
+            });
         }
     }
-    None
+    out
 }
 
-fn pair_key_matches(pair: Node, source: &str, key: &str) -> bool {
+fn pair_key(pair: Node, source: &str) -> Option<String> {
     let mut cursor = pair.walk();
-    for child in pair.children(&mut cursor) {
-        if matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key") {
-            return normalize_key_path(source[child.start_byte()..child.end_byte()].trim()) == key;
-        }
-    }
-    false
+    pair.children(&mut cursor)
+        .find(|child| matches!(child.kind(), "bare_key" | "dotted_key" | "quoted_key"))
+        .map(|child| normalize_key_path(source[child.start_byte()..child.end_byte()].trim()))
 }
 
 fn pair_value_node(pair: Node) -> Option<Node> {
@@ -426,21 +476,13 @@ fn build_section_content(
     source: &str,
     sections: &[Section],
     name_match: impl Fn(&str) -> bool,
-    python_project_manifest: bool,
+    skipped_rows: &HashSet<usize>,
 ) -> Option<crate::content::BatchContent> {
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start_line, end_line) in sections {
         if name_match(name) {
-            if is_pyproject_identity_table(name) {
-                line_numbers.extend(project_identity_lines(
-                    source,
-                    *start_line,
-                    *end_line,
-                    python_project_manifest,
-                ));
-            } else {
-                line_numbers.extend(*start_line..=*end_line);
-            }
+            line_numbers
+                .extend((*start_line..=*end_line).filter(|row| !skipped_rows.contains(row)));
         }
     }
     if line_numbers.is_empty() {
@@ -461,12 +503,15 @@ fn is_python_project_manifest(file: &Path, sections: &[Section], source: &str) -
     }
 }
 
-fn is_manifest_toml(file: &Path, python_project_manifest: bool) -> bool {
-    matches!(
-        file.file_name().and_then(|n| n.to_str()),
-        Some("Cargo.toml" | "pyproject.toml")
-    ) || (file.file_name().and_then(|n| n.to_str()) == Some("project.toml")
-        && python_project_manifest)
+/// A TOML that declares package identity is a manifest whatever it is named —
+/// `sqlite-dist.toml`, `uv.toml` and friends carry the same class of content
+/// as `Cargo.toml`, and a filename list can only ever recognize the dialects
+/// that already existed when it was written.
+fn is_manifest_toml(sections: &[Section], python_project_manifest: bool) -> bool {
+    python_project_manifest
+        || sections.iter().any(|(name, _, _)| {
+            matches!(name.as_str(), "package" | "workspace" | "workspace.package")
+        })
 }
 
 fn project_table_has_pep621_key(sections: &[Section], source: &str) -> bool {
@@ -503,7 +548,15 @@ fn is_pep621_project_key(key: &str) -> bool {
 }
 
 fn is_dependency_section(name: &str) -> bool {
-    is_ordinary_dependency_section(name) || is_cargo_development_dependency_section(name)
+    is_ordinary_dependency_section(name)
+        || is_cargo_development_dependency_section(name)
+        || is_dependency_group_section(name)
+}
+
+/// PEP 735 `[dependency-groups]` — named test / lint / docs rosters, the
+/// Python analogue of Cargo's `[dev-dependencies]`.
+fn is_dependency_group_section(name: &str) -> bool {
+    name == "dependency-groups" || name.starts_with("dependency-groups.")
 }
 
 fn is_ordinary_dependency_section(name: &str) -> bool {
@@ -554,61 +607,91 @@ fn top_level_tool_name(name: &str) -> Option<String> {
     Some(rest.to_string())
 }
 
-fn is_config_section(file: &Path, name: &str) -> bool {
-    if is_pyproject_identity_table(name) || is_scripts_section(name) || is_dependency_section(name)
-    {
-        return false;
-    }
-    name == "build-system"
-        || name == "project.urls"
-        || name == "project.entry-points"
-        || name.starts_with("tool.")
-        || name.starts_with("package.metadata.")
-        || name.starts_with("profile.")
-        || (file.file_name().and_then(|n| n.to_str()) == Some("Cargo.toml")
-            && matches!(name, "bin" | "example" | "test" | "bench"))
+/// Every table of a manifest that no other batch claims. A manifest is
+/// author-written declaration throughout: a `[lib]`, a `[lints.*]` block or a
+/// `[patch.*]` redirect states a decision about the project as much as a
+/// `[profile.*]` does, and enumerating the tables worth keeping only ever
+/// produces a list that the next manifest falls outside of.
+fn is_config_section(name: &str) -> bool {
+    !(matches!(
+        name,
+        "package" | "workspace" | "workspace.package" | "features"
+    ) || name.starts_with("workspace.")
+        || is_pyproject_identity_table(name)
+        || is_scripts_section(name)
+        || is_dependency_section(name))
 }
 
-fn project_identity_lines(
-    source: &str,
-    start_line: usize,
-    end_line: usize,
-    broad_scalars: bool,
-) -> Vec<usize> {
-    let mut out = vec![start_line];
-    for (idx, line) in source.lines().enumerate() {
-        let line_no = idx + 1;
-        if line_no <= start_line || line_no > end_line {
-            continue;
-        }
-        if is_project_scalar_pair_line(line, broad_scalars) {
-            out.push(line_no);
-        }
-    }
-    out
+/// Rows of a Python identity table that its lede does not take: the author and
+/// maintainer rosters, project URLs, keywords, trove classifiers, packaging
+/// globs — and the PEP 621 dependency arrays, which the dependency batch owns.
+///
+/// A Cargo `[package]` table has no such residue: it is short enough that the
+/// whole table is the lede. A PEP 621 `[project]` table routinely declares
+/// four times its lede in metadata, and the Identity batch competes for its
+/// early slot on `value / cost^k` — carrying that metadata costs the lede the
+/// slot outright, so the residue is priced as manifest config instead.
+fn python_identity_non_lede_rows(source: &str, sections: &[Section]) -> HashSet<usize> {
+    let lines: Vec<&str> = source.lines().collect();
+    sections
+        .iter()
+        .filter(|(name, _, _)| is_pyproject_identity_table(name))
+        .flat_map(|(_, start, end)| (start + 1)..=*end)
+        .filter(|row| {
+            !lines
+                .get(row - 1)
+                .is_some_and(|line| is_lede_pair_line(line))
+        })
+        .collect()
 }
 
-/// `broad_scalars` widens the captured keys from {name, description}
-/// to the full PEP 621 lede for Python project manifests.
-fn is_project_scalar_pair_line(line: &str, broad_scalars: bool) -> bool {
+/// The PEP 621 / Poetry lede: the keys that name, version and describe the
+/// package, in their single-line scalar form.
+fn is_lede_pair_line(line: &str) -> bool {
     let Some((key, value)) = line.trim_start().split_once('=') else {
         return false;
     };
-    let key = key.trim();
-    let in_set = if broad_scalars {
-        matches!(
-            key,
-            "name" | "version" | "description" | "requires-python" | "license" | "readme"
-        )
-    } else {
-        matches!(key, "name" | "description")
-    };
-    in_set
-        && value
-            .trim_start()
-            .chars()
-            .next()
-            .is_some_and(|ch| ch != '[' && ch != '{')
+    matches!(
+        key.trim(),
+        "name" | "version" | "description" | "requires-python" | "license" | "readme"
+    ) && value
+        .trim_start()
+        .chars()
+        .next()
+        .is_some_and(|ch| ch != '[' && ch != '{')
+}
+
+/// PEP 621 dependency arrays live inside `[project]` but belong to the
+/// dependency batches.
+fn is_pep621_dependency_key(key: &str) -> bool {
+    matches!(key, "dependencies" | "optional-dependencies")
+}
+
+/// Rows of the identity-table keys that no batch emits at any budget: the
+/// trove-classifier list, which restates in a fixed registry vocabulary what
+/// `license`, `requires-python` and `description` already say, and the
+/// archive-selection globs, which describe how the package is built rather
+/// than what it is. Both are among the longest keys a manifest declares.
+fn packaging_mechanics_rows(pairs: &[TablePair]) -> impl Iterator<Item = usize> {
+    pairs
+        .iter()
+        .filter(|pair| {
+            is_pyproject_identity_table(&pair.table)
+                && matches!(
+                    pair.key.as_str(),
+                    "classifiers" | "packages" | "include" | "exclude"
+                )
+        })
+        .flat_map(|pair| pair.start..=pair.end)
+}
+
+fn pep621_dependency_array_rows(pairs: &[TablePair]) -> impl Iterator<Item = usize> {
+    pairs
+        .iter()
+        .filter(|pair| {
+            pair.table == "project" && pair.value_is_array && is_pep621_dependency_key(&pair.key)
+        })
+        .flat_map(|pair| pair.start..=pair.end)
 }
 
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -1083,6 +1166,27 @@ mod tests {
         crate_root.join("tests/fixtures").join(rel)
     }
 
+    fn parse(source: &str) -> Tree {
+        let mut parser = tree_sitter::Parser::new();
+        parser
+            .set_language(&tree_sitter_toml_ng::LANGUAGE.into())
+            .unwrap();
+        parser.parse(source, None).unwrap()
+    }
+
+    /// `(identity lede rows, manifest-config residue rows)` for a source whose
+    /// only identity table spans 1..=`end`.
+    fn identity_partition(source: &str, end: usize) -> (Vec<usize>, Vec<usize>) {
+        let sections = collect_sections(&parse(source), source);
+        let residue = python_identity_non_lede_rows(source, &sections);
+        let owned: HashSet<usize> =
+            pep621_dependency_array_rows(&collect_table_pairs(&parse(source), source)).collect();
+        (
+            (1..=end).filter(|row| !residue.contains(row)).collect(),
+            dedup_sorted(residue.difference(&owned).copied().collect()),
+        )
+    }
+
     fn members_with(
         root_toml: &str,
         nested: &[(&str, &str)],
@@ -1265,12 +1369,7 @@ mod tests {
         let source = "[package]\nname = \"demo\"\nversion = \"1.0\"\n\n\
                       [[bin]]\nname = \"demo-cli\"\n\n\
                       [dependencies]\nserde = \"1\"\n";
-        let mut parser = tree_sitter::Parser::new();
-        parser
-            .set_language(&tree_sitter_toml_ng::LANGUAGE.into())
-            .unwrap();
-        let tree = parser.parse(source, None).unwrap();
-        let sections = collect_sections(&tree, source);
+        let sections = collect_sections(&parse(source), source);
         assert_eq!(
             sections,
             vec![
@@ -1281,45 +1380,43 @@ mod tests {
         );
     }
 
+    /// The lede keeps the single-line scalars that name and describe the
+    /// package; every other row of the table is manifest-config residue —
+    /// except the PEP 621 dependency arrays, which the dependency batch owns
+    /// and which no second batch may claim.
     #[test]
-    fn walker_toml_project_identity_filters_array_values() {
+    fn walker_toml_project_identity_splits_lede_from_metadata() {
         let source = r#"[project]
 name = "demo"
 dynamic = ["version"]
 description = "Demo package"
 authors = [{ name = "Ada" }]
+license = { text = "MIT" }
 classifiers = [
     "Programming Language :: Python :: 3",
 ]
+dependencies = [
+    "click",
+]
 requires-python = ">=3.10"
-
-[project.urls]
-Homepage = "https://example.com"
 "#;
+        let (lede, residue) = identity_partition(source, 13);
+        assert_eq!(lede, vec![1, 2, 4, 13]);
+        assert_eq!(residue, vec![3, 5, 6, 7, 8, 9]);
+    }
 
-        let broad = project_identity_lines(source, 1, 9, true);
-        // Broad set: header + name (line 2) + description (line 4) +
-        // requires-python (line 9). Array-valued pairs (dynamic /
-        // authors / classifiers) and array-interior rows are excluded
-        // by the `!= '['` value check and the "must contain `=`"
-        // split, respectively.
-        assert_eq!(broad, vec![1, 2, 4, 9]);
-
-        let narrow = project_identity_lines(source, 1, 9, false);
-        // Narrow set: header + name + description.
-        assert_eq!(narrow, vec![1, 2, 4]);
+    /// A Cargo manifest has no residue: `[package]` is taken whole, and the
+    /// identity split is a Python-manifest rule.
+    #[test]
+    fn walker_toml_cargo_package_table_has_no_identity_residue() {
+        let source = "[package]\nname = \"demo\"\nkeywords = [\"a\"]\nexclude = [\"rfcs/**/*\"]\n";
+        let sections = collect_sections(&parse(source), source);
+        assert!(python_identity_non_lede_rows(source, &sections).is_empty());
     }
 
     #[test]
     fn walker_toml_project_toml_requires_pep621_project_table() {
-        let parse_sections = |source: &str| {
-            let mut parser = tree_sitter::Parser::new();
-            parser
-                .set_language(&tree_sitter_toml_ng::LANGUAGE.into())
-                .unwrap();
-            let tree = parser.parse(source, None).unwrap();
-            collect_sections(&tree, source)
-        };
+        let parse_sections = |source: &str| collect_sections(&parse(source), source);
 
         let generic_project = "[project]\nowner = \"infra\"\n";
         let generic_sections = parse_sections(generic_project);
@@ -1347,7 +1444,7 @@ Homepage = "https://example.com"
     }
 
     /// Poetry-style pyproject (`[tool.poetry]` as lede table) is
-    /// classified the same as PEP 621 `[project]`: same scalar filter,
+    /// classified the same as PEP 621 `[project]`: same lede rule,
     /// same lede-detection signal. Both rich and beets ship Poetry
     /// pyprojects in the corpus.
     #[test]
@@ -1360,42 +1457,53 @@ Homepage = "https://example.com"
         let source = r#"[tool.poetry]
 name = "rich"
 homepage = "https://github.com/Textualize/rich"
-documentation = "https://rich.readthedocs.io/en/latest/"
 version = "15.0.0"
-description = "Render rich text"
 authors = ["Will McGugan <willmcgugan@gmail.com>"]
-license = "MIT"
-readme = "README.md"
 "#;
-        let broad = project_identity_lines(source, 1, 9, true);
-        // Header (1) + name (2) + version (5) + description (6) +
-        // license (8) + readme (9). homepage / documentation are not
-        // in the broad set; authors is array-valued.
-        assert_eq!(broad, vec![1, 2, 5, 6, 8, 9]);
+        let (lede, residue) = identity_partition(source, 5);
+        assert_eq!(lede, vec![1, 2, 4]);
+        assert_eq!(residue, vec![3, 5]);
     }
 
+    /// Config takes every table no other batch owns; the owned ones are the
+    /// whole exclusion list, since a peer batch may not re-claim their lines.
     #[test]
     fn walker_toml_config_sections_do_not_overlap_owned_sections() {
-        let file = PathBuf::from("pyproject.toml");
         let owned = [
+            "package",
+            "workspace",
+            "workspace.package",
+            "features",
+            "project",
+            "project.scripts",
             "tool.poetry",
             "tool.poetry.dependencies",
             "tool.poetry.scripts",
             "dependencies.foo",
             "dev-dependencies.foo",
             "build-dependencies.foo",
+            "dependency-groups",
             "target.'cfg(unix)'.dependencies",
             "target.'cfg(windows)'.dev-dependencies",
         ];
         for name in owned {
             assert!(
-                !is_config_section(&file, name),
+                !is_config_section(name),
                 "{name} must stay with its owning TOML batch"
             );
         }
-        assert!(is_config_section(&file, "tool.ruff"));
-        assert!(!is_config_section(&file, "test"));
-        assert!(is_config_section(&PathBuf::from("Cargo.toml"), "test"));
+        for name in [
+            "tool.ruff",
+            "lib",
+            "lints.clippy",
+            "patch.crates-io",
+            "test",
+        ] {
+            assert!(
+                is_config_section(name),
+                "{name} is unclaimed manifest config"
+            );
+        }
     }
 
     #[test]
@@ -1435,20 +1543,10 @@ python = ">=3.11"
 [tool.poetry.group.test.dependencies]
 pytest = "*"
 "#;
-        let mut parser = tree_sitter::Parser::new();
-        parser
-            .set_language(&tree_sitter_toml_ng::LANGUAGE.into())
-            .unwrap();
-        let tree = parser.parse(source, None).unwrap();
-        let sections = collect_sections(&tree, source);
-        let families = collect_tool_config_lines(&PathBuf::from("pyproject.toml"), &sections);
+        let sections = collect_sections(&parse(source), source);
+        let families = collect_tool_config_lines(&sections);
 
-        assert!(!should_partition_tool_config(
-            &PathBuf::from("pyproject.toml"),
-            source,
-            &sections,
-            true
-        ));
+        assert!(!should_partition_tool_config(source, &sections, true));
 
         assert_eq!(
             families.keys().cloned().collect::<Vec<_>>(),
@@ -1473,10 +1571,8 @@ pytest = "*"
                 .collect::<Vec<_>>()
                 .join(", ")
         );
-        let oversized_tree = parser.parse(&oversized, None).unwrap();
-        let oversized_sections = collect_sections(&oversized_tree, &oversized);
+        let oversized_sections = collect_sections(&parse(&oversized), &oversized);
         assert!(should_partition_tool_config(
-            &PathBuf::from("pyproject.toml"),
             &oversized,
             &oversized_sections,
             true

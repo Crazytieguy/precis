@@ -1,7 +1,7 @@
 fixture = "tomli"
 budget = 10000
-cumulative_tokens = 9975
-batch_count = 116
+cumulative_tokens = 9991
+batch_count = 115
 
 [[batches]]
 position = 1
@@ -307,10 +307,44 @@ kind = "full"
 
 [[batches]]
 position = 16
+key = 'Toml(PackageMetadata { file: "pyproject.toml" })'
+descriptor = "package metadata in pyproject.toml"
+cost_tokens = 58
+cum_tokens = 1023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
 key = 'Python(Imports { file: "setup.py" })'
 descriptor = "python imports in setup.py"
 cost_tokens = 32
-cum_tokens = 997
+cum_tokens = 1055
 
 [batches.content]
 kind = "lines"
@@ -324,11 +358,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "isort" })'
 descriptor = "tool.isort config in pyproject.toml"
 cost_tokens = 127
-cum_tokens = 1124
+cum_tokens = 1182
 
 [batches.content]
 kind = "lines"
@@ -342,11 +376,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "coverage" })'
 descriptor = "tool.coverage config in pyproject.toml"
 cost_tokens = 150
-cum_tokens = 1274
+cum_tokens = 1332
 
 [batches.content]
 kind = "lines"
@@ -360,11 +394,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 385
-cum_tokens = 1659
+cum_tokens = 1717
 
 [batches.content]
 kind = "lines"
@@ -594,11 +628,11 @@ end = 231
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 9
-cum_tokens = 1668
+cum_tokens = 1726
 
 [batches.content]
 kind = "lines"
@@ -612,11 +646,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Markdown(Section { file: "README.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #19"
 cost_tokens = 6
-cum_tokens = 1674
+cum_tokens = 1732
 
 [batches.content]
 kind = "lines"
@@ -630,11 +664,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Markdown(Section { file: "README.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #2"
 cost_tokens = 25
-cum_tokens = 1699
+cum_tokens = 1757
 
 [batches.content]
 kind = "lines"
@@ -648,11 +682,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Markdown(Section { file: "README.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #13"
 cost_tokens = 8
-cum_tokens = 1707
+cum_tokens = 1765
 
 [batches.content]
 kind = "lines"
@@ -666,11 +700,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Markdown(Section { file: "README.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #14"
 cost_tokens = 11
-cum_tokens = 1718
+cum_tokens = 1776
 
 [batches.content]
 kind = "lines"
@@ -684,11 +718,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Markdown(Section { file: "README.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #18"
 cost_tokens = 14
-cum_tokens = 1732
+cum_tokens = 1790
 
 [batches.content]
 kind = "lines"
@@ -702,11 +736,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Markdown(Section { file: "README.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #16"
 cost_tokens = 28
-cum_tokens = 1760
+cum_tokens = 1818
 
 [batches.content]
 kind = "lines"
@@ -720,11 +754,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "mypy" })'
 descriptor = "tool.mypy config in pyproject.toml"
 cost_tokens = 272
-cum_tokens = 2032
+cum_tokens = 2090
 
 [batches.content]
 kind = "lines"
@@ -738,11 +772,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Markdown(Section { file: "README.md", section_index: 25, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #25"
 cost_tokens = 83
-cum_tokens = 2115
+cum_tokens = 2173
 
 [batches.content]
 kind = "lines"
@@ -756,11 +790,11 @@ end = 205
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Python(DeclNames { file: "src/tomli/_types.py" })'
 descriptor = "python decl names surface in src/tomli/_types.py"
 cost_tokens = 34
-cum_tokens = 2149
+cum_tokens = 2207
 
 [batches.content]
 kind = "lines"
@@ -774,11 +808,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Markdown(Section { file: "README.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #23"
 cost_tokens = 31
-cum_tokens = 2180
+cum_tokens = 2238
 
 [batches.content]
 kind = "lines"
@@ -792,11 +826,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Markdown(Section { file: "README.md", section_index: 21, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #21"
 cost_tokens = 33
-cum_tokens = 2213
+cum_tokens = 2271
 
 [batches.content]
 kind = "lines"
@@ -810,11 +844,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Markdown(Section { file: "tomllib.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #0"
 cost_tokens = 175
-cum_tokens = 2388
+cum_tokens = 2446
 
 [batches.content]
 kind = "lines"
@@ -828,11 +862,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Markdown(Section { file: "README.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #9"
 cost_tokens = 40
-cum_tokens = 2428
+cum_tokens = 2486
 
 [batches.content]
 kind = "lines"
@@ -846,11 +880,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Markdown(Section { file: "README.md", section_index: 22, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #22"
 cost_tokens = 39
-cum_tokens = 2467
+cum_tokens = 2525
 
 [batches.content]
 kind = "lines"
@@ -864,11 +898,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Markdown(ReadmeHeadline { file: "benchmark/README.md" })'
 descriptor = "README headline in benchmark/README.md"
 cost_tokens = 9
-cum_tokens = 2476
+cum_tokens = 2534
 
 [batches.content]
 kind = "lines"
@@ -882,11 +916,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Fs(DirListing { dir: "tests/data" })'
 descriptor = "listing of 'tests/data'"
 cost_tokens = 7
-cum_tokens = 2483
+cum_tokens = 2541
 
 [batches.content]
 kind = "fs"
@@ -896,11 +930,11 @@ parent = "tests/data"
 entries = ["invalid", "valid"]
 
 [[batches]]
-position = 37
+position = 38
 key = 'Python(DeclNames { file: "src/tomli/_parser.py" })'
 descriptor = "python decl names surface in src/tomli/_parser.py"
 cost_tokens = 464
-cum_tokens = 2947
+cum_tokens = 3005
 
 [batches.content]
 kind = "lines"
@@ -1250,11 +1284,11 @@ end = 613
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Markdown(Section { file: "README.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #17"
 cost_tokens = 49
-cum_tokens = 2996
+cum_tokens = 3054
 
 [batches.content]
 kind = "lines"
@@ -1268,11 +1302,11 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Markdown(Section { file: "README.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #5"
 cost_tokens = 56
-cum_tokens = 3052
+cum_tokens = 3110
 
 [batches.content]
 kind = "lines"
@@ -1286,11 +1320,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Markdown(Section { file: "README.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #8"
 cost_tokens = 56
-cum_tokens = 3108
+cum_tokens = 3166
 
 [batches.content]
 kind = "lines"
@@ -1304,11 +1338,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Markdown(Section { file: "README.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #4"
 cost_tokens = 58
-cum_tokens = 3166
+cum_tokens = 3224
 
 [batches.content]
 kind = "lines"
@@ -1322,11 +1356,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Markdown(Section { file: "tomllib.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #3"
 cost_tokens = 30
-cum_tokens = 3196
+cum_tokens = 3254
 
 [batches.content]
 kind = "lines"
@@ -1340,11 +1374,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Markdown(Section { file: "README.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #1"
 cost_tokens = 301
-cum_tokens = 3497
+cum_tokens = 3555
 
 [batches.content]
 kind = "lines"
@@ -1358,11 +1392,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Markdown(Section { file: "tomllib.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #2"
 cost_tokens = 32
-cum_tokens = 3529
+cum_tokens = 3587
 
 [batches.content]
 kind = "lines"
@@ -1376,11 +1410,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Markdown(Section { file: "README.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #10"
 cost_tokens = 71
-cum_tokens = 3600
+cum_tokens = 3658
 
 [batches.content]
 kind = "lines"
@@ -1394,11 +1428,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Markdown(Section { file: "CHANGELOG.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "CHANGELOG.md section #0"
 cost_tokens = 10
-cum_tokens = 3610
+cum_tokens = 3668
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1446,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Markdown(Section { file: "README.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #20"
 cost_tokens = 71
-cum_tokens = 3681
+cum_tokens = 3739
 
 [batches.content]
 kind = "lines"
@@ -1430,11 +1464,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Markdown(Section { file: "README.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #15"
 cost_tokens = 73
-cum_tokens = 3754
+cum_tokens = 3812
 
 [batches.content]
 kind = "lines"
@@ -1448,11 +1482,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Python(DeclNames { file: "src/tomli/_re.py" })'
 descriptor = "python decl names surface in src/tomli/_re.py"
 cost_tokens = 161
-cum_tokens = 3915
+cum_tokens = 3973
 
 [batches.content]
 kind = "lines"
@@ -1554,11 +1588,11 @@ end = 117
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Python(Decl { file: "src/tomli/_re.py", start_line: 59 })'
 descriptor = "python decl at src/tomli/_re.py:59"
 cost_tokens = 0
-cum_tokens = 3915
+cum_tokens = 3973
 
 [batches.content]
 kind = "lines"
@@ -1572,11 +1606,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Python(Decl { file: "src/tomli/_re.py", start_line: 109 })'
 descriptor = "python decl at src/tomli/_re.py:109"
 cost_tokens = 0
-cum_tokens = 3915
+cum_tokens = 3973
 
 [batches.content]
 kind = "lines"
@@ -1590,11 +1624,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Python(Decl { file: "src/tomli/_re.py", start_line: 116 })'
 descriptor = "python decl at src/tomli/_re.py:116"
 cost_tokens = 0
-cum_tokens = 3915
+cum_tokens = 3973
 
 [batches.content]
 kind = "lines"
@@ -1608,11 +1642,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Python(Decl { file: "src/tomli/_re.py", start_line: 98 })'
 descriptor = "python decl at src/tomli/_re.py:98"
 cost_tokens = 26
-cum_tokens = 3941
+cum_tokens = 3999
 
 [batches.content]
 kind = "lines"
@@ -1626,11 +1660,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Python(DeclBody { file: "src/tomli/_re.py", start_line: 116, body_start_line: 117 })'
 descriptor = "python decl body at src/tomli/_re.py:116 body 117"
 cost_tokens = 34
-cum_tokens = 3975
+cum_tokens = 4033
 
 [batches.content]
 kind = "lines"
@@ -1644,11 +1678,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Python(DeclDoc { file: "src/tomli/_re.py", start_line: 59 })'
 descriptor = "python decl doc at src/tomli/_re.py:59"
 cost_tokens = 62
-cum_tokens = 4037
+cum_tokens = 4095
 
 [batches.content]
 kind = "lines"
@@ -1662,11 +1696,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Toml(ToolConfig { file: "pyproject.toml", tool: "tox" })'
 descriptor = "tool.tox config in pyproject.toml"
 cost_tokens = 1128
-cum_tokens = 5165
+cum_tokens = 5223
 
 [batches.content]
 kind = "lines"
@@ -1680,11 +1714,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Python(Imports { file: "src/tomli/_types.py" })'
 descriptor = "python imports in src/tomli/_types.py"
 cost_tokens = 64
-cum_tokens = 5229
+cum_tokens = 5287
 
 [batches.content]
 kind = "lines"
@@ -1698,11 +1732,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Markdown(Section { file: "README.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #11"
 cost_tokens = 97
-cum_tokens = 5326
+cum_tokens = 5384
 
 [batches.content]
 kind = "lines"
@@ -1716,11 +1750,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Python(DeclBody { file: "src/tomli/_re.py", start_line: 98, body_start_line: 100 })'
 descriptor = "python decl body at src/tomli/_re.py:98 body 100"
 cost_tokens = 70
-cum_tokens = 5396
+cum_tokens = 5454
 
 [batches.content]
 kind = "lines"
@@ -1734,11 +1768,11 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Markdown(Section { file: "README.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #7"
 cost_tokens = 101
-cum_tokens = 5497
+cum_tokens = 5555
 
 [batches.content]
 kind = "lines"
@@ -1752,11 +1786,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Markdown(Section { file: "tomllib.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #7"
 cost_tokens = 51
-cum_tokens = 5548
+cum_tokens = 5606
 
 [batches.content]
 kind = "lines"
@@ -1770,11 +1804,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Python(Decl { file: "src/tomli/_re.py", start_line: 46 })'
 descriptor = "python decl at src/tomli/_re.py:46"
 cost_tokens = 159
-cum_tokens = 5707
+cum_tokens = 5765
 
 [batches.content]
 kind = "lines"
@@ -1788,11 +1822,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Markdown(Section { file: "README.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #12"
 cost_tokens = 116
-cum_tokens = 5823
+cum_tokens = 5881
 
 [batches.content]
 kind = "lines"
@@ -1806,11 +1840,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Python(Imports { file: "src/tomli/_parser.py" })'
 descriptor = "python imports in src/tomli/_parser.py"
 cost_tokens = 159
-cum_tokens = 5982
+cum_tokens = 6040
 
 [batches.content]
 kind = "lines"
@@ -1824,11 +1858,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Python(Imports { file: "src/tomli/_re.py" })'
 descriptor = "python imports in src/tomli/_re.py"
 cost_tokens = 103
-cum_tokens = 6085
+cum_tokens = 6143
 
 [batches.content]
 kind = "lines"
@@ -1842,11 +1876,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 66
+position = 67
 key = 'Markdown(Section { file: "README.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #6"
 cost_tokens = 117
-cum_tokens = 6202
+cum_tokens = 6260
 
 [batches.content]
 kind = "lines"
@@ -1860,11 +1894,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 67
+position = 68
 key = 'Markdown(Section { file: "tomllib.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #4"
 cost_tokens = 76
-cum_tokens = 6278
+cum_tokens = 6336
 
 [batches.content]
 kind = "lines"
@@ -1878,11 +1912,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 68
+position = 69
 key = 'Python(Decl { file: "src/tomli/_re.py", start_line: 26 })'
 descriptor = "python decl at src/tomli/_re.py:26"
 cost_tokens = 237
-cum_tokens = 6515
+cum_tokens = 6573
 
 [batches.content]
 kind = "lines"
@@ -1896,11 +1930,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 69
+position = 70
 key = 'Python(Decl { file: "src/tomli/_re.py", start_line: 17 })'
 descriptor = "python decl at src/tomli/_re.py:17"
 cost_tokens = 104
-cum_tokens = 6619
+cum_tokens = 6677
 
 [batches.content]
 kind = "lines"
@@ -1914,11 +1948,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Markdown(Section { file: "tomllib.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #5"
 cost_tokens = 83
-cum_tokens = 6702
+cum_tokens = 6760
 
 [batches.content]
 kind = "lines"
@@ -1932,11 +1966,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Python(Imports { file: "tests/__init__.py" })'
 descriptor = "python imports in tests/__init__.py"
 cost_tokens = 77
-cum_tokens = 6779
+cum_tokens = 6837
 
 [batches.content]
 kind = "lines"
@@ -1958,11 +1992,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Markdown(Section { file: "README.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #3"
 cost_tokens = 172
-cum_tokens = 6951
+cum_tokens = 7009
 
 [batches.content]
 kind = "lines"
@@ -1976,11 +2010,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Python(DeclNames { file: "profiler/profiler_script.py" })'
 descriptor = "python decl names surface in profiler/profiler_script.py"
 cost_tokens = 14
-cum_tokens = 6965
+cum_tokens = 7023
 
 [batches.content]
 kind = "lines"
@@ -1994,11 +2028,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Plaintext(Whole { file: "scripts/requirements.txt" })'
 descriptor = "plaintext config scripts/requirements.txt"
 cost_tokens = 8
-cum_tokens = 6973
+cum_tokens = 7031
 
 [batches.content]
 kind = "lines"
@@ -2012,11 +2046,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Markdown(Section { file: "README.md", section_index: 27, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #27"
 cost_tokens = 184
-cum_tokens = 7157
+cum_tokens = 7215
 
 [batches.content]
 kind = "lines"
@@ -2030,11 +2064,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Python(DeclNames { file: "scripts/use_setuptools.py" })'
 descriptor = "python decl names surface in scripts/use_setuptools.py"
 cost_tokens = 16
-cum_tokens = 7173
+cum_tokens = 7231
 
 [batches.content]
 kind = "lines"
@@ -2056,11 +2090,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Python(Decl { file: "scripts/use_setuptools.py", start_line: 12 })'
 descriptor = "python decl at scripts/use_setuptools.py:12"
 cost_tokens = 0
-cum_tokens = 7173
+cum_tokens = 7231
 
 [batches.content]
 kind = "lines"
@@ -2074,11 +2108,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Plaintext(Whole { file: "profiler/requirements.txt" })'
 descriptor = "plaintext config profiler/requirements.txt"
 cost_tokens = 9
-cum_tokens = 7182
+cum_tokens = 7240
 
 [batches.content]
 kind = "lines"
@@ -2092,11 +2126,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Markdown(Section { file: "tomllib.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #6"
 cost_tokens = 128
-cum_tokens = 7310
+cum_tokens = 7368
 
 [batches.content]
 kind = "lines"
@@ -2110,11 +2144,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Python(DeclBody { file: "src/tomli/_re.py", start_line: 109, body_start_line: 110 })'
 descriptor = "python decl body at src/tomli/_re.py:109 body 110"
 cost_tokens = 83
-cum_tokens = 7393
+cum_tokens = 7451
 
 [batches.content]
 kind = "lines"
@@ -2128,11 +2162,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Markdown(HeadingsOutline { file: "benchmark/README.md" })'
 descriptor = "headings outline in benchmark/README.md"
 cost_tokens = 51
-cum_tokens = 7444
+cum_tokens = 7502
 
 [batches.content]
 kind = "lines"
@@ -2186,11 +2220,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Markdown(Section { file: "README.md", section_index: 24, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #24"
 cost_tokens = 261
-cum_tokens = 7705
+cum_tokens = 7763
 
 [batches.content]
 kind = "lines"
@@ -2204,11 +2238,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Markdown(Section { file: "tomllib.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "tomllib.md section #1"
 cost_tokens = 97
-cum_tokens = 7802
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -2222,11 +2256,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Python(DeclNames { file: "benchmark/run.py" })'
 descriptor = "python decl names surface in benchmark/run.py"
 cost_tokens = 27
-cum_tokens = 7829
+cum_tokens = 7887
 
 [batches.content]
 kind = "lines"
@@ -2264,11 +2298,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Python(Decl { file: "benchmark/run.py", start_line: 37 })'
 descriptor = "python decl at benchmark/run.py:37"
 cost_tokens = 0
-cum_tokens = 7829
+cum_tokens = 7887
 
 [batches.content]
 kind = "lines"
@@ -2282,11 +2316,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Markdown(Section { file: "README.md", section_index: 26, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #26"
 cost_tokens = 304
-cum_tokens = 8133
+cum_tokens = 8191
 
 [batches.content]
 kind = "lines"
@@ -2300,11 +2334,11 @@ end = 228
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Yaml(Whole { file: ".pre-commit-config.yaml" })'
 descriptor = "YAML config at .pre-commit-config.yaml"
 cost_tokens = 1057
-cum_tokens = 9190
+cum_tokens = 9248
 
 [batches.content]
 kind = "lines"
@@ -2318,11 +2352,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Python(Decl { file: "profiler/profiler_script.py", start_line: 12 })'
 descriptor = "python decl at profiler/profiler_script.py:12"
 cost_tokens = 32
-cum_tokens = 9222
+cum_tokens = 9280
 
 [batches.content]
 kind = "lines"
@@ -2336,11 +2370,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Python(Imports { file: "fuzzer/fuzz.py" })'
 descriptor = "python imports in fuzzer/fuzz.py"
 cost_tokens = 11
-cum_tokens = 9233
+cum_tokens = 9291
 
 [batches.content]
 kind = "lines"
@@ -2354,11 +2388,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Python(Decl { file: "benchmark/run.py", start_line: 15 })'
 descriptor = "python decl at benchmark/run.py:15"
 cost_tokens = 60
-cum_tokens = 9293
+cum_tokens = 9351
 
 [batches.content]
 kind = "lines"
@@ -2372,11 +2406,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Fs(DirListing { dir: "tests/data/valid" })'
 descriptor = "listing of 'tests/data/valid'"
 cost_tokens = 105
-cum_tokens = 9398
+cum_tokens = 9456
 
 [batches.content]
 kind = "fs"
@@ -2386,11 +2420,11 @@ parent = "tests/data/valid"
 entries = ["_external", "apostrophes-in-literal-string.json", "apostrophes-in-literal-string.toml", "array", "boolean.json", "boolean.toml", "dates-and-times", "five-quotes.json", "five-quotes.toml", "hex-char.json", "hex-char.toml", "inline-table", "multiline-basic-str", "no-newlines.json", "no-newlines.toml", "trailing-comma.json", "trailing-comma.toml"]
 
 [[batches]]
-position = 92
+position = 93
 key = 'Fs(DirListing { dir: "tests/data/valid/_external" })'
 descriptor = "listing of 'tests/data/valid/_external'"
 cost_tokens = 5
-cum_tokens = 9403
+cum_tokens = 9461
 
 [batches.content]
 kind = "fs"
@@ -2400,11 +2434,11 @@ parent = "tests/data/valid/_external"
 entries = ["toml-test"]
 
 [[batches]]
-position = 93
+position = 94
 key = 'Fs(DirListing { dir: "tests/data/valid/_external/toml-test" })'
 descriptor = "listing of 'tests/data/valid/_external/toml-test'"
 cost_tokens = 6
-cum_tokens = 9409
+cum_tokens = 9467
 
 [batches.content]
 kind = "fs"
@@ -2414,11 +2448,11 @@ parent = "tests/data/valid/_external/toml-test"
 entries = ["LICENSE", "valid"]
 
 [[batches]]
-position = 94
+position = 95
 key = 'Fs(DirListing { dir: "tests/data/valid/dates-and-times" })'
 descriptor = "listing of 'tests/data/valid/dates-and-times'"
 cost_tokens = 21
-cum_tokens = 9430
+cum_tokens = 9488
 
 [batches.content]
 kind = "fs"
@@ -2428,11 +2462,11 @@ parent = "tests/data/valid/dates-and-times"
 entries = ["datetimes.json", "datetimes.toml", "localtime.json", "localtime.toml"]
 
 [[batches]]
-position = 95
+position = 96
 key = 'Fs(DirListing { dir: "tests/data/valid/array" })'
 descriptor = "listing of 'tests/data/valid/array'"
 cost_tokens = 25
-cum_tokens = 9455
+cum_tokens = 9513
 
 [batches.content]
 kind = "fs"
@@ -2442,11 +2476,11 @@ parent = "tests/data/valid/array"
 entries = ["array-subtables.json", "array-subtables.toml", "open-parent-table.json", "open-parent-table.toml"]
 
 [[batches]]
-position = 96
+position = 97
 key = 'Fs(DirListing { dir: "tests/data/valid/inline-table" })'
 descriptor = "listing of 'tests/data/valid/inline-table'"
 cost_tokens = 25
-cum_tokens = 9480
+cum_tokens = 9538
 
 [batches.content]
 kind = "fs"
@@ -2456,11 +2490,11 @@ parent = "tests/data/valid/inline-table"
 entries = ["empty-inline-table.json", "empty-inline-table.toml", "multiline-inline-table.json", "multiline-inline-table.toml"]
 
 [[batches]]
-position = 97
+position = 98
 key = 'Fs(DirListing { dir: "tests/data/valid/multiline-basic-str" })'
 descriptor = "listing of 'tests/data/valid/multiline-basic-str'"
 cost_tokens = 27
-cum_tokens = 9507
+cum_tokens = 9565
 
 [batches.content]
 kind = "fs"
@@ -2470,11 +2504,11 @@ parent = "tests/data/valid/multiline-basic-str"
 entries = ["ends-in-whitespace-escape.json", "ends-in-whitespace-escape.toml", "replacements.json", "replacements.toml"]
 
 [[batches]]
-position = 98
+position = 99
 key = 'Json(Whole { file: "tests/data/valid/no-newlines.json" })'
 descriptor = "json config tests/data/valid/no-newlines.json"
 cost_tokens = 5
-cum_tokens = 9512
+cum_tokens = 9570
 
 [batches.content]
 kind = "lines"
@@ -2488,11 +2522,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Python(DeclNames { file: "fuzzer/fuzz.py" })'
 descriptor = "python decl names surface in fuzzer/fuzz.py"
 cost_tokens = 60
-cum_tokens = 9572
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
@@ -2562,11 +2596,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Python(Decl { file: "fuzzer/fuzz.py", start_line: 53 })'
 descriptor = "python decl at fuzzer/fuzz.py:53"
 cost_tokens = 0
-cum_tokens = 9572
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
@@ -2580,11 +2614,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Python(Decl { file: "fuzzer/fuzz.py", start_line: 59 })'
 descriptor = "python decl at fuzzer/fuzz.py:59"
 cost_tokens = 0
-cum_tokens = 9572
+cum_tokens = 9630
 
 [batches.content]
 kind = "lines"
@@ -2598,11 +2632,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Python(Decl { file: "fuzzer/fuzz.py", start_line: 20 })'
 descriptor = "python decl at fuzzer/fuzz.py:20"
 cost_tokens = 15
-cum_tokens = 9587
+cum_tokens = 9645
 
 [batches.content]
 kind = "lines"
@@ -2616,11 +2650,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Python(Decl { file: "fuzzer/fuzz.py", start_line: 71 })'
 descriptor = "python decl at fuzzer/fuzz.py:71"
 cost_tokens = 24
-cum_tokens = 9611
+cum_tokens = 9669
 
 [batches.content]
 kind = "lines"
@@ -2634,11 +2668,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Python(DeclDoc { file: "fuzzer/fuzz.py", start_line: 59 })'
 descriptor = "python decl doc at fuzzer/fuzz.py:59"
 cost_tokens = 18
-cum_tokens = 9629
+cum_tokens = 9687
 
 [batches.content]
 kind = "lines"
@@ -2652,11 +2686,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Python(TestNames { file: "tests/test_data.py" })'
 descriptor = "python test names surface in tests/test_data.py"
 cost_tokens = 26
-cum_tokens = 9655
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -2694,11 +2728,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Plaintext(Whole { file: "fuzzer/requirements.txt" })'
 descriptor = "plaintext config fuzzer/requirements.txt"
 cost_tokens = 44
-cum_tokens = 9699
+cum_tokens = 9757
 
 [batches.content]
 kind = "lines"
@@ -2712,11 +2746,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Fs(DirListing { dir: "tests/data/invalid" })'
 descriptor = "listing of 'tests/data/invalid'"
 cost_tokens = 165
-cum_tokens = 9864
+cum_tokens = 9922
 
 [batches.content]
 kind = "fs"
@@ -2726,11 +2760,11 @@ parent = "tests/data/invalid"
 entries = ["_external", "array", "array-missing-comma.toml", "array-of-tables", "basic-str-ends-in-escape.toml", "boolean", "dates-and-times", "dotted-keys", "inline-table", "inline-table-missing-comma.toml", "invalid-comment-char.toml", "invalid-escaped-unicode.toml", "invalid-hex.toml", "keys-and-vals", "literal-str", "missing-closing-double-square-bracket.toml", "missing-closing-square-bracket.toml", "multiline-basic-str", "multiline-literal-str", "non-scalar-escaped.toml", "table", "unclosed-multiline-string.toml", "unclosed-string.toml"]
 
 [[batches]]
-position = 108
+position = 109
 key = 'Fs(DirListing { dir: "tests/data/invalid/_external" })'
 descriptor = "listing of 'tests/data/invalid/_external'"
 cost_tokens = 5
-cum_tokens = 9869
+cum_tokens = 9927
 
 [batches.content]
 kind = "fs"
@@ -2740,11 +2774,11 @@ parent = "tests/data/invalid/_external"
 entries = ["toml-test"]
 
 [[batches]]
-position = 109
+position = 110
 key = 'Fs(DirListing { dir: "tests/data/invalid/dates-and-times" })'
 descriptor = "listing of 'tests/data/invalid/dates-and-times'"
 cost_tokens = 5
-cum_tokens = 9874
+cum_tokens = 9932
 
 [batches.content]
 kind = "fs"
@@ -2754,11 +2788,11 @@ parent = "tests/data/invalid/dates-and-times"
 entries = ["invalid-day.toml"]
 
 [[batches]]
-position = 110
+position = 111
 key = 'Fs(DirListing { dir: "tests/data/invalid/literal-str" })'
 descriptor = "listing of 'tests/data/invalid/literal-str'"
 cost_tokens = 5
-cum_tokens = 9879
+cum_tokens = 9937
 
 [batches.content]
 kind = "fs"
@@ -2768,11 +2802,11 @@ parent = "tests/data/invalid/literal-str"
 entries = ["unclosed.toml"]
 
 [[batches]]
-position = 111
+position = 112
 key = 'Fs(DirListing { dir: "tests/data/invalid/_external/toml-test" })'
 descriptor = "listing of 'tests/data/invalid/_external/toml-test'"
 cost_tokens = 6
-cum_tokens = 9885
+cum_tokens = 9943
 
 [batches.content]
 kind = "fs"
@@ -2782,11 +2816,11 @@ parent = "tests/data/invalid/_external/toml-test"
 entries = ["LICENSE", "invalid"]
 
 [[batches]]
-position = 112
+position = 113
 key = 'Fs(DirListing { dir: "tests/data/invalid/multiline-literal-str" })'
 descriptor = "listing of 'tests/data/invalid/multiline-literal-str'"
 cost_tokens = 14
-cum_tokens = 9899
+cum_tokens = 9957
 
 [batches.content]
 kind = "fs"
@@ -2796,11 +2830,11 @@ parent = "tests/data/invalid/multiline-literal-str"
 entries = ["file-ends-after-opening.toml", "unclosed.toml"]
 
 [[batches]]
-position = 113
+position = 114
 key = 'Fs(DirListing { dir: "tests/data/invalid/array-of-tables" })'
 descriptor = "listing of 'tests/data/invalid/array-of-tables'"
 cost_tokens = 17
-cum_tokens = 9916
+cum_tokens = 9974
 
 [batches.content]
 kind = "fs"
@@ -2810,11 +2844,11 @@ parent = "tests/data/invalid/array-of-tables"
 entries = ["overwrite-array-in-parent.toml", "overwrite-bool-with-aot.toml"]
 
 [[batches]]
-position = 114
+position = 115
 key = 'Fs(DirListing { dir: "tests/data/invalid/boolean" })'
 descriptor = "listing of 'tests/data/invalid/boolean'"
 cost_tokens = 17
-cum_tokens = 9933
+cum_tokens = 9991
 
 [batches.content]
 kind = "fs"
@@ -2822,31 +2856,3 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "tests/data/invalid/boolean"
 entries = ["invalid-false-casing.toml", "invalid-true-casing.toml"]
-
-[[batches]]
-position = 115
-key = 'Fs(DirListing { dir: "tests/data/invalid/table" })'
-descriptor = "listing of 'tests/data/invalid/table'"
-cost_tokens = 20
-cum_tokens = 9953
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/table"
-entries = ["eof-after-opening.toml", "redefine-1.toml", "redefine-2.toml"]
-
-[[batches]]
-position = 116
-key = 'Fs(DirListing { dir: "tests/data/invalid/array" })'
-descriptor = "listing of 'tests/data/invalid/array'"
-cost_tokens = 22
-cum_tokens = 9975
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "tests/data/invalid/array"
-entries = ["file-end-after-val.toml", "unclosed-after-item.toml", "unclosed-empty.toml"]

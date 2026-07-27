@@ -136,11 +136,17 @@ pyproject.toml
        6→build-backend = "setuptools.build_meta"
        8→[project]
        9→name = "pluggy"
+      10→license = {text = "MIT"}
+      11→authors = [{name = "Holger Krekel"}]
+      12→maintainers = [{name="pytest core team", email="core@pytest.org"}]
     …
       33→description = "plugin and hook calling mechanisms for python"
-    …
+      34→readme = {file = "README.rst", content-type = "text/x-rst"}
       35→requires-python = ">=3.10"
-    …
+      37→dynamic = ["version"]
+      38→[dependency-groups]
+      39→dev = ["pre-commit", "tox"]
+      40→testing = ["pytest", "pytest-benchmark", "coverage"]
       43→[tool.setuptools]
       44→packages = ["pluggy"]
       45→package-dir =  {""="src"}
@@ -238,8 +244,7 @@ src/
             …
               36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
               37→_AfterTrace: TypeAlias = Callable[
-              38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
-              39→]
+            …
               42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
             …
               52→class PluginValidationError(Exception):
@@ -255,7 +260,7 @@ src/
               83→class PluginManager:
             …
              525→def _formatdef(func: Callable[..., object]) -> str:
-             526→    return f"{func.__name__}{inspect.signature(func)}"
+            …
         _result.py
             …
               16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]

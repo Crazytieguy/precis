@@ -294,9 +294,12 @@ project.toml
        6→name = "peepdb"
        7→version = "0.1.4"
        8→description = "CLI tool to view database tables fast"
-    …
+       9→authors = [
+      10→    {name = "Evangelos Meklis", email = "vmeklis@hotmail.com"},
+      11→]
       12→readme = "README.md"
       13→requires-python = ">=3.9"
+      14→license = {text = "GNU General Public License v3 (GPLv3)"}
     …
       25→dependencies = [
       26→    "mysql-connector-python>=9.0.0",

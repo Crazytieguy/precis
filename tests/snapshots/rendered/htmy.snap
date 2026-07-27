@@ -274,9 +274,9 @@ mkdocs.yaml …
 pyproject.toml
        1→[project]
        2→name = "htmy"
-    …
+       3→dynamic = ["version"]
        4→description = "Async, pure-Python server-side rendering engine."
-    …
+       5→authors = [{ name = "Peter Volf", email = "do.volfp@gmail.com" }]
        6→license = "MIT"
        7→readme = "README.md"
        8→requires-python = ">=3.10"

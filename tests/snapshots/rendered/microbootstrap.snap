@@ -270,25 +270,6 @@ microbootstrap/
           19→class InstrumentsSetupper:
           20→    console_writer: ConsoleWriter
           21→    instrument_box: InstrumentBox
-          23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
-        …
-          28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
-        …
-          32→    def configure_instruments(
-          33→        self,
-          34→        *instrument_configs: InstrumentConfigT,
-          35→    ) -> typing_extensions.Self:
-        …
-          41→    def use_instrument(
-        …
-          51→    def setup(self) -> None:
-        …
-          57→    def teardown(self) -> None:
-        …
-          62→    def __enter__(self) -> None:
-          63→        self.setup()
-          65→    def __exit__(self, *args: object) -> None:
-          66→        self.teardown()
         …
     middlewares/
         __init__.py
@@ -314,8 +295,19 @@ pyproject.toml
        3→description = "Package for bootstrapping new micro-services"
        4→readme = "README.md"
        5→requires-python = ">=3.10,<4"
+       6→keywords = [
+       7→    "python",
+       8→    "microservice",
+       9→    "bootstrap",
+      10→    "opentelemetry",
+      11→    "logging",
+      12→    "error-tracing",
+      13→    "litestar",
+      14→    "fastapi",
+      15→]
     …
       59→version = "0"
+      60→authors = [{ name = "community-of-python" }]
     …
       93→[build-system]
       94→requires = ["uv_build"]
