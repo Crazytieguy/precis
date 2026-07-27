@@ -301,7 +301,7 @@ sps-core/
                7→pub mod pipeline;
                8→pub mod uninstall;
                9→pub mod upgrade; // New
-            …
+              10→#[cfg(target_os = "macos")]
               11→pub mod utils; // New
             …
               19→pub use uninstall::UninstallOptions; // New
@@ -341,9 +341,9 @@ sps-core/
         utils/
             applescript.rs …
             mod.rs
-                …
+                   1→#[cfg(target_os = "macos")]
                    2→pub mod applescript;
-                …
+                   3→#[cfg(target_os = "macos")]
                    4→pub mod xattr;
             xattr.rs …
 sps-net/

@@ -1,4 +1,4 @@
-Score(3000)=0.591 I=0.818 C=0.426 ns_rows≤3K=17/47 (reached=7 partial=2 missing=8)
+Score(3000)=0.591 I=0.819 C=0.426 ns_rows≤3K=17/47 (reached=7 partial=2 missing=8)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -26,251 +26,250 @@ Score(3000)=0.591 I=0.818 C=0.426 ns_rows≤3K=17/47 (reached=7 partial=2 missin
 | walker |  | 579 | 64 | README.md section #0 |  |  | 0.787 |
 | walker |  | 615 | 36 | manifest config in Cargo.toml |  |  | 0.827 |
 | ns | 689 |  | 137 | Cargo.toml [features]: max_level_*/release_max_level_* | 1.9 |  | 0.731 |
-| walker |  | 760 | 145 | mod/use plumbing in src/lib.rs |  |  | 0.731 |
-| ns | 964 |  | 275 | Cargo.toml [features]: std/kv/kv_std/kv_sval/kv_serde | 1.10 |  | 0.649 |
-| walker |  | 1006 | 246 | crate-doc lede in src/lib.rs |  |  | 0.727 |
-| walker |  | 1032 | 26 | pub-item names surface in src/kv/key.rs |  |  | 0.727 |
-| walker |  | 1063 | 31 | pub item at src/kv/key.rs:7 |  |  | 0.727 |
-| ns | 1081 |  | 117 | Cargo.toml [dependencies] | 1.11 |  | 0.706 |
-| walker |  | 1182 | 119 | [dependencies] in Cargo.toml |  |  | 0.740 |
-| walker |  | 1209 | 27 | pub-item names surface in src/kv/source.rs |  |  | 0.740 |
-| walker |  | 1243 | 34 | pub item at src/kv/error.rs:5 |  |  | 0.740 |
-| walker |  | 1291 | 48 | pub item at src/kv/source.rs:235 |  |  | 0.740 |
-| walker |  | 1360 | 69 | macro_export names across src/kv |  |  | 0.740 |
-| walker |  | 1398 | 38 | pub-item names surface in src/kv/value.rs |  |  | 0.740 |
-| walker |  | 1429 | 31 | pub item at src/kv/value.rs:11 |  |  | 0.740 |
-| walker |  | 1455 | 26 | pub item at src/kv/value.rs:119 |  |  | 0.741 |
-| ns | 1494 |  | 413 | Level enum | 2.1 |  | 0.629 |
-| walker |  | 1755 | 300 | pub-item names surface in src/lib.rs |  |  | 0.629 |
-| walker |  | 1755 | 0 | pub item at src/lib.rs:1351 |  |  | 0.629 |
-| walker |  | 1755 | 0 | pub item at src/lib.rs:1375 |  |  | 0.629 |
-| walker |  | 1755 | 0 | pub item at src/lib.rs:1396 |  |  | 0.629 |
-| walker |  | 1755 | 0 | pub item at src/lib.rs:1420 |  |  | 0.629 |
-| walker |  | 1755 | 0 | pub item at src/lib.rs:1478 |  |  | 0.629 |
-| walker |  | 1755 | 0 | pub item at src/lib.rs:1529 |  |  | 0.629 |
-| walker |  | 1755 | 0 | pub item at src/lib.rs:1581 |  |  | 0.629 |
-| walker |  | 1778 | 23 | pub item at src/lib.rs:1549 |  |  | 0.629 |
+| walker |  | 863 | 248 | crate-doc lede in src/lib.rs |  |  | 0.820 |
+| walker |  | 889 | 26 | pub-item names surface in src/kv/key.rs |  |  | 0.820 |
+| walker |  | 920 | 31 | pub item at src/kv/key.rs:7 |  |  | 0.820 |
+| ns | 964 |  | 275 | Cargo.toml [features]: std/kv/kv_std/kv_sval/kv_serde | 1.10 |  | 0.727 |
+| walker |  | 1039 | 119 | [dependencies] in Cargo.toml |  |  | 0.731 |
+| walker |  | 1066 | 27 | pub-item names surface in src/kv/source.rs |  |  | 0.731 |
+| ns | 1081 |  | 117 | Cargo.toml [dependencies] | 1.11 |  | 0.740 |
+| walker |  | 1100 | 34 | pub item at src/kv/error.rs:5 |  |  | 0.740 |
+| walker |  | 1148 | 48 | pub item at src/kv/source.rs:235 |  |  | 0.740 |
+| walker |  | 1379 | 231 | mod/use plumbing in src/lib.rs |  |  | 0.740 |
+| walker |  | 1448 | 69 | macro_export names across src/kv |  |  | 0.740 |
+| walker |  | 1486 | 38 | pub-item names surface in src/kv/value.rs |  |  | 0.740 |
+| ns | 1494 |  | 413 | Level enum | 2.1 |  | 0.628 |
+| walker |  | 1517 | 31 | pub item at src/kv/value.rs:11 |  |  | 0.629 |
+| walker |  | 1543 | 26 | pub item at src/kv/value.rs:119 |  |  | 0.629 |
 | ns | 1801 |  | 307 | LevelFilter enum | 2.2 |  | 0.572 |
-| walker |  | 1805 | 27 | pub item at src/lib.rs:1003 |  |  | 0.572 |
-| walker |  | 1833 | 28 | pub item at src/lib.rs:1566 |  |  | 0.572 |
-| walker |  | 1845 | 12 | pub item body at src/lib.rs:1478 body 1479 |  |  | 0.572 |
-| walker |  | 1885 | 40 | pub item at src/lib.rs:1200 |  |  | 0.572 |
-| walker |  | 1901 | 16 | pub item body at src/lib.rs:1420 body 1421 |  |  | 0.572 |
+| walker |  | 1843 | 300 | pub-item names surface in src/lib.rs |  |  | 0.572 |
+| walker |  | 1843 | 0 | pub item at src/lib.rs:1375 |  |  | 0.572 |
+| walker |  | 1843 | 0 | pub item at src/lib.rs:1396 |  |  | 0.572 |
+| walker |  | 1843 | 0 | pub item at src/lib.rs:1529 |  |  | 0.572 |
+| walker |  | 1843 | 0 | pub item at src/lib.rs:1581 |  |  | 0.572 |
+| walker |  | 1857 | 14 | pub item at src/lib.rs:1351 |  |  | 0.572 |
+| walker |  | 1871 | 14 | pub item at src/lib.rs:1478 |  |  | 0.572 |
+| walker |  | 1894 | 23 | pub item at src/lib.rs:1549 |  |  | 0.572 |
+| walker |  | 1915 | 21 | pub item at src/lib.rs:1420 |  |  | 0.573 |
+| walker |  | 1942 | 27 | pub item at src/lib.rs:1003 |  |  | 0.573 |
 | ns | 1946 |  | 145 | Level & LevelFilter public method roster | 2.3 |  | 0.549 |
-| walker |  | 1952 | 51 | pub item at src/lib.rs:1158 |  |  | 0.549 |
-| walker |  | 1972 | 20 | pub item body at src/lib.rs:1351 body 1352 |  |  | 0.549 |
-| walker |  | 2078 | 106 | pub item at src/lib.rs:842 |  |  | 0.550 |
-| ns | 2093 |  | 147 | FromStr for Level | 2.4 |  | 0.529 |
-| walker |  | 2098 | 20 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.529 |
-| walker |  | 2272 | 174 | pub item at src/lib.rs:636 |  |  | 0.567 |
-| walker |  | 2293 | 21 | pub-item doc lede at src/lib.rs:842 |  |  | 0.567 |
-| walker |  | 2385 | 92 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.567 |
+| walker |  | 1970 | 28 | pub item at src/lib.rs:1566 |  |  | 0.549 |
+| walker |  | 1982 | 12 | pub item body at src/lib.rs:1478 body 1479 |  |  | 0.549 |
+| walker |  | 2022 | 40 | pub item at src/lib.rs:1200 |  |  | 0.549 |
+| walker |  | 2038 | 16 | pub item body at src/lib.rs:1420 body 1421 |  |  | 0.549 |
+| walker |  | 2089 | 51 | pub item at src/lib.rs:1158 |  |  | 0.549 |
+| ns | 2093 |  | 147 | FromStr for Level | 2.4 |  | 0.528 |
+| walker |  | 2109 | 20 | pub item body at src/lib.rs:1351 body 1352 |  |  | 0.528 |
+| walker |  | 2215 | 106 | pub item at src/lib.rs:842 |  |  | 0.529 |
+| walker |  | 2235 | 20 | pub-item doc lede at src/lib.rs:1158 |  |  | 0.529 |
+| walker |  | 2409 | 174 | pub item at src/lib.rs:636 |  |  | 0.567 |
 | ns | 2420 |  | 327 | Record struct + KeyValues wrapper | 2.5 |  | 0.536 |
+| walker |  | 2430 | 21 | pub-item doc lede at src/lib.rs:842 |  |  | 0.536 |
+| walker |  | 2522 | 92 | pub item body at src/lib.rs:1375 body 1376 |  |  | 0.536 |
 | ns | 2558 |  | 138 | Record accessor method roster | 2.6 |  | 0.519 |
-| walker |  | 2688 | 303 | pub item at src/lib.rs:475 |  |  | 0.591 |
-| walker |  | 2728 | 40 | pub-item doc lede at src/lib.rs:1581 |  |  | 0.591 |
-| walker |  | 2774 | 46 | pub-item doc lede at src/lib.rs:1549 |  |  | 0.591 |
-| ns | 3005 |  | 447 | Log trait | 2.7 |  | 0.545 |
-| walker |  | 3189 | 415 | pub item at src/lib.rs:1249 |  |  | 0.634 |
-| walker |  | 3206 | 17 | pub-item doc lede at src/lib.rs:1249 |  |  | 0.641 |
-| ns | 3281 |  | 276 | NopLogger + blanket impl for &T | 2.8 |  | 0.604 |
-| walker |  | 3484 | 278 | pub item at src/lib.rs:1611 |  |  | 0.604 |
-| ns | 3616 |  | 335 | set_max_level + max_level | 2.9 |  | 0.582 |
-| walker |  | 3633 | 149 | pub item body at src/lib.rs:1529 body 1530 |  |  | 0.582 |
-| walker |  | 3689 | 56 | pub item at src/kv/key.rs:37 |  |  | 0.582 |
-| walker |  | 3854 | 165 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.597 |
-| ns | 3907 |  | 291 | set_boxed_logger + set_logger | 2.10 |  | 0.577 |
-| walker |  | 3917 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.577 |
-| walker |  | 4175 | 258 | macro_export names across src |  |  | 0.581 |
-| ns | 4180 |  | 273 | logger() fn | 2.11 |  | 0.563 |
-| walker |  | 4250 | 75 | pub-item doc lede at src/lib.rs:1351 |  |  | 0.579 |
-| walker |  | 4350 | 100 | pub-item doc lede at src/lib.rs:475 |  |  | 0.613 |
-| walker |  | 4438 | 88 | pub-item doc lede at src/lib.rs:1003 |  |  | 0.630 |
-| ns | 4438 |  | 258 | macro_rules! definition roster | 3.1 |  | 0.630 |
-| walker |  | 4452 | 14 | pub-item doc lede at src/kv/error.rs:5 |  |  | 0.630 |
-| walker |  | 4583 | 131 | mod/use plumbing in src/kv/mod.rs |  |  | 0.631 |
-| walker |  | 4678 | 95 | pub-item doc lede at src/lib.rs:1200 |  |  | 0.631 |
-| walker |  | 4698 | 20 | pub-item doc lede at src/kv/key.rs:7 |  |  | 0.631 |
-| walker |  | 4718 | 20 | pub-item doc lede at src/kv/value.rs:11 |  |  | 0.631 |
-| walker |  | 4840 | 122 | pub-item doc lede at src/lib.rs:636 |  |  | 0.664 |
-| walker |  | 4936 | 96 | pub-item doc lede at src/lib.rs:1529 |  |  | 0.664 |
-| ns | 4940 |  | 502 | log! macro | 3.2 | 3.1 | 0.624 |
-| walker |  | 4980 | 44 | macro_export body at src/kv/value.rs:1129 |  |  | 0.624 |
-| walker |  | 5024 | 44 | macro_export body at src/kv/value.rs:1139 |  |  | 0.624 |
-| walker |  | 5045 | 21 | pub-item doc lede at src/kv/source.rs:235 |  |  | 0.625 |
-| walker |  | 5090 | 45 | macro_export body at src/kv/value.rs:1149 |  |  | 0.625 |
-| walker |  | 5135 | 45 | macro_export body at src/kv/value.rs:1159 |  |  | 0.625 |
-| walker |  | 5180 | 45 | macro_export body at src/kv/value.rs:1169 |  |  | 0.625 |
-| walker |  | 5279 | 99 | pub-item doc lede at src/lib.rs:1375 |  |  | 0.625 |
-| walker |  | 5298 | 19 | README.md section #6 |  |  | 0.625 |
-| ns | 5556 |  | 616 | error! macro | 3.3 | 3.1 | 0.593 |
-| walker |  | 5708 | 410 | [features] in Cargo.toml |  |  | 0.665 |
-| walker |  | 5819 | 111 | pub-item doc lede at src/lib.rs:1420 |  |  | 0.677 |
-| ns | 5891 |  | 335 | log_enabled! macro | 3.4 | 3.1 | 0.660 |
-| walker |  | 5946 | 127 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.660 |
-| walker |  | 6029 | 83 | README.md section #1 |  |  | 0.660 |
-| ns | 6414 |  | 523 | __log_value! kv capture-modifier dispatch | 3.5 | 3.1 | 0.625 |
-| ns | 6839 |  | 425 | GlobalLogger + log/enabled/loc public fns | 4.1 |  | 0.597 |
-| ns | 7120 |  | 281 | kv/mod.rs doc lede | 5.1 |  | 0.586 |
-| ns | 7245 |  | 125 | kv/mod.rs capturing-modifier list | 5.2 |  | 0.580 |
-| ns | 7450 |  | 205 | kv/mod.rs module decls + re-exports | 5.3 |  | 0.578 |
-| ns | 7823 |  | 373 | kv/key.rs: ToKey trait + Key struct | 5.4 |  | 0.563 |
-| walker |  | 8045 | 2016 | impl method sigs in src/lib.rs |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:427 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:431 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:435 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:503 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:510 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:517 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:529 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:535 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:548 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:554 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:561 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:579 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:599 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:620 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:653 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:660 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:667 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:679 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:685 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:699 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:707 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:714 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:732 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:752 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:774 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:788 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:862 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:872 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:878 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:884 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:890 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:896 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:902 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:908 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:917 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:923 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:932 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:939 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:946 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1021 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1037 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1044 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1051 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1058 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1065 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1072 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1079 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1086 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1093 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1101 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1108 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1114 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1166 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1172 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1178 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1212 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1223 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1230 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1237 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1243 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1286 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1290 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1291 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1298 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1302 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1305 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1315 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1319 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1322 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1332 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1336 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1339 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1552 |  |  | 0.610 |
-| walker |  | 8045 | 0 | impl method at src/lib.rs:1569 |  |  | 0.610 |
-| walker |  | 8053 | 8 | impl method body at src/lib.rs:932 body 933 |  |  | 0.610 |
-| ns | 8056 |  | 233 | kv/error.rs: Error struct, Inner enum, msg() constructor | 5.5 |  | 0.598 |
-| walker |  | 8061 | 8 | impl method body at src/lib.rs:1286 body 1287 |  |  | 0.599 |
-| walker |  | 8070 | 9 | impl method body at src/lib.rs:548 body 549 |  |  | 0.599 |
-| walker |  | 8079 | 9 | impl method body at src/lib.rs:653 body 654 |  |  | 0.599 |
-| walker |  | 8088 | 9 | impl method body at src/lib.rs:878 body 879 |  |  | 0.599 |
-| walker |  | 8097 | 9 | impl method body at src/lib.rs:884 body 885 |  |  | 0.599 |
-| ns | 8102 |  | 46 | kv/source.rs: Source trait method roster | 5.6 |  | 0.597 |
-| walker |  | 8106 | 9 | impl method body at src/lib.rs:890 body 891 |  |  | 0.597 |
-| walker |  | 8115 | 9 | impl method body at src/lib.rs:896 body 897 |  |  | 0.597 |
-| walker |  | 8124 | 9 | impl method body at src/lib.rs:1172 body 1173 |  |  | 0.597 |
-| walker |  | 8133 | 9 | impl method body at src/lib.rs:1178 body 1179 |  |  | 0.597 |
-| walker |  | 8143 | 10 | impl method body at src/lib.rs:699 body 700 |  |  | 0.597 |
-| walker |  | 8153 | 10 | impl method body at src/lib.rs:872 body 873 |  |  | 0.597 |
-| walker |  | 8163 | 10 | impl method body at src/lib.rs:1108 body 1109 |  |  | 0.597 |
-| walker |  | 8173 | 10 | impl method body at src/lib.rs:1114 body 1115 |  |  | 0.597 |
-| walker |  | 8183 | 10 | impl method body at src/lib.rs:1237 body 1238 |  |  | 0.597 |
-| ns | 8186 |  | 84 | kv/source.rs: VisitSource trait | 5.7 |  | 0.600 |
-| walker |  | 8193 | 10 | impl method body at src/lib.rs:1243 body 1244 |  |  | 0.600 |
-| walker |  | 8204 | 11 | impl method body at src/lib.rs:529 body 530 |  |  | 0.600 |
-| walker |  | 8215 | 11 | impl method body at src/lib.rs:679 body 680 |  |  | 0.600 |
-| walker |  | 8226 | 11 | impl method body at src/lib.rs:939 body 940 |  |  | 0.600 |
-| walker |  | 8237 | 11 | impl method body at src/lib.rs:1166 body 1167 |  |  | 0.600 |
-| walker |  | 8248 | 11 | impl method body at src/lib.rs:1305 body 1306 |  |  | 0.602 |
-| walker |  | 8260 | 12 | impl method body at src/lib.rs:1298 body 1299 |  |  | 0.604 |
-| walker |  | 8272 | 12 | impl method body at src/lib.rs:1302 body 1303 |  |  | 0.606 |
-| walker |  | 8284 | 12 | impl method body at src/lib.rs:1322 body 1323 |  |  | 0.606 |
-| ns | 8289 |  | 103 | kv/value.rs: ToValue trait + Value struct | 5.8 |  | 0.610 |
-| walker |  | 8296 | 12 | impl method body at src/lib.rs:1339 body 1340 |  |  | 0.610 |
-| walker |  | 8309 | 13 | impl method body at src/lib.rs:561 body 562 |  |  | 0.610 |
-| walker |  | 8322 | 13 | impl method body at src/lib.rs:714 body 715 |  |  | 0.610 |
-| walker |  | 8335 | 13 | impl method body at src/lib.rs:1315 body 1316 |  |  | 0.610 |
-| walker |  | 8348 | 13 | impl method body at src/lib.rs:1319 body 1320 |  |  | 0.610 |
-| walker |  | 8361 | 13 | impl method body at src/lib.rs:1332 body 1333 |  |  | 0.610 |
-| walker |  | 8374 | 13 | impl method body at src/lib.rs:1336 body 1337 |  |  | 0.610 |
-| walker |  | 8388 | 14 | impl method body at src/lib.rs:917 body 918 |  |  | 0.610 |
-| walker |  | 8402 | 14 | impl method body at src/lib.rs:1569 body 1570 |  |  | 0.610 |
-| walker |  | 8417 | 15 | impl method body at src/lib.rs:503 body 504 |  |  | 0.610 |
-| ns | 8430 |  | 141 | kv/value.rs: dependency-free Inner enum (data model) | 5.9 |  | 0.603 |
-| walker |  | 8432 | 15 | impl method body at src/lib.rs:707 body 708 |  |  | 0.603 |
-| walker |  | 8447 | 15 | impl method body at src/lib.rs:902 body 903 |  |  | 0.603 |
-| walker |  | 8462 | 15 | impl method body at src/lib.rs:1552 body 1553 |  |  | 0.603 |
-| walker |  | 8480 | 18 | impl method body at src/lib.rs:510 body 511 |  |  | 0.603 |
-| walker |  | 8498 | 18 | impl method body at src/lib.rs:554 body 555 |  |  | 0.603 |
-| walker |  | 8516 | 18 | impl method body at src/lib.rs:660 body 661 |  |  | 0.603 |
-| walker |  | 8536 | 20 | impl method body at src/lib.rs:1037 body 1038 |  |  | 0.603 |
-| walker |  | 8556 | 20 | impl method body at src/lib.rs:1044 body 1045 |  |  | 0.603 |
-| walker |  | 8576 | 20 | impl method body at src/lib.rs:1093 body 1094 |  |  | 0.603 |
-| walker |  | 8596 | 20 | impl method body at src/lib.rs:1223 body 1224 |  |  | 0.603 |
-| walker |  | 8616 | 20 | impl method body at src/lib.rs:1230 body 1231 |  |  | 0.603 |
-| walker |  | 8637 | 21 | impl method body at src/lib.rs:1051 body 1052 |  |  | 0.603 |
-| walker |  | 8658 | 21 | impl method body at src/lib.rs:1058 body 1059 |  |  | 0.603 |
-| walker |  | 8681 | 23 | impl method body at src/lib.rs:579 body 580 |  |  | 0.603 |
-| walker |  | 8704 | 23 | impl method body at src/lib.rs:732 body 733 |  |  | 0.603 |
-| ns | 8714 |  | 284 | tests/macros.rs test-fn roster | 6.1 |  | 0.592 |
-| walker |  | 8728 | 24 | impl method body at src/lib.rs:1101 body 1102 |  |  | 0.592 |
-| walker |  | 8755 | 27 | impl method body at src/lib.rs:1086 body 1087 |  |  | 0.592 |
-| walker |  | 8783 | 28 | impl method body at src/lib.rs:1072 body 1073 |  |  | 0.592 |
-| walker |  | 8811 | 28 | impl method body at src/lib.rs:1079 body 1080 |  |  | 0.592 |
-| walker |  | 8840 | 29 | impl method body at src/lib.rs:1065 body 1066 |  |  | 0.592 |
-| walker |  | 8873 | 33 | impl method body at src/lib.rs:599 body 600 |  |  | 0.592 |
-| walker |  | 8906 | 33 | impl method body at src/lib.rs:752 body 753 |  |  | 0.592 |
-| ns | 8941 |  | 227 | tests/macros.rs: kv_common_value_types body | 6.2 | 6.1 | 0.582 |
-| walker |  | 8942 | 36 | impl method body at src/lib.rs:620 body 621 |  |  | 0.582 |
-| walker |  | 8978 | 36 | impl method body at src/lib.rs:774 body 775 |  |  | 0.582 |
-| walker |  | 9020 | 42 | impl method body at src/lib.rs:862 body 863 |  |  | 0.587 |
-| ns | 9028 |  | 87 | CI workflow job-name roster | 7.1 |  | 0.584 |
-| walker |  | 9062 | 42 | impl method body at src/lib.rs:923 body 924 |  |  | 0.584 |
-| walker |  | 9105 | 43 | impl method body at src/lib.rs:908 body 909 |  |  | 0.584 |
-| ns | 9147 |  | 119 | test_max_level_features/Cargo.toml | 7.2 |  | 0.578 |
-| walker |  | 9159 | 54 | impl method body at src/lib.rs:1212 body 1213 |  |  | 0.578 |
-| walker |  | 9168 | 9 | impl method body at src/lib.rs:431 body 432 |  |  | 0.578 |
-| walker |  | 9178 | 10 | impl method body at src/lib.rs:435 body 436 |  |  | 0.578 |
-| walker |  | 9267 | 89 | impl method body at src/lib.rs:517 body 518 |  |  | 0.587 |
-| walker |  | 9357 | 90 | impl method body at src/lib.rs:667 body 668 |  |  | 0.587 |
-| ns | 9394 |  | 247 | README.md lede | 8.1 |  | 0.585 |
-| walker |  | 9481 | 124 | pub-item doc lede at src/lib.rs:1611 |  |  | 0.585 |
-| walker |  | 9602 | 121 | impl method body at src/lib.rs:946 body 947 |  |  | 0.585 |
-| ns | 9633 |  | 239 | CHANGELOG.md: Unreleased + 0.4.29 | 8.2 |  | 0.578 |
-| ns | 9677 |  | 44 | CHANGELOG.md: sampled older version headings | 8.3 |  | 0.578 |
-| ns | 9767 |  | 90 | rfcs/0296-structured-logging.md heading roster | 8.4 |  | 0.574 |
-| walker |  | 9884 | 282 | crate-doc body in src/lib.rs |  |  | 0.574 |
-| ns | 9924 |  | 157 | RFC 0296: Summary | 8.5 | 8.4 | 0.571 |
-| ns | 9997 |  | 73 | src/serde.rs: serde impl roster | 9.1 |  | 0.569 |
+| walker |  | 2825 | 303 | pub item at src/lib.rs:475 |  |  | 0.591 |
+| walker |  | 2865 | 40 | pub-item doc lede at src/lib.rs:1581 |  |  | 0.591 |
+| walker |  | 2911 | 46 | pub-item doc lede at src/lib.rs:1549 |  |  | 0.591 |
+| ns | 3005 |  | 447 | Log trait | 2.7 |  | 0.546 |
+| ns | 3281 |  | 276 | NopLogger + blanket impl for &T | 2.8 |  | 0.514 |
+| walker |  | 3326 | 415 | pub item at src/lib.rs:1249 |  |  | 0.597 |
+| walker |  | 3343 | 17 | pub-item doc lede at src/lib.rs:1249 |  |  | 0.604 |
+| ns | 3616 |  | 335 | set_max_level + max_level | 2.9 |  | 0.583 |
+| walker |  | 3619 | 276 | pub item at src/lib.rs:1611 |  |  | 0.583 |
+| walker |  | 3768 | 149 | pub item body at src/lib.rs:1529 body 1530 |  |  | 0.583 |
+| walker |  | 3824 | 56 | pub item at src/kv/key.rs:37 |  |  | 0.583 |
+| ns | 3907 |  | 291 | set_boxed_logger + set_logger | 2.10 |  | 0.567 |
+| walker |  | 3989 | 165 | pub item body at src/lib.rs:1396 body 1397 |  |  | 0.583 |
+| walker |  | 4052 | 63 | pub-item doc lede at src/lib.rs:1566 |  |  | 0.583 |
+| ns | 4180 |  | 273 | logger() fn | 2.11 |  | 0.566 |
+| walker |  | 4310 | 258 | macro_export names across src |  |  | 0.569 |
+| walker |  | 4385 | 75 | pub-item doc lede at src/lib.rs:1351 |  |  | 0.586 |
+| ns | 4438 |  | 258 | macro_rules! definition roster | 3.1 |  | 0.604 |
+| walker |  | 4485 | 100 | pub-item doc lede at src/lib.rs:475 |  |  | 0.636 |
+| walker |  | 4573 | 88 | pub-item doc lede at src/lib.rs:1003 |  |  | 0.636 |
+| walker |  | 4587 | 14 | pub-item doc lede at src/kv/error.rs:5 |  |  | 0.636 |
+| walker |  | 4682 | 95 | pub-item doc lede at src/lib.rs:1200 |  |  | 0.636 |
+| walker |  | 4702 | 20 | pub-item doc lede at src/kv/key.rs:7 |  |  | 0.636 |
+| walker |  | 4722 | 20 | pub-item doc lede at src/kv/value.rs:11 |  |  | 0.636 |
+| walker |  | 4844 | 122 | pub-item doc lede at src/lib.rs:636 |  |  | 0.669 |
+| walker |  | 4940 | 96 | pub-item doc lede at src/lib.rs:1529 |  |  | 0.629 |
+| ns | 4940 |  | 502 | log! macro | 3.2 | 3.1 | 0.629 |
+| walker |  | 4984 | 44 | macro_export body at src/kv/value.rs:1129 |  |  | 0.629 |
+| walker |  | 5028 | 44 | macro_export body at src/kv/value.rs:1139 |  |  | 0.629 |
+| walker |  | 5049 | 21 | pub-item doc lede at src/kv/source.rs:235 |  |  | 0.629 |
+| walker |  | 5094 | 45 | macro_export body at src/kv/value.rs:1149 |  |  | 0.629 |
+| walker |  | 5139 | 45 | macro_export body at src/kv/value.rs:1159 |  |  | 0.629 |
+| walker |  | 5184 | 45 | macro_export body at src/kv/value.rs:1169 |  |  | 0.629 |
+| walker |  | 5283 | 99 | pub-item doc lede at src/lib.rs:1375 |  |  | 0.629 |
+| walker |  | 5302 | 19 | README.md section #6 |  |  | 0.629 |
+| ns | 5556 |  | 616 | error! macro | 3.3 | 3.1 | 0.598 |
+| walker |  | 5712 | 410 | [features] in Cargo.toml |  |  | 0.670 |
+| walker |  | 5823 | 111 | pub-item doc lede at src/lib.rs:1420 |  |  | 0.684 |
+| ns | 5891 |  | 335 | log_enabled! macro | 3.4 | 3.1 | 0.666 |
+| walker |  | 5950 | 127 | pub-item doc lede at src/lib.rs:1478 |  |  | 0.666 |
+| walker |  | 6033 | 83 | README.md section #1 |  |  | 0.666 |
+| walker |  | 6238 | 205 | mod/use plumbing in src/kv/mod.rs |  |  | 0.668 |
+| ns | 6414 |  | 523 | __log_value! kv capture-modifier dispatch | 3.5 | 3.1 | 0.634 |
+| ns | 6839 |  | 425 | GlobalLogger + log/enabled/loc public fns | 4.1 |  | 0.604 |
+| ns | 7120 |  | 281 | kv/mod.rs doc lede | 5.1 |  | 0.594 |
+| ns | 7245 |  | 125 | kv/mod.rs capturing-modifier list | 5.2 |  | 0.588 |
+| ns | 7450 |  | 205 | kv/mod.rs module decls + re-exports | 5.3 |  | 0.600 |
+| ns | 7823 |  | 373 | kv/key.rs: ToKey trait + Key struct | 5.4 |  | 0.585 |
+| ns | 8056 |  | 233 | kv/error.rs: Error struct, Inner enum, msg() constructor | 5.5 |  | 0.573 |
+| ns | 8102 |  | 46 | kv/source.rs: Source trait method roster | 5.6 |  | 0.572 |
+| ns | 8186 |  | 84 | kv/source.rs: VisitSource trait | 5.7 |  | 0.575 |
+| walker |  | 8254 | 2016 | impl method sigs in src/lib.rs |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:427 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:431 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:435 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:503 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:510 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:517 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:529 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:535 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:548 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:554 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:561 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:579 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:599 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:620 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:653 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:660 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:667 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:679 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:685 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:699 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:707 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:714 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:732 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:752 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:774 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:788 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:862 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:872 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:878 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:884 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:890 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:896 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:902 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:908 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:917 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:923 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:932 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1021 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1037 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1044 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1051 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1058 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1065 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1072 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1079 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1086 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1093 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1108 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1114 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1166 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1172 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1178 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1212 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1223 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1230 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1237 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1243 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1286 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1290 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1291 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1298 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1302 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1305 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1315 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1319 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1322 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1332 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1336 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1339 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1552 |  |  | 0.619 |
+| walker |  | 8254 | 0 | impl method at src/lib.rs:1569 |  |  | 0.619 |
+| walker |  | 8262 | 8 | impl method body at src/lib.rs:932 body 933 |  |  | 0.619 |
+| walker |  | 8270 | 8 | impl method body at src/lib.rs:1286 body 1287 |  |  | 0.620 |
+| walker |  | 8279 | 9 | impl method body at src/lib.rs:548 body 549 |  |  | 0.620 |
+| walker |  | 8288 | 9 | impl method body at src/lib.rs:653 body 654 |  |  | 0.620 |
+| ns | 8289 |  | 103 | kv/value.rs: ToValue trait + Value struct | 5.8 |  | 0.624 |
+| walker |  | 8297 | 9 | impl method body at src/lib.rs:878 body 879 |  |  | 0.624 |
+| walker |  | 8306 | 9 | impl method body at src/lib.rs:884 body 885 |  |  | 0.624 |
+| walker |  | 8315 | 9 | impl method body at src/lib.rs:890 body 891 |  |  | 0.624 |
+| walker |  | 8324 | 9 | impl method body at src/lib.rs:896 body 897 |  |  | 0.624 |
+| walker |  | 8333 | 9 | impl method body at src/lib.rs:1172 body 1173 |  |  | 0.624 |
+| walker |  | 8342 | 9 | impl method body at src/lib.rs:1178 body 1179 |  |  | 0.624 |
+| walker |  | 8352 | 10 | impl method body at src/lib.rs:699 body 700 |  |  | 0.624 |
+| walker |  | 8362 | 10 | impl method body at src/lib.rs:872 body 873 |  |  | 0.624 |
+| walker |  | 8372 | 10 | impl method body at src/lib.rs:1108 body 1109 |  |  | 0.624 |
+| walker |  | 8382 | 10 | impl method body at src/lib.rs:1114 body 1115 |  |  | 0.624 |
+| walker |  | 8392 | 10 | impl method body at src/lib.rs:1237 body 1238 |  |  | 0.624 |
+| walker |  | 8402 | 10 | impl method body at src/lib.rs:1243 body 1244 |  |  | 0.624 |
+| walker |  | 8413 | 11 | impl method body at src/lib.rs:529 body 530 |  |  | 0.624 |
+| walker |  | 8424 | 11 | impl method body at src/lib.rs:679 body 680 |  |  | 0.624 |
+| ns | 8430 |  | 141 | kv/value.rs: dependency-free Inner enum (data model) | 5.9 |  | 0.617 |
+| walker |  | 8435 | 11 | impl method body at src/lib.rs:1166 body 1167 |  |  | 0.617 |
+| walker |  | 8446 | 11 | impl method body at src/lib.rs:1305 body 1306 |  |  | 0.619 |
+| walker |  | 8458 | 12 | impl method body at src/lib.rs:1298 body 1299 |  |  | 0.621 |
+| walker |  | 8470 | 12 | impl method body at src/lib.rs:1302 body 1303 |  |  | 0.623 |
+| walker |  | 8482 | 12 | impl method body at src/lib.rs:1322 body 1323 |  |  | 0.623 |
+| walker |  | 8494 | 12 | impl method body at src/lib.rs:1339 body 1340 |  |  | 0.623 |
+| walker |  | 8507 | 13 | impl method body at src/lib.rs:561 body 562 |  |  | 0.623 |
+| walker |  | 8520 | 13 | impl method body at src/lib.rs:714 body 715 |  |  | 0.623 |
+| walker |  | 8533 | 13 | impl method body at src/lib.rs:1315 body 1316 |  |  | 0.623 |
+| walker |  | 8546 | 13 | impl method body at src/lib.rs:1319 body 1320 |  |  | 0.623 |
+| walker |  | 8559 | 13 | impl method body at src/lib.rs:1332 body 1333 |  |  | 0.623 |
+| walker |  | 8572 | 13 | impl method body at src/lib.rs:1336 body 1337 |  |  | 0.623 |
+| walker |  | 8586 | 14 | impl method at src/lib.rs:939 |  |  | 0.623 |
+| walker |  | 8597 | 11 | impl method body at src/lib.rs:939 body 940 |  |  | 0.623 |
+| walker |  | 8611 | 14 | impl method at src/lib.rs:946 |  |  | 0.623 |
+| walker |  | 8626 | 15 | impl method at src/lib.rs:1101 |  |  | 0.623 |
+| walker |  | 8640 | 14 | impl method body at src/lib.rs:917 body 918 |  |  | 0.623 |
+| walker |  | 8654 | 14 | impl method body at src/lib.rs:1569 body 1570 |  |  | 0.623 |
+| walker |  | 8669 | 15 | impl method body at src/lib.rs:503 body 504 |  |  | 0.623 |
+| walker |  | 8684 | 15 | impl method body at src/lib.rs:707 body 708 |  |  | 0.623 |
+| walker |  | 8699 | 15 | impl method body at src/lib.rs:902 body 903 |  |  | 0.623 |
+| walker |  | 8714 | 15 | impl method body at src/lib.rs:1552 body 1553 |  |  | 0.611 |
+| ns | 8714 |  | 284 | tests/macros.rs test-fn roster | 6.1 |  | 0.611 |
+| walker |  | 8732 | 18 | impl method body at src/lib.rs:510 body 511 |  |  | 0.611 |
+| walker |  | 8750 | 18 | impl method body at src/lib.rs:554 body 555 |  |  | 0.611 |
+| walker |  | 8768 | 18 | impl method body at src/lib.rs:660 body 661 |  |  | 0.611 |
+| walker |  | 8788 | 20 | impl method body at src/lib.rs:1037 body 1038 |  |  | 0.611 |
+| walker |  | 8808 | 20 | impl method body at src/lib.rs:1044 body 1045 |  |  | 0.611 |
+| walker |  | 8828 | 20 | impl method body at src/lib.rs:1093 body 1094 |  |  | 0.611 |
+| walker |  | 8848 | 20 | impl method body at src/lib.rs:1223 body 1224 |  |  | 0.611 |
+| walker |  | 8868 | 20 | impl method body at src/lib.rs:1230 body 1231 |  |  | 0.611 |
+| walker |  | 8889 | 21 | impl method body at src/lib.rs:1051 body 1052 |  |  | 0.611 |
+| walker |  | 8910 | 21 | impl method body at src/lib.rs:1058 body 1059 |  |  | 0.611 |
+| walker |  | 8933 | 23 | impl method body at src/lib.rs:579 body 580 |  |  | 0.611 |
+| ns | 8941 |  | 227 | tests/macros.rs: kv_common_value_types body | 6.2 | 6.1 | 0.601 |
+| walker |  | 8956 | 23 | impl method body at src/lib.rs:732 body 733 |  |  | 0.601 |
+| walker |  | 8980 | 24 | impl method body at src/lib.rs:1101 body 1102 |  |  | 0.601 |
+| walker |  | 9007 | 27 | impl method body at src/lib.rs:1086 body 1087 |  |  | 0.601 |
+| ns | 9028 |  | 87 | CI workflow job-name roster | 7.1 |  | 0.598 |
+| walker |  | 9035 | 28 | impl method body at src/lib.rs:1072 body 1073 |  |  | 0.598 |
+| walker |  | 9063 | 28 | impl method body at src/lib.rs:1079 body 1080 |  |  | 0.598 |
+| walker |  | 9092 | 29 | impl method body at src/lib.rs:1065 body 1066 |  |  | 0.598 |
+| walker |  | 9125 | 33 | impl method body at src/lib.rs:599 body 600 |  |  | 0.598 |
+| ns | 9147 |  | 119 | test_max_level_features/Cargo.toml | 7.2 |  | 0.592 |
+| walker |  | 9158 | 33 | impl method body at src/lib.rs:752 body 753 |  |  | 0.592 |
+| walker |  | 9194 | 36 | impl method body at src/lib.rs:620 body 621 |  |  | 0.592 |
+| walker |  | 9230 | 36 | impl method body at src/lib.rs:774 body 775 |  |  | 0.592 |
+| walker |  | 9272 | 42 | impl method body at src/lib.rs:862 body 863 |  |  | 0.596 |
+| walker |  | 9314 | 42 | impl method body at src/lib.rs:923 body 924 |  |  | 0.596 |
+| walker |  | 9357 | 43 | impl method body at src/lib.rs:908 body 909 |  |  | 0.596 |
+| ns | 9394 |  | 247 | README.md lede | 8.1 |  | 0.593 |
+| walker |  | 9411 | 54 | impl method body at src/lib.rs:1212 body 1213 |  |  | 0.593 |
+| walker |  | 9420 | 9 | impl method body at src/lib.rs:431 body 432 |  |  | 0.593 |
+| walker |  | 9430 | 10 | impl method body at src/lib.rs:435 body 436 |  |  | 0.593 |
+| walker |  | 9519 | 89 | impl method body at src/lib.rs:517 body 518 |  |  | 0.602 |
+| walker |  | 9609 | 90 | impl method body at src/lib.rs:667 body 668 |  |  | 0.602 |
+| ns | 9633 |  | 239 | CHANGELOG.md: Unreleased + 0.4.29 | 8.2 |  | 0.596 |
+| ns | 9677 |  | 44 | CHANGELOG.md: sampled older version headings | 8.3 |  | 0.595 |
+| walker |  | 9733 | 124 | pub-item doc lede at src/lib.rs:1611 |  |  | 0.595 |
+| ns | 9767 |  | 90 | rfcs/0296-structured-logging.md heading roster | 8.4 |  | 0.592 |
+| walker |  | 9854 | 121 | impl method body at src/lib.rs:946 body 947 |  |  | 0.592 |
+| ns | 9924 |  | 157 | RFC 0296: Summary | 8.5 | 8.4 | 0.588 |
+| ns | 9997 |  | 73 | src/serde.rs: serde impl roster | 9.1 |  | 0.586 |

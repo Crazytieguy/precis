@@ -71,11 +71,17 @@ README.md
 build.rs …
 rust-toolchain.toml …
 src/
-    backtrace.rs …
+    backtrace.rs
+        …
+           7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
+           8→pub(crate) enum Backtrace {}
+        …
     chain.rs …
     context.rs
         …
           42→impl<T, E> Context<T, E> for Result<T, E>
+          43→where
+          44→    E: ext::StdError + Send + Sync + 'static,
         …
           46→    fn context<C>(self, context: C) -> Result<T, Error>
         …
@@ -154,7 +160,7 @@ src/
          257→mod fmt;
          258→mod kind;
          259→mod macros;
-        …
+         260→#[cfg(error_generic_member_access)]
          261→mod nightly;
          262→mod ptr;
          263→mod wrapper;
@@ -162,11 +168,14 @@ src/
          265→use crate::error::ErrorImpl;
          266→use crate::ptr::Own;
          267→use core::fmt::Display;
-        …
+         268→
+         269→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
          270→use core::fmt::Debug;
-        …
+         271→
+         272→#[cfg(feature = "std")]
          273→use std::error::Error as StdError;
-        …
+         274→
+         275→#[cfg(not(any(feature = "std", anyhow_no_core_error)))]
          276→use core::error::Error as StdError;
         …
          286→pub use anyhow as format_err;
@@ -193,6 +202,7 @@ src/
          396→/// This type is the iterator returned by [`Error::chain`].
          397→///
         …
+         413→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
          414→#[derive(Clone)]
          415→pub struct Chain<'a> {
          416→    state: crate::chain::ChainState<'a>,
@@ -226,6 +236,7 @@ src/
          650→pub fn Ok<T>(value: T) -> Result<T> {
          651→    Result::Ok(value)
         …
+         655→#[doc(hidden)]
          656→pub mod __private {
         …
     macros.rs

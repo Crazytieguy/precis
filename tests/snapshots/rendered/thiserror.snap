@@ -262,7 +262,7 @@ src/
         …
          281→mod aserror;
          282→mod display;
-        …
+         283→#[cfg(error_generic_member_access)]
          284→mod provide;
          285→mod var;
          286→
