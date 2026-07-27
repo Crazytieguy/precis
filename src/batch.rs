@@ -196,6 +196,10 @@ pub enum MarkdownKey {
     SummaryWhole { file: PathBuf },
     /// README headline: first heading + first paragraph.
     ReadmeHeadline { file: PathBuf },
+    /// The rest of a README's pre-heading prelude — hero/logo block,
+    /// badges, and every lede block past the one the headline took.
+    /// Predecessor: `ReadmeHeadline`.
+    Prelude { file: PathBuf },
     /// Every H1/H2/H3 heading line (H2+H3 only on READMEs). Predecessor
     /// of every same-file `Section`.
     HeadingsOutline { file: PathBuf },
@@ -770,6 +774,7 @@ impl InnerKey for MarkdownKey {
                 format!("mdBook SUMMARY at {}", display_path(file, root))
             }
             MarkdownKey::ReadmeHeadline { file } => describe_in("README headline", file, root),
+            MarkdownKey::Prelude { file } => describe_in("README prelude", file, root),
             MarkdownKey::HeadingsOutline { file } => describe_in("headings outline", file, root),
             MarkdownKey::Section {
                 file,

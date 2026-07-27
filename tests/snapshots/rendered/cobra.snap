@@ -100,7 +100,18 @@ README.md
        7→Cobra is a library for creating powerful modern CLI applications.
        8→
        9→<a href="https://cobra.dev">Visit Cobra.dev for extensive documentation</a> 
+      12→Cobra is used in many Go projects such as [Kubernetes](https://kubernetes.io/),
+      13→[Hugo](https://gohugo.io), and [GitHub CLI](https://github.com/cli/cli) to
+      14→name a few. [This list](site/content/projects_using_cobra.md) contains a more extensive list of projects using Cobra.
     …
+      20→<hr>
+      21→<div align="center" markdown="1">
+      22→   <sup>Supported by:</sup>
+      23→   <br>
+      24→   <br>
+      25→   <a href="https://www.warp.dev/cobra">
+      26→      <img alt="Warp sponsorship" width="400" src="https://github.com/user-attachments/assets/ab8dd143-b0fd-4904-bdc5-dd7ecac94eae">
+      27→   </a>
       29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
       30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
       32→</div>
@@ -122,20 +133,6 @@ README.md
      133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
 SECURITY.md
 active_help.go
-    …
-      23→	activeHelpMarker = "_activeHelp_ "
-    …
-      26→	activeHelpEnvVarSuffix  = "ACTIVE_HELP"
-      27→	activeHelpGlobalEnvVar  = configEnvVarGlobalPrefix + "_" + activeHelpEnvVarSuffix
-      28→	activeHelpGlobalDisable = "0"
-    …
-      38→func AppendActiveHelp(compArray []Completion, activeHelpStr string) []Completion {
-      39→	return append(compArray, fmt.Sprintf("%s%s", activeHelpMarker, activeHelpStr))
-    …
-      47→func GetActiveHelpConfig(cmd *Command) string {
-    …
-      58→func activeHelpEnvVar(name string) string {
-    …
 active_help_test.go
 args.go
 args_test.go
@@ -216,22 +213,6 @@ command.go
      115→	Version string
     …
      149→	commandgroups []*Group
-    …
-     152→	args []string
-    …
-     154→	flagErrorBuf *bytes.Buffer
-    …
-     156→	flags *flag.FlagSet
-    …
-     158→	pflags *flag.FlagSet
-    …
-     161→	lflags *flag.FlagSet
-    …
-     164→	iflags *flag.FlagSet
-    …
-     166→	parentsPflags *flag.FlagSet
-    …
-     169→	globNormFunc func(f *flag.FlagSet, name string) flag.NormalizedName
     …
      172→	usageFunc func(*Command) error
     …

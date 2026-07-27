@@ -61,6 +61,9 @@ README.md
       31→
       32→The [Rich API](https://rich.readthedocs.io/en/latest/) makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more — out of the box.
     …
+      36→For a video introduction to Rich see [calmcode.io](https://calmcode.io/rich/introduction.html) by [@fishnets88](https://twitter.com/fishnets88).
+      37→
+      38→See what [people are saying about Rich](https://www.willmcgugan.com/blog/pages/post/rich-tweets/).
       40→## Compatibility
       41→
       42→Rich works with Linux, macOS and Windows. True color / emoji works with new Windows Terminal, classic terminal is limited to 16 colors. Rich requires Python 3.8 or later.
@@ -306,17 +309,6 @@ rich/
         …
     _unicode_data/
         __init__.py
-               1→from __future__ import annotations
-               2→
-               3→import bisect
-               4→import os
-               5→import sys
-            …
-              12→from importlib import import_module
-              13→from typing import TYPE_CHECKING, cast
-              14→
-              15→from rich._unicode_data._versions import VERSIONS
-            …
         _versions.py
         unicode10-0-0.py
         unicode11-0-0.py

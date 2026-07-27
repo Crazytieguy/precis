@@ -46,6 +46,8 @@ README.md
        5→ Immersive terminal interface for managing docker containers, services and images
        6→</p>
     …
+      16→Dockly has been highlighted, featured and chosen as favorite docker container management tool on:
+    …
       27→# Install
       28→Install the API module as a dependency in your project so you can easily use it to query Operations Orchestration REST API
       30→```javascript
@@ -291,8 +293,6 @@ src/
         …
          155→  getContainer (containerId, cb) {
         …
-         160→  getService (serviceId, cb) {
-        …
          233→module.exports = Util
     enum.js
            1→module.exports = {
@@ -334,9 +334,7 @@ src/
         styles.js
             …
               55→module.exports = {
-              56→  darkStyle,
-              57→  lightStyle
-              58→}
+            …
         theme.selector.js
             …
               13→module.exports = () => {

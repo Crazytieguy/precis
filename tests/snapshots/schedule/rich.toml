@@ -1,7 +1,7 @@
 fixture = "rich"
 budget = 10000
-cumulative_tokens = 9961
-batch_count = 392
+cumulative_tokens = 9954
+batch_count = 389
 
 [[batches]]
 position = 1
@@ -147,10 +147,28 @@ kind = "full"
 
 [[batches]]
 position = 10
+key = 'Markdown(Prelude { file: "README.md" })'
+descriptor = "README prelude in README.md"
+cost_tokens = 81
+cum_tokens = 683
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "README.md"
+start = 36
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
 key = 'Markdown(HeadingsOutline { file: "README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 91
-cum_tokens = 693
+cum_tokens = 774
 
 [batches.content]
 kind = "lines"
@@ -300,11 +318,11 @@ end = 442
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(Section { file: "README.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "README.md section #0"
 cost_tokens = 22
-cum_tokens = 715
+cum_tokens = 796
 
 [batches.content]
 kind = "lines"
@@ -318,11 +336,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Fs(DirListing { dir: "benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 21
-cum_tokens = 736
+cum_tokens = 817
 
 [batches.content]
 kind = "fs"
@@ -332,11 +350,11 @@ parent = "benchmarks"
 entries = ["README.md", "__init__.py", "benchmarks.py", "results", "snippets.py"]
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: ".github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 23
-cum_tokens = 759
+cum_tokens = 840
 
 [batches.content]
 kind = "fs"
@@ -346,11 +364,11 @@ parent = ".github"
 entries = ["FUNDING.yml", "ISSUE_TEMPLATE", "dependabot.yml", "pull_request_template.md", "workflows"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Fs(DirListing { dir: ".github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 30
-cum_tokens = 789
+cum_tokens = 870
 
 [batches.content]
 kind = "fs"
@@ -360,11 +378,11 @@ parent = ".github/workflows"
 entries = ["codeql.yml", "codespell.yml", "comment.yml", "newissue.yml", "pythonpackage.yml", "readmechanged.yml"]
 
 [[batches]]
-position = 15
+position = 16
 key = 'Toml(Dependencies { file: "pyproject.toml" })'
 descriptor = "[dependencies] in pyproject.toml"
 cost_tokens = 83
-cum_tokens = 872
+cum_tokens = 953
 
 [batches.content]
 kind = "lines"
@@ -378,11 +396,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Plaintext(Whole { file: "Makefile" })'
 descriptor = "plaintext config Makefile"
 cost_tokens = 154
-cum_tokens = 1026
+cum_tokens = 1107
 
 [batches.content]
 kind = "lines"
@@ -396,11 +414,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 17
+position = 18
 key = 'Toml(Identity { file: "pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 81
-cum_tokens = 1107
+cum_tokens = 1188
 
 [batches.content]
 kind = "lines"
@@ -430,11 +448,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Fs(DirListing { dir: "tools" })'
 descriptor = "listing of 'tools'"
 cost_tokens = 43
-cum_tokens = 1150
+cum_tokens = 1231
 
 [batches.content]
 kind = "fs"
@@ -444,11 +462,11 @@ parent = "tools"
 entries = ["README.md", "cats.json", "make_emoji.py", "make_width_tables.py", "movies.md", "profile_divide.py", "profile_pretty.py", "stress_test_pretty.py"]
 
 [[batches]]
-position = 19
+position = 20
 key = 'Fs(DirListing { dir: "docs/source" })'
 descriptor = "listing of 'docs/source'"
 cost_tokens = 135
-cum_tokens = 1285
+cum_tokens = 1366
 
 [batches.content]
 kind = "fs"
@@ -458,11 +476,11 @@ parent = "docs/source"
 entries = ["appendix", "appendix.rst", "columns.rst", "conf.py", "console.rst", "group.rst", "highlighting.rst", "index.rst", "introduction.rst", "layout.rst", "live.rst", "logging.rst", "markdown.rst", "markup.rst", "padding.rst", "panel.rst", "pretty.rst", "progress.rst", "prompt.rst", "protocol.rst", "reference", "reference.rst", "style.rst", "syntax.rst", "tables.rst", "text.rst", "traceback.rst", "tree.rst"]
 
 [[batches]]
-position = 20
+position = 21
 key = 'Fs(DirListing { dir: "docs/source/appendix" })'
 descriptor = "listing of 'docs/source/appendix'"
 cost_tokens = 10
-cum_tokens = 1295
+cum_tokens = 1376
 
 [batches.content]
 kind = "fs"
@@ -472,11 +490,11 @@ parent = "docs/source/appendix"
 entries = ["box.rst", "colors.rst"]
 
 [[batches]]
-position = 21
+position = 22
 key = 'Fs(DirListing { dir: "examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 166
-cum_tokens = 1461
+cum_tokens = 1542
 
 [batches.content]
 kind = "fs"
@@ -486,11 +504,11 @@ parent = "examples"
 entries = ["README.md", "attrs.py", "bars.py", "columns.py", "cp_progress.py", "downloader.py", "dynamic_progress.py", "exception.py", "export.py", "file_progress.py", "fullscreen.py", "group.py", "group2.py", "highlighter.py", "jobs.py", "justify.py", "justify2.py", "layout.py", "link.py", "listdir.py", "live_progress.py", "log.py", "overflow.py", "padding.py", "print_calendar.py", "rainbow.py", "recursive_error.py", "repr.py", "save_table_svg.py", "screen.py", "spinners.py", "status.py", "suppress.py", "table.py", "table_movie.py", "top_lite_simulator.py", "tree.py"]
 
 [[batches]]
-position = 22
+position = 23
 key = 'Fs(DirListing { dir: "rich" })'
 descriptor = "listing of 'rich'"
 cost_tokens = 361
-cum_tokens = 1822
+cum_tokens = 1903
 
 [batches.content]
 kind = "fs"
@@ -500,11 +518,11 @@ parent = "rich"
 entries = ["__init__.py", "__main__.py", "_emoji_codes.py", "_emoji_replace.py", "_export_format.py", "_extension.py", "_fileno.py", "_inspect.py", "_log_render.py", "_loop.py", "_null_file.py", "_palettes.py", "_pick.py", "_ratio.py", "_spinners.py", "_stack.py", "_timer.py", "_unicode_data", "_win32_console.py", "_windows.py", "_windows_renderer.py", "_wrap.py", "abc.py", "align.py", "ansi.py", "bar.py", "box.py", "cells.py", "color.py", "color_triplet.py", "columns.py", "console.py", "constrain.py", "containers.py", "control.py", "default_styles.py", "diagnose.py", "emoji.py", "errors.py", "file_proxy.py", "filesize.py", "highlighter.py", "json.py", "jupyter.py", "layout.py", "live.py", "live_render.py", "logging.py", "markdown.py", "markup.py", "measure.py", "padding.py", "pager.py", "palette.py", "panel.py", "pretty.py", "progress.py", "progress_bar.py", "prompt.py", "protocol.py", "py.typed", "region.py", "repr.py", "rule.py", "scope.py", "screen.py", "segment.py", "spinner.py", "status.py", "style.py", "styled.py", "syntax.py", "table.py", "terminal_theme.py", "text.py", "theme.py", "themes.py", "traceback.py", "tree.py"]
 
 [[batches]]
-position = 23
+position = 24
 key = 'Python(Imports { file: "rich/__init__.py" })'
 descriptor = "python imports in rich/__init__.py"
 cost_tokens = 105
-cum_tokens = 1927
+cum_tokens = 2008
 
 [batches.content]
 kind = "lines"
@@ -518,11 +536,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Python(DeclNames { file: "rich/_emoji_codes.py" })'
 descriptor = "python decl names surface in rich/_emoji_codes.py"
 cost_tokens = 11
-cum_tokens = 1938
+cum_tokens = 2019
 
 [batches.content]
 kind = "lines"
@@ -536,29 +554,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Python(DeclNames { file: "rich/json.py" })'
 descriptor = "python decl names surface in rich/json.py"
 cost_tokens = 11
-cum_tokens = 1949
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/json.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Python(Decl { file: "rich/json.py", start_line: 9 })'
-descriptor = "python decl at rich/json.py:9"
-cost_tokens = 0
-cum_tokens = 1949
+cum_tokens = 2030
 
 [batches.content]
 kind = "lines"
@@ -573,28 +573,28 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Python(DeclNames { file: "rich/palette.py" })'
-descriptor = "python decl names surface in rich/palette.py"
-cost_tokens = 11
-cum_tokens = 1960
+key = 'Python(Decl { file: "rich/json.py", start_line: 9 })'
+descriptor = "python decl at rich/json.py:9"
+cost_tokens = 0
+cum_tokens = 2030
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/palette.py"
-start = 11
-end = 11
+path = "rich/json.py"
+start = 9
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 28
-key = 'Python(Decl { file: "rich/palette.py", start_line: 11 })'
-descriptor = "python decl at rich/palette.py:11"
-cost_tokens = 0
-cum_tokens = 1960
+key = 'Python(DeclNames { file: "rich/palette.py" })'
+descriptor = "python decl names surface in rich/palette.py"
+cost_tokens = 11
+cum_tokens = 2041
 
 [batches.content]
 kind = "lines"
@@ -609,28 +609,28 @@ kind = "full"
 
 [[batches]]
 position = 29
-key = 'Python(DeclNames { file: "rich/screen.py" })'
-descriptor = "python decl names surface in rich/screen.py"
-cost_tokens = 11
-cum_tokens = 1971
+key = 'Python(Decl { file: "rich/palette.py", start_line: 11 })'
+descriptor = "python decl at rich/palette.py:11"
+cost_tokens = 0
+cum_tokens = 2041
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/screen.py"
-start = 18
-end = 18
+path = "rich/palette.py"
+start = 11
+end = 11
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 30
-key = 'Python(Decl { file: "rich/screen.py", start_line: 18 })'
-descriptor = "python decl at rich/screen.py:18"
-cost_tokens = 0
-cum_tokens = 1971
+key = 'Python(DeclNames { file: "rich/screen.py" })'
+descriptor = "python decl names surface in rich/screen.py"
+cost_tokens = 11
+cum_tokens = 2052
 
 [batches.content]
 kind = "lines"
@@ -645,28 +645,28 @@ kind = "full"
 
 [[batches]]
 position = 31
-key = 'Python(DeclNames { file: "rich/spinner.py" })'
-descriptor = "python decl names surface in rich/spinner.py"
-cost_tokens = 11
-cum_tokens = 1982
+key = 'Python(Decl { file: "rich/screen.py", start_line: 18 })'
+descriptor = "python decl at rich/screen.py:18"
+cost_tokens = 0
+cum_tokens = 2052
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/spinner.py"
-start = 13
-end = 13
+path = "rich/screen.py"
+start = 18
+end = 18
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 32
-key = 'Python(Decl { file: "rich/spinner.py", start_line: 13 })'
-descriptor = "python decl at rich/spinner.py:13"
-cost_tokens = 0
-cum_tokens = 1982
+key = 'Python(DeclNames { file: "rich/spinner.py" })'
+descriptor = "python decl names surface in rich/spinner.py"
+cost_tokens = 11
+cum_tokens = 2063
 
 [batches.content]
 kind = "lines"
@@ -681,28 +681,28 @@ kind = "full"
 
 [[batches]]
 position = 33
-key = 'Python(DeclNames { file: "rich/styled.py" })'
-descriptor = "python decl names surface in rich/styled.py"
-cost_tokens = 11
-cum_tokens = 1993
+key = 'Python(Decl { file: "rich/spinner.py", start_line: 13 })'
+descriptor = "python decl at rich/spinner.py:13"
+cost_tokens = 0
+cum_tokens = 2063
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/styled.py"
-start = 11
-end = 11
+path = "rich/spinner.py"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 34
-key = 'Python(Decl { file: "rich/styled.py", start_line: 11 })'
-descriptor = "python decl at rich/styled.py:11"
-cost_tokens = 0
-cum_tokens = 1993
+key = 'Python(DeclNames { file: "rich/styled.py" })'
+descriptor = "python decl names surface in rich/styled.py"
+cost_tokens = 11
+cum_tokens = 2074
 
 [batches.content]
 kind = "lines"
@@ -717,10 +717,28 @@ kind = "full"
 
 [[batches]]
 position = 35
+key = 'Python(Decl { file: "rich/styled.py", start_line: 11 })'
+descriptor = "python decl at rich/styled.py:11"
+cost_tokens = 0
+cum_tokens = 2074
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "rich/styled.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
 key = 'Python(DeclNames { file: "rich/__main__.py" })'
 descriptor = "python decl names surface in rich/__main__.py"
 cost_tokens = 26
-cum_tokens = 2019
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -750,11 +768,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Python(Decl { file: "rich/__main__.py", start_line: 18 })'
 descriptor = "python decl at rich/__main__.py:18"
 cost_tokens = 0
-cum_tokens = 2019
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -768,11 +786,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Python(Decl { file: "rich/__main__.py", start_line: 39 })'
 descriptor = "python decl at rich/__main__.py:39"
 cost_tokens = 0
-cum_tokens = 2019
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -786,11 +804,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Python(MethodSigs { file: "rich/__main__.py" })'
 descriptor = "python method sigs in rich/__main__.py"
 cost_tokens = 22
-cum_tokens = 2041
+cum_tokens = 2122
 
 [batches.content]
 kind = "lines"
@@ -828,11 +846,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Python(DeclDoc { file: "rich/__main__.py", start_line: 39 })'
 descriptor = "python decl doc at rich/__main__.py:39"
 cost_tokens = 17
-cum_tokens = 2058
+cum_tokens = 2139
 
 [batches.content]
 kind = "lines"
@@ -846,11 +864,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Python(DeclNames { file: "rich/_windows.py" })'
 descriptor = "python decl names surface in rich/_windows.py"
 cost_tokens = 12
-cum_tokens = 2070
+cum_tokens = 2151
 
 [batches.content]
 kind = "lines"
@@ -864,11 +882,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Python(Decl { file: "rich/_windows.py", start_line: 5 })'
 descriptor = "python decl at rich/_windows.py:5"
 cost_tokens = 9
-cum_tokens = 2079
+cum_tokens = 2160
 
 [batches.content]
 kind = "lines"
@@ -882,11 +900,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Python(DeclNames { file: "rich/scope.py" })'
 descriptor = "python decl names surface in rich/scope.py"
 cost_tokens = 12
-cum_tokens = 2091
+cum_tokens = 2172
 
 [batches.content]
 kind = "lines"
@@ -908,11 +926,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Python(DeclNames { file: "rich/_spinners.py" })'
 descriptor = "python decl names surface in rich/_spinners.py"
 cost_tokens = 13
-cum_tokens = 2104
+cum_tokens = 2185
 
 [batches.content]
 kind = "lines"
@@ -926,11 +944,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Python(Method { file: "rich/__main__.py", start_line: 19 })'
 descriptor = "python method at rich/__main__.py:19"
 cost_tokens = 26
-cum_tokens = 2130
+cum_tokens = 2211
 
 [batches.content]
 kind = "lines"
@@ -944,11 +962,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Python(Method { file: "rich/__main__.py", start_line: 33 })'
 descriptor = "python method at rich/__main__.py:33"
 cost_tokens = 26
-cum_tokens = 2156
+cum_tokens = 2237
 
 [batches.content]
 kind = "lines"
@@ -962,11 +980,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Python(DeclDoc { file: "rich/_windows.py", start_line: 5 })'
 descriptor = "python decl doc at rich/_windows.py:5"
 cost_tokens = 10
-cum_tokens = 2166
+cum_tokens = 2247
 
 [batches.content]
 kind = "lines"
@@ -980,11 +998,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Python(DeclNames { file: "rich/_timer.py" })'
 descriptor = "python decl names surface in rich/_timer.py"
 cost_tokens = 14
-cum_tokens = 2180
+cum_tokens = 2261
 
 [batches.content]
 kind = "lines"
@@ -1006,29 +1024,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Python(DeclNames { file: "rich/abc.py" })'
 descriptor = "python decl names surface in rich/abc.py"
 cost_tokens = 14
-cum_tokens = 2194
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/abc.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
-key = 'Python(Decl { file: "rich/abc.py", start_line: 4 })'
-descriptor = "python decl at rich/abc.py:4"
-cost_tokens = 0
-cum_tokens = 2194
+cum_tokens = 2275
 
 [batches.content]
 kind = "lines"
@@ -1043,28 +1043,28 @@ kind = "full"
 
 [[batches]]
 position = 50
-key = 'Python(DeclNames { file: "rich/columns.py" })'
-descriptor = "python decl names surface in rich/columns.py"
-cost_tokens = 14
-cum_tokens = 2208
+key = 'Python(Decl { file: "rich/abc.py", start_line: 4 })'
+descriptor = "python decl at rich/abc.py:4"
+cost_tokens = 0
+cum_tokens = 2275
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/columns.py"
-start = 16
-end = 16
+path = "rich/abc.py"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 51
-key = 'Python(Decl { file: "rich/columns.py", start_line: 16 })'
-descriptor = "python decl at rich/columns.py:16"
-cost_tokens = 0
-cum_tokens = 2208
+key = 'Python(DeclNames { file: "rich/columns.py" })'
+descriptor = "python decl names surface in rich/columns.py"
+cost_tokens = 14
+cum_tokens = 2289
 
 [batches.content]
 kind = "lines"
@@ -1079,28 +1079,28 @@ kind = "full"
 
 [[batches]]
 position = 52
-key = 'Python(DeclNames { file: "rich/logging.py" })'
-descriptor = "python decl names surface in rich/logging.py"
-cost_tokens = 14
-cum_tokens = 2222
+key = 'Python(Decl { file: "rich/columns.py", start_line: 16 })'
+descriptor = "python decl at rich/columns.py:16"
+cost_tokens = 0
+cum_tokens = 2289
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/logging.py"
-start = 24
-end = 24
+path = "rich/columns.py"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 53
-key = 'Python(Decl { file: "rich/logging.py", start_line: 24 })'
-descriptor = "python decl at rich/logging.py:24"
-cost_tokens = 0
-cum_tokens = 2222
+key = 'Python(DeclNames { file: "rich/logging.py" })'
+descriptor = "python decl names surface in rich/logging.py"
+cost_tokens = 14
+cum_tokens = 2303
 
 [batches.content]
 kind = "lines"
@@ -1115,28 +1115,28 @@ kind = "full"
 
 [[batches]]
 position = 54
-key = 'Python(DeclNames { file: "rich/panel.py" })'
-descriptor = "python decl names surface in rich/panel.py"
-cost_tokens = 14
-cum_tokens = 2236
+key = 'Python(Decl { file: "rich/logging.py", start_line: 24 })'
+descriptor = "python decl at rich/logging.py:24"
+cost_tokens = 0
+cum_tokens = 2303
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/panel.py"
-start = 17
-end = 17
+path = "rich/logging.py"
+start = 24
+end = 24
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 55
-key = 'Python(Decl { file: "rich/panel.py", start_line: 17 })'
-descriptor = "python decl at rich/panel.py:17"
-cost_tokens = 0
-cum_tokens = 2236
+key = 'Python(DeclNames { file: "rich/panel.py" })'
+descriptor = "python decl names surface in rich/panel.py"
+cost_tokens = 14
+cum_tokens = 2317
 
 [batches.content]
 kind = "lines"
@@ -1151,28 +1151,28 @@ kind = "full"
 
 [[batches]]
 position = 56
-key = 'Python(DeclNames { file: "rich/region.py" })'
-descriptor = "python decl names surface in rich/region.py"
-cost_tokens = 14
-cum_tokens = 2250
+key = 'Python(Decl { file: "rich/panel.py", start_line: 17 })'
+descriptor = "python decl at rich/panel.py:17"
+cost_tokens = 0
+cum_tokens = 2317
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/region.py"
-start = 4
-end = 4
+path = "rich/panel.py"
+start = 17
+end = 17
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 57
-key = 'Python(Decl { file: "rich/region.py", start_line: 4 })'
-descriptor = "python decl at rich/region.py:4"
-cost_tokens = 0
-cum_tokens = 2250
+key = 'Python(DeclNames { file: "rich/region.py" })'
+descriptor = "python decl names surface in rich/region.py"
+cost_tokens = 14
+cum_tokens = 2331
 
 [batches.content]
 kind = "lines"
@@ -1187,28 +1187,28 @@ kind = "full"
 
 [[batches]]
 position = 58
-key = 'Python(DeclNames { file: "rich/rule.py" })'
-descriptor = "python decl names surface in rich/rule.py"
-cost_tokens = 14
-cum_tokens = 2264
+key = 'Python(Decl { file: "rich/region.py", start_line: 4 })'
+descriptor = "python decl at rich/region.py:4"
+cost_tokens = 0
+cum_tokens = 2331
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/rule.py"
-start = 12
-end = 12
+path = "rich/region.py"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 59
-key = 'Python(Decl { file: "rich/rule.py", start_line: 12 })'
-descriptor = "python decl at rich/rule.py:12"
-cost_tokens = 0
-cum_tokens = 2264
+key = 'Python(DeclNames { file: "rich/rule.py" })'
+descriptor = "python decl names surface in rich/rule.py"
+cost_tokens = 14
+cum_tokens = 2345
 
 [batches.content]
 kind = "lines"
@@ -1223,28 +1223,28 @@ kind = "full"
 
 [[batches]]
 position = 60
-key = 'Python(DeclNames { file: "rich/status.py" })'
-descriptor = "python decl names surface in rich/status.py"
-cost_tokens = 14
-cum_tokens = 2278
+key = 'Python(Decl { file: "rich/rule.py", start_line: 12 })'
+descriptor = "python decl at rich/rule.py:12"
+cost_tokens = 0
+cum_tokens = 2345
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/status.py"
-start = 11
-end = 11
+path = "rich/rule.py"
+start = 12
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 61
-key = 'Python(Decl { file: "rich/status.py", start_line: 11 })'
-descriptor = "python decl at rich/status.py:11"
-cost_tokens = 0
-cum_tokens = 2278
+key = 'Python(DeclNames { file: "rich/status.py" })'
+descriptor = "python decl names surface in rich/status.py"
+cost_tokens = 14
+cum_tokens = 2359
 
 [batches.content]
 kind = "lines"
@@ -1259,10 +1259,28 @@ kind = "full"
 
 [[batches]]
 position = 62
+key = 'Python(Decl { file: "rich/status.py", start_line: 11 })'
+descriptor = "python decl at rich/status.py:11"
+cost_tokens = 0
+cum_tokens = 2359
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "rich/status.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
 key = 'Python(DeclNames { file: "rich/themes.py" })'
 descriptor = "python decl names surface in rich/themes.py"
 cost_tokens = 14
-cum_tokens = 2292
+cum_tokens = 2373
 
 [batches.content]
 kind = "lines"
@@ -1276,11 +1294,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Python(ClassBody { file: "rich/screen.py", start_line: 18 })'
 descriptor = "python class body at rich/screen.py:18"
 cost_tokens = 14
-cum_tokens = 2306
+cum_tokens = 2387
 
 [batches.content]
 kind = "lines"
@@ -1294,11 +1312,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Python(Decl { file: "rich/_timer.py", start_line: 12 })'
 descriptor = "python decl at rich/_timer.py:12"
 cost_tokens = 22
-cum_tokens = 2328
+cum_tokens = 2409
 
 [batches.content]
 kind = "lines"
@@ -1312,29 +1330,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Python(DeclNames { file: "rich/constrain.py" })'
 descriptor = "python decl names surface in rich/constrain.py"
 cost_tokens = 15
-cum_tokens = 2343
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/constrain.py"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Python(Decl { file: "rich/constrain.py", start_line: 10 })'
-descriptor = "python decl at rich/constrain.py:10"
-cost_tokens = 0
-cum_tokens = 2343
+cum_tokens = 2424
 
 [batches.content]
 kind = "lines"
@@ -1349,28 +1349,28 @@ kind = "full"
 
 [[batches]]
 position = 67
-key = 'Python(DeclNames { file: "rich/color_triplet.py" })'
-descriptor = "python decl names surface in rich/color_triplet.py"
-cost_tokens = 16
-cum_tokens = 2359
+key = 'Python(Decl { file: "rich/constrain.py", start_line: 10 })'
+descriptor = "python decl at rich/constrain.py:10"
+cost_tokens = 0
+cum_tokens = 2424
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/color_triplet.py"
-start = 4
-end = 4
+path = "rich/constrain.py"
+start = 10
+end = 10
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 68
-key = 'Python(Decl { file: "rich/color_triplet.py", start_line: 4 })'
-descriptor = "python decl at rich/color_triplet.py:4"
-cost_tokens = 0
-cum_tokens = 2359
+key = 'Python(DeclNames { file: "rich/color_triplet.py" })'
+descriptor = "python decl names surface in rich/color_triplet.py"
+cost_tokens = 16
+cum_tokens = 2440
 
 [batches.content]
 kind = "lines"
@@ -1385,28 +1385,28 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'Python(DeclNames { file: "rich/file_proxy.py" })'
-descriptor = "python decl names surface in rich/file_proxy.py"
-cost_tokens = 16
-cum_tokens = 2375
+key = 'Python(Decl { file: "rich/color_triplet.py", start_line: 4 })'
+descriptor = "python decl at rich/color_triplet.py:4"
+cost_tokens = 0
+cum_tokens = 2440
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "rich/file_proxy.py"
-start = 11
-end = 11
+path = "rich/color_triplet.py"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 70
-key = 'Python(Decl { file: "rich/file_proxy.py", start_line: 11 })'
-descriptor = "python decl at rich/file_proxy.py:11"
-cost_tokens = 0
-cum_tokens = 2375
+key = 'Python(DeclNames { file: "rich/file_proxy.py" })'
+descriptor = "python decl names surface in rich/file_proxy.py"
+cost_tokens = 16
+cum_tokens = 2456
 
 [batches.content]
 kind = "lines"
@@ -1421,10 +1421,28 @@ kind = "full"
 
 [[batches]]
 position = 71
+key = 'Python(Decl { file: "rich/file_proxy.py", start_line: 11 })'
+descriptor = "python decl at rich/file_proxy.py:11"
+cost_tokens = 0
+cum_tokens = 2456
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "rich/file_proxy.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
 key = 'Python(DeclDoc { file: "rich/palette.py", start_line: 11 })'
 descriptor = "python decl doc at rich/palette.py:11"
 cost_tokens = 12
-cum_tokens = 2387
+cum_tokens = 2468
 
 [batches.content]
 kind = "lines"
@@ -1438,11 +1456,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Python(ClassBody { file: "rich/palette.py", start_line: 11 })'
 descriptor = "python class body at rich/palette.py:11"
 cost_tokens = 16
-cum_tokens = 2403
+cum_tokens = 2484
 
 [batches.content]
 kind = "lines"
@@ -1456,11 +1474,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Python(MethodSigs { file: "rich/screen.py" })'
 descriptor = "python method sigs in rich/screen.py"
 cost_tokens = 21
-cum_tokens = 2424
+cum_tokens = 2505
 
 [batches.content]
 kind = "lines"
@@ -1498,11 +1516,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Python(MethodSigs { file: "rich/abc.py" })'
 descriptor = "python method sigs in rich/abc.py"
 cost_tokens = 22
-cum_tokens = 2446
+cum_tokens = 2527
 
 [batches.content]
 kind = "lines"
@@ -1524,11 +1542,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Python(Method { file: "rich/abc.py", start_line: 15 })'
 descriptor = "python method at rich/abc.py:15"
 cost_tokens = 8
-cum_tokens = 2454
+cum_tokens = 2535
 
 [batches.content]
 kind = "lines"
@@ -1542,11 +1560,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Python(DeclDoc { file: "rich/region.py", start_line: 4 })'
 descriptor = "python decl doc at rich/region.py:4"
 cost_tokens = 14
-cum_tokens = 2468
+cum_tokens = 2549
 
 [batches.content]
 kind = "lines"
@@ -1560,11 +1578,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Python(DeclNames { file: "rich/default_styles.py" })'
 descriptor = "python decl names surface in rich/default_styles.py"
 cost_tokens = 20
-cum_tokens = 2488
+cum_tokens = 2569
 
 [batches.content]
 kind = "lines"
@@ -1578,11 +1596,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Python(DeclNames { file: "rich/_pick.py" })'
 descriptor = "python decl names surface in rich/_pick.py"
 cost_tokens = 21
-cum_tokens = 2509
+cum_tokens = 2590
 
 [batches.content]
 kind = "lines"
@@ -1604,11 +1622,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Python(Decl { file: "rich/_pick.py", start_line: 4 })'
 descriptor = "python decl at rich/_pick.py:4"
 cost_tokens = 0
-cum_tokens = 2509
+cum_tokens = 2590
 
 [batches.content]
 kind = "lines"
@@ -1622,11 +1640,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Python(DeclNames { file: "rich/diagnose.py" })'
 descriptor = "python decl names surface in rich/diagnose.py"
 cost_tokens = 21
-cum_tokens = 2530
+cum_tokens = 2611
 
 [batches.content]
 kind = "lines"
@@ -1648,11 +1666,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Python(Decl { file: "rich/diagnose.py", start_line: 10 })'
 descriptor = "python decl at rich/diagnose.py:10"
 cost_tokens = 0
-cum_tokens = 2530
+cum_tokens = 2611
 
 [batches.content]
 kind = "lines"
@@ -1666,11 +1684,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Python(DeclNames { file: "rich/__init__.py" })'
 descriptor = "python decl names surface in rich/__init__.py"
 cost_tokens = 80
-cum_tokens = 2610
+cum_tokens = 2691
 
 [batches.content]
 kind = "lines"
@@ -1764,11 +1782,11 @@ end = 121
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Python(Decl { file: "rich/__init__.py", start_line: 23 })'
 descriptor = "python decl at rich/__init__.py:23"
 cost_tokens = 0
-cum_tokens = 2610
+cum_tokens = 2691
 
 [batches.content]
 kind = "lines"
@@ -1782,11 +1800,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Python(Decl { file: "rich/__init__.py", start_line: 39 })'
 descriptor = "python decl at rich/__init__.py:39"
 cost_tokens = 0
-cum_tokens = 2610
+cum_tokens = 2691
 
 [batches.content]
 kind = "lines"
@@ -1800,11 +1818,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Python(DeclNames { file: "rich/_fileno.py" })'
 descriptor = "python decl names surface in rich/_fileno.py"
 cost_tokens = 23
-cum_tokens = 2633
+cum_tokens = 2714
 
 [batches.content]
 kind = "lines"
@@ -1826,11 +1844,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Python(Decl { file: "rich/_fileno.py", start_line: 6 })'
 descriptor = "python decl at rich/_fileno.py:6"
 cost_tokens = 0
-cum_tokens = 2633
+cum_tokens = 2714
 
 [batches.content]
 kind = "lines"
@@ -1844,11 +1862,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Python(Imports { file: "rich/_pick.py" })'
 descriptor = "python imports in rich/_pick.py"
 cost_tokens = 7
-cum_tokens = 2640
+cum_tokens = 2721
 
 [batches.content]
 kind = "lines"
@@ -1862,11 +1880,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Python(Imports { file: "rich/abc.py" })'
 descriptor = "python imports in rich/abc.py"
 cost_tokens = 7
-cum_tokens = 2647
+cum_tokens = 2728
 
 [batches.content]
 kind = "lines"
@@ -1880,11 +1898,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Python(DeclDoc { file: "rich/color_triplet.py", start_line: 4 })'
 descriptor = "python decl doc at rich/color_triplet.py:4"
 cost_tokens = 18
-cum_tokens = 2665
+cum_tokens = 2746
 
 [batches.content]
 kind = "lines"
@@ -1898,11 +1916,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Fs(DirListing { dir: "rich/_unicode_data" })'
 descriptor = "listing of 'rich/_unicode_data'"
 cost_tokens = 200
-cum_tokens = 2865
+cum_tokens = 2946
 
 [batches.content]
 kind = "fs"
@@ -1912,11 +1930,11 @@ parent = "rich/_unicode_data"
 entries = ["__init__.py", "_versions.py", "unicode10-0-0.py", "unicode11-0-0.py", "unicode12-0-0.py", "unicode12-1-0.py", "unicode13-0-0.py", "unicode14-0-0.py", "unicode15-0-0.py", "unicode15-1-0.py", "unicode16-0-0.py", "unicode17-0-0.py", "unicode4-1-0.py", "unicode5-0-0.py", "unicode5-1-0.py", "unicode5-2-0.py", "unicode6-0-0.py", "unicode6-1-0.py", "unicode6-2-0.py", "unicode6-3-0.py", "unicode7-0-0.py", "unicode8-0-0.py", "unicode9-0-0.py"]
 
 [[batches]]
-position = 91
+position = 92
 key = 'Python(Imports { file: "rich/_unicode_data/__init__.py" })'
 descriptor = "python imports in rich/_unicode_data/__init__.py"
 cost_tokens = 87
-cum_tokens = 2952
+cum_tokens = 3033
 
 [batches.content]
 kind = "lines"
@@ -1938,11 +1956,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Python(DeclNames { file: "rich/_unicode_data/__init__.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/__init__.py"
 cost_tokens = 66
-cum_tokens = 3018
+cum_tokens = 3099
 
 [batches.content]
 kind = "lines"
@@ -1988,11 +2006,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Python(Decl { file: "rich/_unicode_data/__init__.py", start_line: 31 })'
 descriptor = "python decl at rich/_unicode_data/__init__.py:31"
 cost_tokens = 0
-cum_tokens = 3018
+cum_tokens = 3099
 
 [batches.content]
 kind = "lines"
@@ -2006,11 +2024,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Python(Decl { file: "rich/_unicode_data/__init__.py", start_line: 58 })'
 descriptor = "python decl at rich/_unicode_data/__init__.py:58"
 cost_tokens = 19
-cum_tokens = 3037
+cum_tokens = 3118
 
 [batches.content]
 kind = "lines"
@@ -2024,11 +2042,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Python(DeclNames { file: "rich/_null_file.py" })'
 descriptor = "python decl names surface in rich/_null_file.py"
 cost_tokens = 24
-cum_tokens = 3061
+cum_tokens = 3142
 
 [batches.content]
 kind = "lines"
@@ -2050,11 +2068,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Python(Decl { file: "rich/_null_file.py", start_line: 5 })'
 descriptor = "python decl at rich/_null_file.py:5"
 cost_tokens = 0
-cum_tokens = 3061
+cum_tokens = 3142
 
 [batches.content]
 kind = "lines"
@@ -2068,11 +2086,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Python(DeclNames { file: "rich/measure.py" })'
 descriptor = "python decl names surface in rich/measure.py"
 cost_tokens = 25
-cum_tokens = 3086
+cum_tokens = 3167
 
 [batches.content]
 kind = "lines"
@@ -2102,11 +2120,11 @@ end = 126
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Python(Decl { file: "rich/measure.py", start_line: 11 })'
 descriptor = "python decl at rich/measure.py:11"
 cost_tokens = 0
-cum_tokens = 3086
+cum_tokens = 3167
 
 [batches.content]
 kind = "lines"
@@ -2120,11 +2138,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Python(DeclNames { file: "rich/pager.py" })'
 descriptor = "python decl names surface in rich/pager.py"
 cost_tokens = 25
-cum_tokens = 3111
+cum_tokens = 3192
 
 [batches.content]
 kind = "lines"
@@ -2141,34 +2159,34 @@ kind = "full"
 path = "rich/pager.py"
 start = 17
 end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Python(Decl { file: "rich/pager.py", start_line: 5 })'
-descriptor = "python decl at rich/pager.py:5"
-cost_tokens = 0
-cum_tokens = 3111
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/pager.py"
-start = 5
-end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 101
+key = 'Python(Decl { file: "rich/pager.py", start_line: 5 })'
+descriptor = "python decl at rich/pager.py:5"
+cost_tokens = 0
+cum_tokens = 3192
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "rich/pager.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 102
 key = 'Python(Decl { file: "rich/pager.py", start_line: 17 })'
 descriptor = "python decl at rich/pager.py:17"
 cost_tokens = 0
-cum_tokens = 3111
+cum_tokens = 3192
 
 [batches.content]
 kind = "lines"
@@ -2182,11 +2200,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Python(DeclDoc { file: "rich/pager.py", start_line: 5 })'
 descriptor = "python decl doc at rich/pager.py:5"
 cost_tokens = 12
-cum_tokens = 3123
+cum_tokens = 3204
 
 [batches.content]
 kind = "lines"
@@ -2200,11 +2218,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Python(DeclDoc { file: "rich/pager.py", start_line: 17 })'
 descriptor = "python decl doc at rich/pager.py:17"
 cost_tokens = 14
-cum_tokens = 3137
+cum_tokens = 3218
 
 [batches.content]
 kind = "lines"
@@ -2218,11 +2236,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Python(Decl { file: "rich/__init__.py", start_line: 53 })'
 descriptor = "python decl at rich/__init__.py:53"
 cost_tokens = 67
-cum_tokens = 3204
+cum_tokens = 3285
 
 [batches.content]
 kind = "lines"
@@ -2236,11 +2254,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Python(DeclDoc { file: "rich/diagnose.py", start_line: 10 })'
 descriptor = "python decl doc at rich/diagnose.py:10"
 cost_tokens = 16
-cum_tokens = 3220
+cum_tokens = 3301
 
 [batches.content]
 kind = "lines"
@@ -2254,11 +2272,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Python(Decl { file: "rich/_unicode_data/__init__.py", start_line: 20 })'
 descriptor = "python decl at rich/_unicode_data/__init__.py:20"
 cost_tokens = 52
-cum_tokens = 3272
+cum_tokens = 3353
 
 [batches.content]
 kind = "lines"
@@ -2272,11 +2290,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Python(Imports { file: "rich/region.py" })'
 descriptor = "python imports in rich/region.py"
 cost_tokens = 8
-cum_tokens = 3280
+cum_tokens = 3361
 
 [batches.content]
 kind = "lines"
@@ -2290,11 +2308,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Python(DeclNames { file: "rich/_extension.py" })'
 descriptor = "python decl names surface in rich/_extension.py"
 cost_tokens = 27
-cum_tokens = 3307
+cum_tokens = 3388
 
 [batches.content]
 kind = "lines"
@@ -2316,11 +2334,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Python(Decl { file: "rich/_extension.py", start_line: 4 })'
 descriptor = "python decl at rich/_extension.py:4"
 cost_tokens = 10
-cum_tokens = 3317
+cum_tokens = 3398
 
 [batches.content]
 kind = "lines"
@@ -2334,11 +2352,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Python(Imports { file: "rich/_extension.py" })'
 descriptor = "python imports in rich/_extension.py"
 cost_tokens = 7
-cum_tokens = 3324
+cum_tokens = 3405
 
 [batches.content]
 kind = "lines"
@@ -2352,11 +2370,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Python(DeclNames { file: "rich/_windows_renderer.py" })'
 descriptor = "python decl names surface in rich/_windows_renderer.py"
 cost_tokens = 27
-cum_tokens = 3351
+cum_tokens = 3432
 
 [batches.content]
 kind = "lines"
@@ -2378,11 +2396,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Python(Decl { file: "rich/_windows_renderer.py", start_line: 7 })'
 descriptor = "python decl at rich/_windows_renderer.py:7"
 cost_tokens = 0
-cum_tokens = 3351
+cum_tokens = 3432
 
 [batches.content]
 kind = "lines"
@@ -2396,11 +2414,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Python(DeclNames { file: "rich/_unicode_data/_versions.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/_versions.py"
 cost_tokens = 10
-cum_tokens = 3361
+cum_tokens = 3442
 
 [batches.content]
 kind = "lines"
@@ -2414,11 +2432,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Python(DeclDoc { file: "rich/_timer.py", start_line: 12 })'
 descriptor = "python decl doc at rich/_timer.py:12"
 cost_tokens = 18
-cum_tokens = 3379
+cum_tokens = 3460
 
 [batches.content]
 kind = "lines"
@@ -2432,11 +2450,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Python(DeclDoc { file: "rich/measure.py", start_line: 11 })'
 descriptor = "python decl doc at rich/measure.py:11"
 cost_tokens = 22
-cum_tokens = 3401
+cum_tokens = 3482
 
 [batches.content]
 kind = "lines"
@@ -2450,11 +2468,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Python(MethodSigs { file: "rich/json.py" })'
 descriptor = "python method sigs in rich/json.py"
 cost_tokens = 38
-cum_tokens = 3439
+cum_tokens = 3520
 
 [batches.content]
 kind = "lines"
@@ -2508,11 +2526,11 @@ end = 102
 kind = "ellipsis"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Python(Method { file: "rich/json.py", start_line: 101 })'
 descriptor = "python method at rich/json.py:101"
 cost_tokens = 0
-cum_tokens = 3439
+cum_tokens = 3520
 
 [batches.content]
 kind = "lines"
@@ -2526,11 +2544,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Python(DeclNames { file: "rich/live.py" })'
 descriptor = "python decl names surface in rich/live.py"
 cost_tokens = 29
-cum_tokens = 3468
+cum_tokens = 3549
 
 [batches.content]
 kind = "lines"
@@ -2547,34 +2565,34 @@ kind = "full"
 path = "rich/live.py"
 start = 41
 end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Python(Decl { file: "rich/live.py", start_line: 22 })'
-descriptor = "python decl at rich/live.py:22"
-cost_tokens = 0
-cum_tokens = 3468
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/live.py"
-start = 22
-end = 22
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 120
+key = 'Python(Decl { file: "rich/live.py", start_line: 22 })'
+descriptor = "python decl at rich/live.py:22"
+cost_tokens = 0
+cum_tokens = 3549
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "rich/live.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
 key = 'Python(Decl { file: "rich/live.py", start_line: 41 })'
 descriptor = "python decl at rich/live.py:41"
 cost_tokens = 0
-cum_tokens = 3468
+cum_tokens = 3549
 
 [batches.content]
 kind = "lines"
@@ -2588,11 +2606,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Python(DeclDoc { file: "rich/file_proxy.py", start_line: 11 })'
 descriptor = "python decl doc at rich/file_proxy.py:11"
 cost_tokens = 24
-cum_tokens = 3492
+cum_tokens = 3573
 
 [batches.content]
 kind = "lines"
@@ -2606,11 +2624,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Python(MethodBody { file: "rich/__main__.py", start_line: 33, body_start_line: 36 })'
 descriptor = "python method body at rich/__main__.py:33 body 36"
 cost_tokens = 12
-cum_tokens = 3504
+cum_tokens = 3585
 
 [batches.content]
 kind = "lines"
@@ -2624,11 +2642,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Python(Decl { file: "rich/measure.py", start_line: 125 })'
 descriptor = "python decl at rich/measure.py:125"
 cost_tokens = 43
-cum_tokens = 3547
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2642,11 +2660,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Python(DeclNames { file: "rich/theme.py" })'
 descriptor = "python decl names surface in rich/theme.py"
 cost_tokens = 33
-cum_tokens = 3580
+cum_tokens = 3661
 
 [batches.content]
 kind = "lines"
@@ -2671,34 +2689,34 @@ kind = "full"
 path = "rich/theme.py"
 start = 81
 end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
-key = 'Python(Decl { file: "rich/theme.py", start_line: 7 })'
-descriptor = "python decl at rich/theme.py:7"
-cost_tokens = 0
-cum_tokens = 3580
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/theme.py"
-start = 7
-end = 7
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 126
+key = 'Python(Decl { file: "rich/theme.py", start_line: 7 })'
+descriptor = "python decl at rich/theme.py:7"
+cost_tokens = 0
+cum_tokens = 3661
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "rich/theme.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
 key = 'Python(Decl { file: "rich/theme.py", start_line: 77 })'
 descriptor = "python decl at rich/theme.py:77"
 cost_tokens = 0
-cum_tokens = 3580
+cum_tokens = 3661
 
 [batches.content]
 kind = "lines"
@@ -2712,11 +2730,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Python(Decl { file: "rich/theme.py", start_line: 81 })'
 descriptor = "python decl at rich/theme.py:81"
 cost_tokens = 0
-cum_tokens = 3580
+cum_tokens = 3661
 
 [batches.content]
 kind = "lines"
@@ -2730,11 +2748,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Python(ClassBody { file: "rich/theme.py", start_line: 7 })'
 descriptor = "python class body at rich/theme.py:7"
 cost_tokens = 14
-cum_tokens = 3594
+cum_tokens = 3675
 
 [batches.content]
 kind = "lines"
@@ -2748,11 +2766,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Python(DeclDoc { file: "rich/theme.py", start_line: 77 })'
 descriptor = "python decl doc at rich/theme.py:77"
 cost_tokens = 14
-cum_tokens = 3608
+cum_tokens = 3689
 
 [batches.content]
 kind = "lines"
@@ -2766,11 +2784,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Python(Imports { file: "rich/color_triplet.py" })'
 descriptor = "python imports in rich/color_triplet.py"
 cost_tokens = 10
-cum_tokens = 3618
+cum_tokens = 3699
 
 [batches.content]
 kind = "lines"
@@ -2784,11 +2802,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Python(ClassBody { file: "rich/region.py", start_line: 4 })'
 descriptor = "python class body at rich/region.py:4"
 cost_tokens = 34
-cum_tokens = 3652
+cum_tokens = 3733
 
 [batches.content]
 kind = "lines"
@@ -2802,11 +2820,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Python(DeclNames { file: "rich/_stack.py" })'
 descriptor = "python decl names surface in rich/_stack.py"
 cost_tokens = 34
-cum_tokens = 3686
+cum_tokens = 3767
 
 [batches.content]
 kind = "lines"
@@ -2820,11 +2838,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Python(Decl { file: "rich/_stack.py", start_line: 6 })'
 descriptor = "python decl at rich/_stack.py:6"
 cost_tokens = 0
-cum_tokens = 3686
+cum_tokens = 3767
 
 [batches.content]
 kind = "lines"
@@ -2838,11 +2856,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Python(DeclDoc { file: "rich/_stack.py", start_line: 6 })'
 descriptor = "python decl doc at rich/_stack.py:6"
 cost_tokens = 13
-cum_tokens = 3699
+cum_tokens = 3780
 
 [batches.content]
 kind = "lines"
@@ -2856,11 +2874,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Python(MethodSigs { file: "rich/_stack.py" })'
 descriptor = "python method sigs in rich/_stack.py"
 cost_tokens = 32
-cum_tokens = 3731
+cum_tokens = 3812
 
 [batches.content]
 kind = "lines"
@@ -2898,11 +2916,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Python(Method { file: "rich/_stack.py", start_line: 14 })'
 descriptor = "python method at rich/_stack.py:14"
 cost_tokens = 0
-cum_tokens = 3731
+cum_tokens = 3812
 
 [batches.content]
 kind = "lines"
@@ -2916,11 +2934,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Python(Method { file: "rich/_stack.py", start_line: 9 })'
 descriptor = "python method at rich/_stack.py:9"
 cost_tokens = 6
-cum_tokens = 3737
+cum_tokens = 3818
 
 [batches.content]
 kind = "lines"
@@ -2934,11 +2952,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'Python(MethodDoc { file: "rich/_stack.py", start_line: 9 })'
 descriptor = "python method doc at rich/_stack.py:9"
 cost_tokens = 11
-cum_tokens = 3748
+cum_tokens = 3829
 
 [batches.content]
 kind = "lines"
@@ -2952,11 +2970,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'Python(Imports { file: "rich/_stack.py" })'
 descriptor = "python imports in rich/_stack.py"
 cost_tokens = 10
-cum_tokens = 3758
+cum_tokens = 3839
 
 [batches.content]
 kind = "lines"
@@ -2970,11 +2988,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Python(MethodSigs { file: "rich/columns.py" })'
 descriptor = "python method sigs in rich/columns.py"
 cost_tokens = 46
-cum_tokens = 3804
+cum_tokens = 3885
 
 [batches.content]
 kind = "lines"
@@ -3028,11 +3046,11 @@ end = 63
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Python(Method { file: "rich/columns.py", start_line: 54 })'
 descriptor = "python method at rich/columns.py:54"
 cost_tokens = 0
-cum_tokens = 3804
+cum_tokens = 3885
 
 [batches.content]
 kind = "lines"
@@ -3046,11 +3064,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Python(Method { file: "rich/columns.py", start_line: 62 })'
 descriptor = "python method at rich/columns.py:62"
 cost_tokens = 26
-cum_tokens = 3830
+cum_tokens = 3911
 
 [batches.content]
 kind = "lines"
@@ -3064,11 +3082,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 143
+position = 144
 key = 'Python(MethodBody { file: "rich/json.py", start_line: 101, body_start_line: 102 })'
 descriptor = "python method body at rich/json.py:101 body 102"
 cost_tokens = 9
-cum_tokens = 3839
+cum_tokens = 3920
 
 [batches.content]
 kind = "lines"
@@ -3082,11 +3100,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 144
+position = 145
 key = 'Python(Method { file: "rich/screen.py", start_line: 40 })'
 descriptor = "python method at rich/screen.py:40"
 cost_tokens = 29
-cum_tokens = 3868
+cum_tokens = 3949
 
 [batches.content]
 kind = "lines"
@@ -3100,11 +3118,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 145
+position = 146
 key = 'Python(DeclNames { file: "rich/_log_render.py" })'
 descriptor = "python decl names surface in rich/_log_render.py"
 cost_tokens = 36
-cum_tokens = 3904
+cum_tokens = 3985
 
 [batches.content]
 kind = "lines"
@@ -3118,11 +3136,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 146
+position = 147
 key = 'Python(Decl { file: "rich/_log_render.py", start_line: 14 })'
 descriptor = "python decl at rich/_log_render.py:14"
 cost_tokens = 0
-cum_tokens = 3904
+cum_tokens = 3985
 
 [batches.content]
 kind = "lines"
@@ -3136,11 +3154,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Python(MethodSigs { file: "rich/_log_render.py" })'
 descriptor = "python method sigs in rich/_log_render.py"
 cost_tokens = 20
-cum_tokens = 3924
+cum_tokens = 4005
 
 [batches.content]
 kind = "lines"
@@ -3178,11 +3196,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Python(DeclNames { file: "rich/progress_bar.py" })'
 descriptor = "python decl names surface in rich/progress_bar.py"
 cost_tokens = 36
-cum_tokens = 3960
+cum_tokens = 4041
 
 [batches.content]
 kind = "lines"
@@ -3196,11 +3214,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Python(Decl { file: "rich/progress_bar.py", start_line: 18 })'
 descriptor = "python decl at rich/progress_bar.py:18"
 cost_tokens = 0
-cum_tokens = 3960
+cum_tokens = 4041
 
 [batches.content]
 kind = "lines"
@@ -3214,11 +3232,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Python(MethodSigs { file: "rich/color_triplet.py" })'
 descriptor = "python method sigs in rich/color_triplet.py"
 cost_tokens = 48
-cum_tokens = 4008
+cum_tokens = 4089
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3290,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Python(Method { file: "rich/color_triplet.py", start_line: 14 })'
 descriptor = "python method at rich/color_triplet.py:14"
 cost_tokens = 8
-cum_tokens = 4016
+cum_tokens = 4097
 
 [batches.content]
 kind = "lines"
@@ -3290,11 +3308,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 152
+position = 153
 key = 'Python(Method { file: "rich/color_triplet.py", start_line: 20 })'
 descriptor = "python method at rich/color_triplet.py:20"
 cost_tokens = 8
-cum_tokens = 4024
+cum_tokens = 4105
 
 [batches.content]
 kind = "lines"
@@ -3308,11 +3326,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'Python(Method { file: "rich/color_triplet.py", start_line: 30 })'
 descriptor = "python method at rich/color_triplet.py:30"
 cost_tokens = 8
-cum_tokens = 4032
+cum_tokens = 4113
 
 [batches.content]
 kind = "lines"
@@ -3326,11 +3344,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode10-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode10-0-0.py"
 cost_tokens = 14
-cum_tokens = 4046
+cum_tokens = 4127
 
 [batches.content]
 kind = "lines"
@@ -3344,11 +3362,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 155
+position = 156
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode11-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode11-0-0.py"
 cost_tokens = 14
-cum_tokens = 4060
+cum_tokens = 4141
 
 [batches.content]
 kind = "lines"
@@ -3362,11 +3380,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode12-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode12-0-0.py"
 cost_tokens = 14
-cum_tokens = 4074
+cum_tokens = 4155
 
 [batches.content]
 kind = "lines"
@@ -3380,11 +3398,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 157
+position = 158
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode12-1-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode12-1-0.py"
 cost_tokens = 14
-cum_tokens = 4088
+cum_tokens = 4169
 
 [batches.content]
 kind = "lines"
@@ -3398,11 +3416,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode13-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode13-0-0.py"
 cost_tokens = 14
-cum_tokens = 4102
+cum_tokens = 4183
 
 [batches.content]
 kind = "lines"
@@ -3416,11 +3434,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 159
+position = 160
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode14-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode14-0-0.py"
 cost_tokens = 14
-cum_tokens = 4116
+cum_tokens = 4197
 
 [batches.content]
 kind = "lines"
@@ -3434,11 +3452,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode15-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode15-0-0.py"
 cost_tokens = 14
-cum_tokens = 4130
+cum_tokens = 4211
 
 [batches.content]
 kind = "lines"
@@ -3452,11 +3470,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 161
+position = 162
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode15-1-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode15-1-0.py"
 cost_tokens = 14
-cum_tokens = 4144
+cum_tokens = 4225
 
 [batches.content]
 kind = "lines"
@@ -3470,11 +3488,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 162
+position = 163
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode16-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode16-0-0.py"
 cost_tokens = 14
-cum_tokens = 4158
+cum_tokens = 4239
 
 [batches.content]
 kind = "lines"
@@ -3488,11 +3506,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 163
+position = 164
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode17-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode17-0-0.py"
 cost_tokens = 14
-cum_tokens = 4172
+cum_tokens = 4253
 
 [batches.content]
 kind = "lines"
@@ -3506,11 +3524,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 164
+position = 165
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode4-1-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode4-1-0.py"
 cost_tokens = 14
-cum_tokens = 4186
+cum_tokens = 4267
 
 [batches.content]
 kind = "lines"
@@ -3524,11 +3542,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 165
+position = 166
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode5-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode5-0-0.py"
 cost_tokens = 14
-cum_tokens = 4200
+cum_tokens = 4281
 
 [batches.content]
 kind = "lines"
@@ -3542,11 +3560,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 166
+position = 167
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode5-1-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode5-1-0.py"
 cost_tokens = 14
-cum_tokens = 4214
+cum_tokens = 4295
 
 [batches.content]
 kind = "lines"
@@ -3560,11 +3578,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 167
+position = 168
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode5-2-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode5-2-0.py"
 cost_tokens = 14
-cum_tokens = 4228
+cum_tokens = 4309
 
 [batches.content]
 kind = "lines"
@@ -3578,11 +3596,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 168
+position = 169
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode6-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode6-0-0.py"
 cost_tokens = 14
-cum_tokens = 4242
+cum_tokens = 4323
 
 [batches.content]
 kind = "lines"
@@ -3596,11 +3614,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 169
+position = 170
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode6-1-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode6-1-0.py"
 cost_tokens = 14
-cum_tokens = 4256
+cum_tokens = 4337
 
 [batches.content]
 kind = "lines"
@@ -3614,11 +3632,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 170
+position = 171
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode6-2-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode6-2-0.py"
 cost_tokens = 14
-cum_tokens = 4270
+cum_tokens = 4351
 
 [batches.content]
 kind = "lines"
@@ -3632,11 +3650,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 171
+position = 172
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode6-3-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode6-3-0.py"
 cost_tokens = 14
-cum_tokens = 4284
+cum_tokens = 4365
 
 [batches.content]
 kind = "lines"
@@ -3650,11 +3668,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 172
+position = 173
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode7-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode7-0-0.py"
 cost_tokens = 14
-cum_tokens = 4298
+cum_tokens = 4379
 
 [batches.content]
 kind = "lines"
@@ -3668,11 +3686,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 173
+position = 174
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode8-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode8-0-0.py"
 cost_tokens = 14
-cum_tokens = 4312
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -3686,11 +3704,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 174
+position = 175
 key = 'Python(DeclNames { file: "rich/_unicode_data/unicode9-0-0.py" })'
 descriptor = "python decl names surface in rich/_unicode_data/unicode9-0-0.py"
 cost_tokens = 14
-cum_tokens = 4326
+cum_tokens = 4407
 
 [batches.content]
 kind = "lines"
@@ -3704,11 +3722,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 175
+position = 176
 key = 'Python(DeclDoc { file: "rich/_unicode_data/__init__.py", start_line: 58 })'
 descriptor = "python decl doc at rich/_unicode_data/__init__.py:58"
 cost_tokens = 59
-cum_tokens = 4385
+cum_tokens = 4466
 
 [batches.content]
 kind = "lines"
@@ -3722,11 +3740,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 176
+position = 177
 key = 'Python(Imports { file: "rich/_palettes.py" })'
 descriptor = "python imports in rich/_palettes.py"
 cost_tokens = 12
-cum_tokens = 4397
+cum_tokens = 4478
 
 [batches.content]
 kind = "lines"
@@ -3740,11 +3758,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 177
+position = 178
 key = 'Python(MethodSigs { file: "rich/styled.py" })'
 descriptor = "python method sigs in rich/styled.py"
 cost_tokens = 53
-cum_tokens = 4450
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
@@ -3798,11 +3816,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 178
+position = 179
 key = 'Python(Method { file: "rich/styled.py", start_line: 19 })'
 descriptor = "python method at rich/styled.py:19"
 cost_tokens = 0
-cum_tokens = 4450
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
@@ -3816,11 +3834,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 179
+position = 180
 key = 'Python(Method { file: "rich/styled.py", start_line: 31 })'
 descriptor = "python method at rich/styled.py:31"
 cost_tokens = 27
-cum_tokens = 4477
+cum_tokens = 4558
 
 [batches.content]
 kind = "lines"
@@ -3834,11 +3852,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 180
+position = 181
 key = 'Python(Method { file: "rich/styled.py", start_line: 23 })'
 descriptor = "python method at rich/styled.py:23"
 cost_tokens = 29
-cum_tokens = 4506
+cum_tokens = 4587
 
 [batches.content]
 kind = "lines"
@@ -3852,11 +3870,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 181
+position = 182
 key = 'Python(DeclNames { file: "rich/live_render.py" })'
 descriptor = "python decl names surface in rich/live_render.py"
 cost_tokens = 40
-cum_tokens = 4546
+cum_tokens = 4627
 
 [batches.content]
 kind = "lines"
@@ -3870,11 +3888,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 182
+position = 183
 key = 'Python(Decl { file: "rich/live_render.py", start_line: 13 })'
 descriptor = "python decl at rich/live_render.py:13"
 cost_tokens = 0
-cum_tokens = 4546
+cum_tokens = 4627
 
 [batches.content]
 kind = "lines"
@@ -3888,11 +3906,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 183
+position = 184
 key = 'Python(DeclNames { file: "rich/tree.py" })'
 descriptor = "python decl names surface in rich/tree.py"
 cost_tokens = 40
-cum_tokens = 4586
+cum_tokens = 4667
 
 [batches.content]
 kind = "lines"
@@ -3906,11 +3924,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 184
+position = 185
 key = 'Python(Decl { file: "rich/tree.py", start_line: 14 })'
 descriptor = "python decl at rich/tree.py:14"
 cost_tokens = 0
-cum_tokens = 4586
+cum_tokens = 4667
 
 [batches.content]
 kind = "lines"
@@ -3924,11 +3942,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 185
+position = 186
 key = 'Python(MethodSigs { file: "rich/tree.py" })'
 descriptor = "python method sigs in rich/tree.py"
 cost_tokens = 45
-cum_tokens = 4631
+cum_tokens = 4712
 
 [batches.content]
 kind = "lines"
@@ -3998,11 +4016,11 @@ end = 177
 kind = "ellipsis"
 
 [[batches]]
-position = 186
+position = 187
 key = 'Python(Method { file: "rich/tree.py", start_line: 176 })'
 descriptor = "python method at rich/tree.py:176"
 cost_tokens = 28
-cum_tokens = 4659
+cum_tokens = 4740
 
 [batches.content]
 kind = "lines"
@@ -4016,11 +4034,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 187
+position = 188
 key = 'Python(Method { file: "rich/tree.py", start_line: 86 })'
 descriptor = "python method at rich/tree.py:86"
 cost_tokens = 29
-cum_tokens = 4688
+cum_tokens = 4769
 
 [batches.content]
 kind = "lines"
@@ -4034,11 +4052,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 188
+position = 189
 key = 'Python(MethodDoc { file: "rich/color_triplet.py", start_line: 14 })'
 descriptor = "python method doc at rich/color_triplet.py:14"
 cost_tokens = 15
-cum_tokens = 4703
+cum_tokens = 4784
 
 [batches.content]
 kind = "lines"
@@ -4052,11 +4070,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 189
+position = 190
 key = 'Python(MethodSigs { file: "rich/constrain.py" })'
 descriptor = "python method sigs in rich/constrain.py"
 cost_tokens = 56
-cum_tokens = 4759
+cum_tokens = 4840
 
 [batches.content]
 kind = "lines"
@@ -4110,11 +4128,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 191
 key = 'Python(Method { file: "rich/constrain.py", start_line: 18 })'
 descriptor = "python method at rich/constrain.py:18"
 cost_tokens = 0
-cum_tokens = 4759
+cum_tokens = 4840
 
 [batches.content]
 kind = "lines"
@@ -4128,11 +4146,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 191
+position = 192
 key = 'Python(Method { file: "rich/constrain.py", start_line: 31 })'
 descriptor = "python method at rich/constrain.py:31"
 cost_tokens = 28
-cum_tokens = 4787
+cum_tokens = 4868
 
 [batches.content]
 kind = "lines"
@@ -4146,11 +4164,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 192
+position = 193
 key = 'Python(Method { file: "rich/constrain.py", start_line: 22 })'
 descriptor = "python method at rich/constrain.py:22"
 cost_tokens = 29
-cum_tokens = 4816
+cum_tokens = 4897
 
 [batches.content]
 kind = "lines"
@@ -4164,11 +4182,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 193
+position = 194
 key = 'Python(DeclNames { file: "rich/_palettes.py" })'
 descriptor = "python decl names surface in rich/_palettes.py"
 cost_tokens = 42
-cum_tokens = 4858
+cum_tokens = 4939
 
 [batches.content]
 kind = "lines"
@@ -4198,11 +4216,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 194
+position = 195
 key = 'Python(DeclNames { file: "rich/containers.py" })'
 descriptor = "python decl names surface in rich/containers.py"
 cost_tokens = 42
-cum_tokens = 4900
+cum_tokens = 4981
 
 [batches.content]
 kind = "lines"
@@ -4224,11 +4242,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 195
+position = 196
 key = 'Python(Decl { file: "rich/containers.py", start_line: 30 })'
 descriptor = "python decl at rich/containers.py:30"
 cost_tokens = 0
-cum_tokens = 4900
+cum_tokens = 4981
 
 [batches.content]
 kind = "lines"
@@ -4242,11 +4260,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 196
+position = 197
 key = 'Python(Decl { file: "rich/containers.py", start_line: 66 })'
 descriptor = "python decl at rich/containers.py:66"
 cost_tokens = 0
-cum_tokens = 4900
+cum_tokens = 4981
 
 [batches.content]
 kind = "lines"
@@ -4260,11 +4278,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 197
+position = 198
 key = 'Python(DeclDoc { file: "rich/containers.py", start_line: 66 })'
 descriptor = "python decl doc at rich/containers.py:66"
 cost_tokens = 16
-cum_tokens = 4916
+cum_tokens = 4997
 
 [batches.content]
 kind = "lines"
@@ -4278,11 +4296,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 198
+position = 199
 key = 'Python(DeclDoc { file: "rich/containers.py", start_line: 30 })'
 descriptor = "python decl doc at rich/containers.py:30"
 cost_tokens = 17
-cum_tokens = 4933
+cum_tokens = 5014
 
 [batches.content]
 kind = "lines"
@@ -4296,11 +4314,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 199
+position = 200
 key = 'Python(MethodDoc { file: "rich/abc.py", start_line: 15 })'
 descriptor = "python method doc at rich/abc.py:15"
 cost_tokens = 16
-cum_tokens = 4949
+cum_tokens = 5030
 
 [batches.content]
 kind = "lines"
@@ -4314,11 +4332,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 200
+position = 201
 key = 'Python(MethodBody { file: "rich/_stack.py", start_line: 9, body_start_line: 12 })'
 descriptor = "python method body at rich/_stack.py:9 body 12"
 cost_tokens = 8
-cum_tokens = 4957
+cum_tokens = 5038
 
 [batches.content]
 kind = "lines"
@@ -4332,11 +4350,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 201
+position = 202
 key = 'Python(ClassBody { file: "rich/measure.py", start_line: 11 })'
 descriptor = "python class body at rich/measure.py:11"
 cost_tokens = 46
-cum_tokens = 5003
+cum_tokens = 5084
 
 [batches.content]
 kind = "lines"
@@ -4350,11 +4368,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 202
+position = 203
 key = 'Python(DeclDoc { file: "rich/__init__.py", start_line: 23 })'
 descriptor = "python decl doc at rich/__init__.py:23"
 cost_tokens = 70
-cum_tokens = 5073
+cum_tokens = 5154
 
 [batches.content]
 kind = "lines"
@@ -4368,11 +4386,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 203
+position = 204
 key = 'Python(ClassBody { file: "rich/_windows.py", start_line: 5 })'
 descriptor = "python class body at rich/_windows.py:5"
 cost_tokens = 47
-cum_tokens = 5120
+cum_tokens = 5201
 
 [batches.content]
 kind = "lines"
@@ -4386,11 +4404,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 204
+position = 205
 key = 'Python(MethodSigs { file: "rich/pager.py" })'
 descriptor = "python method sigs in rich/pager.py"
 cost_tokens = 62
-cum_tokens = 5182
+cum_tokens = 5263
 
 [batches.content]
 kind = "lines"
@@ -4444,11 +4462,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 205
+position = 206
 key = 'Python(Method { file: "rich/pager.py", start_line: 20 })'
 descriptor = "python method at rich/pager.py:20"
 cost_tokens = 0
-cum_tokens = 5182
+cum_tokens = 5263
 
 [batches.content]
 kind = "lines"
@@ -4462,11 +4480,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 206
+position = 207
 key = 'Python(Method { file: "rich/pager.py", start_line: 23 })'
 descriptor = "python method at rich/pager.py:23"
 cost_tokens = 0
-cum_tokens = 5182
+cum_tokens = 5263
 
 [batches.content]
 kind = "lines"
@@ -4480,11 +4498,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 207
+position = 208
 key = 'Python(Method { file: "rich/pager.py", start_line: 8 })'
 descriptor = "python method at rich/pager.py:8"
 cost_tokens = 7
-cum_tokens = 5189
+cum_tokens = 5270
 
 [batches.content]
 kind = "lines"
@@ -4498,11 +4516,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 208
+position = 209
 key = 'Python(MethodDoc { file: "rich/pager.py", start_line: 23 })'
 descriptor = "python method doc at rich/pager.py:23"
 cost_tokens = 16
-cum_tokens = 5205
+cum_tokens = 5286
 
 [batches.content]
 kind = "lines"
@@ -4516,11 +4534,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 209
+position = 210
 key = 'Python(DeclDoc { file: "rich/live.py", start_line: 22 })'
 descriptor = "python decl doc at rich/live.py:22"
 cost_tokens = 16
-cum_tokens = 5221
+cum_tokens = 5302
 
 [batches.content]
 kind = "lines"
@@ -4534,11 +4552,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 210
+position = 211
 key = 'Python(DeclNames { file: "rich/table.py" })'
 descriptor = "python decl names surface in rich/table.py"
 cost_tokens = 47
-cum_tokens = 5268
+cum_tokens = 5349
 
 [batches.content]
 kind = "lines"
@@ -4576,11 +4594,11 @@ end = 153
 kind = "full"
 
 [[batches]]
-position = 211
+position = 212
 key = 'Python(Decl { file: "rich/table.py", start_line: 142 })'
 descriptor = "python decl at rich/table.py:142"
 cost_tokens = 0
-cum_tokens = 5268
+cum_tokens = 5349
 
 [batches.content]
 kind = "lines"
@@ -4594,11 +4612,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 212
+position = 213
 key = 'Python(Decl { file: "rich/table.py", start_line: 153 })'
 descriptor = "python decl at rich/table.py:153"
 cost_tokens = 0
-cum_tokens = 5268
+cum_tokens = 5349
 
 [batches.content]
 kind = "lines"
@@ -4612,11 +4630,11 @@ end = 153
 kind = "full"
 
 [[batches]]
-position = 213
+position = 214
 key = 'Python(Decl { file: "rich/table.py", start_line: 38 })'
 descriptor = "python decl at rich/table.py:38"
 cost_tokens = 7
-cum_tokens = 5275
+cum_tokens = 5356
 
 [batches.content]
 kind = "lines"
@@ -4630,11 +4648,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 214
+position = 215
 key = 'Python(Decl { file: "rich/table.py", start_line: 131 })'
 descriptor = "python decl at rich/table.py:131"
 cost_tokens = 7
-cum_tokens = 5282
+cum_tokens = 5363
 
 [batches.content]
 kind = "lines"
@@ -4648,11 +4666,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 215
+position = 216
 key = 'Python(DeclDoc { file: "rich/table.py", start_line: 131 })'
 descriptor = "python decl doc at rich/table.py:131"
 cost_tokens = 11
-cum_tokens = 5293
+cum_tokens = 5374
 
 [batches.content]
 kind = "lines"
@@ -4666,11 +4684,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 216
+position = 217
 key = 'Python(DeclDoc { file: "rich/table.py", start_line: 38 })'
 descriptor = "python decl doc at rich/table.py:38"
 cost_tokens = 14
-cum_tokens = 5307
+cum_tokens = 5388
 
 [batches.content]
 kind = "lines"
@@ -4684,11 +4702,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 217
+position = 218
 key = 'Python(DeclDoc { file: "rich/table.py", start_line: 153 })'
 descriptor = "python decl doc at rich/table.py:153"
 cost_tokens = 15
-cum_tokens = 5322
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -4702,11 +4720,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 218
+position = 219
 key = 'Python(ClassBody { file: "rich/table.py", start_line: 153 })'
 descriptor = "python class body at rich/table.py:153"
 cost_tokens = 24
-cum_tokens = 5346
+cum_tokens = 5427
 
 [batches.content]
 kind = "lines"
@@ -4720,11 +4738,11 @@ end = 186
 kind = "full"
 
 [[batches]]
-position = 219
+position = 220
 key = 'Python(DeclDoc { file: "rich/table.py", start_line: 142 })'
 descriptor = "python decl doc at rich/table.py:142"
 cost_tokens = 13
-cum_tokens = 5359
+cum_tokens = 5440
 
 [batches.content]
 kind = "lines"
@@ -4738,11 +4756,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 220
+position = 221
 key = 'Python(MethodSigs { file: "rich/spinner.py" })'
 descriptor = "python method sigs in rich/spinner.py"
 cost_tokens = 65
-cum_tokens = 5424
+cum_tokens = 5505
 
 [batches.content]
 kind = "lines"
@@ -4828,11 +4846,11 @@ end = 96
 kind = "ellipsis"
 
 [[batches]]
-position = 221
+position = 222
 key = 'Python(Method { file: "rich/spinner.py", start_line: 61 })'
 descriptor = "python method at rich/spinner.py:61"
 cost_tokens = 0
-cum_tokens = 5424
+cum_tokens = 5505
 
 [batches.content]
 kind = "lines"
@@ -4846,11 +4864,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 222
+position = 223
 key = 'Python(Method { file: "rich/spinner.py", start_line: 55 })'
 descriptor = "python method at rich/spinner.py:55"
 cost_tokens = 27
-cum_tokens = 5451
+cum_tokens = 5532
 
 [batches.content]
 kind = "lines"
@@ -4864,11 +4882,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 223
+position = 224
 key = 'Python(Method { file: "rich/spinner.py", start_line: 50 })'
 descriptor = "python method at rich/spinner.py:50"
 cost_tokens = 29
-cum_tokens = 5480
+cum_tokens = 5561
 
 [batches.content]
 kind = "lines"
@@ -4882,11 +4900,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 224
+position = 225
 key = 'Python(MethodBody { file: "rich/spinner.py", start_line: 50, body_start_line: 53 })'
 descriptor = "python method body at rich/spinner.py:50 body 53"
 cost_tokens = 10
-cum_tokens = 5490
+cum_tokens = 5571
 
 [batches.content]
 kind = "lines"
@@ -4900,11 +4918,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 225
+position = 226
 key = 'Python(DeclNames { file: "rich/emoji.py" })'
 descriptor = "python decl names surface in rich/emoji.py"
 cost_tokens = 49
-cum_tokens = 5539
+cum_tokens = 5620
 
 [batches.content]
 kind = "lines"
@@ -4926,11 +4944,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 226
+position = 227
 key = 'Python(Decl { file: "rich/emoji.py", start_line: 16 })'
 descriptor = "python decl at rich/emoji.py:16"
 cost_tokens = 0
-cum_tokens = 5539
+cum_tokens = 5620
 
 [batches.content]
 kind = "lines"
@@ -4944,11 +4962,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 227
+position = 228
 key = 'Python(Decl { file: "rich/emoji.py", start_line: 20 })'
 descriptor = "python decl at rich/emoji.py:20"
 cost_tokens = 0
-cum_tokens = 5539
+cum_tokens = 5620
 
 [batches.content]
 kind = "lines"
@@ -4962,11 +4980,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 228
+position = 229
 key = 'Python(DeclDoc { file: "rich/emoji.py", start_line: 16 })'
 descriptor = "python decl doc at rich/emoji.py:16"
 cost_tokens = 10
-cum_tokens = 5549
+cum_tokens = 5630
 
 [batches.content]
 kind = "lines"
@@ -4980,11 +4998,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 229
+position = 230
 key = 'Python(ClassBody { file: "rich/emoji.py", start_line: 20 })'
 descriptor = "python class body at rich/emoji.py:20"
 cost_tokens = 51
-cum_tokens = 5600
+cum_tokens = 5681
 
 [batches.content]
 kind = "lines"
@@ -4998,11 +5016,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 230
+position = 231
 key = 'Python(MethodBody { file: "rich/columns.py", start_line: 54, body_start_line: 60 })'
 descriptor = "python method body at rich/columns.py:54 body 60"
 cost_tokens = 12
-cum_tokens = 5612
+cum_tokens = 5693
 
 [batches.content]
 kind = "lines"
@@ -5016,11 +5034,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 231
+position = 232
 key = 'Python(DeclNames { file: "rich/padding.py" })'
 descriptor = "python decl names surface in rich/padding.py"
 cost_tokens = 51
-cum_tokens = 5663
+cum_tokens = 5744
 
 [batches.content]
 kind = "lines"
@@ -5034,11 +5052,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 232
+position = 233
 key = 'Python(Decl { file: "rich/padding.py", start_line: 19 })'
 descriptor = "python decl at rich/padding.py:19"
 cost_tokens = 0
-cum_tokens = 5663
+cum_tokens = 5744
 
 [batches.content]
 kind = "lines"
@@ -5052,11 +5070,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 233
+position = 234
 key = 'Python(Imports { file: "rich/_loop.py" })'
 descriptor = "python imports in rich/_loop.py"
 cost_tokens = 16
-cum_tokens = 5679
+cum_tokens = 5760
 
 [batches.content]
 kind = "lines"
@@ -5070,11 +5088,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 234
+position = 235
 key = 'Python(Imports { file: "rich/_windows.py" })'
 descriptor = "python imports in rich/_windows.py"
 cost_tokens = 16
-cum_tokens = 5695
+cum_tokens = 5776
 
 [batches.content]
 kind = "lines"
@@ -5088,11 +5106,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 235
+position = 236
 key = 'Python(MethodSigs { file: "rich/emoji.py" })'
 descriptor = "python method sigs in rich/emoji.py"
 cost_tokens = 71
-cum_tokens = 5766
+cum_tokens = 5847
 
 [batches.content]
 kind = "lines"
@@ -5178,11 +5196,11 @@ end = 71
 kind = "ellipsis"
 
 [[batches]]
-position = 236
+position = 237
 key = 'Python(Method { file: "rich/emoji.py", start_line: 64 })'
 descriptor = "python method at rich/emoji.py:64"
 cost_tokens = 0
-cum_tokens = 5766
+cum_tokens = 5847
 
 [batches.content]
 kind = "lines"
@@ -5196,11 +5214,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 237
+position = 238
 key = 'Python(Method { file: "rich/emoji.py", start_line: 67 })'
 descriptor = "python method at rich/emoji.py:67"
 cost_tokens = 0
-cum_tokens = 5766
+cum_tokens = 5847
 
 [batches.content]
 kind = "lines"
@@ -5214,11 +5232,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 238
+position = 239
 key = 'Python(Method { file: "rich/emoji.py", start_line: 52 })'
 descriptor = "python method at rich/emoji.py:52"
 cost_tokens = 8
-cum_tokens = 5774
+cum_tokens = 5855
 
 [batches.content]
 kind = "lines"
@@ -5232,11 +5250,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 239
+position = 240
 key = 'Python(Method { file: "rich/emoji.py", start_line: 70 })'
 descriptor = "python method at rich/emoji.py:70"
 cost_tokens = 29
-cum_tokens = 5803
+cum_tokens = 5884
 
 [batches.content]
 kind = "lines"
@@ -5250,11 +5268,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 240
+position = 241
 key = 'Python(DeclDoc { file: "rich/__init__.py", start_line: 39 })'
 descriptor = "python decl doc at rich/__init__.py:39"
 cost_tokens = 83
-cum_tokens = 5886
+cum_tokens = 5967
 
 [batches.content]
 kind = "lines"
@@ -5268,11 +5286,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 241
+position = 242
 key = 'Python(DeclNames { file: "rich/filesize.py" })'
 descriptor = "python decl names surface in rich/filesize.py"
 cost_tokens = 53
-cum_tokens = 5939
+cum_tokens = 6020
 
 [batches.content]
 kind = "lines"
@@ -5326,11 +5344,11 @@ end = 53
 kind = "ellipsis"
 
 [[batches]]
-position = 242
+position = 243
 key = 'Python(Decl { file: "rich/filesize.py", start_line: 43 })'
 descriptor = "python decl at rich/filesize.py:43"
 cost_tokens = 0
-cum_tokens = 5939
+cum_tokens = 6020
 
 [batches.content]
 kind = "lines"
@@ -5344,11 +5362,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 243
+position = 244
 key = 'Python(DeclDoc { file: "rich/filesize.py", start_line: 43 })'
 descriptor = "python decl doc at rich/filesize.py:43"
 cost_tokens = 16
-cum_tokens = 5955
+cum_tokens = 6036
 
 [batches.content]
 kind = "lines"
@@ -5362,11 +5380,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 244
+position = 245
 key = 'Python(Decl { file: "rich/filesize.py", start_line: 52 })'
 descriptor = "python decl at rich/filesize.py:52"
 cost_tokens = 50
-cum_tokens = 6005
+cum_tokens = 6086
 
 [batches.content]
 kind = "lines"
@@ -5380,11 +5398,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 245
+position = 246
 key = 'Python(DeclDoc { file: "rich/filesize.py", start_line: 52 })'
 descriptor = "python decl doc at rich/filesize.py:52"
 cost_tokens = 23
-cum_tokens = 6028
+cum_tokens = 6109
 
 [batches.content]
 kind = "lines"
@@ -5398,11 +5416,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 246
+position = 247
 key = 'Python(DeclDoc { file: "rich/theme.py", start_line: 81 })'
 descriptor = "python decl doc at rich/theme.py:81"
 cost_tokens = 42
-cum_tokens = 6070
+cum_tokens = 6151
 
 [batches.content]
 kind = "lines"
@@ -5416,11 +5434,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 247
+position = 248
 key = 'Python(DeclNames { file: "rich/segment.py" })'
 descriptor = "python decl names surface in rich/segment.py"
 cost_tokens = 55
-cum_tokens = 6125
+cum_tokens = 6206
 
 [batches.content]
 kind = "lines"
@@ -5466,11 +5484,11 @@ end = 724
 kind = "full"
 
 [[batches]]
-position = 248
+position = 249
 key = 'Python(Decl { file: "rich/segment.py", start_line: 32 })'
 descriptor = "python decl at rich/segment.py:32"
 cost_tokens = 0
-cum_tokens = 6125
+cum_tokens = 6206
 
 [batches.content]
 kind = "lines"
@@ -5484,11 +5502,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 249
+position = 250
 key = 'Python(Decl { file: "rich/segment.py", start_line: 699 })'
 descriptor = "python decl at rich/segment.py:699"
 cost_tokens = 0
-cum_tokens = 6125
+cum_tokens = 6206
 
 [batches.content]
 kind = "lines"
@@ -5502,11 +5520,11 @@ end = 699
 kind = "full"
 
 [[batches]]
-position = 250
+position = 251
 key = 'Python(Decl { file: "rich/segment.py", start_line: 724 })'
 descriptor = "python decl at rich/segment.py:724"
 cost_tokens = 0
-cum_tokens = 6125
+cum_tokens = 6206
 
 [batches.content]
 kind = "lines"
@@ -5520,11 +5538,11 @@ end = 724
 kind = "full"
 
 [[batches]]
-position = 251
+position = 252
 key = 'Python(Decl { file: "rich/segment.py", start_line: 60 })'
 descriptor = "python decl at rich/segment.py:60"
 cost_tokens = 10
-cum_tokens = 6135
+cum_tokens = 6216
 
 [batches.content]
 kind = "lines"
@@ -5538,11 +5556,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 252
+position = 253
 key = 'Python(DeclDoc { file: "rich/segment.py", start_line: 32 })'
 descriptor = "python decl doc at rich/segment.py:32"
 cost_tokens = 18
-cum_tokens = 6153
+cum_tokens = 6234
 
 [batches.content]
 kind = "lines"
@@ -5556,11 +5574,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 253
+position = 254
 key = 'Python(ClassBody { file: "rich/segment.py", start_line: 60 })'
 descriptor = "python class body at rich/segment.py:60"
 cost_tokens = 42
-cum_tokens = 6195
+cum_tokens = 6276
 
 [batches.content]
 kind = "lines"
@@ -5574,11 +5592,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 254
+position = 255
 key = 'Python(Decl { file: "rich/segment.py", start_line: 53 })'
 descriptor = "python decl at rich/segment.py:53"
 cost_tokens = 42
-cum_tokens = 6237
+cum_tokens = 6318
 
 [batches.content]
 kind = "lines"
@@ -5592,11 +5610,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 255
+position = 256
 key = 'Python(MethodDoc { file: "rich/_stack.py", start_line: 14 })'
 descriptor = "python method doc at rich/_stack.py:14"
 cost_tokens = 21
-cum_tokens = 6258
+cum_tokens = 6339
 
 [batches.content]
 kind = "lines"
@@ -5610,11 +5628,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 256
+position = 257
 key = 'Python(MethodSigs { file: "rich/rule.py" })'
 descriptor = "python method sigs in rich/rule.py"
 cost_tokens = 76
-cum_tokens = 6334
+cum_tokens = 6415
 
 [batches.content]
 kind = "lines"
@@ -5700,11 +5718,11 @@ end = 112
 kind = "ellipsis"
 
 [[batches]]
-position = 257
+position = 258
 key = 'Python(Method { file: "rich/rule.py", start_line: 46 })'
 descriptor = "python method at rich/rule.py:46"
 cost_tokens = 0
-cum_tokens = 6334
+cum_tokens = 6415
 
 [batches.content]
 kind = "lines"
@@ -5718,11 +5736,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 258
+position = 259
 key = 'Python(Method { file: "rich/rule.py", start_line: 105 })'
 descriptor = "python method at rich/rule.py:105"
 cost_tokens = 0
-cum_tokens = 6334
+cum_tokens = 6415
 
 [batches.content]
 kind = "lines"
@@ -5736,11 +5754,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 259
+position = 260
 key = 'Python(Method { file: "rich/rule.py", start_line: 111 })'
 descriptor = "python method at rich/rule.py:111"
 cost_tokens = 25
-cum_tokens = 6359
+cum_tokens = 6440
 
 [batches.content]
 kind = "lines"
@@ -5754,11 +5772,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 260
+position = 261
 key = 'Python(Method { file: "rich/rule.py", start_line: 49 })'
 descriptor = "python method at rich/rule.py:49"
 cost_tokens = 26
-cum_tokens = 6385
+cum_tokens = 6466
 
 [batches.content]
 kind = "lines"
@@ -5772,11 +5790,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 261
+position = 262
 key = 'Python(MethodBody { file: "rich/rule.py", start_line: 111, body_start_line: 114 })'
 descriptor = "python method body at rich/rule.py:111 body 114"
 cost_tokens = 13
-cum_tokens = 6398
+cum_tokens = 6479
 
 [batches.content]
 kind = "lines"
@@ -5790,11 +5808,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 262
+position = 263
 key = 'Python(DeclNames { file: "rich/_export_format.py" })'
 descriptor = "python decl names surface in rich/_export_format.py"
 cost_tokens = 56
-cum_tokens = 6454
+cum_tokens = 6535
 
 [batches.content]
 kind = "lines"
@@ -5824,11 +5842,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 263
+position = 264
 key = 'Python(MethodSigs { file: "rich/panel.py" })'
 descriptor = "python method sigs in rich/panel.py"
 cost_tokens = 79
-cum_tokens = 6533
+cum_tokens = 6614
 
 [batches.content]
 kind = "lines"
@@ -5930,11 +5948,11 @@ end = 278
 kind = "ellipsis"
 
 [[batches]]
-position = 264
+position = 265
 key = 'Python(Method { file: "rich/panel.py", start_line: 109 })'
 descriptor = "python method at rich/panel.py:109"
 cost_tokens = 8
-cum_tokens = 6541
+cum_tokens = 6622
 
 [batches.content]
 kind = "lines"
@@ -5948,11 +5966,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 265
+position = 266
 key = 'Python(Method { file: "rich/panel.py", start_line: 125 })'
 descriptor = "python method at rich/panel.py:125"
 cost_tokens = 8
-cum_tokens = 6549
+cum_tokens = 6630
 
 [batches.content]
 kind = "lines"
@@ -5966,11 +5984,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 266
+position = 267
 key = 'Python(Method { file: "rich/panel.py", start_line: 277 })'
 descriptor = "python method at rich/panel.py:277"
 cost_tokens = 28
-cum_tokens = 6577
+cum_tokens = 6658
 
 [batches.content]
 kind = "lines"
@@ -5984,11 +6002,11 @@ end = 279
 kind = "full"
 
 [[batches]]
-position = 267
+position = 268
 key = 'Python(Method { file: "rich/panel.py", start_line: 141 })'
 descriptor = "python method at rich/panel.py:141"
 cost_tokens = 29
-cum_tokens = 6606
+cum_tokens = 6687
 
 [batches.content]
 kind = "lines"
@@ -6002,11 +6020,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 268
+position = 269
 key = 'Python(DeclNames { file: "rich/_ratio.py" })'
 descriptor = "python decl names surface in rich/_ratio.py"
 cost_tokens = 58
-cum_tokens = 6664
+cum_tokens = 6745
 
 [batches.content]
 kind = "lines"
@@ -6068,11 +6086,11 @@ end = 108
 kind = "ellipsis"
 
 [[batches]]
-position = 269
+position = 270
 key = 'Python(Decl { file: "rich/_ratio.py", start_line: 6 })'
 descriptor = "python decl at rich/_ratio.py:6"
 cost_tokens = 0
-cum_tokens = 6664
+cum_tokens = 6745
 
 [batches.content]
 kind = "lines"
@@ -6086,11 +6104,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 270
+position = 271
 key = 'Python(Decl { file: "rich/_ratio.py", start_line: 14 })'
 descriptor = "python decl at rich/_ratio.py:14"
 cost_tokens = 0
-cum_tokens = 6664
+cum_tokens = 6745
 
 [batches.content]
 kind = "lines"
@@ -6104,11 +6122,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 271
+position = 272
 key = 'Python(Decl { file: "rich/_ratio.py", start_line: 107 })'
 descriptor = "python decl at rich/_ratio.py:107"
 cost_tokens = 33
-cum_tokens = 6697
+cum_tokens = 6778
 
 [batches.content]
 kind = "lines"
@@ -6122,11 +6140,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 272
+position = 273
 key = 'Python(DeclDoc { file: "rich/_ratio.py", start_line: 6 })'
 descriptor = "python decl doc at rich/_ratio.py:6"
 cost_tokens = 18
-cum_tokens = 6715
+cum_tokens = 6796
 
 [batches.content]
 kind = "lines"
@@ -6140,11 +6158,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 273
+position = 274
 key = 'Python(Decl { file: "rich/_ratio.py", start_line: 75 })'
 descriptor = "python decl at rich/_ratio.py:75"
 cost_tokens = 34
-cum_tokens = 6749
+cum_tokens = 6830
 
 [batches.content]
 kind = "lines"
@@ -6158,11 +6176,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 274
+position = 275
 key = 'Python(ClassBody { file: "rich/_ratio.py", start_line: 6 })'
 descriptor = "python class body at rich/_ratio.py:6"
 cost_tokens = 36
-cum_tokens = 6785
+cum_tokens = 6866
 
 [batches.content]
 kind = "lines"
@@ -6176,11 +6194,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 275
+position = 276
 key = 'Python(DeclDoc { file: "rich/logging.py", start_line: 24 })'
 descriptor = "python decl doc at rich/logging.py:24"
 cost_tokens = 46
-cum_tokens = 6831
+cum_tokens = 6912
 
 [batches.content]
 kind = "lines"
@@ -6194,11 +6212,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 276
+position = 277
 key = 'Python(ClassBody { file: "rich/logging.py", start_line: 24 })'
 descriptor = "python class body at rich/logging.py:24"
 cost_tokens = 114
-cum_tokens = 6945
+cum_tokens = 7026
 
 [batches.content]
 kind = "lines"
@@ -6212,11 +6230,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 277
+position = 278
 key = 'Python(ClassBody { file: "rich/table.py", start_line: 131 })'
 descriptor = "python class body at rich/table.py:131"
 cost_tokens = 63
-cum_tokens = 7008
+cum_tokens = 7089
 
 [batches.content]
 kind = "lines"
@@ -6230,11 +6248,11 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 278
+position = 279
 key = 'Python(Imports { file: "rich/pager.py" })'
 descriptor = "python imports in rich/pager.py"
 cost_tokens = 19
-cum_tokens = 7027
+cum_tokens = 7108
 
 [batches.content]
 kind = "lines"
@@ -6248,11 +6266,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 279
+position = 280
 key = 'Python(Imports { file: "rich/protocol.py" })'
 descriptor = "python imports in rich/protocol.py"
 cost_tokens = 19
-cum_tokens = 7046
+cum_tokens = 7127
 
 [batches.content]
 kind = "lines"
@@ -6266,11 +6284,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 280
+position = 281
 key = 'Python(Decl { file: "rich/__init__.py", start_line: 120 })'
 descriptor = "python decl at rich/__init__.py:120"
 cost_tokens = 139
-cum_tokens = 7185
+cum_tokens = 7266
 
 [batches.content]
 kind = "lines"
@@ -6284,11 +6302,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 281
+position = 282
 key = 'Python(MethodSigs { file: "rich/status.py" })'
 descriptor = "python method sigs in rich/status.py"
 cost_tokens = 125
-cum_tokens = 7310
+cum_tokens = 7391
 
 [batches.content]
 kind = "lines"
@@ -6438,11 +6456,11 @@ end = 101
 kind = "ellipsis"
 
 [[batches]]
-position = 282
+position = 283
 key = 'Python(Method { file: "rich/status.py", start_line: 85 })'
 descriptor = "python method at rich/status.py:85"
 cost_tokens = 0
-cum_tokens = 7310
+cum_tokens = 7391
 
 [batches.content]
 kind = "lines"
@@ -6456,11 +6474,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 283
+position = 284
 key = 'Python(Method { file: "rich/status.py", start_line: 89 })'
 descriptor = "python method at rich/status.py:89"
 cost_tokens = 0
-cum_tokens = 7310
+cum_tokens = 7391
 
 [batches.content]
 kind = "lines"
@@ -6474,11 +6492,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 284
+position = 285
 key = 'Python(Method { file: "rich/status.py", start_line: 93 })'
 descriptor = "python method at rich/status.py:93"
 cost_tokens = 0
-cum_tokens = 7310
+cum_tokens = 7391
 
 [batches.content]
 kind = "lines"
@@ -6492,11 +6510,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 285
+position = 286
 key = 'Python(Method { file: "rich/status.py", start_line: 96 })'
 descriptor = "python method at rich/status.py:96"
 cost_tokens = 0
-cum_tokens = 7310
+cum_tokens = 7391
 
 [batches.content]
 kind = "lines"
@@ -6510,11 +6528,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 286
+position = 287
 key = 'Python(Method { file: "rich/status.py", start_line: 44 })'
 descriptor = "python method at rich/status.py:44"
 cost_tokens = 8
-cum_tokens = 7318
+cum_tokens = 7399
 
 [batches.content]
 kind = "lines"
@@ -6528,11 +6546,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 287
+position = 288
 key = 'Python(Method { file: "rich/status.py", start_line: 48 })'
 descriptor = "python method at rich/status.py:48"
 cost_tokens = 8
-cum_tokens = 7326
+cum_tokens = 7407
 
 [batches.content]
 kind = "lines"
@@ -6546,11 +6564,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 288
+position = 289
 key = 'Python(MethodDoc { file: "rich/status.py", start_line: 85 })'
 descriptor = "python method doc at rich/status.py:85"
 cost_tokens = 11
-cum_tokens = 7337
+cum_tokens = 7418
 
 [batches.content]
 kind = "lines"
@@ -6564,11 +6582,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 289
+position = 290
 key = 'Python(MethodDoc { file: "rich/status.py", start_line: 89 })'
 descriptor = "python method doc at rich/status.py:89"
 cost_tokens = 11
-cum_tokens = 7348
+cum_tokens = 7429
 
 [batches.content]
 kind = "lines"
@@ -6582,11 +6600,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 290
+position = 291
 key = 'Python(MethodDoc { file: "rich/status.py", start_line: 48 })'
 descriptor = "python method doc at rich/status.py:48"
 cost_tokens = 15
-cum_tokens = 7363
+cum_tokens = 7444
 
 [batches.content]
 kind = "lines"
@@ -6600,11 +6618,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 291
+position = 292
 key = 'Python(MethodSigs { file: "rich/logging.py" })'
 descriptor = "python method sigs in rich/logging.py"
 cost_tokens = 84
-cum_tokens = 7447
+cum_tokens = 7528
 
 [batches.content]
 kind = "lines"
@@ -6690,11 +6708,11 @@ end = 216
 kind = "ellipsis"
 
 [[batches]]
-position = 292
+position = 293
 key = 'Python(Method { file: "rich/logging.py", start_line: 123 })'
 descriptor = "python method at rich/logging.py:123"
 cost_tokens = 0
-cum_tokens = 7447
+cum_tokens = 7528
 
 [batches.content]
 kind = "lines"
@@ -6708,11 +6726,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 293
+position = 294
 key = 'Python(Method { file: "rich/logging.py", start_line: 138 })'
 descriptor = "python method at rich/logging.py:138"
 cost_tokens = 0
-cum_tokens = 7447
+cum_tokens = 7528
 
 [batches.content]
 kind = "lines"
@@ -6726,11 +6744,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 294
+position = 295
 key = 'Python(Method { file: "rich/logging.py", start_line: 190 })'
 descriptor = "python method at rich/logging.py:190"
 cost_tokens = 0
-cum_tokens = 7447
+cum_tokens = 7528
 
 [batches.content]
 kind = "lines"
@@ -6744,11 +6762,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 295
+position = 296
 key = 'Python(MethodDoc { file: "rich/logging.py", start_line: 138 })'
 descriptor = "python method doc at rich/logging.py:138"
 cost_tokens = 11
-cum_tokens = 7458
+cum_tokens = 7539
 
 [batches.content]
 kind = "lines"
@@ -6762,11 +6780,11 @@ end = 139
 kind = "full"
 
 [[batches]]
-position = 296
+position = 297
 key = 'Python(MethodBody { file: "rich/emoji.py", start_line: 67, body_start_line: 68 })'
 descriptor = "python method body at rich/emoji.py:67 body 68"
 cost_tokens = 8
-cum_tokens = 7466
+cum_tokens = 7547
 
 [batches.content]
 kind = "lines"
@@ -6780,11 +6798,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 297
+position = 298
 key = 'Python(MethodSigs { file: "rich/palette.py" })'
 descriptor = "python method sigs in rich/palette.py"
 cost_tokens = 85
-cum_tokens = 7551
+cum_tokens = 7632
 
 [batches.content]
 kind = "lines"
@@ -6854,11 +6872,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 298
+position = 299
 key = 'Python(Method { file: "rich/palette.py", start_line: 14 })'
 descriptor = "python method at rich/palette.py:14"
 cost_tokens = 0
-cum_tokens = 7551
+cum_tokens = 7632
 
 [batches.content]
 kind = "lines"
@@ -6872,11 +6890,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 299
+position = 300
 key = 'Python(Method { file: "rich/palette.py", start_line: 17 })'
 descriptor = "python method at rich/palette.py:17"
 cost_tokens = 0
-cum_tokens = 7551
+cum_tokens = 7632
 
 [batches.content]
 kind = "lines"
@@ -6890,11 +6908,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 300
+position = 301
 key = 'Python(Method { file: "rich/palette.py", start_line: 20 })'
 descriptor = "python method at rich/palette.py:20"
 cost_tokens = 0
-cum_tokens = 7551
+cum_tokens = 7632
 
 [batches.content]
 kind = "lines"
@@ -6908,11 +6926,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 301
+position = 302
 key = 'Python(Method { file: "rich/palette.py", start_line: 44 })'
 descriptor = "python method at rich/palette.py:44"
 cost_tokens = 13
-cum_tokens = 7564
+cum_tokens = 7645
 
 [batches.content]
 kind = "lines"
@@ -6926,11 +6944,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 302
+position = 303
 key = 'Python(MethodBody { file: "rich/palette.py", start_line: 14, body_start_line: 15 })'
 descriptor = "python method body at rich/palette.py:14 body 15"
 cost_tokens = 9
-cum_tokens = 7573
+cum_tokens = 7654
 
 [batches.content]
 kind = "lines"
@@ -6944,11 +6962,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 303
+position = 304
 key = 'Python(MethodSigs { file: "rich/theme.py" })'
 descriptor = "python method sigs in rich/theme.py"
 cost_tokens = 102
-cum_tokens = 7675
+cum_tokens = 7756
 
 [batches.content]
 kind = "lines"
@@ -7066,11 +7084,11 @@ end = 107
 kind = "ellipsis"
 
 [[batches]]
-position = 304
+position = 305
 key = 'Python(Method { file: "rich/theme.py", start_line: 88 })'
 descriptor = "python method at rich/theme.py:88"
 cost_tokens = 0
-cum_tokens = 7675
+cum_tokens = 7756
 
 [batches.content]
 kind = "lines"
@@ -7084,11 +7102,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 305
+position = 306
 key = 'Python(Method { file: "rich/theme.py", start_line: 92 })'
 descriptor = "python method at rich/theme.py:92"
 cost_tokens = 0
-cum_tokens = 7675
+cum_tokens = 7756
 
 [batches.content]
 kind = "lines"
@@ -7102,11 +7120,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 306
+position = 307
 key = 'Python(Method { file: "rich/theme.py", start_line: 106 })'
 descriptor = "python method at rich/theme.py:106"
 cost_tokens = 0
-cum_tokens = 7675
+cum_tokens = 7756
 
 [batches.content]
 kind = "lines"
@@ -7120,11 +7138,11 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 307
+position = 308
 key = 'Python(Method { file: "rich/theme.py", start_line: 29 })'
 descriptor = "python method at rich/theme.py:29"
 cost_tokens = 8
-cum_tokens = 7683
+cum_tokens = 7764
 
 [batches.content]
 kind = "lines"
@@ -7138,11 +7156,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 308
+position = 309
 key = 'Python(Method { file: "rich/theme.py", start_line: 17 })'
 descriptor = "python method at rich/theme.py:17"
 cost_tokens = 32
-cum_tokens = 7715
+cum_tokens = 7796
 
 [batches.content]
 kind = "lines"
@@ -7156,11 +7174,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 309
+position = 310
 key = 'Python(MethodDoc { file: "rich/theme.py", start_line: 29 })'
 descriptor = "python method doc at rich/theme.py:29"
 cost_tokens = 16
-cum_tokens = 7731
+cum_tokens = 7812
 
 [batches.content]
 kind = "lines"
@@ -7174,11 +7192,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 310
+position = 311
 key = 'Python(MethodDoc { file: "rich/theme.py", start_line: 106 })'
 descriptor = "python method doc at rich/theme.py:106"
 cost_tokens = 16
-cum_tokens = 7747
+cum_tokens = 7828
 
 [batches.content]
 kind = "lines"
@@ -7192,11 +7210,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 311
+position = 312
 key = 'Python(Method { file: "rich/theme.py", start_line: 59 })'
 descriptor = "python method at rich/theme.py:59"
 cost_tokens = 43
-cum_tokens = 7790
+cum_tokens = 7871
 
 [batches.content]
 kind = "lines"
@@ -7210,11 +7228,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 312
+position = 313
 key = 'Python(Method { file: "rich/theme.py", start_line: 37 })'
 descriptor = "python method at rich/theme.py:37"
 cost_tokens = 45
-cum_tokens = 7835
+cum_tokens = 7916
 
 [batches.content]
 kind = "lines"
@@ -7228,11 +7246,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 313
+position = 314
 key = 'Python(MethodSigs { file: "rich/table.py" })'
 descriptor = "python method sigs in rich/table.py"
 cost_tokens = 340
-cum_tokens = 8175
+cum_tokens = 8256
 
 [batches.content]
 kind = "lines"
@@ -7606,11 +7624,11 @@ end = 756
 kind = "ellipsis"
 
 [[batches]]
-position = 314
+position = 315
 key = 'Python(Method { file: "rich/table.py", start_line: 116 })'
 descriptor = "python method at rich/table.py:116"
 cost_tokens = 0
-cum_tokens = 8175
+cum_tokens = 8256
 
 [batches.content]
 kind = "lines"
@@ -7624,11 +7642,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 315
+position = 316
 key = 'Python(Method { file: "rich/table.py", start_line: 310 })'
 descriptor = "python method at rich/table.py:310"
 cost_tokens = 0
-cum_tokens = 8175
+cum_tokens = 8256
 
 [batches.content]
 kind = "lines"
@@ -7642,11 +7660,11 @@ end = 310
 kind = "full"
 
 [[batches]]
-position = 316
+position = 317
 key = 'Python(Method { file: "rich/table.py", start_line: 469 })'
 descriptor = "python method at rich/table.py:469"
 cost_tokens = 0
-cum_tokens = 8175
+cum_tokens = 8256
 
 [batches.content]
 kind = "lines"
@@ -7660,11 +7678,11 @@ end = 469
 kind = "full"
 
 [[batches]]
-position = 317
+position = 318
 key = 'Python(Method { file: "rich/table.py", start_line: 700 })'
 descriptor = "python method at rich/table.py:700"
 cost_tokens = 0
-cum_tokens = 8175
+cum_tokens = 8256
 
 [batches.content]
 kind = "lines"
@@ -7678,11 +7696,11 @@ end = 700
 kind = "full"
 
 [[batches]]
-position = 318
+position = 319
 key = 'Python(Method { file: "rich/table.py", start_line: 120 })'
 descriptor = "python method at rich/table.py:120"
 cost_tokens = 8
-cum_tokens = 8183
+cum_tokens = 8264
 
 [batches.content]
 kind = "lines"
@@ -7696,11 +7714,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 319
+position = 320
 key = 'Python(Method { file: "rich/table.py", start_line: 125 })'
 descriptor = "python method at rich/table.py:125"
 cost_tokens = 8
-cum_tokens = 8191
+cum_tokens = 8272
 
 [batches.content]
 kind = "lines"
@@ -7714,11 +7732,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 320
+position = 321
 key = 'Python(Method { file: "rich/table.py", start_line: 285 })'
 descriptor = "python method at rich/table.py:285"
 cost_tokens = 8
-cum_tokens = 8199
+cum_tokens = 8280
 
 [batches.content]
 kind = "lines"
@@ -7732,11 +7750,11 @@ end = 286
 kind = "full"
 
 [[batches]]
-position = 321
+position = 322
 key = 'Python(Method { file: "rich/table.py", start_line: 305 })'
 descriptor = "python method at rich/table.py:305"
 cost_tokens = 8
-cum_tokens = 8207
+cum_tokens = 8288
 
 [batches.content]
 kind = "lines"
@@ -7750,11 +7768,11 @@ end = 306
 kind = "full"
 
 [[batches]]
-position = 322
+position = 323
 key = 'Python(Method { file: "rich/table.py", start_line: 353 })'
 descriptor = "python method at rich/table.py:353"
 cost_tokens = 8
-cum_tokens = 8215
+cum_tokens = 8296
 
 [batches.content]
 kind = "lines"
@@ -7768,11 +7786,11 @@ end = 354
 kind = "full"
 
 [[batches]]
-position = 323
+position = 324
 key = 'Python(Method { file: "rich/table.py", start_line: 290 })'
 descriptor = "python method at rich/table.py:290"
 cost_tokens = 9
-cum_tokens = 8224
+cum_tokens = 8305
 
 [batches.content]
 kind = "lines"
@@ -7786,11 +7804,11 @@ end = 291
 kind = "full"
 
 [[batches]]
-position = 324
+position = 325
 key = 'Python(Method { file: "rich/table.py", start_line: 358 })'
 descriptor = "python method at rich/table.py:358"
 cost_tokens = 9
-cum_tokens = 8233
+cum_tokens = 8314
 
 [batches.content]
 kind = "lines"
@@ -7804,11 +7822,11 @@ end = 359
 kind = "full"
 
 [[batches]]
-position = 325
+position = 326
 key = 'Python(Method { file: "rich/table.py", start_line: 295 })'
 descriptor = "python method at rich/table.py:295"
 cost_tokens = 8
-cum_tokens = 8241
+cum_tokens = 8322
 
 [batches.content]
 kind = "lines"
@@ -7822,11 +7840,11 @@ end = 296
 kind = "full"
 
 [[batches]]
-position = 326
+position = 327
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 290 })'
 descriptor = "python method doc at rich/table.py:290"
 cost_tokens = 9
-cum_tokens = 8250
+cum_tokens = 8331
 
 [batches.content]
 kind = "lines"
@@ -7840,11 +7858,11 @@ end = 292
 kind = "full"
 
 [[batches]]
-position = 327
+position = 328
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 353 })'
 descriptor = "python method doc at rich/table.py:353"
 cost_tokens = 10
-cum_tokens = 8260
+cum_tokens = 8341
 
 [batches.content]
 kind = "lines"
@@ -7858,11 +7876,11 @@ end = 355
 kind = "full"
 
 [[batches]]
-position = 328
+position = 329
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 358 })'
 descriptor = "python method doc at rich/table.py:358"
 cost_tokens = 10
-cum_tokens = 8270
+cum_tokens = 8351
 
 [batches.content]
 kind = "lines"
@@ -7876,11 +7894,11 @@ end = 360
 kind = "full"
 
 [[batches]]
-position = 329
+position = 330
 key = 'Python(Method { file: "rich/table.py", start_line: 320 })'
 descriptor = "python method at rich/table.py:320"
 cost_tokens = 27
-cum_tokens = 8297
+cum_tokens = 8378
 
 [batches.content]
 kind = "lines"
@@ -7894,11 +7912,11 @@ end = 322
 kind = "full"
 
 [[batches]]
-position = 330
+position = 331
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 310 })'
 descriptor = "python method doc at rich/table.py:310"
 cost_tokens = 12
-cum_tokens = 8309
+cum_tokens = 8390
 
 [batches.content]
 kind = "lines"
@@ -7912,11 +7930,11 @@ end = 311
 kind = "full"
 
 [[batches]]
-position = 331
+position = 332
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 116 })'
 descriptor = "python method doc at rich/table.py:116"
 cost_tokens = 13
-cum_tokens = 8322
+cum_tokens = 8403
 
 [batches.content]
 kind = "lines"
@@ -7930,11 +7948,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 332
+position = 333
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 125 })'
 descriptor = "python method doc at rich/table.py:125"
 cost_tokens = 13
-cum_tokens = 8335
+cum_tokens = 8416
 
 [batches.content]
 kind = "lines"
@@ -7948,11 +7966,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 333
+position = 334
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 305 })'
 descriptor = "python method doc at rich/table.py:305"
 cost_tokens = 13
-cum_tokens = 8348
+cum_tokens = 8429
 
 [batches.content]
 kind = "lines"
@@ -7966,11 +7984,11 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 334
+position = 335
 key = 'Python(Method { file: "rich/table.py", start_line: 475 })'
 descriptor = "python method at rich/table.py:475"
 cost_tokens = 29
-cum_tokens = 8377
+cum_tokens = 8458
 
 [batches.content]
 kind = "lines"
@@ -7984,11 +8002,11 @@ end = 477
 kind = "full"
 
 [[batches]]
-position = 335
+position = 336
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 285 })'
 descriptor = "python method doc at rich/table.py:285"
 cost_tokens = 16
-cum_tokens = 8393
+cum_tokens = 8474
 
 [batches.content]
 kind = "lines"
@@ -8002,11 +8020,11 @@ end = 287
 kind = "full"
 
 [[batches]]
-position = 336
+position = 337
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 120 })'
 descriptor = "python method doc at rich/table.py:120"
 cost_tokens = 17
-cum_tokens = 8410
+cum_tokens = 8491
 
 [batches.content]
 kind = "lines"
@@ -8020,11 +8038,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 337
+position = 338
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 469 })'
 descriptor = "python method doc at rich/table.py:469"
 cost_tokens = 19
-cum_tokens = 8429
+cum_tokens = 8510
 
 [batches.content]
 kind = "lines"
@@ -8038,11 +8056,11 @@ end = 470
 kind = "full"
 
 [[batches]]
-position = 338
+position = 339
 key = 'Python(Decl { file: "rich/__init__.py", start_line: 77 })'
 descriptor = "python decl at rich/__init__.py:77"
 cost_tokens = 147
-cum_tokens = 8576
+cum_tokens = 8657
 
 [batches.content]
 kind = "lines"
@@ -8056,11 +8074,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 339
+position = 340
 key = 'Python(MethodDoc { file: "rich/table.py", start_line: 700 })'
 descriptor = "python method doc at rich/table.py:700"
 cost_tokens = 12
-cum_tokens = 8588
+cum_tokens = 8669
 
 [batches.content]
 kind = "lines"
@@ -8074,11 +8092,11 @@ end = 701
 kind = "full"
 
 [[batches]]
-position = 340
+position = 341
 key = 'Python(MethodSigs { file: "rich/measure.py" })'
 descriptor = "python method sigs in rich/measure.py"
 cost_tokens = 91
-cum_tokens = 8679
+cum_tokens = 8760
 
 [batches.content]
 kind = "lines"
@@ -8180,11 +8198,11 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 341
+position = 342
 key = 'Python(Method { file: "rich/measure.py", start_line: 24 })'
 descriptor = "python method at rich/measure.py:24"
 cost_tokens = 0
-cum_tokens = 8679
+cum_tokens = 8760
 
 [batches.content]
 kind = "lines"
@@ -8198,11 +8216,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 342
+position = 343
 key = 'Python(Method { file: "rich/measure.py", start_line: 34 })'
 descriptor = "python method at rich/measure.py:34"
 cost_tokens = 0
-cum_tokens = 8679
+cum_tokens = 8760
 
 [batches.content]
 kind = "lines"
@@ -8216,11 +8234,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 343
+position = 344
 key = 'Python(Method { file: "rich/measure.py", start_line: 46 })'
 descriptor = "python method at rich/measure.py:46"
 cost_tokens = 0
-cum_tokens = 8679
+cum_tokens = 8760
 
 [batches.content]
 kind = "lines"
@@ -8234,11 +8252,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 344
+position = 345
 key = 'Python(Method { file: "rich/measure.py", start_line: 19 })'
 descriptor = "python method at rich/measure.py:19"
 cost_tokens = 6
-cum_tokens = 8685
+cum_tokens = 8766
 
 [batches.content]
 kind = "lines"
@@ -8252,11 +8270,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 345
+position = 346
 key = 'Python(MethodDoc { file: "rich/measure.py", start_line: 19 })'
 descriptor = "python method doc at rich/measure.py:19"
 cost_tokens = 13
-cum_tokens = 8698
+cum_tokens = 8779
 
 [batches.content]
 kind = "lines"
@@ -8270,11 +8288,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 346
+position = 347
 key = 'Python(Method { file: "rich/measure.py", start_line: 59 })'
 descriptor = "python method at rich/measure.py:59"
 cost_tokens = 35
-cum_tokens = 8733
+cum_tokens = 8814
 
 [batches.content]
 kind = "lines"
@@ -8288,11 +8306,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 347
+position = 348
 key = 'Python(Method { file: "rich/measure.py", start_line: 78 })'
 descriptor = "python method at rich/measure.py:78"
 cost_tokens = 43
-cum_tokens = 8776
+cum_tokens = 8857
 
 [batches.content]
 kind = "lines"
@@ -8306,11 +8324,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 348
+position = 349
 key = 'Python(MethodSigs { file: "rich/progress_bar.py" })'
 descriptor = "python method sigs in rich/progress_bar.py"
 cost_tokens = 122
-cum_tokens = 8898
+cum_tokens = 8979
 
 [batches.content]
 kind = "lines"
@@ -8444,11 +8462,11 @@ end = 201
 kind = "ellipsis"
 
 [[batches]]
-position = 349
+position = 350
 key = 'Python(Method { file: "rich/progress_bar.py", start_line: 57 })'
 descriptor = "python method at rich/progress_bar.py:57"
 cost_tokens = 0
-cum_tokens = 8898
+cum_tokens = 8979
 
 [batches.content]
 kind = "lines"
@@ -8462,11 +8480,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 350
+position = 351
 key = 'Python(Method { file: "rich/progress_bar.py", start_line: 116 })'
 descriptor = "python method at rich/progress_bar.py:116"
 cost_tokens = 0
-cum_tokens = 8898
+cum_tokens = 8979
 
 [batches.content]
 kind = "lines"
@@ -8480,11 +8498,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 351
+position = 352
 key = 'Python(Method { file: "rich/progress_bar.py", start_line: 60 })'
 descriptor = "python method at rich/progress_bar.py:60"
 cost_tokens = 8
-cum_tokens = 8906
+cum_tokens = 8987
 
 [batches.content]
 kind = "lines"
@@ -8498,11 +8516,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 352
+position = 353
 key = 'Python(MethodDoc { file: "rich/progress_bar.py", start_line: 60 })'
 descriptor = "python method doc at rich/progress_bar.py:60"
 cost_tokens = 10
-cum_tokens = 8916
+cum_tokens = 8997
 
 [batches.content]
 kind = "lines"
@@ -8516,11 +8534,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 353
+position = 354
 key = 'Python(Method { file: "rich/progress_bar.py", start_line: 200 })'
 descriptor = "python method at rich/progress_bar.py:200"
 cost_tokens = 25
-cum_tokens = 8941
+cum_tokens = 9022
 
 [batches.content]
 kind = "lines"
@@ -8534,11 +8552,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 354
+position = 355
 key = 'Python(Method { file: "rich/progress_bar.py", start_line: 156 })'
 descriptor = "python method at rich/progress_bar.py:156"
 cost_tokens = 26
-cum_tokens = 8967
+cum_tokens = 9048
 
 [batches.content]
 kind = "lines"
@@ -8552,11 +8570,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 355
+position = 356
 key = 'Python(MethodSigs { file: "rich/live_render.py" })'
 descriptor = "python method sigs in rich/live_render.py"
 cost_tokens = 92
-cum_tokens = 9059
+cum_tokens = 9140
 
 [batches.content]
 kind = "lines"
@@ -8658,11 +8676,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 356
+position = 357
 key = 'Python(Method { file: "rich/live_render.py", start_line: 43 })'
 descriptor = "python method at rich/live_render.py:43"
 cost_tokens = 0
-cum_tokens = 9059
+cum_tokens = 9140
 
 [batches.content]
 kind = "lines"
@@ -8676,11 +8694,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 357
+position = 358
 key = 'Python(Method { file: "rich/live_render.py", start_line: 51 })'
 descriptor = "python method at rich/live_render.py:51"
 cost_tokens = 0
-cum_tokens = 9059
+cum_tokens = 9140
 
 [batches.content]
 kind = "lines"
@@ -8694,11 +8712,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 358
+position = 359
 key = 'Python(Method { file: "rich/live_render.py", start_line: 72 })'
 descriptor = "python method at rich/live_render.py:72"
 cost_tokens = 0
-cum_tokens = 9059
+cum_tokens = 9140
 
 [batches.content]
 kind = "lines"
@@ -8712,11 +8730,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 359
+position = 360
 key = 'Python(Method { file: "rich/live_render.py", start_line: 32 })'
 descriptor = "python method at rich/live_render.py:32"
 cost_tokens = 8
-cum_tokens = 9067
+cum_tokens = 9148
 
 [batches.content]
 kind = "lines"
@@ -8730,11 +8748,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 360
+position = 361
 key = 'Python(Method { file: "rich/live_render.py", start_line: 86 })'
 descriptor = "python method at rich/live_render.py:86"
 cost_tokens = 26
-cum_tokens = 9093
+cum_tokens = 9174
 
 [batches.content]
 kind = "lines"
@@ -8748,11 +8766,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 361
+position = 362
 key = 'Python(MethodBody { file: "rich/live_render.py", start_line: 43, body_start_line: 49 })'
 descriptor = "python method body at rich/live_render.py:43 body 49"
 cost_tokens = 12
-cum_tokens = 9105
+cum_tokens = 9186
 
 [batches.content]
 kind = "lines"
@@ -8766,11 +8784,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 362
+position = 363
 key = 'Python(ClassBody { file: "rich/segment.py", start_line: 32 })'
 descriptor = "python class body at rich/segment.py:32"
 cost_tokens = 192
-cum_tokens = 9297
+cum_tokens = 9378
 
 [batches.content]
 kind = "lines"
@@ -8784,11 +8802,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 363
+position = 364
 key = 'Python(ClassBody { file: "rich/color_triplet.py", start_line: 4 })'
 descriptor = "python class body at rich/color_triplet.py:4"
 cost_tokens = 73
-cum_tokens = 9370
+cum_tokens = 9451
 
 [batches.content]
 kind = "lines"
@@ -8802,11 +8820,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 364
+position = 365
 key = 'Python(Imports { file: "rich/_emoji_replace.py" })'
 descriptor = "python imports in rich/_emoji_replace.py"
 cost_tokens = 22
-cum_tokens = 9392
+cum_tokens = 9473
 
 [batches.content]
 kind = "lines"
@@ -8820,11 +8838,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 365
+position = 366
 key = 'Python(Imports { file: "rich/default_styles.py" })'
 descriptor = "python imports in rich/default_styles.py"
 cost_tokens = 22
-cum_tokens = 9414
+cum_tokens = 9495
 
 [batches.content]
 kind = "lines"
@@ -8838,11 +8856,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 366
+position = 367
 key = 'Python(Imports { file: "rich/themes.py" })'
 descriptor = "python imports in rich/themes.py"
 cost_tokens = 22
-cum_tokens = 9436
+cum_tokens = 9517
 
 [batches.content]
 kind = "lines"
@@ -8856,11 +8874,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 367
+position = 368
 key = 'Python(MethodBody { file: "rich/_stack.py", start_line: 14, body_start_line: 16 })'
 descriptor = "python method body at rich/_stack.py:14 body 16"
 cost_tokens = 7
-cum_tokens = 9443
+cum_tokens = 9524
 
 [batches.content]
 kind = "lines"
@@ -8874,11 +8892,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 368
+position = 369
 key = 'Python(MethodBody { file: "rich/styled.py", start_line: 31, body_start_line: 34 })'
 descriptor = "python method body at rich/styled.py:31 body 34"
 cost_tokens = 16
-cum_tokens = 9459
+cum_tokens = 9540
 
 [batches.content]
 kind = "lines"
@@ -8892,11 +8910,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 369
+position = 370
 key = 'Python(Imports { file: "setup.py" })'
 descriptor = "python imports in setup.py"
 cost_tokens = 53
-cum_tokens = 9512
+cum_tokens = 9593
 
 [batches.content]
 kind = "lines"
@@ -8910,11 +8928,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 370
+position = 371
 key = 'Python(MethodSigs { file: "rich/live.py" })'
 descriptor = "python method sigs in rich/live.py"
 cost_tokens = 263
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9176,11 +9194,11 @@ end = 279
 kind = "ellipsis"
 
 [[batches]]
-position = 371
+position = 372
 key = 'Python(Method { file: "rich/live.py", start_line: 25 })'
 descriptor = "python method at rich/live.py:25"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9194,11 +9212,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 372
+position = 373
 key = 'Python(Method { file: "rich/live.py", start_line: 31 })'
 descriptor = "python method at rich/live.py:31"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9212,11 +9230,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 373
+position = 374
 key = 'Python(Method { file: "rich/live.py", start_line: 34 })'
 descriptor = "python method at rich/live.py:34"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9230,11 +9248,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 374
+position = 375
 key = 'Python(Method { file: "rich/live.py", start_line: 103 })'
 descriptor = "python method at rich/live.py:103"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9248,11 +9266,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 375
+position = 376
 key = 'Python(Method { file: "rich/live.py", start_line: 111 })'
 descriptor = "python method at rich/live.py:111"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9266,11 +9284,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 376
+position = 377
 key = 'Python(Method { file: "rich/live.py", start_line: 145 })'
 descriptor = "python method at rich/live.py:145"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9284,11 +9302,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 377
+position = 378
 key = 'Python(Method { file: "rich/live.py", start_line: 183 })'
 descriptor = "python method at rich/live.py:183"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9302,11 +9320,11 @@ end = 183
 kind = "full"
 
 [[batches]]
-position = 378
+position = 379
 key = 'Python(Method { file: "rich/live.py", start_line: 195 })'
 descriptor = "python method at rich/live.py:195"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9320,11 +9338,11 @@ end = 195
 kind = "full"
 
 [[batches]]
-position = 379
+position = 380
 key = 'Python(Method { file: "rich/live.py", start_line: 205 })'
 descriptor = "python method at rich/live.py:205"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9338,11 +9356,11 @@ end = 205
 kind = "full"
 
 [[batches]]
-position = 380
+position = 381
 key = 'Python(Method { file: "rich/live.py", start_line: 230 })'
 descriptor = "python method at rich/live.py:230"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9356,11 +9374,11 @@ end = 230
 kind = "full"
 
 [[batches]]
-position = 381
+position = 382
 key = 'Python(Method { file: "rich/live.py", start_line: 244 })'
 descriptor = "python method at rich/live.py:244"
 cost_tokens = 0
-cum_tokens = 9775
+cum_tokens = 9856
 
 [batches.content]
 kind = "lines"
@@ -9374,11 +9392,11 @@ end = 244
 kind = "full"
 
 [[batches]]
-position = 382
+position = 383
 key = 'Python(Method { file: "rich/live.py", start_line: 98 })'
 descriptor = "python method at rich/live.py:98"
 cost_tokens = 8
-cum_tokens = 9783
+cum_tokens = 9864
 
 [batches.content]
 kind = "lines"
@@ -9392,11 +9410,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 383
+position = 384
 key = 'Python(Method { file: "rich/live.py", start_line: 214 })'
 descriptor = "python method at rich/live.py:214"
 cost_tokens = 8
-cum_tokens = 9791
+cum_tokens = 9872
 
 [batches.content]
 kind = "lines"
@@ -9410,11 +9428,11 @@ end = 215
 kind = "full"
 
 [[batches]]
-position = 384
+position = 385
 key = 'Python(MethodDoc { file: "rich/live.py", start_line: 145 })'
 descriptor = "python method doc at rich/live.py:145"
 cost_tokens = 11
-cum_tokens = 9802
+cum_tokens = 9883
 
 [batches.content]
 kind = "lines"
@@ -9428,11 +9446,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 385
+position = 386
 key = 'Python(Method { file: "rich/live.py", start_line: 278 })'
 descriptor = "python method at rich/live.py:278"
 cost_tokens = 27
-cum_tokens = 9829
+cum_tokens = 9910
 
 [batches.content]
 kind = "lines"
@@ -9446,11 +9464,11 @@ end = 280
 kind = "full"
 
 [[batches]]
-position = 386
+position = 387
 key = 'Python(MethodDoc { file: "rich/live.py", start_line: 98 })'
 descriptor = "python method doc at rich/live.py:98"
 cost_tokens = 14
-cum_tokens = 9843
+cum_tokens = 9924
 
 [batches.content]
 kind = "lines"
@@ -9464,11 +9482,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 387
+position = 388
 key = 'Python(MethodDoc { file: "rich/live.py", start_line: 244 })'
 descriptor = "python method doc at rich/live.py:244"
 cost_tokens = 14
-cum_tokens = 9857
+cum_tokens = 9938
 
 [batches.content]
 kind = "lines"
@@ -9482,11 +9500,11 @@ end = 245
 kind = "full"
 
 [[batches]]
-position = 388
+position = 389
 key = 'Python(MethodDoc { file: "rich/live.py", start_line: 278 })'
 descriptor = "python method doc at rich/live.py:278"
 cost_tokens = 16
-cum_tokens = 9873
+cum_tokens = 9954
 
 [batches.content]
 kind = "lines"
@@ -9495,86 +9513,6 @@ kind = "lines"
 path = "rich/live.py"
 start = 281
 end = 281
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 389
-key = 'Python(DeclNames { file: "rich/align.py" })'
-descriptor = "python decl names surface in rich/align.py"
-cost_tokens = 72
-cum_tokens = 9945
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/align.py"
-start = 13
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "rich/align.py"
-start = 242
-end = 242
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 390
-key = 'Python(Decl { file: "rich/align.py", start_line: 17 })'
-descriptor = "python decl at rich/align.py:17"
-cost_tokens = 0
-cum_tokens = 9945
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/align.py"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 391
-key = 'Python(Decl { file: "rich/align.py", start_line: 242 })'
-descriptor = "python decl at rich/align.py:242"
-cost_tokens = 0
-cum_tokens = 9945
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/align.py"
-start = 242
-end = 242
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 392
-key = 'Python(DeclDoc { file: "rich/align.py", start_line: 17 })'
-descriptor = "python decl doc at rich/align.py:17"
-cost_tokens = 16
-cum_tokens = 9961
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "rich/align.py"
-start = 18
-end = 18
 
 [batches.content.spans.render]
 kind = "full"

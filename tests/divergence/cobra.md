@@ -1,4 +1,4 @@
-Score(3000)=0.571 I=0.798 C=0.409 ns_rows≤3K=16/43 (reached=8 partial=0 missing=8)
+Score(3000)=0.600 I=0.852 C=0.423 ns_rows≤3K=16/43 (reached=9 partial=0 missing=7)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -37,337 +37,327 @@ Score(3000)=0.571 I=0.798 C=0.409 ns_rows≤3K=16/43 (reached=8 partial=0 missin
 | walker |  | 1351 | 19 | go decl doc at fish_completions.go:276 |  |  | 0.739 |
 | ns | 1356 |  | 134 | Command struct fields, part 2: completion opts + behavior toggles, name only | 2.3 |  | 0.705 |
 | walker |  | 1445 | 94 | headings outline in CONDUCT.md |  |  | 0.705 |
-| walker |  | 1626 | 181 | go decl names surface in command.go |  |  | 0.705 |
-| walker |  | 1626 | 0 | go decl at command.go:42 |  |  | 0.705 |
-| walker |  | 1626 | 0 | go decl at command.go:269 |  |  | 0.705 |
-| walker |  | 1626 | 0 | go decl at command.go:275 |  |  | 0.705 |
-| walker |  | 1626 | 0 | go decl at command.go:281 |  |  | 0.705 |
-| walker |  | 1626 | 0 | go decl at command.go:289 |  |  | 0.705 |
-| walker |  | 1633 | 7 | go decl at command.go:54 |  |  | 0.705 |
-| walker |  | 1642 | 9 | go struct field group at command.go:54 group 80 |  |  | 0.705 |
-| walker |  | 1651 | 9 | go struct field group at command.go:54 group 115 |  |  | 0.706 |
-| ns | 1659 |  | 303 | Command run-hook fields + execution order | 2.4 | 2.2 | 0.628 |
-| walker |  | 1662 | 11 | go decl at command.go:33 |  |  | 0.628 |
-| walker |  | 1672 | 10 | go struct field group at command.go:54 group 64 |  |  | 0.629 |
-| walker |  | 1682 | 10 | go struct field group at command.go:54 group 74 |  |  | 0.630 |
-| walker |  | 1692 | 10 | go struct field group at command.go:54 group 77 |  |  | 0.632 |
-| walker |  | 1702 | 10 | go struct field group at command.go:54 group 83 |  |  | 0.634 |
-| walker |  | 1712 | 10 | go struct field group at command.go:54 group 105 |  |  | 0.637 |
-| walker |  | 1722 | 10 | go struct field group at command.go:54 group 195 |  |  | 0.637 |
-| walker |  | 1732 | 10 | go struct field group at command.go:54 group 218 |  |  | 0.637 |
-| walker |  | 1742 | 10 | go struct field group at command.go:54 group 233 |  |  | 0.638 |
-| walker |  | 1752 | 10 | go struct field group at command.go:54 group 259 |  |  | 0.639 |
-| walker |  | 1763 | 11 | go struct field group at command.go:54 group 67 |  |  | 0.642 |
-| walker |  | 1774 | 11 | go struct field group at command.go:54 group 149 |  |  | 0.642 |
-| walker |  | 1785 | 11 | go struct field group at command.go:54 group 230 |  |  | 0.644 |
-| walker |  | 1796 | 11 | go struct field group at command.go:54 group 255 |  |  | 0.647 |
-| walker |  | 1808 | 12 | go struct field group at command.go:54 group 71 |  |  | 0.651 |
-| walker |  | 1820 | 12 | go struct field group at command.go:54 group 93 |  |  | 0.656 |
-| walker |  | 1832 | 12 | go struct field group at command.go:54 group 98 |  |  | 0.661 |
-| walker |  | 1844 | 12 | go struct field group at command.go:54 group 102 |  |  | 0.669 |
-| walker |  | 1856 | 12 | go struct field group at command.go:54 group 109 |  |  | 0.678 |
-| walker |  | 1868 | 12 | go struct field group at command.go:54 group 192 |  |  | 0.678 |
-| walker |  | 1880 | 12 | go struct field group at command.go:54 group 208 |  |  | 0.682 |
-| walker |  | 1892 | 12 | go struct field group at command.go:54 group 236 |  |  | 0.686 |
-| walker |  | 1904 | 12 | go struct field group at command.go:54 group 239 |  |  | 0.690 |
-| walker |  | 1916 | 12 | go struct field group at command.go:54 group 243 |  |  | 0.695 |
-| walker |  | 1937 | 21 | go decl at command.go:45 |  |  | 0.695 |
-| ns | 1945 |  | 286 | Command behavior toggle fields | 2.5 | 2.3 | 0.634 |
-| walker |  | 1950 | 13 | go struct field group at command.go:54 group 189 |  |  | 0.634 |
-| walker |  | 1963 | 13 | go struct field group at command.go:54 group 247 |  |  | 0.640 |
-| walker |  | 1977 | 14 | go struct field group at command.go:54 group 251 |  |  | 0.648 |
-| walker |  | 1992 | 15 | go struct field group at command.go:54 group 205 |  |  | 0.656 |
-| walker |  | 2003 | 11 | go decl doc at command.go:45 |  |  | 0.656 |
-| walker |  | 2019 | 16 | go decl doc at command.go:42 |  |  | 0.656 |
-| walker |  | 2044 | 25 | go struct field group at command.go:54 group 86 |  |  | 0.673 |
-| walker |  | 2077 | 33 | go struct field group at command.go:54 group 198 |  |  | 0.673 |
-| walker |  | 2122 | 45 | go struct field group at command.go:54 group 211 |  |  | 0.673 |
-| walker |  | 2156 | 34 | go decl doc at command.go:275 |  |  | 0.673 |
-| walker |  | 2198 | 42 | go decl doc at command.go:281 |  |  | 0.673 |
-| walker |  | 2257 | 59 | go struct field group at command.go:54 group 221 |  |  | 0.673 |
-| walker |  | 2324 | 67 | go decl doc at command.go:54 |  |  | 0.673 |
-| ns | 2369 |  | 424 | Command methods roster A1: context/IO/template setters + usage/help resolution | 3.1 |  | 0.606 |
-| walker |  | 2377 | 53 | go decl doc at command.go:289 |  |  | 0.606 |
-| walker |  | 2485 | 108 | go decl names surface in bash_completionsV2.go |  |  | 0.606 |
-| walker |  | 2485 | 0 | go decl at bash_completionsV2.go:24 |  |  | 0.606 |
-| walker |  | 2485 | 0 | go decl at bash_completionsV2.go:31 |  |  | 0.606 |
-| walker |  | 2485 | 0 | go decl at bash_completionsV2.go:470 |  |  | 0.606 |
-| walker |  | 2485 | 0 | go decl at bash_completionsV2.go:482 |  |  | 0.606 |
-| walker |  | 2504 | 19 | go decl doc at bash_completionsV2.go:470 |  |  | 0.606 |
-| walker |  | 2519 | 15 | go decl body at bash_completionsV2.go:482 |  |  | 0.606 |
-| walker |  | 2534 | 15 | go decl names surface in command_notwin.go |  |  | 0.606 |
-| walker |  | 2566 | 32 | go decl doc at bash_completionsV2.go:482 |  |  | 0.606 |
-| walker |  | 2665 | 99 | go struct field group at command.go:54 group 172 |  |  | 0.606 |
-| ns | 2666 |  | 297 | Command methods roster A2: flag-arg helpers, Find/Traverse, execute lifecycle | 3.2 |  | 0.571 |
-| walker |  | 2693 | 28 | README.md section #5 |  |  | 0.571 |
-| walker |  | 2820 | 127 | go decl names surface in active_help.go |  |  | 0.571 |
-| walker |  | 2820 | 0 | go decl at active_help.go:38 |  |  | 0.571 |
-| walker |  | 2820 | 0 | go decl at active_help.go:47 |  |  | 0.571 |
-| walker |  | 2820 | 0 | go decl at active_help.go:58 |  |  | 0.571 |
-| walker |  | 2843 | 23 | go decl body at active_help.go:38 |  |  | 0.571 |
-| walker |  | 2957 | 114 | go struct field group at command.go:54 group 152 |  |  | 0.571 |
-| walker |  | 3070 | 113 | go decl doc at command.go:269 |  |  | 0.571 |
-| walker |  | 3163 | 93 | go package + imports in cobra.go |  |  | 0.571 |
-| ns | 3358 |  | 692 | Command.execute(), part 1: flag parsing + help/version short-circuit | 3.3 | 3.2 | 0.502 |
-| walker |  | 3580 | 417 | go decl names surface in cobra.go |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:55 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:59 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:62 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:66 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:81 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:85 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:91 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:99 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:105 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:114 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:144 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:159 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:166 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:174 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:179 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:192 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:225 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:235 |  |  | 0.504 |
-| walker |  | 3580 | 0 | go decl at cobra.go:243 |  |  | 0.504 |
-| walker |  | 3589 | 9 | go decl at cobra.go:45 |  |  | 0.504 |
-| walker |  | 3601 | 12 | go decl body at cobra.go:85 |  |  | 0.504 |
-| walker |  | 3614 | 13 | go decl body at cobra.go:99 |  |  | 0.504 |
-| walker |  | 3627 | 13 | go decl body at cobra.go:105 |  |  | 0.504 |
-| walker |  | 3653 | 26 | go decl at cobra.go:72 |  |  | 0.504 |
-| walker |  | 3672 | 19 | go decl doc at cobra.go:62 |  |  | 0.504 |
-| walker |  | 3697 | 25 | go decl doc at cobra.go:85 |  |  | 0.504 |
-| walker |  | 3722 | 25 | go decl doc at cobra.go:243 |  |  | 0.504 |
-| walker |  | 3750 | 28 | go decl doc at cobra.go:91 |  |  | 0.504 |
-| walker |  | 3778 | 28 | go decl doc at cobra.go:144 |  |  | 0.504 |
-| walker |  | 3807 | 29 | go decl doc at cobra.go:99 |  |  | 0.504 |
-| walker |  | 3836 | 29 | go decl doc at cobra.go:105 |  |  | 0.504 |
-| walker |  | 3870 | 34 | go decl doc at cobra.go:235 |  |  | 0.504 |
-| walker |  | 3886 | 16 | go decl doc at cobra.go:174 |  |  | 0.504 |
-| walker |  | 3905 | 19 | go decl doc at cobra.go:192 |  |  | 0.504 |
-| walker |  | 3940 | 35 | go decl doc at cobra.go:59 |  |  | 0.504 |
-| walker |  | 3983 | 43 | go decl doc at cobra.go:66 |  |  | 0.504 |
-| walker |  | 4029 | 46 | go decl doc at cobra.go:55 |  |  | 0.504 |
-| walker |  | 4059 | 30 | go decl doc at cobra.go:166 |  |  | 0.504 |
-| walker |  | 4129 | 70 | go decl doc at cobra.go:114 |  |  | 0.504 |
-| walker |  | 4191 | 62 | go decl doc at cobra.go:72 |  |  | 0.504 |
-| ns | 4238 |  | 880 | Command.execute(), part 2: the hook-running order | 3.4 | 3.2 | 0.449 |
-| walker |  | 4277 | 86 | go decl doc at cobra.go:81 |  |  | 0.449 |
-| walker |  | 4449 | 172 | go decl names surface #1 in command.go |  |  | 0.459 |
-| walker |  | 4449 | 0 | go decl at command.go:296 |  |  | 0.459 |
-| walker |  | 4449 | 0 | go decl at command.go:302 |  |  | 0.459 |
-| walker |  | 4449 | 0 | go decl at command.go:308 |  |  | 0.459 |
-| walker |  | 4449 | 0 | go decl at command.go:313 |  |  | 0.459 |
-| walker |  | 4449 | 0 | go decl at command.go:318 |  |  | 0.459 |
-| walker |  | 4449 | 0 | go decl at command.go:328 |  |  | 0.459 |
-| walker |  | 4449 | 0 | go decl at command.go:333 |  |  | 0.459 |
-| walker |  | 4449 | 0 | go decl at command.go:338 |  |  | 0.459 |
-| walker |  | 4459 | 10 | go decl body at command.go:333 |  |  | 0.459 |
-| walker |  | 4469 | 10 | go decl body at command.go:338 |  |  | 0.459 |
-| walker |  | 4481 | 12 | go decl doc at command.go:338 |  |  | 0.459 |
-| walker |  | 4492 | 11 | go decl body at command.go:296 |  |  | 0.459 |
-| walker |  | 4510 | 18 | go decl doc at command.go:318 |  |  | 0.459 |
-| walker |  | 4528 | 18 | go decl doc at command.go:333 |  |  | 0.459 |
-| walker |  | 4547 | 19 | go decl doc at command.go:313 |  |  | 0.459 |
-| walker |  | 4574 | 27 | go decl doc at command.go:328 |  |  | 0.459 |
-| walker |  | 4605 | 31 | go decl doc at command.go:296 |  |  | 0.459 |
-| walker |  | 4636 | 31 | go decl doc at command.go:302 |  |  | 0.438 |
-| ns | 4636 |  | 398 | Command.ExecuteC, part 1: setup before dispatch | 3.5 | 3.2 | 0.438 |
-| walker |  | 4667 | 31 | go decl doc at command.go:308 |  |  | 0.438 |
-| walker |  | 4678 | 11 | go decl body at command.go:302 |  |  | 0.438 |
-| walker |  | 4717 | 39 | go package + imports in active_help.go |  |  | 0.438 |
-| walker |  | 4887 | 170 | go decl names surface in powershell_completions.go |  |  | 0.438 |
-| walker |  | 4887 | 0 | go decl at powershell_completions.go:28 |  |  | 0.438 |
-| walker |  | 4887 | 0 | go decl at powershell_completions.go:313 |  |  | 0.438 |
-| walker |  | 4887 | 0 | go decl at powershell_completions.go:320 |  |  | 0.438 |
-| walker |  | 4887 | 0 | go decl at powershell_completions.go:331 |  |  | 0.438 |
-| walker |  | 4887 | 0 | go decl at powershell_completions.go:337 |  |  | 0.438 |
-| walker |  | 4887 | 0 | go decl at powershell_completions.go:342 |  |  | 0.438 |
-| walker |  | 4887 | 0 | go decl at powershell_completions.go:348 |  |  | 0.438 |
-| walker |  | 4901 | 14 | go decl body at powershell_completions.go:337 |  |  | 0.438 |
-| walker |  | 4915 | 14 | go decl body at powershell_completions.go:348 |  |  | 0.438 |
-| walker |  | 4933 | 18 | go decl doc at powershell_completions.go:331 |  |  | 0.438 |
-| walker |  | 4948 | 15 | go decl body at powershell_completions.go:331 |  |  | 0.438 |
-| walker |  | 4968 | 20 | go decl doc at powershell_completions.go:342 |  |  | 0.438 |
-| walker |  | 4998 | 30 | go decl doc at powershell_completions.go:337 |  |  | 0.438 |
-| walker |  | 5030 | 32 | go decl doc at powershell_completions.go:348 |  |  | 0.438 |
-| walker |  | 5046 | 16 | go decl body at active_help.go:58 |  |  | 0.438 |
-| walker |  | 5086 | 40 | go package + imports in shell_completions.go |  |  | 0.438 |
-| walker |  | 5192 | 106 | go package + imports in command.go |  |  | 0.438 |
-| walker |  | 5233 | 41 | go package + imports in args.go |  |  | 0.438 |
-| walker |  | 5244 | 11 | go decl body at command.go:308 |  |  | 0.438 |
-| ns | 5267 |  | 631 | Command.ExecuteC, part 2: dispatch + error handling | 3.6 | 3.2 | 0.411 |
-| walker |  | 5275 | 31 | headings outline in site/content/completions/bash.md |  |  | 0.411 |
-| walker |  | 5282 | 7 | go package + imports in command_notwin.go |  |  | 0.411 |
-| walker |  | 5333 | 51 | go package + imports in bash_completionsV2.go |  |  | 0.411 |
-| walker |  | 5556 | 223 | go decl names surface in args.go |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:28 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:42 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:51 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:69 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:82 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:87 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:97 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:107 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:117 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:127 |  |  | 0.412 |
-| walker |  | 5556 | 0 | go decl at args.go:142 |  |  | 0.412 |
-| walker |  | 5563 | 7 | go decl body at args.go:82 |  |  | 0.412 |
-| walker |  | 5576 | 13 | go decl doc at args.go:82 |  |  | 0.412 |
-| walker |  | 5592 | 16 | go decl doc at args.go:42 |  |  | 0.412 |
-| walker |  | 5610 | 18 | go decl doc at args.go:107 |  |  | 0.412 |
-| ns | 5621 |  | 354 | Command methods roster B1: tree mutation + naming | 3.7 |  | 0.397 |
-| walker |  | 5628 | 18 | go decl doc at args.go:127 |  |  | 0.397 |
-| walker |  | 5647 | 19 | go decl doc at args.go:69 |  |  | 0.397 |
-| walker |  | 5666 | 19 | go decl doc at args.go:97 |  |  | 0.397 |
-| walker |  | 5686 | 20 | go decl doc at args.go:87 |  |  | 0.397 |
-| walker |  | 5708 | 22 | go decl doc at args.go:117 |  |  | 0.397 |
-| walker |  | 5745 | 37 | go decl doc at args.go:51 |  |  | 0.397 |
-| walker |  | 5816 | 71 | go decl doc at args.go:142 |  |  | 0.397 |
-| ns | 5910 |  | 289 | Command methods roster B2: flags accessors + default templates | 3.8 |  | 0.386 |
-| walker |  | 6046 | 230 | go decl names surface in zsh_completions.go |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:25 |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:31 |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:36 |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:42 |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:55 |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:66 |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:70 |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:80 |  |  | 0.386 |
-| walker |  | 6046 | 0 | go decl at zsh_completions.go:87 |  |  | 0.386 |
-| ns | 6049 |  | 139 | args.go: every PositionalArgs validator, name only | 4.1 |  | 0.401 |
-| walker |  | 6053 | 7 | go decl body at zsh_completions.go:55 |  |  | 0.401 |
-| walker |  | 6060 | 7 | go decl body at zsh_completions.go:66 |  |  | 0.401 |
-| walker |  | 6074 | 14 | go decl body at zsh_completions.go:31 |  |  | 0.401 |
-| walker |  | 6088 | 14 | go decl body at zsh_completions.go:42 |  |  | 0.401 |
-| walker |  | 6106 | 18 | go decl doc at zsh_completions.go:25 |  |  | 0.401 |
-| walker |  | 6126 | 20 | go decl doc at zsh_completions.go:36 |  |  | 0.401 |
-| walker |  | 6156 | 30 | go decl doc at zsh_completions.go:31 |  |  | 0.401 |
-| walker |  | 6188 | 32 | go decl doc at zsh_completions.go:42 |  |  | 0.401 |
-| walker |  | 6239 | 51 | go package + imports in zsh_completions.go |  |  | 0.401 |
-| walker |  | 6250 | 11 | go decl body at command.go:313 |  |  | 0.401 |
-| walker |  | 6308 | 58 | go package + imports in fish_completions.go |  |  | 0.401 |
-| walker |  | 6366 | 58 | go package + imports in powershell_completions.go |  |  | 0.401 |
-| ns | 6557 |  | 508 | args.go: no-arg validator bodies (NoArgs, ArbitraryArgs, OnlyValidArgs, NoDuplicateArgs) | 4.2 | 4.1 | 0.390 |
-| walker |  | 6618 | 252 | go decl names surface in shell_completions.go |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:24 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:31 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:38 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:44 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:54 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:61 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:67 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:77 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:83 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:90 |  |  | 0.391 |
-| walker |  | 6618 | 0 | go decl at shell_completions.go:96 |  |  | 0.391 |
-| walker |  | 6631 | 13 | go decl body at shell_completions.go:24 |  |  | 0.391 |
-| walker |  | 6645 | 14 | go decl body at shell_completions.go:31 |  |  | 0.391 |
-| walker |  | 6659 | 14 | go decl body at shell_completions.go:83 |  |  | 0.391 |
-| walker |  | 6674 | 15 | go decl body at shell_completions.go:44 |  |  | 0.391 |
-| walker |  | 6689 | 15 | go decl body at shell_completions.go:54 |  |  | 0.391 |
-| walker |  | 6723 | 34 | go decl doc at shell_completions.go:96 |  |  | 0.391 |
-| walker |  | 6758 | 35 | go decl doc at shell_completions.go:67 |  |  | 0.391 |
-| walker |  | 6792 | 34 | go decl doc at shell_completions.go:83 |  |  | 0.391 |
-| walker |  | 6827 | 35 | go decl doc at shell_completions.go:44 |  |  | 0.391 |
-| walker |  | 6869 | 42 | go decl doc at shell_completions.go:90 |  |  | 0.391 |
-| walker |  | 6912 | 43 | go decl doc at shell_completions.go:61 |  |  | 0.391 |
-| walker |  | 6961 | 49 | go decl doc at shell_completions.go:38 |  |  | 0.391 |
-| ns | 7007 |  | 450 | args.go: parametrized validator bodies (Minimum/Maximum/Exact/RangeArgs) | 4.3 | 4.1 | 0.382 |
-| walker |  | 7008 | 47 | go decl doc at shell_completions.go:24 |  |  | 0.382 |
-| walker |  | 7059 | 51 | go decl doc at shell_completions.go:31 |  |  | 0.382 |
-| walker |  | 7074 | 15 | go decl body at powershell_completions.go:342 |  |  | 0.382 |
-| walker |  | 7110 | 36 | go decl names surface in command_win.go |  |  | 0.382 |
-| walker |  | 7110 | 0 | go decl at command_win.go:30 |  |  | 0.382 |
-| ns | 7221 |  | 214 | user_guide.md heading outline, part 1 (app layout through flags) | 5.1 |  | 0.376 |
-| ns | 7431 |  | 210 | user_guide.md heading outline, part 2 (args through plugins) | 5.2 |  | 0.370 |
-| walker |  | 7495 | 385 | plaintext config Makefile |  |  | 0.371 |
-| ns | 7644 |  | 213 | user_guide.md: Create rootCmd (the bootstrap template) | 5.3 | 5.1 | 0.366 |
-| walker |  | 7690 | 195 | go struct field group at command.go:54 group 128 |  |  | 0.387 |
-| walker |  | 7735 | 45 | go decl body at fish_completions.go:276 |  |  | 0.387 |
-| walker |  | 7778 | 43 | headings outline in site/content/docgen/_index.md |  |  | 0.387 |
-| walker |  | 7789 | 11 | go decl body at command.go:328 |  |  | 0.387 |
-| ns | 7816 |  | 172 | user_guide.md: Required flags | 5.4 | 5.1 | 0.382 |
-| walker |  | 7963 | 174 | go decl names surface #2 in command.go |  |  | 0.397 |
-| walker |  | 7963 | 0 | go decl at command.go:343 |  |  | 0.397 |
-| walker |  | 7963 | 0 | go decl at command.go:352 |  |  | 0.397 |
-| walker |  | 7963 | 0 | go decl at command.go:358 |  |  | 0.397 |
-| walker |  | 7963 | 0 | go decl at command.go:367 |  |  | 0.397 |
-| walker |  | 7963 | 0 | go decl at command.go:376 |  |  | 0.397 |
-| walker |  | 7963 | 0 | go decl at command.go:382 |  |  | 0.397 |
-| walker |  | 7963 | 0 | go decl at command.go:393 |  |  | 0.397 |
-| walker |  | 7963 | 0 | go decl at command.go:398 |  |  | 0.397 |
-| ns | 7972 |  | 156 | user_guide.md: Positional Arguments validator list | 5.5 | 5.2 | 0.394 |
-| walker |  | 7973 | 10 | go decl body at command.go:376 |  |  | 0.394 |
-| walker |  | 7987 | 14 | go decl doc at command.go:393 |  |  | 0.394 |
-| walker |  | 8001 | 14 | go decl doc at command.go:398 |  |  | 0.394 |
-| walker |  | 8013 | 12 | go decl body at command.go:393 |  |  | 0.394 |
-| walker |  | 8032 | 19 | go decl doc at command.go:343 |  |  | 0.394 |
-| walker |  | 8051 | 19 | go decl doc at command.go:352 |  |  | 0.394 |
-| walker |  | 8075 | 24 | go decl doc at command.go:358 |  |  | 0.394 |
-| ns | 8091 |  | 119 | shell_completions.go: MarkFlag*/MarkPersistentFlag* annotators, name only | 6.0 |  | 0.404 |
-| walker |  | 8099 | 24 | go decl doc at command.go:367 |  |  | 0.404 |
-| walker |  | 8124 | 25 | go decl doc at command.go:376 |  |  | 0.404 |
-| ns | 8145 |  | 54 | flag_groups.go: the three Mark*-group annotators, name only | 6.1 |  | 0.404 |
-| walker |  | 8163 | 39 | go decl doc at command.go:382 |  |  | 0.404 |
-| walker |  | 8175 | 12 | go decl body at command.go:398 |  |  | 0.404 |
-| walker |  | 8243 | 68 | go package + imports in flag_groups.go |  |  | 0.404 |
-| ns | 8251 |  | 106 | flag_groups.go: ValidateFlagGroups + helpers, name only | 6.2 |  | 0.401 |
-| walker |  | 8290 | 47 | go decl at active_help.go:22 |  |  | 0.401 |
-| walker |  | 8386 | 96 | go decl doc at active_help.go:47 |  |  | 0.401 |
-| ns | 8398 |  | 147 | cobra.go: every func, name only | 7.1 |  | 0.413 |
-| walker |  | 8483 | 97 | go decl doc at shell_completions.go:77 |  |  | 0.413 |
-| ns | 8517 |  | 119 | Package-level config vars | 7.2 | 7.1 | 0.421 |
-| ns | 8655 |  | 138 | completions.go: every func/method, part 1 (options + registration), name only | 8.1 |  | 0.419 |
-| walker |  | 8792 | 309 | go decl names surface in flag_groups.go |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:33 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:49 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:65 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:81 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:111 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:121 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:144 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:167 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:188 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:209 |  |  | 0.431 |
-| walker |  | 8792 | 0 | go decl at flag_groups.go:225 |  |  | 0.431 |
-| walker |  | 8801 | 9 | go decl at flag_groups.go:25 |  |  | 0.431 |
-| ns | 8815 |  | 160 | completions.go: every func/method, part 2 (internal completion engine), name only | 8.2 |  | 0.427 |
-| walker |  | 8834 | 33 | go decl doc at flag_groups.go:81 |  |  | 0.427 |
-| walker |  | 8875 | 41 | go decl doc at flag_groups.go:33 |  |  | 0.427 |
-| walker |  | 8917 | 42 | go decl doc at flag_groups.go:49 |  |  | 0.427 |
-| ns | 8934 |  | 119 | ShellCompDirective bit-flag constants | 8.3 | 8.1 | 0.425 |
-| walker |  | 8960 | 43 | go decl doc at flag_groups.go:65 |  |  | 0.425 |
-| walker |  | 9093 | 133 | go decl names surface in doc/util.go |  |  | 0.425 |
-| walker |  | 9093 | 0 | go decl at doc/util.go:26 |  |  | 0.425 |
-| walker |  | 9093 | 0 | go decl at doc/util.go:41 |  |  | 0.425 |
-| walker |  | 9108 | 15 | go decl body at zsh_completions.go:25 |  |  | 0.425 |
-| ns | 9125 |  | 191 | active_help.go: AppendActiveHelp | 9.1 |  | 0.422 |
-| walker |  | 9204 | 96 | go decl doc at zsh_completions.go:66 |  |  | 0.422 |
-| walker |  | 9301 | 97 | go decl doc at shell_completions.go:54 |  |  | 0.422 |
-| ns | 9325 |  | 200 | completions/_index.md heading outline, part 1 | 9.2 |  | 0.417 |
-| walker |  | 9443 | 142 | go decl names surface in doc/md_docs.go |  |  | 0.417 |
-| walker |  | 9443 | 0 | go decl at doc/md_docs.go:32 |  |  | 0.417 |
-| walker |  | 9443 | 0 | go decl at doc/md_docs.go:52 |  |  | 0.417 |
-| walker |  | 9443 | 0 | go decl at doc/md_docs.go:57 |  |  | 0.417 |
-| walker |  | 9443 | 0 | go decl at doc/md_docs.go:125 |  |  | 0.417 |
-| walker |  | 9443 | 0 | go decl at doc/md_docs.go:133 |  |  | 0.417 |
-| walker |  | 9454 | 11 | go decl doc at doc/md_docs.go:52 |  |  | 0.417 |
-| walker |  | 9467 | 13 | go decl doc at doc/md_docs.go:57 |  |  | 0.417 |
-| ns | 9480 |  | 155 | completions/_index.md heading outline, part 2 | 9.3 |  | 0.414 |
-| walker |  | 9488 | 21 | go decl body at doc/md_docs.go:52 |  |  | 0.414 |
-| walker |  | 9521 | 33 | go decl doc at doc/md_docs.go:133 |  |  | 0.414 |
-| walker |  | 9621 | 100 | go decl at cobra.go:32 |  |  | 0.414 |
-| walker |  | 9674 | 53 | headings outline in site/content/completions/zsh.md |  |  | 0.414 |
-| walker |  | 9819 | 145 | go decl names surface in doc/yaml_docs.go |  |  | 0.414 |
-| walker |  | 9819 | 0 | go decl at doc/yaml_docs.go:53 |  |  | 0.414 |
-| walker |  | 9819 | 0 | go decl at doc/yaml_docs.go:60 |  |  | 0.414 |
-| walker |  | 9819 | 0 | go decl at doc/yaml_docs.go:88 |  |  | 0.414 |
-| walker |  | 9819 | 0 | go decl at doc/yaml_docs.go:93 |  |  | 0.414 |
-| walker |  | 9819 | 0 | go decl at doc/yaml_docs.go:149 |  |  | 0.414 |
-| walker |  | 9830 | 11 | go decl doc at doc/yaml_docs.go:88 |  |  | 0.414 |
-| walker |  | 9843 | 13 | go decl doc at doc/yaml_docs.go:93 |  |  | 0.414 |
-| walker |  | 9858 | 15 | go decl doc at doc/yaml_docs.go:60 |  |  | 0.414 |
-| ns | 9865 |  | 385 | Makefile | 10.1 |  | 0.438 |
-| walker |  | 9879 | 21 | go decl body at doc/yaml_docs.go:88 |  |  | 0.438 |
-| walker |  | 9976 | 97 | headings outline in site/content/active_help.md |  |  | 0.438 |
-| ns | 9993 |  | 128 | CONTRIBUTING.md: CLA + test commands | 10.2 |  | 0.436 |
+| walker |  | 1656 | 211 | README prelude in README.md |  |  | 0.746 |
+| ns | 1659 |  | 303 | Command run-hook fields + execution order | 2.4 | 2.2 | 0.663 |
+| walker |  | 1837 | 181 | go decl names surface in command.go |  |  | 0.664 |
+| walker |  | 1837 | 0 | go decl at command.go:42 |  |  | 0.664 |
+| walker |  | 1837 | 0 | go decl at command.go:269 |  |  | 0.664 |
+| walker |  | 1837 | 0 | go decl at command.go:275 |  |  | 0.664 |
+| walker |  | 1837 | 0 | go decl at command.go:281 |  |  | 0.664 |
+| walker |  | 1837 | 0 | go decl at command.go:289 |  |  | 0.664 |
+| walker |  | 1844 | 7 | go decl at command.go:54 |  |  | 0.664 |
+| walker |  | 1853 | 9 | go struct field group at command.go:54 group 80 |  |  | 0.664 |
+| walker |  | 1862 | 9 | go struct field group at command.go:54 group 115 |  |  | 0.664 |
+| walker |  | 1873 | 11 | go decl at command.go:33 |  |  | 0.664 |
+| walker |  | 1883 | 10 | go struct field group at command.go:54 group 64 |  |  | 0.665 |
+| walker |  | 1893 | 10 | go struct field group at command.go:54 group 74 |  |  | 0.667 |
+| walker |  | 1903 | 10 | go struct field group at command.go:54 group 77 |  |  | 0.669 |
+| walker |  | 1913 | 10 | go struct field group at command.go:54 group 83 |  |  | 0.671 |
+| walker |  | 1923 | 10 | go struct field group at command.go:54 group 105 |  |  | 0.674 |
+| walker |  | 1933 | 10 | go struct field group at command.go:54 group 195 |  |  | 0.674 |
+| walker |  | 1943 | 10 | go struct field group at command.go:54 group 218 |  |  | 0.674 |
+| ns | 1945 |  | 286 | Command behavior toggle fields | 2.5 | 2.3 | 0.612 |
+| walker |  | 1953 | 10 | go struct field group at command.go:54 group 233 |  |  | 0.612 |
+| walker |  | 1963 | 10 | go struct field group at command.go:54 group 259 |  |  | 0.613 |
+| walker |  | 1974 | 11 | go struct field group at command.go:54 group 67 |  |  | 0.616 |
+| walker |  | 1985 | 11 | go struct field group at command.go:54 group 149 |  |  | 0.616 |
+| walker |  | 1996 | 11 | go struct field group at command.go:54 group 230 |  |  | 0.618 |
+| walker |  | 2007 | 11 | go struct field group at command.go:54 group 255 |  |  | 0.621 |
+| walker |  | 2019 | 12 | go struct field group at command.go:54 group 71 |  |  | 0.625 |
+| walker |  | 2031 | 12 | go struct field group at command.go:54 group 93 |  |  | 0.630 |
+| walker |  | 2043 | 12 | go struct field group at command.go:54 group 98 |  |  | 0.635 |
+| walker |  | 2055 | 12 | go struct field group at command.go:54 group 102 |  |  | 0.642 |
+| walker |  | 2067 | 12 | go struct field group at command.go:54 group 109 |  |  | 0.650 |
+| walker |  | 2079 | 12 | go struct field group at command.go:54 group 192 |  |  | 0.650 |
+| walker |  | 2091 | 12 | go struct field group at command.go:54 group 208 |  |  | 0.654 |
+| walker |  | 2103 | 12 | go struct field group at command.go:54 group 236 |  |  | 0.657 |
+| walker |  | 2115 | 12 | go struct field group at command.go:54 group 239 |  |  | 0.662 |
+| walker |  | 2127 | 12 | go struct field group at command.go:54 group 243 |  |  | 0.668 |
+| walker |  | 2148 | 21 | go decl at command.go:45 |  |  | 0.668 |
+| walker |  | 2161 | 13 | go struct field group at command.go:54 group 189 |  |  | 0.668 |
+| walker |  | 2174 | 13 | go struct field group at command.go:54 group 247 |  |  | 0.674 |
+| walker |  | 2188 | 14 | go struct field group at command.go:54 group 251 |  |  | 0.682 |
+| walker |  | 2203 | 15 | go struct field group at command.go:54 group 205 |  |  | 0.690 |
+| walker |  | 2214 | 11 | go decl doc at command.go:45 |  |  | 0.690 |
+| walker |  | 2230 | 16 | go decl doc at command.go:42 |  |  | 0.690 |
+| walker |  | 2255 | 25 | go struct field group at command.go:54 group 86 |  |  | 0.707 |
+| walker |  | 2288 | 33 | go struct field group at command.go:54 group 198 |  |  | 0.707 |
+| walker |  | 2333 | 45 | go struct field group at command.go:54 group 211 |  |  | 0.707 |
+| walker |  | 2367 | 34 | go decl doc at command.go:275 |  |  | 0.707 |
+| ns | 2369 |  | 424 | Command methods roster A1: context/IO/template setters + usage/help resolution | 3.1 |  | 0.637 |
+| walker |  | 2409 | 42 | go decl doc at command.go:281 |  |  | 0.637 |
+| walker |  | 2468 | 59 | go struct field group at command.go:54 group 221 |  |  | 0.637 |
+| walker |  | 2535 | 67 | go decl doc at command.go:54 |  |  | 0.637 |
+| walker |  | 2588 | 53 | go decl doc at command.go:289 |  |  | 0.637 |
+| ns | 2666 |  | 297 | Command methods roster A2: flag-arg helpers, Find/Traverse, execute lifecycle | 3.2 |  | 0.600 |
+| walker |  | 2696 | 108 | go decl names surface in bash_completionsV2.go |  |  | 0.600 |
+| walker |  | 2696 | 0 | go decl at bash_completionsV2.go:24 |  |  | 0.600 |
+| walker |  | 2696 | 0 | go decl at bash_completionsV2.go:31 |  |  | 0.600 |
+| walker |  | 2696 | 0 | go decl at bash_completionsV2.go:470 |  |  | 0.600 |
+| walker |  | 2696 | 0 | go decl at bash_completionsV2.go:482 |  |  | 0.600 |
+| walker |  | 2715 | 19 | go decl doc at bash_completionsV2.go:470 |  |  | 0.600 |
+| walker |  | 2730 | 15 | go decl body at bash_completionsV2.go:482 |  |  | 0.600 |
+| walker |  | 2745 | 15 | go decl names surface in command_notwin.go |  |  | 0.600 |
+| walker |  | 2777 | 32 | go decl doc at bash_completionsV2.go:482 |  |  | 0.600 |
+| walker |  | 2876 | 99 | go struct field group at command.go:54 group 172 |  |  | 0.600 |
+| walker |  | 2904 | 28 | README.md section #5 |  |  | 0.600 |
+| walker |  | 3031 | 127 | go decl names surface in active_help.go |  |  | 0.600 |
+| walker |  | 3031 | 0 | go decl at active_help.go:38 |  |  | 0.600 |
+| walker |  | 3031 | 0 | go decl at active_help.go:47 |  |  | 0.600 |
+| walker |  | 3031 | 0 | go decl at active_help.go:58 |  |  | 0.600 |
+| walker |  | 3054 | 23 | go decl body at active_help.go:38 |  |  | 0.600 |
+| walker |  | 3168 | 114 | go struct field group at command.go:54 group 152 |  |  | 0.600 |
+| walker |  | 3281 | 113 | go decl doc at command.go:269 |  |  | 0.600 |
+| ns | 3358 |  | 692 | Command.execute(), part 1: flag parsing + help/version short-circuit | 3.3 | 3.2 | 0.528 |
+| walker |  | 3374 | 93 | go package + imports in cobra.go |  |  | 0.528 |
+| walker |  | 3791 | 417 | go decl names surface in cobra.go |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:55 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:59 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:62 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:66 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:81 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:85 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:91 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:99 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:105 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:114 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:144 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:159 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:166 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:174 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:179 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:192 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:225 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:235 |  |  | 0.529 |
+| walker |  | 3791 | 0 | go decl at cobra.go:243 |  |  | 0.529 |
+| walker |  | 3800 | 9 | go decl at cobra.go:45 |  |  | 0.529 |
+| walker |  | 3812 | 12 | go decl body at cobra.go:85 |  |  | 0.529 |
+| walker |  | 3825 | 13 | go decl body at cobra.go:99 |  |  | 0.529 |
+| walker |  | 3838 | 13 | go decl body at cobra.go:105 |  |  | 0.529 |
+| walker |  | 3864 | 26 | go decl at cobra.go:72 |  |  | 0.529 |
+| walker |  | 3883 | 19 | go decl doc at cobra.go:62 |  |  | 0.529 |
+| walker |  | 3908 | 25 | go decl doc at cobra.go:85 |  |  | 0.529 |
+| walker |  | 3933 | 25 | go decl doc at cobra.go:243 |  |  | 0.529 |
+| walker |  | 3961 | 28 | go decl doc at cobra.go:91 |  |  | 0.529 |
+| walker |  | 3989 | 28 | go decl doc at cobra.go:144 |  |  | 0.529 |
+| walker |  | 4018 | 29 | go decl doc at cobra.go:99 |  |  | 0.529 |
+| walker |  | 4047 | 29 | go decl doc at cobra.go:105 |  |  | 0.529 |
+| walker |  | 4081 | 34 | go decl doc at cobra.go:235 |  |  | 0.529 |
+| walker |  | 4097 | 16 | go decl doc at cobra.go:174 |  |  | 0.529 |
+| walker |  | 4116 | 19 | go decl doc at cobra.go:192 |  |  | 0.529 |
+| walker |  | 4151 | 35 | go decl doc at cobra.go:59 |  |  | 0.529 |
+| walker |  | 4194 | 43 | go decl doc at cobra.go:66 |  |  | 0.529 |
+| ns | 4238 |  | 880 | Command.execute(), part 2: the hook-running order | 3.4 | 3.2 | 0.472 |
+| walker |  | 4240 | 46 | go decl doc at cobra.go:55 |  |  | 0.472 |
+| walker |  | 4270 | 30 | go decl doc at cobra.go:166 |  |  | 0.472 |
+| walker |  | 4340 | 70 | go decl doc at cobra.go:114 |  |  | 0.472 |
+| walker |  | 4402 | 62 | go decl doc at cobra.go:72 |  |  | 0.472 |
+| walker |  | 4488 | 86 | go decl doc at cobra.go:81 |  |  | 0.472 |
+| ns | 4636 |  | 398 | Command.ExecuteC, part 1: setup before dispatch | 3.5 | 3.2 | 0.450 |
+| walker |  | 4660 | 172 | go decl names surface #1 in command.go |  |  | 0.460 |
+| walker |  | 4660 | 0 | go decl at command.go:296 |  |  | 0.460 |
+| walker |  | 4660 | 0 | go decl at command.go:302 |  |  | 0.460 |
+| walker |  | 4660 | 0 | go decl at command.go:308 |  |  | 0.460 |
+| walker |  | 4660 | 0 | go decl at command.go:313 |  |  | 0.460 |
+| walker |  | 4660 | 0 | go decl at command.go:318 |  |  | 0.460 |
+| walker |  | 4660 | 0 | go decl at command.go:328 |  |  | 0.460 |
+| walker |  | 4660 | 0 | go decl at command.go:333 |  |  | 0.460 |
+| walker |  | 4660 | 0 | go decl at command.go:338 |  |  | 0.460 |
+| walker |  | 4670 | 10 | go decl body at command.go:333 |  |  | 0.460 |
+| walker |  | 4680 | 10 | go decl body at command.go:338 |  |  | 0.460 |
+| walker |  | 4692 | 12 | go decl doc at command.go:338 |  |  | 0.460 |
+| walker |  | 4703 | 11 | go decl body at command.go:296 |  |  | 0.460 |
+| walker |  | 4721 | 18 | go decl doc at command.go:318 |  |  | 0.460 |
+| walker |  | 4739 | 18 | go decl doc at command.go:333 |  |  | 0.460 |
+| walker |  | 4758 | 19 | go decl doc at command.go:313 |  |  | 0.460 |
+| walker |  | 4785 | 27 | go decl doc at command.go:328 |  |  | 0.460 |
+| walker |  | 4816 | 31 | go decl doc at command.go:296 |  |  | 0.460 |
+| walker |  | 4847 | 31 | go decl doc at command.go:302 |  |  | 0.460 |
+| walker |  | 4878 | 31 | go decl doc at command.go:308 |  |  | 0.460 |
+| walker |  | 4889 | 11 | go decl body at command.go:302 |  |  | 0.460 |
+| walker |  | 4928 | 39 | go package + imports in active_help.go |  |  | 0.460 |
+| walker |  | 5098 | 170 | go decl names surface in powershell_completions.go |  |  | 0.460 |
+| walker |  | 5098 | 0 | go decl at powershell_completions.go:28 |  |  | 0.460 |
+| walker |  | 5098 | 0 | go decl at powershell_completions.go:313 |  |  | 0.460 |
+| walker |  | 5098 | 0 | go decl at powershell_completions.go:320 |  |  | 0.460 |
+| walker |  | 5098 | 0 | go decl at powershell_completions.go:331 |  |  | 0.460 |
+| walker |  | 5098 | 0 | go decl at powershell_completions.go:337 |  |  | 0.460 |
+| walker |  | 5098 | 0 | go decl at powershell_completions.go:342 |  |  | 0.460 |
+| walker |  | 5098 | 0 | go decl at powershell_completions.go:348 |  |  | 0.460 |
+| walker |  | 5112 | 14 | go decl body at powershell_completions.go:337 |  |  | 0.460 |
+| walker |  | 5126 | 14 | go decl body at powershell_completions.go:348 |  |  | 0.460 |
+| walker |  | 5144 | 18 | go decl doc at powershell_completions.go:331 |  |  | 0.460 |
+| walker |  | 5159 | 15 | go decl body at powershell_completions.go:331 |  |  | 0.460 |
+| walker |  | 5179 | 20 | go decl doc at powershell_completions.go:342 |  |  | 0.460 |
+| walker |  | 5209 | 30 | go decl doc at powershell_completions.go:337 |  |  | 0.460 |
+| walker |  | 5241 | 32 | go decl doc at powershell_completions.go:348 |  |  | 0.460 |
+| walker |  | 5257 | 16 | go decl body at active_help.go:58 |  |  | 0.460 |
+| ns | 5267 |  | 631 | Command.ExecuteC, part 2: dispatch + error handling | 3.6 | 3.2 | 0.431 |
+| walker |  | 5297 | 40 | go package + imports in shell_completions.go |  |  | 0.431 |
+| walker |  | 5403 | 106 | go package + imports in command.go |  |  | 0.431 |
+| walker |  | 5444 | 41 | go package + imports in args.go |  |  | 0.431 |
+| walker |  | 5455 | 11 | go decl body at command.go:308 |  |  | 0.431 |
+| walker |  | 5486 | 31 | headings outline in site/content/completions/bash.md |  |  | 0.431 |
+| walker |  | 5493 | 7 | go package + imports in command_notwin.go |  |  | 0.431 |
+| walker |  | 5544 | 51 | go package + imports in bash_completionsV2.go |  |  | 0.431 |
+| ns | 5621 |  | 354 | Command methods roster B1: tree mutation + naming | 3.7 |  | 0.415 |
+| walker |  | 5767 | 223 | go decl names surface in args.go |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:28 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:42 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:51 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:69 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:82 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:87 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:97 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:107 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:117 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:127 |  |  | 0.416 |
+| walker |  | 5767 | 0 | go decl at args.go:142 |  |  | 0.416 |
+| walker |  | 5774 | 7 | go decl body at args.go:82 |  |  | 0.416 |
+| walker |  | 5787 | 13 | go decl doc at args.go:82 |  |  | 0.416 |
+| walker |  | 5803 | 16 | go decl doc at args.go:42 |  |  | 0.416 |
+| walker |  | 5821 | 18 | go decl doc at args.go:107 |  |  | 0.416 |
+| walker |  | 5839 | 18 | go decl doc at args.go:127 |  |  | 0.416 |
+| walker |  | 5858 | 19 | go decl doc at args.go:69 |  |  | 0.416 |
+| walker |  | 5877 | 19 | go decl doc at args.go:97 |  |  | 0.416 |
+| walker |  | 5897 | 20 | go decl doc at args.go:87 |  |  | 0.417 |
+| ns | 5910 |  | 289 | Command methods roster B2: flags accessors + default templates | 3.8 |  | 0.405 |
+| walker |  | 5919 | 22 | go decl doc at args.go:117 |  |  | 0.405 |
+| walker |  | 5956 | 37 | go decl doc at args.go:51 |  |  | 0.405 |
+| walker |  | 6027 | 71 | go decl doc at args.go:142 |  |  | 0.405 |
+| ns | 6049 |  | 139 | args.go: every PositionalArgs validator, name only | 4.1 |  | 0.420 |
+| walker |  | 6257 | 230 | go decl names surface in zsh_completions.go |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:25 |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:31 |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:36 |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:42 |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:55 |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:66 |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:70 |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:80 |  |  | 0.420 |
+| walker |  | 6257 | 0 | go decl at zsh_completions.go:87 |  |  | 0.420 |
+| walker |  | 6264 | 7 | go decl body at zsh_completions.go:55 |  |  | 0.420 |
+| walker |  | 6271 | 7 | go decl body at zsh_completions.go:66 |  |  | 0.420 |
+| walker |  | 6285 | 14 | go decl body at zsh_completions.go:31 |  |  | 0.420 |
+| walker |  | 6299 | 14 | go decl body at zsh_completions.go:42 |  |  | 0.420 |
+| walker |  | 6317 | 18 | go decl doc at zsh_completions.go:25 |  |  | 0.420 |
+| walker |  | 6337 | 20 | go decl doc at zsh_completions.go:36 |  |  | 0.420 |
+| walker |  | 6367 | 30 | go decl doc at zsh_completions.go:31 |  |  | 0.420 |
+| walker |  | 6399 | 32 | go decl doc at zsh_completions.go:42 |  |  | 0.420 |
+| walker |  | 6450 | 51 | go package + imports in zsh_completions.go |  |  | 0.420 |
+| walker |  | 6461 | 11 | go decl body at command.go:313 |  |  | 0.420 |
+| walker |  | 6519 | 58 | go package + imports in fish_completions.go |  |  | 0.420 |
+| ns | 6557 |  | 508 | args.go: no-arg validator bodies (NoArgs, ArbitraryArgs, OnlyValidArgs, NoDuplicateArgs) | 4.2 | 4.1 | 0.409 |
+| walker |  | 6577 | 58 | go package + imports in powershell_completions.go |  |  | 0.409 |
+| walker |  | 6829 | 252 | go decl names surface in shell_completions.go |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:24 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:31 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:38 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:44 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:54 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:61 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:67 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:77 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:83 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:90 |  |  | 0.409 |
+| walker |  | 6829 | 0 | go decl at shell_completions.go:96 |  |  | 0.409 |
+| walker |  | 6842 | 13 | go decl body at shell_completions.go:24 |  |  | 0.409 |
+| walker |  | 6856 | 14 | go decl body at shell_completions.go:31 |  |  | 0.409 |
+| walker |  | 6870 | 14 | go decl body at shell_completions.go:83 |  |  | 0.409 |
+| walker |  | 6885 | 15 | go decl body at shell_completions.go:44 |  |  | 0.409 |
+| walker |  | 6900 | 15 | go decl body at shell_completions.go:54 |  |  | 0.409 |
+| walker |  | 6934 | 34 | go decl doc at shell_completions.go:96 |  |  | 0.409 |
+| walker |  | 6969 | 35 | go decl doc at shell_completions.go:67 |  |  | 0.409 |
+| walker |  | 7003 | 34 | go decl doc at shell_completions.go:83 |  |  | 0.409 |
+| ns | 7007 |  | 450 | args.go: parametrized validator bodies (Minimum/Maximum/Exact/RangeArgs) | 4.3 | 4.1 | 0.400 |
+| walker |  | 7038 | 35 | go decl doc at shell_completions.go:44 |  |  | 0.400 |
+| walker |  | 7080 | 42 | go decl doc at shell_completions.go:90 |  |  | 0.400 |
+| walker |  | 7123 | 43 | go decl doc at shell_completions.go:61 |  |  | 0.400 |
+| walker |  | 7172 | 49 | go decl doc at shell_completions.go:38 |  |  | 0.400 |
+| walker |  | 7219 | 47 | go decl doc at shell_completions.go:24 |  |  | 0.400 |
+| ns | 7221 |  | 214 | user_guide.md heading outline, part 1 (app layout through flags) | 5.1 |  | 0.393 |
+| walker |  | 7270 | 51 | go decl doc at shell_completions.go:31 |  |  | 0.393 |
+| walker |  | 7285 | 15 | go decl body at powershell_completions.go:342 |  |  | 0.393 |
+| walker |  | 7321 | 36 | go decl names surface in command_win.go |  |  | 0.393 |
+| walker |  | 7321 | 0 | go decl at command_win.go:30 |  |  | 0.393 |
+| ns | 7431 |  | 210 | user_guide.md heading outline, part 2 (args through plugins) | 5.2 |  | 0.387 |
+| ns | 7644 |  | 213 | user_guide.md: Create rootCmd (the bootstrap template) | 5.3 | 5.1 | 0.381 |
+| walker |  | 7706 | 385 | plaintext config Makefile |  |  | 0.383 |
+| ns | 7816 |  | 172 | user_guide.md: Required flags | 5.4 | 5.1 | 0.378 |
+| walker |  | 7901 | 195 | go struct field group at command.go:54 group 128 |  |  | 0.400 |
+| walker |  | 7946 | 45 | go decl body at fish_completions.go:276 |  |  | 0.400 |
+| ns | 7972 |  | 156 | user_guide.md: Positional Arguments validator list | 5.5 | 5.2 | 0.397 |
+| walker |  | 7989 | 43 | headings outline in site/content/docgen/_index.md |  |  | 0.397 |
+| walker |  | 8000 | 11 | go decl body at command.go:328 |  |  | 0.397 |
+| ns | 8091 |  | 119 | shell_completions.go: MarkFlag*/MarkPersistentFlag* annotators, name only | 6.0 |  | 0.408 |
+| ns | 8145 |  | 54 | flag_groups.go: the three Mark*-group annotators, name only | 6.1 |  | 0.407 |
+| walker |  | 8174 | 174 | go decl names surface #2 in command.go |  |  | 0.421 |
+| walker |  | 8174 | 0 | go decl at command.go:343 |  |  | 0.421 |
+| walker |  | 8174 | 0 | go decl at command.go:352 |  |  | 0.421 |
+| walker |  | 8174 | 0 | go decl at command.go:358 |  |  | 0.421 |
+| walker |  | 8174 | 0 | go decl at command.go:367 |  |  | 0.421 |
+| walker |  | 8174 | 0 | go decl at command.go:376 |  |  | 0.421 |
+| walker |  | 8174 | 0 | go decl at command.go:382 |  |  | 0.421 |
+| walker |  | 8174 | 0 | go decl at command.go:393 |  |  | 0.421 |
+| walker |  | 8174 | 0 | go decl at command.go:398 |  |  | 0.421 |
+| walker |  | 8184 | 10 | go decl body at command.go:376 |  |  | 0.421 |
+| walker |  | 8198 | 14 | go decl doc at command.go:393 |  |  | 0.421 |
+| walker |  | 8212 | 14 | go decl doc at command.go:398 |  |  | 0.421 |
+| walker |  | 8224 | 12 | go decl body at command.go:393 |  |  | 0.421 |
+| walker |  | 8243 | 19 | go decl doc at command.go:343 |  |  | 0.421 |
+| ns | 8251 |  | 106 | flag_groups.go: ValidateFlagGroups + helpers, name only | 6.2 |  | 0.418 |
+| walker |  | 8262 | 19 | go decl doc at command.go:352 |  |  | 0.418 |
+| walker |  | 8286 | 24 | go decl doc at command.go:358 |  |  | 0.418 |
+| walker |  | 8310 | 24 | go decl doc at command.go:367 |  |  | 0.418 |
+| walker |  | 8335 | 25 | go decl doc at command.go:376 |  |  | 0.418 |
+| walker |  | 8374 | 39 | go decl doc at command.go:382 |  |  | 0.418 |
+| walker |  | 8386 | 12 | go decl body at command.go:398 |  |  | 0.418 |
+| ns | 8398 |  | 147 | cobra.go: every func, name only | 7.1 |  | 0.431 |
+| walker |  | 8454 | 68 | go package + imports in flag_groups.go |  |  | 0.431 |
+| walker |  | 8501 | 47 | go decl at active_help.go:22 |  |  | 0.431 |
+| ns | 8517 |  | 119 | Package-level config vars | 7.2 | 7.1 | 0.439 |
+| walker |  | 8597 | 96 | go decl doc at active_help.go:47 |  |  | 0.439 |
+| ns | 8655 |  | 138 | completions.go: every func/method, part 1 (options + registration), name only | 8.1 |  | 0.436 |
+| walker |  | 8694 | 97 | go decl doc at shell_completions.go:77 |  |  | 0.436 |
+| ns | 8815 |  | 160 | completions.go: every func/method, part 2 (internal completion engine), name only | 8.2 |  | 0.432 |
+| ns | 8934 |  | 119 | ShellCompDirective bit-flag constants | 8.3 | 8.1 | 0.429 |
+| walker |  | 9003 | 309 | go decl names surface in flag_groups.go |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:33 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:49 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:65 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:81 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:111 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:121 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:144 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:167 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:188 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:209 |  |  | 0.442 |
+| walker |  | 9003 | 0 | go decl at flag_groups.go:225 |  |  | 0.442 |
+| walker |  | 9012 | 9 | go decl at flag_groups.go:25 |  |  | 0.442 |
+| walker |  | 9045 | 33 | go decl doc at flag_groups.go:81 |  |  | 0.442 |
+| walker |  | 9086 | 41 | go decl doc at flag_groups.go:33 |  |  | 0.442 |
+| ns | 9125 |  | 191 | active_help.go: AppendActiveHelp | 9.1 |  | 0.439 |
+| walker |  | 9128 | 42 | go decl doc at flag_groups.go:49 |  |  | 0.439 |
+| walker |  | 9171 | 43 | go decl doc at flag_groups.go:65 |  |  | 0.439 |
+| walker |  | 9304 | 133 | go decl names surface in doc/util.go |  |  | 0.439 |
+| walker |  | 9304 | 0 | go decl at doc/util.go:26 |  |  | 0.439 |
+| walker |  | 9304 | 0 | go decl at doc/util.go:41 |  |  | 0.439 |
+| walker |  | 9319 | 15 | go decl body at zsh_completions.go:25 |  |  | 0.439 |
+| ns | 9325 |  | 200 | completions/_index.md heading outline, part 1 | 9.2 |  | 0.434 |
+| walker |  | 9415 | 96 | go decl doc at zsh_completions.go:66 |  |  | 0.434 |
+| ns | 9480 |  | 155 | completions/_index.md heading outline, part 2 | 9.3 |  | 0.430 |
+| walker |  | 9512 | 97 | go decl doc at shell_completions.go:54 |  |  | 0.430 |
+| walker |  | 9654 | 142 | go decl names surface in doc/md_docs.go |  |  | 0.430 |
+| walker |  | 9654 | 0 | go decl at doc/md_docs.go:32 |  |  | 0.430 |
+| walker |  | 9654 | 0 | go decl at doc/md_docs.go:52 |  |  | 0.430 |
+| walker |  | 9654 | 0 | go decl at doc/md_docs.go:57 |  |  | 0.430 |
+| walker |  | 9654 | 0 | go decl at doc/md_docs.go:125 |  |  | 0.430 |
+| walker |  | 9654 | 0 | go decl at doc/md_docs.go:133 |  |  | 0.430 |
+| walker |  | 9665 | 11 | go decl doc at doc/md_docs.go:52 |  |  | 0.430 |
+| walker |  | 9678 | 13 | go decl doc at doc/md_docs.go:57 |  |  | 0.430 |
+| walker |  | 9699 | 21 | go decl body at doc/md_docs.go:52 |  |  | 0.430 |
+| walker |  | 9732 | 33 | go decl doc at doc/md_docs.go:133 |  |  | 0.430 |
+| walker |  | 9832 | 100 | go decl at cobra.go:32 |  |  | 0.430 |
+| ns | 9865 |  | 385 | Makefile | 10.1 |  | 0.455 |
+| walker |  | 9885 | 53 | headings outline in site/content/completions/zsh.md |  |  | 0.455 |
+| ns | 9993 |  | 128 | CONTRIBUTING.md: CLA + test commands | 10.2 |  | 0.453 |

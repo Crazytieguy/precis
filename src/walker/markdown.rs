@@ -128,6 +128,12 @@ const HEADLINE_BLOCK_BYTE_GATE: usize = 16 * 1024;
 const HEADLINE_OVERSIZE_LEDE_BYTES: usize = 640;
 const HEADLINE_OVERSIZE_LINE_CHARS: usize = 320;
 
+/// Source-byte ceiling on the `Prelude` batch. The hero region of a
+/// normal README is well under this; the cap only stops a README that
+/// puts its whole body above the first heading from shipping as one
+/// unsplittable early-budget lump.
+const PRELUDE_MAX_BYTES: usize = 2_500;
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md");
     let mut out = Vec::new();
@@ -255,6 +261,19 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
             headline_emitted = Some(BatchKey::Markdown(key));
         }
+        if let Some(spec) = &headline
+            && !suppress_body
+        {
+            let rows = prelude_remainder_rows(&tree, &source, spec);
+            if let Some(content) = single_file_lines_content(&file, &source, FileLines::new(rows)) {
+                out.push(Batch {
+                    key: MarkdownKey::Prelude { file: file.clone() }.into(),
+                    predecessor: headline_emitted.clone(),
+                    content,
+                    value: prelude_value(&file, ctx),
+                });
+            }
+        }
         let mut outline_emitted: Option<BatchKey> = None;
         if outline_emits && let Some(content) = build_outline_content(&file, &source, &outline_rows)
         {
@@ -334,6 +353,17 @@ fn summary_value(file: &Path, ctx: &WalkCtx) -> f64 {
 fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
 }
+
+/// `Prelude` prices as the README's index-0 section: it is the top of
+/// the README body, just above the first heading rather than below it.
+fn prelude_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx)) * PRELUDE_VALUE_FACTOR
+}
+
+/// Discount on the section-0 value. Part of the prelude is chrome
+/// (logo wrapper, badges) even when the rest is the project's lede,
+/// so it should not outrank a heading-titled section of the same size.
+const PRELUDE_VALUE_FACTOR: f64 = 1.3;
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -> f64 {
     mix_signals(
@@ -733,10 +763,11 @@ fn build_section_content(
 
     // For README section 0, skip lines `ReadmeHeadline` covers — else
     // their marginal cost goes to 0 and `ratio(value, 0) = ∞`.
-    // (`headline` is `Some` only for READMEs.)
+    // (`headline` is `Some` only for READMEs.) Rows the headline
+    // stepped *over* are dropped with them: admitting that chrome
+    // measured −0.0033 corpus mean (design-notes).
     let effective_start = if section_index == 0
-        && let Some(spec) = headline
-        && let Some(max_row) = spec.last_covered_row()
+        && let Some(max_row) = headline.and_then(|spec| spec.covered_rows.iter().next_back())
     {
         (max_row + 1).max(start)
     } else {
@@ -1251,12 +1282,6 @@ struct TruncatedRow {
     pattern: String,
 }
 
-impl HeadlineSpec {
-    fn last_covered_row(&self) -> Option<usize> {
-        self.covered_rows.iter().next_back().copied()
-    }
-}
-
 /// Block kinds that bound a section — `ReadmeHeadline` never reaches
 /// past these.
 fn is_section_boundary(kind: &str) -> bool {
@@ -1530,7 +1555,13 @@ fn is_decorative_paragraph(para: Node, source: &str) -> bool {
 
 fn is_decorative_block(block: Node, source: &str) -> bool {
     match block.kind() {
-        "paragraph" => is_decorative_paragraph(block, source),
+        // A paragraph can be a badge wall written as raw HTML
+        // (`<a …><img …></a>` per line) rather than markdown images —
+        // same decoration, so the same tag-stripping test applies.
+        "paragraph" => {
+            is_decorative_paragraph(block, source)
+                || is_raw_html_markup(&source[block.start_byte()..block.end_byte()])
+        }
         "html_block" => is_decorative_html_block(block, source),
         "block_quote" => is_admin_block_quote(block, source),
         _ => false,
@@ -1579,6 +1610,46 @@ fn is_decorative_html_block(block: Node, source: &str) -> bool {
     let raw = &source[block.start_byte()..block.end_byte()];
     let stripped = strip_html_tags(raw);
     stripped.trim().is_empty()
+}
+
+/// True when the text is nothing but HTML element tags and blank
+/// filler — a badge wall or hero written as raw `<a …><img …></a>`
+/// rather than markdown images. Unlike the `html_block` test this must
+/// see a real element tag, so a markdown autolink (`<https://…>`) or
+/// e-mail (`<a@b.c>`) still counts as content.
+fn is_raw_html_markup(raw: &str) -> bool {
+    let mut rest = raw;
+    let mut saw_tag = false;
+    while let Some(open) = rest.find('<') {
+        let Some(close) = rest[open..].find('>').map(|i| open + i) else {
+            return false;
+        };
+        if !is_blank_filler(&rest[..open]) || !is_html_element_tag(&rest[open + 1..close]) {
+            return false;
+        }
+        saw_tag = true;
+        rest = &rest[close + 1..];
+    }
+    saw_tag && is_blank_filler(rest)
+}
+
+/// A tag body naming an HTML element, as opposed to a markdown
+/// autolink's URL (`https://…`) or e-mail address (`a@b.c`), whose
+/// first token is not a bare element name.
+fn is_html_element_tag(body: &str) -> bool {
+    let name = body
+        .trim_start_matches(['/', '!', '?', '-', ' '])
+        .split([' ', '\t', '\n', '/', '='])
+        .next()
+        .unwrap_or_default();
+    name.starts_with(|c: char| c.is_ascii_alphabetic())
+        && name.chars().all(|c| c.is_ascii_alphanumeric() || c == '-')
+}
+
+/// Whitespace once HTML character references (`&nbsp;`, `&#8226;`) are
+/// removed — layout padding, not words.
+fn is_blank_filler(text: &str) -> bool {
+    strip_html_entities(text).trim().is_empty()
 }
 
 /// True when a `block_quote` is a GitHub-flavored admin callout
@@ -3559,7 +3630,59 @@ fn is_html_nav_block(block: Node, source: &str) -> bool {
         return false;
     }
     let text = &source[block.start_byte()..block.end_byte()];
-    text.matches("href=\"#").count() + text.matches("href='#").count() >= 2
+    if text.matches("href=\"#").count() + text.matches("href='#").count() >= 2 {
+        return true;
+    }
+    // Same construct with absolute URLs (`<a>Demo</a> • <a>Docs</a> •
+    // <a>CLI</a>`): two or more anchors with nothing but separator
+    // punctuation between them once the anchors themselves are removed.
+    let (anchors, rest) = strip_anchor_elements(text);
+    anchors >= 2 && is_separator_gap(&strip_html_entities(&strip_html_tags(&rest)))
+}
+
+/// Remove whole `<a …>…</a>` elements, returning the anchor count and
+/// the surrounding text.
+fn strip_anchor_elements(html: &str) -> (usize, String) {
+    let mut count = 0;
+    let mut rest = String::with_capacity(html.len());
+    let mut cursor = 0usize;
+    while let Some(open) = html[cursor..].find("<a ").map(|i| cursor + i) {
+        let Some(close) = html[open..].find("</a>").map(|i| open + i + "</a>".len()) else {
+            break;
+        };
+        rest.push_str(&html[cursor..open]);
+        count += 1;
+        cursor = close;
+    }
+    rest.push_str(&html[cursor..]);
+    (count, rest)
+}
+
+/// Replace `&nbsp;`-style character references with a space so entity
+/// padding doesn't read as content.
+fn strip_html_entities(text: &str) -> String {
+    let mut out = String::with_capacity(text.len());
+    let mut rest = text;
+    while let Some(amp) = rest.find('&') {
+        out.push_str(&rest[..amp]);
+        let tail = &rest[amp + 1..];
+        match tail.find(';').filter(|end| {
+            tail[..*end]
+                .chars()
+                .all(|c| c.is_ascii_alphanumeric() || c == '#')
+        }) {
+            Some(end) => {
+                out.push(' ');
+                rest = &tail[end + 1..];
+            }
+            None => {
+                out.push('&');
+                rest = tail;
+            }
+        }
+    }
+    out.push_str(rest);
+    out
 }
 
 /// True for an admin/migration warning paragraph (`⚠️ …`, deprecation /
@@ -3597,9 +3720,37 @@ fn extend_prelude_lede(
     first_headed: Node<'_>,
     source: &str,
 ) {
+    let prelude_blocks = prelude_blocks(root, first_headed);
+
+    let mut i = 0;
+    while i < prelude_blocks.len() {
+        if !is_headline_skippable_block(prelude_blocks[i], source) {
+            break;
+        }
+        i += 1;
+    }
+    // Include the first substantive prelude block. Short taglines
+    // extend to one more non-decorative block (skipping decoratives
+    // between).
+    if let Some(block) = prelude_blocks.get(i) {
+        extend_rows_inclusive(covered, *block, source);
+        if is_short_substantive_block(*block, source) {
+            let mut j = i + 1;
+            while j < prelude_blocks.len() && is_headline_skippable_block(prelude_blocks[j], source)
+            {
+                j += 1;
+            }
+            if let Some(extra) = prelude_blocks.get(j) {
+                extend_rows_inclusive(covered, *extra, source);
+            }
+        }
+    }
+}
+
+/// Top-level blocks above the first headed section.
+fn prelude_blocks<'a>(root: Node<'a>, first_headed: Node<'a>) -> Vec<Node<'a>> {
     let mut cursor = root.walk();
-    let prelude_blocks: Vec<Node> = root
-        .children(&mut cursor)
+    root.children(&mut cursor)
         .take_while(|c| *c != first_headed)
         .flat_map(|c| {
             // The prelude is itself a `section` node wrapping the
@@ -3612,43 +3763,68 @@ fn extend_prelude_lede(
                 vec![c]
             }
         })
-        .collect();
+        .collect()
+}
 
-    let mut i = 0;
-    while i < prelude_blocks.len() {
-        let block = prelude_blocks[i];
-        if !(is_decorative_block(block, source)
-            || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source))
-            || (block.kind() == "paragraph" && is_admin_warning_paragraph(block, source))
-            || is_html_nav_block(block, source))
-        {
-            break;
+/// Blocks [`headline_spec`] steps over when looking for the lede:
+/// decorative image/badge paragraphs, tag-only HTML wrappers, in-page
+/// nav menus, and admin/deprecation warnings.
+fn is_headline_skippable_block(block: Node, source: &str) -> bool {
+    is_decorative_block(block, source)
+        || is_html_nav_block(block, source)
+        || (block.kind() == "paragraph"
+            && (is_nav_link_paragraph(block, source) || is_admin_warning_paragraph(block, source)))
+}
+
+/// Prelude rows `ReadmeHeadline` left behind — the substantive blocks
+/// above the first heading that the headline's one-lede walk did not
+/// take. The headline reads this region but claims at most two blocks
+/// of it, and no section range reaches above the first heading, so
+/// without this the rest of the lede is unreachable at any budget.
+///
+/// Chrome (logo wrappers, badge walls, in-page nav) stays excluded:
+/// it is what the headline skips over on purpose, it tokenizes almost
+/// entirely as URLs, and it is the top of the README, so buying it
+/// displaces the earliest-ranked content in the schedule.
+fn prelude_remainder_rows(tree: &Tree, source: &str, headline: &HeadlineSpec) -> Vec<usize> {
+    let Some(first_headed) = headed_sections(tree.root_node()).next() else {
+        return Vec::new();
+    };
+    let mut rows: Vec<usize> = Vec::new();
+    let mut bytes = 0usize;
+    let src_lines: Vec<&str> = source.lines().collect();
+    for block in prelude_blocks(tree.root_node(), first_headed) {
+        if is_prelude_chrome_block(block, source) {
+            continue;
         }
-        i += 1;
-    }
-    // Include the first substantive prelude block. Short taglines
-    // extend to one more non-decorative block (skipping decoratives
-    // between).
-    if let Some(block) = prelude_blocks.get(i) {
-        extend_rows_inclusive(covered, *block, source);
-        if is_short_substantive_block(*block, source) {
-            let mut j = i + 1;
-            while j < prelude_blocks.len() {
-                let next = prelude_blocks[j];
-                if !(is_decorative_block(next, source)
-                    || (next.kind() == "paragraph" && is_nav_link_paragraph(next, source))
-                    || (next.kind() == "paragraph" && is_admin_warning_paragraph(next, source))
-                    || is_html_nav_block(next, source))
-                {
-                    break;
-                }
-                j += 1;
+        for row in block.start_position().row..=node_end_row_trimmed(block, source) {
+            let row = row + 1;
+            if headline.covered_rows.contains(&row) {
+                continue;
             }
-            if let Some(extra) = prelude_blocks.get(j) {
-                extend_rows_inclusive(covered, *extra, source);
+            let line = src_lines.get(row - 1).copied().unwrap_or_default();
+            if line.trim().is_empty() {
+                continue;
             }
+            bytes += line.len() + 1;
+            if bytes > PRELUDE_MAX_BYTES {
+                return rows;
+            }
+            rows.push(row);
         }
     }
+    rows
+}
+
+/// Decoration rather than content: image/badge-only paragraphs,
+/// tag-only HTML wrappers, and in-page nav menus. A subset of
+/// [`is_headline_skippable_block`] — admin/deprecation warnings are
+/// skippable for the *headline* (they are not the "what is this"
+/// sentence) but are real prose and belong in the prelude batch.
+fn is_prelude_chrome_block(block: Node, source: &str) -> bool {
+    is_decorative_block(block, source)
+        || is_html_nav_block(block, source)
+        || (block.kind() == "paragraph" && is_nav_link_paragraph(block, source))
 }
 
 /// Top-level `section` children with a heading — skips tree-sitter-md's
@@ -3720,6 +3896,40 @@ mod tests {
         }
         s.push('\n');
         s
+    }
+
+    /// The prelude batch takes the lede blocks the headline stopped
+    /// short of, and none of the chrome around them.
+    #[test]
+    fn markdown_prelude_takes_lede_remainder_not_chrome() {
+        let source = concat!(
+            "<p align=\"center\"><img src=\"logo.png\"></p>\n",
+            "\n",
+            "<a href=\"https://a\">Docs</a> &nbsp;&middot;&nbsp; <a href=\"https://b\">Demo</a>\n",
+            "\n",
+            "Widget is a tiny thing.\n",
+            "\n",
+            "[![build](https://img.shields.io/build.svg)](https://ci.example)\n",
+            "\n",
+            "It also does the other thing, at length, in a second paragraph.\n",
+            "\n",
+            "## Install\n",
+        );
+        let tree = parse(source);
+        let spec = headline_spec(&tree, source).expect("headline");
+        assert!(spec.covered_rows.contains(&5), "lede row in headline");
+        assert_eq!(prelude_remainder_rows(&tree, source, &spec), vec![9]);
+    }
+
+    /// A badge wall written as raw HTML inside a markdown paragraph is
+    /// decoration, exactly like the markdown-image form.
+    #[test]
+    fn markdown_raw_html_badge_paragraph_is_decorative() {
+        let source = "<a href=\"https://x\"><img src=\"https://b.svg\" alt=\"b\"></a>\n\n# Title\n";
+        let tree = parse(source);
+        let block = tree.root_node().child(0).and_then(|s| s.child(0)).unwrap();
+        assert_eq!(block.kind(), "paragraph");
+        assert!(is_decorative_block(block, source));
     }
 
     #[test]
