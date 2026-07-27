@@ -12,8 +12,8 @@ use std::{
 
 use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
-use crate::fs_util::EntryKind;
 pub use crate::fs_util::list_dir;
+use crate::fs_util::{DirFilter, EntryKind};
 use crate::value::{is_colocated_test_filename, mix_signals};
 
 use super::{WalkCtx, file_depth_factor, path_depth_factor};
@@ -27,7 +27,7 @@ pub fn seed(ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 
 /// Subdirectory listings for the just-scheduled dir's listing.
 pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let children = list_dir(dir);
+    let children = list_dir(dir, ctx.dir_filter());
     let mut out = Vec::new();
     for (name, kind) in children {
         if matches!(kind, EntryKind::Directory)
@@ -44,12 +44,12 @@ pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
 // ---- additional helpers ----
 
 /// Files in `dir` (non-recursive) whose extension matches.
-pub fn files_with_extension(dir: &Path, ext: &str) -> Vec<PathBuf> {
-    files_with_any_extension(dir, &[ext])
+pub fn files_with_extension(dir: &Path, ext: &str, ctx: &WalkCtx) -> Vec<PathBuf> {
+    files_with_any_extension(dir, &[ext], ctx)
 }
 
 /// Files in `dir` matching any of `exts`, in one `read_dir` pass.
-pub fn files_with_any_extension(dir: &Path, exts: &[&str]) -> Vec<PathBuf> {
+pub fn files_with_any_extension(dir: &Path, exts: &[&str], ctx: &WalkCtx) -> Vec<PathBuf> {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return Vec::new();
     };
@@ -66,9 +66,12 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str]) -> Vec<PathBuf> {
             }
             let path = e.path();
             let actual = path.extension().and_then(|e| e.to_str())?;
-            exts.iter()
-                .any(|ext| actual.eq_ignore_ascii_case(ext))
-                .then_some(path)
+            if !exts.iter().any(|ext| actual.eq_ignore_ascii_case(ext)) {
+                return None;
+            }
+            // Same filter the listing uses: a file the listing hides
+            // must not come back as a content batch.
+            (!ctx.dir_filter().excludes(&path, false)).then_some(path)
         })
         .collect();
     out.sort();
@@ -76,27 +79,43 @@ pub fn files_with_any_extension(dir: &Path, exts: &[&str]) -> Vec<PathBuf> {
 }
 
 /// Recursively walk `dir` for files with `ext` (case-insensitive).
-pub fn files_with_extension_recursive(dir: &Path, ext: &str) -> Vec<PathBuf> {
+///
+/// Callers hand this a directory they resolved themselves rather than
+/// one the listing walk reached, so `dir` itself has to clear the
+/// filter — ancestors included, since a directory-only ignore pattern
+/// matches the directory and not the files inside it.
+pub fn files_with_extension_recursive(dir: &Path, ext: &str, ctx: &WalkCtx) -> Vec<PathBuf> {
+    if ctx.dir_filter().excludes_tree(dir, true) {
+        return Vec::new();
+    }
     let mut out = Vec::new();
-    walk_files_recursive(dir, dir, ext, &mut out);
+    walk_files_recursive(dir, dir, ext, ctx, &mut out);
     out.sort();
     out
 }
 
-fn walk_files_recursive(dir: &Path, traversal_root: &Path, ext: &str, out: &mut Vec<PathBuf>) {
+fn walk_files_recursive(
+    dir: &Path,
+    traversal_root: &Path,
+    ext: &str,
+    ctx: &WalkCtx,
+    out: &mut Vec<PathBuf>,
+) {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return;
     };
     for entry in read_dir.flatten() {
         let path = entry.path();
         if path.is_dir() {
-            if should_recurse_dir(&path, traversal_root) {
-                walk_files_recursive(&path, traversal_root, ext, out);
+            if should_recurse_dir(&path, traversal_root) && !ctx.dir_filter().excludes(&path, true)
+            {
+                walk_files_recursive(&path, traversal_root, ext, ctx, out);
             }
         } else if path
             .extension()
             .and_then(|e| e.to_str())
             .is_some_and(|actual| actual.eq_ignore_ascii_case(ext))
+            && !ctx.dir_filter().excludes(&path, false)
         {
             out.push(path);
         }
@@ -104,7 +123,7 @@ fn walk_files_recursive(dir: &Path, traversal_root: &Path, ext: &str, out: &mut 
 }
 
 fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
-    let children = list_dir(&dir);
+    let children = list_dir(&dir, ctx.dir_filter());
     if children.is_empty() {
         return None;
     }
@@ -273,12 +292,12 @@ fn parent_is_high_fanout_catalog(dir: &Path, ctx: &WalkCtx) -> bool {
     if !is_source_inventory_dir(parent, ctx) {
         return false;
     }
-    ctx.fs_state().child_dir_count(parent) >= CATALOG_PARENT_MIN_CHILD_DIRS
+    ctx.fs_state().child_dir_count(parent, ctx.dir_filter()) >= CATALOG_PARENT_MIN_CHILD_DIRS
 }
 
 /// Count of immediate subdirectories of `dir`.
-fn child_dir_count_uncached(dir: &Path) -> usize {
-    list_dir(dir)
+fn child_dir_count_uncached(dir: &Path, filter: &DirFilter) -> usize {
+    list_dir(dir, filter)
         .values()
         .filter(|kind| matches!(kind, EntryKind::Directory))
         .count()
@@ -419,11 +438,16 @@ pub(in crate::walker) struct FsState {
 }
 
 impl FsState {
-    pub(in crate::walker) fn source_inventory_count(&self, dir: &Path, target: usize) -> usize {
+    pub(in crate::walker) fn source_inventory_count(
+        &self,
+        dir: &Path,
+        target: usize,
+        filter: &DirFilter,
+    ) -> usize {
         if let Some(count) = self.source_inventory_counts.borrow().get(dir).copied() {
             return count;
         }
-        let count = source_inventory_count_uncached(self, dir, target);
+        let count = source_inventory_count_uncached(self, dir, target, filter);
         self.source_inventory_counts
             .borrow_mut()
             .insert(dir.to_path_buf(), count);
@@ -433,11 +457,11 @@ impl FsState {
     /// Count of immediate subdirectories of `dir`, cached per parent.
     /// `parent_is_high_fanout_catalog` queries the same parent once per
     /// child, so without this each child re-`read_dir`s the parent (O(N²)).
-    pub(in crate::walker) fn child_dir_count(&self, dir: &Path) -> usize {
+    pub(in crate::walker) fn child_dir_count(&self, dir: &Path, filter: &DirFilter) -> usize {
         if let Some(count) = self.child_dir_counts.borrow().get(dir).copied() {
             return count;
         }
-        let count = child_dir_count_uncached(dir);
+        let count = child_dir_count_uncached(dir, filter);
         self.child_dir_counts
             .borrow_mut()
             .insert(dir.to_path_buf(), count);
@@ -447,7 +471,9 @@ impl FsState {
 
 fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
     const MIN_SOURCE_FILES: usize = 3;
-    ctx.fs_state().source_inventory_count(dir, MIN_SOURCE_FILES) >= MIN_SOURCE_FILES
+    ctx.fs_state()
+        .source_inventory_count(dir, MIN_SOURCE_FILES, ctx.dir_filter())
+        >= MIN_SOURCE_FILES
 }
 
 /// Ratio multiplier lifting a large root-level test/spec listing out of
@@ -509,7 +535,12 @@ fn has_root_adjacent_source_ancestor(dir: &Path, ctx: &WalkCtx) -> bool {
     false
 }
 
-fn source_inventory_count_uncached(state: &FsState, dir: &Path, target: usize) -> usize {
+fn source_inventory_count_uncached(
+    state: &FsState,
+    dir: &Path,
+    target: usize,
+    filter: &DirFilter,
+) -> usize {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return 0;
     };
@@ -519,10 +550,13 @@ fn source_inventory_count_uncached(state: &FsState, dir: &Path, target: usize) -
             continue;
         };
         let path = entry.path();
+        if filter.excludes(&path, file_type.is_dir()) {
+            continue;
+        }
         if file_type.is_dir() {
             let name = entry.file_name();
             if !should_skip_dir(&name.to_string_lossy()) {
-                let child_count = state.source_inventory_count(&path, target);
+                let child_count = state.source_inventory_count(&path, target, filter);
                 count += child_count.min(target.saturating_sub(count));
             }
         } else if file_type.is_file() && is_source_inventory_file(&path) {
@@ -560,6 +594,13 @@ fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 
 
 /// Directories the walker never recurses into — heavy/generated trees.
 /// They still appear in listings; only walker traversal is affected.
+///
+/// Kept alongside the gitignore filter rather than subsumed by it:
+/// inside a repository these names are almost always gitignored and the
+/// list never fires, but precis also runs on trees that aren't
+/// repositories (extracted archives, vendored snapshots, the fixture
+/// corpus), where the filter is inert by design and this is the only
+/// thing standing between the walk and a `node_modules` tree.
 pub(crate) fn should_skip_dir(name: &str) -> bool {
     matches!(
         name,
@@ -647,18 +688,18 @@ mod tests {
         std::fs::write(root_build.join("probe.rs"), "pub fn probe() {}\n").unwrap();
         std::fs::write(target_build.join("mod.rs"), "pub fn generated() {}\n").unwrap();
 
-        let before_build_script = files_with_extension_recursive(root, "rs");
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let before_build_script = files_with_extension_recursive(root, "rs", &ctx);
         assert!(before_build_script.contains(&source_build.join("mod.rs")));
         assert!(before_build_script.contains(&source_build_child.join("compile.rs")));
         assert!(!before_build_script.contains(&root_build.join("probe.rs")));
         assert!(!before_build_script.contains(&target_build.join("mod.rs")));
 
         std::fs::write(root.join("build.rs"), "fn main() {}\n").unwrap();
-        let after_build_script = files_with_extension_recursive(root, "rs");
+        let after_build_script = files_with_extension_recursive(root, "rs", &ctx);
         assert!(after_build_script.contains(&root_build.join("probe.rs")));
         assert!(!after_build_script.contains(&target_build.join("mod.rs")));
 
-        let ctx = WalkCtx::new(root.to_path_buf());
         let root_children = expand_subdirs(root, &ctx);
         assert!(root_children.iter().any(|batch| matches!(
             &batch.key,

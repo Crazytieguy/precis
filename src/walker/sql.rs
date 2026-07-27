@@ -40,7 +40,7 @@ struct Contract {
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
-    for file in fs::files_with_extension(dir, "sql") {
+    for file in fs::files_with_extension(dir, "sql", ctx) {
         if dir != ctx.root() && !ctx.is_sql_cited(&file) {
             continue;
         }
@@ -207,7 +207,7 @@ fn contract_chunks(
 /// Exact nested SQL paths mentioned by root README/build files. Matching the
 /// full relative path (not a basename such as `migration.sql`) is what keeps
 /// migration forests excluded.
-pub(crate) fn collect_root_cited_sql_paths(root: &Path) -> HashSet<PathBuf> {
+pub(crate) fn collect_root_cited_sql_paths(root: &Path, ctx: &WalkCtx) -> HashSet<PathBuf> {
     let Ok(entries) = std::fs::read_dir(root) else {
         return HashSet::new();
     };
@@ -241,7 +241,7 @@ pub(crate) fn collect_root_cited_sql_paths(root: &Path) -> HashSet<PathBuf> {
         return HashSet::new();
     }
 
-    fs::files_with_extension_recursive(root, "sql")
+    fs::files_with_extension_recursive(root, "sql", ctx)
         .into_iter()
         .filter(|file| file.parent().is_some_and(|parent| parent != root))
         .filter(|file| {

@@ -58,6 +58,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TsKey};
 use crate::content::{BatchContent, Render, Span};
+use crate::fs_util::DirFilter;
 use crate::value::{
     CATALOG_ROSTER_CONCAVITY_EXPONENT, DEFAULT_CONCAVITY_EXPONENT, conserved_catalog_chunk_factors,
     mix_signals, reexport_import_chunk_factor, roster_mass_factor,
@@ -244,7 +245,7 @@ impl TypescriptState {
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let js_like_files =
-        files_with_any_extension(dir, &["ts", "tsx", "mts", "cts", "js", "mjs", "cjs"]);
+        files_with_any_extension(dir, &["ts", "tsx", "mts", "cts", "js", "mjs", "cjs"], ctx);
     if js_like_files.is_empty() {
         return Vec::new();
     }
@@ -4337,9 +4338,12 @@ fn is_first_top_level_node(node: Node) -> bool {
 const TS_JS_EXTS: &[&str] = &["ts", "tsx", "js", "mjs", "cjs", "d.ts", "d.mts", "d.cts"];
 
 /// Sorted recursive walk for entrypoint-named files. Skips heavy /
-/// generated trees.
-fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
-    fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+/// generated trees and anything the ignore rules hide — this walk is
+/// uncapped and every hit gets parsed and followed through its
+/// re-export chain, so an ignored generated tree here is both wasted
+/// work and a vote in the public-surface classification.
+fn find_all_entrypoints(root: &Path, filter: &DirFilter) -> Vec<PathBuf> {
+    fn walk(dir: &Path, filter: &DirFilter, out: &mut Vec<PathBuf>) {
         let Ok(read_dir) = std::fs::read_dir(dir) else {
             return;
         };
@@ -4348,10 +4352,13 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
             let Ok(file_type) = entry.file_type() else {
                 continue;
             };
+            if filter.excludes(&path, file_type.is_dir()) {
+                continue;
+            }
             if file_type.is_dir() {
                 let name = entry.file_name();
                 if !super::fs::should_skip_dir(&name.to_string_lossy()) {
-                    walk(&path, out);
+                    walk(&path, filter, out);
                 }
             } else if file_type.is_file() && is_entrypoint_file(&path) {
                 out.push(path);
@@ -4359,7 +4366,7 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
         }
     }
     let mut out = Vec::new();
-    walk(root, &mut out);
+    walk(root, filter, &mut out);
     out.sort();
     out.dedup();
     out
@@ -4368,7 +4375,7 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
 /// Project's public surface — every TS/JS file transitively reachable
 /// from an entrypoint via re-export chains. Canonicalized.
 fn compute_public_surface(ctx: &WalkCtx) -> PublicSurface {
-    let mut entrypoints = find_all_entrypoints(ctx.root());
+    let mut entrypoints = find_all_entrypoints(ctx.root(), ctx.dir_filter());
     entrypoints.extend(declared_package_entry_sources(ctx.root()));
     // The declared API contract is entrypoint-named-adjacent (`types`
     // field) but its `.d.ts` extension escapes the stem match above.

@@ -129,7 +129,7 @@ const HEADLINE_OVERSIZE_LEDE_BYTES: usize = 640;
 const HEADLINE_OVERSIZE_LINE_CHARS: usize = 320;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let md_files = files_with_extension(dir, "md");
+    let md_files = files_with_extension(dir, "md", ctx);
     let mut out = Vec::new();
 
     // RST README: emit a ReadmeHeadline batch (title + first
@@ -138,7 +138,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     // tree-sitter parse — line-scan headings via `is_rst_underline`,
     // dropping `.. directive::` blocks. Skip nested README.rst — the
     // root-level file is the only anchor.
-    for file in super::fs::files_with_extension(dir, "rst") {
+    for file in super::fs::files_with_extension(dir, "rst", ctx) {
         if !is_readme_rst(&file) || dir != ctx.root() {
             continue;
         }

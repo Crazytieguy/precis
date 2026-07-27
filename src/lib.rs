@@ -41,7 +41,7 @@ pub(crate) use {time_counter, time_span};
 
 pub use batch::{Batch, BatchKey, WalkerKey};
 pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
-pub use fs_util::{EntryKind, list_dir};
+pub use fs_util::{DirFilter, EntryKind, list_dir};
 pub use render::{Cost, RenderedTree, SourceCache};
 pub use schedule_types::{Atom, CandidateBatch, Schedule, ScheduledBatch};
 

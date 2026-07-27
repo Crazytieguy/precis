@@ -81,7 +81,7 @@ const REFERENCE_LEAF_VALUE_FACTOR: f64 = 2.75;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
-    let yaml_files = files_with_any_extension(dir, &["yml", "yaml"]);
+    let yaml_files = files_with_any_extension(dir, &["yml", "yaml"], ctx);
     let workflow_file_count = is_github_workflow_dir(dir, ctx).then_some(yaml_files.len());
     let primary_workflow = workflow_file_count
         .filter(|count| *count > 2)

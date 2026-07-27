@@ -112,7 +112,7 @@ impl Decl {
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
-    for file in files_with_extension(dir, "prisma") {
+    for file in files_with_extension(dir, "prisma", ctx) {
         let name = file
             .file_name()
             .and_then(|n| n.to_str())

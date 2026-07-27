@@ -10,7 +10,7 @@ use std::path::{Path, PathBuf};
 use anyhow::{Context, Result, anyhow, bail};
 
 use crate::content::{BatchContent, FsEntries, FsGroup, Span};
-use crate::fs_util::list_dir;
+use crate::fs_util::{DirFilter, list_dir};
 use crate::north_star::NorthStar;
 
 /// Load the NS TOML at `ns_path` and verify its `revision_pin` matches
@@ -89,16 +89,20 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
             Ok(BatchContent::Lines { spans })
         }
         BatchContent::Fs { groups } => {
+            // Same filter the walker builds for this root, so an NS
+            // `all` listing and the walker's listing of the same
+            // directory can't disagree about what exists.
+            let filter = DirFilter::new(fixture_root);
             let resolved = groups
                 .iter()
-                .map(|g| resolve_fs_group(g, fixture_root))
+                .map(|g| resolve_fs_group(g, fixture_root, &filter))
                 .collect::<Result<Vec<_>>>()?;
             Ok(BatchContent::Fs { groups: resolved })
         }
     }
 }
 
-fn resolve_fs_group(group: &FsGroup, fixture_root: &Path) -> Result<FsGroup> {
+fn resolve_fs_group(group: &FsGroup, fixture_root: &Path, filter: &DirFilter) -> Result<FsGroup> {
     // Fs parents must stay inside the fixture root. Surfaces via
     // FsResolveFailed so a frozen NS with an escaping parent fails
     // divergence scoring loudly.
@@ -111,7 +115,7 @@ fn resolve_fs_group(group: &FsGroup, fixture_root: &Path) -> Result<FsGroup> {
     let parent_abs = fixture_root.join(&group.parent);
     let entries = match &group.entries {
         FsEntries::All => {
-            let listed = list_dir(&parent_abs);
+            let listed = list_dir(&parent_abs, filter);
             if listed.is_empty() && !parent_abs.exists() {
                 bail!(
                     "NS fs group points to non-existent parent {}",
@@ -121,7 +125,7 @@ fn resolve_fs_group(group: &FsGroup, fixture_root: &Path) -> Result<FsGroup> {
             FsEntries::Listed(listed.into_keys().map(PathBuf::from).collect())
         }
         FsEntries::Listed(paths) => {
-            let probed = list_dir(&parent_abs);
+            let probed = list_dir(&parent_abs, filter);
             for p in paths {
                 let name = p
                     .file_name()

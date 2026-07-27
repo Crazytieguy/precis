@@ -212,7 +212,7 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let entries = list_dir(dir);
+    let entries = list_dir(dir, ctx.dir_filter());
     let mut out = Vec::new();
     for (name, kind) in entries {
         if !matches!(kind, crate::fs_util::EntryKind::File) {
