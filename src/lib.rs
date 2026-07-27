@@ -149,9 +149,13 @@ fn canonicalize_dir(path: &Path) -> Result<std::path::PathBuf> {
         .with_context(|| format!("failed to canonicalize {}", path.display()))?;
     if !root.is_dir() {
         bail!(
-            "{} is not a directory; v0.2 first pass only supports directory roots",
+            "{} is not a directory; precis summarizes directory trees",
             root.display()
         );
     }
+    // Without this an unreadable root walks to nothing, and the caller
+    // cannot tell a permission error from an empty repository.
+    std::fs::read_dir(&root)
+        .with_context(|| format!("failed to read directory {}", root.display()))?;
     Ok(root)
 }
