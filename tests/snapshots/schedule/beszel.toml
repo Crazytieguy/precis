@@ -1,7 +1,7 @@
 fixture = "beszel"
 budget = 10000
-cumulative_tokens = 9991
-batch_count = 457
+cumulative_tokens = 9928
+batch_count = 451
 
 [[batches]]
 position = 1
@@ -1017,54 +1017,10 @@ entries = ["handlers.go", "request_manager.go", "request_manager_test.go", "ws.g
 
 [[batches]]
 position = 59
-key = 'Go(DeclNames { file: "internal/hub/server_production.go", chunk_index: 0 })'
-descriptor = "go decl names surface in internal/hub/server_production.go"
-cost_tokens = 25
-cum_tokens = 1482
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/server_production.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/server_production.go"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 60
-key = 'Go(Decl { file: "internal/hub/server_production.go", start_line: 18 })'
-descriptor = "go decl at internal/hub/server_production.go:18"
-cost_tokens = 0
-cum_tokens = 1482
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/server_production.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
 key = 'Fs(DirListing { dir: "internal/alerts" })'
 descriptor = "listing of 'internal/alerts'"
 cost_tokens = 97
-cum_tokens = 1579
+cum_tokens = 1554
 
 [batches.content]
 kind = "fs"
@@ -1074,11 +1030,11 @@ parent = "internal/alerts"
 entries = ["alerts.go", "alerts_api.go", "alerts_api_test.go", "alerts_battery_test.go", "alerts_cache.go", "alerts_cache_test.go", "alerts_disk_test.go", "alerts_history.go", "alerts_quiet_hours_test.go", "alerts_smart.go", "alerts_smart_test.go", "alerts_status.go", "alerts_status_test.go", "alerts_system.go", "alerts_system_test.go", "alerts_test.go", "alerts_test_helpers.go"]
 
 [[batches]]
-position = 62
+position = 60
 key = 'Plaintext(MakefileSkeletonChunk { file: "Makefile", chunk_index: 0 })'
 descriptor = "Makefile target skeleton chunk #1 of Makefile"
 cost_tokens = 116
-cum_tokens = 1695
+cum_tokens = 1670
 
 [batches.content]
 kind = "lines"
@@ -1236,11 +1192,11 @@ end = 93
 kind = "ellipsis"
 
 [[batches]]
-position = 63
+position = 61
 key = 'Fs(DirListing { dir: "internal/hub/systems" })'
 descriptor = "listing of 'internal/hub/systems'"
 cost_tokens = 56
-cum_tokens = 1751
+cum_tokens = 1726
 
 [batches.content]
 kind = "fs"
@@ -1250,47 +1206,11 @@ parent = "internal/hub/systems"
 entries = ["system.go", "system_manager.go", "system_realtime.go", "system_smart.go", "system_smart_test.go", "system_systemd_test.go", "system_test.go", "systems_production.go", "systems_test.go", "systems_test_helpers.go"]
 
 [[batches]]
-position = 64
-key = 'Go(DeclNames { file: "internal/hub/systems/systems_production.go", chunk_index: 0 })'
-descriptor = "go decl names surface in internal/hub/systems/systems_production.go"
-cost_tokens = 17
-cum_tokens = 1768
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/systems/systems_production.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 65
-key = 'Go(Decl { file: "internal/hub/systems/systems_production.go", start_line: 9 })'
-descriptor = "go decl at internal/hub/systems/systems_production.go:9"
-cost_tokens = 0
-cum_tokens = 1768
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/systems/systems_production.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
+position = 62
 key = 'Markdown(Section { file: "readme.md", section_index: 23, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #23"
 cost_tokens = 28
-cum_tokens = 1796
+cum_tokens = 1754
 
 [batches.content]
 kind = "lines"
@@ -1304,11 +1224,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 67
+position = 63
 key = 'Fs(DirListing { dir: "internal/site/src/components/charts" })'
 descriptor = "listing of 'internal/site/src/components/charts'"
 cost_tokens = 22
-cum_tokens = 1818
+cum_tokens = 1776
 
 [batches.content]
 kind = "fs"
@@ -1318,11 +1238,11 @@ parent = "internal/site/src/components/charts"
 entries = ["area-chart.tsx", "chart-time-select.tsx", "hooks.ts", "line-chart.tsx"]
 
 [[batches]]
-position = 68
+position = 64
 key = 'Go(DeclNames { file: "internal/hub/update.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/hub/update.go"
 cost_tokens = 31
-cum_tokens = 1849
+cum_tokens = 1807
 
 [batches.content]
 kind = "lines"
@@ -1360,11 +1280,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 69
+position = 65
 key = 'Go(Decl { file: "internal/hub/update.go", start_line: 14 })'
 descriptor = "go decl at internal/hub/update.go:14"
 cost_tokens = 0
-cum_tokens = 1849
+cum_tokens = 1807
 
 [batches.content]
 kind = "lines"
@@ -1378,11 +1298,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 70
+position = 66
 key = 'Go(Decl { file: "internal/hub/update.go", start_line: 58 })'
 descriptor = "go decl at internal/hub/update.go:58"
 cost_tokens = 0
-cum_tokens = 1849
+cum_tokens = 1807
 
 [batches.content]
 kind = "lines"
@@ -1396,11 +1316,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 71
+position = 67
 key = 'Fs(DirListing { dir: "internal/site/src/components/login" })'
 descriptor = "listing of 'internal/site/src/components/login'"
 cost_tokens = 24
-cum_tokens = 1873
+cum_tokens = 1831
 
 [batches.content]
 kind = "fs"
@@ -1410,11 +1330,11 @@ parent = "internal/site/src/components/login"
 entries = ["auth-form.tsx", "forgot-pass-form.tsx", "login.tsx", "otp-forms.tsx"]
 
 [[batches]]
-position = 72
+position = 68
 key = 'Markdown(Section { file: "readme.md", section_index: 1, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #1"
 cost_tokens = 19
-cum_tokens = 1892
+cum_tokens = 1850
 
 [batches.content]
 kind = "lines"
@@ -1428,11 +1348,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 73
+position = 69
 key = 'Markdown(Section { file: "readme.md", section_index: 2, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #2"
 cost_tokens = 17
-cum_tokens = 1909
+cum_tokens = 1867
 
 [batches.content]
 kind = "lines"
@@ -1446,11 +1366,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 74
+position = 70
 key = 'Go(DeclNames { file: "internal/site/embed.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/site/embed.go"
 cost_tokens = 34
-cum_tokens = 1943
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -1480,11 +1400,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 71
 key = 'Go(Decl { file: "internal/site/embed.go", start_line: 10 })'
 descriptor = "go decl at internal/site/embed.go:10"
 cost_tokens = 0
-cum_tokens = 1943
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -1498,11 +1418,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 76
+position = 72
 key = 'Go(Decl { file: "internal/site/embed.go", start_line: 13 })'
 descriptor = "go decl at internal/site/embed.go:13"
 cost_tokens = 0
-cum_tokens = 1943
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -1516,55 +1436,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 77
-key = 'Go(DeclNames { file: "internal/hub/ws/ws_test_helpers.go", chunk_index: 0 })'
-descriptor = "go decl names surface in internal/hub/ws/ws_test_helpers.go"
-cost_tokens = 21
-cum_tokens = 1964
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/ws/ws_test_helpers.go"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/ws/ws_test_helpers.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 78
-key = 'Go(Decl { file: "internal/hub/ws/ws_test_helpers.go", start_line: 6 })'
-descriptor = "go decl at internal/hub/ws/ws_test_helpers.go:6"
-cost_tokens = 0
-cum_tokens = 1964
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/ws/ws_test_helpers.go"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 79
+position = 73
 key = 'Go(DeclNames { file: "internal/ghupdate/selinux.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/ghupdate/selinux.go"
 cost_tokens = 36
-cum_tokens = 2000
+cum_tokens = 1937
 
 [batches.content]
 kind = "lines"
@@ -1602,11 +1478,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 80
+position = 74
 key = 'Go(Decl { file: "internal/ghupdate/selinux.go", start_line: 10 })'
 descriptor = "go decl at internal/ghupdate/selinux.go:10"
 cost_tokens = 0
-cum_tokens = 2000
+cum_tokens = 1937
 
 [batches.content]
 kind = "lines"
@@ -1620,11 +1496,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 81
+position = 75
 key = 'Go(Decl { file: "internal/ghupdate/selinux.go", start_line: 41 })'
 descriptor = "go decl at internal/ghupdate/selinux.go:41"
 cost_tokens = 0
-cum_tokens = 2000
+cum_tokens = 1937
 
 [batches.content]
 kind = "lines"
@@ -1638,11 +1514,63 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 82
+position = 76
+key = 'Go(DeclNames { file: "internal/hub/server_production.go", chunk_index: 0 })'
+descriptor = "go decl names surface in internal/hub/server_production.go"
+cost_tokens = 36
+cum_tokens = 1973
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/server_production.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/server_production.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/server_production.go"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 77
+key = 'Go(Decl { file: "internal/hub/server_production.go", start_line: 18 })'
+descriptor = "go decl at internal/hub/server_production.go:18"
+cost_tokens = 0
+cum_tokens = 1973
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/server_production.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
 key = 'Fs(DirListing { dir: "internal/site/src/components/routes" })'
 descriptor = "listing of 'internal/site/src/components/routes'"
 cost_tokens = 27
-cum_tokens = 2027
+cum_tokens = 2000
 
 [batches.content]
 kind = "fs"
@@ -1652,11 +1580,11 @@ parent = "internal/site/src/components/routes"
 entries = ["containers.tsx", "home.tsx", "settings", "smart.tsx", "system", "system.tsx"]
 
 [[batches]]
-position = 83
+position = 79
 key = 'Fs(DirListing { dir: "internal/site/src/components/routes/system" })'
 descriptor = "listing of 'internal/site/src/components/routes/system'"
 cost_tokens = 59
-cum_tokens = 2086
+cum_tokens = 2059
 
 [batches.content]
 kind = "fs"
@@ -1666,11 +1594,11 @@ parent = "internal/site/src/components/routes/system"
 entries = ["chart-card.tsx", "chart-data.ts", "charts", "cpu-sheet.tsx", "disk-io-sheet.tsx", "info-bar.tsx", "lazy-tables.tsx", "network-sheet.tsx", "smart-table.tsx", "use-system-data.ts"]
 
 [[batches]]
-position = 84
+position = 80
 key = 'Go(DeclNames { file: "internal/hub/utils/utils.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/hub/utils/utils.go"
 cost_tokens = 22
-cum_tokens = 2108
+cum_tokens = 2081
 
 [batches.content]
 kind = "lines"
@@ -1692,11 +1620,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 81
 key = 'Go(Decl { file: "internal/hub/utils/utils.go", start_line: 7 })'
 descriptor = "go decl at internal/hub/utils/utils.go:7"
 cost_tokens = 0
-cum_tokens = 2108
+cum_tokens = 2081
 
 [batches.content]
 kind = "lines"
@@ -1710,11 +1638,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 86
+position = 82
 key = 'Fs(DirListing { dir: "supplemental/kubernetes/beszel-hub/charts/templates" })'
 descriptor = "listing of 'supplemental/kubernetes/beszel-hub/charts/templates'"
 cost_tokens = 30
-cum_tokens = 2138
+cum_tokens = 2111
 
 [batches.content]
 kind = "fs"
@@ -1724,11 +1652,11 @@ parent = "supplemental/kubernetes/beszel-hub/charts/templates"
 entries = ["NOTES.txt", "_helpers.tpl", "deployment.yaml", "ingress.yaml", "service.yaml", "tests", "volume-claim.yaml"]
 
 [[batches]]
-position = 87
+position = 83
 key = 'Fs(DirListing { dir: "internal/site/src/lib" })'
 descriptor = "listing of 'internal/site/src/lib'"
 cost_tokens = 51
-cum_tokens = 2189
+cum_tokens = 2162
 
 [batches.content]
 kind = "fs"
@@ -1738,11 +1666,11 @@ parent = "internal/site/src/lib"
 entries = ["alerts.ts", "api.ts", "enums.ts", "i18n.ts", "languages.ts", "shiki.ts", "stores.ts", "systemsManager.ts", "time.ts", "use-intersection-observer.ts", "utils.ts"]
 
 [[batches]]
-position = 88
+position = 84
 key = 'Markdown(Section { file: "readme.md", section_index: 3, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #3"
 cost_tokens = 23
-cum_tokens = 2212
+cum_tokens = 2185
 
 [batches.content]
 kind = "lines"
@@ -1756,11 +1684,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 89
+position = 85
 key = 'Go(DeclDoc { file: "internal/hub/update.go", start_line: 14 })'
 descriptor = "go decl doc at internal/hub/update.go:14"
 cost_tokens = 14
-cum_tokens = 2226
+cum_tokens = 2199
 
 [batches.content]
 kind = "lines"
@@ -1774,11 +1702,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 90
+position = 86
 key = 'Markdown(Section { file: "readme.md", section_index: 7, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #7"
 cost_tokens = 24
-cum_tokens = 2250
+cum_tokens = 2223
 
 [batches.content]
 kind = "lines"
@@ -1792,11 +1720,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 91
+position = 87
 key = 'Markdown(Section { file: "readme.md", section_index: 6, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #6"
 cost_tokens = 24
-cum_tokens = 2274
+cum_tokens = 2247
 
 [batches.content]
 kind = "lines"
@@ -1810,11 +1738,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 92
+position = 88
 key = 'Markdown(Section { file: "readme.md", section_index: 5, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #5"
 cost_tokens = 24
-cum_tokens = 2298
+cum_tokens = 2271
 
 [batches.content]
 kind = "lines"
@@ -1828,11 +1756,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 93
+position = 89
 key = 'Fs(DirListing { dir: "agent" })'
 descriptor = "listing of 'agent'"
 cost_tokens = 375
-cum_tokens = 2673
+cum_tokens = 2646
 
 [batches.content]
 kind = "fs"
@@ -1842,11 +1770,11 @@ parent = "agent"
 entries = ["agent.go", "agent_cache.go", "agent_cache_test.go", "agent_test_helpers.go", "battery", "client.go", "client_test.go", "connection_manager.go", "connection_manager_test.go", "cpu.go", "data_dir.go", "data_dir_test.go", "deltatracker", "disk.go", "disk_test.go", "docker.go", "docker_test.go", "emmc_common.go", "emmc_common_test.go", "emmc_linux.go", "emmc_linux_test.go", "emmc_stub.go", "fingerprint.go", "fingerprint_test.go", "gpu.go", "gpu_amd_linux.go", "gpu_amd_linux_test.go", "gpu_amd_unsupported.go", "gpu_darwin.go", "gpu_darwin_test.go", "gpu_darwin_unsupported.go", "gpu_intel.go", "gpu_nvml.go", "gpu_nvml_linux.go", "gpu_nvml_unsupported.go", "gpu_nvml_windows.go", "gpu_nvtop.go", "gpu_test.go", "handlers.go", "handlers_test.go", "health", "lhm", "mdraid_linux.go", "mdraid_linux_test.go", "mdraid_stub.go", "network.go", "network_test.go", "response.go", "sensors.go", "sensors_default.go", "sensors_test.go", "sensors_windows.go", "server.go", "server_test.go", "smart.go", "smart_nonwindows.go", "smart_test.go", "smart_windows.go", "system.go", "system_test.go", "systemd.go", "systemd_nonlinux.go", "systemd_nonlinux_test.go", "systemd_test.go", "test-data", "tools", "update.go", "utils", "zfs"]
 
 [[batches]]
-position = 94
+position = 90
 key = 'Fs(DirListing { dir: "agent/health" })'
 descriptor = "listing of 'agent/health'"
 cost_tokens = 8
-cum_tokens = 2681
+cum_tokens = 2654
 
 [batches.content]
 kind = "fs"
@@ -1856,11 +1784,11 @@ parent = "agent/health"
 entries = ["health.go", "health_test.go"]
 
 [[batches]]
-position = 95
+position = 91
 key = 'Fs(DirListing { dir: "agent/utils" })'
 descriptor = "listing of 'agent/utils'"
 cost_tokens = 8
-cum_tokens = 2689
+cum_tokens = 2662
 
 [batches.content]
 kind = "fs"
@@ -1870,11 +1798,11 @@ parent = "agent/utils"
 entries = ["utils.go", "utils_test.go"]
 
 [[batches]]
-position = 96
+position = 92
 key = 'Fs(DirListing { dir: "agent/deltatracker" })'
 descriptor = "listing of 'agent/deltatracker'"
 cost_tokens = 12
-cum_tokens = 2701
+cum_tokens = 2674
 
 [batches.content]
 kind = "fs"
@@ -1884,11 +1812,11 @@ parent = "agent/deltatracker"
 entries = ["deltatracker.go", "deltatracker_test.go"]
 
 [[batches]]
-position = 97
+position = 93
 key = 'Fs(DirListing { dir: "agent/lhm" })'
 descriptor = "listing of 'agent/lhm'"
 cost_tokens = 14
-cum_tokens = 2715
+cum_tokens = 2688
 
 [batches.content]
 kind = "fs"
@@ -1898,11 +1826,11 @@ parent = "agent/lhm"
 entries = ["beszel_lhm.cs", "beszel_lhm.csproj"]
 
 [[batches]]
-position = 98
+position = 94
 key = 'Fs(DirListing { dir: "agent/zfs" })'
 descriptor = "listing of 'agent/zfs'"
 cost_tokens = 19
-cum_tokens = 2734
+cum_tokens = 2707
 
 [batches.content]
 kind = "fs"
@@ -1912,11 +1840,11 @@ parent = "agent/zfs"
 entries = ["zfs_freebsd.go", "zfs_linux.go", "zfs_unsupported.go"]
 
 [[batches]]
-position = 99
+position = 95
 key = 'Fs(DirListing { dir: "agent/test-data" })'
 descriptor = "listing of 'agent/test-data'"
 cost_tokens = 28
-cum_tokens = 2762
+cum_tokens = 2735
 
 [batches.content]
 kind = "fs"
@@ -1926,11 +1854,11 @@ parent = "agent/test-data"
 entries = ["amdgpu.ids", "container.json", "container2.json", "nvtop.json", "smart", "system_info.json"]
 
 [[batches]]
-position = 100
+position = 96
 key = 'Fs(DirListing { dir: "agent/battery" })'
 descriptor = "listing of 'agent/battery'"
 cost_tokens = 31
-cum_tokens = 2793
+cum_tokens = 2766
 
 [batches.content]
 kind = "fs"
@@ -1940,117 +1868,11 @@ parent = "agent/battery"
 entries = ["battery.go", "battery_darwin.go", "battery_linux.go", "battery_linux_test.go", "battery_stub.go", "battery_windows.go"]
 
 [[batches]]
-position = 101
-key = 'Go(DeclNames { file: "agent/sensors_default.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/sensors_default.go"
-cost_tokens = 18
-cum_tokens = 2811
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/sensors_default.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 102
-key = 'Go(DeclNames { file: "agent/smart_nonwindows.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/smart_nonwindows.go"
-cost_tokens = 20
-cum_tokens = 2831
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/smart_nonwindows.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/smart_nonwindows.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 103
-key = 'Go(Decl { file: "agent/smart_nonwindows.go", start_line: 7 })'
-descriptor = "go decl at agent/smart_nonwindows.go:7"
-cost_tokens = 0
-cum_tokens = 2831
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/smart_nonwindows.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Go(DeclNames { file: "agent/agent_test_helpers.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/agent_test_helpers.go"
-cost_tokens = 22
-cum_tokens = 2853
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/agent_test_helpers.go"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/agent_test_helpers.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 105
-key = 'Go(Decl { file: "agent/agent_test_helpers.go", start_line: 6 })'
-descriptor = "go decl at agent/agent_test_helpers.go:6"
-cost_tokens = 0
-cum_tokens = 2853
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/agent_test_helpers.go"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
+position = 97
 key = 'Fs(DirListing { dir: "agent/test-data/smart" })'
 descriptor = "listing of 'agent/test-data/smart'"
 cost_tokens = 25
-cum_tokens = 2878
+cum_tokens = 2791
 
 [batches.content]
 kind = "fs"
@@ -2060,11 +1882,11 @@ parent = "agent/test-data/smart"
 entries = ["apple_nvme.json", "nvme0.json", "scan.json", "scsi.json", "sda.json"]
 
 [[batches]]
-position = 107
+position = 98
 key = 'Go(DeclNames { file: "agent/response.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/response.go"
 cost_tokens = 25
-cum_tokens = 2903
+cum_tokens = 2816
 
 [batches.content]
 kind = "lines"
@@ -2086,11 +1908,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 99
 key = 'Go(Decl { file: "agent/response.go", start_line: 13 })'
 descriptor = "go decl at agent/response.go:13"
 cost_tokens = 0
-cum_tokens = 2903
+cum_tokens = 2816
 
 [batches.content]
 kind = "lines"
@@ -2104,35 +1926,51 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 109
-key = 'Go(DeclBody { file: "agent/agent_test_helpers.go", start_line: 6 })'
-descriptor = "go decl body at agent/agent_test_helpers.go:6"
-cost_tokens = 9
-cum_tokens = 2912
+position = 100
+key = 'Go(DeclNames { file: "agent/sensors_default.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/sensors_default.go"
+cost_tokens = 29
+cum_tokens = 2845
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "agent/agent_test_helpers.go"
-start = 7
-end = 7
+path = "agent/sensors_default.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/sensors_default.go"
+start = 9
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 110
-key = 'Go(DeclNames { file: "agent/zfs/zfs_unsupported.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/zfs/zfs_unsupported.go"
-cost_tokens = 19
-cum_tokens = 2931
+position = 101
+key = 'Go(DeclNames { file: "agent/smart_nonwindows.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/smart_nonwindows.go"
+cost_tokens = 31
+cum_tokens = 2876
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "agent/zfs/zfs_unsupported.go"
+path = "agent/smart_nonwindows.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/smart_nonwindows.go"
 start = 7
 end = 7
 
@@ -2140,7 +1978,7 @@ end = 7
 kind = "full"
 
 [[batches.content.spans]]
-path = "agent/zfs/zfs_unsupported.go"
+path = "agent/smart_nonwindows.go"
 start = 8
 end = 8
 
@@ -2148,17 +1986,17 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 111
-key = 'Go(Decl { file: "agent/zfs/zfs_unsupported.go", start_line: 7 })'
-descriptor = "go decl at agent/zfs/zfs_unsupported.go:7"
+position = 102
+key = 'Go(Decl { file: "agent/smart_nonwindows.go", start_line: 7 })'
+descriptor = "go decl at agent/smart_nonwindows.go:7"
 cost_tokens = 0
-cum_tokens = 2931
+cum_tokens = 2876
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "agent/zfs/zfs_unsupported.go"
+path = "agent/smart_nonwindows.go"
 start = 7
 end = 7
 
@@ -2166,14 +2004,110 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 112
-key = 'Go(DeclNames { file: "agent/gpu_darwin_unsupported.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/gpu_darwin_unsupported.go"
-cost_tokens = 39
-cum_tokens = 2970
+position = 103
+key = 'Go(DeclNames { file: "agent/agent_test_helpers.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/agent_test_helpers.go"
+cost_tokens = 32
+cum_tokens = 2908
 
 [batches.content]
 kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/agent_test_helpers.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/agent_test_helpers.go"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/agent_test_helpers.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 104
+key = 'Go(Decl { file: "agent/agent_test_helpers.go", start_line: 6 })'
+descriptor = "go decl at agent/agent_test_helpers.go:6"
+cost_tokens = 0
+cum_tokens = 2908
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/agent_test_helpers.go"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Go(PackageImports { file: "agent/agent_test_helpers.go" })'
+descriptor = "go package + imports in agent/agent_test_helpers.go"
+cost_tokens = 7
+cum_tokens = 2915
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/agent_test_helpers.go"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Go(DeclBody { file: "agent/agent_test_helpers.go", start_line: 6 })'
+descriptor = "go decl body at agent/agent_test_helpers.go:6"
+cost_tokens = 9
+cum_tokens = 2924
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/agent_test_helpers.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Go(DeclNames { file: "agent/gpu_darwin_unsupported.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/gpu_darwin_unsupported.go"
+cost_tokens = 51
+cum_tokens = 2975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/gpu_darwin_unsupported.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
 path = "agent/gpu_darwin_unsupported.go"
@@ -2200,11 +2134,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 113
+position = 108
 key = 'Go(Decl { file: "agent/gpu_darwin_unsupported.go", start_line: 6 })'
 descriptor = "go decl at agent/gpu_darwin_unsupported.go:6"
 cost_tokens = 0
-cum_tokens = 2970
+cum_tokens = 2975
 
 [batches.content]
 kind = "lines"
@@ -2218,11 +2152,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 114
+position = 109
 key = 'Go(Decl { file: "agent/gpu_darwin_unsupported.go", start_line: 9 })'
 descriptor = "go decl at agent/gpu_darwin_unsupported.go:9"
 cost_tokens = 0
-cum_tokens = 2970
+cum_tokens = 2975
 
 [batches.content]
 kind = "lines"
@@ -2236,29 +2170,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 115
-key = 'Go(PackageImports { file: "agent/agent_test_helpers.go" })'
-descriptor = "go package + imports in agent/agent_test_helpers.go"
-cost_tokens = 9
-cum_tokens = 2979
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/agent_test_helpers.go"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
+position = 110
 key = 'Go(PackageImports { file: "agent/gpu_darwin_unsupported.go" })'
 descriptor = "go package + imports in agent/gpu_darwin_unsupported.go"
-cost_tokens = 9
-cum_tokens = 2988
+cost_tokens = 7
+cum_tokens = 2982
 
 [batches.content]
 kind = "lines"
@@ -2272,14 +2188,22 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 117
+position = 111
 key = 'Go(DeclNames { file: "agent/gpu_amd_unsupported.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/gpu_amd_unsupported.go"
-cost_tokens = 43
-cum_tokens = 3031
+cost_tokens = 54
+cum_tokens = 3036
 
 [batches.content]
 kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/gpu_amd_unsupported.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
 path = "agent/gpu_amd_unsupported.go"
@@ -2314,11 +2238,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 112
 key = 'Go(Decl { file: "agent/gpu_amd_unsupported.go", start_line: 9 })'
 descriptor = "go decl at agent/gpu_amd_unsupported.go:9"
 cost_tokens = 0
-cum_tokens = 3031
+cum_tokens = 3036
 
 [batches.content]
 kind = "lines"
@@ -2332,11 +2256,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 119
+position = 113
 key = 'Go(Decl { file: "agent/gpu_amd_unsupported.go", start_line: 13 })'
 descriptor = "go decl at agent/gpu_amd_unsupported.go:13"
 cost_tokens = 0
-cum_tokens = 3031
+cum_tokens = 3036
 
 [batches.content]
 kind = "lines"
@@ -2350,14 +2274,22 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 120
+position = 114
 key = 'Go(DeclNames { file: "agent/emmc_stub.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/emmc_stub.go"
-cost_tokens = 47
-cum_tokens = 3078
+cost_tokens = 58
+cum_tokens = 3094
 
 [batches.content]
 kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/emmc_stub.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
 path = "agent/emmc_stub.go"
@@ -2392,11 +2324,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 115
 key = 'Go(Decl { file: "agent/emmc_stub.go", start_line: 7 })'
 descriptor = "go decl at agent/emmc_stub.go:7"
 cost_tokens = 0
-cum_tokens = 3078
+cum_tokens = 3094
 
 [batches.content]
 kind = "lines"
@@ -2410,11 +2342,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 122
+position = 116
 key = 'Go(Decl { file: "agent/emmc_stub.go", start_line: 11 })'
 descriptor = "go decl at agent/emmc_stub.go:11"
 cost_tokens = 0
-cum_tokens = 3078
+cum_tokens = 3094
 
 [batches.content]
 kind = "lines"
@@ -2428,11 +2360,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 123
+position = 117
 key = 'Go(PackageImports { file: "agent/emmc_stub.go" })'
 descriptor = "go package + imports in agent/emmc_stub.go"
-cost_tokens = 9
-cum_tokens = 3087
+cost_tokens = 7
+cum_tokens = 3101
 
 [batches.content]
 kind = "lines"
@@ -2446,14 +2378,232 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 124
-key = 'Go(DeclNames { file: "agent/gpu_nvml_unsupported.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/gpu_nvml_unsupported.go"
-cost_tokens = 47
-cum_tokens = 3134
+position = 118
+key = 'Go(DeclNames { file: "agent/mdraid_stub.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/mdraid_stub.go"
+cost_tokens = 58
+cum_tokens = 3159
 
 [batches.content]
 kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 119
+key = 'Go(Decl { file: "agent/mdraid_stub.go", start_line: 5 })'
+descriptor = "go decl at agent/mdraid_stub.go:5"
+cost_tokens = 0
+cum_tokens = 3159
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Go(Decl { file: "agent/mdraid_stub.go", start_line: 9 })'
+descriptor = "go decl at agent/mdraid_stub.go:9"
+cost_tokens = 0
+cum_tokens = 3159
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Go(PackageImports { file: "agent/mdraid_stub.go" })'
+descriptor = "go package + imports in agent/mdraid_stub.go"
+cost_tokens = 5
+cum_tokens = 3164
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'Go(DeclBody { file: "agent/emmc_stub.go", start_line: 7 })'
+descriptor = "go decl body at agent/emmc_stub.go:7"
+cost_tokens = 7
+cum_tokens = 3171
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/emmc_stub.go"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Go(DeclBody { file: "agent/mdraid_stub.go", start_line: 5 })'
+descriptor = "go decl body at agent/mdraid_stub.go:5"
+cost_tokens = 7
+cum_tokens = 3178
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/mdraid_stub.go"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Go(DeclBody { file: "agent/gpu_amd_unsupported.go", start_line: 9 })'
+descriptor = "go decl body at agent/gpu_amd_unsupported.go:9"
+cost_tokens = 7
+cum_tokens = 3185
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/gpu_amd_unsupported.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Go(DeclNames { file: "agent/zfs/zfs_unsupported.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/zfs/zfs_unsupported.go"
+cost_tokens = 34
+cum_tokens = 3219
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/zfs/zfs_unsupported.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/zfs/zfs_unsupported.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/zfs/zfs_unsupported.go"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 126
+key = 'Go(Decl { file: "agent/zfs/zfs_unsupported.go", start_line: 7 })'
+descriptor = "go decl at agent/zfs/zfs_unsupported.go:7"
+cost_tokens = 0
+cum_tokens = 3219
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/zfs/zfs_unsupported.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Go(DeclNames { file: "agent/gpu_nvml_unsupported.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/gpu_nvml_unsupported.go"
+cost_tokens = 73
+cum_tokens = 3292
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/gpu_nvml_unsupported.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches.content.spans]]
 path = "agent/gpu_nvml_unsupported.go"
@@ -2496,11 +2646,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 128
 key = 'Go(Decl { file: "agent/gpu_nvml_unsupported.go", start_line: 11 })'
 descriptor = "go decl at agent/gpu_nvml_unsupported.go:11"
 cost_tokens = 0
-cum_tokens = 3134
+cum_tokens = 3292
 
 [batches.content]
 kind = "lines"
@@ -2514,11 +2664,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 126
+position = 129
 key = 'Go(Decl { file: "agent/gpu_nvml_unsupported.go", start_line: 7 })'
 descriptor = "go decl at agent/gpu_nvml_unsupported.go:7"
 cost_tokens = 13
-cum_tokens = 3147
+cum_tokens = 3305
 
 [batches.content]
 kind = "lines"
@@ -2526,84 +2676,6 @@ kind = "lines"
 [[batches.content.spans]]
 path = "agent/gpu_nvml_unsupported.go"
 start = 7
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
-key = 'Go(DeclNames { file: "agent/mdraid_stub.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/mdraid_stub.go"
-cost_tokens = 47
-cum_tokens = 3194
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/mdraid_stub.go"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/mdraid_stub.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/mdraid_stub.go"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "agent/mdraid_stub.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 128
-key = 'Go(Decl { file: "agent/mdraid_stub.go", start_line: 5 })'
-descriptor = "go decl at agent/mdraid_stub.go:5"
-cost_tokens = 0
-cum_tokens = 3194
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/mdraid_stub.go"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'Go(Decl { file: "agent/mdraid_stub.go", start_line: 9 })'
-descriptor = "go decl at agent/mdraid_stub.go:9"
-cost_tokens = 0
-cum_tokens = 3194
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/mdraid_stub.go"
-start = 9
 end = 9
 
 [batches.content.spans.render]
@@ -2611,178 +2683,10 @@ kind = "full"
 
 [[batches]]
 position = 130
-key = 'Go(PackageImports { file: "agent/mdraid_stub.go" })'
-descriptor = "go package + imports in agent/mdraid_stub.go"
-cost_tokens = 7
-cum_tokens = 3201
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/mdraid_stub.go"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 131
-key = 'Go(DeclBody { file: "agent/emmc_stub.go", start_line: 7 })'
-descriptor = "go decl body at agent/emmc_stub.go:7"
-cost_tokens = 7
-cum_tokens = 3208
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/emmc_stub.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 132
-key = 'Go(DeclBody { file: "agent/mdraid_stub.go", start_line: 5 })'
-descriptor = "go decl body at agent/mdraid_stub.go:5"
-cost_tokens = 7
-cum_tokens = 3215
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/mdraid_stub.go"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 133
-key = 'Go(DeclBody { file: "agent/gpu_amd_unsupported.go", start_line: 9 })'
-descriptor = "go decl body at agent/gpu_amd_unsupported.go:9"
-cost_tokens = 7
-cum_tokens = 3222
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/gpu_amd_unsupported.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
-key = 'Go(DeclNames { file: "agent/battery/battery_stub.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/battery/battery_stub.go"
-cost_tokens = 36
-cum_tokens = 3258
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/battery/battery_stub.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/battery/battery_stub.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/battery/battery_stub.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "agent/battery/battery_stub.go"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 135
-key = 'Go(Decl { file: "agent/battery/battery_stub.go", start_line: 7 })'
-descriptor = "go decl at agent/battery/battery_stub.go:7"
-cost_tokens = 0
-cum_tokens = 3258
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/battery/battery_stub.go"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 136
-key = 'Go(Decl { file: "agent/battery/battery_stub.go", start_line: 11 })'
-descriptor = "go decl at agent/battery/battery_stub.go:11"
-cost_tokens = 0
-cum_tokens = 3258
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/battery/battery_stub.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'Go(DeclBody { file: "agent/battery/battery_stub.go", start_line: 7 })'
-descriptor = "go decl body at agent/battery/battery_stub.go:7"
-cost_tokens = 7
-cum_tokens = 3265
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/battery/battery_stub.go"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
 key = 'Go(DeclDoc { file: "agent/agent_test_helpers.go", start_line: 6 })'
 descriptor = "go decl doc at agent/agent_test_helpers.go:6"
 cost_tokens = 22
-cum_tokens = 3287
+cum_tokens = 3327
 
 [batches.content]
 kind = "lines"
@@ -2796,11 +2700,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 139
+position = 131
 key = 'Go(PackageImports { file: "agent/gpu_nvml_unsupported.go" })'
 descriptor = "go package + imports in agent/gpu_nvml_unsupported.go"
-cost_tokens = 20
-cum_tokens = 3307
+cost_tokens = 18
+cum_tokens = 3345
 
 [batches.content]
 kind = "lines"
@@ -2814,11 +2718,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 140
+position = 132
 key = 'Go(PackageImports { file: "agent/smart_nonwindows.go" })'
 descriptor = "go package + imports in agent/smart_nonwindows.go"
-cost_tokens = 20
-cum_tokens = 3327
+cost_tokens = 18
+cum_tokens = 3363
 
 [batches.content]
 kind = "lines"
@@ -2832,11 +2736,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 141
+position = 133
 key = 'Go(DeclBody { file: "agent/zfs/zfs_unsupported.go", start_line: 7 })'
 descriptor = "go decl body at agent/zfs/zfs_unsupported.go:7"
 cost_tokens = 12
-cum_tokens = 3339
+cum_tokens = 3375
 
 [batches.content]
 kind = "lines"
@@ -2850,11 +2754,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 142
+position = 134
 key = 'Go(DeclBody { file: "agent/emmc_stub.go", start_line: 11 })'
 descriptor = "go decl body at agent/emmc_stub.go:11"
 cost_tokens = 9
-cum_tokens = 3348
+cum_tokens = 3384
 
 [batches.content]
 kind = "lines"
@@ -2868,11 +2772,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 143
+position = 135
 key = 'Go(DeclBody { file: "agent/gpu_amd_unsupported.go", start_line: 13 })'
 descriptor = "go decl body at agent/gpu_amd_unsupported.go:13"
 cost_tokens = 9
-cum_tokens = 3357
+cum_tokens = 3393
 
 [batches.content]
 kind = "lines"
@@ -2886,11 +2790,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 144
+position = 136
 key = 'Go(DeclBody { file: "agent/mdraid_stub.go", start_line: 9 })'
 descriptor = "go decl body at agent/mdraid_stub.go:9"
 cost_tokens = 9
-cum_tokens = 3366
+cum_tokens = 3402
 
 [batches.content]
 kind = "lines"
@@ -2904,11 +2808,55 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 145
+position = 137
+key = 'Go(DeclNames { file: "internal/hub/systems/systems_production.go", chunk_index: 0 })'
+descriptor = "go decl names surface in internal/hub/systems/systems_production.go"
+cost_tokens = 28
+cum_tokens = 3430
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/systems/systems_production.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/systems/systems_production.go"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Go(Decl { file: "internal/hub/systems/systems_production.go", start_line: 9 })'
+descriptor = "go decl at internal/hub/systems/systems_production.go:9"
+cost_tokens = 0
+cum_tokens = 3430
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/systems/systems_production.go"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
 key = 'Go(DeclBody { file: "agent/smart_nonwindows.go", start_line: 7 })'
 descriptor = "go decl body at agent/smart_nonwindows.go:7"
 cost_tokens = 10
-cum_tokens = 3376
+cum_tokens = 3440
 
 [batches.content]
 kind = "lines"
@@ -2922,11 +2870,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 146
+position = 140
 key = 'Markdown(Section { file: "readme.md", section_index: 9, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #9"
 cost_tokens = 55
-cum_tokens = 3431
+cum_tokens = 3495
 
 [batches.content]
 kind = "lines"
@@ -2940,11 +2888,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 147
+position = 141
 key = 'Markdown(Section { file: "readme.md", section_index: 16, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #16"
 cost_tokens = 15
-cum_tokens = 3446
+cum_tokens = 3510
 
 [batches.content]
 kind = "lines"
@@ -2958,11 +2906,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 148
+position = 142
 key = 'Markdown(Section { file: "readme.md", section_index: 17, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #17"
 cost_tokens = 13
-cum_tokens = 3459
+cum_tokens = 3523
 
 [batches.content]
 kind = "lines"
@@ -2976,11 +2924,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 149
+position = 143
 key = 'Markdown(Section { file: "readme.md", section_index: 15, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #15"
 cost_tokens = 15
-cum_tokens = 3474
+cum_tokens = 3538
 
 [batches.content]
 kind = "lines"
@@ -2994,11 +2942,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 150
+position = 144
 key = 'Go(DeclNames { file: "internal/ghupdate/release.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/ghupdate/release.go"
 cost_tokens = 50
-cum_tokens = 3524
+cum_tokens = 3588
 
 [batches.content]
 kind = "lines"
@@ -3052,11 +3000,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 145
 key = 'Go(Decl { file: "internal/ghupdate/release.go", start_line: 26 })'
 descriptor = "go decl at internal/ghupdate/release.go:26"
 cost_tokens = 0
-cum_tokens = 3524
+cum_tokens = 3588
 
 [batches.content]
 kind = "lines"
@@ -3070,11 +3018,29 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 152
+position = 146
+key = 'Go(PackageImports { file: "internal/hub/systems/systems_production.go" })'
+descriptor = "go package + imports in internal/hub/systems/systems_production.go"
+cost_tokens = 7
+cum_tokens = 3595
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/systems/systems_production.go"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
 key = 'Go(DeclNames { file: "agent/battery/battery.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/battery/battery.go"
 cost_tokens = 52
-cum_tokens = 3576
+cum_tokens = 3647
 
 [batches.content]
 kind = "lines"
@@ -3096,11 +3062,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 148
 key = 'Go(Decl { file: "agent/battery/battery.go", start_line: 4 })'
 descriptor = "go decl at agent/battery/battery.go:4"
 cost_tokens = 9
-cum_tokens = 3585
+cum_tokens = 3656
 
 [batches.content]
 kind = "lines"
@@ -3114,11 +3080,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 154
+position = 149
 key = 'Go(PackageImports { file: "agent/battery/battery.go" })'
 descriptor = "go package + imports in agent/battery/battery.go"
 cost_tokens = 7
-cum_tokens = 3592
+cum_tokens = 3663
 
 [batches.content]
 kind = "lines"
@@ -3132,11 +3098,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 155
+position = 150
 key = 'Markdown(Section { file: "readme.md", section_index: 4, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #4"
 cost_tokens = 27
-cum_tokens = 3619
+cum_tokens = 3690
 
 [batches.content]
 kind = "lines"
@@ -3150,11 +3116,81 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 156
+position = 151
+key = 'Go(DeclNames { file: "internal/hub/ws/ws_test_helpers.go", chunk_index: 0 })'
+descriptor = "go decl names surface in internal/hub/ws/ws_test_helpers.go"
+cost_tokens = 31
+cum_tokens = 3721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/ws/ws_test_helpers.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/ws/ws_test_helpers.go"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/ws/ws_test_helpers.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'Go(Decl { file: "internal/hub/ws/ws_test_helpers.go", start_line: 6 })'
+descriptor = "go decl at internal/hub/ws/ws_test_helpers.go:6"
+cost_tokens = 0
+cum_tokens = 3721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/ws/ws_test_helpers.go"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Go(PackageImports { file: "internal/hub/ws/ws_test_helpers.go" })'
+descriptor = "go package + imports in internal/hub/ws/ws_test_helpers.go"
+cost_tokens = 7
+cum_tokens = 3728
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/ws/ws_test_helpers.go"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
 key = 'Markdown(Section { file: "readme.md", section_index: 19, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #19"
 cost_tokens = 16
-cum_tokens = 3635
+cum_tokens = 3744
 
 [batches.content]
 kind = "lines"
@@ -3168,11 +3204,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 157
+position = 155
 key = 'Markdown(Section { file: "readme.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #0"
 cost_tokens = 307
-cum_tokens = 3942
+cum_tokens = 4051
 
 [batches.content]
 kind = "lines"
@@ -3186,11 +3222,115 @@ end = 12
 kind = "full"
 
 [[batches]]
+position = 156
+key = 'Go(DeclNames { file: "agent/battery/battery_stub.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/battery/battery_stub.go"
+cost_tokens = 54
+cum_tokens = 4105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 157
+key = 'Go(Decl { file: "agent/battery/battery_stub.go", start_line: 7 })'
+descriptor = "go decl at agent/battery/battery_stub.go:7"
+cost_tokens = 0
+cum_tokens = 4105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 158
+key = 'Go(Decl { file: "agent/battery/battery_stub.go", start_line: 11 })'
+descriptor = "go decl at agent/battery/battery_stub.go:11"
+cost_tokens = 0
+cum_tokens = 4105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Go(DeclBody { file: "agent/battery/battery_stub.go", start_line: 7 })'
+descriptor = "go decl body at agent/battery/battery_stub.go:7"
+cost_tokens = 7
+cum_tokens = 4112
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
 key = 'Go(DeclNames { file: "agent/agent_cache.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/agent_cache.go"
 cost_tokens = 105
-cum_tokens = 4047
+cum_tokens = 4217
 
 [batches.content]
 kind = "lines"
@@ -3276,11 +3416,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 161
 key = 'Go(Decl { file: "agent/agent_cache.go", start_line: 21 })'
 descriptor = "go decl at agent/agent_cache.go:21"
 cost_tokens = 0
-cum_tokens = 4047
+cum_tokens = 4217
 
 [batches.content]
 kind = "lines"
@@ -3294,11 +3434,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 160
+position = 162
 key = 'Go(Decl { file: "agent/agent_cache.go", start_line: 28 })'
 descriptor = "go decl at agent/agent_cache.go:28"
 cost_tokens = 0
-cum_tokens = 4047
+cum_tokens = 4217
 
 [batches.content]
 kind = "lines"
@@ -3312,11 +3452,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 161
+position = 163
 key = 'Go(Decl { file: "agent/agent_cache.go", start_line: 44 })'
 descriptor = "go decl at agent/agent_cache.go:44"
 cost_tokens = 0
-cum_tokens = 4047
+cum_tokens = 4217
 
 [batches.content]
 kind = "lines"
@@ -3330,11 +3470,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 162
+position = 164
 key = 'Go(DeclDoc { file: "agent/agent_cache.go", start_line: 21 })'
 descriptor = "go decl doc at agent/agent_cache.go:21"
 cost_tokens = 20
-cum_tokens = 4067
+cum_tokens = 4237
 
 [batches.content]
 kind = "lines"
@@ -3348,11 +3488,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 163
+position = 165
 key = 'Go(Decl { file: "agent/agent_cache.go", start_line: 15 })'
 descriptor = "go decl at agent/agent_cache.go:15"
 cost_tokens = 24
-cum_tokens = 4091
+cum_tokens = 4261
 
 [batches.content]
 kind = "lines"
@@ -3366,11 +3506,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 164
+position = 166
 key = 'Go(Decl { file: "agent/agent_cache.go", start_line: 10 })'
 descriptor = "go decl at agent/agent_cache.go:10"
 cost_tokens = 26
-cum_tokens = 4117
+cum_tokens = 4287
 
 [batches.content]
 kind = "lines"
@@ -3384,11 +3524,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 165
+position = 167
 key = 'Go(DeclNames { file: "agent/data_dir.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/data_dir.go"
 cost_tokens = 106
-cum_tokens = 4223
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -3474,11 +3614,11 @@ end = 111
 kind = "ellipsis"
 
 [[batches]]
-position = 166
+position = 168
 key = 'Go(Decl { file: "agent/data_dir.go", start_line: 16 })'
 descriptor = "go decl at agent/data_dir.go:16"
 cost_tokens = 0
-cum_tokens = 4223
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -3492,11 +3632,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 167
+position = 169
 key = 'Go(Decl { file: "agent/data_dir.go", start_line: 40 })'
 descriptor = "go decl at agent/data_dir.go:40"
 cost_tokens = 0
-cum_tokens = 4223
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -3510,11 +3650,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 168
+position = 170
 key = 'Go(Decl { file: "agent/data_dir.go", start_line: 70 })'
 descriptor = "go decl at agent/data_dir.go:70"
 cost_tokens = 0
-cum_tokens = 4223
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -3528,11 +3668,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 169
+position = 171
 key = 'Go(Decl { file: "agent/data_dir.go", start_line: 94 })'
 descriptor = "go decl at agent/data_dir.go:94"
 cost_tokens = 0
-cum_tokens = 4223
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -3546,11 +3686,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 170
+position = 172
 key = 'Go(Decl { file: "agent/data_dir.go", start_line: 110 })'
 descriptor = "go decl at agent/data_dir.go:110"
 cost_tokens = 0
-cum_tokens = 4223
+cum_tokens = 4393
 
 [batches.content]
 kind = "lines"
@@ -3564,11 +3704,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 171
+position = 173
 key = 'Go(DeclDoc { file: "agent/data_dir.go", start_line: 94 })'
 descriptor = "go decl doc at agent/data_dir.go:94"
 cost_tokens = 13
-cum_tokens = 4236
+cum_tokens = 4406
 
 [batches.content]
 kind = "lines"
@@ -3582,11 +3722,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 172
+position = 174
 key = 'Go(DeclNames { file: "internal/hub/collections.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/hub/collections.go"
 cost_tokens = 55
-cum_tokens = 4291
+cum_tokens = 4461
 
 [batches.content]
 kind = "lines"
@@ -3640,11 +3780,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 173
+position = 175
 key = 'Go(Decl { file: "internal/hub/collections.go", start_line: 17 })'
 descriptor = "go decl at internal/hub/collections.go:17"
 cost_tokens = 0
-cum_tokens = 4291
+cum_tokens = 4461
 
 [batches.content]
 kind = "lines"
@@ -3658,11 +3798,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 174
+position = 176
 key = 'Go(Decl { file: "internal/hub/collections.go", start_line: 115 })'
 descriptor = "go decl at internal/hub/collections.go:115"
 cost_tokens = 0
-cum_tokens = 4291
+cum_tokens = 4461
 
 [batches.content]
 kind = "lines"
@@ -3676,11 +3816,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 175
+position = 177
 key = 'Go(DeclNames { file: "internal/hub/server.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/hub/server.go"
 cost_tokens = 55
-cum_tokens = 4346
+cum_tokens = 4516
 
 [batches.content]
 kind = "lines"
@@ -3734,11 +3874,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 176
+position = 178
 key = 'Go(Decl { file: "internal/hub/server.go", start_line: 21 })'
 descriptor = "go decl at internal/hub/server.go:21"
 cost_tokens = 0
-cum_tokens = 4346
+cum_tokens = 4516
 
 [batches.content]
 kind = "lines"
@@ -3752,11 +3892,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 177
+position = 179
 key = 'Go(Decl { file: "internal/hub/server.go", start_line: 31 })'
 descriptor = "go decl at internal/hub/server.go:31"
 cost_tokens = 0
-cum_tokens = 4346
+cum_tokens = 4516
 
 [batches.content]
 kind = "lines"
@@ -3770,11 +3910,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 178
+position = 180
 key = 'Markdown(Section { file: "readme.md", section_index: 10, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #10"
 cost_tokens = 56
-cum_tokens = 4402
+cum_tokens = 4572
 
 [batches.content]
 kind = "lines"
@@ -3788,11 +3928,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 179
+position = 181
 key = 'Go(DeclBody { file: "agent/battery/battery_stub.go", start_line: 11 })'
 descriptor = "go decl body at agent/battery/battery_stub.go:11"
 cost_tokens = 15
-cum_tokens = 4417
+cum_tokens = 4587
 
 [batches.content]
 kind = "lines"
@@ -3806,213 +3946,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 180
-key = 'Go(DeclNames { file: "internal/records/records_test_helpers.go", chunk_index: 0 })'
-descriptor = "go decl names surface in internal/records/records_test_helpers.go"
-cost_tokens = 61
-cum_tokens = 4478
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 181
-key = 'Go(Decl { file: "internal/records/records_test_helpers.go", start_line: 10 })'
-descriptor = "go decl at internal/records/records_test_helpers.go:10"
-cost_tokens = 0
-cum_tokens = 4478
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 182
-key = 'Go(Decl { file: "internal/records/records_test_helpers.go", start_line: 15 })'
-descriptor = "go decl at internal/records/records_test_helpers.go:15"
-cost_tokens = 0
-cum_tokens = 4478
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'Go(Decl { file: "internal/records/records_test_helpers.go", start_line: 20 })'
-descriptor = "go decl at internal/records/records_test_helpers.go:20"
-cost_tokens = 0
-cum_tokens = 4478
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 184
-key = 'Go(DeclBody { file: "internal/records/records_test_helpers.go", start_line: 20 })'
-descriptor = "go decl body at internal/records/records_test_helpers.go:20"
-cost_tokens = 9
-cum_tokens = 4487
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
-key = 'Go(DeclBody { file: "internal/records/records_test_helpers.go", start_line: 10 })'
-descriptor = "go decl body at internal/records/records_test_helpers.go:10"
-cost_tokens = 11
-cum_tokens = 4498
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
-key = 'Go(DeclDoc { file: "internal/records/records_test_helpers.go", start_line: 20 })'
-descriptor = "go decl doc at internal/records/records_test_helpers.go:20"
-cost_tokens = 13
-cum_tokens = 4511
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
-key = 'Go(DeclDoc { file: "internal/records/records_test_helpers.go", start_line: 10 })'
-descriptor = "go decl doc at internal/records/records_test_helpers.go:10"
-cost_tokens = 17
-cum_tokens = 4528
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 188
-key = 'Go(DeclDoc { file: "internal/records/records_test_helpers.go", start_line: 15 })'
-descriptor = "go decl doc at internal/records/records_test_helpers.go:15"
-cost_tokens = 17
-cum_tokens = 4545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_test_helpers.go"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 189
 key = 'Markdown(Section { file: "readme.md", section_index: 18, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #18"
 cost_tokens = 18
-cum_tokens = 4563
+cum_tokens = 4605
 
 [batches.content]
 kind = "lines"
@@ -4026,11 +3964,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 190
+position = 183
 key = 'Markdown(HeadingsOutline { file: "supplemental/guides/systemd.md" })'
 descriptor = "headings outline in supplemental/guides/systemd.md"
 cost_tokens = 76
-cum_tokens = 4639
+cum_tokens = 4681
 
 [batches.content]
 kind = "lines"
@@ -4132,11 +4070,11 @@ end = 105
 kind = "ellipsis"
 
 [[batches]]
-position = 191
+position = 184
 key = 'Go(DeclNames { file: "agent/agent.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/agent.go"
 cost_tokens = 121
-cum_tokens = 4760
+cum_tokens = 4802
 
 [batches.content]
 kind = "lines"
@@ -4222,11 +4160,11 @@ end = 224
 kind = "ellipsis"
 
 [[batches]]
-position = 192
+position = 185
 key = 'Go(Decl { file: "agent/agent.go", start_line: 55 })'
 descriptor = "go decl at agent/agent.go:55"
 cost_tokens = 0
-cum_tokens = 4760
+cum_tokens = 4802
 
 [batches.content]
 kind = "lines"
@@ -4240,11 +4178,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 193
+position = 186
 key = 'Go(Decl { file: "agent/agent.go", start_line: 154 })'
 descriptor = "go decl at agent/agent.go:154"
 cost_tokens = 0
-cum_tokens = 4760
+cum_tokens = 4802
 
 [batches.content]
 kind = "lines"
@@ -4258,11 +4196,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 194
+position = 187
 key = 'Go(Decl { file: "agent/agent.go", start_line: 218 })'
 descriptor = "go decl at agent/agent.go:218"
 cost_tokens = 0
-cum_tokens = 4760
+cum_tokens = 4802
 
 [batches.content]
 kind = "lines"
@@ -4276,11 +4214,11 @@ end = 218
 kind = "full"
 
 [[batches]]
-position = 195
+position = 188
 key = 'Go(Decl { file: "agent/agent.go", start_line: 223 })'
 descriptor = "go decl at agent/agent.go:223"
 cost_tokens = 0
-cum_tokens = 4760
+cum_tokens = 4802
 
 [batches.content]
 kind = "lines"
@@ -4294,11 +4232,11 @@ end = 223
 kind = "full"
 
 [[batches]]
-position = 196
+position = 189
 key = 'Go(DeclDoc { file: "agent/agent.go", start_line: 218 })'
 descriptor = "go decl doc at agent/agent.go:218"
 cost_tokens = 17
-cum_tokens = 4777
+cum_tokens = 4819
 
 [batches.content]
 kind = "lines"
@@ -4312,11 +4250,11 @@ end = 217
 kind = "full"
 
 [[batches]]
-position = 197
+position = 190
 key = 'Go(DeclBody { file: "agent/agent.go", start_line: 218 })'
 descriptor = "go decl body at agent/agent.go:218"
 cost_tokens = 23
-cum_tokens = 4800
+cum_tokens = 4842
 
 [batches.content]
 kind = "lines"
@@ -4330,105 +4268,29 @@ end = 220
 kind = "full"
 
 [[batches]]
-position = 198
-key = 'Go(DeclNames { file: "internal/hub/server_development.go", chunk_index: 0 })'
-descriptor = "go decl names surface in internal/hub/server_development.go"
-cost_tokens = 63
-cum_tokens = 4863
+position = 191
+key = 'Go(PackageImports { file: "agent/gpu_amd_unsupported.go" })'
+descriptor = "go package + imports in agent/gpu_amd_unsupported.go"
+cost_tokens = 28
+cum_tokens = 4870
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 199
-key = 'Go(Decl { file: "internal/hub/server_development.go", start_line: 23 })'
-descriptor = "go decl at internal/hub/server_development.go:23"
-cost_tokens = 0
-cum_tokens = 4863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 23
-end = 23
+path = "agent/gpu_amd_unsupported.go"
+start = 3
+end = 7
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 200
-key = 'Go(Decl { file: "internal/hub/server_development.go", start_line: 48 })'
-descriptor = "go decl at internal/hub/server_development.go:48"
-cost_tokens = 0
-cum_tokens = 4863
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 201
+position = 192
 key = 'Go(DeclNames { file: "agent/emmc_common.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/emmc_common.go"
 cost_tokens = 123
-cum_tokens = 4986
+cum_tokens = 4993
 
 [batches.content]
 kind = "lines"
@@ -4530,11 +4392,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 202
+position = 193
 key = 'Go(Decl { file: "agent/emmc_common.go", start_line: 9 })'
 descriptor = "go decl at agent/emmc_common.go:9"
 cost_tokens = 0
-cum_tokens = 4986
+cum_tokens = 4993
 
 [batches.content]
 kind = "lines"
@@ -4548,11 +4410,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 203
+position = 194
 key = 'Go(Decl { file: "agent/emmc_common.go", start_line: 25 })'
 descriptor = "go decl at agent/emmc_common.go:25"
 cost_tokens = 0
-cum_tokens = 4986
+cum_tokens = 4993
 
 [batches.content]
 kind = "lines"
@@ -4566,11 +4428,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 204
+position = 195
 key = 'Go(Decl { file: "agent/emmc_common.go", start_line: 42 })'
 descriptor = "go decl at agent/emmc_common.go:42"
 cost_tokens = 0
-cum_tokens = 4986
+cum_tokens = 4993
 
 [batches.content]
 kind = "lines"
@@ -4584,11 +4446,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 205
+position = 196
 key = 'Go(Decl { file: "agent/emmc_common.go", start_line: 55 })'
 descriptor = "go decl at agent/emmc_common.go:55"
 cost_tokens = 0
-cum_tokens = 4986
+cum_tokens = 4993
 
 [batches.content]
 kind = "lines"
@@ -4602,11 +4464,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 206
+position = 197
 key = 'Go(Decl { file: "agent/emmc_common.go", start_line: 68 })'
 descriptor = "go decl at agent/emmc_common.go:68"
 cost_tokens = 0
-cum_tokens = 4986
+cum_tokens = 4993
 
 [batches.content]
 kind = "lines"
@@ -4620,11 +4482,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 207
+position = 198
 key = 'Go(Decl { file: "agent/emmc_common.go", start_line: 81 })'
 descriptor = "go decl at agent/emmc_common.go:81"
 cost_tokens = 0
-cum_tokens = 4986
+cum_tokens = 4993
 
 [batches.content]
 kind = "lines"
@@ -4638,11 +4500,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 208
+position = 199
 key = 'Go(DeclNames { file: "agent/system.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/system.go"
 cost_tokens = 125
-cum_tokens = 5111
+cum_tokens = 5118
 
 [batches.content]
 kind = "lines"
@@ -4728,11 +4590,11 @@ end = 268
 kind = "ellipsis"
 
 [[batches]]
-position = 209
+position = 200
 key = 'Go(Decl { file: "agent/system.go", start_line: 26 })'
 descriptor = "go decl at agent/system.go:26"
 cost_tokens = 0
-cum_tokens = 5111
+cum_tokens = 5118
 
 [batches.content]
 kind = "lines"
@@ -4746,11 +4608,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 210
+position = 201
 key = 'Go(Decl { file: "agent/system.go", start_line: 111 })'
 descriptor = "go decl at agent/system.go:111"
 cost_tokens = 0
-cum_tokens = 5111
+cum_tokens = 5118
 
 [batches.content]
 kind = "lines"
@@ -4764,11 +4626,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 211
+position = 202
 key = 'Go(Decl { file: "agent/system.go", start_line: 125 })'
 descriptor = "go decl at agent/system.go:125"
 cost_tokens = 0
-cum_tokens = 5111
+cum_tokens = 5118
 
 [batches.content]
 kind = "lines"
@@ -4782,11 +4644,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 212
+position = 203
 key = 'Go(Decl { file: "agent/system.go", start_line: 131 })'
 descriptor = "go decl at agent/system.go:131"
 cost_tokens = 0
-cum_tokens = 5111
+cum_tokens = 5118
 
 [batches.content]
 kind = "lines"
@@ -4800,11 +4662,11 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 213
+position = 204
 key = 'Go(Decl { file: "agent/system.go", start_line: 267 })'
 descriptor = "go decl at agent/system.go:267"
 cost_tokens = 0
-cum_tokens = 5111
+cum_tokens = 5118
 
 [batches.content]
 kind = "lines"
@@ -4818,11 +4680,11 @@ end = 267
 kind = "full"
 
 [[batches]]
-position = 214
+position = 205
 key = 'Go(DeclDoc { file: "agent/system.go", start_line: 131 })'
 descriptor = "go decl doc at agent/system.go:131"
 cost_tokens = 15
-cum_tokens = 5126
+cum_tokens = 5133
 
 [batches.content]
 kind = "lines"
@@ -4836,11 +4698,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 215
+position = 206
 key = 'Go(DeclDoc { file: "agent/system.go", start_line: 26 })'
 descriptor = "go decl doc at agent/system.go:26"
 cost_tokens = 16
-cum_tokens = 5142
+cum_tokens = 5149
 
 [batches.content]
 kind = "lines"
@@ -4854,11 +4716,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 216
+position = 207
 key = 'Go(DeclDoc { file: "agent/agent_cache.go", start_line: 44 })'
 descriptor = "go decl doc at agent/agent_cache.go:44"
 cost_tokens = 17
-cum_tokens = 5159
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -4872,11 +4734,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 217
+position = 208
 key = 'Markdown(Section { file: "readme.md", section_index: 11, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #11"
 cost_tokens = 19
-cum_tokens = 5178
+cum_tokens = 5185
 
 [batches.content]
 kind = "lines"
@@ -4890,11 +4752,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 218
+position = 209
 key = 'Go(DeclNames { file: "agent/gpu_nvtop.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/gpu_nvtop.go"
 cost_tokens = 128
-cum_tokens = 5306
+cum_tokens = 5313
 
 [batches.content]
 kind = "lines"
@@ -4996,11 +4858,11 @@ end = 141
 kind = "ellipsis"
 
 [[batches]]
-position = 219
+position = 210
 key = 'Go(Decl { file: "agent/gpu_nvtop.go", start_line: 26 })'
 descriptor = "go decl at agent/gpu_nvtop.go:26"
 cost_tokens = 0
-cum_tokens = 5306
+cum_tokens = 5313
 
 [batches.content]
 kind = "lines"
@@ -5014,11 +4876,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 220
+position = 211
 key = 'Go(Decl { file: "agent/gpu_nvtop.go", start_line: 36 })'
 descriptor = "go decl at agent/gpu_nvtop.go:36"
 cost_tokens = 0
-cum_tokens = 5306
+cum_tokens = 5313
 
 [batches.content]
 kind = "lines"
@@ -5032,11 +4894,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 221
+position = 212
 key = 'Go(Decl { file: "agent/gpu_nvtop.go", start_line: 45 })'
 descriptor = "go decl at agent/gpu_nvtop.go:45"
 cost_tokens = 0
-cum_tokens = 5306
+cum_tokens = 5313
 
 [batches.content]
 kind = "lines"
@@ -5050,11 +4912,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 222
+position = 213
 key = 'Go(Decl { file: "agent/gpu_nvtop.go", start_line: 103 })'
 descriptor = "go decl at agent/gpu_nvtop.go:103"
 cost_tokens = 0
-cum_tokens = 5306
+cum_tokens = 5313
 
 [batches.content]
 kind = "lines"
@@ -5068,11 +4930,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 223
+position = 214
 key = 'Go(Decl { file: "agent/gpu_nvtop.go", start_line: 140 })'
 descriptor = "go decl at agent/gpu_nvtop.go:140"
 cost_tokens = 0
-cum_tokens = 5306
+cum_tokens = 5313
 
 [batches.content]
 kind = "lines"
@@ -5086,11 +4948,11 @@ end = 140
 kind = "full"
 
 [[batches]]
-position = 224
+position = 215
 key = 'Go(DeclDoc { file: "internal/ghupdate/selinux.go", start_line: 10 })'
 descriptor = "go decl doc at internal/ghupdate/selinux.go:10"
 cost_tokens = 21
-cum_tokens = 5327
+cum_tokens = 5334
 
 [batches.content]
 kind = "lines"
@@ -5104,423 +4966,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 225
-key = 'Go(PackageImports { file: "internal/hub/systems/systems_production.go" })'
-descriptor = "go package + imports in internal/hub/systems/systems_production.go"
-cost_tokens = 9
-cum_tokens = 5336
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/systems/systems_production.go"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 226
-key = 'Go(PackageImports { file: "internal/hub/ws/ws_test_helpers.go" })'
-descriptor = "go package + imports in internal/hub/ws/ws_test_helpers.go"
-cost_tokens = 9
-cum_tokens = 5345
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/ws/ws_test_helpers.go"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 227
-key = 'Go(PackageImports { file: "agent/gpu_amd_unsupported.go" })'
-descriptor = "go package + imports in agent/gpu_amd_unsupported.go"
-cost_tokens = 30
-cum_tokens = 5375
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/gpu_amd_unsupported.go"
-start = 3
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 228
-key = 'Go(DeclNames { file: "agent/systemd_nonlinux.go", chunk_index: 0 })'
-descriptor = "go decl names surface in agent/systemd_nonlinux.go"
-cost_tokens = 133
-cum_tokens = 5508
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 229
-key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 17 })'
-descriptor = "go decl at agent/systemd_nonlinux.go:17"
-cost_tokens = 0
-cum_tokens = 5508
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 230
-key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 22 })'
-descriptor = "go decl at agent/systemd_nonlinux.go:22"
-cost_tokens = 0
-cum_tokens = 5508
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 231
-key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 27 })'
-descriptor = "go decl at agent/systemd_nonlinux.go:27"
-cost_tokens = 0
-cum_tokens = 5508
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 232
-key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 32 })'
-descriptor = "go decl at agent/systemd_nonlinux.go:32"
-cost_tokens = 0
-cum_tokens = 5508
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 233
-key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 36 })'
-descriptor = "go decl at agent/systemd_nonlinux.go:36"
-cost_tokens = 0
-cum_tokens = 5508
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 234
-key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 12 })'
-descriptor = "go decl at agent/systemd_nonlinux.go:12"
-cost_tokens = 14
-cum_tokens = 5522
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 12
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 235
-key = 'Go(DeclBody { file: "agent/systemd_nonlinux.go", start_line: 22 })'
-descriptor = "go decl body at agent/systemd_nonlinux.go:22"
-cost_tokens = 7
-cum_tokens = 5529
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 236
-key = 'Go(DeclBody { file: "agent/systemd_nonlinux.go", start_line: 27 })'
-descriptor = "go decl body at agent/systemd_nonlinux.go:27"
-cost_tokens = 8
-cum_tokens = 5537
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 237
-key = 'Go(DeclBody { file: "agent/systemd_nonlinux.go", start_line: 32 })'
-descriptor = "go decl body at agent/systemd_nonlinux.go:32"
-cost_tokens = 8
-cum_tokens = 5545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 238
-key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 17 })'
-descriptor = "go decl doc at agent/systemd_nonlinux.go:17"
-cost_tokens = 14
-cum_tokens = 5559
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 239
-key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 12 })'
-descriptor = "go decl doc at agent/systemd_nonlinux.go:12"
-cost_tokens = 17
-cum_tokens = 5576
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 240
-key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 22 })'
-descriptor = "go decl doc at agent/systemd_nonlinux.go:22"
-cost_tokens = 15
-cum_tokens = 5591
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 241
-key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 27 })'
-descriptor = "go decl doc at agent/systemd_nonlinux.go:27"
-cost_tokens = 17
-cum_tokens = 5608
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 242
-key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 32 })'
-descriptor = "go decl doc at agent/systemd_nonlinux.go:32"
-cost_tokens = 17
-cum_tokens = 5625
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/systemd_nonlinux.go"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 243
+position = 216
 key = 'Go(DeclDoc { file: "agent/agent_cache.go", start_line: 28 })'
 descriptor = "go decl doc at agent/agent_cache.go:28"
 cost_tokens = 18
-cum_tokens = 5643
+cum_tokens = 5352
 
 [batches.content]
 kind = "lines"
@@ -5534,11 +4984,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 244
+position = 217
 key = 'Go(DeclDoc { file: "agent/gpu_nvtop.go", start_line: 36 })'
 descriptor = "go decl doc at agent/gpu_nvtop.go:36"
 cost_tokens = 18
-cum_tokens = 5661
+cum_tokens = 5370
 
 [batches.content]
 kind = "lines"
@@ -5552,11 +5002,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 245
+position = 218
 key = 'Go(DeclDoc { file: "agent/system.go", start_line: 111 })'
 descriptor = "go decl doc at agent/system.go:111"
 cost_tokens = 18
-cum_tokens = 5679
+cum_tokens = 5388
 
 [batches.content]
 kind = "lines"
@@ -5570,11 +5020,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 246
+position = 219
 key = 'Go(DeclNames { file: "internal/alerts/alerts_system.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/alerts/alerts_system.go"
 cost_tokens = 70
-cum_tokens = 5749
+cum_tokens = 5458
 
 [batches.content]
 kind = "lines"
@@ -5628,11 +5078,11 @@ end = 358
 kind = "ellipsis"
 
 [[batches]]
-position = 247
+position = 220
 key = 'Go(Decl { file: "internal/alerts/alerts_system.go", start_line: 16 })'
 descriptor = "go decl at internal/alerts/alerts_system.go:16"
 cost_tokens = 0
-cum_tokens = 5749
+cum_tokens = 5458
 
 [batches.content]
 kind = "lines"
@@ -5646,11 +5096,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 248
+position = 221
 key = 'Go(Decl { file: "internal/alerts/alerts_system.go", start_line: 300 })'
 descriptor = "go decl at internal/alerts/alerts_system.go:300"
 cost_tokens = 0
-cum_tokens = 5749
+cum_tokens = 5458
 
 [batches.content]
 kind = "lines"
@@ -5664,11 +5114,11 @@ end = 300
 kind = "full"
 
 [[batches]]
-position = 249
+position = 222
 key = 'Go(Decl { file: "internal/alerts/alerts_system.go", start_line: 357 })'
 descriptor = "go decl at internal/alerts/alerts_system.go:357"
 cost_tokens = 0
-cum_tokens = 5749
+cum_tokens = 5458
 
 [batches.content]
 kind = "lines"
@@ -5682,11 +5132,11 @@ end = 357
 kind = "full"
 
 [[batches]]
-position = 250
+position = 223
 key = 'Go(DeclDoc { file: "agent/agent.go", start_line: 55 })'
 descriptor = "go decl doc at agent/agent.go:55"
 cost_tokens = 43
-cum_tokens = 5792
+cum_tokens = 5501
 
 [batches.content]
 kind = "lines"
@@ -5700,11 +5150,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 251
+position = 224
 key = 'Go(DeclNames { file: "agent/fingerprint.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/fingerprint.go"
 cost_tokens = 136
-cum_tokens = 5928
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -5822,11 +5272,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 252
+position = 225
 key = 'Go(Decl { file: "agent/fingerprint.go", start_line: 18 })'
 descriptor = "go decl at agent/fingerprint.go:18"
 cost_tokens = 0
-cum_tokens = 5928
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -5840,11 +5290,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 253
+position = 226
 key = 'Go(Decl { file: "agent/fingerprint.go", start_line: 27 })'
 descriptor = "go decl at agent/fingerprint.go:27"
 cost_tokens = 0
-cum_tokens = 5928
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -5858,11 +5308,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 254
+position = 227
 key = 'Go(Decl { file: "agent/fingerprint.go", start_line: 43 })'
 descriptor = "go decl at agent/fingerprint.go:43"
 cost_tokens = 0
-cum_tokens = 5928
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -5876,11 +5326,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 255
+position = 228
 key = 'Go(Decl { file: "agent/fingerprint.go", start_line: 62 })'
 descriptor = "go decl at agent/fingerprint.go:62"
 cost_tokens = 0
-cum_tokens = 5928
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -5894,11 +5344,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 256
+position = 229
 key = 'Go(Decl { file: "agent/fingerprint.go", start_line: 75 })'
 descriptor = "go decl at agent/fingerprint.go:75"
 cost_tokens = 0
-cum_tokens = 5928
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -5912,11 +5362,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 257
+position = 230
 key = 'Go(Decl { file: "agent/fingerprint.go", start_line: 81 })'
 descriptor = "go decl at agent/fingerprint.go:81"
 cost_tokens = 0
-cum_tokens = 5928
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
@@ -5930,11 +5380,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 258
+position = 231
 key = 'Go(DeclDoc { file: "agent/fingerprint.go", start_line: 75 })'
 descriptor = "go decl doc at agent/fingerprint.go:75"
 cost_tokens = 15
-cum_tokens = 5943
+cum_tokens = 5652
 
 [batches.content]
 kind = "lines"
@@ -5948,11 +5398,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 259
+position = 232
 key = 'Go(DeclDoc { file: "agent/fingerprint.go", start_line: 81 })'
 descriptor = "go decl doc at agent/fingerprint.go:81"
 cost_tokens = 35
-cum_tokens = 5978
+cum_tokens = 5687
 
 [batches.content]
 kind = "lines"
@@ -5966,11 +5416,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 260
+position = 233
 key = 'Go(DeclDoc { file: "agent/fingerprint.go", start_line: 62 })'
 descriptor = "go decl doc at agent/fingerprint.go:62"
 cost_tokens = 16
-cum_tokens = 5994
+cum_tokens = 5703
 
 [batches.content]
 kind = "lines"
@@ -5984,11 +5434,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 261
+position = 234
 key = 'Go(DeclBody { file: "agent/fingerprint.go", start_line: 75 })'
 descriptor = "go decl body at agent/fingerprint.go:75"
 cost_tokens = 27
-cum_tokens = 6021
+cum_tokens = 5730
 
 [batches.content]
 kind = "lines"
@@ -6002,11 +5452,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 262
+position = 235
 key = 'Markdown(Section { file: "readme.md", section_index: 14, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #14"
 cost_tokens = 20
-cum_tokens = 6041
+cum_tokens = 5750
 
 [batches.content]
 kind = "lines"
@@ -6020,11 +5470,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 263
+position = 236
 key = 'Markdown(Section { file: "readme.md", section_index: 13, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #13"
 cost_tokens = 19
-cum_tokens = 6060
+cum_tokens = 5769
 
 [batches.content]
 kind = "lines"
@@ -6038,11 +5488,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 264
+position = 237
 key = 'Markdown(Section { file: "readme.md", section_index: 12, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #12"
 cost_tokens = 20
-cum_tokens = 6080
+cum_tokens = 5789
 
 [batches.content]
 kind = "lines"
@@ -6056,11 +5506,323 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 265
+position = 238
+key = 'Go(DeclNames { file: "internal/records/records_test_helpers.go", chunk_index: 0 })'
+descriptor = "go decl names surface in internal/records/records_test_helpers.go"
+cost_tokens = 71
+cum_tokens = 5860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 239
+key = 'Go(Decl { file: "internal/records/records_test_helpers.go", start_line: 10 })'
+descriptor = "go decl at internal/records/records_test_helpers.go:10"
+cost_tokens = 0
+cum_tokens = 5860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'Go(Decl { file: "internal/records/records_test_helpers.go", start_line: 15 })'
+descriptor = "go decl at internal/records/records_test_helpers.go:15"
+cost_tokens = 0
+cum_tokens = 5860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'Go(Decl { file: "internal/records/records_test_helpers.go", start_line: 20 })'
+descriptor = "go decl at internal/records/records_test_helpers.go:20"
+cost_tokens = 0
+cum_tokens = 5860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
+key = 'Go(DeclBody { file: "internal/records/records_test_helpers.go", start_line: 20 })'
+descriptor = "go decl body at internal/records/records_test_helpers.go:20"
+cost_tokens = 9
+cum_tokens = 5869
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'Go(DeclBody { file: "internal/records/records_test_helpers.go", start_line: 10 })'
+descriptor = "go decl body at internal/records/records_test_helpers.go:10"
+cost_tokens = 11
+cum_tokens = 5880
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 244
+key = 'Go(DeclDoc { file: "internal/records/records_test_helpers.go", start_line: 20 })'
+descriptor = "go decl doc at internal/records/records_test_helpers.go:20"
+cost_tokens = 13
+cum_tokens = 5893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 245
+key = 'Go(DeclDoc { file: "internal/records/records_test_helpers.go", start_line: 10 })'
+descriptor = "go decl doc at internal/records/records_test_helpers.go:10"
+cost_tokens = 17
+cum_tokens = 5910
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
+key = 'Go(DeclDoc { file: "internal/records/records_test_helpers.go", start_line: 15 })'
+descriptor = "go decl doc at internal/records/records_test_helpers.go:15"
+cost_tokens = 17
+cum_tokens = 5927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/records/records_test_helpers.go"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 247
+key = 'Go(DeclNames { file: "internal/hub/server_development.go", chunk_index: 0 })'
+descriptor = "go decl names surface in internal/hub/server_development.go"
+cost_tokens = 73
+cum_tokens = 6000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 248
+key = 'Go(Decl { file: "internal/hub/server_development.go", start_line: 23 })'
+descriptor = "go decl at internal/hub/server_development.go:23"
+cost_tokens = 0
+cum_tokens = 6000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
+key = 'Go(Decl { file: "internal/hub/server_development.go", start_line: 48 })'
+descriptor = "go decl at internal/hub/server_development.go:48"
+cost_tokens = 0
+cum_tokens = 6000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 250
 key = 'Go(Decl { file: "internal/hub/server.go", start_line: 13 })'
 descriptor = "go decl at internal/hub/server.go:13"
 cost_tokens = 55
-cum_tokens = 6135
+cum_tokens = 6055
 
 [batches.content]
 kind = "lines"
@@ -6074,11 +5836,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 266
+position = 251
 key = 'Go(DeclDoc { file: "internal/hub/server.go", start_line: 13 })'
 descriptor = "go decl doc at internal/hub/server.go:13"
 cost_tokens = 24
-cum_tokens = 6159
+cum_tokens = 6079
 
 [batches.content]
 kind = "lines"
@@ -6092,11 +5854,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 267
+position = 252
 key = 'Go(DeclNames { file: "internal/common/common-ssh.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/common/common-ssh.go"
 cost_tokens = 74
-cum_tokens = 6233
+cum_tokens = 6153
 
 [batches.content]
 kind = "lines"
@@ -6150,11 +5912,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 268
+position = 253
 key = 'Go(PackageImports { file: "internal/common/common-ssh.go" })'
 descriptor = "go package + imports in internal/common/common-ssh.go"
 cost_tokens = 7
-cum_tokens = 6240
+cum_tokens = 6160
 
 [batches.content]
 kind = "lines"
@@ -6168,11 +5930,377 @@ end = 1
 kind = "full"
 
 [[batches]]
+position = 254
+key = 'Go(DeclNames { file: "agent/systemd_nonlinux.go", chunk_index: 0 })'
+descriptor = "go decl names surface in agent/systemd_nonlinux.go"
+cost_tokens = 144
+cum_tokens = 6304
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 255
+key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 17 })'
+descriptor = "go decl at agent/systemd_nonlinux.go:17"
+cost_tokens = 0
+cum_tokens = 6304
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 256
+key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 22 })'
+descriptor = "go decl at agent/systemd_nonlinux.go:22"
+cost_tokens = 0
+cum_tokens = 6304
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 257
+key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 27 })'
+descriptor = "go decl at agent/systemd_nonlinux.go:27"
+cost_tokens = 0
+cum_tokens = 6304
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 258
+key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 32 })'
+descriptor = "go decl at agent/systemd_nonlinux.go:32"
+cost_tokens = 0
+cum_tokens = 6304
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 259
+key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 36 })'
+descriptor = "go decl at agent/systemd_nonlinux.go:36"
+cost_tokens = 0
+cum_tokens = 6304
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 260
+key = 'Go(Decl { file: "agent/systemd_nonlinux.go", start_line: 12 })'
+descriptor = "go decl at agent/systemd_nonlinux.go:12"
+cost_tokens = 14
+cum_tokens = 6318
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 12
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 261
+key = 'Go(DeclBody { file: "agent/systemd_nonlinux.go", start_line: 22 })'
+descriptor = "go decl body at agent/systemd_nonlinux.go:22"
+cost_tokens = 7
+cum_tokens = 6325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 262
+key = 'Go(DeclBody { file: "agent/systemd_nonlinux.go", start_line: 27 })'
+descriptor = "go decl body at agent/systemd_nonlinux.go:27"
+cost_tokens = 8
+cum_tokens = 6333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 263
+key = 'Go(DeclBody { file: "agent/systemd_nonlinux.go", start_line: 32 })'
+descriptor = "go decl body at agent/systemd_nonlinux.go:32"
+cost_tokens = 8
+cum_tokens = 6341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 264
+key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 17 })'
+descriptor = "go decl doc at agent/systemd_nonlinux.go:17"
+cost_tokens = 14
+cum_tokens = 6355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 265
+key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 12 })'
+descriptor = "go decl doc at agent/systemd_nonlinux.go:12"
+cost_tokens = 17
+cum_tokens = 6372
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 266
+key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 22 })'
+descriptor = "go decl doc at agent/systemd_nonlinux.go:22"
+cost_tokens = 15
+cum_tokens = 6387
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 267
+key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 27 })'
+descriptor = "go decl doc at agent/systemd_nonlinux.go:27"
+cost_tokens = 17
+cum_tokens = 6404
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 268
+key = 'Go(DeclDoc { file: "agent/systemd_nonlinux.go", start_line: 32 })'
+descriptor = "go decl doc at agent/systemd_nonlinux.go:32"
+cost_tokens = 17
+cum_tokens = 6421
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/systemd_nonlinux.go"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 269
 key = 'Markdown(Section { file: "readme.md", section_index: 20, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #20"
 cost_tokens = 21
-cum_tokens = 6261
+cum_tokens = 6442
 
 [batches.content]
 kind = "lines"
@@ -6190,7 +6318,7 @@ position = 270
 key = 'Go(DeclDoc { file: "agent/gpu_nvtop.go", start_line: 26 })'
 descriptor = "go decl doc at agent/gpu_nvtop.go:26"
 cost_tokens = 21
-cum_tokens = 6282
+cum_tokens = 6463
 
 [batches.content]
 kind = "lines"
@@ -6208,7 +6336,7 @@ position = 271
 key = 'Go(DeclNames { file: "internal/ghupdate/extract.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/ghupdate/extract.go"
 cost_tokens = 76
-cum_tokens = 6358
+cum_tokens = 6539
 
 [batches.content]
 kind = "lines"
@@ -6282,7 +6410,7 @@ position = 272
 key = 'Go(Decl { file: "internal/ghupdate/extract.go", start_line: 16 })'
 descriptor = "go decl at internal/ghupdate/extract.go:16"
 cost_tokens = 0
-cum_tokens = 6358
+cum_tokens = 6539
 
 [batches.content]
 kind = "lines"
@@ -6300,7 +6428,7 @@ position = 273
 key = 'Go(Decl { file: "internal/ghupdate/extract.go", start_line: 25 })'
 descriptor = "go decl at internal/ghupdate/extract.go:25"
 cost_tokens = 0
-cum_tokens = 6358
+cum_tokens = 6539
 
 [batches.content]
 kind = "lines"
@@ -6318,7 +6446,7 @@ position = 274
 key = 'Go(Decl { file: "internal/ghupdate/extract.go", start_line: 80 })'
 descriptor = "go decl at internal/ghupdate/extract.go:80"
 cost_tokens = 0
-cum_tokens = 6358
+cum_tokens = 6539
 
 [batches.content]
 kind = "lines"
@@ -6336,7 +6464,7 @@ position = 275
 key = 'Go(Decl { file: "internal/ghupdate/extract.go", start_line: 102 })'
 descriptor = "go decl at internal/ghupdate/extract.go:102"
 cost_tokens = 0
-cum_tokens = 6358
+cum_tokens = 6539
 
 [batches.content]
 kind = "lines"
@@ -6354,7 +6482,7 @@ position = 276
 key = 'Go(DeclDoc { file: "agent/gpu_nvtop.go", start_line: 140 })'
 descriptor = "go decl doc at agent/gpu_nvtop.go:140"
 cost_tokens = 20
-cum_tokens = 6378
+cum_tokens = 6559
 
 [batches.content]
 kind = "lines"
@@ -6372,7 +6500,7 @@ position = 277
 key = 'Markdown(Section { file: "readme.md", section_index: 8, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "readme.md section #8"
 cost_tokens = 91
-cum_tokens = 6469
+cum_tokens = 6650
 
 [batches.content]
 kind = "lines"
@@ -6390,7 +6518,7 @@ position = 278
 key = 'Go(Decl { file: "internal/common/common-ssh.go", start_line: 3 })'
 descriptor = "go decl at internal/common/common-ssh.go:3"
 cost_tokens = 36
-cum_tokens = 6505
+cum_tokens = 6686
 
 [batches.content]
 kind = "lines"
@@ -6405,10 +6533,28 @@ kind = "full"
 
 [[batches]]
 position = 279
+key = 'Go(PackageImports { file: "agent/battery/battery_stub.go" })'
+descriptor = "go package + imports in agent/battery/battery_stub.go"
+cost_tokens = 18
+cum_tokens = 6704
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/battery/battery_stub.go"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 280
 key = 'Go(DeclDoc { file: "agent/data_dir.go", start_line: 110 })'
 descriptor = "go decl doc at agent/data_dir.go:110"
 cost_tokens = 22
-cum_tokens = 6527
+cum_tokens = 6726
 
 [batches.content]
 kind = "lines"
@@ -6422,283 +6568,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 280
-key = 'Go(DeclNames { file: "internal/hub/hub_test_helpers.go", chunk_index: 0 })'
-descriptor = "go decl names surface in internal/hub/hub_test_helpers.go"
-cost_tokens = 80
-cum_tokens = 6607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 281
-key = 'Go(Decl { file: "internal/hub/hub_test_helpers.go", start_line: 10 })'
-descriptor = "go decl at internal/hub/hub_test_helpers.go:10"
-cost_tokens = 0
-cum_tokens = 6607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 282
-key = 'Go(Decl { file: "internal/hub/hub_test_helpers.go", start_line: 15 })'
-descriptor = "go decl at internal/hub/hub_test_helpers.go:15"
-cost_tokens = 0
-cum_tokens = 6607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 283
-key = 'Go(Decl { file: "internal/hub/hub_test_helpers.go", start_line: 20 })'
-descriptor = "go decl at internal/hub/hub_test_helpers.go:20"
-cost_tokens = 0
-cum_tokens = 6607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 284
-key = 'Go(Decl { file: "internal/hub/hub_test_helpers.go", start_line: 24 })'
-descriptor = "go decl at internal/hub/hub_test_helpers.go:24"
-cost_tokens = 0
-cum_tokens = 6607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 285
-key = 'Go(DeclBody { file: "internal/hub/hub_test_helpers.go", start_line: 10 })'
-descriptor = "go decl body at internal/hub/hub_test_helpers.go:10"
-cost_tokens = 8
-cum_tokens = 6615
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 286
-key = 'Go(DeclBody { file: "internal/hub/hub_test_helpers.go", start_line: 15 })'
-descriptor = "go decl body at internal/hub/hub_test_helpers.go:15"
-cost_tokens = 9
-cum_tokens = 6624
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 287
-key = 'Go(DeclBody { file: "internal/hub/hub_test_helpers.go", start_line: 20 })'
-descriptor = "go decl body at internal/hub/hub_test_helpers.go:20"
-cost_tokens = 11
-cum_tokens = 6635
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 288
-key = 'Go(DeclBody { file: "internal/hub/hub_test_helpers.go", start_line: 24 })'
-descriptor = "go decl body at internal/hub/hub_test_helpers.go:24"
-cost_tokens = 11
-cum_tokens = 6646
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 289
-key = 'Go(DeclDoc { file: "internal/hub/hub_test_helpers.go", start_line: 10 })'
-descriptor = "go decl doc at internal/hub/hub_test_helpers.go:10"
-cost_tokens = 17
-cum_tokens = 6663
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 290
-key = 'Go(DeclDoc { file: "internal/hub/hub_test_helpers.go", start_line: 15 })'
-descriptor = "go decl doc at internal/hub/hub_test_helpers.go:15"
-cost_tokens = 17
-cum_tokens = 6680
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 291
-key = 'Go(DeclDoc { file: "internal/hub/hub_test_helpers.go", start_line: 20 })'
-descriptor = "go decl doc at internal/hub/hub_test_helpers.go:20"
-cost_tokens = 17
-cum_tokens = 6697
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/hub_test_helpers.go"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 292
 key = 'Go(DeclDoc { file: "agent/gpu_nvtop.go", start_line: 45 })'
 descriptor = "go decl doc at agent/gpu_nvtop.go:45"
 cost_tokens = 21
-cum_tokens = 6718
+cum_tokens = 6747
 
 [batches.content]
 kind = "lines"
@@ -6712,11 +6586,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 293
+position = 282
 key = 'Go(DeclDoc { file: "agent/gpu_nvtop.go", start_line: 103 })'
 descriptor = "go decl doc at agent/gpu_nvtop.go:103"
 cost_tokens = 21
-cum_tokens = 6739
+cum_tokens = 6768
 
 [batches.content]
 kind = "lines"
@@ -6730,11 +6604,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 294
+position = 283
 key = 'Go(Decl { file: "internal/hub/server_development.go", start_line: 18 })'
 descriptor = "go decl at internal/hub/server_development.go:18"
 cost_tokens = 24
-cum_tokens = 6763
+cum_tokens = 6792
 
 [batches.content]
 kind = "lines"
@@ -6748,11 +6622,29 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 295
+position = 284
+key = 'Go(PackageImports { file: "agent/zfs/zfs_unsupported.go" })'
+descriptor = "go package + imports in agent/zfs/zfs_unsupported.go"
+cost_tokens = 19
+cum_tokens = 6811
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/zfs/zfs_unsupported.go"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 285
 key = 'Go(DeclDoc { file: "internal/site/embed.go", start_line: 13 })'
 descriptor = "go decl doc at internal/site/embed.go:13"
 cost_tokens = 20
-cum_tokens = 6783
+cum_tokens = 6831
 
 [batches.content]
 kind = "lines"
@@ -6766,11 +6658,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 296
+position = 286
 key = 'Go(DeclNames { file: "agent/health/health.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/health/health.go"
 cost_tokens = 83
-cum_tokens = 6866
+cum_tokens = 6914
 
 [batches.content]
 kind = "lines"
@@ -6856,11 +6748,11 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 297
+position = 287
 key = 'Go(Decl { file: "agent/health/health.go", start_line: 17 })'
 descriptor = "go decl at agent/health/health.go:17"
 cost_tokens = 0
-cum_tokens = 6866
+cum_tokens = 6914
 
 [batches.content]
 kind = "lines"
@@ -6874,11 +6766,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 298
+position = 288
 key = 'Go(Decl { file: "agent/health/health.go", start_line: 19 })'
 descriptor = "go decl at agent/health/health.go:19"
 cost_tokens = 0
-cum_tokens = 6866
+cum_tokens = 6914
 
 [batches.content]
 kind = "lines"
@@ -6892,11 +6784,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 299
+position = 289
 key = 'Go(Decl { file: "agent/health/health.go", start_line: 30 })'
 descriptor = "go decl at agent/health/health.go:30"
 cost_tokens = 0
-cum_tokens = 6866
+cum_tokens = 6914
 
 [batches.content]
 kind = "lines"
@@ -6910,11 +6802,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 300
+position = 290
 key = 'Go(Decl { file: "agent/health/health.go", start_line: 39 })'
 descriptor = "go decl at agent/health/health.go:39"
 cost_tokens = 0
-cum_tokens = 6866
+cum_tokens = 6914
 
 [batches.content]
 kind = "lines"
@@ -6928,11 +6820,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 301
+position = 291
 key = 'Go(Decl { file: "agent/health/health.go", start_line: 52 })'
 descriptor = "go decl at agent/health/health.go:52"
 cost_tokens = 0
-cum_tokens = 6866
+cum_tokens = 6914
 
 [batches.content]
 kind = "lines"
@@ -6946,11 +6838,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 302
+position = 292
 key = 'Go(Decl { file: "agent/health/health.go", start_line: 57 })'
 descriptor = "go decl at agent/health/health.go:57"
 cost_tokens = 0
-cum_tokens = 6866
+cum_tokens = 6914
 
 [batches.content]
 kind = "lines"
@@ -6964,11 +6856,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 303
+position = 293
 key = 'Go(DeclDoc { file: "agent/health/health.go", start_line: 57 })'
 descriptor = "go decl doc at agent/health/health.go:57"
 cost_tokens = 12
-cum_tokens = 6878
+cum_tokens = 6926
 
 [batches.content]
 kind = "lines"
@@ -6982,11 +6874,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 304
+position = 294
 key = 'Go(DeclBody { file: "agent/health/health.go", start_line: 57 })'
 descriptor = "go decl body at agent/health/health.go:57"
 cost_tokens = 11
-cum_tokens = 6889
+cum_tokens = 6937
 
 [batches.content]
 kind = "lines"
@@ -7000,11 +6892,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 305
+position = 295
 key = 'Go(DeclBody { file: "agent/health/health.go", start_line: 52 })'
 descriptor = "go decl body at agent/health/health.go:52"
 cost_tokens = 12
-cum_tokens = 6901
+cum_tokens = 6949
 
 [batches.content]
 kind = "lines"
@@ -7018,11 +6910,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 306
+position = 296
 key = 'Go(DeclDoc { file: "agent/health/health.go", start_line: 52 })'
 descriptor = "go decl doc at agent/health/health.go:52"
 cost_tokens = 15
-cum_tokens = 6916
+cum_tokens = 6964
 
 [batches.content]
 kind = "lines"
@@ -7036,11 +6928,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 307
+position = 297
 key = 'Go(DeclDoc { file: "agent/health/health.go", start_line: 39 })'
 descriptor = "go decl doc at agent/health/health.go:39"
 cost_tokens = 22
-cum_tokens = 6938
+cum_tokens = 6986
 
 [batches.content]
 kind = "lines"
@@ -7054,29 +6946,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 308
-key = 'Go(PackageImports { file: "agent/battery/battery_stub.go" })'
-descriptor = "go package + imports in agent/battery/battery_stub.go"
-cost_tokens = 20
-cum_tokens = 6958
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/battery/battery_stub.go"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 309
+position = 298
 key = 'Go(DeclDoc { file: "agent/fingerprint.go", start_line: 18 })'
 descriptor = "go decl doc at agent/fingerprint.go:18"
 cost_tokens = 21
-cum_tokens = 6979
+cum_tokens = 7007
 
 [batches.content]
 kind = "lines"
@@ -7090,11 +6964,29 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 310
+position = 299
+key = 'Go(PackageImports { file: "agent/sensors_default.go" })'
+descriptor = "go package + imports in agent/sensors_default.go"
+cost_tokens = 39
+cum_tokens = 7046
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "agent/sensors_default.go"
+start = 3
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 300
 key = 'Go(DeclDoc { file: "agent/data_dir.go", start_line: 16 })'
 descriptor = "go decl doc at agent/data_dir.go:16"
 cost_tokens = 54
-cum_tokens = 7033
+cum_tokens = 7100
 
 [batches.content]
 kind = "lines"
@@ -7108,11 +7000,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 311
+position = 301
 key = 'Plaintext(DeclSurface { file: "agent/lhm/beszel_lhm.cs" })'
 descriptor = "declaration surface of agent/lhm/beszel_lhm.cs"
 cost_tokens = 87
-cum_tokens = 7120
+cum_tokens = 7187
 
 [batches.content]
 kind = "lines"
@@ -7134,11 +7026,291 @@ end = 50
 kind = "full"
 
 [[batches]]
+position = 302
+key = 'Go(DeclNames { file: "internal/hub/hub_test_helpers.go", chunk_index: 0 })'
+descriptor = "go decl names surface in internal/hub/hub_test_helpers.go"
+cost_tokens = 90
+cum_tokens = 7277
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 303
+key = 'Go(Decl { file: "internal/hub/hub_test_helpers.go", start_line: 10 })'
+descriptor = "go decl at internal/hub/hub_test_helpers.go:10"
+cost_tokens = 0
+cum_tokens = 7277
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 304
+key = 'Go(Decl { file: "internal/hub/hub_test_helpers.go", start_line: 15 })'
+descriptor = "go decl at internal/hub/hub_test_helpers.go:15"
+cost_tokens = 0
+cum_tokens = 7277
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 305
+key = 'Go(Decl { file: "internal/hub/hub_test_helpers.go", start_line: 20 })'
+descriptor = "go decl at internal/hub/hub_test_helpers.go:20"
+cost_tokens = 0
+cum_tokens = 7277
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 306
+key = 'Go(Decl { file: "internal/hub/hub_test_helpers.go", start_line: 24 })'
+descriptor = "go decl at internal/hub/hub_test_helpers.go:24"
+cost_tokens = 0
+cum_tokens = 7277
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 307
+key = 'Go(DeclBody { file: "internal/hub/hub_test_helpers.go", start_line: 10 })'
+descriptor = "go decl body at internal/hub/hub_test_helpers.go:10"
+cost_tokens = 8
+cum_tokens = 7285
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 308
+key = 'Go(DeclBody { file: "internal/hub/hub_test_helpers.go", start_line: 15 })'
+descriptor = "go decl body at internal/hub/hub_test_helpers.go:15"
+cost_tokens = 9
+cum_tokens = 7294
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 309
+key = 'Go(DeclBody { file: "internal/hub/hub_test_helpers.go", start_line: 20 })'
+descriptor = "go decl body at internal/hub/hub_test_helpers.go:20"
+cost_tokens = 11
+cum_tokens = 7305
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 310
+key = 'Go(DeclBody { file: "internal/hub/hub_test_helpers.go", start_line: 24 })'
+descriptor = "go decl body at internal/hub/hub_test_helpers.go:24"
+cost_tokens = 11
+cum_tokens = 7316
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 311
+key = 'Go(DeclDoc { file: "internal/hub/hub_test_helpers.go", start_line: 10 })'
+descriptor = "go decl doc at internal/hub/hub_test_helpers.go:10"
+cost_tokens = 17
+cum_tokens = 7333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 312
+key = 'Go(DeclDoc { file: "internal/hub/hub_test_helpers.go", start_line: 15 })'
+descriptor = "go decl doc at internal/hub/hub_test_helpers.go:15"
+cost_tokens = 17
+cum_tokens = 7350
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 313
+key = 'Go(DeclDoc { file: "internal/hub/hub_test_helpers.go", start_line: 20 })'
+descriptor = "go decl doc at internal/hub/hub_test_helpers.go:20"
+cost_tokens = 17
+cum_tokens = 7367
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/hub_test_helpers.go"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 314
 key = 'Go(DeclDoc { file: "agent/system.go", start_line: 267 })'
 descriptor = "go decl doc at agent/system.go:267"
 cost_tokens = 25
-cum_tokens = 7145
+cum_tokens = 7392
 
 [batches.content]
 kind = "lines"
@@ -7152,47 +7324,11 @@ end = 266
 kind = "full"
 
 [[batches]]
-position = 313
-key = 'Go(PackageImports { file: "agent/zfs/zfs_unsupported.go" })'
-descriptor = "go package + imports in agent/zfs/zfs_unsupported.go"
-cost_tokens = 21
-cum_tokens = 7166
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/zfs/zfs_unsupported.go"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 314
-key = 'Go(PackageImports { file: "agent/sensors_default.go" })'
-descriptor = "go package + imports in agent/sensors_default.go"
-cost_tokens = 41
-cum_tokens = 7207
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/sensors_default.go"
-start = 3
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 315
 key = 'Go(DeclNames { file: "agent/cpu.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/cpu.go"
 cost_tokens = 179
-cum_tokens = 7386
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -7330,7 +7466,7 @@ position = 316
 key = 'Go(Decl { file: "agent/cpu.go", start_line: 16 })'
 descriptor = "go decl at agent/cpu.go:16"
 cost_tokens = 0
-cum_tokens = 7386
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -7348,7 +7484,7 @@ position = 317
 key = 'Go(Decl { file: "agent/cpu.go", start_line: 37 })'
 descriptor = "go decl at agent/cpu.go:37"
 cost_tokens = 0
-cum_tokens = 7386
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -7366,7 +7502,7 @@ position = 318
 key = 'Go(Decl { file: "agent/cpu.go", start_line: 72 })'
 descriptor = "go decl at agent/cpu.go:72"
 cost_tokens = 0
-cum_tokens = 7386
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -7384,7 +7520,7 @@ position = 319
 key = 'Go(Decl { file: "agent/cpu.go", start_line: 78 })'
 descriptor = "go decl at agent/cpu.go:78"
 cost_tokens = 0
-cum_tokens = 7386
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -7402,7 +7538,7 @@ position = 320
 key = 'Go(Decl { file: "agent/cpu.go", start_line: 108 })'
 descriptor = "go decl at agent/cpu.go:108"
 cost_tokens = 0
-cum_tokens = 7386
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -7420,7 +7556,7 @@ position = 321
 key = 'Go(Decl { file: "agent/cpu.go", start_line: 121 })'
 descriptor = "go decl at agent/cpu.go:121"
 cost_tokens = 0
-cum_tokens = 7386
+cum_tokens = 7571
 
 [batches.content]
 kind = "lines"
@@ -7438,7 +7574,7 @@ position = 322
 key = 'Go(Decl { file: "agent/cpu.go", start_line: 26 })'
 descriptor = "go decl at agent/cpu.go:26"
 cost_tokens = 63
-cum_tokens = 7449
+cum_tokens = 7634
 
 [batches.content]
 kind = "lines"
@@ -7456,7 +7592,7 @@ position = 323
 key = 'Go(DeclDoc { file: "agent/cpu.go", start_line: 26 })'
 descriptor = "go decl doc at agent/cpu.go:26"
 cost_tokens = 13
-cum_tokens = 7462
+cum_tokens = 7647
 
 [batches.content]
 kind = "lines"
@@ -7474,7 +7610,7 @@ position = 324
 key = 'Go(DeclDoc { file: "agent/cpu.go", start_line: 72 })'
 descriptor = "go decl doc at agent/cpu.go:72"
 cost_tokens = 18
-cum_tokens = 7480
+cum_tokens = 7665
 
 [batches.content]
 kind = "lines"
@@ -7492,7 +7628,7 @@ position = 325
 key = 'Go(DeclBody { file: "internal/alerts/alerts_system.go", start_line: 357 })'
 descriptor = "go decl body at internal/alerts/alerts_system.go:357"
 cost_tokens = 10
-cum_tokens = 7490
+cum_tokens = 7675
 
 [batches.content]
 kind = "lines"
@@ -7510,7 +7646,7 @@ position = 326
 key = 'Go(DeclNames { file: "internal/alerts/alerts_smart.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/alerts/alerts_smart.go"
 cost_tokens = 93
-cum_tokens = 7583
+cum_tokens = 7768
 
 [batches.content]
 kind = "lines"
@@ -7600,7 +7736,7 @@ position = 327
 key = 'Go(Decl { file: "internal/alerts/alerts_smart.go", start_line: 12 })'
 descriptor = "go decl at internal/alerts/alerts_smart.go:12"
 cost_tokens = 0
-cum_tokens = 7583
+cum_tokens = 7768
 
 [batches.content]
 kind = "lines"
@@ -7618,7 +7754,7 @@ position = 328
 key = 'Go(Decl { file: "internal/alerts/alerts_smart.go", start_line: 69 })'
 descriptor = "go decl at internal/alerts/alerts_smart.go:69"
 cost_tokens = 0
-cum_tokens = 7583
+cum_tokens = 7768
 
 [batches.content]
 kind = "lines"
@@ -7636,7 +7772,7 @@ position = 329
 key = 'Go(Decl { file: "internal/alerts/alerts_smart.go", start_line: 78 })'
 descriptor = "go decl at internal/alerts/alerts_smart.go:78"
 cost_tokens = 0
-cum_tokens = 7583
+cum_tokens = 7768
 
 [batches.content]
 kind = "lines"
@@ -7654,7 +7790,7 @@ position = 330
 key = 'Go(Decl { file: "internal/alerts/alerts_smart.go", start_line: 91 })'
 descriptor = "go decl at internal/alerts/alerts_smart.go:91"
 cost_tokens = 0
-cum_tokens = 7583
+cum_tokens = 7768
 
 [batches.content]
 kind = "lines"
@@ -7672,7 +7808,7 @@ position = 331
 key = 'Go(Decl { file: "internal/alerts/alerts_smart.go", start_line: 100 })'
 descriptor = "go decl at internal/alerts/alerts_smart.go:100"
 cost_tokens = 0
-cum_tokens = 7583
+cum_tokens = 7768
 
 [batches.content]
 kind = "lines"
@@ -7690,7 +7826,7 @@ position = 332
 key = 'Go(DeclDoc { file: "internal/hub/ws/ws_test_helpers.go", start_line: 6 })'
 descriptor = "go decl doc at internal/hub/ws/ws_test_helpers.go:6"
 cost_tokens = 16
-cum_tokens = 7599
+cum_tokens = 7784
 
 [batches.content]
 kind = "lines"
@@ -7708,7 +7844,7 @@ position = 333
 key = 'Go(PackageImports { file: "agent/emmc_common.go" })'
 descriptor = "go package + imports in agent/emmc_common.go"
 cost_tokens = 42
-cum_tokens = 7641
+cum_tokens = 7826
 
 [batches.content]
 kind = "lines"
@@ -7726,7 +7862,7 @@ position = 334
 key = 'Go(DeclBody { file: "agent/cpu.go", start_line: 72 })'
 descriptor = "go decl body at agent/cpu.go:72"
 cost_tokens = 17
-cum_tokens = 7658
+cum_tokens = 7843
 
 [batches.content]
 kind = "lines"
@@ -7744,7 +7880,7 @@ position = 335
 key = 'Go(DeclBody { file: "agent/gpu_nvml_unsupported.go", start_line: 11 })'
 descriptor = "go decl body at agent/gpu_nvml_unsupported.go:11"
 cost_tokens = 16
-cum_tokens = 7674
+cum_tokens = 7859
 
 [batches.content]
 kind = "lines"
@@ -7762,7 +7898,7 @@ position = 336
 key = 'Go(DeclNames { file: "internal/alerts/alerts_history.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/alerts/alerts_history.go"
 cost_tokens = 97
-cum_tokens = 7771
+cum_tokens = 7956
 
 [batches.content]
 kind = "lines"
@@ -7836,7 +7972,7 @@ position = 337
 key = 'Go(Decl { file: "internal/alerts/alerts_history.go", start_line: 11 })'
 descriptor = "go decl at internal/alerts/alerts_history.go:11"
 cost_tokens = 0
-cum_tokens = 7771
+cum_tokens = 7956
 
 [batches.content]
 kind = "lines"
@@ -7854,7 +7990,7 @@ position = 338
 key = 'Go(Decl { file: "internal/alerts/alerts_history.go", start_line: 20 })'
 descriptor = "go decl at internal/alerts/alerts_history.go:20"
 cost_tokens = 0
-cum_tokens = 7771
+cum_tokens = 7956
 
 [batches.content]
 kind = "lines"
@@ -7872,7 +8008,7 @@ position = 339
 key = 'Go(Decl { file: "internal/alerts/alerts_history.go", start_line: 44 })'
 descriptor = "go decl at internal/alerts/alerts_history.go:44"
 cost_tokens = 0
-cum_tokens = 7771
+cum_tokens = 7956
 
 [batches.content]
 kind = "lines"
@@ -7890,7 +8026,7 @@ position = 340
 key = 'Go(Decl { file: "internal/alerts/alerts_history.go", start_line: 58 })'
 descriptor = "go decl at internal/alerts/alerts_history.go:58"
 cost_tokens = 0
-cum_tokens = 7771
+cum_tokens = 7956
 
 [batches.content]
 kind = "lines"
@@ -7908,7 +8044,7 @@ position = 341
 key = 'Go(DeclNames { file: "agent/smart.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/smart.go"
 cost_tokens = 139
-cum_tokens = 7910
+cum_tokens = 8095
 
 [batches.content]
 kind = "lines"
@@ -8046,7 +8182,7 @@ position = 342
 key = 'Go(Decl { file: "agent/smart.go", start_line: 69 })'
 descriptor = "go decl at agent/smart.go:69"
 cost_tokens = 0
-cum_tokens = 7910
+cum_tokens = 8095
 
 [batches.content]
 kind = "lines"
@@ -8064,7 +8200,7 @@ position = 343
 key = 'Go(Decl { file: "agent/smart.go", start_line: 95 })'
 descriptor = "go decl at agent/smart.go:95"
 cost_tokens = 0
-cum_tokens = 7910
+cum_tokens = 8095
 
 [batches.content]
 kind = "lines"
@@ -8082,7 +8218,7 @@ position = 344
 key = 'Go(Decl { file: "agent/smart.go", start_line: 113 })'
 descriptor = "go decl at agent/smart.go:113"
 cost_tokens = 0
-cum_tokens = 7910
+cum_tokens = 8095
 
 [batches.content]
 kind = "lines"
@@ -8100,7 +8236,7 @@ position = 345
 key = 'Go(DeclDoc { file: "agent/smart.go", start_line: 69 })'
 descriptor = "go decl doc at agent/smart.go:69"
 cost_tokens = 12
-cum_tokens = 7922
+cum_tokens = 8107
 
 [batches.content]
 kind = "lines"
@@ -8118,7 +8254,7 @@ position = 346
 key = 'Go(Decl { file: "agent/smart.go", start_line: 61 })'
 descriptor = "go decl at agent/smart.go:61"
 cost_tokens = 19
-cum_tokens = 7941
+cum_tokens = 8126
 
 [batches.content]
 kind = "lines"
@@ -8136,7 +8272,7 @@ position = 347
 key = 'Go(DeclDoc { file: "agent/smart.go", start_line: 61 })'
 descriptor = "go decl doc at agent/smart.go:61"
 cost_tokens = 22
-cum_tokens = 7963
+cum_tokens = 8148
 
 [batches.content]
 kind = "lines"
@@ -8154,7 +8290,7 @@ position = 348
 key = 'Go(DeclDoc { file: "agent/smart.go", start_line: 113 })'
 descriptor = "go decl doc at agent/smart.go:113"
 cost_tokens = 18
-cum_tokens = 7981
+cum_tokens = 8166
 
 [batches.content]
 kind = "lines"
@@ -8172,7 +8308,7 @@ position = 349
 key = 'Go(DeclNames { file: "internal/alerts/alerts_api.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/alerts/alerts_api.go"
 cost_tokens = 99
-cum_tokens = 8080
+cum_tokens = 8265
 
 [batches.content]
 kind = "lines"
@@ -8262,7 +8398,7 @@ position = 350
 key = 'Go(Decl { file: "internal/alerts/alerts_api.go", start_line: 18 })'
 descriptor = "go decl at internal/alerts/alerts_api.go:18"
 cost_tokens = 0
-cum_tokens = 8080
+cum_tokens = 8265
 
 [batches.content]
 kind = "lines"
@@ -8280,7 +8416,7 @@ position = 351
 key = 'Go(Decl { file: "internal/alerts/alerts_api.go", start_line: 81 })'
 descriptor = "go decl at internal/alerts/alerts_api.go:81"
 cost_tokens = 0
-cum_tokens = 8080
+cum_tokens = 8265
 
 [batches.content]
 kind = "lines"
@@ -8298,7 +8434,7 @@ position = 352
 key = 'Go(Decl { file: "internal/alerts/alerts_api.go", start_line: 126 })'
 descriptor = "go decl at internal/alerts/alerts_api.go:126"
 cost_tokens = 0
-cum_tokens = 8080
+cum_tokens = 8265
 
 [batches.content]
 kind = "lines"
@@ -8316,7 +8452,7 @@ position = 353
 key = 'Go(Decl { file: "internal/alerts/alerts_api.go", start_line: 152 })'
 descriptor = "go decl at internal/alerts/alerts_api.go:152"
 cost_tokens = 0
-cum_tokens = 8080
+cum_tokens = 8265
 
 [batches.content]
 kind = "lines"
@@ -8334,7 +8470,7 @@ position = 354
 key = 'Go(Decl { file: "internal/alerts/alerts_api.go", start_line: 190 })'
 descriptor = "go decl at internal/alerts/alerts_api.go:190"
 cost_tokens = 0
-cum_tokens = 8080
+cum_tokens = 8265
 
 [batches.content]
 kind = "lines"
@@ -8352,7 +8488,7 @@ position = 355
 key = 'Go(DeclDoc { file: "internal/alerts/alerts_api.go", start_line: 126 })'
 descriptor = "go decl doc at internal/alerts/alerts_api.go:126"
 cost_tokens = 25
-cum_tokens = 8105
+cum_tokens = 8290
 
 [batches.content]
 kind = "lines"
@@ -8370,7 +8506,7 @@ position = 356
 key = 'Go(DeclNames { file: "agent/gpu_intel.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/gpu_intel.go"
 cost_tokens = 192
-cum_tokens = 8297
+cum_tokens = 8482
 
 [batches.content]
 kind = "lines"
@@ -8476,7 +8612,7 @@ position = 357
 key = 'Go(Decl { file: "agent/gpu_intel.go", start_line: 26 })'
 descriptor = "go decl at agent/gpu_intel.go:26"
 cost_tokens = 0
-cum_tokens = 8297
+cum_tokens = 8482
 
 [batches.content]
 kind = "lines"
@@ -8494,7 +8630,7 @@ position = 358
 key = 'Go(Decl { file: "agent/gpu_intel.go", start_line: 53 })'
 descriptor = "go decl at agent/gpu_intel.go:53"
 cost_tokens = 0
-cum_tokens = 8297
+cum_tokens = 8482
 
 [batches.content]
 kind = "lines"
@@ -8512,7 +8648,7 @@ position = 359
 key = 'Go(Decl { file: "agent/gpu_intel.go", start_line: 132 })'
 descriptor = "go decl at agent/gpu_intel.go:132"
 cost_tokens = 0
-cum_tokens = 8297
+cum_tokens = 8482
 
 [batches.content]
 kind = "lines"
@@ -8530,7 +8666,7 @@ position = 360
 key = 'Go(Decl { file: "agent/gpu_intel.go", start_line: 174 })'
 descriptor = "go decl at agent/gpu_intel.go:174"
 cost_tokens = 0
-cum_tokens = 8297
+cum_tokens = 8482
 
 [batches.content]
 kind = "lines"
@@ -8548,7 +8684,7 @@ position = 361
 key = 'Go(Decl { file: "agent/gpu_intel.go", start_line: 14 })'
 descriptor = "go decl at agent/gpu_intel.go:14"
 cost_tokens = 9
-cum_tokens = 8306
+cum_tokens = 8491
 
 [batches.content]
 kind = "lines"
@@ -8566,7 +8702,7 @@ position = 362
 key = 'Go(Decl { file: "agent/gpu_intel.go", start_line: 19 })'
 descriptor = "go decl at agent/gpu_intel.go:19"
 cost_tokens = 39
-cum_tokens = 8345
+cum_tokens = 8530
 
 [batches.content]
 kind = "lines"
@@ -8584,7 +8720,7 @@ position = 363
 key = 'Go(DeclDoc { file: "agent/gpu_intel.go", start_line: 26 })'
 descriptor = "go decl doc at agent/gpu_intel.go:26"
 cost_tokens = 19
-cum_tokens = 8364
+cum_tokens = 8549
 
 [batches.content]
 kind = "lines"
@@ -8602,7 +8738,7 @@ position = 364
 key = 'Go(DeclDoc { file: "agent/gpu_intel.go", start_line: 53 })'
 descriptor = "go decl doc at agent/gpu_intel.go:53"
 cost_tokens = 23
-cum_tokens = 8387
+cum_tokens = 8572
 
 [batches.content]
 kind = "lines"
@@ -8620,7 +8756,7 @@ position = 365
 key = 'Markdown(Section { file: "supplemental/guides/systemd.md", section_index: 0, reference_shaped: false, deferred_mass_prose: false })'
 descriptor = "supplemental/guides/systemd.md section #0"
 cost_tokens = 29
-cum_tokens = 8416
+cum_tokens = 8601
 
 [batches.content]
 kind = "lines"
@@ -8638,7 +8774,7 @@ position = 366
 key = 'Go(DeclNames { file: "agent/update.go", chunk_index: 0 })'
 descriptor = "go decl names surface in agent/update.go"
 cost_tokens = 197
-cum_tokens = 8613
+cum_tokens = 8798
 
 [batches.content]
 kind = "lines"
@@ -8760,7 +8896,7 @@ position = 367
 key = 'Go(Decl { file: "agent/update.go", start_line: 19 })'
 descriptor = "go decl at agent/update.go:19"
 cost_tokens = 0
-cum_tokens = 8613
+cum_tokens = 8798
 
 [batches.content]
 kind = "lines"
@@ -8778,7 +8914,7 @@ position = 368
 key = 'Go(Decl { file: "agent/update.go", start_line: 30 })'
 descriptor = "go decl at agent/update.go:30"
 cost_tokens = 0
-cum_tokens = 8613
+cum_tokens = 8798
 
 [batches.content]
 kind = "lines"
@@ -8796,7 +8932,7 @@ position = 369
 key = 'Go(Decl { file: "agent/update.go", start_line: 40 })'
 descriptor = "go decl at agent/update.go:40"
 cost_tokens = 0
-cum_tokens = 8613
+cum_tokens = 8798
 
 [batches.content]
 kind = "lines"
@@ -8814,7 +8950,7 @@ position = 370
 key = 'Go(Decl { file: "agent/update.go", start_line: 51 })'
 descriptor = "go decl at agent/update.go:51"
 cost_tokens = 0
-cum_tokens = 8613
+cum_tokens = 8798
 
 [batches.content]
 kind = "lines"
@@ -8832,7 +8968,7 @@ position = 371
 key = 'Go(Decl { file: "agent/update.go", start_line: 59 })'
 descriptor = "go decl at agent/update.go:59"
 cost_tokens = 0
-cum_tokens = 8613
+cum_tokens = 8798
 
 [batches.content]
 kind = "lines"
@@ -8850,7 +8986,7 @@ position = 372
 key = 'Go(Decl { file: "agent/update.go", start_line: 79 })'
 descriptor = "go decl at agent/update.go:79"
 cost_tokens = 0
-cum_tokens = 8613
+cum_tokens = 8798
 
 [batches.content]
 kind = "lines"
@@ -8868,7 +9004,7 @@ position = 373
 key = 'Go(Decl { file: "agent/update.go", start_line: 13 })'
 descriptor = "go decl at agent/update.go:13"
 cost_tokens = 12
-cum_tokens = 8625
+cum_tokens = 8810
 
 [batches.content]
 kind = "lines"
@@ -8886,7 +9022,7 @@ position = 374
 key = 'Go(DeclDoc { file: "agent/update.go", start_line: 13 })'
 descriptor = "go decl doc at agent/update.go:13"
 cost_tokens = 17
-cum_tokens = 8642
+cum_tokens = 8827
 
 [batches.content]
 kind = "lines"
@@ -8904,7 +9040,7 @@ position = 375
 key = 'Go(DeclDoc { file: "agent/update.go", start_line: 79 })'
 descriptor = "go decl doc at agent/update.go:79"
 cost_tokens = 39
-cum_tokens = 8681
+cum_tokens = 8866
 
 [batches.content]
 kind = "lines"
@@ -8922,7 +9058,7 @@ position = 376
 key = 'Go(DeclNames { file: "internal/users/users.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/users/users.go"
 cost_tokens = 103
-cum_tokens = 8784
+cum_tokens = 8969
 
 [batches.content]
 kind = "lines"
@@ -9012,7 +9148,7 @@ position = 377
 key = 'Go(Decl { file: "internal/users/users.go", start_line: 18 })'
 descriptor = "go decl at internal/users/users.go:18"
 cost_tokens = 0
-cum_tokens = 8784
+cum_tokens = 8969
 
 [batches.content]
 kind = "lines"
@@ -9030,7 +9166,7 @@ position = 378
 key = 'Go(Decl { file: "internal/users/users.go", start_line: 25 })'
 descriptor = "go decl at internal/users/users.go:25"
 cost_tokens = 0
-cum_tokens = 8784
+cum_tokens = 8969
 
 [batches.content]
 kind = "lines"
@@ -9048,7 +9184,7 @@ position = 379
 key = 'Go(Decl { file: "internal/users/users.go", start_line: 33 })'
 descriptor = "go decl at internal/users/users.go:33"
 cost_tokens = 0
-cum_tokens = 8784
+cum_tokens = 8969
 
 [batches.content]
 kind = "lines"
@@ -9066,7 +9202,7 @@ position = 380
 key = 'Go(Decl { file: "internal/users/users.go", start_line: 61 })'
 descriptor = "go decl at internal/users/users.go:61"
 cost_tokens = 0
-cum_tokens = 8784
+cum_tokens = 8969
 
 [batches.content]
 kind = "lines"
@@ -9084,7 +9220,7 @@ position = 381
 key = 'Go(Decl { file: "internal/users/users.go", start_line: 14 })'
 descriptor = "go decl at internal/users/users.go:14"
 cost_tokens = 11
-cum_tokens = 8795
+cum_tokens = 8980
 
 [batches.content]
 kind = "lines"
@@ -9102,7 +9238,7 @@ position = 382
 key = 'Go(DeclDoc { file: "internal/users/users.go", start_line: 25 })'
 descriptor = "go decl doc at internal/users/users.go:25"
 cost_tokens = 12
-cum_tokens = 8807
+cum_tokens = 8992
 
 [batches.content]
 kind = "lines"
@@ -9120,7 +9256,7 @@ position = 383
 key = 'Go(DeclDoc { file: "internal/users/users.go", start_line: 33 })'
 descriptor = "go decl doc at internal/users/users.go:33"
 cost_tokens = 14
-cum_tokens = 8821
+cum_tokens = 9006
 
 [batches.content]
 kind = "lines"
@@ -9138,7 +9274,7 @@ position = 384
 key = 'Go(DeclDoc { file: "internal/site/embed.go", start_line: 10 })'
 descriptor = "go decl doc at internal/site/embed.go:10"
 cost_tokens = 12
-cum_tokens = 8833
+cum_tokens = 9018
 
 [batches.content]
 kind = "lines"
@@ -9156,7 +9292,7 @@ position = 385
 key = 'Go(DeclNames { file: "internal/cmd/hub/hub.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/cmd/hub/hub.go"
 cost_tokens = 61
-cum_tokens = 8894
+cum_tokens = 9079
 
 [batches.content]
 kind = "lines"
@@ -9230,7 +9366,7 @@ position = 386
 key = 'Go(Decl { file: "internal/cmd/hub/hub.go", start_line: 19 })'
 descriptor = "go decl at internal/cmd/hub/hub.go:19"
 cost_tokens = 0
-cum_tokens = 8894
+cum_tokens = 9079
 
 [batches.content]
 kind = "lines"
@@ -9248,7 +9384,7 @@ position = 387
 key = 'Go(Decl { file: "internal/cmd/hub/hub.go", start_line: 38 })'
 descriptor = "go decl at internal/cmd/hub/hub.go:38"
 cost_tokens = 0
-cum_tokens = 8894
+cum_tokens = 9079
 
 [batches.content]
 kind = "lines"
@@ -9266,7 +9402,7 @@ position = 388
 key = 'Go(Decl { file: "internal/cmd/hub/hub.go", start_line: 68 })'
 descriptor = "go decl at internal/cmd/hub/hub.go:68"
 cost_tokens = 0
-cum_tokens = 8894
+cum_tokens = 9079
 
 [batches.content]
 kind = "lines"
@@ -9284,7 +9420,7 @@ position = 389
 key = 'Go(Decl { file: "internal/cmd/hub/hub.go", start_line: 87 })'
 descriptor = "go decl at internal/cmd/hub/hub.go:87"
 cost_tokens = 0
-cum_tokens = 8894
+cum_tokens = 9079
 
 [batches.content]
 kind = "lines"
@@ -9302,7 +9438,7 @@ position = 390
 key = 'Go(DeclDoc { file: "internal/cmd/hub/hub.go", start_line: 87 })'
 descriptor = "go decl doc at internal/cmd/hub/hub.go:87"
 cost_tokens = 14
-cum_tokens = 8908
+cum_tokens = 9093
 
 [batches.content]
 kind = "lines"
@@ -9320,7 +9456,7 @@ position = 391
 key = 'Go(DeclDoc { file: "internal/cmd/hub/hub.go", start_line: 38 })'
 descriptor = "go decl doc at internal/cmd/hub/hub.go:38"
 cost_tokens = 19
-cum_tokens = 8927
+cum_tokens = 9112
 
 [batches.content]
 kind = "lines"
@@ -9338,7 +9474,7 @@ position = 392
 key = 'Go(DeclDoc { file: "internal/alerts/alerts_history.go", start_line: 20 })'
 descriptor = "go decl doc at internal/alerts/alerts_history.go:20"
 cost_tokens = 15
-cum_tokens = 8942
+cum_tokens = 9127
 
 [batches.content]
 kind = "lines"
@@ -9356,7 +9492,7 @@ position = 393
 key = 'Go(DeclDoc { file: "internal/hub/update.go", start_line: 58 })'
 descriptor = "go decl doc at internal/hub/update.go:58"
 cost_tokens = 15
-cum_tokens = 8957
+cum_tokens = 9142
 
 [batches.content]
 kind = "lines"
@@ -9374,7 +9510,7 @@ position = 394
 key = 'Go(DeclDoc { file: "agent/cpu.go", start_line: 16 })'
 descriptor = "go decl doc at agent/cpu.go:16"
 cost_tokens = 29
-cum_tokens = 8986
+cum_tokens = 9171
 
 [batches.content]
 kind = "lines"
@@ -9392,7 +9528,7 @@ position = 395
 key = 'Fs(DirListing { dir: "internal/site/src/components/routes/settings" })'
 descriptor = "listing of 'internal/site/src/components/routes/settings'"
 cost_tokens = 54
-cum_tokens = 9040
+cum_tokens = 9225
 
 [batches.content]
 kind = "fs"
@@ -9406,7 +9542,7 @@ position = 396
 key = 'Go(DeclBody { file: "internal/users/users.go", start_line: 18 })'
 descriptor = "go decl body at internal/users/users.go:18"
 cost_tokens = 24
-cum_tokens = 9064
+cum_tokens = 9249
 
 [batches.content]
 kind = "lines"
@@ -9424,7 +9560,7 @@ position = 397
 key = 'Go(DeclDoc { file: "internal/hub/server_development.go", start_line: 18 })'
 descriptor = "go decl doc at internal/hub/server_development.go:18"
 cost_tokens = 18
-cum_tokens = 9082
+cum_tokens = 9267
 
 [batches.content]
 kind = "lines"
@@ -9442,7 +9578,7 @@ position = 398
 key = 'Go(DeclNames { file: "internal/hub/transport/transport.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/hub/transport/transport.go"
 cost_tokens = 65
-cum_tokens = 9147
+cum_tokens = 9332
 
 [batches.content]
 kind = "lines"
@@ -9500,7 +9636,7 @@ position = 399
 key = 'Go(Decl { file: "internal/hub/transport/transport.go", start_line: 32 })'
 descriptor = "go decl at internal/hub/transport/transport.go:32"
 cost_tokens = 0
-cum_tokens = 9147
+cum_tokens = 9332
 
 [batches.content]
 kind = "lines"
@@ -9518,7 +9654,7 @@ position = 400
 key = 'Go(Decl { file: "internal/hub/transport/transport.go", start_line: 48 })'
 descriptor = "go decl at internal/hub/transport/transport.go:48"
 cost_tokens = 0
-cum_tokens = 9147
+cum_tokens = 9332
 
 [batches.content]
 kind = "lines"
@@ -9536,7 +9672,7 @@ position = 401
 key = 'Go(DeclDoc { file: "internal/alerts/alerts_history.go", start_line: 58 })'
 descriptor = "go decl doc at internal/alerts/alerts_history.go:58"
 cost_tokens = 16
-cum_tokens = 9163
+cum_tokens = 9348
 
 [batches.content]
 kind = "lines"
@@ -9554,7 +9690,7 @@ position = 402
 key = 'Go(DeclDoc { file: "agent/gpu_darwin_unsupported.go", start_line: 9 })'
 descriptor = "go decl doc at agent/gpu_darwin_unsupported.go:9"
 cost_tokens = 29
-cum_tokens = 9192
+cum_tokens = 9377
 
 [batches.content]
 kind = "lines"
@@ -9572,7 +9708,7 @@ position = 403
 key = 'Fs(DirListing { dir: "internal/site/src/locales" })'
 descriptor = "listing of 'internal/site/src/locales'"
 cost_tokens = 131
-cum_tokens = 9323
+cum_tokens = 9508
 
 [batches.content]
 kind = "fs"
@@ -9586,7 +9722,7 @@ position = 404
 key = 'Fs(DirListing { dir: "internal/site/src/locales/ar" })'
 descriptor = "listing of 'internal/site/src/locales/ar'"
 cost_tokens = 3
-cum_tokens = 9326
+cum_tokens = 9511
 
 [batches.content]
 kind = "fs"
@@ -9600,7 +9736,7 @@ position = 405
 key = 'Fs(DirListing { dir: "internal/site/src/locales/bg" })'
 descriptor = "listing of 'internal/site/src/locales/bg'"
 cost_tokens = 3
-cum_tokens = 9329
+cum_tokens = 9514
 
 [batches.content]
 kind = "fs"
@@ -9614,7 +9750,7 @@ position = 406
 key = 'Fs(DirListing { dir: "internal/site/src/locales/cs" })'
 descriptor = "listing of 'internal/site/src/locales/cs'"
 cost_tokens = 3
-cum_tokens = 9332
+cum_tokens = 9517
 
 [batches.content]
 kind = "fs"
@@ -9628,7 +9764,7 @@ position = 407
 key = 'Fs(DirListing { dir: "internal/site/src/locales/da" })'
 descriptor = "listing of 'internal/site/src/locales/da'"
 cost_tokens = 3
-cum_tokens = 9335
+cum_tokens = 9520
 
 [batches.content]
 kind = "fs"
@@ -9642,7 +9778,7 @@ position = 408
 key = 'Fs(DirListing { dir: "internal/site/src/locales/de" })'
 descriptor = "listing of 'internal/site/src/locales/de'"
 cost_tokens = 3
-cum_tokens = 9338
+cum_tokens = 9523
 
 [batches.content]
 kind = "fs"
@@ -9656,7 +9792,7 @@ position = 409
 key = 'Fs(DirListing { dir: "internal/site/src/locales/en" })'
 descriptor = "listing of 'internal/site/src/locales/en'"
 cost_tokens = 3
-cum_tokens = 9341
+cum_tokens = 9526
 
 [batches.content]
 kind = "fs"
@@ -9670,7 +9806,7 @@ position = 410
 key = 'Fs(DirListing { dir: "internal/site/src/locales/es" })'
 descriptor = "listing of 'internal/site/src/locales/es'"
 cost_tokens = 3
-cum_tokens = 9344
+cum_tokens = 9529
 
 [batches.content]
 kind = "fs"
@@ -9684,7 +9820,7 @@ position = 411
 key = 'Fs(DirListing { dir: "internal/site/src/locales/fa" })'
 descriptor = "listing of 'internal/site/src/locales/fa'"
 cost_tokens = 3
-cum_tokens = 9347
+cum_tokens = 9532
 
 [batches.content]
 kind = "fs"
@@ -9698,7 +9834,7 @@ position = 412
 key = 'Fs(DirListing { dir: "internal/site/src/locales/fr" })'
 descriptor = "listing of 'internal/site/src/locales/fr'"
 cost_tokens = 3
-cum_tokens = 9350
+cum_tokens = 9535
 
 [batches.content]
 kind = "fs"
@@ -9712,7 +9848,7 @@ position = 413
 key = 'Fs(DirListing { dir: "internal/site/src/locales/he" })'
 descriptor = "listing of 'internal/site/src/locales/he'"
 cost_tokens = 3
-cum_tokens = 9353
+cum_tokens = 9538
 
 [batches.content]
 kind = "fs"
@@ -9726,7 +9862,7 @@ position = 414
 key = 'Fs(DirListing { dir: "internal/site/src/locales/hr" })'
 descriptor = "listing of 'internal/site/src/locales/hr'"
 cost_tokens = 3
-cum_tokens = 9356
+cum_tokens = 9541
 
 [batches.content]
 kind = "fs"
@@ -9740,7 +9876,7 @@ position = 415
 key = 'Fs(DirListing { dir: "internal/site/src/locales/hu" })'
 descriptor = "listing of 'internal/site/src/locales/hu'"
 cost_tokens = 3
-cum_tokens = 9359
+cum_tokens = 9544
 
 [batches.content]
 kind = "fs"
@@ -9754,7 +9890,7 @@ position = 416
 key = 'Fs(DirListing { dir: "internal/site/src/locales/id" })'
 descriptor = "listing of 'internal/site/src/locales/id'"
 cost_tokens = 3
-cum_tokens = 9362
+cum_tokens = 9547
 
 [batches.content]
 kind = "fs"
@@ -9768,7 +9904,7 @@ position = 417
 key = 'Fs(DirListing { dir: "internal/site/src/locales/it" })'
 descriptor = "listing of 'internal/site/src/locales/it'"
 cost_tokens = 3
-cum_tokens = 9365
+cum_tokens = 9550
 
 [batches.content]
 kind = "fs"
@@ -9782,7 +9918,7 @@ position = 418
 key = 'Fs(DirListing { dir: "internal/site/src/locales/ja" })'
 descriptor = "listing of 'internal/site/src/locales/ja'"
 cost_tokens = 3
-cum_tokens = 9368
+cum_tokens = 9553
 
 [batches.content]
 kind = "fs"
@@ -9796,7 +9932,7 @@ position = 419
 key = 'Fs(DirListing { dir: "internal/site/src/locales/ko" })'
 descriptor = "listing of 'internal/site/src/locales/ko'"
 cost_tokens = 3
-cum_tokens = 9371
+cum_tokens = 9556
 
 [batches.content]
 kind = "fs"
@@ -9810,7 +9946,7 @@ position = 420
 key = 'Fs(DirListing { dir: "internal/site/src/locales/nl" })'
 descriptor = "listing of 'internal/site/src/locales/nl'"
 cost_tokens = 3
-cum_tokens = 9374
+cum_tokens = 9559
 
 [batches.content]
 kind = "fs"
@@ -9824,7 +9960,7 @@ position = 421
 key = 'Fs(DirListing { dir: "internal/site/src/locales/no" })'
 descriptor = "listing of 'internal/site/src/locales/no'"
 cost_tokens = 3
-cum_tokens = 9377
+cum_tokens = 9562
 
 [batches.content]
 kind = "fs"
@@ -9838,7 +9974,7 @@ position = 422
 key = 'Fs(DirListing { dir: "internal/site/src/locales/pl" })'
 descriptor = "listing of 'internal/site/src/locales/pl'"
 cost_tokens = 3
-cum_tokens = 9380
+cum_tokens = 9565
 
 [batches.content]
 kind = "fs"
@@ -9852,7 +9988,7 @@ position = 423
 key = 'Fs(DirListing { dir: "internal/site/src/locales/pt" })'
 descriptor = "listing of 'internal/site/src/locales/pt'"
 cost_tokens = 3
-cum_tokens = 9383
+cum_tokens = 9568
 
 [batches.content]
 kind = "fs"
@@ -9866,7 +10002,7 @@ position = 424
 key = 'Fs(DirListing { dir: "internal/site/src/locales/ro" })'
 descriptor = "listing of 'internal/site/src/locales/ro'"
 cost_tokens = 3
-cum_tokens = 9386
+cum_tokens = 9571
 
 [batches.content]
 kind = "fs"
@@ -9880,7 +10016,7 @@ position = 425
 key = 'Fs(DirListing { dir: "internal/site/src/locales/ru" })'
 descriptor = "listing of 'internal/site/src/locales/ru'"
 cost_tokens = 3
-cum_tokens = 9389
+cum_tokens = 9574
 
 [batches.content]
 kind = "fs"
@@ -9894,7 +10030,7 @@ position = 426
 key = 'Fs(DirListing { dir: "internal/site/src/locales/sl" })'
 descriptor = "listing of 'internal/site/src/locales/sl'"
 cost_tokens = 3
-cum_tokens = 9392
+cum_tokens = 9577
 
 [batches.content]
 kind = "fs"
@@ -9908,7 +10044,7 @@ position = 427
 key = 'Fs(DirListing { dir: "internal/site/src/locales/sr" })'
 descriptor = "listing of 'internal/site/src/locales/sr'"
 cost_tokens = 3
-cum_tokens = 9395
+cum_tokens = 9580
 
 [batches.content]
 kind = "fs"
@@ -9922,7 +10058,7 @@ position = 428
 key = 'Fs(DirListing { dir: "internal/site/src/locales/sv" })'
 descriptor = "listing of 'internal/site/src/locales/sv'"
 cost_tokens = 3
-cum_tokens = 9398
+cum_tokens = 9583
 
 [batches.content]
 kind = "fs"
@@ -9936,7 +10072,7 @@ position = 429
 key = 'Fs(DirListing { dir: "internal/site/src/locales/th" })'
 descriptor = "listing of 'internal/site/src/locales/th'"
 cost_tokens = 3
-cum_tokens = 9401
+cum_tokens = 9586
 
 [batches.content]
 kind = "fs"
@@ -9950,7 +10086,7 @@ position = 430
 key = 'Fs(DirListing { dir: "internal/site/src/locales/tr" })'
 descriptor = "listing of 'internal/site/src/locales/tr'"
 cost_tokens = 3
-cum_tokens = 9404
+cum_tokens = 9589
 
 [batches.content]
 kind = "fs"
@@ -9964,7 +10100,7 @@ position = 431
 key = 'Fs(DirListing { dir: "internal/site/src/locales/uk" })'
 descriptor = "listing of 'internal/site/src/locales/uk'"
 cost_tokens = 3
-cum_tokens = 9407
+cum_tokens = 9592
 
 [batches.content]
 kind = "fs"
@@ -9978,7 +10114,7 @@ position = 432
 key = 'Fs(DirListing { dir: "internal/site/src/locales/vi" })'
 descriptor = "listing of 'internal/site/src/locales/vi'"
 cost_tokens = 3
-cum_tokens = 9410
+cum_tokens = 9595
 
 [batches.content]
 kind = "fs"
@@ -9992,7 +10128,7 @@ position = 433
 key = 'Fs(DirListing { dir: "internal/site/src/locales/zh" })'
 descriptor = "listing of 'internal/site/src/locales/zh'"
 cost_tokens = 3
-cum_tokens = 9413
+cum_tokens = 9598
 
 [batches.content]
 kind = "fs"
@@ -10006,7 +10142,7 @@ position = 434
 key = 'Fs(DirListing { dir: "internal/site/src/locales/zh-CN" })'
 descriptor = "listing of 'internal/site/src/locales/zh-CN'"
 cost_tokens = 5
-cum_tokens = 9418
+cum_tokens = 9603
 
 [batches.content]
 kind = "fs"
@@ -10020,7 +10156,7 @@ position = 435
 key = 'Fs(DirListing { dir: "internal/site/src/locales/zh-HK" })'
 descriptor = "listing of 'internal/site/src/locales/zh-HK'"
 cost_tokens = 5
-cum_tokens = 9423
+cum_tokens = 9608
 
 [batches.content]
 kind = "fs"
@@ -10034,7 +10170,7 @@ position = 436
 key = 'Go(DeclDoc { file: "agent/gpu_darwin_unsupported.go", start_line: 6 })'
 descriptor = "go decl doc at agent/gpu_darwin_unsupported.go:6"
 cost_tokens = 30
-cum_tokens = 9453
+cum_tokens = 9638
 
 [batches.content]
 kind = "lines"
@@ -10052,7 +10188,7 @@ position = 437
 key = 'Go(DeclNames { file: "internal/records/records_deletion.go", chunk_index: 0 })'
 descriptor = "go decl names surface in internal/records/records_deletion.go"
 cost_tokens = 116
-cum_tokens = 9569
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -10158,7 +10294,7 @@ position = 438
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 14 })'
 descriptor = "go decl at internal/records/records_deletion.go:14"
 cost_tokens = 0
-cum_tokens = 9569
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -10176,7 +10312,7 @@ position = 439
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 41 })'
 descriptor = "go decl at internal/records/records_deletion.go:41"
 cost_tokens = 0
-cum_tokens = 9569
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -10194,7 +10330,7 @@ position = 440
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 60 })'
 descriptor = "go decl at internal/records/records_deletion.go:60"
 cost_tokens = 0
-cum_tokens = 9569
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -10212,7 +10348,7 @@ position = 441
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 102 })'
 descriptor = "go decl at internal/records/records_deletion.go:102"
 cost_tokens = 0
-cum_tokens = 9569
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -10230,7 +10366,7 @@ position = 442
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 116 })'
 descriptor = "go decl at internal/records/records_deletion.go:116"
 cost_tokens = 0
-cum_tokens = 9569
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -10248,7 +10384,7 @@ position = 443
 key = 'Go(Decl { file: "internal/records/records_deletion.go", start_line: 130 })'
 descriptor = "go decl at internal/records/records_deletion.go:130"
 cost_tokens = 0
-cum_tokens = 9569
+cum_tokens = 9754
 
 [batches.content]
 kind = "lines"
@@ -10266,7 +10402,7 @@ position = 444
 key = 'Go(DeclDoc { file: "internal/records/records_deletion.go", start_line: 14 })'
 descriptor = "go decl doc at internal/records/records_deletion.go:14"
 cost_tokens = 9
-cum_tokens = 9578
+cum_tokens = 9763
 
 [batches.content]
 kind = "lines"
@@ -10284,7 +10420,7 @@ position = 445
 key = 'Go(DeclDoc { file: "internal/records/records_deletion.go", start_line: 41 })'
 descriptor = "go decl doc at internal/records/records_deletion.go:41"
 cost_tokens = 11
-cum_tokens = 9589
+cum_tokens = 9774
 
 [batches.content]
 kind = "lines"
@@ -10302,7 +10438,7 @@ position = 446
 key = 'Go(DeclDoc { file: "internal/records/records_deletion.go", start_line: 130 })'
 descriptor = "go decl doc at internal/records/records_deletion.go:130"
 cost_tokens = 16
-cum_tokens = 9605
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -10317,82 +10453,10 @@ kind = "full"
 
 [[batches]]
 position = 447
-key = 'Go(DeclDoc { file: "internal/alerts/alerts_api.go", start_line: 81 })'
-descriptor = "go decl doc at internal/alerts/alerts_api.go:81"
-cost_tokens = 37
-cum_tokens = 9642
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/alerts/alerts_api.go"
-start = 79
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 448
-key = 'Go(DeclDoc { file: "internal/hub/collections.go", start_line: 17 })'
-descriptor = "go decl doc at internal/hub/collections.go:17"
-cost_tokens = 17
-cum_tokens = 9659
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/collections.go"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 449
-key = 'Go(DeclDoc { file: "internal/hub/server_development.go", start_line: 48 })'
-descriptor = "go decl doc at internal/hub/server_development.go:48"
-cost_tokens = 16
-cum_tokens = 9675
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/server_development.go"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 450
-key = 'Go(DeclDoc { file: "internal/hub/server_production.go", start_line: 18 })'
-descriptor = "go decl doc at internal/hub/server_production.go:18"
-cost_tokens = 16
-cum_tokens = 9691
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/server_production.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 451
 key = 'Go(PackageImports { file: "agent/systemd_nonlinux.go" })'
 descriptor = "go package + imports in agent/systemd_nonlinux.go"
-cost_tokens = 54
-cum_tokens = 9745
+cost_tokens = 52
+cum_tokens = 9842
 
 [batches.content]
 kind = "lines"
@@ -10406,109 +10470,73 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 452
-key = 'Go(Decl { file: "agent/smart.go", start_line: 48 })'
-descriptor = "go decl at agent/smart.go:48"
-cost_tokens = 137
-cum_tokens = 9882
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "agent/smart.go"
-start = 48
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 453
-key = 'Go(DeclDoc { file: "internal/alerts/alerts_history.go", start_line: 44 })'
-descriptor = "go decl doc at internal/alerts/alerts_history.go:44"
-cost_tokens = 18
-cum_tokens = 9900
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/alerts/alerts_history.go"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 454
-key = 'Go(DeclDoc { file: "internal/hub/server.go", start_line: 21 })'
-descriptor = "go decl doc at internal/hub/server.go:21"
-cost_tokens = 18
-cum_tokens = 9918
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/hub/server.go"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 455
-key = 'Go(DeclDoc { file: "internal/records/records_deletion.go", start_line: 60 })'
-descriptor = "go decl doc at internal/records/records_deletion.go:60"
-cost_tokens = 18
-cum_tokens = 9936
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "internal/records/records_deletion.go"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 456
-key = 'Go(DeclDoc { file: "internal/alerts/alerts_api.go", start_line: 18 })'
-descriptor = "go decl doc at internal/alerts/alerts_api.go:18"
-cost_tokens = 40
-cum_tokens = 9976
+position = 448
+key = 'Go(DeclDoc { file: "internal/alerts/alerts_api.go", start_line: 81 })'
+descriptor = "go decl doc at internal/alerts/alerts_api.go:81"
+cost_tokens = 37
+cum_tokens = 9879
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "internal/alerts/alerts_api.go"
-start = 16
-end = 17
+start = 79
+end = 80
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 457
-key = 'Go(DeclDoc { file: "agent/health/health.go", start_line: 17 })'
-descriptor = "go decl doc at agent/health/health.go:17"
-cost_tokens = 15
-cum_tokens = 9991
+position = 449
+key = 'Go(DeclDoc { file: "internal/hub/collections.go", start_line: 17 })'
+descriptor = "go decl doc at internal/hub/collections.go:17"
+cost_tokens = 17
+cum_tokens = 9896
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "agent/health/health.go"
+path = "internal/hub/collections.go"
 start = 16
 end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 450
+key = 'Go(DeclDoc { file: "internal/hub/server_development.go", start_line: 48 })'
+descriptor = "go decl doc at internal/hub/server_development.go:48"
+cost_tokens = 16
+cum_tokens = 9912
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/server_development.go"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 451
+key = 'Go(DeclDoc { file: "internal/hub/server_production.go", start_line: 18 })'
+descriptor = "go decl doc at internal/hub/server_production.go:18"
+cost_tokens = 16
+cum_tokens = 9928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "internal/hub/server_production.go"
+start = 17
+end = 17
 
 [batches.content.spans.render]
 kind = "full"
