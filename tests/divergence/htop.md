@@ -45,22 +45,22 @@ Score(3000)=0.483 I=0.423 C=0.551 ns_rows≤3K=17/48 (reached=7 partial=0 missin
 | walker |  | 2766 | 401 | c decl names surface in Process.h |  |  | 0.499 |
 | walker |  | 2766 | 0 | c decl at Process.h:29 |  |  | 0.499 |
 | walker |  | 2766 | 0 | c decl at Process.h:233 |  |  | 0.499 |
-| walker |  | 2773 | 7 | c decl at Process.h:81 |  |  | 0.499 |
+| walker |  | 2783 | 17 | c decl at Process.h:81 |  |  | 0.499 |
 | ns | 2808 |  | 290 | htoprc sample 1/2: header and global toggles | 3.2 |  | 0.483 |
-| walker |  | 2815 | 42 | c decl at Process.h:31 |  |  | 0.483 |
-| walker |  | 2897 | 82 | c decl at Process.h:63 |  |  | 0.483 |
-| walker |  | 2991 | 94 | c decl at Process.h:74 |  |  | 0.483 |
-| walker |  | 3019 | 28 | c decl names surface in MemoryMeter.h |  |  | 0.483 |
-| walker |  | 3048 | 29 | c decl names surface in BatteryMeter.h |  |  | 0.483 |
+| walker |  | 2825 | 42 | c decl at Process.h:31 |  |  | 0.483 |
+| walker |  | 2907 | 82 | c decl at Process.h:63 |  |  | 0.483 |
+| walker |  | 3001 | 94 | c decl at Process.h:74 |  |  | 0.483 |
+| walker |  | 3046 | 45 | c aggregate member group at Process.h:81 group 83 |  |  | 0.483 |
+| walker |  | 3074 | 28 | c decl names surface in MemoryMeter.h |  |  | 0.483 |
+| walker |  | 3103 | 29 | c decl names surface in BatteryMeter.h |  |  | 0.483 |
 | ns | 3209 |  | 401 | htoprc sample 2/2: layout, meters, screens | 3.3 |  | 0.468 |
 | ns | 3378 |  | 169 | Config resolution: overwrite-on-exit, fallbacks, $HTOPRC | 3.4 |  | 0.461 |
 | ns | 3528 |  | 150 | pcp-htop dynamic config: real meter and column samples | 3.5 |  | 0.453 |
-| walker |  | 3537 | 489 | c decl names surface in Meter.h |  |  | 0.453 |
-| walker |  | 3568 | 31 | c decl names surface in NetworkIOMeter.h |  |  | 0.453 |
-| walker |  | 3579 | 11 | listing of 'iwyu' |  |  | 0.454 |
-| ns | 3589 |  | 61 | CommandLine.c structure: parse and run entry points | 3.6 |  | 0.452 |
-| walker |  | 3670 | 91 | c decl at Meter.h:25 |  |  | 0.452 |
-| walker |  | 3725 | 55 | c aggregate member group at Process.h:81 group 83 |  |  | 0.452 |
+| ns | 3589 |  | 61 | CommandLine.c structure: parse and run entry points | 3.6 |  | 0.451 |
+| walker |  | 3592 | 489 | c decl names surface in Meter.h |  |  | 0.451 |
+| walker |  | 3623 | 31 | c decl names surface in NetworkIOMeter.h |  |  | 0.451 |
+| walker |  | 3634 | 11 | listing of 'iwyu' |  |  | 0.452 |
+| walker |  | 3725 | 91 | c decl at Meter.h:25 |  |  | 0.452 |
 | ns | 3889 |  | 300 | Object.h: base vtable, Class()/AllocThis, ObjectClass | 4.1 |  | 0.461 |
 | ns | 4116 |  | 227 | Row.h: Row struct head and tree/lifecycle state | 4.2 |  | 0.449 |
 | walker |  | 4272 | 547 | c decl names surface in Panel.h |  |  | 0.449 |

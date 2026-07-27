@@ -741,8 +741,8 @@ kind = "full"
 position = 28
 key = 'C(Decl { file: "Process.h", start_line: 81 })'
 descriptor = "c decl at Process.h:81"
-cost_tokens = 7
-cum_tokens = 2773
+cost_tokens = 17
+cum_tokens = 2783
 
 [batches.content]
 kind = "lines"
@@ -751,6 +751,14 @@ kind = "lines"
 path = "Process.h"
 start = 81
 end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Process.h"
+start = 83
+end = 83
 
 [batches.content.spans.render]
 kind = "full"
@@ -768,7 +776,7 @@ position = 29
 key = 'C(Decl { file: "Process.h", start_line: 31 })'
 descriptor = "c decl at Process.h:31"
 cost_tokens = 42
-cum_tokens = 2815
+cum_tokens = 2825
 
 [batches.content]
 kind = "lines"
@@ -786,7 +794,7 @@ position = 30
 key = 'C(Decl { file: "Process.h", start_line: 63 })'
 descriptor = "c decl at Process.h:63"
 cost_tokens = 82
-cum_tokens = 2897
+cum_tokens = 2907
 
 [batches.content]
 kind = "lines"
@@ -804,7 +812,7 @@ position = 31
 key = 'C(Decl { file: "Process.h", start_line: 74 })'
 descriptor = "c decl at Process.h:74"
 cost_tokens = 94
-cum_tokens = 2991
+cum_tokens = 3001
 
 [batches.content]
 kind = "lines"
@@ -819,10 +827,52 @@ kind = "full"
 
 [[batches]]
 position = 32
+key = 'C(AggregateMemberGroup { file: "Process.h", start_line: 81, group_start_line: 83 })'
+descriptor = "c aggregate member group at Process.h:81 group 83"
+cost_tokens = 45
+cum_tokens = 3046
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "Process.h"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Process.h"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Process.h"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "Process.h"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
 key = 'C(DeclNames { file: "MemoryMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in MemoryMeter.h"
 cost_tokens = 28
-cum_tokens = 3019
+cum_tokens = 3074
 
 [batches.content]
 kind = "lines"
@@ -860,11 +910,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 34
 key = 'C(DeclNames { file: "BatteryMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in BatteryMeter.h"
 cost_tokens = 29
-cum_tokens = 3048
+cum_tokens = 3103
 
 [batches.content]
 kind = "lines"
@@ -902,11 +952,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 35
 key = 'C(DeclNames { file: "Meter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in Meter.h"
 cost_tokens = 489
-cum_tokens = 3537
+cum_tokens = 3592
 
 [batches.content]
 kind = "lines"
@@ -968,11 +1018,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 35
+position = 36
 key = 'C(DeclNames { file: "NetworkIOMeter.h", chunk_index: 0 })'
 descriptor = "c decl names surface in NetworkIOMeter.h"
 cost_tokens = 31
-cum_tokens = 3568
+cum_tokens = 3623
 
 [batches.content]
 kind = "lines"
@@ -1010,11 +1060,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Fs(DirListing { dir: "iwyu" })'
 descriptor = "listing of 'iwyu'"
 cost_tokens = 11
-cum_tokens = 3579
+cum_tokens = 3634
 
 [batches.content]
 kind = "fs"
@@ -1024,11 +1074,11 @@ parent = "iwyu"
 entries = ["htop.imp", "run_iwyu.sh"]
 
 [[batches]]
-position = 37
+position = 38
 key = 'C(Decl { file: "Meter.h", start_line: 25 })'
 descriptor = "c decl at Meter.h:25"
 cost_tokens = 91
-cum_tokens = 3670
+cum_tokens = 3725
 
 [batches.content]
 kind = "lines"
@@ -1037,56 +1087,6 @@ kind = "lines"
 path = "Meter.h"
 start = 25
 end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'C(AggregateMemberGroup { file: "Process.h", start_line: 81, group_start_line: 83 })'
-descriptor = "c aggregate member group at Process.h:81 group 83"
-cost_tokens = 55
-cum_tokens = 3725
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "Process.h"
-start = 95
-end = 95
 
 [batches.content.spans.render]
 kind = "full"

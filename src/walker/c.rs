@@ -1089,7 +1089,11 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             // the parent `Decl`'s span was trimmed in `collect_decl` to
             // the type header + closer so the group rows don't overlap.
             for group in &info.member_groups {
-                let lines = FileLines::new(group.rows.clone());
+                // The base-object member rides with the `Decl` header;
+                // dropping it here keeps the two batches disjoint.
+                let mut rows = group.rows.clone();
+                rows.retain(|row| Some(*row) != info.base_member_line);
+                let lines = FileLines::new(rows);
                 if let Some(content) = single_file_lines_content(file, &source, lines) {
                     let configuration_surface_aggregate_group = configuration_surface
                         && configuration_surface_aggregate_group_floored(
@@ -1184,6 +1188,10 @@ struct DeclInfo {
     /// Per-group member-batches for big aggregates. When non-empty the
     /// parent `Decl` is trimmed to the type header + closing brace.
     member_groups: Vec<AggregateMemberGroup>,
+    /// Line of the aggregate's leading by-value composite member, if it
+    /// has one — see [`base_object_member_line`]. Rides with the trimmed
+    /// `Decl` header rather than with its member group.
+    base_member_line: Option<usize>,
 }
 
 /// Minimum structural evidence for treating a header as an application
@@ -1666,19 +1674,18 @@ fn classify_decl(
     } else {
         DeclLinkage::External
     };
-    let member_groups = if matches!(kind, DeclKind::Aggregate | DeclKind::Typedef) {
-        find_aggregate_body(node)
-            .map(|body| collect_aggregate_member_groups(body, source))
-            .unwrap_or_default()
-    } else {
-        Vec::new()
-    };
+    let aggregate_body = matches!(kind, DeclKind::Aggregate | DeclKind::Typedef)
+        .then(|| find_aggregate_body(node))
+        .flatten();
     Some(DeclInfo {
         start_line,
         kind,
         linkage,
         has_body,
-        member_groups,
+        member_groups: aggregate_body
+            .map(|body| collect_aggregate_member_groups(body, source))
+            .unwrap_or_default(),
+        base_member_line: aggregate_body.and_then(base_object_member_line),
     })
 }
 
@@ -1728,9 +1735,49 @@ const AGGREGATE_ENUM_CHUNK_MIN: usize = 32;
 /// NS authors use ("ND_ADD through ND_SHR" ~10-14 enumerators).
 const AGGREGATE_ENUM_CHUNK_SIZE: usize = 12;
 
-/// Locate the body node of a top-level aggregate decl: `struct`/`union`/
-/// `enum` specifier, `declaration` over one of those, or `typedef
-/// struct { … } X`. Returns the inner field/enumerator list.
+/// Line of the aggregate's leading by-value composite member — the slot
+/// C uses to say what a type *is* rather than what it holds: the
+/// embedded supertype of the vtable idiom (`Row super;` opening
+/// `struct Process_`) or the discriminant of a tagged union
+/// (`NodeKind kind;` opening `struct Node`).
+///
+/// A split aggregate renders as its type header plus closing brace, so
+/// its name is all that survives — a type that *is a* `Row` then reads
+/// as unrelated to `Row`, and a tagged union reads as an untagged bag
+/// of fields. Scalars are data and stay in their member group; a
+/// pointer, array, or bitfield member references something else rather
+/// than embedding it, and a multi-line member is not an identity slot.
+fn base_object_member_line(body: Node) -> Option<usize> {
+    if body.kind() != "field_declaration_list" {
+        return None;
+    }
+    let mut cursor = body.walk();
+    let first = body
+        .named_children(&mut cursor)
+        .find(|child| child.kind() != "comment")?;
+    if first.kind() != "field_declaration" || first.start_position().row != first.end_position().row
+    {
+        return None;
+    }
+    let member_type = first.child_by_field_name("type")?;
+    let composite_type = match member_type.kind() {
+        // A named type: `Row super;`. Built-ins (including `size_t` and
+        // the `stdint` family) parse as `primitive_type`, so plain
+        // scalars never reach here.
+        "type_identifier" => true,
+        // The untypedef'd form: `struct Row_ super;`. A body here would
+        // be an inline anonymous definition, not an embedding.
+        "struct_specifier" | "union_specifier" => member_type.child_by_field_name("body").is_none(),
+        _ => false,
+    };
+    // A plain identifier declarator is the by-value form; `*`, `[]`,
+    // and `:` shapes wrap it in a pointer/array/bitfield declarator.
+    if !composite_type || first.child_by_field_name("declarator")?.kind() != "field_identifier" {
+        return None;
+    }
+    Some(first.start_position().row + 1)
+}
+
 fn find_aggregate_body(node: Node) -> Option<Node> {
     fn spec_body(spec: Node) -> Option<Node> {
         match spec.kind() {
@@ -2605,6 +2652,12 @@ fn collect_decl(
                 let body_start = body.start_position().row;
                 let body_end = body.end_position().row;
                 push_rows(&mut full, start_row, body_start);
+                // The base-object member is what the type is built on,
+                // not one field among many — see
+                // [`base_object_member_line`]. `Decl` is the member
+                // groups' predecessor, so binding it here makes it
+                // impossible to render the type header without it.
+                full.extend(info.base_member_line);
                 if body_end > body_start && body_end <= end_row {
                     full.push(body_end + 1);
                 }
@@ -2696,6 +2749,50 @@ mod tests {
         let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
         assert_eq!(decls.len(), 1);
         assert_eq!(decls[0].1.start_line, 3);
+    }
+
+    /// `base_member_line` of the sole top-level decl in `src`.
+    fn base_member_line_of(src: &str) -> Option<usize> {
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree, &source, std::path::Path::new("test.h"), true);
+        decls[0].1.base_member_line
+    }
+
+    #[test]
+    fn c_leading_composite_member_is_the_types_identity_slot() {
+        // The vtable idiom's embedded supertype and a tagged union's
+        // discriminant both say what the type *is*.
+        assert_eq!(
+            base_member_line_of("struct P {\n  Row super;\n  int a;\n};\n"),
+            Some(2)
+        );
+        assert_eq!(
+            base_member_line_of("struct P {\n  struct Row_ super;\n  int a;\n};\n"),
+            Some(2)
+        );
+        // A scalar first member is data, not identity.
+        assert_eq!(
+            base_member_line_of("struct P {\n  int a;\n  Row r;\n};\n"),
+            None
+        );
+        assert_eq!(
+            base_member_line_of("struct P {\n  size_t n;\n  Row r;\n};\n"),
+            None
+        );
+        // A pointer references another object rather than embedding it.
+        assert_eq!(
+            base_member_line_of("struct P {\n  Row* parent;\n  int a;\n};\n"),
+            None
+        );
+        assert_eq!(
+            base_member_line_of("struct P {\n  Row rows[4];\n  int a;\n};\n"),
+            None
+        );
+        // An inline anonymous aggregate is a definition, not an embed.
+        assert_eq!(
+            base_member_line_of("struct P {\n  struct { int x; } p;\n  int a;\n};\n"),
+            None
+        );
     }
 
     fn configuration_surface_role(filename: &str, source: &str) -> bool {

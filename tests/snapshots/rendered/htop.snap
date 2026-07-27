@@ -230,12 +230,10 @@ Process.h
       68→} ProcessCmdlineHighlight;
     …
       74→typedef struct ProcessMergedCommand_ {
-      75→   uint64_t lastUpdate;                        /* Marker based on settings->lastUpdate to track when the rendering needs refreshing */
-      76→   char* str;                                  /* merged Command string */
-      77→   size_t highlightCount;                      /* how many portions of cmdline to highlight */
-      78→   ProcessCmdlineHighlight highlights[8];      /* which portions of cmdline to highlight */
-      79→} ProcessMergedCommand;
+    …
       81→typedef struct Process_ {
+    …
+      83→   Row super;
     …
      201→} Process;
      203→typedef struct ProcessFieldData_ {
