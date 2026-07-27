@@ -1345,6 +1345,74 @@ extra two tokens land early enough in the schedule to push `vaul`'s
 cost monaco-editor −0.065. A per-file magnitude is worse still — files
 are the bulk of entry rows, so the +2 applies everywhere.
 
+## GitHub workflow recall + the YAML reference-slice un-ship (2026-07-26)
+
+Baseline 0.6389 / 71 fixtures. Two questions, both answered by
+measurement rather than by the audit's estimate.
+
+**YAML reference deep-leaf slices: DEFENDED, do not un-ship.** The
+2026-07-26 un-ship audit rated the mechanism at +0.0002 and recommended
+keeping only the `TopLevelKeys` roster. Measured removal (roster kept,
+slices + the five bounded-extraction sub-rules deleted, −409 lines)
+costs **−0.0009 mean** with sqlite-vec 0.548 → 0.481 (coverage
+0.420 → 0.332, one NS row reached → missing). Curve: 0.0000 / 0.0000 /
+−0.0003 / **−0.0009** / −0.0006 / +0.0001 / 0.0000. It is worth ~5× the
+audit's estimate on the current frontier. Two facts that also blunt the
+audit's generalization worry: sqlite-vec is the *only* fixture with a
+root reference-map-named YAML, so nothing else can move either way; and
+`conserved_reference_slice_factors` conserves one file-level value
+across all slices, so a huge `openapi.yaml` cannot emit "a long train of
+2.75×-priced slices" — per-slice value falls as the count rises and the
+train loses the `value/cost^k` race by construction. The 2.75 factor and
+the five caps remain un-swept, which is the real open item.
+
+**Non-elected GitHub workflows (recall-census class 4): the recall
+hypothesis is dead; the byte gate was the actual hole.**
+
+- *Elect a second workflow / rank by informativeness* — implemented as a
+  fallback election when no filename ranks: elect the non-delivery
+  workflow with the most `run:` steps (bot/scanner/template workflows
+  delegate to `uses:` and carry nothing project-specific). The
+  discriminator is *accurate* — it picks exactly the NS-wanted file on
+  all three fixtures where name-ranking currently elects nobody
+  (act `checks.yml`, rich `pythonpackage.yml`, enclosed
+  `ci-app-server.yaml`) — and **exactly 0.0000 at every budget**, zero
+  fixtures moved, zero schedule-snapshot diffs. The newly admitted
+  content never wins purchase at `peripheral_ci_value`. ~55 LOC, not
+  shipped.
+- *Blanket raise of `WORKFLOW_HEAD_BYTE_GATE` 3000 → 12000*: **−0.0083**
+  (migrate −0.154, anyhow −0.135, log −0.105, toasty −0.080, tomli
+  −0.060, thiserror −0.030, pluggy −0.024) — every mover a full-`ci_value`
+  workflow in a ≤2-file dir. Reproduces the recorded flooding result.
+- *Demote a truncated head to the peripheral tier* ("the full CI tier is
+  for workflows we can render whole"): −0.0005 at 3000 (peepdb −0.046,
+  d2ts +0.010) but **+0.0026 / +0.0017 / +0.0028 at 1000 / 1442 / 2080**.
+  Identical with or without the gate raise and with or without the
+  fallback election, i.e. it is the *only* live knob of the three. Not
+  shipped: peepdb's NS row 2.7 wants `test.yml` lines 1–44 — a truncated
+  head — at tier 2, so this is a rescale against a bimodal target, the
+  shape the `ci_value` de-saturation entry above already records as
+  failing. A truncation-*fraction* threshold cannot rescue it: peepdb
+  (116 lines) and migrate (111 lines) sit on the same side of every cut.
+
+Shipped instead: the head byte gate is now **per tier**. It stays 3000
+for `Workflow` (there it is load-bearing as a flooding guard, per the
+−0.0083 above) and becomes `WORKFLOW_HEAD_LINE_CAP * 200` for
+`WorkflowPeripheral`, matching `TOOLING_HEAD_BYTE_GATE`'s convention.
+Corpus-exactly-neutral (0.0000 at all 7 budgets) and it closes a real
+invisibility cliff: **18 of 71 training fixtures** currently render
+nothing but the filename for their elected CI workflow at *every*
+budget, because a pre-flight read guard was stricter than the 60-line
+content bound it protects. Same category as the `431650dd` over-cap
+fixes — corpus-neutral by construction, motivated by fixtures being a
+sample.
+
+Still uncovered and NOT addressed: NS rows wanting workflow content
+*past* line 60 (vite `ci.yml` 116–131, express `ci.yml` line 80, tomli's
+scattered job-name lines through line 145). That is a head-shape
+question (job-name roster vs raw prefix), and the pre-refreeze
+"workflow structural summaries: flat to negative" result applies to it.
+
 ## Min-tokens lower bound
 
 `RenderedTree::marginal_cost` is the only path to a real per-batch cost

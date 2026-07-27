@@ -140,22 +140,23 @@ Score(3000)=0.666 I=0.836 C=0.531 ns_rows≤3K=17/54 (reached=9 partial=1 missin
 | walker |  | 6664 | 38 | go test names surface in format_test.go |  |  | 0.879 |
 | walker |  | 6718 | 54 | go test names surface in prefix_test.go |  |  | 0.885 |
 | walker |  | 6741 | 23 | .github/pull_request_template.md section #2 |  |  | 0.885 |
-| walker |  | 6853 | 112 | go test names surface in append_test.go |  |  | 0.905 |
-| ns | 6940 |  | 352 | TestAppend_Error | 9.2 | 1.7 | 0.878 |
-| walker |  | 6989 | 136 | go test names surface in multierror_test.go |  |  | 0.894 |
-| walker |  | 7026 | 37 | .github/pull_request_template.md section #1 |  |  | 0.895 |
-| ns | 7397 |  | 457 | TestGroup (whole file) | 9.3 | 1.7 | 0.862 |
-| ns | 7643 |  | 246 | TestFlatten | 9.4 | 1.7 | 0.842 |
-| ns | 7935 |  | 292 | prefix_test.go (whole file) | 9.5 | 1.7 | 0.820 |
-| ns | 8214 |  | 279 | format_test.go (whole file) | 9.6 | 1.7 | 0.797 |
-| ns | 8454 |  | 240 | TestSortMultiple (sort_test.go) | 9.7 | 1.7 | 0.780 |
-| ns | 8595 |  | 141 | TestErrorErrorOrNil | 9.8 | 1.6 | 0.773 |
-| ns | 8983 |  | 388 | Makefile | 10.1 |  | 0.779 |
-| ns | 9025 |  | 42 | CI job-name locations (go-multierror.yml) | 10.2 |  | 0.777 |
-| ns | 9225 |  | 200 | linux-tests job body | 10.3 | 10.2 | 0.768 |
-| ns | 9427 |  | 202 | actionlint.yml | 10.4 |  | 0.771 |
-| ns | 9611 |  | 184 | dependabot.yml | 10.5 |  | 0.762 |
-| ns | 9691 |  | 80 | CODEOWNERS | 10.6 |  | 0.759 |
-| ns | 9844 |  | 153 | PR template | 10.7 |  | 0.759 |
-| ns | 9900 |  | 56 | CHANGELOG.md | 10.8 |  | 0.760 |
-| ns | 9937 |  | 37 | LICENSE header | 10.9 |  | 0.759 |
+| ns | 6940 |  | 352 | TestAppend_Error | 9.2 | 1.7 | 0.858 |
+| ns | 7397 |  | 457 | TestGroup (whole file) | 9.3 | 1.7 | 0.827 |
+| walker |  | 7598 | 857 | YAML config at .github/workflows/go-multierror.yml |  |  | 0.828 |
+| ns | 7643 |  | 246 | TestFlatten | 9.4 | 1.7 | 0.808 |
+| walker |  | 7710 | 112 | go test names surface in append_test.go |  |  | 0.827 |
+| walker |  | 7846 | 136 | go test names surface in multierror_test.go |  |  | 0.842 |
+| walker |  | 7883 | 37 | .github/pull_request_template.md section #1 |  |  | 0.843 |
+| ns | 7935 |  | 292 | prefix_test.go (whole file) | 9.5 | 1.7 | 0.821 |
+| ns | 8214 |  | 279 | format_test.go (whole file) | 9.6 | 1.7 | 0.798 |
+| ns | 8454 |  | 240 | TestSortMultiple (sort_test.go) | 9.7 | 1.7 | 0.781 |
+| ns | 8595 |  | 141 | TestErrorErrorOrNil | 9.8 | 1.6 | 0.774 |
+| ns | 8983 |  | 388 | Makefile | 10.1 |  | 0.780 |
+| ns | 9025 |  | 42 | CI job-name locations (go-multierror.yml) | 10.2 |  | 0.779 |
+| ns | 9225 |  | 200 | linux-tests job body | 10.3 | 10.2 | 0.773 |
+| ns | 9427 |  | 202 | actionlint.yml | 10.4 |  | 0.776 |
+| ns | 9611 |  | 184 | dependabot.yml | 10.5 |  | 0.767 |
+| ns | 9691 |  | 80 | CODEOWNERS | 10.6 |  | 0.764 |
+| ns | 9844 |  | 153 | PR template | 10.7 |  | 0.764 |
+| ns | 9900 |  | 56 | CHANGELOG.md | 10.8 |  | 0.765 |
+| ns | 9937 |  | 37 | LICENSE header | 10.9 |  | 0.764 |
