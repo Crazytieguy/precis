@@ -40,7 +40,8 @@
 //!   (recognized structurally — first `#ifndef` whose name is then
 //!   `#define`d on the next line, regardless of naming convention) is
 //!   descended into transparently, and its `#define X` is envelope
-//!   rather than a macro decl — see [`is_header_guard_define`]. `extern "C" { ... }` linkage specs
+//!   rather than a macro decl — see [`is_header_guard_define`].
+//!   `extern "C" { ... }` linkage specs
 //!   (including the `#ifdef __cplusplus` wrapper idiom common in C
 //!   headers) are likewise descended through so the wrapped decls are
 //!   visited as top-level. Other `preproc_if` / `preproc_ifdef` blocks
@@ -1089,7 +1090,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             // the parent `Decl`'s span was trimmed in `collect_decl` to
             // the type header + closer so the group rows don't overlap.
             for group in &info.member_groups {
-                // The base-object member rides with the `Decl` header;
+                // The identity slot rides with the `Decl` header;
                 // dropping it here keeps the two batches disjoint.
                 let mut rows = group.rows.clone();
                 rows.retain(|row| Some(*row) != info.base_member_line);
@@ -1189,8 +1190,9 @@ struct DeclInfo {
     /// parent `Decl` is trimmed to the type header + closing brace.
     member_groups: Vec<AggregateMemberGroup>,
     /// Line of the aggregate's leading by-value composite member, if it
-    /// has one — see [`base_object_member_line`]. Rides with the trimmed
-    /// `Decl` header rather than with its member group.
+    /// has one — see [`base_object_member_line`]. Rides with the names
+    /// roster and with the trimmed `Decl` header rather than with its
+    /// member group.
     base_member_line: Option<usize>,
 }
 
@@ -2664,8 +2666,8 @@ fn collect_decl(
                 let body_start = body.start_position().row;
                 let body_end = body.end_position().row;
                 push_rows(&mut full, start_row, body_start);
-                // The base-object member is what the type is built on,
-                // not one field among many — see
+                // The identity slot is what the type is built on, not
+                // one field among many — see
                 // [`base_object_member_line`]. `Decl` is the member
                 // groups' predecessor, so binding it here makes it
                 // impossible to render the type header without it.
